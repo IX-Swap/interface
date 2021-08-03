@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import styled, { css, keyframes } from 'styled-components'
 import { darken } from 'polished'
 import { ArrowLeft, X, ExternalLink as LinkIconFeather, Trash } from 'react-feather'
-
+import { ReactComponent as Check } from 'assets/images/check.svg'
 export const ButtonText = styled.button`
   outline: none;
   border: none;
@@ -428,3 +428,43 @@ export const MobileOnly = styled.span`
     display: block;
   `};
 `
+
+const HiddenCheckbox = styled.input.attrs({ type: 'checkbox' })`
+  border: 0;
+  clip: rect(0 0 0 0);
+  clippath: inset(50%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+`
+const StyledCheckbox = styled.div<{ checked: boolean }>`
+  display: flex;
+  width: 20px;
+  height: 20px;
+  background: ${({ checked, theme }) => (checked ? theme.bg12 : theme.bgG11)};
+  border-radius: 100%;
+  transition: all 150ms;
+  justify-content: center;
+  ${SvgIconWrapper} {
+    visibility: ${({ checked }) => (checked ? 'visible' : 'hidden')};
+  }
+`
+const CheckboxContainer = styled.div`
+  display: inline-block;
+  vertical-align: middle;
+`
+
+export const Checkbox = ({ className, checked, ...rest }: { className?: string; checked: boolean }) => (
+  <CheckboxContainer className={className}>
+    <HiddenCheckbox checked={checked} {...rest} />
+    <StyledCheckbox checked={checked}>
+      <SvgIconWrapper size={20}>
+        <Check />
+      </SvgIconWrapper>
+    </StyledCheckbox>
+  </CheckboxContainer>
+)
