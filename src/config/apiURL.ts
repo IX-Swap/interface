@@ -277,3 +277,7 @@ export const listingsURL = {
 export const assetsURL = {
   getAssetsList: () => '/accounts/assets/list'
 }
+
+export const resources = {
+  getSiteConfig: () => '/resources/siteConfig'
+}
