@@ -1,17 +1,24 @@
 import { Percent, Token } from '@ixswap1/sdk-core'
 import { Pair } from '@ixswap1/v2-sdk'
+import { SupportedLocale } from 'constants/locales'
 import JSBI from 'jsbi'
 import flatMap from 'lodash.flatmap'
 import { useCallback, useMemo } from 'react'
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
+import apiService from 'services/apiService'
+import { tokens } from 'services/apiUrls'
+import { LOGIN_STATUS, useLogin } from 'state/auth/hooks'
+import { listToSecTokenMap, SecTokenAddressMap, useSecTokensFromMap } from 'state/secTokens/hooks'
+import { SecToken } from 'types/secToken'
 import { BASES_TO_TRACK_LIQUIDITY_FOR, PINNED_PAIRS } from '../../constants/routing'
-
-import { useActiveWeb3React } from '../../hooks/web3'
 import { useAllTokens } from '../../hooks/Tokens'
+import { useActiveWeb3React } from '../../hooks/web3'
 import { AppDispatch, AppState } from '../index'
 import {
   addSerializedPair,
   addSerializedToken,
+  fetchUserSecTokenList,
+  passAccreditation,
   removeSerializedToken,
   SerializedPair,
   SerializedToken,
@@ -19,22 +26,10 @@ import {
   updateUserDarkMode,
   updateUserDeadline,
   updateUserExpertMode,
+  updateUserLocale,
   updateUserSingleHopOnly,
   updateUserSlippageTolerance,
-  updateUserLocale,
-  fetchUserSecTokenList,
-  passAccreditation,
-  setUsesSecTokens,
 } from './actions'
-import { SupportedLocale } from 'constants/locales'
-import apiService from 'services/apiService'
-import { tokens } from 'services/apiUrls'
-import { SecToken } from 'types/secToken'
-import { listToSecTokenMap, SecTokenAddressMap, useSecTokensFromMap } from 'state/secTokens/hooks'
-import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
-import { useAuthState, useSaveAuthorization } from 'state/auth/hooks'
-import { useFetchToken } from 'hooks/useFetchToken'
-import { shouldRenewToken } from 'utils/time'
 
 function serializeToken(token: Token): SerializedToken {
   return {
@@ -108,9 +103,7 @@ export function useUserLocaleManager(): [SupportedLocale | null, (newLocale: Sup
 export function useIsExpertMode(): boolean {
   return useSelector<AppState, AppState['user']['userExpertMode']>((state) => state.user.userExpertMode)
 }
-export function useUsesSecTokens(): boolean {
-  return useSelector<AppState, AppState['user']['usesSecTokens']>((state) => state.user.usesSecTokens)
-}
+
 export function useExpertModeManager(): { expertMode: boolean; toggleExpertMode: () => void } {
   const dispatch = useDispatch<AppDispatch>()
   const expertMode = useIsExpertMode()
@@ -380,27 +373,24 @@ export const postPassAccreditation = async ({ tokenId }: { tokenId: number }) =>
 
 export function usePassAccreditation({ tokenId }: { tokenId: number }): () => Promise<void> {
   const dispatch = useDispatch<AppDispatch>()
-  const { token, expiresAt } = useAuthState()
-  const { saveAuthorization } = useSaveAuthorization()
-  const { fetchToken } = useFetchToken()
+  const login = useLogin({ mustHavePreviousLogin: false, expireLogin: false })
   const fetchTokens = useFetchUserSecTokenListCallback()
   // note: prevent dispatch if using for list search or unsupported list
   return useCallback(async () => {
     dispatch(passAccreditation.pending())
     try {
-      if (!token || shouldRenewToken(expiresAt ?? 0)) {
-        const authData = await fetchToken()
-        if (authData) {
-          saveAuthorization(authData)
-        }
+      const status = await login()
+      if (status === LOGIN_STATUS.SUCCESS) {
+        await postPassAccreditation({ tokenId })
+      } else {
+        dispatch(passAccreditation.rejected({ errorMessage: 'Could not login' }))
+        return
       }
-      await postPassAccreditation({ tokenId })
-      dispatch(setUsesSecTokens({ usesTokens: true }))
       await fetchTokens()
       dispatch(passAccreditation.fulfilled())
     } catch (error) {
       console.debug(`Failed to pass accreditation`, error)
       dispatch(passAccreditation.rejected({ errorMessage: error.message }))
     }
-  }, [dispatch, tokenId, token, expiresAt, fetchToken, saveAuthorization, fetchTokens])
+  }, [dispatch, tokenId, fetchTokens, login])
 }

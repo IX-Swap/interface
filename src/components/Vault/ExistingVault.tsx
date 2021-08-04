@@ -19,7 +19,7 @@ interface Props {
 }
 export const ExistingVault = ({ currency, status }: Props) => {
   const symbolText = useMemo(() => currency?.symbol ?? '', [currency?.symbol])
-  const { account, chainId, library } = useActiveWeb3React()
+  const { account } = useActiveWeb3React()
   const toggle = useDepositModalToggle()
   const tokenId = useSecTokenId({ currencyId: (currency as any)?.address })
   const passAccreditation = usePassAccreditation({ tokenId })

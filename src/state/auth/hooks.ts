@@ -1,57 +1,78 @@
 import { useFetchToken } from 'hooks/useFetchToken'
 import { useActiveWeb3React } from 'hooks/web3'
-import { useCallback, useEffect } from 'react'
+import md5 from 'md5'
+import { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import apiService from 'services/apiService'
+import { metamask } from 'services/apiUrls'
 import { AppDispatch, AppState } from 'state'
-import { setUsesSecTokens } from 'state/user/actions'
-import { useUsesSecTokens } from 'state/user/hooks'
-import { getTokenExpiration, shouldRenewToken } from 'utils/time'
-import { RawAuthPayload, saveToken } from './actions'
+import { shouldRenewToken } from 'utils/time'
+import { postLogin } from './actions'
 
 export function useAuthState(): AppState['auth'] {
   return useSelector<AppState, AppState['auth']>((state) => state.auth)
 }
 
-export function useSaveAuthorization() {
-  const dispatch = useDispatch<AppDispatch>()
-
-  const saveAuthorization = (auth: RawAuthPayload) => {
-    const expirationTime = getTokenExpiration(auth.expiresIn)
-    dispatch(saveToken({ value: { token: auth.accessToken, expiresAt: expirationTime } }))
-  }
-  return { saveAuthorization }
-}
-
-export function useAuthToken() {
-  const { token, expiresAt } = useAuthState()
-  const { saveAuthorization } = useSaveAuthorization()
-  const { fetchToken } = useFetchToken()
-  const getToken = useCallback(async () => {
-    if (!token || shouldRenewToken(expiresAt ?? 0)) {
-      const authData = await fetchToken()
-      if (authData) {
-        saveAuthorization(authData)
-      }
-    }
-  }, [expiresAt, token, fetchToken, saveAuthorization])
-  return { getToken }
-}
-
-export const useLogin = () => {
+export function useHasLogin() {
   const { account } = useActiveWeb3React()
-  const usesSecTokens = useUsesSecTokens()
-  const { getToken } = useAuthToken()
-  const { token, expiresAt } = useAuthState()
-  useEffect(() => {
-    if (account && usesSecTokens && (!token || shouldRenewToken(expiresAt ?? 0))) {
-      getToken()
-    }
-  }, [account, usesSecTokens, getToken, token, expiresAt])
+  const getHasLogin = useCallback(
+    async (externalAccount?: string | null) => {
+      if (account || externalAccount) {
+        const hash = md5(account ?? externalAccount ?? '')
+        const { data } = await apiService.get(metamask.hasLogged(hash))
+        return data
+      }
+      return false
+    },
+    [account]
+  )
+  return getHasLogin
 }
 
-export const useFirstLogin = () => {
+export enum LOGIN_STATUS {
+  NO_ACCOUNT,
+  SUCCESS,
+  FAILED,
+}
+
+export function useLogin({
+  expireLogin = false,
+  mustHavePreviousLogin = true,
+}: {
+  expireLogin?: boolean
+  mustHavePreviousLogin?: boolean
+  caller?: string
+}) {
+  const { expiresAt } = useAuthState()
   const dispatch = useDispatch<AppDispatch>()
-  return useCallback(() => {
-    dispatch(setUsesSecTokens({ usesTokens: true }))
-  }, [dispatch])
+  const { fetchToken } = useFetchToken()
+  const getHasLogin = useHasLogin()
+  const checkLogin = useCallback(
+    async (account?: string | null) => {
+      if (expireLogin || shouldRenewToken(expiresAt ?? 0)) {
+        // gets here if he has no login at all, login expired, or login is forced
+        if (mustHavePreviousLogin) {
+          // gets here if he needs to be previously logged in
+          const hasLogin = await getHasLogin(account)
+          if (!hasLogin) {
+            return LOGIN_STATUS.NO_ACCOUNT
+          }
+        }
+        // gets here if previously logged in or previous login not needed
+        dispatch(postLogin.pending())
+        const auth = await fetchToken()
+        if (!auth) {
+          dispatch(postLogin.rejected({ errorMessage: 'Could not login' }))
+          return LOGIN_STATUS.FAILED
+        } else {
+          dispatch(postLogin.fulfilled({ auth }))
+          return LOGIN_STATUS.SUCCESS
+        }
+      } else {
+        return LOGIN_STATUS.SUCCESS
+      }
+    },
+    [expiresAt, fetchToken, dispatch, getHasLogin, expireLogin, mustHavePreviousLogin]
+  )
+  return checkLogin
 }

@@ -1,20 +1,15 @@
-import React, { useMemo } from 'react'
-import { Trans } from '@lingui/macro'
-import { Text } from 'rebass'
 import { Currency, Token } from '@ixswap1/sdk-core'
+import { Trans } from '@lingui/macro'
+import { STO_STATUS_APPROVED } from 'components/SecurityCard/STOStatus'
+import useTheme from 'hooks/useTheme'
+import React, { useMemo } from 'react'
+import { useUserSecTokens } from 'state/user/hooks'
 import styled from 'styled-components/macro'
-
-import { COMMON_BASES } from '../../constants/routing'
+import { SemiTransparent, TYPE } from 'theme'
 import { currencyId } from '../../utils/currencyId'
 import { AutoColumn } from '../Column'
-import QuestionHelper from '../QuestionHelper'
-import { AutoRow } from '../Row'
 import CurrencyLogo from '../CurrencyLogo'
-import { SemiTransparent, TYPE } from 'theme'
-import useTheme from 'hooks/useTheme'
-import { useUserSecTokens } from 'state/user/hooks'
-import { useSecTokens } from 'state/secTokens/hooks'
-import { STO_STATUS_APPROVED, STO_STATUS_CREATED } from 'components/SecurityCard/STOStatus'
+import { AutoRow } from '../Row'
 
 const BaseWrapper = styled.div<{ disable?: boolean }>`
   border-radius: 40px;
@@ -30,7 +25,6 @@ const BaseWrapper = styled.div<{ disable?: boolean }>`
 `
 
 export default function CommonBases({
-  chainId,
   onSelect,
   selectedCurrency,
 }: {

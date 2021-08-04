@@ -104,7 +104,6 @@ export const getActionStatusText = (action: ActionTypes, status: ActionHistorySt
     return TransactionHistoryStatusText[ActionHistoryStatus.PENDING]
   }
   if (isAction(action)) {
-    console.log({ isAction: isAction(action) })
     return ActionHistoryStatusText[status]
   }
   return TransactionHistoryStatusText[status]

@@ -16,7 +16,8 @@ export enum timePeriods {
 // save token expiration for planned time - 1 minute
 export const getTokenExpiration = (time: keyof typeof timePeriods) => {
   const currentUTCTime = dayjs.utc().unix().valueOf()
-  const timeAfterInterval = currentUTCTime + timePeriods[time] - timePeriods['1 minute']
+  // expire login 4 minutes before because we have an interval once in 4 minutes of fetching user sec tokens which relogins if token expired
+  const timeAfterInterval = currentUTCTime + timePeriods[time] - 4 * timePeriods['1 minute']
   return timeAfterInterval
 }
 

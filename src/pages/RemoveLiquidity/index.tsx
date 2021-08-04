@@ -273,8 +273,6 @@ export default function RemoveLiquidity({
   const oneCurrencyIsWETH = Boolean(
     chainId && WETH9[chainId] && (currencyA?.equals(WETH9[chainId]) || currencyB?.equals(WETH9[chainId]))
   )
-  const showApproveButton = !(approval === ApprovalState.APPROVED || signatureData !== null)
-  const showRemoveButton = !showApproveButton
   const handleDismissConfirmation = useCallback(() => {
     setShowConfirm(false)
     // if there was a tx hash, we want to clear the input
