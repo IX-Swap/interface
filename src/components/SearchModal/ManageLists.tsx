@@ -368,6 +368,7 @@ export function ManageLists({
     // if valid url, fetch details for card
     if (validUrl) {
       fetchTempList()
+      setAddError('')
     } else {
       setTempList(undefined)
       listUrlInput !== '' && setAddError(t`Enter valid list location`)
