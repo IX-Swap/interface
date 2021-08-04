@@ -1,20 +1,16 @@
 import { Currency, WETH9 } from '@ixswap1/sdk-core'
 import { Trans } from '@lingui/macro'
 import { TextRow } from 'components/TextRow/TextRow'
-import JSBI from 'jsbi'
 import React from 'react'
 import { Text } from 'rebass'
-import { useStakingInfo } from 'state/stake/hooks'
 import { AutoColumn } from '../../components/Column'
 import CurrencyLogo from '../../components/CurrencyLogo'
 import { RowBetween, RowFixed } from '../../components/Row'
-import { BIG_INT_ZERO } from '../../constants/misc'
 import { useCurrency } from '../../hooks/Tokens'
 import { Field } from '../../state/burn/actions'
 import { SemiTransparent, StyledInternalLink } from '../../theme'
 import { FormattedAmounts } from './interfaces'
 import { RemovedLiquidityWrapper } from './styled'
-
 interface Props {
   currencyIdA: string
   currencyIdB: string
@@ -52,10 +48,10 @@ export const RemovedLiquidity = ({ currencyIdA, currencyIdB, chainId, formattedA
     chainId && WETH9[chainId] && (currencyA?.equals(WETH9[chainId]) || currencyB?.equals(WETH9[chainId]))
   )
   // ask Cucer why there is no staking info
-  const stakingInfo = useStakingInfo()
-  const stakingInfosWithBalance = stakingInfo?.filter((pool) =>
-    JSBI.greaterThan(pool.stakedAmount.quotient, BIG_INT_ZERO)
-  )
+  // const stakingInfo = useStakingInfo()
+  // const stakingInfosWithBalance = stakingInfo?.filter((pool) =>
+  //   JSBI.greaterThan(pool.stakedAmount.quotient, BIG_INT_ZERO)
+  // )
   return (
     <RemovedLiquidityWrapper>
       <AutoColumn gap="10px">

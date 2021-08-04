@@ -4,7 +4,6 @@ import { useCallback, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import apiService from 'services/apiService'
 import { tokens } from 'services/apiUrls'
-import { useApiService } from 'services/useApiService'
 import { AppDispatch, AppState } from 'state'
 import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
 import { SecToken } from 'types/secToken'
@@ -12,14 +11,6 @@ import { fetchSecTokenList } from './actions'
 
 export function useSecTokenState(): AppState['secTokens'] {
   return useSelector<AppState, AppState['secTokens']>((state) => state.secTokens)
-}
-export const useFetchSecTokens = () => {
-  const { result, loading, request } = useApiService<SecToken[]>({
-    method: 'get',
-    uri: tokens.all,
-    data: {},
-  })
-  return { result, loading, request }
 }
 
 export const getSecTokensList = async () => {

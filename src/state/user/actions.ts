@@ -31,7 +31,6 @@ export const addSerializedPair = createAction<{ serializedPair: SerializedPair }
 export const removeSerializedPair =
   createAction<{ chainId: number; tokenAAddress: string; tokenBAddress: string }>('user/removeSerializedPair')
 export const toggleURLWarning = createAction<void>('app/toggleURLWarning')
-export const setUsesSecTokens = createAction<{ usesTokens: boolean }>('user/setUsesSecTokens')
 
 export const fetchUserSecTokenList: Readonly<{
   pending: ActionCreatorWithoutPayload

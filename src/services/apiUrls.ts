@@ -3,6 +3,7 @@ import { ActionTypes } from 'components/Vault/enum'
 export const metamask = {
   challenge: `metamask/challenge`,
   login: `metamask/login`,
+  hasLogged: (hash: string) => `/metamask/hasLogged/${hash}`,
 }
 
 export const tokens = {

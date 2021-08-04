@@ -69,7 +69,7 @@ export function useEventActionHandlers(): {
   onChangeFilter: (filter: ActionTypes) => void
 } {
   const dispatch = useDispatch<AppDispatch>()
-  const { filter: filterState, page } = useEventState()
+  const { filter: filterState } = useEventState()
   const onChangeFilter = useCallback(
     (filter: ActionTypes) => {
       if (filterState !== filter) {
