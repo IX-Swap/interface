@@ -56,7 +56,6 @@ const Marginer = styled.div`
 
 export default function App() {
   const isSettingsOpen = useModalOpen(ApplicationModal.SETTINGS)
-  useLogin()
   return (
     <ErrorBoundary>
       <Route component={GoogleAnalyticsReporter} />
