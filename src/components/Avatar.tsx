@@ -5,10 +5,11 @@ import { Avatar as MUIAvatar } from '@material-ui/core'
 export interface AvatarProps {
   documentId?: string
   ownerId?: string
-  size?: number | [number, number]
+  size?: number | [number, number] | [string, string]
   variant?: 'circle' | 'rounded' | 'square'
   fallback?: Element | JSX.Element
   children?: ReactNode
+  isNewThemeOn?: boolean
 }
 
 export const Avatar = (props: AvatarProps) => {
@@ -18,7 +19,8 @@ export const Avatar = (props: AvatarProps) => {
     size = 80,
     variant = 'circle',
     fallback,
-    children
+    children,
+    isNewThemeOn = false
   } = props
   const width = Array.isArray(size) ? size[0] : size
   const height = Array.isArray(size) ? size[1] : size
@@ -39,7 +41,11 @@ export const Avatar = (props: AvatarProps) => {
   }
 
   return (
-    <ViewDocument documentId={documentId} ownerId={ownerId}>
+    <ViewDocument
+      documentId={documentId}
+      ownerId={ownerId}
+      isNewThemeOn={isNewThemeOn}
+    >
       {url =>
         url !== '' ? (
           <MUIAvatar src={url} style={style} variant={variant}>

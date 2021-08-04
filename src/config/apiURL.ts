@@ -193,6 +193,11 @@ export const documentsURL = {
     `/dataroom/reports-and-newsletters/${fileId}`
 }
 
+export const bannerURL = {
+  uploadBanner: '/resources/banners',
+  getRowBanner: (bannerId: string) => `/resources/banners/raw/${bannerId}`
+}
+
 export const virtualAccounts = {
   getAll: '/virtual-accounts/list',
   add: '/virtual-accounts',
