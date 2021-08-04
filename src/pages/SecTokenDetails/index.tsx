@@ -15,7 +15,6 @@ import { InfoBackground } from './Background'
 import { Container, Description, DescriptionText, InfoTitle } from './styleds'
 import { TokenDetails } from './TokenDetails'
 export default function SecTokenDetails({
-  history,
   match: {
     params: { currencyId },
   },

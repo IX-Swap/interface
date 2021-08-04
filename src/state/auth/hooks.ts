@@ -38,7 +38,6 @@ export enum LOGIN_STATUS {
 export function useLogin({
   expireLogin = false,
   mustHavePreviousLogin = true,
-  caller,
 }: {
   expireLogin?: boolean
   mustHavePreviousLogin?: boolean

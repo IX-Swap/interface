@@ -102,7 +102,7 @@ export default function PoolFinder() {
           <AutoColumn style={{ padding: '0 37px', marginBottom: '10px' }} gap="md">
             <SelectCurrency {...{ currency0, currency1, chooseToken }} />
           </AutoColumn>
-          {poolFound && (
+          {poolFound && pair && (
             <FoundPoolWrapper>
               <Column>
                 <TYPE.title9>
@@ -116,10 +116,10 @@ export default function PoolFinder() {
                   </SemiTransparent>
                 </StyledInternalLink>
               </Column>
-              <FullPositionCard pair={pair!} />
+              <FullPositionCard pair={pair} />
             </FoundPoolWrapper>
           )}
-          {!poolFound && !prerequesiteState && (
+          {!poolFound && !prerequesiteState && currency0 && currency1 && (
             <Column style={{ padding: '37px' }}>
               {noLiquidityInPool && (
                 <EmptyStateInfoCard>
@@ -127,25 +127,19 @@ export default function PoolFinder() {
                     <Trans>You don’t have liquidity in this pool yet</Trans>
                   </TYPE.title9>
                   <ButtonGradient style={{ width: '214px' }}>
-                    <Link
-                      to={`/add/${currencyId(currency0!)}/${currencyId(currency1!)}`}
-                      style={{ color: theme.text1 }}
-                    >
+                    <Link to={`/add/${currencyId(currency0)}/${currencyId(currency1)}`} style={{ color: theme.text1 }}>
                       <Trans>Add liquidity</Trans>
                     </Link>
                   </ButtonGradient>
                 </EmptyStateInfoCard>
               )}
-              {noPool && (
+              {noPool && currency0 && currency1 && (
                 <EmptyStateInfoCard>
                   <TYPE.title9 fontWeight={500}>
                     <Trans>No pool found</Trans>
                   </TYPE.title9>
                   <ButtonGradient style={{ width: '214px' }}>
-                    <Link
-                      to={`/add/${currencyId(currency0!)}/${currencyId(currency1!)}`}
-                      style={{ color: theme.text1 }}
-                    >
+                    <Link to={`/add/${currencyId(currency0)}/${currencyId(currency1)}`} style={{ color: theme.text1 }}>
                       <Trans>Create pool</Trans>
                     </Link>
                   </ButtonGradient>

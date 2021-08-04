@@ -373,7 +373,7 @@ export const postPassAccreditation = async ({ tokenId }: { tokenId: number }) =>
 
 export function usePassAccreditation({ tokenId }: { tokenId: number }): () => Promise<void> {
   const dispatch = useDispatch<AppDispatch>()
-  const login = useLogin({ mustHavePreviousLogin: false, expireLogin: false, caller: 'accreditation' })
+  const login = useLogin({ mustHavePreviousLogin: false, expireLogin: false })
   const fetchTokens = useFetchUserSecTokenListCallback()
   // note: prevent dispatch if using for list search or unsupported list
   return useCallback(async () => {

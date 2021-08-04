@@ -12,7 +12,7 @@ import { useFetchUserSecTokenListCallback } from './hooks'
 export default function Updater(): null {
   const dispatch = useDispatch<AppDispatch>()
   const isWindowVisible = useIsWindowVisible()
-  const login = useLogin({ expireLogin: false, mustHavePreviousLogin: true, caller: 'updater' })
+  const login = useLogin({ expireLogin: false, mustHavePreviousLogin: true })
   const fetchList = useFetchUserSecTokenListCallback()
   const { account } = useActiveWeb3React()
   const fetchListCallback = useCallback(async () => {
