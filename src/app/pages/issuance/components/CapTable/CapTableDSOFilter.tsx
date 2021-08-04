@@ -7,7 +7,7 @@ export const CapTableDSOFilter = () => {
   const { data, isLoading, selected, handleChange } = useDSOFilter(
     'captable',
     undefined,
-    'Hybrid'
+    'Fund'
   )
 
   if (isLoading) {
