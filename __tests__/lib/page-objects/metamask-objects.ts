@@ -12,7 +12,7 @@ class Metamask {
   loginToMetamask = async (secretWords, page = this.page) => {
     await click(auth.buttons.GET_STARTED, page)
     try {
-      await page.waitForSelector('text="All Done"', { timeout: 2000 })
+      await page.waitForSelector('text="All Done"', { timeout: 3000 })
       await click('text="All Done"', page)
     } catch {}
     await click(auth.buttons.IMPORT_WALLET, page)
@@ -35,24 +35,34 @@ class Metamask {
     await click(auth.buttons.CONFIRM, page)
   }
   fullConnection = async (context, page, secretWords, address, topUp = true) => {
-    await navigate(ixswap.URL, page)
-    if ((await context.pages()).length === 3) {
-      await context.pages()[0].close()
+    try {
+      await navigate(ixswap.URL, page)
+      if ((await context.pages()).length === 3) {
+        await context.pages()[0].close()
+      }
+      const metamaskPage = (await context.pages())[1]
+      if (topUp) {
+        await getRequest(`http://rinkeby-faucet.com/send?address=${address}`)
+      }
+      await this.loginToMetamask(secretWords, metamaskPage)
+      await page.reload()
+      await metamaskPage.close()
+      const wallet = new SwapIX(page)
+      await wallet.connectToWallet()
+      // await this.confirmConnection((await context.pages())[1])
+      await waitUntil(() => context.pages()[1] != undefined, { timeout: 10000 })
+      await click(auth.buttons.NEXT, (await context.pages())[1])
+      await click(auth.buttons.CONFIRM, (await context.pages())[1])
+      await context.pages()[1].click(auth.buttons.SIGN)
+
+      return page
+    } catch (error) {
+      console.error(error)
+      await makeScreenOnError('LoginToMetamask-IxSwapPage', error, page)
+      await makeScreenOnError('LoginToMetamask-MetamaskPage', error, context.pages()[1])
+
+      throw new Error(`Connect to metamask error`)
     }
-    const metamaskPage = (await context.pages())[1]
-    if (topUp) {
-      await getRequest(`http://rinkeby-faucet.com/send?address=${address}`)
-    }
-    await this.loginToMetamask(secretWords, metamaskPage)
-    await page.reload()
-    await metamaskPage.close()
-    const wallet = new SwapIX(page)
-    await wallet.connectToWallet()
-    // await this.confirmConnection((await context.pages())[1])
-    await waitUntil(() => context.pages()[1] != undefined, { timeout: 10000 })
-    await click(auth.buttons.NEXT, (await context.pages())[1])
-    await click(auth.buttons.CONFIRM, (await context.pages())[1])
-    return page
   }
 }
 

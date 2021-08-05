@@ -30,6 +30,7 @@ const test = base.extend<{ metaMask: Metamask; ixSwap: SwapIX }>({
     await use(ixSwap)
   },
 })
+test.setTimeout(120000)
 
 let before
 
@@ -52,9 +53,10 @@ test.describe('Run tests in expert mode', () => {
     await screenshotMatching('swapPage', expect, page)
   })
 
-  test('Check that the crypto currency exchange successful', async ({ page, context, metaMask, ixSwap }) => {
+  test.only('Check that the crypto currency exchange successful', async ({ page, context, metaMask, ixSwap }) => {
     await ixSwap.setTypeOfCurrency()
     await typeText(swap.field.CURRENCY_INPUT, amounts.base, page)
+
     const secondPage = await waitNewPage(page, context, swap.button.SWAP)
     const swapConf = await page.isHidden(swap.button.CONFIRM_SWAP)
     expect(swapConf).toBe(true)
