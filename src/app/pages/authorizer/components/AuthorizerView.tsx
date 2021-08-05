@@ -53,7 +53,7 @@ export const AuthorizerView = <T,>(
 
   return (
     <Container className={privateClassNames()} style={{ paddingTop: 40 }}>
-      <Grid container direction='column'>
+      <Grid container direction='column' spacing={4}>
         <Grid item>
           <PageHeader title={title} />
         </Grid>
@@ -71,7 +71,7 @@ export const AuthorizerView = <T,>(
               <Grid container direction='column'>
                 <Grid item style={{ marginBottom: 5 }}>
                   <Typography color='textSecondary'>
-                    {formatDateAndTime(data.createdAt)}
+                    {formatDateAndTime(data.createdAt ?? data.assignedAt)}
                   </Typography>
                 </Grid>
 
@@ -82,7 +82,11 @@ export const AuthorizerView = <T,>(
                   justify='space-between'
                   style={{ marginBottom: 24 }}
                 >
-                  <Typography variant='h3'>{title}</Typography>
+                  <Typography variant='h3'>
+                    {category === 'virtual-accounts'
+                      ? 'About This Virtual Account'
+                      : title}
+                  </Typography>
                   <Box display='flex'>
                     <AuthorizableLevel level={data.level} compact={false} />
                     <Box px={0.5} />
@@ -96,20 +100,24 @@ export const AuthorizerView = <T,>(
                   <VSpacer size='medium' />
                 </Grid>
 
-                <Grid item>
-                  <Typography variant='h3'>Authorization Documents</Typography>
-                  <VSpacer size='small' />
-                  <Form
-                    defaultValues={{
-                      documents: documents.map(value => ({ value }))
-                    }}
-                  >
-                    <AuthorizationDocuments
-                      resourceId={data._id}
-                      feature={feature}
-                    />
-                  </Form>
-                </Grid>
+                {category !== 'virtual-accounts' && (
+                  <Grid item>
+                    <Typography variant='h3'>
+                      Authorization Documents
+                    </Typography>
+                    <VSpacer size='small' />
+                    <Form
+                      defaultValues={{
+                        documents: documents.map(value => ({ value }))
+                      }}
+                    >
+                      <AuthorizationDocuments
+                        resourceId={data._id}
+                        feature={feature}
+                      />
+                    </Form>
+                  </Grid>
+                )}
 
                 {showForm && (
                   <Grid item style={{ marginTop: 20 }}>

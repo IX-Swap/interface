@@ -1,3 +1,10 @@
+import {
+  CorporateIdentity,
+  IndividualIdentity
+} from 'app/pages/identity/types/forms'
+import { AuthorizationInfoWithStatus } from 'types/authorizer'
+import { AuthorizableStatus } from 'types/util'
+
 export interface VirtualAccount {
   _id: string
   accountNumber: string
@@ -22,4 +29,10 @@ export interface VirtualAccount {
   createdAt: string
   assignedAt: string
   updatedAt: string
+  status: AuthorizableStatus
+  authorizations: AuthorizationInfoWithStatus[]
+  identity?: {
+    individual: IndividualIdentity
+    corporates: CorporateIdentity[]
+  }
 }

@@ -17,7 +17,7 @@ describe('CommitmentForm', () => {
   beforeEach(() => {
     jest
       .spyOn(useMakeCommitmentHook, 'useMakeCommitment')
-      .mockImplementation(() => [makeInvestment] as any)
+      .mockImplementation(() => ({ invest: [makeInvestment] } as any))
   })
 
   afterEach(async () => {

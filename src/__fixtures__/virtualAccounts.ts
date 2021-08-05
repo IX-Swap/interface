@@ -24,7 +24,9 @@ export const virtualAccountsSample: VirtualAccount[] = [
     },
     createdBy: '234',
     createdAt: '123',
-    updatedAt: '123'
+    updatedAt: '123',
+    status: 'Submitted',
+    authorizations: []
   },
   {
     _id: '608108b8f23f7412a9ba1cd3',
@@ -49,6 +51,8 @@ export const virtualAccountsSample: VirtualAccount[] = [
     },
     createdBy: '234',
     createdAt: '123',
-    updatedAt: '123'
+    updatedAt: '123',
+    status: 'Submitted',
+    authorizations: []
   }
 ]

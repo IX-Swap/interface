@@ -106,6 +106,8 @@ export const issuanceURL = {
       `/issuance/dso/${userId}/${dsoId}/activities`,
     getById: (userId: string, commitmentId: string) =>
       `/issuance/commitments/${userId}/${commitmentId}`,
+    invest: (userId: string) => `/issuance/commitments/${userId}`,
+    commit: (userId: string) => `/issuance/commitments/${userId}/commit`,
     getAll: (userId: string) => `/issuance/commitments/${userId}`,
     getByDSOId: (dsoId: string) => `/issuance/dso/${dsoId}/commitments/list`
   },
@@ -136,7 +138,9 @@ export const issuanceURL = {
     promote: (dsoId: string) => `/issuance/dso/${dsoId}/promote`,
     disable: (dsoId: string) => `/issuance/dso/${dsoId}/disable`,
     capitalCall: (userId: string, dsoId: string) =>
-      `/issuance/dso/${userId}/${dsoId}/capitalCall`
+      `/issuance/dso/${userId}/${dsoId}/capitalCall`,
+    closeDeal: (userId: string, dsoId: string) =>
+      `/issuance/dso/${userId}/${dsoId}/closeDeal`
   }
 }
 
@@ -196,7 +200,8 @@ export const virtualAccounts = {
   assign: '/virtual-accounts/assign',
   unassign: (accountId: string) => `/virtual-accounts/unassign/${accountId}`,
   uploadCSV: '/virtual-accounts/upload',
-  disable: '/virtual-accounts/disable'
+  disable: '/virtual-accounts/disable',
+  getById: (id: string) => `/virtual-accounts/get-account/${id}`
 }
 
 export const exchange = {
@@ -274,4 +279,8 @@ export const listingsURL = {
 
 export const assetsURL = {
   getAssetsList: () => '/accounts/assets/list'
+}
+
+export const resources = {
+  getSiteConfig: () => '/resources/siteConfig'
 }

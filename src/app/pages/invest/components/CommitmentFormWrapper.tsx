@@ -11,6 +11,7 @@ import { useCommitmentActivity } from '../hooks/useCommitmentActivity'
 import { DownloadDSOSubscriptionDocument } from 'app/components/DSO/components/DownloadDSOSubscriptionDocument'
 import { useParams } from 'react-router-dom'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
+import { CommitmentFormCommitButton } from 'app/pages/invest/components/CommitFormCommitButton'
 
 export const CommitmentFormWrapper = () => {
   const params = useParams<{ dsoId: string; issuerId: string }>()
@@ -53,15 +54,28 @@ export const CommitmentFormWrapper = () => {
                 symbol={data.currency.symbol}
                 network={data.network?._id}
               />
-              <VSpacer size='small' />
-              <Grid container spacing={1}>
-                <Grid item xs={6}>
+              <VSpacer size='medium' />
+              <Grid container spacing={2} justify='center'>
+                <Grid item xs={4}>
                   <CommitmentFormCancelButton />
                 </Grid>
-                <Grid item xs={6}>
+                {data.capitalStructure === 'Fund' && (
+                  <Grid item xs={4}>
+                    <CommitmentFormCommitButton
+                      assetId={data.currency._id}
+                      minInvestment={data.minimumInvestment}
+                      dsoId={params.dsoId}
+                      currency={data.currency._id}
+                    />
+                  </Grid>
+                )}
+
+                <Grid item xs={4}>
                   <CommitmentFormSubmitButton
                     assetId={data.currency._id}
                     minInvestment={data.minimumInvestment}
+                    dsoId={params.dsoId}
+                    currency={data.currency._id}
                   />
                 </Grid>
               </Grid>

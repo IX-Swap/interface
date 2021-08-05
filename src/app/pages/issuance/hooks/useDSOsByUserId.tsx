@@ -8,10 +8,12 @@ import { getIdFromObj } from 'helpers/strings'
 import { authorizerURL, issuanceURL } from 'config/apiURL'
 import { DigitalSecurityOffering } from 'types/dso'
 import { useIsAuthorizer } from 'helpers/acl'
+import { CapitalStructure } from 'app/pages/issuance/hooks/useDSOFilter'
 
 export const useDSOsByUserId = (
   status?: string,
-  onlyByUserId?: boolean
+  onlyByUserId?: boolean,
+  capitalStructure?: CapitalStructure
 ): UsePaginatedQueryData<DigitalSecurityOffering> => {
   const { user } = useAuth()
   const isAuthorizer = useIsAuthorizer()
@@ -27,15 +29,14 @@ export const useDSOsByUserId = (
 
   const { data, ...rest } = useInfiniteQuery(
     [
-      dsoQueryKeys.getDSOsById(userId),
-      status !== undefined
-        ? {
-            ...paginationArgs,
-            status: status
-          }
-        : {
-            ...paginationArgs
-          }
+      dsoQueryKeys.getDSOsById(
+        onlyByUserId !== undefined && onlyByUserId ? userId : userId.concat('!')
+      ),
+      {
+        ...paginationArgs,
+        status: status,
+        capitalStructure: capitalStructure
+      }
     ],
     getDSOsByUserId,
     { enabled: (userId ?? '') !== '' }

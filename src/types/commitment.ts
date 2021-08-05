@@ -32,8 +32,8 @@ export interface Commitment extends Authorizable {
 }
 
 export interface CommitmentFormValues {
-  totalAmount: Commitment['totalAmount']
-  pricePerUnit: Commitment['pricePerUnit']
+  totalAmount?: Commitment['totalAmount']
+  pricePerUnit?: Commitment['pricePerUnit']
   numberOfUnits: Commitment['numberOfUnits']
   withdrawalAddress?: string
   signedSubscriptionDocument: DataroomFile

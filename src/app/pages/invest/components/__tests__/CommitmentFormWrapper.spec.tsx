@@ -22,6 +22,10 @@ jest.mock(
   'app/components/DSO/components/DownloadDSOSubscriptionDocument',
   () => ({ DownloadDSOSubscriptionDocument: jest.fn(() => null) })
 )
+jest.mock('app/pages/invest/components/CommitFormCommitButton', () => ({
+  CommitmentFormCommitButton: jest.fn(() => null)
+}))
+
 jest.mock('app/pages/invest/components/CommitmentFormSubmitButton', () => ({
   CommitmentFormSubmitButton: jest.fn(() => null)
 }))
