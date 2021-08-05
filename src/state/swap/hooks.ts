@@ -14,7 +14,7 @@ import { isAddress } from '../../utils'
 import { AppDispatch, AppState } from '../index'
 import { useCurrencyBalances } from '../wallet/hooks'
 import { Field, replaceSwapState, selectCurrency, setRecipient, switchCurrencies, typeInput } from './actions'
-import { useUserSingleHopOnly } from 'state/user/hooks'
+import { useSwapIsBothSecTokens, useUserSingleHopOnly } from 'state/user/hooks'
 import { involvesAddress, tryParseAmount, queryParametersToSwapState } from './helpers'
 import { BAD_RECIPIENT_ADDRESSES } from './constants'
 
@@ -80,7 +80,6 @@ export function useDerivedSwapInfo(): {
   const { account } = useActiveWeb3React()
 
   const [singleHopOnly] = useUserSingleHopOnly()
-
   const {
     independentField,
     typedValue,
@@ -156,7 +155,10 @@ export function useDerivedSwapInfo(): {
   if (balanceIn && amountIn && balanceIn.lessThan(amountIn)) {
     inputError = t`Insufficient ${amountIn.currency.symbol} balance`
   }
-
+  const areBothSecTokens = useSwapIsBothSecTokens(v2Trade)
+  if (areBothSecTokens) {
+    inputError = t`Swapping two security tokens is not allowed`
+  }
   return {
     currencies,
     currencyBalances,

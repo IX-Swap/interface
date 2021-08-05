@@ -1,3 +1,4 @@
+import { TradeAuthorization } from '@ixswap1/v2-sdk'
 import { createReducer } from '@reduxjs/toolkit'
 import { SupportedLocale } from 'constants/locales'
 import { SecToken } from 'types/secToken'
@@ -6,6 +7,7 @@ import { updateVersion } from '../global/actions'
 import {
   addSerializedPair,
   addSerializedToken,
+  authorizeSecToken,
   fetchUserSecTokenList,
   passAccreditation,
   removeSerializedPair,
@@ -53,6 +55,9 @@ export interface UserState {
   secTokenError: string | null
   loadingAccreditation: boolean
   accreditationError: string | null
+  secTokenAuthorizations: {
+    [address: string]: TradeAuthorization
+  }
   tokens: {
     [chainId: number]: {
       [address: string]: SerializedToken
@@ -93,6 +98,7 @@ export const initialState: UserState = {
   secTokenError: null,
   accreditationError: null,
   loadingAccreditation: false,
+  secTokenAuthorizations: {},
 }
 
 export default createReducer(initialState, (builder) =>
@@ -221,6 +227,28 @@ export default createReducer(initialState, (builder) =>
       state.accreditationError = null
     })
     .addCase(passAccreditation.rejected, (state, { payload: { errorMessage } }) => {
+      state.loadingAccreditation = false
+      state.secTokenError = errorMessage
+    })
+    .addCase(authorizeSecToken.pending, (state) => {
+      state.loadingSecTokenRequest = true
+      state.secTokenError = null
+    })
+    .addCase(
+      authorizeSecToken.fulfilled,
+      (
+        state,
+        {
+          payload: {
+            data: { address, authorization },
+          },
+        }
+      ) => {
+        state.loadingSecTokenRequest = false
+        state.secTokenAuthorizations[address] = authorization
+      }
+    )
+    .addCase(authorizeSecToken.rejected, (state, { payload: { errorMessage } }) => {
       state.loadingSecTokenRequest = false
       state.secTokenError = errorMessage
     })

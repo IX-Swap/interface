@@ -13,6 +13,7 @@ import { useArgentWalletContract } from './useArgentWalletContract'
 import { useV2RouterContract } from './useContract'
 import useTransactionDeadline from './useTransactionDeadline'
 import useENS from './useENS'
+import { useSwapAuthorization } from 'state/user/hooks'
 
 export enum SwapCallbackState {
   INVALID,
@@ -59,21 +60,21 @@ function useSwapCallArguments(
   const deadline = useTransactionDeadline()
   const routerContract = useV2RouterContract()
   const argentWalletContract = useArgentWalletContract()
+  const authorization = useSwapAuthorization(trade)
 
   return useMemo(() => {
     if (!trade || !recipient || !library || !account || !chainId || !deadline) return []
 
     if (!routerContract) return []
     const swapMethods = []
-
-    swapMethods.push(
-      Router.swapCallParameters(trade, {
-        feeOnTransfer: false,
-        allowedSlippage,
-        recipient,
-        deadline: deadline.toNumber(),
-      })
-    )
+    const options = {
+      feeOnTransfer: false,
+      allowedSlippage,
+      recipient,
+      deadline: deadline.toNumber(),
+      authorizationDigest: authorization ? [authorization] : [],
+    }
+    swapMethods.push(Router.swapCallParameters(trade, options))
 
     if (trade.tradeType === TradeType.EXACT_INPUT) {
       swapMethods.push(
@@ -82,6 +83,7 @@ function useSwapCallArguments(
           allowedSlippage,
           recipient,
           deadline: deadline.toNumber(),
+          authorizationDigest: authorization ? [authorization] : [],
         })
       )
     }
@@ -109,7 +111,18 @@ function useSwapCallArguments(
         }
       }
     })
-  }, [account, allowedSlippage, argentWalletContract, chainId, deadline, library, recipient, routerContract, trade])
+  }, [
+    account,
+    allowedSlippage,
+    argentWalletContract,
+    chainId,
+    deadline,
+    library,
+    recipient,
+    routerContract,
+    trade,
+    authorization,
+  ])
 }
 
 /**
@@ -125,7 +138,6 @@ export function swapErrorToUserReadableMessage(error: any): string {
   }
 
   if (reason?.indexOf('execution reverted: ') === 0) reason = reason.substr('execution reverted: '.length)
-
   switch (reason) {
     case 'UniswapV2Router: EXPIRED':
       return t`The transaction could not be sent because the deadline has passed. Please check that your transaction deadline is not too low.`

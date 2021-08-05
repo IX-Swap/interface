@@ -1,3 +1,4 @@
+import { TradeAuthorization } from '@ixswap1/v2-sdk'
 import { ActionCreatorWithoutPayload, ActionCreatorWithPayload, createAction } from '@reduxjs/toolkit'
 import { SupportedLocale } from 'constants/locales'
 import { SecToken } from 'types/secToken'
@@ -50,4 +51,14 @@ export const passAccreditation: Readonly<{
   pending: createAction('user/passAccreditation/pending'),
   fulfilled: createAction('user/passAccreditation/fulfilled'),
   rejected: createAction('user/passAccreditation/rejected'),
+}
+
+export const authorizeSecToken: Readonly<{
+  pending: ActionCreatorWithoutPayload
+  fulfilled: ActionCreatorWithPayload<{ data: { address: string; authorization: TradeAuthorization } }>
+  rejected: ActionCreatorWithPayload<{ errorMessage: string }>
+}> = {
+  pending: createAction('user/authorizeSecToken/pending'),
+  fulfilled: createAction('user/authorizeSecToken/fulfilled'),
+  rejected: createAction('user/authorizeSecToken/rejected'),
 }
