@@ -8,7 +8,7 @@ module.exports = {
     ADD_GROUP: 'This may take up to 30 seconds. Please wait and then refresh the page.',
   },
 
-  amounts: { base: '0.0001', moreThaCurrent: '10000', addToPool: '0.001' },
+  amounts: { base: '0.001', moreThaCurrent: '10000', addToPool: '0.001' },
 
   // Default ABI setting for get balance ERC20 type
   Abi: [

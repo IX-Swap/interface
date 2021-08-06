@@ -9,6 +9,15 @@ class Metamask {
   constructor(page) {
     this.page = page
   }
+
+  signAgreement = async (context) => {
+    try {
+      const secondPage = context.pages()[1]
+      await waitUntil(() => secondPage != undefined, { timeout: 2000 })
+      await click(auth.buttons.SIGN, secondPage)
+    } catch (error) {}
+  }
+
   loginToMetamask = async (secretWords, page = this.page) => {
     await click(auth.buttons.GET_STARTED, page)
     try {
@@ -28,7 +37,7 @@ class Metamask {
     await click(auth.buttons.GET_STARTED, page)
     await click(auth.buttons.QR_POPOVER_CLOSE, page)
     await click(auth.buttons.ETH_ENV, page)
-    await click(auth.buttons.RINKEBY_ENV, page)
+    await click(auth.buttons.KOVAN_ENV, page)
   }
 
   confirmOperation = async (page = this.page) => {
@@ -53,7 +62,8 @@ class Metamask {
       await waitUntil(() => context.pages()[1] != undefined, { timeout: 10000 })
       await click(auth.buttons.NEXT, (await context.pages())[1])
       await click(auth.buttons.CONFIRM, (await context.pages())[1])
-      await context.pages()[1].click(auth.buttons.SIGN)
+      await this.signAgreement(context)
+      await page.waitForTimeout(1000)
 
       return page
     } catch (error) {

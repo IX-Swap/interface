@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test'
 
 import { ixswap } from '../lib/helpers/credentials'
-import { click, typeText, navigate, screenshotMatching } from '../lib/helpers/helpers'
+import { click, makeScreenOnError, navigate, screenshotMatching } from '../lib/helpers/helpers'
 
 import { pool, settings, securityToken } from '../lib/selectors/ixswap'
 
@@ -9,7 +9,12 @@ test.describe('All page without Metamask connection ', () => {
   test.beforeEach(async ({ page }) => {
     await navigate(ixswap.URL, page)
   })
-
+  test.afterEach(async ({ page, context }, testInfo) => {
+    if (testInfo.status === 'failed') {
+      await makeScreenOnError(testInfo.title, 'error', page)
+      await makeScreenOnError(`Metamask${testInfo.title}`, 'metamaskPage', context.pages()[1])
+    }
+  })
   test('Swap page', async ({ page }) => {
     await screenshotMatching('swapPage', expect, page)
   })

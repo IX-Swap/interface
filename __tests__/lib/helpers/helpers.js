@@ -92,7 +92,7 @@ module.exports = {
 
   click: async (selector, page) => {
     try {
-      await page.waitForSelector(selector, { timeout: 30000 })
+      await page.waitForSelector(selector, { timeout: 40000 })
       await page.click(selector)
     } catch {
       throw new Error(`Could not click on selector: ${selector}`)
@@ -187,7 +187,7 @@ module.exports = {
 
   waitForText: async (text, page) => {
     try {
-      await page.waitForSelector(`//*[contains(text(),"${text}")]`, { timeout: 70000 })
+      await page.waitForSelector(`//*[contains(text(),"${text}")]`, { timeout: 120000 })
     } catch (error) {
       console.error(error)
       throw new Error(`No text appears ${text} `)
@@ -204,7 +204,9 @@ module.exports = {
 
   makeScreenOnError: async (name, error, page) => {
     // name = name.replace(/ /g, '')
-    await page.screenshot({ path: `__tests__/screen-test-failed/${name}.png` })
+    try {
+      await page.screenshot({ path: `__tests__/screen-test-failed/${name}.png` })
+    } catch (error) {}
   },
 
   waitNewPage: async (page, context, element) => {

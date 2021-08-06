@@ -30,7 +30,6 @@ const test = base.extend<{ metaMask: Metamask; ixSwap: SwapIX }>({
     await use(ixSwap)
   },
 })
-test.setTimeout(120000)
 
 let before
 
@@ -41,9 +40,10 @@ test.describe('Run tests in expert mode', () => {
     before = await getEthBalance()
   })
 
-  test.afterEach(async ({ page }, testInfo) => {
+  test.afterEach(async ({ page, context }, testInfo) => {
     if (testInfo.status === 'failed') {
       await makeScreenOnError(testInfo.title, 'error', page)
+      await makeScreenOnError(`Metamask${testInfo.title}`, 'metamaskPage', context.pages()[1])
     }
   })
 
@@ -53,10 +53,9 @@ test.describe('Run tests in expert mode', () => {
     await screenshotMatching('swapPage', expect, page)
   })
 
-  test.only('Check that the crypto currency exchange successful', async ({ page, context, metaMask, ixSwap }) => {
+  test('Check that the crypto currency exchange successful', async ({ page, context, metaMask, ixSwap }) => {
     await ixSwap.setTypeOfCurrency()
     await typeText(swap.field.CURRENCY_INPUT, amounts.base, page)
-
     const secondPage = await waitNewPage(page, context, swap.button.SWAP)
     const swapConf = await page.isHidden(swap.button.CONFIRM_SWAP)
     expect(swapConf).toBe(true)
@@ -68,6 +67,7 @@ test.describe('Run tests in expert mode', () => {
   test('Check that the pool can be created', async ({ page, context, metaMask, ixSwap }) => {
     await ixSwap.createPool(amounts.base)
     const secondPage = await waitNewPage(page, context, pool.button.SUPPLY)
+    await click(auth.buttons.SIGN, secondPage)
     await metaMask.confirmOperation(secondPage)
     await waitForText(`Add ${amounts.base} ETH and`, page)
     const after = await getEthBalance()

@@ -10,6 +10,7 @@ module.exports = {
       QR_POPOVER_CLOSE: getTestAttribute('popover-close'),
       ETH_ENV: 'text="Ethereum Mainnet"',
       RINKEBY_ENV: 'text="Rinkeby Test Network"',
+      KOVAN_ENV: 'text="Kovan Test Network"',
       NEXT: '//button[text()="Next"]',
       CONFIRM: getTestAttribute('page-container-footer-next'),
       ADD_TOKEN: 'text="Add Token"',

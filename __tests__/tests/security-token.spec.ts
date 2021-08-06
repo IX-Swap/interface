@@ -24,9 +24,10 @@ const test = base.extend<{ metaMask: Metamask; ixSwap: SwapIX }>({
 
 let before
 
-test.afterEach(async ({ page }, testInfo) => {
+test.afterEach(async ({ page, context }, testInfo) => {
   if (testInfo.status === 'failed') {
     await makeScreenOnError(testInfo.title, 'error', page)
+    await makeScreenOnError(`Metamask${testInfo.title}`, 'metamaskPage', context.pages()[1])
   }
 })
 
