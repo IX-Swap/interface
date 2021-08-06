@@ -8,10 +8,13 @@ import {
   addSerializedPair,
   addSerializedToken,
   authorizeSecToken,
+  clearUserData,
   fetchUserSecTokenList,
   passAccreditation,
   removeSerializedPair,
   removeSerializedToken,
+  saveAccount,
+  saveUserSecTokens,
   SerializedPair,
   SerializedToken,
   toggleURLWarning,
@@ -49,7 +52,7 @@ export interface UserState {
 
   // deadline set by user in minutes, used in all txns
   userDeadline: number
-
+  account: string
   userSecTokens: SecToken[]
   loadingSecTokenRequest: boolean
   secTokenError: string | null
@@ -91,13 +94,14 @@ export const initialState: UserState = {
   userDeadline: DEFAULT_DEADLINE_FROM_NOW,
   tokens: {},
   pairs: {},
+  account: '',
   timestamp: currentTimestamp(),
   URLWarningVisible: true,
-  userSecTokens: [],
   loadingSecTokenRequest: false,
   secTokenError: null,
   accreditationError: null,
   loadingAccreditation: false,
+  userSecTokens: [],
   secTokenAuthorizations: {},
 }
 
@@ -159,6 +163,12 @@ export default createReducer(initialState, (builder) =>
     .addCase(updateUserDeadline, (state, action) => {
       state.userDeadline = action.payload.userDeadline
       state.timestamp = currentTimestamp()
+    })
+    .addCase(saveAccount, (state, action) => {
+      state.account = action.payload.account
+    })
+    .addCase(saveUserSecTokens, (state, action) => {
+      state.userSecTokens = action.payload.tokenList
     })
     .addCase(updateUserSingleHopOnly, (state, action) => {
       state.userSingleHopOnly = action.payload.userSingleHopOnly
@@ -251,5 +261,9 @@ export default createReducer(initialState, (builder) =>
     .addCase(authorizeSecToken.rejected, (state, { payload: { errorMessage } }) => {
       state.loadingSecTokenRequest = false
       state.secTokenError = errorMessage
+    })
+    .addCase(clearUserData, (state) => {
+      state.secTokenAuthorizations = {}
+      state.userSecTokens = []
     })
 )

@@ -1,13 +1,16 @@
 import { Currency, Percent, Token, TradeType } from '@ixswap1/sdk-core'
-import { Pair, TradeAuthorization, Trade as V2Trade } from '@ixswap1/v2-sdk'
+import { Pair, Trade as V2Trade, TradeAuthorizationDigest } from '@ixswap1/v2-sdk'
+import { useWeb3React } from '@web3-react/core'
 import { SupportedLocale } from 'constants/locales'
 import JSBI from 'jsbi'
 import flatMap from 'lodash.flatmap'
-import { useCallback, useMemo, useState, useEffect } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import apiService from 'services/apiService'
 import { tokens } from 'services/apiUrls'
+import { saveToken } from 'state/auth/actions'
 import { LOGIN_STATUS, useLogin } from 'state/auth/hooks'
+import { clearEventLog } from 'state/eventLog/actions'
 import {
   listToSecTokenMap,
   SecTokenAddressMap,
@@ -26,9 +29,11 @@ import {
   addSerializedPair,
   addSerializedToken,
   authorizeSecToken,
+  clearUserData,
   fetchUserSecTokenList,
   passAccreditation,
   removeSerializedToken,
+  saveAccount,
   SerializedPair,
   SerializedToken,
   toggleURLWarning,
@@ -91,6 +96,9 @@ export function useUserLocale(): SupportedLocale | null {
 }
 export function useUserSecTokenState(): SecToken[] | null {
   return useSelector<AppState, AppState['user']['userSecTokens']>((state) => state.user.userSecTokens)
+}
+export function useUserAccountState(): string {
+  return useSelector<AppState, AppState['user']['account']>((state) => state.user.account)
 }
 export function useUserSecTokenLoading(): boolean {
   return useSelector<AppState, AppState['user']['loadingSecTokenRequest']>((state) => state.user.loadingSecTokenRequest)
@@ -381,7 +389,7 @@ export function useSwapAuthorization(trade: V2Trade<Currency, Currency, TradeTyp
   const getAuthorization1 = useGetTokenAuthorization({ address: id1 })
   const isSecToken0 = useIsSecToken(id0)
   const isSecToken1 = useIsSecToken(id1)
-  const [authorization, setAuthorization] = useState<TradeAuthorization | null>(null)
+  const [authorization, setAuthorization] = useState<TradeAuthorizationDigest>()
   useEffect(() => {
     if (isSecToken0) {
       fetchAuthorization0()
@@ -390,12 +398,11 @@ export function useSwapAuthorization(trade: V2Trade<Currency, Currency, TradeTyp
     }
     async function fetchAuthorization0() {
       const result = await getAuthorization0()
-      setAuthorization(result)
+      setAuthorization([result, null])
     }
     async function fetchAuthorization1() {
       const result = await getAuthorization1()
-
-      setAuthorization(result)
+      setAuthorization([null, result])
     }
   }, [getAuthorization0, getAuthorization1, isSecToken1, isSecToken0])
   return authorization
@@ -449,6 +456,7 @@ export function usePassAccreditation({ tokenId }: { tokenId: number }): () => Pr
   const dispatch = useDispatch<AppDispatch>()
   const login = useLogin({ mustHavePreviousLogin: false, expireLogin: false })
   const fetchTokens = useFetchUserSecTokenListCallback()
+
   // note: prevent dispatch if using for list search or unsupported list
   return useCallback(async () => {
     dispatch(passAccreditation.pending())
@@ -466,5 +474,29 @@ export function usePassAccreditation({ tokenId }: { tokenId: number }): () => Pr
       console.debug(`Failed to pass accreditation`, error)
       dispatch(passAccreditation.rejected({ errorMessage: error.message }))
     }
-  }, [dispatch, tokenId, fetchTokens, login])
+  }, [dispatch, tokenId, login, fetchTokens])
+}
+
+export function useAccount() {
+  const savedAccount = useUserAccountState()
+  const { account } = useWeb3React()
+  const dispatch = useDispatch<AppDispatch>()
+  const login = useLogin({ mustHavePreviousLogin: true, expireLogin: true })
+  const getUserSecTokens = useFetchUserSecTokenListCallback()
+  useEffect(() => {
+    if (account && savedAccount && savedAccount !== account) {
+      dispatch(saveToken({ value: { token: '', expiresAt: 0 } }))
+      dispatch(clearUserData())
+      dispatch(clearEventLog())
+      authenticate()
+      dispatch(saveAccount({ account }))
+    }
+
+    async function authenticate() {
+      const status = await login()
+      if (status == LOGIN_STATUS.SUCCESS) {
+        getUserSecTokens()
+      }
+    }
+  }, [account, savedAccount, dispatch, login, getUserSecTokens])
 }

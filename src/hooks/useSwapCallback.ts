@@ -61,7 +61,8 @@ function useSwapCallArguments(
   const routerContract = useV2RouterContract()
   const argentWalletContract = useArgentWalletContract()
   const authorization = useSwapAuthorization(trade)
-
+  const usedAuthorization =
+    authorization && (authorization[0] !== null || authorization[1] !== null) ? authorization : undefined
   return useMemo(() => {
     if (!trade || !recipient || !library || !account || !chainId || !deadline) return []
 
@@ -72,7 +73,7 @@ function useSwapCallArguments(
       allowedSlippage,
       recipient,
       deadline: deadline.toNumber(),
-      authorizationDigest: authorization ? [authorization] : [],
+      authorizationDigest: usedAuthorization,
     }
     swapMethods.push(Router.swapCallParameters(trade, options))
 
@@ -83,7 +84,7 @@ function useSwapCallArguments(
           allowedSlippage,
           recipient,
           deadline: deadline.toNumber(),
-          authorizationDigest: authorization ? [authorization] : [],
+          authorizationDigest: usedAuthorization,
         })
       )
     }
@@ -121,7 +122,7 @@ function useSwapCallArguments(
     recipient,
     routerContract,
     trade,
-    authorization,
+    usedAuthorization,
   ])
 }
 
