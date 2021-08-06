@@ -7,7 +7,11 @@ import { AutoRow } from 'components/Row'
 import React, { useEffect, useState } from 'react'
 import { isMobile } from 'react-device-detect'
 import ReactGA from 'react-ga'
-import { useLogin } from 'state/auth/hooks'
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from 'state'
+import { LOGIN_STATUS, useLogin } from 'state/auth/hooks'
+import { saveAccount } from 'state/user/actions'
+import { useFetchUserSecTokenListCallback } from 'state/user/hooks'
 import MetamaskIcon from '../../assets/images/metamask.png'
 import { fortmatic, injected, portis } from '../../connectors'
 import { OVERLAY_READY } from '../../connectors/Fortmatic'
@@ -86,6 +90,8 @@ export default function WalletModal({
       setWalletView(WALLET_VIEWS.ACCOUNT)
     }
   }, [setWalletView, active, error, connector, walletModalOpen, activePrevious, connectorPrevious])
+  const dispatch = useDispatch<AppDispatch>()
+  const getUserSecTokens = useFetchUserSecTokenListCallback()
 
   const tryActivation = async (connector: AbstractConnector | undefined) => {
     let name = ''
@@ -111,7 +117,13 @@ export default function WalletModal({
     if (connector) {
       try {
         const { account } = await connector.activate()
-        await login(account)
+        if (account) {
+          dispatch(saveAccount({ account }))
+        }
+        const status = await login(account)
+        if (status === LOGIN_STATUS.SUCCESS) {
+          getUserSecTokens()
+        }
       } catch (error) {
         if (error instanceof UnsupportedChainIdError) {
           activate(connector) // a little janky...can't use setError because the connector isn't set

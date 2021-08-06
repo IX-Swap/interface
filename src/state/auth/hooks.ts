@@ -9,6 +9,12 @@ import { AppDispatch, AppState } from 'state'
 import { shouldRenewToken } from 'utils/time'
 import { postLogin } from './actions'
 
+export enum LOGIN_STATUS {
+  NO_ACCOUNT,
+  SUCCESS,
+  FAILED,
+}
+
 export function useAuthState(): AppState['auth'] {
   return useSelector<AppState, AppState['auth']>((state) => state.auth)
 }
@@ -18,7 +24,7 @@ export function useHasLogin() {
   const getHasLogin = useCallback(
     async (externalAccount?: string | null) => {
       if (account || externalAccount) {
-        const hash = md5(account ?? externalAccount ?? '')
+        const hash = md5((account ?? externalAccount ?? '').toLowerCase())
         const { data } = await apiService.get(metamask.hasLogged(hash))
         return data
       }
@@ -27,12 +33,6 @@ export function useHasLogin() {
     [account]
   )
   return getHasLogin
-}
-
-export enum LOGIN_STATUS {
-  NO_ACCOUNT,
-  SUCCESS,
-  FAILED,
 }
 
 export function useLogin({
