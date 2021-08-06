@@ -45,6 +45,9 @@ describe('getIdentityStatus', () => {
     const draftStepContent = getIdentityStatus('Draft')
     expect(draftStepContent).toEqual(['In progress'])
 
+    const skippedStepContent = getIdentityStatus('Skipped')
+    expect(skippedStepContent).toEqual(['Skipped'])
+
     const defaultStepContent = getIdentityStatus()
     expect(defaultStepContent).toEqual([''])
   })

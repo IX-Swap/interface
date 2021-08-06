@@ -13,6 +13,7 @@ export interface DetailsOfIssuance extends Authorizable {
   detail: string
   documents: DataroomFile[]
   status: 'Draft' | 'Submitted' | 'Approved'
+  skipped?: boolean
 }
 
 export interface DetailsOfIssuanceFormValues {
@@ -27,4 +28,5 @@ export interface DetailsOfIssuanceFormValues {
   companyRelated: DataroomFile[]
   issuanceRelated: DataroomFile[]
   financial: DataroomFile[]
+  skipped?: boolean
 }

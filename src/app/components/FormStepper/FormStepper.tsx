@@ -20,6 +20,7 @@ export interface FormStepperProps {
   defaultActiveStep?: number
   shouldSaveOnMove?: boolean
   nonLinear?: boolean
+  skippable?: boolean
 }
 
 export const FormStepper = (props: FormStepperProps) => {
@@ -31,7 +32,8 @@ export const FormStepper = (props: FormStepperProps) => {
     submitMutation,
     shouldSaveOnMove = true,
     defaultActiveStep,
-    nonLinear = false
+    nonLinear = false,
+    skippable = false
   } = props
   const [activeStep, setActiveStep] = useState<number>(
     defaultActiveStep ?? data?.step ?? 0
@@ -100,6 +102,7 @@ export const FormStepper = (props: FormStepperProps) => {
             editMutation={editMutation}
             submitMutation={submitMutation}
             shouldSaveOnMove={shouldSaveOnMove}
+            skippable={skippable}
           />
         </Grid>
       ))}

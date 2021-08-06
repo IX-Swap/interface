@@ -3,6 +3,8 @@ import { DetailsOfIssuanceForm } from 'app/pages/identity/components/DetailsOfIs
 import * as useCreateDetailsOfIssuance from 'app/pages/identity/hooks/useCreateDetailsOfIssuance'
 import * as useDetailsOfIssuance from 'app/pages/identity/hooks/useDetailsOfIssuance'
 import * as useUpdateDetailsOfIssuance from 'app/pages/identity/hooks/useUpdateDetailsOfIssuance'
+import { IdentityRoute } from 'app/pages/identity/router/config'
+import { history } from 'config/history'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { detailsOfIssuance } from '__fixtures__/identity'
@@ -85,5 +87,20 @@ describe('DetailsOfIssuanceForm', () => {
     const { getByText } = render(<DetailsOfIssuanceForm />)
 
     expect(getByText('Loading...')).toBeTruthy()
+  })
+
+  it('redirects to create issuer form if details of issuance is skipped', () => {
+    const useDetailsOfIssuanceLoading = generateQueryResult({
+      data: { skipped: true },
+      isLoading: false
+    })
+
+    jest
+      .spyOn(useDetailsOfIssuance, 'useDetailsOfIssuance')
+      .mockImplementation(() => useDetailsOfIssuanceLoading as any)
+
+    render(<DetailsOfIssuanceForm />)
+
+    expect(history.location.pathname).toBe(IdentityRoute.createIssuer)
   })
 })
