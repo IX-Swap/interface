@@ -115,7 +115,7 @@ export const BannerTableRow = ({ banner }: DocumentTableRowProps) => {
             }
           }}
         >
-          <DeleteOutline color='disabled' style={{ width: 24, height: 24 }} />
+          <DeleteOutline color='disabled' />
         </IconButton>
       </TableCell>
     </TableRow>
