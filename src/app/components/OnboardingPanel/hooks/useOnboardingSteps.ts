@@ -19,7 +19,7 @@ export const useOnboardingSteps = (
     detailsOfIssuance
   } = useGetIdentities(asIssuer ? 'issuer' : 'investor')
 
-  const getIdentityActiveStep = (status?: AuthorizableStatus) => {
+  const getIdentityActiveStep = (status?: AuthorizableStatus | 'Skipped') => {
     let indetityActiveStep = 1
 
     if (!asIssuer) {
@@ -28,10 +28,12 @@ export const useOnboardingSteps = (
     if (
       asIssuer &&
       detailsOfIssuance !== undefined &&
-      detailsOfIssuance.status === 'Approved'
+      (detailsOfIssuance.status === 'Approved' ||
+        (detailsOfIssuance.skipped !== undefined && detailsOfIssuance.skipped))
     ) {
       indetityActiveStep = 2
     }
+
     if (status === 'Submitted') {
       indetityActiveStep = 3
     }
@@ -41,7 +43,7 @@ export const useOnboardingSteps = (
     return indetityActiveStep
   }
 
-  const getActiveStep = (status?: AuthorizableStatus) => {
+  const getActiveStep = (status?: AuthorizableStatus | 'Skipped') => {
     return getIdentityActiveStep(status)
   }
 
@@ -63,18 +65,32 @@ export const useOnboardingSteps = (
     }
   }
 
-  const identityStatus =
-    identityType === 'individual'
-      ? individualIdentity?.status
-      : corporateIdentities.list[0]?.status
+  const getIdentityStatus = () => {
+    if (asIssuer) {
+      return detailsOfIssuance?.skipped !== undefined &&
+        detailsOfIssuance?.skipped &&
+        getIdentityActiveStep() === 1
+        ? 'Skipped'
+        : corporateIdentities.list[0]?.status
+    }
+
+    if (identityType === 'corporate') {
+      return corporateIdentities.list[0]?.status
+    }
+
+    return individualIdentity?.status
+  }
 
   return {
     steps: getIdentityOnboardingSteps({
       identityType: identityType,
-      identityStatus: identityStatus,
+      identityStatus: getIdentityStatus(),
       asIssuer: asIssuer,
-      issuanceDetailsStatus: detailsOfIssuance?.status
+      issuanceDetailsStatus:
+        detailsOfIssuance?.skipped !== undefined && detailsOfIssuance?.skipped
+          ? 'Skipped'
+          : detailsOfIssuance?.status
     }),
-    activeStep: getActiveStep(identityStatus)
+    activeStep: getActiveStep(getIdentityStatus())
   }
 }
