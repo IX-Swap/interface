@@ -195,7 +195,10 @@ export const documentsURL = {
 
 export const bannerURL = {
   uploadBanner: '/resources/banners',
-  getRowBanner: (bannerId: string) => `/resources/banners/raw/${bannerId}`
+  getBannersList: '/resources/banners',
+  deleteBanner: (bannerId: string) => `/resources/banners/${bannerId}`,
+  getRowBanner: (bannerId: string) => `/resources/banners/raw/${bannerId}`,
+  updateBanner: (bannerId: string) => `/resources/banners/${bannerId}`
 }
 
 export const virtualAccounts = {

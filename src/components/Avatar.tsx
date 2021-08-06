@@ -10,6 +10,7 @@ export interface AvatarProps {
   fallback?: Element | JSX.Element
   children?: ReactNode
   isNewThemeOn?: boolean
+  isSmallPreview?: boolean
 }
 
 export const Avatar = (props: AvatarProps) => {
@@ -20,11 +21,15 @@ export const Avatar = (props: AvatarProps) => {
     variant = 'circle',
     fallback,
     children,
-    isNewThemeOn = false
+    isNewThemeOn = false,
+    isSmallPreview = false
   } = props
   const width = Array.isArray(size) ? size[0] : size
   const height = Array.isArray(size) ? size[1] : size
-  const style = { width, height }
+  const borderRadius = isNewThemeOn && isSmallPreview ? 4 : 'initial'
+  const border =
+    isNewThemeOn && isSmallPreview ? ' 1px solid #AAAAAA' : 'initial'
+  const style = { width, height, border, borderRadius }
 
   const fallbackElement = (
     <Fragment>
@@ -36,7 +41,7 @@ export const Avatar = (props: AvatarProps) => {
     </Fragment>
   )
 
-  if (documentId === undefined || ownerId === undefined) {
+  if (documentId === undefined || ownerId === undefined || documentId === '') {
     return fallbackElement
   }
 
