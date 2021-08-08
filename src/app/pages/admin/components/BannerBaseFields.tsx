@@ -48,9 +48,9 @@ export const BannerBaseFields = () => {
         <TypedField
           customRenderer
           component={Dropzone}
-          previewSize={['100%', '100%']}
+          size={['100%', '100%']}
           fullWidth
-          isNewThemeOn
+          type={'banner'}
           name='banner'
           control={control}
           valueExtractor={documentValueExtractor}
