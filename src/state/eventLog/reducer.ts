@@ -2,6 +2,7 @@ import { createReducer } from '@reduxjs/toolkit'
 import { ActionTypes } from 'components/Vault/enum'
 import { PaginationDetails } from 'types/pagination'
 import {
+  clearEventLog,
   getLog,
   LogItem,
   resetPage,
@@ -111,5 +112,9 @@ export default createReducer<EventLogState>(initialState, (builder) =>
       state.eventLogLoading = false
       state.eventLogError = errorMessage
       state.page = 1
+    })
+    .addCase(clearEventLog, (state) => {
+      state.eventLog = []
+      state.activeEvent = null
     })
 )

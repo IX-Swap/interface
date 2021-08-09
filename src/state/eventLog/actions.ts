@@ -29,6 +29,7 @@ export interface LogItem extends TimeStamps {
 }
 
 export const setEventLog = createAction<{ eventLog: Array<LogItem> }>('eventLog/setLog')
+export const clearEventLog = createAction('eventLog/clearLog')
 export const setFilter = createAction<{ filter: ActionTypes }>('eventLog/setFilter')
 export const setPage = createAction<{ page: number }>('eventLog/setPage')
 export const setTokenId = createAction<{ tokenId: number }>('eventLog/setTokenId')

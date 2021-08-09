@@ -8,6 +8,7 @@ export const metamask = {
 
 export const tokens = {
   fromUser: `/token/list`,
+  authorize: (tokenId: number) => `/token/swap-authorize/${tokenId}`,
   all: `/token/list/all`,
   accreditation: (tokenId: number) => `token/accreditation/${tokenId}`,
 }
