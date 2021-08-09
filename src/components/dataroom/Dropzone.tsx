@@ -11,6 +11,7 @@ import { useStyles } from './Dropzone.styles'
 import { hasValue } from 'helpers/forms'
 import { DropzoneDisplay } from 'components/dataroom/DropzoneDisplay'
 import { DropzoneAcceptableFiles } from 'components/dataroom/DropzoneAcceptableFiles'
+import { useUploadBanner } from 'app/pages/admin/hooks/useUploadBanner'
 
 export interface DropzoneProps {
   name: string
@@ -23,6 +24,8 @@ export interface DropzoneProps {
   accept?: DataroomFileType
   fullWidth?: boolean
   showAcceptable?: boolean
+  previewSize?: number | [number, number] | [string, string]
+  isNewThemeOn?: boolean
 }
 
 export const Dropzone = (props: DropzoneProps) => {
@@ -35,7 +38,9 @@ export const Dropzone = (props: DropzoneProps) => {
     accept = DataroomFileType.document,
     multiple = false,
     fullWidth = false,
-    showAcceptable = false
+    showAcceptable = false,
+    previewSize,
+    isNewThemeOn = false
   } = props
   const { watch } = useFormContext()
   const value = watch(name, defaultValue) as DropzoneProps['value']
@@ -52,16 +57,33 @@ export const Dropzone = (props: DropzoneProps) => {
     }
   })
 
+  const [uploadBanner] = useUploadBanner({
+    onSuccess: response => {
+      onChange(
+        multiple
+          ? [...(Array.isArray(value) ? value : []), ...response.data]
+          : response.data
+      )
+    }
+  })
+
   const onDrop = useCallback(
     async acceptedFiles => {
       if (acceptedFiles.length > 0) {
-        await uploadFile({
-          ...documentInfo,
-          documents: Array.from(acceptedFiles)
-        })
+        if (isNewThemeOn) {
+          await uploadBanner({
+            ...documentInfo,
+            banner: Array.from(acceptedFiles)
+          })
+        } else {
+          await uploadFile({
+            ...documentInfo,
+            documents: Array.from(acceptedFiles)
+          })
+        }
       }
     },
-    [documentInfo, uploadFile]
+    [documentInfo, uploadFile, uploadBanner, isNewThemeOn]
   )
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -84,7 +106,7 @@ export const Dropzone = (props: DropzoneProps) => {
       <Box
         component='div'
         width={fullWidth ? '100%' : 128}
-        height={128}
+        height={isNewThemeOn ? 245 : 128}
         className={container}
         {...(getRootProps() as any)}
       >
@@ -93,6 +115,8 @@ export const Dropzone = (props: DropzoneProps) => {
           multiple={multiple}
           hasError={hasError}
           value={value}
+          previewSize={previewSize}
+          isNewThemeOn={isNewThemeOn}
         />
       </Box>
       {hasError ? (

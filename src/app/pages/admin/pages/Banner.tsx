@@ -1,6 +1,7 @@
 import React from 'react'
-import { Grid } from '@material-ui/core'
+import { Grid, Typography } from '@material-ui/core'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
+import { BannerForm } from 'app/pages/admin/components/BannerForm'
 
 export const Banner = () => {
   return (
@@ -8,6 +9,12 @@ export const Banner = () => {
       <Grid item xs={12}>
         <PageHeader title='Upload Banner' />
       </Grid>
+      <Grid item xs={12}>
+        <Typography variant={'subtitle2'}>
+          Please upload the image file with the dimension <b>1230 x 240 px.</b>
+        </Typography>
+      </Grid>
+      <BannerForm />
     </Grid>
   )
 }
