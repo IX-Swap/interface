@@ -8,13 +8,13 @@ import classNames from 'classnames'
 export interface DropzoneFallbackProps {
   hasError: boolean
   multiple?: boolean
-  isNewThemeOn?: boolean
+  type?: 'banner' | 'document'
 }
 
 export const DropzoneFallback = ({
   hasError,
   multiple = false,
-  isNewThemeOn = false
+  type = 'document'
 }: DropzoneFallbackProps) => {
   const theme = useTheme()
   const { icon, bigIcon } = useStyles()
@@ -22,7 +22,7 @@ export const DropzoneFallback = ({
   const borderStyle = hasError ? 'solid' : 'dashed'
   const borderColor = hasError
     ? theme.palette.error.main
-    : isNewThemeOn
+    : type === 'banner'
     ? ' #C4C4C4'
     : theme.palette.text.secondary
 
@@ -35,13 +35,13 @@ export const DropzoneFallback = ({
       alignItems='center'
       width='100%'
       height='100%'
-      style={{ backgroundColor: isNewThemeOn ? '#EDEDED' : 'initial' }}
+      style={{ backgroundColor: type === 'banner' ? '#EDEDED' : 'initial' }}
       border={`1px ${borderStyle} ${borderColor}`}
     >
       <BackupOutlinedIcon
-        className={classNames(icon, { [bigIcon]: isNewThemeOn })}
+        className={classNames(icon, { [bigIcon]: type === 'banner' })}
       />
-      {isNewThemeOn ? (
+      {type === 'banner' ? (
         <Typography
           align='center'
           variant='body1'

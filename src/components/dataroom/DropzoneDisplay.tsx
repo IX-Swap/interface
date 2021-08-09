@@ -11,16 +11,16 @@ export interface DropzoneDisplayProps {
   multiple: boolean
   hasError: boolean
   value?: Maybe<DataroomFile | DataroomFile[]>
-  previewSize?: number | [number, number] | [string, string]
-  isNewThemeOn?: boolean
+  size?: number | [number, number] | [string, string]
+  type?: 'banner' | 'document'
 }
 
 export const DropzoneDisplay = ({
   multiple,
   hasError,
   value,
-  previewSize,
-  isNewThemeOn = false
+  size = 128,
+  type = 'document'
 }: DropzoneDisplayProps) => {
   const { user } = useAuth()
 
@@ -30,14 +30,12 @@ export const DropzoneDisplay = ({
         <DropzoneFallback hasError={hasError} multiple />
       ) : (
         <Avatar
-          size={previewSize !== undefined ? previewSize : 128}
+          size={size}
           documentId={getDataroomFileId(value)}
           ownerId={getIdFromObj(user)}
           variant='square'
-          isNewThemeOn={isNewThemeOn}
-          fallback={
-            <DropzoneFallback isNewThemeOn={isNewThemeOn} hasError={hasError} />
-          }
+          type={type}
+          fallback={<DropzoneFallback type={type} hasError={hasError} />}
         />
       )}
     </>

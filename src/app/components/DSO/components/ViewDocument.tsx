@@ -5,25 +5,31 @@ import {
   createObjectURLFromFile,
   revokeObjectURL
 } from 'hooks/utils'
-import { useRawBanner } from 'app/pages/admin/hooks/useRawBanner'
 
 export interface ViewDocumentProps {
   documentId: string
-  ownerId: string
-  isNewThemeOn?: boolean
+  ownerId?: string
+  type?: 'document' | 'banner'
   children: (url: string) => JSX.Element
+  getDataFunction?: any
 }
 
 export const ViewDocument = (props: ViewDocumentProps) => {
-  const { documentId, ownerId, children, isNewThemeOn = false } = props
-  const { data } = useRawDocument({ documentId, ownerId })
-  const { data: dataBanner } = useRawBanner(documentId)
-  const finalData = isNewThemeOn ? dataBanner : data
-  const blob = useMemo(() => finalData?.data ?? new Blob(), [finalData])
+  const {
+    documentId,
+    ownerId = '',
+    children,
+    type = 'document',
+    getDataFunction = useRawDocument
+  } = props
+  const { data } = getDataFunction(
+    type === 'banner' ? documentId : { documentId, ownerId }
+  )
+  const blob = useMemo(() => data?.data ?? new Blob(), [data])
   const [file, setFile] = useState<string>('')
 
   useEffect(() => {
-    if (finalData !== undefined) {
+    if (data !== undefined) {
       setFile(createObjectURLFromFile(convertBlobToFile(blob, '')))
     }
 

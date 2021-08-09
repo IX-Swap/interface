@@ -24,8 +24,9 @@ export interface DropzoneProps {
   accept?: DataroomFileType
   fullWidth?: boolean
   showAcceptable?: boolean
-  previewSize?: number | [number, number] | [string, string]
-  isNewThemeOn?: boolean
+  size?: number | [number, number] | [string, string]
+  type?: 'banner' | 'document'
+  uploadFunction?: any
 }
 
 export const Dropzone = (props: DropzoneProps) => {
@@ -39,30 +40,24 @@ export const Dropzone = (props: DropzoneProps) => {
     multiple = false,
     fullWidth = false,
     showAcceptable = false,
-    previewSize,
-    isNewThemeOn = false
+    size,
+    type = 'document'
   } = props
   const { watch } = useFormContext()
   const value = watch(name, defaultValue) as DropzoneProps['value']
   const { hasError, error } = useFormError(name)
   const { container } = useStyles()
 
-  const [uploadFile] = useUploadFile({
-    onSuccess: response => {
-      onChange(
-        multiple
-          ? [...(Array.isArray(value) ? value : []), ...response.data]
-          : response.data[0]
-      )
-    }
-  })
+  const uploadFunction = type === 'banner' ? useUploadBanner : useUploadFile
 
-  const [uploadBanner] = useUploadBanner({
+  const [uploadFile] = uploadFunction({
     onSuccess: response => {
       onChange(
         multiple
           ? [...(Array.isArray(value) ? value : []), ...response.data]
-          : response.data
+          : type === 'banner'
+          ? response.data
+          : response.data[0]
       )
     }
   })
@@ -70,20 +65,20 @@ export const Dropzone = (props: DropzoneProps) => {
   const onDrop = useCallback(
     async acceptedFiles => {
       if (acceptedFiles.length > 0) {
-        if (isNewThemeOn) {
-          await uploadBanner({
-            ...documentInfo,
-            banner: Array.from(acceptedFiles)
-          })
-        } else {
-          await uploadFile({
-            ...documentInfo,
-            documents: Array.from(acceptedFiles)
-          })
-        }
+        const payload =
+          type === 'banner'
+            ? {
+                ...documentInfo,
+                banner: Array.from(acceptedFiles)
+              }
+            : {
+                ...documentInfo,
+                documents: Array.from(acceptedFiles)
+              }
+        await uploadFile(payload as any)
       }
     },
-    [documentInfo, uploadFile, uploadBanner, isNewThemeOn]
+    [documentInfo, uploadFile, type]
   )
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -106,7 +101,7 @@ export const Dropzone = (props: DropzoneProps) => {
       <Box
         component='div'
         width={fullWidth ? '100%' : 128}
-        height={isNewThemeOn ? 245 : 128}
+        height={type === 'banner' ? 245 : 128}
         className={container}
         {...(getRootProps() as any)}
       >
@@ -115,8 +110,8 @@ export const Dropzone = (props: DropzoneProps) => {
           multiple={multiple}
           hasError={hasError}
           value={value}
-          previewSize={previewSize}
-          isNewThemeOn={isNewThemeOn}
+          size={size}
+          type={type}
         />
       </Box>
       {hasError ? (

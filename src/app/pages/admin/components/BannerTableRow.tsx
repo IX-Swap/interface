@@ -1,47 +1,43 @@
 import React from 'react'
-import { Grid, Typography, TableRow, IconButton } from '@material-ui/core'
+import { Grid, Typography, TableRow, IconButton, Box } from '@material-ui/core'
 import { DeleteOutline } from '@material-ui/icons'
 import { TableCell } from 'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/TableCell'
 import { formatDateAndTime } from 'helpers/dates'
 import { DataroomBanner } from 'types/dataroomBanner'
 import { ViewUploadedBanner } from 'app/pages/admin/components/ViewUploadedBanner'
 import { useDeleteBanner } from 'app/pages/admin/hooks/useDeleteBanner'
-import { queryCache } from 'react-query'
-import { bannersQueryKeys } from 'config/queryKeys'
 import { Avatar } from 'components/Avatar'
 import { useFormContext } from 'react-hook-form'
 
-export interface DocumentTableRowProps {
+export interface BannerTableRowProps {
   banner: DataroomBanner
 }
 
-export const BannerTableRow = ({ banner }: DocumentTableRowProps) => {
+export const BannerTableRow = ({ banner }: BannerTableRowProps) => {
   const { watch, setValue } = useFormContext()
-
   const titleWatch = watch('title')
   const bannerWatch = watch('banner')
 
-  const [deleteBanner, { status }] = useDeleteBanner(banner._id, {
-    onSuccess: () => {
-      void queryCache.invalidateQueries(bannersQueryKeys.getBannersList)
+  const imageWidth = 245
+  const imageHeight = 75
+  const tableCellStyle = { paddingTop: 24, paddingBottom: 24 }
+
+  const [deleteBanner] = useDeleteBanner(banner._id)
+  const removeBanner = async () => {
+    await deleteBanner()
+    if (titleWatch === banner.title && bannerWatch === banner._id) {
+      setValue('banner', undefined)
+      setValue('title', 'Title')
     }
-  })
+  }
 
   if (banner._id === undefined) {
     return null
   }
 
-  const removeBanner = async () => {
-    await deleteBanner()
-  }
-
   return (
     <TableRow>
-      <TableCell
-        component='th'
-        scope='row'
-        style={{ paddingTop: 24, paddingBottom: 24 }}
-      >
+      <TableCell component='th' scope='row' style={tableCellStyle}>
         <Grid container spacing={5} alignItems='center'>
           <Grid
             item
@@ -52,12 +48,13 @@ export const BannerTableRow = ({ banner }: DocumentTableRowProps) => {
             }}
           >
             <Avatar
-              size={[245, 75]}
+              size={[imageWidth, imageHeight]}
               documentId={banner._id}
+              borderRadius={4}
+              type={'banner'}
+              border={'1px solid #AAAAAA'}
               variant='square'
-              ownerId={'1'}
-              isNewThemeOn
-              isSmallPreview
+              fallback={<Box width={imageWidth} height={imageHeight} />}
             />
           </Grid>
           <Grid item>
@@ -65,29 +62,25 @@ export const BannerTableRow = ({ banner }: DocumentTableRowProps) => {
           </Grid>
         </Grid>
       </TableCell>
-      <TableCell
-        component='th'
-        scope='row'
-        style={{ minWidth: 40, paddingTop: 24, paddingBottom: 24 }}
-      />
+      <TableCell component='th' scope='row' style={tableCellStyle} />
       <TableCell
         component='th'
         scope='row'
         align={'left'}
-        style={{ paddingTop: 24, paddingBottom: 24 }}
+        style={tableCellStyle}
       >
         <Typography>{banner.title}</Typography>
       </TableCell>
       <TableCell
         component='th'
         scope='row'
-        style={{ minWidth: 40, paddingTop: 24, paddingBottom: 24 }}
+        style={{ minWidth: 40, ...tableCellStyle }}
       />
       <TableCell
         component='th'
         scope='row'
         align={'left'}
-        style={{ paddingTop: 24, paddingBottom: 24 }}
+        style={tableCellStyle}
       >
         <Typography>
           {banner.createdAt !== undefined
@@ -99,20 +92,12 @@ export const BannerTableRow = ({ banner }: DocumentTableRowProps) => {
         component='th'
         scope='row'
         align='right'
-        style={{ paddingTop: 24, paddingBottom: 24 }}
+        style={tableCellStyle}
       >
         <ViewUploadedBanner bannerId={banner._id} />
         <IconButton
           onClick={() => {
             void removeBanner()
-            if (
-              titleWatch === banner.title &&
-              bannerWatch === banner._id &&
-              status === 'success'
-            ) {
-              setValue('banner', undefined)
-              setValue('title', 'Title')
-            }
           }}
         >
           <DeleteOutline color='disabled' />

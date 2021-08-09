@@ -1,35 +1,38 @@
 import React, { Fragment, ReactNode } from 'react'
 import { ViewDocument } from 'app/components/DSO/components/ViewDocument'
 import { Avatar as MUIAvatar } from '@material-ui/core'
+import { useRawBanner } from 'app/pages/admin/hooks/useRawBanner'
 
 export interface AvatarProps {
   documentId?: string
   ownerId?: string
+  type?: 'banner' | 'document'
   size?: number | [number, number] | [string, string]
+  border?: string | number
+  borderRadius?: string | number
+  maxWidth?: number | string
   variant?: 'circle' | 'rounded' | 'square'
   fallback?: Element | JSX.Element
   children?: ReactNode
-  isNewThemeOn?: boolean
-  isSmallPreview?: boolean
 }
 
 export const Avatar = (props: AvatarProps) => {
   const {
     documentId,
-    ownerId,
+    ownerId = '',
+    type = 'document',
     size = 80,
+    borderRadius = 'initial',
+    border = 'initial',
     variant = 'circle',
     fallback,
     children,
-    isNewThemeOn = false,
-    isSmallPreview = false
+    maxWidth = 'initial'
   } = props
   const width = Array.isArray(size) ? size[0] : size
   const height = Array.isArray(size) ? size[1] : size
-  const borderRadius = isNewThemeOn && isSmallPreview ? 4 : 'initial'
-  const border =
-    isNewThemeOn && isSmallPreview ? ' 1px solid #AAAAAA' : 'initial'
-  const style = { width, height, border, borderRadius }
+
+  const style = { width, height, border, borderRadius, maxWidth }
 
   const fallbackElement = (
     <Fragment>
@@ -49,7 +52,8 @@ export const Avatar = (props: AvatarProps) => {
     <ViewDocument
       documentId={documentId}
       ownerId={ownerId}
-      isNewThemeOn={isNewThemeOn}
+      type={type}
+      getDataFunction={type === 'banner' ? useRawBanner : undefined}
     >
       {url =>
         url !== '' ? (
