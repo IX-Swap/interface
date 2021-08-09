@@ -7,4 +7,5 @@ export const routes = {
   find: '/find',
   pool: '/pool',
   securityTokens: (currency?: Currency) => `/security-tokens${currency ? `/${currencyId(currency)}` : ''}`,
+  farming: '/farming',
 }

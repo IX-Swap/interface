@@ -3,11 +3,11 @@ import useScrollPosition from '@react-hook/window-scroll'
 import { Text } from 'rebass'
 import { Trans } from '@lingui/macro'
 import styled from 'styled-components/macro'
-import LogoDark from '../../assets/svg/logo_white.svg'
+import LogoDark from '../../assets/svg/logo-white.svg'
 import { useActiveWeb3React } from '../../hooks/web3'
 import { useETHBalances } from '../../state/wallet/hooks'
 import { VioletCard } from '../Card'
-import { RowFixed } from '../Row'
+import { RowCenter, RowFixed } from '../Row'
 import Web3Status from '../Web3Status'
 import { HeaderLinks } from './HeaderLinks'
 import useLightBackground from 'components/AppBackground/useLightBackground'
@@ -206,7 +206,7 @@ export default function Header() {
           <HeaderRow>
             <Title href=".">
               <IXSIcon>
-                <img width={'160px'} src={LogoDark} alt="logo" />
+                <img width={'38px'} height={'47px'} src={LogoDark} alt="logo" />
               </IXSIcon>
             </Title>
           </HeaderRow>

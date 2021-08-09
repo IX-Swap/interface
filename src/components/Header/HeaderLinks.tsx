@@ -28,7 +28,7 @@ const HeaderLinksWrap = styled(Row)`
    justify-self: center;
   `};
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-   grid-gap: 5px 10px;
+   grid-gap: 5px 5px;
   `};
 `
 const StyledNavLink = styled(NavLink).attrs({
@@ -89,6 +89,9 @@ export const HeaderLinks = () => {
           <Trans>Security tokens</Trans>
         </StyledNavLink>
       )}
+      <StyledNavLink id={`farming-nav-link`} to={'/farming'}>
+        <Trans>IXS Farming</Trans>
+      </StyledNavLink>
       <SettingsTab placeholderSlippage={allowedSlippage} />
     </HeaderLinksWrap>
   )

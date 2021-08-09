@@ -11,7 +11,7 @@ import { RouteComponentProps } from 'react-router-dom'
 import { Box } from 'rebass'
 import { useUserSecTokens } from 'state/user/hooks'
 import { TYPE } from 'theme'
-import { InfoBackground } from './Background'
+import { LightBackground } from 'theme/Background'
 import { Container, Description, DescriptionText, InfoTitle } from './styleds'
 import { TokenDetails } from './TokenDetails'
 export default function SecTokenDetails({
@@ -34,7 +34,7 @@ export default function SecTokenDetails({
     <>
       <DepositPopup currency={currency} />
       <WithdrawPopup currency={currency} />
-      <InfoBackground />
+      <LightBackground />
       <Container width={['100%', '90%', '65%']} maxWidth={'920px'}>
         <InfoTitle>
           <CurrencyLogo currency={currency} size="72px" />
