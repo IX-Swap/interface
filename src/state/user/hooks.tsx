@@ -2,7 +2,7 @@ import { Currency, Percent, Token, TradeType } from '@ixswap1/sdk-core'
 import { Pair, Trade as V2Trade, TradeAuthorizationDigest } from '@ixswap1/v2-sdk'
 import { useWeb3React } from '@web3-react/core'
 import { SupportedLocale } from 'constants/locales'
-import { BigNumber } from 'ethers'
+import { BigNumber, utils } from 'ethers'
 import JSBI from 'jsbi'
 import flatMap from 'lodash.flatmap'
 import { useCallback, useEffect, useMemo, useState } from 'react'
@@ -22,6 +22,7 @@ import {
 } from 'state/secTokens/hooks'
 import { SecToken } from 'types/secToken'
 import { currencyId } from 'utils/currencyId'
+import { toHex } from 'utils/toHex'
 import { BASES_TO_TRACK_LIQUIDITY_FOR, PINNED_PAIRS } from '../../constants/routing'
 import { useAllTokens } from '../../hooks/Tokens'
 import { useActiveWeb3React } from '../../hooks/web3'
@@ -356,7 +357,7 @@ export const getUserSecTokensList = async () => {
 }
 
 export const fetchTokenAuthorization = async (tokenId: number, amount0: string, amount1: string) => {
-  const result = await apiService.post(tokens.authorize(tokenId), { amount0, amount1, nonce: '0' })
+  const result = await apiService.post(tokens.authorize(tokenId), { amount0, amount1 })
   return result.data
 }
 
@@ -381,11 +382,16 @@ export const useGetTokenAuthorization = ({ address }: { address: string }) => {
   )
 }
 
-export function useSwapAuthorization(trade: V2Trade<Currency, Currency, TradeType> | undefined) {
+export function useSwapAuthorization(
+  trade: V2Trade<Currency, Currency, TradeType> | undefined,
+  allowedSlippage: Percent
+) {
   const id0 = trade?.inputAmount?.currency ? currencyId(trade?.inputAmount?.currency) : ''
   const id1 = trade?.outputAmount?.currency ? currencyId(trade?.outputAmount?.currency) : ''
   const amount0 = trade?.inputAmount?.toSignificant(18)
   const amount1 = trade?.outputAmount?.toSignificant(18)
+  // const amount0 = trade ? utils.hexlify(trade?.maximumAmountIn(allowedSlippage)) : ''
+  // const amount1 = trade ? utils.hexlify(trade?.minimumAmountOut(allowedSlippage)) : ''
   const getAuthorization0 = useGetTokenAuthorization({ address: id0 })
   const getAuthorization1 = useGetTokenAuthorization({ address: id1 })
   const isSecToken0 = useIsSecToken(id0)

@@ -60,7 +60,7 @@ function useSwapCallArguments(
   const deadline = useTransactionDeadline()
   const routerContract = useV2RouterContract()
   const argentWalletContract = useArgentWalletContract()
-  const authorization = useSwapAuthorization(trade)
+  const authorization = useSwapAuthorization(trade, allowedSlippage)
   const usedAuthorization =
     authorization && (authorization[0] !== null || authorization[1] !== null) ? authorization : undefined
   return useMemo(() => {
@@ -181,7 +181,6 @@ export function useSwapCallback(
 
   const { address: recipientAddress } = useENS(recipientAddressOrName)
   const recipient = recipientAddressOrName === null ? account : recipientAddress
-
   return useMemo(() => {
     if (!trade || !library || !account || !chainId) {
       return { state: SwapCallbackState.INVALID, callback: null, error: 'Missing dependencies' }
