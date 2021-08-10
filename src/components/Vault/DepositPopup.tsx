@@ -12,6 +12,7 @@ import { DepositRequestForm } from './DepositRequestForm'
 import { ModalPadding } from './styleds'
 import { DepositSendInfo } from './DepositSendInfo'
 import { useDepositState } from 'state/deposit/hooks'
+import { DepositPending } from './DepositPending'
 
 export enum DepositModalView {
   CREATE_REQUEST,
@@ -60,6 +61,7 @@ export const DepositPopup = ({ currency }: Props) => {
               <DepositRequestForm currency={currency} setModalView={setModalView} />
             )}
             {modalView === DepositModalView.SEND_INFO && <DepositSendInfo onClose={onClose} />}
+            {modalView === DepositModalView.PENDING && <DepositPending />}
           </ModalPadding>
         </ModalContentWrapper>
       </ModalBlurWrapper>

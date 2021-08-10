@@ -38,10 +38,20 @@ export const DepositRequestForm = ({ currency, setModalView }: Props) => {
   const onError = () => {
     setModalView(DepositModalView.ERROR)
   }
+  const onPending = () => {
+    setModalView(DepositModalView.PENDING)
+  }
   const onClick = () => {
     const tokenId = (secTokens[cid ?? ''] as any)?.tokenInfo?.id
     if (tokenId && !error && parsedAmount && !inputError && address) {
-      deposit({ id: tokenId, amount: Number(parsedAmount?.toSignificant(5)), onSuccess, onError, fromAddress: address })
+      deposit({
+        id: tokenId,
+        amount: Number(parsedAmount?.toSignificant(5)),
+        onPending,
+        onSuccess,
+        onError,
+        fromAddress: address,
+      })
     }
   }
   useEffect(() => {
