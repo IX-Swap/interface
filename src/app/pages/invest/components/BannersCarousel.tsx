@@ -32,7 +32,7 @@ export const BannersCarousel = () => {
           const { title, _id } = item
 
           return (
-            <>
+            <div key={_id}>
               {title !== '' ? (
                 <Typography
                   variant='h4'
@@ -51,7 +51,7 @@ export const BannersCarousel = () => {
                 type={'banner'}
                 fallback={<Box />}
               />
-            </>
+            </div>
           )
         })}
       </Carousel>
