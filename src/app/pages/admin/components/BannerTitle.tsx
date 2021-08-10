@@ -32,6 +32,7 @@ export const BannerTitle = ({ text, onChange }: BannerTitleProps) => {
     <Grid container alignItems={'center'}>
       <Grid
         item
+        data-testid='firstGrid'
         style={{
           display: isEdit ? 'none' : 'flex',
           minHeight: 54,
@@ -41,7 +42,12 @@ export const BannerTitle = ({ text, onChange }: BannerTitleProps) => {
         <Typography variant={'body1'}>{text}</Typography>
       </Grid>
 
-      <Grid item xs={8} style={{ display: !isEdit ? 'none' : 'block' }}>
+      <Grid
+        data-testid='secondGrid'
+        item
+        xs={8}
+        style={{ display: !isEdit ? 'none' : 'block' }}
+      >
         <TypedField
           label=''
           fullWidth
@@ -50,6 +56,7 @@ export const BannerTitle = ({ text, onChange }: BannerTitleProps) => {
           control={control}
           component={Input}
           inputRef={inputRef}
+          inputProps={{ 'data-testid': 'input' }}
           onKeyUp={onTitleKeyUp}
           onChange={value => onChange(value)}
           onBlurCapture={onTitleBlurCapture}
@@ -57,7 +64,7 @@ export const BannerTitle = ({ text, onChange }: BannerTitleProps) => {
         />
       </Grid>
       <Grid item>
-        <IconButton onClick={onEditButtonClick}>
+        <IconButton onClick={onEditButtonClick} data-testid={'button'}>
           <EditIcon />
         </IconButton>
       </Grid>
