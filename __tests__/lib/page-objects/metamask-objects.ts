@@ -62,6 +62,7 @@ class Metamask {
       await waitUntil(() => context.pages()[1] != undefined, { timeout: 10000 })
       await click(auth.buttons.NEXT, (await context.pages())[1])
       await click(auth.buttons.CONFIRM, (await context.pages())[1])
+      await page.waitForTimeout(10000)
       await this.signAgreement(context)
       await page.waitForTimeout(1000)
 

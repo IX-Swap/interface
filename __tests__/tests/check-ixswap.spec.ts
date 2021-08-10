@@ -46,7 +46,7 @@ test.afterEach(async ({ page, context }, testInfo) => {
   }
 })
 
-test.describe.only('Check pool functions', () => {
+test.describe('Check pool functions', () => {
   test('Check that the pool can be created', async ({ page, context, metaMask, ixSwap }) => {
     await ixSwap.createPool(amounts.base)
     await metaMask.signAgreement(context)
@@ -65,9 +65,9 @@ test.describe.only('Check pool functions', () => {
   test('Check that crypto can be add to the pool', async ({ page, context, metaMask, ixSwap }) => {
     await navigate(ixswap.URL, page)
     await ixSwap.addToCurrentLiquidityPool(amounts.addToPool, false)
-    await metaMask.signAgreement(context)
+    // await metaMask.signAgreement(context)
     await click(pool.button.SUPPLY, page)
-    await metaMask.signAgreement(context)
+    // await metaMask.signAgreement(context)
     const secondPage = await waitNewPage(page, context, pool.button.CREATE_OR_SUPPLY)
     await metaMask.confirmOperation(secondPage)
     await waitForText(`Add ${amounts.addToPool} ETH and`, page)

@@ -43,7 +43,7 @@ class SwapIX {
     // expect(rowSum).toBe(5)
   }
   createPool = async (sum, page = this.page) => {
-    await navigate(ixswap.URL, this.page)
+    // await navigate(ixswap.URL, this.page)
     await click(pool.button.POOL_SECTION, page)
     await click(pool.button.ADD_LIQUIDITY, page)
     await typeText(pool.field.TOKEN_AMOUNT, sum, page)

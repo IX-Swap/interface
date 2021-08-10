@@ -33,12 +33,12 @@ test.afterEach(async ({ page, context }, testInfo) => {
 
 test.describe('Functionality testing', () => {
   test.beforeEach(async ({ context, page, metaMask }) => {
-    await metaMask.fullConnection(context, page, metamask.SECRET_WORDS, metamask.contractAddresses.eth)
+    await metaMask.fullConnection(context, page, metamask2.SECRET_WORDS, metamask.contractAddresses.eth)
     await navigate(ixswap.URL, page)
     await click(securityToken.button.OPEN_SECURITY, page)
-    await context.pages()[1].click(auth.buttons.SIGN)
+    // await context.pages()[1].click(auth.buttons.SIGN)
   })
-  test('Create deposit', async ({ page, context }) => {
+  test.only('Create deposit', async ({ page, context }) => {
     await click(securityToken.button.TOKEN_ROW, page)
     const metamaskPage = await waitNewPage(page, context, securityToken.button.ACCREDITATION)
     await click(auth.buttons.SIGN, metamaskPage)
