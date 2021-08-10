@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { LightBackground } from 'theme/Background'
 import { FarmingTabs } from './FarmingTabs'
 import { Container } from './styleds'
+import { Vesting } from './Vesting'
 
 export enum FARMING_TABS {
   STAKING = 'Staking',
@@ -13,8 +14,9 @@ export const Farming = () => {
   return (
     <>
       <LightBackground />
-      <Container width={['100%', '90%', '100%']} maxWidth={'1370px'}>
+      <Container width={['100%']} maxWidth={'1370px'} paddingLeft="15px" paddingRight="15px">
         <FarmingTabs {...{ tab, setTab }} />
+        {tab === FARMING_TABS.VESTING && <Vesting />}
       </Container>
     </>
   )
