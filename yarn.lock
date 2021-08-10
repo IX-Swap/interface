@@ -2497,7 +2497,7 @@
     "@ixswap1/lib" "1.x.x"
     "@ixswap1/v2-core" "1.x.x"
 
-"@ixswap1/v2-sdk@1.0.7":
+"@ixswap1/v2-sdk@^1.0.7":
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/@ixswap1/v2-sdk/-/v2-sdk-1.0.7.tgz#668c8062ece3f2e8b74371c511eccc35c539b36d"
   integrity sha512-LuRC/CiDKF5Mf08Gj2bH8Gs4cxJUoNLzVg88vYvVk2Ui6RTOSWfP5K656WdTu5eP/YE+lC1qFVcapcNkWZ6jTA==

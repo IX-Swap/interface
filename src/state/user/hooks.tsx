@@ -2,6 +2,7 @@ import { Currency, Percent, Token, TradeType } from '@ixswap1/sdk-core'
 import { Pair, Trade as V2Trade, TradeAuthorizationDigest } from '@ixswap1/v2-sdk'
 import { useWeb3React } from '@web3-react/core'
 import { SupportedLocale } from 'constants/locales'
+import { BigNumber } from 'ethers'
 import JSBI from 'jsbi'
 import flatMap from 'lodash.flatmap'
 import { useCallback, useEffect, useMemo, useState } from 'react'
@@ -354,37 +355,37 @@ export const getUserSecTokensList = async () => {
   return result.data
 }
 
-export const fetchTokenAuthorization = async (tokenId: number) => {
-  const result = await apiService.get(tokens.authorize(tokenId))
+export const fetchTokenAuthorization = async (tokenId: number, amount0: string, amount1: string) => {
+  const result = await apiService.post(tokens.authorize(tokenId), { amount0, amount1, nonce: '0' })
   return result.data
 }
 
 export const useGetTokenAuthorization = ({ address }: { address: string }) => {
   const tokenId = useSecTokenId({ currencyId: address })
-  const authorizations = useGetSecTokenAuthorization()
   const dispatch = useDispatch<AppDispatch>()
 
-  return useCallback(async () => {
-    if (!tokenId) return null
-    const authorization = authorizations[address]
-    if (authorization) {
-      return authorization
-    }
-    dispatch(authorizeSecToken.pending())
-    try {
-      const result = await fetchTokenAuthorization(tokenId)
-      dispatch(authorizeSecToken.fulfilled({ data: { address, authorization: result.data } }))
-      return result.data
-    } catch (e) {
-      dispatch(authorizeSecToken.rejected({ errorMessage: e.message }))
-      return null
-    }
-  }, [dispatch, authorizations, tokenId, address])
+  return useCallback(
+    async ({ amount0, amount1 }: { amount0?: string; amount1?: string }) => {
+      if (!tokenId || !amount0 || !amount1) return null
+      dispatch(authorizeSecToken.pending())
+      try {
+        const result = await fetchTokenAuthorization(tokenId, amount0, amount1)
+        dispatch(authorizeSecToken.fulfilled({ data: { address, authorization: result.data } }))
+        return result.data
+      } catch (e) {
+        dispatch(authorizeSecToken.rejected({ errorMessage: e.message }))
+        return null
+      }
+    },
+    [dispatch, tokenId, address]
+  )
 }
 
 export function useSwapAuthorization(trade: V2Trade<Currency, Currency, TradeType> | undefined) {
   const id0 = trade?.inputAmount?.currency ? currencyId(trade?.inputAmount?.currency) : ''
   const id1 = trade?.outputAmount?.currency ? currencyId(trade?.outputAmount?.currency) : ''
+  const amount0 = trade?.inputAmount?.toSignificant(18)
+  const amount1 = trade?.outputAmount?.toSignificant(18)
   const getAuthorization0 = useGetTokenAuthorization({ address: id0 })
   const getAuthorization1 = useGetTokenAuthorization({ address: id1 })
   const isSecToken0 = useIsSecToken(id0)
@@ -397,14 +398,14 @@ export function useSwapAuthorization(trade: V2Trade<Currency, Currency, TradeTyp
       fetchAuthorization1()
     }
     async function fetchAuthorization0() {
-      const result = await getAuthorization0()
+      const result = await getAuthorization0({ amount0, amount1 })
       setAuthorization([result, null])
     }
     async function fetchAuthorization1() {
-      const result = await getAuthorization1()
+      const result = await getAuthorization1({ amount0, amount1 })
       setAuthorization([null, result])
     }
-  }, [getAuthorization0, getAuthorization1, isSecToken1, isSecToken0])
+  }, [getAuthorization0, getAuthorization1, isSecToken1, isSecToken0, amount0, amount1])
   return authorization
 }
 
