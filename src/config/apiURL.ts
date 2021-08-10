@@ -95,6 +95,9 @@ export const accountsURL = {
       `/virtual-accounts/transactions/list/${virtualAccountId}/${userId}`,
     getPaymentMethods: (country: string, swiftCode: string) =>
       `/accounts/banks/payment-method?country=${country}&swiftCode=${swiftCode}`
+  },
+  commitments: {
+    getAllByUserId: (userId: string) => `/issuance/commitments/list/${userId}`
   }
 }
 

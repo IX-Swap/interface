@@ -7,11 +7,13 @@ import { useStyles } from './DSONameAndStucture.styles'
 export interface DSONameAndStructureProps {
   tokenName: string
   dso: DigitalSecurityOffering
+  size?: number
 }
 
 export const DSONameAndStructure: React.FC<DSONameAndStructureProps> = ({
   tokenName,
-  dso
+  dso,
+  size = 70
 }: DSONameAndStructureProps) => {
   const classes = useStyles()
 
@@ -24,7 +26,7 @@ export const DSONameAndStructure: React.FC<DSONameAndStructureProps> = ({
       spacing={3}
     >
       <Grid item>
-        <DSOLogo dsoId={dso._id} size={70} variant='rounded' />
+        <DSOLogo dsoId={dso._id} size={size} variant='rounded' />
       </Grid>
       <Grid item container direction='column'>
         <Typography>{tokenName}</Typography>
