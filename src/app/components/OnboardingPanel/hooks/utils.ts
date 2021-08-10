@@ -1,7 +1,7 @@
 import { AuthorizableStatus } from 'types/util'
 import { IdentityType } from 'app/pages/identity/utils/shared'
 
-export const getIdentityStatus = (status?: AuthorizableStatus) => {
+export const getIdentityStatus = (status?: AuthorizableStatus | 'Skipped') => {
   switch (status) {
     case 'Rejected':
       return ['Rejected']
@@ -11,6 +11,8 @@ export const getIdentityStatus = (status?: AuthorizableStatus) => {
       return ['Verified!']
     case 'Draft':
       return ['In progress']
+    case 'Skipped':
+      return ['Skipped']
     default:
       return ['']
   }
@@ -23,9 +25,9 @@ export const defaultOnboardingSteps = [
 
 interface IdentityOnboardingSteps {
   identityType: IdentityType
-  identityStatus?: AuthorizableStatus
+  identityStatus?: AuthorizableStatus | 'Skipped'
   asIssuer?: boolean
-  issuanceDetailsStatus?: AuthorizableStatus
+  issuanceDetailsStatus?: AuthorizableStatus | 'Skipped'
 }
 
 export const getIdentityOnboardingSteps = ({

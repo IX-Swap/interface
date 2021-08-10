@@ -11,7 +11,13 @@ import { useUnmountCallback } from 'hooks/useUnmountCallback'
 import React from 'react'
 import { VirtualAccount } from 'types/virtualAccount'
 
-export const AssignedVirtualAccountsTable = () => {
+export interface AssignedVirtualAccountsTableProps {
+  role?: 'issuer' | 'investor'
+}
+
+export const AssignedVirtualAccountsTable = ({
+  role
+}: AssignedVirtualAccountsTableProps) => {
   const { getFilterValue } = useQueryFilter()
   const selectionHelperContext = useSelectionHelperContext()
 
@@ -29,7 +35,8 @@ export const AssignedVirtualAccountsTable = () => {
     currency:
       currencyFilterValue === '' || bothCurrency
         ? undefined
-        : currencyFilterValue
+        : currencyFilterValue,
+    assignedRole: role
   }
 
   return (

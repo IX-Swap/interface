@@ -35,7 +35,8 @@ export enum AppFeature {
   Deposits = 'deposits',
   Withdrawals = 'withdrawals',
   Users = 'users',
-  VirtualAccounts = 'virtual-accounts'
+  VirtualAccounts = 'virtual-accounts',
+  CapTable = 'captable'
 }
 
 export enum NotificationFilter {
