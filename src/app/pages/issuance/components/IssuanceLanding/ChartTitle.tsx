@@ -1,19 +1,27 @@
 import React from 'react'
-import { Typography } from '@material-ui/core'
+import { Grid, Typography } from '@material-ui/core'
 
 export interface ChartTitleProps {
   title: string
   small?: boolean
+  icon?: JSX.Element
 }
 
 export const ChartTitle = (props: ChartTitleProps) => {
-  const { title, small = false } = props
+  const { title, small = false, icon } = props
   return (
-    <Typography
-      color={small ? 'textSecondary' : 'textPrimary'}
-      variant={small ? 'subtitle2' : 'subtitle1'}
-    >
-      {title}
-    </Typography>
+    <Grid container spacing={1} wrap='nowrap'>
+      {icon !== undefined ? <Grid item>{icon}</Grid> : null}
+      <Grid item>
+        <Typography
+          color={small ? 'textSecondary' : 'textPrimary'}
+          variant={small ? 'subtitle2' : 'subtitle1'}
+          noWrap
+          style={{ lineHeight: '25px' }}
+        >
+          {title}
+        </Typography>
+      </Grid>
+    </Grid>
   )
 }

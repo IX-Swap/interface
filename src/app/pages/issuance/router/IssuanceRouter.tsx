@@ -11,6 +11,7 @@ import { PreviewDSO } from 'app/pages/issuance/pages/PreviewDSO'
 import { AppRoute } from 'components/AppRoute'
 import { Commitments } from 'app/pages/issuance/pages/Commitments'
 import { useIsIssuer } from 'helpers/acl'
+import { CapTable } from 'app/pages/issuance/pages/CapTable'
 
 export const IssuanceRouter = () => {
   const isIssuer = useIsIssuer()
@@ -75,6 +76,26 @@ export const IssuanceRouter = () => {
           path={IssuanceRoute.commitments}
         >
           <Commitments />
+        </AppRoute>
+      ) : null}
+
+      {isIssuer ? (
+        <AppRoute
+          breadcrumb='Manage Distributions'
+          exact
+          path={IssuanceRoute.manageDistributions}
+        >
+          <>Manage Distributions</>
+        </AppRoute>
+      ) : null}
+
+      {isIssuer ? (
+        <AppRoute
+          breadcrumb='Cap Table Management'
+          exact
+          path={IssuanceRoute.capTable}
+        >
+          <CapTable />
         </AppRoute>
       ) : null}
     </Switch>
