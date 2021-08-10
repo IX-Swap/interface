@@ -29,6 +29,7 @@ export function useSwapActionHandlers(): {
   onChangeRecipient: (recipient: string | null) => void
 } {
   const dispatch = useDispatch<AppDispatch>()
+
   const onCurrencySelection = useCallback(
     (field: Field, currency: Currency) => {
       dispatch(
