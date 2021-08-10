@@ -9,6 +9,7 @@ import { DataroomFileType } from 'config/dataroom'
 import { useFormContext } from 'react-hook-form'
 import { useUpdateBanner } from 'app/pages/admin/hooks/useUpdateBanner'
 import { useBannersList } from 'app/pages/admin/hooks/useBannersList'
+import Typography from '@material-ui/core/Typography'
 
 export const BannerBaseFields = () => {
   const { control, setValue, watch } = useFormContext()
@@ -63,6 +64,15 @@ export const BannerBaseFields = () => {
             title: title
           }}
         />
+        {isUploadBannerDisabled && (
+          <Typography
+            variant={'body1'}
+            style={{ color: '#D20000', marginTop: 8 }}
+          >
+            Maximum limit has reached to 5 images. Please remove any unnecessary
+            image before uploading new image.
+          </Typography>
+        )}
       </Grid>
     </Grid>
   )
