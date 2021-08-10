@@ -8,12 +8,15 @@ import { documentValueExtractor } from 'app/components/DSO/utils'
 import { DataroomFileType } from 'config/dataroom'
 import { useFormContext } from 'react-hook-form'
 import { useUpdateBanner } from 'app/pages/admin/hooks/useUpdateBanner'
+import { useBannersList } from 'app/pages/admin/hooks/useBannersList'
 
 export const BannerBaseFields = () => {
   const { control, setValue, watch } = useFormContext()
   const title = watch('title')
   const banner = watch('banner')
   const [updateBanner, { isLoading }] = useUpdateBanner(banner)
+  const { data } = useBannersList()
+  const isUploadBannerDisabled = data !== undefined && data.length >= 5
 
   return (
     <Grid container>
@@ -52,6 +55,7 @@ export const BannerBaseFields = () => {
           fullWidth
           type={'banner'}
           name='banner'
+          disabled={isUploadBannerDisabled}
           control={control}
           valueExtractor={documentValueExtractor}
           accept={DataroomFileType.image}

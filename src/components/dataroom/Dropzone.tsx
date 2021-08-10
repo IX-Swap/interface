@@ -24,6 +24,7 @@ export interface DropzoneProps {
   accept?: DataroomFileType
   fullWidth?: boolean
   showAcceptable?: boolean
+  disabled?: boolean
   size?: number | [number, number] | [string, string]
   type?: 'banner' | 'document'
   uploadFunction?: any
@@ -41,6 +42,7 @@ export const Dropzone = (props: DropzoneProps) => {
     fullWidth = false,
     showAcceptable = false,
     size,
+    disabled = false,
     type = 'document'
   } = props
   const { watch } = useFormContext()
@@ -105,7 +107,7 @@ export const Dropzone = (props: DropzoneProps) => {
         className={container}
         {...(getRootProps() as any)}
       >
-        <input id={name} name={name} {...getInputProps()} />
+        <input id={name} name={name} {...getInputProps()} disabled={disabled} />
         <DropzoneDisplay
           multiple={multiple}
           hasError={hasError}
