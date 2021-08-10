@@ -1,3 +1,4 @@
+import { TradeAuthorization } from '@ixswap1/v2-sdk'
 import { ActionCreatorWithoutPayload, ActionCreatorWithPayload, createAction } from '@reduxjs/toolkit'
 import { SupportedLocale } from 'constants/locales'
 import { SecToken } from 'types/secToken'
@@ -28,10 +29,11 @@ export const updateUserDeadline = createAction<{ userDeadline: number }>('user/u
 export const addSerializedToken = createAction<{ serializedToken: SerializedToken }>('user/addSerializedToken')
 export const removeSerializedToken = createAction<{ chainId: number; address: string }>('user/removeSerializedToken')
 export const addSerializedPair = createAction<{ serializedPair: SerializedPair }>('user/addSerializedPair')
+export const saveAccount = createAction<{ account: string }>('user/saveAccount')
 export const removeSerializedPair =
   createAction<{ chainId: number; tokenAAddress: string; tokenBAddress: string }>('user/removeSerializedPair')
 export const toggleURLWarning = createAction<void>('app/toggleURLWarning')
-
+export const clearUserData = createAction<void>('user/clearData')
 export const fetchUserSecTokenList: Readonly<{
   pending: ActionCreatorWithoutPayload
   fulfilled: ActionCreatorWithPayload<{ tokenList: SecToken[] }>
@@ -41,7 +43,7 @@ export const fetchUserSecTokenList: Readonly<{
   fulfilled: createAction('user/fetchUserSecTokenList/fulfilled'),
   rejected: createAction('user/fetchUserSecTokenList/rejected'),
 }
-
+export const saveUserSecTokens = createAction<{ tokenList: SecToken[] }>('user/saveUserSecTokens')
 export const passAccreditation: Readonly<{
   pending: ActionCreatorWithoutPayload
   fulfilled: ActionCreatorWithoutPayload
@@ -50,4 +52,14 @@ export const passAccreditation: Readonly<{
   pending: createAction('user/passAccreditation/pending'),
   fulfilled: createAction('user/passAccreditation/fulfilled'),
   rejected: createAction('user/passAccreditation/rejected'),
+}
+
+export const authorizeSecToken: Readonly<{
+  pending: ActionCreatorWithoutPayload
+  fulfilled: ActionCreatorWithPayload<{ data: { address: string; authorization: TradeAuthorization } }>
+  rejected: ActionCreatorWithPayload<{ errorMessage: string }>
+}> = {
+  pending: createAction('user/authorizeSecToken/pending'),
+  fulfilled: createAction('user/authorizeSecToken/fulfilled'),
+  rejected: createAction('user/authorizeSecToken/rejected'),
 }

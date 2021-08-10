@@ -41,7 +41,7 @@ export const WithdrawRequestForm = ({ currency, changeModal }: Props) => {
   const onClick = () => {
     const tokenId = (secTokens[cid ?? ''] as any)?.tokenInfo?.id
     if (tokenId && !error && parsedAmount && !inputError) {
-      withdraw({ id: tokenId, amount: Number(parsedAmount?.toSignificant(5)), onSuccess, onError, receiver })
+      withdraw({ id: tokenId, amount: Number(parsedAmount?.toSignificant(18)), onSuccess, onError, receiver })
     }
   }
   const onSuccess = () => {

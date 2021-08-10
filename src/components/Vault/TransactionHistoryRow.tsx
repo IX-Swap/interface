@@ -63,7 +63,9 @@ export const TransactionHistoryRow = ({ row, key, icon }: Props) => {
       <td width="25%">
         <RowStart>
           <DesktopAndTablet>
-            <TYPE.subHeader1 color={'text1'}>{formattedDate}</TYPE.subHeader1>
+            <Box width="115px">
+              <TYPE.subHeader1 color={'text1'}>{formattedDate}</TYPE.subHeader1>
+            </Box>
           </DesktopAndTablet>
           <Box marginLeft="1rem" display="flex" justifyContent="center">
             <IconWrapper size={20}>

@@ -3,6 +3,7 @@ import { SECURITY_TOKENS } from 'config'
 import ApeModeQueryParamReader from 'hooks/useApeModeQueryParamReader'
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
+import { useAccount } from 'state/user/hooks'
 import styled from 'styled-components/macro'
 import { routes } from 'utils/routes'
 import GoogleAnalyticsReporter from '../components/analytics/GoogleAnalyticsReporter'
@@ -56,6 +57,7 @@ const Marginer = styled.div`
 
 export default function App() {
   const isSettingsOpen = useModalOpen(ApplicationModal.SETTINGS)
+  useAccount()
   return (
     <ErrorBoundary>
       <Route component={GoogleAnalyticsReporter} />
