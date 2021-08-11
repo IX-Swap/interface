@@ -31,6 +31,17 @@ export const VestingWrapper = styled.div`
      align-items: center
   `};
 `
+export const StackingWrapper = styled.div`
+  display: flex;
+  padding-top: 42px;
+  gap: 90px;
+  flex-wrap: wrap;
+  justify-content: center;
+  ${({ theme }) => theme.mediaWidth.upToMedium`
+     flex-direction: column;
+     align-items: center
+  `};
+`
 export const VestingBackground = styled.div`
   border-radius: 30px;
   padding: 32px 32px 45px 32px;
@@ -80,4 +91,24 @@ export const VestingContractDetails = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
+`
+
+export const StackingTokenCard = styled.div`
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-radius: 30px;
+  display: flex;
+  background: ${({ theme }) => theme.bgG15};
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 32px;
+  padding-bottom: 70px;
+  height: 330px;
+  width: 294px;
+`
+export const TokenDescriptionWrapper = styled(Box)`
+  display: flex;
+  flex-direction: column;
+  height: 330px;
 `
