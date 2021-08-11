@@ -57,23 +57,10 @@ test.describe('Set value more that current balance', () => {
     expect(poolConf).toBe(true)
   })
 
-  test('Check that the SWAP can`t be created when not enough funds', async ({ page, ixSwap }) => {
-    await ixSwap.setTypeOfCurrency()
-    await typeText(swap.field.CURRENCY_INPUT, amounts.moreThaCurrent, page)
-    const swapConf = await page.isDisabled(swap.button.SWAP)
-    expect(swapConf).toBe(true)
-  })
-
   test('Check that crypto can`t be add to the pool when not enough funds', async ({ page, ixSwap }) => {
     await ixSwap.addToCurrentLiquidityPool(amounts.moreThaCurrent, false)
     const poolConf = await page.isDisabled(pool.button.SUPPLY)
     expect(poolConf).toBe(true)
-  })
-
-  test('Check token search on the Swap page(invalid crypto)', async ({ page }) => {
-    await click(swap.button.OUT_CURRENCY, page)
-    await typeText(swap.field.SEARCH_INPUT, '1D2AI1', page)
-    await shouldExist('text="No results found."', page)
   })
 })
 
@@ -145,21 +132,10 @@ test.describe('Check the behave when balance = 0', () => {
       await makeScreenOnError(testInfo.title, 'error', page)
     }
   })
-  test('Check that the SWAP is not available', async ({ page, ixSwap }) => {
-    await ixSwap.setTypeOfCurrency()
-    await typeText(swap.field.CURRENCY_INPUT, amounts.base, page)
-    const swapConf = await page.isDisabled(swap.button.SWAP)
-    expect(swapConf).toBe(true)
-  })
+
   test('Check that "Create pool" is not available', async ({ page, ixSwap }) => {
     await ixSwap.createPool(amounts.base)
     const swapConf = await page.isDisabled(pool.button.SUPPLY)
     expect(swapConf).toBe(true)
-  })
-
-  test('The "Needs accreditation" notification appears', async ({ page }) => {
-    await click(swap.button.OUT_CURRENCY, page)
-    const notification = await page.isVisible('text="Needs accreditation"')
-    expect(notification).toBe(true)
   })
 })

@@ -44,12 +44,18 @@ module.exports = {
   },
   settings: { button: { OPEN_SETTINGS: '[id="open-settings-dialog-button"]' } },
   securityToken: {
+    TABLE_ROW: getTestAttribute('row'),
+    DEPOSIT_POPUP: getTestAttribute('depositPopup'),
+
     button: {
       OPEN_SECURITY: '[id="stake-nav-link"]',
       TOKEN_ROW: getTestAttribute('custodian-sec-token-info'),
       ACCREDITATION: getTestAttribute('pass-kyc-and-accreditation'),
       DEPOSIT: getTestAttribute('deposit'),
+      WITHDRAW: getTestAttribute('withdraw'),
       CREATE_DEPOSIT: 'text="Create deposit request"',
+      WITHDRAW_APPROVE: 'text="Send"',
+
       CANCEL: getTestAttribute('cancel'),
     },
   },

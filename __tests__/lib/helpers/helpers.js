@@ -145,7 +145,17 @@ module.exports = {
       throw new Error(`Selector: ${selector} does not exist`)
     }
   },
-
+  async shouldNotExist(selector, page) {
+    try {
+      await page.waitForSelector(selector, {
+        state: 'detached',
+        timeout: TIMEOUT,
+      })
+      return true
+    } catch {
+      throw new Error(`Selector: ${selector} exist but should not `)
+    }
+  },
   getCount: async (selector, page) => {
     const links = await page.$$eval(selector, (selector) => selector.length)
     return links

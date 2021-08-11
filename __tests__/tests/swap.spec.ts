@@ -12,6 +12,7 @@ import {
   getValue,
   screenshotMatching,
   typeText,
+  shouldExist,
 } from '../lib/helpers/helpers'
 import { amounts, notifications } from '../lib/helpers/text-helpers'
 
@@ -46,56 +47,7 @@ test.afterEach(async ({ page, context }, testInfo) => {
   }
 })
 
-test.describe('Check pool functions', () => {
-  test('Check that the pool can be created', async ({ page, context, metaMask, ixSwap }) => {
-    await ixSwap.createPool(amounts.base)
-    await metaMask.signAgreement(context)
-    // await context.pages()[1].click(auth.buttons.SIGN)
-    await click(pool.button.SUPPLY, page)
-    const secondPage = await waitNewPage(page, context, pool.button.CREATE_OR_SUPPLY)
-    await metaMask.confirmOperation(secondPage)
-    await waitForText(`Add ${amounts.base} ETH and`, page)
-    const after = await getEthBalance()
-    expect(Number(before)).toBeGreaterThan(Number(after))
-    // 'Check that the IXS-LT added to the balance'
-    const ixsBalance = await getBalanceOtherCurrency(metamask.contractAddresses.ixsLt)
-    expect(Number(ixsBalance)).toBeGreaterThan(0)
-  })
-
-  test('Check that crypto can be add to the pool', async ({ page, context, metaMask, ixSwap }) => {
-    await navigate(ixswap.URL, page)
-    await ixSwap.addToCurrentLiquidityPool(amounts.addToPool, false)
-    // await metaMask.signAgreement(context)
-    await click(pool.button.SUPPLY, page)
-    // await metaMask.signAgreement(context)
-    const secondPage = await waitNewPage(page, context, pool.button.CREATE_OR_SUPPLY)
-    await metaMask.confirmOperation(secondPage)
-    await waitForText(`Add ${amounts.addToPool} ETH and`, page)
-    const after = await getEthBalance()
-    expect(Number(after)).toBeLessThan(Number(before))
-  })
-
-  test('Check that the pool can be removed', async ({ page, context, metaMask, ixSwap }) => {
-    await ixSwap.removePool()
-    const secondPage = await ixSwap.removePoolFull({ page, context })
-    await metaMask.confirmOperation(secondPage)
-    await waitForText(notifications.REMOVE_POOL, page)
-    await page.waitForTimeout(5000)
-    const after = await getEthBalance()
-    expect(Number(after)).toBeGreaterThan(Number(before))
-    // 'Check that the IXS-LT removed from the balance'
-    const ixsBalance = await getBalanceOtherCurrency(metamask.contractAddresses.ixsLt)
-    expect(Number(ixsBalance)).toBe(0)
-  })
-})
-
 test.describe('Check swap functions', () => {
-  test.afterEach(async ({ page, context }, testInfo) => {
-    if (testInfo.status === 'failed') {
-      await makeScreenOnError(testInfo.title, 'error', page)
-      await makeScreenOnError(`Metamask${testInfo.title}`, 'metamaskPage', context.pages()[1])
-    }
-  })
   test('Check that the ETH can be exchanged for DAI', async ({ page, context, metaMask, ixSwap }) => {
     await ixSwap.setTypeOfCurrency()
     await ixSwap.currencyExchange(amounts.base)
@@ -124,5 +76,57 @@ test.describe('Check swap functions', () => {
     await typeText(swap.field.SEARCH_INPUT, 'DAI', page)
     const tokenTitle = await page.isVisible('[title="Dai Stablecoin"]')
     expect(tokenTitle).toBe(true)
+  })
+})
+
+test.describe('Set value more that current balance', () => {
+  test.beforeEach(async ({ context, page, metaMask }) => {
+    await metaMask.fullConnection(context, page, metamask.SECRET_WORDS, metamask.contractAddresses.eth)
+    before = await getEthBalance()
+    await navigate(ixswap.URL, page)
+  })
+  test('The test instead beforeAll hook--> Create pool', async ({ page, ixSwap, metaMask, context }) => {
+    await ixSwap.createPool(amounts.base)
+    await click(pool.button.SUPPLY, page)
+    const secondPage = await waitNewPage(page, context, pool.button.CREATE_OR_SUPPLY)
+    await metaMask.confirmOperation(secondPage)
+    await waitForText(`Add ${amounts.base} ETH and`, page)
+  })
+
+  test('Check that the POOL can`t be created when not enough funds', async ({ page, ixSwap }) => {
+    await ixSwap.createPool(amounts.moreThaCurrent)
+    const poolConf = await page.isDisabled(pool.button.SUPPLY)
+    expect(poolConf).toBe(true)
+  })
+
+  test('Check that the SWAP can`t be created when not enough funds', async ({ page, ixSwap }) => {
+    await ixSwap.setTypeOfCurrency()
+    await typeText(swap.field.CURRENCY_INPUT, amounts.moreThaCurrent, page)
+    const swapConf = await page.isDisabled(swap.button.SWAP)
+    expect(swapConf).toBe(true)
+  })
+})
+
+test.describe('Run tests in expert mode', () => {
+  test.beforeEach(async ({ context, page, metaMask, ixSwap }) => {
+    await metaMask.fullConnection(context, page, metamask.SECRET_WORDS, metamask.contractAddresses.eth)
+    await ixSwap.setExpertMode(page)
+    before = await getEthBalance()
+  })
+
+  test('Check that the DAI added to the output ', async ({ page, ixSwap }) => {
+    const outPutField = await ixSwap.setTypeOfCurrency(page)
+    expect(outPutField).toContain('DAI')
+    await screenshotMatching('swapPage', expect, page)
+  })
+
+  test('Check that the crypto currency exchange successful', async ({ page, context, metaMask, ixSwap }) => {
+    await ixSwap.setTypeOfCurrency()
+    await typeText(swap.field.CURRENCY_INPUT, amounts.base, page)
+    const secondPage = await waitNewPage(page, context, swap.button.SWAP)
+    const swapConf = await page.isHidden(swap.button.CONFIRM_SWAP)
+    expect(swapConf).toBe(true)
+    await metaMask.confirmOperation(secondPage)
+    await waitForText(`Swap ${amounts.base} ETH for`, page)
   })
 })

@@ -9,7 +9,7 @@ module.exports = {
     REMOVE_POOL: 'Remove',
   },
 
-  amounts: { base: '0.001', moreThaCurrent: '10000', addToPool: '0.001' },
+  amounts: { base: '0.001', moreThaCurrent: '10000', addToPool: '0.001', securityTokens: 2 },
 
   // Default ABI setting for get balance ERC20 type
   Abi: [

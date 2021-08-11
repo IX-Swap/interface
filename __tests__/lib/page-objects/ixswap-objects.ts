@@ -1,4 +1,4 @@
-import { click, typeText, waitForText, navigate, waitNewPage } from '../helpers/helpers.js'
+import { click, typeText, waitForText, shouldNotExist, waitNewPage } from '../helpers/helpers.js'
 import { expect } from '@playwright/test'
 import { amounts } from '../helpers/text-helpers'
 
@@ -78,6 +78,24 @@ class SwapIX {
   createDeposit = async ({ page }) => {
     await click(securityToken.button.DEPOSIT, page)
     await typeText(pool.field.TOKEN_AMOUNT, '10000', page)
+    await click(securityToken.button.CREATE_DEPOSIT, page)
+  }
+
+  cancelDeposit = async ({ page }) => {
+    await page.mouse.click(0, 0)
+    await shouldNotExist(securityToken.DEPOSIT_POPUP, page)
+    await click(securityToken.TABLE_ROW, page)
+    await click(securityToken.button.CANCEL, page)
+    await page.waitForTimeout(5000)
+    await shouldNotExist(securityToken.DEPOSIT_POPUP, page)
+    await page.waitForTimeout(5000)
+    const texts = await page.innerText(securityToken.TABLE_ROW)
+    expect(texts).toContain('Cancelled')
+  }
+
+  createWithdraw = async ({ page }) => {
+    await click(securityToken.button.WITHDRAW, page)
+    await typeText(pool.field.TOKEN_AMOUNT, '2', page)
     await click(securityToken.button.CREATE_DEPOSIT, page)
   }
 }

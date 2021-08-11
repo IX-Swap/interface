@@ -29,4 +29,24 @@ async function getBlockNumber(address = metamask.contractAddresses.eth) {
   const result = await web3.eth.getBlock(number)
   return result
 }
-export { getBalanceOtherCurrency, getBlockNumber, getEthBalance }
+
+async function sendCrypto({ addressFrom, addressTo, privKey }) {
+  console.log(`Attempting to make transaction from ${addressFrom} to ${addressTo}`)
+
+  const createTransaction = await web3.eth.accounts.signTransaction(
+    {
+      from: addressFrom,
+      to: addressTo,
+      value: web3.utils.toWei('1', 'ether'),
+      gasPrice: '20000000000',
+      gas: '21000',
+    },
+    privKey
+  )
+
+  // Deploy transaction
+  const createReceipt = await web3.eth.sendSignedTransaction(createTransaction.rawTransaction)
+  console.log(`Transaction successful with hash: ${createReceipt.transactionHash}`)
+}
+
+export { getBalanceOtherCurrency, getBlockNumber, getEthBalance, sendCrypto }

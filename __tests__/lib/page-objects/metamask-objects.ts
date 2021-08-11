@@ -31,14 +31,14 @@ class Metamask {
     await typeText(auth.field.SECRET_PHRASE, secretWords, page)
     await typeText(auth.field.PASSWORD, metamask.PASSWORD, page)
     await typeText(auth.field.PASSWORD_CONF, metamask.PASSWORD, page)
-    await page.waitForTimeout(3000)
+    await page.waitForTimeout(1000)
     await click(auth.checkbox.I_READ_AGREE, page)
-    await page.waitForTimeout(3000)
+    await page.waitForTimeout(1000)
 
     await click(auth.buttons.SUBMIT, page)
     try {
-      await page.waitForSelector(auth.buttons.GET_STARTED, { timeout: 30000 })
-      await click(auth.buttons.GET_STARTED, page)
+      await page.waitForSelector('text="All Done"', { timeout: 30000 })
+      await click('text="All Done"', page)
     } catch {}
 
     await click(auth.buttons.QR_POPOVER_CLOSE, page)
