@@ -48,14 +48,14 @@ export const DepositPopup = ({ currency }: Props) => {
       maxHeight={'fit-content'}
       mobileMaxHeight={90}
     >
-      <ModalBlurWrapper>
+      <ModalBlurWrapper data-testid="depositPopup">
         <ModalContentWrapper>
           <ModalPadding>
             <RowBetween>
               <TYPE.title5>
                 <Trans>Deposit</Trans>
               </TYPE.title5>
-              <CloseIcon onClick={onClose} />
+              <CloseIcon data-testid="cross" onClick={onClose} />
             </RowBetween>
             {modalView === DepositModalView.CREATE_REQUEST && (
               <DepositRequestForm currency={currency} setModalView={setModalView} />
