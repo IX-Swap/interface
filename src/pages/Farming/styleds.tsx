@@ -68,8 +68,16 @@ export const VestingTextWrapper = styled(Box)`
   width: 180px;
   align-self: center;
 `
-export const VestingTableTitle = styled.div``
+export const VestingTableTitle = styled.div`
+  opacity: 0.5;
+  text-align: left;
+`
 export const ChartParent = styled.div`
   height: 320px;
+  width: 100%;
+`
+export const VestingContractDetails = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 100%;
 `
