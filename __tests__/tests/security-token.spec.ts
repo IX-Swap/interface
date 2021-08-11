@@ -38,25 +38,17 @@ test.describe('Functionality testing', () => {
     await click(securityToken.button.OPEN_SECURITY, page)
     // await context.pages()[1].click(auth.buttons.SIGN)
   })
-  test.only('Create deposit', async ({ page, context }) => {
+  test('Create deposit', async ({ page, context, ixSwap }) => {
     await click(securityToken.button.TOKEN_ROW, page)
     const metamaskPage = await waitNewPage(page, context, securityToken.button.ACCREDITATION)
     await click(auth.buttons.SIGN, metamaskPage)
-    await click(securityToken.button.DEPOSIT, page)
-    await typeText(pool.field.TOKEN_AMOUNT, '10000', page)
-    await click(securityToken.button.CREATE_DEPOSIT, page)
+    await ixSwap.createDeposit({ page })
   })
-})
 
-test.describe('Check without accreditation', () => {
-  test.beforeEach(async ({ context, page, metaMask }) => {
-    await metaMask.fullConnection(context, page, metamask2.SECRET_WORDS, metamask2.contractAddresses.eth)
-    await navigate(ixswap.URL, page)
-    await context.pages()[1].click(auth.buttons.SIGN)
-  })
-  test('The "Needs accreditation" notification appears', async ({ page }) => {
-    await click(swap.button.OUT_CURRENCY, page)
-    const notification = await page.isVisible('text="Needs accreditation"')
-    expect(notification).toBe(true)
+  test.only('Create deposit(click on Cancel)', async ({ page, context, ixSwap }) => {
+    await click(securityToken.button.TOKEN_ROW, page)
+    const metamaskPage = await waitNewPage(page, context, securityToken.button.ACCREDITATION)
+    await click(auth.buttons.SIGN, metamaskPage)
+    await ixSwap.createDeposit({ page })
   })
 })

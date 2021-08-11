@@ -1,8 +1,16 @@
 import { test as base } from '../lib/fixture'
 import { expect } from '@playwright/test'
 import { ixswap, metamask, metamask2 } from '../lib/helpers/credentials'
-import { click, waitForText, typeText, waitNewPage, makeScreenOnError, navigate } from '../lib/helpers/helpers'
-import { amounts } from '../lib/helpers/text-helpers'
+import {
+  click,
+  waitForText,
+  typeText,
+  waitNewPage,
+  makeScreenOnError,
+  navigate,
+  shouldExist,
+} from '../lib/helpers/helpers'
+import { amounts, notifications } from '../lib/helpers/text-helpers'
 
 import { getBalanceOtherCurrency, getEthBalance } from '../lib/helpers/web3-helpers'
 import { SwapIX } from '../lib/page-objects/ixswap-objects'
@@ -61,6 +69,12 @@ test.describe('Set value more that current balance', () => {
     const poolConf = await page.isDisabled(pool.button.SUPPLY)
     expect(poolConf).toBe(true)
   })
+
+  test('Check token search on the Swap page(invalid crypto)', async ({ page }) => {
+    await click(swap.button.OUT_CURRENCY, page)
+    await typeText(swap.field.SEARCH_INPUT, '1D2AI1', page)
+    await shouldExist('text="No results found."', page)
+  })
 })
 
 test.describe('Cancel poll transaction', () => {
@@ -116,7 +130,7 @@ test.describe('Cancel poll transaction', () => {
     await ixSwap.removePool()
     const secondPage = await ixSwap.removePoolFull({ page, context })
     await metaMask.confirmOperation(secondPage)
-    await waitForText(`Remove 0.0`, page)
+    await waitForText(notifications.REMOVE_POOL, page)
   })
 })
 
@@ -141,5 +155,11 @@ test.describe('Check the behave when balance = 0', () => {
     await ixSwap.createPool(amounts.base)
     const swapConf = await page.isDisabled(pool.button.SUPPLY)
     expect(swapConf).toBe(true)
+  })
+
+  test('The "Needs accreditation" notification appears', async ({ page }) => {
+    await click(swap.button.OUT_CURRENCY, page)
+    const notification = await page.isVisible('text="Needs accreditation"')
+    expect(notification).toBe(true)
   })
 })

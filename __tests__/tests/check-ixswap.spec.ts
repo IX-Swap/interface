@@ -13,7 +13,7 @@ import {
   screenshotMatching,
   typeText,
 } from '../lib/helpers/helpers'
-import { amounts } from '../lib/helpers/text-helpers'
+import { amounts, notifications } from '../lib/helpers/text-helpers'
 
 import { getBalanceOtherCurrency, getEthBalance } from '../lib/helpers/web3-helpers'
 import { SwapIX } from '../lib/page-objects/ixswap-objects'
@@ -76,11 +76,11 @@ test.describe('Check pool functions', () => {
   })
 
   test('Check that the pool can be removed', async ({ page, context, metaMask, ixSwap }) => {
-    before = await getEthBalance()
     await ixSwap.removePool()
     const secondPage = await ixSwap.removePoolFull({ page, context })
     await metaMask.confirmOperation(secondPage)
-    await waitForText(`Remove 0.0`, page)
+    await waitForText(notifications.REMOVE_POOL, page)
+    await page.waitForTimeout(5000)
     const after = await getEthBalance()
     expect(Number(after)).toBeGreaterThan(Number(before))
     // 'Check that the IXS-LT removed from the balance'
@@ -121,8 +121,8 @@ test.describe('Check swap functions', () => {
 
   test('Check token search on the Swap page', async ({ page }) => {
     await click(swap.button.OUT_CURRENCY, page)
-    await typeText(swap.field.SEARCH_INPUT, 'KEKWU', page)
-    const tokenTitle = await page.isVisible('[title="KEKWU"]')
+    await typeText(swap.field.SEARCH_INPUT, 'DAI', page)
+    const tokenTitle = await page.isVisible('[title="Dai Stablecoin"]')
     expect(tokenTitle).toBe(true)
   })
 })

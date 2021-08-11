@@ -14,7 +14,7 @@ export const test = base.extend({
       headless: false,
       args: ARGS,
       timeout: 90000,
-      slowMo: 50,
+      // slowMo: 50,
       viewport: { width: 1720, height: 880 },
       ignoreHTTPSErrors: true,
       httpCredentials: {

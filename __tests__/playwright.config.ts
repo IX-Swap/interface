@@ -5,7 +5,7 @@ const config: PlaywrightTestConfig = {
   projects: [
     {
       name: 'Chromium',
-      retries: 0,
+      retries: 2,
       timeout: 90000,
       use: {
         headless: false,

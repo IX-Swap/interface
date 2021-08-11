@@ -5,7 +5,7 @@ import { metamask } from './credentials'
 import { Abi } from './text-helpers'
 
 // const web3 = new Web3(provider(`wss://rinkeby.infura.io/ws/v3/${INFURA_ID}`))
-const web3 = new Web3(new Web3.providers.HttpProvider(`https://rinkeby.infura.io/v3/${INFURA_ID}`))
+const web3 = new Web3(new Web3.providers.HttpProvider(`https://kovan.infura.io/v3/${INFURA_ID}`))
 
 async function getBalanceOtherCurrency(address) {
   try {

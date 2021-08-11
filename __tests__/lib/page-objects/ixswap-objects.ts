@@ -2,7 +2,7 @@ import { click, typeText, waitForText, navigate, waitNewPage } from '../helpers/
 import { expect } from '@playwright/test'
 import { amounts } from '../helpers/text-helpers'
 
-import { pool, swap } from '../selectors/ixswap'
+import { pool, swap, securityToken } from '../selectors/ixswap'
 import { auth } from '../selectors/metamask'
 import { Metamask } from '../page-objects/metamask-objects'
 
@@ -66,10 +66,6 @@ class SwapIX {
     await page.waitForTimeout(1000)
     await click('[data-testid="turn-on-expert-mode"]', page)
     await page.waitForTimeout(1000)
-
-    // } catch (error) {
-    // await makeScreenOnError('setExpertMode', error, page)
-    // }
   }
   removePoolFull = async ({ page, context }) => {
     let secondPage = await waitNewPage(page, context, pool.button.APPROVE_REMOVE_LIQUIDITY)
@@ -77,6 +73,12 @@ class SwapIX {
     await click(pool.button.REMOVE, page)
     secondPage = await waitNewPage(page, context, pool.button.CONFIRM_REMOVE)
     return secondPage
+  }
+
+  createDeposit = async ({ page }) => {
+    await click(securityToken.button.DEPOSIT, page)
+    await typeText(pool.field.TOKEN_AMOUNT, '10000', page)
+    await click(securityToken.button.CREATE_DEPOSIT, page)
   }
 }
 export { SwapIX }

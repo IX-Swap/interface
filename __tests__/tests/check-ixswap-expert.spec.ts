@@ -11,7 +11,7 @@ import {
   screenshotMatching,
   makeScreenOnError,
 } from '../lib/helpers/helpers'
-import { amounts } from '../lib/helpers/text-helpers'
+import { amounts, notifications } from '../lib/helpers/text-helpers'
 
 import { getBalanceOtherCurrency, getEthBalance } from '../lib/helpers/web3-helpers'
 import { SwapIX } from '../lib/page-objects/ixswap-objects'
@@ -60,14 +60,13 @@ test.describe('Run tests in expert mode', () => {
     const swapConf = await page.isHidden(swap.button.CONFIRM_SWAP)
     expect(swapConf).toBe(true)
     await metaMask.confirmOperation(secondPage)
-    await click(swap.button.CLOSE_ADD_CURRENCY_POPOVER, page)
     await waitForText(`Swap ${amounts.base} ETH for`, page)
   })
 
   test('Check that the pool can be created', async ({ page, context, metaMask, ixSwap }) => {
     await ixSwap.createPool(amounts.base)
     const secondPage = await waitNewPage(page, context, pool.button.SUPPLY)
-    await click(auth.buttons.SIGN, secondPage)
+    // await click(auth.buttons.SIGN, secondPage)
     await metaMask.confirmOperation(secondPage)
     await waitForText(`Add ${amounts.base} ETH and`, page)
     const after = await getEthBalance()
@@ -76,7 +75,6 @@ test.describe('Run tests in expert mode', () => {
 
   test('Check that crypto can be add to the pool', async ({ page, context, metaMask, ixSwap }) => {
     await navigate(ixswap.URL, page)
-    before = await getEthBalance()
     await ixSwap.addToCurrentLiquidityPool(amounts.addToPool, false)
     const secondPage = await waitNewPage(page, context, pool.button.SUPPLY)
     await metaMask.confirmOperation(secondPage)
@@ -86,15 +84,14 @@ test.describe('Run tests in expert mode', () => {
   })
 
   test('Check that the pool can be removed', async ({ page, context, metaMask, ixSwap }) => {
-    before = await getEthBalance()
     await ixSwap.removePool()
     let secondPage = await waitNewPage(page, context, pool.button.APPROVE_REMOVE_LIQUIDITY)
     await click(auth.buttons.GET_STARTED + '[2]', secondPage)
     await click(pool.button.REMOVE, page)
     secondPage = await waitNewPage(page, context, pool.button.CONFIRM_REMOVE)
     await metaMask.confirmOperation(secondPage)
-    await waitForText(`Remove 0.0`, page)
-    // await page.waitForTimeout(5000)
+    await waitForText(notifications.REMOVE_POOL, page)
+    await page.waitForTimeout(5000)
     const after = await getEthBalance()
     expect(Number(after)).toBeGreaterThan(Number(before))
   })

@@ -6,6 +6,7 @@ module.exports = {
   },
   notifications: {
     ADD_GROUP: 'This may take up to 30 seconds. Please wait and then refresh the page.',
+    REMOVE_POOL: 'Remove',
   },
 
   amounts: { base: '0.001', moreThaCurrent: '10000', addToPool: '0.001' },

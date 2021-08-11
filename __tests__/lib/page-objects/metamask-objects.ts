@@ -20,10 +20,10 @@ class Metamask {
 
   loginToMetamask = async (secretWords, page = this.page) => {
     await click(auth.buttons.GET_STARTED, page)
-    try {
-      await page.waitForSelector('text="All Done"', { timeout: 3000 })
-      await click('text="All Done"', page)
-    } catch {}
+    // try {
+    //   await page.waitForSelector('text="All Done"', { timeout: 3000 })
+    //   await click('text="All Done"', page)
+    // } catch {}
     await click(auth.buttons.IMPORT_WALLET, page)
 
     await click(auth.buttons.CONFIRM, page)
@@ -31,10 +31,16 @@ class Metamask {
     await typeText(auth.field.SECRET_PHRASE, secretWords, page)
     await typeText(auth.field.PASSWORD, metamask.PASSWORD, page)
     await typeText(auth.field.PASSWORD_CONF, metamask.PASSWORD, page)
-
+    await page.waitForTimeout(3000)
     await click(auth.checkbox.I_READ_AGREE, page)
+    await page.waitForTimeout(3000)
+
     await click(auth.buttons.SUBMIT, page)
-    await click(auth.buttons.GET_STARTED, page)
+    try {
+      await page.waitForSelector(auth.buttons.GET_STARTED, { timeout: 30000 })
+      await click(auth.buttons.GET_STARTED, page)
+    } catch {}
+
     await click(auth.buttons.QR_POPOVER_CLOSE, page)
     await click(auth.buttons.ETH_ENV, page)
     await click(auth.buttons.KOVAN_ENV, page)
@@ -50,9 +56,9 @@ class Metamask {
         await context.pages()[0].close()
       }
       const metamaskPage = (await context.pages())[1]
-      if (topUp) {
-        await getRequest(`http://rinkeby-faucet.com/send?address=${address}`)
-      }
+      // if (topUp) {
+      //   await getRequest(`http://rinkeby-faucet.com/send?address=${address}`)
+      // }
       await this.loginToMetamask(secretWords, metamaskPage)
       await page.reload()
       await metamaskPage.close()
@@ -62,7 +68,7 @@ class Metamask {
       await waitUntil(() => context.pages()[1] != undefined, { timeout: 10000 })
       await click(auth.buttons.NEXT, (await context.pages())[1])
       await click(auth.buttons.CONFIRM, (await context.pages())[1])
-      await page.waitForTimeout(10000)
+      await page.waitForTimeout(1000)
       await this.signAgreement(context)
       await page.waitForTimeout(1000)
 

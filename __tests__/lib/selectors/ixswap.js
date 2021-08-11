@@ -50,6 +50,7 @@ module.exports = {
       ACCREDITATION: getTestAttribute('pass-kyc-and-accreditation'),
       DEPOSIT: getTestAttribute('deposit'),
       CREATE_DEPOSIT: 'text="Create deposit request"',
+      CANCEL: getTestAttribute('cancel'),
     },
   },
 }
