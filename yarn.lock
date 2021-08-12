@@ -2475,10 +2475,10 @@
     tiny-invariant "^1.1.0"
     toformat "^2.0.0"
 
-"@ixswap1/v2-core@1.0.2":
-  version "1.0.2"
-  resolved "https://registry.npmjs.org/@ixswap1/v2-core/-/v2-core-1.0.2.tgz#42426f20dcc1f54a106b28eb480c3e422e82b4c0"
-  integrity sha512-YTh5wZnNyH++C6NTSLa5lMJtB6Q+j5kTkLSbHveJlTuSz8Y8AzzKYfk38CiBHABHVN6qUk7Sk2Hy5GrAsFxr0Q==
+"@ixswap1/v2-core@1.0.3":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@ixswap1/v2-core/-/v2-core-1.0.3.tgz#9bab6098174d643887a74aeb69984f140b1fbd0f"
+  integrity sha512-S19Orh+qmAOv1ht55NaeMbZdefhnRVEXX5zl/opX5UI98gJn2IUkBuvmb/2DMswl6rmro9JF5GXdAfOqYhm79Q==
   dependencies:
     "@openzeppelin/contracts" "^2.0.0"
 

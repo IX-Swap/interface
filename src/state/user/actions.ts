@@ -56,7 +56,7 @@ export const passAccreditation: Readonly<{
 
 export const authorizeSecToken: Readonly<{
   pending: ActionCreatorWithoutPayload
-  fulfilled: ActionCreatorWithPayload<{ data: { address: string; authorization: TradeAuthorization } }>
+  fulfilled: ActionCreatorWithoutPayload
   rejected: ActionCreatorWithPayload<{ errorMessage: string }>
 }> = {
   pending: createAction('user/authorizeSecToken/pending'),
