@@ -13,9 +13,6 @@ export const MasDisclosureConfirmDialog = ({
   onClose,
   open
 }: MasDisclosureConfirmDialogProps) => {
-  const title = 'Do You Want to Update the Disclosure?'
-  const bodyText = 'New disclosure will be displayed on the exchange screen'
-
   const { watch } = useFormContext()
   const content = watch('content')
 
@@ -30,17 +27,19 @@ export const MasDisclosureConfirmDialog = ({
     }
   }
 
-  const confirmLabel = 'Confirm'
-
   return (
     <Dialog open={open} disablePortal>
       <Box py='40px' px='60px' textAlign='center'>
         <Grid container direction='column' spacing={2}>
           <Grid item>
-            <Typography variant='subtitle1'>{title}</Typography>
+            <Typography variant='subtitle1'>
+              Do You Want to Update the Disclosure?
+            </Typography>
           </Grid>
           <Grid item>
-            <Typography variant='body1'>{bodyText}</Typography>
+            <Typography variant='body1'>
+              New disclosure will be displayed on the exchange screen
+            </Typography>
           </Grid>
           <Grid item>
             <VSpacer size='small' />
@@ -64,7 +63,7 @@ export const MasDisclosureConfirmDialog = ({
                   disableElevation
                   onClick={handleSubmit}
                 >
-                  {confirmLabel}
+                  Confirm
                 </Button>
               </Grid>
             </Grid>
