@@ -13,6 +13,7 @@ import { Switch } from 'react-router'
 import { VirtualAccounts } from 'app/pages/admin/pages/VirtualAccounts'
 import { UserRouter } from 'app/pages/admin/router/UserRouter'
 import { MasDisclosure } from 'app/pages/admin/pages/MasDisclosure'
+import { Banner } from 'app/pages/admin/pages/Banner'
 
 export const AdminRouter = () => {
   return (
@@ -73,6 +74,10 @@ export const AdminRouter = () => {
         breadcrumb='MAS Disclosure'
       >
         <MasDisclosure />
+      </AppRoute>
+
+      <AppRoute exact path={AdminRoute.banner} breadcrumb='Banner'>
+        <Banner />
       </AppRoute>
 
       <AppRoute exact path={AdminRoute.landing}>
