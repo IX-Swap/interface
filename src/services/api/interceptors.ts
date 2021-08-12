@@ -1,6 +1,8 @@
 import { AxiosResponse } from 'axios'
 import { APIResponse } from 'services/api/types'
 import { errorCodes, errors } from './errorCodes'
+import storageService from 'services/storage'
+import socketService from 'services/socket'
 
 class APIError extends Error {
   code: string
@@ -20,6 +22,14 @@ export const responseErrorInterceptor = (error: any) => {
   } else {
     message = error.message
     code = error.code ?? error.name
+  }
+
+  if (error.response.data.code === 'RWCO-IHJ78K') {
+    storageService.remove('user')
+    storageService.remove('visitedUrl')
+    storageService.remove('notificationFilter')
+    socketService.disconnect()
+    window.location.replace('/')
   }
 
   throw new APIError(message, code)
