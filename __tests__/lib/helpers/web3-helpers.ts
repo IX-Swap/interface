@@ -1,5 +1,4 @@
 import Web3 from 'web3'
-import provider from 'eth-provider'
 const INFURA_ID = process.env.REACT_APP_INFURA_KEY
 import { metamask } from './credentials'
 import { Abi } from './text-helpers'
@@ -30,14 +29,14 @@ async function getBlockNumber(address = metamask.contractAddresses.eth) {
   return result
 }
 
-async function sendCrypto({ addressFrom, addressTo, privKey }) {
+async function sendCrypto({ addressFrom, addressTo, privKey, amount, cryptoType }) {
   console.log(`Attempting to make transaction from ${addressFrom} to ${addressTo}`)
 
   const createTransaction = await web3.eth.accounts.signTransaction(
     {
       from: addressFrom,
       to: addressTo,
-      value: web3.utils.toWei('1', 'ether'),
+      value: web3.utils.toWei(amount, cryptoType),
       gasPrice: '20000000000',
       gas: '21000',
     },

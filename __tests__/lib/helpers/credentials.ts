@@ -27,10 +27,13 @@ const metamask3 = {
     eth: '0x2203004aBaCADda2E561380dD863FC479a90A43e',
   },
 }
+const forDeposit = {
+  sendToKostodian: '0x8eC74c3B5d61d7f64b7eB267587709BAb4C0C737',
+}
 const ixswap = {
   URL: 'http://localhost:3000/#/swap',
   // URL: 'http://dev.ixswap.io/',
   // URL: 'https://app.ixswap.io/#/swap',
 }
 
-export { metamask, ixswap, metamask2, metamask3 }
+export { metamask, ixswap, metamask2, metamask3, forDeposit }

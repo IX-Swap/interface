@@ -15,14 +15,19 @@ class SwapIX {
   }
 
   addToCurrentLiquidityPool = async (amount, forNewLiquidity = true) => {
-    await click(pool.button.POOL_SECTION, this.page)
-    await click(pool.button.OPEN_TABLE, this.page)
-    await click(pool.button.ADD_TO_LIQUIDITY, this.page)
-    await typeText(pool.field.TOKEN_AMOUNT, amount, this.page)
-    if (forNewLiquidity === true) {
-      await click(pool.button.SUPPLY, this.page)
-      await click(swap.button.CHOOSE_TOKEN, this.page)
-      await click(swap.button.DAI_CRYPTO, this.page)
+    try {
+      await click(pool.button.POOL_SECTION, this.page)
+      await click(pool.button.OPEN_TABLE, this.page)
+      await click(pool.button.ADD_TO_LIQUIDITY, this.page)
+      await typeText(pool.field.TOKEN_AMOUNT, amount, this.page)
+      if (forNewLiquidity === true) {
+        await click(pool.button.SUPPLY, this.page)
+        await click(swap.button.CHOOSE_TOKEN, this.page)
+        await click(swap.button.DAI_CRYPTO, this.page)
+      }
+    } catch (error) {
+      console.log(error)
+      throw new Error(`Add To Current Liquidity Pool`)
     }
   }
   connectToWallet = async () => {
@@ -77,7 +82,7 @@ class SwapIX {
 
   createDeposit = async ({ page }) => {
     await click(securityToken.button.DEPOSIT, page)
-    await typeText(pool.field.TOKEN_AMOUNT, '10000', page)
+    await typeText(pool.field.TOKEN_AMOUNT, '2', page)
     await click(securityToken.button.CREATE_DEPOSIT, page)
   }
 

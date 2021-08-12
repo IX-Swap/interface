@@ -197,7 +197,7 @@ module.exports = {
 
   waitForText: async (text, page) => {
     try {
-      await page.waitForSelector(`//*[contains(text(),"${text}")]`, { timeout: 120000 })
+      await page.waitForSelector(`//*[contains(text(),"${text}")]`, { timeout: 80000 })
     } catch (error) {
       console.error(error)
       throw new Error(`No text appears ${text} `)

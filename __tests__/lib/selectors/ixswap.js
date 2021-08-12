@@ -24,6 +24,9 @@ module.exports = {
       MAX: 'button >> text="Max"',
       CHOOSE_TOKEN: "text ='Choose token'",
       MANAGE_LIST_TOKEN: getTestAttribute('list-token-manage-button'),
+      VIEW_ON_EXPLORER: "text='View on Explorer'",
+      MY_ACCOUNT: '[id="web3-status-connected"]',
+      CLEAR_ALL: 'button >> text="Clear all"',
     },
   },
   pool: {

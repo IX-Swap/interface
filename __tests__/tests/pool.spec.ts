@@ -38,11 +38,11 @@ test.beforeEach(async ({ context, page, metaMask }) => {
 })
 
 test.afterEach(async ({ page, context }, testInfo) => {
-  if (testInfo.status === 'failed') {
+  if (testInfo.status === 'failed' || testInfo.status === 'timedOut') {
     await makeScreenOnError(testInfo.title, 'error', page)
     await makeScreenOnError(`Metamask${testInfo.title}`, 'metamaskPage', context.pages()[1])
-    await page.close()
   }
+  await page.close()
 })
 
 test.describe('Check pool functions', () => {
@@ -52,7 +52,7 @@ test.describe('Check pool functions', () => {
     await click(pool.button.SUPPLY, page)
     const secondPage = await waitNewPage(page, context, pool.button.CREATE_OR_SUPPLY)
     await metaMask.confirmOperation(secondPage)
-    await waitForText(`Add ${amounts.base} ETH and`, page)
+    await waitForText(`Add ${amounts.base}`, page)
     const after = await getEthBalance()
     expect(Number(before)).toBeGreaterThan(Number(after))
     // 'Check that the IXS-LT added to the balance'
@@ -66,7 +66,7 @@ test.describe('Check pool functions', () => {
     await click(pool.button.SUPPLY, page)
     const secondPage = await waitNewPage(page, context, pool.button.CREATE_OR_SUPPLY)
     await metaMask.confirmOperation(secondPage)
-    await waitForText(`Add ${amounts.addToPool} ETH and`, page)
+    await waitForText(`Add ${amounts.addToPool}`, page)
     const after = await getEthBalance()
     expect(Number(after)).toBeLessThan(Number(before))
   })
@@ -76,7 +76,7 @@ test.describe('Check pool functions', () => {
     const secondPage = await ixSwap.removePoolFull({ page, context })
     await metaMask.confirmOperation(secondPage)
     await waitForText(notifications.REMOVE_POOL, page)
-    await page.waitForTimeout(5000)
+    await page.waitForTimeout(10000)
     const after = await getEthBalance()
     expect(Number(after)).toBeGreaterThan(Number(before))
     // 'Check that the IXS-LT removed from the balance'
@@ -87,7 +87,6 @@ test.describe('Check pool functions', () => {
 
 test.describe('Run tests in expert mode', () => {
   test.beforeEach(async ({ context, page, metaMask, ixSwap }) => {
-    await metaMask.fullConnection(context, page, metamask.SECRET_WORDS, metamask.contractAddresses.eth)
     await ixSwap.setExpertMode(page)
     before = await getEthBalance()
   })
@@ -97,7 +96,7 @@ test.describe('Run tests in expert mode', () => {
     const secondPage = await waitNewPage(page, context, pool.button.SUPPLY)
     // await click(auth.buttons.SIGN, secondPage)
     await metaMask.confirmOperation(secondPage)
-    await waitForText(`Add ${amounts.base} ETH and`, page)
+    await waitForText(`Add ${amounts.base}`, page)
     const after = await getEthBalance()
     expect(Number(before)).toBeGreaterThan(Number(after))
   })
@@ -107,7 +106,7 @@ test.describe('Run tests in expert mode', () => {
     await ixSwap.addToCurrentLiquidityPool(amounts.addToPool, false)
     const secondPage = await waitNewPage(page, context, pool.button.SUPPLY)
     await metaMask.confirmOperation(secondPage)
-    await waitForText(`Add ${amounts.addToPool} ETH and`, page)
+    await waitForText(`Add ${amounts.addToPool}`, page)
     const after = await getEthBalance()
     expect(Number(after)).toBeLessThan(Number(before))
   })
@@ -120,7 +119,7 @@ test.describe('Run tests in expert mode', () => {
     secondPage = await waitNewPage(page, context, pool.button.CONFIRM_REMOVE)
     await metaMask.confirmOperation(secondPage)
     await waitForText(notifications.REMOVE_POOL, page)
-    await page.waitForTimeout(5000)
+    await page.waitForTimeout(7000)
     const after = await getEthBalance()
     expect(Number(after)).toBeGreaterThan(Number(before))
   })

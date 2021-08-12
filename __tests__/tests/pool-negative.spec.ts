@@ -32,16 +32,23 @@ const test = base.extend<{ metaMask: Metamask; ixSwap: SwapIX }>({
 
 let before
 test.afterEach(async ({ page, context }, testInfo) => {
-  if (testInfo.status === 'failed') {
+  if (testInfo.status === 'failed' || testInfo.status === 'timedOut') {
     await makeScreenOnError(testInfo.title, 'error', page)
     await makeScreenOnError(`Metamask${testInfo.title}`, 'metamaskPage', context.pages()[1])
   }
+  await page.close()
 })
 test.describe('Set value more that current balance', () => {
   test.beforeEach(async ({ context, page, metaMask }) => {
     await metaMask.fullConnection(context, page, metamask.SECRET_WORDS, metamask.contractAddresses.eth)
     before = await getEthBalance()
     await navigate(ixswap.URL, page)
+  })
+
+  test('Check that the POOL can`t be created when not enough funds', async ({ page, ixSwap }) => {
+    await ixSwap.createPool(amounts.moreThaCurrent)
+    const poolConf = await page.isDisabled(pool.button.SUPPLY)
+    expect(poolConf).toBe(true)
   })
   test('The test instead beforeAll hook--> Create pool', async ({ page, ixSwap, metaMask, context }) => {
     await ixSwap.createPool(amounts.base)
@@ -50,13 +57,6 @@ test.describe('Set value more that current balance', () => {
     await metaMask.confirmOperation(secondPage)
     await waitForText(`Add ${amounts.base} ETH and`, page)
   })
-
-  test('Check that the POOL can`t be created when not enough funds', async ({ page, ixSwap }) => {
-    await ixSwap.createPool(amounts.moreThaCurrent)
-    const poolConf = await page.isDisabled(pool.button.SUPPLY)
-    expect(poolConf).toBe(true)
-  })
-
   test('Check that crypto can`t be add to the pool when not enough funds', async ({ page, ixSwap }) => {
     await ixSwap.addToCurrentLiquidityPool(amounts.moreThaCurrent, false)
     const poolConf = await page.isDisabled(pool.button.SUPPLY)

@@ -1,9 +1,9 @@
 import { test as base } from '../lib/fixture'
 
 import { expect } from '@playwright/test'
-import { ixswap, metamask2, metamask, metamask3 } from '../lib/helpers/credentials'
+import { ixswap, forDeposit, metamask, metamask3 } from '../lib/helpers/credentials'
 import { click, navigate, makeScreenOnError, shouldNotExist, waitNewPage } from '../lib/helpers/helpers'
-import { amounts } from '../lib/helpers/text-helpers'
+import { sendCrypto } from '../lib/helpers/web3-helpers'
 
 import { SwapIX } from '../lib/page-objects/ixswap-objects'
 import { Metamask } from '../lib/page-objects/metamask-objects'
@@ -36,10 +36,17 @@ test.describe('Functionality testing', () => {
     await click(securityToken.button.OPEN_SECURITY, page)
   })
   test('Create deposit', async ({ page, context, ixSwap }) => {
-    await click(securityToken.button.TOKEN_ROW, page)
-    const metamaskPage = await waitNewPage(page, context, securityToken.button.ACCREDITATION)
-    await click(auth.buttons.SIGN, metamaskPage)
-    await ixSwap.createDeposit({ page })
+    // await click(securityToken.button.TOKEN_ROW, page)
+    // const metamaskPage = await waitNewPage(page, context, securityToken.button.ACCREDITATION)
+    // await click(auth.buttons.SIGN, metamaskPage)
+    // await ixSwap.createDeposit({ page })
+    // await sendCrypto({
+    //   addressFrom: metamask.contractAddresses.eth,
+    //   addressTo: forDeposit.sendToKostodian,
+    //   privKey: metamask.privKey,
+    //   amount: '2',
+    //   cryptoType: 'ether',
+    // })
   })
 
   test('Cancel created deposit', async ({ page, context, ixSwap }) => {
@@ -48,7 +55,7 @@ test.describe('Functionality testing', () => {
     await click(auth.buttons.SIGN, metamaskPage)
     await ixSwap.createDeposit({ page })
     await click(securityToken.button.CANCEL, page)
-    await page.isDisabled(securityToken.DEPOSIT_POPUP)
+    await shouldNotExist(securityToken.DEPOSIT_POPUP, page)
     const texts = await page.innerText(securityToken.TABLE_ROW)
     expect(texts).toContain('Cancelled')
   })
@@ -61,10 +68,10 @@ test.describe('Functionality testing', () => {
     await ixSwap.cancelDeposit({ page })
   })
 
-  test.only('Test the ability to make withdraw', async ({ page, context, ixSwap }) => {
-    await click(securityToken.button.TOKEN_ROW, page)
-    const metamaskPage = await waitNewPage(page, context, securityToken.button.ACCREDITATION)
-    await click(auth.buttons.SIGN, metamaskPage)
-    await ixSwap.createWithdraw({ page })
-  })
+  // test('Test the ability to make withdraw', async ({ page, context, ixSwap }) => {
+  //   await click(securityToken.button.TOKEN_ROW, page)
+  //   const metamaskPage = await waitNewPage(page, context, securityToken.button.ACCREDITATION)
+  //   await click(auth.buttons.SIGN, metamaskPage)
+  //   await ixSwap.createWithdraw({ page })
+  // })
 })

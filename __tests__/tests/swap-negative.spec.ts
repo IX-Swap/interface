@@ -3,20 +3,9 @@ import { auth } from '../lib/selectors/metamask'
 
 import { expect } from '@playwright/test'
 import { ixswap, metamask, metamask2 } from '../lib/helpers/credentials'
-import {
-  click,
-  navigate,
-  waitForText,
-  waitNewPage,
-  makeScreenOnError,
-  getValue,
-  screenshotMatching,
-  typeText,
-  shouldExist,
-} from '../lib/helpers/helpers'
+import { click, navigate, makeScreenOnError, typeText, shouldExist } from '../lib/helpers/helpers'
 import { amounts, notifications } from '../lib/helpers/text-helpers'
 
-import { getBalanceOtherCurrency, getEthBalance } from '../lib/helpers/web3-helpers'
 import { SwapIX } from '../lib/page-objects/ixswap-objects'
 import { Metamask } from '../lib/page-objects/metamask-objects'
 import { swap, pool } from '../lib/selectors/ixswap'
@@ -32,8 +21,6 @@ const test = base.extend<{ metaMask: Metamask; ixSwap: SwapIX }>({
   },
 })
 
-let before
-
 test.afterEach(async ({ page, context }, testInfo) => {
   if (testInfo.status === 'failed') {
     await makeScreenOnError(testInfo.title, 'error', page)
@@ -45,7 +32,6 @@ test.afterEach(async ({ page, context }, testInfo) => {
 test.describe('Check swap functions', () => {
   test.beforeEach(async ({ context, page, metaMask }) => {
     await metaMask.fullConnection(context, page, metamask.SECRET_WORDS, metamask.contractAddresses.eth)
-    before = await getEthBalance()
     await navigate(ixswap.URL, page)
   })
 
