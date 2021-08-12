@@ -4,7 +4,7 @@ import { errorCodes, errors } from './errorCodes'
 import storageService from 'services/storage'
 import socketService from 'services/socket'
 
-class APIError extends Error {
+export class APIError extends Error {
   code: string
   constructor(message: string, code?: string) {
     super()
@@ -24,7 +24,7 @@ export const responseErrorInterceptor = (error: any) => {
     code = error.code ?? error.name
   }
 
-  if (error.response.data.code === 'RWCO-IHJ78K') {
+  if (error.response?.data.code === 'RWCO-IHJ78K') {
     storageService.remove('user')
     storageService.remove('visitedUrl')
     storageService.remove('notificationFilter')
