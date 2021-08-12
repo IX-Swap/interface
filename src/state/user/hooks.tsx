@@ -1,8 +1,8 @@
-import { Currency, Percent, Token, TradeType } from '@ixswap1/sdk-core'
+import { Currency, CurrencyAmount, Percent, Token, TradeType } from '@ixswap1/sdk-core'
 import { Pair, Trade as V2Trade, TradeAuthorizationDigest } from '@ixswap1/v2-sdk'
 import { useWeb3React } from '@web3-react/core'
 import { SupportedLocale } from 'constants/locales'
-import { BigNumber, utils } from 'ethers'
+import { useV2Pair } from 'hooks/useV2Pairs'
 import JSBI from 'jsbi'
 import flatMap from 'lodash.flatmap'
 import { useCallback, useEffect, useMemo, useState } from 'react'
@@ -16,13 +16,11 @@ import {
   listToSecTokenMap,
   SecTokenAddressMap,
   useAreBothSecTokens,
-  useIsSecToken,
   useSecTokenId,
   useSecTokensFromMap,
 } from 'state/secTokens/hooks'
 import { SecToken } from 'types/secToken'
 import { currencyId } from 'utils/currencyId'
-import { toHex } from 'utils/toHex'
 import { BASES_TO_TRACK_LIQUIDITY_FOR, PINNED_PAIRS } from '../../constants/routing'
 import { useAllTokens } from '../../hooks/Tokens'
 import { useActiveWeb3React } from '../../hooks/web3'
@@ -361,57 +359,58 @@ export const fetchTokenAuthorization = async (tokenId: number, amount0: string, 
   return result.data
 }
 
-export const useGetTokenAuthorization = ({ address }: { address: string }) => {
-  const tokenId = useSecTokenId({ currencyId: address })
+export const useGetTokenAuthorization = () => {
   const dispatch = useDispatch<AppDispatch>()
 
   return useCallback(
-    async ({ amount0, amount1 }: { amount0?: string; amount1?: string }) => {
+    async ({ amount0, amount1, tokenId }: { amount0?: string; amount1?: string; tokenId?: number }) => {
       if (!tokenId || !amount0 || !amount1) return null
       dispatch(authorizeSecToken.pending())
       try {
         const result = await fetchTokenAuthorization(tokenId, amount0, amount1)
-        dispatch(authorizeSecToken.fulfilled({ data: { address, authorization: result.data } }))
-        return result.data
+        dispatch(authorizeSecToken.fulfilled())
+        return result
       } catch (e) {
         dispatch(authorizeSecToken.rejected({ errorMessage: e.message }))
         return null
       }
     },
-    [dispatch, tokenId, address]
+    [dispatch]
   )
+}
+
+const getStringAmount = (amount: CurrencyAmount<Currency>) => {
+  const num = amount.numerator
+  const denum = amount.denominator
+  const division = JSBI.divide(num, denum)
+  return String(division)
 }
 
 export function useSwapAuthorization(
   trade: V2Trade<Currency, Currency, TradeType> | undefined,
   allowedSlippage: Percent
 ) {
-  const id0 = trade?.inputAmount?.currency ? currencyId(trade?.inputAmount?.currency) : ''
-  const id1 = trade?.outputAmount?.currency ? currencyId(trade?.outputAmount?.currency) : ''
-  const amount0 = trade?.inputAmount?.toSignificant(18)
-  const amount1 = trade?.outputAmount?.toSignificant(18)
-  // const amount0 = trade ? utils.hexlify(trade?.maximumAmountIn(allowedSlippage)) : ''
-  // const amount1 = trade ? utils.hexlify(trade?.minimumAmountOut(allowedSlippage)) : ''
-  const getAuthorization0 = useGetTokenAuthorization({ address: id0 })
-  const getAuthorization1 = useGetTokenAuthorization({ address: id1 })
-  const isSecToken0 = useIsSecToken(id0)
-  const isSecToken1 = useIsSecToken(id1)
+  const inputToken = trade?.inputAmount?.currency
+  const outputToken = trade?.outputAmount?.currency
+  const [, pair] = useV2Pair(inputToken ?? undefined, outputToken ?? undefined)
+  const tokenId0 = useSecTokenId({ currencyId: pair?.token0?.address })
+  const tokenId1 = useSecTokenId({ currencyId: pair?.token1?.address })
+  const getAuthorization = useGetTokenAuthorization()
   const [authorization, setAuthorization] = useState<TradeAuthorizationDigest>()
+  const amount0 = trade ? getStringAmount(trade?.maximumAmountIn(allowedSlippage)) : ''
+  const amount1 = trade ? getStringAmount(trade?.minimumAmountOut(allowedSlippage)) : ''
+  const firstIsSec = (pair?.token0 as any)?.isSecToken
+
   useEffect(() => {
-    if (isSecToken0) {
-      fetchAuthorization0()
-    } else if (isSecToken1) {
-      fetchAuthorization1()
+    if (amount0 && amount1 && pair?.isSecurity) {
+      fetchAuthorization()
     }
-    async function fetchAuthorization0() {
-      const result = await getAuthorization0({ amount0, amount1 })
-      setAuthorization([result, null])
+    async function fetchAuthorization() {
+      const usedToken = firstIsSec ? tokenId0 : tokenId1
+      const result = await getAuthorization({ amount0, amount1, tokenId: usedToken })
+      setAuthorization(firstIsSec ? [result, null] : [null, result])
     }
-    async function fetchAuthorization1() {
-      const result = await getAuthorization1({ amount0, amount1 })
-      setAuthorization([null, result])
-    }
-  }, [getAuthorization0, getAuthorization1, isSecToken1, isSecToken0, amount0, amount1])
+  }, [amount0, amount1, getAuthorization, pair?.isSecurity, firstIsSec, tokenId0, tokenId1, allowedSlippage])
   return authorization
 }
 

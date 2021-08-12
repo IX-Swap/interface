@@ -1,19 +1,19 @@
 import { BigNumber } from '@ethersproject/bignumber'
-import { t } from '@lingui/macro'
-import { Router, Trade as V2Trade } from '@ixswap1/v2-sdk'
 import { Currency, Percent, TradeType } from '@ixswap1/sdk-core'
+import { Router, Trade as V2Trade } from '@ixswap1/v2-sdk'
+import { t } from '@lingui/macro'
 import { useMemo } from 'react'
-import { calculateGasMargin } from '../utils/calculateGasMargin'
-import approveAmountCalldata from '../utils/approveAmountCalldata'
+import { useSwapAuthorization } from 'state/user/hooks'
 import { useTransactionAdder } from '../state/transactions/hooks'
 import { isAddress, shortenAddress } from '../utils'
+import approveAmountCalldata from '../utils/approveAmountCalldata'
+import { calculateGasMargin } from '../utils/calculateGasMargin'
 import isZero from '../utils/isZero'
-import { useActiveWeb3React } from './web3'
 import { useArgentWalletContract } from './useArgentWalletContract'
 import { useV2RouterContract } from './useContract'
-import useTransactionDeadline from './useTransactionDeadline'
 import useENS from './useENS'
-import { useSwapAuthorization } from 'state/user/hooks'
+import useTransactionDeadline from './useTransactionDeadline'
+import { useActiveWeb3React } from './web3'
 
 export enum SwapCallbackState {
   INVALID,
@@ -61,11 +61,11 @@ function useSwapCallArguments(
   const routerContract = useV2RouterContract()
   const argentWalletContract = useArgentWalletContract()
   const authorization = useSwapAuthorization(trade, allowedSlippage)
+
   const usedAuthorization =
     authorization && (authorization[0] !== null || authorization[1] !== null) ? authorization : undefined
   return useMemo(() => {
     if (!trade || !recipient || !library || !account || !chainId || !deadline) return []
-
     if (!routerContract) return []
     const swapMethods = []
     const options = {
@@ -174,7 +174,6 @@ export function useSwapCallback(
   recipientAddressOrName: string | null // the ENS name or address of the recipient of the trade, or null if swap should be returned to sender
 ): { state: SwapCallbackState; callback: null | (() => Promise<string>); error: string | null } {
   const { account, chainId, library } = useActiveWeb3React()
-
   const swapCalls = useSwapCallArguments(trade, allowedSlippage, recipientAddressOrName)
 
   const addTransaction = useTransactionAdder()
