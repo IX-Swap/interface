@@ -1,0 +1,76 @@
+import { Box, Button, Dialog, Grid, Typography } from '@material-ui/core'
+import { VSpacer } from 'components/VSpacer'
+import React from 'react'
+import { useCreateOrUpdateMASDisclosure } from 'app/pages/exchange/hooks/useCreateOrUpdateMASDisclosure'
+import { useFormContext } from 'react-hook-form'
+
+export interface MasDisclosureConfirmDialogProps {
+  onClose: () => void
+  open: boolean
+}
+
+export const MasDisclosureConfirmDialog = ({
+  onClose,
+  open
+}: MasDisclosureConfirmDialogProps) => {
+  const title = 'Do You Want to Update the Disclosure?'
+  const bodyText = 'New disclosure will be displayed on the exchange screen'
+
+  const { watch } = useFormContext()
+  const content = watch('content')
+
+  const [
+    createOrUpdateMasDisclosure,
+    { status }
+  ] = useCreateOrUpdateMASDisclosure()
+  const handleSubmit = async () => {
+    await createOrUpdateMasDisclosure({ content: content })
+    if (status !== 'loading' && status !== 'error') {
+      onClose()
+    }
+  }
+
+  const confirmLabel = 'Confirm'
+
+  return (
+    <Dialog open={open} disablePortal>
+      <Box py='40px' px='60px' textAlign='center'>
+        <Grid container direction='column' spacing={2}>
+          <Grid item>
+            <Typography variant='subtitle1'>{title}</Typography>
+          </Grid>
+          <Grid item>
+            <Typography variant='body1'>{bodyText}</Typography>
+          </Grid>
+          <Grid item>
+            <VSpacer size='small' />
+            <Grid container spacing={1} justify='center'>
+              <Grid item>
+                <Button
+                  onClick={onClose}
+                  type='button'
+                  variant='outlined'
+                  color='primary'
+                  disableElevation
+                >
+                  Cancel
+                </Button>
+              </Grid>
+              <Grid item>
+                <Button
+                  type='button'
+                  variant='contained'
+                  color='primary'
+                  disableElevation
+                  onClick={handleSubmit}
+                >
+                  {confirmLabel}
+                </Button>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Box>
+    </Dialog>
+  )
+}
