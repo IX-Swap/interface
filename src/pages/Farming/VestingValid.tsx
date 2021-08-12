@@ -19,13 +19,13 @@ export const VestingValid = () => {
           </TYPE.title6>
         </VestingTableTitle>
         <Column style={{ gap: '16px' }}>
-          <Column style={{}}>
+          <Column>
             <TYPE.body1>
               <Trans>Start Date</Trans>&nbsp;
             </TYPE.body1>
             <TYPE.titleSmall fontWeight={400}>05.06.2021, 9:00 am</TYPE.titleSmall>
           </Column>
-          <Column style={{}}>
+          <Column>
             <TYPE.body1>
               <Trans>Next Payment</Trans>&nbsp;
             </TYPE.body1>

@@ -468,3 +468,10 @@ export const Checkbox = ({ className, checked, ...rest }: { className?: string; 
     </StyledCheckbox>
   </CheckboxContainer>
 )
+
+export const TextGradient = styled.div`
+  background: ${({ theme }) => theme.bgG3};
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+`

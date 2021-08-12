@@ -1,6 +1,6 @@
 import { IconWrapper } from 'components/AccountDetails/styleds'
 import React from 'react'
-import { StackingTokenCard } from './styleds'
+import { StakingPromoCard } from './styleds'
 import { ReactComponent as IXSToken } from 'assets/images/IXS-token.svg'
 import { TYPE } from 'theme'
 import { Trans } from '@lingui/macro'
@@ -8,7 +8,7 @@ import { Box } from 'rebass'
 
 export const PromoTokenCard = () => {
   return (
-    <StackingTokenCard>
+    <StakingPromoCard>
       <IconWrapper size={75}>
         <IXSToken />
       </IconWrapper>
@@ -25,6 +25,6 @@ export const PromoTokenCard = () => {
       <Box marginTop={13}>
         <TYPE.main0>10%</TYPE.main0>
       </Box>
-    </StackingTokenCard>
+    </StakingPromoCard>
   )
 }
