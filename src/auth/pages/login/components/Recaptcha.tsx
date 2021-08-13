@@ -1,6 +1,7 @@
 import { Grid, Typography, Box } from '@material-ui/core'
+import { useVerifyCaptcha } from 'auth/hooks/useVerifyCaptcha'
 import { RECAPTCHA_KEY } from 'config'
-import React from 'react'
+import React, { useRef } from 'react'
 import Reaptcha from 'reaptcha'
 
 export interface RecaptchaProps {
@@ -8,10 +9,16 @@ export interface RecaptchaProps {
 }
 
 export const Recaptcha = ({ onVerify }: RecaptchaProps) => {
-  const handleVerify = (response: string) => {
-    setTimeout(() => {
-      onVerify()
-    }, 1000)
+  const captchRef = useRef<Reaptcha>(null)
+
+  const handleError = () => {
+    void captchRef.current?.reset()
+  }
+
+  const [verifyToken] = useVerifyCaptcha(handleError, onVerify)
+
+  const handleVerify = async (response: string) => {
+    await verifyToken(response)
   }
 
   return (
@@ -23,7 +30,13 @@ export const Recaptcha = ({ onVerify }: RecaptchaProps) => {
       </Grid>
       <Grid item xs={12}>
         <Box width='100%' display='flex' justifyContent='center'>
-          <Reaptcha sitekey={RECAPTCHA_KEY ?? ''} onVerify={handleVerify} />
+          <Reaptcha
+            ref={captchRef}
+            sitekey={RECAPTCHA_KEY ?? ''}
+            onVerify={handleVerify}
+            onError={handleError}
+            onExpire={handleError}
+          />
         </Box>
       </Grid>
     </Grid>
