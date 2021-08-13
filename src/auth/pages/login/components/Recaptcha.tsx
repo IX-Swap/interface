@@ -34,7 +34,6 @@ export const Recaptcha = ({ onVerify }: RecaptchaProps) => {
             ref={captchRef}
             sitekey={RECAPTCHA_KEY ?? ''}
             onVerify={handleVerify}
-            onError={handleError}
             onExpire={handleError}
           />
         </Box>
