@@ -7,7 +7,7 @@
     "@ethersproject/experimental": "^5.2.0",
     "@ixswap1/default-token-list": "^1.0.4",
     "@ixswap1/sdk-core": "^1.0.0",
-    "@ixswap1/v2-core": "1.0.2",
+    "@ixswap1/v2-core": "1.0.3",
     "@ixswap1/v2-periphery": "1.0.2",
     "@ixswap1/v2-sdk": "^1.0.7",
     "@lingui/cli": "^3.9.0",

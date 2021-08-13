@@ -244,20 +244,9 @@ export default createReducer(initialState, (builder) =>
       state.loadingSecTokenRequest = true
       state.secTokenError = null
     })
-    .addCase(
-      authorizeSecToken.fulfilled,
-      (
-        state,
-        {
-          payload: {
-            data: { address, authorization },
-          },
-        }
-      ) => {
-        state.loadingSecTokenRequest = false
-        state.secTokenAuthorizations[address] = authorization
-      }
-    )
+    .addCase(authorizeSecToken.fulfilled, (state) => {
+      state.loadingSecTokenRequest = false
+    })
     .addCase(authorizeSecToken.rejected, (state, { payload: { errorMessage } }) => {
       state.loadingSecTokenRequest = false
       state.secTokenError = errorMessage
