@@ -290,5 +290,6 @@ export const assetsURL = {
 }
 
 export const resources = {
-  getSiteConfig: () => '/resources/siteConfig'
+  getSiteConfig: '/resources/siteConfig',
+  createOrUpdateMasDisclosure: '/resources/siteConfig/masDisclosure'
 }

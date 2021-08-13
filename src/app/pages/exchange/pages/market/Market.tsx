@@ -29,6 +29,7 @@ export const Market = () => {
   const { data: config } = useGetSiteConfig()
   const hasReadMasDisclosure =
     config !== undefined ? config.hasReadMasDisclosure : false
+  const masDisclosure = config !== undefined ? config.masDisclosure : ''
 
   useEffect(() => {
     if (!hasReadMasDisclosure) {
@@ -80,6 +81,7 @@ export const Market = () => {
   return (
     <Box className={classes.container}>
       <DisclosureDialog
+        content={masDisclosure}
         isOpen={isDisclosureVisible}
         onClose={() => setIsDisclosureVisible(false)}
       />
