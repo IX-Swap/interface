@@ -23,10 +23,11 @@ const test = base.extend<{ metaMask: Metamask; ixSwap: SwapIX }>({
 })
 
 test.afterEach(async ({ page, context }, testInfo) => {
-  if (testInfo.status === 'failed') {
+  if (testInfo.status === 'failed' || testInfo.status === 'timedOut') {
     await makeScreenOnError(testInfo.title, 'error', page)
     await makeScreenOnError(`Metamask${testInfo.title}`, 'metamaskPage', context.pages()[1])
   }
+  await page.close()
 })
 
 test.describe('Functionality testing', () => {

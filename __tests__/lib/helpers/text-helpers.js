@@ -33,3 +33,11 @@ module.exports = {
     },
   ],
 }
+
+// {type: "auth/saveToken",
+//  payload: {
+//  value: {
+//  token: "",
+//  expiresAt: 1628846495
+//  } }
+// }

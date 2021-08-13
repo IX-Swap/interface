@@ -2,6 +2,7 @@ const { getTestAttribute } = require('../helpers/helpers')
 
 module.exports = {
   swap: {
+    TRANSACTION_POPUP: '[data-testid="TransactionPopup"]',
     field: {
       CURRENCY_OUTPUT: '//*[@id="swap-currency-output"]//INPUT',
       CURRENCY_INPUT: '//*[@id="swap-currency-input"]//INPUT',
@@ -21,6 +22,7 @@ module.exports = {
       ETH_CRYPTO: '[title="Ether"]',
       REPLACE_CRYPTO: getTestAttribute('currencyReplace'),
       TABLE_ROW: getTestAttribute('tableRow'),
+      CLOSE_POPUP: getTestAttribute('close'),
       MAX: 'button >> text="Max"',
       CHOOSE_TOKEN: "text ='Choose token'",
       MANAGE_LIST_TOKEN: getTestAttribute('list-token-manage-button'),
@@ -40,6 +42,7 @@ module.exports = {
       REMOVE: getTestAttribute('approve-currency-b-remove'),
       CONFIRM_REMOVE: getTestAttribute('confirm-remove'),
       ADD_TO_LIQUIDITY: getTestAttribute('add-to-liquidity'),
+      IMPORT: getTestAttribute('find-pool-button'),
       SUPPLY: getTestAttribute('supply'),
       CREATE_OR_SUPPLY: getTestAttribute('create-or-supply'),
     },

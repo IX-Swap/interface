@@ -10,10 +10,11 @@ test.describe('All page without Metamask connection ', () => {
     await navigate(ixswap.URL, page)
   })
   test.afterEach(async ({ page, context }, testInfo) => {
-    if (testInfo.status === 'failed') {
+    if (testInfo.status === 'failed' || testInfo.status === 'timedOut') {
       await makeScreenOnError(testInfo.title, 'error', page)
       await makeScreenOnError(`Metamask${testInfo.title}`, 'metamaskPage', context.pages()[1])
     }
+    await page.close()
   })
   test('Swap page', async ({ page }) => {
     await screenshotMatching('swapPage', expect, page)

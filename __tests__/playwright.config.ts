@@ -1,6 +1,8 @@
 // playwright.config.ts
 import { PlaywrightTestConfig } from '@playwright/test'
 const config: PlaywrightTestConfig = {
+  testDir: './e2e',
+  outputDir: './test-results',
   timeout: 90000,
   projects: [
     {

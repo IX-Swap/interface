@@ -40,16 +40,15 @@ test.beforeEach(async ({ context, page, metaMask }) => {
 })
 
 test.afterEach(async ({ page, context }, testInfo) => {
-  if (testInfo.status === 'failed') {
+  if (testInfo.status === 'failed' || testInfo.status === 'timedOut') {
     await makeScreenOnError(testInfo.title, 'error', page)
     await makeScreenOnError(`Metamask${testInfo.title}`, 'metamaskPage', context.pages()[1])
-    await page.close()
-    await context.pages()[1].close()
   }
+  await page.close()
 })
 
 test.describe('Check swap functions', () => {
-  test.only('Check that the ETH can be exchanged for DAI', async ({ page, context, metaMask, ixSwap }) => {
+  test('Check that the ETH can be exchanged for DAI', async ({ page, context, metaMask, ixSwap }) => {
     await ixSwap.setTypeOfCurrency()
     await ixSwap.currencyExchange(amounts.swap)
     const secondPage = await waitNewPage(page, context, swap.button.CONFIRM_SWAP)

@@ -1,10 +1,19 @@
 import { test as base } from '../lib/fixture'
+import { getBalanceOtherCurrency, getEthBalance } from '../lib/helpers/web3-helpers'
 import { auth } from '../lib/selectors/metamask'
 
 import { expect } from '@playwright/test'
 import { ixswap, metamask, metamask2 } from '../lib/helpers/credentials'
-import { click, navigate, makeScreenOnError, typeText, shouldExist } from '../lib/helpers/helpers'
-import { amounts, notifications } from '../lib/helpers/text-helpers'
+import {
+  click,
+  navigate,
+  makeScreenOnError,
+  typeText,
+  shouldExist,
+  waitNewPage,
+  screenshotMatching,
+} from '../lib/helpers/helpers'
+import { amounts } from '../lib/helpers/text-helpers'
 
 import { SwapIX } from '../lib/page-objects/ixswap-objects'
 import { Metamask } from '../lib/page-objects/metamask-objects'
@@ -22,11 +31,11 @@ const test = base.extend<{ metaMask: Metamask; ixSwap: SwapIX }>({
 })
 
 test.afterEach(async ({ page, context }, testInfo) => {
-  if (testInfo.status === 'failed') {
+  if (testInfo.status === 'failed' || testInfo.status === 'timedOut') {
     await makeScreenOnError(testInfo.title, 'error', page)
     await makeScreenOnError(`Metamask${testInfo.title}`, 'metamaskPage', context.pages()[1])
-    await page.close()
   }
+  await page.close()
 })
 
 test.describe('Check swap functions', () => {
@@ -46,6 +55,19 @@ test.describe('Check swap functions', () => {
     await click(swap.button.OUT_CURRENCY, page)
     await typeText(swap.field.SEARCH_INPUT, '1D2AI1', page)
     await shouldExist('text="No results found."', page)
+  })
+
+  test.only('Reject swap operation', async ({ page, ixSwap, context }, testInfo) => {
+    const before = await getEthBalance()
+    await ixSwap.setTypeOfCurrency()
+    await ixSwap.currencyExchange(amounts.swap)
+    const secondPage = await waitNewPage(page, context, swap.button.CONFIRM_SWAP)
+    await click(auth.buttons.CANCEL, secondPage)
+    await page.waitForSelector(swap.button.CLOSE_POPUP)
+    const elementHandle = await page.$(swap.TRANSACTION_POPUP)
+    await screenshotMatching(testInfo.title, expect, elementHandle)
+    const after = await getEthBalance()
+    expect(Number(before)).toEqual(Number(after))
   })
 })
 test.describe('Check the behave when balance = 0', () => {
