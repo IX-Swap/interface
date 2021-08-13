@@ -36,10 +36,39 @@ describe('SkipButton', () => {
     render(<SkipButton mutation={mutation} />)
   })
 
-  it('invokes mutate function with correct data', async () => {
-    const { container } = render(<SkipButton mutation={mutation} />)
+  it('opens and closes dialog boxes by pressing skip and cancel button respectively', async () => {
+    const { container, getByText, getByRole, queryByText } = render(
+      <SkipButton mutation={mutation} />
+    )
     const skipButton = container.querySelector('button') as HTMLButtonElement
     fireEvent.click(skipButton, { bubbles: true, cancellable: true })
+
+    expect(getByText('Are You Sure You Want To Skip This?')).toBeTruthy()
+
+    const cancelButton = getByRole('button', {
+      name: 'Cancel'
+    }) as HTMLButtonElement
+    fireEvent.click(cancelButton, { bubbles: true, cancellable: true })
+
+    await waitFor(
+      () => {
+        expect(queryByText('Are You Sure You Want To Skip This?')).toBeFalsy()
+      },
+      { timeout: 1000 }
+    )
+  })
+
+  it('opens dialog box and invokes mutate function with correct data', async () => {
+    const { container, getByText, getByRole } = render(
+      <SkipButton mutation={mutation} />
+    )
+    const skipButton = container.querySelector('button') as HTMLButtonElement
+    fireEvent.click(skipButton, { bubbles: true, cancellable: true })
+
+    expect(getByText('Are You Sure You Want To Skip This?')).toBeTruthy()
+
+    const yesButton = getByRole('button', { name: 'Yes' }) as HTMLButtonElement
+    fireEvent.click(yesButton, { bubbles: true, cancellable: true })
 
     await expect(save).toHaveBeenCalledWith(skippedPayload)
 
