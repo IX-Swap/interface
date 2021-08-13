@@ -14,6 +14,7 @@ describe('useVerifyCaptcha', () => {
     await act(async () => {
       const token = 'qwerty'
       const successCallback = jest.fn()
+      const errorCallback = jest.fn()
       const apiFn = jest
         .fn()
         .mockResolvedValueOnce(
@@ -22,7 +23,7 @@ describe('useVerifyCaptcha', () => {
       const apiObj = { post: apiFn }
 
       const { result } = renderHookWithServiceProvider(
-        () => useVerifyCaptcha(),
+        () => useVerifyCaptcha(errorCallback, successCallback),
         {
           apiService: apiObj
         }
@@ -36,6 +37,44 @@ describe('useVerifyCaptcha', () => {
             token: 'qwerty'
           })
           expect(successCallback).toHaveBeenCalled()
+        },
+        { timeout: 1000 }
+      )
+    })
+  })
+
+  it('calls api endpoint and error callback correctly ', async () => {
+    await act(async () => {
+      const token = 'qwerty'
+      const successCallback = jest.fn()
+      const errorCallback = jest.fn()
+      const apiFn = jest
+        .fn()
+        .mockRejectedValueOnce(
+          generateMutationResult({ queryStatus: QueryStatus.Error })
+        )
+      const apiObj = { post: apiFn }
+
+      const showSnackbar = jest.fn()
+      const snackbarObj = { showSnackbar: showSnackbar }
+
+      const { result } = renderHookWithServiceProvider(
+        () => useVerifyCaptcha(errorCallback, successCallback),
+        {
+          apiService: apiObj,
+          snackbarService: snackbarObj
+        }
+      )
+
+      await waitFor(
+        () => {
+          const [verify] = result.current
+          void verify(token)
+          expect(apiFn).toHaveBeenCalledWith('/auth/verify-captcha', {
+            token: 'qwerty'
+          })
+          expect(showSnackbar).toHaveBeenCalled()
+          expect(errorCallback).toHaveBeenCalled()
         },
         { timeout: 1000 }
       )
