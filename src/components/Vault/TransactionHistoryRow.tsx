@@ -39,7 +39,7 @@ export const TransactionHistoryRow = ({ row, key, icon }: Props) => {
     toggle()
   }, [toggle, dispatch, row])
   return (
-    <HistoryRowWraper key={`history-item-${key}`} onClick={() => openModal()}>
+    <HistoryRowWraper data-testid="row" key={`history-item-${key}`} onClick={() => openModal()}>
       <td>
         <TYPE.subHeader1 color={'text1'}>{ActionTypeText[row.type]}</TYPE.subHeader1>
       </td>

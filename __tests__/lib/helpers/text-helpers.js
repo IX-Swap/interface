@@ -6,9 +6,14 @@ module.exports = {
   },
   notifications: {
     ADD_GROUP: 'This may take up to 30 seconds. Please wait and then refresh the page.',
+    REMOVE_POOL: 'Remove',
+    CONNECTED: 'Connected with MetaMask',
+    TRANSACTIONS: 'Your transactions will appear here...',
   },
-  amounts: { base: '0.00001' },
+  urls: { kovanEtherscan: 'https://kovan.etherscan.io/address/' },
+  amounts: { base: '0.001', moreThaCurrent: '10000', addToPool: '0.001', securityTokens: 2, swap: '0.00000001' },
 
+  // Default ABI setting for get balance ERC20 type
   Abi: [
     // balanceOf
     {
@@ -28,3 +33,11 @@ module.exports = {
     },
   ],
 }
+
+// {type: "auth/saveToken",
+//  payload: {
+//  value: {
+//  token: "",
+//  expiresAt: 1628846495
+//  } }
+// }

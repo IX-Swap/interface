@@ -75,7 +75,7 @@ export const TransactionDetails = ({ currency }: Props) => {
       maxHeight={'fit-content'}
       mobileMaxHeight={90}
     >
-      <ModalBlurWrapper style={{ overflowY: 'scroll' }}>
+      <ModalBlurWrapper data-testid="depositPopup" style={{ overflowY: 'scroll' }}>
         <ModalContentWrapper>
           <ModalPadding>
             <RowBetween>
@@ -84,7 +84,7 @@ export const TransactionDetails = ({ currency }: Props) => {
                   {ActionTypeText[activeEvent.type]}&nbsp;{currency?.symbol}
                 </Trans>
               </TYPE.title5>
-              <CloseIcon onClick={toggle} />
+              <CloseIcon data-testid="cross" onClick={toggle} />
             </RowBetween>
             <div style={{ position: 'relative' }}>
               <Column style={{ marginTop: '20px' }}>
@@ -145,6 +145,7 @@ export const TransactionDetails = ({ currency }: Props) => {
                 {activeEvent.type === ActionTypes.DEPOSIT && isPendingDeposit(status) && (
                   <RowCenter style={{ marginTop: '45px', marginBottom: '45px' }}>
                     <ButtonGradientBorder
+                      data-testid="cancel"
                       style={{ width: '211px' }}
                       onClick={() => cancelDeposit({ requestId: activeEvent?.id, onSuccess })}
                     >

@@ -15,7 +15,7 @@
     "@lingui/macro": "^3.9.0",
     "@lingui/react": "^3.9.0",
     "@metamask/jazzicon": "^2.0.0",
-    "@playwright/test": "^1.12.3",
+    "@playwright/test": "^1.13.0",
     "@popperjs/core": "^2.4.4",
     "@reach/dialog": "^0.10.3",
     "@reach/portal": "^0.10.3",
@@ -72,6 +72,7 @@
     "babel-loader": "8.1.0",
     "cids": "^1.0.0",
     "copy-to-clipboard": "^3.2.0",
+    "concurrently": "^6.2.0",
     "cross-env": "^7.0.2",
     "dayjs": "^1.10.5",
     "eslint": "^7.11.0",
@@ -137,7 +138,7 @@
     "build": "yarn compile-contract-types && yarn i18n:extract && yarn i18n:compile && react-scripts build",
     "i18n:extract": "lingui extract --locale en-US",
     "i18n:compile": "lingui compile",
-    "integration-test": "npx playwright test __tests__/tests",
+    "integration-test": "concurrently \"yarn start\" \"wait-on http-get://localhost:3000 && xvfb-run npx playwright test /__tests__  --workers=1 --timeout 180000 \" --kill-others --success first",
     "postinstall": "yarn compile-contract-types",
     "start": "yarn compile-contract-types && react-scripts start",
     "storybook": "start-storybook -p 6006",
@@ -164,7 +165,9 @@
   "license": "GPL-3.0-or-later",
   "dependencies": {
     "async-wait-until": "^2.0.7",
+    "concurrently": "^6.2.0",
     "eth-provider": "^0.7.0",
+    "playwright": "^1.13.0",
     "truffle-privatekey-provider": "^1.2.0",
     "web3": "^1.4.0"
   }

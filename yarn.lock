@@ -3033,10 +3033,10 @@
     enc-utils "^3.0.0"
     randombytes "^2.1.0"
 
-"@playwright/test@^1.12.3":
-  version "1.12.3"
-  resolved "https://registry.yarnpkg.com/@playwright/test/-/test-1.12.3.tgz#178e5d84e4c97c339dd315bd265ab1af39275ef0"
-  integrity sha512-e8i8rMqd1nhdyW2ELShOc5F2EiLIcZs+2LRglrCAy/nzftpLdAqfsk6gp29n8N5KExIlzpKdoQ5QBviqGzT9DA==
+"@playwright/test@^1.13.0":
+  version "1.13.1"
+  resolved "https://registry.yarnpkg.com/@playwright/test/-/test-1.13.1.tgz#a040020d81227cf33fbe71b918578ed3b6e5bc8c"
+  integrity sha512-i8se6FK65hdbTzGMWnvPEaFoCh7DQ0XLKmaf2rWnh+ufhn4Ad/1jhdK8c6s4Mo87veTfd6N60fKCAWjyhbHyCg==
   dependencies:
     "@babel/code-frame" "^7.12.13"
     "@babel/core" "^7.14.0"
@@ -7984,6 +7984,21 @@ concat-stream@^1.5.0, concat-stream@^1.5.1, concat-stream@^1.6.2:
     inherits "^2.0.3"
     readable-stream "^2.2.2"
     typedarray "^0.0.6"
+
+concurrently@^6.2.0:
+  version "6.2.0"
+  resolved "https://registry.yarnpkg.com/concurrently/-/concurrently-6.2.0.tgz#587e2cb8afca7234172d8ea55176088632c4c56d"
+  integrity sha512-v9I4Y3wFoXCSY2L73yYgwA9ESrQMpRn80jMcqMgHx720Hecz2GZAvTI6bREVST6lkddNypDKRN22qhK0X8Y00g==
+  dependencies:
+    chalk "^4.1.0"
+    date-fns "^2.16.1"
+    lodash "^4.17.21"
+    read-pkg "^5.2.0"
+    rxjs "^6.6.3"
+    spawn-command "^0.0.2-1"
+    supports-color "^8.1.0"
+    tree-kill "^1.2.2"
+    yargs "^16.2.0"
 
 confusing-browser-globals@^1.0.10:
   version "1.0.10"
@@ -15781,6 +15796,26 @@ pkg-up@^2.0.0:
   dependencies:
     find-up "^2.1.0"
 
+playwright@^1.13.0:
+  version "1.13.1"
+  resolved "https://registry.yarnpkg.com/playwright/-/playwright-1.13.1.tgz#53c49244ffa7fc2d5d8bf7ce87739393206eda5e"
+  integrity sha512-pGbILcUV1+Yx0fcRJZBEIsqTDjQSwGYkJ4tVUQUtuAyMuHg5B++Nasl+pIeIJRMqKSWTyvZfPxJuPIGsLJgiFg==
+  dependencies:
+    commander "^6.1.0"
+    debug "^4.1.1"
+    extract-zip "^2.0.1"
+    https-proxy-agent "^5.0.0"
+    jpeg-js "^0.4.2"
+    mime "^2.4.6"
+    pngjs "^5.0.0"
+    progress "^2.0.3"
+    proper-lockfile "^4.1.1"
+    proxy-from-env "^1.1.0"
+    rimraf "^3.0.2"
+    stack-utils "^2.0.3"
+    ws "^7.4.6"
+    yazl "^2.5.1"
+
 plurals-cldr@^1.0.4:
   version "1.0.4"
   resolved "https://registry.npmjs.org/plurals-cldr/-/plurals-cldr-1.0.4.tgz"
@@ -18783,6 +18818,11 @@ space-separated-tokens@^1.0.0:
   resolved "https://registry.npmjs.org/space-separated-tokens/-/space-separated-tokens-1.1.5.tgz"
   integrity sha512-q/JSVd1Lptzhf5bkYm4ob4iWPjx0KiRe3sRFBNrVqbJkFaBm5vbbowy1mymoPNLRa52+oadOhJ+K49wsSeSjTA==
 
+spawn-command@^0.0.2-1:
+  version "0.0.2-1"
+  resolved "https://registry.yarnpkg.com/spawn-command/-/spawn-command-0.0.2-1.tgz#62f5e9466981c1b796dc5929937e11c9c6921bd0"
+  integrity sha1-YvXpRmmBwbeW3Fkpk34RycaSG9A=
+
 spdx-correct@^3.0.0:
   version "3.1.1"
   resolved "https://registry.npmjs.org/spdx-correct/-/spdx-correct-3.1.1.tgz"
@@ -19302,9 +19342,9 @@ supports-color@^7.0.0, supports-color@^7.1.0:
   dependencies:
     has-flag "^4.0.0"
 
-supports-color@^8.1.1:
+supports-color@^8.1.0, supports-color@^8.1.1:
   version "8.1.1"
-  resolved "https://registry.npmjs.org/supports-color/-/supports-color-8.1.1.tgz"
+  resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-8.1.1.tgz#cd6fc17e28500cff56c1b86c0a7fd4a54a73005c"
   integrity sha512-MpUEN2OodtUzxvKQl72cUF7RQ5EiHsGvSsVG0ia9c5RbWGL2CI4C7EpPS8UTBIplnlzZiNuV56w+FuNxy3ty2Q==
   dependencies:
     has-flag "^4.0.0"
@@ -19758,6 +19798,11 @@ tr46@^2.0.2:
   integrity sha512-3n1qG+/5kg+jrbTzwAykB5yRYtQCTqOGKq5U5PE3b0a1/mzo6snDhjGS0zJVJunO0NrT3Dg1MLy5TjWP/UJppg==
   dependencies:
     punycode "^2.1.1"
+
+tree-kill@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/tree-kill/-/tree-kill-1.2.2.tgz#4ca09a9092c88b73a7cdc5e8a01b507b0790a0cc"
+  integrity sha512-L0Orpi8qGpRG//Nd+H90vFB+3iHnue1zSSGmNOOCh1GLJ7rUKVwV2HvijphGQS2UmhUZewS9VgvxYIdgr+fG1A==
 
 trim-right@^1.0.1:
   version "1.0.1"

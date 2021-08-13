@@ -1,5 +1,5 @@
 const fetch = require('node-fetch')
-const TIMEOUT = 10000
+const TIMEOUT = 20000
 
 module.exports = {
   getRequest: async (link) => {
@@ -92,7 +92,7 @@ module.exports = {
 
   click: async (selector, page) => {
     try {
-      await page.waitForSelector(selector, { timeout: 30000 })
+      await page.waitForSelector(selector, { timeout: 40000 })
       await page.click(selector)
     } catch {
       throw new Error(`Could not click on selector: ${selector}`)
@@ -132,10 +132,10 @@ module.exports = {
     }
   },
 
-  waitForValue: async (selector, value, page) => {
+  getValue: async (selector, page) => {
     await page.waitForSelector(selector, { timeout: TIMEOUT })
     const result = await page.evaluate((selector) => document.querySelector(selector).getAttribute('value'), selector)
-    if (result !== value) throw new Error(`Value: ${value} not found for selector: ${selector}`)
+    return result
   },
 
   shouldExist: async (selector, page) => {
@@ -145,7 +145,17 @@ module.exports = {
       throw new Error(`Selector: ${selector} does not exist`)
     }
   },
-
+  async shouldNotExist(selector, page) {
+    try {
+      await page.waitForSelector(selector, {
+        state: 'detached',
+        timeout: TIMEOUT,
+      })
+      return true
+    } catch {
+      throw new Error(`Selector: ${selector} exist but should not `)
+    }
+  },
   getCount: async (selector, page) => {
     const links = await page.$$eval(selector, (selector) => selector.length)
     return links
@@ -178,7 +188,7 @@ module.exports = {
     }
   },
 
-  screenshotMatching: async (name, expect, page, range = 0.5) => {
+  screenshotMatching: async function (name, expect, page, range = 0.9) {
     const screenshot = await page.screenshot()
     expect(screenshot).toMatchSnapshot(`${name}.png`, {
       threshold: range,
@@ -187,7 +197,7 @@ module.exports = {
 
   waitForText: async (text, page) => {
     try {
-      await page.waitForSelector(`//*[contains(text(),"${text}")]`)
+      await page.waitForSelector(`//*[contains(text(),"${text}")]`, { timeout: 80000 })
     } catch (error) {
       console.error(error)
       throw new Error(`No text appears ${text} `)
@@ -197,12 +207,20 @@ module.exports = {
   clickIfElementDoesNotDisappears: async (selector, page, forClick = selector) => {
     if ((await page.$(selector)) !== null) await page.click(forClick)
   },
+
   getTestAttribute(element) {
     return `[data-testid="${element}"]`
   },
+
   makeScreenOnError: async (name, error, page) => {
-    await page.screenshot({ path: `__tests__/screen/${name}.png` })
-    console.error(error)
-    throw new Error(`on the ${name}`)
+    // name = name.replace(/ /g, '')
+    try {
+      await page.screenshot({ path: `__tests__/screen-test-failed/${name}.png` })
+    } catch (error) {}
+  },
+
+  waitNewPage: async (page, context, element) => {
+    const [secondPage] = await Promise.all([context.waitForEvent('page'), page.click(element)])
+    return secondPage
   },
 }

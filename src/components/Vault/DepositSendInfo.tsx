@@ -98,6 +98,7 @@ export const DepositSendInfo = ({ onClose }: Props) => {
         {activeEvent?.id && !loadingDeposit && (
           <RowCenter style={{ marginTop: '18px' }}>
             <ButtonGradientBorder
+              data-testid="cancel"
               style={{ width: '211px' }}
               onClick={() => cancelDeposit({ requestId: activeEvent?.id, onSuccess })}
             >
