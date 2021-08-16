@@ -15,7 +15,7 @@ import styled from 'styled-components'
 import { TYPE } from 'theme'
 import { durationInHours } from 'utils/time'
 import { shortenAddress } from '../../utils'
-import { isTransaction } from './enum'
+import { ActionTypes, isPendingDeposit } from './enum'
 
 const StyledCopy = styled(Copy)`
   color: ${({ theme }) => theme.text1};
@@ -29,7 +29,6 @@ export const DepositSendInfo = ({ onClose }: Props) => {
   const { amount, sender, currencyId, loadingDeposit, depositError } = useDepositState()
   const currency = useCurrency(currencyId)
   const [isCopied, setCopied] = useCopyClipboard()
-  const receiver = '0x2966adb1F526069cACac849FDd00C41334652238'
   const cancelDeposit = useCancelDepositCallback()
   const { activeEvent } = useEventState()
   const deadlineIn = useMemo(() => {
@@ -56,19 +55,26 @@ export const DepositSendInfo = ({ onClose }: Props) => {
             <Trans>Send {currency?.symbol} here</Trans>
           </TYPE.body1>
         </Row>
-        <RowBetween style={{ marginTop: '4px', flexWrap: 'wrap' }} onClick={() => setCopied(receiver)}>
-          <TYPE.body2>{shortenAddress(receiver)}</TYPE.body2>
-          {isCopied ? (
-            <Trans>Copied</Trans>
-          ) : (
-            <IconWrapper size={18}>
-              <StyledCopy />
-            </IconWrapper>
-          )}
-        </RowBetween>
-        <RowCenter style={{ marginTop: '25px' }}>
-          <QRCodeWrap value={receiver}></QRCodeWrap>
-        </RowCenter>
+        {activeEvent?.depositAddress && (
+          <RowBetween
+            style={{ marginTop: '4px', flexWrap: 'wrap' }}
+            onClick={() => setCopied(activeEvent?.depositAddress ?? '')}
+          >
+            <TYPE.body2>{shortenAddress(activeEvent?.depositAddress)}</TYPE.body2>
+            {isCopied ? (
+              <Trans>Copied</Trans>
+            ) : (
+              <IconWrapper size={18}>
+                <StyledCopy />
+              </IconWrapper>
+            )}
+          </RowBetween>
+        )}
+        {activeEvent?.depositAddress && (
+          <RowCenter style={{ marginTop: '25px' }}>
+            <QRCodeWrap value={activeEvent?.depositAddress}></QRCodeWrap>
+          </RowCenter>
+        )}
         <Row style={{ marginTop: '16px', textTransform: 'uppercase' }}>
           <TYPE.body1>
             <Trans>Need to send</Trans>
@@ -92,6 +98,7 @@ export const DepositSendInfo = ({ onClose }: Props) => {
         {activeEvent?.id && !loadingDeposit && (
           <RowCenter style={{ marginTop: '18px' }}>
             <ButtonGradientBorder
+              data-testid="cancel"
               style={{ width: '211px' }}
               onClick={() => cancelDeposit({ requestId: activeEvent?.id, onSuccess })}
             >
@@ -109,13 +116,16 @@ export const DepositSendInfo = ({ onClose }: Props) => {
             <TYPE.description2>{depositError}</TYPE.description2>
           </RowCenter>
         )}
-        {activeEvent?.type && isTransaction(activeEvent?.type) && deadlineIn && (
-          <RowCenter style={{ marginTop: '16px', opacity: '0.7' }}>
-            <TYPE.description2>
-              <Trans>Will be cancelled automatically in {deadlineIn} hours</Trans>
-            </TYPE.description2>
-          </RowCenter>
-        )}
+        {activeEvent?.type === ActionTypes.DEPOSIT &&
+          activeEvent?.status &&
+          isPendingDeposit(activeEvent?.status) &&
+          deadlineIn && (
+            <RowCenter style={{ marginTop: '16px', opacity: '0.7' }}>
+              <TYPE.description2>
+                <Trans>Will be cancelled automatically in {deadlineIn} hours</Trans>
+              </TYPE.description2>
+            </RowCenter>
+          )}
       </Column>
     </div>
   )

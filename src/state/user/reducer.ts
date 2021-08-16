@@ -1,3 +1,4 @@
+import { TradeAuthorization } from '@ixswap1/v2-sdk'
 import { createReducer } from '@reduxjs/toolkit'
 import { SupportedLocale } from 'constants/locales'
 import { SecToken } from 'types/secToken'
@@ -6,10 +7,14 @@ import { updateVersion } from '../global/actions'
 import {
   addSerializedPair,
   addSerializedToken,
+  authorizeSecToken,
+  clearUserData,
   fetchUserSecTokenList,
   passAccreditation,
   removeSerializedPair,
   removeSerializedToken,
+  saveAccount,
+  saveUserSecTokens,
   SerializedPair,
   SerializedToken,
   toggleURLWarning,
@@ -47,12 +52,15 @@ export interface UserState {
 
   // deadline set by user in minutes, used in all txns
   userDeadline: number
-
+  account: string
   userSecTokens: SecToken[]
   loadingSecTokenRequest: boolean
   secTokenError: string | null
   loadingAccreditation: boolean
   accreditationError: string | null
+  secTokenAuthorizations: {
+    [address: string]: TradeAuthorization
+  }
   tokens: {
     [chainId: number]: {
       [address: string]: SerializedToken
@@ -86,13 +94,15 @@ export const initialState: UserState = {
   userDeadline: DEFAULT_DEADLINE_FROM_NOW,
   tokens: {},
   pairs: {},
+  account: '',
   timestamp: currentTimestamp(),
   URLWarningVisible: true,
-  userSecTokens: [],
   loadingSecTokenRequest: false,
   secTokenError: null,
   accreditationError: null,
   loadingAccreditation: false,
+  userSecTokens: [],
+  secTokenAuthorizations: {},
 }
 
 export default createReducer(initialState, (builder) =>
@@ -153,6 +163,12 @@ export default createReducer(initialState, (builder) =>
     .addCase(updateUserDeadline, (state, action) => {
       state.userDeadline = action.payload.userDeadline
       state.timestamp = currentTimestamp()
+    })
+    .addCase(saveAccount, (state, action) => {
+      state.account = action.payload.account
+    })
+    .addCase(saveUserSecTokens, (state, action) => {
+      state.userSecTokens = action.payload.tokenList
     })
     .addCase(updateUserSingleHopOnly, (state, action) => {
       state.userSingleHopOnly = action.payload.userSingleHopOnly
@@ -221,7 +237,22 @@ export default createReducer(initialState, (builder) =>
       state.accreditationError = null
     })
     .addCase(passAccreditation.rejected, (state, { payload: { errorMessage } }) => {
+      state.loadingAccreditation = false
+      state.secTokenError = errorMessage
+    })
+    .addCase(authorizeSecToken.pending, (state) => {
+      state.loadingSecTokenRequest = true
+      state.secTokenError = null
+    })
+    .addCase(authorizeSecToken.fulfilled, (state) => {
+      state.loadingSecTokenRequest = false
+    })
+    .addCase(authorizeSecToken.rejected, (state, { payload: { errorMessage } }) => {
       state.loadingSecTokenRequest = false
       state.secTokenError = errorMessage
+    })
+    .addCase(clearUserData, (state) => {
+      state.secTokenAuthorizations = {}
+      state.userSecTokens = []
     })
 )

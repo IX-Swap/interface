@@ -112,19 +112,21 @@ interface DepositProps {
   fromAddress: string
   onSuccess: () => void
   onError: () => void
+  onPending?: () => void
 }
 interface CancelDepositProps {
   requestId: number
   onSuccess: () => void
 }
 
-export function useDepositCallback(): ({ id, amount, onSuccess, onError }: DepositProps) => Promise<void> {
+export function useDepositCallback(): ({ id, amount, onSuccess, onError, onPending }: DepositProps) => Promise<void> {
   const dispatch = useDispatch<AppDispatch>()
   const getEvents = useGetEventCallback()
   const { tokenId } = useEventState()
   return useCallback(
-    async ({ id, amount, fromAddress, onSuccess, onError }: DepositProps) => {
+    async ({ id, amount, fromAddress, onSuccess, onError, onPending }: DepositProps) => {
       dispatch(depositSecTokens.pending())
+      onPending && onPending()
       try {
         const response = await depositToken({ tokenId: id, amount, fromAddress })
         dispatch(setLogItem({ logItem: response.data }))

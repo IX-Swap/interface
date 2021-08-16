@@ -7,7 +7,6 @@ on:
       - ci-dev
 
 jobs:
-
   bump_version:
     name: Bump Version
     runs-on: ubuntu-latest
@@ -15,7 +14,6 @@ jobs:
       new_tag: ${{ steps.github_tag_action.outputs.new_tag }}
       changelog: ${{ steps.github_tag_action.outputs.changelog }}
     steps:
-
       - name: Checkout
         uses: actions/checkout@v2
 
@@ -35,13 +33,13 @@ jobs:
       - name: Diplay environments
         run: env
 
-#      - name: Config terraform
-#        run: |
-#          mkdir $HOME/terraform/  && \
-#          curl  -v -k -L https://releases.hashicorp.com/terraform/0.12.26/terraform_0.12.26_linux_amd64.zip -o  $HOME/terraform/terraform_0.12.26_linux_amd64.zip  && \
-#          unzip  $HOME/terraform/terraform_0.12.26_linux_amd64.zip -d  $HOME/terraform/  && \
-#          cp -fv $HOME/terraform/terraform /usr/local/bin/  && \
-#          terraform --version
+      #      - name: Config terraform
+      #        run: |
+      #          mkdir $HOME/terraform/  && \
+      #          curl  -v -k -L https://releases.hashicorp.com/terraform/0.12.26/terraform_0.12.26_linux_amd64.zip -o  $HOME/terraform/terraform_0.12.26_linux_amd64.zip  && \
+      #          unzip  $HOME/terraform/terraform_0.12.26_linux_amd64.zip -d  $HOME/terraform/  && \
+      #          cp -fv $HOME/terraform/terraform /usr/local/bin/  && \
+      #          terraform --version
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -53,7 +51,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Add .env infrastructure variables            # ${{ secrets.ENVPRODUCTION }} must be without spaces
+      - name: Add .env infrastructure variables # ${{ secrets.ENVPRODUCTION }} must be without spaces
         run: |
           echo''; echo " === echo secrets.ENVPRODUCTION === "
           echo "${{ secrets.ENVPRODUCTION }}"
@@ -81,11 +79,11 @@ jobs:
           npm ls babel-loader
           yarn run build
 
-#      - name: Init terraform
-#        run: ./bin/tf-init.sh
+      #      - name: Init terraform
+      #        run: ./bin/tf-init.sh
 
       - name: Sync AWS S3 Bucket
-#        run: ./bin/s3-web-sync.sh
+        #        run: ./bin/s3-web-sync.sh
         run: |
           aws s3 sync build/ s3://${{ secrets.AWS_BUCKET_NAME }}/ --acl public-read
           aws s3api put-bucket-versioning --bucket ${{ secrets.AWS_BUCKET_NAME }} --versioning-configuration Status=Enabled

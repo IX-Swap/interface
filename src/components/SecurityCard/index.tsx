@@ -52,17 +52,19 @@ export default function SecurityCard({ currency, style }: { currency: Currency; 
       <Row style={{ paddingBottom: '10px', paddingRight: '10px' }}>
         <StyledPositionCard as={Link} to={routes.securityTokens(currency)} data-testid="custodian-sec-token-info">
           <RowBetween style={{ flexWrap: 'wrap' }}>
-            <RowStart style={{ width: 'fit-content' }}>
+            <Box style={{ display: 'flex', justifyContent: 'flex-start', width: 'fit-content' }}>
               <CurrencyHeader currency={currency} />
               <SemiTransparent>
                 <TYPE.body4 style={{ marginLeft: '12px', fontWeight: 'normal' }} color={theme.text2}>
                   {currency.name}
                 </TYPE.body4>
               </SemiTransparent>
-            </RowStart>
-            {status && (
+            </Box>
+            {status && account && (
               <Box style={{ width: 'fit-content' }}>
-                {status === STOStatus.PASSED && <TYPE.body4>{formatCurrencyAmount(balance, 18)}</TYPE.body4>}
+                {status === STOStatus.PASSED && (
+                  <TYPE.body4>{formatCurrencyAmount(balance, currency.decimals ?? 18)}</TYPE.body4>
+                )}
                 {status !== STOStatus.PASSED && <Status status={status} />}
               </Box>
             )}

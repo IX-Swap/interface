@@ -41,7 +41,6 @@ export const TransactionDetails = ({ currency }: Props) => {
   const toggle = useToggleTransactionModal()
   const dispatch = useDispatch<AppDispatch>()
   const { depositError } = useDepositState()
-  const receiver = '0x2966adb1F526069cACac849FDd00C41334652238'
   const { activeEvent } = useEventState()
   const onClose = useCallback(() => {
     toggle()
@@ -72,12 +71,11 @@ export const TransactionDetails = ({ currency }: Props) => {
     <RedesignedWideModal
       isOpen={isOpen}
       onDismiss={onClose}
-      // minHeight={false}
-      minHeight={100}
+      minHeight={50}
       maxHeight={'fit-content'}
       mobileMaxHeight={90}
     >
-      <ModalBlurWrapper>
+      <ModalBlurWrapper data-testid="depositPopup" style={{ overflowY: 'scroll' }}>
         <ModalContentWrapper>
           <ModalPadding>
             <RowBetween>
@@ -86,7 +84,7 @@ export const TransactionDetails = ({ currency }: Props) => {
                   {ActionTypeText[activeEvent.type]}&nbsp;{currency?.symbol}
                 </Trans>
               </TYPE.title5>
-              <CloseIcon onClick={toggle} />
+              <CloseIcon data-testid="cross" onClick={toggle} />
             </RowBetween>
             <div style={{ position: 'relative' }}>
               <Column style={{ marginTop: '20px' }}>
@@ -123,19 +121,18 @@ export const TransactionDetails = ({ currency }: Props) => {
                 {isTransaction(activeEvent.type) && activeEvent.depositAddress && (
                   <Row
                     style={{ marginTop: '16px', flexWrap: 'wrap' }}
-                    onClick={() => setCopied(activeEvent.depositAddress ?? receiver)}
+                    onClick={() => setCopied(activeEvent.depositAddress ?? '')}
                   >
                     <TYPE.buttonMuted>
-                      <Trans>{currency?.symbol} sent to: </Trans>&nbsp;&nbsp;
+                      {isSuccessTransaction(activeEvent?.type, status) && <Trans>{currency?.symbol} sent to: </Trans>}
+                      {isPendingDeposit(status) && <Trans>Send {currency?.symbol} to: </Trans>}&nbsp;&nbsp;
                     </TYPE.buttonMuted>
-                    <TYPE.body3>
-                      {isCopied ? t`Copied` : shortenAddress(activeEvent.depositAddress) ?? shortenAddress(receiver)}
-                    </TYPE.body3>
+                    <TYPE.body3>{isCopied ? t`Copied` : shortenAddress(activeEvent.depositAddress)}</TYPE.body3>
                   </Row>
                 )}
-                {activeEvent.type === ActionTypes.DEPOSIT && isPendingDeposit(status) && (
+                {activeEvent.type === ActionTypes.DEPOSIT && isPendingDeposit(status) && activeEvent.depositAddress && (
                   <RowCenter style={{ marginTop: '25px' }}>
-                    <QRCodeWrap value={activeEvent.depositAddress ?? receiver}></QRCodeWrap>
+                    <QRCodeWrap value={activeEvent.depositAddress ?? ''}></QRCodeWrap>
                   </RowCenter>
                 )}
                 {isSuccessTransaction(activeEvent.type, status) && (
@@ -148,6 +145,7 @@ export const TransactionDetails = ({ currency }: Props) => {
                 {activeEvent.type === ActionTypes.DEPOSIT && isPendingDeposit(status) && (
                   <RowCenter style={{ marginTop: '45px', marginBottom: '45px' }}>
                     <ButtonGradientBorder
+                      data-testid="cancel"
                       style={{ width: '211px' }}
                       onClick={() => cancelDeposit({ requestId: activeEvent?.id, onSuccess })}
                     >
@@ -160,7 +158,7 @@ export const TransactionDetails = ({ currency }: Props) => {
                     <TYPE.description2>{depositError}</TYPE.description2>
                   </RowCenter>
                 )}
-                {activeEvent.type === ActionTypes.DEPOSIT && deadlineIn && (
+                {activeEvent.type === ActionTypes.DEPOSIT && deadlineIn && isPendingDeposit(status) && (
                   <RowCenter style={{ marginTop: '16px', opacity: '0.7' }}>
                     <TYPE.description2>
                       <Trans>Will be cancelled automatically in {deadlineIn} hours</Trans>

@@ -4,7 +4,7 @@ import useIsWindowVisible from 'hooks/useIsWindowVisible'
 import { useActiveWeb3React } from 'hooks/web3'
 import { useCallback, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { LOGIN_STATUS, useLogin } from 'state/auth/hooks'
+import { LOGIN_STATUS, useAuthState, useLogin } from 'state/auth/hooks'
 import { AppDispatch } from '../index'
 import { updateMatchesDarkMode } from './actions'
 import { useFetchUserSecTokenListCallback } from './hooks'
@@ -15,6 +15,7 @@ export default function Updater(): null {
   const login = useLogin({ expireLogin: false, mustHavePreviousLogin: true })
   const fetchList = useFetchUserSecTokenListCallback()
   const { account } = useActiveWeb3React()
+  const { token } = useAuthState()
   const fetchListCallback = useCallback(async () => {
     if (!isWindowVisible) return
     if (!SECURITY_TOKENS) return
@@ -24,7 +25,7 @@ export default function Updater(): null {
     }
     fetchList().catch((error) => console.debug('interval user sec token list fetching error', error))
   }, [fetchList, isWindowVisible, login])
-  useInterval(fetchListCallback, account ? 1000 * 60 * 4 : null)
+  useInterval(fetchListCallback, account && token ? 1000 * 60 * 4 : null)
   // keep dark mode in sync with the system
   useEffect(() => {
     const darkHandler = (match: MediaQueryListEvent) => {
