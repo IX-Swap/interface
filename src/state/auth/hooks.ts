@@ -49,27 +49,31 @@ export function useLogin({
   const getHasLogin = useHasLogin()
   const checkLogin = useCallback(
     async (account?: string | null) => {
-      if (expireLogin || shouldRenewToken(expiresAt ?? 0)) {
-        // gets here if he has no login at all, login expired, or login is forced
-        if (mustHavePreviousLogin) {
-          // gets here if he needs to be previously logged in
-          const hasLogin = await getHasLogin(account)
-          if (!hasLogin) {
-            return LOGIN_STATUS.NO_ACCOUNT
+      try {
+        if (expireLogin || shouldRenewToken(expiresAt ?? 0)) {
+          // gets here if he has no login at all, login expired, or login is forced
+          if (mustHavePreviousLogin) {
+            // gets here if he needs to be previously logged in
+            const hasLogin = await getHasLogin(account)
+            if (!hasLogin) {
+              return LOGIN_STATUS.NO_ACCOUNT
+            }
           }
-        }
-        // gets here if previously logged in or previous login not needed
-        dispatch(postLogin.pending())
-        const auth = await fetchToken()
-        if (!auth) {
-          dispatch(postLogin.rejected({ errorMessage: 'Could not login' }))
-          return LOGIN_STATUS.FAILED
+          // gets here if previously logged in or previous login not needed
+          dispatch(postLogin.pending())
+          const auth = await fetchToken()
+          if (!auth) {
+            dispatch(postLogin.rejected({ errorMessage: 'Could not login' }))
+            return LOGIN_STATUS.FAILED
+          } else {
+            dispatch(postLogin.fulfilled({ auth }))
+            return LOGIN_STATUS.SUCCESS
+          }
         } else {
-          dispatch(postLogin.fulfilled({ auth }))
           return LOGIN_STATUS.SUCCESS
         }
-      } else {
-        return LOGIN_STATUS.SUCCESS
+      } catch (error: any) {
+        return LOGIN_STATUS.FAILED
       }
     },
     [expiresAt, fetchToken, dispatch, getHasLogin, expireLogin, mustHavePreviousLogin]
