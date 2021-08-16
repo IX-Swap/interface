@@ -1,4 +1,6 @@
+import StakingModal2 from 'components/earn/StakingModal2'
 import React, { useState } from 'react'
+import { useToggleStakeModal } from 'state/application/hooks'
 import { PromoTokenCard } from './PromoTokenCard'
 import { StakingDescription } from './StakingDescription'
 import { StakingWrapper } from './styleds'
@@ -12,12 +14,16 @@ export enum StakingState {
 }
 
 export const Staking = () => {
-  const [stakingState, setStakingState] = useState(StakingState.STAKING)
+  const [stakingState, setStakingState] = useState(StakingState.NO_STAKE)
+  const toggle = useToggleStakeModal()
   return (
-    <StakingWrapper>
-      {stakingState !== StakingState.STAKING && <PromoTokenCard />}
-      {stakingState !== StakingState.STAKING && <StakingDescription stakingState={stakingState} />}
-      {stakingState === StakingState.STAKING && <TokenCardWithStaking />}
-    </StakingWrapper>
+    <>
+      <StakingModal2 onDismiss={toggle} />
+      <StakingWrapper>
+        {stakingState !== StakingState.STAKING && <PromoTokenCard />}
+        {stakingState !== StakingState.STAKING && <StakingDescription stakingState={stakingState} />}
+        {stakingState === StakingState.STAKING && <TokenCardWithStaking />}
+      </StakingWrapper>
+    </>
   )
 }

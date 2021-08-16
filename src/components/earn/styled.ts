@@ -1,5 +1,5 @@
 import styled from 'styled-components/macro'
-import { AutoColumn } from '../Column'
+import Column, { AutoColumn } from '../Column'
 
 import uImage from '../../assets/images/big_unicorn.png'
 import noise from '../../assets/images/noise.png'
@@ -62,3 +62,15 @@ export const Break = styled.div`
   background-color: rgba(255, 255, 255, 0.2);
   height: 1px;
 `
+
+export const ModalContentWrapper = styled(Column)`
+  width: 100%;
+  flex: 1 1;
+  position: relative;
+  background: ${({ theme }) => theme.bgG4};
+  padding: 37px 40px 19px 40px;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+   padding: 1rem;
+  `};
+`
+export const StakeModalTop = styled(Column)``

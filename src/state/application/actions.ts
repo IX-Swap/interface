@@ -21,6 +21,7 @@ export enum ApplicationModal {
   DEPOSIT,
   WITHDRAW,
   TRANSACTION_DETAILS,
+  STAKE,
 }
 
 export const updateBlockNumber = createAction<{ chainId: number; blockNumber: number }>('application/updateBlockNumber')

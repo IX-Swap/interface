@@ -6,7 +6,7 @@ import useTheme from 'hooks/useTheme'
 import { useActiveWeb3React } from 'hooks/web3'
 import React from 'react'
 import { Box } from 'rebass'
-import { useWalletModalToggle } from 'state/application/hooks'
+import { useToggleStakeModal, useWalletModalToggle } from 'state/application/hooks'
 import { StyledInternalLink, TYPE } from 'theme'
 import { routes } from 'utils/routes'
 import { StakingState } from './Staking'
@@ -15,6 +15,7 @@ import { TokenDescriptionWrapper, TokenStakingDescriptionNumbers } from './style
 export const StakingDescription = ({ stakingState }: { stakingState: StakingState }) => {
   const theme = useTheme()
   const toggleWalletModal = useWalletModalToggle()
+  const toggleStakeModal = useToggleStakeModal()
   const { chainId, account } = useActiveWeb3React()
   return (
     <TokenDescriptionWrapper>
@@ -64,7 +65,11 @@ export const StakingDescription = ({ stakingState }: { stakingState: StakingStat
           </ButtonIXSGradient>
         )}
         {stakingState === StakingState.NO_STAKE && account && chainId && (
-          <ButtonIXSGradient style={{ width: '245px' }} data-testid="stake-ixs-button">
+          <ButtonIXSGradient
+            style={{ width: '245px' }}
+            data-testid="stake-ixs-modal-button"
+            onClick={() => toggleStakeModal()}
+          >
             <Trans>Stake</Trans>
           </ButtonIXSGradient>
         )}
