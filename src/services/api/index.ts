@@ -5,7 +5,6 @@ import {
   responseErrorInterceptor,
   responseSuccessInterceptor
 } from 'services/api/interceptors'
-import storageService from 'services/storage'
 
 const _axios = axios.create()
 _axios.defaults.baseURL = API_URL
@@ -129,9 +128,6 @@ const apiService = {
 
   _prepareHeaders(data: any) {
     const headers: KeyValueMap = {}
-    const token = storageService.get<string>('access-token') ?? ''
-
-    headers.Authorization = `Bearer ${token}`
 
     if (data !== undefined && !this._isFormData(data)) {
       headers['Content-Type'] = 'application/json'
