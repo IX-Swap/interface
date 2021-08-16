@@ -1972,7 +1972,7 @@
     "@ethersproject/logger" "^5.2.0"
     bn.js "^4.4.0"
 
-"@ethersproject/bignumber@^5.0.7", "@ethersproject/bignumber@^5.4.0":
+"@ethersproject/bignumber@^5.0.7":
   version "5.4.0"
   resolved "https://registry.yarnpkg.com/@ethersproject/bignumber/-/bignumber-5.4.0.tgz#be8dea298c0ec71208ee60f0b245be0761217ad9"
   integrity sha512-OXUu9f9hO3vGRIPxU40cignXZVaYyfx6j9NNMjebKdnaCL3anCLSSy8/b8d03vY6dh7duCC0kW72GEC4tZer2w==
@@ -1981,7 +1981,7 @@
     "@ethersproject/logger" "^5.4.0"
     bn.js "^4.11.9"
 
-"@ethersproject/bignumber@^5.2.0":
+"@ethersproject/bignumber@^5.2.0", "@ethersproject/bignumber@^5.4.0":
   version "5.4.1"
   resolved "https://registry.yarnpkg.com/@ethersproject/bignumber/-/bignumber-5.4.1.tgz#64399d3b9ae80aa83d483e550ba57ea062c1042d"
   integrity sha512-fJhdxqoQNuDOk6epfM7yD6J8Pol4NUCy1vkaGAkuujZm0+lNow//MKu1hLhRiYV4BsOHyBv5/lsTjF+7hWwhJg==
@@ -2454,9 +2454,9 @@
   integrity sha512-ZXRY4jNvVgSVQ8DL3LTcakaAtXwTVUxE81hslsyD2AtoXW/wVob10HkOJ1X/pAlcI7D+2YoZKg5do8G/w6RYgA==
 
 "@ixswap1/default-token-list@^1.0.4":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@ixswap1/default-token-list/-/default-token-list-1.0.5.tgz#7a673ec99ed02e0d9cb905e37676701443934966"
-  integrity sha512-4Iwx5C3qtJRY7xQ397Mb/illymbHvzmthXFsJLMDcB7CLpGcLnXDSohn5TkFgpS74gJStR7IJBMYF82hbWjZFA==
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@ixswap1/default-token-list/-/default-token-list-1.0.6.tgz#15df697938a672c413d21794f7d271ff516ffa1c"
+  integrity sha512-H8tR57OIXk00VazRiuHWT+XE+ynHJaHCe+JT7l9OItCnrs7Qk0bXtBAWXc1Z3l3aKRi5u6Ns03SFZ1/q8576yg==
 
 "@ixswap1/lib@1.x.x":
   version "1.0.0"
@@ -2464,9 +2464,9 @@
   integrity sha512-igdCZgIun6T0JhPg3XvCUnz0AcyhUSZNAG2DD5vI2HjcLksYfF2r+Ws8YkSBk6j53V/kBOCaqam2FRyWvTGxhQ==
 
 "@ixswap1/sdk-core@1.x.x", "@ixswap1/sdk-core@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.npmjs.org/@ixswap1/sdk-core/-/sdk-core-1.0.0.tgz#06e8c3e0b0371f04423ca98c8cd13d4d0e210776"
-  integrity sha512-5omJyFMo3rd9NVtR4Fa8Ls49TF38usTYPxCw3YQsnK7eX+fBcP1rmcDhyUnnUX3vSC/pBsK4IRJM6JXZ6KtuQw==
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@ixswap1/sdk-core/-/sdk-core-1.0.1.tgz#71f5db03fdf027649a1843891da28e665c21c464"
+  integrity sha512-i4pdlQ20YUhoJ59skLMNQCCxvVrYhpFgO4Ol2V2kI3YoPlZXEnDjEyvN0TqkvNic4ox5GgnoT/curDmzc6M7VQ==
   dependencies:
     "@ethersproject/address" "^5.0.2"
     big.js "^5.2.2"
@@ -2475,13 +2475,6 @@
     tiny-invariant "^1.1.0"
     toformat "^2.0.0"
 
-"@ixswap1/v2-core@1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@ixswap1/v2-core/-/v2-core-1.0.3.tgz#9bab6098174d643887a74aeb69984f140b1fbd0f"
-  integrity sha512-S19Orh+qmAOv1ht55NaeMbZdefhnRVEXX5zl/opX5UI98gJn2IUkBuvmb/2DMswl6rmro9JF5GXdAfOqYhm79Q==
-  dependencies:
-    "@openzeppelin/contracts" "^2.0.0"
-
 "@ixswap1/v2-core@1.x.x":
   version "1.0.0"
   resolved "https://registry.npmjs.org/@ixswap1/v2-core/-/v2-core-1.0.0.tgz#c4312ea699b544dc4939c5892a86f202e7762fd3"
@@ -2489,18 +2482,25 @@
   dependencies:
     "@openzeppelin/contracts" "^2.0.0"
 
-"@ixswap1/v2-periphery@1.0.2":
-  version "1.0.2"
-  resolved "https://registry.npmjs.org/@ixswap1/v2-periphery/-/v2-periphery-1.0.2.tgz#7ebec49f1642a91bffa92002075799b7230b74f6"
-  integrity sha512-oLhoa1UQVll5hng9wo8vDI/caEXc55SwjjfbOKmAgKQXDVE6BHbakwpYS1GME9iDSFZ6AHiy5b/8w0oHf6tLPQ==
+"@ixswap1/v2-core@^1.0.3":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@ixswap1/v2-core/-/v2-core-1.0.4.tgz#5708a17876eef4bf39cdf3292b8763b152bc8369"
+  integrity sha512-BWFVhegDehVocgyhprhTEGrIjt7fmwq8I8C5bK1zAdtDJxtNNiXwGtAMmwPubY7dA+UxzDm+ydvJo5Kvo6zr1A==
+  dependencies:
+    "@openzeppelin/contracts" "^2.0.0"
+
+"@ixswap1/v2-periphery@^1.0.2":
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@ixswap1/v2-periphery/-/v2-periphery-1.0.3.tgz#481b8ebbd3bef4566ec12b143ebed6370d50d1ad"
+  integrity sha512-+FRS9An4X3hoqfxC6cC0NdmanN5YYeQXJkVPoqlH4vKIncDPON9zi+zyQOnjj5snF5daW08n6Zy6r3Umcr4EOQ==
   dependencies:
     "@ixswap1/lib" "1.x.x"
     "@ixswap1/v2-core" "1.x.x"
 
 "@ixswap1/v2-sdk@^1.0.7":
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/@ixswap1/v2-sdk/-/v2-sdk-1.0.7.tgz#668c8062ece3f2e8b74371c511eccc35c539b36d"
-  integrity sha512-LuRC/CiDKF5Mf08Gj2bH8Gs4cxJUoNLzVg88vYvVk2Ui6RTOSWfP5K656WdTu5eP/YE+lC1qFVcapcNkWZ6jTA==
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/@ixswap1/v2-sdk/-/v2-sdk-1.0.8.tgz#eb077443d4b033516f6322b9dbb2177e1875efb7"
+  integrity sha512-8MPfEEO41IgwNEyAFmzH7oDvABlWMucNSODeUvGlWIj9tL0AIKqLyJLQSfYtnMG+wCrH0o+GcZxEJTbaO849ow==
   dependencies:
     "@ethersproject/address" "^5.0.0"
     "@ethersproject/solidity" "^5.0.0"
