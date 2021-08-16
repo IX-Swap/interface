@@ -10,7 +10,7 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import apiService from 'services/apiService'
 import { tokens } from 'services/apiUrls'
 import { saveToken } from 'state/auth/actions'
-import { LOGIN_STATUS, useLogin } from 'state/auth/hooks'
+import { LOGIN_STATUS, useAuthState, useLogin } from 'state/auth/hooks'
 import { clearEventLog } from 'state/eventLog/actions'
 import {
   listToSecTokenMap,
@@ -21,6 +21,7 @@ import {
 } from 'state/secTokens/hooks'
 import { SecToken } from 'types/secToken'
 import { currencyId } from 'utils/currencyId'
+import { shouldRenewToken } from 'utils/time'
 import { BASES_TO_TRACK_LIQUIDITY_FOR, PINNED_PAIRS } from '../../constants/routing'
 import { useAllTokens } from '../../hooks/Tokens'
 import { useActiveWeb3React } from '../../hooks/web3'
@@ -489,6 +490,25 @@ export function useAccount() {
   const dispatch = useDispatch<AppDispatch>()
   const login = useLogin({ mustHavePreviousLogin: true, expireLogin: true })
   const getUserSecTokens = useFetchUserSecTokenListCallback()
+  const { expiresAt } = useAuthState()
+  const authenticate = useCallback(async () => {
+    const status = await login()
+    if (status == LOGIN_STATUS.SUCCESS) {
+      getUserSecTokens()
+    }
+  }, [login, getUserSecTokens])
+
+  // once in 30 seconds check for expired token
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (expiresAt !== undefined && shouldRenewToken(expiresAt) && account) {
+        authenticate()
+      }
+    }, 30000)
+    return () => clearInterval(interval)
+  }, [expiresAt, account, authenticate])
+
+  // when user logins to another account clear his data and relogin him
   useEffect(() => {
     if (account && savedAccount && savedAccount !== account) {
       dispatch(saveToken({ value: { token: '', expiresAt: 0 } }))
@@ -497,12 +517,5 @@ export function useAccount() {
       authenticate()
       dispatch(saveAccount({ account }))
     }
-
-    async function authenticate() {
-      const status = await login()
-      if (status == LOGIN_STATUS.SUCCESS) {
-        getUserSecTokens()
-      }
-    }
-  }, [account, savedAccount, dispatch, login, getUserSecTokens])
+  }, [account, savedAccount, dispatch, login, getUserSecTokens, authenticate])
 }

@@ -25,7 +25,7 @@ export default function Updater(): null {
     }
     fetchList().catch((error) => console.debug('interval user sec token list fetching error', error))
   }, [fetchList, isWindowVisible, login])
-  useInterval(fetchListCallback, token ? 1000 * 60 * 3 : null)
+  useInterval(fetchListCallback, account && token ? 1000 * 60 * 4 : null)
   // keep dark mode in sync with the system
   useEffect(() => {
     const darkHandler = (match: MediaQueryListEvent) => {
