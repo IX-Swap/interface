@@ -24,17 +24,17 @@ export const AdminLogin = () => {
       /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
 
     if (!values.email) {
-      handleError('Enter the email')
+      handleError(t`Enter the email`)
       return
     }
 
     if (!emailRegexp.test(values.email.toLowerCase())) {
-      handleError('Enter a valid email')
+      handleError(t`Enter a valid email`)
       return
     }
 
     if (!values.password) {
-      handleError('Enter the password')
+      handleError(t`Enter the password`)
       return
     }
     handleError('')
