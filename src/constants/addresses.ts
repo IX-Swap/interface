@@ -2,10 +2,10 @@ import { FACTORY_ADDRESS } from '@ixswap1/v2-sdk'
 import { constructSameAddressMap } from '../utils/constructSameAddressMap'
 
 export const MULTICALL2_ADDRESSES = constructSameAddressMap('0x5BA1e12693Dc8F9c48aAD8770482f4739bEeD696')
-export const IXS_ADDRESS = constructSameAddressMap('0xbE76627A5ce0e16507e24dBc30aE91a0DD078B93')
-export const IXS_GOVERNANCE_ADDRESS = constructSameAddressMap('0x95b85A1c9032D6A3459BeaD1ccd76FC7D735ff56')
-export const IXS_VESTING_ADDRESS = constructSameAddressMap('0x28180339ACf608747fEaCC0Ef24AA57080BCBDB9')
-export const V2_ROUTER_ADDRESS = constructSameAddressMap('0x232cbE40425BEA75cc483255B2EbadCDd6839C21')
+export const IXS_ADDRESS = constructSameAddressMap('0x7f4CD8e470C23AD5e6DD2a3C56394c79081588FE')
+export const IXS_GOVERNANCE_ADDRESS = constructSameAddressMap('0x999337a2676B44CE00334B0e2209B2777654c90e')
+export const IXS_VESTING_ADDRESS = constructSameAddressMap('0xf80EF2a554B5a386CB9D09984cAFdb5C550bbA7e')
+export const V2_ROUTER_ADDRESS = constructSameAddressMap('0xcb97697363C4376387d4b4912704e387795188dD')
 export const MERKLE_DISTRIBUTOR_ADDRESS: { [chainId: number]: string } = {
   [1]: '0x090D4613473dEE047c3f2706764f49E0821D256e',
 }
