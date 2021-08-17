@@ -5,7 +5,7 @@ import { resourcesQueryKeys } from 'config/queryKeys'
 
 export const useGetSiteConfig = () => {
   const { apiService } = useServices()
-  const url = resources.getSiteConfig()
+  const url = resources.getSiteConfig
   const fetchSiteConfig = async () => {
     return await apiService.get<{
       masDisclosure: string

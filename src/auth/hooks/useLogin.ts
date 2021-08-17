@@ -28,7 +28,6 @@ export const useLogin = () => {
           const user = response.data
 
           storageService.set<User>('user', user)
-          storageService.set<string>('access-token', user.accessToken)
           storageService.set('visitedUrl', [])
 
           window.location.replace('/')

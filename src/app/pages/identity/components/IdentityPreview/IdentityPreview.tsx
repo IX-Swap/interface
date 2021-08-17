@@ -25,6 +25,7 @@ export const IdentityPreview = () => {
   const hasDetailsOfIssuance = detailsOfIssuance !== undefined
   const detailsOfIssuanceApproved =
     detailsOfIssuance?.status === 'Approved' ?? false
+  const detailsOfIssuanceSkipped = detailsOfIssuance?.skipped ?? false
   const [selectedIdentity, setSelectedIdentity] = useState<
     'individual' | 'corporate'
   >(hasIndividual ? 'individual' : 'corporate')
@@ -64,7 +65,7 @@ export const IdentityPreview = () => {
           </Grid>
         ) : (
           hasDetailsOfIssuance &&
-          (detailsOfIssuanceApproved ? (
+          (detailsOfIssuanceApproved || detailsOfIssuanceSkipped ? (
             <CreateIssuerIdentityButton />
           ) : (
             <CreateDetailsOfIssuanceButton />

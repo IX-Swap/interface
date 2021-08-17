@@ -9,6 +9,7 @@ import { SubmitButton } from './SubmitButton'
 import { VSpacer } from 'components/VSpacer'
 import { NextButton } from 'app/components/FormStepper/NextButton'
 import { ScrollToTop } from 'components/ScrollToTop'
+import { SkipButton } from 'app/components/FormStepper/SkipButton'
 
 export interface FormStepProps {
   step: FormStepperStep
@@ -22,6 +23,7 @@ export interface FormStepProps {
   submitMutation: MutationResultPair<any, any, any, any>
   shouldSaveOnMove: boolean
   setCompleted?: () => void
+  skippable?: boolean
 }
 
 export const FormStep = (props: FormStepProps) => {
@@ -36,7 +38,8 @@ export const FormStep = (props: FormStepProps) => {
     editMutation,
     submitMutation,
     shouldSaveOnMove,
-    setCompleted
+    setCompleted,
+    skippable
   } = props
 
   const isCurrentStep = activeStep === index
@@ -91,6 +94,13 @@ export const FormStep = (props: FormStepProps) => {
 
       <Grid item container justify='flex-end'>
         <Box display='flex'>
+          {skippable !== undefined && skippable && !isLastStep && (
+            <Fragment>
+              <SkipButton mutation={saveMutation} />
+              <Box mx={1} />
+            </Fragment>
+          )}
+
           {hasPrevStep && (
             <Fragment>
               <BackButton

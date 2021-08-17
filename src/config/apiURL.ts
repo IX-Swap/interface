@@ -193,6 +193,14 @@ export const documentsURL = {
     `/dataroom/reports-and-newsletters/${fileId}`
 }
 
+export const bannerURL = {
+  uploadBanner: '/resources/banners',
+  getBannersList: '/resources/banners',
+  deleteBanner: (bannerId: string) => `/resources/banners/${bannerId}`,
+  getRowBanner: (bannerId: string) => `/resources/banners/raw/${bannerId}`,
+  updateBanner: (bannerId: string) => `/resources/banners/${bannerId}`
+}
+
 export const virtualAccounts = {
   getAll: '/virtual-accounts/list',
   add: '/virtual-accounts',
@@ -282,5 +290,6 @@ export const assetsURL = {
 }
 
 export const resources = {
-  getSiteConfig: () => '/resources/siteConfig'
+  getSiteConfig: '/resources/siteConfig',
+  createOrUpdateMasDisclosure: '/resources/siteConfig/masDisclosure'
 }

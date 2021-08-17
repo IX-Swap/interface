@@ -15,6 +15,11 @@ export const documentsQueryKeys = {
   getById: 'document-by-id'
 }
 
+export const bannersQueryKeys = {
+  getById: 'banner-by-id',
+  getBannersList: 'banners-list'
+}
+
 export const assetsQueryKeys = {
   getById: 'asset-by-id',
   getData: 'assets',
