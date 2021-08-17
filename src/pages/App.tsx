@@ -2,7 +2,7 @@ import { AppBackground } from 'components/AppBackground'
 import { SECURITY_TOKENS } from 'config'
 import ApeModeQueryParamReader from 'hooks/useApeModeQueryParamReader'
 import React from 'react'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, useLocation } from 'react-router-dom'
 import { useAccount } from 'state/user/hooks'
 import styled from 'styled-components/macro'
 import { routes } from 'utils/routes'
@@ -23,6 +23,8 @@ import RemoveLiquidity from './RemoveLiquidity'
 import SecTokenDetails from './SecTokenDetails'
 import Swap from './Swap'
 import { RedirectPathToSwapOnly, RedirectToSwap } from './Swap/redirects'
+import { AdminLoginPage } from './AdminLogin'
+import { AdminKycPage } from './AdminKyc'
 
 const AppWrapper = styled.div`
   display: flex;
@@ -56,6 +58,7 @@ const Marginer = styled.div`
 
 export default function App() {
   const isSettingsOpen = useModalOpen(ApplicationModal.SETTINGS)
+  const { pathname } = useLocation()
   useAccount()
   return (
     <ErrorBoundary>
@@ -64,12 +67,14 @@ export default function App() {
       <Route component={ApeModeQueryParamReader} />
       <AppBackground />
       <AppWrapper>
-        <Header />
+        {!pathname.includes('admin-kyc') && <Header />}
         <ToggleableBody isVisible={!isSettingsOpen}>
           <Popups />
           <Polling />
           <Web3ReactManager>
             <Switch>
+              <Route exact strict path="/admin-kyc" component={AdminKycPage} />
+              <Route exact strict path="/admin-login" component={AdminLoginPage} />
               <Route exact strict path="/send" component={RedirectPathToSwapOnly} />
               <Route exact strict path="/swap/:outputCurrency" component={RedirectToSwap} />
               <Route exact strict path="/swap" component={Swap} />

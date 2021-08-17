@@ -100,9 +100,9 @@ const apiService = {
 
   _prepareHeaders(data: any) {
     const headers: KeyValueMap = {}
-    const { auth } = store.getState()
-    if (auth.token) {
-      headers.Authorization = `Bearer ${auth.token}`
+    const { auth, admin } = store.getState()
+    if (auth.token || admin.token) {
+      headers.Authorization = `Bearer ${auth.token || admin.token}`
     }
 
     if (data !== undefined && !this._isFormData(data)) {

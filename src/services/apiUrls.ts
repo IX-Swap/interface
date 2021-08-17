@@ -1,5 +1,10 @@
 import { ActionTypes } from 'components/Vault/enum'
 
+export const admin = {
+  login: 'auth/login',
+  me: 'auth/me',
+}
+
 export const metamask = {
   challenge: `metamask/challenge`,
   login: `metamask/login`,
