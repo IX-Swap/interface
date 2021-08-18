@@ -223,6 +223,7 @@ export const dso: DigitalSecurityOffering = {
   pricePerUnit: 1,
   subscriptionDocument: emptyFile,
   team: [],
+  faq: [],
   tokenName: 'token name',
   tokenSymbol: 'token symbol',
   totalFundraisingAmount: 100000,

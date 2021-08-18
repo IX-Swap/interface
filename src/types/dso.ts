@@ -15,6 +15,12 @@ export interface DsoTeamMember {
   photo: string
 }
 
+export interface DsoFAQItem {
+  _id?: string
+  question: string
+  answer: string
+}
+
 export interface DeploymentInfo {
   _id: string
   createdBy: string
@@ -62,6 +68,7 @@ export interface BaseDigitalSecurityOffering extends AuthorizableWithIdentity {
   useOfProceeds: string
   fundraisingMilestone: string
   team: DsoTeamMember[]
+  faq: DsoFAQItem[]
   createdAt: string
   asset: string
   deploymentInfo?: DeploymentInfo
@@ -124,6 +131,7 @@ export type DSOFormValues = Omit<
   | 'insight'
   | 'disabled'
   | 'decimalPlaces'
+  | 'faq'
 > & {
   subscriptionDocument?: DataroomFile
   status?: string
@@ -132,6 +140,7 @@ export type DSOFormValues = Omit<
   corporate: string
   documents: FormArray<DataroomFile>
   team: DsoTeamMember[]
+  faq: DsoFAQItem[]
 }
 
 export type DSORequestArgs = Partial<

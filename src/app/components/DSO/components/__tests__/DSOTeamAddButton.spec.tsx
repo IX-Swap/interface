@@ -2,9 +2,9 @@ import { fireEvent, waitFor } from '@testing-library/react'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import {
-  DSOTeamAddButton,
+  DSOChapterAddButton,
   DSOTeamAddButtonProps
-} from 'app/components/DSO/components/DSOTeamAddButton'
+} from 'app/components/DSO/components/DSOChapterAddButton'
 
 describe('DSOTeamAddButton', () => {
   const props: DSOTeamAddButtonProps = {
@@ -17,11 +17,11 @@ describe('DSOTeamAddButton', () => {
   })
 
   it('renders without error', () => {
-    render(<DSOTeamAddButton {...props} />)
+    render(<DSOChapterAddButton {...props} />)
   })
 
   it('invokes append function with index on button click', async () => {
-    const { getByRole } = render(<DSOTeamAddButton {...props} />)
+    const { getByRole } = render(<DSOChapterAddButton {...props} />)
 
     fireEvent.click(getByRole('button'))
 

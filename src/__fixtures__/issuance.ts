@@ -92,6 +92,12 @@ export const formvalues: DSOFormValues = {
       photo: 'id'
     }
   ],
+  faq: [
+    {
+      question: 'FAQ #1',
+      answer: 'Text'
+    }
+  ],
   documents: [
     {
       value: {
