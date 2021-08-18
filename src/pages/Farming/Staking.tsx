@@ -20,7 +20,7 @@ export const Staking = () => {
     <>
       <StakingModal2 onDismiss={toggle} />
       <StakingWrapper>
-        {stakingState !== StakingState.STAKING && <PromoTokenCard />}
+        {stakingState !== StakingState.STAKING && <PromoTokenCard stakingState={stakingState} />}
         {stakingState !== StakingState.STAKING && <StakingDescription stakingState={stakingState} />}
         {stakingState === StakingState.STAKING && <TokenCardWithStaking />}
       </StakingWrapper>

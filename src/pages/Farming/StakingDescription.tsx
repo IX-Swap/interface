@@ -54,16 +54,6 @@ export const StakingDescription = ({ stakingState }: { stakingState: StakingStat
             <Trans>Connect Wallet</Trans>
           </ButtonIXSGradient>
         )}
-        {stakingState === StakingState.NO_IXS && account && chainId && (
-          <ButtonIXSGradient
-            style={{ width: '245px' }}
-            as={StyledInternalLink}
-            to={`${routes.swap}/${IXS_ADDRESS[chainId]}`}
-            data-testid="get-ixs-button"
-          >
-            <Trans>Get IXS</Trans>
-          </ButtonIXSGradient>
-        )}
         {stakingState === StakingState.NO_STAKE && account && chainId && (
           <ButtonIXSGradient
             style={{ width: '245px' }}
