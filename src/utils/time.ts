@@ -32,3 +32,21 @@ export const durationInHours = (deadline?: null | string) => {
   const deadlineTime = dayjs(deadline ?? '')
   return deadline && deadlineTime.isAfter(currentTime) ? deadlineTime.diff(currentTime, 'h') : null
 }
+
+export const unixTimeToFormat = ({ time, format = 'DD.MM.YYYY, hh:mm a' }: { time: number; format?: string }) => {
+  return dayjs.unix(time).format(format)
+}
+
+export const closestFutureDate = ({ dates }: { dates: number[] }) => {
+  const currentDate = dayjs().unix()
+
+  const futureDates = dates.filter((date) => date - currentDate > 0)
+  return futureDates.length > 0 ? futureDates.shift() : null
+}
+
+export const getPayoutClosestToPresent = ({ payouts }: { payouts: [number, string][] }) => {
+  const currentDate = dayjs().unix()
+
+  const pastPayouts = payouts.filter((value) => value[0] - currentDate <= 0)
+  return pastPayouts.length > 0 ? pastPayouts.pop() : null
+}
