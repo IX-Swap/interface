@@ -20,11 +20,14 @@ export const dsoTeamMemberSchema = object().shape<DsoTeamMember>({
   photo: string().required('Required')
 })
 
-export const dsoFAQItemSchema = object().shape<DsoTeamMember>({
-  about: string(),
-  name: string().required('Required'),
-  position: string().required('Required'),
-  photo: string().required('Required')
+export const dsoFAQItemSchema = object().shape<DsoFAQItem>({
+  question: string().required('Required'),
+  answer: string().required('Required')
+})
+
+export const dsoVideoLinkSchema = object().shape<DsoVideoLink>({
+  title: string().required('Required'),
+  link: string().required('Required')
 })
 
 export const dsoFormBaseValidationSchema = {
@@ -117,12 +120,12 @@ export const dsoFormBaseValidationSchema = {
     .ensure()
     .required('Required'),
   faq: array<DsoFAQItem>()
-    // .of(dsoFAQItemSchema.required('Required'))
-    // .ensure()
+    .of(dsoFAQItemSchema.required('Required'))
+    .ensure()
     .required('Required'),
   videoLinks: array<DsoVideoLink>()
-    // .of(dsoFAQItemSchema.required('Required'))
-    // .ensure()
+    .of(dsoVideoLinkSchema.required('Required'))
+    .ensure()
     .required('Required')
 }
 

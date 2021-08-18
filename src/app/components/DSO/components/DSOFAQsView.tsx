@@ -2,11 +2,11 @@ import React from 'react'
 import { Grid, Typography } from '@material-ui/core'
 import { DigitalSecurityOffering, DsoFAQItem } from 'types/dso'
 
-export interface DSOFAQsViewViewProps {
+export interface DSOFAQsViewProps {
   dso: DigitalSecurityOffering
 }
 
-export const DSOFAQsView = (props: DSOFAQsViewViewProps) => {
+export const DSOFAQsView = (props: DSOFAQsViewProps) => {
   const { dso } = props
 
   const fakeFAQ: DsoFAQItem[] = [

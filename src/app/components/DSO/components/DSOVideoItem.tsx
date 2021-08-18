@@ -8,6 +8,7 @@ import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { VSpacer } from 'components/VSpacer'
 
 export interface DSOVideoItemProps {
+  isNew: boolean
   fieldId: string
   index: number
   remove: (field: any) => void
@@ -15,7 +16,7 @@ export interface DSOVideoItemProps {
 }
 
 export const DSOVideoItem = (props: DSOVideoItemProps) => {
-  const { defaultValue, fieldId, index, remove } = props
+  const { defaultValue, fieldId, index, remove, isNew } = props
   const { control } = useFormContext<{
     videoLinks: DSOFormValues['videoLinks']
   }>()
@@ -69,7 +70,7 @@ export const DSOVideoItem = (props: DSOVideoItemProps) => {
         >
           <Grid item>
             <VSpacer size='small' />
-            {index >= 3 && (
+            {(index >= 3 || !isNew) && (
               <DSOTeamRemoveButton remove={remove} index={index} />
             )}
           </Grid>

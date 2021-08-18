@@ -10,7 +10,11 @@ import { DSOChapterAddButton } from 'app/components/DSO/components/DSOChapterAdd
 import { VSpacer } from 'components/VSpacer'
 import { DSOVideoItem } from 'app/components/DSO/components/DSOVideoItem'
 
-export const DSOVideoLinks = () => {
+interface DSOVideoLinksProps {
+  isNew: boolean
+}
+
+export const DSOVideoLinks = ({ isNew = false }: DSOVideoLinksProps) => {
   const fieldName = 'videoLinks'
   const { control } = useFormContext<DSOFormValues>()
 
@@ -26,6 +30,7 @@ export const DSOVideoLinks = () => {
               {fields.map((value, index) => {
                 return (
                   <DSOVideoItem
+                    isNew={isNew}
                     key={value.id}
                     defaultValue={fields[index] as any}
                     fieldId={value.id}
