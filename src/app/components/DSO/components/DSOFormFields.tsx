@@ -8,6 +8,7 @@ import { DSOTerms } from 'app/components/DSO/components/DSOTerms'
 import { DSOFormSection } from 'app/components/DSO/DSOScrollGuide'
 import { VSpacer } from 'components/VSpacer'
 import { Element } from 'react-scroll'
+import { DSOFAQ } from 'app/components/DSO/components/DSOFAQ'
 
 export interface DSOFormFieldsProps {
   isNew: boolean
@@ -38,14 +39,19 @@ export const DSOFormFields = (props: DSOFormFieldsProps) => {
         <DSOInformationProfile />
       </Element>
 
+      <Element name={DSOFormSection['Team Members']}>
+        <VSpacer size='large' />
+        <DSOTeam />
+      </Element>
+
       <Element name={DSOFormSection.Documents}>
         <VSpacer size='large' />
         <DSODataroom />
       </Element>
 
-      <Element name={DSOFormSection['Team Members']}>
+      <Element name={DSOFormSection.FAQs}>
         <VSpacer size='large' />
-        <DSOTeam />
+        <DSOFAQ />
       </Element>
     </Fragment>
   )

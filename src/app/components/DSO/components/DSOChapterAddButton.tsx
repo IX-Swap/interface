@@ -3,17 +3,18 @@ import { Button } from '@material-ui/core'
 
 export interface DSOTeamAddButtonProps {
   append: Function
+  text?: string
 }
 
-export const DSOTeamAddButton: React.FC<DSOTeamAddButtonProps> = props => {
-  const { append } = props
+export const DSOChapterAddButton: React.FC<DSOTeamAddButtonProps> = props => {
+  const { append, text = 'Add Team Member' } = props
   const handleClick = () => {
     append({})
   }
 
   return (
     <Button color='primary' variant='outlined' onClick={handleClick}>
-      Add Team Member
+      {text}
     </Button>
   )
 }
