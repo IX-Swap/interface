@@ -224,6 +224,7 @@ export const dso: DigitalSecurityOffering = {
   subscriptionDocument: emptyFile,
   team: [],
   faq: [],
+  videoLinks: [],
   tokenName: 'token name',
   tokenSymbol: 'token symbol',
   totalFundraisingAmount: 100000,

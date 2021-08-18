@@ -7,17 +7,17 @@ import { FieldsArray } from 'components/form/FieldsArray'
 import { FormError } from 'components/form/FormError'
 import { TextError } from 'components/TextError'
 import { DSOChapterAddButton } from 'app/components/DSO/components/DSOChapterAddButton'
-import { DSOFAQItem } from 'app/components/DSO/components/DSOFAQItem'
 import { VSpacer } from 'components/VSpacer'
+import { DSOVideoItem } from 'app/components/DSO/components/DSOVideoItem'
 
-export const DSOFAQ = () => {
-  const fieldName = 'faq'
+export const DSOVideoLinks = () => {
+  const fieldName = 'videoLinks'
   const { control } = useFormContext<DSOFormValues>()
 
   return (
     <Grid container direction='column'>
       <Grid item>
-        <FormSectionHeader title='FAQs' />
+        <FormSectionHeader title='Video Links' />
       </Grid>
       <FieldsArray name={fieldName} control={control}>
         {({ fields, append, remove }) => (
@@ -25,7 +25,7 @@ export const DSOFAQ = () => {
             <Grid item container direction='column'>
               {fields.map((value, index) => {
                 return (
-                  <DSOFAQItem
+                  <DSOVideoItem
                     key={value.id}
                     defaultValue={fields[index] as any}
                     fieldId={value.id}
@@ -38,7 +38,7 @@ export const DSOFAQ = () => {
             <VSpacer size={'small'} />
             <Grid item container justify='flex-end' alignItems='center'>
               <FormError name={fieldName} render={TextError} />
-              <DSOChapterAddButton append={append} text={'ADD NEW FAQ'} />
+              <DSOChapterAddButton append={append} text={'ADD NEW VIDEO'} />
             </Grid>
           </Grid>
         )}
