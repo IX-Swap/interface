@@ -8,6 +8,7 @@ import { DSOTermsViewCompact } from 'app/components/DSO/DSOPreview/DSOTermsViewC
 import { TabPanel } from 'components/TabPanel'
 import { DSOInvestorInformationView } from 'app/components/DSO/components/DSOInvestorInformationView'
 import { DSODataroomView } from 'app/components/DSO/components/DSODataroomView'
+import { DSOFAQsView } from 'app/components/DSO/components/DSOFAQsView'
 
 export interface DSOInvestorViewProps {
   dso: DigitalSecurityOffering
@@ -30,6 +31,8 @@ export const DSOInvestorView = (props: DSOInvestorViewProps) => {
         <Tab label='Overview' />
         <Tab label='Information' />
         <Tab label='Documents' />
+        <Tab label='Videos' />
+        <Tab label='FAQs' />
       </Tabs>
 
       <TabPanel value={selectedIdx} index={0}>
@@ -54,6 +57,14 @@ export const DSOInvestorView = (props: DSOInvestorViewProps) => {
 
       <TabPanel value={selectedIdx} index={2}>
         <DSODataroomView dso={dso} showTitle={false} />
+      </TabPanel>
+
+      <TabPanel value={selectedIdx} index={3}>
+        <DSODataroomView dso={dso} showTitle={false} />
+      </TabPanel>
+
+      <TabPanel value={selectedIdx} index={4}>
+        <DSOFAQsView dso={dso} />
       </TabPanel>
     </Fragment>
   )
