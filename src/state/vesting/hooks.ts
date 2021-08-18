@@ -27,7 +27,7 @@ export function useDistributeCallback(): () => Promise<void> {
   return useCallback(async () => {
     try {
       const success = await vesting?.distribute(
-        '0x8256CD82e8Cffa51f166D5f89458f2fd63BC77a8',
+        '0x78140B507Ca3CCA6A2174d8eb5A642F36EBc4051',
         BigNumber.from(604800),
         BigNumber.from(100).mul(BigNumber.from(10).pow(decimals ?? 1)),
         BigNumber.from(3 * 60 * 60)

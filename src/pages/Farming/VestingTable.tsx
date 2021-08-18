@@ -8,11 +8,7 @@ import useTheme from 'hooks/useTheme'
 import { useActiveWeb3React } from 'hooks/web3'
 import React, { useCallback, useMemo } from 'react'
 import { Line } from 'react-chartjs-2'
-import {
-  // useDistributeCallback,
-  usePayouts,
-  useTableOptions,
-} from 'state/vesting/hooks'
+import { useDistributeCallback, usePayouts, useTableOptions } from 'state/vesting/hooks'
 import { TYPE } from 'theme'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { hexToRGBA } from 'utils/themeHelper'
@@ -33,7 +29,7 @@ const sampleData = [
 ]
 
 export const VestingTable = ({ vestingStatus }: { vestingStatus: VestingState }) => {
-  // const distribute = useDistributeCallback()
+  const distribute = useDistributeCallback()
   const { chainId } = useActiveWeb3React()
   const options = useTableOptions()
   const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
@@ -90,11 +86,7 @@ export const VestingTable = ({ vestingStatus }: { vestingStatus: VestingState })
   return (
     <VestingTableWrapper>
       <VestingTableTitle>
-        <TYPE.title6
-          color={theme.text2}
-          style={{ textTransform: 'uppercase' }}
-          //  onClick={() => distribute()}
-        >
+        <TYPE.title6 color={theme.text2} style={{ textTransform: 'uppercase' }} onClick={() => distribute()}>
           <Trans>Progress</Trans>
         </TYPE.title6>
       </VestingTableTitle>
