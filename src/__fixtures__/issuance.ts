@@ -98,6 +98,12 @@ export const formvalues: DSOFormValues = {
       answer: 'Text'
     }
   ],
+  videoLinks: [
+    {
+      title: 'Video #1',
+      link: 'Link'
+    }
+  ],
   documents: [
     {
       value: {

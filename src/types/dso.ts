@@ -21,6 +21,12 @@ export interface DsoFAQItem {
   answer: string
 }
 
+export interface DsoVideoLink {
+  _id?: string
+  title: string
+  link: string
+}
+
 export interface DeploymentInfo {
   _id: string
   createdBy: string
@@ -69,6 +75,7 @@ export interface BaseDigitalSecurityOffering extends AuthorizableWithIdentity {
   fundraisingMilestone: string
   team: DsoTeamMember[]
   faq: DsoFAQItem[]
+  videoLinks: DsoVideoLink[]
   createdAt: string
   asset: string
   deploymentInfo?: DeploymentInfo
@@ -132,6 +139,7 @@ export type DSOFormValues = Omit<
   | 'disabled'
   | 'decimalPlaces'
   | 'faq'
+  | 'videoLinks'
 > & {
   subscriptionDocument?: DataroomFile
   status?: string
@@ -141,6 +149,7 @@ export type DSOFormValues = Omit<
   documents: FormArray<DataroomFile>
   team: DsoTeamMember[]
   faq: DsoFAQItem[]
+  videoLinks: DsoVideoLink[]
 }
 
 export type DSORequestArgs = Partial<

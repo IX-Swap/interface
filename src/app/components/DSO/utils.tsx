@@ -22,6 +22,7 @@ export const transformDSOToFormValues = (
       fundraisingMilestone: '',
       team: [{}],
       faq: [{}, {}, {}],
+      videoLinks: [{}, {}, {}],
       documents: [],
       capitalStructure: '',
       minimumInvestment: '',
@@ -74,7 +75,8 @@ export const transformDSOToFormValues = (
     leverage: percentageToNumber(dso.leverage),
     documents: dso.documents.map(document => ({ value: document })),
     team: dso.team.map(({ _id, ...person }) => person),
-    faq: dso.faq.map(({ _id, ...item }) => item)
+    faq: dso.faq.map(({ _id, ...item }) => item),
+    videoLinks: dso.videoLinks.map(({ _id, ...item }) => item)
   }
 }
 

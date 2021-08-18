@@ -9,6 +9,7 @@ import { DSOFormSection } from 'app/components/DSO/DSOScrollGuide'
 import { VSpacer } from 'components/VSpacer'
 import { Element } from 'react-scroll'
 import { DSOFAQ } from 'app/components/DSO/components/DSOFAQ'
+import { DSOVideoLinks } from 'app/components/DSO/components/DSOVideoLinks'
 
 export interface DSOFormFieldsProps {
   isNew: boolean
@@ -49,8 +50,13 @@ export const DSOFormFields = (props: DSOFormFieldsProps) => {
         <DSODataroom />
       </Element>
 
-      <Element name={DSOFormSection.FAQs}>
+      <Element name={DSOFormSection['Video Links']}>
         <VSpacer size='large' />
+        <DSOVideoLinks />
+      </Element>
+
+      <Element name={DSOFormSection.FAQs}>
+        <VSpacer size='extraSmall' />
         <DSOFAQ />
       </Element>
     </Fragment>
