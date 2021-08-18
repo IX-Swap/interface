@@ -17,6 +17,7 @@ import { Order } from 'types/order'
 import { OrderStatus } from 'app/pages/exchange/components/PastOrderTable/OrderStatus'
 import { Side } from 'app/pages/exchange/components/TradeHistoryTable/Side'
 import { dsoQueryKeys } from 'config/queryKeys'
+import { sanitize } from 'dompurify'
 
 export const renderMenuItems = (
   items: Array<{ label: string; value: string | number }>
@@ -53,7 +54,7 @@ export const renderAddressColumn = (address: string): JSX.Element => (
 )
 
 export const wysiwygToHtml = (draft: string): string => {
-  return draftToHtml(JSON.parse(draft))
+  return draftToHtml(JSON.parse(sanitize(draft)))
 }
 
 export const renderOrderStatus = (status: Order['status']) => {

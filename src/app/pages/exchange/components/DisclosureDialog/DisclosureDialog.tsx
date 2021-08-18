@@ -7,6 +7,7 @@ import {
   DialogTitle
 } from '@material-ui/core'
 import { useStyles } from './DisclosureDialog.style'
+import { renderStringToHTML } from 'app/components/DSO/utils'
 
 export interface DisclosureDialogProps {
   content: any
@@ -27,7 +28,7 @@ export const DisclosureDialog = ({
         Disclosure
       </DialogTitle>
       <DialogContentText classes={{ root: classes.content }}>
-        <div dangerouslySetInnerHTML={{ __html: content }} />
+        {renderStringToHTML(content)}
       </DialogContentText>
       <DialogActions classes={{ root: classes.actions }}>
         <Button
