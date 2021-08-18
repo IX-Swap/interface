@@ -43,6 +43,9 @@ export function useWithdrawModalToggle(): () => void {
 export function useToggleSettingsMenu(): () => void {
   return useToggleModal(ApplicationModal.SETTINGS)
 }
+export function useToggleStakeModal(): () => void {
+  return useToggleModal(ApplicationModal.STAKE)
+}
 
 export function useToggleTransactionModal(): () => void {
   return useToggleModal(ApplicationModal.TRANSACTION_DETAILS)

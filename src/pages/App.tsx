@@ -17,6 +17,7 @@ import { useModalOpen } from '../state/application/hooks'
 import DarkModeQueryParamReader from '../theme/DarkModeQueryParamReader'
 import { RedirectDuplicateTokenIdsV2 } from './AddLiquidityV2/redirects'
 import Custodian from './Custodian'
+import { Farming } from './Farming/Farming'
 import PoolV2 from './Pool/v2'
 import PoolFinder from './PoolFinder'
 import RemoveLiquidity from './RemoveLiquidity'
@@ -84,6 +85,7 @@ export default function App() {
                 <Route exact strict path="/security-tokens/:currencyId" component={SecTokenDetails} />
               )}
               {SECURITY_TOKENS && <Route exact strict path={routes.securityTokens()} component={Custodian} />}
+              <Route exact strict path="/farming" component={Farming} />
               <Route component={RedirectPathToSwapOnly} />
             </Switch>
           </Web3ReactManager>

@@ -1,5 +1,6 @@
 import { RowCenter } from 'components/Row'
 import styled from 'styled-components'
+import { hexToRGBA } from 'utils/themeHelper'
 
 export const ToggleWrapper = styled(RowCenter)`
   background-color: transparent;
@@ -26,7 +27,7 @@ export const ToggleOption = styled.div<{ active?: boolean }>`
   line-height: 24px;
   text-transform: uppercase;
   background-color: transparent;
-  color: ${({ theme }) => theme.text2};
+  color: ${({ theme, active }) => (active ? theme.text2 : hexToRGBA(theme.text2, 0.7))};
   user-select: none;
 
   :hover {
