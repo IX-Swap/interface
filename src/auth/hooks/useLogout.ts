@@ -5,7 +5,7 @@ export const useLogout = () => {
 
   return async () => {
     try {
-      void apiService.get('/auth/log-out')
+      await apiService.get('/auth/log-out')
     } catch (error) {
     } finally {
       storageService.remove('user')
