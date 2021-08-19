@@ -6,8 +6,8 @@ import { DSOChapterAddButton } from 'app/components/DSO/components/DSOChapterAdd
 import { DSOTeamMember } from 'app/components/DSO/components/DSOTeamMember'
 import { teamMember } from '__fixtures__/issuance'
 
-jest.mock('app/components/DSO/components/DSOTeamAddButton', () => ({
-  DSOTeamAddButton: jest.fn(() => null)
+jest.mock('app/components/DSO/components/DSOChapterAddButton', () => ({
+  DSOChapterAddButton: jest.fn(() => null)
 }))
 
 jest.mock('app/components/DSO/components/DSOTeamMember', () => ({

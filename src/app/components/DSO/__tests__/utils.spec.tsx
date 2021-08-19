@@ -30,6 +30,8 @@ describe('transformDSOToFormValues', () => {
       useOfProceeds: '',
       fundraisingMilestone: '',
       team: [{}],
+      faq: [{}, {}, {}],
+      videoLinks: [{}, {}, {}],
       documents: [],
       capitalStructure: '',
       minimumInvestment: '',
