@@ -1,13 +1,15 @@
 import React from 'react'
 import { Grid, Typography } from '@material-ui/core'
 import { DigitalSecurityOffering, DsoFAQItem } from 'types/dso'
+import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
 
 export interface DSOFAQsViewProps {
   dso: DigitalSecurityOffering
+  isTitleVisible?: boolean
 }
 
 export const DSOFAQsView = (props: DSOFAQsViewProps) => {
-  const { dso } = props
+  const { dso, isTitleVisible = false } = props
 
   const fakeFAQ: DsoFAQItem[] = [
     {
@@ -55,6 +57,12 @@ export const DSOFAQsView = (props: DSOFAQsViewProps) => {
 
   return (
     <Grid container direction='column' spacing={5}>
+      {isTitleVisible && (
+        <Grid item>
+          <FormSectionHeader title='FAQ' />
+        </Grid>
+      )}
+
       {realFAQ.map((item, i) => {
         return (
           <Grid item>

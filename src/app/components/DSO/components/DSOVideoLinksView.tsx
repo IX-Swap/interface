@@ -3,13 +3,15 @@ import { Grid, Typography } from '@material-ui/core'
 import { DigitalSecurityOffering, DsoVideoLink } from 'types/dso'
 import ReactPlayer from 'react-player/lazy'
 import { VSpacer } from 'components/VSpacer'
+import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
 
 export interface DSOVideoLinksViewProps {
   dso: DigitalSecurityOffering
+  isTitleVisible?: boolean
 }
 
 export const DSOVideoLinksView = (props: DSOVideoLinksViewProps) => {
-  const { dso } = props
+  const { dso, isTitleVisible = false } = props
 
   const fakeVideoLinks: DsoVideoLink[] = [
     {
@@ -31,6 +33,11 @@ export const DSOVideoLinksView = (props: DSOVideoLinksViewProps) => {
 
   return (
     <Grid container direction='column' spacing={5}>
+      {isTitleVisible && (
+        <Grid item>
+          <FormSectionHeader title='FAQ' />
+        </Grid>
+      )}
       {realVideoLinks.map((item, i) => {
         return (
           <Grid item>

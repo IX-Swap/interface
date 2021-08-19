@@ -10,6 +10,8 @@ import { DSOTeamView } from 'app/components/DSO/DSOPreview/DSOTeamView'
 import { Element } from 'react-scroll'
 import { DSOFormSection } from 'app/components/DSO/DSOScrollGuide'
 import { DSODataroomView } from 'app/components/DSO/components/DSODataroomView'
+import { DSOFAQsView } from 'app/components/DSO/components/DSOFAQsView'
+import { DSOVideoLinksView } from 'app/components/DSO/components/DSOVideoLinksView'
 
 export interface DSOPreviewProps {
   data: DigitalSecurityOffering
@@ -50,6 +52,16 @@ export const DSOPreview = (props: DSOPreviewProps) => {
       <Element name={DSOFormSection['Team Members']}>
         <VSpacer size='large' />
         <DSOTeamView dso={data} />
+      </Element>
+
+      <Element name={DSOFormSection.FAQs}>
+        <VSpacer size='large' />
+        <DSOFAQsView dso={data} isTitleVisible />
+      </Element>
+
+      <Element name={DSOFormSection['Video Links']}>
+        <VSpacer size='large' />
+        <DSOVideoLinksView dso={data} />
       </Element>
     </Fragment>
   )
