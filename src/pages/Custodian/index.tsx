@@ -17,7 +17,7 @@ export default function Custodian() {
   return (
     <>
       <AppBody>
-        <ColumnCenter style={{ padding: '26px 0' }}>
+        <ColumnCenter style={{ paddingBottom: '26px' }}>
           <CustodianTabs />
           {isLoggedIn && (
             <AutoColumn style={{ paddingBottom: 0 }}>
