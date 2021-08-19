@@ -4,7 +4,9 @@ import {
   DsoTeamMember,
   DeploymentInfo,
   DSOInsight,
-  DSOActivity
+  DSOActivity,
+  DsoFAQItem,
+  DsoVideoLink
 } from 'types/dso'
 import { corporate, asset } from './authorizer'
 import { emptyFile } from '__fixtures__/file'
@@ -81,6 +83,18 @@ export const teamMember: DsoTeamMember = {
   name: 'name',
   photo: '1',
   position: 'position'
+}
+
+export const faqItem: DsoFAQItem = {
+  _id: '0',
+  question: 'Question',
+  answer: 'Answer'
+}
+
+export const videoLink: DsoVideoLink = {
+  _id: '0',
+  title: 'Title',
+  link: 'Link'
 }
 
 export const formvalues: DSOFormValues = {

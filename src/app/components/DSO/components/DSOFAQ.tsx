@@ -11,11 +11,11 @@ import { DSOFAQItem } from 'app/components/DSO/components/DSOFAQItem'
 import { VSpacer } from 'components/VSpacer'
 
 interface DSOFAQProps {
-  isNew: boolean
+  isNew?: boolean
 }
 
 export const DSOFAQ = ({ isNew = false }: DSOFAQProps) => {
-  const fieldName = 'faq'
+  const fieldSectionName = 'faq'
   const { control } = useFormContext<DSOFormValues>()
 
   return (
@@ -23,17 +23,17 @@ export const DSOFAQ = ({ isNew = false }: DSOFAQProps) => {
       <Grid item>
         <FormSectionHeader title='FAQs' />
       </Grid>
-      <FieldsArray name={fieldName} control={control}>
+      <FieldsArray name={fieldSectionName} control={control}>
         {({ fields, append, remove }) => (
           <Grid container direction='column'>
             <Grid item container direction='column'>
-              {fields.map((value, index) => {
+              {fields.map((item, index) => {
                 return (
                   <DSOFAQItem
                     isNew={isNew}
-                    key={value.id}
+                    key={item.id}
                     defaultValue={fields[index] as any}
-                    fieldId={value.id}
+                    fieldId={item.id}
                     index={index}
                     remove={remove}
                   />
@@ -42,7 +42,7 @@ export const DSOFAQ = ({ isNew = false }: DSOFAQProps) => {
             </Grid>
             <VSpacer size={'small'} />
             <Grid item container justify='flex-end' alignItems='center'>
-              <FormError name={fieldName} render={TextError} />
+              <FormError name={fieldSectionName} render={TextError} />
               <DSOChapterAddButton append={append} text={'ADD NEW FAQ'} />
             </Grid>
           </Grid>

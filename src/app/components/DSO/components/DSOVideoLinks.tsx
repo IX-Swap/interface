@@ -11,7 +11,7 @@ import { VSpacer } from 'components/VSpacer'
 import { DSOVideoItem } from 'app/components/DSO/components/DSOVideoItem'
 
 interface DSOVideoLinksProps {
-  isNew: boolean
+  isNew?: boolean
 }
 
 export const DSOVideoLinks = ({ isNew = false }: DSOVideoLinksProps) => {
