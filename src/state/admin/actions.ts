@@ -46,3 +46,9 @@ export const getMe: Readonly<{
   fulfilled: createAction('admin/getMe/fulfilled'),
   rejected: createAction('admin/getMe/rejected'),
 }
+
+export const logout: Readonly<{
+  fulfilled: ActionCreatorWithoutPayload
+}> = {
+  fulfilled: createAction('admin/logOut/fulfilled'),
+}

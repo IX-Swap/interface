@@ -1,4 +1,3 @@
-import { TradeAuthorization } from '@ixswap1/v2-sdk'
 import { ActionCreatorWithoutPayload, ActionCreatorWithPayload, createAction } from '@reduxjs/toolkit'
 import { SupportedLocale } from 'constants/locales'
 import { SecToken } from 'types/secToken'

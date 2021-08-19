@@ -24,7 +24,7 @@ import SecTokenDetails from './SecTokenDetails'
 import Swap from './Swap'
 import { RedirectPathToSwapOnly, RedirectToSwap } from './Swap/redirects'
 import { AdminLoginPage } from './AdminLogin'
-import { AdminKycPage } from './AdminKyc'
+import { AdminKyc } from './AdminKyc'
 
 const AppWrapper = styled.div`
   display: flex;
@@ -60,6 +60,9 @@ export default function App() {
   const isSettingsOpen = useModalOpen(ApplicationModal.SETTINGS)
   const { pathname } = useLocation()
   useAccount()
+
+  const isAdminKyc = pathname.includes('admin-kyc')
+
   return (
     <ErrorBoundary>
       <Route component={GoogleAnalyticsReporter} />
@@ -67,13 +70,13 @@ export default function App() {
       <Route component={ApeModeQueryParamReader} />
       <AppBackground />
       <AppWrapper>
-        {!pathname.includes('admin-kyc') && <Header />}
-        <ToggleableBody isVisible={!isSettingsOpen}>
+        {!isAdminKyc && <Header />}
+        <ToggleableBody isVisible={!isSettingsOpen} {...(isAdminKyc && { style: { marginTop: 26 } })}>
           <Popups />
           <Polling />
           <Web3ReactManager>
             <Switch>
-              <Route exact strict path="/admin-kyc" component={AdminKycPage} />
+              <Route exact strict path="/admin-kyc" component={AdminKyc} />
               <Route exact strict path="/admin-login" component={AdminLoginPage} />
               <Route exact strict path="/send" component={RedirectPathToSwapOnly} />
               <Route exact strict path="/swap/:outputCurrency" component={RedirectToSwap} />

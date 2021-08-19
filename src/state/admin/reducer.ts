@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit'
 import { getTokenExpiration } from 'utils/time'
-import { postLogin, getMe, RawGetMePayload } from './actions'
+import { postLogin, getMe, RawGetMePayload, logout } from './actions'
 
 export interface AdminState {
   readonly token?: string
@@ -53,5 +53,12 @@ export default createReducer<AdminState>(initialState, (builder) =>
       state.adminIsAuthenticated = false
       state.adminLoading = false
       state.adminError = errorMessage
+    })
+    .addCase(logout.fulfilled, (state) => {
+      localStorage.removeItem('accessToken')
+      state.adminIsAuthenticated = false
+      state.adminLoading = false
+      state.adminError = null
+      state.adminData = {} as RawGetMePayload
     })
 )

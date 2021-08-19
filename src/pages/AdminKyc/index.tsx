@@ -1,8 +1,14 @@
 import React, { useEffect } from 'react'
-import { useAdminState, useGetMe } from 'state/admin/hooks'
 import { useHistory } from 'react-router-dom'
+import styled from 'styled-components'
 
-export const AdminKycPage = () => {
+import { useAdminState, useGetMe } from 'state/admin/hooks'
+
+import { AdminKycTable } from '../../components/AdminKycTable'
+import { Navbar } from './Navbar'
+import { Search } from './Search'
+
+export const AdminKyc = () => {
   const history = useHistory()
   const getMe = useGetMe()
   const { adminIsAuthenticated, adminError } = useAdminState()
@@ -11,11 +17,34 @@ export const AdminKycPage = () => {
     if (!adminIsAuthenticated && adminError) {
       history.push('/admin-login')
     }
-  }, [adminIsAuthenticated, adminError])
+  }, [adminIsAuthenticated, adminError, history])
 
   useEffect(() => {
-    getMe()
-  }, [])
+    if (localStorage.getItem('accessToken')) {
+      getMe()
+    }
+  }, [getMe])
 
-  return <div>KYC table</div>
+  return (
+    <Container>
+      <Navbar />
+      <Body>
+        <Search />
+        <AdminKycTable />
+      </Body>
+    </Container>
+  )
 }
+
+const Container = styled.div`
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+`
+
+const Body = styled.div`
+  padding: 0 30px;
+  max-width: 1610px;
+  margin: 0 auto;
+  width: 100%;
+`

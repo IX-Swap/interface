@@ -13,11 +13,13 @@ export const AdminLoginPage = () => {
     if (adminIsAuthenticated) {
       history.push('/admin-kyc')
     }
-  }, [adminIsAuthenticated])
+  }, [adminIsAuthenticated, history])
 
   useEffect(() => {
-    getMe()
-  }, [])
+    if (localStorage.getItem('accessToken')) {
+      getMe()
+    }
+  }, [getMe])
 
   return (
     <AppBody>

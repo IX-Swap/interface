@@ -1,10 +1,9 @@
-import React, { ChangeEvent, useState, useEffect } from 'react'
+import React, { ChangeEvent, useState, useEffect, useCallback } from 'react'
 import styled from 'styled-components'
 import { Trans, t } from '@lingui/macro'
 
 import { ButtonIXSWide } from '../Button'
 import Loader from '../Loader'
-import { LoaderThin } from '../Loader/LoaderThin'
 import { useAdminState, useLogin } from '../../state/admin/hooks'
 
 export const AdminLogin = () => {
@@ -19,7 +18,7 @@ export const AdminLogin = () => {
     handleValues((state) => ({ ...state, [name]: value }))
   }
 
-  const validate = () => {
+  const validate = useCallback(() => {
     const emailRegexp =
       /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i
 
@@ -38,11 +37,11 @@ export const AdminLogin = () => {
       return
     }
     handleError('')
-  }
+  }, [values])
 
   useEffect(() => {
     validate()
-  }, [values])
+  }, [values, validate])
 
   const submit = () => {
     login(values)
