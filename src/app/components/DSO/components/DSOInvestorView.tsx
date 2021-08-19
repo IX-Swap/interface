@@ -9,6 +9,7 @@ import { TabPanel } from 'components/TabPanel'
 import { DSOInvestorInformationView } from 'app/components/DSO/components/DSOInvestorInformationView'
 import { DSODataroomView } from 'app/components/DSO/components/DSODataroomView'
 import { DSOFAQsView } from 'app/components/DSO/components/DSOFAQsView'
+import { DSOVideoLinksView } from 'app/components/DSO/components/DSOVideoLinksView'
 
 export interface DSOInvestorViewProps {
   dso: DigitalSecurityOffering
@@ -60,7 +61,7 @@ export const DSOInvestorView = (props: DSOInvestorViewProps) => {
       </TabPanel>
 
       <TabPanel value={selectedIdx} index={3}>
-        <DSODataroomView dso={dso} showTitle={false} />
+        <DSOVideoLinksView dso={dso} />
       </TabPanel>
 
       <TabPanel value={selectedIdx} index={4}>

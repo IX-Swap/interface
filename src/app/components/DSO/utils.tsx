@@ -75,8 +75,17 @@ export const transformDSOToFormValues = (
     leverage: percentageToNumber(dso.leverage),
     documents: dso.documents.map(document => ({ value: document })),
     team: dso.team.map(({ _id, ...person }) => person),
-    faq: dso.faq.map(({ _id, ...item }) => item),
-    videoLinks: dso.videoLinks.map(({ _id, ...item }) => item)
+    // TODO Remove fake data after complete backend api endpoint
+    faq: [{ question: 'Fake question', answer: 'fakeAnswer' }],
+    videoLinks: [
+      {
+        title: 'Fake title',
+        link: 'https://www.youtube.com/watch?v=6tE1bl4GnzE'
+      }
+    ]
+    // TODO Uncomment this after complete backend api endpoint
+    // faq: dso.faq.map(({ _id, ...item }) => item),
+    // videoLinks: dso.videoLinks.map(({ _id, ...item }) => item)
   }
 }
 

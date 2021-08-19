@@ -10,7 +10,11 @@ import { DSOChapterAddButton } from 'app/components/DSO/components/DSOChapterAdd
 import { DSOFAQItem } from 'app/components/DSO/components/DSOFAQItem'
 import { VSpacer } from 'components/VSpacer'
 
-export const DSOFAQ = () => {
+interface DSOFAQProps {
+  isNew: boolean
+}
+
+export const DSOFAQ = ({ isNew = false }: DSOFAQProps) => {
   const fieldName = 'faq'
   const { control } = useFormContext<DSOFormValues>()
 
@@ -26,6 +30,7 @@ export const DSOFAQ = () => {
               {fields.map((value, index) => {
                 return (
                   <DSOFAQItem
+                    isNew={isNew}
                     key={value.id}
                     defaultValue={fields[index] as any}
                     fieldId={value.id}

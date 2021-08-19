@@ -8,6 +8,7 @@ import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { VSpacer } from 'components/VSpacer'
 
 export interface DSOFAQItemProps {
+  isNew: boolean
   fieldId: string
   index: number
   remove: (field: any) => void
@@ -15,7 +16,7 @@ export interface DSOFAQItemProps {
 }
 
 export const DSOFAQItem = (props: DSOFAQItemProps) => {
-  const { defaultValue, fieldId, index, remove } = props
+  const { defaultValue, fieldId, index, remove, isNew } = props
   const { control } = useFormContext<{ faq: DSOFormValues['faq'] }>()
   const { isTablet } = useAppBreakpoints()
 
@@ -70,7 +71,7 @@ export const DSOFAQItem = (props: DSOFAQItemProps) => {
         >
           <Grid item>
             <VSpacer size='small' />
-            {index >= 3 && (
+            {(index >= 3 || !isNew) && (
               <DSOTeamRemoveButton remove={remove} index={index} />
             )}
           </Grid>
