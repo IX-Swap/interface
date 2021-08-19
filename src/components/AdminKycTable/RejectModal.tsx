@@ -6,13 +6,16 @@ import { ButtonIXSWide } from 'components/Button'
 
 import clipboardTextIcon from '../../assets/images/clipboard-text .svg'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
+import { useDeclineKyc } from 'state/admin/hooks'
 
 interface Props {
   isModalOpen: boolean
   closeModal: () => void
+  id: number
 }
 
-export const RejectModal = ({ isModalOpen, closeModal }: Props) => {
+export const RejectModal = ({ isModalOpen, closeModal, id }: Props) => {
+  const declineKyc = useDeclineKyc()
   const [value, handleValue] = useState('Your KYC was rejected. Please contact us if you have any questions.')
   const [error, handleError] = useState('')
 
@@ -32,8 +35,11 @@ export const RejectModal = ({ isModalOpen, closeModal }: Props) => {
     handleValue(e.target.value)
   }
 
-  const onReject = () => {
-    closeModal()
+  const onReject = async () => {
+    try {
+      await declineKyc({ id, message: value })
+      closeModal()
+    } catch (e) {}
   }
 
   return (
@@ -81,9 +87,11 @@ const ModalContent = styled.div`
   background: ${({ theme: { bgG4 } }) => bgG4};
   width: 555px;
   padding: 42px;
+  border-radius: 20px;
   @media (max-width: 768px) {
     width: 100%;
     padding: 12px;
+    border-radius: 12px;
   }
 `
 

@@ -28,10 +28,12 @@ export const AdminKyc = () => {
   return (
     <Container>
       <Navbar />
-      <Body>
-        <Search />
-        <AdminKycTable />
-      </Body>
+      {adminIsAuthenticated && (
+        <Body>
+          <Search />
+          <AdminKycTable />
+        </Body>
+      )}
     </Container>
   )
 }

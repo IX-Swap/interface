@@ -10,17 +10,21 @@ import rejectedIcon from '../../assets/images/attention.svg'
 import pendingIcon from '../../assets/images/loader_thin.svg'
 import { ReactComponent as DropDownIcon } from '../../assets/images/dropdown.svg'
 import { RejectModal } from './RejectModal'
+import { useApproveKyc } from 'state/admin/hooks'
 
 interface Props {
   status: string
+  id: number
 }
 
-export const SecondStepStatus = ({ status }: Props) => {
+export const SecondStepStatus = ({ status, id }: Props) => {
   const theme = useContext(ThemeContext)
+  const approveKyc = useApproveKyc()
+
   const [isOpen, handleIsOpen] = useState(false)
   const [isModalOpen, handleIsModalOpen] = useState(false)
 
-  const isRejected = status === 'rejected'
+  const isRejected = status === 'declined'
 
   const toggle = () => handleIsOpen((state) => !state)
   const open = () => isRejected && handleIsOpen(true)
@@ -29,15 +33,22 @@ export const SecondStepStatus = ({ status }: Props) => {
   const openModal = () => handleIsModalOpen(true)
   const closeModal = () => handleIsModalOpen(false)
 
+  const approve = async () => {
+    try {
+      await approveKyc(id)
+      close()
+    } catch (e) {}
+  }
+
   const statusColors = {
-    pending: theme.text2,
-    rejected: theme.error,
+    new: theme.text2,
+    declined: theme.error,
     approved: theme.green1,
   } as Record<string, string>
 
   const getText = () => {
     switch (status) {
-      case 'rejected':
+      case 'declined':
         return t`Rejected`
       case 'approved':
         return t`Approved`
@@ -48,7 +59,7 @@ export const SecondStepStatus = ({ status }: Props) => {
 
   const getIcon = () => {
     switch (status) {
-      case 'rejected':
+      case 'declined':
         return rejectedIcon
       case 'approved':
         return approvedIcon
@@ -56,12 +67,12 @@ export const SecondStepStatus = ({ status }: Props) => {
         return pendingIcon
     }
   }
-  if (status === 'pending') {
+  if (status === 'new') {
     return (
       <>
-        <RejectModal isModalOpen={isModalOpen} closeModal={closeModal} />
+        <RejectModal isModalOpen={isModalOpen} closeModal={closeModal} id={id} />
         <ButtonsContainer>
-          <ApproveButton>
+          <ApproveButton onClick={approve}>
             <Trans>Approve</Trans>
           </ApproveButton>
           <RejectButton onClick={openModal}>
@@ -74,7 +85,7 @@ export const SecondStepStatus = ({ status }: Props) => {
 
   const popOverContent = () => (
     <PopOverContent>
-      <ButtonEmpty onClick={toggle} padding="0" data-testid="approve">
+      <ButtonEmpty onClick={approve} padding="0" data-testid="approve">
         <PopOverItem>
           <Trans>Approve</Trans>
         </PopOverItem>

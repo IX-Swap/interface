@@ -1,14 +1,15 @@
-import React, { useState } from 'react'
-import { t } from '@lingui/macro'
+import React, { useEffect } from 'react'
+import { t, Trans } from '@lingui/macro'
 import styled from 'styled-components'
 import dayjs from 'dayjs'
 
 import { Table, BodyRow, HeaderRow } from '../Table'
-import { data } from './constants'
 import { FirstStepStatus } from './FirstStepStatus'
 import { SecondStepStatus } from './SecondStepStatus'
 import { Pagination } from './Pagination'
 import { MoreActions } from './MoreActions'
+import { useAdminState, useGetKycList } from 'state/admin/hooks'
+import { LoaderThin } from 'components/Loader/LoaderThin'
 
 const headerCells = [
   t`Wallet address`,
@@ -30,38 +31,90 @@ const Header = () => {
 }
 
 const Body = () => {
+  const {
+    kycList: { items },
+  } = useAdminState()
   return (
     <>
-      {data.map(({ id, wallet, createdAt, token, pair, step1, step2 }) => (
-        <StyledBodyRow key={id}>
-          <Wallet>{`${wallet.slice(0, 6)} ... ${wallet.slice(wallet.length - 4)}`}</Wallet>
-          <div>{token}</div>
-          <div>{dayjs(createdAt).format('MMM D, YYYY HH:mm')}</div>
-          <div>{pair}</div>
-          <div>
-            <FirstStepStatus {...step1} />
-          </div>
-          <div>{['pending', 'rejected'].includes(step1.status) ? <Dash /> : <SecondStepStatus {...step2} />}</div>
-          <div>
-            <MoreActions />
-          </div>
-        </StyledBodyRow>
-      ))}
+      {items?.map(
+        ({ id, user: { ethAddress }, tokenId, status, token: { symbol, custodyVaultId }, createdAt, kyc: { url } }) => (
+          <StyledBodyRow key={id}>
+            <Wallet>{`${(ethAddress || '').slice(0, 6)} ... ${(ethAddress || '').slice(
+              (ethAddress || '').length - 4
+            )}`}</Wallet>
+            <div>{symbol}</div>
+            <div>{dayjs(createdAt).format('MMM D, YYYY HH:mm')}</div>
+            <div>{custodyVaultId}</div>
+            <div>
+              <FirstStepStatus status="approved" link={url} />
+            </div>
+            <div>
+              <SecondStepStatus status={status} id={id} />
+            </div>
+            <div>
+              <MoreActions id={id} />
+            </div>
+          </StyledBodyRow>
+        )
+      )}
     </>
   )
 }
 
 export const AdminKycTable = () => {
-  const totalPages = Math.ceil(data.length / 2)
-  const [page, handlePage] = useState(1)
+  const {
+    kycList: { totalPages, page, items },
+    adminLoading,
+  } = useAdminState()
+  const getKycList = useGetKycList()
+
+  const onPageChange = (page: number) => {
+    getKycList({ page, offset: 10 })
+  }
+
+  useEffect(() => {
+    getKycList({ page: 1, offset: 10 })
+  }, [])
 
   return (
-    <Container>
-      <Table body={<Body />} header={<Header />} />
-      <Pagination page={page} totalPages={totalPages} onPageChange={handlePage} />
-    </Container>
+    <>
+      {adminLoading && (
+        <Loader>
+          <LoaderThin size={96} />
+        </Loader>
+      )}
+      {items.length === 0 ? (
+        <NoData>
+          <Trans>No data</Trans>
+        </NoData>
+      ) : (
+        <Container>
+          <Table body={<Body />} header={<Header />} />
+          <Pagination page={page} totalPages={totalPages} onPageChange={onPageChange} />
+        </Container>
+      )}
+    </>
   )
 }
+
+const Loader = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000000;
+`
+
+const NoData = styled.div`
+  font-weight: 600;
+  color: ${({ theme: { text2 } }) => text2};
+  text-align: center;
+`
 
 const Dash = styled.div`
   background-color: ${({ theme: { bg7 } }) => bg7};

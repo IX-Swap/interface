@@ -1,6 +1,16 @@
 import { createReducer } from '@reduxjs/toolkit'
 import { getTokenExpiration } from 'utils/time'
-import { postLogin, getMe, RawGetMePayload, logout } from './actions'
+import {
+  postLogin,
+  getMe,
+  logout,
+  RawGetMePayload,
+  KycList,
+  getKycList,
+  postApproveKyc,
+  postDeclineKyc,
+  postKycReset,
+} from './actions'
 
 export interface AdminState {
   readonly token?: string
@@ -9,6 +19,7 @@ export interface AdminState {
   adminIsAuthenticated: boolean
   adminError: string | null
   adminData: RawGetMePayload
+  kycList: KycList
 }
 
 const initialState: AdminState = {
@@ -18,6 +29,16 @@ const initialState: AdminState = {
   adminError: null,
   adminData: {} as RawGetMePayload,
   adminIsAuthenticated: Boolean(localStorage.getItem('accessToken')),
+  kycList: {
+    page: 0,
+    offset: 0,
+    totalItems: 0,
+    totalPages: 0,
+    itemCount: 0,
+    items: [],
+    nextPage: 0,
+    prevPage: 0,
+  },
 }
 
 export default createReducer<AdminState>(initialState, (builder) =>
@@ -60,5 +81,69 @@ export default createReducer<AdminState>(initialState, (builder) =>
       state.adminLoading = false
       state.adminError = null
       state.adminData = {} as RawGetMePayload
+    })
+    .addCase(getKycList.pending, (state) => {
+      state.adminLoading = true
+      state.adminError = null
+    })
+    .addCase(getKycList.fulfilled, (state, { payload: { data } }) => {
+      state.adminLoading = false
+      state.adminError = null
+      state.kycList = data
+    })
+    .addCase(getKycList.rejected, (state, { payload: { errorMessage } }) => {
+      state.adminLoading = false
+      state.adminError = errorMessage
+    })
+    .addCase(postApproveKyc.pending, (state) => {
+      state.adminLoading = true
+      state.adminError = null
+    })
+    .addCase(postApproveKyc.fulfilled, (state, { payload: { data } }) => {
+      const list = [...state.kycList.items]
+      state.adminLoading = false
+      state.adminError = null
+      state.kycList = {
+        ...state.kycList,
+        items: list.map((el) => ({ ...el, status: el.id === data.id ? data.status : el.status })),
+      }
+    })
+    .addCase(postApproveKyc.rejected, (state, { payload: { errorMessage } }) => {
+      state.adminLoading = false
+      state.adminError = errorMessage
+    })
+    .addCase(postDeclineKyc.pending, (state) => {
+      state.adminLoading = true
+      state.adminError = null
+    })
+    .addCase(postDeclineKyc.fulfilled, (state, { payload: { data } }) => {
+      const list = [...state.kycList.items]
+      state.adminLoading = false
+      state.adminError = null
+      state.kycList = {
+        ...state.kycList,
+        items: list.map((el) => ({ ...el, status: el.id === data.id ? data.status : el.status })),
+      }
+    })
+    .addCase(postDeclineKyc.rejected, (state, { payload: { errorMessage } }) => {
+      state.adminLoading = false
+      state.adminError = errorMessage
+    })
+    .addCase(postKycReset.pending, (state) => {
+      state.adminLoading = true
+      state.adminError = null
+    })
+    .addCase(postKycReset.fulfilled, (state, { payload: { data } }) => {
+      const list = [...state.kycList.items]
+      state.adminLoading = false
+      state.adminError = null
+      state.kycList = {
+        ...state.kycList,
+        items: list.map((el) => ({ ...el, status: el.id === data.id ? data.status : el.status })),
+      }
+    })
+    .addCase(postKycReset.rejected, (state, { payload: { errorMessage } }) => {
+      state.adminLoading = false
+      state.adminError = errorMessage
     })
 )

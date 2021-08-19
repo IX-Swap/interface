@@ -6,16 +6,29 @@ import Popover from 'components/Popover'
 
 import { ReactComponent as MenuIcon } from '../../assets/images/menu.svg'
 import { Trans } from '@lingui/macro'
+import { useKycReset } from 'state/admin/hooks'
 
-export const MoreActions = () => {
+interface Props {
+  id: number
+}
+
+export const MoreActions = ({ id }: Props) => {
+  const kycReset = useKycReset()
   const [isOpen, handleIsOpen] = useState(false)
 
   const toggle = () => handleIsOpen((state) => !state)
   const close = () => handleIsOpen(false)
 
+  const startAgain = async () => {
+    try {
+      await kycReset(id)
+      close()
+    } catch (e) {}
+  }
+
   const popOverContent = () => (
     <PopOverContent>
-      <ButtonEmpty onClick={toggle} padding="0" data-testid="start-again">
+      <ButtonEmpty onClick={startAgain} padding="0" data-testid="start-again">
         <PopOverItem>
           <Trans>Start again</Trans>
         </PopOverItem>

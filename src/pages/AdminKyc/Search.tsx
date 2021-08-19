@@ -1,9 +1,20 @@
-import React from 'react'
+import React, { ChangeEvent } from 'react'
 import { t } from '@lingui/macro'
 import styled from 'styled-components'
+import { useGetKycList } from 'state/admin/hooks'
+
+let timer = null as any
 
 export const Search = () => {
-  return <Input placeholder={t`Search for Wallet or Token`} />
+  const getKysList = useGetKycList()
+
+  const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target
+    clearTimeout(timer)
+    timer = setTimeout(() => getKysList({ page: 1, offset: 10, wallet: value, token: value }), 250)
+  }
+
+  return <Input placeholder={t`Search for Wallet or Token`} onChange={onSearchChange} />
 }
 
 const Input = styled.input`
