@@ -8,7 +8,7 @@ import flatMap from 'lodash.flatmap'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import apiService from 'services/apiService'
-import { tokens } from 'services/apiUrls'
+import { kyc, tokens } from 'services/apiUrls'
 import { saveToken } from 'state/auth/actions'
 import { LOGIN_STATUS, useAuthState, useLogin } from 'state/auth/hooks'
 import { clearEventLog } from 'state/eventLog/actions'
@@ -455,7 +455,7 @@ export function useFetchUserSecTokenListCallback(): (sendDispatch?: boolean) => 
 }
 
 export const postPassAccreditation = async ({ tokenId }: { tokenId: number }) => {
-  const result = await apiService.post(tokens.accreditation(tokenId), {})
+  const result = await apiService.post(kyc.getAccreditation(tokenId), {})
   return result.data
 }
 
