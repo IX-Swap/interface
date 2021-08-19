@@ -118,7 +118,4 @@ const Textarea = styled.textarea`
   padding: 16px 22px;
   margin-bottom: 31px;
   height: 308px;
-  @media (max-width: 768px) {
-    /* height: 308px; */
-  }
 `
