@@ -1,15 +1,23 @@
-import { t } from '@lingui/macro'
-import { Token, CurrencyAmount, WETH9 } from '@ixswap1/sdk-core'
+import { Interface } from '@ethersproject/abi'
+import { Currency, CurrencyAmount, Token, WETH9 } from '@ixswap1/sdk-core'
 import { Pair } from '@ixswap1/v2-sdk'
+import { t } from '@lingui/macro'
+import { abi as STAKING_REWARDS_ABI } from '@uniswap/liquidity-staker/build/StakingRewards.json'
+import { IXS_ADDRESS } from 'constants/addresses'
+import { useCurrency } from 'hooks/Tokens'
+import useCurrentBlockTimestamp from 'hooks/useCurrentBlockTimestamp'
 import JSBI from 'jsbi'
-import { useMemo } from 'react'
+import { StakingStatus } from 'pages/Farming/Staking'
+import { useEffect, useMemo } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch, AppState } from 'state'
+import { useCurrencyBalance } from 'state/wallet/hooks'
+import { maxAmountSpend } from 'utils/maxAmountSpend'
 import { DAI, IXS, USDC, USDT, WBTC } from '../../constants/tokens'
 import { useActiveWeb3React } from '../../hooks/web3'
 import { NEVER_RELOAD, useMultipleContractSingleData } from '../multicall/hooks'
 import { tryParseAmount } from '../swap/helpers'
-import useCurrentBlockTimestamp from 'hooks/useCurrentBlockTimestamp'
-import { Interface } from '@ethersproject/abi'
-import { abi as STAKING_REWARDS_ABI } from '@uniswap/liquidity-staker/build/StakingRewards.json'
+import { saveStakingStatus } from './actions'
 
 export const STAKING_REWARDS_INTERFACE = new Interface(STAKING_REWARDS_ABI)
 
@@ -274,19 +282,16 @@ export function useDerivedStakeInfo(
 }
 
 // based on typed value
-export function useDerivedUnstakeInfo(
-  typedValue: string,
-  stakingAmount: CurrencyAmount<Token>
-): {
-  parsedAmount?: CurrencyAmount<Token>
+export function useDerivedUnstakeInfo(typedValue: string): {
+  parsedAmount?: CurrencyAmount<Currency>
   error?: string
 } {
-  const { account } = useActiveWeb3React()
-
-  const parsedInput: CurrencyAmount<Token> | undefined = tryParseAmount(typedValue, stakingAmount.currency)
-
-  const parsedAmount =
-    parsedInput && JSBI.lessThanOrEqual(parsedInput.quotient, stakingAmount.quotient) ? parsedInput : undefined
+  const { account, chainId } = useActiveWeb3React()
+  const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
+  const balance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
+  const parsedInput = tryParseAmount(typedValue, currency)
+  const maxAmountInput = maxAmountSpend(balance)
+  const parsedAmount = parsedInput && JSBI.greaterThan(parsedInput.quotient, JSBI.BigInt('0')) ? parsedInput : undefined
 
   let error: string | undefined
   if (!account) {
@@ -295,9 +300,38 @@ export function useDerivedUnstakeInfo(
   if (!parsedAmount) {
     error = error ?? t`Enter an amount`
   }
-
+  if (parsedAmount && JSBI.greaterThan(parsedAmount.quotient, maxAmountInput?.quotient ?? JSBI.BigInt('0'))) {
+    error = error ?? t`Amount exceeds balance`
+  }
   return {
     parsedAmount,
     error,
   }
+}
+
+export function useStakingStatus() {
+  const { status } = useStakingState()
+  const { account, chainId } = useActiveWeb3React()
+  const dispatch = useDispatch<AppDispatch>()
+  const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
+  const balance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
+  const hasStaking = false
+
+  useEffect(() => {
+    if (!account) {
+      dispatch(saveStakingStatus({ status: StakingStatus.CONNECT_WALLET }))
+    } else if (hasStaking) {
+      dispatch(saveStakingStatus({ status: StakingStatus.STAKING }))
+    } else if (!balance?.greaterThan('0')) {
+      dispatch(saveStakingStatus({ status: StakingStatus.NO_IXS }))
+    } else {
+      dispatch(saveStakingStatus({ status: StakingStatus.NO_STAKE }))
+    }
+  }, [dispatch, account, hasStaking, balance])
+
+  return status
+}
+
+export function useStakingState(): AppState['staking'] {
+  return useSelector<AppState, AppState['staking']>((state) => state.staking)
 }

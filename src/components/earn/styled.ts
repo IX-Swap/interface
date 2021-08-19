@@ -3,6 +3,8 @@ import Column, { AutoColumn } from '../Column'
 
 import uImage from '../../assets/images/big_unicorn.png'
 import noise from '../../assets/images/noise.png'
+import { Text } from 'rebass'
+import Input from 'components/NumericalInput'
 
 export const TextBox = styled.div`
   display: flex;
@@ -66,11 +68,46 @@ export const Break = styled.div`
 export const ModalContentWrapper = styled(Column)`
   width: 100%;
   flex: 1 1;
+  border-radius: 20px;
   position: relative;
   background: ${({ theme }) => theme.bgG4};
-  padding: 37px 40px 19px 40px;
   ${({ theme }) => theme.mediaWidth.upToSmall`
    padding: 1rem;
   `};
 `
-export const StakeModalTop = styled(Column)``
+export const StakeModalTop = styled(Column)`
+  padding: 37px 40px 57px 40px;
+`
+
+export const ModalBottomWrapper = styled(Column)`
+  padding: 33px 40px 34px 40px;
+  background: ${({ theme }) => theme.bgG7};
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+`
+
+export const HighlightedInput = styled.div<{ active?: boolean; warning?: boolean }>`
+  min-height: 60px;
+  width: 100%;
+  position: relative;
+  padding: 10px 22px;
+  flex: 1;
+  background: ${({ theme }) => theme.bg12};
+  border-radius: 36px;
+  border: ${({ theme, active, warning }) =>
+    warning ? `1px solid ${theme.red1}` : active ? `1px solid ${theme.popUpInputBorder}` : 'none'};
+  :hover {
+    border: ${({ theme, warning }) => (warning ? `1px solid ${theme.red1}` : `1px solid ${theme.popUpInputBorder}`)};
+  }
+`
+export const AvailableBalance = styled(Text)`
+  color: ${({ theme }) => theme.text8};
+  font-size: 14px;
+  line-height: 39px;
+`
+
+export const StakingInput = styled(Input)`
+  background: ${({ theme }) => theme.bg12};
+  width: 60%;
+  margin-right: 10px;
+`

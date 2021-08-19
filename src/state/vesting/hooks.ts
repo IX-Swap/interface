@@ -6,7 +6,7 @@ import { useCurrency } from 'hooks/Tokens'
 import { useVestingContract } from 'hooks/useContract'
 import useTheme from 'hooks/useTheme'
 import { useActiveWeb3React } from 'hooks/web3'
-import { VestingState } from 'pages/Farming/Vesting'
+import { VestingStatus } from 'pages/Farming/Vesting'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, AppState } from 'state'
@@ -148,21 +148,21 @@ export function useClaimAll(): () => Promise<any> {
 }
 
 export function useVestingStatus() {
-  const [vestingStatus, setVestingStatus] = useState(VestingState.LOADING)
+  const [vestingStatus, setVestingStatus] = useState(VestingStatus.LOADING)
   const { account } = useActiveWeb3React()
   const getIsVesting = useIsVestingCallback()
   const dispatch = useDispatch<AppDispatch>()
 
   useEffect(() => {
-    if (!account && vestingStatus !== VestingState.CONNECT_WALLET) {
-      setVestingStatus(VestingState.CONNECT_WALLET)
+    if (!account && vestingStatus !== VestingStatus.CONNECT_WALLET) {
+      setVestingStatus(VestingStatus.CONNECT_WALLET)
     }
     if (account) {
       getVesting()
     }
     async function getVesting() {
       const vestingResponse = await getIsVesting()
-      setVestingStatus(vestingResponse ? VestingState.VALID : VestingState.ZERO_BALANCE)
+      setVestingStatus(vestingResponse ? VestingStatus.VALID : VestingStatus.ZERO_BALANCE)
       dispatch(saveIsVesting({ isVesting: vestingResponse }))
     }
   }, [account, vestingStatus, getIsVesting, dispatch])
@@ -186,7 +186,7 @@ export function useVestingDetails() {
   }, [vesting, account, dispatch])
 
   useEffect(() => {
-    if (isVesting && account && !details) {
+    if (isVesting && account && details) {
       fetchDetails()
     }
   }, [fetchDetails, account, isVesting, details])

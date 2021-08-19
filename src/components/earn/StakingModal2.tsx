@@ -1,58 +1,57 @@
-import React, { useState, useCallback } from 'react'
-import { useV2LiquidityTokenPermit } from '../../hooks/useERC20Permit'
-import useTransactionDeadline from '../../hooks/useTransactionDeadline'
-import { formatCurrencyAmount } from '../../utils/formatCurrencyAmount'
-import Modal from '../Modal'
-import { AutoColumn } from '../Column'
-import styled from 'styled-components/macro'
-import { RowBetween } from '../Row'
-import { TYPE, CloseIcon, ModalBlurWrapper } from '../../theme'
-import { ButtonConfirmed, ButtonError } from '../Button'
-import ProgressCircles from '../ProgressSteps'
-import CurrencyInputPanel from '../CurrencyInputPanel'
-import { Pair } from '@ixswap1/v2-sdk'
-import { Token, CurrencyAmount } from '@ixswap1/sdk-core'
-import { useActiveWeb3React } from '../../hooks/web3'
-import { maxAmountSpend } from '../../utils/maxAmountSpend'
-import { usePairContract, useStakingContract, useV2RouterContract } from '../../hooks/useContract'
-import { useApproveCallback, ApprovalState } from '../../hooks/useApproveCallback'
-import { StakingInfo, useDerivedStakeInfo } from '../../state/stake/hooks'
-import { TransactionResponse } from '@ethersproject/providers'
-import { useTransactionAdder } from '../../state/transactions/hooks'
-import { LoadingView, SubmittedView } from '../ModalViews'
+import { Percent } from '@ixswap1/sdk-core'
 import { t, Trans } from '@lingui/macro'
+import { ButtonIXSWide } from 'components/Button'
+import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
+import { Option, OptionRow } from 'components/OptionButton'
+import { TextRow } from 'components/TextRow/TextRow'
 import { IXS_ADDRESS } from 'constants/addresses'
 import { useCurrency } from 'hooks/Tokens'
+import { ApprovalState, useApproveCallback } from 'hooks/useApproveCallback'
+import { useV2LiquidityTokenPermit } from 'hooks/useERC20Permit'
+import JSBI from 'jsbi'
+import { Dots } from 'pages/Pool/styleds'
+import React, { useCallback, useState } from 'react'
 import { ApplicationModal } from 'state/application/actions'
 import { useModalOpen } from 'state/application/hooks'
-import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
-
-const HypotheticalRewardRate = styled.div<{ dim: boolean }>`
-  display: flex;
-  justify-content: space-between;
-  padding-right: 20px;
-  padding-left: 20px;
-
-  opacity: ${({ dim }) => (dim ? 0.5 : 1)};
-`
-
-const ContentWrapper = styled(AutoColumn)`
-  width: 100%;
-  padding: 1rem;
-`
+import { useCurrencyBalance } from 'state/wallet/hooks'
+import { useV2RouterContract } from '../../hooks/useContract'
+import useTransactionDeadline from '../../hooks/useTransactionDeadline'
+import { useActiveWeb3React } from '../../hooks/web3'
+import { useDerivedUnstakeInfo } from '../../state/stake/hooks'
+import { useTransactionAdder } from '../../state/transactions/hooks'
+import { CloseIcon, ModalBlurWrapper, TYPE } from '../../theme'
+import { maxAmountSpend } from '../../utils/maxAmountSpend'
+import Column from '../Column'
+import Row, { RowBetween } from '../Row'
+import {
+  AvailableBalance,
+  HighlightedInput,
+  ModalBottomWrapper,
+  ModalContentWrapper,
+  StakeModalTop,
+  StakingInput,
+} from './styled'
 
 interface StakingModalProps {
   onDismiss: () => void
-  stakingInfo?: StakingInfo
-  userLiquidityUnstaked?: CurrencyAmount<Token>
 }
 
-export default function StakingModal2({ onDismiss, stakingInfo, userLiquidityUnstaked }: StakingModalProps) {
-  const { library, chainId } = useActiveWeb3React()
+const PERCENTAGES = ['25', '50', '75', '100']
+
+export default function StakingModal2({ onDismiss }: StakingModalProps) {
+  const { library, chainId, account } = useActiveWeb3React()
   const isOpen = useModalOpen(ApplicationModal.STAKE)
   // track and parse user input
+  const router = useV2RouterContract()
   const [typedValue, setTypedValue] = useState('')
-  const currency = useCurrency(IXS_ADDRESS[chainId ?? 42])
+  const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
+  const { error, parsedAmount } = useDerivedUnstakeInfo(typedValue)
+  const balance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
+  const maxAmountInput = maxAmountSpend(balance)
+  const [approval, approveCallback] = useApproveCallback(parsedAmount, IXS_ADDRESS[chainId ?? 1])
+  const parsedAmountWrapped = parsedAmount?.wrapped
+  const { signatureData, gatherPermitSignature } = useV2LiquidityTokenPermit(parsedAmountWrapped, router?.address)
+
   // state for pending and submitted txn views
   const addTransaction = useTransactionAdder()
   const [attempting, setAttempting] = useState<boolean>(false)
@@ -65,7 +64,6 @@ export default function StakingModal2({ onDismiss, stakingInfo, userLiquidityUns
 
   // approval data for stake
   const deadline = useTransactionDeadline()
-  const router = useV2RouterContract()
 
   async function onStake() {
     console.log('STAKE')
@@ -76,75 +74,111 @@ export default function StakingModal2({ onDismiss, stakingInfo, userLiquidityUns
     setTypedValue(typedValue)
   }, [])
 
-  // used for max input button
-  const maxAmountInput = maxAmountSpend(userLiquidityUnstaked)
-  const handleMax = useCallback(() => {
-    maxAmountInput && onUserInput(maxAmountInput.toExact())
-  }, [maxAmountInput, onUserInput])
+  const onPercentageInput = useCallback(
+    (percentage: string) => {
+      const fraction = new Percent(JSBI.BigInt(percentage), JSBI.BigInt(100))
+      const result = maxAmountInput?.multiply(fraction)
+      setTypedValue(result?.toSignificant(currency?.decimals ?? 18) ?? '0')
+    },
+    [maxAmountInput, currency]
+  )
+
+  const isSelectedPercentage = useCallback(
+    (percentage: string) => {
+      const fraction = JSBI.divide(JSBI.BigInt(percentage), JSBI.BigInt(100))
+
+      return Boolean(parsedAmount && maxAmountInput && parsedAmount.equalTo(maxAmountInput.multiply(fraction)))
+    },
+    [maxAmountInput, parsedAmount]
+  )
+
   async function onAttemptToApprove() {
-    console.log('APPROVE')
+    if (!library || !deadline) throw new Error('missing dependencies')
+    if (!parsedAmount) throw new Error('missing liquidity amount')
+
+    if (gatherPermitSignature) {
+      try {
+        await gatherPermitSignature()
+      } catch (error) {
+        // try to approve if gatherPermitSignature failed for any reason other than the user rejecting it
+        if (error?.code !== 4001) {
+          await approveCallback()
+        }
+      }
+    } else {
+      await approveCallback()
+    }
   }
 
   return (
     <RedesignedWideModal isOpen={isOpen} onDismiss={wrappedOnDismiss} maxHeight={90}>
       <ModalBlurWrapper>
-        {!attempting && !hash && (
-          <ContentWrapper gap="lg">
+        <ModalContentWrapper>
+          <StakeModalTop>
             <RowBetween>
-              <TYPE.mediumHeader>
+              <TYPE.title5>
                 <Trans>Stake</Trans>
-              </TYPE.mediumHeader>
+              </TYPE.title5>
               <CloseIcon onClick={wrappedOnDismiss} />
             </RowBetween>
-            <CurrencyInputPanel
-              value={typedValue}
-              onUserInput={onUserInput}
-              onMax={handleMax}
-              showMaxButton={false}
-              currency={currency}
-              label={''}
-              renderBalance={(amount) => <Trans>Available balance: {formatCurrencyAmount(amount, 4)}</Trans>}
-              id="stake-liquidity-token"
-            />
-
-            <HypotheticalRewardRate dim={true}>
-              <div>
-                <TYPE.black fontWeight={600}>
-                  <Trans>Weekly Rewards</Trans>
-                </TYPE.black>
-              </div>
-
-              <TYPE.black>
-                {/* <Trans>
-                {hypotheticalRewardRate
-                  .multiply((60 * 60 * 24 * 7).toString())
-                  .toSignificant(4, { groupSeparator: ',' })}{' '}
-                IXS / week
-              </Trans> */}
-              </TYPE.black>
-            </HypotheticalRewardRate>
-          </ContentWrapper>
-        )}
-        {attempting && !hash && (
-          <LoadingView onDismiss={wrappedOnDismiss}>
-            <AutoColumn gap="12px" justify={'center'}>
-              <TYPE.largeHeader>
-                <Trans>Depositing Liquidity</Trans>
-              </TYPE.largeHeader>
-              <TYPE.body fontSize={20}>{/* <Trans>{parsedAmount?.toSignificant(4)} IXS</Trans> */}</TYPE.body>
-            </AutoColumn>
-          </LoadingView>
-        )}
-        {attempting && hash && (
-          <SubmittedView onDismiss={wrappedOnDismiss} hash={hash}>
-            <AutoColumn gap="12px" justify={'center'}>
-              <TYPE.largeHeader>
-                <Trans>Transaction Submitted</Trans>
-              </TYPE.largeHeader>
-              <TYPE.body fontSize={20}>{/* <Trans>Deposited {parsedAmount?.toSignificant(4)} IXS</Trans> */}</TYPE.body>
-            </AutoColumn>
-          </SubmittedView>
-        )}
+            <Row style={{ marginTop: '19px' }}>
+              <TYPE.body1>
+                <Trans>Amount of IXS to stake</Trans>
+              </TYPE.body1>
+            </Row>
+            <HighlightedInput style={{ marginTop: '11px' }}>
+              <RowBetween style={{ flexWrap: 'wrap' }}>
+                <StakingInput
+                  placeholder={maxAmountInput?.toSignificant(5)}
+                  value={typedValue}
+                  error={Boolean(error)}
+                  onUserInput={(value) => onUserInput(value)}
+                  color={error ? 'red' : 'text1'}
+                />
+                <AvailableBalance>
+                  <Trans>Available balance: {maxAmountInput?.toSignificant(5)}</Trans>
+                </AvailableBalance>
+              </RowBetween>
+            </HighlightedInput>
+            <OptionRow style={{ marginTop: '36px', width: '100%', justifyContent: 'space-between' }}>
+              {PERCENTAGES.map((percentage) => (
+                <Option
+                  key={percentage}
+                  onClick={() => onPercentageInput(percentage)}
+                  active={isSelectedPercentage(percentage)}
+                  data-testid={'percentage_' + percentage}
+                >
+                  {percentage !== '100' ? `${percentage}%` : <Trans>MAX</Trans>}
+                </Option>
+              ))}
+            </OptionRow>
+          </StakeModalTop>
+          <ModalBottomWrapper>
+            <Column style={{ gap: '5px' }}>
+              <TextRow textLeft={t`Reward payout interval`} textRight={t`Twice a week`} />
+              <TextRow textLeft={t`Yearly rewards`} textRight={`10%`} />
+              <TextRow textLeft={t`Type`} textRight={`On-chain`} />
+            </Column>
+            <Row style={{ marginTop: '43px' }}>
+              {!(approval === ApprovalState.APPROVED || signatureData !== null) && (
+                <ButtonIXSWide data-testid="approve-staking" disabled={Boolean(error)} onClick={onAttemptToApprove}>
+                  {approval === ApprovalState.PENDING ? (
+                    <Dots>
+                      <Trans>Approving</Trans>
+                    </Dots>
+                  ) : (
+                    <>{error || <Trans>Approve</Trans>}</>
+                  )}
+                </ButtonIXSWide>
+              )}
+              {(approval === ApprovalState.APPROVED || signatureData !== null) && (
+                <ButtonIXSWide data-testid="stake-button" disabled={Boolean(error)} onClick={onStake}>
+                  <>{error || <Trans>Stake</Trans>}</>
+                </ButtonIXSWide>
+              )}
+            </Row>
+          </ModalBottomWrapper>
+        </ModalContentWrapper>
       </ModalBlurWrapper>
     </RedesignedWideModal>
   )

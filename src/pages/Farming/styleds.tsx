@@ -105,10 +105,14 @@ export const StakingCard = styled.div`
 export const StakingPromoCard = styled(StakingCard)`
   justify-content: center;
   align-items: center;
+  text-align: center;
   padding-top: 32px;
   padding-bottom: 70px;
-  height: 330px;
+  min-height: 330px;
   width: 294px;
+`
+export const GetIXSStakingCard = styled(StakingPromoCard)`
+  padding: 35px 34px 37px 34px;
 `
 export const StackingPositionCard = styled(StakingCard)`
   padding: 32px;

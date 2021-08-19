@@ -1,16 +1,16 @@
 import React from 'react'
 import { ConnectWalletVesting } from './ConnectWalletVesting'
 import { VestingInfoWrapper } from './styleds'
-import { VestingState } from './Vesting'
+import { VestingStatus } from './Vesting'
 import { VestingValid } from './VestingValid'
 import { ZeroBalanceVesting } from './ZeroBalanceVesting'
 
-export const VestingInfo = ({ state }: { state: VestingState }) => {
+export const VestingInfo = ({ state }: { state: VestingStatus }) => {
   return (
     <VestingInfoWrapper>
-      {state === VestingState.CONNECT_WALLET && <ConnectWalletVesting />}
-      {state === VestingState.ZERO_BALANCE && <ZeroBalanceVesting />}
-      {state === VestingState.VALID && <VestingValid />}
+      {state === VestingStatus.CONNECT_WALLET && <ConnectWalletVesting />}
+      {state === VestingStatus.ZERO_BALANCE && <ZeroBalanceVesting />}
+      {state === VestingStatus.VALID && <VestingValid />}
     </VestingInfoWrapper>
   )
 }

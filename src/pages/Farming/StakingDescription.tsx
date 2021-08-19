@@ -1,18 +1,16 @@
 import { Trans } from '@lingui/macro'
 import { ButtonIXSGradient } from 'components/Button'
 import Column from 'components/Column'
-import { IXS_ADDRESS } from 'constants/addresses'
 import useTheme from 'hooks/useTheme'
 import { useActiveWeb3React } from 'hooks/web3'
 import React from 'react'
 import { Box } from 'rebass'
 import { useToggleStakeModal, useWalletModalToggle } from 'state/application/hooks'
-import { StyledInternalLink, TYPE } from 'theme'
-import { routes } from 'utils/routes'
-import { StakingState } from './Staking'
+import { TYPE } from 'theme'
+import { StakingStatus } from './Staking'
 import { TokenDescriptionWrapper, TokenStakingDescriptionNumbers } from './styleds'
 
-export const StakingDescription = ({ stakingState }: { stakingState: StakingState }) => {
+export const StakingDescription = ({ stakingStatus }: { stakingStatus: StakingStatus }) => {
   const theme = useTheme()
   const toggleWalletModal = useWalletModalToggle()
   const toggleStakeModal = useToggleStakeModal()
@@ -49,22 +47,12 @@ export const StakingDescription = ({ stakingState }: { stakingState: StakingStat
         </TokenStakingDescriptionNumbers>
       </Column>
       <Box style={{ marginTop: '42px', justifySelf: 'flex-end' }}>
-        {stakingState === StakingState.CONNECT_WALLET && (
+        {stakingStatus === StakingStatus.CONNECT_WALLET && (
           <ButtonIXSGradient onClick={toggleWalletModal} disabled={!!account} data-testid="connect-wallet-in-staking">
             <Trans>Connect Wallet</Trans>
           </ButtonIXSGradient>
         )}
-        {stakingState === StakingState.NO_IXS && account && chainId && (
-          <ButtonIXSGradient
-            style={{ width: '245px' }}
-            as={StyledInternalLink}
-            to={`${routes.swap}/${IXS_ADDRESS[chainId]}`}
-            data-testid="get-ixs-button"
-          >
-            <Trans>Get IXS</Trans>
-          </ButtonIXSGradient>
-        )}
-        {stakingState === StakingState.NO_STAKE && account && chainId && (
+        {stakingStatus === StakingStatus.NO_STAKE && account && chainId && (
           <ButtonIXSGradient
             style={{ width: '245px' }}
             data-testid="stake-ixs-modal-button"
