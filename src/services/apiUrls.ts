@@ -6,6 +6,10 @@ export const metamask = {
   hasLogged: (hash: string) => `/metamask/hasLogged/${hash}`,
 }
 
+export const kyc = {
+  getAccreditation: (tokenId: number) => `kyc/getAccreditation/${tokenId}`,
+}
+
 export const tokens = {
   fromUser: `/token/list`,
   authorize: (tokenId: number) => `/token/swap-authorize/${tokenId}`,
