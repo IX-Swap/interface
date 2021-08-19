@@ -8,14 +8,14 @@ import React from 'react'
 import { Box } from 'rebass'
 import { ExternalLink, StyledInternalLink, TYPE } from 'theme'
 import { routes } from 'utils/routes'
-import { StakingState } from './Staking'
+import { StakingStatus } from './Staking'
 import { GetIXSStakingCard, StakingPromoCard } from './styleds'
 
-export const PromoTokenCard = ({ stakingState }: { stakingState: StakingState }) => {
+export const PromoTokenCard = ({ stakingStatus: stakingStatus }: { stakingStatus: StakingStatus }) => {
   const { account, chainId } = useActiveWeb3React()
   return (
     <>
-      {stakingState !== StakingState.NO_IXS && (
+      {stakingStatus !== StakingStatus.NO_IXS && (
         <StakingPromoCard>
           <IconWrapper size={75}>
             <IXSToken />
@@ -36,7 +36,7 @@ export const PromoTokenCard = ({ stakingState }: { stakingState: StakingState })
         </StakingPromoCard>
       )}
 
-      {stakingState === StakingState.NO_IXS && (
+      {stakingStatus === StakingStatus.NO_IXS && (
         <GetIXSStakingCard>
           <Box>
             <Box>

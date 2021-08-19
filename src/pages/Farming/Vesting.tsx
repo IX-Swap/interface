@@ -5,7 +5,7 @@ import { VestingWrapper } from './styleds'
 import { VestingInfo } from './VestingInfo'
 import { VestingTable } from './VestingTable'
 
-export enum VestingState {
+export enum VestingStatus {
   LOADING = 'LOADING',
   CONNECT_WALLET = 'CONNECT_WALLET',
   ZERO_BALANCE = 'ZERO_BALANCE',
@@ -17,8 +17,8 @@ export const Vesting = () => {
 
   return (
     <VestingWrapper>
-      {vestingState === VestingState.LOADING && <LoaderThin size={128} />}
-      {vestingState !== VestingState.LOADING && (
+      {vestingState === VestingStatus.LOADING && <LoaderThin size={128} />}
+      {vestingState !== VestingStatus.LOADING && (
         <>
           <VestingInfo state={vestingState} />
           <VestingTable vestingStatus={vestingState} />

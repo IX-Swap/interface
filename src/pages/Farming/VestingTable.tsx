@@ -13,7 +13,7 @@ import { TYPE } from 'theme'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { hexToRGBA } from 'utils/themeHelper'
 import { ChartParent, VestingTableTitle, VestingTableWrapper } from './styleds'
-import { VestingState } from './Vesting'
+import { VestingStatus } from './Vesting'
 dayjs.extend(isSameOrAfter)
 
 const DATE_FORMAT = 'DD.MM'
@@ -28,7 +28,7 @@ const sampleData = [
   { x: 1639125872, y: 4000 },
 ]
 
-export const VestingTable = ({ vestingStatus }: { vestingStatus: VestingState }) => {
+export const VestingTable = ({ vestingStatus }: { vestingStatus: VestingStatus }) => {
   const distribute = useDistributeCallback()
   const { chainId } = useActiveWeb3React()
   const options = useTableOptions()
@@ -48,7 +48,7 @@ export const VestingTable = ({ vestingStatus }: { vestingStatus: VestingState })
   )
 
   const points = useMemo(() => {
-    if (vestingStatus !== VestingState.VALID || !currency || payouts.length === 0) {
+    if (vestingStatus !== VestingStatus.VALID || !currency || payouts.length === 0) {
       return sampleData
     }
     return payouts.map((point) => ({
@@ -74,7 +74,7 @@ export const VestingTable = ({ vestingStatus }: { vestingStatus: VestingState })
           borderCapStyle: 'round',
           segment: {
             borderColor: (ctx: any) =>
-              vestingStatus !== VestingState.VALID
+              vestingStatus !== VestingStatus.VALID
                 ? hexToRGBA(theme.text2, 0.3)
                 : getColor(ctx, theme.text2, theme.error),
           },
