@@ -394,6 +394,7 @@ export function useSwapAuthorization(
   const inputToken = trade?.inputAmount?.currency
   const outputToken = trade?.outputAmount?.currency
   const [, pair] = useV2Pair(inputToken ?? undefined, outputToken ?? undefined)
+  // console.log({ pair })
   const tokenId0 = useSecTokenId({ currencyId: pair?.token0?.address })
   const tokenId1 = useSecTokenId({ currencyId: pair?.token1?.address })
   const getAuthorization = useGetTokenAuthorization()

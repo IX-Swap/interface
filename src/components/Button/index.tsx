@@ -204,6 +204,17 @@ export const ButtonGradientBorder = styled(ButtonIXSGradient)`
     background: transparent;
   }
 `
+export const ButtonPinkBorder = styled(ButtonIXSGradient)`
+  background-color: transparent;
+  background: transparent;
+  color: ${({ theme }) => theme.text2};
+  border: 1px solid ${({ theme }) => theme.error};
+  :focus,
+  :hover {
+    background-color: transparent;
+    background: transparent;
+  }
+`
 export const ButtonIXSWide = styled(ButtonIXSGradient)`
   width: 100%;
 `

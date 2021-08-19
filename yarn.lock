@@ -1972,7 +1972,7 @@
     "@ethersproject/logger" "^5.2.0"
     bn.js "^4.4.0"
 
-"@ethersproject/bignumber@^5.0.7", "@ethersproject/bignumber@^5.4.0":
+"@ethersproject/bignumber@^5.0.7":
   version "5.4.0"
   resolved "https://registry.yarnpkg.com/@ethersproject/bignumber/-/bignumber-5.4.0.tgz#be8dea298c0ec71208ee60f0b245be0761217ad9"
   integrity sha512-OXUu9f9hO3vGRIPxU40cignXZVaYyfx6j9NNMjebKdnaCL3anCLSSy8/b8d03vY6dh7duCC0kW72GEC4tZer2w==
@@ -1981,7 +1981,7 @@
     "@ethersproject/logger" "^5.4.0"
     bn.js "^4.11.9"
 
-"@ethersproject/bignumber@^5.2.0":
+"@ethersproject/bignumber@^5.2.0", "@ethersproject/bignumber@^5.4.0":
   version "5.4.1"
   resolved "https://registry.yarnpkg.com/@ethersproject/bignumber/-/bignumber-5.4.1.tgz#64399d3b9ae80aa83d483e550ba57ea062c1042d"
   integrity sha512-fJhdxqoQNuDOk6epfM7yD6J8Pol4NUCy1vkaGAkuujZm0+lNow//MKu1hLhRiYV4BsOHyBv5/lsTjF+7hWwhJg==
@@ -2454,19 +2454,19 @@
   integrity sha512-ZXRY4jNvVgSVQ8DL3LTcakaAtXwTVUxE81hslsyD2AtoXW/wVob10HkOJ1X/pAlcI7D+2YoZKg5do8G/w6RYgA==
 
 "@ixswap1/default-token-list@^1.0.4":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@ixswap1/default-token-list/-/default-token-list-1.0.5.tgz#7a673ec99ed02e0d9cb905e37676701443934966"
-  integrity sha512-4Iwx5C3qtJRY7xQ397Mb/illymbHvzmthXFsJLMDcB7CLpGcLnXDSohn5TkFgpS74gJStR7IJBMYF82hbWjZFA==
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/@ixswap1/default-token-list/-/default-token-list-1.0.8.tgz#ecf1760a54a85390ed6cfd44607318365baec4bc"
+  integrity sha512-eMNGFBuvggStOpkgutS+4vv8hvvzHroeWBLqtf818mKStCgSj8bJAnAe338CZx9kAmFykF3ZslyXIGYcyAg+cg==
 
 "@ixswap1/lib@1.x.x":
-  version "1.0.0"
-  resolved "https://registry.npmjs.org/@ixswap1/lib/-/lib-1.0.0.tgz#18fcfb0066010a12ac699bcf8ed3180c14e2cb64"
-  integrity sha512-igdCZgIun6T0JhPg3XvCUnz0AcyhUSZNAG2DD5vI2HjcLksYfF2r+Ws8YkSBk6j53V/kBOCaqam2FRyWvTGxhQ==
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@ixswap1/lib/-/lib-1.0.3.tgz#0890c55101503402b54b2d960b85dfdd1a589ea1"
+  integrity sha512-AojtfYtx67Ge9/nf0NmAg6wy9ryFXAeEWEj6zgY0rNZQ4eZ7upevjAJZPKsstXH4VN5Up2bQYo16oJ9qZkDdag==
 
 "@ixswap1/sdk-core@1.x.x", "@ixswap1/sdk-core@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.npmjs.org/@ixswap1/sdk-core/-/sdk-core-1.0.0.tgz#06e8c3e0b0371f04423ca98c8cd13d4d0e210776"
-  integrity sha512-5omJyFMo3rd9NVtR4Fa8Ls49TF38usTYPxCw3YQsnK7eX+fBcP1rmcDhyUnnUX3vSC/pBsK4IRJM6JXZ6KtuQw==
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/@ixswap1/sdk-core/-/sdk-core-1.0.3.tgz#6d4568a096f1fb26647cb220b0632fca77dd124c"
+  integrity sha512-sxeW5fog34Kv7Ocx+SnUikgK1NQ7LHeKAwg2I+6jd+0hSJowBodZgy5hdws9WAz5IfFBCmEbogcBtWJJmp+3jQ==
   dependencies:
     "@ethersproject/address" "^5.0.2"
     big.js "^5.2.2"
@@ -2475,32 +2475,25 @@
     tiny-invariant "^1.1.0"
     toformat "^2.0.0"
 
-"@ixswap1/v2-core@1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@ixswap1/v2-core/-/v2-core-1.0.3.tgz#9bab6098174d643887a74aeb69984f140b1fbd0f"
-  integrity sha512-S19Orh+qmAOv1ht55NaeMbZdefhnRVEXX5zl/opX5UI98gJn2IUkBuvmb/2DMswl6rmro9JF5GXdAfOqYhm79Q==
+"@ixswap1/v2-core@1.x.x", "@ixswap1/v2-core@^1.0.3":
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/@ixswap1/v2-core/-/v2-core-1.0.6.tgz#d852d8e62ed9420beacc8e1f922fdade245eaee5"
+  integrity sha512-hNJPbmn/UJkU+UbWfKmxcoXf0UMVly1z4AXwO9Dl0Q64N+Wpt0piuTMIf4C8BcLKqp5bERJlFD6uivoUkhIA3A==
   dependencies:
     "@openzeppelin/contracts" "^2.0.0"
 
-"@ixswap1/v2-core@1.x.x":
-  version "1.0.0"
-  resolved "https://registry.npmjs.org/@ixswap1/v2-core/-/v2-core-1.0.0.tgz#c4312ea699b544dc4939c5892a86f202e7762fd3"
-  integrity sha512-whN5oiw6VGmaXsw2dZH2BVeeMi5RWaQFMplKk3FMxiC8aB0C1jwHoOxBi7IpRjjszgBIOM5TeizXnygV2j+SEw==
-  dependencies:
-    "@openzeppelin/contracts" "^2.0.0"
-
-"@ixswap1/v2-periphery@1.0.2":
-  version "1.0.2"
-  resolved "https://registry.npmjs.org/@ixswap1/v2-periphery/-/v2-periphery-1.0.2.tgz#7ebec49f1642a91bffa92002075799b7230b74f6"
-  integrity sha512-oLhoa1UQVll5hng9wo8vDI/caEXc55SwjjfbOKmAgKQXDVE6BHbakwpYS1GME9iDSFZ6AHiy5b/8w0oHf6tLPQ==
+"@ixswap1/v2-periphery@^1.0.2":
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/@ixswap1/v2-periphery/-/v2-periphery-1.0.5.tgz#dbbf9a8ad6c2e55a8c7377f7d6961b471618b45c"
+  integrity sha512-ZmbI2b0w8nbHqyMb5cbpoB1/iZrL51g9wy9Nswx8Q9Rx4b3/aF276evCdrapVjp6Pq7La0t11cRgoNjAFs1LPg==
   dependencies:
     "@ixswap1/lib" "1.x.x"
     "@ixswap1/v2-core" "1.x.x"
 
 "@ixswap1/v2-sdk@^1.0.7":
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/@ixswap1/v2-sdk/-/v2-sdk-1.0.7.tgz#668c8062ece3f2e8b74371c511eccc35c539b36d"
-  integrity sha512-LuRC/CiDKF5Mf08Gj2bH8Gs4cxJUoNLzVg88vYvVk2Ui6RTOSWfP5K656WdTu5eP/YE+lC1qFVcapcNkWZ6jTA==
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/@ixswap1/v2-sdk/-/v2-sdk-1.0.10.tgz#7946121991f0383eac23f27db87824b2946e59a8"
+  integrity sha512-tyOfZ96qAnDpBoUinHMNOXcX/QHbXsIHa8gvNk87vzj23aCPvQfk6vbwyYeewvKkbCLz+I1tfMBAJBjjEdWMiA==
   dependencies:
     "@ethersproject/address" "^5.0.0"
     "@ethersproject/solidity" "^5.0.0"
@@ -7472,6 +7465,11 @@ charenc@0.0.2:
   version "0.0.2"
   resolved "https://registry.yarnpkg.com/charenc/-/charenc-0.0.2.tgz#c0a1d2f3a7092e03774bfa83f14c0fc5790a8667"
   integrity sha1-wKHS86cJLgN3S/qD8UwPxXkKhmc=
+
+chart.js@^3.5.0:
+  version "3.5.0"
+  resolved "https://registry.yarnpkg.com/chart.js/-/chart.js-3.5.0.tgz#6eb075332d4ebbbb20a94e5a07a234052ed6c4fb"
+  integrity sha512-J1a4EAb1Gi/KbhwDRmoovHTRuqT8qdF0kZ4XgwxpGethJHUdDrkqyPYwke0a+BuvSeUxPf8Cos6AX2AB8H8GLA==
 
 check-more-types@2.24.0, check-more-types@^2.24.0:
   version "2.24.0"
@@ -17036,6 +17034,13 @@ react-app-polyfill@^2.0.0:
     raf "^3.4.1"
     regenerator-runtime "^0.13.7"
     whatwg-fetch "^3.4.1"
+
+react-chartjs-2@^3.0.4:
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/react-chartjs-2/-/react-chartjs-2-3.0.4.tgz#88e14c6b4d577941c736f0657b071c8273916652"
+  integrity sha512-pcbFNpkPMTkGXXJ7k7hnukbRD0ZV01qB6JQY1ontITc2IYvhGlK6BBDy28VeydYs1Dl/c5ZpRgRVEtT5GUnxcQ==
+  dependencies:
+    lodash "^4.17.19"
 
 react-clientside-effect@^1.2.2:
   version "1.2.5"

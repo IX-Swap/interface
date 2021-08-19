@@ -5,7 +5,7 @@ import { abi as MERKLE_DISTRIBUTOR_ABI } from '@uniswap/merkle-distributor/build
 import { abi as IIxsV2PairABI } from '@ixswap1/v2-core/build/IIxsV2Pair.json'
 import { abi as IIxsV2Router02ABI } from '@ixswap1/v2-periphery/build/IIxsV2Router02.json'
 import { abi as IIxsWSecABI } from '@ixswap1/v2-core/build/IIxsWSec.json'
-
+import { abi as IIxsVestedDistribution } from '@ixswap1/v2-core/build/IXSVestedDistribution.json'
 import ARGENT_WALLET_DETECTOR_ABI from 'abis/argent-wallet-detector.json'
 import ENS_PUBLIC_RESOLVER_ABI from 'abis/ens-public-resolver.json'
 import ENS_ABI from 'abis/ens-registrar.json'
@@ -24,6 +24,7 @@ import {
   V2_ROUTER_ADDRESS,
   ENS_REGISTRAR_ADDRESSES,
   SOCKS_CONTROLLER_ADDRESSES,
+  IXS_VESTING_ADDRESS,
 } from 'constants/addresses'
 import { useMemo } from 'react'
 import { getContract } from 'utils'
@@ -55,6 +56,10 @@ export function useContract<T extends Contract = Contract>(
 
 export function useTokenContract(tokenAddress?: string, withSignerIfPossible?: boolean) {
   return useContract<Erc20>(tokenAddress, ERC20_ABI, withSignerIfPossible)
+}
+
+export function useVestingContract() {
+  return useContract(IXS_VESTING_ADDRESS, IIxsVestedDistribution, true)
 }
 
 export function useWETHContract(withSignerIfPossible?: boolean) {

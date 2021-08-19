@@ -17,6 +17,7 @@ import secTokens from './secTokens/reducer'
 import eventLog from './eventLog/reducer'
 import admin from './admin/reducer'
 
+import vesting from './vesting/reducer'
 const PERSISTED_KEYS: string[] = ['user', 'transactions', 'lists', 'auth']
 
 const store = configureStore({
@@ -35,6 +36,7 @@ const store = configureStore({
     auth,
     secTokens,
     eventLog,
+    vesting,
   },
   middleware: [...getDefaultMiddleware({ thunk: true }), save({ states: PERSISTED_KEYS, debounce: 1000 })],
   preloadedState: load({ states: PERSISTED_KEYS }),
