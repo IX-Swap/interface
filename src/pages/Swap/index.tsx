@@ -356,7 +356,7 @@ export default function Swap({ history }: RouteComponentProps) {
                             )}
                           </span>
                           {approvalState === ApprovalState.PENDING ? (
-                            <Loader stroke="white" />
+                            <Loader stroke="white" style={{ marginLeft: '12px' }} />
                           ) : (approvalSubmitted && approvalState === ApprovalState.APPROVED) ||
                             signatureState === UseERC20PermitState.SIGNED ? (
                             <CheckCircle size="20" color={theme.green1} />
