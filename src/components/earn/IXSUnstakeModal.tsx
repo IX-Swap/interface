@@ -10,7 +10,7 @@ import React, { useCallback, useState } from 'react'
 import { ApplicationModal } from 'state/application/actions'
 import { useModalOpen } from 'state/application/hooks'
 import { useCurrencyBalance } from 'state/wallet/hooks'
-import { useV2RouterContract } from '../../hooks/useContract'
+import { useLiquidityRouterContract } from '../../hooks/useContract'
 import useTransactionDeadline from '../../hooks/useTransactionDeadline'
 import { useActiveWeb3React } from '../../hooks/web3'
 import { useDerivedIXSStakeInfo } from '../../state/stake/hooks'
@@ -29,7 +29,7 @@ export default function IXSUnstakeModal({ onDismiss }: StakingModalProps) {
   const { library, chainId, account } = useActiveWeb3React()
   const isOpen = useModalOpen(ApplicationModal.UNSTAKE)
   // track and parse user input
-  const router = useV2RouterContract()
+  const router = useLiquidityRouterContract()
   const [typedValue, setTypedValue] = useState('')
   const { error, parsedAmount } = useDerivedIXSStakeInfo({
     typedValue,

@@ -8,7 +8,7 @@ import flatMap from 'lodash.flatmap'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import apiService from 'services/apiService'
-import { kyc, tokens } from 'services/apiUrls'
+import { broker, kyc, tokens } from 'services/apiUrls'
 import { saveToken } from 'state/auth/actions'
 import { LOGIN_STATUS, useAuthState, useLogin } from 'state/auth/hooks'
 import { clearEventLog } from 'state/eventLog/actions'
@@ -459,6 +459,11 @@ export const postPassAccreditation = async ({ tokenId }: { tokenId: number }) =>
   return result.data
 }
 
+export const chooseBrokerDealer = async ({ pairId }: { pairId: number }) => {
+  const result = await apiService.post(broker.choose(pairId), {})
+  return result.data
+}
+
 export function usePassAccreditation({ tokenId }: { tokenId: number }): () => Promise<void> {
   const dispatch = useDispatch<AppDispatch>()
   const login = useLogin({ mustHavePreviousLogin: false, expireLogin: false })
@@ -470,6 +475,7 @@ export function usePassAccreditation({ tokenId }: { tokenId: number }): () => Pr
     try {
       const status = await login()
       if (status === LOGIN_STATUS.SUCCESS) {
+        await chooseBrokerDealer({ pairId: 5 })
         await postPassAccreditation({ tokenId })
       } else {
         dispatch(passAccreditation.rejected({ errorMessage: 'Could not login' }))

@@ -20,7 +20,7 @@ import { Dots } from '../../components/swap/styleds'
 import TransactionConfirmationModal from '../../components/TransactionConfirmationModal'
 import { useCurrency } from '../../hooks/Tokens'
 import { ApprovalState, useApproveCallback } from '../../hooks/useApproveCallback'
-import { usePairContract, useV2RouterContract } from '../../hooks/useContract'
+import { useLiquidityRouterContract, usePairContract } from '../../hooks/useContract'
 import { useV2LiquidityTokenPermit } from '../../hooks/useERC20Permit'
 import useTransactionDeadline from '../../hooks/useTransactionDeadline'
 import { useActiveWeb3React } from '../../hooks/web3'
@@ -86,7 +86,7 @@ export default function RemoveLiquidity({
   // pair contract
   const pairContract: Contract | null = usePairContract(pair?.liquidityToken?.address)
 
-  const router = useV2RouterContract()
+  const router = useLiquidityRouterContract()
 
   // allowance handling
   const { gatherPermitSignature, signatureData } = useV2LiquidityTokenPermit(

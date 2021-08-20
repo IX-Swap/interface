@@ -10,7 +10,7 @@ import approveAmountCalldata from '../utils/approveAmountCalldata'
 import { calculateGasMargin } from '../utils/calculateGasMargin'
 import isZero from '../utils/isZero'
 import { useArgentWalletContract } from './useArgentWalletContract'
-import { useV2RouterContract } from './useContract'
+import { useSwapRouterContract } from './useContract'
 import useENS from './useENS'
 import useTransactionDeadline from './useTransactionDeadline'
 import { useActiveWeb3React } from './web3'
@@ -58,7 +58,7 @@ function useSwapCallArguments(
   const { address: recipientAddress } = useENS(recipientAddressOrName)
   const recipient = recipientAddressOrName === null ? account : recipientAddress
   const deadline = useTransactionDeadline()
-  const routerContract = useV2RouterContract()
+  const routerContract = useSwapRouterContract()
   const argentWalletContract = useArgentWalletContract()
   const authorization = useSwapAuthorization(trade, allowedSlippage)
 
