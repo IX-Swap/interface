@@ -306,7 +306,7 @@ export default function CurrencyList({
 
       const isUnapprovedToken =
         token && secTokens[token.address]
-          ? (userSecTokens[token.address] as any)?.tokenInfo?.tokenUser?.status !== STO_STATUS_APPROVED
+          ? (userSecTokens[token.address] as any)?.tokenInfo?.status !== STO_STATUS_APPROVED
           : false
       if (showImport && token) {
         return (
@@ -353,7 +353,7 @@ export default function CurrencyList({
     const token = currency?.wrapped
     const isUnapprovedToken =
       token && secTokens[token.address]
-        ? (userSecTokens[token.address] as any)?.tokenInfo?.tokenUser?.status !== STO_STATUS_APPROVED
+        ? (userSecTokens[token.address] as any)?.tokenInfo?.status !== STO_STATUS_APPROVED
         : false
     return isUnapprovedToken ? UNAPPROVED_ROW : NORMAL_ROW
   }
