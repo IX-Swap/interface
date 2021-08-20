@@ -1,4 +1,4 @@
-import StakingModal2 from 'components/earn/StakingModal2'
+import IXSStakingModal from 'components/earn/IXSStakingModal'
 import React from 'react'
 import { useToggleStakeModal } from 'state/application/hooks'
 import { useStakingStatus } from 'state/stake/hooks'
@@ -19,7 +19,7 @@ export const Staking = () => {
   const toggle = useToggleStakeModal()
   return (
     <>
-      <StakingModal2 onDismiss={toggle} />
+      <IXSStakingModal onDismiss={toggle} />
       <StakingWrapper>
         {stakingStatus !== StakingStatus.STAKING && <PromoTokenCard stakingStatus={stakingStatus} />}
         {stakingStatus !== StakingStatus.STAKING && <StakingDescription stakingStatus={stakingStatus} />}
