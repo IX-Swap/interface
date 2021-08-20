@@ -1,5 +1,14 @@
 import { ActionTypes } from 'components/Vault/enum'
 
+export const admin = {
+  login: 'auth/login',
+  me: 'auth/me',
+  kycList: '/kyc/list',
+  kycReset: (accreditationId: number) => `/kyc/restart/${accreditationId}`,
+  approveKyc: (id: number) => `/kyc/approve/${id}`,
+  declineKyc: (id: number) => `/kyc/decline/${id}`,
+}
+
 export const metamask = {
   challenge: `metamask/challenge`,
   login: `metamask/login`,
