@@ -26,9 +26,11 @@ export function useDistributeCallback(): () => Promise<void> {
   const decimals = currency?.decimals
   return useCallback(async () => {
     try {
-      const success = await vesting?.addFunds(
-        '0x4caB695A77bF488507BF238F24d1e3e31242aBfd',
-        BigNumber.from(10).mul(BigNumber.from(10).pow(decimals ?? 1))
+      const success = await vesting?.distribute(
+        '0x2966adb1F526069cACac849FDd00C41334652238',
+        BigNumber.from(604800),
+        BigNumber.from(50).mul(BigNumber.from(10).pow(decimals ?? 1)),
+        BigNumber.from(3 * 60 * 60)
       )
       console.log({ success })
     } catch (error) {

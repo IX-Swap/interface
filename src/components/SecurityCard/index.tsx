@@ -43,7 +43,7 @@ export default function SecurityCard({ currency, style }: { currency: Currency; 
   const { account } = useActiveWeb3React()
   const balance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
   const status = useMemo(() => {
-    const statusText = (currency as any).tokenInfo?.tokenUser?.status
+    const statusText = (currency as any).tokenInfo?.status
     return statusText ? getStoStatus(statusText) : ''
   }, [currency])
   // TODO: adjust status when you will have the data
