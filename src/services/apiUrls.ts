@@ -19,6 +19,10 @@ export const kyc = {
   getAccreditation: (tokenId: number) => `kyc/getAccreditation/${tokenId}`,
 }
 
+export const broker = {
+  choose: (pairId: number) => `broker-dealer/choose/${pairId}`,
+}
+
 export const tokens = {
   fromUser: `/token/list`,
   authorize: (tokenId: number) => `/token/swap-authorize/${tokenId}`,
