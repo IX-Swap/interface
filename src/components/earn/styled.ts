@@ -111,3 +111,14 @@ export const StakingInput = styled(Input)`
   width: 60%;
   margin-right: 10px;
 `
+export const BottomClaimButtons = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+
+  align-items: center;
+  ${({ theme }) => theme.mediaWidth.upToMedium`
+   flex-direction: column;
+   gap: 5px;
+  `};
+`

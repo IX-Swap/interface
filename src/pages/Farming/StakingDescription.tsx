@@ -30,13 +30,13 @@ export const StakingDescription = ({ stakingStatus }: { stakingStatus: StakingSt
             <TYPE.titleSmall color={theme.text2} style={{ textTransform: 'uppercase' }}>
               Time
             </TYPE.titleSmall>
-            <TYPE.title3>4 month - 4 years</TYPE.title3>
+            <TYPE.title3>4 months - 4 years</TYPE.title3>
           </Column>
           <Column>
             <TYPE.titleSmall color={theme.text2} style={{ textTransform: 'uppercase' }}>
               Amount
             </TYPE.titleSmall>
-            <TYPE.title3>4 month - 4 years</TYPE.title3>
+            <TYPE.title3>100 - 10000</TYPE.title3>
           </Column>
           <Column>
             <TYPE.titleSmall color={theme.text2} style={{ textTransform: 'uppercase' }}>

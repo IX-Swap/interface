@@ -282,12 +282,12 @@ export function useDerivedStakeInfo(
 }
 
 // based on typed value
-export function useDerivedUnstakeInfo(typedValue: string): {
+export function useDerivedIXSStakeInfo({ typedValue, currencyId }: { typedValue: string; currencyId?: string }): {
   parsedAmount?: CurrencyAmount<Currency>
   error?: string
 } {
-  const { account, chainId } = useActiveWeb3React()
-  const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
+  const { account } = useActiveWeb3React()
+  const currency = useCurrency(currencyId)
   const balance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
   const parsedInput = tryParseAmount(typedValue, currency)
   const maxAmountInput = maxAmountSpend(balance)
@@ -315,7 +315,8 @@ export function useStakingStatus() {
   const dispatch = useDispatch<AppDispatch>()
   const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
   const balance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
-  const hasStaking = false
+  // adjust this when we have staking contracts
+  const hasStaking = true
 
   useEffect(() => {
     if (!account) {
