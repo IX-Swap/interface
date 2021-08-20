@@ -11,7 +11,7 @@ export const Search = () => {
   const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
     clearTimeout(timer)
-    timer = setTimeout(() => getKysList({ page: 1, offset: 10, wallet: value, token: value }), 250)
+    timer = setTimeout(() => getKysList({ page: 1, offset: 10, search: value }), 250)
   }
 
   return <Input placeholder={t`Search for Wallet or Token`} onChange={onSearchChange} />

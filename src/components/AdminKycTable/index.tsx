@@ -10,6 +10,7 @@ import { Pagination } from './Pagination'
 import { MoreActions } from './MoreActions'
 import { useAdminState, useGetKycList } from 'state/admin/hooks'
 import { LoaderThin } from 'components/Loader/LoaderThin'
+import { shortenAddress } from 'utils'
 
 const headerCells = [
   t`Wallet address`,
@@ -37,14 +38,23 @@ const Body = () => {
   return (
     <>
       {items?.map(
-        ({ id, user: { ethAddress }, tokenId, status, token: { symbol, custodyVaultId }, createdAt, kyc: { url } }) => (
+        ({
+          id,
+          user: { ethAddress },
+          custodian: { name: custodian },
+          brokerDealer: { name: broker },
+          status,
+          token,
+          createdAt,
+          kyc: { url },
+        }) => (
           <StyledBodyRow key={id}>
-            <Wallet>{`${(ethAddress || '').slice(0, 6)} ... ${(ethAddress || '').slice(
-              (ethAddress || '').length - 4
-            )}`}</Wallet>
-            <div>{symbol}</div>
+            <Wallet>{shortenAddress(ethAddress || '')}</Wallet>
+            <div>{token?.symbol || '-'}</div>
             <div>{dayjs(createdAt).format('MMM D, YYYY HH:mm')}</div>
-            <div>{custodyVaultId}</div>
+            <div>
+              {broker} - {custodian}
+            </div>
             <div>
               <FirstStepStatus status="approved" link={url} />
             </div>

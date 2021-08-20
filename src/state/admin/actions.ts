@@ -74,6 +74,27 @@ export interface KycItem {
   }
   message?: string
   status: string
+  custodian: {
+    createdAt: string
+    deletedAt: string | null
+    description: string
+    id: number
+    logoId: number | null
+    name: string
+    updatedAt: string
+    website: string
+  }
+  brokerDealerId?: number
+  brokerDealer: {
+    createdAt: string
+    deletedAt: string | null
+    description: string
+    id: number
+    logoId: number | null
+    name: string
+    updatedAt: string
+    website: string
+  }
   token: {
     address: string
     chainId: number
