@@ -3,6 +3,7 @@ import { Box, Tab, Tabs } from '@material-ui/core'
 import { TabPanel } from 'components/TabPanel'
 import useStyles from './VirtualAccountsAuditTabView.styles'
 import { EODMT940Table } from 'app/pages/admin/components/EODMT940Table/EODMT940Table'
+import { InterimMT942Table } from 'app/pages/admin/components/InterimMT942Table/EODMT940Table'
 
 export const VirtualAccountsAuditTabView = () => {
   const [activeTab, setActiveTab] = useState(0)
@@ -38,7 +39,7 @@ export const VirtualAccountsAuditTabView = () => {
         </TabPanel>
 
         <TabPanel index={1} value={activeTab}>
-          Interim MT 942 table
+          <InterimMT942Table />
         </TabPanel>
 
         <TabPanel index={2} value={activeTab}>
