@@ -148,4 +148,6 @@ export const UnapprovedTokenWrapper = styled.div`
   display: grid;
   width: 100%;
   grid-template-columns: auto minmax(auto, 1fr) minmax(0, 72px);
+  text-decoration: none;
+  color: white;
 `
