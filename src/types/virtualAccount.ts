@@ -36,3 +36,9 @@ export interface VirtualAccount {
     corporates: CorporateIdentity[]
   }
 }
+
+export interface VirtualAccountAuditItem {
+  _id: string
+  fileName: string
+  createdAt: string
+}
