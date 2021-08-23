@@ -2,6 +2,7 @@ import React, { Fragment, useState } from 'react'
 import { Box, Tab, Tabs } from '@material-ui/core'
 import { TabPanel } from 'components/TabPanel'
 import useStyles from './VirtualAccountsAuditTabView.styles'
+import { EODMT940Table } from 'app/pages/admin/components/EODMT940Table/EODMT940Table'
 
 export const VirtualAccountsAuditTabView = () => {
   const [activeTab, setActiveTab] = useState(0)
@@ -33,7 +34,7 @@ export const VirtualAccountsAuditTabView = () => {
 
       <Box className={classes.content}>
         <TabPanel index={0} value={activeTab}>
-          EOD MT 940 table
+          <EODMT940Table />
         </TabPanel>
 
         <TabPanel index={1} value={activeTab}>

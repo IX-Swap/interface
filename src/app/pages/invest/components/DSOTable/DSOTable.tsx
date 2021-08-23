@@ -43,7 +43,7 @@ export const DSOTable = () => {
                   ? isPriceAscending === 'yes'
                   : undefined
             }}
-            isNewThemeOn
+            themeVariant={'primary'}
           />
         </Box>
       </Grid>
