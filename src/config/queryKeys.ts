@@ -208,5 +208,6 @@ export const resourcesQueryKeys = {
 }
 
 export const virtualAccountsAuditQueryKeys = {
-  getMT940Files: 'get-mt40-files'
+  getMT940Files: 'get-mt940-files',
+  getMT942Files: 'get-mt942-files'
 }
