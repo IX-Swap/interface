@@ -5,6 +5,7 @@ import { DSTableActions } from 'app/pages/accounts/pages/digitalSecurities/DSLis
 import { useAuth } from 'hooks/auth/useAuth'
 import { getIdFromObj } from 'helpers/strings'
 import { digitalSecuritiesQueryKeys } from 'config/queryKeys'
+import { accountsURL } from 'config/apiURL'
 
 export const DSTable: React.FC = () => {
   const { user } = useAuth()
@@ -12,7 +13,7 @@ export const DSTable: React.FC = () => {
 
   return (
     <TableView
-      uri={`/accounts/balance/${userId}`}
+      uri={accountsURL.assets.getAll}
       name={digitalSecuritiesQueryKeys.getByUserId(userId)}
       columns={columns}
       hasActions
