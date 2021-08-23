@@ -132,7 +132,11 @@ function CurrencyRow({
     if (!isUnapprovedSecToken) return null
     return (
       <Row style={{ position: 'relative', height: '100%', alignItems: 'center' }}>
-        <UnapprovedTokenWrapper>
+        <UnapprovedTokenWrapper
+          as={Link}
+          to={routes.securityTokens(currency)}
+          data-testid="currency-search-sec-token-info"
+        >
           <CurrencyLogo currency={currency} size={'24px'} />
           <Column style={{ marginLeft: '8px' }}>
             <RowFixed style={{ gap: '8px' }}>
@@ -158,11 +162,7 @@ function CurrencyRow({
           </Column>
           <Column>
             <Box width="100%">
-              <ButtonGradient
-                as={Link}
-                to={routes.securityTokens(currency)}
-                data-testid="currency-search-sec-token-info"
-              >
+              <ButtonGradient>
                 <Trans>Info</Trans>
               </ButtonGradient>
             </Box>
