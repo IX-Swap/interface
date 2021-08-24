@@ -1,6 +1,7 @@
+import React from 'react'
 import { t, Trans } from '@lingui/macro'
 import { ReactComponent as InfoIcon } from 'assets/images/attention.svg'
-import { ReactComponent as IXSToken } from 'assets/images/IXS-token.svg'
+import IXSToken from 'assets/images/IXS-token.svg'
 import { IconWrapper } from 'components/AccountDetails/styleds'
 import { ButtonGradientBorder, ButtonIXSGradient } from 'components/Button'
 import Column from 'components/Column'
@@ -13,7 +14,6 @@ import { MouseoverTooltip } from 'components/Tooltip'
 import { IXS_ADDRESS, IXS_GOVERNANCE_ADDRESS } from 'constants/addresses'
 import { useCurrency } from 'hooks/Tokens'
 import { useActiveWeb3React } from 'hooks/web3'
-import React from 'react'
 import { ApplicationModal } from 'state/application/actions'
 import { useToggleModal } from 'state/application/hooks'
 import { useCurrencyBalance } from 'state/wallet/hooks'
@@ -38,7 +38,7 @@ export const TokenCardWithStaking = () => {
       <StackingPositionCard>
         <RowCenter>
           <IconWrapper size={75}>
-            <IXSToken />
+            <img src={IXSToken} />
           </IconWrapper>
         </RowCenter>
         <RowCenter marginTop={18}>

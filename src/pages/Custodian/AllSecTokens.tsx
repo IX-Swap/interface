@@ -35,7 +35,7 @@ export const AllSecTokens = () => {
 
       <div>
         {filteredSortedTokens?.length > 0 || filteredInactiveTokens?.length > 0 ? (
-          <div style={{ flex: '1 1 auto', height: '400px' }}>
+          <div style={{ flex: '1 1 auto', minHeight: '80px' }}>
             <AutoSizer disableWidth>
               {({ height }) => <SecTokensList height={height} currencies={filteredSortedTokens} listRef={listRef} />}
             </AutoSizer>
