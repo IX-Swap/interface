@@ -394,13 +394,13 @@ export function useSwapAuthorization(
   const inputToken = trade?.inputAmount?.currency
   const outputToken = trade?.outputAmount?.currency
   const [, pair] = useV2Pair(inputToken ?? undefined, outputToken ?? undefined)
-  const tokenId0 = useSecTokenId({ currencyId: pair?.token0?.address })
-  const tokenId1 = useSecTokenId({ currencyId: pair?.token1?.address })
+  const tokenId0 = useSecTokenId({ currencyId: (inputToken as any)?.address })
+  const tokenId1 = useSecTokenId({ currencyId: (outputToken as any)?.address })
   const getAuthorization = useGetTokenAuthorization()
   const [authorization, setAuthorization] = useState<TradeAuthorizationDigest>()
   const amount0 = trade ? getStringAmount(trade?.maximumAmountIn(allowedSlippage)) : ''
   const amount1 = trade ? getStringAmount(trade?.minimumAmountOut(allowedSlippage)) : ''
-  const firstIsSec = (pair?.token0 as any)?.isSecToken
+  const firstIsSec = (inputToken as any)?.isSecToken
 
   useEffect(() => {
     if (amount0 && amount1 && pair?.isSecurity) {
