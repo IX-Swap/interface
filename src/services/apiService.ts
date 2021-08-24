@@ -104,7 +104,7 @@ const apiService = {
     const headers: KeyValueMap = {}
     const { auth, admin } = store.getState()
     if (auth.token || admin.token) {
-      headers.Authorization = `Bearer ${auth.token || admin.token}`
+      headers.Authorization = `Bearer ${admin.token || auth.token}`
     }
 
     if (data !== undefined && !this._isFormData(data)) {
