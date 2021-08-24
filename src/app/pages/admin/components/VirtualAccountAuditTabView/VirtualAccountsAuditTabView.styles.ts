@@ -11,6 +11,5 @@ export default makeStyles(theme => ({
     '& span': {
       fontWeight: 600
     }
-  },
-  content: {}
+  }
 }))
