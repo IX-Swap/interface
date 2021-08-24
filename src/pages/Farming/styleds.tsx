@@ -25,7 +25,7 @@ export const VestingWrapper = styled.div`
   padding-top: 50px;
   gap: 33px;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-between;
   ${({ theme }) => theme.mediaWidth.upToMedium`
      flex-direction: column;
      align-items: center

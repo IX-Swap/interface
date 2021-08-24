@@ -341,7 +341,7 @@ export default function Swap({ history }: RouteComponentProps) {
                         }
                       >
                         <AutoRow justify="space-between" style={{ flexWrap: 'nowrap' }}>
-                          <span style={{ display: 'flex', alignItems: 'center' }}>
+                          <span style={{ display: 'flex', alignItems: 'center', marginRight: '12px' }}>
                             <CurrencyLogo
                               currency={currencies[Field.INPUT]}
                               size={'20px'}
@@ -356,7 +356,7 @@ export default function Swap({ history }: RouteComponentProps) {
                             )}
                           </span>
                           {approvalState === ApprovalState.PENDING ? (
-                            <Loader stroke="white" style={{ marginLeft: '12px' }} />
+                            <Loader stroke="white" />
                           ) : (approvalSubmitted && approvalState === ApprovalState.APPROVED) ||
                             signatureState === UseERC20PermitState.SIGNED ? (
                             <CheckCircle size="20" color={theme.green1} />

@@ -1,7 +1,7 @@
+import React, { CSSProperties, MutableRefObject, useCallback, useMemo } from 'react'
 import { Currency } from '@ixswap1/sdk-core'
 import SecurityCard from 'components/SecurityCard'
 import { useWindowSize } from 'hooks/useWindowSize'
-import React, { CSSProperties, MutableRefObject, useCallback, useMemo } from 'react'
 import { FixedSizeList as List } from 'react-window'
 import { MEDIA_WIDTHS } from 'theme'
 
