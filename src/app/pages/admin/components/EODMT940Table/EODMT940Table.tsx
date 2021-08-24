@@ -6,7 +6,6 @@ import { virtualAccountsAuditQueryKeys } from 'config/queryKeys'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import React from 'react'
 import { VirtualAccountAuditItem } from 'types/virtualAccount'
-import { virtualAccountsAuditSample } from '__fixtures__/virtualAccountsAudit'
 
 export const EODMT940Table = () => {
   const { getFilterValue } = useQueryFilter()
@@ -26,8 +25,6 @@ export const EODMT940Table = () => {
       actions={Actions}
       filter={filter}
       themeVariant={'no-header'}
-      // TODO Remove next line after complete backend api endpoints
-      fakeItems={virtualAccountsAuditSample as any}
       paperProps={{ variant: 'elevation', elevation: 0 }}
     />
   )
