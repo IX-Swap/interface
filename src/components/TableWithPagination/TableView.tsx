@@ -95,7 +95,8 @@ export const TableView = <T,>({
         : theme.palette.primary.main
       : 'initial'
   const headHeight = themeVariant === 'primary' ? 50 : 'initial'
-  const headDisplay = themeVariant === 'no-header' ? 'none' : 'initial'
+  const headDisplay =
+    themeVariant === 'no-header' ? 'none' : 'table-header-group'
   const cacheQueryKey = [name, page, rowsPerPage, filter]
 
   const _items = Array.isArray(fakeItems) ? fakeItems : items
