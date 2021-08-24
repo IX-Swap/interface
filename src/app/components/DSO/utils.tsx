@@ -10,6 +10,7 @@ import { getIdFromObj } from 'helpers/strings'
 import { calculatePercent } from 'helpers/numbers'
 import isPast from 'date-fns/isPast'
 import { Network, Urls } from 'types/networks'
+import { sanitize } from 'dompurify'
 
 export const transformDSOToFormValues = (
   dso: DigitalSecurityOffering | undefined
@@ -111,9 +112,9 @@ export const getDSOStats = (dso: DigitalSecurityOffering) => {
   return { status, percentRaised, color }
 }
 
-export const renderStringToHTML = (value: string) => (
-  <div dangerouslySetInnerHTML={{ __html: value }} />
-)
+export const renderStringToHTML = (value: string) => {
+  return <div dangerouslySetInnerHTML={{ __html: sanitize(value) }} />
+}
 
 export const isDSOLive = (dso: DigitalSecurityOffering | undefined) => {
   if (dso === undefined) {
