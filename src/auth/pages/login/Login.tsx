@@ -8,9 +8,10 @@ import { AuthRoute } from 'auth/router/config'
 export interface LoginProps {
   hidden: boolean
   isLoading: boolean
+  attempts?: number
 }
 
-export const Login = ({ hidden, isLoading }: LoginProps) => {
+export const Login = ({ hidden, isLoading, attempts = 0 }: LoginProps) => {
   return (
     <Box display={hidden ? 'none' : 'block'}>
       <Grid container direction='column' spacing={2}>
@@ -20,6 +21,15 @@ export const Login = ({ hidden, isLoading }: LoginProps) => {
         <Grid item>
           <LoginFields />
         </Grid>
+        {attempts >= 3 && (
+          <Grid item>
+            <Typography variant='body2' color='error'>
+              You have {5 - attempts} attempts left. Your account will be
+              temporarily locked.
+            </Typography>
+          </Grid>
+        )}
+
         <Grid item container justify='center'>
           <Submit
             style={{ width: 150 }}
