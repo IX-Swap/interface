@@ -33,7 +33,7 @@ export const VirtualAccountsAuditTabView = () => {
         />
       </Tabs>
 
-      <Box className={classes.content}>
+      <Box>
         <TabPanel index={0} value={activeTab}>
           <EODMT940Table />
         </TabPanel>
