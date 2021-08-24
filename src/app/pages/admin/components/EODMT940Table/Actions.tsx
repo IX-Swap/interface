@@ -23,7 +23,7 @@ export const Actions = ({ item }: ActionsProps) => {
   const handleClick = async () => await downloadFile()
 
   return (
-    <IconButton onClick={handleClick} disabled={isLoading}>
+    <IconButton onClick={handleClick} disabled={isLoading} data-testid='button'>
       <Launch color='disabled' style={{ width: 23, height: 23 }} />
     </IconButton>
   )
