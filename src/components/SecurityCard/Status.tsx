@@ -2,10 +2,10 @@ import React from 'react'
 import { ReactComponent as IconClock } from 'assets/images/clock.svg'
 import { ReactComponent as IconPassed } from 'assets/images/passed.svg'
 import { Box } from 'rebass'
-import { STOStatus } from './STOStatus'
 import { Trans } from '@lingui/macro'
 import { TYPE } from 'theme'
 import styled from 'styled-components'
+import { VaultState } from 'components/Vault/enum'
 
 const StatusBox = styled(Box)`
   gap: 4px;
@@ -13,10 +13,10 @@ const StatusBox = styled(Box)`
   justify-content: center;
   align-items: center;
 `
-export const Status = ({ status }: { status: STOStatus }) => {
+export const Status = ({ status }: { status: VaultState }) => {
   return (
     <>
-      {status === STOStatus.PENDING && (
+      {status === VaultState.PENDING && (
         <StatusBox>
           <IconClock />
           <TYPE.status>
@@ -24,7 +24,7 @@ export const Status = ({ status }: { status: STOStatus }) => {
           </TYPE.status>
         </StatusBox>
       )}
-      {status === STOStatus.PASSED && (
+      {status === VaultState.APPROVED && (
         <StatusBox>
           <IconPassed />
           <TYPE.status>

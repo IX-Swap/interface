@@ -1,8 +1,8 @@
+import React, { useMemo } from 'react'
 import { Currency } from '@ixswap1/sdk-core'
 import useTheme from 'hooks/useTheme'
 import { useActiveWeb3React } from 'hooks/web3'
 import { darken } from 'polished'
-import React, { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { Box } from 'rebass'
 import { useCurrencyBalance } from 'state/wallet/hooks'
@@ -14,7 +14,6 @@ import Card, { LightCard } from '../Card'
 import Row, { RowBetween } from '../Row'
 import { CurrencyHeader } from './CurrencyHeader'
 import { Status } from './Status'
-import { getStoStatus, STOStatus } from './STOStatus'
 import { useUserSecTokens } from 'state/user/hooks'
 import { getVaultState, VaultState } from 'components/Vault/enum'
 
@@ -44,18 +43,14 @@ export default function SecurityCard({ currency, style }: { currency: Currency; 
   const theme = useTheme()
   const { account } = useActiveWeb3React()
   const balance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
-  const status = useMemo(() => {
-    const statusText = (currency as any).tokenInfo?.status
-    return statusText ? getStoStatus(statusText) : ''
-  }, [currency])
-  // TODO: adjust status when you will have the data
 
   const { secTokens } = useUserSecTokens()
-  const isAccredited = useMemo(() => {
+  const vaultStatus = useMemo(() => {
     const currencyId = (currency as any).tokenInfo?.id
     const status = (secTokens[currencyId] as any)?.tokenInfo?.status ?? ''
-    return getVaultState(status) === VaultState.APPROVED
+    return getVaultState(status)
   }, [secTokens, currency])
+  const isAccredited = vaultStatus === VaultState.APPROVED
 
   return (
     <Row style={style}>
@@ -70,12 +65,10 @@ export default function SecurityCard({ currency, style }: { currency: Currency; 
                 </TYPE.body4>
               </SemiTransparent>
             </Box>
-            {status && account && (
+            {account && (
               <Box style={{ width: 'fit-content' }}>
-                {status === STOStatus.PASSED && isAccredited && (
-                  <TYPE.body4>{formatCurrencyAmount(balance, currency.decimals ?? 18)}</TYPE.body4>
-                )}
-                {status !== STOStatus.PASSED && <Status status={status} />}
+                {isAccredited && <TYPE.body4>{formatCurrencyAmount(balance, currency.decimals ?? 18)}</TYPE.body4>}
+                {!isAccredited && <Status status={vaultStatus} />}
               </Box>
             )}
           </RowBetween>
