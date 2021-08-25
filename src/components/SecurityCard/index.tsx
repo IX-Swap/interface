@@ -48,6 +48,7 @@ export default function SecurityCard({ currency, style }: { currency: Currency; 
     const statusText = (currency as any).tokenInfo?.status
     return statusText ? getStoStatus(statusText) : ''
   }, [currency])
+  // TODO: adjust status when you will have the data
 
   const { secTokens } = useUserSecTokens()
   const isAccredited = useMemo(() => {
