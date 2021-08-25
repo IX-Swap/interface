@@ -6,6 +6,7 @@ import { ReactComponent as CashWithdrawalIcon } from 'assets/icons/navigation/ca
 import { ReactComponent as VirtualAccountIcon } from 'assets/icons/navigation/virtual-account.svg'
 import { ReactComponent as BannerIcon } from 'assets/icons/navigation/banner.svg'
 import { ReactComponent as MasDisclosureIcon } from 'assets/icons/navigation/mas-disclosure.svg'
+import { ReactComponent as VAAuditIcon } from 'assets/icons/navigation/va-audit.svg'
 
 export const AdminRoute = {
   landing: makeURL(['app', 'admin']),
@@ -21,7 +22,8 @@ export const AdminRoute = {
     '/app/admin/identies/corporate/:userId/:identityId/view',
   virtualAccount: '/app/admin/virtualAccount',
   banner: '/app/admin/banner',
-  masDisclosure: '/app/admin/masDisclosure'
+  masDisclosure: '/app/admin/masDisclosure',
+  virtualAccountAudit: '/app/admin/virtualAccountAudit'
 }
 
 export const adminLandingLinks: InternalRouteProps[] = [
@@ -60,5 +62,11 @@ export const adminLandingLinks: InternalRouteProps[] = [
     path: AdminRoute.masDisclosure,
     color: '#8B3DFF',
     icon: MasDisclosureIcon
+  },
+  {
+    label: 'Virtual Account Audit',
+    path: AdminRoute.virtualAccountAudit,
+    color: '#246D97',
+    icon: VAAuditIcon
   }
 ]

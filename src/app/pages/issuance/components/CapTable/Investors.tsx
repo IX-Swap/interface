@@ -85,7 +85,7 @@ export const Investors = () => {
           filter={{
             search
           }}
-          isNewThemeOn
+          themeVariant={'primary'}
         />
       </Grid>
     </Grid>

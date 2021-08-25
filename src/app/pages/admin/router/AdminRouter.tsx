@@ -14,6 +14,7 @@ import { VirtualAccounts } from 'app/pages/admin/pages/VirtualAccounts'
 import { UserRouter } from 'app/pages/admin/router/UserRouter'
 import { MasDisclosure } from 'app/pages/admin/pages/MasDisclosure'
 import { Banner } from 'app/pages/admin/pages/Banner'
+import { VirtualAccountAudit } from 'app/pages/admin/pages/VirtualAccountAudit'
 
 export const AdminRouter = () => {
   return (
@@ -78,6 +79,14 @@ export const AdminRouter = () => {
 
       <AppRoute exact path={AdminRoute.banner} breadcrumb='Banner'>
         <Banner />
+      </AppRoute>
+
+      <AppRoute
+        exact
+        path={AdminRoute.virtualAccountAudit}
+        breadcrumb='VA Audit'
+      >
+        <VirtualAccountAudit />
       </AppRoute>
 
       <AppRoute exact path={AdminRoute.landing}>

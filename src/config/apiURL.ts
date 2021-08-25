@@ -293,3 +293,12 @@ export const resources = {
   getSiteConfig: '/resources/siteConfig',
   createOrUpdateMasDisclosure: '/resources/siteConfig/masDisclosure'
 }
+
+export const virtualAccountsAudit = {
+  getMT940Files: 'https://hsbc.mozork.com/audit/virtual-account/mt940/files',
+  getMT942Files: 'https://hsbc.mozork.com/audit/virtual-account/mt940/files',
+  getRawMT940File: (fileId: string) =>
+    `https://hsbc.mozork.com/audit/virtual-account/mt940/files/raw/${fileId}`,
+  getRawMT942File: (fileId: string) =>
+    `https://hsbc.mozork.com/audit/virtual-account/mt940/files/raw/${fileId}`
+}
