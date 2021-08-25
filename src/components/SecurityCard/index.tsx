@@ -15,6 +15,8 @@ import Row, { RowBetween } from '../Row'
 import { CurrencyHeader } from './CurrencyHeader'
 import { Status } from './Status'
 import { getStoStatus, STOStatus } from './STOStatus'
+import { useUserSecTokens } from 'state/user/hooks'
+import { getVaultState, VaultState } from 'components/Vault/enum'
 
 export const FixedHeightRow = styled(RowBetween)`
   height: 24px;
@@ -47,6 +49,14 @@ export default function SecurityCard({ currency, style }: { currency: Currency; 
     return statusText ? getStoStatus(statusText) : ''
   }, [currency])
   // TODO: adjust status when you will have the data
+
+  const { secTokens } = useUserSecTokens()
+  const isAccredited = useMemo(() => {
+    const currencyId = (currency as any).tokenInfo?.id
+    const status = (secTokens[currencyId] as any)?.tokenInfo?.status ?? ''
+    return getVaultState(status) === VaultState.APPROVED
+  }, [secTokens, currency])
+
   return (
     <Row style={style}>
       <Row style={{ paddingBottom: '10px', paddingRight: '10px' }}>
@@ -62,7 +72,7 @@ export default function SecurityCard({ currency, style }: { currency: Currency; 
             </Box>
             {status && account && (
               <Box style={{ width: 'fit-content' }}>
-                {status === STOStatus.PASSED && (
+                {status === STOStatus.PASSED && isAccredited && (
                   <TYPE.body4>{formatCurrencyAmount(balance, currency.decimals ?? 18)}</TYPE.body4>
                 )}
                 {status !== STOStatus.PASSED && <Status status={status} />}
