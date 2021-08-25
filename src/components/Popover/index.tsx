@@ -87,6 +87,7 @@ export interface PopoverProps {
   style?: any
   offset?: any
   close?: () => void
+  hideShadow?: boolean
 }
 
 export default function Popover({
@@ -97,6 +98,7 @@ export default function Popover({
   style = {},
   offset = [8, 8],
   close,
+  hideShadow = false, // used for tooltips
 }: PopoverProps) {
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null)
   const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(null)
@@ -118,7 +120,7 @@ export default function Popover({
     <>
       <ReferenceElement ref={setReferenceElement as any}>{children}</ReferenceElement>
       <Portal>
-        {show && (
+        {show && !hideShadow && (
           <Shadow
             id="kekw"
             onClick={() => {
