@@ -40,7 +40,9 @@ export const VestingValid = () => {
               <TYPE.body1>
                 <Trans>Start Date</Trans>&nbsp;
               </TYPE.body1>
-              <TYPE.titleSmall fontWeight={400}>{unixTimeToFormat({ time: vestingDetails?.start })}</TYPE.titleSmall>
+              <TYPE.titleSmall fontWeight={400} lineHeight={'18px'}>
+                {unixTimeToFormat({ time: vestingDetails?.start })}
+              </TYPE.titleSmall>
             </Column>
           )}
           {nextPayment && (
@@ -48,7 +50,9 @@ export const VestingValid = () => {
               <TYPE.body1>
                 <Trans>Next Payment</Trans>&nbsp;
               </TYPE.body1>
-              <TYPE.titleSmall fontWeight={400}>{unixTimeToFormat({ time: nextPayment })}</TYPE.titleSmall>
+              <TYPE.titleSmall fontWeight={400} lineHeight={'18px'}>
+                {unixTimeToFormat({ time: nextPayment })}
+              </TYPE.titleSmall>
             </Column>
           )}
           <Column style={{ gap: '19px' }}>
