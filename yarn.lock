@@ -2482,10 +2482,10 @@
   dependencies:
     "@openzeppelin/contracts" "^2.0.0"
 
-"@ixswap1/v2-periphery@^1.0.2":
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/@ixswap1/v2-periphery/-/v2-periphery-1.0.8.tgz#5736e34480cb9b8a0b3d8ee1279e36af1557663c"
-  integrity sha512-7j6KTW/Z6OkhzZHw8fveCF4X1svwtNOCN6oxWpPHN95ClfapRXsmCKAZtTGHMWzMlRFN+WFth228CN9RX87paQ==
+"@ixswap1/v2-periphery@^1.0.10":
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/@ixswap1/v2-periphery/-/v2-periphery-1.0.10.tgz#e838d8abe835cd78527a124b6e5ba62961f0a1ec"
+  integrity sha512-c04LiIbPNbqAU3ZNahr5n8ZfqHbxpIrlw40bHha/Q7tq3Ei7KSdO2Kl9sG6UCwngMJBPKIqCQ07LVLGzKZjwTQ==
   dependencies:
     "@ixswap1/lib" "1.x.x"
     "@ixswap1/v2-core" "1.x.x"
