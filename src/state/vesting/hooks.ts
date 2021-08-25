@@ -188,7 +188,7 @@ export function useVestingDetails() {
   }, [vesting, account, dispatch])
 
   useEffect(() => {
-    if (isVesting && account && details) {
+    if (isVesting && account && !details) {
       fetchDetails()
     }
   }, [fetchDetails, account, isVesting, details])
