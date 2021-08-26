@@ -8,9 +8,9 @@ export const VirtualTransactionDateFilter = () => {
   const { isMobile } = useAppBreakpoints()
 
   return (
-    <Grid item container xs={12} md={3} alignItems={'center'}>
+    <Grid item container xs={12} md={6} lg={3} alignItems={'center'}>
       <Grid item xs={12} sm={'auto'}>
-        <Typography>Date:</Typography>
+        <Typography style={{ fontWeight: 600 }}>Date:</Typography>
         {isMobile && <VSpacer size={'small'} />}
       </Grid>
       <Box pr={1} />
