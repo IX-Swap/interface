@@ -42,3 +42,10 @@ export interface VirtualAccountAuditItem {
   fileName: string
   createdAt: string
 }
+
+export interface VAAuditOutboundItem {
+  _id: string
+  fileName: string
+  fileType: string
+  createdAt: string
+}

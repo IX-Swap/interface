@@ -297,8 +297,12 @@ export const resources = {
 export const virtualAccountsAudit = {
   getMT940Files: 'https://hsbc.mozork.com/audit/virtual-account/mt940/files',
   getMT942Files: 'https://hsbc.mozork.com/audit/virtual-account/mt940/files',
+  getOutboundFiles:
+    'https://hsbc.mozork.com/audit/virtual-account/outbound/files',
   getRawMT940File: (fileId: string) =>
     `https://hsbc.mozork.com/audit/virtual-account/mt940/files/raw/${fileId}`,
   getRawMT942File: (fileId: string) =>
-    `https://hsbc.mozork.com/audit/virtual-account/mt940/files/raw/${fileId}`
+    `https://hsbc.mozork.com/audit/virtual-account/mt942/files/raw/${fileId}`,
+  getRawOutboundFile: (fileId: string) =>
+    `https://hsbc.mozork.com/audit/virtual-account/outbound/files/raw/${fileId}`
 }

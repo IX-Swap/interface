@@ -4,13 +4,13 @@ import { virtualAccountsAudit } from 'config/apiURL'
 import { QueryOrMutationCallbacks } from 'hooks/types'
 import { DownloadDocument } from 'hooks/useDownloadRawDocument'
 
-export const useDownloadRawMT940File = (
+export const useDownloadRawOutboundFile = (
   document: DownloadDocument,
   callbacks?: QueryOrMutationCallbacks<Blob>
 ) => {
   const { snackbarService, apiService } = useServices()
   const { documentId, uri } = document
-  const url = virtualAccountsAudit.getRawMT940File(documentId)
+  const url = virtualAccountsAudit.getRawOutboundFile(documentId)
   const downloadFile = async () => {
     return await apiService.get<Blob>(uri ?? url, { responseType: 'blob' })
   }
