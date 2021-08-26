@@ -2,6 +2,7 @@ import { Grid } from '@material-ui/core'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import React from 'react'
 import { VSpacer } from 'components/VSpacer'
+import { VirtualTransactionsTable } from 'app/pages/admin/components/VirtualTransactionsTable/VirtualTransactionsTable'
 
 export const VirtualAccountTransactions = () => {
   return (
@@ -9,6 +10,9 @@ export const VirtualAccountTransactions = () => {
       <Grid item>
         <PageHeader title='Virtual Account Transactions' />
         <VSpacer size={'medium'} />
+      </Grid>
+      <Grid item>
+        <VirtualTransactionsTable />
       </Grid>
     </Grid>
   )
