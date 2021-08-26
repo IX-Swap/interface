@@ -7,25 +7,36 @@ import { QueryFilter } from 'hooks/filters/useQueryFilter'
 export interface DateFilterProps {
   name: QueryFilter
   label: string
+  clearable?: boolean
   width?: number | string
 }
 
-export const DateFilter = ({ name, label, width = 150 }: DateFilterProps) => {
+export const DateFilter = ({
+  name,
+  label,
+  width = 150,
+  clearable = false
+}: DateFilterProps) => {
   return (
     <SearchQueryFilter name={name}>
-      {({ value, onChange }) => (
+      {({ value, onChange, onClear }) => (
         <DateTimePickerComponent
           value={value ?? null}
           className='denseAdornments'
           size='small'
           inputVariant='outlined'
           label={label}
+          clearable={clearable}
           style={{ width: width }}
           onChange={date => {
-            try {
-              onChange(convertDateToISO(date))
-            } catch (e) {
-              onChange(undefined)
+            if (date === null) {
+              onClear()
+            } else {
+              try {
+                onChange(convertDateToISO(date))
+              } catch (e) {
+                onChange(undefined)
+              }
             }
           }}
         />

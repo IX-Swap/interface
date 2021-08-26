@@ -3,7 +3,7 @@ import { Box, Grid, Typography } from '@material-ui/core'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { TransferTypesFilter } from 'app/pages/admin/components/TransferTypesFilter'
 
-export const VirtualTransactionsTransferTypesFilter = () => {
+export const VTTransferTypesFilter = () => {
   const { isMobile } = useAppBreakpoints()
 
   return (
@@ -11,7 +11,7 @@ export const VirtualTransactionsTransferTypesFilter = () => {
       item
       container
       xs={12}
-      md={6}
+      md={5}
       lg={4}
       alignItems={'center'}
       justify={'flex-start'}
