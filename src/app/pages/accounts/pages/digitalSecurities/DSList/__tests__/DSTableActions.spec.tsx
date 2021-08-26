@@ -29,7 +29,7 @@ describe('DSTableActions', () => {
       expect.objectContaining({
         children: expect.anything(),
         to: DSRoute.deposit,
-        params: { balanceId: props.item.assetId }
+        params: { balanceId: props.item._id }
       }),
       {}
     )
@@ -38,7 +38,7 @@ describe('DSTableActions', () => {
       expect.objectContaining({
         children: expect.anything(),
         to: DSRoute.withdraw,
-        params: { balanceId: props.item.assetId }
+        params: { balanceId: props.item._id }
       }),
       {}
     )

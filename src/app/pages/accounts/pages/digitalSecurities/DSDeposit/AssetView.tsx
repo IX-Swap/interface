@@ -33,7 +33,7 @@ export const AssetView: React.FC = () => {
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Alert severity='warning'>
-            Please only send {asset.symbol} to this address. We may not be able
+            Please only send {asset?.symbol} to this address. We may not be able
             to recover if you transfer to the wrong address.
           </Alert>
         </Grid>
@@ -47,7 +47,7 @@ export const AssetView: React.FC = () => {
           className={privateClassNames()}
         >
           <Typography variant='h4'>
-            <b>{asset.symbol} Address</b>
+            <b>{asset?.symbol} Address</b>
           </Typography>
           <Typography variant='body1' color='primary'>
             <b>{address}</b>

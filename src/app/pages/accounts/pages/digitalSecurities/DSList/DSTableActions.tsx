@@ -14,14 +14,14 @@ export const DSTableActions = ({ item }: DSTableActionsProps) => {
       <Button
         component={AppRouterLinkComponent}
         to={DSRoute.deposit}
-        params={{ balanceId: item.assetId }}
+        params={{ balanceId: item._id }}
       >
         Deposit
       </Button>
       <Button
         component={AppRouterLinkComponent}
         to={DSRoute.withdraw}
-        params={{ balanceId: item.assetId }}
+        params={{ balanceId: item._id }}
       >
         Withdraw
       </Button>
