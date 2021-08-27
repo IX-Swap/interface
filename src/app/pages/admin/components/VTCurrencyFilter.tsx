@@ -3,7 +3,7 @@ import { Box, Grid, Typography } from '@material-ui/core'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { CurrencyFilter } from 'app/pages/admin/components/AssignedVirtualAccountsTable/CurrencyFilter'
 
-export const VirtualTransactionCurrencyFilter = () => {
+export const VTCurrencyFilter = () => {
   const { isMobile } = useAppBreakpoints()
 
   return (
@@ -11,7 +11,7 @@ export const VirtualTransactionCurrencyFilter = () => {
       item
       container
       xs={12}
-      md={6}
+      md={4}
       lg={2}
       alignItems={'center'}
       justify={'flex-start'}

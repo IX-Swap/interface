@@ -10,10 +10,13 @@ export const VirtualTransactionsTable = () => {
   const { getFilterValue } = useQueryFilter()
 
   const filter = {
-    // TODO Add more filters after complete backend api endpoints
+    // TODO Make changes filters names after complete backend api endpoints
     search: getFilterValue('search'),
     to: getFilterValue('toDate'),
-    from: getFilterValue('fromDate')
+    from: getFilterValue('fromDate'),
+    transferDirection: getFilterValue('transferDirection'),
+    currency: getFilterValue('currency'),
+    transferType: getFilterValue('transferType')
   }
 
   return (
