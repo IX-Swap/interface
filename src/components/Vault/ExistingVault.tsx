@@ -22,7 +22,7 @@ export const ExistingVault = ({ currency, status }: Props) => {
   const { account } = useActiveWeb3React()
   const toggle = useDepositModalToggle()
   const tokenId = useSecTokenId({ currencyId: (currency as any)?.address })
-  const passAccreditation = usePassAccreditation({ tokenId })
+  const passAccreditation = usePassAccreditation()
   const isApproved = status === VaultState.APPROVED
   return (
     <ExistingWrapper>
@@ -49,7 +49,7 @@ export const ExistingVault = ({ currency, status }: Props) => {
               data-testid="pass-accreditation"
               style={{ width: '400px' }}
               onClick={() => {
-                passAccreditation()
+                passAccreditation(tokenId, 0)
               }}
             >
               <Trans>Pass Accreditation</Trans>

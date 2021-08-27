@@ -3,11 +3,11 @@ import { Trans } from '@lingui/macro'
 import { ButtonIXSGradient } from 'components/Button'
 import { useActiveWeb3React } from 'hooks/web3'
 import React, { useMemo } from 'react'
-import { useWalletModalToggle } from 'state/application/hooks'
+import { useWalletModalToggle, useChooseBrokerDealerModalToggle } from 'state/application/hooks'
 import { useSecTokenId } from 'state/secTokens/hooks'
-import { usePassAccreditation } from 'state/user/hooks'
 import { TYPE } from 'theme'
 import { ButtonRow, NotSubmittedDescription, NotSubmittedTitle, NotSubmittedWrapper } from './styleds'
+import { ChooseBrokerDealerPopup } from './ChooseBrokerDealerPopup'
 
 interface Props {
   currency?: Currency
@@ -16,8 +16,8 @@ export const NotSubmitted = ({ currency }: Props) => {
   const symbolText = useMemo(() => currency?.symbol ?? currency?.name ?? '', [currency])
   const { account } = useActiveWeb3React()
   const toggleWalletModal = useWalletModalToggle()
+  const toggleChooseBrokerDealerModal = useChooseBrokerDealerModalToggle()
   const tokenId = useSecTokenId({ currencyId: (currency as any)?.address })
-  const passAccreditation = usePassAccreditation({ tokenId })
   return (
     <NotSubmittedWrapper>
       <NotSubmittedTitle>
@@ -37,13 +37,12 @@ export const NotSubmitted = ({ currency }: Props) => {
 
         <ButtonIXSGradient
           data-testid="pass-kyc-and-accreditation"
-          onClick={() => {
-            passAccreditation()
-          }}
+          onClick={toggleChooseBrokerDealerModal}
           disabled={!account}
         >
           <Trans>Pass KYC and Accreditation</Trans>
         </ButtonIXSGradient>
+        <ChooseBrokerDealerPopup tokenId={tokenId} />
       </ButtonRow>
     </NotSubmittedWrapper>
   )
