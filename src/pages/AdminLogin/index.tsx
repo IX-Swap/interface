@@ -16,7 +16,7 @@ export const AdminLoginPage = () => {
   }, [adminIsAuthenticated, history])
 
   useEffect(() => {
-    if (localStorage.getItem('accessToken')) {
+    if (localStorage.getItem('adminAccessToken')) {
       getMe()
     }
   }, [getMe])
