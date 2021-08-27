@@ -1,7 +1,7 @@
-import { Grid } from '@material-ui/core'
-import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import React from 'react'
+import { Grid } from '@material-ui/core'
 import { VSpacer } from 'components/VSpacer'
+import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { VirtualTransactionsTable } from 'app/pages/admin/components/VirtualTransactionsTable/VirtualTransactionsTable'
 import { VirtualTransactionsFilters } from 'app/pages/admin/components/VirtualTransactionsFilters'
 
@@ -14,7 +14,6 @@ export const VirtualAccountTransactions = () => {
       </Grid>
       <Grid item>
         <VirtualTransactionsFilters />
-        <VSpacer size={'small'} />
       </Grid>
       <Grid item>
         <VirtualTransactionsTable />
