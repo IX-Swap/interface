@@ -15,7 +15,7 @@ export const Actions = ({ item }: ActionsProps) => {
     {
       onSuccess: async ({ data }) => {
         const file = new Blob([data], { type: 'text' })
-        openFileInNewTab(file)
+        openFileInNewTab(file as File)
       }
     }
   )
