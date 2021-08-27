@@ -23,12 +23,12 @@ export interface AdminState {
 }
 
 const initialState: AdminState = {
-  token: localStorage.getItem('accessToken') || '',
+  token: localStorage.getItem('adminAccessToken') || '',
   expiresAt: undefined,
   adminLoading: false,
   adminError: null,
   adminData: {} as RawGetMePayload,
-  adminIsAuthenticated: Boolean(localStorage.getItem('accessToken')),
+  adminIsAuthenticated: Boolean(localStorage.getItem('adminAccessToken')),
   kycList: {
     page: 0,
     offset: 0,
@@ -48,7 +48,7 @@ export default createReducer<AdminState>(initialState, (builder) =>
       state.adminError = null
     })
     .addCase(postLogin.fulfilled, (state, { payload: { auth } }) => {
-      localStorage.setItem('accessToken', auth.accessToken)
+      localStorage.setItem('adminAccessToken', auth.accessToken)
       state.adminLoading = false
       state.adminError = null
       const expirationTime = getTokenExpiration(auth.expiresIn)
@@ -70,13 +70,13 @@ export default createReducer<AdminState>(initialState, (builder) =>
       state.adminData = data
     })
     .addCase(getMe.rejected, (state, { payload: { errorMessage } }) => {
-      localStorage.removeItem('accessToken')
+      localStorage.removeItem('adminAccessToken')
       state.adminIsAuthenticated = false
       state.adminLoading = false
       state.adminError = errorMessage
     })
     .addCase(logout.fulfilled, (state) => {
-      localStorage.removeItem('accessToken')
+      localStorage.removeItem('adminAccessToken')
       state.adminIsAuthenticated = false
       state.adminLoading = false
       state.adminError = null

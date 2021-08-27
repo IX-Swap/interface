@@ -20,7 +20,7 @@ export const AdminKyc = () => {
   }, [adminIsAuthenticated, adminError, history])
 
   useEffect(() => {
-    if (localStorage.getItem('accessToken')) {
+    if (localStorage.getItem('adminAccessToken')) {
       getMe()
     }
   }, [getMe])
