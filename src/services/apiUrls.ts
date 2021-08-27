@@ -21,6 +21,7 @@ export const kyc = {
 
 export const broker = {
   choose: (pairId: number) => `broker-dealer/choose/${pairId}`,
+  pairs: (tokenId: number) => `broker-dealer/${tokenId}/pairs`,
 }
 
 export const tokens = {

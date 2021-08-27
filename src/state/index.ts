@@ -20,6 +20,8 @@ import admin from './admin/reducer'
 import vesting from './vesting/reducer'
 import staking from './stake/reducer'
 
+import brokerDealer from './brokerDealer/reducer'
+
 const PERSISTED_KEYS: string[] = ['user', 'transactions', 'lists', 'auth']
 
 const store = configureStore({
@@ -40,6 +42,7 @@ const store = configureStore({
     eventLog,
     vesting,
     staking,
+    brokerDealer,
   },
   middleware: [...getDefaultMiddleware({ thunk: true }), save({ states: PERSISTED_KEYS, debounce: 1000 })],
   preloadedState: load({ states: PERSISTED_KEYS }),

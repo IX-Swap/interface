@@ -464,30 +464,33 @@ export const chooseBrokerDealer = async ({ pairId }: { pairId: number }) => {
   return result.data
 }
 
-export function usePassAccreditation({ tokenId }: { tokenId: number }): () => Promise<void> {
+export function usePassAccreditation(): (tokenId: number, brokerDealerPairId: number) => Promise<void> {
   const dispatch = useDispatch<AppDispatch>()
   const login = useLogin({ mustHavePreviousLogin: false, expireLogin: false })
   const fetchTokens = useFetchUserSecTokenListCallback()
 
   // note: prevent dispatch if using for list search or unsupported list
-  return useCallback(async () => {
-    dispatch(passAccreditation.pending())
-    try {
-      const status = await login()
-      if (status === LOGIN_STATUS.SUCCESS) {
-        await chooseBrokerDealer({ pairId: 5 })
-        await postPassAccreditation({ tokenId })
-      } else {
-        dispatch(passAccreditation.rejected({ errorMessage: 'Could not login' }))
-        return
+  return useCallback(
+    async (tokenId: number, brokerDealerPairId: number) => {
+      dispatch(passAccreditation.pending())
+      try {
+        const status = await login()
+        if (status === LOGIN_STATUS.SUCCESS) {
+          await chooseBrokerDealer({ pairId: brokerDealerPairId })
+          await postPassAccreditation({ tokenId })
+        } else {
+          dispatch(passAccreditation.rejected({ errorMessage: 'Could not login' }))
+          return
+        }
+        await fetchTokens()
+        dispatch(passAccreditation.fulfilled())
+      } catch (error) {
+        console.debug(`Failed to pass accreditation`, error)
+        dispatch(passAccreditation.rejected({ errorMessage: error.message }))
       }
-      await fetchTokens()
-      dispatch(passAccreditation.fulfilled())
-    } catch (error) {
-      console.debug(`Failed to pass accreditation`, error)
-      dispatch(passAccreditation.rejected({ errorMessage: error.message }))
-    }
-  }, [dispatch, tokenId, login, fetchTokens])
+    },
+    [dispatch, login, fetchTokens]
+  )
 }
 
 export function useAccount() {

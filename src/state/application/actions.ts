@@ -25,6 +25,7 @@ export enum ApplicationModal {
   MANAGE_REWARD,
   ADD_STAKE,
   UNSTAKE,
+  CHOOSE_BROKER_DEALER,
 }
 
 export const updateBlockNumber = createAction<{ chainId: number; blockNumber: number }>('application/updateBlockNumber')
