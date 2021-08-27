@@ -1,6 +1,6 @@
 import { IconButton } from '@material-ui/core'
 import { Launch } from '@material-ui/icons'
-import { convertBlobToFile, openFileInNewTab } from 'hooks/utils'
+import { openFileInNewTab } from 'hooks/utils'
 import React from 'react'
 import { VAAuditOutboundItem } from 'types/virtualAccount'
 import { useDownloadRawOutboundFile } from 'app/pages/admin/hooks/useDownloadRawOutboundFile'
@@ -14,7 +14,7 @@ export const Actions = ({ item }: ActionsProps) => {
     { documentId: item._id },
     {
       onSuccess: ({ data }) => {
-        const file = convertBlobToFile(data, '')
+        const file = new Blob([data], { type: 'text' })
         openFileInNewTab(file)
       }
     }

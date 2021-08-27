@@ -12,7 +12,9 @@ export const useDownloadRawMT940File = (
   const { documentId, uri } = document
   const url = virtualAccountsAudit.getRawMT940File(documentId)
   const downloadFile = async () => {
-    return await apiService.get<Blob>(uri ?? url, { responseType: 'blob' })
+    return await apiService.get<Blob>(uri ?? url, {
+      responseType: 'blob'
+    })
   }
 
   return useMutation(downloadFile, {

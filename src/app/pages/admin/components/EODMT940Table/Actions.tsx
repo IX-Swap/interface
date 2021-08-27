@@ -1,6 +1,6 @@
 import { IconButton } from '@material-ui/core'
 import { Launch } from '@material-ui/icons'
-import { convertBlobToFile, openFileInNewTab } from 'hooks/utils'
+import { openFileInNewTab } from 'hooks/utils'
 import React from 'react'
 import { useDownloadRawMT940File } from 'app/pages/admin/hooks/useDownloadRawMT940File'
 import { VirtualAccountAuditItem } from 'types/virtualAccount'
@@ -13,8 +13,8 @@ export const Actions = ({ item }: ActionsProps) => {
   const [downloadFile, { isLoading }] = useDownloadRawMT940File(
     { documentId: item._id },
     {
-      onSuccess: ({ data }) => {
-        const file = convertBlobToFile(data, '')
+      onSuccess: async ({ data }) => {
+        const file = new Blob([data], { type: 'text' })
         openFileInNewTab(file)
       }
     }
