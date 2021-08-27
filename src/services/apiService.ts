@@ -101,10 +101,11 @@ const apiService = {
   },
 
   _prepareHeaders(data: any) {
+    const isAdmin = window.location.hash === '#/admin-kyc' || window.location.hash === '#/admin-login'
     const headers: KeyValueMap = {}
     const { auth, admin } = store.getState()
     if (auth.token || admin.token) {
-      headers.Authorization = `Bearer ${admin.token || auth.token}`
+      headers.Authorization = `Bearer ${isAdmin ? admin.token : auth.token}`
     }
 
     if (data !== undefined && !this._isFormData(data)) {
