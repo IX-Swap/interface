@@ -11,22 +11,21 @@ export const VirtualTransactionCurrencyFilter = () => {
       item
       container
       xs={12}
-      md={3}
+      md={6}
+      lg={2}
       alignItems={'center'}
       justify={'flex-start'}
     >
       <Grid item xs={4} sm={'auto'}>
-        <Typography>Currency:</Typography>
-        {/* {isMobile && <VSpacer size={'small'} />} */}
+        <Typography style={{ fontWeight: 600 }}>Currency:</Typography>
       </Grid>
       {!isMobile && <Box pr={1} />}
       <Grid item xs={4} sm={'auto'}>
-        <CurrencyFilter currency='SGD' />
-        {/* {isMobile && <VSpacer size={'small'} />} */}
+        <CurrencyFilter currency='SGD' defaultValue={null} />
       </Grid>
       {!isMobile && <Box pr={2} />}
       <Grid item xs={4} sm={'auto'}>
-        <CurrencyFilter currency='USD' />
+        <CurrencyFilter currency='USD' defaultValue={null} />
       </Grid>
     </Grid>
   )

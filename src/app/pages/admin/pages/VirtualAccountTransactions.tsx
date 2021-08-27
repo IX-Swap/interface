@@ -4,8 +4,11 @@ import { VSpacer } from 'components/VSpacer'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { VirtualTransactionsTable } from 'app/pages/admin/components/VirtualTransactionsTable/VirtualTransactionsTable'
 import { VirtualTransactionsFilters } from 'app/pages/admin/components/VirtualTransactionsFilters'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 
 export const VirtualAccountTransactions = () => {
+  const { isMiniLaptop } = useAppBreakpoints()
+
   return (
     <Grid container direction='column'>
       <Grid item>
@@ -14,6 +17,7 @@ export const VirtualAccountTransactions = () => {
       </Grid>
       <Grid item>
         <VirtualTransactionsFilters />
+        {isMiniLaptop && <VSpacer size={'small'} />}
       </Grid>
       <Grid item>
         <VirtualTransactionsTable />
