@@ -24,9 +24,9 @@ export const DSOVideoLinksView = (props: DSOVideoLinksViewProps) => {
           <FormSectionHeader title='Videos' />
         </Grid>
       )}
-      {dso.videos.map((item, i) => {
+      {dso.videos.map(item => {
         return (
-          <Grid item>
+          <Grid item key={item.title}>
             <Typography variant={'subtitle1'}>{item.title}</Typography>
             <VSpacer size={'small'} />
             <ReactPlayer width={'100%'} height={434} url={item.link} />

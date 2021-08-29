@@ -25,7 +25,7 @@ export const DSOFAQsView = (props: DSOFAQsViewProps) => {
 
       {dso.faqs.map((item, i) => {
         return (
-          <Grid item>
+          <Grid item key={item.question}>
             <Typography variant={'subtitle1'}>
               {i + 1}. {item.question}
             </Typography>
