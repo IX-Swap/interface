@@ -1,6 +1,6 @@
 import React from 'react'
 import { Grid, Typography } from '@material-ui/core'
-import { DigitalSecurityOffering, DsoVideoLink } from 'types/dso'
+import { DigitalSecurityOffering } from 'types/dso'
 import ReactPlayer from 'react-player/lazy'
 import { VSpacer } from 'components/VSpacer'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
@@ -13,32 +13,18 @@ export interface DSOVideoLinksViewProps {
 export const DSOVideoLinksView = (props: DSOVideoLinksViewProps) => {
   const { dso, isTitleVisible = false } = props
 
-  const fakeVideoLinks: DsoVideoLink[] = [
-    {
-      title: 'Title 1',
-      link: 'https://www.youtube.com/watch?v=6tE1bl4GnzE'
-    },
-    {
-      title: 'Title 1',
-      link: 'https://www.youtube.com/watch?v=6tE1bl4GnzE'
-    },
-    {
-      title: 'Title 1',
-      link: 'https://www.youtube.com/watch?v=6tE1bl4GnzE'
-    }
-  ]
-
-  const realVideoLinks =
-    dso.videoLinks !== undefined ? dso.videoLinks : fakeVideoLinks
+  if (dso.videos === undefined) {
+    return null
+  }
 
   return (
     <Grid container direction='column' spacing={5}>
       {isTitleVisible && (
         <Grid item>
-          <FormSectionHeader title='FAQ' />
+          <FormSectionHeader title='Videos' />
         </Grid>
       )}
-      {realVideoLinks.map((item, i) => {
+      {dso.videos.map((item, i) => {
         return (
           <Grid item>
             <Typography variant={'subtitle1'}>{item.title}</Typography>

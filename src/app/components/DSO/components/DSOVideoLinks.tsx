@@ -15,7 +15,7 @@ interface DSOVideoLinksProps {
 }
 
 export const DSOVideoLinks = ({ isNew = false }: DSOVideoLinksProps) => {
-  const fieldName = 'videoLinks'
+  const fieldName = 'videos'
   const { control } = useFormContext<DSOFormValues>()
 
   return (

@@ -6,7 +6,7 @@ import {
   DSOInsight,
   DSOActivity,
   DsoFAQItem,
-  DsoVideoLink
+  DsoVideo
 } from 'types/dso'
 import { corporate, asset } from './authorizer'
 import { emptyFile } from '__fixtures__/file'
@@ -91,7 +91,7 @@ export const faqItem: DsoFAQItem = {
   answer: 'Answer'
 }
 
-export const videoLink: DsoVideoLink = {
+export const videoLink: DsoVideo = {
   _id: '0',
   title: 'Title',
   link: 'Link'
@@ -106,13 +106,13 @@ export const formvalues: DSOFormValues = {
       photo: 'id'
     }
   ],
-  faq: [
+  faqs: [
     {
       question: 'FAQ #1',
       answer: 'Text'
     }
   ],
-  videoLinks: [
+  videos: [
     {
       title: 'Video #1',
       link: 'Link'

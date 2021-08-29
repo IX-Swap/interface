@@ -11,8 +11,8 @@ export enum DSOFormSection {
   'Information' = 'dso-profile',
   'Documents' = 'dso-documents',
   'Team Members' = 'dso-team',
-  'FAQs' = 'dso-faq',
-  'Video Links' = 'dso-video-links'
+  'FAQs' = 'dso-faqs',
+  'Videos' = 'dso-videos'
 }
 
 export const DSOScrollGuide = () => {

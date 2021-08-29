@@ -23,6 +23,30 @@ export const DSOPreview = (props: DSOPreviewProps) => {
 
   useSetPageTitle(data.tokenName)
 
+  const renderFAQsFormSection = () => {
+    if (data.faqs === undefined || data.faqs.length < 1) {
+      return null
+    }
+    return (
+      <Element name={DSOFormSection.FAQs}>
+        <VSpacer size='large' />
+        <DSOFAQsView dso={data} isTitleVisible />
+      </Element>
+    )
+  }
+
+  const renderVideosFormSection = () => {
+    if (data.videos === undefined || data.videos.length < 1) {
+      return null
+    }
+    return (
+      <Element name={DSOFormSection.Videos}>
+        <VSpacer size='large' />
+        <DSOVideoLinksView dso={data} isTitleVisible />
+      </Element>
+    )
+  }
+
   return (
     <Fragment>
       <Element name={DSOFormSection['DSO Information']}>
@@ -54,15 +78,8 @@ export const DSOPreview = (props: DSOPreviewProps) => {
         <DSOTeamView dso={data} />
       </Element>
 
-      <Element name={DSOFormSection.FAQs}>
-        <VSpacer size='large' />
-        <DSOFAQsView dso={data} isTitleVisible />
-      </Element>
-
-      <Element name={DSOFormSection['Video Links']}>
-        <VSpacer size='large' />
-        <DSOVideoLinksView dso={data} />
-      </Element>
+      {renderVideosFormSection()}
+      {renderFAQsFormSection()}
     </Fragment>
   )
 }

@@ -3,7 +3,7 @@ import { render, cleanup } from 'test-utils'
 import { Form } from 'components/form/Form'
 import { DSOChapterAddButton } from 'app/components/DSO/components/DSOChapterAddButton'
 import { faqItem } from '__fixtures__/issuance'
-import { DSOFAQ } from 'app/components/DSO/components/DSOFAQ'
+import { DSOFAQs } from 'app/components/DSO/components/DSOFAQs'
 import { DSOFAQItem } from 'app/components/DSO/components/DSOFAQItem'
 
 jest.mock('app/components/DSO/components/DSOChapterAddButton', () => ({
@@ -14,7 +14,7 @@ jest.mock('app/components/DSO/components/DSOFAQItem', () => ({
   DSOFAQItem: jest.fn(() => null)
 }))
 
-describe('DSOFAQ', () => {
+describe('DSOFAQs', () => {
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -22,16 +22,16 @@ describe('DSOFAQ', () => {
 
   it('renders without error', () => {
     render(
-      <Form defaultValues={{ faq: [] }}>
-        <DSOFAQ />
+      <Form defaultValues={{ faqs: [] }}>
+        <DSOFAQs />
       </Form>
     )
   })
 
   it('renders DSOTeamAddButton', () => {
     render(
-      <Form defaultValues={{ faq: [] }}>
-        <DSOFAQ />
+      <Form defaultValues={{ faqs: [] }}>
+        <DSOFAQs />
       </Form>
     )
 
@@ -40,8 +40,8 @@ describe('DSOFAQ', () => {
 
   it('calls DSOFAQItem for each element in the array', () => {
     render(
-      <Form defaultValues={{ faq: [faqItem, faqItem, faqItem] }}>
-        <DSOFAQ />
+      <Form defaultValues={{ faqs: [faqItem, faqItem, faqItem] }}>
+        <DSOFAQs />
       </Form>
     )
 
@@ -50,8 +50,8 @@ describe('DSOFAQ', () => {
 
   it('does not call DSOFAQItem if array is empty', () => {
     render(
-      <Form defaultValues={{ faq: [] }}>
-        <DSOFAQ />
+      <Form defaultValues={{ faqs: [] }}>
+        <DSOFAQs />
       </Form>
     )
 

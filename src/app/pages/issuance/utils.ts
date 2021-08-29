@@ -1,8 +1,10 @@
 import {
   DSOActivity,
+  DsoFAQItem,
   DSOFormValues,
   DSORequestArgs,
-  DsoTeamMember
+  DsoTeamMember,
+  DsoVideo
 } from 'types/dso'
 import { getPersonName } from 'helpers/strings'
 import { hasValue } from 'helpers/forms'
@@ -31,6 +33,14 @@ export const getDocumentsFieldPayload = (
   return documents?.map(d => d.value?._id ?? null).filter(d => d !== null) ?? []
 }
 
+export const getFAQsFieldsPayload = (faqs: DsoFAQItem[]) => {
+  return faqs?.filter(item => item.question !== '' || item.answer !== '')
+}
+
+export const getVideosFieldsPayload = (videos: DsoVideo[]) => {
+  return videos?.filter(item => item.link !== '' || item.title !== '')
+}
+
 export const getCreateDSOPayload = (values: Partial<DSOFormValues>) => {
   return Object.keys(values).reduce((acc, key) => {
     let value = values[key as keyof DSOFormValues]
@@ -48,17 +58,33 @@ export const getCreateDSOPayload = (values: Partial<DSOFormValues>) => {
     ) {
       value = numberToPercentage(value as number)
     }
-
-    return {
-      ...acc,
-      ...(hasValue(value) ? { [key]: value } : {})
+    if (key === 'faqs') {
+      value = getFAQsFieldsPayload(value as DsoFAQItem[])
     }
+    if (key === 'videos') {
+      value = getVideosFieldsPayload(value as DsoVideo[])
+    }
+
+    return { ...acc, ...(hasValue(value) ? { [key]: value } : {}) }
   }, {}) as DSORequestArgs
 }
 
 export const getUpdateDSOPayload = (values: Partial<DSOFormValues>) => {
-  console.log(getCreateDSOPayload(values))
   const { status, ...payload } = getCreateDSOPayload(values)
+
+  if (!('videos' in payload)) {
+    return {
+      ...payload,
+      videos: []
+    }
+  }
+
+  if (!('faqs' in payload)) {
+    return {
+      ...payload,
+      faqs: []
+    }
+  }
 
   return payload
 }

@@ -17,7 +17,7 @@ export interface DSOFAQItemProps {
 
 export const DSOFAQItem = (props: DSOFAQItemProps) => {
   const { defaultValue, fieldId, index, remove, isNew } = props
-  const { control } = useFormContext<{ faq: DSOFormValues['faq'] }>()
+  const { control } = useFormContext<{ faqs: DSOFormValues['faqs'] }>()
   const { isTablet } = useAppBreakpoints()
 
   return (
@@ -37,7 +37,7 @@ export const DSOFAQItem = (props: DSOFAQItemProps) => {
             control={control}
             defaultValue={defaultValue?.question ?? ''}
             label={`FAQ #${index + 1}`}
-            name={['faq', index, 'question']}
+            name={['faqs', index, 'question']}
             variant='outlined'
             helperText={'Input FAQ Question'}
           />
@@ -53,7 +53,7 @@ export const DSOFAQItem = (props: DSOFAQItemProps) => {
             component={TextField}
             defaultValue={defaultValue?.answer ?? ''}
             label='Input answer here'
-            name={['faq', index, 'answer']}
+            name={['faqs', index, 'answer']}
             variant='outlined'
             multiline
             rows={3}

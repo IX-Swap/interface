@@ -1,6 +1,6 @@
 import React from 'react'
 import { Grid, Typography } from '@material-ui/core'
-import { DigitalSecurityOffering, DsoFAQItem } from 'types/dso'
+import { DigitalSecurityOffering } from 'types/dso'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
 
 export interface DSOFAQsViewProps {
@@ -11,59 +11,19 @@ export interface DSOFAQsViewProps {
 export const DSOFAQsView = (props: DSOFAQsViewProps) => {
   const { dso, isTitleVisible = false } = props
 
-  const fakeFAQ: DsoFAQItem[] = [
-    {
-      question: 'Sample Questions',
-      answer:
-        'Lorem ipsum dolor sit amet, ' +
-        'consectetur adipiscing elit,' +
-        ' sed do eiusmod tempor incididunt ' +
-        'ut labore et dolore magna aliqua.' +
-        ' Ut enim ad minim veniam, quis nostrud' +
-        ' exercitation ullamco laboris nisi' +
-        ' ut aliquip ex ea commodo consequat. ' +
-        'Duis aute irure dolor in reprehenderit' +
-        ' in voluptate velit esse cillum dolore.'
-    },
-    {
-      question: 'Sample Questions',
-      answer:
-        'Lorem ipsum dolor sit amet, ' +
-        'consectetur adipiscing elit,' +
-        ' sed do eiusmod tempor incididunt ' +
-        'ut labore et dolore magna aliqua.' +
-        ' Ut enim ad minim veniam, quis nostrud' +
-        ' exercitation ullamco laboris nisi' +
-        ' ut aliquip ex ea commodo consequat. ' +
-        'Duis aute irure dolor in reprehenderit' +
-        ' in voluptate velit esse cillum dolore.'
-    },
-    {
-      question: 'Sample Questions',
-      answer:
-        'Lorem ipsum dolor sit amet, ' +
-        'consectetur adipiscing elit,' +
-        ' sed do eiusmod tempor incididunt ' +
-        'ut labore et dolore magna aliqua.' +
-        ' Ut enim ad minim veniam, quis nostrud' +
-        ' exercitation ullamco laboris nisi' +
-        ' ut aliquip ex ea commodo consequat. ' +
-        'Duis aute irure dolor in reprehenderit' +
-        ' in voluptate velit esse cillum dolore.'
-    }
-  ]
-
-  const realFAQ = dso.faq !== undefined ? dso.faq : fakeFAQ
+  if (dso.faqs === undefined) {
+    return null
+  }
 
   return (
     <Grid container direction='column' spacing={5}>
       {isTitleVisible && (
         <Grid item>
-          <FormSectionHeader title='FAQ' />
+          <FormSectionHeader title='FAQs' />
         </Grid>
       )}
 
-      {realFAQ.map((item, i) => {
+      {dso.faqs.map((item, i) => {
         return (
           <Grid item>
             <Typography variant={'subtitle1'}>

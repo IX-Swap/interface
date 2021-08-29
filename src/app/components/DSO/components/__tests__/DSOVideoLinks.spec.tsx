@@ -22,7 +22,7 @@ describe('DSOVideoLinks', () => {
 
   it('renders without error', () => {
     render(
-      <Form defaultValues={{ videoLinks: [] }}>
+      <Form defaultValues={{ videos: [] }}>
         <DSOVideoLinks />
       </Form>
     )
@@ -30,7 +30,7 @@ describe('DSOVideoLinks', () => {
 
   it('renders DSOTeamAddButton', () => {
     render(
-      <Form defaultValues={{ faq: [] }}>
+      <Form defaultValues={{ videos: [] }}>
         <DSOVideoLinks />
       </Form>
     )
@@ -40,7 +40,7 @@ describe('DSOVideoLinks', () => {
 
   it('calls DSOVideoItem for each element in the array', () => {
     render(
-      <Form defaultValues={{ videoLinks: [videoLink, videoLink, videoLink] }}>
+      <Form defaultValues={{ videos: [videoLink, videoLink, videoLink] }}>
         <DSOVideoLinks />
       </Form>
     )
@@ -50,7 +50,7 @@ describe('DSOVideoLinks', () => {
 
   it('does not call DSOVideoItem if array is empty', () => {
     render(
-      <Form defaultValues={{ faq: [] }}>
+      <Form defaultValues={{ videos: [] }}>
         <DSOVideoLinks />
       </Form>
     )

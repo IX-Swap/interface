@@ -3,7 +3,7 @@ import { Box, Grid, TextField } from '@material-ui/core'
 import { DSOTeamRemoveButton } from 'app/components/DSO/components/DSOTeamRemoveButton'
 import { TypedField } from 'components/form/TypedField'
 import { useFormContext } from 'react-hook-form'
-import { DSOFormValues, DsoVideoLink } from 'types/dso'
+import { DSOFormValues, DsoVideo } from 'types/dso'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { VSpacer } from 'components/VSpacer'
 
@@ -12,13 +12,13 @@ export interface DSOVideoItemProps {
   fieldId: string
   index: number
   remove: (field: any) => void
-  defaultValue: DsoVideoLink
+  defaultValue: DsoVideo
 }
 
 export const DSOVideoItem = (props: DSOVideoItemProps) => {
   const { defaultValue, fieldId, index, remove, isNew } = props
   const { control } = useFormContext<{
-    videoLinks: DSOFormValues['videoLinks']
+    videos: DSOFormValues['videos']
   }>()
   const { isTablet } = useAppBreakpoints()
 
@@ -39,7 +39,7 @@ export const DSOVideoItem = (props: DSOVideoItemProps) => {
             control={control}
             defaultValue={defaultValue?.title ?? ''}
             label='Video Title'
-            name={['videoLinks', index, 'title']}
+            name={['videos', index, 'title']}
             variant='outlined'
             helperText={'Title of the link'}
           />
@@ -53,7 +53,7 @@ export const DSOVideoItem = (props: DSOVideoItemProps) => {
             component={TextField}
             defaultValue={defaultValue?.link ?? ''}
             label='Link Source URL'
-            name={['videoLinks', index, 'link']}
+            name={['videos', index, 'link']}
             variant='outlined'
             helperText={'URL source where the investors will be redirected to'}
           />
