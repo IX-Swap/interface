@@ -13,7 +13,7 @@ export const DSTable: React.FC = () => {
 
   return (
     <TableView
-      uri={accountsURL.assets.getAll}
+      uri={accountsURL.balance.getAll(userId)}
       name={digitalSecuritiesQueryKeys.getByUserId(userId)}
       columns={columns}
       hasActions

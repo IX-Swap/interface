@@ -19,7 +19,7 @@ export const Balances: React.FC = () => {
 
       <Grid item>
         <TableView<AssetBalance>
-          uri={`/accounts/balance/${getIdFromObj(user)}`}
+          uri={`/accounts/currency-balance/${getIdFromObj(user)}`}
           name={balanceQueryKeys.getByUserId(getIdFromObj(user))}
           filter={{ type: 'Currency' }}
           columns={columns}
