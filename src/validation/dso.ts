@@ -1,4 +1,4 @@
-import { DSOFormValues, DsoTeamMember } from 'types/dso'
+import { DsoFAQItem, DSOFormValues, DsoTeamMember, DsoVideo } from 'types/dso'
 import { DataroomFile, FormArrayElement } from 'types/dataroomFile'
 import { string, number, array, object } from 'yup'
 import { dateSchema } from './shared'
@@ -13,6 +13,16 @@ export const dsoTeamMemberSchema = object().shape<DsoTeamMember>({
   name: string().required('Required'),
   position: string().required('Required'),
   photo: string().required('Required')
+})
+
+export const dsoFAQItemSchema = object().shape<DsoFAQItem>({
+  question: string().required('Required'),
+  answer: string().required('Required')
+})
+
+export const dsoVideoLinkSchema = object().shape<DsoVideo>({
+  title: string().required('Required'),
+  link: string().required('Required')
 })
 
 export const dsoFormBaseValidationSchema = {
@@ -102,6 +112,14 @@ export const dsoFormBaseValidationSchema = {
     .required('Required'),
   team: array<DsoTeamMember>()
     .of(dsoTeamMemberSchema.required('Required'))
+    .ensure()
+    .required('Required'),
+  faqs: array<DsoFAQItem>()
+    .of(dsoFAQItemSchema.required('Required'))
+    .ensure()
+    .required('Required'),
+  videos: array<DsoVideo>()
+    .of(dsoVideoLinkSchema.required('Required'))
     .ensure()
     .required('Required')
 }

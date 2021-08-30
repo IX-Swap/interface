@@ -10,6 +10,8 @@ import { DSOTeamView } from 'app/components/DSO/DSOPreview/DSOTeamView'
 import { Element } from 'react-scroll'
 import { DSOFormSection } from 'app/components/DSO/DSOScrollGuide'
 import { DSODataroomView } from 'app/components/DSO/components/DSODataroomView'
+import { DSOFAQsView } from 'app/components/DSO/components/DSOFAQsView'
+import { DSOVideoLinksView } from 'app/components/DSO/components/DSOVideoLinksView'
 
 export interface DSOPreviewProps {
   data: DigitalSecurityOffering
@@ -20,6 +22,30 @@ export const DSOPreview = (props: DSOPreviewProps) => {
   const { data } = props
 
   useSetPageTitle(data.tokenName)
+
+  const renderFAQsFormSection = () => {
+    if (data.faqs === undefined || data.faqs.length < 1) {
+      return null
+    }
+    return (
+      <Element name={DSOFormSection.FAQs}>
+        <VSpacer size='large' />
+        <DSOFAQsView dso={data} isTitleVisible />
+      </Element>
+    )
+  }
+
+  const renderVideosFormSection = () => {
+    if (data.videos === undefined || data.videos.length < 1) {
+      return null
+    }
+    return (
+      <Element name={DSOFormSection.Videos}>
+        <VSpacer size='large' />
+        <DSOVideoLinksView dso={data} isTitleVisible />
+      </Element>
+    )
+  }
 
   return (
     <Fragment>
@@ -51,6 +77,9 @@ export const DSOPreview = (props: DSOPreviewProps) => {
         <VSpacer size='large' />
         <DSOTeamView dso={data} />
       </Element>
+
+      {renderVideosFormSection()}
+      {renderFAQsFormSection()}
     </Fragment>
   )
 }

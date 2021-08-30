@@ -4,7 +4,9 @@ import {
   DsoTeamMember,
   DeploymentInfo,
   DSOInsight,
-  DSOActivity
+  DSOActivity,
+  DsoFAQItem,
+  DsoVideo
 } from 'types/dso'
 import { corporate, asset } from './authorizer'
 import { emptyFile } from '__fixtures__/file'
@@ -83,13 +85,37 @@ export const teamMember: DsoTeamMember = {
   position: 'position'
 }
 
-export const formvalues: DSOFormValues = {
+export const faqItem: DsoFAQItem = {
+  _id: '0',
+  question: 'Question',
+  answer: 'Answer'
+}
+
+export const videoLink: DsoVideo = {
+  _id: '0',
+  title: 'Title',
+  link: 'Link'
+}
+
+export const formValues: DSOFormValues = {
   team: [
     {
       name: 'Team Ultimate',
       position: 'Maintainer',
       about: '<p>Hello world</p>',
       photo: 'id'
+    }
+  ],
+  faqs: [
+    {
+      question: 'FAQ #1',
+      answer: 'Text'
+    }
+  ],
+  videos: [
+    {
+      title: 'Video #1',
+      link: 'Link'
     }
   ],
   documents: [
@@ -148,20 +174,20 @@ export const requestargs: DSORequestArgs = {
   logo: '5f898b69aa141c6d0d358ce6',
   useOfProceeds: '<p>Hello world</p>',
   totalFundraisingAmount: 100000,
-  subscriptionDocument: formvalues.subscriptionDocument?._id ?? '',
+  subscriptionDocument: formValues.subscriptionDocument?._id ?? '',
   pricePerUnit: 10,
   minimumInvestment: 200,
-  leverage: numberToPercentage(formvalues.leverage),
+  leverage: numberToPercentage(formValues.leverage),
   launchDate: '2020-10-16T18:30:00.000Z',
   completionDate: '2220-10-16T18:30:00.000Z',
   investmentStructure: '1',
   investmentPeriod: 2,
   introduction: '<p>Hello world</p>',
-  interestRate: numberToPercentage(formvalues.interestRate),
-  grossIRR: numberToPercentage(formvalues.grossIRR),
+  interestRate: numberToPercentage(formValues.interestRate),
+  grossIRR: numberToPercentage(formValues.grossIRR),
   fundraisingMilestone: '<p>Hello world</p>',
-  equityMultiple: numberToPercentage(formvalues.equityMultiple),
-  dividendYield: numberToPercentage(formvalues.dividendYield),
+  equityMultiple: numberToPercentage(formValues.equityMultiple),
+  dividendYield: numberToPercentage(formValues.dividendYield),
   distributionFrequency: 'Monthly',
   currency: '5f732c5b8a568b50914d8373',
   corporate: '5f898a64aa141c6d0d358ce1',
