@@ -33,7 +33,7 @@ describe('DSO Table', () => {
           isPriceAscending: undefined,
           network: undefined
         },
-        isNewThemeOn: true
+        themeVariant: 'primary'
       },
       {}
     )

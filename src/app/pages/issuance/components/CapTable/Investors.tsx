@@ -4,7 +4,7 @@ import { issuanceURL } from 'config/apiURL'
 import { investQueryKeys } from 'config/queryKeys'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import React from 'react'
-import { useParams } from 'react-router-dom'
+import { generatePath, useParams } from 'react-router-dom'
 import { Commitment } from 'types/commitment'
 import { formatDateToMMDDYY } from 'helpers/dates'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
@@ -20,7 +20,12 @@ export const Investors = () => {
   const { getFilterValue } = useQueryFilter()
   const search = getFilterValue('search', undefined)
 
-  if (data === undefined || isLoading) {
+  if (
+    data === undefined ||
+    isLoading ||
+    dsoId === undefined ||
+    issuerId === undefined
+  ) {
     return null
   }
 
@@ -66,7 +71,10 @@ export const Investors = () => {
           <Grid item>
             <Button
               component={AppRouterLinkComponent}
-              to={IssuanceRoute.manageDistributions}
+              to={generatePath(IssuanceRoute.manageDistributions, {
+                issuerId,
+                dsoId
+              })}
               variant='contained'
               color='primary'
               style={{ height: 40 }}
@@ -85,7 +93,7 @@ export const Investors = () => {
           filter={{
             search
           }}
-          isNewThemeOn
+          themeVariant={'primary'}
         />
       </Grid>
     </Grid>

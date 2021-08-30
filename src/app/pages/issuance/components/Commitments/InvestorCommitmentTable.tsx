@@ -41,7 +41,7 @@ export const InvestorCommitmentTable = () => {
               search,
               fundStatus
             }}
-            isNewThemeOn
+            themeVariant={'primary'}
           />
         </Box>
       </Grid>

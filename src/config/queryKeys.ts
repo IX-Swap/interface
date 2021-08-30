@@ -206,3 +206,8 @@ export const exchangeListingsQueryKeys = {
 export const resourcesQueryKeys = {
   getSiteConfig: () => 'site-config'
 }
+
+export const virtualAccountsAuditQueryKeys = {
+  getMT940Files: 'get-mt940-files',
+  getMT942Files: 'get-mt942-files'
+}
