@@ -4,11 +4,6 @@ import { virtualAccountsAudit } from 'config/apiURL'
 import { QueryOrMutationCallbacks } from 'hooks/types'
 import { DownloadDocument } from 'hooks/useDownloadRawDocument'
 
-export interface DownloadBanner {
-  fileId: string
-  uri?: string
-}
-
 export const useDownloadRawMT942File = (
   document: DownloadDocument,
   callbacks?: QueryOrMutationCallbacks<Blob>

@@ -2,12 +2,12 @@ import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { DSOTeam } from 'app/components/DSO/components/DSOTeam'
 import { Form } from 'components/form/Form'
-import { DSOTeamAddButton } from 'app/components/DSO/components/DSOTeamAddButton'
+import { DSOChapterAddButton } from 'app/components/DSO/components/DSOChapterAddButton'
 import { DSOTeamMember } from 'app/components/DSO/components/DSOTeamMember'
 import { teamMember } from '__fixtures__/issuance'
 
-jest.mock('app/components/DSO/components/DSOTeamAddButton', () => ({
-  DSOTeamAddButton: jest.fn(() => null)
+jest.mock('app/components/DSO/components/DSOChapterAddButton', () => ({
+  DSOChapterAddButton: jest.fn(() => null)
 }))
 
 jest.mock('app/components/DSO/components/DSOTeamMember', () => ({
@@ -35,7 +35,7 @@ describe('DSOTeam', () => {
       </Form>
     )
 
-    expect(DSOTeamAddButton).toHaveBeenCalled()
+    expect(DSOChapterAddButton).toHaveBeenCalled()
   })
 
   it('calls DSOTeamMember for each element in the array', () => {
