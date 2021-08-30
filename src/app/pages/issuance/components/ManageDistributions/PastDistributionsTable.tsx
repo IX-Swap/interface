@@ -20,7 +20,7 @@ export const PastDistributionsTable = () => {
             { label: 'Distributed Amount Per Token', key: 'amountPerToken' },
             { label: 'Status', key: 'status', render: renderDistributionStatus }
           ]}
-          isNewThemeOn
+          themeVariant='primary'
           fakeItems={[
             {
               createdAt: '2021-03-12T08:37:43.832Z',
