@@ -71,22 +71,23 @@ export const getCreateDSOPayload = (values: Partial<DSOFormValues>) => {
 
 export const getUpdateDSOPayload = (values: Partial<DSOFormValues>) => {
   const { status, ...payload } = getCreateDSOPayload(values)
+  let result = payload
 
-  if (!('videos' in payload)) {
-    return {
-      ...payload,
+  if (!('videos' in result)) {
+    result = {
+      ...result,
       videos: []
     }
   }
 
-  if (!('faqs' in payload)) {
-    return {
-      ...payload,
+  if (!('faqs' in result)) {
+    result = {
+      ...result,
       faqs: []
     }
   }
 
-  return payload
+  return result
 }
 
 export const getIdFromDSOSelectValue = (value: string) => value.split(':')[0]
