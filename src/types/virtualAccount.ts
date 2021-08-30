@@ -45,7 +45,7 @@ export interface VirtualAccountAuditItem {
 
 export interface VAAuditOutboundItem {
   _id: string
-  fileName: string
-  fileType: string
+  ackFileName: string
+  vaFileName: string
   createdAt: string
 }

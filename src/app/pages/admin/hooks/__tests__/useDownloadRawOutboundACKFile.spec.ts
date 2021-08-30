@@ -2,9 +2,9 @@ import { act } from '@testing-library/react-hooks'
 import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
 import { unsuccessfulResponse, successfulResponse } from '__fixtures__/api'
 import { document } from '__fixtures__/identity'
-import { useDownloadRawOutboundFile } from 'app/pages/admin/hooks/useDownloadRawOutboundFile'
+import { useDownloadRawOutboundACKFile } from 'app/pages/admin/hooks/useDownloadRawOutboundACKFile'
 
-describe('useDownloadRawOutboundFile', () => {
+describe('useDownloadRawOutboundACKFile', () => {
   const downloadFile = { documentId: document._id }
   const callbacks = { onSuccess: jest.fn(), onError: jest.fn() }
 
@@ -21,7 +21,7 @@ describe('useDownloadRawOutboundFile', () => {
       const apiObj = { get: getFn }
       const snackbarObj = { showSnackbar }
       const { result } = renderHookWithServiceProvider(
-        () => useDownloadRawOutboundFile(downloadFile, callbacks),
+        () => useDownloadRawOutboundACKFile(downloadFile, callbacks),
         { apiService: apiObj, snackbarService: snackbarObj }
       )
 
@@ -48,7 +48,7 @@ describe('useDownloadRawOutboundFile', () => {
       const apiObj = { get: getFn }
       const snackbarObj = { showSnackbar }
       const { result } = renderHookWithServiceProvider(
-        () => useDownloadRawOutboundFile(downloadFile, callbacks),
+        () => useDownloadRawOutboundACKFile(downloadFile, callbacks),
         { apiService: apiObj, snackbarService: snackbarObj }
       )
 

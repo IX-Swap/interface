@@ -1,16 +1,22 @@
-import { IconButton } from '@material-ui/core'
+import { Box, IconButton } from '@material-ui/core'
 import { Launch } from '@material-ui/icons'
 import { openFileInNewTab } from 'hooks/utils'
 import React from 'react'
 import { VAAuditOutboundItem } from 'types/virtualAccount'
-import { useDownloadRawOutboundFile } from 'app/pages/admin/hooks/useDownloadRawOutboundFile'
+import { useDownloadRawOutboundACKFile } from 'app/pages/admin/hooks/useDownloadRawOutboundACKFile'
+import { useDownloadRawOutboundVAFile } from 'app/pages/admin/hooks/useDownloadRawOutboundVAFile'
 
 export interface ActionsProps {
   item: VAAuditOutboundItem
+  forVAFile?: boolean
 }
 
-export const Actions = ({ item }: ActionsProps) => {
-  const [downloadFile, { isLoading }] = useDownloadRawOutboundFile(
+export const Actions = ({ item, forVAFile = false }: ActionsProps) => {
+  const apiHook = forVAFile
+    ? useDownloadRawOutboundVAFile
+    : useDownloadRawOutboundACKFile
+
+  const [downloadFile, { isLoading }] = apiHook(
     { documentId: item._id },
     {
       onSuccess: ({ data }) => {
@@ -23,8 +29,19 @@ export const Actions = ({ item }: ActionsProps) => {
   const handleClick = async () => await downloadFile()
 
   return (
-    <IconButton onClick={handleClick} disabled={isLoading} data-testid='button'>
-      <Launch color='disabled' style={{ width: 23, height: 23 }} />
-    </IconButton>
+    <Box
+      display={'flex'}
+      alignItems={'center'}
+      justifyContent={forVAFile ? 'center' : 'flex-end'}
+    >
+      <Box>{forVAFile ? item.vaFileName : item.ackFileName}</Box>
+      <IconButton
+        onClick={handleClick}
+        disabled={isLoading}
+        data-testid='button'
+      >
+        <Launch color='disabled' style={{ width: 23, height: 23 }} />
+      </IconButton>
+    </Box>
   )
 }

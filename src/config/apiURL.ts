@@ -303,6 +303,8 @@ export const virtualAccountsAudit = {
     `https://hsbc.mozork.com/audit/virtual-account/mt940/files/raw/${fileId}`,
   getRawMT942File: (fileId: string) =>
     `https://hsbc.mozork.com/audit/virtual-account/mt942/files/raw/${fileId}`,
-  getRawOutboundFile: (fileId: string) =>
-    `https://hsbc.mozork.com/audit/virtual-account/outbound/files/raw/${fileId}`
+  getRawOutboundACKFile: (fileId: string) =>
+    `https://hsbc.mozork.com/audit/virtual-account/outbound/files/raw/${fileId}`,
+  getRawOutboundVAFile: (fileId: string) =>
+    `https://hsbc.mozork.com/audit/virtual-account/outbound/files/raw/va/${fileId}`
 }
