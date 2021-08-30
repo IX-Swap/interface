@@ -8,6 +8,7 @@ import { getPersonName } from 'helpers/strings'
 import { hasValue } from 'helpers/forms'
 import { DataroomFile, FormArray } from 'types/dataroomFile'
 import { ListingFormValues } from 'app/pages/exchange/types/listings'
+import * as yup from 'yup'
 
 export const numberToPercentage = (value: any) => {
   if (value === null || value === undefined || value === '') {
@@ -113,3 +114,9 @@ export const validateTeamField = (
 
   return formData
 }
+
+export const newDistributionValidationSchema = yup.object().shape({
+  pricePerToken: yup.number().required('This is a required field'),
+  dateOfDistribution: yup.string().required('This is a required field'),
+  otp: yup.string().required('This is a required field')
+})
