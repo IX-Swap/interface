@@ -30,7 +30,7 @@ describe('DSTable', () => {
   })
 
   it('renders TableView with correct props', () => {
-    const uri = accountsURL.assets.getAll
+    const uri = accountsURL.balance.getAll(user._id)
     const name = digitalSecuritiesQueryKeys.getByUserId(user._id)
 
     render(<DSTable />)
