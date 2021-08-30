@@ -13,10 +13,6 @@ export interface DSOVideoLinksViewProps {
 export const DSOVideoLinksView = (props: DSOVideoLinksViewProps) => {
   const { dso, isTitleVisible = false } = props
 
-  if (dso.videos === undefined) {
-    return null
-  }
-
   return (
     <Grid container direction='column' spacing={5}>
       {isTitleVisible && (

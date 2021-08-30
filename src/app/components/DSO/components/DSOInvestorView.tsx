@@ -18,6 +18,8 @@ export interface DSOInvestorViewProps {
 export const DSOInvestorView = (props: DSOInvestorViewProps) => {
   const { dso } = props
   const [selectedIdx, setSelectedIdx] = useState(0)
+  const isDSOVideosVisible = dso.videos !== undefined && dso.videos.length > 0
+  const isDSOFAQsVisible = dso.faqs !== undefined && dso.faqs.length > 0
 
   return (
     <Fragment>
@@ -32,8 +34,8 @@ export const DSOInvestorView = (props: DSOInvestorViewProps) => {
         <Tab label='Overview' />
         <Tab label='Information' />
         <Tab label='Documents' />
-        <Tab label='Videos' />
-        <Tab label='FAQs' />
+        {isDSOVideosVisible ? <Tab label='Videos' /> : null}
+        {isDSOFAQsVisible ? <Tab label='FAQs' /> : null}
       </Tabs>
 
       <TabPanel value={selectedIdx} index={0}>
@@ -60,13 +62,17 @@ export const DSOInvestorView = (props: DSOInvestorViewProps) => {
         <DSODataroomView dso={dso} showTitle={false} />
       </TabPanel>
 
-      <TabPanel value={selectedIdx} index={3}>
-        <DSOVideoLinksView dso={dso} />
-      </TabPanel>
+      {isDSOVideosVisible ? (
+        <TabPanel value={selectedIdx} index={3}>
+          <DSOVideoLinksView dso={dso} />
+        </TabPanel>
+      ) : null}
 
-      <TabPanel value={selectedIdx} index={4}>
-        <DSOFAQsView dso={dso} />
-      </TabPanel>
+      {isDSOFAQsVisible ? (
+        <TabPanel value={selectedIdx} index={4}>
+          <DSOFAQsView dso={dso} />
+        </TabPanel>
+      ) : null}
     </Fragment>
   )
 }

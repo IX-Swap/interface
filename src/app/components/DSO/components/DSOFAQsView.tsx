@@ -11,10 +11,6 @@ export interface DSOFAQsViewProps {
 export const DSOFAQsView = (props: DSOFAQsViewProps) => {
   const { dso, isTitleVisible = false } = props
 
-  if (dso.faqs === undefined) {
-    return null
-  }
-
   return (
     <Grid container direction='column' spacing={5}>
       {isTitleVisible && (
