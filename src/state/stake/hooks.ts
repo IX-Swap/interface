@@ -7,8 +7,8 @@ import { IXS_ADDRESS } from 'constants/addresses'
 import { useCurrency } from 'hooks/Tokens'
 import useCurrentBlockTimestamp from 'hooks/useCurrentBlockTimestamp'
 import JSBI from 'jsbi'
-import { StakingStatus } from 'pages/Farming/Staking'
-import { useEffect, useMemo } from 'react'
+import { StakingStatus } from 'state/stake/reducer'
+import { useEffect, useMemo, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, AppState } from 'state'
 import { useCurrencyBalance } from 'state/wallet/hooks'
@@ -18,6 +18,8 @@ import { useActiveWeb3React } from '../../hooks/web3'
 import { NEVER_RELOAD, useMultipleContractSingleData } from '../multicall/hooks'
 import { tryParseAmount } from '../swap/helpers'
 import { saveStakingStatus } from './actions'
+import { useIXSStakingContract } from 'hooks/useContract'
+import { BigNumber } from 'ethers'
 
 export const STAKING_REWARDS_INTERFACE = new Interface(STAKING_REWARDS_ABI)
 
@@ -321,10 +323,10 @@ export function useStakingStatus() {
   useEffect(() => {
     if (!account) {
       dispatch(saveStakingStatus({ status: StakingStatus.CONNECT_WALLET }))
-    } else if (hasStaking) {
-      dispatch(saveStakingStatus({ status: StakingStatus.STAKING }))
     } else if (!balance?.greaterThan('0')) {
       dispatch(saveStakingStatus({ status: StakingStatus.NO_IXS }))
+    } else if (hasStaking) {
+      dispatch(saveStakingStatus({ status: StakingStatus.STAKING }))
     } else {
       dispatch(saveStakingStatus({ status: StakingStatus.NO_STAKE }))
     }
@@ -335,4 +337,19 @@ export function useStakingStatus() {
 
 export function useStakingState(): AppState['staking'] {
   return useSelector<AppState, AppState['staking']>((state) => state.staking)
+}
+
+export function useFetchStakingAPY() {
+  const { account, chainId } = useActiveWeb3React()
+  console.log('account: ', account)
+
+  const staking = useIXSStakingContract(account as string)
+  return useCallback(async () => {
+    try {
+      const result = await staking?.ONE_WEEK_APY()
+      console.log('availableClaim: ', result)
+    } catch (error) {
+      console.error(`IxsReturningStakeBankPostIdoV1: `, error)
+    }
+  }, [staking, account])
 }

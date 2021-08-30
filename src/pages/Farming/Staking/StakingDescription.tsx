@@ -7,8 +7,8 @@ import React from 'react'
 import { Box } from 'rebass'
 import { useToggleStakeModal, useWalletModalToggle } from 'state/application/hooks'
 import { TYPE } from 'theme'
-import { StakingStatus } from './Staking'
-import { TokenDescriptionWrapper, TokenStakingDescriptionNumbers } from './styleds'
+import { StakingStatus } from 'state/stake/reducer'
+import { TokenDescriptionWrapper, TokenStakingDescriptionNumbers } from '../styleds'
 
 export const StakingDescription = ({ stakingStatus }: { stakingStatus: StakingStatus }) => {
   const theme = useTheme()

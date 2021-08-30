@@ -6,8 +6,8 @@ import { Container } from './styleds'
 import { Vesting } from './Vesting'
 
 export enum FARMING_TABS {
-  STAKING = 'Staking',
-  VESTING = 'Vesting',
+  STAKING = 'Staking IXS',
+  VESTING = 'Vesting IXS',
 }
 
 export const Farming = () => {
