@@ -77,7 +77,6 @@ describe('VTDateFilter', () => {
     expect(DateFilter).toHaveBeenNthCalledWith(
       1,
       expect.objectContaining({
-        clearable: true,
         name: 'fromDate',
         label: 'From',
         width: '100%'
@@ -87,7 +86,6 @@ describe('VTDateFilter', () => {
     expect(DateFilter).toHaveBeenNthCalledWith(
       2,
       expect.objectContaining({
-        clearable: true,
         name: 'toDate',
         label: 'To',
         width: '100%'
