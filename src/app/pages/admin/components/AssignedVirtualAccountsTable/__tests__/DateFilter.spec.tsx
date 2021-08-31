@@ -1,10 +1,10 @@
 import { DateFilter } from 'app/pages/admin/components/AssignedVirtualAccountsTable/DateFilter'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
+import { DateTimePickerComponent } from 'components/form/_DateTimePicker'
 
-jest.mock('components/SearchQueryFilter/SearchQueryFilter', () => ({
-  SearchQueryFilter: jest.fn(() => null)
+jest.mock('components/form/_DateTimePicker', () => ({
+  DateTimePickerComponent: jest.fn(() => null)
 }))
 
 describe('DateFilter', () => {
@@ -17,11 +17,17 @@ describe('DateFilter', () => {
     render(<DateFilter name='fromDate' label='From' />)
   })
 
-  it('renders without errors', () => {
+  it('renders DateTimePickerComponent with correct props', () => {
     render(<DateFilter name='fromDate' label='From' />)
-    expect(SearchQueryFilter).toHaveBeenCalledTimes(1)
-    expect(SearchQueryFilter).toHaveBeenCalledWith(
-      expect.objectContaining({ name: 'fromDate' }),
+    expect(DateTimePickerComponent).toHaveBeenCalledTimes(1)
+    expect(DateTimePickerComponent).toHaveBeenCalledWith(
+      expect.objectContaining({
+        clearable: true,
+        inputVariant: 'outlined',
+        label: 'From',
+        size: 'small',
+        style: { width: 150 }
+      }),
       {}
     )
   })
