@@ -1,18 +1,5 @@
-import { formatDateToMMDDYY, formatTime } from 'helpers/dates'
 import { TableColumn } from 'types/util'
-import React from 'react'
-import { Grid } from '@material-ui/core'
-
-const renderDateAndTimeField = (date: any) => {
-  return (
-    <Grid container direction={'column'}>
-      <Grid item>{formatDateToMMDDYY(date)}</Grid>
-      <Grid item style={{ color: '#AAAAAA' }}>
-        {formatTime(date)}
-      </Grid>
-    </Grid>
-  )
-}
+import { renderDateAndTimeField } from 'helpers/rendering'
 
 // TODO Make changes after complete backend api endpoints
 export const columns: Array<TableColumn<any>> = [
