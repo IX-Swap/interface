@@ -1,6 +1,10 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { wysiwygToHtml, renderAddressColumn } from 'helpers/rendering'
+import {
+  wysiwygToHtml,
+  renderAddressColumn,
+  renderDistributionStatus
+} from 'helpers/rendering'
 import { WalletAddress } from 'app/components/WalletAddress'
 import { withdrawalAddress } from '__fixtures__/withdrawalAddress'
 
@@ -28,5 +32,16 @@ describe('renderAddressColumn', () => {
   it('returns wallet address', () => {
     render(<>{renderAddressColumn(withdrawalAddress.address)}</>)
     expect(WalletAddress).toHaveBeenCalled()
+  })
+})
+
+describe('renderDistributionStatus', () => {
+  afterEach(async () => {
+    await cleanup()
+    jest.clearAllMocks()
+  })
+
+  it('renders without errors', () => {
+    render(<>{renderDistributionStatus('approved')}</>)
   })
 })

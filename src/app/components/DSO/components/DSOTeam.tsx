@@ -4,7 +4,7 @@ import { FieldsArray } from 'components/form/FieldsArray'
 import { useFormContext } from 'react-hook-form'
 import { DSOFormValues } from 'types/dso'
 import { DSOTeamMember } from 'app/components/DSO/components/DSOTeamMember'
-import { DSOTeamAddButton } from 'app/components/DSO/components/DSOTeamAddButton'
+import { DSOChapterAddButton } from 'app/components/DSO/components/DSOChapterAddButton'
 import { FormError } from 'components/form/FormError'
 import { TextError } from 'components/TextError'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
@@ -40,7 +40,7 @@ export const DSOTeam = () => {
                   </Grid>
                   <Grid item container justify='flex-end' alignItems='center'>
                     <FormError name={fieldName} render={TextError} />
-                    <DSOTeamAddButton append={append} />
+                    <DSOChapterAddButton append={append} />
                   </Grid>
                 </Grid>
               )}

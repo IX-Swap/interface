@@ -9,7 +9,14 @@ export const issuerDetailsSchema = yup.object().shape<any>({
   companyRegistrationNumber: taxIdentificationNumberSchema.required(
     'This field is required'
   ),
-  contactNumber: yup.string().phone(),
+  contactNumber: yup
+    .string()
+    .test('isValidPhone', 'Invalid phone number', value => {
+      if (value !== undefined && value !== null && value.length > 0) {
+        return yup.string().phone().isValidSync(value)
+      }
+      return true
+    }),
   email: emailSchema.required('This field is required'),
   industry: yup.string().required('Required'),
   fundRaisingAmount: yup.number().required('Required'),

@@ -49,6 +49,14 @@ export const formatDateAndTime = (s?: string, seconds = false): string => {
     : s
 }
 
+export const formatTime = (s?: string): string => {
+  if (s === undefined) {
+    return ''
+  }
+
+  return format(new Date(s), 'hh:mmaa')
+}
+
 export const getTimeAgo = (datetime: string) => {
   try {
     const now = Date.now()

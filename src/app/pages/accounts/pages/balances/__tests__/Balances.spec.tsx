@@ -31,7 +31,7 @@ describe('Balances', () => {
     expect(TableView).toHaveBeenCalledWith(
       {
         name: balanceQueryKeys.getByUserId(user._id),
-        uri: `/accounts/balance/${user._id}`,
+        uri: `/accounts/currency-balance/${user._id}`,
         columns,
         filter: {
           type: 'Currency'

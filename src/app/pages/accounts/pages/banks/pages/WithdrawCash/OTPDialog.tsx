@@ -19,9 +19,18 @@ import { useFormContext } from 'react-hook-form'
 interface OTPDialogProps {
   close: () => void
   open: boolean
+  title?: string
+  content?: React.ReactNode
+  actionLabel?: string
 }
 
-export const OTPDialog = ({ close, open }: OTPDialogProps) => {
+export const OTPDialog = ({
+  close,
+  open,
+  title,
+  content,
+  actionLabel
+}: OTPDialogProps) => {
   const { control, watch, formState } = useFormContext<WithdrawCashFormValues>()
   const otpValue = watch('otp')
 
@@ -34,10 +43,11 @@ export const OTPDialog = ({ close, open }: OTPDialogProps) => {
             align='center'
             style={{ textTransform: 'capitalize' }}
           >
-            Cash Withdrawal
+            {title ?? 'Cash Withdrawal'}
           </Typography>
         </DialogTitle>
         <DialogContent>
+          {content !== undefined ? <>{content}</> : null}
           <TypedField
             control={control}
             customRenderer
@@ -71,7 +81,7 @@ export const OTPDialog = ({ close, open }: OTPDialogProps) => {
                   formState.isSubmitting
                 }
               >
-                Withdraw
+                {actionLabel ?? 'Withdraw'}
               </Button>
             </Grid>
           </Grid>

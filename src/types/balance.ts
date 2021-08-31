@@ -14,6 +14,7 @@ export interface Balance {
 }
 
 export interface AssetBalance extends Balance {
+  _id?: string
   onHold: number
   available: number
   numberFormat: NumberFormat

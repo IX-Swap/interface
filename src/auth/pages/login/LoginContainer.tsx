@@ -7,6 +7,7 @@ import { Login } from 'auth/pages/login/Login'
 import { OTPFields } from 'auth/pages/login/components/OTPFields'
 import { Recaptcha } from 'auth/pages/login/components/Recaptcha'
 import { RECAPTCHA_KEY } from 'config'
+import { Locked } from 'auth/pages/login/components/Locked'
 
 export const loginFormInitialValues = {
   email: '',
@@ -19,7 +20,9 @@ export const LoginContainer = () => {
     mutation: [login, { isLoading }],
     step,
     attempts,
-    resetAttempts
+    resetAttempts,
+    locked,
+    email
   } = useLogin()
 
   const handleSubmit = async (values: LoginArgs) => {
@@ -28,6 +31,10 @@ export const LoginContainer = () => {
 
   const isOtpStep = step === 'otp'
 
+  if (locked) {
+    return <Locked email={email} />
+  }
+
   return (
     <Form
       data-testid='login-form'
@@ -35,11 +42,11 @@ export const LoginContainer = () => {
       validationSchema={loginFormValidationSchema}
       onSubmit={handleSubmit}
     >
-      {attempts >= 3 && RECAPTCHA_KEY !== undefined ? (
+      {attempts === 3 && RECAPTCHA_KEY !== undefined ? (
         <Recaptcha onVerify={resetAttempts} />
       ) : (
         <>
-          <Login hidden={isOtpStep} isLoading={isLoading} />
+          <Login hidden={isOtpStep} isLoading={isLoading} attempts={attempts} />
           {isOtpStep ? <OTPFields isLoading={isLoading} /> : null}
         </>
       )}
