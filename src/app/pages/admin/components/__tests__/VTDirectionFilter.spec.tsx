@@ -1,16 +1,24 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render, cleanup, fireEvent, waitFor } from 'test-utils'
 import { VTDirectionFilter } from 'app/pages/admin/components/VTDirectionFilter'
-import { VTDirectionSelect } from 'app/pages/admin/components/VTDirectionSelect'
+// import { VTDirectionSelect } from 'app/pages/admin/components/VTDirectionSelect'
 import { InputLabel } from '@material-ui/core'
+import { history } from 'config/history'
+import { generatePath } from 'react-router-dom'
+import { AdminRoute } from 'app/pages/admin/router/config'
+import * as useQueryFilter from 'hooks/filters/useQueryFilter'
 
 jest.mock('@material-ui/core/InputLabel', () => jest.fn(() => null))
 
-jest.mock('app/pages/admin/components/VTDirectionSelect', () => ({
-  VTDirectionSelect: jest.fn(() => null)
-}))
+// jest.mock('app/pages/admin/components/VTDirectionSelect', () => ({
+//   VTDirectionSelect: jest.fn(() => null)
+// }))
 
 describe('VTDirectionFilter', () => {
+  beforeEach(() => {
+    history.push(generatePath(AdminRoute.virtualAccountTransactions))
+  })
+
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -33,17 +41,38 @@ describe('VTDirectionFilter', () => {
     )
   })
 
-  it('renders direction select component with correct props', () => {
-    render(<VTDirectionFilter />)
+  // it('renders direction select component with correct props', () => {
+  //   render(<VTDirectionFilter />)
+  //
+  //   expect(VTDirectionSelect).toHaveBeenCalledTimes(1)
+  //   expect(VTDirectionSelect).toHaveBeenCalledWith(
+  //     expect.objectContaining({
+  //       includeAll: true,
+  //       valueBetweenAll: '',
+  //       inputProps: { id: 'sortBy', 'data-testid': 'select' }
+  //     }),
+  //     {}
+  //   )
+  // })
 
-    expect(VTDirectionSelect).toHaveBeenCalledTimes(1)
-    expect(VTDirectionSelect).toHaveBeenCalledWith(
-      expect.objectContaining({
-        includeAll: true,
-        valueBetweenAll: '',
-        inputProps: { id: 'sortBy', 'data-testid': 'select' }
-      }),
-      {}
+  it('renders SearchFilter correctly', async () => {
+    const getFilterValueFn = jest.fn(() => 'transferDirection')
+    const updateFilterValueFn = jest.fn()
+
+    jest.spyOn(useQueryFilter, 'useQueryFilter').mockImplementation(
+      () =>
+        ({
+          getFilterValue: getFilterValueFn,
+          updateFilter: updateFilterValueFn
+        } as any)
     )
+    const { getByTestId } = render(<VTDirectionFilter />)
+    const select = getByTestId('select')
+    expect(select).toBeInTheDocument()
+
+    fireEvent.change(select, { target: { value: '' } })
+    await waitFor(() => {
+      expect(updateFilterValueFn).toBeCalled()
+    })
   })
 })
