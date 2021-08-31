@@ -36,4 +36,13 @@ describe('VTDirectionSelect', () => {
     expect(MenuItem).toHaveBeenCalledWith({ value: 'All', children: 'All' }, {})
     expect(getByText(/all/i)).toBeTruthy()
   })
+
+  it('shows all in the option if includeAll props is true and labelBetweenAll is not undefined', () => {
+    const { getByText } = render(
+      <VTDirectionSelect includeAll labelBetweenAll={''} />
+    )
+
+    expect(MenuItem).toHaveBeenCalledWith({ value: 'All', children: '' }, {})
+    expect(getByText(/all/i)).toBeTruthy()
+  })
 })
