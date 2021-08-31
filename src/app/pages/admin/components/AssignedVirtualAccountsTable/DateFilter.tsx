@@ -7,16 +7,10 @@ import { QueryFilter } from 'hooks/filters/useQueryFilter'
 export interface DateFilterProps {
   name: QueryFilter
   label: string
-  clearable?: boolean
   width?: number | string
 }
 
-export const DateFilter = ({
-  name,
-  label,
-  width = 150,
-  clearable = false
-}: DateFilterProps) => {
+export const DateFilter = ({ name, label, width = 150 }: DateFilterProps) => {
   return (
     <SearchQueryFilter name={name}>
       {({ value, onChange, onClear }) => (
@@ -26,7 +20,7 @@ export const DateFilter = ({
           size='small'
           inputVariant='outlined'
           label={label}
-          clearable={clearable}
+          clearable
           style={{ width: width }}
           onChange={date => {
             if (date === null) {

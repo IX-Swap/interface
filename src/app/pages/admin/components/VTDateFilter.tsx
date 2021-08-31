@@ -15,12 +15,12 @@ export const VTDateFilter = () => {
       </Grid>
       <Box pr={1} />
       <Grid item xs={12} sm={true}>
-        <DateFilter clearable name='fromDate' label='From' width={'100%'} />
+        <DateFilter name='fromDate' label='From' width={'100%'} />
         {isMobile && <VSpacer size={'small'} />}
       </Grid>
       <Box pr={3} />
       <Grid item xs={12} sm={true}>
-        <DateFilter clearable name='toDate' label='To' width={'100%'} />
+        <DateFilter name='toDate' label='To' width={'100%'} />
       </Grid>
     </Grid>
   )
