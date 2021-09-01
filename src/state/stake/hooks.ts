@@ -391,7 +391,7 @@ export function useStakeForWeek() {
   const { account } = useActiveWeb3React()
   return useCallback(async () => {
     try {
-      const result = await staking?.stakeForMonth(account, BigNumber.from(Math.pow(10, 8)), '0x00')
+      const result = await staking?.stakeForMonth(account, BigNumber.from(Math.pow(10, 18)), '0x00')
       console.log('stakeForWeek: ', result.toString())
     } catch (error) {
       console.error(`IxsReturningStakeBankPostIdoV1: `, error)

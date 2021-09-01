@@ -5,7 +5,6 @@ import { useStakingStatus } from 'state/stake/hooks'
 import { PromoTokenCard } from './PromoTokenCard'
 import { StakingPage } from './StakingPage'
 import { StakingWrapper } from '../styleds'
-import { TokenCardWithStaking } from './TokenCardWithStaking'
 import { StakingStatus } from 'state/stake/reducer'
 
 export const Staking = () => {
@@ -19,10 +18,9 @@ export const Staking = () => {
         return <PromoTokenCard stakingStatus={stakingStatus} />
       case StakingStatus.NO_STAKE:
       case StakingStatus.STAKING:
-        // return <StakingPage stakingStatus={stakingStatus} />
-        return <TokenCardWithStaking />
+        return <StakingPage stakingStatus={stakingStatus} />
       default:
-        return 'foo'
+        return 'Something went wrong'
     }
   }
 

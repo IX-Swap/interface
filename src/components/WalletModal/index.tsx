@@ -290,7 +290,7 @@ export default function WalletModal({
         minHeight={50}
         maxHeight={50}
         mobileMaxHeight={80}
-        isRight
+        isright
       >
         <Wrapper>
           {' '}
