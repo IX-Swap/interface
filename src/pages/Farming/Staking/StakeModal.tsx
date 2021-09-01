@@ -1,5 +1,6 @@
 import { t, Trans } from '@lingui/macro'
 import { ButtonIXSWide } from 'components/Button'
+import { ReactComponent as InfoIcon } from 'assets/images/attention.svg'
 import Loader from 'components/Loader'
 import { ReactComponent as DropDown } from 'assets/images/dropdown.svg'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
@@ -22,7 +23,7 @@ import { useTransactionAdder } from 'state/transactions/hooks'
 import { CloseIcon, ModalBlurWrapper, TYPE } from 'theme'
 import { maxAmountSpend } from 'utils/maxAmountSpend'
 import Column from 'components/Column'
-import Row, { RowBetween, RowFixed } from 'components/Row'
+import Row, { RowBetween, RowFixed, RowCenter } from 'components/Row'
 import { StakingInputPercentage } from 'components/earn/StakingInputPercentage'
 import { ModalBottomWrapper, ModalContentWrapper, StakeModalTop } from 'components/earn/styled'
 import { MouseoverTooltip } from 'components/Tooltip'
@@ -31,6 +32,8 @@ import { ReactComponent as ArrowDown } from '../../../assets/images/arrow.svg'
 import { Text } from 'rebass'
 import { theme } from 'theme'
 import { useStakingState } from 'state/stake/hooks'
+import { IconWrapper } from 'components/AccountDetails/styleds'
+import { ReactComponent as Checkmark } from 'assets/images/checked-solid-bg.svg'
 
 interface StakingModalProps {
   onDismiss: () => void
@@ -167,7 +170,23 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
             </Row>
             <Row style={{ marginTop: '11px' }}>
               <DisabledInput>
-                <span style={{ fontWeight: 600 }}>{typedValue}</span> IXSgov
+                <div>
+                  <span style={{ fontWeight: 600 }}>{typedValue}</span> IXSgov
+                </div>
+                <InputHintRight>
+                  <RowFixed>
+                    <MouseoverTooltip
+                      style={{ whiteSpace: 'pre-line' }}
+                      text={t`IXSgov is a tokenized asset representing your staked IXS on a 1:1 basis. IXSwap distributes the IXSgov to your wallet.
+                              ${'' ?? ''}
+                              You should swap your IXSgov back to IXS during the unstaking process. Please note, that you will receive IXS equal to your IXSgov holdings at the time of the swap.`}
+                    >
+                      <IconWrapper size={20} style={{ transform: 'rotate(180deg)', marginLeft: '12px' }}>
+                        <InfoIcon />
+                      </IconWrapper>
+                    </MouseoverTooltip>
+                  </RowFixed>
+                </InputHintRight>
               </DisabledInput>
             </Row>
           </StakeModalTop>
@@ -176,10 +195,38 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
               <TextRow textLeft={t`Period of staking`} textRight={selectedTier?.period} />
               <TextRow textLeft={t`APY`} textRight={`${selectedTier?.APY}%`} />
               <TextRow textLeft={t`Staking amount`} textRight={`${typedValue} IXS`} />
-              <TextRow textLeft={t`Estimated maturity time`} textRight={0} />
-              <TextRow textLeft={t`Estimated lock period`} textRight={0} />
-              <TextRow textLeft={t`Estimated rewards`} textRight={0} />
+              <TextRow
+                textLeft={t`Estimated maturity time`}
+                textRight={0}
+                tooltipText={t`Your staked IXS will be locked for 2 months till Jun 05, 2021 12:40:33. Until that time you won’t be able to unstake your IXS fully or partially. Please carefully consider the risks involved.
+                              ${'' ?? ''}
+                              You will be able to redeem your staked IXS fully or partially after Jun 05, 2021 12:40:33.`}
+              />
+              <TextRow
+                textLeft={t`Estimated lock period`}
+                textRight={0}
+                tooltipText={t`This amount of rewards is based on assumption that your staked amount will be kept for the whole period of ${
+                  selectedTier?.period
+                }. In this case your APY will be ${
+                  selectedTier?.APY
+                }%. If you partially or fully unstake your IXS before the end date 5% APY will be applied to unstaked amount. 
+                  ${'' ?? ''}
+                  Please note: your rewards will be available with vesting process in 10 weeks after unstakting`}
+              />
+              <TextRow
+                textLeft={t`Estimated rewards`}
+                textRight={0}
+                tooltipText={t`Maturity time is the final date of your staking period time escalibur. `}
+              />
             </StakeInfoContainer>
+            <RowCenter marginTop={35}>
+              <TYPE.body1>
+                <IconWrapper size={16} className={`checkmark ${true ? 'checked' : ''}`}>
+                  <Checkmark />
+                </IconWrapper>
+                <Trans>I have read the terms of use</Trans>
+              </TYPE.body1>
+            </RowCenter>
             <Row style={{ marginTop: '43px' }}>
               {
                 <ButtonIXSWide data-testid="approve-staking" onClick={onAttemptToApprove}>
@@ -318,4 +365,8 @@ const DisabledInput = styled(HighlightedInput)`
   font-size: 22px;
   line-height: 40px;
   color: ${({ theme }) => theme.text2};
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  align-items: center;
 `
