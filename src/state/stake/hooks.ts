@@ -1,4 +1,5 @@
 import { Interface } from '@ethersproject/abi'
+import { BigNumber, Bytes } from 'ethers'
 import { Currency, CurrencyAmount, Token, WETH9 } from '@ixswap1/sdk-core'
 import { Pair } from '@ixswap1/v2-sdk'
 import { t } from '@lingui/macro'
@@ -17,9 +18,8 @@ import { DAI, IXS, USDC, USDT, WBTC } from '../../constants/tokens'
 import { useActiveWeb3React } from '../../hooks/web3'
 import { NEVER_RELOAD, useMultipleContractSingleData } from '../multicall/hooks'
 import { tryParseAmount } from '../swap/helpers'
-import { saveStakingStatus } from './actions'
+import { saveStakingStatus, setOneWeekAPY, setOneMonthAPY, setTwoMonthsAPY, setThreeMonthsAPY } from './actions'
 import { useIXSStakingContract } from 'hooks/useContract'
-import { BigNumber } from 'ethers'
 
 export const STAKING_REWARDS_INTERFACE = new Interface(STAKING_REWARDS_ABI)
 
@@ -330,7 +330,7 @@ export function useStakingStatus() {
     } else {
       dispatch(saveStakingStatus({ status: StakingStatus.NO_STAKE }))
     }
-  }, [dispatch, account, hasStaking, balance])
+  }, [balance])
 
   return status
 }
@@ -340,14 +340,59 @@ export function useStakingState(): AppState['staking'] {
 }
 
 export function useFetchStakingAPY() {
-  const { account, chainId } = useActiveWeb3React()
-  console.log('account: ', account)
+  const dispatch = useDispatch<AppDispatch>()
+  const staking = useIXSStakingContract()
+  return useCallback(() => {
+    try {
+      fetchOneWeekAPY()
+      fetchOneMonthAPY()
+      fetchTwoMonthsAPY()
+      fetchThreeMonthsAPY()
+    } catch (error) {
+      console.error(`IxsReturningStakeBankPostIdoV1: `, error)
+    }
 
-  const staking = useIXSStakingContract(account as string)
+    async function fetchOneWeekAPY() {
+      const oneWeekAPY = await staking?.ONE_WEEK_APY()
+      dispatch(setOneWeekAPY({ oneWeekAPY }))
+    }
+
+    async function fetchOneMonthAPY() {
+      const oneMonthAPY = await staking?.ONE_MONTH_APY()
+      dispatch(setOneMonthAPY({ oneMonthAPY }))
+    }
+
+    async function fetchTwoMonthsAPY() {
+      const twoMonthsAPY = await staking?.TWO_MONTHS_APY()
+      dispatch(setTwoMonthsAPY({ twoMonthsAPY }))
+    }
+
+    async function fetchThreeMonthsAPY() {
+      const threeMonthsAPY = await staking?.THREE_MONTHS_APY()
+      dispatch(setThreeMonthsAPY({ threeMonthsAPY }))
+    }
+  }, [dispatch, staking])
+}
+
+export function useFetchOneWeekCurrentPoolSize() {
+  const staking = useIXSStakingContract()
   return useCallback(async () => {
     try {
-      const result = await staking?.ONE_WEEK_APY()
-      console.log('availableClaim: ', result)
+      const result = await staking?.oneMonthHistoricalPoolSize()
+      console.log('oneMonthHistoricalPoolSize: ', result.toString())
+    } catch (error) {
+      console.error(`IxsReturningStakeBankPostIdoV1: `, error)
+    }
+  }, [staking])
+}
+
+export function useStakeForWeek() {
+  const staking = useIXSStakingContract()
+  const { account } = useActiveWeb3React()
+  return useCallback(async () => {
+    try {
+      const result = await staking?.stakeForMonth(account, BigNumber.from(Math.pow(10, 8)), '0x00')
+      console.log('stakeForWeek: ', result.toString())
     } catch (error) {
       console.error(`IxsReturningStakeBankPostIdoV1: `, error)
     }
