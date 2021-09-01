@@ -6,7 +6,7 @@ import { StakingStatus } from 'state/stake/reducer'
 export const StakingPage = ({ stakingStatus }: { stakingStatus: StakingStatus }) => {
   return (
     <>
-      <StakingTiers stakingStatus={stakingStatus} />
+      <StakingTiers />
       <MyStakingsTable />
     </>
   )
