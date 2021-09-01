@@ -2535,9 +2535,9 @@
     "toformat" "^2.0.0"
 
 "@ixswap1/v2-core@^1.0.10", "@ixswap1/v2-core@1.x.x":
-  "integrity" "sha512-caBYyOGpKD63Ycx1Uaji4ZUEbwl9MZpWi1mxLWEbFZkoJXFPMfkB3phS9oJmRDHazW4Gk2HymxZvAk1kEoxonQ=="
-  "resolved" "https://registry.npmjs.org/@ixswap1/v2-core/-/v2-core-1.0.10.tgz"
-  "version" "1.0.10"
+  "integrity" "sha512-a3WmD+97Si7yqI9PQ7lB3Qpbyz9Y9mKbZy0VXTnIlt52oyannNuYPyWqXjMHOVKbGYoROMDorPIPT67kZ3KCng=="
+  "resolved" "https://registry.npmjs.org/@ixswap1/v2-core/-/v2-core-1.0.11.tgz"
+  "version" "1.0.11"
   dependencies:
     "@openzeppelin/contracts" "^2.0.0"
 
@@ -2549,10 +2549,10 @@
     "@ixswap1/lib" "1.x.x"
     "@ixswap1/v2-core" "1.x.x"
 
-"@ixswap1/v2-sdk@^1.0.7":
-  "integrity" "sha512-VSTmcao9Im7BKxl/miU2vdn2eHTYnyFCLprV/TLZ9juGo+dJoS67jk456jMGggtbX3Rzd9CB9IqFOtyTgJGZzA=="
-  "resolved" "https://registry.npmjs.org/@ixswap1/v2-sdk/-/v2-sdk-1.0.14.tgz"
-  "version" "1.0.14"
+"@ixswap1/v2-sdk@1.0.7":
+  "integrity" "sha512-LuRC/CiDKF5Mf08Gj2bH8Gs4cxJUoNLzVg88vYvVk2Ui6RTOSWfP5K656WdTu5eP/YE+lC1qFVcapcNkWZ6jTA=="
+  "resolved" "https://registry.npmjs.org/@ixswap1/v2-sdk/-/v2-sdk-1.0.7.tgz"
+  "version" "1.0.7"
   dependencies:
     "@ethersproject/address" "^5.0.0"
     "@ethersproject/solidity" "^5.0.0"
