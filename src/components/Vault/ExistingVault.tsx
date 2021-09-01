@@ -25,10 +25,10 @@ export const ExistingVault = ({ currency, status, accreditationRequest }: Props)
   const tokenId = useSecTokenId({ currencyId: (currency as any)?.address })
   const passAccreditation = usePassAccreditation()
   // const isApproved = status === VaultState.APPROVED
-  console.log('avocado vault accreditationRequest', accreditationRequest)
+  // console.log('avocado vault accreditationRequest', accreditationRequest)
   const accreditationStatus = accreditationRequest.status
   const isAccredited = accreditationStatus === AccreditationStatusEnum.APPROVED
-  console.log('avocado vault isAccredited', isAccredited)
+  // console.log('avocado vault isAccredited', isAccredited)
   const isApproved = isAccredited
 
   return (
@@ -47,9 +47,7 @@ export const ExistingVault = ({ currency, status, accreditationRequest }: Props)
         )}
       </TitleStatusRow>
       {isApproved && <BalanceRow currency={currency} account={account} isAccredited={isAccredited} />}
-      {/* {isApproved && ( */}
       <HistoryBlock currency={currency} />
-      {/* )} */}
       {accreditationStatus === AccreditationStatusEnum.REJECTED && (
         <>
           <Line />
