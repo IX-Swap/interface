@@ -18,8 +18,8 @@ import { ApplicationModal } from 'state/application/actions'
 import { useToggleModal } from 'state/application/hooks'
 import { useCurrencyBalance } from 'state/wallet/hooks'
 import { TextGradient, TYPE } from 'theme'
-import Loader from '../../components/Loader'
-import { ButtonRow, StackingPositionCard } from './styleds'
+import Loader from '../../../components/Loader'
+import { ButtonRow, StackingPositionCard } from '../styleds'
 
 export const TokenCardWithStaking = () => {
   const toggleManage = useToggleModal(ApplicationModal.MANAGE_REWARD)
