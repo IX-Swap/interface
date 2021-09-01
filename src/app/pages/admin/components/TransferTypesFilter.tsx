@@ -31,7 +31,7 @@ export const TransferTypesFilter = ({
   return (
     <SearchQueryFilter<'transferType'>
       name='transferType'
-      defaultValue={defaultValue !== null ? defaultValue : undefined}
+      defaultValue={defaultValue ?? undefined}
     >
       {({ value, onChange }) => (
         <FormControlLabel
