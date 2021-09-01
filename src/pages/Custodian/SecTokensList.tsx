@@ -9,36 +9,41 @@ function currencyKey(currency: Currency): string {
   return currency.isToken ? currency.address : 'ETHER'
 }
 
-function CurrencyRow({ currency, style }: { currency: Currency; style: CSSProperties }) {
+function CurrencyRow({ currency, style, isAll }: { currency: Currency; style: CSSProperties; isAll: boolean }) {
   const key = currencyKey(currency)
   // only show add or remove buttons if not on selected list
-  return <SecurityCard key={key} currency={currency} style={style} />
+  return <SecurityCard key={key} currency={currency} style={style} isAll={isAll} />
 }
 
 export default function SecTokensList({
   height,
   currencies,
   listRef,
+  isAll = false,
 }: {
   height: number
   currencies: Currency[]
   selectedCurrency?: Currency | null
   otherCurrency?: Currency | null
   listRef?: MutableRefObject<List | undefined>
+  isAll?: boolean
 }) {
   const itemData: Currency[] = useMemo(() => {
     return currencies
   }, [currencies])
 
-  const Row = useCallback(function TokenRow({ data, index, style }) {
-    const row: Currency = data[index]
-    const currency = row
-    if (currency) {
-      return <CurrencyRow style={style} currency={currency} />
-    } else {
-      return null
-    }
-  }, [])
+  const Row = useCallback(
+    function TokenRow({ data, index, style }) {
+      const row: Currency = data[index]
+      const currency = row
+      if (currency) {
+        return <CurrencyRow style={style} currency={currency} isAll={isAll} />
+      } else {
+        return null
+      }
+    },
+    [isAll]
+  )
 
   const itemKey = useCallback((index: number, data: typeof itemData) => {
     const currency = data[index]

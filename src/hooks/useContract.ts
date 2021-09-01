@@ -8,6 +8,7 @@ import { abi as IIxsV2LiquidityRouter } from '@ixswap1/v2-periphery/build/IIxsV2
 import { abi as IIxsWSecABI } from '@ixswap1/v2-core/build/IIxsWSec.json'
 import { abi as IIxsVestedDistribution } from '@ixswap1/v2-core/build/IXSVestedDistribution.json'
 import { abi as IxsReturningStakeBankPostIdoV1 } from '@ixswap1/v2-core/build/IxsReturningStakeBankPostIdoV1.json'
+import { abi as IxsToken } from '@ixswap1/v2-core/build/IxsToken.json'
 import ARGENT_WALLET_DETECTOR_ABI from 'abis/argent-wallet-detector.json'
 import ENS_PUBLIC_RESOLVER_ABI from 'abis/ens-public-resolver.json'
 import ENS_ABI from 'abis/ens-registrar.json'
@@ -29,6 +30,7 @@ import {
   SOCKS_CONTROLLER_ADDRESSES,
   IXS_VESTING_ADDRESS,
   IXS_STAKING_V1_ADDRESS,
+  IXS_ADDRESS,
 } from 'constants/addresses'
 import { useMemo } from 'react'
 import { getContract } from 'utils'
@@ -68,6 +70,10 @@ export function useVestingContract() {
 
 export function useIXSStakingContract() {
   return useContract(IXS_STAKING_V1_ADDRESS, IxsReturningStakeBankPostIdoV1, true)
+}
+
+export function useIXSTokenContract() {
+  return useContract(IXS_ADDRESS, IxsToken, true)
 }
 
 export function useWETHContract(withSignerIfPossible?: boolean) {

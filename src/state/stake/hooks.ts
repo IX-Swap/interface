@@ -19,7 +19,8 @@ import { useActiveWeb3React } from '../../hooks/web3'
 import { NEVER_RELOAD, useMultipleContractSingleData } from '../multicall/hooks'
 import { tryParseAmount } from '../swap/helpers'
 import { saveStakingStatus, setOneWeekAPY, setOneMonthAPY, setTwoMonthsAPY, setThreeMonthsAPY } from './actions'
-import { useIXSStakingContract } from 'hooks/useContract'
+import { useIXSStakingContract, useIXSTokenContract } from 'hooks/useContract'
+import { IXS_STAKING_V1_ADDRESS_PLAIN } from 'constants/addresses'
 
 export const STAKING_REWARDS_INTERFACE = new Interface(STAKING_REWARDS_ABI)
 
@@ -388,13 +389,20 @@ export function useFetchOneWeekCurrentPoolSize() {
 
 export function useStakeForWeek() {
   const staking = useIXSStakingContract()
+  const tokenContract = useIXSTokenContract()
   const { account } = useActiveWeb3React()
+
   return useCallback(async () => {
     try {
-      const result = await staking?.stakeForMonth(account, BigNumber.from(Math.pow(10, 18)), '0x00')
-      console.log('stakeForWeek: ', result.toString())
+      const stakeAmount = BigNumber.from('10').pow(18)
+      const noData = '0x00'
+
+      const allowanceTx = await tokenContract?.increaseAllowance(IXS_STAKING_V1_ADDRESS_PLAIN, stakeAmount)
+      console.log('stakeForWeek allowanceTx', allowanceTx)
+      const stakeTx = await staking?.estimateGas.stakeForWeek(account, stakeAmount, noData)
+      console.log('stakeForWeek stakeTx', stakeTx)
     } catch (error) {
       console.error(`IxsReturningStakeBankPostIdoV1: `, error)
     }
-  }, [staking, account])
+  }, [staking, account, tokenContract])
 }

@@ -108,3 +108,13 @@ export const getActionStatusText = (action: ActionTypes, status: ActionHistorySt
   }
   return TransactionHistoryStatusText[status]
 }
+
+export enum AccreditationStatusEnum {
+  PENDING = 'new',
+  APPROVED = 'approved',
+  REJECTED = 'declined',
+}
+export interface IAccreditationRequest {
+  message?: string
+  status: AccreditationStatusEnum
+}

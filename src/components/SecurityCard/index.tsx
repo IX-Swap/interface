@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import { Currency } from '@ixswap1/sdk-core'
 import useTheme from 'hooks/useTheme'
 import { useActiveWeb3React } from 'hooks/web3'
@@ -14,8 +14,7 @@ import Card, { LightCard } from '../Card'
 import Row, { RowBetween } from '../Row'
 import { CurrencyHeader } from './CurrencyHeader'
 import { Status } from './Status'
-import { useUserSecTokens } from 'state/user/hooks'
-import { getVaultState, VaultState } from 'components/Vault/enum'
+import { AccreditationStatusEnum } from 'components/Vault/enum'
 
 export const FixedHeightRow = styled(RowBetween)`
   height: 24px;
@@ -39,19 +38,21 @@ const StyledPositionCard = styled(LightCard)`
   `};
 `
 
-export default function SecurityCard({ currency, style }: { currency: Currency; style?: CSSProperties }) {
+export default function SecurityCard({
+  currency,
+  style,
+  isAll,
+}: {
+  currency: Currency
+  style?: CSSProperties
+  isAll: boolean
+}) {
   const theme = useTheme()
   const { account } = useActiveWeb3React()
   const balance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
 
-  const { secTokens } = useUserSecTokens()
-  const vaultStatus = useMemo(() => {
-    const currencyId = (currency as any).tokenInfo?.id
-    const status = (secTokens[currencyId] as any)?.tokenInfo?.status ?? ''
-    return getVaultState(status)
-  }, [secTokens, currency])
-  const isAccredited = vaultStatus === VaultState.APPROVED
-
+  const accreditationStatus = (currency as any)?.tokenInfo?.accreditationRequest?.status
+  const isAccredited = accreditationStatus === AccreditationStatusEnum.APPROVED
   return (
     <Row style={style}>
       <Row style={{ paddingBottom: '10px', paddingRight: '10px' }}>
@@ -65,10 +66,10 @@ export default function SecurityCard({ currency, style }: { currency: Currency; 
                 </TYPE.body4>
               </SemiTransparent>
             </Box>
-            {account && (
+            {account && isAll && (
               <Box style={{ width: 'fit-content' }}>
                 {isAccredited && <TYPE.body4>{formatCurrencyAmount(balance, currency.decimals ?? 18)}</TYPE.body4>}
-                {!isAccredited && <Status status={vaultStatus} />}
+                {!isAccredited && <Status status={accreditationStatus} />}
               </Box>
             )}
           </RowBetween>

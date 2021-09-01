@@ -28,7 +28,9 @@ export const MySecurities = () => {
         <div>
           <div style={{ flex: '1 1 auto', height: '400px' }}>
             <AutoSizer disableWidth>
-              {({ height }) => <SecTokensList height={height} currencies={filteredSortedTokens} listRef={listRef} />}
+              {({ height }) => (
+                <SecTokensList height={height} currencies={filteredSortedTokens} listRef={listRef} isAll />
+              )}
             </AutoSizer>
           </div>
         </div>
