@@ -14,6 +14,7 @@ import { useLocation } from 'react-router'
 export interface ActionsProps<T> {
   item: T
   cacheQueryKey: any
+  isDSO?: boolean
 }
 
 export const getItemOwnerId = (user: string | User) => {
@@ -23,7 +24,7 @@ export const getItemOwnerId = (user: string | User) => {
 export type Actions<T> = (props: ActionsProps<T>) => ReactElement
 
 export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
-  const { item, cacheQueryKey } = props
+  const { item, cacheQueryKey, isDSO = false } = props
   const { pathname } = useLocation()
   const id: string = (item as any)._id
   const splitted = pathname.split('/')
@@ -44,6 +45,8 @@ export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
     action: 'reject',
     cacheQueryKey
   })
+
+  const approveClosure = () => {}
 
   const view = () =>
     category === 'virtual-accounts'
@@ -90,6 +93,7 @@ export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
                   {...props}
                   approve={approve}
                   reject={reject}
+                  approveClosure={isDSO ? approveClosure : undefined}
                   view={view}
                 />
               )}

@@ -27,7 +27,8 @@ export const AuthorizerRoute = {
   viewItem: makeURL(['app', 'authorizer', 'category', 'itemId']),
   issuanceDetails: makeURL(['app', 'authorizer', 'issuanceDetails']),
   listings: '/app/authorizer/listings',
-  virtualAccounts: '/app/authorizer/virtual-accounts'
+  virtualAccounts: '/app/authorizer/virtual-accounts',
+  dealClosure: '/app/authorizer/deal-closures'
 }
 
 export const authorizerLandingLinks: InternalRouteProps[] = [
@@ -72,6 +73,12 @@ export const authorizerLandingLinks: InternalRouteProps[] = [
     path: AuthorizerRoute.offerings,
     color: '#11BB93',
     icon: OfferingIcon
+  },
+  {
+    label: 'Deal Closure',
+    path: AuthorizerRoute.dealClosure,
+    color: '#11BB93',
+    icon: CommitmentIcon
   },
   {
     label: 'Commitments',

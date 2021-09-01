@@ -16,6 +16,20 @@ export const renderStatusColumn = (s: string): JSX.Element => (
   <AuthorizableStatus status={s} />
 )
 
+export const renderDSOStatusColumn = (s: string): JSX.Element => {
+  let dsoStatus = s
+  switch (s) {
+    case 'Approved':
+      dsoStatus = 'Active'
+      break
+
+    default:
+      dsoStatus = s
+      break
+  }
+  return <AuthorizableStatus status={dsoStatus} isNewTheme compact={false} />
+}
+
 export const statusColumn: TableColumn<any> = {
   key: 'status',
   label: 'Status',
