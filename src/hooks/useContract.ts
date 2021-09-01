@@ -28,6 +28,7 @@ import {
   ENS_REGISTRAR_ADDRESSES,
   SOCKS_CONTROLLER_ADDRESSES,
   IXS_VESTING_ADDRESS,
+  IXS_STAKING_V1_ADDRESS,
 } from 'constants/addresses'
 import { useMemo } from 'react'
 import { getContract } from 'utils'
@@ -65,8 +66,8 @@ export function useVestingContract() {
   return useContract(IXS_VESTING_ADDRESS, IIxsVestedDistribution, true)
 }
 
-export function useIXSStakingContract(stakingAddress?: string) {
-  return useContract(IXS_VESTING_ADDRESS, IxsReturningStakeBankPostIdoV1, false)
+export function useIXSStakingContract() {
+  return useContract(IXS_STAKING_V1_ADDRESS, IxsReturningStakeBankPostIdoV1, true)
 }
 
 export function useWETHContract(withSignerIfPossible?: boolean) {
