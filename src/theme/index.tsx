@@ -52,7 +52,7 @@ export function colors(darkMode: boolean): Colors {
     text8: darkMode ? '#9184C3' : '#9184C3',
     // backgrounds / greys
     bg0: darkMode ? '#0D0415' : '#FFF',
-    bg1: darkMode ? '#1A123A' : '#F7F8FA',
+    bg1: darkMode ? '#170626' : '#F7F8FA',
     bg2: darkMode ? '#2C2F36' : '#EDEEF2',
     bg3: darkMode ? '#40444F' : '#CED0D9',
     bg4: darkMode ? '#565A69' : '#888D9B',
@@ -298,6 +298,12 @@ export const TYPE = {
   },
   description5(props: TextProps) {
     return <TextWrapper fontWeight={400} fontSize={22} lineHeight={'33px'} color={'text2'} {...props} />
+  },
+  description6(props: TextProps) {
+    return <TextWrapper fontWeight={300} fontSize={28} lineHeight={'56px'} color={'text1'} {...props} />
+  },
+  description7(props: TextProps) {
+    return <TextWrapper fontWeight={400} fontSize={30} lineHeight={'45px'} color={'text2'} {...props} />
   },
   small(props: TextProps) {
     return <TextWrapper fontWeight={500} fontSize={11} {...props} />

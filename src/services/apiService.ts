@@ -104,8 +104,6 @@ const apiService = {
     const isAdmin = window.location.hash === '#/admin-kyc' || window.location.hash === '#/admin-login'
     const headers: KeyValueMap = {}
     const { auth, admin } = store.getState()
-    console.log('admin token: ', admin.token)
-    console.log('auth token: ', auth.token)
     if (auth.token || admin.token) {
       headers.Authorization = `Bearer ${isAdmin ? admin.token : auth.token}`
     }
