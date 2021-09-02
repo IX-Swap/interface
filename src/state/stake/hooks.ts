@@ -18,10 +18,11 @@ import { DAI, IXS, USDC, USDT, WBTC } from '../../constants/tokens'
 import { useActiveWeb3React } from '../../hooks/web3'
 import { NEVER_RELOAD, useMultipleContractSingleData } from '../multicall/hooks'
 import { tryParseAmount } from '../swap/helpers'
-import { saveStakingStatus, increaseAllowance, stake } from './actions'
+import { saveStakingStatus, increaseAllowance, stake, getStakings } from './actions'
 import { useIXSStakingContract, useIXSTokenContract, useIXSGovTokenContract } from 'hooks/useContract'
 import { IXS_STAKING_V1_ADDRESS_PLAIN, IXS_GOVERNANCE_ADDRESS_PLAIN } from 'constants/addresses'
-import stakingPeriodsData, { PeriodsEnum } from 'constants/stakingPeriods'
+
+import stakingPeriodsData, { PeriodsEnum, IStaking } from 'constants/stakingPeriods'
 
 export const STAKING_REWARDS_INTERFACE = new Interface(STAKING_REWARDS_ABI)
 
@@ -341,17 +342,46 @@ export function useStakingState(): AppState['staking'] {
   return useSelector<AppState, AppState['staking']>((state) => state.staking)
 }
 
-export function useFetchOneWeekHistoricalPoolSize() {
+export function useFetchHistoricalPoolSize() {
   const staking = useIXSStakingContract()
-  return useCallback(async () => {
-    try {
-      const result = await staking?.oneWeekHistoricalPoolSize()
-      const stakedIXS = parseInt(utils.formatUnits(result, 18))
-      console.log('oneWeekHistoricalPoolSize: ', stakedIXS)
-    } catch (error) {
-      console.error(`IxsReturningStakeBankPostIdoV1: `, error)
-    }
-  }, [staking])
+  return useCallback(
+    async (period?: PERIOD) => {
+      try {
+        // switch (period) {
+        //   case PERIOD.ONE_WEEK: {
+        //     const stakeTx = await staking?.oneWeekHistoricalPoolSize()
+        //     dispatch(stake.fulfilled({ data: stakeTx }))
+        //     break
+        //   }
+        //   case PERIOD.ONE_MONTH: {
+        //     const stakeTx = await staking?.stakeForMonth(account, stakeAmount, noData, { gasLimit: 9999999 })
+        //     dispatch(stake.fulfilled({ data: stakeTx }))
+        //     break
+        //   }
+        //   case PERIOD.TWO_MONTHS: {
+        //     const stakeTx = await staking?.stakeForTwoMonths(account, stakeAmount, noData, { gasLimit: 9999999 })
+        //     dispatch(stake.fulfilled({ data: stakeTx }))
+        //     break
+        //   }
+        //   case PERIOD.THREE_MONTHS: {
+        //     const stakeTx = await staking?.stakeForThreeMonths(account, stakeAmount, noData, { gasLimit: 9999999 })
+        //     dispatch(stake.fulfilled({ data: stakeTx }))
+        //     break
+        //   }
+        //   default: {
+        //     console.error('Wrong period. Nothing has been staked.')
+        //     break
+        //   }
+        // }
+        const result = await staking?.oneWeekHistoricalPoolSize()
+        const stakedIXS = parseInt(utils.formatUnits(result, 18))
+        console.log('oneWeekHistoricalPoolSize: ', stakedIXS)
+      } catch (error) {
+        console.error(`IxsReturningStakeBankPostIdoV1: `, error)
+      }
+    },
+    [staking]
+  )
 }
 
 export function useIncreaseAllowance() {
@@ -419,6 +449,7 @@ export function useStakeFor(period?: PERIOD) {
 }
 
 export function useGetStakings() {
+  const dispatch = useDispatch<AppDispatch>()
   const staking = useIXSStakingContract()
   const { account } = useActiveWeb3React()
 
@@ -443,7 +474,7 @@ export function useGetStakings() {
       const getByPeriod = async (period: PeriodsEnum) => {
         const stakedTransactions = await staking?.stakedTransactionsForPeriod(account, periods_index[period])
         if (stakedTransactions.length === 0) return []
-        return stakedTransactions.map((data: Array<number>) => {
+        return stakedTransactions.map((data: Array<number>, index: number) => {
           const unixStart = BigNumber.from(data[0]).toNumber()
           const stakeAmount = +utils.formatUnits(data[1], 18)
           const endDateUnix = unixStart + periods_in_seconds[period]
@@ -463,10 +494,11 @@ export function useGetStakings() {
             unixStart,
             canUnstake: getCanUnstake(lock_months, endDateUnix, lockedTill),
             originalData: data,
+            originalIndex: index,
           }
         })
       }
-
+      dispatch(getStakings.pending())
       const transactionsArrays = await Promise.all(
         Object.values(PeriodsEnum).map((period: PeriodsEnum) => getByPeriod(period))
       )
@@ -476,30 +508,32 @@ export function useGetStakings() {
       }, [])
       transactions.sort((a: { unixStart: number }, b: { unixStart: number }) => a.unixStart > b.unixStart)
       console.log('useGetStakings transactions', transactions)
+      dispatch(getStakings.fulfilled({ transactions }))
       return transactions
     } catch (error) {
       console.error(`useGetStakings error `, error)
     }
-  }, [staking, account])
+  }, [staking, account, dispatch])
 }
 
-// todo remove any types
-export function useUnstake([stakeIndex, stakeAmount]: any) {
+export function useUnstakeFromWeek() {
   const staking = useIXSStakingContract()
   const tokenContract = useIXSGovTokenContract()
-  // const { account } = useActiveWeb3React()
 
-  return useCallback(async () => {
-    try {
-      const noData = '0x00'
-      // govToken.increaseAllowance(stakeContractAddress, amount)
+  return useCallback(
+    async (data: IStaking) => {
+      try {
+        const { originalData, originalIndex } = data
+        const stakeAmount = originalData[1]
+        const noData = '0x00'
 
-      const allowanceRes = await tokenContract?.increaseAllowance(staking?.address, stakeAmount)
-      console.error(`useUnstake allowanceRes`, allowanceRes)
-      // await staking?.estimateGas.unstakeFromWeek(stakeIndex, noData)
-      // await staking?.unstakeFromWeek(stakeIndex, noData, { gasLimit: 9999999 })
-    } catch (error) {
-      console.error(`useUnstake error`, error)
-    }
-  }, [staking, stakeIndex, stakeAmount, tokenContract])
+        await tokenContract?.increaseAllowance(staking?.address, stakeAmount)
+        // await staking?.estimateGas.unstakeFromWeek(BigNumber.from(originalIndex), noData)
+        await staking?.unstakeFromWeek(BigNumber.from(originalIndex), noData, { gasLimit: 9999999 })
+      } catch (error) {
+        console.error(`useUnstake error`, error)
+      }
+    },
+    [staking, tokenContract]
+  )
 }
