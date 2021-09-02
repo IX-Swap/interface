@@ -5,4 +5,4 @@ export type WithExtraActionsProps<T> = ActionsProps<T>
 
 export const withDSOExtraActions = <T,>() => (
   actionsProps: ActionsProps<T>
-): JSX.Element => <Actions<T> {...actionsProps} isDSO={true} />
+): JSX.Element => <Actions<T> {...actionsProps} />
