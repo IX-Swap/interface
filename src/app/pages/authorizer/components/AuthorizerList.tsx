@@ -11,6 +11,7 @@ export interface AuthorizerListProps<T>
     Viewable<T> {
   idKey?: string
   title: string
+  isNewTheme?: boolean
 }
 
 export const AuthorizerList = <T,>(props: AuthorizerListProps<T>) => {

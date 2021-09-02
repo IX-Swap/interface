@@ -3,7 +3,7 @@ import { StatusFilterItem } from 'app/pages/authorizer/components/StatusFilterIt
 import {
   Assignment as AllIcon,
   AssignmentTurnedIn as ApprovedIcon,
-  Gavel as RejectedIcon,
+  ThumbDownOutlined as RejectedIcon,
   Subject as UnauthorizedIcon,
   TrackChanges as ClosedDealIcon,
   Warning as PendingApprovalIcon,

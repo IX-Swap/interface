@@ -55,7 +55,13 @@ describe('AuthorizerTable', () => {
         actions: null,
         hasStatus: true,
         hasActions: true,
-        filter: { status: '' }
+        filter: {
+          status: '',
+          from: undefined,
+          to: undefined,
+          search: undefined
+        },
+        themeVariant: 'default'
       },
       {}
     )

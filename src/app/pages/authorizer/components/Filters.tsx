@@ -1,23 +1,16 @@
 import React from 'react'
 import { SidebarTitle } from 'ui/Sidebar/SidebarTitle'
 import { SidebarSection } from 'ui/Sidebar/SidebarSection'
-import {
-  ColorStatusFilter,
-  StatusFilter
-} from 'app/pages/authorizer/components/StatusFilter'
+import { StatusFilter } from 'app/pages/authorizer/components/StatusFilter'
 import { SearchAndDateFilter } from 'app/pages/authorizer/components/SearchAndDateFilter'
 
-export interface FiltersProps {
-  isNewTheme?: boolean
-}
-
-export const Filters = ({ isNewTheme = false }: FiltersProps) => {
+export const Filters = () => {
   return (
     <>
       <SidebarTitle>FILTERS</SidebarTitle>
 
       <SidebarSection>
-        {isNewTheme ? <ColorStatusFilter /> : <StatusFilter />}
+        <StatusFilter />
       </SidebarSection>
 
       <SidebarSection padded>

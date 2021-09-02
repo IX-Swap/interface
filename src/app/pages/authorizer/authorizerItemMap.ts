@@ -19,6 +19,10 @@ export const authorizerItemMap: Record<
     uri: '/issuance/dso/list',
     listRoute: AuthorizerRoute.offerings
   },
+  [AppFeature.DealClosure]: {
+    uri: '/issuance/deal-closure/list',
+    listRoute: AuthorizerRoute.dealClosure
+  },
   [AppFeature.DigitalSecurityWithdrawals]: {
     uri: '/accounts/security/withdrawals',
     listRoute: AuthorizerRoute.dsWithdrawals
