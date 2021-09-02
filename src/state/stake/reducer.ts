@@ -1,12 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit'
-import {
-  saveStakingStatus,
-  setOneWeekAPY,
-  setOneMonthAPY,
-  setTwoMonthsAPY,
-  setThreeMonthsAPY,
-  selectTier,
-} from './actions'
+import { saveStakingStatus, increaseAllowance, selectTier, stake } from './actions'
 
 export enum StakingStatus {
   CONNECT_WALLET = 'CONNECT_WALLET',
@@ -80,6 +73,12 @@ interface StakingState {
   status: StakingStatus
   APY: APY
   selectedTier?: Tier
+  approvingIXS: boolean
+  approveIXSError: boolean
+  isIXSApproved: boolean
+  isStaking: boolean
+  isStakingFailed: boolean
+  hasStakedSuccessfully: boolean
 }
 
 const initialState: StakingState = {
@@ -91,6 +90,12 @@ const initialState: StakingState = {
     threeMonths: 88,
   },
   selectedTier: undefined,
+  approvingIXS: false,
+  approveIXSError: false,
+  isIXSApproved: false,
+  isStaking: false,
+  isStakingFailed: false,
+  hasStakedSuccessfully: false,
 }
 
 export default createReducer<StakingState>(initialState, (builder) =>
@@ -99,19 +104,38 @@ export default createReducer<StakingState>(initialState, (builder) =>
       console.log('staking status: ', status)
       state.status = status
     })
-    .addCase(setOneWeekAPY, (state, { payload: { oneWeekAPY } }) => {
-      state.APY.oneWeek = oneWeekAPY
-    })
-    .addCase(setOneMonthAPY, (state, { payload: { oneMonthAPY } }) => {
-      state.APY.oneMonth = oneMonthAPY
-    })
-    .addCase(setTwoMonthsAPY, (state, { payload: { twoMonthsAPY } }) => {
-      state.APY.twoMonths = twoMonthsAPY
-    })
-    .addCase(setThreeMonthsAPY, (state, { payload: { threeMonthsAPY } }) => {
-      state.APY.threeMonths = threeMonthsAPY
-    })
     .addCase(selectTier, (state, { payload: { tier } }) => {
       state.selectedTier = tier
+    })
+    .addCase(increaseAllowance.pending, (state) => {
+      state.approvingIXS = true
+      state.approveIXSError = false
+    })
+    .addCase(increaseAllowance.fulfilled, (state, { payload: { data } }) => {
+      state.approvingIXS = false
+      state.approveIXSError = false
+      state.isIXSApproved = true
+      console.log('IXS has been approved: ', data)
+    })
+    .addCase(increaseAllowance.rejected, (state, { payload: { errorMessage } }) => {
+      state.approvingIXS = false
+      state.approveIXSError = true
+      console.error('IXS approve error: ', errorMessage)
+    })
+    .addCase(stake.pending, (state) => {
+      state.isStaking = true
+      state.isStakingFailed = false
+    })
+    .addCase(stake.fulfilled, (state, { payload: { data } }) => {
+      state.isStaking = false
+      state.isStakingFailed = false
+      state.hasStakedSuccessfully = true
+      console.log('IXS has been staked: ', data)
+    })
+    .addCase(stake.rejected, (state, { payload: { errorMessage } }) => {
+      state.isStaking = false
+      state.isStakingFailed = true
+      state.hasStakedSuccessfully = false
+      console.error('IXS staking error: ', errorMessage)
     })
 )

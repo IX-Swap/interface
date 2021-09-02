@@ -1,5 +1,6 @@
 import { t, Trans } from '@lingui/macro'
 import { ButtonIXSWide } from 'components/Button'
+import { ReactComponent as InfoIcon } from 'assets/images/attention.svg'
 import Loader from 'components/Loader'
 import { ReactComponent as DropDown } from 'assets/images/dropdown.svg'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
@@ -12,7 +13,7 @@ import { Dots } from 'pages/Pool/styleds'
 import React, { useCallback, useState, useRef } from 'react'
 import { ApplicationModal } from 'state/application/actions'
 import { useModalOpen } from 'state/application/hooks'
-import { useStakeForWeek } from 'state/stake/hooks'
+import { useStakeFor, useIncreaseAllowance } from 'state/stake/hooks'
 import { useCurrencyBalance } from 'state/wallet/hooks'
 import { useLiquidityRouterContract } from 'hooks/useContract'
 import useTransactionDeadline from 'hooks/useTransactionDeadline'
@@ -22,7 +23,7 @@ import { useTransactionAdder } from 'state/transactions/hooks'
 import { CloseIcon, ModalBlurWrapper, TYPE } from 'theme'
 import { maxAmountSpend } from 'utils/maxAmountSpend'
 import Column from 'components/Column'
-import Row, { RowBetween, RowFixed } from 'components/Row'
+import Row, { RowBetween, RowFixed, RowCenter } from 'components/Row'
 import { StakingInputPercentage } from 'components/earn/StakingInputPercentage'
 import { ModalBottomWrapper, ModalContentWrapper, StakeModalTop } from 'components/earn/styled'
 import { MouseoverTooltip } from 'components/Tooltip'
@@ -31,6 +32,8 @@ import { ReactComponent as ArrowDown } from '../../../assets/images/arrow.svg'
 import { Text } from 'rebass'
 import { theme } from 'theme'
 import { useStakingState } from 'state/stake/hooks'
+import { IconWrapper } from 'components/AccountDetails/styleds'
+import { ReactComponent as Checkmark } from 'assets/images/checked-solid-bg.svg'
 
 interface StakingModalProps {
   onDismiss: () => void
@@ -50,9 +53,10 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
   const parsedAmountWrapped = parsedAmount?.wrapped
   const { signatureData, gatherPermitSignature } = useV2LiquidityTokenPermit(parsedAmountWrapped, router?.address)
   const availableIXS = maxAmountInput ? maxAmountInput?.toSignificant(5) : ''
-  const stakeForWeek = useStakeForWeek()
+  const increaseAllowance = useIncreaseAllowance()
   const amountOfIXStoStakeInput = useRef<HTMLInputElement>(null)
-  const { selectedTier } = useStakingState()
+  const { selectedTier, approvingIXS, isIXSApproved } = useStakingState()
+  const stake = useStakeFor(selectedTier?.period)
 
   // state for pending and submitted txn views
   const addTransaction = useTransactionAdder()
@@ -64,11 +68,12 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
     onDismiss()
   }, [onDismiss])
 
-  // approval data for stake
-  const deadline = useTransactionDeadline()
-
   async function onStake() {
-    stakeForWeek()
+    stake(typedValue)
+  }
+
+  async function onApprove() {
+    increaseAllowance(typedValue)
   }
 
   // wrapped onUserInput to clear signatures
@@ -80,24 +85,6 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
     }
   }
 
-  async function onAttemptToApprove() {
-    if (!library || !deadline) throw new Error('missing dependencies')
-    if (!parsedAmount) throw new Error('missing liquidity amount')
-
-    if (gatherPermitSignature) {
-      try {
-        await gatherPermitSignature()
-      } catch (error) {
-        // try to approve if gatherPermitSignature failed for any reason other than the user rejecting it
-        if (error?.code !== 4001) {
-          await approveCallback()
-        }
-      }
-    } else {
-      await approveCallback()
-    }
-  }
-
   const onMaxClick = () => {
     if (amountOfIXStoStakeInput?.current?.value) {
       amountOfIXStoStakeInput.current.value = availableIXS
@@ -106,7 +93,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
   }
 
   return (
-    <RedesignedWideModal isOpen={isOpen} onDismiss={wrappedOnDismiss} maxHeight={100}>
+    <RedesignedWideModal isOpen={isOpen} onDismiss={wrappedOnDismiss}>
       <ModalBlurWrapper>
         <ModalContentWrapper>
           <StakeModalTop>
@@ -157,46 +144,97 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                 </InputHintRight>
               </RowBetween>
             </HighlightedInput>
-            <ArrowWrapper>
+            <ArrowWrapper style={{ display: 'none' }}>
               <ArrowDown width="16px" height="16px" color="#372E5D" />
             </ArrowWrapper>
-            <Row style={{ marginTop: '-18px' }}>
+            <Row style={{ marginTop: '-18px', display: 'none' }}>
               <TYPE.body1>
                 <Trans>Distribute</Trans>
               </TYPE.body1>
             </Row>
-            <Row style={{ marginTop: '11px' }}>
+            <Row style={{ marginTop: '11px', display: 'none' }}>
               <DisabledInput>
-                <span style={{ fontWeight: 600 }}>{typedValue}</span> IXSgov
+                <div>
+                  <span style={{ fontWeight: 600 }}>{typedValue}</span> IXSgov
+                </div>
+                <InputHintRight>
+                  <RowFixed>
+                    <MouseoverTooltip
+                      style={{ whiteSpace: 'pre-line' }}
+                      text={t`IXSgov is a tokenized asset representing your staked IXS on a 1:1 basis. IXSwap distributes the IXSgov to your wallet.
+                              ${'' ?? ''}
+                              You should swap your IXSgov back to IXS during the unstaking process. Please note, that you will receive IXS equal to your IXSgov holdings at the time of the swap.`}
+                    >
+                      <IconWrapper size={20} style={{ transform: 'rotate(180deg)', marginLeft: '12px' }}>
+                        <InfoIcon />
+                      </IconWrapper>
+                    </MouseoverTooltip>
+                  </RowFixed>
+                </InputHintRight>
               </DisabledInput>
             </Row>
           </StakeModalTop>
           <ModalBottomWrapper>
             <StakeInfoContainer>
               <TextRow textLeft={t`Period of staking`} textRight={selectedTier?.period} />
+              <TextRow
+                textLeft={t`Distribute`}
+                textRight={`${typedValue} IXSgov`}
+                tooltipText={t`IXSgov is a tokenized asset representing your staked IXS on a 1:1 basis. IXSwap distributes the IXSgov to your wallet.
+                              ${'' ?? ''}
+                              You should swap your IXSgov back to IXS during the unstaking process. Please note, that you will receive IXS equal to your IXSgov holdings at the time of the swap.`}
+              />
               <TextRow textLeft={t`APY`} textRight={`${selectedTier?.APY}%`} />
               <TextRow textLeft={t`Staking amount`} textRight={`${typedValue} IXS`} />
-              <TextRow textLeft={t`Estimated maturity time`} textRight={0} />
-              <TextRow textLeft={t`Estimated lock period`} textRight={0} />
-              <TextRow textLeft={t`Estimated rewards`} textRight={0} />
+              <TextRow
+                textLeft={t`Estimated maturity time`}
+                textRight={0}
+                tooltipText={t`Your staked IXS will be locked for 2 months till Jun 05, 2021 12:40:33. Until that time you won’t be able to unstake your IXS fully or partially. Please carefully consider the risks involved.
+                              ${'' ?? ''}
+                              You will be able to redeem your staked IXS fully or partially after Jun 05, 2021 12:40:33.`}
+              />
+              <TextRow
+                textLeft={t`Estimated lock period`}
+                textRight={0}
+                tooltipText={t`This amount of rewards is based on assumption that your staked amount will be kept for the whole period of ${
+                  selectedTier?.period
+                }. In this case your APY will be ${
+                  selectedTier?.APY
+                }%. If you partially or fully unstake your IXS before the end date 5% APY will be applied to unstaked amount. 
+                  ${'' ?? ''}
+                  Please note: your rewards will be available with vesting process in 10 weeks after unstakting`}
+              />
+              <TextRow
+                textLeft={t`Estimated rewards`}
+                textRight={0}
+                tooltipText={t`Maturity time is the final date of your staking period time escalibur. `}
+              />
             </StakeInfoContainer>
-            <Row style={{ marginTop: '43px' }}>
-              {
-                <ButtonIXSWide data-testid="approve-staking" onClick={onAttemptToApprove}>
-                  {approval === ApprovalState.PENDING ? (
+            <RowCenter marginTop={25}>
+              <IconWrapper size={16} className={`checkmark ${true ? 'checked' : ''}`}>
+                <Checkmark />
+              </IconWrapper>
+              <TYPE.body1>
+                <Trans>I have read the terms of use</Trans>
+              </TYPE.body1>
+            </RowCenter>
+            <Row style={{ marginTop: '25px' }}>
+              {!isIXSApproved && (
+                <ButtonIXSWide data-testid="approve-staking" disabled={Boolean(error)} onClick={onApprove}>
+                  {approvingIXS ? (
                     <Dots>
-                      <Trans>Approving</Trans>
+                      <Trans>Approving IXS</Trans>
                     </Dots>
                   ) : (
-                    <>{error || <Trans>Approve</Trans>}</>
+                    <>{error || <Trans>Approve IXS</Trans>}</>
                   )}
                 </ButtonIXSWide>
-              }
-            </Row>
-            <Row style={{ marginTop: '10px' }}>
-              <ButtonIXSWide data-testid="stake-button" onClick={onStake}>
-                <Trans>Stake</Trans>
-              </ButtonIXSWide>
+              )}
+              {isIXSApproved && (
+                <ButtonIXSWide data-testid="stake-button" disabled={Boolean(error)} onClick={onStake}>
+                  <>{error || <Trans>Stake</Trans>}</>
+                </ButtonIXSWide>
+              )}
             </Row>
           </ModalBottomWrapper>
         </ModalContentWrapper>
@@ -318,4 +356,8 @@ const DisabledInput = styled(HighlightedInput)`
   font-size: 22px;
   line-height: 40px;
   color: ${({ theme }) => theme.text2};
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  align-items: center;
 `
