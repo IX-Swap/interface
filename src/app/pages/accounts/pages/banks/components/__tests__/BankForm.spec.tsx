@@ -6,7 +6,6 @@ import {
 } from 'app/pages/accounts/pages/banks/components/BankForm'
 import { Submit } from 'components/form/Submit'
 import { BankFields } from 'app/pages/accounts/pages/banks/components/BankFields'
-import { BankDocuments } from 'app/pages/accounts/pages/banks/components/BankDocuments'
 import { AddressFields } from 'app/pages/identity/components/AddressFields/AddressFields'
 
 jest.mock('components/form/Submit', () => ({
@@ -19,10 +18,6 @@ jest.mock('app/pages/identity/components/AddressFields/AddressFields', () => ({
 
 jest.mock('app/pages/accounts/pages/banks/components/BankFields', () => ({
   BankFields: jest.fn(() => <div />)
-}))
-
-jest.mock('app/pages/accounts/pages/banks/components/BankDocuments', () => ({
-  BankDocuments: jest.fn(() => <div />)
 }))
 
 describe('BankForm', () => {
@@ -39,12 +34,11 @@ describe('BankForm', () => {
     render(<BankForm {...props} />)
   })
 
-  it('renders BankFields, AddressFields, BankDocuments and Submit', () => {
+  it('renders BankFields, AddressFields and Submit', () => {
     render(<BankForm {...props} />)
 
     expect(Submit).toHaveBeenCalled()
     expect(AddressFields).toHaveBeenCalled()
-    expect(BankDocuments).toHaveBeenCalled()
     expect(BankFields).toHaveBeenCalled()
   })
 })
