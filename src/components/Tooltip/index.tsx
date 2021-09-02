@@ -30,7 +30,9 @@ export default function Tooltip({ text, ...rest }: TooltipProps) {
 }
 
 export function TooltipLight({ text, ...rest }: TooltipProps) {
-  return <Popover offset={[-180, 10]} content={<TooltipContainerFit>{text}</TooltipContainerFit>} {...rest} />
+  return (
+    <Popover offset={[-180, 10]} content={<TooltipContainerFit>{text}</TooltipContainerFit>} hideShadow {...rest} />
+  )
 }
 
 export function TooltipContent({ content, ...rest }: TooltipContentProps) {

@@ -6,7 +6,8 @@ export const IXS_ADDRESS = constructSameAddressMap('0xB64dDc38BD73Bc283ad10100Cd
 export const IXS_GOVERNANCE_ADDRESS = constructSameAddressMap('0xA94A5E15989f36e0C3b3A78B6Ff6E20Ed2373d1b')
 export const IXS_VESTING_ADDRESS = constructSameAddressMap('0x91112a4B1A0c7f5eE34Cc4d812fd51f9011fD7F5')
 // IXS Token staking V1 (post TGE) address
-export const IXS_STAKING_V1_ADDRESS = constructSameAddressMap('0xEB5C601cfB10EC49888be9aE726Cf7ce2CEBF16d')
+export const IXS_STAKING_V1_ADDRESS_PLAIN = '0xEB5C601cfB10EC49888be9aE726Cf7ce2CEBF16d'
+export const IXS_STAKING_V1_ADDRESS = constructSameAddressMap(IXS_STAKING_V1_ADDRESS_PLAIN)
 export const SWAP_ROUTER_ADDRESS = constructSameAddressMap('0x7B5DFB320E666cB809b5811BB61B0Ad25cbf63Bb')
 export const LIQUIDITY_ROUTER_ADDRESS = constructSameAddressMap('0x86A090F0AFb19e9E70008B466b2052ae42904E96')
 export const MERKLE_DISTRIBUTOR_ADDRESS: { [chainId: number]: string } = {
