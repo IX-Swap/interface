@@ -13,7 +13,7 @@ import { Dots } from 'pages/Pool/styleds'
 import React, { useCallback, useState, useRef } from 'react'
 import { ApplicationModal } from 'state/application/actions'
 import { useModalOpen } from 'state/application/hooks'
-import { useStakeForWeek, useIncreaseAllowance } from 'state/stake/hooks'
+import { useStakeFor, useIncreaseAllowance } from 'state/stake/hooks'
 import { useCurrencyBalance } from 'state/wallet/hooks'
 import { useLiquidityRouterContract } from 'hooks/useContract'
 import useTransactionDeadline from 'hooks/useTransactionDeadline'
@@ -54,9 +54,9 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
   const { signatureData, gatherPermitSignature } = useV2LiquidityTokenPermit(parsedAmountWrapped, router?.address)
   const availableIXS = maxAmountInput ? maxAmountInput?.toSignificant(5) : ''
   const increaseAllowance = useIncreaseAllowance()
-  const stakeForWeek = useStakeForWeek()
   const amountOfIXStoStakeInput = useRef<HTMLInputElement>(null)
   const { selectedTier, approvingIXS, isIXSApproved } = useStakingState()
+  const stake = useStakeFor(selectedTier?.period)
 
   // state for pending and submitted txn views
   const addTransaction = useTransactionAdder()
@@ -68,15 +68,12 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
     onDismiss()
   }, [onDismiss])
 
-  // approval data for stake
-  const deadline = useTransactionDeadline()
-
   async function onStake() {
-    stakeForWeek()
+    stake(typedValue)
   }
 
   async function onApprove() {
-    increaseAllowance()
+    increaseAllowance(typedValue)
   }
 
   // wrapped onUserInput to clear signatures
@@ -85,24 +82,6 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
       setTypedValue(amountOfIXStoStakeInput.current.value)
     } else {
       setTypedValue('0')
-    }
-  }
-
-  async function onAttemptToApprove() {
-    if (!library || !deadline) throw new Error('missing dependencies')
-    if (!parsedAmount) throw new Error('missing liquidity amount')
-
-    if (gatherPermitSignature) {
-      try {
-        await gatherPermitSignature()
-      } catch (error) {
-        // try to approve if gatherPermitSignature failed for any reason other than the user rejecting it
-        if (error?.code !== 4001) {
-          await approveCallback()
-        }
-      }
-    } else {
-      await approveCallback()
     }
   }
 
