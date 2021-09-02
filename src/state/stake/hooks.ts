@@ -18,15 +18,7 @@ import { DAI, IXS, USDC, USDT, WBTC } from '../../constants/tokens'
 import { useActiveWeb3React } from '../../hooks/web3'
 import { NEVER_RELOAD, useMultipleContractSingleData } from '../multicall/hooks'
 import { tryParseAmount } from '../swap/helpers'
-import {
-  saveStakingStatus,
-  setOneWeekAPY,
-  setOneMonthAPY,
-  setTwoMonthsAPY,
-  setThreeMonthsAPY,
-  increaseAllowance,
-  stake,
-} from './actions'
+import { saveStakingStatus, increaseAllowance, stake } from './actions'
 import { useIXSStakingContract, useIXSTokenContract, useIXSGovTokenContract } from 'hooks/useContract'
 import { IXS_STAKING_V1_ADDRESS_PLAIN, IXS_GOVERNANCE_ADDRESS_PLAIN } from 'constants/addresses'
 import stakingPeriodsData, { PeriodsEnum } from 'constants/stakingPeriods'
