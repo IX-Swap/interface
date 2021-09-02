@@ -37,6 +37,7 @@ export const DSODataroomView = (props: DSODataroomViewProps) => {
               downloader={
                 <DownloadDSODocument
                   dsoId={dso._id}
+                  type={'subscriptionDocument'}
                   documentId={dso.subscriptionDocument?._id}
                 />
               }
