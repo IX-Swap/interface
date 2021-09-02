@@ -528,8 +528,31 @@ export function useUnstakeFromWeek() {
         const noData = '0x00'
 
         await tokenContract?.increaseAllowance(staking?.address, stakeAmount)
-        // await staking?.estimateGas.unstakeFromWeek(BigNumber.from(originalIndex), noData)
         await staking?.unstakeFromWeek(BigNumber.from(originalIndex), noData, { gasLimit: 9999999 })
+      } catch (error) {
+        console.error(`useUnstake error`, error)
+      }
+    },
+    [staking, tokenContract]
+  )
+}
+
+export function useUnstakeFromTwoMonths() {
+  const staking = useIXSStakingContract()
+  const tokenContract = useIXSGovTokenContract()
+
+  return useCallback(
+    async (data: IStaking, amount: number) => {
+      try {
+        const { originalData, originalIndex } = data
+        const stakeAmount = originalData[1]
+        const noData = '0x00'
+        const partialStakeAmount = BigNumber.from(amount * 10).pow(18)
+
+        await tokenContract?.increaseAllowance(staking?.address, stakeAmount)
+        await staking?.unstakeFromTwoMonths(partialStakeAmount, BigNumber.from(originalIndex), noData, {
+          gasLimit: 9999999,
+        })
       } catch (error) {
         console.error(`useUnstake error`, error)
       }

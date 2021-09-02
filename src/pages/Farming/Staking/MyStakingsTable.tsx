@@ -8,7 +8,7 @@ import { useAdminState, useGetKycList, useGetMe } from 'state/admin/hooks'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import { shortenAddress } from 'utils'
 import { Box } from 'rebass'
-import { useGetStakings, useStakingState, useUnstakeFromWeek } from 'state/stake/hooks'
+import { useGetStakings, useStakingState, useUnstakeFromTwoMonths } from 'state/stake/hooks'
 
 import { TYPE } from 'theme'
 
@@ -743,19 +743,26 @@ const Body = () => {
 
 export const MyStakingsTable = () => {
   const getStakings = useGetStakings()
-  const unstake = useUnstakeFromWeek()
+  const unstake = useUnstakeFromTwoMonths()
   const { stakings } = useStakingState()
 
   useEffect(() => {
     getStakings()
   }, [getStakings])
 
+  console.log('stakings', stakings)
   const unstakeFirstStake = () => {
     if (stakings.length === 0) {
       console.log('no stakings, cannot unstake')
+      return
     }
-    console.log('unstaking first stake', stakings[0])
-    unstake(stakings[0])
+    const stake = stakings.find((item) => item.period === 'two_months')
+    if (!stake) {
+      console.log('no stakings with period two_months')
+      return
+    }
+    console.log('unstaking stake -', stake)
+    unstake(stake, stake.stakeAmount / 10)
   }
 
   return (
