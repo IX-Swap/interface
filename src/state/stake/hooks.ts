@@ -476,7 +476,6 @@ export function useGetStakings() {
       }, [])
       transactions.sort((a: { unixStart: number }, b: { unixStart: number }) => a.unixStart > b.unixStart)
       console.log('useGetStakings transactions', transactions)
-      console.log('useGetStakings staking', staking)
       return transactions
     } catch (error) {
       console.error(`useGetStakings error `, error)
@@ -495,11 +494,12 @@ export function useUnstake([stakeIndex, stakeAmount]: any) {
       const noData = '0x00'
       // govToken.increaseAllowance(stakeContractAddress, amount)
 
-      await tokenContract?.increaseAllowance(staking?.address, stakeAmount)
+      const allowanceRes = await tokenContract?.increaseAllowance(staking?.address, stakeAmount)
+      console.error(`useUnstake allowanceRes`, allowanceRes)
       // await staking?.estimateGas.unstakeFromWeek(stakeIndex, noData)
       // await staking?.unstakeFromWeek(stakeIndex, noData, { gasLimit: 9999999 })
     } catch (error) {
-      console.error(`useStakeForWeek error: `, error)
+      console.error(`useUnstake error`, error)
     }
   }, [staking, stakeIndex, stakeAmount, tokenContract])
 }
