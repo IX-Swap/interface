@@ -8,7 +8,7 @@ import { IXS_ADDRESS } from 'constants/addresses'
 import { useCurrency } from 'hooks/Tokens'
 import useCurrentBlockTimestamp from 'hooks/useCurrentBlockTimestamp'
 import JSBI from 'jsbi'
-import { StakingStatus } from 'state/stake/reducer'
+import { StakingStatus, PERIOD } from 'state/stake/reducer'
 import { useEffect, useMemo, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, AppState } from 'state'
@@ -18,7 +18,7 @@ import { DAI, IXS, USDC, USDT, WBTC } from '../../constants/tokens'
 import { useActiveWeb3React } from '../../hooks/web3'
 import { NEVER_RELOAD, useMultipleContractSingleData } from '../multicall/hooks'
 import { tryParseAmount } from '../swap/helpers'
-import { saveStakingStatus, setOneWeekAPY, setOneMonthAPY, setTwoMonthsAPY, setThreeMonthsAPY } from './actions'
+import { saveStakingStatus, increaseAllowance, stake } from './actions'
 import { useIXSStakingContract, useIXSTokenContract } from 'hooks/useContract'
 import { IXS_STAKING_V1_ADDRESS_PLAIN } from 'constants/addresses'
 import stakingPeriodsData, { PeriodsEnum } from 'constants/stakingPeriods'
@@ -332,7 +332,7 @@ export function useStakingStatus() {
     } else {
       dispatch(saveStakingStatus({ status: StakingStatus.NO_STAKE }))
     }
-  }, [balance])
+  }, [balance, account, dispatch, hasStaking])
 
   return status
 }
@@ -341,70 +341,81 @@ export function useStakingState(): AppState['staking'] {
   return useSelector<AppState, AppState['staking']>((state) => state.staking)
 }
 
-export function useFetchStakingAPY() {
-  const dispatch = useDispatch<AppDispatch>()
-  const staking = useIXSStakingContract()
-  return useCallback(() => {
-    try {
-      fetchOneWeekAPY()
-      fetchOneMonthAPY()
-      fetchTwoMonthsAPY()
-      fetchThreeMonthsAPY()
-    } catch (error) {
-      console.error(`IxsReturningStakeBankPostIdoV1: `, error)
-    }
-
-    async function fetchOneWeekAPY() {
-      const oneWeekAPY = await staking?.ONE_WEEK_APY()
-      dispatch(setOneWeekAPY({ oneWeekAPY }))
-    }
-
-    async function fetchOneMonthAPY() {
-      const oneMonthAPY = await staking?.ONE_MONTH_APY()
-      dispatch(setOneMonthAPY({ oneMonthAPY }))
-    }
-
-    async function fetchTwoMonthsAPY() {
-      const twoMonthsAPY = await staking?.TWO_MONTHS_APY()
-      dispatch(setTwoMonthsAPY({ twoMonthsAPY }))
-    }
-
-    async function fetchThreeMonthsAPY() {
-      const threeMonthsAPY = await staking?.THREE_MONTHS_APY()
-      dispatch(setThreeMonthsAPY({ threeMonthsAPY }))
-    }
-  }, [dispatch, staking])
-}
-
-export function useFetchOneWeekCurrentPoolSize() {
+export function useFetchOneWeekHistoricalPoolSize() {
   const staking = useIXSStakingContract()
   return useCallback(async () => {
     try {
-      const result = await staking?.oneMonthHistoricalPoolSize()
-      console.log('oneMonthHistoricalPoolSize: ', result.toString())
+      const result = await staking?.oneWeekHistoricalPoolSize()
+      const stakedIXS = parseInt(utils.formatUnits(result, 18))
+      console.log('oneWeekHistoricalPoolSize: ', stakedIXS)
     } catch (error) {
       console.error(`IxsReturningStakeBankPostIdoV1: `, error)
     }
   }, [staking])
 }
 
-export function useStakeForWeek() {
-  const staking = useIXSStakingContract()
+export function useIncreaseAllowance() {
+  const dispatch = useDispatch<AppDispatch>()
   const tokenContract = useIXSTokenContract()
+
+  return useCallback(
+    async (amount: string) => {
+      try {
+        const stakeAmount = utils.parseUnits(amount, 'ether')
+        dispatch(increaseAllowance.pending())
+        const allowanceTx = await tokenContract?.increaseAllowance(IXS_STAKING_V1_ADDRESS_PLAIN, stakeAmount)
+        dispatch(increaseAllowance.fulfilled({ data: allowanceTx }))
+      } catch (error) {
+        dispatch(increaseAllowance.rejected({ errorMessage: error }))
+      }
+    },
+    [tokenContract, dispatch]
+  )
+}
+
+export function useStakeFor(period?: PERIOD) {
+  const dispatch = useDispatch<AppDispatch>()
+  const staking = useIXSStakingContract()
   const { account } = useActiveWeb3React()
 
-  return useCallback(async () => {
-    try {
-      const stakeAmount = BigNumber.from('10').pow(18)
-      const noData = '0x00'
-
-      await tokenContract?.increaseAllowance(IXS_STAKING_V1_ADDRESS_PLAIN, stakeAmount)
-      // await staking?.estimateGas.stakeForWeek(account, stakeAmount, noData)
-      await staking?.stakeForWeek(account, stakeAmount, noData, { gasLimit: 9999999 })
-    } catch (error) {
-      console.error(`useStakeForWeek error: `, error)
-    }
-  }, [staking, account, tokenContract])
+  return useCallback(
+    async (amount: string) => {
+      try {
+        const stakeAmount = utils.parseUnits(amount, 'ether')
+        const noData = '0x00'
+        dispatch(stake.pending())
+        switch (period) {
+          case PERIOD.ONE_WEEK: {
+            const stakeTx = await staking?.stakeForWeek(account, stakeAmount, noData, { gasLimit: 9999999 })
+            dispatch(stake.fulfilled({ data: stakeTx }))
+            break
+          }
+          case PERIOD.ONE_MONTH: {
+            const stakeTx = await staking?.stakeForMonth(account, stakeAmount, noData, { gasLimit: 9999999 })
+            dispatch(stake.fulfilled({ data: stakeTx }))
+            break
+          }
+          case PERIOD.TWO_MONTHS: {
+            const stakeTx = await staking?.stakeForTwoMonths(account, stakeAmount, noData, { gasLimit: 9999999 })
+            dispatch(stake.fulfilled({ data: stakeTx }))
+            break
+          }
+          case PERIOD.THREE_MONTHS: {
+            const stakeTx = await staking?.stakeForThreeMonths(account, stakeAmount, noData, { gasLimit: 9999999 })
+            dispatch(stake.fulfilled({ data: stakeTx }))
+            break
+          }
+          default: {
+            console.error('Wrong period. Nothing has been staked.')
+            break
+          }
+        }
+      } catch (error) {
+        dispatch(stake.rejected({ errorMessage: error }))
+      }
+    },
+    [staking, account, dispatch, period]
+  )
 }
 
 export function useGetStakings() {
