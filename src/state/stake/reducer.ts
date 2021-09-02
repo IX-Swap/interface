@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit'
-import { saveStakingStatus, increaseAllowance, selectTier, stake } from './actions'
+import { saveStakingStatus, increaseAllowance, selectTier, stake, getStakings } from './actions'
 
 export enum StakingStatus {
   CONNECT_WALLET = 'CONNECT_WALLET',
@@ -79,6 +79,7 @@ interface StakingState {
   isStaking: boolean
   isStakingFailed: boolean
   hasStakedSuccessfully: boolean
+  stakings: any[]
 }
 
 const initialState: StakingState = {
@@ -96,6 +97,7 @@ const initialState: StakingState = {
   isStaking: false,
   isStakingFailed: false,
   hasStakedSuccessfully: false,
+  stakings: [],
 }
 
 export default createReducer<StakingState>(initialState, (builder) =>
@@ -137,5 +139,15 @@ export default createReducer<StakingState>(initialState, (builder) =>
       state.isStakingFailed = true
       state.hasStakedSuccessfully = false
       console.error('IXS staking error: ', errorMessage)
+    })
+    .addCase(getStakings.pending, (state) => {
+      console.log('Fetching staking transactions...')
+    })
+    .addCase(getStakings.fulfilled, (state, { payload: { transactions } }) => {
+      state.stakings = transactions
+      console.log('staking transactions: ', transactions)
+    })
+    .addCase(getStakings.rejected, (state, { payload: { errorMessage } }) => {
+      console.error('Error on fetch staking transactions: ', errorMessage)
     })
 )

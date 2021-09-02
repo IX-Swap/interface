@@ -23,3 +23,13 @@ export const stake: Readonly<{
   fulfilled: createAction('stake/staking/fulfilled'),
   rejected: createAction('stake/staking/rejected'),
 }
+
+export const getStakings: Readonly<{
+  pending: ActionCreatorWithoutPayload
+  fulfilled: ActionCreatorWithPayload<{ transactions: any }>
+  rejected: ActionCreatorWithPayload<{ errorMessage: string }>
+}> = {
+  pending: createAction('stake/getStakings/pending'),
+  fulfilled: createAction('stake/getStakings/fulfilled'),
+  rejected: createAction('stake/getStakings/rejected'),
+}

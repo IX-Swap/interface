@@ -89,13 +89,15 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
       >
         Stake
       </ButtonIXSWide>
-      <RowCenter>
-        <TYPE.description3 fontWeight={400} opacity="0.5">
-          <Trans>
-            Left to fill <span style={{ fontWeight: 700 }}>33389</span> coins
-          </Trans>
-        </TYPE.description3>
-      </RowCenter>
+      {!isTierUnlimited && (
+        <RowCenter>
+          <TYPE.description3 fontWeight={400} opacity="0.5">
+            <Trans>
+              Left to fill <span style={{ fontWeight: 700 }}>33389</span> coins
+            </Trans>
+          </TYPE.description3>
+        </RowCenter>
+      )}
     </StakingTierCardWrapper>
   )
 }

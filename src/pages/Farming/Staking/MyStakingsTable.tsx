@@ -8,7 +8,7 @@ import { useAdminState, useGetKycList, useGetMe } from 'state/admin/hooks'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import { shortenAddress } from 'utils'
 import { Box } from 'rebass'
-import { useGetStakings } from 'state/stake/hooks'
+import { useGetStakings, useStakingState } from 'state/stake/hooks'
 
 import { TYPE } from 'theme'
 
@@ -742,10 +742,13 @@ const Body = () => {
 }
 
 export const MyStakingsTable = () => {
-  const getStakingsHook = useGetStakings()
-  const getStakings = () => {
-    getStakingsHook()
-  }
+  const getStakings = useGetStakings()
+  const { stakings } = useStakingState()
+
+  useEffect(() => {
+    getStakings()
+  }, [getStakings])
+
   return (
     <Box style={{ width: '100%' }}>
       <Box marginBottom={22}>
