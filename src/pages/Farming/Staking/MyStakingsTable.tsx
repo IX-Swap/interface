@@ -11,7 +11,6 @@ import { Box } from 'rebass'
 import { useGetStakings, useStakingState, useUnstakeFromWeek } from 'state/stake/hooks'
 
 import { TYPE } from 'theme'
-import CommonBases from 'components/SearchModal/CommonBases'
 
 const items = [
   {
