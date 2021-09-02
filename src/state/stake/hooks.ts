@@ -18,7 +18,7 @@ import { DAI, IXS, USDC, USDT, WBTC } from '../../constants/tokens'
 import { useActiveWeb3React } from '../../hooks/web3'
 import { NEVER_RELOAD, useMultipleContractSingleData } from '../multicall/hooks'
 import { tryParseAmount } from '../swap/helpers'
-import { saveStakingStatus, setOneWeekAPY, setOneMonthAPY, setTwoMonthsAPY, setThreeMonthsAPY } from './actions'
+import { saveStakingStatus, increaseAllowance, stake } from './actions'
 import { useIXSStakingContract, useIXSTokenContract } from 'hooks/useContract'
 import { IXS_STAKING_V1_ADDRESS_PLAIN } from 'constants/addresses'
 
@@ -340,69 +340,48 @@ export function useStakingState(): AppState['staking'] {
   return useSelector<AppState, AppState['staking']>((state) => state.staking)
 }
 
-export function useFetchStakingAPY() {
-  const dispatch = useDispatch<AppDispatch>()
-  const staking = useIXSStakingContract()
-  return useCallback(() => {
-    try {
-      fetchOneWeekAPY()
-      fetchOneMonthAPY()
-      fetchTwoMonthsAPY()
-      fetchThreeMonthsAPY()
-    } catch (error) {
-      console.error(`IxsReturningStakeBankPostIdoV1: `, error)
-    }
-
-    async function fetchOneWeekAPY() {
-      const oneWeekAPY = await staking?.ONE_WEEK_APY()
-      dispatch(setOneWeekAPY({ oneWeekAPY }))
-    }
-
-    async function fetchOneMonthAPY() {
-      const oneMonthAPY = await staking?.ONE_MONTH_APY()
-      dispatch(setOneMonthAPY({ oneMonthAPY }))
-    }
-
-    async function fetchTwoMonthsAPY() {
-      const twoMonthsAPY = await staking?.TWO_MONTHS_APY()
-      dispatch(setTwoMonthsAPY({ twoMonthsAPY }))
-    }
-
-    async function fetchThreeMonthsAPY() {
-      const threeMonthsAPY = await staking?.THREE_MONTHS_APY()
-      dispatch(setThreeMonthsAPY({ threeMonthsAPY }))
-    }
-  }, [dispatch, staking])
-}
-
 export function useFetchOneWeekCurrentPoolSize() {
   const staking = useIXSStakingContract()
   return useCallback(async () => {
     try {
-      const result = await staking?.oneMonthHistoricalPoolSize()
-      console.log('oneMonthHistoricalPoolSize: ', result.toString())
+      const result = await staking?.oneWeekHistoricalPoolSize()
+      console.log('oneWeekHistoricalPoolSize: ', result.toString())
     } catch (error) {
       console.error(`IxsReturningStakeBankPostIdoV1: `, error)
     }
   }, [staking])
 }
 
-export function useStakeForWeek() {
-  const staking = useIXSStakingContract()
+export function useIncreaseAllowance() {
+  const dispatch = useDispatch<AppDispatch>()
   const tokenContract = useIXSTokenContract()
+
+  return useCallback(async () => {
+    try {
+      const stakeAmount = BigNumber.from(10).pow(18)
+      dispatch(increaseAllowance.pending())
+      const allowanceTx = await tokenContract?.increaseAllowance(IXS_STAKING_V1_ADDRESS_PLAIN, stakeAmount)
+      dispatch(increaseAllowance.fulfilled({ data: allowanceTx }))
+    } catch (error) {
+      dispatch(increaseAllowance.rejected({ errorMessage: error }))
+    }
+  }, [tokenContract, dispatch])
+}
+
+export function useStakeForWeek() {
+  const dispatch = useDispatch<AppDispatch>()
+  const staking = useIXSStakingContract()
   const { account } = useActiveWeb3React()
 
   return useCallback(async () => {
     try {
       const stakeAmount = BigNumber.from('10').pow(18)
       const noData = '0x00'
-
-      const allowanceTx = await tokenContract?.increaseAllowance(IXS_STAKING_V1_ADDRESS_PLAIN, stakeAmount)
-      console.log('stakeForWeek allowanceTx', allowanceTx)
-      const stakeTx = await staking?.estimateGas.stakeForWeek(account, stakeAmount, noData)
-      console.log('stakeForWeek stakeTx', stakeTx)
+      dispatch(stake.pending())
+      const stakeTx = await staking?.stakeForWeek(account, stakeAmount, noData, { gasLimit: 9999999 })
+      dispatch(stake.fulfilled({ data: stakeTx }))
     } catch (error) {
-      console.error(`IxsReturningStakeBankPostIdoV1: `, error)
+      dispatch(stake.rejected({ errorMessage: error }))
     }
-  }, [staking, account, tokenContract])
+  }, [staking, account, dispatch])
 }

@@ -13,7 +13,7 @@ import { Dots } from 'pages/Pool/styleds'
 import React, { useCallback, useState, useRef } from 'react'
 import { ApplicationModal } from 'state/application/actions'
 import { useModalOpen } from 'state/application/hooks'
-import { useStakeForWeek } from 'state/stake/hooks'
+import { useStakeForWeek, useIncreaseAllowance } from 'state/stake/hooks'
 import { useCurrencyBalance } from 'state/wallet/hooks'
 import { useLiquidityRouterContract } from 'hooks/useContract'
 import useTransactionDeadline from 'hooks/useTransactionDeadline'
@@ -53,9 +53,10 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
   const parsedAmountWrapped = parsedAmount?.wrapped
   const { signatureData, gatherPermitSignature } = useV2LiquidityTokenPermit(parsedAmountWrapped, router?.address)
   const availableIXS = maxAmountInput ? maxAmountInput?.toSignificant(5) : ''
+  const increaseAllowance = useIncreaseAllowance()
   const stakeForWeek = useStakeForWeek()
   const amountOfIXStoStakeInput = useRef<HTMLInputElement>(null)
-  const { selectedTier } = useStakingState()
+  const { selectedTier, approvingIXS, isIXSApproved } = useStakingState()
 
   // state for pending and submitted txn views
   const addTransaction = useTransactionAdder()
@@ -72,6 +73,10 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
 
   async function onStake() {
     stakeForWeek()
+  }
+
+  async function onApprove() {
+    increaseAllowance()
   }
 
   // wrapped onUserInput to clear signatures
@@ -109,7 +114,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
   }
 
   return (
-    <RedesignedWideModal isOpen={isOpen} onDismiss={wrappedOnDismiss} maxHeight={100}>
+    <RedesignedWideModal isOpen={isOpen} onDismiss={wrappedOnDismiss}>
       <ModalBlurWrapper>
         <ModalContentWrapper>
           <StakeModalTop>
@@ -160,15 +165,15 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                 </InputHintRight>
               </RowBetween>
             </HighlightedInput>
-            <ArrowWrapper>
+            <ArrowWrapper style={{ display: 'none' }}>
               <ArrowDown width="16px" height="16px" color="#372E5D" />
             </ArrowWrapper>
-            <Row style={{ marginTop: '-18px' }}>
+            <Row style={{ marginTop: '-18px', display: 'none' }}>
               <TYPE.body1>
                 <Trans>Distribute</Trans>
               </TYPE.body1>
             </Row>
-            <Row style={{ marginTop: '11px' }}>
+            <Row style={{ marginTop: '11px', display: 'none' }}>
               <DisabledInput>
                 <div>
                   <span style={{ fontWeight: 600 }}>{typedValue}</span> IXSgov
@@ -193,6 +198,13 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
           <ModalBottomWrapper>
             <StakeInfoContainer>
               <TextRow textLeft={t`Period of staking`} textRight={selectedTier?.period} />
+              <TextRow
+                textLeft={t`Distribute`}
+                textRight={`${typedValue} IXSgov`}
+                tooltipText={t`IXSgov is a tokenized asset representing your staked IXS on a 1:1 basis. IXSwap distributes the IXSgov to your wallet.
+                              ${'' ?? ''}
+                              You should swap your IXSgov back to IXS during the unstaking process. Please note, that you will receive IXS equal to your IXSgov holdings at the time of the swap.`}
+              />
               <TextRow textLeft={t`APY`} textRight={`${selectedTier?.APY}%`} />
               <TextRow textLeft={t`Staking amount`} textRight={`${typedValue} IXS`} />
               <TextRow
@@ -219,31 +231,31 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                 tooltipText={t`Maturity time is the final date of your staking period time escalibur. `}
               />
             </StakeInfoContainer>
-            <RowCenter marginTop={35}>
+            <RowCenter marginTop={25}>
+              <IconWrapper size={16} className={`checkmark ${true ? 'checked' : ''}`}>
+                <Checkmark />
+              </IconWrapper>
               <TYPE.body1>
-                <IconWrapper size={16} className={`checkmark ${true ? 'checked' : ''}`}>
-                  <Checkmark />
-                </IconWrapper>
                 <Trans>I have read the terms of use</Trans>
               </TYPE.body1>
             </RowCenter>
-            <Row style={{ marginTop: '43px' }}>
-              {
-                <ButtonIXSWide data-testid="approve-staking" onClick={onAttemptToApprove}>
-                  {approval === ApprovalState.PENDING ? (
+            <Row style={{ marginTop: '25px' }}>
+              {!isIXSApproved && (
+                <ButtonIXSWide data-testid="approve-staking" disabled={Boolean(error)} onClick={onApprove}>
+                  {approvingIXS ? (
                     <Dots>
-                      <Trans>Approving</Trans>
+                      <Trans>Approving IXS</Trans>
                     </Dots>
                   ) : (
-                    <>{error || <Trans>Approve</Trans>}</>
+                    <>{error || <Trans>Approve IXS</Trans>}</>
                   )}
                 </ButtonIXSWide>
-              }
-            </Row>
-            <Row style={{ marginTop: '10px' }}>
-              <ButtonIXSWide data-testid="stake-button" onClick={onStake}>
-                <Trans>Stake</Trans>
-              </ButtonIXSWide>
+              )}
+              {isIXSApproved && (
+                <ButtonIXSWide data-testid="stake-button" disabled={Boolean(error)} onClick={onStake}>
+                  <>{error || <Trans>Stake</Trans>}</>
+                </ButtonIXSWide>
+              )}
             </Row>
           </ModalBottomWrapper>
         </ModalContentWrapper>

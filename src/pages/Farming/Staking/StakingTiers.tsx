@@ -4,21 +4,18 @@ import { RowBetween, RowCenter } from 'components/Row'
 import { ApplicationModal } from 'state/application/actions'
 import { useToggleModal } from 'state/application/hooks'
 import { TYPE } from 'theme'
-import { PERIOD, TIER_TYPES } from 'state/stake/reducer'
+import { TIER_TYPES } from 'state/stake/reducer'
 import { StakingTierCard } from './StakingTierCard'
-import { useStakingState, useFetchStakingAPY, useFetchOneWeekCurrentPoolSize } from 'state/stake/hooks'
+import { useFetchOneWeekCurrentPoolSize } from 'state/stake/hooks'
 import { StakeModal } from './StakeModal'
 
 export const StakingTiers = () => {
   const toggleStakeModal = useToggleModal(ApplicationModal.STAKE_IXS)
-  const fethcAPY = useFetchStakingAPY()
   const fetchOneWeekCurrentPoolSize = useFetchOneWeekCurrentPoolSize()
-  const { APY } = useStakingState()
 
   useEffect(() => {
-    fethcAPY()
     fetchOneWeekCurrentPoolSize()
-  }, [fethcAPY, fetchOneWeekCurrentPoolSize])
+  }, [fetchOneWeekCurrentPoolSize])
 
   return (
     <div style={{ display: 'flex', flexWrap: 'wrap' }}>
