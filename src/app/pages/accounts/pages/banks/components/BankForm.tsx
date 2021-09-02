@@ -28,17 +28,18 @@ export interface BankFormProps {
 
 export const BankForm: React.FC<BankFormProps> = props => {
   const { submitButtonLabel, onSubmit, bank } = props
-  const handleSubmit = async (values: BankFormValues) => {
-    await onSubmit(values)
-  }
+  // const handleSubmit = async (values: BankFormValues) => {
+  //   await onSubmit(values)
+  // }
 
   useSetPageTitle(bank?.bankName)
 
   return (
     <Form
+      data-testid='form'
       defaultValues={getBankFormDefaultValues(bank)}
       validationSchema={bankFormValidationSchema}
-      onSubmit={handleSubmit}
+      onSubmit={onSubmit}
     >
       <Grid container direction='column'>
         <Card variant='outlined'>
