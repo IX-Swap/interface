@@ -747,7 +747,7 @@ export const MyStakingsTable = () => {
     getStakingsHook()
   }
   return (
-    <Box style={{ width: '100%' }}>
+    <Box style={{ width: '100%' }} onClick={getStakings}>
       <Box marginBottom={22}>
         <TYPE.title5>
           <Trans>My ongoing stakings</Trans>

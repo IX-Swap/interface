@@ -19,8 +19,8 @@ import { useActiveWeb3React } from '../../hooks/web3'
 import { NEVER_RELOAD, useMultipleContractSingleData } from '../multicall/hooks'
 import { tryParseAmount } from '../swap/helpers'
 import { saveStakingStatus, setOneWeekAPY, setOneMonthAPY, setTwoMonthsAPY, setThreeMonthsAPY } from './actions'
-import { useIXSStakingContract, useIXSTokenContract } from 'hooks/useContract'
-import { IXS_STAKING_V1_ADDRESS_PLAIN } from 'constants/addresses'
+import { useIXSStakingContract, useIXSTokenContract, useIXSGovTokenContract } from 'hooks/useContract'
+import { IXS_STAKING_V1_ADDRESS_PLAIN, IXS_GOVERNANCE_ADDRESS_PLAIN } from 'constants/addresses'
 import stakingPeriodsData, { PeriodsEnum } from 'constants/stakingPeriods'
 
 export const STAKING_REWARDS_INTERFACE = new Interface(STAKING_REWARDS_ABI)
@@ -451,6 +451,7 @@ export function useGetStakings() {
             lock_months,
             unixStart,
             canUnstake: getCanUnstake(lock_months, endDateUnix, lockedTill),
+            originalData: data,
           }
         })
       }
@@ -464,9 +465,30 @@ export function useGetStakings() {
       }, [])
       transactions.sort((a: { unixStart: number }, b: { unixStart: number }) => a.unixStart > b.unixStart)
       console.log('useGetStakings transactions', transactions)
+      console.log('useGetStakings staking', staking)
       return transactions
     } catch (error) {
       console.error(`useGetStakings error `, error)
     }
   }, [staking, account])
+}
+
+// todo remove any types
+export function useUnstake([stakeIndex, stakeAmount]: any) {
+  const staking = useIXSStakingContract()
+  const tokenContract = useIXSGovTokenContract()
+  // const { account } = useActiveWeb3React()
+
+  return useCallback(async () => {
+    try {
+      const noData = '0x00'
+      // govToken.increaseAllowance(stakeContractAddress, amount)
+
+      await tokenContract?.increaseAllowance(staking?.address, stakeAmount)
+      // await staking?.estimateGas.unstakeFromWeek(stakeIndex, noData)
+      // await staking?.unstakeFromWeek(stakeIndex, noData, { gasLimit: 9999999 })
+    } catch (error) {
+      console.error(`useStakeForWeek error: `, error)
+    }
+  }, [staking, stakeIndex, stakeAmount, tokenContract])
 }

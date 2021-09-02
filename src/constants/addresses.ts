@@ -3,7 +3,8 @@ import { constructSameAddressMap } from '../utils/constructSameAddressMap'
 
 export const MULTICALL2_ADDRESSES = constructSameAddressMap('0x5BA1e12693Dc8F9c48aAD8770482f4739bEeD696')
 export const IXS_ADDRESS = constructSameAddressMap('0xB64dDc38BD73Bc283ad10100CdA9043eFF7fbE9F')
-export const IXS_GOVERNANCE_ADDRESS = constructSameAddressMap('0xA94A5E15989f36e0C3b3A78B6Ff6E20Ed2373d1b')
+export const IXS_GOVERNANCE_ADDRESS_PLAIN = '0xA94A5E15989f36e0C3b3A78B6Ff6E20Ed2373d1b'
+export const IXS_GOVERNANCE_ADDRESS = constructSameAddressMap(IXS_GOVERNANCE_ADDRESS_PLAIN)
 export const IXS_VESTING_ADDRESS = constructSameAddressMap('0x91112a4B1A0c7f5eE34Cc4d812fd51f9011fD7F5')
 // IXS Token staking V1 (post TGE) address
 export const IXS_STAKING_V1_ADDRESS_PLAIN = '0xEB5C601cfB10EC49888be9aE726Cf7ce2CEBF16d'
