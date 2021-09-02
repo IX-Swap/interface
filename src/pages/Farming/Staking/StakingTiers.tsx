@@ -6,16 +6,11 @@ import { useToggleModal } from 'state/application/hooks'
 import { TYPE } from 'theme'
 import { TIER_TYPES } from 'state/stake/reducer'
 import { StakingTierCard } from './StakingTierCard'
-// import { useFetchOneWeekHistoricalPoolSize } from 'state/stake/hooks'
+import { useFetchHistoricalPoolSize } from 'state/stake/hooks'
 import { StakeModal } from './StakeModal'
 
 export const StakingTiers = () => {
   const toggleStakeModal = useToggleModal(ApplicationModal.STAKE_IXS)
-  // const fetchOneWeekHistoricalPoolSize = useFetchOneWeekHistoricalPoolSize()
-
-  // useEffect(() => {
-  //   fetchOneWeekHistoricalPoolSize()
-  // }, [fetchOneWeekHistoricalPoolSize])
 
   return (
     <div style={{ display: 'flex', flexWrap: 'wrap' }}>

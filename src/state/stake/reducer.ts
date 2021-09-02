@@ -80,6 +80,16 @@ interface StakingState {
   isStakingFailed: boolean
   hasStakedSuccessfully: boolean
   stakings: any[]
+  historicalPoolSize: {
+    oneWeek: number
+    oneMonth: number
+    twoMonths: number
+    threeMonths: number
+    isOneWeekLoading: boolean
+    isOneMonthLoading: boolean
+    isTwoMonthsLoading: boolean
+    isThreeMonthsLoading: boolean
+  }
 }
 
 const initialState: StakingState = {
@@ -98,6 +108,16 @@ const initialState: StakingState = {
   isStakingFailed: false,
   hasStakedSuccessfully: false,
   stakings: [],
+  historicalPoolSize: {
+    oneWeek: 0,
+    oneMonth: 0,
+    twoMonths: 0,
+    threeMonths: 0,
+    isOneWeekLoading: false,
+    isOneMonthLoading: false,
+    isTwoMonthsLoading: false,
+    isThreeMonthsLoading: false,
+  },
 }
 
 export default createReducer<StakingState>(initialState, (builder) =>

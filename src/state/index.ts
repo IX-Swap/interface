@@ -19,6 +19,7 @@ import admin from './admin/reducer'
 
 import vesting from './vesting/reducer'
 import staking from './stake/reducer'
+import stakingPoolSize from './stake/poolSizeReducer'
 
 import brokerDealer from './brokerDealer/reducer'
 
@@ -42,6 +43,7 @@ const store = configureStore({
     eventLog,
     vesting,
     staking,
+    stakingPoolSize,
     brokerDealer,
   },
   middleware: [...getDefaultMiddleware({ thunk: true }), save({ states: PERSISTED_KEYS, debounce: 1000 })],

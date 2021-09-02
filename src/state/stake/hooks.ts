@@ -18,7 +18,16 @@ import { DAI, IXS, USDC, USDT, WBTC } from '../../constants/tokens'
 import { useActiveWeb3React } from '../../hooks/web3'
 import { NEVER_RELOAD, useMultipleContractSingleData } from '../multicall/hooks'
 import { tryParseAmount } from '../swap/helpers'
-import { saveStakingStatus, increaseAllowance, stake, getStakings } from './actions'
+import {
+  saveStakingStatus,
+  increaseAllowance,
+  stake,
+  getStakings,
+  getOneWeekHistoricalPoolSize,
+  getOneMonthHistoricalPoolSize,
+  getTwoMonthsHistoricalPoolSize,
+  getThreeMonthsHistoricalPoolSize,
+} from './actions'
 import { useIXSStakingContract, useIXSTokenContract } from 'hooks/useContract'
 import { IXS_STAKING_V1_ADDRESS_PLAIN } from 'constants/addresses'
 import stakingPeriodsData, { PeriodsEnum } from 'constants/stakingPeriods'
@@ -341,37 +350,50 @@ export function useStakingState(): AppState['staking'] {
   return useSelector<AppState, AppState['staking']>((state) => state.staking)
 }
 
+export function usePoolSizeState(): AppState['stakingPoolSize'] {
+  return useSelector<AppState, AppState['stakingPoolSize']>((state) => state.stakingPoolSize)
+}
+
 export function useFetchHistoricalPoolSize() {
+  const dispatch = useDispatch<AppDispatch>()
   const staking = useIXSStakingContract()
   return useCallback(
     async (period?: PERIOD) => {
       try {
-        // switch (period) {
-        //   case PERIOD.ONE_WEEK: {
-        //     const stakeTx = await staking?.oneWeekHistoricalPoolSize()
-        //     dispatch(stake.fulfilled({ data: stakeTx }))
-        //     break
-        //   }
-        //   case PERIOD.ONE_MONTH: {
-        //     const stakeTx = await staking?.stakeForMonth(account, stakeAmount, noData, { gasLimit: 9999999 })
-        //     dispatch(stake.fulfilled({ data: stakeTx }))
-        //     break
-        //   }
-        //   case PERIOD.TWO_MONTHS: {
-        //     const stakeTx = await staking?.stakeForTwoMonths(account, stakeAmount, noData, { gasLimit: 9999999 })
-        //     dispatch(stake.fulfilled({ data: stakeTx }))
-        //     break
-        //   }
-        //   case PERIOD.THREE_MONTHS: {
-        //     const stakeTx = await staking?.stakeForThreeMonths(account, stakeAmount, noData, { gasLimit: 9999999 })
-        //     dispatch(stake.fulfilled({ data: stakeTx }))
-        //     break
-        //   }
-        //   default: {
-        //     console.error('Wrong period. Nothing has been staked.')
-        //     break
-        //   }
-        // }
+        switch (period) {
+          case PERIOD.ONE_WEEK: {
+            dispatch(getOneWeekHistoricalPoolSize.pending())
+            const result = await staking?.oneWeekHistoricalPoolSize()
+            const stakedIXS = parseInt(utils.formatUnits(result))
+            dispatch(getOneWeekHistoricalPoolSize.fulfilled({ data: stakedIXS }))
+            break
+          }
+          case PERIOD.ONE_MONTH: {
+            dispatch(getOneMonthHistoricalPoolSize.pending())
+            const result = await staking?.oneMonthHistoricalPoolSize()
+            const stakedIXS = parseInt(utils.formatUnits(result))
+            dispatch(getOneMonthHistoricalPoolSize.fulfilled({ data: stakedIXS }))
+            break
+          }
+          case PERIOD.TWO_MONTHS: {
+            dispatch(getTwoMonthsHistoricalPoolSize.pending())
+            const result = await staking?.twoMonthsHistoricalPoolSize()
+            const stakedIXS = parseInt(utils.formatUnits(result))
+            dispatch(getTwoMonthsHistoricalPoolSize.fulfilled({ data: stakedIXS }))
+            break
+          }
+          case PERIOD.THREE_MONTHS: {
+            dispatch(getThreeMonthsHistoricalPoolSize.pending())
+            const result = await staking?.threeMonthsHistoricalPoolSize()
+            const stakedIXS = parseInt(utils.formatUnits(result))
+            dispatch(getThreeMonthsHistoricalPoolSize.fulfilled({ data: stakedIXS }))
+            break
+          }
+          default: {
+            console.error('Wrong period. Nothing has been staked.')
+            break
+          }
+        }
         const result = await staking?.oneWeekHistoricalPoolSize()
         const stakedIXS = parseInt(utils.formatUnits(result, 18))
         console.log('oneWeekHistoricalPoolSize: ', stakedIXS)
@@ -379,7 +401,7 @@ export function useFetchHistoricalPoolSize() {
         console.error(`IxsReturningStakeBankPostIdoV1: `, error)
       }
     },
-    [staking]
+    [staking, dispatch]
   )
 }
 

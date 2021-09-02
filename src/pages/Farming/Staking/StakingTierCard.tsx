@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { t, Trans } from '@lingui/macro'
 import { ReactComponent as InfoIcon } from 'assets/images/attention.svg'
 import IXSToken from 'assets/images/IXS-token.svg'
@@ -9,16 +9,50 @@ import { MouseoverTooltip } from 'components/Tooltip'
 import { ApplicationModal } from 'state/application/actions'
 import { useToggleModal } from 'state/application/hooks'
 import { TYPE } from 'theme'
-import { Tier, TIER_LIMIT } from 'state/stake/reducer'
+import { Tier, TIER_LIMIT, PERIOD } from 'state/stake/reducer'
+import { DEFAULT_POOL_SIZE_LIMIT } from 'state/stake/poolSizeReducer'
 import { selectTier } from 'state/stake/actions'
 import { StakingTierCardWrapper } from './style'
 import { AppDispatch } from 'state'
 import { useDispatch } from 'react-redux'
+import { useFetchHistoricalPoolSize, usePoolSizeState } from 'state/stake/hooks'
 
 export const StakingTierCard = ({ tier }: { tier: Tier }) => {
   const dispatch = useDispatch<AppDispatch>()
   const toggleStake = useToggleModal(ApplicationModal.STAKE_IXS)
   const isTierUnlimited = tier?.limit === TIER_LIMIT.UNLIMITED
+  const fetchHistoricalPoolSize = useFetchHistoricalPoolSize()
+  const poolSizeState = usePoolSizeState()
+  const tierPeriod = () => {
+    switch (tier.period) {
+      case PERIOD.ONE_WEEK: {
+        return 'oneWeek'
+      }
+      case PERIOD.ONE_MONTH: {
+        return 'oneMonth'
+      }
+      case PERIOD.TWO_MONTHS: {
+        return 'twoMonths'
+      }
+      case PERIOD.THREE_MONTHS: {
+        return 'threeMonths'
+      }
+      default: {
+        return 'oneWeek'
+      }
+    }
+  }
+
+  const tierPeriodKey = tierPeriod() as keyof typeof poolSizeState
+
+  useEffect(() => {
+    fetchHistoricalPoolSize(tier.period)
+  }, [fetchHistoricalPoolSize, tier.period])
+
+  function leftToFill(): number {
+    const filled = poolSizeState[tierPeriodKey] as number
+    return DEFAULT_POOL_SIZE_LIMIT - filled
+  }
 
   return (
     <StakingTierCardWrapper>
@@ -93,7 +127,7 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
         <RowCenter>
           <TYPE.description3 fontWeight={400} opacity="0.5">
             <Trans>
-              Left to fill <span style={{ fontWeight: 700 }}>33389</span> coins
+              Left to fill <span style={{ fontWeight: 700 }}>{leftToFill()}</span> coins
             </Trans>
           </TYPE.description3>
         </RowCenter>
