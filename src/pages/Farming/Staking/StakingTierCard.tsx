@@ -51,6 +51,7 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
 
   function leftToFill(): number {
     const filled = poolSizeState[tierPeriodKey] as number
+    console.log(`${tier.period} pool size: ${filled}`)
     return DEFAULT_POOL_SIZE_LIMIT - filled
   }
 

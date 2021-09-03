@@ -6,6 +6,22 @@ export enum PeriodsEnum {
   THREE_MONTHS = 'three_months',
 }
 
+export interface IStaking {
+  period: PeriodsEnum
+  startDate: Date
+  endDate: Date
+  lockedTill: Date
+  stakeAmount: number
+  distributeAmount: number
+  apy: number
+  reward: number
+  lock_months: number
+  unixStart: number
+  canUnstake: boolean
+  originalData: number[]
+  originalIndex: number
+}
+
 const periods = {
   WEEK: 'week',
   MONTH: 'month',

@@ -8,7 +8,7 @@ import { useAdminState, useGetKycList, useGetMe } from 'state/admin/hooks'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import { shortenAddress } from 'utils'
 import { Box } from 'rebass'
-import { useGetStakings, useStakingState } from 'state/stake/hooks'
+import { useGetStakings, useStakingState, useUnstakeFromWeek } from 'state/stake/hooks'
 
 import { TYPE } from 'theme'
 
@@ -743,14 +743,23 @@ const Body = () => {
 
 export const MyStakingsTable = () => {
   const getStakings = useGetStakings()
+  const unstake = useUnstakeFromWeek()
   const { stakings } = useStakingState()
 
   useEffect(() => {
     getStakings()
   }, [getStakings])
 
+  const unstakeFirstStake = () => {
+    if (stakings.length === 0) {
+      console.log('no stakings, cannot unstake')
+    }
+    console.log('unstaking first stake', stakings[0])
+    // unstake(stakings[0])
+  }
+
   return (
-    <Box style={{ width: '100%' }}>
+    <Box style={{ width: '100%' }} onClick={unstakeFirstStake}>
       <Box marginBottom={22}>
         <TYPE.title5>
           <Trans>My ongoing stakings</Trans>

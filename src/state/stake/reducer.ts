@@ -69,6 +69,22 @@ export const TIER_TYPES: TierType = {
   },
 }
 
+interface StakeTransaction {
+  apy: number
+  canUnstake: boolean
+  distributeAmount: number
+  endDate: string
+  lock_months: number
+  lockedTill: string
+  originalData: any
+  originalIndex: number
+  period: string
+  reward: number
+  stakeAmount: number
+  startDate: string
+  unixStart: number
+}
+
 interface StakingState {
   status: StakingStatus
   APY: APY
@@ -79,7 +95,7 @@ interface StakingState {
   isStaking: boolean
   isStakingFailed: boolean
   hasStakedSuccessfully: boolean
-  stakings: any[]
+  stakings: StakeTransaction[]
   historicalPoolSize: {
     oneWeek: number
     oneMonth: number
