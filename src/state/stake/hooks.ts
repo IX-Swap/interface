@@ -488,10 +488,31 @@ export function useGetStakings() {
         stakingPeriodsData
 
       const floorTo4Decimals = (num: number) => Math.floor((num + Number.EPSILON) * 10000) / 10000
-      const calculateReward = (amount: number, period: PeriodsEnum) => {
-        const apy = periods_apy[period]
-        const yearReward = floorTo4Decimals((amount * apy) / 100)
-        return floorTo4Decimals((yearReward / 360) * periods_in_days[period])
+      const calculateReward = (
+        amount: number,
+        period: PeriodsEnum,
+        startDateUnix: number,
+        lockedUntilUnix: number,
+        endDateUnix: number
+      ) => {
+        // passedMaturity = амоунт* (APY in %)*days passed/365
+        // !passedMaturity && passedLockIn = аммаунт* Пенальти Йелд (5%) * Сколько прошло со стейкинга в секундах / 365 дней в секундах
+        const now = new Date().getTime() / 1000
+        const passedMaturity = now > endDateUnix
+        const passedLockIn = now > lockedUntilUnix
+        const yearDays = 365
+        let reward
+        if (!passedMaturity && passedLockIn) {
+          const yearSeconds = yearDays * 86400
+          const secondsPassed = now - startDateUnix
+          const penalty = 5 / 100
+          reward = floorTo4Decimals((amount * penalty * secondsPassed) / yearSeconds)
+        } else {
+          const apyPercent = periods_apy[period] / 100
+          const daysPassed = periods_in_days[period]
+          reward = floorTo4Decimals((amount * apyPercent * daysPassed) / yearDays)
+        }
+        return reward
       }
       const getCanUnstake = (lock_months: number, endDateUnix: number, lockedTill: number) => {
         const now = Date.now()
@@ -504,24 +525,24 @@ export function useGetStakings() {
         const stakedTransactions = await staking?.stakedTransactionsForPeriod(account, periods_index[period])
         if (stakedTransactions.length === 0) return []
         return stakedTransactions.map((data: Array<number>, index: number) => {
-          const unixStart = BigNumber.from(data[0]).toNumber()
+          const startDateUnix = BigNumber.from(data[0]).toNumber()
           const stakeAmount = +utils.formatUnits(data[1], 18)
-          const endDateUnix = unixStart + periods_in_seconds[period]
-          const lock_months = periods_lock_months[period]
-          const lockSeconds = lock_months * 30 * oneDaySeconds
-          const lockedTill = unixStart + lockSeconds
+          const endDateUnix = startDateUnix + periods_in_seconds[period]
+          const lockMonths = periods_lock_months[period]
+          const lockSeconds = lockMonths * 30 * oneDaySeconds
+          const lockedTillUnix = startDateUnix + lockSeconds
           return {
             period,
-            startDate: new Date(unixStart * 1000),
+            startDate: new Date(startDateUnix * 1000),
             endDate: new Date(endDateUnix * 1000),
-            lockedTill: new Date(lockedTill * 1000),
+            lockedTill: new Date(lockedTillUnix * 1000),
             stakeAmount,
             distributeAmount: stakeAmount,
             apy: periods_apy[period],
-            reward: calculateReward(stakeAmount, period),
-            lock_months,
-            unixStart,
-            canUnstake: getCanUnstake(lock_months, endDateUnix, lockedTill),
+            reward: calculateReward(stakeAmount, period, startDateUnix, endDateUnix, lockedTillUnix),
+            lockMonths,
+            startDateUnix,
+            canUnstake: getCanUnstake(lockMonths, endDateUnix, lockedTillUnix),
             originalData: data,
             originalIndex: index,
           }
@@ -535,7 +556,7 @@ export function useGetStakings() {
         accum.push(...item)
         return accum
       }, [])
-      transactions.sort((a: { unixStart: number }, b: { unixStart: number }) => a.unixStart > b.unixStart)
+      transactions.sort((a: IStaking, b: IStaking) => a.startDateUnix > b.startDateUnix)
       dispatch(getStakings.fulfilled({ transactions }))
       return transactions
     } catch (error) {

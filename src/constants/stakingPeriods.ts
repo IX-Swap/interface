@@ -15,8 +15,8 @@ export interface IStaking {
   distributeAmount: number
   apy: number
   reward: number
-  lock_months: number
-  unixStart: number
+  lockMonths: number
+  startDateUnix: number
   canUnstake: boolean
   originalData: number[]
   originalIndex: number
@@ -28,6 +28,7 @@ const periods = {
   TWO_MONTHS: 'two_months',
   THREE_MONTHS: 'three_months',
 }
+// todo everything camel case. why did i even do snake case here
 const periods_index = {
   [periods.WEEK]: 0,
   [periods.MONTH]: 1,
