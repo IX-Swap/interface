@@ -750,7 +750,6 @@ export const MyStakingsTable = () => {
     getStakings()
   }, [getStakings])
 
-  console.log('stakings', stakings)
   const unstakeFirstStake = () => {
     if (stakings.length === 0) {
       console.log('no stakings, cannot unstake')
