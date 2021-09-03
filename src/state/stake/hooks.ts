@@ -554,15 +554,14 @@ export function useGetStakings() {
           const lockedTillUnix = startDateUnix + lockSeconds
           return {
             period,
-            startDate: new Date(startDateUnix * 1000),
-            endDate: new Date(endDateUnix * 1000),
-            lockedTill: new Date(lockedTillUnix * 1000),
             stakeAmount,
             distributeAmount: stakeAmount,
             apy: periodsApy[period],
             reward: calculateReward(stakeAmount, period, startDateUnix, endDateUnix, lockedTillUnix),
             lockMonths,
             startDateUnix,
+            endDateUnix,
+            lockedTillUnix,
             canUnstake: getCanUnstake(lockMonths, endDateUnix, lockedTillUnix),
             originalData: data,
             originalIndex: index,
@@ -587,6 +586,7 @@ export function useGetStakings() {
 }
 
 export function useUnstakeFromWeek() {
+  // works the same for 1 month
   const staking = useIXSStakingContract()
   const tokenContract = useIXSGovTokenContract()
 
@@ -615,6 +615,7 @@ export function useUnstakeFromWeek() {
 }
 
 export function useUnstakeFromTwoMonths() {
+  // works the same for 3 months
   const staking = useIXSStakingContract()
   const tokenContract = useIXSGovTokenContract()
 

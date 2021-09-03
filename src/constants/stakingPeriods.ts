@@ -8,13 +8,14 @@ export enum PeriodsEnum {
 
 export interface IStaking {
   period: PeriodsEnum
-  lockedTill: any
   stakeAmount: number
   distributeAmount: number
   apy: number
   reward: number
   lockMonths: number
   startDateUnix: number
+  endDateUnix: number
+  lockedTillUnix: number
   canUnstake: boolean
   originalData: number[]
   originalIndex: number
