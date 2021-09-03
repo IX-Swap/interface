@@ -4,6 +4,7 @@ import { useVestingStatus } from 'state/vesting/hooks'
 import { VestingWrapper } from './styleds'
 import { VestingInfo } from './VestingInfo'
 import { VestingTable } from './VestingTable'
+import { VestingSearch } from './VestingSearch'
 
 export enum VestingStatus {
   LOADING = 'LOADING',
@@ -20,6 +21,7 @@ export const Vesting = () => {
       {vestingState === VestingStatus.LOADING && <LoaderThin size={128} />}
       {vestingState !== VestingStatus.LOADING && (
         <>
+          <VestingSearch />
           <VestingInfo state={vestingState} />
           <VestingTable vestingStatus={vestingState} />
         </>

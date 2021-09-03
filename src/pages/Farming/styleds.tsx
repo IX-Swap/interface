@@ -72,6 +72,7 @@ export const VestingInfoWrapper = styled(VestingBackground)`
      min-width: fit-content;
   `};
 `
+
 export const VestingTextWrapper = styled(Box)`
   height: 100%;
   display: flex;
