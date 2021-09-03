@@ -11,11 +11,8 @@ import { FormError } from 'components/form/FormError'
 import { TextError } from 'components/TextError'
 import { DataroomUploadAndAppend } from 'components/dataroom/DataroomUploadAndAppend'
 import { UploadButton } from 'components/dataroom/UploadButton'
-import {
-  itemComparator,
-  SelectedDocument
-} from 'app/pages/accounts/pages/banks/components/BankDocuments'
 import { SelectionHelper } from 'components/SelectionHelper'
+import { itemComparator, SelectedDocument } from 'helpers/dataroom'
 
 export interface ListingDocumentUploaderProps {
   name: string

@@ -291,7 +291,6 @@ export const bank: Bank = {
   authorized: true,
   authorizationDocuments: [],
   authorizations: [],
-  supportingDocuments: [],
   createdAt: '01-01-2000',
   updatedAt: '01-01-2000',
   authorization: authorizationInfo,
