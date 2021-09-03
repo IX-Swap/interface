@@ -38,8 +38,6 @@ const Header = () => {
 const Body = () => {
   const unstake = useUnstakeFromTwoMonths()
   const { stakings } = useStakingState()
-
-  console.log('stakings', stakings)
   const unstakeFirstStake = () => {
     if (stakings.length === 0) {
       console.log('no stakings, cannot unstake')
@@ -90,8 +88,8 @@ const Body = () => {
 
   return (
     <>
-      {stakings?.map(({ period, unixStart, apy, stakeAmount, distributeAmount, reward }) => (
-        <StyledBodyRow key={unixStart}>
+      {stakings?.map(({ period, startDateUnix, apy, stakeAmount, distributeAmount, reward }) => (
+        <StyledBodyRow key={startDateUnix}>
           <Tier>
             <span className="digit">{getPeriodDigit(period)}</span>&nbsp;{getPeriodString(period).toUpperCase()}
           </Tier>
