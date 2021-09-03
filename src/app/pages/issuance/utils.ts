@@ -1,13 +1,16 @@
 import {
   DSOActivity,
+  DsoFAQItem,
   DSOFormValues,
   DSORequestArgs,
-  DsoTeamMember
+  DsoTeamMember,
+  DsoVideo
 } from 'types/dso'
 import { getPersonName } from 'helpers/strings'
 import { hasValue } from 'helpers/forms'
 import { DataroomFile, FormArray } from 'types/dataroomFile'
 import { ListingFormValues } from 'app/pages/exchange/types/listings'
+import * as yup from 'yup'
 
 export const numberToPercentage = (value: any) => {
   if (value === null || value === undefined || value === '') {
@@ -17,7 +20,7 @@ export const numberToPercentage = (value: any) => {
   return Number(value) / 100
 }
 
-export const percentageToNumber = (value: any) => {
+export const percentageToNumber = (value?: any) => {
   if (value === null || value === undefined || value === '') {
     return undefined
   }
@@ -29,6 +32,14 @@ export const getDocumentsFieldPayload = (
   documents: FormArray<DataroomFile>
 ) => {
   return documents?.map(d => d.value?._id ?? null).filter(d => d !== null) ?? []
+}
+
+export const getFAQsFieldsPayload = (faqs: DsoFAQItem[]) => {
+  return faqs?.filter(item => item.question !== '' || item.answer !== '')
+}
+
+export const getVideosFieldsPayload = (videos: DsoVideo[]) => {
+  return videos?.filter(item => item.link !== '' || item.title !== '')
 }
 
 export const getCreateDSOPayload = (values: Partial<DSOFormValues>) => {
@@ -48,19 +59,36 @@ export const getCreateDSOPayload = (values: Partial<DSOFormValues>) => {
     ) {
       value = numberToPercentage(value as number)
     }
-
-    return {
-      ...acc,
-      ...(hasValue(value) ? { [key]: value } : {})
+    if (key === 'faqs') {
+      value = getFAQsFieldsPayload(value as DsoFAQItem[])
     }
+    if (key === 'videos') {
+      value = getVideosFieldsPayload(value as DsoVideo[])
+    }
+
+    return { ...acc, ...(hasValue(value) ? { [key]: value } : {}) }
   }, {}) as DSORequestArgs
 }
 
 export const getUpdateDSOPayload = (values: Partial<DSOFormValues>) => {
-  console.log(getCreateDSOPayload(values))
   const { status, ...payload } = getCreateDSOPayload(values)
+  let result = payload
 
-  return payload
+  if (!('videos' in result)) {
+    result = {
+      ...result,
+      videos: []
+    }
+  }
+
+  if (!('faqs' in result)) {
+    result = {
+      ...result,
+      faqs: []
+    }
+  }
+
+  return result
 }
 
 export const getIdFromDSOSelectValue = (value: string) => value.split(':')[0]
@@ -113,3 +141,9 @@ export const validateTeamField = (
 
   return formData
 }
+
+export const newDistributionValidationSchema = yup.object().shape({
+  pricePerToken: yup.number().required('This is a required field'),
+  dateOfDistribution: yup.string().required('This is a required field'),
+  otp: yup.string().required('This is a required field')
+})

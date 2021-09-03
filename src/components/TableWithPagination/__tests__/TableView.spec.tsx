@@ -8,10 +8,13 @@ import * as useTableWithPaginationHook from 'components/TableWithPagination/hook
 import { QueryStatus } from 'react-query'
 import { useSelectionHelperContext } from 'components/SelectionHelper'
 import { fakeVirtualAccount } from '__fixtures__/unassignedVirtualAccounts'
+import { TablePagination } from '@material-ui/core'
 
 jest.mock('components/SelectionHelper', () => ({
   useSelectionHelperContext: jest.fn(() => {})
 }))
+
+jest.mock('@material-ui/core/TablePagination', () => jest.fn(() => null))
 
 const useTableWithPaginationMockReturnValue: useTableWithPaginationHook.UseTableWithPaginationReturnType<any> = {
   total: 0,
@@ -72,5 +75,38 @@ describe('TableView', () => {
       .mockReturnValueOnce(useTableWithPaginationMockReturnValue)
 
     render(<TableView {...extraProps} />)
+  })
+
+  it('renders TablePagination when total is 0', () => {
+    jest
+      .spyOn(useTableWithPaginationHook, 'useTableWithPagination')
+      .mockReturnValueOnce(useTableWithPaginationMockReturnValue)
+
+    render(<TableView {...extraProps} />)
+
+    expect(TablePagination).toHaveBeenCalledTimes(0)
+  })
+
+  it('renders TablePagination with correct props when total is more than 0', () => {
+    const useExtendedTableWithPaginationMockReturnValue = {
+      ...useTableWithPaginationMockReturnValue,
+      total: 1
+    }
+    jest
+      .spyOn(useTableWithPaginationHook, 'useTableWithPagination')
+      .mockReturnValueOnce(useExtendedTableWithPaginationMockReturnValue)
+
+    render(<TableView {...extraProps} />)
+
+    expect(TablePagination).toHaveBeenCalledTimes(1)
+    expect(TablePagination).toHaveBeenCalledWith(
+      expect.objectContaining({
+        page: useExtendedTableWithPaginationMockReturnValue.page,
+        count: useExtendedTableWithPaginationMockReturnValue.total,
+        rowsPerPage: useExtendedTableWithPaginationMockReturnValue.rowsPerPage,
+        colSpan: 0
+      }),
+      {}
+    )
   })
 })

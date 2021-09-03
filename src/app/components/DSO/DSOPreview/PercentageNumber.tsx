@@ -9,7 +9,7 @@ export interface PercentageNumberInterface {
 
 export const PercentageNumber = ({ value }: PercentageNumberInterface) => {
   const valueToPercent = (value?: number) => {
-    return value !== undefined ? getPercentageValue(value) : value
+    return value !== undefined ? getPercentageValue(value) : '-'
   }
 
   return (

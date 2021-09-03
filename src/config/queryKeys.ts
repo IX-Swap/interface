@@ -15,6 +15,11 @@ export const documentsQueryKeys = {
   getById: 'document-by-id'
 }
 
+export const bannersQueryKeys = {
+  getById: 'banner-by-id',
+  getBannersList: 'banners-list'
+}
+
 export const assetsQueryKeys = {
   getById: 'asset-by-id',
   getData: 'assets',
@@ -62,7 +67,10 @@ export const authorizerQueryKeys = {
   getSecurityWithdrawals: 'authorizer-security-withdrawals',
   getIndividualIdentityList: 'authorizer-individual-identitiesList',
   getDSOList: 'authorizer-dso-list',
-  getWithdrawalAddresses: 'authorizer-withdrawal-addresses-list'
+  getWithdrawalAddresses: 'authorizer-withdrawal-addresses-list',
+  getVirtualAccounts: 'authorizer-virtual-accounts',
+  getVirtualAccountById: (id: string) =>
+    generateQueryKey('authorizer-virtual-account', id)
 }
 
 export const homeQueryKeys = {
@@ -133,7 +141,9 @@ export const dsoQueryKeys = {
   getDSOsById: (id: string) => generateQueryKey('dso-list', id),
   getCapitalStructureList: 'capital-structures-list',
   getPromoted: 'promoted-dsos',
-  getApprovedList: 'dso-approved-list'
+  getApprovedList: 'dso-approved-list',
+  getCommitmentsListByDSOId: (dsoId: string) =>
+    generateQueryKey('commitments-list', dsoId)
 }
 
 export const otcQueryKeys = {
@@ -159,7 +169,8 @@ export const issuanceQueryKeys = {
 export const virtualAccountQueryKeys = {
   listAssigned: 'assigned-virtual-accounts',
   listUnassigned: 'unassigned-virtual-accounts',
-  getByUserId: 'virtual-account'
+  getByUserId: 'virtual-account',
+  paymentMethod: 'payment-method'
 }
 
 export const exchange = {
@@ -190,4 +201,14 @@ export const listingsQueryKeys = {
 export const exchangeListingsQueryKeys = {
   getListingById: (listingId: string, issuerId: string) =>
     generateQueryKey('listing', listingId, issuerId)
+}
+
+export const resourcesQueryKeys = {
+  getSiteConfig: () => 'site-config'
+}
+
+export const virtualAccountsAuditQueryKeys = {
+  getMT940Files: 'get-mt940-files',
+  getMT942Files: 'get-mt942-files',
+  getOutboundFiles: 'get-outbound-files'
 }

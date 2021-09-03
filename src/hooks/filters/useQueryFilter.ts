@@ -19,6 +19,9 @@ export interface QueryFilters {
   pairFilter: string | undefined
   sortBy: string | undefined
   orderBy: 'ASC' | 'DSC' | undefined
+  network: string | undefined
+  isPriceAscending: string | undefined
+  fundStatus: string | undefined
 }
 
 export type QueryFilter = keyof QueryFilters

@@ -72,6 +72,37 @@ describe('useDSOFilter', () => {
     })
   })
 
+  it('returns selected dso correctly when type is commitments', async () => {
+    history.push(
+      generatePath(IssuanceRoute.commitments, {
+        dsoId: dso._id,
+        issuerId: dso.user
+      })
+    )
+
+    jest
+      .spyOn(useDSOsByUserIdHook, 'useDSOsByUserId')
+      .mockReturnValue(generateInfiniteQueryResult({ list: [dso] }))
+
+    await act(async () => {
+      const { result } = renderHook(() => useDSOFilter('commitments'), {
+        wrapper: ({ children }: PropsWithChildren<any>) => (
+          <BaseProviders>
+            <Route path={IssuanceRoute.commitments}>{children}</Route>
+          </BaseProviders>
+        )
+      })
+
+      await waitFor(
+        () => {
+          expect(result.current.status).toBe('success')
+          expect(result.current.selected).toBe(`${dso._id}:${dso.user}`)
+        },
+        { timeout: 1000 }
+      )
+    })
+  })
+
   it('returns selected dso as null if dsoId is invalid', async () => {
     jest
       .spyOn(useDSOsByUserIdHook, 'useDSOsByUserId')

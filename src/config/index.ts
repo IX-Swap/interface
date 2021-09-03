@@ -32,3 +32,5 @@ export const INVESTAX_BANK: Partial<Bank> = {
     city: 'Singapore'
   }
 }
+
+export const RECAPTCHA_KEY = process.env.REACT_APP_RECAPTCHA_KEY

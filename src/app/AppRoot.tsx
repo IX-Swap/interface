@@ -9,10 +9,21 @@ import { SidebarContainer } from 'app/components/SidebarContainer/SidebarContain
 import { AppContentWrapper } from 'ui/AppContentWrapper'
 import { OnboardingContentWrapper } from 'app/components/OnboardingPanel/OnboardingContentWrapper'
 import { AppRouter } from 'app/router/AppRouter'
+import { IdleDialog } from 'app/components/IdleDialog'
+import { useIdleTimers } from 'app/hooks/useIdleTimers'
 
 export const AppRoot = () => {
   const theme = useTheme()
   const backgroundColor = theme.palette.backgrounds.default
+
+  const {
+    open,
+    logoutTimer,
+    resetLogoutTimer,
+    closeDialog,
+    reset,
+    logout
+  } = useIdleTimers()
 
   useDataFromURL()
 
@@ -29,6 +40,14 @@ export const AppRoot = () => {
           </OnboardingContentWrapper>
         </AppContentWrapper>
       </Grid>
+      <IdleDialog
+        open={open}
+        reset={reset}
+        closeDialog={closeDialog}
+        logout={logout}
+        logoutTimer={logoutTimer}
+        resetLogoutTimer={resetLogoutTimer}
+      />
     </ErrorBoundary>
   )
 }

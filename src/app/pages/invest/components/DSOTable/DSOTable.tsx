@@ -16,6 +16,9 @@ export const DSOTable = () => {
   const { getFilterValue } = useQueryFilter()
   const search = getFilterValue('search', undefined)
   const capitalStructure = getFilterValue('capitalStructure', undefined)
+  const currency = getFilterValue('currency', undefined)
+  const network = getFilterValue('network', undefined)
+  const isPriceAscending = getFilterValue('isPriceAscending', undefined)
 
   return (
     <Grid container direction='column' spacing={3}>
@@ -30,7 +33,17 @@ export const DSOTable = () => {
             columns={columns}
             hasActions
             actions={Actions}
-            filter={{ search, capitalStructure }}
+            filter={{
+              search,
+              capitalStructure,
+              network,
+              currency: currency !== '' ? currency : undefined,
+              isPriceAscending:
+                isPriceAscending !== undefined
+                  ? isPriceAscending === 'yes'
+                  : undefined
+            }}
+            themeVariant={'primary'}
           />
         </Box>
       </Grid>

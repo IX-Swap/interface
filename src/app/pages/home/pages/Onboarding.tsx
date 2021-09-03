@@ -4,11 +4,11 @@ import { useAuth } from 'hooks/auth/useAuth'
 import { AccessReports } from 'app/pages/home/components/AccessReports'
 import { TopIssuers } from 'app/pages/home/components/TopIssuers'
 import { TopCorporates } from 'app/pages/home/components/TopCorporates'
-import { PromoBanner } from 'app/pages/invest/components/PromoBanner'
 import { Divider } from 'ui/Divider'
 import { News } from 'app/pages/home/components/News/News'
 import { RootContainer } from 'ui/RootContainer'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
+import { BannersCarousel } from 'app/pages/invest/components/BannersCarousel'
 
 export const Onboarding = () => {
   const { user } = useAuth()
@@ -51,7 +51,7 @@ export const Onboarding = () => {
           </Grid>
 
           <Grid item xs={12}>
-            <PromoBanner />
+            <BannersCarousel />
           </Grid>
         </Grid>
       </Fragment>

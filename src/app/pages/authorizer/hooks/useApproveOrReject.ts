@@ -17,7 +17,10 @@ export const useApproveOrReject = (args: UseApproveOrRejectArgs) => {
   const category = useAuthorizerCategory()
   const { uri, listRoute } = authorizerItemMap[category]
   const _uri = uri.replace(/\/list$/, '')
-  const url = `${_uri}/${id}/${action}`
+  const url =
+    category === 'virtual-accounts'
+      ? `${_uri}/assign/${id}/${action}`
+      : `${_uri}/${id}/${action}`
 
   const { search } = useLocation()
   const { replace } = useHistory()

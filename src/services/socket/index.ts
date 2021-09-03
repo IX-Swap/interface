@@ -23,7 +23,6 @@ const socketService = {
   },
 
   subscribeToSocket(
-    token: string,
     onNotification: (notification: Notification) => any,
     queryCache: QueryCache
   ) {
@@ -34,12 +33,9 @@ const socketService = {
 
       _socket?.removeAllListeners()
 
-      _socket = io(
-        process.env.NODE_ENV === 'test' ? '' : `${API_URL}?token=${token}`,
-        {
-          transports: SOCKET_TRANSPORTS
-        }
-      )
+      _socket = io(process.env.NODE_ENV === 'test' ? '' : `${API_URL}`, {
+        transports: SOCKET_TRANSPORTS
+      })
 
       _socket.addEventListener('default', () => {})
 

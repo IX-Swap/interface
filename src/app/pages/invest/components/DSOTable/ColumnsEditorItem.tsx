@@ -12,14 +12,35 @@ export interface ColumnsEditorItemProps {
 
 export const ColumnsEditorItem = (props: ColumnsEditorItemProps) => {
   const { value, isSelected, onSelect, onDeselect } = props
-  const label = formatCamelCasedWithSpaces(value)
+  const label = () => {
+    if (value === 'tokenName') {
+      return 'Offer Name'
+    }
+
+    if (value === 'completionDate') {
+      return 'Closing Date'
+    }
+    if (value === 'interestRate') {
+      return 'Expected Return'
+    }
+
+    if (value === 'totalFundraisingAmount') {
+      return 'Raising'
+    }
+
+    if (value === 'minimumInvestment') {
+      return 'Min. Investment'
+    }
+
+    return formatCamelCasedWithSpaces(value)
+  }
   const disabled =
     value === 'favorite' || value === 'tokenName' || value === 'insight'
 
   return (
     <Box mr={2.5} mb={1.5}>
       <Chip
-        label={label}
+        label={label()}
         variant={isSelected ? 'default' : 'outlined'}
         onClick={isSelected ? undefined : () => onSelect(value)}
         disabled={disabled}

@@ -20,6 +20,8 @@ import { useTableWithPagination } from 'components/TableWithPagination/hooks/use
 import { TableRows } from 'components/TableWithPagination/TableRows'
 import { statusColumn } from 'app/pages/authorizer/hooks/useAuthorizerView'
 import { UseSelectionHelperReturnType } from 'hooks/useSelectionHelper'
+import { useTheme } from '@material-ui/core/styles'
+import useStyles from './TableView.styles'
 
 export interface TableViewRendererProps<T> {
   items: T[]
@@ -46,6 +48,7 @@ export interface TableViewProps<T> {
   paperProps?: PaperProps
   defaultRowsPerPage?: number
   size?: Size
+  themeVariant?: 'default' | 'primary' | 'no-header'
 }
 
 export const TableView = <T,>({
@@ -64,7 +67,8 @@ export const TableView = <T,>({
   selectionHelper,
   paperProps = {},
   defaultRowsPerPage,
-  size = 'medium'
+  size = 'medium',
+  themeVariant = 'default'
 }: TableViewProps<T>): JSX.Element => {
   const {
     items,
@@ -81,6 +85,18 @@ export const TableView = <T,>({
     queryEnabled,
     defaultRowsPerPage
   )
+
+  const theme = useTheme()
+  const classes = useStyles()
+  const headColor =
+    themeVariant === 'primary'
+      ? theme.palette.type === 'light'
+        ? '#141272'
+        : theme.palette.primary.main
+      : 'initial'
+  const headHeight = themeVariant === 'primary' ? 50 : 'initial'
+  const headDisplay =
+    themeVariant === 'no-header' ? 'none' : 'table-header-group'
   const cacheQueryKey = [name, page, rowsPerPage, filter]
 
   const _items = Array.isArray(fakeItems) ? fakeItems : items
@@ -150,7 +166,13 @@ export const TableView = <T,>({
           <TableContainer>
             <Table aria-label='table' data-testid='table' size={size}>
               {columns.length > 0 ? (
-                <TableHead>
+                <TableHead
+                  style={{
+                    backgroundColor: headColor,
+                    height: headHeight,
+                    display: headDisplay
+                  }}
+                >
                   <TableRow>
                     {columns.map(e => (
                       <TableCell
@@ -158,7 +180,16 @@ export const TableView = <T,>({
                         align={e.headAlign ?? 'left'}
                         style={{ borderBottom: 'none' }}
                       >
-                        <b>{e.label}</b>
+                        <b
+                          style={{
+                            color:
+                              themeVariant === 'primary'
+                                ? theme.palette.slider.activeColor
+                                : 'initial'
+                          }}
+                        >
+                          {e.label}
+                        </b>
                       </TableCell>
                     ))}
                     {hasActions && (
@@ -185,6 +216,7 @@ export const TableView = <T,>({
                   hasActions={hasActions}
                   actions={actions}
                   cacheQueryKey={cacheQueryKey}
+                  themeVariant={themeVariant}
                 />
               )}
             </Table>
@@ -201,6 +233,7 @@ export const TableView = <T,>({
             count={total}
             rowsPerPage={rowsPerPage}
             page={page}
+            classes={{ toolbar: classes.toolbar }}
             onChangeRowsPerPage={evt => {
               setPage(0)
               setRowsPerPage(parseInt(evt.target.value))

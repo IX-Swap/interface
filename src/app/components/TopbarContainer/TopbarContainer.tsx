@@ -108,6 +108,18 @@ export const TopbarContainer = () => {
     { label: 'View Exchange Listings', path: OTCMarketRoute.myListings }
   ]
 
+  if (isIssuer) {
+    newIssuanceLandingLinks.push({
+      label: 'Commitments',
+      path: IssuanceRoute.commitments
+    })
+
+    newIssuanceLandingLinks.push({
+      label: 'Cap Table',
+      path: IssuanceRoute.capTable
+    })
+  }
+
   const dropdownLinksItems = (name: string) => {
     switch (name) {
       case 'Home':

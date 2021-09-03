@@ -5,11 +5,12 @@ import { useTheme } from '@material-ui/core/styles'
 export interface IdentityLinkProps {
   type: 'individual' | 'corporate'
   identityId: string
+  userId: string
   children?: ReactNode
 }
 
 export const AuthorizerIdentityLink = (props: IdentityLinkProps) => {
-  const { identityId, type, children = 'View Profile' } = props
+  const { identityId, type, userId, children = 'View Profile' } = props
   const theme = useTheme()
 
   return (
@@ -18,7 +19,7 @@ export const AuthorizerIdentityLink = (props: IdentityLinkProps) => {
       color='primary'
       underline='always'
       style={{ fontWeight: 700, color: theme.palette.primary.main }}
-      to={`/app/authorizer/${type}s/${identityId}/view`}
+      to={`/app/authorizer/${type}s/${userId}/${identityId}/view`}
       params={{
         itemId: identityId,
         category: `${type}s`

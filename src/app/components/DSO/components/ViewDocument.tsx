@@ -8,13 +8,23 @@ import {
 
 export interface ViewDocumentProps {
   documentId: string
-  ownerId: string
+  ownerId?: string
+  type?: 'document' | 'banner'
   children: (url: string) => JSX.Element
+  getDataFunction?: any
 }
 
 export const ViewDocument = (props: ViewDocumentProps) => {
-  const { documentId, ownerId, children } = props
-  const { data } = useRawDocument({ documentId, ownerId })
+  const {
+    documentId,
+    ownerId = '',
+    children,
+    type = 'document',
+    getDataFunction = useRawDocument
+  } = props
+  const { data } = getDataFunction(
+    type === 'banner' ? documentId : { documentId, ownerId }
+  )
   const blob = useMemo(() => data?.data ?? new Blob(), [data])
   const [file, setFile] = useState<string>('')
 

@@ -22,6 +22,7 @@ describe('OTPField', () => {
     value: '123456',
     onChange: onChangeMock,
     numInputs: 6,
+    isInputNum: true,
     variant: 'standard',
     control: { formStateRef: { current: { errors: [] } } }
   }
@@ -47,6 +48,7 @@ describe('OTPField', () => {
         value: '123456',
         onChange: onChangeMock,
         numInputs: 6,
+        isInputNum: true,
         variant: 'standard',
         shouldAutoFocus: false
       },

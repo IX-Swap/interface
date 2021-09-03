@@ -92,8 +92,8 @@ describe('WithdrawalPreview', () => {
     expect(LabelledValue).toHaveBeenNthCalledWith(
       8,
       {
-        label: 'Transfer Method',
-        value: ''
+        label: 'Withdrawal Method',
+        value: undefined
       },
       {}
     )

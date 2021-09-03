@@ -8,9 +8,13 @@ export const ColumnsEditorToggle = (props: ColumnsEditorToggleProps) => {
     <ToggleButton
       {...props}
       value='show-table-columns'
-      style={{ width: '100%' }}
+      style={{
+        width: '100%',
+        fontSize: 15,
+        fontWeight: 'normal'
+      }}
     >
-      Columns
+      Manage Columns
     </ToggleButton>
   )
 }

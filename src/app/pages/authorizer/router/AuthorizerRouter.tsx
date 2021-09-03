@@ -17,6 +17,7 @@ import React from 'react'
 import { Switch } from 'react-router'
 import { AuthorizerIssuanceDetailsRouter } from 'app/pages/authorizer/pages/issuanceDetails/router/AuthorizerIssuanceDetailsRouter'
 import { AuthorizerListingsRouter } from '../pages/listings/router/AuthorizerListingsRouter'
+import { AuthorizerVirtualAccountsRouter } from 'app/pages/authorizer/pages/VirtualAccounts/router/AuthorizerVirtualAccountsRouter'
 
 export const AuthorizerRouter = () => {
   return (
@@ -84,6 +85,13 @@ export const AuthorizerRouter = () => {
 
       <AppRoute breadcrumb='Listings' path={AuthorizerRoute.listings}>
         <AuthorizerListingsRouter />
+      </AppRoute>
+
+      <AppRoute
+        breadcrumb='Virtual Accounts'
+        path={AuthorizerRoute.virtualAccounts}
+      >
+        <AuthorizerVirtualAccountsRouter />
       </AppRoute>
 
       <AppRoute exact path={AuthorizerRoute.landing}>

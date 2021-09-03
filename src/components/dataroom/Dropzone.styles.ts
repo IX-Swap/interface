@@ -25,5 +25,10 @@ export const useStyles = makeStyles(theme => ({
   },
   icon: {
     color: theme.palette.text.secondary
+  },
+  bigIcon: {
+    width: 96,
+    height: 64,
+    color: '#AAAAAA'
   }
 }))
