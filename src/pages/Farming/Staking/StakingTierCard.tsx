@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { t, Trans } from '@lingui/macro'
 import { ReactComponent as InfoIcon } from 'assets/images/attention.svg'
 import IXSToken from 'assets/images/IXS-token.svg'
@@ -16,6 +16,7 @@ import { StakingTierCardWrapper } from './style'
 import { AppDispatch } from 'state'
 import { useDispatch } from 'react-redux'
 import { useFetchHistoricalPoolSize, usePoolSizeState } from 'state/stake/hooks'
+import { useStakingState } from 'state/stake/hooks'
 
 export const StakingTierCard = ({ tier }: { tier: Tier }) => {
   const dispatch = useDispatch<AppDispatch>()
@@ -23,6 +24,7 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
   const isTierUnlimited = tier?.limit === TIER_LIMIT.UNLIMITED
   const fetchHistoricalPoolSize = useFetchHistoricalPoolSize()
   const poolSizeState = usePoolSizeState()
+  const { hasStakedSuccessfully } = useStakingState()
   const tierPeriod = () => {
     switch (tier.period) {
       case PERIOD.ONE_WEEK: {
@@ -44,16 +46,17 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
   }
 
   const tierPeriodKey = tierPeriod() as keyof typeof poolSizeState
+  const [leftToFill, setLeftToFill] = useState(0)
 
   useEffect(() => {
     fetchHistoricalPoolSize(tier.period)
-  }, [fetchHistoricalPoolSize, tier.period])
+  }, [fetchHistoricalPoolSize, tier.period, hasStakedSuccessfully])
 
-  function leftToFill(): number {
+  useEffect(() => {
     const filled = poolSizeState[tierPeriodKey] as number
     console.log(`${tier.period} pool size: ${filled}`)
-    return DEFAULT_POOL_SIZE_LIMIT - filled
-  }
+    setLeftToFill(DEFAULT_POOL_SIZE_LIMIT - filled)
+  }, [poolSizeState, tierPeriodKey, tier.period])
 
   return (
     <StakingTierCardWrapper>
@@ -78,18 +81,22 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
           <Trans>{tier.limit}</Trans>
         </TYPE.body1>
         <MouseoverTooltip
-          style={{ whiteSpace: 'pre-line' }}
+          style={{ whiteSpace: 'pre-line', textAlign: 'center' }}
           text={t`Overall limit for all stakers for this tier is ${
-            isTierUnlimited ? 'unlimited.\n' : '2 000 000 IXS.\n'
-          }
-                  
-                  Overall staked for now: 234 747 IXS
+            isTierUnlimited ? 'unlimited.\n' : '\n2 000 000 IXS.\n'
+          } 
 
-                  ${isTierUnlimited ? '' : 'Available for staking: 1 776 399/2 000 000.\n'}
+                  Overall staked for now: ${'\n' + poolSizeState[tierPeriodKey]} IXS
 
-                  Lock period means the time you won’t be able to unstake your IXS fully or partially. Please carefully consider the risks involved.
-                  ${'' ?? ''}
-                  You will be able to redeem your staked IXS fully or partially after lock period. `}
+                  ${
+                    isTierUnlimited
+                      ? ''
+                      : '\nAvailable for staking: \n' +
+                        leftToFill.toLocaleString('fr') +
+                        '/' +
+                        DEFAULT_POOL_SIZE_LIMIT.toLocaleString('fr') +
+                        '.'
+                  }`}
         >
           <IconWrapper size={20} style={{ transform: 'rotate(180deg)', marginLeft: '12px' }}>
             <InfoIcon />
@@ -101,14 +108,10 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
           <Trans>{tier.lockupPeriod} lock up period</Trans>
         </TYPE.body1>
         <MouseoverTooltip
-          style={{ whiteSpace: 'pre-line' }}
-          text={t`This amount of rewards is based on assumption that your staked amount will be kept for the whole period of ${
-            tier.period
-          }. In this case your APY will be ${
-            tier.APY
-          }%. If you partially or fully unstake your IXS before the end date 5% APY will be applied to unstaked amount. 
-                  ${'' ?? ''}
-                  Please note: your rewards will be available with vesting process in 10 weeks after unstakting`}
+          style={{ whiteSpace: 'pre-line', textAlign: 'center' }}
+          text={t`Lock period means the time you won’t be able to unstake your IXS fully or partially. Please carefully consider the risks involved.
+                ${'' ?? ''}
+                You will be able to redeem your staked IXS fully or partially after lock period. `}
         >
           <IconWrapper size={20} style={{ transform: 'rotate(180deg)', marginLeft: '12px' }}>
             <InfoIcon />
@@ -128,7 +131,7 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
         <RowCenter>
           <TYPE.description3 fontWeight={400} opacity="0.5">
             <Trans>
-              Left to fill <span style={{ fontWeight: 700 }}>{leftToFill()}</span> coins
+              Left to fill <span style={{ fontWeight: 700 }}>{leftToFill}</span> coins
             </Trans>
           </TYPE.description3>
         </RowCenter>

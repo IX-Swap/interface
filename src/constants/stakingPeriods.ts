@@ -8,9 +8,7 @@ export enum PeriodsEnum {
 
 export interface IStaking {
   period: PeriodsEnum
-  startDate: Date
-  endDate: Date
-  lockedTill: Date
+  lockedTill: any
   stakeAmount: number
   distributeAmount: number
   apy: number
@@ -34,7 +32,7 @@ const periods_index = {
   [periods.TWO_MONTHS]: 2,
   [periods.THREE_MONTHS]: 3,
 }
-const periods_in_seconds = {
+export const periods_in_seconds = {
   [periods.WEEK]: 7 * oneDaySeconds,
   [periods.MONTH]: 30 * oneDaySeconds,
   [periods.TWO_MONTHS]: 2 * 30 * oneDaySeconds,
