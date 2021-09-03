@@ -577,7 +577,15 @@ export function useGetStakings() {
         accum.push(...item)
         return accum
       }, [])
-      transactions.sort((a: IStaking, b: IStaking) => a.startDateUnix > b.startDateUnix)
+      transactions.sort((a: IStaking, b: IStaking) => {
+        if (a.startDateUnix > b.startDateUnix) {
+          return -1
+        }
+        if (a.startDateUnix < b.startDateUnix) {
+          return 1
+        }
+        return 0
+      })
       dispatch(getStakings.fulfilled({ transactions }))
       return transactions
     } catch (error) {
@@ -651,6 +659,7 @@ export function useGetVestings() {
 
   return useCallback(async () => {
     try {
+      // returns dynamic number of arrays of size 7. Each array consists of [start, end, amount, claimed, cliff, segments, singlePayout]
       const vestedTransactions = await staking?.vestedTransactions(account)
       console.log('avocado vestedTransactions', vestedTransactions)
     } catch (error) {

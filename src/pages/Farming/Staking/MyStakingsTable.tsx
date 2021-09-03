@@ -8,7 +8,7 @@ import { useAdminState, useGetKycList, useGetMe } from 'state/admin/hooks'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import { shortenAddress } from 'utils'
 import { Box } from 'rebass'
-import { useGetStakings, useStakingState, useUnstakeFromTwoMonths } from 'state/stake/hooks'
+import { useGetStakings, useStakingState, useGetVestings } from 'state/stake/hooks'
 import { dateFormatter } from 'state/stake/reducer'
 import periods_lock_months, { PeriodsEnum } from 'constants/stakingPeriods'
 import Row, { RowBetween, RowFixed, RowCenter } from 'components/Row'
@@ -86,21 +86,12 @@ const Header = () => {
 }
 
 const Body = () => {
-  const unstake = useUnstakeFromTwoMonths()
   const { stakings } = useStakingState()
-  const unstakeFirstStake = () => {
-    if (stakings.length === 0) {
-      console.log('no stakings, cannot unstake')
-      return
-    }
-    const stake = stakings.find((item) => item.period === 'two_months')
-    if (!stake) {
-      console.log('no stakings with period two_months')
-      return
-    }
-    console.log('unstaking stake -', stake)
-    unstake(stake, stake.stakeAmount / 10)
-  }
+
+  // const getVestings = useGetVestings()
+  // useEffect(() => {
+  //   getVestings()
+  // })
 
   function formatAmount(amount: number) {
     return amount.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 10 })
