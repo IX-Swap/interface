@@ -21,6 +21,7 @@ import { tryParseAmount } from '../swap/helpers'
 import { saveStakingStatus, increaseAllowance, stake, getStakings } from './actions'
 import { useIXSStakingContract, useIXSTokenContract, useIXSGovTokenContract } from 'hooks/useContract'
 import { IXS_STAKING_V1_ADDRESS_PLAIN, IXS_GOVERNANCE_ADDRESS_PLAIN } from 'constants/addresses'
+import { calculateGasMargin } from '../../utils/calculateGasMargin'
 
 import stakingPeriodsData, { PeriodsEnum, IStaking } from 'constants/stakingPeriods'
 
@@ -416,22 +417,50 @@ export function useStakeFor(period?: PERIOD) {
         dispatch(stake.pending())
         switch (period) {
           case PERIOD.ONE_WEEK: {
-            const stakeTx = await staking?.stakeForWeek(account, stakeAmount, noData, { gasLimit: 9999999 })
+            const estimatedGas = await staking?.estimateGas.stakeForWeek(account, stakeAmount, noData)
+            if (!estimatedGas) {
+              dispatch(stake.rejected({ errorMessage: 'cannot estimate gas' }))
+              break
+            }
+            const stakeTx = await staking?.stakeForWeek(account, stakeAmount, noData, {
+              gasLimit: calculateGasMargin(estimatedGas),
+            })
             dispatch(stake.fulfilled({ data: stakeTx }))
             break
           }
           case PERIOD.ONE_MONTH: {
-            const stakeTx = await staking?.stakeForMonth(account, stakeAmount, noData, { gasLimit: 9999999 })
+            const estimatedGas = await staking?.estimateGas.stakeForMonth(account, stakeAmount, noData)
+            if (!estimatedGas) {
+              dispatch(stake.rejected({ errorMessage: 'cannot estimate gas' }))
+              break
+            }
+            const stakeTx = await staking?.stakeForMonth(account, stakeAmount, noData, {
+              gasLimit: calculateGasMargin(estimatedGas),
+            })
             dispatch(stake.fulfilled({ data: stakeTx }))
             break
           }
           case PERIOD.TWO_MONTHS: {
-            const stakeTx = await staking?.stakeForTwoMonths(account, stakeAmount, noData, { gasLimit: 9999999 })
+            const estimatedGas = await staking?.estimateGas.stakeForTwoMonths(account, stakeAmount, noData)
+            if (!estimatedGas) {
+              dispatch(stake.rejected({ errorMessage: 'cannot estimate gas' }))
+              break
+            }
+            const stakeTx = await staking?.stakeForTwoMonths(account, stakeAmount, noData, {
+              gasLimit: calculateGasMargin(estimatedGas),
+            })
             dispatch(stake.fulfilled({ data: stakeTx }))
             break
           }
           case PERIOD.THREE_MONTHS: {
-            const stakeTx = await staking?.stakeForThreeMonths(account, stakeAmount, noData, { gasLimit: 9999999 })
+            const estimatedGas = await staking?.estimateGas.stakeForThreeMonths(account, stakeAmount, noData)
+            if (!estimatedGas) {
+              dispatch(stake.rejected({ errorMessage: 'cannot estimate gas' }))
+              break
+            }
+            const stakeTx = await staking?.stakeForThreeMonths(account, stakeAmount, noData, {
+              gasLimit: calculateGasMargin(estimatedGas),
+            })
             dispatch(stake.fulfilled({ data: stakeTx }))
             break
           }
@@ -507,7 +536,6 @@ export function useGetStakings() {
         return accum
       }, [])
       transactions.sort((a: { unixStart: number }, b: { unixStart: number }) => a.unixStart > b.unixStart)
-      console.log('useGetStakings transactions', transactions)
       dispatch(getStakings.fulfilled({ transactions }))
       return transactions
     } catch (error) {
@@ -528,8 +556,14 @@ export function useUnstakeFromWeek() {
         const noData = '0x00'
 
         await tokenContract?.increaseAllowance(staking?.address, stakeAmount)
-        // await staking?.estimateGas.unstakeFromWeek(BigNumber.from(originalIndex), noData)
-        await staking?.unstakeFromWeek(BigNumber.from(originalIndex), noData, { gasLimit: 9999999 })
+        const stakeIndex = BigNumber.from(originalIndex)
+
+        const estimatedGas = await staking?.estimateGas.unstakeFromWeek(stakeIndex, noData)
+        if (!estimatedGas) {
+          // todo dispatch error!
+          return
+        }
+        await staking?.unstakeFromWeek(stakeIndex, noData, { gasLimit: calculateGasMargin(estimatedGas) })
       } catch (error) {
         console.error(`useUnstake error`, error)
       }
@@ -545,14 +579,19 @@ export function useUnstakeFromTwoMonths() {
   return useCallback(
     async (data: IStaking, amount: number) => {
       try {
-        const { originalData, originalIndex } = data
-        const stakeAmount = originalData[1]
         const noData = '0x00'
-        const partialStakeAmount = BigNumber.from(amount * 10).pow(18)
+        const stakeIndex = BigNumber.from(data.originalIndex)
+        const partialStakeAmount = utils.parseUnits(amount.toString(), 'ether')
 
-        await tokenContract?.increaseAllowance(staking?.address, stakeAmount)
-        await staking?.unstakeFromTwoMonths(partialStakeAmount, BigNumber.from(originalIndex), noData, {
-          gasLimit: 9999999,
+        await tokenContract?.increaseAllowance(staking?.address, partialStakeAmount)
+        const estimatedGas = await staking?.estimateGas.unstakeFromTwoMonths(partialStakeAmount, stakeIndex, noData)
+
+        if (!estimatedGas) {
+          // todo dispatch error!
+          return
+        }
+        await staking?.unstakeFromTwoMonths(partialStakeAmount, stakeIndex, noData, {
+          gasLimit: calculateGasMargin(estimatedGas),
         })
       } catch (error) {
         console.error(`useUnstake error`, error)

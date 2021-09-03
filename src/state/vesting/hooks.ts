@@ -3,7 +3,7 @@ import { t } from '@lingui/macro'
 import { IXS_ADDRESS } from 'constants/addresses'
 import { BigNumber } from 'ethers'
 import { useCurrency } from 'hooks/Tokens'
-import { useVestingContract } from 'hooks/useContract'
+import { useVestingContract, useIXSTokenContract } from 'hooks/useContract'
 import useTheme from 'hooks/useTheme'
 import { useActiveWeb3React } from 'hooks/web3'
 import { VestingStatus } from 'pages/Farming/Vesting'
@@ -21,16 +21,23 @@ import { vestingResponseAdapter } from './utils'
 export function useDistributeCallback(): () => Promise<void> {
   const vesting = useVestingContract()
   const { chainId } = useActiveWeb3React()
+  const tokenContract = useIXSTokenContract()
 
   const currency = useCurrency(IXS_ADDRESS[chainId ?? 42])
   const decimals = currency?.decimals
   return useCallback(async () => {
     try {
+      // await tokenContract?.transfer(
+      //   '0x91112a4B1A0c7f5eE34Cc4d812fd51f9011fD7F5',
+      //   BigNumber.from(50).mul(BigNumber.from(10).pow(decimals ?? 1))
+      // )
       const success = await vesting?.distribute(
-        '0x2966adb1F526069cACac849FDd00C41334652238',
+        // '0x2966adb1F526069cACac849FDd00C41334652238',
+        '0x4caB695A77bF488507BF238F24d1e3e31242aBfd',
         BigNumber.from(604800),
         BigNumber.from(50).mul(BigNumber.from(10).pow(decimals ?? 1)),
-        BigNumber.from(3 * 60 * 60)
+        BigNumber.from(3 * 60 * 60),
+        { gasLimit: 9999999 }
       )
       console.log({ success })
     } catch (error) {
