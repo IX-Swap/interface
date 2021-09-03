@@ -650,6 +650,7 @@ export function useGetVestings() {
 
   return useCallback(async () => {
     try {
+      // returns dynamic number of arrays of size 7. Each array consists of [start, end, amount, claimed, cliff, segments, singlePayout]
       const vestedTransactions = await staking?.vestedTransactions(account)
       console.log('avocado vestedTransactions', vestedTransactions)
     } catch (error) {
