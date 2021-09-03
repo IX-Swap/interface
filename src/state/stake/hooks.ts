@@ -621,3 +621,17 @@ export function useUnstakeFromTwoMonths() {
     [staking, tokenContract]
   )
 }
+
+export function useGetVestings() {
+  const staking = useIXSStakingContract()
+  const { account } = useActiveWeb3React()
+
+  return useCallback(async () => {
+    try {
+      const vestedTransactions = await staking?.vestedTransactions(account)
+      console.log('avocado vestedTransactions', vestedTransactions)
+    } catch (error) {
+      console.error(`useGetStakings error `, error)
+    }
+  }, [staking, account])
+}
