@@ -26,32 +26,32 @@ const periods = {
   TWO_MONTHS: 'two_months',
   THREE_MONTHS: 'three_months',
 }
-// todo everything camel case. why did i even do snake case here
-const periods_index = {
+const periodsIndex = {
   [periods.WEEK]: 0,
   [periods.MONTH]: 1,
   [periods.TWO_MONTHS]: 2,
   [periods.THREE_MONTHS]: 3,
 }
-export const periods_in_seconds = {
+
+export const periodsInSeconds = {
   [periods.WEEK]: 7 * oneDaySeconds,
   [periods.MONTH]: 30 * oneDaySeconds,
   [periods.TWO_MONTHS]: 2 * 30 * oneDaySeconds,
   [periods.THREE_MONTHS]: 3 * 30 * oneDaySeconds,
 }
-const periods_apy = {
+const periodsApy = {
   [periods.WEEK]: 5,
   [periods.MONTH]: 18,
   [periods.TWO_MONTHS]: 44,
   [periods.THREE_MONTHS]: 88,
 }
-const periods_lock_months = {
+const periodsLockMonths = {
   [periods.WEEK]: 0,
   [periods.MONTH]: 0,
   [periods.TWO_MONTHS]: 1,
   [periods.THREE_MONTHS]: 2,
 }
-const periods_in_days = {
+const periodsInDays = {
   [periods.WEEK]: 7,
   [periods.MONTH]: 30,
   [periods.TWO_MONTHS]: 2 * 30,
@@ -60,9 +60,9 @@ const periods_in_days = {
 export default {
   oneDaySeconds,
   periods,
-  periods_index,
-  periods_in_seconds,
-  periods_apy,
-  periods_lock_months,
-  periods_in_days,
+  periodsIndex,
+  periodsInSeconds,
+  periodsApy,
+  periodsLockMonths,
+  periodsInDays,
 }

@@ -505,7 +505,7 @@ export function useGetStakings() {
 
   return useCallback(async () => {
     try {
-      const { oneDaySeconds, periods_index, periods_in_seconds, periods_apy, periods_lock_months, periods_in_days } =
+      const { oneDaySeconds, periodsIndex, periodsInSeconds, periodsApy, periodsLockMonths, periodsInDays } =
         stakingPeriodsData
 
       const floorTo4Decimals = (num: number) => Math.floor((num + Number.EPSILON) * 10000) / 10000
@@ -529,8 +529,8 @@ export function useGetStakings() {
           const penalty = 5 / 100
           reward = floorTo4Decimals((amount * penalty * secondsPassed) / yearSeconds)
         } else {
-          const apyPercent = periods_apy[period] / 100
-          const daysPassed = periods_in_days[period]
+          const apyPercent = periodsApy[period] / 100
+          const daysPassed = periodsInDays[period]
           reward = floorTo4Decimals((amount * apyPercent * daysPassed) / yearDays)
         }
         return reward
@@ -543,13 +543,13 @@ export function useGetStakings() {
         return now > lockedTill * 1000
       }
       const getByPeriod = async (period: PeriodsEnum) => {
-        const stakedTransactions = await staking?.stakedTransactionsForPeriod(account, periods_index[period])
+        const stakedTransactions = await staking?.stakedTransactionsForPeriod(account, periodsIndex[period])
         if (stakedTransactions.length === 0) return []
         return stakedTransactions.map((data: Array<number>, index: number) => {
           const startDateUnix = BigNumber.from(data[0]).toNumber()
           const stakeAmount = +utils.formatUnits(data[1], 18)
-          const endDateUnix = startDateUnix + periods_in_seconds[period]
-          const lockMonths = periods_lock_months[period]
+          const endDateUnix = startDateUnix + periodsInSeconds[period]
+          const lockMonths = periodsLockMonths[period]
           const lockSeconds = lockMonths * 30 * oneDaySeconds
           const lockedTillUnix = startDateUnix + lockSeconds
           return {
@@ -559,7 +559,7 @@ export function useGetStakings() {
             lockedTill: new Date(lockedTillUnix * 1000),
             stakeAmount,
             distributeAmount: stakeAmount,
-            apy: periods_apy[period],
+            apy: periodsApy[period],
             reward: calculateReward(stakeAmount, period, startDateUnix, endDateUnix, lockedTillUnix),
             lockMonths,
             startDateUnix,

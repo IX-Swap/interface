@@ -35,7 +35,7 @@ import { useStakingState } from 'state/stake/hooks'
 import { PERIOD, convertPeriod } from 'state/stake/reducer'
 import { IconWrapper } from 'components/AccountDetails/styleds'
 import { ReactComponent as Checkmark } from 'assets/images/checked-solid-bg.svg'
-import { periods_in_seconds } from 'constants/stakingPeriods'
+import { periodsInSeconds } from 'constants/stakingPeriods'
 
 interface StakingModalProps {
   onDismiss: () => void
@@ -102,7 +102,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
 
   function estimatePeriod(period?: PERIOD) {
     const unixStart = Date.now() / 1000
-    const endDateUnix = unixStart + periods_in_seconds[convertPeriod(period)]
+    const endDateUnix = unixStart + periodsInSeconds[convertPeriod(period)]
     const endDate = new Date(endDateUnix * 1000)
     return dateFormatter.format(endDate)
   }
