@@ -577,7 +577,15 @@ export function useGetStakings() {
         accum.push(...item)
         return accum
       }, [])
-      transactions.sort((a: IStaking, b: IStaking) => a.startDateUnix > b.startDateUnix)
+      transactions.sort((a: IStaking, b: IStaking) => {
+        if (a.startDateUnix > b.startDateUnix) {
+          return -1
+        }
+        if (a.startDateUnix < b.startDateUnix) {
+          return 1
+        }
+        return 0
+      })
       dispatch(getStakings.fulfilled({ transactions }))
       return transactions
     } catch (error) {
