@@ -544,6 +544,7 @@ export function useGetStakings() {
       }
       const getByPeriod = async (period: PeriodsEnum) => {
         const stakedTransactions = await staking?.stakedTransactionsForPeriod(account, periodsIndex[period])
+        console.log(`stakedTransactions for ${periodsIndex[period]}: ${stakedTransactions}`)
         if (stakedTransactions.length === 0) return []
         return stakedTransactions.map((data: Array<number>, index: number) => {
           const startDateUnix = BigNumber.from(data[0]).toNumber()

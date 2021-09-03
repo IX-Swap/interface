@@ -9,7 +9,14 @@ import { LoaderThin } from 'components/Loader/LoaderThin'
 import { shortenAddress } from 'utils'
 import { Box } from 'rebass'
 import { useGetStakings, useStakingState, useGetVestings } from 'state/stake/hooks'
+import { dateFormatter } from 'state/stake/reducer'
 import periods_lock_months, { PeriodsEnum } from 'constants/stakingPeriods'
+import Row, { RowBetween, RowFixed, RowCenter } from 'components/Row'
+import Column from 'components/Column'
+import { ReactComponent as LockIcon } from 'assets/images/lock.svg'
+import { MouseoverTooltip } from 'components/Tooltip'
+import { IconWrapper } from 'components/AccountDetails/styleds'
+import { ReactComponent as InfoIcon } from 'assets/images/attention.svg'
 
 import { TYPE } from 'theme'
 
@@ -26,11 +33,54 @@ const headerCells = [
 const Header = () => {
   return (
     <StyledHeaderRow>
-      {headerCells.map((cell) => (
+      {/*      {headerCells.map((cell) => (
         <div className="header-cell-label" key={cell}>
           {cell}
         </div>
-      ))}
+      ))}*/}
+      <div className="header-label">
+        <Trans>Tier</Trans>
+      </div>
+      <div>
+        <div className="header-label">
+          <Trans>APY</Trans>
+        </div>
+        <MouseoverTooltip
+          style={{ whiteSpace: 'pre-line', textAlign: 'center' }}
+          text={t`Full amount of APY is applied only to amount of IXS staked till the end of staking period.`}
+        >
+          <IconWrapper size={20} style={{ transform: 'rotate(180deg)', marginLeft: '12px' }}>
+            <InfoIcon />
+          </IconWrapper>
+        </MouseoverTooltip>
+      </div>
+      <div className="header-label">
+        <Trans>Period of staking</Trans>
+      </div>
+      <div className="header-label">
+        <Trans>Lock Period</Trans>
+      </div>
+      <div className="header-label">
+        <Trans>Amount</Trans>
+      </div>
+      <div className="header-label">
+        <Trans>Distribute</Trans>
+      </div>
+      <div>
+        <div className="header-label">
+          <Trans>Estimated Rewards</Trans>
+        </div>
+        <MouseoverTooltip
+          style={{ whiteSpace: 'pre-line', textAlign: 'center' }}
+          text={t`Estimated rewards are based on assumption that your staked amount will be fully kept for the whole period of staking. In this case maximum APY will be applied 
+                  ${'' ?? ''}
+                  If you partially or fully unstake your IXS before the end date - 5% APY will be applied to unstaked amount. `}
+        >
+          <IconWrapper size={20} style={{ transform: 'rotate(180deg)', marginLeft: '12px' }}>
+            <InfoIcon />
+          </IconWrapper>
+        </MouseoverTooltip>
+      </div>
     </StyledHeaderRow>
   )
 }
@@ -77,22 +127,49 @@ const Body = () => {
     }
   }
 
+  function formatDate(dateUnix: number) {
+    return dateFormatter.format(new Date(dateUnix * 1000))
+  }
+
+  function getDateShortTime(dateUnix: number) {
+    return new Date(dateUnix * 1000).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })
+  }
+
+  function getDateFullTime(dateUnix: number) {
+    return new Date(dateUnix * 1000).toLocaleTimeString('en-GB')
+  }
+
   return (
     <>
-      {stakings?.map(({ period, startDateUnix, apy, stakeAmount, distributeAmount, reward }) => (
-        <StyledBodyRow key={startDateUnix}>
-          <Tier>
-            <span className="digit">{getPeriodDigit(period)}</span>&nbsp;{getPeriodString(period).toUpperCase()}
-          </Tier>
-          <div>{apy}%</div>
-          <div>date</div>
-          <div>{getLockPeriod(period)}</div>
-          <div>{formatAmount(stakeAmount)} IXS</div>
-          <div>{formatAmount(distributeAmount)} IXSgov</div>
-          <div className="rewards">{formatAmount(reward)} IXS</div>
-          <div>Locked till</div>
-        </StyledBodyRow>
-      ))}
+      {stakings?.map(
+        ({ period, startDateUnix, endDateUnix, lockedTillUnix, apy, stakeAmount, distributeAmount, reward }) => (
+          <StyledBodyRow key={startDateUnix}>
+            <Tier>
+              <span className="digit">{getPeriodDigit(period)}</span>&nbsp;{getPeriodString(period).toUpperCase()}
+            </Tier>
+            <div>{apy}%</div>
+            <Column>
+              <Row>{formatDate(startDateUnix)}</Row>
+              <Row>
+                {formatDate(endDateUnix)} <MutedText>{getDateFullTime(endDateUnix)}</MutedText>
+              </Row>
+            </Column>
+            <div>{getLockPeriod(period)}</div>
+            <div>{formatAmount(stakeAmount)} IXS</div>
+            <div>{formatAmount(distributeAmount)} IXSgov</div>
+            <div className="rewards">{formatAmount(reward)} IXS</div>
+            <LockedTillColumn>
+              <Row>
+                <LockIcon className="lock-icon" />
+                <Trans>Locked till</Trans>
+              </Row>
+              <Row>
+                {formatDate(lockedTillUnix)} {getDateShortTime(lockedTillUnix)}
+              </Row>
+            </LockedTillColumn>
+          </StyledBodyRow>
+        )
+      )}
     </>
   )
 }
@@ -103,6 +180,7 @@ export const MyStakingsTable = () => {
 
   useEffect(() => {
     getStakings()
+    console.log('stakings: ', stakings)
   }, [getStakings, hasStakedSuccessfully])
 
   return (
@@ -144,9 +222,13 @@ const Loader = styled.div`
 `
 
 const NoData = styled.div`
-  font-weight: 600;
+  margin-top: 39px
+  font-weight: 400;
   color: ${({ theme: { text2 } }) => text2};
   text-align: center;
+  background-color: #2c254a80;
+  border-radius: 30px;
+  padding: 36px;
 `
 
 const Dash = styled.div`
@@ -181,18 +263,20 @@ const Container = styled.div`
 `
 
 const StyledHeaderRow = styled(HeaderRow)`
-  grid-template-columns: 160px 100px 190px 160px 200px 180px auto;
+  grid-template-columns: 160px 100px 190px 160px 160px 180px auto;
   min-width: 1270px;
-  .header-cell-label {
-    color: #edceff80;
+
+  .header-label {
+    color: ${({ theme: { text2 } }) => text2};
     font-weight: 600;
     font-size: 14px;
-    line-height: 21px;
+    line-height: 22px;
+    opacity: 0.5;
   }
 `
 
 const StyledBodyRow = styled(BodyRow)`
-  grid-template-columns: 160px 100px 190px 160px 200px 180px 180px auto;
+  grid-template-columns: 160px 100px 190px 160px 160px 180px 180px auto;
   min-width: 1270px;
   font-size: 14px;
   line-height: 21px;
@@ -200,5 +284,22 @@ const StyledBodyRow = styled(BodyRow)`
 
   .rewards {
     color: #9df9b1;
+  }
+`
+const MutedText = styled.span`
+  color: ${({ theme: { text2 } }) => text2};
+  opacity: 0.5;
+  padding-left: 0.5em;
+`
+
+const LockedTillColumn = styled(Column)`
+  color: ${({ theme: { text2 } }) => text2};
+  opacity: 0.5;
+  font-size: 12px;
+  line-height: 18px;
+
+  .lock-icon {
+    margin-right: 0.5em;
+    margin-bottom: 4px;
   }
 `
