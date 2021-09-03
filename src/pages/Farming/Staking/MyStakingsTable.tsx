@@ -9,7 +9,10 @@ import { LoaderThin } from 'components/Loader/LoaderThin'
 import { shortenAddress } from 'utils'
 import { Box } from 'rebass'
 import { useGetStakings, useStakingState, useUnstakeFromTwoMonths } from 'state/stake/hooks'
+import { dateFormatter } from 'state/stake/reducer'
 import periods_lock_months, { PeriodsEnum } from 'constants/stakingPeriods'
+import Row, { RowBetween, RowFixed, RowCenter } from 'components/Row'
+import Column from 'components/Column'
 
 import { TYPE } from 'theme'
 
@@ -86,15 +89,28 @@ const Body = () => {
     }
   }
 
+  function formatDate(dateUnix: number) {
+    return dateFormatter.format(new Date(dateUnix * 1000))
+  }
+
+  function getDateFullTime(dateUnix: number) {
+    return new Date(dateUnix * 1000).toLocaleTimeString('en-GB')
+  }
+
   return (
     <>
-      {stakings?.map(({ period, startDateUnix, apy, stakeAmount, distributeAmount, reward }) => (
+      {stakings?.map(({ period, startDateUnix, endDateUnix, apy, stakeAmount, distributeAmount, reward }) => (
         <StyledBodyRow key={startDateUnix}>
           <Tier>
             <span className="digit">{getPeriodDigit(period)}</span>&nbsp;{getPeriodString(period).toUpperCase()}
           </Tier>
           <div>{apy}%</div>
-          <div>date</div>
+          <Column>
+            <Row>{formatDate(startDateUnix)}</Row>
+            <Row>
+              {formatDate(endDateUnix)} <MutedText>{getDateFullTime(endDateUnix)}</MutedText>
+            </Row>
+          </Column>
           <div>{getLockPeriod(period)}</div>
           <div>{formatAmount(stakeAmount)} IXS</div>
           <div>{formatAmount(distributeAmount)} IXSgov</div>
@@ -112,6 +128,7 @@ export const MyStakingsTable = () => {
 
   useEffect(() => {
     getStakings()
+    console.log('stakings: ', stakings)
   }, [getStakings, hasStakedSuccessfully])
 
   return (
@@ -214,4 +231,9 @@ const StyledBodyRow = styled(BodyRow)`
   .rewards {
     color: #9df9b1;
   }
+`
+const MutedText = styled.span`
+  color: ${({ theme: { text2 } }) => text2};
+  opacity: 0.5;
+  padding-left: 0.5em;
 `

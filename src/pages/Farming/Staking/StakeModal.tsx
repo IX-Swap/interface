@@ -32,7 +32,7 @@ import { ReactComponent as ArrowDown } from '../../../assets/images/arrow.svg'
 import { Text } from 'rebass'
 import { theme } from 'theme'
 import { useStakingState } from 'state/stake/hooks'
-import { PERIOD, convertPeriod } from 'state/stake/reducer'
+import { PERIOD, convertPeriod, dateFormatter } from 'state/stake/reducer'
 import { IconWrapper } from 'components/AccountDetails/styleds'
 import { ReactComponent as Checkmark } from 'assets/images/checked-solid-bg.svg'
 import { periodsInSeconds } from 'constants/stakingPeriods'
@@ -93,12 +93,6 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
       setTypedValue(availableIXS)
     }
   }
-
-  const dateFormatter = new Intl.DateTimeFormat('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: '2-digit',
-  })
 
   function estimatePeriod(period?: PERIOD) {
     const unixStart = Date.now() / 1000
