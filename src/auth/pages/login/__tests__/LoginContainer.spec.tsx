@@ -56,7 +56,9 @@ describe('LoginContainer', () => {
       mutation: [login, generateMutationResult({ data: user })],
       step: 'login',
       attempts: 0,
-      resetAttempts: resetAttempts
+      resetAttempts: resetAttempts,
+      locked: false,
+      email: ''
     })
 
     const { getByText, getByLabelText } = render(<LoginContainer />)
@@ -85,7 +87,9 @@ describe('LoginContainer', () => {
       mutation: [login, generateMutationResult({ data: user })],
       step: 'login',
       attempts: 0,
-      resetAttempts: resetAttempts
+      resetAttempts: resetAttempts,
+      locked: false,
+      email: ''
     })
 
     const { getByText } = render(<LoginContainer />)
@@ -95,15 +99,17 @@ describe('LoginContainer', () => {
     expect(history.location.pathname).toBe(AuthRoute.passwordReset)
   })
 
-  it('shows recaptcha when attempt >= 3', () => {
+  it('shows recaptcha when attempt === 3', () => {
     const login = jest.fn()
     const resetAttempts = jest.fn()
 
     jest.spyOn(useLoginHook, 'useLogin').mockReturnValue({
       mutation: [login, generateMutationResult({ data: user })],
       step: 'login',
-      attempts: 4,
-      resetAttempts: resetAttempts
+      attempts: 3,
+      resetAttempts: resetAttempts,
+      locked: false,
+      email: ''
     })
 
     const { getByText } = render(<LoginContainer />)
@@ -122,11 +128,34 @@ describe('LoginContainer', () => {
       mutation: [login, generateMutationResult({ data: user })],
       step: 'otp',
       attempts: 0,
-      resetAttempts: resetAttempts
+      resetAttempts: resetAttempts,
+      locked: false,
+      email: ''
     })
 
     const { getByText } = render(<LoginContainer />)
 
     expect(getByText('Two-factor authentication')).toBeTruthy()
+  })
+
+  it('shows locked view when mutation returns that account is locked', () => {
+    const login = jest.fn()
+    const resetAttempts = jest.fn()
+    jest.spyOn(useLoginHook, 'useLogin').mockReturnValue({
+      mutation: [login, generateMutationResult({ data: user })],
+      step: 'otp',
+      attempts: 0,
+      resetAttempts: resetAttempts,
+      locked: true,
+      email: ''
+    })
+
+    const { getByText } = render(<LoginContainer />)
+
+    expect(
+      getByText(
+        'Your account has been locked due to multiple failed attempts. We have sent a reset link to your registered email address.'
+      )
+    ).toBeTruthy()
   })
 })

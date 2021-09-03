@@ -20,7 +20,7 @@ describe('TableRows', () => {
     uri: 'test/uri',
     items: [],
     cacheQueryKey: 'cache',
-    isNewThemeOn: false
+    themeVariant: 'default'
   }
 
   afterEach(async () => {
@@ -45,32 +45,32 @@ describe('TableRows', () => {
     expect(TableRow).toHaveBeenCalledTimes(2)
     expect(TableRow).toHaveBeenCalledWith(
       expect.objectContaining({
-        style: { backgroundColor: 'initial' }
+        style: {
+          backgroundColor: 'initial',
+          border: 'initial',
+          borderBottom: 'initial'
+        }
       }),
       {}
     )
   })
 
-  it('renders TableRow with correct props when isNewThemeOn is false', async () => {
-    const extraProps = { ...props, items: ['1', '2'] }
-    render(<TableRows {...extraProps} />)
-
-    expect(TableRow).toHaveBeenCalledWith(
-      expect.objectContaining({
-        style: { backgroundColor: 'initial' }
-      }),
-      {}
-    )
-  })
-
-  it('renders TableRow with correct props when isNewThemeOn is true', async () => {
-    const extraProps = { ...props, items: ['1', '2', '3'], isNewThemeOn: true }
+  it('renders TableRow with correct props when themeVariant is primary is true', async () => {
+    const extraProps = {
+      ...props,
+      items: ['1', '2', '3'],
+      themeVariant: 'primary'
+    }
     render(<TableRows {...extraProps} />)
 
     expect(TableRow).toHaveBeenNthCalledWith(
       1,
       expect.objectContaining({
-        style: { backgroundColor: '#ffffff' }
+        style: {
+          backgroundColor: '#ffffff',
+          border: 'none',
+          borderBottom: 'initial'
+        }
       }),
       {}
     )
@@ -78,7 +78,11 @@ describe('TableRows', () => {
     expect(TableRow).toHaveBeenNthCalledWith(
       2,
       expect.objectContaining({
-        style: { backgroundColor: '#f5f5f5' }
+        style: {
+          backgroundColor: '#F8F8FD',
+          border: 'none',
+          borderBottom: 'initial'
+        }
       }),
       {}
     )
@@ -86,7 +90,11 @@ describe('TableRows', () => {
     expect(TableRow).toHaveBeenNthCalledWith(
       3,
       expect.objectContaining({
-        style: { backgroundColor: '#ffffff' }
+        style: {
+          backgroundColor: '#ffffff',
+          border: 'none',
+          borderBottom: 'initial'
+        }
       }),
       {}
     )

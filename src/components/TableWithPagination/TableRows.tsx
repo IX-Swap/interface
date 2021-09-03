@@ -9,7 +9,7 @@ export interface TableRowsProps<T> extends TableViewProps<T> {
   items: T[]
   cacheQueryKey: any
   bordered: boolean
-  isNewThemeOn?: boolean
+  themeVariant?: 'default' | 'primary' | 'no-header'
 }
 
 export const TableRows = <T,>(props: TableRowsProps<T>): JSX.Element => {
@@ -20,16 +20,18 @@ export const TableRows = <T,>(props: TableRowsProps<T>): JSX.Element => {
     hasActions = false,
     actions,
     cacheQueryKey,
-    isNewThemeOn = false
+    themeVariant = 'default'
   } = props
 
   const theme = useTheme()
 
   const rowColor = (count: number) => {
-    return isNewThemeOn
-      ? count % 2 === 0
+    return themeVariant !== 'default'
+      ? count % 2 === 0 && themeVariant === 'primary'
         ? theme.palette.backgrounds.default
-        : theme.palette.grey[theme.palette.type === 'light' ? 100 : 900]
+        : theme.palette.type === 'light'
+        ? '#F8F8FD'
+        : theme.palette.grey[900]
       : 'initial'
   }
 
@@ -37,7 +39,15 @@ export const TableRows = <T,>(props: TableRowsProps<T>): JSX.Element => {
     <TableBody>
       {items.length > 0 ? (
         items.map((row, i) => (
-          <TableRow key={i} style={{ backgroundColor: rowColor(i) }}>
+          <TableRow
+            key={i}
+            style={{
+              backgroundColor: rowColor(i),
+              border: themeVariant === 'primary' ? 'none' : 'initial',
+              borderBottom:
+                themeVariant === 'no-header' ? '4px solid #ffffff' : 'initial'
+            }}
+          >
             {columns.map(column => (
               <TableCellWrapper
                 bordered={bordered}

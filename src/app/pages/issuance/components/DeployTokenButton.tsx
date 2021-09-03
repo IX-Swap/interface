@@ -6,13 +6,20 @@ import { formatDateAndTime } from 'helpers/dates'
 export interface DeployTokenButtonProps {
   isInitializing: boolean
   isDeploying: boolean
+  isDeployed: boolean
   onClick: () => any
   deploymentInfo?: DeploymentInfo
 }
 
 export const DeployTokenButton = (props: DeployTokenButtonProps) => {
-  const { isDeploying, isInitializing, deploymentInfo, onClick } = props
-  const isDeployed = deploymentInfo !== undefined
+  const {
+    isDeploying,
+    isDeployed,
+    isInitializing,
+    deploymentInfo,
+    onClick
+  } = props
+  const deployed = isDeployed || deploymentInfo !== undefined
 
   return (
     <Grid container direction='column' alignItems='flex-end' spacing={1}>
@@ -20,20 +27,20 @@ export const DeployTokenButton = (props: DeployTokenButtonProps) => {
         <Button
           variant='contained'
           color='primary'
-          disabled={isDeploying || isInitializing || isDeployed}
+          disabled={isDeploying || isInitializing || deployed}
           onClick={onClick}
         >
           Deploy
         </Button>
       </Grid>
       <Grid item>
-        {!isDeployed && isInitializing && (
+        {!deployed && isInitializing && (
           <Typography>Getting info...</Typography>
         )}
-        {!isDeployed && isDeploying && (
+        {!deployed && isDeploying && (
           <Typography>Token is being deployed...</Typography>
         )}
-        {isDeployed && (
+        {deployed && (
           <Typography>
             Successfully deployed at{' '}
             {formatDateAndTime(deploymentInfo?.updatedAt ?? '')}

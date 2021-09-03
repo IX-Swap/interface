@@ -10,7 +10,9 @@ export enum DSOFormSection {
   'Offering Terms' = 'dso-terms',
   'Information' = 'dso-profile',
   'Documents' = 'dso-documents',
-  'Team Members' = 'dso-team'
+  'Team Members' = 'dso-team',
+  'FAQs' = 'dso-faqs',
+  'Videos' = 'dso-videos'
 }
 
 export const DSOScrollGuide = () => {

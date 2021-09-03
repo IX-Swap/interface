@@ -15,7 +15,7 @@ export const EstimatedValue = (props: EstimatedValueProps) => {
   return (
     <LabelledValue
       label='Estimated Value'
-      value={formatMoney(value, props.symbol)}
+      value={formatMoney(value ?? 0, props.symbol)}
     />
   )
 }

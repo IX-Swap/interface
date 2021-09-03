@@ -5,7 +5,7 @@ import {
   IndividualInfoProps
 } from 'app/pages/authorizer/components/IndividualInfo'
 import { individual } from '__fixtures__/authorizer'
-import { ViewDocument } from 'app/components/DSO/components/ViewDocument'
+// import { ViewDocument } from 'app/components/DSO/components/ViewDocument'
 import { LabelledValue } from 'components/LabelledValue'
 import { renderName } from 'helpers/tables'
 import { convertAddressToString } from '../utils'
@@ -14,9 +14,9 @@ jest.mock('components/LabelledValue', () => ({
   LabelledValue: jest.fn(() => null)
 }))
 
-jest.mock('app/components/DSO/components/ViewDocument', () => ({
-  ViewDocument: jest.fn(({ children }) => children())
-}))
+// jest.mock('app/components/DSO/components/ViewDocument', () => ({
+//   ViewDocument: jest.fn(({ children }) => children())
+// }))
 
 describe('IndividualInfo', () => {
   const props: IndividualInfoProps = { data: individual }
@@ -30,18 +30,18 @@ describe('IndividualInfo', () => {
     render(<IndividualInfo {...props} />)
   })
 
-  it('renders ViewDocument with correct props', () => {
-    render(<IndividualInfo {...props} />)
-
-    expect(ViewDocument).toHaveBeenCalledWith(
-      {
-        documentId: props.data.photo,
-        ownerId: props.data.user._id,
-        children: expect.any(Function)
-      },
-      {}
-    )
-  })
+  // it('renders ViewDocument with correct props', () => {
+  //   render(<IndividualInfo {...props} />)
+  //
+  //   expect(ViewDocument).toHaveBeenCalledWith(
+  //     {
+  //       documentId: props.data.photo,
+  //       ownerId: props.data.user._id,
+  //       children: expect.any(Function)
+  //     },
+  //     {}
+  //   )
+  // })
 
   it('renders LabelledValue with correct props', () => {
     render(<IndividualInfo {...props} />)

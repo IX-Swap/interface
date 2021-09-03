@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import React from 'react'
-import { MenuItem } from '@material-ui/core'
+import { Chip, MenuItem } from '@material-ui/core'
 import draftToHtml from 'draftjs-to-html'
 import pdfIcon from 'assets/icons/documents/pdf.svg'
 import docxIcon from 'assets/icons/documents/docx.svg'
@@ -17,6 +17,7 @@ import { Order } from 'types/order'
 import { OrderStatus } from 'app/pages/exchange/components/PastOrderTable/OrderStatus'
 import { Side } from 'app/pages/exchange/components/TradeHistoryTable/Side'
 import { dsoQueryKeys } from 'config/queryKeys'
+import { sanitize } from 'dompurify'
 
 export const renderMenuItems = (
   items: Array<{ label: string; value: string | number }>
@@ -53,7 +54,7 @@ export const renderAddressColumn = (address: string): JSX.Element => (
 )
 
 export const wysiwygToHtml = (draft: string): string => {
-  return draftToHtml(JSON.parse(draft))
+  return draftToHtml(JSON.parse(sanitize(draft)))
 }
 
 export const renderOrderStatus = (status: Order['status']) => {
@@ -84,3 +85,39 @@ export const documentIcons = {
 }
 
 export const renderSide = (side: 'BID' | 'ASK') => <Side side={side} />
+
+export const renderDistributionStatus = (
+  status: 'approved' | 'pending' | 'rejected' | 'complete'
+) => {
+  const colorMap = {
+    approved: {
+      main: '#8DCA82',
+      bg: '#EEF7F1'
+    },
+    pending: {
+      main: '#6739B6',
+      bg: '#EEE4FF'
+    },
+    rejected: {
+      main: '#D20000',
+      bg: '#F4CECE'
+    },
+    complete: {
+      main: '#767676',
+      bg: '#E3E3E3'
+    }
+  }
+  return (
+    <Chip
+      color='secondary'
+      size='small'
+      label={status === 'pending' ? 'pending aproval' : status}
+      style={{
+        textTransform: 'uppercase',
+        fontWeight: 600,
+        color: colorMap[status].main,
+        backgroundColor: colorMap[status].bg
+      }}
+    />
+  )
+}

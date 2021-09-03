@@ -55,7 +55,7 @@ describe('AssetBalance', () => {
     expect(LabelledValue).toHaveBeenCalledTimes(1)
     expect(LabelledValue).toHaveBeenCalledWith(
       {
-        label: 'Account Balance',
+        label: 'Available Balance',
         value: formatMoney(balance.available, balance.symbol)
       },
       {}
@@ -75,7 +75,7 @@ describe('AssetBalance', () => {
     expect(LabelledValue).toHaveBeenCalledTimes(1)
     expect(LabelledValue).toHaveBeenCalledWith(
       {
-        label: 'Account Balance',
+        label: 'Available Balance',
         value: formatMoney(0, balance.symbol)
       },
       {}

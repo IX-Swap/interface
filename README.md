@@ -6,9 +6,9 @@ Built with [React](https://facebook.github.io/react/), [Material-UI](https://mat
 
 ```
 git clone https://github.com/InvestaX/IXWebApp
-npm install
+yarn
 cp .env.example .env #and update .env file
-npm start
+yarn start
 ```
 
 ## Run StandardJS Fixes

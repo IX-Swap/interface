@@ -7,9 +7,10 @@ import { QueryFilter } from 'hooks/filters/useQueryFilter'
 export interface DateFilterProps {
   name: QueryFilter
   label: string
+  width?: number | string
 }
 
-export const DateFilter = ({ name, label }: DateFilterProps) => {
+export const DateFilter = ({ name, label, width = 150 }: DateFilterProps) => {
   return (
     <SearchQueryFilter name={name}>
       {({ value, onChange }) => (
@@ -19,7 +20,7 @@ export const DateFilter = ({ name, label }: DateFilterProps) => {
           size='small'
           inputVariant='outlined'
           label={label}
-          style={{ width: 150 }}
+          style={{ width: width }}
           onChange={date => {
             try {
               onChange(convertDateToISO(date))

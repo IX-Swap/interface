@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { PlaceOrderForm } from 'app/pages/exchange/components/PlaceOrderForm/PlaceOrderForm'
 import { Box, Grid } from '@material-ui/core'
 import { MyOrders } from 'app/pages/exchange/components/MyOrders/MyOrders'
@@ -21,8 +21,25 @@ import { useCustodianWalletSubmit } from 'app/pages/exchange/hooks/useCustodianW
 import { useSymbol } from '../../hooks/useSymbol'
 import { useVirtualAccount } from 'app/pages/accounts/hooks/useVirtualAccount'
 import { useTokenBalance } from 'app/pages/exchange/hooks/useTokenBalance'
+import { DisclosureDialog } from 'app/pages/exchange/components/DisclosureDialog/DisclosureDialog'
+import { useGetSiteConfig } from 'app/pages/exchange/hooks/useGetSiteConfig'
+import { ExchangeRulesLink } from 'app/pages/exchange/components/ExchangeRulesLink/ExchangeRulesLink'
 
 export const Market = () => {
+  const [isDisclosureVisible, setIsDisclosureVisible] = useState<boolean>(false)
+  const { data: config } = useGetSiteConfig()
+  const hasReadMasDisclosure =
+    config !== undefined ? config.hasReadMasDisclosure : false
+  const masDisclosure = config !== undefined ? config.masDisclosure : ''
+
+  useEffect(() => {
+    if (!hasReadMasDisclosure) {
+      setIsDisclosureVisible(true)
+    } else {
+      setIsDisclosureVisible(false)
+    }
+  }, [hasReadMasDisclosure, setIsDisclosureVisible])
+
   const classes = useStyles()
   const {
     openDialog,
@@ -64,7 +81,16 @@ export const Market = () => {
 
   return (
     <Box className={classes.container}>
+      <DisclosureDialog
+        content={masDisclosure}
+        isOpen={isDisclosureVisible}
+        onClose={() => setIsDisclosureVisible(false)}
+      />
       <GetWalletDialog open={openDialog} toggleOpen={setOpenDialog} />
+      <Grid item container xs={12} justify='flex-end'>
+        <ExchangeRulesLink />
+      </Grid>
+      <Box my={2} />
       <Grid item xs={12} className={classes.colorGrid}>
         <FinancialSummary />
       </Grid>

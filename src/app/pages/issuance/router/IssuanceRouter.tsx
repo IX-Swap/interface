@@ -11,6 +11,7 @@ import { PreviewDSO } from 'app/pages/issuance/pages/PreviewDSO'
 import { AppRoute } from 'components/AppRoute'
 import { Commitments } from 'app/pages/issuance/pages/Commitments'
 import { useIsIssuer } from 'helpers/acl'
+import { CapTableRouter } from 'app/pages/issuance/router/CapTableRouter'
 
 export const IssuanceRouter = () => {
   const isIssuer = useIsIssuer()
@@ -75,6 +76,15 @@ export const IssuanceRouter = () => {
           path={IssuanceRoute.commitments}
         >
           <Commitments />
+        </AppRoute>
+      ) : null}
+
+      {isIssuer ? (
+        <AppRoute
+          breadcrumb='Cap Table Management'
+          path={IssuanceRoute.capTable}
+        >
+          <CapTableRouter />
         </AppRoute>
       ) : null}
     </Switch>

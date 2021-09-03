@@ -6,8 +6,8 @@ import { user } from '__fixtures__/user'
 import { AccessReports } from 'app/pages/home/components/AccessReports'
 import { TopIssuers } from 'app/pages/home/components/TopIssuers'
 import { TopCorporates } from 'app/pages/home/components/TopCorporates'
-import { PromoBanner } from 'app/pages/invest/components/PromoBanner'
 import { News } from 'app/pages/home/components/News/News'
+import { BannersCarousel } from 'app/pages/invest/components/BannersCarousel'
 
 jest.mock('app/pages/home/components/News/News', () => ({
   News: jest.fn(() => null)
@@ -25,8 +25,8 @@ jest.mock('app/pages/home/components/TopCorporates', () => ({
   TopCorporates: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/invest/components/PromoBanner', () => ({
-  PromoBanner: jest.fn(() => null)
+jest.mock('app/pages/invest/components/BannersCarousel', () => ({
+  BannersCarousel: jest.fn(() => null)
 }))
 
 describe('Onboarding', () => {
@@ -51,7 +51,7 @@ describe('Onboarding', () => {
     expect(AccessReports).toHaveBeenCalled()
     expect(TopIssuers).toHaveBeenCalled()
     expect(TopCorporates).toHaveBeenCalled()
-    expect(PromoBanner).toHaveBeenCalled()
+    expect(BannersCarousel).toHaveBeenCalled()
     expect(News).toHaveBeenCalled()
   })
 

@@ -7,6 +7,8 @@ import React, { memo, useEffect } from 'react'
 import { getIdentityDefaultActiveStep } from 'app/pages/identity/utils/shared'
 import { useSubmitDetailsOfIssuance } from 'app/pages/identity/hooks/useSubmitDetailsOfIssuance'
 import { useOnboardingDialog } from 'app/components/OnboardingDialog/hooks/useOnboardingDialog'
+import { IdentityRoute } from 'app/pages/identity/router/config'
+import { history } from 'config/history'
 
 export const DetailsOfIssuanceForm = memo(() => {
   const { data, isLoading } = useDetailsOfIssuance()
@@ -18,6 +20,15 @@ export const DetailsOfIssuanceForm = memo(() => {
   useEffect(() => {
     if (!isLoading && data === undefined) {
       showCreateDetailsOfIssuanceDialog()
+    }
+
+    if (
+      !isLoading &&
+      data !== undefined &&
+      data.skipped !== undefined &&
+      data.skipped
+    ) {
+      history.push(IdentityRoute.createIssuer)
     }
     // eslint-disable-next-line
   }, [isLoading])
@@ -42,6 +53,7 @@ export const DetailsOfIssuanceForm = memo(() => {
       defaultActiveStep={defaultActiveStep}
       steps={detailsOfIssuanceFormSteps}
       nonLinear
+      skippable
     />
   )
 })

@@ -117,6 +117,11 @@ export const TopbarContainer = () => {
       label: 'Commitments',
       path: IssuanceRoute.commitments
     })
+
+    newIssuanceLandingLinks.push({
+      label: 'Cap Table',
+      path: IssuanceRoute.capTable
+    })
   }
 
   const dropdownLinksItems = (name: string) => {

@@ -26,11 +26,8 @@ export const PageHeader = (props: PageHeaderProps) => {
       underline='none'
       variant='h3'
       style={{
-        display: 'block',
         fontWeight: 500,
-        fontSize: theme.spacing(3),
-        marginTop: theme.spacing(3.5),
-        marginBottom: theme.spacing(5)
+        fontSize: theme.spacing(3)
       }}
     >
       {title}

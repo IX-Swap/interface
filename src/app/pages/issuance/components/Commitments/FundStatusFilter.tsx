@@ -19,6 +19,8 @@ export const FundStatusFilter = () => {
     <FormControl variant='outlined' fullWidth>
       <InputLabel htmlFor='sortBy'>Sort By</InputLabel>
       <FundStatusSelect
+        includeAll
+        valueBetweenAll={''}
         inputProps={{ id: 'sortBy', 'data-testid': 'select' }}
         value={value}
         onChange={handleChange}

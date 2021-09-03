@@ -3,22 +3,26 @@ import { useAllCorporates } from 'app/pages/identity/hooks/useAllCorporates'
 import { useDetailsOfIssuance } from 'app/pages/identity/hooks/useDetailsOfIssuance'
 import { useIndividualIdentity } from 'hooks/identity/useIndividualIdentity'
 
-export const useGetIdentities = (corporateType?: 'issuer' | 'investor') => {
+export const useGetIdentities = (
+  corporateType?: 'issuer' | 'investor',
+  userId?: string
+) => {
   const {
     data: individualIdentity,
     isLoading: individualIdentityIsLoading
-  } = useIndividualIdentity()
+  } = useIndividualIdentity(userId)
   const {
     data: corporateIdentities,
     isLoading: corporateIdentitiesIsLoading
   } = useAllCorporates({
-    type: corporateType
+    type: corporateType,
+    userId: userId
   })
 
   const {
     data: detailsOfIssuance,
     isLoading: detailsOfIssuanceLoading
-  } = useDetailsOfIssuance()
+  } = useDetailsOfIssuance(userId)
 
   const hasIdentity =
     individualIdentity !== undefined || corporateIdentities.list.length > 0

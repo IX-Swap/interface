@@ -16,7 +16,7 @@ export const useCommitmentValidator = (
   props: ValidatorProps
 ): ValidatorReturnObj => {
   const { assetId, minInvestment } = props
-  const minimumUnits = minInvestment ?? 0
+  const minimumUnits = minInvestment ?? 1
 
   const {
     watch,

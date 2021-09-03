@@ -31,19 +31,25 @@ export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
   const userId: string =
     typeof (item as any).user === 'string'
       ? (item as any).user
-      : (item as any).user._id
+      : (item as any).user?._id
+
   const [approve, { isLoading: isApproving }] = useApproveOrReject({
     id: getIdFromObj(item),
     action: 'approve',
     cacheQueryKey
   })
+
   const [reject, { isLoading: isRejecting }] = useApproveOrReject({
     id: getIdFromObj(item),
     action: 'reject',
     cacheQueryKey
   })
+
   const view = () =>
-    history.push(`/app/authorizer/${category}/${userId}/${id}/view`)
+    category === 'virtual-accounts'
+      ? history.push(`/app/authorizer/${category}/${id}/view`)
+      : history.push(`/app/authorizer/${category}/${userId}/${id}/view`)
+
   const isUnauthorized = (item as any).status === 'Submitted'
   const isLoading = isApproving || isRejecting
 
@@ -54,7 +60,11 @@ export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
           component={AppRouterLinkComponent}
           size='small'
           data-testid='view-button'
-          to={`/app/authorizer/${category}/${userId}/${id}/view`}
+          to={
+            category === 'virtual-accounts'
+              ? `/app/authorizer/${category}/${id}/view`
+              : `/app/authorizer/${category}/${userId}/${id}/view`
+          }
           params={{
             itemId: id,
             cacheQueryKey

@@ -8,7 +8,7 @@ export const AssetInfo: React.FC = () => {
   const params = useParams<{ balanceId: string }>()
   const balance = data.map[params.balanceId]
 
-  if (isLoading) {
+  if (data === undefined || isLoading) {
     return null
   }
 

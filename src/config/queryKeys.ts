@@ -15,6 +15,11 @@ export const documentsQueryKeys = {
   getById: 'document-by-id'
 }
 
+export const bannersQueryKeys = {
+  getById: 'banner-by-id',
+  getBannersList: 'banners-list'
+}
+
 export const assetsQueryKeys = {
   getById: 'asset-by-id',
   getData: 'assets',
@@ -62,7 +67,10 @@ export const authorizerQueryKeys = {
   getSecurityWithdrawals: 'authorizer-security-withdrawals',
   getIndividualIdentityList: 'authorizer-individual-identitiesList',
   getDSOList: 'authorizer-dso-list',
-  getWithdrawalAddresses: 'authorizer-withdrawal-addresses-list'
+  getWithdrawalAddresses: 'authorizer-withdrawal-addresses-list',
+  getVirtualAccounts: 'authorizer-virtual-accounts',
+  getVirtualAccountById: (id: string) =>
+    generateQueryKey('authorizer-virtual-account', id)
 }
 
 export const homeQueryKeys = {
@@ -197,4 +205,14 @@ export const exchangeListingsQueryKeys = {
 
 export const atlasOneQueryKeys = {
   getSecurities: 'atlas-one-securities'
+}
+
+export const resourcesQueryKeys = {
+  getSiteConfig: () => 'site-config'
+}
+
+export const virtualAccountsAuditQueryKeys = {
+  getMT940Files: 'get-mt940-files',
+  getMT942Files: 'get-mt942-files',
+  getOutboundFiles: 'get-outbound-files'
 }

@@ -27,7 +27,7 @@ export const Setup: React.FC = () => {
       <Grid item>
         <Alert severity='warning'>
           Please double check the address because we are unable to recover{' '}
-          {balance.symbol} sent to a wrong address.
+          {balance?.symbol} sent to a wrong address.
         </Alert>
       </Grid>
       <Grid item>
@@ -36,7 +36,7 @@ export const Setup: React.FC = () => {
           control={control}
           component={Input}
           name='recipientWallet'
-          label={`Recipients ${balance.symbol} Address`}
+          label={`Recipients ${balance?.symbol} Address`}
         />
       </Grid>
       <Grid item>

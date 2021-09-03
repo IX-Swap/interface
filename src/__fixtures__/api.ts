@@ -12,9 +12,7 @@ export const unsuccessfulResponse: APIResponse = {
   message: 'error'
 }
 
-export const headers = {
-  Authorization: 'Bearer '
-}
+export const headers = {}
 
 export const customConfig = {
   headers: { 'Custom-Header': '12345' }

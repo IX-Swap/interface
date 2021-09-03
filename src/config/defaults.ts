@@ -7,5 +7,7 @@ export const paginationArgs: PaginationArgs = {
 
 export const MIN_INVESTMENT_AMOUNT = 1000
 
-export const capitalStructures = ['Equity', 'Debt', 'Hybrid']
+export const capitalStructures = ['Equity', 'Debt', 'Hybrid', 'Fund']
 export const fundStatuses = ['Not Funded', 'Funds on Hold', 'Funds Transferred']
+export const idleWarningTime = 1000 * 60 * 15
+export const idleLogoutTime = 1000 * 60 * 1

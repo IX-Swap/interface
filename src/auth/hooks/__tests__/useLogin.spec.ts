@@ -39,11 +39,6 @@ describe('useLogin', () => {
           expect(storageService.set).toHaveBeenNthCalledWith(1, 'user', user)
           expect(storageService.set).toHaveBeenNthCalledWith(
             2,
-            'access-token',
-            user.accessToken
-          )
-          expect(storageService.set).toHaveBeenNthCalledWith(
-            3,
             'visitedUrl',
             []
           )

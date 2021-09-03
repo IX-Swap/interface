@@ -15,6 +15,7 @@ export interface UseAllCorporatesArgs {
   all?: boolean
   status?: AuthorizableStatus
   type?: 'investor' | 'issuer'
+  userId?: string
 }
 
 export const useAllCorporates = (
@@ -23,13 +24,14 @@ export const useAllCorporates = (
   const {
     all = false,
     status = 'Draft,Submitted,Approved,Rejected',
-    type
+    type,
+    userId
   } = args
   const { user } = useAuth()
   const isAuthorizer = useIsAuthorizer()
   const isAdmin = useIsAdmin()
   const isSuperUser = isAdmin || isAuthorizer
-  const userId = getIdFromObj(user)
+  const authUserId = getIdFromObj(user)
   const payload = {
     ...paginationArgs,
     status
@@ -37,14 +39,14 @@ export const useAllCorporates = (
   const uri =
     all && isSuperUser
       ? identityURL.corporates.getAllBySuperUser
-      : identityURL.corporates.getAllByUserId(userId)
+      : identityURL.corporates.getAllByUserId(userId ?? authUserId)
 
   const getAllCorporates = async () => {
     return await apiService.post<PaginatedData<CorporateIdentity>>(uri, payload)
   }
 
   const { data, ...rest } = useInfiniteQuery(
-    [identityQueryKeys.getAllCorporate, payload],
+    [identityQueryKeys.getAllCorporate, payload, userId ?? authUserId],
     getAllCorporates
   )
 

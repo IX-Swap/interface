@@ -15,7 +15,9 @@ export const CommitmentForm = (
   >
 ) => {
   const { dso, currency, children, ...rest } = props
-  const [makeInvestment] = useMakeCommitment()
+  const {
+    invest: [makeInvestment]
+  } = useMakeCommitment()
   const handleSubmit = async ({
     totalAmount,
     pricePerUnit,
@@ -26,7 +28,7 @@ export const CommitmentForm = (
       ...values,
       withdrawalAddress:
         withdrawalAddress === '' ? undefined : withdrawalAddress,
-      signedSubscriptionDocument: values.signedSubscriptionDocument._id,
+      signedSubscriptionDocument: values.signedSubscriptionDocument?._id,
       dso,
       currency
     })
