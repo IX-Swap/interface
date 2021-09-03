@@ -6,7 +6,7 @@ import { ReactComponent as CrossSvg } from '../../assets/images/cross.svg'
 // todo use button inside search
 export const VestingSearch = () => {
   const [search, setSearch] = useState('')
-  const [isShowedChecked, setIsShowedChecked] = useState(false)
+  const [isShowedChecked, setIsShowedChecked] = useState(true)
   const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value)
   }
@@ -15,6 +15,7 @@ export const VestingSearch = () => {
     setIsShowedChecked(false)
   }
   const onCross = () => {
+    // todo setup default address back
     setSearch('')
     setIsShowedChecked(true)
   }
