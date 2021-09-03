@@ -491,7 +491,7 @@ export function useGetStakings() {
       const calculateReward = (amount: number, period: PeriodsEnum) => {
         const apy = periods_apy[period]
         const yearReward = floorTo4Decimals((amount * apy) / 100)
-        return floorTo4Decimals((yearReward / 360) * periods_in_days[period])
+        return floorTo4Decimals((yearReward / 365) * periods_in_days[period])
       }
       const getCanUnstake = (lock_months: number, endDateUnix: number, lockedTill: number) => {
         const now = Date.now()
