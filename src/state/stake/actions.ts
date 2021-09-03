@@ -33,3 +33,43 @@ export const getStakings: Readonly<{
   fulfilled: createAction('stake/getStakings/fulfilled'),
   rejected: createAction('stake/getStakings/rejected'),
 }
+
+export const getOneWeekHistoricalPoolSize: Readonly<{
+  pending: ActionCreatorWithoutPayload
+  fulfilled: ActionCreatorWithPayload<{ data: number }>
+  rejected: ActionCreatorWithPayload<{ errorMessage: string }>
+}> = {
+  pending: createAction('stake/getOneWeekHistoricalPoolSize/pending'),
+  fulfilled: createAction('stake/getOneWeekHistoricalPoolSize/fulfilled'),
+  rejected: createAction('stake/getOneWeekHistoricalPoolSize/rejected'),
+}
+
+export const getOneMonthHistoricalPoolSize: Readonly<{
+  pending: ActionCreatorWithoutPayload
+  fulfilled: ActionCreatorWithPayload<{ data: number }>
+  rejected: ActionCreatorWithPayload<{ errorMessage: string }>
+}> = {
+  pending: createAction('stake/getOneMonthHistoricalPoolSize/pending'),
+  fulfilled: createAction('stake/getOneMonthHistoricalPoolSize/fulfilled'),
+  rejected: createAction('stake/getOneMonthHistoricalPoolSize/rejected'),
+}
+
+export const getTwoMonthsHistoricalPoolSize: Readonly<{
+  pending: ActionCreatorWithoutPayload
+  fulfilled: ActionCreatorWithPayload<{ data: number }>
+  rejected: ActionCreatorWithPayload<{ errorMessage: string }>
+}> = {
+  pending: createAction('stake/getTwoMonthsHistoricalPoolSize/pending'),
+  fulfilled: createAction('stake/getTwoMonthsHistoricalPoolSize/fulfilled'),
+  rejected: createAction('stake/getTwoMonthsHistoricalPoolSize/rejected'),
+}
+
+export const getThreeMonthsHistoricalPoolSize: Readonly<{
+  pending: ActionCreatorWithoutPayload
+  fulfilled: ActionCreatorWithPayload<{ data: number }>
+  rejected: ActionCreatorWithPayload<{ errorMessage: string }>
+}> = {
+  pending: createAction('stake/getThreeMonthsHistoricalPoolSize/pending'),
+  fulfilled: createAction('stake/getThreeMonthsHistoricalPoolSize/fulfilled'),
+  rejected: createAction('stake/getThreeMonthsHistoricalPoolSize/rejected'),
+}

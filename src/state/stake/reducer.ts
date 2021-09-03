@@ -1,5 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit'
 import { saveStakingStatus, increaseAllowance, selectTier, stake, getStakings } from './actions'
+import { IStaking } from 'constants/stakingPeriods'
 
 export enum StakingStatus {
   CONNECT_WALLET = 'CONNECT_WALLET',
@@ -13,6 +14,24 @@ export enum PERIOD {
   ONE_MONTH = '1 month',
   TWO_MONTHS = '2 months',
   THREE_MONTHS = '3 months',
+}
+
+export function convertPeriod(period?: PERIOD): string {
+  switch (period) {
+    case PERIOD.ONE_WEEK: {
+      return 'week'
+    }
+    case PERIOD.ONE_MONTH: {
+      return 'month'
+    }
+    case PERIOD.TWO_MONTHS: {
+      return 'two_months'
+    }
+    case PERIOD.THREE_MONTHS: {
+      return 'three_months'
+    }
+  }
+  return 'week'
 }
 
 export enum TIER_LIMIT {
@@ -69,6 +88,22 @@ export const TIER_TYPES: TierType = {
   },
 }
 
+interface StakeTransaction {
+  apy: number
+  canUnstake: boolean
+  distributeAmount: number
+  endDate: string
+  lock_months: number
+  lockedTill: string
+  originalData: any
+  originalIndex: number
+  period: string
+  reward: number
+  stakeAmount: number
+  startDate: string
+  unixStart: number
+}
+
 interface StakingState {
   status: StakingStatus
   APY: APY
@@ -79,7 +114,7 @@ interface StakingState {
   isStaking: boolean
   isStakingFailed: boolean
   hasStakedSuccessfully: boolean
-  stakings: any[]
+  stakings: IStaking[]
 }
 
 const initialState: StakingState = {
@@ -125,6 +160,7 @@ export default createReducer<StakingState>(initialState, (builder) =>
       console.error('IXS approve error: ', errorMessage)
     })
     .addCase(stake.pending, (state) => {
+      state.hasStakedSuccessfully = false
       state.isStaking = true
       state.isStakingFailed = false
     })

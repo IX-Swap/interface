@@ -32,8 +32,10 @@ import { ReactComponent as ArrowDown } from '../../../assets/images/arrow.svg'
 import { Text } from 'rebass'
 import { theme } from 'theme'
 import { useStakingState } from 'state/stake/hooks'
+import { PERIOD, convertPeriod } from 'state/stake/reducer'
 import { IconWrapper } from 'components/AccountDetails/styleds'
 import { ReactComponent as Checkmark } from 'assets/images/checked-solid-bg.svg'
+import { periodsInSeconds } from 'constants/stakingPeriods'
 
 interface StakingModalProps {
   onDismiss: () => void
@@ -55,7 +57,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
   const availableIXS = maxAmountInput ? maxAmountInput?.toSignificant(5) : ''
   const increaseAllowance = useIncreaseAllowance()
   const amountOfIXStoStakeInput = useRef<HTMLInputElement>(null)
-  const { selectedTier, approvingIXS, isIXSApproved } = useStakingState()
+  const { selectedTier, approvingIXS, isIXSApproved, isStaking, hasStakedSuccessfully } = useStakingState()
   const stake = useStakeFor(selectedTier?.period)
 
   // state for pending and submitted txn views
@@ -90,6 +92,27 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
       amountOfIXStoStakeInput.current.value = availableIXS
       setTypedValue(availableIXS)
     }
+  }
+
+  const dateFormatter = new Intl.DateTimeFormat('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: '2-digit',
+  })
+
+  function estimatePeriod(period?: PERIOD) {
+    const unixStart = Date.now() / 1000
+    const endDateUnix = unixStart + periodsInSeconds[convertPeriod(period)]
+    const endDate = new Date(endDateUnix * 1000)
+    return dateFormatter.format(endDate)
+  }
+
+  function estimateMaturityTime() {
+    return estimatePeriod(selectedTier?.period)
+  }
+
+  function estimateLockPeriod() {
+    return estimatePeriod(selectedTier?.lockupPeriod)
   }
 
   return (
@@ -188,14 +211,21 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
               <TextRow textLeft={t`Staking amount`} textRight={`${typedValue} IXS`} />
               <TextRow
                 textLeft={t`Estimated maturity time`}
-                textRight={0}
-                tooltipText={t`Your staked IXS will be locked for 2 months till Jun 05, 2021 12:40:33. Until that time you won’t be able to unstake your IXS fully or partially. Please carefully consider the risks involved.
+                textRight={estimateMaturityTime()}
+                tooltipText={t`Maturity time is the final date of your staking period time escalibur. `}
+              />
+              <TextRow
+                textLeft={t`Estimated lock period`}
+                textRight={estimateLockPeriod()}
+                tooltipText={t`Your staked IXS will be locked for ${
+                  selectedTier?.lockupPeriod
+                } till Jun 05, 2021 12:40:33. Until that time you won’t be able to unstake your IXS fully or partially. Please carefully consider the risks involved.
                               ${'' ?? ''}
                               You will be able to redeem your staked IXS fully or partially after Jun 05, 2021 12:40:33.`}
               />
               <TextRow
-                textLeft={t`Estimated lock period`}
-                textRight={0}
+                textLeft={t`Estimated rewards`}
+                textRight={`- IXS`}
                 tooltipText={t`This amount of rewards is based on assumption that your staked amount will be kept for the whole period of ${
                   selectedTier?.period
                 }. In this case your APY will be ${
@@ -203,11 +233,6 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                 }%. If you partially or fully unstake your IXS before the end date 5% APY will be applied to unstaked amount. 
                   ${'' ?? ''}
                   Please note: your rewards will be available with vesting process in 10 weeks after unstakting`}
-              />
-              <TextRow
-                textLeft={t`Estimated rewards`}
-                textRight={0}
-                tooltipText={t`Maturity time is the final date of your staking period time escalibur. `}
               />
             </StakeInfoContainer>
             <RowCenter marginTop={25}>
@@ -220,7 +245,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
             </RowCenter>
             <Row style={{ marginTop: '25px' }}>
               {!isIXSApproved && (
-                <ButtonIXSWide data-testid="approve-staking" disabled={Boolean(error)} onClick={onApprove}>
+                <ButtonIXSWide data-testid="approve-staking" disabled={approvingIXS} onClick={onApprove}>
                   {approvingIXS ? (
                     <Dots>
                       <Trans>Approving IXS</Trans>
@@ -231,8 +256,14 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                 </ButtonIXSWide>
               )}
               {isIXSApproved && (
-                <ButtonIXSWide data-testid="stake-button" disabled={Boolean(error)} onClick={onStake}>
-                  <>{error || <Trans>Stake</Trans>}</>
+                <ButtonIXSWide data-testid="stake-button" disabled={isStaking} onClick={onStake}>
+                  {isStaking ? (
+                    <Dots>
+                      <Trans>Staking</Trans>
+                    </Dots>
+                  ) : (
+                    <>{error || <Trans>Stake</Trans>}</>
+                  )}
                 </ButtonIXSWide>
               )}
             </Row>
