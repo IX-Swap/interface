@@ -26,18 +26,6 @@ export const AuthorizableStatus: React.FC<AuthorizableStatusProps> = props => {
           {compact ? 'A' : 'Approved'}
         </Typography>
       )
-    case 'Active':
-      return (
-        <Typography
-          className={classNames(classes.authStatus, classes.approved, {
-            [classes.compact]: compact,
-            [classes.authStatusNewTheme]: isNewTheme,
-            [classes.approvedNewTheme]: isNewTheme
-          })}
-        >
-          {compact ? 'A' : 'Active Deal'}
-        </Typography>
-      )
     case 'Rejected':
       return (
         <Typography
@@ -72,18 +60,6 @@ export const AuthorizableStatus: React.FC<AuthorizableStatusProps> = props => {
           })}
         >
           {compact ? 'C' : 'Closed'}
-        </Typography>
-      )
-    case 'Pending':
-      return (
-        <Typography
-          className={classNames(classes.authStatus, classes.unauthorized, {
-            [classes.compact]: compact,
-            [classes.authStatusNewTheme]: isNewTheme,
-            [classes.unauthorizedNewTheme]: isNewTheme
-          })}
-        >
-          {compact ? 'P' : 'Pending Approval'}
         </Typography>
       )
     default:

@@ -21,6 +21,12 @@ describe('AuthorizableStatus', () => {
     expect(getByText('S')).toBeTruthy()
   })
 
+  it('renders C if status is Closed', () => {
+    const { getByText } = render(<AuthorizableStatus status='Closed' />)
+
+    expect(getByText('C')).toBeTruthy()
+  })
+
   it('renders Approved if status Approved & compact is false', () => {
     const { getByText } = render(
       <AuthorizableStatus status='Approved' compact={false} />
@@ -43,5 +49,13 @@ describe('AuthorizableStatus', () => {
     )
 
     expect(getByText('Submitted')).toBeTruthy()
+  })
+
+  it('renders Closed if status is Closed & compact is false', () => {
+    const { getByText } = render(
+      <AuthorizableStatus status='Closed' compact={false} />
+    )
+
+    expect(getByText('Closed')).toBeTruthy()
   })
 })

@@ -19,7 +19,7 @@ interface AuthorizerViewProps<T>
 export const AuthorizerTable = <T,>(
   props: AuthorizerViewProps<T>
 ): JSX.Element => {
-  const { columns, name, uri, themeVariant = 'default' } = props
+  const { columns, name, uri, themeVariant = 'primary' } = props
   const { filter: authFilter } = useAuthorizerFilter()
   const category = useAuthorizerCategory()
 

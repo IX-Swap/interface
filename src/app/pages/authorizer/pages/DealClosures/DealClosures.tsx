@@ -1,5 +1,5 @@
 import { AuthorizerList } from 'app/pages/authorizer/components/AuthorizerList'
-import { columns } from 'app/pages/authorizer/pages/DealClosures/columns'
+import { columns } from 'app/pages/authorizer/pages/offerings/columns'
 import { authorizerQueryKeys } from 'config/queryKeys'
 import React from 'react'
 

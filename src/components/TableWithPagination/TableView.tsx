@@ -68,7 +68,7 @@ export const TableView = <T,>({
   paperProps = {},
   defaultRowsPerPage,
   size = 'medium',
-  themeVariant = 'default'
+  themeVariant = 'primary'
 }: TableViewProps<T>): JSX.Element => {
   const {
     items,
