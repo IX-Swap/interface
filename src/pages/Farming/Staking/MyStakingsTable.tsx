@@ -14,6 +14,9 @@ import periods_lock_months, { PeriodsEnum } from 'constants/stakingPeriods'
 import Row, { RowBetween, RowFixed, RowCenter } from 'components/Row'
 import Column from 'components/Column'
 import { ReactComponent as LockIcon } from 'assets/images/lock.svg'
+import { MouseoverTooltip } from 'components/Tooltip'
+import { IconWrapper } from 'components/AccountDetails/styleds'
+import { ReactComponent as InfoIcon } from 'assets/images/attention.svg'
 
 import { TYPE } from 'theme'
 
@@ -30,11 +33,54 @@ const headerCells = [
 const Header = () => {
   return (
     <StyledHeaderRow>
-      {headerCells.map((cell) => (
+      {/*      {headerCells.map((cell) => (
         <div className="header-cell-label" key={cell}>
           {cell}
         </div>
-      ))}
+      ))}*/}
+      <div className="header-label">
+        <Trans>Tier</Trans>
+      </div>
+      <div>
+        <div className="header-label">
+          <Trans>APY</Trans>
+        </div>
+        <MouseoverTooltip
+          style={{ whiteSpace: 'pre-line', textAlign: 'center' }}
+          text={t`Full amount of APY is applied only to amount of IXS staked till the end of staking period.`}
+        >
+          <IconWrapper size={20} style={{ transform: 'rotate(180deg)', marginLeft: '12px' }}>
+            <InfoIcon />
+          </IconWrapper>
+        </MouseoverTooltip>
+      </div>
+      <div className="header-label">
+        <Trans>Period of staking</Trans>
+      </div>
+      <div className="header-label">
+        <Trans>Lock Period</Trans>
+      </div>
+      <div className="header-label">
+        <Trans>Amount</Trans>
+      </div>
+      <div className="header-label">
+        <Trans>Distribute</Trans>
+      </div>
+      <div>
+        <div className="header-label">
+          <Trans>Estimated Rewards</Trans>
+        </div>
+        <MouseoverTooltip
+          style={{ whiteSpace: 'pre-line', textAlign: 'center' }}
+          text={t`Estimated rewards are based on assumption that your staked amount will be fully kept for the whole period of staking. In this case maximum APY will be applied 
+                  ${'' ?? ''}
+                  If you partially or fully unstake your IXS before the end date - 5% APY will be applied to unstaked amount. `}
+        >
+          <IconWrapper size={20} style={{ transform: 'rotate(180deg)', marginLeft: '12px' }}>
+            <InfoIcon />
+          </IconWrapper>
+        </MouseoverTooltip>
+      </div>
     </StyledHeaderRow>
   )
 }
@@ -228,11 +274,13 @@ const Container = styled.div`
 const StyledHeaderRow = styled(HeaderRow)`
   grid-template-columns: 160px 100px 190px 160px 160px 180px auto;
   min-width: 1270px;
-  .header-cell-label {
-    color: #edceff80;
+
+  .header-label {
+    color: ${({ theme: { text2 } }) => text2};
     font-weight: 600;
     font-size: 14px;
-    line-height: 21px;
+    line-height: 22px;
+    opacity: 0.5;
   }
 `
 
