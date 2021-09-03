@@ -47,8 +47,8 @@ const periodsApy = {
   [periods.THREE_MONTHS]: 88,
 }
 const periodsLockMonths = {
-  [periods.WEEK]: 0,
-  [periods.MONTH]: 0,
+  [periods.WEEK]: 0.2333334,
+  [periods.MONTH]: 1,
   [periods.TWO_MONTHS]: 1,
   [periods.THREE_MONTHS]: 2,
 }

@@ -13,6 +13,7 @@ import { dateFormatter } from 'state/stake/reducer'
 import periods_lock_months, { PeriodsEnum } from 'constants/stakingPeriods'
 import Row, { RowBetween, RowFixed, RowCenter } from 'components/Row'
 import Column from 'components/Column'
+import { ReactComponent as LockIcon } from 'assets/images/lock.svg'
 
 import { TYPE } from 'theme'
 
@@ -93,31 +94,45 @@ const Body = () => {
     return dateFormatter.format(new Date(dateUnix * 1000))
   }
 
+  function getDateShortTime(dateUnix: number) {
+    return new Date(dateUnix * 1000).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })
+  }
+
   function getDateFullTime(dateUnix: number) {
     return new Date(dateUnix * 1000).toLocaleTimeString('en-GB')
   }
 
   return (
     <>
-      {stakings?.map(({ period, startDateUnix, endDateUnix, apy, stakeAmount, distributeAmount, reward }) => (
-        <StyledBodyRow key={startDateUnix}>
-          <Tier>
-            <span className="digit">{getPeriodDigit(period)}</span>&nbsp;{getPeriodString(period).toUpperCase()}
-          </Tier>
-          <div>{apy}%</div>
-          <Column>
-            <Row>{formatDate(startDateUnix)}</Row>
-            <Row>
-              {formatDate(endDateUnix)} <MutedText>{getDateFullTime(endDateUnix)}</MutedText>
-            </Row>
-          </Column>
-          <div>{getLockPeriod(period)}</div>
-          <div>{formatAmount(stakeAmount)} IXS</div>
-          <div>{formatAmount(distributeAmount)} IXSgov</div>
-          <div className="rewards">{formatAmount(reward)} IXS</div>
-          <div>Locked till</div>
-        </StyledBodyRow>
-      ))}
+      {stakings?.map(
+        ({ period, startDateUnix, endDateUnix, lockedTillUnix, apy, stakeAmount, distributeAmount, reward }) => (
+          <StyledBodyRow key={startDateUnix}>
+            <Tier>
+              <span className="digit">{getPeriodDigit(period)}</span>&nbsp;{getPeriodString(period).toUpperCase()}
+            </Tier>
+            <div>{apy}%</div>
+            <Column>
+              <Row>{formatDate(startDateUnix)}</Row>
+              <Row>
+                {formatDate(endDateUnix)} <MutedText>{getDateFullTime(endDateUnix)}</MutedText>
+              </Row>
+            </Column>
+            <div>{getLockPeriod(period)}</div>
+            <div>{formatAmount(stakeAmount)} IXS</div>
+            <div>{formatAmount(distributeAmount)} IXSgov</div>
+            <div className="rewards">{formatAmount(reward)} IXS</div>
+            <LockedTillColumn>
+              <Row>
+                <LockIcon className="lock-icon" />
+                <Trans>Locked till</Trans>
+              </Row>
+              <Row>
+                {formatDate(lockedTillUnix)} {getDateShortTime(lockedTillUnix)}
+              </Row>
+            </LockedTillColumn>
+          </StyledBodyRow>
+        )
+      )}
     </>
   )
 }
@@ -211,7 +226,7 @@ const Container = styled.div`
 `
 
 const StyledHeaderRow = styled(HeaderRow)`
-  grid-template-columns: 160px 100px 190px 160px 200px 180px auto;
+  grid-template-columns: 160px 100px 190px 160px 160px 180px auto;
   min-width: 1270px;
   .header-cell-label {
     color: #edceff80;
@@ -222,7 +237,7 @@ const StyledHeaderRow = styled(HeaderRow)`
 `
 
 const StyledBodyRow = styled(BodyRow)`
-  grid-template-columns: 160px 100px 190px 160px 200px 180px 180px auto;
+  grid-template-columns: 160px 100px 190px 160px 160px 180px 180px auto;
   min-width: 1270px;
   font-size: 14px;
   line-height: 21px;
@@ -236,4 +251,16 @@ const MutedText = styled.span`
   color: ${({ theme: { text2 } }) => text2};
   opacity: 0.5;
   padding-left: 0.5em;
+`
+
+const LockedTillColumn = styled(Column)`
+  color: ${({ theme: { text2 } }) => text2};
+  opacity: 0.5;
+  font-size: 12px;
+  line-height: 18px;
+
+  .lock-icon {
+    margin-right: 0.5em;
+    margin-bottom: 4px;
+  }
 `
