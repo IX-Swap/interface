@@ -49,12 +49,11 @@ export const renderExpectedReturn = (
   interestRate: number,
   dso: DigitalSecurityOffering
 ) => {
-  return (dso !== undefined && dso.capitalStructure === 'Debt'
-    ? dso.interestRate ?? 0
-    : dso.grossIRR ?? 0
-  )
-    .toString()
-    .concat('%')
+  const result =
+    dso !== undefined && dso.capitalStructure === 'Debt'
+      ? dso.interestRate ?? 0
+      : dso.grossIRR ?? 0
+  return (result * 100).toFixed(2).toString().concat('%')
 }
 
 export const columns: Array<

@@ -11,7 +11,13 @@ export const AuthRoot: React.FC = () => {
   const { container, formContainer } = useStyles()
 
   return (
-    <Grid className={container} container justify='center' alignItems='center'>
+    <Grid
+      className={container}
+      container
+      justify='center'
+      alignItems='center'
+      alignContent='center'
+    >
       <Grid item xs={12}>
         <AuthWrapper
           container
@@ -45,7 +51,9 @@ export const AuthRoot: React.FC = () => {
           </Grid>
         </AuthWrapper>
       </Grid>
-      <Copyright />
+      <Grid item xs={12}>
+        <Copyright />
+      </Grid>
     </Grid>
   )
 }

@@ -6,6 +6,7 @@ import { TableView } from 'components/TableWithPagination/TableView'
 import * as useAuthHook from 'hooks/auth/useAuth'
 import { user } from '__fixtures__/user'
 import { digitalSecuritiesQueryKeys } from 'config/queryKeys'
+import { accountsURL } from 'config/apiURL'
 
 jest.mock('components/TableWithPagination/TableView', () => ({
   TableView: jest.fn(() => null)
@@ -29,7 +30,7 @@ describe('DSTable', () => {
   })
 
   it('renders TableView with correct props', () => {
-    const uri = `/accounts/balance/${user._id}`
+    const uri = accountsURL.balance.getAll(user._id)
     const name = digitalSecuritiesQueryKeys.getByUserId(user._id)
 
     render(<DSTable />)

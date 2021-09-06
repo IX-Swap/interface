@@ -15,6 +15,18 @@ export interface DsoTeamMember {
   photo: string
 }
 
+export interface DsoFAQItem {
+  _id?: string
+  question: string
+  answer: string
+}
+
+export interface DsoVideo {
+  _id?: string
+  title: string
+  link: string
+}
+
 export interface DeploymentInfo {
   _id: string
   createdBy: string
@@ -62,6 +74,8 @@ export interface BaseDigitalSecurityOffering extends AuthorizableWithIdentity {
   useOfProceeds: string
   fundraisingMilestone: string
   team: DsoTeamMember[]
+  faqs: DsoFAQItem[]
+  videos: DsoVideo[]
   createdAt: string
   asset: string
   deploymentInfo?: DeploymentInfo
@@ -132,6 +146,8 @@ export type DSOFormValues = Omit<
   corporate: string
   documents: FormArray<DataroomFile>
   team: DsoTeamMember[]
+  faqs: DsoFAQItem[]
+  videos: DsoVideo[]
 }
 
 export type DSORequestArgs = Partial<

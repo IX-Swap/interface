@@ -15,6 +15,11 @@ export const documentsQueryKeys = {
   getById: 'document-by-id'
 }
 
+export const bannersQueryKeys = {
+  getById: 'banner-by-id',
+  getBannersList: 'banners-list'
+}
+
 export const assetsQueryKeys = {
   getById: 'asset-by-id',
   getData: 'assets',
@@ -200,4 +205,10 @@ export const exchangeListingsQueryKeys = {
 
 export const resourcesQueryKeys = {
   getSiteConfig: () => 'site-config'
+}
+
+export const virtualAccountsAuditQueryKeys = {
+  getMT940Files: 'get-mt940-files',
+  getMT942Files: 'get-mt942-files',
+  getOutboundFiles: 'get-outbound-files'
 }

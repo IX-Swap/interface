@@ -48,7 +48,7 @@ export interface TableViewProps<T> {
   paperProps?: PaperProps
   defaultRowsPerPage?: number
   size?: Size
-  isNewThemeOn?: boolean
+  themeVariant?: 'default' | 'primary' | 'no-header'
 }
 
 export const TableView = <T,>({
@@ -68,7 +68,7 @@ export const TableView = <T,>({
   paperProps = {},
   defaultRowsPerPage,
   size = 'medium',
-  isNewThemeOn = false
+  themeVariant = 'default'
 }: TableViewProps<T>): JSX.Element => {
   const {
     items,
@@ -88,12 +88,15 @@ export const TableView = <T,>({
 
   const theme = useTheme()
   const classes = useStyles()
-  const headColor = isNewThemeOn
-    ? theme.palette.type === 'light'
-      ? '#141272'
-      : theme.palette.primary.main
-    : 'initial'
-  const headHeight = isNewThemeOn ? 50 : 'initial'
+  const headColor =
+    themeVariant === 'primary'
+      ? theme.palette.type === 'light'
+        ? '#141272'
+        : theme.palette.primary.main
+      : 'initial'
+  const headHeight = themeVariant === 'primary' ? 50 : 'initial'
+  const headDisplay =
+    themeVariant === 'no-header' ? 'none' : 'table-header-group'
   const cacheQueryKey = [name, page, rowsPerPage, filter]
 
   const _items = Array.isArray(fakeItems) ? fakeItems : items
@@ -166,7 +169,8 @@ export const TableView = <T,>({
                 <TableHead
                   style={{
                     backgroundColor: headColor,
-                    height: headHeight
+                    height: headHeight,
+                    display: headDisplay
                   }}
                 >
                   <TableRow>
@@ -178,9 +182,10 @@ export const TableView = <T,>({
                       >
                         <b
                           style={{
-                            color: isNewThemeOn
-                              ? theme.palette.slider.activeColor
-                              : 'initial'
+                            color:
+                              themeVariant === 'primary'
+                                ? theme.palette.slider.activeColor
+                                : 'initial'
                           }}
                         >
                           {e.label}
@@ -211,7 +216,7 @@ export const TableView = <T,>({
                   hasActions={hasActions}
                   actions={actions}
                   cacheQueryKey={cacheQueryKey}
-                  isNewThemeOn={isNewThemeOn}
+                  themeVariant={themeVariant}
                 />
               )}
             </Table>

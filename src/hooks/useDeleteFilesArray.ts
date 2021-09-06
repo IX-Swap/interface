@@ -2,12 +2,12 @@ import { useServices } from 'hooks/useServices'
 import { useAuth } from 'hooks/auth/useAuth'
 import { getIdFromObj } from 'helpers/strings'
 import { useState } from 'react'
-import { SelectedDocument } from 'app/pages/accounts/pages/banks/components/BankDocuments'
 import { useSelectionHelperContext } from 'components/SelectionHelper'
 import { useFormContext } from 'react-hook-form'
 import { DataroomFile, FormArray } from 'types/dataroomFile'
 import { isSuperUser } from 'helpers/acl'
 import { documentsURL } from 'config/apiURL'
+import { SelectedDocument } from 'helpers/dataroom'
 
 export const useDeleteFilesArray = (name: string) => {
   const {

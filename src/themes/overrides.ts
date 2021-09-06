@@ -264,5 +264,10 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
         marginTop: -2
       }
     }
+  },
+  MuiTypography: {
+    h6: {
+      textTransform: 'capitalize'
+    }
   }
 })

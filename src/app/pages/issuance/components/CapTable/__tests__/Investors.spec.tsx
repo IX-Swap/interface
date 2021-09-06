@@ -35,7 +35,8 @@ describe('Investors', () => {
 
   afterAll(() => history.push('/'))
 
-  it('renders without errors', () => {
+  it('renders without errors', async () => {
+    history.push(uri)
     render(<Investors />)
   })
 

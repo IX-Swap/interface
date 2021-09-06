@@ -67,7 +67,7 @@ describe('InvestorCommitmentTable', () => {
           search: undefined,
           fundStatus: undefined
         },
-        isNewThemeOn: true
+        themeVariant: 'primary'
       }),
       {}
     )
