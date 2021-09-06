@@ -33,9 +33,9 @@ export const NoIXSTokens = () => {
         </ButtonGradientBorder>
         {chainId && (
           <ButtonIXSGradient
-            as={Link}
-            style={{ textTransform: 'unset', width: '172px' }}
-            to={`${routes.swap}/${IXS_ADDRESS[chainId]}`}
+            as={ExternalLink}
+            style={{ textTransform: 'unset', width: '172px', textDecoration: 'none' }}
+            href={`https://app.uniswap.org/#/swap?outputCurrency=${IXS_ADDRESS[chainId]}`}
             data-testid="staking-redirect-swap"
           >
             <Trans>Swap</Trans>
