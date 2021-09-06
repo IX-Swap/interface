@@ -11,6 +11,7 @@ import { RowCenter, RowFixed } from '../Row'
 import Web3Status from '../Web3Status'
 import { HeaderLinks } from './HeaderLinks'
 import useLightBackground from 'components/AppBackground/useLightBackground'
+import { SUPPORTED_TGE_CHAINS } from 'pages/App'
 
 const HeaderFrame = styled.div<{ showBackground: boolean; lightBackground: boolean }>`
   display: grid;
@@ -185,6 +186,7 @@ const NETWORK_LABELS: { [chainId: number]: string } = {
   [5]: 'Görli',
   [42]: 'Kovan',
 }
+
 const HeaderWrapper = styled.div`
   ${({ theme }) => theme.flexRowNoWrap}
   width: 100%;
@@ -210,7 +212,11 @@ export default function Header() {
               </IXSIcon>
             </Title>
           </HeaderRow>
-          <HeaderLinks />
+          {chainId !== SUPPORTED_TGE_CHAINS.MAIN && (
+            <>
+              <HeaderLinks />
+            </>
+          )}
 
           <HeaderControls>
             <HeaderElement>

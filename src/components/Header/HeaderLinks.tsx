@@ -1,14 +1,13 @@
+import { Trans } from '@lingui/macro'
+import SettingsTab from 'components/Settings'
+import { SECURITY_TOKENS } from 'config'
+import { darken } from 'polished'
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import { darken } from 'polished'
-import { Trans } from '@lingui/macro'
-import styled from 'styled-components/macro'
-
-import Row from '../Row'
-import SettingsTab from 'components/Settings'
 import { useDerivedSwapInfo } from 'state/swap/hooks'
+import styled from 'styled-components/macro'
 import { routes } from 'utils/routes'
-import { SECURITY_TOKENS } from 'config'
+import Row from '../Row'
 
 const activeClassName = 'ACTIVE'
 
@@ -67,6 +66,7 @@ const StyledNavLink = styled(NavLink).attrs({
 
 export const HeaderLinks = () => {
   const { allowedSlippage } = useDerivedSwapInfo()
+
   return (
     <HeaderLinksWrap>
       <StyledNavLink id={`swap-nav-link`} to={'/swap'}>
@@ -84,11 +84,13 @@ export const HeaderLinks = () => {
       >
         <Trans>Pool</Trans>
       </StyledNavLink>
+
       {SECURITY_TOKENS && (
         <StyledNavLink id={`stake-nav-link`} to={routes.securityTokens()}>
           <Trans>Security tokens</Trans>
         </StyledNavLink>
       )}
+
       <StyledNavLink id={`vesting-nav-link`} to={'/vesting'}>
         <Trans>IXS Farming</Trans>
       </StyledNavLink>
