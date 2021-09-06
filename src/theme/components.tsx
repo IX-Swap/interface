@@ -5,6 +5,9 @@ import styled, { css, keyframes } from 'styled-components'
 import { darken } from 'polished'
 import { ArrowLeft, X, ExternalLink as LinkIconFeather, Trash } from 'react-feather'
 import { ReactComponent as Check } from 'assets/images/check.svg'
+import { ColumnCenter } from 'components/Column'
+import { TYPE } from 'theme'
+import { Trans } from '@lingui/macro'
 export const ButtonText = styled.button`
   outline: none;
   border: none;
@@ -484,3 +487,10 @@ export const TextGradient = styled.div`
   background-clip: text;
   -webkit-text-fill-color: transparent;
 `
+export const ConnectToAppropriateNetwork = () => (
+  <ColumnCenter style={{ height: '100vh', justifyContent: 'center' }}>
+    <TYPE.main0>
+      <Trans>Please connect to the Kovan or Main Etherium network.</Trans>
+    </TYPE.main0>
+  </ColumnCenter>
+)
