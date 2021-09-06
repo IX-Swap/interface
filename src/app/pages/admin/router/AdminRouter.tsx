@@ -1,3 +1,5 @@
+import React from 'react'
+import { Switch } from 'react-router'
 import { LandingPage } from 'app/components/LandingPage/LandingPage'
 import { AccessReports } from 'app/pages/admin/pages/AccessReports'
 import { CreateCorporateAsAdmin } from 'app/pages/admin/pages/CreateCorporateAsAdmin'
@@ -8,13 +10,12 @@ import { AppRoute } from 'components/AppRoute'
 import { Identities } from 'app/pages/admin/pages/Identities'
 import { ViewCorporateIdentity } from 'app/pages/admin/pages/ViewCorporateIdentity'
 import { ViewIndividualIdentity } from 'app/pages/admin/pages/ViewIndividualIdentity'
-import React from 'react'
-import { Switch } from 'react-router'
 import { VirtualAccounts } from 'app/pages/admin/pages/VirtualAccounts'
 import { UserRouter } from 'app/pages/admin/router/UserRouter'
 import { MasDisclosure } from 'app/pages/admin/pages/MasDisclosure'
 import { Banner } from 'app/pages/admin/pages/Banner'
 import { VirtualAccountAudit } from 'app/pages/admin/pages/VirtualAccountAudit'
+import { CustodyManagement } from 'app/pages/admin/pages/CustodyManagement'
 
 export const AdminRouter = () => {
   return (
@@ -87,6 +88,14 @@ export const AdminRouter = () => {
         breadcrumb='VA Audit'
       >
         <VirtualAccountAudit />
+      </AppRoute>
+
+      <AppRoute
+        exact
+        path={AdminRoute.custodyManagement}
+        breadcrumb='Custody Management'
+      >
+        <CustodyManagement />
       </AppRoute>
 
       <AppRoute exact path={AdminRoute.landing}>

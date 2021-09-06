@@ -7,6 +7,7 @@ import { ReactComponent as VirtualAccountIcon } from 'assets/icons/navigation/vi
 import { ReactComponent as BannerIcon } from 'assets/icons/navigation/banner.svg'
 import { ReactComponent as MasDisclosureIcon } from 'assets/icons/navigation/mas-disclosure.svg'
 import { ReactComponent as VAAuditIcon } from 'assets/icons/navigation/va-audit.svg'
+import { ReactComponent as CustodyManagementIcon } from 'assets/icons/navigation/custody-management.svg'
 
 export const AdminRoute = {
   landing: makeURL(['app', 'admin']),
@@ -23,7 +24,8 @@ export const AdminRoute = {
   virtualAccount: '/app/admin/virtualAccount',
   banner: '/app/admin/banner',
   masDisclosure: '/app/admin/masDisclosure',
-  virtualAccountAudit: '/app/admin/virtualAccountAudit'
+  virtualAccountAudit: '/app/admin/virtualAccountAudit',
+  custodyManagement: '/app/admin/custodyManagement'
 }
 
 export const adminLandingLinks: InternalRouteProps[] = [
@@ -68,5 +70,11 @@ export const adminLandingLinks: InternalRouteProps[] = [
     path: AdminRoute.virtualAccountAudit,
     color: '#246D97',
     icon: VAAuditIcon
+  },
+  {
+    label: 'Custody Management',
+    path: AdminRoute.custodyManagement,
+    color: '#90A30F',
+    icon: CustodyManagementIcon
   }
 ]
