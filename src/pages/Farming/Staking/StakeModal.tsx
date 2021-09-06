@@ -48,13 +48,10 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
   const router = useLiquidityRouterContract()
   const [typedValue, setTypedValue] = useState('0')
   const [termsAccepted, setTermsAccepted] = useState(false)
+  const [error, setError] = useState('')
   const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
   const balance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
-  const { error, parsedAmount } = useDerivedIXSStakeInfo({ typedValue: '10', currencyId: IXS_ADDRESS[chainId ?? 1] })
   const maxAmountInput = maxAmountSpend(balance)
-  const [approval, approveCallback] = useApproveCallback(parsedAmount, IXS_ADDRESS[chainId ?? 1])
-  const parsedAmountWrapped = parsedAmount?.wrapped
-  const { signatureData, gatherPermitSignature } = useV2LiquidityTokenPermit(parsedAmountWrapped, router?.address)
   const availableIXS = maxAmountInput ? maxAmountInput?.toSignificant(5) : ''
   const increaseAllowance = useIncreaseAllowance()
   const amountOfIXStoStakeInput = useRef<HTMLInputElement>(null)
@@ -83,7 +80,11 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
   // wrapped onUserInput to clear signatures
   const onUserInput = () => {
     if (amountOfIXStoStakeInput?.current?.value) {
-      setTypedValue(amountOfIXStoStakeInput.current.value)
+      const value = amountOfIXStoStakeInput.current.value
+      setTypedValue(value)
+      if (maxAmountInput) {
+        setError(parseFloat(value) > parseFloat(maxAmountInput.toSignificant(10)) ? 'Not enough IXS' : '')
+      }
     } else {
       setTypedValue('0')
     }
@@ -241,19 +242,24 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                   Please note: your rewards will be available with vesting process in 10 weeks after unstakting`}
               />
             </StakeInfoContainer>
-            <RowCenter marginTop={25} onClick={() => setTermsAccepted(!termsAccepted)}>
-              <IconWrapper size={16}>
+            <RowCenter marginTop={25}>
+              <IconWrapper size={16} onClick={() => setTermsAccepted(!termsAccepted)}>
                 <TermsCheckmark className={`checkmark ${termsAccepted ? 'checked' : ''}`} />
               </IconWrapper>
               <TYPE.body1>
-                <Trans>I have read the terms of use</Trans>
+                <Trans>
+                  I have read the{' '}
+                  <a style={{ color: '#EDCEFF' }} href="dev.ixswap.io/#/swap">
+                    terms of use
+                  </a>
+                </Trans>
               </TYPE.body1>
             </RowCenter>
             <Row style={{ marginTop: '25px' }}>
               {!isIXSApproved && (
                 <ButtonIXSWide
                   data-testid="approve-staking"
-                  disabled={approvingIXS || !termsAccepted}
+                  disabled={approvingIXS || !termsAccepted || Boolean(error)}
                   onClick={onApprove}
                 >
                   {approvingIXS ? (
@@ -266,7 +272,11 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                 </ButtonIXSWide>
               )}
               {isIXSApproved && (
-                <ButtonIXSWide data-testid="stake-button" disabled={isStaking || !termsAccepted} onClick={onStake}>
+                <ButtonIXSWide
+                  data-testid="stake-button"
+                  disabled={isStaking || !termsAccepted || Boolean(error)}
+                  onClick={onStake}
+                >
                   {isStaking ? (
                     <Dots>
                       <Trans>Staking</Trans>
