@@ -29,8 +29,6 @@ import { IconWrapper } from 'components/AccountDetails/styleds'
 import { ReactComponent as Checkmark } from 'assets/images/checked-solid-bg.svg'
 import { periodsInSeconds, periodsInDays } from 'constants/stakingPeriods'
 
-const isStakingPaused = true
-
 interface StakingModalProps {
   onDismiss: () => void
 }
@@ -241,7 +239,11 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
               <TYPE.body1>
                 <Trans>
                   I have read{' '}
-                  <a style={{ color: '#EDCEFF' }} href="dev.ixswap.io/#/swap">
+                  <a
+                    style={{ color: '#EDCEFF' }}
+                    href="https://docs.google.com/document/d/1NOS85wOrG1aJbLwTEhri25BRMM62PK2DFb_6H7oh0rI/edit"
+                    target="blank"
+                  >
                     Staking Conditions
                   </a>
                 </Trans>
