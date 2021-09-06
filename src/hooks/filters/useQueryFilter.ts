@@ -22,6 +22,8 @@ export interface QueryFilters {
   network: string | undefined
   isPriceAscending: string | undefined
   fundStatus: string | undefined
+  // TODO Change filter name and types if it needs after complete backend api endpoints
+  custodianFilter: string | undefined
 }
 
 export type QueryFilter = keyof QueryFilters
