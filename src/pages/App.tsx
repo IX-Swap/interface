@@ -16,16 +16,17 @@ import { ApplicationModal } from '../state/application/actions'
 import { useModalOpen } from '../state/application/hooks'
 import DarkModeQueryParamReader from '../theme/DarkModeQueryParamReader'
 import { RedirectDuplicateTokenIdsV2 } from './AddLiquidityV2/redirects'
+import { AdminKyc } from './AdminKyc'
+import { AdminLoginPage } from './AdminLogin'
 import Custodian from './Custodian'
-import { Farming } from './Farming/Farming'
+import { StakingTab } from './Farming/StakingTab'
+import { VestingTab } from './Farming/VestingTab'
 import PoolV2 from './Pool/v2'
 import PoolFinder from './PoolFinder'
 import RemoveLiquidity from './RemoveLiquidity'
 import SecTokenDetails from './SecTokenDetails'
 import Swap from './Swap'
 import { RedirectPathToSwapOnly, RedirectToSwap } from './Swap/redirects'
-import { AdminLoginPage } from './AdminLogin'
-import { AdminKyc } from './AdminKyc'
 
 const AppWrapper = styled.div`
   display: flex;
@@ -93,7 +94,8 @@ export default function App() {
                 <Route exact strict path="/security-tokens/:currencyId" component={SecTokenDetails} />
               )}
               {SECURITY_TOKENS && <Route exact strict path={routes.securityTokens()} component={Custodian} />}
-              <Route exact strict path="/farming" component={Farming} />
+              <Route exact strict path={routes.vesting} component={VestingTab} />
+              <Route exact strict path={routes.staking} component={StakingTab} />
               <Route component={RedirectPathToSwapOnly} />
             </Switch>
           </Web3ReactManager>
