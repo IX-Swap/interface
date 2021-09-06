@@ -24,7 +24,7 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
   const isTierUnlimited = tier?.limit === TIER_LIMIT.UNLIMITED
   const fetchHistoricalPoolSize = useFetchHistoricalPoolSize()
   const poolSizeState = usePoolSizeState()
-  const { hasStakedSuccessfully } = useStakingState()
+  const { hasStakedSuccessfully, isPaused } = useStakingState()
   const tierPeriod = () => {
     switch (tier.period) {
       case PERIOD.ONE_WEEK: {
@@ -81,12 +81,12 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
           <Trans>{tier.limit}</Trans>
         </TYPE.body1>
         <MouseoverTooltip
-          style={{ whiteSpace: 'pre-line', textAlign: 'center' }}
-          text={t`Overall limit for all stakers for this tier is ${
-            isTierUnlimited ? 'unlimited.\n' : '\n2 000 000 IXS.\n'
-          } 
+          style={{ whiteSpace: 'pre-line' }}
+          text={t`Maximum Capacity:
+                  ${isTierUnlimited ? 'Unlimited\n' : '2 000 000 IXS\n'}
 
-                  Overall staked for now: ${'\n' + poolSizeState[tierPeriodKey]} IXS
+                  Staked IXS in Pool: 
+                  ${poolSizeState[tierPeriodKey]} IXS
 
                   ${
                     isTierUnlimited
@@ -124,8 +124,9 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
           toggleStake()
         }}
         style={{ marginBottom: '26px' }}
+        disabled={isPaused}
       >
-        Stake
+        <Trans>{isPaused ? 'Paused' : 'Stake'}</Trans>
       </ButtonIXSWide>
       {!isTierUnlimited && (
         <RowCenter>

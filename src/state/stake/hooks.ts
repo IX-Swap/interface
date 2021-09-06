@@ -27,6 +27,7 @@ import {
   getOneMonthHistoricalPoolSize,
   getTwoMonthsHistoricalPoolSize,
   getThreeMonthsHistoricalPoolSize,
+  getIsStakingPaused,
 } from './actions'
 import { useIXSStakingContract, useIXSTokenContract, useIXSGovTokenContract } from 'hooks/useContract'
 import { IXS_STAKING_V1_ADDRESS_PLAIN, IXS_GOVERNANCE_ADDRESS_PLAIN } from 'constants/addresses'
@@ -666,4 +667,18 @@ export function useGetVestings() {
       console.error(`useGetStakings error `, error)
     }
   }, [staking, account])
+}
+
+export function useIsVestingPaused() {
+  const staking = useIXSStakingContract()
+  const dispatch = useDispatch<AppDispatch>()
+  return useCallback(async () => {
+    try {
+      const isPaused = await staking?.paused()
+      dispatch(getIsStakingPaused({ isPaused }))
+      console.log('isVestingPaused: ', isPaused)
+    } catch (error) {
+      console.error(`isVestingPaused error `, error)
+    }
+  }, [staking, dispatch])
 }
