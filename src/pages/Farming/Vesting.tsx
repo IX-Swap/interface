@@ -1,10 +1,11 @@
-import { LoaderThin } from 'components/Loader/LoaderThin'
 import React from 'react'
-import { useVestingStatus } from 'state/vesting/hooks'
-import { VestingWrapper } from './styleds'
+import { LoaderThin } from 'components/Loader/LoaderThin'
+import { useVestingState, useVestingStatus } from 'state/vesting/hooks'
+import { VestingWrapper, LoaderContainer } from './styleds'
 import { VestingInfo } from './VestingInfo'
 import { VestingTable } from './VestingTable'
 import { VestingSearch } from './VestingSearch'
+import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 
 export enum VestingStatus {
   LOADING = 'LOADING',
@@ -14,16 +15,22 @@ export enum VestingStatus {
 }
 
 export const Vesting = () => {
-  const vestingState = useVestingStatus()
+  const { vestingStatus } = useVestingStatus()
+  const { loadingVesting } = useVestingState()
 
   return (
     <VestingWrapper>
-      {vestingState === VestingStatus.LOADING && <LoaderThin size={128} />}
-      {vestingState !== VestingStatus.LOADING && (
+      {vestingStatus === VestingStatus.LOADING && <LoaderThin size={128} />}
+      {vestingStatus !== VestingStatus.LOADING && (
         <>
+          {loadingVesting && (
+            <LoaderContainer>
+              <LoaderThin size={96} />
+            </LoaderContainer>
+          )}
           <VestingSearch />
-          <VestingInfo state={vestingState} />
-          <VestingTable vestingStatus={vestingState} />
+          <VestingInfo state={vestingStatus} />
+          <VestingTable vestingStatus={vestingStatus} />
         </>
       )}
     </VestingWrapper>

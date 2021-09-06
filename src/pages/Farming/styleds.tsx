@@ -3,6 +3,41 @@ import { Box } from 'rebass'
 import styled from 'styled-components'
 import { hexToRGBA } from 'utils/themeHelper'
 
+export const LoaderContainer = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+export const NoVestingCustomAddress = styled.div`
+  text-align: center;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  height: 100%;
+`
+
+export const YourAddressWrapper = styled.div`
+  font-size: 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 40px;
+`
+
+export const YourAddress = styled.div`
+  font-weight: 400;
+`
+
+export const Address = styled.div`
+  font-weight: 700;
+`
+
 export const Container = styled(Box)`
   height: fit-content;
 `
@@ -66,7 +101,7 @@ export const VestingInfoWrapper = styled(VestingBackground)`
   justify-content: space-between;
   width: 360px;
   gap: 15px;
-  height: 475px;
+  height: 500px;
   align-items: center;
   ${({ theme }) => theme.mediaWidth.upToMedium`
      min-width: fit-content;
@@ -79,15 +114,16 @@ export const VestingTextWrapper = styled(Box)`
   text-align: center;
   align-items: center;
   justify-content: center;
-  width: 180px;
+  width: 252px;
   align-self: center;
+  flex-direction: column;
 `
 export const VestingTableTitle = styled.div`
   opacity: 0.5;
   text-align: left;
 `
 export const ChartParent = styled.div`
-  height: 320px;
+  height: 349px;
   width: 100%;
 `
 export const VestingContractDetails = styled.div`
