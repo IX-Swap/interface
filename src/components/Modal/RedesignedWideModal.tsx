@@ -9,9 +9,11 @@ import { AnimatedDialogContent, StyledDialogOverlay } from './styleds'
 
 // destructure to not pass custom props to Dialog DOM element
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const StyledDialogContent = styled(({ minHeight, maxHeight, mobile, isOpen, isright, mobileMaxHeight, ...rest }) => (
-  <AnimatedDialogContent {...rest} />
-)).attrs({
+const StyledDialogContent = styled(
+  ({ minHeight, maxHeight, mobile, isOpen, isright, mobileMaxHeight, scrollable, ...rest }) => (
+    <AnimatedDialogContent {...rest} />
+  )
+).attrs({
   'aria-label': 'dialog',
 })`
   overflow-y: ${({ mobile }) => (mobile ? 'scroll' : 'hidden')};
@@ -35,6 +37,14 @@ const StyledDialogContent = styled(({ minHeight, maxHeight, mobile, isOpen, isri
       !maxHeight &&
       css`
         height: 785px;
+      `}
+    ${({ scrollable }) =>
+      scrollable &&
+      css`
+        overflow-y: visible;
+        max-height: none;
+        align-self: flex-start;
+        margin-top: 5vh;
       `}
     ${({ minHeight }) =>
       minHeight &&
@@ -68,6 +78,7 @@ export default function RedesignedWideModal({
   initialFocusRef,
   children,
   isright = false,
+  scrollable = false,
 }: ModalProps) {
   const fadeTransition = useTransition(isOpen, null, {
     config: { duration: 200 },
@@ -100,6 +111,7 @@ export default function RedesignedWideModal({
               initialFocusRef={initialFocusRef}
               unstable_lockFocusAcrossFrames={false}
               isright={isright}
+              scrollable={scrollable}
             >
               <StyledDialogContent
                 {...(isMobile
@@ -114,6 +126,7 @@ export default function RedesignedWideModal({
                 mobile={isMobile}
                 isright={isright}
                 mobileMaxHeight={mobileMaxHeight}
+                scrollable={scrollable}
               >
                 {/* prevents the automatic focusing of inputs on mobile by the reach dialog */}
                 {!initialFocusRef && isMobile ? <div tabIndex={1} /> : null}

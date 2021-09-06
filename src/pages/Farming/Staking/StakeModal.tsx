@@ -110,7 +110,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
   }
 
   return (
-    <RedesignedWideModal isOpen={isOpen} onDismiss={wrappedOnDismiss}>
+    <RedesignedWideModal isOpen={isOpen} onDismiss={wrappedOnDismiss} scrollable>
       <ModalBlurWrapper>
         <ModalContentWrapper>
           <StakeModalTop>
