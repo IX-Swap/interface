@@ -35,7 +35,7 @@ import { useStakingState } from 'state/stake/hooks'
 import { PERIOD, convertPeriod, dateFormatter } from 'state/stake/reducer'
 import { IconWrapper } from 'components/AccountDetails/styleds'
 import { ReactComponent as Checkmark } from 'assets/images/checked-solid-bg.svg'
-import { periodsInSeconds } from 'constants/stakingPeriods'
+import { periodsInSeconds, periodsInDays } from 'constants/stakingPeriods'
 
 interface StakingModalProps {
   onDismiss: () => void
@@ -47,6 +47,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
   // track and parse user input
   const router = useLiquidityRouterContract()
   const [typedValue, setTypedValue] = useState('0')
+  const [termsAccepted, setTermsAccepted] = useState(false)
   const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
   const balance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
   const { error, parsedAmount } = useDerivedIXSStakeInfo({ typedValue: '10', currencyId: IXS_ADDRESS[chainId ?? 1] })
@@ -67,6 +68,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
   const wrappedOnDismiss = useCallback(() => {
     setHash(undefined)
     setAttempting(false)
+    setTypedValue('0')
     onDismiss()
   }, [onDismiss])
 
@@ -88,7 +90,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
   }
 
   const onMaxClick = () => {
-    if (amountOfIXStoStakeInput?.current?.value) {
+    if (amountOfIXStoStakeInput?.current) {
       amountOfIXStoStakeInput.current.value = availableIXS
       setTypedValue(availableIXS)
     }
@@ -107,6 +109,16 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
 
   function estimateLockPeriod() {
     return estimatePeriod(selectedTier?.lockupPeriod)
+  }
+
+  function estimateRewards() {
+    const floorTo4Decimals = (num: number) => Math.floor((num + Number.EPSILON) * 10000) / 10000
+    if (selectedTier) {
+      const rewards =
+        (parseInt(typedValue) * (selectedTier?.APY / 100) * periodsInDays[convertPeriod(selectedTier?.period)]) / 365
+      return floorTo4Decimals(rewards)
+    }
+    return 0
   }
 
   return (
@@ -219,7 +231,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
               />
               <TextRow
                 textLeft={t`Estimated rewards`}
-                textRight={`- IXS`}
+                textRight={`${estimateRewards()} IXS`}
                 tooltipText={t`This amount of rewards is based on assumption that your staked amount will be kept for the whole period of ${
                   selectedTier?.period
                 }. In this case your APY will be ${
@@ -229,9 +241,9 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                   Please note: your rewards will be available with vesting process in 10 weeks after unstakting`}
               />
             </StakeInfoContainer>
-            <RowCenter marginTop={25}>
-              <IconWrapper size={16} className={`checkmark ${true ? 'checked' : ''}`}>
-                <Checkmark />
+            <RowCenter marginTop={25} onClick={() => setTermsAccepted(!termsAccepted)}>
+              <IconWrapper size={16}>
+                <TermsCheckmark className={`checkmark ${termsAccepted ? 'checked' : ''}`} />
               </IconWrapper>
               <TYPE.body1>
                 <Trans>I have read the terms of use</Trans>
@@ -239,7 +251,11 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
             </RowCenter>
             <Row style={{ marginTop: '25px' }}>
               {!isIXSApproved && (
-                <ButtonIXSWide data-testid="approve-staking" disabled={approvingIXS} onClick={onApprove}>
+                <ButtonIXSWide
+                  data-testid="approve-staking"
+                  disabled={approvingIXS || !termsAccepted}
+                  onClick={onApprove}
+                >
                   {approvingIXS ? (
                     <Dots>
                       <Trans>Approving IXS</Trans>
@@ -250,7 +266,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                 </ButtonIXSWide>
               )}
               {isIXSApproved && (
-                <ButtonIXSWide data-testid="stake-button" disabled={isStaking} onClick={onStake}>
+                <ButtonIXSWide data-testid="stake-button" disabled={isStaking || !termsAccepted} onClick={onStake}>
                   {isStaking ? (
                     <Dots>
                       <Trans>Staking</Trans>
@@ -385,4 +401,14 @@ const DisabledInput = styled(HighlightedInput)`
   justify-content: space-between;
   flex-wrap: nowrap;
   align-items: center;
+`
+
+const TermsCheckmark = styled(Checkmark)`
+  & > path {
+    visibility: hidden;
+  }
+
+  &.checked > path {
+    visibility: visible;
+  }
 `
