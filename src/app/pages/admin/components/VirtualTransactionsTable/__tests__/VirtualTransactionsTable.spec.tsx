@@ -2,8 +2,8 @@ import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { TableView } from 'components/TableWithPagination/TableView'
 import { columns } from '../columns'
-import { virtualAccountsAudit } from 'config/apiURL'
-import { virtualAccountsAuditQueryKeys } from 'config/queryKeys'
+import { virtualTransactions } from 'config/apiURL'
+import { virtualTransactionsQueryKeys } from 'config/queryKeys'
 import { VirtualTransactionsTable } from 'app/pages/admin/components/VirtualTransactionsTable/VirtualTransactionsTable'
 
 jest.mock('components/TableWithPagination/TableView', () => ({
@@ -26,12 +26,15 @@ describe('VirtualTransactionsTable', () => {
     expect(TableView).toHaveBeenCalledWith(
       expect.objectContaining({
         columns,
-        uri: virtualAccountsAudit.getMT940Files,
-        name: virtualAccountsAuditQueryKeys.getMT940Files,
+        uri: virtualTransactions.getTransactions,
+        name: virtualTransactionsQueryKeys.getTransactions,
         filter: {
           search: undefined,
           to: undefined,
-          from: undefined
+          from: undefined,
+          currency: undefined,
+          direction: undefined,
+          paymentMethod: undefined
         },
         themeVariant: 'primary'
       }),
