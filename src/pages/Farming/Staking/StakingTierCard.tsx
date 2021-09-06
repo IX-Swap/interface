@@ -123,7 +123,7 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
           dispatch(selectTier({ tier }))
           toggleStake()
         }}
-        style={{ marginBottom: '26px', marginTop: 'auto' }}
+        style={{ marginBottom: '26px' }}
       >
         Stake
       </ButtonIXSWide>

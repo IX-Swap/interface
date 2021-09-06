@@ -89,7 +89,7 @@ export const HeaderLinks = () => {
           <Trans>Security tokens</Trans>
         </StyledNavLink>
       )}
-      <StyledNavLink id={`farming-nav-link`} to={'/farming'}>
+      <StyledNavLink id={`vesting-nav-link`} to={'/vesting'}>
         <Trans>IXS Farming</Trans>
       </StyledNavLink>
       <SettingsTab placeholderSlippage={allowedSlippage} />

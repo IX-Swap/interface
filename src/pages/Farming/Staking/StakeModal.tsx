@@ -7,53 +7,42 @@ import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import { TextRow } from 'components/TextRow/TextRow'
 import { IXS_ADDRESS } from 'constants/addresses'
 import { useCurrency } from 'hooks/Tokens'
-import { ApprovalState, useApproveCallback } from 'hooks/useApproveCallback'
-import { useV2LiquidityTokenPermit } from 'hooks/useERC20Permit'
 import { Dots } from 'pages/Pool/styleds'
 import React, { useCallback, useState, useRef } from 'react'
 import { ApplicationModal } from 'state/application/actions'
 import { useModalOpen } from 'state/application/hooks'
 import { useStakeFor, useIncreaseAllowance } from 'state/stake/hooks'
 import { useCurrencyBalance } from 'state/wallet/hooks'
-import { useLiquidityRouterContract } from 'hooks/useContract'
-import useTransactionDeadline from 'hooks/useTransactionDeadline'
 import { useActiveWeb3React } from 'hooks/web3'
-import { useDerivedIXSStakeInfo } from 'state/stake/hooks'
-import { useTransactionAdder } from 'state/transactions/hooks'
 import { CloseIcon, ModalBlurWrapper, TYPE } from 'theme'
 import { maxAmountSpend } from 'utils/maxAmountSpend'
 import Column from 'components/Column'
 import Row, { RowBetween, RowFixed, RowCenter } from 'components/Row'
-import { StakingInputPercentage } from 'components/earn/StakingInputPercentage'
 import { ModalBottomWrapper, ModalContentWrapper, StakeModalTop } from 'components/earn/styled'
 import { MouseoverTooltip } from 'components/Tooltip'
 import styled from 'styled-components'
 import { ReactComponent as ArrowDown } from '../../../assets/images/arrow.svg'
 import { Text } from 'rebass'
-import { theme } from 'theme'
 import { useStakingState } from 'state/stake/hooks'
 import { PERIOD, convertPeriod, dateFormatter } from 'state/stake/reducer'
 import { IconWrapper } from 'components/AccountDetails/styleds'
 import { ReactComponent as Checkmark } from 'assets/images/checked-solid-bg.svg'
-import { periodsInSeconds } from 'constants/stakingPeriods'
+import { periodsInSeconds, periodsInDays } from 'constants/stakingPeriods'
 
 interface StakingModalProps {
   onDismiss: () => void
 }
 
 export function StakeModal({ onDismiss }: StakingModalProps) {
-  const { library, chainId, account } = useActiveWeb3React()
+  const { chainId, account } = useActiveWeb3React()
   const isOpen = useModalOpen(ApplicationModal.STAKE_IXS)
   // track and parse user input
-  const router = useLiquidityRouterContract()
   const [typedValue, setTypedValue] = useState('0')
+  const [termsAccepted, setTermsAccepted] = useState(false)
+  const [error, setError] = useState('')
   const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
   const balance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
-  const { error, parsedAmount } = useDerivedIXSStakeInfo({ typedValue: '10', currencyId: IXS_ADDRESS[chainId ?? 1] })
   const maxAmountInput = maxAmountSpend(balance)
-  const [approval, approveCallback] = useApproveCallback(parsedAmount, IXS_ADDRESS[chainId ?? 1])
-  const parsedAmountWrapped = parsedAmount?.wrapped
-  const { signatureData, gatherPermitSignature } = useV2LiquidityTokenPermit(parsedAmountWrapped, router?.address)
   const availableIXS = maxAmountInput ? maxAmountInput?.toSignificant(5) : ''
   const increaseAllowance = useIncreaseAllowance()
   const amountOfIXStoStakeInput = useRef<HTMLInputElement>(null)
@@ -61,12 +50,8 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
   const stake = useStakeFor(selectedTier?.period)
 
   // state for pending and submitted txn views
-  const addTransaction = useTransactionAdder()
-  const [attempting, setAttempting] = useState<boolean>(false)
-  const [hash, setHash] = useState<string | undefined>()
   const wrappedOnDismiss = useCallback(() => {
-    setHash(undefined)
-    setAttempting(false)
+    setTypedValue('0')
     onDismiss()
   }, [onDismiss])
 
@@ -81,16 +66,20 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
   // wrapped onUserInput to clear signatures
   const onUserInput = () => {
     if (amountOfIXStoStakeInput?.current?.value) {
-      setTypedValue(amountOfIXStoStakeInput.current.value)
+      const value = amountOfIXStoStakeInput.current.value
+      setTypedValue(value)
+      if (maxAmountInput) {
+        setError(parseFloat(value) > parseFloat(maxAmountInput.toSignificant(10)) ? 'Not enough IXS' : '')
+      }
     } else {
       setTypedValue('0')
     }
   }
 
   const onMaxClick = () => {
-    if (amountOfIXStoStakeInput?.current?.value) {
+    if (amountOfIXStoStakeInput?.current) {
       amountOfIXStoStakeInput.current.value = availableIXS
-      setTypedValue(availableIXS)
+      onUserInput()
     }
   }
 
@@ -107,6 +96,16 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
 
   function estimateLockPeriod() {
     return estimatePeriod(selectedTier?.lockupPeriod)
+  }
+
+  function estimateRewards() {
+    const floorTo4Decimals = (num: number) => Math.floor((num + Number.EPSILON) * 10000) / 10000
+    if (selectedTier) {
+      const rewards =
+        (parseInt(typedValue) * (selectedTier?.APY / 100) * periodsInDays[convertPeriod(selectedTier?.period)]) / 365
+      return floorTo4Decimals(rewards)
+    }
+    return 0
   }
 
   return (
@@ -131,7 +130,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                 <InputHintRight>
                   <RowFixed>
                     <Trans>Pool limitation: 2 000 000</Trans>
-                    <StyledDropDown />
+                    <StyledDropDown style={{ display: 'none' }} />
                   </RowFixed>
                 </InputHintRight>
               </RowBetween>
@@ -219,7 +218,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
               />
               <TextRow
                 textLeft={t`Estimated rewards`}
-                textRight={`- IXS`}
+                textRight={`${estimateRewards()} IXS`}
                 tooltipText={t`This amount of rewards is based on assumption that your staked amount will be kept for the whole period of ${
                   selectedTier?.period
                 }. In this case your APY will be ${
@@ -230,16 +229,25 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
               />
             </StakeInfoContainer>
             <RowCenter marginTop={25}>
-              <IconWrapper size={16} className={`checkmark ${true ? 'checked' : ''}`}>
-                <Checkmark />
+              <IconWrapper size={16} onClick={() => setTermsAccepted(!termsAccepted)}>
+                <TermsCheckmark className={`checkmark ${termsAccepted ? 'checked' : ''}`} />
               </IconWrapper>
               <TYPE.body1>
-                <Trans>I have read the terms of use</Trans>
+                <Trans>
+                  I have read the{' '}
+                  <a style={{ color: '#EDCEFF' }} href="dev.ixswap.io/#/swap">
+                    terms of use
+                  </a>
+                </Trans>
               </TYPE.body1>
             </RowCenter>
             <Row style={{ marginTop: '25px' }}>
               {!isIXSApproved && (
-                <ButtonIXSWide data-testid="approve-staking" disabled={approvingIXS} onClick={onApprove}>
+                <ButtonIXSWide
+                  data-testid="approve-staking"
+                  disabled={approvingIXS || !termsAccepted || Boolean(error)}
+                  onClick={onApprove}
+                >
                   {approvingIXS ? (
                     <Dots>
                       <Trans>Approving IXS</Trans>
@@ -250,7 +258,11 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                 </ButtonIXSWide>
               )}
               {isIXSApproved && (
-                <ButtonIXSWide data-testid="stake-button" disabled={isStaking} onClick={onStake}>
+                <ButtonIXSWide
+                  data-testid="stake-button"
+                  disabled={isStaking || !termsAccepted || Boolean(error)}
+                  onClick={onStake}
+                >
                   {isStaking ? (
                     <Dots>
                       <Trans>Staking</Trans>
@@ -385,4 +397,14 @@ const DisabledInput = styled(HighlightedInput)`
   justify-content: space-between;
   flex-wrap: nowrap;
   align-items: center;
+`
+
+const TermsCheckmark = styled(Checkmark)`
+  & > path {
+    visibility: hidden;
+  }
+
+  &.checked > path {
+    visibility: visible;
+  }
 `

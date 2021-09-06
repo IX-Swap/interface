@@ -52,7 +52,7 @@ const periodsLockMonths = {
   [periods.TWO_MONTHS]: 1,
   [periods.THREE_MONTHS]: 2,
 }
-const periodsInDays = {
+export const periodsInDays = {
   [periods.WEEK]: 7,
   [periods.MONTH]: 30,
   [periods.TWO_MONTHS]: 2 * 30,

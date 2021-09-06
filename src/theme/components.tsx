@@ -115,7 +115,16 @@ export const StyledInternalLink = styled(Link)`
     text-decoration: none;
   }
 `
+export const DiscreteInternalLink = styled(StyledInternalLink)`
+  :hover {
+    text-decoration: none;
+  }
 
+  :focus {
+    outline: none;
+    text-decoration: none;
+  }
+`
 const StyledLink = styled.a`
   text-decoration: none;
   cursor: pointer;
