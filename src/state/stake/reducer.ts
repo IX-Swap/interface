@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit'
-import { saveStakingStatus, increaseAllowance, selectTier, stake, getStakings } from './actions'
+import { saveStakingStatus, increaseAllowance, selectTier, stake, getStakings, getIsStakingPaused } from './actions'
 import { IStaking } from 'constants/stakingPeriods'
 
 export enum StakingStatus {
@@ -121,6 +121,7 @@ interface StakingState {
   isStakingFailed: boolean
   hasStakedSuccessfully: boolean
   stakings: IStaking[]
+  isPaused: boolean
 }
 
 const initialState: StakingState = {
@@ -139,6 +140,7 @@ const initialState: StakingState = {
   isStakingFailed: false,
   hasStakedSuccessfully: false,
   stakings: [],
+  isPaused: false,
 }
 
 export default createReducer<StakingState>(initialState, (builder) =>
@@ -191,5 +193,8 @@ export default createReducer<StakingState>(initialState, (builder) =>
     })
     .addCase(getStakings.rejected, (state, { payload: { errorMessage } }) => {
       console.error('Error on fetch staking transactions: ', errorMessage)
+    })
+    .addCase(getIsStakingPaused, (state, { payload: { isPaused } }) => {
+      state.isPaused = isPaused
     })
 )

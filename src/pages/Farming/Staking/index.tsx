@@ -1,7 +1,7 @@
 import IXSStakingModal from 'components/earn/IXSStakingModal'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useToggleStakeModal } from 'state/application/hooks'
-import { useStakingStatus } from 'state/stake/hooks'
+import { useStakingStatus, useIsVestingPaused } from 'state/stake/hooks'
 import { PromoTokenCard } from './PromoTokenCard'
 import { StakingPage } from './StakingPage'
 import { StakingWrapper } from '../styleds'
@@ -10,6 +10,11 @@ import { StakingStatus } from 'state/stake/reducer'
 export const Staking = () => {
   const stakingStatus = useStakingStatus()
   const toggle = useToggleStakeModal()
+  const isVestingPaused = useIsVestingPaused()
+
+  useEffect(() => {
+    isVestingPaused()
+  }, [isVestingPaused])
 
   function renderStakingPage(stakingStatus: StakingStatus) {
     switch (stakingStatus) {
@@ -18,7 +23,7 @@ export const Staking = () => {
         return <PromoTokenCard stakingStatus={stakingStatus} />
       case StakingStatus.NO_STAKE:
       case StakingStatus.STAKING:
-        return <StakingPage stakingStatus={stakingStatus} />
+        return <StakingPage />
       default:
         return 'Something went wrong'
     }
