@@ -1,17 +1,14 @@
 import React, { useEffect } from 'react'
 import { t, Trans } from '@lingui/macro'
 import styled from 'styled-components'
-import dayjs from 'dayjs'
 
 import { Table, BodyRow, HeaderRow } from 'components/Table'
-import { useAdminState, useGetKycList, useGetMe } from 'state/admin/hooks'
 import { LoaderThin } from 'components/Loader/LoaderThin'
-import { shortenAddress } from 'utils'
 import { Box } from 'rebass'
-import { useGetStakings, useStakingState, useGetVestings } from 'state/stake/hooks'
+import { useGetStakings, useStakingState } from 'state/stake/hooks'
 import { dateFormatter } from 'state/stake/reducer'
-import periods_lock_months, { PeriodsEnum } from 'constants/stakingPeriods'
-import Row, { RowBetween, RowFixed, RowCenter } from 'components/Row'
+import { PeriodsEnum } from 'constants/stakingPeriods'
+import Row from 'components/Row'
 import Column from 'components/Column'
 import { ReactComponent as LockIcon } from 'assets/images/lock.svg'
 import { MouseoverTooltip } from 'components/Tooltip'
@@ -20,24 +17,9 @@ import { ReactComponent as InfoIcon } from 'assets/images/attention.svg'
 
 import { TYPE } from 'theme'
 
-const headerCells = [
-  t`Tier`,
-  t`APY`,
-  t`Period of staking`,
-  t`Lock Period`,
-  t`Amount`,
-  t`Distribute`,
-  t`Estimated Rewards`,
-]
-
 const Header = () => {
   return (
     <StyledHeaderRow>
-      {/*      {headerCells.map((cell) => (
-        <div className="header-cell-label" key={cell}>
-          {cell}
-        </div>
-      ))}*/}
       <div className="header-label">
         <Trans>Tier</Trans>
       </div>
@@ -87,11 +69,6 @@ const Header = () => {
 
 const Body = () => {
   const { stakings } = useStakingState()
-
-  // const getVestings = useGetVestings()
-  // useEffect(() => {
-  //   getVestings()
-  // })
 
   function formatAmount(amount: number) {
     return amount.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 10 })
