@@ -93,7 +93,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
   const onMaxClick = () => {
     if (amountOfIXStoStakeInput?.current) {
       amountOfIXStoStakeInput.current.value = availableIXS
-      setTypedValue(availableIXS)
+      onUserInput()
     }
   }
 
