@@ -22,9 +22,8 @@ export interface QueryFilters {
   network: string | undefined
   isPriceAscending: string | undefined
   fundStatus: string | undefined
-  // TODO Make changes type name after complete backend api endpoints
   transferType: string | undefined
-  transferDirection: 'VA to VA' | 'Inbound' | 'Outbound' | undefined
+  transferDirection: string | undefined
 }
 
 export type QueryFilter = keyof QueryFilters

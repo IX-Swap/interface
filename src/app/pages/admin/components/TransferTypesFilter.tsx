@@ -27,7 +27,7 @@ export const TransferTypesFilter = ({
     }
     return value.includes(type)
   }
-  // TODO Make changes type and name attributes after complete backend api endpoints
+
   return (
     <SearchQueryFilter<'transferType'>
       name='transferType'

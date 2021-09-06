@@ -1,34 +1,12 @@
 import { TableColumn } from 'types/util'
 import { renderDateAndTimeField } from 'helpers/rendering'
-import { formatMoney } from 'helpers/numbers'
 import { VirtualTransaction } from 'types/transaction'
-
-const renderFromField = (from: string, item: VirtualTransaction) => {
-  const swiftCode = item.detail.debtorSwiftCode
-  if (swiftCode === undefined) {
-    return from
-  }
-  return from.concat(` (${swiftCode})`)
-}
-
-const renderToField = (to: string, item: VirtualTransaction) => {
-  const swiftCode = item.detail.creditorSwiftCode
-  if (swiftCode === undefined) {
-    return to
-  }
-  return to.concat(` (${swiftCode})`)
-}
-
-const renderDirectionField = (direction: string) => {
-  if (direction.includes('2')) {
-    return direction.replace('2', ' to ')
-  }
-  return direction
-}
-
-const renderAmount = (amount: number, item: VirtualTransaction) => {
-  return formatMoney(amount, item.detail.currency)
-}
+import {
+  renderAmount,
+  renderDirection,
+  renderFromField,
+  renderToField
+} from 'app/pages/admin/components/VirtualTransactionsTable/utils'
 
 export const columns: Array<TableColumn<VirtualTransaction>> = [
   {
@@ -49,7 +27,7 @@ export const columns: Array<TableColumn<VirtualTransaction>> = [
   {
     key: 'detail.direction',
     label: 'Direction',
-    render: renderDirectionField
+    render: renderDirection
   },
   {
     key: 'detail.paymentMethod',
