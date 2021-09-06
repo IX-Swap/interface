@@ -308,3 +308,7 @@ export const virtualAccountsAudit = {
   getRawOutboundVAFile: (fileId: string) =>
     `https://hsbc.mozork.com/audit/virtual-account/outbound/files/raw/va/${fileId}`
 }
+
+export const virtualTransactions = {
+  getTransactions: 'https://hsbc.mozork.com/payments/transactions'
+}

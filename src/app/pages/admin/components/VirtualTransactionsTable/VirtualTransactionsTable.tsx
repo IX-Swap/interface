@@ -1,32 +1,37 @@
 import { columns } from './columns'
 import { TableView } from 'components/TableWithPagination/TableView'
-import { virtualAccountsAudit } from 'config/apiURL'
-import { virtualAccountsAuditQueryKeys } from 'config/queryKeys'
+import { virtualTransactions } from 'config/apiURL'
+import { virtualTransactionsQueryKeys } from 'config/queryKeys'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import React from 'react'
-import { virtualTransactionsItemSample } from '__fixtures__/virtualAccountsAudit'
+import { VirtualTransaction } from 'types/transaction'
 
 export const VirtualTransactionsTable = () => {
   const { getFilterValue } = useQueryFilter()
+  const transferDirection = getFilterValue('transferDirection')
+  const getCorrectDirectionFilterValues = () => {
+    // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+    if (transferDirection?.includes(' to ')) {
+      return transferDirection?.replace(' to ', '2')
+    }
+    return transferDirection
+  }
 
   const filter = {
-    // TODO Make changes filters names after complete backend api endpoints
     search: getFilterValue('search'),
     to: getFilterValue('toDate'),
     from: getFilterValue('fromDate'),
-    transferDirection: getFilterValue('transferDirection'),
+    direction: getCorrectDirectionFilterValues(),
     currency: getFilterValue('currency'),
-    transferType: getFilterValue('transferType')
+    paymentMethod: getFilterValue('transferType')
   }
 
   return (
-    <TableView<any>
-      // TODO Make change next 2 line after complete backend api endpoints
-      uri={virtualAccountsAudit.getMT940Files}
-      name={virtualAccountsAuditQueryKeys.getMT940Files}
+    <TableView<VirtualTransaction>
+      uri={virtualTransactions.getTransactions}
+      name={virtualTransactionsQueryKeys.getTransactions}
       columns={columns}
       filter={filter}
-      fakeItems={[1, 2, 3, 4].map(() => virtualTransactionsItemSample)}
       themeVariant={'primary'}
     />
   )
