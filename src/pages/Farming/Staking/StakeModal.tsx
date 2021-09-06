@@ -7,30 +7,22 @@ import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import { TextRow } from 'components/TextRow/TextRow'
 import { IXS_ADDRESS } from 'constants/addresses'
 import { useCurrency } from 'hooks/Tokens'
-import { ApprovalState, useApproveCallback } from 'hooks/useApproveCallback'
-import { useV2LiquidityTokenPermit } from 'hooks/useERC20Permit'
 import { Dots } from 'pages/Pool/styleds'
 import React, { useCallback, useState, useRef } from 'react'
 import { ApplicationModal } from 'state/application/actions'
 import { useModalOpen } from 'state/application/hooks'
 import { useStakeFor, useIncreaseAllowance } from 'state/stake/hooks'
 import { useCurrencyBalance } from 'state/wallet/hooks'
-import { useLiquidityRouterContract } from 'hooks/useContract'
-import useTransactionDeadline from 'hooks/useTransactionDeadline'
 import { useActiveWeb3React } from 'hooks/web3'
-import { useDerivedIXSStakeInfo } from 'state/stake/hooks'
-import { useTransactionAdder } from 'state/transactions/hooks'
 import { CloseIcon, ModalBlurWrapper, TYPE } from 'theme'
 import { maxAmountSpend } from 'utils/maxAmountSpend'
 import Column from 'components/Column'
 import Row, { RowBetween, RowFixed, RowCenter } from 'components/Row'
-import { StakingInputPercentage } from 'components/earn/StakingInputPercentage'
 import { ModalBottomWrapper, ModalContentWrapper, StakeModalTop } from 'components/earn/styled'
 import { MouseoverTooltip } from 'components/Tooltip'
 import styled from 'styled-components'
 import { ReactComponent as ArrowDown } from '../../../assets/images/arrow.svg'
 import { Text } from 'rebass'
-import { theme } from 'theme'
 import { useStakingState } from 'state/stake/hooks'
 import { PERIOD, convertPeriod, dateFormatter } from 'state/stake/reducer'
 import { IconWrapper } from 'components/AccountDetails/styleds'
@@ -42,10 +34,9 @@ interface StakingModalProps {
 }
 
 export function StakeModal({ onDismiss }: StakingModalProps) {
-  const { library, chainId, account } = useActiveWeb3React()
+  const { chainId, account } = useActiveWeb3React()
   const isOpen = useModalOpen(ApplicationModal.STAKE_IXS)
   // track and parse user input
-  const router = useLiquidityRouterContract()
   const [typedValue, setTypedValue] = useState('0')
   const [termsAccepted, setTermsAccepted] = useState(false)
   const [error, setError] = useState('')
@@ -59,12 +50,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
   const stake = useStakeFor(selectedTier?.period)
 
   // state for pending and submitted txn views
-  const addTransaction = useTransactionAdder()
-  const [attempting, setAttempting] = useState<boolean>(false)
-  const [hash, setHash] = useState<string | undefined>()
   const wrappedOnDismiss = useCallback(() => {
-    setHash(undefined)
-    setAttempting(false)
     setTypedValue('0')
     onDismiss()
   }, [onDismiss])
@@ -144,7 +130,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                 <InputHintRight>
                   <RowFixed>
                     <Trans>Pool limitation: 2 000 000</Trans>
-                    <StyledDropDown />
+                    <StyledDropDown style={{ display: 'none' }} />
                   </RowFixed>
                 </InputHintRight>
               </RowBetween>
