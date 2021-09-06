@@ -7,4 +7,5 @@ export interface ModalProps {
   children?: React.ReactNode
   isright?: boolean
   mobileMaxHeight?: number | false
+  scrollable?: boolean
 }
