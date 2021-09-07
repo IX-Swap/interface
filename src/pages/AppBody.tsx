@@ -32,6 +32,7 @@ export const BlurredOverlay = styled.div`
   justify-content: center;
   align-items: center;
   backdrop-filter: blur(10px);
+  background: ${({ theme }) => theme.bgG16};
 `
 
 /**
@@ -43,7 +44,7 @@ export default function AppBody({ children, blurred, ...rest }: { children: Reac
       <BodyWrapper {...rest}>
         {blurred && (
           <BlurredOverlay>
-            <TYPE.titleBig>
+            <TYPE.titleBig fontWeight={600}>
               <Trans>Coming soon</Trans>
             </TYPE.titleBig>
           </BlurredOverlay>
