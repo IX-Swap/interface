@@ -499,7 +499,7 @@ export function useAccount() {
   const dispatch = useDispatch<AppDispatch>()
   const login = useLogin({ mustHavePreviousLogin: true, expireLogin: true })
   const getUserSecTokens = useFetchUserSecTokenListCallback()
-  const { expiresAt } = useAuthState()
+  const { expiresAt, token } = useAuthState()
   const authenticate = useCallback(async () => {
     const status = await login()
     if (status == LOGIN_STATUS.SUCCESS) {
@@ -510,12 +510,12 @@ export function useAccount() {
   // once in 30 seconds check for expired token
   useEffect(() => {
     const interval = setInterval(() => {
-      if (expiresAt !== undefined && shouldRenewToken(expiresAt) && account) {
+      if (Boolean(token && shouldRenewToken(expiresAt) && account)) {
         authenticate()
       }
     }, 30000)
     return () => clearInterval(interval)
-  }, [expiresAt, account, authenticate])
+  }, [expiresAt, account, authenticate, token])
 
   // when user logins to another account clear his data and relogin him
   useEffect(() => {
