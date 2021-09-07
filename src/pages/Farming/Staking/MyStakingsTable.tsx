@@ -126,7 +126,9 @@ const Body = () => {
             </Tier>
             <div>{apy}%</div>
             <Column>
-              <Row>{formatDate(startDateUnix)}</Row>
+              <Row>
+                {formatDate(startDateUnix)} <MutedText>{getDateFullTime(startDateUnix)}</MutedText>
+              </Row>
               <Row>
                 {formatDate(endDateUnix)} <MutedText>{getDateFullTime(endDateUnix)}</MutedText>
               </Row>
