@@ -142,7 +142,7 @@ const initialState: StakingState = {
   hasStakedSuccessfully: false,
   stakings: [],
   isPaused: false,
-  userHasIXS: false,
+  userHasIXS: Boolean(localStorage.getItem('hasIXS')),
 }
 
 export default createReducer<StakingState>(initialState, (builder) =>
@@ -152,6 +152,7 @@ export default createReducer<StakingState>(initialState, (builder) =>
       state.status = status
       if (status === StakingStatus.STAKING) {
         state.userHasIXS = true
+        localStorage.setItem('hasIXS', 'true')
       }
     })
     .addCase(selectTier, (state, { payload: { tier } }) => {
