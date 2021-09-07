@@ -1,104 +1,111 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { t } from '@lingui/macro'
+import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
-import { t, Trans } from '@lingui/macro'
-import { ReactComponent as CrossSvg } from '../../assets/images/cross.svg'
+import { ButtonIXSGradient } from 'components/Button'
+import { Trans } from '@lingui/macro'
+import { useVestingStatus } from 'state/vesting/hooks'
+import { ReactComponent as Close } from '../../assets/images/cross.svg'
+import { saveCustomVestingAddress } from 'state/vesting/actions'
+import { useActiveWeb3React } from 'hooks/web3'
 
 // todo use button inside search
 export const VestingSearch = () => {
-  const [search, setSearch] = useState('')
-  const [isShowedChecked, setIsShowedChecked] = useState(true)
-  const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearch(e.target.value)
+  const dispatch = useDispatch()
+  const { getVesting } = useVestingStatus()
+  const [address, handleAddres] = useState('')
+  const [addressChecked, handleAddressChecked] = useState(false)
+
+  const { account } = useActiveWeb3React()
+
+  useEffect(() => {
+    if (address) {
+      dispatch(saveCustomVestingAddress({ customVestingAddress: '' }))
+      handleAddres('')
+    }
+  }, [account])
+
+  const onChange = (e: { target: { value: string } }) => {
+    handleAddres(e.target.value)
   }
-  const onCheck = () => {
-    // todo search by search field
-    setIsShowedChecked(false)
+
+  const checkAddress = async () => {
+    await getVesting(address)
+    dispatch(saveCustomVestingAddress({ customVestingAddress: address }))
+    handleAddressChecked(true)
   }
-  const onCross = () => {
-    // todo setup default address back
-    setSearch('')
-    setIsShowedChecked(true)
+
+  const clear = async () => {
+    await getVesting('')
+    dispatch(saveCustomVestingAddress({ customVestingAddress: '' }))
+    handleAddres('')
+    handleAddressChecked(false)
   }
 
   return (
-    <VestingSearchWrapper>
-      <SearchInput
-        id="vesting-search"
-        name="vesting-search"
-        type="text"
-        placeholder={t`Check any address`}
-        maxLength={42}
-        value={search}
-        onChange={onSearchChange}
-        disabled={!isShowedChecked}
+    <InputWrapper>
+      <Input
+        value={address}
+        placeholder={account || t`Check any address`}
+        onChange={onChange}
+        addressChecked={addressChecked}
       />
-      {isShowedChecked && (
-        <CheckBtn onClick={onCheck} disabled={!search}>
-          <Trans>Check</Trans>
-        </CheckBtn>
-      )}
-      {!isShowedChecked && (
-        <CrossBtn onClick={onCross}>
-          <CrossSvg />
-        </CrossBtn>
-      )}
-    </VestingSearchWrapper>
+      <ButtonWrapper addressChecked={addressChecked}>
+        {addressChecked ? (
+          <ClearButton onClick={clear}>
+            <Close />
+          </ClearButton>
+        ) : (
+          <CheckButton disabled={!/^0x[a-fA-F0-9]{40}$/.test(address)} onClick={checkAddress}>{t`Check`}</CheckButton>
+        )}
+      </ButtonWrapper>
+    </InputWrapper>
   )
 }
 
-// todo reuse colors from theme where possible
-const VestingSearchWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 0;
-  width: 100%;
+const CheckButton = styled(ButtonIXSGradient)`
+  padding: 16px;
+  min-width: 127px;
 `
-const SearchInput = styled.input`
+const ClearButton = styled(ButtonIXSGradient)`
+  width: 40px;
+  padding: 7px;
+`
+
+const ButtonWrapper = styled.div<{ addressChecked: boolean }>`
+  position: absolute;
+  right: 20px;
+  top: 10px;
+  > button {
+    height: 40px;
+  }
+`
+
+const InputWrapper = styled.div`
+  width: 100%;
+  position: relative;
+`
+
+const Input = styled.input<{ addressChecked: boolean }>`
+  background-color: ${({ theme, value }) => (value ? theme.bg7 : theme.bg12)};
+  font-size: 20px;
+  border-radius: 100px;
   width: 100%;
   height: 60px;
-  background: rgba(39, 31, 74, 0.3);
-  border: 1px solid #272046;
-  box-sizing: border-box;
-  border-radius: 100px;
-  padding: 10px 22px;
-  font-size: 20px;
-  color: #9184c3;
-  ::placeholder {
-    color: #9184c3;
-  }
   outline: none;
-`
-
-const CheckBtn = styled.button`
-  width: 127px;
-  height: 40px;
-  background: linear-gradient(116.36deg, #7b42a9 33.43%, #ed0376 95.41%);
-  border-radius: 40px;
-  color: #edceff;
-  font-size: 18px;
   border: none;
-  line-height: 20px;
-  text-align: center;
-  :hover {
-    cursor: pointer;
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    -webkit-appearance: none;
   }
-  &:disabled {
-    background: linear-gradient(116.36deg, #37205b 33.43%, #590d4c 95.41%);
-    cursor: auto;
-    pointer-events: none;
+  ::placeholder {
+    color: #edceff50;
   }
-`
-
-const CrossBtn = styled.button`
-  background: linear-gradient(116.36deg, #7b42a9 33.43%, #ed0376 95.41%);
-  border-radius: 40px;
-  width: 40px;
-  height: 40px;
-  border: none;
-  :hover {
-    cursor: pointer;
+  color: ${({ theme, color }) => (color === 'red' ? theme.red1 : theme.text1)};
+  padding: 10px 22px;
+  margin-bottom: 40px;
+  padding-right: ${({ addressChecked }) => (addressChecked ? '100px' : '175px')};
+  @media (max-width: 768px) {
+    font-size: 16px;
   }
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `

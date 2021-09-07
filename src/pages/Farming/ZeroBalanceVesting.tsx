@@ -3,17 +3,46 @@ import { ButtonPinkBorder } from 'components/Button'
 import useTheme from 'hooks/useTheme'
 import React from 'react'
 import { Text } from 'rebass'
-import { VestingTextWrapper } from './styleds'
+import { VestingTextWrapper, YourAddressWrapper, YourAddress, Address, NoVestingCustomAddress } from './styleds'
 import { ReactComponent as ExternalBright } from 'assets/images/external-bright.svg'
 import { IconWrapperWithBg } from 'components/AccountDetails/styleds'
 import { ExternalLink } from 'theme'
+import { shortenAddress } from 'utils'
+import { useWeb3React } from '@web3-react/core'
+import { useVestingState } from 'state/vesting/hooks'
+
 export const ZeroBalanceVesting = () => {
   const theme = useTheme()
+  const { account } = useWeb3React()
+  const { customVestingAddress } = useVestingState()
+
+  if (customVestingAddress) {
+    return (
+      <NoVestingCustomAddress>
+        <Trans>
+          Found address
+          <br />
+          {shortenAddress(customVestingAddress)}
+          <br />
+          doesn’t have IXS vesting
+        </Trans>
+      </NoVestingCustomAddress>
+    )
+  }
+
   return (
     <>
       <VestingTextWrapper>
+        {account && (
+          <YourAddressWrapper>
+            <YourAddress>
+              <Trans>Your address</Trans>
+            </YourAddress>
+            <Address>{shortenAddress(account || '')}</Address>
+          </YourAddressWrapper>
+        )}
         <Text fontSize={'18px'} lineHeight={'27px'} color={theme.text2}>
-          <Trans>Oops, you don’t have IXS vesting in progress now, go to telegram and ask for IXS</Trans>
+          <Trans>Your address doesn’t have IXS vesting in progress now, go to Telegram and ask for IXS</Trans>
         </Text>
       </VestingTextWrapper>
 

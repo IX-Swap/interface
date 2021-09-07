@@ -9,7 +9,7 @@ import { useCurrency } from 'hooks/Tokens'
 import useTheme from 'hooks/useTheme'
 import { useActiveWeb3React } from 'hooks/web3'
 import React from 'react'
-import { useAvailableClaim, useClaimAll, usePayouts, useVestingDetails } from 'state/vesting/hooks'
+import { useAvailableClaim, useClaimAll, usePayouts, useVestingDetails, useVestingState } from 'state/vesting/hooks'
 import { getVestingDates } from 'state/vesting/utils'
 import { TYPE } from 'theme'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
@@ -20,12 +20,15 @@ export const VestingValid = () => {
   const theme = useTheme()
   const vestingDetails = useVestingDetails()
   const payouts = usePayouts()
-  const { chainId } = useActiveWeb3React()
+  const { chainId, account } = useActiveWeb3React()
   const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
   const nextPayment = closestFutureDate({ dates: getVestingDates({ payouts }) })
   const availableClaim = useAvailableClaim()
   const alreadyVested = getPayoutClosestToPresent({ payouts })
   const claim = useClaimAll()
+  const { customVestingAddress } = useVestingState()
+
+  const isDifferentAddress = customVestingAddress && customVestingAddress !== account
 
   return (
     <>
@@ -52,13 +55,24 @@ export const VestingValid = () => {
               </TYPE.titleSmall>
             </Column>
           )}
-          {nextPayment && (
+
+          {nextPayment && !isDifferentAddress && (
             <Column>
               <TYPE.body1>
                 <Trans>Next Payment</Trans>&nbsp;
               </TYPE.body1>
               <TYPE.titleSmall fontWeight={400} lineHeight={'18px'}>
                 {unixTimeToFormat({ time: nextPayment })}
+              </TYPE.titleSmall>
+            </Column>
+          )}
+          {vestingDetails?.end && (
+            <Column>
+              <TYPE.body1>
+                <Trans>End Date</Trans>&nbsp;
+              </TYPE.body1>
+              <TYPE.titleSmall fontWeight={400} lineHeight={'18px'}>
+                {unixTimeToFormat({ time: vestingDetails?.end })}
               </TYPE.titleSmall>
             </Column>
           )}
@@ -86,7 +100,7 @@ export const VestingValid = () => {
                 }
               />
             )}
-            {vestingDetails?.claimed && currency && (
+            {vestingDetails?.claimed && currency && !isDifferentAddress && (
               <TextRow
                 textLeft={<Trans>Already Released</Trans>}
                 textRight={
@@ -97,7 +111,7 @@ export const VestingValid = () => {
                 }
               />
             )}
-            {availableClaim && currency && (
+            {availableClaim && currency && !isDifferentAddress && (
               <TextRow
                 textLeft={<Trans>Releasable</Trans>}
                 textRight={
@@ -112,15 +126,16 @@ export const VestingValid = () => {
           </Column>
         </Column>
       </VestingContractDetails>
-
-      <ButtonIXSWide
-        data-testid="release-vesting"
-        style={{ width: '308px' }}
-        onClick={() => claim()}
-        disabled={!availableClaim || availableClaim === '0'}
-      >
-        <Trans>Release</Trans>
-      </ButtonIXSWide>
+      {!isDifferentAddress && (
+        <ButtonIXSWide
+          data-testid="release-vesting"
+          style={{ width: '308px' }}
+          onClick={() => claim()}
+          disabled={!availableClaim || availableClaim === '0'}
+        >
+          <Trans>Release</Trans>
+        </ButtonIXSWide>
+      )}
     </>
   )
 }
