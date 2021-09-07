@@ -22,7 +22,10 @@ export const getTokenExpiration = (time: keyof typeof timePeriods) => {
 }
 
 // renew token when expiration has passed current time
-export const shouldRenewToken = (time: number) => {
+export const shouldRenewToken = (time?: number) => {
+  if (time === undefined) {
+    return true
+  }
   const currentUTCTime = dayjs.utc().unix().valueOf()
   return currentUTCTime >= time
 }
