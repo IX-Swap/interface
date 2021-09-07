@@ -129,6 +129,7 @@ interface StakingState {
   isStakingFailed: boolean
   hasStakedSuccessfully: boolean
   stakings: IStaking[]
+  stakingsLoading: boolean
   isPaused: boolean
   userHasIXS: boolean
   metaMaskAccount: string | null
@@ -150,6 +151,7 @@ const initialState: StakingState = {
   isStakingFailed: false,
   hasStakedSuccessfully: false,
   stakings: [],
+  stakingsLoading: false,
   isPaused: false,
   userHasIXS: Boolean(localStorage.getItem('hasIXS')),
   metaMaskAccount: localStorage.getItem('account'),
@@ -208,12 +210,15 @@ export default createReducer<StakingState>(initialState, (builder) =>
     })
     .addCase(getStakings.pending, (state) => {
       console.log('Fetching staking transactions...')
+      state.stakingsLoading = true
     })
     .addCase(getStakings.fulfilled, (state, { payload: { transactions } }) => {
       state.stakings = transactions
+      state.stakingsLoading = false
       console.log('staking transactions: ', transactions)
     })
     .addCase(getStakings.rejected, (state, { payload: { errorMessage } }) => {
+      state.stakingsLoading = false
       console.error('Error on fetch staking transactions: ', errorMessage)
     })
     .addCase(getIsStakingPaused, (state, { payload: { isPaused } }) => {
