@@ -65,14 +65,13 @@ export const FarmingToggleOption = styled(ToggleOption)`
 `
 export const VestingWrapper = styled.div`
   display: flex;
-  padding-top: 50px;
   gap: 33px;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  ${({ theme }) => theme.mediaWidth.upToMedium`
-     flex-direction: column;
-     align-items: center
-  `};
+  /* flex-wrap: wrap; */
+  padding: 0 15px;
+  @media (max-width: 1296px) {
+    flex-direction: column;
+    align-items: center;
+  }
 `
 export const StakingWrapper = styled.div`
   display: flex;
@@ -100,27 +99,24 @@ export const VestingBackground = styled.div`
   flex-direction: column;
 `
 export const VestingTableWrapper = styled(VestingBackground)`
-  width: 873px;
+  max-width: 873px;
+  width: 100%;
   height: fit-content;
   border-radius: 30px;
   padding: 32px 32px 45px 32px;
   color: ${({ theme }) => theme.text2};
   background: ${({ theme }) => theme.bgG14};
   gap: 50px;
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-     width:100%;
-  `};
 `
 export const VestingInfoWrapper = styled(VestingBackground)`
   padding: 31px 31px 35px 24px;
   justify-content: space-between;
-  width: 360px;
+  max-width: 360px;
   gap: 15px;
   height: 500px;
+  width: 100%;
   align-items: center;
-  ${({ theme }) => theme.mediaWidth.upToMedium`
-     min-width: fit-content;
-  `};
+
   ${({ theme }) => theme.mediaWidth.upToSmall`
      width:100%;
      min-width: 100%;

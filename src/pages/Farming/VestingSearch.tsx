@@ -74,7 +74,7 @@ const ClearButton = styled(ButtonIXSGradient)`
 
 const ButtonWrapper = styled.div<{ addressChecked: boolean }>`
   position: absolute;
-  right: 20px;
+  right: 35px;
   top: 10px;
   > button {
     height: 40px;
@@ -84,6 +84,9 @@ const ButtonWrapper = styled.div<{ addressChecked: boolean }>`
 const InputWrapper = styled.div`
   width: 100%;
   position: relative;
+  margin-top: 30px;
+  padding: 0 15px;
+  margin-bottom: 33px;
 `
 
 const Input = styled.input<{ addressChecked: boolean }>`

@@ -9,7 +9,7 @@ export const VestingTab = () => {
   return (
     <>
       <LightBackground />
-      <Container width={['100%']} maxWidth={'1269px'}>
+      <Container width={['100%']} maxWidth={'1299px'}>
         <FarmingTabs {...{ tab: FARMING_TABS.VESTING }} />
         <Vesting />
       </Container>

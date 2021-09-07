@@ -19,20 +19,22 @@ export const Vesting = () => {
   const { loadingVesting } = useVestingState()
 
   return (
-    <VestingWrapper>
-      {vestingStatus === VestingStatus.LOADING && <LoaderThin size={128} />}
-      {vestingStatus !== VestingStatus.LOADING && (
-        <>
-          {loadingVesting && (
-            <LoaderContainer>
-              <LoaderThin size={96} />
-            </LoaderContainer>
-          )}
-          <VestingSearch />
-          <VestingInfo state={vestingStatus} />
-          <VestingTable vestingStatus={vestingStatus} />
-        </>
-      )}
-    </VestingWrapper>
+    <>
+      <VestingSearch />
+      <VestingWrapper>
+        {vestingStatus === VestingStatus.LOADING && <LoaderThin size={128} />}
+        {vestingStatus !== VestingStatus.LOADING && (
+          <>
+            {loadingVesting && (
+              <LoaderContainer>
+                <LoaderThin size={96} />
+              </LoaderContainer>
+            )}
+            <VestingInfo state={vestingStatus} />
+            <VestingTable vestingStatus={vestingStatus} />
+          </>
+        )}
+      </VestingWrapper>
+    </>
   )
 }
