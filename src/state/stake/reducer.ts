@@ -1,5 +1,13 @@
 import { createReducer } from '@reduxjs/toolkit'
-import { saveStakingStatus, increaseAllowance, selectTier, stake, getStakings, getIsStakingPaused } from './actions'
+import {
+  saveStakingStatus,
+  increaseAllowance,
+  selectTier,
+  stake,
+  getStakings,
+  getIsStakingPaused,
+  changeAccount,
+} from './actions'
 import { IStaking } from 'constants/stakingPeriods'
 
 export enum StakingStatus {
@@ -123,6 +131,7 @@ interface StakingState {
   stakings: IStaking[]
   isPaused: boolean
   userHasIXS: boolean
+  metaMaskAccount: string | null
 }
 
 const initialState: StakingState = {
@@ -143,6 +152,7 @@ const initialState: StakingState = {
   stakings: [],
   isPaused: false,
   userHasIXS: Boolean(localStorage.getItem('hasIXS')),
+  metaMaskAccount: localStorage.getItem('account'),
 }
 
 export default createReducer<StakingState>(initialState, (builder) =>
@@ -154,6 +164,12 @@ export default createReducer<StakingState>(initialState, (builder) =>
         state.userHasIXS = true
         localStorage.setItem('hasIXS', 'true')
       }
+    })
+    .addCase(changeAccount, (state, { payload: { newAccount } }) => {
+      localStorage.removeItem('hasIXS')
+      state.userHasIXS = false
+      state.metaMaskAccount = newAccount
+      localStorage.setItem('account', newAccount)
     })
     .addCase(selectTier, (state, { payload: { tier } }) => {
       state.selectedTier = tier
