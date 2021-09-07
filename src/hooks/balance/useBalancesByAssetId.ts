@@ -19,7 +19,7 @@ export const useBalancesByAssetId = (
     const { assetId, userId, ...payload } = args
 
     return await apiService.post(
-      accountsURL.balance.getByAssetId(userId, assetId),
+      accountsURL.balance.getCurrencyBalanceByAssetId(userId, assetId),
       payload
     )
   }
