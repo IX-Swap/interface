@@ -3,6 +3,7 @@ import { AutoColumn, ColumnCenter } from 'components/Column'
 import { CustodianTabs } from 'components/NavigationTabs'
 import { Border, ToggleOption, ToggleWrapper } from 'components/Tabs'
 import { useActiveWeb3React } from 'hooks/web3'
+import { SUPPORTED_TGE_CHAINS } from 'pages/App'
 import AppBody from 'pages/AppBody'
 import React, { useState } from 'react'
 import { useAuthState } from 'state/auth/hooks'
@@ -11,12 +12,12 @@ import { MySecurities } from './MySecurities'
 
 export default function Custodian() {
   const { token } = useAuthState()
-  const { account } = useActiveWeb3React()
+  const { account, chainId } = useActiveWeb3React()
   const isLoggedIn = !!token && !!account
   const [showAllSecTokens, setShowAllSecTokens] = useState<boolean>(!isLoggedIn)
   return (
     <>
-      <AppBody>
+      <AppBody blurred={chainId === SUPPORTED_TGE_CHAINS.MAIN}>
         <ColumnCenter style={{ paddingBottom: '26px' }}>
           <CustodianTabs />
           {isLoggedIn && (

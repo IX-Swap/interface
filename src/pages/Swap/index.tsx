@@ -12,6 +12,7 @@ import { tradeMeaningfullyDiffers } from 'components/swap/tradeMeaningfullyDiffe
 import UnsupportedCurrencyFooter from 'components/swap/UnsupportedCurrencyFooter'
 import { MouseoverTooltip } from 'components/Tooltip'
 import JSBI from 'jsbi'
+import { SUPPORTED_TGE_CHAINS } from 'pages/App'
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { CheckCircle, HelpCircle } from 'react-feather'
 import ReactGA from 'react-ga'
@@ -48,7 +49,7 @@ import { warningSeverity } from '../../utils/prices'
 import AppBody from '../AppBody'
 
 export default function Swap({ history }: RouteComponentProps) {
-  const { account } = useActiveWeb3React()
+  const { account, chainId } = useActiveWeb3React()
   const theme = useContext(ThemeContext)
   const [openModal, setOpenModal] = useState<boolean>(false)
   // toggle wallet when disconnected
@@ -265,7 +266,7 @@ export default function Swap({ history }: RouteComponentProps) {
   return (
     <>
       <TokenWarningModal history={history} />
-      <AppBody>
+      <AppBody blurred={chainId === SUPPORTED_TGE_CHAINS.MAIN}>
         <SwapHeader />
         <Wrapper id="swap-page">
           <PendingSuccesModals

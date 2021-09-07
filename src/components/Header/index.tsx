@@ -212,12 +212,7 @@ export default function Header() {
               </IXSIcon>
             </Title>
           </HeaderRow>
-          {chainId !== SUPPORTED_TGE_CHAINS.MAIN && (
-            <>
-              <HeaderLinks />
-            </>
-          )}
-
+          <HeaderLinks />
           <HeaderControls>
             <HeaderElement>
               <HideSmall>
