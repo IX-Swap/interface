@@ -15,7 +15,7 @@ import { useUserAccountState } from 'state/user/hooks'
 import { setTransaction } from 'state/withdraw/actions'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { hexToRGBA } from 'utils/themeHelper'
-import { getDetails, saveAvailableClaim, saveIsVesting, savePayouts } from './actions'
+import { getDetails, saveAvailableClaim, saveIsVesting, savePayouts, saveVestingStatus } from './actions'
 import { vestingResponseAdapter } from './utils'
 
 export function useDistributeCallback(): () => Promise<void> {
@@ -46,45 +46,56 @@ export function useDistributeCallback(): () => Promise<void> {
   }, [vesting, decimals])
 }
 
-export function useIsVestingCallback(): () => Promise<boolean> {
+export function useIsVestingCallback(): (address?: string) => Promise<boolean> {
   const vesting = useVestingContract()
   const savedAccount = useUserAccountState()
-  return useCallback(async () => {
-    try {
-      if (!savedAccount) {
+
+  return useCallback(
+    async (account?: string) => {
+      try {
+        const accountToCheck = account || savedAccount
+        if (!accountToCheck) {
+          return false
+        }
+        const isVesting = await vesting?.isVesting(accountToCheck)
+        return Boolean(isVesting)
+      } catch (error) {
+        console.error(`Could not get isVesting`, error)
         return false
       }
-      const isVesting = await vesting?.isVesting(savedAccount)
-      return Boolean(isVesting)
-    } catch (error) {
-      console.error(`Could not get isVesting`, error)
-      return false
-    }
-  }, [vesting, savedAccount])
+    },
+    [vesting, savedAccount]
+  )
 }
 
 export function useAvailableClaim() {
   const vesting = useVestingContract()
   const { account } = useActiveWeb3React()
   const dispatch = useDispatch<AppDispatch>()
-  const { isVesting, availableClaim } = useVestingState()
-  const fetchClaimable = useCallback(async () => {
-    try {
-      if (!account) {
-        return
+  const { isVesting, availableClaim, customVestingAddress } = useVestingState()
+  const fetchClaimable = useCallback(
+    async (address?: string | null) => {
+      try {
+        if (!address) {
+          return
+        }
+        dispatch(saveAvailableClaim.pending())
+        const claimable = await vesting?.availableClaim(address)
+        dispatch(saveAvailableClaim.fulfilled({ availableClaim: claimable.toString() }))
+      } catch (error) {
+        console.error(`Could not get claimable`, error)
+        dispatch(saveAvailableClaim.rejected({ errorMessage: 'Could not get claimable' }))
       }
-      const claimable = await vesting?.availableClaim(account)
-      dispatch(saveAvailableClaim({ availableClaim: claimable.toString() }))
-    } catch (error) {
-      console.error(`Could not get claimable`, error)
-    }
-  }, [vesting, account, dispatch])
+    },
+    [vesting, dispatch]
+  )
 
   useEffect(() => {
-    if (isVesting && account) {
-      fetchClaimable()
+    if (isVesting && (account || customVestingAddress)) {
+      fetchClaimable(customVestingAddress || account)
     }
-  }, [fetchClaimable, account, isVesting])
+  }, [fetchClaimable, account, isVesting, customVestingAddress])
+
   return availableClaim
 }
 
@@ -93,27 +104,31 @@ export function usePayouts() {
   const account = useUserAccountState()
   const dispatch = useDispatch<AppDispatch>()
 
-  const { isVesting, payouts } = useVestingState()
-  const fetchPayouts = useCallback(async () => {
-    try {
-      if (!account) {
-        dispatch(savePayouts({ payouts: [] }))
-      }
-      const result = await vesting?.payouts(account)
+  const { isVesting, payouts, customVestingAddress } = useVestingState()
+  const fetchPayouts = useCallback(
+    async (address?: string | null) => {
+      try {
+        if (!address) {
+          dispatch(savePayouts.pending())
+        }
+        const result = await vesting?.payouts(address)
 
-      const payouts = result.map((payout: [BigNumber, BigNumber]) => [payout[0].toNumber(), payout[1].toString()])
-      dispatch(savePayouts({ payouts }))
-      return payouts
-    } catch (error) {
-      dispatch(savePayouts({ payouts: [] }))
-      console.error(`Could not get payouts`, error)
-    }
-  }, [account, dispatch, vesting])
+        const payouts = result.map((payout: [BigNumber, BigNumber]) => [payout[0].toNumber(), payout[1].toString()])
+        dispatch(savePayouts.fulfilled({ payouts }))
+        return payouts
+      } catch (error) {
+        dispatch(savePayouts.rejected({ errorMessage: 'Could not get payouts' }))
+        console.error(`Could not get payouts`, error)
+      }
+    },
+    [dispatch, vesting]
+  )
   useEffect(() => {
-    if (isVesting && account) {
-      fetchPayouts()
+    if (isVesting && (account || customVestingAddress)) {
+      fetchPayouts(customVestingAddress || account)
     }
-  }, [fetchPayouts, account, isVesting])
+  }, [fetchPayouts, account, isVesting, customVestingAddress])
+
   return payouts
 }
 
@@ -124,20 +139,24 @@ export function useClaimAll(): () => Promise<any> {
   const addTransaction = useTransactionAdder()
   const { chainId } = useActiveWeb3React()
   const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
+  const { customVestingAddress } = useVestingState()
+
+  const address = customVestingAddress || account
+
   return useCallback(async () => {
     try {
-      if (!account) {
+      if (!address) {
         return false
       }
-      const claimable = await vesting?.availableClaim(account)
-      const claimed = await vesting?.claimFor(account, claimable)
-      const vestingDetails = await vesting?.details(account)
+      const claimable = await vesting?.availableClaim(address)
+      const claimed = await vesting?.claimFor(address, claimable)
+      const vestingDetails = await vesting?.details(address)
 
-      const result = await vesting?.payouts(account)
+      const result = await vesting?.payouts(address)
       const payouts = result.map((payout: [BigNumber, BigNumber]) => [payout[0].toNumber(), payout[1].toString()])
       dispatch(getDetails.fulfilled({ details: vestingResponseAdapter(vestingDetails) }))
-      dispatch(saveAvailableClaim({ availableClaim: claimable.toString() }))
-      dispatch(savePayouts({ payouts }))
+      dispatch(saveAvailableClaim.fulfilled({ availableClaim: claimable.toString() }))
+      dispatch(savePayouts.fulfilled({ payouts }))
       if (currency) {
         addTransaction(claimed, {
           summary: t`Released ${formatCurrencyAmount(
@@ -153,52 +172,65 @@ export function useClaimAll(): () => Promise<any> {
       console.error(`Could not claim`, error)
       return false
     }
-  }, [vesting, account, dispatch, addTransaction, currency])
+  }, [vesting, address, dispatch, addTransaction, currency])
 }
 
 export function useVestingStatus() {
-  const [vestingStatus, setVestingStatus] = useState(VestingStatus.LOADING)
+  const { vestingStatus } = useVestingState()
   const { account } = useActiveWeb3React()
   const getIsVesting = useIsVestingCallback()
   const dispatch = useDispatch<AppDispatch>()
 
+  const getVesting = useCallback(async (address?: string) => {
+    try {
+      dispatch(saveIsVesting.pending())
+      const vestingResponse = await getIsVesting(address)
+      dispatch(saveVestingStatus(vestingResponse ? VestingStatus.VALID : VestingStatus.ZERO_BALANCE))
+      dispatch(saveIsVesting.fulfilled({ isVesting: vestingResponse }))
+    } catch (error) {
+      dispatch(saveIsVesting.rejected({ errorMessage: '`Could not get vesting status' }))
+    }
+  }, [])
+
   useEffect(() => {
     if (!account && vestingStatus !== VestingStatus.CONNECT_WALLET) {
-      setVestingStatus(VestingStatus.CONNECT_WALLET)
+      dispatch(saveVestingStatus(VestingStatus.CONNECT_WALLET))
     }
+  }, [account, vestingStatus])
+
+  useEffect(() => {
     if (account) {
-      getVesting()
+      getVesting(account)
     }
-    async function getVesting() {
-      const vestingResponse = await getIsVesting()
-      setVestingStatus(vestingResponse ? VestingStatus.VALID : VestingStatus.ZERO_BALANCE)
-      dispatch(saveIsVesting({ isVesting: vestingResponse }))
-    }
-  }, [account, vestingStatus, getIsVesting, dispatch])
-  return vestingStatus
+  }, [account])
+
+  return { vestingStatus, getVesting }
 }
 
 export function useVestingDetails() {
   const vesting = useVestingContract()
   const { account } = useActiveWeb3React()
   const dispatch = useDispatch<AppDispatch>()
-  const { isVesting, details } = useVestingState()
-  const fetchDetails = useCallback(async () => {
-    try {
-      dispatch(getDetails.pending())
-      const vestingDetails = await vesting?.details(account)
-      dispatch(getDetails.fulfilled({ details: vestingResponseAdapter(vestingDetails) }))
-    } catch (error) {
-      console.error(`Could not get vesting details`, error)
-      dispatch(getDetails.rejected({ errorMessage: error.message }))
-    }
-  }, [vesting, account, dispatch])
+  const { isVesting, details, customVestingAddress } = useVestingState()
+  const fetchDetails = useCallback(
+    async (address?: string | null) => {
+      try {
+        dispatch(getDetails.pending())
+        const vestingDetails = await vesting?.details(address)
+        dispatch(getDetails.fulfilled({ details: vestingResponseAdapter(vestingDetails) }))
+      } catch (error) {
+        console.error(`Could not get vesting details`, error)
+        dispatch(getDetails.rejected({ errorMessage: error.message }))
+      }
+    },
+    [vesting, account, dispatch]
+  )
 
   useEffect(() => {
-    if (isVesting && account && !details) {
-      fetchDetails()
+    if (isVesting && (account || customVestingAddress)) {
+      fetchDetails(customVestingAddress || account)
     }
-  }, [fetchDetails, account, isVesting, details])
+  }, [fetchDetails, account, isVesting, customVestingAddress])
   return details
 }
 
@@ -257,5 +289,14 @@ export function useTableOptions() {
 }
 
 export function useVestingState(): AppState['vesting'] {
-  return useSelector<AppState, AppState['vesting']>((state) => state.vesting)
+  const data = useSelector<AppState, AppState['vesting']>((state) => state.vesting)
+  return {
+    ...data,
+    loadingVesting:
+      data.loadingIsVesting ||
+      data.loadingDetails ||
+      data.loadingAvailableClaim ||
+      data.loadingPayouts ||
+      data.loadingVesting,
+  }
 }

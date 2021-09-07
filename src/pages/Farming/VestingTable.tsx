@@ -16,6 +16,10 @@ import { ChartParent, VestingTableTitle, VestingTableWrapper } from './styleds'
 import { VestingStatus } from './Vesting'
 dayjs.extend(isSameOrAfter)
 
+import { defaults } from 'react-chartjs-2'
+
+defaults.animation = false
+
 const DATE_FORMAT = 'DD.MM'
 const sampleData = [
   { x: 1620636272, y: 500 },
@@ -82,7 +86,8 @@ export const VestingTable = ({ vestingStatus }: { vestingStatus: VestingStatus }
       ],
     }
   }, [points, theme, vestingStatus, getColor])
-  const chart = useMemo(() => <Line data={data} options={options} />, [data, options])
+  const chart = useMemo(() => <Line data={data} options={options} redraw={false} />, [data, options])
+
   return (
     <VestingTableWrapper>
       <VestingTableTitle>

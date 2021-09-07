@@ -128,7 +128,7 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
       >
         <Trans>{isPaused ? 'Paused' : 'Stake'}</Trans>
       </ButtonIXSWide>
-      {!isTierUnlimited && (
+      {/*{!isTierUnlimited && (
         <RowCenter>
           <TYPE.description3 fontWeight={400} opacity="0.5">
             <Trans>
@@ -136,7 +136,7 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
             </Trans>
           </TYPE.description3>
         </RowCenter>
-      )}
+      )}*/}
     </StakingTierCardWrapper>
   )
 }

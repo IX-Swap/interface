@@ -13,12 +13,7 @@ import { ReactComponent as InfoIcon } from 'assets/images/attention.svg'
 
 export const StakingTiers = () => {
   const toggleStakeModal = useToggleModal(ApplicationModal.STAKE_IXS)
-  const { hasStakedSuccessfully, isPaused } = useStakingState()
-  useEffect(() => {
-    if (hasStakedSuccessfully) {
-      toggleStakeModal()
-    }
-  }, [hasStakedSuccessfully, toggleStakeModal])
+  const { isPaused } = useStakingState()
 
   return (
     <div style={{ display: 'flex', flexWrap: 'wrap' }}>
