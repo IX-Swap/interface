@@ -1,38 +1,38 @@
 import { Interface } from '@ethersproject/abi'
-import { BigNumber, Bytes, utils } from 'ethers'
 import { Currency, CurrencyAmount, Token, WETH9 } from '@ixswap1/sdk-core'
 import { Pair } from '@ixswap1/v2-sdk'
 import { t } from '@lingui/macro'
 import { abi as STAKING_REWARDS_ABI } from '@uniswap/liquidity-staker/build/StakingRewards.json'
-import { IXS_ADDRESS } from 'constants/addresses'
+import { IXS_ADDRESS, IXS_STAKING_V1_ADDRESS } from 'constants/addresses'
+import stakingPeriodsData, { IStaking, PeriodsEnum } from 'constants/stakingPeriods'
+import { BigNumber, utils } from 'ethers'
 import { useCurrency } from 'hooks/Tokens'
+import { useIXSGovTokenContract, useIXSStakingContract, useIXSTokenContract } from 'hooks/useContract'
 import useCurrentBlockTimestamp from 'hooks/useCurrentBlockTimestamp'
 import JSBI from 'jsbi'
-import { StakingStatus, PERIOD } from 'state/stake/reducer'
-import { useEffect, useMemo, useCallback } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, AppState } from 'state'
+import { PERIOD, StakingStatus } from 'state/stake/reducer'
 import { useCurrencyBalance } from 'state/wallet/hooks'
 import { maxAmountSpend } from 'utils/maxAmountSpend'
 import { DAI, IXS, USDC, USDT, WBTC } from '../../constants/tokens'
 import { useActiveWeb3React } from '../../hooks/web3'
+import { calculateGasMargin } from '../../utils/calculateGasMargin'
 import { NEVER_RELOAD, useMultipleContractSingleData } from '../multicall/hooks'
 import { tryParseAmount } from '../swap/helpers'
 import {
-  saveStakingStatus,
-  increaseAllowance,
-  stake,
-  getStakings,
-  getOneWeekHistoricalPoolSize,
-  getOneMonthHistoricalPoolSize,
-  getTwoMonthsHistoricalPoolSize,
-  getThreeMonthsHistoricalPoolSize,
   getIsStakingPaused,
+  getOneMonthHistoricalPoolSize,
+  getOneWeekHistoricalPoolSize,
+  getStakings,
+  getThreeMonthsHistoricalPoolSize,
+  getTwoMonthsHistoricalPoolSize,
+  increaseAllowance,
+  saveStakingStatus,
+  stake,
 } from './actions'
-import { useIXSStakingContract, useIXSTokenContract, useIXSGovTokenContract } from 'hooks/useContract'
-import { IXS_STAKING_V1_ADDRESS_PLAIN, IXS_GOVERNANCE_ADDRESS_PLAIN } from 'constants/addresses'
-import { calculateGasMargin } from '../../utils/calculateGasMargin'
-import stakingPeriodsData, { PeriodsEnum, IStaking } from 'constants/stakingPeriods'
+import { stakingsAdapter } from './utils'
 
 export const STAKING_REWARDS_INTERFACE = new Interface(STAKING_REWARDS_ABI)
 
@@ -265,38 +265,6 @@ export function useTotalIXsEarned(): CurrencyAmount<Token> | undefined {
 }
 
 // based on typed value
-export function useDerivedStakeInfo(
-  typedValue: string,
-  stakingToken: Token | undefined,
-  userLiquidityUnstaked: CurrencyAmount<Token> | undefined
-): {
-  parsedAmount?: CurrencyAmount<Token>
-  error?: string
-} {
-  const { account } = useActiveWeb3React()
-
-  const parsedInput: CurrencyAmount<Token> | undefined = tryParseAmount(typedValue, stakingToken)
-
-  const parsedAmount =
-    parsedInput && userLiquidityUnstaked && JSBI.lessThanOrEqual(parsedInput.quotient, userLiquidityUnstaked.quotient)
-      ? parsedInput
-      : undefined
-
-  let error: string | undefined
-  if (!account) {
-    error = t`Connect Wallet`
-  }
-  if (!parsedAmount) {
-    error = error ?? t`Enter an amount`
-  }
-
-  return {
-    parsedAmount,
-    error,
-  }
-}
-
-// based on typed value
 export function useDerivedIXSStakeInfo({ typedValue, currencyId }: { typedValue: string; currencyId?: string }): {
   parsedAmount?: CurrencyAmount<Currency>
   error?: string
@@ -410,19 +378,23 @@ export function useFetchHistoricalPoolSize() {
 export function useIncreaseAllowance() {
   const dispatch = useDispatch<AppDispatch>()
   const tokenContract = useIXSTokenContract()
-
+  const { chainId } = useActiveWeb3React()
   return useCallback(
     async (amount: string) => {
+      if (!chainId) {
+        return
+      }
       try {
         const stakeAmount = utils.parseUnits(amount, 'ether')
         dispatch(increaseAllowance.pending())
-        const allowanceTx = await tokenContract?.increaseAllowance(IXS_STAKING_V1_ADDRESS_PLAIN, stakeAmount)
-        dispatch(increaseAllowance.fulfilled({ data: allowanceTx }))
+        const stakingAddress = IXS_STAKING_V1_ADDRESS[chainId]
+        const allowanceTx = await tokenContract?.increaseAllowance(stakingAddress, stakeAmount)
+        dispatch(increaseAllowance.fulfilled({ data: allowanceTx?.hash }))
       } catch (error) {
         dispatch(increaseAllowance.rejected({ errorMessage: error }))
       }
     },
-    [tokenContract, dispatch]
+    [tokenContract, dispatch, chainId]
   )
 }
 
@@ -447,7 +419,7 @@ export function useStakeFor(period?: PERIOD) {
             const stakeTx = await staking?.stakeForWeek(account, stakeAmount, noData, {
               gasLimit: calculateGasMargin(estimatedGas),
             })
-            dispatch(stake.fulfilled({ data: stakeTx }))
+            dispatch(stake.fulfilled({ data: stakeTx?.hash }))
             break
           }
           case PERIOD.ONE_MONTH: {
@@ -459,7 +431,7 @@ export function useStakeFor(period?: PERIOD) {
             const stakeTx = await staking?.stakeForMonth(account, stakeAmount, noData, {
               gasLimit: calculateGasMargin(estimatedGas),
             })
-            dispatch(stake.fulfilled({ data: stakeTx }))
+            dispatch(stake.fulfilled({ data: stakeTx?.hash }))
             break
           }
           case PERIOD.TWO_MONTHS: {
@@ -471,7 +443,7 @@ export function useStakeFor(period?: PERIOD) {
             const stakeTx = await staking?.stakeForTwoMonths(account, stakeAmount, noData, {
               gasLimit: calculateGasMargin(estimatedGas),
             })
-            dispatch(stake.fulfilled({ data: stakeTx }))
+            dispatch(stake.fulfilled({ data: stakeTx?.hash }))
             break
           }
           case PERIOD.THREE_MONTHS: {
@@ -483,7 +455,7 @@ export function useStakeFor(period?: PERIOD) {
             const stakeTx = await staking?.stakeForThreeMonths(account, stakeAmount, noData, {
               gasLimit: calculateGasMargin(estimatedGas),
             })
-            dispatch(stake.fulfilled({ data: stakeTx }))
+            dispatch(stake.fulfilled({ data: stakeTx?.hash }))
             break
           }
           default: {
@@ -587,7 +559,7 @@ export function useGetStakings() {
         }
         return 0
       })
-      dispatch(getStakings.fulfilled({ transactions }))
+      dispatch(getStakings.fulfilled({ transactions: stakingsAdapter(transactions) }))
       return transactions
     } catch (error) {
       console.error(`useGetStakings error `, error)
