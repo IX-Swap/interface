@@ -86,7 +86,9 @@ export const accountsURL = {
     getAll: (userId: string) => `/accounts/balance/${userId}`,
     getByUserId: (userId: string) => `/accounts/balance/${userId}`,
     getByAssetId: (userId: string, assetId: string) =>
-      `/accounts/balance/${userId}/${assetId}`
+      `/accounts/balance/${userId}/${assetId}`,
+    getCurrencyBalanceByAssetId: (userId: string, assetId: string) =>
+      `/accounts/currency-balance/${userId}/${assetId}`
   },
   virtualAccounts: {
     withdraw: (userId: string, virtualAccountId: string) =>
