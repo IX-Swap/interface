@@ -2120,10 +2120,15 @@
   resolved "https://registry.npmjs.org/@ethersproject/logger/-/logger-5.2.0.tgz"
   integrity sha512-dPZ6/E3YiArgG8dI/spGkaRDry7YZpCntf4gm/c6SI8Mbqiihd7q3nuLN5VvDap/0K3xm3RE1AIUOcUwwh2ezQ==
 
-"@ethersproject/logger@^5.0.5", "@ethersproject/logger@^5.2.0", "@ethersproject/logger@^5.4.0":
+"@ethersproject/logger@^5.0.5", "@ethersproject/logger@^5.2.0":
   version "5.4.0"
   resolved "https://registry.npmjs.org/@ethersproject/logger/-/logger-5.4.0.tgz"
   integrity sha512-xYdWGGQ9P2cxBayt64d8LC8aPFJk6yWCawQi/4eJ4+oJdMMjEBMrIcIMZ9AxhwpPVmnBPrsB10PcXGmGAqgUEQ==
+
+"@ethersproject/logger@^5.4.0":
+  version "5.4.1"
+  resolved "https://registry.yarnpkg.com/@ethersproject/logger/-/logger-5.4.1.tgz#503bd33683538b923c578c07d1c2c0dd18672054"
+  integrity sha512-DZ+bRinnYLPw1yAC64oRl0QyVZj43QeHIhVKfD/+YwSz4wsv1pfwb5SOFjz+r710YEWzU6LrhuSjpSO+6PeE4A==
 
 "@ethersproject/networks@5.2.0", "@ethersproject/networks@^5.2.0":
   version "5.2.0"
@@ -2204,7 +2209,7 @@
 
 "@ethersproject/rlp@^5.2.0", "@ethersproject/rlp@^5.4.0":
   version "5.4.0"
-  resolved "https://registry.npmjs.org/@ethersproject/rlp/-/rlp-5.4.0.tgz"
+  resolved "https://registry.yarnpkg.com/@ethersproject/rlp/-/rlp-5.4.0.tgz#de61afda5ff979454e76d3b3310a6c32ad060931"
   integrity sha512-0I7MZKfi+T5+G8atId9QaQKHRvvasM/kqLyAH4XxBCBchAooH2EX5rL9kYZWwcm3awYV+XC7VF6nLhfeQFKVPg==
   dependencies:
     "@ethersproject/bytes" "^5.4.0"
@@ -2221,7 +2226,7 @@
 
 "@ethersproject/sha2@^5.4.0":
   version "5.4.0"
-  resolved "https://registry.npmjs.org/@ethersproject/sha2/-/sha2-5.4.0.tgz"
+  resolved "https://registry.yarnpkg.com/@ethersproject/sha2/-/sha2-5.4.0.tgz#c9a8db1037014cbc4e9482bd662f86c090440371"
   integrity sha512-siheo36r1WD7Cy+bDdE1BJ8y0bDtqXCOxRMzPa4bV1TGt/eTUUt03BHoJNB6reWJD8A30E/pdJ8WFkq+/uz4Gg==
   dependencies:
     "@ethersproject/bytes" "^5.4.0"
@@ -2264,7 +2269,7 @@
 
 "@ethersproject/solidity@^5.0.0":
   version "5.4.0"
-  resolved "https://registry.npmjs.org/@ethersproject/solidity/-/solidity-5.4.0.tgz"
+  resolved "https://registry.yarnpkg.com/@ethersproject/solidity/-/solidity-5.4.0.tgz#1305e058ea02dc4891df18b33232b11a14ece9ec"
   integrity sha512-XFQTZ7wFSHOhHcV1DpcWj7VXECEiSrBuv7JErJvB9Uo+KfCdc3QtUZV+Vjh/AAaYgezUEKbCtE6Khjm44seevQ==
   dependencies:
     "@ethersproject/bignumber" "^5.4.0"
@@ -2445,19 +2450,19 @@
   integrity sha512-ZXRY4jNvVgSVQ8DL3LTcakaAtXwTVUxE81hslsyD2AtoXW/wVob10HkOJ1X/pAlcI7D+2YoZKg5do8G/w6RYgA==
 
 "@ixswap1/default-token-list@^1.0.4":
-  version "1.0.12"
-  resolved "https://registry.npmjs.org/@ixswap1/default-token-list/-/default-token-list-1.0.12.tgz"
-  integrity sha512-ZfNlgC4BU+2PYwdXZBePntKsav04B9bk8KGUaEWCQsajEmCqN6m37pOZ5vF6f01lp4eVKuKbckNAfHINQ0s4pQ==
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@ixswap1/default-token-list/-/default-token-list-1.1.0.tgz#b934258f989e1677ada3b7aa5d34ae9c52a3d991"
+  integrity sha512-+NLkeRoxbXFa2s+mifP3HH0DwRd5AjpRf5bxvMj+nbb7Siba0EmXMy9MI0hLyeQ3+Waua3Cy1JV9q8cSQLU3BA==
 
 "@ixswap1/lib@1.x.x":
-  version "1.0.6"
-  resolved "https://registry.npmjs.org/@ixswap1/lib/-/lib-1.0.6.tgz"
-  integrity sha512-/BZX0ms5iVDbI7szsKQhqGezoPwq8vYi9W729MMQqXVOhLrVFvnqNnCz5PNcoCFbM/R1apQbYGnZg6kvMlhMqw==
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@ixswap1/lib/-/lib-1.1.0.tgz#567ad9a5e61052b950837c3bc257be3136800582"
+  integrity sha512-jfNP4W8ss2MIq9JZxkXGZCplKAXrh6J1mrZNj3aAPSvhpoO8QoVPUa8TCKQQsnBQcKlqhHo6Ap23+5UDjJF6Qg==
 
 "@ixswap1/sdk-core@1.x.x", "@ixswap1/sdk-core@^1.0.0":
-  version "1.0.6"
-  resolved "https://registry.npmjs.org/@ixswap1/sdk-core/-/sdk-core-1.0.6.tgz"
-  integrity sha512-RVk+jx/7ApgAeH1QzU6zOCv9ZUTIO1oI3T8P0byg6ywFxCtX5/XBEv77Vjsl1PYpOWvW5XyB9cj+VIVPx599xQ==
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@ixswap1/sdk-core/-/sdk-core-1.1.0.tgz#26ea1a7a808e77cfe7d997657035cd60bd9f2ead"
+  integrity sha512-qb0W5Y33+KFScsjx8wi09fbvqRTyOjddB1UJCCHwhLItMGUSeHfpud0hO+bBO7CRTX7QhFAVOr1b+1GUB2V3xw==
   dependencies:
     "@ethersproject/address" "^5.0.2"
     big.js "^5.2.2"
@@ -2467,24 +2472,24 @@
     toformat "^2.0.0"
 
 "@ixswap1/v2-core@1.x.x", "@ixswap1/v2-core@^1.0.11":
-  version "1.0.11"
-  resolved "https://registry.yarnpkg.com/@ixswap1/v2-core/-/v2-core-1.0.11.tgz#7d06bb462354d6a09e1e380c9f387bb690d64f75"
-  integrity sha512-a3WmD+97Si7yqI9PQ7lB3Qpbyz9Y9mKbZy0VXTnIlt52oyannNuYPyWqXjMHOVKbGYoROMDorPIPT67kZ3KCng==
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@ixswap1/v2-core/-/v2-core-1.1.0.tgz#b01871818fa0107553bc53f18170d4fffb2d8565"
+  integrity sha512-P5eb/Wtk311gSpSMNfBfhe+5pPw2QUX6BsQ+63XjfnPv7Zjew6s/YNlUMeGNTt8paRhXKiG5PI053iE07r853w==
   dependencies:
     "@openzeppelin/contracts" "^2.0.0"
 
 "@ixswap1/v2-periphery@^1.0.10":
-  version "1.0.10"
-  resolved "https://registry.npmjs.org/@ixswap1/v2-periphery/-/v2-periphery-1.0.10.tgz"
-  integrity sha512-c04LiIbPNbqAU3ZNahr5n8ZfqHbxpIrlw40bHha/Q7tq3Ei7KSdO2Kl9sG6UCwngMJBPKIqCQ07LVLGzKZjwTQ==
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@ixswap1/v2-periphery/-/v2-periphery-1.1.0.tgz#09de7e763b7d01952dba43d521d8aa5caf36d4d4"
+  integrity sha512-2+XqRWv7p9BWaYU/23MmLRwGFz0D448VigoDiGnwhLj9La3RqfF7Qoc7Lds+A16Dop/6m1toB4KGpKg9wMBAvQ==
   dependencies:
     "@ixswap1/lib" "1.x.x"
     "@ixswap1/v2-core" "1.x.x"
 
-"@ixswap1/v2-sdk@1.0.7":
-  version "1.0.7"
-  resolved "https://registry.npmjs.org/@ixswap1/v2-sdk/-/v2-sdk-1.0.7.tgz"
-  integrity sha512-LuRC/CiDKF5Mf08Gj2bH8Gs4cxJUoNLzVg88vYvVk2Ui6RTOSWfP5K656WdTu5eP/YE+lC1qFVcapcNkWZ6jTA==
+"@ixswap1/v2-sdk@^1.0.7":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@ixswap1/v2-sdk/-/v2-sdk-1.1.0.tgz#7182b4d23f7c44e21854b31714f66d8c440072cb"
+  integrity sha512-I5Ec6pWrL9NRTymTPa1vPwwIqUcGbdafGLxhGHYqmBacyLvvvU8tZgg3p/txBC6JcjABYMwMSzzS2VIRzsTkGg==
   dependencies:
     "@ethersproject/address" "^5.0.0"
     "@ethersproject/solidity" "^5.0.0"
@@ -2990,7 +2995,7 @@
 
 "@openzeppelin/contracts@^2.0.0":
   version "2.5.1"
-  resolved "https://registry.npmjs.org/@openzeppelin/contracts/-/contracts-2.5.1.tgz"
+  resolved "https://registry.yarnpkg.com/@openzeppelin/contracts/-/contracts-2.5.1.tgz#c76e3fc57aa224da3718ec351812a4251289db31"
   integrity sha512-qIy6tLx8rtybEsIOAlrM4J/85s2q2nPkDqj/Rx46VakBZ0LwtFhXIVub96LXHczQX0vaqmAueDqNPXtbSXSaYQ==
 
 "@pedrouid/environment@^1.0.1":
@@ -6773,7 +6778,7 @@ bfj@^7.0.2:
 
 big.js@^5.2.2:
   version "5.2.2"
-  resolved "https://registry.npmjs.org/big.js/-/big.js-5.2.2.tgz"
+  resolved "https://registry.yarnpkg.com/big.js/-/big.js-5.2.2.tgz#65f0af382f578bcdc742bd9c281e9cb2d7768328"
   integrity sha512-vyL2OymJxmarO8gxMr0mhChsO9QGwhynfuu4+MHTAW6czfq9humCB7rKpUjDd9YUiDPU4mzpyupFSvOClAwbmQ==
 
 bignumber.js@^9.0.0:
@@ -8700,7 +8705,7 @@ decamelize@^1.2.0:
 
 decimal.js-light@^2.5.0:
   version "2.5.1"
-  resolved "https://registry.npmjs.org/decimal.js-light/-/decimal.js-light-2.5.1.tgz"
+  resolved "https://registry.yarnpkg.com/decimal.js-light/-/decimal.js-light-2.5.1.tgz#134fd32508f19e208f4fb2f8dac0d2626a867934"
   integrity sha512-qIMFpTMZmny+MMIitAB6D7iVPEorVw6YQRWkvarTkT4tBeSLLiHzcwj6q0MmYSFCiVpiqPJTJEYIrpcPzVEIvg==
 
 decimal.js@^10.2.1:
@@ -13360,9 +13365,9 @@ js-yaml@^3.13.1:
     esprima "^4.0.0"
 
 jsbi@^3.1.4:
-  version "3.1.6"
-  resolved "https://registry.npmjs.org/jsbi/-/jsbi-3.1.6.tgz"
-  integrity sha512-CGjq13y28FrBA5mAU+rsfHaVKEF9jrw3PhzZpIzTeMiPsT0XRDAS6E7QS8/ZTmFQUtl2MDJsxKQoYJzAhF7B1w==
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/jsbi/-/jsbi-3.2.1.tgz#513a8f404abb9d5ba725f5265265b688215ee9f0"
+  integrity sha512-NzcT09wuJReIO829enrY3yRdHFz+ciVIq01PCGPkHlwIv5Dj9v2F4daQ4akwuPHf6xO/oii4Jrd3BsPepOxXrg==
 
 jsbn@~0.1.0:
   version "0.1.1"
@@ -19667,12 +19672,12 @@ tiny-emitter@^2.0.0:
 
 tiny-invariant@^1.0.2, tiny-invariant@^1.0.6, tiny-invariant@^1.1.0:
   version "1.1.0"
-  resolved "https://registry.npmjs.org/tiny-invariant/-/tiny-invariant-1.1.0.tgz"
+  resolved "https://registry.yarnpkg.com/tiny-invariant/-/tiny-invariant-1.1.0.tgz#634c5f8efdc27714b7f386c35e6760991d230875"
   integrity sha512-ytxQvrb1cPc9WBEI/HSeYYoGD0kWnGEOR8RY6KomWLBVhqz0RgTwVO9dLrGz7dC+nN9llyI7OKAgRq8Vq4ZBSw==
 
 tiny-warning@^1.0.0, tiny-warning@^1.0.3:
   version "1.0.3"
-  resolved "https://registry.npmjs.org/tiny-warning/-/tiny-warning-1.0.3.tgz"
+  resolved "https://registry.yarnpkg.com/tiny-warning/-/tiny-warning-1.0.3.tgz#94a30db453df4c643d0fd566060d60a875d84754"
   integrity sha512-lBN9zLN/oAf68o3zNXYrdCt1kP8WsiGW8Oo2ka41b2IM5JL/S1CTyX1rW0mb/zSuJun0ZUrDxx4sqvYS2FWzPA==
 
 tinycolor2@^1.4.1:
@@ -19753,7 +19758,7 @@ to-regex@^3.0.1, to-regex@^3.0.2:
 
 toformat@^2.0.0:
   version "2.0.0"
-  resolved "https://registry.npmjs.org/toformat/-/toformat-2.0.0.tgz"
+  resolved "https://registry.yarnpkg.com/toformat/-/toformat-2.0.0.tgz#7a043fd2dfbe9021a4e36e508835ba32056739d8"
   integrity sha512-03SWBVop6nU8bpyZCx7SodpYznbZF5R4ljwNLBcTQzKOD9xuihRo/psX58llS1BMFhhAI08H3luot5GoXJz2pQ==
 
 toggle-selection@^1.0.6:
