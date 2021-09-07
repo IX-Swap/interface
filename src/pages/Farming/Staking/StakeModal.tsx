@@ -239,11 +239,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
               <TYPE.body1>
                 <Trans>
                   I have read{' '}
-                  <a
-                    style={{ color: '#EDCEFF' }}
-                    href="https://docs.google.com/document/d/1NOS85wOrG1aJbLwTEhri25BRMM62PK2DFb_6H7oh0rI/edit"
-                    target="blank"
-                  >
+                  <a style={{ color: '#EDCEFF' }} href="https://ixswap.io/ixs-staking-vaults/" target="blank">
                     Staking Conditions
                   </a>
                 </Trans>
