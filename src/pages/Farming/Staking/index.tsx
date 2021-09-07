@@ -6,11 +6,17 @@ import { PromoTokenCard } from './PromoTokenCard'
 import { StakingPage } from './StakingPage'
 import { StakingWrapper } from '../styleds'
 import { ApplicationModal } from 'state/application/actions'
+import { useActiveWeb3React } from 'hooks/web3'
+import { useDispatch } from 'react-redux'
+import { changeAccount } from 'state/stake/actions'
+import { AppDispatch } from 'state'
 
 export const Staking = () => {
-  const { userHasIXS, hasStakedSuccessfully } = useStakingState()
+  const { userHasIXS, hasStakedSuccessfully, metaMaskAccount } = useStakingState()
   const isVestingPaused = useIsVestingPaused()
   const toggleStakeModal = useToggleModal(ApplicationModal.STAKE_IXS)
+  const { chainId, account } = useActiveWeb3React()
+  const dispatch = useDispatch<AppDispatch>()
 
   useEffect(() => {
     isVestingPaused()
@@ -21,6 +27,14 @@ export const Staking = () => {
       toggleStakeModal()
     }
   }, [hasStakedSuccessfully])
+
+  useEffect(() => {
+    console.log('chainId: ', chainId)
+    console.log('account: ', account)
+    if (account && account !== metaMaskAccount) {
+      dispatch(changeAccount({ newAccount: account }))
+    }
+  }, [chainId, account])
 
   function renderStakingPage() {
     if (userHasIXS) {
