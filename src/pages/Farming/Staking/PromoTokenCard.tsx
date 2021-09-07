@@ -26,10 +26,10 @@ export const PromoTokenCard = ({ stakingStatus: stakingStatus }: { stakingStatus
           <Box>
             <TYPE.body3>
               <Trans>
-                Staking is a great way to maximize the value of your holdings that would otherwise be sitting idle in
-                your IXS account.
-                <br /> Once you have staked your assets you can earn rewards on your holdings which allows token holders
-                to grow their token holdings over time.
+                Staking is a great way to maximize the value of your holdings, instead of letting them sit idle in your
+                IXS account!
+                <br /> Once you have staked your assets, you can earn rewards on your holdings. This allows you to grow
+                your token holdings over time.
               </Trans>
             </TYPE.body3>
           </Box>

@@ -179,7 +179,9 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                       style={{ whiteSpace: 'pre-line' }}
                       text={t`IXSgov is a tokenized asset representing your staked IXS on a 1:1 basis. IXSwap distributes the IXSgov to your wallet.
                               ${'' ?? ''}
-                              You should swap your IXSgov back to IXS during the unstaking process. Please note, that you will receive IXS equal to your IXSgov holdings at the time of the swap.`}
+                              You should swap your IXSgov back to IXS during the unstaking process. 
+                              ${'' ?? ''}
+                              *Do note that IXS received will be equal to your IXSgov holdings at the time of swap.`}
                     >
                       <IconWrapper size={20} style={{ transform: 'rotate(180deg)', marginLeft: '12px' }}>
                         <InfoIcon />
@@ -198,7 +200,9 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                 textRight={`${typedValue} IXSgov`}
                 tooltipText={t`IXSgov is a tokenized asset representing your staked IXS on a 1:1 basis. IXSwap distributes the IXSgov to your wallet.
                               ${'' ?? ''}
-                              You should swap your IXSgov back to IXS during the unstaking process. Please note, that you will receive IXS equal to your IXSgov holdings at the time of the swap.`}
+                              You should swap your IXSgov back to IXS during the unstaking process. 
+                              ${'' ?? ''}
+                              *Do note that IXS received will be equal to your IXSgov holdings at the time of swap.`}
               />
               <TextRow textLeft={t`APY`} textRight={`${selectedTier?.APY}%`} />
               <TextRow textLeft={t`Staking amount`} textRight={`${typedValue} IXS`} />
@@ -225,7 +229,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                   selectedTier?.APY
                 }%. If you partially or fully unstake your IXS before the end date 5% APY will be applied to unstaked amount. 
                   ${'' ?? ''}
-                  Please note: your rewards will be available with vesting process in 10 weeks after unstakting`}
+                  Please note your rewards will vest over 10 weeks after unstaking.`}
               />
             </StakeInfoContainer>
             <RowCenter marginTop={25}>
@@ -234,9 +238,13 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
               </IconWrapper>
               <TYPE.body1>
                 <Trans>
-                  I have read the{' '}
-                  <a style={{ color: '#EDCEFF' }} href="dev.ixswap.io/#/swap">
-                    terms of use
+                  I have read{' '}
+                  <a
+                    style={{ color: '#EDCEFF' }}
+                    href="https://docs.google.com/document/d/1NOS85wOrG1aJbLwTEhri25BRMM62PK2DFb_6H7oh0rI/edit"
+                    target="blank"
+                  >
+                    Staking Conditions
                   </a>
                 </Trans>
               </TYPE.body1>

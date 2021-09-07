@@ -3,6 +3,7 @@ import { StakingStatus, Tier } from 'state/stake/reducer'
 
 export const saveStakingStatus = createAction<{ status: StakingStatus }>('stake/saveStakingStatus')
 export const selectTier = createAction<{ tier: Tier }>('stake/selectTier')
+export const getIsStakingPaused = createAction<{ isPaused: boolean }>('stake/isPaused')
 
 export const increaseAllowance: Readonly<{
   pending: ActionCreatorWithoutPayload
