@@ -3,6 +3,7 @@ import { Box } from 'rebass'
 import styled from 'styled-components'
 import { hexToRGBA } from 'utils/themeHelper'
 import { ReactComponent as InfoSvg } from '../../assets/images/attention.svg'
+import { RowStart } from 'components/Row'
 
 export const LoaderContainer = styled.div`
   position: fixed;
@@ -45,6 +46,9 @@ export const Container = styled(Box)`
 
 export const FarmingToggleWrapper = styled(ToggleWrapper)`
   grid-gap: 46px;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+     flex-direction:row;
+  `};
 `
 
 export const FarmingToggleOption = styled(ToggleOption)`
@@ -55,6 +59,9 @@ export const FarmingToggleOption = styled(ToggleOption)`
   :hover {
     color: ${({ theme }) => theme.text2};
   }
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    font-size: 24px;
+  `};
 `
 export const VestingWrapper = styled.div`
   display: flex;
@@ -79,6 +86,10 @@ export const StakingWrapper = styled.div`
      flex-direction: column;
      align-items: center;
   `};
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    padding-left: 0px;
+    padding-right: 0px;
+  `};
 `
 export const VestingBackground = styled.div`
   border-radius: 30px;
@@ -96,6 +107,9 @@ export const VestingTableWrapper = styled(VestingBackground)`
   color: ${({ theme }) => theme.text2};
   background: ${({ theme }) => theme.bgG14};
   gap: 50px;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+     width:100%;
+  `};
 `
 export const VestingInfoWrapper = styled(VestingBackground)`
   padding: 31px 31px 35px 24px;
@@ -106,6 +120,11 @@ export const VestingInfoWrapper = styled(VestingBackground)`
   align-items: center;
   ${({ theme }) => theme.mediaWidth.upToMedium`
      min-width: fit-content;
+  `};
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+     width:100%;
+     min-width: 100%;
+     height: 400px;
   `};
 `
 
@@ -212,4 +231,15 @@ export const TokenStakingDescriptionNumbers = styled.div`
 export const InfoIcon = styled(InfoSvg)`
   transform: rotate(180deg);
   cursor: pointer;
+`
+
+export const TabsRow = styled(RowStart)`
+  padding-bottom: 0px;
+  width: fit-content;
+  padding: 0 15px;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    padding: 0px;
+    width:100%;
+    flex-direction:row;
+  `};
 `

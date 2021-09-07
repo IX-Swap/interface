@@ -103,7 +103,6 @@ const Input = styled.input<{ addressChecked: boolean }>`
   }
   color: ${({ theme, color }) => (color === 'red' ? theme.red1 : theme.text1)};
   padding: 10px 22px;
-  margin-bottom: 40px;
   padding-right: ${({ addressChecked }) => (addressChecked ? '100px' : '175px')};
   @media (max-width: 768px) {
     font-size: 16px;

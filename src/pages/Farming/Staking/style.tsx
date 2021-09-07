@@ -1,5 +1,32 @@
+import { RowBetween } from 'components/Row'
 import styled from 'styled-components'
 import { gradientBorder } from 'theme'
+
+export const CardsRow = styled(RowBetween)`
+  ${({ theme }) => theme.mediaWidth.upToLarge`
+     display:grid;
+     grid-gap:15px;
+     grid-template-columns: 50% 50%;
+      > div:nth-child(1) {
+       justify-self: flex-end;
+      }
+      > div:nth-child(2){
+        justify-self: flex-start;
+      }
+      > div:nth-child(3){
+        justify-self: flex-end;
+      }
+      > div:nth-child(4){
+        justify-self: flex-start;
+      }
+  `};
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+        grid-template-columns: 100%;
+        > div {
+          justify-self: center !important;
+         }
+     `};
+`
 
 export const StakingWrapper = styled.div`
   display: flex;
@@ -21,6 +48,9 @@ export const StakingCard = styled.div`
   display: flex;
   background: ${({ theme }) => theme.bgG15};
   flex-direction: column;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    border-radius: 20px; 
+  `};
 `
 export const PromoTokenCardWrapper = styled(StakingCard)`
   justify-content: center;
@@ -89,6 +119,19 @@ export const NoIXSTokensWrapper = styled.div`
   text-align: center;
   margin-bottom: 10px;
   margin-top: 27px;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    padding: 15%;
+  `};
+  :before {
+    ${({ theme }) => theme.mediaWidth.upToSmall`
+      border-radius:25px;
+     `};
+  }
+  * a {
+    ${({ theme }) => theme.mediaWidth.upToSmall`
+    font-size:15px;
+  `};
+  }
 `
 
 export const ButtonRow = styled.div`
@@ -105,6 +148,6 @@ export const ButtonRow = styled.div`
 
 export const StakingTierCardWrapper = styled(StakingCard)`
   padding: 24px;
-  height: 466px;
+  height: 428px;
   width: 294px;
 `

@@ -123,7 +123,6 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
           dispatch(selectTier({ tier }))
           toggleStake()
         }}
-        style={{ marginBottom: '26px' }}
         disabled={isPaused}
       >
         <Trans>{isPaused ? 'Paused' : 'Stake'}</Trans>

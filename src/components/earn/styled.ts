@@ -72,7 +72,7 @@ export const ModalContentWrapper = styled(Column)`
   position: relative;
   background: ${({ theme }) => theme.bgG4};
   ${({ theme }) => theme.mediaWidth.upToSmall`
-   padding: 1rem;
+   padding: 0px;
   `};
 `
 export const StakeModalTop = styled(Column)`

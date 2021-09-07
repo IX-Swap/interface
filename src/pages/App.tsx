@@ -49,7 +49,7 @@ const BodyWrapper = styled.div`
 
   ${({ theme }) => theme.mediaWidth.upToSmall`
     padding: 16px;
-    margin-top: 9rem;
+    margin-top: 10rem;
   `};
 `
 

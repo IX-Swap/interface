@@ -1,10 +1,9 @@
-import { RowStart } from 'components/Row'
 import { Border } from 'components/Tabs'
 import React from 'react'
 import { DiscreteInternalLink } from 'theme'
 import { routes } from 'utils/routes'
 import { FARMING_STRINGS, FARMING_TABS } from './enum'
-import { FarmingToggleOption, FarmingToggleWrapper } from './styleds'
+import { FarmingToggleOption, FarmingToggleWrapper, TabsRow } from './styleds'
 
 interface Props {
   tab: FARMING_TABS
@@ -15,7 +14,7 @@ const urls = {
 }
 export const FarmingTabs = ({ tab }: Props) => {
   return (
-    <RowStart style={{ paddingBottom: 0, width: 'fit-content' }}>
+    <TabsRow>
       <FarmingToggleWrapper>
         {[FARMING_TABS.STAKING, FARMING_TABS.VESTING].map((option) => (
           <FarmingToggleOption as={DiscreteInternalLink} key={option} active={tab === option} to={urls[option]}>
@@ -24,6 +23,6 @@ export const FarmingTabs = ({ tab }: Props) => {
           </FarmingToggleOption>
         ))}
       </FarmingToggleWrapper>
-    </RowStart>
+    </TabsRow>
   )
 }
