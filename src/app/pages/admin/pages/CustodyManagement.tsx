@@ -5,7 +5,6 @@ import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { CustodyManagementTable } from 'app/pages/admin/components/CustodyManagementTable/CustodyManagementTable'
 import { CustodyManagementFilters } from 'app/pages/admin/components/CustodyManagementFilters'
 import { AccountsUnderCustody } from 'app/pages/admin/components/AccountsUnderCustody'
-import { InsightCard } from 'app/pages/issuance/components/CapTable/InsightCard'
 
 export const CustodyManagement = () => {
   return (
@@ -15,9 +14,7 @@ export const CustodyManagement = () => {
         <VSpacer size={'small'} />
       </Grid>
       <Grid item xs={12} sm={8} md={5} lg={4}>
-        <InsightCard>
-          <AccountsUnderCustody />
-        </InsightCard>
+        <AccountsUnderCustody />
         <VSpacer size={'medium'} />
       </Grid>
       <Grid item>

@@ -4,6 +4,7 @@ import { TableView } from 'components/TableWithPagination/TableView'
 import { virtualAccountsAudit } from 'config/apiURL'
 import { virtualAccountsAuditQueryKeys } from 'config/queryKeys'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
+import { custodyManagementItems } from '__fixtures__/custodyAccount'
 
 export const CustodyManagementTable = () => {
   const { getFilterValue } = useQueryFilter()
@@ -23,24 +24,7 @@ export const CustodyManagementTable = () => {
       name={virtualAccountsAuditQueryKeys.getOutboundFiles}
       columns={columns}
       // TODO Remove fake items after complete backend api endpoints
-      fakeItems={[
-        {
-          assigned: '3 mins ago',
-          status: 'Closed',
-          investor: 'Delphine Stark',
-          custodian: 'InvestaX',
-          walletAddress: '0xFd...51eb',
-          accountID: '323456789014'
-        },
-        {
-          assigned: '2 mins ago',
-          status: 'Active',
-          investor: 'Jovany Dooley',
-          custodian: 'HEX',
-          walletAddress: '0xFd...17e3',
-          accountID: '323456789014'
-        }
-      ]}
+      fakeItems={custodyManagementItems}
       filter={filter}
       themeVariant={'primary'}
       paperProps={{ variant: 'elevation', elevation: 0 }}
