@@ -122,6 +122,7 @@ interface StakingState {
   hasStakedSuccessfully: boolean
   stakings: IStaking[]
   isPaused: boolean
+  userHasIXS: boolean
 }
 
 const initialState: StakingState = {
@@ -141,6 +142,7 @@ const initialState: StakingState = {
   hasStakedSuccessfully: false,
   stakings: [],
   isPaused: false,
+  userHasIXS: false,
 }
 
 export default createReducer<StakingState>(initialState, (builder) =>
@@ -148,6 +150,9 @@ export default createReducer<StakingState>(initialState, (builder) =>
     .addCase(saveStakingStatus, (state, { payload: { status } }) => {
       console.log('staking status: ', status)
       state.status = status
+      if (status === StakingStatus.STAKING) {
+        state.userHasIXS = true
+      }
     })
     .addCase(selectTier, (state, { payload: { tier } }) => {
       state.selectedTier = tier

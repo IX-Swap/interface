@@ -11,9 +11,11 @@ import Column from 'components/Column'
 import { ConnectWalletButton } from './ConnectWalletButton'
 import { NoIXSTokens } from './NoIXSTokens'
 import { RowCenter } from 'components/Row'
+import { useStakingStatus } from 'state/stake/hooks'
 
-export const PromoTokenCard = ({ stakingStatus: stakingStatus }: { stakingStatus: StakingStatus }) => {
+export const PromoTokenCard = () => {
   const theme = useTheme()
+  const stakingStatus = useStakingStatus()
   return (
     <PromoTokenCardWrapper data-testid="connect-wallet-card">
       <RowCenter id="promo-staking-wrapper">
