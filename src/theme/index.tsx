@@ -112,6 +112,9 @@ export function colors(darkMode: boolean): Colors {
     bgG15: darkMode
       ? 'radial-gradient(76.91% 60% at 2.38% 3.84%, rgba(123, 66, 169, 0.195) 0%, rgba(26, 18, 58, 0) 100%), radial-gradient(79.76% 116.06% at 44.22% 136.36%, rgba(102, 20, 206, 0.132) 0%, rgba(26, 18, 58, 0) 100%), radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.132) 0%, rgba(26, 18, 58, 0) 100%), rgba(44, 37, 74, 0.3)'
       : 'radial-gradient(76.91% 60% at 2.38% 3.84%, rgba(123, 66, 169, 0.195) 0%, rgba(26, 18, 58, 0) 100%), radial-gradient(79.76% 116.06% at 44.22% 136.36%, rgba(102, 20, 206, 0.132) 0%, rgba(26, 18, 58, 0) 100%), radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.132) 0%, rgba(26, 18, 58, 0) 100%), rgba(44, 37, 74, 0.3)',
+    bgG16: darkMode
+      ? 'linear-gradient(0deg, rgba(13, 4, 21, 0.7), rgba(13, 4, 21, 0.7)), radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.099) 0%, rgba(26, 18, 58, 0) 100%), rgba(44, 37, 74, 0.2);'
+      : 'linear-gradient(0deg, rgba(13, 4, 21, 0.7), rgba(13, 4, 21, 0.7)), radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.099) 0%, rgba(26, 18, 58, 0) 100%), rgba(44, 37, 74, 0.2);',
     //specialty colors
     borderG1: darkMode
       ? 'linear-gradient(116.36deg, #7b42a9 33.43%, #ed0376 95.41%);'
