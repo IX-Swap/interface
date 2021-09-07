@@ -3,7 +3,7 @@ import { TableColumn } from 'types/util'
 import { VAAuditOutboundItem } from 'types/virtualAccount'
 import { WalletAddressField } from 'app/pages/admin/components/CustodyManagementTable/WalletAddressField'
 
-const renderWalletAddress = (address: string) => {
+export const renderWalletAddress = (address: string) => {
   if (address === '' || address === null) {
     return '-'
   }
