@@ -2,6 +2,7 @@ import { ToggleOption, ToggleWrapper } from 'components/Tabs'
 import { Box } from 'rebass'
 import styled from 'styled-components'
 import { hexToRGBA } from 'utils/themeHelper'
+import { ReactComponent as InfoSvg } from '../../assets/images/attention.svg'
 
 export const Container = styled(Box)`
   height: fit-content;
@@ -86,6 +87,16 @@ export const VestingTableTitle = styled.div`
   opacity: 0.5;
   text-align: left;
 `
+
+export const VestingDetailsTitle = styled(VestingTableTitle)`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  > :first-child {
+    margin-right: 15px;
+  }
+`
+
 export const ChartParent = styled.div`
   height: 320px;
   width: 100%;
@@ -160,4 +171,9 @@ export const TokenStakingDescriptionNumbers = styled.div`
      flex-direction: column;
      gap: 15px;
   `};
+`
+
+export const InfoIcon = styled(InfoSvg)`
+  transform: rotate(180deg);
+  cursor: pointer;
 `
