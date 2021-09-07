@@ -12,6 +12,8 @@ import { NoPairs } from './NoPairs'
 import { LiquidityInnerTitle, MarginerTitle } from './styleds'
 import { useTokens } from './useTokens'
 import { ConnectWallet } from './ConnectWallet'
+import { useActiveWeb3React } from 'hooks/web3'
+import { SUPPORTED_TGE_CHAINS } from 'pages/App'
 
 const bodyProps = {
   padding: '0',
@@ -30,9 +32,10 @@ export default function Pool() {
     stakingPairs,
     stakingInfosWithBalance,
   } = useTokens()
+  const { chainId } = useActiveWeb3React()
   return (
     <>
-      <AppBody {...bodyProps}>
+      <AppBody {...bodyProps} blurred={chainId === SUPPORTED_TGE_CHAINS.MAIN}>
         <SwapPoolTabs active={'pool'} />
         <AutoColumn gap="1.5rem" justify="center">
           <AutoColumn gap="md" style={{ width: '100%' }}>

@@ -94,26 +94,20 @@ export default function App() {
               <Route exact strict path="/admin-kyc" component={AdminKyc} />
               <Route exact strict path="/admin-login" component={AdminLoginPage} />
 
-              <KovanOnlyRoute exact strict path="/send" component={RedirectPathToSwapOnly} chainId={chainId} />
-              <KovanOnlyRoute exact strict path="/swap/:outputCurrency" component={RedirectToSwap} chainId={chainId} />
-              <KovanOnlyRoute exact strict path="/swap" component={Swap} chainId={chainId} />
-              <KovanOnlyRoute exact strict path="/find" component={PoolFinder} chainId={chainId} />
-              <KovanOnlyRoute exact strict path="/pool" component={PoolV2} chainId={chainId} />
+              <Route exact strict path="/send" component={RedirectPathToSwapOnly} />
+              <Route exact strict path="/swap/:outputCurrency" component={RedirectToSwap} />
+              <Route exact strict path="/swap" component={Swap} />
+              <Route exact strict path="/find" component={PoolFinder} />
+              <Route exact strict path="/pool" component={PoolV2} />
 
-              <KovanOnlyRoute
-                exact
-                strict
-                path="/add/:currencyIdA?/:currencyIdB?"
-                component={RedirectDuplicateTokenIdsV2}
-                chainId={chainId}
-              />
+              <Route exact strict path="/add/:currencyIdA?/:currencyIdB?" component={RedirectDuplicateTokenIdsV2} />
 
-              <KovanOnlyRoute exact strict path="/remove/:currencyIdA/:currencyIdB" component={RemoveLiquidity} />
+              <Route exact strict path="/remove/:currencyIdA/:currencyIdB" component={RemoveLiquidity} />
 
               {SECURITY_TOKENS && (
-                <KovanOnlyRoute exact strict path="/security-tokens/:currencyId" component={SecTokenDetails} />
+                <Route exact strict path="/security-tokens/:currencyId" component={SecTokenDetails} />
               )}
-              {SECURITY_TOKENS && <KovanOnlyRoute exact strict path={routes.securityTokens()} component={Custodian} />}
+              {SECURITY_TOKENS && <Route exact strict path={routes.securityTokens()} component={Custodian} />}
 
               <Route exact strict path={routes.staking} component={StakingTab} />
               <Route exact strict path={routes.vesting} component={VestingTab} />
