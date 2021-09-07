@@ -209,7 +209,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
               <TextRow
                 textLeft={t`Estimated maturity time`}
                 textRight={estimateMaturityTime()}
-                tooltipText={t`Maturity time is the final date of your staking period time escalibur. `}
+                tooltipText={t`Maturity time is the final date of your staking period.`}
               />
               <TextRow
                 textLeft={t`Estimated lock period`}
