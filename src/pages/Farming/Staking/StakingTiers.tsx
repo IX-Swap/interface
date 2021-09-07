@@ -10,6 +10,7 @@ import { useStakingState } from 'state/stake/hooks'
 import { StakeModal } from './StakeModal'
 import { IconWrapper } from 'components/AccountDetails/styleds'
 import { ReactComponent as InfoIcon } from 'assets/images/attention.svg'
+import { CardsRow } from './style'
 
 export const StakingTiers = () => {
   const toggleStakeModal = useToggleModal(ApplicationModal.STAKE_IXS)
@@ -27,12 +28,12 @@ export const StakingTiers = () => {
           </TYPE.title5>
         </RowStart>
       )}
-      <RowBetween>
+      <CardsRow>
         <StakingTierCard tier={TIER_TYPES.oneWeek} />
         <StakingTierCard tier={TIER_TYPES.oneMonth} />
         <StakingTierCard tier={TIER_TYPES.twoMonths} />
         <StakingTierCard tier={TIER_TYPES.threeMonths} />
-      </RowBetween>
+      </CardsRow>
       <RowCenter marginTop={21}>
         <TYPE.title7 color="#edceff9e">
           <Trans>You’ll have 1 IXSGov for each 1 staked IXS.</Trans>

@@ -112,7 +112,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
     <RedesignedWideModal isOpen={isOpen} onDismiss={wrappedOnDismiss} scrollable>
       <ModalBlurWrapper>
         <ModalContentWrapper>
-          <StakeModalTop>
+          <ModalTop>
             <RowBetween>
               <TYPE.title5>
                 <Trans>Stake</Trans>
@@ -191,8 +191,8 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                 </InputHintRight>
               </DisabledInput>
             </Row>
-          </StakeModalTop>
-          <ModalBottomWrapper>
+          </ModalTop>
+          <ModalBottom>
             <StakeInfoContainer>
               <TextRow textLeft={t`Period of staking`} textRight={selectedTier?.period} />
               <TextRow
@@ -277,12 +277,24 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                 </ButtonIXSWide>
               )}
             </Row>
-          </ModalBottomWrapper>
+          </ModalBottom>
         </ModalContentWrapper>
       </ModalBlurWrapper>
     </RedesignedWideModal>
   )
 }
+
+const ModalTop = styled(StakeModalTop)`
+  @media (max-width: 768px) {
+    padding: 15px;
+  }
+`
+
+const ModalBottom = styled(ModalBottomWrapper)`
+  @media (max-width: 768px) {
+    padding: 15px;
+  }
+`
 
 const Input = styled.input<{ error?: boolean }>`
   font-size: 1.25rem;
@@ -327,6 +339,9 @@ const StakingInput = styled(Input)`
   margin-right: 10px;
   width: 0;
   font-size: 22px;
+  @media (max-width: 768px) {
+    font-size: 20px;
+  }
 `
 const HighlightedInput = styled.div<{ active?: boolean; warning?: boolean }>`
   min-height: 60px;
@@ -376,6 +391,18 @@ const StakeInfoContainer = styled(Column)`
   background-color: ${({ theme }) => theme.bg8};
   padding: 25px 23px;
   border-radius: 20px;
+  @media (max-width: 768px) {
+    > div {
+      height: auto;
+      font-size: 13px;
+      > :first-child {
+        /* align-items: flex-start; */
+      }
+      > :last-child {
+        text-align: right;
+      }
+    }
+  }
 `
 
 const StyledDropDown = styled(DropDown)`

@@ -28,6 +28,7 @@ export const NoIXSTokens = () => {
           as={ExternalLink}
           href="https://t.me/ixswapofficial"
           data-testid="staking-redirect-to-telegram"
+          style={{ textTransform: 'none', textDecoration: 'none' }}
         >
           <Trans>Go to Telegram</Trans>
         </ButtonGradientBorder>

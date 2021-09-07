@@ -56,7 +56,7 @@ export const VestingValid = () => {
             </Column>
           )}
 
-          {nextPayment && !isDifferentAddress && (
+          {nextPayment && (
             <Column>
               <TYPE.body1>
                 <Trans>Next Payment</Trans>&nbsp;
@@ -100,7 +100,7 @@ export const VestingValid = () => {
                 }
               />
             )}
-            {vestingDetails?.claimed && currency && !isDifferentAddress && (
+            {vestingDetails?.claimed && currency && (
               <TextRow
                 textLeft={<Trans>Already Released</Trans>}
                 textRight={
@@ -111,7 +111,7 @@ export const VestingValid = () => {
                 }
               />
             )}
-            {availableClaim && currency && !isDifferentAddress && (
+            {availableClaim && currency && (
               <TextRow
                 textLeft={<Trans>Releasable</Trans>}
                 textRight={
@@ -129,7 +129,7 @@ export const VestingValid = () => {
       {!isDifferentAddress && (
         <ButtonIXSWide
           data-testid="release-vesting"
-          style={{ width: '308px' }}
+          style={{ width: '100%', maxWidth: 308 }}
           onClick={() => claim()}
           disabled={!availableClaim || availableClaim === '0'}
         >
