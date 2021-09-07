@@ -5,21 +5,32 @@ import { Line } from 'components/Line'
 import { useActiveWeb3React } from 'hooks/web3'
 import React, { useMemo } from 'react'
 import { useDepositModalToggle } from 'state/application/hooks'
+import { useSecTokenId } from 'state/secTokens/hooks'
+import { usePassAccreditation } from 'state/user/hooks'
 import { TYPE } from 'theme'
 import { AccreditationStatus } from './AccreditationStatus'
 import { BalanceRow } from './BalanceRow'
-import { VaultState } from './enum'
+import { VaultState, AccreditationStatusEnum, IAccreditationRequest } from './enum'
 import { HistoryBlock } from './HistoryBlock'
 import { AccreditationButtonRow, ExistingTitle, ExistingWrapper, TitleStatusRow } from './styleds'
 interface Props {
   currency?: Currency
   status: Exclude<VaultState, VaultState.NOT_SUBMITTED>
+  accreditationRequest: IAccreditationRequest
 }
-export const ExistingVault = ({ currency, status }: Props) => {
+export const ExistingVault = ({ currency, status, accreditationRequest }: Props) => {
   const symbolText = useMemo(() => currency?.symbol ?? '', [currency?.symbol])
-  const { account, chainId, library } = useActiveWeb3React()
+  const { account } = useActiveWeb3React()
   const toggle = useDepositModalToggle()
-  const isApproved = status === VaultState.APPROVED
+  const tokenId = useSecTokenId({ currencyId: (currency as any)?.address })
+  const passAccreditation = usePassAccreditation()
+  // const isApproved = status === VaultState.APPROVED
+  // console.log('avocado vault accreditationRequest', accreditationRequest)
+  const accreditationStatus = accreditationRequest.status
+  const isAccredited = accreditationStatus === AccreditationStatusEnum.APPROVED
+  // console.log('avocado vault isAccredited', isAccredited)
+  const isApproved = isAccredited
+
   return (
     <ExistingWrapper>
       <TitleStatusRow>
@@ -35,9 +46,9 @@ export const ExistingVault = ({ currency, status }: Props) => {
           </ButtonIXSGradient>
         )}
       </TitleStatusRow>
-      {isApproved && <BalanceRow currency={currency} account={account} />}
-      {isApproved && <HistoryBlock currency={currency} />}
-      {status === VaultState.REJECTED && (
+      {isApproved && <BalanceRow currency={currency} account={account} isAccredited={isAccredited} />}
+      <HistoryBlock currency={currency} />
+      {accreditationStatus === AccreditationStatusEnum.REJECTED && (
         <>
           <Line />
           <AccreditationButtonRow>
@@ -45,7 +56,7 @@ export const ExistingVault = ({ currency, status }: Props) => {
               data-testid="pass-accreditation"
               style={{ width: '400px' }}
               onClick={() => {
-                console.log(0)
+                passAccreditation(tokenId, 0)
               }}
             >
               <Trans>Pass Accreditation</Trans>

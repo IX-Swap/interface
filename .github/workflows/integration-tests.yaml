@@ -1,16 +1,17 @@
 name: Integration Tests
 
 on:
-  push:
-    branches:
-      - metamask-tests
-      - main
-      - development
-      - ci-update
-  pull_request:
-    branches:
-      - main
-      - development
+  [push]
+  # push:
+  #   branches:
+  #     - run-tests
+  #     - main
+  #     - development
+  #     - ci-update
+  # pull_request:
+  #   branches:
+  #     - main
+  #     - development
 
 jobs:
   integration-tests:
@@ -19,14 +20,22 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-
+      - name: Npm login
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
       - name: Set up node
-        run: npm config set '//registry.npmjs.org/:_authToken' "de90c270-9627-40cf-b0b2-8ba913f3f2bd"
-      - name: Set up node
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2
         with:
           node-version: 14
           registry-url: https://registry.npmjs.org
-      - uses: microsoft/playwright-github-action@v1
-      - name: Install dependencies and run tests
-        run: xvfb-run --auto-servernum --server-args="-screen 0 1280x960x24" -- npm run integration-test -- --project=chromium
+      - run: npx playwright install-deps
+      - run: npx playwright install
+      - run: yarn
+      # - run: CI=false yarn build
+      - run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+      - run: yarn integration-test
+
+      - uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: my-artifact
+          path: ./__tests__

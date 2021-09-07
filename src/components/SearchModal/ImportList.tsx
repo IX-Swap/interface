@@ -1,25 +1,23 @@
 import { Trans } from '@lingui/macro'
 import { TokenList } from '@uniswap/token-lists'
-import { ButtonGradient } from 'components/Button'
-import Card from 'components/Card'
+import { ButtonIXSWide } from 'components/Button'
+import Card, { TipCard } from 'components/Card'
 import { AutoColumn } from 'components/Column'
 import ListLogo from 'components/ListLogo'
+import { ImportListTabs } from 'components/NavigationTabs'
 import { AutoRow, RowBetween, RowFixed } from 'components/Row'
-import { SectionBreak } from 'components/swap/styleds'
 import { useFetchListCallback } from 'hooks/useFetchListCallback'
 import useTheme from 'hooks/useTheme'
-import { transparentize } from 'polished'
 import React, { useCallback, useState } from 'react'
-import { AlertTriangle, ArrowLeft } from 'react-feather'
 import ReactGA from 'react-ga'
 import { useAppDispatch } from 'state/hooks'
 import { enableList, removeList } from 'state/lists/actions'
 import { useAllLists } from 'state/lists/hooks'
 import styled from 'styled-components/macro'
-import { CloseIcon, TYPE } from 'theme'
-import { ExternalLink } from '../../theme/components'
+import { TYPE } from 'theme'
+import { Checkbox, ExternalLink, SemiTransparent } from '../../theme/components'
 import { CurrencyModalView } from './CurrencySearchModal'
-import { Checkbox, PaddedColumn, TextDot } from './styleds'
+import { ModalContentWrapper, PaddedColumn } from './styleds'
 
 const Wrapper = styled.div`
   position: relative;
@@ -43,7 +41,7 @@ export function ImportList({ listURL, list, setModalView, onDismiss }: ImportPro
 
   const lists = useAllLists()
   const fetchList = useFetchListCallback()
-
+  const shortenedUrl = listURL.split('//').slice(-1)[0]
   // monitor is list is loading
   const adding = Boolean(lists[listURL]?.loadingRequestId)
   const [addError, setAddError] = useState<string | null>(null)
@@ -76,92 +74,84 @@ export function ImportList({ listURL, list, setModalView, onDismiss }: ImportPro
   }, [adding, dispatch, fetchList, listURL, setModalView])
 
   return (
-    <Wrapper>
-      <PaddedColumn gap="14px" style={{ width: '100%', flex: '1 1' }}>
-        <RowBetween>
-          <ArrowLeft style={{ cursor: 'pointer' }} onClick={() => setModalView(CurrencyModalView.manage)} />
-          <TYPE.mediumHeader>
-            <Trans>Import List</Trans>
-          </TYPE.mediumHeader>
-          <CloseIcon onClick={onDismiss} />
-        </RowBetween>
-      </PaddedColumn>
-      <SectionBreak />
-      <PaddedColumn gap="md">
-        <AutoColumn gap="md">
-          <Card backgroundColor={theme.bg2} padding="12px 20px">
-            <RowBetween>
-              <RowFixed>
-                {list.logoURI && <ListLogo logoURI={list.logoURI} size="40px" />}
-                <AutoColumn gap="sm" style={{ marginLeft: '20px' }}>
-                  <RowFixed>
-                    <TYPE.body fontWeight={600} mr="6px">
-                      {list.name}
-                    </TYPE.body>
-                    <TextDot />
-                    <TYPE.main fontSize={'16px'} ml="6px">
-                      <Trans>{list.tokens.length} tokens</Trans>
-                    </TYPE.main>
-                  </RowFixed>
-                  <ExternalLink href={`https://tokenlists.org/token-list?url=${listURL}`}>
-                    <TYPE.main fontSize={'12px'} color={theme.blue1}>
-                      {listURL}
-                    </TYPE.main>
-                  </ExternalLink>
+    <ModalContentWrapper style={{ borderRadius: '20px', overflowY: 'scroll' }}>
+      <Wrapper>
+        <ImportListTabs onClick={() => setModalView(CurrencyModalView.manage)} onDismiss={onDismiss} />
+        <PaddedColumn gap="md">
+          <AutoColumn gap="md">
+            <Card backgroundColor={theme.bg12} padding="20px">
+              <RowBetween style={{ flexWrap: 'wrap' }}>
+                <RowFixed>
+                  {list.logoURI && <ListLogo logoURI={list.logoURI} size="45px" />}
+                  <AutoColumn gap="0" style={{ marginLeft: '12px' }}>
+                    <RowFixed>
+                      <TYPE.main1>{list.name}</TYPE.main1>
+                    </RowFixed>
+                    <ExternalLink href={`https://tokenlists.org/token-list?url=${listURL}`}>
+                      <TYPE.popOver>{shortenedUrl}</TYPE.popOver>
+                    </ExternalLink>
+                  </AutoColumn>
+                </RowFixed>
+                <SemiTransparent>
+                  <TYPE.description5 fontSize={'20px'} ml="6px">
+                    <Trans>{list.tokens.length} tokens</Trans>
+                  </TYPE.description5>
+                </SemiTransparent>
+              </RowBetween>
+            </Card>
+            <TipCard>
+              <AutoColumn
+                justify="center"
+                style={{ textAlign: 'center', gap: '16px', marginBottom: '12px', textTransform: 'uppercase' }}
+              >
+                <TYPE.body1 fontWeight={600}>
+                  <Trans>Import at your own risk</Trans>
+                </TYPE.body1>
+              </AutoColumn>
+              <SemiTransparent>
+                <AutoColumn style={{ textAlign: 'center', gap: '16px', marginBottom: '12px' }}>
+                  <TYPE.body1>
+                    <Trans>
+                      By adding this list you are implicitly trusting that the data is correct. Anyone can create a
+                      list, including creating fake versions of existing lists and lists that claim to represent
+                      projects that do not have one.
+                    </Trans>
+                  </TYPE.body1>
+                  <TYPE.body1>
+                    <Trans>If you purchase a token from this list, you may not be able to sell it back.</Trans>
+                  </TYPE.body1>
                 </AutoColumn>
-              </RowFixed>
-            </RowBetween>
-          </Card>
-          <Card style={{ backgroundColor: transparentize(0.8, theme.red1) }}>
-            <AutoColumn justify="center" style={{ textAlign: 'center', gap: '16px', marginBottom: '12px' }}>
-              <AlertTriangle stroke={theme.red1} size={32} />
-              <TYPE.body fontWeight={500} fontSize={20} color={theme.red1}>
-                <Trans>Import at your own risk</Trans>
-              </TYPE.body>
-            </AutoColumn>
+              </SemiTransparent>
 
-            <AutoColumn style={{ textAlign: 'center', gap: '16px', marginBottom: '12px' }}>
-              <TYPE.body fontWeight={500} color={theme.red1}>
-                <Trans>
-                  By adding this list you are implicitly trusting that the data is correct. Anyone can create a list,
-                  including creating fake versions of existing lists and lists that claim to represent projects that do
-                  not have one.
-                </Trans>
-              </TYPE.body>
-              <TYPE.body fontWeight={600} color={theme.red1}>
-                <Trans>If you purchase a token from this list, you may not be able to sell it back.</Trans>
-              </TYPE.body>
-            </AutoColumn>
-            <AutoRow justify="center" style={{ cursor: 'pointer' }} onClick={() => setConfirmed(!confirmed)}>
-              <Checkbox
-                name="confirmed"
-                type="checkbox"
-                checked={confirmed}
-                onChange={() => setConfirmed(!confirmed)}
-              />
-              <TYPE.body ml="10px" fontSize="16px" color={theme.red1} fontWeight={500}>
-                <Trans>I understand</Trans>
-              </TYPE.body>
-            </AutoRow>
-          </Card>
+              <AutoRow
+                justify="center"
+                style={{ cursor: 'pointer', marginTop: '20px' }}
+                onClick={() => setConfirmed(!confirmed)}
+              >
+                <Checkbox checked={confirmed} />
 
-          <ButtonGradient
-            disabled={!confirmed}
-            altDisabledStyle={true}
-            borderRadius="20px"
-            padding="10px 1rem"
-            data-testid="import-tokens"
-            onClick={handleAddList}
-          >
-            <Trans>Import</Trans>
-          </ButtonGradient>
-          {addError ? (
-            <TYPE.error title={addError} style={{ textOverflow: 'ellipsis', overflow: 'hidden' }} error>
-              {addError}
-            </TYPE.error>
-          ) : null}
-        </AutoColumn>
-      </PaddedColumn>
-    </Wrapper>
+                <TYPE.body3 ml="10px" fontWeight={500}>
+                  <Trans>I understand</Trans>
+                </TYPE.body3>
+              </AutoRow>
+            </TipCard>
+
+            <ButtonIXSWide
+              disabled={!confirmed}
+              altDisabledStyle={true}
+              data-testid="import-tokens"
+              onClick={handleAddList}
+            >
+              <Trans>Import</Trans>
+            </ButtonIXSWide>
+            {addError ? (
+              <TYPE.error title={addError} style={{ textOverflow: 'ellipsis', overflow: 'hidden' }} error>
+                {addError}
+              </TYPE.error>
+            ) : null}
+          </AutoColumn>
+        </PaddedColumn>
+      </Wrapper>
+    </ModalContentWrapper>
   )
 }

@@ -127,13 +127,16 @@ function CurrencyRow({
   const isOnSelectedList = isTokenOnList(selectedTokenList, currency.isToken ? currency : undefined)
   const customAdded = useIsUserAddedToken(currency)
   const balance = useCurrencyBalance(account ?? undefined, currency)
-  const theme = useTheme()
   // only show add or remove buttons if not on selected list
   const unapprovedSecToken = useMemo(() => {
     if (!isUnapprovedSecToken) return null
     return (
       <Row style={{ position: 'relative', height: '100%', alignItems: 'center' }}>
-        <UnapprovedTokenWrapper>
+        <UnapprovedTokenWrapper
+          as={Link}
+          to={routes.securityTokens(currency)}
+          data-testid="currency-search-sec-token-info"
+        >
           <CurrencyLogo currency={currency} size={'24px'} />
           <Column style={{ marginLeft: '8px' }}>
             <RowFixed style={{ gap: '8px' }}>
@@ -159,11 +162,7 @@ function CurrencyRow({
           </Column>
           <Column>
             <Box width="100%">
-              <ButtonGradient
-                as={Link}
-                to={routes.securityTokens(currency)}
-                data-testid="currency-search-sec-token-info"
-              >
+              <ButtonGradient>
                 <Trans>Info</Trans>
               </ButtonGradient>
             </Box>
@@ -307,7 +306,7 @@ export default function CurrencyList({
 
       const isUnapprovedToken =
         token && secTokens[token.address]
-          ? (userSecTokens[token.address] as any)?.tokenInfo?.tokenUser?.status !== STO_STATUS_APPROVED
+          ? (userSecTokens[token.address] as any)?.tokenInfo?.status !== STO_STATUS_APPROVED
           : false
       if (showImport && token) {
         return (
@@ -354,7 +353,7 @@ export default function CurrencyList({
     const token = currency?.wrapped
     const isUnapprovedToken =
       token && secTokens[token.address]
-        ? (userSecTokens[token.address] as any)?.tokenInfo?.tokenUser?.status !== STO_STATUS_APPROVED
+        ? (userSecTokens[token.address] as any)?.tokenInfo?.status !== STO_STATUS_APPROVED
         : false
     return isUnapprovedToken ? UNAPPROVED_ROW : NORMAL_ROW
   }

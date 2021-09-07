@@ -20,6 +20,15 @@ const ReferenceElement = styled.div`
   display: inline-block;
 `
 
+const Shadow = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 100;
+`
+
 const Arrow = styled.div`
   width: 8px;
   height: 8px;
@@ -77,6 +86,8 @@ export interface PopoverProps {
   placement?: Placement
   style?: any
   offset?: any
+  close?: () => void
+  hideShadow?: boolean
 }
 
 export default function Popover({
@@ -86,6 +97,8 @@ export default function Popover({
   placement = 'auto',
   style = {},
   offset = [8, 8],
+  close,
+  hideShadow = false, // used for tooltips
 }: PopoverProps) {
   const [referenceElement, setReferenceElement] = useState<HTMLDivElement | null>(null)
   const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(null)
@@ -107,6 +120,14 @@ export default function Popover({
     <>
       <ReferenceElement ref={setReferenceElement as any}>{children}</ReferenceElement>
       <Portal>
+        {show && !hideShadow && (
+          <Shadow
+            id="kekw"
+            onClick={() => {
+              if (close instanceof Function) close()
+            }}
+          />
+        )}
         <PopoverContainer
           show={show}
           ref={setPopperElement as any}

@@ -62,7 +62,6 @@ export default function AccountDetails({
   pendingTransactions,
   confirmedTransactions,
   ENSName,
-  openOptions,
 }: AccountDetailsProps) {
   const { chainId, account, connector } = useActiveWeb3React()
   const theme = useContext(ThemeContext)
@@ -162,6 +161,7 @@ export default function AccountDetails({
                     </WalletAction>
                   )}
                   {/* TODO: uncomment when we have more options */}
+                  {/* reimport open options*/}
                   {/* <WalletAction
                     style={{ fontSize: '.825rem', fontWeight: 400 }}
                     onClick={() => {

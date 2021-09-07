@@ -12,7 +12,7 @@ export const saveToken = createAction<{ value: AuthPayload }>('auth/saveToken')
 
 export const postLogin: Readonly<{
   pending: ActionCreatorWithoutPayload
-  fulfilled: ActionCreatorWithPayload<{ auth: AuthPayload }>
+  fulfilled: ActionCreatorWithPayload<{ auth: RawAuthPayload }>
   rejected: ActionCreatorWithPayload<{ errorMessage: string }>
 }> = {
   pending: createAction('auth/postLogin/pending'),

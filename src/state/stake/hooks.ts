@@ -1,15 +1,38 @@
-import { t } from '@lingui/macro'
-import { Token, CurrencyAmount, WETH9 } from '@ixswap1/sdk-core'
+import { Interface } from '@ethersproject/abi'
+import { Currency, CurrencyAmount, Token, WETH9 } from '@ixswap1/sdk-core'
 import { Pair } from '@ixswap1/v2-sdk'
+import { t } from '@lingui/macro'
+import { abi as STAKING_REWARDS_ABI } from '@uniswap/liquidity-staker/build/StakingRewards.json'
+import { IXS_ADDRESS, IXS_STAKING_V1_ADDRESS } from 'constants/addresses'
+import stakingPeriodsData, { IStaking, PeriodsEnum } from 'constants/stakingPeriods'
+import { BigNumber, utils } from 'ethers'
+import { useCurrency } from 'hooks/Tokens'
+import { useIXSGovTokenContract, useIXSStakingContract, useIXSTokenContract } from 'hooks/useContract'
+import useCurrentBlockTimestamp from 'hooks/useCurrentBlockTimestamp'
 import JSBI from 'jsbi'
-import { useMemo } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch, AppState } from 'state'
+import { PERIOD, StakingStatus } from 'state/stake/reducer'
+import { useCurrencyBalance } from 'state/wallet/hooks'
+import { maxAmountSpend } from 'utils/maxAmountSpend'
 import { DAI, IXS, USDC, USDT, WBTC } from '../../constants/tokens'
 import { useActiveWeb3React } from '../../hooks/web3'
+import { calculateGasMargin } from '../../utils/calculateGasMargin'
 import { NEVER_RELOAD, useMultipleContractSingleData } from '../multicall/hooks'
 import { tryParseAmount } from '../swap/helpers'
-import useCurrentBlockTimestamp from 'hooks/useCurrentBlockTimestamp'
-import { Interface } from '@ethersproject/abi'
-import { abi as STAKING_REWARDS_ABI } from '@uniswap/liquidity-staker/build/StakingRewards.json'
+import {
+  getIsStakingPaused,
+  getOneMonthHistoricalPoolSize,
+  getOneWeekHistoricalPoolSize,
+  getStakings,
+  getThreeMonthsHistoricalPoolSize,
+  getTwoMonthsHistoricalPoolSize,
+  increaseAllowance,
+  saveStakingStatus,
+  stake,
+} from './actions'
+import { stakingsAdapter } from './utils'
 
 export const STAKING_REWARDS_INTERFACE = new Interface(STAKING_REWARDS_ABI)
 
@@ -242,22 +265,16 @@ export function useTotalIXsEarned(): CurrencyAmount<Token> | undefined {
 }
 
 // based on typed value
-export function useDerivedStakeInfo(
-  typedValue: string,
-  stakingToken: Token | undefined,
-  userLiquidityUnstaked: CurrencyAmount<Token> | undefined
-): {
-  parsedAmount?: CurrencyAmount<Token>
+export function useDerivedIXSStakeInfo({ typedValue, currencyId }: { typedValue: string; currencyId?: string }): {
+  parsedAmount?: CurrencyAmount<Currency>
   error?: string
 } {
   const { account } = useActiveWeb3React()
-
-  const parsedInput: CurrencyAmount<Token> | undefined = tryParseAmount(typedValue, stakingToken)
-
-  const parsedAmount =
-    parsedInput && userLiquidityUnstaked && JSBI.lessThanOrEqual(parsedInput.quotient, userLiquidityUnstaked.quotient)
-      ? parsedInput
-      : undefined
+  const currency = useCurrency(currencyId)
+  const balance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
+  const parsedInput = tryParseAmount(typedValue, currency)
+  const maxAmountInput = maxAmountSpend(balance)
+  const parsedAmount = parsedInput && JSBI.greaterThan(parsedInput.quotient, JSBI.BigInt('0')) ? parsedInput : undefined
 
   let error: string | undefined
   if (!account) {
@@ -266,38 +283,374 @@ export function useDerivedStakeInfo(
   if (!parsedAmount) {
     error = error ?? t`Enter an amount`
   }
-
+  if (parsedAmount && JSBI.greaterThan(parsedAmount.quotient, maxAmountInput?.quotient ?? JSBI.BigInt('0'))) {
+    error = error ?? t`Amount exceeds balance`
+  }
   return {
     parsedAmount,
     error,
   }
 }
 
-// based on typed value
-export function useDerivedUnstakeInfo(
-  typedValue: string,
-  stakingAmount: CurrencyAmount<Token>
-): {
-  parsedAmount?: CurrencyAmount<Token>
-  error?: string
-} {
+export function useStakingStatus() {
+  const { status } = useStakingState()
+  const { account, chainId } = useActiveWeb3React()
+  const dispatch = useDispatch<AppDispatch>()
+  const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
+  const balance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
+  // adjust this when we have staking contracts
+  const hasStaking = true
+
+  useEffect(() => {
+    if (!account) {
+      dispatch(saveStakingStatus({ status: StakingStatus.CONNECT_WALLET }))
+    } else if (!balance?.greaterThan('0')) {
+      dispatch(saveStakingStatus({ status: StakingStatus.NO_IXS }))
+    } else if (hasStaking) {
+      dispatch(saveStakingStatus({ status: StakingStatus.STAKING }))
+    } else {
+      dispatch(saveStakingStatus({ status: StakingStatus.NO_STAKE }))
+    }
+  }, [balance, account, dispatch, hasStaking])
+
+  return status
+}
+
+export function useStakingState(): AppState['staking'] {
+  return useSelector<AppState, AppState['staking']>((state) => state.staking)
+}
+
+export function usePoolSizeState(): AppState['stakingPoolSize'] {
+  return useSelector<AppState, AppState['stakingPoolSize']>((state) => state.stakingPoolSize)
+}
+
+export function useFetchHistoricalPoolSize() {
+  const dispatch = useDispatch<AppDispatch>()
+  const staking = useIXSStakingContract()
+  return useCallback(
+    async (period?: PERIOD) => {
+      try {
+        switch (period) {
+          case PERIOD.ONE_WEEK: {
+            dispatch(getOneWeekHistoricalPoolSize.pending())
+            const result = await staking?.oneWeekHistoricalPoolSize()
+            const stakedIXS = parseInt(utils.formatUnits(result))
+            dispatch(getOneWeekHistoricalPoolSize.fulfilled({ data: stakedIXS }))
+            break
+          }
+          case PERIOD.ONE_MONTH: {
+            dispatch(getOneMonthHistoricalPoolSize.pending())
+            const result = await staking?.oneMonthHistoricalPoolSize()
+            const stakedIXS = parseInt(utils.formatUnits(result))
+            dispatch(getOneMonthHistoricalPoolSize.fulfilled({ data: stakedIXS }))
+            break
+          }
+          case PERIOD.TWO_MONTHS: {
+            dispatch(getTwoMonthsHistoricalPoolSize.pending())
+            const result = await staking?.twoMonthsHistoricalPoolSize()
+            const stakedIXS = parseInt(utils.formatUnits(result))
+            dispatch(getTwoMonthsHistoricalPoolSize.fulfilled({ data: stakedIXS }))
+            break
+          }
+          case PERIOD.THREE_MONTHS: {
+            dispatch(getThreeMonthsHistoricalPoolSize.pending())
+            const result = await staking?.threeMonthsHistoricalPoolSize()
+            const stakedIXS = parseInt(utils.formatUnits(result))
+            dispatch(getThreeMonthsHistoricalPoolSize.fulfilled({ data: stakedIXS }))
+            break
+          }
+          default: {
+            console.error('Wrong period. Nothing has been staked.')
+            break
+          }
+        }
+        const result = await staking?.oneWeekHistoricalPoolSize()
+        const stakedIXS = parseInt(utils.formatUnits(result, 18))
+        console.log('oneWeekHistoricalPoolSize: ', stakedIXS)
+      } catch (error) {
+        console.error(`IxsReturningStakeBankPostIdoV1: `, error)
+      }
+    },
+    [staking, dispatch]
+  )
+}
+
+export function useIncreaseAllowance() {
+  const dispatch = useDispatch<AppDispatch>()
+  const tokenContract = useIXSTokenContract()
+  const { chainId } = useActiveWeb3React()
+  return useCallback(
+    async (amount: string) => {
+      if (!chainId) {
+        return
+      }
+      try {
+        const stakeAmount = utils.parseUnits(amount, 'ether')
+        dispatch(increaseAllowance.pending())
+        const stakingAddress = IXS_STAKING_V1_ADDRESS[chainId]
+        const allowanceTx = await tokenContract?.increaseAllowance(stakingAddress, stakeAmount)
+        dispatch(increaseAllowance.fulfilled({ data: allowanceTx?.hash }))
+      } catch (error) {
+        dispatch(increaseAllowance.rejected({ errorMessage: error }))
+      }
+    },
+    [tokenContract, dispatch, chainId]
+  )
+}
+
+export function useStakeFor(period?: PERIOD) {
+  const dispatch = useDispatch<AppDispatch>()
+  const staking = useIXSStakingContract()
   const { account } = useActiveWeb3React()
 
-  const parsedInput: CurrencyAmount<Token> | undefined = tryParseAmount(typedValue, stakingAmount.currency)
+  return useCallback(
+    async (amount: string) => {
+      try {
+        const stakeAmount = utils.parseUnits(amount, 'ether')
+        const noData = '0x00'
+        dispatch(stake.pending())
+        switch (period) {
+          case PERIOD.ONE_WEEK: {
+            const estimatedGas = await staking?.estimateGas.stakeForWeek(account, stakeAmount, noData)
+            if (!estimatedGas) {
+              dispatch(stake.rejected({ errorMessage: 'cannot estimate gas' }))
+              break
+            }
+            const stakeTx = await staking?.stakeForWeek(account, stakeAmount, noData, {
+              gasLimit: calculateGasMargin(estimatedGas),
+            })
+            dispatch(stake.fulfilled({ data: stakeTx?.hash }))
+            break
+          }
+          case PERIOD.ONE_MONTH: {
+            const estimatedGas = await staking?.estimateGas.stakeForMonth(account, stakeAmount, noData)
+            if (!estimatedGas) {
+              dispatch(stake.rejected({ errorMessage: 'cannot estimate gas' }))
+              break
+            }
+            const stakeTx = await staking?.stakeForMonth(account, stakeAmount, noData, {
+              gasLimit: calculateGasMargin(estimatedGas),
+            })
+            dispatch(stake.fulfilled({ data: stakeTx?.hash }))
+            break
+          }
+          case PERIOD.TWO_MONTHS: {
+            const estimatedGas = await staking?.estimateGas.stakeForTwoMonths(account, stakeAmount, noData)
+            if (!estimatedGas) {
+              dispatch(stake.rejected({ errorMessage: 'cannot estimate gas' }))
+              break
+            }
+            const stakeTx = await staking?.stakeForTwoMonths(account, stakeAmount, noData, {
+              gasLimit: calculateGasMargin(estimatedGas),
+            })
+            dispatch(stake.fulfilled({ data: stakeTx?.hash }))
+            break
+          }
+          case PERIOD.THREE_MONTHS: {
+            const estimatedGas = await staking?.estimateGas.stakeForThreeMonths(account, stakeAmount, noData)
+            if (!estimatedGas) {
+              dispatch(stake.rejected({ errorMessage: 'cannot estimate gas' }))
+              break
+            }
+            const stakeTx = await staking?.stakeForThreeMonths(account, stakeAmount, noData, {
+              gasLimit: calculateGasMargin(estimatedGas),
+            })
+            dispatch(stake.fulfilled({ data: stakeTx?.hash }))
+            break
+          }
+          default: {
+            console.error('Wrong period. Nothing has been staked.')
+            break
+          }
+        }
+      } catch (error) {
+        dispatch(stake.rejected({ errorMessage: error }))
+      }
+    },
+    [staking, account, dispatch, period]
+  )
+}
 
-  const parsedAmount =
-    parsedInput && JSBI.lessThanOrEqual(parsedInput.quotient, stakingAmount.quotient) ? parsedInput : undefined
+export function useGetStakings() {
+  const dispatch = useDispatch<AppDispatch>()
+  const staking = useIXSStakingContract()
+  const { account } = useActiveWeb3React()
 
-  let error: string | undefined
-  if (!account) {
-    error = t`Connect Wallet`
-  }
-  if (!parsedAmount) {
-    error = error ?? t`Enter an amount`
-  }
+  return useCallback(async () => {
+    try {
+      const { oneDaySeconds, periodsIndex, periodsInSeconds, periodsApy, periodsLockMonths, periodsInDays } =
+        stakingPeriodsData
 
-  return {
-    parsedAmount,
-    error,
-  }
+      const floorTo4Decimals = (num: number) => Math.floor((num + Number.EPSILON) * 10000) / 10000
+      const calculateReward = (
+        amount: number,
+        period: PeriodsEnum,
+        startDateUnix: number,
+        lockedUntilUnix: number,
+        endDateUnix: number
+      ) => {
+        // passedMaturity = амоунт* (APY in %)*days passed/365
+        // !passedMaturity && passedLockIn = аммаунт* Пенальти Йелд (5%) * Сколько прошло со стейкинга в секундах / 365 дней в секундах
+        const now = new Date().getTime() / 1000
+        const passedMaturity = now > endDateUnix
+        const passedLockIn = now > lockedUntilUnix
+        const yearDays = 365
+        let reward
+        if (!passedMaturity && passedLockIn) {
+          const yearSeconds = yearDays * 86400
+          const secondsPassed = now - startDateUnix
+          const penalty = 5 / 100
+          reward = floorTo4Decimals((amount * penalty * secondsPassed) / yearSeconds)
+        } else {
+          const apyPercent = periodsApy[period] / 100
+          const daysPassed = periodsInDays[period]
+          reward = floorTo4Decimals((amount * apyPercent * daysPassed) / yearDays)
+        }
+        return reward
+      }
+      const getCanUnstake = (lock_months: number, endDateUnix: number, lockedTill: number) => {
+        const now = Date.now()
+        if (lock_months === 0) {
+          return now > endDateUnix * 1000
+        }
+        return now > lockedTill * 1000
+      }
+      const getByPeriod = async (period: PeriodsEnum) => {
+        const stakedTransactions = await staking?.stakedTransactionsForPeriod(account, periodsIndex[period])
+        console.log(`stakedTransactions for ${periodsIndex[period]}: ${stakedTransactions}`)
+        if (stakedTransactions.length === 0) return []
+        return stakedTransactions.map((data: Array<number>, index: number) => {
+          const startDateUnix = BigNumber.from(data[0]).toNumber()
+          const stakeAmount = +utils.formatUnits(data[1], 18)
+          const endDateUnix = startDateUnix + periodsInSeconds[period]
+          const lockMonths = periodsLockMonths[period]
+          const lockSeconds = lockMonths * 30 * oneDaySeconds
+          const lockedTillUnix = startDateUnix + lockSeconds
+          return {
+            period,
+            stakeAmount,
+            distributeAmount: stakeAmount,
+            apy: periodsApy[period],
+            reward: calculateReward(stakeAmount, period, startDateUnix, endDateUnix, lockedTillUnix),
+            lockMonths,
+            startDateUnix,
+            endDateUnix,
+            lockedTillUnix,
+            canUnstake: getCanUnstake(lockMonths, endDateUnix, lockedTillUnix),
+            originalData: data,
+            originalIndex: index,
+          }
+        })
+      }
+      dispatch(getStakings.pending())
+      const transactionsArrays = await Promise.all(
+        Object.values(PeriodsEnum).map((period: PeriodsEnum) => getByPeriod(period))
+      )
+      const transactions = transactionsArrays.reduce((accum, item) => {
+        accum.push(...item)
+        return accum
+      }, [])
+      transactions.sort((a: IStaking, b: IStaking) => {
+        if (a.startDateUnix > b.startDateUnix) {
+          return -1
+        }
+        if (a.startDateUnix < b.startDateUnix) {
+          return 1
+        }
+        return 0
+      })
+      dispatch(getStakings.fulfilled({ transactions: stakingsAdapter(transactions) }))
+      return transactions
+    } catch (error) {
+      console.error(`useGetStakings error `, error)
+    }
+  }, [staking, account, dispatch])
+}
+
+export function useUnstakeFromWeek() {
+  // works the same for 1 month
+  const staking = useIXSStakingContract()
+  const tokenContract = useIXSGovTokenContract()
+
+  return useCallback(
+    async (data: IStaking) => {
+      try {
+        const { originalData, originalIndex } = data
+        const stakeAmount = originalData[1]
+        const noData = '0x00'
+
+        await tokenContract?.increaseAllowance(staking?.address, stakeAmount)
+        const stakeIndex = BigNumber.from(originalIndex)
+
+        const estimatedGas = await staking?.estimateGas.unstakeFromWeek(stakeIndex, noData)
+        if (!estimatedGas) {
+          // todo dispatch error!
+          return
+        }
+        await staking?.unstakeFromWeek(stakeIndex, noData, { gasLimit: calculateGasMargin(estimatedGas) })
+      } catch (error) {
+        console.error(`useUnstake error`, error)
+      }
+    },
+    [staking, tokenContract]
+  )
+}
+
+export function useUnstakeFromTwoMonths() {
+  // works the same for 3 months
+  const staking = useIXSStakingContract()
+  const tokenContract = useIXSGovTokenContract()
+
+  return useCallback(
+    async (data: IStaking, amount: number) => {
+      try {
+        const noData = '0x00'
+        const stakeIndex = BigNumber.from(data.originalIndex)
+        const partialStakeAmount = utils.parseUnits(amount.toString(), 'ether')
+
+        await tokenContract?.increaseAllowance(staking?.address, partialStakeAmount)
+        const estimatedGas = await staking?.estimateGas.unstakeFromTwoMonths(partialStakeAmount, stakeIndex, noData)
+
+        if (!estimatedGas) {
+          // todo dispatch error!
+          return
+        }
+        await staking?.unstakeFromTwoMonths(partialStakeAmount, stakeIndex, noData, {
+          gasLimit: calculateGasMargin(estimatedGas),
+        })
+      } catch (error) {
+        console.error(`useUnstake error`, error)
+      }
+    },
+    [staking, tokenContract]
+  )
+}
+
+export function useGetVestings() {
+  const staking = useIXSStakingContract()
+  const { account } = useActiveWeb3React()
+
+  return useCallback(async () => {
+    try {
+      // returns dynamic number of arrays of size 7. Each array consists of [start, end, amount, claimed, cliff, segments, singlePayout]
+      const vestedTransactions = await staking?.vestedTransactions(account)
+      console.log('avocado vestedTransactions', vestedTransactions)
+    } catch (error) {
+      console.error(`useGetStakings error `, error)
+    }
+  }, [staking, account])
+}
+
+export function useIsVestingPaused() {
+  const staking = useIXSStakingContract()
+  const dispatch = useDispatch<AppDispatch>()
+  return useCallback(async () => {
+    try {
+      const isPaused = await staking?.paused()
+      dispatch(getIsStakingPaused({ isPaused }))
+      console.log('isVestingPaused: ', isPaused)
+    } catch (error) {
+      console.error(`isVestingPaused error `, error)
+    }
+  }, [staking, dispatch])
 }

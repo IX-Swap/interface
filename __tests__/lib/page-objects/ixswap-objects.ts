@@ -1,7 +1,10 @@
-import { click, typeText, makeScreenOnError, navigate, getCount } from '../helpers/helpers.js'
+import { click, typeText, waitForText, shouldNotExist, waitNewPage } from '../helpers/helpers.js'
 import { expect } from '@playwright/test'
-import { swap, pool } from '../selectors/ixswap'
+import { amounts } from '../helpers/text-helpers'
+
+import { pool, swap, securityToken } from '../selectors/ixswap'
 import { auth } from '../selectors/metamask'
+import { Metamask } from '../page-objects/metamask-objects'
 
 import { metamask, ixswap } from '../helpers/credentials'
 
@@ -11,25 +14,25 @@ class SwapIX {
     this.page = page
   }
 
-  addToCurrentLiquidityPool = async (page) => {
+  addToCurrentLiquidityPool = async (amount, forNewLiquidity = true) => {
     try {
-      await click(pool.button.POOL_SECTION, page)
-      await click(pool.button.OPEN_TABLE, page)
-      await click(pool.button.ADD_TO_LIQUIDITY, page)
-      await typeText(pool.field.TOKEN_AMOUNT, '0.00001', page)
-      await click(pool.button.SUPPLY, page)
-      await click(pool.button.CREATE_OR_SUPPLY, page)
+      await click(pool.button.POOL_SECTION, this.page)
+      await click(pool.button.OPEN_TABLE, this.page)
+      await click(pool.button.ADD_TO_LIQUIDITY, this.page)
+      await typeText(pool.field.TOKEN_AMOUNT, amount, this.page)
+      if (forNewLiquidity === true) {
+        await click(pool.button.SUPPLY, this.page)
+        await click(swap.button.CHOOSE_TOKEN, this.page)
+        await click(swap.button.DAI_CRYPTO, this.page)
+      }
     } catch (error) {
-      await makeScreenOnError('addToCurrentLiquidityPool', error, this.page)
+      console.log(error)
+      throw new Error(`Add To Current Liquidity Pool`)
     }
   }
   connectToWallet = async () => {
-    try {
-      await click(swap.button.CONNECT_WALLET, this.page)
-      await click(swap.button.METAMASK_CONNECT, this.page)
-    } catch (error) {
-      await makeScreenOnError('connectToWallet', error, this.page)
-    }
+    await click(swap.button.CONNECT_WALLET, this.page)
+    await click(swap.button.METAMASK_CONNECT, this.page)
   }
   setTypeOfCurrency = async (page = this.page) => {
     await click(swap.button.OUT_CURRENCY, page)
@@ -43,41 +46,62 @@ class SwapIX {
     await click(swap.button.SWAP, page)
     // const rowSum = await getCount(swap.button.TABLE_ROW, page)
     // expect(rowSum).toBe(5)
-    await click(swap.button.CONFIRM_SWAP, page)
   }
   createPool = async (sum, page = this.page) => {
-    await navigate(ixswap.URL, this.page)
+    // await navigate(ixswap.URL, this.page)
     await click(pool.button.POOL_SECTION, page)
     await click(pool.button.ADD_LIQUIDITY, page)
     await typeText(pool.field.TOKEN_AMOUNT, sum, page)
-    await click('text="Choose token"', page)
+    await click(swap.button.CHOOSE_TOKEN, page)
     await click(swap.button.DAI_CRYPTO, page)
-    await click(pool.button.SUPPLY, page)
-    await click(pool.button.CREATE_OR_SUPPLY, page)
   }
 
   removePool = async (page = this.page) => {
-    try {
-      await click(pool.button.POOL_SECTION, page)
-      await click(pool.button.OPEN_TABLE, page)
-      await click(pool.button.REMOVE_LIQUIDITY, page)
-      await click(pool.button.MAX_PERCENTAGE, page)
-      await click(pool.button.APPROVE_REMOVE_LIQUIDITY, page)
-    } catch (error) {
-      await makeScreenOnError('removePool', error, page)
-    }
+    await click(pool.button.POOL_SECTION, page)
+    await click(pool.button.OPEN_TABLE, page)
+    await click(pool.button.REMOVE_LIQUIDITY, page)
+    await click(pool.button.MAX_PERCENTAGE, page)
   }
   setExpertMode = async (page = this.page) => {
-    try {
-      page.on('dialog', async (dialog) => {
-        await dialog.accept('confirm')
-      })
-      await click('[id="open-settings-dialog-button"]', page)
-      await click('[id="toggle-expert-mode-button"]', page)
-      await click('[data-testid="turn-on-expert-mode"]', page)
-    } catch (error) {
-      await makeScreenOnError('setExpertMode', error, page)
-    }
+    page.on('dialog', async (dialog) => {
+      await dialog.accept('confirm')
+    })
+    await click('[id="open-settings-dialog-button"]', page)
+    await click('[id="toggle-expert-mode-button"]', page)
+    await page.waitForTimeout(1000)
+    await click('[data-testid="turn-on-expert-mode"]', page)
+    await page.waitForTimeout(1000)
+  }
+  removePoolFull = async ({ page, context }) => {
+    let secondPage = await waitNewPage(page, context, pool.button.APPROVE_REMOVE_LIQUIDITY)
+    await click(auth.buttons.GET_STARTED + '[2]', secondPage)
+    await click(pool.button.REMOVE, page)
+    secondPage = await waitNewPage(page, context, pool.button.CONFIRM_REMOVE)
+    return secondPage
+  }
+
+  createDeposit = async ({ page }) => {
+    await click(securityToken.button.DEPOSIT, page)
+    await typeText(pool.field.TOKEN_AMOUNT, '2', page)
+    await click(securityToken.button.CREATE_DEPOSIT, page)
+  }
+
+  cancelDeposit = async ({ page }) => {
+    await page.mouse.click(0, 0)
+    await shouldNotExist(securityToken.DEPOSIT_POPUP, page)
+    await click(securityToken.TABLE_ROW, page)
+    await click(securityToken.button.CANCEL, page)
+    await page.waitForTimeout(5000)
+    await shouldNotExist(securityToken.DEPOSIT_POPUP, page)
+    await page.waitForTimeout(5000)
+    const texts = await page.innerText(securityToken.TABLE_ROW)
+    expect(texts).toContain('Cancelled')
+  }
+
+  createWithdraw = async ({ page }) => {
+    await click(securityToken.button.WITHDRAW, page)
+    await typeText(pool.field.TOKEN_AMOUNT, '2', page)
+    await click(securityToken.button.CREATE_DEPOSIT, page)
   }
 }
 export { SwapIX }

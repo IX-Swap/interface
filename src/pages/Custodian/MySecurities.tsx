@@ -1,4 +1,3 @@
-import { TopStraightBackgroundWrapper } from 'components/BottomHalfWrapper'
 import { ListType, useCurrencySearch } from 'components/SearchModal/useCurrencySearch'
 import { useActiveWeb3React } from 'hooks/web3'
 import React, { useMemo, useRef } from 'react'
@@ -26,13 +25,15 @@ export const MySecurities = () => {
         <EmptyState hasAccount={!!account} loading={loading} showEmptyLiquidity={showEmptyLiquidity} />
       )}
       {!loading && !showEmptyLiquidity && (
-        <TopStraightBackgroundWrapper>
+        <div>
           <div style={{ flex: '1 1 auto', height: '400px' }}>
             <AutoSizer disableWidth>
-              {({ height }) => <SecTokensList height={height} currencies={filteredSortedTokens} listRef={listRef} />}
+              {({ height }) => (
+                <SecTokensList height={height} currencies={filteredSortedTokens} listRef={listRef} isAll />
+              )}
             </AutoSizer>
           </div>
-        </TopStraightBackgroundWrapper>
+        </div>
       )}
     </>
   )

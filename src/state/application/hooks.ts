@@ -43,9 +43,16 @@ export function useWithdrawModalToggle(): () => void {
 export function useToggleSettingsMenu(): () => void {
   return useToggleModal(ApplicationModal.SETTINGS)
 }
+export function useToggleStakeModal(): () => void {
+  return useToggleModal(ApplicationModal.STAKE)
+}
 
 export function useToggleTransactionModal(): () => void {
   return useToggleModal(ApplicationModal.TRANSACTION_DETAILS)
+}
+
+export function useChooseBrokerDealerModalToggle(): () => void {
+  return useToggleModal(ApplicationModal.CHOOSE_BROKER_DEALER)
 }
 
 // returns a function that allows adding a popup

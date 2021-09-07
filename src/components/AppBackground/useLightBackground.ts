@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 import { routes } from 'utils/routes'
+const LIGHT_PAGES = [`${routes.securityTokens()}/`, routes.vesting, routes.staking]
 
 const useLightBackground = () => {
-  const isSecurityTokenInfoPage = () => window.location.hash.startsWith(`#${routes.securityTokens()}/`)
-  const [hasLightBackground, setHasLightBackground] = useState(isSecurityTokenInfoPage())
+  const isLightPage = () => LIGHT_PAGES.some((route) => window.location.hash.startsWith(`#${route}`))
+  const [hasLightBackground, setHasLightBackground] = useState(isLightPage())
   const handleEvent = () => {
-    setHasLightBackground(isSecurityTokenInfoPage())
+    setHasLightBackground(isLightPage())
   }
   useEffect(() => {
     window.addEventListener('hashchange', handleEvent)
@@ -14,7 +15,7 @@ const useLightBackground = () => {
     }
   })
   window.onhashchange = () => {
-    setHasLightBackground(isSecurityTokenInfoPage())
+    setHasLightBackground(isLightPage())
   }
   return { hasLightBackground }
 }

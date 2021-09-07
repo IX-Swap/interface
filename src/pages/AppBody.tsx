@@ -1,5 +1,7 @@
+import { Trans } from '@lingui/macro'
 import React from 'react'
 import styled from 'styled-components/macro'
+import { TYPE } from 'theme'
 
 export const BodyWrapper = styled.div<{ margin?: string; padding?: string; paddingXS?: string }>`
   position: relative;
@@ -17,10 +19,38 @@ export const BodyWrapper = styled.div<{ margin?: string; padding?: string; paddi
   `};
   z-index: 1;
 `
+export const BlurredOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 3;
+  display: flex;
+  text-align: center;
+  vertical-align: center;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(10px);
+  background: ${({ theme }) => theme.bgG16};
+`
 
 /**
  * The styled container element that wraps the content of most pages and the tabs.
  */
-export default function AppBody({ children, ...rest }: { children: React.ReactNode }) {
-  return <BodyWrapper {...rest}>{children}</BodyWrapper>
+export default function AppBody({ children, blurred, ...rest }: { children: React.ReactNode; blurred?: boolean }) {
+  return (
+    <React.Fragment>
+      <BodyWrapper {...rest}>
+        {blurred && (
+          <BlurredOverlay>
+            <TYPE.titleBig fontWeight={600}>
+              <Trans>Coming soon</Trans>
+            </TYPE.titleBig>
+          </BlurredOverlay>
+        )}
+        {children}
+      </BodyWrapper>
+    </React.Fragment>
+  )
 }

@@ -10,22 +10,23 @@ _axios.defaults.baseURL = API_URL
 _axios.interceptors.response.use(responseSuccessInterceptor, responseErrorInterceptor)
 
 const apiService = {
-  async request<T = any>({ method, uri, data, axiosConfig = {} }: APIServiceRequestConfig) {
+  async request<T = any>({ method, uri, data, axiosConfig = {}, params = {} }: APIServiceRequestConfig) {
     const requestConfig: APIServiceRequestConfig = {
       uri,
       method,
       data: data,
+      params,
       axiosConfig,
     }
 
     return await _axios.request<T>(this._prepareRequestConfig(requestConfig))
   },
 
-  get: async function get<T = any>(uri: string, config?: RequestConfig) {
+  get: async function get<T = any>(uri: string, config?: RequestConfig, params?: Record<string, string | number>) {
     return await this.request<T>({
       method: 'get',
       uri,
-      data: undefined,
+      params,
       axiosConfig: config ?? {},
     })
   },
@@ -68,17 +69,16 @@ const apiService = {
 
   _getErrorMessage(error: any) {
     let message = 'Unknown error'
-    console.log({ error })
     if (error.response !== undefined) {
       message = error.response.data.message ?? error.response.message
     } else {
       message = error.message
     }
-
+    console.log({ ERROR1: error.response.data })
     return message
   },
 
-  _prepareRequestConfig({ uri, axiosConfig, data, method }: APIServiceRequestConfig): RequestConfig {
+  _prepareRequestConfig({ uri, axiosConfig, data, method, params }: APIServiceRequestConfig): RequestConfig {
     const body = this._prepareBody(data)
     const headers = this._prepareHeaders(data)
     const requestConfig: RequestConfig = {
@@ -86,6 +86,7 @@ const apiService = {
       url: uri,
       headers,
       method,
+      params,
     }
 
     if (method !== 'get' && data !== undefined) {
@@ -100,10 +101,11 @@ const apiService = {
   },
 
   _prepareHeaders(data: any) {
+    const isAdmin = window.location.hash === '#/admin-kyc' || window.location.hash === '#/admin-login'
     const headers: KeyValueMap = {}
-    const { auth } = store.getState()
-    if (auth.token) {
-      headers.Authorization = `Bearer ${auth.token}`
+    const { auth, admin } = store.getState()
+    if (auth.token || admin.token) {
+      headers.Authorization = `Bearer ${isAdmin ? admin.token : auth.token}`
     }
 
     if (data !== undefined && !this._isFormData(data)) {

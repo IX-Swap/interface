@@ -139,7 +139,7 @@ const BalanceWrap = styled(RowFixed)`
   height: 17px;
   text-align: center;
 `
-const StyledBalanceMax = styled.button<{ disabled?: boolean }>`
+export const StyledBalanceMax = styled.button<{ disabled?: boolean }>`
   background-color: transparent;
   border: none;
   border-radius: 12px;
