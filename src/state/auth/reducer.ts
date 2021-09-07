@@ -1,4 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit'
+import { getTokenExpiration } from 'utils/time'
 import { postLogin, saveToken } from './actions'
 
 export interface AuthState {
@@ -28,9 +29,12 @@ export default createReducer<AuthState>(initialState, (builder) =>
       state.loginLoading = true
       state.loginError = null
     })
-    .addCase(postLogin.fulfilled, (state) => {
+    .addCase(postLogin.fulfilled, (state, { payload: { auth } }) => {
       state.loginLoading = false
       state.loginError = null
+      const expirationTime = getTokenExpiration(auth.expiresIn)
+      state.token = auth.accessToken
+      state.expiresAt = expirationTime
     })
     .addCase(postLogin.rejected, (state, { payload: { errorMessage } }) => {
       state.loginLoading = false

@@ -11,11 +11,11 @@ import { RouteComponentProps } from 'react-router-dom'
 import { Box } from 'rebass'
 import { useUserSecTokens } from 'state/user/hooks'
 import { TYPE } from 'theme'
-import { InfoBackground } from './Background'
+import { LightBackground } from 'theme/Background'
 import { Container, Description, DescriptionText, InfoTitle } from './styleds'
 import { TokenDetails } from './TokenDetails'
+
 export default function SecTokenDetails({
-  history,
   match: {
     params: { currencyId },
   },
@@ -23,19 +23,22 @@ export default function SecTokenDetails({
   const currency = (useCurrency(currencyId) as any) ?? undefined
   const { secTokens } = useUserSecTokens()
 
+  // todo remove vaultState if not needed anymore
   const vaultState = useMemo(() => {
-    const status = (secTokens[currencyId] as any)?.tokenInfo?.tokenUser?.status ?? ''
+    const status = (secTokens[currencyId] as any)?.tokenInfo?.status ?? ''
     return getVaultState(status)
   }, [secTokens, currencyId])
 
   const description = useMemo(() => {
     return (currency as any)?.tokenInfo?.description
   }, [currency])
+
+  const accreditationRequest = (secTokens[currencyId] as any)?.tokenInfo?.accreditationRequest || {}
   return (
     <>
       <DepositPopup currency={currency} />
       <WithdrawPopup currency={currency} />
-      <InfoBackground />
+      <LightBackground />
       <Container width={['100%', '90%', '65%']} maxWidth={'920px'}>
         <InfoTitle>
           <CurrencyLogo currency={currency} size="72px" />
@@ -52,7 +55,7 @@ export default function SecTokenDetails({
           </DescriptionText>
         </Description>
         <TokenDetails currency={currency} />
-        <Vault status={vaultState} currency={currency} />
+        <Vault status={vaultState} currency={currency} accreditationRequest={accreditationRequest} />
       </Container>
     </>
   )

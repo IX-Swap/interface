@@ -8,6 +8,7 @@ export interface APIServiceRequestConfig {
   uri: string
   axiosConfig: RequestConfig
   data?: any
+  params?: any
 }
 
 export interface APIServiceResponse<T = undefined> {

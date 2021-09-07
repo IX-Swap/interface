@@ -3,9 +3,13 @@ import { WETH9 } from '@ixswap1/sdk-core'
 import { abi as STAKING_REWARDS_ABI } from '@uniswap/liquidity-staker/build/StakingRewards.json'
 import { abi as MERKLE_DISTRIBUTOR_ABI } from '@uniswap/merkle-distributor/build/MerkleDistributor.json'
 import { abi as IIxsV2PairABI } from '@ixswap1/v2-core/build/IIxsV2Pair.json'
-import { abi as IIxsV2Router02ABI } from '@ixswap1/v2-periphery/build/IIxsV2Router02.json'
+import { abi as IIxsV2SwapRouter } from '@ixswap1/v2-periphery/build/IIxsV2SwapRouter.json'
+import { abi as IIxsV2LiquidityRouter } from '@ixswap1/v2-periphery/build/IIxsV2LiquidityRouter.json'
 import { abi as IIxsWSecABI } from '@ixswap1/v2-core/build/IIxsWSec.json'
-
+import { abi as IIxsVestedDistribution } from '@ixswap1/v2-core/build/IXSVestedDistribution.json'
+import { abi as IxsReturningStakeBankPostIdoV1 } from '@ixswap1/v2-core/build/IxsReturningStakeBankPostIdoV1.json'
+import { abi as IxsToken } from '@ixswap1/v2-core/build/IxsToken.json'
+import { abi as IxsGovernanceToken } from '@ixswap1/v2-core/build/IxsGovernanceToken.json'
 import ARGENT_WALLET_DETECTOR_ABI from 'abis/argent-wallet-detector.json'
 import ENS_PUBLIC_RESOLVER_ABI from 'abis/ens-public-resolver.json'
 import ENS_ABI from 'abis/ens-registrar.json'
@@ -21,9 +25,14 @@ import {
   ARGENT_WALLET_DETECTOR_ADDRESS,
   MERKLE_DISTRIBUTOR_ADDRESS,
   MULTICALL2_ADDRESSES,
-  V2_ROUTER_ADDRESS,
+  SWAP_ROUTER_ADDRESS,
+  LIQUIDITY_ROUTER_ADDRESS,
   ENS_REGISTRAR_ADDRESSES,
   SOCKS_CONTROLLER_ADDRESSES,
+  IXS_VESTING_ADDRESS,
+  IXS_STAKING_V1_ADDRESS,
+  IXS_ADDRESS,
+  IXS_GOVERNANCE_ADDRESS,
 } from 'constants/addresses'
 import { useMemo } from 'react'
 import { getContract } from 'utils'
@@ -57,6 +66,22 @@ export function useTokenContract(tokenAddress?: string, withSignerIfPossible?: b
   return useContract<Erc20>(tokenAddress, ERC20_ABI, withSignerIfPossible)
 }
 
+export function useVestingContract() {
+  return useContract(IXS_VESTING_ADDRESS, IIxsVestedDistribution, true)
+}
+
+export function useIXSStakingContract() {
+  return useContract(IXS_STAKING_V1_ADDRESS, IxsReturningStakeBankPostIdoV1, true)
+}
+
+export function useIXSTokenContract() {
+  return useContract(IXS_ADDRESS, IxsToken, true)
+}
+
+export function useIXSGovTokenContract() {
+  return useContract(IXS_GOVERNANCE_ADDRESS, IxsGovernanceToken, true)
+}
+
 export function useWETHContract(withSignerIfPossible?: boolean) {
   const { chainId } = useActiveWeb3React()
   return useContract<Weth>(chainId ? WETH9[chainId]?.address : undefined, WETH_ABI, withSignerIfPossible)
@@ -86,10 +111,12 @@ export function usePairContract(pairAddress?: string, withSignerIfPossible?: boo
   return useContract(pairAddress, IIxsV2PairABI, withSignerIfPossible)
 }
 
-export function useV2RouterContract(): Contract | null {
-  return useContract(V2_ROUTER_ADDRESS, IIxsV2Router02ABI, true)
+export function useSwapRouterContract(): Contract | null {
+  return useContract(SWAP_ROUTER_ADDRESS, IIxsV2SwapRouter, true)
 }
-
+export function useLiquidityRouterContract(): Contract | null {
+  return useContract(LIQUIDITY_ROUTER_ADDRESS, IIxsV2LiquidityRouter, true)
+}
 export function useMulticall2Contract() {
   return useContract<Multicall2>(MULTICALL2_ADDRESSES, MULTICALL_ABI, false) as Multicall2
 }

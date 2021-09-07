@@ -26,11 +26,13 @@ interface TooltipContentProps extends Omit<PopoverProps, 'content'> {
 }
 
 export default function Tooltip({ text, ...rest }: TooltipProps) {
-  return <Popover content={<TooltipContainer>{text}</TooltipContainer>} {...rest} />
+  return <Popover content={<TooltipContainer>{text}</TooltipContainer>} hideShadow {...rest} />
 }
 
 export function TooltipLight({ text, ...rest }: TooltipProps) {
-  return <Popover offset={[-180, 10]} content={<TooltipContainerFit>{text}</TooltipContainerFit>} {...rest} />
+  return (
+    <Popover offset={[-180, 10]} content={<TooltipContainerFit>{text}</TooltipContainerFit>} hideShadow {...rest} />
+  )
 }
 
 export function TooltipContent({ content, ...rest }: TooltipContentProps) {

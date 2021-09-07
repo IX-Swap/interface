@@ -4,6 +4,7 @@ import { abi as IIxsV2PairABI } from '@ixswap1/v2-core/build/IIxsV2Pair.json'
 import { Interface } from '@ethersproject/abi'
 import { useMultipleContractSingleData } from '../state/multicall/hooks'
 import { Currency, CurrencyAmount } from '@ixswap1/sdk-core'
+import { isSecurityPair, useSecTokens } from 'state/secTokens/hooks'
 
 const PAIR_INTERFACE = new Interface(IIxsV2PairABI)
 
@@ -29,6 +30,7 @@ export function useV2Pairs(currencies: [Currency | undefined, Currency | undefin
   )
 
   const results = useMultipleContractSingleData(pairAddresses, PAIR_INTERFACE, 'getReserves')
+  const { secTokens } = useSecTokens()
 
   return useMemo(() => {
     return results.map((result, i) => {
@@ -41,15 +43,21 @@ export function useV2Pairs(currencies: [Currency | undefined, Currency | undefin
       if (!reserves) return [PairState.NOT_EXISTS, null]
       const { reserve0, reserve1 } = reserves
       const [token0, token1] = tokenA.sortsBefore(tokenB) ? [tokenA, tokenB] : [tokenB, tokenA]
+      const isSecPair = isSecurityPair({
+        token0,
+        token1,
+        secTokens,
+      })
       return [
         PairState.EXISTS,
         new Pair(
           CurrencyAmount.fromRawAmount(token0, reserve0.toString()),
-          CurrencyAmount.fromRawAmount(token1, reserve1.toString())
+          CurrencyAmount.fromRawAmount(token1, reserve1.toString()),
+          isSecPair
         ),
       ]
     })
-  }, [results, tokens])
+  }, [results, tokens, secTokens])
 }
 
 export function useV2Pair(tokenA?: Currency, tokenB?: Currency): [PairState, Pair | null] {

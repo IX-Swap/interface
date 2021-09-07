@@ -17,7 +17,7 @@ const LightWrapper = styled(Milkyway)`
   overflow: hidden;
   top: 20vh;
 `
-export const InfoBackground = () => {
+export const LightBackground = () => {
   return (
     <Background>
       <LightWrapper />

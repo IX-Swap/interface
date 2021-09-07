@@ -5,6 +5,7 @@ export interface ModalProps {
   maxHeight?: number | string
   initialFocusRef?: React.RefObject<any>
   children?: React.ReactNode
-  isRight?: boolean
+  isright?: boolean
   mobileMaxHeight?: number | false
+  scrollable?: boolean
 }

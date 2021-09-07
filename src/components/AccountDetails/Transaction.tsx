@@ -11,6 +11,7 @@ import { ReactComponent as Failed } from 'assets/images/attention.svg'
 import Loader from '../Loader'
 import { IconWrapperWithBg, IconWrapper } from './styleds'
 import useTheme from 'hooks/useTheme'
+import { Box } from 'rebass'
 const TransactionWrapper = styled.div``
 
 const TransactionStatusText = styled.div`
@@ -59,7 +60,9 @@ export default function Transaction({ hash }: { hash: string }) {
         </RowFixed>
 
         {pending ? (
-          <Loader />
+          <Box padding="4px">
+            <Loader />
+          </Box>
         ) : success ? (
           <IconWrapperWithBg size={16} bg={theme.popUpInputBorder} padding="4px">
             <Check />

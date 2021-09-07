@@ -4,7 +4,6 @@ import { useCallback, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import apiService from 'services/apiService'
 import { tokens } from 'services/apiUrls'
-import { useApiService } from 'services/useApiService'
 import { AppDispatch, AppState } from 'state'
 import { WrappedTokenInfo } from 'state/lists/wrappedTokenInfo'
 import { SecToken } from 'types/secToken'
@@ -13,23 +12,38 @@ import { fetchSecTokenList } from './actions'
 export function useSecTokenState(): AppState['secTokens'] {
   return useSelector<AppState, AppState['secTokens']>((state) => state.secTokens)
 }
-export const useFetchSecTokens = () => {
-  const { result, loading, request } = useApiService<SecToken[]>({
-    method: 'get',
-    uri: tokens.all,
-    data: {},
-  })
-  return { result, loading, request }
-}
 
 export const getSecTokensList = async () => {
   const result = await apiService.get(tokens.all)
   return result.data
 }
-
-export const useSecTokenId = ({ currencyId }: { currencyId: string }) => {
+export const useIsSecToken = (address?: string) => {
   const { secTokens } = useSecTokens()
-  const token = secTokens[currencyId]
+  return useMemo(() => Boolean(address && Boolean(secTokens[address])), [address, secTokens])
+}
+
+export const isSecurityPair = ({
+  token0,
+  token1,
+  secTokens,
+}: {
+  token0: Token | undefined
+  token1: Token | undefined
+  secTokens: { [address: string]: Token }
+}) => {
+  if (!token0 || !token1) {
+    return false
+  }
+  return Boolean(secTokens[token0.address] || secTokens[token1.address])
+}
+export const useAreBothSecTokens = ({ address0, address1 }: { address0?: string; address1?: string }) => {
+  const sec0 = useIsSecToken(address0)
+  const sec1 = useIsSecToken(address1)
+  return useMemo(() => sec0 && sec1, [sec0, sec1])
+}
+export const useSecTokenId = ({ currencyId }: { currencyId?: string }) => {
+  const { secTokens } = useSecTokens()
+  const token = secTokens[currencyId ?? '']
 
   return (token as any)?.tokenInfo?.id
 }

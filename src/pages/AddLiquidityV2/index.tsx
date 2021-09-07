@@ -1,33 +1,34 @@
-import React, { useCallback, useContext, useState } from 'react'
 import { BigNumber } from '@ethersproject/bignumber'
 import { TransactionResponse } from '@ethersproject/providers'
 import { Currency, CurrencyAmount, Percent, WETH9 } from '@ixswap1/sdk-core'
+import { t, Trans } from '@lingui/macro'
+import UnsupportedCurrencyFooter from 'components/swap/UnsupportedCurrencyFooter'
+import { ConfirmationModalContent } from 'components/TransactionConfirmationModal/ConfirmationModalContent'
+import React, { useCallback, useContext, useState } from 'react'
 import { Plus } from 'react-feather'
 import ReactGA from 'react-ga'
 import { RouteComponentProps } from 'react-router-dom'
 import { Box, Text } from 'rebass'
 import { ThemeContext } from 'styled-components'
-import { ButtonIXSWide, ButtonGradient } from '../../components/Button'
+import { routes } from 'utils/routes'
+import { ButtonGradient, ButtonIXSWide } from '../../components/Button'
 import { AutoColumn, ColumnCenter } from '../../components/Column'
-import TransactionConfirmationModal from '../../components/TransactionConfirmationModal'
-import { ConfirmationModalContent } from 'components/TransactionConfirmationModal/ConfirmationModalContent'
 import CurrencyInputPanel from '../../components/CurrencyInputPanel'
 import { AddRemoveTabs } from '../../components/NavigationTabs'
 import { MinimalPositionCard } from '../../components/PositionCard/MinimalPositionCard'
 import { ButtonRow } from '../../components/Row'
-
+import TransactionConfirmationModal from '../../components/TransactionConfirmationModal'
 import { ZERO_PERCENT } from '../../constants/misc'
-import { useV2RouterContract } from '../../hooks/useContract'
-import { PairState } from '../../hooks/useV2Pairs'
-import { useActiveWeb3React } from '../../hooks/web3'
 import { useCurrency } from '../../hooks/Tokens'
 import { ApprovalState, useApproveCallback } from '../../hooks/useApproveCallback'
+import { useLiquidityRouterContract } from '../../hooks/useContract'
 import { useIsSwapUnsupported } from '../../hooks/useIsSwapUnsupported'
 import useTransactionDeadline from '../../hooks/useTransactionDeadline'
+import { PairState } from '../../hooks/useV2Pairs'
+import { useActiveWeb3React } from '../../hooks/web3'
 import { useWalletModalToggle } from '../../state/application/hooks'
 import { Field } from '../../state/mint/actions'
 import { useDerivedMintInfo, useMintActionHandlers, useMintState } from '../../state/mint/hooks'
-
 import { useTransactionAdder } from '../../state/transactions/hooks'
 import { useIsExpertMode, useUserSlippageToleranceWithDefault } from '../../state/user/hooks'
 import { ModalBlurWrapper, TYPE } from '../../theme'
@@ -37,14 +38,11 @@ import { maxAmountSpend } from '../../utils/maxAmountSpend'
 import AppBody from '../AppBody'
 import { Dots } from '../Pool/styleds'
 import { ModalBottom } from './ModalBottom'
-import UnsupportedCurrencyFooter from 'components/swap/UnsupportedCurrencyFooter'
-import { t, Trans } from '@lingui/macro'
-import { Tip } from './Tip'
-import { useHandleCurrencySelect } from './useHandleCurrencySelect'
-import { ToggleableBody } from './styleds'
 import { ModalHeader } from './ModalHeader'
 import { PricesAndPoolShare } from './PricesAndPoolShare'
-import { routes } from 'utils/routes'
+import { ToggleableBody } from './styleds'
+import { Tip } from './Tip'
+import { useHandleCurrencySelect } from './useHandleCurrencySelect'
 
 const DEFAULT_ADD_V2_SLIPPAGE_TOLERANCE = new Percent(50, 10_000)
 
@@ -124,7 +122,7 @@ export default function AddLiquidity({
     {}
   )
 
-  const router = useV2RouterContract()
+  const router = useLiquidityRouterContract()
 
   // check whether the user has approved the router on the tokens
   const [approvalA, approveACallback] = useApproveCallback(parsedAmounts[Field.CURRENCY_A], router?.address)

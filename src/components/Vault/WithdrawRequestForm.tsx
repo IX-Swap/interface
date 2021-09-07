@@ -41,7 +41,7 @@ export const WithdrawRequestForm = ({ currency, changeModal }: Props) => {
   const onClick = () => {
     const tokenId = (secTokens[cid ?? ''] as any)?.tokenInfo?.id
     if (tokenId && !error && parsedAmount && !inputError) {
-      withdraw({ id: tokenId, amount: Number(parsedAmount?.toSignificant(5)), onSuccess, onError, receiver })
+      withdraw({ id: tokenId, amount: Number(parsedAmount?.toSignificant(18)), onSuccess, onError, receiver })
     }
   }
   const onSuccess = () => {
@@ -77,7 +77,13 @@ export const WithdrawRequestForm = ({ currency, changeModal }: Props) => {
               <Trans>Amount</Trans>
             </TYPE.body1>
           </Row>
-          <AmountInput currency={currency} value={amount ?? ''} onUserInput={onTypeAmount} />
+          <AmountInput
+            amount={parsedAmount}
+            showMax={true}
+            currency={currency}
+            value={amount ?? ''}
+            onUserInput={onTypeAmount}
+          />
         </Column>
         <Column style={{ gap: '11px' }}>
           <Row>

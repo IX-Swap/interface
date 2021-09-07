@@ -29,7 +29,6 @@ export const ModalContentWrapper = styled(Column)`
 export function ConfirmationPendingContent({
   onDismiss,
   pendingText,
-  inline,
 }: {
   onDismiss: () => void
   pendingText: ReactNode
@@ -142,7 +141,7 @@ export function TransactionSubmittedContent({
 
 export function TransactionErrorContent({ message, onDismiss }: { message: ReactNode; onDismiss: () => void }) {
   return (
-    <ModalBlurWrapper>
+    <ModalBlurWrapper data-testid="TransactionPopup">
       <ModalContentWrapper>
         <Column>
           <RowBetween>

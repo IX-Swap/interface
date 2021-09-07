@@ -1,14 +1,14 @@
 import { MaxUint256 } from '@ethersproject/constants'
 import { TransactionResponse } from '@ethersproject/providers'
-import { CurrencyAmount, Percent, Currency, TradeType } from '@ixswap1/sdk-core'
+import { Currency, CurrencyAmount, Percent, TradeType } from '@ixswap1/sdk-core'
 import { Trade as V2Trade } from '@ixswap1/v2-sdk'
 import { useCallback, useMemo } from 'react'
-import { V2_ROUTER_ADDRESS } from '../constants/addresses'
-import { useTransactionAdder, useHasPendingApproval } from '../state/transactions/hooks'
+import { SWAP_ROUTER_ADDRESS } from '../constants/addresses'
+import { useHasPendingApproval, useTransactionAdder } from '../state/transactions/hooks'
 import { calculateGasMargin } from '../utils/calculateGasMargin'
 import { useTokenContract } from './useContract'
-import { useActiveWeb3React } from './web3'
 import { useTokenAllowance } from './useTokenAllowance'
+import { useActiveWeb3React } from './web3'
 
 export enum ApprovalState {
   UNKNOWN = 'UNKNOWN',
@@ -108,6 +108,6 @@ export function useApproveCallbackFromTrade(
   )
   return useApproveCallback(
     amountToApprove,
-    chainId ? (trade instanceof V2Trade ? V2_ROUTER_ADDRESS[chainId] : undefined) : undefined
+    chainId ? (trade instanceof V2Trade ? SWAP_ROUTER_ADDRESS[chainId] : undefined) : undefined
   )
 }

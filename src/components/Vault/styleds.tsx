@@ -109,9 +109,13 @@ export const StatusIcons = {
   [ActionHistoryStatus.SETTLED]: () => <Passed />,
   [ActionHistoryStatus.APPROVED]: () => <Passed />,
   [ActionHistoryStatus.REJECTED]: () => <Attention />,
+  [ActionHistoryStatus.FAILED]: () => <Attention />,
+  [ActionHistoryStatus.REQUESTED]: () => <LoaderThin size={20} />,
+  [ActionHistoryStatus.CANCELLED]: () => <Attention />,
+  [ActionHistoryStatus.PROCESSING]: () => <LoaderThin size={20} />,
 }
 
-export const getStatusIcon = (action: ActionTypes, status: ActionHistoryStatus) => {
+export const getStatusIcon = (action = ActionTypes.DEPOSIT, status: ActionHistoryStatus) => {
   if (action === ActionTypes.DEPOSIT && status === ActionHistoryStatus.APPROVED) {
     return StatusIcons[ActionHistoryStatus.PENDING]
   }

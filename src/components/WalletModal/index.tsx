@@ -4,14 +4,14 @@ import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core'
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import { AutoRow } from 'components/Row'
-import { useFetchToken } from 'hooks/useFetchToken'
 import React, { useEffect, useState } from 'react'
 import { isMobile } from 'react-device-detect'
 import ReactGA from 'react-ga'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from 'state'
-import { saveToken } from 'state/auth/actions'
-import { useSaveAuthorization } from 'state/auth/hooks'
+import { LOGIN_STATUS, useLogin } from 'state/auth/hooks'
+import { saveAccount } from 'state/user/actions'
+import { useFetchUserSecTokenListCallback } from 'state/user/hooks'
 import MetamaskIcon from '../../assets/images/metamask.png'
 import { fortmatic, injected, portis } from '../../connectors'
 import { OVERLAY_READY } from '../../connectors/Fortmatic'
@@ -55,7 +55,6 @@ export default function WalletModal({
 }) {
   // important that these are destructed from the account-specific web3-react context
   const { active, account, connector, activate, error } = useWeb3React()
-  const dispatch = useDispatch<AppDispatch>()
 
   const [walletView, setWalletView] = useState(WALLET_VIEWS.ACCOUNT)
 
@@ -82,8 +81,7 @@ export default function WalletModal({
       setWalletView(WALLET_VIEWS.ACCOUNT)
     }
   }, [walletModalOpen])
-  const { fetchToken } = useFetchToken()
-  const { saveAuthorization } = useSaveAuthorization()
+  const login = useLogin({ mustHavePreviousLogin: true, expireLogin: true })
   // close modal when a connection is successful
   const activePrevious = usePrevious(active)
   const connectorPrevious = usePrevious(connector)
@@ -92,6 +90,8 @@ export default function WalletModal({
       setWalletView(WALLET_VIEWS.ACCOUNT)
     }
   }, [setWalletView, active, error, connector, walletModalOpen, activePrevious, connectorPrevious])
+  const dispatch = useDispatch<AppDispatch>()
+  const getUserSecTokens = useFetchUserSecTokenListCallback()
 
   const tryActivation = async (connector: AbstractConnector | undefined) => {
     let name = ''
@@ -116,12 +116,13 @@ export default function WalletModal({
     }
     if (connector) {
       try {
-        await activate(connector, undefined, true)
-
-        dispatch(saveToken({ value: { token: '', expiresAt: 0 } }))
-        const authData = await fetchToken()
-        if (authData) {
-          saveAuthorization(authData)
+        const { account } = await connector.activate()
+        if (account) {
+          dispatch(saveAccount({ account }))
+        }
+        const status = await login(account)
+        if (status === LOGIN_STATUS.SUCCESS) {
+          getUserSecTokens()
         }
       } catch (error) {
         if (error instanceof UnsupportedChainIdError) {
@@ -289,7 +290,7 @@ export default function WalletModal({
         minHeight={50}
         maxHeight={50}
         mobileMaxHeight={80}
-        isRight
+        isright
       >
         <Wrapper>
           {' '}

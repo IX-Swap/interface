@@ -9,7 +9,7 @@ import { SwapState } from './reducer'
 import { ADDRESS_REGEX, ENS_NAME_REGEX } from './constants'
 
 // try to parse a user entered amount for a given token
-export function tryParseAmount<T extends Currency>(value?: string, currency?: T): CurrencyAmount<T> | undefined {
+export function tryParseAmount<T extends Currency>(value?: string, currency?: T | null): CurrencyAmount<T> | undefined {
   if (!value || !currency) {
     return undefined
   }

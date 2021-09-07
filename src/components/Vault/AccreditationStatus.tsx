@@ -14,6 +14,7 @@ interface Props {
   status: VaultState
 }
 export const AccreditationStatus = ({ status }: Props) => {
+  // todo link new statuses
   const info =
     status === VaultState.PENDING
       ? {

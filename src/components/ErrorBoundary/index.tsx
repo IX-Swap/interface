@@ -1,11 +1,9 @@
 import { Trans } from '@lingui/macro'
 import React, { ErrorInfo } from 'react'
-import store, { AppState } from '../../state'
-import { ExternalLink, TYPE } from '../../theme'
-import { AutoColumn } from '../Column'
-import styled from 'styled-components/macro'
 import ReactGA from 'react-ga'
-import { getUserAgent } from '../../utils/getUserAgent'
+import styled from 'styled-components/macro'
+import { TYPE } from '../../theme'
+import { AutoColumn } from '../Column'
 import { AutoRow } from '../Row'
 
 const FallbackWrapper = styled.div`
@@ -31,11 +29,6 @@ const CodeBlockWrapper = styled.div`
   border-radius: 24px;
   padding: 18px 24px;
   color: ${({ theme }) => theme.text1};
-`
-
-const LinkWrapper = styled.div`
-  color: ${({ theme }) => theme.blue1};
-  padding: 6px 24px;
 `
 
 const SomethingWentWrongWrapper = styled.div`
@@ -67,7 +60,7 @@ export default class ErrorBoundary extends React.Component<unknown, ErrorBoundar
   render() {
     const { error } = this.state
     if (error !== null) {
-      const encodedBody = encodeURIComponent(issueBody(error))
+      // find out what is this const encodedBody = encodeURIComponent(issueBody(error))
       return (
         <FallbackWrapper>
           <BodyWrapper>
@@ -90,68 +83,4 @@ export default class ErrorBoundary extends React.Component<unknown, ErrorBoundar
     }
     return this.props.children
   }
-}
-
-function getRelevantState(): null | keyof AppState {
-  const path = window.location.hash
-  if (!path.startsWith('#/')) {
-    return null
-  }
-  const pieces = path.substring(2).split(/[\/\\?]/)
-  switch (pieces[0]) {
-    case 'swap':
-      return 'swap'
-    case 'add':
-      return 'mint'
-    case 'remove':
-      return 'burn'
-  }
-  return null
-}
-
-function issueBody(error: Error): string {
-  const relevantState = getRelevantState()
-  const deviceData = getUserAgent()
-  return `## URL
-  
-${window.location.href}
-
-${
-  relevantState
-    ? `## \`${relevantState}\` state
-    
-\`\`\`json
-${JSON.stringify(store.getState()[relevantState], null, 2)}
-\`\`\`
-`
-    : ''
-}
-${
-  error.name &&
-  `## Error
-
-\`\`\`
-${error.name}${error.message && `: ${error.message}`}
-\`\`\`
-`
-}
-${
-  error.stack &&
-  `## Stacktrace
-
-\`\`\`
-${error.stack}
-\`\`\`
-`
-}
-${
-  deviceData &&
-  `## Device data
-
-\`\`\`json
-${JSON.stringify(deviceData, null, 2)}
-\`\`\`
-`
-}
-`
 }
