@@ -34,6 +34,8 @@ export const Staking = () => {
     console.log('account: ', account)
     if (account && account !== metaMaskAccount) {
       dispatch(changeAccount({ newAccount: account }))
+    } else {
+      dispatch(changeAccount({ newAccount: 'null' }))
     }
   }, [chainId, account])
 
