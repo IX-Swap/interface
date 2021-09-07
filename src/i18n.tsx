@@ -6,10 +6,12 @@ import { useActiveLocale, useSetLocaleFromUrl } from 'hooks/useActiveLocale'
 import { SupportedLocale } from 'constants/locales'
 
 export async function dynamicActivate(locale: SupportedLocale) {
-  const { messages } = await import(`@lingui/loader!./locales/${locale}.po`)
-  i18n.loadLocaleData(locale, { plurals: () => null })
-  i18n.load(locale, messages)
-  i18n.activate(locale)
+  try {
+    const { messages } = await import(`@lingui/loader!./locales/${locale}.po`)
+    i18n.loadLocaleData(locale, { plurals: () => null })
+    i18n.load(locale, messages)
+    i18n.activate(locale)
+  } catch (e) {}
 }
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
