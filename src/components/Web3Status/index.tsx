@@ -175,6 +175,14 @@ function Web3StatusInner() {
   const hasSocks = useHasSocks()
   const toggleWalletModal = useWalletModalToggle()
 
+  const connectWallet = () => {
+    const {
+      Ya: { Metrika2 },
+    } = window as any
+    Metrika2(84960586, 'reachGoal', 'headerConnectWalletClicked')
+    toggleWalletModal()
+  }
+
   if (account) {
     return (
       <Web3StatusConnected id="web3-status-connected" onClick={toggleWalletModal} pending={hasPendingTransactions}>
@@ -203,7 +211,7 @@ function Web3StatusInner() {
     )
   } else {
     return (
-      <Web3StatusConnect id="connect-wallet" onClick={toggleWalletModal} faded={!account}>
+      <Web3StatusConnect id="connect-wallet" onClick={connectWallet} faded={!account}>
         <Text>
           <Trans>Connect Wallet</Trans>
         </Text>
