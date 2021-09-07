@@ -46,7 +46,7 @@ const Header = () => {
         <Trans>Amount</Trans>
       </div>
       <div className="header-label">
-        <Trans>Distribute</Trans>
+        <Trans>Distributed</Trans>
       </div>
       <div>
         <div className="header-label">
@@ -164,7 +164,7 @@ export const MyStakingsTable = () => {
     <Box style={{ width: '100%' }}>
       <Box marginBottom={22}>
         <TYPE.title5>
-          <Trans>My ongoing stakings</Trans>
+          <Trans>My stakes</Trans>
         </TYPE.title5>
       </Box>
       {false && (
@@ -174,7 +174,7 @@ export const MyStakingsTable = () => {
       )}
       {stakings.length === 0 ? (
         <NoData>
-          <Trans>You have no stakings yet</Trans>
+          <Trans>You have no ongoing stakings at the moment</Trans>
         </NoData>
       ) : (
         <Container>
