@@ -1,6 +1,6 @@
 import IXSStakingModal from 'components/earn/IXSStakingModal'
 import React, { useEffect } from 'react'
-import { useToggleModal } from 'state/application/hooks'
+import { useToggleModal, useCloseModals } from 'state/application/hooks'
 import { useStakingState, useIsVestingPaused } from 'state/stake/hooks'
 import { PromoTokenCard } from './PromoTokenCard'
 import { StakingPage } from './StakingPage'
@@ -15,6 +15,7 @@ export const Staking = () => {
   const { userHasIXS, hasStakedSuccessfully, metaMaskAccount } = useStakingState()
   const isVestingPaused = useIsVestingPaused()
   const toggleStakeModal = useToggleModal(ApplicationModal.STAKE_IXS)
+  const closeModals = useCloseModals()
   const { chainId, account } = useActiveWeb3React()
   const dispatch = useDispatch<AppDispatch>()
 
@@ -24,7 +25,7 @@ export const Staking = () => {
 
   useEffect(() => {
     if (hasStakedSuccessfully) {
-      toggleStakeModal()
+      closeModals()
     }
   }, [hasStakedSuccessfully])
 
