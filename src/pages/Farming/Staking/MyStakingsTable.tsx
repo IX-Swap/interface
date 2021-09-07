@@ -155,12 +155,30 @@ const Body = () => {
 
 export const MyStakingsTable = () => {
   const getStakings = useGetStakings()
-  const { stakings, hasStakedSuccessfully } = useStakingState()
+  const { stakings, stakingsLoading } = useStakingState()
 
   useEffect(() => {
     getStakings()
     console.log('stakings: ', stakings)
-  }, [getStakings, hasStakedSuccessfully])
+  }, [getStakings])
+
+  function showTableData() {
+    if (stakingsLoading) {
+      return <LoaderThin size={96} />
+    } else if (stakings.length === 0) {
+      return (
+        <NoData>
+          <Trans>You have no ongoing stakings at the moment</Trans>
+        </NoData>
+      )
+    } else {
+      return (
+        <Container>
+          <Table body={<Body />} header={<Header />} />
+        </Container>
+      )
+    }
+  }
 
   return (
     <Box style={{ width: '100%' }}>
@@ -169,36 +187,10 @@ export const MyStakingsTable = () => {
           <Trans>My stakes</Trans>
         </TYPE.title5>
       </Box>
-      {false && (
-        <Loader>
-          <LoaderThin size={96} />
-        </Loader>
-      )}
-      {stakings.length === 0 ? (
-        <NoData>
-          <Trans>You have no ongoing stakings at the moment</Trans>
-        </NoData>
-      ) : (
-        <Container>
-          <Table body={<Body />} header={<Header />} />
-        </Container>
-      )}
+      {showTableData()}
     </Box>
   )
 }
-
-const Loader = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000000;
-`
 
 const NoData = styled.div`
   margin-top: 39px
@@ -208,13 +200,6 @@ const NoData = styled.div`
   background-color: #2c254a80;
   border-radius: 30px;
   padding: 36px;
-`
-
-const Dash = styled.div`
-  background-color: ${({ theme: { bg7 } }) => bg7};
-  width: 21px;
-  height: 3px;
-  border-radius: 40px;
 `
 
 const Tier = styled.div`
