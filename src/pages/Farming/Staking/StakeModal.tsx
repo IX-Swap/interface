@@ -79,7 +79,14 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
       const value = amountOfIXStoStakeInput.current.value
       setTypedValue(value)
       if (maxAmountInput) {
-        setError(parseFloat(value) > parseFloat(maxAmountInput.toSignificant(10)) ? 'Not enough IXS' : '')
+        const IXSamount = parseFloat(value)
+        if (IXSamount > parseFloat(maxAmountInput.toSignificant(10))) {
+          setError('Not enough IXS')
+        } else if (IXSamount <= 0) {
+          setError('Wrong IXS amount')
+        } else {
+          setError('')
+        }
       }
     } else {
       setTypedValue('0')
