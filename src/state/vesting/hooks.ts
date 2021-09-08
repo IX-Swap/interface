@@ -176,7 +176,7 @@ export function useClaimAll(): () => Promise<any> {
 }
 
 export function useVestingStatus() {
-  const { vestingStatus } = useVestingState()
+  const { vestingStatus, customVestingAddress } = useVestingState()
   const { account } = useActiveWeb3React()
   const getIsVesting = useIsVestingCallback()
   const dispatch = useDispatch<AppDispatch>()
@@ -193,10 +193,10 @@ export function useVestingStatus() {
   }, [])
 
   useEffect(() => {
-    if (!account && vestingStatus !== VestingStatus.CONNECT_WALLET) {
+    if (!account && !customVestingAddress) {
       dispatch(saveVestingStatus(VestingStatus.CONNECT_WALLET))
     }
-  }, [account, vestingStatus])
+  }, [account, customVestingAddress])
 
   useEffect(() => {
     if (account) {
