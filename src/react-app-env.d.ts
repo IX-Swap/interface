@@ -14,9 +14,7 @@ interface Window {
     autoRefreshOnNetworkChange?: boolean
   }
   web3?: Record<string, unknown>
-  Ya: {
-    Metrika2: (id: number, action: string, goal: string) => void
-  }
+  ym: (id: number, action: string, goal: string) => void
 }
 
 declare module 'content-hash' {
