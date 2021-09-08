@@ -96,6 +96,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
         }
       }
     } else {
+      setError('Wrong IXS amount')
       setTypedValue('0')
     }
   }
