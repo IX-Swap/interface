@@ -7,6 +7,7 @@ import {
   getStakings,
   getIsStakingPaused,
   changeAccount,
+  checkAllowance,
 } from './actions'
 import { IStaking } from 'constants/stakingPeriods'
 
@@ -133,6 +134,7 @@ interface StakingState {
   isPaused: boolean
   userHasIXS: boolean
   metaMaskAccount: string | null
+  allowanceAmount: number
 }
 
 const initialState: StakingState = {
@@ -155,6 +157,7 @@ const initialState: StakingState = {
   isPaused: false,
   userHasIXS: Boolean(localStorage.getItem('hasIXS')),
   metaMaskAccount: localStorage.getItem('account'),
+  allowanceAmount: 0,
 }
 
 export default createReducer<StakingState>(initialState, (builder) =>
@@ -175,6 +178,9 @@ export default createReducer<StakingState>(initialState, (builder) =>
     })
     .addCase(selectTier, (state, { payload: { tier } }) => {
       state.selectedTier = tier
+    })
+    .addCase(checkAllowance, (state, { payload: { allowanceAmount } }) => {
+      state.allowanceAmount = allowanceAmount
     })
     .addCase(increaseAllowance.pending, (state) => {
       state.approvingIXS = true
@@ -200,7 +206,6 @@ export default createReducer<StakingState>(initialState, (builder) =>
       state.isStaking = false
       state.isStakingFailed = false
       state.hasStakedSuccessfully = true
-      console.log('IXS has been staked: ', data)
     })
     .addCase(stake.rejected, (state, { payload: { errorMessage } }) => {
       state.isStaking = false
@@ -209,13 +214,11 @@ export default createReducer<StakingState>(initialState, (builder) =>
       console.error('IXS staking error: ', errorMessage)
     })
     .addCase(getStakings.pending, (state) => {
-      console.log('Fetching staking transactions...')
       state.stakingsLoading = true
     })
     .addCase(getStakings.fulfilled, (state, { payload: { transactions } }) => {
       state.stakings = transactions
       state.stakingsLoading = false
-      console.log('staking transactions: ', transactions)
     })
     .addCase(getStakings.rejected, (state, { payload: { errorMessage } }) => {
       state.stakingsLoading = false
