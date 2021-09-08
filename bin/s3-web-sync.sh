@@ -30,6 +30,8 @@ _info "ENVIRONMENT and AWS_APP_NAME"
 if [ -z "${ENVIRONMENT}" ] | [ -z "${AWS_APP_NAME}" ]; then
   _fail ' ENVIRONMENT is null !!! '
 else
+  _info 'Terraform initiaizing'
+  cd ./terraform && terraform init  && cd ../
   _info 'Wait SYNC files with AWS S3 Bucket'
   bucket_name=$(cd terraform && terraform output s3_bucket_id) || _fail
   aws s3 sync build/ s3://${bucket_name}/ --acl public-read || _fail
