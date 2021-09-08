@@ -212,3 +212,7 @@ export const virtualAccountsAuditQueryKeys = {
   getMT942Files: 'get-mt942-files',
   getOutboundFiles: 'get-outbound-files'
 }
+
+export const virtualTransactionsQueryKeys = {
+  getTransactions: 'get-transactions'
+}

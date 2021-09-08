@@ -298,7 +298,7 @@ export const resources = {
 
 export const virtualAccountsAudit = {
   getMT940Files: 'https://hsbc.mozork.com/audit/virtual-account/mt940/files',
-  getMT942Files: 'https://hsbc.mozork.com/audit/virtual-account/mt940/files',
+  getMT942Files: 'https://hsbc.mozork.com/audit/virtual-account/mt942/files',
   getOutboundFiles:
     'https://hsbc.mozork.com/audit/virtual-account/outbound/files',
   getRawMT940File: (fileId: string) =>
@@ -309,4 +309,8 @@ export const virtualAccountsAudit = {
     `https://hsbc.mozork.com/audit/virtual-account/outbound/files/raw/${fileId}`,
   getRawOutboundVAFile: (fileId: string) =>
     `https://hsbc.mozork.com/audit/virtual-account/outbound/files/raw/va/${fileId}`
+}
+
+export const virtualTransactions = {
+  getTransactions: 'https://hsbc.mozork.com/payments/transactions'
 }
