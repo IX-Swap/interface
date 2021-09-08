@@ -159,7 +159,6 @@ export const MyStakingsTable = () => {
 
   useEffect(() => {
     getStakings()
-    console.log('stakings: ', stakings)
   }, [getStakings])
 
   function showTableData() {
