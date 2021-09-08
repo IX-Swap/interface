@@ -366,7 +366,6 @@ export function useFetchHistoricalPoolSize() {
         }
         const result = await staking?.oneWeekHistoricalPoolSize()
         const stakedIXS = parseInt(utils.formatUnits(result, 18))
-        console.log('oneWeekHistoricalPoolSize: ', stakedIXS)
       } catch (error) {
         console.error(`IxsReturningStakeBankPostIdoV1: `, error)
       }
@@ -517,7 +516,6 @@ export function useGetStakings() {
       }
       const getByPeriod = async (period: PeriodsEnum) => {
         const stakedTransactions = await staking?.stakedTransactionsForPeriod(account, periodsIndex[period])
-        console.log(`stakedTransactions for ${periodsIndex[period]}: ${stakedTransactions}`)
         if (stakedTransactions.length === 0) return []
         return stakedTransactions.map((data: Array<number>, index: number) => {
           const startDateUnix = BigNumber.from(data[0]).toNumber()
@@ -634,7 +632,6 @@ export function useGetVestings() {
     try {
       // returns dynamic number of arrays of size 7. Each array consists of [start, end, amount, claimed, cliff, segments, singlePayout]
       const vestedTransactions = await staking?.vestedTransactions(account)
-      console.log('avocado vestedTransactions', vestedTransactions)
     } catch (error) {
       console.error(`useGetStakings error `, error)
     }
@@ -648,7 +645,6 @@ export function useIsVestingPaused() {
     try {
       const isPaused = await staking?.paused()
       dispatch(getIsStakingPaused({ isPaused }))
-      console.log('isVestingPaused: ', isPaused)
     } catch (error) {
       console.error(`isVestingPaused error `, error)
     }

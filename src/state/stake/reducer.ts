@@ -200,7 +200,6 @@ export default createReducer<StakingState>(initialState, (builder) =>
       state.isStaking = false
       state.isStakingFailed = false
       state.hasStakedSuccessfully = true
-      console.log('IXS has been staked: ', data)
     })
     .addCase(stake.rejected, (state, { payload: { errorMessage } }) => {
       state.isStaking = false
@@ -209,13 +208,11 @@ export default createReducer<StakingState>(initialState, (builder) =>
       console.error('IXS staking error: ', errorMessage)
     })
     .addCase(getStakings.pending, (state) => {
-      console.log('Fetching staking transactions...')
       state.stakingsLoading = true
     })
     .addCase(getStakings.fulfilled, (state, { payload: { transactions } }) => {
       state.stakings = transactions
       state.stakingsLoading = false
-      console.log('staking transactions: ', transactions)
     })
     .addCase(getStakings.rejected, (state, { payload: { errorMessage } }) => {
       state.stakingsLoading = false
