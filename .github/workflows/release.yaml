@@ -85,11 +85,11 @@ jobs:
       - name: Sync AWS S3 Bucket
         #        run: ./bin/s3-web-sync.sh
         run: |
-          cd ./terraform && terraform init  && cd ../ && bucket_name=$(cd terraform && terraform output s3_bucket_id)
-          aws s3 sync build/ s3://$bucket_name/ --acl public-read --delete
-          aws s3api put-bucket-versioning --bucket $bucket_name --versioning-configuration Status=Enabled
-          aws s3 website s3://$bucket_name/ --index-document index.html
-          aws cloudfront create-invalidation --distribution-id $(cd terraform && terraform output cf_id) --paths "/*"
+          aws s3 sync build/ s3://${{ secrets.AWS_BUCKET_NAME }}/ --acl public-read
+          aws s3api put-bucket-versioning --bucket ${{ secrets.AWS_BUCKET_NAME }} --versioning-configuration Status=Enabled
+          aws s3 website s3://${{ secrets.AWS_BUCKET_NAME }}/ --index-document index.html
+          aws cloudfront create-invalidation --distribution-id E325RKPWP0VQSX --paths "/*"
+
 
 #      - name: Sync AWS S3 Bucket
 #        uses: shallwefootball/s3-upload-action@master
