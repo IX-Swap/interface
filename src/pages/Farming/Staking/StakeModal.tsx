@@ -216,9 +216,9 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                 textRight={estimateLockPeriod()}
                 tooltipText={t`Your staked IXS will be locked for ${
                   selectedTier?.lockupPeriod
-                } till Jun 05, 2021 12:40:33. Until that time you won’t be able to unstake your IXS fully or partially. Please carefully consider the risks involved.
+                } till ${estimateLockPeriod()}. Until that time you won’t be able to unstake your IXS fully or partially. Please carefully consider the risks involved.
                               ${'' ?? ''}
-                              You will be able to redeem your staked IXS fully or partially after Jun 05, 2021 12:40:33.`}
+                              You will be able to redeem your staked IXS fully or partially after ${estimateLockPeriod()}.`}
               />
               <TextRow
                 textLeft={t`Estimated rewards`}
