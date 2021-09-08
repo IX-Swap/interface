@@ -2,16 +2,16 @@ name: Integration Tests
 
 on:
   [push]
-  # push:
-  #   branches:
-  #     - run-tests
-  #     - main
-  #     - development
-  #     - ci-update
-  # pull_request:
-  #   branches:
-  #     - main
-  #     - development
+   push:
+     branches:
+       - run-tests
+       - main
+       - development
+       - ci-fix-lint
+   pull_request:
+     branches:
+       - main
+       - development
 
 jobs:
   integration-tests:
@@ -20,13 +20,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Npm login
-        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
       - name: Set up node
         uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 14.17
           registry-url: https://registry.npmjs.org
+      - name: create .npmrc file
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
       - run: npx playwright install-deps
       - run: npx playwright install
       - run: yarn
