@@ -7,6 +7,7 @@ import {
   getStakings,
   getIsStakingPaused,
   changeAccount,
+  checkAllowance,
 } from './actions'
 import { IStaking } from 'constants/stakingPeriods'
 
@@ -133,6 +134,7 @@ interface StakingState {
   isPaused: boolean
   userHasIXS: boolean
   metaMaskAccount: string | null
+  allowanceAmount: number
 }
 
 const initialState: StakingState = {
@@ -155,6 +157,7 @@ const initialState: StakingState = {
   isPaused: false,
   userHasIXS: Boolean(localStorage.getItem('hasIXS')),
   metaMaskAccount: localStorage.getItem('account'),
+  allowanceAmount: 0,
 }
 
 export default createReducer<StakingState>(initialState, (builder) =>
@@ -175,6 +178,9 @@ export default createReducer<StakingState>(initialState, (builder) =>
     })
     .addCase(selectTier, (state, { payload: { tier } }) => {
       state.selectedTier = tier
+    })
+    .addCase(checkAllowance, (state, { payload: { allowanceAmount } }) => {
+      state.allowanceAmount = allowanceAmount
     })
     .addCase(increaseAllowance.pending, (state) => {
       state.approvingIXS = true

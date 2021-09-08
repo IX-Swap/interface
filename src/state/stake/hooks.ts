@@ -31,6 +31,7 @@ import {
   increaseAllowance,
   saveStakingStatus,
   stake,
+  checkAllowance,
 } from './actions'
 import { stakingsAdapter } from './utils'
 
@@ -395,6 +396,25 @@ export function useIncreaseAllowance() {
     },
     [tokenContract, dispatch, chainId]
   )
+}
+
+export function useCheckAllowance() {
+  const dispatch = useDispatch<AppDispatch>()
+  const IXSContract = useIXSTokenContract()
+  const { account, chainId } = useActiveWeb3React()
+  return useCallback(async () => {
+    if (!account || !chainId) {
+      return
+    }
+    try {
+      const stakingAddress = IXS_STAKING_V1_ADDRESS[chainId]
+      const allowance = await IXSContract?.allowance(account, stakingAddress)
+      const allowanceAmount = parseFloat(utils.formatUnits(allowance))
+      dispatch(checkAllowance({ allowanceAmount }))
+    } catch (error) {
+      console.error('check allowance error: ', error)
+    }
+  }, [IXSContract, account, chainId, dispatch])
 }
 
 export function useStakeFor(period?: PERIOD) {
