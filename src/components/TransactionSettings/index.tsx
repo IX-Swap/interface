@@ -97,11 +97,11 @@ export default function TransactionSettings({ placeholderSlippage }: Transaction
                   onBlur={() => resetSlippage()}
                   color={slippageError ? 'red' : ''}
                 />
+                <Text color={theme.text8} fontWeight={500} fontSize={22} lineHeight={'33px'}>
+                  %
+                </Text>
               </RowBetween>
             </OptionCustom>
-            <Text color={theme.text8} fontWeight={500} fontSize={22} lineHeight={'33px'}>
-              %
-            </Text>
           </OptionRow>
           {slippageError || tooLow || tooHigh ? (
             <RowStart

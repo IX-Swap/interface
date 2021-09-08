@@ -24,7 +24,13 @@ export const StakingTiers = () => {
             <InfoIcon />
           </IconWrapper>
           <TYPE.title5 color={'text2'}>
-            <Trans>Staking will start 09.09.2021</Trans>
+            <Trans>
+              Staking will be opened soon. Wait for the official announcement on{' '}
+              <a style={{ color: '#EDCEFF' }} href="https://ixswap.io/community/" target="blank">
+                our channels
+              </a>
+              .
+            </Trans>
           </TYPE.title5>
         </RowStart>
       )}

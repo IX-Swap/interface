@@ -9,10 +9,8 @@ export const ConnectWalletButton = () => {
   const { account } = useActiveWeb3React()
 
   const connectWallet = () => {
-    const {
-      Ya: { Metrika2 },
-    } = window
-    Metrika2(84960586, 'reachGoal', 'stakingConnectWalletClicked')
+    const { ym } = window
+    ym(84960586, 'reachGoal', 'stakingConnectWalletClicked')
     toggleWalletModal()
   }
 
