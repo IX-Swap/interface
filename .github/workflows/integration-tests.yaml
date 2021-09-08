@@ -1,17 +1,18 @@
 name: Integration Tests
 
 on:
-  [push]
-   push:
-     branches:
-       - run-tests
-       - main
-       - development
-       - ci-fix-lint
-   pull_request:
-     branches:
-       - main
-       - development
+  push:
+    branches:
+      - main
+      - development
+      - staging
+      - ci-fix-lint
+  pull_request:
+    branches:
+      - main
+      - development
+      - staging
+      - ci-update
 
 jobs:
   integration-tests:
