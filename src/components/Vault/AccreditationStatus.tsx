@@ -30,7 +30,7 @@ export const AccreditationStatus = ({ status }: Props) => {
           icon: () => null,
         }
   return (
-    <RowCenter flexWrap="wrap">
+    <RowCenter flexWrap="wrap" style={{ marginTop: '10px' }}>
       <StatusTitle>
         <Trans>Status:</Trans>
       </StatusTitle>

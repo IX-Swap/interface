@@ -41,13 +41,22 @@ export const NoVault = ({ currency, status }: Props) => {
       )}
       <RowCenter>
         {!account && (
-          <ButtonIXSGradient onClick={toggleWalletModal} disabled={!!account} data-testid="connect-wallet-in-vault">
+          <ButtonIXSGradient
+            style={{ marginTop: '25px' }}
+            onClick={toggleWalletModal}
+            disabled={!!account}
+            data-testid="connect-wallet-in-vault"
+          >
             <Trans>Connect Wallet</Trans>
           </ButtonIXSGradient>
         )}
 
         {Boolean(account && status !== AccreditationStatusEnum.PENDING) && (
-          <ButtonIXSGradient data-testid="pass-kyc-and-accreditation" onClick={toggleChooseBrokerDealerModal}>
+          <ButtonIXSGradient
+            style={{ marginTop: '25px' }}
+            data-testid="pass-kyc-and-accreditation"
+            onClick={toggleChooseBrokerDealerModal}
+          >
             {status === undefined && <Trans>Pass KYC and Accreditation</Trans>}
             {status === AccreditationStatusEnum.REJECTED && <Trans>Retry pass accreditation</Trans>}
           </ButtonIXSGradient>
