@@ -84,7 +84,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
   const onUserInput = () => {
     if (amountOfIXStoStakeInput?.current?.value) {
       const value = amountOfIXStoStakeInput.current.value
-      setTypedValue(value)
+      setTypedValue(value.match(/\d{0,}\.{0,}\d{0,4}/)?.[0] || '')
       if (maxAmountInput) {
         const IXSamount = parseFloat(value)
         if (IXSamount > parseFloat(maxAmountInput.toSignificant(10))) {
@@ -216,6 +216,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                   color={error ? 'red' : 'text1'}
                   ref={amountOfIXStoStakeInput}
                   onInput={onUserInput}
+                  value={typedValue}
                   disabled={approvingIXS || isIXSApproved || isStaking}
                 />
                 <InputHintRight>
@@ -266,7 +267,11 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
               <TextRow textLeft={t`Period of staking`} textRight={selectedTier?.period} />
               <TextRow
                 textLeft={t`Distribute`}
-                textRight={`${typedValue} IXSgov`}
+                textRight={
+                  <EllipsedText>
+                    <div>{typedValue}</div>&nbsp;IXSgov
+                  </EllipsedText>
+                }
                 tooltipText={t`IXSgov is a tokenized asset representing your staked IXS on a 1:1 basis. IXSwap distributes the IXSgov to your wallet.
                               ${'' ?? ''}
                               You should swap your IXSgov back to IXS during the unstaking process. 
@@ -274,7 +279,14 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                               *Do note that IXS received will be equal to your IXSgov holdings at the time of swap.`}
               />
               <TextRow textLeft={t`APY`} textRight={`${selectedTier?.APY}%`} />
-              <TextRow textLeft={t`Staking amount`} textRight={`${typedValue} IXS`} />
+              <TextRow
+                textLeft={t`Staking amount`}
+                textRight={
+                  <EllipsedText>
+                    <div>{typedValue}</div>&nbsp;IXS
+                  </EllipsedText>
+                }
+              />
               <TextRow
                 textLeft={t`Estimated maturity time`}
                 textRight={estimateMaturityTime()}
@@ -291,7 +303,11 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
               />
               <TextRow
                 textLeft={t`Estimated rewards`}
-                textRight={`${estimateRewards()} IXS`}
+                textRight={
+                  <EllipsedText>
+                    <div>{estimateRewards()}</div>&nbsp;IXS
+                  </EllipsedText>
+                }
                 tooltipText={t`This amount of rewards is based on assumption that your staked amount will be kept for the whole period of ${
                   selectedTier?.period
                 }. In this case your APY will be ${
@@ -326,6 +342,18 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
     </RedesignedWideModal>
   )
 }
+
+const EllipsedText = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  > div {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 100%;
+  }
+`
 
 const ModalTop = styled(StakeModalTop)`
   @media (max-width: 768px) {
@@ -439,10 +467,15 @@ const StakeInfoContainer = styled(Column)`
       height: auto;
       font-size: 13px;
       > :first-child {
-        /* align-items: flex-start; */
+        min-width: fit-content;
       }
       > :last-child {
-        text-align: right;
+        /* width: 100%; */
+        > div {
+          width: 100%;
+          text-align: right;
+          margin-left: 10px;
+        }
       }
     }
   }

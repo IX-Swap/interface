@@ -120,7 +120,7 @@ export const VestingInfoWrapper = styled(VestingBackground)`
   ${({ theme }) => theme.mediaWidth.upToSmall`
      width:100%;
      min-width: 100%;
-     height: 400px;
+     height: auto;
   `};
 `
 
