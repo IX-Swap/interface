@@ -30,6 +30,14 @@ export const VestingValid = () => {
 
   const isDifferentAddress = customVestingAddress && customVestingAddress !== account
 
+  const onClickClaim = () => {
+    claim()
+    const {
+      Ya: { Metrika2 },
+    } = window
+    Metrika2(84960586, 'reachGoal', 'bigVestingClaim')
+  }
+
   return (
     <>
       <VestingContractDetails>
@@ -79,9 +87,9 @@ export const VestingValid = () => {
           <Column style={{ gap: '19px' }}>
             {vestingDetails?.amount && currency && (
               <TextRow
-                textLeft={<Trans>Total Vesting</Trans>}
+                textLeft={<Trans>Total Vested</Trans>}
                 textRight={
-                  <TYPE.titleSmall fontWeight={400}>
+                  <TYPE.titleSmall fontWeight={400} style={{ whiteSpace: 'nowrap' }}>
                     {formatCurrencyAmount(CurrencyAmount.fromRawAmount(currency, vestingDetails?.amount), 10)}{' '}
                     {currency?.symbol}
                   </TYPE.titleSmall>
@@ -90,9 +98,9 @@ export const VestingValid = () => {
             )}
             {alreadyVested && currency && (
               <TextRow
-                textLeft={<Trans>Already Vested</Trans>}
+                textLeft={<Trans>Vesting Amount</Trans>}
                 textRight={
-                  <TYPE.titleSmall fontWeight={400}>
+                  <TYPE.titleSmall fontWeight={400} style={{ whiteSpace: 'nowrap' }}>
                     {' '}
                     {formatCurrencyAmount(CurrencyAmount.fromRawAmount(currency, alreadyVested[1]), 10)}{' '}
                     {currency?.symbol}
@@ -102,9 +110,9 @@ export const VestingValid = () => {
             )}
             {vestingDetails?.claimed && currency && (
               <TextRow
-                textLeft={<Trans>Already Released</Trans>}
+                textLeft={<Trans>Claimed</Trans>}
                 textRight={
-                  <TYPE.titleSmall fontWeight={400}>
+                  <TYPE.titleSmall fontWeight={400} style={{ whiteSpace: 'nowrap' }}>
                     {formatCurrencyAmount(CurrencyAmount.fromRawAmount(currency, vestingDetails?.claimed), 10)}{' '}
                     {currency?.symbol}
                   </TYPE.titleSmall>
@@ -113,9 +121,9 @@ export const VestingValid = () => {
             )}
             {availableClaim && currency && (
               <TextRow
-                textLeft={<Trans>Releasable</Trans>}
+                textLeft={<Trans>Claimable</Trans>}
                 textRight={
-                  <TYPE.titleSmall fontWeight={400}>
+                  <TYPE.titleSmall fontWeight={400} style={{ whiteSpace: 'nowrap' }}>
                     {' '}
                     {formatCurrencyAmount(CurrencyAmount.fromRawAmount(currency, availableClaim), 10)}{' '}
                     {currency?.symbol}
@@ -130,10 +138,10 @@ export const VestingValid = () => {
         <ButtonIXSWide
           data-testid="release-vesting"
           style={{ width: '100%', maxWidth: 308 }}
-          onClick={() => claim()}
+          onClick={onClickClaim}
           disabled={!availableClaim || availableClaim === '0'}
         >
-          <Trans>Release</Trans>
+          <Trans>Claim</Trans>
         </ButtonIXSWide>
       )}
     </>

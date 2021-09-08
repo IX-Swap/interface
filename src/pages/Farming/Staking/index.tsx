@@ -30,12 +30,10 @@ export const Staking = () => {
   }, [hasStakedSuccessfully])
 
   useEffect(() => {
-    console.log('chainId: ', chainId)
-    console.log('account: ', account)
-    if (account && account !== metaMaskAccount) {
-      dispatch(changeAccount({ newAccount: account }))
-    } else {
+    if (!account) {
       dispatch(changeAccount({ newAccount: 'null' }))
+    } else if (account !== metaMaskAccount) {
+      dispatch(changeAccount({ newAccount: account }))
     }
   }, [chainId, account])
 

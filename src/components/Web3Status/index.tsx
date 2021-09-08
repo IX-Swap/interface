@@ -90,7 +90,6 @@ const Web3StatusConnected = styled(Web3StatusGeneric)<{ pending?: boolean }>`
   padding-right: 10px;
   color: ${({ pending, theme }) => (pending ? theme.white : theme.text1)};
   font-weight: 500;
-  }
 `
 
 const Text = styled.p`
@@ -178,7 +177,7 @@ function Web3StatusInner() {
   const connectWallet = () => {
     const {
       Ya: { Metrika2 },
-    } = window as any
+    } = window
     Metrika2(84960586, 'reachGoal', 'headerConnectWalletClicked')
     toggleWalletModal()
   }
