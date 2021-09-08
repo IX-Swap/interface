@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      - ci-update
+      - ci-fix-lint
   pull_request_target:
     branches:
       - main
@@ -36,8 +36,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-yarn-
 
-      - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: |
+          export CI=false
+          yarn install --frozen-lockfile
 
       - name: Run linters
         uses: wearerequired/lint-action@b98b0918aa71490373d2eca9e8e39a9bc1cc2517

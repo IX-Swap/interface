@@ -1,17 +1,17 @@
 name: Integration Tests
 
-on:
-  [push]
-  # push:
-  #   branches:
-  #     - run-tests
-  #     - main
-  #     - development
-  #     - ci-update
-  # pull_request:
-  #   branches:
-  #     - main
-  #     - development
+#on:
+#  [push]
+#  # push:
+#  #   branches:
+#  #     - run-tests
+#  #     - main
+#  #     - development
+#  #     - ci-update
+#  # pull_request:
+#  #   branches:
+#  #     - main
+#  #     - development
 
 jobs:
   integration-tests:

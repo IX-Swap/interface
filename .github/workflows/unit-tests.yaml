@@ -1,17 +1,17 @@
 name: Unit Tests
-on:
-  push:
-    branches:
-      - main
-      - development
-      - staging
-      - ci-update
-  pull_request:
-    branches:
-      - main
-      - development
-      - staging
-      - ci-update
+#on:
+#  push:
+#    branches:
+#      - main
+#      - development
+#      - staging
+#      - ci-update
+#  pull_request:
+#    branches:
+#      - main
+#      - development
+#      - staging
+#      - ci-update
 
 jobs:
   unit-tests:
