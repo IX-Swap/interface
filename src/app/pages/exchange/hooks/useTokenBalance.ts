@@ -6,6 +6,15 @@ import { exchange } from 'config/apiURL'
 import { useAuth } from 'hooks/auth/useAuth'
 import { getIdFromObj } from 'helpers/strings'
 
+export interface BalanceSocketResponse {
+  valid: boolean
+  error?: string
+  data?: {
+    amount: number
+    ticker: string
+  }
+}
+
 export const useTokenBalance = (pairId: string) => {
   const { socketService } = useServices()
   const socket = useMemo(() => socketService.socket, [socketService.socket])
@@ -14,11 +23,13 @@ export const useTokenBalance = (pairId: string) => {
   const { user } = useAuth()
   const userId = getIdFromObj(user)
 
-  const onDataReceived = (receivedData: any) => {
-    queryCache.setQueryData(
-      [exchangeQueryKeys.tokenBalance, pairId],
-      () => receivedData ?? { bids: [], asks: [] }
-    )
+  const onDataReceived = (receivedData: BalanceSocketResponse | undefined) => {
+    if (receivedData?.valid ?? false) {
+      queryCache.setQueryData(
+        [exchangeQueryKeys.tokenBalance, pairId],
+        () => receivedData
+      )
+    }
   }
 
   useEffect(() => {

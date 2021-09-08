@@ -86,7 +86,9 @@ export const accountsURL = {
     getAll: (userId: string) => `/accounts/balance/${userId}`,
     getByUserId: (userId: string) => `/accounts/balance/${userId}`,
     getByAssetId: (userId: string, assetId: string) =>
-      `/accounts/balance/${userId}/${assetId}`
+      `/accounts/balance/${userId}/${assetId}`,
+    getCurrencyBalanceByAssetId: (userId: string, assetId: string) =>
+      `/accounts/currency-balance/${userId}/${assetId}`
   },
   virtualAccounts: {
     withdraw: (userId: string, virtualAccountId: string) =>
@@ -297,8 +299,14 @@ export const resources = {
 export const virtualAccountsAudit = {
   getMT940Files: 'https://hsbc.mozork.com/audit/virtual-account/mt940/files',
   getMT942Files: 'https://hsbc.mozork.com/audit/virtual-account/mt940/files',
+  getOutboundFiles:
+    'https://hsbc.mozork.com/audit/virtual-account/outbound/files',
   getRawMT940File: (fileId: string) =>
     `https://hsbc.mozork.com/audit/virtual-account/mt940/files/raw/${fileId}`,
   getRawMT942File: (fileId: string) =>
-    `https://hsbc.mozork.com/audit/virtual-account/mt940/files/raw/${fileId}`
+    `https://hsbc.mozork.com/audit/virtual-account/mt942/files/raw/${fileId}`,
+  getRawOutboundACKFile: (fileId: string) =>
+    `https://hsbc.mozork.com/audit/virtual-account/outbound/files/raw/${fileId}`,
+  getRawOutboundVAFile: (fileId: string) =>
+    `https://hsbc.mozork.com/audit/virtual-account/outbound/files/raw/va/${fileId}`
 }

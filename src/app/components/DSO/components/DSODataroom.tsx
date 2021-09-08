@@ -10,14 +10,11 @@ import { SelectionHelper } from 'components/SelectionHelper'
 import { SelectableDataroomUploader } from 'components/dataroom/SelectableDataroomUploader'
 import { SelectableDataroomHeader } from 'components/dataroom/SelectableDataroomHeader'
 import { DataroomDeleteSelected } from 'components/dataroom/DataroomDeleteSelected'
-import {
-  itemComparator,
-  SelectedDocument
-} from 'app/pages/accounts/pages/banks/components/BankDocuments'
 import { FormError } from 'components/form/FormError'
 import { TextError } from 'components/TextError'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
 import { DSOSubscriptionDocument } from 'app/components/DSO/components/DSOSubscriptionDocument'
+import { itemComparator, SelectedDocument } from 'helpers/dataroom'
 
 export const DSODataroom = () => {
   const { control } = useFormContext<DSOFormValues>()

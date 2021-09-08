@@ -52,6 +52,7 @@
     "react-router-dom": "^5.0.1",
     "react-scripts": "^3.4.3",
     "react-scroll": "^1.8.1",
+    "react-player": "^2.9.0",
     "react-toast-notifications": "^2.4.0",
     "react-waypoint": "^10.1.0",
     "react-window": "^1.8.5",

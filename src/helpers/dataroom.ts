@@ -25,3 +25,12 @@ export const isDocument = (
 ): value is DataroomFile => {
   return value !== null && value !== undefined && value?._id?.length > 0
 }
+
+export interface SelectedDocument {
+  id: string
+  index: number
+}
+
+export const itemComparator = (a: SelectedDocument, b: SelectedDocument) => {
+  return a.id === b.id
+}

@@ -35,7 +35,7 @@ export const VAAuditFilters = () => {
         wrap={'wrap'}
       >
         <Grid item xs={12} sm={'auto'}>
-          <Typography>Date:</Typography>
+          <Typography style={{ fontWeight: 600 }}>Date:</Typography>
           {isMobile && <VSpacer size={'small'} />}
         </Grid>
         <Box pr={1} />

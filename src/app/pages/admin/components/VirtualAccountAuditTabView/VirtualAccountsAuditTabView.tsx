@@ -4,6 +4,7 @@ import { TabPanel } from 'components/TabPanel'
 import useStyles from './VirtualAccountsAuditTabView.styles'
 import { EODMT940Table } from 'app/pages/admin/components/EODMT940Table/EODMT940Table'
 import { InterimMT942Table } from 'app/pages/admin/components/InterimMT942Table/InterimMT942Table'
+import { OutboundTable } from 'app/pages/admin/components/OutboundTable/OutboundTable'
 
 export const VirtualAccountsAuditTabView = () => {
   const [activeTab, setActiveTab] = useState(0)
@@ -43,7 +44,7 @@ export const VirtualAccountsAuditTabView = () => {
         </TabPanel>
 
         <TabPanel index={2} value={activeTab}>
-          Outbound table
+          <OutboundTable />
         </TabPanel>
       </Box>
     </Fragment>

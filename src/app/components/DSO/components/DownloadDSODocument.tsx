@@ -7,11 +7,15 @@ import { Launch } from '@material-ui/icons'
 export interface DownloadDSODocumentProps {
   dsoId: string
   documentId: string
+  type?: 'document' | 'subscriptionDocument'
 }
 
 export const DownloadDSODocument = (props: DownloadDSODocumentProps) => {
-  const { dsoId, documentId } = props
-  const uri = `/issuance/dso/dataroom/documents/raw/${dsoId}/${documentId}`
+  const { dsoId, documentId, type = 'document' } = props
+  const uri =
+    type === 'document'
+      ? `/issuance/dso/dataroom/documents/raw/${dsoId}/${documentId}`
+      : `/issuance/dso/dataroom/subscription/raw/${dsoId}`
   const [download, { isLoading }] = useDownloadRawFile(uri, {
     onSuccess: ({ data }) => {
       const file = convertBlobToFile(data, '')

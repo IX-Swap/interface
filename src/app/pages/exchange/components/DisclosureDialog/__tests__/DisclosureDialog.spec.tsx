@@ -12,12 +12,14 @@ describe('DisclosureDialog', () => {
   })
 
   it('renders without error', () => {
-    render(<DisclosureDialog isOpen={true} onClose={handleClose} />)
+    render(
+      <DisclosureDialog isOpen={true} onClose={handleClose} content={<></>} />
+    )
   })
 
   it('invokes handleClose function on Ok button click', async () => {
     const { getByText } = render(
-      <DisclosureDialog isOpen={true} onClose={handleClose} />
+      <DisclosureDialog isOpen={true} onClose={handleClose} content={<></>} />
     )
 
     const close = getByText('Ok')

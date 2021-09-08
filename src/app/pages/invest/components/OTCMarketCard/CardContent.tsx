@@ -69,7 +69,7 @@ export const CardContent = (props: CardContentProps) => {
                       ? data.interestRate
                       : data.grossIRR
                   )
-                    ?.toString()
+                    ?.toFixed(2)
                     .concat('%')
             }
           />

@@ -4,11 +4,6 @@ import { virtualAccountsAudit } from 'config/apiURL'
 import { QueryOrMutationCallbacks } from 'hooks/types'
 import { DownloadDocument } from 'hooks/useDownloadRawDocument'
 
-export interface DownloadBanner {
-  fileId: string
-  uri?: string
-}
-
 export const useDownloadRawMT940File = (
   document: DownloadDocument,
   callbacks?: QueryOrMutationCallbacks<Blob>
@@ -17,7 +12,9 @@ export const useDownloadRawMT940File = (
   const { documentId, uri } = document
   const url = virtualAccountsAudit.getRawMT940File(documentId)
   const downloadFile = async () => {
-    return await apiService.get<Blob>(uri ?? url, { responseType: 'blob' })
+    return await apiService.get<Blob>(uri ?? url, {
+      responseType: 'blob'
+    })
   }
 
   return useMutation(downloadFile, {
