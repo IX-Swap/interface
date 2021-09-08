@@ -37,7 +37,7 @@ export enum AppFeature {
   Users = 'users',
   VirtualAccounts = 'virtual-accounts',
   CapTable = 'captable',
-  DealClosure = 'deal-closure'
+  DealClosure = 'closure'
 }
 
 export enum NotificationFilter {
@@ -66,5 +66,5 @@ export enum AuthorizerCategory {
   WithdrawalAddresses = 'withdrawal-addresses',
   Listings = 'listings',
   VirtualAccounts = 'virtual-accounts',
-  DealClosure = 'deal-closure'
+  DealClosure = 'closure'
 }

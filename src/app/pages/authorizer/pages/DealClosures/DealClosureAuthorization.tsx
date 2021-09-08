@@ -1,13 +1,16 @@
 import React from 'react'
-import { AuthorizerView } from 'app/pages/authorizer/components/AuthorizerView'
 import { AppFeature } from 'types/app'
-import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
 import { useParams } from 'react-router'
-import { DSOView } from 'app/components/DSO/DSOView'
+import { useClosure } from 'app/pages/authorizer/hooks/useClosure'
+import { DealClosureView } from 'app/pages/authorizer/components/DealClosureView'
+import { AuthorizerView } from 'app/pages/authorizer/components/AuthorizerView'
 
 export const DealClosureAuthorization = () => {
-  const { userId, dsoId } = useParams<{ userId: string; dsoId: string }>()
-  const { data, isLoading } = useDSOById(dsoId, userId)
+  const { userId, closureId } = useParams<{
+    userId: string
+    closureId: string
+  }>()
+  const { data, isLoading } = useClosure(closureId, userId)
 
   if (isLoading || data === undefined) {
     return null
@@ -15,11 +18,11 @@ export const DealClosureAuthorization = () => {
 
   return (
     <AuthorizerView
-      title={data.tokenName}
+      title={data.dso.tokenName}
       data={data}
-      feature={AppFeature.Offerings}
+      feature={AppFeature.DealClosure}
     >
-      <DSOView data={data} />
+      <DealClosureView data={data} />
     </AuthorizerView>
   )
 }

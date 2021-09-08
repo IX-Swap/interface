@@ -142,7 +142,9 @@ export const issuanceURL = {
     capitalCall: (userId: string, dsoId: string) =>
       `/issuance/dso/${userId}/${dsoId}/capitalCall`,
     closeDeal: (userId: string, dsoId: string) =>
-      `/issuance/dso/${userId}/${dsoId}/closeDeal`
+      `/issuance/dso/${userId}/${dsoId}/closeDeal`,
+    closure: (closureId: string, issuerId: string) =>
+      `/issuance/closure/${closureId}/${issuerId}`
   }
 }
 

@@ -11,7 +11,7 @@ export const AuthorizerDealClosureRouter = () => {
       <AppRoute
         exact
         breadcrumb='Deal Closure Details'
-        path='/app/authorizer/deal-closure/:userId/:dsoId/view'
+        path='/app/authorizer/closure/:userId/:closureId/view'
       >
         <DealClosureAuthorization />
       </AppRoute>

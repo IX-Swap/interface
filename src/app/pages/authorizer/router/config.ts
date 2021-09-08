@@ -28,7 +28,7 @@ export const AuthorizerRoute = {
   issuanceDetails: makeURL(['app', 'authorizer', 'issuanceDetails']),
   listings: '/app/authorizer/listings',
   virtualAccounts: '/app/authorizer/virtual-accounts',
-  dealClosure: '/app/authorizer/deal-closure'
+  dealClosure: '/app/authorizer/closure'
 }
 
 export const authorizerLandingLinks: InternalRouteProps[] = [

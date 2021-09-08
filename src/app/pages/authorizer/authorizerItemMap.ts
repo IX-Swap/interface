@@ -20,7 +20,7 @@ export const authorizerItemMap: Record<
     listRoute: AuthorizerRoute.offerings
   },
   [AppFeature.DealClosure]: {
-    uri: '/issuance/deal-closure/list',
+    uri: '/issuance/closure/list',
     listRoute: AuthorizerRoute.dealClosure
   },
   [AppFeature.DigitalSecurityWithdrawals]: {
