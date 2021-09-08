@@ -175,10 +175,8 @@ function Web3StatusInner() {
   const toggleWalletModal = useWalletModalToggle()
 
   const connectWallet = () => {
-    const {
-      Ya: { Metrika2 },
-    } = window
-    Metrika2(84960586, 'reachGoal', 'headerConnectWalletClicked')
+    const { ym } = window
+    ym(84960586, 'reachGoal', 'headerConnectWalletClicked')
     toggleWalletModal()
   }
 

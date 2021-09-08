@@ -103,10 +103,8 @@ export default function WalletModal({
     })
     // log selected wallet
 
-    const {
-      Ya: { Metrika2 },
-    } = window
-    Metrika2(84960586, 'reachGoal', 'commonMetamaskChosenAsWallet')
+    const { ym } = window
+    ym(84960586, 'reachGoal', 'commonMetamaskChosenAsWallet')
 
     ReactGA.event({
       category: 'Wallet',
