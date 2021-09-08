@@ -9,7 +9,7 @@ export const StakingTab = () => {
   return (
     <>
       <LightBackground />
-      <Container width={['100%']} maxWidth={'1269px'}>
+      <Container width={['100%']} maxWidth={'1300px'}>
         <FarmingTabs {...{ tab: FARMING_TABS.STAKING }} />
         <Staking />
       </Container>

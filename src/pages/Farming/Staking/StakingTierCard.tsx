@@ -58,6 +58,27 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
     setLeftToFill(DEFAULT_POOL_SIZE_LIMIT - filled)
   }, [poolSizeState, tierPeriodKey, tier.period])
 
+  const selectPeriod = () => {
+    const periodLegend = {
+      [PERIOD.ONE_WEEK]: '1w',
+      [PERIOD.ONE_MONTH]: '1m',
+      [PERIOD.TWO_MONTHS]: '2m',
+      [PERIOD.THREE_MONTHS]: '3m',
+    }
+
+    const metrikaTier = periodLegend[tier.period] || '1w'
+
+    dispatch(selectTier({ tier }))
+    const {
+      Ya: { Metrika2 },
+    } = window
+    Metrika2(84960586, 'reachGoal', `staking${metrikaTier}StakeButtonClicked`)
+
+    toggleStake()
+
+    Metrika2(84960586, 'reachGoal', 'stakingStakeModalFormOpened')
+  }
+
   return (
     <StakingTierCardWrapper>
       <RowCenter style={{ marginTop: '8px' }}>
@@ -118,13 +139,7 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
           </IconWrapper>
         </MouseoverTooltip>
       </RowCenter>
-      <ButtonIXSWide
-        onClick={() => {
-          dispatch(selectTier({ tier }))
-          toggleStake()
-        }}
-        disabled={isPaused}
-      >
+      <ButtonIXSWide onClick={selectPeriod} disabled={isPaused}>
         <Trans>{isPaused ? 'Paused' : 'Stake'}</Trans>
       </ButtonIXSWide>
       {/*{!isTierUnlimited && (

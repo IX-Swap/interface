@@ -57,10 +57,20 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
 
   async function onStake() {
     stake(typedValue)
+
+    const {
+      Ya: { Metrika2 },
+    } = window
+    Metrika2(84960586, 'reachGoal', 'stakingSubmitStakeButtonClicked')
   }
 
   async function onApprove() {
     increaseAllowance(typedValue)
+
+    const {
+      Ya: { Metrika2 },
+    } = window
+    Metrika2(84960586, 'reachGoal', 'stakingApproveIXSButtonClicked')
   }
 
   // wrapped onUserInput to clear signatures
@@ -106,6 +116,13 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
       return floorTo4Decimals(rewards)
     }
     return 0
+  }
+
+  const onClickStakingContitions = () => {
+    const {
+      Ya: { Metrika2 },
+    } = window
+    Metrika2(84960586, 'reachGoal', 'stakingConditionsTermsClicked')
   }
 
   return (
@@ -239,7 +256,12 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
               <TYPE.body1>
                 <Trans>
                   I have read{' '}
-                  <a style={{ color: '#EDCEFF' }} href="https://ixswap.io/ixs-staking-vaults/" target="blank">
+                  <a
+                    onClick={onClickStakingContitions}
+                    style={{ color: '#EDCEFF' }}
+                    href="https://ixswap.io/ixs-staking-vaults/"
+                    target="blank"
+                  >
                     Staking Conditions
                   </a>
                 </Trans>

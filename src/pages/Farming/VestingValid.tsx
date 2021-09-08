@@ -30,6 +30,14 @@ export const VestingValid = () => {
 
   const isDifferentAddress = customVestingAddress && customVestingAddress !== account
 
+  const onClickClaim = () => {
+    claim()
+    const {
+      Ya: { Metrika2 },
+    } = window
+    Metrika2(84960586, 'reachGoal', 'bigVestingClaim')
+  }
+
   return (
     <>
       <VestingContractDetails>
@@ -130,7 +138,7 @@ export const VestingValid = () => {
         <ButtonIXSWide
           data-testid="release-vesting"
           style={{ width: '100%', maxWidth: 308 }}
-          onClick={() => claim()}
+          onClick={onClickClaim}
           disabled={!availableClaim || availableClaim === '0'}
         >
           <Trans>Release</Trans>
