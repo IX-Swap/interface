@@ -32,10 +32,8 @@ export const VestingValid = () => {
 
   const onClickClaim = () => {
     claim()
-    const {
-      Ya: { Metrika2 },
-    } = window
-    Metrika2(84960586, 'reachGoal', 'bigVestingClaim')
+    const { ym } = window
+    ym(84960586, 'reachGoal', 'bigVestingClaim')
   }
 
   return (

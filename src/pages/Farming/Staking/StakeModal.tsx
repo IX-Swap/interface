@@ -65,19 +65,15 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
   async function onStake() {
     stake(typedValue)
 
-    const {
-      Ya: { Metrika2 },
-    } = window
-    Metrika2(84960586, 'reachGoal', 'stakingSubmitStakeButtonClicked')
+    const { ym } = window
+    ym(84960586, 'reachGoal', 'stakingSubmitStakeButtonClicked')
   }
 
   async function onApprove() {
     increaseAllowance(typedValue)
 
-    const {
-      Ya: { Metrika2 },
-    } = window
-    Metrika2(84960586, 'reachGoal', 'stakingApproveIXSButtonClicked')
+    const { ym } = window
+    ym(84960586, 'reachGoal', 'stakingApproveIXSButtonClicked')
   }
 
   // wrapped onUserInput to clear signatures
@@ -134,10 +130,8 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
   }
 
   const onClickStakingContitions = () => {
-    const {
-      Ya: { Metrika2 },
-    } = window
-    Metrika2(84960586, 'reachGoal', 'stakingConditionsTermsClicked')
+    const { ym } = window
+    ym(84960586, 'reachGoal', 'stakingConditionsTermsClicked')
   }
 
   function renderStakeButton() {

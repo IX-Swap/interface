@@ -68,14 +68,12 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
     const metrikaTier = periodLegend[tier.period] || '1w'
 
     dispatch(selectTier({ tier }))
-    const {
-      Ya: { Metrika2 },
-    } = window
-    Metrika2(84960586, 'reachGoal', `staking${metrikaTier}StakeButtonClicked`)
+    const { ym } = window
+    ym(84960586, 'reachGoal', `staking${metrikaTier}StakeButtonClicked`)
 
     toggleStake()
 
-    Metrika2(84960586, 'reachGoal', 'stakingStakeModalFormOpened')
+    ym(84960586, 'reachGoal', 'stakingStakeModalFormOpened')
   }
 
   return (
