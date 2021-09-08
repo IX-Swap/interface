@@ -1,4 +1,5 @@
 import { Trans } from '@lingui/macro'
+import Column, { ColumnCenter } from 'components/Column'
 import React from 'react'
 import styled from 'styled-components/macro'
 import { TYPE } from 'theme'
@@ -45,7 +46,14 @@ export default function AppBody({ children, blurred, ...rest }: { children: Reac
         {blurred && (
           <BlurredOverlay>
             <TYPE.titleBig fontWeight={600}>
-              <Trans>Coming soon</Trans>
+              <ColumnCenter>
+                <div>
+                  <Trans>Coming soon</Trans>
+                </div>
+                <div>
+                  <Trans>You can test it on Kovan</Trans>
+                </div>
+              </ColumnCenter>
             </TYPE.titleBig>
           </BlurredOverlay>
         )}
