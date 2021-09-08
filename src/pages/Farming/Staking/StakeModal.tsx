@@ -8,10 +8,10 @@ import { TextRow } from 'components/TextRow/TextRow'
 import { IXS_ADDRESS } from 'constants/addresses'
 import { useCurrency } from 'hooks/Tokens'
 import { Dots } from 'pages/Pool/styleds'
-import React, { useCallback, useState, useRef } from 'react'
+import React, { useCallback, useState, useRef, useEffect } from 'react'
 import { ApplicationModal } from 'state/application/actions'
 import { useModalOpen } from 'state/application/hooks'
-import { useStakeFor, useIncreaseAllowance } from 'state/stake/hooks'
+import { useStakeFor, useIncreaseAllowance, useCheckAllowance } from 'state/stake/hooks'
 import { useCurrencyBalance } from 'state/wallet/hooks'
 import { useActiveWeb3React } from 'hooks/web3'
 import { CloseIcon, ModalBlurWrapper, TYPE } from 'theme'
@@ -39,15 +39,22 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
   // track and parse user input
   const [typedValue, setTypedValue] = useState('0')
   const [termsAccepted, setTermsAccepted] = useState(false)
-  const [error, setError] = useState('')
+  const [error, setError] = useState('Please enter amount to stake')
   const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
   const balance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
   const maxAmountInput = maxAmountSpend(balance)
   const availableIXS = maxAmountInput ? maxAmountInput?.toSignificant(5) : ''
   const increaseAllowance = useIncreaseAllowance()
   const amountOfIXStoStakeInput = useRef<HTMLInputElement>(null)
-  const { selectedTier, approvingIXS, isIXSApproved, isStaking, hasStakedSuccessfully } = useStakingState()
+  const { selectedTier, approvingIXS, isIXSApproved, isStaking, allowanceAmount } = useStakingState()
   const stake = useStakeFor(selectedTier?.period)
+  const checkAllowance = useCheckAllowance()
+
+  useEffect(() => {
+    if (isOpen) {
+      checkAllowance()
+    }
+  }, [isOpen, checkAllowance])
 
   // state for pending and submitted txn views
   const wrappedOnDismiss = useCallback(() => {
@@ -57,21 +64,39 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
 
   async function onStake() {
     stake(typedValue)
+
+    const {
+      Ya: { Metrika2 },
+    } = window
+    Metrika2(84960586, 'reachGoal', 'stakingSubmitStakeButtonClicked')
   }
 
   async function onApprove() {
     increaseAllowance(typedValue)
+
+    const {
+      Ya: { Metrika2 },
+    } = window
+    Metrika2(84960586, 'reachGoal', 'stakingApproveIXSButtonClicked')
   }
 
   // wrapped onUserInput to clear signatures
   const onUserInput = () => {
     if (amountOfIXStoStakeInput?.current?.value) {
       const value = amountOfIXStoStakeInput.current.value
-      setTypedValue(value)
+      setTypedValue(value.match(/\d{0,}\.{0,}\d{0,4}/)?.[0] || '')
       if (maxAmountInput) {
-        setError(parseFloat(value) > parseFloat(maxAmountInput.toSignificant(10)) ? 'Not enough IXS' : '')
+        const IXSamount = parseFloat(value)
+        if (IXSamount > parseFloat(maxAmountInput.toSignificant(10))) {
+          setError('Not enough IXS')
+        } else if (IXSamount <= 0) {
+          setError('Wrong IXS amount')
+        } else {
+          setError('')
+        }
       }
     } else {
+      setError('Wrong IXS amount')
       setTypedValue('0')
     }
   }
@@ -106,6 +131,49 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
       return floorTo4Decimals(rewards)
     }
     return 0
+  }
+
+  const onClickStakingContitions = () => {
+    const {
+      Ya: { Metrika2 },
+    } = window
+    Metrika2(84960586, 'reachGoal', 'stakingConditionsTermsClicked')
+  }
+
+  function renderStakeButton() {
+    if (allowanceAmount > parseFloat(typedValue) || isIXSApproved) {
+      return (
+        <ButtonIXSWide
+          data-testid="stake-button"
+          disabled={isStaking || !termsAccepted || Boolean(error)}
+          onClick={onStake}
+        >
+          {isStaking ? (
+            <Dots>
+              <Trans>Staking</Trans>
+            </Dots>
+          ) : (
+            <>{error || <Trans>Stake</Trans>}</>
+          )}
+        </ButtonIXSWide>
+      )
+    } else {
+      return (
+        <ButtonIXSWide
+          data-testid="approve-staking"
+          disabled={approvingIXS || !termsAccepted || Boolean(error)}
+          onClick={onApprove}
+        >
+          {approvingIXS ? (
+            <Dots>
+              <Trans>Approving IXS</Trans>
+            </Dots>
+          ) : (
+            <>{error || <Trans>Approve IXS</Trans>}</>
+          )}
+        </ButtonIXSWide>
+      )
+    }
   }
 
   return (
@@ -148,6 +216,8 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                   color={error ? 'red' : 'text1'}
                   ref={amountOfIXStoStakeInput}
                   onInput={onUserInput}
+                  value={typedValue}
+                  disabled={approvingIXS || isIXSApproved || isStaking}
                 />
                 <InputHintRight>
                   <RowFixed>
@@ -197,7 +267,11 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
               <TextRow textLeft={t`Period of staking`} textRight={selectedTier?.period} />
               <TextRow
                 textLeft={t`Distribute`}
-                textRight={`${typedValue} IXSgov`}
+                textRight={
+                  <EllipsedText>
+                    <div>{typedValue}</div>&nbsp;IXSgov
+                  </EllipsedText>
+                }
                 tooltipText={t`IXSgov is a tokenized asset representing your staked IXS on a 1:1 basis. IXSwap distributes the IXSgov to your wallet.
                               ${'' ?? ''}
                               You should swap your IXSgov back to IXS during the unstaking process. 
@@ -205,7 +279,14 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                               *Do note that IXS received will be equal to your IXSgov holdings at the time of swap.`}
               />
               <TextRow textLeft={t`APY`} textRight={`${selectedTier?.APY}%`} />
-              <TextRow textLeft={t`Staking amount`} textRight={`${typedValue} IXS`} />
+              <TextRow
+                textLeft={t`Staking amount`}
+                textRight={
+                  <EllipsedText>
+                    <div>{typedValue}</div>&nbsp;IXS
+                  </EllipsedText>
+                }
+              />
               <TextRow
                 textLeft={t`Estimated maturity time`}
                 textRight={estimateMaturityTime()}
@@ -216,13 +297,17 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                 textRight={estimateLockPeriod()}
                 tooltipText={t`Your staked IXS will be locked for ${
                   selectedTier?.lockupPeriod
-                } till Jun 05, 2021 12:40:33. Until that time you won’t be able to unstake your IXS fully or partially. Please carefully consider the risks involved.
+                } till ${estimateLockPeriod()}. Until that time you won’t be able to unstake your IXS fully or partially. Please carefully consider the risks involved.
                               ${'' ?? ''}
-                              You will be able to redeem your staked IXS fully or partially after Jun 05, 2021 12:40:33.`}
+                              You will be able to redeem your staked IXS fully or partially after ${estimateLockPeriod()}.`}
               />
               <TextRow
                 textLeft={t`Estimated rewards`}
-                textRight={`${estimateRewards()} IXS`}
+                textRight={
+                  <EllipsedText>
+                    <div>{estimateRewards()}</div>&nbsp;IXS
+                  </EllipsedText>
+                }
                 tooltipText={t`This amount of rewards is based on assumption that your staked amount will be kept for the whole period of ${
                   selectedTier?.period
                 }. In this case your APY will be ${
@@ -239,50 +324,36 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
               <TYPE.body1>
                 <Trans>
                   I have read{' '}
-                  <a style={{ color: '#EDCEFF' }} href="https://ixswap.io/ixs-staking-vaults/" target="blank">
+                  <a
+                    onClick={onClickStakingContitions}
+                    style={{ color: '#EDCEFF' }}
+                    href="https://ixswap.io/ixs-staking-vaults/"
+                    target="blank"
+                  >
                     Staking Conditions
                   </a>
                 </Trans>
               </TYPE.body1>
             </RowCenter>
-            <Row style={{ marginTop: '25px' }}>
-              {!isIXSApproved && (
-                <ButtonIXSWide
-                  data-testid="approve-staking"
-                  disabled={approvingIXS || !termsAccepted || Boolean(error)}
-                  onClick={onApprove}
-                >
-                  {approvingIXS ? (
-                    <Dots>
-                      <Trans>Approving IXS</Trans>
-                    </Dots>
-                  ) : (
-                    <>{error || <Trans>Approve IXS</Trans>}</>
-                  )}
-                </ButtonIXSWide>
-              )}
-              {isIXSApproved && (
-                <ButtonIXSWide
-                  data-testid="stake-button"
-                  disabled={isStaking || !termsAccepted || Boolean(error)}
-                  onClick={onStake}
-                >
-                  {isStaking ? (
-                    <Dots>
-                      <Trans>Staking</Trans>
-                    </Dots>
-                  ) : (
-                    <>{error || <Trans>Stake</Trans>}</>
-                  )}
-                </ButtonIXSWide>
-              )}
-            </Row>
+            <Row style={{ marginTop: '25px' }}>{renderStakeButton()}</Row>
           </ModalBottom>
         </ModalContentWrapper>
       </ModalBlurWrapper>
     </RedesignedWideModal>
   )
 }
+
+const EllipsedText = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  > div {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 100%;
+  }
+`
 
 const ModalTop = styled(StakeModalTop)`
   @media (max-width: 768px) {
@@ -396,10 +467,15 @@ const StakeInfoContainer = styled(Column)`
       height: auto;
       font-size: 13px;
       > :first-child {
-        /* align-items: flex-start; */
+        min-width: fit-content;
       }
       > :last-child {
-        text-align: right;
+        /* width: 100%; */
+        > div {
+          width: 100%;
+          text-align: right;
+          margin-left: 10px;
+        }
       }
     }
   }

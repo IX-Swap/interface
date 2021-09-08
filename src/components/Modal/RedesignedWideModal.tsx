@@ -60,6 +60,7 @@ const StyledDialogContent = styled(
     ${({ theme, mobileMaxHeight }) => theme.mediaWidth.upToSmall`
           border-radius: 0px;
           top: 0;
+          max-width: 100vw;
          ${
            mobileMaxHeight &&
            css`

@@ -5,6 +5,7 @@ export const saveStakingStatus = createAction<{ status: StakingStatus }>('stake/
 export const selectTier = createAction<{ tier: Tier }>('stake/selectTier')
 export const getIsStakingPaused = createAction<{ isPaused: boolean }>('stake/isPaused')
 export const changeAccount = createAction<{ newAccount: string }>('stake/changeAccount')
+export const checkAllowance = createAction<{ allowanceAmount: number }>('stake/checkAllowance')
 
 export const increaseAllowance: Readonly<{
   pending: ActionCreatorWithoutPayload
