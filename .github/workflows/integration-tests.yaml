@@ -6,7 +6,6 @@ on:
       - main
       - development
       - staging
-      - ci-fix-lint
   pull_request:
     branches:
       - main
