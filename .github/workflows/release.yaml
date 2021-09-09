@@ -90,7 +90,6 @@ jobs:
           aws s3 website s3://${{ secrets.AWS_BUCKET_NAME }}/ --index-document index.html
           aws cloudfront create-invalidation --distribution-id E325RKPWP0VQSX --paths "/*"
 
-
 #      - name: Sync AWS S3 Bucket
 #        uses: shallwefootball/s3-upload-action@master
 #        with:

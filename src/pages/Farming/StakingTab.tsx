@@ -1,7 +1,7 @@
 import React from 'react'
+import { TYPE } from 'theme'
 import { LightBackground } from 'theme/Background'
-import { FARMING_TABS } from './enum'
-import { FarmingTabs } from './FarmingTabs'
+import { FARMING_STRINGS, FARMING_TABS } from './enum'
 import { Staking } from './Staking'
 import { Container } from './styleds'
 
@@ -10,7 +10,7 @@ export const StakingTab = () => {
     <>
       <LightBackground />
       <Container width={['100%']} maxWidth={'1300px'}>
-        <FarmingTabs {...{ tab: FARMING_TABS.STAKING }} />
+        <TYPE.title4>{FARMING_STRINGS[FARMING_TABS.STAKING]}</TYPE.title4>
         <Staking />
       </Container>
     </>
