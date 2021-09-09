@@ -42,7 +42,7 @@ export const StakingTiers = () => {
       </CardsRow>
       <RowCenter marginTop={21}>
         <TYPE.title7 color="#edceff9e">
-          <Trans>You’ll have 1 IXSGov for each 1 staked IXS.</Trans>
+          <Trans>You will receive 1 IXSGov for each 1 staked IXS.</Trans>
         </TYPE.title7>
       </RowCenter>
       <StakeModal onDismiss={toggleStakeModal} />
