@@ -3,15 +3,21 @@ import { StatusFilterItem } from 'app/pages/authorizer/components/StatusFilterIt
 import {
   Assignment as AllIcon,
   AssignmentTurnedIn as ApprovedIcon,
-  Gavel as RejectedIcon,
+  ThumbDownOutlined as RejectedIcon,
   Subject as UnauthorizedIcon,
+  TrackChanges as ClosedDealIcon,
+  Warning as PendingApprovalIcon,
   SvgIconComponent
 } from '@material-ui/icons'
 import { AuthorizableStatus } from 'types/util'
 import { Box } from '@material-ui/core'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
 
-export const StatusFilter = () => {
+export interface BaseStatusFilterProps {
+  statusFilters: StatusFilterItemType[]
+}
+
+export const BaseStatusFilter = ({ statusFilters }: BaseStatusFilterProps) => {
   return (
     <SearchQueryFilter<'authorizationStatus'>
       name='authorizationStatus'
@@ -33,11 +39,23 @@ export const StatusFilter = () => {
     </SearchQueryFilter>
   )
 }
+
+export const StatusFilter = () => {
+  return <BaseStatusFilter statusFilters={[...statusFilters, ...allFilter]} />
+}
+
+export const ColorStatusFilter = () => {
+  return <BaseStatusFilter statusFilters={dsoStatusFilters} />
+}
 interface StatusFilterItemType {
   icon: SvgIconComponent
   title: string
   value: AuthorizableStatus
 }
+
+export const allFilter: StatusFilterItemType[] = [
+  { icon: AllIcon, value: '', title: 'All' }
+]
 
 export const statusFilters: StatusFilterItemType[] = [
   {
@@ -54,6 +72,20 @@ export const statusFilters: StatusFilterItemType[] = [
     icon: RejectedIcon,
     value: 'Rejected',
     title: 'Rejected'
+  }
+]
+
+export const dsoStatusFilters: StatusFilterItemType[] = [
+  ...statusFilters,
+  {
+    icon: PendingApprovalIcon,
+    value: 'Pending',
+    title: 'Pending Approval'
   },
-  { icon: AllIcon, value: '', title: 'All' }
+  {
+    icon: ClosedDealIcon,
+    value: 'Closed',
+    title: 'Closed'
+  },
+  ...allFilter
 ]

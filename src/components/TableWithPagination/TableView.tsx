@@ -68,7 +68,7 @@ export const TableView = <T,>({
   paperProps = {},
   defaultRowsPerPage,
   size = 'medium',
-  themeVariant = 'default'
+  themeVariant = 'primary'
 }: TableViewProps<T>): JSX.Element => {
   const {
     items,
@@ -105,10 +105,7 @@ export const TableView = <T,>({
     innerRef.current = { refresh: () => setPage(page) }
   }
 
-  let columns =
-    hasStatus && filter?.status === ''
-      ? [...columnsProp, statusColumn]
-      : columnsProp
+  let columns = hasStatus ? [...columnsProp, statusColumn] : columnsProp
 
   if (selectionHelper !== undefined) {
     const {
