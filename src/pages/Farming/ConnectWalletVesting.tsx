@@ -3,9 +3,11 @@ import { ButtonIXSWide } from 'components/Button'
 import useTheme from 'hooks/useTheme'
 import { useActiveWeb3React } from 'hooks/web3'
 import React from 'react'
+import { isMobile } from 'react-device-detect'
+
 import { Text } from 'rebass'
 import { useWalletModalToggle } from 'state/application/hooks'
-import { VestingTextWrapper } from './styleds'
+import { VestingTextWrapper, UseWeb3Browser } from './styleds'
 
 export const ConnectWalletVesting = () => {
   const theme = useTheme()
@@ -28,12 +30,17 @@ export const ConnectWalletVesting = () => {
 
       <ButtonIXSWide
         onClick={connectWallet}
-        disabled={!!account}
+        disabled={!!account || isMobile}
         data-testid="connect-wallet-in-vesting"
         style={{ maxWidth: '308px', width: '100%' }}
       >
         <Trans>Connect Wallet</Trans>
       </ButtonIXSWide>
+      {isMobile && (
+        <UseWeb3Browser>
+          <Trans>Use web3 browser in Metamask app or another one to connect your wallet.</Trans>
+        </UseWeb3Browser>
+      )}
     </>
   )
 }
