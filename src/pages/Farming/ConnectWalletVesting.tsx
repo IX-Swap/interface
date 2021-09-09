@@ -30,7 +30,7 @@ export const ConnectWalletVesting = () => {
         onClick={connectWallet}
         disabled={!!account}
         data-testid="connect-wallet-in-vesting"
-        style={{ width: '308px' }}
+        style={{ maxWidth: '308px', width: '100%' }}
       >
         <Trans>Connect Wallet</Trans>
       </ButtonIXSWide>
