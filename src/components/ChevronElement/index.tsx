@@ -8,7 +8,7 @@ import styled from 'styled-components'
 
 interface Props {
   showMore: boolean
-  setShowMore: (arg0: boolean) => void
+  setShowMore?: (arg0: boolean) => void
 }
 
 const StyledChevron = styled(ChevronUp)<{ showMore: boolean }>`
@@ -24,7 +24,9 @@ export const ChevronElement = ({ showMore, setShowMore }: Props) => {
         padding="6px 8px"
         borderRadius="12px"
         width="100%"
-        onClick={() => setShowMore(!showMore)}
+        onClick={() => {
+          if (setShowMore) setShowMore(!showMore)
+        }}
       >
         <StyledChevron
           size="20"

@@ -33,7 +33,9 @@ export default function SecTokenDetails({
     return (currency as any)?.tokenInfo?.description
   }, [currency])
 
-  const accreditationRequest = (secTokens[currencyId] as any)?.tokenInfo?.accreditationRequest || {}
+  const accreditationRequest = useMemo(() => {
+    return (secTokens[currencyId] as any)?.tokenInfo?.accreditationRequest || null
+  }, [secTokens, currencyId])
   return (
     <>
       <DepositPopup currency={currency} />
@@ -55,7 +57,7 @@ export default function SecTokenDetails({
           </DescriptionText>
         </Description>
         <TokenDetails currency={currency} />
-        <Vault status={vaultState} currency={currency} accreditationRequest={accreditationRequest} />
+        <Vault currency={currency} accreditationRequest={accreditationRequest} />
       </Container>
     </>
   )
