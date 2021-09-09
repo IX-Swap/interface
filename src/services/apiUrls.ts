@@ -1,4 +1,4 @@
-import { ActionTypes } from 'components/Vault/enum'
+import { ActionFilterTabs, ActionTypes } from 'components/Vault/enum'
 
 export const admin = {
   login: 'auth/login',
@@ -33,7 +33,7 @@ export const tokens = {
 export interface PaginateWithFilter {
   tokenId?: number | null
   page?: number
-  filter?: ActionTypes
+  filter?: ActionFilterTabs
 }
 export const custody = {
   deposit: '/custody/deposit/request',
@@ -44,7 +44,7 @@ export const custody = {
     filters += getQueryParam({ param: 'tokenId', value: tokenId, isFirst: true })
     filters += getQueryParam({
       param: 'request',
-      value: filter,
+      value: filter === 'all' ? '' : filter,
       isFirst: !Boolean(tokenId),
     })
     filters += getQueryParam({ param: 'page', value: page, isFirst: !Boolean(tokenId || filter) })

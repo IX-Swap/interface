@@ -8,7 +8,7 @@ import styled from 'styled-components'
 import { gradientBorder, TYPE } from 'theme'
 import { ActionHistoryStatus, ActionTypes } from './enum'
 
-export const NotSubmittedWrapper = styled.div`
+export const NoVaultWrapper = styled.div`
   background: ${({ theme }) => theme.bgG10};
   border-radius: 45px;
   padding: 2rem 14px 3rem;
@@ -23,7 +23,7 @@ export const ExistingWrapper = styled.div`
     padding: 1rem;
   `};
 `
-export const NotSubmittedTitle = styled.span`
+export const NoVaultTitle = styled.span`
   text-transform: uppercase;
   text-align: center;
 `
@@ -35,15 +35,8 @@ export const ExistingTitle = styled.span`
   white-space: -o-pre-wrap; /* Opera 7 */
   word-wrap: break-word;
 `
-export const NotSubmittedDescription = styled.span`
+export const NoVaultDescription = styled.span`
   text-align: center;
-`
-
-export const ButtonRow = styled(RowCenter)`
-  gap: 26px;
-  flex-wrap: wrap;
-  margin: auto;
-  margin-top: 3rem;
 `
 
 export const TitleStatusRow = styled(RowBetween)`

@@ -5,11 +5,11 @@ import { darken } from 'polished'
 import { Activity } from 'react-feather'
 import { t, Trans } from '@lingui/macro'
 import styled, { css } from 'styled-components'
-import CoinbaseWalletIcon from '../../assets/images/coinbaseWalletIcon.svg'
-import FortmaticIcon from '../../assets/images/fortmaticIcon.png'
-import PortisIcon from '../../assets/images/portisIcon.png'
+// import CoinbaseWalletIcon from '../../assets/images/coinbaseWalletIcon.svg'
+// import FortmaticIcon from '../../assets/images/fortmaticIcon.png'
+// import PortisIcon from '../../assets/images/portisIcon.png'
 import WalletConnectIcon from '../../assets/images/walletConnectIcon.svg'
-import { fortmatic, injected, portis, walletconnect, walletlink } from '../../connectors'
+import { injected, walletconnect } from '../../connectors'
 import { NetworkContextName } from '../../constants/misc'
 import useENSName from '../../hooks/useENSName'
 import { useHasSocks } from '../../hooks/useSocksBalance'
@@ -134,25 +134,27 @@ function StatusIcon({ connector }: { connector: AbstractConnector }) {
         <img src={WalletConnectIcon} alt={'WalletConnect'} />
       </IconWrapper>
     )
-  } else if (connector === walletlink) {
-    return (
-      <IconWrapper size={16}>
-        <img src={CoinbaseWalletIcon} alt={'CoinbaseWallet'} />
-      </IconWrapper>
-    )
-  } else if (connector === fortmatic) {
-    return (
-      <IconWrapper size={16}>
-        <img src={FortmaticIcon} alt={'Fortmatic'} />
-      </IconWrapper>
-    )
-  } else if (connector === portis) {
-    return (
-      <IconWrapper size={16}>
-        <img src={PortisIcon} alt={'Portis'} />
-      </IconWrapper>
-    )
   }
+  // else if (connector === walletlink) {
+  //   return (
+  //     <IconWrapper size={16}>
+  //       <img src={CoinbaseWalletIcon} alt={'CoinbaseWallet'} />
+  //     </IconWrapper>
+  //   )
+  // }
+  // else if (connector === fortmatic) {
+  //   return (
+  //     <IconWrapper size={16}>
+  //       <img src={FortmaticIcon} alt={'Fortmatic'} />
+  //     </IconWrapper>
+  //   )
+  // } else if (connector === portis) {
+  //   return (
+  //     <IconWrapper size={16}>
+  //       <img src={PortisIcon} alt={'Portis'} />
+  //     </IconWrapper>
+  //   )
+  // }
   return null
 }
 

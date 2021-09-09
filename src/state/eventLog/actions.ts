@@ -1,5 +1,5 @@
 import { ActionCreatorWithoutPayload, ActionCreatorWithPayload, createAction } from '@reduxjs/toolkit'
-import { ActionHistoryStatus, ActionTypes } from 'components/Vault/enum'
+import { ActionFilterTabs, ActionHistoryStatus, ActionTypes } from 'components/Vault/enum'
 import { PaginateResponse, PaginationDetails } from 'types/pagination'
 
 export interface TimeStamps {
@@ -46,7 +46,7 @@ export const getLog: Readonly<{
   pending: ActionCreatorWithoutPayload
   fulfilled: ActionCreatorWithPayload<{
     response: PaginateResponse<LogItem>
-    params: { page?: number; filter?: ActionTypes; tokenId?: number | null }
+    params: { page?: number; filter: ActionFilterTabs; tokenId?: number | null }
   }>
   rejected: ActionCreatorWithPayload<{ errorMessage: string }>
 }> = {

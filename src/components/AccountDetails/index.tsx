@@ -3,12 +3,12 @@ import React, { useCallback, useContext } from 'react'
 import { useDispatch } from 'react-redux'
 import { Box } from 'rebass'
 import { ThemeContext } from 'styled-components'
-import CoinbaseWalletIcon from '../../assets/images/coinbaseWalletIcon.svg'
+// import CoinbaseWalletIcon from '../../assets/images/coinbaseWalletIcon.svg'
 import { ReactComponent as ExternalBright } from '../../assets/images/external-bright.svg'
-import FortmaticIcon from '../../assets/images/fortmaticIcon.png'
-import PortisIcon from '../../assets/images/portisIcon.png'
+// import FortmaticIcon from '../../assets/images/fortmaticIcon.png'
+// import PortisIcon from '../../assets/images/portisIcon.png'
 import WalletConnectIcon from '../../assets/images/walletConnectIcon.svg'
-import { fortmatic, injected, portis, walletconnect, walletlink } from '../../connectors'
+import { injected, walletconnect } from '../../connectors'
 import { SUPPORTED_WALLETS } from '../../constants/wallet'
 import { useActiveWeb3React } from '../../hooks/web3'
 import { AppDispatch } from '../../state'
@@ -98,34 +98,35 @@ export default function AccountDetails({
           <img src={WalletConnectIcon} alt={'WalletConnect logo'} />
         </IconWrapper>
       )
-    } else if (connector === walletlink) {
-      return (
-        <IconWrapper size={33}>
-          <img src={CoinbaseWalletIcon} alt={'Coinbase Wallet logo'} />
-        </IconWrapper>
-      )
-    } else if (connector === fortmatic) {
-      return (
-        <IconWrapper size={33}>
-          <img src={FortmaticIcon} alt={'Fortmatic logo'} />
-        </IconWrapper>
-      )
-    } else if (connector === portis) {
-      return (
-        <>
-          <IconWrapper size={33}>
-            <img src={PortisIcon} alt={'Portis logo'} />
-            <MainWalletAction
-              onClick={() => {
-                portis.portis.showPortis()
-              }}
-            >
-              <Trans>Show Portis</Trans>
-            </MainWalletAction>
-          </IconWrapper>
-        </>
-      )
     }
+    // else if (connector === walletlink) {
+    //   return (
+    //     <IconWrapper size={33}>
+    //       <img src={CoinbaseWalletIcon} alt={'Coinbase Wallet logo'} />
+    //     </IconWrapper>
+    //   )
+    // } else if (connector === fortmatic) {
+    //   return (
+    //     <IconWrapper size={33}>
+    //       <img src={FortmaticIcon} alt={'Fortmatic logo'} />
+    //     </IconWrapper>
+    //   )
+    // } else if (connector === portis) {
+    //   return (
+    //     <>
+    //       <IconWrapper size={33}>
+    //         <img src={PortisIcon} alt={'Portis logo'} />
+    //         <MainWalletAction
+    //           onClick={() => {
+    //             portis.portis.showPortis()
+    //           }}
+    //         >
+    //           <Trans>Show Portis</Trans>
+    //         </MainWalletAction>
+    //       </IconWrapper>
+    //     </>
+    //   )
+    // }
     return null
   }
 
@@ -150,7 +151,7 @@ export default function AccountDetails({
               <AccountGroupingRow>
                 {formatConnectorName()}
                 <div>
-                  {connector !== injected && connector !== walletlink && (
+                  {connector !== injected && (
                     <WalletAction
                       style={{ fontSize: '.825rem', fontWeight: 400, marginRight: '8px' }}
                       onClick={() => {
