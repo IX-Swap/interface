@@ -27,22 +27,16 @@ export enum ActionHistoryStatus {
 export enum ActionTypes {
   WITHDRAW = 'withdraw',
   DEPOSIT = 'deposit',
-  KYC = 'kyc',
-  ACCREDITATION = 'accreditation',
 }
-export const filterTabs = [ActionTypes.WITHDRAW, ActionTypes.DEPOSIT, ActionTypes.ACCREDITATION]
-export const ActionTypeTextHeader: { [key in ActionTypes]: string } = {
+
+export type ActionFilterTabs = ActionTypes | 'all'
+export const filterTabs = [ActionTypes.DEPOSIT, ActionTypes.WITHDRAW, 'all']
+export const ActionTypeTextHeader: { [key in ActionFilterTabs]: string } = {
   [ActionTypes.DEPOSIT]: t`Deposit`,
   [ActionTypes.WITHDRAW]: t`Withdraw`,
-  [ActionTypes.KYC]: t`KYC`,
-  [ActionTypes.ACCREDITATION]: t`Accreditation`,
+  ['all']: t`All`,
 }
-export const isAction = (action: ActionTypes) => {
-  return [ActionTypes.KYC, ActionTypes.ACCREDITATION].includes(action)
-}
-export const isTransaction = (action: ActionTypes) => {
-  return [ActionTypes.DEPOSIT, ActionTypes.WITHDRAW].includes(action)
-}
+
 export const isPendingDeposit = (status: ActionHistoryStatus) => {
   return [ActionHistoryStatus.PENDING, ActionHistoryStatus.APPROVED].includes(status)
 }
@@ -89,8 +83,6 @@ export const StatusColors = {
 export const ActionTypeText = {
   [ActionTypes.DEPOSIT]: t`Deposit`,
   [ActionTypes.WITHDRAW]: t`Withdraw`,
-  [ActionTypes.KYC]: t`KYC`,
-  [ActionTypes.ACCREDITATION]: t`Pass accreditation`,
 }
 
 export const getStatusColor = (action: ActionTypes, status: ActionHistoryStatus) => {
@@ -103,9 +95,7 @@ export const getActionStatusText = (action: ActionTypes, status: ActionHistorySt
   if (action === ActionTypes.DEPOSIT && status === ActionHistoryStatus.APPROVED) {
     return TransactionHistoryStatusText[ActionHistoryStatus.PENDING]
   }
-  if (isAction(action)) {
-    return ActionHistoryStatusText[status]
-  }
+
   return TransactionHistoryStatusText[status]
 }
 

@@ -1,4 +1,4 @@
-import { ActionTypes } from 'components/Vault/enum'
+import { ActionFilterTabs, ActionTypes } from 'components/Vault/enum'
 import { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import apiService from 'services/apiService'
@@ -29,7 +29,7 @@ export const getTransactionLog = async ({
 }: {
   tokenId?: number | null
   page?: number
-  filter?: ActionTypes
+  filter?: ActionFilterTabs
 }) => {
   return await apiService.get(custody.requests({ tokenId, filter, page }))
 }
@@ -49,16 +49,11 @@ export function useGetEventCallback(): ({
       dispatch(getLog.pending())
       try {
         const params = { page, tokenId, filter }
-        let response
-        if (!filter || [ActionTypes.DEPOSIT, ActionTypes.WITHDRAW].includes(filter)) {
-          response = await getTransactionLog(params)
-        } else {
-          response = await getEventLog(params)
-        }
+        const response = await getTransactionLog(params)
         dispatch(getLog.fulfilled({ response: response.data, params }))
       } catch (error) {
         console.error(`Could not fetch event list`, error)
-        dispatch(getLog.rejected({ errorMessage: error.message }))
+        dispatch(getLog.rejected({ errorMessage: error?.message }))
       }
     },
     [dispatch]
