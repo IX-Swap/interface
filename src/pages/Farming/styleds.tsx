@@ -239,3 +239,11 @@ export const TabsRow = styled(RowStart)`
     flex-direction:row;
   `};
 `
+
+export const UseWeb3Browser = styled.div`
+  text-align: center;
+  color: ${({ theme }) => theme.text8};
+  font-size: 14px;
+  font-weight: 300;
+  margin-top: 15px;
+`

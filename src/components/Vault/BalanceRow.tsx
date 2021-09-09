@@ -10,9 +10,8 @@ import { ExistingTitle, TitleStatusRow } from './styleds'
 interface Props {
   currency?: Currency
   account?: string | null
-  isAccredited?: boolean
 }
-export const BalanceRow = ({ currency, account, isAccredited = false }: Props) => {
+export const BalanceRow = ({ currency, account }: Props) => {
   const currencyBalance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
   const toggle = useWithdrawModalToggle()
   return (
@@ -31,7 +30,6 @@ export const BalanceRow = ({ currency, account, isAccredited = false }: Props) =
         onClick={() => {
           toggle()
         }}
-        disabled={!isAccredited}
       >
         <Trans>Withdraw</Trans>
       </ButtonGradientBorder>

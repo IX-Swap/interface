@@ -11,7 +11,7 @@ import { Dots } from 'pages/Pool/styleds'
 import React, { useCallback, useState, useRef, useEffect } from 'react'
 import { ApplicationModal } from 'state/application/actions'
 import { useModalOpen } from 'state/application/hooks'
-import { useStakeFor, useIncreaseAllowance, useCheckAllowance } from 'state/stake/hooks'
+import { useStakeFor, useIncreaseAllowance, useCheckAllowance, useUpdateIXSBalance } from 'state/stake/hooks'
 import { useCurrencyBalance } from 'state/wallet/hooks'
 import { useActiveWeb3React } from 'hooks/web3'
 import { CloseIcon, ModalBlurWrapper, TYPE } from 'theme'
@@ -34,31 +34,30 @@ interface StakingModalProps {
 }
 
 export function StakeModal({ onDismiss }: StakingModalProps) {
-  const { chainId, account } = useActiveWeb3React()
   const isOpen = useModalOpen(ApplicationModal.STAKE_IXS)
   // track and parse user input
-  const [typedValue, setTypedValue] = useState('0')
+  const [typedValue, setTypedValue] = useState('')
   const [termsAccepted, setTermsAccepted] = useState(false)
   const [error, setError] = useState('Please enter amount to stake')
-  const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
-  const balance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
-  const maxAmountInput = maxAmountSpend(balance)
-  const availableIXS = maxAmountInput ? maxAmountInput?.toSignificant(5) : ''
   const increaseAllowance = useIncreaseAllowance()
   const amountOfIXStoStakeInput = useRef<HTMLInputElement>(null)
-  const { selectedTier, approvingIXS, isIXSApproved, isStaking, allowanceAmount } = useStakingState()
+  const { selectedTier, approvingIXS, isIXSApproved, isStaking, allowanceAmount, IXSBalance } = useStakingState()
   const stake = useStakeFor(selectedTier?.period)
   const checkAllowance = useCheckAllowance()
+  const updateIXSBalance = useUpdateIXSBalance()
 
   useEffect(() => {
     if (isOpen) {
       checkAllowance()
+    } else {
+      setTypedValue('')
+      onUserInput()
     }
-  }, [isOpen, checkAllowance])
+  }, [isOpen])
 
   // state for pending and submitted txn views
   const wrappedOnDismiss = useCallback(() => {
-    setTypedValue('0')
+    setTypedValue('')
     onDismiss()
   }, [onDismiss])
 
@@ -81,11 +80,12 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
     if (amountOfIXStoStakeInput?.current?.value) {
       const value = amountOfIXStoStakeInput.current.value
       setTypedValue(value.match(/\d{0,}\.{0,}\d{0,4}/)?.[0] || '')
-      if (maxAmountInput) {
-        const IXSamount = parseFloat(value)
-        if (IXSamount > parseFloat(maxAmountInput.toSignificant(10))) {
+      if (IXSBalance) {
+        const fTypedIXSAmount = parseFloat(value)
+        const fIXSbalance = parseFloat(IXSBalance)
+        if (fTypedIXSAmount > fIXSbalance) {
           setError('Not enough IXS')
-        } else if (IXSamount <= 0) {
+        } else if (fTypedIXSAmount <= 0) {
           setError('Wrong IXS amount')
         } else {
           setError('')
@@ -93,13 +93,13 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
       }
     } else {
       setError('Wrong IXS amount')
-      setTypedValue('0')
+      setTypedValue('')
     }
   }
 
   const onMaxClick = () => {
-    if (amountOfIXStoStakeInput?.current) {
-      amountOfIXStoStakeInput.current.value = availableIXS
+    if (amountOfIXStoStakeInput?.current && IXSBalance) {
+      amountOfIXStoStakeInput.current.value = IXSBalance
       onUserInput()
     }
   }
@@ -124,7 +124,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
     if (selectedTier) {
       const rewards =
         (parseInt(typedValue) * (selectedTier?.APY / 100) * periodsInDays[convertPeriod(selectedTier?.period)]) / 365
-      return floorTo4Decimals(rewards)
+      return rewards ? floorTo4Decimals(rewards) : 0
     }
     return 0
   }
@@ -216,7 +216,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                 <InputHintRight>
                   <RowFixed>
                     <Trans>Available:</Trans>&nbsp;
-                    <span style={{ fontWeight: 600 }}>{availableIXS}</span>
+                    <span style={{ fontWeight: 600 }}>{IXSBalance}</span>
                     <MaxButton onClick={onMaxClick}>
                       <Trans>Max</Trans>
                     </MaxButton>
@@ -263,7 +263,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                 textLeft={t`Distribute`}
                 textRight={
                   <EllipsedText>
-                    <div>{typedValue}</div>&nbsp;IXSgov
+                    <div>{typedValue ? typedValue : 0}</div>&nbsp;IXSgov
                   </EllipsedText>
                 }
                 tooltipText={t`IXSgov is a tokenized asset representing your staked IXS on a 1:1 basis. IXSwap distributes the IXSgov to your wallet.
@@ -277,7 +277,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                 textLeft={t`Staking amount`}
                 textRight={
                   <EllipsedText>
-                    <div>{typedValue}</div>&nbsp;IXS
+                    <div>{typedValue ? typedValue : 0}</div>&nbsp;IXS
                   </EllipsedText>
                 }
               />

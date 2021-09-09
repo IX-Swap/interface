@@ -13,7 +13,6 @@ import { ButtonIXSWide } from 'components/Button'
 import { useFetchBrokerDealers, useBrokerDealersState } from 'state/brokerDealer/hooks'
 import { ReactComponent as Checkmark } from 'assets/images/checked-solid-bg.svg'
 import { usePassAccreditation } from 'state/user/hooks'
-import Loader from '../Loader'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 
 export const ChooseBrokerDealerPopup = ({ tokenId }: { tokenId: any }) => {
@@ -90,16 +89,23 @@ export const ChooseBrokerDealerPopup = ({ tokenId }: { tokenId: any }) => {
           </div>
           <ModalPadding>
             <Row style={{ marginBottom: '24px' }}>
-              <ButtonIXSWide
-                disabled={accreditationStarted}
-                style={{ textTransform: 'unset' }}
-                onClick={() => {
-                  passAccreditation(tokenId, selectedBrokerPair)
-                  setAccreditationStarted(true)
-                }}
-              >
-                {accreditationStarted ? <Loader /> : <Trans>Start accreditation</Trans>}
-              </ButtonIXSWide>
+              {!accreditationStarted && (
+                <ButtonIXSWide
+                  disabled={accreditationStarted}
+                  style={{ textTransform: 'unset' }}
+                  onClick={() => {
+                    passAccreditation(tokenId, selectedBrokerPair)
+                    setAccreditationStarted(true)
+                  }}
+                >
+                  <Trans>Start accreditation</Trans>
+                </ButtonIXSWide>
+              )}
+              {accreditationStarted && (
+                <div style={{ margin: 'auto' }}>
+                  <LoaderThin size={32} />
+                </div>
+              )}
             </Row>
           </ModalPadding>
         </ModalContentWrapper>

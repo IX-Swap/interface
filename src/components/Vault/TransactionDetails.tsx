@@ -28,7 +28,6 @@ import {
   getActionStatusText,
   isPendingDeposit,
   isSuccessTransaction,
-  isTransaction,
 } from './enum'
 import { ModalPadding } from './styleds'
 
@@ -100,16 +99,16 @@ export const TransactionDetails = ({ currency }: Props) => {
                   </TYPE.buttonMuted>
                   <TYPE.body3>{formattedDate}</TYPE.body3>
                 </Row>
-                {isTransaction(activeEvent.type) && (
-                  <Row style={{ marginTop: '16px', flexWrap: 'wrap' }}>
-                    <TYPE.buttonMuted>
-                      <Trans>Amount:</Trans>&nbsp;&nbsp;
-                    </TYPE.buttonMuted>
-                    <TYPE.body3>
-                      {amount}&nbsp;{currency?.symbol}
-                    </TYPE.body3>
-                  </Row>
-                )}
+
+                <Row style={{ marginTop: '16px', flexWrap: 'wrap' }}>
+                  <TYPE.buttonMuted>
+                    <Trans>Amount:</Trans>&nbsp;&nbsp;
+                  </TYPE.buttonMuted>
+                  <TYPE.body3>
+                    {amount}&nbsp;{currency?.symbol}
+                  </TYPE.body3>
+                </Row>
+
                 {activeEvent?.fromAddress && (
                   <Row style={{ marginTop: '16px', flexWrap: 'wrap' }}>
                     <TYPE.buttonMuted>
@@ -118,7 +117,7 @@ export const TransactionDetails = ({ currency }: Props) => {
                     <TYPE.body3>{shortenAddress(activeEvent?.fromAddress)}</TYPE.body3>
                   </Row>
                 )}
-                {isTransaction(activeEvent.type) && activeEvent.depositAddress && (
+                {activeEvent.depositAddress && (
                   <Row
                     style={{ marginTop: '16px', flexWrap: 'wrap' }}
                     onClick={() => setCopied(activeEvent.depositAddress ?? '')}

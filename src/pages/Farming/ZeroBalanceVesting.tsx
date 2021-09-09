@@ -42,13 +42,13 @@ export const ZeroBalanceVesting = () => {
           </YourAddressWrapper>
         )}
         <Text fontSize={'18px'} lineHeight={'27px'} color={theme.text2}>
-          <Trans>Your address doesn’t have IXS vesting in progress now, go to Telegram and ask for IXS</Trans>
+          <Trans>Balances will be updated on the vesting page until the contracts are programmed.</Trans>
         </Text>
       </VestingTextWrapper>
 
       <ButtonPinkBorder
         data-testid="redirect-to-telegram"
-        style={{ width: '308px' }}
+        style={{ maxWidth: '308px', width: '100%' }}
         as={ExternalLink}
         href="https://t.me/ixswapofficial"
       >

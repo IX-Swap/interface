@@ -1,14 +1,18 @@
 import { Trans } from '@lingui/macro'
+import { ChevronElement } from 'components/ChevronElement'
+import Popover from 'components/Popover'
 import SettingsTab from 'components/Settings'
 import { SECURITY_TOKENS } from 'config'
+import { useOnClickOutside } from 'hooks/useOnClickOutside'
+import useToggle from 'hooks/useToggle'
 import { darken } from 'polished'
-import React from 'react'
+import React, { useRef } from 'react'
 import { NavLink } from 'react-router-dom'
 import { useDerivedSwapInfo } from 'state/swap/hooks'
 import styled from 'styled-components/macro'
 import { routes } from 'utils/routes'
-import Row from '../Row'
-
+import Row, { RowFixed } from '../Row'
+import { css } from 'styled-components'
 const activeClassName = 'ACTIVE'
 
 const HeaderLinksWrap = styled(Row)`
@@ -30,9 +34,7 @@ const HeaderLinksWrap = styled(Row)`
    grid-gap: 5px 5px;
   `};
 `
-const StyledNavLink = styled(NavLink).attrs({
-  activeClassName,
-})`
+const navLinkStyles = css`
   ${({ theme }) => theme.flexRowNoWrap}
   align-items: left;
   border-radius: 3rem;
@@ -63,9 +65,46 @@ const StyledNavLink = styled(NavLink).attrs({
 
   `};
 `
+const StyledNavLink = styled(NavLink).attrs({
+  activeClassName,
+})`
+  ${navLinkStyles}
+`
 
+const SubMenuLink = styled(StyledNavLink)`
+  font-size: 16px;
+  line-height: 24px;
+  text-transform: none;
+  padding: 0 66px 0 0;
+`
+
+const PopOverContent = styled.div`
+  display: flex;
+  gap: 6px;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 15px 22px;
+`
+
+const HeaderPopover = () => {
+  return (
+    <PopOverContent>
+      <SubMenuLink id={`stake-nav-link`} to={routes.staking}>
+        <Trans>Staking</Trans>
+      </SubMenuLink>
+      <SubMenuLink id={`vesting-nav-link`} to={routes.vesting}>
+        <Trans>Vesting</Trans>
+      </SubMenuLink>
+    </PopOverContent>
+  )
+}
 export const HeaderLinks = () => {
   const { allowedSlippage } = useDerivedSwapInfo()
+
+  const [open, toggle] = useToggle(false)
+  const node = useRef<HTMLDivElement>()
+
+  useOnClickOutside(node, open ? toggle : undefined)
 
   return (
     <HeaderLinksWrap>
@@ -91,8 +130,24 @@ export const HeaderLinks = () => {
         </StyledNavLink>
       )}
 
-      <StyledNavLink id={`vesting-nav-link`} to={'/vesting'}>
-        <Trans>IXS Farming</Trans>
+      <StyledNavLink
+        ref={node as any}
+        id={`farming-nav-link`}
+        to={'#'}
+        isActive={(match, { pathname }) => pathname.startsWith('/vesting') || pathname.startsWith('/staking')}
+      >
+        <Popover
+          hideArrow
+          show={open}
+          content={<HeaderPopover />}
+          placement={'bottom'}
+          style={{ background: 'rgba(44, 37, 74, 0.5)' }}
+        >
+          <RowFixed onClick={toggle}>
+            <Trans>IXS Farming</Trans>
+            <ChevronElement showMore={open} />
+          </RowFixed>
+        </Popover>
       </StyledNavLink>
       <SettingsTab placeholderSlippage={allowedSlippage} />
     </HeaderLinksWrap>
