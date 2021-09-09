@@ -1,4 +1,4 @@
-import React, { ReactNode, useCallback, useState } from 'react'
+import React, { ReactNode, useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components/macro'
 import Popover, { PopoverProps } from '../Popover'
 
@@ -43,9 +43,18 @@ export function MouseoverTooltip({ children, ...rest }: Omit<TooltipProps, 'show
   const [show, setShow] = useState(false)
   const open = useCallback(() => setShow(true), [setShow])
   const close = useCallback(() => setShow(false), [setShow])
+  const toggle = useCallback(() => setShow((state) => !state), [setShow])
+
+  useEffect(() => {
+    window.addEventListener('scroll', close)
+    return () => {
+      window.removeEventListener('scroll', close)
+    }
+  }, [])
+
   return (
     <Tooltip {...rest} show={show}>
-      <div onMouseEnter={open} onMouseLeave={close}>
+      <div onMouseEnter={open} onMouseLeave={close} onClick={toggle}>
         {children}
       </div>
     </Tooltip>
@@ -69,6 +78,7 @@ export function MouseoverTooltipContent({ content, children, ...rest }: Omit<Too
   const [show, setShow] = useState(false)
   const open = useCallback(() => setShow(true), [setShow])
   const close = useCallback(() => setShow(false), [setShow])
+
   return (
     <TooltipContent {...rest} show={show} content={content}>
       <div
