@@ -41,7 +41,7 @@ export function useGetEventCallback(): ({
 }: {
   tokenId?: number | null
   page?: number
-  filter?: ActionTypes
+  filter: ActionFilterTabs
 }) => Promise<void> {
   const dispatch = useDispatch<AppDispatch>()
   return useCallback(

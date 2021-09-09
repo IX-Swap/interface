@@ -30,7 +30,7 @@ export enum ActionTypes {
 }
 
 export type ActionFilterTabs = ActionTypes | 'all'
-export const filterTabs = [ActionTypes.DEPOSIT, ActionTypes.WITHDRAW, 'all']
+export const filterTabs: ActionFilterTabs[] = [ActionTypes.DEPOSIT, ActionTypes.WITHDRAW, 'all']
 export const ActionTypeTextHeader: { [key in ActionFilterTabs]: string } = {
   [ActionTypes.DEPOSIT]: t`Deposit`,
   [ActionTypes.WITHDRAW]: t`Withdraw`,

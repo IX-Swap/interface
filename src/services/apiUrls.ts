@@ -44,7 +44,7 @@ export const custody = {
     filters += getQueryParam({ param: 'tokenId', value: tokenId, isFirst: true })
     filters += getQueryParam({
       param: 'request',
-      value: filter === 'all' ? 'deposit,withdraw' : filter,
+      value: filter === 'all' ? '' : filter,
       isFirst: !Boolean(tokenId),
     })
     filters += getQueryParam({ param: 'page', value: page, isFirst: !Boolean(tokenId || filter) })

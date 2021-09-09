@@ -1,10 +1,16 @@
 import { Currency } from '@ixswap1/sdk-core'
 import { Trans } from '@lingui/macro'
 import { styled } from '@storybook/theming'
-import React from 'react'
-import { useEventState } from 'state/eventLog/hooks'
-import { DesktopAndTablet, ExternalLink, LinkStyledButton, TYPE } from 'theme'
-import { ActionHistoryStatus } from './enum'
+import { ChevronElement } from 'components/ChevronElement'
+import Popover from 'components/Popover'
+import { RowCenter, RowFixed } from 'components/Row'
+import { useOnClickOutside } from 'hooks/useOnClickOutside'
+import useTheme from 'hooks/useTheme'
+import useToggle from 'hooks/useToggle'
+import React, { useRef } from 'react'
+import { useEventState, useGetEventCallback } from 'state/eventLog/hooks'
+import { DesktopAndTablet, LinkStyledButton, TYPE } from 'theme'
+import { ActionFilterTabs, ActionHistoryStatus, ActionTypeTextHeader, filterTabs } from './enum'
 import { getStatusIcon, HistoryHeaderWrapper } from './styleds'
 import { TransactionHistoryRow } from './TransactionHistoryRow'
 
@@ -14,49 +20,41 @@ const PopOverContent = styled.div`
   flex-direction: column;
   padding: 15px 20px;
 `
-const StyledMenu = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  border: none;
-`
 const UnpaddedLinkStyledButton = styled(LinkStyledButton)`
   padding: 0;
   font-size: 1rem;
   opacity: ${({ disabled }) => (disabled ? '0.4' : '1')};
 `
 
-// const popOverContent = () => (
-//   <PopOverContent>
-//     <ExternalLink href={`https://tokenlists.org/token-list?url=${listUrl}`}>
-//       <TYPE.popOver>
-//         <Trans>View list</Trans>
-//       </TYPE.popOver>
-//     </ExternalLink>
-//     {handleRemoveList && (
-//       <UnpaddedLinkStyledButton onClick={handleRemoveList} disabled={isDisabled}>
-//         <TYPE.popOver>
-//           <Trans>Remove list</Trans>
-//         </TYPE.popOver>
-//       </UnpaddedLinkStyledButton>
-//     )}
-//     {pending && (
-//       <UnpaddedLinkStyledButton onClick={handleAcceptListUpdate}>
-//         <Trans>Update list</Trans>
-//       </UnpaddedLinkStyledButton>
-//     )}
-//   </PopOverContent>
-// )
+const FilterPopover = ({ options, tokenId }: { options: ActionFilterTabs[]; tokenId: number | null }) => {
+  const getEvents = useGetEventCallback()
+  return (
+    <PopOverContent>
+      {options.map((option) => (
+        <UnpaddedLinkStyledButton key={option} onClick={() => getEvents({ filter: option, tokenId })}>
+          <TYPE.popOver>{ActionTypeTextHeader[option]}</TYPE.popOver>
+        </UnpaddedLinkStyledButton>
+      ))}
+    </PopOverContent>
+  )
+}
 
 export const HistoryHeader = () => {
+  const [open, toggle] = useToggle(false)
+  const node = useRef<HTMLDivElement>()
+  const { filter, tokenId } = useEventState()
+  useOnClickOutside(node, open ? toggle : undefined)
+  const options = filterTabs.filter((option) => option !== filter)
   return (
     <HistoryHeaderWrapper>
       <tr>
-        <th>
-          <TYPE.description2>
-            <Trans>Action</Trans>
-          </TYPE.description2>
+        <th ref={node as any}>
+          <Popover show={open} content={<FilterPopover options={options} tokenId={tokenId} />} placement={'bottom'}>
+            <RowFixed onClick={toggle}>
+              <TYPE.description2>{ActionTypeTextHeader[filter]}</TYPE.description2>
+              <ChevronElement showMore={open} />
+            </RowFixed>
+          </Popover>
         </th>
         <th>
           <TYPE.description2>
@@ -82,20 +80,30 @@ export const HistoryHeader = () => {
 
 export const HistoryTable = ({ currency }: { currency?: Currency }) => {
   const { eventLog } = useEventState()
-
+  const theme = useTheme()
   return (
     <>
-      {eventLog.length > 0 && (
-        <table style={{ marginTop: '26px', width: '100%', border: 'none' }} cellSpacing="0" cellPadding="0">
-          <HistoryHeader />
-          {currency &&
-            eventLog.map((row) => {
-              const status = row?.status ?? row?.params?.status ?? ActionHistoryStatus.PENDING
-              const statusIcon = getStatusIcon(row?.type, status)
-              return <TransactionHistoryRow row={row} key={row.createdAt} icon={statusIcon} />
-            })}
-        </table>
-      )}
+      <table style={{ marginTop: '26px', width: '100%', border: 'none' }} cellSpacing="0" cellPadding="0">
+        <HistoryHeader />
+        {eventLog.length > 0 &&
+          currency &&
+          eventLog.map((row) => {
+            const status = row?.status ?? row?.params?.status ?? ActionHistoryStatus.PENDING
+            const statusIcon = getStatusIcon(row?.type, status)
+            return <TransactionHistoryRow row={row} key={row.createdAt} icon={statusIcon} />
+          })}
+        {eventLog.length === 0 && (
+          <tr>
+            <td colSpan={4}>
+              <RowCenter style={{ padding: '20px' }}>
+                <TYPE.main color={theme.text2} textAlign="center">
+                  <Trans>No results found.</Trans>
+                </TYPE.main>
+              </RowCenter>
+            </td>
+          </tr>
+        )}
+      </table>
     </>
   )
 }

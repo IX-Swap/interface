@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit'
-import { ActionTypes } from 'components/Vault/enum'
+import { ActionFilterTabs, ActionTypes } from 'components/Vault/enum'
 import { PaginationDetails } from 'types/pagination'
 import {
   clearEventLog,
@@ -17,7 +17,7 @@ import {
 
 export interface EventLogState {
   eventLog: Array<LogItem>
-  filter: ActionTypes | null
+  filter: ActionFilterTabs
   page: number
   activeEvent: LogItem | null
   paginationDetails: PaginationDetails
@@ -28,7 +28,7 @@ export interface EventLogState {
 
 const initialState: EventLogState = {
   eventLog: [],
-  filter: null,
+  filter: 'all',
   page: 1,
   tokenId: null,
   paginationDetails: {

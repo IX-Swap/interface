@@ -6,7 +6,6 @@ import React, { useMemo } from 'react'
 import { useDepositModalToggle } from 'state/application/hooks'
 import { TYPE } from 'theme'
 import { BalanceRow } from './BalanceRow'
-import { AccreditationStatusEnum } from './enum'
 import { HistoryBlock } from './HistoryBlock'
 import { ExistingTitle, ExistingWrapper, TitleStatusRow } from './styleds'
 interface Props {
