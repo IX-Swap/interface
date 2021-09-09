@@ -22,7 +22,7 @@ export const ConnectWalletVesting = () => {
     <>
       <VestingTextWrapper onClick={connectWallet}>
         <Text fontSize={'18px'} lineHeight={'27px'} color={theme.text2}>
-          <Trans>Connect your wallet to see your vesting progress</Trans>
+          <Trans>Connect to your Web3 wallet to view your vesting progress </Trans>
         </Text>
       </VestingTextWrapper>
 
