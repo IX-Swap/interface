@@ -1,10 +1,11 @@
 import React from 'react'
 import { Link } from '@material-ui/core'
+import { generateImgSrc } from 'helpers/generateImgSrc'
 
 export const ExchangeRulesLink = () => {
   return (
     <Link
-      href='/documents/IXExchangeRules.pdf'
+      href={generateImgSrc('/IXExchangeRules.pdf')}
       target='_blank'
       rel='noopener noreferrer'
     >
