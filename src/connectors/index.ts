@@ -2,7 +2,7 @@ import { Web3Provider } from '@ethersproject/providers'
 import { InjectedConnector } from '@web3-react/injected-connector'
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 import { WalletLinkConnector } from '@web3-react/walletlink-connector'
-import { PortisConnector } from '@web3-react/portis-connector'
+// import { PortisConnector } from '@web3-react/portis-connector'
 import getLibrary from '../utils/getLibrary'
 
 import { FortmaticConnector } from './Fortmatic'
@@ -49,16 +49,16 @@ export const walletconnect = new WalletConnectConnector({
 })
 
 // mainnet only
-export const fortmatic = new FortmaticConnector({
-  apiKey: '',
-  chainId: 1,
-})
+// export const fortmatic = new FortmaticConnector({
+//   apiKey: '',
+//   chainId: 1,
+// })
 
 // mainnet only
-export const portis = new PortisConnector({
-  dAppId: '',
-  networks: [1],
-})
+// export const portis = new PortisConnector({
+//   dAppId: '',
+//   networks: [1],
+// })
 
 // mainnet only
 export const walletlink = new WalletLinkConnector({

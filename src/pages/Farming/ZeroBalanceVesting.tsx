@@ -48,7 +48,7 @@ export const ZeroBalanceVesting = () => {
 
       <ButtonPinkBorder
         data-testid="redirect-to-telegram"
-        style={{ width: '308px' }}
+        style={{ maxWidth: '308px', width: '100%' }}
         as={ExternalLink}
         href="https://t.me/ixswapofficial"
       >
