@@ -13,7 +13,7 @@ export interface AuthorizerViewReturnValue<T> {
 }
 
 export const renderStatusColumn = (s: string): JSX.Element => (
-  <AuthorizableStatus status={s} />
+  <AuthorizableStatus status={s} isNewTheme compact={false} />
 )
 
 export const statusColumn: TableColumn<any> = {

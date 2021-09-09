@@ -26,6 +26,8 @@ export type AuthorizableStatus =
   | 'Approved'
   | 'Rejected'
   | 'Submitted'
+  | 'Closed'
+  | 'Pending'
   | 'Draft'
   | ''
 export interface NumberFormat {

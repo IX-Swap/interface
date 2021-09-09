@@ -21,6 +21,7 @@ interface AuthorizerViewProps<T>
   title: string
   selectable?: boolean
   selectionActions?: AuthorizerSelectionActions
+  themeVariant?: 'default' | 'primary' | 'no-header'
 }
 
 export const AuthorizerTable = <T,>(
@@ -34,9 +35,11 @@ export const AuthorizerTable = <T,>(
     columns,
     name,
     uri,
+    themeVariant = 'primary',
     selectable = false,
     selectionActions = {}
   } = props
+
   const { filter: authFilter } = useAuthorizerFilter()
   const category = useAuthorizerCategory()
 
@@ -64,6 +67,7 @@ export const AuthorizerTable = <T,>(
           filter={mergedFilters}
           hasActions
           hasStatus
+          themeVariant={themeVariant}
           selectionHelper={selectable ? selectionHelperContext : undefined}
         />
       </Grid>

@@ -22,7 +22,7 @@ describe('renderStatusColumn', () => {
 
     expect(AuthorizableStatus).toHaveBeenCalledTimes(1)
     expect(AuthorizableStatus).toHaveBeenCalledWith(
-      { status: 'Test Status' },
+      { status: 'Test Status', compact: false, isNewTheme: true },
       {}
     )
   })
