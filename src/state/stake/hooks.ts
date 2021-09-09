@@ -32,6 +32,7 @@ import {
   saveStakingStatus,
   stake,
   checkAllowance,
+  updateIXSBalance,
 } from './actions'
 import { stakingsAdapter } from './utils'
 
@@ -301,6 +302,7 @@ export function useStakingStatus() {
   const balance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
   // adjust this when we have staking contracts
   const hasStaking = true
+  const updateIXSBalance = useUpdateIXSBalance()
 
   useEffect(() => {
     if (!account) {
@@ -314,6 +316,10 @@ export function useStakingStatus() {
     }
   }, [balance, account, dispatch, hasStaking])
 
+  useEffect(() => {
+    updateIXSBalance()
+  }, [account, balance])
+
   return status
 }
 
@@ -323,6 +329,18 @@ export function useStakingState(): AppState['staking'] {
 
 export function usePoolSizeState(): AppState['stakingPoolSize'] {
   return useSelector<AppState, AppState['stakingPoolSize']>((state) => state.stakingPoolSize)
+}
+
+export function useUpdateIXSBalance() {
+  const dispatch = useDispatch<AppDispatch>()
+  const { account, chainId } = useActiveWeb3React()
+  const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
+  const balance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
+  return useCallback(async () => {
+    const maxAmountInput = maxAmountSpend(balance)
+    const IXSAmount = maxAmountInput ? maxAmountInput?.toSignificant(5) : '0'
+    dispatch(updateIXSBalance({ IXSAmount }))
+  }, [dispatch, balance])
 }
 
 export function useFetchHistoricalPoolSize() {
@@ -421,6 +439,7 @@ export function useStakeFor(period?: PERIOD) {
   const dispatch = useDispatch<AppDispatch>()
   const staking = useIXSStakingContract()
   const { account } = useActiveWeb3React()
+  const updateIXSBalance = useUpdateIXSBalance()
 
   return useCallback(
     async (amount: string) => {
@@ -438,7 +457,9 @@ export function useStakeFor(period?: PERIOD) {
             const stakeTx = await staking?.stakeForWeek(account, stakeAmount, noData, {
               gasLimit: calculateGasMargin(estimatedGas),
             })
-            dispatch(stake.fulfilled({ data: stakeTx?.hash }))
+            const tx = await stakeTx.wait()
+            dispatch(stake.fulfilled({ txStatus: tx.status }))
+            updateIXSBalance()
             break
           }
           case PERIOD.ONE_MONTH: {
@@ -450,7 +471,9 @@ export function useStakeFor(period?: PERIOD) {
             const stakeTx = await staking?.stakeForMonth(account, stakeAmount, noData, {
               gasLimit: calculateGasMargin(estimatedGas),
             })
-            dispatch(stake.fulfilled({ data: stakeTx?.hash }))
+            const tx = await stakeTx.wait()
+            dispatch(stake.fulfilled({ txStatus: tx.status }))
+            updateIXSBalance()
             break
           }
           case PERIOD.TWO_MONTHS: {
@@ -462,19 +485,24 @@ export function useStakeFor(period?: PERIOD) {
             const stakeTx = await staking?.stakeForTwoMonths(account, stakeAmount, noData, {
               gasLimit: calculateGasMargin(estimatedGas),
             })
-            dispatch(stake.fulfilled({ data: stakeTx?.hash }))
+            const tx = await stakeTx.wait()
+            dispatch(stake.fulfilled({ txStatus: tx.status }))
+            updateIXSBalance()
             break
           }
           case PERIOD.THREE_MONTHS: {
             const estimatedGas = await staking?.estimateGas.stakeForThreeMonths(account, stakeAmount, noData)
             if (!estimatedGas) {
               dispatch(stake.rejected({ errorMessage: 'cannot estimate gas' }))
+              updateIXSBalance()
               break
             }
             const stakeTx = await staking?.stakeForThreeMonths(account, stakeAmount, noData, {
               gasLimit: calculateGasMargin(estimatedGas),
             })
-            dispatch(stake.fulfilled({ data: stakeTx?.hash }))
+            const tx = await stakeTx.wait()
+            dispatch(stake.fulfilled({ txStatus: tx.status }))
+            updateIXSBalance()
             break
           }
           default: {

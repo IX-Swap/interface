@@ -155,11 +155,11 @@ const Body = () => {
 
 export const MyStakingsTable = () => {
   const getStakings = useGetStakings()
-  const { stakings, stakingsLoading } = useStakingState()
+  const { stakings, stakingsLoading, hasStakedSuccessfully } = useStakingState()
 
   useEffect(() => {
     getStakings()
-  }, [getStakings])
+  }, [getStakings, hasStakedSuccessfully])
 
   function showTableData() {
     if (stakingsLoading) {
