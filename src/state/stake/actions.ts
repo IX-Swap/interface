@@ -6,6 +6,7 @@ export const selectTier = createAction<{ tier: Tier }>('stake/selectTier')
 export const getIsStakingPaused = createAction<{ isPaused: boolean }>('stake/isPaused')
 export const changeAccount = createAction<{ newAccount: string }>('stake/changeAccount')
 export const checkAllowance = createAction<{ allowanceAmount: number }>('stake/checkAllowance')
+export const updateIXSBalance = createAction<{ IXSAmount: string }>('stake/updateIXSBalance')
 
 export const increaseAllowance: Readonly<{
   pending: ActionCreatorWithoutPayload
@@ -19,7 +20,7 @@ export const increaseAllowance: Readonly<{
 
 export const stake: Readonly<{
   pending: ActionCreatorWithoutPayload
-  fulfilled: ActionCreatorWithPayload<{ data: any }>
+  fulfilled: ActionCreatorWithPayload<{ txStatus: number }>
   rejected: ActionCreatorWithPayload<{ errorMessage: string }>
 }> = {
   pending: createAction('stake/staking/pending'),

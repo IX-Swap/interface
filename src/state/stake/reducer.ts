@@ -8,6 +8,7 @@ import {
   getIsStakingPaused,
   changeAccount,
   checkAllowance,
+  updateIXSBalance,
 } from './actions'
 import { IStaking } from 'constants/stakingPeriods'
 
@@ -103,22 +104,6 @@ export const TIER_TYPES: TierType = {
   },
 }
 
-interface StakeTransaction {
-  apy: number
-  canUnstake: boolean
-  distributeAmount: number
-  endDate: string
-  lock_months: number
-  lockedTill: string
-  originalData: any
-  originalIndex: number
-  period: string
-  reward: number
-  stakeAmount: number
-  startDate: string
-  unixStart: number
-}
-
 interface StakingState {
   status: StakingStatus
   APY: APY
@@ -132,9 +117,9 @@ interface StakingState {
   stakings: IStaking[]
   stakingsLoading: boolean
   isPaused: boolean
-  userHasIXS: boolean
   metaMaskAccount: string | null
   allowanceAmount: number
+  IXSBalance: string | null
 }
 
 const initialState: StakingState = {
@@ -155,9 +140,9 @@ const initialState: StakingState = {
   stakings: [],
   stakingsLoading: false,
   isPaused: false,
-  userHasIXS: Boolean(localStorage.getItem('hasIXS')),
   metaMaskAccount: localStorage.getItem('account'),
   allowanceAmount: 0,
+  IXSBalance: localStorage.getItem('IXSBalance'),
 }
 
 export default createReducer<StakingState>(initialState, (builder) =>
@@ -165,14 +150,13 @@ export default createReducer<StakingState>(initialState, (builder) =>
     .addCase(saveStakingStatus, (state, { payload: { status } }) => {
       console.log('staking status: ', status)
       state.status = status
-      if (status === StakingStatus.STAKING) {
-        state.userHasIXS = true
-        localStorage.setItem('hasIXS', 'true')
-      }
+    })
+    .addCase(updateIXSBalance, (state, { payload: { IXSAmount } }) => {
+      state.IXSBalance = IXSAmount
+      localStorage.setItem('IXSBalance', IXSAmount)
     })
     .addCase(changeAccount, (state, { payload: { newAccount } }) => {
-      localStorage.removeItem('hasIXS')
-      state.userHasIXS = false
+      localStorage.setItem('IXSBalance', '0')
       state.metaMaskAccount = newAccount
       localStorage.setItem('account', newAccount)
     })
@@ -202,10 +186,15 @@ export default createReducer<StakingState>(initialState, (builder) =>
       state.isStaking = true
       state.isStakingFailed = false
     })
-    .addCase(stake.fulfilled, (state, { payload: { data } }) => {
+    .addCase(stake.fulfilled, (state, { payload: { txStatus } }) => {
       state.isStaking = false
-      state.isStakingFailed = false
-      state.hasStakedSuccessfully = true
+      if (txStatus === 1) {
+        state.hasStakedSuccessfully = true
+        state.isStakingFailed = false
+      } else {
+        state.hasStakedSuccessfully = false
+        state.isStakingFailed = true
+      }
     })
     .addCase(stake.rejected, (state, { payload: { errorMessage } }) => {
       state.isStaking = false

@@ -1,7 +1,7 @@
 import IXSStakingModal from 'components/earn/IXSStakingModal'
 import React, { useEffect } from 'react'
 import { useToggleModal, useCloseModals } from 'state/application/hooks'
-import { useStakingState, useIsVestingPaused } from 'state/stake/hooks'
+import { useStakingState, useIsVestingPaused, useUpdateIXSBalance } from 'state/stake/hooks'
 import { PromoTokenCard } from './PromoTokenCard'
 import { StakingPage } from './StakingPage'
 import { StakingWrapper } from '../styleds'
@@ -12,12 +12,13 @@ import { changeAccount } from 'state/stake/actions'
 import { AppDispatch } from 'state'
 
 export const Staking = () => {
-  const { userHasIXS, hasStakedSuccessfully, metaMaskAccount } = useStakingState()
+  const { IXSBalance, hasStakedSuccessfully, metaMaskAccount } = useStakingState()
   const isVestingPaused = useIsVestingPaused()
   const toggleStakeModal = useToggleModal(ApplicationModal.STAKE_IXS)
   const closeModals = useCloseModals()
   const { chainId, account } = useActiveWeb3React()
   const dispatch = useDispatch<AppDispatch>()
+  const updateIXSBalance = useUpdateIXSBalance()
 
   useEffect(() => {
     isVestingPaused()
@@ -27,18 +28,19 @@ export const Staking = () => {
     if (hasStakedSuccessfully) {
       closeModals()
     }
-  }, [hasStakedSuccessfully])
+  }, [hasStakedSuccessfully, closeModals])
 
   useEffect(() => {
     if (!account) {
       dispatch(changeAccount({ newAccount: 'null' }))
     } else if (account !== metaMaskAccount) {
       dispatch(changeAccount({ newAccount: account }))
+      updateIXSBalance()
     }
-  }, [chainId, account])
+  }, [chainId, account, metaMaskAccount, dispatch])
 
   function renderStakingPage() {
-    if (userHasIXS) {
+    if (IXSBalance && parseFloat(IXSBalance) > 0) {
       return <StakingPage />
     } else {
       return <PromoTokenCard />
