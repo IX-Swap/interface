@@ -43,11 +43,11 @@ const MenuFlyoutWrapper = styled.span`
   min-width: 622px;
   z-index: 100;
   padding: 34px;
+  visibility: visible;
   backdrop-filter: blur(20px);
   right: calc(50% - (622px / 2));
   ${({ theme }) => theme.mediaWidth.upToSmall`
-     top: 0;
-     overflow-y:scroll;
+     overflow-y:auto;
      padding: 0;
   `};
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`

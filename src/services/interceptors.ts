@@ -12,8 +12,8 @@ class APIError extends Error {
 }
 
 export const responseErrorInterceptor = (error: any) => {
-  const { message, code } = getError(error)
-  throw new APIError(message, code)
+  // const { message, code } = getError(error)
+  // throw new APIError(message, code)
 }
 
 export const responseSuccessInterceptor = (response: AxiosResponse<APIResponse>) => {

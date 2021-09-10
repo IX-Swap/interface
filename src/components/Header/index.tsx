@@ -2,7 +2,7 @@ import React from 'react'
 import useScrollPosition from '@react-hook/window-scroll'
 import { Text } from 'rebass'
 import { Trans } from '@lingui/macro'
-import styled from 'styled-components/macro'
+import styled, { css } from 'styled-components'
 import LogoDark from '../../assets/svg/logo-white.svg'
 import { useActiveWeb3React } from '../../hooks/web3'
 import { useETHBalances } from '../../state/wallet/hooks'
@@ -13,7 +13,9 @@ import { HeaderLinks } from './HeaderLinks'
 import useLightBackground from 'components/AppBackground/useLightBackground'
 import { SUPPORTED_TGE_CHAINS } from 'pages/App'
 
-const HeaderFrame = styled.div<{ showBackground: boolean; lightBackground: boolean }>`
+import { MobileMenu } from '../Mobile-Menu'
+
+const HeaderFrame = styled.div<{ showBackground: boolean; lightBackground: boolean; withNetwork: boolean }>`
   display: grid;
   grid-template-columns: 120px 1fr 120px;
   align-items: center;
@@ -29,22 +31,25 @@ const HeaderFrame = styled.div<{ showBackground: boolean; lightBackground: boole
 
   /* Background slide effect on scroll. */
   background-image: ${({ theme, lightBackground }) =>
-    `linear-gradient(to bottom, transparent 50%, ${lightBackground ? theme.bg1 : theme.bg0} 50% )}}`}
+    `linear-gradient(to bottom, transparent 50%, ${lightBackground ? theme.bg1 : theme.bg0} 50% )}}`};
   background-position: ${({ showBackground }) => (showBackground ? '0 -100%' : '0 0')};
   background-size: 100% 200%;
   /* box-shadow: 0px 0px 0px 1px ${({ theme, showBackground }) => (showBackground ? theme.bg2 : 'transparent;')}; */
   transition: background-position 0.1s, box-shadow 0.1s;
 
-  ${({ theme }) => theme.mediaWidth.upToMedium`
-    padding:  1rem;
-    grid-template-columns: auto 1fr;
-  `};
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    grid-template-columns: repeat(1, 1fr);
-  `};
-  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-    padding: 1rem;
-  `}
+  @media (max-width: 1280px) {
+    ${({ withNetwork }) =>
+      withNetwork &&
+      css`
+        grid-template-columns: auto 1fr auto;
+        grid-gap: 32px;
+      `}
+  }
+  @media (max-width: 1023px) {
+    grid-template-columns: auto 1fr auto;
+    grid-gap: 32px;
+    padding: 14px 18px;
+  }
 `
 
 const HeaderControls = styled.div`
@@ -53,7 +58,7 @@ const HeaderControls = styled.div`
   align-items: center;
   justify-self: flex-end;
 
-  ${({ theme }) => theme.mediaWidth.upToLarge`
+  /* ${({ theme }) => theme.mediaWidth.upToLarge`
     flex-direction: row;
     justify-content: space-between;
     justify-self: center;
@@ -71,7 +76,7 @@ const HeaderControls = styled.div`
   `};
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
     padding-top: 3rem;
-  `};
+  `}; */
 `
 
 const HeaderElement = styled.div`
@@ -84,7 +89,7 @@ const HeaderElement = styled.div`
   }
 
   ${({ theme }) => theme.mediaWidth.upToMedium`
-    flex-direction: row-reverse;
+    // flex-direction: row-reverse;
     align-items: center;
   `};
 `
@@ -120,8 +125,6 @@ const NetworkCard = styled(VioletCard)`
   padding: 2px 12px;
   ${({ theme }) => theme.mediaWidth.upToSmall`
     margin: 0;
-    margin-right: 0.5rem;
-    width: initial;
     overflow: hidden;
     text-overflow: ellipsis;
     flex-shrink: 1;
@@ -204,7 +207,11 @@ export default function Header() {
   return (
     <>
       <HeaderWrapper>
-        <HeaderFrame showBackground={scrollY > 45} lightBackground={hasLightBackground}>
+        <HeaderFrame
+          showBackground={scrollY > 45}
+          lightBackground={hasLightBackground}
+          withNetwork={Boolean(chainId && NETWORK_LABELS[chainId])}
+        >
           <HeaderRow>
             <Title href=".">
               <IXSIcon>
@@ -215,11 +222,11 @@ export default function Header() {
           <HeaderLinks />
           <HeaderControls>
             <HeaderElement>
-              <HideSmall>
-                {chainId && NETWORK_LABELS[chainId] && (
-                  <NetworkCard title={NETWORK_LABELS[chainId]}>{NETWORK_LABELS[chainId]}</NetworkCard>
-                )}
-              </HideSmall>
+              {/* <HideSmall> */}
+              {chainId && NETWORK_LABELS[chainId] && (
+                <NetworkCard title={NETWORK_LABELS[chainId]}>{NETWORK_LABELS[chainId]}</NetworkCard>
+              )}
+              {/* </HideSmall> */}
               <AccountElement active={!!account} style={{ pointerEvents: 'auto' }}>
                 {account && userEthBalance ? (
                   <BalanceText style={{ flexShrink: 0 }} pl="0.75rem" pr="0.5rem" fontWeight={600}>
@@ -230,6 +237,7 @@ export default function Header() {
               </AccountElement>
             </HeaderElement>
           </HeaderControls>
+          <MobileMenu />
         </HeaderFrame>
       </HeaderWrapper>
     </>
