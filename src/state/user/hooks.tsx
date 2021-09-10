@@ -466,7 +466,7 @@ export const chooseBrokerDealer = async ({ pairId }: { pairId: number }) => {
 
 export function usePassAccreditation(): (tokenId: number, brokerDealerPairId: number) => Promise<void> {
   const dispatch = useDispatch<AppDispatch>()
-  const login = useLogin({ mustHavePreviousLogin: false, expireLogin: false })
+  const login = useLogin({ mustHavePreviousLogin: true, expireLogin: false })
   const fetchTokens = useFetchUserSecTokenListCallback()
 
   // note: prevent dispatch if using for list search or unsupported list
@@ -495,7 +495,7 @@ export function usePassAccreditation(): (tokenId: number, brokerDealerPairId: nu
 
 export function useAccount() {
   const savedAccount = useUserAccountState()
-  const { account } = useWeb3React()
+  const { account } = useActiveWeb3React()
   const dispatch = useDispatch<AppDispatch>()
   const login = useLogin({ mustHavePreviousLogin: true, expireLogin: true })
   const getUserSecTokens = useFetchUserSecTokenListCallback()
@@ -518,6 +518,7 @@ export function useAccount() {
   }, [expiresAt, account, authenticate, token])
 
   // when user logins to another account clear his data and relogin him
+
   useEffect(() => {
     if (account && savedAccount && savedAccount !== account) {
       dispatch(saveToken({ value: { token: '', expiresAt: 0 } }))
