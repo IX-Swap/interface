@@ -15,6 +15,9 @@ import { MouseoverTooltip } from 'components/Tooltip'
 import { IconWrapper } from 'components/AccountDetails/styleds'
 import { ReactComponent as InfoIcon } from 'assets/images/attention.svg'
 import { ButtonIXSGradient } from 'components/Button'
+import { useToggleModal } from 'state/application/hooks'
+import { ApplicationModal } from 'state/application/actions'
+import { UnstakeModal } from './Unstaking/UnstakeModal'
 
 import { TYPE } from 'theme'
 
@@ -70,6 +73,7 @@ const Header = () => {
 
 const Body = () => {
   const { stakings } = useStakingState()
+  const toggleUnstakeModal = useToggleModal(ApplicationModal.UNSTAKE_IXS)
 
   useEffect(() => {
     console.log('Stakings: ', stakings)
@@ -143,7 +147,7 @@ const Body = () => {
           <div>{formatAmount(stake.distributeAmount)} IXSgov</div>
           <div className="rewards">{formatAmount(stake.reward)} IXS</div>
           {stake.canUnstake ? (
-            <UnstakeButton>
+            <UnstakeButton onClick={toggleUnstakeModal}>
               <TYPE.subHeader1>
                 <Trans>Unstake</Trans>
               </TYPE.subHeader1>
@@ -168,6 +172,7 @@ const Body = () => {
 export const MyStakingsTable = () => {
   const getStakings = useGetStakings()
   const { stakings, stakingsLoading, hasStakedSuccessfully } = useStakingState()
+  const toggleUnstakeModal = useToggleModal(ApplicationModal.UNSTAKE_IXS)
 
   useEffect(() => {
     getStakings()
@@ -192,14 +197,17 @@ export const MyStakingsTable = () => {
   }
 
   return (
-    <Box style={{ width: '100%' }}>
-      <Box marginBottom={22}>
-        <TYPE.title5>
-          <Trans>My stakes</Trans>
-        </TYPE.title5>
+    <>
+      <Box style={{ width: '100%' }}>
+        <Box marginBottom={22}>
+          <TYPE.title5>
+            <Trans>My stakes</Trans>
+          </TYPE.title5>
+        </Box>
+        {showTableData()}
       </Box>
-      {showTableData()}
-    </Box>
+      <UnstakeModal onDismiss={toggleUnstakeModal} />
+    </>
   )
 }
 
