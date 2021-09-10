@@ -98,7 +98,7 @@ export default function WalletModal({
       setWalletView(WALLET_VIEWS.ACCOUNT)
     }
   }, [walletModalOpen])
-  const login = useLogin({ mustHavePreviousLogin: false, expireLogin: true })
+  const login = useLogin({ mustHavePreviousLogin: true, expireLogin: true })
   // close modal when a connection is successful
   const activePrevious = usePrevious(active)
   const connectorPrevious = usePrevious(connector)
