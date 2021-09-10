@@ -91,7 +91,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
           setError('')
         }
       }
-    } else {
+    } else if (!isStaking && !approvingIXS) {
       setError('Wrong IXS amount')
       setTypedValue('')
     }
@@ -135,7 +135,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
   }
 
   function renderStakeButton() {
-    if (allowanceAmount > parseFloat(typedValue) || isIXSApproved) {
+    if (!typedValue || allowanceAmount > parseFloat(typedValue) || isIXSApproved) {
       return (
         <ButtonIXSWide
           data-testid="stake-button"
