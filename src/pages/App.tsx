@@ -45,11 +45,11 @@ const BodyWrapper = styled.div`
   margin-top: 120px;
   align-items: center;
   flex: 1;
-  z-index: 1;
+  /* z-index: 1; */
 
   ${({ theme }) => theme.mediaWidth.upToSmall`
     padding: 16px;
-    margin-top: 10rem;
+    margin-top: 64px;
   `};
 `
 

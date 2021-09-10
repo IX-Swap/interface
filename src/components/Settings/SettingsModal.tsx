@@ -43,11 +43,11 @@ const MenuFlyoutWrapper = styled.span`
   min-width: 622px;
   z-index: 100;
   padding: 34px;
+  visibility: visible;
   backdrop-filter: blur(20px);
   right: calc(50% - (622px / 2));
   ${({ theme }) => theme.mediaWidth.upToSmall`
-     top: 0;
-     overflow-y:scroll;
+     overflow-y:auto;
      padding: 0;
   `};
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
@@ -91,13 +91,14 @@ const SettingsModal = React.forwardRef(({ placeholderSlippage }: { placeholderSl
   const [singleHopOnly, setSingleHopOnly] = useUserSingleHopOnly()
 
   const [showConfirmation, setShowConfirmation] = useState(false)
+  console.log('log=> open', open)
 
   return (
     // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/30451
     <StyledSettings>
       <ExpertModeModal showConfirmation={showConfirmation} toggleConfirmation={setShowConfirmation} />
       {open && (
-        <MenuFlyoutWrapper>
+        <MenuFlyoutWrapper id="keka">
           <MenuFlyout>
             <AutoColumn gap="md" style={{ padding: '1rem', gridRowGap: '18px' }}>
               <SettingsHeader>
