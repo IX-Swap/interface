@@ -32,13 +32,14 @@ export const Menu = ({ close }: Props) => {
           <CloseIcon src={closeIcon} alt={closeIcon} onClick={close} />
         </CloseContainer>
         <MenuList>
-          <MenuListItem id={`swap-nav-link`} to={'/swap'} onClick={close}>
+          <MenuListItem id={`swap-nav-link`} to={'/swap'} onClick={close} activeClassName="active-item">
             <Trans>SWAP</Trans>
           </MenuListItem>
           <MenuListItem
             onClick={close}
             id={`pool-nav-link`}
             to={'/pool'}
+            activeClassName="active-item"
             isActive={(match, { pathname }) =>
               Boolean(match) ||
               pathname.startsWith('/add') ||
@@ -49,14 +50,19 @@ export const Menu = ({ close }: Props) => {
             <Trans>POOL</Trans>
           </MenuListItem>
           {SECURITY_TOKENS && (
-            <MenuListItem id={`stake-nav-link`} to={routes.securityTokens()} onClick={close}>
+            <MenuListItem
+              activeClassName="active-item"
+              id={`stake-nav-link`}
+              to={routes.securityTokens()}
+              onClick={close}
+            >
               <Trans>Security tokens</Trans>
             </MenuListItem>
           )}
-          <MenuListItem id={`stake-nav-link`} to={routes.staking} onClick={close}>
+          <MenuListItem activeClassName="active-item" id={`stake-nav-link`} to={routes.staking} onClick={close}>
             <Trans>Staking IXS</Trans>
           </MenuListItem>
-          <MenuListItem id={`vesting-nav-link`} to={routes.vesting} onClick={close}>
+          <MenuListItem activeClassName="active-item" id={`vesting-nav-link`} to={routes.vesting} onClick={close}>
             <Trans>Vesting IXS</Trans>
           </MenuListItem>
         </MenuList>
@@ -75,6 +81,7 @@ const ModalContainer = styled.div`
   z-index: 9999;
   padding: 32px 18px;
   display: none;
+  background: ${({ theme }) => theme.bgG16};
   @media (max-width: 1023px) {
     display: block;
   }
@@ -116,6 +123,11 @@ const MenuListItem = styled(NavLink)`
   outline: none;
   cursor: pointer;
   text-decoration: none;
-  color: white;
   text-align: center;
+  color: ${({ theme }) => theme.text2};
+  opacity: 0.6;
+  &.active-item {
+    opacity: 1;
+    color: white;
+  }
 `
