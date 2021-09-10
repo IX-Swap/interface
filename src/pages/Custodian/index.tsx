@@ -5,7 +5,7 @@ import { Border, ToggleOption, ToggleWrapper } from 'components/Tabs'
 import { useActiveWeb3React } from 'hooks/web3'
 import { SUPPORTED_TGE_CHAINS } from 'pages/App'
 import AppBody from 'pages/AppBody'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useAuthState } from 'state/auth/hooks'
 import { AllSecTokens } from './AllSecTokens'
 import { MySecurities } from './MySecurities'
@@ -15,6 +15,13 @@ export default function Custodian() {
   const { account, chainId } = useActiveWeb3React()
   const isLoggedIn = !!token && !!account
   const [showAllSecTokens, setShowAllSecTokens] = useState<boolean>(!isLoggedIn)
+
+  useEffect(() => {
+    if (!isLoggedIn && !showAllSecTokens) {
+      setShowAllSecTokens(true)
+    }
+  }, [isLoggedIn])
+
   return (
     <>
       <AppBody blurred={chainId === SUPPORTED_TGE_CHAINS.MAIN}>

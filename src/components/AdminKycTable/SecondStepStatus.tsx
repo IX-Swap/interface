@@ -156,7 +156,8 @@ const RejectButton = styled(ButtonGray)`
   ${defaultBtnStyles};
   color: ${({ theme: { error } }) => error};
   background-color: rgba(55, 46, 94, 0.42);
-  &:hover {
+  &:hover,
+  :focus {
     background-color: ${({ theme: { error } }) => `${error}20`};
   }
 `

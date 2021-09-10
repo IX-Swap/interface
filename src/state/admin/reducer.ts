@@ -139,7 +139,7 @@ export default createReducer<AdminState>(initialState, (builder) =>
       state.adminError = null
       state.kycList = {
         ...state.kycList,
-        items: list.map((el) => ({ ...el, status: el.id === data.id ? data.status : el.status })),
+        items: list.filter((el) => el.id !== data.id),
       }
     })
     .addCase(postKycReset.rejected, (state, { payload: { errorMessage } }) => {

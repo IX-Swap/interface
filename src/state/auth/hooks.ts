@@ -62,6 +62,7 @@ export function useLogin({
           // gets here if previously logged in or previous login not needed
           dispatch(postLogin.pending())
           const auth = await fetchToken()
+
           if (!auth) {
             dispatch(postLogin.rejected({ errorMessage: 'Could not login' }))
             return LOGIN_STATUS.FAILED
