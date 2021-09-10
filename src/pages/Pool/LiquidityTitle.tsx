@@ -3,13 +3,14 @@ import { HideSmall } from '../../theme'
 import { Trans } from '@lingui/macro'
 import styled from 'styled-components'
 import { RowBetween } from '../../components/Row'
+import SettingsTab from 'components/Settings'
+import { useDerivedSwapInfo } from 'state/swap/hooks'
 
 const TitleRow = styled(RowBetween)`
   ${({ theme }) => theme.mediaWidth.upToSmall`
     flex-wrap: wrap;
     gap: 12px;
     width: 100%;
-    flex-direction: column-reverse;
   `};
 `
 const Title = styled.span`
@@ -18,13 +19,13 @@ const Title = styled.span`
   line-height: 33px;
 `
 export const LiquidityTitle = () => {
+  const { allowedSlippage } = useDerivedSwapInfo()
   return (
     <TitleRow padding={'0'}>
-      <HideSmall>
-        <Title>
-          <Trans>Liquidity Pool</Trans>
-        </Title>
-      </HideSmall>
+      <Title>
+        <Trans>Liquidity Pool</Trans>
+      </Title>
+      <SettingsTab placeholderSlippage={allowedSlippage} />
     </TitleRow>
   )
 }

@@ -1,7 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { ChevronElement } from 'components/ChevronElement'
 import Popover from 'components/Popover'
-import SettingsTab from 'components/Settings'
 import { SECURITY_TOKENS } from 'config'
 import { useOnClickOutside } from 'hooks/useOnClickOutside'
 import useToggle from 'hooks/useToggle'
@@ -21,18 +20,14 @@ const HeaderLinksWrap = styled(Row)`
   width: fit-content;
   display: flex;
   flex-wrap: wrap;
-  grid-gap: 2px 11px;
   overflow: visible;
+  grid-gap: 32px;
   ${({ theme }) => theme.mediaWidth.upToMedium`
     justify-self: flex-end;
   `};
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-   margin: 0.5rem 0;
-   justify-self: center;
-  `};
-  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-   grid-gap: 5px 5px;
-  `};
+  @media (max-width: 1023px) {
+    display: none;
+  }
 `
 const navLinkStyles = css`
   ${({ theme }) => theme.flexRowNoWrap}
@@ -46,7 +41,6 @@ const navLinkStyles = css`
   font-size: 20px;
   line-height: 30px;
   width: fit-content;
-  padding: 0 25px;
   word-break: break-word;
   opacity: 0.3;
   border-radius: 45px;
@@ -149,7 +143,6 @@ export const HeaderLinks = () => {
           </RowFixed>
         </Popover>
       </StyledNavLink>
-      <SettingsTab placeholderSlippage={allowedSlippage} />
     </HeaderLinksWrap>
   )
 }

@@ -6,6 +6,7 @@ import { ButtonIXSWide } from 'components/Button'
 
 import clipboardTextIcon from '../../assets/images/clipboard-text .svg'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
+import closeIcon from '../../assets/images/cross.svg'
 import { useDeclineKyc } from 'state/admin/hooks'
 
 interface Props {
@@ -48,6 +49,7 @@ export const RejectModal = ({ isModalOpen, closeModal, id }: Props) => {
         <ModalContent>
           <Title>
             <Trans>Reject</Trans>
+            <img src={closeIcon} alt={closeIcon} width="18px" height="18px" onClick={closeModal} />
           </Title>
           <LabelContainer>
             <Label>Accompanying text</Label>
@@ -68,6 +70,13 @@ const Title = styled.div`
   font-weight: 600;
   font-size: 22px;
   margin-bottom: 18px;
+  display: grid;
+  grid-template-columns: auto 32px;
+  grid-gap: 15px;
+  align-items: center;
+  > img {
+    cursor: pointer;
+  }
 `
 
 const ModalContainer = styled.div`
@@ -86,7 +95,7 @@ const ModalContainer = styled.div`
 const ModalContent = styled.div`
   background: ${({ theme: { bgG4 } }) => bgG4};
   width: 555px;
-  padding: 42px;
+  padding: 32px 42px 42px;
   border-radius: 20px;
   @media (max-width: 768px) {
     width: 100%;

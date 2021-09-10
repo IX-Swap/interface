@@ -47,7 +47,7 @@ const Container = styled.div<{ hideInput: boolean }>`
   background-color: ${({ theme }) => theme.bg7};
   width: ${({ hideInput }) => (hideInput ? '100%' : 'initial')};
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-      boder-radius: 1rem;
+      border-radius: 20px;
   `};
 `
 
@@ -91,7 +91,7 @@ const LabelRow = styled.div`
   line-height: 1rem;
   padding: 0 2rem 9px 2.5rem;
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-      padding: 10px 1rem;
+      padding: 0px 1rem 10px;
       flex-wrap: wrap;
   `};
   span:hover {
@@ -103,6 +103,9 @@ const LabelRow = styled.div`
 const FiatRow = styled(LabelRow)`
   justify-content: space-between;
   gap: 16px;
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+    gap: 0px;
+  `};
 `
 
 const Aligner = styled.span`
@@ -126,11 +129,7 @@ const StyledTokenName = styled.span<{ active?: boolean }>`
   ${({ active }) => (active ? '  margin: 0 0.25rem 0 0.25rem;' : '  margin: 0 0.25rem 0 0.25rem;')}
   font-size:  ${({ active }) => (active ? '18px' : '18px')};
 `
-const BalanceRow = styled(RowEnd)`
-  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-     margin-top: 0.5rem;
-  `};
-`
+const BalanceRow = styled(RowEnd)``
 const BalanceWrap = styled(RowFixed)`
   display: -webkit-box;
   -webkit-line-clamp: 1;

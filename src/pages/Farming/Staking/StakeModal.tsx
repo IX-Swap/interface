@@ -91,7 +91,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
           setError('')
         }
       }
-    } else {
+    } else if (!isStaking && !approvingIXS) {
       setError('Wrong IXS amount')
       setTypedValue('')
     }
@@ -135,7 +135,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
   }
 
   function renderStakeButton() {
-    if (allowanceAmount > parseFloat(typedValue) || isIXSApproved) {
+    if (!typedValue || allowanceAmount > parseFloat(typedValue) || isIXSApproved) {
       return (
         <ButtonIXSWide
           data-testid="stake-button"
@@ -206,7 +206,8 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
               <RowBetween style={{ flexWrap: 'wrap' }}>
                 <StakingInput
                   placeholder="0.0"
-                  type="number"
+                  type="tel"
+                  pattern="[0-9]*"
                   color={error ? 'red' : 'text1'}
                   ref={amountOfIXStoStakeInput}
                   onInput={onUserInput}

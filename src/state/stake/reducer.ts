@@ -148,7 +148,6 @@ const initialState: StakingState = {
 export default createReducer<StakingState>(initialState, (builder) =>
   builder
     .addCase(saveStakingStatus, (state, { payload: { status } }) => {
-      console.log('staking status: ', status)
       state.status = status
     })
     .addCase(updateIXSBalance, (state, { payload: { IXSAmount } }) => {
