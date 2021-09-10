@@ -338,9 +338,8 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
 }
 
 const EllipsedText = styled.div`
-  display: flex;
-  align-items: center;
-  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr auto;
   > div {
     overflow: hidden;
     white-space: nowrap;
@@ -447,28 +446,39 @@ const ArrowWrapper = styled.div`
   margin-top: 12px;
   margin-bottom: 12px;
   left: calc(50% - 16px);
-  /* transform: rotate(90deg); */
   background-color: ${({ theme }) => theme.bg9};
   z-index: 2;
 `
 const StakeInfoContainer = styled(Column)`
-  gap: 5px;
   background-color: ${({ theme }) => theme.bg8};
   padding: 25px 23px;
   border-radius: 20px;
-  @media (max-width: 768px) {
-    > div {
-      height: auto;
-      font-size: 13px;
-      > :first-child {
-        min-width: fit-content;
+  grid-gap: 16px;
+  > div {
+    display: grid;
+    grid-gap: 15px;
+    grid-template-columns: auto 1fr;
+    height: auto;
+    > :first-child {
+      min-width: fit-content;
+      font-size: 14px;
+      color: ${({ theme }) => theme.text2};
+    }
+    > :last-child {
+      width: 100%;
+      > div {
+        color: white;
+        font-size: 16px;
+        width: 100%;
+        text-align: right;
       }
+    }
+    @media (max-width: 540px) {
+      grid-template-columns: 1fr;
+      grid-gap: 0;
       > :last-child {
-        /* width: 100%; */
         > div {
-          width: 100%;
-          text-align: right;
-          margin-left: 10px;
+          text-align: left;
         }
       }
     }
