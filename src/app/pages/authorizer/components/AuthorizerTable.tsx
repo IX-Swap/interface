@@ -37,7 +37,8 @@ export const AuthorizerTable = <T,>(
     uri,
     themeVariant = 'primary',
     selectable = false,
-    selectionActions = {}
+    selectionActions = {},
+    hasStatus = true
   } = props
 
   const { filter: authFilter } = useAuthorizerFilter()
@@ -66,7 +67,7 @@ export const AuthorizerTable = <T,>(
           actions={withExtraActions<T>()}
           filter={mergedFilters}
           hasActions
-          hasStatus
+          hasStatus={hasStatus}
           themeVariant={themeVariant}
           selectionHelper={selectable ? selectionHelperContext : undefined}
         />

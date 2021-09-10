@@ -3,16 +3,20 @@ import { useSelectionHelperContext } from 'components/SelectionHelper'
 import React from 'react'
 
 export interface ApproveSelectionButtonProps {
-  approve?: () => void
+  approve?: (selected: any[]) => void
+  disabled?: boolean
 }
 
 export const ApproveSelectionButton = ({
-  approve
+  approve,
+  disabled = false
 }: ApproveSelectionButtonProps) => {
-  const { hasSelected } = useSelectionHelperContext()
+  const { hasSelected, selected } = useSelectionHelperContext()
   const handleClick = () => {
-    approve?.()
+    approve?.(selected.map((item: any) => item._id))
   }
 
-  return <ApproveButton disabled={!hasSelected} approve={handleClick} />
+  return (
+    <ApproveButton disabled={!hasSelected || disabled} approve={handleClick} />
+  )
 }

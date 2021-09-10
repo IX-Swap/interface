@@ -3,16 +3,20 @@ import React from 'react'
 import { useSelectionHelperContext } from 'components/SelectionHelper'
 
 export interface RejectSelectionButtonProps {
-  reject?: () => void
+  reject?: (selected: any[]) => void
+  disabled?: boolean
 }
 
 export const RejectSelectionButton = ({
-  reject
+  reject,
+  disabled = false
 }: RejectSelectionButtonProps) => {
-  const { hasSelected } = useSelectionHelperContext()
+  const { hasSelected, selected } = useSelectionHelperContext()
   const handleClick = () => {
-    reject?.()
+    reject?.(selected.map((item: any) => item._id))
   }
 
-  return <RejectButton disabled={!hasSelected} reject={handleClick} />
+  return (
+    <RejectButton disabled={!hasSelected || disabled} reject={handleClick} />
+  )
 }

@@ -4,8 +4,8 @@ import { RejectSelectionButton } from 'app/pages/authorizer/components/Selection
 import React from 'react'
 
 export interface AuthorizerSelectionActions {
-  approve?: () => void
-  reject?: () => void
+  approve?: { action: () => void; disabled: boolean }
+  reject?: { action: () => void; disabled: boolean }
 }
 
 export interface SelectionActionsProps {
@@ -15,9 +15,15 @@ export interface SelectionActionsProps {
 export const SelectionActions = ({ actions }: SelectionActionsProps) => {
   return (
     <Box display='flex' justifyContent='flex-end'>
-      <RejectSelectionButton reject={actions.reject} />
+      <RejectSelectionButton
+        reject={actions.reject?.action}
+        disabled={actions.reject?.disabled}
+      />
       <Box px={1} />
-      <ApproveSelectionButton approve={actions.approve} />
+      <ApproveSelectionButton
+        approve={actions.approve?.action}
+        disabled={actions.approve?.disabled}
+      />
     </Box>
   )
 }

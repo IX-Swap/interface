@@ -6,6 +6,7 @@ import { Filters } from 'app/pages/authorizer/components/Filters'
 import { AuthorizerTable } from './AuthorizerTable'
 import { FiltersToggle } from 'app/components/FiltersToggle'
 import { SelectionHelper } from 'components/SelectionHelper'
+import { AuthorizerSelectionActions } from 'app/pages/authorizer/components/SelectionAction/SelectionActions'
 
 export interface AuthorizerListProps<T>
   extends Omit<TableViewProps<T>, 'actions'>,
@@ -14,6 +15,7 @@ export interface AuthorizerListProps<T>
   title: string
   selectable?: boolean
   itemComparator?: (a: any, b: any) => boolean
+  selectionActions?: AuthorizerSelectionActions
 }
 
 export const defaultItemComparator = (a: any, b: any) => {

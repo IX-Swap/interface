@@ -50,6 +50,18 @@ export const AuthorizableStatus: React.FC<AuthorizableStatusProps> = props => {
           {compact ? 'S' : 'Submitted'}
         </Typography>
       )
+    case 'Open':
+      return (
+        <Typography
+          className={classNames(classes.authStatus, classes.open, {
+            [classes.compact]: compact,
+            [classes.authStatusNewTheme]: isNewTheme,
+            [classes.openNewTheme]: isNewTheme
+          })}
+        >
+          {compact ? 'O' : 'Open'}
+        </Typography>
+      )
     case 'Closed':
       return (
         <Typography
@@ -62,7 +74,65 @@ export const AuthorizableStatus: React.FC<AuthorizableStatusProps> = props => {
           {compact ? 'C' : 'Closed'}
         </Typography>
       )
-    default:
+    /**
+       * NOT_FUNDED: 'Not funded',
+      FUNDS_ON_HOLD: 'Funds on hold',
+      SETTLEMENT_IN_PROGRESS: 'Settlement in Progress',
+      FUNDS_TRANSFERRED: 'Funds transferred',
+      REJECTED: 'Rejected'
+       */
+    case 'Not funded':
+      return (
+        <Typography
+          className={classNames(classes.authStatus, classes.open, {
+            [classes.compact]: compact,
+            [classes.authStatusNewTheme]: isNewTheme,
+            [classes.openNewTheme]: isNewTheme
+          })}
+        >
+          {compact ? 'N' : 'Not funded'}
+        </Typography>
+      )
+    case 'Funds on hold':
+      return (
+        <Typography
+          className={classNames(classes.authStatus, classes.rejected, {
+            [classes.compact]: compact,
+            [classes.authStatusNewTheme]: isNewTheme,
+            [classes.rejectedNewTheme]: isNewTheme
+          })}
+        >
+          {compact ? 'H' : 'Funds on hold'}
+        </Typography>
+      )
+
+    case 'Settlement in Progress':
+      return (
+        <Typography
+          className={classNames(classes.authStatus, classes.unauthorized, {
+            [classes.compact]: compact,
+            [classes.authStatusNewTheme]: isNewTheme,
+            [classes.submittedNewTheme]: isNewTheme
+          })}
+        >
+          {compact ? 'S' : 'Settlement in Progress'}
+        </Typography>
+      )
+
+    case 'Funds transferred':
+      return (
+        <Typography
+          className={classNames(classes.authStatus, classes.approved, {
+            [classes.compact]: compact,
+            [classes.authStatusNewTheme]: isNewTheme,
+            [classes.approvedNewTheme]: isNewTheme
+          })}
+        >
+          {compact ? 'T' : 'Funds transferred'}
+        </Typography>
+      )
+
+    case 'Draft':
       return (
         <Typography
           className={classNames(classes.authStatus, classes.unauthorized, {
@@ -74,5 +144,8 @@ export const AuthorizableStatus: React.FC<AuthorizableStatusProps> = props => {
           {compact ? 'D' : 'Draft'}
         </Typography>
       )
+
+    default:
+      return <></>
   }
 }
