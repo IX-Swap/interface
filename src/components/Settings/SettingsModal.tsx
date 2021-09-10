@@ -91,14 +91,13 @@ const SettingsModal = React.forwardRef(({ placeholderSlippage }: { placeholderSl
   const [singleHopOnly, setSingleHopOnly] = useUserSingleHopOnly()
 
   const [showConfirmation, setShowConfirmation] = useState(false)
-  console.log('log=> open', open)
 
   return (
     // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/30451
     <StyledSettings>
       <ExpertModeModal showConfirmation={showConfirmation} toggleConfirmation={setShowConfirmation} />
       {open && (
-        <MenuFlyoutWrapper id="keka">
+        <MenuFlyoutWrapper>
           <MenuFlyout>
             <AutoColumn gap="md" style={{ padding: '1rem', gridRowGap: '18px' }}>
               <SettingsHeader>
