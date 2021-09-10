@@ -1,6 +1,6 @@
 import { Button, Grid } from '@material-ui/core'
 import { CommitmentInvestForm } from 'app/pages/accounts/components/Commitments/CommitmentInvestForm'
-import { useMakeCommitment } from 'app/pages/invest/hooks/useMakeCommitment'
+import { useConfirmCommitment } from 'app/pages/accounts/hooks/useConfirmCommitment'
 import React, { useState } from 'react'
 import { Commitment } from 'types/commitment'
 
@@ -12,22 +12,19 @@ export const CommitmentsTableActions = ({
   item
 }: CommitmentsTableActionsProps) => {
   const [open, setOpen] = useState(false)
-  const {
-    invest: [makeInvestment, { isLoading }]
-  } = useMakeCommitment()
-  const closeDialog = () => {
-    setOpen(false)
-  }
 
   const openDialog = () => {
     setOpen(true)
   }
 
+  const closeDialog = () => {
+    setOpen(false)
+  }
+
+  const [confirm, { isLoading }] = useConfirmCommitment(closeDialog)
+
   const handleSubmit = async (args: { otp: string }) => {
-    console.log({ args })
-    console.log({ item })
-    await makeInvestment()
-    closeDialog()
+    await confirm({ commitmentId: item._id, otp: args.otp })
   }
 
   return (

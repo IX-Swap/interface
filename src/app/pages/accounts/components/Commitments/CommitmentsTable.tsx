@@ -18,7 +18,11 @@ export const CommitmentsTable: React.FC = () => {
       name={investQueryKeys.getCommitmentsByUserId(userId)}
       columns={commitmentsColumns}
       hasActions
+      filter={{
+        fundStatus: 'Not funded'
+      }}
       actions={CommitmentsTableActions}
+      themeVariant='primary'
     />
   )
 }

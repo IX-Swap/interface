@@ -97,7 +97,9 @@ export const accountsURL = {
       `/accounts/banks/payment-method?country=${country}&swiftCode=${swiftCode}`
   },
   commitments: {
-    getAllByUserId: (userId: string) => `/issuance/commitments/list/${userId}`
+    getAllByUserId: (userId: string) => `/issuance/commitments/list/${userId}`,
+    confirmCommitment: (commitmentId: string) =>
+      `/issuance/commitments/${commitmentId}/confirmInvestment`
   }
 }
 
