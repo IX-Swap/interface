@@ -338,7 +338,7 @@ export function useUpdateIXSBalance() {
   const balance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
   return useCallback(async () => {
     const maxAmountInput = maxAmountSpend(balance)
-    const IXSAmount = maxAmountInput ? maxAmountInput?.toSignificant(5) : '0'
+    const IXSAmount = maxAmountInput ? maxAmountInput?.toFixed(3) : '0'
     dispatch(updateIXSBalance({ IXSAmount }))
   }, [dispatch, balance])
 }
