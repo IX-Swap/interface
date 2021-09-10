@@ -14,6 +14,7 @@ import { ReactComponent as LockIcon } from 'assets/images/lock.svg'
 import { MouseoverTooltip } from 'components/Tooltip'
 import { IconWrapper } from 'components/AccountDetails/styleds'
 import { ReactComponent as InfoIcon } from 'assets/images/attention.svg'
+import { ButtonIXSGradient } from 'components/Button'
 
 import { TYPE } from 'theme'
 
@@ -70,6 +71,10 @@ const Header = () => {
 const Body = () => {
   const { stakings } = useStakingState()
 
+  useEffect(() => {
+    console.log('Stakings: ', stakings)
+  }, [stakings])
+
   function formatAmount(amount: number) {
     return amount.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 10 })
   }
@@ -118,37 +123,44 @@ const Body = () => {
 
   return (
     <>
-      {stakings?.map(
-        ({ period, startDateUnix, endDateUnix, lockedTillUnix, apy, stakeAmount, distributeAmount, reward }) => (
-          <StyledBodyRow key={startDateUnix}>
-            <Tier>
-              <span className="digit">{getPeriodDigit(period)}</span>&nbsp;{getPeriodString(period).toUpperCase()}
-            </Tier>
-            <div>{apy}%</div>
-            <Column>
-              <Row>
-                {formatDate(startDateUnix)} <MutedText>{getDateFullTime(startDateUnix)}</MutedText>
-              </Row>
-              <Row>
-                {formatDate(endDateUnix)} <MutedText>{getDateFullTime(endDateUnix)}</MutedText>
-              </Row>
-            </Column>
-            <div>{getLockPeriod(period)}</div>
-            <div>{formatAmount(stakeAmount)} IXS</div>
-            <div>{formatAmount(distributeAmount)} IXSgov</div>
-            <div className="rewards">{formatAmount(reward)} IXS</div>
+      {stakings?.map((stake) => (
+        <StyledBodyRow key={stake.startDateUnix}>
+          <Tier>
+            <span className="digit">{getPeriodDigit(stake.period)}</span>&nbsp;
+            {getPeriodString(stake.period).toUpperCase()}
+          </Tier>
+          <div>{stake.apy}%</div>
+          <Column>
+            <Row>
+              {formatDate(stake.startDateUnix)} <MutedText>{getDateFullTime(stake.startDateUnix)}</MutedText>
+            </Row>
+            <Row>
+              {formatDate(stake.endDateUnix)} <MutedText>{getDateFullTime(stake.endDateUnix)}</MutedText>
+            </Row>
+          </Column>
+          <div>{getLockPeriod(stake.period)}</div>
+          <div>{formatAmount(stake.stakeAmount)} IXS</div>
+          <div>{formatAmount(stake.distributeAmount)} IXSgov</div>
+          <div className="rewards">{formatAmount(stake.reward)} IXS</div>
+          {stake.canUnstake ? (
+            <UnstakeButton>
+              <TYPE.subHeader1>
+                <Trans>Unstake</Trans>
+              </TYPE.subHeader1>
+            </UnstakeButton>
+          ) : (
             <LockedTillColumn>
               <Row>
                 <LockIcon className="lock-icon" />
                 <Trans>Locked till</Trans>
               </Row>
               <Row>
-                {formatDate(lockedTillUnix)} {getDateShortTime(lockedTillUnix)}
+                {formatDate(stake.lockedTillUnix)} {getDateShortTime(stake.lockedTillUnix)}
               </Row>
             </LockedTillColumn>
-          </StyledBodyRow>
-        )
-      )}
+          )}
+        </StyledBodyRow>
+      ))}
     </>
   )
 }
@@ -265,4 +277,9 @@ const LockedTillColumn = styled(Column)`
     margin-right: 0.5em;
     margin-bottom: 4px;
   }
+`
+
+const UnstakeButton = styled(ButtonIXSGradient)`
+  align-self: center;
+  padding: 16px 26px;
 `
