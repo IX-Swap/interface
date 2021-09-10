@@ -10,6 +10,9 @@ import { useActiveWeb3React } from 'hooks/web3'
 import { useDispatch } from 'react-redux'
 import { changeAccount } from 'state/stake/actions'
 import { AppDispatch } from 'state'
+import { useCurrency } from 'hooks/Tokens'
+import { useCurrencyBalance } from 'state/wallet/hooks'
+import { IXS_ADDRESS } from 'constants/addresses'
 
 export const Staking = () => {
   const { IXSBalance, hasStakedSuccessfully, metaMaskAccount } = useStakingState()
@@ -19,6 +22,14 @@ export const Staking = () => {
   const { chainId, account } = useActiveWeb3React()
   const dispatch = useDispatch<AppDispatch>()
   const updateIXSBalance = useUpdateIXSBalance()
+  const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
+  const balance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
+
+  useEffect(() => {
+    if (balance) {
+      updateIXSBalance()
+    }
+  }, [balance])
 
   useEffect(() => {
     isVestingPaused()
