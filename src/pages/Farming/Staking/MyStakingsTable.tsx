@@ -170,13 +170,8 @@ const Body = () => {
 }
 
 export const MyStakingsTable = () => {
-  const getStakings = useGetStakings()
-  const { stakings, stakingsLoading, hasStakedSuccessfully } = useStakingState()
+  const { stakings, stakingsLoading } = useStakingState()
   const toggleUnstakeModal = useToggleModal(ApplicationModal.UNSTAKE_IXS)
-
-  useEffect(() => {
-    getStakings()
-  }, [getStakings, hasStakedSuccessfully])
 
   function showTableData() {
     if (stakingsLoading) {

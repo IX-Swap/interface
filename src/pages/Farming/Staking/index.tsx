@@ -1,7 +1,7 @@
 import IXSStakingModal from 'components/earn/IXSStakingModal'
 import React, { useEffect } from 'react'
 import { useToggleModal, useCloseModals } from 'state/application/hooks'
-import { useStakingState, useIsVestingPaused, useUpdateIXSBalance } from 'state/stake/hooks'
+import { useStakingState, useIsVestingPaused, useUpdateIXSBalance, useGetStakings } from 'state/stake/hooks'
 import { PromoTokenCard } from './PromoTokenCard'
 import { StakingPage } from './StakingPage'
 import { StakingWrapper } from '../styleds'
@@ -15,7 +15,7 @@ import { useCurrencyBalance } from 'state/wallet/hooks'
 import { IXS_ADDRESS } from 'constants/addresses'
 
 export const Staking = () => {
-  const { IXSBalance, hasStakedSuccessfully, metaMaskAccount } = useStakingState()
+  const { IXSBalance, hasStakedSuccessfully, metaMaskAccount, stakings } = useStakingState()
   const isVestingPaused = useIsVestingPaused()
   const toggleStakeModal = useToggleModal(ApplicationModal.STAKE_IXS)
   const closeModals = useCloseModals()
@@ -24,6 +24,11 @@ export const Staking = () => {
   const updateIXSBalance = useUpdateIXSBalance()
   const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
   const balance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
+  const getStakings = useGetStakings()
+
+  useEffect(() => {
+    getStakings()
+  }, [getStakings, hasStakedSuccessfully])
 
   useEffect(() => {
     if (balance) {
@@ -51,7 +56,7 @@ export const Staking = () => {
   }, [chainId, account, metaMaskAccount, dispatch])
 
   function renderStakingPage() {
-    if (IXSBalance && parseFloat(IXSBalance) > 0) {
+    if ((IXSBalance && parseFloat(IXSBalance) > 0) || stakings.length !== 0) {
       return <StakingPage />
     } else {
       return <PromoTokenCard />
