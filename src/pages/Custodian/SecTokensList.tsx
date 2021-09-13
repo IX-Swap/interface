@@ -50,7 +50,6 @@ export default function SecTokensList({
   }, [])
   const { width = 0 } = useWindowSize()
   const itemHeight = width < MEDIA_WIDTHS.upToExtraSmall ? 100 : 80
-  console.log('log=>', itemData.length)
 
   return (
     <List

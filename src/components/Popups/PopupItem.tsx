@@ -87,7 +87,7 @@ export default function PopupItem({
   })
 
   return (
-    <Popup id="kekw">
+    <Popup>
       <StyledClose color={theme.text2} onClick={removeThisPopup} />
       {popupContent}
       {removeAfterMs !== null ? <AnimatedFader style={faderStyle} /> : null}
