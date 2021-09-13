@@ -11,11 +11,8 @@ import { Dots } from 'pages/Pool/styleds'
 import React, { useCallback, useState, useRef, useEffect } from 'react'
 import { ApplicationModal } from 'state/application/actions'
 import { useModalOpen } from 'state/application/hooks'
-import { useStakeFor, useIncreaseAllowance, useCheckAllowance, useUpdateIXSBalance } from 'state/stake/hooks'
-import { useCurrencyBalance } from 'state/wallet/hooks'
-import { useActiveWeb3React } from 'hooks/web3'
+import { useStakeFor, useIncreaseAllowance, useCheckAllowance } from 'state/stake/hooks'
 import { CloseIcon, ModalBlurWrapper, TYPE } from 'theme'
-import { maxAmountSpend } from 'utils/maxAmountSpend'
 import Column from 'components/Column'
 import Row, { RowBetween, RowFixed, RowCenter } from 'components/Row'
 import { ModalBottomWrapper, ModalContentWrapper, StakeModalTop } from 'components/earn/styled'
@@ -44,7 +41,6 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
   const { selectedTier, approvingIXS, isIXSApproved, isStaking, allowanceAmount, IXSBalance } = useStakingState()
   const stake = useStakeFor(selectedTier?.period)
   const checkAllowance = useCheckAllowance()
-  const updateIXSBalance = useUpdateIXSBalance()
 
   useEffect(() => {
     if (isOpen) {

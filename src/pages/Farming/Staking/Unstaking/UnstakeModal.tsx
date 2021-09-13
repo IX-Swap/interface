@@ -20,12 +20,16 @@ import { useV2LiquidityTokenPermit } from 'hooks/useERC20Permit'
 import { useDerivedIXSStakeInfo } from 'state/stake/hooks'
 import { useLiquidityRouterContract } from 'hooks/useContract'
 import { useActiveWeb3React } from 'hooks/web3'
+import { useStakingState } from 'state/stake/hooks'
+import { Currency, CurrencyAmount, Percent } from '@ixswap1/sdk-core'
+import { tryParseAmount } from 'state/swap/helpers'
 
 interface UnstakingModalProps {
   onDismiss: () => void
+  stakeAmount: string
 }
 
-export function UnstakeModal({ onDismiss }: UnstakingModalProps) {
+export function UnstakeModal({ onDismiss, stakeAmount }: UnstakingModalProps) {
   const isOpen = useModalOpen(ApplicationModal.UNSTAKE_IXS)
   // track and parse user input
   const [typedValue, setTypedValue] = useState('')
@@ -40,9 +44,12 @@ export function UnstakeModal({ onDismiss }: UnstakingModalProps) {
   const [approval, approveCallback] = useApproveCallback(parsedAmount, IXS_ADDRESS[chainId ?? 1])
   const parsedAmountWrapped = parsedAmount?.wrapped
   const { signatureData, gatherPermitSignature } = useV2LiquidityTokenPermit(parsedAmountWrapped, router?.address)
+  const { IXSBalance } = useStakingState()
+  const stakeIXSCurrencyAmount = tryParseAmount(stakeAmount, currency)
 
   const wrappedOnDismiss = useCallback(() => {
     onDismiss()
+    setTypedValue('')
   }, [onDismiss])
 
   async function onStake() {
@@ -61,14 +68,14 @@ export function UnstakeModal({ onDismiss }: UnstakingModalProps) {
           <StakeModalTop>
             <RowBetween>
               <TYPE.title5>
-                <Trans>Stake</Trans>
+                <Trans>Unstake</Trans>
               </TYPE.title5>
               <CloseIcon onClick={wrappedOnDismiss} />
             </RowBetween>
             <StakingInputPercentage
               {...{
-                fieldTitle: t`Amount of IXS to stake`,
-                maxAvailable: maxAmountInput,
+                fieldTitle: t`Amount of IXS to unstake`,
+                maxAvailable: stakeIXSCurrencyAmount,
                 typedValue,
                 onUserInput,
                 error,

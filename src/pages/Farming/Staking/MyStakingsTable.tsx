@@ -21,6 +21,12 @@ import { UnstakeModal } from './Unstaking/UnstakeModal'
 
 import { TYPE } from 'theme'
 
+let activeStakeAmount = 0
+
+function formatAmount(amount: number): string {
+  return amount.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 10 })
+}
+
 const Header = () => {
   return (
     <StyledHeaderRow>
@@ -78,10 +84,6 @@ const Body = () => {
   useEffect(() => {
     console.log('Stakings: ', stakings)
   }, [stakings])
-
-  function formatAmount(amount: number) {
-    return amount.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 10 })
-  }
 
   function getPeriodDigit(period: PeriodsEnum) {
     if (period === PeriodsEnum.WEEK || period === PeriodsEnum.MONTH) {
@@ -147,7 +149,12 @@ const Body = () => {
           <div>{formatAmount(stake.distributeAmount)} IXSgov</div>
           <div className="rewards">{formatAmount(stake.reward)} IXS</div>
           {stake.canUnstake ? (
-            <UnstakeButton onClick={toggleUnstakeModal}>
+            <UnstakeButton
+              onClick={() => {
+                activeStakeAmount = stake.stakeAmount
+                toggleUnstakeModal()
+              }}
+            >
               <TYPE.subHeader1>
                 <Trans>Unstake</Trans>
               </TYPE.subHeader1>
@@ -201,7 +208,7 @@ export const MyStakingsTable = () => {
         </Box>
         {showTableData()}
       </Box>
-      <UnstakeModal onDismiss={toggleUnstakeModal} />
+      <UnstakeModal onDismiss={toggleUnstakeModal} stakeAmount={formatAmount(activeStakeAmount)} />
     </>
   )
 }
