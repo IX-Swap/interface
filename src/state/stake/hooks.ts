@@ -407,6 +407,7 @@ export function useIncreaseAllowance() {
         dispatch(increaseAllowance.pending())
         const stakingAddress = IXS_STAKING_V1_ADDRESS[chainId]
         const allowanceTx = await tokenContract?.increaseAllowance(stakingAddress, stakeAmount)
+        const tx = await allowanceTx.wait()
         dispatch(increaseAllowance.fulfilled({ data: allowanceTx?.hash }))
       } catch (error) {
         dispatch(increaseAllowance.rejected({ errorMessage: error }))
