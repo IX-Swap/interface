@@ -32,7 +32,6 @@ export interface DeploymentInfo {
   createdBy: string
   transactionHash: string
   token: string
-  tokenAddress?: string
   owner: string
   name: string
   symbol: string
