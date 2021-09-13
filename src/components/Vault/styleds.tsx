@@ -96,6 +96,12 @@ export const ModalPadding = styled.div`
   `};
 `
 
+export const StyledTitle = styled(TYPE.title4)`
+  @media (max-width: 768px) {
+    font-size: 28px !important;
+  }
+`
+
 /* eslint-disable react/display-name */
 export const StatusIcons = {
   [ActionHistoryStatus.PENDING]: () => <LoaderThin size={20} />,

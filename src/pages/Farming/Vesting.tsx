@@ -22,14 +22,13 @@ export const Vesting = () => {
     <>
       <VestingSearch />
       <VestingWrapper>
-        {vestingStatus === VestingStatus.LOADING && <LoaderThin size={128} />}
+        {(loadingVesting || vestingStatus === VestingStatus.LOADING) && (
+          <LoaderContainer>
+            <LoaderThin size={96} />
+          </LoaderContainer>
+        )}
         {vestingStatus !== VestingStatus.LOADING && (
           <>
-            {loadingVesting && (
-              <LoaderContainer>
-                <LoaderThin size={96} />
-              </LoaderContainer>
-            )}
             <VestingInfo state={vestingStatus} />
             <VestingTable vestingStatus={vestingStatus} />
           </>

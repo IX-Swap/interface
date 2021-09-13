@@ -148,6 +148,21 @@ export const ButtonRow = styled.div`
 
 export const StakingTierCardWrapper = styled(StakingCard)`
   padding: 24px;
-  height: 428px;
+  padding-bottom: 0px;
+  height: 466px;
   width: 294px;
+
+  &.fully-staked {
+    background: radial-gradient(
+        79.76% 116.06% at 44.22% 136.36%,
+        rgba(102, 20, 206, 0.132) 0%,
+        rgba(26, 18, 58, 0) 100%
+      ),
+      rgba(44, 37, 74, 0.3);
+    opacity: 0.5;
+
+    button {
+      opacity: 1;
+    }
+  }
 `

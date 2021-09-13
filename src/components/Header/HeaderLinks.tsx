@@ -7,7 +7,6 @@ import useToggle from 'hooks/useToggle'
 import { darken } from 'polished'
 import React, { useRef } from 'react'
 import { NavLink } from 'react-router-dom'
-import { useDerivedSwapInfo } from 'state/swap/hooks'
 import styled from 'styled-components/macro'
 import { routes } from 'utils/routes'
 import Row, { RowFixed } from '../Row'
@@ -93,8 +92,6 @@ const HeaderPopover = () => {
   )
 }
 export const HeaderLinks = () => {
-  const { allowedSlippage } = useDerivedSwapInfo()
-
   const [open, toggle] = useToggle(false)
   const node = useRef<HTMLDivElement>()
 

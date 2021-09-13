@@ -26,6 +26,12 @@ export const ModalContentWrapper = styled(Column)`
   `};
 `
 
+export const StyledTitle = styled(TYPE.title4)`
+  @media (max-width: 768px) {
+    text-align: center;
+  }
+`
+
 export function ConfirmationPendingContent({
   onDismiss,
   pendingText,
@@ -43,9 +49,9 @@ export function ConfirmationPendingContent({
             <CloseIcon onClick={onDismiss} />
           </RowBetween>
           <RowCenter>
-            <TYPE.title4>
+            <StyledTitle>
               <Trans>Waiting For Confirmation</Trans>
-            </TYPE.title4>
+            </StyledTitle>
           </RowCenter>
           <RowCenter style={{ marginTop: '20px' }}>
             <TYPE.title9>{pendingText}</TYPE.title9>
@@ -90,9 +96,9 @@ export function TransactionSubmittedContent({
             <CloseIcon onClick={onDismiss} />
           </RowBetween>
           <RowCenter>
-            <TYPE.title4>
+            <StyledTitle>
               <Trans>Transaction Submitted</Trans>
-            </TYPE.title4>
+            </StyledTitle>
           </RowCenter>
           {currencyToAdd && library?.provider?.isMetaMask && (
             <RowCenter>

@@ -5,7 +5,6 @@ import { SearchInput } from 'components/SearchModal/styleds'
 import { ListType, useCurrencySearch } from 'components/SearchModal/useCurrencySearch'
 import useTheme from 'hooks/useTheme'
 import React, { RefObject, useRef } from 'react'
-import AutoSizer from 'react-virtualized-auto-sizer'
 import { FixedSizeList } from 'react-window'
 import { TYPE } from 'theme'
 import SecTokensList from './SecTokensList'
@@ -35,11 +34,7 @@ export const AllSecTokens = () => {
 
       <div>
         {filteredSortedTokens?.length > 0 || filteredInactiveTokens?.length > 0 ? (
-          <div style={{ flex: '1 1 auto', minHeight: '80px' }}>
-            <AutoSizer disableWidth>
-              {({ height }) => <SecTokensList height={height} currencies={filteredSortedTokens} listRef={listRef} />}
-            </AutoSizer>
-          </div>
+          <SecTokensList currencies={filteredSortedTokens} listRef={listRef} />
         ) : (
           <Column style={{ padding: '20px', height: '100%' }}>
             <TYPE.main color={theme.text2} textAlign="center" mb="20px">
