@@ -44,8 +44,11 @@ export const AuthorizerTable = <T,>(
   const { filter: authFilter } = useAuthorizerFilter()
   const category = useAuthorizerCategory()
 
+  console.log(selectable)
+
   const mergedFilters = {
     ...authFilter,
+    status: category === 'commitments' ? undefined : authFilter.status,
     isAssigned:
       category === 'virtual-accounts'
         ? authFilter.status !== 'Rejected'

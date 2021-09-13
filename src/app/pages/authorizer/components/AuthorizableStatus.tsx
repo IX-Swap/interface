@@ -93,18 +93,6 @@ export const AuthorizableStatus: React.FC<AuthorizableStatusProps> = props => {
           {compact ? 'N' : 'Not funded'}
         </Typography>
       )
-    case 'Funds on hold':
-      return (
-        <Typography
-          className={classNames(classes.authStatus, classes.rejected, {
-            [classes.compact]: compact,
-            [classes.authStatusNewTheme]: isNewTheme,
-            [classes.rejectedNewTheme]: isNewTheme
-          })}
-        >
-          {compact ? 'H' : 'Funds on hold'}
-        </Typography>
-      )
 
     case 'Settlement in Progress':
       return (
@@ -116,6 +104,19 @@ export const AuthorizableStatus: React.FC<AuthorizableStatusProps> = props => {
           })}
         >
           {compact ? 'S' : 'Settlement in Progress'}
+        </Typography>
+      )
+
+    case 'Funds on hold':
+      return (
+        <Typography
+          className={classNames(classes.authStatus, classes.rejected, {
+            [classes.compact]: compact,
+            [classes.authStatusNewTheme]: isNewTheme,
+            [classes.rejectedNewTheme]: isNewTheme
+          })}
+        >
+          {compact ? 'H' : 'Funds on hold'}
         </Typography>
       )
 

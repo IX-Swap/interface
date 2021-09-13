@@ -19,7 +19,10 @@ export const useBulkAuthorizeCommitments = (action: 'approve' | 'reject') => {
 
   return useMutation(authorizeCommitments, {
     onSuccess: data => {
-      void snackbarService.showSnackbar('Commitments Approved', 'success')
+      void snackbarService.showSnackbar(
+        action === 'approve' ? 'Commitments Approved' : 'Commitments Rejected',
+        'success'
+      )
       replace({ pathname: listRoute, search })
     },
     onError: (error: any) => {
