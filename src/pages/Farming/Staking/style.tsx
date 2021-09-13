@@ -148,7 +148,8 @@ export const ButtonRow = styled.div`
 
 export const StakingTierCardWrapper = styled(StakingCard)`
   padding: 24px;
-  height: 428px;
+  padding-bottom: 0px;
+  height: 466px;
   width: 294px;
 
   &.fully-staked {
