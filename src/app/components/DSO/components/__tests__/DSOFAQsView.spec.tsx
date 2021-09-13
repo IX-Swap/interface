@@ -18,12 +18,14 @@ describe('DSOFAQsView', () => {
     jest.clearAllMocks()
   })
 
+  const faq = { faqs: [faqItem] } as DigitalSecurityOffering
+
   it('renders without error', () => {
-    render(<DSOFAQsView dso={{ faqs: [faqItem] } as DigitalSecurityOffering} />)
+    render(<DSOFAQsView dso={faq} />)
   })
 
   it('renders FormSectionHeader', () => {
-    render(<DSOFAQsView dso={{ faqs: [faqItem] } as DigitalSecurityOffering} />)
+    render(<DSOFAQsView dso={faq} />)
 
     expect(FormSectionHeader).toHaveBeenCalledTimes(0)
   })
@@ -44,7 +46,7 @@ describe('DSOFAQsView', () => {
   })
 
   it('renders content with correct props', () => {
-    render(<DSOFAQsView dso={{ faqs: [faqItem] } as DigitalSecurityOffering} />)
+    render(<DSOFAQsView dso={faq} />)
 
     expect(Typography).toHaveBeenCalledTimes(2)
 

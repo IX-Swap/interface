@@ -53,6 +53,13 @@ export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
   const isUnauthorized = (item as any).status === 'Submitted'
   const isLoading = isApproving || isRejecting
 
+  if (
+    category === 'commitments' &&
+    (item as any).fundStatus !== 'Funds on hold'
+  ) {
+    return <></>
+  }
+
   return (
     <Grid container wrap='nowrap' justify='flex-end'>
       <Grid item>

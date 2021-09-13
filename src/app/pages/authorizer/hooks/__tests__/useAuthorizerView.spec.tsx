@@ -1,6 +1,9 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { renderStatusColumn } from 'app/pages/authorizer/hooks/useAuthorizerView'
+import {
+  renderStatusColumn,
+  renderDealStatus
+} from 'app/pages/authorizer/hooks/useAuthorizerView'
 import { AuthorizableStatus } from 'app/pages/authorizer/components/AuthorizableStatus'
 
 jest.mock('app/pages/authorizer/components/AuthorizableStatus', () => ({
@@ -23,6 +26,20 @@ describe('renderStatusColumn', () => {
     expect(AuthorizableStatus).toHaveBeenCalledTimes(1)
     expect(AuthorizableStatus).toHaveBeenCalledWith(
       { status: 'Test Status', compact: false, isNewTheme: true },
+      {}
+    )
+  })
+
+  it('renders Deal Status without error', () => {
+    render(<>{renderDealStatus('Open')}</>)
+  })
+
+  it('renders Deal Status AuthorizableStatus with correct props', () => {
+    render(<>{renderDealStatus('Open')}</>)
+
+    expect(AuthorizableStatus).toHaveBeenCalledTimes(1)
+    expect(AuthorizableStatus).toHaveBeenCalledWith(
+      { status: 'Open', compact: false, isNewTheme: true },
       {}
     )
   })
