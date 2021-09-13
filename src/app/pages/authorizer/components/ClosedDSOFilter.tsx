@@ -15,6 +15,7 @@ export const ClosedDSOsFilter = () => {
     if (value !== undefined) {
       updateFilter('commitmentDSO', event.target.value)
     } else {
+      console.log('removed')
       removeFilter('commitmentDSO')
     }
   }
