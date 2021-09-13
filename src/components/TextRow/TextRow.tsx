@@ -18,7 +18,7 @@ interface Props {
 export const TextRow = ({ textLeft, textRight, currency, tooltipText }: Props) => {
   return (
     <FixedHeightRow data-testid="tableRow">
-      <RowFixed>
+      <RowFixed className="text-row">
         <Text>{textLeft}</Text>
         {tooltipText && (
           <MouseoverTooltip style={{ whiteSpace: 'pre-line' }} text={tooltipText}>

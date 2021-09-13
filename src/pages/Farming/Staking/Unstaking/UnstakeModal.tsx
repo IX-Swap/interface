@@ -2,7 +2,7 @@ import { t, Trans } from '@lingui/macro'
 import { ButtonIXSWide } from 'components/Button'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import { TextRow } from 'components/TextRow/TextRow'
-import { IXS_ADDRESS } from 'constants/addresses'
+import { IXS_ADDRESS, IXS_GOVERNANCE_ADDRESS } from 'constants/addresses'
 import { useCurrency } from 'hooks/Tokens'
 import { ApprovalState, useApproveCallback } from 'hooks/useApproveCallback'
 import { Dots } from 'pages/Pool/styleds'
@@ -23,6 +23,7 @@ import { useActiveWeb3React } from 'hooks/web3'
 import { useStakingState } from 'state/stake/hooks'
 import { Currency, CurrencyAmount, Percent } from '@ixswap1/sdk-core'
 import { tryParseAmount } from 'state/swap/helpers'
+import { StakeInfoContainer, EllipsedText, ModalBottom } from '../style'
 
 interface UnstakingModalProps {
   onDismiss: () => void
@@ -40,7 +41,9 @@ export function UnstakeModal({ onDismiss, stakeAmount }: UnstakingModalProps) {
   const router = useLiquidityRouterContract()
   const { parsedAmount } = useDerivedIXSStakeInfo({ typedValue, currencyId: IXS_ADDRESS[chainId ?? 1] })
   const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
+  const IXSGovCurrency = useCurrency(IXS_GOVERNANCE_ADDRESS[chainId ?? 1])
   const balance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
+  const IXSGovBalance = useCurrencyBalance(account ?? undefined, IXSGovCurrency ?? undefined)
   const [approval, approveCallback] = useApproveCallback(parsedAmount, IXS_ADDRESS[chainId ?? 1])
   const parsedAmountWrapped = parsedAmount?.wrapped
   const { signatureData, gatherPermitSignature } = useV2LiquidityTokenPermit(parsedAmountWrapped, router?.address)
@@ -62,16 +65,24 @@ export function UnstakeModal({ onDismiss, stakeAmount }: UnstakingModalProps) {
   }, [])
 
   return (
-    <RedesignedWideModal isOpen={isOpen} onDismiss={wrappedOnDismiss} maxHeight={90}>
+    <RedesignedWideModal isOpen={isOpen} onDismiss={wrappedOnDismiss} scrollable>
       <ModalBlurWrapper>
         <ModalContentWrapper>
-          <StakeModalTop>
+          <StakeModalTop style={{ paddingBottom: '30px' }}>
             <RowBetween>
               <TYPE.title5>
                 <Trans>Unstake</Trans>
               </TYPE.title5>
               <CloseIcon onClick={wrappedOnDismiss} />
             </RowBetween>
+            <Row marginTop={20} marginBottom={10}>
+              <TYPE.title6 color={'bg14'} style={{ textTransform: 'uppercase' }}>
+                <Trans>Warning:</Trans>&nbsp;
+              </TYPE.title6>
+              <TYPE.body color={'bg14'}>
+                <Trans>Your APY will be 5% in case of an early unstake</Trans>
+              </TYPE.body>
+            </Row>
             <StakingInputPercentage
               {...{
                 fieldTitle: t`Amount of IXS to unstake`,
@@ -83,13 +94,36 @@ export function UnstakeModal({ onDismiss, stakeAmount }: UnstakingModalProps) {
                 parsedAmount,
               }}
             />
+            <Row marginTop={37}>
+              <TYPE.body3 style={{ opacity: '0.5' }}>
+                <Trans>When your assets have been unstaked they will be transferred to your Metamask</Trans>
+              </TYPE.body3>
+            </Row>
           </StakeModalTop>
-          <ModalBottomWrapper>
-            <Column style={{ gap: '5px' }}>
-              <TextRow textLeft={t`Reward payout interval`} textRight={t`Twice a week`} />
-              <TextRow textLeft={t`Yearly rewards`} textRight={`10%`} />
-              <TextRow textLeft={t`Type`} textRight={`On-chain`} />
-            </Column>
+          <ModalBottom>
+            <StakeInfoContainer>
+              <TextRow
+                textLeft={t`IXSGov to return`}
+                textRight={
+                  <EllipsedText>
+                    <div>{typedValue ? typedValue : 0}</div>&nbsp;IXSGov ({IXSGovBalance?.toSignificant(5)}{' '}
+                    <Trans>available</Trans>)
+                  </EllipsedText>
+                }
+              />
+              <TextRow textLeft={t`APY`} textRight="5%" />
+              <TextRow textLeft={t`Total rewards `} textRight={`${0}%`} />
+              <TextRow
+                textLeft={t`Instant reward payout today`}
+                textRight={
+                  <EllipsedText>
+                    <div>{typedValue ? typedValue : 0}</div>&nbsp;IXS
+                  </EllipsedText>
+                }
+              />
+              <TextRow textLeft={t`Rewards to be vested (10% weekly)`} textRight={0} />
+              <TextRow textLeft={t`Passed staking period`} textRight={0} />
+            </StakeInfoContainer>
             <Row style={{ marginTop: '43px' }}>
               {true && (
                 <ButtonIXSWide data-testid="approve-staking" disabled={Boolean(error)}>
@@ -108,7 +142,7 @@ export function UnstakeModal({ onDismiss, stakeAmount }: UnstakingModalProps) {
                 </ButtonIXSWide>
               )}
             </Row>
-          </ModalBottomWrapper>
+          </ModalBottom>
         </ModalContentWrapper>
       </ModalBlurWrapper>
     </RedesignedWideModal>
