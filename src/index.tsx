@@ -21,6 +21,8 @@ import UserUpdater from './state/user/updater'
 import ThemeProvider, { ThemedGlobalStyle } from './theme'
 import getLibrary from './utils/getLibrary'
 import { SECURITY_TOKENS } from 'config'
+import * as Sentry from '@sentry/react'
+import { Integrations } from '@sentry/tracing'
 
 const Web3ProviderNetwork = createWeb3ReactRoot(NetworkContextName)
 
@@ -60,6 +62,15 @@ function Updaters() {
     </>
   )
 }
+
+Sentry.init({
+  dsn: 'https://2513acdd7bf24acf85a18ad939a8b134@o998077.ingest.sentry.io/5956549',
+  integrations: [new Integrations.BrowserTracing()],
+
+  // We recommend adjusting this value in production, or using tracesSampler
+  // for finer control
+  tracesSampleRate: 0.8,
+})
 
 ReactDOM.render(
   <StrictMode>

@@ -30,14 +30,15 @@ import { PaddedColumn40, PaddedColumnList, SearchInput } from './styleds'
 const Wrapper = styled(Column)`
   width: 100%;
   max-height: 100%;
-  :after {
+  overflow: auto;
+  /* :after {
     position: absolute;
     content: '';
     width: 100%;
     height: 30px;
     top: 95%;
     background: ${({ theme }) => theme.bgG9};
-  }
+  } */
 `
 
 const UnpaddedLinkStyledButton = styled(LinkStyledButton)`
@@ -94,8 +95,9 @@ const ListContainer = styled.div`
   overflow: auto;
   will-change: transform;
   direction: ltr;
-  margin-right: 12px;
+  min-height: 100px;
   position: relative;
+  align-self: stretch;
   ${({ theme }) => theme.mediaWidth.upToLarge`
    
   `};

@@ -124,7 +124,6 @@ export default function Popover({
       <Portal>
         {show && !hideShadow && (
           <Shadow
-            id="kekw"
             onClick={() => {
               if (close instanceof Function) close()
             }}
