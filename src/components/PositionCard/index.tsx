@@ -33,6 +33,9 @@ const StyledPositionCard = styled(LightCard)`
   overflow: hidden;
   padding: 2rem 2rem 1.5rem 2rem;
   margin-bottom: 0.5rem;
+  @media (max-width: 540px) {
+    padding: 16px;
+  }
 `
 
 export default function FullPositionCard({ pair, stakedBalance }: PositionCardProps) {

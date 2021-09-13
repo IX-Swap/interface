@@ -3,6 +3,7 @@ import { gradientBorder } from 'theme'
 import { hexToRGBA } from 'utils/themeHelper'
 import Column, { AutoColumn } from '../Column'
 import Row, { RowBetween, RowFixed } from '../Row'
+import { ToggleWrapper } from 'components/Tabs'
 
 export const ModalInfo = styled.div`
   ${({ theme }) => theme.flexRowNoWrap}
@@ -150,4 +151,11 @@ export const UnapprovedTokenWrapper = styled.div`
   grid-template-columns: auto minmax(auto, 1fr) minmax(0, 72px);
   text-decoration: none;
   color: white;
+`
+
+export const StyledToggleWrapper = styled(ToggleWrapper)`
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+   flex-direction:row;
+   gap: 0px;
+  `};
 `
