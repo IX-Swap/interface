@@ -8,16 +8,16 @@ import { formatMoney } from 'helpers/numbers'
 import { Commitment } from 'types/commitment'
 import { TableColumn } from 'types/util'
 
-const renderCommitmentDSOLogo = (_: any, row: Commitment) =>
+export const renderCommitmentDSOLogo = (_: any, row: Commitment) =>
   renderDSONameAndStructure(row.dso.tokenName, row.dso, 50)
 
-const renderCommitmentDSOFundRaisingAmount = (_: any, row: Commitment) =>
+export const renderCommitmentDSOFundRaisingAmount = (_: any, row: Commitment) =>
   renderTotalFundraisingAmount(row.dso.totalFundraisingAmount ?? 0, row.dso)
 
-const renderCommitmentDSOExpectedReturn = (_: any, row: Commitment) =>
+export const renderCommitmentDSOExpectedReturn = (_: any, row: Commitment) =>
   renderExpectedReturn(row.dso.interestRate ?? 0, row.dso)
 
-const renderCommitted = (value: any, row: Commitment) =>
+export const renderCommitted = (value: any, row: Commitment) =>
   formatMoney(value, row.dso.currency.symbol, true)
 
 export const commitmentsColumns: Array<TableColumn<Commitment>> = [
