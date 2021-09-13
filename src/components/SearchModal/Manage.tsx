@@ -4,12 +4,12 @@ import { Trans } from '@lingui/macro'
 import { TokenList } from '@uniswap/token-lists'
 import { AutoColumn } from 'components/Column'
 import { ManageTabs } from 'components/NavigationTabs'
-import { Border, ToggleOption, ToggleWrapper } from 'components/Tabs'
+import { Border, ToggleOption } from 'components/Tabs'
 import styled from 'styled-components/macro'
 import { CurrencyModalView } from './CurrencySearchModal'
 import { ManageLists } from './ManageLists'
 import ManageTokens from './ManageTokens'
-import { ModalContentWrapper } from './styleds'
+import { ModalContentWrapper, StyledToggleWrapper } from './styleds'
 
 const Wrapper = styled(ModalContentWrapper)`
   max-height: 100%;
@@ -38,7 +38,7 @@ export default function Manage({
     <Wrapper>
       <ManageTabs onClick={() => setModalView(CurrencyModalView.search)} onDismiss={onDismiss} />
       <AutoColumn style={{ paddingBottom: 0 }}>
-        <ToggleWrapper>
+        <StyledToggleWrapper>
           <ToggleOption onClick={() => setShowLists(!showLists)} active={showLists}>
             <Trans>Lists</Trans>
             <Border active={showLists} />
@@ -47,7 +47,7 @@ export default function Manage({
             <Trans>Tokens</Trans>
             <Border active={!showLists} />
           </ToggleOption>
-        </ToggleWrapper>
+        </StyledToggleWrapper>
       </AutoColumn>
       {showLists ? (
         <ManageLists setModalView={setModalView} setImportList={setImportList} setListUrl={setListUrl} />
