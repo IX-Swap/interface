@@ -17,7 +17,7 @@ import { ReactComponent as InfoIcon } from 'assets/images/attention.svg'
 
 import { TYPE } from 'theme'
 
-const OngoingHeader = () => {
+const Header = () => {
   return (
     <StyledHeaderRow>
       <div className="header-label">
@@ -66,47 +66,7 @@ const OngoingHeader = () => {
     </StyledHeaderRow>
   )
 }
-const UnstakedHeader = () => {
-  return (
-    <StyledHeaderRow>
-      <div className="header-label">
-        <Trans>Date of unstake</Trans>
-      </div>
-      <div>
-        <div className="header-label">
-          <Trans>APY</Trans>
-        </div>
-      </div>
-      <div className="header-label">
-        <Trans>Amount</Trans>
-      </div>
-      <div>
-        <div className="header-label">
-          <Trans>Total Rewards</Trans>
-        </div>
-        <MouseoverTooltip style={{ whiteSpace: 'pre-line', textAlign: 'center' }} text={t``}>
-          <IconWrapper size={20} style={{ transform: 'rotate(180deg)', marginLeft: '12px' }}>
-            <InfoIcon />
-          </IconWrapper>
-        </MouseoverTooltip>
-      </div>
-      <div>
-        <div className="header-label">
-          <Trans>Rewards in vesting</Trans>
-        </div>
-        <MouseoverTooltip style={{ whiteSpace: 'pre-line', textAlign: 'center' }} text={t``}>
-          <IconWrapper size={20} style={{ transform: 'rotate(180deg)', marginLeft: '12px' }}>
-            <InfoIcon />
-          </IconWrapper>
-        </MouseoverTooltip>
-      </div>
 
-      <div className="header-label">
-        <Trans>Claimable Rewards</Trans>
-      </div>
-    </StyledHeaderRow>
-  )
-}
 const Body = () => {
   const { stakings } = useStakingState()
 
@@ -193,7 +153,7 @@ const Body = () => {
   )
 }
 
-export const MyStakingsTable = () => {
+export const UnstakedTable = () => {
   const { stakings, stakingsLoading } = useStakingState()
 
   function showTableData() {
@@ -208,7 +168,7 @@ export const MyStakingsTable = () => {
     } else {
       return (
         <Container>
-          <Table body={<Body />} header={<OngoingHeader />} />
+          <Table body={<Body />} header={<Header />} />
         </Container>
       )
     }

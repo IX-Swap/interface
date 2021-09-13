@@ -9,3 +9,13 @@ export const FARMING_STRINGS = {
   [FARMING_TABS.STAKING]: t`Staking IXS`,
   [FARMING_TABS.VESTING]: t`Vesting IXS`,
 }
+
+export enum STAKING_TABS {
+  ONGOING = 'ONGOING',
+  UNSTAKED = 'UNSTAKED',
+}
+
+export const STAKING_TABS_STRINGS = {
+  [STAKING_TABS.ONGOING]: t`My ongoing stakings`,
+  [STAKING_TABS.UNSTAKED]: t`Unstaked`,
+}
