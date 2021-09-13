@@ -1,4 +1,5 @@
 import React from 'react'
+import { isMobile } from 'react-device-detect'
 import { Trans } from '@lingui/macro'
 import { ButtonIXSWide } from 'components/Button'
 import { useWalletModalToggle } from 'state/application/hooks'
@@ -17,9 +18,12 @@ export const ConnectWalletButton = () => {
 
   return (
     <>
-      <ButtonIXSWide onClick={connectWallet} disabled={!!account} data-testid="connect-wallet-btn">
+      <ButtonIXSWide onClick={connectWallet} disabled={!!account || isMobile} data-testid="connect-wallet-btn">
         <Trans>Connect Wallet</Trans>
       </ButtonIXSWide>
+      {isMobile && (
+        <UseWeb3Browser>Use web3 browser in Metamask app or another one to connect your wallet.</UseWeb3Browser>
+      )}
     </>
   )
 }

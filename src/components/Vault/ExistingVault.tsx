@@ -7,7 +7,7 @@ import { useDepositModalToggle } from 'state/application/hooks'
 import { TYPE } from 'theme'
 import { BalanceRow } from './BalanceRow'
 import { HistoryBlock } from './HistoryBlock'
-import { ExistingTitle, ExistingWrapper, TitleStatusRow } from './styleds'
+import { ExistingTitle, ExistingWrapper, TitleStatusRow, StyledTitle } from './styleds'
 interface Props {
   currency?: Currency
 }
@@ -20,9 +20,9 @@ export const ExistingVault = ({ currency }: Props) => {
     <ExistingWrapper>
       <TitleStatusRow>
         <ExistingTitle>
-          <TYPE.title4>
+          <StyledTitle>
             <Trans>My {symbolText} Vault</Trans>
-          </TYPE.title4>
+          </StyledTitle>
         </ExistingTitle>
         <ButtonIXSGradient data-testid="deposit" style={{ width: '230px' }} onClick={() => toggle()}>
           <Trans>Deposit</Trans>

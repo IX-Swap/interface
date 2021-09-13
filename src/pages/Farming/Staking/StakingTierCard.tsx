@@ -149,15 +149,15 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
       <ButtonIXSWide onClick={selectPeriod} disabled={isPaused || leftToFill <= 0}>
         <Trans>{getStakeButtonText()}</Trans>
       </ButtonIXSWide>
-      {/*{!isTierUnlimited && (
-        <RowCenter>
+      {!isTierUnlimited && (
+        <RowCenter style={{ margin: 'auto' }}>
           <TYPE.description3 fontWeight={400} opacity="0.5">
             <Trans>
-              Left to fill <span style={{ fontWeight: 700 }}>{leftToFill}</span> coins
+              <span style={{ fontWeight: 700 }}>{leftToFill}</span> tokens available for staking
             </Trans>
           </TYPE.description3>
         </RowCenter>
-      )}*/}
+      )}
     </StakingTierCardWrapper>
   )
 }

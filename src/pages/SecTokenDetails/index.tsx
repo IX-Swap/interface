@@ -10,10 +10,9 @@ import React, { useMemo } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 import { Box } from 'rebass'
 import { useUserSecTokens } from 'state/user/hooks'
-import { TYPE } from 'theme'
 import { LightBackground } from 'theme/Background'
-import { Container, Description, DescriptionText, InfoTitle } from './styleds'
 import { TokenDetails } from './TokenDetails'
+import { Container, Description, DescriptionText, InfoTitle, Logo, StyledTitleBig } from './styleds'
 
 export default function SecTokenDetails({
   match: {
@@ -43,10 +42,10 @@ export default function SecTokenDetails({
       <LightBackground />
       <Container width={['100%', '90%', '65%']} maxWidth={'920px'}>
         <InfoTitle>
-          <CurrencyLogo currency={currency} size="72px" />
+          <Logo currency={currency} size="72px" />
           <Box display="flex">
-            <TYPE.titleBig fontWeight="600">{currency?.symbol}</TYPE.titleBig>
-            <TYPE.titleBig>&nbsp;-&nbsp;{currency?.name}</TYPE.titleBig>
+            <StyledTitleBig fontWeight="600">{currency?.symbol}</StyledTitleBig>
+            <StyledTitleBig>&nbsp;-&nbsp;{currency?.name}</StyledTitleBig>
           </Box>
         </InfoTitle>
         <Description>
