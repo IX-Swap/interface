@@ -12,13 +12,9 @@ const BalanceWrapper = styled.div`
   border-radius: 30px;
   width: fit-content;
   max-width: 90px;
-  padding: 0;
   cursor: pointer;
   margin-right: 3px;
   margin-left: 10px;
-  ${({ theme }) => theme.mediaWidth.upToLarge`
-      
-  `};
   ${({ theme }) => theme.mediaWidth.upToSmall`
      max-width: 60px;
   `};
@@ -31,18 +27,17 @@ export const IXSBalance = () => {
   const showElement =
     JSBI.greaterThan(IXSBalance?.amount?.quotient ?? JSBI.BigInt(0), JSBI.BigInt(0)) ||
     JSBI.greaterThan(IXSGovBalance?.amount?.quotient ?? JSBI.BigInt(0), JSBI.BigInt(0))
+  if (!showElement) {
+    return null
+  }
   return (
-    <>
-      {showElement ? (
-        <BalanceWrapper onClick={() => toggle()}>
-          {!IXSBalance.loading && !IXSGovBalance.loading && (
-            <IconWrapper size={33}>
-              <img src={IXSToken} />
-            </IconWrapper>
-          )}
-          {(IXSBalance.loading || IXSGovBalance.loading) && <Dots></Dots>}
-        </BalanceWrapper>
-      ) : null}
-    </>
+    <BalanceWrapper onClick={() => toggle()}>
+      {!IXSBalance.loading && !IXSGovBalance.loading && (
+        <IconWrapper size={33}>
+          <img src={IXSToken} />
+        </IconWrapper>
+      )}
+      {(IXSBalance.loading || IXSGovBalance.loading) && <Dots></Dots>}
+    </BalanceWrapper>
   )
 }
