@@ -7,9 +7,9 @@ import { Text } from 'rebass'
 import styled from 'styled-components/macro'
 import { TextGradient, TYPE } from 'theme'
 import { LightBackground } from 'theme/Background'
-import { FARMING_STRINGS, FARMING_TABS } from './enum'
+import { FARMING_STRINGS, FARMING_TABS } from './Vesting/enum'
 import { Container } from './styleds'
-import { Vesting } from './Vesting'
+import { Vesting } from './Vesting/Vesting'
 
 export const BlurredOverlay = styled.div`
   position: absolute;
@@ -42,6 +42,9 @@ const SmallerFont = styled.div`
     font-size: 28px;
   }
 `
+const Title = styled(TYPE.title4)`
+  padding: 0 15px;
+`
 
 export const VestingTab = () => {
   const { chainId } = useActiveWeb3React()
@@ -51,12 +54,12 @@ export const VestingTab = () => {
       <Container width={['100%']} maxWidth={'1299px'}>
         {chainId === SUPPORTED_TGE_CHAINS.MAIN && (
           <HideOnSmallScreen>
-            <TYPE.title4>
+            <Title>
               <SmallerFont>{FARMING_STRINGS[FARMING_TABS.VESTING]}</SmallerFont>
-            </TYPE.title4>
+            </Title>
           </HideOnSmallScreen>
         )}
-        {chainId !== SUPPORTED_TGE_CHAINS.MAIN && <TYPE.title4>{FARMING_STRINGS[FARMING_TABS.VESTING]}</TYPE.title4>}
+        {chainId !== SUPPORTED_TGE_CHAINS.MAIN && <Title>{FARMING_STRINGS[FARMING_TABS.VESTING]}</Title>}
         <div>
           {chainId === SUPPORTED_TGE_CHAINS.MAIN && (
             <BlurredOverlay>
