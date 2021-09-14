@@ -48,6 +48,7 @@ export const DisclosureDialog = ({
             <Box className={classes.box}>
               <Checkbox
                 checked={isChecked}
+                className={classes.checkbox}
                 onClick={() => setIsChecked(!isChecked)}
               />
               <ListItemText

@@ -23,7 +23,8 @@ export const useStyles = makeStyles(theme => ({
     textAlign: 'center'
   },
   actions: {
-    flexDirection: 'column'
+    flexDirection: 'column',
+    padding: 0
   },
   box: {
     display: 'flex',
@@ -35,5 +36,8 @@ export const useStyles = makeStyles(theme => ({
   },
   button: {
     textTransform: 'initial'
+  },
+  checkbox: {
+    paddingLeft: 0
   }
 }))
