@@ -10,7 +10,7 @@ export const admin = {
 }
 
 export const vesting = {
-  privateBuyers: 'vesting/private-buyers',
+  privateBuyer: 'investor/me',
 }
 
 export const metamask = {

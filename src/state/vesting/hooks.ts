@@ -19,7 +19,7 @@ import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { hexToRGBA } from 'utils/themeHelper'
 import {
   getDetails,
-  getPrivateBuyers,
+  getIsPrivateBuyer,
   saveAvailableClaim,
   saveIsVesting,
   savePayouts,
@@ -302,24 +302,27 @@ export function useTableOptions() {
   }, [theme])
 }
 
-export const privateBuyers = async () => {
-  const result = await apiService.get(vesting.privateBuyers)
+export const privateBuyer = async (address: string) => {
+  const result = await apiService.post(vesting.privateBuyer, { address })
   return result.data
 }
 
-export function usePrivateBuyers() {
+export function useIsPrivateBuyer() {
   const dispatch = useDispatch<AppDispatch>()
-  const callback = useCallback(async () => {
-    try {
-      dispatch(getPrivateBuyers.pending())
-      const data = await privateBuyers()
-      dispatch(getPrivateBuyers.fulfilled({ data }))
-      return STATUS.SUCCESS
-    } catch (error: any) {
-      dispatch(getPrivateBuyers.rejected({ errorMessage: 'Could not get private buyers' }))
-      return STATUS.FAILED
-    }
-  }, [dispatch])
+  const callback = useCallback(
+    async (address: string) => {
+      try {
+        dispatch(getIsPrivateBuyer.pending())
+        const data = await privateBuyer(address)
+        dispatch(getIsPrivateBuyer.fulfilled({ data }))
+        return STATUS.SUCCESS
+      } catch (error: any) {
+        dispatch(getIsPrivateBuyer.rejected({ errorMessage: 'Could not get private buyers' }))
+        return STATUS.FAILED
+      }
+    },
+    [dispatch]
+  )
   return callback
 }
 

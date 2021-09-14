@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from 'react'
 import { LoaderThin } from 'components/Loader/LoaderThin'
-import { usePrivateBuyers, useVestingState, useVestingStatus } from 'state/vesting/hooks'
+import { useIsPrivateBuyer, useVestingState, useVestingStatus } from 'state/vesting/hooks'
 import { VestingWrapper, LoaderContainer } from '../styleds'
 import { VestingInfo } from './VestingInfo'
 import { VestingTable } from './VestingTable'
@@ -18,18 +18,23 @@ export enum VestingStatus {
 
 export const Vesting = () => {
   const { vestingStatus } = useVestingStatus()
-  const { loadingVesting, privateBuyers } = useVestingState()
+  const { loadingVesting, privateBuyer, customVestingAddress } = useVestingState()
   const { account } = useActiveWeb3React()
 
-  const getPrivateBuyers = usePrivateBuyers()
+  const getIsPrivateBuyer = useIsPrivateBuyer()
 
   useEffect(() => {
-    getPrivateBuyers()
-  }, [])
+    if (account) {
+      getIsPrivateBuyer(account)
+    }
+  }, [account])
 
   const isPrivateBuyer = useMemo(
-    () => vestingStatus === VestingStatus.ZERO_BALANCE && privateBuyers.includes(account || ''),
-    [privateBuyers, vestingStatus]
+    () =>
+      vestingStatus === VestingStatus.ZERO_BALANCE &&
+      privateBuyer.isVerified &&
+      (!customVestingAddress || customVestingAddress === account),
+    [privateBuyer, vestingStatus, customVestingAddress, account]
   )
 
   return (

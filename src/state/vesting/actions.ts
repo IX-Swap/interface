@@ -1,6 +1,6 @@
 import { ActionCreatorWithoutPayload, ActionCreatorWithPayload, createAction } from '@reduxjs/toolkit'
 import { VestingStatus } from 'pages/Farming/Vesting/Vesting'
-import { VestingDetails } from './types'
+import { VestingDetails, VestingState } from './types'
 
 export const saveIsVesting: Readonly<{
   pending: ActionCreatorWithoutPayload
@@ -48,12 +48,12 @@ export const saveCustomVestingAddress = createAction<{ customVestingAddress: str
 
 export const saveVestingStatus = createAction<VestingStatus>('vesting/saveVestingStatus')
 
-export const getPrivateBuyers: Readonly<{
+export const getIsPrivateBuyer: Readonly<{
   pending: ActionCreatorWithoutPayload
-  fulfilled: ActionCreatorWithPayload<{ data: string[] }>
+  fulfilled: ActionCreatorWithPayload<{ data: VestingState['privateBuyer'] }>
   rejected: ActionCreatorWithPayload<{ errorMessage?: string }>
 }> = {
-  pending: createAction('vesting/getPrivateBuyers/pending'),
-  rejected: createAction('vesting/getPrivateBuyers/rejected'),
-  fulfilled: createAction('vesting/getPrivateBuyers/fulfilled'),
+  pending: createAction('vesting/getIsPrivateBuyer/pending'),
+  rejected: createAction('vesting/getIsPrivateBuyer/rejected'),
+  fulfilled: createAction('vesting/getIsPrivateBuyer/fulfilled'),
 }

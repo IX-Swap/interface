@@ -1,16 +1,19 @@
 import { Trans } from '@lingui/macro'
 import React from 'react'
+import { useVestingState } from 'state/vesting/hooks'
 import styled from 'styled-components'
 import { ReactComponent as PrivateSaleIcon } from '../../../assets/images/private-sale.svg'
 
 export const PrivateBuyer = () => {
+  const { privateBuyer } = useVestingState()
   return (
     <Container>
       <Icon />
       <Info>
         <Trans>
-          Hi! Сurrently you have <b>128,000</b> of unvested IXS that will be vested over the next <b>23 months</b>. Your
-          next IXS payment will be available on <b>8 October</b> and vesting balances will be updated here.
+          Hi! Сurrently you have <b>{privateBuyer.amount}</b> of unvested IXS that will be vested over the next{' '}
+          <b>{privateBuyer.months} months</b>. Your next IXS payment will be available on <b>8 October</b> and vesting
+          balances will be updated here.
         </Trans>
       </Info>
     </Container>
