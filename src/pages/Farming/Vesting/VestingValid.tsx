@@ -14,7 +14,7 @@ import { getVestingDates } from 'state/vesting/utils'
 import { TYPE } from 'theme'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { closestFutureDate, getPayoutClosestToPresent, unixTimeToFormat } from 'utils/time'
-import { VestingContractDetails, InfoIcon, VestingDetailsTitle } from './styleds'
+import { VestingContractDetails, InfoIcon, VestingDetailsTitle } from '../styleds'
 
 export const VestingValid = () => {
   const theme = useTheme()

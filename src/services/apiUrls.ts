@@ -9,6 +9,10 @@ export const admin = {
   declineKyc: (id: number) => `/kyc/decline/${id}`,
 }
 
+export const vesting = {
+  privateBuyer: 'investor/me',
+}
+
 export const metamask = {
   challenge: `metamask/challenge`,
   login: `metamask/login`,

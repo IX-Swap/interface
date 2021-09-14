@@ -1,7 +1,7 @@
 import React from 'react'
 import { TYPE } from 'theme'
 import { LightBackground } from 'theme/Background'
-import { FARMING_STRINGS, FARMING_TABS } from './enum'
+import { FARMING_STRINGS, FARMING_TABS } from './Vesting/enum'
 import { Staking } from './Staking'
 import { Container } from './styleds'
 

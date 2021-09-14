@@ -7,7 +7,7 @@ import { isMobile } from 'react-device-detect'
 
 import { Text } from 'rebass'
 import { useWalletModalToggle } from 'state/application/hooks'
-import { VestingTextWrapper, UseWeb3Browser } from './styleds'
+import { VestingTextWrapper, UseWeb3Browser } from '../styleds'
 
 export const ConnectWalletVesting = () => {
   const theme = useTheme()
