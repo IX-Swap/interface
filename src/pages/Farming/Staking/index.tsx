@@ -1,7 +1,13 @@
 import IXSStakingModal from 'components/earn/IXSStakingModal'
 import React, { useEffect } from 'react'
 import { useToggleModal, useCloseModals } from 'state/application/hooks'
-import { useStakingState, useIsVestingPaused, useUpdateIXSBalance, useGetStakings } from 'state/stake/hooks'
+import {
+  useStakingState,
+  useIsVestingPaused,
+  useUpdateIXSBalance,
+  useGetStakings,
+  useGetVestedRewards,
+} from 'state/stake/hooks'
 import { PromoTokenCard } from './PromoTokenCard'
 import { StakingPage } from './StakingPage'
 import { StakingWrapper } from '../styleds'
@@ -25,6 +31,11 @@ export const Staking = () => {
   const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
   const balance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
   const getStakings = useGetStakings()
+  const getRewards = useGetVestedRewards()
+
+  useEffect(() => {
+    getRewards()
+  }, [getRewards, hasStakedSuccessfully])
 
   useEffect(() => {
     getStakings()

@@ -38,6 +38,16 @@ export const getStakings: Readonly<{
   rejected: createAction('stake/getStakings/rejected'),
 }
 
+export const getRewards: Readonly<{
+  pending: ActionCreatorWithoutPayload
+  fulfilled: ActionCreatorWithPayload<{ transactions: any }>
+  rejected: ActionCreatorWithPayload<{ errorMessage: string }>
+}> = {
+  pending: createAction('stake/getRewards/pending'),
+  fulfilled: createAction('stake/getRewards/fulfilled'),
+  rejected: createAction('stake/getRewards/rejected'),
+}
+
 export const getOneWeekHistoricalPoolSize: Readonly<{
   pending: ActionCreatorWithoutPayload
   fulfilled: ActionCreatorWithPayload<{ data: number }>

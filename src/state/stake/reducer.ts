@@ -9,6 +9,7 @@ import {
   changeAccount,
   checkAllowance,
   updateIXSBalance,
+  getRewards,
 } from './actions'
 import { IStaking } from 'constants/stakingPeriods'
 
@@ -76,6 +77,15 @@ export interface TierType {
   twoMonths: Tier
   threeMonths: Tier
 }
+export interface VestingReward {
+  start: number
+  end: number
+  amount: string
+  claimed: string
+  cliff: string
+  segments: number
+  singlePayout: string
+}
 
 export const TIER_TYPES: TierType = {
   oneWeek: {
@@ -116,10 +126,12 @@ interface StakingState {
   hasStakedSuccessfully: boolean
   stakings: IStaking[]
   stakingsLoading: boolean
+  rewardsLoading: boolean
   isPaused: boolean
   metaMaskAccount: string | null
   allowanceAmount: number
   IXSBalance: string | null
+  rewards: VestingReward[]
 }
 
 const initialState: StakingState = {
@@ -143,6 +155,8 @@ const initialState: StakingState = {
   metaMaskAccount: localStorage.getItem('account'),
   allowanceAmount: 0,
   IXSBalance: localStorage.getItem('IXSBalance'),
+  rewards: [],
+  rewardsLoading: false,
 }
 
 export default createReducer<StakingState>(initialState, (builder) =>
@@ -211,6 +225,16 @@ export default createReducer<StakingState>(initialState, (builder) =>
     .addCase(getStakings.rejected, (state, { payload: { errorMessage } }) => {
       state.stakingsLoading = false
       console.error('Error on fetch staking transactions: ', errorMessage)
+    })
+    .addCase(getRewards.pending, (state) => {
+      state.rewardsLoading = true
+    })
+    .addCase(getRewards.fulfilled, (state, { payload: { transactions } }) => {
+      state.rewards = transactions
+      state.rewardsLoading = false
+    })
+    .addCase(getRewards.rejected, (state, { payload: { errorMessage } }) => {
+      state.rewardsLoading = false
     })
     .addCase(getIsStakingPaused, (state, { payload: { isPaused } }) => {
       state.isPaused = isPaused

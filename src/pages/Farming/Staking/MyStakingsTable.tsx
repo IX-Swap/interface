@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { Table, BodyRow, HeaderRow } from 'components/Table'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import { Box } from 'rebass'
-import { useStakingState } from 'state/stake/hooks'
+import { useStakingState, useUnstakeFromWeek } from 'state/stake/hooks'
 import { dateFormatter } from 'state/stake/reducer'
 import { PeriodsEnum } from 'constants/stakingPeriods'
 import Row from 'components/Row'
@@ -108,8 +108,7 @@ const UnstakedHeader = () => {
   )
 }
 const Body = () => {
-  const { stakings } = useStakingState()
-
+  const { stakings, rewards } = useStakingState()
   function formatAmount(amount: number) {
     return amount.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 10 })
   }
