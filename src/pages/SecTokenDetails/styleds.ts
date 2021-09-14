@@ -3,6 +3,7 @@ import { RowStart } from 'components/Row'
 import { Box } from 'rebass'
 import styled from 'styled-components'
 import { TYPE } from 'theme'
+import CurrencyLogo from 'components/CurrencyLogo'
 
 export const Container = styled(Box)`
   height: fit-content;
@@ -55,5 +56,17 @@ export const IconWrapper = styled.div<{ size?: number }>`
   & > * {
     height: ${({ size }) => (size ? size + 'px' : '32px')};
     width: ${({ size }) => (size ? size + 'px' : '32px')};
+  }
+`
+export const Logo = styled(CurrencyLogo)`
+  @media (max-width: 768px) {
+    width: 54px;
+    height: 54px;
+  }
+`
+
+export const StyledTitleBig = styled(TYPE.titleBig)`
+  @media (max-width: 768px) {
+    font-size: 24px !important;
   }
 `

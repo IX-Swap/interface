@@ -76,8 +76,18 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
     ym(84960586, 'reachGoal', 'stakingStakeModalFormOpened')
   }
 
+  function getStakeButtonText() {
+    if (isPaused) {
+      return 'Paused'
+    } else if (leftToFill <= 0) {
+      return 'Limit reached'
+    } else {
+      return 'Stake'
+    }
+  }
+
   return (
-    <StakingTierCardWrapper>
+    <StakingTierCardWrapper className={`${leftToFill <= 0 ? 'fully-staked' : ''}`}>
       <RowCenter style={{ marginTop: '8px' }}>
         <img src={IXSToken} />
       </RowCenter>
@@ -136,18 +146,18 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
           </IconWrapper>
         </MouseoverTooltip>
       </RowCenter>
-      <ButtonIXSWide onClick={selectPeriod} disabled={isPaused}>
-        <Trans>{isPaused ? 'Paused' : 'Stake'}</Trans>
+      <ButtonIXSWide onClick={selectPeriod} disabled={isPaused || leftToFill <= 0}>
+        <Trans>{getStakeButtonText()}</Trans>
       </ButtonIXSWide>
-      {/*{!isTierUnlimited && (
-        <RowCenter>
+      {!isTierUnlimited && (
+        <RowCenter style={{ margin: 'auto' }}>
           <TYPE.description3 fontWeight={400} opacity="0.5">
             <Trans>
-              Left to fill <span style={{ fontWeight: 700 }}>{leftToFill}</span> coins
+              <span style={{ fontWeight: 700 }}>{leftToFill}</span> tokens available for staking
             </Trans>
           </TYPE.description3>
         </RowCenter>
-      )}*/}
+      )}
     </StakingTierCardWrapper>
   )
 }

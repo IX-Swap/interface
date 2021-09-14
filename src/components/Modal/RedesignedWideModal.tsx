@@ -61,6 +61,7 @@ const StyledDialogContent = styled(
           border-radius: 0px;
           top: 0;
           max-width: 100vw;
+          margin:0;
          ${
            mobileMaxHeight &&
            css`
@@ -118,7 +119,7 @@ export default function RedesignedWideModal({
                 {...(isMobile
                   ? {
                       ...bind(),
-                      style: { transform: y.interpolate((y) => `translateY(${(y as number) > 0 ? y : 0}px)`) },
+                      style: { transform: y?.interpolate((y) => `translateY(${(y as number) > 0 ? y : 0}px)`) },
                     }
                   : {})}
                 aria-label="dialog content"

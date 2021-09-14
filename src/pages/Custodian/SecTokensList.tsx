@@ -16,12 +16,11 @@ function CurrencyRow({ currency, style, isAll }: { currency: Currency; style: CS
 }
 
 export default function SecTokensList({
-  height,
   currencies,
   listRef,
   isAll = false,
 }: {
-  height: number
+  height?: number
   currencies: Currency[]
   selectedCurrency?: Currency | null
   otherCurrency?: Currency | null
@@ -54,7 +53,7 @@ export default function SecTokensList({
 
   return (
     <List
-      height={height}
+      height={itemData.length > 5 ? itemHeight * 5 : itemHeight * itemData.length}
       ref={listRef as any}
       width="100%"
       itemData={itemData}

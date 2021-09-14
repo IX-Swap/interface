@@ -88,7 +88,7 @@ export function ImportList({ listURL, list, setModalView, onDismiss }: ImportPro
                       <TYPE.main1>{list.name}</TYPE.main1>
                     </RowFixed>
                     <ExternalLink href={`https://tokenlists.org/token-list?url=${listURL}`}>
-                      <TYPE.popOver>{shortenedUrl}</TYPE.popOver>
+                      <TYPE.popOver style={{ wordBreak: 'break-all' }}>{shortenedUrl}</TYPE.popOver>
                     </ExternalLink>
                   </AutoColumn>
                 </RowFixed>
