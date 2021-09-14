@@ -152,6 +152,18 @@ export const AuthorizableStatus: React.FC<AuthorizableStatusProps> = props => {
         />
       )
 
+    case 'Failed':
+      return (
+        <AuthChip
+          {...props}
+          compact={compact}
+          isNewTheme={isNewTheme}
+          compactChar={'F'}
+          classname={classes.rejected}
+          newTheme={classes.rejectedNewTheme}
+        />
+      )
+
     case 'Draft':
       return (
         <AuthChip

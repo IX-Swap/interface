@@ -118,4 +118,18 @@ describe('AuthorizableStatus', () => {
 
     expect(getByText('T')).toBeTruthy()
   })
+
+  it('renders Failed if status is Failed & compact is false', () => {
+    const { getByText } = render(
+      <AuthorizableStatus status='Failed' compact={false} />
+    )
+
+    expect(getByText('Failed')).toBeTruthy()
+  })
+
+  it('renders F if status Funds transferred', () => {
+    const { getByText } = render(<AuthorizableStatus status='Failed' />)
+
+    expect(getByText('F')).toBeTruthy()
+  })
 })

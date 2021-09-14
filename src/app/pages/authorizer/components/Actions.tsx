@@ -53,13 +53,6 @@ export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
   const isUnauthorized = (item as any).status === 'Submitted'
   const isLoading = isApproving || isRejecting
 
-  if (
-    category === 'commitments' &&
-    (item as any).fundStatus !== 'Funds on hold'
-  ) {
-    return <></>
-  }
-
   return (
     <Grid container wrap='nowrap' justify='flex-end'>
       <Grid item>
@@ -80,30 +73,35 @@ export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
           <LaunchIcon color='disabled' />
         </IconButton>
       </Grid>
-      <>
-        <Grid item>
-          <Box px={1} />
-        </Grid>
-        <Grid item style={{ minWidth: 26 }}>
-          {isUnauthorized && (
-            <Dropdown
-              arrow
-              contentTheme='dark'
-              trigger={props => (
-                <ActionsDropdownTrigger {...props} isLoading={isLoading} />
-              )}
-              content={props => (
-                <ActionsDropdownContent
-                  {...props}
-                  approve={approve}
-                  reject={reject}
-                  view={view}
-                />
-              )}
-            />
-          )}
-        </Grid>
-      </>
+      <Grid item>
+        <Box px={1} />
+      </Grid>
+      {category === 'commitments' &&
+      (item as any).fundStatus !== 'Funds on hold' ? (
+        <></>
+      ) : (
+        <>
+          <Grid item style={{ minWidth: 26 }}>
+            {isUnauthorized && (
+              <Dropdown
+                arrow
+                contentTheme='dark'
+                trigger={props => (
+                  <ActionsDropdownTrigger {...props} isLoading={isLoading} />
+                )}
+                content={props => (
+                  <ActionsDropdownContent
+                    {...props}
+                    approve={approve}
+                    reject={reject}
+                    view={view}
+                  />
+                )}
+              />
+            )}
+          </Grid>
+        </>
+      )}
     </Grid>
   )
 }

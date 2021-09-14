@@ -37,6 +37,7 @@ export type FundStatus =
   | 'Settlement in Progress'
   | 'Funds transferred'
   | 'Rejected'
+  | 'Failed'
   | ''
 export interface NumberFormat {
   currency: string

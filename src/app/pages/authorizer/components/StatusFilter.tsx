@@ -138,10 +138,11 @@ export const fundStatusFilters: FundStatusFilterItemType[] = [
     title: 'Funds Transferred'
   },
   {
-    icon: PendingApprovalIcon,
+    icon: ClosedDealIcon,
     value: 'Settlement in Progress',
     title: 'Settlement in Progress'
   },
   { icon: RejectedIcon, value: 'Rejected', title: 'Rejected' },
+  { icon: PendingApprovalIcon, value: 'Failed', title: 'Failed' },
   { icon: AllIcon, value: '', title: 'All' }
 ]
