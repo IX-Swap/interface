@@ -28,7 +28,8 @@ export const useStyles = makeStyles(theme => ({
   },
   box: {
     display: 'flex',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginLeft: -11
   },
   scrollable: {
     overflowY: 'scroll',
@@ -36,8 +37,5 @@ export const useStyles = makeStyles(theme => ({
   },
   button: {
     textTransform: 'initial'
-  },
-  checkbox: {
-    paddingLeft: 0
   }
 }))

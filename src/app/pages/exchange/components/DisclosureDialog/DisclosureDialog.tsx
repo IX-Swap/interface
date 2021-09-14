@@ -37,9 +37,8 @@ export const DisclosureDialog = ({
         Disclosure
       </DialogTitle>
       <DialogContentText classes={{ root: classes.content }}>
-        <div className={classes.scrollable}>{renderStringToHTML(content)}</div>
-        <VSpacer size={'small'} />
-        <VSpacer size={'extraSmall'} />
+        <Box className={classes.scrollable}>{renderStringToHTML(content)}</Box>
+        <VSpacer size={'medium'} />
         <Divider />
       </DialogContentText>
       <DialogActions classes={{ root: classes.actions }}>
@@ -48,7 +47,6 @@ export const DisclosureDialog = ({
             <Box className={classes.box}>
               <Checkbox
                 checked={isChecked}
-                className={classes.checkbox}
                 onClick={() => setIsChecked(!isChecked)}
               />
               <ListItemText
