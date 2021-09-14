@@ -100,7 +100,7 @@ describe('AuthorizableStatus', () => {
       <AuthorizableStatus status='Settlement in Progress' />
     )
 
-    expect(getByText('S')).toBeTruthy()
+    expect(getByText('P')).toBeTruthy()
   })
 
   it('renders Funds transferred if status is Funds transferred & compact is false', () => {

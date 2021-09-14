@@ -9,6 +9,37 @@ interface AuthorizableStatusProps {
   isNewTheme?: boolean
 }
 
+export interface AuthChipProps {
+  classname: string
+  newTheme: string
+  status?: string
+  compactChar: string
+  compact: boolean
+  isNewTheme: boolean
+}
+
+export const AuthChip = ({
+  classname,
+  newTheme,
+  status,
+  compactChar,
+  compact,
+  isNewTheme
+}: AuthChipProps) => {
+  const classes = useStyles()
+  return (
+    <Typography
+      className={classNames(classes.authStatus, classname, {
+        [classes.compact]: compact,
+        [classes.authStatusNewTheme]: isNewTheme,
+        [newTheme]: isNewTheme
+      })}
+    >
+      {compact ? compactChar : status}
+    </Typography>
+  )
+}
+
 export const AuthorizableStatus: React.FC<AuthorizableStatusProps> = props => {
   const { status, compact = true, isNewTheme = false } = props
   const classes = useStyles()
@@ -16,134 +47,121 @@ export const AuthorizableStatus: React.FC<AuthorizableStatusProps> = props => {
   switch (status) {
     case 'Approved':
       return (
-        <Typography
-          className={classNames(classes.authStatus, classes.approved, {
-            [classes.compact]: compact,
-            [classes.authStatusNewTheme]: isNewTheme,
-            [classes.approvedNewTheme]: isNewTheme
-          })}
-        >
-          {compact ? 'A' : 'Approved'}
-        </Typography>
+        <AuthChip
+          {...props}
+          compact={compact}
+          isNewTheme={isNewTheme}
+          compactChar={'A'}
+          classname={classes.approved}
+          newTheme={classes.approvedNewTheme}
+        />
       )
     case 'Rejected':
       return (
-        <Typography
-          className={classNames(classes.authStatus, classes.rejected, {
-            [classes.compact]: compact,
-            [classes.authStatusNewTheme]: isNewTheme,
-            [classes.rejectedNewTheme]: isNewTheme
-          })}
-        >
-          {compact ? 'R' : 'Rejected'}
-        </Typography>
+        <AuthChip
+          {...props}
+          compact={compact}
+          isNewTheme={isNewTheme}
+          compactChar={'R'}
+          classname={classes.rejected}
+          newTheme={classes.rejectedNewTheme}
+        />
       )
+
     case 'Submitted':
       return (
-        <Typography
-          className={classNames(classes.authStatus, classes.unauthorized, {
-            [classes.compact]: compact,
-            [classes.authStatusNewTheme]: isNewTheme,
-            [classes.submittedNewTheme]: isNewTheme
-          })}
-        >
-          {compact ? 'S' : 'Submitted'}
-        </Typography>
+        <AuthChip
+          {...props}
+          compact={compact}
+          isNewTheme={isNewTheme}
+          compactChar={'S'}
+          classname={classes.unauthorized}
+          newTheme={classes.submittedNewTheme}
+        />
       )
+
     case 'Open':
       return (
-        <Typography
-          className={classNames(classes.authStatus, classes.open, {
-            [classes.compact]: compact,
-            [classes.authStatusNewTheme]: isNewTheme,
-            [classes.openNewTheme]: isNewTheme
-          })}
-        >
-          {compact ? 'O' : 'Open'}
-        </Typography>
+        <AuthChip
+          {...props}
+          compact={compact}
+          isNewTheme={isNewTheme}
+          compactChar={'O'}
+          classname={classes.open}
+          newTheme={classes.openNewTheme}
+        />
       )
+
     case 'Closed':
       return (
-        <Typography
-          className={classNames(classes.authStatus, classes.unauthorized, {
-            [classes.compact]: compact,
-            [classes.authStatusNewTheme]: isNewTheme,
-            [classes.unauthorizedNewTheme]: isNewTheme
-          })}
-        >
-          {compact ? 'C' : 'Closed'}
-        </Typography>
+        <AuthChip
+          {...props}
+          compact={compact}
+          isNewTheme={isNewTheme}
+          compactChar={'C'}
+          classname={classes.unauthorized}
+          newTheme={classes.unauthorizedNewTheme}
+        />
       )
-    /**
-       * NOT_FUNDED: 'Not funded',
-      FUNDS_ON_HOLD: 'Funds on hold',
-      SETTLEMENT_IN_PROGRESS: 'Settlement in Progress',
-      FUNDS_TRANSFERRED: 'Funds transferred',
-      REJECTED: 'Rejected'
-       */
+
     case 'Not funded':
       return (
-        <Typography
-          className={classNames(classes.authStatus, classes.open, {
-            [classes.compact]: compact,
-            [classes.authStatusNewTheme]: isNewTheme,
-            [classes.openNewTheme]: isNewTheme
-          })}
-        >
-          {compact ? 'N' : 'Not funded'}
-        </Typography>
+        <AuthChip
+          {...props}
+          compact={compact}
+          isNewTheme={isNewTheme}
+          compactChar={'N'}
+          classname={classes.open}
+          newTheme={classes.openNewTheme}
+        />
       )
 
     case 'Settlement in Progress':
       return (
-        <Typography
-          className={classNames(classes.authStatus, classes.unauthorized, {
-            [classes.compact]: compact,
-            [classes.authStatusNewTheme]: isNewTheme,
-            [classes.submittedNewTheme]: isNewTheme
-          })}
-        >
-          {compact ? 'S' : 'Settlement in Progress'}
-        </Typography>
+        <AuthChip
+          {...props}
+          compact={compact}
+          isNewTheme={isNewTheme}
+          compactChar={'P'}
+          classname={classes.unauthorized}
+          newTheme={classes.submittedNewTheme}
+        />
       )
 
     case 'Funds on hold':
       return (
-        <Typography
-          className={classNames(classes.authStatus, classes.rejected, {
-            [classes.compact]: compact,
-            [classes.authStatusNewTheme]: isNewTheme,
-            [classes.rejectedNewTheme]: isNewTheme
-          })}
-        >
-          {compact ? 'H' : 'Funds on hold'}
-        </Typography>
+        <AuthChip
+          {...props}
+          compact={compact}
+          isNewTheme={isNewTheme}
+          compactChar={'H'}
+          classname={classes.rejected}
+          newTheme={classes.rejectedNewTheme}
+        />
       )
 
     case 'Funds transferred':
       return (
-        <Typography
-          className={classNames(classes.authStatus, classes.approved, {
-            [classes.compact]: compact,
-            [classes.authStatusNewTheme]: isNewTheme,
-            [classes.approvedNewTheme]: isNewTheme
-          })}
-        >
-          {compact ? 'T' : 'Funds transferred'}
-        </Typography>
+        <AuthChip
+          {...props}
+          compact={compact}
+          isNewTheme={isNewTheme}
+          compactChar={'T'}
+          classname={classes.approved}
+          newTheme={classes.approvedNewTheme}
+        />
       )
 
     case 'Draft':
       return (
-        <Typography
-          className={classNames(classes.authStatus, classes.unauthorized, {
-            [classes.compact]: compact,
-            [classes.authStatusNewTheme]: isNewTheme,
-            [classes.unauthorizedNewTheme]: isNewTheme
-          })}
-        >
-          {compact ? 'D' : 'Draft'}
-        </Typography>
+        <AuthChip
+          {...props}
+          compact={compact}
+          isNewTheme={isNewTheme}
+          compactChar={'T'}
+          classname={classes.unauthorized}
+          newTheme={classes.unauthorizedNewTheme}
+        />
       )
 
     default:

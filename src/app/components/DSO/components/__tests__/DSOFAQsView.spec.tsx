@@ -2,7 +2,6 @@ import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { faqItem } from '__fixtures__/issuance'
 import { DSOFAQsView } from 'app/components/DSO/components/DSOFAQsView'
-import { DigitalSecurityOffering } from 'types/dso'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
 import * as Typography from '@material-ui/core'
 
@@ -18,7 +17,7 @@ describe('DSOFAQsView', () => {
     jest.clearAllMocks()
   })
 
-  const faq = { faqs: [faqItem] } as DigitalSecurityOffering
+  const faq = { faqs: [faqItem] } as any
 
   it('renders without error', () => {
     render(<DSOFAQsView dso={faq} />)
@@ -31,12 +30,7 @@ describe('DSOFAQsView', () => {
   })
 
   it('renders FormSectionHeader when isTitleVisible is true', () => {
-    render(
-      <DSOFAQsView
-        dso={{ faqs: [faqItem] } as DigitalSecurityOffering}
-        isTitleVisible
-      />
-    )
+    render(<DSOFAQsView dso={faq} isTitleVisible />)
 
     expect(FormSectionHeader).toHaveBeenCalledTimes(1)
     expect(FormSectionHeader).toHaveBeenCalledWith(
