@@ -5,7 +5,7 @@ import { ClosedDSOSelect } from 'app/pages/authorizer/components/ClosedDSOSelect
 
 export const ClosedDSOsFilter = () => {
   const { getFilterValue, updateFilter, removeFilter } = useQueryFilter()
-  const value = getFilterValue('commitmentDSO')
+  const value = getFilterValue('dso')
 
   const handleChange = (event: ChangeEvent<{ value: string }>) => {
     const {
@@ -13,9 +13,9 @@ export const ClosedDSOsFilter = () => {
     } = event
 
     if (value !== undefined) {
-      updateFilter('commitmentDSO', event.target.value)
+      updateFilter('dso', event.target.value)
     } else {
-      removeFilter('commitmentDSO')
+      removeFilter('dso')
     }
   }
 

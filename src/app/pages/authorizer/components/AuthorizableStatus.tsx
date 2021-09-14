@@ -152,18 +152,6 @@ export const AuthorizableStatus: React.FC<AuthorizableStatusProps> = props => {
         />
       )
 
-    case 'Failed':
-      return (
-        <AuthChip
-          {...props}
-          compact={compact}
-          isNewTheme={isNewTheme}
-          compactChar={'F'}
-          classname={classes.rejected}
-          newTheme={classes.rejectedNewTheme}
-        />
-      )
-
     case 'Draft':
       return (
         <AuthChip
@@ -173,6 +161,18 @@ export const AuthorizableStatus: React.FC<AuthorizableStatusProps> = props => {
           compactChar={'T'}
           classname={classes.unauthorized}
           newTheme={classes.unauthorizedNewTheme}
+        />
+      )
+
+    case 'Failed':
+      return (
+        <AuthChip
+          {...props}
+          compact={compact}
+          isNewTheme={isNewTheme}
+          compactChar={'F'}
+          classname={classes.rejected}
+          newTheme={classes.rejectedNewTheme}
         />
       )
 
