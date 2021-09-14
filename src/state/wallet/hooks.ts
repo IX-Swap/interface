@@ -47,7 +47,25 @@ export function useETHBalances(uncheckedAddresses?: (string | undefined)[]): {
     [addresses, chainId, results]
   )
 }
-
+export function useSimpleTokenBalanceWithLoading(
+  account?: string | null,
+  currency?: Currency | null,
+  tokenAddress?: string
+) {
+  const ERC20Interface = new Interface(ERC20ABI) as Erc20Interface
+  const balance = useMultipleContractSingleData(
+    [tokenAddress],
+    ERC20Interface,
+    'balanceOf',
+    [account ?? undefined],
+    undefined,
+    100_000
+  )
+  const value = balance?.[0]?.result?.[0]
+  const loading = balance?.[0]?.loading
+  const amount = value && currency ? CurrencyAmount.fromRawAmount(currency, JSBI.BigInt(value.toString())) : undefined
+  return { amount, loading }
+}
 /**
  * Returns a map of token addresses to their eventually consistent token balances for a single account.
  */
@@ -70,7 +88,6 @@ export function useTokenBalancesWithLoadingIndicator(
     undefined,
     100_000
   )
-
   const anyLoading: boolean = useMemo(() => balances.some((callState) => callState.loading), [balances])
 
   return [
