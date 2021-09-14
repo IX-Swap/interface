@@ -7,7 +7,7 @@ import { LoaderThin } from 'components/Loader/LoaderThin'
 import { Box } from 'rebass'
 import { useStakingState } from 'state/stake/hooks'
 import { dateFormatter } from 'state/stake/reducer'
-import { PeriodsEnum } from 'constants/stakingPeriods'
+import { PeriodsEnum, IStaking } from 'constants/stakingPeriods'
 import Row from 'components/Row'
 import Column from 'components/Column'
 import { ReactComponent as LockIcon } from 'assets/images/lock.svg'
@@ -21,7 +21,7 @@ import { UnstakeModal } from './Unstaking/UnstakeModal'
 
 import { TYPE } from 'theme'
 
-let activeStakeAmount = 0
+let activeStake: IStaking
 
 function formatAmount(amount: number): string {
   return amount.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 10 })
@@ -148,10 +148,10 @@ const Body = () => {
           <div>{formatAmount(stake.stakeAmount)} IXS</div>
           <div>{formatAmount(stake.distributeAmount)} IXSgov</div>
           <div className="rewards">{formatAmount(stake.reward)} IXS</div>
-          {stake.canUnstake ? (
+          {true ? (
             <UnstakeButton
               onClick={() => {
-                activeStakeAmount = stake.stakeAmount
+                activeStake = stake
                 toggleUnstakeModal()
               }}
             >
@@ -208,7 +208,7 @@ export const MyStakingsTable = () => {
         </Box>
         {showTableData()}
       </Box>
-      <UnstakeModal onDismiss={toggleUnstakeModal} stakeAmount={formatAmount(activeStakeAmount)} />
+      <UnstakeModal onDismiss={toggleUnstakeModal} stake={activeStake} />
     </>
   )
 }

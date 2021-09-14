@@ -526,7 +526,7 @@ export function useGetStakings() {
 
   return useCallback(async () => {
     try {
-      const { oneDaySeconds, periodsIndex, periodsInSeconds, periodsApy, periodsLockMonths, periodsInDays } =
+      const { SECONDS_IN_DAY, periodsIndex, periodsInSeconds, periodsApy, periodsLockMonths, periodsInDays } =
         stakingPeriodsData
 
       const floorTo4Decimals = (num: number) => Math.floor((num + Number.EPSILON) * 10000) / 10000
@@ -571,7 +571,7 @@ export function useGetStakings() {
           const stakeAmount = +utils.formatUnits(data[1], 18)
           const endDateUnix = startDateUnix + periodsInSeconds[period]
           const lockMonths = periodsLockMonths[period]
-          const lockSeconds = lockMonths * 30 * oneDaySeconds
+          const lockSeconds = lockMonths * 30 * SECONDS_IN_DAY
           const lockedTillUnix = startDateUnix + lockSeconds
           return {
             period,

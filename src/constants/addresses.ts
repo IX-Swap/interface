@@ -23,7 +23,9 @@ export const IXS_VESTING_ADDRESS: { [key: number]: string } = {
 // IXS Token staking V1 (post TGE) address
 export const IXS_STAKING_V1_ADDRESS: { [key: number]: string } = {
   [1]: '0x13Ca6Daab84af2A452f86Ea437bb90c6217a220c',
-  [42]: '0xEB5C601cfB10EC49888be9aE726Cf7ce2CEBF16d',
+  //testing contract
+  [42]: '0xdF26666a9B68F8A13b4e277C49A735Eb693e8242',
+  // [42]: '0xEB5C601cfB10EC49888be9aE726Cf7ce2CEBF16d',
 }
 export const SWAP_ROUTER_ADDRESS: { [key: number]: string } = {
   [1]: '',
