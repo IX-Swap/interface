@@ -26,7 +26,8 @@ import { useGetSiteConfig } from 'app/pages/exchange/hooks/useGetSiteConfig'
 import { ExchangeRulesLink } from 'app/pages/exchange/components/ExchangeRulesLink/ExchangeRulesLink'
 
 export const Market = () => {
-  const [isDisclosureVisible, setIsDisclosureVisible] = useState<boolean>(false)
+  // TODO Make changes after complete backend api
+  const [isDisclosureVisible, setIsDisclosureVisible] = useState<boolean>(true)
   const { data: config } = useGetSiteConfig()
   const hasReadMasDisclosure =
     config !== undefined ? config.hasReadMasDisclosure : false
@@ -36,7 +37,8 @@ export const Market = () => {
     if (!hasReadMasDisclosure) {
       setIsDisclosureVisible(true)
     } else {
-      setIsDisclosureVisible(false)
+      // TODO Make changes after complete backend api
+      setIsDisclosureVisible(true)
     }
   }, [hasReadMasDisclosure, setIsDisclosureVisible])
 
