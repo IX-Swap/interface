@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit'
-import { VestingStatus } from 'pages/Farming/Vesting'
+import { VestingStatus } from 'pages/Farming/Vesting/Vesting'
 import {
   getDetails,
   saveAvailableClaim,
@@ -7,6 +7,7 @@ import {
   savePayouts,
   saveCustomVestingAddress,
   saveVestingStatus,
+  getIsPrivateBuyer,
 } from './actions'
 import { VestingState } from './types'
 
@@ -23,6 +24,7 @@ const initialState: VestingState = {
   loadingIsVesting: false,
   loadingPayouts: false,
   loadingAvailableClaim: false,
+  privateBuyer: {} as VestingState['privateBuyer'],
 }
 export default createReducer<VestingState>(initialState, (builder) =>
   builder
@@ -83,5 +85,17 @@ export default createReducer<VestingState>(initialState, (builder) =>
     })
     .addCase(saveVestingStatus, (state, { payload }) => {
       state.vestingStatus = payload
+    })
+    .addCase(getIsPrivateBuyer.pending, (state) => {
+      state.loadingVesting = true
+      state.privateBuyer = {} as VestingState['privateBuyer']
+    })
+    .addCase(getIsPrivateBuyer.fulfilled, (state, { payload: { data } }) => {
+      state.privateBuyer = data
+      state.loadingVesting = false
+    })
+    .addCase(getIsPrivateBuyer.rejected, (state) => {
+      state.loadingVesting = false
+      state.privateBuyer = {} as VestingState['privateBuyer']
     })
 )

@@ -1,6 +1,6 @@
 import { Currency, CurrencyAmount, Percent, Token, TradeType } from '@ixswap1/sdk-core'
 import { Pair, Trade as V2Trade, TradeAuthorizationDigest } from '@ixswap1/v2-sdk'
-import { useWeb3React } from '@web3-react/core'
+import { IXS_ADDRESS, IXS_GOVERNANCE_ADDRESS } from 'constants/addresses'
 import { SupportedLocale } from 'constants/locales'
 import { useV2Pair } from 'hooks/useV2Pairs'
 import JSBI from 'jsbi'
@@ -19,11 +19,12 @@ import {
   useSecTokenId,
   useSecTokensFromMap,
 } from 'state/secTokens/hooks'
+import { useSimpleTokenBalanceWithLoading } from 'state/wallet/hooks'
 import { SecToken } from 'types/secToken'
 import { currencyId } from 'utils/currencyId'
 import { shouldRenewToken } from 'utils/time'
 import { BASES_TO_TRACK_LIQUIDITY_FOR, PINNED_PAIRS } from '../../constants/routing'
-import { useAllTokens } from '../../hooks/Tokens'
+import { useAllTokens, useCurrency } from '../../hooks/Tokens'
 import { useActiveWeb3React } from '../../hooks/web3'
 import { AppDispatch, AppState } from '../index'
 import {
@@ -430,6 +431,21 @@ export const useUserSecTokens = () => {
   const secMap = listToSecTokenMap(listCache, userSecTokens)
   const secTokens = useSecTokensFromMap(secMap)
   return { secTokens }
+}
+
+export const useIXSBalance = () => {
+  const { account, chainId } = useActiveWeb3React()
+  const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
+  const balance = useSimpleTokenBalanceWithLoading(account, currency, IXS_ADDRESS[chainId ?? 1])
+  return balance
+}
+
+export const useIXSGovBalance = () => {
+  const { account, chainId } = useActiveWeb3React()
+  const currency = useCurrency(IXS_GOVERNANCE_ADDRESS[chainId ?? 1])
+
+  const balance = useSimpleTokenBalanceWithLoading(account, currency, IXS_GOVERNANCE_ADDRESS[chainId ?? 1])
+  return balance
 }
 
 export function useFetchUserSecTokenListCallback(): (sendDispatch?: boolean) => Promise<SecToken[]> {
