@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { ButtonIXSGradient } from 'components/Button'
 import { Trans } from '@lingui/macro'
 import { useVestingStatus } from 'state/vesting/hooks'
-import { ReactComponent as Close } from '../../assets/images/cross.svg'
+import { ReactComponent as Close } from '../../../assets/images/cross.svg'
 import { saveCustomVestingAddress } from 'state/vesting/actions'
 import { useActiveWeb3React } from 'hooks/web3'
 

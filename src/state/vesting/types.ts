@@ -1,5 +1,5 @@
 import { BigNumber } from 'ethers'
-import { VestingStatus } from 'pages/Farming/Vesting'
+import { VestingStatus } from 'pages/Farming/Vesting/Vesting'
 
 export interface VestingResponse {
   start?: BigNumber
@@ -34,4 +34,5 @@ export interface VestingState {
   loadingIsVesting: boolean
   loadingPayouts: boolean
   loadingAvailableClaim: boolean
+  privateBuyer: { amount: string; isVerified: boolean; months: number }
 }
