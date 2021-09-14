@@ -43,136 +43,60 @@ export const AuthChip = ({
 export const AuthorizableStatus: React.FC<AuthorizableStatusProps> = props => {
   const { status, compact = true, isNewTheme = false } = props
   const classes = useStyles()
+  const compactStatus = status?.split(' ').pop()?.[0].toUpperCase() ?? ''
 
   switch (status) {
     case 'Approved':
-      return (
-        <AuthChip
-          {...props}
-          compact={compact}
-          isNewTheme={isNewTheme}
-          compactChar={'A'}
-          classname={classes.approved}
-          newTheme={classes.approvedNewTheme}
-        />
-      )
-    case 'Rejected':
-      return (
-        <AuthChip
-          {...props}
-          compact={compact}
-          isNewTheme={isNewTheme}
-          compactChar={'R'}
-          classname={classes.rejected}
-          newTheme={classes.rejectedNewTheme}
-        />
-      )
-
-    case 'Submitted':
-      return (
-        <AuthChip
-          {...props}
-          compact={compact}
-          isNewTheme={isNewTheme}
-          compactChar={'S'}
-          classname={classes.unauthorized}
-          newTheme={classes.submittedNewTheme}
-        />
-      )
-
-    case 'Open':
-      return (
-        <AuthChip
-          {...props}
-          compact={compact}
-          isNewTheme={isNewTheme}
-          compactChar={'O'}
-          classname={classes.open}
-          newTheme={classes.openNewTheme}
-        />
-      )
-
-    case 'Closed':
-      return (
-        <AuthChip
-          {...props}
-          compact={compact}
-          isNewTheme={isNewTheme}
-          compactChar={'C'}
-          classname={classes.unauthorized}
-          newTheme={classes.unauthorizedNewTheme}
-        />
-      )
-
-    case 'Not funded':
-      return (
-        <AuthChip
-          {...props}
-          compact={compact}
-          isNewTheme={isNewTheme}
-          compactChar={'N'}
-          classname={classes.open}
-          newTheme={classes.openNewTheme}
-        />
-      )
-
-    case 'Settlement in Progress':
-      return (
-        <AuthChip
-          {...props}
-          compact={compact}
-          isNewTheme={isNewTheme}
-          compactChar={'P'}
-          classname={classes.unauthorized}
-          newTheme={classes.submittedNewTheme}
-        />
-      )
-
-    case 'Funds on hold':
-      return (
-        <AuthChip
-          {...props}
-          compact={compact}
-          isNewTheme={isNewTheme}
-          compactChar={'H'}
-          classname={classes.rejected}
-          newTheme={classes.rejectedNewTheme}
-        />
-      )
-
     case 'Funds transferred':
       return (
         <AuthChip
           {...props}
           compact={compact}
           isNewTheme={isNewTheme}
-          compactChar={'T'}
+          compactChar={compactStatus}
           classname={classes.approved}
           newTheme={classes.approvedNewTheme}
         />
       )
-
-    case 'Draft':
-      return (
-        <AuthChip
-          {...props}
-          compact={compact}
-          isNewTheme={isNewTheme}
-          compactChar={'T'}
-          classname={classes.unauthorized}
-          newTheme={classes.unauthorizedNewTheme}
-        />
-      )
-
+    case 'Rejected':
+    case 'Funds on hold':
     case 'Failed':
       return (
         <AuthChip
           {...props}
           compact={compact}
           isNewTheme={isNewTheme}
-          compactChar={'F'}
+          compactChar={compactStatus}
           classname={classes.rejected}
           newTheme={classes.rejectedNewTheme}
+        />
+      )
+
+    case 'Submitted':
+    case 'Closed':
+    case 'Settlement in Progress':
+    case 'Draft':
+      return (
+        <AuthChip
+          {...props}
+          compact={compact}
+          isNewTheme={isNewTheme}
+          compactChar={compactStatus}
+          classname={classes.unauthorized}
+          newTheme={classes.submittedNewTheme}
+        />
+      )
+
+    case 'Open':
+    case 'Not funded':
+      return (
+        <AuthChip
+          {...props}
+          compact={compact}
+          isNewTheme={isNewTheme}
+          compactChar={compactStatus}
+          classname={classes.open}
+          newTheme={classes.openNewTheme}
         />
       )
 

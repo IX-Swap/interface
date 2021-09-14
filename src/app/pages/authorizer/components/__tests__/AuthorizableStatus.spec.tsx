@@ -67,10 +67,10 @@ describe('AuthorizableStatus', () => {
     expect(getByText('Not funded')).toBeTruthy()
   })
 
-  it('renders N if status Not funded', () => {
+  it('renders F if status Not funded', () => {
     const { getByText } = render(<AuthorizableStatus status='Not funded' />)
 
-    expect(getByText('N')).toBeTruthy()
+    expect(getByText('F')).toBeTruthy()
   })
 
   it('renders Funds on hold if status is Funds on hold & compact is false', () => {
