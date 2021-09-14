@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import React from 'react'
-import { Chip, MenuItem } from '@material-ui/core'
+import { Chip, Grid, MenuItem } from '@material-ui/core'
 import draftToHtml from 'draftjs-to-html'
 import pdfIcon from 'assets/icons/documents/pdf.svg'
 import docxIcon from 'assets/icons/documents/docx.svg'
@@ -18,6 +18,7 @@ import { OrderStatus } from 'app/pages/exchange/components/PastOrderTable/OrderS
 import { Side } from 'app/pages/exchange/components/TradeHistoryTable/Side'
 import { dsoQueryKeys } from 'config/queryKeys'
 import { sanitize } from 'dompurify'
+import { formatDateToMMDDYY, formatTime } from 'helpers/dates'
 
 export const renderMenuItems = (
   items: Array<{ label: string; value: string | number }>
@@ -119,5 +120,18 @@ export const renderDistributionStatus = (
         backgroundColor: colorMap[status].bg
       }}
     />
+  )
+}
+
+export const renderDateAndTimeField = (date: any) => {
+  return (
+    <Grid container direction={'column'}>
+      <Grid item data-testid={'date'}>
+        {formatDateToMMDDYY(date)}
+      </Grid>
+      <Grid item data-testid={'time'} style={{ color: '#AAAAAA' }}>
+        {formatTime(date)}
+      </Grid>
+    </Grid>
   )
 }

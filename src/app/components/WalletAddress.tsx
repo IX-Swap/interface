@@ -32,6 +32,10 @@ export const WalletAddress = ({
     ? address
     : `${address.slice(0, 4)}...${address.slice(address.length - 4)}`
 
+  if (address === '') {
+    return null
+  }
+
   return (
     <span style={{ display: 'inline-flex', alignItems: 'center' }}>
       {link ? (

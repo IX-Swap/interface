@@ -40,7 +40,7 @@ export const DSOInvestorOverview = (props: DSOInvestorOverviewProps) => {
         <Grid item xs={12} md={4}>
           <LabelledValue
             label='Token Address'
-            value={dso.deploymentInfo?.token}
+            value={dso.deploymentInfo?.token ?? ''}
           />
         </Grid>
       </Grid>

@@ -13,12 +13,13 @@ interface AuthorizerViewProps<T>
     Viewable<T> {
   idKey?: string
   title: string
+  themeVariant?: 'default' | 'primary' | 'no-header'
 }
 
 export const AuthorizerTable = <T,>(
   props: AuthorizerViewProps<T>
 ): JSX.Element => {
-  const { columns, name, uri } = props
+  const { columns, name, uri, themeVariant = 'primary' } = props
   const { filter: authFilter } = useAuthorizerFilter()
   const category = useAuthorizerCategory()
 
@@ -39,6 +40,7 @@ export const AuthorizerTable = <T,>(
       filter={mergedFilters}
       hasActions
       hasStatus
+      themeVariant={themeVariant}
     />
   )
 }

@@ -1,6 +1,5 @@
 import { Bank, Address } from 'types/bank'
 import { Asset } from 'types/asset'
-import { DataroomFile, FormArray } from 'types/dataroomFile'
 import { PaginationArgs } from 'services/api/types'
 
 export type BankFormValues = Pick<
@@ -9,7 +8,6 @@ export type BankFormValues = Pick<
 > & {
   asset: Asset['_id']
   address: Bank['address']
-  supportingDocuments: FormArray<DataroomFile>
 }
 
 export type AddressValues = Address
@@ -48,13 +46,7 @@ export interface WithdrawDSFormValues
   memo?: string
 }
 
-export type BankArgs = Omit<BankFormValues, 'supportingDocuments'> & {
-  supportingDocuments: string[]
-}
-
-export type CreateBankArgs = BankArgs
-
-export type UpdateBankArgs = BankArgs & {
+export type UpdateBankArgs = BankFormValues & {
   bankId: string
 }
 
