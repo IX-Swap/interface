@@ -1,11 +1,10 @@
-import React from 'react'
 import { LoaderThin } from 'components/Loader/LoaderThin'
+import React from 'react'
 import { useVestingState, useVestingStatus } from 'state/vesting/hooks'
-import { VestingWrapper, LoaderContainer } from './styleds'
+import { LoaderContainer, VestingWrapper } from './styleds'
 import { VestingInfo } from './VestingInfo'
-import { VestingTable } from './VestingTable'
 import { VestingSearch } from './VestingSearch'
-import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
+import { VestingTable } from './VestingTable'
 
 export enum VestingStatus {
   LOADING = 'LOADING',

@@ -7,6 +7,7 @@ import { FixedHeightRow } from './styleds'
 import { MouseoverTooltip } from 'components/Tooltip'
 import { IconWrapper } from 'components/AccountDetails/styleds'
 import { ReactComponent as InfoIcon } from 'assets/images/attention.svg'
+import styled from 'styled-components/macro'
 
 interface Props {
   textLeft: React.ReactNode
@@ -15,9 +16,15 @@ interface Props {
   tooltipText?: string
 }
 
+const RowTinyColumn = styled(FixedHeightRow)`
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+      flex-wrap: wrap;
+  `};
+`
+
 export const TextRow = ({ textLeft, textRight, currency, tooltipText }: Props) => {
   return (
-    <FixedHeightRow data-testid="tableRow">
+    <RowTinyColumn data-testid="tableRow">
       <RowFixed>
         <Text>{textLeft}</Text>
         {tooltipText && (
@@ -32,6 +39,6 @@ export const TextRow = ({ textLeft, textRight, currency, tooltipText }: Props) =
         {currency && textRight && <CurrencyLogo size="20px" style={{ marginRight: '8px' }} currency={currency} />}
         <Text>{textRight ?? '-'}</Text>
       </RowFixed>
-    </FixedHeightRow>
+    </RowTinyColumn>
   )
 }
