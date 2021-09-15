@@ -29,6 +29,10 @@ export const Staking = () => {
   const getStakings = useGetStakings()
 
   useEffect(() => {
+    getStakings()
+  }, [getStakings])
+
+  useEffect(() => {
     if (hasStakedSuccessfully || hasUnstakedSuccessfully) {
       getStakings()
     }

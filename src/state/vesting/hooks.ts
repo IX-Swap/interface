@@ -6,17 +6,31 @@ import { useCurrency } from 'hooks/Tokens'
 import { useVestingContract, useIXSTokenContract } from 'hooks/useContract'
 import useTheme from 'hooks/useTheme'
 import { useActiveWeb3React } from 'hooks/web3'
-import { VestingStatus } from 'pages/Farming/Vesting'
+import { VestingStatus } from 'pages/Farming/Vesting/Vesting'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import apiService from 'services/apiService'
+import { vesting } from 'services/apiUrls'
 import { AppDispatch, AppState } from 'state'
 import { useTransactionAdder } from 'state/transactions/hooks'
 import { useUserAccountState } from 'state/user/hooks'
 import { setTransaction } from 'state/withdraw/actions'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { hexToRGBA } from 'utils/themeHelper'
-import { getDetails, saveAvailableClaim, saveIsVesting, savePayouts, saveVestingStatus } from './actions'
+import {
+  getDetails,
+  getIsPrivateBuyer,
+  saveAvailableClaim,
+  saveIsVesting,
+  savePayouts,
+  saveVestingStatus,
+} from './actions'
 import { vestingResponseAdapter } from './utils'
+
+export enum STATUS {
+  SUCCESS,
+  FAILED,
+}
 
 export function useDistributeCallback(): () => Promise<void> {
   const vesting = useVestingContract()
@@ -286,6 +300,30 @@ export function useTableOptions() {
     }
     return options
   }, [theme])
+}
+
+export const privateBuyer = async (address: string) => {
+  const result = await apiService.post(vesting.privateBuyer, { address })
+  return result.data
+}
+
+export function useIsPrivateBuyer() {
+  const dispatch = useDispatch<AppDispatch>()
+  const callback = useCallback(
+    async (address: string) => {
+      try {
+        dispatch(getIsPrivateBuyer.pending())
+        const data = await privateBuyer(address)
+        dispatch(getIsPrivateBuyer.fulfilled({ data }))
+        return STATUS.SUCCESS
+      } catch (error: any) {
+        dispatch(getIsPrivateBuyer.rejected({ errorMessage: 'Could not get private buyers' }))
+        return STATUS.FAILED
+      }
+    },
+    [dispatch]
+  )
+  return callback
 }
 
 export function useVestingState(): AppState['vesting'] {

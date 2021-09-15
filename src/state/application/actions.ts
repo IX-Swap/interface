@@ -28,6 +28,7 @@ export enum ApplicationModal {
   CHOOSE_BROKER_DEALER,
   STAKE_IXS,
   UNSTAKE_IXS,
+  IXS_BALANCE,
 }
 
 export const updateBlockNumber = createAction<{ chainId: number; blockNumber: number }>('application/updateBlockNumber')

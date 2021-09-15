@@ -7,6 +7,7 @@ import { FixedHeightRow } from './styleds'
 import { MouseoverTooltip } from 'components/Tooltip'
 import { IconWrapper } from 'components/AccountDetails/styleds'
 import { ReactComponent as InfoIcon } from 'assets/images/attention.svg'
+import styled from 'styled-components/macro'
 
 interface Props {
   textLeft: React.ReactNode

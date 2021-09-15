@@ -1,6 +1,6 @@
 import React from 'react'
 import { ConnectWalletVesting } from './ConnectWalletVesting'
-import { VestingInfoWrapper } from './styleds'
+import { VestingInfoWrapper } from '../styleds'
 import { VestingStatus } from './Vesting'
 import { VestingValid } from './VestingValid'
 import { ZeroBalanceVesting } from './ZeroBalanceVesting'

@@ -1,5 +1,5 @@
 import { AppBackground } from 'components/AppBackground'
-import { KovanOnlyRoute } from 'components/Routes/KovanOnlyRoute'
+import { IXSBalanceModal } from 'components/Header/IXSBalanceModal'
 import { SECURITY_TOKENS } from 'config'
 import ApeModeQueryParamReader from 'hooks/useApeModeQueryParamReader'
 import { useActiveWeb3React } from 'hooks/web3'
@@ -88,6 +88,7 @@ export default function App() {
         <ToggleableBody isVisible={visibleBody} {...(isAdminKyc && { style: { marginTop: 26 } })}>
           <Popups />
           <Polling />
+          <IXSBalanceModal />
           <Web3ReactManager>
             <Switch>
               <Route exact strict path="/admin-kyc" component={AdminKyc} />

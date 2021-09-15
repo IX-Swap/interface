@@ -1,19 +1,18 @@
-import React from 'react'
-import useScrollPosition from '@react-hook/window-scroll'
-import { Text } from 'rebass'
 import { Trans } from '@lingui/macro'
+import useScrollPosition from '@react-hook/window-scroll'
+import useLightBackground from 'components/AppBackground/useLightBackground'
+import React from 'react'
+import { Text } from 'rebass'
 import styled, { css } from 'styled-components'
 import LogoDark from '../../assets/svg/logo-white.svg'
 import { useActiveWeb3React } from '../../hooks/web3'
 import { useETHBalances } from '../../state/wallet/hooks'
 import { VioletCard } from '../Card'
-import { RowCenter, RowFixed } from '../Row'
+import { MobileMenu } from '../Mobile-Menu'
+import { RowFixed } from '../Row'
 import Web3Status from '../Web3Status'
 import { HeaderLinks } from './HeaderLinks'
-import useLightBackground from 'components/AppBackground/useLightBackground'
-import { SUPPORTED_TGE_CHAINS } from 'pages/App'
-
-import { MobileMenu } from '../Mobile-Menu'
+import { IXSBalance } from './IXSBalance'
 
 const HeaderFrame = styled.div<{ showBackground: boolean; lightBackground: boolean; withNetwork: boolean }>`
   display: grid;
@@ -38,14 +37,10 @@ const HeaderFrame = styled.div<{ showBackground: boolean; lightBackground: boole
   transition: background-position 0.1s, box-shadow 0.1s;
 
   @media (max-width: 1280px) {
-    ${({ withNetwork }) =>
-      withNetwork &&
-      css`
-        grid-template-columns: auto 1fr auto;
-        grid-gap: 32px;
-      `}
+    grid-template-columns: auto 1fr auto;
+    grid-gap: 32px;
   }
-  @media (max-width: 1023px) {
+  @media (max-width: 1080px) {
     grid-template-columns: auto 1fr auto;
     grid-gap: 32px;
     padding: 14px 18px;
@@ -114,15 +109,9 @@ const AccountElement = styled.div<{ active: boolean }>`
   }
 `
 
-const HideSmall = styled.span`
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    display: none;
-  `};
-`
-
 const NetworkCard = styled(VioletCard)`
   border-radius: 12px;
-  padding: 2px 12px;
+  padding: 2px 3px;
   ${({ theme }) => theme.mediaWidth.upToSmall`
     margin: 0;
     overflow: hidden;
@@ -222,11 +211,12 @@ export default function Header() {
           <HeaderLinks />
           <HeaderControls>
             <HeaderElement>
-              {/* <HideSmall> */}
+              <IXSBalance />
+            </HeaderElement>
+            <HeaderElement>
               {chainId && NETWORK_LABELS[chainId] && (
                 <NetworkCard title={NETWORK_LABELS[chainId]}>{NETWORK_LABELS[chainId]}</NetworkCard>
               )}
-              {/* </HideSmall> */}
               <AccountElement active={!!account} style={{ pointerEvents: 'auto' }}>
                 {account && userEthBalance ? (
                   <BalanceText style={{ flexShrink: 0 }} pl="0.75rem" pr="0.5rem" fontWeight={600}>

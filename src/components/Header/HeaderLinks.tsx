@@ -24,7 +24,7 @@ const HeaderLinksWrap = styled(Row)`
   ${({ theme }) => theme.mediaWidth.upToMedium`
     justify-self: flex-end;
   `};
-  @media (max-width: 1023px) {
+  @media (max-width: 1080px) {
     display: none;
   }
 `

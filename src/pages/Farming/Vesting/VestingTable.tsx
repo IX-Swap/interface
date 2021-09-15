@@ -12,7 +12,7 @@ import { useDistributeCallback, usePayouts, useTableOptions } from 'state/vestin
 import { TYPE } from 'theme'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { hexToRGBA } from 'utils/themeHelper'
-import { ChartParent, VestingTableTitle, VestingTableWrapper } from './styleds'
+import { ChartParent, VestingTableTitle, VestingTableWrapper } from '../styleds'
 import { VestingStatus } from './Vesting'
 dayjs.extend(isSameOrAfter)
 
