@@ -606,8 +606,11 @@ export function useGetStakings() {
         }
         return 0
       })
-      dispatch(getStakings.fulfilled({ transactions: stakingsAdapter(transactions) }))
-      return transactions
+      const filteredTransactions = transactions.filter((trans: IStaking) => {
+        return trans.stakeAmount !== 0
+      })
+      dispatch(getStakings.fulfilled({ transactions: stakingsAdapter(filteredTransactions) }))
+      return filteredTransactions
     } catch (error) {
       console.error(`useGetStakings error `, error)
     }

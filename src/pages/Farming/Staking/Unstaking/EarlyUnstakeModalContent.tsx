@@ -47,7 +47,8 @@ export function EarlyUnstake({ onDismiss, stake }: UnstakingModalProps) {
   const unstake = useUnstakeFrom(stake.period)
 
   useEffect(() => {
-    if (IXSGovAllowanceAmount >= parseFloat(typedValue)) {
+    if (!IXSGovAllowanceAmount) return
+    if (parseFloat(IXSGovAllowanceAmount) >= parseFloat(typedValue)) {
       setIsEnoughAllowance(true)
     } else {
       setIsEnoughAllowance(false)

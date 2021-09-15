@@ -81,10 +81,6 @@ const Body = () => {
   const { stakings } = useStakingState()
   const toggleUnstakeModal = useToggleModal(ApplicationModal.UNSTAKE_IXS)
 
-  useEffect(() => {
-    console.log('Stakings: ', stakings)
-  }, [stakings])
-
   function getPeriodDigit(period: PeriodsEnum) {
     if (period === PeriodsEnum.WEEK || period === PeriodsEnum.MONTH) {
       return 1

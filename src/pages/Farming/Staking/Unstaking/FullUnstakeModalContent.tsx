@@ -26,7 +26,7 @@ function formatAmount(amount: number): string {
 
 export function FullUnstake({ onDismiss, stake }: UnstakingModalProps) {
   const stakeAmount = formatAmount(stake?.stakeAmount)
-  const [isEnoughAllowance, setIsEnoughAllowance] = useState(false)
+  const [isEnoughAllowance, setIsEnoughAllowance] = useState(true)
   const error = ''
   const { chainId, account } = useActiveWeb3React()
   const IXSGovCurrency = useCurrency(IXS_GOVERNANCE_ADDRESS[chainId ?? 1])
@@ -36,7 +36,8 @@ export function FullUnstake({ onDismiss, stake }: UnstakingModalProps) {
   const increaseAllowance = useIncreaseIXSGovAllowance()
 
   useEffect(() => {
-    if (IXSGovAllowanceAmount >= parseFloat(stakeAmount)) {
+    if (!IXSGovAllowanceAmount) return
+    if (parseFloat(IXSGovAllowanceAmount) >= parseFloat(stakeAmount)) {
       setIsEnoughAllowance(true)
     } else {
       setIsEnoughAllowance(false)

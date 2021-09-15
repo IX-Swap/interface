@@ -4,7 +4,7 @@ import { increaseIXSGovAllowance, checkIXSGovAllowance, unstake } from './action
 interface UnstakingState {
   isApprovingIXSGov: boolean
   approveIXSGovError: boolean
-  IXSGovAllowanceAmount: number
+  IXSGovAllowanceAmount: string | null
   isUnstaking: boolean
   isUnstakingFailed: boolean
   hasUnstakedSuccessfully: boolean
@@ -13,7 +13,7 @@ interface UnstakingState {
 const initialState: UnstakingState = {
   isApprovingIXSGov: false,
   approveIXSGovError: false,
-  IXSGovAllowanceAmount: 0,
+  IXSGovAllowanceAmount: localStorage.getItem('IXSGovAllowanceAmount'),
   isUnstaking: false,
   isUnstakingFailed: false,
   hasUnstakedSuccessfully: false,
@@ -35,7 +35,8 @@ export default createReducer<UnstakingState>(initialState, (builder) =>
       console.error('IXSGov approve error: ', errorMessage)
     })
     .addCase(checkIXSGovAllowance, (state, { payload: { allowanceAmount } }) => {
-      state.IXSGovAllowanceAmount = allowanceAmount
+      state.IXSGovAllowanceAmount = allowanceAmount.toString()
+      localStorage.setItem('IXSGovAllowanceAmount', allowanceAmount.toString())
     })
     .addCase(unstake.pending, (state) => {
       state.hasUnstakedSuccessfully = false
