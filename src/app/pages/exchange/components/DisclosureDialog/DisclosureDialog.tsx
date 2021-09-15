@@ -4,10 +4,13 @@ import {
   Dialog,
   DialogActions,
   DialogContentText,
-  DialogTitle
+  DialogTitle,
+  Typography
 } from '@material-ui/core'
 import { useStyles } from './DisclosureDialog.style'
 import { renderStringToHTML } from 'app/components/DSO/utils'
+import { VSpacer } from 'components/VSpacer'
+import { ExchangeRulesLink } from 'app/pages/exchange/components/ExchangeRulesLink/ExchangeRulesLink'
 
 export interface DisclosureDialogProps {
   content: any
@@ -29,6 +32,10 @@ export const DisclosureDialog = ({
       </DialogTitle>
       <DialogContentText classes={{ root: classes.content }}>
         {renderStringToHTML(content)}
+        <VSpacer size='small' />
+        <Typography>
+          Learn about our <ExchangeRulesLink />
+        </Typography>
       </DialogContentText>
       <DialogActions classes={{ root: classes.actions }}>
         <Button

@@ -72,10 +72,7 @@ describe('CardContent', () => {
         ...defaultLabeledValueProps,
         reverse: true,
         label: 'Expected Return',
-        value:
-          dso.capitalStructure === 'Debt'
-            ? dso.interestRate
-            : dso.grossIRR?.toString().concat('%')
+        value: '0.00%'
       },
       {}
     )

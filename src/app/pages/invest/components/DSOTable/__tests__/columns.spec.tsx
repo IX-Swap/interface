@@ -162,7 +162,7 @@ describe('render DSO Expected Return', () => {
       <>{renderExpectedReturn(expectedReturn, dsoDebt)}</>
     )
 
-    expect(container).toHaveTextContent(`${dsoDebt.interestRate ?? 0}%`)
+    expect(container).toHaveTextContent('100.00%')
   })
 
   it('renders correct when capitalStructure is Hybrid', () => {

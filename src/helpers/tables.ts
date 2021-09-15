@@ -15,11 +15,17 @@ import {
   Personnel
 } from 'app/pages/identity/types/forms'
 import { useUserById } from 'app/pages/admin/hooks/useUserById'
+import { Closure } from 'app/pages/authorizer/pages/DealClosures/DealClosures'
 
 export const renderMinimumInvestment = (
   amount: number,
   row: DigitalSecurityOffering
 ): string => formatMoney(amount, row.tokenSymbol)
+
+export const renderClosureMinimumInvestment = (
+  amount: number,
+  row: Closure
+): string => formatMoney(amount, row.dso?.tokenSymbol)
 
 export const renderIncome = (i: string): string => `SGD ${i}`
 
@@ -155,6 +161,12 @@ export const renderAmount = (
     symbol = row.asset?.symbol
   }
 
+  return formatMoney(amount, symbol)
+}
+
+export const renderClosureAmount = (val: string, row: Closure): string => {
+  const amount = Number.isNaN(val) ? 0 : parseFloat(val)
+  const symbol = row.dso?.currency.symbol
   return formatMoney(amount, symbol)
 }
 

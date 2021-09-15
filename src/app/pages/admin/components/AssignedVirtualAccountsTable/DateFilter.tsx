@@ -13,19 +13,24 @@ export interface DateFilterProps {
 export const DateFilter = ({ name, label, width = 150 }: DateFilterProps) => {
   return (
     <SearchQueryFilter name={name}>
-      {({ value, onChange }) => (
+      {({ value, onChange, onClear }) => (
         <DateTimePickerComponent
           value={value ?? null}
           className='denseAdornments'
           size='small'
           inputVariant='outlined'
           label={label}
+          clearable
           style={{ width: width }}
           onChange={date => {
-            try {
-              onChange(convertDateToISO(date))
-            } catch (e) {
-              onChange(undefined)
+            if (date === null) {
+              onClear()
+            } else {
+              try {
+                onChange(convertDateToISO(date))
+              } catch (e) {
+                onChange(undefined)
+              }
             }
           }}
         />

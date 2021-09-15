@@ -10,6 +10,6 @@ describe('StatusFilter', () => {
     const { getAllByRole } = render(<StatusFilter />)
     const items = getAllByRole('button')
 
-    expect(items.length).toBe(statusFilters.length)
+    expect(items.length).toBe(statusFilters.length + 1)
   })
 })
