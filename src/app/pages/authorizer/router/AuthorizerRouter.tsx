@@ -1,6 +1,5 @@
 import { LandingPage } from 'app/components/LandingPage/LandingPage'
 import { AuthorizerBanksRouter } from 'app/pages/authorizer/pages/banks/router/AuthorizerBanksRouter'
-import { AuthorizerCashDepositsRouter } from 'app/pages/authorizer/pages/cashDeposits/router/AuthorizerCashDepositsRouter'
 import { AuthorizerCashWithdrawalsRouter } from 'app/pages/authorizer/pages/cashWithdrawals/router/AuthorizerCashWithdrawalsRouter'
 import { AuthorizerCommitmentRouter } from 'app/pages/authorizer/pages/commitments/router/AuthorizerCommitmentRouter'
 import { AuthorizerCorporateIdentitiesRouter } from 'app/pages/authorizer/pages/corporateIdentities/router/AuthorizerCorporateIdentitiesRouter'
@@ -25,10 +24,6 @@ export const AuthorizerRouter = () => {
     <Switch>
       <AppRoute breadcrumb='Bank Accounts' path={AuthorizerRoute.banks}>
         <AuthorizerBanksRouter />
-      </AppRoute>
-
-      <AppRoute breadcrumb='Cash Deposits' path={AuthorizerRoute.cashDeposits}>
-        <AuthorizerCashDepositsRouter />
       </AppRoute>
 
       <AppRoute

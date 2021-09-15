@@ -55,7 +55,6 @@ export enum NotificationFilter {
 
 export enum AuthorizerCategory {
   BankAccounts = 'bank-accounts',
-  CashDeposits = 'cash-deposits',
   CashWithdrawals = 'cash-withdrawals',
   DigitalSecurityWithdrawals = 'digital-security-withdrawals',
   Corporates = 'corporates',
