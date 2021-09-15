@@ -41,7 +41,8 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
   const [error, setError] = useState('Please enter amount to stake')
   const increaseAllowance = useIncreaseAllowance()
   const amountOfIXStoStakeInput = useRef<HTMLInputElement>(null)
-  const { selectedTier, approvingIXS, isIXSApproved, isStaking, allowanceAmount, IXSBalance } = useStakingState()
+  const { selectedTier, approvingIXS, isIXSApproved, isStaking, allowanceAmount, IXSBalance, hasStakedSuccessfully } =
+    useStakingState()
   const stake = useStakeFor(selectedTier?.period)
   const checkAllowance = useCheckAllowance()
   const updateIXSBalance = useUpdateIXSBalance()
@@ -62,14 +63,16 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
   }, [onDismiss])
 
   async function onStake() {
-    stake(typedValue)
-
+    await stake(typedValue)
+    setTypedValue('')
+    setTermsAccepted(false)
     const { ym } = window
     ym(84960586, 'reachGoal', 'stakingSubmitStakeButtonClicked')
   }
 
   async function onApprove() {
-    increaseAllowance(typedValue)
+    await increaseAllowance(typedValue)
+    setTermsAccepted(false)
 
     const { ym } = window
     ym(84960586, 'reachGoal', 'stakingApproveIXSButtonClicked')
@@ -134,7 +137,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
     ym(84960586, 'reachGoal', 'stakingConditionsTermsClicked')
   }
 
-  function renderStakeButton() {
+  function renderActionButtons() {
     if (!typedValue || allowanceAmount > parseFloat(typedValue) || isIXSApproved) {
       return (
         <ButtonIXSWide
@@ -168,6 +171,25 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
         </ButtonIXSWide>
       )
     }
+  }
+
+  const isDisabledStake = (): boolean => {
+    if (!termsAccepted || Boolean(error)) return true
+    if (approvingIXS || isStaking) return true
+    if (allowanceAmount < parseFloat(typedValue)) return true
+    return !isIXSApproved
+  }
+
+  const isDisabledApprove = (): boolean => {
+    if (!termsAccepted || Boolean(error)) return true
+    if (approvingIXS || isStaking) return true
+    if (allowanceAmount >= parseFloat(typedValue)) return true
+    return isIXSApproved
+  }
+
+  const isAmountApproved = (): boolean => {
+    if (allowanceAmount >= parseFloat(typedValue)) return true
+    return isIXSApproved
   }
 
   return (
@@ -212,7 +234,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                   ref={amountOfIXStoStakeInput}
                   onInput={onUserInput}
                   value={typedValue}
-                  disabled={approvingIXS || isIXSApproved || isStaking}
+                  disabled={approvingIXS || isStaking || (isIXSApproved && !hasStakedSuccessfully)}
                 />
                 <InputHintRight>
                   <RowFixed>
@@ -330,13 +352,41 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                 </Trans>
               </TYPE.body1>
             </RowCenter>
-            <Row style={{ marginTop: '25px' }}>{renderStakeButton()}</Row>
+            <ActionButtons style={{ marginTop: '25px' }}>
+              <ButtonIXSWide data-testid="approve-staking" disabled={isDisabledApprove()} onClick={onApprove}>
+                {approvingIXS ? (
+                  <Dots>
+                    <Trans>Approving IXS</Trans>
+                  </Dots>
+                ) : (
+                  <>{isAmountApproved() ? t`Approved IXS` : t`Approve IXS`}</>
+                )}
+              </ButtonIXSWide>
+              <ButtonIXSWide data-testid="stake-button" disabled={isDisabledStake()} onClick={onStake}>
+                {isStaking ? (
+                  <Dots>
+                    <Trans>Staking</Trans>
+                  </Dots>
+                ) : (
+                  <>{error || <Trans>Stake</Trans>}</>
+                )}
+              </ButtonIXSWide>
+            </ActionButtons>
           </ModalBottom>
         </ModalContentWrapper>
       </ModalBlurWrapper>
     </RedesignedWideModal>
   )
 }
+
+const ActionButtons = styled.div`
+  display: grid;
+  grid-gap: 13px;
+  grid-template-columns: 50% 50%;
+  @media (max-width: 540px) {
+    grid-template-columns: 100%;
+  }
+`
 
 const EllipsedText = styled.div`
   display: grid;
