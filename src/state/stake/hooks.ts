@@ -7,7 +7,7 @@ import { IXS_ADDRESS, IXS_STAKING_V1_ADDRESS } from 'constants/addresses'
 import stakingPeriodsData, { IStaking, PeriodsEnum } from 'constants/stakingPeriods'
 import { BigNumber, utils } from 'ethers'
 import { useCurrency } from 'hooks/Tokens'
-import { useIXSGovTokenContract, useIXSStakingContract, useIXSTokenContract } from 'hooks/useContract'
+import { useIXSStakingContract, useIXSTokenContract } from 'hooks/useContract'
 import useCurrentBlockTimestamp from 'hooks/useCurrentBlockTimestamp'
 import JSBI from 'jsbi'
 import { useCallback, useEffect, useMemo } from 'react'
@@ -612,65 +612,6 @@ export function useGetStakings() {
       console.error(`useGetStakings error `, error)
     }
   }, [staking, account, dispatch])
-}
-
-export function useUnstakeFromWeek() {
-  // works the same for 1 month
-  const staking = useIXSStakingContract()
-  const tokenContract = useIXSGovTokenContract()
-
-  return useCallback(
-    async (data: IStaking) => {
-      try {
-        const { originalData, originalIndex } = data
-        const stakeAmount = originalData[1]
-        const noData = '0x00'
-
-        await tokenContract?.increaseAllowance(staking?.address, stakeAmount)
-        const stakeIndex = BigNumber.from(originalIndex)
-
-        const estimatedGas = await staking?.estimateGas.unstakeFromWeek(stakeIndex, noData)
-        if (!estimatedGas) {
-          // todo dispatch error!
-          return
-        }
-        await staking?.unstakeFromWeek(stakeIndex, noData, { gasLimit: calculateGasMargin(estimatedGas) })
-      } catch (error) {
-        console.error(`useUnstake error`, error)
-      }
-    },
-    [staking, tokenContract]
-  )
-}
-
-export function useUnstakeFromTwoMonths() {
-  // works the same for 3 months
-  const staking = useIXSStakingContract()
-  const tokenContract = useIXSGovTokenContract()
-
-  return useCallback(
-    async (data: IStaking, amount: number) => {
-      try {
-        const noData = '0x00'
-        const stakeIndex = BigNumber.from(data.originalIndex)
-        const partialStakeAmount = utils.parseUnits(amount.toString(), 'ether')
-
-        await tokenContract?.increaseAllowance(staking?.address, partialStakeAmount)
-        const estimatedGas = await staking?.estimateGas.unstakeFromTwoMonths(partialStakeAmount, stakeIndex, noData)
-
-        if (!estimatedGas) {
-          // todo dispatch error!
-          return
-        }
-        await staking?.unstakeFromTwoMonths(partialStakeAmount, stakeIndex, noData, {
-          gasLimit: calculateGasMargin(estimatedGas),
-        })
-      } catch (error) {
-        console.error(`useUnstake error`, error)
-      }
-    },
-    [staking, tokenContract]
-  )
 }
 
 export function useGetVestings() {

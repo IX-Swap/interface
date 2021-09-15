@@ -19,6 +19,7 @@ import admin from './admin/reducer'
 
 import vesting from './vesting/reducer'
 import staking from './stake/reducer'
+import unstaking from './stake/unstake/reducer'
 import stakingPoolSize from './stake/poolSizeReducer'
 
 import brokerDealer from './brokerDealer/reducer'
@@ -43,6 +44,7 @@ const store = configureStore({
     eventLog,
     vesting,
     staking,
+    unstaking,
     stakingPoolSize,
     brokerDealer,
   },
