@@ -13,10 +13,10 @@ const BalanceWrapper = styled.div`
   width: fit-content;
   max-width: 90px;
   cursor: pointer;
-  margin-right: 3px;
-  margin-left: 10px;
+  margin-left: 4px;
   ${({ theme }) => theme.mediaWidth.upToSmall`
      max-width: 60px;
+     margin-left: 10px;
   `};
 `
 
@@ -33,7 +33,7 @@ export const IXSBalance = () => {
   return (
     <BalanceWrapper onClick={() => toggle()}>
       {!IXSBalance.loading && !IXSGovBalance.loading && (
-        <IconWrapper size={33}>
+        <IconWrapper size={33} style={{ marginRight: '4px' }}>
           <img src={IXSToken} />
         </IconWrapper>
       )}
