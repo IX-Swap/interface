@@ -9,7 +9,7 @@ export const useGetSiteConfig = () => {
   const fetchSiteConfig = async () => {
     return await apiService.get<{
       masDisclosure: string
-      hasReadMasDisclosure: boolean
+      hasAcceptedMasDisclosure: boolean
     }>(url)
   }
 

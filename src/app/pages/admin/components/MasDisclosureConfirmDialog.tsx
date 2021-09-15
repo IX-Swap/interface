@@ -22,7 +22,7 @@ export const MasDisclosureConfirmDialog = ({
   ] = useCreateOrUpdateMASDisclosure()
   const handleSubmit = async () => {
     await createOrUpdateMasDisclosure({ content: content })
-    if (status !== 'loading' && status !== 'error') {
+    if (status !== 'loading' && (status === 'success' || status === 'idle')) {
       onClose()
     }
   }

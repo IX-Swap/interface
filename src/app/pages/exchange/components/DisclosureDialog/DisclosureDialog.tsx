@@ -7,8 +7,8 @@ import {
   DialogActions,
   DialogContentText,
   DialogTitle,
+  FormControlLabel,
   Grid,
-  ListItemText,
   Typography
 } from '@material-ui/core'
 import { useStyles } from './DisclosureDialog.style'
@@ -16,25 +16,34 @@ import { renderStringToHTML } from 'app/components/DSO/utils'
 import { VSpacer } from 'components/VSpacer'
 import { ExchangeRulesLink } from 'app/pages/exchange/components/ExchangeRulesLink/ExchangeRulesLink'
 import { Divider } from 'ui/Divider'
+import { useAcceptMASDisclosure } from 'app/pages/exchange/hooks/useAcceptMASDisclosure'
+import { generatePath, useHistory } from 'react-router-dom'
+import { InvestRoute } from 'app/pages/invest/router/config'
 
 export interface DisclosureDialogProps {
   content: any
   isOpen: boolean
-  onClose: () => void
 }
 
 export const DisclosureDialog = ({
   content,
-  isOpen,
-  onClose
+  isOpen
 }: DisclosureDialogProps) => {
   const classes = useStyles()
+  const { push } = useHistory()
   const [isChecked, setIsChecked] = useState<boolean>(false)
+  const [acceptMasDisclosure] = useAcceptMASDisclosure()
+  const acceptDisclosure = async () => {
+    await acceptMasDisclosure()
+  }
+  const handleClose = () => {
+    push(generatePath(InvestRoute.overview))
+  }
 
   return (
     <Dialog open={isOpen} maxWidth={'md'} classes={{ paper: classes.root }}>
       <DialogTitle disableTypography classes={{ root: classes.title }}>
-        Disclosure
+        Disclosures
       </DialogTitle>
       <DialogContentText classes={{ root: classes.content }}>
         <Box className={classes.scrollable}>{renderStringToHTML(content)}</Box>
@@ -45,12 +54,14 @@ export const DisclosureDialog = ({
         <Grid container justify={'space-between'} alignItems={'center'}>
           <Grid item>
             <Box className={classes.box}>
-              <Checkbox
-                checked={isChecked}
-                onClick={() => setIsChecked(!isChecked)}
-              />
-              <ListItemText
-                primary={'I agree, accept and understand all the disclosures'}
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={isChecked}
+                    onClick={() => setIsChecked(!isChecked)}
+                  />
+                }
+                label={'I agree, accept and understand all the disclosures'}
               />
             </Box>
           </Grid>
@@ -63,16 +74,16 @@ export const DisclosureDialog = ({
 
         <VSpacer size={'small'} />
         <VSpacer size={'extraSmall'} />
-        <Grid container justify={'center'} style={{ marginLeft: 0 }}>
+        <Grid container justify={'flex-end'} style={{ marginLeft: 0 }}>
           <Grid item>
             <Button
               type={'button'}
               className={classes.button}
               variant={'outlined'}
               color={'primary'}
-              onClick={() => onClose()}
+              onClick={handleClose}
             >
-              Close
+              Decline
             </Button>
           </Grid>
           <Grid item style={{ marginLeft: 20 }}>
@@ -82,7 +93,7 @@ export const DisclosureDialog = ({
               variant={'contained'}
               color={'primary'}
               disabled={!isChecked}
-              onClick={() => onClose()}
+              onClick={acceptDisclosure}
             >
               I Agree
             </Button>
