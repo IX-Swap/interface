@@ -10,6 +10,7 @@ import {
   checkAllowance,
   updateIXSBalance,
   getRewards,
+  getPayouts,
 } from './actions'
 import { IStaking } from 'constants/stakingPeriods'
 
@@ -132,6 +133,8 @@ interface StakingState {
   allowanceAmount: number
   IXSBalance: string | null
   rewards: VestingReward[]
+  payouts: [number, string][][]
+  payoutsLoading: boolean
 }
 
 const initialState: StakingState = {
@@ -157,6 +160,8 @@ const initialState: StakingState = {
   IXSBalance: localStorage.getItem('IXSBalance'),
   rewards: [],
   rewardsLoading: false,
+  payouts: [],
+  payoutsLoading: false,
 }
 
 export default createReducer<StakingState>(initialState, (builder) =>
@@ -235,6 +240,16 @@ export default createReducer<StakingState>(initialState, (builder) =>
     })
     .addCase(getRewards.rejected, (state, { payload: { errorMessage } }) => {
       state.rewardsLoading = false
+    })
+    .addCase(getPayouts.pending, (state) => {
+      state.payoutsLoading = true
+    })
+    .addCase(getPayouts.fulfilled, (state, { payload: { transactions } }) => {
+      state.payouts = transactions
+      state.payoutsLoading = false
+    })
+    .addCase(getPayouts.rejected, (state, { payload: { errorMessage } }) => {
+      state.payoutsLoading = false
     })
     .addCase(getIsStakingPaused, (state, { payload: { isPaused } }) => {
       state.isPaused = isPaused

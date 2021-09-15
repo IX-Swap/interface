@@ -7,12 +7,19 @@ import { LoaderThin } from 'components/Loader/LoaderThin'
 import Row from 'components/Row'
 import { Table } from 'components/Table'
 import { MouseoverTooltip } from 'components/Tooltip'
-import { PeriodsEnum } from 'constants/stakingPeriods'
 import React from 'react'
 import { Box } from 'rebass'
 import { useStakingState } from 'state/stake/hooks'
-import { dateFormatter } from 'state/stake/reducer'
 import { Container, LockedTillColumn, MutedText, NoData, StyledBodyRow, StyledHeaderRow, Tier } from './style'
+import {
+  formatAmount,
+  formatDate,
+  getDateFullTime,
+  getDateShortTime,
+  getLockPeriod,
+  getPeriodDigit,
+  getPeriodString,
+} from './utils'
 
 const Header = () => {
   return (
@@ -66,52 +73,6 @@ const Header = () => {
 
 const Body = () => {
   const { stakings } = useStakingState()
-  function formatAmount(amount: number) {
-    return amount.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 10 })
-  }
-
-  function getPeriodDigit(period: PeriodsEnum) {
-    if (period === PeriodsEnum.WEEK || period === PeriodsEnum.MONTH) {
-      return 1
-    } else if (period === PeriodsEnum.TWO_MONTHS) {
-      return 2
-    } else {
-      return 3
-    }
-  }
-
-  function getPeriodString(period: PeriodsEnum) {
-    if (period === PeriodsEnum.WEEK) {
-      return 'Week'
-    } else if (period === PeriodsEnum.MONTH) {
-      return 'Month'
-    } else {
-      return 'Months'
-    }
-  }
-
-  function getLockPeriod(period: PeriodsEnum) {
-    if (period === PeriodsEnum.WEEK) {
-      return '1 Week'
-    } else if (period === PeriodsEnum.MONTH || period === PeriodsEnum.TWO_MONTHS) {
-      return '1 Month'
-    } else {
-      return '2 Months'
-    }
-  }
-
-  function formatDate(dateUnix: number) {
-    return dateFormatter.format(new Date(dateUnix * 1000))
-  }
-
-  function getDateShortTime(dateUnix: number) {
-    return new Date(dateUnix * 1000).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })
-  }
-
-  function getDateFullTime(dateUnix: number) {
-    return new Date(dateUnix * 1000).toLocaleTimeString('en-GB')
-  }
-
   return (
     <>
       {stakings?.map(

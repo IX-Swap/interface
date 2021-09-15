@@ -1,84 +1,88 @@
+import { CurrencyAmount } from '@ixswap1/sdk-core'
 import { t, Trans } from '@lingui/macro'
 import { ReactComponent as InfoIcon } from 'assets/images/attention.svg'
 import { IconWrapper } from 'components/AccountDetails/styleds'
+import Column from 'components/Column'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import { Table } from 'components/Table'
 import { MouseoverTooltip } from 'components/Tooltip'
-import dayjs from 'dayjs'
+import { IXS_ADDRESS } from 'constants/addresses'
+import { useCurrency } from 'hooks/Tokens'
+import { useActiveWeb3React } from 'hooks/web3'
 import React from 'react'
 import { Box } from 'rebass'
 import { useStakingState } from 'state/stake/hooks'
-import { unixTimeToFormat } from 'utils/time'
-import { Container, NoData, RewardsBodyRow, StyledHeaderRow } from './style'
+import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
+import { getNextPayoutTime, unixTimeToFormat } from 'utils/time'
+import { Container, NoData, RewardsBodyRow, RewardsHeaderRow } from './style'
+import { formatAmount } from './utils'
 
-const dateFormat = 'MMM D, YYYY HH:mm:ss'
+const longDate = 'MMM D, YYYY HH:mm'
+const shortDate = 'MMM D, YYYY'
 
 const Header = () => {
   return (
-    <StyledHeaderRow>
+    <RewardsHeaderRow>
       <div className="header-label">
-        <Trans>Date of unstake</Trans>
+        <Trans>Period of vesting</Trans>
       </div>
-      <div>
-        <div className="header-label">
-          <Trans>APY</Trans>
-        </div>
-      </div>
+
       <div className="header-label">
-        <Trans>Amount</Trans>
+        <Trans>Next rewards on</Trans>
       </div>
-      <div>
-        <div className="header-label">
-          <Trans>Total Rewards</Trans>
-        </div>
-        <MouseoverTooltip style={{ whiteSpace: 'pre-line', textAlign: 'center' }} text={t``}>
-          <IconWrapper size={20} style={{ transform: 'rotate(180deg)', marginLeft: '12px' }}>
-            <InfoIcon />
-          </IconWrapper>
-        </MouseoverTooltip>
+
+      <div className="header-label">
+        <Trans>Total rewards</Trans>
       </div>
-      <div>
-        <div className="header-label">
-          <Trans>Rewards in vesting</Trans>
-        </div>
-        <MouseoverTooltip style={{ whiteSpace: 'pre-line', textAlign: 'center' }} text={t``}>
-          <IconWrapper size={20} style={{ transform: 'rotate(180deg)', marginLeft: '12px' }}>
-            <InfoIcon />
-          </IconWrapper>
-        </MouseoverTooltip>
+
+      <div className="header-label">
+        <Trans>Rewards in vesting</Trans>
+      </div>
+
+      <div className="header-label">
+        <Trans>Claimed rewards</Trans>
       </div>
 
       <div className="header-label">
         <Trans>Claimable Rewards</Trans>
       </div>
-    </StyledHeaderRow>
+    </RewardsHeaderRow>
   )
 }
 
 const Body = () => {
-  const { rewards } = useStakingState()
-
+  const { rewards, payouts } = useStakingState()
+  const { chainId } = useActiveWeb3React()
+  const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
   return (
     <>
-      {rewards?.map(({ start, end, amount, claimed, cliff, segments }) => (
-        <RewardsBodyRow key={start}>
-          <div>{unixTimeToFormat({ time: start, format: dateFormat })}</div>
-          <div>{unixTimeToFormat({ time: end, format: dateFormat })}</div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-        </RewardsBodyRow>
-      ))}
+      {rewards?.map(({ start, end, amount, claimed, cliff, segments }, index) => {
+        const nextPayoutTime = getNextPayoutTime({ payouts: payouts[index] })
+        return (
+          <RewardsBodyRow key={Number(start)}>
+            <div>
+              <Column>
+                <div>{unixTimeToFormat({ time: start, format: shortDate })}</div>
+                <div>{unixTimeToFormat({ time: end, format: shortDate })}</div>
+              </Column>
+            </div>
+            <div>{nextPayoutTime ? unixTimeToFormat({ time: nextPayoutTime[0], format: longDate }) : '-'}</div>
+            {currency && <div>{formatCurrencyAmount(CurrencyAmount.fromRawAmount(currency, amount), 10)}</div>}
+            <div>vesting</div>
+            {currency && <div>{formatCurrencyAmount(CurrencyAmount.fromRawAmount(currency, claimed), 10)}</div>}
+            <div>Claimable</div>
+            <div></div>
+          </RewardsBodyRow>
+        )
+      })}
     </>
   )
 }
 export const UnstakedTable = () => {
-  const { rewards, rewardsLoading } = useStakingState()
+  const { rewards, rewardsLoading, payoutsLoading } = useStakingState()
 
   function showTableData() {
-    if (rewardsLoading) {
+    if (rewardsLoading || payoutsLoading) {
       return <LoaderThin size={96} />
     } else if (rewards.length === 0) {
       return (

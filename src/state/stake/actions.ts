@@ -47,7 +47,24 @@ export const getRewards: Readonly<{
   fulfilled: createAction('stake/getRewards/fulfilled'),
   rejected: createAction('stake/getRewards/rejected'),
 }
-
+export const getPayouts: Readonly<{
+  pending: ActionCreatorWithoutPayload
+  fulfilled: ActionCreatorWithPayload<{ transactions: any }>
+  rejected: ActionCreatorWithPayload<{ errorMessage: string }>
+}> = {
+  pending: createAction('stake/getPayouts/pending'),
+  fulfilled: createAction('stake/getPayouts/fulfilled'),
+  rejected: createAction('stake/getPayouts/rejected'),
+}
+export const getAvailableClaim: Readonly<{
+  pending: ActionCreatorWithoutPayload
+  fulfilled: ActionCreatorWithPayload<{ transactions: any }>
+  rejected: ActionCreatorWithPayload<{ errorMessage: string }>
+}> = {
+  pending: createAction('stake/getAvailableClaim/pending'),
+  fulfilled: createAction('stake/getAvailableClaim/fulfilled'),
+  rejected: createAction('stake/getAvailableClaim/rejected'),
+}
 export const getOneWeekHistoricalPoolSize: Readonly<{
   pending: ActionCreatorWithoutPayload
   fulfilled: ActionCreatorWithPayload<{ data: number }>

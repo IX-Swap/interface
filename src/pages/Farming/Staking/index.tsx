@@ -7,6 +7,7 @@ import {
   useUpdateIXSBalance,
   useGetStakings,
   useGetVestedRewards,
+  useGetPayouts,
 } from 'state/stake/hooks'
 import { PromoTokenCard } from './PromoTokenCard'
 import { StakingPage } from './StakingPage'
@@ -32,6 +33,7 @@ export const Staking = () => {
   const balance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
   const getStakings = useGetStakings()
   const getRewards = useGetVestedRewards()
+  const getPayouts = useGetPayouts()
 
   useEffect(() => {
     getRewards()
@@ -40,7 +42,9 @@ export const Staking = () => {
   useEffect(() => {
     getStakings()
   }, [getStakings, hasStakedSuccessfully])
-
+  useEffect(() => {
+    getPayouts()
+  }, [getPayouts, hasStakedSuccessfully])
   useEffect(() => {
     if (balance) {
       updateIXSBalance()

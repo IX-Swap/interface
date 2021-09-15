@@ -34,8 +34,9 @@ import {
   checkAllowance,
   updateIXSBalance,
   getRewards,
+  getPayouts,
 } from './actions'
-import { rewardsAdapter, stakingsAdapter } from './utils'
+import { payoutsAdapter, rewardsAdapter, stakingsAdapter } from './utils'
 
 export const STAKING_REWARDS_INTERFACE = new Interface(STAKING_REWARDS_ABI)
 
@@ -628,6 +629,25 @@ export function useGetVestedRewards() {
     } catch (error) {
       dispatch(getRewards.rejected({ errorMessage: error?.message }))
       console.error(`error getting rewards`, error)
+    }
+  }, [staking, account, dispatch])
+}
+
+export function useGetPayouts() {
+  const staking = useIXSStakingContract()
+  const { account } = useActiveWeb3React()
+  const dispatch = useDispatch<AppDispatch>()
+
+  return useCallback(async () => {
+    try {
+      dispatch(getPayouts.pending())
+      const payouts = await staking?.payouts(account)
+      dispatch(
+        getPayouts.fulfilled({ transactions: payouts.map((pay: [BigNumber, BigNumber][]) => payoutsAdapter(pay)) })
+      )
+    } catch (error) {
+      dispatch(getPayouts.rejected({ errorMessage: error?.message }))
+      console.error(`error getting payouts`, error)
     }
   }, [staking, account, dispatch])
 }

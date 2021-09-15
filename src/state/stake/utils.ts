@@ -1,3 +1,4 @@
+import { BigNumber } from 'ethers'
 import { VestingReward } from './reducer'
 
 export const stakingsAdapter = (transactions: any) => {
@@ -17,4 +18,8 @@ export const rewardsAdapter = (transactions: any): VestingReward[] => {
     segments: Number(transaction[5].toString()),
     singlePayout: transaction[6].toString(),
   }))
+}
+
+export const payoutsAdapter = (payouts: [BigNumber, BigNumber][]) => {
+  return payouts.map((payout: [BigNumber, BigNumber]) => [payout[0].toNumber(), payout[1].toString()])
 }

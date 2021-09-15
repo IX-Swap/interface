@@ -246,5 +246,8 @@ export const StyledBodyRow = styled(BodyRow)`
   }
 `
 export const RewardsBodyRow = styled(StyledBodyRow)`
-  grid-template-columns: 160px 100px 150px 150px 150px 150px auto;
+  grid-template-columns: 190px 190px 180px 180px 180px 180px auto;
+`
+export const RewardsHeaderRow = styled(StyledHeaderRow)`
+  grid-template-columns: 190px 190px 180px 180px 180px 180px auto;
 `
