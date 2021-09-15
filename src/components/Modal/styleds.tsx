@@ -4,7 +4,11 @@ import { DialogOverlay, DialogContent } from '@reach/dialog'
 
 export const AnimatedDialogOverlay = animated(DialogOverlay)
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const StyledDialogOverlay = styled(AnimatedDialogOverlay)<{ isright?: boolean; scrollable?: boolean }>`
+export const StyledDialogOverlay = styled(AnimatedDialogOverlay)<{
+  isright?: boolean
+  scrollable?: boolean
+  tip?: string
+}>`
   &[data-reach-dialog-overlay] {
     z-index: 2;
     background-color: transparent;
@@ -21,6 +25,11 @@ export const StyledDialogOverlay = styled(AnimatedDialogOverlay)<{ isright?: boo
     justify-content: ${({ isright }) => (isright ? 'flex-end' : 'center')};
 
     background-color: ${({ theme }) => theme.modalBG};
+    ${({ tip }) =>
+      tip &&
+      css`
+        padding-top: 6%;
+      `}
   }
 `
 export const AnimatedDialogContent = animated(DialogContent)

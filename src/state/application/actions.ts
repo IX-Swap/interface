@@ -27,6 +27,7 @@ export enum ApplicationModal {
   UNSTAKE,
   CHOOSE_BROKER_DEALER,
   STAKE_IXS,
+  UNSTAKE_IXS,
   IXS_BALANCE,
 }
 
