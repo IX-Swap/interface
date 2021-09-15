@@ -97,7 +97,8 @@ export const HighlightedInput = styled.div<{ active?: boolean; warning?: boolean
   border: ${({ theme, active, warning }) =>
     warning ? `1px solid ${theme.red1}` : active ? `1px solid ${theme.popUpInputBorder}` : 'none'};
   :hover {
-    border: ${({ theme, warning }) => (warning ? `1px solid ${theme.red1}` : `1px solid ${theme.popUpInputBorder}`)};
+    box-shadow: ${({ theme, warning }) =>
+      warning ? `0px 0px 2px 1px ${theme.red1}` : `0px 0px 2px 1px ${theme.popUpInputBorder}`};
   }
 `
 export const AvailableBalance = styled(Text)`

@@ -1,4 +1,4 @@
-const oneDaySeconds = 86400
+export const SECONDS_IN_DAY = 86400
 export enum PeriodsEnum {
   WEEK = 'week',
   MONTH = 'month',
@@ -35,10 +35,10 @@ const periodsIndex = {
 }
 
 export const periodsInSeconds = {
-  [periods.WEEK]: 7 * oneDaySeconds,
-  [periods.MONTH]: 30 * oneDaySeconds,
-  [periods.TWO_MONTHS]: 2 * 30 * oneDaySeconds,
-  [periods.THREE_MONTHS]: 3 * 30 * oneDaySeconds,
+  [periods.WEEK]: 7 * SECONDS_IN_DAY,
+  [periods.MONTH]: 30 * SECONDS_IN_DAY,
+  [periods.TWO_MONTHS]: 2 * 30 * SECONDS_IN_DAY,
+  [periods.THREE_MONTHS]: 3 * 30 * SECONDS_IN_DAY,
 }
 const periodsApy = {
   [periods.WEEK]: 5,
@@ -59,7 +59,7 @@ export const periodsInDays = {
   [periods.THREE_MONTHS]: 3 * 30,
 }
 export default {
-  oneDaySeconds,
+  SECONDS_IN_DAY,
   periods,
   periodsIndex,
   periodsInSeconds,
