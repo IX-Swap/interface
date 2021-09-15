@@ -144,7 +144,7 @@ const Body = () => {
           <div>{formatAmount(stake.stakeAmount)} IXS</div>
           <div>{formatAmount(stake.distributeAmount)} IXSgov</div>
           <div className="rewards">{formatAmount(stake.reward)} IXS</div>
-          {/* {stake.canUnstake ? (
+          {stake.canUnstake ? (
             <UnstakeButton
               onClick={() => {
                 activeStake = stake
@@ -165,16 +165,7 @@ const Body = () => {
                 {formatDate(stake.lockedTillUnix)} {getDateShortTime(stake.lockedTillUnix)}
               </Row>
             </LockedTillColumn>
-          )} */}
-          <LockedTillColumn>
-            <Row>
-              <LockIcon className="lock-icon" />
-              <Trans>Locked till</Trans>
-            </Row>
-            <Row>
-              {formatDate(stake.lockedTillUnix)} {getDateShortTime(stake.lockedTillUnix)}
-            </Row>
-          </LockedTillColumn>
+          )}
         </StyledBodyRow>
       ))}
     </>
