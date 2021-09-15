@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { Border, ToggleOption, ToggleWrapper } from 'components/Tabs'
 import React from 'react'
-import { STAKING_TABS, STAKING_TABS_STRINGS } from '../enum'
+import { STAKING_TABS, STAKING_TABS_STRINGS } from '../Vesting/enum'
 
 interface Props {
   tab: STAKING_TABS

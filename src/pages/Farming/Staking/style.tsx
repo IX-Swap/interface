@@ -1,4 +1,6 @@
+import Column from 'components/Column'
 import { RowBetween } from 'components/Row'
+import { BodyRow, HeaderRow } from 'components/Table'
 import styled from 'styled-components'
 import { gradientBorder } from 'theme'
 
@@ -165,4 +167,84 @@ export const StakingTierCardWrapper = styled(StakingCard)`
       opacity: 1;
     }
   }
+`
+
+export const MutedText = styled.span`
+  color: ${({ theme: { text2 } }) => text2};
+  opacity: 0.5;
+  padding-left: 0.5em;
+`
+
+export const LockedTillColumn = styled(Column)`
+  color: ${({ theme: { text2 } }) => text2};
+  opacity: 0.5;
+  font-size: 12px;
+  line-height: 18px;
+
+  .lock-icon {
+    margin-right: 0.5em;
+    margin-bottom: 4px;
+  }
+`
+
+export const NoData = styled.div`
+  margin-top: 39px
+  font-weight: 400;
+  color: ${({ theme: { text2 } }) => text2};
+  text-align: center;
+  background-color: #2c254a80;
+  border-radius: 30px;
+  padding: 36px;
+`
+
+export const Tier = styled.div`
+  background: ${({ theme: { bgG3 } }) => bgG3};
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  display: flex;
+  align-items: flex-end !important;
+
+  .digit {
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 37px;
+  }
+`
+
+export const Container = styled.div`
+  display: grid;
+  grid-template-columns: 100%;
+  grid-gap: 50px;
+`
+
+export const StyledHeaderRow = styled(HeaderRow)`
+  grid-template-columns: 160px 100px 190px 160px 160px 180px auto;
+  min-width: 1270px;
+
+  .header-label {
+    color: ${({ theme: { text2 } }) => text2};
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 22px;
+    opacity: 0.5;
+  }
+`
+
+export const StyledBodyRow = styled(BodyRow)`
+  grid-template-columns: 160px 100px 190px 160px 160px 180px 180px auto;
+  min-width: 1270px;
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 400;
+
+  .rewards {
+    color: #9df9b1;
+  }
+`
+export const RewardsBodyRow = styled(StyledBodyRow)`
+  grid-template-columns: 160px 100px 150px 150px 150px 150px auto;
 `

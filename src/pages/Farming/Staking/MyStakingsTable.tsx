@@ -1,23 +1,20 @@
-import React, { useEffect } from 'react'
 import { t, Trans } from '@lingui/macro'
-import styled from 'styled-components'
-
-import { Table, BodyRow, HeaderRow } from 'components/Table'
-import { LoaderThin } from 'components/Loader/LoaderThin'
-import { Box } from 'rebass'
-import { useStakingState, useUnstakeFromWeek } from 'state/stake/hooks'
-import { dateFormatter } from 'state/stake/reducer'
-import { PeriodsEnum } from 'constants/stakingPeriods'
-import Row from 'components/Row'
-import Column from 'components/Column'
-import { ReactComponent as LockIcon } from 'assets/images/lock.svg'
-import { MouseoverTooltip } from 'components/Tooltip'
-import { IconWrapper } from 'components/AccountDetails/styleds'
 import { ReactComponent as InfoIcon } from 'assets/images/attention.svg'
+import { ReactComponent as LockIcon } from 'assets/images/lock.svg'
+import { IconWrapper } from 'components/AccountDetails/styleds'
+import Column from 'components/Column'
+import { LoaderThin } from 'components/Loader/LoaderThin'
+import Row from 'components/Row'
+import { Table } from 'components/Table'
+import { MouseoverTooltip } from 'components/Tooltip'
+import { PeriodsEnum } from 'constants/stakingPeriods'
+import React from 'react'
+import { Box } from 'rebass'
+import { useStakingState } from 'state/stake/hooks'
+import { dateFormatter } from 'state/stake/reducer'
+import { Container, LockedTillColumn, MutedText, NoData, StyledBodyRow, StyledHeaderRow, Tier } from './style'
 
-import { TYPE } from 'theme'
-
-const OngoingHeader = () => {
+const Header = () => {
   return (
     <StyledHeaderRow>
       <div className="header-label">
@@ -66,49 +63,9 @@ const OngoingHeader = () => {
     </StyledHeaderRow>
   )
 }
-const UnstakedHeader = () => {
-  return (
-    <StyledHeaderRow>
-      <div className="header-label">
-        <Trans>Date of unstake</Trans>
-      </div>
-      <div>
-        <div className="header-label">
-          <Trans>APY</Trans>
-        </div>
-      </div>
-      <div className="header-label">
-        <Trans>Amount</Trans>
-      </div>
-      <div>
-        <div className="header-label">
-          <Trans>Total Rewards</Trans>
-        </div>
-        <MouseoverTooltip style={{ whiteSpace: 'pre-line', textAlign: 'center' }} text={t``}>
-          <IconWrapper size={20} style={{ transform: 'rotate(180deg)', marginLeft: '12px' }}>
-            <InfoIcon />
-          </IconWrapper>
-        </MouseoverTooltip>
-      </div>
-      <div>
-        <div className="header-label">
-          <Trans>Rewards in vesting</Trans>
-        </div>
-        <MouseoverTooltip style={{ whiteSpace: 'pre-line', textAlign: 'center' }} text={t``}>
-          <IconWrapper size={20} style={{ transform: 'rotate(180deg)', marginLeft: '12px' }}>
-            <InfoIcon />
-          </IconWrapper>
-        </MouseoverTooltip>
-      </div>
 
-      <div className="header-label">
-        <Trans>Claimable Rewards</Trans>
-      </div>
-    </StyledHeaderRow>
-  )
-}
 const Body = () => {
-  const { stakings, rewards } = useStakingState()
+  const { stakings } = useStakingState()
   function formatAmount(amount: number) {
     return amount.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 10 })
   }
@@ -207,7 +164,7 @@ export const MyStakingsTable = () => {
     } else {
       return (
         <Container>
-          <Table body={<Body />} header={<OngoingHeader />} />
+          <Table body={<Body />} header={<Header />} />
         </Container>
       )
     }
@@ -215,79 +172,3 @@ export const MyStakingsTable = () => {
 
   return <Box style={{ width: '100%' }}>{showTableData()}</Box>
 }
-
-const NoData = styled.div`
-  margin-top: 39px
-  font-weight: 400;
-  color: ${({ theme: { text2 } }) => text2};
-  text-align: center;
-  background-color: #2c254a80;
-  border-radius: 30px;
-  padding: 36px;
-`
-
-const Tier = styled.div`
-  background: ${({ theme: { bgG3 } }) => bgG3};
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  font-size: 16px;
-  line-height: 24px;
-  font-weight: 400;
-  display: flex;
-  align-items: flex-end !important;
-
-  .digit {
-    font-size: 32px;
-    font-weight: 700;
-    line-height: 37px;
-  }
-`
-
-const Container = styled.div`
-  display: grid;
-  grid-template-columns: 100%;
-  grid-gap: 50px;
-`
-
-const StyledHeaderRow = styled(HeaderRow)`
-  grid-template-columns: 160px 100px 190px 160px 160px 180px auto;
-  min-width: 1270px;
-
-  .header-label {
-    color: ${({ theme: { text2 } }) => text2};
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 22px;
-    opacity: 0.5;
-  }
-`
-
-const StyledBodyRow = styled(BodyRow)`
-  grid-template-columns: 160px 100px 190px 160px 160px 180px 180px auto;
-  min-width: 1270px;
-  font-size: 14px;
-  line-height: 21px;
-  font-weight: 400;
-
-  .rewards {
-    color: #9df9b1;
-  }
-`
-const MutedText = styled.span`
-  color: ${({ theme: { text2 } }) => text2};
-  opacity: 0.5;
-  padding-left: 0.5em;
-`
-
-const LockedTillColumn = styled(Column)`
-  color: ${({ theme: { text2 } }) => text2};
-  opacity: 0.5;
-  font-size: 12px;
-  line-height: 18px;
-
-  .lock-icon {
-    margin-right: 0.5em;
-    margin-bottom: 4px;
-  }
-`

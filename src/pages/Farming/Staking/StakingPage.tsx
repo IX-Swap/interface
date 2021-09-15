@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
-import { StakingTiers } from './StakingTiers'
-import { MyStakingsTable } from './MyStakingsTable'
-import { STAKING_TABS } from '../enum'
-import { StakingTableTabs } from './StakingTableTabs'
 import Column from 'components/Column'
+import React, { useState } from 'react'
+import { Box } from 'rebass'
+import { STAKING_TABS } from '../Vesting/enum'
+import { MyStakingsTable } from './MyStakingsTable'
+import { StakingTableTabs } from './StakingTableTabs'
+import { StakingTiers } from './StakingTiers'
 import { UnstakedTable } from './UnstakedTable'
 
 export const StakingPage = () => {
@@ -11,11 +12,14 @@ export const StakingPage = () => {
   return (
     <>
       <StakingTiers />
-      <Column>
-        <StakingTableTabs tab={tab} setTab={setTab} />
-        {tab === STAKING_TABS.ONGOING && <MyStakingsTable />}
-        {tab === STAKING_TABS.UNSTAKED && <UnstakedTable />}
-      </Column>
+      <Box style={{ width: '100%' }}>
+        <Column>
+          <StakingTableTabs tab={tab} setTab={setTab} />
+
+          {tab === STAKING_TABS.ONGOING && <MyStakingsTable />}
+          {tab === STAKING_TABS.UNSTAKED && <UnstakedTable />}
+        </Column>
+      </Box>
     </>
   )
 }
