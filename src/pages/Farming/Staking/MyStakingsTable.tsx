@@ -7,10 +7,24 @@ import { LoaderThin } from 'components/Loader/LoaderThin'
 import Row from 'components/Row'
 import { Table } from 'components/Table'
 import { MouseoverTooltip } from 'components/Tooltip'
+import { IStaking } from 'constants/stakingPeriods'
 import React from 'react'
 import { Box } from 'rebass'
+import { ApplicationModal } from 'state/application/actions'
+import { useToggleModal } from 'state/application/hooks'
 import { useStakingState } from 'state/stake/hooks'
-import { Container, LockedTillColumn, MutedText, NoData, StyledBodyRow, StyledHeaderRow, Tier } from './style'
+import { TYPE } from 'theme'
+import {
+  Container,
+  LockedTillColumn,
+  MutedText,
+  NoData,
+  StyledBodyRow,
+  StyledHeaderRow,
+  Tier,
+  UnstakeButton,
+} from './style'
+import { UnstakeModal } from './Unstaking/UnstakeModal'
 import {
   formatAmount,
   formatDate,
@@ -20,6 +34,8 @@ import {
   getPeriodDigit,
   getPeriodString,
 } from './utils'
+
+let activeStake: IStaking
 
 const Header = () => {
   return (
@@ -73,45 +89,60 @@ const Header = () => {
 
 const Body = () => {
   const { stakings } = useStakingState()
+  const toggleUnstakeModal = useToggleModal(ApplicationModal.UNSTAKE_IXS)
+
   return (
     <>
-      {stakings?.map(
-        ({ period, startDateUnix, endDateUnix, lockedTillUnix, apy, stakeAmount, distributeAmount, reward }) => (
-          <StyledBodyRow key={startDateUnix}>
-            <Tier>
-              <span className="digit">{getPeriodDigit(period)}</span>&nbsp;{getPeriodString(period).toUpperCase()}
-            </Tier>
-            <div>{apy}%</div>
-            <Column>
-              <Row>
-                {formatDate(startDateUnix)} <MutedText>{getDateFullTime(startDateUnix)}</MutedText>
-              </Row>
-              <Row>
-                {formatDate(endDateUnix)} <MutedText>{getDateFullTime(endDateUnix)}</MutedText>
-              </Row>
-            </Column>
-            <div>{getLockPeriod(period)}</div>
-            <div>{formatAmount(stakeAmount)} IXS</div>
-            <div>{formatAmount(distributeAmount)} IXSgov</div>
-            <div className="rewards">{formatAmount(reward)} IXS</div>
+      {stakings?.map((stake) => (
+        <StyledBodyRow key={stake.startDateUnix}>
+          <Tier>
+            <span className="digit">{getPeriodDigit(stake.period)}</span>&nbsp;
+            {getPeriodString(stake.period).toUpperCase()}
+          </Tier>
+          <div>{stake.apy}%</div>
+          <Column>
+            <Row>
+              {formatDate(stake.startDateUnix)} <MutedText>{getDateFullTime(stake.startDateUnix)}</MutedText>
+            </Row>
+            <Row>
+              {formatDate(stake.endDateUnix)} <MutedText>{getDateFullTime(stake.endDateUnix)}</MutedText>
+            </Row>
+          </Column>
+          <div>{getLockPeriod(stake.period)}</div>
+          <div>{formatAmount(stake.stakeAmount)} IXS</div>
+          <div>{formatAmount(stake.distributeAmount)} IXSgov</div>
+          <div className="rewards">{formatAmount(stake.reward)} IXS</div>
+          {stake.canUnstake ? (
+            <UnstakeButton
+              onClick={() => {
+                activeStake = stake
+                toggleUnstakeModal()
+              }}
+            >
+              <TYPE.subHeader1>
+                <Trans>Unstake</Trans>
+              </TYPE.subHeader1>
+            </UnstakeButton>
+          ) : (
             <LockedTillColumn>
               <Row>
                 <LockIcon className="lock-icon" />
                 <Trans>Locked till</Trans>
               </Row>
               <Row>
-                {formatDate(lockedTillUnix)} {getDateShortTime(lockedTillUnix)}
+                {formatDate(stake.lockedTillUnix)} {getDateShortTime(stake.lockedTillUnix)}
               </Row>
             </LockedTillColumn>
-          </StyledBodyRow>
-        )
-      )}
+          )}
+        </StyledBodyRow>
+      ))}
     </>
   )
 }
 
 export const MyStakingsTable = () => {
   const { stakings, stakingsLoading } = useStakingState()
+  const toggleUnstakeModal = useToggleModal(ApplicationModal.UNSTAKE_IXS)
 
   function showTableData() {
     if (stakingsLoading) {
@@ -131,5 +162,10 @@ export const MyStakingsTable = () => {
     }
   }
 
-  return <Box style={{ width: '100%' }}>{showTableData()}</Box>
+  return (
+    <>
+      <Box style={{ width: '100%' }}>{showTableData()}</Box>
+      <UnstakeModal onDismiss={toggleUnstakeModal} stake={activeStake} />
+    </>
+  )
 }

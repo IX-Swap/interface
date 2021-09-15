@@ -1,4 +1,6 @@
+import { ButtonIXSGradient } from 'components/Button'
 import Column from 'components/Column'
+import { ModalBottomWrapper } from 'components/earn/styled'
 import { RowBetween } from 'components/Row'
 import { BodyRow, HeaderRow } from 'components/Table'
 import styled from 'styled-components'
@@ -245,9 +247,70 @@ export const StyledBodyRow = styled(BodyRow)`
     color: #9df9b1;
   }
 `
+
 export const RewardsBodyRow = styled(StyledBodyRow)`
   grid-template-columns: 190px 190px 180px 180px 180px 180px auto;
 `
 export const RewardsHeaderRow = styled(StyledHeaderRow)`
   grid-template-columns: 190px 190px 180px 180px 180px 180px auto;
+`
+export const StakeInfoContainer = styled(Column)`
+  background-color: ${({ theme }) => theme.bg8};
+  padding: 25px 23px;
+  border-radius: 20px;
+  grid-gap: 8px;
+  > div {
+    display: grid;
+    grid-gap: 15px;
+    grid-template-columns: auto 1fr;
+    height: auto;
+    > :first-child {
+      min-width: fit-content;
+      font-size: 14px;
+      color: ${({ theme }) => theme.text2};
+    }
+    > :last-child {
+      width: 100%;
+      > div {
+        color: white;
+        font-size: 16px;
+        width: 100%;
+        text-align: right;
+      }
+    }
+    @media (max-width: 540px) {
+      grid-template-columns: 1fr;
+      grid-gap: 0;
+      > :last-child {
+        > div {
+          text-align: left;
+        }
+      }
+    }
+  }
+`
+
+export const EllipsedText = styled.div`
+  display: grid;
+  grid-template-columns: 1fr auto;
+  > div {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 100%;
+  }
+`
+
+export const ModalBottom = styled(ModalBottomWrapper)`
+  @media (max-width: 768px) {
+    padding: 15px;
+  }
+
+  .text-row {
+    font-size: 16px !important;
+  }
+`
+export const UnstakeButton = styled(ButtonIXSGradient)`
+  align-self: center;
+  padding: 16px 26px;
 `

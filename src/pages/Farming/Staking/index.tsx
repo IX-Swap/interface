@@ -9,6 +9,7 @@ import {
   useGetVestedRewards,
   useGetPayouts,
 } from 'state/stake/hooks'
+import { useUnstakingState } from 'state/stake/unstake/hooks'
 import { PromoTokenCard } from './PromoTokenCard'
 import { StakingPage } from './StakingPage'
 import { StakingWrapper } from '../styleds'
@@ -23,6 +24,7 @@ import { IXS_ADDRESS } from 'constants/addresses'
 
 export const Staking = () => {
   const { IXSBalance, hasStakedSuccessfully, metaMaskAccount, stakings } = useStakingState()
+  const { hasUnstakedSuccessfully } = useUnstakingState()
   const isVestingPaused = useIsVestingPaused()
   const toggleStakeModal = useToggleModal(ApplicationModal.STAKE_IXS)
   const closeModals = useCloseModals()
@@ -41,10 +43,12 @@ export const Staking = () => {
 
   useEffect(() => {
     getStakings()
-  }, [getStakings, hasStakedSuccessfully])
+  }, [getStakings, hasStakedSuccessfully, hasUnstakedSuccessfully])
+
   useEffect(() => {
     getPayouts()
   }, [getPayouts, hasStakedSuccessfully])
+
   useEffect(() => {
     if (balance) {
       updateIXSBalance()
@@ -56,7 +60,7 @@ export const Staking = () => {
   }, [isVestingPaused])
 
   useEffect(() => {
-    if (hasStakedSuccessfully) {
+    if (hasStakedSuccessfully || hasUnstakedSuccessfully) {
       closeModals()
     }
   }, [hasStakedSuccessfully, closeModals])
