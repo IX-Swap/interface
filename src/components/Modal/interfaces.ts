@@ -8,4 +8,5 @@ export interface ModalProps {
   isright?: boolean
   mobileMaxHeight?: number | false
   scrollable?: boolean
+  tip?: string
 }

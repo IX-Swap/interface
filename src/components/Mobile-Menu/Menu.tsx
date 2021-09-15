@@ -82,7 +82,7 @@ const ModalContainer = styled.div`
   padding: 32px 18px;
   display: none;
   background: ${({ theme }) => theme.bgG16};
-  @media (max-width: 1425px) {
+  @media (max-width: 1080px) {
     display: block;
   }
 `

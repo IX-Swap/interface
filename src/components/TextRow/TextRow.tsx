@@ -16,16 +16,10 @@ interface Props {
   tooltipText?: string
 }
 
-const RowTinyColumn = styled(FixedHeightRow)`
-  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-      flex-wrap: wrap;
-  `};
-`
-
 export const TextRow = ({ textLeft, textRight, currency, tooltipText }: Props) => {
   return (
-    <RowTinyColumn data-testid="tableRow">
-      <RowFixed>
+    <FixedHeightRow data-testid="tableRow">
+      <RowFixed className="text-row">
         <Text>{textLeft}</Text>
         {tooltipText && (
           <MouseoverTooltip style={{ whiteSpace: 'pre-line' }} text={tooltipText}>
@@ -39,6 +33,6 @@ export const TextRow = ({ textLeft, textRight, currency, tooltipText }: Props) =
         {currency && textRight && <CurrencyLogo size="20px" style={{ marginRight: '8px' }} currency={currency} />}
         <Text>{textRight ?? '-'}</Text>
       </RowFixed>
-    </RowTinyColumn>
+    </FixedHeightRow>
   )
 }

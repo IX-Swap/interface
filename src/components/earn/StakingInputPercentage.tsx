@@ -65,7 +65,8 @@ export const StakingInputPercentage = ({
           />
           <AvailableBalance>
             <RowFixed>
-              <Trans>Available: {maxAvailable?.toSignificant(5)}</Trans>
+              <Trans>Available:</Trans>&nbsp;
+              <span style={{ fontWeight: 600 }}>{maxAvailable?.toSignificant(5)}</span>
               {infoText && (
                 <MouseoverTooltip text={infoText} placement={'top-end'}>
                   <IconWrapper size={20} style={{ transform: 'rotate(180deg)', marginLeft: '7px' }}>
