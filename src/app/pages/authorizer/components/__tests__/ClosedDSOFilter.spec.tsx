@@ -45,10 +45,7 @@ describe('ClosedDSOFilter', () => {
 
     fireEvent.click(listbox.getByText(dso.tokenName))
 
-    expect(objResponse.updateFilter).toHaveBeenCalledWith(
-      'commitmentDSO',
-      dso._id
-    )
+    expect(objResponse.updateFilter).toHaveBeenCalledWith('dso', dso._id)
   })
 
   it('calls handleChange correctly when select has no value', () => {
