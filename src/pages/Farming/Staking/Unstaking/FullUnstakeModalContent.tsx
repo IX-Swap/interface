@@ -27,13 +27,19 @@ function formatAmount(amount: number): string {
 export function FullUnstake({ onDismiss, stake }: UnstakingModalProps) {
   const stakeAmount = formatAmount(stake?.stakeAmount)
   const [isEnoughAllowance, setIsEnoughAllowance] = useState(true)
-  const error = ''
+  const [error, setError] = useState('')
   const { chainId, account } = useActiveWeb3React()
   const IXSGovCurrency = useCurrency(IXS_GOVERNANCE_ADDRESS[chainId ?? 1])
   const IXSGovBalance = useCurrencyBalance(account ?? undefined, IXSGovCurrency ?? undefined)
   const { IXSGovAllowanceAmount, isApprovingIXSGov, isUnstaking } = useUnstakingState()
   const unstake = useUnstakeFrom(stake.period)
   const increaseAllowance = useIncreaseIXSGovAllowance()
+
+  useEffect(() => {
+    if (!isEnoughIXSGov()) {
+      setError('Not Enough IXSGov')
+    }
+  }, [])
 
   useEffect(() => {
     if (!IXSGovAllowanceAmount) return
@@ -124,7 +130,7 @@ export function FullUnstake({ onDismiss, stake }: UnstakingModalProps) {
         <Row style={{ marginTop: '43px' }}>
           <ButtonIXSWide
             data-testid="approve-ixsgov-button"
-            disabled={isEnoughAllowance || isApprovingIXSGov}
+            disabled={isEnoughAllowance || isApprovingIXSGov || Boolean(error)}
             onClick={onApprove}
             style={{ marginRight: '14px' }}
           >
@@ -133,12 +139,12 @@ export function FullUnstake({ onDismiss, stake }: UnstakingModalProps) {
                 <Trans>Approving IXSGov</Trans>
               </Dots>
             ) : (
-              <>{error || <Trans>Approve IXSGov</Trans>}</>
+              <Trans>Approve IXSGov</Trans>
             )}
           </ButtonIXSWide>
           <ButtonIXSWide
             data-testid="unstake-button"
-            disabled={!isEnoughAllowance || isApprovingIXSGov}
+            disabled={!isEnoughAllowance || isApprovingIXSGov || Boolean(error)}
             onClick={onUnstake}
           >
             {isUnstaking ? (

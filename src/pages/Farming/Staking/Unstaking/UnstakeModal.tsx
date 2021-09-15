@@ -107,7 +107,13 @@ export function UnstakeModal({ onDismiss, stake }: UnstakingModalProps) {
   }
 
   return (
-    <RedesignedWideModal isOpen={isOpen} onDismiss={wrappedOnDismiss} scrollable>
+    <RedesignedWideModal
+      isOpen={isOpen}
+      onDismiss={wrappedOnDismiss}
+      scrollable
+      tip={t`Tip: To unstake IXS tokens you need to have enough IXSgov tokens. 
+You can unstake IXS tokens equal to the number of IXSgov tokens in your account.`}
+    >
       <ModalBlurWrapper>
         <ModalContentWrapper>
           {bIsEarlyUnstake ? (
