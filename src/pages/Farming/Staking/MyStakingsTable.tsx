@@ -148,7 +148,7 @@ const Body = () => {
           <div>{formatAmount(stake.stakeAmount)} IXS</div>
           <div>{formatAmount(stake.distributeAmount)} IXSgov</div>
           <div className="rewards">{formatAmount(stake.reward)} IXS</div>
-          {true ? (
+          {stake.canUnstake ? (
             <UnstakeButton
               onClick={() => {
                 activeStake = stake
