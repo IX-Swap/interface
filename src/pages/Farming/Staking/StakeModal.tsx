@@ -38,7 +38,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
   const [error, setError] = useState('Please enter amount to stake')
   const increaseAllowance = useIncreaseAllowance()
   const amountOfIXStoStakeInput = useRef<HTMLInputElement>(null)
-  const { selectedTier, approvingIXS, isIXSApproved, isStaking, allowanceAmount, IXSBalance } = useStakingState()
+  const { selectedTier, isApprovingIXS, isIXSApproved, isStaking, allowanceAmount, IXSBalance } = useStakingState()
   const stake = useStakeFor(selectedTier?.period)
   const checkAllowance = useCheckAllowance()
 
@@ -53,9 +53,11 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
 
   // state for pending and submitted txn views
   const wrappedOnDismiss = useCallback(() => {
-    setTypedValue('')
-    onDismiss()
-  }, [onDismiss])
+    if (!isStaking && !isApprovingIXS) {
+      setTypedValue('')
+      onDismiss()
+    }
+  }, [onDismiss, isStaking, isApprovingIXS])
 
   async function onStake() {
     stake(typedValue)
@@ -87,7 +89,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
           setError('')
         }
       }
-    } else if (!isStaking && !approvingIXS) {
+    } else if (!isStaking && !isApprovingIXS) {
       setError('Wrong IXS amount')
       setTypedValue('')
     }
@@ -151,10 +153,10 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
       return (
         <ButtonIXSWide
           data-testid="approve-staking"
-          disabled={approvingIXS || !termsAccepted || Boolean(error)}
+          disabled={isApprovingIXS || !termsAccepted || Boolean(error)}
           onClick={onApprove}
         >
-          {approvingIXS ? (
+          {isApprovingIXS ? (
             <Dots>
               <Trans>Approving IXS</Trans>
             </Dots>
@@ -208,7 +210,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                   ref={amountOfIXStoStakeInput}
                   onInput={onUserInput}
                   value={typedValue}
-                  disabled={approvingIXS || isIXSApproved || isStaking}
+                  disabled={isApprovingIXS || isIXSApproved || isStaking}
                 />
                 <InputHintRight>
                   <RowFixed>
