@@ -35,6 +35,7 @@ export const Staking = () => {
   useEffect(() => {
     if (hasStakedSuccessfully || hasUnstakedSuccessfully) {
       getStakings()
+      updateIXSBalance()
     }
   }, [getStakings, hasStakedSuccessfully, hasUnstakedSuccessfully])
 

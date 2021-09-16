@@ -158,6 +158,10 @@ export default createReducer<StakingState>(initialState, (builder) =>
       localStorage.setItem('IXSBalance', '0')
       state.metaMaskAccount = newAccount
       localStorage.setItem('account', newAccount)
+      if (newAccount === 'null') {
+        state.stakings = []
+        state.IXSBalance = '0'
+      }
     })
     .addCase(selectTier, (state, { payload: { tier } }) => {
       state.selectedTier = tier
