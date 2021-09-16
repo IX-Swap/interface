@@ -245,7 +245,7 @@ export function useVestingDetails() {
       fetchDetails(customVestingAddress || account)
     }
   }, [fetchDetails, account, isVesting, customVestingAddress])
-  return details
+  return { details, fetchDetails }
 }
 
 export function useTableOptions() {

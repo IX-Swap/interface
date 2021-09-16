@@ -26,7 +26,7 @@ import { VestingContractDetails, InfoIcon, VestingDetailsTitle } from '../styled
 
 export const VestingValid = () => {
   const theme = useTheme()
-  const vestingDetails = useVestingDetails()
+  const { details, fetchDetails } = useVestingDetails()
   const { payouts, fetchPayouts } = usePayouts()
   const { chainId, account } = useActiveWeb3React()
   const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
@@ -40,9 +40,13 @@ export const VestingValid = () => {
   const isDifferentAddress = customVestingAddress && customVestingAddress !== account
 
   useEffect(() => {
+    const fetch = async () => {
+      await fetchDetails(account)
+      await fetchPayouts(account)
+      await fetchClaimable(account)
+    }
     if (transactionEnded) {
-      fetchPayouts(account)
-      fetchClaimable(account)
+      fetch()
     }
   }, [transactionEnded])
 
@@ -67,13 +71,13 @@ export const VestingValid = () => {
           </MouseoverTooltip>
         </VestingDetailsTitle>
         <Column style={{ gap: '16px' }}>
-          {vestingDetails?.start && (
+          {details?.start && (
             <Column>
               <TYPE.body1>
                 <Trans>Start Date</Trans>&nbsp;
               </TYPE.body1>
               <TYPE.titleSmall fontWeight={400} lineHeight={'18px'}>
-                {unixTimeToFormat({ time: vestingDetails?.start })}
+                {unixTimeToFormat({ time: details?.start })}
               </TYPE.titleSmall>
             </Column>
           )}
@@ -88,23 +92,23 @@ export const VestingValid = () => {
               </TYPE.titleSmall>
             </Column>
           )}
-          {vestingDetails?.end && (
+          {details?.end && (
             <Column>
               <TYPE.body1>
                 <Trans>End Date</Trans>&nbsp;
               </TYPE.body1>
               <TYPE.titleSmall fontWeight={400} lineHeight={'18px'}>
-                {unixTimeToFormat({ time: vestingDetails?.end })}
+                {unixTimeToFormat({ time: details?.end })}
               </TYPE.titleSmall>
             </Column>
           )}
           <Column style={{ gap: '19px' }}>
-            {vestingDetails?.amount && currency && (
+            {details?.amount && currency && (
               <TextRow
                 textLeft={<Trans>Total Vested</Trans>}
                 textRight={
                   <TYPE.titleSmall fontWeight={400} style={{ whiteSpace: 'nowrap' }}>
-                    {formatCurrencyAmount(CurrencyAmount.fromRawAmount(currency, vestingDetails?.amount), 10)}{' '}
+                    {formatCurrencyAmount(CurrencyAmount.fromRawAmount(currency, details?.amount), 10)}{' '}
                     {currency?.symbol}
                   </TYPE.titleSmall>
                 }
@@ -122,12 +126,12 @@ export const VestingValid = () => {
                 }
               />
             )}
-            {vestingDetails?.claimed && currency && (
+            {details?.claimed && currency && (
               <TextRow
                 textLeft={<Trans>Claimed</Trans>}
                 textRight={
                   <TYPE.titleSmall fontWeight={400} style={{ whiteSpace: 'nowrap' }}>
-                    {formatCurrencyAmount(CurrencyAmount.fromRawAmount(currency, vestingDetails?.claimed), 10)}{' '}
+                    {formatCurrencyAmount(CurrencyAmount.fromRawAmount(currency, details?.claimed), 10)}{' '}
                     {currency?.symbol}
                   </TYPE.titleSmall>
                 }
