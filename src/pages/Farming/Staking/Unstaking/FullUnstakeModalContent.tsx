@@ -96,7 +96,9 @@ export function FullUnstake({ onDismiss, stake }: UnstakingModalProps) {
             textLeft={t`IXSGov to return`}
             textRight={
               <EllipsedText>
-                <div>{stakeAmount}</div>&nbsp;IXSGov ({IXSGovBalance?.toSignificant(5)} <Trans>available</Trans>)
+                <div>
+                  {stakeAmount}&nbsp;IXSGov ({IXSGovBalance?.toSignificant(5)} <Trans>available</Trans>)
+                </div>
               </EllipsedText>
             }
           />
@@ -106,7 +108,7 @@ export function FullUnstake({ onDismiss, stake }: UnstakingModalProps) {
             textLeft={t`Instant reward payout today`}
             textRight={
               <EllipsedText>
-                <div>{stake.reward * 0.1}</div>&nbsp;IXS
+                <div>{stake.reward * 0.1}&nbsp;IXS</div>
               </EllipsedText>
             }
           />
@@ -114,7 +116,7 @@ export function FullUnstake({ onDismiss, stake }: UnstakingModalProps) {
             textLeft={t`Rewards to be vested (10% weekly)`}
             textRight={
               <EllipsedText>
-                <div>{stake.reward * 0.9}</div>&nbsp;IXS
+                <div>{stake.reward * 0.9}&nbsp;IXS</div>
               </EllipsedText>
             }
           />
@@ -122,7 +124,9 @@ export function FullUnstake({ onDismiss, stake }: UnstakingModalProps) {
             textLeft={t`Passed staking period`}
             textRight={
               <EllipsedText>
-                <div>{periodsInDays[stake.period]}</div>&nbsp;<Trans>days (ended)</Trans>
+                <div>
+                  {periodsInDays[stake.period]}&nbsp;<Trans>days (ended)</Trans>
+                </div>
               </EllipsedText>
             }
           />
