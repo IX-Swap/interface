@@ -108,7 +108,7 @@ interface StakingState {
   status: StakingStatus
   APY: APY
   selectedTier?: Tier
-  approvingIXS: boolean
+  isApprovingIXS: boolean
   approveIXSError: boolean
   isIXSApproved: boolean
   isStaking: boolean
@@ -131,7 +131,7 @@ const initialState: StakingState = {
     threeMonths: 88,
   },
   selectedTier: undefined,
-  approvingIXS: false,
+  isApprovingIXS: false,
   approveIXSError: false,
   isIXSApproved: false,
   isStaking: false,
@@ -158,6 +158,10 @@ export default createReducer<StakingState>(initialState, (builder) =>
       localStorage.setItem('IXSBalance', '0')
       state.metaMaskAccount = newAccount
       localStorage.setItem('account', newAccount)
+      if (newAccount === 'null') {
+        state.stakings = []
+        state.IXSBalance = '0'
+      }
     })
     .addCase(selectTier, (state, { payload: { tier } }) => {
       state.selectedTier = tier
@@ -166,17 +170,17 @@ export default createReducer<StakingState>(initialState, (builder) =>
       state.allowanceAmount = allowanceAmount
     })
     .addCase(increaseAllowance.pending, (state) => {
-      state.approvingIXS = true
+      state.isApprovingIXS = true
       state.approveIXSError = false
     })
     .addCase(increaseAllowance.fulfilled, (state, { payload: { data } }) => {
-      state.approvingIXS = false
+      state.isApprovingIXS = false
       state.approveIXSError = false
       state.isIXSApproved = true
       console.log('IXS has been approved: ', data)
     })
     .addCase(increaseAllowance.rejected, (state, { payload: { errorMessage } }) => {
-      state.approvingIXS = false
+      state.isApprovingIXS = false
       state.approveIXSError = true
       console.error('IXS approve error: ', errorMessage)
     })
