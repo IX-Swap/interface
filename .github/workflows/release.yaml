@@ -85,7 +85,7 @@ jobs:
       - name: Sync AWS S3 Bucket
         #        run: ./bin/s3-web-sync.sh
         run: |
-          aws s3 sync build/ s3://${{ secrets.AWS_BUCKET_NAME }}/ --acl public-read
+          aws s3 sync build/ s3://${{ secrets.AWS_BUCKET_NAME }}/ --acl public-read --delete 
           aws s3api put-bucket-versioning --bucket ${{ secrets.AWS_BUCKET_NAME }} --versioning-configuration Status=Enabled
           aws s3 website s3://${{ secrets.AWS_BUCKET_NAME }}/ --index-document index.html
           aws cloudfront create-invalidation --distribution-id E325RKPWP0VQSX --paths "/*"
