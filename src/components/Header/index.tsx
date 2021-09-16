@@ -37,14 +37,10 @@ const HeaderFrame = styled.div<{ showBackground: boolean; lightBackground: boole
   transition: background-position 0.1s, box-shadow 0.1s;
 
   @media (max-width: 1280px) {
-    ${({ withNetwork }) =>
-      withNetwork &&
-      css`
-        grid-template-columns: auto 1fr auto;
-        grid-gap: 32px;
-      `}
+    grid-template-columns: auto 1fr auto;
+    grid-gap: 32px;
   }
-  @media (max-width: 1425px) {
+  @media (max-width: 1080px) {
     grid-template-columns: auto 1fr auto;
     grid-gap: 32px;
     padding: 14px 18px;

@@ -10,13 +10,49 @@ import { AnimatedDialogContent, StyledDialogOverlay } from './styleds'
 // destructure to not pass custom props to Dialog DOM element
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const StyledDialogContent = styled(
-  ({ minHeight, maxHeight, mobile, isOpen, isright, mobileMaxHeight, scrollable, ...rest }) => (
+  ({ minHeight, maxHeight, mobile, isOpen, isright, mobileMaxHeight, scrollable, tip, ...rest }) => (
     <AnimatedDialogContent {...rest} />
   )
 ).attrs({
   'aria-label': 'dialog',
 })`
   overflow-y: ${({ mobile }) => (mobile ? 'scroll' : 'hidden')};
+
+  ${({ tip }) =>
+    tip &&
+    css`
+      ::before {
+        content: '${tip}';
+        position: fixed;
+        background: radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgb(125 0 76 / 17%) 0%, rgb(32 11 39 / 88%) 100%),
+          #2c254ae6;
+        border-radius: 45px;
+        padding: 30px;
+        z-index: 10;
+        color: ${({ theme }) => theme.text2};
+        font-weight: 300;
+        font-size: 12px;
+        line-height: 18px;
+        width: 520px;
+        top: 2.5%;
+        position: absolute;
+        margin-left: auto;
+        margin-right: auto;
+        left: 0;
+        right: 0;
+        ${({ theme }) => theme.mediaWidth.upToSmall`
+          width: 85vw;
+          top: 0;
+          position: relative;
+        `}
+      }
+
+      &[data-reach-dialog-content] {
+        ${({ theme }) => theme.mediaWidth.upToSmall`
+            flex-direction: column;
+          `}
+      }
+    `}
 
   &[data-reach-dialog-content] {
     margin: ${({ isright }) => (isright ? '4rem 0 2rem 0' : '0 0 2rem 0')};
@@ -81,6 +117,7 @@ export default function RedesignedWideModal({
   children,
   isright = false,
   scrollable = false,
+  tip,
 }: ModalProps) {
   const fadeTransition = useTransition(isOpen, null, {
     config: { duration: 200 },
@@ -114,6 +151,7 @@ export default function RedesignedWideModal({
               unstable_lockFocusAcrossFrames={false}
               isright={isright}
               scrollable={scrollable}
+              tip={tip}
             >
               <StyledDialogContent
                 {...(isMobile
@@ -129,6 +167,7 @@ export default function RedesignedWideModal({
                 isright={isright}
                 mobileMaxHeight={mobileMaxHeight}
                 scrollable={scrollable}
+                tip={tip}
               >
                 {/* prevents the automatic focusing of inputs on mobile by the reach dialog */}
                 {!initialFocusRef && isMobile ? <div tabIndex={1} /> : null}

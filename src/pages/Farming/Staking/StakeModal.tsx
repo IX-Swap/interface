@@ -11,12 +11,8 @@ import { Dots } from 'pages/Pool/styleds'
 import React, { useCallback, useState, useRef, useEffect } from 'react'
 import { ApplicationModal } from 'state/application/actions'
 import { useModalOpen } from 'state/application/hooks'
-import { useStakeFor, useIncreaseAllowance, useCheckAllowance, useUpdateIXSBalance } from 'state/stake/hooks'
-import { useCurrencyBalance } from 'state/wallet/hooks'
-import { useActiveWeb3React } from 'hooks/web3'
+import { useStakeFor, useIncreaseAllowance, useCheckAllowance } from 'state/stake/hooks'
 import { CloseIcon, ModalBlurWrapper, TYPE } from 'theme'
-import { maxAmountSpend } from 'utils/maxAmountSpend'
-import Column from 'components/Column'
 import Row, { RowBetween, RowFixed, RowCenter } from 'components/Row'
 import { ModalBottomWrapper, ModalContentWrapper, StakeModalTop } from 'components/earn/styled'
 import { MouseoverTooltip } from 'components/Tooltip'
@@ -28,6 +24,7 @@ import { PERIOD, convertPeriod, dateFormatter } from 'state/stake/reducer'
 import { IconWrapper } from 'components/AccountDetails/styleds'
 import { ReactComponent as Checkmark } from 'assets/images/checked-solid-bg.svg'
 import { periodsInSeconds, periodsInDays } from 'constants/stakingPeriods'
+import { StakeInfoContainer, EllipsedText, ModalBottom } from './style'
 
 interface StakingModalProps {
   onDismiss: () => void
@@ -45,7 +42,6 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
     useStakingState()
   const stake = useStakeFor(selectedTier?.period)
   const checkAllowance = useCheckAllowance()
-  const updateIXSBalance = useUpdateIXSBalance()
 
   useEffect(() => {
     if (isOpen) {
@@ -177,19 +173,19 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
     if (!termsAccepted || Boolean(error)) return true
     if (approvingIXS || isStaking) return true
     if (allowanceAmount < parseFloat(typedValue)) return true
-    return !isIXSApproved
+    return false
   }
 
   const isDisabledApprove = (): boolean => {
     if (!termsAccepted || Boolean(error)) return true
     if (approvingIXS || isStaking) return true
     if (allowanceAmount >= parseFloat(typedValue)) return true
-    return isIXSApproved
+    return false
   }
 
   const isAmountApproved = (): boolean => {
     if (allowanceAmount >= parseFloat(typedValue)) return true
-    return isIXSApproved
+    return false
   }
 
   return (
@@ -388,24 +384,7 @@ const ActionButtons = styled.div`
   }
 `
 
-const EllipsedText = styled.div`
-  display: grid;
-  grid-template-columns: 1fr auto;
-  > div {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    width: 100%;
-  }
-`
-
 const ModalTop = styled(StakeModalTop)`
-  @media (max-width: 768px) {
-    padding: 15px;
-  }
-`
-
-const ModalBottom = styled(ModalBottomWrapper)`
   @media (max-width: 768px) {
     padding: 15px;
   }
@@ -499,41 +478,6 @@ const ArrowWrapper = styled.div`
   left: calc(50% - 16px);
   background-color: ${({ theme }) => theme.bg9};
   z-index: 2;
-`
-const StakeInfoContainer = styled(Column)`
-  background-color: ${({ theme }) => theme.bg8};
-  padding: 25px 23px;
-  border-radius: 20px;
-  grid-gap: 16px;
-  > div {
-    display: grid;
-    grid-gap: 15px;
-    grid-template-columns: auto 1fr;
-    height: auto;
-    > :first-child {
-      min-width: fit-content;
-      font-size: 14px;
-      color: ${({ theme }) => theme.text2};
-    }
-    > :last-child {
-      width: 100%;
-      > div {
-        color: white;
-        font-size: 16px;
-        width: 100%;
-        text-align: right;
-      }
-    }
-    @media (max-width: 540px) {
-      grid-template-columns: 1fr;
-      grid-gap: 0;
-      > :last-child {
-        > div {
-          text-align: left;
-        }
-      }
-    }
-  }
 `
 
 const StyledDropDown = styled(DropDown)`
