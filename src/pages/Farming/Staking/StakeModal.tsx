@@ -1,12 +1,9 @@
 import { t, Trans } from '@lingui/macro'
 import { ButtonIXSWide } from 'components/Button'
 import { ReactComponent as InfoIcon } from 'assets/images/attention.svg'
-import Loader from 'components/Loader'
 import { ReactComponent as DropDown } from 'assets/images/dropdown.svg'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import { TextRow } from 'components/TextRow/TextRow'
-import { IXS_ADDRESS } from 'constants/addresses'
-import { useCurrency } from 'hooks/Tokens'
 import { Dots } from 'pages/Pool/styleds'
 import React, { useCallback, useState, useRef, useEffect } from 'react'
 import { ApplicationModal } from 'state/application/actions'
@@ -14,7 +11,7 @@ import { useModalOpen } from 'state/application/hooks'
 import { useStakeFor, useIncreaseAllowance, useCheckAllowance } from 'state/stake/hooks'
 import { CloseIcon, ModalBlurWrapper, TYPE } from 'theme'
 import Row, { RowBetween, RowFixed, RowCenter } from 'components/Row'
-import { ModalBottomWrapper, ModalContentWrapper, StakeModalTop } from 'components/earn/styled'
+import { ModalContentWrapper, StakeModalTop } from 'components/earn/styled'
 import { MouseoverTooltip } from 'components/Tooltip'
 import styled from 'styled-components'
 import { ReactComponent as ArrowDown } from '../../../assets/images/arrow.svg'
@@ -44,6 +41,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
 
   useEffect(() => {
     if (isOpen) {
+      setTypedValue('')
       checkAllowance()
     } else {
       setTypedValue('')
@@ -51,7 +49,6 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
     }
   }, [isOpen])
 
-  // state for pending and submitted txn views
   const wrappedOnDismiss = useCallback(() => {
     if (!isStaking && !isApprovingIXS) {
       setTypedValue('')
@@ -210,7 +207,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                   ref={amountOfIXStoStakeInput}
                   onInput={onUserInput}
                   value={typedValue}
-                  disabled={isApprovingIXS || isIXSApproved || isStaking}
+                  disabled={isApprovingIXS || isStaking}
                 />
                 <InputHintRight>
                   <RowFixed>
