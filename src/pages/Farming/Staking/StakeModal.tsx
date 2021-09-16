@@ -1,12 +1,9 @@
 import { t, Trans } from '@lingui/macro'
 import { ButtonIXSWide } from 'components/Button'
 import { ReactComponent as InfoIcon } from 'assets/images/attention.svg'
-import Loader from 'components/Loader'
 import { ReactComponent as DropDown } from 'assets/images/dropdown.svg'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import { TextRow } from 'components/TextRow/TextRow'
-import { IXS_ADDRESS } from 'constants/addresses'
-import { useCurrency } from 'hooks/Tokens'
 import { Dots } from 'pages/Pool/styleds'
 import React, { useCallback, useState, useRef, useEffect } from 'react'
 import { ApplicationModal } from 'state/application/actions'
@@ -14,13 +11,13 @@ import { useModalOpen } from 'state/application/hooks'
 import { useStakeFor, useIncreaseAllowance, useCheckAllowance } from 'state/stake/hooks'
 import { CloseIcon, ModalBlurWrapper, TYPE } from 'theme'
 import Row, { RowBetween, RowFixed, RowCenter } from 'components/Row'
-import { ModalBottomWrapper, ModalContentWrapper, StakeModalTop } from 'components/earn/styled'
+import { ModalContentWrapper, StakeModalTop } from 'components/earn/styled'
 import { MouseoverTooltip } from 'components/Tooltip'
 import styled from 'styled-components'
 import { ReactComponent as ArrowDown } from '../../../assets/images/arrow.svg'
 import { Text } from 'rebass'
 import { useStakingState } from 'state/stake/hooks'
-import { PERIOD, convertPeriod, dateFormatter } from 'state/stake/reducer'
+import { PERIOD, convertPeriod, dateFormatter, TIER_LIMIT } from 'state/stake/reducer'
 import { IconWrapper } from 'components/AccountDetails/styleds'
 import { ReactComponent as Checkmark } from 'assets/images/checked-solid-bg.svg'
 import { periodsInSeconds, periodsInDays } from 'constants/stakingPeriods'
@@ -38,12 +35,20 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
   const [error, setError] = useState('Please enter amount to stake')
   const increaseAllowance = useIncreaseAllowance()
   const amountOfIXStoStakeInput = useRef<HTMLInputElement>(null)
-  const { selectedTier, approvingIXS, isIXSApproved, isStaking, allowanceAmount, IXSBalance } = useStakingState()
+  const { selectedTier, isApprovingIXS, isStaking, allowanceAmount, IXSBalance } = useStakingState()
   const stake = useStakeFor(selectedTier?.period)
   const checkAllowance = useCheckAllowance()
 
   useEffect(() => {
+    if (!isApprovingIXS) {
+      checkAllowance()
+    }
+  }, [isApprovingIXS])
+
+  useEffect(() => {
     if (isOpen) {
+      setTypedValue('')
+      setTermsAccepted(false)
       checkAllowance()
     } else {
       setTypedValue('')
@@ -51,21 +56,22 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
     }
   }, [isOpen])
 
-  // state for pending and submitted txn views
   const wrappedOnDismiss = useCallback(() => {
-    setTypedValue('')
-    onDismiss()
-  }, [onDismiss])
+    if (!isStaking && !isApprovingIXS) {
+      setTypedValue('')
+      onDismiss()
+    }
+  }, [onDismiss, isStaking, isApprovingIXS])
 
   async function onStake() {
-    stake(typedValue)
-
+    await stake(typedValue)
+    setTypedValue('')
     const { ym } = window
     ym(84960586, 'reachGoal', 'stakingSubmitStakeButtonClicked')
   }
 
   async function onApprove() {
-    increaseAllowance(typedValue)
+    await increaseAllowance(typedValue)
 
     const { ym } = window
     ym(84960586, 'reachGoal', 'stakingApproveIXSButtonClicked')
@@ -81,13 +87,13 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
         const fIXSbalance = parseFloat(IXSBalance)
         if (fTypedIXSAmount > fIXSbalance) {
           setError('Not enough IXS')
-        } else if (fTypedIXSAmount <= 0) {
+        } else if (fTypedIXSAmount <= 0 || !fTypedIXSAmount) {
           setError('Wrong IXS amount')
         } else {
           setError('')
         }
       }
-    } else if (!isStaking && !approvingIXS) {
+    } else if (!isStaking && !isApprovingIXS) {
       setError('Wrong IXS amount')
       setTypedValue('')
     }
@@ -130,40 +136,23 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
     ym(84960586, 'reachGoal', 'stakingConditionsTermsClicked')
   }
 
-  function renderStakeButton() {
-    if (!typedValue || allowanceAmount > parseFloat(typedValue) || isIXSApproved) {
-      return (
-        <ButtonIXSWide
-          data-testid="stake-button"
-          disabled={isStaking || !termsAccepted || Boolean(error)}
-          onClick={onStake}
-        >
-          {isStaking ? (
-            <Dots>
-              <Trans>Staking</Trans>
-            </Dots>
-          ) : (
-            <>{error || <Trans>Stake</Trans>}</>
-          )}
-        </ButtonIXSWide>
-      )
-    } else {
-      return (
-        <ButtonIXSWide
-          data-testid="approve-staking"
-          disabled={approvingIXS || !termsAccepted || Boolean(error)}
-          onClick={onApprove}
-        >
-          {approvingIXS ? (
-            <Dots>
-              <Trans>Approving IXS</Trans>
-            </Dots>
-          ) : (
-            <>{error || <Trans>Approve IXS</Trans>}</>
-          )}
-        </ButtonIXSWide>
-      )
-    }
+  const isDisabledStake = useCallback((): boolean => {
+    if (!termsAccepted || Boolean(error)) return true
+    if (isApprovingIXS || isStaking) return true
+    if (allowanceAmount < parseFloat(typedValue)) return true
+    return false
+  }, [termsAccepted, allowanceAmount, isApprovingIXS, isStaking, typedValue, error])
+
+  const isDisabledApprove = useCallback((): boolean => {
+    if (!termsAccepted || Boolean(error)) return true
+    if (isApprovingIXS || isStaking) return true
+    if (allowanceAmount >= parseFloat(typedValue)) return true
+    return false
+  }, [termsAccepted, allowanceAmount, isApprovingIXS, isStaking, typedValue, error])
+
+  const isAmountApproved = (): boolean => {
+    if (allowanceAmount >= parseFloat(typedValue)) return true
+    return false
   }
 
   return (
@@ -185,12 +174,14 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
             <HighlightedInput style={{ marginTop: '11px' }}>
               <RowBetween style={{ flexWrap: 'wrap' }}>
                 <StakingInput value={selectedTier?.period} disabled />
-                <InputHintRight>
-                  <RowFixed>
-                    <Trans>Pool limitation: 2 000 000</Trans>
-                    <StyledDropDown style={{ display: 'none' }} />
-                  </RowFixed>
-                </InputHintRight>
+                {selectedTier?.limit !== TIER_LIMIT.UNLIMITED && (
+                  <InputHintRight>
+                    <RowFixed>
+                      <Trans>Pool limitation: 2 000 000</Trans>
+                      <StyledDropDown style={{ display: 'none' }} />
+                    </RowFixed>
+                  </InputHintRight>
+                )}
               </RowBetween>
             </HighlightedInput>
             <Row style={{ marginTop: '36px' }}>
@@ -208,7 +199,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                   ref={amountOfIXStoStakeInput}
                   onInput={onUserInput}
                   value={typedValue}
-                  disabled={approvingIXS || isIXSApproved || isStaking}
+                  disabled={isApprovingIXS || isStaking}
                 />
                 <InputHintRight>
                   <RowFixed>
@@ -326,13 +317,41 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                 </Trans>
               </TYPE.body1>
             </RowCenter>
-            <Row style={{ marginTop: '25px' }}>{renderStakeButton()}</Row>
+            <ActionButtons style={{ marginTop: '25px' }}>
+              <ButtonIXSWide data-testid="approve-staking" disabled={isDisabledApprove()} onClick={onApprove}>
+                {isApprovingIXS ? (
+                  <Dots>
+                    <Trans>Approving IXS</Trans>
+                  </Dots>
+                ) : (
+                  <>{isAmountApproved() ? t`Approved IXS` : t`Approve IXS`}</>
+                )}
+              </ButtonIXSWide>
+              <ButtonIXSWide data-testid="stake-button" disabled={isDisabledStake()} onClick={onStake}>
+                {isStaking ? (
+                  <Dots>
+                    <Trans>Staking</Trans>
+                  </Dots>
+                ) : (
+                  <>{error || <Trans>Stake</Trans>}</>
+                )}
+              </ButtonIXSWide>
+            </ActionButtons>
           </ModalBottom>
         </ModalContentWrapper>
       </ModalBlurWrapper>
     </RedesignedWideModal>
   )
 }
+
+const ActionButtons = styled.div`
+  display: grid;
+  grid-gap: 13px;
+  grid-template-columns: 50% 50%;
+  @media (max-width: 540px) {
+    grid-template-columns: 100%;
+  }
+`
 
 const ModalTop = styled(StakeModalTop)`
   @media (max-width: 768px) {

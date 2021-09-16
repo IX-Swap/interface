@@ -42,7 +42,10 @@ export const Staking = () => {
   }, [getRewards, hasStakedSuccessfully, hasUnstakedSuccessfully])
 
   useEffect(() => {
-    getStakings()
+    if (hasStakedSuccessfully || hasUnstakedSuccessfully) {
+      getStakings()
+      updateIXSBalance()
+    }
   }, [getStakings, hasStakedSuccessfully, hasUnstakedSuccessfully])
 
   useEffect(() => {

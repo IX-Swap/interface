@@ -7,7 +7,7 @@ import { VestingTextWrapper, YourAddressWrapper, YourAddress, Address, NoVesting
 import { ReactComponent as ExternalBright } from 'assets/images/external-bright.svg'
 import { IconWrapperWithBg } from 'components/AccountDetails/styleds'
 import { ExternalLink } from 'theme'
-import { shortenAddress } from 'utils'
+import { shortAddress } from 'utils'
 import { useWeb3React } from '@web3-react/core'
 import { useVestingState } from 'state/vesting/hooks'
 
@@ -22,7 +22,7 @@ export const ZeroBalanceVesting = () => {
         <Trans>
           Found address
           <br />
-          {shortenAddress(customVestingAddress)}
+          {shortAddress(customVestingAddress)}
           <br />
           doesn’t have IXS vesting
         </Trans>
@@ -38,7 +38,7 @@ export const ZeroBalanceVesting = () => {
             <YourAddress>
               <Trans>Your address</Trans>
             </YourAddress>
-            <Address>{shortenAddress(account || '')}</Address>
+            <Address>{shortAddress(account || '')}</Address>
           </YourAddressWrapper>
         )}
         <Text fontSize={'18px'} lineHeight={'27px'} color={theme.text2}>
