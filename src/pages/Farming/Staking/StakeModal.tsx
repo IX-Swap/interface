@@ -17,7 +17,7 @@ import styled from 'styled-components'
 import { ReactComponent as ArrowDown } from '../../../assets/images/arrow.svg'
 import { Text } from 'rebass'
 import { useStakingState } from 'state/stake/hooks'
-import { PERIOD, convertPeriod, dateFormatter } from 'state/stake/reducer'
+import { PERIOD, convertPeriod, dateFormatter, TIER_LIMIT } from 'state/stake/reducer'
 import { IconWrapper } from 'components/AccountDetails/styleds'
 import { ReactComponent as Checkmark } from 'assets/images/checked-solid-bg.svg'
 import { periodsInSeconds, periodsInDays } from 'constants/stakingPeriods'
@@ -185,12 +185,14 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
             <HighlightedInput style={{ marginTop: '11px' }}>
               <RowBetween style={{ flexWrap: 'wrap' }}>
                 <StakingInput value={selectedTier?.period} disabled />
-                <InputHintRight>
-                  <RowFixed>
-                    <Trans>Pool limitation: 2 000 000</Trans>
-                    <StyledDropDown style={{ display: 'none' }} />
-                  </RowFixed>
-                </InputHintRight>
+                {selectedTier?.limit !== TIER_LIMIT.UNLIMITED && (
+                  <InputHintRight>
+                    <RowFixed>
+                      <Trans>Pool limitation: 2 000 000</Trans>
+                      <StyledDropDown style={{ display: 'none' }} />
+                    </RowFixed>
+                  </InputHintRight>
+                )}
               </RowBetween>
             </HighlightedInput>
             <Row style={{ marginTop: '36px' }}>
