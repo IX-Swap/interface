@@ -23,3 +23,6 @@ export const rewardsAdapter = (transactions: any): VestingReward[] => {
 export const payoutsAdapter = (payouts: [BigNumber, BigNumber][]) => {
   return payouts.map((payout: [BigNumber, BigNumber]) => [payout[0].toNumber(), payout[1].toString()])
 }
+export const claimsAdapter = (claims: BigNumber[]) => {
+  return claims.map((claim) => claim.toString())
+}

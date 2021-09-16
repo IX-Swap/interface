@@ -314,3 +314,4 @@ export const UnstakeButton = styled(ButtonIXSGradient)`
   align-self: center;
   padding: 16px 26px;
 `
+export const ClaimButton = styled(UnstakeButton)``

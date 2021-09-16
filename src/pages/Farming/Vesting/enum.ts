@@ -17,5 +17,5 @@ export enum STAKING_TABS {
 
 export const STAKING_TABS_STRINGS = {
   [STAKING_TABS.ONGOING]: t`My ongoing stakings`,
-  [STAKING_TABS.UNSTAKED]: t`Unstaked`,
+  [STAKING_TABS.UNSTAKED]: t`Rewards vesting`,
 }

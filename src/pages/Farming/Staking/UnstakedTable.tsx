@@ -1,21 +1,19 @@
 import { CurrencyAmount } from '@ixswap1/sdk-core'
-import { t, Trans } from '@lingui/macro'
-import { ReactComponent as InfoIcon } from 'assets/images/attention.svg'
-import { IconWrapper } from 'components/AccountDetails/styleds'
+import { Trans } from '@lingui/macro'
 import Column from 'components/Column'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import { Table } from 'components/Table'
-import { MouseoverTooltip } from 'components/Tooltip'
 import { IXS_ADDRESS } from 'constants/addresses'
+import { BIG_INT_ZERO } from 'constants/misc'
 import { useCurrency } from 'hooks/Tokens'
 import { useActiveWeb3React } from 'hooks/web3'
-import React from 'react'
+import JSBI from 'jsbi'
+import React, { useCallback } from 'react'
 import { Box } from 'rebass'
-import { useStakingState } from 'state/stake/hooks'
+import { useClaimRewards, useStakingState } from 'state/stake/hooks'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { getNextPayoutTime, unixTimeToFormat } from 'utils/time'
-import { Container, NoData, RewardsBodyRow, RewardsHeaderRow } from './style'
-import { formatAmount } from './utils'
+import { ClaimButton, Container, NoData, RewardsBodyRow, RewardsHeaderRow } from './style'
 
 const longDate = 'MMM D, YYYY HH:mm'
 const shortDate = 'MMM D, YYYY'
@@ -51,13 +49,32 @@ const Header = () => {
 }
 
 const Body = () => {
-  const { rewards, payouts } = useStakingState()
+  const { rewards, payouts, claims } = useStakingState()
   const { chainId } = useActiveWeb3React()
   const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
+  const formatCurrency = useCallback(
+    (amount, digits = 10) =>
+      currency ? formatCurrencyAmount(CurrencyAmount.fromRawAmount(currency, amount), digits) : '-',
+    [currency]
+  )
+  const isAboveZero = useCallback(
+    (amount) =>
+      currency &&
+      JSBI.greaterThan(CurrencyAmount.fromRawAmount(currency, amount).quotient ?? BIG_INT_ZERO, BIG_INT_ZERO),
+    [currency]
+  )
+  const getVestingSum = useCallback(({ total, claimable, claimed }) => {
+    const deducted = JSBI.add(JSBI.BigInt(claimable), JSBI.BigInt(claimed))
+    const result = JSBI.subtract(JSBI.BigInt(total), deducted)
+    return result
+  }, [])
+  const claimRewards = useClaimRewards()
   return (
     <>
-      {rewards?.map(({ start, end, amount, claimed, cliff, segments }, index) => {
+      {rewards?.map(({ start, end, amount, claimed }, index) => {
         const nextPayoutTime = getNextPayoutTime({ payouts: payouts[index] })
+        const claimPositive = claims[index] && isAboveZero(claims[index])
+        const vestingSum = getVestingSum({ total: amount, claimed, claimable: claims[index] })
         return (
           <RewardsBodyRow key={Number(start)}>
             <div>
@@ -67,11 +84,17 @@ const Body = () => {
               </Column>
             </div>
             <div>{nextPayoutTime ? unixTimeToFormat({ time: nextPayoutTime[0], format: longDate }) : '-'}</div>
-            {currency && <div>{formatCurrencyAmount(CurrencyAmount.fromRawAmount(currency, amount), 10)}</div>}
-            <div>vesting</div>
-            {currency && <div>{formatCurrencyAmount(CurrencyAmount.fromRawAmount(currency, claimed), 10)}</div>}
-            <div>Claimable</div>
-            <div></div>
+            <div>{formatCurrency(amount, 5)}&nbsp;IXS</div>
+            <div>{formatCurrency(vestingSum, 5)}&nbsp;IXS</div>
+            <div>{formatCurrency(claimed)}&nbsp;IXS</div>
+            <div className={claimPositive ? 'rewards' : ''}>{formatCurrency(claims[index])}&nbsp;IXS</div>
+            <div>
+              {claimPositive && (
+                <ClaimButton onClick={() => claimRewards(index)}>
+                  <Trans>Claim</Trans>
+                </ClaimButton>
+              )}
+            </div>
           </RewardsBodyRow>
         )
       })}
@@ -79,10 +102,10 @@ const Body = () => {
   )
 }
 export const UnstakedTable = () => {
-  const { rewards, rewardsLoading, payoutsLoading } = useStakingState()
+  const { rewards, rewardsLoading, payoutsLoading, claimLoading } = useStakingState()
 
   function showTableData() {
-    if (rewardsLoading || payoutsLoading) {
+    if (rewardsLoading || payoutsLoading || claimLoading) {
       return <LoaderThin size={96} />
     } else if (rewards.length === 0) {
       return (

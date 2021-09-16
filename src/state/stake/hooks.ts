@@ -14,6 +14,7 @@ import { useCallback, useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, AppState } from 'state'
 import { PERIOD, StakingStatus } from 'state/stake/reducer'
+import { useTransactionAdder } from 'state/transactions/hooks'
 import { useCurrencyBalance } from 'state/wallet/hooks'
 import { maxAmountSpend } from 'utils/maxAmountSpend'
 import { DAI, IXS, USDC, USDT, WBTC } from '../../constants/tokens'
@@ -35,8 +36,9 @@ import {
   updateIXSBalance,
   getRewards,
   getPayouts,
+  getAvailableClaim,
 } from './actions'
-import { payoutsAdapter, rewardsAdapter, stakingsAdapter } from './utils'
+import { claimsAdapter, payoutsAdapter, rewardsAdapter, stakingsAdapter } from './utils'
 
 export const STAKING_REWARDS_INTERFACE = new Interface(STAKING_REWARDS_ABI)
 
@@ -628,7 +630,20 @@ export function useGetVestedRewards() {
     try {
       dispatch(getRewards.pending())
       const rewards = await staking?.vestedTransactions(account)
-      dispatch(getRewards.fulfilled({ transactions: rewardsAdapter(rewards) }))
+      const transactions = rewardsAdapter(rewards)
+      dispatch(getRewards.fulfilled({ transactions }))
+      try {
+        dispatch(getAvailableClaim.pending())
+        const claims: any[] = await Promise.all(
+          transactions.map(async (reward, index): Promise<any> => {
+            return await staking?.availableClaim(account, index)
+          })
+        )
+        dispatch(getAvailableClaim.fulfilled({ transactions: claimsAdapter(claims) }))
+      } catch (e) {
+        dispatch(getAvailableClaim.rejected({ errorMessage: e?.message }))
+        console.error(`error getting available claims`, e?.message)
+      }
     } catch (error) {
       dispatch(getRewards.rejected({ errorMessage: error?.message }))
       console.error(`error getting rewards`, error)
@@ -653,6 +668,35 @@ export function useGetPayouts() {
       console.error(`error getting payouts`, error)
     }
   }, [staking, account, dispatch])
+}
+
+export function useClaimRewards() {
+  const staking = useIXSStakingContract()
+  const { account } = useActiveWeb3React()
+  const { claims } = useStakingState()
+  const getRewards = useGetVestedRewards()
+  const getPayouts = useGetPayouts()
+  const addTransaction = useTransactionAdder()
+  return useCallback(
+    async (index) => {
+      try {
+        const availableClaim = claims[index]
+        if (!availableClaim) {
+          return
+        }
+        const success = await staking?.claimFor(account, BigNumber.from(availableClaim), index)
+        console.log({ success })
+        addTransaction(success, {
+          summary: t`Claim rewards`,
+        })
+        getRewards()
+        getPayouts()
+      } catch (error) {
+        console.error(`error could not claim reward`, error)
+      }
+    },
+    [staking, account, claims, getPayouts, getRewards, addTransaction]
+  )
 }
 
 export function useGetVestings() {
