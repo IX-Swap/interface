@@ -35,9 +35,15 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
   const [error, setError] = useState('Please enter amount to stake')
   const increaseAllowance = useIncreaseAllowance()
   const amountOfIXStoStakeInput = useRef<HTMLInputElement>(null)
-  const { selectedTier, isApprovingIXS, isIXSApproved, isStaking, allowanceAmount, IXSBalance } = useStakingState()
+  const { selectedTier, isApprovingIXS, isStaking, allowanceAmount, IXSBalance } = useStakingState()
   const stake = useStakeFor(selectedTier?.period)
   const checkAllowance = useCheckAllowance()
+
+  useEffect(() => {
+    if (!isApprovingIXS) {
+      checkAllowance()
+    }
+  }, [isApprovingIXS])
 
   useEffect(() => {
     if (isOpen) {
@@ -58,14 +64,14 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
   }, [onDismiss, isStaking, isApprovingIXS])
 
   async function onStake() {
-    stake(typedValue)
-
+    await stake(typedValue)
+    setTypedValue('')
     const { ym } = window
     ym(84960586, 'reachGoal', 'stakingSubmitStakeButtonClicked')
   }
 
   async function onApprove() {
-    increaseAllowance(typedValue)
+    await increaseAllowance(typedValue)
 
     const { ym } = window
     ym(84960586, 'reachGoal', 'stakingApproveIXSButtonClicked')
@@ -130,40 +136,23 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
     ym(84960586, 'reachGoal', 'stakingConditionsTermsClicked')
   }
 
-  function renderStakeButton() {
-    if (!typedValue || allowanceAmount > parseFloat(typedValue) || isIXSApproved) {
-      return (
-        <ButtonIXSWide
-          data-testid="stake-button"
-          disabled={isStaking || !termsAccepted || Boolean(error)}
-          onClick={onStake}
-        >
-          {isStaking ? (
-            <Dots>
-              <Trans>Staking</Trans>
-            </Dots>
-          ) : (
-            <>{error || <Trans>Stake</Trans>}</>
-          )}
-        </ButtonIXSWide>
-      )
-    } else {
-      return (
-        <ButtonIXSWide
-          data-testid="approve-staking"
-          disabled={isApprovingIXS || !termsAccepted || Boolean(error)}
-          onClick={onApprove}
-        >
-          {isApprovingIXS ? (
-            <Dots>
-              <Trans>Approving IXS</Trans>
-            </Dots>
-          ) : (
-            <>{error || <Trans>Approve IXS</Trans>}</>
-          )}
-        </ButtonIXSWide>
-      )
-    }
+  const isDisabledStake = useCallback((): boolean => {
+    if (!termsAccepted || Boolean(error)) return true
+    if (isApprovingIXS || isStaking) return true
+    if (allowanceAmount < parseFloat(typedValue)) return true
+    return false
+  }, [termsAccepted, allowanceAmount, isApprovingIXS, isStaking, typedValue, error])
+
+  const isDisabledApprove = useCallback((): boolean => {
+    if (!termsAccepted || Boolean(error)) return true
+    if (isApprovingIXS || isStaking) return true
+    if (allowanceAmount >= parseFloat(typedValue)) return true
+    return false
+  }, [termsAccepted, allowanceAmount, isApprovingIXS, isStaking, typedValue, error])
+
+  const isAmountApproved = (): boolean => {
+    if (allowanceAmount >= parseFloat(typedValue)) return true
+    return false
   }
 
   return (
@@ -328,13 +317,41 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                 </Trans>
               </TYPE.body1>
             </RowCenter>
-            <Row style={{ marginTop: '25px' }}>{renderStakeButton()}</Row>
+            <ActionButtons style={{ marginTop: '25px' }}>
+              <ButtonIXSWide data-testid="approve-staking" disabled={isDisabledApprove()} onClick={onApprove}>
+                {isApprovingIXS ? (
+                  <Dots>
+                    <Trans>Approving IXS</Trans>
+                  </Dots>
+                ) : (
+                  <>{isAmountApproved() ? t`Approved IXS` : t`Approve IXS`}</>
+                )}
+              </ButtonIXSWide>
+              <ButtonIXSWide data-testid="stake-button" disabled={isDisabledStake()} onClick={onStake}>
+                {isStaking ? (
+                  <Dots>
+                    <Trans>Staking</Trans>
+                  </Dots>
+                ) : (
+                  <>{error || <Trans>Stake</Trans>}</>
+                )}
+              </ButtonIXSWide>
+            </ActionButtons>
           </ModalBottom>
         </ModalContentWrapper>
       </ModalBlurWrapper>
     </RedesignedWideModal>
   )
 }
+
+const ActionButtons = styled.div`
+  display: grid;
+  grid-gap: 13px;
+  grid-template-columns: 50% 50%;
+  @media (max-width: 540px) {
+    grid-template-columns: 100%;
+  }
+`
 
 const ModalTop = styled(StakeModalTop)`
   @media (max-width: 768px) {
