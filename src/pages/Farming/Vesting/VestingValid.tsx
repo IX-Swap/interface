@@ -1,3 +1,4 @@
+import React, { useState } from 'react'
 import { CurrencyAmount } from '@ixswap1/sdk-core'
 import { Trans, t } from '@lingui/macro'
 import { ButtonIXSWide } from 'components/Button'
@@ -8,16 +9,7 @@ import { IXS_ADDRESS } from 'constants/addresses'
 import { useCurrency } from 'hooks/Tokens'
 import useTheme from 'hooks/useTheme'
 import { useActiveWeb3React } from 'hooks/web3'
-import React, { useEffect } from 'react'
-import { useAllTransactions, useTransactionsState } from 'state/transactions/hooks'
-import {
-  useAvailableClaim,
-  useClaimAll,
-  usePayouts,
-  useVestingDetails,
-  useVestingState,
-  useVestingStatus,
-} from 'state/vesting/hooks'
+import { useAvailableClaim, useClaimAll, usePayouts, useVestingDetails, useVestingState } from 'state/vesting/hooks'
 import { getVestingDates } from 'state/vesting/utils'
 import { TYPE } from 'theme'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
@@ -26,6 +18,7 @@ import { VestingContractDetails, InfoIcon, VestingDetailsTitle } from '../styled
 
 export const VestingValid = () => {
   const theme = useTheme()
+  const [isLoading, handleIsLoading] = useState(false)
   const { details, fetchDetails } = useVestingDetails()
   const { payouts, fetchPayouts } = usePayouts()
   const { chainId, account } = useActiveWeb3React()
@@ -35,25 +28,25 @@ export const VestingValid = () => {
   const alreadyVested = getPayoutClosestToPresent({ payouts })
   const claim = useClaimAll()
   const { customVestingAddress } = useVestingState()
-  const { transactionEnded } = useTransactionsState()
 
   const isDifferentAddress = customVestingAddress && customVestingAddress !== account
 
-  useEffect(() => {
+  const onClickClaim = async () => {
+    handleIsLoading(true)
+
+    await claim()
+
+    handleIsLoading(false)
+
+    const { ym } = window
+    ym(84960586, 'reachGoal', 'bigVestingClaim')
+
     const fetch = async () => {
       await fetchDetails(account)
       await fetchPayouts(account)
       await fetchClaimable(account)
     }
-    if (transactionEnded) {
-      fetch()
-    }
-  }, [transactionEnded])
-
-  const onClickClaim = async () => {
-    await claim()
-    const { ym } = window
-    ym(84960586, 'reachGoal', 'bigVestingClaim')
+    fetch()
   }
 
   return (
@@ -157,7 +150,7 @@ export const VestingValid = () => {
           data-testid="release-vesting"
           style={{ width: '100%', maxWidth: 308 }}
           onClick={onClickClaim}
-          disabled={!availableClaim || availableClaim === '0'}
+          disabled={!availableClaim || availableClaim === '0' || isLoading}
         >
           <Trans>Claim</Trans>
         </ButtonIXSWide>

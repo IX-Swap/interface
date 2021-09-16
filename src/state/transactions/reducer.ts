@@ -22,13 +22,12 @@ export interface TransactionDetails {
 }
 
 export interface TransactionState {
-  transactionEnded: boolean
   [chainId: number]: {
     [txHash: string]: TransactionDetails
   }
 }
 
-export const initialState: TransactionState = { transactionEnded: false }
+export const initialState: TransactionState = {}
 
 export default createReducer(initialState, (builder) =>
   builder
@@ -36,7 +35,6 @@ export default createReducer(initialState, (builder) =>
       if (transactions[chainId]?.[hash]) {
         throw Error('Attempted to add existing transaction.')
       }
-      transactions.transactionEnded = false
       const txs = transactions[chainId] ?? {}
       txs[hash] = { hash, approval, summary, claim, from, addedTime: now() }
       transactions[chainId] = txs
@@ -44,7 +42,6 @@ export default createReducer(initialState, (builder) =>
     .addCase(clearAllTransactions, (transactions, { payload: { chainId } }) => {
       if (!transactions[chainId]) return
       transactions[chainId] = {}
-      transactions.transactionEnded = false
     })
     .addCase(checkedTransaction, (transactions, { payload: { chainId, hash, blockNumber } }) => {
       const tx = transactions[chainId]?.[hash]
@@ -64,6 +61,5 @@ export default createReducer(initialState, (builder) =>
       }
       tx.receipt = receipt
       tx.confirmedTime = now()
-      transactions.transactionEnded = true
     })
 )

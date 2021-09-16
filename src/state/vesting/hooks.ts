@@ -181,6 +181,7 @@ export function useClaimAll(): () => Promise<any> {
       }
 
       dispatch(setTransaction({ tx: claimed.hash ?? claimed.tx }))
+      await claimed.wait()
       return Boolean(claimed)
     } catch (error) {
       console.error(`Could not claim`, error)
