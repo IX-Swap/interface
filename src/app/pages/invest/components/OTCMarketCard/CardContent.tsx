@@ -11,7 +11,6 @@ import { VSpacer } from 'components/VSpacer'
 import { percentageToNumber } from 'app/pages/issuance/utils'
 
 export interface CardContentProps {
-  // TODO Add interface after complete final version backend api
   data: DigitalSecurityOffering | any
   type: 'Primary' | 'OTC' | 'TopOffers'
 }
@@ -90,8 +89,7 @@ export const CardContent = (props: CardContentProps) => {
             value={
               type !== 'OTC'
                 ? minimumInvestmentPrice
-                : // TODO Remove this after add new interface for data prop
-                  // eslint-disable-next-line
+                : // eslint-disable-next-line
                   `${data.tokenSymbol} ${data.minimumTradeUnits}`
             }
           />
@@ -106,10 +104,11 @@ export const CardContent = (props: CardContentProps) => {
             labelWeight='default'
             valueFontSize={16}
             labelFontSize={14}
-            label={type !== 'OTC' ? 'Raised Amount' : 'Target Fundraise'}
+            label={
+              type !== 'OTC' ? 'Total Fundraising Amount' : 'Target Fundraise'
+            }
             value={formatMoney(
               type !== 'OTC' ? data.totalFundraisingAmount : data.raisedAmount,
-              // TODO Remove fake data after added new field on backend api
               type !== 'OTC' ? data.currency.symbol : 'SGD'
             )}
           />

@@ -131,7 +131,7 @@ describe('CardContent', () => {
       {
         ...defaultLabeledValueProps,
         reverse: true,
-        label: 'Raised Amount',
+        label: 'Total Fundraising Amount',
         value: 'SGD 100,000.00'
       },
       {}
