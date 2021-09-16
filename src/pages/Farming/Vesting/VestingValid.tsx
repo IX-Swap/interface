@@ -8,8 +8,16 @@ import { IXS_ADDRESS } from 'constants/addresses'
 import { useCurrency } from 'hooks/Tokens'
 import useTheme from 'hooks/useTheme'
 import { useActiveWeb3React } from 'hooks/web3'
-import React from 'react'
-import { useAvailableClaim, useClaimAll, usePayouts, useVestingDetails, useVestingState } from 'state/vesting/hooks'
+import React, { useEffect } from 'react'
+import { useAllTransactions, useTransactionsState } from 'state/transactions/hooks'
+import {
+  useAvailableClaim,
+  useClaimAll,
+  usePayouts,
+  useVestingDetails,
+  useVestingState,
+  useVestingStatus,
+} from 'state/vesting/hooks'
 import { getVestingDates } from 'state/vesting/utils'
 import { TYPE } from 'theme'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
@@ -19,19 +27,27 @@ import { VestingContractDetails, InfoIcon, VestingDetailsTitle } from '../styled
 export const VestingValid = () => {
   const theme = useTheme()
   const vestingDetails = useVestingDetails()
-  const payouts = usePayouts()
+  const { payouts, fetchPayouts } = usePayouts()
   const { chainId, account } = useActiveWeb3React()
   const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
   const nextPayment = closestFutureDate({ dates: getVestingDates({ payouts }) })
-  const availableClaim = useAvailableClaim()
+  const { availableClaim, fetchClaimable } = useAvailableClaim()
   const alreadyVested = getPayoutClosestToPresent({ payouts })
   const claim = useClaimAll()
   const { customVestingAddress } = useVestingState()
+  const { transactionEnded } = useTransactionsState()
 
   const isDifferentAddress = customVestingAddress && customVestingAddress !== account
 
-  const onClickClaim = () => {
-    claim()
+  useEffect(() => {
+    if (transactionEnded) {
+      fetchPayouts(account)
+      fetchClaimable(account)
+    }
+  }, [transactionEnded])
+
+  const onClickClaim = async () => {
+    await claim()
     const { ym } = window
     ym(84960586, 'reachGoal', 'bigVestingClaim')
   }

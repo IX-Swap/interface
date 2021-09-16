@@ -110,7 +110,7 @@ export function useAvailableClaim() {
     }
   }, [fetchClaimable, account, isVesting, customVestingAddress])
 
-  return availableClaim
+  return { availableClaim, fetchClaimable }
 }
 
 export function usePayouts() {
@@ -143,7 +143,7 @@ export function usePayouts() {
     }
   }, [fetchPayouts, account, isVesting, customVestingAddress])
 
-  return payouts
+  return { payouts, fetchPayouts }
 }
 
 export function useClaimAll(): () => Promise<any> {
