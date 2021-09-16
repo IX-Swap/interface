@@ -42,6 +42,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
   useEffect(() => {
     if (isOpen) {
       setTypedValue('')
+      setTermsAccepted(false)
       checkAllowance()
     } else {
       setTypedValue('')
