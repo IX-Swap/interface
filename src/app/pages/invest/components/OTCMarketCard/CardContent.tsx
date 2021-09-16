@@ -106,7 +106,9 @@ export const CardContent = (props: CardContentProps) => {
             labelWeight='default'
             valueFontSize={16}
             labelFontSize={14}
-            label={type !== 'OTC' ? 'Raised Amount' : 'Target Fundraise'}
+            label={
+              type !== 'OTC' ? 'Total Fundraising Amount' : 'Target Fundraise'
+            }
             value={formatMoney(
               type !== 'OTC' ? data.totalFundraisingAmount : data.raisedAmount,
               // TODO Remove fake data after added new field on backend api
