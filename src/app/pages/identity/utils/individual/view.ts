@@ -1,13 +1,14 @@
 import { IndividualIdentity } from 'app/pages/identity/types/forms'
 
 const fundSourceList = [
-  'Inheritance/Gift',
-  'Interest/Dividend',
+  'Inheritance/Gifts',
+  'Investments',
+  'Interest/Dividends',
   'Property',
-  'Allowance/Spousal Income',
+  'Allowances/Spouse',
   'Employment',
   'Pension',
-  'Retirement Benifits',
+  'Retirement Benefits',
   'Others'
 ]
 
