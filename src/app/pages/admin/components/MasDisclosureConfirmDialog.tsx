@@ -16,15 +16,10 @@ export const MasDisclosureConfirmDialog = ({
   const { watch } = useFormContext()
   const content = watch('content')
 
-  const [
-    createOrUpdateMasDisclosure,
-    { status }
-  ] = useCreateOrUpdateMASDisclosure()
+  const [createOrUpdateMasDisclosure] = useCreateOrUpdateMASDisclosure()
   const handleSubmit = async () => {
+    onClose()
     await createOrUpdateMasDisclosure({ content: content })
-    if (status !== 'loading' && (status === 'success' || status === 'idle')) {
-      onClose()
-    }
   }
 
   return (
