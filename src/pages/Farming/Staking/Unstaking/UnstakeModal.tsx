@@ -95,12 +95,11 @@ export function UnstakeModal({ onDismiss, stake }: UnstakingModalProps) {
   }, [hasUnstakedSuccessfully])
 
   const wrappedOnDismiss = useCallback(() => {
-    if (isUnstaking || isApprovingIXSGov) {
-      return
+    if (!isUnstaking && !isApprovingIXSGov) {
+      onDismiss()
+      setTypedValue('')
     }
-    onDismiss()
-    setTypedValue('')
-  }, [onDismiss])
+  }, [onDismiss, isUnstaking, isApprovingIXSGov])
 
   async function onStake() {
     console.log('STAKE')
