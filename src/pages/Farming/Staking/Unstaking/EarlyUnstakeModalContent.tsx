@@ -34,7 +34,7 @@ export function EarlyUnstake({ onDismiss, stake }: UnstakingModalProps) {
   const stakeAmount = formatAmount(stake?.stakeAmount)
   const [typedValue, setTypedValue] = useState('')
   const [isEnoughAllowance, setIsEnoughAllowance] = useState(false)
-  const error = ''
+  const [error, setError] = useState('')
   const { chainId, account } = useActiveWeb3React()
   const { parsedAmount } = useDerivedIXSStakeInfo({ typedValue, currencyId: IXS_ADDRESS[chainId ?? 1] })
   const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
@@ -61,10 +61,17 @@ export function EarlyUnstake({ onDismiss, stake }: UnstakingModalProps) {
     }
     onDismiss()
     setTypedValue('')
-  }, [onDismiss])
+  }, [onDismiss, isUnstaking, isApprovingIXSGov])
 
   const onUserInput = useCallback((typedValue: string) => {
     setTypedValue(typedValue)
+    const IXSAmount = stakeIXSCurrencyAmount?.toSignificant(18)
+    if (!IXSAmount) return
+    if (parseFloat(typedValue) > parseFloat(IXSAmount)) {
+      setError('Not enough')
+    } else {
+      setError('')
+    }
   }, [])
 
   async function onUnstake() {
@@ -189,7 +196,7 @@ export function EarlyUnstake({ onDismiss, stake }: UnstakingModalProps) {
         <Row style={{ marginTop: '43px' }}>
           <ButtonIXSWide
             data-testid="approve-ixsgov-button"
-            disabled={isEnoughAllowance || isApprovingIXSGov}
+            disabled={isEnoughAllowance || isApprovingIXSGov || Boolean(error)}
             onClick={onApprove}
             style={{ marginRight: '14px' }}
           >
@@ -198,12 +205,12 @@ export function EarlyUnstake({ onDismiss, stake }: UnstakingModalProps) {
                 <Trans>Approving IXSGov</Trans>
               </Dots>
             ) : (
-              <>{error || <Trans>Approve IXSGov</Trans>}</>
+              <Trans>Approve IXSGov</Trans>
             )}
           </ButtonIXSWide>
           <ButtonIXSWide
             data-testid="unstake-button"
-            disabled={!isEnoughAllowance || isApprovingIXSGov}
+            disabled={!isEnoughAllowance || isApprovingIXSGov || Boolean(error)}
             onClick={onUnstake}
           >
             {isUnstaking ? (
@@ -211,7 +218,7 @@ export function EarlyUnstake({ onDismiss, stake }: UnstakingModalProps) {
                 <Trans>Unstaking</Trans>
               </Dots>
             ) : (
-              <>{error || <Trans>Unstake</Trans>}</>
+              <Trans>Unstake</Trans>
             )}
           </ButtonIXSWide>
         </Row>
