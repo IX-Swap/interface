@@ -39,7 +39,7 @@ export const Staking = () => {
 
   useEffect(() => {
     getRewards()
-  }, [getRewards, hasStakedSuccessfully])
+  }, [getRewards, hasStakedSuccessfully, hasUnstakedSuccessfully])
 
   useEffect(() => {
     getStakings()
@@ -47,7 +47,7 @@ export const Staking = () => {
 
   useEffect(() => {
     getPayouts()
-  }, [getPayouts, hasStakedSuccessfully])
+  }, [getPayouts, hasStakedSuccessfully, hasUnstakedSuccessfully])
 
   useEffect(() => {
     if (balance) {
