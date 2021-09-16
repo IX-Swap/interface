@@ -136,42 +136,6 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
     ym(84960586, 'reachGoal', 'stakingConditionsTermsClicked')
   }
 
-  // function renderActionButtons() {
-  //   if (!typedValue || allowanceAmount > parseFloat(typedValue) || isIXSApproved) {
-  //     return (
-  //       <ButtonIXSWide
-  //         data-testid="stake-button"
-  //         disabled={isStaking || !termsAccepted || Boolean(error)}
-  //         onClick={onStake}
-  //       >
-  //         {isStaking ? (
-  //           <Dots>
-  //             <Trans>Staking</Trans>
-  //           </Dots>
-  //         ) : (
-  //           <>{error || <Trans>Stake</Trans>}</>
-  //         )}
-  //       </ButtonIXSWide>
-  //     )
-  //   } else {
-  //     return (
-  //       <ButtonIXSWide
-  //         data-testid="approve-staking"
-  //         disabled={isApprovingIXS || !termsAccepted || Boolean(error)}
-  //         onClick={onApprove}
-  //       >
-  //         {isApprovingIXS ? (
-  //           <Dots>
-  //             <Trans>Approving IXS</Trans>
-  //           </Dots>
-  //         ) : (
-  //           <>{error || <Trans>Approve IXS</Trans>}</>
-  //         )}
-  //       </ButtonIXSWide>
-  //     )
-  //   }
-  // }
-
   const isDisabledStake = useCallback((): boolean => {
     if (!termsAccepted || Boolean(error)) return true
     if (isApprovingIXS || isStaking) return true
