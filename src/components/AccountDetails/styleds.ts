@@ -111,7 +111,7 @@ export const IconWrapper = styled.div<{ size?: number }>`
   ${({ theme }) => theme.flexColumnNoWrap};
   align-items: center;
   justify-content: center;
-  margin-right: 8px;
+  margin-right: 4px;
   & > img,
   span {
     height: ${({ size }) => (size ? size + 'px' : '32px')};
@@ -124,7 +124,6 @@ export const IconWrapper = styled.div<{ size?: number }>`
 export const IconWrapperWithBg = styled(IconWrapper)<{ bg?: string; padding?: string }>`
   background-color: ${({ theme, bg }) => bg ?? theme.bg13};
   padding: ${({ padding }) => padding ?? '2px 4px'};
-  margin-right: 4px;
   border-radius: 100%;
   justify-content: center;
   align-items: center;
