@@ -87,7 +87,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
         const fIXSbalance = parseFloat(IXSBalance)
         if (fTypedIXSAmount > fIXSbalance) {
           setError('Not enough IXS')
-        } else if (fTypedIXSAmount <= 0) {
+        } else if (fTypedIXSAmount <= 0 || !fTypedIXSAmount) {
           setError('Wrong IXS amount')
         } else {
           setError('')
