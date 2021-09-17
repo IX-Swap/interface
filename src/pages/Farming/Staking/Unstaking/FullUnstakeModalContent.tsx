@@ -51,11 +51,10 @@ export function FullUnstake({ onDismiss, stake }: UnstakingModalProps) {
   }, [IXSGovAllowanceAmount, stakeAmount])
 
   const wrappedOnDismiss = useCallback(() => {
-    if (isUnstaking || isApprovingIXSGov) {
-      return
+    if (!isUnstaking && !isApprovingIXSGov) {
+      onDismiss()
     }
-    onDismiss()
-  }, [onDismiss])
+  }, [onDismiss, isUnstaking, isApprovingIXSGov])
 
   function isEnoughIXSGov(): boolean {
     if (!IXSGovBalance) return false

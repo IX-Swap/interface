@@ -9,6 +9,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import apiService from 'services/apiService'
 import { broker, kyc, tokens } from 'services/apiUrls'
+import { useChooseBrokerDealerModalToggle } from 'state/application/hooks'
 import { saveToken } from 'state/auth/actions'
 import { LOGIN_STATUS, useAuthState, useLogin } from 'state/auth/hooks'
 import { clearEventLog } from 'state/eventLog/actions'
@@ -484,7 +485,7 @@ export function usePassAccreditation(): (tokenId: number, brokerDealerPairId: nu
   const dispatch = useDispatch<AppDispatch>()
   const login = useLogin({ mustHavePreviousLogin: false, expireLogin: false })
   const fetchTokens = useFetchUserSecTokenListCallback()
-
+  const toggle = useChooseBrokerDealerModalToggle()
   // note: prevent dispatch if using for list search or unsupported list
   return useCallback(
     async (tokenId: number, brokerDealerPairId: number) => {
@@ -500,12 +501,13 @@ export function usePassAccreditation(): (tokenId: number, brokerDealerPairId: nu
         }
         await fetchTokens()
         dispatch(passAccreditation.fulfilled())
+        toggle()
       } catch (error) {
         console.debug(`Failed to pass accreditation`, error)
         dispatch(passAccreditation.rejected({ errorMessage: error.message }))
       }
     },
-    [dispatch, login, fetchTokens]
+    [dispatch, login, fetchTokens, toggle]
   )
 }
 

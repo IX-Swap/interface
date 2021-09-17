@@ -1,6 +1,6 @@
 import { Currency, Token } from '@ixswap1/sdk-core'
 import { Trans } from '@lingui/macro'
-import { STO_STATUS_APPROVED } from 'components/SecurityCard/STOStatus'
+import { AccreditationStatusEnum } from 'components/Vault/enum'
 import useTheme from 'hooks/useTheme'
 import React, { useMemo } from 'react'
 import { useUserSecTokens } from 'state/user/hooks'
@@ -36,7 +36,10 @@ export default function CommonBases({
   const { secTokens } = useUserSecTokens()
   const visibleTokens = useMemo(() => {
     return Object.keys(secTokens)
-      .filter((tokenId) => (secTokens[tokenId] as any).tokenInfo?.status === STO_STATUS_APPROVED)
+      .filter(
+        (tokenId) =>
+          (secTokens[tokenId] as any).tokenInfo?.accreditationRequest?.status === AccreditationStatusEnum.APPROVED
+      )
       .reduce<{
         [address: string]: Token
       }>((obj, key) => {

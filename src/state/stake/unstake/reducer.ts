@@ -57,6 +57,6 @@ export default createReducer<UnstakingState>(initialState, (builder) =>
       state.isUnstaking = false
       state.isUnstakingFailed = true
       state.hasUnstakedSuccessfully = false
-      console.error('IXS staking error: ', errorMessage)
+      console.error('IXS unstaking error: ', errorMessage)
     })
 )
