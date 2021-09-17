@@ -133,7 +133,7 @@ export function FullUnstake({ onDismiss, stake }: UnstakingModalProps) {
         <Row style={{ marginTop: '43px' }}>
           <ButtonIXSWide
             data-testid="approve-ixsgov-button"
-            disabled={isEnoughAllowance || isApprovingIXSGov || Boolean(error)}
+            disabled={isEnoughAllowance || isApprovingIXSGov || isUnstaking || Boolean(error)}
             onClick={onApprove}
             style={{ marginRight: '14px' }}
           >
@@ -147,7 +147,7 @@ export function FullUnstake({ onDismiss, stake }: UnstakingModalProps) {
           </ButtonIXSWide>
           <ButtonIXSWide
             data-testid="unstake-button"
-            disabled={!isEnoughAllowance || isApprovingIXSGov || Boolean(error)}
+            disabled={!isEnoughAllowance || isApprovingIXSGov || isUnstaking || Boolean(error)}
             onClick={onUnstake}
           >
             {isUnstaking ? (
