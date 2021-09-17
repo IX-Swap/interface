@@ -140,6 +140,7 @@ export function EarlyUnstake({ onDismiss, stake }: UnstakingModalProps) {
             currency,
             parsedAmount,
           }}
+          disabled={isUnstaking || isApprovingIXSGov}
         />
         <Row marginTop={37}>
           <TYPE.body3 style={{ opacity: '0.5' }}>

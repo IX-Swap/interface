@@ -12,8 +12,9 @@ import { StakeModalTop } from 'components/earn/styled'
 import { useIncreaseIXSGovAllowance, useUnstakeFrom, useUnstakingState } from 'state/stake/unstake/hooks'
 import { useActiveWeb3React } from 'hooks/web3'
 import { StakeInfoContainer, EllipsedText, ModalBottom } from '../style'
-import { IStaking, periodsInDays } from 'constants/stakingPeriods'
+import { IStaking, periodsInDays, PeriodsEnum } from 'constants/stakingPeriods'
 import styled from 'styled-components'
+import { floorTo4Decimals } from 'utils/formatCurrencyAmount'
 
 interface UnstakingModalProps {
   onDismiss: () => void
@@ -36,10 +37,14 @@ export function FullUnstake({ onDismiss, stake }: UnstakingModalProps) {
   const increaseAllowance = useIncreaseIXSGovAllowance()
 
   useEffect(() => {
+    if (!IXSGovBalance) {
+      setError('Please wait...')
+      return
+    }
     if (!isEnoughIXSGov()) {
       setError('Not Enough IXSGov')
     }
-  }, [])
+  }, [IXSGovBalance])
 
   useEffect(() => {
     if (!IXSGovAllowanceAmount) return
@@ -62,7 +67,11 @@ export function FullUnstake({ onDismiss, stake }: UnstakingModalProps) {
   }
 
   async function onUnstake() {
-    unstake(stake)
+    if (stake.period === PeriodsEnum.WEEK || stake.period === PeriodsEnum.MONTH) {
+      unstake(stake)
+    } else {
+      unstake(stake, 0)
+    }
   }
 
   async function onApprove() {
@@ -96,7 +105,7 @@ export function FullUnstake({ onDismiss, stake }: UnstakingModalProps) {
             textRight={
               <EllipsedText>
                 <div>
-                  {stakeAmount}&nbsp;IXSGov ({IXSGovBalance?.toSignificant(5)} <Trans>available</Trans>)
+                  {stakeAmount}&nbsp;IXSGov ({IXSGovBalance?.toSignificant(4)} <Trans>available</Trans>)
                 </div>
               </EllipsedText>
             }
@@ -107,7 +116,7 @@ export function FullUnstake({ onDismiss, stake }: UnstakingModalProps) {
             textLeft={t`Instant reward payout today`}
             textRight={
               <EllipsedText>
-                <div>{stake.reward * 0.1}&nbsp;IXS</div>
+                <div>{floorTo4Decimals(stake.reward * 0.1)}&nbsp;IXS</div>
               </EllipsedText>
             }
           />
@@ -115,7 +124,7 @@ export function FullUnstake({ onDismiss, stake }: UnstakingModalProps) {
             textLeft={t`Rewards to be vested (10% weekly)`}
             textRight={
               <EllipsedText>
-                <div>{stake.reward * 0.9}&nbsp;IXS</div>
+                <div>{floorTo4Decimals(stake.reward * 0.9)}&nbsp;IXS</div>
               </EllipsedText>
             }
           />
