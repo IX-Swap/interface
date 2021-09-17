@@ -36,7 +36,7 @@ export function EarlyUnstake({ onDismiss, stake }: UnstakingModalProps) {
   const stakeAmount = formatAmount(stake?.stakeAmount)
   const [typedValue, setTypedValue] = useState('')
   const [isEnoughAllowance, setIsEnoughAllowance] = useState(false)
-  const [error, setError] = useState('')
+  const [error, setError] = useState('Enter an amount')
   const { chainId, account } = useActiveWeb3React()
   const { parsedAmount } = useDerivedIXSStakeInfo({ typedValue, currencyId: IXS_ADDRESS[chainId ?? 1] })
   const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
@@ -65,16 +65,23 @@ export function EarlyUnstake({ onDismiss, stake }: UnstakingModalProps) {
     setTypedValue('')
   }, [onDismiss, isUnstaking, isApprovingIXSGov])
 
-  const onUserInput = useCallback((typedValue: string) => {
-    setTypedValue(typedValue)
+  function onUserInput(typedValue: string) {
+    const cleanedValue = typedValue.match(/\d{0,}\.?\d{0,4}/)?.[0] || ''
+    setTypedValue(cleanedValue)
     const IXSAmount = stakeIXSCurrencyAmount?.toSignificant(18)
-    if (!IXSAmount) return
-    if (parseFloat(typedValue) > parseFloat(IXSAmount)) {
-      setError('Not enough')
+    if (!IXSAmount) {
+      setError('Please wait')
+      return
+    }
+    const fTypedValue = parseFloat(cleanedValue)
+    const fIXSAmount = parseFloat(IXSAmount)
+
+    if (!fTypedValue || fTypedValue > fIXSAmount || fTypedValue === 0) {
+      setError('Wrong IXS amount')
     } else {
       setError('')
     }
-  }, [])
+  }
 
   async function onUnstake() {
     unstake(stake, parseFloat(typedValue))
@@ -224,7 +231,7 @@ export function EarlyUnstake({ onDismiss, stake }: UnstakingModalProps) {
                 <Trans>Unstaking</Trans>
               </Dots>
             ) : (
-              <Trans>Unstake</Trans>
+              <>{error || <Trans>Unstake</Trans>}</>
             )}
           </ButtonIXSWide>
         </Row>
