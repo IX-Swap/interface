@@ -83,3 +83,8 @@ export function useHasPendingApproval(tokenAddress: string | undefined, spender:
     [allTransactions, spender, tokenAddress]
   )
 }
+
+export function useTransactionsState(): AppState['transactions'] {
+  const data = useSelector<AppState, AppState['transactions']>((state) => state.transactions)
+  return data
+}
