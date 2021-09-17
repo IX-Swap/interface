@@ -19,12 +19,12 @@ import { VestingContractDetails, InfoIcon, VestingDetailsTitle } from '../styled
 export const VestingValid = () => {
   const theme = useTheme()
   const [isLoading, handleIsLoading] = useState(false)
-  const { details, fetchDetails } = useVestingDetails()
-  const { payouts, fetchPayouts } = usePayouts()
+  const { details } = useVestingDetails()
+  const { payouts } = usePayouts()
   const { chainId, account } = useActiveWeb3React()
   const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
   const nextPayment = closestFutureDate({ dates: getVestingDates({ payouts }) })
-  const { availableClaim, fetchClaimable } = useAvailableClaim()
+  const { availableClaim } = useAvailableClaim()
   const alreadyVested = getPayoutClosestToPresent({ payouts })
   const claim = useClaimAll()
   const { customVestingAddress } = useVestingState()
@@ -40,13 +40,6 @@ export const VestingValid = () => {
 
     const { ym } = window
     ym(84960586, 'reachGoal', 'bigVestingClaim')
-
-    const fetch = async () => {
-      await fetchDetails(account)
-      await fetchPayouts(account)
-      await fetchClaimable(account)
-    }
-    fetch()
   }
 
   return (
