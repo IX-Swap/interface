@@ -38,16 +38,27 @@ export const Option = styled(FancyButton)<{ active: boolean }>`
   }
   background: ${({ active, theme }) => (active ? theme.bgG6 : theme.bg12)};
   color: ${({ active, theme }) => (active ? theme.white : theme.text1)};
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    width: 100%  
+  `}
 `
 export const OptionRow = styled(RowCenter)`
   grid-gap: 0.5rem;
+  margin-top: 36px;
+  width: 100%;
+  justify-content: space-between;
   ${({ theme }) => theme.mediaWidth.upToSmall`
-    flex-wrap: wrap;  
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;  
+    margin-top: 24px;
   `}
 `
 
 export const OptionCustom = styled(FancyButton)<{ active?: boolean; warning?: boolean }>`
+  min-width: 110px;
   max-width: 130px;
+  width: 100%;
   height: 60px;
   position: relative;
   padding: 10px 22px;

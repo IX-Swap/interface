@@ -81,9 +81,10 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
   const onUserInput = () => {
     if (amountOfIXStoStakeInput?.current?.value) {
       const value = amountOfIXStoStakeInput.current.value
-      setTypedValue(value.match(/\d{0,}\.?\d{0,4}/)?.[0] || '')
+      const cleanedValue = value.match(/\d{0,}\.?\d{0,4}/)?.[0] || ''
+      setTypedValue(cleanedValue)
       if (IXSBalance) {
-        const fTypedIXSAmount = parseFloat(value)
+        const fTypedIXSAmount = parseFloat(cleanedValue)
         const fIXSbalance = parseFloat(IXSBalance)
         if (fTypedIXSAmount > fIXSbalance) {
           setError('Not enough IXS')

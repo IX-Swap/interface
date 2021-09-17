@@ -14,6 +14,7 @@ import { ApplicationModal } from 'state/application/actions'
 import { useToggleModal } from 'state/application/hooks'
 import { useStakingState } from 'state/stake/hooks'
 import { TYPE } from 'theme'
+import { LoaderContainer } from '../styleds'
 import {
   Container,
   LockedTillColumn,
@@ -146,7 +147,11 @@ export const MyStakingsTable = () => {
 
   function showTableData() {
     if (stakingsLoading) {
-      return <LoaderThin size={96} />
+      return (
+        <LoaderContainer>
+          <LoaderThin size={96} />
+        </LoaderContainer>
+      )
     } else if (stakings.length === 0) {
       return (
         <NoData>

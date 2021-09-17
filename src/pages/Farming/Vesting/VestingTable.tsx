@@ -37,7 +37,7 @@ export const VestingTable = ({ vestingStatus }: { vestingStatus: VestingStatus }
   const { chainId } = useActiveWeb3React()
   const options = useTableOptions()
   const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
-  const payouts = usePayouts()
+  const { payouts } = usePayouts()
   const theme = useTheme()
 
   const getColor = useCallback(

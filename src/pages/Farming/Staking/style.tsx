@@ -190,7 +190,7 @@ export const LockedTillColumn = styled(Column)`
 `
 
 export const NoData = styled.div`
-  margin-top: 39px
+  margin-top: 39px;
   font-weight: 400;
   color: ${({ theme: { text2 } }) => text2};
   text-align: center;
@@ -315,3 +315,9 @@ export const UnstakeButton = styled(ButtonIXSGradient)`
   padding: 16px 26px;
 `
 export const ClaimButton = styled(UnstakeButton)``
+
+const LoaderContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`

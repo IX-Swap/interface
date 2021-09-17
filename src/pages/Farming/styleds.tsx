@@ -64,13 +64,12 @@ export const FarmingToggleOption = styled(ToggleOption)`
   `};
 `
 export const VestingWrapper = styled.div`
-  display: flex;
-  gap: 33px;
-  /* flex-wrap: wrap; */
+  display: grid;
+  grid-gap: 33px;
+  grid-template-columns: 360px 1fr;
   padding: 0 15px;
   @media (max-width: 1296px) {
-    flex-direction: column;
-    align-items: center;
+    grid-template-columns: 100%;
   }
 `
 export const StakingWrapper = styled.div`
@@ -107,11 +106,15 @@ export const VestingTableWrapper = styled(VestingBackground)`
   color: ${({ theme }) => theme.text2};
   background: ${({ theme }) => theme.bgG14};
   gap: 50px;
+  @media (max-width: 1296px) {
+    max-width: 100%;
+  }
 `
 export const VestingInfoWrapper = styled(VestingBackground)`
   padding: 31px 31px 35px 24px;
   justify-content: space-between;
   max-width: 360px;
+  width: 100%;
   gap: 15px;
   height: 500px;
   width: 100%;
@@ -122,6 +125,9 @@ export const VestingInfoWrapper = styled(VestingBackground)`
      min-width: 100%;
      height: auto;
   `};
+  @media (max-width: 1296px) {
+    justify-self: center;
+  }
 `
 
 export const VestingTextWrapper = styled(Box)`
