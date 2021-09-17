@@ -65,7 +65,6 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
 
   async function onStake() {
     await stake(typedValue)
-    setTypedValue('')
     const { ym } = window
     ym(84960586, 'reachGoal', 'stakingSubmitStakeButtonClicked')
   }
