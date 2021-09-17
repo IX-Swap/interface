@@ -1,6 +1,10 @@
 import { Price, CurrencyAmount, Currency, Fraction } from '@ixswap1/sdk-core'
 import JSBI from 'jsbi'
 
+export function floorTo4Decimals(num: number) {
+  return Math.floor((num + Number.EPSILON) * 10000) / 10000
+}
+
 export function formatCurrencyAmount(amount: CurrencyAmount<Currency> | undefined, sigFigs: number) {
   if (!amount) {
     return '-'

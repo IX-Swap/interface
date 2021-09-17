@@ -78,7 +78,7 @@ export const StakingInputPercentage = ({
           </AvailableBalance>
         </RowBetween>
       </HighlightedInput>
-      <OptionRow style={{ marginTop: '36px', width: '100%', justifyContent: 'space-between' }}>
+      <OptionRow>
         {PERCENTAGES.map((percentage) => (
           <Option
             key={percentage}
