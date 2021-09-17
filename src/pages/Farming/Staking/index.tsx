@@ -70,7 +70,7 @@ export const Staking = () => {
     if (hasStakedSuccessfully || hasUnstakedSuccessfully) {
       closeModals()
     }
-  }, [hasStakedSuccessfully, closeModals])
+  }, [hasStakedSuccessfully, hasUnstakedSuccessfully, closeModals])
 
   useEffect(() => {
     if (!account) {

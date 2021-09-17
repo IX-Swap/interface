@@ -38,12 +38,6 @@ export function UnstakeModal({ onDismiss, stake }: UnstakingModalProps) {
     }
   }, [isOpen])
 
-  useEffect(() => {
-    if (hasUnstakedSuccessfully) {
-      wrappedOnDismiss()
-    }
-  }, [hasUnstakedSuccessfully])
-
   const wrappedOnDismiss = useCallback(() => {
     if (!isUnstaking && !isApprovingIXSGov) {
       onDismiss()
