@@ -4,7 +4,7 @@ import Attention from 'assets/images/attention-clear.svg'
 import { ButtonGradient } from 'components/Button'
 import { VioletCard } from 'components/Card'
 import QuestionHelper from 'components/QuestionHelper'
-import { STO_STATUS_APPROVED } from 'components/SecurityCard/STOStatus'
+import { AccreditationStatusEnum } from 'components/Vault/enum'
 import useTheme from 'hooks/useTheme'
 import React, { CSSProperties, MutableRefObject, useCallback, useMemo } from 'react'
 import { Link } from 'react-router-dom'
@@ -303,10 +303,12 @@ export default function CurrencyList({
 
       const showImport = index > currencies.length
       const token = currency?.wrapped
+      const currencyId = token.address
 
       const isUnapprovedToken =
-        token && secTokens[token.address]
-          ? (userSecTokens[token.address] as any)?.tokenInfo?.status !== STO_STATUS_APPROVED
+        token && secTokens[currencyId]
+          ? (userSecTokens[currencyId] as any)?.tokenInfo?.accreditationRequest?.status !==
+            AccreditationStatusEnum.APPROVED
           : false
       if (showImport && token) {
         return (
@@ -351,9 +353,11 @@ export default function CurrencyList({
       return BREAK_HEIGHT
     }
     const token = currency?.wrapped
+    const currencyId = token.address
     const isUnapprovedToken =
-      token && secTokens[token.address]
-        ? (userSecTokens[token.address] as any)?.tokenInfo?.status !== STO_STATUS_APPROVED
+      token && secTokens[currencyId]
+        ? (userSecTokens[currencyId] as any)?.tokenInfo?.accreditationRequest?.status !==
+          AccreditationStatusEnum.APPROVED
         : false
     return isUnapprovedToken ? UNAPPROVED_ROW : NORMAL_ROW
   }
