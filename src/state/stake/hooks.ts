@@ -717,6 +717,7 @@ export function useClaimRewards() {
         getPayouts()
         dispatch(setTransactionInProgress({ value: false }))
       } catch (error) {
+        dispatch(setTransactionInProgress({ value: false }))
         console.error(`error could not claim reward`, error)
       }
     },
