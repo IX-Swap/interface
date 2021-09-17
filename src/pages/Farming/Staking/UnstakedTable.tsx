@@ -49,7 +49,7 @@ const Header = () => {
 }
 
 const Body = () => {
-  const { rewards, payouts, claims } = useStakingState()
+  const { rewards, payouts, claims, transactionInProgress } = useStakingState()
   const { chainId } = useActiveWeb3React()
   const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
   const formatCurrency = useCallback(
@@ -74,6 +74,7 @@ const Body = () => {
       {rewards?.map(({ start, end, amount, claimed }, index) => {
         const nextPayoutTime = getNextPayoutTime({ payouts: payouts[index] })
         const claimPositive = claims[index] && isAboveZero(claims[index])
+
         const vestingSum = getVestingSum({ total: amount, claimed, claimable: claims[index] })
         return (
           <RewardsBodyRow key={Number(start)}>
@@ -90,7 +91,7 @@ const Body = () => {
             <div className={claimPositive ? 'rewards' : ''}>{formatCurrency(claims[index])}&nbsp;IXS</div>
             <div>
               {claimPositive && (
-                <ClaimButton onClick={() => claimRewards(index)}>
+                <ClaimButton disabled={transactionInProgress} onClick={() => claimRewards(index)}>
                   <Trans>Claim</Trans>
                 </ClaimButton>
               )}

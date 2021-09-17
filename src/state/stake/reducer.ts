@@ -12,6 +12,7 @@ import {
   getRewards,
   getPayouts,
   getAvailableClaim,
+  setTransactionInProgress,
 } from './actions'
 import { IStaking } from 'constants/stakingPeriods'
 
@@ -138,6 +139,7 @@ interface StakingState {
   claims: any[]
   payoutsLoading: boolean
   claimLoading: boolean
+  transactionInProgress: boolean
 }
 
 const initialState: StakingState = {
@@ -167,6 +169,7 @@ const initialState: StakingState = {
   claims: [],
   payoutsLoading: false,
   claimLoading: false,
+  transactionInProgress: false,
 }
 
 export default createReducer<StakingState>(initialState, (builder) =>
@@ -269,6 +272,9 @@ export default createReducer<StakingState>(initialState, (builder) =>
     })
     .addCase(getAvailableClaim.rejected, (state, { payload: { errorMessage } }) => {
       state.claimLoading = false
+    })
+    .addCase(setTransactionInProgress, (state, { payload: { value } }) => {
+      state.transactionInProgress = value
     })
     .addCase(getIsStakingPaused, (state, { payload: { isPaused } }) => {
       state.isPaused = isPaused
