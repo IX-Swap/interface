@@ -178,7 +178,11 @@ export const MyStakingsTable = () => {
 
   function showTableData() {
     if (stakingsLoading) {
-      return <LoaderThin size={96} />
+      return (
+        <LoaderContainer>
+          <LoaderThin size={96} />
+        </LoaderContainer>
+      )
     } else if (stakings.length === 0) {
       return (
         <NoData>
@@ -209,8 +213,14 @@ export const MyStakingsTable = () => {
   )
 }
 
+const LoaderContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
 const NoData = styled.div`
-  margin-top: 39px
+  margin-top: 39px;
   font-weight: 400;
   color: ${({ theme: { text2 } }) => text2};
   text-align: center;

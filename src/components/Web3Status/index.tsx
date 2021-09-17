@@ -35,9 +35,6 @@ const IconWrapper = styled.div<{ size?: number }>`
     height: ${({ size }) => (size ? size + 'px' : '32px')};
     width: ${({ size }) => (size ? size + 'px' : '32px')};
   }
-  > div {
-    display: block;
-  }
 `
 
 const Web3StatusGeneric = styled(ButtonSecondary)`
