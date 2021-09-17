@@ -43,10 +43,6 @@ export const authorizerItemMap: Record<
     uri: '/identity/individuals/list',
     listRoute: AuthorizerRoute.individualIdentities
   },
-  [AppFeature.CashDeposits]: {
-    uri: '/accounts/cash/deposits',
-    listRoute: AuthorizerRoute.cashDeposits
-  },
   [AppFeature.Commitments]: {
     uri: '/issuance/commitments/list',
     listRoute: AuthorizerRoute.commitments
