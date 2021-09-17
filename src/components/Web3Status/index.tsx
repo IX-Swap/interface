@@ -74,15 +74,18 @@ const Web3StatusError = styled(Web3StatusGeneric)`
 const Web3StatusConnect = styled(Web3StatusGeneric)<{ faded?: boolean }>`
   background: ${({ theme }) => theme.bgG1};
   border: none;
-  color: ${({ theme }) => theme.text2};
+  font-size: 14px;
+  line-height: 21px;
+  color: ${({ theme }) => theme.text1};
   font-weight: 600;
   border-radius: 40px;
+  padding: 1px 7px;
 
   ${({ faded }) =>
     faded &&
     css`
       background-color: ${({ theme }) => theme.bgG1};
-      color: ${({ theme }) => theme.text2};
+      color: ${({ theme }) => theme.text1};
     `}
 `
 
@@ -213,7 +216,7 @@ function Web3StatusInner() {
   } else if (!isMobile) {
     return (
       <Web3StatusConnect id="connect-wallet" onClick={connectWallet} faded={!account}>
-        <Text>
+        <Text style={{ fontWeight: 600 }}>
           <Trans>Connect Wallet</Trans>
         </Text>
       </Web3StatusConnect>

@@ -11,6 +11,7 @@ import styled from 'styled-components/macro'
 import { routes } from 'utils/routes'
 import Row, { RowFixed } from '../Row'
 import { css } from 'styled-components'
+import { ExternalLink } from 'theme'
 const activeClassName = 'ACTIVE'
 
 const HeaderLinksWrap = styled(Row)`
@@ -63,14 +64,31 @@ const StyledNavLink = styled(NavLink).attrs({
 })`
   ${navLinkStyles}
 `
-
-const SubMenuLink = styled(StyledNavLink)`
+const subMenuLinkStyle = css`
   font-size: 16px;
   line-height: 24px;
   text-transform: none;
   padding: 0 66px 0 0;
+  :hover {
+    color: ${({ theme }) => theme.text1};
+    opacity: 1;
+  }
 `
-
+const SubMenuLink = styled(StyledNavLink)`
+  ${subMenuLinkStyle}
+  &.${activeClassName} {
+    color: ${({ theme }) => theme.text1};
+  }
+`
+const SubMenuExternalLink = styled(ExternalLink)`
+  ${navLinkStyles};
+  ${subMenuLinkStyle};
+  :hover,
+  :active,
+  :focus {
+    text-decoration: none;
+  }
+`
 const PopOverContent = styled.div`
   display: flex;
   gap: 6px;
@@ -81,13 +99,16 @@ const PopOverContent = styled.div`
 
 const HeaderPopover = () => {
   return (
-    <PopOverContent>
+    <PopOverContent onClick={(e) => (e ? e.stopPropagation() : null)}>
       <SubMenuLink id={`stake-nav-link`} to={routes.staking}>
         <Trans>Staking</Trans>
       </SubMenuLink>
       <SubMenuLink id={`vesting-nav-link`} to={routes.vesting}>
         <Trans>Vesting</Trans>
       </SubMenuLink>
+      <SubMenuExternalLink href={`https://lm.ixswap.io/`}>
+        <Trans>IXS Liquidity Mining</Trans>
+      </SubMenuExternalLink>
     </PopOverContent>
   )
 }
@@ -127,13 +148,7 @@ export const HeaderLinks = () => {
         to={'#'}
         isActive={(match, { pathname }) => pathname.startsWith('/vesting') || pathname.startsWith('/staking')}
       >
-        <Popover
-          hideArrow
-          show={open}
-          content={<HeaderPopover />}
-          placement={'bottom'}
-          style={{ background: 'rgba(44, 37, 74, 0.5)' }}
-        >
+        <Popover hideArrow show={open} content={<HeaderPopover />} placement={'bottom'}>
           <RowFixed onClick={toggle}>
             <Trans>IXS Farming</Trans>
             <ChevronElement showMore={open} />
