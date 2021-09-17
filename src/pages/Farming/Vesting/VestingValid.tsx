@@ -1,3 +1,4 @@
+import React, { useState } from 'react'
 import { CurrencyAmount } from '@ixswap1/sdk-core'
 import { Trans, t } from '@lingui/macro'
 import { ButtonIXSWide } from 'components/Button'
@@ -8,7 +9,6 @@ import { IXS_ADDRESS } from 'constants/addresses'
 import { useCurrency } from 'hooks/Tokens'
 import useTheme from 'hooks/useTheme'
 import { useActiveWeb3React } from 'hooks/web3'
-import React from 'react'
 import { useAvailableClaim, useClaimAll, usePayouts, useVestingDetails, useVestingState } from 'state/vesting/hooks'
 import { getVestingDates } from 'state/vesting/utils'
 import { TYPE } from 'theme'
@@ -18,20 +18,26 @@ import { VestingContractDetails, InfoIcon, VestingDetailsTitle } from '../styled
 
 export const VestingValid = () => {
   const theme = useTheme()
-  const vestingDetails = useVestingDetails()
-  const payouts = usePayouts()
+  const [isLoading, handleIsLoading] = useState(false)
+  const { details } = useVestingDetails()
+  const { payouts } = usePayouts()
   const { chainId, account } = useActiveWeb3React()
   const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
   const nextPayment = closestFutureDate({ dates: getVestingDates({ payouts }) })
-  const availableClaim = useAvailableClaim()
+  const { availableClaim } = useAvailableClaim()
   const alreadyVested = getPayoutClosestToPresent({ payouts })
   const claim = useClaimAll()
   const { customVestingAddress } = useVestingState()
 
   const isDifferentAddress = customVestingAddress && customVestingAddress !== account
 
-  const onClickClaim = () => {
-    claim()
+  const onClickClaim = async () => {
+    handleIsLoading(true)
+
+    await claim()
+
+    handleIsLoading(false)
+
     const { ym } = window
     ym(84960586, 'reachGoal', 'bigVestingClaim')
   }
@@ -51,13 +57,13 @@ export const VestingValid = () => {
           </MouseoverTooltip>
         </VestingDetailsTitle>
         <Column style={{ gap: '16px' }}>
-          {vestingDetails?.start && (
+          {details?.start && (
             <Column>
               <TYPE.body1>
                 <Trans>Start Date</Trans>&nbsp;
               </TYPE.body1>
               <TYPE.titleSmall fontWeight={400} lineHeight={'18px'}>
-                {unixTimeToFormat({ time: vestingDetails?.start })}
+                {unixTimeToFormat({ time: details?.start })}
               </TYPE.titleSmall>
             </Column>
           )}
@@ -72,23 +78,23 @@ export const VestingValid = () => {
               </TYPE.titleSmall>
             </Column>
           )}
-          {vestingDetails?.end && (
+          {details?.end && (
             <Column>
               <TYPE.body1>
                 <Trans>End Date</Trans>&nbsp;
               </TYPE.body1>
               <TYPE.titleSmall fontWeight={400} lineHeight={'18px'}>
-                {unixTimeToFormat({ time: vestingDetails?.end })}
+                {unixTimeToFormat({ time: details?.end })}
               </TYPE.titleSmall>
             </Column>
           )}
           <Column style={{ gap: '19px' }}>
-            {vestingDetails?.amount && currency && (
+            {details?.amount && currency && (
               <TextRow
                 textLeft={<Trans>Total Vested</Trans>}
                 textRight={
                   <TYPE.titleSmall fontWeight={400} style={{ whiteSpace: 'nowrap' }}>
-                    {formatCurrencyAmount(CurrencyAmount.fromRawAmount(currency, vestingDetails?.amount), 10)}{' '}
+                    {formatCurrencyAmount(CurrencyAmount.fromRawAmount(currency, details?.amount), 10)}{' '}
                     {currency?.symbol}
                   </TYPE.titleSmall>
                 }
@@ -106,12 +112,12 @@ export const VestingValid = () => {
                 }
               />
             )}
-            {vestingDetails?.claimed && currency && (
+            {details?.claimed && currency && (
               <TextRow
                 textLeft={<Trans>Claimed</Trans>}
                 textRight={
                   <TYPE.titleSmall fontWeight={400} style={{ whiteSpace: 'nowrap' }}>
-                    {formatCurrencyAmount(CurrencyAmount.fromRawAmount(currency, vestingDetails?.claimed), 10)}{' '}
+                    {formatCurrencyAmount(CurrencyAmount.fromRawAmount(currency, details?.claimed), 10)}{' '}
                     {currency?.symbol}
                   </TYPE.titleSmall>
                 }
@@ -137,7 +143,7 @@ export const VestingValid = () => {
           data-testid="release-vesting"
           style={{ width: '100%', maxWidth: 308 }}
           onClick={onClickClaim}
-          disabled={!availableClaim || availableClaim === '0'}
+          disabled={!availableClaim || availableClaim === '0' || isLoading}
         >
           <Trans>Claim</Trans>
         </ButtonIXSWide>

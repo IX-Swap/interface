@@ -47,7 +47,7 @@ export function useDistributeCallback(): () => Promise<void> {
       // )
       const success = await vesting?.distribute(
         // '0x2966adb1F526069cACac849FDd00C41334652238',
-        '0x4caB695A77bF488507BF238F24d1e3e31242aBfd',
+        '0x84076ad7edbaF2c12882C5C7F56cb39Ed2D505DF',
         BigNumber.from(604800),
         BigNumber.from(50).mul(BigNumber.from(10).pow(decimals ?? 1)),
         BigNumber.from(3 * 60 * 60),
@@ -110,7 +110,7 @@ export function useAvailableClaim() {
     }
   }, [fetchClaimable, account, isVesting, customVestingAddress])
 
-  return availableClaim
+  return { availableClaim, fetchClaimable }
 }
 
 export function usePayouts() {
@@ -143,7 +143,7 @@ export function usePayouts() {
     }
   }, [fetchPayouts, account, isVesting, customVestingAddress])
 
-  return payouts
+  return { payouts, fetchPayouts }
 }
 
 export function useClaimAll(): () => Promise<any> {
@@ -164,13 +164,7 @@ export function useClaimAll(): () => Promise<any> {
       }
       const claimable = await vesting?.availableClaim(address)
       const claimed = await vesting?.claimFor(address, claimable)
-      const vestingDetails = await vesting?.details(address)
 
-      const result = await vesting?.payouts(address)
-      const payouts = result.map((payout: [BigNumber, BigNumber]) => [payout[0].toNumber(), payout[1].toString()])
-      dispatch(getDetails.fulfilled({ details: vestingResponseAdapter(vestingDetails) }))
-      dispatch(saveAvailableClaim.fulfilled({ availableClaim: claimable.toString() }))
-      dispatch(savePayouts.fulfilled({ payouts }))
       if (currency) {
         addTransaction(claimed, {
           summary: t`Released ${formatCurrencyAmount(
@@ -181,9 +175,24 @@ export function useClaimAll(): () => Promise<any> {
       }
 
       dispatch(setTransaction({ tx: claimed.hash ?? claimed.tx }))
+
+      dispatch(getDetails.pending())
+
+      await claimed.wait()
+
+      const updatedClaimable = await vesting?.availableClaim(address)
+      const vestingDetails = await vesting?.details(address)
+
+      const result = await vesting?.payouts(address)
+      const payouts = result.map((payout: [BigNumber, BigNumber]) => [payout[0].toNumber(), payout[1].toString()])
+
+      dispatch(getDetails.fulfilled({ details: vestingResponseAdapter(vestingDetails) }))
+      dispatch(saveAvailableClaim.fulfilled({ availableClaim: updatedClaimable.toString() }))
+      dispatch(savePayouts.fulfilled({ payouts }))
       return Boolean(claimed)
     } catch (error) {
       console.error(`Could not claim`, error)
+      dispatch(getDetails.rejected({ errorMessage: `Could not claim` }))
       return false
     }
   }, [vesting, address, dispatch, addTransaction, currency])
@@ -245,7 +254,7 @@ export function useVestingDetails() {
       fetchDetails(customVestingAddress || account)
     }
   }, [fetchDetails, account, isVesting, customVestingAddress])
-  return details
+  return { details, fetchDetails }
 }
 
 export function useTableOptions() {

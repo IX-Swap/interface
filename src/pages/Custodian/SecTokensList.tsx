@@ -49,7 +49,7 @@ export default function SecTokensList({
     return currencyKey(currency)
   }, [])
   const { width = 0 } = useWindowSize()
-  const itemHeight = width < MEDIA_WIDTHS.upToExtraSmall ? 100 : 80
+  const itemHeight = width < MEDIA_WIDTHS.upToExtraSmall ? 112 : 80
 
   return (
     <List

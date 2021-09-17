@@ -1,5 +1,6 @@
 import IXSToken from 'assets/images/IXS-token.svg'
 import { IconWrapper } from 'components/AccountDetails/styleds'
+import { BIG_INT_ZERO } from 'constants/misc'
 import JSBI from 'jsbi'
 import { Dots } from 'pages/Pool/styleds'
 import React from 'react'
@@ -25,8 +26,8 @@ export const IXSBalance = () => {
   const IXSGovBalance = useIXSGovBalance()
   const toggle = useToggleModal(ApplicationModal.IXS_BALANCE)
   const showElement =
-    JSBI.greaterThan(IXSBalance?.amount?.quotient ?? JSBI.BigInt(0), JSBI.BigInt(0)) ||
-    JSBI.greaterThan(IXSGovBalance?.amount?.quotient ?? JSBI.BigInt(0), JSBI.BigInt(0))
+    JSBI.greaterThan(IXSBalance?.amount?.quotient ?? BIG_INT_ZERO, BIG_INT_ZERO) ||
+    JSBI.greaterThan(IXSGovBalance?.amount?.quotient ?? BIG_INT_ZERO, BIG_INT_ZERO)
   if (!showElement) {
     return null
   }

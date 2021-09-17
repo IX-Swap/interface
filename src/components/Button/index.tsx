@@ -171,7 +171,7 @@ export const ButtonPink = styled(Base)`
 
 export const ButtonIXSGradient = styled(ButtonPrimary)<{ confirmed?: boolean }>`
   color: white;
-  height: 36px;
+  height: 50px;
   opacity: ${({ confirmed }) => (confirmed ? 0.5 : 1)};
   width: fit-content;
   position: relative;
@@ -185,7 +185,6 @@ export const ButtonIXSGradient = styled(ButtonPrimary)<{ confirmed?: boolean }>`
   :active {
     opacity: 0.9;
   }
-  padding: 25px;
   text-transform: capitalize;
   border-radius: 40px;
   font-weight: 600;

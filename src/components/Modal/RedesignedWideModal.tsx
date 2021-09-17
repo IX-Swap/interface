@@ -40,6 +40,17 @@ const StyledDialogContent = styled(
         margin-right: auto;
         left: 0;
         right: 0;
+        ${({ theme }) => theme.mediaWidth.upToSmall`
+          width: 85vw;
+          top: 0;
+          position: relative;
+        `}
+      }
+
+      &[data-reach-dialog-content] {
+        ${({ theme }) => theme.mediaWidth.upToSmall`
+            flex-direction: column;
+          `}
       }
     `}
 

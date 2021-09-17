@@ -1,18 +1,15 @@
 import { Currency } from '@ixswap1/sdk-core'
-import React, { useMemo } from 'react'
-import { VaultState, IAccreditationRequest, AccreditationStatusEnum } from './enum'
+import React from 'react'
+import { useAccreditationStatus } from 'state/secTokens/hooks'
 import { ExistingVault } from './ExistingVault'
 import { NoVault } from './NoVault'
 
 interface Props {
   currency?: Currency
-  accreditationRequest: IAccreditationRequest | null
+  currencyId: string
 }
-export const Vault = ({ currency, accreditationRequest }: Props) => {
-  const status = accreditationRequest?.status
-  const vaultExists = useMemo(() => {
-    return ![AccreditationStatusEnum.PENDING, AccreditationStatusEnum.REJECTED, undefined].includes(status)
-  }, [status])
+export const Vault = ({ currency, currencyId }: Props) => {
+  const { status, isApproved: vaultExists } = useAccreditationStatus(currencyId)
   return (
     <>
       {!vaultExists && <NoVault currency={currency} status={status} />}
