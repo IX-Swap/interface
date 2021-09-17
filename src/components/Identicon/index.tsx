@@ -10,6 +10,9 @@ const StyledIdenticonContainer = styled.div<{ size: number }>`
   width: ${({ size }) => `${size}px`};
   border-radius: 1.125rem;
   background-color: ${({ theme }) => theme.bg4};
+  > div {
+    display: block !important;
+  }
 `
 
 export default function Identicon({ size = 16 }: { size?: number }) {
