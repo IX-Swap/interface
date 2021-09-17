@@ -1,13 +1,11 @@
 import { t, Trans } from '@lingui/macro'
-import { ReactComponent as Attention } from 'assets/images/attention.svg'
 import { ReactComponent as Clock } from 'assets/images/clock.svg'
-import Row, { RowCenter } from 'components/Row'
-import { MouseoverLightTooltip } from 'components/Tooltip'
+import { RowCenter } from 'components/Row'
 import { IconWrapper } from 'pages/SecTokenDetails/styleds'
 import React from 'react'
 import { Box } from 'rebass'
 import { TYPE } from 'theme'
-import { AccreditationStatusEnum, VaultState } from './enum'
+import { AccreditationStatusEnum } from './enum'
 import { StatusTitle } from './styleds'
 
 interface Props {
