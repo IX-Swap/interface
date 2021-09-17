@@ -13,14 +13,15 @@ import Row, { RowFixed } from '../Row'
 import { css } from 'styled-components'
 const activeClassName = 'ACTIVE'
 
-const HeaderLinksWrap = styled(Row)`
+const HeaderLinksWrap = styled(Row)<{ links: number }>`
   justify-self: center;
   background-color: 'transparent';
   width: fit-content;
-  display: flex;
+  display: grid;
   flex-wrap: wrap;
   overflow: visible;
   grid-gap: 32px;
+  grid-template-columns: ${({ links }) => `repeat(${links},auto)`};
   ${({ theme }) => theme.mediaWidth.upToMedium`
     justify-self: flex-end;
   `};
@@ -98,7 +99,7 @@ export const HeaderLinks = () => {
   useOnClickOutside(node, open ? toggle : undefined)
 
   return (
-    <HeaderLinksWrap>
+    <HeaderLinksWrap links={SECURITY_TOKENS ? 4 : 3}>
       <StyledNavLink id={`swap-nav-link`} to={'/swap'}>
         <Trans>Swap</Trans>
       </StyledNavLink>

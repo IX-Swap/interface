@@ -47,7 +47,9 @@ export const OptionRow = styled(RowCenter)`
 `
 
 export const OptionCustom = styled(FancyButton)<{ active?: boolean; warning?: boolean }>`
+  min-width: 110px;
   max-width: 130px;
+  width: 100%;
   height: 60px;
   position: relative;
   padding: 10px 22px;

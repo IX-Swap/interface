@@ -40,12 +40,12 @@ export const Vesting = () => {
   return (
     <>
       <VestingSearch />
+      {(loadingVesting || vestingStatus === VestingStatus.LOADING) && (
+        <LoaderContainer>
+          <LoaderThin size={96} />
+        </LoaderContainer>
+      )}
       <VestingWrapper>
-        {(loadingVesting || vestingStatus === VestingStatus.LOADING) && (
-          <LoaderContainer>
-            <LoaderThin size={96} />
-          </LoaderContainer>
-        )}
         {vestingStatus !== VestingStatus.LOADING && (
           <>
             {isPrivateBuyer ? (
