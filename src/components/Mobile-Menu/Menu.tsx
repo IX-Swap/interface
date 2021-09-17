@@ -1,12 +1,13 @@
 import { Trans } from '@lingui/macro'
 import React, { useEffect } from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { NavLink } from 'react-router-dom'
 import { SECURITY_TOKENS } from 'config'
 
 import { routes } from 'utils/routes'
 
 import closeIcon from '../../assets/images/cross.svg'
+import { ExternalLink } from 'theme'
 
 interface Props {
   close: () => void
@@ -65,6 +66,9 @@ export const Menu = ({ close }: Props) => {
           <MenuListItem activeClassName="active-item" id={`vesting-nav-link`} to={routes.vesting} onClick={close}>
             <Trans>Vesting IXS</Trans>
           </MenuListItem>
+          <ExternalListItem href={`https://lm.ixswap.io/`}>
+            <Trans>IXS Liquidity Mining</Trans>
+          </ExternalListItem>
         </MenuList>
       </Container>
     </ModalContainer>
@@ -114,8 +118,7 @@ const MenuList = styled.div`
   grid-gap: 8px;
   justify-content: center;
 `
-
-const MenuListItem = styled(NavLink)`
+const listItemStyle = css`
   height: 56px;
   font-weight: 600;
   font-size: 22px;
@@ -129,5 +132,16 @@ const MenuListItem = styled(NavLink)`
   &.active-item {
     opacity: 1;
     color: white;
+  }
+`
+const MenuListItem = styled(NavLink)`
+  ${listItemStyle};
+`
+const ExternalListItem = styled(ExternalLink)`
+  ${listItemStyle};
+  :hover,
+  :active,
+  :focus {
+    text-decoration: none;
   }
 `
