@@ -82,6 +82,9 @@ export const DarkCard = styled(Card)`
   backdrop-filter: blur(4px);
   border-radius: 20px;
   padding: 26px 36px 40px 36px;
+  @media (max-width: 500px) {
+    padding: 16px;
+  }
 `
 export const SwapErrorCard = styled(DarkCard)`
   padding: 20px 36px;

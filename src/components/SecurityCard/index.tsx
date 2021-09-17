@@ -38,6 +38,17 @@ const StyledPositionCard = styled(LightCard)`
   `};
 `
 
+const StyledRowBetween = styled(RowBetween)`
+  display: grid;
+  grid-template-columns: auto auto;
+  @media (max-width: 500px) {
+    grid-template-columns: 100%;
+  }
+  > div:last-child {
+    justify-self: right;
+  }
+`
+
 export default function SecurityCard({
   currency,
   style,
@@ -57,7 +68,7 @@ export default function SecurityCard({
     <Row style={style}>
       <Row style={{ paddingBottom: '10px', paddingRight: '10px' }}>
         <StyledPositionCard as={Link} to={routes.securityTokens(currency)} data-testid="custodian-sec-token-info">
-          <RowBetween style={{ flexWrap: 'wrap' }}>
+          <StyledRowBetween>
             <Box style={{ display: 'flex', justifyContent: 'flex-start', width: 'fit-content' }}>
               <CurrencyHeader currency={currency} />
               <SemiTransparent>
@@ -72,7 +83,7 @@ export default function SecurityCard({
                 {!isAccredited && <Status status={accreditationStatus} />}
               </Box>
             )}
-          </RowBetween>
+          </StyledRowBetween>
         </StyledPositionCard>
       </Row>
     </Row>
