@@ -1,14 +1,12 @@
-import React from 'react'
 import { Trans } from '@lingui/macro'
 import { ButtonGradientBorder, ButtonIXSGradient } from 'components/Button'
-import { useActiveWeb3React } from 'hooks/web3'
-import { Box } from 'rebass'
-import { TYPE, ExternalLink } from 'theme'
-import useTheme from 'hooks/useTheme'
-import { NoIXSTokensWrapper, ButtonRow } from './style'
-import { Link } from 'react-router-dom'
-import { routes } from 'utils/routes'
 import { IXS_ADDRESS } from 'constants/addresses'
+import useTheme from 'hooks/useTheme'
+import { useActiveWeb3React } from 'hooks/web3'
+import React from 'react'
+import { Box } from 'rebass'
+import { ExternalLink, TYPE } from 'theme'
+import { ButtonRow, NoIXSTokensWrapper } from './style'
 
 export const NoIXSTokens = () => {
   const theme = useTheme()

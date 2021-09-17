@@ -53,3 +53,9 @@ export const getPayoutClosestToPresent = ({ payouts }: { payouts: [number, strin
   const pastPayouts = payouts.filter((value) => value[0] - currentDate <= 0)
   return pastPayouts.length > 0 ? pastPayouts.pop() : null
 }
+
+export const getNextPayoutTime = ({ payouts }: { payouts: [number, string][] }) => {
+  const currentDate = dayjs().unix()
+  const futurePayouts = payouts.filter((value) => value[0] - currentDate >= 0)
+  return futurePayouts.length > 0 ? futurePayouts[0] : null
+}

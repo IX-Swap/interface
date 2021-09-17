@@ -20,6 +20,8 @@ import useTheme from 'hooks/useTheme'
 import { MouseoverTooltip } from 'components/Tooltip'
 import { IconWrapper } from 'components/AccountDetails/styleds'
 import { ReactComponent as InfoIcon } from 'assets/images/attention.svg'
+import { floorTo4Decimals } from 'utils/formatCurrencyAmount'
+import styled from 'styled-components'
 
 interface UnstakingModalProps {
   onDismiss: () => void
@@ -34,7 +36,7 @@ export function EarlyUnstake({ onDismiss, stake }: UnstakingModalProps) {
   const stakeAmount = formatAmount(stake?.stakeAmount)
   const [typedValue, setTypedValue] = useState('')
   const [isEnoughAllowance, setIsEnoughAllowance] = useState(false)
-  const error = ''
+  const [error, setError] = useState('')
   const { chainId, account } = useActiveWeb3React()
   const { parsedAmount } = useDerivedIXSStakeInfo({ typedValue, currencyId: IXS_ADDRESS[chainId ?? 1] })
   const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
@@ -61,10 +63,17 @@ export function EarlyUnstake({ onDismiss, stake }: UnstakingModalProps) {
     }
     onDismiss()
     setTypedValue('')
-  }, [onDismiss])
+  }, [onDismiss, isUnstaking, isApprovingIXSGov])
 
   const onUserInput = useCallback((typedValue: string) => {
     setTypedValue(typedValue)
+    const IXSAmount = stakeIXSCurrencyAmount?.toSignificant(18)
+    if (!IXSAmount) return
+    if (parseFloat(typedValue) > parseFloat(IXSAmount)) {
+      setError('Not enough')
+    } else {
+      setError('')
+    }
   }, [])
 
   async function onUnstake() {
@@ -106,14 +115,14 @@ export function EarlyUnstake({ onDismiss, stake }: UnstakingModalProps) {
           </TYPE.title5>
           <CloseIcon onClick={wrappedOnDismiss} />
         </RowBetween>
-        <Row marginTop={20} marginBottom={10}>
+        <WarningContainer marginTop={20} marginBottom={10}>
           <TYPE.title6 color={'bg14'} style={{ textTransform: 'uppercase' }}>
             <Trans>Warning:</Trans>&nbsp;
           </TYPE.title6>
           <TYPE.body color={'bg14'}>
             <Trans>Your APY will be 5% in case of an early unstake</Trans>
           </TYPE.body>
-        </Row>
+        </WarningContainer>
         <StakingInputPercentage
           {...{
             fieldTitle: t`Amount of IXS to unstake`,
@@ -137,8 +146,9 @@ export function EarlyUnstake({ onDismiss, stake }: UnstakingModalProps) {
             textLeft={t`IXSGov to return`}
             textRight={
               <EllipsedText>
-                <div>{typedValue ? typedValue : 0}</div>&nbsp;IXSGov ({IXSGovBalance?.toSignificant(5)}{' '}
-                <Trans>available</Trans>)
+                <div>
+                  {typedValue ? typedValue : 0}&nbsp;IXSGov ({IXSGovBalance?.toSignificant(5)} <Trans>available</Trans>)
+                </div>
               </EllipsedText>
             }
           />
@@ -148,10 +158,13 @@ export function EarlyUnstake({ onDismiss, stake }: UnstakingModalProps) {
               <>
                 <span style={{ color: theme.bg14 }}>5%</span>
                 <MouseoverTooltip
-                  style={{ whiteSpace: 'pre-line', verticalAlign: 'sub' }}
+                  style={{ whiteSpace: 'pre-line' }}
                   text={t`If you partially or fully unstake your IXS before the end date - 5% APY will be applied to unstaked amount.`}
                 >
-                  <IconWrapper size={20} style={{ transform: 'rotate(180deg)', marginLeft: '4px' }}>
+                  <IconWrapper
+                    size={20}
+                    style={{ transform: 'rotate(180deg)', marginLeft: '4px', verticalAlign: 'sub' }}
+                  >
                     <InfoIcon />
                   </IconWrapper>
                 </MouseoverTooltip>
@@ -163,7 +176,7 @@ export function EarlyUnstake({ onDismiss, stake }: UnstakingModalProps) {
             textLeft={t`Instant reward payout today`}
             textRight={
               <EllipsedText>
-                <div>{stake.reward * 0.1}</div>&nbsp;IXS
+                <div>{floorTo4Decimals(stake.reward * 0.1)}&nbsp;IXS</div>
               </EllipsedText>
             }
           />
@@ -171,7 +184,7 @@ export function EarlyUnstake({ onDismiss, stake }: UnstakingModalProps) {
             textLeft={t`Rewards to be vested (10% weekly)`}
             textRight={
               <EllipsedText>
-                <div>{stake.reward * 0.9}</div>&nbsp;IXS
+                <div>{floorTo4Decimals(stake.reward * 0.9)}&nbsp;IXS</div>
               </EllipsedText>
             }
           />
@@ -189,7 +202,7 @@ export function EarlyUnstake({ onDismiss, stake }: UnstakingModalProps) {
         <Row style={{ marginTop: '43px' }}>
           <ButtonIXSWide
             data-testid="approve-ixsgov-button"
-            disabled={isEnoughAllowance || isApprovingIXSGov}
+            disabled={isEnoughAllowance || isApprovingIXSGov || isUnstaking || Boolean(error)}
             onClick={onApprove}
             style={{ marginRight: '14px' }}
           >
@@ -198,12 +211,12 @@ export function EarlyUnstake({ onDismiss, stake }: UnstakingModalProps) {
                 <Trans>Approving IXSGov</Trans>
               </Dots>
             ) : (
-              <>{error || <Trans>Approve IXSGov</Trans>}</>
+              <Trans>Approve IXSGov</Trans>
             )}
           </ButtonIXSWide>
           <ButtonIXSWide
             data-testid="unstake-button"
-            disabled={!isEnoughAllowance || isApprovingIXSGov}
+            disabled={!isEnoughAllowance || isApprovingIXSGov || isUnstaking || Boolean(error)}
             onClick={onUnstake}
           >
             {isUnstaking ? (
@@ -211,7 +224,7 @@ export function EarlyUnstake({ onDismiss, stake }: UnstakingModalProps) {
                 <Trans>Unstaking</Trans>
               </Dots>
             ) : (
-              <>{error || <Trans>Unstake</Trans>}</>
+              <Trans>Unstake</Trans>
             )}
           </ButtonIXSWide>
         </Row>
@@ -219,3 +232,10 @@ export function EarlyUnstake({ onDismiss, stake }: UnstakingModalProps) {
     </>
   )
 }
+
+const WarningContainer = styled(Row)`
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    flex-direction: column;
+    align-items: flex-start;
+  `}
+`

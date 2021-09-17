@@ -28,7 +28,10 @@ export const StyledDialogOverlay = styled(AnimatedDialogOverlay)<{
     ${({ tip }) =>
       tip &&
       css`
-        padding-top: 6%;
+        padding-top: 80px;
+        ${({ theme }) => theme.mediaWidth.upToSmall`
+          padding-top: 0;
+        `}
       `}
   }
 `

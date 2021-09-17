@@ -1,7 +1,14 @@
 import IXSStakingModal from 'components/earn/IXSStakingModal'
 import React, { useEffect } from 'react'
 import { useToggleModal, useCloseModals } from 'state/application/hooks'
-import { useStakingState, useIsVestingPaused, useUpdateIXSBalance, useGetStakings } from 'state/stake/hooks'
+import {
+  useStakingState,
+  useIsVestingPaused,
+  useUpdateIXSBalance,
+  useGetStakings,
+  useGetVestedRewards,
+  useGetPayouts,
+} from 'state/stake/hooks'
 import { useUnstakingState } from 'state/stake/unstake/hooks'
 import { PromoTokenCard } from './PromoTokenCard'
 import { StakingPage } from './StakingPage'
@@ -27,6 +34,12 @@ export const Staking = () => {
   const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
   const balance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
   const getStakings = useGetStakings()
+  const getRewards = useGetVestedRewards()
+  const getPayouts = useGetPayouts()
+
+  useEffect(() => {
+    getRewards()
+  }, [getRewards, hasStakedSuccessfully, hasUnstakedSuccessfully])
 
   useEffect(() => {
     getStakings()
@@ -35,8 +48,13 @@ export const Staking = () => {
   useEffect(() => {
     if (hasStakedSuccessfully || hasUnstakedSuccessfully) {
       getStakings()
+      updateIXSBalance()
     }
   }, [getStakings, hasStakedSuccessfully, hasUnstakedSuccessfully])
+
+  useEffect(() => {
+    getPayouts()
+  }, [getPayouts, hasStakedSuccessfully, hasUnstakedSuccessfully])
 
   useEffect(() => {
     if (balance) {
@@ -52,7 +70,7 @@ export const Staking = () => {
     if (hasStakedSuccessfully || hasUnstakedSuccessfully) {
       closeModals()
     }
-  }, [hasStakedSuccessfully, closeModals])
+  }, [hasStakedSuccessfully, hasUnstakedSuccessfully, closeModals])
 
   useEffect(() => {
     if (!account) {
