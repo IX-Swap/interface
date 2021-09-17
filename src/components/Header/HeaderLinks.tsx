@@ -69,6 +69,9 @@ const SubMenuLink = styled(StyledNavLink)`
   line-height: 24px;
   text-transform: none;
   padding: 0 66px 0 0;
+  &.${activeClassName} {
+    color: ${({ theme }) => theme.text1};
+  }
 `
 
 const PopOverContent = styled.div`
@@ -127,13 +130,7 @@ export const HeaderLinks = () => {
         to={'#'}
         isActive={(match, { pathname }) => pathname.startsWith('/vesting') || pathname.startsWith('/staking')}
       >
-        <Popover
-          hideArrow
-          show={open}
-          content={<HeaderPopover />}
-          placement={'bottom'}
-          style={{ background: 'rgba(44, 37, 74, 0.5)' }}
-        >
+        <Popover hideArrow show={open} content={<HeaderPopover />} placement={'bottom'}>
           <RowFixed onClick={toggle}>
             <Trans>IXS Farming</Trans>
             <ChevronElement showMore={open} />
