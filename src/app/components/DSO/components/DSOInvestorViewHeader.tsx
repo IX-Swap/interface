@@ -5,71 +5,90 @@ import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { DigitalSecurityOffering } from 'types/dso'
 import { InvestRoute } from 'app/pages/invest/router/config'
+import { DSOInvestorOverview } from 'app/components/DSO/components/DSOInvestorOverview'
+import { VSpacer } from 'components/VSpacer'
+import useStyles from 'app/components/DSO/components/styles'
+
 export interface DSOInvestorViewHeaderProps {
   dso: DigitalSecurityOffering
 }
 
 export const DSOInvestorViewHeader = (props: DSOInvestorViewHeaderProps) => {
   const { dso } = props
-  const { isTablet } = useAppBreakpoints()
+  const classes = useStyles()
+  const { isTablet, theme } = useAppBreakpoints()
 
   return (
     <Grid
       container
-      direction={isTablet ? 'column' : 'row'}
+      direction={'column'}
       alignItems={isTablet ? 'flex-start' : 'center'}
       justify='space-between'
       wrap='nowrap'
-      style={{ marginBottom: 50 }}
+      className={classes.newDSOViewHeaderStyles}
     >
       <Grid
         item
         container
-        alignItems='center'
-        wrap='nowrap'
-        xs={12}
-        spacing={3}
+        justify={isTablet ? 'center' : 'space-between'}
+        alignItems={'center'}
       >
-        <Grid item>
-          <DSOLogo dsoId={dso._id} size={124} variant='square' />
-        </Grid>
-        <Grid item container direction='column' spacing={1}>
+        <Grid
+          item
+          container
+          direction={isTablet ? 'column' : 'row'}
+          alignItems='center'
+          wrap='nowrap'
+          xs={isTablet ? 12 : 9}
+          spacing={3}
+        >
           <Grid item>
-            <Typography variant='h4'>
+            <DSOLogo
+              dsoId={dso._id}
+              size={isTablet ? 240 : 124}
+              variant='circle'
+            />
+            {isTablet && <VSpacer size={'medium'} />}
+          </Grid>
+
+          <Grid
+            item
+            container
+            direction={'column'}
+            alignItems={isTablet ? 'center' : 'flex-start'}
+          >
+            <Typography variant='h2' style={{ fontSize: isTablet ? 32 : 40 }}>
               {dso.tokenName} ({dso.tokenSymbol})
             </Typography>
-          </Grid>
 
-          <Grid item>
-            <Typography variant='h5' style={{ fontWeight: 400 }}>
-              {dso.issuerName}
-            </Typography>
-          </Grid>
+            {isTablet && <VSpacer size={'medium'} />}
 
-          <Grid item>
-            <Typography variant='subtitle1' component='span'>
-              Currency:{' '}
-            </Typography>
-            <Typography variant='body1' component='span'>
-              {dso.currency.symbol}
+            <Typography variant='h6' style={{ fontWeight: 400, opacity: 0.7 }}>
+              {dso.corporate.companyLegalName}
             </Typography>
           </Grid>
         </Grid>
-      </Grid>
 
-      <Grid item>
-        <Button
-          color='primary'
-          variant='contained'
-          disableElevation
-          style={{ minWidth: 140, marginTop: isTablet ? 30 : 0 }}
-          component={AppRouterLinkComponent}
-          to={InvestRoute.makeInvestment}
-          params={{ dsoId: dso._id, issuerId: dso.user }}
-        >
-          Invest
-        </Button>
+        <Grid item>
+          <Button
+            variant='contained'
+            disableElevation
+            style={{
+              minWidth: isTablet ? 220 : 140,
+              marginTop: isTablet ? 30 : 0,
+              backgroundColor: '#ffffff',
+              color: theme.palette.slider.activeBackground
+            }}
+            component={AppRouterLinkComponent}
+            to={InvestRoute.makeInvestment}
+            params={{ dsoId: dso._id, issuerId: dso.user }}
+          >
+            Invest
+          </Button>
+        </Grid>
       </Grid>
+      <VSpacer size={'extraMedium'} />
+      <DSOInvestorOverview dso={dso} />
     </Grid>
   )
 }

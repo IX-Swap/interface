@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles'
 import { grey } from '@material-ui/core/colors'
 
-export default makeStyles(() => ({
+export default makeStyles(theme => ({
   largeInputLabel: {
     fontSize: '1.25em'
   },
@@ -39,5 +39,27 @@ export default makeStyles(() => ({
   currency: {
     width: '125px',
     marginLeft: '16px'
+  },
+  newDSOViewHeaderStyles: {
+    marginBottom: 50,
+    paddingTop: 55,
+    paddingLeft: 55,
+    paddingRight: 55,
+    paddingBottom: 60,
+    backgroundColor: '#020071',
+    borderRadius: 24,
+    color: '#ffffff'
+  },
+  newDSOViewItemStyles: {
+    borderRadius: 24,
+    boxShadow: `0px 8px 32px ${
+      theme.palette.type === 'light'
+        ? 'rgba(0, 0, 0, 0.08)'
+        : 'rgba(255, 255, 255, 0.08)'
+    }`,
+    paddingTop: `${theme.spacing(3)}px!important`,
+    paddingLeft: `${theme.spacing(5.25)}px!important`,
+    paddingRight: `${theme.spacing(5.25)}px!important`,
+    paddingBottom: `${theme.spacing(4.25)}px!important`
   }
 }))
