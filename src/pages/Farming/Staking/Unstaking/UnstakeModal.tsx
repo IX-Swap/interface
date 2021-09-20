@@ -29,7 +29,7 @@ function isEarlyUnstake(stake: IStaking): boolean {
 export function UnstakeModal({ onDismiss, stake }: UnstakingModalProps) {
   const bIsEarlyUnstake = isEarlyUnstake(stake)
   const isOpen = useModalOpen(ApplicationModal.UNSTAKE_IXS)
-  const { isApprovingIXSGov, isUnstaking, hasUnstakedSuccessfully } = useUnstakingState()
+  const { isApprovingIXSGov, isUnstaking } = useUnstakingState()
   const checkIXSGovAllowance = useCheckIXSGovAllowance()
 
   useEffect(() => {
