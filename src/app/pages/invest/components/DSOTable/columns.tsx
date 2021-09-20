@@ -10,8 +10,9 @@ import { abbreviateNumber, formatMoney } from 'helpers/numbers'
 
 export const renderDSONameAndStructure = (
   tokenName: string,
-  dso: DigitalSecurityOffering
-) => <DSONameAndStructure tokenName={tokenName} dso={dso} />
+  dso: DigitalSecurityOffering,
+  size?: number
+) => <DSONameAndStructure tokenName={tokenName} dso={dso} size={size} />
 
 export const renderPriceWithCurrency = (
   price: number,

@@ -13,6 +13,7 @@ import { AppRoute } from 'components/AppRoute'
 import { BanksRouter } from 'app/pages/accounts/pages/banks/router/BanksRouter'
 import { DigitalSecuritiesRouter } from 'app/pages/accounts/pages/digitalSecurities/router/DigitalSecuritiesRouter'
 import { WithdrawalAddressesRouter } from 'app/pages/accounts/pages/withdrawalAddresses/router/WithdrawalAddressesRouter'
+import { CommitmentsRouter } from 'app/pages/accounts/pages/commitments/router/CommitmentsRouter'
 
 export const AccountsRouter = () => {
   return (
@@ -23,6 +24,10 @@ export const AccountsRouter = () => {
 
       <AppRoute breadcrumb='Cash Deposits' path={AccountsRoute.depositCash}>
         <DepositCash />
+      </AppRoute>
+
+      <AppRoute breadcrumb='Commitments' path={AccountsRoute.commitments}>
+        <CommitmentsRouter />
       </AppRoute>
 
       <AppRoute breadcrumb='Cash Withdrawals' path={AccountsRoute.withdrawCash}>
