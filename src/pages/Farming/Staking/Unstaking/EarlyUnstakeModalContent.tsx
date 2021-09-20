@@ -26,13 +26,15 @@ import styled from 'styled-components'
 interface UnstakingModalProps {
   onDismiss: () => void
   stake: IStaking
+  onUnstake: (amount: string) => void
+  onApprove: (amount?: string) => void
 }
 
 function formatAmount(amount: number): string {
   return amount?.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 10 })
 }
 
-export function EarlyUnstake({ onDismiss, stake }: UnstakingModalProps) {
+export function EarlyUnstake({ onDismiss, stake, onUnstake, onApprove }: UnstakingModalProps) {
   const stakeAmount = formatAmount(stake?.stakeAmount)
   const [typedValue, setTypedValue] = useState('')
   const [isEnoughAllowance, setIsEnoughAllowance] = useState(false)
@@ -81,14 +83,6 @@ export function EarlyUnstake({ onDismiss, stake }: UnstakingModalProps) {
     } else {
       setError('')
     }
-  }
-
-  async function onUnstake() {
-    unstake(stake, parseFloat(typedValue))
-  }
-
-  async function onApprove() {
-    increaseAllowance(stakeAmount)
   }
 
   function calcLeftToStakeEndUnix(): number {
@@ -211,7 +205,7 @@ export function EarlyUnstake({ onDismiss, stake }: UnstakingModalProps) {
           <ButtonIXSWide
             data-testid="approve-ixsgov-button"
             disabled={isEnoughAllowance || isApprovingIXSGov || isUnstaking || Boolean(error)}
-            onClick={onApprove}
+            onClick={() => onApprove(typedValue)}
             style={{ marginRight: '14px' }}
           >
             {isApprovingIXSGov ? (
@@ -225,7 +219,7 @@ export function EarlyUnstake({ onDismiss, stake }: UnstakingModalProps) {
           <ButtonIXSWide
             data-testid="unstake-button"
             disabled={!isEnoughAllowance || isApprovingIXSGov || isUnstaking || Boolean(error)}
-            onClick={onUnstake}
+            onClick={() => onUnstake(typedValue)}
           >
             {isUnstaking ? (
               <Dots>
