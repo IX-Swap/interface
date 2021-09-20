@@ -19,13 +19,15 @@ import { floorTo4Decimals } from 'utils/formatCurrencyAmount'
 interface UnstakingModalProps {
   onDismiss: () => void
   stake: IStaking
+  onUnstake: () => void
+  onApprove: (amount?: string) => void
 }
 
 function formatAmount(amount: number): string {
   return amount?.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 10 })
 }
 
-export function FullUnstake({ onDismiss, stake }: UnstakingModalProps) {
+export function FullUnstake({ onDismiss, stake, onUnstake, onApprove }: UnstakingModalProps) {
   const stakeAmount = formatAmount(stake?.stakeAmount)
   const [isEnoughAllowance, setIsEnoughAllowance] = useState(true)
   const [error, setError] = useState('')
@@ -33,8 +35,6 @@ export function FullUnstake({ onDismiss, stake }: UnstakingModalProps) {
   const IXSGovCurrency = useCurrency(IXS_GOVERNANCE_ADDRESS[chainId ?? 1])
   const IXSGovBalance = useCurrencyBalance(account ?? undefined, IXSGovCurrency ?? undefined)
   const { IXSGovAllowanceAmount, isApprovingIXSGov, isUnstaking } = useUnstakingState()
-  const unstake = useUnstakeFrom(stake.period)
-  const increaseAllowance = useIncreaseIXSGovAllowance()
 
   useEffect(() => {
     if (!IXSGovBalance) {
@@ -65,18 +65,6 @@ export function FullUnstake({ onDismiss, stake }: UnstakingModalProps) {
   function isEnoughIXSGov(): boolean {
     if (!IXSGovBalance) return false
     return parseFloat(IXSGovBalance.toSignificant(5)) >= stake?.stakeAmount
-  }
-
-  async function onUnstake() {
-    if (stake.period === PeriodsEnum.WEEK || stake.period === PeriodsEnum.MONTH) {
-      unstake(stake)
-    } else {
-      unstake(stake, 0)
-    }
-  }
-
-  async function onApprove() {
-    increaseAllowance(stakeAmount)
   }
 
   return (
@@ -144,7 +132,7 @@ export function FullUnstake({ onDismiss, stake }: UnstakingModalProps) {
           <ButtonIXSWide
             data-testid="approve-ixsgov-button"
             disabled={isEnoughAllowance || isApprovingIXSGov || isUnstaking || Boolean(error)}
-            onClick={onApprove}
+            onClick={() => onApprove()}
             style={{ marginRight: '14px' }}
           >
             {isApprovingIXSGov ? (
