@@ -35,8 +35,9 @@ export const ExistingTitle = styled.span`
   white-space: -o-pre-wrap; /* Opera 7 */
   word-wrap: break-word;
 `
-export const NoVaultDescription = styled.span`
+export const VaultStatusDescription = styled.div`
   text-align: center;
+  margin-top: 25px;
 `
 
 export const TitleStatusRow = styled(RowBetween)`
