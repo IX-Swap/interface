@@ -28,17 +28,17 @@ import { ExchangeRulesLink } from 'app/pages/exchange/components/ExchangeRulesLi
 export const Market = () => {
   const [isDisclosureVisible, setIsDisclosureVisible] = useState<boolean>(false)
   const { data: config } = useGetSiteConfig()
-  const hasReadMasDisclosure =
-    config !== undefined ? config.hasReadMasDisclosure : false
+  const hasAcceptedMasDisclosure =
+    config !== undefined ? config.hasAcceptedMasDisclosure : false
   const masDisclosure = config !== undefined ? config.masDisclosure : ''
 
   useEffect(() => {
-    if (!hasReadMasDisclosure) {
+    if (!hasAcceptedMasDisclosure) {
       setIsDisclosureVisible(true)
     } else {
       setIsDisclosureVisible(false)
     }
-  }, [hasReadMasDisclosure, setIsDisclosureVisible])
+  }, [hasAcceptedMasDisclosure, setIsDisclosureVisible])
 
   const classes = useStyles()
   const {
@@ -81,11 +81,7 @@ export const Market = () => {
 
   return (
     <Box className={classes.container}>
-      <DisclosureDialog
-        content={masDisclosure}
-        isOpen={isDisclosureVisible}
-        onClose={() => setIsDisclosureVisible(false)}
-      />
+      <DisclosureDialog content={masDisclosure} isOpen={isDisclosureVisible} />
       <GetWalletDialog open={openDialog} toggleOpen={setOpenDialog} />
       <Grid item container xs={12} justify='flex-end'>
         <ExchangeRulesLink />
