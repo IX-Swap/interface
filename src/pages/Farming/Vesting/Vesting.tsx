@@ -1,13 +1,12 @@
-import React, { useEffect, useMemo } from 'react'
 import { LoaderThin } from 'components/Loader/LoaderThin'
-import { useIsPrivateBuyer, useVestingState, useVestingStatus } from 'state/vesting/hooks'
-import { VestingWrapper, LoaderContainer } from '../styleds'
-import { VestingInfo } from './VestingInfo'
-import { VestingTable } from './VestingTable'
-import { VestingSearch } from './VestingSearch'
-import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
-import { PrivateBuyer } from './PrivateBuyer'
 import { useActiveWeb3React } from 'hooks/web3'
+import React, { useEffect, useMemo } from 'react'
+import { useIsPrivateBuyer, useVestingState, useVestingStatus } from 'state/vesting/hooks'
+import { LoaderContainer, VestingWrapper } from '../styleds'
+import { PrivateBuyer } from './PrivateBuyer'
+import { VestingInfo } from './VestingInfo'
+import { VestingSearch } from './VestingSearch'
+import { VestingTable } from './VestingTable'
 
 export enum VestingStatus {
   LOADING = 'LOADING',
@@ -45,20 +44,20 @@ export const Vesting = () => {
           <LoaderThin size={96} />
         </LoaderContainer>
       )}
-      <VestingWrapper>
+      <>
         {vestingStatus !== VestingStatus.LOADING && (
           <>
             {isPrivateBuyer ? (
               <PrivateBuyer />
             ) : (
-              <>
+              <VestingWrapper>
                 <VestingInfo state={vestingStatus} />
                 <VestingTable vestingStatus={vestingStatus} />
-              </>
+              </VestingWrapper>
             )}
           </>
         )}
-      </VestingWrapper>
+      </>
     </>
   )
 }
