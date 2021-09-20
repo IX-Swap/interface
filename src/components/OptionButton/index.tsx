@@ -68,4 +68,7 @@ export const OptionCustom = styled(FancyButton)<{ active?: boolean; warning?: bo
   :hover {
     border: ${({ theme, warning }) => (warning ? `1px solid ${theme.red1}` : `1px solid ${theme.popUpInputBorder}`)};
   }
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+      max-width: 100%;
+  `}
 `
