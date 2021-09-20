@@ -23,7 +23,11 @@ export const DSOTermsViewCompact = ({ dso }: DSOTermsViewCompactProps) => {
       className={classes.newDSOViewItemStyles}
     >
       <Grid item>
-        <Typography variant={'h3'} color={'primary'}>
+        <Typography
+          variant={'h4'}
+          color={'primary'}
+          style={{ fontWeight: 700 }}
+        >
           Offering Terms
         </Typography>
         <VSpacer size={'small'} />

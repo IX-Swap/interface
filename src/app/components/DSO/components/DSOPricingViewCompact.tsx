@@ -38,7 +38,11 @@ export const DSOPricingViewCompact = ({ dso }: DSOPricingViewCompactProps) => {
       className={classes.newDSOViewItemStyles}
     >
       <Grid item>
-        <Typography variant={'h3'} color={'primary'}>
+        <Typography
+          variant={'h4'}
+          color={'primary'}
+          style={{ fontWeight: 700 }}
+        >
           Pricing
         </Typography>
         <VSpacer size={'small'} />

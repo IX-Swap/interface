@@ -21,7 +21,11 @@ export const DSOTeamView = ({
       <Grid item>
         {isNewThemeOn ? (
           <>
-            <Typography variant={'h3'} color={'primary'}>
+            <Typography
+              variant={isNewThemeOn ? 'h4' : 'h3'}
+              color={'primary'}
+              style={isNewThemeOn ? { fontWeight: 700 } : {}}
+            >
               Company Profile
             </Typography>
             <VSpacer size={'small'} />

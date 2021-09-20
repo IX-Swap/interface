@@ -19,7 +19,11 @@ export const DSOInvestorInformationView = (
   return (
     <Grid container direction='column' spacing={5}>
       <Grid item className={classes.newDSOViewItemStyles}>
-        <Typography variant={'h3'} color={'primary'}>
+        <Typography
+          variant={'h4'}
+          color={'primary'}
+          style={{ fontWeight: 700 }}
+        >
           Company Profile
         </Typography>
         <VSpacer size={'small'} />
@@ -29,7 +33,11 @@ export const DSOInvestorInformationView = (
       <VSpacer size={'medium'} />
 
       <Grid item className={classes.newDSOViewItemStyles}>
-        <Typography variant={'h3'} color={'primary'}>
+        <Typography
+          variant={'h4'}
+          color={'primary'}
+          style={{ fontWeight: 700 }}
+        >
           Business Model
         </Typography>
         <VSpacer size={'small'} />
@@ -39,7 +47,11 @@ export const DSOInvestorInformationView = (
       <VSpacer size={'medium'} />
 
       <Grid item className={classes.newDSOViewItemStyles}>
-        <Typography variant={'h3'} color={'primary'}>
+        <Typography
+          variant={'h4'}
+          color={'primary'}
+          style={{ fontWeight: 700 }}
+        >
           Use of Proceeds
         </Typography>
         <VSpacer size={'small'} />
@@ -49,7 +61,11 @@ export const DSOInvestorInformationView = (
       <VSpacer size={'medium'} />
 
       <Grid item className={classes.newDSOViewItemStyles}>
-        <Typography variant={'h3'} color={'primary'}>
+        <Typography
+          variant={'h4'}
+          color={'primary'}
+          style={{ fontWeight: 700 }}
+        >
           Fundraising Milestone
         </Typography>
         <VSpacer size={'small'} />

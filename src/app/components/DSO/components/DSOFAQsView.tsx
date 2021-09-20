@@ -26,7 +26,11 @@ export const DSOFAQsView = (props: DSOFAQsViewProps) => {
         <Grid item>
           {isNewThemeOn ? (
             <>
-              <Typography variant={'h3'} color={'primary'}>
+              <Typography
+                variant={isNewThemeOn ? 'h4' : 'h3'}
+                color={'primary'}
+                style={isNewThemeOn ? { fontWeight: 700 } : {}}
+              >
                 Frequently Asked Questions
               </Typography>
               <VSpacer size={'small'} />
