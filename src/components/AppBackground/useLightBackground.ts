@@ -13,7 +13,7 @@ const useLightBackground = () => {
     return () => {
       window.removeEventListener('hashchange', handleEvent)
     }
-  })
+  }, [])
   window.onhashchange = () => {
     setHasLightBackground(isLightPage())
   }
