@@ -9,10 +9,10 @@ interface Props {
   currencyId: string
 }
 export const Vault = ({ currency, currencyId }: Props) => {
-  const { status, isApproved: vaultExists } = useAccreditationStatus(currencyId)
+  const { status, isApproved: vaultExists, accreditationRequest } = useAccreditationStatus(currencyId)
   return (
     <>
-      {!vaultExists && <NoVault currency={currency} status={status} />}
+      {!vaultExists && <NoVault currency={currency} status={status} accreditationRequest={accreditationRequest} />}
       {vaultExists && <ExistingVault currency={currency} />}
     </>
   )
