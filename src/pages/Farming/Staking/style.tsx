@@ -316,7 +316,7 @@ export const UnstakeButton = styled(ButtonIXSGradient)`
 `
 export const ClaimButton = styled(UnstakeButton)``
 
-const LoaderContainer = styled.div`
+export const LoaderContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;

@@ -14,7 +14,6 @@ import { useCurrencyBalance } from 'state/wallet/hooks'
 import styled from 'styled-components'
 import { CloseIcon, TYPE } from 'theme'
 import { EllipsedText, ModalBottom, StakeInfoContainer } from '../style'
-
 interface UnstakingModalProps {
   onDismiss: () => void
   stake: IStaking

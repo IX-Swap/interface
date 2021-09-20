@@ -3,11 +3,10 @@ import { InjectedConnector } from '@web3-react/injected-connector'
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 import { WalletLinkConnector } from '@web3-react/walletlink-connector'
 // import { PortisConnector } from '@web3-react/portis-connector'
-import getLibrary from '../utils/getLibrary'
-
-import { FortmaticConnector } from './Fortmatic'
+// import { FortmaticConnector } from './Fortmatic'
 import { NetworkConnector } from './NetworkConnector'
 import IXSWAP_LOGO_URL from '../assets/svg/logo.svg'
+import getLibrary from '../utils/getLibrary'
 
 const INFURA_KEY = process.env.REACT_APP_INFURA_KEY
 

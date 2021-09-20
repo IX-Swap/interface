@@ -1,13 +1,12 @@
 import { Currency } from '@ixswap1/sdk-core'
+import { ReactComponent as InfoIcon } from 'assets/images/attention.svg'
+import { IconWrapper } from 'components/AccountDetails/styleds'
+import { MouseoverTooltip } from 'components/Tooltip'
 import React from 'react'
 import { Text } from 'rebass'
 import CurrencyLogo from '../CurrencyLogo'
 import { RowFixed } from '../Row'
 import { FixedHeightRow } from './styleds'
-import { MouseoverTooltip } from 'components/Tooltip'
-import { IconWrapper } from 'components/AccountDetails/styleds'
-import { ReactComponent as InfoIcon } from 'assets/images/attention.svg'
-import styled from 'styled-components/macro'
 
 interface Props {
   textLeft: React.ReactNode
