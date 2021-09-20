@@ -532,8 +532,16 @@ export function useGetStakings() {
 
   return useCallback(async () => {
     try {
-      const { SECONDS_IN_DAY, periodsIndex, periodsInSeconds, periodsApy, periodsLockMonths, periodsInDays } =
-        stakingPeriodsData
+      const {
+        SECONDS_IN_DAY,
+        periodsIndex,
+        periodsInSeconds,
+        periodsApy,
+        periodsLockMonths,
+        periodsInDays,
+        testPeriodsLockSeconds,
+        testPeriodsMaturitySeconds,
+      } = stakingPeriodsData
 
       const floorTo4Decimals = (num: number) => Math.floor((num + Number.EPSILON) * 10000) / 10000
       const calculateReward = (
@@ -575,10 +583,16 @@ export function useGetStakings() {
         return stakedTransactions.map((data: Array<number>, index: number) => {
           const startDateUnix = BigNumber.from(data[0]).toNumber()
           const stakeAmount = +utils.formatUnits(data[1], 18)
-          const endDateUnix = startDateUnix + periodsInSeconds[period]
+          // TODO: uncomment on prod
+          // const endDateUnix = startDateUnix + periodsInSeconds[period]
           const lockMonths = periodsLockMonths[period]
-          const lockSeconds = lockMonths * 30 * SECONDS_IN_DAY
-          const lockedTillUnix = startDateUnix + lockSeconds
+          // const lockSeconds = lockMonths * 30 * SECONDS_IN_DAY
+          // const lockedTillUnix = startDateUnix + lockSeconds
+
+          //<<<< testing, remove on prod
+          const endDateUnix = startDateUnix + testPeriodsMaturitySeconds[period]
+          const lockedTillUnix = startDateUnix + testPeriodsLockSeconds[period]
+          //===== testing, remove on prod
           return {
             period,
             stakeAmount,

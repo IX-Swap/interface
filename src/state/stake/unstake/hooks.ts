@@ -1,21 +1,10 @@
-import { Interface } from '@ethersproject/abi'
-import { Currency, CurrencyAmount, Token, WETH9 } from '@ixswap1/sdk-core'
-import { Pair } from '@ixswap1/v2-sdk'
-import { t } from '@lingui/macro'
-import { abi as STAKING_REWARDS_ABI } from '@uniswap/liquidity-staker/build/StakingRewards.json'
-import { IXS_ADDRESS, IXS_STAKING_V1_ADDRESS } from 'constants/addresses'
-import stakingPeriodsData, { IStaking, PeriodsEnum } from 'constants/stakingPeriods'
+import { IXS_STAKING_V1_ADDRESS } from 'constants/addresses'
+import { IStaking, PeriodsEnum } from 'constants/stakingPeriods'
 import { BigNumber, utils } from 'ethers'
-import { useCurrency } from 'hooks/Tokens'
-import { useIXSGovTokenContract, useIXSStakingContract, useIXSTokenContract } from 'hooks/useContract'
-import useCurrentBlockTimestamp from 'hooks/useCurrentBlockTimestamp'
-import JSBI from 'jsbi'
-import { useCallback, useEffect, useMemo } from 'react'
+import { useIXSGovTokenContract, useIXSStakingContract } from 'hooks/useContract'
+import { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, AppState } from 'state'
-import { PERIOD, StakingStatus } from 'state/stake/reducer'
-import { useCurrencyBalance } from 'state/wallet/hooks'
-import { maxAmountSpend } from 'utils/maxAmountSpend'
 import { useActiveWeb3React } from 'hooks/web3'
 import { calculateGasMargin } from 'utils/calculateGasMargin'
 import { increaseIXSGovAllowance, checkIXSGovAllowance, unstake } from './actions'
@@ -106,7 +95,10 @@ export function useUnstakeFrom(period?: PeriodsEnum) {
             break
           }
           case PeriodsEnum.TWO_MONTHS: {
-            if (!amount) return
+            if (!amount && amount !== 0) {
+              dispatch(unstake.rejected({ errorMessage: 'Wrong unstake amount' }))
+              return
+            }
             const stakeAmount = utils.parseUnits(amount.toString(), 'ether')
             const estimatedGas = await contract?.estimateGas.unstakeFromTwoMonths(stakeAmount, stakeIndex, noData)
             if (!estimatedGas) {
@@ -119,7 +111,10 @@ export function useUnstakeFrom(period?: PeriodsEnum) {
             break
           }
           case PeriodsEnum.THREE_MONTHS: {
-            if (!amount) return
+            if (!amount && amount !== 0) {
+              dispatch(unstake.rejected({ errorMessage: 'Wrong unstake amount' }))
+              return
+            }
             const stakeAmount = utils.parseUnits(amount.toString(), 'ether')
             const estimatedGas = await contract?.estimateGas.unstakeFromThreeMonths(stakeAmount, stakeIndex, noData)
             if (!estimatedGas) {
