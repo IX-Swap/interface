@@ -2,10 +2,8 @@ import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { faqItem } from '__fixtures__/issuance'
 import { DSOFAQsView } from 'app/components/DSO/components/DSOFAQsView'
-import { DigitalSecurityOffering } from 'types/dso'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
 import * as Typography from '@material-ui/core'
-import { dso } from '__fixtures__/authorizer'
 
 jest.mock('@material-ui/core/Typography', () => jest.fn(() => null))
 
@@ -14,24 +12,25 @@ jest.mock('app/components/DSO/components/FormSectionHeader', () => ({
 }))
 
 describe('DSOFAQsView', () => {
-  const dsoObj: DigitalSecurityOffering = { ...dso, faqs: [faqItem] }
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
   })
 
+  const faq = { faqs: [faqItem] } as any
+
   it('renders without error', () => {
-    render(<DSOFAQsView dso={dsoObj} />)
+    render(<DSOFAQsView dso={faq} />)
   })
 
   it('renders FormSectionHeader', () => {
-    render(<DSOFAQsView dso={dsoObj} />)
+    render(<DSOFAQsView dso={faq} />)
 
     expect(FormSectionHeader).toHaveBeenCalledTimes(0)
   })
 
   it('renders FormSectionHeader when isTitleVisible is true', () => {
-    render(<DSOFAQsView dso={dsoObj} isTitleVisible />)
+    render(<DSOFAQsView dso={faq} isTitleVisible />)
 
     expect(FormSectionHeader).toHaveBeenCalledTimes(1)
     expect(FormSectionHeader).toHaveBeenCalledWith(
@@ -41,7 +40,7 @@ describe('DSOFAQsView', () => {
   })
 
   it('renders content with correct props', () => {
-    render(<DSOFAQsView dso={dsoObj} />)
+    render(<DSOFAQsView dso={faq} />)
 
     expect(Typography).toHaveBeenCalledTimes(2)
 

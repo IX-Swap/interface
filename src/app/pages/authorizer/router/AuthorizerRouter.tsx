@@ -1,6 +1,5 @@
 import { LandingPage } from 'app/components/LandingPage/LandingPage'
 import { AuthorizerBanksRouter } from 'app/pages/authorizer/pages/banks/router/AuthorizerBanksRouter'
-import { AuthorizerCashDepositsRouter } from 'app/pages/authorizer/pages/cashDeposits/router/AuthorizerCashDepositsRouter'
 import { AuthorizerCashWithdrawalsRouter } from 'app/pages/authorizer/pages/cashWithdrawals/router/AuthorizerCashWithdrawalsRouter'
 import { AuthorizerCommitmentRouter } from 'app/pages/authorizer/pages/commitments/router/AuthorizerCommitmentRouter'
 import { AuthorizerCorporateIdentitiesRouter } from 'app/pages/authorizer/pages/corporateIdentities/router/AuthorizerCorporateIdentitiesRouter'
@@ -18,16 +17,13 @@ import { Switch } from 'react-router'
 import { AuthorizerIssuanceDetailsRouter } from 'app/pages/authorizer/pages/issuanceDetails/router/AuthorizerIssuanceDetailsRouter'
 import { AuthorizerListingsRouter } from '../pages/listings/router/AuthorizerListingsRouter'
 import { AuthorizerVirtualAccountsRouter } from 'app/pages/authorizer/pages/VirtualAccounts/router/AuthorizerVirtualAccountsRouter'
+import { AuthorizerDealClosureRouter } from 'app/pages/authorizer/pages/DealClosures/AuthorizerDealClosuerRouter'
 
 export const AuthorizerRouter = () => {
   return (
     <Switch>
       <AppRoute breadcrumb='Bank Accounts' path={AuthorizerRoute.banks}>
         <AuthorizerBanksRouter />
-      </AppRoute>
-
-      <AppRoute breadcrumb='Cash Deposits' path={AuthorizerRoute.cashDeposits}>
-        <AuthorizerCashDepositsRouter />
       </AppRoute>
 
       <AppRoute
@@ -63,6 +59,10 @@ export const AuthorizerRouter = () => {
         path={AuthorizerRoute.offerings}
       >
         <AuthorizerDSORouter />
+      </AppRoute>
+
+      <AppRoute breadcrumb='Deal Closure' path={AuthorizerRoute.dealClosure}>
+        <AuthorizerDealClosureRouter />
       </AppRoute>
 
       <AppRoute breadcrumb='Commitments' path={AuthorizerRoute.commitments}>

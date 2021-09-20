@@ -1,7 +1,11 @@
 import { TableColumn } from 'types/util'
 import { Commitment } from 'types/commitment'
 import { formatDateToMMDDYY } from 'helpers/dates'
-import { renderAmount, renderIndividualOrCompanyName } from 'helpers/tables'
+import { renderAmount } from 'helpers/tables'
+import {
+  renderDealStatus,
+  renderStatusColumn
+} from 'app/pages/authorizer/hooks/useAuthorizerView'
 
 export const columns: Array<TableColumn<Commitment>> = [
   {
@@ -10,27 +14,28 @@ export const columns: Array<TableColumn<Commitment>> = [
     render: formatDateToMMDDYY
   },
   {
-    key: 'identity.individual.firstName',
-    label: 'Name',
-    render: renderIndividualOrCompanyName
-  },
-  {
-    key: 'level',
-    label: 'Level'
-  },
-  {
     key: 'dso.tokenName',
     label: 'Digital Security'
   },
   {
-    key: 'dso.issuerName',
-    label: 'Issuer'
+    key: 'dso.capitalStructure',
+    label: 'Capital Structure'
+  },
+  {
+    key: 'dso.status',
+    label: 'DSO Status',
+    render: renderDealStatus
   },
   {
     key: 'totalAmount',
-    label: 'Amount',
+    label: 'Invested Amount',
     align: 'right',
     headAlign: 'right',
     render: renderAmount
+  },
+  {
+    key: 'fundStatus',
+    label: 'Status',
+    render: renderStatusColumn
   }
 ]

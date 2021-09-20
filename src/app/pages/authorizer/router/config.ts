@@ -1,7 +1,6 @@
 import { makeURL } from 'config/appURL'
 import { InternalRouteProps } from 'types/util'
 import { ReactComponent as AccountIcon } from 'assets/icons/navigation/account.svg'
-import { ReactComponent as CashDepositIcon } from 'assets/icons/navigation/cash-deposit.svg'
 import { ReactComponent as CashWithdrawalIcon } from 'assets/icons/navigation/cash-withdrawal.svg'
 import { ReactComponent as DSWithdrawalIcon } from 'assets/icons/navigation/ds-withdrawal.svg'
 import { ReactComponent as WithdrawalAddressIcon } from 'assets/icons/navigation/withdrawal-address.svg'
@@ -16,7 +15,6 @@ import { ReactComponent as VirtualAccountIcon } from 'assets/icons/navigation/vi
 export const AuthorizerRoute = {
   banks: makeURL(['app', 'authorizer', 'bankAccount']),
   landing: makeURL(['app', 'authorizer']),
-  cashDeposits: makeURL(['app', 'authorizer', 'cashDeposit']),
   cashWithdrawals: makeURL(['app', 'authorizer', 'cashWithdrawal']),
   dsWithdrawals: makeURL(['app', 'authorizer', 'dsWithdrawal']),
   individualIdentities: makeURL(['app', 'authorizer', 'individualIdentity']),
@@ -27,7 +25,8 @@ export const AuthorizerRoute = {
   viewItem: makeURL(['app', 'authorizer', 'category', 'itemId']),
   issuanceDetails: makeURL(['app', 'authorizer', 'issuanceDetails']),
   listings: '/app/authorizer/listings',
-  virtualAccounts: '/app/authorizer/virtual-accounts'
+  virtualAccounts: '/app/authorizer/virtual-accounts',
+  dealClosure: '/app/authorizer/closure'
 }
 
 export const authorizerLandingLinks: InternalRouteProps[] = [
@@ -36,12 +35,6 @@ export const authorizerLandingLinks: InternalRouteProps[] = [
     path: AuthorizerRoute.banks,
     color: '#2B78FD',
     icon: AccountIcon
-  },
-  {
-    label: 'Cash Deposits',
-    path: AuthorizerRoute.cashDeposits,
-    color: '#43B526',
-    icon: CashDepositIcon
   },
   {
     label: 'Cash Withdrawals',
@@ -72,6 +65,12 @@ export const authorizerLandingLinks: InternalRouteProps[] = [
     path: AuthorizerRoute.offerings,
     color: '#11BB93',
     icon: OfferingIcon
+  },
+  {
+    label: 'Deal Closure',
+    path: AuthorizerRoute.dealClosure,
+    color: '#11BB93',
+    icon: CommitmentIcon
   },
   {
     label: 'Commitments',

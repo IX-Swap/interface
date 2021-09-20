@@ -13,8 +13,13 @@ export interface AuthorizerViewReturnValue<T> {
 }
 
 export const renderStatusColumn = (s: string): JSX.Element => (
-  <AuthorizableStatus status={s} />
+  <AuthorizableStatus status={s} isNewTheme compact={false} />
 )
+
+export const renderDealStatus = (s: string): JSX.Element => {
+  const status = s === 'Approved' ? 'Open' : s
+  return <AuthorizableStatus status={status} isNewTheme compact={false} />
+}
 
 export const statusColumn: TableColumn<any> = {
   key: 'status',

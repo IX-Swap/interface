@@ -29,7 +29,7 @@ describe('FinancialView', () => {
           ...individual,
           sourceOfFund: [
             {
-              name: 'Inheritance/Gift',
+              name: 'Inheritance/Gifts',
               checked: false,
               value: 20
             }
@@ -38,6 +38,6 @@ describe('FinancialView', () => {
       />
     )
 
-    expect(queryByText('Inheritance/Gift 20%')).toBeFalsy()
+    expect(queryByText('Inheritance/Gifts 20%')).toBeFalsy()
   })
 })
