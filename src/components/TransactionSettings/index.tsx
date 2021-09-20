@@ -47,7 +47,7 @@ const MinuteLabel = styled.span`
   line-height: 33px;
   color: ${({ theme }) => theme.text6};
 `
-export interface TransactionSettingsProps {
+interface TransactionSettingsProps {
   placeholderSlippage: Percent // varies according to the context in which the settings dialog is placed
 }
 

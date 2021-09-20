@@ -31,7 +31,7 @@ import {
   IconWrapperWithBg,
   InfoCard,
   LowerSection,
-  MainWalletAction,
+  // MainWalletAction,
   TransactionListWrapper,
   UpperSection,
   WalletAction,

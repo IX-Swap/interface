@@ -1,4 +1,4 @@
-import { ActionFilterTabs, ActionTypes } from 'components/Vault/enum'
+import { ActionFilterTabs } from 'components/Vault/enum'
 
 export const admin = {
   login: 'auth/login',

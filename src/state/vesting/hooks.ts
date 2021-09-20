@@ -3,11 +3,11 @@ import { t } from '@lingui/macro'
 import { IXS_ADDRESS } from 'constants/addresses'
 import { BigNumber } from 'ethers'
 import { useCurrency } from 'hooks/Tokens'
-import { useVestingContract, useIXSTokenContract } from 'hooks/useContract'
+import { useVestingContract } from 'hooks/useContract'
 import useTheme from 'hooks/useTheme'
 import { useActiveWeb3React } from 'hooks/web3'
 import { VestingStatus } from 'pages/Farming/Vesting/Vesting'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import apiService from 'services/apiService'
 import { vesting } from 'services/apiUrls'
@@ -35,7 +35,6 @@ export enum STATUS {
 export function useDistributeCallback(): () => Promise<void> {
   const vesting = useVestingContract()
   const { chainId } = useActiveWeb3React()
-  const tokenContract = useIXSTokenContract()
 
   const currency = useCurrency(IXS_ADDRESS[chainId ?? 42])
   const decimals = currency?.decimals

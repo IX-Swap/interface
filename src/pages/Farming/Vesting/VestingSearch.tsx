@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from 'react'
 import { t } from '@lingui/macro'
-import { useDispatch } from 'react-redux'
-import styled from 'styled-components'
 import { ButtonIXSGradient } from 'components/Button'
-import { Trans } from '@lingui/macro'
-import { useVestingStatus } from 'state/vesting/hooks'
-import { ReactComponent as Close } from '../../../assets/images/cross.svg'
-import { saveCustomVestingAddress } from 'state/vesting/actions'
 import { useActiveWeb3React } from 'hooks/web3'
+import React, { useEffect, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { saveCustomVestingAddress } from 'state/vesting/actions'
+import { useVestingStatus } from 'state/vesting/hooks'
+import styled from 'styled-components'
+import { ReactComponent as Close } from '../../../assets/images/cross.svg'
 
 // todo use button inside search
 export const VestingSearch = () => {

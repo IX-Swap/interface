@@ -17,6 +17,7 @@ function parseLocale(maybeSupportedLocale: string): SupportedLocale | undefined 
 /**
  * Returns the supported locale read from the user agent (navigator)
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function navigatorLocale(): SupportedLocale | undefined {
   if (!navigator.language) return undefined
 
