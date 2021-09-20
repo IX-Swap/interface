@@ -40,9 +40,10 @@ export function FullUnstake({ onDismiss, stake }: UnstakingModalProps) {
     if (!IXSGovBalance) {
       setError('Please wait...')
       return
-    }
-    if (!isEnoughIXSGov()) {
+    } else if (!isEnoughIXSGov()) {
       setError('Not Enough IXSGov')
+    } else {
+      setError('')
     }
   }, [IXSGovBalance])
 
@@ -90,7 +91,7 @@ export function FullUnstake({ onDismiss, stake }: UnstakingModalProps) {
         <Row marginTop={20} marginBottom={10}>
           <IXSAmountToUnstake>{stakeAmount} IXS</IXSAmountToUnstake>
         </Row>
-        {!isEnoughIXSGov() && (
+        {IXSGovBalance && !isEnoughIXSGov() && (
           <TYPE.description2 color={'bg14'}>
             <Trans>
               You don’t have enough IXSGov for unstake all available IXS ({stakeAmount} is available) 1 IXS = 1 IXGov
