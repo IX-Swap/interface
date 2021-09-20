@@ -125,7 +125,13 @@ export const TopbarContainer = () => {
       case 'Home':
         return homeLinks
       case 'Authorizer':
-        return authorizerLandingLinks
+        return [
+          {
+            label: 'Dashboard',
+            path: AuthorizerRoute.landing
+          },
+          ...authorizerLandingLinks
+        ]
       case 'Accounts':
         return newAccountsLandingLinks
       case 'Issuance':

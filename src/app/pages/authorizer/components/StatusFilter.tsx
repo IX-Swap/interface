@@ -53,7 +53,7 @@ export const BaseFundStatusFilter = ({
   return (
     <SearchQueryFilter<'fundStatus'>
       name='fundStatus'
-      defaultValue='Not funded'
+      defaultValue='Funds on hold'
     >
       {({ value, onChange }) => (
         <Box>
