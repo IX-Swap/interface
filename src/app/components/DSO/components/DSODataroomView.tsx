@@ -104,7 +104,7 @@ export const DSODataroomView = (props: DSODataroomViewProps) => {
           item
           container
           direction={'column'}
-          className={showTitle ? '' : classes.newDSOViewItemStyles}
+          className={classes.newDSOViewItemStyles}
         >
           <Grid item>
             <Typography
@@ -130,7 +130,7 @@ export const DSODataroomView = (props: DSODataroomViewProps) => {
           item
           container
           direction={'column'}
-          className={showTitle ? '' : classes.newDSOViewItemStyles}
+          className={classes.newDSOViewItemStyles}
         >
           <Grid item>
             <Typography

@@ -22,9 +22,9 @@ export const DSOTeamView = ({
         {isNewThemeOn ? (
           <>
             <Typography
-              variant={isNewThemeOn ? 'h4' : 'h3'}
+              variant={'h4'}
               color={'primary'}
-              style={isNewThemeOn ? { fontWeight: 700 } : {}}
+              style={{ fontWeight: 700 }}
             >
               Company Profile
             </Typography>
