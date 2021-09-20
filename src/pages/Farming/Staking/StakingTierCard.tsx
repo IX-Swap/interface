@@ -25,27 +25,7 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
   const fetchHistoricalPoolSize = useFetchHistoricalPoolSize()
   const poolSizeState = usePoolSizeState()
   const { hasStakedSuccessfully, isPaused } = useStakingState()
-  const tierPeriod = () => {
-    switch (tier.period) {
-      case PERIOD.ONE_WEEK: {
-        return 'oneWeek'
-      }
-      case PERIOD.ONE_MONTH: {
-        return 'oneMonth'
-      }
-      case PERIOD.TWO_MONTHS: {
-        return 'twoMonths'
-      }
-      case PERIOD.THREE_MONTHS: {
-        return 'threeMonths'
-      }
-      default: {
-        return 'oneWeek'
-      }
-    }
-  }
 
-  const tierPeriodKey = tierPeriod() as keyof typeof poolSizeState
   const [leftToFill, setLeftToFill] = useState(0)
 
   useEffect(() => {
@@ -53,9 +33,9 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
   }, [fetchHistoricalPoolSize, tier.period, hasStakedSuccessfully])
 
   useEffect(() => {
-    const filled = poolSizeState[tierPeriodKey] as number
+    const filled = poolSizeState[tier.period]
     setLeftToFill(DEFAULT_POOL_SIZE_LIMIT - filled)
-  }, [poolSizeState, tierPeriodKey, tier.period])
+  }, [poolSizeState, tier.period])
 
   const selectPeriod = () => {
     const periodLegend = {
@@ -114,7 +94,7 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
                   ${isTierUnlimited ? 'Unlimited\n' : '2 000 000 IXS\n'}
 
                   Staked IXS in Pool: 
-                  ${poolSizeState[tierPeriodKey]} IXS
+                  ${poolSizeState[tier.period]} IXS
 
                   ${
                     isTierUnlimited
@@ -153,7 +133,7 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
         <RowCenter style={{ margin: 'auto' }}>
           <TYPE.description3 fontWeight={400} opacity="0.5">
             <Trans>
-              <span style={{ fontWeight: 700 }}>{leftToFill}</span> tokens available for staking
+              <span style={{ fontWeight: 700 }}>{leftToFill.toLocaleString('fr')}</span> tokens available for staking
             </Trans>
           </TYPE.description3>
         </RowCenter>
