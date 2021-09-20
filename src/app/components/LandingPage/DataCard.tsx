@@ -5,6 +5,7 @@ import OrangeEllipse from 'assets/ellipse-314.svg'
 import PurpleSquare from 'assets/purple-square.svg'
 import PurpleEllipse from 'assets/purple-ellipse.svg'
 import BlueEllipse from 'assets/blue-ellipse.svg'
+import DarkPurpleSquare from 'assets/dark-purple-square.svg'
 import { AppRouterLink } from 'components/AppRouterLink'
 import { getCurrentLocationData } from 'hooks/location/utils'
 import { safeGeneratePath } from 'helpers/router'
@@ -15,7 +16,8 @@ export const dataCardBgList = [
   `url("${OrangeEllipse}") no-repeat bottom right, linear-gradient(180deg, #E94D3E 0%, #EAA140 100%)`,
   `url("${PurpleSquare}") no-repeat bottom right, linear-gradient(180deg, #3E82E9 0%, #548AF3 100%)`,
   `url("${PurpleEllipse}") no-repeat bottom right, linear-gradient(180deg, #1D1EB4 0%, #B6288E 100%)`,
-  `url("${BlueEllipse}") no-repeat bottom right, linear-gradient(180deg, #4764ED 0%, #6DCCF7 100%)`
+  `url("${BlueEllipse}") no-repeat bottom right, linear-gradient(180deg, #4764ED 0%, #6DCCF7 100%)`,
+  `url("${DarkPurpleSquare}") no-repeat bottom right, linear-gradient(180deg, #1D1EB4 0%, #932AB8 100%)`
 ]
 
 export const DataCard = (props: LandingPageItemProps) => {

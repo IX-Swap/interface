@@ -19,10 +19,14 @@ const categoryMap = {
 }
 
 export const useAuthorizerPendingItems = (category: AuthorizerCategory) => {
+  const isCommitment = category === AuthorizerCategory.Commitments
   const data = useTableWithPagination<any>(
     `pending-${category}`,
     categoryMap[category],
-    { status: 'Submitted' },
+    {
+      status: !isCommitment ? 'Submitted' : undefined,
+      fundStatus: !isCommitment ? undefined : 'Funds on hold'
+    },
     true
   )
   return {

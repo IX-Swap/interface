@@ -3,7 +3,10 @@ import { makeStyles } from '@material-ui/core/styles'
 export const useStyles = makeStyles(theme => ({
   container: {
     position: 'relative',
-    padding: 0
+    padding: 0,
+    [theme.breakpoints.down('md')]: {
+      padding: 24
+    }
   },
   header: {
     padding: theme.spacing(5, 2, 0),
