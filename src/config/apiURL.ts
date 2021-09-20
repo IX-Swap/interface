@@ -298,7 +298,8 @@ export const assetsURL = {
 
 export const resources = {
   getSiteConfig: '/resources/siteConfig',
-  createOrUpdateMasDisclosure: '/resources/siteConfig/masDisclosure'
+  createOrUpdateMasDisclosure: '/resources/siteConfig/masDisclosure',
+  acceptMasDisclosure: '/resources/siteConfig/masDisclosure/accept'
 }
 
 export const virtualAccountsAudit = {
