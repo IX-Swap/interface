@@ -26,9 +26,9 @@ msgstr "${0}"
 msgid "${0} ETH"
 msgstr "${0} ETH"
 
-#: src/components/AccountDetails/index.tsx
-msgid "(clear all)"
-msgstr "(curățat)"
+#: 
+#~ msgid "(clear all)"
+#~ msgstr "(curățat)"
 
 #: src/components/InputStepCounter/InputStepCounter.tsx
 msgid "+{feeAmountFormatted}%"
@@ -59,6 +59,18 @@ msgstr "1% taxă"
 msgid "<0>Loading</0>"
 msgstr "<0>Se încarcă</0>"
 
+#: src/pages/Farming/Staking/StakingTierCard.tsx
+msgid "<0>{0}</0> tokens available for staking"
+msgstr ""
+
+#: src/pages/Farming/Staking/MyStakingsTable.tsx
+#: src/pages/Farming/Staking/StakeModal.tsx
+#: src/pages/Farming/Staking/StakingTierCard.tsx
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+msgid "APY"
+msgstr ""
+
 #: src/components/swap/AcceptChanges.tsx
 #: src/components/swap/SwapModalHeader.tsx
 msgid "Accept"
@@ -67,6 +79,14 @@ msgstr "Acceptă"
 #: src/components/AccountDetails/index.tsx
 msgid "Account"
 msgstr "Cont"
+
+#: src/components/AdminKycTable/index.tsx
+msgid "Accreditation pair"
+msgstr ""
+
+#: src/components/Vault/NoVault.tsx
+msgid "Accreditation rejected"
+msgstr ""
 
 #: src/components/SearchModal/ImportRow.tsx
 msgid "Active"
@@ -85,9 +105,18 @@ msgstr "Adaugă lichiditate"
 msgid "Add liquidity"
 msgstr "Adaugă lichiditate"
 
+#: src/components/Header/IXSBalanceModal.tsx
+#: src/components/Header/IXSBalanceModal.tsx
+msgid "Add to Metamask"
+msgstr ""
+
 #: src/components/TransactionConfirmationModal/index.tsx
-msgid "Add {0} to Metamask <0/>"
-msgstr "Adaugă {0} la Metamask <0/>"
+msgid "Add {0} to Metamask"
+msgstr ""
+
+#: 
+#~ msgid "Add {0} to Metamask <0/>"
+#~ msgstr "Adaugă {0} la Metamask <0/>"
 
 #: src/pages/AddLiquidityV2/index.tsx
 #: src/pages/AddLiquidityV2/index.tsx
@@ -97,6 +126,10 @@ msgstr "Add {0} {1} and {2} {3} (Automatic Copy)"
 #: src/components/TransactionConfirmationModal/index.tsx
 msgid "Added {0}"
 msgstr "Adăugat {0}"
+
+#: src/components/Vault/enum.ts
+msgid "All"
+msgstr ""
 
 #: src/pages/Swap/index.tsx
 msgid "Allow IXSwap to use your {0}"
@@ -110,27 +143,88 @@ msgstr "Permiteți tranzacțiile cu impact asupra prețurilor mari și săriți 
 msgid "Always make sure the URL is<0>app.ixswap.io</0> - bookmark it to be safe."
 msgstr "Asigurați-vă întotdeauna că adresa URL este <0> app.ixswap.io </0> - marcați-o pentru a fi sigură."
 
-#: src/hooks/useSwapCallback.ts
-msgid "An error occurred when trying to execute this swap. You may need to increase your slippage tolerance. If that does not work, there may be an incompatibility with the token you are trading. Note fee on transfer and rebase tokens are incompatible with Uniswap V3."
-msgstr "A apărut o eroare la încercarea de a executa acest swap. Este posibil să fie nevoie să vă măriți toleranța la alunecare. Dacă acest lucru nu funcționează, poate exista o incompatibilitate cu jetonul pe care îl tranzacționați. Taxa de notă pentru jetoanele de transfer și rebase sunt incompatibile cu Uniswap V3."
+#: src/components/Vault/DepositRequestForm.tsx
+#: src/components/Vault/HistoryTable.tsx
+#: src/components/Vault/WithdrawRequestForm.tsx
+#: src/pages/Farming/Staking/MyStakingsTable.tsx
+msgid "Amount"
+msgstr ""
 
-#: src/components/earn/StakingModal.tsx
+#: src/state/stake/hooks.ts
+msgid "Amount exceeds balance"
+msgstr ""
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Amount of IXS to stake"
+msgstr ""
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+msgid "Amount of IXS to unstake"
+msgstr ""
+
+#: src/components/Vault/DepositSendInfo.tsx
+#: src/components/Vault/TransactionDetails.tsx
+msgid "Amount:"
+msgstr ""
+
+#: src/hooks/useSwapCallback.ts
+msgid "An error occurred when trying to execute this swap. You may need to increase your slippage tolerance. If that does not work, there may be an incompatibility with the token you are trading."
+msgstr ""
+
+#: 
+#~ msgid "An error occurred when trying to execute this swap. You may need to increase your slippage tolerance. If that does not work, there may be an incompatibility with the token you are trading. Note fee on transfer and rebase tokens are incompatible with Uniswap V3."
+#~ msgstr "A apărut o eroare la încercarea de a executa acest swap. Este posibil să fie nevoie să vă măriți toleranța la alunecare. Dacă acest lucru nu funcționează, poate exista o incompatibilitate cu jetonul pe care îl tranzacționați. Taxa de notă pentru jetoanele de transfer și rebase sunt incompatibile cu Uniswap V3."
+
+#: src/components/AdminKycTable/SecondStepStatus.tsx
+#: src/components/AdminKycTable/SecondStepStatus.tsx
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Approve"
 msgstr "Aprobați"
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Approve IXS"
+msgstr ""
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+msgid "Approve IXSGov"
+msgstr ""
 
 #: src/pages/AddLiquidityV2/index.tsx
 #: src/pages/AddLiquidityV2/index.tsx
 msgid "Approve {0}"
 msgstr "Aprobați {0}"
 
+#: src/state/stake/hooks.ts
+msgid "Approve {amount} IXS"
+msgstr ""
+
+#: src/state/stake/unstake/hooks.ts
+msgid "Approve {amount} IXSGov"
+msgstr ""
+
+#: src/components/AdminKycTable/FirstStepStatus.tsx
+#: src/components/AdminKycTable/SecondStepStatus.tsx
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Approved"
 msgstr "Aprobat"
 
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Approved IXS"
+msgstr ""
+
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Approving"
 msgstr "Aprobare"
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Approving IXS"
+msgstr ""
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+msgid "Approving IXSGov"
+msgstr ""
 
 #: src/pages/AddLiquidityV2/index.tsx
 #: src/pages/AddLiquidityV2/index.tsx
@@ -141,17 +235,34 @@ msgstr "Aprobare {0}"
 msgid "Are you sure?"
 msgstr "Ești sigur?"
 
-#: src/components/earn/StakingModal.tsx
-msgid "Available to deposit: {0}"
-msgstr "Disponibil pentru depunere: {0}"
+#: 
+#~ msgid "Available to deposit: {0}"
+#~ msgstr "Disponibil pentru depunere: {0}"
+
+#: src/components/earn/StakingInputPercentage.tsx
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Available:"
+msgstr ""
 
 #: src/components/WalletModal/index.tsx
 msgid "Back"
 msgstr "Înapoi"
 
+#: src/components/Header/IXSBalanceModal.tsx
+msgid "Balance of IXGov"
+msgstr ""
+
+#: src/components/Header/IXSBalanceModal.tsx
+msgid "Balance of IXS"
+msgstr ""
+
 #: src/components/CurrencyInputPanel/index.tsx
 msgid "Balance: {0} {1}"
 msgstr "Sold: {0} {1}"
+
+#: src/pages/Farming/Vesting/ZeroBalanceVesting.tsx
+msgid "Balances will be updated on the vesting page until the contracts are programmed."
+msgstr ""
 
 #: src/components/FeeSelector/index.tsx
 msgid "Best for exotic pairs."
@@ -169,6 +280,10 @@ msgstr "Cel mai bun pentru perechi stabile."
 msgid "Blocked address"
 msgstr "Adresa blocată"
 
+#: src/components/Vault/ChooseBrokerDealerPopup.tsx
+msgid "Broker dealer and Custodian"
+msgstr ""
+
 #: src/components/SearchModal/ImportList.tsx
 msgid "By adding this list you are implicitly trusting that the data is correct. Anyone can create a list, including creating fake versions of existing lists and lists that claim to represent projects that do not have one."
 msgstr "Prin adăugarea acestei liste sunteți implicit încrezător că datele sunt corecte. Oricine poate crea o listă, inclusiv crearea unor versiuni false ale listelor și listelor existente care pretind că reprezintă proiecte care nu au unul."
@@ -177,9 +292,30 @@ msgstr "Prin adăugarea acestei liste sunteți implicit încrezător că datele 
 msgid "By connecting a wallet, you agree to IXSwap’ <0>Terms and Conditions</0> and acknowledge that you have read and understand the <1>IXSwap Privacy Policy</1>."
 msgstr "Prin conectarea unui portofel, sunteți de acord cu „<0> Termenii și condițiile </0> IXSwap și recunoașteți că ați citit și înțeles <1> Politica de confidențialitate IXSwap </1>."
 
-#: src/components/AccountDetails/index.tsx
-msgid "Change"
-msgstr "Schimbă"
+#: src/components/Vault/DepositSendInfo.tsx
+#: src/components/Vault/TransactionDetails.tsx
+msgid "Cancel"
+msgstr ""
+
+#: src/components/Vault/enum.ts
+msgid "Cancelled"
+msgstr ""
+
+#: 
+#~ msgid "Change"
+#~ msgstr "Schimbă"
+
+#: src/pages/Farming/Vesting/VestingSearch.tsx
+msgid "Check"
+msgstr ""
+
+#: src/pages/Farming/Vesting/VestingSearch.tsx
+msgid "Check any address"
+msgstr ""
+
+#: src/components/Vault/NoVault.tsx
+msgid "Checking your KYC on primary issuer"
+msgstr ""
 
 #: src/components/CurrencyInputPanel/index.tsx
 #: src/pages/PoolFinder/CurrencyRow.tsx
@@ -188,11 +324,15 @@ msgid "Choose token"
 msgstr "Selectează un simbol"
 
 #: src/pages/PoolFinder/PrerequisiteMessage.tsx
-msgid "Choose token to find your liquidity."
-msgstr "Selectează un simbol pentru a-ți găsi lichiditatea."
+msgid "Choose token to find your liquidity"
+msgstr ""
 
-#: src/components/earn/ClaimRewardModal.tsx
-#: src/components/earn/ClaimRewardModal.tsx
+#: 
+#~ msgid "Choose token to find your liquidity."
+#~ msgstr "Selectează un simbol pentru a-ți găsi lichiditatea."
+
+#: src/pages/Farming/Staking/UnstakedTable.tsx
+#: src/pages/Farming/Vesting/VestingValid.tsx
 msgid "Claim"
 msgstr "Claim"
 
@@ -200,32 +340,65 @@ msgstr "Claim"
 msgid "Claim IXS"
 msgstr "Claim IXS"
 
-#: src/components/earn/ClaimRewardModal.tsx
-#: src/components/earn/ClaimRewardModal.tsx
-msgid "Claim accumulated IXS rewards"
-msgstr "Revendică recompense IXS acumulate"
+#: 
+#: 
+#~ msgid "Claim accumulated IXS rewards"
+#~ msgstr "Revendică recompense IXS acumulate"
 
-#: src/components/earn/ClaimRewardModal.tsx
-#: src/components/earn/UnstakingModal.tsx
-msgid "Claimed IXS!"
-msgstr "Pretins IXS!"
+#: src/state/stake/hooks.ts
+msgid "Claim rewards {formattedAmount}"
+msgstr ""
 
-#: src/components/earn/ClaimRewardModal.tsx
-#: src/components/earn/UnstakingModal.tsx
-msgid "Claiming {0} IXS"
-msgstr "Solicitare {0} IXS"
+#: src/pages/Farming/Vesting/VestingValid.tsx
+msgid "Claimable"
+msgstr ""
 
+#: src/pages/Farming/Staking/UnstakedTable.tsx
+msgid "Claimable Rewards"
+msgstr ""
+
+#: src/pages/Farming/Vesting/VestingValid.tsx
+msgid "Claimed"
+msgstr ""
+
+#: 
+#: 
+#~ msgid "Claimed IXS!"
+#~ msgstr "Pretins IXS!"
+
+#: src/pages/Farming/Staking/UnstakedTable.tsx
+msgid "Claimed rewards"
+msgstr ""
+
+#: 
+#: 
+#~ msgid "Claiming {0} IXS"
+#~ msgstr "Solicitare {0} IXS"
+
+#: src/components/AccountDetails/index.tsx
 #: src/components/SearchModal/ManageTokens.tsx
 msgid "Clear all"
 msgstr "Șterge tot"
 
 #: src/components/TransactionConfirmationModal/index.tsx
+#: src/components/TransactionConfirmationModal/index.tsx
+#: src/components/Vault/WithDrawError.tsx
+#: src/components/Vault/WithDrawSuccess.tsx
 msgid "Close"
 msgstr "Inchide"
 
-#: src/components/SearchModal/CommonBases.tsx
-msgid "Common bases"
-msgstr "Bazele comune"
+#: src/pages/AppBody.tsx
+msgid "Coming soon"
+msgstr ""
+
+#: 
+#~ msgid "Common bases"
+#~ msgstr "Bazele comune"
+
+#: src/components/Vault/enum.ts
+#: src/components/Vault/enum.ts
+msgid "Completed"
+msgstr ""
 
 #: src/pages/RemoveLiquidity/ModalBottom.tsx
 msgid "Confirm"
@@ -246,25 +419,34 @@ msgstr "Confirmați Swap"
 msgid "Confirm this transaction in your wallet"
 msgstr "Confirmați această tranzacție în portofel"
 
+#: src/components/Vault/NoVault.tsx
 #: src/components/Web3Status/index.tsx
 #: src/pages/AddLiquidityV2/index.tsx
+#: src/pages/Farming/Staking/ConnectWalletButton.tsx
+#: src/pages/Farming/Vesting/ConnectWalletVesting.tsx
+#: src/pages/Pool/ConnectWallet.tsx
 #: src/pages/RemoveLiquidity/index.tsx
 #: src/pages/Swap/index.tsx
 #: src/state/burn/hooks.ts
+#: src/state/deposit/hooks.ts
 #: src/state/mint/hooks.ts
 #: src/state/stake/hooks.ts
-#: src/state/stake/hooks.ts
 #: src/state/swap/hooks.ts
+#: src/state/withdraw/hooks.ts
 msgid "Connect Wallet"
 msgstr "Conectează Portofel"
 
-#: src/components/earn/UnstakingModal.tsx
-msgid "Connect a wallet"
-msgstr "Conectează un portofel"
+#: 
+#~ msgid "Connect a wallet"
+#~ msgstr "Conectează un portofel"
 
-#: src/pages/Pool/NoPairs.tsx
+#: src/pages/Pool/v2.tsx
 msgid "Connect a wallet to view your Liquidity."
 msgstr "Conectați un portofel pentru a vedea lichiditatea."
+
+#: src/pages/Custodian/EmptyState.tsx
+msgid "Connect a wallet to view your Securities."
+msgstr ""
 
 #: src/components/WalletModal/index.tsx
 msgid "Connect to a wallet"
@@ -274,22 +456,44 @@ msgstr "Conectează-te la un portofel"
 msgid "Connect to a wallet to find pools"
 msgstr "Conectează-te la un portofel pentru a găsi pool-uri"
 
-#: src/components/earn/ClaimRewardModal.tsx
-msgid "Connect wallet"
-msgstr "Conectare portofel"
+#: src/pages/Farming/Vesting/ConnectWalletVesting.tsx
+msgid "Connect to your Web3 wallet to view your vesting progress"
+msgstr ""
+
+#: 
+#~ msgid "Connect wallet"
+#~ msgstr "Conectare portofel"
 
 #: src/components/AccountDetails/index.tsx
 msgid "Connected with {name}"
 msgstr "Conectat cu {name}"
 
+#: src/pages/SecTokenDetails/TokenDetails.tsx
+msgid "Contract:"
+msgstr ""
+
 #: src/components/AccountDetails/Copy.tsx
+#: src/components/Vault/DepositSendInfo.tsx
+#: src/components/Vault/TransactionDetails.tsx
+#: src/components/Vault/WithdrawPending.tsx
 msgid "Copied"
 msgstr "Copiat"
 
-#: src/components/AccountDetails/index.tsx
+#: src/pages/SecTokenDetails/TokenDetails.tsx
+msgid "Copied!"
+msgstr ""
+
 #: src/components/AccountDetails/index.tsx
 msgid "Copy Address"
 msgstr "Copiază adresa"
+
+#: src/components/Vault/DepositSendInfo.tsx
+msgid "Copy this address and send tokens to this wallet."
+msgstr ""
+
+#: src/state/withdraw/hooks.ts
+msgid "Could not submit withdraw request"
+msgstr ""
 
 #: src/pages/AddLiquidityV2/ModalBottom.tsx
 msgid "Create Pool & Supply"
@@ -299,38 +503,68 @@ msgstr "Crează rezervă & Aprovizionare"
 msgid "Create a pair"
 msgstr "Creează o pereche"
 
+#: src/components/Vault/DepositRequestForm.tsx
+msgid "Create deposit request"
+msgstr ""
+
 #: src/pages/PoolFinder/index.tsx
 msgid "Create pool"
 msgstr "Crează rezervă"
+
+#: src/components/Vault/NoVault.tsx
+msgid "Create {symbolText} Vault"
+msgstr ""
 
 #: src/components/swap/CurrentRate.tsx
 msgid "Current Rate"
 msgstr "Taxa actuală"
 
-#: src/components/Header/HeaderLinks.tsx
-msgid "Custodian"
-msgstr "Custode"
+#: 
+#~ msgid "Custodian"
+#~ msgstr "Custode"
 
-#: src/components/earn/StakingModal.tsx
-#: src/components/earn/StakingModal.tsx
+#: src/components/Vault/HistoryTable.tsx
+msgid "Date"
+msgstr ""
+
+#: src/components/AdminKycTable/index.tsx
+msgid "Date of request"
+msgstr ""
+
+#: src/components/Vault/TransactionDetails.tsx
+msgid "Date:"
+msgstr ""
+
+#: src/components/Vault/enum.ts
+msgid "Declined"
+msgstr ""
+
+#: src/components/Vault/DepositPopup.tsx
+#: src/components/Vault/ExistingVault.tsx
+#: src/components/Vault/enum.ts
+#: src/components/Vault/enum.ts
 msgid "Deposit"
 msgstr "Depozit"
 
-#: src/components/earn/StakingModal.tsx
-msgid "Deposit liquidity"
-msgstr "Lichiditate depozit"
+#: 
+#~ msgid "Deposit liquidity"
+#~ msgstr "Lichiditate depozit"
 
-#: src/components/earn/UnstakingModal.tsx
-msgid "Deposited liquidity:"
-msgstr "Lichiditate depozitată:"
+#: 
+#~ msgid "Deposited liquidity:"
+#~ msgstr "Lichiditate depozitată:"
 
-#: src/components/earn/StakingModal.tsx
-msgid "Deposited {0} IXS-V2"
-msgstr "Depozitat {0} IXS-V2"
+#: 
+#~ msgid "Deposited {0} IXS-V2"
+#~ msgstr "Depozitat {0} IXS-V2"
 
-#: src/components/earn/StakingModal.tsx
-msgid "Depositing Liquidity"
-msgstr "Depunerea lichidității"
+#: 
+#~ msgid "Depositing Liquidity"
+#~ msgstr "Depunerea lichidității"
+
+#: src/pages/Farming/Vesting/VestingValid.tsx
+msgid "Details"
+msgstr ""
 
 #: src/components/Settings/SettingsModal.tsx
 msgid "Disable Multihops"
@@ -340,31 +574,71 @@ msgstr "Dezactivează Multihops"
 msgid "Disconnect"
 msgstr "Deconectare"
 
-#: src/components/TransactionConfirmationModal/index.tsx
-msgid "Dismiss"
-msgstr "Renunţaţi"
+#: 
+#~ msgid "Dismiss"
+#~ msgstr "Renunţaţi"
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Distribute"
+msgstr ""
+
+#: src/pages/Farming/Staking/MyStakingsTable.tsx
+msgid "Distributed"
+msgstr ""
 
 #: src/pages/Pool/ImportPool.tsx
 msgid "Don't see a pool you joined?"
 msgstr "Nu vedeți o piscină la care v-ați alăturat?"
 
+#: src/components/AdminKycTable/FirstStepStatus.tsx
+msgid "Download"
+msgstr ""
+
+#: src/components/AdminLogin/index.tsx
+msgid "Email"
+msgstr ""
+
+#: src/pages/Farming/Vesting/VestingValid.tsx
+msgid "End Date"
+msgstr ""
+
+#: src/state/withdraw/hooks.ts
+msgid "Enter a receiver"
+msgstr ""
+
 #: src/state/swap/hooks.ts
 msgid "Enter a recipient"
 msgstr "Introduceți un destinatar"
+
+#: src/state/deposit/hooks.ts
+msgid "Enter a sender"
+msgstr ""
+
+#: src/components/AdminLogin/index.tsx
+msgid "Enter a valid email"
+msgstr ""
 
 #: src/components/TransactionSettings/index.tsx
 msgid "Enter a valid slippage percentage"
 msgstr "Introduceți un procentaj valid de slippage"
 
-#: src/components/earn/ClaimRewardModal.tsx
-#: src/components/earn/UnstakingModal.tsx
 #: src/state/burn/hooks.ts
+#: src/state/deposit/hooks.ts
 #: src/state/mint/hooks.ts
 #: src/state/stake/hooks.ts
-#: src/state/stake/hooks.ts
 #: src/state/swap/hooks.ts
+#: src/state/withdraw/hooks.ts
 msgid "Enter an amount"
 msgstr "Introduceți o sumă"
+
+#: src/components/AdminLogin/index.tsx
+msgid "Enter the email"
+msgstr ""
+
+#: src/components/AdminLogin/index.tsx
+msgid "Enter the password"
+msgstr ""
 
 #: src/components/SearchModal/ManageLists.tsx
 msgid "Enter valid list location"
@@ -374,23 +648,54 @@ msgstr "Introduceți o listă validă"
 msgid "Enter valid token address"
 msgstr "Introduceți adresa simbolică validă"
 
-#: src/components/TransactionConfirmationModal/index.tsx
+#: src/services/interceptors.ts
+msgid "Entity not found"
+msgstr ""
+
 #: src/components/Web3Status/index.tsx
 msgid "Error"
 msgstr "Eroare"
 
+#: src/components/TransactionConfirmationModal/index.tsx
+#: src/components/Vault/WithDrawError.tsx
+msgid "Error Occurred"
+msgstr ""
+
+#: src/components/WalletModal/ErrorSection.tsx
 #: src/components/WalletModal/PendingView.tsx
-#: src/components/WalletModal/index.tsx
 msgid "Error connecting"
 msgstr "Eroare de conectare"
 
-#: src/components/WalletModal/index.tsx
+#: src/components/WalletModal/ErrorSection.tsx
 msgid "Error connecting. Try refreshing the page."
 msgstr "Eroare la conectare. Încercați să reîncărcați pagina."
 
 #: src/components/SearchModal/ManageLists.tsx
 msgid "Error importing list"
 msgstr "Eroare la importarea listei"
+
+#: src/pages/Farming/Staking/MyStakingsTable.tsx
+msgid "Estimated Rewards"
+msgstr ""
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Estimated lock period"
+msgstr ""
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Estimated maturity time"
+msgstr ""
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Estimated rewards"
+msgstr ""
+
+#: src/pages/Farming/Staking/MyStakingsTable.tsx
+msgid ""
+"Estimated rewards are based on assumption that your staked amount will be fully kept for the whole period of staking. In this case maximum APY will be applied \n"
+"{0}\n"
+"If you partially or fully unstake your IXS before the end date - 5% APY will be applied to unstaked amount."
+msgstr ""
 
 #: src/components/SearchModal/CurrencyList.tsx
 msgid "Expanded results from inactive Token Lists"
@@ -404,6 +709,21 @@ msgstr "Modul expert"
 msgid "Expert mode turns off the confirm transaction prompt and allows high slippage trades that often result in bad rates and lost funds."
 msgstr "Modul Expert dezactivează prompt tranzacția de confirmare și permite tranzacțiile cu derapaje mari, care duc adesea la rate nefavorabile și la pierderi de fonduri."
 
+#: src/components/AdminKycTable/FirstStepStatus.tsx
+#: src/components/AdminKycTable/SecondStepStatus.tsx
+#: src/components/Vault/AccreditationStatus.tsx
+#: src/components/Vault/enum.ts
+msgid "Failed"
+msgstr ""
+
+#: src/components/SearchModal/CommonBases.tsx
+msgid "Featured Tokens"
+msgstr ""
+
+#: src/pages/Farming/Vesting/ZeroBalanceVesting.tsx
+msgid "Found address<0/>{0}<1/>doesn’t have IXS vesting"
+msgstr ""
+
 #: src/components/swap/CurrencyInput.tsx
 #: src/components/swap/SwapModalHeader.tsx
 msgid "From"
@@ -413,13 +733,46 @@ msgstr "De la"
 msgid "From (at most)"
 msgstr "De la (cel mult)"
 
+#: src/pages/Farming/Staking/MyStakingsTable.tsx
+msgid "Full amount of APY is applied only to amount of IXS staked till the end of staking period."
+msgstr ""
+
+#: src/pages/Farming/Staking/NoIXSTokens.tsx
+msgid "Go to Telegram"
+msgstr ""
+
+#: src/pages/Farming/Vesting/PrivateBuyer.tsx
+msgid "Hi! Сurrently you have <0>{0}</0> of unvested IXS that will be vested over the next <1>{1} months</1>. Your next IXS payment will be available on <2>8 October</2> and vesting balances will be updated here."
+msgstr ""
+
+#: src/pages/SecTokenDetails/index.tsx
+msgid "Hide"
+msgstr ""
+
 #: src/pages/Swap/index.tsx
 msgid "High Price Impact"
 msgstr "Impact preț mare"
 
+#: src/components/Vault/HistoryBlock.tsx
+msgid "History"
+msgstr ""
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "I have read <0>Staking Conditions</0>"
+msgstr ""
+
 #: src/components/SearchModal/ImportList.tsx
 msgid "I understand"
 msgstr "Am înțeles"
+
+#: src/components/Header/HeaderLinks.tsx
+msgid "IXS Farming"
+msgstr ""
+
+#: src/components/Header/HeaderLinks.tsx
+#: src/components/Mobile-Menu/Menu.tsx
+msgid "IXS Liquidity Mining"
+msgstr ""
 
 #: src/pages/RemoveLiquidity/RemovedLiquidity.tsx
 msgid "IXS Rewards"
@@ -429,9 +782,32 @@ msgstr "Recompense IXS"
 msgid "IXS Rewards (on quit)"
 msgstr "Recompense IXS (la ieșire)"
 
+#: src/pages/Farming/Vesting/ZeroBalanceVesting.tsx
+msgid "IXS in Telegram"
+msgstr ""
+
 #: src/pages/RemoveLiquidity/ModalBottom.tsx
 msgid "IXS {0}/{1} Burned"
 msgstr "IXS {0}/{1} ars"
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+msgid "IXSGov to return"
+msgstr ""
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid ""
+"IXSgov is a tokenized asset representing your staked IXS on a 1:1 basis. IXSwap distributes the IXSgov to your wallet.\n"
+"{0}\n"
+"You should swap your IXSgov back to IXS during the unstaking process. \n"
+"{1}\n"
+"*Do note that IXS received will be equal to your IXSgov holdings at the time of swap."
+msgstr ""
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+msgid "If you partially or fully unstake your IXS before the end date - 5% APY will be applied to unstaked amount."
+msgstr ""
 
 #: src/components/SearchModal/ImportList.tsx
 msgid "If you purchase a token from this list, you may not be able to sell it back."
@@ -443,7 +819,7 @@ msgstr "Dacă cumperi un token din această listă, s-ar putea să nu îl poți 
 msgid "Import"
 msgstr "Importă"
 
-#: src/components/SearchModal/ImportList.tsx
+#: src/components/NavigationTabs/index.tsx
 msgid "Import List"
 msgstr "Listă de import"
 
@@ -467,6 +843,23 @@ msgstr "În interval"
 msgid "Inactive"
 msgstr "Inactiv"
 
+#: src/components/SearchModal/CurrencyList.tsx
+msgid "Info"
+msgstr ""
+
+#: src/components/Vault/DepositRequestForm.tsx
+#: src/components/Vault/DepositSendInfo.tsx
+msgid "Info:"
+msgstr ""
+
+#: src/pages/SecTokenDetails/TokenDetails.tsx
+msgid "Initial Price:"
+msgstr ""
+
+#: src/pages/SecTokenDetails/TokenDetails.tsx
+msgid "Initial offering price:"
+msgstr ""
+
 #: src/pages/AddLiquidityV2/PricesAndPoolShare.tsx
 msgid "Initial prices and pool share"
 msgstr "Prețurile inițiale și cota parte"
@@ -475,6 +868,7 @@ msgstr "Prețurile inițiale și cota parte"
 msgid "Initializing..."
 msgstr "Se inițializează..."
 
+#: src/components/swap/OutputInfo.tsx
 #: src/components/swap/SwapModalHeader.tsx
 msgid "Input is estimated. You will sell at most <0>{0} {1}</0> or the transaction will revert."
 msgstr "Intrarea este estimată. Vei vinde cel mult <0>{0} {1}</0> sau tranzacția va reveni."
@@ -482,6 +876,15 @@ msgstr "Intrarea este estimată. Vei vinde cel mult <0>{0} {1}</0> sau tranzacț
 #: src/components/WalletModal/index.tsx
 msgid "Install Metamask"
 msgstr "Instalează Metamask"
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+msgid "Instant reward payout today"
+msgstr ""
+
+#: src/state/withdraw/hooks.ts
+msgid "Insufficient balance"
+msgstr ""
 
 #: src/pages/Swap/index.tsx
 msgid "Insufficient liquidity for this trade"
@@ -510,6 +913,14 @@ msgstr "Pereche nevalidă"
 msgid "Invalid recipient"
 msgstr "Destinatar nevalid"
 
+#: src/pages/SecTokenDetails/TokenDetails.tsx
+msgid "Issuer:"
+msgstr ""
+
+#: src/components/Vault/NoVault.tsx
+msgid "KYC approved on primary issuer. Waiting for KYC approval on Custodian..."
+msgstr ""
+
 #: src/pages/Pool/LiquidityTitle.tsx
 msgid "Liquidity Pool"
 msgstr "Bazin de lichiditate"
@@ -528,10 +939,32 @@ msgid "Loaded"
 msgstr "Încărcat"
 
 #: src/components/PositionCard/CurrencyHeader.tsx
+#: src/components/SecurityCard/CurrencyHeader.tsx
+#: src/pages/Custodian/EmptyState.tsx
 #: src/pages/Pool/NoPairs.tsx
 msgid "Loading"
 msgstr "Încărcare"
 
+#: src/pages/Farming/Staking/MyStakingsTable.tsx
+msgid "Lock Period"
+msgstr ""
+
+#: src/pages/Farming/Staking/StakingTierCard.tsx
+msgid ""
+"Lock period means the time you won’t be able to unstake your IXS fully or partially. Please carefully consider the risks involved.\n"
+"{0}\n"
+"You will be able to redeem your staked IXS fully or partially after lock period."
+msgstr ""
+
+#: src/pages/Farming/Staking/MyStakingsTable.tsx
+msgid "Locked till"
+msgstr ""
+
+#: src/pages/AdminKyc/Navbar.tsx
+msgid "Logout"
+msgstr ""
+
+#: src/components/earn/StakingInputPercentage.tsx
 #: src/pages/RemoveLiquidity/RemoveAmount.tsx
 msgid "MAX"
 msgstr "MAX"
@@ -540,25 +973,52 @@ msgstr "MAX"
 msgid "Make sure the URL is<0>app.ixswap.io</0>"
 msgstr "Asigurați-vă că URL-ul este<0>app.ixswap.io</0>"
 
-#: src/components/SearchModal/Manage.tsx
-msgid "Manage"
-msgstr "Gestionează"
+#: 
+#~ msgid "Manage"
+#~ msgstr "Gestionează"
 
 #: src/components/SearchModal/CurrencySearch.tsx
 msgid "Manage Token List"
 msgstr "Gestionează lista de jetoane"
 
 #: src/pages/PoolFinder/index.tsx
-msgid "Manage this pool."
-msgstr "Gestionează acest grup."
+msgid "Manage this Pool"
+msgstr ""
 
+#: 
+#~ msgid "Manage this pool."
+#~ msgstr "Gestionează acest grup."
+
+#: src/components/NavigationTabs/index.tsx
+msgid "Manage tokens"
+msgstr ""
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Maturity time is the final date of your staking period."
+msgstr ""
+
+#: src/components/CurrencyInputPanel/MaxButton.tsx
 #: src/components/CurrencyInputPanel/index.tsx
+#: src/pages/Farming/Staking/StakeModal.tsx
 msgid "Max"
 msgstr "Maxim"
 
 #: src/components/RangeSelector/index.tsx
 msgid "Max Price"
 msgstr "Preț maxim"
+
+#: src/pages/Farming/Staking/StakingTierCard.tsx
+msgid ""
+"Maximum Capacity:\n"
+"{0}\n"
+"Staked IXS in Pool: \n"
+"{1} IXS\n"
+"{2}"
+msgstr ""
+
+#: src/components/AdminKycTable/RejectModal.tsx
+msgid "Maximum is 10000 chars"
+msgstr ""
 
 #: src/components/swap/AdvancedSwapDetails.tsx
 #: src/components/swap/ConfirmSwapInfo.tsx
@@ -583,9 +1043,41 @@ msgstr "Minute"
 msgid "My Liquidity"
 msgstr "Lichiditatea mea"
 
+#: src/pages/Custodian/index.tsx
+msgid "My Securities"
+msgstr ""
+
+#: src/pages/Farming/Vesting/enum.ts
+msgid "My ongoing stakings"
+msgstr ""
+
 #: src/components/PositionCard/MinimalPositionCard.tsx
 msgid "My pool share"
 msgstr "Cota mea din piscină"
+
+#: src/components/Vault/ExistingVault.tsx
+msgid "My {symbolText} Vault"
+msgstr ""
+
+#: src/components/Vault/DepositSendInfo.tsx
+msgid "Need to send"
+msgstr ""
+
+#: src/components/SearchModal/CurrencyList.tsx
+msgid "Needs accreditation"
+msgstr ""
+
+#: src/pages/Farming/Vesting/VestingValid.tsx
+msgid "Next Payment"
+msgstr ""
+
+#: src/pages/Farming/Staking/UnstakedTable.tsx
+msgid "Next rewards on"
+msgstr ""
+
+#: src/components/AdminKycTable/index.tsx
+msgid "No data"
+msgstr ""
 
 #: src/pages/Pool/EmptyLiquidity.tsx
 msgid "No liquidity found."
@@ -596,16 +1088,22 @@ msgid "No pool found"
 msgstr "Nici o piscină găsită"
 
 #: src/components/SearchModal/CurrencySearch.tsx
+#: src/components/Vault/HistoryTable.tsx
+#: src/pages/Custodian/AllSecTokens.tsx
 msgid "No results found."
 msgstr "Nici un rezultat găsit."
 
-#: src/components/Toggle/ListToggle.tsx
-msgid "OFF"
-msgstr "OPRIT"
+#: src/pages/Custodian/EmptyState.tsx
+msgid "No securities found."
+msgstr ""
 
-#: src/components/Toggle/ListToggle.tsx
-msgid "ON"
-msgstr "PE"
+#: 
+#~ msgid "OFF"
+#~ msgstr "OPRIT"
+
+#: 
+#~ msgid "ON"
+#~ msgstr "PE"
 
 #: src/components/Settings/ExpertModeModal.tsx
 msgid "ONLY USE THIS MODE IF YOU KNOW WHAT YOU ARE DOING."
@@ -614,6 +1112,10 @@ msgstr "UTILIZAȚI NUMAI ACEASTĂ MOD DUPĂ CUM ÎNAINTE SĂ ȘTIȚI."
 #: src/components/Web3ReactManager/index.tsx
 msgid "Oops! An unknown error occurred. Please refresh the page, or visit from another browser or device."
 msgstr "Ups! A apărut o eroare necunoscută. Reîmprospătați pagina, sau vizitați un alt browser sau dispozitiv."
+
+#: src/pages/Custodian/index.tsx
+msgid "Other Sec tokens"
+msgstr ""
 
 #: src/components/Badge/RangeBadge.tsx
 msgid "Out of range"
@@ -624,6 +1126,7 @@ msgstr "În afara razei"
 msgid "Output is estimated. If the price changes by more than {0}% your transaction will revert."
 msgstr "Ieșirea este estimată. Dacă prețul se schimbă cu mai mult de {0}% tranzacția dvs. va reveni."
 
+#: src/components/swap/OutputInfo.tsx
 #: src/components/swap/SwapModalHeader.tsx
 msgid "Output is estimated. You will receive at least <0>{0} {1}</0> or the transaction will revert."
 msgstr "Ieșirea este estimată. Vei primi cel puțin <0>{0} {1}</0> sau tranzacția va reveni."
@@ -632,9 +1135,70 @@ msgstr "Ieșirea este estimată. Vei primi cel puțin <0>{0} {1}</0> sau tranzac
 msgid "Output will be sent to <0>{0}</0>"
 msgstr "Ieșirea va fi trimisă la <0>{0}</0>"
 
-#: src/components/WalletModal/index.tsx
+#: src/components/swap/OutputInfo.tsx
+msgid "Output will be sent to <0>{0}</0>."
+msgstr ""
+
+#: src/components/Mobile-Menu/Menu.tsx
+msgid "POOL"
+msgstr ""
+
+#: src/components/Vault/NoVault.tsx
+msgid "Pass KYC and Accreditation"
+msgstr ""
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+msgid "Passed staking period"
+msgstr ""
+
+#: src/components/SecurityCard/Status.tsx
+msgid "Passing KYC..."
+msgstr ""
+
+#: src/components/Vault/AccreditationStatus.tsx
+msgid "Passing accreditation"
+msgstr ""
+
+#: src/components/AdminLogin/index.tsx
+msgid "Password"
+msgstr ""
+
+#: src/components/AdminKycTable/FirstStepStatus.tsx
+#: src/components/AdminKycTable/SecondStepStatus.tsx
+#: src/components/Vault/DepositPending.tsx
+msgid "Pending"
+msgstr ""
+
+#: src/components/Vault/enum.ts
+msgid "Pending..."
+msgstr ""
+
+#: src/pages/Farming/Staking/MyStakingsTable.tsx
+#: src/pages/Farming/Staking/StakeModal.tsx
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Period of staking"
+msgstr ""
+
+#: src/pages/Farming/Staking/UnstakedTable.tsx
+msgid "Period of vesting"
+msgstr ""
+
+#: src/components/Vault/ChooseBrokerDealerPopup.tsx
+msgid "Please choose broker dealer and custodian to start accreditation process"
+msgstr ""
+
+#: src/theme/components.tsx
+msgid "Please connect to the Kovan or Main Etherium network."
+msgstr ""
+
+#: src/components/WalletModal/ErrorSection.tsx
 msgid "Please connect to the appropriate Ethereum network."
 msgstr "Vă rugăm să vă conectați la rețeaua Ethereum adecvată."
+
+#: src/components/Vault/DepositRequestForm.tsx
+msgid "Please provide sender’s address in order to approve this transaction. Other adresses will be rejected."
+msgstr ""
 
 #: src/components/Settings/ExpertModeModal.tsx
 msgid "Please type the word \"{confirmWord}\" to enable expert mode."
@@ -648,6 +1212,10 @@ msgstr "Rezervă"
 #: src/pages/PoolFinder/index.tsx
 msgid "Pool Found!"
 msgstr "Rezervă găsită!"
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Pool limitation: 2 000 000"
+msgstr ""
 
 #: src/components/earn/PoolCard.tsx
 msgid "Pool rate"
@@ -687,17 +1255,49 @@ msgstr "Preț actualizat"
 msgid "Prices and pool share"
 msgstr "Prețuri și partajare grup"
 
+#: src/components/Vault/enum.ts
+msgid "Processing"
+msgstr ""
+
+#: src/pages/Farming/Vesting/VestingTable.tsx
+msgid "Progress"
+msgstr ""
+
 #: src/pages/AddLiquidityV2/ModalBottom.tsx
 msgid "Rates"
 msgstr "Tarife"
+
+#: src/pages/SecTokenDetails/index.tsx
+msgid "Read More"
+msgstr ""
 
 #: src/components/swap/UnsupportedCurrencyFooter.tsx
 msgid "Read more about unsupported assets"
 msgstr "Citește mai multe despre activele neacceptate"
 
+#: src/state/withdraw/hooks.ts
+msgid "Receiver is invalid"
+msgstr ""
+
 #: src/components/AccountDetails/index.tsx
 msgid "Recent Transactions"
 msgstr "Tranzacții recente"
+
+#: src/components/AdminKycTable/RejectModal.tsx
+#: src/components/AdminKycTable/SecondStepStatus.tsx
+#: src/components/AdminKycTable/SecondStepStatus.tsx
+msgid "Reject"
+msgstr ""
+
+#: src/components/AdminKycTable/SecondStepStatus.tsx
+#: src/components/SecurityCard/Status.tsx
+#: src/components/Vault/AccreditationStatus.tsx
+msgid "Rejected"
+msgstr ""
+
+#: src/state/vesting/hooks.ts
+msgid "Released {0} IXS"
+msgstr ""
 
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Remove"
@@ -733,22 +1333,65 @@ msgstr "Dacă eliminați jetoanele pool vă convertiți poziția înapoi în jet
 msgid "Removing {0} {1} and {2} {3}"
 msgstr "Se elimină {0} {1} și {2} {3}"
 
+#: src/components/Vault/enum.ts
+msgid "Requested"
+msgstr ""
+
 #: src/components/Settings/SettingsModal.tsx
 msgid "Restricts swaps to direct pairs only."
 msgstr "Restricționează swap-urile doar la perechi directe."
 
-#: src/components/TransactionConfirmationModal/index.tsx
-msgid "Return"
-msgstr "Întoarcere"
+#: src/components/Vault/NoVault.tsx
+msgid "Retry pass accreditation"
+msgstr ""
+
+#: 
+#~ msgid "Return"
+#~ msgstr "Întoarcere"
+
+#: src/pages/Farming/Staking/UnstakedTable.tsx
+msgid "Rewards in vesting"
+msgstr ""
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+msgid "Rewards to be vested (10% weekly)"
+msgstr ""
+
+#: src/pages/Farming/Vesting/enum.ts
+msgid "Rewards vesting"
+msgstr ""
 
 #: src/components/swap/AdvancedSwapDetails.tsx
 #: src/components/swap/ConfirmSwapInfo.tsx
 msgid "Route"
 msgstr "Traseu"
 
+#: src/pages/SecTokenDetails/TokenDetails.tsx
+msgid "STO Med. price:"
+msgstr ""
+
+#: src/components/Mobile-Menu/Menu.tsx
+msgid "SWAP"
+msgstr ""
+
+#: src/pages/AdminKyc/Search.tsx
+msgid "Search for Wallet or Token"
+msgstr ""
+
 #: src/components/SearchModal/CurrencySearch.tsx
+#: src/pages/Custodian/AllSecTokens.tsx
 msgid "Search or paste address"
 msgstr "Căutați sau introduceți adresa"
+
+#: src/components/NavigationTabs/index.tsx
+msgid "Security Tokens"
+msgstr ""
+
+#: src/components/Header/HeaderLinks.tsx
+#: src/components/Mobile-Menu/Menu.tsx
+msgid "Security tokens"
+msgstr ""
 
 #: src/components/FeeSelector/index.tsx
 msgid "Select Pool"
@@ -758,21 +1401,54 @@ msgstr "Selectare grup"
 msgid "Select a pool type based on your preferred liquidity provider fee."
 msgstr "Selectați un tip de grup pe baza taxei dvs. preferate de furnizor de lichidități."
 
-#: src/components/SearchModal/CurrencySearch.tsx
-msgid "Select a token"
-msgstr "Selectează un jeton"
+#: 
+#~ msgid "Select a token"
+#~ msgstr "Selectează un jeton"
 
+#: src/components/SearchModal/CurrencySearch.tsx
 #: src/components/swap/CurrencyInput.tsx
 msgid "Select a token to swap"
 msgstr "Selectează un jeton pentru schimb"
+
+#: src/components/Vault/WithdrawRequestForm.tsx
+msgid "Send"
+msgstr ""
+
+#: src/components/Vault/DepositSendInfo.tsx
+msgid "Send {0} here"
+msgstr ""
+
+#: src/components/Vault/TransactionDetails.tsx
+msgid "Send {0} to:"
+msgstr ""
+
+#: src/state/deposit/hooks.ts
+msgid "Sender is invalid"
+msgstr ""
+
+#: src/components/Vault/DepositRequestForm.tsx
+msgid "Sender's wallet"
+msgstr ""
+
+#: src/components/Vault/DepositSendInfo.tsx
+msgid "Sender’s wallet:"
+msgstr ""
+
+#: src/components/Vault/WithdrawPending.tsx
+msgid "Sending {amount} {0} here"
+msgstr ""
+
+#: src/components/Vault/TransactionDetails.tsx
+msgid "Sent from:"
+msgstr ""
 
 #: src/pages/AddLiquidityV2/ModalBottom.tsx
 msgid "Share of Pool"
 msgstr "Cota parte din piscină"
 
-#: src/components/AccountDetails/index.tsx
-msgid "Show Portis"
-msgstr "Arată Portis"
+#: 
+#~ msgid "Show Portis"
+#~ msgstr "Arată Portis"
 
 #: src/components/TransactionSettings/index.tsx
 #: src/components/swap/AdvancedSwapDetails.tsx
@@ -788,6 +1464,71 @@ msgstr "Unele active nu sunt disponibile prin intermediul acestei interfețe deo
 msgid "Something went wrong"
 msgstr "Ceva n-a mers bine"
 
+#: src/pages/Farming/Staking/StakeModal.tsx
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Stake"
+msgstr ""
+
+#: src/state/stake/hooks.ts
+#: src/state/stake/hooks.ts
+#: src/state/stake/hooks.ts
+#: src/state/stake/hooks.ts
+msgid "Stake {amount} IXS for {0}"
+msgstr ""
+
+#: src/components/Header/HeaderLinks.tsx
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Staking"
+msgstr ""
+
+#: src/components/Mobile-Menu/Menu.tsx
+#: src/pages/Farming/Vesting/enum.ts
+msgid "Staking IXS"
+msgstr ""
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Staking amount"
+msgstr ""
+
+#: src/pages/Farming/Staking/PromoTokenCard.tsx
+msgid "Staking is a great way to maximize the value of your holdings, instead of letting them sit idle in your IXS account!<0/> Once you have staked your assets, you can earn rewards on your holdings. This allows you to grow your token holdings over time."
+msgstr ""
+
+#: src/pages/Farming/Staking/StakingTiers.tsx
+msgid "Staking will be opened soon. Wait for the official announcement on <0>our channels</0>."
+msgstr ""
+
+#: src/pages/Farming/Vesting/VestingValid.tsx
+msgid "Start Date"
+msgstr ""
+
+#: src/components/Vault/ChooseBrokerDealerPopup.tsx
+msgid "Start accreditation"
+msgstr ""
+
+#: src/components/AdminKycTable/MoreActions.tsx
+msgid "Start again"
+msgstr ""
+
+#: src/components/AdminKycTable/FirstStepStatus.tsx
+#: src/components/AdminKycTable/SecondStepStatus.tsx
+#: src/components/Vault/HistoryTable.tsx
+msgid "Status"
+msgstr ""
+
+#: src/components/Vault/AccreditationStatus.tsx
+#: src/components/Vault/TransactionDetails.tsx
+msgid "Status:"
+msgstr ""
+
+#: src/components/AdminKycTable/index.tsx
+msgid "Step 1 - Primary issuer"
+msgstr ""
+
+#: src/components/AdminKycTable/index.tsx
+msgid "Step 2 - Custodian"
+msgstr ""
+
 #: src/pages/AddLiquidityV2/index.tsx
 msgid "Supply"
 msgstr "Aprovizionare"
@@ -799,10 +1540,15 @@ msgstr "Furnizare {0} {1} și {2} {3}"
 #: src/components/Header/HeaderLinks.tsx
 #: src/components/NavigationTabs/index.tsx
 #: src/components/swap/SwapHeader.tsx
+#: src/pages/Farming/Staking/NoIXSTokens.tsx
 #: src/pages/Swap/index.tsx
 #: src/pages/Swap/index.tsx
 msgid "Swap"
 msgstr "Schimbă"
+
+#: src/state/swap/hooks.ts
+msgid "Swapping two security tokens is not allowed"
+msgstr ""
 
 #: src/components/swap/ConfirmSwapModal.tsx
 #: src/components/swap/PendingSuccesModals.tsx
@@ -810,8 +1556,12 @@ msgid "Swapping {0} {1} for {2} {3}"
 msgstr "Schimbarea {0} {1} cu {2} {3}"
 
 #: src/hooks/useSwapCallback.ts
-msgid "The Uniswap invariant x*y=k was not satisfied by the swap. This usually means one of the tokens you are swapping incorporates custom behavior on transfer."
-msgstr "Invariantul Uniswap x * y = k nu a fost satisfăcut de swap. Acest lucru înseamnă, de obicei, că unul dintre jetoanele pe care le schimbați încorporează un comportament personalizat la transfer."
+msgid "The IXswap invariant x*y=k was not satisfied by the swap. This usually means one of the tokens you are swapping incorporates custom behavior on transfer."
+msgstr ""
+
+#: 
+#~ msgid "The Uniswap invariant x*y=k was not satisfied by the swap. This usually means one of the tokens you are swapping incorporates custom behavior on transfer."
+#~ msgstr "Invariantul Uniswap x * y = k nu a fost satisfăcut de swap. Acest lucru înseamnă, de obicei, că unul dintre jetoanele pe care le schimbați încorporează un comportament personalizat la transfer."
 
 #: src/hooks/useSwapCallback.ts
 msgid "The input token cannot be transferred. There may be an issue with the input token."
@@ -822,12 +1572,13 @@ msgid "The market price is outside your specified price range. Single-asset depo
 msgstr "Prețul de piață este în afara intervalului de preț specificat. Doar depozitul de active unice."
 
 #: src/hooks/useSwapCallback.ts
+#: src/hooks/useSwapCallback.ts
 msgid "The output token cannot be transferred. There may be an issue with the output token."
 msgstr "Jetonul de ieșire nu poate fi transferat. S-ar putea să existe o problemă cu simbolul de ieșire."
 
-#: src/hooks/useSwapCallback.ts
-msgid "The output token cannot be transferred. There may be an issue with the output token. Note fee on transfer and rebase tokens are incompatible with Uniswap V3."
-msgstr "Jetonul de ieșire nu poate fi transferat. S-ar putea să existe o problemă cu simbolul de ieșire. Taxa de notă pentru jetoanele de transfer și rebase sunt incompatibile cu Uniswap V3."
+#: 
+#~ msgid "The output token cannot be transferred. There may be an issue with the output token. Note fee on transfer and rebase tokens are incompatible with Uniswap V3."
+#~ msgstr "Jetonul de ieșire nu poate fi transferat. S-ar putea să existe o problemă cu simbolul de ieșire. Taxa de notă pentru jetoanele de transfer și rebase sunt incompatibile cu Uniswap V3."
 
 #: src/components/Badge/RangeBadge.tsx
 msgid "The price of this pool is outside of your selected range. Your position is not currently earning fees."
@@ -841,29 +1592,54 @@ msgstr "Prețul acestui pool se încadrează în intervalul selectat. Poziția d
 msgid "The transaction could not be sent because the deadline has passed. Please check that your transaction deadline is not too low."
 msgstr "Tranzacția nu a putut fi trimisă deoarece termenul a trecut. Vă rugăm să verificați dacă termenul limită al tranzacției nu este prea mic."
 
-#: src/components/SearchModal/CommonBases.tsx
-msgid "These tokens are commonly paired with other tokens."
-msgstr "Aceste jetoane sunt de obicei asociate cu alte jetoane."
+#: 
+#~ msgid "These tokens are commonly paired with other tokens."
+#~ msgstr "Aceste jetoane sunt de obicei asociate cu alte jetoane."
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid ""
+"This amount of rewards is based on assumption that your staked amount will be kept for the whole period of {0}. In this case your APY will be {1}%. If you partially or fully unstake your IXS before the end date 5% APY will be applied to unstaked amount. \n"
+"{2}\n"
+"Please note your rewards will vest over 10 weeks after unstaking."
+msgstr ""
 
 #: src/components/SearchModal/ImportToken.tsx
-msgid "This token doesn't appear on the active token list(s). Make sure this is the token that you want to trade."
-msgstr "Acest jeton nu apare pe lista (listele) de jetoane active. Asigurați-vă că acesta este jetonul pe care doriți să îl tranzacționați."
+msgid "This token doesn't appear on the active list(s). Make sure this is the token that you want to trade"
+msgstr ""
+
+#: 
+#~ msgid "This token doesn't appear on the active token list(s). Make sure this is the token that you want to trade."
+#~ msgstr "Acest jeton nu apare pe lista (listele) de jetoane active. Asigurați-vă că acesta este jetonul pe care doriți să îl tranzacționați."
 
 #: src/hooks/useSwapCallback.ts
-msgid "This transaction will not succeed due to price movement. Try increasing your slippage tolerance. Note fee on transfer and rebase tokens are incompatible with Uniswap V3."
-msgstr "Această tranzacție nu va reuși din cauza mișcării prețurilor. Încercați să vă măriți toleranța la alunecare. Taxa de notă pentru jetoanele de transfer și rebase sunt incompatibile cu Uniswap V3."
+msgid "This transaction will not succeed due to price movement. Try increasing your slippage tolerance."
+msgstr ""
+
+#: 
+#~ msgid "This transaction will not succeed due to price movement. Try increasing your slippage tolerance. Note fee on transfer and rebase tokens are incompatible with Uniswap V3."
+#~ msgstr "Această tranzacție nu va reuși din cauza mișcării prețurilor. Încercați să vă măriți toleranța la alunecare. Taxa de notă pentru jetoanele de transfer și rebase sunt incompatibile cu Uniswap V3."
 
 #: src/hooks/useSwapCallback.ts
 msgid "This transaction will not succeed either due to price movement or fee on transfer. Try increasing your slippage tolerance."
 msgstr "Această tranzacție nu va reuși nici din cauza mișcării prețului, nici a comisioanelor la transfer. Încercați să vă măriți toleranța la alunecare."
 
+#: src/pages/Farming/Staking/MyStakingsTable.tsx
+msgid "Tier"
+msgstr ""
+
 #: src/components/TipWithMessage/index.tsx
 msgid "Tip:"
 msgstr "Sfat:"
 
-#: src/components/SearchModal/ManageTokens.tsx
-msgid "Tip: Custom tokens are stored locally in your browser"
-msgstr "Sfat: Token-urile personalizate sunt stocate local în browser"
+#: 
+#~ msgid "Tip: Custom tokens are stored locally in your browser"
+#~ msgstr "Sfat: Token-urile personalizate sunt stocate local în browser"
+
+#: src/pages/Farming/Staking/Unstaking/UnstakeModal.tsx
+msgid ""
+"Tip: To unstake IXS tokens you need to have enough IXSgov tokens. \n"
+"You can unstake IXS tokens equal to the number of IXSgov tokens in your account."
+msgstr ""
 
 #: src/components/swap/CurrencyInput.tsx
 #: src/components/swap/SwapModalHeader.tsx
@@ -874,6 +1650,14 @@ msgstr "La"
 msgid "To (at least)"
 msgstr "La (cel puțin)"
 
+#: src/pages/Farming/Staking/NoIXSTokens.tsx
+msgid "To buy IXS click on swap below or find us on our Telegram channel to learn more."
+msgstr ""
+
+#: src/components/AdminKycTable/index.tsx
+msgid "Token"
+msgstr ""
+
 #: src/components/SearchModal/Manage.tsx
 msgid "Tokens"
 msgstr "Token-uri"
@@ -882,18 +1666,30 @@ msgstr "Token-uri"
 msgid "Tokens from inactive lists. Import specific tokens below or click Manage to activate more lists."
 msgstr "Jetoane din liste inactive. Importați jetoane specifice de mai jos sau faceți clic pe Gestionare pentru a activa mai multe liste."
 
+#: src/pages/SecTokenDetails/TokenDetails.tsx
+msgid "Total Issued:"
+msgstr ""
+
+#: src/pages/Farming/Vesting/VestingValid.tsx
+msgid "Total Vested"
+msgstr ""
+
 #: src/components/earn/PoolCard.tsx
 msgid "Total deposited"
 msgstr "Total depozitat"
+
+#: src/pages/Farming/Staking/UnstakedTable.tsx
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+msgid "Total rewards"
+msgstr ""
 
 #: src/components/Settings/SettingsModal.tsx
 msgid "Transaction Settings"
 msgstr "Setările tranzacției"
 
 #: src/components/TransactionConfirmationModal/index.tsx
-#: src/components/earn/ClaimRewardModal.tsx
-#: src/components/earn/StakingModal.tsx
-#: src/components/earn/UnstakingModal.tsx
+#: src/components/Vault/WithDrawSuccess.tsx
 msgid "Transaction Submitted"
 msgstr "Tranzacție trimisă"
 
@@ -909,14 +1705,43 @@ msgstr "Încearcă din nou"
 msgid "Turn On Expert Mode"
 msgstr "Activează Modul Expert"
 
-#: src/components/earn/ClaimRewardModal.tsx
-#: src/components/earn/UnstakingModal.tsx
-msgid "Unclaimed IXS"
-msgstr "IXS nesolicitate"
+#: 
+#: 
+#~ msgid "Unclaimed IXS"
+#~ msgstr "IXS nesolicitate"
+
+#: src/components/Vault/NoVault.tsx
+msgid "Unknown error"
+msgstr ""
 
 #: src/hooks/useSwapCallback.ts
-msgid "Unknown error{0}. Try increasing your slippage tolerance. Note fee on transfer and rebase tokens are incompatible with Uniswap V3."
-msgstr "Eroare{0}necunoscută. Încercați să vă măriți toleranța la alunecare. Taxa de notă pentru jetoanele de transfer și rebase sunt incompatibile cu Uniswap V3."
+msgid "Unknown error{0}. Try increasing your slippage tolerance."
+msgstr ""
+
+#: 
+#~ msgid "Unknown error{0}. Try increasing your slippage tolerance. Note fee on transfer and rebase tokens are incompatible with Uniswap V3."
+#~ msgstr "Eroare{0}necunoscută. Încercați să vă măriți toleranța la alunecare. Taxa de notă pentru jetoanele de transfer și rebase sunt incompatibile cu Uniswap V3."
+
+#: src/pages/Farming/Staking/MyStakingsTable.tsx
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+msgid "Unstake"
+msgstr ""
+
+#: src/pages/Farming/Staking/Unstaking/UnstakeModal.tsx
+msgid "Unstake {0} IXS"
+msgstr ""
+
+#: src/pages/Farming/Staking/Unstaking/UnstakeModal.tsx
+msgid "Unstake {amount} IXS"
+msgstr ""
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+msgid "Unstaking"
+msgstr ""
 
 #: src/pages/AddLiquidityV2/index.tsx
 #: src/pages/Swap/index.tsx
@@ -939,15 +1764,31 @@ msgstr "Actualizare listă"
 msgid "Use this tool to find pairs that don't automatically appear in the interface."
 msgstr "Utilizați acest instrument pentru a găsi perechi care nu apar automat în interfață."
 
+#: src/components/Header/HeaderLinks.tsx
+msgid "Vesting"
+msgstr ""
+
+#: src/pages/Farming/Vesting/VestingValid.tsx
+msgid "Vesting Amount"
+msgstr ""
+
+#: src/components/Mobile-Menu/Menu.tsx
+#: src/pages/Farming/Vesting/enum.ts
+msgid "Vesting IXS"
+msgstr ""
+
 #: src/components/SearchModal/ManageLists.tsx
 msgid "View list"
 msgstr "Vezi lista"
 
-#: src/components/AccountDetails/index.tsx
-#: src/components/AccountDetails/index.tsx
 #: src/components/TransactionConfirmationModal/index.tsx
+#: src/components/Vault/WithDrawSuccess.tsx
 msgid "View on Etherscan"
 msgstr "Vezi pe Etherscan"
+
+#: src/components/AccountDetails/index.tsx
+msgid "View on Explorer"
+msgstr ""
 
 #: src/components/PositionCard/PoolInformation.tsx
 msgid "View pool information<0>↗</0>"
@@ -961,49 +1802,77 @@ msgstr "Vizualizați tranzacția pe Etherscan"
 msgid "Waiting For Confirmation"
 msgstr "Aşteptare pentru confirmare"
 
-#: src/components/earn/StakingModal.tsx
-msgid "Weekly Rewards"
-msgstr "Recompense Săptămânale"
+#: src/components/AdminKycTable/index.tsx
+msgid "Wallet address"
+msgstr ""
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+msgid "Warning:"
+msgstr ""
+
+#: 
+#~ msgid "Weekly Rewards"
+#~ msgstr "Recompense Săptămânale"
 
 #: src/pages/AddLiquidityV2/Tip.tsx
 #: src/pages/AddLiquidityV2/Tip.tsx
 msgid "When you add liquidity, you will receive pool tokens representing your position. These tokens automatically earn fees proportional to your share of the pool, and can be redeemed at any time."
 msgstr "Când adăugați lichiditate, veți primi jetoane de pool care vă reprezintă poziția. Aceste jetoane câștigă automat taxe proporționale cu cota dvs. din pool și pot fi răscumpărate oricând."
 
-#: src/components/earn/ClaimRewardModal.tsx
-msgid "When you claim without withdrawing your liquidity remains in the mining pool."
-msgstr "Când revendici fără să-ți retragi lichiditatea rămâne în rezerva de minere."
+#: 
+#~ msgid "When you claim without withdrawing your liquidity remains in the mining pool."
+#~ msgstr "Când revendici fără să-ți retragi lichiditatea rămâne în rezerva de minere."
 
-#: src/components/earn/UnstakingModal.tsx
-msgid "When you withdraw, your IXS is claimed and your liquidity is removed from the mining pool."
-msgstr "Când retragi, IXS este revendicată și lichiditatea ta este eliminată din rezerva de minerite."
+#: 
+#~ msgid "When you withdraw, your IXS is claimed and your liquidity is removed from the mining pool."
+#~ msgstr "Când retragi, IXS este revendicată și lichiditatea ta este eliminată din rezerva de minerite."
 
-#: src/components/earn/UnstakingModal.tsx
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+msgid "When your assets have been unstaked they will be transferred to your Metamask"
+msgstr ""
+
+#: src/components/Vault/WithdrawRequestForm.tsx
+msgid "Where to send?"
+msgstr ""
+
+#: src/components/Vault/DepositSendInfo.tsx
+#: src/components/Vault/TransactionDetails.tsx
+msgid "Will be cancelled automatically in {deadlineIn} hours"
+msgstr ""
+
+#: src/components/Vault/BalanceRow.tsx
+#: src/components/Vault/WithdrawPopup.tsx
+#: src/components/Vault/enum.ts
+#: src/components/Vault/enum.ts
 msgid "Withdraw"
 msgstr "Retragere"
 
-#: src/components/earn/UnstakingModal.tsx
-msgid "Withdraw & Claim"
-msgstr "Retragere & Solicitare"
+#: 
+#~ msgid "Withdraw & Claim"
+#~ msgstr "Retragere & Solicitare"
 
-#: src/components/earn/UnstakingModal.tsx
-#: src/components/earn/UnstakingModal.tsx
-msgid "Withdraw deposited liquidity"
-msgstr "Retrage lichiditatea depozitată"
+#: 
+#: 
+#~ msgid "Withdraw deposited liquidity"
+#~ msgstr "Retrage lichiditatea depozitată"
 
-#: src/components/earn/UnstakingModal.tsx
-msgid "Withdrawing {0} IXS-V2"
-msgstr "Retragere {0} IXS-V2"
+#: src/state/withdraw/hooks.ts
+msgid "Withdraw {amount} {currencySymbol}"
+msgstr ""
 
-#: src/components/earn/UnstakingModal.tsx
-msgid "Withdrew IXS-V2!"
-msgstr "Retragere IXS-V2!"
+#: 
+#~ msgid "Withdrawing {0} IXS-V2"
+#~ msgstr "Retragere {0} IXS-V2"
+
+#: 
+#~ msgid "Withdrew IXS-V2!"
+#~ msgstr "Retragere IXS-V2!"
 
 #: src/pages/Swap/index.tsx
 msgid "Wrap"
 msgstr "Încadrare"
 
-#: src/components/WalletModal/index.tsx
+#: src/components/WalletModal/ErrorSection.tsx
 #: src/components/Web3Status/index.tsx
 msgid "Wrong Network"
 msgstr "Rețea greșită"
@@ -1016,18 +1885,54 @@ msgstr "Creezi un pool"
 msgid "You can now trade {0}"
 msgstr "Acum poți tranzacționa {0}"
 
+#: src/pages/AppBody.tsx
+msgid "You can test it on Kovan"
+msgstr ""
+
+#: src/pages/Farming/Staking/NoIXSTokens.tsx
+msgid "You don't have any IXS tokens available!"
+msgstr ""
+
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+msgid "You don’t have enough IXSGov for unstake all available IXS ({stakeAmount} is available) 1 IXS = 1 IXGov"
+msgstr ""
+
 #: src/pages/PoolFinder/index.tsx
 msgid "You don’t have liquidity in this pool yet"
 msgstr "În acest fond nu aveți încă lichidități"
+
+#: src/pages/Farming/Staking/MyStakingsTable.tsx
+msgid "You have no ongoing stakings at the moment"
+msgstr ""
+
+#: src/pages/Farming/Staking/UnstakedTable.tsx
+msgid "You have no rewards at the moment"
+msgstr ""
 
 #: src/pages/Swap/index.tsx
 msgid "You must give the IXS smart contracts permission to use your {0}. You only have to do this once per token."
 msgstr "Trebuie să dați contractelor inteligente IXS permisiunea de a vă folosi {0}. Trebuie să faceți acest lucru o singură dată pe jeton."
 
+#: src/components/Vault/NoVault.tsx
+msgid "You need to pass accreditation and KYC to start trading with the {symbolText} token."
+msgstr ""
+
 #: src/pages/AddLiquidityV2/index.tsx
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "You will receive"
 msgstr "Vei primi"
+
+#: src/pages/Farming/Staking/StakingTiers.tsx
+msgid "You will receive 1 IXSGov for each 1 staked IXS."
+msgstr ""
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+msgid "Your APY will be 5% in case of an early unstake"
+msgstr ""
+
+#: src/pages/Farming/Vesting/ZeroBalanceVesting.tsx
+msgid "Your address"
+msgstr ""
 
 #: src/components/PositionCard/index.tsx
 msgid "Your pool share"
@@ -1049,6 +1954,17 @@ msgstr "Poziţia ta are 0 lichidităţi şi nu plăteşte taxe."
 msgid "Your rate"
 msgstr "Rata ta de schimb"
 
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid ""
+"Your staked IXS will be locked for {0} till {1}. Until that time you won’t be able to unstake your IXS fully or partially. Please carefully consider the risks involved.\n"
+"{2}\n"
+"You will be able to redeem your staked IXS fully or partially after {3}."
+msgstr ""
+
+#: src/pages/Farming/Vesting/VestingValid.tsx
+msgid "Your tokens will be released linearly over time. You can claim the releasable amount right now. Come back later to claim more tokens until the full balance is claimed."
+msgstr ""
+
 #: src/components/TransactionSettings/index.tsx
 msgid "Your transaction may be frontrun"
 msgstr "Tranzacția poate fi frontrun"
@@ -1057,21 +1973,50 @@ msgstr "Tranzacția poate fi frontrun"
 msgid "Your transaction may fail"
 msgstr "Tranzacția dvs. poate eșua"
 
-#: src/components/TransactionSettings/index.tsx
-msgid "Your transaction will revert if it is pending for more than this period of time."
-msgstr "Tranzacția dvs. va reveni dacă este în așteptare pentru mai mult de această perioadă de timp."
+#: 
+#~ msgid "Your transaction will revert if it is pending for more than this period of time."
+#~ msgstr "Tranzacția dvs. va reveni dacă este în așteptare pentru mai mult de această perioadă de timp."
 
 #: src/components/TransactionSettings/index.tsx
-msgid "Your transaction will revert if the price changes unfavorably by more than this percentage."
-msgstr "Tranzacția dvs. va reveni în cazul în care prețul se modifică nefavorabil cu mai mult de acest procent."
+msgid "Your transaction will revert if it is pending for more than this period of time. Value range 1 - 180 min."
+msgstr ""
+
+#: 
+#~ msgid "Your transaction will revert if the price changes unfavorably by more than this percentage."
+#~ msgstr "Tranzacția dvs. va reveni în cazul în care prețul se modifică nefavorabil cu mai mult de acest procent."
+
+#: src/components/TransactionSettings/index.tsx
+msgid "Your transaction will revert if the price changes unfavorably by more than this percentage. Value range 0-50%"
+msgstr ""
 
 #: src/components/AccountDetails/index.tsx
 msgid "Your transactions will appear here..."
 msgstr "Tranzacțiile vor apărea aici..."
 
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+msgid "available"
+msgstr ""
+
 #: src/components/Settings/ExpertModeModal.tsx
 msgid "confirm"
 msgstr "confirmă"
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+msgid "days"
+msgstr ""
+
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+msgid "days (ended)"
+msgstr ""
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+msgid "days to go"
+msgstr ""
+
+#: src/components/Vault/enum.ts
+msgid "error"
+msgstr ""
 
 #: src/components/Web3Status/index.tsx
 msgid "has socks emoji"
@@ -1081,11 +2026,27 @@ msgstr "are șosete emoji"
 msgid "https:// or ipfs:// or ENS name"
 msgstr "https: // sau ipfs: // sau numele ENS"
 
+#: src/components/Vault/enum.ts
+#: src/components/Vault/enum.ts
+msgid "text2"
+msgstr ""
+
+#: src/pages/Farming/Staking/StakingTierCard.tsx
+msgid "tokens available for staking"
+msgstr ""
+
 #: src/components/SearchModal/ImportRow.tsx
 msgid "via {0}"
 msgstr "prin {0}"
 
+#: src/components/AdminKycTable/RejectModal.tsx
+#: src/components/AdminLogin/index.tsx
+#: src/components/Header/IXSBalanceModal.tsx
 #: src/components/Toggle/index.tsx
+#: src/pages/Farming/Staking/StakingTableTabs.tsx
+#: src/pages/Farming/Staking/StakingTierCard.tsx
+#: src/pages/Farming/Staking/StakingTierCard.tsx
+#: src/pages/Farming/Staking/StakingTierCard.tsx
 msgid "{0}"
 msgstr "{0}"
 
@@ -1108,24 +2069,35 @@ msgstr "{0} ETH"
 
 #: src/components/earn/PoolCard.tsx
 #: src/components/earn/PoolCard.tsx
-#: src/components/earn/StakingModal.tsx
 msgid "{0} IXS / week"
 msgstr "{0} IXS / săptămână"
 
-#: src/components/earn/StakingModal.tsx
-msgid "{0} IXS-V2"
-msgstr "{0} IXS-V2"
+#: 
+#~ msgid "{0} IXS-V2"
+#~ msgstr "{0} IXS-V2"
 
 #: src/components/Web3Status/index.tsx
 msgid "{0} Pending"
 msgstr "{0} în așteptare"
 
+#: src/pages/Farming/Staking/StakingTierCard.tsx
+msgid "{0} lock up period"
+msgstr ""
+
+#: src/components/Vault/TransactionDetails.tsx
+msgid "{0} sent to:"
+msgstr ""
+
 #: src/components/SearchModal/ImportList.tsx
-#: src/components/SearchModal/ManageLists.tsx
 #: src/components/SearchModal/ManageLists.tsx
 msgid "{0} tokens"
 msgstr "{0} jetoane"
 
+#: src/components/Vault/BalanceRow.tsx
+msgid "{0} {1}"
+msgstr ""
+
+#: src/components/SearchModal/CurrencyList.tsx
 #: src/components/SearchModal/CurrencyList.tsx
 msgid "{0} • Added by user"
 msgstr "{0} • Adăugat de utilizator"
@@ -1134,6 +2106,14 @@ msgstr "{0} • Adăugat de utilizator"
 #: src/pages/AddLiquidityV2/ModalBottom.tsx
 msgid "{0}%"
 msgstr "{0}%"
+
+#: src/components/Vault/TransactionDetails.tsx
+msgid "{0} {1}"
+msgstr ""
+
+#: src/components/AdminKycTable/Pagination.tsx
+msgid "{page} of {totalPages}"
+msgstr ""
 
 #: src/components/InputStepCounter/InputStepCounter.tsx
 msgid "{tokenB} per {tokenA}"

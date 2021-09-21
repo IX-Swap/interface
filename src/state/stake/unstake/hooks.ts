@@ -3,13 +3,13 @@ import { IXS_STAKING_V1_ADDRESS } from 'constants/addresses'
 import { IStaking, PeriodsEnum } from 'constants/stakingPeriods'
 import { BigNumber, utils } from 'ethers'
 import { useIXSGovTokenContract, useIXSStakingContract } from 'hooks/useContract'
+import { useActiveWeb3React } from 'hooks/web3'
 import { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, AppState } from 'state'
-import { useActiveWeb3React } from 'hooks/web3'
-import { calculateGasMargin } from 'utils/calculateGasMargin'
-import { increaseIXSGovAllowance, checkIXSGovAllowance, unstake } from './actions'
 import { useTransactionAdder } from 'state/transactions/hooks'
+import { calculateGasMargin } from 'utils/calculateGasMargin'
+import { checkIXSGovAllowance, increaseIXSGovAllowance, unstake } from './actions'
 
 export function useUnstakingState(): AppState['unstaking'] {
   return useSelector<AppState, AppState['unstaking']>((state) => state.unstaking)
@@ -38,7 +38,7 @@ export function useIncreaseIXSGovAllowance() {
           summary: t`Approve ${amount} IXSGov`,
         })
       } catch (error) {
-        dispatch(increaseIXSGovAllowance.rejected({ errorMessage: error }))
+        dispatch(increaseIXSGovAllowance.rejected({ errorMessage: error as string }))
       }
     },
     [tokenContract, dispatch, chainId]
@@ -139,8 +139,8 @@ export function useUnstakeFrom(period?: PeriodsEnum) {
         }
         const result = await unstakeTx.wait()
         dispatch(unstake.fulfilled({ txStatus: result.status }))
-      } catch (error) {
-        dispatch(unstake.rejected({ errorMessage: error }))
+      } catch (e) {
+        dispatch(unstake.rejected({ errorMessage: e as string }))
       }
 
       return unstakeTx
