@@ -44,8 +44,6 @@ import { claimsAdapter, payoutsAdapter, rewardsAdapter, stakingsAdapter } from '
 
 export const STAKING_REWARDS_INTERFACE = new Interface(STAKING_REWARDS_ABI)
 
-export const STAKING_GENESIS = 1600387200
-
 export const REWARDS_DURATION_DAYS = 60
 
 export const STAKING_REWARDS_INFO: {
@@ -256,22 +254,6 @@ export function useStakingInfo(pairToFilterBy?: Pair | null): StakingInfo[] {
   ])
 }
 
-export function useTotalIXsEarned(): CurrencyAmount<Token> | undefined {
-  const { chainId } = useActiveWeb3React()
-  const ixs = chainId ? IXS[chainId] : undefined
-  const stakingInfos = useStakingInfo()
-
-  return useMemo(() => {
-    if (!ixs) return undefined
-    return (
-      stakingInfos?.reduce(
-        (accumulator, stakingInfo) => accumulator.add(stakingInfo.earnedAmount),
-        CurrencyAmount.fromRawAmount(ixs, '0')
-      ) ?? CurrencyAmount.fromRawAmount(ixs, '0')
-    )
-  }, [stakingInfos, ixs])
-}
-
 // based on typed value
 export function useDerivedIXSStakeInfo({ typedValue, currencyId }: { typedValue: string; currencyId?: string }): {
   parsedAmount?: CurrencyAmount<Currency>
@@ -389,8 +371,6 @@ export function useFetchHistoricalPoolSize() {
             break
           }
         }
-        const result = await staking?.oneWeekHistoricalPoolSize()
-        const stakedIXS = parseInt(utils.formatUnits(result, 18))
       } catch (error) {
         console.error(`IxsReturningStakeBankPostIdoV1: `, error)
       }
@@ -403,6 +383,7 @@ export function useIncreaseAllowance() {
   const dispatch = useDispatch<AppDispatch>()
   const tokenContract = useIXSTokenContract()
   const { chainId } = useActiveWeb3React()
+  const addTransaction = useTransactionAdder()
   return useCallback(
     async (amount: string) => {
       if (!chainId) {
@@ -413,8 +394,11 @@ export function useIncreaseAllowance() {
         dispatch(increaseAllowance.pending())
         const stakingAddress = IXS_STAKING_V1_ADDRESS[chainId]
         const allowanceTx = await tokenContract?.increaseAllowance(stakingAddress, stakeAmount)
-        const tx = await allowanceTx.wait()
+        await allowanceTx.wait()
         dispatch(increaseAllowance.fulfilled({ data: allowanceTx?.hash }))
+        addTransaction(allowanceTx, {
+          summary: t`Approve ${amount} IXS`,
+        })
       } catch (error) {
         dispatch(increaseAllowance.rejected({ errorMessage: error }))
       }
@@ -447,6 +431,7 @@ export function useStakeFor(period?: PERIOD) {
   const staking = useIXSStakingContract()
   const { account } = useActiveWeb3React()
   const updateIXSBalance = useUpdateIXSBalance()
+  const addTransaction = useTransactionAdder()
 
   return useCallback(
     async (amount: string) => {
@@ -467,6 +452,9 @@ export function useStakeFor(period?: PERIOD) {
             const tx = await stakeTx.wait()
             dispatch(stake.fulfilled({ txStatus: tx.status }))
             updateIXSBalance()
+            addTransaction(stakeTx, {
+              summary: t`Stake ${amount} IXS for ${PERIOD.ONE_WEEK}`,
+            })
             break
           }
           case PERIOD.ONE_MONTH: {
@@ -481,6 +469,9 @@ export function useStakeFor(period?: PERIOD) {
             const tx = await stakeTx.wait()
             dispatch(stake.fulfilled({ txStatus: tx.status }))
             updateIXSBalance()
+            addTransaction(stakeTx, {
+              summary: t`Stake ${amount} IXS for ${PERIOD.ONE_MONTH}`,
+            })
             break
           }
           case PERIOD.TWO_MONTHS: {
@@ -495,6 +486,9 @@ export function useStakeFor(period?: PERIOD) {
             const tx = await stakeTx.wait()
             dispatch(stake.fulfilled({ txStatus: tx.status }))
             updateIXSBalance()
+            addTransaction(stakeTx, {
+              summary: t`Stake ${amount} IXS for ${PERIOD.TWO_MONTHS}`,
+            })
             break
           }
           case PERIOD.THREE_MONTHS: {
@@ -510,6 +504,9 @@ export function useStakeFor(period?: PERIOD) {
             const tx = await stakeTx.wait()
             dispatch(stake.fulfilled({ txStatus: tx.status }))
             updateIXSBalance()
+            addTransaction(stakeTx, {
+              summary: t`Stake ${amount} IXS for ${PERIOD.THREE_MONTHS}`,
+            })
             break
           }
           default: {

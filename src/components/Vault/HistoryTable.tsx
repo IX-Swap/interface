@@ -39,7 +39,7 @@ const FilterPopover = ({ options, tokenId }: { options: ActionFilterTabs[]; toke
   )
 }
 
-export const HistoryHeader = () => {
+const HistoryHeader = () => {
   const [open, toggle] = useToggle(false)
   const node = useRef<HTMLDivElement>()
   const { filter, tokenId } = useEventState()

@@ -1,15 +1,15 @@
-import React, { useEffect } from 'react'
 import { Trans } from '@lingui/macro'
-import { RowBetween, RowCenter, RowStart } from 'components/Row'
+import { ReactComponent as InfoIcon } from 'assets/images/attention.svg'
+import { IconWrapper } from 'components/AccountDetails/styleds'
+import { RowCenter, RowStart } from 'components/Row'
+import React from 'react'
 import { ApplicationModal } from 'state/application/actions'
 import { useToggleModal } from 'state/application/hooks'
-import { TYPE } from 'theme'
-import { TIER_TYPES } from 'state/stake/reducer'
-import { StakingTierCard } from './StakingTierCard'
 import { useStakingState } from 'state/stake/hooks'
+import { TIER_TYPES } from 'state/stake/reducer'
+import { TYPE } from 'theme'
 import { StakeModal } from './StakeModal'
-import { IconWrapper } from 'components/AccountDetails/styleds'
-import { ReactComponent as InfoIcon } from 'assets/images/attention.svg'
+import { StakingTierCard } from './StakingTierCard'
 import { CardsRow } from './style'
 
 export const StakingTiers = () => {
@@ -35,7 +35,6 @@ export const StakingTiers = () => {
         </RowStart>
       )}
       <CardsRow>
-        <StakingTierCard tier={TIER_TYPES.oneWeek} />
         <StakingTierCard tier={TIER_TYPES.oneMonth} />
         <StakingTierCard tier={TIER_TYPES.twoMonths} />
         <StakingTierCard tier={TIER_TYPES.threeMonths} />

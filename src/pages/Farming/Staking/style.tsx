@@ -1,35 +1,38 @@
 import { ButtonIXSGradient } from 'components/Button'
 import Column from 'components/Column'
 import { ModalBottomWrapper } from 'components/earn/styled'
-import { RowBetween } from 'components/Row'
+import Row from 'components/Row'
 import { BodyRow, HeaderRow } from 'components/Table'
 import styled from 'styled-components'
 import { gradientBorder } from 'theme'
 
-export const CardsRow = styled(RowBetween)`
-  ${({ theme }) => theme.mediaWidth.upToLarge`
-     display:grid;
-     grid-gap:15px;
-     grid-template-columns: 50% 50%;
-      > div:nth-child(1) {
-       justify-self: flex-end;
-      }
-      > div:nth-child(2){
-        justify-self: flex-start;
-      }
-      > div:nth-child(3){
-        justify-self: flex-end;
-      }
-      > div:nth-child(4){
-        justify-self: flex-start;
-      }
-  `};
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-        grid-template-columns: 100%;
-        > div {
-          justify-self: center !important;
-         }
-     `};
+export const CardsRow = styled(Row)`
+  justify-content: center;
+  flex-wrap: wrap;
+  
+  > div {
+    margin-right: 16px;
+    margin-left: 16px;
+    margin-top: 0;
+  }
+
+  @media only screen and (max-width: 1007px) {
+    flex-wrap: wrap;
+
+    > div:nth-child(3){
+      margin-top: 33px;
+  };
+
+  @media only screen and (max-width: 683px) {
+    grid-template-columns: 100%;
+
+    > div {
+      justify-self: center;
+     }
+    > div:nth-child(2){
+      margin-top: 33px;
+    }
+  };
 `
 
 export const StakingWrapper = styled.div`
@@ -316,7 +319,7 @@ export const UnstakeButton = styled(ButtonIXSGradient)`
 `
 export const ClaimButton = styled(UnstakeButton)``
 
-const LoaderContainer = styled.div`
+export const LoaderContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
