@@ -3,7 +3,8 @@ import { Currency, CurrencyAmount, Token, WETH9 } from '@ixswap1/sdk-core'
 import { Pair } from '@ixswap1/v2-sdk'
 import { t } from '@lingui/macro'
 import { abi as STAKING_REWARDS_ABI } from '@uniswap/liquidity-staker/build/StakingRewards.json'
-import { IXS_ADDRESS, IXS_STAKING_V1_ADDRESS, IS_DEV_ENV } from 'constants/addresses'
+import { STAKING_CONTRACT_KOVAN } from 'config'
+import { IXS_ADDRESS, IXS_STAKING_V1_ADDRESS } from 'constants/addresses'
 import stakingPeriodsData, { IStaking, PeriodsEnum } from 'constants/stakingPeriods'
 import { BigNumber, utils } from 'ethers'
 import { useCurrency } from 'hooks/Tokens'
@@ -24,21 +25,21 @@ import { calculateGasMargin } from '../../utils/calculateGasMargin'
 import { NEVER_RELOAD, useMultipleContractSingleData } from '../multicall/hooks'
 import { tryParseAmount } from '../swap/helpers'
 import {
+  checkAllowance,
+  getAvailableClaim,
   getIsStakingPaused,
   getOneMonthHistoricalPoolSize,
   getOneWeekHistoricalPoolSize,
+  getPayouts,
+  getRewards,
   getStakings,
   getThreeMonthsHistoricalPoolSize,
   getTwoMonthsHistoricalPoolSize,
   increaseAllowance,
   saveStakingStatus,
-  stake,
-  checkAllowance,
-  updateIXSBalance,
-  getRewards,
-  getPayouts,
-  getAvailableClaim,
   setTransactionInProgress,
+  stake,
+  updateIXSBalance,
 } from './actions'
 import { claimsAdapter, payoutsAdapter, rewardsAdapter, stakingsAdapter } from './utils'
 
@@ -583,7 +584,7 @@ export function useGetStakings() {
           const lockMonths = periodsLockMonths[period]
 
           let endDateUnix, lockedTillUnix
-          if (IS_DEV_ENV) {
+          if (STAKING_CONTRACT_KOVAN === '0x24108fD7fa1897a76488fe8B39fDBc7715916294') {
             endDateUnix = startDateUnix + testPeriodsMaturitySeconds[period]
             lockedTillUnix = startDateUnix + testPeriodsLockSeconds[period]
           } else {
