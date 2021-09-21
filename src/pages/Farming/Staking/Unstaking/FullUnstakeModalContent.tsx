@@ -13,6 +13,7 @@ import { useUnstakingState } from 'state/stake/unstake/hooks'
 import { useCurrencyBalance } from 'state/wallet/hooks'
 import styled from 'styled-components'
 import { CloseIcon, TYPE } from 'theme'
+import { floorTo4Decimals } from 'utils/formatCurrencyAmount'
 import { EllipsedText, ModalBottom, StakeInfoContainer } from '../style'
 interface UnstakingModalProps {
   onDismiss: () => void
@@ -92,7 +93,7 @@ export function FullUnstake({ onDismiss, stake, onUnstake, onApprove }: Unstakin
             textRight={
               <EllipsedText>
                 <div>
-                  {stakeAmount}&nbsp;IXSGov ({IXSGovBalance?.toSignificant(5)} <Trans>available</Trans>)
+                  {stakeAmount}&nbsp;IXSGov ({IXSGovBalance?.toSignificant(4)} <Trans>available</Trans>)
                 </div>
               </EllipsedText>
             }
@@ -103,7 +104,7 @@ export function FullUnstake({ onDismiss, stake, onUnstake, onApprove }: Unstakin
             textLeft={t`Instant reward payout today`}
             textRight={
               <EllipsedText>
-                <div>{stake.reward * 0.1}&nbsp;IXS</div>
+                <div>{floorTo4Decimals(stake.reward * 0.1)}&nbsp;IXS</div>
               </EllipsedText>
             }
           />
@@ -111,7 +112,7 @@ export function FullUnstake({ onDismiss, stake, onUnstake, onApprove }: Unstakin
             textLeft={t`Rewards to be vested (10% weekly)`}
             textRight={
               <EllipsedText>
-                <div>{stake.reward * 0.9}&nbsp;IXS</div>
+                <div>{floorTo4Decimals(stake.reward * 0.9)}&nbsp;IXS</div>
               </EllipsedText>
             }
           />

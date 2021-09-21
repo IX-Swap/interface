@@ -101,7 +101,10 @@ export function useUnstakeFrom(period?: PeriodsEnum) {
             break
           }
           case PeriodsEnum.TWO_MONTHS: {
-            if (!amount) return
+            if (!amount && amount !== 0) {
+              dispatch(unstake.rejected({ errorMessage: 'Wrong unstake amount' }))
+              return
+            }
             const stakeAmount = utils.parseUnits(amount.toString(), 'ether')
             const estimatedGas = await contract?.estimateGas.unstakeFromTwoMonths(stakeAmount, stakeIndex, noData)
             if (!estimatedGas) {
@@ -114,7 +117,10 @@ export function useUnstakeFrom(period?: PeriodsEnum) {
             break
           }
           case PeriodsEnum.THREE_MONTHS: {
-            if (!amount) return
+            if (!amount && amount !== 0) {
+              dispatch(unstake.rejected({ errorMessage: 'Wrong unstake amount' }))
+              return
+            }
             const stakeAmount = utils.parseUnits(amount.toString(), 'ether')
             const estimatedGas = await contract?.estimateGas.unstakeFromThreeMonths(stakeAmount, stakeIndex, noData)
             if (!estimatedGas) {

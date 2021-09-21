@@ -52,6 +52,21 @@ const periodsLockMonths = {
   [periods.TWO_MONTHS]: 1,
   [periods.THREE_MONTHS]: 2,
 }
+
+//<<<< testing, remove on prod
+export const testPeriodsLockSeconds = {
+  [periods.WEEK]: 5 * 60,
+  [periods.MONTH]: 10 * 60,
+  [periods.TWO_MONTHS]: 10 * 60,
+  [periods.THREE_MONTHS]: 15 * 60,
+}
+export const testPeriodsMaturitySeconds = {
+  [periods.WEEK]: 5 * 60,
+  [periods.MONTH]: 10 * 60,
+  [periods.TWO_MONTHS]: 15 * 60,
+  [periods.THREE_MONTHS]: 20 * 60,
+}
+//===== testing, remove on prod
 export const periodsInDays = {
   [periods.WEEK]: 7,
   [periods.MONTH]: 30,
@@ -66,4 +81,6 @@ export default {
   periodsApy,
   periodsLockMonths,
   periodsInDays,
+  testPeriodsLockSeconds,
+  testPeriodsMaturitySeconds,
 }

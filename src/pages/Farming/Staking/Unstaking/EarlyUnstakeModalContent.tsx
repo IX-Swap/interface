@@ -22,7 +22,6 @@ import styled from 'styled-components'
 import { CloseIcon, TYPE } from 'theme'
 import { floorTo4Decimals } from 'utils/formatCurrencyAmount'
 import { EllipsedText, ModalBottom, StakeInfoContainer } from '../style'
-
 interface UnstakingModalProps {
   onDismiss: () => void
   stake: IStaking
@@ -132,6 +131,7 @@ export function EarlyUnstake({ onDismiss, stake, onUnstake, onApprove }: Unstaki
             currency,
             parsedAmount,
           }}
+          disabled={isUnstaking || isApprovingIXSGov}
         />
         <Row marginTop={37}>
           <TYPE.body3 style={{ opacity: '0.5' }}>

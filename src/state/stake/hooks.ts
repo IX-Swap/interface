@@ -3,7 +3,7 @@ import { Currency, CurrencyAmount, Token, WETH9 } from '@ixswap1/sdk-core'
 import { Pair } from '@ixswap1/v2-sdk'
 import { t } from '@lingui/macro'
 import { abi as STAKING_REWARDS_ABI } from '@uniswap/liquidity-staker/build/StakingRewards.json'
-import { IXS_ADDRESS, IXS_STAKING_V1_ADDRESS } from 'constants/addresses'
+import { IXS_ADDRESS, IXS_STAKING_V1_ADDRESS, IS_DEV_ENV } from 'constants/addresses'
 import stakingPeriodsData, { IStaking, PeriodsEnum } from 'constants/stakingPeriods'
 import { BigNumber, utils } from 'ethers'
 import { useCurrency } from 'hooks/Tokens'
@@ -529,8 +529,16 @@ export function useGetStakings() {
 
   return useCallback(async () => {
     try {
-      const { SECONDS_IN_DAY, periodsIndex, periodsInSeconds, periodsApy, periodsLockMonths, periodsInDays } =
-        stakingPeriodsData
+      const {
+        periodsIndex,
+        periodsApy,
+        periodsLockMonths,
+        periodsInDays,
+        periodsInSeconds,
+        testPeriodsLockSeconds,
+        testPeriodsMaturitySeconds,
+        SECONDS_IN_DAY,
+      } = stakingPeriodsData
 
       const floorTo4Decimals = (num: number) => Math.floor((num + Number.EPSILON) * 10000) / 10000
       const calculateReward = (
@@ -572,10 +580,18 @@ export function useGetStakings() {
         return stakedTransactions.map((data: Array<number>, index: number) => {
           const startDateUnix = BigNumber.from(data[0]).toNumber()
           const stakeAmount = +utils.formatUnits(data[1], 18)
-          const endDateUnix = startDateUnix + periodsInSeconds[period]
           const lockMonths = periodsLockMonths[period]
-          const lockSeconds = lockMonths * 30 * SECONDS_IN_DAY
-          const lockedTillUnix = startDateUnix + lockSeconds
+
+          let endDateUnix, lockedTillUnix
+          if (IS_DEV_ENV) {
+            endDateUnix = startDateUnix + testPeriodsMaturitySeconds[period]
+            lockedTillUnix = startDateUnix + testPeriodsLockSeconds[period]
+          } else {
+            endDateUnix = startDateUnix + periodsInSeconds[period]
+            const lockSeconds = lockMonths * 30 * SECONDS_IN_DAY
+            lockedTillUnix = startDateUnix + lockSeconds
+          }
+
           return {
             period,
             stakeAmount,
