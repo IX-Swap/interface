@@ -26,7 +26,7 @@ export const DSOTeamView = ({
               color={'primary'}
               style={{ fontWeight: 700 }}
             >
-              Company Profile
+              Team Members
             </Typography>
             <VSpacer size={'small'} />
           </>

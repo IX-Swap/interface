@@ -1,15 +1,15 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { DSOInformationView } from 'app/components/DSO/DSOPreview/DSOInformationView'
 import { dso } from '__fixtures__/authorizer'
+import { DSOInvestorInformationView } from 'app/components/DSO/components/DSOInvestorInformationView'
 
-describe('DSOInformationView', () => {
+describe('DSOInvestorInformationView', () => {
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
   })
 
   it('renders without error', () => {
-    render(<DSOInformationView dso={dso} />)
+    render(<DSOInvestorInformationView dso={dso} />)
   })
 })
