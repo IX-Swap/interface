@@ -17,7 +17,7 @@ const PhishAlert = styled.div<{ isActive: any }>`
   display: ${({ isActive }) => (isActive ? 'flex' : 'none')};
 `
 
-export const StyledClose = styled(X)`
+const StyledClose = styled(X)`
   :hover {
     cursor: pointer;
   }

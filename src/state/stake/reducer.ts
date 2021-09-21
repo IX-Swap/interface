@@ -200,11 +200,11 @@ export default createReducer<StakingState>(initialState, (builder) =>
       state.isApprovingIXS = true
       state.approveIXSError = false
     })
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     .addCase(increaseAllowance.fulfilled, (state, { payload: { data } }) => {
       state.isApprovingIXS = false
       state.approveIXSError = false
       state.isIXSApproved = true
-      console.log('IXS has been approved: ', data)
     })
     .addCase(increaseAllowance.rejected, (state, { payload: { errorMessage } }) => {
       state.isApprovingIXS = false
@@ -250,6 +250,7 @@ export default createReducer<StakingState>(initialState, (builder) =>
       state.rewards = transactions
       state.rewardsLoading = false
     })
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     .addCase(getRewards.rejected, (state, { payload: { errorMessage } }) => {
       state.rewardsLoading = false
     })
@@ -260,6 +261,7 @@ export default createReducer<StakingState>(initialState, (builder) =>
       state.payouts = transactions
       state.payoutsLoading = false
     })
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     .addCase(getPayouts.rejected, (state, { payload: { errorMessage } }) => {
       state.payoutsLoading = false
     })
@@ -270,6 +272,7 @@ export default createReducer<StakingState>(initialState, (builder) =>
       state.claims = transactions
       state.claimLoading = false
     })
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     .addCase(getAvailableClaim.rejected, (state, { payload: { errorMessage } }) => {
       state.claimLoading = false
     })

@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit'
-import { ActionFilterTabs, ActionTypes } from 'components/Vault/enum'
+import { ActionFilterTabs } from 'components/Vault/enum'
 import { PaginationDetails } from 'types/pagination'
 import {
   clearEventLog,

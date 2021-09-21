@@ -4,10 +4,9 @@ import { ButtonIXSGradient } from 'components/Button'
 import { useActiveWeb3React } from 'hooks/web3'
 import React, { useMemo } from 'react'
 import { useDepositModalToggle } from 'state/application/hooks'
-import { TYPE } from 'theme'
 import { BalanceRow } from './BalanceRow'
 import { HistoryBlock } from './HistoryBlock'
-import { ExistingTitle, ExistingWrapper, TitleStatusRow, StyledTitle } from './styleds'
+import { ExistingTitle, ExistingWrapper, StyledTitle, TitleStatusRow } from './styleds'
 interface Props {
   currency?: Currency
 }

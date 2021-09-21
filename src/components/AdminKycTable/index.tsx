@@ -126,13 +126,6 @@ const NoData = styled.div`
   text-align: center;
 `
 
-const Dash = styled.div`
-  background-color: ${({ theme: { bg7 } }) => bg7};
-  width: 21px;
-  height: 3px;
-  border-radius: 40px;
-`
-
 const Wallet = styled.div`
   background: ${({ theme: { bgG3 } }) => bgG3};
   -webkit-background-clip: text;

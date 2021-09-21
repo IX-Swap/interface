@@ -44,8 +44,6 @@ import { claimsAdapter, payoutsAdapter, rewardsAdapter, stakingsAdapter } from '
 
 export const STAKING_REWARDS_INTERFACE = new Interface(STAKING_REWARDS_ABI)
 
-export const STAKING_GENESIS = 1600387200
-
 export const REWARDS_DURATION_DAYS = 60
 
 export const STAKING_REWARDS_INFO: {
@@ -256,22 +254,6 @@ export function useStakingInfo(pairToFilterBy?: Pair | null): StakingInfo[] {
   ])
 }
 
-export function useTotalIXsEarned(): CurrencyAmount<Token> | undefined {
-  const { chainId } = useActiveWeb3React()
-  const ixs = chainId ? IXS[chainId] : undefined
-  const stakingInfos = useStakingInfo()
-
-  return useMemo(() => {
-    if (!ixs) return undefined
-    return (
-      stakingInfos?.reduce(
-        (accumulator, stakingInfo) => accumulator.add(stakingInfo.earnedAmount),
-        CurrencyAmount.fromRawAmount(ixs, '0')
-      ) ?? CurrencyAmount.fromRawAmount(ixs, '0')
-    )
-  }, [stakingInfos, ixs])
-}
-
 // based on typed value
 export function useDerivedIXSStakeInfo({ typedValue, currencyId }: { typedValue: string; currencyId?: string }): {
   parsedAmount?: CurrencyAmount<Currency>
@@ -412,7 +394,7 @@ export function useIncreaseAllowance() {
         dispatch(increaseAllowance.pending())
         const stakingAddress = IXS_STAKING_V1_ADDRESS[chainId]
         const allowanceTx = await tokenContract?.increaseAllowance(stakingAddress, stakeAmount)
-        const tx = await allowanceTx.wait()
+        await allowanceTx.wait()
         dispatch(increaseAllowance.fulfilled({ data: allowanceTx?.hash }))
         addTransaction(allowanceTx, {
           summary: t`Approve ${amount} IXS`,
@@ -548,9 +530,7 @@ export function useGetStakings() {
   return useCallback(async () => {
     try {
       const {
-        SECONDS_IN_DAY,
         periodsIndex,
-        periodsInSeconds,
         periodsApy,
         periodsLockMonths,
         periodsInDays,
