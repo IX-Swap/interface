@@ -1,10 +1,8 @@
 import { FACTORY_ADDRESS } from '@ixswap1/v2-sdk'
+import { STAKING_CONTRACT_KOVAN } from 'config'
 import { constructSameAddressMap } from '../utils/constructSameAddressMap'
 
 export const MULTICALL2_ADDRESSES = constructSameAddressMap('0x5BA1e12693Dc8F9c48aAD8770482f4739bEeD696')
-
-const REACT_APP_NODE_ENV = process.env.NODE_ENV as string
-export const IS_DEV_ENV = REACT_APP_NODE_ENV !== 'production' && REACT_APP_NODE_ENV !== 'staging'
 
 // the rest are same as kovan for now
 export const IXS_ADDRESS: { [key: number]: string } = {
@@ -26,7 +24,7 @@ export const IXS_VESTING_ADDRESS: { [key: number]: string } = {
 // IXS Token staking V1 (post TGE) address
 export const IXS_STAKING_V1_ADDRESS: { [key: number]: string } = {
   [1]: '0x13Ca6Daab84af2A452f86Ea437bb90c6217a220c',
-  [42]: IS_DEV_ENV ? '0x24108fD7fa1897a76488fe8B39fDBc7715916294' : '0xEB5C601cfB10EC49888be9aE726Cf7ce2CEBF16d',
+  [42]: STAKING_CONTRACT_KOVAN,
 }
 export const SWAP_ROUTER_ADDRESS: { [key: number]: string } = {
   [1]: '',
