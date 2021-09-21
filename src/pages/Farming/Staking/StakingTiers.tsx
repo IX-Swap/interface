@@ -35,7 +35,6 @@ export const StakingTiers = () => {
         </RowStart>
       )}
       <CardsRow>
-        <StakingTierCard tier={TIER_TYPES.oneWeek} />
         <StakingTierCard tier={TIER_TYPES.oneMonth} />
         <StakingTierCard tier={TIER_TYPES.twoMonths} />
         <StakingTierCard tier={TIER_TYPES.threeMonths} />
