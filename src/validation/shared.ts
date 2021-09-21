@@ -11,6 +11,10 @@ import {
 } from 'app/pages/identity/types/forms'
 import { differenceInYears } from 'date-fns'
 
+export const validationMessages = {
+  required: 'This field is required'
+}
+
 export const emailSchema = yup
   .string()
   .email('This must be a valid email format')
@@ -61,58 +65,63 @@ export const documentsArraySchema = yup.array<
 export const nameSchema = yup
   .string()
   .max(50, 'Maximum of 50 characters')
-  .matches(/^$|^[aA-zZ\s]+$/, 'Must include letters only')
+  .matches(/^[aA-zZ](?:-?[aA-zZ]+)*$/, 'Invalid name')
 
 export const addressSchema = yup.object().shape<AddressValues>({
-  line1: yup.string().required('Required'),
+  line1: yup.string().required(validationMessages.required),
   line2: yup.string(),
-  city: yup.string().required('Required'),
-  postalCode: yup.string().required('Required'),
+  city: yup.string().required(validationMessages.required),
+  postalCode: yup.string().required(validationMessages.required),
   state: yup.string(),
-  country: yup.string().required('Required')
+  country: yup.string().required(validationMessages.required)
 })
 
 export const personalProfileSchema = yup.object().shape<PersonalProfile>({
   photo: yup.string(),
-  firstName: nameSchema.required('This field is required'),
+  firstName: nameSchema.required(validationMessages.required),
   middleName: nameSchema,
-  lastName: nameSchema.required('This field is required'),
-  nationality: yup.string().required('Required'),
-  dob: birthdaySchema.required('This field is required'),
-  countryOfResidence: yup.string().required('Required'),
-  contactNumber: yup.string().phone().required('This field is required'),
-  email: emailSchema.required('This field is required')
+  lastName: nameSchema.required(validationMessages.required),
+  nationality: yup.string().required(validationMessages.required),
+  dob: birthdaySchema.required(validationMessages.required),
+  countryOfResidence: yup.string().required(validationMessages.required),
+  contactNumber: yup.string().phone().required(validationMessages.required),
+  email: emailSchema.required(validationMessages.required)
 })
 
 export const personalProfileArraySchema = yup
   .array<PersonalProfile>()
-  .of(personalProfileSchema.required('Required'))
+  .of(personalProfileSchema.required(validationMessages.required))
 
 export const personnelProfileSchema = yup.object().shape<Personnel>({
-  fullName: yup.string().required('Required'),
-  designation: yup.string().required('Required'),
-  email: emailSchema.required('This field is required'),
-  contactNumber: yup.string().phone().required('This field is required'),
-  documents: yup.mixed<DataroomFile[], object>().required('Required'),
-  address: addressSchema.required('Required'),
-  percentageShareholding: yup.number().required('Required')
+  fullName: yup.string().required(validationMessages.required),
+  designation: yup.string().required(validationMessages.required),
+  email: emailSchema.required(validationMessages.required),
+  contactNumber: yup.string().phone().required(validationMessages.required),
+  documents: yup
+    .mixed<DataroomFile[], object>()
+    .required(validationMessages.required),
+  address: addressSchema.required(validationMessages.required),
+  percentageShareholding: yup.number().required(validationMessages.required)
 })
 
 export const personnelArraySchema = yup
   .array<Personnel>()
-  .of(personnelProfileSchema.required('Required'))
+  .of(personnelProfileSchema.required(validationMessages.required))
 
 export const taxResidenciesSchema = yup.object().shape<TaxResidency>({
   residentOfSingapore: yup.boolean(),
-  countryOfResidence: yup.string().required('Required'),
+  countryOfResidence: yup.string().required(validationMessages.required),
   taxIdentificationNumber: taxIdentificationNumberSchema.required(
-    'This field is required'
+    validationMessages.required
   ),
   taxIdAvailable: yup.boolean(),
-  reason: yup.string().oneOf(['A', 'B', 'C']).required('Required'),
+  reason: yup
+    .string()
+    .oneOf(['A', 'B', 'C'])
+    .required(validationMessages.required),
   customReason: yup.string()
 })
 
 export const taxResidenciesArraySchema = yup
   .array<TaxResidency>()
-  .of(taxResidenciesSchema.required('Required'))
+  .of(taxResidenciesSchema.required(validationMessages.required))
