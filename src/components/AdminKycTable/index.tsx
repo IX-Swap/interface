@@ -56,7 +56,7 @@ const Body = () => {
               {broker} - {custodian}
             </div>
             <div>
-              <FirstStepStatus status="approved" link={url} />
+              <FirstStepStatus status={status} link={url} />
             </div>
             <div>
               <SecondStepStatus status={status} id={id} />

@@ -78,4 +78,16 @@ export enum AccreditationStatusEnum {
   PENDING = 'new',
   APPROVED = 'approved',
   REJECTED = 'declined',
+  FAILED = 'failed', // error occured
+  PENDING_CUSTODIAN = 'pending-custodian', // waiting for custodian action
 }
+export interface AccreditationRequest {
+  message?: string
+  status: AccreditationStatusEnum
+}
+export const PENDING_ACCREDITATION_STATUSES = [
+  AccreditationStatusEnum.PENDING,
+  AccreditationStatusEnum.PENDING_CUSTODIAN,
+]
+
+export const ERROR_ACCREDITATION_STATUSES = [AccreditationStatusEnum.FAILED, AccreditationStatusEnum.REJECTED]
