@@ -1,2 +1,4 @@
 export const API_URL = process.env.REACT_APP_API_URL
 export const SECURITY_TOKENS = process.env.REACT_APP_SECURITY_TOKENS === 'true'
+export const STAKING_CONTRACT_KOVAN =
+  process.env.REACT_APP_STAKING_CONTRACT_KOVAN || '0xEB5C601cfB10EC49888be9aE726Cf7ce2CEBF16d'
