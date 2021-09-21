@@ -102,11 +102,6 @@ export const CloseColor = styled(Close)`
   }
 `
 
-export const WalletName = styled.div`
-  width: initial;
-  color: ${({ theme }) => theme.text2};
-`
-
 export const IconWrapper = styled.div<{ size?: number }>`
   ${({ theme }) => theme.flexColumnNoWrap};
   align-items: center;

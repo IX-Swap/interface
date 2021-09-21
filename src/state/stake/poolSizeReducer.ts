@@ -6,74 +6,66 @@ import {
   getThreeMonthsHistoricalPoolSize,
 } from './actions'
 
+import { PERIOD } from 'state/stake/reducer'
+
 export const DEFAULT_POOL_SIZE_LIMIT = 2_000_000
+export const POOL_SIZE_LOADING = -1
+export const POOL_SIZE_ERROR = -2
 
 interface PoolSizeState {
-  oneWeek: number
-  oneMonth: number
-  twoMonths: number
-  threeMonths: number
-  isOneWeekLoading: boolean
-  isOneMonthLoading: boolean
-  isTwoMonthsLoading: boolean
-  isThreeMonthsLoading: boolean
+  [PERIOD.ONE_WEEK]: number
+  [PERIOD.ONE_MONTH]: number
+  [PERIOD.TWO_MONTHS]: number
+  [PERIOD.THREE_MONTHS]: number
 }
 
 const initialState: PoolSizeState = {
-  oneWeek: 0,
-  oneMonth: 0,
-  twoMonths: 0,
-  threeMonths: 0,
-  isOneWeekLoading: false,
-  isOneMonthLoading: false,
-  isTwoMonthsLoading: false,
-  isThreeMonthsLoading: false,
+  [PERIOD.ONE_WEEK]: 0,
+  [PERIOD.ONE_MONTH]: 0,
+  [PERIOD.TWO_MONTHS]: 0,
+  [PERIOD.THREE_MONTHS]: 0,
 }
 
 export default createReducer<PoolSizeState>(initialState, (builder) =>
   builder
     .addCase(getOneWeekHistoricalPoolSize.pending, (state) => {
-      state.isOneWeekLoading = true
+      state[PERIOD.ONE_WEEK] = POOL_SIZE_LOADING
     })
     .addCase(getOneWeekHistoricalPoolSize.fulfilled, (state, { payload: { data } }) => {
-      state.oneWeek = data
-      state.isOneWeekLoading = false
+      state[PERIOD.ONE_WEEK] = data
     })
     .addCase(getOneWeekHistoricalPoolSize.rejected, (state, { payload: { errorMessage } }) => {
-      state.isOneWeekLoading = false
+      state[PERIOD.ONE_WEEK] = POOL_SIZE_ERROR
       console.error('getOneWeekHistoricalPoolSize error: ', errorMessage)
     })
     .addCase(getOneMonthHistoricalPoolSize.pending, (state) => {
-      state.isOneMonthLoading = true
+      state[PERIOD.ONE_MONTH] = POOL_SIZE_LOADING
     })
     .addCase(getOneMonthHistoricalPoolSize.fulfilled, (state, { payload: { data } }) => {
-      state.oneMonth = data
-      state.isOneMonthLoading = false
+      state[PERIOD.ONE_MONTH] = data
     })
     .addCase(getOneMonthHistoricalPoolSize.rejected, (state, { payload: { errorMessage } }) => {
-      state.isOneMonthLoading = false
+      state[PERIOD.ONE_MONTH] = POOL_SIZE_ERROR
       console.error('getOneMonthHistoricalPoolSize error: ', errorMessage)
     })
     .addCase(getTwoMonthsHistoricalPoolSize.pending, (state) => {
-      state.isTwoMonthsLoading = true
+      state[PERIOD.TWO_MONTHS] = POOL_SIZE_LOADING
     })
     .addCase(getTwoMonthsHistoricalPoolSize.fulfilled, (state, { payload: { data } }) => {
-      state.twoMonths = data
-      state.isTwoMonthsLoading = false
+      state[PERIOD.TWO_MONTHS] = data
     })
     .addCase(getTwoMonthsHistoricalPoolSize.rejected, (state, { payload: { errorMessage } }) => {
-      state.isTwoMonthsLoading = false
+      state[PERIOD.TWO_MONTHS] = POOL_SIZE_ERROR
       console.error('getTwoMonthsHistoricalPoolSize error: ', errorMessage)
     })
     .addCase(getThreeMonthsHistoricalPoolSize.pending, (state) => {
-      state.isThreeMonthsLoading = true
+      state[PERIOD.THREE_MONTHS] = POOL_SIZE_LOADING
     })
     .addCase(getThreeMonthsHistoricalPoolSize.fulfilled, (state, { payload: { data } }) => {
-      state.threeMonths = data
-      state.isThreeMonthsLoading = false
+      state[PERIOD.THREE_MONTHS] = data
     })
     .addCase(getThreeMonthsHistoricalPoolSize.rejected, (state, { payload: { errorMessage } }) => {
-      state.isThreeMonthsLoading = false
+      state[PERIOD.THREE_MONTHS] = POOL_SIZE_ERROR
       console.error('getThreeMonthsHistoricalPoolSize error: ', errorMessage)
     })
 )

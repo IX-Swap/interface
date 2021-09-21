@@ -10,13 +10,14 @@ import { ApplicationModal } from 'state/application/actions'
 import { useToggleModal } from 'state/application/hooks'
 import { TYPE } from 'theme'
 import { Tier, TIER_LIMIT, PERIOD } from 'state/stake/reducer'
-import { DEFAULT_POOL_SIZE_LIMIT } from 'state/stake/poolSizeReducer'
+import { DEFAULT_POOL_SIZE_LIMIT, POOL_SIZE_LOADING } from 'state/stake/poolSizeReducer'
 import { selectTier } from 'state/stake/actions'
 import { StakingTierCardWrapper } from './style'
 import { AppDispatch } from 'state'
 import { useDispatch } from 'react-redux'
 import { useFetchHistoricalPoolSize, usePoolSizeState } from 'state/stake/hooks'
 import { useStakingState } from 'state/stake/hooks'
+import { LoaderThin } from 'components/Loader/LoaderThin'
 
 export const StakingTierCard = ({ tier }: { tier: Tier }) => {
   const dispatch = useDispatch<AppDispatch>()
@@ -25,27 +26,7 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
   const fetchHistoricalPoolSize = useFetchHistoricalPoolSize()
   const poolSizeState = usePoolSizeState()
   const { hasStakedSuccessfully, isPaused } = useStakingState()
-  const tierPeriod = () => {
-    switch (tier.period) {
-      case PERIOD.ONE_WEEK: {
-        return 'oneWeek'
-      }
-      case PERIOD.ONE_MONTH: {
-        return 'oneMonth'
-      }
-      case PERIOD.TWO_MONTHS: {
-        return 'twoMonths'
-      }
-      case PERIOD.THREE_MONTHS: {
-        return 'threeMonths'
-      }
-      default: {
-        return 'oneWeek'
-      }
-    }
-  }
 
-  const tierPeriodKey = tierPeriod() as keyof typeof poolSizeState
   const [leftToFill, setLeftToFill] = useState(0)
 
   useEffect(() => {
@@ -53,9 +34,9 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
   }, [fetchHistoricalPoolSize, tier.period, hasStakedSuccessfully])
 
   useEffect(() => {
-    const filled = poolSizeState[tierPeriodKey] as number
+    const filled = poolSizeState[tier.period]
     setLeftToFill(DEFAULT_POOL_SIZE_LIMIT - filled)
-  }, [poolSizeState, tierPeriodKey, tier.period])
+  }, [poolSizeState, tier.period])
 
   const selectPeriod = () => {
     const periodLegend = {
@@ -83,6 +64,32 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
       return 'Limit reached'
     } else {
       return 'Stake'
+    }
+  }
+
+  function renderPoolSize() {
+    if (isTierUnlimited) {
+      return
+    }
+    if (poolSizeState[tier.period] === POOL_SIZE_LOADING) {
+      return (
+        <RowCenter style={{ margin: 'auto' }}>
+          <LoaderThin />
+          <TYPE.description3 fontWeight={400} opacity="0.5" marginLeft={2}>
+            <Trans> tokens available for staking</Trans>
+          </TYPE.description3>
+        </RowCenter>
+      )
+    } else {
+      return (
+        <RowCenter style={{ margin: 'auto' }}>
+          <TYPE.description3 fontWeight={400} opacity="0.5">
+            <Trans>
+              <span style={{ fontWeight: 700 }}>{leftToFill.toLocaleString('fr')}</span> tokens available for staking
+            </Trans>
+          </TYPE.description3>
+        </RowCenter>
+      )
     }
   }
 
@@ -114,7 +121,7 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
                   ${isTierUnlimited ? 'Unlimited\n' : '2 000 000 IXS\n'}
 
                   Staked IXS in Pool: 
-                  ${poolSizeState[tierPeriodKey]} IXS
+                  ${poolSizeState[tier.period]} IXS
 
                   ${
                     isTierUnlimited
@@ -149,15 +156,7 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
       <ButtonIXSWide onClick={selectPeriod} disabled={isPaused || leftToFill <= 0}>
         <Trans>{getStakeButtonText()}</Trans>
       </ButtonIXSWide>
-      {!isTierUnlimited && (
-        <RowCenter style={{ margin: 'auto' }}>
-          <TYPE.description3 fontWeight={400} opacity="0.5">
-            <Trans>
-              <span style={{ fontWeight: 700 }}>{leftToFill}</span> tokens available for staking
-            </Trans>
-          </TYPE.description3>
-        </RowCenter>
-      )}
+      {renderPoolSize()}
     </StakingTierCardWrapper>
   )
 }

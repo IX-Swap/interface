@@ -1,38 +1,40 @@
 import { t, Trans } from '@lingui/macro'
+import { ReactComponent as InfoIcon } from 'assets/images/attention.svg'
+import { IconWrapper } from 'components/AccountDetails/styleds'
 import { ButtonIXSWide } from 'components/Button'
-import { TextRow } from 'components/TextRow/TextRow'
-import { IXS_ADDRESS, IXS_GOVERNANCE_ADDRESS } from 'constants/addresses'
-import { useCurrency } from 'hooks/Tokens'
-import { Dots } from 'pages/Pool/styleds'
-import React, { useCallback, useState, useEffect } from 'react'
-import { useCurrencyBalance } from 'state/wallet/hooks'
-import { CloseIcon, TYPE } from 'theme'
-import Row, { RowBetween } from 'components/Row'
 import { StakingInputPercentage } from 'components/earn/StakingInputPercentage'
 import { StakeModalTop } from 'components/earn/styled'
+import Row, { RowBetween } from 'components/Row'
+import { TextRow } from 'components/TextRow/TextRow'
+import { MouseoverTooltip } from 'components/Tooltip'
+import { IXS_ADDRESS, IXS_GOVERNANCE_ADDRESS } from 'constants/addresses'
+import { IStaking, SECONDS_IN_DAY } from 'constants/stakingPeriods'
+import { useCurrency } from 'hooks/Tokens'
+import useTheme from 'hooks/useTheme'
+import { useActiveWeb3React } from 'hooks/web3'
+import { Dots } from 'pages/Pool/styleds'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useDerivedIXSStakeInfo } from 'state/stake/hooks'
 import { useIncreaseIXSGovAllowance, useUnstakeFrom, useUnstakingState } from 'state/stake/unstake/hooks'
-import { useActiveWeb3React } from 'hooks/web3'
 import { tryParseAmount } from 'state/swap/helpers'
-import { StakeInfoContainer, EllipsedText, ModalBottom } from '../style'
-import { IStaking, SECONDS_IN_DAY } from 'constants/stakingPeriods'
-import useTheme from 'hooks/useTheme'
-import { MouseoverTooltip } from 'components/Tooltip'
-import { IconWrapper } from 'components/AccountDetails/styleds'
-import { ReactComponent as InfoIcon } from 'assets/images/attention.svg'
-import { floorTo4Decimals } from 'utils/formatCurrencyAmount'
+import { useCurrencyBalance } from 'state/wallet/hooks'
 import styled from 'styled-components'
+import { CloseIcon, TYPE } from 'theme'
+import { floorTo4Decimals } from 'utils/formatCurrencyAmount'
+import { EllipsedText, ModalBottom, StakeInfoContainer } from '../style'
 
 interface UnstakingModalProps {
   onDismiss: () => void
   stake: IStaking
+  onUnstake: (amount: string) => void
+  onApprove: (amount?: string) => void
 }
 
 function formatAmount(amount: number): string {
   return amount?.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 10 })
 }
 
-export function EarlyUnstake({ onDismiss, stake }: UnstakingModalProps) {
+export function EarlyUnstake({ onDismiss, stake, onUnstake, onApprove }: UnstakingModalProps) {
   const stakeAmount = formatAmount(stake?.stakeAmount)
   const [typedValue, setTypedValue] = useState('')
   const [isEnoughAllowance, setIsEnoughAllowance] = useState(false)
@@ -81,14 +83,6 @@ export function EarlyUnstake({ onDismiss, stake }: UnstakingModalProps) {
     } else {
       setError('')
     }
-  }
-
-  async function onUnstake() {
-    unstake(stake, parseFloat(typedValue))
-  }
-
-  async function onApprove() {
-    increaseAllowance(stakeAmount)
   }
 
   function calcLeftToStakeEndUnix(): number {
@@ -211,7 +205,7 @@ export function EarlyUnstake({ onDismiss, stake }: UnstakingModalProps) {
           <ButtonIXSWide
             data-testid="approve-ixsgov-button"
             disabled={isEnoughAllowance || isApprovingIXSGov || isUnstaking || Boolean(error)}
-            onClick={onApprove}
+            onClick={() => onApprove(typedValue)}
             style={{ marginRight: '14px' }}
           >
             {isApprovingIXSGov ? (
@@ -225,7 +219,7 @@ export function EarlyUnstake({ onDismiss, stake }: UnstakingModalProps) {
           <ButtonIXSWide
             data-testid="unstake-button"
             disabled={!isEnoughAllowance || isApprovingIXSGov || isUnstaking || Boolean(error)}
-            onClick={onUnstake}
+            onClick={() => onUnstake(typedValue)}
           >
             {isUnstaking ? (
               <Dots>
