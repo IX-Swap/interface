@@ -26,11 +26,10 @@ export const FirstStepStatus = ({ status, link }: Props) => {
     switch (status) {
       case AccreditationStatusEnum.PENDING:
         return t`Pending`
-      case AccreditationStatusEnum.REJECTED:
-        return t`Rejected`
       case AccreditationStatusEnum.FAILED:
         return t`Failed`
       case AccreditationStatusEnum.APPROVED:
+      case AccreditationStatusEnum.REJECTED:
       case AccreditationStatusEnum.PENDING_CUSTODIAN:
         return t`Approved`
       default:
@@ -40,14 +39,13 @@ export const FirstStepStatus = ({ status, link }: Props) => {
 
   const getIcon = () => {
     switch (status) {
-      case AccreditationStatusEnum.PENDING:
-        return pendingIcon
       case AccreditationStatusEnum.FAILED:
-      case AccreditationStatusEnum.REJECTED:
         return rejectedIcon
+      case AccreditationStatusEnum.REJECTED:
       case AccreditationStatusEnum.APPROVED:
       case AccreditationStatusEnum.PENDING_CUSTODIAN:
         return approvedIcon
+      case AccreditationStatusEnum.PENDING:
       default:
         return pendingIcon
     }
