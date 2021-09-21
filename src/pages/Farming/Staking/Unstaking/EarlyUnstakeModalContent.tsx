@@ -15,7 +15,7 @@ import { useActiveWeb3React } from 'hooks/web3'
 import { Dots } from 'pages/Pool/styleds'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useDerivedIXSStakeInfo } from 'state/stake/hooks'
-import { useIncreaseIXSGovAllowance, useUnstakeFrom, useUnstakingState } from 'state/stake/unstake/hooks'
+import { useUnstakingState } from 'state/stake/unstake/hooks'
 import { tryParseAmount } from 'state/swap/helpers'
 import { useCurrencyBalance } from 'state/wallet/hooks'
 import styled from 'styled-components'
@@ -46,9 +46,7 @@ export function EarlyUnstake({ onDismiss, stake, onUnstake, onApprove }: Unstaki
   const IXSGovBalance = useCurrencyBalance(account ?? undefined, IXSGovCurrency ?? undefined)
   const stakeIXSCurrencyAmount = tryParseAmount(stakeAmount, currency)
   const theme = useTheme()
-  const increaseAllowance = useIncreaseIXSGovAllowance()
   const { IXSGovAllowanceAmount, isApprovingIXSGov, isUnstaking } = useUnstakingState()
-  const unstake = useUnstakeFrom(stake.period)
 
   useEffect(() => {
     if (!IXSGovAllowanceAmount) return

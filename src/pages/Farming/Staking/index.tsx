@@ -4,8 +4,7 @@ import { useActiveWeb3React } from 'hooks/web3'
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from 'state'
-import { ApplicationModal } from 'state/application/actions'
-import { useCloseModals, useToggleModal } from 'state/application/hooks'
+import { useCloseModals } from 'state/application/hooks'
 import { changeAccount } from 'state/stake/actions'
 import {
   useGetPayouts,
