@@ -26,9 +26,9 @@ msgstr "${0}"
 msgid "${0} ETH"
 msgstr "${0} ETH"
 
-#: src/components/AccountDetails/index.tsx
-msgid "(clear all)"
-msgstr "（全部清除）"
+#: 
+#~ msgid "(clear all)"
+#~ msgstr "（全部清除）"
 
 #: src/components/InputStepCounter/InputStepCounter.tsx
 msgid "+{feeAmountFormatted}%"
@@ -59,6 +59,18 @@ msgstr "1％的費用"
 msgid "<0>Loading</0>"
 msgstr "您的礦池代幣"
 
+#: src/pages/Farming/Staking/StakingTierCard.tsx
+msgid "<0>{0}</0> tokens available for staking"
+msgstr ""
+
+#: src/pages/Farming/Staking/MyStakingsTable.tsx
+#: src/pages/Farming/Staking/StakeModal.tsx
+#: src/pages/Farming/Staking/StakingTierCard.tsx
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+msgid "APY"
+msgstr ""
+
 #: src/components/swap/AcceptChanges.tsx
 #: src/components/swap/SwapModalHeader.tsx
 msgid "Accept"
@@ -67,6 +79,14 @@ msgstr "接受"
 #: src/components/AccountDetails/index.tsx
 msgid "Account"
 msgstr "帳戶"
+
+#: src/components/AdminKycTable/index.tsx
+msgid "Accreditation pair"
+msgstr ""
+
+#: src/components/Vault/NoVault.tsx
+msgid "Accreditation rejected"
+msgstr ""
 
 #: src/components/SearchModal/ImportRow.tsx
 msgid "Active"
@@ -85,9 +105,18 @@ msgstr "增加流動性"
 msgid "Add liquidity"
 msgstr "增加流動性"
 
+#: src/components/Header/IXSBalanceModal.tsx
+#: src/components/Header/IXSBalanceModal.tsx
+msgid "Add to Metamask"
+msgstr ""
+
 #: src/components/TransactionConfirmationModal/index.tsx
-msgid "Add {0} to Metamask <0/>"
-msgstr "將 {0} 添加到Metamask <0 />"
+msgid "Add {0} to Metamask"
+msgstr ""
+
+#: 
+#~ msgid "Add {0} to Metamask <0/>"
+#~ msgstr "將 {0} 添加到Metamask <0 />"
 
 #: src/pages/AddLiquidityV2/index.tsx
 #: src/pages/AddLiquidityV2/index.tsx
@@ -97,6 +126,10 @@ msgstr "加 {0} {1} 和 {2} {3}"
 #: src/components/TransactionConfirmationModal/index.tsx
 msgid "Added {0}"
 msgstr "新增 {0}"
+
+#: src/components/Vault/enum.ts
+msgid "All"
+msgstr ""
 
 #: src/pages/Swap/index.tsx
 msgid "Allow IXSwap to use your {0}"
@@ -110,27 +143,88 @@ msgstr "允許高價格影響交易，並跳過確認屏幕。使用風險自負
 msgid "Always make sure the URL is<0>app.ixswap.io</0> - bookmark it to be safe."
 msgstr "始終確保 URL 為<0>app.ixswap.io</0> - 將其加入書籤以確保安全。"
 
-#: src/hooks/useSwapCallback.ts
-msgid "An error occurred when trying to execute this swap. You may need to increase your slippage tolerance. If that does not work, there may be an incompatibility with the token you are trading. Note fee on transfer and rebase tokens are incompatible with Uniswap V3."
-msgstr "嘗試執行此交換時發生錯誤。您可能需要增加滑移公差。如果這不起作用，則可能與您正在交易的代幣不兼容。轉移令牌和變基令牌的註釋費與Uniswap V3不兼容。"
+#: src/components/Vault/DepositRequestForm.tsx
+#: src/components/Vault/HistoryTable.tsx
+#: src/components/Vault/WithdrawRequestForm.tsx
+#: src/pages/Farming/Staking/MyStakingsTable.tsx
+msgid "Amount"
+msgstr ""
 
-#: src/components/earn/StakingModal.tsx
+#: src/state/stake/hooks.ts
+msgid "Amount exceeds balance"
+msgstr ""
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Amount of IXS to stake"
+msgstr ""
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+msgid "Amount of IXS to unstake"
+msgstr ""
+
+#: src/components/Vault/DepositSendInfo.tsx
+#: src/components/Vault/TransactionDetails.tsx
+msgid "Amount:"
+msgstr ""
+
+#: src/hooks/useSwapCallback.ts
+msgid "An error occurred when trying to execute this swap. You may need to increase your slippage tolerance. If that does not work, there may be an incompatibility with the token you are trading."
+msgstr ""
+
+#: 
+#~ msgid "An error occurred when trying to execute this swap. You may need to increase your slippage tolerance. If that does not work, there may be an incompatibility with the token you are trading. Note fee on transfer and rebase tokens are incompatible with Uniswap V3."
+#~ msgstr "嘗試執行此交換時發生錯誤。您可能需要增加滑移公差。如果這不起作用，則可能與您正在交易的代幣不兼容。轉移令牌和變基令牌的註釋費與Uniswap V3不兼容。"
+
+#: src/components/AdminKycTable/SecondStepStatus.tsx
+#: src/components/AdminKycTable/SecondStepStatus.tsx
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Approve"
 msgstr "批准"
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Approve IXS"
+msgstr ""
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+msgid "Approve IXSGov"
+msgstr ""
 
 #: src/pages/AddLiquidityV2/index.tsx
 #: src/pages/AddLiquidityV2/index.tsx
 msgid "Approve {0}"
 msgstr "批准 {0}"
 
+#: src/state/stake/hooks.ts
+msgid "Approve {amount} IXS"
+msgstr ""
+
+#: src/state/stake/unstake/hooks.ts
+msgid "Approve {amount} IXSGov"
+msgstr ""
+
+#: src/components/AdminKycTable/FirstStepStatus.tsx
+#: src/components/AdminKycTable/SecondStepStatus.tsx
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Approved"
 msgstr "得到正式認可的"
 
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Approved IXS"
+msgstr ""
+
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Approving"
 msgstr "批准中"
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Approving IXS"
+msgstr ""
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+msgid "Approving IXSGov"
+msgstr ""
 
 #: src/pages/AddLiquidityV2/index.tsx
 #: src/pages/AddLiquidityV2/index.tsx
@@ -141,17 +235,34 @@ msgstr "批准 {0}"
 msgid "Are you sure?"
 msgstr "你確定嗎？"
 
-#: src/components/earn/StakingModal.tsx
-msgid "Available to deposit: {0}"
-msgstr "可用存款： {0}"
+#: 
+#~ msgid "Available to deposit: {0}"
+#~ msgstr "可用存款： {0}"
+
+#: src/components/earn/StakingInputPercentage.tsx
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Available:"
+msgstr ""
 
 #: src/components/WalletModal/index.tsx
 msgid "Back"
 msgstr "後退"
 
+#: src/components/Header/IXSBalanceModal.tsx
+msgid "Balance of IXGov"
+msgstr ""
+
+#: src/components/Header/IXSBalanceModal.tsx
+msgid "Balance of IXS"
+msgstr ""
+
 #: src/components/CurrencyInputPanel/index.tsx
 msgid "Balance: {0} {1}"
 msgstr "餘額： {0} {1}"
+
+#: src/pages/Farming/Vesting/ZeroBalanceVesting.tsx
+msgid "Balances will be updated on the vesting page until the contracts are programmed."
+msgstr ""
 
 #: src/components/FeeSelector/index.tsx
 msgid "Best for exotic pairs."
@@ -169,6 +280,10 @@ msgstr "最適合穩定的配對。"
 msgid "Blocked address"
 msgstr "地址被封鎖"
 
+#: src/components/Vault/ChooseBrokerDealerPopup.tsx
+msgid "Broker dealer and Custodian"
+msgstr ""
+
 #: src/components/SearchModal/ImportList.tsx
 msgid "By adding this list you are implicitly trusting that the data is correct. Anyone can create a list, including creating fake versions of existing lists and lists that claim to represent projects that do not have one."
 msgstr "通過添加此列表，您將隱式地相信數據是正確的。任何人都可以創建一個列表，包括創建現有列表的偽造版本以及聲稱代表沒有項目的列表的列表。"
@@ -177,9 +292,30 @@ msgstr "通過添加此列表，您將隱式地相信數據是正確的。任何
 msgid "By connecting a wallet, you agree to IXSwap’ <0>Terms and Conditions</0> and acknowledge that you have read and understand the <1>IXSwap Privacy Policy</1>."
 msgstr "連接錢包即表示您同意 IXSwap 的<0>條款和條件</0>，並承認您已閱讀並理解 <1>IXSwap 隱私政策</1>。"
 
-#: src/components/AccountDetails/index.tsx
-msgid "Change"
-msgstr "改變"
+#: src/components/Vault/DepositSendInfo.tsx
+#: src/components/Vault/TransactionDetails.tsx
+msgid "Cancel"
+msgstr ""
+
+#: src/components/Vault/enum.ts
+msgid "Cancelled"
+msgstr ""
+
+#: 
+#~ msgid "Change"
+#~ msgstr "改變"
+
+#: src/pages/Farming/Vesting/VestingSearch.tsx
+msgid "Check"
+msgstr ""
+
+#: src/pages/Farming/Vesting/VestingSearch.tsx
+msgid "Check any address"
+msgstr ""
+
+#: src/components/Vault/NoVault.tsx
+msgid "Checking your KYC on primary issuer"
+msgstr ""
 
 #: src/components/CurrencyInputPanel/index.tsx
 #: src/pages/PoolFinder/CurrencyRow.tsx
@@ -188,11 +324,15 @@ msgid "Choose token"
 msgstr "選擇一個令牌"
 
 #: src/pages/PoolFinder/PrerequisiteMessage.tsx
-msgid "Choose token to find your liquidity."
-msgstr "選擇一個代幣以找到您的流動性。"
+msgid "Choose token to find your liquidity"
+msgstr ""
 
-#: src/components/earn/ClaimRewardModal.tsx
-#: src/components/earn/ClaimRewardModal.tsx
+#: 
+#~ msgid "Choose token to find your liquidity."
+#~ msgstr "選擇一個代幣以找到您的流動性。"
+
+#: src/pages/Farming/Staking/UnstakedTable.tsx
+#: src/pages/Farming/Vesting/VestingValid.tsx
 msgid "Claim"
 msgstr "宣稱"
 
@@ -200,32 +340,65 @@ msgstr "宣稱"
 msgid "Claim IXS"
 msgstr "索取IXS"
 
-#: src/components/earn/ClaimRewardModal.tsx
-#: src/components/earn/ClaimRewardModal.tsx
-msgid "Claim accumulated IXS rewards"
-msgstr "領取累積的IXS獎勵"
+#: 
+#: 
+#~ msgid "Claim accumulated IXS rewards"
+#~ msgstr "領取累積的IXS獎勵"
 
-#: src/components/earn/ClaimRewardModal.tsx
-#: src/components/earn/UnstakingModal.tsx
-msgid "Claimed IXS!"
-msgstr "聲稱IXS！"
+#: src/state/stake/hooks.ts
+msgid "Claim rewards {formattedAmount}"
+msgstr ""
 
-#: src/components/earn/ClaimRewardModal.tsx
-#: src/components/earn/UnstakingModal.tsx
-msgid "Claiming {0} IXS"
-msgstr "索取 {0} IXS"
+#: src/pages/Farming/Vesting/VestingValid.tsx
+msgid "Claimable"
+msgstr ""
 
+#: src/pages/Farming/Staking/UnstakedTable.tsx
+msgid "Claimable Rewards"
+msgstr ""
+
+#: src/pages/Farming/Vesting/VestingValid.tsx
+msgid "Claimed"
+msgstr ""
+
+#: 
+#: 
+#~ msgid "Claimed IXS!"
+#~ msgstr "聲稱IXS！"
+
+#: src/pages/Farming/Staking/UnstakedTable.tsx
+msgid "Claimed rewards"
+msgstr ""
+
+#: 
+#: 
+#~ msgid "Claiming {0} IXS"
+#~ msgstr "索取 {0} IXS"
+
+#: src/components/AccountDetails/index.tsx
 #: src/components/SearchModal/ManageTokens.tsx
 msgid "Clear all"
 msgstr "全部清除"
 
 #: src/components/TransactionConfirmationModal/index.tsx
+#: src/components/TransactionConfirmationModal/index.tsx
+#: src/components/Vault/WithDrawError.tsx
+#: src/components/Vault/WithDrawSuccess.tsx
 msgid "Close"
 msgstr "關閉"
 
-#: src/components/SearchModal/CommonBases.tsx
-msgid "Common bases"
-msgstr "共同基礎"
+#: src/pages/AppBody.tsx
+msgid "Coming soon"
+msgstr ""
+
+#: 
+#~ msgid "Common bases"
+#~ msgstr "共同基礎"
+
+#: src/components/Vault/enum.ts
+#: src/components/Vault/enum.ts
+msgid "Completed"
+msgstr ""
 
 #: src/pages/RemoveLiquidity/ModalBottom.tsx
 msgid "Confirm"
@@ -246,25 +419,34 @@ msgstr "確認掉期"
 msgid "Confirm this transaction in your wallet"
 msgstr "在您的錢包中確認此交易"
 
+#: src/components/Vault/NoVault.tsx
 #: src/components/Web3Status/index.tsx
 #: src/pages/AddLiquidityV2/index.tsx
+#: src/pages/Farming/Staking/ConnectWalletButton.tsx
+#: src/pages/Farming/Vesting/ConnectWalletVesting.tsx
+#: src/pages/Pool/ConnectWallet.tsx
 #: src/pages/RemoveLiquidity/index.tsx
 #: src/pages/Swap/index.tsx
 #: src/state/burn/hooks.ts
+#: src/state/deposit/hooks.ts
 #: src/state/mint/hooks.ts
 #: src/state/stake/hooks.ts
-#: src/state/stake/hooks.ts
 #: src/state/swap/hooks.ts
+#: src/state/withdraw/hooks.ts
 msgid "Connect Wallet"
 msgstr "連接錢包"
 
-#: src/components/earn/UnstakingModal.tsx
-msgid "Connect a wallet"
-msgstr "連接錢包"
+#: 
+#~ msgid "Connect a wallet"
+#~ msgstr "連接錢包"
 
-#: src/pages/Pool/NoPairs.tsx
+#: src/pages/Pool/v2.tsx
 msgid "Connect a wallet to view your Liquidity."
 msgstr "連接錢包以查看您的流動性。"
+
+#: src/pages/Custodian/EmptyState.tsx
+msgid "Connect a wallet to view your Securities."
+msgstr ""
 
 #: src/components/WalletModal/index.tsx
 msgid "Connect to a wallet"
@@ -274,22 +456,44 @@ msgstr "連接到錢包"
 msgid "Connect to a wallet to find pools"
 msgstr "連接到錢包以查找池"
 
-#: src/components/earn/ClaimRewardModal.tsx
-msgid "Connect wallet"
-msgstr "連接錢包"
+#: src/pages/Farming/Vesting/ConnectWalletVesting.tsx
+msgid "Connect to your Web3 wallet to view your vesting progress"
+msgstr ""
+
+#: 
+#~ msgid "Connect wallet"
+#~ msgstr "連接錢包"
 
 #: src/components/AccountDetails/index.tsx
 msgid "Connected with {name}"
 msgstr "連接 {name}"
 
+#: src/pages/SecTokenDetails/TokenDetails.tsx
+msgid "Contract:"
+msgstr ""
+
 #: src/components/AccountDetails/Copy.tsx
+#: src/components/Vault/DepositSendInfo.tsx
+#: src/components/Vault/TransactionDetails.tsx
+#: src/components/Vault/WithdrawPending.tsx
 msgid "Copied"
 msgstr "複製的"
 
-#: src/components/AccountDetails/index.tsx
+#: src/pages/SecTokenDetails/TokenDetails.tsx
+msgid "Copied!"
+msgstr ""
+
 #: src/components/AccountDetails/index.tsx
 msgid "Copy Address"
 msgstr "複製地址"
+
+#: src/components/Vault/DepositSendInfo.tsx
+msgid "Copy this address and send tokens to this wallet."
+msgstr ""
+
+#: src/state/withdraw/hooks.ts
+msgid "Could not submit withdraw request"
+msgstr ""
 
 #: src/pages/AddLiquidityV2/ModalBottom.tsx
 msgid "Create Pool & Supply"
@@ -299,38 +503,68 @@ msgstr "創建池和供應"
 msgid "Create a pair"
 msgstr "創建一對"
 
+#: src/components/Vault/DepositRequestForm.tsx
+msgid "Create deposit request"
+msgstr ""
+
 #: src/pages/PoolFinder/index.tsx
 msgid "Create pool"
 msgstr "創建池"
+
+#: src/components/Vault/NoVault.tsx
+msgid "Create {symbolText} Vault"
+msgstr ""
 
 #: src/components/swap/CurrentRate.tsx
 msgid "Current Rate"
 msgstr "當前利率"
 
-#: src/components/Header/HeaderLinks.tsx
-msgid "Custodian"
-msgstr "保管人"
+#: 
+#~ msgid "Custodian"
+#~ msgstr "保管人"
 
-#: src/components/earn/StakingModal.tsx
-#: src/components/earn/StakingModal.tsx
+#: src/components/Vault/HistoryTable.tsx
+msgid "Date"
+msgstr ""
+
+#: src/components/AdminKycTable/index.tsx
+msgid "Date of request"
+msgstr ""
+
+#: src/components/Vault/TransactionDetails.tsx
+msgid "Date:"
+msgstr ""
+
+#: src/components/Vault/enum.ts
+msgid "Declined"
+msgstr ""
+
+#: src/components/Vault/DepositPopup.tsx
+#: src/components/Vault/ExistingVault.tsx
+#: src/components/Vault/enum.ts
+#: src/components/Vault/enum.ts
 msgid "Deposit"
 msgstr "訂金"
 
-#: src/components/earn/StakingModal.tsx
-msgid "Deposit liquidity"
-msgstr "存款流動性"
+#: 
+#~ msgid "Deposit liquidity"
+#~ msgstr "存款流動性"
 
-#: src/components/earn/UnstakingModal.tsx
-msgid "Deposited liquidity:"
-msgstr "存入的流動資金："
+#: 
+#~ msgid "Deposited liquidity:"
+#~ msgstr "存入的流動資金："
 
-#: src/components/earn/StakingModal.tsx
-msgid "Deposited {0} IXS-V2"
-msgstr "存入 {0} IXS-V2"
+#: 
+#~ msgid "Deposited {0} IXS-V2"
+#~ msgstr "存入 {0} IXS-V2"
 
-#: src/components/earn/StakingModal.tsx
-msgid "Depositing Liquidity"
-msgstr "存放流動資金"
+#: 
+#~ msgid "Depositing Liquidity"
+#~ msgstr "存放流動資金"
+
+#: src/pages/Farming/Vesting/VestingValid.tsx
+msgid "Details"
+msgstr ""
 
 #: src/components/Settings/SettingsModal.tsx
 msgid "Disable Multihops"
@@ -340,31 +574,71 @@ msgstr "禁用多跳"
 msgid "Disconnect"
 msgstr "斷開"
 
-#: src/components/TransactionConfirmationModal/index.tsx
-msgid "Dismiss"
-msgstr "解僱"
+#: 
+#~ msgid "Dismiss"
+#~ msgstr "解僱"
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Distribute"
+msgstr ""
+
+#: src/pages/Farming/Staking/MyStakingsTable.tsx
+msgid "Distributed"
+msgstr ""
 
 #: src/pages/Pool/ImportPool.tsx
 msgid "Don't see a pool you joined?"
 msgstr "沒有看到您加入的池？"
 
+#: src/components/AdminKycTable/FirstStepStatus.tsx
+msgid "Download"
+msgstr ""
+
+#: src/components/AdminLogin/index.tsx
+msgid "Email"
+msgstr ""
+
+#: src/pages/Farming/Vesting/VestingValid.tsx
+msgid "End Date"
+msgstr ""
+
+#: src/state/withdraw/hooks.ts
+msgid "Enter a receiver"
+msgstr ""
+
 #: src/state/swap/hooks.ts
 msgid "Enter a recipient"
 msgstr "輸入收件人"
+
+#: src/state/deposit/hooks.ts
+msgid "Enter a sender"
+msgstr ""
+
+#: src/components/AdminLogin/index.tsx
+msgid "Enter a valid email"
+msgstr ""
 
 #: src/components/TransactionSettings/index.tsx
 msgid "Enter a valid slippage percentage"
 msgstr "輸入有效的滑點百分比"
 
-#: src/components/earn/ClaimRewardModal.tsx
-#: src/components/earn/UnstakingModal.tsx
 #: src/state/burn/hooks.ts
+#: src/state/deposit/hooks.ts
 #: src/state/mint/hooks.ts
 #: src/state/stake/hooks.ts
-#: src/state/stake/hooks.ts
 #: src/state/swap/hooks.ts
+#: src/state/withdraw/hooks.ts
 msgid "Enter an amount"
 msgstr "輸入金額"
+
+#: src/components/AdminLogin/index.tsx
+msgid "Enter the email"
+msgstr ""
+
+#: src/components/AdminLogin/index.tsx
+msgid "Enter the password"
+msgstr ""
 
 #: src/components/SearchModal/ManageLists.tsx
 msgid "Enter valid list location"
@@ -374,23 +648,54 @@ msgstr "輸入有效的清單位置"
 msgid "Enter valid token address"
 msgstr "輸入有效的令牌地址"
 
-#: src/components/TransactionConfirmationModal/index.tsx
+#: src/services/interceptors.ts
+msgid "Entity not found"
+msgstr ""
+
 #: src/components/Web3Status/index.tsx
 msgid "Error"
 msgstr "錯誤"
 
+#: src/components/TransactionConfirmationModal/index.tsx
+#: src/components/Vault/WithDrawError.tsx
+msgid "Error Occurred"
+msgstr ""
+
+#: src/components/WalletModal/ErrorSection.tsx
 #: src/components/WalletModal/PendingView.tsx
-#: src/components/WalletModal/index.tsx
 msgid "Error connecting"
 msgstr "連接錯誤"
 
-#: src/components/WalletModal/index.tsx
+#: src/components/WalletModal/ErrorSection.tsx
 msgid "Error connecting. Try refreshing the page."
 msgstr "連接錯誤。嘗試刷新頁面。"
 
 #: src/components/SearchModal/ManageLists.tsx
 msgid "Error importing list"
 msgstr "導入列表時出錯"
+
+#: src/pages/Farming/Staking/MyStakingsTable.tsx
+msgid "Estimated Rewards"
+msgstr ""
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Estimated lock period"
+msgstr ""
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Estimated maturity time"
+msgstr ""
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Estimated rewards"
+msgstr ""
+
+#: src/pages/Farming/Staking/MyStakingsTable.tsx
+msgid ""
+"Estimated rewards are based on assumption that your staked amount will be fully kept for the whole period of staking. In this case maximum APY will be applied \n"
+"{0}\n"
+"If you partially or fully unstake your IXS before the end date - 5% APY will be applied to unstaked amount."
+msgstr ""
 
 #: src/components/SearchModal/CurrencyList.tsx
 msgid "Expanded results from inactive Token Lists"
@@ -404,6 +709,21 @@ msgstr "切換專家模式"
 msgid "Expert mode turns off the confirm transaction prompt and allows high slippage trades that often result in bad rates and lost funds."
 msgstr "專家模式會關閉確認交易提示，並允許高差價交易，這通常會導致匯率差和資金損失。"
 
+#: src/components/AdminKycTable/FirstStepStatus.tsx
+#: src/components/AdminKycTable/SecondStepStatus.tsx
+#: src/components/Vault/AccreditationStatus.tsx
+#: src/components/Vault/enum.ts
+msgid "Failed"
+msgstr ""
+
+#: src/components/SearchModal/CommonBases.tsx
+msgid "Featured Tokens"
+msgstr ""
+
+#: src/pages/Farming/Vesting/ZeroBalanceVesting.tsx
+msgid "Found address<0/>{0}<1/>doesn’t have IXS vesting"
+msgstr ""
+
 #: src/components/swap/CurrencyInput.tsx
 #: src/components/swap/SwapModalHeader.tsx
 msgid "From"
@@ -413,13 +733,46 @@ msgstr "從"
 msgid "From (at most)"
 msgstr "來自（至多）"
 
+#: src/pages/Farming/Staking/MyStakingsTable.tsx
+msgid "Full amount of APY is applied only to amount of IXS staked till the end of staking period."
+msgstr ""
+
+#: src/pages/Farming/Staking/NoIXSTokens.tsx
+msgid "Go to Telegram"
+msgstr ""
+
+#: src/pages/Farming/Vesting/PrivateBuyer.tsx
+msgid "Hi! Сurrently you have <0>{0}</0> of unvested IXS that will be vested over the next <1>{1} months</1>. Your next IXS payment will be available on <2>8 October</2> and vesting balances will be updated here."
+msgstr ""
+
+#: src/pages/SecTokenDetails/index.tsx
+msgid "Hide"
+msgstr ""
+
 #: src/pages/Swap/index.tsx
 msgid "High Price Impact"
 msgstr "高價格影響"
 
+#: src/components/Vault/HistoryBlock.tsx
+msgid "History"
+msgstr ""
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "I have read <0>Staking Conditions</0>"
+msgstr ""
+
 #: src/components/SearchModal/ImportList.tsx
 msgid "I understand"
 msgstr "我明白"
+
+#: src/components/Header/HeaderLinks.tsx
+msgid "IXS Farming"
+msgstr ""
+
+#: src/components/Header/HeaderLinks.tsx
+#: src/components/Mobile-Menu/Menu.tsx
+msgid "IXS Liquidity Mining"
+msgstr ""
 
 #: src/pages/RemoveLiquidity/RemovedLiquidity.tsx
 msgid "IXS Rewards"
@@ -429,9 +782,32 @@ msgstr "IXS 獎勵"
 msgid "IXS Rewards (on quit)"
 msgstr "IXS 獎勵 （退出時）"
 
+#: src/pages/Farming/Vesting/ZeroBalanceVesting.tsx
+msgid "IXS in Telegram"
+msgstr ""
+
 #: src/pages/RemoveLiquidity/ModalBottom.tsx
 msgid "IXS {0}/{1} Burned"
 msgstr "IXS {0}/{1} 燒"
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+msgid "IXSGov to return"
+msgstr ""
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid ""
+"IXSgov is a tokenized asset representing your staked IXS on a 1:1 basis. IXSwap distributes the IXSgov to your wallet.\n"
+"{0}\n"
+"You should swap your IXSgov back to IXS during the unstaking process. \n"
+"{1}\n"
+"*Do note that IXS received will be equal to your IXSgov holdings at the time of swap."
+msgstr ""
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+msgid "If you partially or fully unstake your IXS before the end date - 5% APY will be applied to unstaked amount."
+msgstr ""
 
 #: src/components/SearchModal/ImportList.tsx
 msgid "If you purchase a token from this list, you may not be able to sell it back."
@@ -443,7 +819,7 @@ msgstr "如果您從此列表中購買了代幣，則可能無法將其出售。
 msgid "Import"
 msgstr "進口"
 
-#: src/components/SearchModal/ImportList.tsx
+#: src/components/NavigationTabs/index.tsx
 msgid "Import List"
 msgstr "匯入清單"
 
@@ -467,6 +843,23 @@ msgstr "在範圍內"
 msgid "Inactive"
 msgstr "不活躍"
 
+#: src/components/SearchModal/CurrencyList.tsx
+msgid "Info"
+msgstr ""
+
+#: src/components/Vault/DepositRequestForm.tsx
+#: src/components/Vault/DepositSendInfo.tsx
+msgid "Info:"
+msgstr ""
+
+#: src/pages/SecTokenDetails/TokenDetails.tsx
+msgid "Initial Price:"
+msgstr ""
+
+#: src/pages/SecTokenDetails/TokenDetails.tsx
+msgid "Initial offering price:"
+msgstr ""
+
 #: src/pages/AddLiquidityV2/PricesAndPoolShare.tsx
 msgid "Initial prices and pool share"
 msgstr "初始價格和總份額"
@@ -475,6 +868,7 @@ msgstr "初始價格和總份額"
 msgid "Initializing..."
 msgstr "初始化中..."
 
+#: src/components/swap/OutputInfo.tsx
 #: src/components/swap/SwapModalHeader.tsx
 msgid "Input is estimated. You will sell at most <0>{0} {1}</0> or the transaction will revert."
 msgstr "估計輸入。您最多將出售<0>{0} {1}</0>否則交易將還原。"
@@ -482,6 +876,15 @@ msgstr "估計輸入。您最多將出售<0>{0} {1}</0>否則交易將還原。"
 #: src/components/WalletModal/index.tsx
 msgid "Install Metamask"
 msgstr "安裝Metamask"
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+msgid "Instant reward payout today"
+msgstr ""
+
+#: src/state/withdraw/hooks.ts
+msgid "Insufficient balance"
+msgstr ""
 
 #: src/pages/Swap/index.tsx
 msgid "Insufficient liquidity for this trade"
@@ -510,6 +913,14 @@ msgstr "無效的貨幣對"
 msgid "Invalid recipient"
 msgstr "無效的收件者"
 
+#: src/pages/SecTokenDetails/TokenDetails.tsx
+msgid "Issuer:"
+msgstr ""
+
+#: src/components/Vault/NoVault.tsx
+msgid "KYC approved on primary issuer. Waiting for KYC approval on Custodian..."
+msgstr ""
+
 #: src/pages/Pool/LiquidityTitle.tsx
 msgid "Liquidity Pool"
 msgstr "流動資金池"
@@ -528,10 +939,32 @@ msgid "Loaded"
 msgstr "已加載"
 
 #: src/components/PositionCard/CurrencyHeader.tsx
+#: src/components/SecurityCard/CurrencyHeader.tsx
+#: src/pages/Custodian/EmptyState.tsx
 #: src/pages/Pool/NoPairs.tsx
 msgid "Loading"
 msgstr "載入中"
 
+#: src/pages/Farming/Staking/MyStakingsTable.tsx
+msgid "Lock Period"
+msgstr ""
+
+#: src/pages/Farming/Staking/StakingTierCard.tsx
+msgid ""
+"Lock period means the time you won’t be able to unstake your IXS fully or partially. Please carefully consider the risks involved.\n"
+"{0}\n"
+"You will be able to redeem your staked IXS fully or partially after lock period."
+msgstr ""
+
+#: src/pages/Farming/Staking/MyStakingsTable.tsx
+msgid "Locked till"
+msgstr ""
+
+#: src/pages/AdminKyc/Navbar.tsx
+msgid "Logout"
+msgstr ""
+
+#: src/components/earn/StakingInputPercentage.tsx
 #: src/pages/RemoveLiquidity/RemoveAmount.tsx
 msgid "MAX"
 msgstr "最大限度"
@@ -540,25 +973,52 @@ msgstr "最大限度"
 msgid "Make sure the URL is<0>app.ixswap.io</0>"
 msgstr "確保 URL 為<0>app.ixswap.io</0>"
 
-#: src/components/SearchModal/Manage.tsx
-msgid "Manage"
-msgstr "管理"
+#: 
+#~ msgid "Manage"
+#~ msgstr "管理"
 
 #: src/components/SearchModal/CurrencySearch.tsx
 msgid "Manage Token List"
 msgstr "管理令牌列表"
 
 #: src/pages/PoolFinder/index.tsx
-msgid "Manage this pool."
-msgstr "管理該池。"
+msgid "Manage this Pool"
+msgstr ""
 
+#: 
+#~ msgid "Manage this pool."
+#~ msgstr "管理該池。"
+
+#: src/components/NavigationTabs/index.tsx
+msgid "Manage tokens"
+msgstr ""
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Maturity time is the final date of your staking period."
+msgstr ""
+
+#: src/components/CurrencyInputPanel/MaxButton.tsx
 #: src/components/CurrencyInputPanel/index.tsx
+#: src/pages/Farming/Staking/StakeModal.tsx
 msgid "Max"
 msgstr "最大限度"
 
 #: src/components/RangeSelector/index.tsx
 msgid "Max Price"
 msgstr "最高價格"
+
+#: src/pages/Farming/Staking/StakingTierCard.tsx
+msgid ""
+"Maximum Capacity:\n"
+"{0}\n"
+"Staked IXS in Pool: \n"
+"{1} IXS\n"
+"{2}"
+msgstr ""
+
+#: src/components/AdminKycTable/RejectModal.tsx
+msgid "Maximum is 10000 chars"
+msgstr ""
 
 #: src/components/swap/AdvancedSwapDetails.tsx
 #: src/components/swap/ConfirmSwapInfo.tsx
@@ -583,9 +1043,41 @@ msgstr "分鐘"
 msgid "My Liquidity"
 msgstr "我的流動性"
 
+#: src/pages/Custodian/index.tsx
+msgid "My Securities"
+msgstr ""
+
+#: src/pages/Farming/Vesting/enum.ts
+msgid "My ongoing stakings"
+msgstr ""
+
 #: src/components/PositionCard/MinimalPositionCard.tsx
 msgid "My pool share"
 msgstr "我的泳池分享"
+
+#: src/components/Vault/ExistingVault.tsx
+msgid "My {symbolText} Vault"
+msgstr ""
+
+#: src/components/Vault/DepositSendInfo.tsx
+msgid "Need to send"
+msgstr ""
+
+#: src/components/SearchModal/CurrencyList.tsx
+msgid "Needs accreditation"
+msgstr ""
+
+#: src/pages/Farming/Vesting/VestingValid.tsx
+msgid "Next Payment"
+msgstr ""
+
+#: src/pages/Farming/Staking/UnstakedTable.tsx
+msgid "Next rewards on"
+msgstr ""
+
+#: src/components/AdminKycTable/index.tsx
+msgid "No data"
+msgstr ""
 
 #: src/pages/Pool/EmptyLiquidity.tsx
 msgid "No liquidity found."
@@ -596,16 +1088,22 @@ msgid "No pool found"
 msgstr "未找到池"
 
 #: src/components/SearchModal/CurrencySearch.tsx
+#: src/components/Vault/HistoryTable.tsx
+#: src/pages/Custodian/AllSecTokens.tsx
 msgid "No results found."
 msgstr "未找到結果。"
 
-#: src/components/Toggle/ListToggle.tsx
-msgid "OFF"
-msgstr "離開"
+#: src/pages/Custodian/EmptyState.tsx
+msgid "No securities found."
+msgstr ""
 
-#: src/components/Toggle/ListToggle.tsx
-msgid "ON"
-msgstr "上"
+#: 
+#~ msgid "OFF"
+#~ msgstr "離開"
+
+#: 
+#~ msgid "ON"
+#~ msgstr "上"
 
 #: src/components/Settings/ExpertModeModal.tsx
 msgid "ONLY USE THIS MODE IF YOU KNOW WHAT YOU ARE DOING."
@@ -614,6 +1112,10 @@ msgstr "如果您知道自己在做什麼，請僅使用此模式。"
 #: src/components/Web3ReactManager/index.tsx
 msgid "Oops! An unknown error occurred. Please refresh the page, or visit from another browser or device."
 msgstr "糟糕！出現未知錯誤。請刷新頁面，或從其他瀏覽器或設備訪問。"
+
+#: src/pages/Custodian/index.tsx
+msgid "Other Sec tokens"
+msgstr ""
 
 #: src/components/Badge/RangeBadge.tsx
 msgid "Out of range"
@@ -624,6 +1126,7 @@ msgstr "超出範圍"
 msgid "Output is estimated. If the price changes by more than {0}% your transaction will revert."
 msgstr "估計輸出。如果價格變動幅度超過 {0}％，您的交易將恢復。"
 
+#: src/components/swap/OutputInfo.tsx
 #: src/components/swap/SwapModalHeader.tsx
 msgid "Output is estimated. You will receive at least <0>{0} {1}</0> or the transaction will revert."
 msgstr "估計輸出。您將至少收到<0>{0} {1}</0>否則交易將還原。"
@@ -632,9 +1135,70 @@ msgstr "估計輸出。您將至少收到<0>{0} {1}</0>否則交易將還原。"
 msgid "Output will be sent to <0>{0}</0>"
 msgstr "輸出將發送到<0>{0}</0>"
 
-#: src/components/WalletModal/index.tsx
+#: src/components/swap/OutputInfo.tsx
+msgid "Output will be sent to <0>{0}</0>."
+msgstr ""
+
+#: src/components/Mobile-Menu/Menu.tsx
+msgid "POOL"
+msgstr ""
+
+#: src/components/Vault/NoVault.tsx
+msgid "Pass KYC and Accreditation"
+msgstr ""
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+msgid "Passed staking period"
+msgstr ""
+
+#: src/components/SecurityCard/Status.tsx
+msgid "Passing KYC..."
+msgstr ""
+
+#: src/components/Vault/AccreditationStatus.tsx
+msgid "Passing accreditation"
+msgstr ""
+
+#: src/components/AdminLogin/index.tsx
+msgid "Password"
+msgstr ""
+
+#: src/components/AdminKycTable/FirstStepStatus.tsx
+#: src/components/AdminKycTable/SecondStepStatus.tsx
+#: src/components/Vault/DepositPending.tsx
+msgid "Pending"
+msgstr ""
+
+#: src/components/Vault/enum.ts
+msgid "Pending..."
+msgstr ""
+
+#: src/pages/Farming/Staking/MyStakingsTable.tsx
+#: src/pages/Farming/Staking/StakeModal.tsx
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Period of staking"
+msgstr ""
+
+#: src/pages/Farming/Staking/UnstakedTable.tsx
+msgid "Period of vesting"
+msgstr ""
+
+#: src/components/Vault/ChooseBrokerDealerPopup.tsx
+msgid "Please choose broker dealer and custodian to start accreditation process"
+msgstr ""
+
+#: src/theme/components.tsx
+msgid "Please connect to the Kovan or Main Etherium network."
+msgstr ""
+
+#: src/components/WalletModal/ErrorSection.tsx
 msgid "Please connect to the appropriate Ethereum network."
 msgstr "請連接到適當的以太坊網絡。"
+
+#: src/components/Vault/DepositRequestForm.tsx
+msgid "Please provide sender’s address in order to approve this transaction. Other adresses will be rejected."
+msgstr ""
 
 #: src/components/Settings/ExpertModeModal.tsx
 msgid "Please type the word \"{confirmWord}\" to enable expert mode."
@@ -648,6 +1212,10 @@ msgstr "水池"
 #: src/pages/PoolFinder/index.tsx
 msgid "Pool Found!"
 msgstr "找到游泳池！"
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Pool limitation: 2 000 000"
+msgstr ""
 
 #: src/components/earn/PoolCard.tsx
 msgid "Pool rate"
@@ -687,17 +1255,49 @@ msgstr "價格更新"
 msgid "Prices and pool share"
 msgstr "價格和池份額"
 
+#: src/components/Vault/enum.ts
+msgid "Processing"
+msgstr ""
+
+#: src/pages/Farming/Vesting/VestingTable.tsx
+msgid "Progress"
+msgstr ""
+
 #: src/pages/AddLiquidityV2/ModalBottom.tsx
 msgid "Rates"
 msgstr "費率"
+
+#: src/pages/SecTokenDetails/index.tsx
+msgid "Read More"
+msgstr ""
 
 #: src/components/swap/UnsupportedCurrencyFooter.tsx
 msgid "Read more about unsupported assets"
 msgstr "閱讀有關不支持資產的更多信息"
 
+#: src/state/withdraw/hooks.ts
+msgid "Receiver is invalid"
+msgstr ""
+
 #: src/components/AccountDetails/index.tsx
 msgid "Recent Transactions"
 msgstr "最近交易"
+
+#: src/components/AdminKycTable/RejectModal.tsx
+#: src/components/AdminKycTable/SecondStepStatus.tsx
+#: src/components/AdminKycTable/SecondStepStatus.tsx
+msgid "Reject"
+msgstr ""
+
+#: src/components/AdminKycTable/SecondStepStatus.tsx
+#: src/components/SecurityCard/Status.tsx
+#: src/components/Vault/AccreditationStatus.tsx
+msgid "Rejected"
+msgstr ""
+
+#: src/state/vesting/hooks.ts
+msgid "Released {0} IXS"
+msgstr ""
 
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Remove"
@@ -733,22 +1333,65 @@ msgstr "移除池代幣會將您的頭寸以當前速率轉換回基礎代幣，
 msgid "Removing {0} {1} and {2} {3}"
 msgstr "刪除 {0} {1} 和 {2} {3}"
 
+#: src/components/Vault/enum.ts
+msgid "Requested"
+msgstr ""
+
 #: src/components/Settings/SettingsModal.tsx
 msgid "Restricts swaps to direct pairs only."
 msgstr "僅將交換限制為直接對。"
 
-#: src/components/TransactionConfirmationModal/index.tsx
-msgid "Return"
-msgstr "返回"
+#: src/components/Vault/NoVault.tsx
+msgid "Retry pass accreditation"
+msgstr ""
+
+#: 
+#~ msgid "Return"
+#~ msgstr "返回"
+
+#: src/pages/Farming/Staking/UnstakedTable.tsx
+msgid "Rewards in vesting"
+msgstr ""
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+msgid "Rewards to be vested (10% weekly)"
+msgstr ""
+
+#: src/pages/Farming/Vesting/enum.ts
+msgid "Rewards vesting"
+msgstr ""
 
 #: src/components/swap/AdvancedSwapDetails.tsx
 #: src/components/swap/ConfirmSwapInfo.tsx
 msgid "Route"
 msgstr "路線"
 
+#: src/pages/SecTokenDetails/TokenDetails.tsx
+msgid "STO Med. price:"
+msgstr ""
+
+#: src/components/Mobile-Menu/Menu.tsx
+msgid "SWAP"
+msgstr ""
+
+#: src/pages/AdminKyc/Search.tsx
+msgid "Search for Wallet or Token"
+msgstr ""
+
 #: src/components/SearchModal/CurrencySearch.tsx
+#: src/pages/Custodian/AllSecTokens.tsx
 msgid "Search or paste address"
 msgstr "搜索或粘貼地址"
+
+#: src/components/NavigationTabs/index.tsx
+msgid "Security Tokens"
+msgstr ""
+
+#: src/components/Header/HeaderLinks.tsx
+#: src/components/Mobile-Menu/Menu.tsx
+msgid "Security tokens"
+msgstr ""
 
 #: src/components/FeeSelector/index.tsx
 msgid "Select Pool"
@@ -758,21 +1401,54 @@ msgstr "選擇游泳池"
 msgid "Select a pool type based on your preferred liquidity provider fee."
 msgstr "根據您的首選流動性提供商費用選擇一種池類型。"
 
-#: src/components/SearchModal/CurrencySearch.tsx
-msgid "Select a token"
-msgstr "選擇一個令牌"
+#: 
+#~ msgid "Select a token"
+#~ msgstr "選擇一個令牌"
 
+#: src/components/SearchModal/CurrencySearch.tsx
 #: src/components/swap/CurrencyInput.tsx
 msgid "Select a token to swap"
 msgstr "選擇要交換的代幣"
+
+#: src/components/Vault/WithdrawRequestForm.tsx
+msgid "Send"
+msgstr ""
+
+#: src/components/Vault/DepositSendInfo.tsx
+msgid "Send {0} here"
+msgstr ""
+
+#: src/components/Vault/TransactionDetails.tsx
+msgid "Send {0} to:"
+msgstr ""
+
+#: src/state/deposit/hooks.ts
+msgid "Sender is invalid"
+msgstr ""
+
+#: src/components/Vault/DepositRequestForm.tsx
+msgid "Sender's wallet"
+msgstr ""
+
+#: src/components/Vault/DepositSendInfo.tsx
+msgid "Sender’s wallet:"
+msgstr ""
+
+#: src/components/Vault/WithdrawPending.tsx
+msgid "Sending {amount} {0} here"
+msgstr ""
+
+#: src/components/Vault/TransactionDetails.tsx
+msgid "Sent from:"
+msgstr ""
 
 #: src/pages/AddLiquidityV2/ModalBottom.tsx
 msgid "Share of Pool"
 msgstr "池份額"
 
-#: src/components/AccountDetails/index.tsx
-msgid "Show Portis"
-msgstr "顯示波蒂斯"
+#: 
+#~ msgid "Show Portis"
+#~ msgstr "顯示波蒂斯"
 
 #: src/components/TransactionSettings/index.tsx
 #: src/components/swap/AdvancedSwapDetails.tsx
@@ -788,6 +1464,71 @@ msgstr "有些資產無法通過此界面使用，因為它們可能無法與智
 msgid "Something went wrong"
 msgstr "出問題了"
 
+#: src/pages/Farming/Staking/StakeModal.tsx
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Stake"
+msgstr ""
+
+#: src/state/stake/hooks.ts
+#: src/state/stake/hooks.ts
+#: src/state/stake/hooks.ts
+#: src/state/stake/hooks.ts
+msgid "Stake {amount} IXS for {0}"
+msgstr ""
+
+#: src/components/Header/HeaderLinks.tsx
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Staking"
+msgstr ""
+
+#: src/components/Mobile-Menu/Menu.tsx
+#: src/pages/Farming/Vesting/enum.ts
+msgid "Staking IXS"
+msgstr ""
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Staking amount"
+msgstr ""
+
+#: src/pages/Farming/Staking/PromoTokenCard.tsx
+msgid "Staking is a great way to maximize the value of your holdings, instead of letting them sit idle in your IXS account!<0/> Once you have staked your assets, you can earn rewards on your holdings. This allows you to grow your token holdings over time."
+msgstr ""
+
+#: src/pages/Farming/Staking/StakingTiers.tsx
+msgid "Staking will be opened soon. Wait for the official announcement on <0>our channels</0>."
+msgstr ""
+
+#: src/pages/Farming/Vesting/VestingValid.tsx
+msgid "Start Date"
+msgstr ""
+
+#: src/components/Vault/ChooseBrokerDealerPopup.tsx
+msgid "Start accreditation"
+msgstr ""
+
+#: src/components/AdminKycTable/MoreActions.tsx
+msgid "Start again"
+msgstr ""
+
+#: src/components/AdminKycTable/FirstStepStatus.tsx
+#: src/components/AdminKycTable/SecondStepStatus.tsx
+#: src/components/Vault/HistoryTable.tsx
+msgid "Status"
+msgstr ""
+
+#: src/components/Vault/AccreditationStatus.tsx
+#: src/components/Vault/TransactionDetails.tsx
+msgid "Status:"
+msgstr ""
+
+#: src/components/AdminKycTable/index.tsx
+msgid "Step 1 - Primary issuer"
+msgstr ""
+
+#: src/components/AdminKycTable/index.tsx
+msgid "Step 2 - Custodian"
+msgstr ""
+
 #: src/pages/AddLiquidityV2/index.tsx
 msgid "Supply"
 msgstr "供應"
@@ -799,10 +1540,15 @@ msgstr "供應 {0} {1} 和 {2} {3}"
 #: src/components/Header/HeaderLinks.tsx
 #: src/components/NavigationTabs/index.tsx
 #: src/components/swap/SwapHeader.tsx
+#: src/pages/Farming/Staking/NoIXSTokens.tsx
 #: src/pages/Swap/index.tsx
 #: src/pages/Swap/index.tsx
 msgid "Swap"
 msgstr "交換"
+
+#: src/state/swap/hooks.ts
+msgid "Swapping two security tokens is not allowed"
+msgstr ""
 
 #: src/components/swap/ConfirmSwapModal.tsx
 #: src/components/swap/PendingSuccesModals.tsx
@@ -810,8 +1556,12 @@ msgid "Swapping {0} {1} for {2} {3}"
 msgstr "將 {0} {1} 交換為 {2} {3}"
 
 #: src/hooks/useSwapCallback.ts
-msgid "The Uniswap invariant x*y=k was not satisfied by the swap. This usually means one of the tokens you are swapping incorporates custom behavior on transfer."
-msgstr "交換不滿足Uniswap不變量x * y = k的要求。這通常意味著您要交換的令牌之一在傳輸時合併了自定義行為。"
+msgid "The IXswap invariant x*y=k was not satisfied by the swap. This usually means one of the tokens you are swapping incorporates custom behavior on transfer."
+msgstr ""
+
+#: 
+#~ msgid "The Uniswap invariant x*y=k was not satisfied by the swap. This usually means one of the tokens you are swapping incorporates custom behavior on transfer."
+#~ msgstr "交換不滿足Uniswap不變量x * y = k的要求。這通常意味著您要交換的令牌之一在傳輸時合併了自定義行為。"
 
 #: src/hooks/useSwapCallback.ts
 msgid "The input token cannot be transferred. There may be an issue with the input token."
@@ -822,12 +1572,13 @@ msgid "The market price is outside your specified price range. Single-asset depo
 msgstr "市場價格超出了您指定的價格範圍。僅單資產存款。"
 
 #: src/hooks/useSwapCallback.ts
+#: src/hooks/useSwapCallback.ts
 msgid "The output token cannot be transferred. There may be an issue with the output token."
 msgstr "輸出令牌無法轉讓。輸出令牌可能有問題。"
 
-#: src/hooks/useSwapCallback.ts
-msgid "The output token cannot be transferred. There may be an issue with the output token. Note fee on transfer and rebase tokens are incompatible with Uniswap V3."
-msgstr "輸出令牌無法轉讓。輸出令牌可能有問題。轉移令牌和變基令牌的註釋費與Uniswap V3不兼容。"
+#: 
+#~ msgid "The output token cannot be transferred. There may be an issue with the output token. Note fee on transfer and rebase tokens are incompatible with Uniswap V3."
+#~ msgstr "輸出令牌無法轉讓。輸出令牌可能有問題。轉移令牌和變基令牌的註釋費與Uniswap V3不兼容。"
 
 #: src/components/Badge/RangeBadge.tsx
 msgid "The price of this pool is outside of your selected range. Your position is not currently earning fees."
@@ -841,29 +1592,54 @@ msgstr "該池的價格在您選擇的範圍內。您的職位目前正在賺取
 msgid "The transaction could not be sent because the deadline has passed. Please check that your transaction deadline is not too low."
 msgstr "由於期限已過，因此無法發送交易。請檢查您的交易截止日期是否太短。"
 
-#: src/components/SearchModal/CommonBases.tsx
-msgid "These tokens are commonly paired with other tokens."
-msgstr "這些令牌通常與其他令牌配對。"
+#: 
+#~ msgid "These tokens are commonly paired with other tokens."
+#~ msgstr "這些令牌通常與其他令牌配對。"
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid ""
+"This amount of rewards is based on assumption that your staked amount will be kept for the whole period of {0}. In this case your APY will be {1}%. If you partially or fully unstake your IXS before the end date 5% APY will be applied to unstaked amount. \n"
+"{2}\n"
+"Please note your rewards will vest over 10 weeks after unstaking."
+msgstr ""
 
 #: src/components/SearchModal/ImportToken.tsx
-msgid "This token doesn't appear on the active token list(s). Make sure this is the token that you want to trade."
-msgstr "此令牌未出現在活動令牌列表中。 確保這是您要交易的代幣。"
+msgid "This token doesn't appear on the active list(s). Make sure this is the token that you want to trade"
+msgstr ""
+
+#: 
+#~ msgid "This token doesn't appear on the active token list(s). Make sure this is the token that you want to trade."
+#~ msgstr "此令牌未出現在活動令牌列表中。 確保這是您要交易的代幣。"
 
 #: src/hooks/useSwapCallback.ts
-msgid "This transaction will not succeed due to price movement. Try increasing your slippage tolerance. Note fee on transfer and rebase tokens are incompatible with Uniswap V3."
-msgstr "由於價格變動，該交易將不會成功。嘗試增加滑動容差。轉移令牌和變基令牌的註釋費與Uniswap V3不兼容。"
+msgid "This transaction will not succeed due to price movement. Try increasing your slippage tolerance."
+msgstr ""
+
+#: 
+#~ msgid "This transaction will not succeed due to price movement. Try increasing your slippage tolerance. Note fee on transfer and rebase tokens are incompatible with Uniswap V3."
+#~ msgstr "由於價格變動，該交易將不會成功。嘗試增加滑動容差。轉移令牌和變基令牌的註釋費與Uniswap V3不兼容。"
 
 #: src/hooks/useSwapCallback.ts
 msgid "This transaction will not succeed either due to price movement or fee on transfer. Try increasing your slippage tolerance."
 msgstr "由於價格變動或轉移費用，該交易將不會成功。嘗試增加滑動容差。"
 
+#: src/pages/Farming/Staking/MyStakingsTable.tsx
+msgid "Tier"
+msgstr ""
+
 #: src/components/TipWithMessage/index.tsx
 msgid "Tip:"
 msgstr "提示："
 
-#: src/components/SearchModal/ManageTokens.tsx
-msgid "Tip: Custom tokens are stored locally in your browser"
-msgstr "提示：自定義令牌存儲在您的瀏覽器本地"
+#: 
+#~ msgid "Tip: Custom tokens are stored locally in your browser"
+#~ msgstr "提示：自定義令牌存儲在您的瀏覽器本地"
+
+#: src/pages/Farming/Staking/Unstaking/UnstakeModal.tsx
+msgid ""
+"Tip: To unstake IXS tokens you need to have enough IXSgov tokens. \n"
+"You can unstake IXS tokens equal to the number of IXSgov tokens in your account."
+msgstr ""
 
 #: src/components/swap/CurrencyInput.tsx
 #: src/components/swap/SwapModalHeader.tsx
@@ -874,6 +1650,14 @@ msgstr "至"
 msgid "To (at least)"
 msgstr "到（至少）"
 
+#: src/pages/Farming/Staking/NoIXSTokens.tsx
+msgid "To buy IXS click on swap below or find us on our Telegram channel to learn more."
+msgstr ""
+
+#: src/components/AdminKycTable/index.tsx
+msgid "Token"
+msgstr ""
+
 #: src/components/SearchModal/Manage.tsx
 msgid "Tokens"
 msgstr "代幣"
@@ -882,18 +1666,30 @@ msgstr "代幣"
 msgid "Tokens from inactive lists. Import specific tokens below or click Manage to activate more lists."
 msgstr "非活動列表中的令牌。在下面導入特定令牌或單擊“管理”以激活更多列表。"
 
+#: src/pages/SecTokenDetails/TokenDetails.tsx
+msgid "Total Issued:"
+msgstr ""
+
+#: src/pages/Farming/Vesting/VestingValid.tsx
+msgid "Total Vested"
+msgstr ""
+
 #: src/components/earn/PoolCard.tsx
 msgid "Total deposited"
 msgstr "存入總額"
+
+#: src/pages/Farming/Staking/UnstakedTable.tsx
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+msgid "Total rewards"
+msgstr ""
 
 #: src/components/Settings/SettingsModal.tsx
 msgid "Transaction Settings"
 msgstr "交易設定"
 
 #: src/components/TransactionConfirmationModal/index.tsx
-#: src/components/earn/ClaimRewardModal.tsx
-#: src/components/earn/StakingModal.tsx
-#: src/components/earn/UnstakingModal.tsx
+#: src/components/Vault/WithDrawSuccess.tsx
 msgid "Transaction Submitted"
 msgstr "交易已提交"
 
@@ -909,14 +1705,43 @@ msgstr "再試一次"
 msgid "Turn On Expert Mode"
 msgstr "開啟專家模式"
 
-#: src/components/earn/ClaimRewardModal.tsx
-#: src/components/earn/UnstakingModal.tsx
-msgid "Unclaimed IXS"
-msgstr "無人認領的IXS"
+#: 
+#: 
+#~ msgid "Unclaimed IXS"
+#~ msgstr "無人認領的IXS"
+
+#: src/components/Vault/NoVault.tsx
+msgid "Unknown error"
+msgstr ""
 
 #: src/hooks/useSwapCallback.ts
-msgid "Unknown error{0}. Try increasing your slippage tolerance. Note fee on transfer and rebase tokens are incompatible with Uniswap V3."
-msgstr "未知錯誤{0}。嘗試增加滑動容差。轉移令牌和變基令牌的註釋費與Uniswap V3不兼容。"
+msgid "Unknown error{0}. Try increasing your slippage tolerance."
+msgstr ""
+
+#: 
+#~ msgid "Unknown error{0}. Try increasing your slippage tolerance. Note fee on transfer and rebase tokens are incompatible with Uniswap V3."
+#~ msgstr "未知錯誤{0}。嘗試增加滑動容差。轉移令牌和變基令牌的註釋費與Uniswap V3不兼容。"
+
+#: src/pages/Farming/Staking/MyStakingsTable.tsx
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+msgid "Unstake"
+msgstr ""
+
+#: src/pages/Farming/Staking/Unstaking/UnstakeModal.tsx
+msgid "Unstake {0} IXS"
+msgstr ""
+
+#: src/pages/Farming/Staking/Unstaking/UnstakeModal.tsx
+msgid "Unstake {amount} IXS"
+msgstr ""
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+msgid "Unstaking"
+msgstr ""
 
 #: src/pages/AddLiquidityV2/index.tsx
 #: src/pages/Swap/index.tsx
@@ -939,15 +1764,31 @@ msgstr "更新清單"
 msgid "Use this tool to find pairs that don't automatically appear in the interface."
 msgstr "使用此工具查找不會自動出現在界面中的對。"
 
+#: src/components/Header/HeaderLinks.tsx
+msgid "Vesting"
+msgstr ""
+
+#: src/pages/Farming/Vesting/VestingValid.tsx
+msgid "Vesting Amount"
+msgstr ""
+
+#: src/components/Mobile-Menu/Menu.tsx
+#: src/pages/Farming/Vesting/enum.ts
+msgid "Vesting IXS"
+msgstr ""
+
 #: src/components/SearchModal/ManageLists.tsx
 msgid "View list"
 msgstr "查看清單"
 
-#: src/components/AccountDetails/index.tsx
-#: src/components/AccountDetails/index.tsx
 #: src/components/TransactionConfirmationModal/index.tsx
+#: src/components/Vault/WithDrawSuccess.tsx
 msgid "View on Etherscan"
 msgstr "在Etherscan上查看"
+
+#: src/components/AccountDetails/index.tsx
+msgid "View on Explorer"
+msgstr ""
 
 #: src/components/PositionCard/PoolInformation.tsx
 msgid "View pool information<0>↗</0>"
@@ -961,49 +1802,77 @@ msgstr "在Etherscan上查看交易"
 msgid "Waiting For Confirmation"
 msgstr "等待確認中"
 
-#: src/components/earn/StakingModal.tsx
-msgid "Weekly Rewards"
-msgstr "每週獎勵"
+#: src/components/AdminKycTable/index.tsx
+msgid "Wallet address"
+msgstr ""
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+msgid "Warning:"
+msgstr ""
+
+#: 
+#~ msgid "Weekly Rewards"
+#~ msgstr "每週獎勵"
 
 #: src/pages/AddLiquidityV2/Tip.tsx
 #: src/pages/AddLiquidityV2/Tip.tsx
 msgid "When you add liquidity, you will receive pool tokens representing your position. These tokens automatically earn fees proportional to your share of the pool, and can be redeemed at any time."
 msgstr "當您增加流動性時，您將收到代表您頭寸的池代幣。 這些代幣會自動賺取與您在池中所佔份額成比例的費用，並且可以隨時贖回。"
 
-#: src/components/earn/ClaimRewardModal.tsx
-msgid "When you claim without withdrawing your liquidity remains in the mining pool."
-msgstr "當您要求不撤回資金時，您的流動性仍留在採礦池中。"
+#: 
+#~ msgid "When you claim without withdrawing your liquidity remains in the mining pool."
+#~ msgstr "當您要求不撤回資金時，您的流動性仍留在採礦池中。"
 
-#: src/components/earn/UnstakingModal.tsx
-msgid "When you withdraw, your IXS is claimed and your liquidity is removed from the mining pool."
-msgstr "當您提款時，您的IXS會被索取，而您的流動性也會從採礦池中刪除。"
+#: 
+#~ msgid "When you withdraw, your IXS is claimed and your liquidity is removed from the mining pool."
+#~ msgstr "當您提款時，您的IXS會被索取，而您的流動性也會從採礦池中刪除。"
 
-#: src/components/earn/UnstakingModal.tsx
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+msgid "When your assets have been unstaked they will be transferred to your Metamask"
+msgstr ""
+
+#: src/components/Vault/WithdrawRequestForm.tsx
+msgid "Where to send?"
+msgstr ""
+
+#: src/components/Vault/DepositSendInfo.tsx
+#: src/components/Vault/TransactionDetails.tsx
+msgid "Will be cancelled automatically in {deadlineIn} hours"
+msgstr ""
+
+#: src/components/Vault/BalanceRow.tsx
+#: src/components/Vault/WithdrawPopup.tsx
+#: src/components/Vault/enum.ts
+#: src/components/Vault/enum.ts
 msgid "Withdraw"
 msgstr "提取"
 
-#: src/components/earn/UnstakingModal.tsx
-msgid "Withdraw & Claim"
-msgstr "提領和索償"
+#: 
+#~ msgid "Withdraw & Claim"
+#~ msgstr "提領和索償"
 
-#: src/components/earn/UnstakingModal.tsx
-#: src/components/earn/UnstakingModal.tsx
-msgid "Withdraw deposited liquidity"
-msgstr "提取流動資金"
+#: 
+#: 
+#~ msgid "Withdraw deposited liquidity"
+#~ msgstr "提取流動資金"
 
-#: src/components/earn/UnstakingModal.tsx
-msgid "Withdrawing {0} IXS-V2"
-msgstr "提現 {0} IXS-V2"
+#: src/state/withdraw/hooks.ts
+msgid "Withdraw {amount} {currencySymbol}"
+msgstr ""
 
-#: src/components/earn/UnstakingModal.tsx
-msgid "Withdrew IXS-V2!"
-msgstr "退出IXS-V2！"
+#: 
+#~ msgid "Withdrawing {0} IXS-V2"
+#~ msgstr "提現 {0} IXS-V2"
+
+#: 
+#~ msgid "Withdrew IXS-V2!"
+#~ msgstr "退出IXS-V2！"
 
 #: src/pages/Swap/index.tsx
 msgid "Wrap"
 msgstr "裹"
 
-#: src/components/WalletModal/index.tsx
+#: src/components/WalletModal/ErrorSection.tsx
 #: src/components/Web3Status/index.tsx
 msgid "Wrong Network"
 msgstr "網絡錯誤"
@@ -1016,18 +1885,54 @@ msgstr "您正在創建一個池"
 msgid "You can now trade {0}"
 msgstr "您現在可以交易 {0}"
 
+#: src/pages/AppBody.tsx
+msgid "You can test it on Kovan"
+msgstr ""
+
+#: src/pages/Farming/Staking/NoIXSTokens.tsx
+msgid "You don't have any IXS tokens available!"
+msgstr ""
+
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+msgid "You don’t have enough IXSGov for unstake all available IXS ({stakeAmount} is available) 1 IXS = 1 IXGov"
+msgstr ""
+
 #: src/pages/PoolFinder/index.tsx
 msgid "You don’t have liquidity in this pool yet"
 msgstr "您在這個池中還沒有流動性"
+
+#: src/pages/Farming/Staking/MyStakingsTable.tsx
+msgid "You have no ongoing stakings at the moment"
+msgstr ""
+
+#: src/pages/Farming/Staking/UnstakedTable.tsx
+msgid "You have no rewards at the moment"
+msgstr ""
 
 #: src/pages/Swap/index.tsx
 msgid "You must give the IXS smart contracts permission to use your {0}. You only have to do this once per token."
 msgstr "您必須授予 IXS 智能合約使用您的 {0} 的權限。 您只需為每個令牌執行一次此操作。"
 
+#: src/components/Vault/NoVault.tsx
+msgid "You need to pass accreditation and KYC to start trading with the {symbolText} token."
+msgstr ""
+
 #: src/pages/AddLiquidityV2/index.tsx
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "You will receive"
 msgstr "您將收到"
+
+#: src/pages/Farming/Staking/StakingTiers.tsx
+msgid "You will receive 1 IXSGov for each 1 staked IXS."
+msgstr ""
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+msgid "Your APY will be 5% in case of an early unstake"
+msgstr ""
+
+#: src/pages/Farming/Vesting/ZeroBalanceVesting.tsx
+msgid "Your address"
+msgstr ""
 
 #: src/components/PositionCard/index.tsx
 msgid "Your pool share"
@@ -1049,6 +1954,17 @@ msgstr "您的頭寸流動性為0，並且不賺取費用。"
 msgid "Your rate"
 msgstr "您的費率"
 
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid ""
+"Your staked IXS will be locked for {0} till {1}. Until that time you won’t be able to unstake your IXS fully or partially. Please carefully consider the risks involved.\n"
+"{2}\n"
+"You will be able to redeem your staked IXS fully or partially after {3}."
+msgstr ""
+
+#: src/pages/Farming/Vesting/VestingValid.tsx
+msgid "Your tokens will be released linearly over time. You can claim the releasable amount right now. Come back later to claim more tokens until the full balance is claimed."
+msgstr ""
+
 #: src/components/TransactionSettings/index.tsx
 msgid "Your transaction may be frontrun"
 msgstr "您的交易可能是搶先交易"
@@ -1057,21 +1973,50 @@ msgstr "您的交易可能是搶先交易"
 msgid "Your transaction may fail"
 msgstr "您的交易可能失敗"
 
-#: src/components/TransactionSettings/index.tsx
-msgid "Your transaction will revert if it is pending for more than this period of time."
-msgstr "如果您的交易待處理的時間超過此時間段，則將還原該交易。"
+#: 
+#~ msgid "Your transaction will revert if it is pending for more than this period of time."
+#~ msgstr "如果您的交易待處理的時間超過此時間段，則將還原該交易。"
 
 #: src/components/TransactionSettings/index.tsx
-msgid "Your transaction will revert if the price changes unfavorably by more than this percentage."
-msgstr "如果價格的不利變化超過此百分比，您的交易將恢復。"
+msgid "Your transaction will revert if it is pending for more than this period of time. Value range 1 - 180 min."
+msgstr ""
+
+#: 
+#~ msgid "Your transaction will revert if the price changes unfavorably by more than this percentage."
+#~ msgstr "如果價格的不利變化超過此百分比，您的交易將恢復。"
+
+#: src/components/TransactionSettings/index.tsx
+msgid "Your transaction will revert if the price changes unfavorably by more than this percentage. Value range 0-50%"
+msgstr ""
 
 #: src/components/AccountDetails/index.tsx
 msgid "Your transactions will appear here..."
 msgstr "您的交易將出現在這裡..."
 
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+msgid "available"
+msgstr ""
+
 #: src/components/Settings/ExpertModeModal.tsx
 msgid "confirm"
 msgstr "確認"
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+msgid "days"
+msgstr ""
+
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+msgid "days (ended)"
+msgstr ""
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+msgid "days to go"
+msgstr ""
+
+#: src/components/Vault/enum.ts
+msgid "error"
+msgstr ""
 
 #: src/components/Web3Status/index.tsx
 msgid "has socks emoji"
@@ -1081,11 +2026,27 @@ msgstr "有襪子表情符號"
 msgid "https:// or ipfs:// or ENS name"
 msgstr "https：//或ipfs：//或ENS名稱"
 
+#: src/components/Vault/enum.ts
+#: src/components/Vault/enum.ts
+msgid "text2"
+msgstr ""
+
+#: src/pages/Farming/Staking/StakingTierCard.tsx
+msgid "tokens available for staking"
+msgstr ""
+
 #: src/components/SearchModal/ImportRow.tsx
 msgid "via {0}"
 msgstr "通過 {0}"
 
+#: src/components/AdminKycTable/RejectModal.tsx
+#: src/components/AdminLogin/index.tsx
+#: src/components/Header/IXSBalanceModal.tsx
 #: src/components/Toggle/index.tsx
+#: src/pages/Farming/Staking/StakingTableTabs.tsx
+#: src/pages/Farming/Staking/StakingTierCard.tsx
+#: src/pages/Farming/Staking/StakingTierCard.tsx
+#: src/pages/Farming/Staking/StakingTierCard.tsx
 msgid "{0}"
 msgstr "{0}"
 
@@ -1108,24 +2069,35 @@ msgstr "{0} ETH"
 
 #: src/components/earn/PoolCard.tsx
 #: src/components/earn/PoolCard.tsx
-#: src/components/earn/StakingModal.tsx
 msgid "{0} IXS / week"
 msgstr "{0} IXS /週"
 
-#: src/components/earn/StakingModal.tsx
-msgid "{0} IXS-V2"
-msgstr "{0} IXS-V2"
+#: 
+#~ msgid "{0} IXS-V2"
+#~ msgstr "{0} IXS-V2"
 
 #: src/components/Web3Status/index.tsx
 msgid "{0} Pending"
 msgstr "{0} 待定"
 
+#: src/pages/Farming/Staking/StakingTierCard.tsx
+msgid "{0} lock up period"
+msgstr ""
+
+#: src/components/Vault/TransactionDetails.tsx
+msgid "{0} sent to:"
+msgstr ""
+
 #: src/components/SearchModal/ImportList.tsx
-#: src/components/SearchModal/ManageLists.tsx
 #: src/components/SearchModal/ManageLists.tsx
 msgid "{0} tokens"
 msgstr "{0} 代幣"
 
+#: src/components/Vault/BalanceRow.tsx
+msgid "{0} {1}"
+msgstr ""
+
+#: src/components/SearchModal/CurrencyList.tsx
 #: src/components/SearchModal/CurrencyList.tsx
 msgid "{0} • Added by user"
 msgstr "{0} •由用戶添加"
@@ -1134,6 +2106,14 @@ msgstr "{0} •由用戶添加"
 #: src/pages/AddLiquidityV2/ModalBottom.tsx
 msgid "{0}%"
 msgstr "{0}％"
+
+#: src/components/Vault/TransactionDetails.tsx
+msgid "{0} {1}"
+msgstr ""
+
+#: src/components/AdminKycTable/Pagination.tsx
+msgid "{page} of {totalPages}"
+msgstr ""
 
 #: src/components/InputStepCounter/InputStepCounter.tsx
 msgid "{tokenB} per {tokenA}"
