@@ -56,7 +56,7 @@ const Body = () => {
                 {broker} - {custodian}
               </div>
               <div>
-                <FirstStepStatus status={status} kyc={kyc} />
+                <FirstStepStatus status={status} kyc={kyc} broker={broker} />
               </div>
               <div>
                 <SecondStepStatus status={status} id={id} />
