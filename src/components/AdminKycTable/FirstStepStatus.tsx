@@ -17,15 +17,20 @@ export const FirstStepStatus = ({ status, link }: Props) => {
   const theme = useContext(ThemeContext)
 
   const statusColors = {
-    pending: theme.text2,
-    rejected: theme.error,
-    approved: theme.green1,
+    [AccreditationStatusEnum.PENDING]: theme.text2,
+    [AccreditationStatusEnum.PENDING_KYC]: theme.text2,
+    [AccreditationStatusEnum.REJECTED]: theme.error,
+    [AccreditationStatusEnum.FAILED]: theme.error,
+    [AccreditationStatusEnum.APPROVED]: theme.green1,
+    [AccreditationStatusEnum.PENDING_CUSTODIAN]: theme.green1,
   } as Record<string, string>
 
   const getText = () => {
     switch (status) {
       case AccreditationStatusEnum.PENDING:
         return t`Pending`
+      case AccreditationStatusEnum.PENDING_KYC:
+        return t`Pending KYC`
       case AccreditationStatusEnum.FAILED:
         return t`Failed`
       case AccreditationStatusEnum.APPROVED:
@@ -46,6 +51,7 @@ export const FirstStepStatus = ({ status, link }: Props) => {
       case AccreditationStatusEnum.PENDING_CUSTODIAN:
         return approvedIcon
       case AccreditationStatusEnum.PENDING:
+      case AccreditationStatusEnum.PENDING_KYC:
       default:
         return pendingIcon
     }
