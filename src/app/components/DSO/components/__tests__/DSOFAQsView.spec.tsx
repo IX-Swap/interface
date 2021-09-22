@@ -23,18 +23,34 @@ describe('DSOFAQsView', () => {
     render(<DSOFAQsView dso={faq} />)
   })
 
-  it('renders FormSectionHeader', () => {
+  it('renders title', () => {
     render(<DSOFAQsView dso={faq} />)
 
     expect(FormSectionHeader).toHaveBeenCalledTimes(0)
   })
 
-  it('renders FormSectionHeader when isTitleVisible is true', () => {
+  it('renders title with correct props when isTitleVisible is true', () => {
     render(<DSOFAQsView dso={faq} isTitleVisible />)
 
     expect(FormSectionHeader).toHaveBeenCalledTimes(1)
     expect(FormSectionHeader).toHaveBeenCalledWith(
       expect.objectContaining({ title: 'FAQs' }),
+      {}
+    )
+  })
+
+  it('renders title with correct props when isTitleVisible and iaNewThemeOn is true', () => {
+    render(<DSOFAQsView dso={faq} isNewThemeOn isTitleVisible />)
+
+    expect(FormSectionHeader).toHaveBeenCalledTimes(0)
+    expect(Typography).toHaveBeenNthCalledWith(
+      1,
+      expect.objectContaining({
+        variant: 'h4',
+        color: 'primary',
+        style: { fontWeight: 700 },
+        children: 'Frequently Asked Questions'
+      }),
       {}
     )
   })

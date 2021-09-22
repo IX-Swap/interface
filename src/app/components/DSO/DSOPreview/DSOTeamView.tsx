@@ -1,21 +1,38 @@
 import React from 'react'
-import { Grid } from '@material-ui/core'
+import { Grid, Typography } from '@material-ui/core'
 import { DigitalSecurityOffering } from 'types/dso'
-import { DSOInformationViewProps } from 'app/components/DSO/DSOPreview/DSOInformationView'
 import { DSOTeamMemberView } from 'app/components/DSO/components/DSOTeamMemberView'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
+import { VSpacer } from 'components/VSpacer'
 
 export interface DSOTeamViewProps {
   dso: DigitalSecurityOffering
+  isNewThemeOn?: boolean
 }
 
-export const DSOTeamView = ({ dso }: DSOInformationViewProps) => {
+export const DSOTeamView = ({
+  dso,
+  isNewThemeOn = false
+}: DSOTeamViewProps) => {
   const team = dso.team
 
   return (
     <Grid container direction='column' spacing={3}>
       <Grid item>
-        <FormSectionHeader title='Team Members' />
+        {isNewThemeOn ? (
+          <>
+            <Typography
+              variant={'h4'}
+              color={'primary'}
+              style={{ fontWeight: 700 }}
+            >
+              Team Members
+            </Typography>
+            <VSpacer size={'small'} />
+          </>
+        ) : (
+          <FormSectionHeader title='Team Members' />
+        )}
       </Grid>
 
       <Grid item>
