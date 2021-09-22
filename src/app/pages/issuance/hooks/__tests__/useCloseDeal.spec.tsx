@@ -42,10 +42,10 @@ describe('useCloseDeal', () => {
 
   it('it calls snackbarService.showSnackbar with error message', async () => {
     await act(async () => {
-      const patch = jest.fn().mockRejectedValueOnce(unsuccessfulResponse)
+      const post = jest.fn().mockRejectedValueOnce(unsuccessfulResponse)
       const showSnackbar = jest.fn()
 
-      const apiObj = { patch }
+      const apiObj = { post }
       const snackbarObj = { showSnackbar }
       const { result } = renderHookWithServiceProvider(() => useCloseDeal(), {
         apiService: apiObj,
@@ -61,7 +61,7 @@ describe('useCloseDeal', () => {
 
           expect(showSnackbar).toHaveBeenNthCalledWith(
             1,
-            'There was an error closing the deal. Please try again in few minutes',
+            unsuccessfulResponse.message,
             'error'
           )
         },
