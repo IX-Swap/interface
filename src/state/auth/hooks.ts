@@ -43,12 +43,15 @@ export function useLogin({
   mustHavePreviousLogin?: boolean
   caller?: string
 }) {
-  const { expiresAt } = useAuthState()
+  const { expiresAt, loginLoading } = useAuthState()
   const dispatch = useDispatch<AppDispatch>()
   const { fetchToken } = useFetchToken()
   const getHasLogin = useHasLogin()
   const checkLogin = useCallback(
     async (account?: string | null) => {
+      if (loginLoading) {
+        return
+      }
       try {
         if (expireLogin || shouldRenewToken(expiresAt ?? 0)) {
           // gets here if he has no login at all, login expired, or login is forced
@@ -59,8 +62,8 @@ export function useLogin({
               return LOGIN_STATUS.NO_ACCOUNT
             }
           }
-          // gets here if previously logged in or previous login not needed
           dispatch(postLogin.pending())
+          // gets here if previously logged in or previous login not needed
           const auth = await fetchToken()
 
           if (!auth) {

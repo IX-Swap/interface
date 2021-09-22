@@ -238,7 +238,7 @@ export default createReducer(initialState, (builder) =>
     })
     .addCase(passAccreditation.rejected, (state, { payload: { errorMessage } }) => {
       state.loadingAccreditation = false
-      state.secTokenError = errorMessage
+      state.accreditationError = errorMessage
     })
     .addCase(authorizeSecToken.pending, (state) => {
       state.loadingSecTokenRequest = true
@@ -246,6 +246,7 @@ export default createReducer(initialState, (builder) =>
     })
     .addCase(authorizeSecToken.fulfilled, (state) => {
       state.loadingSecTokenRequest = false
+      state.secTokenError = null
     })
     .addCase(authorizeSecToken.rejected, (state, { payload: { errorMessage } }) => {
       state.loadingSecTokenRequest = false

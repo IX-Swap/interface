@@ -1,5 +1,6 @@
 import { Currency, CurrencyAmount, Percent, Token, TradeType } from '@ixswap1/sdk-core'
 import { Pair, Trade as V2Trade, TradeAuthorizationDigest } from '@ixswap1/v2-sdk'
+import { ERROR_ACCREDITATION_STATUSES } from 'components/Vault/enum'
 import { IXS_ADDRESS, IXS_GOVERNANCE_ADDRESS } from 'constants/addresses'
 import { SupportedLocale } from 'constants/locales'
 import { useV2Pair } from 'hooks/useV2Pairs'
@@ -16,6 +17,7 @@ import { clearEventLog } from 'state/eventLog/actions'
 import {
   listToSecTokenMap,
   SecTokenAddressMap,
+  useAccreditationStatus,
   useAreBothSecTokens,
   useSecTokenId,
   useSecTokensFromMap,
@@ -476,16 +478,24 @@ export const postPassAccreditation = async ({ tokenId }: { tokenId: number }) =>
   return result.data
 }
 
+export const restartAccreditation = async ({ accreditationId }: { accreditationId: number }) => {
+  const result = await apiService.post(kyc.restartAccreditation(accreditationId), {})
+  return result.data
+}
+
 export const chooseBrokerDealer = async ({ pairId }: { pairId: number }) => {
   const result = await apiService.post(broker.choose(pairId), {})
   return result.data
 }
 
-export function usePassAccreditation(): (tokenId: number, brokerDealerPairId: number) => Promise<void> {
+export function usePassAccreditation(
+  currencyId?: string
+): (tokenId: number, brokerDealerPairId: number) => Promise<void> {
   const dispatch = useDispatch<AppDispatch>()
   const login = useLogin({ mustHavePreviousLogin: false, expireLogin: false })
   const fetchTokens = useFetchUserSecTokenListCallback()
   const toggle = useChooseBrokerDealerModalToggle()
+  const { status: accreditationStatus, accreditationRequest } = useAccreditationStatus(currencyId)
   // note: prevent dispatch if using for list search or unsupported list
   return useCallback(
     async (tokenId: number, brokerDealerPairId: number) => {
@@ -494,6 +504,13 @@ export function usePassAccreditation(): (tokenId: number, brokerDealerPairId: nu
         const status = await login()
         if (status === LOGIN_STATUS.SUCCESS) {
           await chooseBrokerDealer({ pairId: brokerDealerPairId })
+          if (
+            accreditationRequest &&
+            accreditationStatus &&
+            ERROR_ACCREDITATION_STATUSES.includes(accreditationStatus)
+          ) {
+            await restartAccreditation({ accreditationId: accreditationRequest.id })
+          }
           await postPassAccreditation({ tokenId })
         } else {
           dispatch(passAccreditation.rejected({ errorMessage: 'Could not login' }))
@@ -507,7 +524,7 @@ export function usePassAccreditation(): (tokenId: number, brokerDealerPairId: nu
         dispatch(passAccreditation.rejected({ errorMessage: error.message }))
       }
     },
-    [dispatch, login, fetchTokens, toggle]
+    [dispatch, login, fetchTokens, toggle, accreditationRequest, accreditationStatus]
   )
 }
 
@@ -536,14 +553,19 @@ export function useAccount() {
   }, [expiresAt, account, authenticate, token])
 
   // when user logins to another account clear his data and relogin him
+  // run with an interval of 5 sec in cases when user changes fast from an account to another
+  // so the user won't end up authenticated with a different account
 
   useEffect(() => {
-    if (account && savedAccount && savedAccount !== account) {
-      dispatch(saveToken({ value: { token: '', expiresAt: 0 } }))
-      dispatch(clearUserData())
-      dispatch(clearEventLog())
-      authenticate()
-      dispatch(saveAccount({ account }))
-    }
+    const interval = setInterval(() => {
+      if (account && savedAccount && savedAccount !== account) {
+        dispatch(saveToken({ value: { token: '', expiresAt: 0 } }))
+        dispatch(clearUserData())
+        dispatch(clearEventLog())
+        authenticate()
+        dispatch(saveAccount({ account }))
+      }
+    }, 5000)
+    return () => clearInterval(interval)
   }, [account, savedAccount, dispatch, login, getUserSecTokens, authenticate])
 }

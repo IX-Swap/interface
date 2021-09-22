@@ -15,7 +15,7 @@ import { ReactComponent as Checkmark } from 'assets/images/checked-solid-bg.svg'
 import { usePassAccreditation } from 'state/user/hooks'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 
-export const ChooseBrokerDealerPopup = ({ tokenId }: { tokenId: any }) => {
+export const ChooseBrokerDealerPopup = ({ tokenId, currencyId }: { tokenId: any; currencyId?: string }) => {
   const isOpen = useModalOpen(ApplicationModal.CHOOSE_BROKER_DEALER)
   const toggle = useChooseBrokerDealerModalToggle()
 
@@ -36,7 +36,7 @@ export const ChooseBrokerDealerPopup = ({ tokenId }: { tokenId: any }) => {
     toggle()
   }, [toggle])
 
-  const passAccreditation = usePassAccreditation()
+  const passAccreditation = usePassAccreditation(currencyId)
 
   return (
     <RedesignedWideModal
