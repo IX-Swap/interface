@@ -82,11 +82,11 @@ export default function App() {
       <Route component={DarkModeQueryParamReader} />
       <Route component={ApeModeQueryParamReader} />
       <AppBackground />
+      <Popups />
       <AppWrapper>
         {validChainId && !isAdminKyc && <Header />}
         {chainId && !validChainId && !isAdminKyc && <ConnectToAppropriateNetwork />}
         <ToggleableBody isVisible={visibleBody} {...(isAdminKyc && { style: { marginTop: 26 } })}>
-          <Popups />
           <Polling />
           <IXSBalanceModal />
           <Web3ReactManager>
