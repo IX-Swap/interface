@@ -70,6 +70,16 @@ export const DSOBaseFieldsView = ({ dso }: DSOBaseFieldsViewProps) => {
           </Grid>
         </Grid>
       </Grid>
+      <Grid item>
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <LabelledValue
+              label='Unique Identifier Code'
+              value={dso?.uniqueIdentifierCode}
+            />
+          </Grid>
+        </Grid>
+      </Grid>
     </Grid>
   )
 }

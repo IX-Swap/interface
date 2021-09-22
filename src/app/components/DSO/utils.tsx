@@ -43,7 +43,8 @@ export const transformDSOToFormValues = (
       interestRate: '',
       dividendYield: '',
       investmentPeriod: '',
-      issuerName: ''
+      issuerName: '',
+      uniqueIdentifierCode: ''
     } as any
   }
 
@@ -83,7 +84,8 @@ export const transformDSOToFormValues = (
     videos:
       dso.videos !== undefined && dso.videos.length > 0
         ? dso.videos.map(({ _id, ...video }) => video)
-        : []
+        : [],
+    uniqueIdentifierCode: dso.uniqueIdentifierCode
   }
 }
 

@@ -51,7 +51,8 @@ describe('transformDSOToFormValues', () => {
       interestRate: '',
       dividendYield: '',
       investmentPeriod: '',
-      issuerName: ''
+      issuerName: '',
+      uniqueIdentifierCode: ''
     })
   })
 })
