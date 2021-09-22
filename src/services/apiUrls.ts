@@ -21,6 +21,7 @@ export const metamask = {
 
 export const kyc = {
   getAccreditation: (tokenId: number) => `kyc/getAccreditation/${tokenId}`,
+  restartAccreditation: (accreditationRequestId: number) => `kyc/my/restart/${accreditationRequestId}`,
 }
 
 export const broker = {

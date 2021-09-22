@@ -1,5 +1,5 @@
 import { Token } from '@ixswap1/sdk-core'
-import { AccreditationStatusEnum } from 'components/Vault/enum'
+import { AccreditationRequest, AccreditationStatusEnum } from 'components/Vault/enum'
 import { useActiveWeb3React } from 'hooks/web3'
 import { useCallback, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -135,12 +135,12 @@ export function useSecTokensFromMap(tokenMap: SecTokenAddressMap): { [address: s
   }, [tokenMap, chainId])
 }
 
-export function useAccreditationStatus(currencyId: string) {
+export function useAccreditationStatus(currencyId?: string) {
   const { secTokens } = useUserSecTokens()
-  const accreditationRequest = useMemo(() => {
-    return (secTokens[currencyId] as any)?.tokenInfo?.accreditationRequest || null
+  const accreditationRequest: AccreditationRequest | null = useMemo(() => {
+    return (secTokens[currencyId ?? ''] as any)?.tokenInfo?.accreditationRequest || null
   }, [secTokens, currencyId])
-  const status = accreditationRequest?.status
+  const status: AccreditationStatusEnum | undefined = accreditationRequest?.status
   const isApproved = useMemo(() => {
     return status === AccreditationStatusEnum.APPROVED
   }, [status])

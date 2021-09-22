@@ -27,6 +27,7 @@ function getStatusMessage(accreditationRequest: AccreditationRequest | null, sym
   const status = accreditationRequest?.status
   switch (status) {
     case AccreditationStatusEnum.PENDING:
+    case AccreditationStatusEnum.PENDING_KYC:
       return t`Checking your KYC on primary issuer`
     case AccreditationStatusEnum.PENDING_CUSTODIAN:
       return t`KYC approved on primary issuer. Waiting for KYC approval on Custodian...`
@@ -44,7 +45,8 @@ export const NoVault = ({ currency, status, accreditationRequest }: Props) => {
   const { account } = useActiveWeb3React()
   const toggleWalletModal = useWalletModalToggle()
   const toggleChooseBrokerDealerModal = useChooseBrokerDealerModalToggle()
-  const tokenId = useSecTokenId({ currencyId: (currency as any)?.address })
+  const currencyId: string | undefined = (currency as any)?.address
+  const tokenId = useSecTokenId({ currencyId })
   return (
     <NoVaultWrapper>
       <NoVaultTitle>
@@ -80,7 +82,7 @@ export const NoVault = ({ currency, status, accreditationRequest }: Props) => {
             {status && ERROR_ACCREDITATION_STATUSES.includes(status) && <Trans>Retry pass accreditation</Trans>}
           </ButtonIXSGradient>
         )}
-        <ChooseBrokerDealerPopup tokenId={tokenId} />
+        <ChooseBrokerDealerPopup tokenId={tokenId} currencyId={currencyId} />
       </RowCenter>
     </NoVaultWrapper>
   )
