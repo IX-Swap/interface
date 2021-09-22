@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import React, { useContext } from 'react'
+import React, { useContext, useMemo } from 'react'
 import styled, { ThemeContext } from 'styled-components'
 
 import approvedIcon from '../../assets/images/check-success.svg'
@@ -7,15 +7,40 @@ import rejectedIcon from '../../assets/images/attention.svg'
 import pendingIcon from '../../assets/images/loader_thin.svg'
 import { ButtonGradient } from 'components/Button'
 import { AccreditationStatusEnum } from 'components/Vault/enum'
+import ReactPDF from '@react-pdf/renderer'
+import { usePDF, Document, Page, View, Text } from '@react-pdf/renderer'
 
 interface Props {
   status: string
-  link?: string
+  kyc: any
 }
 
-export const FirstStepStatus = ({ status, link }: Props) => {
-  const theme = useContext(ThemeContext)
+// const Card = ({ kyc }: { kyc: any }) => {
+//   const isObject = typeof kyc === 'object' && kyc
+//   if (!isObject(kyc)) {
+//     return <>{JSON.stringify(kyc)}</>
+//   } else {
+//     return Object.keys(kyc).map((key, index) => <Card key={JSON.stringify(key)} kyc={kyc[key]} />)
+//   }
+// }
 
+const usePdfDoc = ({ kyc }: { kyc: any }) => {
+  return useMemo(() => {
+    return (
+      <Document>
+        <Page size="A4">
+          <View>
+            <Text>{/* <Card kyc={kyc} /> */}</Text>
+          </View>
+        </Page>
+      </Document>
+    )
+  }, [kyc])
+}
+export const FirstStepStatus = ({ status, kyc }: Props) => {
+  const theme = useContext(ThemeContext)
+  const pdfDoc = usePdfDoc({ kyc })
+  const [instance, updateInstance] = usePDF({ document: pdfDoc })
   const statusColors = {
     [AccreditationStatusEnum.PENDING]: theme.text2,
     [AccreditationStatusEnum.PENDING_KYC]: theme.text2,
@@ -61,9 +86,9 @@ export const FirstStepStatus = ({ status, link }: Props) => {
     <Container>
       <img src={getIcon()} alt="icon" width="20px" height="20px" />
       <StatusText color={statusColors[status] || theme.text2}>{getText()}</StatusText>
-      {link && (
+      {!instance.loading && !instance.error && instance.url && Object.keys(kyc).length > 0 && (
         <ButtonContainer>
-          <a href={link} download="kyc.pdf" target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}>
+          <a href={instance.url} download="kyc.pdf" target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}>
             <ButtonGradient>
               <Trans>Download</Trans>
             </ButtonGradient>

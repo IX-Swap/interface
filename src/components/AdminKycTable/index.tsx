@@ -1,16 +1,15 @@
-import React, { useEffect } from 'react'
 import { t, Trans } from '@lingui/macro'
-import styled from 'styled-components'
-import dayjs from 'dayjs'
-
-import { Table, BodyRow, HeaderRow } from '../Table'
-import { FirstStepStatus } from './FirstStepStatus'
-import { SecondStepStatus } from './SecondStepStatus'
-import { Pagination } from './Pagination'
-import { MoreActions } from './MoreActions'
-import { useAdminState, useGetKycList } from 'state/admin/hooks'
 import { LoaderThin } from 'components/Loader/LoaderThin'
+import dayjs from 'dayjs'
+import React, { useEffect } from 'react'
+import { useAdminState, useGetKycList } from 'state/admin/hooks'
+import styled from 'styled-components'
 import { shortenAddress } from 'utils'
+import { BodyRow, HeaderRow, Table } from '../Table'
+import { FirstStepStatus } from './FirstStepStatus'
+import { MoreActions } from './MoreActions'
+import { Pagination } from './Pagination'
+import { SecondStepStatus } from './SecondStepStatus'
 
 const headerCells = [
   t`Wallet address`,
@@ -46,26 +45,28 @@ const Body = () => {
           status,
           token,
           createdAt,
-          kyc: { url },
-        }) => (
-          <StyledBodyRow key={id}>
-            <Wallet>{shortenAddress(ethAddress || '')}</Wallet>
-            <div>{token?.symbol || '-'}</div>
-            <div>{dayjs(createdAt).format('MMM D, YYYY HH:mm')}</div>
-            <div>
-              {broker} - {custodian}
-            </div>
-            <div>
-              <FirstStepStatus status={status} link={url} />
-            </div>
-            <div>
-              <SecondStepStatus status={status} id={id} />
-            </div>
-            <div>
-              <MoreActions id={id} />
-            </div>
-          </StyledBodyRow>
-        )
+          kyc,
+        }) => {
+          return (
+            <StyledBodyRow key={id}>
+              <Wallet>{shortenAddress(ethAddress || '')}</Wallet>
+              <div>{token?.symbol || '-'}</div>
+              <div>{dayjs(createdAt).format('MMM D, YYYY HH:mm')}</div>
+              <div>
+                {broker} - {custodian}
+              </div>
+              <div>
+                <FirstStepStatus status={status} kyc={kyc} />
+              </div>
+              <div>
+                <SecondStepStatus status={status} id={id} />
+              </div>
+              <div>
+                <MoreActions id={id} />
+              </div>
+            </StyledBodyRow>
+          )
+        }
       )}
     </>
   )
