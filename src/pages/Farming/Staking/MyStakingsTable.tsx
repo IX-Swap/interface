@@ -14,7 +14,6 @@ import { ApplicationModal } from 'state/application/actions'
 import { useToggleModal } from 'state/application/hooks'
 import { useStakingState } from 'state/stake/hooks'
 import { TYPE } from 'theme'
-import { LoaderContainer } from '../styleds'
 import {
   Container,
   LockedTillColumn,
@@ -24,6 +23,7 @@ import {
   StyledHeaderRow,
   Tier,
   UnstakeButton,
+  LoaderContainer,
 } from './style'
 import { UnstakeModal } from './Unstaking/UnstakeModal'
 import {

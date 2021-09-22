@@ -56,7 +56,7 @@ const Body = () => {
               {broker} - {custodian}
             </div>
             <div>
-              <FirstStepStatus status="approved" link={url} />
+              <FirstStepStatus status={status} link={url} />
             </div>
             <div>
               <SecondStepStatus status={status} id={id} />
@@ -124,13 +124,6 @@ const NoData = styled.div`
   font-weight: 600;
   color: ${({ theme: { text2 } }) => text2};
   text-align: center;
-`
-
-const Dash = styled.div`
-  background-color: ${({ theme: { bg7 } }) => bg7};
-  width: 21px;
-  height: 3px;
-  border-radius: 40px;
 `
 
 const Wallet = styled.div`

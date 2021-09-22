@@ -18,6 +18,7 @@ interface Props {
   currency?: Currency | null
   parsedAmount?: CurrencyAmount<Currency>
   infoText?: string
+  disabled?: boolean
 }
 const PERCENTAGES = ['25', '50', '75', '100']
 
@@ -30,6 +31,7 @@ export const StakingInputPercentage = ({
   currency,
   parsedAmount,
   infoText,
+  disabled,
 }: Props) => {
   const onPercentageInput = useCallback(
     (percentage: string) => {
@@ -62,6 +64,7 @@ export const StakingInputPercentage = ({
             error={Boolean(error)}
             onUserInput={onUserInput}
             color={error ? 'red' : 'text1'}
+            disabled={disabled}
           />
           <AvailableBalance>
             <RowFixed>

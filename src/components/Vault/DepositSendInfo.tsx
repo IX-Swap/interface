@@ -22,7 +22,7 @@ const StyledCopy = styled(Copy)`
   width: 17px;
   height: 17px;
 `
-export interface Props {
+interface Props {
   onClose: () => void
 }
 export const DepositSendInfo = ({ onClose }: Props) => {

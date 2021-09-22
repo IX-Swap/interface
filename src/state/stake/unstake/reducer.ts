@@ -25,6 +25,7 @@ export default createReducer<UnstakingState>(initialState, (builder) =>
       state.isApprovingIXSGov = true
       state.approveIXSGovError = false
     })
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     .addCase(increaseIXSGovAllowance.fulfilled, (state, { payload: { data } }) => {
       state.isApprovingIXSGov = false
       state.approveIXSGovError = false

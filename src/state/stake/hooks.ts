@@ -3,6 +3,7 @@ import { Currency, CurrencyAmount, Token, WETH9 } from '@ixswap1/sdk-core'
 import { Pair } from '@ixswap1/v2-sdk'
 import { t } from '@lingui/macro'
 import { abi as STAKING_REWARDS_ABI } from '@uniswap/liquidity-staker/build/StakingRewards.json'
+import { STAKING_CONTRACT_KOVAN } from 'config'
 import { IXS_ADDRESS, IXS_STAKING_V1_ADDRESS } from 'constants/addresses'
 import stakingPeriodsData, { IStaking, PeriodsEnum } from 'constants/stakingPeriods'
 import { BigNumber, utils } from 'ethers'
@@ -24,27 +25,25 @@ import { calculateGasMargin } from '../../utils/calculateGasMargin'
 import { NEVER_RELOAD, useMultipleContractSingleData } from '../multicall/hooks'
 import { tryParseAmount } from '../swap/helpers'
 import {
+  checkAllowance,
+  getAvailableClaim,
   getIsStakingPaused,
   getOneMonthHistoricalPoolSize,
   getOneWeekHistoricalPoolSize,
+  getPayouts,
+  getRewards,
   getStakings,
   getThreeMonthsHistoricalPoolSize,
   getTwoMonthsHistoricalPoolSize,
   increaseAllowance,
   saveStakingStatus,
-  stake,
-  checkAllowance,
-  updateIXSBalance,
-  getRewards,
-  getPayouts,
-  getAvailableClaim,
   setTransactionInProgress,
+  stake,
+  updateIXSBalance,
 } from './actions'
 import { claimsAdapter, payoutsAdapter, rewardsAdapter, stakingsAdapter } from './utils'
 
 export const STAKING_REWARDS_INTERFACE = new Interface(STAKING_REWARDS_ABI)
-
-export const STAKING_GENESIS = 1600387200
 
 export const REWARDS_DURATION_DAYS = 60
 
@@ -256,22 +255,6 @@ export function useStakingInfo(pairToFilterBy?: Pair | null): StakingInfo[] {
   ])
 }
 
-export function useTotalIXsEarned(): CurrencyAmount<Token> | undefined {
-  const { chainId } = useActiveWeb3React()
-  const ixs = chainId ? IXS[chainId] : undefined
-  const stakingInfos = useStakingInfo()
-
-  return useMemo(() => {
-    if (!ixs) return undefined
-    return (
-      stakingInfos?.reduce(
-        (accumulator, stakingInfo) => accumulator.add(stakingInfo.earnedAmount),
-        CurrencyAmount.fromRawAmount(ixs, '0')
-      ) ?? CurrencyAmount.fromRawAmount(ixs, '0')
-    )
-  }, [stakingInfos, ixs])
-}
-
 // based on typed value
 export function useDerivedIXSStakeInfo({ typedValue, currencyId }: { typedValue: string; currencyId?: string }): {
   parsedAmount?: CurrencyAmount<Currency>
@@ -389,8 +372,6 @@ export function useFetchHistoricalPoolSize() {
             break
           }
         }
-        const result = await staking?.oneWeekHistoricalPoolSize()
-        const stakedIXS = parseInt(utils.formatUnits(result, 18))
       } catch (error) {
         console.error(`IxsReturningStakeBankPostIdoV1: `, error)
       }
@@ -403,6 +384,7 @@ export function useIncreaseAllowance() {
   const dispatch = useDispatch<AppDispatch>()
   const tokenContract = useIXSTokenContract()
   const { chainId } = useActiveWeb3React()
+  const addTransaction = useTransactionAdder()
   return useCallback(
     async (amount: string) => {
       if (!chainId) {
@@ -413,8 +395,11 @@ export function useIncreaseAllowance() {
         dispatch(increaseAllowance.pending())
         const stakingAddress = IXS_STAKING_V1_ADDRESS[chainId]
         const allowanceTx = await tokenContract?.increaseAllowance(stakingAddress, stakeAmount)
-        const tx = await allowanceTx.wait()
+        await allowanceTx.wait()
         dispatch(increaseAllowance.fulfilled({ data: allowanceTx?.hash }))
+        addTransaction(allowanceTx, {
+          summary: t`Approve ${amount} IXS`,
+        })
       } catch (error) {
         dispatch(increaseAllowance.rejected({ errorMessage: error }))
       }
@@ -447,6 +432,7 @@ export function useStakeFor(period?: PERIOD) {
   const staking = useIXSStakingContract()
   const { account } = useActiveWeb3React()
   const updateIXSBalance = useUpdateIXSBalance()
+  const addTransaction = useTransactionAdder()
 
   return useCallback(
     async (amount: string) => {
@@ -467,6 +453,9 @@ export function useStakeFor(period?: PERIOD) {
             const tx = await stakeTx.wait()
             dispatch(stake.fulfilled({ txStatus: tx.status }))
             updateIXSBalance()
+            addTransaction(stakeTx, {
+              summary: t`Stake ${amount} IXS for ${PERIOD.ONE_WEEK}`,
+            })
             break
           }
           case PERIOD.ONE_MONTH: {
@@ -481,6 +470,9 @@ export function useStakeFor(period?: PERIOD) {
             const tx = await stakeTx.wait()
             dispatch(stake.fulfilled({ txStatus: tx.status }))
             updateIXSBalance()
+            addTransaction(stakeTx, {
+              summary: t`Stake ${amount} IXS for ${PERIOD.ONE_MONTH}`,
+            })
             break
           }
           case PERIOD.TWO_MONTHS: {
@@ -495,6 +487,9 @@ export function useStakeFor(period?: PERIOD) {
             const tx = await stakeTx.wait()
             dispatch(stake.fulfilled({ txStatus: tx.status }))
             updateIXSBalance()
+            addTransaction(stakeTx, {
+              summary: t`Stake ${amount} IXS for ${PERIOD.TWO_MONTHS}`,
+            })
             break
           }
           case PERIOD.THREE_MONTHS: {
@@ -510,6 +505,9 @@ export function useStakeFor(period?: PERIOD) {
             const tx = await stakeTx.wait()
             dispatch(stake.fulfilled({ txStatus: tx.status }))
             updateIXSBalance()
+            addTransaction(stakeTx, {
+              summary: t`Stake ${amount} IXS for ${PERIOD.THREE_MONTHS}`,
+            })
             break
           }
           default: {
@@ -532,8 +530,16 @@ export function useGetStakings() {
 
   return useCallback(async () => {
     try {
-      const { SECONDS_IN_DAY, periodsIndex, periodsInSeconds, periodsApy, periodsLockMonths, periodsInDays } =
-        stakingPeriodsData
+      const {
+        periodsIndex,
+        periodsApy,
+        periodsLockMonths,
+        periodsInDays,
+        periodsInSeconds,
+        testPeriodsLockSeconds,
+        testPeriodsMaturitySeconds,
+        SECONDS_IN_DAY,
+      } = stakingPeriodsData
 
       const floorTo4Decimals = (num: number) => Math.floor((num + Number.EPSILON) * 10000) / 10000
       const calculateReward = (
@@ -575,10 +581,18 @@ export function useGetStakings() {
         return stakedTransactions.map((data: Array<number>, index: number) => {
           const startDateUnix = BigNumber.from(data[0]).toNumber()
           const stakeAmount = +utils.formatUnits(data[1], 18)
-          const endDateUnix = startDateUnix + periodsInSeconds[period]
           const lockMonths = periodsLockMonths[period]
-          const lockSeconds = lockMonths * 30 * SECONDS_IN_DAY
-          const lockedTillUnix = startDateUnix + lockSeconds
+
+          let endDateUnix, lockedTillUnix
+          if (STAKING_CONTRACT_KOVAN === '0x24108fD7fa1897a76488fe8B39fDBc7715916294') {
+            endDateUnix = startDateUnix + testPeriodsMaturitySeconds[period]
+            lockedTillUnix = startDateUnix + testPeriodsLockSeconds[period]
+          } else {
+            endDateUnix = startDateUnix + periodsInSeconds[period]
+            const lockSeconds = lockMonths * 30 * SECONDS_IN_DAY
+            lockedTillUnix = startDateUnix + lockSeconds
+          }
+
           return {
             period,
             stakeAmount,

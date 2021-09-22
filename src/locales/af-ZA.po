@@ -26,9 +26,9 @@ msgstr "${0}"
 msgid "${0} ETH"
 msgstr "${0} ETH"
 
-#: src/components/AccountDetails/index.tsx
-msgid "(clear all)"
-msgstr "(maak alles skoon)"
+#: 
+#~ msgid "(clear all)"
+#~ msgstr "(maak alles skoon)"
 
 #: src/components/InputStepCounter/InputStepCounter.tsx
 msgid "+{feeAmountFormatted}%"
@@ -59,6 +59,18 @@ msgstr "1% fooi"
 msgid "<0>Loading</0>"
 msgstr "<0>Laai tans</0>"
 
+#: src/pages/Farming/Staking/StakingTierCard.tsx
+msgid "<0>{0}</0> tokens available for staking"
+msgstr ""
+
+#: src/pages/Farming/Staking/MyStakingsTable.tsx
+#: src/pages/Farming/Staking/StakeModal.tsx
+#: src/pages/Farming/Staking/StakingTierCard.tsx
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+msgid "APY"
+msgstr ""
+
 #: src/components/swap/AcceptChanges.tsx
 #: src/components/swap/SwapModalHeader.tsx
 msgid "Accept"
@@ -67,6 +79,14 @@ msgstr "Aanvaar"
 #: src/components/AccountDetails/index.tsx
 msgid "Account"
 msgstr "Rekening"
+
+#: src/components/AdminKycTable/index.tsx
+msgid "Accreditation pair"
+msgstr ""
+
+#: src/components/Vault/NoVault.tsx
+msgid "Accreditation rejected"
+msgstr ""
 
 #: src/components/SearchModal/ImportRow.tsx
 msgid "Active"
@@ -85,9 +105,18 @@ msgstr "Voeg Likiditeit by"
 msgid "Add liquidity"
 msgstr "Voeg likiditeit by"
 
+#: src/components/Header/IXSBalanceModal.tsx
+#: src/components/Header/IXSBalanceModal.tsx
+msgid "Add to Metamask"
+msgstr ""
+
 #: src/components/TransactionConfirmationModal/index.tsx
-msgid "Add {0} to Metamask <0/>"
-msgstr "Voeg {0} by Metamask <0 />"
+msgid "Add {0} to Metamask"
+msgstr ""
+
+#: 
+#~ msgid "Add {0} to Metamask <0/>"
+#~ msgstr "Voeg {0} by Metamask <0 />"
 
 #: src/pages/AddLiquidityV2/index.tsx
 #: src/pages/AddLiquidityV2/index.tsx
@@ -97,6 +126,10 @@ msgstr "Voeg {0} {1} en {2} {3}"
 #: src/components/TransactionConfirmationModal/index.tsx
 msgid "Added {0}"
 msgstr "{0}bygevoeg"
+
+#: src/components/Vault/enum.ts
+msgid "All"
+msgstr ""
 
 #: src/pages/Swap/index.tsx
 msgid "Allow IXSwap to use your {0}"
@@ -110,27 +143,88 @@ msgstr "Laat handel oor hoë prysimpak toe en slaan die bevestigingsskerm oor. G
 msgid "Always make sure the URL is<0>app.ixswap.io</0> - bookmark it to be safe."
 msgstr "Maak altyd seker dat die URL <0> app.ixswap.io </0> is - boekmerk dit om veilig te wees."
 
-#: src/hooks/useSwapCallback.ts
-msgid "An error occurred when trying to execute this swap. You may need to increase your slippage tolerance. If that does not work, there may be an incompatibility with the token you are trading. Note fee on transfer and rebase tokens are incompatible with Uniswap V3."
-msgstr "'N Fout het voorgekom tydens die uitvoer van hierdie ruil. U moet dalk u glyverdraagsaamheid verhoog. As dit nie werk nie, is daar moontlik 'n onverenigbaarheid met die teken wat u verhandel. Nota-fooi vir oordrag- en rebase-tokens is nie versoenbaar met Uniswap V3 nie."
+#: src/components/Vault/DepositRequestForm.tsx
+#: src/components/Vault/HistoryTable.tsx
+#: src/components/Vault/WithdrawRequestForm.tsx
+#: src/pages/Farming/Staking/MyStakingsTable.tsx
+msgid "Amount"
+msgstr ""
 
-#: src/components/earn/StakingModal.tsx
+#: src/state/stake/hooks.ts
+msgid "Amount exceeds balance"
+msgstr ""
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Amount of IXS to stake"
+msgstr ""
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+msgid "Amount of IXS to unstake"
+msgstr ""
+
+#: src/components/Vault/DepositSendInfo.tsx
+#: src/components/Vault/TransactionDetails.tsx
+msgid "Amount:"
+msgstr ""
+
+#: src/hooks/useSwapCallback.ts
+msgid "An error occurred when trying to execute this swap. You may need to increase your slippage tolerance. If that does not work, there may be an incompatibility with the token you are trading."
+msgstr ""
+
+#: 
+#~ msgid "An error occurred when trying to execute this swap. You may need to increase your slippage tolerance. If that does not work, there may be an incompatibility with the token you are trading. Note fee on transfer and rebase tokens are incompatible with Uniswap V3."
+#~ msgstr "'N Fout het voorgekom tydens die uitvoer van hierdie ruil. U moet dalk u glyverdraagsaamheid verhoog. As dit nie werk nie, is daar moontlik 'n onverenigbaarheid met die teken wat u verhandel. Nota-fooi vir oordrag- en rebase-tokens is nie versoenbaar met Uniswap V3 nie."
+
+#: src/components/AdminKycTable/SecondStepStatus.tsx
+#: src/components/AdminKycTable/SecondStepStatus.tsx
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Approve"
 msgstr "Goedkeur"
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Approve IXS"
+msgstr ""
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+msgid "Approve IXSGov"
+msgstr ""
 
 #: src/pages/AddLiquidityV2/index.tsx
 #: src/pages/AddLiquidityV2/index.tsx
 msgid "Approve {0}"
 msgstr "Keur {0}"
 
+#: src/state/stake/hooks.ts
+msgid "Approve {amount} IXS"
+msgstr ""
+
+#: src/state/stake/unstake/hooks.ts
+msgid "Approve {amount} IXSGov"
+msgstr ""
+
+#: src/components/AdminKycTable/FirstStepStatus.tsx
+#: src/components/AdminKycTable/SecondStepStatus.tsx
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Approved"
 msgstr "Goedgekeur"
 
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Approved IXS"
+msgstr ""
+
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Approving"
 msgstr "Goedkeur"
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Approving IXS"
+msgstr ""
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+msgid "Approving IXSGov"
+msgstr ""
 
 #: src/pages/AddLiquidityV2/index.tsx
 #: src/pages/AddLiquidityV2/index.tsx
@@ -141,17 +235,34 @@ msgstr "Goedkeur {0}"
 msgid "Are you sure?"
 msgstr "Is jy seker?"
 
-#: src/components/earn/StakingModal.tsx
-msgid "Available to deposit: {0}"
-msgstr "Beskikbaar vir deposito: {0}"
+#: 
+#~ msgid "Available to deposit: {0}"
+#~ msgstr "Beskikbaar vir deposito: {0}"
+
+#: src/components/earn/StakingInputPercentage.tsx
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Available:"
+msgstr ""
 
 #: src/components/WalletModal/index.tsx
 msgid "Back"
 msgstr "Terug"
 
+#: src/components/Header/IXSBalanceModal.tsx
+msgid "Balance of IXGov"
+msgstr ""
+
+#: src/components/Header/IXSBalanceModal.tsx
+msgid "Balance of IXS"
+msgstr ""
+
 #: src/components/CurrencyInputPanel/index.tsx
 msgid "Balance: {0} {1}"
 msgstr "Saldo: {0} {1}"
+
+#: src/pages/Farming/Vesting/ZeroBalanceVesting.tsx
+msgid "Balances will be updated on the vesting page until the contracts are programmed."
+msgstr ""
 
 #: src/components/FeeSelector/index.tsx
 msgid "Best for exotic pairs."
@@ -169,6 +280,10 @@ msgstr "Die beste vir stabiele pare."
 msgid "Blocked address"
 msgstr "Adres geblokkeer"
 
+#: src/components/Vault/ChooseBrokerDealerPopup.tsx
+msgid "Broker dealer and Custodian"
+msgstr ""
+
 #: src/components/SearchModal/ImportList.tsx
 msgid "By adding this list you are implicitly trusting that the data is correct. Anyone can create a list, including creating fake versions of existing lists and lists that claim to represent projects that do not have one."
 msgstr "Deur hierdie lys by te voeg, vertrou u implisiet dat die data korrek is. Almal kan 'n lys opstel, insluitend die skep van vals weergawes van bestaande lyste en lyste wat beweer dat hulle projekte verteenwoordig wat nie een het nie."
@@ -177,9 +292,30 @@ msgstr "Deur hierdie lys by te voeg, vertrou u implisiet dat die data korrek is.
 msgid "By connecting a wallet, you agree to IXSwap’ <0>Terms and Conditions</0> and acknowledge that you have read and understand the <1>IXSwap Privacy Policy</1>."
 msgstr "Deur 'n beursie aan te sluit, stem u in tot IXSwap se <0> bepalings en voorwaardes </0> en erken u dat u die <1> privaatheidsbeleid van IXSwap </1> gelees en verstaan het."
 
-#: src/components/AccountDetails/index.tsx
-msgid "Change"
-msgstr "Verander"
+#: src/components/Vault/DepositSendInfo.tsx
+#: src/components/Vault/TransactionDetails.tsx
+msgid "Cancel"
+msgstr ""
+
+#: src/components/Vault/enum.ts
+msgid "Cancelled"
+msgstr ""
+
+#: 
+#~ msgid "Change"
+#~ msgstr "Verander"
+
+#: src/pages/Farming/Vesting/VestingSearch.tsx
+msgid "Check"
+msgstr ""
+
+#: src/pages/Farming/Vesting/VestingSearch.tsx
+msgid "Check any address"
+msgstr ""
+
+#: src/components/Vault/NoVault.tsx
+msgid "Checking your KYC on primary issuer"
+msgstr ""
 
 #: src/components/CurrencyInputPanel/index.tsx
 #: src/pages/PoolFinder/CurrencyRow.tsx
@@ -188,11 +324,15 @@ msgid "Choose token"
 msgstr "Kies 'n teken"
 
 #: src/pages/PoolFinder/PrerequisiteMessage.tsx
-msgid "Choose token to find your liquidity."
-msgstr "Kies 'n teken om u likiditeit te vind."
+msgid "Choose token to find your liquidity"
+msgstr ""
 
-#: src/components/earn/ClaimRewardModal.tsx
-#: src/components/earn/ClaimRewardModal.tsx
+#: 
+#~ msgid "Choose token to find your liquidity."
+#~ msgstr "Kies 'n teken om u likiditeit te vind."
+
+#: src/pages/Farming/Staking/UnstakedTable.tsx
+#: src/pages/Farming/Vesting/VestingValid.tsx
 msgid "Claim"
 msgstr "Eis"
 
@@ -200,32 +340,65 @@ msgstr "Eis"
 msgid "Claim IXS"
 msgstr "Eis IXS"
 
-#: src/components/earn/ClaimRewardModal.tsx
-#: src/components/earn/ClaimRewardModal.tsx
-msgid "Claim accumulated IXS rewards"
-msgstr "Eis opgehoopte IXS-belonings"
+#: 
+#: 
+#~ msgid "Claim accumulated IXS rewards"
+#~ msgstr "Eis opgehoopte IXS-belonings"
 
-#: src/components/earn/ClaimRewardModal.tsx
-#: src/components/earn/UnstakingModal.tsx
-msgid "Claimed IXS!"
-msgstr "IXS geëis!"
+#: src/state/stake/hooks.ts
+msgid "Claim rewards {formattedAmount}"
+msgstr ""
 
-#: src/components/earn/ClaimRewardModal.tsx
-#: src/components/earn/UnstakingModal.tsx
-msgid "Claiming {0} IXS"
-msgstr "Eis {0} IXS"
+#: src/pages/Farming/Vesting/VestingValid.tsx
+msgid "Claimable"
+msgstr ""
 
+#: src/pages/Farming/Staking/UnstakedTable.tsx
+msgid "Claimable Rewards"
+msgstr ""
+
+#: src/pages/Farming/Vesting/VestingValid.tsx
+msgid "Claimed"
+msgstr ""
+
+#: 
+#: 
+#~ msgid "Claimed IXS!"
+#~ msgstr "IXS geëis!"
+
+#: src/pages/Farming/Staking/UnstakedTable.tsx
+msgid "Claimed rewards"
+msgstr ""
+
+#: 
+#: 
+#~ msgid "Claiming {0} IXS"
+#~ msgstr "Eis {0} IXS"
+
+#: src/components/AccountDetails/index.tsx
 #: src/components/SearchModal/ManageTokens.tsx
 msgid "Clear all"
 msgstr "Maak alles skoon"
 
 #: src/components/TransactionConfirmationModal/index.tsx
+#: src/components/TransactionConfirmationModal/index.tsx
+#: src/components/Vault/WithDrawError.tsx
+#: src/components/Vault/WithDrawSuccess.tsx
 msgid "Close"
 msgstr "Naby"
 
-#: src/components/SearchModal/CommonBases.tsx
-msgid "Common bases"
-msgstr "Algemene basisse"
+#: src/pages/AppBody.tsx
+msgid "Coming soon"
+msgstr ""
+
+#: 
+#~ msgid "Common bases"
+#~ msgstr "Algemene basisse"
+
+#: src/components/Vault/enum.ts
+#: src/components/Vault/enum.ts
+msgid "Completed"
+msgstr ""
 
 #: src/pages/RemoveLiquidity/ModalBottom.tsx
 msgid "Confirm"
@@ -246,25 +419,34 @@ msgstr "Bevestig die ruil"
 msgid "Confirm this transaction in your wallet"
 msgstr "Bevestig hierdie transaksie in u beursie"
 
+#: src/components/Vault/NoVault.tsx
 #: src/components/Web3Status/index.tsx
 #: src/pages/AddLiquidityV2/index.tsx
+#: src/pages/Farming/Staking/ConnectWalletButton.tsx
+#: src/pages/Farming/Vesting/ConnectWalletVesting.tsx
+#: src/pages/Pool/ConnectWallet.tsx
 #: src/pages/RemoveLiquidity/index.tsx
 #: src/pages/Swap/index.tsx
 #: src/state/burn/hooks.ts
+#: src/state/deposit/hooks.ts
 #: src/state/mint/hooks.ts
 #: src/state/stake/hooks.ts
-#: src/state/stake/hooks.ts
 #: src/state/swap/hooks.ts
+#: src/state/withdraw/hooks.ts
 msgid "Connect Wallet"
 msgstr "Verbind Wallet"
 
-#: src/components/earn/UnstakingModal.tsx
-msgid "Connect a wallet"
-msgstr "Verbind 'n beursie"
+#: 
+#~ msgid "Connect a wallet"
+#~ msgstr "Verbind 'n beursie"
 
-#: src/pages/Pool/NoPairs.tsx
+#: src/pages/Pool/v2.tsx
 msgid "Connect a wallet to view your Liquidity."
 msgstr "Verbind 'n beursie om u likiditeit te sien."
+
+#: src/pages/Custodian/EmptyState.tsx
+msgid "Connect a wallet to view your Securities."
+msgstr ""
 
 #: src/components/WalletModal/index.tsx
 msgid "Connect to a wallet"
@@ -274,22 +456,44 @@ msgstr "Koppel aan 'n beursie"
 msgid "Connect to a wallet to find pools"
 msgstr "Koppel aan 'n beursie om swembaddens te vind"
 
-#: src/components/earn/ClaimRewardModal.tsx
-msgid "Connect wallet"
-msgstr "Verbind beursie"
+#: src/pages/Farming/Vesting/ConnectWalletVesting.tsx
+msgid "Connect to your Web3 wallet to view your vesting progress"
+msgstr ""
+
+#: 
+#~ msgid "Connect wallet"
+#~ msgstr "Verbind beursie"
 
 #: src/components/AccountDetails/index.tsx
 msgid "Connected with {name}"
 msgstr "Gekoppel met {name}"
 
+#: src/pages/SecTokenDetails/TokenDetails.tsx
+msgid "Contract:"
+msgstr ""
+
 #: src/components/AccountDetails/Copy.tsx
+#: src/components/Vault/DepositSendInfo.tsx
+#: src/components/Vault/TransactionDetails.tsx
+#: src/components/Vault/WithdrawPending.tsx
 msgid "Copied"
 msgstr "Gekopieer"
 
-#: src/components/AccountDetails/index.tsx
+#: src/pages/SecTokenDetails/TokenDetails.tsx
+msgid "Copied!"
+msgstr ""
+
 #: src/components/AccountDetails/index.tsx
 msgid "Copy Address"
 msgstr "Kopieer adres"
+
+#: src/components/Vault/DepositSendInfo.tsx
+msgid "Copy this address and send tokens to this wallet."
+msgstr ""
+
+#: src/state/withdraw/hooks.ts
+msgid "Could not submit withdraw request"
+msgstr ""
 
 #: src/pages/AddLiquidityV2/ModalBottom.tsx
 msgid "Create Pool & Supply"
@@ -299,38 +503,68 @@ msgstr "Skep swembad en aanbod"
 msgid "Create a pair"
 msgstr "Skep 'n paar"
 
+#: src/components/Vault/DepositRequestForm.tsx
+msgid "Create deposit request"
+msgstr ""
+
 #: src/pages/PoolFinder/index.tsx
 msgid "Create pool"
 msgstr "Skep swembad"
+
+#: src/components/Vault/NoVault.tsx
+msgid "Create {symbolText} Vault"
+msgstr ""
 
 #: src/components/swap/CurrentRate.tsx
 msgid "Current Rate"
 msgstr "Huidige tarief"
 
-#: src/components/Header/HeaderLinks.tsx
-msgid "Custodian"
-msgstr "Bewaarder"
+#: 
+#~ msgid "Custodian"
+#~ msgstr "Bewaarder"
 
-#: src/components/earn/StakingModal.tsx
-#: src/components/earn/StakingModal.tsx
+#: src/components/Vault/HistoryTable.tsx
+msgid "Date"
+msgstr ""
+
+#: src/components/AdminKycTable/index.tsx
+msgid "Date of request"
+msgstr ""
+
+#: src/components/Vault/TransactionDetails.tsx
+msgid "Date:"
+msgstr ""
+
+#: src/components/Vault/enum.ts
+msgid "Declined"
+msgstr ""
+
+#: src/components/Vault/DepositPopup.tsx
+#: src/components/Vault/ExistingVault.tsx
+#: src/components/Vault/enum.ts
+#: src/components/Vault/enum.ts
 msgid "Deposit"
 msgstr "Deposito"
 
-#: src/components/earn/StakingModal.tsx
-msgid "Deposit liquidity"
-msgstr "Deponeer likiditeit"
+#: 
+#~ msgid "Deposit liquidity"
+#~ msgstr "Deponeer likiditeit"
 
-#: src/components/earn/UnstakingModal.tsx
-msgid "Deposited liquidity:"
-msgstr "Gedeponeerde likiditeit:"
+#: 
+#~ msgid "Deposited liquidity:"
+#~ msgstr "Gedeponeerde likiditeit:"
 
-#: src/components/earn/StakingModal.tsx
-msgid "Deposited {0} IXS-V2"
-msgstr "Deponeer {0} IXS-V2"
+#: 
+#~ msgid "Deposited {0} IXS-V2"
+#~ msgstr "Deponeer {0} IXS-V2"
 
-#: src/components/earn/StakingModal.tsx
-msgid "Depositing Liquidity"
-msgstr "Deposito van likiditeit"
+#: 
+#~ msgid "Depositing Liquidity"
+#~ msgstr "Deposito van likiditeit"
+
+#: src/pages/Farming/Vesting/VestingValid.tsx
+msgid "Details"
+msgstr ""
 
 #: src/components/Settings/SettingsModal.tsx
 msgid "Disable Multihops"
@@ -340,31 +574,71 @@ msgstr "Skakel Multihops uit"
 msgid "Disconnect"
 msgstr "Ontkoppel"
 
-#: src/components/TransactionConfirmationModal/index.tsx
-msgid "Dismiss"
-msgstr "Verwerp"
+#: 
+#~ msgid "Dismiss"
+#~ msgstr "Verwerp"
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Distribute"
+msgstr ""
+
+#: src/pages/Farming/Staking/MyStakingsTable.tsx
+msgid "Distributed"
+msgstr ""
 
 #: src/pages/Pool/ImportPool.tsx
 msgid "Don't see a pool you joined?"
 msgstr "Sien u nie 'n swembad waarby u aangesluit het nie?"
 
+#: src/components/AdminKycTable/FirstStepStatus.tsx
+msgid "Download"
+msgstr ""
+
+#: src/components/AdminLogin/index.tsx
+msgid "Email"
+msgstr ""
+
+#: src/pages/Farming/Vesting/VestingValid.tsx
+msgid "End Date"
+msgstr ""
+
+#: src/state/withdraw/hooks.ts
+msgid "Enter a receiver"
+msgstr ""
+
 #: src/state/swap/hooks.ts
 msgid "Enter a recipient"
 msgstr "Voer 'n ontvanger in"
+
+#: src/state/deposit/hooks.ts
+msgid "Enter a sender"
+msgstr ""
+
+#: src/components/AdminLogin/index.tsx
+msgid "Enter a valid email"
+msgstr ""
 
 #: src/components/TransactionSettings/index.tsx
 msgid "Enter a valid slippage percentage"
 msgstr "Voer 'n geldige glippersentasie in"
 
-#: src/components/earn/ClaimRewardModal.tsx
-#: src/components/earn/UnstakingModal.tsx
 #: src/state/burn/hooks.ts
+#: src/state/deposit/hooks.ts
 #: src/state/mint/hooks.ts
 #: src/state/stake/hooks.ts
-#: src/state/stake/hooks.ts
 #: src/state/swap/hooks.ts
+#: src/state/withdraw/hooks.ts
 msgid "Enter an amount"
 msgstr "Voer 'n bedrag in"
+
+#: src/components/AdminLogin/index.tsx
+msgid "Enter the email"
+msgstr ""
+
+#: src/components/AdminLogin/index.tsx
+msgid "Enter the password"
+msgstr ""
 
 #: src/components/SearchModal/ManageLists.tsx
 msgid "Enter valid list location"
@@ -374,23 +648,54 @@ msgstr "Voer geldige lysligging in"
 msgid "Enter valid token address"
 msgstr "Voer geldige tekenadres in"
 
-#: src/components/TransactionConfirmationModal/index.tsx
+#: src/services/interceptors.ts
+msgid "Entity not found"
+msgstr ""
+
 #: src/components/Web3Status/index.tsx
 msgid "Error"
 msgstr "Fout"
 
+#: src/components/TransactionConfirmationModal/index.tsx
+#: src/components/Vault/WithDrawError.tsx
+msgid "Error Occurred"
+msgstr ""
+
+#: src/components/WalletModal/ErrorSection.tsx
 #: src/components/WalletModal/PendingView.tsx
-#: src/components/WalletModal/index.tsx
 msgid "Error connecting"
 msgstr "Kon nie koppel nie"
 
-#: src/components/WalletModal/index.tsx
+#: src/components/WalletModal/ErrorSection.tsx
 msgid "Error connecting. Try refreshing the page."
 msgstr "Kon nie koppel nie. Probeer om die bladsy te verfris."
 
 #: src/components/SearchModal/ManageLists.tsx
 msgid "Error importing list"
 msgstr "Kon nie lys invoer nie"
+
+#: src/pages/Farming/Staking/MyStakingsTable.tsx
+msgid "Estimated Rewards"
+msgstr ""
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Estimated lock period"
+msgstr ""
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Estimated maturity time"
+msgstr ""
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Estimated rewards"
+msgstr ""
+
+#: src/pages/Farming/Staking/MyStakingsTable.tsx
+msgid ""
+"Estimated rewards are based on assumption that your staked amount will be fully kept for the whole period of staking. In this case maximum APY will be applied \n"
+"{0}\n"
+"If you partially or fully unstake your IXS before the end date - 5% APY will be applied to unstaked amount."
+msgstr ""
 
 #: src/components/SearchModal/CurrencyList.tsx
 msgid "Expanded results from inactive Token Lists"
@@ -404,6 +709,21 @@ msgstr "Skakel deskundige modus af"
 msgid "Expert mode turns off the confirm transaction prompt and allows high slippage trades that often result in bad rates and lost funds."
 msgstr "Die kundige modus skakel die bevestiging van die transaksie uit en laat transaksies met 'n hoë glip toe wat dikwels slegte tariewe en verlore fondse tot gevolg het."
 
+#: src/components/AdminKycTable/FirstStepStatus.tsx
+#: src/components/AdminKycTable/SecondStepStatus.tsx
+#: src/components/Vault/AccreditationStatus.tsx
+#: src/components/Vault/enum.ts
+msgid "Failed"
+msgstr ""
+
+#: src/components/SearchModal/CommonBases.tsx
+msgid "Featured Tokens"
+msgstr ""
+
+#: src/pages/Farming/Vesting/ZeroBalanceVesting.tsx
+msgid "Found address<0/>{0}<1/>doesn’t have IXS vesting"
+msgstr ""
+
 #: src/components/swap/CurrencyInput.tsx
 #: src/components/swap/SwapModalHeader.tsx
 msgid "From"
@@ -413,13 +733,46 @@ msgstr "Van"
 msgid "From (at most)"
 msgstr "Van (hoogstens)"
 
+#: src/pages/Farming/Staking/MyStakingsTable.tsx
+msgid "Full amount of APY is applied only to amount of IXS staked till the end of staking period."
+msgstr ""
+
+#: src/pages/Farming/Staking/NoIXSTokens.tsx
+msgid "Go to Telegram"
+msgstr ""
+
+#: src/pages/Farming/Vesting/PrivateBuyer.tsx
+msgid "Hi! Сurrently you have <0>{0}</0> of unvested IXS that will be vested over the next <1>{1} months</1>. Your next IXS payment will be available on <2>8 October</2> and vesting balances will be updated here."
+msgstr ""
+
+#: src/pages/SecTokenDetails/index.tsx
+msgid "Hide"
+msgstr ""
+
 #: src/pages/Swap/index.tsx
 msgid "High Price Impact"
 msgstr "Hoë prysimpak"
 
+#: src/components/Vault/HistoryBlock.tsx
+msgid "History"
+msgstr ""
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "I have read <0>Staking Conditions</0>"
+msgstr ""
+
 #: src/components/SearchModal/ImportList.tsx
 msgid "I understand"
 msgstr "ek verstaan"
+
+#: src/components/Header/HeaderLinks.tsx
+msgid "IXS Farming"
+msgstr ""
+
+#: src/components/Header/HeaderLinks.tsx
+#: src/components/Mobile-Menu/Menu.tsx
+msgid "IXS Liquidity Mining"
+msgstr ""
 
 #: src/pages/RemoveLiquidity/RemovedLiquidity.tsx
 msgid "IXS Rewards"
@@ -429,9 +782,32 @@ msgstr "IXS-belonings"
 msgid "IXS Rewards (on quit)"
 msgstr "IXS-belonings (ophou)"
 
+#: src/pages/Farming/Vesting/ZeroBalanceVesting.tsx
+msgid "IXS in Telegram"
+msgstr ""
+
 #: src/pages/RemoveLiquidity/ModalBottom.tsx
 msgid "IXS {0}/{1} Burned"
 msgstr "IXS {0}/{1} Verbrand"
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+msgid "IXSGov to return"
+msgstr ""
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid ""
+"IXSgov is a tokenized asset representing your staked IXS on a 1:1 basis. IXSwap distributes the IXSgov to your wallet.\n"
+"{0}\n"
+"You should swap your IXSgov back to IXS during the unstaking process. \n"
+"{1}\n"
+"*Do note that IXS received will be equal to your IXSgov holdings at the time of swap."
+msgstr ""
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+msgid "If you partially or fully unstake your IXS before the end date - 5% APY will be applied to unstaked amount."
+msgstr ""
 
 #: src/components/SearchModal/ImportList.tsx
 msgid "If you purchase a token from this list, you may not be able to sell it back."
@@ -443,7 +819,7 @@ msgstr "As u 'n teken uit hierdie lys koop, kan u dit dalk nie terug verkoop nie
 msgid "Import"
 msgstr "Invoer"
 
-#: src/components/SearchModal/ImportList.tsx
+#: src/components/NavigationTabs/index.tsx
 msgid "Import List"
 msgstr "Invoerlys"
 
@@ -467,6 +843,23 @@ msgstr "Binne reikafstand"
 msgid "Inactive"
 msgstr "Onaktief"
 
+#: src/components/SearchModal/CurrencyList.tsx
+msgid "Info"
+msgstr ""
+
+#: src/components/Vault/DepositRequestForm.tsx
+#: src/components/Vault/DepositSendInfo.tsx
+msgid "Info:"
+msgstr ""
+
+#: src/pages/SecTokenDetails/TokenDetails.tsx
+msgid "Initial Price:"
+msgstr ""
+
+#: src/pages/SecTokenDetails/TokenDetails.tsx
+msgid "Initial offering price:"
+msgstr ""
+
 #: src/pages/AddLiquidityV2/PricesAndPoolShare.tsx
 msgid "Initial prices and pool share"
 msgstr "Aanvanklike pryse en swembadaandeel"
@@ -475,6 +868,7 @@ msgstr "Aanvanklike pryse en swembadaandeel"
 msgid "Initializing..."
 msgstr "Inisialiseer tans ..."
 
+#: src/components/swap/OutputInfo.tsx
 #: src/components/swap/SwapModalHeader.tsx
 msgid "Input is estimated. You will sell at most <0>{0} {1}</0> or the transaction will revert."
 msgstr "Inset word geskat. U sal hoogstens <0>{0} {1}</0> anders gaan die transaksie terug."
@@ -482,6 +876,15 @@ msgstr "Inset word geskat. U sal hoogstens <0>{0} {1}</0> anders gaan die transa
 #: src/components/WalletModal/index.tsx
 msgid "Install Metamask"
 msgstr "Installeer Metamask"
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+msgid "Instant reward payout today"
+msgstr ""
+
+#: src/state/withdraw/hooks.ts
+msgid "Insufficient balance"
+msgstr ""
 
 #: src/pages/Swap/index.tsx
 msgid "Insufficient liquidity for this trade"
@@ -510,6 +913,14 @@ msgstr "Ongeldige paar"
 msgid "Invalid recipient"
 msgstr "Ongeldige ontvanger"
 
+#: src/pages/SecTokenDetails/TokenDetails.tsx
+msgid "Issuer:"
+msgstr ""
+
+#: src/components/Vault/NoVault.tsx
+msgid "KYC approved on primary issuer. Waiting for KYC approval on Custodian..."
+msgstr ""
+
 #: src/pages/Pool/LiquidityTitle.tsx
 msgid "Liquidity Pool"
 msgstr "Likiditeitspoel"
@@ -528,10 +939,32 @@ msgid "Loaded"
 msgstr "Gelaai"
 
 #: src/components/PositionCard/CurrencyHeader.tsx
+#: src/components/SecurityCard/CurrencyHeader.tsx
+#: src/pages/Custodian/EmptyState.tsx
 #: src/pages/Pool/NoPairs.tsx
 msgid "Loading"
 msgstr "Laai tans"
 
+#: src/pages/Farming/Staking/MyStakingsTable.tsx
+msgid "Lock Period"
+msgstr ""
+
+#: src/pages/Farming/Staking/StakingTierCard.tsx
+msgid ""
+"Lock period means the time you won’t be able to unstake your IXS fully or partially. Please carefully consider the risks involved.\n"
+"{0}\n"
+"You will be able to redeem your staked IXS fully or partially after lock period."
+msgstr ""
+
+#: src/pages/Farming/Staking/MyStakingsTable.tsx
+msgid "Locked till"
+msgstr ""
+
+#: src/pages/AdminKyc/Navbar.tsx
+msgid "Logout"
+msgstr ""
+
+#: src/components/earn/StakingInputPercentage.tsx
 #: src/pages/RemoveLiquidity/RemoveAmount.tsx
 msgid "MAX"
 msgstr "MAX"
@@ -540,25 +973,52 @@ msgstr "MAX"
 msgid "Make sure the URL is<0>app.ixswap.io</0>"
 msgstr "Maak seker dat die URL <0> app.ixswap.io </0> is"
 
-#: src/components/SearchModal/Manage.tsx
-msgid "Manage"
-msgstr "Bestuur"
+#: 
+#~ msgid "Manage"
+#~ msgstr "Bestuur"
 
 #: src/components/SearchModal/CurrencySearch.tsx
 msgid "Manage Token List"
 msgstr "Bestuur tekenlyste"
 
 #: src/pages/PoolFinder/index.tsx
-msgid "Manage this pool."
-msgstr "Bestuur hierdie swembad."
+msgid "Manage this Pool"
+msgstr ""
 
+#: 
+#~ msgid "Manage this pool."
+#~ msgstr "Bestuur hierdie swembad."
+
+#: src/components/NavigationTabs/index.tsx
+msgid "Manage tokens"
+msgstr ""
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Maturity time is the final date of your staking period."
+msgstr ""
+
+#: src/components/CurrencyInputPanel/MaxButton.tsx
 #: src/components/CurrencyInputPanel/index.tsx
+#: src/pages/Farming/Staking/StakeModal.tsx
 msgid "Max"
 msgstr "Maks"
 
 #: src/components/RangeSelector/index.tsx
 msgid "Max Price"
 msgstr "Maksimum prys"
+
+#: src/pages/Farming/Staking/StakingTierCard.tsx
+msgid ""
+"Maximum Capacity:\n"
+"{0}\n"
+"Staked IXS in Pool: \n"
+"{1} IXS\n"
+"{2}"
+msgstr ""
+
+#: src/components/AdminKycTable/RejectModal.tsx
+msgid "Maximum is 10000 chars"
+msgstr ""
 
 #: src/components/swap/AdvancedSwapDetails.tsx
 #: src/components/swap/ConfirmSwapInfo.tsx
@@ -583,9 +1043,41 @@ msgstr "minute"
 msgid "My Liquidity"
 msgstr "My likiditeit"
 
+#: src/pages/Custodian/index.tsx
+msgid "My Securities"
+msgstr ""
+
+#: src/pages/Farming/Vesting/enum.ts
+msgid "My ongoing stakings"
+msgstr ""
+
 #: src/components/PositionCard/MinimalPositionCard.tsx
 msgid "My pool share"
 msgstr "My swembad deel"
+
+#: src/components/Vault/ExistingVault.tsx
+msgid "My {symbolText} Vault"
+msgstr ""
+
+#: src/components/Vault/DepositSendInfo.tsx
+msgid "Need to send"
+msgstr ""
+
+#: src/components/SearchModal/CurrencyList.tsx
+msgid "Needs accreditation"
+msgstr ""
+
+#: src/pages/Farming/Vesting/VestingValid.tsx
+msgid "Next Payment"
+msgstr ""
+
+#: src/pages/Farming/Staking/UnstakedTable.tsx
+msgid "Next rewards on"
+msgstr ""
+
+#: src/components/AdminKycTable/index.tsx
+msgid "No data"
+msgstr ""
 
 #: src/pages/Pool/EmptyLiquidity.tsx
 msgid "No liquidity found."
@@ -596,16 +1088,22 @@ msgid "No pool found"
 msgstr "Geen swembad gevind nie"
 
 #: src/components/SearchModal/CurrencySearch.tsx
+#: src/components/Vault/HistoryTable.tsx
+#: src/pages/Custodian/AllSecTokens.tsx
 msgid "No results found."
 msgstr "Geen resultate gevind."
 
-#: src/components/Toggle/ListToggle.tsx
-msgid "OFF"
-msgstr "AF"
+#: src/pages/Custodian/EmptyState.tsx
+msgid "No securities found."
+msgstr ""
 
-#: src/components/Toggle/ListToggle.tsx
-msgid "ON"
-msgstr "AAN"
+#: 
+#~ msgid "OFF"
+#~ msgstr "AF"
+
+#: 
+#~ msgid "ON"
+#~ msgstr "AAN"
 
 #: src/components/Settings/ExpertModeModal.tsx
 msgid "ONLY USE THIS MODE IF YOU KNOW WHAT YOU ARE DOING."
@@ -614,6 +1112,10 @@ msgstr "GEBRUIK SLEGS hierdie modus as u weet wat u doen."
 #: src/components/Web3ReactManager/index.tsx
 msgid "Oops! An unknown error occurred. Please refresh the page, or visit from another browser or device."
 msgstr "Oeps! 'N Onbekende fout het voorgekom. Verfris die bladsy of besoek 'n ander blaaier of toestel."
+
+#: src/pages/Custodian/index.tsx
+msgid "Other Sec tokens"
+msgstr ""
 
 #: src/components/Badge/RangeBadge.tsx
 msgid "Out of range"
@@ -624,6 +1126,7 @@ msgstr "Buite bereik"
 msgid "Output is estimated. If the price changes by more than {0}% your transaction will revert."
 msgstr "Die uitset word geskat. As die prys met meer as {0}% verander, sal u transaksie terugkeer."
 
+#: src/components/swap/OutputInfo.tsx
 #: src/components/swap/SwapModalHeader.tsx
 msgid "Output is estimated. You will receive at least <0>{0} {1}</0> or the transaction will revert."
 msgstr "Die uitset word geskat. U sal minstens <0>{0} {1}</0> anders gaan die transaksie terug."
@@ -632,9 +1135,70 @@ msgstr "Die uitset word geskat. U sal minstens <0>{0} {1}</0> anders gaan die tr
 msgid "Output will be sent to <0>{0}</0>"
 msgstr "Uitset sal na <0>{0}</0>"
 
-#: src/components/WalletModal/index.tsx
+#: src/components/swap/OutputInfo.tsx
+msgid "Output will be sent to <0>{0}</0>."
+msgstr ""
+
+#: src/components/Mobile-Menu/Menu.tsx
+msgid "POOL"
+msgstr ""
+
+#: src/components/Vault/NoVault.tsx
+msgid "Pass KYC and Accreditation"
+msgstr ""
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+msgid "Passed staking period"
+msgstr ""
+
+#: src/components/SecurityCard/Status.tsx
+msgid "Passing KYC..."
+msgstr ""
+
+#: src/components/Vault/AccreditationStatus.tsx
+msgid "Passing accreditation"
+msgstr ""
+
+#: src/components/AdminLogin/index.tsx
+msgid "Password"
+msgstr ""
+
+#: src/components/AdminKycTable/FirstStepStatus.tsx
+#: src/components/AdminKycTable/SecondStepStatus.tsx
+#: src/components/Vault/DepositPending.tsx
+msgid "Pending"
+msgstr ""
+
+#: src/components/Vault/enum.ts
+msgid "Pending..."
+msgstr ""
+
+#: src/pages/Farming/Staking/MyStakingsTable.tsx
+#: src/pages/Farming/Staking/StakeModal.tsx
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Period of staking"
+msgstr ""
+
+#: src/pages/Farming/Staking/UnstakedTable.tsx
+msgid "Period of vesting"
+msgstr ""
+
+#: src/components/Vault/ChooseBrokerDealerPopup.tsx
+msgid "Please choose broker dealer and custodian to start accreditation process"
+msgstr ""
+
+#: src/theme/components.tsx
+msgid "Please connect to the Kovan or Main Etherium network."
+msgstr ""
+
+#: src/components/WalletModal/ErrorSection.tsx
 msgid "Please connect to the appropriate Ethereum network."
 msgstr "Verbind asseblief die toepaslike Ethereum-netwerk."
+
+#: src/components/Vault/DepositRequestForm.tsx
+msgid "Please provide sender’s address in order to approve this transaction. Other adresses will be rejected."
+msgstr ""
 
 #: src/components/Settings/ExpertModeModal.tsx
 msgid "Please type the word \"{confirmWord}\" to enable expert mode."
@@ -648,6 +1212,10 @@ msgstr "Swembad"
 #: src/pages/PoolFinder/index.tsx
 msgid "Pool Found!"
 msgstr "Swembad gevind!"
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Pool limitation: 2 000 000"
+msgstr ""
 
 #: src/components/earn/PoolCard.tsx
 msgid "Pool rate"
@@ -687,17 +1255,49 @@ msgstr "Prys opgedateer"
 msgid "Prices and pool share"
 msgstr "Pryse en swembadaandeel"
 
+#: src/components/Vault/enum.ts
+msgid "Processing"
+msgstr ""
+
+#: src/pages/Farming/Vesting/VestingTable.tsx
+msgid "Progress"
+msgstr ""
+
 #: src/pages/AddLiquidityV2/ModalBottom.tsx
 msgid "Rates"
 msgstr "Tariewe"
+
+#: src/pages/SecTokenDetails/index.tsx
+msgid "Read More"
+msgstr ""
 
 #: src/components/swap/UnsupportedCurrencyFooter.tsx
 msgid "Read more about unsupported assets"
 msgstr "Lees meer oor onondersteunde bates"
 
+#: src/state/withdraw/hooks.ts
+msgid "Receiver is invalid"
+msgstr ""
+
 #: src/components/AccountDetails/index.tsx
 msgid "Recent Transactions"
 msgstr "Onlangse transaksies"
+
+#: src/components/AdminKycTable/RejectModal.tsx
+#: src/components/AdminKycTable/SecondStepStatus.tsx
+#: src/components/AdminKycTable/SecondStepStatus.tsx
+msgid "Reject"
+msgstr ""
+
+#: src/components/AdminKycTable/SecondStepStatus.tsx
+#: src/components/SecurityCard/Status.tsx
+#: src/components/Vault/AccreditationStatus.tsx
+msgid "Rejected"
+msgstr ""
+
+#: src/state/vesting/hooks.ts
+msgid "Released {0} IXS"
+msgstr ""
 
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Remove"
@@ -733,22 +1333,65 @@ msgstr "As u swembadtekens verwyder, verander u u posisie in onderliggende teken
 msgid "Removing {0} {1} and {2} {3}"
 msgstr "Verwyder {0} {1} en {2} {3}"
 
+#: src/components/Vault/enum.ts
+msgid "Requested"
+msgstr ""
+
 #: src/components/Settings/SettingsModal.tsx
 msgid "Restricts swaps to direct pairs only."
 msgstr "Beperk ruilings slegs vir direkte pare."
 
-#: src/components/TransactionConfirmationModal/index.tsx
-msgid "Return"
-msgstr "Keer terug"
+#: src/components/Vault/NoVault.tsx
+msgid "Retry pass accreditation"
+msgstr ""
+
+#: 
+#~ msgid "Return"
+#~ msgstr "Keer terug"
+
+#: src/pages/Farming/Staking/UnstakedTable.tsx
+msgid "Rewards in vesting"
+msgstr ""
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+msgid "Rewards to be vested (10% weekly)"
+msgstr ""
+
+#: src/pages/Farming/Vesting/enum.ts
+msgid "Rewards vesting"
+msgstr ""
 
 #: src/components/swap/AdvancedSwapDetails.tsx
 #: src/components/swap/ConfirmSwapInfo.tsx
 msgid "Route"
 msgstr "Roete"
 
+#: src/pages/SecTokenDetails/TokenDetails.tsx
+msgid "STO Med. price:"
+msgstr ""
+
+#: src/components/Mobile-Menu/Menu.tsx
+msgid "SWAP"
+msgstr ""
+
+#: src/pages/AdminKyc/Search.tsx
+msgid "Search for Wallet or Token"
+msgstr ""
+
 #: src/components/SearchModal/CurrencySearch.tsx
+#: src/pages/Custodian/AllSecTokens.tsx
 msgid "Search or paste address"
 msgstr "Soek of plak adres"
+
+#: src/components/NavigationTabs/index.tsx
+msgid "Security Tokens"
+msgstr ""
+
+#: src/components/Header/HeaderLinks.tsx
+#: src/components/Mobile-Menu/Menu.tsx
+msgid "Security tokens"
+msgstr ""
 
 #: src/components/FeeSelector/index.tsx
 msgid "Select Pool"
@@ -758,21 +1401,54 @@ msgstr "Kies Pool"
 msgid "Select a pool type based on your preferred liquidity provider fee."
 msgstr "Kies 'n swembadtipe gebaseer op u fooi vir likiedeverskaffer."
 
-#: src/components/SearchModal/CurrencySearch.tsx
-msgid "Select a token"
-msgstr "Kies 'n teken"
+#: 
+#~ msgid "Select a token"
+#~ msgstr "Kies 'n teken"
 
+#: src/components/SearchModal/CurrencySearch.tsx
 #: src/components/swap/CurrencyInput.tsx
 msgid "Select a token to swap"
 msgstr "Kies 'n teken om te verruil"
+
+#: src/components/Vault/WithdrawRequestForm.tsx
+msgid "Send"
+msgstr ""
+
+#: src/components/Vault/DepositSendInfo.tsx
+msgid "Send {0} here"
+msgstr ""
+
+#: src/components/Vault/TransactionDetails.tsx
+msgid "Send {0} to:"
+msgstr ""
+
+#: src/state/deposit/hooks.ts
+msgid "Sender is invalid"
+msgstr ""
+
+#: src/components/Vault/DepositRequestForm.tsx
+msgid "Sender's wallet"
+msgstr ""
+
+#: src/components/Vault/DepositSendInfo.tsx
+msgid "Sender’s wallet:"
+msgstr ""
+
+#: src/components/Vault/WithdrawPending.tsx
+msgid "Sending {amount} {0} here"
+msgstr ""
+
+#: src/components/Vault/TransactionDetails.tsx
+msgid "Sent from:"
+msgstr ""
 
 #: src/pages/AddLiquidityV2/ModalBottom.tsx
 msgid "Share of Pool"
 msgstr "Deel van die swembad"
 
-#: src/components/AccountDetails/index.tsx
-msgid "Show Portis"
-msgstr "Wys Portis"
+#: 
+#~ msgid "Show Portis"
+#~ msgstr "Wys Portis"
 
 #: src/components/TransactionSettings/index.tsx
 #: src/components/swap/AdvancedSwapDetails.tsx
@@ -788,6 +1464,71 @@ msgstr "Sommige bates is nie beskikbaar via hierdie koppelvlak nie, omdat dit mo
 msgid "Something went wrong"
 msgstr "Iets het verkeerd geloop"
 
+#: src/pages/Farming/Staking/StakeModal.tsx
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Stake"
+msgstr ""
+
+#: src/state/stake/hooks.ts
+#: src/state/stake/hooks.ts
+#: src/state/stake/hooks.ts
+#: src/state/stake/hooks.ts
+msgid "Stake {amount} IXS for {0}"
+msgstr ""
+
+#: src/components/Header/HeaderLinks.tsx
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Staking"
+msgstr ""
+
+#: src/components/Mobile-Menu/Menu.tsx
+#: src/pages/Farming/Vesting/enum.ts
+msgid "Staking IXS"
+msgstr ""
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Staking amount"
+msgstr ""
+
+#: src/pages/Farming/Staking/PromoTokenCard.tsx
+msgid "Staking is a great way to maximize the value of your holdings, instead of letting them sit idle in your IXS account!<0/> Once you have staked your assets, you can earn rewards on your holdings. This allows you to grow your token holdings over time."
+msgstr ""
+
+#: src/pages/Farming/Staking/StakingTiers.tsx
+msgid "Staking will be opened soon. Wait for the official announcement on <0>our channels</0>."
+msgstr ""
+
+#: src/pages/Farming/Vesting/VestingValid.tsx
+msgid "Start Date"
+msgstr ""
+
+#: src/components/Vault/ChooseBrokerDealerPopup.tsx
+msgid "Start accreditation"
+msgstr ""
+
+#: src/components/AdminKycTable/MoreActions.tsx
+msgid "Start again"
+msgstr ""
+
+#: src/components/AdminKycTable/FirstStepStatus.tsx
+#: src/components/AdminKycTable/SecondStepStatus.tsx
+#: src/components/Vault/HistoryTable.tsx
+msgid "Status"
+msgstr ""
+
+#: src/components/Vault/AccreditationStatus.tsx
+#: src/components/Vault/TransactionDetails.tsx
+msgid "Status:"
+msgstr ""
+
+#: src/components/AdminKycTable/index.tsx
+msgid "Step 1 - Primary issuer"
+msgstr ""
+
+#: src/components/AdminKycTable/index.tsx
+msgid "Step 2 - Custodian"
+msgstr ""
+
 #: src/pages/AddLiquidityV2/index.tsx
 msgid "Supply"
 msgstr "Voorsiening"
@@ -799,10 +1540,15 @@ msgstr "Verskaf {0} {1} en {2} {3}"
 #: src/components/Header/HeaderLinks.tsx
 #: src/components/NavigationTabs/index.tsx
 #: src/components/swap/SwapHeader.tsx
+#: src/pages/Farming/Staking/NoIXSTokens.tsx
 #: src/pages/Swap/index.tsx
 #: src/pages/Swap/index.tsx
 msgid "Swap"
 msgstr "Ruil om"
+
+#: src/state/swap/hooks.ts
+msgid "Swapping two security tokens is not allowed"
+msgstr ""
 
 #: src/components/swap/ConfirmSwapModal.tsx
 #: src/components/swap/PendingSuccesModals.tsx
@@ -810,8 +1556,12 @@ msgid "Swapping {0} {1} for {2} {3}"
 msgstr "Ruil {0} {1} vir {2} {3}"
 
 #: src/hooks/useSwapCallback.ts
-msgid "The Uniswap invariant x*y=k was not satisfied by the swap. This usually means one of the tokens you are swapping incorporates custom behavior on transfer."
-msgstr "Die ruil-invariant x * y = k is nie bevredig deur die ruil nie. Dit beteken gewoonlik dat een van die tekens wat u omruil, persoonlike gedrag by oordrag bevat."
+msgid "The IXswap invariant x*y=k was not satisfied by the swap. This usually means one of the tokens you are swapping incorporates custom behavior on transfer."
+msgstr ""
+
+#: 
+#~ msgid "The Uniswap invariant x*y=k was not satisfied by the swap. This usually means one of the tokens you are swapping incorporates custom behavior on transfer."
+#~ msgstr "Die ruil-invariant x * y = k is nie bevredig deur die ruil nie. Dit beteken gewoonlik dat een van die tekens wat u omruil, persoonlike gedrag by oordrag bevat."
 
 #: src/hooks/useSwapCallback.ts
 msgid "The input token cannot be transferred. There may be an issue with the input token."
@@ -822,12 +1572,13 @@ msgid "The market price is outside your specified price range. Single-asset depo
 msgstr "Die markprys is buite u gespesifiseerde prysklas. Slegs deposito vir enkelbates."
 
 #: src/hooks/useSwapCallback.ts
+#: src/hooks/useSwapCallback.ts
 msgid "The output token cannot be transferred. There may be an issue with the output token."
 msgstr "Die uitvoer-token kan nie oorgedra word nie. Daar kan 'n probleem wees met die uitvoer-token."
 
-#: src/hooks/useSwapCallback.ts
-msgid "The output token cannot be transferred. There may be an issue with the output token. Note fee on transfer and rebase tokens are incompatible with Uniswap V3."
-msgstr "Die uitvoer-token kan nie oorgedra word nie. Daar kan 'n probleem wees met die uitvoer-token. Nota-fooi vir oordrag- en rebase-tokens is nie versoenbaar met Uniswap V3 nie."
+#: 
+#~ msgid "The output token cannot be transferred. There may be an issue with the output token. Note fee on transfer and rebase tokens are incompatible with Uniswap V3."
+#~ msgstr "Die uitvoer-token kan nie oorgedra word nie. Daar kan 'n probleem wees met die uitvoer-token. Nota-fooi vir oordrag- en rebase-tokens is nie versoenbaar met Uniswap V3 nie."
 
 #: src/components/Badge/RangeBadge.tsx
 msgid "The price of this pool is outside of your selected range. Your position is not currently earning fees."
@@ -841,29 +1592,54 @@ msgstr "Die prys van hierdie swembad is binne u gekose reeks. U pos verdien tans
 msgid "The transaction could not be sent because the deadline has passed. Please check that your transaction deadline is not too low."
 msgstr "Die transaksie kon nie gestuur word nie omdat die sperdatum verstryk het. Kyk dat u sperdatum nie te laag is nie."
 
-#: src/components/SearchModal/CommonBases.tsx
-msgid "These tokens are commonly paired with other tokens."
-msgstr "Hierdie tokens word gewoonlik gekoppel aan ander tokens."
+#: 
+#~ msgid "These tokens are commonly paired with other tokens."
+#~ msgstr "Hierdie tokens word gewoonlik gekoppel aan ander tokens."
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid ""
+"This amount of rewards is based on assumption that your staked amount will be kept for the whole period of {0}. In this case your APY will be {1}%. If you partially or fully unstake your IXS before the end date 5% APY will be applied to unstaked amount. \n"
+"{2}\n"
+"Please note your rewards will vest over 10 weeks after unstaking."
+msgstr ""
 
 #: src/components/SearchModal/ImportToken.tsx
-msgid "This token doesn't appear on the active token list(s). Make sure this is the token that you want to trade."
-msgstr "Hierdie token verskyn nie op die aktiewe tokenlys nie. Maak seker dat dit die teken is wat u wil verhandel."
+msgid "This token doesn't appear on the active list(s). Make sure this is the token that you want to trade"
+msgstr ""
+
+#: 
+#~ msgid "This token doesn't appear on the active token list(s). Make sure this is the token that you want to trade."
+#~ msgstr "Hierdie token verskyn nie op die aktiewe tokenlys nie. Maak seker dat dit die teken is wat u wil verhandel."
 
 #: src/hooks/useSwapCallback.ts
-msgid "This transaction will not succeed due to price movement. Try increasing your slippage tolerance. Note fee on transfer and rebase tokens are incompatible with Uniswap V3."
-msgstr "Hierdie transaksie sal weens die prysbeweging nie slaag nie. Probeer u glyverdraagsaamheid verhoog. Nota-fooi vir oordrag- en rebase-tokens is nie versoenbaar met Uniswap V3 nie."
+msgid "This transaction will not succeed due to price movement. Try increasing your slippage tolerance."
+msgstr ""
+
+#: 
+#~ msgid "This transaction will not succeed due to price movement. Try increasing your slippage tolerance. Note fee on transfer and rebase tokens are incompatible with Uniswap V3."
+#~ msgstr "Hierdie transaksie sal weens die prysbeweging nie slaag nie. Probeer u glyverdraagsaamheid verhoog. Nota-fooi vir oordrag- en rebase-tokens is nie versoenbaar met Uniswap V3 nie."
 
 #: src/hooks/useSwapCallback.ts
 msgid "This transaction will not succeed either due to price movement or fee on transfer. Try increasing your slippage tolerance."
 msgstr "Hierdie transaksie sal ook nie slaag nie as gevolg van prysbeweging of fooi by oordrag. Probeer u glyverdraagsaamheid verhoog."
 
+#: src/pages/Farming/Staking/MyStakingsTable.tsx
+msgid "Tier"
+msgstr ""
+
 #: src/components/TipWithMessage/index.tsx
 msgid "Tip:"
 msgstr "Wenk:"
 
-#: src/components/SearchModal/ManageTokens.tsx
-msgid "Tip: Custom tokens are stored locally in your browser"
-msgstr "Wenk: Pasgemaakte tokens word plaaslik in u blaaier geberg"
+#: 
+#~ msgid "Tip: Custom tokens are stored locally in your browser"
+#~ msgstr "Wenk: Pasgemaakte tokens word plaaslik in u blaaier geberg"
+
+#: src/pages/Farming/Staking/Unstaking/UnstakeModal.tsx
+msgid ""
+"Tip: To unstake IXS tokens you need to have enough IXSgov tokens. \n"
+"You can unstake IXS tokens equal to the number of IXSgov tokens in your account."
+msgstr ""
 
 #: src/components/swap/CurrencyInput.tsx
 #: src/components/swap/SwapModalHeader.tsx
@@ -874,6 +1650,14 @@ msgstr "Aan"
 msgid "To (at least)"
 msgstr "Aan (ten minste)"
 
+#: src/pages/Farming/Staking/NoIXSTokens.tsx
+msgid "To buy IXS click on swap below or find us on our Telegram channel to learn more."
+msgstr ""
+
+#: src/components/AdminKycTable/index.tsx
+msgid "Token"
+msgstr ""
+
 #: src/components/SearchModal/Manage.tsx
 msgid "Tokens"
 msgstr "Tokens"
@@ -882,18 +1666,30 @@ msgstr "Tokens"
 msgid "Tokens from inactive lists. Import specific tokens below or click Manage to activate more lists."
 msgstr "Tokens uit onaktiewe lyste. Voer spesifieke tekens hieronder in of klik op Bestuur om meer lyste te aktiveer."
 
+#: src/pages/SecTokenDetails/TokenDetails.tsx
+msgid "Total Issued:"
+msgstr ""
+
+#: src/pages/Farming/Vesting/VestingValid.tsx
+msgid "Total Vested"
+msgstr ""
+
 #: src/components/earn/PoolCard.tsx
 msgid "Total deposited"
 msgstr "Totale deposito"
+
+#: src/pages/Farming/Staking/UnstakedTable.tsx
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+msgid "Total rewards"
+msgstr ""
 
 #: src/components/Settings/SettingsModal.tsx
 msgid "Transaction Settings"
 msgstr "Transaksie-instellings"
 
 #: src/components/TransactionConfirmationModal/index.tsx
-#: src/components/earn/ClaimRewardModal.tsx
-#: src/components/earn/StakingModal.tsx
-#: src/components/earn/UnstakingModal.tsx
+#: src/components/Vault/WithDrawSuccess.tsx
 msgid "Transaction Submitted"
 msgstr "Transaksie ingedien"
 
@@ -909,14 +1705,43 @@ msgstr "Probeer weer"
 msgid "Turn On Expert Mode"
 msgstr "Skakel kundigheidsmodus aan"
 
-#: src/components/earn/ClaimRewardModal.tsx
-#: src/components/earn/UnstakingModal.tsx
-msgid "Unclaimed IXS"
-msgstr "Onopgeëiste IXS"
+#: 
+#: 
+#~ msgid "Unclaimed IXS"
+#~ msgstr "Onopgeëiste IXS"
+
+#: src/components/Vault/NoVault.tsx
+msgid "Unknown error"
+msgstr ""
 
 #: src/hooks/useSwapCallback.ts
-msgid "Unknown error{0}. Try increasing your slippage tolerance. Note fee on transfer and rebase tokens are incompatible with Uniswap V3."
-msgstr "Onbekende fout{0}. Probeer u glyverdraagsaamheid verhoog. Nota-fooi vir oordrag- en rebase-tokens is nie versoenbaar met Uniswap V3 nie."
+msgid "Unknown error{0}. Try increasing your slippage tolerance."
+msgstr ""
+
+#: 
+#~ msgid "Unknown error{0}. Try increasing your slippage tolerance. Note fee on transfer and rebase tokens are incompatible with Uniswap V3."
+#~ msgstr "Onbekende fout{0}. Probeer u glyverdraagsaamheid verhoog. Nota-fooi vir oordrag- en rebase-tokens is nie versoenbaar met Uniswap V3 nie."
+
+#: src/pages/Farming/Staking/MyStakingsTable.tsx
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+msgid "Unstake"
+msgstr ""
+
+#: src/pages/Farming/Staking/Unstaking/UnstakeModal.tsx
+msgid "Unstake {0} IXS"
+msgstr ""
+
+#: src/pages/Farming/Staking/Unstaking/UnstakeModal.tsx
+msgid "Unstake {amount} IXS"
+msgstr ""
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+msgid "Unstaking"
+msgstr ""
 
 #: src/pages/AddLiquidityV2/index.tsx
 #: src/pages/Swap/index.tsx
@@ -939,15 +1764,31 @@ msgstr "Lys van opdaterings"
 msgid "Use this tool to find pairs that don't automatically appear in the interface."
 msgstr "Gebruik hierdie instrument om pare te vind wat nie outomaties in die koppelvlak verskyn nie."
 
+#: src/components/Header/HeaderLinks.tsx
+msgid "Vesting"
+msgstr ""
+
+#: src/pages/Farming/Vesting/VestingValid.tsx
+msgid "Vesting Amount"
+msgstr ""
+
+#: src/components/Mobile-Menu/Menu.tsx
+#: src/pages/Farming/Vesting/enum.ts
+msgid "Vesting IXS"
+msgstr ""
+
 #: src/components/SearchModal/ManageLists.tsx
 msgid "View list"
 msgstr "Kyk na lys"
 
-#: src/components/AccountDetails/index.tsx
-#: src/components/AccountDetails/index.tsx
 #: src/components/TransactionConfirmationModal/index.tsx
+#: src/components/Vault/WithDrawSuccess.tsx
 msgid "View on Etherscan"
 msgstr "Uitsig op Etherscan"
+
+#: src/components/AccountDetails/index.tsx
+msgid "View on Explorer"
+msgstr ""
 
 #: src/components/PositionCard/PoolInformation.tsx
 msgid "View pool information<0>↗</0>"
@@ -961,49 +1802,77 @@ msgstr "Besigtig transaksie op Etherscan"
 msgid "Waiting For Confirmation"
 msgstr "Wag op bevestiging"
 
-#: src/components/earn/StakingModal.tsx
-msgid "Weekly Rewards"
-msgstr "Weeklikse belonings"
+#: src/components/AdminKycTable/index.tsx
+msgid "Wallet address"
+msgstr ""
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+msgid "Warning:"
+msgstr ""
+
+#: 
+#~ msgid "Weekly Rewards"
+#~ msgstr "Weeklikse belonings"
 
 #: src/pages/AddLiquidityV2/Tip.tsx
 #: src/pages/AddLiquidityV2/Tip.tsx
 msgid "When you add liquidity, you will receive pool tokens representing your position. These tokens automatically earn fees proportional to your share of the pool, and can be redeemed at any time."
 msgstr "As u likiditeit byvoeg, sal u swembadtekens ontvang wat u posisie verteenwoordig. Hierdie tokens verdien outomaties fooie wat eweredig is aan u deel van die swembad en kan op enige tydstip afgelos word."
 
-#: src/components/earn/ClaimRewardModal.tsx
-msgid "When you claim without withdrawing your liquidity remains in the mining pool."
-msgstr "As u eis sonder om te onttrek, bly u likiditeit in die mynpoel."
+#: 
+#~ msgid "When you claim without withdrawing your liquidity remains in the mining pool."
+#~ msgstr "As u eis sonder om te onttrek, bly u likiditeit in die mynpoel."
 
-#: src/components/earn/UnstakingModal.tsx
-msgid "When you withdraw, your IXS is claimed and your liquidity is removed from the mining pool."
-msgstr "By u onttrekking word u IXS geëis en u likiditeit uit die mynpoel verwyder."
+#: 
+#~ msgid "When you withdraw, your IXS is claimed and your liquidity is removed from the mining pool."
+#~ msgstr "By u onttrekking word u IXS geëis en u likiditeit uit die mynpoel verwyder."
 
-#: src/components/earn/UnstakingModal.tsx
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+msgid "When your assets have been unstaked they will be transferred to your Metamask"
+msgstr ""
+
+#: src/components/Vault/WithdrawRequestForm.tsx
+msgid "Where to send?"
+msgstr ""
+
+#: src/components/Vault/DepositSendInfo.tsx
+#: src/components/Vault/TransactionDetails.tsx
+msgid "Will be cancelled automatically in {deadlineIn} hours"
+msgstr ""
+
+#: src/components/Vault/BalanceRow.tsx
+#: src/components/Vault/WithdrawPopup.tsx
+#: src/components/Vault/enum.ts
+#: src/components/Vault/enum.ts
 msgid "Withdraw"
 msgstr "Onttrek"
 
-#: src/components/earn/UnstakingModal.tsx
-msgid "Withdraw & Claim"
-msgstr "Onttrek en eis"
+#: 
+#~ msgid "Withdraw & Claim"
+#~ msgstr "Onttrek en eis"
 
-#: src/components/earn/UnstakingModal.tsx
-#: src/components/earn/UnstakingModal.tsx
-msgid "Withdraw deposited liquidity"
-msgstr "Onttrek gedeponeerde likiditeit"
+#: 
+#: 
+#~ msgid "Withdraw deposited liquidity"
+#~ msgstr "Onttrek gedeponeerde likiditeit"
 
-#: src/components/earn/UnstakingModal.tsx
-msgid "Withdrawing {0} IXS-V2"
-msgstr "Onttrek {0} IXS-V2"
+#: src/state/withdraw/hooks.ts
+msgid "Withdraw {amount} {currencySymbol}"
+msgstr ""
 
-#: src/components/earn/UnstakingModal.tsx
-msgid "Withdrew IXS-V2!"
-msgstr "IXS-V2 onttrek!"
+#: 
+#~ msgid "Withdrawing {0} IXS-V2"
+#~ msgstr "Onttrek {0} IXS-V2"
+
+#: 
+#~ msgid "Withdrew IXS-V2!"
+#~ msgstr "IXS-V2 onttrek!"
 
 #: src/pages/Swap/index.tsx
 msgid "Wrap"
 msgstr "Draai toe"
 
-#: src/components/WalletModal/index.tsx
+#: src/components/WalletModal/ErrorSection.tsx
 #: src/components/Web3Status/index.tsx
 msgid "Wrong Network"
 msgstr "Verkeerde netwerk"
@@ -1016,18 +1885,54 @@ msgstr "U skep 'n swembad"
 msgid "You can now trade {0}"
 msgstr "U kan nou {0}"
 
+#: src/pages/AppBody.tsx
+msgid "You can test it on Kovan"
+msgstr ""
+
+#: src/pages/Farming/Staking/NoIXSTokens.tsx
+msgid "You don't have any IXS tokens available!"
+msgstr ""
+
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+msgid "You don’t have enough IXSGov for unstake all available IXS ({stakeAmount} is available) 1 IXS = 1 IXGov"
+msgstr ""
+
 #: src/pages/PoolFinder/index.tsx
 msgid "You don’t have liquidity in this pool yet"
 msgstr "U het nog nie likiditeit in hierdie poel nie"
+
+#: src/pages/Farming/Staking/MyStakingsTable.tsx
+msgid "You have no ongoing stakings at the moment"
+msgstr ""
+
+#: src/pages/Farming/Staking/UnstakedTable.tsx
+msgid "You have no rewards at the moment"
+msgstr ""
 
 #: src/pages/Swap/index.tsx
 msgid "You must give the IXS smart contracts permission to use your {0}. You only have to do this once per token."
 msgstr "U moet toestemming gee vir die IXS-slimkontrakte om u {0} te gebruik. U hoef dit slegs een keer per teken te doen."
 
+#: src/components/Vault/NoVault.tsx
+msgid "You need to pass accreditation and KYC to start trading with the {symbolText} token."
+msgstr ""
+
 #: src/pages/AddLiquidityV2/index.tsx
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "You will receive"
 msgstr "Jy sal ontvang"
+
+#: src/pages/Farming/Staking/StakingTiers.tsx
+msgid "You will receive 1 IXSGov for each 1 staked IXS."
+msgstr ""
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+msgid "Your APY will be 5% in case of an early unstake"
+msgstr ""
+
+#: src/pages/Farming/Vesting/ZeroBalanceVesting.tsx
+msgid "Your address"
+msgstr ""
 
 #: src/components/PositionCard/index.tsx
 msgid "Your pool share"
@@ -1049,6 +1954,17 @@ msgstr "U posisie het 0 likiditeit en verdien geen fooie nie."
 msgid "Your rate"
 msgstr "U tarief"
 
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid ""
+"Your staked IXS will be locked for {0} till {1}. Until that time you won’t be able to unstake your IXS fully or partially. Please carefully consider the risks involved.\n"
+"{2}\n"
+"You will be able to redeem your staked IXS fully or partially after {3}."
+msgstr ""
+
+#: src/pages/Farming/Vesting/VestingValid.tsx
+msgid "Your tokens will be released linearly over time. You can claim the releasable amount right now. Come back later to claim more tokens until the full balance is claimed."
+msgstr ""
+
 #: src/components/TransactionSettings/index.tsx
 msgid "Your transaction may be frontrun"
 msgstr "U transaksie kan vooruitloop"
@@ -1057,21 +1973,50 @@ msgstr "U transaksie kan vooruitloop"
 msgid "Your transaction may fail"
 msgstr "U transaksie kan misluk"
 
-#: src/components/TransactionSettings/index.tsx
-msgid "Your transaction will revert if it is pending for more than this period of time."
-msgstr "U transaksie gaan terug as dit langer as hierdie tydperk hangende is."
+#: 
+#~ msgid "Your transaction will revert if it is pending for more than this period of time."
+#~ msgstr "U transaksie gaan terug as dit langer as hierdie tydperk hangende is."
 
 #: src/components/TransactionSettings/index.tsx
-msgid "Your transaction will revert if the price changes unfavorably by more than this percentage."
-msgstr "U transaksie gaan terug as die prys met meer as hierdie persentasie ongunstig verander."
+msgid "Your transaction will revert if it is pending for more than this period of time. Value range 1 - 180 min."
+msgstr ""
+
+#: 
+#~ msgid "Your transaction will revert if the price changes unfavorably by more than this percentage."
+#~ msgstr "U transaksie gaan terug as die prys met meer as hierdie persentasie ongunstig verander."
+
+#: src/components/TransactionSettings/index.tsx
+msgid "Your transaction will revert if the price changes unfavorably by more than this percentage. Value range 0-50%"
+msgstr ""
 
 #: src/components/AccountDetails/index.tsx
 msgid "Your transactions will appear here..."
 msgstr "U transaksies sal hier verskyn ..."
 
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+msgid "available"
+msgstr ""
+
 #: src/components/Settings/ExpertModeModal.tsx
 msgid "confirm"
 msgstr "bevestig"
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+msgid "days"
+msgstr ""
+
+#: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
+msgid "days (ended)"
+msgstr ""
+
+#: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
+msgid "days to go"
+msgstr ""
+
+#: src/components/Vault/enum.ts
+msgid "error"
+msgstr ""
 
 #: src/components/Web3Status/index.tsx
 msgid "has socks emoji"
@@ -1081,11 +2026,27 @@ msgstr "het sokkies emoji"
 msgid "https:// or ipfs:// or ENS name"
 msgstr "https: // of ipfs: // of ENS naam"
 
+#: src/components/Vault/enum.ts
+#: src/components/Vault/enum.ts
+msgid "text2"
+msgstr ""
+
+#: src/pages/Farming/Staking/StakingTierCard.tsx
+msgid "tokens available for staking"
+msgstr ""
+
 #: src/components/SearchModal/ImportRow.tsx
 msgid "via {0}"
 msgstr "via {0}"
 
+#: src/components/AdminKycTable/RejectModal.tsx
+#: src/components/AdminLogin/index.tsx
+#: src/components/Header/IXSBalanceModal.tsx
 #: src/components/Toggle/index.tsx
+#: src/pages/Farming/Staking/StakingTableTabs.tsx
+#: src/pages/Farming/Staking/StakingTierCard.tsx
+#: src/pages/Farming/Staking/StakingTierCard.tsx
+#: src/pages/Farming/Staking/StakingTierCard.tsx
 msgid "{0}"
 msgstr "{0}"
 
@@ -1108,24 +2069,35 @@ msgstr "{0} ETH"
 
 #: src/components/earn/PoolCard.tsx
 #: src/components/earn/PoolCard.tsx
-#: src/components/earn/StakingModal.tsx
 msgid "{0} IXS / week"
 msgstr "{0} IXS / week"
 
-#: src/components/earn/StakingModal.tsx
-msgid "{0} IXS-V2"
-msgstr "{0} IXS-V2"
+#: 
+#~ msgid "{0} IXS-V2"
+#~ msgstr "{0} IXS-V2"
 
 #: src/components/Web3Status/index.tsx
 msgid "{0} Pending"
 msgstr "{0} hangende"
 
+#: src/pages/Farming/Staking/StakingTierCard.tsx
+msgid "{0} lock up period"
+msgstr ""
+
+#: src/components/Vault/TransactionDetails.tsx
+msgid "{0} sent to:"
+msgstr ""
+
 #: src/components/SearchModal/ImportList.tsx
-#: src/components/SearchModal/ManageLists.tsx
 #: src/components/SearchModal/ManageLists.tsx
 msgid "{0} tokens"
 msgstr "{0} tokens"
 
+#: src/components/Vault/BalanceRow.tsx
+msgid "{0} {1}"
+msgstr ""
+
+#: src/components/SearchModal/CurrencyList.tsx
 #: src/components/SearchModal/CurrencyList.tsx
 msgid "{0} • Added by user"
 msgstr "{0} • Bygevoeg deur gebruiker"
@@ -1134,6 +2106,14 @@ msgstr "{0} • Bygevoeg deur gebruiker"
 #: src/pages/AddLiquidityV2/ModalBottom.tsx
 msgid "{0}%"
 msgstr "{0}%"
+
+#: src/components/Vault/TransactionDetails.tsx
+msgid "{0} {1}"
+msgstr ""
+
+#: src/components/AdminKycTable/Pagination.tsx
+msgid "{page} of {totalPages}"
+msgstr ""
 
 #: src/components/InputStepCounter/InputStepCounter.tsx
 msgid "{tokenB} per {tokenA}"

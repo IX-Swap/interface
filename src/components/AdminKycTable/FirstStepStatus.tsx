@@ -6,6 +6,7 @@ import approvedIcon from '../../assets/images/check-success.svg'
 import rejectedIcon from '../../assets/images/attention.svg'
 import pendingIcon from '../../assets/images/loader_thin.svg'
 import { ButtonGradient } from 'components/Button'
+import { AccreditationStatusEnum } from 'components/Vault/enum'
 
 interface Props {
   status: string
@@ -23,11 +24,13 @@ export const FirstStepStatus = ({ status, link }: Props) => {
 
   const getText = () => {
     switch (status) {
-      case 'pending':
+      case AccreditationStatusEnum.PENDING:
         return t`Pending`
-      case 'rejected':
-        return t`Rejected`
-      case 'approved':
+      case AccreditationStatusEnum.FAILED:
+        return t`Failed`
+      case AccreditationStatusEnum.APPROVED:
+      case AccreditationStatusEnum.REJECTED:
+      case AccreditationStatusEnum.PENDING_CUSTODIAN:
         return t`Approved`
       default:
         return t`Status`
@@ -36,12 +39,13 @@ export const FirstStepStatus = ({ status, link }: Props) => {
 
   const getIcon = () => {
     switch (status) {
-      case 'pending':
-        return pendingIcon
-      case 'rejected':
+      case AccreditationStatusEnum.FAILED:
         return rejectedIcon
-      case 'approved':
+      case AccreditationStatusEnum.REJECTED:
+      case AccreditationStatusEnum.APPROVED:
+      case AccreditationStatusEnum.PENDING_CUSTODIAN:
         return approvedIcon
+      case AccreditationStatusEnum.PENDING:
       default:
         return pendingIcon
     }

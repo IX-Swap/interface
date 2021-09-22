@@ -1,32 +1,29 @@
-import IXSStakingModal from 'components/earn/IXSStakingModal'
+import { IXS_ADDRESS } from 'constants/addresses'
+import { useCurrency } from 'hooks/Tokens'
+import { useActiveWeb3React } from 'hooks/web3'
 import React, { useEffect } from 'react'
-import { useToggleModal, useCloseModals } from 'state/application/hooks'
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from 'state'
+import { useCloseModals } from 'state/application/hooks'
+import { changeAccount } from 'state/stake/actions'
 import {
-  useStakingState,
-  useIsVestingPaused,
-  useUpdateIXSBalance,
+  useGetPayouts,
   useGetStakings,
   useGetVestedRewards,
-  useGetPayouts,
+  useIsVestingPaused,
+  useStakingState,
+  useUpdateIXSBalance,
 } from 'state/stake/hooks'
 import { useUnstakingState } from 'state/stake/unstake/hooks'
+import { useCurrencyBalance } from 'state/wallet/hooks'
+import { StakingWrapper } from '../styleds'
 import { PromoTokenCard } from './PromoTokenCard'
 import { StakingPage } from './StakingPage'
-import { StakingWrapper } from '../styleds'
-import { ApplicationModal } from 'state/application/actions'
-import { useActiveWeb3React } from 'hooks/web3'
-import { useDispatch } from 'react-redux'
-import { changeAccount } from 'state/stake/actions'
-import { AppDispatch } from 'state'
-import { useCurrency } from 'hooks/Tokens'
-import { useCurrencyBalance } from 'state/wallet/hooks'
-import { IXS_ADDRESS } from 'constants/addresses'
 
 export const Staking = () => {
   const { IXSBalance, hasStakedSuccessfully, metaMaskAccount, stakings } = useStakingState()
   const { hasUnstakedSuccessfully } = useUnstakingState()
   const isVestingPaused = useIsVestingPaused()
-  const toggleStakeModal = useToggleModal(ApplicationModal.STAKE_IXS)
   const closeModals = useCloseModals()
   const { chainId, account } = useActiveWeb3React()
   const dispatch = useDispatch<AppDispatch>()
@@ -43,6 +40,7 @@ export const Staking = () => {
 
   useEffect(() => {
     getStakings()
+    console.log('process.env.NODE_ENV: ', process.env.NODE_ENV)
   }, [getStakings])
 
   useEffect(() => {
@@ -91,7 +89,6 @@ export const Staking = () => {
 
   return (
     <>
-      <IXSStakingModal onDismiss={toggleStakeModal} />
       <StakingWrapper>{renderStakingPage()}</StakingWrapper>
     </>
   )

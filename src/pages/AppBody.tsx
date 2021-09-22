@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro'
-import Column, { ColumnCenter } from 'components/Column'
+import { ColumnCenter } from 'components/Column'
 import React from 'react'
 import styled from 'styled-components/macro'
 import { TYPE } from 'theme'

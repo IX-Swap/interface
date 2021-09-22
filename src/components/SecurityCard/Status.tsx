@@ -4,7 +4,11 @@ import { Box } from 'rebass'
 import { Trans } from '@lingui/macro'
 import { TYPE } from 'theme'
 import styled from 'styled-components'
-import { AccreditationStatusEnum } from 'components/Vault/enum'
+import {
+  AccreditationStatusEnum,
+  ERROR_ACCREDITATION_STATUSES,
+  PENDING_ACCREDITATION_STATUSES,
+} from 'components/Vault/enum'
 import { ReactComponent as Attention } from 'assets/images/attention.svg'
 
 const StatusBox = styled(Box)`
@@ -16,7 +20,7 @@ const StatusBox = styled(Box)`
 export const Status = ({ status }: { status: AccreditationStatusEnum }) => {
   return (
     <>
-      {status === AccreditationStatusEnum.PENDING && (
+      {PENDING_ACCREDITATION_STATUSES.includes(status) && (
         <StatusBox>
           <IconClock />
           <TYPE.status>
@@ -24,7 +28,7 @@ export const Status = ({ status }: { status: AccreditationStatusEnum }) => {
           </TYPE.status>
         </StatusBox>
       )}
-      {status === AccreditationStatusEnum.REJECTED && (
+      {ERROR_ACCREDITATION_STATUSES.includes(status) && (
         <StatusBox>
           <Attention />
           <TYPE.status>

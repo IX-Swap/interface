@@ -2,7 +2,7 @@ import { ReactComponent as Attention } from 'assets/images/attention.svg'
 import { ReactComponent as Passed } from 'assets/images/check-success.svg'
 import Column from 'components/Column'
 import { LoaderThin } from 'components/Loader/LoaderThin'
-import { RowBetween, RowCenter } from 'components/Row'
+import { RowBetween } from 'components/Row'
 import React from 'react'
 import styled from 'styled-components'
 import { gradientBorder, TYPE } from 'theme'
@@ -35,8 +35,9 @@ export const ExistingTitle = styled.span`
   white-space: -o-pre-wrap; /* Opera 7 */
   word-wrap: break-word;
 `
-export const NoVaultDescription = styled.span`
+export const VaultStatusDescription = styled.div`
   text-align: center;
+  margin-top: 25px;
 `
 
 export const TitleStatusRow = styled(RowBetween)`

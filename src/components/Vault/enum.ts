@@ -33,18 +33,7 @@ export const isSuccessTransaction = (action: ActionTypes, status: ActionHistoryS
   return status === ActionHistoryStatus.APPROVED
 }
 
-export const ActionHistoryStatusText = {
-  [ActionHistoryStatus.PENDING]: t`In progress...`,
-  [ActionHistoryStatus.APPROVED]: t`Approved`,
-  [ActionHistoryStatus.SETTLED]: t`Approved`,
-  [ActionHistoryStatus.REJECTED]: t`Rejected`,
-  [ActionHistoryStatus.FAILED]: t`Failed`,
-  [ActionHistoryStatus.REQUESTED]: t`Requested`,
-  [ActionHistoryStatus.CANCELLED]: t`Cancelled`,
-  [ActionHistoryStatus.PROCESSING]: t`Processing`,
-}
-
-export const TransactionHistoryStatusText = {
+const TransactionHistoryStatusText = {
   [ActionHistoryStatus.PENDING]: t`Pending...`,
   [ActionHistoryStatus.APPROVED]: t`Completed`,
   [ActionHistoryStatus.SETTLED]: t`Completed`,
@@ -55,7 +44,7 @@ export const TransactionHistoryStatusText = {
   [ActionHistoryStatus.PROCESSING]: t`Processing`,
 }
 
-export const StatusColors = {
+const StatusColors = {
   [ActionHistoryStatus.PENDING]: 'text2',
   [ActionHistoryStatus.APPROVED]: 'green1',
   [ActionHistoryStatus.SETTLED]: 'green1',
@@ -89,8 +78,16 @@ export enum AccreditationStatusEnum {
   PENDING = 'new',
   APPROVED = 'approved',
   REJECTED = 'declined',
+  FAILED = 'failed', // error occured
+  PENDING_CUSTODIAN = 'pending-custodian', // waiting for custodian action
 }
-export interface IAccreditationRequest {
+export interface AccreditationRequest {
   message?: string
   status: AccreditationStatusEnum
 }
+export const PENDING_ACCREDITATION_STATUSES = [
+  AccreditationStatusEnum.PENDING,
+  AccreditationStatusEnum.PENDING_CUSTODIAN,
+]
+
+export const ERROR_ACCREDITATION_STATUSES = [AccreditationStatusEnum.FAILED, AccreditationStatusEnum.REJECTED]

@@ -1,30 +1,32 @@
 import { t, Trans } from '@lingui/macro'
 import { ButtonIXSWide } from 'components/Button'
+import { StakeModalTop } from 'components/earn/styled'
+import Row, { RowBetween } from 'components/Row'
 import { TextRow } from 'components/TextRow/TextRow'
 import { IXS_GOVERNANCE_ADDRESS } from 'constants/addresses'
-import { useCurrency } from 'hooks/Tokens'
-import { Dots } from 'pages/Pool/styleds'
-import React, { useCallback, useState, useEffect } from 'react'
-import { useCurrencyBalance } from 'state/wallet/hooks'
-import { CloseIcon, TYPE } from 'theme'
-import Row, { RowBetween } from 'components/Row'
-import { StakeModalTop } from 'components/earn/styled'
-import { useIncreaseIXSGovAllowance, useUnstakeFrom, useUnstakingState } from 'state/stake/unstake/hooks'
-import { useActiveWeb3React } from 'hooks/web3'
-import { StakeInfoContainer, EllipsedText, ModalBottom } from '../style'
 import { IStaking, periodsInDays } from 'constants/stakingPeriods'
+import { useCurrency } from 'hooks/Tokens'
+import { useActiveWeb3React } from 'hooks/web3'
+import { Dots } from 'pages/Pool/styleds'
+import React, { useCallback, useEffect, useState } from 'react'
+import { useUnstakingState } from 'state/stake/unstake/hooks'
+import { useCurrencyBalance } from 'state/wallet/hooks'
 import styled from 'styled-components'
-
+import { CloseIcon, TYPE } from 'theme'
+import { floorTo4Decimals } from 'utils/formatCurrencyAmount'
+import { EllipsedText, ModalBottom, StakeInfoContainer } from '../style'
 interface UnstakingModalProps {
   onDismiss: () => void
   stake: IStaking
+  onUnstake: () => void
+  onApprove: (amount?: string) => void
 }
 
 function formatAmount(amount: number): string {
   return amount?.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 10 })
 }
 
-export function FullUnstake({ onDismiss, stake }: UnstakingModalProps) {
+export function FullUnstake({ onDismiss, stake, onUnstake, onApprove }: UnstakingModalProps) {
   const stakeAmount = formatAmount(stake?.stakeAmount)
   const [isEnoughAllowance, setIsEnoughAllowance] = useState(true)
   const [error, setError] = useState('')
@@ -32,8 +34,6 @@ export function FullUnstake({ onDismiss, stake }: UnstakingModalProps) {
   const IXSGovCurrency = useCurrency(IXS_GOVERNANCE_ADDRESS[chainId ?? 1])
   const IXSGovBalance = useCurrencyBalance(account ?? undefined, IXSGovCurrency ?? undefined)
   const { IXSGovAllowanceAmount, isApprovingIXSGov, isUnstaking } = useUnstakingState()
-  const unstake = useUnstakeFrom(stake.period)
-  const increaseAllowance = useIncreaseIXSGovAllowance()
 
   useEffect(() => {
     if (!IXSGovBalance) {
@@ -66,14 +66,6 @@ export function FullUnstake({ onDismiss, stake }: UnstakingModalProps) {
     return parseFloat(IXSGovBalance.toSignificant(5)) >= stake?.stakeAmount
   }
 
-  async function onUnstake() {
-    unstake(stake)
-  }
-
-  async function onApprove() {
-    increaseAllowance(stakeAmount)
-  }
-
   return (
     <>
       <StakeModalTop style={{ paddingBottom: '30px' }}>
@@ -101,7 +93,7 @@ export function FullUnstake({ onDismiss, stake }: UnstakingModalProps) {
             textRight={
               <EllipsedText>
                 <div>
-                  {stakeAmount}&nbsp;IXSGov ({IXSGovBalance?.toSignificant(5)} <Trans>available</Trans>)
+                  {stakeAmount}&nbsp;IXSGov ({IXSGovBalance?.toSignificant(4)} <Trans>available</Trans>)
                 </div>
               </EllipsedText>
             }
@@ -112,7 +104,7 @@ export function FullUnstake({ onDismiss, stake }: UnstakingModalProps) {
             textLeft={t`Instant reward payout today`}
             textRight={
               <EllipsedText>
-                <div>{stake.reward * 0.1}&nbsp;IXS</div>
+                <div>{floorTo4Decimals(stake.reward * 0.1)}&nbsp;IXS</div>
               </EllipsedText>
             }
           />
@@ -120,7 +112,7 @@ export function FullUnstake({ onDismiss, stake }: UnstakingModalProps) {
             textLeft={t`Rewards to be vested (10% weekly)`}
             textRight={
               <EllipsedText>
-                <div>{stake.reward * 0.9}&nbsp;IXS</div>
+                <div>{floorTo4Decimals(stake.reward * 0.9)}&nbsp;IXS</div>
               </EllipsedText>
             }
           />
@@ -139,7 +131,7 @@ export function FullUnstake({ onDismiss, stake }: UnstakingModalProps) {
           <ButtonIXSWide
             data-testid="approve-ixsgov-button"
             disabled={isEnoughAllowance || isApprovingIXSGov || isUnstaking || Boolean(error)}
-            onClick={onApprove}
+            onClick={() => onApprove()}
             style={{ marginRight: '14px' }}
           >
             {isApprovingIXSGov ? (

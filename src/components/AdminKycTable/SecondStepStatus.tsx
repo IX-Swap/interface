@@ -1,16 +1,15 @@
-import React, { useContext, useState } from 'react'
 import { t, Trans } from '@lingui/macro'
-import styled, { css, ThemeContext } from 'styled-components'
-
-import { ButtonGray, ButtonEmpty } from 'components/Button'
+import { ButtonEmpty, ButtonGray } from 'components/Button'
 import Popover from 'components/Popover'
-
-import approvedIcon from '../../assets/images/check-success.svg'
-import rejectedIcon from '../../assets/images/attention.svg'
-import pendingIcon from '../../assets/images/loader_thin.svg'
-import { ReactComponent as DropDownIcon } from '../../assets/images/dropdown.svg'
-import { RejectModal } from './RejectModal'
+import { AccreditationStatusEnum } from 'components/Vault/enum'
+import React, { useContext, useState } from 'react'
 import { useApproveKyc } from 'state/admin/hooks'
+import styled, { css, ThemeContext } from 'styled-components'
+import rejectedIcon from '../../assets/images/attention.svg'
+import approvedIcon from '../../assets/images/check-success.svg'
+import { ReactComponent as DropDownIcon } from '../../assets/images/dropdown.svg'
+import pendingIcon from '../../assets/images/loader_thin.svg'
+import { RejectModal } from './RejectModal'
 
 interface Props {
   status: string
@@ -48,10 +47,14 @@ export const SecondStepStatus = ({ status, id }: Props) => {
 
   const getText = () => {
     switch (status) {
-      case 'declined':
+      case AccreditationStatusEnum.REJECTED:
         return t`Rejected`
-      case 'approved':
+      case AccreditationStatusEnum.APPROVED:
         return t`Approved`
+      case AccreditationStatusEnum.FAILED:
+        return t`Failed`
+      case AccreditationStatusEnum.PENDING:
+        return t`Pending`
       default:
         return t`Status`
     }
@@ -59,15 +62,16 @@ export const SecondStepStatus = ({ status, id }: Props) => {
 
   const getIcon = () => {
     switch (status) {
-      case 'declined':
+      case AccreditationStatusEnum.REJECTED:
+      case AccreditationStatusEnum.FAILED:
         return rejectedIcon
-      case 'approved':
+      case AccreditationStatusEnum.APPROVED:
         return approvedIcon
       default:
         return pendingIcon
     }
   }
-  if (status === 'new') {
+  if (status === AccreditationStatusEnum.PENDING_CUSTODIAN) {
     return (
       <>
         <RejectModal isModalOpen={isModalOpen} closeModal={closeModal} id={id} />

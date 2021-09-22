@@ -142,7 +142,7 @@ export function useAccreditationStatus(currencyId: string) {
   }, [secTokens, currencyId])
   const status = accreditationRequest?.status
   const isApproved = useMemo(() => {
-    return ![AccreditationStatusEnum.PENDING, AccreditationStatusEnum.REJECTED, undefined].includes(status)
+    return status === AccreditationStatusEnum.APPROVED
   }, [status])
-  return { status, isApproved }
+  return { status, isApproved, accreditationRequest }
 }

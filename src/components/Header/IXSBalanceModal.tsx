@@ -20,7 +20,7 @@ import styled from 'styled-components'
 import { ModalBlurWrapper, TextGradient } from 'theme'
 import { CloseIcon, TYPE } from '../../theme'
 
-export const ModalPadding = styled.div`
+const ModalPadding = styled.div`
   padding: 37px 40px 19px 40px;
   ${({ theme }) => theme.mediaWidth.upToSmall`
    padding: 1rem;

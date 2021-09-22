@@ -8,8 +8,8 @@ import { ModalProps } from './interfaces'
 import { AnimatedDialogContent, StyledDialogOverlay } from './styleds'
 
 // destructure to not pass custom props to Dialog DOM element
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const StyledDialogContent = styled(
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   ({ minHeight, maxHeight, mobile, isOpen, isright, mobileMaxHeight, scrollable, tip, ...rest }) => (
     <AnimatedDialogContent {...rest} />
   )

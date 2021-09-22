@@ -1,10 +1,9 @@
-import React from 'react'
-import { HideSmall } from '../../theme'
 import { Trans } from '@lingui/macro'
+import SettingsTab from 'components/Settings'
+import React from 'react'
+import { useDerivedSwapInfo } from 'state/swap/hooks'
 import styled from 'styled-components'
 import { RowBetween } from '../../components/Row'
-import SettingsTab from 'components/Settings'
-import { useDerivedSwapInfo } from 'state/swap/hooks'
 
 const TitleRow = styled(RowBetween)`
   ${({ theme }) => theme.mediaWidth.upToSmall`
