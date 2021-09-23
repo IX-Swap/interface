@@ -1,6 +1,6 @@
 import { Currency } from '@ixswap1/sdk-core'
 import { ReactComponent as Info } from 'assets/images/info.svg'
-import Row, { RowStart } from 'components/Row'
+import Row, { RowFixed, RowStart } from 'components/Row'
 import dayjs from 'dayjs'
 import { useWindowSize } from 'hooks/useWindowSize'
 import { IconWrapper } from 'pages/SecTokenDetails/styleds'
@@ -12,7 +12,7 @@ import { useToggleTransactionModal } from 'state/application/hooks'
 import { LogItem, setLogItem } from 'state/eventLog/actions'
 import { DesktopAndTablet, DesktopOnly, MEDIA_WIDTHS, TYPE } from 'theme'
 import { ActionHistoryStatus, ActionTypeText, getActionStatusText, getStatusColor } from './enum'
-import { HistoryRowWraper, IconColumn } from './styleds'
+import { DateBox, HistoryRowWraper, IconColumn } from './styleds'
 
 interface Props {
   row: LogItem
@@ -61,16 +61,18 @@ export const TransactionHistoryRow = ({ row, key, icon }: Props) => {
         </Row>
       </td>
       <td width="25%">
-        <RowStart>
+        <RowFixed>
           <DesktopAndTablet>
-            <TYPE.subHeader1 color={'text1'}>{formattedDate}</TYPE.subHeader1>
+            <DateBox>
+              <TYPE.subHeader1 color={'text1'}>{formattedDate}</TYPE.subHeader1>
+            </DateBox>
           </DesktopAndTablet>
           <Box marginLeft="1rem" display="flex" justifyContent="center">
             <IconWrapper size={20}>
               <Info />
             </IconWrapper>
           </Box>
-        </RowStart>
+        </RowFixed>
       </td>
     </HistoryRowWraper>
   )
