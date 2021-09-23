@@ -18,6 +18,7 @@ import { useDispatch } from 'react-redux'
 import { useFetchHistoricalPoolSize, usePoolSizeState } from 'state/stake/hooks'
 import { useStakingState } from 'state/stake/hooks'
 import { LoaderThin } from 'components/Loader/LoaderThin'
+import { formatNumber } from 'utils/formatNumber'
 
 export const StakingTierCard = ({ tier }: { tier: Tier }) => {
   const dispatch = useDispatch<AppDispatch>()
@@ -85,7 +86,7 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
         <RowCenter style={{ margin: 'auto' }}>
           <TYPE.description3 fontWeight={400} opacity="0.5">
             <Trans>
-              <span style={{ fontWeight: 700 }}>{leftToFill.toLocaleString('fr')}</span> tokens available for staking
+              <span style={{ fontWeight: 700 }}>{formatNumber(leftToFill)}</span> tokens available for staking
             </Trans>
           </TYPE.description3>
         </RowCenter>
@@ -127,9 +128,9 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
                     isTierUnlimited
                       ? ''
                       : '\nAvailable for staking: \n' +
-                        leftToFill.toLocaleString('fr') +
+                        formatNumber(leftToFill) +
                         '/' +
-                        DEFAULT_POOL_SIZE_LIMIT.toLocaleString('fr') +
+                        formatNumber(DEFAULT_POOL_SIZE_LIMIT) +
                         '.'
                   }`}
         >
