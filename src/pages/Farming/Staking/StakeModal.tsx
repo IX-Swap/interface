@@ -22,6 +22,10 @@ import { IconWrapper } from 'components/AccountDetails/styleds'
 import { ReactComponent as Checkmark } from 'assets/images/checked-solid-bg.svg'
 import { periodsInSeconds, periodsInDays } from 'constants/stakingPeriods'
 import { StakeInfoContainer, EllipsedText, ModalBottom } from './style'
+import { usePoolSizeState } from 'state/stake/hooks'
+import { DEFAULT_POOL_SIZE_LIMIT, POOL_SIZE_LOADING } from 'state/stake/poolSizeReducer'
+import { LoaderThin } from 'components/Loader/LoaderThin'
+import { formatNumber } from 'utils/formatNumber'
 
 interface StakingModalProps {
   onDismiss: () => void
@@ -38,6 +42,20 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
   const { selectedTier, isApprovingIXS, isStaking, allowanceAmount, IXSBalance } = useStakingState()
   const stake = useStakeFor(selectedTier?.period)
   const checkAllowance = useCheckAllowance()
+  const poolSizeState = usePoolSizeState()
+  const period = selectedTier?.period || PERIOD.ONE_WEEK
+  const [poolLimitation, setPoolLimitation] = useState(calcPoolLimitation())
+  const [isPoolLimitationLoading, setIsPoolLimitationLoading] = useState(poolSizeState[period] === POOL_SIZE_LOADING)
+
+  function calcPoolLimitation(): string {
+    const filled = poolSizeState[period]
+    return formatNumber(DEFAULT_POOL_SIZE_LIMIT - filled)
+  }
+
+  useEffect(() => {
+    setPoolLimitation(calcPoolLimitation())
+    setIsPoolLimitationLoading(poolSizeState[period] === POOL_SIZE_LOADING)
+  }, [poolSizeState[period]])
 
   useEffect(() => {
     if (!isApprovingIXS) {
@@ -177,7 +195,12 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                 {selectedTier?.limit !== TIER_LIMIT.UNLIMITED && (
                   <InputHintRight>
                     <RowFixed>
-                      <Trans>Pool limitation: 2 000 000</Trans>
+                      <Trans>Pool limitation:</Trans>&nbsp;
+                      {isPoolLimitationLoading ? (
+                        <LoaderThin />
+                      ) : (
+                        <span style={{ fontWeight: 600 }}>{poolLimitation}</span>
+                      )}
                       <StyledDropDown style={{ display: 'none' }} />
                     </RowFixed>
                   </InputHintRight>
