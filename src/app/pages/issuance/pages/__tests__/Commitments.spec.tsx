@@ -368,7 +368,7 @@ describe('Commitments', () => {
         variant: 'outlined',
         color: 'primary',
         disabled: true,
-        children: 'CLOSE DEAL'
+        children: 'Close deal'
       }),
       {}
     )
