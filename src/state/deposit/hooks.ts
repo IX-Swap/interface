@@ -130,7 +130,7 @@ export function useDepositCallback(): ({ id, amount, onSuccess, onError, onPendi
       try {
         const response = await depositToken({ tokenId: id, amount, fromAddress })
         dispatch(setLogItem({ logItem: response.data }))
-        getEvents({ tokenId, filter: ActionTypes.DEPOSIT })
+        getEvents({ tokenId, filter: 'all' })
         dispatch(depositSecTokens.fulfilled())
         onSuccess()
       } catch (error) {
@@ -152,7 +152,7 @@ export function useCancelDepositCallback(): ({ requestId }: CancelDepositProps) 
       dispatch(depositSecTokens.pending())
       try {
         await cancelDeposit({ requestId })
-        getEvents({ tokenId, filter: ActionTypes.DEPOSIT })
+        getEvents({ tokenId, filter: 'all' })
         dispatch(depositSecTokens.fulfilled())
         onSuccess()
       } catch (error) {

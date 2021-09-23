@@ -130,7 +130,7 @@ export function useWithdrawCallback(
           utils.hexlify(s.data)
         )
 
-        getEvents({ tokenId, filter: ActionTypes.WITHDRAW })
+        getEvents({ tokenId, filter: 'all' })
         if (!burned.hash) {
           dispatch(withdrawCurrency.rejected({ errorMessage: t`Could not submit withdraw request` }))
         } else {
