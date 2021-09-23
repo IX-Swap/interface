@@ -18,6 +18,9 @@ export const Commitments = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
   const { data, isLoading } = useDSOById(dsoId, issuerId)
+
+  const idDealClosed =
+    data?.dealStatus !== undefined && data.dealStatus === 'Closed'
   const { theme, isTablet, isMobile, isMiniLaptop } = useAppBreakpoints()
   const isCloseDealTimerCompleted =
     data !== undefined && getEndDate(data) !== undefined
@@ -63,10 +66,10 @@ export const Commitments = () => {
             <Button
               variant={'outlined'}
               color={'primary'}
-              disabled={!isCloseDealTimerCompleted}
+              disabled={!isCloseDealTimerCompleted || idDealClosed}
               onClick={() => setIsModalOpen(true)}
             >
-              CLOSE DEAL
+              {idDealClosed ? 'Closed' : 'Close deal'}
             </Button>
           </Grid>
         </Grid>
