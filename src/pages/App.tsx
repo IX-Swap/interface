@@ -12,7 +12,6 @@ import { routes } from 'utils/routes'
 import GoogleAnalyticsReporter from '../components/analytics/GoogleAnalyticsReporter'
 import ErrorBoundary from '../components/ErrorBoundary'
 import Header from '../components/Header'
-import Polling from '../components/Header/Polling'
 import Popups from '../components/Popups'
 import Web3ReactManager from '../components/Web3ReactManager'
 import { ApplicationModal } from '../state/application/actions'
@@ -87,7 +86,6 @@ export default function App() {
         {validChainId && !isAdminKyc && <Header />}
         {chainId && !validChainId && !isAdminKyc && <ConnectToAppropriateNetwork />}
         <ToggleableBody isVisible={visibleBody} {...(isAdminKyc && { style: { marginTop: 26 } })}>
-          <Polling />
           <IXSBalanceModal />
           <Web3ReactManager>
             <Switch>
