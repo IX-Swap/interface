@@ -8,6 +8,7 @@ import {
   saveCustomVestingAddress,
   saveVestingStatus,
   getIsPrivateBuyer,
+  claimAll,
 } from './actions'
 import { VestingState } from './types'
 
@@ -24,6 +25,7 @@ const initialState: VestingState = {
   loadingIsVesting: false,
   loadingPayouts: false,
   loadingAvailableClaim: false,
+  loadingClaimAll: false,
   privateBuyer: {} as VestingState['privateBuyer'],
 }
 export default createReducer<VestingState>(initialState, (builder) =>
@@ -97,5 +99,14 @@ export default createReducer<VestingState>(initialState, (builder) =>
     .addCase(getIsPrivateBuyer.rejected, (state) => {
       state.loadingVesting = false
       state.privateBuyer = {} as VestingState['privateBuyer']
+    })
+    .addCase(claimAll.pending, (state) => {
+      state.loadingClaimAll = true
+    })
+    .addCase(claimAll.fulfilled, (state) => {
+      state.loadingClaimAll = false
+    })
+    .addCase(claimAll.rejected, (state) => {
+      state.loadingClaimAll = false
     })
 )
