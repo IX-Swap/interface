@@ -14,6 +14,13 @@ export interface RoleSelectProps extends SelectProps {
 
 export const RoleSelect = (props: RoleSelectProps) => {
   // TODO: Need to fix TypeScript error for BackdropProps
+  const getName = (name: string) => {
+    if (name === 'fundmanager') {
+      return 'fund manager'
+    }
+    return name
+  }
+
   return (
     <Select
       {...props}
@@ -24,7 +31,7 @@ export const RoleSelect = (props: RoleSelectProps) => {
       {ROLES.map(name => (
         <MenuItem key={name} value={name}>
           <Checkbox checked={props.value.includes(name)} />
-          <ListItemText primary={name} />
+          <ListItemText primary={getName(name)} />
         </MenuItem>
       ))}
     </Select>
