@@ -102,7 +102,9 @@ export const StyledTitle = styled(TYPE.title4)`
     font-size: 28px !important;
   }
 `
-
+export const DateBox = styled.div`
+  width: 120px;
+`
 /* eslint-disable react/display-name */
 export const StatusIcons = {
   [ActionHistoryStatus.PENDING]: () => <LoaderThin size={20} />,
