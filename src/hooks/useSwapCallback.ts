@@ -2,7 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { Currency, Percent, TradeType } from '@ixswap1/sdk-core'
 import { Router, Trade as V2Trade } from '@ixswap1/v2-sdk'
 import { t } from '@lingui/macro'
-import { useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 import { useSwapAuthorization } from 'state/user/hooks'
 import { useTransactionAdder } from '../state/transactions/hooks'
 import { isAddress, shortenAddress } from '../utils'
@@ -52,7 +52,7 @@ function useSwapCallArguments(
   trade: V2Trade<Currency, Currency, TradeType> | undefined, // trade to execute, required
   allowedSlippage: Percent, // in bips
   recipientAddressOrName: string | null // the ENS name or address of the recipient of the trade, or null if swap should be returned to sender
-): SwapCall[] {
+): () => Promise<SwapCall[]> {
   const { account, chainId, library } = useActiveWeb3React()
 
   const { address: recipientAddress } = useENS(recipientAddressOrName)
@@ -60,14 +60,20 @@ function useSwapCallArguments(
   const deadline = useTransactionDeadline()
   const routerContract = useSwapRouterContract()
   const argentWalletContract = useArgentWalletContract()
-  const authorization = useSwapAuthorization(trade, allowedSlippage)
+  const fetchAuthorization = useSwapAuthorization(trade, allowedSlippage)
 
-  const usedAuthorization =
-    authorization && (authorization[0] !== null || authorization[1] !== null) ? authorization : undefined
-  return useMemo(() => {
+  return useCallback(async () => {
     if (!trade || !recipient || !library || !account || !chainId || !deadline) return []
     if (!routerContract) return []
     const swapMethods = []
+    let authorization = null
+    try {
+      authorization = await fetchAuthorization()
+    } catch (error) {
+      return []
+    }
+    const usedAuthorization =
+      authorization && (authorization[0] !== null || authorization[1] !== null) ? authorization : undefined
     const options = {
       feeOnTransfer: false,
       allowedSlippage,
@@ -122,7 +128,7 @@ function useSwapCallArguments(
     recipient,
     routerContract,
     trade,
-    usedAuthorization,
+    fetchAuthorization,
   ])
 }
 
@@ -166,34 +172,61 @@ export function swapErrorToUserReadableMessage(error: any): string {
   }
 }
 
+export function useSwapCallbackError(
+  trade: V2Trade<Currency, Currency, TradeType> | undefined, // trade to execute, required
+  allowedSlippage: Percent, // in bips
+  recipientAddressOrName: string | null // the ENS name or address of the recipient of the trade, or null if swap should be returned to sender
+): { state: SwapCallbackState; error: string | null } {
+  const { account, chainId, library } = useActiveWeb3React()
+
+  const { address: recipientAddress } = useENS(recipientAddressOrName)
+  const recipient = recipientAddressOrName === null ? account : recipientAddress
+  return useMemo(() => {
+    if (!trade || !library || !account || !chainId) {
+      return { state: SwapCallbackState.INVALID, error: 'Missing dependencies' }
+    }
+    if (!recipient) {
+      if (recipientAddressOrName !== null) {
+        return { state: SwapCallbackState.INVALID, error: 'Invalid recipient' }
+      } else {
+        return { state: SwapCallbackState.LOADING, error: null }
+      }
+    }
+
+    return {
+      state: SwapCallbackState.VALID,
+      error: null,
+    }
+  }, [trade, library, account, chainId, recipient, recipientAddressOrName])
+}
+
 // returns a function that will execute a swap, if the parameters are all valid
 // and the user has approved the slippage adjusted input amount for the trade
 export function useSwapCallback(
   trade: V2Trade<Currency, Currency, TradeType> | undefined, // trade to execute, required
   allowedSlippage: Percent, // in bips
   recipientAddressOrName: string | null // the ENS name or address of the recipient of the trade, or null if swap should be returned to sender
-): { state: SwapCallbackState; callback: null | (() => Promise<string>); error: string | null } {
+): () => Promise<{ callback: null | (() => Promise<string>) }> {
   const { account, chainId, library } = useActiveWeb3React()
-  const swapCalls = useSwapCallArguments(trade, allowedSlippage, recipientAddressOrName)
+  const getSwapCalls = useSwapCallArguments(trade, allowedSlippage, recipientAddressOrName)
 
   const addTransaction = useTransactionAdder()
 
   const { address: recipientAddress } = useENS(recipientAddressOrName)
   const recipient = recipientAddressOrName === null ? account : recipientAddress
-  return useMemo(() => {
+  return useCallback(async () => {
     if (!trade || !library || !account || !chainId) {
-      return { state: SwapCallbackState.INVALID, callback: null, error: 'Missing dependencies' }
+      return { callback: null }
     }
     if (!recipient) {
       if (recipientAddressOrName !== null) {
-        return { state: SwapCallbackState.INVALID, callback: null, error: 'Invalid recipient' }
+        return { callback: null }
       } else {
-        return { state: SwapCallbackState.LOADING, callback: null, error: null }
+        return { callback: null }
       }
     }
-
+    const swapCalls = await getSwapCalls()
     return {
-      state: SwapCallbackState.VALID,
       callback: async function onSwap(): Promise<string> {
         const estimatedCalls: SwapCallEstimate[] = await Promise.all(
           swapCalls.map((call) => {
@@ -300,7 +333,6 @@ export function useSwapCallback(
             }
           })
       },
-      error: null,
     }
-  }, [trade, library, account, chainId, recipient, recipientAddressOrName, swapCalls, addTransaction])
+  }, [trade, library, account, chainId, recipient, recipientAddressOrName, getSwapCalls, addTransaction])
 }

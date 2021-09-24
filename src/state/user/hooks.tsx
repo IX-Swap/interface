@@ -401,22 +401,24 @@ export function useSwapAuthorization(
   const tokenId0 = useSecTokenId({ currencyId: (inputToken as any)?.address })
   const tokenId1 = useSecTokenId({ currencyId: (outputToken as any)?.address })
   const getAuthorization = useGetTokenAuthorization()
-  const [authorization, setAuthorization] = useState<TradeAuthorizationDigest>()
   const amount0 = trade ? getStringAmount(trade?.maximumAmountIn(allowedSlippage)) : ''
   const amount1 = trade ? getStringAmount(trade?.minimumAmountOut(allowedSlippage)) : ''
   const firstIsSec = (inputToken as any)?.isSecToken
 
-  useEffect(() => {
+  const fetchAuthorization = useCallback(async () => {
     if (amount0 && amount1 && pair?.isSecurity) {
-      fetchAuthorization()
+      return await fetchAuthorization()
+    } else {
+      return null
     }
     async function fetchAuthorization() {
       const usedToken = firstIsSec ? tokenId0 : tokenId1
       const result = await getAuthorization({ amount0, amount1, tokenId: usedToken })
-      setAuthorization(firstIsSec ? [result, null] : [null, result])
+      const authorization = firstIsSec ? [result, null] : [null, result]
+      return authorization
     }
   }, [amount0, amount1, getAuthorization, pair?.isSecurity, firstIsSec, tokenId0, tokenId1, allowedSlippage])
-  return authorization
+  return fetchAuthorization
 }
 
 export function useSwapIsBothSecTokens(trade?: V2Trade<Currency, Currency, TradeType> | null) {
