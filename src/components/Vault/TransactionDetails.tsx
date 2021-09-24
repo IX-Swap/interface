@@ -148,7 +148,7 @@ export const TransactionDetails = ({ currency }: Props) => {
                       style={{ width: '211px' }}
                       onClick={() => cancelDeposit({ requestId: activeEvent?.id, onSuccess })}
                     >
-                      <Trans>Cancel</Trans>
+                      <Trans>Cancel deposit</Trans>
                     </ButtonGradientBorder>
                   </RowCenter>
                 )}
