@@ -108,14 +108,6 @@ describe('Topbar', () => {
     expect(TopbarLinkContainer).toHaveBeenNthCalledWith(
       4,
       expect.objectContaining({
-        label: 'Funds Management',
-        link: IssuanceRoute.insight
-      }),
-      {}
-    )
-    expect(TopbarLinkContainer).toHaveBeenNthCalledWith(
-      5,
-      expect.objectContaining({
         label: 'Issuance',
         link: IssuanceRoute.list
       }),
@@ -156,15 +148,6 @@ describe('Topbar', () => {
     )
     expect(TopbarLinkContainer).toHaveBeenNthCalledWith(
       4,
-      expect.objectContaining({
-        label: 'Funds Management',
-        link: IssuanceRoute.insight
-      }),
-      {}
-    )
-
-    expect(TopbarLinkContainer).toHaveBeenNthCalledWith(
-      5,
       expect.objectContaining({
         label: 'Authorizer',
         link: AuthorizerRoute.landing,
