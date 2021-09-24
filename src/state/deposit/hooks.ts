@@ -129,6 +129,9 @@ export function useDepositCallback(): ({ id, amount, onSuccess, onError, onPendi
       onPending && onPending()
       try {
         const response = await depositToken({ tokenId: id, amount, fromAddress })
+        if (!response?.data) {
+          throw new Error(t`Something went wrong. Could not deposit amount`)
+        }
         dispatch(setLogItem({ logItem: response.data }))
         getEvents({ tokenId, filter: 'all' })
         dispatch(depositSecTokens.fulfilled())

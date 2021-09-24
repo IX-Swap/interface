@@ -13,6 +13,10 @@ import { ModalPadding } from './styleds'
 import { DepositSendInfo } from './DepositSendInfo'
 import { useDepositState } from 'state/deposit/hooks'
 import { DepositPending } from './DepositPending'
+import { DepositError } from './DepositError'
+import { setError, setLoading } from 'state/deposit/actions'
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from 'state'
 
 export enum DepositModalView {
   CREATE_REQUEST,
@@ -27,10 +31,13 @@ export const DepositPopup = ({ currency }: Props) => {
   const isOpen = useModalOpen(ApplicationModal.DEPOSIT)
   const toggle = useDepositModalToggle()
   const [modalView, setModalView] = useState<DepositModalView>(DepositModalView.CREATE_REQUEST)
-  const { loadingDeposit } = useDepositState()
+  const { loadingDeposit, depositError } = useDepositState()
+  const dispatch = useDispatch<AppDispatch>()
 
   const onClose = useCallback(() => {
     setModalView(DepositModalView.CREATE_REQUEST)
+    dispatch(setError({ errorMessage: '' }))
+    dispatch(setLoading({ loading: false }))
     toggle()
   }, [toggle, setModalView])
 
@@ -38,8 +45,10 @@ export const DepositPopup = ({ currency }: Props) => {
     if (loadingDeposit && modalView === DepositModalView.CREATE_REQUEST) {
       setModalView(DepositModalView.PENDING)
     }
-  }, [loadingDeposit, modalView, toggle])
-
+    if (depositError && modalView !== DepositModalView.ERROR) {
+      setModalView(DepositModalView.ERROR)
+    }
+  }, [loadingDeposit, modalView, toggle, depositError])
   return (
     <RedesignedWideModal
       isOpen={isOpen}
@@ -62,6 +71,7 @@ export const DepositPopup = ({ currency }: Props) => {
             )}
             {modalView === DepositModalView.SEND_INFO && <DepositSendInfo onClose={onClose} />}
             {modalView === DepositModalView.PENDING && <DepositPending />}
+            {modalView === DepositModalView.ERROR && <DepositError onClose={onClose} />}
           </ModalPadding>
         </ModalContentWrapper>
       </ModalBlurWrapper>

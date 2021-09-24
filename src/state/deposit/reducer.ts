@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit'
-import { depositSecTokens, setCurrency, typeAmount, typeSender } from './actions'
+import { depositSecTokens, setCurrency, setError, setLoading, typeAmount, typeSender } from './actions'
 
 export interface DepositState {
   readonly amount: string
@@ -48,5 +48,11 @@ export default createReducer<DepositState>(initialState, (builder) =>
     .addCase(depositSecTokens.rejected, (state, { payload: { errorMessage } }) => {
       state.loadingDeposit = false
       state.depositError = errorMessage
+    })
+    .addCase(setError, (state, { payload: { errorMessage } }) => {
+      state.depositError = errorMessage
+    })
+    .addCase(setLoading, (state, { payload: { loading } }) => {
+      state.loadingDeposit = loading
     })
 )

@@ -1,6 +1,5 @@
 import { Currency, CurrencyAmount } from '@ixswap1/sdk-core'
 import { t } from '@lingui/macro'
-import { ActionTypes } from 'components/Vault/enum'
 import { BigNumber, utils } from 'ethers'
 import { useCurrency } from 'hooks/Tokens'
 import { useBurnWSecContract } from 'hooks/useContract'
@@ -121,7 +120,6 @@ export function useWithdrawCallback(
         const response = await withdrawToken({ id, amount, receiver })
         const data = response?.data
         if (!data) {
-          console.log({ response })
           throw new Error(response?.message || t`An error occured. Could not submit withdraw request`)
         }
         const { operator, amount: sum, deadline, v, r, s } = data
