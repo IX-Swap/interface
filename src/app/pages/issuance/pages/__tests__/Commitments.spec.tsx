@@ -373,4 +373,27 @@ describe('Commitments', () => {
       {}
     )
   })
+
+  it('renders closed button with correct props', () => {
+    const closedDealDSO = { ...dso, dealStatus: 'Closed' }
+    jest
+      .spyOn(useDSOByIdHook, 'useDSOById')
+      .mockReturnValue({ isLoading: false, data: closedDealDSO } as any)
+
+    jest
+      .spyOn(useTableWithPaginationHook, 'useTableWithPagination')
+      .mockReturnValueOnce(useTableWithPaginationMockReturnValue)
+
+    render(<Commitments />)
+    expect(Button).toHaveBeenCalledTimes(1)
+    expect(Button).toHaveBeenCalledWith(
+      expect.objectContaining({
+        variant: 'outlined',
+        color: 'primary',
+        disabled: true,
+        children: 'Closed'
+      }),
+      {}
+    )
+  })
 })
