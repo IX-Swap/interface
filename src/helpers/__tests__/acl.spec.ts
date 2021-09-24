@@ -9,7 +9,8 @@ import {
   useIsIssuer,
   useIsAuthorizer,
   useIsAccredited,
-  useHasSpecialRole
+  useHasSpecialRole,
+  useIsFundManager
 } from '../acl'
 import { user } from '__fixtures__/user'
 
@@ -190,6 +191,37 @@ describe('useHasSpecialRole', () => {
       const { result } = renderHook(() => useHasSpecialRole())
 
       await waitFor(() => expect(result.current).toBe(true))
+    })
+  })
+})
+
+describe('useIsFundManager', () => {
+  afterEach(async () => {
+    await cleanup()
+    jest.clearAllMocks()
+  })
+
+  it('returns true if user is fund manager', async () => {
+    jest
+      .spyOn(useCachedUserHook, 'useCachedUser')
+      .mockReturnValue({ ...user, roles: 'fundmanager' })
+
+    await act(async () => {
+      const { result } = renderHook(() => useIsFundManager())
+
+      await waitFor(() => expect(result.current).toBe(true))
+    })
+  })
+
+  it('returns false if user is not fund manager', async () => {
+    jest
+      .spyOn(useCachedUserHook, 'useCachedUser')
+      .mockReturnValue({ ...user, roles: 'issuer' })
+
+    await act(async () => {
+      const { result } = renderHook(() => useIsFundManager())
+
+      await waitFor(() => expect(result.current).toBe(false))
     })
   })
 })
