@@ -156,7 +156,7 @@ export function useCancelDepositCallback(): ({ requestId }: CancelDepositProps) 
         dispatch(depositSecTokens.fulfilled())
         onSuccess()
       } catch (error) {
-        console.error(`Could not cancel deposit`, error)
+        console.error(`Could not cancel transaction ${requestId}`, error)
         dispatch(depositSecTokens.rejected({ errorMessage: error.message }))
       }
     },

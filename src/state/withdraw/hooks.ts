@@ -119,7 +119,11 @@ export function useWithdrawCallback(
       dispatch(withdrawCurrency.pending())
       try {
         const response = await withdrawToken({ id, amount, receiver })
-        const { data } = response
+        const data = response?.data
+        if (!data) {
+          console.log({ response })
+          throw new Error(response?.message || t`An error occured. Could not submit withdraw request`)
+        }
         const { operator, amount: sum, deadline, v, r, s } = data
         const burned = await router?.burn(
           operator,
@@ -132,7 +136,7 @@ export function useWithdrawCallback(
 
         getEvents({ tokenId, filter: 'all' })
         if (!burned.hash) {
-          dispatch(withdrawCurrency.rejected({ errorMessage: t`Could not submit withdraw request` }))
+          throw new Error(t`An error occured. Could not submit withdraw request`)
         } else {
           addTransaction(burned, { summary: t`Withdraw ${amount} ${currencySymbol}` })
           dispatch(setTransaction({ tx: burned.hash }))
