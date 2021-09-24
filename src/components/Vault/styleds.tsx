@@ -6,7 +6,7 @@ import { RowBetween } from 'components/Row'
 import React from 'react'
 import styled from 'styled-components'
 import { gradientBorder, TYPE } from 'theme'
-import { ActionHistoryStatus, ActionTypes } from './enum'
+import { ActionHistoryStatus, ActionTypes, isDeposit } from './enum'
 
 export const NoVaultWrapper = styled.div`
   background: ${({ theme }) => theme.bgG10};
@@ -103,7 +103,7 @@ export const StyledTitle = styled(TYPE.title4)`
   }
 `
 export const DateBox = styled.div`
-  width: 120px;
+  width: 123px;
 `
 /* eslint-disable react/display-name */
 export const StatusIcons = {
@@ -118,7 +118,7 @@ export const StatusIcons = {
 }
 
 export const getStatusIcon = (action = ActionTypes.DEPOSIT, status: ActionHistoryStatus) => {
-  if (action === ActionTypes.DEPOSIT && status === ActionHistoryStatus.APPROVED) {
+  if (isDeposit(action) && status === ActionHistoryStatus.APPROVED) {
     return StatusIcons[ActionHistoryStatus.PENDING]
   }
   return StatusIcons[status]

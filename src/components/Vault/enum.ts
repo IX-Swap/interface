@@ -61,19 +61,31 @@ export const ActionTypeText = {
 }
 
 export const getStatusColor = (action: ActionTypes, status: ActionHistoryStatus) => {
-  if (action === ActionTypes.DEPOSIT && status === ActionHistoryStatus.APPROVED) {
+  if (isDeposit(action) && status === ActionHistoryStatus.APPROVED) {
     return StatusColors[ActionHistoryStatus.PENDING]
   }
   return StatusColors[status]
 }
 export const getActionStatusText = (action: ActionTypes, status: ActionHistoryStatus) => {
-  if (action === ActionTypes.DEPOSIT && status === ActionHistoryStatus.APPROVED) {
+  if (isDeposit(action) && status === ActionHistoryStatus.APPROVED) {
     return TransactionHistoryStatusText[ActionHistoryStatus.PENDING]
   }
 
   return TransactionHistoryStatusText[status]
 }
 
+export const isPending = (action: ActionTypes, status: ActionHistoryStatus) => {
+  return (
+    (isDeposit(action) && isPendingDeposit(status)) || (isWithdraw(action) && status === ActionHistoryStatus.PENDING)
+  )
+}
+
+export const isWithdraw = (action: ActionTypes) => {
+  return action === ActionTypes.WITHDRAW
+}
+export const isDeposit = (action: ActionTypes) => {
+  return action === ActionTypes.DEPOSIT
+}
 export enum AccreditationStatusEnum {
   PENDING = 'new',
   APPROVED = 'approved',
