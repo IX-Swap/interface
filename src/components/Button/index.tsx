@@ -171,7 +171,7 @@ export const ButtonPink = styled(Base)`
 
 export const ButtonIXSGradient = styled(ButtonPrimary)<{ confirmed?: boolean }>`
   color: white;
-  height: 50px;
+  height: 54px;
   opacity: ${({ confirmed }) => (confirmed ? 0.5 : 1)};
   width: fit-content;
   position: relative;
@@ -185,7 +185,6 @@ export const ButtonIXSGradient = styled(ButtonPrimary)<{ confirmed?: boolean }>`
   :active {
     opacity: 0.9;
   }
-  text-transform: capitalize;
   border-radius: 40px;
   font-weight: 600;
   font-size: 18px;
@@ -196,7 +195,7 @@ export const ButtonIXSGradient = styled(ButtonPrimary)<{ confirmed?: boolean }>`
 export const ButtonGradientBorder = styled(ButtonIXSGradient)`
   background-color: transparent;
   background: transparent;
-  ${gradientBorder}
+  ${gradientBorder};
   :focus,
   :hover {
     background-color: transparent;

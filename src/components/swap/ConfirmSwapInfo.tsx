@@ -32,7 +32,7 @@ export const ConfirmSwapInfo = ({ trade, allowedSlippage }: Props) => {
         />
         <TextRow textLeft={<Trans>Route</Trans>} textRight={<SwapRoute trade={trade} />} />
         <TextRow
-          textLeft={<Trans>Price Impact</Trans>}
+          textLeft={<Trans>Price impact</Trans>}
           textRight={<FormattedPriceImpact priceImpact={priceImpact} />}
         />
         <TextRow
