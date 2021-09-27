@@ -1,6 +1,5 @@
 import { Currency, CurrencyAmount } from '@ixswap1/sdk-core'
 import { t } from '@lingui/macro'
-import { ActionTypes } from 'components/Vault/enum'
 import { useCurrency } from 'hooks/Tokens'
 import { useActiveWeb3React } from 'hooks/web3'
 import { useCallback } from 'react'
@@ -12,7 +11,8 @@ import { setLogItem } from 'state/eventLog/actions'
 import { useEventState, useGetEventCallback } from 'state/eventLog/hooks'
 import { tryParseAmount } from 'state/swap/helpers'
 import { isAddress } from 'utils'
-import { depositSecTokens, setCurrency, typeAmount, typeSender } from './actions'
+import { depositSecTokens, setCurrency, setModalView, typeAmount, typeSender } from './actions'
+import { DepositModalView } from './reducer'
 
 export function useDepositState(): AppState['deposit'] {
   return useSelector<AppState, AppState['deposit']>((state) => state.deposit)
@@ -110,36 +110,34 @@ interface DepositProps {
   id: number
   amount: number
   fromAddress: string
-  onSuccess: () => void
-  onError: () => void
-  onPending?: () => void
 }
 interface CancelDepositProps {
   requestId: number
   onSuccess: () => void
 }
 
-export function useDepositCallback(): ({ id, amount, onSuccess, onError, onPending }: DepositProps) => Promise<void> {
+export function useDepositCallback(): ({ id, amount }: DepositProps) => Promise<void> {
   const dispatch = useDispatch<AppDispatch>()
   const getEvents = useGetEventCallback()
   const { tokenId } = useEventState()
   return useCallback(
-    async ({ id, amount, fromAddress, onSuccess, onError, onPending }: DepositProps) => {
+    async ({ id, amount, fromAddress }: DepositProps) => {
+      dispatch(setModalView({ view: DepositModalView.PENDING }))
       dispatch(depositSecTokens.pending())
-      onPending && onPending()
       try {
         const response = await depositToken({ tokenId: id, amount, fromAddress })
         if (!response?.data) {
           throw new Error(t`Something went wrong. Could not deposit amount`)
         }
         dispatch(setLogItem({ logItem: response.data }))
+        dispatch(setModalView({ view: DepositModalView.SEND_INFO }))
+
         getEvents({ tokenId, filter: 'all' })
         dispatch(depositSecTokens.fulfilled())
-        onSuccess()
       } catch (error) {
         console.error(`Could not deposit amount`, error)
         dispatch(depositSecTokens.rejected({ errorMessage: error.message }))
-        onError()
+        dispatch(setModalView({ view: DepositModalView.ERROR }))
       }
     },
     [dispatch, getEvents, tokenId]
@@ -151,16 +149,19 @@ export function useCancelDepositCallback(): ({ requestId }: CancelDepositProps) 
   const getEvents = useGetEventCallback()
   const { tokenId } = useEventState()
   return useCallback(
-    async ({ requestId, onSuccess }: CancelDepositProps) => {
+    async ({ requestId }: CancelDepositProps) => {
+      dispatch(setModalView({ view: DepositModalView.PENDING }))
       dispatch(depositSecTokens.pending())
       try {
         await cancelDeposit({ requestId })
         getEvents({ tokenId, filter: 'all' })
         dispatch(depositSecTokens.fulfilled())
-        onSuccess()
+        dispatch(setLogItem({ logItem: null }))
+        dispatch(setModalView({ view: DepositModalView.CREATE_REQUEST }))
       } catch (error) {
         console.error(`Could not cancel transaction ${requestId}`, error)
         dispatch(depositSecTokens.rejected({ errorMessage: error.message }))
+        dispatch(setModalView({ view: DepositModalView.ERROR }))
       }
     },
     [dispatch, getEvents, tokenId]

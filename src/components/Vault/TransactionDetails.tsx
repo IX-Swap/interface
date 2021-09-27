@@ -14,7 +14,6 @@ import { AppDispatch } from 'state'
 import { ApplicationModal } from 'state/application/actions'
 import { useModalOpen, useToggleTransactionModal } from 'state/application/hooks'
 import { useCancelDepositCallback, useDepositState } from 'state/deposit/hooks'
-import { setLogItem } from 'state/eventLog/actions'
 import { useEventState } from 'state/eventLog/hooks'
 import { ModalBlurWrapper, SvgIconWrapper, TYPE } from 'theme'
 import { shortenAddress } from 'utils'
@@ -45,7 +44,6 @@ export const TransactionDetails = ({ currency }: Props) => {
   const { activeEvent } = useEventState()
   const onClose = useCallback(() => {
     toggle()
-    dispatch(setLogItem({ logItem: null }))
   }, [toggle, dispatch])
 
   const amount = useMemo(() => {
