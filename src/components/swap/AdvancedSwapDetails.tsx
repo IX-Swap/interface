@@ -54,7 +54,7 @@ export function AdvancedSwapDetails({ trade, allowedSlippage }: AdvancedSwapDeta
       <RowBetween>
         <RowFixed>
           <TYPE.black fontSize={12} fontWeight={400} color={theme.text2}>
-            <Trans>Price Impact</Trans>
+            <Trans>Price impact</Trans>
           </TYPE.black>
         </RowFixed>
         <TYPE.black textAlign="right" fontSize={12} color={theme.text1}>
