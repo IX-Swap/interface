@@ -34,13 +34,6 @@ const columns: Array<TableColumn<Transaction>> = [
     headAlign: 'right',
     align: 'right',
     render: formatAmount
-  },
-  {
-    label: 'Balance',
-    key: 'runningTotal',
-    headAlign: 'right',
-    align: 'right',
-    render: formatAmount
   }
 ]
 
