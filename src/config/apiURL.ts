@@ -148,8 +148,7 @@ export const issuanceURL = {
     disable: (dsoId: string) => `/issuance/dso/${dsoId}/disable`,
     capitalCall: (userId: string, dsoId: string) =>
       `/issuance/dso/${userId}/${dsoId}/capitalCall`,
-    closeDeal: (userId: string, dsoId: string) =>
-      `/issuance/dso/${userId}/${dsoId}/closeDeal`,
+    closeDeal: () => `/issuance/closure/create`,
     closure: (closureId: string, issuerId: string) =>
       `/issuance/closure/${closureId}/${issuerId}`,
     getDSOList: '/issuance/dso/list'
