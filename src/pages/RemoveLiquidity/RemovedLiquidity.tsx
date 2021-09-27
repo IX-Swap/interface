@@ -67,7 +67,7 @@ export const RemovedLiquidity = ({ currencyIdA, currencyIdB, chainId, formattedA
           currency={currencyB}
           id={'remove-liquidity-tokenb-symbol'}
         />
-        <TextRow textLeft={<Trans>IXS Rewards</Trans>} textRight={<>-</>} />
+        {/* <TextRow textLeft={<Trans>IXS Rewards</Trans>} textRight={<>-</>} /> */}
         {chainId && (oneCurrencyIsWETH || oneCurrencyIsETH) ? (
           <SemiTransparent>
             <RowBetween style={{ justifyContent: 'flex-end' }}>

@@ -34,7 +34,7 @@ import useENSAddress from '../../hooks/useENSAddress'
 import { useERC20PermitFromTrade, UseERC20PermitState } from '../../hooks/useERC20Permit'
 import useIsArgentWallet from '../../hooks/useIsArgentWallet'
 import { useIsSwapUnsupported } from '../../hooks/useIsSwapUnsupported'
-import { useSwapCallback } from '../../hooks/useSwapCallback'
+import { useSwapCallback, useSwapCallbackError } from '../../hooks/useSwapCallback'
 import { Version } from '../../hooks/useToggledVersion'
 import { useUSDCValue } from '../../hooks/useUSDCPrice'
 import useWrapCallback, { WrapType } from '../../hooks/useWrapCallback'
@@ -148,13 +148,17 @@ export default function Swap({ history }: RouteComponentProps) {
   }, [approvalState, approvalSubmitted])
 
   const maxInputAmount: CurrencyAmount<Currency> | undefined = maxAmountSpend(currencyBalances[Field.INPUT])
-
   // the callback to execute the swap
-  const { callback: swapCallback, error: swapCallbackError } = useSwapCallback(trade, allowedSlippage, recipient)
+  const getSwapCallback = useSwapCallback(trade, allowedSlippage, recipient)
+  const { error: swapCallbackError } = useSwapCallbackError(trade, allowedSlippage, recipient)
 
   const [singleHopOnly] = useUserSingleHopOnly()
 
-  const handleSwap = useCallback(() => {
+  const handleSwap = useCallback(async () => {
+    const { callback: swapCallback } = await getSwapCallback()
+    if (swapCallbackError) {
+      return
+    }
     if (!swapCallback) {
       return
     }
@@ -200,7 +204,7 @@ export default function Swap({ history }: RouteComponentProps) {
       })
   }, [
     priceImpact,
-    swapCallback,
+    getSwapCallback,
     tradeToConfirm,
     showConfirm,
     recipient,
