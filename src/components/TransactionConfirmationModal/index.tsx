@@ -107,6 +107,7 @@ export function TransactionSubmittedContent({
                 style={{ width: 'fit-content', padding: '7px 45px' }}
                 onClick={addToken}
                 data-testid="add-currency-to-metamask"
+                disabled={Boolean(success)}
               >
                 {!success ? (
                   <RowFixed>
