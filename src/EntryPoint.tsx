@@ -4,7 +4,7 @@ import { BreadcrumbsProvider } from 'hooks/useBreadcrumbs'
 import { SentryRoute } from 'components/SentryRoute'
 import { useAppInit } from 'hooks/useAppInit'
 import { ReactQueryDevtools } from 'react-query-devtools'
-import { Redirect, Switch } from 'react-router-dom'
+import { Redirect, Switch, useLocation } from 'react-router-dom'
 import { Page404 } from 'components/Page404/Page404'
 import { useGoogleAnalytics } from './hooks/useGoogleAnalytics'
 
@@ -23,6 +23,7 @@ export const EntryPoint = () => {
   const { isSuccess, isFinished } = useAppInit()
 
   useGoogleAnalytics()
+  const location = useLocation()
 
   if (!isFinished) {
     return <LoadingFullScreen />
@@ -33,17 +34,29 @@ export const EntryPoint = () => {
       <BreadcrumbsProvider>
         <ReactQueryDevtools initialIsOpen={false} />
         <Switch>
-          {isSuccess ? (
-            <SentryRoute path='/app' exact={false} component={AppRoot} />
-          ) : (
-            <SentryRoute path='/auth' exact={false} component={AuthRoot} />
-          )}
+          <SentryRoute
+            path='/app'
+            exact={false}
+            component={
+              isSuccess
+                ? AppRoot
+                : () => (
+                    <Redirect
+                      to={{
+                        pathname: '/auth/sign-in',
+                        state: { from: location.pathname }
+                      }}
+                    />
+                  )
+            }
+          />
+          <SentryRoute path='/auth' exact={false} component={AuthRoot} />
           <SentryRoute
             exact
             path='/'
             render={() => <Redirect to={isSuccess ? '/app' : '/auth'} />}
           />
-          <SentryRoute path='*' component={Page404} />
+          <SentryRoute component={Page404} />
         </Switch>
       </BreadcrumbsProvider>
     </Suspense>

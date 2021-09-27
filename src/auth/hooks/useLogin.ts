@@ -5,8 +5,9 @@ import { LoginArgs } from 'types/auth'
 import apiService from 'services/api'
 import { authURL } from 'config/apiURL'
 import { useState } from 'react'
+import { useLocation } from 'react-router'
 
-export const useLogin = () => {
+export const useLogin = (referrer?: string) => {
   const [step, setStep] = useState<'login' | 'otp'>('login')
   const [locked, setLocked] = useState(false)
   const [email, setEmail] = useState('')
@@ -21,6 +22,8 @@ export const useLogin = () => {
     return await apiService.post<User>(url, args)
   }
 
+  const location = useLocation<any>()
+
   return {
     mutation: useMutation(mutateFn, {
       onSuccess: response => {
@@ -32,8 +35,7 @@ export const useLogin = () => {
 
           storageService.set<User>('user', user)
           storageService.set('visitedUrl', [])
-
-          window.location.replace('/')
+          window.location.replace(location?.state?.from ?? '/')
         }
       },
       onError: (error: any) => {
