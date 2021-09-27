@@ -3,52 +3,38 @@ import { Trans } from '@lingui/macro'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import { RowBetween } from 'components/Row'
 import { ModalContentWrapper } from 'components/SearchModal/styleds'
-import React, { useCallback, useEffect, useState } from 'react'
-import { ApplicationModal } from 'state/application/actions'
-import { useDepositModalToggle, useModalOpen } from 'state/application/hooks'
-import { ModalBlurWrapper } from 'theme'
-import { CloseIcon, TYPE } from '../../theme'
-import { DepositRequestForm } from './DepositRequestForm'
-import { ModalPadding } from './styleds'
-import { DepositSendInfo } from './DepositSendInfo'
-import { useDepositState } from 'state/deposit/hooks'
-import { DepositPending } from './DepositPending'
-import { DepositError } from './DepositError'
-import { setError, setLoading } from 'state/deposit/actions'
+import React, { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 import { AppDispatch } from 'state'
+import { ApplicationModal } from 'state/application/actions'
+import { useDepositModalToggle, useModalOpen } from 'state/application/hooks'
+import { setError, setLoading, setModalView } from 'state/deposit/actions'
+import { useDepositState } from 'state/deposit/hooks'
+import { DepositModalView } from 'state/deposit/reducer'
+import { ModalBlurWrapper } from 'theme'
+import { CloseIcon, TYPE } from '../../theme'
+import { DepositError } from './DepositError'
+import { DepositPending } from './DepositPending'
+import { DepositRequestForm } from './DepositRequestForm'
+import { DepositSendInfo } from './DepositSendInfo'
+import { ModalPadding } from './styleds'
 
-export enum DepositModalView {
-  CREATE_REQUEST,
-  SEND_INFO,
-  PENDING,
-  ERROR,
-}
 interface Props {
   currency?: Currency
 }
 export const DepositPopup = ({ currency }: Props) => {
   const isOpen = useModalOpen(ApplicationModal.DEPOSIT)
   const toggle = useDepositModalToggle()
-  const [modalView, setModalView] = useState<DepositModalView>(DepositModalView.CREATE_REQUEST)
-  const { loadingDeposit, depositError } = useDepositState()
+  const { modalView } = useDepositState()
   const dispatch = useDispatch<AppDispatch>()
 
   const onClose = useCallback(() => {
-    setModalView(DepositModalView.CREATE_REQUEST)
+    dispatch(setModalView({ view: DepositModalView.CREATE_REQUEST }))
     dispatch(setError({ errorMessage: '' }))
     dispatch(setLoading({ loading: false }))
     toggle()
-  }, [toggle, setModalView])
+  }, [toggle])
 
-  useEffect(() => {
-    if (loadingDeposit && modalView === DepositModalView.CREATE_REQUEST) {
-      setModalView(DepositModalView.PENDING)
-    }
-    if (depositError && modalView !== DepositModalView.ERROR) {
-      setModalView(DepositModalView.ERROR)
-    }
-  }, [loadingDeposit, modalView, toggle, depositError])
   return (
     <RedesignedWideModal
       isOpen={isOpen}
@@ -66,9 +52,7 @@ export const DepositPopup = ({ currency }: Props) => {
               </TYPE.title5>
               <CloseIcon data-testid="cross" onClick={onClose} />
             </RowBetween>
-            {modalView === DepositModalView.CREATE_REQUEST && (
-              <DepositRequestForm currency={currency} setModalView={setModalView} />
-            )}
+            {modalView === DepositModalView.CREATE_REQUEST && <DepositRequestForm currency={currency} />}
             {modalView === DepositModalView.SEND_INFO && <DepositSendInfo onClose={onClose} />}
             {modalView === DepositModalView.PENDING && <DepositPending />}
             {modalView === DepositModalView.ERROR && <DepositError onClose={onClose} />}
