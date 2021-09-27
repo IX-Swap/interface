@@ -113,7 +113,7 @@ interface DepositProps {
 }
 interface CancelDepositProps {
   requestId: number
-  onSuccess: () => void
+  onSuccess?: () => void
 }
 
 export function useDepositCallback(): ({ id, amount }: DepositProps) => Promise<void> {
@@ -144,12 +144,12 @@ export function useDepositCallback(): ({ id, amount }: DepositProps) => Promise<
   )
 }
 
-export function useCancelDepositCallback(): ({ requestId }: CancelDepositProps) => Promise<void> {
+export function useCancelDepositCallback(): ({ requestId, onSuccess }: CancelDepositProps) => Promise<void> {
   const dispatch = useDispatch<AppDispatch>()
   const getEvents = useGetEventCallback()
   const { tokenId } = useEventState()
   return useCallback(
-    async ({ requestId }: CancelDepositProps) => {
+    async ({ requestId, onSuccess }: CancelDepositProps) => {
       dispatch(setModalView({ view: DepositModalView.PENDING }))
       dispatch(depositSecTokens.pending())
       try {
@@ -158,6 +158,7 @@ export function useCancelDepositCallback(): ({ requestId }: CancelDepositProps) 
         dispatch(depositSecTokens.fulfilled())
         dispatch(setLogItem({ logItem: null }))
         dispatch(setModalView({ view: DepositModalView.CREATE_REQUEST }))
+        onSuccess && onSuccess()
       } catch (error) {
         console.error(`Could not cancel transaction ${requestId}`, error)
         dispatch(depositSecTokens.rejected({ errorMessage: error.message }))

@@ -25,11 +25,15 @@ export const ChooseBrokerDealerPopup = ({ tokenId, currencyId }: { tokenId: any;
 
   const fetchBrokerDealerPairs = useFetchBrokerDealers()
   useEffect(() => {
-    fetchBrokerDealerPairs(tokenId)
+    if (tokenId) {
+      fetchBrokerDealerPairs(tokenId)
+    }
   }, [tokenId])
 
   useEffect(() => {
-    setSelectedBrokerPair(brokerDealerPairs[0]?.id)
+    if (brokerDealerPairs) {
+      setSelectedBrokerPair(brokerDealerPairs[0]?.id)
+    }
   }, [brokerDealerPairs])
 
   const onClose = useCallback(() => {
