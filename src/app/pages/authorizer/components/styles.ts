@@ -40,6 +40,14 @@ export const useStyles = makeStyles((theme: any) => ({
     color: '#8DCA82',
     backgroundColor: '#EEF7F1'
   },
+  open: {
+    color: '#EEE4FF',
+    borderColor: '#0BBE12'
+  },
+  openNewTheme: {
+    color: '#6739B6',
+    backgroundColor: '#EEE4FF'
+  },
   rejected: {
     color: '#D20000',
     borderColor: '#D20000'

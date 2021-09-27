@@ -58,4 +58,78 @@ describe('AuthorizableStatus', () => {
 
     expect(getByText('Closed')).toBeTruthy()
   })
+
+  it('renders Not Funded if status is Not funded & compact is false', () => {
+    const { getByText } = render(
+      <AuthorizableStatus status='Not funded' compact={false} />
+    )
+
+    expect(getByText('Not funded')).toBeTruthy()
+  })
+
+  it('renders F if status Not funded', () => {
+    const { getByText } = render(<AuthorizableStatus status='Not funded' />)
+
+    expect(getByText('F')).toBeTruthy()
+  })
+
+  it('renders Funds on hold if status is Funds on hold & compact is false', () => {
+    const { getByText } = render(
+      <AuthorizableStatus status='Funds on hold' compact={false} />
+    )
+
+    expect(getByText('Funds on hold')).toBeTruthy()
+  })
+
+  it('renders H if status Funds on hold', () => {
+    const { getByText } = render(<AuthorizableStatus status='Funds on hold' />)
+
+    expect(getByText('H')).toBeTruthy()
+  })
+
+  it('renders Settlement in Progress if status isSettlement in Progress & compact is false', () => {
+    const { getByText } = render(
+      <AuthorizableStatus status='Settlement in Progress' compact={false} />
+    )
+
+    expect(getByText('Settlement in Progress')).toBeTruthy()
+  })
+
+  it('renders S if status Settlement in Progress', () => {
+    const { getByText } = render(
+      <AuthorizableStatus status='Settlement in Progress' />
+    )
+
+    expect(getByText('P')).toBeTruthy()
+  })
+
+  it('renders Funds transferred if status is Funds transferred & compact is false', () => {
+    const { getByText } = render(
+      <AuthorizableStatus status='Funds transferred' compact={false} />
+    )
+
+    expect(getByText('Funds transferred')).toBeTruthy()
+  })
+
+  it('renders T if status Funds transferred', () => {
+    const { getByText } = render(
+      <AuthorizableStatus status='Funds transferred' />
+    )
+
+    expect(getByText('T')).toBeTruthy()
+  })
+
+  it('renders Failed if status is Failed & compact is false', () => {
+    const { getByText } = render(
+      <AuthorizableStatus status='Failed' compact={false} />
+    )
+
+    expect(getByText('Failed')).toBeTruthy()
+  })
+
+  it('renders F if status Funds transferred', () => {
+    const { getByText } = render(<AuthorizableStatus status='Failed' />)
+
+    expect(getByText('F')).toBeTruthy()
+  })
 })

@@ -24,6 +24,7 @@ export interface QueryFilters {
   fundStatus: string | undefined
   transferType: string | undefined
   transferDirection: string | undefined
+  dso: string | undefined
 }
 
 export type QueryFilter = keyof QueryFilters

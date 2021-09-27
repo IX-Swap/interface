@@ -8,6 +8,7 @@ import { Noop } from 'components/Noop'
 
 export interface LandingPageItemProps {
   link: InternalRouteProps
+  variant?: number
 }
 
 export const LandingPageItem = (props: LandingPageItemProps) => {

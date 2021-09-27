@@ -11,7 +11,7 @@ export const useStyles = makeStyles(theme => ({
   title: {
     fontSize: 24,
     fontWeight: 600,
-    textAlign: 'center',
+    textAlign: 'left',
     textTransform: 'capitalize',
     padding: 0
   },
@@ -19,10 +19,22 @@ export const useStyles = makeStyles(theme => ({
     fontSize: 14,
     fontWeight: 'normal',
     letterSpacing: '0.04em',
-    marginTop: theme.spacing(3),
-    textAlign: 'center'
+    marginTop: theme.spacing(2),
+    textAlign: 'left'
   },
   actions: {
-    justifyContent: 'center'
+    flexDirection: 'column',
+    padding: 0
+  },
+  box: {
+    display: 'flex',
+    alignItems: 'center'
+  },
+  scrollable: {
+    overflowY: 'scroll',
+    maxHeight: 250
+  },
+  button: {
+    textTransform: 'initial'
   }
 }))
