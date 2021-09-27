@@ -122,19 +122,7 @@ export const dsoFormBaseValidationSchema = {
     .of(dsoVideoLinkSchema.required('Required'))
     .ensure()
     .required('Required'),
-  uniqueIdentifierCode: string()
-    .max(32)
-    .test('isValidUIDCode', 'Invalid ISIN or CUSIP number', value => {
-      if (
-        value === undefined ||
-        value?.length === 12 ||
-        value?.length === 32 ||
-        value?.length === 0
-      ) {
-        return true
-      }
-      return false
-    })
+  uniqueIdentifierCode: string().min(12).max(32)
 }
 
 export const createDSOValidationSchema = object()
