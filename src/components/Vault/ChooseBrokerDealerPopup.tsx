@@ -52,12 +52,12 @@ export const ChooseBrokerDealerPopup = ({ tokenId, currencyId }: { tokenId: any;
       <ModalBlurWrapper data-testid="choose-broker-dealer-and-custodian-popup">
         <ModalContentWrapper style={{ borderRadius: '12px' }}>
           <ModalPadding>
-            <RowBetween>
+            <ModalHeader>
               <TYPE.title5>
                 <Trans>Broker dealer and Custodian</Trans>
               </TYPE.title5>
-              <CloseIcon data-testid="cross" onClick={onClose} />
-            </RowBetween>
+              <CloseIcon data-testid="cross" onClick={onClose} className="close-icon" />
+            </ModalHeader>
             <Row style={{ opacity: '0.7', marginTop: '18px' }}>
               <TYPE.description2>
                 <Trans>Please choose broker dealer and custodian to start accreditation process</Trans>
@@ -90,8 +90,8 @@ export const ChooseBrokerDealerPopup = ({ tokenId, currencyId }: { tokenId: any;
               </BrokerDealerAndCustodianPair>
             ))}
           </div>
-          <ModalPadding>
-            <Row style={{ marginBottom: '24px' }}>
+          <StartAccreditationButtonWrapper>
+            <Row style={{ marginBottom: '24px' }} className="start-accreditation-button-row">
               {!accreditationStarted && (
                 <ButtonIXSWide
                   disabled={accreditationStarted}
@@ -110,12 +110,23 @@ export const ChooseBrokerDealerPopup = ({ tokenId, currencyId }: { tokenId: any;
                 </div>
               )}
             </Row>
-          </ModalPadding>
+          </StartAccreditationButtonWrapper>
         </ModalContentWrapper>
       </ModalBlurWrapper>
     </RedesignedWideModal>
   )
 }
+
+const ModalHeader = styled(RowBetween)`
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+      align-items: flex-start;
+
+      .close-icon {
+        margin-top: 0.3rem;
+        stroke-width: 2.5;
+      }
+  `};
+`
 
 const BrokerDealerAndCustodianPair = styled(Row)`
   padding: 10px 0;
@@ -130,11 +141,18 @@ const BrokerDealerAndCustodianPair = styled(Row)`
     margin: 0 40px;
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
+    ${({ theme }) => theme.mediaWidth.upToSmall`
+      margin: 0 16px;
+    `};
   }
 
   .selected-checkmark {
     margin-right: 40px;
     display: none;
+    ${({ theme }) => theme.mediaWidth.upToSmall`
+      margin-right: 16px;
+    `};
   }
 
   .selected-checkmark.show {
@@ -154,5 +172,14 @@ export const IconWrapper = styled.div<{ size?: number }>`
   }
   ${({ theme }) => theme.mediaWidth.upToMedium`
     align-items: flex-end;
+  `};
+`
+const StartAccreditationButtonWrapper = styled(ModalPadding)`
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    margin-top: auto;
+
+    .start-accreditation-button-row {
+      margin-bottom: 10px !important;
+    }
   `};
 `

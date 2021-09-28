@@ -274,7 +274,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                 textLeft={t`Distribute`}
                 textRight={
                   <EllipsedText>
-                    <div>{typedValue ? typedValue : 0}</div>&nbsp;IXSgov
+                    <div>{typedValue ? typedValue : 0}&nbsp;IXSgov</div>
                   </EllipsedText>
                 }
                 tooltipText={t`IXSgov is a tokenized asset representing your staked IXS on a 1:1 basis. IXSwap distributes the IXSgov to your wallet.
@@ -288,7 +288,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                 textLeft={t`Staking amount`}
                 textRight={
                   <EllipsedText>
-                    <div>{typedValue ? typedValue : 0}</div>&nbsp;IXS
+                    <div>{typedValue ? typedValue : 0}&nbsp;IXS</div>
                   </EllipsedText>
                 }
               />
@@ -310,7 +310,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                 textLeft={t`Estimated rewards`}
                 textRight={
                   <EllipsedText>
-                    <div>{estimateRewards()}</div>&nbsp;IXS
+                    <div>{estimateRewards()}&nbsp;IXS</div>
                   </EllipsedText>
                 }
                 tooltipText={t`This amount of rewards is based on assumption that your staked amount will be kept for the whole period of ${
@@ -340,7 +340,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                 </Trans>
               </TYPE.body1>
             </RowCenter>
-            <ActionButtons style={{ marginTop: '25px' }}>
+            <ActionButtons>
               <ButtonIXSWide data-testid="approve-staking" disabled={isDisabledApprove()} onClick={onApprove}>
                 {isApprovingIXS ? (
                   <Dots>
@@ -371,6 +371,8 @@ const ActionButtons = styled.div`
   display: grid;
   grid-gap: 13px;
   grid-template-columns: 50% 50%;
+  justify-content: center;
+  margin-top: 25px;
   @media (max-width: 540px) {
     grid-template-columns: 100%;
   }
