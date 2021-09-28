@@ -40,7 +40,7 @@ export const TopbarLinkDropdown = ({
       >
         {linkItems.map(accountLink => {
           return (
-            <TopNavMenuItem onClick={handleClose}>
+            <TopNavMenuItem onClick={handleClose} key={accountLink.label}>
               <TopbarLinkContainer
                 label={accountLink.label}
                 link={accountLink.path}

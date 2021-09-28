@@ -26,7 +26,9 @@ export const SecurityTypeFilter = () => {
           >
             <MenuItem value=''>All Types</MenuItem>
             {assetClasses.map(assetClass => (
-              <MenuItem value={assetClass}>{assetClass}</MenuItem>
+              <MenuItem key={assetClass} value={assetClass}>
+                {assetClass}
+              </MenuItem>
             ))}
           </Select>
         </FormControl>

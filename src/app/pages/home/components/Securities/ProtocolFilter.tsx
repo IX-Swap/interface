@@ -29,7 +29,9 @@ export const ProtocolFilter = () => {
           >
             <MenuItem value=''>All Protocols</MenuItem>
             {protocols.map(protocol => (
-              <MenuItem value={protocol}>{protocol}</MenuItem>
+              <MenuItem key={protocol} value={protocol}>
+                {protocol}
+              </MenuItem>
             ))}
           </Select>
         </FormControl>

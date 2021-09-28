@@ -7,6 +7,7 @@ import {
 } from 'app/pages/home/components/SecuritiesMarketsTabs/StyledTab'
 import { PriceChangesTable } from 'app/pages/home/components/SecurityTradingView/PriceChangesTable'
 import { YearlyAnalysis } from 'app/pages/home/components/SecurityTradingView/YearlyAnalysis'
+import { useTimeSeries } from 'app/pages/home/hooks/useTimeSeries'
 import { TabPanel } from 'components/TabPanel'
 import { VSpacer } from 'components/VSpacer'
 import { format } from 'date-fns'
@@ -14,27 +15,21 @@ import { hasValue } from 'helpers/forms'
 import { formatMoney } from 'helpers/numbers'
 import React, { useState } from 'react'
 
-const sampleData = [
-  { time: '2021-07-12', value: 80.01 },
-  { time: '2021-07-13', value: 96.63 },
-  { time: '2021-07-14', value: 76.64 },
-  { time: '2021-07-15', value: 81.89 },
-  { time: '2021-07-16', value: 74.43 },
-  { time: '2021-07-17', value: 80.01 },
-  { time: '2021-07-18', value: 96.63 },
-  { time: '2021-07-19', value: 76.64 },
-  { time: '2021-07-20', value: 81.89 },
-  { time: '2021-07-21', value: 74.43 }
-]
-
 export interface SecurityTradingViewProps {
   data: Security
 }
 
 export const SecurityTradingView = ({ data }: SecurityTradingViewProps) => {
+  const { data: fetchedData, isLoading } = useTimeSeries()
   const [tabValue, setTabValue] = useState<number>(0)
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setTabValue(newValue)
+  }
+
+  const timeSeriesData = fetchedData ?? []
+
+  if (isLoading) {
+    return null
   }
 
   return (
@@ -73,22 +68,22 @@ export const SecurityTradingView = ({ data }: SecurityTradingViewProps) => {
       </Grid>
       <Grid item xs={12}>
         <TabPanel value={tabValue} index={0} withoutSpacing>
-          <TimeSeriesChart data={sampleData} range='1W' />
+          <TimeSeriesChart data={timeSeriesData} range='1W' />
         </TabPanel>
         <TabPanel value={tabValue} index={1} withoutSpacing>
-          <TimeSeriesChart data={sampleData} range='1M' />
+          <TimeSeriesChart data={timeSeriesData} range='1M' />
         </TabPanel>
         <TabPanel value={tabValue} index={2} withoutSpacing>
-          <TimeSeriesChart data={sampleData} range='6M' />
+          <TimeSeriesChart data={timeSeriesData} range='6M' />
         </TabPanel>
         <TabPanel value={tabValue} index={3} withoutSpacing>
-          <TimeSeriesChart data={sampleData} range='YTD' />
+          <TimeSeriesChart data={timeSeriesData} range='YTD' />
         </TabPanel>
         <TabPanel value={tabValue} index={4} withoutSpacing>
-          <TimeSeriesChart data={sampleData} range='1Y' />
+          <TimeSeriesChart data={timeSeriesData} range='1Y' />
         </TabPanel>
         <TabPanel value={tabValue} index={5} withoutSpacing>
-          <TimeSeriesChart data={sampleData} range='MAX' />
+          <TimeSeriesChart data={timeSeriesData} range='MAX' />
         </TabPanel>
       </Grid>
       <Grid item xs={12}>

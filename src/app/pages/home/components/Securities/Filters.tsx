@@ -7,6 +7,7 @@ import { SecurityTypeFilter } from 'app/pages/home/components/Securities/Securit
 import AppsIcon from '@material-ui/icons/Apps'
 import ViewListIcon from '@material-ui/icons/ViewList'
 import React from 'react'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 
 export interface FiltersProps {
   view: 'grid' | 'list'
@@ -19,43 +20,42 @@ export const Filters = ({
   toggleView,
   showViewToggle = false
 }: FiltersProps) => {
+  const { isMiniLaptop } = useAppBreakpoints()
   return (
-    <Grid container spacing={0} justify='space-between'>
-      <Grid item xs={12} md={4}>
+    <Grid container spacing={2} justify='space-between'>
+      <Grid item xs={12} lg={4}>
         <SearchFilter
           inputAdormentPosition='end'
           placeholder='Search'
           fullWidth
         />
       </Grid>
-      <Grid
-        xs={12}
-        md={6}
-        item
-        container
-        spacing={2}
-        justify='flex-end'
-        wrap='nowrap'
-      >
-        <Grid item>
-          <IndustryFilter />
-        </Grid>
-        <Grid item>
-          <SecurityTypeFilter />
-        </Grid>
-        <Grid item>
-          <CountryFilter />
-        </Grid>
-        <Grid item>
-          <ProtocolFilter />
-        </Grid>
-        {showViewToggle && (
+      <Grid item xs={12} lg={8}>
+        <Grid
+          container
+          spacing={2}
+          justify={isMiniLaptop ? 'flex-start' : 'flex-end'}
+        >
           <Grid item>
-            <IconButton onClick={toggleView}>
-              {view === 'grid' ? <AppsIcon /> : <ViewListIcon />}
-            </IconButton>
+            <IndustryFilter />
           </Grid>
-        )}
+          <Grid item>
+            <SecurityTypeFilter />
+          </Grid>
+          <Grid item>
+            <CountryFilter />
+          </Grid>
+          <Grid item>
+            <ProtocolFilter />
+          </Grid>
+          {showViewToggle && (
+            <Grid item>
+              <IconButton onClick={toggleView}>
+                {view === 'grid' ? <AppsIcon /> : <ViewListIcon />}
+              </IconButton>
+            </Grid>
+          )}
+        </Grid>
       </Grid>
     </Grid>
   )

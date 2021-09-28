@@ -290,7 +290,8 @@ export const assetsURL = {
 }
 
 export const atlasOneURL = {
-  getSecurities: '/resources/securities'
+  getSecurities: '/resources/securities',
+  getTimeSeries: '/resources/timeseries'
 }
 
 export const resources = {

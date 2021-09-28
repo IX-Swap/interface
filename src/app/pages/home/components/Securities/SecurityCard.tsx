@@ -54,6 +54,7 @@ export interface Security {
   issuanceDate?: string | null
   tokenSupply?: string | null
   tokensOffered?: string | null
+  issuerPriceTimeseries?: [] | null
   reserved?: string | null
 }
 

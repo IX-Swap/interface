@@ -26,7 +26,9 @@ export const IndustryFilter = () => {
           >
             <MenuItem value=''>All Industries</MenuItem>
             {industries.map(industry => (
-              <MenuItem value={industry}>{industry}</MenuItem>
+              <MenuItem key={industry} value={industry}>
+                {industry}
+              </MenuItem>
             ))}
           </Select>
         </FormControl>

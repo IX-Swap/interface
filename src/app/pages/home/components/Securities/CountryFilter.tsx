@@ -38,7 +38,9 @@ export const CountryFilter = () => {
           >
             <MenuItem value=''>All Countries</MenuItem>
             {countries.map(country => (
-              <MenuItem value={country}>{country}</MenuItem>
+              <MenuItem key={country} value={country}>
+                {country}
+              </MenuItem>
             ))}
           </Select>
         </FormControl>
