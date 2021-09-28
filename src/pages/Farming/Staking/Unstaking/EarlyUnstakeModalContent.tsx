@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { ReactComponent as InfoIcon } from 'assets/images/attention.svg'
+import { ReactComponent as InfoIcon } from 'assets/images/info-filled.svg'
 import { IconWrapper } from 'components/AccountDetails/styleds'
 import { ButtonIXSWide } from 'components/Button'
 import { StakingInputPercentage } from 'components/earn/StakingInputPercentage'
@@ -154,20 +154,17 @@ export function EarlyUnstake({ onDismiss, stake, onUnstake, onApprove }: Unstaki
           <TextRow
             textLeft={t`APY`}
             textRight={
-              <>
+              <TextWithTooltipWrapper>
                 <span style={{ color: theme.bg14 }}>5%</span>
                 <MouseoverTooltip
                   style={{ whiteSpace: 'pre-line' }}
                   text={t`If you partially or fully unstake your IXS before the end date - 5% APY will be applied to unstaked amount.`}
                 >
-                  <IconWrapper
-                    size={20}
-                    style={{ transform: 'rotate(180deg)', marginLeft: '4px', verticalAlign: 'sub' }}
-                  >
+                  <IconWrapper size={20} style={{ marginLeft: '4px' }}>
                     <InfoIcon />
                   </IconWrapper>
                 </MouseoverTooltip>
-              </>
+              </TextWithTooltipWrapper>
             }
           />
           <TextRow textLeft={t`Total rewards `} textRight={`${stake.reward} IXS`} />
@@ -237,4 +234,12 @@ const WarningContainer = styled(Row)`
     flex-direction: column;
     align-items: flex-start;
   `}
+`
+const TextWithTooltipWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+
+  @media (max-width: 540px) {
+    justify-content: flex-start;
+  }
 `

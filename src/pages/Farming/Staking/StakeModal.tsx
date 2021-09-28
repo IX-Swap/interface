@@ -1,6 +1,6 @@
 import { t, Trans } from '@lingui/macro'
 import { ButtonIXSWide } from 'components/Button'
-import { ReactComponent as InfoIcon } from 'assets/images/attention.svg'
+import { ReactComponent as InfoIcon } from 'assets/images/info-filled.svg'
 import { ReactComponent as DropDown } from 'assets/images/dropdown.svg'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import { TextRow } from 'components/TextRow/TextRow'
@@ -258,7 +258,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                               ${'' ?? ''}
                               *Do note that IXS received will be equal to your IXSgov holdings at the time of swap.`}
                     >
-                      <IconWrapper size={20} style={{ transform: 'rotate(180deg)', marginLeft: '12px' }}>
+                      <IconWrapper size={20} style={{ marginLeft: '12px' }}>
                         <InfoIcon />
                       </IconWrapper>
                     </MouseoverTooltip>

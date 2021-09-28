@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { t, Trans } from '@lingui/macro'
-import { ReactComponent as InfoIcon } from 'assets/images/attention.svg'
+import { ReactComponent as InfoIcon } from 'assets/images/info-filled.svg'
 import IXSToken from 'assets/images/IXS-token.svg'
 import { IconWrapper } from 'components/AccountDetails/styleds'
 import { ButtonIXSWide } from 'components/Button'
@@ -134,7 +134,7 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
                         '.'
                   }`}
         >
-          <IconWrapper size={20} style={{ transform: 'rotate(180deg)', marginLeft: '12px' }}>
+          <IconWrapper size={20} style={{ marginLeft: '12px' }}>
             <InfoIcon />
           </IconWrapper>
         </MouseoverTooltip>
@@ -149,7 +149,7 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
                 ${'' ?? ''}
                 You will be able to redeem your staked IXS fully or partially after lock period. `}
         >
-          <IconWrapper size={20} style={{ transform: 'rotate(180deg)', marginLeft: '12px' }}>
+          <IconWrapper size={20} style={{ marginLeft: '12px' }}>
             <InfoIcon />
           </IconWrapper>
         </MouseoverTooltip>
