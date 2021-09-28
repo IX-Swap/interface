@@ -92,9 +92,9 @@ const StyledDialogContent = styled(
       `}
     display: flex;
     border-radius: 45px;
-    ${({ theme }) => theme.mediaWidth.upToMedium`
+    ${({ theme, scrollable }) => theme.mediaWidth.upToMedium`
       width: 100vw;
-      min-height: auto !important;
+      ${scrollable && 'min-height: auto !important;'}
       background: rgba(26, 18, 58, 0);
       backdrop-filter: opacity(0);
     `}
