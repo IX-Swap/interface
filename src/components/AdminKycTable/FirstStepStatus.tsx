@@ -34,11 +34,11 @@ const usePdfDoc = ({ kyc, broker }: { kyc: any; broker: string }) => {
 export const FirstStepStatus = ({ status, kyc, broker }: Props) => {
   const theme = useContext(ThemeContext)
   const pdfDoc = usePdfDoc({ kyc, broker })
-  const [instance, updateInstance] = usePDF({ document: pdfDoc })
+  const [instance] = usePDF({ document: pdfDoc })
   const statusColors = {
     [AccreditationStatusEnum.PENDING]: theme.text2,
     [AccreditationStatusEnum.PENDING_KYC]: theme.text2,
-    [AccreditationStatusEnum.REJECTED]: theme.error,
+    [AccreditationStatusEnum.REJECTED]: theme.green1,
     [AccreditationStatusEnum.FAILED]: theme.error,
     [AccreditationStatusEnum.APPROVED]: theme.green1,
     [AccreditationStatusEnum.PENDING_CUSTODIAN]: theme.green1,

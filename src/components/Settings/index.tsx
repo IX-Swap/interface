@@ -1,15 +1,14 @@
-import React, { useRef } from 'react'
+import { Percent } from '@ixswap1/sdk-core'
+import Astronaut from 'assets/images/astronaut.svg'
+import { ReactComponent as SettingsEmpty } from 'assets/images/settings-empty.svg'
+import { ReactComponent as SettingsFull } from 'assets/images/settings-full.svg'
+import React from 'react'
 import styled from 'styled-components'
-import { useOnClickOutside } from '../../hooks/useOnClickOutside'
+import { SvgIconWrapper } from 'theme'
 import { ApplicationModal } from '../../state/application/actions'
 import { useModalOpen, useToggleSettingsMenu } from '../../state/application/hooks'
 import { useExpertModeManager } from '../../state/user/hooks'
-import { Percent } from '@ixswap1/sdk-core'
 import SettingsModal from './SettingsModal'
-import { ReactComponent as SettingsFull } from 'assets/images/settings-full.svg'
-import { ReactComponent as SettingsEmpty } from 'assets/images/settings-empty.svg'
-import Astronaut from 'assets/images/astronaut.svg'
-import { SvgIconWrapper } from 'theme'
 const SettingsIcon = ({ open }: { open: boolean }) => <>{open ? <SettingsFull /> : <SettingsEmpty />}</>
 const StyledMenuIcon = styled(SettingsIcon)`
   height: 22px;
@@ -55,17 +54,14 @@ const StyledMenuButton = styled.button`
 `
 
 export default function SettingsTab({ placeholderSlippage }: { placeholderSlippage: Percent }) {
-  const node = useRef<HTMLDivElement>()
   const open = useModalOpen(ApplicationModal.SETTINGS)
   const toggle = useToggleSettingsMenu()
 
   const { expertMode } = useExpertModeManager()
 
-  useOnClickOutside(node, open ? toggle : undefined)
-
   return (
     // https://github.com/DefinitelyTyped/DefinitelyTyped/issues/30451
-    <StyledMenu ref={node as any}>
+    <StyledMenu>
       <StyledMenuButton id="open-settings-dialog-button" onClick={toggle}>
         <StyledMenuIcon open={open} />
         {expertMode ? (
