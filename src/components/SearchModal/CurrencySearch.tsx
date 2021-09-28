@@ -13,7 +13,8 @@ import Row, { RowBetween, RowFixed } from '../Row'
 import CommonBases from './CommonBases'
 import CurrencyList from './CurrencyList'
 import ImportRow from './ImportRow'
-import { ModalContentWrapper, PaddedColumn40, SearchInput } from './styleds'
+import { PaddedColumn40, SearchInput } from './styleds'
+import { ModalContentWrapper } from 'theme/components'
 import { useCurrencySearch } from './useCurrencySearch'
 
 const Footer = styled.div`

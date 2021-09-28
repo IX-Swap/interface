@@ -11,7 +11,7 @@ import { useModalOpen } from 'state/application/hooks'
 import { useStakeFor, useIncreaseAllowance, useCheckAllowance } from 'state/stake/hooks'
 import { CloseIcon, ModalBlurWrapper, TYPE } from 'theme'
 import Row, { RowBetween, RowFixed, RowCenter } from 'components/Row'
-import { ModalContentWrapper, StakeModalTop } from 'components/earn/styled'
+import { EarnModalContentWrapper, StakeModalTop } from 'components/earn/styled'
 import { MouseoverTooltip } from 'components/Tooltip'
 import styled from 'styled-components'
 import { ReactComponent as ArrowDown } from '../../../assets/images/arrow.svg'
@@ -176,7 +176,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
   return (
     <RedesignedWideModal isOpen={isOpen} onDismiss={wrappedOnDismiss} scrollable>
       <ModalBlurWrapper>
-        <ModalContentWrapper>
+        <EarnModalContentWrapper>
           <ModalTop>
             <RowBetween>
               <TYPE.title5>
@@ -361,7 +361,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
               </ButtonIXSWide>
             </ActionButtons>
           </ModalBottom>
-        </ModalContentWrapper>
+        </EarnModalContentWrapper>
       </ModalBlurWrapper>
     </RedesignedWideModal>
   )

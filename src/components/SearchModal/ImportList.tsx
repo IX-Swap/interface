@@ -15,9 +15,9 @@ import { enableList, removeList } from 'state/lists/actions'
 import { useAllLists } from 'state/lists/hooks'
 import styled from 'styled-components/macro'
 import { TYPE } from 'theme'
-import { Checkbox, ExternalLink, SemiTransparent } from '../../theme/components'
+import { Checkbox, ExternalLink, SemiTransparent, ModalContentWrapper } from '../../theme/components'
 import { CurrencyModalView } from './CurrencySearchModal'
-import { ModalContentWrapper, PaddedColumn } from './styleds'
+import { PaddedColumn } from './styleds'
 
 const Wrapper = styled.div`
   position: relative;

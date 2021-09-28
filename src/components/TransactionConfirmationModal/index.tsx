@@ -8,18 +8,14 @@ import styled from 'styled-components'
 import Attention from '../../assets/images/attention.svg'
 import Success from '../../assets/images/success.svg'
 import { useActiveWeb3React } from '../../hooks/web3'
-import { ExternalLink, TYPE } from '../../theme'
+import { ExternalLink, TYPE, ModalContentWrapper } from '../../theme'
 import { CloseIcon, ModalBlurWrapper, SvgIconWrapper } from '../../theme/components'
 import { ExplorerDataType, getExplorerLink } from '../../utils/getExplorerLink'
 import { ButtonGradient, ButtonGradientBorder } from '../Button'
 import Column, { AutoColumn } from '../Column'
 import { RowBetween, RowCenter, RowFixed } from '../Row'
 
-export const ModalContentWrapper = styled(Column)`
-  width: 100%;
-  flex: 1 1;
-  position: relative;
-  background: ${({ theme }) => theme.bgG4};
+export const StyledModalContentWrapper = styled(ModalContentWrapper)`
   padding: 37px 40px 19px 40px;
   ${({ theme }) => theme.mediaWidth.upToSmall`
    padding: 1rem;
@@ -42,7 +38,7 @@ export function ConfirmationPendingContent({
 }) {
   return (
     <ModalBlurWrapper>
-      <ModalContentWrapper>
+      <StyledModalContentWrapper>
         <Column>
           <RowBetween>
             <div />
@@ -66,7 +62,7 @@ export function ConfirmationPendingContent({
             </TYPE.description2>
           </RowCenter>
         </Column>
-      </ModalContentWrapper>
+      </StyledModalContentWrapper>
     </ModalBlurWrapper>
   )
 }
@@ -89,7 +85,7 @@ export function TransactionSubmittedContent({
 
   return (
     <ModalBlurWrapper>
-      <ModalContentWrapper>
+      <StyledModalContentWrapper>
         <Column>
           <RowBetween>
             <div />
@@ -141,7 +137,7 @@ export function TransactionSubmittedContent({
             </ButtonGradientBorder>
           </AutoColumn>
         </Column>
-      </ModalContentWrapper>
+      </StyledModalContentWrapper>
     </ModalBlurWrapper>
   )
 }
@@ -149,7 +145,7 @@ export function TransactionSubmittedContent({
 export function TransactionErrorContent({ message, onDismiss }: { message: ReactNode; onDismiss: () => void }) {
   return (
     <ModalBlurWrapper data-testid="TransactionPopup">
-      <ModalContentWrapper>
+      <StyledModalContentWrapper>
         <Column>
           <RowBetween>
             <div></div>
@@ -174,7 +170,7 @@ export function TransactionErrorContent({ message, onDismiss }: { message: React
             </ButtonGradientBorder>
           </RowCenter>
         </Column>
-      </ModalContentWrapper>
+      </StyledModalContentWrapper>
     </ModalBlurWrapper>
   )
 }
