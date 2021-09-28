@@ -4,6 +4,7 @@ import { TableView } from 'components/TableWithPagination/TableView'
 import { withExtraActions } from 'app/pages/authorizer/components/withExtraActions'
 import { AuthorizerTable } from 'app/pages/authorizer/components/AuthorizerTable'
 import * as useAuthorizerFilterHook from 'app/pages/authorizer/hooks/useAuthorizerFilter'
+import { SelectionHelper } from 'components/SelectionHelper'
 
 jest.mock('components/TableWithPagination/TableView', () => ({
   TableView: jest.fn(() => null)
@@ -31,7 +32,11 @@ describe('AuthorizerTable', () => {
   })
 
   it('renders without error', async () => {
-    render(<AuthorizerTable {...props} />)
+    render(
+      <SelectionHelper itemComparator={() => true}>
+        <AuthorizerTable {...props} />
+      </SelectionHelper>
+    )
   })
 
   it('renders table with correct props if isAll is true', async () => {
@@ -40,11 +45,17 @@ describe('AuthorizerTable', () => {
         from: undefined,
         to: undefined,
         status: '',
-        search: undefined
+        search: undefined,
+        fundStatus: '',
+        commitmentDSO: undefined
       }
     })
 
-    render(<AuthorizerTable {...props} />)
+    render(
+      <SelectionHelper itemComparator={() => true}>
+        <AuthorizerTable {...props} />
+      </SelectionHelper>
+    )
 
     expect(withExtraActions).toHaveBeenCalled()
     expect(TableView).toHaveBeenCalledWith(
@@ -55,7 +66,16 @@ describe('AuthorizerTable', () => {
         actions: null,
         hasStatus: true,
         hasActions: true,
-        filter: { status: '' }
+        filter: {
+          status: '',
+          isAssigned: undefined,
+          from: undefined,
+          to: undefined,
+          search: undefined,
+          fundStatus: '',
+          commitmentDSO: undefined
+        },
+        themeVariant: 'primary'
       },
       {}
     )

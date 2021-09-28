@@ -1,7 +1,6 @@
 import { Asset } from './asset'
 import User from './user'
 import { AuthorizableWithIdentity } from './authorizer'
-import { DataroomFile } from './dataroomFile'
 
 export interface Address {
   line1: string
@@ -24,6 +23,5 @@ export interface Bank extends AuthorizableWithIdentity {
   updatedAt: string
   address: Address
   currency: Asset
-  supportingDocuments: DataroomFile[]
   user: User
 }

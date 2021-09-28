@@ -19,7 +19,9 @@ export const authorizerURL = {
   [AppFeature.Corporates]: '/identity/corporates/list',
   [AppFeature.Individuals]: '/identity/individuals/list',
   [AppFeature.DigitalSecurityWithdrawals]: '/accounts/security/withdrawals',
-  [AppFeature.Offerings]: '/issuance/dso/list'
+  [AppFeature.Offerings]: '/issuance/dso/list',
+  bulkAuthorizeCommitments: (action: 'approve' | 'reject') =>
+    `/issuance/commitments/${action}`
 }
 
 export const identityURL = {
@@ -86,7 +88,9 @@ export const accountsURL = {
     getAll: (userId: string) => `/accounts/balance/${userId}`,
     getByUserId: (userId: string) => `/accounts/balance/${userId}`,
     getByAssetId: (userId: string, assetId: string) =>
-      `/accounts/balance/${userId}/${assetId}`
+      `/accounts/balance/${userId}/${assetId}`,
+    getCurrencyBalanceByAssetId: (userId: string, assetId: string) =>
+      `/accounts/currency-balance/${userId}/${assetId}`
   },
   virtualAccounts: {
     withdraw: (userId: string, virtualAccountId: string) =>
@@ -95,6 +99,11 @@ export const accountsURL = {
       `/virtual-accounts/transactions/list/${virtualAccountId}/${userId}`,
     getPaymentMethods: (country: string, swiftCode: string) =>
       `/accounts/banks/payment-method?country=${country}&swiftCode=${swiftCode}`
+  },
+  commitments: {
+    getAllByUserId: (userId: string) => `/issuance/commitments/list/${userId}`,
+    confirmCommitment: (commitmentId: string) =>
+      `/issuance/commitments/${commitmentId}/confirmInvestment`
   }
 }
 
@@ -139,8 +148,10 @@ export const issuanceURL = {
     disable: (dsoId: string) => `/issuance/dso/${dsoId}/disable`,
     capitalCall: (userId: string, dsoId: string) =>
       `/issuance/dso/${userId}/${dsoId}/capitalCall`,
-    closeDeal: (userId: string, dsoId: string) =>
-      `/issuance/dso/${userId}/${dsoId}/closeDeal`
+    closeDeal: () => `/issuance/closure/create`,
+    closure: (closureId: string, issuerId: string) =>
+      `/issuance/closure/${closureId}/${issuerId}`,
+    getDSOList: '/issuance/dso/list'
   }
 }
 
@@ -296,12 +307,13 @@ export const atlasOneURL = {
 
 export const resources = {
   getSiteConfig: '/resources/siteConfig',
-  createOrUpdateMasDisclosure: '/resources/siteConfig/masDisclosure'
+  createOrUpdateMasDisclosure: '/resources/siteConfig/masDisclosure',
+  acceptMasDisclosure: '/resources/siteConfig/masDisclosure/accept'
 }
 
 export const virtualAccountsAudit = {
   getMT940Files: 'https://hsbc.mozork.com/audit/virtual-account/mt940/files',
-  getMT942Files: 'https://hsbc.mozork.com/audit/virtual-account/mt940/files',
+  getMT942Files: 'https://hsbc.mozork.com/audit/virtual-account/mt942/files',
   getOutboundFiles:
     'https://hsbc.mozork.com/audit/virtual-account/outbound/files',
   getRawMT940File: (fileId: string) =>
@@ -312,4 +324,8 @@ export const virtualAccountsAudit = {
     `https://hsbc.mozork.com/audit/virtual-account/outbound/files/raw/${fileId}`,
   getRawOutboundVAFile: (fileId: string) =>
     `https://hsbc.mozork.com/audit/virtual-account/outbound/files/raw/va/${fileId}`
+}
+
+export const virtualTransactions = {
+  getTransactions: 'https://hsbc.mozork.com/payments/transactions'
 }

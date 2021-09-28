@@ -5,12 +5,20 @@ import { GroupedSearchFilter } from 'app/pages/authorizer/components/GroupedSear
 import { GroupedDateTimeFilter } from 'app/pages/authorizer/components/GroupedFromDateFilter'
 import { SearchQueryFilterGroupApply } from 'components/SearchQueryFilter/SearchQueryFilterGroupApply'
 import { SearchQueryFilterGroupReset } from 'components/SearchQueryFilter/SearchQueryFilterGroupReset'
+import { useAuthorizerCategory } from 'hooks/location/useAuthorizerCategory'
+import { ClosedDSOsFilter } from 'app/pages/authorizer/components/ClosedDSOFilter'
 
 export const SearchAndDateFilter = () => {
+  const category = useAuthorizerCategory()
   return (
     <SearchQueryFilterGroup>
-      <Grid container direction='column' spacing={1}>
-        <Grid item xs={12} style={{ paddingTop: 24 }}>
+      <Grid container direction='column' spacing={3} style={{ paddingTop: 24 }}>
+        {category === 'commitments' && (
+          <Grid item xs={12}>
+            <ClosedDSOsFilter />
+          </Grid>
+        )}
+        <Grid item xs={12}>
           <GroupedSearchFilter />
         </Grid>
         <Grid item xs={12}>

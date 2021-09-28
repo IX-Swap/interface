@@ -72,6 +72,7 @@ describe('AuthorizerView', () => {
     expect(AuthorizableStatus).toHaveBeenCalledWith(
       {
         compact: false,
+        isNewTheme: true,
         status: props.data.status
       },
       {}

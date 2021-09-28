@@ -1,22 +1,36 @@
 import React from 'react'
-import { Grid } from '@material-ui/core'
+import { Grid, Typography } from '@material-ui/core'
 import { DigitalSecurityOffering } from 'types/dso'
-import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
 import { LabelledValue } from 'components/LabelledValue'
 import { PercentageNumber } from 'app/components/DSO/DSOPreview/PercentageNumber'
+import { VSpacer } from 'components/VSpacer'
+import useStyles from 'app/components/DSO/components/styles'
 
 export interface DSOTermsViewCompactProps {
   dso: DigitalSecurityOffering
 }
 
 export const DSOTermsViewCompact = ({ dso }: DSOTermsViewCompactProps) => {
+  const classes = useStyles()
   const isDebt = dso.capitalStructure === 'Debt'
   const isEquity = dso.capitalStructure === 'Equity'
 
   return (
-    <Grid container spacing={2} direction='column'>
+    <Grid
+      container
+      spacing={2}
+      direction='column'
+      className={classes.newDSOViewItemStyles}
+    >
       <Grid item>
-        <FormSectionHeader title='Offering Terms' />
+        <Typography
+          variant={'h4'}
+          color={'primary'}
+          style={{ fontWeight: 700 }}
+        >
+          Offering Terms
+        </Typography>
+        <VSpacer size={'small'} />
       </Grid>
 
       <Grid item container spacing={3}>

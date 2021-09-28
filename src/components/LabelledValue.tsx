@@ -62,6 +62,7 @@ export interface LabelledValueProps {
   align?: TextAlignment
   labelColor?: 'default' | 'light' | 'dark'
   valueColor?: string
+  isNewThemeOn?: boolean
 }
 
 export const LabelledValue = (props: LabelledValueProps & GridProps) => {
@@ -77,17 +78,12 @@ export const LabelledValue = (props: LabelledValueProps & GridProps) => {
     align = 'left',
     labelColor = 'default',
     valueColor,
+    isNewThemeOn = false,
     ...rest
   } = props
   const direction = row ? 'row' : 'column'
 
   const theme = useTheme()
-
-  const labelColorMap = {
-    default: theme.palette.text.primary,
-    light: theme.palette.text.hint,
-    dark: 'rgba(255,255,255,.7)'
-  }
 
   const items = [
     {
@@ -95,7 +91,11 @@ export const LabelledValue = (props: LabelledValueProps & GridProps) => {
       styles: {
         fontWeight: labelWeightMap[labelWeight],
         fontSize: reverse ? labelFontSize : undefined,
-        color: labelColorMap[labelColor]
+        color: isNewThemeOn
+          ? theme.palette.slider.activeColor
+          : labelColor === 'default'
+          ? theme.palette.text.primary
+          : theme.palette.text.hint
       }
     },
     {
@@ -103,7 +103,8 @@ export const LabelledValue = (props: LabelledValueProps & GridProps) => {
       styles: {
         fontWeight: valueWeightMap[valueWeight],
         fontSize: reverse ? valueFontSize : undefined,
-        color: valueColor ?? undefined
+        color: valueColor ?? undefined,
+        opacity: isNewThemeOn ? 0.6 : 1
       }
     }
   ]

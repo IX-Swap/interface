@@ -24,7 +24,6 @@ export interface AuthorizerViewProps<T> {
 }
 
 const transactionalCategories = [
-  AuthorizerCategory.CashDeposits,
   AuthorizerCategory.CashWithdrawals,
   AuthorizerCategory.DigitalSecurityWithdrawals,
   AuthorizerCategory.Commitments,
@@ -90,7 +89,11 @@ export const AuthorizerView = <T,>(
                   <Box display='flex'>
                     <AuthorizableLevel level={data.level} compact={false} />
                     <Box px={0.5} />
-                    <AuthorizableStatus status={data.status} compact={false} />
+                    <AuthorizableStatus
+                      status={data.status}
+                      compact={false}
+                      isNewTheme
+                    />
                   </Box>
                 </Grid>
 

@@ -28,6 +28,9 @@ export interface QueryFilters {
   isPriceAscending: string | undefined
   category: string | undefined
   fundStatus: string | undefined
+  transferType: string | undefined
+  transferDirection: string | undefined
+  dso: string | undefined
 }
 
 export type QueryFilter = keyof QueryFilters

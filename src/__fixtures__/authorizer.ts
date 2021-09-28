@@ -277,7 +277,8 @@ export const commitment: Commitment = {
   pricePerUnit: 0,
   signedSubscriptionDocument: emptyFile,
   user,
-  withdrawalAddress: withdrawalAddress
+  withdrawalAddress: withdrawalAddress,
+  fundStatus: 'Not funded'
 }
 
 export const bank: Bank = {
@@ -291,7 +292,6 @@ export const bank: Bank = {
   authorized: true,
   authorizationDocuments: [],
   authorizations: [],
-  supportingDocuments: [],
   createdAt: '01-01-2000',
   updatedAt: '01-01-2000',
   authorization: authorizationInfo,

@@ -13,6 +13,20 @@ export const useStyles = makeStyles((theme: any) => ({
     paddingLeft: 28,
     paddingRight: 28
   },
+  authStatusNewTheme: {
+    height: 28,
+    borderRadius: 14,
+    border: 'none',
+    paddingLeft: 10,
+    paddingRight: 10,
+    fontSize: 12,
+    display: 'inline-flex',
+    fontWeight: 600,
+    flexWrap: 'nowrap',
+    whiteSpace: 'nowrap',
+    textTransform: 'uppercase',
+    backgroundColor: '#F8F8FD'
+  },
   compact: {
     width: 24,
     height: 24,
@@ -22,9 +36,25 @@ export const useStyles = makeStyles((theme: any) => ({
     color: '#0BBE12',
     borderColor: '#0BBE12'
   },
+  approvedNewTheme: {
+    color: '#8DCA82',
+    backgroundColor: '#EEF7F1'
+  },
+  open: {
+    color: '#EEE4FF',
+    borderColor: '#0BBE12'
+  },
+  openNewTheme: {
+    color: '#6739B6',
+    backgroundColor: '#EEE4FF'
+  },
   rejected: {
     color: '#D20000',
     borderColor: '#D20000'
+  },
+  rejectedNewTheme: {
+    color: '#D20000',
+    backgroundColor: '#F4CECE'
   },
   rejectedButton: {
     backgroundColor: themeColors.error,
@@ -37,6 +67,30 @@ export const useStyles = makeStyles((theme: any) => ({
   unauthorized: {
     color: '#666666',
     borderColor: '#666666'
+  },
+  unauthorizedNewTheme: {
+    color: '#666666',
+    backgroundColor: '#F0F0F0'
+  },
+  submittedNewTheme: {
+    color: '#FF9700',
+    backgroundColor: '#FFF2DE'
+  },
+  pending: {
+    color: '#6739B6',
+    borderColor: '#6739B6'
+  },
+  pendingNewTheme: {
+    color: '#6739B6',
+    backgroundColor: '#EEE4FF'
+  },
+  closed: {
+    color: '#6739B6',
+    borderColor: '#6739B6'
+  },
+  closedNewTheme: {
+    color: '#666666',
+    backgroundColor: '#F0F0F0'
   },
   viewColor: {
     color: '#DADADA'

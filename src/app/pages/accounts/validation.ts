@@ -7,7 +7,6 @@ import {
   AddressValues,
   BankFormValues
 } from 'app/pages/accounts/types'
-import { DataroomFile, FormArrayElement } from 'types/dataroomFile'
 import { MIN_INVESTMENT_AMOUNT } from 'config/defaults'
 
 export const withdrawValidator = (
@@ -84,8 +83,5 @@ export const bankFormValidationSchema = yup.object().shape<BankFormValues>({
   asset: yup.string().required('Required'),
   bankAccountNumber: yup.string().required('Required'),
   swiftCode: yup.string().required('Required'),
-  address: addressValidationSchema.required('Required'),
-  supportingDocuments: yup
-    .array<FormArrayElement<DataroomFile>>()
-    .required('Required')
+  address: addressValidationSchema.required('Required')
 })

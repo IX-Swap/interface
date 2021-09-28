@@ -7,6 +7,11 @@ export const useAuthorizerFilter = () => {
     'authorizationStatus',
     'Submitted'
   ) as AuthorizableStatus
+  const fundStatusQueryValue = getFilterValue(
+    'fundStatus',
+    undefined
+  ) as AuthorizableStatus
+  const commitmentDSOQueryValue = getFilterValue('dso', undefined)
   const fromDateQueryValue = getFilterValue('fromDate', undefined)
   const toDateQueryValue = getFilterValue('toDate', undefined)
   const searchQueryValue = getFilterValue('search', undefined)
@@ -15,8 +20,10 @@ export const useAuthorizerFilter = () => {
     filter: {
       search: searchQueryValue,
       status: statusQueryValue,
+      fundStatus: fundStatusQueryValue,
       to: toDateQueryValue,
-      from: fromDateQueryValue
+      from: fromDateQueryValue,
+      dso: commitmentDSOQueryValue
     }
   }
 }

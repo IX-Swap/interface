@@ -45,7 +45,7 @@ describe('useBalancesByAssetId', () => {
             'assetId'
           )
           expect(post).toHaveBeenCalledWith(
-            `/accounts/balance/${user._id}/${balance.assetId}`,
+            `/accounts/currency-balance/${user._id}/${balance.assetId}`,
             paginationArgs
           )
         },

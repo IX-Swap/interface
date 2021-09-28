@@ -68,7 +68,7 @@ export const TableView = <T,>({
   paperProps = {},
   defaultRowsPerPage,
   size = 'medium',
-  themeVariant = 'default'
+  themeVariant = 'primary'
 }: TableViewProps<T>): JSX.Element => {
   const {
     items,
@@ -105,10 +105,7 @@ export const TableView = <T,>({
     innerRef.current = { refresh: () => setPage(page) }
   }
 
-  let columns =
-    hasStatus && filter?.status === ''
-      ? [...columnsProp, statusColumn]
-      : columnsProp
+  let columns = hasStatus ? [...columnsProp, statusColumn] : columnsProp
 
   if (selectionHelper !== undefined) {
     const {
@@ -131,6 +128,9 @@ export const TableView = <T,>({
                 checked={getIsItemsSelected(_items)}
                 indeterminate={getIsIndeterminate(_items)}
                 onClick={() => toggleAll(_items)}
+                style={{
+                  color: '#fff'
+                }}
               />
             }
             label={<b>{columns[0].label}</b>}

@@ -1,5 +1,5 @@
 import {
-  CreateBankArgs,
+  BankFormValues,
   DepositCashArgs,
   UpdateBankArgs,
   WithdrawCashArgs,
@@ -8,14 +8,13 @@ import {
 import { virtualAccount } from '__fixtures__/virtualAccount'
 import { address, asset, bank } from './authorizer'
 
-export const createBankArgs: CreateBankArgs = {
+export const createBankArgs: BankFormValues = {
   bankName: 'ASBC',
   bankAccountNumber: '1234567890',
   accountHolderName: 'John Doe',
   swiftCode: 'SWIFTCODE',
   address: address,
-  asset: asset._id,
-  supportingDocuments: []
+  asset: asset._id
 }
 
 export const updateBankArgs: UpdateBankArgs = {
@@ -25,8 +24,7 @@ export const updateBankArgs: UpdateBankArgs = {
   accountHolderName: 'John Doe',
   swiftCode: 'SWIFTCODE',
   address: address,
-  asset: asset._id,
-  supportingDocuments: []
+  asset: asset._id
 }
 
 export const depositCashArgs: DepositCashArgs = {

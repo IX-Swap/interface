@@ -94,6 +94,17 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 variant='outlined'
               />
             </Grid>
+            <Grid item xs={12} md={4}>
+              <TypedField
+                component={TextField}
+                label='Unique Identifier Code'
+                name='uniqueIdentifierCode'
+                disabled={isLive}
+                control={control}
+                helperText='ISIN or CUSIP Number'
+                variant='outlined'
+              />
+            </Grid>
           </Grid>
         </Grid>
         <Grid item>
