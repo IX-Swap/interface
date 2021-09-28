@@ -18,6 +18,7 @@ import { AuthorizerListingsRouter } from '../pages/listings/router/AuthorizerLis
 import { AuthorizerVirtualAccountsRouter } from 'app/pages/authorizer/pages/VirtualAccounts/router/AuthorizerVirtualAccountsRouter'
 import { AuthorizerDealClosureRouter } from 'app/pages/authorizer/pages/DealClosures/AuthorizerDealClosuerRouter'
 import { AuthorizerLandingPage } from 'app/components/LandingPage/AuthorizerLandingPage'
+import { TokenDeploymentRouter } from 'app/pages/authorizer/pages/TokenDeployment/TokenDeploymentRouter'
 
 export const AuthorizerRouter = () => {
   return (
@@ -92,6 +93,13 @@ export const AuthorizerRouter = () => {
         path={AuthorizerRoute.virtualAccounts}
       >
         <AuthorizerVirtualAccountsRouter />
+      </AppRoute>
+
+      <AppRoute
+        breadcrumb='Token Deployment'
+        path={AuthorizerRoute.tokenDeployment}
+      >
+        <TokenDeploymentRouter />
       </AppRoute>
 
       <AppRoute exact path={AuthorizerRoute.landing}>
