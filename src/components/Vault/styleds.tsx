@@ -34,6 +34,9 @@ export const ExistingTitle = styled.span`
   white-space: -pre-wrap; /* Opera <7 */
   white-space: -o-pre-wrap; /* Opera 7 */
   word-wrap: break-word;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+      margin-bottom: 20px;
+  `};
 `
 export const VaultStatusDescription = styled.div`
   text-align: center;
