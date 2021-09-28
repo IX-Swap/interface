@@ -1,4 +1,5 @@
 import Row, { RowBetween } from 'components/Row'
+import { ToggleWrapper } from 'components/Tabs'
 import styled from 'styled-components'
 import { hexToRGBA } from 'utils/themeHelper'
 
@@ -18,4 +19,10 @@ export const MenuItem = styled(RowBetween)`
 `
 export const MenuRow = styled(Row)`
   padding-right: 10px;
+`
+
+export const CustodianToggleWrapper = styled(ToggleWrapper)`
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+   flex-direction: row;
+  `};
 `
