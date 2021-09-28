@@ -2,11 +2,10 @@ import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import Row, { RowBetween } from 'components/Row'
-import { ModalContentWrapper } from 'components/SearchModal/styleds'
 import React, { useCallback, useEffect, useState } from 'react'
 import { ApplicationModal } from 'state/application/actions'
 import { useChooseBrokerDealerModalToggle, useModalOpen } from 'state/application/hooks'
-import { ModalBlurWrapper } from 'theme'
+import { ModalBlurWrapper, ModalContentWrapper } from 'theme'
 import { CloseIcon, TYPE } from '../../theme'
 import { ModalPadding } from './styleds'
 import { ButtonIXSWide } from 'components/Button'
@@ -25,11 +24,15 @@ export const ChooseBrokerDealerPopup = ({ tokenId, currencyId }: { tokenId: any;
 
   const fetchBrokerDealerPairs = useFetchBrokerDealers()
   useEffect(() => {
-    fetchBrokerDealerPairs(tokenId)
+    if (tokenId) {
+      fetchBrokerDealerPairs(tokenId)
+    }
   }, [tokenId])
 
   useEffect(() => {
-    setSelectedBrokerPair(brokerDealerPairs[0]?.id)
+    if (brokerDealerPairs) {
+      setSelectedBrokerPair(brokerDealerPairs[0]?.id)
+    }
   }, [brokerDealerPairs])
 
   const onClose = useCallback(() => {

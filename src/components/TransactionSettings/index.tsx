@@ -43,9 +43,34 @@ const SlippageEmojiContainer = styled.span`
 
 const MinuteLabel = styled.span`
   font-weight: 300;
-  font-size: 22px;
+  font-size: 16px;
   line-height: 33px;
-  color: ${({ theme }) => theme.text6};
+  opacity: 0.5;
+  color: ${({ theme }) => theme.text2};
+`
+const StyledOptionRow = styled(OptionRow)`
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    display: flex;
+    gap: 10px;
+    margin-top: 0px;
+  `}
+`
+const StyledOption = styled(Option)`
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+    width: fit-content;
+    padding: 10px;
+    margin: 0;
+  `}
+`
+const StyledOptionCustom = styled(OptionCustom)`
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    min-width: 85px;
+    max-width: 100px;
+    padding: 10px;
+    > div > input {
+     text-align: left;
+   }
+  `}
 `
 interface TransactionSettingsProps {
   placeholderSlippage: Percent // varies according to the context in which the settings dialog is placed
@@ -60,7 +85,7 @@ export default function TransactionSettings({ placeholderSlippage }: Transaction
   return (
     <AutoColumn gap="md">
       <Marginer>
-        <AutoColumn gap="sm">
+        <AutoColumn gap="16px">
           <RowFixed>
             <TYPE.black fontWeight={400} fontSize={14} color={theme.text2}>
               <Trans>Slippage tolerance</Trans>
@@ -74,9 +99,9 @@ export default function TransactionSettings({ placeholderSlippage }: Transaction
               }
             />
           </RowFixed>
-          <OptionRow>
+          <StyledOptionRow>
             {RECOMMENDED_SLIPPAGE_OPTIONS.map((slippageOption) => (
-              <Option
+              <StyledOption
                 key={slippageOption}
                 onClick={() => {
                   parseSlippageInput(slippageOption)
@@ -84,9 +109,9 @@ export default function TransactionSettings({ placeholderSlippage }: Transaction
                 active={slippageInput === slippageOption}
               >
                 {slippageOption}%
-              </Option>
+              </StyledOption>
             ))}
-            <OptionCustom active={userSlippageTolerance !== 'auto'} warning={!!slippageError} tabIndex={-1}>
+            <StyledOptionCustom active={userSlippageTolerance !== 'auto'} warning={!!slippageError} tabIndex={-1}>
               <RowBetween>
                 <Input
                   placeholder={placeholderSlippage.toFixed(2)}
@@ -101,8 +126,8 @@ export default function TransactionSettings({ placeholderSlippage }: Transaction
                   %
                 </Text>
               </RowBetween>
-            </OptionCustom>
-          </OptionRow>
+            </StyledOptionCustom>
+          </StyledOptionRow>
           {slippageError || tooLow || tooHigh ? (
             <RowStart
               style={{
@@ -141,7 +166,7 @@ export default function TransactionSettings({ placeholderSlippage }: Transaction
             />
           </RowFixed>
           <RowFixed>
-            <OptionCustom warning={!!deadlineError} tabIndex={-1}>
+            <StyledOptionCustom warning={!!deadlineError} tabIndex={-1}>
               <Input
                 placeholder={(DEFAULT_DEADLINE_FROM_NOW / 60).toString()}
                 value={displayDeadline({ deadlineInput, deadline })}
@@ -149,13 +174,25 @@ export default function TransactionSettings({ placeholderSlippage }: Transaction
                 onBlur={() => resetDeadline()}
                 color={deadlineError ? 'red' : ''}
               />
-            </OptionCustom>
+            </StyledOptionCustom>
             <TYPE.body style={{ paddingLeft: '8px' }} fontSize={14}>
               <MinuteLabel>
-                <Trans>Minutes</Trans>
+                <Trans>minutes</Trans>
               </MinuteLabel>
             </TYPE.body>
           </RowFixed>
+          {deadlineError ? (
+            <RowStart
+              style={{
+                fontSize: '14px',
+                paddingTop: '7px',
+                gap: '5px',
+                color: 'red',
+              }}
+            >
+              <Trans>Deadline range is 1-180 minutes</Trans>
+            </RowStart>
+          ) : null}
         </AutoColumn>
       </Marginer>
     </AutoColumn>

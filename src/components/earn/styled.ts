@@ -5,6 +5,7 @@ import uImage from '../../assets/images/big_unicorn.png'
 import noise from '../../assets/images/noise.png'
 import { Text } from 'rebass'
 import Input from 'components/NumericalInput'
+import { ModalContentWrapper } from 'theme'
 
 export const TextBox = styled.div`
   display: flex;
@@ -65,12 +66,8 @@ export const Break = styled.div`
   height: 1px;
 `
 
-export const ModalContentWrapper = styled(Column)`
-  width: 100%;
-  flex: 1 1;
+export const EarnModalContentWrapper = styled(ModalContentWrapper)`
   border-radius: 20px;
-  position: relative;
-  background: ${({ theme }) => theme.bgG4};
   ${({ theme }) => theme.mediaWidth.upToSmall`
    padding: 0px;
   `};

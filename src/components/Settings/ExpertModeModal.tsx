@@ -9,7 +9,7 @@ import { AutoColumn } from '../Column'
 import Modal from '../Modal'
 import { RowBetween } from '../Row'
 
-const ModalContentWrapper = styled.div`
+const ExpertModalContentWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -42,7 +42,7 @@ export const ExpertModeModal = ({ showConfirmation = false, toggleConfirmation }
 
   return (
     <Modal isOpen={showConfirmation} onDismiss={() => toggleConfirmation(false)} maxHeight={100}>
-      <ModalContentWrapper>
+      <ExpertModalContentWrapper>
         <AutoColumn gap="lg">
           <RowBetween style={{ padding: '0 2rem' }}>
             <div />
@@ -80,7 +80,7 @@ export const ExpertModeModal = ({ showConfirmation = false, toggleConfirmation }
             </ButtonError>
           </AutoColumn>
         </AutoColumn>
-      </ModalContentWrapper>
+      </ExpertModalContentWrapper>
     </Modal>
   )
 }
