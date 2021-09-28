@@ -159,7 +159,7 @@ export function CurrencySearch({
           </TYPE.main>
         </Column>
       )}
-      <Footer>
+      <Footer style={{ marginTop: '5px' }}>
         <Row justify="center">
           <ButtonText
             onClick={showManageView}
