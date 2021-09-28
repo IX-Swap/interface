@@ -340,7 +340,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                 </Trans>
               </TYPE.body1>
             </RowCenter>
-            <ActionButtons style={{ marginTop: '25px' }}>
+            <ActionButtons>
               <ButtonIXSWide data-testid="approve-staking" disabled={isDisabledApprove()} onClick={onApprove}>
                 {isApprovingIXS ? (
                   <Dots>
@@ -371,6 +371,8 @@ const ActionButtons = styled.div`
   display: grid;
   grid-gap: 13px;
   grid-template-columns: 50% 50%;
+  justify-content: center;
+  margin-top: 25px;
   @media (max-width: 540px) {
     grid-template-columns: 100%;
   }
