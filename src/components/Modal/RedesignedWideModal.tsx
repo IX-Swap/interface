@@ -34,26 +34,34 @@ const StyledDialogContent = styled(
         font-size: 12px;
         line-height: 18px;
         width: 520px;
-        top: 2.5%;
+        top: 16px;
         position: absolute;
         margin-left: auto;
         margin-right: auto;
         left: 0;
         right: 0;
+
+        ${({ theme }) => theme.mediaWidth.upToMedium`
+          margin-bottom: 6px;
+          top: 0;
+        `}
+
         ${({ theme }) => theme.mediaWidth.upToSmall`
           width: 74vw;
           top: 0;
           position: relative;
         `}
-        ${({ theme }) => theme.mediaWidth.upToMedium`
-          margin-bottom: 6px;
-        `}
       }
+
+      ${({ theme }) => theme.mediaWidth.upToMedium`
+          padding-top: 106px !important;
+      `}
 
       &[data-reach-dialog-content] {
         ${({ theme }) => theme.mediaWidth.upToSmall`
-            flex-direction: column;
-          `}
+          flex-direction: column;
+          padding-top: 0 !important;
+        `}
       }
     `}
 
