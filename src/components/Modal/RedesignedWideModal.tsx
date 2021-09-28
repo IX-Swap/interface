@@ -41,9 +41,12 @@ const StyledDialogContent = styled(
         left: 0;
         right: 0;
         ${({ theme }) => theme.mediaWidth.upToSmall`
-          width: 85vw;
+          width: 74vw;
           top: 0;
           position: relative;
+        `}
+        ${({ theme }) => theme.mediaWidth.upToMedium`
+          margin-bottom: 6px;
         `}
       }
 
@@ -80,7 +83,7 @@ const StyledDialogContent = styled(
         overflow-y: visible;
         max-height: none;
         align-self: flex-start;
-        margin-top: 5vh;
+        margin: 16px !important;
       `}
     ${({ minHeight }) =>
       minHeight &&
@@ -91,12 +94,15 @@ const StyledDialogContent = styled(
     border-radius: 45px;
     ${({ theme }) => theme.mediaWidth.upToMedium`
       width: 100vw;
-
+      min-height: auto !important;
+      background: rgba(26, 18, 58, 0);
+      backdrop-filter: opacity(0);
     `}
     ${({ theme, mobileMaxHeight }) => theme.mediaWidth.upToSmall`
-          border-radius: 0px;
+          border-radius: 20px;
           top: 0;
-          max-width: 100vw;
+          max-width: 90vw;
+          min-height: 95vh;
           margin:0;
          ${
            mobileMaxHeight &&
