@@ -9,7 +9,11 @@ export const useDistribution = () => {
 
   const fetchDistribution = async () => {
     const uri = '/issuance/distribution/list'
-    return await apiService.post(uri, { skip: 0, limit: 10 })
+    return await apiService.post(uri, {
+      skip: 0,
+      limit: 10,
+      status: 'Approved'
+    })
   }
 
   const { data, ...rest } = useInfiniteQuery(
