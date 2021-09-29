@@ -3,6 +3,7 @@ import { Currency, Percent, TradeType } from '@ixswap1/sdk-core'
 import { Router, Trade as V2Trade } from '@ixswap1/v2-sdk'
 import { t } from '@lingui/macro'
 import { useCallback, useMemo } from 'react'
+import { useSwapHelpersState } from 'state/swap-helpers/hooks'
 import { useSwapAuthorization } from 'state/user/hooks'
 import { useTransactionAdder } from '../state/transactions/hooks'
 import { isAddress, shortenAddress } from '../utils'
@@ -13,6 +14,7 @@ import { useArgentWalletContract } from './useArgentWalletContract'
 import { useSwapRouterContract } from './useContract'
 import useENS from './useENS'
 import useTransactionDeadline from './useTransactionDeadline'
+import { useV2Pair } from './useV2Pairs'
 import { useActiveWeb3React } from './web3'
 
 export enum SwapCallbackState {
@@ -61,19 +63,19 @@ function useSwapCallArguments(
   const routerContract = useSwapRouterContract()
   const argentWalletContract = useArgentWalletContract()
   const fetchAuthorization = useSwapAuthorization(trade, allowedSlippage)
-
+  const inputToken = trade?.inputAmount?.currency
+  const outputToken = trade?.outputAmount?.currency
+  const [, pair] = useV2Pair(inputToken ?? undefined, outputToken ?? undefined)
+  const { dto } = useSwapHelpersState()
   return useCallback(async () => {
     if (!trade || !recipient || !library || !account || !chainId || !deadline) return []
     if (!routerContract) return []
     const swapMethods = []
-    let authorization = null
-    try {
-      authorization = await fetchAuthorization()
-    } catch (error) {
+    if (dto === null && pair?.isSecurity) {
+      await fetchAuthorization()
       return []
     }
-    const usedAuthorization =
-      authorization && (authorization[0] !== null || authorization[1] !== null) ? authorization : undefined
+    const usedAuthorization = undefined
     const options = {
       feeOnTransfer: false,
       allowedSlippage,

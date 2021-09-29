@@ -22,6 +22,7 @@ import {
   useSecTokenId,
   useSecTokensFromMap,
 } from 'state/secTokens/hooks'
+import { useSaveBrokerDealerDto } from 'state/swap-helpers/hooks'
 import { useSimpleTokenBalanceWithLoading } from 'state/wallet/hooks'
 import { SecToken } from 'types/secToken'
 import { currencyId } from 'utils/currencyId'
@@ -49,6 +50,7 @@ import {
   updateUserSingleHopOnly,
   updateUserSlippageTolerance,
 } from './actions'
+import { OrderType } from './enum'
 
 function serializeToken(token: Token): SerializedToken {
   return {
@@ -359,8 +361,15 @@ export const getUserSecTokensList = async () => {
   return result.data
 }
 
-export const fetchTokenAuthorization = async (tokenId: number, amount0: string, amount1: string) => {
-  const result = await apiService.post(tokens.authorize(tokenId), { amount0, amount1 })
+interface AuthorizationParams {
+  tokenId: number
+  amount: string
+  pairAddress?: string
+  orderType: string
+}
+
+export const fetchTokenAuthorization = async ({ tokenId, amount, pairAddress, orderType }: AuthorizationParams) => {
+  const result = await apiService.post(tokens.authorize(tokenId), { amount, pairAddress, orderType })
   return result.data
 }
 
@@ -368,11 +377,21 @@ export const useGetTokenAuthorization = () => {
   const dispatch = useDispatch<AppDispatch>()
 
   return useCallback(
-    async ({ amount0, amount1, tokenId }: { amount0?: string; amount1?: string; tokenId?: number }) => {
-      if (!tokenId || !amount0 || !amount1) return null
+    async ({
+      amount,
+      pairAddress,
+      orderType,
+      tokenId,
+    }: {
+      amount: string
+      pairAddress?: string
+      orderType: OrderType
+      tokenId?: number
+    }) => {
+      if (!tokenId || !amount || !pairAddress || !orderType) return null
       dispatch(authorizeSecToken.pending())
       try {
-        const result = await fetchTokenAuthorization(tokenId, amount0, amount1)
+        const result = await fetchTokenAuthorization({ tokenId, amount, pairAddress, orderType })
         dispatch(authorizeSecToken.fulfilled())
         return result
       } catch (e) {
@@ -404,20 +423,32 @@ export function useSwapAuthorization(
   const amount0 = trade ? getStringAmount(trade?.maximumAmountIn(allowedSlippage)) : ''
   const amount1 = trade ? getStringAmount(trade?.minimumAmountOut(allowedSlippage)) : ''
   const firstIsSec = (inputToken as any)?.isSecToken
+  const saveBrokerDealerDto = useSaveBrokerDealerDto()
 
   const fetchAuthorization = useCallback(async () => {
     if (amount0 && amount1 && pair?.isSecurity) {
-      return await fetchAuthorization()
-    } else {
-      return null
+      await fetchAuthorization()
     }
     async function fetchAuthorization() {
       const usedToken = firstIsSec ? tokenId0 : tokenId1
-      const result = await getAuthorization({ amount0, amount1, tokenId: usedToken })
-      const authorization = firstIsSec ? [result, null] : [null, result]
-      return authorization
+      const amount = firstIsSec ? amount0 : amount1
+      const orderType = firstIsSec ? OrderType.SELL : OrderType.BUY
+      const pairAddress = pair?.liquidityToken.address
+      const result = await getAuthorization({ amount, orderType, pairAddress, tokenId: usedToken })
+      saveBrokerDealerDto(result)
     }
-  }, [amount0, amount1, getAuthorization, pair?.isSecurity, firstIsSec, tokenId0, tokenId1, allowedSlippage])
+  }, [
+    amount0,
+    amount1,
+    getAuthorization,
+    pair?.isSecurity,
+    pair?.liquidityToken?.address,
+    firstIsSec,
+    tokenId0,
+    tokenId1,
+    allowedSlippage,
+    saveBrokerDealerDto,
+  ])
   return fetchAuthorization
 }
 
@@ -523,7 +554,7 @@ export function usePassAccreditation(
         toggle()
       } catch (error) {
         console.debug(`Failed to pass accreditation`, error)
-        dispatch(passAccreditation.rejected({ errorMessage: error.message }))
+        dispatch(passAccreditation.rejected({ errorMessage: String((error as any)?.message) }))
       }
     },
     [dispatch, login, fetchTokens, toggle, accreditationRequest, accreditationStatus]

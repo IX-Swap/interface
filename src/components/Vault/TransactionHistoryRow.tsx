@@ -1,6 +1,6 @@
 import { Currency } from '@ixswap1/sdk-core'
 import { ReactComponent as Info } from 'assets/images/info.svg'
-import Row, { RowFixed, RowStart } from 'components/Row'
+import Row, { RowFixed } from 'components/Row'
 import dayjs from 'dayjs'
 import { useWindowSize } from 'hooks/useWindowSize'
 import { IconWrapper } from 'pages/SecTokenDetails/styleds'
