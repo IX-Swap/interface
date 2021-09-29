@@ -31,7 +31,7 @@ export const Investors = () => {
 
   const renderTokens = (value: any, row: Commitment) => {
     const tokenPrice = data.pricePerUnit
-    return formatAmount(parseInt(value) / tokenPrice)
+    return formatAmount(row.totalAmount / tokenPrice)
   }
 
   const renderTotalAmount = (value: any, row: Commitment) => {
@@ -41,10 +41,9 @@ export const Investors = () => {
   const renderOwnership = (value: any, row: Commitment) => {
     const tokenPrice = data.pricePerUnit
     const totalTokens = data.insight.raisedTotal / tokenPrice
+    const tokenValue = row.totalAmount / tokenPrice
 
-    return totalTokens > 1
-      ? formatAmount((parseInt(value) / totalTokens) * 100)
-      : 0
+    return totalTokens > 1 ? formatAmount((tokenValue / totalTokens) * 100) : 0
   }
 
   const columns: Array<TableColumn<Commitment>> = [
@@ -57,8 +56,8 @@ export const Investors = () => {
       headAlign: 'right',
       align: 'right'
     },
-    { label: 'Tokens', key: 'totalAmount', render: renderTokens },
-    { label: 'Ownership (%)', key: 'totalAmount', render: renderOwnership }
+    { label: 'Tokens', key: 'tokens', render: renderTokens },
+    { label: 'Ownership (%)', key: 'user', render: renderOwnership }
   ]
 
   return (
@@ -91,7 +90,8 @@ export const Investors = () => {
           name={investQueryKeys.getDSOById(dsoId, issuerId)}
           columns={columns}
           filter={{
-            search
+            search,
+            fundStatus: 'Funds transferred'
           }}
           themeVariant={'primary'}
         />

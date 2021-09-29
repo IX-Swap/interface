@@ -4,6 +4,7 @@ import { VSpacer } from 'components/VSpacer'
 import { useCountdown } from 'app/pages/issuance/hooks/useCountdown'
 import { TimeDisplay } from 'app/pages/issuance/components/CountdownTimer/TimeDisplay'
 import { getTimeUnitsToDisplay } from 'helpers/countdownTimer'
+import { useDistribution } from 'app/pages/issuance/hooks/useDistribution'
 
 export interface CountdownTimerProps {
   my?: number
@@ -16,17 +17,16 @@ export const NextDistributionTimer = ({
   mx = 'auto',
   isNewThemeOn = false
 }: CountdownTimerProps) => {
-  // Replace with actual data when backend is ready
-  var date = new Date()
-  date.setDate(date.getDate() + 21)
+  const { data, isLoading } = useDistribution()
+  const soonest = data?.list[0]?.distributionDate
 
-  const { units } = useCountdown(date.toDateString())
+  const { units } = useCountdown(soonest)
 
-  const unitsToDisplay = getTimeUnitsToDisplay(
-    !isNewThemeOn
-      ? units
-      : { years: 0, months: 0, days: 1, hours: 1, minutes: 1, seconds: 0 }
-  )
+  const unitsToDisplay = getTimeUnitsToDisplay(units)
+
+  if (isLoading) {
+    return null
+  }
 
   return (
     <Box my={my} mx={mx} style={{ width: 'max-content' }}>
