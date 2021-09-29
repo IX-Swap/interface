@@ -60,7 +60,8 @@ export interface LabelledValueProps {
   labelFontSize?: number
   valueFontSize?: number
   align?: TextAlignment
-  labelColor?: 'default' | 'light'
+  labelColor?: 'default' | 'light' | 'dark'
+  valueColor?: string
   isNewThemeOn?: boolean
 }
 
@@ -76,6 +77,7 @@ export const LabelledValue = (props: LabelledValueProps & GridProps) => {
     valueFontSize = 24,
     align = 'left',
     labelColor = 'default',
+    valueColor,
     isNewThemeOn = false,
     ...rest
   } = props
@@ -101,6 +103,7 @@ export const LabelledValue = (props: LabelledValueProps & GridProps) => {
       styles: {
         fontWeight: valueWeightMap[valueWeight],
         fontSize: reverse ? valueFontSize : undefined,
+        color: valueColor ?? undefined,
         opacity: isNewThemeOn ? 0.6 : 1
       }
     }
