@@ -5,7 +5,7 @@ import Row, { RowBetween } from 'components/Row'
 import React, { useCallback, useEffect, useState } from 'react'
 import { ApplicationModal } from 'state/application/actions'
 import { useChooseBrokerDealerModalToggle, useModalOpen } from 'state/application/hooks'
-import { ModalBlurWrapper, ModalContentWrapper, MobileOnly } from 'theme'
+import { ModalBlurWrapper, ModalContentWrapper } from 'theme'
 import { CloseIcon, TYPE } from '../../theme'
 import { ModalPadding } from './styleds'
 import { ButtonIXSWide } from 'components/Button'
@@ -85,9 +85,7 @@ export const ChooseBrokerDealerPopup = ({ tokenId, currencyId }: { tokenId: any;
                   {selectedBrokerPair === pair?.id ? (
                     <Checkmark className="selected-checkmark" />
                   ) : (
-                    <MobileOnly>
-                      <CheckmarkPlaceholder />
-                    </MobileOnly>
+                    <CheckmarkPlaceholder />
                   )}
                 </IconWrapper>
               </BrokerDealerAndCustodianPair>
@@ -133,16 +131,12 @@ const ModalHeader = styled(RowBetween)`
 
 const BrokerDealerAndCustodianPair = styled(Row)`
   padding: 10px 0;
-  justify-content: flex-start;
+  justify-content: space-between;
   cursor: pointer;
   &:hover,
   &.selected {
     background-color: #edceff0a;
   }
-
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    justify-content: space-between;
-  `}
 
   .pair-text {
     margin: 0 18px 0 40px;
@@ -169,7 +163,6 @@ export const IconWrapper = styled.div<{ size?: number }>`
   margin-right: 40px;
   align-items: center;
   justify-content: center;
-  margin-right: 8px;
   & > img,
   span {
     height: ${({ size }) => (size ? size + 'px' : '32px')};
