@@ -5,7 +5,7 @@ import Row, { RowBetween } from 'components/Row'
 import React, { useCallback, useEffect, useState } from 'react'
 import { ApplicationModal } from 'state/application/actions'
 import { useChooseBrokerDealerModalToggle, useModalOpen } from 'state/application/hooks'
-import { ModalBlurWrapper, ModalContentWrapper } from 'theme'
+import { ModalBlurWrapper, ModalContentWrapper, MobileOnly } from 'theme'
 import { CloseIcon, TYPE } from '../../theme'
 import { ModalPadding } from './styleds'
 import { ButtonIXSWide } from 'components/Button'
@@ -81,11 +81,14 @@ export const ChooseBrokerDealerPopup = ({ tokenId, currencyId }: { tokenId: any;
                   <TYPE.body4>{pair?.pair?.brokerDealer?.name}</TYPE.body4>&nbsp;—&nbsp;
                   <TYPE.body4 style={{ fontWeight: 400 }}>{pair?.pair?.custodian?.name}</TYPE.body4>
                 </div>
-                <IconWrapper
-                  size={16}
-                  className={`selected-checkmark ${selectedBrokerPair === pair?.id ? 'show' : ''}`}
-                >
-                  <Checkmark />
+                <IconWrapper size={28}>
+                  {selectedBrokerPair === pair?.id ? (
+                    <Checkmark className="selected-checkmark" />
+                  ) : (
+                    <MobileOnly>
+                      <CheckmarkPlaceholder />
+                    </MobileOnly>
+                  )}
                 </IconWrapper>
               </BrokerDealerAndCustodianPair>
             ))}
@@ -130,15 +133,19 @@ const ModalHeader = styled(RowBetween)`
 
 const BrokerDealerAndCustodianPair = styled(Row)`
   padding: 10px 0;
-  justify-content: space-between;
+  justify-content: flex-start;
   cursor: pointer;
   &:hover,
   &.selected {
     background-color: #edceff0a;
   }
 
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    justify-content: space-between;
+  `}
+
   .pair-text {
-    margin: 0 40px;
+    margin: 0 18px 0 40px;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
@@ -146,22 +153,20 @@ const BrokerDealerAndCustodianPair = styled(Row)`
       margin: 0 16px;
     `};
   }
+`
 
-  .selected-checkmark {
-    margin-right: 40px;
-    display: none;
-    ${({ theme }) => theme.mediaWidth.upToSmall`
-      margin-right: 16px;
-    `};
-  }
-
-  .selected-checkmark.show {
-    display: flex;
-  }
+const CheckmarkPlaceholder = styled.div`
+  border: 2px solid #372e5e;
+  box-sizing: border-box;
+  height: 28px;
+  width: 28px;
+  border-radius: 100%;
+  opacity: 0.6;
 `
 
 export const IconWrapper = styled.div<{ size?: number }>`
   ${({ theme }) => theme.flexColumnNoWrap};
+  margin-right: 40px;
   align-items: center;
   justify-content: center;
   margin-right: 8px;
@@ -172,6 +177,9 @@ export const IconWrapper = styled.div<{ size?: number }>`
   }
   ${({ theme }) => theme.mediaWidth.upToMedium`
     align-items: flex-end;
+  `};
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+      margin-right: 16px;
   `};
 `
 const StartAccreditationButtonWrapper = styled(ModalPadding)`
