@@ -28,7 +28,7 @@ import PoolFinder from './PoolFinder'
 import RemoveLiquidity from './RemoveLiquidity'
 import SecTokenDetails from './SecTokenDetails'
 import Swap from './Swap'
-import { RedirectPathToSwapOnly, RedirectPathToVesting, RedirectToSwap } from './Swap/redirects'
+import { RedirectPathToSwapOnly, RedirectPathToStaking, RedirectToSwap } from './Swap/redirects'
 
 const AppWrapper = styled.div`
   display: flex;
@@ -111,7 +111,7 @@ export default function App() {
               <Route exact strict path={routes.vesting} component={VestingTab} />
 
               {chainId !== SUPPORTED_TGE_CHAINS.MAIN && <Route component={RedirectPathToSwapOnly} />}
-              {chainId === SUPPORTED_TGE_CHAINS.MAIN && <Route component={RedirectPathToVesting} />}
+              {chainId === SUPPORTED_TGE_CHAINS.MAIN && <Route component={RedirectPathToStaking} />}
             </Switch>
           </Web3ReactManager>
           <Marginer />
