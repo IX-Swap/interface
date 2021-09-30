@@ -300,6 +300,11 @@ export const assetsURL = {
   getAssetsList: () => '/accounts/assets/list'
 }
 
+export const atlasOneURL = {
+  getSecurities: '/resources/securities',
+  getTimeSeries: '/resources/timeseries'
+}
+
 export const resources = {
   getSiteConfig: '/resources/siteConfig',
   createOrUpdateMasDisclosure: '/resources/siteConfig/masDisclosure',
