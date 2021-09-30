@@ -10,7 +10,6 @@ import { DEFAULT_DEADLINE_FROM_NOW } from 'constants/misc'
 import { displayDeadline, displayUserSlippageTolerance } from './helpers'
 import { useDeadline } from 'hooks/useDeadline'
 import { useSlippage } from 'hooks/useSlippage'
-import { RECOMMENDED_SLIPPAGE_OPTIONS } from './constants'
 import { TYPE } from 'theme'
 import { Option, OptionRow, OptionCustom } from 'components/OptionButton'
 import { Text } from 'rebass'
@@ -49,7 +48,10 @@ const MinuteLabel = styled.span`
   color: ${({ theme }) => theme.text2};
 `
 const StyledOptionRow = styled(OptionRow)`
+  justify-content: flex-start;
+  margin-top: 0;
   ${({ theme }) => theme.mediaWidth.upToSmall`
+    width: fit-content;
     display: flex;
     gap: 10px;
     margin-top: 0px;
@@ -100,17 +102,16 @@ export default function TransactionSettings({ placeholderSlippage }: Transaction
             />
           </RowFixed>
           <StyledOptionRow>
-            {RECOMMENDED_SLIPPAGE_OPTIONS.map((slippageOption) => (
-              <StyledOption
-                key={slippageOption}
-                onClick={() => {
-                  parseSlippageInput(slippageOption)
-                }}
-                active={slippageInput === slippageOption}
-              >
-                {slippageOption}%
-              </StyledOption>
-            ))}
+            <StyledOption
+              key={'auto'}
+              onClick={() => {
+                parseSlippageInput('')
+              }}
+              active={userSlippageTolerance === 'auto'}
+            >
+              Auto
+            </StyledOption>
+
             <StyledOptionCustom active={userSlippageTolerance !== 'auto'} warning={!!slippageError} tabIndex={-1}>
               <RowBetween>
                 <Input
