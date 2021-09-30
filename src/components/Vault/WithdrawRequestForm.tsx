@@ -18,6 +18,7 @@ import { currencyId } from 'utils/currencyId'
 import { AddressInput } from '../AddressInputPanel/AddressInput'
 import { AmountInput } from './AmountInput'
 import { WithdrawModalView } from './WithdrawPopup'
+
 interface Props {
   currency?: Currency
   changeModal: (param: WithdrawModalView) => void
@@ -41,7 +42,7 @@ export const WithdrawRequestForm = ({ currency, changeModal }: Props) => {
   const onClick = () => {
     const tokenId = (secTokens[cid ?? ''] as any)?.tokenInfo?.id
     if (tokenId && !error && parsedAmount && !inputError) {
-      withdraw({ id: tokenId, amount: Number(parsedAmount?.toSignificant(18)), onSuccess, onError, receiver })
+      withdraw({ id: tokenId, amount: parsedAmount.toExact(), onSuccess, onError, receiver })
     }
   }
   const onSuccess = () => {
