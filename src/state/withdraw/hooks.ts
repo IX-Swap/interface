@@ -16,6 +16,7 @@ import { useTransactionAdder } from 'state/transactions/hooks'
 import { useCurrencyBalance } from 'state/wallet/hooks'
 import { isAddress } from 'utils'
 import { setCurrency, setTransaction, typeAmount, typeReceiver, withdrawCurrency } from './actions'
+import { removeSciNotation } from 'utils/formatNumber'
 
 export function useWithdrawState(): AppState['withdraw'] {
   return useSelector<AppState, AppState['withdraw']>((state) => state.withdraw)
@@ -95,7 +96,12 @@ export function useDerivedWithdrawInfo(): {
   }
 }
 export const withdrawToken = async ({ id, amount, receiver }: { id: number; amount: number; receiver: string }) => {
-  const response = await apiService.post(custody.withdraw, { amount, tokenId: id, fromAddress: receiver })
+  const formatedAmount = removeSciNotation(amount)
+  const response = await apiService.post(custody.withdraw, {
+    amount: formatedAmount,
+    tokenId: id,
+    fromAddress: receiver,
+  })
   return response
 }
 interface WithdrawProps {
