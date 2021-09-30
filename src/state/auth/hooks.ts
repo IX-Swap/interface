@@ -67,6 +67,7 @@ export function useLogin({
           const auth = await fetchToken()
 
           if (!auth) {
+            console.log({ ERROR70: 'no auth' })
             dispatch(postLogin.rejected({ errorMessage: 'Could not login' }))
             return LOGIN_STATUS.FAILED
           } else {
@@ -77,6 +78,8 @@ export function useLogin({
           return LOGIN_STATUS.SUCCESS
         }
       } catch (error: any) {
+        console.log({ ERROR80: error })
+        dispatch(postLogin.rejected({ errorMessage: 'Could not login' }))
         return LOGIN_STATUS.FAILED
       }
     },
