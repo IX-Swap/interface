@@ -26,6 +26,7 @@ export const BrokerDealerForm = React.forwardRef<any, Props>(({ dto }, ref) => {
       <input name="callbackEndpoint" value={callbackEndpoint} />
       <input name="hash" value={hash} />
       <input type="data" value={data} />
+      <input type="submit" />
     </FormWrapper>
   )
 })

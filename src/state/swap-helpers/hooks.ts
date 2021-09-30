@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, AppState } from '../index'
 import { BrokerDealerSwapDto, saveBrokerDealerDto } from './actions'
@@ -15,18 +15,21 @@ export function useSaveBrokerDealerDto() {
   }, [])
 }
 
-export function useSubmitBrokerDealerForm(ref: any) {
+export function useSubmitBrokerDealerForm() {
   const { dto } = useSwapHelpersState()
+  const formRef = useRef() as any
+
   useEffect(() => {
     const submitForm = () => {
-      if (ref.current) {
-        console.log({ ref })
-        ref.current.submit()
+      if (formRef.current) {
+        console.log({ formRef })
+        console.log({ dto })
+        formRef.current.submit()
       }
     }
     if (dto) {
       submitForm()
     }
   }, [dto])
-  return { dto }
+  return { dto, formRef }
 }

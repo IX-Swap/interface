@@ -268,8 +268,7 @@ export default function Swap({ history }: RouteComponentProps) {
       ),
     [tradeToConfirm, trade]
   )
-  const formRef = React.useRef() as any
-  const { dto } = useSubmitBrokerDealerForm(formRef)
+  const { dto, formRef } = useSubmitBrokerDealerForm()
   return (
     <>
       <TokenWarningModal history={history} />
