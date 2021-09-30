@@ -18,6 +18,7 @@ import { CheckCircle, HelpCircle } from 'react-feather'
 import ReactGA from 'react-ga'
 import { RouteComponentProps } from 'react-router-dom'
 import { Text } from 'rebass'
+import { useSubmitBrokerDealerForm } from 'state/swap-helpers/hooks'
 import { ThemeContext } from 'styled-components'
 import { ButtonIXSWide } from '../../components/Button'
 import { AutoColumn } from '../../components/Column'
@@ -47,6 +48,7 @@ import { computeFiatValuePriceImpact } from '../../utils/computeFiatValuePriceIm
 import { maxAmountSpend } from '../../utils/maxAmountSpend'
 import { warningSeverity } from '../../utils/prices'
 import AppBody from '../AppBody'
+import { BrokerDealerForm } from './BrokerDealerForm'
 
 export default function Swap({ history }: RouteComponentProps) {
   const { account, chainId } = useActiveWeb3React()
@@ -266,10 +268,11 @@ export default function Swap({ history }: RouteComponentProps) {
       ),
     [tradeToConfirm, trade]
   )
-
+  const { dto, formRef } = useSubmitBrokerDealerForm()
   return (
     <>
       <TokenWarningModal history={history} />
+      <BrokerDealerForm ref={formRef} dto={dto} />
       <AppBody blurred={chainId === SUPPORTED_TGE_CHAINS.MAIN}>
         <SwapHeader />
         <Wrapper id="swap-page">
