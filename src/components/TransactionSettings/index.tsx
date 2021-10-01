@@ -107,7 +107,7 @@ export default function TransactionSettings({ placeholderSlippage }: Transaction
               onClick={() => {
                 parseSlippageInput('')
               }}
-              active={userSlippageTolerance === 'auto'}
+              active={userSlippageTolerance === 'auto' && !slippageInput}
             >
               Auto
             </StyledOption>
