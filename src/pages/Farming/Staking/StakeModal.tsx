@@ -25,7 +25,10 @@ import { StakeInfoContainer, EllipsedText, ModalBottom } from './style'
 import { usePoolSizeState } from 'state/stake/hooks'
 import { DEFAULT_POOL_SIZE_LIMIT, POOL_SIZE_LOADING } from 'state/stake/poolSizeReducer'
 import { LoaderThin } from 'components/Loader/LoaderThin'
-import { formatNumber } from 'utils/formatNumber'
+import { tryParseAmount } from 'state/swap/helpers'
+import { useCurrency } from 'hooks/Tokens'
+import { useActiveWeb3React } from 'hooks/web3'
+import { IXS_ADDRESS } from 'constants/addresses'
 
 interface StakingModalProps {
   onDismiss: () => void
@@ -44,17 +47,23 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
   const checkAllowance = useCheckAllowance()
   const poolSizeState = usePoolSizeState()
   const period = selectedTier?.period || PERIOD.ONE_WEEK
+  const { chainId } = useActiveWeb3React()
+  const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
   const [poolLimitation, setPoolLimitation] = useState(calcPoolLimitation())
   const [isPoolLimitationLoading, setIsPoolLimitationLoading] = useState(poolSizeState[period] === POOL_SIZE_LOADING)
 
   function calcPoolLimitation(): string {
-    const filled = poolSizeState[period]
-    return formatNumber(DEFAULT_POOL_SIZE_LIMIT - filled)
+    const filled = tryParseAmount(poolSizeState[period], currency ?? undefined)
+    const maxPoolSize = tryParseAmount(DEFAULT_POOL_SIZE_LIMIT, currency ?? undefined)
+    if (filled && maxPoolSize) {
+      return maxPoolSize.subtract(filled).toExact()
+    }
+    return ''
   }
 
   useEffect(() => {
-    setPoolLimitation(calcPoolLimitation())
     setIsPoolLimitationLoading(poolSizeState[period] === POOL_SIZE_LOADING)
+    setPoolLimitation(calcPoolLimitation())
   }, [poolSizeState[period]])
 
   useEffect(() => {
@@ -107,6 +116,8 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
           setError('Not enough IXS')
         } else if (fTypedIXSAmount <= 0 || !fTypedIXSAmount) {
           setError('Wrong IXS amount')
+        } else if (poolLimitation && fTypedIXSAmount > parseFloat(poolLimitation)) {
+          setError('Pool limits exceeded')
         } else {
           setError('')
         }
@@ -118,8 +129,13 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
   }
 
   const onMaxClick = () => {
-    if (amountOfIXStoStakeInput?.current && IXSBalance) {
-      amountOfIXStoStakeInput.current.value = IXSBalance
+    if (amountOfIXStoStakeInput?.current && IXSBalance && poolLimitation) {
+      if (parseFloat(poolLimitation) > parseFloat(IXSBalance)) {
+        amountOfIXStoStakeInput.current.value = IXSBalance
+      } else {
+        amountOfIXStoStakeInput.current.value = poolLimitation
+      }
+
       onUserInput()
     }
   }
