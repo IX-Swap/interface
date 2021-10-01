@@ -8,22 +8,22 @@ import {
 
 import { PERIOD } from 'state/stake/reducer'
 
-export const DEFAULT_POOL_SIZE_LIMIT = 2_000_000
-export const POOL_SIZE_LOADING = -1
-export const POOL_SIZE_ERROR = -2
+export const DEFAULT_POOL_SIZE_LIMIT = '2000000'
+export const POOL_SIZE_LOADING = '-1'
+export const POOL_SIZE_ERROR = '-2'
 
 interface PoolSizeState {
-  [PERIOD.ONE_WEEK]: number
-  [PERIOD.ONE_MONTH]: number
-  [PERIOD.TWO_MONTHS]: number
-  [PERIOD.THREE_MONTHS]: number
+  [PERIOD.ONE_WEEK]: string
+  [PERIOD.ONE_MONTH]: string
+  [PERIOD.TWO_MONTHS]: string
+  [PERIOD.THREE_MONTHS]: string
 }
 
 const initialState: PoolSizeState = {
-  [PERIOD.ONE_WEEK]: 0,
-  [PERIOD.ONE_MONTH]: 0,
-  [PERIOD.TWO_MONTHS]: 0,
-  [PERIOD.THREE_MONTHS]: 0,
+  [PERIOD.ONE_WEEK]: '0',
+  [PERIOD.ONE_MONTH]: '0',
+  [PERIOD.TWO_MONTHS]: '0',
+  [PERIOD.THREE_MONTHS]: '0',
 }
 
 export default createReducer<PoolSizeState>(initialState, (builder) =>

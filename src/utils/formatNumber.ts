@@ -1,3 +1,4 @@
 export function formatNumber(num: number): string {
-  return num.toLocaleString('fr')
+  const str = num.toLocaleString('fr')
+  return str.replace(/,/, '.')
 }
