@@ -19,7 +19,9 @@ export const authorizerURL = {
   [AppFeature.Corporates]: '/identity/corporates/list',
   [AppFeature.Individuals]: '/identity/individuals/list',
   [AppFeature.DigitalSecurityWithdrawals]: '/accounts/security/withdrawals',
-  [AppFeature.Offerings]: '/issuance/dso/list'
+  [AppFeature.Offerings]: '/issuance/dso/list',
+  bulkAuthorizeCommitments: (action: 'approve' | 'reject') =>
+    `/issuance/commitments/${action}`
 }
 
 export const identityURL = {
@@ -97,6 +99,11 @@ export const accountsURL = {
       `/virtual-accounts/transactions/list/${virtualAccountId}/${userId}`,
     getPaymentMethods: (country: string, swiftCode: string) =>
       `/accounts/banks/payment-method?country=${country}&swiftCode=${swiftCode}`
+  },
+  commitments: {
+    getAllByUserId: (userId: string) => `/issuance/commitments/list/${userId}`,
+    confirmCommitment: (commitmentId: string) =>
+      `/issuance/commitments/${commitmentId}/confirmInvestment`
   }
 }
 
@@ -141,10 +148,10 @@ export const issuanceURL = {
     disable: (dsoId: string) => `/issuance/dso/${dsoId}/disable`,
     capitalCall: (userId: string, dsoId: string) =>
       `/issuance/dso/${userId}/${dsoId}/capitalCall`,
-    closeDeal: (userId: string, dsoId: string) =>
-      `/issuance/dso/${userId}/${dsoId}/closeDeal`,
+    closeDeal: () => `/issuance/closure/create`,
     closure: (closureId: string, issuerId: string) =>
-      `/issuance/closure/${closureId}/${issuerId}`
+      `/issuance/closure/${closureId}/${issuerId}`,
+    getDSOList: '/issuance/dso/list'
   }
 }
 
@@ -293,9 +300,15 @@ export const assetsURL = {
   getAssetsList: () => '/accounts/assets/list'
 }
 
+export const atlasOneURL = {
+  getSecurities: '/resources/securities',
+  getTimeSeries: '/resources/timeseries'
+}
+
 export const resources = {
   getSiteConfig: '/resources/siteConfig',
-  createOrUpdateMasDisclosure: '/resources/siteConfig/masDisclosure'
+  createOrUpdateMasDisclosure: '/resources/siteConfig/masDisclosure',
+  acceptMasDisclosure: '/resources/siteConfig/masDisclosure/accept'
 }
 
 export const virtualAccountsAudit = {

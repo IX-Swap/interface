@@ -10,7 +10,6 @@ import {
 import { activity, faqItem, videoLink } from '__fixtures__/issuance'
 import { getPersonName } from 'helpers/strings'
 import { getCorporateLegalName } from 'helpers/tables'
-import { DSOFormValues } from 'types/dso'
 
 describe('getActivityUserInfo', () => {
   it('returns photo and name of the person if individual identity is present', () => {
@@ -102,7 +101,7 @@ describe('getCreateDSOPayload', () => {
     expect(
       getCreateDSOPayload({
         subscriptionDocument: { _id: '2' }
-      } as Partial<DSOFormValues>)
+      } as any)
     ).toEqual({ subscriptionDocument: '2' })
   })
 
@@ -110,7 +109,7 @@ describe('getCreateDSOPayload', () => {
     expect(
       getCreateDSOPayload({
         documents: [{ value: { _id: '2' } } as any, {}]
-      } as Partial<DSOFormValues>)
+      } as any)
     ).toEqual({ documents: ['2'] })
   })
 
@@ -130,9 +129,7 @@ describe('getCreateDSOPayload', () => {
       leverage: numberToPercentage(testPayload.leverage)
     }
 
-    expect(getCreateDSOPayload(testPayload as Partial<DSOFormValues>)).toEqual(
-      result
-    )
+    expect(getCreateDSOPayload(testPayload as any)).toEqual(result)
   })
 
   it('returns correct result for faqs', () => {
@@ -140,7 +137,7 @@ describe('getCreateDSOPayload', () => {
     expect(
       getCreateDSOPayload({
         faqs: testPayload
-      } as Partial<DSOFormValues>)
+      } as any)
     ).toEqual({ faqs: getFAQsFieldsPayload(testPayload) })
   })
 
@@ -149,7 +146,7 @@ describe('getCreateDSOPayload', () => {
     expect(
       getCreateDSOPayload({
         videos: testPayload
-      } as Partial<DSOFormValues>)
+      } as any)
     ).toEqual({ videos: getVideosFieldsPayload(testPayload) })
   })
 })

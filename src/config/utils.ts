@@ -15,3 +15,13 @@ export const getAPIUrl = (value: string | undefined) => {
 export const getPercentageValue = (value: number) => {
   return value * 100
 }
+
+export const stringTruncate = (
+  value: string,
+  length: number,
+  ellipsis: boolean | undefined = true
+) => {
+  return `${value.substring(0, length)}${
+    ellipsis && value.length > length ? '...' : ''
+  }`
+}
