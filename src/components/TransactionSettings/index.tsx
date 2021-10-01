@@ -1,18 +1,17 @@
-import React, { useContext } from 'react'
-import { t, Trans } from '@lingui/macro'
 import { Percent } from '@ixswap1/sdk-core'
-import styled, { ThemeContext } from 'styled-components'
-
-import QuestionHelper from '../QuestionHelper'
-import { AutoColumn } from '../Column'
-import { RowBetween, RowFixed, RowStart } from '../Row'
+import { t, Trans } from '@lingui/macro'
+import { Option, OptionCustom, OptionRow } from 'components/OptionButton'
 import { DEFAULT_DEADLINE_FROM_NOW } from 'constants/misc'
-import { displayDeadline, displayUserSlippageTolerance } from './helpers'
 import { useDeadline } from 'hooks/useDeadline'
 import { useSlippage } from 'hooks/useSlippage'
-import { TYPE } from 'theme'
-import { Option, OptionRow, OptionCustom } from 'components/OptionButton'
+import React, { useContext } from 'react'
 import { Text } from 'rebass'
+import styled, { ThemeContext } from 'styled-components'
+import { TYPE } from 'theme'
+import { AutoColumn } from '../Column'
+import QuestionHelper from '../QuestionHelper'
+import { RowBetween, RowFixed, RowStart } from '../Row'
+import { displayDeadline, displayUserSlippageTolerance } from './helpers'
 
 const Input = styled.input`
   background: ${({ theme }) => theme.bg1};
@@ -58,6 +57,9 @@ const StyledOptionRow = styled(OptionRow)`
   `}
 `
 const StyledOption = styled(Option)`
+  :focus {
+    background: ${({ theme }) => theme.bg12};
+  }
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
     width: fit-content;
     padding: 10px;
