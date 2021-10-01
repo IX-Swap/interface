@@ -1,6 +1,6 @@
 import { t, Trans } from '@lingui/macro'
 import { ButtonIXSWide } from 'components/Button'
-import { ReactComponent as InfoIcon } from 'assets/images/attention.svg'
+import { ReactComponent as InfoIcon } from 'assets/images/info-filled.svg'
 import { ReactComponent as DropDown } from 'assets/images/dropdown.svg'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import { TextRow } from 'components/TextRow/TextRow'
@@ -11,7 +11,7 @@ import { useModalOpen } from 'state/application/hooks'
 import { useStakeFor, useIncreaseAllowance, useCheckAllowance } from 'state/stake/hooks'
 import { CloseIcon, ModalBlurWrapper, TYPE } from 'theme'
 import Row, { RowBetween, RowFixed, RowCenter } from 'components/Row'
-import { ModalContentWrapper, StakeModalTop } from 'components/earn/styled'
+import { EarnModalContentWrapper, StakeModalTop } from 'components/earn/styled'
 import { MouseoverTooltip } from 'components/Tooltip'
 import styled from 'styled-components'
 import { ReactComponent as ArrowDown } from '../../../assets/images/arrow.svg'
@@ -22,6 +22,13 @@ import { IconWrapper } from 'components/AccountDetails/styleds'
 import { ReactComponent as Checkmark } from 'assets/images/checked-solid-bg.svg'
 import { periodsInSeconds, periodsInDays } from 'constants/stakingPeriods'
 import { StakeInfoContainer, EllipsedText, ModalBottom } from './style'
+import { usePoolSizeState } from 'state/stake/hooks'
+import { DEFAULT_POOL_SIZE_LIMIT, POOL_SIZE_LOADING } from 'state/stake/poolSizeReducer'
+import { LoaderThin } from 'components/Loader/LoaderThin'
+import { tryParseAmount } from 'state/swap/helpers'
+import { useCurrency } from 'hooks/Tokens'
+import { useActiveWeb3React } from 'hooks/web3'
+import { IXS_ADDRESS } from 'constants/addresses'
 
 interface StakingModalProps {
   onDismiss: () => void
@@ -38,6 +45,26 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
   const { selectedTier, isApprovingIXS, isStaking, allowanceAmount, IXSBalance } = useStakingState()
   const stake = useStakeFor(selectedTier?.period)
   const checkAllowance = useCheckAllowance()
+  const poolSizeState = usePoolSizeState()
+  const period = selectedTier?.period || PERIOD.ONE_WEEK
+  const { chainId } = useActiveWeb3React()
+  const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
+  const [poolLimitation, setPoolLimitation] = useState(calcPoolLimitation())
+  const [isPoolLimitationLoading, setIsPoolLimitationLoading] = useState(poolSizeState[period] === POOL_SIZE_LOADING)
+
+  function calcPoolLimitation(): string {
+    const filled = tryParseAmount(poolSizeState[period], currency ?? undefined)
+    const maxPoolSize = tryParseAmount(DEFAULT_POOL_SIZE_LIMIT, currency ?? undefined)
+    if (filled && maxPoolSize) {
+      return maxPoolSize.subtract(filled).toExact()
+    }
+    return ''
+  }
+
+  useEffect(() => {
+    setIsPoolLimitationLoading(poolSizeState[period] === POOL_SIZE_LOADING)
+    setPoolLimitation(calcPoolLimitation())
+  }, [poolSizeState[period]])
 
   useEffect(() => {
     if (!isApprovingIXS) {
@@ -89,6 +116,8 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
           setError('Not enough IXS')
         } else if (fTypedIXSAmount <= 0 || !fTypedIXSAmount) {
           setError('Wrong IXS amount')
+        } else if (poolLimitation && fTypedIXSAmount > parseFloat(poolLimitation)) {
+          setError('Pool limits exceeded')
         } else {
           setError('')
         }
@@ -100,8 +129,13 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
   }
 
   const onMaxClick = () => {
-    if (amountOfIXStoStakeInput?.current && IXSBalance) {
-      amountOfIXStoStakeInput.current.value = IXSBalance
+    if (amountOfIXStoStakeInput?.current && IXSBalance && poolLimitation) {
+      if (parseFloat(poolLimitation) > parseFloat(IXSBalance)) {
+        amountOfIXStoStakeInput.current.value = IXSBalance
+      } else {
+        amountOfIXStoStakeInput.current.value = poolLimitation
+      }
+
       onUserInput()
     }
   }
@@ -158,7 +192,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
   return (
     <RedesignedWideModal isOpen={isOpen} onDismiss={wrappedOnDismiss} scrollable>
       <ModalBlurWrapper>
-        <ModalContentWrapper>
+        <EarnModalContentWrapper>
           <ModalTop>
             <RowBetween>
               <TYPE.title5>
@@ -177,7 +211,12 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                 {selectedTier?.limit !== TIER_LIMIT.UNLIMITED && (
                   <InputHintRight>
                     <RowFixed>
-                      <Trans>Pool limitation: 2 000 000</Trans>
+                      <Trans>Pool limitation:</Trans>&nbsp;
+                      {isPoolLimitationLoading ? (
+                        <LoaderThin />
+                      ) : (
+                        <span style={{ fontWeight: 600 }}>{poolLimitation}</span>
+                      )}
                       <StyledDropDown style={{ display: 'none' }} />
                     </RowFixed>
                   </InputHintRight>
@@ -235,7 +274,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                               ${'' ?? ''}
                               *Do note that IXS received will be equal to your IXSgov holdings at the time of swap.`}
                     >
-                      <IconWrapper size={20} style={{ transform: 'rotate(180deg)', marginLeft: '12px' }}>
+                      <IconWrapper size={20} style={{ marginLeft: '12px' }}>
                         <InfoIcon />
                       </IconWrapper>
                     </MouseoverTooltip>
@@ -251,7 +290,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                 textLeft={t`Distribute`}
                 textRight={
                   <EllipsedText>
-                    <div>{typedValue ? typedValue : 0}</div>&nbsp;IXSgov
+                    <div>{typedValue ? typedValue : 0}&nbsp;IXSgov</div>
                   </EllipsedText>
                 }
                 tooltipText={t`IXSgov is a tokenized asset representing your staked IXS on a 1:1 basis. IXSwap distributes the IXSgov to your wallet.
@@ -265,7 +304,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                 textLeft={t`Staking amount`}
                 textRight={
                   <EllipsedText>
-                    <div>{typedValue ? typedValue : 0}</div>&nbsp;IXS
+                    <div>{typedValue ? typedValue : 0}&nbsp;IXS</div>
                   </EllipsedText>
                 }
               />
@@ -287,7 +326,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                 textLeft={t`Estimated rewards`}
                 textRight={
                   <EllipsedText>
-                    <div>{estimateRewards()}</div>&nbsp;IXS
+                    <div>{estimateRewards()}&nbsp;IXS</div>
                   </EllipsedText>
                 }
                 tooltipText={t`This amount of rewards is based on assumption that your staked amount will be kept for the whole period of ${
@@ -317,7 +356,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                 </Trans>
               </TYPE.body1>
             </RowCenter>
-            <ActionButtons style={{ marginTop: '25px' }}>
+            <ActionButtons>
               <ButtonIXSWide data-testid="approve-staking" disabled={isDisabledApprove()} onClick={onApprove}>
                 {isApprovingIXS ? (
                   <Dots>
@@ -338,7 +377,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
               </ButtonIXSWide>
             </ActionButtons>
           </ModalBottom>
-        </ModalContentWrapper>
+        </EarnModalContentWrapper>
       </ModalBlurWrapper>
     </RedesignedWideModal>
   )
@@ -348,6 +387,8 @@ const ActionButtons = styled.div`
   display: grid;
   grid-gap: 13px;
   grid-template-columns: 50% 50%;
+  justify-content: center;
+  margin-top: 25px;
   @media (max-width: 540px) {
     grid-template-columns: 100%;
   }

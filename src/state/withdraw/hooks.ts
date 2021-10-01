@@ -1,6 +1,5 @@
 import { Currency, CurrencyAmount } from '@ixswap1/sdk-core'
 import { t } from '@lingui/macro'
-import { ActionTypes } from 'components/Vault/enum'
 import { BigNumber, utils } from 'ethers'
 import { useCurrency } from 'hooks/Tokens'
 import { useBurnWSecContract } from 'hooks/useContract'
@@ -10,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import apiService from 'services/apiService'
 import { custody } from 'services/apiUrls'
 import { AppDispatch, AppState } from 'state'
+import { useCancelDepositCallback } from 'state/deposit/hooks'
 import { useEventState, useGetEventCallback } from 'state/eventLog/hooks'
 import { tryParseAmount } from 'state/swap/helpers'
 import { useTransactionAdder } from 'state/transactions/hooks'
@@ -94,13 +94,17 @@ export function useDerivedWithdrawInfo(): {
     inputError,
   }
 }
-export const withdrawToken = async ({ id, amount, receiver }: { id: number; amount: number; receiver: string }) => {
-  const response = await apiService.post(custody.withdraw, { amount, tokenId: id, fromAddress: receiver })
+export const withdrawToken = async ({ id, amount, receiver }: { id: number; amount: string; receiver: string }) => {
+  const response = await apiService.post(custody.withdraw, {
+    amount,
+    tokenId: id,
+    fromAddress: receiver,
+  })
   return response
 }
 interface WithdrawProps {
   id: number
-  amount: number
+  amount: string
   receiver: string
   onSuccess: () => void
   onError: () => void
@@ -114,13 +118,20 @@ export function useWithdrawCallback(
   const getEvents = useGetEventCallback()
   const { tokenId } = useEventState()
   const addTransaction = useTransactionAdder()
+  const cancelAction = useCancelDepositCallback()
   return useCallback(
     async ({ id, amount, onSuccess, onError, receiver }: WithdrawProps) => {
       dispatch(withdrawCurrency.pending())
+      let withdrawId = null
       try {
         const response = await withdrawToken({ id, amount, receiver })
-        const { data } = response
-        const { operator, amount: sum, deadline, v, r, s } = data
+        const data = response?.data
+        if (!data) {
+          throw new Error(response?.message || t`An error occured. Could not submit withdraw request`)
+        }
+        const { withdrawRequest, signature } = data
+        withdrawId = withdrawRequest.id
+        const { operator, amount: sum, deadline, v, r, s } = signature
         const burned = await router?.burn(
           operator,
           BigNumber.from(sum.hex),
@@ -129,18 +140,18 @@ export function useWithdrawCallback(
           utils.hexlify(r.data),
           utils.hexlify(s.data)
         )
-
-        getEvents({ tokenId, filter: ActionTypes.WITHDRAW })
         if (!burned.hash) {
-          dispatch(withdrawCurrency.rejected({ errorMessage: t`Could not submit withdraw request` }))
-        } else {
-          addTransaction(burned, { summary: t`Withdraw ${amount} ${currencySymbol}` })
-          dispatch(setTransaction({ tx: burned.hash }))
+          throw new Error(t`An error occured. Could not submit withdraw request`)
         }
-
+        getEvents({ tokenId, filter: 'all' })
+        addTransaction(burned, { summary: t`Withdraw ${amount} ${currencySymbol}` })
+        dispatch(setTransaction({ tx: burned.hash }))
         dispatch(withdrawCurrency.fulfilled())
         onSuccess()
       } catch (error) {
+        if (withdrawId) {
+          await cancelAction({ requestId: withdrawId })
+        }
         console.error(`Could not withdraw amount`, error)
         dispatch(withdrawCurrency.rejected({ errorMessage: error.message }))
         onError()

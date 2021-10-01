@@ -18,6 +18,7 @@ import { setTransaction } from 'state/withdraw/actions'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { hexToRGBA } from 'utils/themeHelper'
 import {
+  claimAll,
   getDetails,
   getIsPrivateBuyer,
   saveAvailableClaim,
@@ -153,7 +154,10 @@ export function useClaimAll(): () => Promise<any> {
   const { chainId } = useActiveWeb3React()
   const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
   const { customVestingAddress } = useVestingState()
-
+  const { fetchDetails } = useVestingDetails()
+  const { fetchClaimable } = useAvailableClaim()
+  const { fetchPayouts } = usePayouts()
+  const { getVesting } = useVestingStatus()
   const address = customVestingAddress || account
 
   return useCallback(async () => {
@@ -161,12 +165,13 @@ export function useClaimAll(): () => Promise<any> {
       if (!address) {
         return false
       }
+      dispatch(claimAll.pending())
       const claimable = await vesting?.availableClaim(address)
       const claimed = await vesting?.claimFor(address, claimable)
 
       if (currency) {
         addTransaction(claimed, {
-          summary: t`Released ${formatCurrencyAmount(
+          summary: t`Claimed ${formatCurrencyAmount(
             CurrencyAmount.fromRawAmount(currency, claimable),
             currency?.decimals ?? 18
           )} IXS`,
@@ -174,27 +179,19 @@ export function useClaimAll(): () => Promise<any> {
       }
 
       dispatch(setTransaction({ tx: claimed.hash ?? claimed.tx }))
-
-      dispatch(getDetails.pending())
-
       await claimed.wait()
-
-      const updatedClaimable = await vesting?.availableClaim(address)
-      const vestingDetails = await vesting?.details(address)
-
-      const result = await vesting?.payouts(address)
-      const payouts = result.map((payout: [BigNumber, BigNumber]) => [payout[0].toNumber(), payout[1].toString()])
-
-      dispatch(getDetails.fulfilled({ details: vestingResponseAdapter(vestingDetails) }))
-      dispatch(saveAvailableClaim.fulfilled({ availableClaim: updatedClaimable.toString() }))
-      dispatch(savePayouts.fulfilled({ payouts }))
+      dispatch(claimAll.fulfilled())
+      await getVesting(address)
+      await fetchDetails(address)
+      await fetchClaimable(address)
+      await fetchPayouts(address)
       return Boolean(claimed)
     } catch (error) {
-      console.error(`Could not claim`, error)
-      dispatch(getDetails.rejected({ errorMessage: `Could not claim` }))
+      console.error(`Could not claim all `, error)
+      dispatch(claimAll.rejected())
       return false
     }
-  }, [vesting, address, dispatch, addTransaction, currency])
+  }, [vesting, address, addTransaction, currency, fetchDetails, fetchClaimable, fetchPayouts, getVesting])
 }
 
 export function useVestingStatus() {
@@ -203,16 +200,19 @@ export function useVestingStatus() {
   const getIsVesting = useIsVestingCallback()
   const dispatch = useDispatch<AppDispatch>()
 
-  const getVesting = useCallback(async (address?: string) => {
-    try {
-      dispatch(saveIsVesting.pending())
-      const vestingResponse = await getIsVesting(address)
-      dispatch(saveVestingStatus(vestingResponse ? VestingStatus.VALID : VestingStatus.ZERO_BALANCE))
-      dispatch(saveIsVesting.fulfilled({ isVesting: vestingResponse }))
-    } catch (error) {
-      dispatch(saveIsVesting.rejected({ errorMessage: '`Could not get vesting status' }))
-    }
-  }, [])
+  const getVesting = useCallback(
+    async (address?: string) => {
+      try {
+        dispatch(saveIsVesting.pending())
+        const vestingResponse = await getIsVesting(address)
+        dispatch(saveVestingStatus(vestingResponse ? VestingStatus.VALID : VestingStatus.ZERO_BALANCE))
+        dispatch(saveIsVesting.fulfilled({ isVesting: vestingResponse }))
+      } catch (error) {
+        dispatch(saveIsVesting.rejected({ errorMessage: '`Could not get vesting status' }))
+      }
+    },
+    [getIsVesting]
+  )
 
   useEffect(() => {
     if (!account && !customVestingAddress) {
@@ -224,7 +224,7 @@ export function useVestingStatus() {
     if (account) {
       getVesting(account)
     }
-  }, [account])
+  }, [account, getVesting])
 
   return { vestingStatus, getVesting }
 }
@@ -245,7 +245,7 @@ export function useVestingDetails() {
         dispatch(getDetails.rejected({ errorMessage: error.message }))
       }
     },
-    [vesting, account, dispatch]
+    [vesting, dispatch]
   )
 
   useEffect(() => {
@@ -343,6 +343,7 @@ export function useVestingState(): AppState['vesting'] {
       data.loadingDetails ||
       data.loadingAvailableClaim ||
       data.loadingPayouts ||
-      data.loadingVesting,
+      data.loadingVesting ||
+      data.loadingClaimAll,
   }
 }

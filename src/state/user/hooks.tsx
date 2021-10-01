@@ -1,5 +1,6 @@
 import { Currency, CurrencyAmount, Percent, Token, TradeType } from '@ixswap1/sdk-core'
 import { Pair, Trade as V2Trade, TradeAuthorizationDigest } from '@ixswap1/v2-sdk'
+import { ERROR_ACCREDITATION_STATUSES } from 'components/Vault/enum'
 import { IXS_ADDRESS, IXS_GOVERNANCE_ADDRESS } from 'constants/addresses'
 import { SupportedLocale } from 'constants/locales'
 import { useV2Pair } from 'hooks/useV2Pairs'
@@ -16,10 +17,12 @@ import { clearEventLog } from 'state/eventLog/actions'
 import {
   listToSecTokenMap,
   SecTokenAddressMap,
+  useAccreditationStatus,
   useAreBothSecTokens,
   useSecTokenId,
   useSecTokensFromMap,
 } from 'state/secTokens/hooks'
+import { useSaveBrokerDealerDto } from 'state/swap-helpers/hooks'
 import { useSimpleTokenBalanceWithLoading } from 'state/wallet/hooks'
 import { SecToken } from 'types/secToken'
 import { currencyId } from 'utils/currencyId'
@@ -47,6 +50,7 @@ import {
   updateUserSingleHopOnly,
   updateUserSlippageTolerance,
 } from './actions'
+import { OrderType } from './enum'
 
 function serializeToken(token: Token): SerializedToken {
   return {
@@ -357,8 +361,15 @@ export const getUserSecTokensList = async () => {
   return result.data
 }
 
-export const fetchTokenAuthorization = async (tokenId: number, amount0: string, amount1: string) => {
-  const result = await apiService.post(tokens.authorize(tokenId), { amount0, amount1 })
+interface AuthorizationParams {
+  tokenId: number
+  amount: string
+  pairAddress?: string
+  orderType: string
+}
+
+export const fetchTokenAuthorization = async ({ tokenId, amount, pairAddress, orderType }: AuthorizationParams) => {
+  const result = await apiService.post(tokens.authorize(tokenId), { amount, pairAddress, orderType })
   return result.data
 }
 
@@ -366,11 +377,21 @@ export const useGetTokenAuthorization = () => {
   const dispatch = useDispatch<AppDispatch>()
 
   return useCallback(
-    async ({ amount0, amount1, tokenId }: { amount0?: string; amount1?: string; tokenId?: number }) => {
-      if (!tokenId || !amount0 || !amount1) return null
+    async ({
+      amount,
+      pairAddress,
+      orderType,
+      tokenId,
+    }: {
+      amount: string
+      pairAddress?: string
+      orderType: OrderType
+      tokenId?: number
+    }) => {
+      if (!tokenId || !amount || !pairAddress || !orderType) return null
       dispatch(authorizeSecToken.pending())
       try {
-        const result = await fetchTokenAuthorization(tokenId, amount0, amount1)
+        const result = await fetchTokenAuthorization({ tokenId, amount, pairAddress, orderType })
         dispatch(authorizeSecToken.fulfilled())
         return result
       } catch (e) {
@@ -399,22 +420,36 @@ export function useSwapAuthorization(
   const tokenId0 = useSecTokenId({ currencyId: (inputToken as any)?.address })
   const tokenId1 = useSecTokenId({ currencyId: (outputToken as any)?.address })
   const getAuthorization = useGetTokenAuthorization()
-  const [authorization, setAuthorization] = useState<TradeAuthorizationDigest>()
   const amount0 = trade ? getStringAmount(trade?.maximumAmountIn(allowedSlippage)) : ''
   const amount1 = trade ? getStringAmount(trade?.minimumAmountOut(allowedSlippage)) : ''
   const firstIsSec = (inputToken as any)?.isSecToken
+  const saveBrokerDealerDto = useSaveBrokerDealerDto()
 
-  useEffect(() => {
+  const fetchAuthorization = useCallback(async () => {
     if (amount0 && amount1 && pair?.isSecurity) {
-      fetchAuthorization()
+      await fetchAuthorization()
     }
     async function fetchAuthorization() {
       const usedToken = firstIsSec ? tokenId0 : tokenId1
-      const result = await getAuthorization({ amount0, amount1, tokenId: usedToken })
-      setAuthorization(firstIsSec ? [result, null] : [null, result])
+      const amount = firstIsSec ? amount0 : amount1
+      const orderType = firstIsSec ? OrderType.SELL : OrderType.BUY
+      const pairAddress = pair?.liquidityToken.address
+      const result = await getAuthorization({ amount, orderType, pairAddress, tokenId: usedToken })
+      saveBrokerDealerDto(result)
     }
-  }, [amount0, amount1, getAuthorization, pair?.isSecurity, firstIsSec, tokenId0, tokenId1, allowedSlippage])
-  return authorization
+  }, [
+    amount0,
+    amount1,
+    getAuthorization,
+    pair?.isSecurity,
+    pair?.liquidityToken?.address,
+    firstIsSec,
+    tokenId0,
+    tokenId1,
+    allowedSlippage,
+    saveBrokerDealerDto,
+  ])
+  return fetchAuthorization
 }
 
 export function useSwapIsBothSecTokens(trade?: V2Trade<Currency, Currency, TradeType> | null) {
@@ -476,16 +511,24 @@ export const postPassAccreditation = async ({ tokenId }: { tokenId: number }) =>
   return result.data
 }
 
+export const restartAccreditation = async ({ accreditationId }: { accreditationId: number }) => {
+  const result = await apiService.post(kyc.restartAccreditation(accreditationId), {})
+  return result.data
+}
+
 export const chooseBrokerDealer = async ({ pairId }: { pairId: number }) => {
   const result = await apiService.post(broker.choose(pairId), {})
   return result.data
 }
 
-export function usePassAccreditation(): (tokenId: number, brokerDealerPairId: number) => Promise<void> {
+export function usePassAccreditation(
+  currencyId?: string
+): (tokenId: number, brokerDealerPairId: number) => Promise<void> {
   const dispatch = useDispatch<AppDispatch>()
   const login = useLogin({ mustHavePreviousLogin: false, expireLogin: false })
   const fetchTokens = useFetchUserSecTokenListCallback()
   const toggle = useChooseBrokerDealerModalToggle()
+  const { status: accreditationStatus, accreditationRequest } = useAccreditationStatus(currencyId)
   // note: prevent dispatch if using for list search or unsupported list
   return useCallback(
     async (tokenId: number, brokerDealerPairId: number) => {
@@ -494,6 +537,13 @@ export function usePassAccreditation(): (tokenId: number, brokerDealerPairId: nu
         const status = await login()
         if (status === LOGIN_STATUS.SUCCESS) {
           await chooseBrokerDealer({ pairId: brokerDealerPairId })
+          if (
+            accreditationRequest &&
+            accreditationStatus &&
+            ERROR_ACCREDITATION_STATUSES.includes(accreditationStatus)
+          ) {
+            await restartAccreditation({ accreditationId: accreditationRequest.id })
+          }
           await postPassAccreditation({ tokenId })
         } else {
           dispatch(passAccreditation.rejected({ errorMessage: 'Could not login' }))
@@ -504,10 +554,10 @@ export function usePassAccreditation(): (tokenId: number, brokerDealerPairId: nu
         toggle()
       } catch (error) {
         console.debug(`Failed to pass accreditation`, error)
-        dispatch(passAccreditation.rejected({ errorMessage: error.message }))
+        dispatch(passAccreditation.rejected({ errorMessage: String((error as any)?.message) }))
       }
     },
-    [dispatch, login, fetchTokens, toggle]
+    [dispatch, login, fetchTokens, toggle, accreditationRequest, accreditationStatus]
   )
 }
 
@@ -536,14 +586,19 @@ export function useAccount() {
   }, [expiresAt, account, authenticate, token])
 
   // when user logins to another account clear his data and relogin him
+  // run with an interval of 5 sec in cases when user changes fast from an account to another
+  // so the user won't end up authenticated with a different account
 
   useEffect(() => {
-    if (account && savedAccount && savedAccount !== account) {
-      dispatch(saveToken({ value: { token: '', expiresAt: 0 } }))
-      dispatch(clearUserData())
-      dispatch(clearEventLog())
-      authenticate()
-      dispatch(saveAccount({ account }))
-    }
+    const interval = setInterval(() => {
+      if (account && savedAccount && savedAccount !== account) {
+        dispatch(saveToken({ value: { token: '', expiresAt: 0 } }))
+        dispatch(clearUserData())
+        dispatch(clearEventLog())
+        authenticate()
+        dispatch(saveAccount({ account }))
+      }
+    }, 5000)
+    return () => clearInterval(interval)
   }, [account, savedAccount, dispatch, login, getUserSecTokens, authenticate])
 }

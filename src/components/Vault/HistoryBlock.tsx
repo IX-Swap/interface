@@ -21,7 +21,9 @@ export const HistoryBlock = ({ currency }: Props) => {
   const tokenId = useSecTokenId({ currencyId: (currency as any)?.address })
   const getEvents = useGetEventCallback()
   useEffect(() => {
-    getEvents({ tokenId, filter: 'all' })
+    if (tokenId) {
+      getEvents({ tokenId, filter: 'all' })
+    }
   }, [getEvents, tokenId])
   return (
     <>

@@ -17,13 +17,12 @@ import { TYPE } from 'theme'
 import { currencyId } from 'utils/currencyId'
 import { AddressInput } from '../AddressInputPanel/AddressInput'
 import { AmountInput } from './AmountInput'
-import { DepositModalView } from './DepositPopup'
 
 interface Props {
   currency?: Currency
-  setModalView: (param: DepositModalView) => void
 }
-export const DepositRequestForm = ({ currency, setModalView }: Props) => {
+
+export const DepositRequestForm = ({ currency }: Props) => {
   const { account } = useActiveWeb3React()
   const { amount, sender, currencyId: cid } = useDepositState()
   const { inputError, parsedAmount } = useDerivedDepositInfo()
@@ -32,24 +31,13 @@ export const DepositRequestForm = ({ currency, setModalView }: Props) => {
   const { secTokens } = useUserSecTokens()
   const deposit = useDepositCallback()
   const error = Boolean(sender.length > 0 && !loading && !address)
-  const onSuccess = () => {
-    setModalView(DepositModalView.SEND_INFO)
-  }
-  const onError = () => {
-    setModalView(DepositModalView.ERROR)
-  }
-  const onPending = () => {
-    setModalView(DepositModalView.PENDING)
-  }
+
   const onClick = () => {
     const tokenId = (secTokens[cid ?? ''] as any)?.tokenInfo?.id
     if (tokenId && !error && parsedAmount && !inputError && address) {
       deposit({
         id: tokenId,
         amount: Number(parsedAmount?.toSignificant(5)),
-        onPending,
-        onSuccess,
-        onError,
         fromAddress: address,
       })
     }

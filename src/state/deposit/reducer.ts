@@ -1,12 +1,18 @@
 import { createReducer } from '@reduxjs/toolkit'
-import { depositSecTokens, setCurrency, typeAmount, typeSender } from './actions'
-
+import { depositSecTokens, setCurrency, setError, setLoading, setModalView, typeAmount, typeSender } from './actions'
+export enum DepositModalView {
+  CREATE_REQUEST,
+  SEND_INFO,
+  PENDING,
+  ERROR,
+}
 export interface DepositState {
   readonly amount: string
   readonly sender: string
   readonly currencyId?: string
   readonly loadingDeposit: boolean
   readonly depositError: string | null
+  readonly modalView: DepositModalView
 }
 
 const initialState: DepositState = {
@@ -15,6 +21,7 @@ const initialState: DepositState = {
   currencyId: '',
   loadingDeposit: false,
   depositError: null,
+  modalView: DepositModalView.CREATE_REQUEST,
 }
 
 export default createReducer<DepositState>(initialState, (builder) =>
@@ -48,5 +55,14 @@ export default createReducer<DepositState>(initialState, (builder) =>
     .addCase(depositSecTokens.rejected, (state, { payload: { errorMessage } }) => {
       state.loadingDeposit = false
       state.depositError = errorMessage
+    })
+    .addCase(setError, (state, { payload: { errorMessage } }) => {
+      state.depositError = errorMessage
+    })
+    .addCase(setLoading, (state, { payload: { loading } }) => {
+      state.loadingDeposit = loading
+    })
+    .addCase(setModalView, (state, { payload: { view } }) => {
+      state.modalView = view
     })
 )

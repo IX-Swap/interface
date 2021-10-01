@@ -18,8 +18,9 @@ import { CheckCircle, HelpCircle } from 'react-feather'
 import ReactGA from 'react-ga'
 import { RouteComponentProps } from 'react-router-dom'
 import { Text } from 'rebass'
+import { useSubmitBrokerDealerForm } from 'state/swap-helpers/hooks'
 import { ThemeContext } from 'styled-components'
-import { ButtonIXSGradient, ButtonIXSWide } from '../../components/Button'
+import { ButtonIXSWide } from '../../components/Button'
 import { AutoColumn } from '../../components/Column'
 import CurrencyLogo from '../../components/CurrencyLogo'
 import Loader from '../../components/Loader'
@@ -34,7 +35,7 @@ import useENSAddress from '../../hooks/useENSAddress'
 import { useERC20PermitFromTrade, UseERC20PermitState } from '../../hooks/useERC20Permit'
 import useIsArgentWallet from '../../hooks/useIsArgentWallet'
 import { useIsSwapUnsupported } from '../../hooks/useIsSwapUnsupported'
-import { useSwapCallback } from '../../hooks/useSwapCallback'
+import { useSwapCallback, useSwapCallbackError } from '../../hooks/useSwapCallback'
 import { Version } from '../../hooks/useToggledVersion'
 import { useUSDCValue } from '../../hooks/useUSDCPrice'
 import useWrapCallback, { WrapType } from '../../hooks/useWrapCallback'
@@ -47,6 +48,7 @@ import { computeFiatValuePriceImpact } from '../../utils/computeFiatValuePriceIm
 import { maxAmountSpend } from '../../utils/maxAmountSpend'
 import { warningSeverity } from '../../utils/prices'
 import AppBody from '../AppBody'
+import { BrokerDealerForm } from './BrokerDealerForm'
 
 export default function Swap({ history }: RouteComponentProps) {
   const { account, chainId } = useActiveWeb3React()
@@ -148,13 +150,17 @@ export default function Swap({ history }: RouteComponentProps) {
   }, [approvalState, approvalSubmitted])
 
   const maxInputAmount: CurrencyAmount<Currency> | undefined = maxAmountSpend(currencyBalances[Field.INPUT])
-
   // the callback to execute the swap
-  const { callback: swapCallback, error: swapCallbackError } = useSwapCallback(trade, allowedSlippage, recipient)
+  const getSwapCallback = useSwapCallback(trade, allowedSlippage, recipient)
+  const { error: swapCallbackError } = useSwapCallbackError(trade, allowedSlippage, recipient)
 
   const [singleHopOnly] = useUserSingleHopOnly()
 
-  const handleSwap = useCallback(() => {
+  const handleSwap = useCallback(async () => {
+    const { callback: swapCallback } = await getSwapCallback()
+    if (swapCallbackError) {
+      return
+    }
     if (!swapCallback) {
       return
     }
@@ -200,7 +206,7 @@ export default function Swap({ history }: RouteComponentProps) {
       })
   }, [
     priceImpact,
-    swapCallback,
+    getSwapCallback,
     tradeToConfirm,
     showConfirm,
     recipient,
@@ -262,10 +268,11 @@ export default function Swap({ history }: RouteComponentProps) {
       ),
     [tradeToConfirm, trade]
   )
-
+  const { dto, formRef } = useSubmitBrokerDealerForm()
   return (
     <>
       <TokenWarningModal history={history} />
+      <BrokerDealerForm ref={formRef} dto={dto} />
       <AppBody blurred={chainId === SUPPORTED_TGE_CHAINS.MAIN}>
         <SwapHeader />
         <Wrapper id="swap-page">
@@ -292,7 +299,7 @@ export default function Swap({ history }: RouteComponentProps) {
                 {trade && <OutputInfo {...{ trade, recipient, allowedSlippage }} />}
                 <BottomGrouping>
                   <ButtonIXSWide onClick={handleSwap} disabled={showAcceptChanges} data-testid="confirm-swap">
-                    <Trans>Confirm Swap</Trans>
+                    <Trans>Confirm swap</Trans>
                   </ButtonIXSWide>
                 </BottomGrouping>
               </>
@@ -301,7 +308,7 @@ export default function Swap({ history }: RouteComponentProps) {
               <BottomGrouping>
                 {swapIsUnsupported ? (
                   <ButtonIXSWide disabled={true} data-testid="unsupported-asset">
-                    <Trans>Unsupported Asset</Trans>
+                    <Trans>Unsupported asset</Trans>
                   </ButtonIXSWide>
                 ) : !account ? (
                   <ButtonIXSWide onClick={toggleWalletModal} data-testid="connect-wallet-from-swap">
@@ -327,7 +334,7 @@ export default function Swap({ history }: RouteComponentProps) {
                 ) : showApproveFlow ? (
                   <AutoRow style={{ flexWrap: 'nowrap', width: '100%' }}>
                     <AutoColumn style={{ width: '100%' }} gap="12px">
-                      <ButtonIXSGradient
+                      <ButtonIXSWide
                         onClick={handleApprove}
                         disabled={
                           approvalState !== ApprovalState.NOT_APPROVED ||
@@ -374,7 +381,7 @@ export default function Swap({ history }: RouteComponentProps) {
                             </MouseoverTooltip>
                           )}
                         </AutoRow>
-                      </ButtonIXSGradient>
+                      </ButtonIXSWide>
                       <ButtonIXSWide
                         onClick={() => {
                           if (expertMode) {
@@ -400,9 +407,9 @@ export default function Swap({ history }: RouteComponentProps) {
                       >
                         <Text fontSize={17} fontWeight={600}>
                           {priceImpactTooHigh ? (
-                            <Trans>High Price Impact</Trans>
+                            <Trans>High price impact</Trans>
                           ) : priceImpactSeverity > 2 ? (
-                            <Trans>Price Impact is high. Swap Anyway</Trans>
+                            <Trans>Price impact is high. Swap anyway</Trans>
                           ) : (
                             <Trans>Swap</Trans>
                           )}
@@ -433,9 +440,9 @@ export default function Swap({ history }: RouteComponentProps) {
                       {swapInputError ? (
                         swapInputError
                       ) : priceImpactTooHigh ? (
-                        <Trans>Price Impact Too High</Trans>
+                        <Trans>Price impact too high</Trans>
                       ) : priceImpactSeverity > 2 ? (
-                        <Trans>Price Impact is high. Swap Anyway</Trans>
+                        <Trans>Price impact is high. Swap anyway</Trans>
                       ) : (
                         <Trans>Swap</Trans>
                       )}

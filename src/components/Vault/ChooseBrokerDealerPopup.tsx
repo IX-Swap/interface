@@ -2,11 +2,10 @@ import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import Row, { RowBetween } from 'components/Row'
-import { ModalContentWrapper } from 'components/SearchModal/styleds'
 import React, { useCallback, useEffect, useState } from 'react'
 import { ApplicationModal } from 'state/application/actions'
 import { useChooseBrokerDealerModalToggle, useModalOpen } from 'state/application/hooks'
-import { ModalBlurWrapper } from 'theme'
+import { ModalBlurWrapper, ModalContentWrapper } from 'theme'
 import { CloseIcon, TYPE } from '../../theme'
 import { ModalPadding } from './styleds'
 import { ButtonIXSWide } from 'components/Button'
@@ -15,7 +14,7 @@ import { ReactComponent as Checkmark } from 'assets/images/checked-solid-bg.svg'
 import { usePassAccreditation } from 'state/user/hooks'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 
-export const ChooseBrokerDealerPopup = ({ tokenId }: { tokenId: any }) => {
+export const ChooseBrokerDealerPopup = ({ tokenId, currencyId }: { tokenId: any; currencyId?: string }) => {
   const isOpen = useModalOpen(ApplicationModal.CHOOSE_BROKER_DEALER)
   const toggle = useChooseBrokerDealerModalToggle()
 
@@ -25,18 +24,22 @@ export const ChooseBrokerDealerPopup = ({ tokenId }: { tokenId: any }) => {
 
   const fetchBrokerDealerPairs = useFetchBrokerDealers()
   useEffect(() => {
-    fetchBrokerDealerPairs(tokenId)
+    if (tokenId) {
+      fetchBrokerDealerPairs(tokenId)
+    }
   }, [tokenId])
 
   useEffect(() => {
-    setSelectedBrokerPair(brokerDealerPairs[0]?.id)
+    if (brokerDealerPairs) {
+      setSelectedBrokerPair(brokerDealerPairs[0]?.id)
+    }
   }, [brokerDealerPairs])
 
   const onClose = useCallback(() => {
     toggle()
   }, [toggle])
 
-  const passAccreditation = usePassAccreditation()
+  const passAccreditation = usePassAccreditation(currencyId)
 
   return (
     <RedesignedWideModal
@@ -49,12 +52,12 @@ export const ChooseBrokerDealerPopup = ({ tokenId }: { tokenId: any }) => {
       <ModalBlurWrapper data-testid="choose-broker-dealer-and-custodian-popup">
         <ModalContentWrapper style={{ borderRadius: '12px' }}>
           <ModalPadding>
-            <RowBetween>
+            <ModalHeader>
               <TYPE.title5>
                 <Trans>Broker dealer and Custodian</Trans>
               </TYPE.title5>
-              <CloseIcon data-testid="cross" onClick={onClose} />
-            </RowBetween>
+              <CloseIcon data-testid="cross" onClick={onClose} className="close-icon" />
+            </ModalHeader>
             <Row style={{ opacity: '0.7', marginTop: '18px' }}>
               <TYPE.description2>
                 <Trans>Please choose broker dealer and custodian to start accreditation process</Trans>
@@ -78,17 +81,18 @@ export const ChooseBrokerDealerPopup = ({ tokenId }: { tokenId: any }) => {
                   <TYPE.body4>{pair?.pair?.brokerDealer?.name}</TYPE.body4>&nbsp;—&nbsp;
                   <TYPE.body4 style={{ fontWeight: 400 }}>{pair?.pair?.custodian?.name}</TYPE.body4>
                 </div>
-                <IconWrapper
-                  size={16}
-                  className={`selected-checkmark ${selectedBrokerPair === pair?.id ? 'show' : ''}`}
-                >
-                  <Checkmark />
+                <IconWrapper size={28}>
+                  {selectedBrokerPair === pair?.id ? (
+                    <Checkmark className="selected-checkmark" />
+                  ) : (
+                    <CheckmarkPlaceholder />
+                  )}
                 </IconWrapper>
               </BrokerDealerAndCustodianPair>
             ))}
           </div>
-          <ModalPadding>
-            <Row style={{ marginBottom: '24px' }}>
+          <StartAccreditationButtonWrapper>
+            <Row style={{ marginBottom: '24px' }} className="start-accreditation-button-row">
               {!accreditationStarted && (
                 <ButtonIXSWide
                   disabled={accreditationStarted}
@@ -107,12 +111,23 @@ export const ChooseBrokerDealerPopup = ({ tokenId }: { tokenId: any }) => {
                 </div>
               )}
             </Row>
-          </ModalPadding>
+          </StartAccreditationButtonWrapper>
         </ModalContentWrapper>
       </ModalBlurWrapper>
     </RedesignedWideModal>
   )
 }
+
+const ModalHeader = styled(RowBetween)`
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+      align-items: flex-start;
+
+      .close-icon {
+        margin-top: 0.3rem;
+        stroke-width: 2.5;
+      }
+  `};
+`
 
 const BrokerDealerAndCustodianPair = styled(Row)`
   padding: 10px 0;
@@ -124,26 +139,30 @@ const BrokerDealerAndCustodianPair = styled(Row)`
   }
 
   .pair-text {
-    margin: 0 40px;
+    margin: 0 18px 0 40px;
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
+    ${({ theme }) => theme.mediaWidth.upToSmall`
+      margin: 0 16px;
+    `};
   }
+`
 
-  .selected-checkmark {
-    margin-right: 40px;
-    display: none;
-  }
-
-  .selected-checkmark.show {
-    display: flex;
-  }
+const CheckmarkPlaceholder = styled.div`
+  border: 2px solid #372e5e;
+  box-sizing: border-box;
+  height: 28px;
+  width: 28px;
+  border-radius: 100%;
+  opacity: 0.6;
 `
 
 export const IconWrapper = styled.div<{ size?: number }>`
   ${({ theme }) => theme.flexColumnNoWrap};
+  margin-right: 40px;
   align-items: center;
   justify-content: center;
-  margin-right: 8px;
   & > img,
   span {
     height: ${({ size }) => (size ? size + 'px' : '32px')};
@@ -151,5 +170,17 @@ export const IconWrapper = styled.div<{ size?: number }>`
   }
   ${({ theme }) => theme.mediaWidth.upToMedium`
     align-items: flex-end;
+  `};
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+      margin-right: 16px;
+  `};
+`
+const StartAccreditationButtonWrapper = styled(ModalPadding)`
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    margin-top: auto;
+
+    .start-accreditation-button-row {
+      margin-bottom: 10px !important;
+    }
   `};
 `

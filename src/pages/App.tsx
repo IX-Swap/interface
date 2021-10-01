@@ -12,7 +12,6 @@ import { routes } from 'utils/routes'
 import GoogleAnalyticsReporter from '../components/analytics/GoogleAnalyticsReporter'
 import ErrorBoundary from '../components/ErrorBoundary'
 import Header from '../components/Header'
-import Polling from '../components/Header/Polling'
 import Popups from '../components/Popups'
 import Web3ReactManager from '../components/Web3ReactManager'
 import { ApplicationModal } from '../state/application/actions'
@@ -29,7 +28,7 @@ import PoolFinder from './PoolFinder'
 import RemoveLiquidity from './RemoveLiquidity'
 import SecTokenDetails from './SecTokenDetails'
 import Swap from './Swap'
-import { RedirectPathToSwapOnly, RedirectPathToVesting, RedirectToSwap } from './Swap/redirects'
+import { RedirectPathToSwapOnly, RedirectPathToStaking, RedirectToSwap } from './Swap/redirects'
 
 const AppWrapper = styled.div`
   display: flex;
@@ -82,12 +81,11 @@ export default function App() {
       <Route component={DarkModeQueryParamReader} />
       <Route component={ApeModeQueryParamReader} />
       <AppBackground />
+      <Popups />
       <AppWrapper>
         {validChainId && !isAdminKyc && <Header />}
         {chainId && !validChainId && !isAdminKyc && <ConnectToAppropriateNetwork />}
         <ToggleableBody isVisible={visibleBody} {...(isAdminKyc && { style: { marginTop: 26 } })}>
-          <Popups />
-          <Polling />
           <IXSBalanceModal />
           <Web3ReactManager>
             <Switch>
@@ -113,7 +111,7 @@ export default function App() {
               <Route exact strict path={routes.vesting} component={VestingTab} />
 
               {chainId !== SUPPORTED_TGE_CHAINS.MAIN && <Route component={RedirectPathToSwapOnly} />}
-              {chainId === SUPPORTED_TGE_CHAINS.MAIN && <Route component={RedirectPathToVesting} />}
+              {chainId === SUPPORTED_TGE_CHAINS.MAIN && <Route component={RedirectPathToStaking} />}
             </Switch>
           </Web3ReactManager>
           <Marginer />

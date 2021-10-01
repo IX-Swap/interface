@@ -61,33 +61,48 @@ export const ActionTypeText = {
 }
 
 export const getStatusColor = (action: ActionTypes, status: ActionHistoryStatus) => {
-  if (action === ActionTypes.DEPOSIT && status === ActionHistoryStatus.APPROVED) {
+  if (isDeposit(action) && status === ActionHistoryStatus.APPROVED) {
     return StatusColors[ActionHistoryStatus.PENDING]
   }
   return StatusColors[status]
 }
 export const getActionStatusText = (action: ActionTypes, status: ActionHistoryStatus) => {
-  if (action === ActionTypes.DEPOSIT && status === ActionHistoryStatus.APPROVED) {
+  if (isDeposit(action) && status === ActionHistoryStatus.APPROVED) {
     return TransactionHistoryStatusText[ActionHistoryStatus.PENDING]
   }
 
   return TransactionHistoryStatusText[status]
 }
 
+export const isPending = (action: ActionTypes, status: ActionHistoryStatus) => {
+  return (
+    (isDeposit(action) && isPendingDeposit(status)) || (isWithdraw(action) && status === ActionHistoryStatus.PENDING)
+  )
+}
+
+export const isWithdraw = (action: ActionTypes) => {
+  return action === ActionTypes.WITHDRAW
+}
+export const isDeposit = (action: ActionTypes) => {
+  return action === ActionTypes.DEPOSIT
+}
 export enum AccreditationStatusEnum {
   PENDING = 'new',
   APPROVED = 'approved',
   REJECTED = 'declined',
   FAILED = 'failed', // error occured
   PENDING_CUSTODIAN = 'pending-custodian', // waiting for custodian action
+  PENDING_KYC = 'pending-kyc',
 }
 export interface AccreditationRequest {
   message?: string
+  id: number
   status: AccreditationStatusEnum
 }
 export const PENDING_ACCREDITATION_STATUSES = [
   AccreditationStatusEnum.PENDING,
   AccreditationStatusEnum.PENDING_CUSTODIAN,
+  AccreditationStatusEnum.PENDING_KYC,
 ]
 
 export const ERROR_ACCREDITATION_STATUSES = [AccreditationStatusEnum.FAILED, AccreditationStatusEnum.REJECTED]

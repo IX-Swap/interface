@@ -180,22 +180,25 @@ export function useDefaultsFromURLSearch():
   const parsedQs = useParsedQueryString()
   const [result, setResult] =
     useState<{ inputCurrencyId: string | undefined; outputCurrencyId: string | undefined } | undefined>()
-
+  const state = useSwapState()
   useEffect(() => {
     if (!chainId) return
     const parsed = queryParametersToSwapState(parsedQs)
 
     dispatch(
       replaceSwapState({
-        typedValue: parsed.typedValue,
-        field: parsed.independentField,
-        inputCurrencyId: parsed[Field.INPUT].currencyId,
-        outputCurrencyId: parsed[Field.OUTPUT].currencyId,
-        recipient: parsed.recipient,
+        typedValue: state.typedValue || parsed.typedValue,
+        field: state.independentField || parsed.independentField,
+        inputCurrencyId: state[Field.INPUT].currencyId || parsed[Field.INPUT].currencyId,
+        outputCurrencyId: state[Field.OUTPUT].currencyId || parsed[Field.OUTPUT].currencyId,
+        recipient: state.recipient || parsed.recipient,
       })
     )
 
-    setResult({ inputCurrencyId: parsed[Field.INPUT].currencyId, outputCurrencyId: parsed[Field.OUTPUT].currencyId })
+    setResult({
+      inputCurrencyId: state[Field.INPUT].currencyId || parsed[Field.INPUT].currencyId,
+      outputCurrencyId: state[Field.OUTPUT].currencyId || parsed[Field.OUTPUT].currencyId,
+    })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, chainId])
 

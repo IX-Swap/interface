@@ -135,12 +135,7 @@ export const SeparatorDark = styled.div`
   height: 1px;
   background-color: ${({ theme }) => theme.bg3};
 `
-export const ModalContentWrapper = styled(Column)`
-  width: 100%;
-  flex: 1 1;
-  position: relative;
-  background: ${({ theme }) => theme.bgG4};
-`
+
 export const UnapprovedTokenWrapper = styled.div`
   ${gradientBorder}
   padding-left: 24px;

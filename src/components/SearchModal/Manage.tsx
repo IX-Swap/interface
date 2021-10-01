@@ -9,7 +9,8 @@ import styled from 'styled-components/macro'
 import { CurrencyModalView } from './CurrencySearchModal'
 import { ManageLists } from './ManageLists'
 import ManageTokens from './ManageTokens'
-import { ModalContentWrapper, StyledToggleWrapper } from './styleds'
+import { ModalContentWrapper } from 'theme'
+import { StyledToggleWrapper } from './styleds'
 
 const Wrapper = styled(ModalContentWrapper)`
   max-height: 100%;

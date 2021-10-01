@@ -1,5 +1,5 @@
 import { t, Trans } from '@lingui/macro'
-import { ReactComponent as InfoIcon } from 'assets/images/attention.svg'
+import { ReactComponent as InfoIcon } from 'assets/images/info-filled.svg'
 import { ReactComponent as LockIcon } from 'assets/images/lock.svg'
 import { IconWrapper } from 'components/AccountDetails/styleds'
 import Column from 'components/Column'
@@ -52,7 +52,7 @@ const Header = () => {
           style={{ whiteSpace: 'pre-line', textAlign: 'center' }}
           text={t`Full amount of APY is applied only to amount of IXS staked till the end of staking period.`}
         >
-          <IconWrapper size={20} style={{ transform: 'rotate(180deg)', marginLeft: '12px' }}>
+          <IconWrapper size={20} style={{ marginLeft: '12px' }}>
             <InfoIcon />
           </IconWrapper>
         </MouseoverTooltip>
@@ -79,7 +79,7 @@ const Header = () => {
                   ${'' ?? ''}
                   If you partially or fully unstake your IXS before the end date - 5% APY will be applied to unstaked amount. `}
         >
-          <IconWrapper size={20} style={{ transform: 'rotate(180deg)', marginLeft: '12px' }}>
+          <IconWrapper size={20} style={{ marginLeft: '12px' }}>
             <InfoIcon />
           </IconWrapper>
         </MouseoverTooltip>

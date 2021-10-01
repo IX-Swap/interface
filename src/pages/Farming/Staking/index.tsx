@@ -40,7 +40,6 @@ export const Staking = () => {
 
   useEffect(() => {
     getStakings()
-    console.log('process.env.NODE_ENV: ', process.env.NODE_ENV)
   }, [getStakings])
 
   useEffect(() => {
