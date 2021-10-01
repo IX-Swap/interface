@@ -40,7 +40,7 @@ export const DepositSendInfo = ({ onClose }: Props) => {
   }, [onClose])
   return (
     <div style={{ position: 'relative' }}>
-      <Column>
+      <Column style={{ paddingBottom: '36px' }}>
         <Row style={{ marginTop: '20px' }}>
           <TYPE.description3>
             <b>
@@ -95,17 +95,6 @@ export const DepositSendInfo = ({ onClose }: Props) => {
           </TYPE.buttonMuted>
           <TYPE.body3>{shortenAddress(sender)}</TYPE.body3>
         </Row>
-        {activeEvent?.id && !loadingDeposit && (
-          <RowCenter style={{ marginTop: '18px' }}>
-            <ButtonGradientBorder
-              data-testid="cancel"
-              style={{ width: '211px' }}
-              onClick={() => cancelDeposit({ requestId: activeEvent?.id, onSuccess })}
-            >
-              <Trans>Cancel</Trans>
-            </ButtonGradientBorder>
-          </RowCenter>
-        )}
         {loadingDeposit && (
           <RowCenter style={{ marginTop: '18px' }}>
             <LoaderThin size={32} />
@@ -116,16 +105,6 @@ export const DepositSendInfo = ({ onClose }: Props) => {
             <TYPE.description2>{depositError}</TYPE.description2>
           </RowCenter>
         )}
-        {activeEvent?.type === ActionTypes.DEPOSIT &&
-          activeEvent?.status &&
-          isPendingDeposit(activeEvent?.status) &&
-          deadlineIn && (
-            <RowCenter style={{ marginTop: '16px', opacity: '0.7' }}>
-              <TYPE.description2>
-                <Trans>Will be cancelled automatically in {deadlineIn} hours</Trans>
-              </TYPE.description2>
-            </RowCenter>
-          )}
       </Column>
     </div>
   )

@@ -55,6 +55,8 @@ export const SecondStepStatus = ({ status, id }: Props) => {
         return t`Failed`
       case AccreditationStatusEnum.PENDING:
         return t`Pending`
+      case AccreditationStatusEnum.PENDING_KYC:
+        return t`Pending KYC`
       default:
         return t`Status`
     }

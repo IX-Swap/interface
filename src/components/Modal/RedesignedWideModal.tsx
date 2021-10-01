@@ -34,23 +34,34 @@ const StyledDialogContent = styled(
         font-size: 12px;
         line-height: 18px;
         width: 520px;
-        top: 2.5%;
+        top: 16px;
         position: absolute;
         margin-left: auto;
         margin-right: auto;
         left: 0;
         right: 0;
+
+        ${({ theme }) => theme.mediaWidth.upToMedium`
+          margin-bottom: 6px;
+          top: 0;
+        `}
+
         ${({ theme }) => theme.mediaWidth.upToSmall`
-          width: 85vw;
+          width: 74vw;
           top: 0;
           position: relative;
         `}
       }
 
+      ${({ theme }) => theme.mediaWidth.upToMedium`
+          padding-top: 106px !important;
+      `}
+
       &[data-reach-dialog-content] {
         ${({ theme }) => theme.mediaWidth.upToSmall`
-            flex-direction: column;
-          `}
+          flex-direction: column;
+          padding-top: 0 !important;
+        `}
       }
     `}
 
@@ -80,7 +91,7 @@ const StyledDialogContent = styled(
         overflow-y: visible;
         max-height: none;
         align-self: flex-start;
-        margin-top: 5vh;
+        margin: 16px !important;
       `}
     ${({ minHeight }) =>
       minHeight &&
@@ -89,14 +100,17 @@ const StyledDialogContent = styled(
       `}
     display: flex;
     border-radius: 45px;
-    ${({ theme }) => theme.mediaWidth.upToMedium`
+    ${({ theme, scrollable }) => theme.mediaWidth.upToMedium`
       width: 100vw;
-
+      ${scrollable && 'min-height: auto !important;'}
+      background: rgba(26, 18, 58, 0);
+      backdrop-filter: opacity(0);
     `}
     ${({ theme, mobileMaxHeight }) => theme.mediaWidth.upToSmall`
-          border-radius: 0px;
+          border-radius: 20px;
           top: 0;
-          max-width: 100vw;
+          max-width: 90vw;
+          min-height: 95vh;
           margin:0;
          ${
            mobileMaxHeight &&

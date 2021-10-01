@@ -9,6 +9,7 @@ import React, { useState, useEffect } from 'react'
 import { useAuthState } from 'state/auth/hooks'
 import { AllSecTokens } from './AllSecTokens'
 import { MySecurities } from './MySecurities'
+import { CustodianToggleWrapper } from './styleds'
 
 export default function Custodian() {
   const { token } = useAuthState()
@@ -29,16 +30,16 @@ export default function Custodian() {
           <CustodianTabs />
           {isLoggedIn && (
             <AutoColumn style={{ paddingBottom: 0 }}>
-              <ToggleWrapper>
+              <CustodianToggleWrapper>
                 <ToggleOption onClick={() => setShowAllSecTokens(!showAllSecTokens)} active={!showAllSecTokens}>
                   <Trans>My Securities</Trans>
                   <Border active={!showAllSecTokens} />
                 </ToggleOption>
                 <ToggleOption onClick={() => setShowAllSecTokens(!showAllSecTokens)} active={showAllSecTokens}>
-                  <Trans>Other Sec tokens</Trans>
+                  <Trans>Other</Trans>
                   <Border active={showAllSecTokens} />
                 </ToggleOption>
-              </ToggleWrapper>
+              </CustodianToggleWrapper>
             </AutoColumn>
           )}
         </ColumnCenter>

@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux'
 import { saveCustomVestingAddress } from 'state/vesting/actions'
 import { useVestingStatus } from 'state/vesting/hooks'
 import styled from 'styled-components'
+import { isValidAddress } from 'utils'
 import { ReactComponent as Close } from '../../../assets/images/cross.svg'
 
 // todo use button inside search
@@ -25,12 +26,19 @@ export const VestingSearch = () => {
   }, [account])
 
   const onChange = (e: { target: { value: string } }) => {
-    handleAddres(e.target.value)
+    const input = e.target.value.trim()
+    handleAddres(input)
+    if (isValidAddress(input)) {
+      checkAddress(input)
+    }
+    if (input.length === 0) {
+      clear()
+    }
   }
 
-  const checkAddress = async () => {
-    await getVesting(address)
-    dispatch(saveCustomVestingAddress({ customVestingAddress: address }))
+  const checkAddress = async (input?: string) => {
+    await getVesting(input || address)
+    dispatch(saveCustomVestingAddress({ customVestingAddress: input || address }))
     handleAddressChecked(true)
   }
 
@@ -50,22 +58,16 @@ export const VestingSearch = () => {
         addressChecked={addressChecked}
       />
       <ButtonWrapper addressChecked={addressChecked}>
-        {addressChecked ? (
+        {address && (
           <ClearButton onClick={clear}>
             <Close />
           </ClearButton>
-        ) : (
-          <CheckButton disabled={!/^0x[a-fA-F0-9]{40}$/.test(address)} onClick={checkAddress}>{t`Check`}</CheckButton>
         )}
       </ButtonWrapper>
     </InputWrapper>
   )
 }
 
-const CheckButton = styled(ButtonIXSGradient)`
-  padding: 16px;
-  min-width: 127px;
-`
 const ClearButton = styled(ButtonIXSGradient)`
   width: 40px;
   padding: 7px;

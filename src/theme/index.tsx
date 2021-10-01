@@ -52,7 +52,7 @@ export function colors(darkMode: boolean): Colors {
     text8: darkMode ? '#9184C3' : '#9184C3',
     // backgrounds / greys
     bg0: darkMode ? '#0D0415' : '#FFF',
-    bg1: darkMode ? '#170626' : '#F7F8FA',
+    bg1: darkMode ? '#1A123A' : '#F7F8FA',
     bg2: darkMode ? '#2C2F36' : '#EDEEF2',
     bg3: darkMode ? '#40444F' : '#CED0D9',
     bg4: darkMode ? '#565A69' : '#888D9B',
@@ -67,6 +67,7 @@ export function colors(darkMode: boolean): Colors {
     bg13: darkMode ? '#2F254E' : '#2F254E',
     bg14: darkMode ? '#ED0376' : '#ED0376',
     bg15: darkMode ? '#2C254A' : '#2C254A',
+    bg16: darkMode ? '#170626' : '#170626',
     bgG1: darkMode
       ? 'radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.33) 0%, rgba(26, 18, 58, 0) 100%), #2C254A;'
       : 'radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.33) 0%, rgba(26, 18, 58, 0) 100%), #2C254A;',

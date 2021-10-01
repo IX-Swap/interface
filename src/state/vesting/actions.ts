@@ -57,3 +57,13 @@ export const getIsPrivateBuyer: Readonly<{
   rejected: createAction('vesting/getIsPrivateBuyer/rejected'),
   fulfilled: createAction('vesting/getIsPrivateBuyer/fulfilled'),
 }
+
+export const claimAll: Readonly<{
+  pending: ActionCreatorWithoutPayload
+  fulfilled: ActionCreatorWithoutPayload
+  rejected: ActionCreatorWithoutPayload
+}> = {
+  pending: createAction('vesting/claimAll/pending'),
+  rejected: createAction('vesting/claimAll/rejected'),
+  fulfilled: createAction('vesting/claimAll/fulfilled'),
+}

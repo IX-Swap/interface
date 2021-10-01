@@ -1,5 +1,5 @@
 import { Currency } from '@ixswap1/sdk-core'
-import { ReactComponent as InfoIcon } from 'assets/images/attention.svg'
+import { ReactComponent as InfoIcon } from 'assets/images/info-filled.svg'
 import { IconWrapper } from 'components/AccountDetails/styleds'
 import { MouseoverTooltip } from 'components/Tooltip'
 import React from 'react'
@@ -22,7 +22,7 @@ export const TextRow = ({ textLeft, textRight, currency, tooltipText }: Props) =
         <Text>{textLeft}</Text>
         {tooltipText && (
           <MouseoverTooltip style={{ whiteSpace: 'pre-line' }} text={tooltipText}>
-            <IconWrapper size={20} style={{ transform: 'rotate(180deg)', marginLeft: '12px' }}>
+            <IconWrapper size={20} style={{ marginLeft: '12px' }}>
               <InfoIcon />
             </IconWrapper>
           </MouseoverTooltip>

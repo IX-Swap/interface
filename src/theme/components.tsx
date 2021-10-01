@@ -5,7 +5,7 @@ import styled, { css, keyframes } from 'styled-components'
 import { darken } from 'polished'
 import { ArrowLeft, X, ExternalLink as LinkIconFeather, Trash } from 'react-feather'
 import { ReactComponent as Check } from 'assets/images/check.svg'
-import { ColumnCenter } from 'components/Column'
+import Column, { ColumnCenter } from 'components/Column'
 import { TYPE } from 'theme'
 import { Trans } from '@lingui/macro'
 export const ButtonText = styled.button`
@@ -494,3 +494,10 @@ export const ConnectToAppropriateNetwork = () => (
     </TYPE.main0>
   </ColumnCenter>
 )
+
+export const ModalContentWrapper = styled(Column)`
+  width: 100%;
+  flex: 1 1;
+  position: relative;
+  background: ${({ theme }) => theme.bgG4};
+`

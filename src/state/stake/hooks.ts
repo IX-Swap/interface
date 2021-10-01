@@ -342,28 +342,28 @@ export function useFetchHistoricalPoolSize() {
           case PERIOD.ONE_WEEK: {
             dispatch(getOneWeekHistoricalPoolSize.pending())
             const result = await staking?.oneWeekHistoricalPoolSize()
-            const stakedIXS = parseInt(utils.formatUnits(result))
+            const stakedIXS = utils.formatUnits(result)
             dispatch(getOneWeekHistoricalPoolSize.fulfilled({ data: stakedIXS }))
             break
           }
           case PERIOD.ONE_MONTH: {
             dispatch(getOneMonthHistoricalPoolSize.pending())
             const result = await staking?.oneMonthHistoricalPoolSize()
-            const stakedIXS = parseInt(utils.formatUnits(result))
+            const stakedIXS = utils.formatUnits(result)
             dispatch(getOneMonthHistoricalPoolSize.fulfilled({ data: stakedIXS }))
             break
           }
           case PERIOD.TWO_MONTHS: {
             dispatch(getTwoMonthsHistoricalPoolSize.pending())
             const result = await staking?.twoMonthsHistoricalPoolSize()
-            const stakedIXS = parseInt(utils.formatUnits(result))
+            const stakedIXS = utils.formatUnits(result)
             dispatch(getTwoMonthsHistoricalPoolSize.fulfilled({ data: stakedIXS }))
             break
           }
           case PERIOD.THREE_MONTHS: {
             dispatch(getThreeMonthsHistoricalPoolSize.pending())
             const result = await staking?.threeMonthsHistoricalPoolSize()
-            const stakedIXS = parseInt(utils.formatUnits(result))
+            const stakedIXS = utils.formatUnits(result)
             dispatch(getThreeMonthsHistoricalPoolSize.fulfilled({ data: stakedIXS }))
             break
           }

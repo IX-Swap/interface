@@ -1,4 +1,5 @@
 import { ActionCreatorWithoutPayload, ActionCreatorWithPayload, createAction } from '@reduxjs/toolkit'
+import { DepositModalView } from './reducer'
 
 export enum Field {
   AMOUNT = 'AMOUNT',
@@ -8,7 +9,9 @@ export enum Field {
 export const typeAmount = createAction<{ typedValue: string }>('deposit/typeAmount')
 export const typeSender = createAction<{ typedValue: string }>('deposit/typeSender')
 export const setCurrency = createAction<{ currencyId: string }>('deposit/setCurrency')
-
+export const setError = createAction<{ errorMessage: string }>('deposit/setError')
+export const setLoading = createAction<{ loading: boolean }>('deposit/setLoading')
+export const setModalView = createAction<{ view: DepositModalView }>('deposit/setModalView')
 export const depositSecTokens: Readonly<{
   pending: ActionCreatorWithoutPayload
   fulfilled: ActionCreatorWithoutPayload

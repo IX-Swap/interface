@@ -68,7 +68,7 @@ export const getAvailableClaim: Readonly<{
 }
 export const getOneWeekHistoricalPoolSize: Readonly<{
   pending: ActionCreatorWithoutPayload
-  fulfilled: ActionCreatorWithPayload<{ data: number }>
+  fulfilled: ActionCreatorWithPayload<{ data: string }>
   rejected: ActionCreatorWithPayload<{ errorMessage: string }>
 }> = {
   pending: createAction('stake/getOneWeekHistoricalPoolSize/pending'),
@@ -78,7 +78,7 @@ export const getOneWeekHistoricalPoolSize: Readonly<{
 
 export const getOneMonthHistoricalPoolSize: Readonly<{
   pending: ActionCreatorWithoutPayload
-  fulfilled: ActionCreatorWithPayload<{ data: number }>
+  fulfilled: ActionCreatorWithPayload<{ data: string }>
   rejected: ActionCreatorWithPayload<{ errorMessage: string }>
 }> = {
   pending: createAction('stake/getOneMonthHistoricalPoolSize/pending'),
@@ -88,7 +88,7 @@ export const getOneMonthHistoricalPoolSize: Readonly<{
 
 export const getTwoMonthsHistoricalPoolSize: Readonly<{
   pending: ActionCreatorWithoutPayload
-  fulfilled: ActionCreatorWithPayload<{ data: number }>
+  fulfilled: ActionCreatorWithPayload<{ data: string }>
   rejected: ActionCreatorWithPayload<{ errorMessage: string }>
 }> = {
   pending: createAction('stake/getTwoMonthsHistoricalPoolSize/pending'),
@@ -98,7 +98,7 @@ export const getTwoMonthsHistoricalPoolSize: Readonly<{
 
 export const getThreeMonthsHistoricalPoolSize: Readonly<{
   pending: ActionCreatorWithoutPayload
-  fulfilled: ActionCreatorWithPayload<{ data: number }>
+  fulfilled: ActionCreatorWithPayload<{ data: string }>
   rejected: ActionCreatorWithPayload<{ errorMessage: string }>
 }> = {
   pending: createAction('stake/getThreeMonthsHistoricalPoolSize/pending'),

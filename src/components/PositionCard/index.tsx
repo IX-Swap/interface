@@ -71,7 +71,7 @@ export default function FullPositionCard({ pair, stakedBalance }: PositionCardPr
               textRight={token1Deposited?.toSignificant(6)}
               currency={currency1}
             />
-            <TextRow textLeft={<Trans>IXS Rewards (on quit)</Trans>} textRight={stakedBalance?.toSignificant(4)} />
+            {/* <TextRow textLeft={<Trans>IXS Rewards (on quit)</Trans>} textRight={stakedBalance?.toSignificant(4)} /> */}
             <TextRow textLeft={<Trans>Your pool tokens</Trans>} textRight={userPoolBalance?.toSignificant(4)} />
 
             <TextRow

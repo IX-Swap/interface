@@ -4,7 +4,7 @@ import React, { useCallback, useEffect } from 'react'
 import { ApplicationModal } from 'state/application/actions'
 import { useModalOpen } from 'state/application/hooks'
 import { ModalBlurWrapper } from 'theme'
-import { ModalContentWrapper } from 'components/earn/styled'
+import { EarnModalContentWrapper } from 'components/earn/styled'
 import {
   useCheckIXSGovAllowance,
   useUnstakingState,
@@ -94,13 +94,13 @@ export function UnstakeModal({ onDismiss, stake }: UnstakingModalProps) {
 You can unstake IXS tokens equal to the number of IXSgov tokens in your account.`}
     >
       <ModalBlurWrapper>
-        <ModalContentWrapper>
+        <EarnModalContentWrapper>
           {bIsEarlyUnstake ? (
             <EarlyUnstake onDismiss={onDismiss} stake={stake} onUnstake={onEarlyUnstake} onApprove={onApprove} />
           ) : (
             <FullUnstake onDismiss={onDismiss} stake={stake} onUnstake={onFullUnstake} onApprove={onApprove} />
           )}
-        </ModalContentWrapper>
+        </EarnModalContentWrapper>
       </ModalBlurWrapper>
     </RedesignedWideModal>
   )

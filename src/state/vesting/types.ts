@@ -34,5 +34,6 @@ export interface VestingState {
   loadingIsVesting: boolean
   loadingPayouts: boolean
   loadingAvailableClaim: boolean
+  loadingClaimAll: boolean
   privateBuyer: { amount: string; isVerified: boolean; months: number }
 }

@@ -12,6 +12,9 @@ export function RedirectPathToSwapOnly({ location }: RouteComponentProps) {
 export function RedirectPathToVesting({ location }: RouteComponentProps) {
   return <Redirect to={{ ...location, pathname: routes.vesting }} />
 }
+export function RedirectPathToStaking({ location }: RouteComponentProps) {
+  return <Redirect to={{ ...location, pathname: routes.staking }} />
+}
 // Redirects from the /swap/:outputCurrency path to the /swap?outputCurrency=:outputCurrency format
 export function RedirectToSwap(props: RouteComponentProps<{ outputCurrency: string }>) {
   const {

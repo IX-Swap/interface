@@ -296,6 +296,7 @@ export default function AddLiquidity({
                 currency={currencies[Field.CURRENCY_A]}
                 id="add-liquidity-input-tokena"
                 showCommonBases={false}
+                title={<Trans>Choose token to create a pool</Trans>}
               />
               <ColumnCenter>
                 <Plus size="24" color={theme.text2} />
@@ -311,6 +312,7 @@ export default function AddLiquidity({
                 currency={currencies[Field.CURRENCY_B]}
                 id="add-liquidity-input-tokenb"
                 showCommonBases={false}
+                title={<Trans>Choose token to create a pool</Trans>}
               />
               <AutoColumn gap="20px">
                 {currencies[Field.CURRENCY_A] && currencies[Field.CURRENCY_B] && pairState !== PairState.INVALID && (

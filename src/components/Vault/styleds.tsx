@@ -6,7 +6,7 @@ import { RowBetween } from 'components/Row'
 import React from 'react'
 import styled from 'styled-components'
 import { gradientBorder, TYPE } from 'theme'
-import { ActionHistoryStatus, ActionTypes } from './enum'
+import { ActionHistoryStatus, ActionTypes, isDeposit } from './enum'
 
 export const NoVaultWrapper = styled.div`
   background: ${({ theme }) => theme.bgG10};
@@ -34,6 +34,9 @@ export const ExistingTitle = styled.span`
   white-space: -pre-wrap; /* Opera <7 */
   white-space: -o-pre-wrap; /* Opera 7 */
   word-wrap: break-word;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+      margin-bottom: 20px;
+  `};
 `
 export const VaultStatusDescription = styled.div`
   text-align: center;
@@ -102,7 +105,9 @@ export const StyledTitle = styled(TYPE.title4)`
     font-size: 28px !important;
   }
 `
-
+export const DateBox = styled.div`
+  width: 123px;
+`
 /* eslint-disable react/display-name */
 export const StatusIcons = {
   [ActionHistoryStatus.PENDING]: () => <LoaderThin size={20} />,
@@ -116,7 +121,7 @@ export const StatusIcons = {
 }
 
 export const getStatusIcon = (action = ActionTypes.DEPOSIT, status: ActionHistoryStatus) => {
-  if (action === ActionTypes.DEPOSIT && status === ActionHistoryStatus.APPROVED) {
+  if (isDeposit(action) && status === ActionHistoryStatus.APPROVED) {
     return StatusIcons[ActionHistoryStatus.PENDING]
   }
   return StatusIcons[status]

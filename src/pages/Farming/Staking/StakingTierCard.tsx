@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { t, Trans } from '@lingui/macro'
-import { ReactComponent as InfoIcon } from 'assets/images/attention.svg'
+import { ReactComponent as InfoIcon } from 'assets/images/info-filled.svg'
 import IXSToken from 'assets/images/IXS-token.svg'
 import { IconWrapper } from 'components/AccountDetails/styleds'
 import { ButtonIXSWide } from 'components/Button'
@@ -18,6 +18,7 @@ import { useDispatch } from 'react-redux'
 import { useFetchHistoricalPoolSize, usePoolSizeState } from 'state/stake/hooks'
 import { useStakingState } from 'state/stake/hooks'
 import { LoaderThin } from 'components/Loader/LoaderThin'
+import { formatNumber } from 'utils/formatNumber'
 
 export const StakingTierCard = ({ tier }: { tier: Tier }) => {
   const dispatch = useDispatch<AppDispatch>()
@@ -28,15 +29,30 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
   const { hasStakedSuccessfully, isPaused } = useStakingState()
 
   const [leftToFill, setLeftToFill] = useState(0)
+  const [isPoolLimitationLoading, setIsPoolLimitationLoading] = useState(false)
+  const [isLimitReached, setIsLimitReached] = useState(false)
 
   useEffect(() => {
     fetchHistoricalPoolSize(tier.period)
   }, [fetchHistoricalPoolSize, tier.period, hasStakedSuccessfully])
 
   useEffect(() => {
+    if (poolSizeState[tier.period] === POOL_SIZE_LOADING) {
+      setIsPoolLimitationLoading(true)
+      return
+    }
+    setIsPoolLimitationLoading(false)
     const filled = poolSizeState[tier.period]
-    setLeftToFill(DEFAULT_POOL_SIZE_LIMIT - filled)
+    setLeftToFill(parseFloat(DEFAULT_POOL_SIZE_LIMIT) - parseFloat(filled))
   }, [poolSizeState, tier.period])
+
+  useEffect(() => {
+    if (leftToFill <= 1) {
+      setIsLimitReached(true)
+    } else {
+      setIsLimitReached(false)
+    }
+  }, [leftToFill])
 
   const selectPeriod = () => {
     const periodLegend = {
@@ -60,7 +76,7 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
   function getStakeButtonText() {
     if (isPaused) {
       return 'Paused'
-    } else if (leftToFill <= 0) {
+    } else if (isLimitReached) {
       return 'Limit reached'
     } else {
       return 'Stake'
@@ -71,7 +87,7 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
     if (isTierUnlimited) {
       return
     }
-    if (poolSizeState[tier.period] === POOL_SIZE_LOADING) {
+    if (isPoolLimitationLoading) {
       return (
         <RowCenter style={{ margin: 'auto' }}>
           <LoaderThin />
@@ -85,7 +101,8 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
         <RowCenter style={{ margin: 'auto' }}>
           <TYPE.description3 fontWeight={400} opacity="0.5">
             <Trans>
-              <span style={{ fontWeight: 700 }}>{leftToFill.toLocaleString('fr')}</span> tokens available for staking
+              <span style={{ fontWeight: 700 }}>{formatNumber(Math.floor(leftToFill))}</span> tokens available for
+              staking
             </Trans>
           </TYPE.description3>
         </RowCenter>
@@ -94,7 +111,7 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
   }
 
   return (
-    <StakingTierCardWrapper className={`${leftToFill <= 0 ? 'fully-staked' : ''}`}>
+    <StakingTierCardWrapper className={`${isLimitReached ? 'fully-staked' : ''}`}>
       <RowCenter style={{ marginTop: '8px' }}>
         <img src={IXSToken} />
       </RowCenter>
@@ -126,14 +143,10 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
                   ${
                     isTierUnlimited
                       ? ''
-                      : '\nAvailable for staking: \n' +
-                        leftToFill.toLocaleString('fr') +
-                        '/' +
-                        DEFAULT_POOL_SIZE_LIMIT.toLocaleString('fr') +
-                        '.'
+                      : '\nAvailable for staking: \n' + leftToFill + '/' + DEFAULT_POOL_SIZE_LIMIT + '.'
                   }`}
         >
-          <IconWrapper size={20} style={{ transform: 'rotate(180deg)', marginLeft: '12px' }}>
+          <IconWrapper size={20} style={{ marginLeft: '12px' }}>
             <InfoIcon />
           </IconWrapper>
         </MouseoverTooltip>
@@ -148,12 +161,12 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
                 ${'' ?? ''}
                 You will be able to redeem your staked IXS fully or partially after lock period. `}
         >
-          <IconWrapper size={20} style={{ transform: 'rotate(180deg)', marginLeft: '12px' }}>
+          <IconWrapper size={20} style={{ marginLeft: '12px' }}>
             <InfoIcon />
           </IconWrapper>
         </MouseoverTooltip>
       </RowCenter>
-      <ButtonIXSWide onClick={selectPeriod} disabled={isPaused || leftToFill <= 0}>
+      <ButtonIXSWide onClick={selectPeriod} disabled={isPaused || isLimitReached}>
         <Trans>{getStakeButtonText()}</Trans>
       </ButtonIXSWide>
       {renderPoolSize()}

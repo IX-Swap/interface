@@ -112,6 +112,7 @@ const AccountElement = styled.div<{ active: boolean }>`
 const NetworkCard = styled(VioletCard)`
   border-radius: 12px;
   padding: 2px 3px;
+  background: transparent;
   ${({ theme }) => theme.mediaWidth.upToSmall`
     margin: 0;
     overflow: hidden;

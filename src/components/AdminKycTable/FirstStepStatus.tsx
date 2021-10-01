@@ -1,31 +1,55 @@
 import { t, Trans } from '@lingui/macro'
-import React, { useContext } from 'react'
-import styled, { ThemeContext } from 'styled-components'
-
-import approvedIcon from '../../assets/images/check-success.svg'
-import rejectedIcon from '../../assets/images/attention.svg'
-import pendingIcon from '../../assets/images/loader_thin.svg'
+import { Document, Page, StyleSheet, Text, usePDF, View } from '@react-pdf/renderer'
 import { ButtonGradient } from 'components/Button'
 import { AccreditationStatusEnum } from 'components/Vault/enum'
-
+import React, { useContext, useMemo } from 'react'
+import styled, { ThemeContext } from 'styled-components'
+import rejectedIcon from '../../assets/images/attention.svg'
+import approvedIcon from '../../assets/images/check-success.svg'
+import pendingIcon from '../../assets/images/loader_thin.svg'
+import { convert } from './utils'
 interface Props {
   status: string
-  link?: string
+  kyc: any
+  broker: string
 }
+const styles = StyleSheet.create({
+  section: { textAlign: 'left', margin: 30 },
+})
 
-export const FirstStepStatus = ({ status, link }: Props) => {
+const usePdfDoc = ({ kyc, broker }: { kyc: any; broker: string }) => {
+  return useMemo(() => {
+    return (
+      <Document>
+        <Page size="A4">
+          <View style={styles.section}>
+            <Text>Broker: {broker}</Text>
+            <Text>{convert(kyc)}</Text>
+          </View>
+        </Page>
+      </Document>
+    )
+  }, [kyc])
+}
+export const FirstStepStatus = ({ status, kyc, broker }: Props) => {
   const theme = useContext(ThemeContext)
-
+  const pdfDoc = usePdfDoc({ kyc, broker })
+  const [instance] = usePDF({ document: pdfDoc })
   const statusColors = {
-    pending: theme.text2,
-    rejected: theme.error,
-    approved: theme.green1,
+    [AccreditationStatusEnum.PENDING]: theme.text2,
+    [AccreditationStatusEnum.PENDING_KYC]: theme.text2,
+    [AccreditationStatusEnum.REJECTED]: theme.green1,
+    [AccreditationStatusEnum.FAILED]: theme.error,
+    [AccreditationStatusEnum.APPROVED]: theme.green1,
+    [AccreditationStatusEnum.PENDING_CUSTODIAN]: theme.green1,
   } as Record<string, string>
 
   const getText = () => {
     switch (status) {
       case AccreditationStatusEnum.PENDING:
         return t`Pending`
+      case AccreditationStatusEnum.PENDING_KYC:
+        return t`Pending KYC`
       case AccreditationStatusEnum.FAILED:
         return t`Failed`
       case AccreditationStatusEnum.APPROVED:
@@ -46,6 +70,7 @@ export const FirstStepStatus = ({ status, link }: Props) => {
       case AccreditationStatusEnum.PENDING_CUSTODIAN:
         return approvedIcon
       case AccreditationStatusEnum.PENDING:
+      case AccreditationStatusEnum.PENDING_KYC:
       default:
         return pendingIcon
     }
@@ -55,9 +80,9 @@ export const FirstStepStatus = ({ status, link }: Props) => {
     <Container>
       <img src={getIcon()} alt="icon" width="20px" height="20px" />
       <StatusText color={statusColors[status] || theme.text2}>{getText()}</StatusText>
-      {link && (
+      {!instance.loading && !instance.error && instance.url && Object.keys(kyc).length > 0 && (
         <ButtonContainer>
-          <a href={link} download="kyc.pdf" target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}>
+          <a href={instance.url} download="kyc.pdf" target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}>
             <ButtonGradient>
               <Trans>Download</Trans>
             </ButtonGradient>

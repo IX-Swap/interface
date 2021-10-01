@@ -5,7 +5,6 @@ import Column from 'components/Column'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import { QRCodeWrap } from 'components/QRCodeWrap'
 import Row, { RowBetween, RowCenter } from 'components/Row'
-import { ModalContentWrapper } from 'components/SearchModal/styleds'
 import dayjs from 'dayjs'
 import useCopyClipboard from 'hooks/useCopyClipboard'
 import React, { useCallback, useMemo } from 'react'
@@ -14,20 +13,21 @@ import { AppDispatch } from 'state'
 import { ApplicationModal } from 'state/application/actions'
 import { useModalOpen, useToggleTransactionModal } from 'state/application/hooks'
 import { useCancelDepositCallback, useDepositState } from 'state/deposit/hooks'
-import { setLogItem } from 'state/eventLog/actions'
 import { useEventState } from 'state/eventLog/hooks'
-import { ModalBlurWrapper, SvgIconWrapper, TYPE } from 'theme'
+import { ModalBlurWrapper, ModalContentWrapper, SvgIconWrapper, TYPE } from 'theme'
 import { shortenAddress } from 'utils'
 import { durationInHours } from 'utils/time'
 import Success from '../../assets/images/success.svg'
 import { CloseIcon } from '../../theme'
 import {
   ActionHistoryStatus,
-  ActionTypes,
   ActionTypeText,
   getActionStatusText,
+  isDeposit,
+  isPending,
   isPendingDeposit,
   isSuccessTransaction,
+  isWithdraw,
 } from './enum'
 import { ModalPadding } from './styleds'
 
@@ -43,7 +43,6 @@ export const TransactionDetails = ({ currency }: Props) => {
   const { activeEvent } = useEventState()
   const onClose = useCallback(() => {
     toggle()
-    dispatch(setLogItem({ logItem: null }))
   }, [toggle, dispatch])
 
   const amount = useMemo(() => {
@@ -70,7 +69,7 @@ export const TransactionDetails = ({ currency }: Props) => {
     <RedesignedWideModal
       isOpen={isOpen}
       onDismiss={onClose}
-      minHeight={50}
+      minHeight={isDeposit(activeEvent.type) ? 50 : 30}
       maxHeight={'fit-content'}
       mobileMaxHeight={90}
     >
@@ -123,13 +122,16 @@ export const TransactionDetails = ({ currency }: Props) => {
                     onClick={() => setCopied(activeEvent.depositAddress ?? '')}
                   >
                     <TYPE.buttonMuted>
-                      {isSuccessTransaction(activeEvent?.type, status) && <Trans>{currency?.symbol} sent to: </Trans>}
-                      {isPendingDeposit(status) && <Trans>Send {currency?.symbol} to: </Trans>}&nbsp;&nbsp;
+                      {!isPending(activeEvent.type, status) && <Trans>Recipient address: </Trans>}
+                      {isDeposit(activeEvent.type) && isPendingDeposit(status) && (
+                        <Trans>Send {currency?.symbol} to: </Trans>
+                      )}
+                      &nbsp;&nbsp;
                     </TYPE.buttonMuted>
                     <TYPE.body3>{isCopied ? t`Copied` : shortenAddress(activeEvent.depositAddress)}</TYPE.body3>
                   </Row>
                 )}
-                {activeEvent.type === ActionTypes.DEPOSIT && isPendingDeposit(status) && activeEvent.depositAddress && (
+                {isDeposit(activeEvent.type) && isPendingDeposit(status) && activeEvent.depositAddress && (
                   <RowCenter style={{ marginTop: '25px' }}>
                     <QRCodeWrap value={activeEvent.depositAddress ?? ''}></QRCodeWrap>
                   </RowCenter>
@@ -141,14 +143,15 @@ export const TransactionDetails = ({ currency }: Props) => {
                     </SvgIconWrapper>
                   </RowCenter>
                 )}
-                {activeEvent.type === ActionTypes.DEPOSIT && isPendingDeposit(status) && (
+                {isPending(activeEvent.type, status) && (
                   <RowCenter style={{ marginTop: '45px', marginBottom: '45px' }}>
                     <ButtonGradientBorder
                       data-testid="cancel"
                       style={{ width: '211px' }}
                       onClick={() => cancelDeposit({ requestId: activeEvent?.id, onSuccess })}
                     >
-                      <Trans>Cancel</Trans>
+                      {isDeposit(activeEvent.type) && <Trans>Cancel deposit</Trans>}
+                      {isWithdraw(activeEvent.type) && <Trans>Cancel withdraw</Trans>}
                     </ButtonGradientBorder>
                   </RowCenter>
                 )}
@@ -157,7 +160,7 @@ export const TransactionDetails = ({ currency }: Props) => {
                     <TYPE.description2>{depositError}</TYPE.description2>
                   </RowCenter>
                 )}
-                {activeEvent.type === ActionTypes.DEPOSIT && deadlineIn && isPendingDeposit(status) && (
+                {isDeposit(activeEvent.type) && deadlineIn && isPendingDeposit(status) && (
                   <RowCenter style={{ marginTop: '16px', opacity: '0.7' }}>
                     <TYPE.description2>
                       <Trans>Will be cancelled automatically in {deadlineIn} hours</Trans>
