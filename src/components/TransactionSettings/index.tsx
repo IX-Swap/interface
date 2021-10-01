@@ -4,7 +4,7 @@ import { Option, OptionCustom, OptionRow } from 'components/OptionButton'
 import { DEFAULT_DEADLINE_FROM_NOW } from 'constants/misc'
 import { useDeadline } from 'hooks/useDeadline'
 import { useSlippage } from 'hooks/useSlippage'
-import React, { useContext } from 'react'
+import React, { useContext, useRef, useEffect } from 'react'
 import { Text } from 'rebass'
 import styled, { ThemeContext } from 'styled-components'
 import { TYPE } from 'theme'
@@ -57,9 +57,6 @@ const StyledOptionRow = styled(OptionRow)`
   `}
 `
 const StyledOption = styled(Option)`
-  :focus {
-    background: ${({ theme }) => theme.bg12};
-  }
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
     width: fit-content;
     padding: 10px;
@@ -82,10 +79,22 @@ interface TransactionSettingsProps {
 
 export default function TransactionSettings({ placeholderSlippage }: TransactionSettingsProps) {
   const theme = useContext(ThemeContext)
+  const buttonRef = useRef<HTMLButtonElement>(null)
+
   const { deadline, deadlineInput, deadlineError, parseCustomDeadline, resetDeadline } = useDeadline()
   const { userSlippageTolerance, slippageInput, slippageError, tooLow, tooHigh, resetSlippage, parseSlippageInput } =
     useSlippage()
-
+  useEffect(() => {
+    console.log({
+      isnotAuto: userSlippageTolerance !== 'auto',
+      ref: buttonRef,
+    })
+    if (userSlippageTolerance !== 'auto' && buttonRef && buttonRef.current) {
+      console.log('blurring')
+      buttonRef.current.blur()
+    }
+  }, [])
+  console.log({ active: userSlippageTolerance === 'auto' && !slippageInput })
   return (
     <AutoColumn gap="md">
       <Marginer>
@@ -105,6 +114,7 @@ export default function TransactionSettings({ placeholderSlippage }: Transaction
           </RowFixed>
           <StyledOptionRow>
             <StyledOption
+              ref={buttonRef}
               key={'auto'}
               onClick={() => {
                 parseSlippageInput('')
