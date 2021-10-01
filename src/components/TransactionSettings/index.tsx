@@ -85,15 +85,10 @@ export default function TransactionSettings({ placeholderSlippage }: Transaction
   const { userSlippageTolerance, slippageInput, slippageError, tooLow, tooHigh, resetSlippage, parseSlippageInput } =
     useSlippage()
   useEffect(() => {
-    console.log({
-      isnotAuto: userSlippageTolerance !== 'auto',
-      ref: buttonRef,
-    })
     if (userSlippageTolerance !== 'auto' && buttonRef && buttonRef.current) {
-      console.log('blurring')
       buttonRef.current.blur()
     }
-  }, [])
+  }, [userSlippageTolerance])
   console.log({ active: userSlippageTolerance === 'auto' && !slippageInput })
   return (
     <AutoColumn gap="md">
