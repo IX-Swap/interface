@@ -12,7 +12,7 @@ import apiService from 'services/apiService'
 import { broker, kyc, tokens } from 'services/apiUrls'
 import { useChooseBrokerDealerModalToggle } from 'state/application/hooks'
 import { saveToken } from 'state/auth/actions'
-import { LOGIN_STATUS, useAuthState, useLogin } from 'state/auth/hooks'
+import { LOGIN_STATUS, useAuthState, useLogin, useLogout, useUserisLoggedIn } from 'state/auth/hooks'
 import { clearEventLog } from 'state/eventLog/actions'
 import {
   listToSecTokenMap,
@@ -525,7 +525,9 @@ export function usePassAccreditation(
   currencyId?: string
 ): (tokenId: number, brokerDealerPairId: number) => Promise<void> {
   const dispatch = useDispatch<AppDispatch>()
-  const login = useLogin({ mustHavePreviousLogin: false, expireLogin: false })
+  const login = useLogin({ mustHavePreviousLogin: false })
+  const isLoggedIn = useUserisLoggedIn()
+  const { account } = useActiveWeb3React()
   const fetchTokens = useFetchUserSecTokenListCallback()
   const toggle = useChooseBrokerDealerModalToggle()
   const { status: accreditationStatus, accreditationRequest } = useAccreditationStatus(currencyId)
@@ -565,40 +567,36 @@ export function useAccount() {
   const savedAccount = useUserAccountState()
   const { account } = useActiveWeb3React()
   const dispatch = useDispatch<AppDispatch>()
-  const login = useLogin({ mustHavePreviousLogin: true, expireLogin: true })
+  const login = useLogin({ mustHavePreviousLogin: true })
   const getUserSecTokens = useFetchUserSecTokenListCallback()
-  const { expiresAt, token } = useAuthState()
+  const logout = useLogout()
+  const isLoggedIn = useUserisLoggedIn()
+
   const authenticate = useCallback(async () => {
-    const status = await login()
-    if (status == LOGIN_STATUS.SUCCESS) {
+    const status = await login(true)
+    if (status == LOGIN_STATUS.SUCCESS && isLoggedIn) {
       getUserSecTokens()
     }
-  }, [login, getUserSecTokens])
-
-  // once in 30 seconds check for expired token
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (Boolean(token && shouldRenewToken(expiresAt) && account)) {
-        authenticate()
-      }
-    }, 30000)
-    return () => clearInterval(interval)
-  }, [expiresAt, account, authenticate, token])
+  }, [login, getUserSecTokens, account])
 
   // when user logins to another account clear his data and relogin him
   // run with an interval of 5 sec in cases when user changes fast from an account to another
   // so the user won't end up authenticated with a different account
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    const interval = setInterval(async () => {
       if (account && savedAccount && savedAccount !== account) {
-        dispatch(saveToken({ value: { token: '', expiresAt: 0 } }))
-        dispatch(clearUserData())
-        dispatch(clearEventLog())
-        authenticate()
-        dispatch(saveAccount({ account }))
+        dispatch(saveAccount({ account: '' }))
       }
     }, 5000)
     return () => clearInterval(interval)
   }, [account, savedAccount, dispatch, login, getUserSecTokens, authenticate])
+
+  // User connects with account
+  useEffect(() => {
+    if (account && !savedAccount) {
+      logout()
+      authenticate()
+    }
+  }, [account, savedAccount])
 }

@@ -1,13 +1,44 @@
 import axios from 'axios'
 import { API_URL } from 'config'
 import store from 'state'
-import { responseErrorInterceptor, responseSuccessInterceptor } from './interceptors'
+import { postLogin, RawAuthPayload } from 'state/auth/actions'
+import { admin, auth, metamask } from './apiUrls'
+import { getError, responseSuccessInterceptor } from './interceptors'
 import { APIServiceRequestConfig, KeyValueMap, RequestConfig } from './types'
 
 const _axios = axios.create()
 _axios.defaults.baseURL = API_URL
-// _axios.defaults.withCredentials = true
-_axios.interceptors.response.use(responseSuccessInterceptor, responseErrorInterceptor)
+
+_axios.interceptors.response.use(responseSuccessInterceptor, async function responseErrorInterceptor(error: any) {
+  const originalConfig = error?.config
+  const shouldRetry = () => {
+    const loginUrLs = [metamask.login, admin.login, metamask.challenge]
+    const isAdmin = window.location.hash === '#/admin-kyc' || window.location.hash === '#/admin-login'
+    return !loginUrLs.includes(originalConfig.url) || !isAdmin
+  }
+  if (shouldRetry() && error?.response) {
+    if (error.response.status === 401 && !originalConfig._retry) {
+      originalConfig._retry = true
+      try {
+        const { auth: authState } = store.getState()
+        if (authState.refreshToken) {
+          store.dispatch(postLogin.pending())
+          const response = (await _axios.post(auth.refresh, { refreshToken: authState.refreshToken })) as RawAuthPayload
+          store.dispatch(
+            postLogin.fulfilled({
+              auth: response,
+            })
+          )
+          return _axios(originalConfig)
+        } else {
+        }
+      } catch (error) {
+        console.error({ requestError: error.message })
+        store.dispatch(postLogin.rejected({ errorMessage: error.message }))
+      }
+    }
+  }
+})
 
 const apiService = {
   async request<T = any>({ method, uri, data, axiosConfig = {}, params = {} }: APIServiceRequestConfig) {
@@ -74,7 +105,6 @@ const apiService = {
     } else {
       message = error.message
     }
-    console.log({ ERROR1: error.response.data })
     return message
   },
 

@@ -1,13 +1,15 @@
 import { useFetchToken } from 'hooks/useFetchToken'
 import { useActiveWeb3React } from 'hooks/web3'
 import md5 from 'md5'
-import { useCallback } from 'react'
+import { useCallback, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import apiService from 'services/apiService'
 import { metamask } from 'services/apiUrls'
 import { AppDispatch, AppState } from 'state'
+import { clearEventLog } from 'state/eventLog/actions'
+import { clearUserData, saveAccount } from 'state/user/actions'
 import { shouldRenewToken } from 'utils/time'
-import { postLogin } from './actions'
+import { logout, postLogin } from './actions'
 
 export enum LOGIN_STATUS {
   NO_ACCOUNT,
@@ -35,55 +37,78 @@ export function useHasLogin() {
   return getHasLogin
 }
 
-export function useLogin({
-  expireLogin = false,
-  mustHavePreviousLogin = true,
-}: {
-  expireLogin?: boolean
-  mustHavePreviousLogin?: boolean
-  caller?: string
-}) {
-  const { expiresAt, loginLoading } = useAuthState()
+export function useUserisLoggedIn() {
+  const { token } = useAuthState()
+  return useMemo(() => {
+    return !!token
+  }, [token])
+}
+
+const awaitDispatch = (dispatch: any, action: any) =>
+  new Promise((resolve, reject) => {
+    dispatch(action())
+    resolve(null)
+  })
+
+export function useLogout() {
+  const dispatch = useDispatch<AppDispatch>()
+  return useCallback(async () => {
+    awaitDispatch(dispatch, logout)
+    dispatch(clearUserData())
+    dispatch(clearEventLog())
+  }, [])
+}
+
+export function useLogin({ mustHavePreviousLogin = true }: { mustHavePreviousLogin?: boolean; caller?: string }) {
+  const { loginLoading } = useAuthState()
   const dispatch = useDispatch<AppDispatch>()
   const { fetchToken } = useFetchToken()
   const getHasLogin = useHasLogin()
+  const isLoggedIn = useUserisLoggedIn()
+  const { account } = useActiveWeb3React()
   const checkLogin = useCallback(
-    async (account?: string | null) => {
+    async (expireLogin = false) => {
       if (loginLoading) {
         return
       }
+      if (isLoggedIn && !expireLogin) {
+        return LOGIN_STATUS.SUCCESS
+      }
       try {
-        if (expireLogin || shouldRenewToken(expiresAt ?? 0)) {
-          // gets here if he has no login at all, login expired, or login is forced
-          if (mustHavePreviousLogin) {
-            // gets here if he needs to be previously logged in
-            const hasLogin = await getHasLogin(account)
-            if (!hasLogin) {
-              return LOGIN_STATUS.NO_ACCOUNT
+        dispatch(postLogin.pending())
+        // gets here if he has no login at all, or login is forced
+        if (mustHavePreviousLogin) {
+          // gets here if he needs to be previously logged in
+          const hasLogin = await getHasLogin(account)
+          if (!hasLogin) {
+            if (account) {
+              dispatch(postLogin.fulfilled({ auth: { accessToken: '', refreshToken: '' } }))
+              dispatch(saveAccount({ account }))
             }
+            return LOGIN_STATUS.NO_ACCOUNT
           }
-          dispatch(postLogin.pending())
-          // gets here if previously logged in or previous login not needed
-          const auth = await fetchToken()
+        }
+        // gets here if previously logged in or previous login not needed
+        const auth = await fetchToken()
 
-          if (!auth) {
-            console.log({ ERROR70: 'no auth' })
-            dispatch(postLogin.rejected({ errorMessage: 'Could not login' }))
-            return LOGIN_STATUS.FAILED
-          } else {
-            dispatch(postLogin.fulfilled({ auth }))
-            return LOGIN_STATUS.SUCCESS
-          }
+        if (!auth) {
+          dispatch(saveAccount({ account: '' }))
+          dispatch(postLogin.rejected({ errorMessage: 'Could not login' }))
+          return LOGIN_STATUS.FAILED
         } else {
+          if (account) {
+            dispatch(saveAccount({ account }))
+          }
+          dispatch(postLogin.fulfilled({ auth }))
           return LOGIN_STATUS.SUCCESS
         }
       } catch (error: any) {
-        console.log({ ERROR80: error })
-        dispatch(postLogin.rejected({ errorMessage: 'Could not login' }))
+        dispatch(postLogin.rejected({ errorMessage: error.message }))
+        dispatch(saveAccount({ account: '' }))
         return LOGIN_STATUS.FAILED
       }
     },
-    [expiresAt, fetchToken, dispatch, getHasLogin, expireLogin, mustHavePreviousLogin]
+    [fetchToken, dispatch, getHasLogin, mustHavePreviousLogin, account]
   )
   return checkLogin
 }

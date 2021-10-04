@@ -11,11 +11,6 @@ class APIError extends Error {
   }
 }
 
-export const responseErrorInterceptor = (error: any) => {
-  // const { message, code } = getError(error)
-  // throw new APIError(message, code)
-}
-
 export const responseSuccessInterceptor = (response: AxiosResponse<APIResponse>) => {
   const data = response.data.data ?? response.data
 
@@ -26,7 +21,7 @@ export const responseSuccessInterceptor = (response: AxiosResponse<APIResponse>)
   }
 }
 
-const getError = (error: any) => {
+export const getError = (error: any) => {
   let message = 'Unknown error'
   let code = 'Unknown code'
   if (error.response !== undefined) {

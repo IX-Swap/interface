@@ -7,11 +7,6 @@ import { AutoRow } from 'components/Row'
 import React, { useEffect, useState } from 'react'
 import { isMobile } from 'react-device-detect'
 import ReactGA from 'react-ga'
-import { useDispatch } from 'react-redux'
-import { AppDispatch } from 'state'
-import { LOGIN_STATUS, useAuthState, useLogin } from 'state/auth/hooks'
-import { saveAccount } from 'state/user/actions'
-import { useFetchUserSecTokenListCallback, useUserAccountState } from 'state/user/hooks'
 import MetamaskIcon from '../../assets/images/metamask.png'
 import { injected } from '../../connectors'
 // import { OVERLAY_READY } from '../../connectors/Fortmatic'
@@ -55,7 +50,6 @@ export default function WalletModal({
 }) {
   // important that these are destructed from the account-specific web3-react context
   const { active, account, connector, activate, error } = useWeb3React()
-  const savedAccount = useUserAccountState()
 
   const [walletView, setWalletView] = useState(WALLET_VIEWS.ACCOUNT)
 
@@ -68,28 +62,12 @@ export default function WalletModal({
 
   const previousAccount = usePrevious(account)
 
-  const { token } = useAuthState()
-
   // close on connection, when logged out before
   useEffect(() => {
     if (account && !previousAccount && walletModalOpen) {
       toggleWalletModal()
     }
   }, [account, previousAccount, toggleWalletModal, walletModalOpen])
-
-  useEffect(() => {
-    const loginRequest = async () => {
-      const status = await login(account)
-
-      if (status === LOGIN_STATUS.SUCCESS && token) {
-        getUserSecTokens()
-      }
-    }
-    if (account && !savedAccount) {
-      dispatch(saveAccount({ account }))
-      loginRequest()
-    }
-  }, [account, savedAccount])
 
   // always reset to account view
   useEffect(() => {
@@ -98,7 +76,6 @@ export default function WalletModal({
       setWalletView(WALLET_VIEWS.ACCOUNT)
     }
   }, [walletModalOpen])
-  const login = useLogin({ mustHavePreviousLogin: true, expireLogin: true })
   // close modal when a connection is successful
   const activePrevious = usePrevious(active)
   const connectorPrevious = usePrevious(connector)
@@ -107,8 +84,6 @@ export default function WalletModal({
       setWalletView(WALLET_VIEWS.ACCOUNT)
     }
   }, [setWalletView, active, error, connector, walletModalOpen, activePrevious, connectorPrevious])
-  const dispatch = useDispatch<AppDispatch>()
-  const getUserSecTokens = useFetchUserSecTokenListCallback()
 
   const tryActivation = async (connector: AbstractConnector | undefined) => {
     let name = ''

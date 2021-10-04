@@ -20,7 +20,7 @@ export const BrokerDealerForm = React.forwardRef<any, Props>(({ dto }, ref) => {
   const data = dto?.encryptedData
   const hash = dto?.hash
   const action = `${endpoint}`
-  console.log({ action })
+
   return (
     <FormWrapper action={action} method="POST" ref={ref}>
       <input name="callbackEndpoint" value={callbackEndpoint} />
