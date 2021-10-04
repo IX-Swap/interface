@@ -9,7 +9,6 @@ import { Commitment } from 'types/commitment'
 import { formatDateToMMDDYY } from 'helpers/dates'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
 import { formatAmount } from 'helpers/numbers'
-import { TableColumn } from 'types/util'
 import { SearchFilter } from 'app/components/SearchFilter'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
@@ -46,20 +45,6 @@ export const Investors = () => {
     return totalTokens > 1 ? formatAmount((tokenValue / totalTokens) * 100) : 0
   }
 
-  const columns: Array<TableColumn<Commitment>> = [
-    { label: 'Date', key: 'createdAt', render: formatDateToMMDDYY },
-    { label: 'Investor’s Name', key: 'user.name' },
-    {
-      label: 'Amount Invested',
-      key: 'totalAmount',
-      render: renderTotalAmount,
-      headAlign: 'right',
-      align: 'right'
-    },
-    { label: 'Tokens', key: 'tokens', render: renderTokens },
-    { label: 'Ownership (%)', key: 'user', render: renderOwnership }
-  ]
-
   return (
     <Grid container spacing={3}>
       <Grid item xs={12}>
@@ -88,7 +73,19 @@ export const Investors = () => {
         <TableView<Commitment>
           uri={issuanceURL.commitments.getByDSOId(dsoId)}
           name={investQueryKeys.getDSOById(dsoId, issuerId)}
-          columns={columns}
+          columns={[
+            { label: 'Date', key: 'createdAt', render: formatDateToMMDDYY },
+            { label: 'Investor’s Name', key: 'user.name' },
+            {
+              label: 'Amount Invested',
+              key: 'totalAmount',
+              render: renderTotalAmount,
+              headAlign: 'right',
+              align: 'right'
+            },
+            { label: 'Tokens', key: 'tokens', render: renderTokens },
+            { label: 'Ownership (%)', key: 'user', render: renderOwnership }
+          ]}
           filter={{
             search,
             fundStatus: 'Funds transferred'
