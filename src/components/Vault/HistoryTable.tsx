@@ -90,7 +90,7 @@ export const HistoryTable = ({ currency }: { currency?: Currency }) => {
           eventLog.map((row) => {
             const status = row?.status ?? row?.params?.status ?? ActionHistoryStatus.PENDING
             const statusIcon = getStatusIcon(row?.type, status)
-            return <TransactionHistoryRow row={row} key={row.createdAt} icon={statusIcon} />
+            return <TransactionHistoryRow row={row} key={row.createdAt} icon={statusIcon} currency={currency} />
           })}
         {eventLog.length === 0 && (
           <tr>
