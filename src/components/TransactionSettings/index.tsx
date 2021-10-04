@@ -84,7 +84,6 @@ export default function TransactionSettings({ placeholderSlippage }: Transaction
   const { userSlippageTolerance, slippageInput, slippageError, tooLow, tooHigh, resetSlippage, parseSlippageInput } =
     useSlippage()
 
-  console.log({ active: userSlippageTolerance === 'auto' && !slippageInput })
   return (
     <AutoColumn gap="md">
       <Marginer>
