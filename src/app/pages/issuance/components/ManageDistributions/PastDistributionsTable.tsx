@@ -47,7 +47,7 @@ export const PastDistributionsTable = ({
             { label: 'Status', key: 'status', render: renderStatusColumn }
           ]}
           filter={{
-            status: 'Approved'
+            status: 'Complete'
           }}
           themeVariant='primary'
         />

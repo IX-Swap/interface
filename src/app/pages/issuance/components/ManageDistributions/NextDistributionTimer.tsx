@@ -4,7 +4,8 @@ import { VSpacer } from 'components/VSpacer'
 import { useCountdown } from 'app/pages/issuance/hooks/useCountdown'
 import { TimeDisplay } from 'app/pages/issuance/components/CountdownTimer/TimeDisplay'
 import { getTimeUnitsToDisplay } from 'helpers/countdownTimer'
-import { useDistribution } from 'app/pages/issuance/hooks/useDistribution'
+import { useNextDistribution } from 'app/pages/issuance/hooks/useNextDistribution'
+import { useParams } from 'react-router'
 
 export interface CountdownTimerProps {
   my?: number
@@ -17,14 +18,15 @@ export const NextDistributionTimer = ({
   mx = 'auto',
   isNewThemeOn = false
 }: CountdownTimerProps) => {
-  const { data, isLoading } = useDistribution()
-  const soonest = data?.list[0]?.distributionDate
+  const { dsoId } = useParams<{ dsoId: string; issuerId: string }>()
+  const { data, isLoading } = useNextDistribution(dsoId)
+  const soonest = data?.distributionDate
 
   const { units } = useCountdown(soonest)
 
   const unitsToDisplay = getTimeUnitsToDisplay(units)
 
-  if (isLoading) {
+  if (isLoading || data === undefined) {
     return null
   }
 

@@ -17,7 +17,7 @@ export const Investors = () => {
   const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
   const { data, isLoading } = useDSOById(dsoId, issuerId)
   const { getFilterValue } = useQueryFilter()
-  const search = getFilterValue('search', undefined)
+  const search = getFilterValue('search')
 
   if (
     data === undefined ||
