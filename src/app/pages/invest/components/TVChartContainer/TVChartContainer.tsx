@@ -13,6 +13,8 @@ import {
 } from './constants'
 import { getMovingAverageParams } from './utils'
 
+// import '../trading-view_dark.css'
+
 export const TVChartContainer: React.FC<
   Partial<ChartContainerProps>
 > = props => {
@@ -56,6 +58,8 @@ export const TVChartContainer: React.FC<
       width: width ?? sampleTVChartProps.width,
       theme: theme ?? sampleTVChartProps.theme,
       timezone: Intl.DateTimeFormat().resolvedOptions().timeZone as any,
+      toolbar_bg: theme === 'Dark' ? '#292929' : '',
+      custom_css_url: './trading-view_dark.css',
       overrides
     })
 

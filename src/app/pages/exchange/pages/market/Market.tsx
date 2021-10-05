@@ -24,6 +24,7 @@ import { useTokenBalance } from 'app/pages/exchange/hooks/useTokenBalance'
 import { DisclosureDialog } from 'app/pages/exchange/components/DisclosureDialog/DisclosureDialog'
 import { useGetSiteConfig } from 'app/pages/exchange/hooks/useGetSiteConfig'
 import { ExchangeRulesLink } from 'app/pages/exchange/components/ExchangeRulesLink/ExchangeRulesLink'
+import { useTheme } from '@material-ui/core/styles'
 
 export const Market = () => {
   const [isDisclosureVisible, setIsDisclosureVisible] = useState<boolean>(false)
@@ -48,6 +49,7 @@ export const Market = () => {
     isFetching,
     createOrderStatus
   } = useCustodianWalletSubmit()
+  const theme = useTheme()
   const [datafeed] = React.useState<IBasicDataFeed>(() => getDataFeed())
   const { pairId } = useParams<{ pairId: string }>()
   const { data, isLoading } = useMarketList()
@@ -106,7 +108,11 @@ export const Market = () => {
         <Grid item container>
           <Grid item className={classes.middleBlock} xs={12}>
             {symbol.length > 0 && (
-              <TVChartContainer datafeed={datafeed} symbol={symbol} />
+              <TVChartContainer
+                datafeed={datafeed}
+                symbol={symbol}
+                theme={theme.palette.type === 'dark' ? 'Dark' : 'Light'}
+              />
             )}
           </Grid>
           <Grid item className={classes.colorGrid} xs={12}>
