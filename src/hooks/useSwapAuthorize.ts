@@ -77,7 +77,7 @@ interface SwapSecToken {
   firstIsSec: boolean
 }
 export function useSwapSecToken(
-  trade: V2Trade<Currency, Currency, TradeType> | undefined,
+  trade: V2Trade<Currency, Currency, TradeType> | null | undefined,
   allowedSlippage: Percent
 ): SwapSecToken {
   const inputToken = trade?.inputAmount?.currency

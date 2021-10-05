@@ -1,9 +1,9 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Currency, Percent, TradeType } from '@ixswap1/sdk-core'
-import { Router, Trade as V2Trade, TradeAuthorizationDigest } from '@ixswap1/v2-sdk'
+import { Router, Trade as V2Trade } from '@ixswap1/v2-sdk'
 import { t } from '@lingui/macro'
 import { useCallback, useMemo } from 'react'
-import { useSwapHelpersState } from 'state/swapHelper/hooks'
+import { useSwapAuthorization } from 'state/swapHelper/hooks'
 import { useTransactionAdder } from '../state/transactions/hooks'
 import { isAddress, shortenAddress } from '../utils'
 import approveAmountCalldata from '../utils/approveAmountCalldata'
@@ -12,7 +12,7 @@ import isZero from '../utils/isZero'
 import { useArgentWalletContract } from './useArgentWalletContract'
 import { useSwapRouterContract } from './useContract'
 import useENS from './useENS'
-import { useSwapSecToken } from './useSwapAuthorization'
+import { useSwapSecToken } from './useSwapAuthorize'
 import useTransactionDeadline from './useTransactionDeadline'
 import { useV2Pair } from './useV2Pairs'
 import { useActiveWeb3React } from './web3'
@@ -44,7 +44,7 @@ interface FailedCall extends SwapCallEstimate {
 }
 export function useSwapPair(
   // trade to execute, required
-  trade: V2Trade<Currency, Currency, TradeType> | undefined
+  trade?: V2Trade<Currency, Currency, TradeType> | null
 ) {
   const inputToken = trade?.inputAmount?.currency
   const outputToken = trade?.outputAmount?.currency
@@ -54,14 +54,15 @@ export function useSwapPair(
 export function useAuthorization(
   trade: V2Trade<Currency, Currency, TradeType> | undefined,
   allowedSlippage: Percent
-): TradeAuthorizationDigest | undefined {
-  const { authorization } = useSwapHelpersState()
+): any | undefined {
+  const authorization = useSwapAuthorization(trade, allowedSlippage)
   const { firstIsSec } = useSwapSecToken(trade, allowedSlippage)
   const pair = useSwapPair(trade)
   if (!pair?.isSecurity || authorization === null) {
     return undefined
+  } else {
+    return firstIsSec ? [authorization, null] : [null, authorization]
   }
-  return firstIsSec ? [authorization, null] : [null, authorization]
 }
 /**
  * Returns the swap calls that can be used to make the trade
@@ -250,7 +251,6 @@ export function useSwapCallback(
         const estimatedCalls: SwapCallEstimate[] = await Promise.all(
           swapCalls.map((call) => {
             const { address, calldata, value } = call
-
             const tx =
               !value || isZero(value)
                 ? { from: account, to: address, data: calldata }

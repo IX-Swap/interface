@@ -1,3 +1,5 @@
+import { TradeAuthorization } from '@ixswap1/v2-sdk'
+
 export interface BrokerDealerSwapDto {
   callbackEndpoint?: string
   encryptedData: string
@@ -12,6 +14,14 @@ export interface SwapConfirmArguments {
   encryptedData: string
 }
 
+export interface SwapAuthorization extends TradeAuthorization {
+  expiresAt: number
+}
+
 export interface SwapHelperState {
-  authorization: any
+  authorizations: {
+    [chainId: number]: {
+      [address: string]: SwapAuthorization | null
+    }
+  }
 }

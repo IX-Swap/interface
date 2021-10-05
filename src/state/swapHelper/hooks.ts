@@ -1,12 +1,14 @@
 import { Currency, Percent, TradeType } from '@ixswap1/sdk-core'
 import { Trade as V2Trade } from '@ixswap1/v2-sdk'
 import useParsedQueryString from 'hooks/useParsedQueryString'
-import { useSwapSecToken } from 'hooks/useSwapAuthorization'
+import { useSwapSecToken } from 'hooks/useSwapAuthorize'
+import { useActiveWeb3React } from 'hooks/web3'
 import { useCallback, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import apiService from 'services/apiService'
 import { tokens } from 'services/apiUrls'
 import { useAccreditationStatus } from 'state/secTokens/hooks'
+import { getTokenExpiration, shouldRenewToken } from 'utils/time'
 import { AppDispatch, AppState } from '../index'
 import { saveAuthorization } from './actions'
 import { BrokerDealerSwapDto, SwapConfirmArguments } from './typings'
@@ -14,6 +16,30 @@ import { BrokerDealerSwapDto, SwapConfirmArguments } from './typings'
 export function useSwapHelpersState(): AppState['swapHelper'] {
   const data = useSelector<AppState, AppState['swapHelper']>((state) => state.swapHelper)
   return data
+}
+export function useSwapAuthorization(
+  trade: V2Trade<Currency, Currency, TradeType> | undefined | null,
+  allowedSlippage: Percent
+) {
+  const { authorizations } = useSwapHelpersState()
+  const { chainId } = useActiveWeb3React()
+  const dispatch = useDispatch<AppDispatch>()
+  const { selectedCurrency } = useSwapSecToken(trade, allowedSlippage)
+  const address = (selectedCurrency as any)?.address
+  if (chainId && address) {
+    const authorization = authorizations?.[chainId]?.[address]
+    if (!authorization) {
+      return null
+    }
+    const isExpired = shouldRenewToken(authorization?.expiresAt)
+    if (isExpired && authorization) {
+      dispatch(saveAuthorization({ authorization: null, chainId, address }))
+      return null
+    }
+    const { s, v, r, operator, deadline } = authorization
+    return { s, v, r, operator, deadline }
+  }
+  return null
 }
 
 export function useSubmitAuthorizationToBrokerDealer() {
@@ -58,14 +84,11 @@ export function useSwapConfirmDataFromURL(
 ) {
   const dispatch = useDispatch<AppDispatch>()
   const parsedQs = useParsedQueryString()
-  const { authorization } = useSwapHelpersState()
+  const authorization = useSwapAuthorization(trade, allowedSlippage)
   const { selectedCurrency } = useSwapSecToken(trade, allowedSlippage)
   const { accreditationRequest } = useAccreditationStatus((selectedCurrency as any)?.address)
-
+  const { chainId } = useActiveWeb3React()
   useEffect(() => {
-    if (!parsedQs?.hash || !parsedQs?.result || authorization || !accreditationRequest) {
-      return
-    }
     const swapConfirm = {
       hash: (parsedQs?.hash as string) || '',
       encryptedData: (parsedQs?.result as string) || '',
@@ -73,14 +96,21 @@ export function useSwapConfirmDataFromURL(
     }
     fetchAuthorization()
     async function fetchAuthorization() {
+      const address = (selectedCurrency as any)?.address
       try {
+        if (!parsedQs?.hash || !parsedQs?.result || authorization || !accreditationRequest || !chainId || !address) {
+          return
+        }
         const response = await getSwapConfirmAuthorization({ ...swapConfirm })
-        dispatch(saveAuthorization({ authorization: response }))
+        const data = response.data
+        const { s, v, r, operator, deadline } = data
+        const persistedAuthorization = { s, v, r, operator, deadline, expiresAt: getTokenExpiration('1 hour') }
+        dispatch(saveAuthorization({ authorization: persistedAuthorization, chainId, address }))
       } catch (e) {
         console.log({ e })
       }
     }
-  }, [accreditationRequest, authorization, parsedQs?.hash, parsedQs?.result])
+  }, [accreditationRequest, chainId, selectedCurrency, authorization, parsedQs?.hash, parsedQs?.result])
 }
 
 export async function getSwapConfirmAuthorization({ brokerDealerId, hash, encryptedData }: SwapConfirmArguments) {

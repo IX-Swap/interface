@@ -11,7 +11,7 @@ import { PendingSuccesModals } from 'components/swap/PendingSuccesModals'
 import { tradeMeaningfullyDiffers } from 'components/swap/tradeMeaningfullyDiffers'
 import UnsupportedCurrencyFooter from 'components/swap/UnsupportedCurrencyFooter'
 import { MouseoverTooltip } from 'components/Tooltip'
-import { useSwapAuthorize } from 'hooks/useSwapAuthorization'
+import { useSwapAuthorize } from 'hooks/useSwapAuthorize'
 import JSBI from 'jsbi'
 import { SUPPORTED_TGE_CHAINS } from 'pages/App'
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
@@ -19,7 +19,7 @@ import { CheckCircle, HelpCircle } from 'react-feather'
 import ReactGA from 'react-ga'
 import { RouteComponentProps } from 'react-router-dom'
 import { Text } from 'rebass'
-import { useSwapConfirmDataFromURL, useSwapHelpersState } from 'state/swapHelper/hooks'
+import { useSwapAuthorization, useSwapConfirmDataFromURL } from 'state/swapHelper/hooks'
 import { ThemeContext } from 'styled-components'
 import { ButtonIXSWide } from '../../components/Button'
 import { AutoColumn } from '../../components/Column'
@@ -63,7 +63,6 @@ export default function Swap({ history }: RouteComponentProps) {
 
   // swap state
   const { independentField, typedValue, recipient } = useSwapState()
-  const { authorization } = useSwapHelpersState()
 
   const {
     toggledTrade: trade,
@@ -72,7 +71,10 @@ export default function Swap({ history }: RouteComponentProps) {
     parsedAmount,
     currencies,
     inputError: swapInputError,
+    shouldGetAuthorization,
   } = useDerivedSwapInfo()
+
+  const authorization = useSwapAuthorization(trade, allowedSlippage)
 
   const {
     wrapType,
@@ -309,7 +311,7 @@ export default function Swap({ history }: RouteComponentProps) {
                 {trade && <OutputInfo {...{ trade, recipient, allowedSlippage }} />}
                 <BottomGrouping>
                   <ButtonIXSWide onClick={handleSwap} disabled={showAcceptChanges} data-testid="confirm-swap">
-                    <Trans>Confirm swap</Trans>
+                    {shouldGetAuthorization ? <Trans>Get authorization</Trans> : <Trans>Confirm swap</Trans>}
                   </ButtonIXSWide>
                 </BottomGrouping>
               </>
@@ -453,6 +455,8 @@ export default function Swap({ history }: RouteComponentProps) {
                         <Trans>Price impact too high</Trans>
                       ) : priceImpactSeverity > 2 ? (
                         <Trans>Price impact is high. Swap anyway</Trans>
+                      ) : shouldGetAuthorization ? (
+                        <Trans>Get authorization</Trans>
                       ) : (
                         <Trans>Swap</Trans>
                       )}
