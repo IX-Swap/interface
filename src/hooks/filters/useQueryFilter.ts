@@ -31,6 +31,7 @@ export interface QueryFilters {
   transferType: string | undefined
   transferDirection: string | undefined
   dso: string | undefined
+  deploymentStatus: string | undefined
 }
 
 export type QueryFilter = keyof QueryFilters

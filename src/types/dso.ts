@@ -84,6 +84,7 @@ export interface BaseDigitalSecurityOffering extends AuthorizableWithIdentity {
   decimalPlaces?: number
   uniqueIdentifierCode?: string
   dealStatus?: string
+  marketType?: string
 }
 
 export interface DSOInsight {

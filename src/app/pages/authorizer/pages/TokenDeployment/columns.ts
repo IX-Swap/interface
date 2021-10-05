@@ -2,6 +2,7 @@ import { TableColumn } from 'types/util'
 import { DigitalSecurityOffering } from 'types/dso'
 import { formatDateToMMDDYY } from 'helpers/dates'
 import { renderAmount, renderMinimumInvestment } from 'helpers/tables'
+import { renderStatusColumn } from 'app/pages/authorizer/hooks/useAuthorizerView'
 
 export const columns: Array<TableColumn<DigitalSecurityOffering>> = [
   {
@@ -32,13 +33,12 @@ export const columns: Array<TableColumn<DigitalSecurityOffering>> = [
     render: renderMinimumInvestment
   },
   {
-    key: 'minimumInvestment',
-    label: 'Minimum Investment',
-    render: renderMinimumInvestment
+    key: 'marketType',
+    label: 'Market Type'
   },
   {
-    key: 'minimumInvestment',
-    label: 'Market Type',
-    render: () => 'Primary'
+    key: 'deploymentStatus',
+    label: 'Status',
+    render: renderStatusColumn
   }
 ]

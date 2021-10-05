@@ -7,7 +7,7 @@ export const TokenDeployments = () => {
   return (
     <AuthorizerList<any>
       title='Token Deployment'
-      uri='/issuance/dso/list'
+      uri='/issuance/dso/deployments/list'
       name={authorizerQueryKeys.getDSOList}
       columns={columns}
       themeVariant='primary'
