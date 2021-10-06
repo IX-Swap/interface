@@ -2,6 +2,7 @@ import { Currency, Percent, TradeType } from '@ixswap1/sdk-core'
 import { Trade as V2Trade } from '@ixswap1/v2-sdk'
 import useParsedQueryString from 'hooks/useParsedQueryString'
 import { useSwapSecToken } from 'hooks/useSwapAuthorize'
+import { useMultihopAuthorization } from 'hooks/useSwapCallback'
 import { useActiveWeb3React } from 'hooks/web3'
 import { useCallback, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -17,15 +18,12 @@ export function useSwapHelpersState(): AppState['swapHelper'] {
   const data = useSelector<AppState, AppState['swapHelper']>((state) => state.swapHelper)
   return data
 }
-export function useSwapAuthorization(
-  trade: V2Trade<Currency, Currency, TradeType> | undefined | null,
-  allowedSlippage: Percent
-) {
+export function useSwapAuthorization(trade: V2Trade<Currency, Currency, TradeType> | undefined | null) {
   const { authorizations } = useSwapHelpersState()
   const { chainId } = useActiveWeb3React()
   const dispatch = useDispatch<AppDispatch>()
-  const { selectedCurrency } = useSwapSecToken(trade, allowedSlippage)
-  const address = (selectedCurrency as any)?.address
+  const secAddresses = useMultihopAuthorization(trade)
+  const address = secAddresses.find((addr) => addr !== null)
   if (chainId && address) {
     const authorization = authorizations?.[chainId]?.[address]
     if (!authorization) {
@@ -42,6 +40,20 @@ export function useSwapAuthorization(
   return null
 }
 
+export function usePersistAuthorization() {
+  const dispatch = useDispatch<AppDispatch>()
+  const { chainId } = useActiveWeb3React()
+
+  return useCallback(
+    (authorization, address) => {
+      if (chainId) {
+        console.log({ setAuthorization: `${address} ${authorization}` })
+        dispatch(saveAuthorization({ authorization: null, chainId, address }))
+      }
+    },
+    [chainId]
+  )
+}
 export function useSubmitAuthorizationToBrokerDealer() {
   const { submitForm } = useSubmitBrokerDealerForm()
   return useCallback(
@@ -84,7 +96,7 @@ export function useSwapConfirmDataFromURL(
 ) {
   const dispatch = useDispatch<AppDispatch>()
   const parsedQs = useParsedQueryString()
-  const authorization = useSwapAuthorization(trade, allowedSlippage)
+  const authorization = useSwapAuthorization(trade)
   const { selectedCurrency } = useSwapSecToken(trade, allowedSlippage)
   const { accreditationRequest } = useAccreditationStatus((selectedCurrency as any)?.address)
   const { chainId } = useActiveWeb3React()

@@ -51,18 +51,34 @@ export function useSwapPair(
   const [, pair] = useV2Pair(inputToken ?? undefined, outputToken ?? undefined)
   return pair
 }
-export function useAuthorization(
-  trade: V2Trade<Currency, Currency, TradeType> | undefined,
-  allowedSlippage: Percent
-): any | undefined {
-  const authorization = useSwapAuthorization(trade, allowedSlippage)
-  const { firstIsSec } = useSwapSecToken(trade, allowedSlippage)
+export function useAuthorization(trade: V2Trade<Currency, Currency, TradeType> | undefined): any | undefined {
+  const authorization = useSwapAuthorization(trade)
+  const addresses = useMultihopAuthorization(trade)
   const pair = useSwapPair(trade)
   if (!pair?.isSecurity || authorization === null) {
     return undefined
   } else {
-    return firstIsSec ? [authorization, null] : [null, authorization]
+    const authorizationDigest = addresses.map((address) => {
+      return address === null ? address : authorization
+    })
+    console.log({ authorizationDigest })
+    return authorizationDigest
   }
+}
+
+export function useMultihopAuthorization(trade: V2Trade<Currency, Currency, TradeType> | undefined | null) {
+  const tokenPath = trade?.route?.path
+  const tokens = []
+  if (tokenPath) {
+    for (const token of tokenPath) {
+      if ((token as any)?.isSecToken) {
+        tokens.push(token.address)
+      } else {
+        tokens.push(null)
+      }
+    }
+  }
+  return tokens
 }
 /**
  * Returns the swap calls that can be used to make the trade
@@ -84,7 +100,7 @@ function useSwapCallArguments(
   const routerContract = useSwapRouterContract()
   const argentWalletContract = useArgentWalletContract()
   const pair = useSwapPair(trade)
-  const authorization = useAuthorization(trade, allowedSlippage)
+  const authorization = useAuthorization(trade)
   return useCallback(async () => {
     if (!trade || !recipient || !library || !account || !chainId || !deadline) return []
     if (!routerContract) return []
