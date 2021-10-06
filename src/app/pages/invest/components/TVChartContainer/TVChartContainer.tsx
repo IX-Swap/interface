@@ -13,8 +13,6 @@ import {
 } from './constants'
 import { getMovingAverageParams } from './utils'
 
-// import '../trading-view_dark.css'
-
 export const TVChartContainer: React.FC<
   Partial<ChartContainerProps>
 > = props => {
