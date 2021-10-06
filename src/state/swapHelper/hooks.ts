@@ -122,6 +122,8 @@ export function useSwapConfirmDataFromURL(
         const data = response.data
         const { s, v, r, operator, deadline } = data
         const persistedAuthorization = { s, v, r, operator, deadline, expiresAt: getTokenExpiration('1 hour') }
+        queryParams.delete('result')
+        queryParams.delete('hash')
         history.replace({
           search: queryParams.toString(),
         })
@@ -130,7 +132,16 @@ export function useSwapConfirmDataFromURL(
         console.log({ e })
       }
     }
-  }, [accreditationRequest, chainId, selectedCurrency, authorization, parsedQs?.hash, parsedQs?.result])
+  }, [
+    accreditationRequest,
+    history,
+    location.search,
+    chainId,
+    selectedCurrency,
+    authorization,
+    parsedQs?.hash,
+    parsedQs?.result,
+  ])
 }
 
 export async function getSwapConfirmAuthorization({ brokerDealerId, hash, encryptedData }: SwapConfirmArguments) {
