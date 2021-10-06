@@ -14,6 +14,7 @@ import { getTokenExpiration, shouldRenewToken } from 'utils/time'
 import { AppDispatch, AppState } from '../index'
 import { saveAuthorization } from './actions'
 import { BrokerDealerSwapDto, SwapConfirmArguments } from './typings'
+import { useHistory, useLocation } from 'react-router-dom'
 
 export function useSwapHelpersState(): AppState['swapHelper'] {
   const data = useSelector<AppState, AppState['swapHelper']>((state) => state.swapHelper)
@@ -101,7 +102,10 @@ export function useSwapConfirmDataFromURL(
   const { selectedCurrency } = useSwapSecToken(trade, allowedSlippage)
   const { accreditationRequest } = useAccreditationStatus((selectedCurrency as any)?.address)
   const { chainId } = useActiveWeb3React()
+  const location = useLocation()
+  const history = useHistory()
   useEffect(() => {
+    const queryParams = new URLSearchParams(location.search)
     const swapConfirm = {
       hash: (parsedQs?.hash as string) || '',
       encryptedData: (parsedQs?.result as string) || '',
@@ -118,6 +122,9 @@ export function useSwapConfirmDataFromURL(
         const data = response.data
         const { s, v, r, operator, deadline } = data
         const persistedAuthorization = { s, v, r, operator, deadline, expiresAt: getTokenExpiration('1 hour') }
+        history.replace({
+          search: queryParams.toString(),
+        })
         dispatch(saveAuthorization({ authorization: persistedAuthorization, chainId, address }))
       } catch (e) {
         console.log({ e })
