@@ -178,44 +178,43 @@ export default function Swap({ history }: RouteComponentProps) {
     }
     setSwapState({ attemptingTxn: true, tradeToConfirm, showConfirm, swapErrorMessage: undefined, txHash: undefined })
     setOpenModal(true)
-    swapCallback()
-      .then((hash) => {
-        if (selectedCurrency) {
-          persistAuthorization(null, (selectedCurrency as any)?.address)
-        }
-        setSwapState({
-          attemptingTxn: false,
-          tradeToConfirm,
-          showConfirm,
-          swapErrorMessage: undefined,
-          txHash: hash,
-        })
+    try {
+      const hash = await swapCallback()
+      if (selectedCurrency) {
+        await persistAuthorization(null, (selectedCurrency as any)?.address)
+      }
+      setSwapState({
+        attemptingTxn: false,
+        tradeToConfirm,
+        showConfirm,
+        swapErrorMessage: undefined,
+        txHash: hash,
+      })
 
-        ReactGA.event({
-          category: 'Swap',
-          action:
-            recipient === null
-              ? 'Swap w/o Send'
-              : (recipientAddress ?? recipient) === account
-              ? 'Swap w/o Send + recipient'
-              : 'Swap w/ Send',
-          label: [
-            trade?.inputAmount?.currency?.symbol,
-            trade?.outputAmount?.currency?.symbol,
-            Version.v2,
-            singleHopOnly ? 'SH' : 'MH',
-          ].join('/'),
-        })
+      ReactGA.event({
+        category: 'Swap',
+        action:
+          recipient === null
+            ? 'Swap w/o Send'
+            : (recipientAddress ?? recipient) === account
+            ? 'Swap w/o Send + recipient'
+            : 'Swap w/ Send',
+        label: [
+          trade?.inputAmount?.currency?.symbol,
+          trade?.outputAmount?.currency?.symbol,
+          Version.v2,
+          singleHopOnly ? 'SH' : 'MH',
+        ].join('/'),
       })
-      .catch((error) => {
-        setSwapState({
-          attemptingTxn: false,
-          tradeToConfirm,
-          showConfirm,
-          swapErrorMessage: error.message,
-          txHash: undefined,
-        })
+    } catch (error) {
+      setSwapState({
+        attemptingTxn: false,
+        tradeToConfirm,
+        showConfirm,
+        swapErrorMessage: error?.message as string,
+        txHash: undefined,
       })
+    }
   }, [
     priceImpact,
     getSwapCallback,
@@ -230,6 +229,8 @@ export default function Swap({ history }: RouteComponentProps) {
     authorization,
     fetchAuthorization,
     swapCallbackError,
+    persistAuthorization,
+    selectedCurrency,
   ])
 
   // errors
