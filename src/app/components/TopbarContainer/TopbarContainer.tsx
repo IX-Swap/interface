@@ -89,7 +89,7 @@ export const TopbarContainer = () => {
       path: HomeRoute.landing
     },
     {
-      label: 'Securities Markets',
+      label: 'Research Terminal',
       path: HomeRoute.securitiesMarkets
     }
   ]
