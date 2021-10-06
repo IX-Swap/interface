@@ -8,6 +8,7 @@ import { InvestRoute } from 'app/pages/invest/router/config'
 import { DSOInvestorOverview } from 'app/components/DSO/components/DSOInvestorOverview'
 import { VSpacer } from 'components/VSpacer'
 import useStyles from 'app/components/DSO/components/styles'
+import { useAuth } from 'hooks/auth/useAuth'
 
 export interface DSOInvestorViewHeaderProps {
   dso: DigitalSecurityOffering
@@ -15,8 +16,11 @@ export interface DSOInvestorViewHeaderProps {
 
 export const DSOInvestorViewHeader = (props: DSOInvestorViewHeaderProps) => {
   const { dso } = props
+  const { user } = useAuth()
   const classes = useStyles()
   const { isTablet, theme } = useAppBreakpoints()
+  const isInvestButtonDisabled =
+    dso.createdBy === user?._id || dso.subscriptionDocument === undefined
 
   return (
     <Grid
@@ -72,12 +76,15 @@ export const DSOInvestorViewHeader = (props: DSOInvestorViewHeaderProps) => {
         <Grid item>
           <Button
             variant='contained'
+            disabled={isInvestButtonDisabled}
             disableElevation
             style={{
               minWidth: isTablet ? 220 : 140,
               marginTop: isTablet ? 30 : 0,
-              backgroundColor: '#ffffff',
-              color: theme.palette.slider.activeBackground
+              backgroundColor: isInvestButtonDisabled ? 'lightgray' : '#ffffff',
+              color: isInvestButtonDisabled
+                ? 'rgba(0, 0, 0, 0.26)'
+                : theme.palette.slider.activeBackground
             }}
             component={AppRouterLinkComponent}
             to={InvestRoute.makeInvestment}
