@@ -13,7 +13,7 @@ export const SecuritiesMarkets = () => {
         <Grid item xs={12} container spacing={2} wrap='nowrap'>
           <Grid item container spacing={1} alignItems='center' wrap='nowrap'>
             <Typography variant='h4' style={{ marginRight: 36 }}>
-              Research Terminal
+              Securities Markets
             </Typography>
             <Typography
               variant='body2'
