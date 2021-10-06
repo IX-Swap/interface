@@ -11,7 +11,7 @@ import { PendingSuccesModals } from 'components/swap/PendingSuccesModals'
 import { tradeMeaningfullyDiffers } from 'components/swap/tradeMeaningfullyDiffers'
 import UnsupportedCurrencyFooter from 'components/swap/UnsupportedCurrencyFooter'
 import { MouseoverTooltip } from 'components/Tooltip'
-import { useSwapAuthorize } from 'hooks/useSwapAuthorize'
+import { useSwapAuthorize, useSwapSecToken } from 'hooks/useSwapAuthorize'
 import JSBI from 'jsbi'
 import { SUPPORTED_TGE_CHAINS } from 'pages/App'
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
@@ -19,7 +19,7 @@ import { CheckCircle, HelpCircle } from 'react-feather'
 import ReactGA from 'react-ga'
 import { RouteComponentProps } from 'react-router-dom'
 import { Text } from 'rebass'
-import { useSwapAuthorization, useSwapConfirmDataFromURL } from 'state/swapHelper/hooks'
+import { usePersistAuthorization, useSwapAuthorization, useSwapConfirmDataFromURL } from 'state/swapHelper/hooks'
 import { ThemeContext } from 'styled-components'
 import { ButtonIXSWide } from '../../components/Button'
 import { AutoColumn } from '../../components/Column'
@@ -74,8 +74,9 @@ export default function Swap({ history }: RouteComponentProps) {
     shouldGetAuthorization,
   } = useDerivedSwapInfo()
 
-  const authorization = useSwapAuthorization(trade, allowedSlippage)
-
+  const authorization = useSwapAuthorization(trade)
+  const persistAuthorization = usePersistAuthorization()
+  const { selectedCurrency } = useSwapSecToken(trade, allowedSlippage)
   const {
     wrapType,
     execute: onWrap,
@@ -179,6 +180,9 @@ export default function Swap({ history }: RouteComponentProps) {
     setOpenModal(true)
     swapCallback()
       .then((hash) => {
+        if (selectedCurrency) {
+          persistAuthorization(null, (selectedCurrency as any)?.address)
+        }
         setSwapState({
           attemptingTxn: false,
           tradeToConfirm,

@@ -165,7 +165,7 @@ export function useDerivedSwapInfo(): {
     inputError = t`Swapping two security tokens is not allowed`
   }
   const pair = useSwapPair(v2Trade)
-  const authorization = useSwapAuthorization(v2Trade, allowedSlippage)
+  const authorization = useSwapAuthorization(v2Trade)
   return {
     currencies,
     currencyBalances,
