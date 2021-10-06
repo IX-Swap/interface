@@ -66,7 +66,11 @@ export const TokenDeploymentView = ({ data }: TokenDeploymentViewProps) => {
       <Grid item xs={12} md={6}>
         <Typography variant='h3'>Deploy Token</Typography>
       </Grid>
-      {data.deploymentInfo === undefined ? (
+      {data.deploymentInfo !== undefined || isDeployed ? (
+        <Grid item xs={12}>
+          <CustodyForm />
+        </Grid>
+      ) : (
         <Grid item xs={12} md={6}>
           <DeployTokenButton
             isInitializing={isInitializing}
@@ -76,10 +80,6 @@ export const TokenDeploymentView = ({ data }: TokenDeploymentViewProps) => {
             onClick={deploy}
             hideTextStatus
           />
-        </Grid>
-      ) : (
-        <Grid item xs={12}>
-          <CustodyForm />
         </Grid>
       )}
       <Grid item xs={12}>
