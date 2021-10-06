@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import apiService from 'services/apiService'
 import { tokens } from 'services/apiUrls'
 import { useAccreditationStatus } from 'state/secTokens/hooks'
+import { completeDispatch } from 'utils/completeDispatch'
 import { getTokenExpiration, shouldRenewToken } from 'utils/time'
 import { AppDispatch, AppState } from '../index'
 import { saveAuthorization } from './actions'
@@ -45,10 +46,10 @@ export function usePersistAuthorization() {
   const { chainId } = useActiveWeb3React()
 
   return useCallback(
-    (authorization, address) => {
+    async (authorization, address) => {
       if (chainId) {
         console.log({ setAuthorization: `${address} ${authorization}` })
-        dispatch(saveAuthorization({ authorization: null, chainId, address }))
+        await completeDispatch({ dispatch, action: saveAuthorization, args: { authorization: null, chainId, address } })
       }
     },
     [chainId]
