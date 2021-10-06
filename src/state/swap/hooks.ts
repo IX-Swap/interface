@@ -14,9 +14,12 @@ import { isAddress } from '../../utils'
 import { AppDispatch, AppState } from '../index'
 import { useCurrencyBalances } from '../wallet/hooks'
 import { Field, replaceSwapState, selectCurrency, setRecipient, switchCurrencies, typeInput } from './actions'
-import { useSwapIsBothSecTokens, useUserSingleHopOnly } from 'state/user/hooks'
+import { useUserSingleHopOnly } from 'state/user/hooks'
 import { involvesAddress, tryParseAmount, queryParametersToSwapState } from './helpers'
 import { BAD_RECIPIENT_ADDRESSES } from './constants'
+import { useSwapIsBothSecTokens } from 'hooks/useSwapAuthorize'
+import { useSwapPair } from 'hooks/useSwapCallback'
+import { useSwapAuthorization } from 'state/swapHelper/hooks'
 
 export function useSwapState(): AppState['swap'] {
   return useSelector<AppState, AppState['swap']>((state) => state.swap)
@@ -77,6 +80,7 @@ export function useDerivedSwapInfo(): {
   v2Trade: V2Trade<Currency, Currency, TradeType> | undefined
   toggledTrade: V2Trade<Currency, Currency, TradeType> | undefined
   allowedSlippage: Percent
+  shouldGetAuthorization: boolean
 } {
   const { account } = useActiveWeb3React()
 
@@ -160,6 +164,8 @@ export function useDerivedSwapInfo(): {
   if (areBothSecTokens) {
     inputError = t`Swapping two security tokens is not allowed`
   }
+  const pair = useSwapPair(v2Trade)
+  const authorization = useSwapAuthorization(v2Trade, allowedSlippage)
   return {
     currencies,
     currencyBalances,
@@ -168,6 +174,7 @@ export function useDerivedSwapInfo(): {
     v2Trade: v2Trade ?? undefined,
     toggledTrade,
     allowedSlippage,
+    shouldGetAuthorization: Boolean(pair?.isSecurity) && !authorization,
   }
 }
 

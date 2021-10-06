@@ -11,14 +11,15 @@ import { PendingSuccesModals } from 'components/swap/PendingSuccesModals'
 import { tradeMeaningfullyDiffers } from 'components/swap/tradeMeaningfullyDiffers'
 import UnsupportedCurrencyFooter from 'components/swap/UnsupportedCurrencyFooter'
 import { MouseoverTooltip } from 'components/Tooltip'
+import { useSwapAuthorize } from 'hooks/useSwapAuthorize'
 import JSBI from 'jsbi'
 import { SUPPORTED_TGE_CHAINS } from 'pages/App'
-import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { CheckCircle, HelpCircle } from 'react-feather'
 import ReactGA from 'react-ga'
 import { RouteComponentProps } from 'react-router-dom'
 import { Text } from 'rebass'
-import { useSubmitBrokerDealerForm } from 'state/swap-helpers/hooks'
+import { useSwapAuthorization, useSwapConfirmDataFromURL } from 'state/swapHelper/hooks'
 import { ThemeContext } from 'styled-components'
 import { ButtonIXSWide } from '../../components/Button'
 import { AutoColumn } from '../../components/Column'
@@ -35,7 +36,7 @@ import useENSAddress from '../../hooks/useENSAddress'
 import { useERC20PermitFromTrade, UseERC20PermitState } from '../../hooks/useERC20Permit'
 import useIsArgentWallet from '../../hooks/useIsArgentWallet'
 import { useIsSwapUnsupported } from '../../hooks/useIsSwapUnsupported'
-import { useSwapCallback, useSwapCallbackError } from '../../hooks/useSwapCallback'
+import { useSwapCallback, useSwapCallbackError, useSwapPair } from '../../hooks/useSwapCallback'
 import { Version } from '../../hooks/useToggledVersion'
 import { useUSDCValue } from '../../hooks/useUSDCPrice'
 import useWrapCallback, { WrapType } from '../../hooks/useWrapCallback'
@@ -62,6 +63,7 @@ export default function Swap({ history }: RouteComponentProps) {
 
   // swap state
   const { independentField, typedValue, recipient } = useSwapState()
+
   const {
     toggledTrade: trade,
     allowedSlippage,
@@ -69,7 +71,10 @@ export default function Swap({ history }: RouteComponentProps) {
     parsedAmount,
     currencies,
     inputError: swapInputError,
+    shouldGetAuthorization,
   } = useDerivedSwapInfo()
+
+  const authorization = useSwapAuthorization(trade, allowedSlippage)
 
   const {
     wrapType,
@@ -153,18 +158,21 @@ export default function Swap({ history }: RouteComponentProps) {
   // the callback to execute the swap
   const getSwapCallback = useSwapCallback(trade, allowedSlippage, recipient)
   const { error: swapCallbackError } = useSwapCallbackError(trade, allowedSlippage, recipient)
-
+  useSwapConfirmDataFromURL(trade, allowedSlippage)
   const [singleHopOnly] = useUserSingleHopOnly()
-
+  const formRef = useRef() as any
+  const fetchAuthorization = useSwapAuthorize(trade, allowedSlippage, formRef)
+  const pair = useSwapPair(trade)
   const handleSwap = useCallback(async () => {
     const { callback: swapCallback } = await getSwapCallback()
-    if (swapCallbackError) {
-      return
-    }
-    if (!swapCallback) {
+    if (swapCallbackError || !swapCallback) {
       return
     }
     if (priceImpact && !confirmPriceImpactWithoutFee(priceImpact)) {
+      return
+    }
+    if (pair?.isSecurity && !authorization) {
+      await fetchAuthorization()
       return
     }
     setSwapState({ attemptingTxn: true, tradeToConfirm, showConfirm, swapErrorMessage: undefined, txHash: undefined })
@@ -214,6 +222,10 @@ export default function Swap({ history }: RouteComponentProps) {
     account,
     trade,
     singleHopOnly,
+    pair,
+    authorization,
+    fetchAuthorization,
+    swapCallbackError,
   ])
 
   // errors
@@ -268,11 +280,11 @@ export default function Swap({ history }: RouteComponentProps) {
       ),
     [tradeToConfirm, trade]
   )
-  const { dto, formRef } = useSubmitBrokerDealerForm()
+
   return (
     <>
       <TokenWarningModal history={history} />
-      <BrokerDealerForm ref={formRef} dto={dto} />
+      <BrokerDealerForm ref={formRef} />
       <AppBody blurred={chainId === SUPPORTED_TGE_CHAINS.MAIN}>
         <SwapHeader />
         <Wrapper id="swap-page">
@@ -299,7 +311,7 @@ export default function Swap({ history }: RouteComponentProps) {
                 {trade && <OutputInfo {...{ trade, recipient, allowedSlippage }} />}
                 <BottomGrouping>
                   <ButtonIXSWide onClick={handleSwap} disabled={showAcceptChanges} data-testid="confirm-swap">
-                    <Trans>Confirm swap</Trans>
+                    {shouldGetAuthorization ? <Trans>Get authorization</Trans> : <Trans>Confirm swap</Trans>}
                   </ButtonIXSWide>
                 </BottomGrouping>
               </>
@@ -443,6 +455,8 @@ export default function Swap({ history }: RouteComponentProps) {
                         <Trans>Price impact too high</Trans>
                       ) : priceImpactSeverity > 2 ? (
                         <Trans>Price impact is high. Swap anyway</Trans>
+                      ) : shouldGetAuthorization ? (
+                        <Trans>Get authorization</Trans>
                       ) : (
                         <Trans>Swap</Trans>
                       )}
