@@ -59,7 +59,7 @@ export function useLogin() {
         await getMe()
         return LOGIN_STATUS.SUCCESS
       } catch (error: any) {
-        dispatch(postLogin.rejected({ errorMessage: 'Could not login' }))
+        dispatch(postLogin.rejected({ errorMessage: 'Could not login.' }))
         return LOGIN_STATUS.FAILED
       }
     },

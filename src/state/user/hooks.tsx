@@ -106,6 +106,9 @@ export function useUserSecTokenLoading(): boolean {
 export function useGetSecTokenAuthorization() {
   return useSelector<AppState, AppState['user']['secTokenAuthorizations']>((state) => state.user.secTokenAuthorizations)
 }
+export function useUserState() {
+  return useSelector<AppState, AppState['user']>((state) => state.user)
+}
 export function useUserLocaleManager(): [SupportedLocale | null, (newLocale: SupportedLocale) => void] {
   const dispatch = useDispatch<AppDispatch>()
   const locale = useUserLocale()
@@ -441,7 +444,7 @@ export function usePassAccreditation(
           }
           await postPassAccreditation({ tokenId })
         } else {
-          dispatch(passAccreditation.rejected({ errorMessage: 'Could not login' }))
+          dispatch(passAccreditation.rejected({ errorMessage: 'Could not login.' }))
           return
         }
         await fetchTokens()

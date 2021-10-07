@@ -68,7 +68,7 @@ export function useLogin({
 
           if (!auth) {
             console.log({ ERROR70: 'no auth' })
-            dispatch(postLogin.rejected({ errorMessage: 'Could not login' }))
+            dispatch(postLogin.rejected({ errorMessage: 'Could not login.' }))
             return LOGIN_STATUS.FAILED
           } else {
             dispatch(postLogin.fulfilled({ auth }))
@@ -79,7 +79,7 @@ export function useLogin({
         }
       } catch (error: any) {
         console.log({ ERROR80: error })
-        dispatch(postLogin.rejected({ errorMessage: 'Could not login' }))
+        dispatch(postLogin.rejected({ errorMessage: 'Could not login.' }))
         return LOGIN_STATUS.FAILED
       }
     },
