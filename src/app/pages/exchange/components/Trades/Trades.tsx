@@ -4,17 +4,19 @@ import { MyTrades } from 'app/pages/exchange/components/Trades/MyTrades'
 import { useStyles } from 'app/pages/exchange/components/Trades/Trades.styles'
 import { TabPanel } from 'components/TabPanel'
 import React, { useState } from 'react'
-import { useTheme } from '@material-ui/core/styles'
+// import { useTheme } from '@material-ui/core/styles'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 
 export const Trades = () => {
   const { tab } = useStyles()
-  const theme = useTheme()
+  const { theme } = useAppBreakpoints()
   const [activeTab, setActiveTab] = useState(0)
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setActiveTab(newValue)
   }
   return (
     <Grid
+      data-testid={'wrapper'}
       container
       spacing={0}
       direction='column'
@@ -25,6 +27,7 @@ export const Trades = () => {
     >
       <Grid item>
         <Tabs
+          data-testid={'tabs'}
           variant='fullWidth'
           value={activeTab}
           indicatorColor='primary'
