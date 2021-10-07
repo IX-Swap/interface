@@ -1,5 +1,6 @@
 import { Currency, Percent, TradeType } from '@ixswap1/sdk-core'
 import { Trade as V2Trade } from '@ixswap1/v2-sdk'
+import * as H from 'history'
 import useParsedQueryString from 'hooks/useParsedQueryString'
 import { useSwapSecToken } from 'hooks/useSwapAuthorize'
 import { useMultihopAuthorization } from 'hooks/useSwapCallback'
@@ -14,7 +15,6 @@ import { getTokenExpiration, shouldRenewToken } from 'utils/time'
 import { AppDispatch, AppState } from '../index'
 import { saveAuthorization } from './actions'
 import { BrokerDealerSwapDto, SwapConfirmArguments } from './typings'
-import { useHistory, useLocation } from 'react-router-dom'
 
 export function useSwapHelpersState(): AppState['swapHelper'] {
   const data = useSelector<AppState, AppState['swapHelper']>((state) => state.swapHelper)
@@ -48,7 +48,7 @@ export function usePersistAuthorization() {
 
   return useCallback(
     async (authorization, address) => {
-      if (chainId) {
+      if (chainId && address) {
         console.log({ setAuthorization: `${address} ${authorization}` })
         await completeDispatch({ dispatch, action: saveAuthorization, args: { authorization: null, chainId, address } })
       }
@@ -94,7 +94,8 @@ export function useSubmitBrokerDealerForm() {
 
 export function useSwapConfirmDataFromURL(
   trade: V2Trade<Currency, Currency, TradeType> | undefined,
-  allowedSlippage: Percent
+  allowedSlippage: Percent,
+  history: H.History
 ) {
   const dispatch = useDispatch<AppDispatch>()
   const parsedQs = useParsedQueryString()
@@ -102,10 +103,7 @@ export function useSwapConfirmDataFromURL(
   const { selectedCurrency } = useSwapSecToken(trade, allowedSlippage)
   const { accreditationRequest } = useAccreditationStatus((selectedCurrency as any)?.address)
   const { chainId } = useActiveWeb3React()
-  const location = useLocation()
-  const history = useHistory()
   useEffect(() => {
-    const queryParams = new URLSearchParams(location.search)
     const swapConfirm = {
       hash: (parsedQs?.hash as string) || '',
       encryptedData: (parsedQs?.result as string) || '',
@@ -122,26 +120,13 @@ export function useSwapConfirmDataFromURL(
         const data = response.data
         const { s, v, r, operator, deadline } = data
         const persistedAuthorization = { s, v, r, operator, deadline, expiresAt: getTokenExpiration('1 hour') }
-        queryParams.delete('result')
-        queryParams.delete('hash')
-        history.replace({
-          search: queryParams.toString(),
-        })
+        history.push(`/swap`)
         dispatch(saveAuthorization({ authorization: persistedAuthorization, chainId, address }))
       } catch (e) {
         console.log({ e })
       }
     }
-  }, [
-    accreditationRequest,
-    history,
-    location.search,
-    chainId,
-    selectedCurrency,
-    authorization,
-    parsedQs?.hash,
-    parsedQs?.result,
-  ])
+  }, [accreditationRequest, chainId, selectedCurrency, authorization, parsedQs?.hash, parsedQs?.result, history])
 }
 
 export async function getSwapConfirmAuthorization({ brokerDealerId, hash, encryptedData }: SwapConfirmArguments) {

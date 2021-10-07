@@ -159,7 +159,7 @@ export default function Swap({ history }: RouteComponentProps) {
   // the callback to execute the swap
   const getSwapCallback = useSwapCallback(trade, allowedSlippage, recipient)
   const { error: swapCallbackError } = useSwapCallbackError(trade, allowedSlippage, recipient)
-  useSwapConfirmDataFromURL(trade, allowedSlippage)
+  useSwapConfirmDataFromURL(trade, allowedSlippage, history)
   const [singleHopOnly] = useUserSingleHopOnly()
   const formRef = useRef() as any
   const fetchAuthorization = useSwapAuthorize(trade, allowedSlippage, formRef)
