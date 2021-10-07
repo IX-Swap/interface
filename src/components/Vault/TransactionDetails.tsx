@@ -143,7 +143,7 @@ export const TransactionDetails = ({ currency }: Props) => {
                     </SvgIconWrapper>
                   </RowCenter>
                 )}
-                {isPending(activeEvent.type, status) && isDeposit(activeEvent.type) && (
+                {isPending(activeEvent.type, status) && (
                   <RowCenter style={{ marginTop: '45px', marginBottom: '45px' }}>
                     <ButtonGradientBorder
                       data-testid="cancel"
@@ -151,6 +151,7 @@ export const TransactionDetails = ({ currency }: Props) => {
                       onClick={() => cancelDeposit({ requestId: activeEvent?.id, onSuccess })}
                     >
                       {isDeposit(activeEvent.type) && <Trans>Cancel deposit</Trans>}
+                      {isWithdraw(activeEvent.type) && <Trans>Cancel withdraw</Trans>}
                     </ButtonGradientBorder>
                   </RowCenter>
                 )}

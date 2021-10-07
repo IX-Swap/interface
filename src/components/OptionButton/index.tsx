@@ -34,8 +34,6 @@ export const Option = styled(FancyButton)<{ active: boolean }>`
     cursor: pointer;
     border: none;
     outline: none;
-  }
-  :hover {
     background: ${({ theme }) => theme.bgG6};
   }
   background: ${({ active, theme }) => (active ? theme.bgG6 : theme.bg12)};

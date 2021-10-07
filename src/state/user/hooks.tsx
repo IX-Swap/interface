@@ -1,11 +1,12 @@
-import { Percent, Token } from '@ixswap1/sdk-core'
-import { Pair } from '@ixswap1/v2-sdk'
+import { Currency, CurrencyAmount, Percent, Token, TradeType } from '@ixswap1/sdk-core'
+import { Pair, Trade as V2Trade, TradeAuthorizationDigest } from '@ixswap1/v2-sdk'
 import { ERROR_ACCREDITATION_STATUSES } from 'components/Vault/enum'
 import { IXS_ADDRESS, IXS_GOVERNANCE_ADDRESS } from 'constants/addresses'
 import { SupportedLocale } from 'constants/locales'
+import { useV2Pair } from 'hooks/useV2Pairs'
 import JSBI from 'jsbi'
 import flatMap from 'lodash.flatmap'
-import { useCallback, useEffect, useMemo } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import apiService from 'services/apiService'
 import { broker, kyc, tokens } from 'services/apiUrls'
@@ -17,10 +18,14 @@ import {
   listToSecTokenMap,
   SecTokenAddressMap,
   useAccreditationStatus,
+  useAreBothSecTokens,
+  useSecTokenId,
   useSecTokensFromMap,
 } from 'state/secTokens/hooks'
+import { useSaveBrokerDealerDto } from 'state/swap-helpers/hooks'
 import { useSimpleTokenBalanceWithLoading } from 'state/wallet/hooks'
 import { SecToken } from 'types/secToken'
+import { currencyId } from 'utils/currencyId'
 import { shouldRenewToken } from 'utils/time'
 import { BASES_TO_TRACK_LIQUIDITY_FOR, PINNED_PAIRS } from '../../constants/routing'
 import { useAllTokens, useCurrency } from '../../hooks/Tokens'
@@ -29,6 +34,7 @@ import { AppDispatch, AppState } from '../index'
 import {
   addSerializedPair,
   addSerializedToken,
+  authorizeSecToken,
   clearUserData,
   fetchUserSecTokenList,
   passAccreditation,
@@ -44,6 +50,7 @@ import {
   updateUserSingleHopOnly,
   updateUserSlippageTolerance,
 } from './actions'
+import { OrderType } from './enum'
 
 function serializeToken(token: Token): SerializedToken {
   return {
@@ -352,6 +359,104 @@ export function useTrackedTokenPairs(): [Token, Token][] {
 export const getUserSecTokensList = async () => {
   const result = await apiService.get(tokens.fromUser)
   return result.data
+}
+
+interface AuthorizationParams {
+  tokenId: number
+  amount: string
+  pairAddress?: string
+  orderType: string
+}
+
+export const fetchTokenAuthorization = async ({ tokenId, amount, pairAddress, orderType }: AuthorizationParams) => {
+  const result = await apiService.post(tokens.authorize(tokenId), { amount, pairAddress, orderType })
+  return result.data
+}
+
+export const useGetTokenAuthorization = () => {
+  const dispatch = useDispatch<AppDispatch>()
+
+  return useCallback(
+    async ({
+      amount,
+      pairAddress,
+      orderType,
+      tokenId,
+    }: {
+      amount: string
+      pairAddress?: string
+      orderType: OrderType
+      tokenId?: number
+    }) => {
+      if (!tokenId || !amount || !pairAddress || !orderType) return null
+      dispatch(authorizeSecToken.pending())
+      try {
+        const result = await fetchTokenAuthorization({ tokenId, amount, pairAddress, orderType })
+        dispatch(authorizeSecToken.fulfilled())
+        return result
+      } catch (e) {
+        dispatch(authorizeSecToken.rejected({ errorMessage: e.message }))
+        return null
+      }
+    },
+    [dispatch]
+  )
+}
+
+const getStringAmount = (amount: CurrencyAmount<Currency>) => {
+  const num = amount.numerator
+  const denum = amount.denominator
+  const division = JSBI.divide(num, denum)
+  return String(division)
+}
+
+export function useSwapAuthorization(
+  trade: V2Trade<Currency, Currency, TradeType> | undefined,
+  allowedSlippage: Percent
+) {
+  const inputToken = trade?.inputAmount?.currency
+  const outputToken = trade?.outputAmount?.currency
+  const [, pair] = useV2Pair(inputToken ?? undefined, outputToken ?? undefined)
+  const tokenId0 = useSecTokenId({ currencyId: (inputToken as any)?.address })
+  const tokenId1 = useSecTokenId({ currencyId: (outputToken as any)?.address })
+  const getAuthorization = useGetTokenAuthorization()
+  const amount0 = trade ? getStringAmount(trade?.maximumAmountIn(allowedSlippage)) : ''
+  const amount1 = trade ? getStringAmount(trade?.minimumAmountOut(allowedSlippage)) : ''
+  const firstIsSec = (inputToken as any)?.isSecToken
+  const saveBrokerDealerDto = useSaveBrokerDealerDto()
+
+  const fetchAuthorization = useCallback(async () => {
+    if (amount0 && amount1 && pair?.isSecurity) {
+      await fetchAuthorization()
+    }
+    async function fetchAuthorization() {
+      const usedToken = firstIsSec ? tokenId0 : tokenId1
+      const amount = firstIsSec ? amount0 : amount1
+      const orderType = firstIsSec ? OrderType.SELL : OrderType.BUY
+      const pairAddress = pair?.liquidityToken.address
+      const result = await getAuthorization({ amount, orderType, pairAddress, tokenId: usedToken })
+      saveBrokerDealerDto(result)
+    }
+  }, [
+    amount0,
+    amount1,
+    getAuthorization,
+    pair?.isSecurity,
+    pair?.liquidityToken?.address,
+    firstIsSec,
+    tokenId0,
+    tokenId1,
+    allowedSlippage,
+    saveBrokerDealerDto,
+  ])
+  return fetchAuthorization
+}
+
+export function useSwapIsBothSecTokens(trade?: V2Trade<Currency, Currency, TradeType> | null) {
+  const id0 = trade?.inputAmount?.currency ? currencyId(trade?.inputAmount?.currency) : ''
+  const id1 = trade?.outputAmount?.currency ? currencyId(trade?.outputAmount?.currency) : ''
+  const areBothSecTokens = useAreBothSecTokens({ address0: id0, address1: id1 })
+  return areBothSecTokens
 }
 
 const listCache: WeakMap<SecToken[], SecTokenAddressMap> | null =

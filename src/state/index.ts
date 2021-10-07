@@ -16,7 +16,7 @@ import auth from './auth/reducer'
 import secTokens from './secTokens/reducer'
 import eventLog from './eventLog/reducer'
 import admin from './admin/reducer'
-import swapHelper from './swapHelper/reducer'
+import swapHelper from './swap-helpers/reducer'
 import vesting from './vesting/reducer'
 import staking from './stake/reducer'
 import unstaking from './stake/unstake/reducer'
@@ -24,7 +24,7 @@ import stakingPoolSize from './stake/poolSizeReducer'
 
 import brokerDealer from './brokerDealer/reducer'
 
-const PERSISTED_KEYS: string[] = ['user', 'transactions', 'lists', 'auth', 'swap', 'swapHelper']
+const PERSISTED_KEYS: string[] = ['user', 'transactions', 'lists', 'auth', 'swap']
 
 const store = configureStore({
   reducer: {

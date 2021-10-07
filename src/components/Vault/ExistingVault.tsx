@@ -7,28 +7,21 @@ import { useDepositModalToggle } from 'state/application/hooks'
 import { BalanceRow } from './BalanceRow'
 import { HistoryBlock } from './HistoryBlock'
 import { ExistingTitle, ExistingWrapper, StyledTitle, TitleStatusRow } from './styleds'
-import { TYPE } from 'theme'
-import { CustodianInfo } from 'components/Vault/enum'
-
 interface Props {
   currency?: Currency
-  custodian?: CustodianInfo
 }
-export const ExistingVault = ({ currency, custodian }: Props) => {
+export const ExistingVault = ({ currency }: Props) => {
   const symbolText = useMemo(() => currency?.symbol ?? '', [currency?.symbol])
   const { account } = useActiveWeb3React()
   const toggle = useDepositModalToggle()
 
   return (
     <ExistingWrapper>
-      <TitleStatusRow style={{ marginBottom: '0.6rem' }}>
+      <TitleStatusRow>
         <ExistingTitle>
           <StyledTitle>
             <Trans>My {symbolText} Vault</Trans>
           </StyledTitle>
-          <TYPE.description2 color={'text1'}>
-            <Trans>on {custodian?.name} custodian</Trans>
-          </TYPE.description2>
         </ExistingTitle>
         <ButtonIXSGradient data-testid="deposit" style={{ width: '230px' }} onClick={() => toggle()}>
           <Trans>Deposit</Trans>

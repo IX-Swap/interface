@@ -32,7 +32,6 @@ export const broker = {
 export const tokens = {
   fromUser: `/token/list`,
   authorize: (tokenId: number) => `/token/swap-authorize/${tokenId}`,
-  swapConfirm: (brokerDealerId: number) => `/token/swap-confirm/${brokerDealerId}`,
   all: `/token/list/all`,
   accreditation: (tokenId: number) => `token/accreditation/${tokenId}`,
 }
