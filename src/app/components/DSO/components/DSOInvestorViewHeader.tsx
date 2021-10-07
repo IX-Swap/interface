@@ -19,8 +19,7 @@ export const DSOInvestorViewHeader = (props: DSOInvestorViewHeaderProps) => {
   const { user } = useAuth()
   const classes = useStyles()
   const { isTablet, theme } = useAppBreakpoints()
-  const isInvestButtonDisabled =
-    dso.createdBy === user?._id || dso.subscriptionDocument === undefined
+  const isInvestButtonDisabled = dso.createdBy === user?._id
 
   return (
     <Grid
