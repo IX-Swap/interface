@@ -1,12 +1,12 @@
-import { Trades } from 'app/pages/exchange/components/Trades/Trades'
-import * as React from 'react'
+import React from 'react'
 import { render, cleanup } from 'test-utils'
 import * as useAppBreakpoints from 'hooks/useAppBreakpoints'
-import { fireEvent, waitFor } from '@testing-library/dom'
+import { Trades } from 'app/pages/exchange/components/Trades/Trades'
+import Grid from '@material-ui/core/Grid'
+
+jest.mock('@material-ui/core/Grid', () => jest.fn(() => null))
 
 describe('Trades', () => {
-  const setActiveTab = jest.fn()
-
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -22,12 +22,16 @@ describe('Trades', () => {
         palette: { type: 'dark' }
       }
     } as any)
+    render(<Trades />)
 
-    const { getByTestId } = render(<Trades />)
-    const wrapper = getByTestId('wrapper')
-    expect(wrapper).toHaveAttribute(
-      'style',
-      'background-color: rgb(41, 41, 41); margin-top: 10px;'
+    expect(Grid).toHaveBeenCalledWith(
+      expect.objectContaining({
+        style: {
+          backgroundColor: '#292929',
+          marginTop: 10
+        }
+      }),
+      {}
     )
   })
 
@@ -38,22 +42,15 @@ describe('Trades', () => {
       }
     } as any)
 
-    const { getByTestId } = render(<Trades />)
-    const wrapper = getByTestId('wrapper')
-    expect(wrapper).toHaveAttribute(
-      'style',
-      'background-color: rgb(255, 255, 255); margin-top: 10px;'
+    render(<Trades />)
+    expect(Grid).toHaveBeenCalledWith(
+      expect.objectContaining({
+        style: {
+          backgroundColor: '#ffffff',
+          marginTop: 10
+        }
+      }),
+      {}
     )
-  })
-
-  it('renders without errors', async () => {
-    jest.spyOn(React, 'useState').mockImplementation(() => [0, setActiveTab])
-
-    const { getByTestId } = render(<Trades />)
-    const tabs = getByTestId('tabs')
-    fireEvent.change(tabs)
-    await waitFor(() => {
-      expect(setActiveTab).toBeCalled()
-    })
   })
 })

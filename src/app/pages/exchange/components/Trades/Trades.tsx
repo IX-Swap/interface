@@ -16,7 +16,6 @@ export const Trades = () => {
   }
   return (
     <Grid
-      data-testid={'wrapper'}
       container
       spacing={0}
       direction='column'
@@ -27,7 +26,6 @@ export const Trades = () => {
     >
       <Grid item>
         <Tabs
-          data-testid={'tabs'}
           variant='fullWidth'
           value={activeTab}
           indicatorColor='primary'
