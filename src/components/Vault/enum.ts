@@ -94,10 +94,20 @@ export enum AccreditationStatusEnum {
   PENDING_CUSTODIAN = 'pending-custodian', // waiting for custodian action
   PENDING_KYC = 'pending-kyc',
 }
+
+export interface CustodianInfo {
+  name: string
+  description: string
+  website: string
+}
+
 export interface AccreditationRequest {
+  brokerDealerId: number
+  custodianId: number
   message?: string
   id: number
   status: AccreditationStatusEnum
+  custodian: CustodianInfo
 }
 export const PENDING_ACCREDITATION_STATUSES = [
   AccreditationStatusEnum.PENDING,
