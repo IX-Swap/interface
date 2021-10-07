@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
-import { BrokerDealerSwapDto } from 'state/swap-helpers/actions'
 import styled from 'styled-components/macro'
 
 const FormWrapper = styled.form`
@@ -9,23 +8,13 @@ const FormWrapper = styled.form`
   top: 0;
   left: 0;
 `
-interface Props {
-  dto: BrokerDealerSwapDto | null
-}
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface Props {}
 
 // eslint-disable react/prop-types
-export const BrokerDealerForm = React.forwardRef<any, Props>(({ dto }, ref) => {
-  const endpoint = dto?.endpoint
-  const callbackEndpoint = dto?.callbackEndpoint
-  const data = dto?.encryptedData
-  const hash = dto?.hash
-  const action = `${endpoint}`
-  console.log({ action })
+export const BrokerDealerForm = React.forwardRef<any, Props>(({}, ref) => {
   return (
-    <FormWrapper action={action} method="POST" ref={ref}>
-      <input name="callbackEndpoint" value={callbackEndpoint} />
-      <input name="hash" value={hash} />
-      <input type="data" value={data} />
+    <FormWrapper method="POST" ref={ref}>
       <input type="submit" />
     </FormWrapper>
   )
