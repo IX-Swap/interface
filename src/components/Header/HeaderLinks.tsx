@@ -100,7 +100,10 @@ const PopOverContent = styled.div`
 
 const HeaderPopover = () => {
   return (
-    <PopOverContent onClick={(e) => (e ? e.stopPropagation() : null)}>
+    <PopOverContent
+      onClick={(e) => (e ? e.stopPropagation() : null)}
+      onMouseDown={(e) => (e ? e.stopPropagation() : null)}
+    >
       <SubMenuLink id={`stake-nav-link`} to={routes.staking}>
         <Trans>Staking</Trans>
       </SubMenuLink>
