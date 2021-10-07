@@ -90,3 +90,8 @@ export const SwapErrorCard = styled(DarkCard)`
   padding: 20px 36px;
   text-align: left;
 `
+export const BlueGreyCard = styled(Card)`
+  background: ${({ theme }) => `${theme.bg11}66`};
+  border-radius: 20px;
+  padding: 18px 25px;
+`
