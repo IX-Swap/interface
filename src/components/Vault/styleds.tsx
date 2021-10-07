@@ -105,6 +105,7 @@ export const StyledTitle = styled(TYPE.title4)`
     font-size: 28px !important;
   }
 `
+
 export const DateBox = styled.div`
   width: 123px;
 `

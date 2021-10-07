@@ -40,6 +40,7 @@ import { Dots } from '../Pool/styleds'
 import { ModalBottom } from './ModalBottom'
 import { ModalHeader } from './ModalHeader'
 import { PricesAndPoolShare } from './PricesAndPoolShare'
+import { SecToSecWarning } from './SecToSecWarning'
 import { ToggleableBody } from './styleds'
 import { Tip } from './Tip'
 import { useHandleCurrencySelect } from './useHandleCurrencySelect'
@@ -80,6 +81,7 @@ export default function AddLiquidity({
     liquidityMinted,
     poolTokenPercentage,
     error,
+    areBothSecTokens,
   } = useDerivedMintInfo(currencyA ?? undefined, currencyB ?? undefined)
 
   const { onFieldAInput, onFieldBInput } = useMintActionHandlers(noLiquidity)
@@ -323,6 +325,7 @@ export default function AddLiquidity({
                     price={price}
                   />
                 )}
+                {areBothSecTokens && <SecToSecWarning />}
                 <Box marginTop={'23px'}>
                   {addIsUnsupported ? (
                     <ButtonIXSWide disabled={true} data-testid="unsupported-asset">

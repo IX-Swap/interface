@@ -3,8 +3,7 @@ import { Currency, Percent, TradeType } from '@ixswap1/sdk-core'
 import { Router, Trade as V2Trade } from '@ixswap1/v2-sdk'
 import { t } from '@lingui/macro'
 import { useCallback, useMemo } from 'react'
-import { useSwapHelpersState } from 'state/swap-helpers/hooks'
-import { useSwapAuthorization } from 'state/user/hooks'
+import { useSwapAuthorization } from 'state/swapHelper/hooks'
 import { useTransactionAdder } from '../state/transactions/hooks'
 import { isAddress, shortenAddress } from '../utils'
 import approveAmountCalldata from '../utils/approveAmountCalldata'
@@ -13,6 +12,7 @@ import isZero from '../utils/isZero'
 import { useArgentWalletContract } from './useArgentWalletContract'
 import { useSwapRouterContract } from './useContract'
 import useENS from './useENS'
+import { useSwapSecToken } from './useSwapAuthorize'
 import useTransactionDeadline from './useTransactionDeadline'
 import { useV2Pair } from './useV2Pairs'
 import { useActiveWeb3React } from './web3'
@@ -42,7 +42,44 @@ interface FailedCall extends SwapCallEstimate {
   call: SwapCall
   error: Error
 }
+export function useSwapPair(
+  // trade to execute, required
+  trade?: V2Trade<Currency, Currency, TradeType> | null
+) {
+  const inputToken = trade?.inputAmount?.currency
+  const outputToken = trade?.outputAmount?.currency
+  const [, pair] = useV2Pair(inputToken ?? undefined, outputToken ?? undefined)
+  return pair
+}
+export function useAuthorization(trade: V2Trade<Currency, Currency, TradeType> | undefined): any | undefined {
+  const authorization = useSwapAuthorization(trade)
+  const addresses = useMultihopAuthorization(trade)
+  const pair = useSwapPair(trade)
+  if (!pair?.isSecurity || authorization === null) {
+    return undefined
+  } else {
+    const authorizationDigest = addresses.map((address) => {
+      return address === null ? address : authorization
+    })
+    console.log({ authorizationDigest })
+    return authorizationDigest
+  }
+}
 
+export function useMultihopAuthorization(trade: V2Trade<Currency, Currency, TradeType> | undefined | null) {
+  const tokenPath = trade?.route?.path
+  const tokens = []
+  if (tokenPath) {
+    for (const token of tokenPath) {
+      if ((token as any)?.isSecToken) {
+        tokens.push(token.address)
+      } else {
+        tokens.push(null)
+      }
+    }
+  }
+  return tokens
+}
 /**
  * Returns the swap calls that can be used to make the trade
  * @param trade trade to execute
@@ -62,20 +99,16 @@ function useSwapCallArguments(
   const deadline = useTransactionDeadline()
   const routerContract = useSwapRouterContract()
   const argentWalletContract = useArgentWalletContract()
-  const fetchAuthorization = useSwapAuthorization(trade, allowedSlippage)
-  const inputToken = trade?.inputAmount?.currency
-  const outputToken = trade?.outputAmount?.currency
-  const [, pair] = useV2Pair(inputToken ?? undefined, outputToken ?? undefined)
-  const { dto } = useSwapHelpersState()
+  const pair = useSwapPair(trade)
+  const authorization = useAuthorization(trade)
   return useCallback(async () => {
     if (!trade || !recipient || !library || !account || !chainId || !deadline) return []
     if (!routerContract) return []
-    const swapMethods = []
-    if (dto === null && pair?.isSecurity) {
-      await fetchAuthorization()
+    if (pair?.isSecurity && authorization === undefined) {
       return []
     }
-    const usedAuthorization = undefined
+    const swapMethods = []
+    const usedAuthorization = pair?.isSecurity ? authorization : undefined
     const options = {
       feeOnTransfer: false,
       allowedSlippage,
@@ -130,7 +163,8 @@ function useSwapCallArguments(
     recipient,
     routerContract,
     trade,
-    fetchAuthorization,
+    authorization,
+    pair,
   ])
 }
 
@@ -233,7 +267,6 @@ export function useSwapCallback(
         const estimatedCalls: SwapCallEstimate[] = await Promise.all(
           swapCalls.map((call) => {
             const { address, calldata, value } = call
-
             const tx =
               !value || isZero(value)
                 ? { from: account, to: address, data: calldata }
@@ -243,29 +276,32 @@ export function useSwapCallback(
                     data: calldata,
                     value,
                   }
+            return {
+              call,
+              gasEstimate: 900000,
+            }
+            // return library
+            //   .estimateGas(tx)
+            //   .then((gasEstimate) => {
+            //     return {
+            //       call,
+            //       gasEstimate,
+            //     }
+            //   })
+            //   .catch((gasError) => {
+            //     console.debug('Gas estimate failed, trying eth_call to extract error', call)
 
-            return library
-              .estimateGas(tx)
-              .then((gasEstimate) => {
-                return {
-                  call,
-                  gasEstimate,
-                }
-              })
-              .catch((gasError) => {
-                console.debug('Gas estimate failed, trying eth_call to extract error', call)
-
-                return library
-                  .call(tx)
-                  .then((result) => {
-                    console.debug('Unexpected successful call after failed estimate gas', call, gasError, result)
-                    return { call, error: new Error('Unexpected issue with estimating the gas. Please try again.') }
-                  })
-                  .catch((callError) => {
-                    console.debug('Call threw error', call, callError)
-                    return { call, error: new Error(swapErrorToUserReadableMessage(callError)) }
-                  })
-              })
+            //     return library
+            //       .call(tx)
+            //       .then((result) => {
+            //         console.debug('Unexpected successful call after failed estimate gas', call, gasError, result)
+            //         return { call, error: new Error('Unexpected issue with estimating the gas. Please try again.') }
+            //       })
+            //       .catch((callError) => {
+            //         console.debug('Call threw error', call, callError)
+            //         return { call, error: new Error(swapErrorToUserReadableMessage(callError)) }
+            //       })
+            //   })
           })
         )
 
@@ -297,7 +333,7 @@ export function useSwapCallback(
             to: address,
             data: calldata,
             // let the wallet try if we can't estimate the gas
-            ...('gasEstimate' in bestCallOption ? { gasLimit: calculateGasMargin(bestCallOption.gasEstimate) } : {}),
+            ...('gasEstimate' in bestCallOption ? { gasLimit: 9000000 } : {}),
             ...(value && !isZero(value) ? { value } : {}),
           })
           .then((response) => {

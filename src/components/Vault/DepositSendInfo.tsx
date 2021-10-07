@@ -1,21 +1,18 @@
 import { Trans } from '@lingui/macro'
 import { IconWrapper } from 'components/AccountDetails/styleds'
-import { ButtonGradientBorder } from 'components/Button'
 import Column from 'components/Column'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import { QRCodeWrap } from 'components/QRCodeWrap'
 import Row, { RowBetween, RowCenter } from 'components/Row'
 import { useCurrency } from 'hooks/Tokens'
 import useCopyClipboard from 'hooks/useCopyClipboard'
-import React, { useCallback, useMemo } from 'react'
+import React from 'react'
 import { Copy } from 'react-feather'
-import { useCancelDepositCallback, useDepositState } from 'state/deposit/hooks'
+import { useDepositState } from 'state/deposit/hooks'
 import { useEventState } from 'state/eventLog/hooks'
 import styled from 'styled-components'
 import { TYPE } from 'theme'
-import { durationInHours } from 'utils/time'
 import { shortenAddress } from '../../utils'
-import { ActionTypes, isPendingDeposit } from './enum'
 
 const StyledCopy = styled(Copy)`
   color: ${({ theme }) => theme.text1};
@@ -29,15 +26,8 @@ export const DepositSendInfo = ({ onClose }: Props) => {
   const { amount, sender, currencyId, loadingDeposit, depositError } = useDepositState()
   const currency = useCurrency(currencyId)
   const [isCopied, setCopied] = useCopyClipboard()
-  const cancelDeposit = useCancelDepositCallback()
   const { activeEvent } = useEventState()
-  const deadlineIn = useMemo(() => {
-    return durationInHours(activeEvent?.deadline)
-  }, [activeEvent?.deadline])
 
-  const onSuccess = useCallback(() => {
-    onClose()
-  }, [onClose])
   return (
     <div style={{ position: 'relative' }}>
       <Column style={{ paddingBottom: '36px' }}>
