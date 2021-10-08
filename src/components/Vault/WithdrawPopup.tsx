@@ -53,7 +53,7 @@ export const WithdrawPopup = ({ currency }: Props) => {
           <ModalPadding>
             <RowBetween>
               <TYPE.title5>
-                <Trans>Withdraw</Trans>
+                <Trans>Withdraw from Custodian</Trans>
               </TYPE.title5>
               <CloseIcon onClick={onClose} />
             </RowBetween>
