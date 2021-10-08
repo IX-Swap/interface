@@ -1,6 +1,6 @@
 import { Currency } from '@ixswap1/sdk-core'
 import styled from 'styled-components'
-import { Trans } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import { ArrowDown } from 'react-feather'
 import { ButtonIXSWide, ButtonGradient } from 'components/Button'
 import Column from 'components/Column'
@@ -72,8 +72,6 @@ export const DepositRequestForm = ({ currency, showWrapInfo, setShowWrapInfo }: 
     const id = currencyId(currency)
     onCurrencySet(id)
   }, [currency, onCurrencySet])
-
-  console.log(address)
 
   return (
     <div style={{ position: 'relative' }}>
@@ -167,38 +165,43 @@ export const DepositRequestForm = ({ currency, showWrapInfo, setShowWrapInfo }: 
         </>
       ) : (
         <Column style={{ marginTop: '18px' }}>
-          <TYPE.title11 marginBottom="16px">
-            <Trans>
-              At the moment, security tokens are kept by the custodian and can only be regulated by him. This is done to
-              prevent theft and fraudulent transactions. Your security tokens (further as a SEC) cannot be controlled or
-              moved, but you have the rights to own them. Relatively speaking, you can dispose of your rights to your
-              own security tokens. First reason to do this, we tokenize your token ownership and call it wrapped tokens
-              (further as a wSEC).
-            </Trans>
-          </TYPE.title11>
-          <TYPE.title11 marginBottom="16px">
-            <Trans>
-              Second reason you need wSEC is to be able to trade SEC for other ERC-20 tokens on decentralized platforms
-              like IXS. Because decentralized platforms running on Ethereum use smart contracts to facilitate trades
-              directly between users, every user needs to have the same standardized format for every token they trade.
-              This ensures tokens don’t get lost in translation.
-            </Trans>
-          </TYPE.title11>
-          <TYPE.title11 marginBottom="16px">
-            <Trans>
-              When you “wrap” SEC, you are actually not so much wrap as trading through a smart contract for an equal
-              token called wSEC. If you want to get back a simple SEC, you need to &quot;unfold&quot; it. AKA will
-              exchange it for a simple SEC.
-            </Trans>
-          </TYPE.title11>
-          <TYPE.title11 marginBottom="16px">
-            <Trans>
-              When you make a deposit, we create a wrap token and transfer it to your balance. In the future, you have
-              the ability to manage it - change, sell, stake, etc. 1 security token = 1 wrapped token (1 SEC = wSEC)
-            </Trans>
-          </TYPE.title11>
+          <WrapInfo />
         </Column>
       )}
     </div>
+  )
+}
+
+const WrapInfo = () => {
+  const info = [
+    `At the moment, security tokens are kept by the custodian and can only be regulated by him. This is done to
+  prevent theft and fraudulent transactions. Your security tokens (further as a SEC) cannot be controlled or
+  moved, but you have the rights to own them. Relatively speaking, you can dispose of your rights to your own
+  security tokens. First reason to do this, we tokenize your token ownership and call it wrapped tokens (further
+  as a wSEC).`,
+    `
+  Second reason you need wSEC is to be able to trade SEC for other ERC-20 tokens on decentralized platforms like
+  IXS. Because decentralized platforms running on Ethereum use smart contracts to facilitate trades directly
+  between users, every user needs to have the same standardized format for every token they trade. This ensures
+  tokens don’t get lost in translation.
+  `,
+    `
+  When you “wrap” SEC, you are actually not so much wrapping as trading through a smart contract for an equal
+  token called wSEC. If you want to get back a simple SEC, you need to &quot;unfold&quot; it. AKA will exchange
+  it for a simple SEC.
+  `,
+    `When you make a deposit, we create a wrap token and transfer it to your balance. In the future, you have the
+  ability to manage it - change, sell, stake, etc. 1 security token = 1 wrapped token (1 SEC = wSEC)
+  `,
+  ]
+
+  return (
+    <>
+      {info.map((text, index) => (
+        <TYPE.title11 key={`info-${index}`} marginBottom="16px">
+          <Trans>{t`${text}`}</Trans>
+        </TYPE.title11>
+      ))}
+    </>
   )
 }
