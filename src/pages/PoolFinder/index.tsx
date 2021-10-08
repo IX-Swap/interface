@@ -24,7 +24,7 @@ import { Dots } from '../Pool/styleds'
 import { Fields } from './enums'
 import { PrerequisiteMessage } from './PrerequisiteMessage'
 import { SelectCurrency } from './SelectCurrency'
-import { FoundPoolWrapper } from './styleds'
+import { FoundPoolWrapper, PoolStateColumn, SelectCurrencyContainer } from './styleds'
 
 function useQuery() {
   return new URLSearchParams(useLocation().search)
@@ -99,9 +99,9 @@ export default function PoolFinder() {
       <AppBody {...bodyProps}>
         <FindPoolTabs origin={query.get('origin') ?? '/pool'} />
         <AutoColumn>
-          <AutoColumn style={{ padding: '0 37px', marginBottom: '10px' }} gap="md">
+          <SelectCurrencyContainer gap="md">
             <SelectCurrency {...{ currency0, currency1, chooseToken }} />
-          </AutoColumn>
+          </SelectCurrencyContainer>
           {poolFound && pair && (
             <FoundPoolWrapper>
               <Column>
@@ -120,7 +120,7 @@ export default function PoolFinder() {
             </FoundPoolWrapper>
           )}
           {!poolFound && !prerequesiteState && currency0 && currency1 && (
-            <Column style={{ padding: '37px' }}>
+            <PoolStateColumn>
               {noLiquidityInPool && (
                 <EmptyStateInfoCard>
                   <TYPE.title9 fontWeight={500}>
@@ -157,7 +157,7 @@ export default function PoolFinder() {
                   </Trans>
                 </EmptyStateInfoCard>
               )}
-            </Column>
+            </PoolStateColumn>
           )}
           {prerequesiteState && <PrerequisiteMessage account={account} />}
         </AutoColumn>

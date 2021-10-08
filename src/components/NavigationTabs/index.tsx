@@ -61,9 +61,16 @@ export function SwapPoolTabs({ active }: { active: 'swap' | 'pool' }) {
   )
 }
 
+export const PoolTabs = styled(Tabs)`
+  padding: 26px 37px 0 37px;
+  @media (max-width: 500px) {
+    padding: 1rem 0.7rem;
+  }
+`
+
 export function FindPoolTabs({ origin }: { origin: string }) {
   return (
-    <Tabs style={{ padding: '26px 37px 0 37px' }}>
+    <PoolTabs>
       <StyledPageHeader>
         <RowStart style={{ padding: '0' }}>
           <HistoryLink to={origin}>
@@ -74,7 +81,7 @@ export function FindPoolTabs({ origin }: { origin: string }) {
           <Trans>Import Pool</Trans>
         </RowStart>
       </StyledPageHeader>
-    </Tabs>
+    </PoolTabs>
   )
 }
 export function ManageTabs({ onClick, onDismiss }: { onClick: () => void; onDismiss: () => void }) {
