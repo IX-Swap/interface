@@ -20,16 +20,19 @@ import { DepositRequestForm } from './DepositRequestForm'
 import { DepositSendInfo } from './DepositSendInfo'
 import { ModalPadding } from './styleds'
 import { ButtonText } from 'components/Button'
+import { useUserSecTokens } from 'state/user/hooks'
 
 interface Props {
   currency?: Currency
 }
 export const DepositPopup = ({ currency }: Props) => {
+  const { secTokens } = useUserSecTokens()
   const isOpen = useModalOpen(ApplicationModal.DEPOSIT)
   const [showWrapInfo, setShowWrapInfo] = useState(false)
   const toggle = useDepositModalToggle()
   const { modalView } = useDepositState()
   const dispatch = useDispatch<AppDispatch>()
+  const tokenInfo = (secTokens[(currency as any)?.address || ''] as any)?.tokenInfo
 
   const onClose = useCallback(() => {
     dispatch(setModalView({ view: DepositModalView.CREATE_REQUEST }))
@@ -46,6 +49,7 @@ export const DepositPopup = ({ currency }: Props) => {
       minHeight={false}
       maxHeight={'fit-content'}
       mobileMaxHeight={90}
+      scrollable
     >
       <ModalBlurWrapper data-testid="depositPopup">
         <ModalContentWrapper>
@@ -64,9 +68,7 @@ export const DepositPopup = ({ currency }: Props) => {
                 </Row>
               ) : (
                 <TYPE.title5>
-                  <Trans>{`Deposit ${(currency as any)?.tokenInfo?.originalName || ''} from ${
-                    (currency as any)?.tokenInfo?.network || ''
-                  }`}</Trans>
+                  <Trans>{`Deposit ${tokenInfo?.symbol || ''} from ${tokenInfo?.network || ''}`}</Trans>
                 </TYPE.title5>
               )}
               <CloseIcon data-testid="cross" onClick={onClose} />
