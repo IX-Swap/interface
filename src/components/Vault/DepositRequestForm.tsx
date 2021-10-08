@@ -14,7 +14,7 @@ import {
   useDepositState,
   useDerivedDepositInfo,
 } from 'state/deposit/hooks'
-import { shortenAddress } from 'utils'
+import { shortAddress } from 'utils'
 import { BlueGreyCard } from 'components/Card'
 import { useUserSecTokens } from 'state/user/hooks'
 import { TYPE } from 'theme'
@@ -50,6 +50,7 @@ export const DepositRequestForm = ({ currency, showWrapInfo, setShowWrapInfo }: 
   const { secTokens } = useUserSecTokens()
   const deposit = useDepositCallback()
   const error = Boolean(sender.length > 0 && !loading && !address)
+  const tokenInfo = (secTokens[(currency as any)?.address || ''] as any)?.tokenInfo
 
   const onClick = () => {
     const tokenId = (secTokens[cid ?? ''] as any)?.tokenInfo?.id
@@ -71,6 +72,8 @@ export const DepositRequestForm = ({ currency, showWrapInfo, setShowWrapInfo }: 
     const id = currencyId(currency)
     onCurrencySet(id)
   }, [currency, onCurrencySet])
+
+  console.log(address)
 
   return (
     <div style={{ position: 'relative' }}>
@@ -94,12 +97,12 @@ export const DepositRequestForm = ({ currency, showWrapInfo, setShowWrapInfo }: 
               <Column style={{ marginTop: '20px', gap: '11px' }}>
                 <Row>
                   <TYPE.body1>
-                    <Trans>{`From my ${(currency as any)?.tokenInfo?.network || ''} wallet`}</Trans>
+                    <Trans>{`From my ${tokenInfo?.network || ''} wallet`}</Trans>
                   </TYPE.body1>
                 </Row>
                 <AddressInput
                   {...{ id: 'sender-input', value: sender ?? '', error, onChange: onTypeSender }}
-                  placeholder={`Paste your ${(currency as any)?.tokenInfo?.network || ''} wallet`}
+                  placeholder={`Paste your ${tokenInfo?.network || ''} wallet`}
                 />
               </Column>
               <Column style={{ margin: '12px 0px', padding: '0 22px' }}>
@@ -122,12 +125,12 @@ export const DepositRequestForm = ({ currency, showWrapInfo, setShowWrapInfo }: 
               <Column style={{ gap: '11px' }}>
                 <Row>
                   <TYPE.body1>
-                    <Trans>{`You will get wrapped ${(currency as any)?.tokenInfo?.originalName}:`}</Trans>
+                    <Trans>{`You will get wrapped ${tokenInfo?.symbol}:`}</Trans>
                   </TYPE.body1>
                 </Row>
                 <AmountInput
                   currency={currency}
-                  value={amount ? `${amount} ${(currency as any)?.tokenInfo?.name}` : ''}
+                  value={amount ? `${amount} ${tokenInfo?.symbol}` : ''}
                   onUserInput={onTypeAmount}
                   amount={parsedAmount}
                   rightItem={
@@ -140,17 +143,17 @@ export const DepositRequestForm = ({ currency, showWrapInfo, setShowWrapInfo }: 
               <Column style={{ marginTop: '20px', marginBottom: '16px', gap: '11px' }}>
                 <Row>
                   <TYPE.body1>
-                    <Trans>{`To my ${(currency as any)?.tokenInfo?.network || ''} wallet`}</Trans>
+                    <Trans>{`To my ${tokenInfo?.network || ''} wallet`}</Trans>
                   </TYPE.body1>
                 </Row>
                 <AddressInput
                   {...{
                     id: 'sender-input',
-                    value: sender ? shortenAddress(sender) : '',
+                    value: address ? shortAddress(address) : '',
                     error,
                     onChange: onTypeSender,
                     disabled: true,
-                    placeholder: `Paste your ${(currency as any)?.tokenInfo?.network || ''} wallet`,
+                    placeholder: `Paste your ${tokenInfo?.network || ''} wallet`,
                   }}
                 />
               </Column>
