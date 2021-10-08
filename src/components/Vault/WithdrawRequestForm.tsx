@@ -100,9 +100,9 @@ export const WithdrawRequestForm = ({ currency, changeModal }: Props) => {
           />
           <Row>
             <TYPE.description2 color={`${theme.text2}80`}>
-              <Trans>{`${amount || '0'} ${tokenInfo?.symbol} tokens from your wallet ${shortAddress(
-                address || ''
-              )} will be burned during withdrawal`}</Trans>
+              <Trans>{`${amount || '0'} ${tokenInfo?.symbol} tokens from your wallet ${
+                address && shortAddress(address || '')
+              } will be burned during withdrawal`}</Trans>
             </TYPE.description2>
           </Row>
         </Column>
