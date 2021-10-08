@@ -4,7 +4,6 @@ import { MyTrades } from 'app/pages/exchange/components/Trades/MyTrades'
 import { useStyles } from 'app/pages/exchange/components/Trades/Trades.styles'
 import { TabPanel } from 'components/TabPanel'
 import React, { useState } from 'react'
-// import { useTheme } from '@material-ui/core/styles'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 
 export const Trades = () => {

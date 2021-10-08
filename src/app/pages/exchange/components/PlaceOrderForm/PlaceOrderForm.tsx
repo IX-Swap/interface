@@ -54,11 +54,7 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
   }
 
   return (
-    <Form
-      onSubmit={handleSubmit}
-      // TODO Uncomment after testing
-      // validationSchema={placeOrderFormValidationSchema(balance)}
-    >
+    <Form onSubmit={handleSubmit}>
       <Grid
         container
         direction={'column'}

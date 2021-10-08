@@ -82,13 +82,7 @@ export const Market = () => {
   }
 
   return (
-    <Box
-      className={classes.container}
-      style={{
-        backgroundColor:
-          theme.palette.type === 'dark' ? theme.palette.background.paper : ''
-      }}
-    >
+    <Box className={classes.container}>
       <DisclosureDialog content={masDisclosure} isOpen={isDisclosureVisible} />
       <GetWalletDialog open={openDialog} toggleOpen={setOpenDialog} />
       <Grid item container xs={12} justify='flex-end'>

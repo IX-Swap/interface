@@ -5,7 +5,6 @@ import { Market } from '../Market'
 // import * as useAppBreakpoints from 'hooks/useAppBreakpoints'
 import * as useMarketList from 'app/pages/exchange/hooks/useMarketList'
 // import * as useSymbol from 'app/pages/exchange/hooks/useSymbol'
-// import { useParams, Redirect } from 'react-router'
 import * as useParams from 'react-router'
 import { history } from 'config/history'
 // import { PlaceOrderForm } from 'app/pages/exchange/components/PlaceOrderForm/PlaceOrderForm'
@@ -25,26 +24,19 @@ jest.mock(
   })
 )
 
-// jest.mock('@material-ui/core/useMediaQuery', () => jest.fn(() => null))
+const defaultPairId = '60d2a03508a1f73d1aadebe2'
 
 describe('Market', () => {
-  const defaultPairId = '1212'
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
   })
 
   it('renders without error', () => {
-    jest.spyOn(useMarketList, 'useMarketList').mockReturnValue({
-      data: {
-        list: [{ _id: defaultPairId }]
-      }
-    } as any)
-
     render(<Market />)
   })
 
-  // it('renders without error', () => {
+  // it('renders tv chart container with correct props', () => {
   //   jest.spyOn(useSymbol, 'useSymbol').mockReturnValueOnce({
   //     symbol: 'RHTC/SGD'
   //   })
@@ -78,7 +70,7 @@ describe('Market', () => {
       }
     } as any)
 
-    jest.spyOn(useParams, 'useParams').mockReturnValueOnce({
+    jest.spyOn(useParams, 'useParams').mockReturnValue({
       pairId: undefined
     })
 
@@ -100,22 +92,25 @@ describe('Market', () => {
     expect(container).toBeEmptyDOMElement()
   })
 
-  // it('returns null when market list is loading', () => {
-  //   // jest.spyOn(useParams, 'useParams').mockReturnValueOnce({
-  //   //   pairId: '1233'
-  //   // })
-  //   // jest.spyOn(useTokenBalance, 'useTokenBalance').mockReturnValueOnce({
-  //   //   data: 1000
-  //   // })
-  //   //
-  //   // jest.spyOn(useMarketList, 'useMarketList').mockReturnValue({
-  //   //   data: {
-  //   //     list: [{ _id: defaultPairId }]
-  //   //   },
-  //   //   isLoading: false
-  //   // } as any)
+  // it('renders place order form with correct props', () => {
+  //   jest.spyOn(useParams, 'useParams').mockReturnValue({
+  //     pairId: '60d2a03508a1f73d1aadebe2'
+  //   })
+  //   jest.spyOn(useTokenBalance, 'useTokenBalance').mockReturnValue({
+  //     data: 1000
+  //   })
+  //   jest.spyOn(useSymbol, 'useSymbol').mockReturnValue({
+  //     symbol: 'RHTC/SGD'
+  //   })
+  //
+  //   jest.spyOn(useMarketList, 'useMarketList').mockReturnValue({
+  //     data: {
+  //       list: [{ _id: defaultPairId }]
+  //     },
+  //     isLoading: false
+  //   } as any)
   //
   //   render(<Market />)
-  //   expect(PlaceOrderForm).toHaveBeenCalledTimes(1)
+  //   expect(PlaceOrderForm).toBeCalled()
   // })
 })
