@@ -13,7 +13,6 @@ import { useStyles } from 'app/pages/exchange/components/PlaceOrderForm/PlaceOrd
 import { Submit } from 'components/form/Submit'
 import { transformPlaceOrderFormValuesToArgs } from 'app/pages/exchange/utils/order'
 import { useParams } from 'react-router'
-import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 
 export type ActiveTabName = 'BUY' | 'SELL'
 
@@ -38,7 +37,6 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
 }) => {
   const classes = useStyles()
   const tabs = ['BUY', 'SELL']
-  const { theme } = useAppBreakpoints()
   const [activeTabNameIdx, setActiveTabNameIdx] = useState(0)
   const balance = activeTabNameIdx === 0 ? currencyBalance : tokenBalance
   const totalCurrencyLabel = currencyLabel
@@ -55,14 +53,7 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
 
   return (
     <Form onSubmit={handleSubmit}>
-      <Grid
-        container
-        direction={'column'}
-        className={classes.container}
-        style={{
-          backgroundColor: theme.palette.type === 'dark' ? '#292929' : ''
-        }}
-      >
+      <Grid container direction={'column'} className={classes.container}>
         <Grid item>
           <Tabs
             value={activeTabNameIdx}

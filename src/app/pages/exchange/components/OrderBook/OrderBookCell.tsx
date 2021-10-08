@@ -13,11 +13,7 @@ export const OrderBookCell = ({
 }: OrderBookCellProps) => {
   const { tableCell } = useStyles({ transaction: transaction })
   return (
-    <TableCell
-      className={tableCell}
-      {...rest}
-      style={{ borderBottom: '5px solid transparent' }}
-    >
+    <TableCell className={tableCell} {...rest}>
       {children}
     </TableCell>
   )
