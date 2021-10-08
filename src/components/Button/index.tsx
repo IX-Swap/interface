@@ -169,10 +169,11 @@ export const ButtonPink = styled(Base)`
   }
 `
 
-export const ButtonIXSGradient = styled(ButtonPrimary)<{ confirmed?: boolean }>`
+export const ButtonIXSGradient = styled(ButtonPrimary)<{ confirmed?: boolean; disabled?: boolean }>`
   color: white;
   height: 54px;
   opacity: ${({ confirmed }) => (confirmed ? 0.5 : 1)};
+  border: ${({ disabled }) => (disabled ? 'none !important' : 'none !important')};
   width: fit-content;
   position: relative;
   cursor: pointer;

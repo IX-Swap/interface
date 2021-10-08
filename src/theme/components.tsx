@@ -327,6 +327,9 @@ export const StyledPageHeader = styled.div`
   font-weight: 600;
   font-size: 22px;
   color: ${({ theme }) => theme.text1};
+  @media (max-width: 500px) {
+    margin-bottom: 5px;
+  }
 `
 export const ModalBlurWrapper = styled.span`
   background: ${({ theme }) => theme.bgG5};

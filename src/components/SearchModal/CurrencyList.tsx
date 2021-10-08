@@ -28,6 +28,8 @@ import Loader from '../Loader'
 import Row, { RowBetween, RowFixed } from '../Row'
 import { MouseoverTooltip } from '../Tooltip'
 import ImportRow from './ImportRow'
+import { isMobile } from 'react-device-detect'
+
 import { MenuItem, UnapprovedMenuItem, UnapprovedTokenWrapper } from './styleds'
 function currencyKey(currency: Currency): string {
   return currency.isToken ? currency.address : 'ETHER'
@@ -61,8 +63,8 @@ const FixedContentRow = styled.div`
   align-items: center;
 `
 
-const UNAPPROVED_ROW = 72
-const NORMAL_ROW = 56
+const UNAPPROVED_ROW = isMobile ? 78 : 76
+const NORMAL_ROW = isMobile ? 68 : 66
 const BREAK_HEIGHT = 36
 function Balance({ balance }: { balance: CurrencyAmount<Currency> }) {
   return <StyledBalanceText title={balance.toExact()}>{balance.toSignificant(4)}</StyledBalanceText>
