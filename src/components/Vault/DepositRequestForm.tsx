@@ -73,6 +73,8 @@ export const DepositRequestForm = ({ currency, showWrapInfo, setShowWrapInfo }: 
     onCurrencySet(id)
   }, [currency, onCurrencySet])
 
+  console.log(address)
+
   return (
     <div style={{ position: 'relative' }}>
       {!showWrapInfo ? (
