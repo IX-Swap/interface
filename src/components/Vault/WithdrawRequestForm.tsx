@@ -15,7 +15,7 @@ import {
   useWithdrawState,
 } from 'state/withdraw/hooks'
 import { TYPE } from 'theme'
-import { shortenAddress } from 'utils'
+import { shortAddress } from 'utils'
 import { currencyId } from 'utils/currencyId'
 import { AddressInput } from '../AddressInputPanel/AddressInput'
 import { AmountInput } from './AmountInput'
@@ -35,6 +35,7 @@ export const WithdrawRequestForm = ({ currency, changeModal }: Props) => {
   const error = Boolean(receiver.length > 0 && !loading && !address)
   const withdraw = useWithdrawCallback(cid, currency?.symbol)
   const { parsedAmount, inputError } = useDerivedWithdrawInfo()
+  const tokenInfo = (secTokens[(currency as any)?.address || ''] as any)?.tokenInfo
 
   useEffect(() => {
     if (account) {
@@ -81,7 +82,7 @@ export const WithdrawRequestForm = ({ currency, changeModal }: Props) => {
               <Trans>Info:</Trans>
             </b>
             &nbsp;
-            <Trans>Your wrapped AMPS will be extracted from your Ethereum wallet and burnt automatically.</Trans>
+            <Trans>{`Your wrapped ${tokenInfo?.symbol} will be extracted from your Ethereum wallet and burnt automatically.`}</Trans>
           </TYPE.description3>
         </Column>
         <Column style={{ gap: '11px' }}>
@@ -99,16 +100,16 @@ export const WithdrawRequestForm = ({ currency, changeModal }: Props) => {
           />
           <Row>
             <TYPE.description2 color={`${theme.text2}80`}>
-              <Trans>{`${amount || '0'} ${
-                (secTokens[currency?.address || ''] as any)?.tokenInfo?.name
-              } tokens from your wallet ${shortenAddress(address || '')} will be burned during withdrawal`}</Trans>
+              <Trans>{`${amount || '0'} ${tokenInfo?.symbol} tokens from your wallet ${shortAddress(
+                address || ''
+              )} will be burned during withdrawal`}</Trans>
             </TYPE.description2>
           </Row>
         </Column>
         <Column style={{ gap: '11px' }}>
           <Row>
             <TYPE.body1>
-              <Trans>{`To my ${(secTokens[currency?.address || ''] as any)?.tokenInfo?.network} wallet`}</Trans>
+              <Trans>{`To my ${tokenInfo?.network} wallet`}</Trans>
             </TYPE.body1>
           </Row>
           <AddressInput {...{ id: 'receiver-input', value: receiver ?? '', error, onChange: onTypeReceiver }} />
