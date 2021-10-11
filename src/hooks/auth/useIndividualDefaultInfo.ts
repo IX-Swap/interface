@@ -18,7 +18,7 @@ export const useIndividualDefaultInfo = (root: string | undefined) => {
     middleName: shouldUserIndividualInfo
       ? names.length > 2
         ? names.slice(1, names.length - 1).join(' ')
-        : ''
+        : undefined
       : undefined,
     isDisabled: shouldUserIndividualInfo
   }
