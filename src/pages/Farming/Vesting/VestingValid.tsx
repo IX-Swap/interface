@@ -1,6 +1,5 @@
-import React, { useState } from 'react'
 import { CurrencyAmount } from '@ixswap1/sdk-core'
-import { Trans, t } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { ButtonIXSWide } from 'components/Button'
 import Column from 'components/Column'
 import { TextRow } from 'components/TextRow/TextRow'
@@ -9,25 +8,24 @@ import { IXS_ADDRESS } from 'constants/addresses'
 import { useCurrency } from 'hooks/Tokens'
 import useTheme from 'hooks/useTheme'
 import { useActiveWeb3React } from 'hooks/web3'
-import { useAvailableClaim, useClaimAll, usePayouts, useVestingDetails, useVestingState } from 'state/vesting/hooks'
+import React, { useState } from 'react'
+import { useClaimAll, useVestingState } from 'state/vesting/hooks'
 import { getVestingDates } from 'state/vesting/utils'
 import { TYPE } from 'theme'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { closestFutureDate, getPayoutClosestToPresent, unixTimeToFormat } from 'utils/time'
-import { VestingContractDetails, InfoIcon, VestingDetailsTitle } from '../styleds'
+import { InfoIcon, VestingContractDetails, VestingDetailsTitle } from '../styleds'
 
 export const VestingValid = () => {
   const theme = useTheme()
   const [isLoading, handleIsLoading] = useState(false)
-  const { details } = useVestingDetails()
-  const { payouts } = usePayouts()
+  const { payouts, details } = useVestingState()
   const { chainId, account } = useActiveWeb3React()
   const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
   const nextPayment = closestFutureDate({ dates: getVestingDates({ payouts }) })
-  const { availableClaim } = useAvailableClaim()
   const alreadyVested = getPayoutClosestToPresent({ payouts })
   const claim = useClaimAll()
-  const { customVestingAddress } = useVestingState()
+  const { customVestingAddress, availableClaim } = useVestingState()
 
   const isDifferentAddress = customVestingAddress && customVestingAddress !== account
 
