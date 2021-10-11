@@ -21,6 +21,7 @@ import {
   claimAll,
   getDetails,
   getIsPrivateBuyer,
+  persistIsVesting,
   saveAvailableClaim,
   saveIsVesting,
   savePayouts,
@@ -65,9 +66,9 @@ export function useIsVestingCallback(): (address?: string) => Promise<boolean> {
   const savedAccount = useUserAccountState()
 
   return useCallback(
-    async (account?: string) => {
+    async (address?: string) => {
       try {
-        const accountToCheck = account || savedAccount
+        const accountToCheck = address || savedAccount
         if (!accountToCheck) {
           return false
         }
@@ -84,9 +85,7 @@ export function useIsVestingCallback(): (address?: string) => Promise<boolean> {
 
 export function useAvailableClaim() {
   const vesting = useVestingContract()
-  const { account } = useActiveWeb3React()
   const dispatch = useDispatch<AppDispatch>()
-  const { isVesting, availableClaim, customVestingAddress } = useVestingState()
   const fetchClaimable = useCallback(
     async (address?: string | null) => {
       try {
@@ -103,22 +102,13 @@ export function useAvailableClaim() {
     },
     [vesting, dispatch]
   )
-
-  useEffect(() => {
-    if (isVesting && (account || customVestingAddress)) {
-      fetchClaimable(customVestingAddress || account)
-    }
-  }, [fetchClaimable, account, isVesting, customVestingAddress])
-
-  return { availableClaim, fetchClaimable }
+  return { fetchClaimable }
 }
 
 export function usePayouts() {
   const vesting = useVestingContract()
-  const account = useUserAccountState()
   const dispatch = useDispatch<AppDispatch>()
 
-  const { isVesting, payouts, customVestingAddress } = useVestingState()
   const fetchPayouts = useCallback(
     async (address?: string | null) => {
       try {
@@ -137,13 +127,8 @@ export function usePayouts() {
     },
     [dispatch, vesting]
   )
-  useEffect(() => {
-    if (isVesting && (account || customVestingAddress)) {
-      fetchPayouts(customVestingAddress || account)
-    }
-  }, [fetchPayouts, account, isVesting, customVestingAddress])
 
-  return { payouts, fetchPayouts }
+  return { fetchPayouts }
 }
 
 export function useClaimAll(): () => Promise<any> {
@@ -153,12 +138,11 @@ export function useClaimAll(): () => Promise<any> {
   const addTransaction = useTransactionAdder()
   const { chainId } = useActiveWeb3React()
   const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
-  const { customVestingAddress } = useVestingState()
   const { fetchDetails } = useVestingDetails()
   const { fetchClaimable } = useAvailableClaim()
   const { fetchPayouts } = usePayouts()
   const { getVesting } = useVestingStatus()
-  const address = customVestingAddress || account
+  const address = account
 
   return useCallback(async () => {
     try {
@@ -181,10 +165,12 @@ export function useClaimAll(): () => Promise<any> {
       dispatch(setTransaction({ tx: claimed.hash ?? claimed.tx }))
       await claimed.wait()
       dispatch(claimAll.fulfilled())
-      await getVesting(address)
-      await fetchDetails(address)
-      await fetchClaimable(address)
-      await fetchPayouts(address)
+      const { vestingStatus, isVesting } = await getVesting(address)
+      if (isVesting && vestingStatus === VestingStatus.VALID) {
+        await fetchDetails(address)
+        await fetchPayouts(address)
+        await fetchClaimable(address)
+      }
       return Boolean(claimed)
     } catch (error) {
       console.error(`Could not claim all `, error)
@@ -195,8 +181,6 @@ export function useClaimAll(): () => Promise<any> {
 }
 
 export function useVestingStatus() {
-  const { vestingStatus, customVestingAddress } = useVestingState()
-  const { account } = useActiveWeb3React()
   const getIsVesting = useIsVestingCallback()
   const dispatch = useDispatch<AppDispatch>()
 
@@ -205,35 +189,24 @@ export function useVestingStatus() {
       try {
         dispatch(saveIsVesting.pending())
         const vestingResponse = await getIsVesting(address)
-        dispatch(saveVestingStatus(vestingResponse ? VestingStatus.VALID : VestingStatus.ZERO_BALANCE))
+        const vestingStatus = vestingResponse ? VestingStatus.VALID : VestingStatus.ZERO_BALANCE
+        dispatch(saveVestingStatus(vestingStatus))
         dispatch(saveIsVesting.fulfilled({ isVesting: vestingResponse }))
+        return { vestingStatus, isVesting: vestingResponse }
       } catch (error) {
         dispatch(saveIsVesting.rejected({ errorMessage: '`Could not get vesting status' }))
+        return { vestingStatus: VestingStatus.ZERO_BALANCE, isVesting: false }
       }
     },
     [getIsVesting]
   )
 
-  useEffect(() => {
-    if (!account && !customVestingAddress) {
-      dispatch(saveVestingStatus(VestingStatus.CONNECT_WALLET))
-    }
-  }, [account, customVestingAddress])
-
-  useEffect(() => {
-    if (account) {
-      getVesting(account)
-    }
-  }, [account, getVesting])
-
-  return { vestingStatus, getVesting }
+  return { getVesting }
 }
 
 export function useVestingDetails() {
   const vesting = useVestingContract()
-  const { account } = useActiveWeb3React()
   const dispatch = useDispatch<AppDispatch>()
-  const { isVesting, details, customVestingAddress } = useVestingState()
   const fetchDetails = useCallback(
     async (address?: string | null) => {
       try {
@@ -245,15 +218,10 @@ export function useVestingDetails() {
         dispatch(getDetails.rejected({ errorMessage: error.message }))
       }
     },
-    [vesting, dispatch]
+    [vesting]
   )
 
-  useEffect(() => {
-    if (isVesting && (account || customVestingAddress)) {
-      fetchDetails(customVestingAddress || account)
-    }
-  }, [fetchDetails, account, isVesting, customVestingAddress])
-  return { details, fetchDetails }
+  return { fetchDetails }
 }
 
 export function useTableOptions() {
@@ -346,4 +314,31 @@ export function useVestingState(): AppState['vesting'] {
       data.loadingVesting ||
       data.loadingClaimAll,
   }
+}
+
+export function useUpdateVestingState() {
+  const { account } = useActiveWeb3React()
+  const { customVestingAddress } = useVestingState()
+  const dispatch = useDispatch<AppDispatch>()
+  const { getVesting } = useVestingStatus()
+  const { fetchDetails } = useVestingDetails()
+  const { fetchPayouts } = usePayouts()
+  const { fetchClaimable } = useAvailableClaim()
+  useEffect(() => {
+    async function refreshVesting() {
+      const usedAccount = customVestingAddress || account
+      if (!usedAccount) {
+        dispatch(saveVestingStatus(VestingStatus.CONNECT_WALLET))
+        dispatch(persistIsVesting({ isVesting: false }))
+        return
+      }
+      const { vestingStatus, isVesting } = await getVesting(usedAccount)
+      if (isVesting && vestingStatus === VestingStatus.VALID) {
+        fetchDetails(usedAccount)
+        fetchPayouts(usedAccount)
+        fetchClaimable(usedAccount)
+      }
+    }
+    refreshVesting()
+  }, [account, getVesting, customVestingAddress])
 }

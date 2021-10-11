@@ -1,7 +1,7 @@
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import { useActiveWeb3React } from 'hooks/web3'
 import React, { useEffect, useMemo } from 'react'
-import { useIsPrivateBuyer, useVestingState, useVestingStatus } from 'state/vesting/hooks'
+import { useIsPrivateBuyer, useUpdateVestingState, useVestingState } from 'state/vesting/hooks'
 import { LoaderContainer, VestingWrapper } from '../styleds'
 import { PrivateBuyer } from './PrivateBuyer'
 import { VestingInfo } from './VestingInfo'
@@ -16,8 +16,8 @@ export enum VestingStatus {
 }
 
 export const Vesting = () => {
-  const { vestingStatus } = useVestingStatus()
-  const { loadingVesting, privateBuyer, customVestingAddress } = useVestingState()
+  useUpdateVestingState() // watching for account and address changes
+  const { loadingVesting, privateBuyer, customVestingAddress, vestingStatus } = useVestingState()
   const { account } = useActiveWeb3React()
 
   const getIsPrivateBuyer = useIsPrivateBuyer()
