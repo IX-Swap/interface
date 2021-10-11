@@ -3,7 +3,8 @@ import { render } from 'test-utils'
 import {
   StatusFilter,
   statusFilters,
-  fundStatusFilters
+  fundStatusFilters,
+  deploymentStatusFilter
 } from 'app/pages/authorizer/components/StatusFilter'
 import * as useAuthorizerCategory from 'hooks/location/useAuthorizerCategory'
 
@@ -26,5 +27,18 @@ describe('StatusFilter', () => {
     const items = getAllByRole('button')
 
     expect(items.length).toBe(fundStatusFilters.length)
+  })
+
+  it('renders correct filter when category is token-deployment', () => {
+    const objResponse = 'token-deployment'
+
+    jest
+      .spyOn(useAuthorizerCategory, 'useAuthorizerCategory')
+      .mockImplementation(() => objResponse as any)
+
+    const { getAllByRole } = render(<StatusFilter />)
+    const items = getAllByRole('button')
+
+    expect(items.length).toBe(deploymentStatusFilter.length)
   })
 })

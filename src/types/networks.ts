@@ -62,4 +62,5 @@ export interface Network {
   networkId: number
   nodes: Node[]
   updatedAt: string // Date
+  networkCode?: string
 }
