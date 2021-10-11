@@ -17,7 +17,7 @@ export const TotalTokens = () => {
   let value = formatAmount(0)
 
   if (data !== undefined) {
-    value = formatAmount(data.insight?.raisedTotal ?? 0 / data.pricePerUnit)
+    value = formatAmount((data.insight?.raisedTotal ?? 0) / data.pricePerUnit)
   }
 
   return (

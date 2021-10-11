@@ -29,6 +29,7 @@ export type AuthorizableStatus =
   | 'Closed'
   | 'Pending'
   | 'Draft'
+  | 'Complete'
   | ''
 
 export type FundStatus =
