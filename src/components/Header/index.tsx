@@ -16,7 +16,7 @@ import { IXSBalance } from './IXSBalance'
 
 const HeaderFrame = styled.div<{ showBackground: boolean; lightBackground: boolean; withNetwork: boolean }>`
   display: grid;
-  grid-template-columns: 120px 1fr 120px;
+  grid-template-columns: 120px 1fr auto;
   align-items: center;
   justify-content: space-between;
   align-items: center;
@@ -178,6 +178,8 @@ const NETWORK_LABELS: { [chainId: number]: string } = {
   [3]: 'Ropsten',
   [5]: 'Görli',
   [42]: 'Kovan',
+  [80001]: 'Polygon Mumbai',
+  [137]: 'Polygon Mainnet',
 }
 
 const HeaderWrapper = styled.div`

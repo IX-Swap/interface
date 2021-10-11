@@ -13,7 +13,7 @@ import { LiquidityInnerTitle, MarginerTitle } from './styleds'
 import { useTokens } from './useTokens'
 import { ConnectWallet } from './ConnectWallet'
 import { useActiveWeb3React } from 'hooks/web3'
-import { SUPPORTED_TGE_CHAINS } from 'pages/App'
+import { TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
 
 const bodyProps = {
   padding: '0',
@@ -35,7 +35,7 @@ export default function Pool() {
   const { chainId } = useActiveWeb3React()
   return (
     <>
-      <AppBody {...bodyProps} blurred={chainId === SUPPORTED_TGE_CHAINS.MAIN}>
+      <AppBody {...bodyProps} blurred={chainId !== undefined && !TGE_CHAINS_WITH_SWAP.includes(chainId)}>
         <SwapPoolTabs active={'pool'} />
         <AutoColumn gap="1.5rem" justify="center">
           <AutoColumn gap="md" style={{ width: '100%' }}>

@@ -4,6 +4,17 @@ const ETHERSCAN_PREFIXES: { [chainId: number]: string } = {
   4: 'rinkeby.',
   5: 'goerli.',
   42: 'kovan.',
+  80001: 'mumbai.',
+  137: '',
+}
+const CHAIN_EXPLORERS: { [chainId: number]: string } = {
+  1: 'etherscan.io',
+  3: 'etherscan.io',
+  4: 'etherscan.io',
+  5: 'etherscan.io',
+  42: 'etherscan.io',
+  80001: 'polygonscan.com',
+  137: 'polygonscan.com',
 }
 
 export enum ExplorerDataType {
@@ -20,7 +31,7 @@ export enum ExplorerDataType {
  * @param type the type of the data
  */
 export function getExplorerLink(chainId: number, data: string, type: ExplorerDataType): string {
-  const prefix = `https://${ETHERSCAN_PREFIXES[chainId] ?? ''}etherscan.io`
+  const prefix = `https://${ETHERSCAN_PREFIXES[chainId] ?? ''}${CHAIN_EXPLORERS[chainId] ?? ''}`
 
   switch (type) {
     case ExplorerDataType.TRANSACTION: {

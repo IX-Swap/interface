@@ -12,6 +12,8 @@ import { routes } from 'utils/routes'
 import Row, { RowFixed } from '../Row'
 import { css } from 'styled-components'
 import { ExternalLink } from 'theme'
+import { useActiveWeb3React } from 'hooks/web3'
+import { TGE_CHAINS_WITH_STAKING } from 'constants/addresses'
 const activeClassName = 'ACTIVE'
 
 const HeaderLinksWrap = styled(Row)<{ links: number }>`
@@ -99,14 +101,17 @@ const PopOverContent = styled.div`
 `
 
 const HeaderPopover = () => {
+  const { chainId } = useActiveWeb3React()
   return (
     <PopOverContent
       onClick={(e) => (e ? e.stopPropagation() : null)}
       onMouseDown={(e) => (e ? e.stopPropagation() : null)}
     >
-      <SubMenuLink id={`stake-nav-link`} to={routes.staking}>
-        <Trans>Staking</Trans>
-      </SubMenuLink>
+      {chainId !== undefined && TGE_CHAINS_WITH_STAKING.includes(chainId) && (
+        <SubMenuLink id={`stake-nav-link`} to={routes.staking}>
+          <Trans>Staking</Trans>
+        </SubMenuLink>
+      )}
       <SubMenuLink id={`vesting-nav-link`} to={routes.vesting}>
         <Trans>Vesting</Trans>
       </SubMenuLink>
