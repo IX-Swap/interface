@@ -121,7 +121,8 @@ export const dsoFormBaseValidationSchema = {
   videos: array<DsoVideo>()
     .of(dsoVideoLinkSchema.required('Required'))
     .ensure()
-    .required('Required')
+    .required('Required'),
+  uniqueIdentifierCode: string().min(12).max(32)
 }
 
 export const createDSOValidationSchema = object()

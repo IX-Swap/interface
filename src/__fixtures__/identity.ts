@@ -140,7 +140,7 @@ export const individual: IndividualIdentity = {
   user,
   sourceOfFund: [
     {
-      name: 'Inheritance/Gift',
+      name: 'Inheritance/Gifts',
       checked: true,
       value: 20
     }

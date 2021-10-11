@@ -8,6 +8,7 @@ import {
   CorporateIdentity,
   IndividualIdentity
 } from 'app/pages/identity/types/forms'
+import { FundStatus } from 'types/util'
 
 export interface Commitment extends Authorizable {
   _id: string
@@ -29,6 +30,7 @@ export interface Commitment extends Authorizable {
   }
   authorizationOverride?: AuthorizationOverride
   authorizationOverrides: AuthorizationOverride[]
+  fundStatus: FundStatus
 }
 
 export interface CommitmentFormValues {

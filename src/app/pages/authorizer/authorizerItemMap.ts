@@ -19,6 +19,10 @@ export const authorizerItemMap: Record<
     uri: '/issuance/dso/list',
     listRoute: AuthorizerRoute.offerings
   },
+  [AppFeature.DealClosure]: {
+    uri: '/issuance/closure/list',
+    listRoute: AuthorizerRoute.dealClosure
+  },
   [AppFeature.DigitalSecurityWithdrawals]: {
     uri: '/accounts/security/withdrawals',
     listRoute: AuthorizerRoute.dsWithdrawals
@@ -38,10 +42,6 @@ export const authorizerItemMap: Record<
   [AppFeature.Individuals]: {
     uri: '/identity/individuals/list',
     listRoute: AuthorizerRoute.individualIdentities
-  },
-  [AppFeature.CashDeposits]: {
-    uri: '/accounts/cash/deposits',
-    listRoute: AuthorizerRoute.cashDeposits
   },
   [AppFeature.Commitments]: {
     uri: '/issuance/commitments/list',

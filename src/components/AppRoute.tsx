@@ -1,6 +1,7 @@
 import { useOnboardingDialog } from 'app/components/OnboardingDialog/hooks/useOnboardingDialog'
 import { AppRoute as AppPath } from 'app/router/config'
 import { Breadcrumb } from 'components/Breadcrumb'
+import { ScrollToTop } from 'components/ScrollToTop'
 import { SentryRoute } from 'components/SentryRoute'
 import { useIsAccredited, useIsEnabled2FA } from 'helpers/acl'
 import { useCachedUser } from 'hooks/auth/useCachedUser'
@@ -49,11 +50,14 @@ export const AppRoute = memo((props: AppRouteProps) => {
   }
 
   return (
-    <SentryRoute {...rest} path={path}>
-      {breadcrumb !== undefined && (
-        <Breadcrumb label={breadcrumb} path={path} />
-      )}
-      {children}
-    </SentryRoute>
+    <>
+      <ScrollToTop />
+      <SentryRoute {...rest} path={path}>
+        {breadcrumb !== undefined && (
+          <Breadcrumb label={breadcrumb} path={path} />
+        )}
+        {children}
+      </SentryRoute>
+    </>
   )
 })

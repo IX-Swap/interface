@@ -8,13 +8,10 @@ import { TypedField } from 'components/form/TypedField'
 import { plainValueExtractor } from 'helpers/forms'
 import { DataroomUploaderWithFileTypeSelector } from 'components/dataroom/DataroomUploaderWithFileTypeSelector'
 import { SelectionHelper } from 'components/SelectionHelper'
-import {
-  itemComparator,
-  SelectedDocument
-} from 'app/pages/accounts/pages/banks/components/BankDocuments'
 import { SelectableDataroomUploader } from 'components/dataroom/SelectableDataroomUploader'
 import { DataroomDeleteSelected } from 'components/dataroom/DataroomDeleteSelected'
 import { SelectableDataroomHeader } from 'components/dataroom/SelectableDataroomHeader'
+import { itemComparator, SelectedDocument } from 'helpers/dataroom'
 
 export interface AuthorizationDocumentsProps {
   resourceId: string

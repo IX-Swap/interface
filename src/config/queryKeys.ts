@@ -67,6 +67,7 @@ export const authorizerQueryKeys = {
   getSecurityWithdrawals: 'authorizer-security-withdrawals',
   getIndividualIdentityList: 'authorizer-individual-identitiesList',
   getDSOList: 'authorizer-dso-list',
+  getClosureList: 'authorizer-closure-list',
   getWithdrawalAddresses: 'authorizer-withdrawal-addresses-list',
   getVirtualAccounts: 'authorizer-virtual-accounts',
   getVirtualAccountById: (id: string) =>
@@ -143,7 +144,8 @@ export const dsoQueryKeys = {
   getPromoted: 'promoted-dsos',
   getApprovedList: 'dso-approved-list',
   getCommitmentsListByDSOId: (dsoId: string) =>
-    generateQueryKey('commitments-list', dsoId)
+    generateQueryKey('commitments-list', dsoId),
+  closure: (closureId: string) => generateQueryKey('closure', closureId)
 }
 
 export const otcQueryKeys = {
@@ -203,6 +205,10 @@ export const exchangeListingsQueryKeys = {
     generateQueryKey('listing', listingId, issuerId)
 }
 
+export const atlasOneQueryKeys = {
+  getSecurities: 'atlas-one-securities'
+}
+
 export const resourcesQueryKeys = {
   getSiteConfig: () => 'site-config'
 }
@@ -211,4 +217,8 @@ export const virtualAccountsAuditQueryKeys = {
   getMT940Files: 'get-mt940-files',
   getMT942Files: 'get-mt942-files',
   getOutboundFiles: 'get-outbound-files'
+}
+
+export const virtualTransactionsQueryKeys = {
+  getTransactions: 'get-transactions'
 }

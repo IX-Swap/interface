@@ -36,7 +36,8 @@ export enum AppFeature {
   Withdrawals = 'withdrawals',
   Users = 'users',
   VirtualAccounts = 'virtual-accounts',
-  CapTable = 'captable'
+  CapTable = 'captable',
+  DealClosure = 'closure'
 }
 
 export enum NotificationFilter {
@@ -54,7 +55,6 @@ export enum NotificationFilter {
 
 export enum AuthorizerCategory {
   BankAccounts = 'bank-accounts',
-  CashDeposits = 'cash-deposits',
   CashWithdrawals = 'cash-withdrawals',
   DigitalSecurityWithdrawals = 'digital-security-withdrawals',
   Corporates = 'corporates',
@@ -64,5 +64,6 @@ export enum AuthorizerCategory {
   Offerings = 'offerings',
   WithdrawalAddresses = 'withdrawal-addresses',
   Listings = 'listings',
-  VirtualAccounts = 'virtual-accounts'
+  VirtualAccounts = 'virtual-accounts',
+  DealClosure = 'closure'
 }

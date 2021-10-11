@@ -3,7 +3,6 @@ import { Grid } from '@material-ui/core'
 import { Bank } from 'types/bank'
 import { convertAddressToString } from 'app/pages/authorizer/components/utils'
 import { LabelledValue } from 'components/LabelledValue'
-import { SupportingDocuments } from 'app/components/SupportingDocuments'
 import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
 import { privateClassNames } from 'helpers/classnames'
 
@@ -59,9 +58,6 @@ export const BankPreview: React.FC<BankViewProps> = ({ data }) => {
         </Grid>
       </Grid>
       <Grid item xs={12} />
-      <Grid item xs={12}>
-        <SupportingDocuments data={data.supportingDocuments} />
-      </Grid>
     </Grid>
   )
 }

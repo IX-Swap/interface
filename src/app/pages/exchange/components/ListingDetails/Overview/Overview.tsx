@@ -20,7 +20,7 @@ export const Overview = ({ data }: OverviewProps) => {
           launchDate={data.launchDate}
           completionDate={data.completionDate}
           decimalPlaces={data.decimalPlaces}
-          tokenAddress='0xdAC17F958D2ee523a2206206994597C13D831ec7'
+          tokenAddress={data.dso?.deploymentInfo?.token ?? ''}
         />
       </Grid>
       <Grid item xs={12}>

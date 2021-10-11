@@ -2,20 +2,42 @@ import React from 'react'
 import { Grid, Typography } from '@material-ui/core'
 import { DigitalSecurityOffering } from 'types/dso'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
+import { VSpacer } from 'components/VSpacer'
+import useStyles from 'app/components/DSO/components/styles'
 
 export interface DSOFAQsViewProps {
   dso: DigitalSecurityOffering
   isTitleVisible?: boolean
+  isNewThemeOn?: boolean
 }
 
 export const DSOFAQsView = (props: DSOFAQsViewProps) => {
-  const { dso, isTitleVisible = false } = props
+  const classes = useStyles()
+  const { dso, isTitleVisible = false, isNewThemeOn = false } = props
 
   return (
-    <Grid container direction='column' spacing={5}>
+    <Grid
+      container
+      direction='column'
+      spacing={5}
+      className={classes.newDSOViewItemStyles}
+    >
       {isTitleVisible && (
         <Grid item>
-          <FormSectionHeader title='FAQs' />
+          {isNewThemeOn ? (
+            <>
+              <Typography
+                variant={'h4'}
+                color={'primary'}
+                style={{ fontWeight: 700 }}
+              >
+                Frequently Asked Questions
+              </Typography>
+              <VSpacer size={'small'} />
+            </>
+          ) : (
+            <FormSectionHeader title='FAQs' />
+          )}
         </Grid>
       )}
 

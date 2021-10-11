@@ -1,4 +1,4 @@
-import React, { ComponentType, createElement, memo } from 'react'
+import React, { ComponentType, createElement } from 'react'
 import { Grid } from '@material-ui/core'
 import { useStyles } from 'app/components/LayoutWithSidebar.styles'
 import { privateClassNames } from 'helpers/classnames'
@@ -20,39 +20,36 @@ export interface LayoutWithSidebarProps {
   secret?: boolean
 }
 
-export const LayoutWithSidebar = memo(
-  (props: LayoutWithSidebarProps) => {
-    const { title, sidebar, content, sidebarToggle, secret = false } = props
-    const classes = useStyles()
-    const { isSidebarOpened } = useAppState()
-    const { isTablet } = useAppBreakpoints()
-    const showSidebar = !isTablet || isSidebarOpened
-    const containerClass = secret
-      ? privateClassNames(classes.container)
-      : classes.container
+export const LayoutWithSidebar = (props: LayoutWithSidebarProps) => {
+  const { title, sidebar, content, sidebarToggle, secret = false } = props
+  const classes = useStyles()
+  const { isSidebarOpened } = useAppState()
+  const { isTablet } = useAppBreakpoints()
+  const showSidebar = !isTablet || isSidebarOpened
+  const containerClass = secret
+    ? privateClassNames(classes.container)
+    : classes.container
 
-    return (
-      <RootContainer className={containerClass}>
-        <Grid container direction='column'>
-          <Grid item className={classes.header}>
-            <PageHeader title={title} />
-          </Grid>
-          <Grid item container className={classes.wrapper}>
-            {isTablet && (
-              <Grid item>
-                <SidebarToggle render={sidebarToggle} />
-              </Grid>
-            )}
-            {showSidebar && (
-              <Grid item>
-                <SidebarWrapper>{createElement(sidebar)}</SidebarWrapper>
-              </Grid>
-            )}
-            <Grid className={classes.content}>{createElement(content)}</Grid>
-          </Grid>
+  return (
+    <RootContainer className={containerClass}>
+      <Grid container direction='column'>
+        <Grid item className={classes.header}>
+          <PageHeader title={title} />
         </Grid>
-      </RootContainer>
-    )
-  },
-  () => true
-)
+        <Grid item container className={classes.wrapper}>
+          {isTablet && (
+            <Grid item>
+              <SidebarToggle render={sidebarToggle} />
+            </Grid>
+          )}
+          {showSidebar && (
+            <Grid item>
+              <SidebarWrapper>{createElement(sidebar)}</SidebarWrapper>
+            </Grid>
+          )}
+          <Grid className={classes.content}>{createElement(content)}</Grid>
+        </Grid>
+      </Grid>
+    </RootContainer>
+  )
+}

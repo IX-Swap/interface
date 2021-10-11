@@ -19,9 +19,18 @@ export interface QueryFilters {
   pairFilter: string | undefined
   sortBy: string | undefined
   orderBy: 'ASC' | 'DSC' | undefined
+  industry: string | undefined
+  assetClass: string | undefined
+  country: string | undefined
+  protocol: string | undefined
+  status: string | undefined
   network: string | undefined
   isPriceAscending: string | undefined
+  category: string | undefined
   fundStatus: string | undefined
+  transferType: string | undefined
+  transferDirection: string | undefined
+  dso: string | undefined
   // TODO Change filter name and types if it needs after complete backend api endpoints
   custodianFilter: string | undefined
 }

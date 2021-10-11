@@ -3,7 +3,7 @@ import { useSelectionHelperContext } from 'components/SelectionHelper'
 import { Button, ButtonProps } from '@material-ui/core'
 import { themeColors } from 'themes/colors'
 import { useDeleteFilesArray } from 'hooks/useDeleteFilesArray'
-import { SelectedDocument } from 'app/pages/accounts/pages/banks/components/BankDocuments'
+import { SelectedDocument } from 'helpers/dataroom'
 
 export interface DataroomDeleteSelectedProps extends ButtonProps {
   name: string

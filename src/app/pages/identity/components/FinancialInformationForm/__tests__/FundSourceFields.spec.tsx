@@ -29,13 +29,14 @@ describe('FundSourceFields', () => {
       </Form>
     )
 
-    expect(getByLabelText('Inheritance/Gift')).toBeInTheDocument()
-    expect(getByLabelText('Interest/Dividend')).toBeInTheDocument()
+    expect(getByLabelText('Inheritance/Gifts')).toBeInTheDocument()
+    expect(getByLabelText('Investments')).toBeInTheDocument()
+    expect(getByLabelText('Interest/Dividends')).toBeInTheDocument()
     expect(getByLabelText('Property')).toBeInTheDocument()
-    expect(getByLabelText('Allowance/Spousal Income')).toBeInTheDocument()
+    expect(getByLabelText('Allowances/Spouse')).toBeInTheDocument()
     expect(getByLabelText('Employment')).toBeInTheDocument()
     expect(getByLabelText('Pension')).toBeInTheDocument()
-    expect(getByLabelText('Retirement Benifits')).toBeInTheDocument()
+    expect(getByLabelText('Retirement Benefits')).toBeInTheDocument()
     expect(getByLabelText('Others')).toBeInTheDocument()
   })
 
