@@ -11,9 +11,9 @@ import { PendingSuccesModals } from 'components/swap/PendingSuccesModals'
 import { tradeMeaningfullyDiffers } from 'components/swap/tradeMeaningfullyDiffers'
 import UnsupportedCurrencyFooter from 'components/swap/UnsupportedCurrencyFooter'
 import { MouseoverTooltip } from 'components/Tooltip'
+import { TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
 import { useSwapAuthorize, useSwapSecToken } from 'hooks/useSwapAuthorize'
 import JSBI from 'jsbi'
-import { SUPPORTED_TGE_CHAINS } from 'pages/App'
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { CheckCircle, HelpCircle } from 'react-feather'
 import ReactGA from 'react-ga'
@@ -290,7 +290,7 @@ export default function Swap({ history }: RouteComponentProps) {
     <>
       <TokenWarningModal history={history} />
       <BrokerDealerForm ref={formRef} />
-      <AppBody blurred={chainId === SUPPORTED_TGE_CHAINS.MAIN}>
+      <AppBody blurred={chainId !== undefined && !TGE_CHAINS_WITH_SWAP.includes(chainId)}>
         <SwapHeader />
         <Wrapper id="swap-page">
           <PendingSuccesModals
