@@ -28,7 +28,7 @@ export const InvestorLiveOrderBook = () => {
       wrap='nowrap'
     >
       <Grid item>
-        <Box px={2}>
+        <Box px={2} py={2}>
           <Typography variant='subtitle1'>Market Order</Typography>
         </Box>
       </Grid>

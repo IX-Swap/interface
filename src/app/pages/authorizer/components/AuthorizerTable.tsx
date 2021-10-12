@@ -47,6 +47,8 @@ export const AuthorizerTable = <T,>(
   const mergedFilters = {
     ...authFilter,
     status: category === 'commitments' ? undefined : authFilter.status,
+    deploymentStatus:
+      category === 'token-deployment' ? authFilter.deploymentStatus : undefined,
     isAssigned:
       category === 'virtual-accounts'
         ? authFilter.status !== 'Rejected'

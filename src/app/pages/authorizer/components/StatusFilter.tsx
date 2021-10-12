@@ -10,7 +10,7 @@ import {
   SwapHoriz as TransferredIcon,
   SvgIconComponent
 } from '@material-ui/icons'
-import { AuthorizableStatus, FundStatus } from 'types/util'
+import { AuthorizableStatus, DeploymentStatus, FundStatus } from 'types/util'
 import { Box } from '@material-ui/core'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
 import { useAuthorizerCategory } from 'hooks/location/useAuthorizerCategory'
@@ -72,10 +72,43 @@ export const BaseFundStatusFilter = ({
   )
 }
 
+export interface DeploymentStatusFilterProps {
+  statusFilters: DeploymentStatusFilterItemType[]
+}
+
+export const DeploymentStatusFilter = ({
+  statusFilters
+}: DeploymentStatusFilterProps) => {
+  return (
+    <SearchQueryFilter<'deploymentStatus'>
+      name='deploymentStatus'
+      defaultValue=''
+    >
+      {({ value, onChange }) => (
+        <Box>
+          {statusFilters.map((status, i) => (
+            <StatusFilterItem
+              key={i}
+              title={status.title}
+              isSelected={status.value === value}
+              onClick={() => onChange(status.value)}
+              icon={status.icon}
+            />
+          ))}
+        </Box>
+      )}
+    </SearchQueryFilter>
+  )
+}
+
 export const StatusFilter = () => {
   const category = useAuthorizerCategory()
   if (category === 'commitments') {
     return <BaseFundStatusFilter statusFilters={fundStatusFilters} />
+  }
+
+  if (category === 'token-deployment') {
+    return <DeploymentStatusFilter statusFilters={deploymentStatusFilter} />
   }
   return <BaseStatusFilter statusFilters={[...statusFilters, ...allFilter]} />
 }
@@ -90,6 +123,12 @@ interface FundStatusFilterItemType {
   icon: SvgIconComponent
   title: string
   value: FundStatus
+}
+
+interface DeploymentStatusFilterItemType {
+  icon: SvgIconComponent
+  title: string
+  value: DeploymentStatus
 }
 
 export const allFilter: StatusFilterItemType[] = [
@@ -144,5 +183,19 @@ export const fundStatusFilters: FundStatusFilterItemType[] = [
   },
   { icon: RejectedIcon, value: 'Rejected', title: 'Rejected' },
   { icon: PendingApprovalIcon, value: 'Failed', title: 'Failed' },
+  { icon: AllIcon, value: '', title: 'All' }
+]
+
+export const deploymentStatusFilter: DeploymentStatusFilterItemType[] = [
+  {
+    icon: ApprovedIcon,
+    value: 'DEPLOYED',
+    title: 'Deployed'
+  },
+  {
+    icon: UnauthorizedIcon,
+    value: 'PENDING',
+    title: 'Pending'
+  },
   { icon: AllIcon, value: '', title: 'All' }
 ]

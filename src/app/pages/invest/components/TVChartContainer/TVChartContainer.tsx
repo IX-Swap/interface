@@ -24,7 +24,9 @@ export const TVChartContainer: React.FC<
     width,
     height,
     theme,
-    containerId
+    containerId,
+    toolbarBg,
+    customCssUrl
   } = props
   const [tvWidget, setTradingChart] = React.useState<IChartingLibraryWidget>()
 
@@ -56,6 +58,8 @@ export const TVChartContainer: React.FC<
       width: width ?? sampleTVChartProps.width,
       theme: theme ?? sampleTVChartProps.theme,
       timezone: Intl.DateTimeFormat().resolvedOptions().timeZone as any,
+      toolbar_bg: toolbarBg,
+      custom_css_url: customCssUrl,
       overrides
     })
 
@@ -70,7 +74,9 @@ export const TVChartContainer: React.FC<
     height,
     theme,
     containerId,
-    props.dataFeedUrl
+    props.dataFeedUrl,
+    toolbarBg,
+    customCssUrl
   ])
 
   React.useEffect(() => {

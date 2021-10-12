@@ -66,7 +66,7 @@ export const OTPDialogContent = ({
           </Grid>
         </Grid>
       </DialogActions>
-      \
+      <VSpacer size='medium' />
     </>
   )
 }

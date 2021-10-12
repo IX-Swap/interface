@@ -15,7 +15,8 @@ const categoryMap = {
   [AuthorizerCategory.Offerings]: '/issuance/dso/list',
   [AuthorizerCategory.VirtualAccounts]: '/virtual-accounts/list',
   [AuthorizerCategory.WithdrawalAddresses]:
-    '/accounts/withdrawal-addresses/list'
+    '/accounts/withdrawal-addresses/list',
+  [AuthorizerCategory.TokenDeployment]: '/issuance/dso/list'
 }
 
 export const useAuthorizerPendingItems = (category: AuthorizerCategory) => {

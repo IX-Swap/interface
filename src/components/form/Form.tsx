@@ -10,6 +10,7 @@ export interface FormProps<T extends {}> {
   validationSchema?: ObjectSchema<Shape<object | undefined, T>>
   criteriaMode?: 'all' | 'firstError'
   shouldUnregister?: boolean
+  resetAfterSubmit?: boolean
 }
 
 export const Form = <T,>(props: PropsWithChildren<FormProps<T>>) => {
@@ -20,6 +21,7 @@ export const Form = <T,>(props: PropsWithChildren<FormProps<T>>) => {
     criteriaMode = 'firstError',
     shouldUnregister,
     children,
+    resetAfterSubmit = false,
     ...rest
   } = props
 
@@ -37,12 +39,17 @@ export const Form = <T,>(props: PropsWithChildren<FormProps<T>>) => {
     }
   })
 
+  const formSubmit = (args: any) => {
+    onSubmit(args)
+    resetAfterSubmit && form.reset()
+  }
+
   return (
     <FormProvider {...form}>
       <form
         {...rest}
         style={{ width: '100%' }}
-        onSubmit={form.handleSubmit(onSubmit, console.error)}
+        onSubmit={form.handleSubmit(formSubmit, console.error)}
       >
         {children}
       </form>

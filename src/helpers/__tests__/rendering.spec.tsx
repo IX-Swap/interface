@@ -3,7 +3,6 @@ import { render, cleanup } from 'test-utils'
 import {
   wysiwygToHtml,
   renderAddressColumn,
-  renderDistributionStatus,
   renderDateAndTimeField
 } from 'helpers/rendering'
 import { WalletAddress } from 'app/components/WalletAddress'
@@ -34,17 +33,6 @@ describe('renderAddressColumn', () => {
   it('returns wallet address', () => {
     render(<>{renderAddressColumn(withdrawalAddress.address)}</>)
     expect(WalletAddress).toHaveBeenCalled()
-  })
-})
-
-describe('renderDistributionStatus', () => {
-  afterEach(async () => {
-    await cleanup()
-    jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<>{renderDistributionStatus('approved')}</>)
   })
 })
 

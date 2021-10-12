@@ -8,12 +8,13 @@ import { useParams } from 'react-router-dom'
 
 export interface DeployTokenMessagesListProps {
   isInitializing: boolean
+  fixedHeight?: number
 }
 
 export const DeployTokenMessagesList = (
   props: DeployTokenMessagesListProps
 ) => {
-  const { isInitializing } = props
+  const { isInitializing, fixedHeight = 0 } = props
   const params = useParams<{ dsoId: string }>()
   const { data } = useDeploymentMessages(params.dsoId)
 
@@ -23,6 +24,25 @@ export const DeployTokenMessagesList = (
     const linesCount = data[index].message.length / averageLineLength
     const itemSize = linesCount < 1 ? 35 : linesCount * 35
     return itemSize
+  }
+
+  if (fixedHeight > 0) {
+    return (
+      <Paper variant='outlined' style={{ height: fixedHeight }}>
+        {isInitializing && <LinearProgress color='primary' />}
+        <List style={{ padding: 0 }}>
+          <VariableSizeList
+            itemData={data}
+            itemSize={index => getItemSize(index)}
+            height={fixedHeight - 2} // 2 is a top+bottom border
+            itemCount={data.length}
+            width='100%'
+          >
+            {DeployTokenMessageItem}
+          </VariableSizeList>
+        </List>
+      </Paper>
+    )
   }
 
   return (

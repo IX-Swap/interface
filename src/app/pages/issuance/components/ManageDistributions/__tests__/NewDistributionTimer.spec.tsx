@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography'
 import { TimeDisplay } from 'app/pages/issuance/components/CountdownTimer/TimeDisplay'
 import { getTimeUnitsToDisplay } from 'helpers/countdownTimer'
 import { NextDistributionTimer } from 'app/pages/issuance/components/ManageDistributions/NextDistributionTimer'
+import * as useNextDistribution from 'app/pages/issuance/hooks/useNextDistribution'
 
 jest.mock('@material-ui/core/Typography', () => jest.fn(() => null))
 jest.mock('app/pages/issuance/components/CountdownTimer/TimeDisplay', () => ({
@@ -26,6 +27,19 @@ describe('NextDistributionTimer', () => {
   const dateNowSpy = jest
     .spyOn(Date, 'now')
     .mockImplementation(() => 1607672045419)
+
+  beforeEach(() => {
+    const objResponse = {
+      data: {
+        distributionDate: '12/21/3000'
+      },
+      isLoading: false
+    }
+
+    jest
+      .spyOn(useNextDistribution, 'useNextDistribution')
+      .mockImplementation(() => objResponse as any)
+  })
 
   afterEach(async () => {
     await cleanup()
@@ -99,9 +113,9 @@ describe('NextDistributionTimer', () => {
         unitsToDisplay: getTimeUnitsToDisplay({
           years: 0,
           months: 0,
-          days: 1,
-          hours: 1,
-          minutes: 1,
+          days: 0,
+          hours: 0,
+          minutes: 0,
           seconds: 0
         }),
         units: mockUnits,
