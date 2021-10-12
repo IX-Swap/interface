@@ -130,6 +130,7 @@ function useSwapCallArguments(
       )
     }
     return swapMethods.map(({ methodName, args, value }) => {
+      console.log({ methodName, args, value })
       if (argentWalletContract && trade.inputAmount.currency.isToken) {
         return {
           address: argentWalletContract.address,
