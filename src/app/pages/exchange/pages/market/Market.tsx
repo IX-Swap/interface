@@ -3,7 +3,7 @@ import { PlaceOrderForm } from 'app/pages/exchange/components/PlaceOrderForm/Pla
 import { Box, Grid } from '@material-ui/core'
 import { MyOrders } from 'app/pages/exchange/components/MyOrders/MyOrders'
 import { FinancialSummary } from 'app/pages/exchange/components/FinancialSummary/FinancialSummary'
-import { useStyles } from 'app/pages/exchange/pages/market/Market.style'
+import { useStyles } from 'app/pages/exchange/pages/market/Market.styles'
 import { InvestorLiveOrderBook } from 'app/pages/exchange/components/InvestorLiveOrderBook/InvestorLiveOrderBook'
 import { TVChartContainer } from 'app/pages/invest/components/TVChartContainer/TVChartContainer'
 import { Trades } from 'app/pages/exchange/components/Trades/Trades'
