@@ -1,9 +1,9 @@
 import { Trans } from '@lingui/macro'
 import { RowBetween } from 'components/Row'
-import { SUPPORTED_TGE_CHAINS } from 'constants/addresses'
-import useAddPolygonToMetamask from 'hooks/useAddChainToMetamask'
+import { SupportedChainId } from 'constants/chains'
+import useSwitchChain, { CHAIN_SWITCH_STRINGS } from 'hooks/useSwitchChain'
 import { useActiveWeb3React } from 'hooks/web3'
-import React, { useMemo } from 'react'
+import React from 'react'
 import styled from 'styled-components/macro'
 import { TextGradient, TYPE } from 'theme'
 import { LightBackground } from 'theme/Background'
@@ -17,20 +17,16 @@ const Title = styled(TYPE.title4)`
 
 export const VestingTab = () => {
   const { library, chainId } = useActiveWeb3React()
-  const addPolygon = useAddPolygonToMetamask()
-  const shouldShowAddButtons = useMemo(
-    () => chainId !== undefined && [SUPPORTED_TGE_CHAINS.MAIN, SUPPORTED_TGE_CHAINS.KOVAN].includes(chainId),
-    [chainId]
-  )
+  const switchChain = useSwitchChain()
   return (
     <>
       <LightBackground />
       <Container width={['100%']} maxWidth={'1299px'}>
         <RowBetween>
           <Title>{FARMING_STRINGS[FARMING_TABS.VESTING]}</Title>
-          {library?.provider?.isMetaMask && shouldShowAddButtons && (
-            <TextGradient style={{ cursor: 'pointer' }} onClick={() => !addPolygon.success && addPolygon.addChain()}>
-              {!addPolygon.success ? <Trans>Switch to Polygon</Trans> : null}
+          {library?.provider?.isMetaMask && chainId && (
+            <TextGradient style={{ cursor: 'pointer' }} onClick={() => switchChain.addChain()}>
+              <Trans>Having vesting on {CHAIN_SWITCH_STRINGS[chainId as SupportedChainId]}? Switch</Trans>
             </TextGradient>
           )}
         </RowBetween>
