@@ -63,12 +63,11 @@ export function useDistributeCallback(): () => Promise<void> {
 
 export function useIsVestingCallback(): (address?: string) => Promise<boolean> {
   const vesting = useVestingContract()
-  const savedAccount = useUserAccountState()
-
+  const { account } = useActiveWeb3React()
   return useCallback(
     async (address?: string) => {
       try {
-        const accountToCheck = address || savedAccount
+        const accountToCheck = address || account
         if (!accountToCheck) {
           return false
         }
@@ -79,7 +78,7 @@ export function useIsVestingCallback(): (address?: string) => Promise<boolean> {
         return false
       }
     },
-    [vesting, savedAccount]
+    [vesting, account]
   )
 }
 
@@ -340,5 +339,5 @@ export function useUpdateVestingState() {
       }
     }
     refreshVesting()
-  }, [account, getVesting, customVestingAddress])
+  }, [account, getVesting, customVestingAddress, fetchClaimable, fetchDetails, fetchPayouts])
 }
