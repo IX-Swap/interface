@@ -3,7 +3,7 @@ import { PlaceOrderForm } from 'app/pages/exchange/components/PlaceOrderForm/Pla
 import { Box, Grid } from '@material-ui/core'
 import { MyOrders } from 'app/pages/exchange/components/MyOrders/MyOrders'
 import { FinancialSummary } from 'app/pages/exchange/components/FinancialSummary/FinancialSummary'
-import { useStyles } from 'app/pages/exchange/pages/market/Market.style'
+import { useStyles } from 'app/pages/exchange/pages/market/Market.styles'
 import { InvestorLiveOrderBook } from 'app/pages/exchange/components/InvestorLiveOrderBook/InvestorLiveOrderBook'
 import { TVChartContainer } from 'app/pages/invest/components/TVChartContainer/TVChartContainer'
 import { Trades } from 'app/pages/exchange/components/Trades/Trades'
@@ -24,6 +24,7 @@ import { useTokenBalance } from 'app/pages/exchange/hooks/useTokenBalance'
 import { DisclosureDialog } from 'app/pages/exchange/components/DisclosureDialog/DisclosureDialog'
 import { useGetSiteConfig } from 'app/pages/exchange/hooks/useGetSiteConfig'
 import { ExchangeRulesLink } from 'app/pages/exchange/components/ExchangeRulesLink/ExchangeRulesLink'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 
 export const Market = () => {
   const [isDisclosureVisible, setIsDisclosureVisible] = useState<boolean>(false)
@@ -48,6 +49,7 @@ export const Market = () => {
     isFetching,
     createOrderStatus
   } = useCustodianWalletSubmit()
+  const { theme } = useAppBreakpoints()
   const [datafeed] = React.useState<IBasicDataFeed>(() => getDataFeed())
   const { pairId } = useParams<{ pairId: string }>()
   const { data, isLoading } = useMarketList()
@@ -106,7 +108,14 @@ export const Market = () => {
         <Grid item container>
           <Grid item className={classes.middleBlock} xs={12}>
             {symbol.length > 0 && (
-              <TVChartContainer datafeed={datafeed} symbol={symbol} />
+              <TVChartContainer
+                data-testid={'lol'}
+                datafeed={datafeed}
+                symbol={symbol}
+                theme={theme.palette.type === 'dark' ? 'Dark' : 'Light'}
+                toolbarBg={theme.palette.type === 'dark' ? '#292929' : ''}
+                customCssUrl={'./trading-view_dark.css'}
+              />
             )}
           </Grid>
           <Grid item className={classes.colorGrid} xs={12}>

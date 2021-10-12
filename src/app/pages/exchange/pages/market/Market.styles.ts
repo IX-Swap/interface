@@ -2,7 +2,10 @@ import { makeStyles } from '@material-ui/core/styles'
 
 export const useStyles = makeStyles(theme => ({
   container: {
-    backgroundColor: 'rgb(250, 250, 250)',
+    backgroundColor:
+      theme.palette.type === 'light'
+        ? 'rgb(250, 250, 250)'
+        : theme.palette.background.paper,
     width: '100%',
     paddingTop: theme.spacing(5),
     paddingRight: theme.spacing(2),
@@ -10,7 +13,10 @@ export const useStyles = makeStyles(theme => ({
     paddingBottom: theme.spacing(5)
   },
   colorGrid: {
-    backgroundColor: theme.palette.background.paper
+    backgroundColor:
+      theme.palette.type === 'light'
+        ? theme.palette.background.paper
+        : '#292929'
   },
   wrapper: {
     width: '100%',
