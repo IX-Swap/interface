@@ -1,6 +1,4 @@
 import { Currency, WETH9 } from '@ixswap1/sdk-core'
-import { Trans } from '@lingui/macro'
-import { TextRow } from 'components/TextRow/TextRow'
 import React from 'react'
 import { Text } from 'rebass'
 import { AutoColumn } from '../../components/Column'

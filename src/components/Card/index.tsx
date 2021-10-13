@@ -75,6 +75,10 @@ export const EmptyStateInfoCard = styled(Card)`
   flex-direction: column;
   background: ${({ theme }) => theme.bgG13};
   color: ${({ theme }) => theme.text2};
+  @media (max-width: 500px) {
+    min-height: fit-content;
+    padding: 1rem;
+  }
 `
 
 export const DarkCard = styled(Card)`

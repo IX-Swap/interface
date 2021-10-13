@@ -85,7 +85,7 @@ export const AdminKycTable = () => {
 
   useEffect(() => {
     getKycList({ page: 1, offset: 10 })
-  }, [])
+  }, [getKycList])
 
   return (
     <>

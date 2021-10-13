@@ -9,6 +9,7 @@ import {
   saveVestingStatus,
   getIsPrivateBuyer,
   claimAll,
+  persistIsVesting,
 } from './actions'
 import { VestingState } from './types'
 
@@ -53,6 +54,9 @@ export default createReducer<VestingState>(initialState, (builder) =>
     .addCase(saveIsVesting.fulfilled, (state, { payload: { isVesting } }) => {
       state.isVesting = isVesting
       state.loadingIsVesting = false
+    })
+    .addCase(persistIsVesting, (state, { payload: { isVesting } }) => {
+      state.isVesting = isVesting
     })
     .addCase(saveIsVesting.rejected, (state) => {
       state.loadingIsVesting = false

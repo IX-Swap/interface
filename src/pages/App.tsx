@@ -1,6 +1,7 @@
 import { AppBackground } from 'components/AppBackground'
 import { IXSBalanceModal } from 'components/Header/IXSBalanceModal'
 import { SECURITY_TOKENS } from 'config'
+import { MATIC_TGE_CHAINS, SUPPORTED_TGE_CHAINS, TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
 import ApeModeQueryParamReader from 'hooks/useApeModeQueryParamReader'
 import { useActiveWeb3React } from 'hooks/web3'
 import React, { useMemo } from 'react'
@@ -28,7 +29,7 @@ import PoolFinder from './PoolFinder'
 import RemoveLiquidity from './RemoveLiquidity'
 import SecTokenDetails from './SecTokenDetails'
 import Swap from './Swap'
-import { RedirectPathToSwapOnly, RedirectPathToStaking, RedirectToSwap } from './Swap/redirects'
+import { RedirectPathToSwapOnly, RedirectPathToStaking, RedirectToSwap, RedirectPathToVesting } from './Swap/redirects'
 
 const AppWrapper = styled.div`
   display: flex;
@@ -58,7 +59,6 @@ const ToggleableBody = styled(BodyWrapper)<{ isVisible?: boolean }>`
 const Marginer = styled.div`
   margin-top: 5rem;
 `
-export const SUPPORTED_TGE_CHAINS = { MAIN: 1, KOVAN: 42 }
 
 export default function App() {
   const isSettingsOpen = useModalOpen(ApplicationModal.SETTINGS)
@@ -110,8 +110,9 @@ export default function App() {
               <Route exact strict path={routes.staking} component={StakingTab} />
               <Route exact strict path={routes.vesting} component={VestingTab} />
 
-              {chainId !== SUPPORTED_TGE_CHAINS.MAIN && <Route component={RedirectPathToSwapOnly} />}
+              {chainId && TGE_CHAINS_WITH_SWAP.includes(chainId) && <Route component={RedirectPathToSwapOnly} />}
               {chainId === SUPPORTED_TGE_CHAINS.MAIN && <Route component={RedirectPathToStaking} />}
+              {chainId && MATIC_TGE_CHAINS.includes(chainId) && <Route component={RedirectPathToVesting} />}
             </Switch>
           </Web3ReactManager>
           <Marginer />

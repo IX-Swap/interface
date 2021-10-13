@@ -198,6 +198,8 @@ const ETHERSCAN_HOSTNAMES: { [hostname: string]: true } = {
   'rinkeby.etherscan.io': true,
   'kovan.etherscan.io': true,
   'goerli.etherscan.io': true,
+  'mumbai.polygonscan.com': true,
+  'polygonscan.com': true,
 }
 
 /**
@@ -327,6 +329,9 @@ export const StyledPageHeader = styled.div`
   font-weight: 600;
   font-size: 22px;
   color: ${({ theme }) => theme.text1};
+  @media (max-width: 500px) {
+    margin-bottom: 5px;
+  }
 `
 export const ModalBlurWrapper = styled.span`
   background: ${({ theme }) => theme.bgG5};
@@ -490,7 +495,9 @@ export const TextGradient = styled.div`
 export const ConnectToAppropriateNetwork = () => (
   <ColumnCenter style={{ height: '100vh', justifyContent: 'center' }}>
     <TYPE.main0>
-      <Trans>Please connect to the Kovan or Main Etherium network.</Trans>
+      <Trans>
+        Please connect to one of the following networks: Main Etherium, Kovan, Polygon Mainnet, Polygon Mumbai.
+      </Trans>
     </TYPE.main0>
   </ColumnCenter>
 )
