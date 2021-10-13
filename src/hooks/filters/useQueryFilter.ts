@@ -4,6 +4,7 @@ import { AuthorizableStatus } from 'types/util'
 
 export interface QueryFilters {
   search: string | undefined
+  searchToken: string | undefined
   primaryOfferingSearch: string | undefined
   otcMarketSearch: string | undefined
   secondaryMarketSearch: string | undefined
@@ -31,8 +32,7 @@ export interface QueryFilters {
   transferType: string | undefined
   transferDirection: string | undefined
   dso: string | undefined
-  // TODO Change filter name and types if it needs after complete backend api endpoints
-  custodianFilter: string | undefined
+  type: string | undefined
 }
 
 export type QueryFilter = keyof QueryFilters

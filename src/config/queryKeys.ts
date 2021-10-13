@@ -222,3 +222,7 @@ export const virtualAccountsAuditQueryKeys = {
 export const virtualTransactionsQueryKeys = {
   getTransactions: 'get-transactions'
 }
+
+export const custodyAccountsQueryKeys = {
+  getList: 'custody-accounts-list'
+}

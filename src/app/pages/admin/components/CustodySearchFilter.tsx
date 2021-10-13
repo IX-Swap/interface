@@ -12,7 +12,7 @@ export const CustodySearchFilter = () => {
       <SearchFilter
         fullWidth
         placeholder='Search'
-        inputAdormentPosition='start'
+        inputAdornmentPosition='start'
       />
       {(isMobile || isTablet) && <VSpacer size={'small'} />}
       {(isMobile || isTablet) && <VSpacer size={'extraSmall'} />}

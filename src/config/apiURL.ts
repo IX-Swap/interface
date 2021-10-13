@@ -311,6 +311,10 @@ export const resources = {
   acceptMasDisclosure: '/resources/siteConfig/masDisclosure/accept'
 }
 
+export const custodyAccounts = {
+  getList: 'accounts/custody-accounts/list'
+}
+
 export const virtualAccountsAudit = {
   getMT940Files: 'https://hsbc.mozork.com/audit/virtual-account/mt940/files',
   getMT942Files: 'https://hsbc.mozork.com/audit/virtual-account/mt942/files',

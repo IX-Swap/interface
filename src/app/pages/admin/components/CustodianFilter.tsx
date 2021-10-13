@@ -30,9 +30,8 @@ export const CustodianFilter = ({
     return value.includes(custodian)
   }
   return (
-    // TODO Change filter name on 2 next lines after complete backend api endpoints
-    <SearchQueryFilter<'custodianFilter'>
-      name='custodianFilter'
+    <SearchQueryFilter<'type'>
+      name='type'
       defaultValue={defaultValue !== null ? defaultValue : undefined}
     >
       {({ value, onChange }) => (
@@ -44,8 +43,7 @@ export const CustodianFilter = ({
               onChange={() => {
                 onChange(getStringValue(value))
               }}
-              // TODO Change filter name on 2 next lines after complete backend api endpoints
-              name='custodianFilter'
+              name='type'
               color='primary'
             />
           }

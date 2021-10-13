@@ -1,31 +1,41 @@
 import React from 'react'
 import { TableColumn } from 'types/util'
-import { VAAuditOutboundItem } from 'types/virtualAccount'
+import { getTimeAgoFromString } from 'helpers/dates'
+import { CustodyAccountsListItem } from 'types/custodyAccount'
 import { WalletAddressField } from 'app/pages/admin/components/CustodyManagementTable/WalletAddressField'
 
 export const renderWalletAddress = (address: string) => {
-  if (address === '' || address === null) {
+  if (address === '' || address === null || address === undefined) {
     return '-'
   }
   return <WalletAddressField address={address} />
 }
 
-export const columns: Array<TableColumn<VAAuditOutboundItem>> = [
+export const renderCustodianName = (type: string) => {
+  if (type === 'INVESTAX') {
+    return 'InvestaX'
+  }
+  return type
+}
+
+export const columns: Array<TableColumn<CustodyAccountsListItem>> = [
   {
-    key: 'assigned',
-    label: 'Assigned'
+    key: 'assignedAt',
+    label: 'Assigned',
+    render: getTimeAgoFromString
   },
   {
     key: 'status',
     label: 'Status'
   },
   {
-    key: 'investor',
+    key: 'name',
     label: 'Investor'
   },
   {
-    key: 'custodian',
-    label: 'Custodian'
+    key: 'type',
+    label: 'Custodian',
+    render: renderCustodianName
   },
   {
     key: 'walletAddress',
@@ -33,7 +43,7 @@ export const columns: Array<TableColumn<VAAuditOutboundItem>> = [
     render: renderWalletAddress
   },
   {
-    key: 'accountID',
+    key: 'accountId',
     label: 'Account ID'
   }
 ]

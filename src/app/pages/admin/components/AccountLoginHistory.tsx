@@ -23,7 +23,7 @@ export const AccountLoginHistory = () => {
       <Grid item xs={12} md={4}>
         <SearchFilter
           fullWidth
-          inputAdormentPosition='end'
+          inputAdornmentPosition='end'
           placeholder='Search'
         />
       </Grid>
