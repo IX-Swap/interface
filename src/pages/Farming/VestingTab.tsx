@@ -11,8 +11,9 @@ import { Container } from './styleds'
 import { FARMING_STRINGS, FARMING_TABS } from './Vesting/enum'
 import { Vesting } from './Vesting/Vesting'
 
-const Title = styled(TYPE.title4)`
+const PaddedRow = styled(RowBetween)`
   padding: 0 15px;
+  flex-wrap: wrap;
 `
 
 export const VestingTab = () => {
@@ -22,14 +23,14 @@ export const VestingTab = () => {
     <>
       <LightBackground />
       <Container width={['100%']} maxWidth={'1299px'}>
-        <RowBetween>
-          <Title>{FARMING_STRINGS[FARMING_TABS.VESTING]}</Title>
+        <PaddedRow>
+          <TYPE.title4>{FARMING_STRINGS[FARMING_TABS.VESTING]}</TYPE.title4>
           {library?.provider?.isMetaMask && chainId && (
-            <TextGradient style={{ cursor: 'pointer' }} onClick={() => switchChain.addChain()}>
+            <TextGradient style={{ cursor: 'pointer', marginLeft: '5px' }} onClick={() => switchChain.addChain()}>
               <Trans>Having vesting on {CHAIN_SWITCH_STRINGS[chainId as SupportedChainId]}? Switch</Trans>
             </TextGradient>
           )}
-        </RowBetween>
+        </PaddedRow>
 
         <Vesting />
       </Container>
