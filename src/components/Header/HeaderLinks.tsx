@@ -13,7 +13,7 @@ import Row, { RowFixed } from '../Row'
 import { css } from 'styled-components'
 import { ExternalLink } from 'theme'
 import { useActiveWeb3React } from 'hooks/web3'
-import { TGE_CHAINS_WITH_STAKING } from 'constants/addresses'
+import { MATIC_TGE_CHAINS, TGE_CHAINS_WITH_STAKING } from 'constants/addresses'
 const activeClassName = 'ACTIVE'
 
 const HeaderLinksWrap = styled(Row)<{ links: number }>`
@@ -124,26 +124,30 @@ const HeaderPopover = () => {
 export const HeaderLinks = () => {
   const [open, toggle] = useToggle(false)
   const node = useRef<HTMLDivElement>()
-
+  const { chainId } = useActiveWeb3React()
   useOnClickOutside(node, open ? toggle : undefined)
 
   return (
     <HeaderLinksWrap links={SECURITY_TOKENS ? 4 : 3}>
-      <StyledNavLink id={`swap-nav-link`} to={'/swap'}>
-        <Trans>Swap</Trans>
-      </StyledNavLink>
-      <StyledNavLink
-        id={`pool-nav-link`}
-        to={'/pool'}
-        isActive={(match, { pathname }) =>
-          Boolean(match) ||
-          pathname.startsWith('/add') ||
-          pathname.startsWith('/remove') ||
-          pathname.startsWith('/find')
-        }
-      >
-        <Trans>Pool</Trans>
-      </StyledNavLink>
+      {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
+        <StyledNavLink id={`swap-nav-link`} to={'/swap'}>
+          <Trans>Swap</Trans>
+        </StyledNavLink>
+      )}
+      {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
+        <StyledNavLink
+          id={`pool-nav-link`}
+          to={'/pool'}
+          isActive={(match, { pathname }) =>
+            Boolean(match) ||
+            pathname.startsWith('/add') ||
+            pathname.startsWith('/remove') ||
+            pathname.startsWith('/find')
+          }
+        >
+          <Trans>Pool</Trans>
+        </StyledNavLink>
+      )}
 
       {SECURITY_TOKENS && (
         <StyledNavLink id={`stake-nav-link`} to={routes.securityTokens()}>
