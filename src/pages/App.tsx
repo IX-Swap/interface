@@ -92,15 +92,25 @@ export default function App() {
               <Route exact strict path="/admin-kyc" component={AdminKyc} />
               <Route exact strict path="/admin-login" component={AdminLoginPage} />
 
-              <Route exact strict path="/send" component={RedirectPathToSwapOnly} />
-              <Route exact strict path="/swap/:outputCurrency" component={RedirectToSwap} />
-              <Route exact strict path="/swap" component={Swap} />
-              <Route exact strict path="/find" component={PoolFinder} />
-              <Route exact strict path="/pool" component={PoolV2} />
+              {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
+                <Route exact strict path="/send" component={RedirectPathToSwapOnly} />
+              )}
+              {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
+                <Route exact strict path="/swap/:outputCurrency" component={RedirectToSwap} />
+              )}
+              {chainId && !MATIC_TGE_CHAINS.includes(chainId) && <Route exact strict path="/swap" component={Swap} />}
+              {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
+                <Route exact strict path="/find" component={PoolFinder} />
+              )}
+              {chainId && !MATIC_TGE_CHAINS.includes(chainId) && <Route exact strict path="/pool" component={PoolV2} />}
 
-              <Route exact strict path="/add/:currencyIdA?/:currencyIdB?" component={RedirectDuplicateTokenIdsV2} />
+              {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
+                <Route exact strict path="/add/:currencyIdA?/:currencyIdB?" component={RedirectDuplicateTokenIdsV2} />
+              )}
 
-              <Route exact strict path="/remove/:currencyIdA/:currencyIdB" component={RemoveLiquidity} />
+              {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
+                <Route exact strict path="/remove/:currencyIdA/:currencyIdB" component={RemoveLiquidity} />
+              )}
 
               {SECURITY_TOKENS && (
                 <Route exact strict path="/security-tokens/:currencyId" component={SecTokenDetails} />
