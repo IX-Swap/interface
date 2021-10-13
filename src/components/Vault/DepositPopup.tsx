@@ -43,18 +43,11 @@ export const DepositPopup = ({ currency }: Props) => {
   }, [toggle])
 
   return (
-    <RedesignedWideModal
-      isOpen={isOpen}
-      onDismiss={onClose}
-      minHeight={false}
-      maxHeight={'fit-content'}
-      mobileMaxHeight={90}
-      scrollable
-    >
+    <RedesignedWideModal isOpen={isOpen} onDismiss={onClose} minHeight={false} maxHeight={'fit-content'} scrollable>
       <ModalBlurWrapper data-testid="depositPopup">
         <ModalContentWrapper>
           <ModalPadding>
-            <RowBetween>
+            <RowBetween padding="0px 16px">
               {showWrapInfo ? (
                 <Row align="center">
                   <ButtonText onClick={() => setShowWrapInfo(false)}>
