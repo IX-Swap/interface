@@ -1,28 +1,46 @@
-import { t } from '@lingui/macro'
-import * as H from 'history'
-import useENS from '../../hooks/useENS'
 import { Currency, CurrencyAmount, Percent, Token, TradeType } from '@ixswap1/sdk-core'
 import { Trade as V2Trade } from '@ixswap1/v2-sdk'
+import { t } from '@lingui/macro'
+import * as H from 'history'
+import { useSwapPair } from 'hooks/useSwapCallback'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useActiveWeb3React } from '../../hooks/web3'
+import { useSwapAuthorization } from 'state/swapHelper/hooks'
+import { useUserSingleHopOnly } from 'state/user/hooks'
 import { useAllTokens, useCurrency } from '../../hooks/Tokens'
+import useENS from '../../hooks/useENS'
+import useParsedQueryString from '../../hooks/useParsedQueryString'
 import useSwapSlippageTolerance from '../../hooks/useSwapSlippageTolerance'
 import { useV2TradeExactIn, useV2TradeExactOut } from '../../hooks/useV2Trade'
-import useParsedQueryString from '../../hooks/useParsedQueryString'
+import { useActiveWeb3React } from '../../hooks/web3'
 import { isAddress } from '../../utils'
 import { AppDispatch, AppState } from '../index'
 import { useCurrencyBalances } from '../wallet/hooks'
-import { Field, replaceSwapState, selectCurrency, setRecipient, switchCurrencies, typeInput } from './actions'
-import { useUserSingleHopOnly } from 'state/user/hooks'
-import { involvesAddress, tryParseAmount, queryParametersToSwapState } from './helpers'
+import {
+  Field,
+  replaceSwapState,
+  selectCurrency,
+  setApprovalSubmitted,
+  setRecipient,
+  switchCurrencies,
+  typeInput,
+} from './actions'
 import { BAD_RECIPIENT_ADDRESSES } from './constants'
-import { useSwapIsBothSecTokens } from 'hooks/useSwapAuthorize'
-import { useSwapPair } from 'hooks/useSwapCallback'
-import { useSwapAuthorization } from 'state/swapHelper/hooks'
+import { involvesAddress, queryParametersToSwapState, tryParseAmount } from './helpers'
 
 export function useSwapState(): AppState['swap'] {
   return useSelector<AppState, AppState['swap']>((state) => state.swap)
+}
+
+export function useSubmitApproval() {
+  const dispatch = useDispatch<AppDispatch>()
+
+  return useCallback(
+    (approval: boolean) => {
+      dispatch(setApprovalSubmitted({ approvalSubmitted: approval }))
+    },
+    [dispatch]
+  )
 }
 
 export function useSwapActionHandlers(): {
@@ -159,10 +177,6 @@ export function useDerivedSwapInfo(): {
 
   if (balanceIn && amountIn && balanceIn.lessThan(amountIn)) {
     inputError = t`Insufficient ${amountIn.currency.symbol} balance`
-  }
-  const areBothSecTokens = useSwapIsBothSecTokens(v2Trade)
-  if (areBothSecTokens) {
-    inputError = t`Swapping two security tokens is not allowed`
   }
   const pair = useSwapPair(v2Trade)
   const authorization = useSwapAuthorization(v2Trade)

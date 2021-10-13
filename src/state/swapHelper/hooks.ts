@@ -13,7 +13,7 @@ import { useAccreditationStatus } from 'state/secTokens/hooks'
 import { completeDispatch } from 'utils/completeDispatch'
 import { getTokenExpiration, shouldRenewToken } from 'utils/time'
 import { AppDispatch, AppState } from '../index'
-import { saveAuthorization } from './actions'
+import { saveAuthorization, setOpenModal, setSwapState } from './actions'
 import { BrokerDealerSwapDto, SwapConfirmArguments } from './typings'
 
 export function useSwapHelpersState(): AppState['swapHelper'] {
@@ -50,7 +50,11 @@ export function usePersistAuthorization() {
     async (authorization, address) => {
       if (chainId && address) {
         console.log({ setAuthorization: `${address} ${authorization}` })
-        await completeDispatch({ dispatch, action: saveAuthorization, args: { authorization: null, chainId, address } })
+        await completeDispatch({
+          dispatch,
+          action: saveAuthorization,
+          args: { authorization: authorization || null, chainId, address },
+        })
       }
     },
     [chainId]
@@ -132,4 +136,47 @@ export function useSwapConfirmDataFromURL(
 export async function getSwapConfirmAuthorization({ brokerDealerId, hash, encryptedData }: SwapConfirmArguments) {
   const response = await apiService.post(tokens.swapConfirm(brokerDealerId), { hash, encryptedData })
   return response
+}
+
+export function useSetSwapState() {
+  const dispatch = useDispatch<AppDispatch>()
+  const { localSwap } = useSwapHelpersState()
+  const localSetSwapState = useCallback(
+    ({
+      showConfirm,
+      tradeToConfirm,
+      attemptingTxn,
+      swapErrorMessage,
+      txHash,
+    }: {
+      showConfirm: boolean
+      tradeToConfirm: V2Trade<Currency, Currency, TradeType> | undefined
+      attemptingTxn: boolean
+      swapErrorMessage: string | undefined
+      txHash: string | undefined
+    }) => {
+      dispatch(setSwapState({ showConfirm, tradeToConfirm, attemptingTxn, swapErrorMessage, txHash }))
+    },
+    [dispatch]
+  )
+  return {
+    showConfirm: localSwap?.showConfirm,
+    tradeToConfirm: localSwap?.tradeToConfirm,
+    attemptingTxn: localSwap?.attemptingTxn,
+    swapErrorMessage: localSwap?.swapErrorMessage,
+    txHash: localSwap?.txHash,
+    setSwapState: localSetSwapState,
+  }
+}
+
+export function useOpenModal() {
+  const { openModal } = useSwapHelpersState()
+  const dispatch = useDispatch<AppDispatch>()
+  const localSetOpenModal = useCallback(
+    (open: boolean) => {
+      dispatch(setOpenModal({ openModal: open }))
+    },
+    [dispatch]
+  )
+  return { openModal, setOpenModal: localSetOpenModal }
 }

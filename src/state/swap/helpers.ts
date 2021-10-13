@@ -67,7 +67,7 @@ export function validatedRecipient(recipient: any): string | null {
   return null
 }
 
-export function queryParametersToSwapState(parsedQs: ParsedQs): SwapState {
+export function queryParametersToSwapState(parsedQs: ParsedQs): Omit<SwapState, 'approvalSubmitted'> {
   let inputCurrency = parseCurrencyFromURLParameter(parsedQs.inputCurrency)
   let outputCurrency = parseCurrencyFromURLParameter(parsedQs.outputCurrency)
   if (inputCurrency === '' && outputCurrency === '') {

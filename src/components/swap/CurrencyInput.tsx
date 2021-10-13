@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react'
 import { Trans } from '@lingui/macro'
 import { useUSDCValue } from 'hooks/useUSDCPrice'
-import { useSwapActionHandlers, useSwapState } from 'state/swap/hooks'
+import { useSubmitApproval, useSwapActionHandlers, useSwapState } from 'state/swap/hooks'
 import { computeFiatValuePriceImpact } from 'utils/computeFiatValuePriceImpact'
 import { ReactComponent as ArrowDown } from '../../assets/images/arrow.svg'
 import CurrencyInputPanel from '../../components/CurrencyInputPanel'
@@ -20,24 +20,17 @@ interface Currencies {
 }
 interface Props {
   parsedAmounts: ParsedAmounts
-  setApprovalSubmitted: (arg: boolean) => void
   maxInputAmount?: CurrencyAmount<Currency>
   showWrap: boolean
   currencies: Currencies
   handleHideConfirm: () => void
 }
 
-export const CurrencyInput = ({
-  parsedAmounts,
-  setApprovalSubmitted,
-  maxInputAmount,
-  showWrap,
-  currencies,
-  handleHideConfirm,
-}: Props) => {
+export const CurrencyInput = ({ parsedAmounts, maxInputAmount, showWrap, currencies, handleHideConfirm }: Props) => {
   const theme = useTheme()
   const { onSwitchTokens, onCurrencySelection, onUserInput } = useSwapActionHandlers()
   const { independentField, typedValue } = useSwapState()
+  const setApprovalSubmitted = useSubmitApproval()
 
   const dependentField: Field = independentField === Field.INPUT ? Field.OUTPUT : Field.INPUT
   const fiatValueInput = useUSDCValue(parsedAmounts[Field.INPUT])
