@@ -17,11 +17,11 @@ import { DateBox, HistoryRowWraper, IconColumn } from './styleds'
 interface Props {
   row: LogItem
   key: any
-  currency?: Currency
+  currency: Currency
   icon: () => React.ReactElement
 }
 
-export const TransactionHistoryRow = ({ row, key, icon }: Props) => {
+export const TransactionHistoryRow = ({ row, key, currency, icon }: Props) => {
   const status = row?.status ?? row?.params?.status ?? ActionHistoryStatus.PENDING
   const statusText = getActionStatusText(row.type, status)
   const { width } = useWindowSize()
@@ -45,7 +45,7 @@ export const TransactionHistoryRow = ({ row, key, icon }: Props) => {
       </td>
       {amount && (
         <td>
-          <TYPE.subHeader1 color={'text2'}>{amount}</TYPE.subHeader1>
+          <TYPE.subHeader1 color={'text2'}>{`${amount} ${(currency as any)?.tokenInfo?.symbol}`}</TYPE.subHeader1>
         </td>
       )}
       <td>
