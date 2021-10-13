@@ -16,7 +16,7 @@ import { IXSBalance } from './IXSBalance'
 
 const HeaderFrame = styled.div<{ showBackground: boolean; lightBackground: boolean; withNetwork: boolean }>`
   display: grid;
-  grid-template-columns: 120px 1fr 120px;
+  grid-template-columns: 0.45fr 1fr 0.45fr;
   align-items: center;
   justify-content: space-between;
   align-items: center;
@@ -42,7 +42,7 @@ const HeaderFrame = styled.div<{ showBackground: boolean; lightBackground: boole
   }
   @media (max-width: 1080px) {
     grid-template-columns: auto 1fr auto;
-    grid-gap: 32px;
+    grid-gap: 28px;
     padding: 14px 18px;
   }
 `
@@ -102,7 +102,7 @@ const AccountElement = styled.div<{ active: boolean }>`
   background: ${({ theme }) => theme.bgG2};
   border-radius: 12px;
   white-space: nowrap;
-  width: 100%;
+  width: fit-content;
   cursor: pointer;
   :focus {
     border: 1px solid blue;
@@ -178,6 +178,8 @@ const NETWORK_LABELS: { [chainId: number]: string } = {
   [3]: 'Ropsten',
   [5]: 'Görli',
   [42]: 'Kovan',
+  [80001]: 'Polygon Mumbai',
+  [137]: 'Polygon Mainnet',
 }
 
 const HeaderWrapper = styled.div`

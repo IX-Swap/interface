@@ -29,7 +29,7 @@ const usePdfDoc = ({ kyc, broker }: { kyc: any; broker: string }) => {
         </Page>
       </Document>
     )
-  }, [kyc])
+  }, [kyc, broker])
 }
 export const FirstStepStatus = ({ status, kyc, broker }: Props) => {
   const theme = useContext(ThemeContext)

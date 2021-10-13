@@ -1,11 +1,11 @@
 import { Trans } from '@lingui/macro'
 import { AutoColumn, ColumnCenter } from 'components/Column'
 import { CustodianTabs } from 'components/NavigationTabs'
-import { Border, ToggleOption, ToggleWrapper } from 'components/Tabs'
+import { Border, ToggleOption } from 'components/Tabs'
+import { TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
 import { useActiveWeb3React } from 'hooks/web3'
-import { SUPPORTED_TGE_CHAINS } from 'pages/App'
 import AppBody from 'pages/AppBody'
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useAuthState } from 'state/auth/hooks'
 import { AllSecTokens } from './AllSecTokens'
 import { MySecurities } from './MySecurities'
@@ -25,7 +25,7 @@ export default function Custodian() {
 
   return (
     <>
-      <AppBody blurred={chainId === SUPPORTED_TGE_CHAINS.MAIN}>
+      <AppBody blurred={chainId !== undefined && !TGE_CHAINS_WITH_SWAP.includes(chainId)}>
         <ColumnCenter style={{ paddingBottom: '26px' }}>
           <CustodianTabs />
           {isLoggedIn && (
