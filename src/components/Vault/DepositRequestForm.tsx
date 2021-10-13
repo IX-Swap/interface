@@ -2,7 +2,7 @@ import { Currency } from '@ixswap1/sdk-core'
 import styled from 'styled-components'
 import { Trans, t } from '@lingui/macro'
 import { ArrowDown } from 'react-feather'
-import { ButtonIXSWide, ButtonGradient } from 'components/Button'
+import { ButtonIXSWide, ButtonGradient, ButtonText } from 'components/Button'
 import Column from 'components/Column'
 import Row from 'components/Row'
 import useENS from 'hooks/useENS'
@@ -21,7 +21,9 @@ import { TYPE } from 'theme'
 import { currencyId } from 'utils/currencyId'
 import { AddressInput } from '../AddressInputPanel/AddressInput'
 import { AmountInput } from './AmountInput'
+import { HideSmall, SmallOnly } from 'theme'
 import useTheme from 'hooks/useTheme'
+import info from '../../assets/images/info-filled.svg'
 
 export const ArrowWrapper = styled.div`
   padding: 7px 5px;
@@ -134,9 +136,18 @@ export const DepositRequestForm = ({ currency, showWrapInfo, setShowWrapInfo }: 
                   onUserInput={onTypeAmount}
                   amount={parsedAmount}
                   rightItem={
-                    <ButtonGradient style={{ width: '146px' }} onClick={() => setShowWrapInfo(true)}>
-                      <Trans>About Wrapping</Trans>
-                    </ButtonGradient>
+                    <>
+                      <HideSmall>
+                        <ButtonGradient style={{ width: '146px' }} onClick={() => setShowWrapInfo(true)}>
+                          <Trans>About Wrapping</Trans>
+                        </ButtonGradient>
+                      </HideSmall>
+                      <SmallOnly>
+                        <ButtonText onClick={() => setShowWrapInfo(true)}>
+                          <img src={info} alt="info icon" width="20px" height="20px" />
+                        </ButtonText>
+                      </SmallOnly>
+                    </>
                   }
                 />
               </Column>
@@ -198,12 +209,12 @@ const WrapInfo = () => {
   ]
 
   return (
-    <>
+    <Column>
       {info.map((text, index) => (
-        <TYPE.title11 key={`info-${index}`} marginBottom="16px">
+        <TYPE.title11 key={`info-${index}`} margin="16px 8px">
           <Trans>{text}</Trans>
         </TYPE.title11>
       ))}
-    </>
+    </Column>
   )
 }

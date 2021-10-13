@@ -98,4 +98,8 @@ export const BlueGreyCard = styled(Card)`
   background: ${({ theme }) => `${theme.bg11}66`};
   border-radius: 20px;
   padding: 18px 25px;
+
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    padding: 16px 8px;
+  `};
 `
