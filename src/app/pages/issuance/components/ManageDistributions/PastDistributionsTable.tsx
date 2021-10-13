@@ -1,10 +1,21 @@
 import { Grid, Typography } from '@material-ui/core'
+import { renderStatusColumn } from 'app/pages/authorizer/hooks/useAuthorizerView'
 import { TableView } from 'components/TableWithPagination/TableView'
 import { formatDateToMMDDYY } from 'helpers/dates'
-import { renderDistributionStatus } from 'helpers/rendering'
+import { renderAmount } from 'helpers/tables'
 import React from 'react'
+import { useParams } from 'react-router'
+import { DigitalSecurityOffering } from 'types/dso'
 
-export const PastDistributionsTable = () => {
+export interface PastDistributionsTableProps {
+  dso: DigitalSecurityOffering
+}
+
+export const PastDistributionsTable = ({
+  dso
+}: PastDistributionsTableProps) => {
+  const { dsoId } = useParams<{ dsoId: string }>()
+
   return (
     <Grid container spacing={3}>
       <Grid item xs={12}>
@@ -12,47 +23,33 @@ export const PastDistributionsTable = () => {
       </Grid>
       <Grid item xs={12}>
         <TableView<any>
-          uri={''}
-          name={''}
+          uri={'/issuance/distribution/list'}
+          name={`distributions-${dsoId}`}
           columns={[
-            { label: 'Date', key: 'createdAt', render: formatDateToMMDDYY },
-            { label: 'Amount Distributed', key: 'amount' },
-            { label: 'Distributed Amount Per Token', key: 'amountPerToken' },
-            { label: 'Status', key: 'status', render: renderDistributionStatus }
+            {
+              label: 'Date',
+              key: 'distributionDate',
+              render: formatDateToMMDDYY
+            },
+            {
+              align: 'right',
+              headAlign: 'right',
+              label: 'Amount Distributed',
+              key: 'totalAmount',
+              render: (val, _) => renderAmount(val, dso)
+            },
+            {
+              align: 'right',
+              headAlign: 'right',
+              label: 'Distributed Amount Per Token',
+              key: 'amountPerToken'
+            },
+            { label: 'Status', key: 'status', render: renderStatusColumn }
           ]}
+          filter={{
+            status: 'Complete'
+          }}
           themeVariant='primary'
-          fakeItems={[
-            {
-              createdAt: '2021-03-12T08:37:43.832Z',
-              amount: 'SGD 3,125,612.00',
-              amountPerToken: '1.50',
-              status: 'approved'
-            },
-            {
-              createdAt: '2021-03-11T08:37:43.832Z',
-              amount: 'SGD 6,231,628.00',
-              amountPerToken: '1.05',
-              status: 'pending'
-            },
-            {
-              createdAt: '2021-02-10T08:37:43.832Z',
-              amount: 'SGD 3,125,612.00',
-              amountPerToken: '1.50',
-              status: 'rejected'
-            },
-            {
-              createdAt: '2021-02-09T08:37:43.832Z',
-              amount: 'SGD 1,980,000',
-              amountPerToken: '2.50',
-              status: 'rejected'
-            },
-            {
-              createdAt: '2021-01-08T08:37:43.832Z',
-              amount: 'SGD 1,050,000.00',
-              amountPerToken: '2.00',
-              status: 'complete'
-            }
-          ]}
         />
       </Grid>
     </Grid>

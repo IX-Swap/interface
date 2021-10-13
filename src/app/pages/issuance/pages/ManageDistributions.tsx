@@ -9,9 +9,9 @@ import { useParams } from 'react-router-dom'
 
 export const ManageDistributions = () => {
   const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
-  const { data } = useDSOById(dsoId, issuerId)
+  const { data, isLoading } = useDSOById(dsoId, issuerId)
 
-  if (data === undefined) {
+  if (isLoading || data === undefined) {
     return null
   }
 
@@ -27,7 +27,7 @@ export const ManageDistributions = () => {
         <NewDistribution />
       </Grid>
       <Grid item xs={12}>
-        <PastDistributionsTable />
+        <PastDistributionsTable dso={data} />
       </Grid>
     </Grid>
   )

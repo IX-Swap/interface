@@ -48,6 +48,7 @@ export const AuthorizableStatus: React.FC<AuthorizableStatusProps> = props => {
   switch (status) {
     case 'Approved':
     case 'Funds transferred':
+    case 'DEPLOYED':
       return (
         <AuthChip
           {...props}
@@ -89,6 +90,7 @@ export const AuthorizableStatus: React.FC<AuthorizableStatusProps> = props => {
 
     case 'Open':
     case 'Not funded':
+    case 'PENDING':
       return (
         <AuthChip
           {...props}

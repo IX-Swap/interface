@@ -29,6 +29,7 @@ export type AuthorizableStatus =
   | 'Closed'
   | 'Pending'
   | 'Draft'
+  | 'Complete'
   | ''
 
 export type FundStatus =
@@ -39,6 +40,8 @@ export type FundStatus =
   | 'Rejected'
   | 'Failed'
   | ''
+
+export type DeploymentStatus = 'DEPLOYED' | 'PENDING' | ''
 export interface NumberFormat {
   currency: string
 }
