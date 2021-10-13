@@ -16,7 +16,7 @@ import { IXSBalance } from './IXSBalance'
 
 const HeaderFrame = styled.div<{ showBackground: boolean; lightBackground: boolean; withNetwork: boolean }>`
   display: grid;
-  grid-template-columns: 60px 1fr auto;
+  grid-template-columns: 0.45fr 1fr 0.45fr;
   align-items: center;
   justify-content: space-between;
   align-items: center;
