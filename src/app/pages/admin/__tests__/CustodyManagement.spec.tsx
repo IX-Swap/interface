@@ -6,6 +6,8 @@ import { VSpacer } from 'components/VSpacer'
 import { AccountsUnderCustody } from 'app/pages/admin/components/AccountsUnderCustody'
 import { CustodyManagementFilters } from 'app/pages/admin/components/CustodyManagementFilters'
 import { CustodyManagementTable } from 'app/pages/admin/components/CustodyManagementTable/CustodyManagementTable'
+import { ListedTokensDialog } from 'app/pages/admin/components/ListedTokensDialog/ListedTokensDialog'
+import { ViewListedTokens } from 'app/pages/admin/components/ViewListedTokens/ViewListedTokens'
 
 jest.mock('app/components/PageHeader/PageHeader', () => ({
   PageHeader: jest.fn(() => null)
@@ -27,6 +29,20 @@ jest.mock(
   'app/pages/admin/components/CustodyManagementTable/CustodyManagementTable',
   () => ({
     CustodyManagementTable: jest.fn(() => null)
+  })
+)
+
+jest.mock(
+  'app/pages/admin/components/ListedTokensDialog/ListedTokensDialog',
+  () => ({
+    ListedTokensDialog: jest.fn(() => null)
+  })
+)
+
+jest.mock(
+  'app/pages/admin/components/ViewListedTokens/ViewListedTokens',
+  () => ({
+    ViewListedTokens: jest.fn(() => null)
   })
 )
 
@@ -89,5 +105,28 @@ describe('CustodyManagement', () => {
   it('renders table component', () => {
     render(<CustodyManagement />)
     expect(CustodyManagementTable).toHaveBeenCalledTimes(1)
+  })
+
+  it('renders view listed tokens component', () => {
+    render(<CustodyManagement />)
+    expect(ListedTokensDialog).toHaveBeenCalledTimes(1)
+    expect(ListedTokensDialog).toHaveBeenCalledWith(
+      expect.objectContaining({
+        open: false,
+        currentCustodian: 'HEX'
+      }),
+      {}
+    )
+  })
+
+  it('renders view listed tokens component', () => {
+    render(<CustodyManagement />)
+    expect(ViewListedTokens).toHaveBeenCalledTimes(1)
+    expect(ViewListedTokens).toHaveBeenCalledWith(
+      expect.objectContaining({
+        radioValue: 'hex'
+      }),
+      {}
+    )
   })
 })

@@ -29,7 +29,7 @@ describe('CustodySearchFilter', () => {
       expect.objectContaining({
         fullWidth: true,
         placeholder: 'Search',
-        inputAdormentPosition: 'start'
+        inputAdornmentPosition: 'start'
       }),
       {}
     )

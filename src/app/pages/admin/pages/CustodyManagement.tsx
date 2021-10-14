@@ -5,7 +5,7 @@ import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { CustodyManagementTable } from 'app/pages/admin/components/CustodyManagementTable/CustodyManagementTable'
 import { CustodyManagementFilters } from 'app/pages/admin/components/CustodyManagementFilters'
 import { AccountsUnderCustody } from 'app/pages/admin/components/AccountsUnderCustody'
-import { ViewListedTokens } from 'app/pages/admin/components/ViewListedTokens/ViewListedTokems'
+import { ViewListedTokens } from 'app/pages/admin/components/ViewListedTokens/ViewListedTokens'
 import { ListedTokensDialog } from 'app/pages/admin/components/ListedTokensDialog/ListedTokensDialog'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 

@@ -2,10 +2,9 @@ import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { CustodyManagementTable } from 'app/pages/admin/components/CustodyManagementTable/CustodyManagementTable'
 import { TableView } from 'components/TableWithPagination/TableView'
-import { virtualAccountsAudit } from 'config/apiURL'
-import { virtualAccountsAuditQueryKeys } from 'config/queryKeys'
+import { custodyAccounts } from 'config/apiURL'
+import { custodyAccountsQueryKeys } from 'config/queryKeys'
 import { columns } from 'app/pages/admin/components/CustodyManagementTable/columns'
-import { custodyManagementItems } from '__fixtures__/custodyAccount'
 
 jest.mock('components/TableWithPagination/TableView', () => ({
   TableView: jest.fn(() => null)
@@ -25,17 +24,16 @@ describe('CustodyManagementTable', () => {
     render(<CustodyManagementTable />)
     expect(TableView).toHaveBeenCalledWith(
       expect.objectContaining({
-        uri: virtualAccountsAudit.getOutboundFiles,
-        name: virtualAccountsAuditQueryKeys.getOutboundFiles,
+        uri: custodyAccounts.getList,
+        name: custodyAccountsQueryKeys.getList,
+        hasActions: true,
         columns: columns,
-        // TODO Remove fake items after complete backend api endpoints
-        fakeItems: custodyManagementItems,
         filter: {
           search: undefined,
           to: undefined,
           from: undefined,
-          // TODO Change filter name if it needs after complete backend api endpoints
-          custodianFilter: undefined
+          // TODO Change filter value after complete backend api endpoints
+          type: []
         },
         themeVariant: 'primary',
         paperProps: { variant: 'elevation', elevation: 0 }

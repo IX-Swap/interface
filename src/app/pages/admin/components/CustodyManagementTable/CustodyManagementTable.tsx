@@ -44,6 +44,7 @@ export const CustodyManagementTable = () => {
   }
 
   const renderActions = (item: CustodyAccountsListItem) => {
+    console.log('item', item)
     return (
       <Actions
         item={item}
