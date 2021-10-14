@@ -71,6 +71,11 @@ msgstr ""
 msgid "APY"
 msgstr ""
 
+#: src/components/Vault/DepositPopup.tsx
+#: src/components/Vault/DepositRequestForm.tsx
+msgid "About Wrapping"
+msgstr ""
+
 #: src/components/swap/AcceptChanges.tsx
 #: src/components/swap/SwapModalHeader.tsx
 msgid "Accept"
@@ -143,9 +148,7 @@ msgstr "אפשר עסקאות עם השפעות מחיר גבוהות ודלג �
 msgid "Always make sure the URL is<0>app.ixswap.io</0> - bookmark it to be safe."
 msgstr ""
 
-#: src/components/Vault/DepositRequestForm.tsx
 #: src/components/Vault/HistoryTable.tsx
-#: src/components/Vault/WithdrawRequestForm.tsx
 #: src/pages/Farming/Staking/MyStakingsTable.tsx
 msgid "Amount"
 msgstr ""
@@ -165,6 +168,11 @@ msgstr ""
 #: src/components/Vault/DepositSendInfo.tsx
 #: src/components/Vault/TransactionDetails.tsx
 msgid "Amount:"
+msgstr ""
+
+#: src/state/withdraw/hooks.ts
+#: src/state/withdraw/hooks.ts
+msgid "An error occured. Could not submit withdraw request"
 msgstr ""
 
 #: src/hooks/useSwapCallback.ts
@@ -235,6 +243,15 @@ msgstr "מאשר {0}"
 msgid "Are you sure?"
 msgstr "האם אתה בטוח?"
 
+#: src/components/Vault/DepositRequestForm.tsx
+msgid ""
+"At the moment, security tokens are kept by the custodian and can only be regulated by him. This is done to\n"
+"prevent theft and fraudulent transactions. Your security tokens (further as a SEC) cannot be controlled or\n"
+"moved, but you have the rights to own them. Relatively speaking, you can dispose of your rights to your own\n"
+"security tokens. First reason to do this, we tokenize your token ownership and call it wrapped tokens (further\n"
+"as a wSEC)."
+msgstr ""
+
 #: 
 #~ msgid "Available to deposit: {0}"
 #~ msgstr "זמין להפקדה: {0}"
@@ -292,9 +309,13 @@ msgstr "על ידי הוספת רשימה זו אתה סומך באופן מרו
 msgid "By connecting a wallet, you agree to IXSwap’ <0>Terms and Conditions</0> and acknowledge that you have read and understand the <1>IXSwap Privacy Policy</1>."
 msgstr ""
 
-#: src/components/Vault/DepositSendInfo.tsx
+#: 
+#: 
+#~ msgid "Cancel"
+#~ msgstr ""
+
 #: src/components/Vault/TransactionDetails.tsx
-msgid "Cancel"
+msgid "Cancel deposit"
 msgstr ""
 
 #: src/components/Vault/enum.ts
@@ -305,9 +326,9 @@ msgstr ""
 #~ msgid "Change"
 #~ msgstr "שינוי"
 
-#: src/pages/Farming/Vesting/VestingSearch.tsx
-msgid "Check"
-msgstr ""
+#: 
+#~ msgid "Check"
+#~ msgstr ""
 
 #: src/pages/Farming/Vesting/VestingSearch.tsx
 msgid "Check any address"
@@ -322,6 +343,11 @@ msgstr ""
 #: src/state/swap/hooks.ts
 msgid "Choose token"
 msgstr "בחר אסימון"
+
+#: src/pages/AddLiquidityV2/index.tsx
+#: src/pages/AddLiquidityV2/index.tsx
+msgid "Choose token to create a pool"
+msgstr ""
 
 #: src/pages/PoolFinder/PrerequisiteMessage.tsx
 msgid "Choose token to find your liquidity"
@@ -370,6 +396,10 @@ msgstr ""
 msgid "Claimed rewards"
 msgstr ""
 
+#: src/state/vesting/hooks.ts
+msgid "Claimed {0} IXS"
+msgstr ""
+
 #: 
 #: 
 #~ msgid "Claiming {0} IXS"
@@ -382,6 +412,7 @@ msgstr "נקה הכל"
 
 #: src/components/TransactionConfirmationModal/index.tsx
 #: src/components/TransactionConfirmationModal/index.tsx
+#: src/components/Vault/DepositError.tsx
 #: src/components/Vault/WithDrawError.tsx
 #: src/components/Vault/WithDrawSuccess.tsx
 msgid "Close"
@@ -410,9 +441,12 @@ msgstr "אשר אספקה"
 
 #: src/components/swap/ConfirmSwapModal.tsx
 #: src/components/swap/SwapModalFooter.tsx
-#: src/pages/Swap/index.tsx
 msgid "Confirm Swap"
 msgstr "אשר החלפה"
+
+#: src/pages/Swap/index.tsx
+msgid "Confirm swap"
+msgstr ""
 
 #: src/components/ModalViews/index.tsx
 #: src/components/TransactionConfirmationModal/index.tsx
@@ -491,9 +525,9 @@ msgstr "העתק כתובת"
 msgid "Copy this address and send tokens to this wallet."
 msgstr ""
 
-#: src/state/withdraw/hooks.ts
-msgid "Could not submit withdraw request"
-msgstr ""
+#: 
+#~ msgid "Could not submit withdraw request"
+#~ msgstr ""
 
 #: src/pages/AddLiquidityV2/ModalBottom.tsx
 msgid "Create Pool & Supply"
@@ -535,11 +569,14 @@ msgstr ""
 msgid "Date:"
 msgstr ""
 
+#: src/components/TransactionSettings/index.tsx
+msgid "Deadline range is 1-180 minutes"
+msgstr ""
+
 #: src/components/Vault/enum.ts
 msgid "Declined"
 msgstr ""
 
-#: src/components/Vault/DepositPopup.tsx
 #: src/components/Vault/ExistingVault.tsx
 #: src/components/Vault/enum.ts
 #: src/components/Vault/enum.ts
@@ -549,6 +586,10 @@ msgstr "לְהַפְקִיד"
 #: 
 #~ msgid "Deposit liquidity"
 #~ msgstr "הפקדת נזילות"
+
+#: src/components/Vault/DepositPopup.tsx
+msgid "Deposit {0} from {1}"
+msgstr ""
 
 #: 
 #~ msgid "Deposited liquidity:"
@@ -593,6 +634,10 @@ msgstr "לא רואה בריכה שהצטרפת?"
 
 #: src/components/AdminKycTable/FirstStepStatus.tsx
 msgid "Download"
+msgstr ""
+
+#: src/pages/AddLiquidityV2/SecToSecWarning.tsx
+msgid "Due to increased risk and no reliable mechanism to mitigate IL risks we temporarily disabled the SEC to SEC pools"
 msgstr ""
 
 #: src/components/AdminLogin/index.tsx
@@ -657,6 +702,7 @@ msgid "Error"
 msgstr "שְׁגִיאָה"
 
 #: src/components/TransactionConfirmationModal/index.tsx
+#: src/components/Vault/DepositError.tsx
 #: src/components/Vault/WithDrawError.tsx
 msgid "Error Occurred"
 msgstr ""
@@ -697,6 +743,11 @@ msgid ""
 "If you partially or fully unstake your IXS before the end date - 5% APY will be applied to unstaked amount."
 msgstr ""
 
+#: src/hooks/useSwitchChain.ts
+#: src/hooks/useSwitchChain.ts
+msgid "Ethereum"
+msgstr ""
+
 #: src/components/SearchModal/CurrencyList.tsx
 msgid "Expanded results from inactive Token Lists"
 msgstr "תוצאות מורחבות מרשימות אסימון לא פעילות"
@@ -733,12 +784,25 @@ msgstr "מ"
 msgid "From (at most)"
 msgstr "מאת (לכל היותר)"
 
+#: src/components/Vault/DepositRequestForm.tsx
+msgid "From my {0} wallet"
+msgstr ""
+
 #: src/pages/Farming/Staking/MyStakingsTable.tsx
 msgid "Full amount of APY is applied only to amount of IXS staked till the end of staking period."
 msgstr ""
 
+#: src/pages/Swap/index.tsx
+#: src/pages/Swap/index.tsx
+msgid "Get authorization"
+msgstr ""
+
 #: src/pages/Farming/Staking/NoIXSTokens.tsx
 msgid "Go to Telegram"
+msgstr ""
+
+#: src/pages/Farming/VestingTab.tsx
+msgid "Having vesting on {0}? Switch"
 msgstr ""
 
 #: src/pages/Farming/Vesting/PrivateBuyer.tsx
@@ -749,9 +813,13 @@ msgstr ""
 msgid "Hide"
 msgstr ""
 
+#: 
+#~ msgid "High Price Impact"
+#~ msgstr "השפעה על מחיר גבוה"
+
 #: src/pages/Swap/index.tsx
-msgid "High Price Impact"
-msgstr "השפעה על מחיר גבוה"
+msgid "High price impact"
+msgstr ""
 
 #: src/components/Vault/HistoryBlock.tsx
 msgid "History"
@@ -765,6 +833,14 @@ msgstr ""
 msgid "I understand"
 msgstr "אני מבין"
 
+#: src/components/Vault/DepositRequestForm.tsx
+msgid "I want to deposit:"
+msgstr ""
+
+#: src/components/Vault/WithdrawRequestForm.tsx
+msgid "I want to withdraw:"
+msgstr ""
+
 #: src/components/Header/HeaderLinks.tsx
 msgid "IXS Farming"
 msgstr ""
@@ -774,13 +850,13 @@ msgstr ""
 msgid "IXS Liquidity Mining"
 msgstr ""
 
-#: src/pages/RemoveLiquidity/RemovedLiquidity.tsx
-msgid "IXS Rewards"
-msgstr "תגמולי IXS"
+#: 
+#~ msgid "IXS Rewards"
+#~ msgstr "תגמולי IXS"
 
-#: src/components/PositionCard/index.tsx
-msgid "IXS Rewards (on quit)"
-msgstr "IXS Rewards (בהפסקה)"
+#: 
+#~ msgid "IXS Rewards (on quit)"
+#~ msgstr "IXS Rewards (בהפסקה)"
 
 #: src/pages/Farming/Vesting/ZeroBalanceVesting.tsx
 msgid "IXS in Telegram"
@@ -847,8 +923,8 @@ msgstr "לֹא פָּעִיל"
 msgid "Info"
 msgstr ""
 
-#: src/components/Vault/DepositRequestForm.tsx
 #: src/components/Vault/DepositSendInfo.tsx
+#: src/components/Vault/WithdrawRequestForm.tsx
 msgid "Info:"
 msgstr ""
 
@@ -1034,9 +1110,9 @@ msgstr "מחיר מינימלי"
 msgid "Minimum received"
 msgstr "מינימום שהתקבל"
 
-#: src/components/TransactionSettings/index.tsx
-msgid "Minutes"
-msgstr "דקות"
+#: 
+#~ msgid "Minutes"
+#~ msgstr "דקות"
 
 #: src/pages/Pool/NoPairs.tsx
 #: src/pages/Pool/v2.tsx
@@ -1114,8 +1190,12 @@ msgid "Oops! An unknown error occurred. Please refresh the page, or visit from a
 msgstr "אופס! אירעה שגיאה לא ידועה. אנא רענן את הדף, או בקר בדפדפן או מכשיר אחר."
 
 #: src/pages/Custodian/index.tsx
-msgid "Other Sec tokens"
+msgid "Other"
 msgstr ""
+
+#: 
+#~ msgid "Other Sec tokens"
+#~ msgstr ""
 
 #: src/components/Badge/RangeBadge.tsx
 msgid "Out of range"
@@ -1170,6 +1250,11 @@ msgstr ""
 msgid "Pending"
 msgstr ""
 
+#: src/components/AdminKycTable/FirstStepStatus.tsx
+#: src/components/AdminKycTable/SecondStepStatus.tsx
+msgid "Pending KYC"
+msgstr ""
+
 #: src/components/Vault/enum.ts
 msgid "Pending..."
 msgstr ""
@@ -1189,8 +1274,12 @@ msgid "Please choose broker dealer and custodian to start accreditation process"
 msgstr ""
 
 #: src/theme/components.tsx
-msgid "Please connect to the Kovan or Main Etherium network."
+msgid "Please connect to one of the following networks: Main Ethereum, Kovan, Polygon Mainnet, Polygon Mumbai."
 msgstr ""
+
+#: 
+#~ msgid "Please connect to the Kovan or Main Ethereum network."
+#~ msgstr ""
 
 #: src/components/WalletModal/ErrorSection.tsx
 msgid "Please connect to the appropriate Ethereum network."
@@ -1200,9 +1289,18 @@ msgstr "אנא התחבר לרשת Ethereum המתאימה."
 msgid "Please provide sender’s address in order to approve this transaction. Other adresses will be rejected."
 msgstr ""
 
+#: src/components/Vault/ChooseBrokerDealerPopup.tsx
+msgid "Please try again."
+msgstr ""
+
 #: src/components/Settings/ExpertModeModal.tsx
 msgid "Please type the word \"{confirmWord}\" to enable expert mode."
 msgstr "אנא הקלד את המילה \"{confirmWord}\" כדי להפעיל מצב מומחה."
+
+#: src/hooks/useSwitchChain.ts
+#: src/hooks/useSwitchChain.ts
+msgid "Polygon"
+msgstr ""
 
 #: src/components/Header/HeaderLinks.tsx
 #: src/components/NavigationTabs/index.tsx
@@ -1214,8 +1312,12 @@ msgid "Pool Found!"
 msgstr "בריכה נמצאה!"
 
 #: src/pages/Farming/Staking/StakeModal.tsx
-msgid "Pool limitation: 2 000 000"
+msgid "Pool limitation:"
 msgstr ""
+
+#: 
+#~ msgid "Pool limitation: 2 000 000"
+#~ msgstr ""
 
 #: src/components/earn/PoolCard.tsx
 msgid "Pool rate"
@@ -1232,24 +1334,38 @@ msgstr "מאוגד {0}"
 msgid "Price"
 msgstr "מחיר"
 
-#: src/components/swap/AdvancedSwapDetails.tsx
-#: src/components/swap/ConfirmSwapInfo.tsx
-msgid "Price Impact"
-msgstr "השפעת מחיר"
+#: 
+#: 
+#~ msgid "Price Impact"
+#~ msgstr "השפעת מחיר"
 
-#: src/pages/Swap/index.tsx
-msgid "Price Impact Too High"
-msgstr "השפעת מחיר גבוהה מדי"
+#: 
+#~ msgid "Price Impact Too High"
+#~ msgstr "השפעת מחיר גבוהה מדי"
 
-#: src/pages/Swap/index.tsx
-#: src/pages/Swap/index.tsx
-msgid "Price Impact is high. Swap Anyway"
-msgstr "מחיר ההשפעה הוא גבוה. החלף בכל מקרה"
+#: 
+#: 
+#~ msgid "Price Impact is high. Swap Anyway"
+#~ msgstr "מחיר ההשפעה הוא גבוה. החלף בכל מקרה"
 
 #: src/components/swap/AcceptChanges.tsx
 #: src/components/swap/SwapModalHeader.tsx
 msgid "Price Updated"
 msgstr "המחיר עודכן"
+
+#: src/components/swap/AdvancedSwapDetails.tsx
+#: src/components/swap/ConfirmSwapInfo.tsx
+msgid "Price impact"
+msgstr ""
+
+#: src/pages/Swap/index.tsx
+#: src/pages/Swap/index.tsx
+msgid "Price impact is high. Swap anyway"
+msgstr ""
+
+#: src/pages/Swap/index.tsx
+msgid "Price impact too high"
+msgstr ""
 
 #: src/pages/AddLiquidityV2/PricesAndPoolShare.tsx
 msgid "Prices and pool share"
@@ -1283,6 +1399,10 @@ msgstr ""
 msgid "Recent Transactions"
 msgstr "תנועות אחרונות"
 
+#: src/components/Vault/TransactionDetails.tsx
+msgid "Recipient address:"
+msgstr ""
+
 #: src/components/AdminKycTable/RejectModal.tsx
 #: src/components/AdminKycTable/SecondStepStatus.tsx
 #: src/components/AdminKycTable/SecondStepStatus.tsx
@@ -1295,9 +1415,9 @@ msgstr ""
 msgid "Rejected"
 msgstr ""
 
-#: src/state/vesting/hooks.ts
-msgid "Released {0} IXS"
-msgstr ""
+#: 
+#~ msgid "Released {0} IXS"
+#~ msgstr ""
 
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Remove"
@@ -1384,6 +1504,18 @@ msgstr ""
 msgid "Search or paste address"
 msgstr "חפש או הדבק כתובת"
 
+#: src/state/mint/hooks.ts
+msgid "Sec to sec pools forbidden"
+msgstr ""
+
+#: src/components/Vault/DepositRequestForm.tsx
+msgid ""
+"Second reason you need wSEC is to be able to trade SEC for other ERC-20 tokens on decentralized platforms like\n"
+"IXS. Because decentralized platforms running on Ethereum use smart contracts to facilitate trades directly\n"
+"between users, every user needs to have the same standardized format for every token they trade. This ensures\n"
+"tokens don’t get lost in translation."
+msgstr ""
+
 #: src/components/NavigationTabs/index.tsx
 msgid "Security Tokens"
 msgstr ""
@@ -1426,9 +1558,9 @@ msgstr ""
 msgid "Sender is invalid"
 msgstr ""
 
-#: src/components/Vault/DepositRequestForm.tsx
-msgid "Sender's wallet"
-msgstr ""
+#: 
+#~ msgid "Sender's wallet"
+#~ msgstr ""
 
 #: src/components/Vault/DepositSendInfo.tsx
 msgid "Sender’s wallet:"
@@ -1463,6 +1595,10 @@ msgstr "חלק מהנכסים אינם זמינים דרך ממשק זה מכי�
 #: src/components/ErrorBoundary/index.tsx
 msgid "Something went wrong"
 msgstr "משהו השתבש"
+
+#: src/state/deposit/hooks.ts
+msgid "Something went wrong. Could not deposit amount"
+msgstr ""
 
 #: src/pages/Farming/Staking/StakeModal.tsx
 #: src/pages/Farming/Staking/StakeModal.tsx
@@ -1654,6 +1790,11 @@ msgstr "לפחות)"
 msgid "To buy IXS click on swap below or find us on our Telegram channel to learn more."
 msgstr ""
 
+#: src/components/Vault/DepositRequestForm.tsx
+#: src/components/Vault/WithdrawRequestForm.tsx
+msgid "To my {0} wallet"
+msgstr ""
+
 #: src/components/AdminKycTable/index.tsx
 msgid "Token"
 msgstr ""
@@ -1684,9 +1825,9 @@ msgstr "סה\"כ הופקד"
 msgid "Total rewards"
 msgstr ""
 
-#: src/components/Settings/SettingsModal.tsx
-msgid "Transaction Settings"
-msgstr "הגדרות עסקה"
+#: 
+#~ msgid "Transaction Settings"
+#~ msgstr "הגדרות עסקה"
 
 #: src/components/TransactionConfirmationModal/index.tsx
 #: src/components/Vault/WithDrawSuccess.tsx
@@ -1696,6 +1837,10 @@ msgstr "העסקה הוגשה"
 #: src/components/TransactionSettings/index.tsx
 msgid "Transaction deadline"
 msgstr "מועד אחרון לעסקה"
+
+#: src/components/Settings/SettingsModal.tsx
+msgid "Transaction settings"
+msgstr ""
 
 #: src/components/WalletModal/PendingView.tsx
 msgid "Try Again"
@@ -1744,13 +1889,16 @@ msgid "Unstaking"
 msgstr ""
 
 #: src/pages/AddLiquidityV2/index.tsx
-#: src/pages/Swap/index.tsx
 msgid "Unsupported Asset"
 msgstr "נכס לא נתמך"
 
 #: src/components/swap/UnsupportedCurrencyFooter.tsx
 msgid "Unsupported Assets"
 msgstr "נכסים שאינם נתמכים"
+
+#: src/pages/Swap/index.tsx
+msgid "Unsupported asset"
+msgstr ""
 
 #: src/pages/Swap/index.tsx
 msgid "Unwrap"
@@ -1823,25 +1971,36 @@ msgstr "כשתוסיף נזילות, תקבל אסימונים לבריכה המ
 #~ msgid "When you claim without withdrawing your liquidity remains in the mining pool."
 #~ msgstr "כאשר אתה טוען מבלי למשוך את הנזילות שלך נשאר בבריכת הכרייה."
 
+#: src/components/Vault/DepositRequestForm.tsx
+msgid ""
+"When you make a deposit, we create a wrap token and transfer it to your balance. In the future, you have the\n"
+"ability to manage it - change, sell, stake, etc. 1 security token = 1 wrapped token (1 SEC = wSEC)"
+msgstr ""
+
 #: 
 #~ msgid "When you withdraw, your IXS is claimed and your liquidity is removed from the mining pool."
 #~ msgstr "כשאתה נסוג, תביעת ה- IXS שלך תובעת ונזילותך מוסרת ממאגר הכרייה."
+
+#: src/components/Vault/DepositRequestForm.tsx
+msgid ""
+"When you “wrap” SEC, you are actually not so much wrapping as trading through a smart contract for an equal\n"
+"token called wSEC. If you want to get back a simple SEC, you need to &quot;unfold&quot; it. AKA will exchange\n"
+"it for a simple SEC."
+msgstr ""
 
 #: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
 msgid "When your assets have been unstaked they will be transferred to your Metamask"
 msgstr ""
 
-#: src/components/Vault/WithdrawRequestForm.tsx
-msgid "Where to send?"
-msgstr ""
+#: 
+#~ msgid "Where to send?"
+#~ msgstr ""
 
-#: src/components/Vault/DepositSendInfo.tsx
 #: src/components/Vault/TransactionDetails.tsx
 msgid "Will be cancelled automatically in {deadlineIn} hours"
 msgstr ""
 
 #: src/components/Vault/BalanceRow.tsx
-#: src/components/Vault/WithdrawPopup.tsx
 #: src/components/Vault/enum.ts
 #: src/components/Vault/enum.ts
 msgid "Withdraw"
@@ -1855,6 +2014,10 @@ msgstr "לָסֶגֶת"
 #: 
 #~ msgid "Withdraw deposited liquidity"
 #~ msgstr "משיכת נזילות שהופקדה"
+
+#: src/components/Vault/WithdrawPopup.tsx
+msgid "Withdraw from Custodian"
+msgstr ""
 
 #: src/state/withdraw/hooks.ts
 msgid "Withdraw {amount} {currencySymbol}"
@@ -1915,6 +2078,10 @@ msgstr "עליך לתת לחוזים החכמים של IXS להשתמש ב- {0} 
 
 #: src/components/Vault/NoVault.tsx
 msgid "You need to pass accreditation and KYC to start trading with the {symbolText} token."
+msgstr ""
+
+#: src/components/Vault/DepositRequestForm.tsx
+msgid "You will get wrapped {0}:"
 msgstr ""
 
 #: src/pages/AddLiquidityV2/index.tsx
@@ -1993,6 +2160,10 @@ msgstr ""
 msgid "Your transactions will appear here..."
 msgstr "העסקאות שלך יופיעו כאן ..."
 
+#: src/components/Vault/WithdrawRequestForm.tsx
+msgid "Your wrapped {0} will be extracted from your Ethereum wallet and burnt automatically."
+msgstr ""
+
 #: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
 #: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
 msgid "available"
@@ -2026,6 +2197,14 @@ msgstr "יש אימוג'י גרביים"
 msgid "https:// or ipfs:// or ENS name"
 msgstr "https: // או ipfs: // או שם ENS"
 
+#: src/components/TransactionSettings/index.tsx
+msgid "minutes"
+msgstr ""
+
+#: src/components/Vault/ExistingVault.tsx
+msgid "on {0} custodian"
+msgstr ""
+
 #: src/components/Vault/enum.ts
 #: src/components/Vault/enum.ts
 msgid "text2"
@@ -2043,6 +2222,7 @@ msgstr "דרך {0}"
 #: src/components/AdminLogin/index.tsx
 #: src/components/Header/IXSBalanceModal.tsx
 #: src/components/Toggle/index.tsx
+#: src/components/Vault/ChooseBrokerDealerPopup.tsx
 #: src/pages/Farming/Staking/StakingTableTabs.tsx
 #: src/pages/Farming/Staking/StakingTierCard.tsx
 #: src/pages/Farming/Staking/StakingTierCard.tsx
@@ -2084,17 +2264,21 @@ msgstr "{0} בהמתנה"
 msgid "{0} lock up period"
 msgstr ""
 
-#: src/components/Vault/TransactionDetails.tsx
-msgid "{0} sent to:"
-msgstr ""
+#: 
+#~ msgid "{0} sent to:"
+#~ msgstr ""
 
 #: src/components/SearchModal/ImportList.tsx
 #: src/components/SearchModal/ManageLists.tsx
 msgid "{0} tokens"
 msgstr "{0} אסימונים"
 
-#: src/components/Vault/BalanceRow.tsx
-msgid "{0} {1}"
+#: 
+#~ msgid "{0} {1}"
+#~ msgstr ""
+
+#: src/components/Vault/WithdrawRequestForm.tsx
+msgid "{0} {1} tokens from your wallet {2} will be burned during withdrawal"
 msgstr ""
 
 #: src/components/SearchModal/CurrencyList.tsx
@@ -2113,6 +2297,10 @@ msgstr ""
 
 #: src/components/AdminKycTable/Pagination.tsx
 msgid "{page} of {totalPages}"
+msgstr ""
+
+#: src/components/Vault/DepositRequestForm.tsx
+msgid "{text}"
 msgstr ""
 
 #: src/components/InputStepCounter/InputStepCounter.tsx

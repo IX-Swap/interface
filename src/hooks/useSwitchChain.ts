@@ -14,8 +14,8 @@ export const CHAIN_SWITCH_MAP: { [key in SupportedChainId]: SupportedChainId } =
 export const CHAIN_SWITCH_STRINGS: { [key in SupportedChainId]: string } = {
   [SupportedChainId.MAINNET]: t`Polygon`,
   [SupportedChainId.KOVAN]: t`Polygon`,
-  [SupportedChainId.MATIC]: t`Etherium`,
-  [SupportedChainId.MUMBAI]: t`Etherium`,
+  [SupportedChainId.MATIC]: t`Ethereum`,
+  [SupportedChainId.MUMBAI]: t`Ethereum`,
 }
 
 export default function useSwitchChain(): {
