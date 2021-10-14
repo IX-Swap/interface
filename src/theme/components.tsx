@@ -496,7 +496,7 @@ export const ConnectToAppropriateNetwork = () => (
   <ColumnCenter style={{ height: '100vh', justifyContent: 'center' }}>
     <TYPE.main0>
       <Trans>
-        Please connect to one of the following networks: Main Etherium, Kovan, Polygon Mainnet, Polygon Mumbai.
+        Please connect to one of the following networks: Main Ethereum, Kovan, Polygon Mainnet, Polygon Mumbai.
       </Trans>
     </TYPE.main0>
   </ColumnCenter>
