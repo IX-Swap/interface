@@ -24,6 +24,7 @@ import { maxAmountSpend } from '../../utils/maxAmountSpend'
 import AppBody from '../AppBody'
 import { BrokerDealerForm } from './BrokerDealerForm'
 import { SwapButtons } from './SwapButtons'
+import { useWatchApprovalSubmitted } from './useWatchApprovalSubmitted'
 
 export default function Swap({ history }: RouteComponentProps) {
   const { chainId } = useActiveWeb3React()
@@ -59,7 +60,7 @@ export default function Swap({ history }: RouteComponentProps) {
   const maxInputAmount: CurrencyAmount<Currency> | undefined = maxAmountSpend(currencyBalances[Field.INPUT])
 
   useSwapConfirmDataFromURL(trade, allowedSlippage, history)
-
+  useWatchApprovalSubmitted({ trade, allowedSlippage })
   const handleHideConfirm = useCallback(() => {
     setSwapState({ showConfirm: false, tradeToConfirm, attemptingTxn, swapErrorMessage, txHash })
   }, [attemptingTxn, swapErrorMessage, tradeToConfirm, txHash, setSwapState])

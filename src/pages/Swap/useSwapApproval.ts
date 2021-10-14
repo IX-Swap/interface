@@ -1,6 +1,6 @@
-import { useCallback, useEffect } from 'react'
-import { useDerivedSwapInfo, useSubmitApproval, useSwapState } from 'state/swap/hooks'
-import { ApprovalState, useApproveCallbackFromTrade } from '../../hooks/useApproveCallback'
+import { useCallback } from 'react'
+import { useDerivedSwapInfo } from 'state/swap/hooks'
+import { useApproveCallbackFromTrade } from '../../hooks/useApproveCallback'
 import { useERC20PermitFromTrade, UseERC20PermitState } from '../../hooks/useERC20Permit'
 
 export function useSwapApproval() {
@@ -8,18 +8,7 @@ export function useSwapApproval() {
 
   const { state: signatureState, gatherPermitSignature } = useERC20PermitFromTrade(trade, allowedSlippage)
 
-  // check if user has gone through approval process, used to show two step buttons, reset on token change
-  const { approvalSubmitted } = useSwapState()
-
-  const setApprovalSubmitted = useSubmitApproval()
-
   const [approvalState, approveCallback] = useApproveCallbackFromTrade(trade, allowedSlippage)
-
-  useEffect(() => {
-    if (approvalState === ApprovalState.PENDING) {
-      setApprovalSubmitted(true)
-    }
-  }, [approvalState, approvalSubmitted, setApprovalSubmitted])
 
   const handleApprove = useCallback(async () => {
     if (signatureState === UseERC20PermitState.NOT_SIGNED && gatherPermitSignature) {
