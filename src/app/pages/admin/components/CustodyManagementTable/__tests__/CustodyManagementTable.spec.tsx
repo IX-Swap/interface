@@ -4,7 +4,10 @@ import { CustodyManagementTable } from 'app/pages/admin/components/CustodyManage
 import { TableView } from 'components/TableWithPagination/TableView'
 import { custodyAccounts } from 'config/apiURL'
 import { custodyAccountsQueryKeys } from 'config/queryKeys'
-import { columns } from 'app/pages/admin/components/CustodyManagementTable/columns'
+import {
+  columns,
+  renderWalletAddress
+} from 'app/pages/admin/components/CustodyManagementTable/columns'
 
 jest.mock('components/TableWithPagination/TableView', () => ({
   TableView: jest.fn(() => null)
@@ -40,5 +43,9 @@ describe('CustodyManagementTable', () => {
       }),
       {}
     )
+  })
+
+  it('returns "-" when address is empty string', () => {
+    expect(renderWalletAddress('')).toEqual('-')
   })
 })

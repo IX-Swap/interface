@@ -29,3 +29,15 @@ export const custodyManagementItems = [
     accountID: '323456789014'
   }
 ]
+
+export const fakeCustodyAccountsListItem = {
+  _id: '1',
+  status: 'Approved',
+  name: 'Gleb',
+  userId: '334344',
+  walletAddress: '34434',
+  accountId: 32442,
+  active: true,
+  assignedAt: new Date(),
+  type: 'hex'
+}
