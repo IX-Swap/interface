@@ -1,18 +1,21 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { Trans } from '@lingui/macro'
 import { IconWrapper } from 'components/AccountDetails/styleds'
 import Column from 'components/Column'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import { QRCodeWrap } from 'components/QRCodeWrap'
-import Row, { RowBetween, RowCenter } from 'components/Row'
+import Row, { RowCenter } from 'components/Row'
 import { useCurrency } from 'hooks/Tokens'
 import useCopyClipboard from 'hooks/useCopyClipboard'
+import { AddressInput } from 'components/AddressInputPanel/AddressInput'
 import React from 'react'
 import { Copy } from 'react-feather'
 import { useDepositState } from 'state/deposit/hooks'
 import { useEventState } from 'state/eventLog/hooks'
 import styled from 'styled-components'
 import { TYPE } from 'theme'
-import { shortenAddress } from '../../utils'
+import { shortAddress } from '../../utils'
+import useENS from 'hooks/useENS'
 
 const StyledCopy = styled(Copy)`
   color: ${({ theme }) => theme.text1};
@@ -24,6 +27,8 @@ interface Props {
 }
 export const DepositSendInfo = ({ onClose }: Props) => {
   const { amount, sender, currencyId, loadingDeposit, depositError } = useDepositState()
+  const { address, loading } = useENS(sender)
+  const error = Boolean(sender.length > 0 && !loading && !address)
   const currency = useCurrency(currencyId)
   const [isCopied, setCopied] = useCopyClipboard()
   const { activeEvent } = useEventState()
@@ -31,7 +36,7 @@ export const DepositSendInfo = ({ onClose }: Props) => {
   return (
     <div style={{ position: 'relative' }}>
       <Column style={{ paddingBottom: '36px' }}>
-        <Row style={{ marginTop: '20px' }}>
+        <Row style={{ marginTop: '20px', padding: '0px' }}>
           <TYPE.description3>
             <b>
               <Trans>Info:</Trans>
@@ -40,51 +45,53 @@ export const DepositSendInfo = ({ onClose }: Props) => {
             <Trans>Copy this address and send tokens to this wallet.</Trans>
           </TYPE.description3>
         </Row>
-        <Row style={{ marginTop: '16px', textTransform: 'uppercase' }}>
-          <TYPE.body1>
-            <Trans>Send {currency?.symbol} here</Trans>
+
+        <Column style={{ marginTop: '33px' }}>
+          <TYPE.body1 marginBottom="11px">
+            <Trans>{`${amount || ''} ${(currency as any)?.tokenInfo?.symbol} from`}</Trans>
           </TYPE.body1>
-        </Row>
+          <AddressInput
+            {...{
+              id: 'sender-input',
+              value: address ? shortAddress(address) : '',
+              error,
+              onChange: () => {},
+              disabled: true,
+              rightItem: (
+                <div onClick={() => setCopied(address ?? '')}>
+                  {isCopied ? (
+                    <Trans>Copied</Trans>
+                  ) : (
+                    <IconWrapper size={18}>
+                      <StyledCopy />
+                    </IconWrapper>
+                  )}
+                </div>
+              ),
+            }}
+          />
+        </Column>
+
+        <Column style={{ marginTop: '16px', marginBottom: '69px' }}>
+          <TYPE.body1 marginBottom="11px">
+            <Trans>To</Trans>
+          </TYPE.body1>
+          <AddressInput
+            {...{
+              id: 'receiver-input',
+              value: activeEvent?.depositAddress ? shortAddress(activeEvent.depositAddress) : '',
+              error,
+              onChange: () => {},
+              disabled: true,
+            }}
+          />
+        </Column>
+
         {activeEvent?.depositAddress && (
-          <RowBetween
-            style={{ marginTop: '4px', flexWrap: 'wrap' }}
-            onClick={() => setCopied(activeEvent?.depositAddress ?? '')}
-          >
-            <TYPE.body2>{shortenAddress(activeEvent?.depositAddress)}</TYPE.body2>
-            {isCopied ? (
-              <Trans>Copied</Trans>
-            ) : (
-              <IconWrapper size={18}>
-                <StyledCopy />
-              </IconWrapper>
-            )}
-          </RowBetween>
-        )}
-        {activeEvent?.depositAddress && (
-          <RowCenter style={{ marginTop: '25px' }}>
+          <RowCenter style={{ marginBottom: '22px' }}>
             <QRCodeWrap value={activeEvent?.depositAddress}></QRCodeWrap>
           </RowCenter>
         )}
-        <Row style={{ marginTop: '16px', textTransform: 'uppercase' }}>
-          <TYPE.body1>
-            <Trans>Need to send</Trans>
-          </TYPE.body1>
-        </Row>
-        <Row style={{ marginTop: '16px', flexWrap: 'wrap' }}>
-          <TYPE.buttonMuted>
-            <Trans>Amount:</Trans>&nbsp;
-          </TYPE.buttonMuted>
-          <TYPE.body3>
-            {amount}&nbsp;
-            {currency?.symbol}
-          </TYPE.body3>
-        </Row>
-        <Row style={{ marginTop: '16px', flexWrap: 'wrap' }}>
-          <TYPE.buttonMuted>
-            <Trans>Sender’s wallet:</Trans>&nbsp;
-          </TYPE.buttonMuted>
-          <TYPE.body3>{shortenAddress(sender)}</TYPE.body3>
-        </Row>
         {loadingDeposit && (
           <RowCenter style={{ marginTop: '18px' }}>
             <LoaderThin size={32} />

@@ -47,7 +47,7 @@ export const DepositPopup = ({ currency }: Props) => {
       <ModalBlurWrapper data-testid="depositPopup">
         <ModalContentWrapper>
           <ModalPadding>
-            <RowBetween padding="0px 16px">
+            <RowBetween>
               {showWrapInfo ? (
                 <Row align="center">
                   <ButtonText onClick={() => setShowWrapInfo(false)}>
@@ -61,7 +61,11 @@ export const DepositPopup = ({ currency }: Props) => {
                 </Row>
               ) : (
                 <TYPE.title5>
-                  <Trans>{`Deposit ${tokenInfo?.symbol || ''} from ${tokenInfo?.network || ''}`}</Trans>
+                  <Trans>{`Deposit ${tokenInfo?.symbol || ''} ${
+                    modalView === DepositModalView.SEND_INFO
+                      ? `to 1st Digital Custodian`
+                      : `from ${tokenInfo?.network || ''}`
+                  }`}</Trans>
                 </TYPE.title5>
               )}
               <CloseIcon data-testid="cross" onClick={onClose} />

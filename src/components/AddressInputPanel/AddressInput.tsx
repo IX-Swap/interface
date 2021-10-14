@@ -1,4 +1,5 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, ReactNode } from 'react'
+import { Box } from 'rebass'
 import { ContainerRow, Input, InputContainer, InputPanel } from './styleds'
 
 interface Props {
@@ -9,9 +10,10 @@ interface Props {
   onChange: (arg: string) => void
   placeholder?: string
   disabled?: boolean
+  rightItem?: ReactNode
 }
 
-export const AddressInput = ({ id, value, error, onChange, placeholder, disabled }: Props) => {
+export const AddressInput = ({ id, value, error, onChange, placeholder, disabled, rightItem }: Props) => {
   const handleInput = useCallback(
     (event) => {
       const input = event.target.value
@@ -38,6 +40,7 @@ export const AddressInput = ({ id, value, error, onChange, placeholder, disabled
             value={value}
             disabled={disabled}
           />
+          {rightItem && <Box marginLeft="auto">{rightItem}</Box>}
         </InputContainer>
       </ContainerRow>
     </InputPanel>
