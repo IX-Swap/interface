@@ -35,6 +35,7 @@ export const ViewListedTokens = ({
       <VSpacer size={'small'} />
 
       <Button
+        data-testid={'button'}
         variant={'contained'}
         color={'primary'}
         style={{ width: 172 }}
