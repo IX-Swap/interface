@@ -1,6 +1,6 @@
 import { Currency } from '@ixswap1/sdk-core'
 import styled from 'styled-components'
-import { Trans, t } from '@lingui/macro'
+import { Trans } from '@lingui/macro'
 import { ArrowDown } from 'react-feather'
 import { ButtonIXSWide, ButtonGradient, ButtonText } from 'components/Button'
 import Column from 'components/Column'
@@ -13,6 +13,7 @@ import {
   useDepositCallback,
   useDepositState,
   useDerivedDepositInfo,
+  useShowAboutWrappingCallback,
 } from 'state/deposit/hooks'
 import { shortAddress } from 'utils'
 import { BlueGreyCard } from 'components/Card'
@@ -38,12 +39,11 @@ export const ArrowWrapper = styled.div`
 `
 interface Props {
   currency?: Currency
-  showWrapInfo: boolean
-  setShowWrapInfo: (newValue: boolean) => void
 }
 
-export const DepositRequestForm = ({ currency, showWrapInfo, setShowWrapInfo }: Props) => {
+export const DepositRequestForm = ({ currency }: Props) => {
   const theme = useTheme()
+  const showAboutWrapping = useShowAboutWrappingCallback()
   const { account } = useActiveWeb3React()
   const { amount, sender, currencyId: cid } = useDepositState()
   const { inputError, parsedAmount } = useDerivedDepositInfo()
@@ -75,146 +75,96 @@ export const DepositRequestForm = ({ currency, showWrapInfo, setShowWrapInfo }: 
     onCurrencySet(id)
   }, [currency, onCurrencySet])
 
-  console.log(address)
-
   return (
     <div style={{ position: 'relative' }}>
-      {!showWrapInfo ? (
-        <>
-          <Column style={{ gap: '25px', marginTop: '16px' }}>
-            <BlueGreyCard>
-              <Column style={{ gap: '11px' }}>
-                <Row>
-                  <TYPE.body1>
-                    <Trans>I want to deposit:</Trans>
-                  </TYPE.body1>
-                </Row>
-                <AmountInput
-                  currency={currency}
-                  value={amount ?? ''}
-                  onUserInput={onTypeAmount}
-                  amount={parsedAmount}
-                />
-              </Column>
-              <Column style={{ marginTop: '20px', gap: '11px' }}>
-                <Row>
-                  <TYPE.body1>
-                    <Trans>{`From my ${tokenInfo?.network || ''} wallet`}</Trans>
-                  </TYPE.body1>
-                </Row>
-                <AddressInput
-                  {...{ id: 'sender-input', value: sender ?? '', error, onChange: onTypeSender }}
-                  placeholder={`Paste your ${tokenInfo?.network || ''} wallet`}
-                />
-              </Column>
-              <Column style={{ margin: '12px 0px', padding: '0 22px' }}>
-                <Row>
-                  <TYPE.description2 color={`${theme.text2}80`}>
-                    <Trans>
-                      Please provide sender’s address in order to approve this transaction. Other adresses will be
-                      rejected.
-                    </Trans>
-                  </TYPE.description2>
-                </Row>
-              </Column>
-            </BlueGreyCard>
+      <Column style={{ gap: '25px', marginTop: '16px' }}>
+        <BlueGreyCard>
+          <Column style={{ gap: '11px' }}>
+            <Row>
+              <TYPE.body1>
+                <Trans>I want to deposit:</Trans>
+              </TYPE.body1>
+            </Row>
+            <AmountInput currency={currency} value={amount ?? ''} onUserInput={onTypeAmount} amount={parsedAmount} />
           </Column>
-          <ArrowWrapper>
-            <ArrowDown width="22px" height="22px" color={`${theme.text2}80`} />
-          </ArrowWrapper>
-          <Column style={{ gap: '25px', marginTop: '16px' }}>
-            <BlueGreyCard>
-              <Column style={{ gap: '11px' }}>
-                <Row>
-                  <TYPE.body1>
-                    <Trans>{`You will get wrapped ${tokenInfo?.symbol}:`}</Trans>
-                  </TYPE.body1>
-                </Row>
-                <AmountInput
-                  currency={currency}
-                  value={amount ? `${amount} ${tokenInfo?.symbol}` : ''}
-                  onUserInput={onTypeAmount}
-                  amount={parsedAmount}
-                  rightItem={
-                    <>
-                      <HideSmall>
-                        <ButtonGradient style={{ width: '146px' }} onClick={() => setShowWrapInfo(true)}>
-                          <Trans>About Wrapping</Trans>
-                        </ButtonGradient>
-                      </HideSmall>
-                      <SmallOnly>
-                        <ButtonText onClick={() => setShowWrapInfo(true)}>
-                          <img src={info} alt="info icon" width="20px" height="20px" />
-                        </ButtonText>
-                      </SmallOnly>
-                    </>
-                  }
-                />
-              </Column>
-              <Column style={{ marginTop: '20px', marginBottom: '16px', gap: '11px' }}>
-                <Row>
-                  <TYPE.body1>
-                    <Trans>{`To my ${tokenInfo?.network || ''} wallet`}</Trans>
-                  </TYPE.body1>
-                </Row>
-                <AddressInput
-                  {...{
-                    id: 'sender-input',
-                    value: address ? shortAddress(address) : '',
-                    error,
-                    onChange: onTypeSender,
-                    disabled: true,
-                    placeholder: `Paste your ${tokenInfo?.network || ''} wallet`,
-                  }}
-                />
-              </Column>
-            </BlueGreyCard>
+          <Column style={{ marginTop: '20px', gap: '11px' }}>
+            <Row>
+              <TYPE.body1>
+                <Trans>{`From my ${tokenInfo?.network || ''} wallet`}</Trans>
+              </TYPE.body1>
+            </Row>
+            <AddressInput
+              {...{ id: 'sender-input', value: sender ?? '', error, onChange: onTypeSender }}
+              placeholder={`Paste your ${tokenInfo?.network || ''} wallet`}
+            />
           </Column>
-          <Row style={{ marginTop: '43px', marginBottom: '8px' }}>
-            <ButtonIXSWide style={{ textTransform: 'unset' }} disabled={!!inputError} onClick={onClick}>
-              {inputError ?? <Trans>Create deposit request</Trans>}
-            </ButtonIXSWide>
-          </Row>
-        </>
-      ) : (
-        <Column style={{ marginTop: '18px' }}>
-          <WrapInfo />
-        </Column>
-      )}
+          <Column style={{ margin: '12px 0px', padding: '0 22px' }}>
+            <Row>
+              <TYPE.description2 color={`${theme.text2}80`}>
+                <Trans>
+                  Please provide sender’s address in order to approve this transaction. Other adresses will be rejected.
+                </Trans>
+              </TYPE.description2>
+            </Row>
+          </Column>
+        </BlueGreyCard>
+      </Column>
+      <ArrowWrapper>
+        <ArrowDown width="22px" height="22px" color={`${theme.text2}80`} />
+      </ArrowWrapper>
+      <Column style={{ gap: '25px', marginTop: '16px' }}>
+        <BlueGreyCard>
+          <Column style={{ gap: '11px' }}>
+            <Row>
+              <TYPE.body1>
+                <Trans>{`You will get wrapped ${tokenInfo?.symbol}:`}</Trans>
+              </TYPE.body1>
+            </Row>
+            <AmountInput
+              currency={currency}
+              value={amount ? `${amount} ${tokenInfo?.symbol}` : ''}
+              onUserInput={onTypeAmount}
+              amount={parsedAmount}
+              rightItem={
+                <>
+                  <HideSmall>
+                    <ButtonGradient style={{ width: '146px' }} onClick={showAboutWrapping}>
+                      <Trans>About Wrapping</Trans>
+                    </ButtonGradient>
+                  </HideSmall>
+                  <SmallOnly>
+                    <ButtonText onClick={showAboutWrapping}>
+                      <img src={info} alt="info icon" width="20px" height="20px" />
+                    </ButtonText>
+                  </SmallOnly>
+                </>
+              }
+            />
+          </Column>
+          <Column style={{ marginTop: '20px', marginBottom: '16px', gap: '11px' }}>
+            <Row>
+              <TYPE.body1>
+                <Trans>{`To my ${tokenInfo?.network || ''} wallet`}</Trans>
+              </TYPE.body1>
+            </Row>
+            <AddressInput
+              {...{
+                id: 'sender-input',
+                value: address ? shortAddress(address) : '',
+                error,
+                onChange: onTypeSender,
+                disabled: true,
+                placeholder: `Paste your ${tokenInfo?.network || ''} wallet`,
+              }}
+            />
+          </Column>
+        </BlueGreyCard>
+      </Column>
+      <Row style={{ marginTop: '43px', marginBottom: '8px' }}>
+        <ButtonIXSWide style={{ textTransform: 'unset' }} disabled={!!inputError} onClick={onClick}>
+          {inputError ?? <Trans>Create deposit request</Trans>}
+        </ButtonIXSWide>
+      </Row>
     </div>
-  )
-}
-
-const WrapInfo = () => {
-  const info = [
-    t`At the moment, security tokens are kept by the custodian and can only be regulated by him. This is done to
-  prevent theft and fraudulent transactions. Your security tokens (further as a SEC) cannot be controlled or
-  moved, but you have the rights to own them. Relatively speaking, you can dispose of your rights to your own
-  security tokens. First reason to do this, we tokenize your token ownership and call it wrapped tokens (further
-  as a wSEC).`,
-    t`
-  Second reason you need wSEC is to be able to trade SEC for other ERC-20 tokens on decentralized platforms like
-  IXS. Because decentralized platforms running on Ethereum use smart contracts to facilitate trades directly
-  between users, every user needs to have the same standardized format for every token they trade. This ensures
-  tokens don’t get lost in translation.
-  `,
-    t`
-  When you “wrap” SEC, you are actually not so much wrapping as trading through a smart contract for an equal
-  token called wSEC. If you want to get back a simple SEC, you need to &quot;unfold&quot; it. AKA will exchange
-  it for a simple SEC.
-  `,
-    t`When you make a deposit, we create a wrap token and transfer it to your balance. In the future, you have the
-  ability to manage it - change, sell, stake, etc. 1 security token = 1 wrapped token (1 SEC = wSEC)
-  `,
-  ]
-
-  return (
-    <Column>
-      {info.map((text, index) => (
-        <TYPE.title11 key={`info-${index}`} margin="16px 8px">
-          <Trans>{text}</Trans>
-        </TYPE.title11>
-      ))}
-    </Column>
   )
 }
