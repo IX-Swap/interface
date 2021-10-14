@@ -27,10 +27,18 @@ export const Actions = ({
 
   return (
     <Box display={'flex'} justifyContent={'space-around'}>
-      <IconButton size='small' onClick={handleLaunchButtonClick}>
+      <IconButton
+        data-testid={'launch'}
+        size='small'
+        onClick={handleLaunchButtonClick}
+      >
         <LaunchIcon color='disabled' />
       </IconButton>
-      <IconButton size='small' onClick={handleLinkOffButtonClick}>
+      <IconButton
+        data-testid={'link-off'}
+        size='small'
+        onClick={handleLinkOffButtonClick}
+      >
         <LinkOffIcon color='disabled' />
       </IconButton>
     </Box>
