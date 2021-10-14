@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 import { render, cleanup } from 'test-utils'
 import { CustodyManagement } from 'app/pages/admin/pages/CustodyManagement'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
@@ -8,6 +8,7 @@ import { CustodyManagementFilters } from 'app/pages/admin/components/CustodyMana
 import { CustodyManagementTable } from 'app/pages/admin/components/CustodyManagementTable/CustodyManagementTable'
 import { ListedTokensDialog } from 'app/pages/admin/components/ListedTokensDialog/ListedTokensDialog'
 import { ViewListedTokens } from 'app/pages/admin/components/ViewListedTokens/ViewListedTokens'
+import * as useAppBreakpoints from 'hooks/useAppBreakpoints'
 
 jest.mock('app/components/PageHeader/PageHeader', () => ({
   PageHeader: jest.fn(() => null)
@@ -119,7 +120,12 @@ describe('CustodyManagement', () => {
     )
   })
 
-  it('renders view listed tokens component', () => {
+  it('renders view listed tokens component when custodianValue is hex', () => {
+    const custodianValue = 'hex'
+    jest
+      .spyOn(React, 'useState')
+      .mockImplementation(() => [custodianValue, jest.fn()])
+
     render(<CustodyManagement />)
     expect(ViewListedTokens).toHaveBeenCalledTimes(1)
     expect(ViewListedTokens).toHaveBeenCalledWith(
@@ -128,5 +134,38 @@ describe('CustodyManagement', () => {
       }),
       {}
     )
+  })
+
+  it('renders view listed tokens component when custodianValue is inestax', async () => {
+    const custodianValue = 'investax'
+    jest
+      .spyOn(React, 'useState')
+      .mockImplementation(() => [custodianValue, jest.fn()])
+
+    render(<CustodyManagement />)
+    expect(ViewListedTokens).toHaveBeenCalledWith(
+      expect.objectContaining({
+        radioValue: 'investax'
+      }),
+      {}
+    )
+  })
+
+  it('renders view listed tokens wrapper component with correct styles when isMobile is true', async () => {
+    jest.spyOn(useAppBreakpoints, 'useAppBreakpoints').mockReturnValueOnce({
+      isMobile: true
+    } as any)
+    const { getByTestId } = render(<CustodyManagement />)
+    const listedTokenWrapper = getByTestId('listed-tokens-wrapper')
+    expect(listedTokenWrapper).toHaveAttribute('style', 'margin-top: 30px;')
+  })
+
+  it('renders view listed tokens wrapper component with correct styles when isMobile is false', async () => {
+    jest.spyOn(useAppBreakpoints, 'useAppBreakpoints').mockReturnValueOnce({
+      isMobile: false
+    } as any)
+    const { getByTestId } = render(<CustodyManagement />)
+    const listedTokenWrapper = getByTestId('listed-tokens-wrapper')
+    expect(listedTokenWrapper).toHaveAttribute('style', 'margin-top: 0px;')
   })
 })

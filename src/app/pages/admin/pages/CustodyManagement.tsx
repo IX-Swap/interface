@@ -31,6 +31,7 @@ export const CustodyManagement = () => {
           <AccountsUnderCustody />
         </Grid>
         <Grid
+          data-testid={'listed-tokens-wrapper'}
           item
           container
           xs={12}

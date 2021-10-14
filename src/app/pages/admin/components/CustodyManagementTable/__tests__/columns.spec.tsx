@@ -1,6 +1,9 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { renderWalletAddress } from 'app/pages/admin/components/CustodyManagementTable/columns'
+import {
+  renderWalletAddress,
+  renderCustodianName
+} from 'app/pages/admin/components/CustodyManagementTable/columns'
 import { custodyManagementItems } from '__fixtures__/custodyAccount'
 import { WalletAddressField } from 'app/pages/admin/components/CustodyManagementTable/WalletAddressField'
 
@@ -34,5 +37,13 @@ describe('renderWalletAddress', () => {
 
   it('returns "-" when address is null', () => {
     expect(renderWalletAddress(null as any)).toEqual('-')
+  })
+
+  it('returns "InvestaX" when type is "INVESTAX"', () => {
+    expect(renderCustodianName('INVESTAX')).toEqual('InvestaX')
+  })
+
+  it('returns "HEX" when type is "HEX"', () => {
+    expect(renderCustodianName('HEX')).toEqual('HEX')
   })
 })
