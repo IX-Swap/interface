@@ -7,14 +7,14 @@ import styled from 'styled-components'
 import LogoDark from '../../assets/svg/logo-white.svg'
 import { useActiveWeb3React } from '../../hooks/web3'
 import { useETHBalances } from '../../state/wallet/hooks'
-import { VioletCard } from '../Card'
 import { MobileMenu } from '../Mobile-Menu'
 import { RowFixed } from '../Row'
 import Web3Status from '../Web3Status'
 import { HeaderLinks } from './HeaderLinks'
 import { IXSBalance } from './IXSBalance'
+import { NetworkCard } from './NetworkCard'
 
-const HeaderFrame = styled.div<{ showBackground: boolean; lightBackground: boolean; withNetwork: boolean }>`
+const HeaderFrame = styled.div<{ showBackground: boolean; lightBackground: boolean }>`
   display: grid;
   grid-template-columns: 0.45fr 1fr 0.45fr;
   align-items: center;
@@ -109,18 +109,6 @@ const AccountElement = styled.div<{ active: boolean }>`
   }
 `
 
-const NetworkCard = styled(VioletCard)`
-  border-radius: 12px;
-  padding: 2px 3px;
-  background: transparent;
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    margin: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    flex-shrink: 1;
-  `};
-`
-
 const BalanceText = styled(Text)`
   color: ${({ theme }) => theme.text2};
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
@@ -173,15 +161,6 @@ export const StyledMenuButton = styled.button`
   }
 `
 
-const NETWORK_LABELS: { [chainId: number]: string } = {
-  [4]: 'Rinkeby',
-  [3]: 'Ropsten',
-  [5]: 'Görli',
-  [42]: 'Kovan',
-  [80001]: 'Polygon Mumbai',
-  [137]: 'Polygon Mainnet',
-}
-
 const HeaderWrapper = styled.div`
   ${({ theme }) => theme.flexRowNoWrap}
   width: 100%;
@@ -191,7 +170,7 @@ const HeaderWrapper = styled.div`
   z-index: 2;
 `
 export default function Header() {
-  const { account, chainId } = useActiveWeb3React()
+  const { account } = useActiveWeb3React()
   const { hasLightBackground } = useLightBackground()
   const userEthBalance = useETHBalances(account ? [account] : [])?.[account ?? '']
 
@@ -199,11 +178,7 @@ export default function Header() {
   return (
     <>
       <HeaderWrapper>
-        <HeaderFrame
-          showBackground={scrollY > 45}
-          lightBackground={hasLightBackground}
-          withNetwork={Boolean(chainId && NETWORK_LABELS[chainId])}
-        >
+        <HeaderFrame showBackground={scrollY > 45} lightBackground={hasLightBackground}>
           <HeaderRow>
             <Title href=".">
               <IXSIcon>
@@ -217,9 +192,7 @@ export default function Header() {
               <IXSBalance />
             </HeaderElement>
             <HeaderElement>
-              {chainId && NETWORK_LABELS[chainId] && (
-                <NetworkCard title={NETWORK_LABELS[chainId]}>{NETWORK_LABELS[chainId]}</NetworkCard>
-              )}
+              <NetworkCard />
               <AccountElement active={!!account} style={{ pointerEvents: 'auto' }}>
                 {account && userEthBalance ? (
                   <BalanceText style={{ flexShrink: 0 }} pl="0.75rem" pr="0.5rem" fontWeight={600}>

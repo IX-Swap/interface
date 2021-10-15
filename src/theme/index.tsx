@@ -241,6 +241,9 @@ export const TYPE = {
   body5(props: TextProps) {
     return <TextWrapper fontWeight={600} fontSize={20} lineHeight={'33px'} color={'text2'} {...props} />
   },
+  body6(props: TextProps) {
+    return <TextWrapper fontWeight={400} fontSize={17} color={'text1'} lineHeight={'40px'} {...props} />
+  },
   popOver(props: TextProps) {
     return <TextWrapper fontWeight={400} fontSize={14} color={'text2'} lineHeight={'17px'} {...props} />
   },

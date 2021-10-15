@@ -132,6 +132,7 @@ export default function RedesignedWideModal({
   isright = false,
   scrollable = false,
   tip,
+  topContent,
 }: ModalProps) {
   const fadeTransition = useTransition(isOpen, null, {
     config: { duration: 200 },
@@ -166,7 +167,9 @@ export default function RedesignedWideModal({
               isright={isright}
               scrollable={scrollable}
               tip={tip}
+              flexColumn={topContent ? true : false}
             >
+              {topContent ? <div style={{ maxWidth: '622px', whiteSpace: 'nowrap' }}>{topContent}</div> : null}
               <StyledDialogContent
                 {...(isMobile
                   ? {

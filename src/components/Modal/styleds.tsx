@@ -8,6 +8,7 @@ export const StyledDialogOverlay = styled(AnimatedDialogOverlay)<{
   isright?: boolean
   scrollable?: boolean
   tip?: string
+  flexColumn?: boolean
 }>`
   &[data-reach-dialog-overlay] {
     z-index: 2;
@@ -23,6 +24,7 @@ export const StyledDialogOverlay = styled(AnimatedDialogOverlay)<{
     display: flex;
     align-items: ${({ isright }) => (isright ? 'flex-start' : 'center')};
     justify-content: ${({ isright }) => (isright ? 'flex-end' : 'center')};
+    flex-direction: ${({ flexColumn }) => (flexColumn ? 'column' : 'row')};
 
     background-color: ${({ theme }) => theme.modalBG};
     ${({ tip }) =>
