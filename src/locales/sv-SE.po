@@ -801,9 +801,9 @@ msgstr ""
 msgid "Go to Telegram"
 msgstr ""
 
-#: src/pages/Farming/VestingTab.tsx
-msgid "Having vesting on {0}? Switch"
-msgstr ""
+#: 
+#~ msgid "Having vesting on {0}? Switch"
+#~ msgstr ""
 
 #: src/pages/Farming/Vesting/PrivateBuyer.tsx
 msgid "Hi! Сurrently you have <0>{0}</0> of unvested IXS that will be vested over the next <1>{1} months</1>. Your next IXS payment will be available on <2>8 October</2> and vesting balances will be updated here."
@@ -1923,6 +1923,10 @@ msgstr ""
 #: src/components/Mobile-Menu/Menu.tsx
 #: src/pages/Farming/Vesting/enum.ts
 msgid "Vesting IXS"
+msgstr ""
+
+#: src/pages/Farming/VestingTab.tsx
+msgid "Vesting on {0}? Switch networks"
 msgstr ""
 
 #: src/components/SearchModal/ManageLists.tsx
