@@ -5,8 +5,9 @@ import { RowBetween } from 'components/Row'
 import React, { useCallback, useEffect, useState } from 'react'
 import { ApplicationModal } from 'state/application/actions'
 import { useModalOpen, useWithdrawModalToggle } from 'state/application/hooks'
+import { useUserSecTokens } from 'state/user/hooks'
 import { useWithdrawState } from 'state/withdraw/hooks'
-import { ModalBlurWrapper, ModalContentWrapper } from 'theme'
+import { HideSmall, ModalBlurWrapper, ModalContentWrapper } from 'theme'
 import { CloseIcon, TYPE } from '../../theme'
 import { ModalPadding } from './styleds'
 import { WithdrawError } from './WithDrawError'
@@ -25,9 +26,12 @@ interface Props {
 }
 export const WithdrawPopup = ({ currency }: Props) => {
   const isOpen = useModalOpen(ApplicationModal.WITHDRAW)
+  const { amount } = useWithdrawState()
+  const { secTokens } = useUserSecTokens()
   const toggle = useWithdrawModalToggle()
   const [modalView, setModalView] = useState<WithdrawModalView>(WithdrawModalView.WITHDRAW_REQUEST)
   const { loadingWithdraw } = useWithdrawState()
+  const tokenInfo = (secTokens[(currency as any)?.address || ''] as any)?.tokenInfo
 
   const onClose = useCallback(() => {
     setModalView(WithdrawModalView.WITHDRAW_REQUEST)
@@ -47,6 +51,15 @@ export const WithdrawPopup = ({ currency }: Props) => {
       minHeight={false}
       maxHeight={'fit-content'}
       mobileMaxHeight={90}
+      topContent={
+        <HideSmall>
+          <TYPE.body6 marginBottom="5px" marginTop="50px">
+            <Trans>{`${amount || '0'} ${
+              tokenInfo?.symbol
+            } will be extracted from your Ethereum wallet and burnt automatically.`}</Trans>
+          </TYPE.body6>
+        </HideSmall>
+      }
     >
       <ModalBlurWrapper>
         <ModalContentWrapper>
