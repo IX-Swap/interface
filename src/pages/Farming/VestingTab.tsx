@@ -27,7 +27,7 @@ export const VestingTab = () => {
           <TYPE.title4>{FARMING_STRINGS[FARMING_TABS.VESTING]}</TYPE.title4>
           {library?.provider?.isMetaMask && chainId && (
             <TextGradient style={{ cursor: 'pointer', marginLeft: '5px' }} onClick={() => switchChain.addChain()}>
-              <Trans>Having vesting on {CHAIN_SWITCH_STRINGS[chainId as SupportedChainId]}? Switch</Trans>
+              <Trans>Vesting on {CHAIN_SWITCH_STRINGS[chainId as SupportedChainId]}? Switch networks</Trans>
             </TextGradient>
           )}
         </PaddedRow>
