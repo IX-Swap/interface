@@ -30,7 +30,7 @@ export const DepositAboutWrapping: FC = () => {
     <div style={{ position: 'relative' }}>
       <Column style={{ marginTop: '18px', marginBottom: '69px' }}>
         {info.map((text, index) => (
-          <TYPE.title11 key={`info-${index}`}>
+          <TYPE.title11 marginBottom="16px" key={`info-${index}`}>
             <Trans>{text}</Trans>
           </TYPE.title11>
         ))}
