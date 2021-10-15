@@ -61,8 +61,6 @@ export const WithdrawRequestForm = ({ currency, changeModal }: Props) => {
     onCurrencySet(id)
   }, [currency, onCurrencySet])
 
-  console.log('accouint', tokenInfo)
-
   return (
     <div style={{ position: 'relative' }}>
       <Column style={{ gap: '25px', marginTop: '18px' }}>
