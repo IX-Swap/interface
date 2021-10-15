@@ -10,7 +10,7 @@ import { ReactComponent as ArrowLeft } from '../../assets/images/arrow-back.svg'
 import { ApplicationModal } from 'state/application/actions'
 import { useDepositModalToggle, useModalOpen } from 'state/application/hooks'
 import { setError, setLoading, setModalView } from 'state/deposit/actions'
-import { useDepositState } from 'state/deposit/hooks'
+import { useDepositState, useHideAboutWrappingCallback } from 'state/deposit/hooks'
 import { DepositModalView } from 'state/deposit/reducer'
 import { ModalBlurWrapper, ModalContentWrapper } from 'theme'
 import { CloseIcon, TYPE } from '../../theme'
@@ -21,6 +21,7 @@ import { DepositSendInfo } from './DepositSendInfo'
 import { ModalPadding } from './styleds'
 import { ButtonText } from 'components/Button'
 import { useUserSecTokens } from 'state/user/hooks'
+import { DepositAboutWrapping } from './DepositAboutWrapping'
 
 interface Props {
   currency?: Currency
@@ -28,7 +29,7 @@ interface Props {
 export const DepositPopup = ({ currency }: Props) => {
   const { secTokens } = useUserSecTokens()
   const isOpen = useModalOpen(ApplicationModal.DEPOSIT)
-  const [showWrapInfo, setShowWrapInfo] = useState(false)
+  const hideAboutWrapping = useHideAboutWrappingCallback()
   const toggle = useDepositModalToggle()
   const { modalView } = useDepositState()
   const dispatch = useDispatch<AppDispatch>()
@@ -39,7 +40,7 @@ export const DepositPopup = ({ currency }: Props) => {
     dispatch(setError({ errorMessage: '' }))
     dispatch(setLoading({ loading: false }))
     toggle()
-    setShowWrapInfo(false)
+    hideAboutWrapping()
   }, [toggle])
 
   return (
@@ -47,10 +48,10 @@ export const DepositPopup = ({ currency }: Props) => {
       <ModalBlurWrapper data-testid="depositPopup">
         <ModalContentWrapper>
           <ModalPadding>
-            <RowBetween padding="0px 16px">
-              {showWrapInfo ? (
+            <RowBetween>
+              {modalView === DepositModalView.ABOUT_WRAPPING ? (
                 <Row align="center">
-                  <ButtonText onClick={() => setShowWrapInfo(false)}>
+                  <ButtonText onClick={hideAboutWrapping}>
                     <Box display="flex" alignItems="center" marginRight={'0.5rem'}>
                       <ArrowLeft />
                     </Box>
@@ -61,17 +62,23 @@ export const DepositPopup = ({ currency }: Props) => {
                 </Row>
               ) : (
                 <TYPE.title5>
-                  <Trans>{`Deposit ${tokenInfo?.symbol || ''} from ${tokenInfo?.network || ''}`}</Trans>
+                  <Trans>{`Deposit ${tokenInfo?.symbol || ''} ${
+                    modalView === DepositModalView.SEND_INFO
+                      ? `to 1st Digital Custodian`
+                      : `from ${tokenInfo?.network || ''}`
+                  }`}</Trans>
                 </TYPE.title5>
               )}
-              <CloseIcon data-testid="cross" onClick={onClose} />
+              <CloseIcon
+                data-testid="cross"
+                onClick={modalView === DepositModalView.ABOUT_WRAPPING ? hideAboutWrapping : onClose}
+              />
             </RowBetween>
-            {modalView === DepositModalView.CREATE_REQUEST && (
-              <DepositRequestForm showWrapInfo={showWrapInfo} setShowWrapInfo={setShowWrapInfo} currency={currency} />
-            )}
+            {modalView === DepositModalView.CREATE_REQUEST && <DepositRequestForm currency={currency} />}
             {modalView === DepositModalView.SEND_INFO && <DepositSendInfo onClose={onClose} />}
             {modalView === DepositModalView.PENDING && <DepositPending />}
             {modalView === DepositModalView.ERROR && <DepositError onClose={onClose} />}
+            {modalView === DepositModalView.ABOUT_WRAPPING && <DepositAboutWrapping />}
           </ModalPadding>
         </ModalContentWrapper>
       </ModalBlurWrapper>

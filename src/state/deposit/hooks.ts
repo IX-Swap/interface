@@ -2,7 +2,7 @@ import { Currency, CurrencyAmount } from '@ixswap1/sdk-core'
 import { t } from '@lingui/macro'
 import { useCurrency } from 'hooks/Tokens'
 import { useActiveWeb3React } from 'hooks/web3'
-import { useCallback } from 'react'
+import { MouseEventHandler, useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import apiService from 'services/apiService'
 import { custody } from 'services/apiUrls'
@@ -167,4 +167,20 @@ export function useCancelDepositCallback(): ({ requestId, onSuccess }: CancelDep
     },
     [dispatch, getEvents, tokenId]
   )
+}
+
+export const useShowAboutWrappingCallback = () => {
+  const dispatch = useDispatch<AppDispatch>()
+
+  return useCallback(() => {
+    dispatch(setModalView({ view: DepositModalView.ABOUT_WRAPPING }))
+  }, [dispatch])
+}
+
+export function useHideAboutWrappingCallback() {
+  const dispatch = useDispatch<AppDispatch>()
+
+  return useCallback(() => {
+    dispatch(setModalView({ view: DepositModalView.CREATE_REQUEST }))
+  }, [dispatch])
 }
