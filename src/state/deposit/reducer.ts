@@ -5,6 +5,7 @@ export enum DepositModalView {
   SEND_INFO,
   PENDING,
   ERROR,
+  ABOUT_WRAPPING,
 }
 export interface DepositState {
   readonly amount: string
