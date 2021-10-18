@@ -51,7 +51,10 @@ export const IssuerDetails = (props: IssuerDetailFieldsProps) => {
                   field.name === 'fullName'
                     ? `${defaultFirstName as string}
                         ${defaultMiddleName as string}
-                       ${defaultLastName as string}`.replace(/\s\s+/g, ' ')
+                       ${defaultLastName as string}`
+                        .replace(/\s\s+/g, ' ')
+                        .replace('undefined', '')
+                        .replace('  ', ' ')
                     : ''
                 }
               />
