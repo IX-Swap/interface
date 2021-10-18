@@ -2,6 +2,8 @@ import { Trans } from '@lingui/macro'
 import { ReactComponent as InfoIcon } from 'assets/images/attention.svg'
 import { IconWrapper } from 'components/AccountDetails/styleds'
 import { RowCenter, RowStart } from 'components/Row'
+import { ETHEREUM_TGE_CHAINS, MATIC_TGE_CHAINS } from 'constants/addresses'
+import { useActiveWeb3React } from 'hooks/web3'
 import React from 'react'
 import { ApplicationModal } from 'state/application/actions'
 import { useToggleModal } from 'state/application/hooks'
@@ -9,13 +11,14 @@ import { useStakingState } from 'state/stake/hooks'
 import { TIER_TYPES } from 'state/stake/reducer'
 import { TYPE } from 'theme'
 import { StakeModal } from './StakeModal'
+import { StakingOtherNetworkCard } from './StakingOtherNetworkCard'
 import { StakingTierCard } from './StakingTierCard'
 import { CardsRow } from './style'
 
 export const StakingTiers = () => {
   const toggleStakeModal = useToggleModal(ApplicationModal.STAKE_IXS)
   const { isPaused } = useStakingState()
-
+  const { chainId } = useActiveWeb3React()
   return (
     <div style={{ display: 'flex', flexWrap: 'wrap' }}>
       {isPaused && (
@@ -37,7 +40,8 @@ export const StakingTiers = () => {
       <CardsRow>
         <StakingTierCard tier={TIER_TYPES.oneMonth} />
         <StakingTierCard tier={TIER_TYPES.twoMonths} />
-        <StakingTierCard tier={TIER_TYPES.threeMonths} />
+        {chainId && MATIC_TGE_CHAINS.includes(chainId) && <StakingTierCard tier={TIER_TYPES.threeMonths} />}
+        {chainId && ETHEREUM_TGE_CHAINS.includes(chainId) && <StakingOtherNetworkCard />}
       </CardsRow>
       <RowCenter marginTop={21}>
         <TYPE.title7 color="#edceff9e">
