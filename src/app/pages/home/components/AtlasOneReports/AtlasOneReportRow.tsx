@@ -6,14 +6,7 @@ import { documentIcons } from 'helpers/rendering'
 import { ViewDocument } from 'app/components/DSO/components/ViewDocument'
 import { useDownloadRawDocument } from 'hooks/useDownloadRawDocument'
 import { convertBlobToFile, openFileInNewTab } from 'hooks/utils'
-import {
-  FacebookShareButton,
-  LinkedinShareButton,
-  TwitterShareButton
-} from 'react-share'
-import FacebookIcon from '@material-ui/icons/Facebook'
-import TwitterIcon from '@material-ui/icons/Twitter'
-import LinkedInIcon from '@material-ui/icons/LinkedIn'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 
 export interface PublicFile {
   publicUrl: string
@@ -39,6 +32,7 @@ export interface AtlasOneReportRowProps {
 
 export const AtlasOneReportRow = ({ item }: AtlasOneReportRowProps) => {
   const theme = useTheme()
+  const { isTablet } = useAppBreakpoints()
 
   const [downloadDocument, { isLoading }] = useDownloadRawDocument(
     { documentId: item._id, ownerId: item.user },
@@ -107,7 +101,7 @@ export const AtlasOneReportRow = ({ item }: AtlasOneReportRowProps) => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid item xs={12} md={4}>
+      <Grid item xs={12} md={5}>
         <Grid
           container
           spacing={2}
@@ -127,58 +121,15 @@ export const AtlasOneReportRow = ({ item }: AtlasOneReportRowProps) => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid item xs={12} md={4}>
+      <Grid item xs={12} md={3}>
         <Grid
           container
           spacing={2}
           alignItems='center'
-          justify='flex-end'
+          justify={isTablet ? 'center' : 'flex-end'}
+          direction={isTablet ? 'column' : 'row'}
           wrap='nowrap'
         >
-          <Grid item style={{ display: 'flex', alignItems: 'center' }}>
-            {isAtlasOne && (
-              <>
-                <FacebookShareButton
-                  url={item.publicFile?.publicUrl ?? item.url}
-                >
-                  <FacebookIcon
-                    fontSize='default'
-                    style={{
-                      color: '#0C469C',
-                      marginRight: 8,
-                      display: 'flex',
-                      alignItems: 'center'
-                    }}
-                  />
-                </FacebookShareButton>
-                <TwitterShareButton
-                  url={item.publicFile?.publicUrl ?? item.url}
-                >
-                  <TwitterIcon
-                    fontSize='default'
-                    style={{
-                      color: '#0C469C',
-                      marginRight: 8,
-                      display: 'flex',
-                      alignItems: 'center'
-                    }}
-                  />
-                </TwitterShareButton>
-                <LinkedinShareButton
-                  url={item.publicFile?.publicUrl ?? item.url}
-                >
-                  <LinkedInIcon
-                    fontSize='default'
-                    style={{
-                      color: '#0C469C',
-                      display: 'flex',
-                      alignItems: 'center'
-                    }}
-                  />
-                </LinkedinShareButton>
-              </>
-            )}
-          </Grid>
           <Grid item>
             {isAtlasOne ? (
               <Button

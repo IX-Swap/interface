@@ -15,10 +15,10 @@ export const columns: Array<TableColumn<Report>> = [
         <Card
           variant='outlined'
           style={{
-            height: 88,
+            minHeight: 88,
             alignItems: 'center',
             display: 'flex',
-            padding: '0 30px'
+            padding: '10px 30px'
           }}
         >
           <AtlasOneReportRow item={row} />
