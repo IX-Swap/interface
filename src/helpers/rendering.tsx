@@ -2,7 +2,7 @@
 import React from 'react'
 import { Grid, MenuItem } from '@material-ui/core'
 import draftToHtml from 'draftjs-to-html'
-import pdfIcon from 'assets/icons/documents/pdf.svg'
+import pdfIcon from 'assets/icons/documents/pdf2.svg'
 import docxIcon from 'assets/icons/documents/docx.svg'
 import txtIcon from 'assets/icons/documents/txt.svg'
 import unknownIcon from 'assets/icons/documents/unknown.svg'

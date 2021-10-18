@@ -1,7 +1,6 @@
 import React, { Fragment } from 'react'
-import { Box, Grid, Typography } from '@material-ui/core'
+import { Box, Grid, Typography, useTheme } from '@material-ui/core'
 import { useAuth } from 'hooks/auth/useAuth'
-import { AccessReports } from 'app/pages/home/components/AccessReports'
 import { TopIssuers } from 'app/pages/home/components/TopIssuers'
 import { TopCorporates } from 'app/pages/home/components/TopCorporates'
 import { Divider } from 'ui/Divider'
@@ -9,9 +8,11 @@ import { News } from 'app/pages/home/components/News/News'
 import { RootContainer } from 'ui/RootContainer'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { BannersCarousel } from 'app/pages/invest/components/BannersCarousel'
+import { AtlasOneReports } from 'app/pages/home/components/AtlasOneReports/AtlasOneReports'
 
 export const Onboarding = () => {
   const { user } = useAuth()
+  const theme = useTheme()
 
   return (
     <RootContainer>
@@ -22,9 +23,27 @@ export const Onboarding = () => {
       <Fragment>
         <Grid container direction='column' spacing={10}>
           <Grid item xs={12}>
-            <Typography variant='h4'>Access Reports</Typography>
+            <Grid item container spacing={1} alignItems='center' wrap='nowrap'>
+              <Typography variant='h4' style={{ marginRight: 36 }}>
+                Access Reports
+              </Typography>
+              <Typography
+                variant='body2'
+                style={{ lineHeight: '100%', marginRight: 8 }}
+              >
+                In Partnership With
+              </Typography>
+              <img
+                width={106}
+                height={34}
+                src={require(theme.palette.type === 'light'
+                  ? 'assets/icons/atlas_logo.png'
+                  : 'assets/icons/atlas_logo_white.png')}
+                alt={'Atlas One Logo'}
+              />
+            </Grid>
             <Box my={2.5} />
-            <AccessReports />
+            <AtlasOneReports />
           </Grid>
 
           <Grid item xs={12}>
