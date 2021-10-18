@@ -92,7 +92,7 @@ const NetworkLabel = styled.div`
 
 const Selector = styled.div``
 export const NetworkCard = () => {
-  const { chainId, library } = useActiveWeb3React()
+  const { chainId, library, account } = useActiveWeb3React()
   const node = useRef<HTMLDivElement>()
   const open = useModalOpen(ApplicationModal.NETWORK_SELECTOR)
   const toggle = useToggleModal(ApplicationModal.NETWORK_SELECTOR)
@@ -121,20 +121,24 @@ export const NetworkCard = () => {
     return null
   }
   return (
-    <Selector ref={node as any}>
-      <SelectorControls onClick={() => toggle()}>
-        <NetworkCardWrapper>{activeChainName}</NetworkCardWrapper>
-        <ChevronElement showMore={open} setShowMore={toggle} />
-      </SelectorControls>
-      {open && (
-        <FlyoutMenu>
-          <FlyoutHeader>
-            <Trans>Select a network</Trans>
-          </FlyoutHeader>
-          <Row targetChain={SupportedChainId.MAINNET} />
-          <Row targetChain={SupportedChainId.MATIC} />
-        </FlyoutMenu>
+    <>
+      {account && (
+        <Selector ref={node as any}>
+          <SelectorControls onClick={() => toggle()}>
+            <NetworkCardWrapper>{activeChainName}</NetworkCardWrapper>
+            <ChevronElement showMore={open} setShowMore={toggle} />
+          </SelectorControls>
+          {open && (
+            <FlyoutMenu>
+              <FlyoutHeader>
+                <Trans>Select a network</Trans>
+              </FlyoutHeader>
+              <Row targetChain={SupportedChainId.MAINNET} />
+              <Row targetChain={SupportedChainId.MATIC} />
+            </FlyoutMenu>
+          )}
+        </Selector>
       )}
-    </Selector>
+    </>
   )
 }
