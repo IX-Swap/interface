@@ -36,6 +36,7 @@ export const WithdrawRequestForm = ({ currency, changeModal }: Props) => {
   const withdraw = useWithdrawCallback(cid, currency?.symbol)
   const { parsedAmount, inputError } = useDerivedWithdrawInfo()
   const tokenInfo = (secTokens[(currency as any)?.address || ''] as any)?.tokenInfo
+  const networkName = tokenInfo?.network.charAt(0).toUpperCase() + tokenInfo?.network.slice(1) || ''
 
   useEffect(() => {
     if (account) {
@@ -109,10 +110,18 @@ export const WithdrawRequestForm = ({ currency, changeModal }: Props) => {
         <Column style={{ gap: '11px' }}>
           <Row>
             <TYPE.body1>
-              <Trans>{`To my ${tokenInfo?.network} wallet`}</Trans>
+              <Trans>{`To my ${networkName} wallet`}</Trans>
             </TYPE.body1>
           </Row>
-          <AddressInput {...{ id: 'receiver-input', value: receiver ?? '', error, onChange: onTypeReceiver }} />
+          <AddressInput
+            {...{
+              id: 'receiver-input',
+              value: receiver ?? '',
+              error,
+              onChange: onTypeReceiver,
+              placeholder: `Paste your ${networkName} wallet`,
+            }}
+          />
         </Column>
       </Column>
 
