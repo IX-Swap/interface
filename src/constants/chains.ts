@@ -1,3 +1,6 @@
+import ethereumLogoUrl from 'assets/images/ethereum-logo.png'
+import polygonLogoUrl from 'assets/images/polygon.svg'
+
 export enum SupportedChainId {
   MAINNET = 1,
   KOVAN = 42,
@@ -22,6 +25,7 @@ export interface ChainInfo {
     decimals: number
   }
   rpcUrls?: string[]
+  logoUrl?: string
   blockExplorerUrls: string[]
 }
 
@@ -32,11 +36,13 @@ export const CHAIN_INFO: ChainInfoMap = {
     blockExplorerUrls: ['https://etherscan.io/'],
     chainName: 'Ethereum',
     nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
+    logoUrl: ethereumLogoUrl,
   },
   [SupportedChainId.KOVAN]: {
     blockExplorerUrls: ['https://kovan.etherscan.io/'],
     chainName: 'Kovan',
     nativeCurrency: { name: 'Kovan ETH', symbol: 'kovETH', decimals: 18 },
+    logoUrl: ethereumLogoUrl,
   },
   [SupportedChainId.MATIC]: {
     chainName: 'Polygon',
@@ -45,6 +51,7 @@ export const CHAIN_INFO: ChainInfoMap = {
       symbol: 'MATIC',
       decimals: 18,
     },
+    logoUrl: polygonLogoUrl,
     rpcUrls: ['https://polygon-rpc.com'],
     blockExplorerUrls: ['https://polygonscan.com/'],
   },
@@ -55,6 +62,7 @@ export const CHAIN_INFO: ChainInfoMap = {
       symbol: 'MATIC',
       decimals: 18,
     },
+    logoUrl: polygonLogoUrl,
     rpcUrls: ['https://rpc-mumbai.matic.today'],
     blockExplorerUrls: ['https://explorer-mumbai.maticvigil.com/'],
   },

@@ -31,6 +31,7 @@ export const DepositSendInfo = ({ onClose }: Props) => {
   const error = Boolean(sender.length > 0 && !loading && !address)
   const currency = useCurrency(currencyId)
   const [isCopied, setCopied] = useCopyClipboard()
+  const [toFieldIsCopied, setToFieldIsCopied] = useCopyClipboard()
   const { activeEvent } = useEventState()
 
   return (
@@ -83,6 +84,17 @@ export const DepositSendInfo = ({ onClose }: Props) => {
               error,
               onChange: () => {},
               disabled: true,
+              rightItem: (
+                <div onClick={() => setToFieldIsCopied(activeEvent?.depositAddress ?? '')}>
+                  {toFieldIsCopied ? (
+                    <Trans>Copied</Trans>
+                  ) : (
+                    <IconWrapper size={18}>
+                      <StyledCopy />
+                    </IconWrapper>
+                  )}
+                </div>
+              ),
             }}
           />
         </Column>
