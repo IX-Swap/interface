@@ -1,7 +1,12 @@
 import { AppBackground } from 'components/AppBackground'
 import { IXSBalanceModal } from 'components/Header/IXSBalanceModal'
 import { SECURITY_TOKENS } from 'config'
-import { MATIC_TGE_CHAINS, SUPPORTED_TGE_CHAINS, TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
+import {
+  MATIC_TGE_CHAINS,
+  SUPPORTED_TGE_CHAINS,
+  TGE_CHAINS_WITH_STAKING,
+  TGE_CHAINS_WITH_SWAP,
+} from 'constants/addresses'
 import ApeModeQueryParamReader from 'hooks/useApeModeQueryParamReader'
 import { useActiveWeb3React } from 'hooks/web3'
 import React, { useMemo } from 'react'
@@ -117,7 +122,9 @@ export default function App() {
               )}
               {SECURITY_TOKENS && <Route exact strict path={routes.securityTokens()} component={Custodian} />}
 
-              <Route exact strict path={routes.staking} component={StakingTab} />
+              {chainId && TGE_CHAINS_WITH_STAKING.includes(chainId) && (
+                <Route exact strict path={routes.staking} component={StakingTab} />
+              )}
               <Route exact strict path={routes.vesting} component={VestingTab} />
 
               {chainId && TGE_CHAINS_WITH_SWAP.includes(chainId) && <Route component={RedirectPathToSwapOnly} />}
