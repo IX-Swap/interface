@@ -136,38 +136,48 @@ export const AtlasOneReportRow = ({ item }: AtlasOneReportRowProps) => {
           wrap='nowrap'
         >
           <Grid item style={{ display: 'flex', alignItems: 'center' }}>
-            <FacebookShareButton url={item.publicFile?.publicUrl ?? item.url}>
-              <FacebookIcon
-                fontSize='default'
-                style={{
-                  color: '#0C469C',
-                  marginRight: 8,
-                  display: 'flex',
-                  alignItems: 'center'
-                }}
-              />
-            </FacebookShareButton>
-            <TwitterShareButton url={item.publicFile?.publicUrl ?? item.url}>
-              <TwitterIcon
-                fontSize='default'
-                style={{
-                  color: '#0C469C',
-                  marginRight: 8,
-                  display: 'flex',
-                  alignItems: 'center'
-                }}
-              />
-            </TwitterShareButton>
-            <LinkedinShareButton url={item.publicFile?.publicUrl ?? item.url}>
-              <LinkedInIcon
-                fontSize='default'
-                style={{
-                  color: '#0C469C',
-                  display: 'flex',
-                  alignItems: 'center'
-                }}
-              />
-            </LinkedinShareButton>
+            {isAtlasOne && (
+              <>
+                <FacebookShareButton
+                  url={item.publicFile?.publicUrl ?? item.url}
+                >
+                  <FacebookIcon
+                    fontSize='default'
+                    style={{
+                      color: '#0C469C',
+                      marginRight: 8,
+                      display: 'flex',
+                      alignItems: 'center'
+                    }}
+                  />
+                </FacebookShareButton>
+                <TwitterShareButton
+                  url={item.publicFile?.publicUrl ?? item.url}
+                >
+                  <TwitterIcon
+                    fontSize='default'
+                    style={{
+                      color: '#0C469C',
+                      marginRight: 8,
+                      display: 'flex',
+                      alignItems: 'center'
+                    }}
+                  />
+                </TwitterShareButton>
+                <LinkedinShareButton
+                  url={item.publicFile?.publicUrl ?? item.url}
+                >
+                  <LinkedInIcon
+                    fontSize='default'
+                    style={{
+                      color: '#0C469C',
+                      display: 'flex',
+                      alignItems: 'center'
+                    }}
+                  />
+                </LinkedinShareButton>
+              </>
+            )}
           </Grid>
           <Grid item>
             {isAtlasOne ? (
