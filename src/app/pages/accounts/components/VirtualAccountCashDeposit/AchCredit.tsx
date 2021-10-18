@@ -28,6 +28,10 @@ export const AchCredits = ({ accountId, currency }: DepositInfoProps) => {
     {
       label: 'Message to receiver/beneficiary/Ref/Bill ref:',
       value: 'InvestaX to recommend'
+    },
+    {
+      label: 'Time Estimation for Deposit:',
+      value: '1-3 Business Days'
     }
   ]
 
