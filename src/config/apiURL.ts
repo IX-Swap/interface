@@ -63,7 +63,9 @@ export const accountsURL = {
       `accounts/banks/${userId}/${bankId}`,
     create: (userId: string) => `/accounts/banks/${userId}`,
     update: (userId: string, bankId: string) =>
-      `/accounts/banks/${userId}/${bankId}`
+      `/accounts/banks/${userId}/${bankId}`,
+    remove: (userId: string, bankId: string) =>
+      `/accounts/banks/${userId}/${bankId}/remove`
   },
   cashDeposits: {
     getAll: (userId: string) => `/accounts/cash/deposits/${userId}`
