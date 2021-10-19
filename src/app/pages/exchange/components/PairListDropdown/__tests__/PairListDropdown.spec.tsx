@@ -49,7 +49,7 @@ describe('PairListDropdown', () => {
     fireEvent.click(getByTestId('pairName'))
 
     await waitFor(() => {
-      expect(setAnchorEl).toBeCalled()
+      expect(setAnchorEl).toBeCalledWith(null)
     })
   })
 })

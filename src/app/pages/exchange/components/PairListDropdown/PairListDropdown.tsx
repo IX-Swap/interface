@@ -57,18 +57,7 @@ export const PairListDropdown = ({ pairName }: PairListDropdownProps) => {
 
   const renderPopperWithOutsideClickHandler = () => {
     return (
-      <ClickAwayListener
-        onClickAway={evt => {
-          if (
-            popperRef?.current !== undefined &&
-            // @ts-expect-error
-            // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
-            !popperRef.current.contains(evt.currentTarget)
-          ) {
-            setAnchorEl(null)
-          }
-        }}
-      >
+      <ClickAwayListener onClickAway={() => setAnchorEl(null)}>
         {renderPopper()}
       </ClickAwayListener>
     )
