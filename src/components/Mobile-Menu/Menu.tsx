@@ -76,7 +76,10 @@ export const Menu = ({ close }: Props) => {
             <Trans>Vesting IXS</Trans>
           </MenuListItem>
           <ExternalListItem href={`https://lm.ixswap.io/`}>
-            <Trans>IXS Liquidity Mining</Trans>
+            <Trans>Liquidity Mining - Uniswap</Trans>
+          </ExternalListItem>
+          <ExternalListItem href={`https://ixswap.defiterm.io/`}>
+            <Trans>DeFi Terminal</Trans>
           </ExternalListItem>
         </MenuList>
       </Container>
