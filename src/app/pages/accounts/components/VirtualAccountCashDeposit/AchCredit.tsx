@@ -28,7 +28,11 @@ export const AchCredits = ({ accountId, currency }: DepositInfoProps) => {
     {
       label: 'Message to receiver/beneficiary/Ref/Bill ref:',
       value: 'InvestaX to recommend'
-    },
+    }
+  ]
+
+  const extendedAchDetails = [
+    ...achDetails,
     {
       label: 'Time Estimation for Deposit:',
       value: '1-3 Business Days'
@@ -40,7 +44,7 @@ export const AchCredits = ({ accountId, currency }: DepositInfoProps) => {
       <Grid item>
         <Box px={3} pb={3}>
           <Grid container spacing={1}>
-            <CashDepositDetails data={achDetails} />
+            <CashDepositDetails data={extendedAchDetails} />
           </Grid>
         </Box>
       </Grid>

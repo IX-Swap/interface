@@ -35,7 +35,11 @@ export const Fast = ({ accountId, currency }: DepositInfoProps) => {
     {
       label: 'Message to receiver/beneficiary/Ref/Bill ref:',
       value: 'InvestaX to recommend'
-    },
+    }
+  ]
+
+  const extendedFastDetails = [
+    ...fastDetails,
     {
       label: 'Time Estimation for Deposit:',
       value: '1 Hour'
@@ -47,7 +51,7 @@ export const Fast = ({ accountId, currency }: DepositInfoProps) => {
       <Grid item>
         <Box px={3} pb={3}>
           <Grid container spacing={1}>
-            <CashDepositDetails data={fastDetails} />
+            <CashDepositDetails data={extendedFastDetails} />
           </Grid>
         </Box>
       </Grid>
