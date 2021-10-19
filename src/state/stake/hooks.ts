@@ -557,7 +557,7 @@ export function useGetStakings() {
         const yearDays = 365
         let reward
         if (!passedMaturity && passedLockIn) {
-          const yearSeconds = yearDays * 86400
+          const yearSeconds = yearDays * SECONDS_IN_DAY
           const secondsPassed = now - startDateUnix
           const penalty = 5 / 100
           reward = floorTo4Decimals((amount * penalty * secondsPassed) / yearSeconds)
