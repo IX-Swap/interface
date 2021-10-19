@@ -2,7 +2,6 @@ import { Trans } from '@lingui/macro'
 import { ReactComponent as InfoIcon } from 'assets/images/attention.svg'
 import { IconWrapper } from 'components/AccountDetails/styleds'
 import { RowCenter, RowStart } from 'components/Row'
-import { ETHEREUM_TGE_CHAINS, MATIC_TGE_CHAINS } from 'constants/addresses'
 import { useActiveWeb3React } from 'hooks/web3'
 import React from 'react'
 import { ApplicationModal } from 'state/application/actions'
@@ -18,7 +17,6 @@ import { CardsRow } from './style'
 export const StakingTiers = () => {
   const toggleStakeModal = useToggleModal(ApplicationModal.STAKE_IXS)
   const { isPaused } = useStakingState()
-  const { chainId } = useActiveWeb3React()
   return (
     <div style={{ display: 'flex', flexWrap: 'wrap' }}>
       {isPaused && (
