@@ -24,6 +24,10 @@ export const PairListDropdown = ({ pairName }: PairListDropdownProps) => {
     setAnchorEl(anchorEl !== null ? null : event.currentTarget)
   }
 
+  useEffect(() => {
+    setAnchorEl(null)
+  }, [pairId])
+
   const renderPopper = () => {
     return (
       <Popper
@@ -70,14 +74,11 @@ export const PairListDropdown = ({ pairName }: PairListDropdownProps) => {
     )
   }
 
-  useEffect(() => {
-    setAnchorEl(null)
-  }, [pairId])
-
   return (
     <Grid container direction='column' justify='flex-start'>
       <Grid item>
         <Typography
+          data-testid={'pairName'}
           variant='subtitle1'
           className={classes.pairName}
           color='primary'
