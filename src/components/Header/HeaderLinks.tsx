@@ -116,7 +116,10 @@ const HeaderPopover = () => {
         <Trans>Vesting</Trans>
       </SubMenuLink>
       <SubMenuExternalLink href={`https://lm.ixswap.io/`}>
-        <Trans>IXS Liquidity Mining</Trans>
+        <Trans>Liquidity Mining - Uniswap</Trans>
+      </SubMenuExternalLink>
+      <SubMenuExternalLink href={`https://ixswap.defiterm.io/`}>
+        <Trans>DeFi Terminal</Trans>
       </SubMenuExternalLink>
     </PopOverContent>
   )
@@ -163,7 +166,7 @@ export const HeaderLinks = () => {
       >
         <Popover hideArrow show={open} content={<HeaderPopover />} placement={'bottom'}>
           <RowFixed onClick={toggle}>
-            <Trans>IXS Farming</Trans>
+            <Trans>IXS Farms</Trans>
             <ChevronElement showMore={open} />
           </RowFixed>
         </Popover>

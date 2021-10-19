@@ -19,15 +19,19 @@ import { useFetchHistoricalPoolSize, usePoolSizeState } from 'state/stake/hooks'
 import { useStakingState } from 'state/stake/hooks'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import { formatNumber } from 'utils/formatNumber'
+import { useCurrency } from 'hooks/Tokens'
+import { IXS_ADDRESS } from 'constants/addresses'
+import { useActiveWeb3React } from 'hooks/web3'
 
 export const StakingTierCard = ({ tier }: { tier: Tier }) => {
   const dispatch = useDispatch<AppDispatch>()
+  const { chainId } = useActiveWeb3React()
   const toggleStake = useToggleModal(ApplicationModal.STAKE_IXS)
   const isTierUnlimited = tier?.limit === TIER_LIMIT.UNLIMITED
   const fetchHistoricalPoolSize = useFetchHistoricalPoolSize()
   const poolSizeState = usePoolSizeState()
   const { hasStakedSuccessfully, isPaused } = useStakingState()
-
+  const ixsCurrency = useCurrency(IXS_ADDRESS[chainId ?? 1])
   const [leftToFill, setLeftToFill] = useState(0)
   const [isPoolLimitationLoading, setIsPoolLimitationLoading] = useState(false)
   const [isLimitReached, setIsLimitReached] = useState(false)
@@ -111,7 +115,7 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
   }
 
   return (
-    <StakingTierCardWrapper className={`${isLimitReached ? 'fully-staked' : ''}`}>
+    <StakingTierCardWrapper className={`${isLimitReached ? 'muted' : ''}`}>
       <RowCenter style={{ marginTop: '8px' }}>
         <img src={IXSToken} />
       </RowCenter>
@@ -135,10 +139,10 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
         <MouseoverTooltip
           style={{ whiteSpace: 'pre-line' }}
           text={t`Maximum Capacity:
-                  ${isTierUnlimited ? 'Unlimited\n' : '2 000 000 IXS\n'}
+                  ${isTierUnlimited ? 'Unlimited\n' : `2 000 000 ${ixsCurrency?.symbol}\n`}
 
-                  Staked IXS in Pool: 
-                  ${poolSizeState[tier.period]} IXS
+                  Staked ${ixsCurrency?.symbol} in Pool: 
+                  ${poolSizeState[tier.period]} ${ixsCurrency?.symbol}
 
                   ${
                     isTierUnlimited
@@ -157,9 +161,11 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
         </TYPE.body1>
         <MouseoverTooltip
           style={{ whiteSpace: 'pre-line', textAlign: 'center' }}
-          text={t`Lock period means the time you won’t be able to unstake your IXS fully or partially. Please carefully consider the risks involved.
+          text={t`Lock period means the time you won’t be able to unstake your ${
+            ixsCurrency?.symbol
+          } fully or partially. Please carefully consider the risks involved.
                 ${'' ?? ''}
-                You will be able to redeem your staked IXS fully or partially after lock period. `}
+                You will be able to redeem your staked ${ixsCurrency?.symbol} fully or partially after lock period. `}
         >
           <IconWrapper size={20} style={{ marginLeft: '12px' }}>
             <InfoIcon />

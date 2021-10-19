@@ -9,7 +9,7 @@ import { gradientBorder } from 'theme'
 export const CardsRow = styled(Row)`
   justify-content: center;
   flex-wrap: wrap;
-  
+
   > div {
     margin-right: 16px;
     margin-left: 16px;
@@ -19,20 +19,21 @@ export const CardsRow = styled(Row)`
   @media only screen and (max-width: 1007px) {
     flex-wrap: wrap;
 
-    > div:nth-child(3){
+    > div:nth-child(3) {
       margin-top: 33px;
-  };
+    }
+  }
 
   @media only screen and (max-width: 683px) {
     grid-template-columns: 100%;
 
     > div {
       justify-self: center;
-     }
-    > div:nth-child(2){
+    }
+    > div:nth-child(2) {
       margin-top: 33px;
     }
-  };
+  } ;
 `
 
 export const StakingWrapper = styled.div`
@@ -158,8 +159,15 @@ export const StakingTierCardWrapper = styled(StakingCard)`
   padding-bottom: 0px;
   height: 466px;
   width: 294px;
-
-  &.fully-staked {
+  &.semi-muted {
+    background: radial-gradient(
+        79.76% 116.06% at 44.22% 136.36%,
+        rgba(102, 20, 206, 0.132) 0%,
+        rgba(26, 18, 58, 0) 100%
+      ),
+      rgba(44, 37, 74, 0.3);
+  }
+  &.muted {
     background: radial-gradient(
         79.76% 116.06% at 44.22% 136.36%,
         rgba(102, 20, 206, 0.132) 0%,
