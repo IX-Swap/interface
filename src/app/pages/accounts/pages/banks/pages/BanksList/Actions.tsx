@@ -17,7 +17,7 @@ export interface ActionsProps {
 }
 
 export const Actions = ({ item }: ActionsProps) => {
-  const [removeBank] = useRemoveBank()
+  const [removeBank, { isLoading }] = useRemoveBank()
   const [showBankDetails, setShowBankDetails] = useState(false)
   const [showOtpDialog, setShowOtpDialog] = useState(false)
 
@@ -51,7 +51,7 @@ export const Actions = ({ item }: ActionsProps) => {
         arrow
         contentTheme='dark'
         trigger={props => (
-          <ActionsDropdownTrigger {...props} isLoading={false} />
+          <ActionsDropdownTrigger {...props} isLoading={isLoading} />
         )}
         content={props => (
           <ActionContent
