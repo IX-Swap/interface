@@ -8,7 +8,7 @@ import React from 'react'
 import { ApplicationModal } from 'state/application/actions'
 import { useToggleModal } from 'state/application/hooks'
 import { useStakingState } from 'state/stake/hooks'
-import { TIER_TYPES } from 'state/stake/reducer'
+import { PERIOD, TIER_TYPES } from 'state/stake/reducer'
 import { TYPE } from 'theme'
 import { StakeModal } from './StakeModal'
 import { StakingOtherNetworkCard } from './StakingOtherNetworkCard'
@@ -38,10 +38,10 @@ export const StakingTiers = () => {
         </RowStart>
       )}
       <CardsRow>
-        <StakingTierCard tier={TIER_TYPES.oneMonth} />
-        <StakingTierCard tier={TIER_TYPES.twoMonths} />
-        {chainId && MATIC_TGE_CHAINS.includes(chainId) && <StakingTierCard tier={TIER_TYPES.threeMonths} />}
-        {chainId && ETHEREUM_TGE_CHAINS.includes(chainId) && <StakingOtherNetworkCard />}
+        <StakingTierCard tier={TIER_TYPES[PERIOD.ONE_MONTH]} />
+        <StakingTierCard tier={TIER_TYPES[PERIOD.TWO_MONTHS]} />
+        <StakingTierCard tier={TIER_TYPES[PERIOD.THREE_MONTHS]} />
+        <StakingOtherNetworkCard />
       </CardsRow>
       <RowCenter marginTop={21}>
         <TYPE.title7 color="#edceff9e">

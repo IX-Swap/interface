@@ -8,7 +8,7 @@ import { IXS_ADDRESS, IXS_STAKING_V1_ADDRESS } from 'constants/addresses'
 import stakingPeriodsData, { IStaking, PeriodsEnum } from 'constants/stakingPeriods'
 import { BigNumber, utils } from 'ethers'
 import { useCurrency } from 'hooks/Tokens'
-import { useIXSStakingContract, useIXSTokenContract } from 'hooks/useContract'
+import { useIXSAlternateStakingContract, useIXSStakingContract, useIXSTokenContract } from 'hooks/useContract'
 import useCurrentBlockTimestamp from 'hooks/useCurrentBlockTimestamp'
 import JSBI from 'jsbi'
 import { useCallback, useEffect, useMemo } from 'react'
@@ -41,6 +41,7 @@ import {
   stake,
   updateIXSBalance,
 } from './actions'
+import { DEFAULT_POOL_SIZE_LIMIT } from './poolSizeReducer'
 import { claimsAdapter, payoutsAdapter, rewardsAdapter, stakingsAdapter } from './utils'
 
 export const STAKING_REWARDS_INTERFACE = new Interface(STAKING_REWARDS_ABI)
@@ -311,7 +312,9 @@ export function useStakingStatus() {
 
   return status
 }
-
+// export function useMemoizedStakingContract() {
+//   return useMemo(() => {},[chainId])
+// }
 export function useStakingState(): AppState['staking'] {
   return useSelector<AppState, AppState['staking']>((state) => state.staking)
 }
@@ -629,6 +632,7 @@ export function useGetStakings() {
       const filteredTransactions = transactions.filter((trans: IStaking) => {
         return trans.stakeAmount !== 0
       })
+      console.log('GET STAKINGS')
       dispatch(getStakings.fulfilled({ transactions: stakingsAdapter(filteredTransactions) }))
       return filteredTransactions
     } catch (error) {
@@ -647,8 +651,11 @@ export function useGetVestedRewards() {
       dispatch(getRewards.pending())
       const rewards = await staking?.vestedTransactions(account)
       const transactions = rewardsAdapter(rewards)
+      console.log('GET REWARDS')
+
       dispatch(getRewards.fulfilled({ transactions }))
       try {
+        console.log('GET AVAILABLE CLAIM')
         dispatch(getAvailableClaim.pending())
         const claims: any[] = await Promise.all(
           transactions.map(async (reward, index): Promise<any> => {
@@ -677,6 +684,8 @@ export function useGetPayouts() {
     try {
       dispatch(getPayouts.pending())
       const payouts = await staking?.payouts(account)
+      console.log('GET PAYOUTS')
+
       dispatch(
         getPayouts.fulfilled({ transactions: payouts.map((pay: [BigNumber, BigNumber][]) => payoutsAdapter(pay)) })
       )
@@ -725,15 +734,49 @@ export function useClaimRewards() {
   )
 }
 
-export function useIsVestingPaused() {
+export function useIsStakingPaused() {
   const staking = useIXSStakingContract()
   const dispatch = useDispatch<AppDispatch>()
   return useCallback(async () => {
     try {
       const isPaused = await staking?.paused()
+      console.log({ isPaused })
+      console.log('GET IS PAUSED')
+
       dispatch(getIsStakingPaused({ isPaused }))
     } catch (error) {
-      console.error(`isVestingPaused error `, error)
+      console.error(`isStakingPaused error `, error)
     }
   }, [staking, dispatch])
+}
+
+export function useFetchInfoFromOtherChain() {
+  const alternateStaking = useIXSAlternateStakingContract()
+  const dispatch = useDispatch<AppDispatch>()
+  const leftToStake = (filled: string) => {
+    return parseFloat(DEFAULT_POOL_SIZE_LIMIT) - parseFloat(filled)
+  }
+  return useCallback(async () => {
+    try {
+      const isPaused = await alternateStaking?.paused()
+      console.log({ isPausedAlternate: isPaused })
+      if (!isPaused) {
+        const weekResult = await alternateStaking?.oneWeekHistoricalPoolSize()
+        const stakedWeek = utils.formatUnits(weekResult)
+
+        const monthResult = await alternateStaking?.oneMonthHistoricalPoolSize()
+        const stakedMonth = utils.formatUnits(monthResult)
+
+        const twoMonthResult = await alternateStaking?.twoMonthsHistoricalPoolSize()
+        const stakedTwoMonths = utils.formatUnits(twoMonthResult)
+
+        const threeMonthResult = await alternateStaking?.threeMonthsHistoricalPoolSize()
+        const stakedThreeMonths = utils.formatUnits(threeMonthResult)
+        // parseFloat(DEFAULT_POOL_SIZE_LIMIT) - parseFloat(filled)
+        console.log({ isPaused, stakedWeek, stakedMonth, stakedTwoMonths, stakedThreeMonths })
+      }
+    } catch (error) {
+      console.error(`alternative isStakingPaused error `, error)
+    }
+  }, [alternateStaking])
 }

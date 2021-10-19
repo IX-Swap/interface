@@ -1,5 +1,6 @@
 import { FACTORY_ADDRESS } from '@ixswap1/v2-sdk'
 import { constructSameAddressMap } from '../utils/constructSameAddressMap'
+import { SupportedChainId } from './chains'
 
 export const MULTICALL2_ADDRESSES = constructSameAddressMap('0x5BA1e12693Dc8F9c48aAD8770482f4739bEeD696')
 
@@ -66,4 +67,11 @@ export const ENS_REGISTRAR_ADDRESSES = {
 }
 export const SOCKS_CONTROLLER_ADDRESSES = {
   [1]: '0x65770b5283117639760beA3F867b69b3697a91dd',
+}
+
+export const STAKING_ALTERNATE_MAP = {
+  [SupportedChainId.MAINNET]: SupportedChainId.KOVAN,
+  [SupportedChainId.KOVAN]: SupportedChainId.MAINNET,
+  [SupportedChainId.MATIC]: SupportedChainId.MAINNET,
+  [SupportedChainId.MUMBAI]: SupportedChainId.KOVAN,
 }

@@ -45,6 +45,9 @@ const HeaderFrame = styled.div<{ showBackground: boolean; lightBackground: boole
     grid-gap: 28px;
     padding: 14px 18px;
   }
+  @media (max-width: 500px) {
+    grid-gap: 7px;
+  }
 `
 
 const HeaderControls = styled.div`

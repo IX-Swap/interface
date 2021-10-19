@@ -33,11 +33,13 @@ import {
   IXS_STAKING_V1_ADDRESS,
   IXS_ADDRESS,
   IXS_GOVERNANCE_ADDRESS,
+  STAKING_ALTERNATE_MAP,
 } from 'constants/addresses'
 import { useMemo } from 'react'
 import { getContract } from 'utils'
 import { Erc20, ArgentWalletDetector, EnsPublicResolver, EnsRegistrar, Multicall2, Weth } from '../abis/types'
 import { useActiveWeb3React } from './web3'
+import { SupportedChainId } from 'constants/chains'
 
 // returns null on errors
 export function useContract<T extends Contract = Contract>(
@@ -48,10 +50,15 @@ export function useContract<T extends Contract = Contract>(
   const { library, account, chainId } = useActiveWeb3React()
 
   return useMemo(() => {
+    console.log({ addressOrAddressMap, ABI, library, chainId, withSignerIfPossible, account })
     if (!addressOrAddressMap || !ABI || !library || !chainId) return null
     let address: string | undefined
-    if (typeof addressOrAddressMap === 'string') address = addressOrAddressMap
-    else address = addressOrAddressMap[chainId]
+    if (typeof addressOrAddressMap === 'string') {
+      console.log({ addressUseContract: address })
+      address = addressOrAddressMap
+    } else {
+      address = addressOrAddressMap[chainId]
+    }
     if (!address) return null
     try {
       return getContract(address, ABI, library, withSignerIfPossible && account ? account : undefined)
@@ -74,6 +81,13 @@ export function useIXSStakingContract() {
   return useContract(IXS_STAKING_V1_ADDRESS, IxsReturningStakeBankPostIdoV1, true)
 }
 
+export function useIXSAlternateStakingContract() {
+  const { chainId } = useActiveWeb3React()
+  // const alternateChain = STAKING_ALTERNATE_MAP[(chainId as SupportedChainId) ?? 1]
+  // const alternateAddress = IXS_STAKING_V1_ADDRESS[alternateChain]
+  // console.log({ alternateAddress, alternateChain })
+  return useContract('0xf49A087aA48C0A4f0dEa6428F1175e1bB45CDAa2', IxsReturningStakeBankPostIdoV1, true)
+}
 export function useIXSTokenContract() {
   return useContract(IXS_ADDRESS, IxsToken, true)
 }

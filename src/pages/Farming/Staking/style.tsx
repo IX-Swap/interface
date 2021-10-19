@@ -36,19 +36,6 @@ export const CardsRow = styled(Row)`
   } ;
 `
 
-export const StakingWrapper = styled.div`
-  display: flex;
-  padding-top: 42px;
-  gap: 90px;
-  padding-left: 15px;
-  padding-right: 15px;
-  flex-wrap: wrap;
-  justify-content: center;
-  ${({ theme }) => theme.mediaWidth.upToMedium`
-     flex-direction: column;
-     align-items: center;
-  `};
-`
 export const StakingCard = styled.div`
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -93,33 +80,7 @@ export const PromoTokenCardWrapper = styled(StakingCard)`
     }
   `};
 `
-export const GetIXSStakingCard = styled(PromoTokenCardWrapper)`
-  padding: 35px 34px 37px 34px;
-`
-export const StackingPositionCard = styled(StakingCard)`
-  padding: 32px;
-  height: 458px;
-  min-width: 370px;
-  max-width: 415px;
-  justify-content: space-between;
-  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-      align-self: flex-start;
-      min-width: 330px;
-      max-width: 330px;
-      height: auto;
-  `};
-`
-export const TokenStakingDescriptionNumbers = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-top: 30px;
-  flex-wrap: wrap;
-  gap: 20px;
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-     flex-direction: column;
-     gap: 15px;
-  `};
-`
+
 export const NoIXSTokensWrapper = styled.div`
   position: relative;
   padding: 6% 15%;

@@ -8,6 +8,8 @@ export const changeAccount = createAction<{ newAccount: string }>('stake/changeA
 export const checkAllowance = createAction<{ allowanceAmount: number }>('stake/checkAllowance')
 export const updateIXSBalance = createAction<{ IXSAmount: string }>('stake/updateIXSBalance')
 export const setTransactionInProgress = createAction<{ value: boolean }>('stake/setTransactionInProgress')
+export const setShowCardFromOtherChain = createAction<{ showCard: boolean }>('stake/setShowCardFromOtherChain')
+export const setTiersFromOtherChain = createAction<{ tiers: Tier[] }>('stake/setTiersFromOtherChain')
 
 export const increaseAllowance: Readonly<{
   pending: ActionCreatorWithoutPayload

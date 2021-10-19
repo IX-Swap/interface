@@ -9,7 +9,7 @@ export const StakingTab = () => {
   return (
     <>
       <LightBackground />
-      <Container width={['100%']} maxWidth={'1300px'}>
+      <Container width={['100%']} maxWidth={'1400px'}>
         <TYPE.title4>{FARMING_STRINGS[FARMING_TABS.STAKING]}</TYPE.title4>
         <Staking />
       </Container>

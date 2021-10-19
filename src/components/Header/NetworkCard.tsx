@@ -27,11 +27,17 @@ const SelectorControls = styled(VioletCard)`
   background: transparent;
   width: fit-content;
   display: flex;
+  button {
+    ${({ theme }) => theme.mediaWidth.upToSmall`
+     padding: 0 3px 0 1px;
+  `};
+  }
   ${({ theme }) => theme.mediaWidth.upToSmall`
     margin: 0;
     overflow: hidden;
     text-overflow: ellipsis;
     flex-shrink: 1;
+    padding: 0;
   `};
 `
 
