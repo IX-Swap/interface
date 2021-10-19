@@ -5,6 +5,14 @@ import {
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 
+jest.mock('app/pages/home/components/AtlasOneReports/ReportLogo', () => ({
+  ReportLogo: jest.fn(() => null)
+}))
+
+jest.mock('app/pages/home/components/AtlasOneReports/ReportViewButton', () => ({
+  ReportViewButton: jest.fn(() => null)
+}))
+
 describe('AtlasOneReportsRow', () => {
   const report: Report = {
     _id: 'c146a34f-cd0d-4b88-aadc-9409ac62dcc1',
@@ -53,47 +61,5 @@ describe('AtlasOneReportsRow', () => {
       <AtlasOneReportRow item={{ ...report, reportType: 'dataroom' }} />
     )
     expect(getByText('InvestaX Access Report')).toBeTruthy()
-  })
-
-  it('renders correct view button label when report type is atlas one', () => {
-    const { getByText } = render(<AtlasOneReportRow item={report} />)
-    expect(getByText('View PDF')).toBeTruthy()
-  })
-
-  it('renders correct view button label when report type is atlas one and public url file is not defined', () => {
-    const { getByText } = render(
-      <AtlasOneReportRow
-        item={{
-          ...report,
-          publicFile: undefined
-        }}
-      />
-    )
-    expect(getByText('View Report')).toBeTruthy()
-  })
-
-  it('renders correct view button label when report type is dataroom and file is pdf', () => {
-    const { getByText } = render(
-      <AtlasOneReportRow
-        item={{
-          ...report,
-          reportType: 'dataroom'
-        }}
-      />
-    )
-    expect(getByText('View pdf')).toBeTruthy()
-  })
-
-  it('renders correct view button label when report type is dataroom and file is image', () => {
-    const { getByText } = render(
-      <AtlasOneReportRow
-        item={{
-          ...report,
-          reportType: 'dataroom',
-          originalFileName: 'sample.png'
-        }}
-      />
-    )
-    expect(getByText('View Image')).toBeTruthy()
   })
 })
