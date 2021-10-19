@@ -293,3 +293,8 @@ export const LoaderContainer = styled.div`
   align-items: center;
   justify-content: center;
 `
+
+export const OptionList = styled.ul`
+  margin: 8px 0 0 0;
+  padding: 0;
+`

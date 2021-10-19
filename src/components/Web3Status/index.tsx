@@ -1,11 +1,12 @@
-import React, { useMemo } from 'react'
+import { t, Trans } from '@lingui/macro'
 import { AbstractConnector } from '@web3-react/abstract-connector'
 import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core'
 import { darken } from 'polished'
-import { Activity } from 'react-feather'
-import { t, Trans } from '@lingui/macro'
-import styled, { css } from 'styled-components'
+import React, { useMemo } from 'react'
 import { isMobile } from 'react-device-detect'
+import { Activity } from 'react-feather'
+import styled, { css } from 'styled-components'
+import { DesktopAndTablet } from 'theme'
 // import CoinbaseWalletIcon from '../../assets/images/coinbaseWalletIcon.svg'
 // import FortmaticIcon from '../../assets/images/fortmaticIcon.png'
 // import PortisIcon from '../../assets/images/portisIcon.png'
@@ -19,13 +20,10 @@ import { isTransactionRecent, useAllTransactions } from '../../state/transaction
 import { TransactionDetails } from '../../state/transactions/reducer'
 import { shortenAddress } from '../../utils'
 import { ButtonSecondary } from '../Button'
-
 import Identicon from '../Identicon'
 import Loader from '../Loader'
-
 import { RowBetween } from '../Row'
 import WalletModal from '../WalletModal'
-import { DesktopAndTablet, DesktopOnly } from 'theme'
 
 const IconWrapper = styled.div<{ size?: number }>`
   ${({ theme }) => theme.flexColumnNoWrap};

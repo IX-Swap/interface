@@ -1,22 +1,20 @@
 import { createReducer } from '@reduxjs/toolkit'
+import { IStaking } from 'constants/stakingPeriods'
 import {
-  saveStakingStatus,
-  increaseAllowance,
-  selectTier,
-  stake,
-  getStakings,
-  getIsStakingPaused,
   changeAccount,
   checkAllowance,
-  updateIXSBalance,
-  getRewards,
-  getPayouts,
   getAvailableClaim,
+  getIsStakingPaused,
+  getPayouts,
+  getRewards,
+  getStakings,
+  increaseAllowance,
+  saveStakingStatus,
+  selectTier,
   setTransactionInProgress,
-  setShowCardFromOtherChain,
-  setTiersFromOtherChain,
+  stake,
+  updateIXSBalance,
 } from './actions'
-import { IStaking } from 'constants/stakingPeriods'
 
 export enum StakingStatus {
   CONNECT_WALLET = 'CONNECT_WALLET',
@@ -142,8 +140,6 @@ interface StakingState {
   payoutsLoading: boolean
   claimLoading: boolean
   transactionInProgress: boolean
-  showCardFromOtherChain: boolean
-  tiersFromOtherChain: Tier[]
 }
 
 const initialState: StakingState = {
@@ -174,8 +170,6 @@ const initialState: StakingState = {
   payoutsLoading: false,
   claimLoading: false,
   transactionInProgress: false,
-  showCardFromOtherChain: false,
-  tiersFromOtherChain: [],
 }
 
 export default createReducer<StakingState>(initialState, (builder) =>
@@ -287,11 +281,5 @@ export default createReducer<StakingState>(initialState, (builder) =>
     })
     .addCase(getIsStakingPaused, (state, { payload: { isPaused } }) => {
       state.isPaused = isPaused
-    })
-    .addCase(setShowCardFromOtherChain, (state, { payload: { showCard } }) => {
-      state.showCardFromOtherChain = showCard
-    })
-    .addCase(setTiersFromOtherChain, (state, { payload: { tiers } }) => {
-      state.tiersFromOtherChain = tiers
     })
 )

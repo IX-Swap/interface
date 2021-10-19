@@ -7,7 +7,6 @@ import { AppDispatch } from 'state'
 import { useCloseModals } from 'state/application/hooks'
 import { changeAccount } from 'state/stake/actions'
 import {
-  useFetchInfoFromOtherChain,
   useGetPayouts,
   useGetStakings,
   useGetVestedRewards,
@@ -34,12 +33,6 @@ export const Staking = () => {
   const getStakings = useGetStakings()
   const getRewards = useGetVestedRewards()
   const getPayouts = useGetPayouts()
-
-  const getAlternateStaking = useFetchInfoFromOtherChain()
-
-  useEffect(() => {
-    getAlternateStaking()
-  }, [getAlternateStaking])
 
   useEffect(() => {
     getRewards()
