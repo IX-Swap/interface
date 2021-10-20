@@ -16,7 +16,7 @@ import { NetworkCard } from './NetworkCard'
 
 const HeaderFrame = styled.div<{ showBackground: boolean; lightBackground: boolean }>`
   display: grid;
-  grid-template-columns: 0.45fr 1fr 0.45fr;
+  grid-template-columns: 0.51fr 1fr 0.51fr;
   align-items: center;
   justify-content: space-between;
   align-items: center;
@@ -44,6 +44,10 @@ const HeaderFrame = styled.div<{ showBackground: boolean; lightBackground: boole
     grid-template-columns: auto 1fr auto;
     grid-gap: 28px;
     padding: 14px 18px;
+  }
+  @media (max-width: 500px) {
+    grid-gap: 7px;
+    grid-template-columns: auto 2fr auto;
   }
 `
 

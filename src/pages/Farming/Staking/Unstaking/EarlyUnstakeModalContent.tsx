@@ -76,7 +76,7 @@ export function EarlyUnstake({ onDismiss, stake, onUnstake, onApprove }: Unstaki
     const fIXSAmount = parseFloat(IXSAmount)
 
     if (!fTypedValue || fTypedValue > fIXSAmount || fTypedValue === 0) {
-      setError('Wrong IXS amount')
+      setError(`Wrong ${currency?.symbol} amount`)
     } else {
       setError('')
     }
@@ -123,7 +123,7 @@ export function EarlyUnstake({ onDismiss, stake, onUnstake, onApprove }: Unstaki
         </WarningContainer>
         <StakingInputPercentage
           {...{
-            fieldTitle: t`Amount of IXS to unstake`,
+            fieldTitle: t`Amount of ${currency?.symbol} to unstake`,
             maxAvailable: stakeIXSCurrencyAmount,
             typedValue,
             onUserInput,
@@ -158,7 +158,7 @@ export function EarlyUnstake({ onDismiss, stake, onUnstake, onApprove }: Unstaki
                 <span style={{ color: theme.bg14 }}>5%</span>
                 <MouseoverTooltip
                   style={{ whiteSpace: 'pre-line' }}
-                  text={t`If you partially or fully unstake your IXS before the end date - 5% APY will be applied to unstaked amount.`}
+                  text={t`If you partially or fully unstake your ${currency?.symbol} before the end date - 5% APY will be applied to unstaked amount.`}
                 >
                   <IconWrapper size={20} style={{ marginLeft: '4px' }}>
                     <InfoIcon />
@@ -167,12 +167,14 @@ export function EarlyUnstake({ onDismiss, stake, onUnstake, onApprove }: Unstaki
               </TextWithTooltipWrapper>
             }
           />
-          <TextRow textLeft={t`Total rewards `} textRight={`${stake.reward} IXS`} />
+          <TextRow textLeft={t`Total rewards `} textRight={`${stake.reward} ${currency?.symbol}`} />
           <TextRow
             textLeft={t`Instant reward payout today`}
             textRight={
               <EllipsedText>
-                <div>{floorTo4Decimals(stake.reward * 0.1)}&nbsp;IXS</div>
+                <div>
+                  {floorTo4Decimals(stake.reward * 0.1)}&nbsp;{currency?.symbol}
+                </div>
               </EllipsedText>
             }
           />
@@ -180,7 +182,9 @@ export function EarlyUnstake({ onDismiss, stake, onUnstake, onApprove }: Unstaki
             textLeft={t`Rewards to be vested (10% weekly)`}
             textRight={
               <EllipsedText>
-                <div>{floorTo4Decimals(stake.reward * 0.9)}&nbsp;IXS</div>
+                <div>
+                  {floorTo4Decimals(stake.reward * 0.9)}&nbsp;{currency?.symbol}
+                </div>
               </EllipsedText>
             }
           />

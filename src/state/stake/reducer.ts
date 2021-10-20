@@ -1,20 +1,20 @@
 import { createReducer } from '@reduxjs/toolkit'
+import { IStaking } from 'constants/stakingPeriods'
 import {
-  saveStakingStatus,
-  increaseAllowance,
-  selectTier,
-  stake,
-  getStakings,
-  getIsStakingPaused,
   changeAccount,
   checkAllowance,
-  updateIXSBalance,
-  getRewards,
-  getPayouts,
   getAvailableClaim,
+  getIsStakingPaused,
+  getPayouts,
+  getRewards,
+  getStakings,
+  increaseAllowance,
+  saveStakingStatus,
+  selectTier,
   setTransactionInProgress,
+  stake,
+  updateIXSBalance,
 } from './actions'
-import { IStaking } from 'constants/stakingPeriods'
 
 export enum StakingStatus {
   CONNECT_WALLET = 'CONNECT_WALLET',
@@ -61,10 +61,10 @@ export enum TIER_LIMIT {
 
 // APY in percents
 export interface APY {
-  oneWeek: number | undefined
-  oneMonth: number | undefined
-  twoMonths: number | undefined
-  threeMonths: number | undefined
+  [PERIOD.ONE_WEEK]: number | undefined
+  [PERIOD.ONE_MONTH]: number | undefined
+  [PERIOD.TWO_MONTHS]: number | undefined
+  [PERIOD.THREE_MONTHS]: number | undefined
 }
 
 export interface Tier {
@@ -75,10 +75,10 @@ export interface Tier {
 }
 
 export interface TierType {
-  oneWeek: Tier
-  oneMonth: Tier
-  twoMonths: Tier
-  threeMonths: Tier
+  [PERIOD.THREE_MONTHS]: Tier
+  [PERIOD.ONE_WEEK]: Tier
+  [PERIOD.ONE_MONTH]: Tier
+  [PERIOD.TWO_MONTHS]: Tier
 }
 export interface VestingReward {
   start: number
@@ -91,25 +91,25 @@ export interface VestingReward {
 }
 
 export const TIER_TYPES: TierType = {
-  oneWeek: {
+  [PERIOD.ONE_WEEK]: {
     period: PERIOD.ONE_WEEK,
     APY: 5,
     limit: TIER_LIMIT.UNLIMITED,
     lockupPeriod: PERIOD.ONE_WEEK,
   },
-  oneMonth: {
+  [PERIOD.ONE_MONTH]: {
     period: PERIOD.ONE_MONTH,
     APY: 18,
     limit: TIER_LIMIT.TWO_MLN,
     lockupPeriod: PERIOD.ONE_MONTH,
   },
-  twoMonths: {
+  [PERIOD.TWO_MONTHS]: {
     period: PERIOD.TWO_MONTHS,
     APY: 44,
     limit: TIER_LIMIT.TWO_MLN,
     lockupPeriod: PERIOD.ONE_MONTH,
   },
-  threeMonths: {
+  [PERIOD.THREE_MONTHS]: {
     period: PERIOD.THREE_MONTHS,
     APY: 88,
     limit: TIER_LIMIT.TWO_MLN,
@@ -145,10 +145,10 @@ interface StakingState {
 const initialState: StakingState = {
   status: StakingStatus.CONNECT_WALLET,
   APY: {
-    oneWeek: 5,
-    oneMonth: 18,
-    twoMonths: 44,
-    threeMonths: 88,
+    [PERIOD.ONE_WEEK]: 5,
+    [PERIOD.ONE_MONTH]: 18,
+    [PERIOD.TWO_MONTHS]: 44,
+    [PERIOD.THREE_MONTHS]: 88,
   },
   selectedTier: undefined,
   isApprovingIXS: false,

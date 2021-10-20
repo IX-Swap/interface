@@ -12,10 +12,15 @@ import { ConnectWalletButton } from './ConnectWalletButton'
 import { NoIXSTokens } from './NoIXSTokens'
 import { RowCenter } from 'components/Row'
 import { useStakingStatus } from 'state/stake/hooks'
+import { useCurrency } from 'hooks/Tokens'
+import { useActiveWeb3React } from 'hooks/web3'
+import { IXS_ADDRESS } from 'constants/addresses'
 
 export const PromoTokenCard = () => {
   const theme = useTheme()
   const stakingStatus = useStakingStatus()
+  const { chainId } = useActiveWeb3React()
+  const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
   return (
     <PromoTokenCardWrapper data-testid="connect-wallet-card">
       <RowCenter id="promo-staking-wrapper">
@@ -29,7 +34,7 @@ export const PromoTokenCard = () => {
             <TYPE.body3>
               <Trans>
                 Staking is a great way to maximize the value of your holdings, instead of letting them sit idle in your
-                IXS account!
+                {currency?.symbol} account!
                 <br /> Once you have staked your assets, you can earn rewards on your holdings. This allows you to grow
                 your token holdings over time.
               </Trans>

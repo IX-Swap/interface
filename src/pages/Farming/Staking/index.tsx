@@ -10,7 +10,7 @@ import {
   useGetPayouts,
   useGetStakings,
   useGetVestedRewards,
-  useIsVestingPaused,
+  useIsStakingPaused,
   useStakingState,
   useUpdateIXSBalance,
 } from 'state/stake/hooks'
@@ -23,7 +23,7 @@ import { StakingPage } from './StakingPage'
 export const Staking = () => {
   const { IXSBalance, hasStakedSuccessfully, metaMaskAccount, stakings } = useStakingState()
   const { hasUnstakedSuccessfully } = useUnstakingState()
-  const isVestingPaused = useIsVestingPaused()
+  const isStakingPaused = useIsStakingPaused()
   const closeModals = useCloseModals()
   const { chainId, account } = useActiveWeb3React()
   const dispatch = useDispatch<AppDispatch>()
@@ -60,8 +60,8 @@ export const Staking = () => {
   }, [balance])
 
   useEffect(() => {
-    isVestingPaused()
-  }, [isVestingPaused])
+    isStakingPaused()
+  }, [isStakingPaused])
 
   useEffect(() => {
     if (hasStakedSuccessfully || hasUnstakedSuccessfully) {

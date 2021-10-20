@@ -85,10 +85,18 @@ const Body = () => {
               </Column>
             </div>
             <div>{nextPayoutTime ? unixTimeToFormat({ time: nextPayoutTime[0], format: longDate }) : '-'}</div>
-            <div>{formatCurrency(amount, 5)}&nbsp;IXS</div>
-            <div>{formatCurrency(vestingSum, 5)}&nbsp;IXS</div>
-            <div>{formatCurrency(claimed)}&nbsp;IXS</div>
-            <div className={claimPositive ? 'rewards' : ''}>{formatCurrency(claims[index])}&nbsp;IXS</div>
+            <div>
+              {formatCurrency(amount, 5)}&nbsp;{currency?.symbol}
+            </div>
+            <div>
+              {formatCurrency(vestingSum, 5)}&nbsp;{currency?.symbol}
+            </div>
+            <div>
+              {formatCurrency(claimed)}&nbsp;{currency?.symbol}
+            </div>
+            <div className={claimPositive ? 'rewards' : ''}>
+              {formatCurrency(claims[index])}&nbsp;{currency?.symbol}
+            </div>
             <div>
               {claimPositive && (
                 <ClaimButton disabled={transactionInProgress} onClick={() => claimRewards(index)}>

@@ -1,11 +1,12 @@
-import React, { useMemo } from 'react'
+import { t, Trans } from '@lingui/macro'
 import { AbstractConnector } from '@web3-react/abstract-connector'
 import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core'
 import { darken } from 'polished'
-import { Activity } from 'react-feather'
-import { t, Trans } from '@lingui/macro'
-import styled, { css } from 'styled-components'
+import React, { useMemo } from 'react'
 import { isMobile } from 'react-device-detect'
+import { Activity } from 'react-feather'
+import styled, { css } from 'styled-components'
+import { DesktopAndTablet } from 'theme'
 // import CoinbaseWalletIcon from '../../assets/images/coinbaseWalletIcon.svg'
 // import FortmaticIcon from '../../assets/images/fortmaticIcon.png'
 // import PortisIcon from '../../assets/images/portisIcon.png'
@@ -19,10 +20,8 @@ import { isTransactionRecent, useAllTransactions } from '../../state/transaction
 import { TransactionDetails } from '../../state/transactions/reducer'
 import { shortenAddress } from '../../utils'
 import { ButtonSecondary } from '../Button'
-
 import Identicon from '../Identicon'
 import Loader from '../Loader'
-
 import { RowBetween } from '../Row'
 import WalletModal from '../WalletModal'
 
@@ -94,6 +93,9 @@ const Web3StatusConnected = styled(Web3StatusGeneric)<{ pending?: boolean }>`
   padding-right: 10px;
   color: ${({ pending, theme }) => (pending ? theme.white : theme.text1)};
   font-weight: 500;
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+    padding-right: 0;
+  `};
 `
 
 const Text = styled.p`
@@ -131,12 +133,18 @@ function Sock() {
 // eslint-disable-next-line react/prop-types
 function StatusIcon({ connector }: { connector: AbstractConnector }) {
   if (connector === injected) {
-    return <Identicon />
+    return (
+      <DesktopAndTablet>
+        <Identicon />
+      </DesktopAndTablet>
+    )
   } else if (connector === walletconnect) {
     return (
-      <IconWrapper size={16}>
-        <img src={WalletConnectIcon} alt={'WalletConnect'} />
-      </IconWrapper>
+      <DesktopAndTablet>
+        <IconWrapper size={16}>
+          <img src={WalletConnectIcon} alt={'WalletConnect'} />
+        </IconWrapper>
+      </DesktopAndTablet>
     )
   }
   // else if (connector === walletlink) {

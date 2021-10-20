@@ -311,7 +311,9 @@ export function useStakingStatus() {
 
   return status
 }
-
+// export function useMemoizedStakingContract() {
+//   return useMemo(() => {},[chainId])
+// }
 export function useStakingState(): AppState['staking'] {
   return useSelector<AppState, AppState['staking']>((state) => state.staking)
 }
@@ -647,6 +649,7 @@ export function useGetVestedRewards() {
       dispatch(getRewards.pending())
       const rewards = await staking?.vestedTransactions(account)
       const transactions = rewardsAdapter(rewards)
+
       dispatch(getRewards.fulfilled({ transactions }))
       try {
         dispatch(getAvailableClaim.pending())
@@ -677,6 +680,7 @@ export function useGetPayouts() {
     try {
       dispatch(getPayouts.pending())
       const payouts = await staking?.payouts(account)
+
       dispatch(
         getPayouts.fulfilled({ transactions: payouts.map((pay: [BigNumber, BigNumber][]) => payoutsAdapter(pay)) })
       )
@@ -725,15 +729,16 @@ export function useClaimRewards() {
   )
 }
 
-export function useIsVestingPaused() {
+export function useIsStakingPaused() {
   const staking = useIXSStakingContract()
   const dispatch = useDispatch<AppDispatch>()
   return useCallback(async () => {
     try {
       const isPaused = await staking?.paused()
+
       dispatch(getIsStakingPaused({ isPaused }))
     } catch (error) {
-      console.error(`isVestingPaused error `, error)
+      console.error(`isStakingPaused error `, error)
     }
   }, [staking, dispatch])
 }
