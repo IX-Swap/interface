@@ -16,7 +16,8 @@ export const AccountsRoute = {
   transactions: makeURL(['app', 'account', 'transactions']),
   depositCash: makeURL(['app', 'account', 'cashDeposit']),
   withdrawCash: makeURL(['app', 'account', 'cashWithdrawal']),
-  withdrawalAddresses: makeURL(['app', 'account', 'withdrawalAddresses'])
+  withdrawalAddresses: makeURL(['app', 'account', 'withdrawalAddresses']),
+  dashboard: makeURL(['app', 'account', 'dashboard'])
 }
 
 export const accountsLandingLinks: InternalRouteProps[] = [
@@ -59,6 +60,12 @@ export const accountsLandingLinks: InternalRouteProps[] = [
   {
     label: 'Withdrawal Addresses',
     path: AccountsRoute.withdrawalAddresses,
+    color: '#e6d200',
+    icon: WithdrawalAddressIcon
+  },
+  {
+    label: 'Dashboard',
+    path: AccountsRoute.dashboard,
     color: '#e6d200',
     icon: WithdrawalAddressIcon
   }

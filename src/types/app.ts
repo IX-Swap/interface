@@ -37,7 +37,8 @@ export enum AppFeature {
   Users = 'users',
   VirtualAccounts = 'virtual-accounts',
   CapTable = 'captable',
-  DealClosure = 'closure'
+  DealClosure = 'closure',
+  Dashboard = 'dashboard'
 }
 
 export enum NotificationFilter {
