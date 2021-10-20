@@ -2,11 +2,24 @@ import { FACTORY_ADDRESS } from '@ixswap1/v2-sdk'
 import { constructSameAddressMap } from '../utils/constructSameAddressMap'
 import { SupportedChainId } from './chains'
 
-export const MULTICALL2_ADDRESSES = constructSameAddressMap('0x5BA1e12693Dc8F9c48aAD8770482f4739bEeD696')
+export const MULTICALL2_ADDRESSES = {
+  [1]: '0x5BA1e12693Dc8F9c48aAD8770482f4739bEeD696',
+  [4]: '0x5BA1e12693Dc8F9c48aAD8770482f4739bEeD696',
+  [3]: '0x5BA1e12693Dc8F9c48aAD8770482f4739bEeD696',
+  [5]: '0x5BA1e12693Dc8F9c48aAD8770482f4739bEeD696',
+  [42]: '0x5BA1e12693Dc8F9c48aAD8770482f4739bEeD696',
+  [80001]: '0xBC3B2826B3968a877C82D274A0389c16fBBcc742',
+  [137]: '0x65Eed76951B6660bb0b80AF8D8A3AC6b10C6e65F',
+}
 
 export const SUPPORTED_TGE_CHAINS = { MAIN: 1, KOVAN: 42, MATIC: 137, MUMBAI: 80001 }
 export const TGE_CHAINS_WITH_SWAP = [SUPPORTED_TGE_CHAINS.KOVAN]
-export const TGE_CHAINS_WITH_STAKING = [SUPPORTED_TGE_CHAINS.KOVAN, SUPPORTED_TGE_CHAINS.MAIN]
+export const TGE_CHAINS_WITH_STAKING = [
+  SUPPORTED_TGE_CHAINS.KOVAN,
+  SUPPORTED_TGE_CHAINS.MAIN,
+  SUPPORTED_TGE_CHAINS.MUMBAI,
+  SUPPORTED_TGE_CHAINS.MATIC,
+]
 export const ETHEREUM_TGE_CHAINS = [SUPPORTED_TGE_CHAINS.KOVAN, SUPPORTED_TGE_CHAINS.MAIN]
 export const MATIC_TGE_CHAINS = [SUPPORTED_TGE_CHAINS.MATIC, SUPPORTED_TGE_CHAINS.MUMBAI]
 // the rest are same as kovan for now
@@ -23,9 +36,8 @@ export const IXS_ADDRESS: { [key: number]: string } = {
 export const IXS_GOVERNANCE_ADDRESS: { [key: number]: string } = {
   [1]: '0xf65dd1B5dE5655B56Ae8beAE49Bb2bCb95B1F20c',
   [42]: '0xB1519Ffe2761Eb68C11F53eBb550f71C4E04C35F',
-  // setting matic chains equal to kovan for now
-  [80001]: '0xB1519Ffe2761Eb68C11F53eBb550f71C4E04C35F',
-  [137]: '0xB1519Ffe2761Eb68C11F53eBb550f71C4E04C35F',
+  [80001]: '0x7eE23bF4246e9923D1f923066214afEDe60B1d5C',
+  [137]: '0xe09910d2DA99Bad626f3747E0621Df7C4aEE1465',
 }
 export const IXS_VESTING_ADDRESS: { [key: number]: string } = {
   [1]: '0x7e6A90091a77bcd49D48C412A54087981f915F7c',
@@ -37,8 +49,8 @@ export const IXS_VESTING_ADDRESS: { [key: number]: string } = {
 export const IXS_STAKING_V1_ADDRESS: { [key: number]: string } = {
   [1]: '0x13Ca6Daab84af2A452f86Ea437bb90c6217a220c',
   [42]: '0xf49A087aA48C0A4f0dEa6428F1175e1bB45CDAa2',
-  [80001]: '',
-  [137]: '',
+  [80001]: '0x2274FAE295FA3Fa87777E3A73Cb30D64dbb20685',
+  [137]: '0xad644F3cC768bc6dceF97096790e2210D5191cec',
 }
 export const SWAP_ROUTER_ADDRESS: { [key: number]: string } = {
   [1]: '',
@@ -71,7 +83,7 @@ export const SOCKS_CONTROLLER_ADDRESSES = {
 
 export const STAKING_ALTERNATE_MAP = {
   [SupportedChainId.MAINNET]: SupportedChainId.KOVAN,
-  [SupportedChainId.KOVAN]: SupportedChainId.MAINNET,
+  [SupportedChainId.KOVAN]: SupportedChainId.MUMBAI,
   [SupportedChainId.MATIC]: SupportedChainId.MAINNET,
   [SupportedChainId.MUMBAI]: SupportedChainId.KOVAN,
 }

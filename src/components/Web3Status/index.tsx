@@ -93,6 +93,9 @@ const Web3StatusConnected = styled(Web3StatusGeneric)<{ pending?: boolean }>`
   padding-right: 10px;
   color: ${({ pending, theme }) => (pending ? theme.white : theme.text1)};
   font-weight: 500;
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+    padding-right: 0;
+  `};
 `
 
 const Text = styled.p`

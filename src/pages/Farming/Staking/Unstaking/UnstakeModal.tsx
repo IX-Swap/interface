@@ -15,6 +15,9 @@ import { IStaking, PeriodsEnum } from 'constants/stakingPeriods'
 import { EarlyUnstake } from './EarlyUnstakeModalContent'
 import { FullUnstake } from './FullUnstakeModalContent'
 import { useTransactionAdder } from 'state/transactions/hooks'
+import { useActiveWeb3React } from 'hooks/web3'
+import { useCurrency } from 'hooks/Tokens'
+import { IXS_ADDRESS } from 'constants/addresses'
 
 interface UnstakingModalProps {
   onDismiss: () => void
@@ -40,6 +43,8 @@ export function UnstakeModal({ onDismiss, stake }: UnstakingModalProps) {
   const unstake = useUnstakeFrom(stake?.period)
   const increaseAllowance = useIncreaseIXSGovAllowance()
   const addTransaction = useTransactionAdder()
+  const { chainId } = useActiveWeb3React()
+  const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
 
   useEffect(() => {
     if (isOpen) {
@@ -57,7 +62,7 @@ export function UnstakeModal({ onDismiss, stake }: UnstakingModalProps) {
     const unstakeTx = await unstake(stake, parseFloat(amount))
     if (unstakeTx) {
       addTransaction(unstakeTx, {
-        summary: t`Unstake ${amount} IXS`,
+        summary: t`Unstake ${amount} ${currency?.symbol}`,
       })
     }
   }
@@ -72,7 +77,7 @@ export function UnstakeModal({ onDismiss, stake }: UnstakingModalProps) {
 
     if (unstakeTx) {
       addTransaction(unstakeTx, {
-        summary: t`Unstake ${stake?.stakeAmount} IXS`,
+        summary: t`Unstake ${stake?.stakeAmount} ${currency?.symbol}`,
       })
     }
   }
@@ -90,8 +95,8 @@ export function UnstakeModal({ onDismiss, stake }: UnstakingModalProps) {
       isOpen={isOpen}
       onDismiss={wrappedOnDismiss}
       scrollable
-      tip={t`Tip: To unstake IXS tokens you need to have enough IXSgov tokens. 
-You can unstake IXS tokens equal to the number of IXSgov tokens in your account.`}
+      tip={t`Tip: To unstake ${currency?.symbol} tokens you need to have enough IXSgov tokens. 
+You can unstake ${currency?.symbol} tokens equal to the number of IXSgov tokens in your account.`}
     >
       <ModalBlurWrapper>
         <EarnModalContentWrapper>

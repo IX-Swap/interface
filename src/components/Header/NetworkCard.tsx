@@ -41,7 +41,11 @@ const SelectorControls = styled(VioletCard)`
   `};
 `
 
-const NetworkCardWrapper = styled.div``
+const NetworkCardWrapper = styled.div`
+  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
+     max-width: min-content;
+  `};
+`
 
 const FlyoutHeader = styled.div`
   color: ${({ theme }) => theme.text2};

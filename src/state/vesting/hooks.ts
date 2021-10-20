@@ -156,7 +156,7 @@ export function useClaimAll(): () => Promise<any> {
           summary: t`Claimed ${formatCurrencyAmount(
             CurrencyAmount.fromRawAmount(currency, claimable),
             currency?.decimals ?? 18
-          )} IXS`,
+          )} ${currency?.symbol}`,
         })
       }
 

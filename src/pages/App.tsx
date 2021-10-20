@@ -128,8 +128,10 @@ export default function App() {
               <Route exact strict path={routes.vesting} component={VestingTab} />
 
               {chainId && TGE_CHAINS_WITH_SWAP.includes(chainId) && <Route component={RedirectPathToSwapOnly} />}
-              {chainId === SUPPORTED_TGE_CHAINS.MAIN && <Route component={RedirectPathToStaking} />}
-              {chainId && MATIC_TGE_CHAINS.includes(chainId) && <Route component={RedirectPathToVesting} />}
+              {chainId &&
+                [SUPPORTED_TGE_CHAINS.MAIN, SUPPORTED_TGE_CHAINS.MUMBAI, SUPPORTED_TGE_CHAINS.MATIC].includes(
+                  chainId
+                ) && <Route component={RedirectPathToStaking} />}
             </Switch>
           </Web3ReactManager>
           <Marginer />

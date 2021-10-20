@@ -1,37 +1,34 @@
 import { ButtonIXSGradient } from 'components/Button'
 import Column from 'components/Column'
 import { ModalBottomWrapper } from 'components/earn/styled'
-import Row from 'components/Row'
+import Row, { RowCenter } from 'components/Row'
 import { BodyRow, HeaderRow } from 'components/Table'
 import styled from 'styled-components'
-import { gradientBorder } from 'theme'
+import { gradientBorder, TYPE } from 'theme'
 
+export const CardsWrapper = styled.div`
+  overflow: auto;
+  max-width: 90vw;
+  ::-webkit-scrollbar-thumb {
+    display: none;
+  }
+  ::-webkit-scrollbar {
+    display: none;
+  }
+`
 export const CardsRow = styled(Row)`
   justify-content: center;
-  flex-wrap: wrap;
-
-  > div {
-    margin-right: 16px;
-    margin-left: 16px;
-    margin-top: 0;
-  }
-
-  @media only screen and (max-width: 1007px) {
-    flex-wrap: wrap;
-
-    > div:nth-child(3) {
-      margin-top: 33px;
-    }
-  }
+  flex-wrap: nowrap;
+  min-width: fit-content;
+  max-width: 100vw;
+  width: 100%;
+  gap: 33px;
 
   @media only screen and (max-width: 683px) {
     grid-template-columns: 100%;
 
     > div {
       justify-self: center;
-    }
-    > div:nth-child(2) {
-      margin-top: 33px;
     }
   } ;
 `
@@ -140,6 +137,10 @@ export const StakingTierCardWrapper = styled(StakingCard)`
     button {
       opacity: 1;
     }
+  }
+  @media only screen and (max-width: 683px) {
+    height: 379px;
+    width: 234px;
   }
 `
 
@@ -297,4 +298,32 @@ export const LoaderContainer = styled.div`
 export const OptionList = styled.ul`
   margin: 8px 0 0 0;
   padding: 0;
+`
+export const APYWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  @media only screen and (max-width: 683px) {
+    flex-direction: row;
+    justify-content: center;
+    gap: 8px;
+  }
+`
+
+export const APYPercentage = styled(TYPE.main0)`
+  @media only screen and (max-width: 683px) {
+    font-size: 36px;
+  }
+`
+export const RowWithMarginTop = styled(RowCenter)`
+  margin-top: 15px;
+  @media only screen and (max-width: 683px) {
+    margin-top: 5px;
+  }
+`
+export const RowWithMarginTopAndBottom = styled(RowWithMarginTop)`
+  margin-bottom: 22px;
+  @media only screen and (max-width: 683px) {
+    margin-bottom: 15px;
+  }
 `
