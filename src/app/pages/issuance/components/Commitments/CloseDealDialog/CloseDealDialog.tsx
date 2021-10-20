@@ -14,6 +14,7 @@ import useStyles from './CloseDealDialog.styles'
 import { OTPForm } from 'app/pages/issuance/components/Commitments/CloseDealDialog/OTPForm'
 import { VSpacer } from 'components/VSpacer'
 import { useCloseDeal } from 'app/pages/issuance/hooks/useCloseDeal'
+import { useParams } from 'react-router-dom'
 
 export interface ModalProps extends Partial<DialogProps> {
   open?: boolean
@@ -21,12 +22,13 @@ export interface ModalProps extends Partial<DialogProps> {
 }
 
 export const CloseDealDialog = (props: ModalProps) => {
+  const { dsoId } = useParams<{ dsoId: string }>()
   const { open = false, toggleOpen } = props
   const classes = useStyles()
   const theme = useTheme()
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const {
-    mutation: [closeDeal, { isLoading, status }]
+    mutation: [closeDeal, { isLoading }]
   } = useCloseDeal()
 
   return (
@@ -72,10 +74,8 @@ export const CloseDealDialog = (props: ModalProps) => {
             isLoading={isLoading}
             onClose={() => toggleOpen()}
             onSubmit={async values => {
-              await closeDeal(values)
-              if (status === 'success') {
-                toggleOpen()
-              }
+              await closeDeal({ dso: dsoId, ...values })
+              toggleOpen()
             }}
           />
         </DialogActions>

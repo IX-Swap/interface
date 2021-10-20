@@ -1,15 +1,17 @@
 import React from 'react'
-import { Grid } from '@material-ui/core'
-import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
+import { Grid, Typography } from '@material-ui/core'
 import { DigitalSecurityOffering } from 'types/dso'
 import { addSymbol, formatMoney } from 'helpers/numbers'
 import { LabelledValue } from 'components/LabelledValue'
+import { VSpacer } from 'components/VSpacer'
+import useStyles from 'app/components/DSO/components/styles'
 
 export interface DSOPricingViewCompactProps {
   dso: DigitalSecurityOffering
 }
 
 export const DSOPricingViewCompact = ({ dso }: DSOPricingViewCompactProps) => {
+  const classes = useStyles()
   const currency = dso.currency.symbol
   const totalFundraisingAmount =
     dso.totalFundraisingAmount !== null
@@ -29,9 +31,21 @@ export const DSOPricingViewCompact = ({ dso }: DSOPricingViewCompactProps) => {
       : 0
 
   return (
-    <Grid container direction='column' spacing={3}>
+    <Grid
+      container
+      direction='column'
+      spacing={3}
+      className={classes.newDSOViewItemStyles}
+    >
       <Grid item>
-        <FormSectionHeader title='Pricing' />
+        <Typography
+          variant={'h4'}
+          color={'primary'}
+          style={{ fontWeight: 700 }}
+        >
+          Pricing
+        </Typography>
+        <VSpacer size={'small'} />
       </Grid>
 
       <Grid container item>

@@ -7,9 +7,20 @@ import { formatMoney } from 'helpers/numbers'
 import { VSpacer } from 'components/VSpacer'
 import { LabelIcon } from 'app/pages/issuance/components/CapTable/LabelIcon'
 import { ReactComponent as PaymentsIcon } from 'assets/icons/payments_black_24dp.svg'
+import { useBalancesByType } from 'hooks/balance/useBalancesByType'
+import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
+import { useParams } from 'react-router'
 
 export const AvailableBalance = () => {
-  const value = formatMoney(172517, 'S$')
+  let value = '0'
+  const { data: assetData } = useBalancesByType('Currency')
+
+  const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
+  const { data: dsoData } = useDSOById(dsoId, issuerId)
+  if (assetData !== undefined) {
+    const asset = assetData.map[dsoData?.currency._id ?? '']
+    value = formatMoney(asset?.available ?? 0, asset?.symbol ?? '')
+  }
 
   return (
     <ChartWrapper py={2.5}>

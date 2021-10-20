@@ -58,5 +58,9 @@ export const authorizerItemMap: Record<
   [AppFeature.VirtualAccounts]: {
     uri: virtualAccounts.getAll,
     listRoute: AuthorizerRoute.virtualAccounts
+  },
+  [AppFeature.TokenDeployment]: {
+    uri: '/issuance/dso/list',
+    listRoute: AuthorizerRoute.tokenDeployment
   }
 }

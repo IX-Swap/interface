@@ -82,6 +82,9 @@ export interface BaseDigitalSecurityOffering extends AuthorizableWithIdentity {
   policyBuilder?: {}
   user: string
   decimalPlaces?: number
+  uniqueIdentifierCode?: string
+  dealStatus?: string
+  marketType?: string
 }
 
 export interface DSOInsight {
@@ -148,6 +151,7 @@ export type DSOFormValues = Omit<
   team: DsoTeamMember[]
   faqs: DsoFAQItem[]
   videos: DsoVideo[]
+  uidCode?: string
 }
 
 export type DSORequestArgs = Partial<

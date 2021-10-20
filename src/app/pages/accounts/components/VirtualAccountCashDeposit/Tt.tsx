@@ -35,6 +35,10 @@ export const Tt = ({ accountId, currency }: DepositInfoProps) => {
     {
       label: 'Message to receiver/beneficiary/Ref/Bill ref:',
       value: 'InvestaX to recommend'
+    },
+    {
+      label: 'Time Estimation for Deposit:',
+      value: '2-5 Business Days'
     }
   ]
   return (

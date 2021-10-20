@@ -3,7 +3,7 @@ import { PlaceOrderForm } from 'app/pages/exchange/components/PlaceOrderForm/Pla
 import { Box, Grid } from '@material-ui/core'
 import { MyOrders } from 'app/pages/exchange/components/MyOrders/MyOrders'
 import { FinancialSummary } from 'app/pages/exchange/components/FinancialSummary/FinancialSummary'
-import { useStyles } from 'app/pages/exchange/pages/market/Market.style'
+import { useStyles } from 'app/pages/exchange/pages/market/Market.styles'
 import { InvestorLiveOrderBook } from 'app/pages/exchange/components/InvestorLiveOrderBook/InvestorLiveOrderBook'
 import { TVChartContainer } from 'app/pages/invest/components/TVChartContainer/TVChartContainer'
 import { Trades } from 'app/pages/exchange/components/Trades/Trades'
@@ -24,21 +24,22 @@ import { useTokenBalance } from 'app/pages/exchange/hooks/useTokenBalance'
 import { DisclosureDialog } from 'app/pages/exchange/components/DisclosureDialog/DisclosureDialog'
 import { useGetSiteConfig } from 'app/pages/exchange/hooks/useGetSiteConfig'
 import { ExchangeRulesLink } from 'app/pages/exchange/components/ExchangeRulesLink/ExchangeRulesLink'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 
 export const Market = () => {
   const [isDisclosureVisible, setIsDisclosureVisible] = useState<boolean>(false)
   const { data: config } = useGetSiteConfig()
-  const hasReadMasDisclosure =
-    config !== undefined ? config.hasReadMasDisclosure : false
+  const hasAcceptedMasDisclosure =
+    config !== undefined ? config.hasAcceptedMasDisclosure : false
   const masDisclosure = config !== undefined ? config.masDisclosure : ''
 
   useEffect(() => {
-    if (!hasReadMasDisclosure) {
+    if (!hasAcceptedMasDisclosure) {
       setIsDisclosureVisible(true)
     } else {
       setIsDisclosureVisible(false)
     }
-  }, [hasReadMasDisclosure, setIsDisclosureVisible])
+  }, [hasAcceptedMasDisclosure, setIsDisclosureVisible])
 
   const classes = useStyles()
   const {
@@ -48,6 +49,7 @@ export const Market = () => {
     isFetching,
     createOrderStatus
   } = useCustodianWalletSubmit()
+  const { theme } = useAppBreakpoints()
   const [datafeed] = React.useState<IBasicDataFeed>(() => getDataFeed())
   const { pairId } = useParams<{ pairId: string }>()
   const { data, isLoading } = useMarketList()
@@ -81,11 +83,7 @@ export const Market = () => {
 
   return (
     <Box className={classes.container}>
-      <DisclosureDialog
-        content={masDisclosure}
-        isOpen={isDisclosureVisible}
-        onClose={() => setIsDisclosureVisible(false)}
-      />
+      <DisclosureDialog content={masDisclosure} isOpen={isDisclosureVisible} />
       <GetWalletDialog open={openDialog} toggleOpen={setOpenDialog} />
       <Grid item container xs={12} justify='flex-end'>
         <ExchangeRulesLink />
@@ -110,7 +108,14 @@ export const Market = () => {
         <Grid item container>
           <Grid item className={classes.middleBlock} xs={12}>
             {symbol.length > 0 && (
-              <TVChartContainer datafeed={datafeed} symbol={symbol} />
+              <TVChartContainer
+                data-testid={'lol'}
+                datafeed={datafeed}
+                symbol={symbol}
+                theme={theme.palette.type === 'dark' ? 'Dark' : 'Light'}
+                toolbarBg={theme.palette.type === 'dark' ? '#292929' : ''}
+                customCssUrl={'./trading-view_dark.css'}
+              />
             )}
           </Grid>
           <Grid item className={classes.colorGrid} xs={12}>

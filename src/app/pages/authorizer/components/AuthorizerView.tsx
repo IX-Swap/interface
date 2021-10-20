@@ -103,26 +103,27 @@ export const AuthorizerView = <T,>(
                   <VSpacer size='medium' />
                 </Grid>
 
-                {category !== 'virtual-accounts' && (
-                  <Grid item>
-                    <Typography variant='h3'>
-                      Authorization Documents
-                    </Typography>
-                    <VSpacer size='small' />
-                    <Form
-                      defaultValues={{
-                        documents: documents.map(value => ({ value }))
-                      }}
-                    >
-                      <AuthorizationDocuments
-                        resourceId={data._id}
-                        feature={feature}
-                      />
-                    </Form>
-                  </Grid>
-                )}
+                {category !== 'virtual-accounts' &&
+                  category !== 'token-deployment' && (
+                    <Grid item>
+                      <Typography variant='h3'>
+                        Authorization Documents
+                      </Typography>
+                      <VSpacer size='small' />
+                      <Form
+                        defaultValues={{
+                          documents: documents.map(value => ({ value }))
+                        }}
+                      >
+                        <AuthorizationDocuments
+                          resourceId={data._id}
+                          feature={feature}
+                        />
+                      </Form>
+                    </Grid>
+                  )}
 
-                {showForm && (
+                {showForm && category !== 'token-deployment' && (
                   <Grid item style={{ marginTop: 20 }}>
                     <AuthorizerForm status={data.status} itemId={data._id} />
                   </Grid>

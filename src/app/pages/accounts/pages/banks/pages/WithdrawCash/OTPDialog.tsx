@@ -16,6 +16,60 @@ import { plainValueExtractor } from 'helpers/forms'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
 
+export const OTPDialogContent = ({
+  close,
+  content,
+  actionLabel
+}: Pick<OTPDialogProps, 'close' | 'content' | 'actionLabel'>) => {
+  const { control, watch, formState } = useFormContext<WithdrawCashFormValues>()
+  const otpValue = watch('otp')
+
+  return (
+    <>
+      <DialogContent>
+        {content !== undefined ? <>{content}</> : null}
+        <TypedField
+          control={control}
+          customRenderer
+          component={OTPField}
+          name='otp'
+          label='Please enter your OTP from authenticator before proceeding'
+          variant='outlined'
+          valueExtractor={plainValueExtractor}
+          shouldAutoFocus
+        />
+      </DialogContent>
+      <VSpacer size='small' />
+      <DialogActions>
+        <Grid container spacing={2} justify='center'>
+          <Grid item>
+            <Button variant='outlined' color='primary' onClick={close}>
+              Cancel
+            </Button>
+          </Grid>
+          <Grid item>
+            <Button
+              type='submit'
+              variant='contained'
+              color='primary'
+              disableElevation
+              disabled={
+                otpValue === undefined ||
+                otpValue === null ||
+                otpValue === '' ||
+                otpValue.length < 6 ||
+                formState.isSubmitting
+              }
+            >
+              {actionLabel ?? 'Withdraw'}
+            </Button>
+          </Grid>
+        </Grid>
+      </DialogActions>
+      <VSpacer size='medium' />
+    </>
+  )
+}
 interface OTPDialogProps {
   close: () => void
   open: boolean
@@ -24,15 +78,8 @@ interface OTPDialogProps {
   actionLabel?: string
 }
 
-export const OTPDialog = ({
-  close,
-  open,
-  title,
-  content,
-  actionLabel
-}: OTPDialogProps) => {
-  const { control, watch, formState } = useFormContext<WithdrawCashFormValues>()
-  const otpValue = watch('otp')
+export const OTPDialog = (props: OTPDialogProps) => {
+  const { close, open, title } = props
 
   return (
     <Dialog disablePortal open={open} maxWidth='md' onBackdropClick={close}>
@@ -46,47 +93,8 @@ export const OTPDialog = ({
             {title ?? 'Cash Withdrawal'}
           </Typography>
         </DialogTitle>
-        <DialogContent>
-          {content !== undefined ? <>{content}</> : null}
-          <TypedField
-            control={control}
-            customRenderer
-            component={OTPField}
-            name='otp'
-            label='Please enter your OTP from authenticator before proceeding'
-            variant='outlined'
-            valueExtractor={plainValueExtractor}
-            shouldAutoFocus
-          />
-        </DialogContent>
-        <VSpacer size='small' />
-        <DialogActions>
-          <Grid container spacing={2} justify='center'>
-            <Grid item>
-              <Button variant='outlined' color='primary' onClick={close}>
-                Cancel
-              </Button>
-            </Grid>
-            <Grid item>
-              <Button
-                type='submit'
-                variant='contained'
-                color='primary'
-                disableElevation
-                disabled={
-                  otpValue === undefined ||
-                  otpValue === null ||
-                  otpValue === '' ||
-                  otpValue.length < 6 ||
-                  formState.isSubmitting
-                }
-              >
-                {actionLabel ?? 'Withdraw'}
-              </Button>
-            </Grid>
-          </Grid>
-        </DialogActions>
       </Box>
+      <OTPDialogContent {...props} />
     </Dialog>
   )
 }

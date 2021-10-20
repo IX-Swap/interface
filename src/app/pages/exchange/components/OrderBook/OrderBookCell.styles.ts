@@ -9,7 +9,7 @@ export const useStyles = makeStyles(theme => ({
     paddingTop: 1,
     paddingBottom: 1,
     fontSize: 12,
-    borderBottom: `5px solid ${theme.palette.backgrounds.default as string}`,
+    borderBottom: `5px solid transparent`,
     '&:first-child': {
       color: (props: Props) =>
         props.transaction === 'sell'

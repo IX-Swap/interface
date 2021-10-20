@@ -37,7 +37,7 @@ export const CorporateUploadDocumentsForm = (
           label='Corporate Documents'
           helperElement={
             <Typography variant='body1'>
-              company registry profile, certificate of incorporation, memroandum
+              company registry profile, certificate of incorporation, memorandum
               and articles of association, company organisation chart, register
               of shareholders and directors, partnership deed and trust deed
             </Typography>

@@ -128,6 +128,9 @@ export const TableView = <T,>({
                 checked={getIsItemsSelected(_items)}
                 indeterminate={getIsIndeterminate(_items)}
                 onClick={() => toggleAll(_items)}
+                style={{
+                  color: '#fff'
+                }}
               />
             }
             label={<b>{columns[0].label}</b>}

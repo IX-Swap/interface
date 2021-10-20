@@ -9,7 +9,7 @@ import {
   PlaceOrderFormValues
 } from 'app/pages/exchange/types/form'
 import { PlaceOrderFields } from 'app/pages/exchange/components/PlaceOrderFields/PlaceOrderFields'
-import { useStyles } from 'app/pages/exchange/components/PlaceOrderForm/PlaceOrderForm.style'
+import { useStyles } from 'app/pages/exchange/components/PlaceOrderForm/PlaceOrderForm.styles'
 import { Submit } from 'components/form/Submit'
 import { transformPlaceOrderFormValuesToArgs } from 'app/pages/exchange/utils/order'
 import { useParams } from 'react-router'
@@ -52,11 +52,7 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
   }
 
   return (
-    <Form
-      onSubmit={handleSubmit}
-      // TODO Uncomment after testing
-      // validationSchema={placeOrderFormValidationSchema(balance)}
-    >
+    <Form onSubmit={handleSubmit}>
       <Grid container direction={'column'} className={classes.container}>
         <Grid item>
           <Tabs

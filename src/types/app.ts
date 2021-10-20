@@ -38,6 +38,7 @@ export enum AppFeature {
   VirtualAccounts = 'virtual-accounts',
   CapTable = 'captable',
   DealClosure = 'closure',
+  TokenDeployment = 'token-deployment',
   Dashboard = 'dashboard'
 }
 
@@ -66,5 +67,6 @@ export enum AuthorizerCategory {
   WithdrawalAddresses = 'withdrawal-addresses',
   Listings = 'listings',
   VirtualAccounts = 'virtual-accounts',
-  DealClosure = 'closure'
+  DealClosure = 'closure',
+  TokenDeployment = 'token-deployment'
 }

@@ -108,14 +108,6 @@ describe('Topbar', () => {
     expect(TopbarLinkContainer).toHaveBeenNthCalledWith(
       4,
       expect.objectContaining({
-        label: 'Funds Management',
-        link: IssuanceRoute.insight
-      }),
-      {}
-    )
-    expect(TopbarLinkContainer).toHaveBeenNthCalledWith(
-      5,
-      expect.objectContaining({
         label: 'Issuance',
         link: IssuanceRoute.list
       }),
@@ -157,18 +149,49 @@ describe('Topbar', () => {
     expect(TopbarLinkContainer).toHaveBeenNthCalledWith(
       4,
       expect.objectContaining({
-        label: 'Funds Management',
-        link: IssuanceRoute.insight
-      }),
-      {}
-    )
-
-    expect(TopbarLinkContainer).toHaveBeenNthCalledWith(
-      5,
-      expect.objectContaining({
         label: 'Authorizer',
         link: AuthorizerRoute.landing,
         disabled: true
+      }),
+      {}
+    )
+  })
+
+  it('renders TopbarLink correctly if user is fund manager', () => {
+    jest.spyOn(acl, 'useIsFundManager').mockReturnValue(true)
+
+    render(<TopbarContainer />)
+
+    expect(TopbarLinkContainer).toHaveBeenNthCalledWith(
+      1,
+      expect.objectContaining({
+        label: 'Home',
+        link: HomeRoute.landing
+      }),
+      {}
+    )
+    expect(TopbarLinkContainer).toHaveBeenNthCalledWith(
+      2,
+      expect.objectContaining({
+        label: 'Accounts',
+        link: AccountsRoute.landing,
+        disabled: true
+      }),
+      {}
+    )
+    expect(TopbarLinkContainer).toHaveBeenNthCalledWith(
+      3,
+      expect.objectContaining({
+        label: 'Invest',
+        link: InvestRoute.landing
+      }),
+      {}
+    )
+    expect(TopbarLinkContainer).toHaveBeenNthCalledWith(
+      4,
+      expect.objectContaining({
+        label: 'Funds Management',
+        link: IssuanceRoute.insight
       }),
       {}
     )

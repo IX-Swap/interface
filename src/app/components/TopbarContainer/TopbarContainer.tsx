@@ -1,5 +1,10 @@
 import React from 'react'
-import { useIsAdmin, useIsAuthorizer, useIsIssuer } from 'helpers/acl'
+import {
+  useIsAdmin,
+  useIsAuthorizer,
+  useIsFundManager,
+  useIsIssuer
+} from 'helpers/acl'
 import {
   accountsLandingLinks,
   AccountsRoute
@@ -30,6 +35,7 @@ export const TopbarContainer = () => {
   const isAuthorizer = useIsAuthorizer()
   const isIssuer = useIsIssuer()
   const isAdmin = useIsAdmin()
+  const isFundManager = useIsFundManager()
 
   const isSuperUser = isAuthorizer || isAdmin
   const links = [
@@ -47,12 +53,15 @@ export const TopbarContainer = () => {
       label: 'Invest',
       link: InvestRoute.landing,
       icon: InvestIcon
-    },
-    {
-      label: 'Funds Management',
-      link: IssuanceRoute.insight
     }
   ]
+
+  if (isFundManager) {
+    links.push({
+      label: 'Funds Management',
+      link: IssuanceRoute.insight
+    } as any)
+  }
 
   if (isIssuer) {
     links.push({
@@ -78,6 +87,10 @@ export const TopbarContainer = () => {
     {
       label: 'News',
       path: HomeRoute.landing
+    },
+    {
+      label: 'Research Terminal',
+      path: HomeRoute.securitiesMarkets
     }
   ]
 
@@ -125,7 +138,13 @@ export const TopbarContainer = () => {
       case 'Home':
         return homeLinks
       case 'Authorizer':
-        return authorizerLandingLinks
+        return [
+          {
+            label: 'Dashboard',
+            path: AuthorizerRoute.landing
+          },
+          ...authorizerLandingLinks
+        ]
       case 'Accounts':
         return newAccountsLandingLinks
       case 'Issuance':

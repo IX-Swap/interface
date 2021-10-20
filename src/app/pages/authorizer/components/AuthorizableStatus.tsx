@@ -9,70 +9,100 @@ interface AuthorizableStatusProps {
   isNewTheme?: boolean
 }
 
+export interface AuthChipProps {
+  classname: string
+  newTheme: string
+  status?: string
+  compactChar: string
+  compact: boolean
+  isNewTheme: boolean
+}
+
+export const AuthChip = ({
+  classname,
+  newTheme,
+  status,
+  compactChar,
+  compact,
+  isNewTheme
+}: AuthChipProps) => {
+  const classes = useStyles()
+  return (
+    <Typography
+      className={classNames(classes.authStatus, classname, {
+        [classes.compact]: compact,
+        [classes.authStatusNewTheme]: isNewTheme,
+        [newTheme]: isNewTheme
+      })}
+    >
+      {compact ? compactChar : status}
+    </Typography>
+  )
+}
+
 export const AuthorizableStatus: React.FC<AuthorizableStatusProps> = props => {
   const { status, compact = true, isNewTheme = false } = props
   const classes = useStyles()
+  const compactStatus = status?.split(' ').pop()?.[0].toUpperCase() ?? ''
 
   switch (status) {
     case 'Approved':
+    case 'Funds transferred':
+    case 'DEPLOYED':
       return (
-        <Typography
-          className={classNames(classes.authStatus, classes.approved, {
-            [classes.compact]: compact,
-            [classes.authStatusNewTheme]: isNewTheme,
-            [classes.approvedNewTheme]: isNewTheme
-          })}
-        >
-          {compact ? 'A' : 'Approved'}
-        </Typography>
+        <AuthChip
+          {...props}
+          compact={compact}
+          isNewTheme={isNewTheme}
+          compactChar={compactStatus}
+          classname={classes.approved}
+          newTheme={classes.approvedNewTheme}
+        />
       )
     case 'Rejected':
+    case 'Funds on hold':
+    case 'Failed':
       return (
-        <Typography
-          className={classNames(classes.authStatus, classes.rejected, {
-            [classes.compact]: compact,
-            [classes.authStatusNewTheme]: isNewTheme,
-            [classes.rejectedNewTheme]: isNewTheme
-          })}
-        >
-          {compact ? 'R' : 'Rejected'}
-        </Typography>
+        <AuthChip
+          {...props}
+          compact={compact}
+          isNewTheme={isNewTheme}
+          compactChar={compactStatus}
+          classname={classes.rejected}
+          newTheme={classes.rejectedNewTheme}
+        />
       )
+
     case 'Submitted':
-      return (
-        <Typography
-          className={classNames(classes.authStatus, classes.unauthorized, {
-            [classes.compact]: compact,
-            [classes.authStatusNewTheme]: isNewTheme,
-            [classes.submittedNewTheme]: isNewTheme
-          })}
-        >
-          {compact ? 'S' : 'Submitted'}
-        </Typography>
-      )
     case 'Closed':
+    case 'Settlement in Progress':
+    case 'Draft':
       return (
-        <Typography
-          className={classNames(classes.authStatus, classes.unauthorized, {
-            [classes.compact]: compact,
-            [classes.authStatusNewTheme]: isNewTheme,
-            [classes.unauthorizedNewTheme]: isNewTheme
-          })}
-        >
-          {compact ? 'C' : 'Closed'}
-        </Typography>
+        <AuthChip
+          {...props}
+          compact={compact}
+          isNewTheme={isNewTheme}
+          compactChar={compactStatus}
+          classname={classes.unauthorized}
+          newTheme={classes.submittedNewTheme}
+        />
       )
+
+    case 'Open':
+    case 'Not funded':
+    case 'PENDING':
+      return (
+        <AuthChip
+          {...props}
+          compact={compact}
+          isNewTheme={isNewTheme}
+          compactChar={compactStatus}
+          classname={classes.open}
+          newTheme={classes.openNewTheme}
+        />
+      )
+
     default:
-      return (
-        <Typography
-          className={classNames(classes.authStatus, classes.unauthorized, {
-            [classes.compact]: compact,
-            [classes.authStatusNewTheme]: isNewTheme,
-            [classes.unauthorizedNewTheme]: isNewTheme
-          })}
-        >
-          {compact ? 'D' : 'Draft'}
-        </Typography>
-      )
+      return <></>
   }
 }
