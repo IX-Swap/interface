@@ -111,7 +111,7 @@ export const NetworkCard = () => {
 
   function Row({ targetChain }: { targetChain: number }) {
     const handleRowClick = () => {
-      if (chainId !== targetChain && library) {
+      if (chainId !== targetChain && library && library?.provider?.isMetaMask) {
         switchToNetwork({ library, chainId: targetChain })
         toggle()
       }
