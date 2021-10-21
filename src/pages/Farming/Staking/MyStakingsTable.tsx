@@ -7,10 +7,8 @@ import { LoaderThin } from 'components/Loader/LoaderThin'
 import Row from 'components/Row'
 import { Table } from 'components/Table'
 import { MouseoverTooltip } from 'components/Tooltip'
-import { IXS_ADDRESS } from 'constants/addresses'
 import { IStaking } from 'constants/stakingPeriods'
-import { useCurrency } from 'hooks/Tokens'
-import { useActiveWeb3React } from 'hooks/web3'
+import useIXSCurrency from 'hooks/useIXSCurrency'
 import React from 'react'
 import { Box } from 'rebass'
 import { ApplicationModal } from 'state/application/actions'
@@ -19,6 +17,7 @@ import { useStakingState } from 'state/stake/hooks'
 import { TYPE } from 'theme'
 import {
   Container,
+  LoaderContainer,
   LockedTillColumn,
   MutedText,
   NoData,
@@ -26,7 +25,6 @@ import {
   StyledHeaderRow,
   Tier,
   UnstakeButton,
-  LoaderContainer,
 } from './style'
 import { UnstakeModal } from './Unstaking/UnstakeModal'
 import {
@@ -42,8 +40,7 @@ import {
 let activeStake: IStaking
 
 const Header = () => {
-  const { chainId } = useActiveWeb3React()
-  const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
+  const currency = useIXSCurrency()
   return (
     <StyledHeaderRow>
       <div className="header-label">
@@ -98,8 +95,7 @@ const Header = () => {
 const Body = () => {
   const { stakings } = useStakingState()
   const toggleUnstakeModal = useToggleModal(ApplicationModal.UNSTAKE_IXS)
-  const { chainId } = useActiveWeb3React()
-  const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
+  const currency = useIXSCurrency()
   return (
     <>
       {stakings?.map((stake) => (

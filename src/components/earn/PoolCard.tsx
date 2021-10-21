@@ -1,22 +1,20 @@
+import { CurrencyAmount, Token } from '@ixswap1/sdk-core'
+import { Trans } from '@lingui/macro'
+import { useNativeCurrency } from 'hooks/useNativeCurrencyName'
+import JSBI from 'jsbi'
 import React from 'react'
+import styled from 'styled-components/macro'
+import { BIG_INT_SECONDS_IN_WEEK } from '../../constants/misc'
+import { useColor } from '../../hooks/useColor'
+import { useTotalSupply } from '../../hooks/useTotalSupply'
+import useUSDCPrice from '../../hooks/useUSDCPrice'
+import { useV2Pair } from '../../hooks/useV2Pairs'
+import { StakingInfo } from '../../state/stake/hooks'
+import { TYPE } from '../../theme'
+import { unwrappedToken } from '../../utils/unwrappedToken'
 import { AutoColumn } from '../Column'
 import { RowBetween } from '../Row'
-import styled from 'styled-components/macro'
-import { TYPE, StyledInternalLink } from '../../theme'
-import DoubleCurrencyLogo from '../DoubleLogo'
-import { CurrencyAmount, Token } from '@ixswap1/sdk-core'
-import JSBI from 'jsbi'
-import { ButtonPrimary } from '../Button'
-import { StakingInfo } from '../../state/stake/hooks'
-import { useColor } from '../../hooks/useColor'
-import { currencyId } from '../../utils/currencyId'
-import { Break, CardNoise, CardBGImage } from './styled'
-import { unwrappedToken } from '../../utils/unwrappedToken'
-import { useTotalSupply } from '../../hooks/useTotalSupply'
-import { useV2Pair } from '../../hooks/useV2Pairs'
-import useUSDCPrice from '../../hooks/useUSDCPrice'
-import { BIG_INT_SECONDS_IN_WEEK } from '../../constants/misc'
-import { Trans } from '@lingui/macro'
+import { Break, CardBGImage, CardNoise } from './styled'
 
 const StatContainer = styled.div`
   display: flex;
@@ -76,7 +74,7 @@ export default function PoolCard({ stakingInfo }: { stakingInfo: StakingInfo }) 
 
   const currency0 = unwrappedToken(token0)
   const currency1 = unwrappedToken(token1)
-
+  const nativeCurrency = useNativeCurrency()
   const isStaking = Boolean(stakingInfo.stakedAmount.greaterThan('0'))
 
   // get the color of the token
@@ -133,7 +131,9 @@ export default function PoolCard({ stakingInfo }: { stakingInfo: StakingInfo }) 
             {valueOfTotalStakedAmountInUSDC ? (
               <Trans>${valueOfTotalStakedAmountInUSDC.toFixed(0, { groupSeparator: ',' })}</Trans>
             ) : (
-              <Trans>${valueOfTotalStakedAmountInWETH?.toSignificant(4, { groupSeparator: ',' }) ?? '-'} ETH</Trans>
+              <Trans>
+                ${valueOfTotalStakedAmountInWETH?.toSignificant(4, { groupSeparator: ',' }) ?? '-'} {nativeCurrency}
+              </Trans>
             )}
           </TYPE.white>
         </RowBetween>

@@ -3,6 +3,7 @@ import { Pair } from '@ixswap1/v2-sdk'
 import { ERROR_ACCREDITATION_STATUSES } from 'components/Vault/enum'
 import { IXS_ADDRESS, IXS_GOVERNANCE_ADDRESS } from 'constants/addresses'
 import { SupportedLocale } from 'constants/locales'
+import useIXSCurrency from 'hooks/useIXSCurrency'
 import JSBI from 'jsbi'
 import flatMap from 'lodash.flatmap'
 import { useCallback, useEffect, useMemo } from 'react'
@@ -369,7 +370,7 @@ export const useUserSecTokens = () => {
 
 export const useIXSBalance = () => {
   const { account, chainId } = useActiveWeb3React()
-  const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
+  const currency = useIXSCurrency()
   const balance = useSimpleTokenBalanceWithLoading(account, currency, IXS_ADDRESS[chainId ?? 1])
   return balance
 }

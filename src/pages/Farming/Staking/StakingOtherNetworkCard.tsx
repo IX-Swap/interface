@@ -31,7 +31,7 @@ export const StakingOtherNetworkCard = () => {
       [SupportedChainId.MATIC]: {
         icon: EthereumRound,
         name: t`ethereum`,
-        options: [t`2 month — 44% APY`],
+        options: [t`2 month — 44% APY`, t`3 month — 88% APY`],
       },
       [SupportedChainId.MUMBAI]: {
         icon: EthereumRound,
@@ -47,7 +47,7 @@ export const StakingOtherNetworkCard = () => {
       return switchToParams[chainId as SupportedChainId]
     }
     return null
-  }, [chainId])
+  }, [chainId, switchToParams])
 
   if (computedSwitchToParams?.options?.length === 0) {
     return null

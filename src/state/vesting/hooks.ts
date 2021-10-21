@@ -1,9 +1,8 @@
 import { CurrencyAmount } from '@ixswap1/sdk-core'
 import { t } from '@lingui/macro'
-import { IXS_ADDRESS } from 'constants/addresses'
 import { BigNumber } from 'ethers'
-import { useCurrency } from 'hooks/Tokens'
 import { useVestingContract } from 'hooks/useContract'
+import useIXSCurrency from 'hooks/useIXSCurrency'
 import useTheme from 'hooks/useTheme'
 import { useActiveWeb3React } from 'hooks/web3'
 import { VestingStatus } from 'pages/Farming/Vesting/Vesting'
@@ -35,9 +34,8 @@ export enum STATUS {
 
 export function useDistributeCallback(): () => Promise<void> {
   const vesting = useVestingContract()
-  const { chainId } = useActiveWeb3React()
 
-  const currency = useCurrency(IXS_ADDRESS[chainId ?? 42])
+  const currency = useIXSCurrency()
   const decimals = currency?.decimals
   return useCallback(async () => {
     try {
@@ -134,8 +132,7 @@ export function useClaimAll(): () => Promise<any> {
   const { account } = useActiveWeb3React()
   const dispatch = useDispatch<AppDispatch>()
   const addTransaction = useTransactionAdder()
-  const { chainId } = useActiveWeb3React()
-  const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
+  const currency = useIXSCurrency()
   const { fetchDetails } = useVestingDetails()
   const { fetchClaimable } = useAvailableClaim()
   const { fetchPayouts } = usePayouts()

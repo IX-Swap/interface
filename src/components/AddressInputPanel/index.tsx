@@ -1,3 +1,4 @@
+import { useExplorerName } from 'hooks/useExplorerName'
 import React, { useContext } from 'react'
 import { ThemeContext } from 'styled-components'
 import useENS from '../../hooks/useENS'
@@ -20,7 +21,7 @@ export default function AddressInputPanel({
 }) {
   const { chainId } = useActiveWeb3React()
   const theme = useContext(ThemeContext)
-
+  const explorerName = useExplorerName()
   const { address, loading, name } = useENS(value)
   const error = Boolean(value.length > 0 && !loading && !address)
 
@@ -35,7 +36,7 @@ export default function AddressInputPanel({
             href={getExplorerLink(chainId, name ?? address, ExplorerDataType.ADDRESS)}
             style={{ fontSize: '14px' }}
           >
-            (View on Etherscan)
+            (View on {explorerName})
           </ExternalLink>
         )}
       </RowBetween>

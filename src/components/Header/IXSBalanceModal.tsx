@@ -5,11 +5,11 @@ import Column from 'components/Column'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import { RowBetween, RowCenter, RowEnd } from 'components/Row'
-import { ModalContentWrapper } from 'theme/components'
 import { TextRow } from 'components/TextRow/TextRow'
-import { IXS_ADDRESS, IXS_GOVERNANCE_ADDRESS } from 'constants/addresses'
+import { IXS_GOVERNANCE_ADDRESS } from 'constants/addresses'
 import { useCurrency } from 'hooks/Tokens'
 import useAddTokenToMetamask from 'hooks/useAddTokenToMetamask'
+import useIXSCurrency from 'hooks/useIXSCurrency'
 import { useActiveWeb3React } from 'hooks/web3'
 import JSBI from 'jsbi'
 import React, { useCallback } from 'react'
@@ -18,6 +18,7 @@ import { useModalOpen, useToggleModal } from 'state/application/hooks'
 import { useIXSBalance, useIXSGovBalance } from 'state/user/hooks'
 import styled from 'styled-components'
 import { ModalBlurWrapper, TextGradient } from 'theme'
+import { ModalContentWrapper } from 'theme/components'
 import { CloseIcon, TYPE } from '../../theme'
 
 const ModalPadding = styled.div`
@@ -44,7 +45,7 @@ export const IXSBalanceModal = () => {
   const toggle = useToggleModal(ApplicationModal.IXS_BALANCE)
   const onClose = useCallback(() => toggle(), [toggle])
   const { library, chainId } = useActiveWeb3React()
-  const IXSCurrency = useCurrency(IXS_ADDRESS[chainId ?? 1])
+  const IXSCurrency = useIXSCurrency()
   const IXSGovCurrency = useCurrency(IXS_GOVERNANCE_ADDRESS[chainId ?? 1])
   const addIXS = useAddTokenToMetamask(IXSCurrency ?? undefined)
   const addIXSGov = useAddTokenToMetamask(IXSGovCurrency ?? undefined)

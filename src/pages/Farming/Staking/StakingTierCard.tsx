@@ -6,9 +6,8 @@ import { ButtonIXSWide } from 'components/Button'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import { RowCenter } from 'components/Row'
 import { MouseoverTooltip } from 'components/Tooltip'
-import { IXS_ADDRESS } from 'constants/addresses'
 import { SupportedChainId } from 'constants/chains'
-import { useCurrency } from 'hooks/Tokens'
+import useIXSCurrency from 'hooks/useIXSCurrency'
 import { useActiveWeb3React } from 'hooks/web3'
 import React, { useEffect, useMemo, useState } from 'react'
 import { useDispatch } from 'react-redux'
@@ -32,7 +31,7 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
   const fetchHistoricalPoolSize = useFetchHistoricalPoolSize()
   const poolSizeState = usePoolSizeState()
   const { hasStakedSuccessfully, isPaused } = useStakingState()
-  const ixsCurrency = useCurrency(IXS_ADDRESS[chainId ?? 1])
+  const ixsCurrency = useIXSCurrency()
   const [leftToFill, setLeftToFill] = useState(0)
   const [isPoolLimitationLoading, setIsPoolLimitationLoading] = useState(false)
   const [isLimitReached, setIsLimitReached] = useState(false)
@@ -117,9 +116,7 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
       )
     }
   }
-  if (isLimitReached) {
-    return null
-  }
+
   return (
     <StakingTierCardWrapper className={`${isLimitReached ? 'muted' : ''}`}>
       <RowCenter style={{ marginTop: '8px' }}>

@@ -3,10 +3,8 @@ import { Trans } from '@lingui/macro'
 import Column from 'components/Column'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import { Table } from 'components/Table'
-import { IXS_ADDRESS } from 'constants/addresses'
 import { BIG_INT_ZERO } from 'constants/misc'
-import { useCurrency } from 'hooks/Tokens'
-import { useActiveWeb3React } from 'hooks/web3'
+import useIXSCurrency from 'hooks/useIXSCurrency'
 import JSBI from 'jsbi'
 import React, { useCallback } from 'react'
 import { Box } from 'rebass'
@@ -50,8 +48,7 @@ const Header = () => {
 
 const Body = () => {
   const { rewards, payouts, claims, transactionInProgress } = useStakingState()
-  const { chainId } = useActiveWeb3React()
-  const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
+  const currency = useIXSCurrency()
   const formatCurrency = useCallback(
     (amount, digits = 10) =>
       currency ? formatCurrencyAmount(CurrencyAmount.fromRawAmount(currency, amount), digits) : '-',

@@ -2,8 +2,8 @@ import { Trans } from '@lingui/macro'
 import { ReactComponent as InfoIcon } from 'assets/images/attention.svg'
 import { IconWrapper } from 'components/AccountDetails/styleds'
 import { RowCenter, RowStart } from 'components/Row'
-import { IXS_ADDRESS, SUPPORTED_TGE_CHAINS } from 'constants/addresses'
-import { useCurrency } from 'hooks/Tokens'
+import { SUPPORTED_TGE_CHAINS } from 'constants/addresses'
+import useIXSCurrency from 'hooks/useIXSCurrency'
 import { useActiveWeb3React } from 'hooks/web3'
 import React from 'react'
 import { ApplicationModal } from 'state/application/actions'
@@ -20,7 +20,7 @@ export const StakingTiers = () => {
   const toggleStakeModal = useToggleModal(ApplicationModal.STAKE_IXS)
   const { isPaused } = useStakingState()
   const { chainId } = useActiveWeb3React()
-  const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
+  const currency = useIXSCurrency()
   return (
     <div>
       {isPaused && (
