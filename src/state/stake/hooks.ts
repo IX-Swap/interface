@@ -4,12 +4,13 @@ import { Pair } from '@ixswap1/v2-sdk'
 import { t } from '@lingui/macro'
 import { abi as STAKING_REWARDS_ABI } from '@uniswap/liquidity-staker/build/StakingRewards.json'
 import { STAKING_CONTRACT_KOVAN } from 'config'
-import { IXS_ADDRESS, IXS_STAKING_V1_ADDRESS } from 'constants/addresses'
+import { IXS_STAKING_V1_ADDRESS } from 'constants/addresses'
 import stakingPeriodsData, { IStaking, PeriodsEnum } from 'constants/stakingPeriods'
 import { BigNumber, utils } from 'ethers'
 import { useCurrency } from 'hooks/Tokens'
 import { useIXSStakingContract, useIXSTokenContract } from 'hooks/useContract'
 import useCurrentBlockTimestamp from 'hooks/useCurrentBlockTimestamp'
+import useIXSCurrency from 'hooks/useIXSCurrency'
 import JSBI from 'jsbi'
 import { useCallback, useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -285,9 +286,9 @@ export function useDerivedIXSStakeInfo({ typedValue, currencyId }: { typedValue:
 
 export function useStakingStatus() {
   const { status } = useStakingState()
-  const { account, chainId } = useActiveWeb3React()
+  const { account } = useActiveWeb3React()
   const dispatch = useDispatch<AppDispatch>()
-  const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
+  const currency = useIXSCurrency()
   const balance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
   // adjust this when we have staking contracts
   const hasStaking = true
@@ -324,8 +325,8 @@ export function usePoolSizeState(): AppState['stakingPoolSize'] {
 
 export function useUpdateIXSBalance() {
   const dispatch = useDispatch<AppDispatch>()
-  const { account, chainId } = useActiveWeb3React()
-  const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
+  const { account } = useActiveWeb3React()
+  const currency = useIXSCurrency()
   const balance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
   return useCallback(async () => {
     const maxAmountInput = maxAmountSpend(balance)
@@ -387,6 +388,8 @@ export function useIncreaseAllowance() {
   const tokenContract = useIXSTokenContract()
   const { chainId } = useActiveWeb3React()
   const addTransaction = useTransactionAdder()
+  const IXSCurrency = useIXSCurrency()
+
   return useCallback(
     async (amount: string) => {
       if (!chainId) {
@@ -400,7 +403,7 @@ export function useIncreaseAllowance() {
         await allowanceTx.wait()
         dispatch(increaseAllowance.fulfilled({ data: allowanceTx?.hash }))
         addTransaction(allowanceTx, {
-          summary: t`Approve ${amount} IXS`,
+          summary: t`Approve ${amount} ${IXSCurrency?.symbol}`,
         })
       } catch (error) {
         dispatch(increaseAllowance.rejected({ errorMessage: error }))
@@ -435,7 +438,7 @@ export function useStakeFor(period?: PERIOD) {
   const { account } = useActiveWeb3React()
   const updateIXSBalance = useUpdateIXSBalance()
   const addTransaction = useTransactionAdder()
-
+  const IXSCurrency = useIXSCurrency()
   return useCallback(
     async (amount: string) => {
       try {
@@ -456,7 +459,7 @@ export function useStakeFor(period?: PERIOD) {
             dispatch(stake.fulfilled({ txStatus: tx.status }))
             updateIXSBalance()
             addTransaction(stakeTx, {
-              summary: t`Stake ${amount} IXS for ${PERIOD.ONE_WEEK}`,
+              summary: t`Stake ${amount} ${IXSCurrency?.symbol} for ${PERIOD.ONE_WEEK}`,
             })
             break
           }
@@ -473,7 +476,7 @@ export function useStakeFor(period?: PERIOD) {
             dispatch(stake.fulfilled({ txStatus: tx.status }))
             updateIXSBalance()
             addTransaction(stakeTx, {
-              summary: t`Stake ${amount} IXS for ${PERIOD.ONE_MONTH}`,
+              summary: t`Stake ${amount} ${IXSCurrency?.symbol} for ${PERIOD.ONE_MONTH}`,
             })
             break
           }
@@ -490,7 +493,7 @@ export function useStakeFor(period?: PERIOD) {
             dispatch(stake.fulfilled({ txStatus: tx.status }))
             updateIXSBalance()
             addTransaction(stakeTx, {
-              summary: t`Stake ${amount} IXS for ${PERIOD.TWO_MONTHS}`,
+              summary: t`Stake ${amount} ${IXSCurrency?.symbol} for ${PERIOD.TWO_MONTHS}`,
             })
             break
           }
@@ -508,7 +511,7 @@ export function useStakeFor(period?: PERIOD) {
             dispatch(stake.fulfilled({ txStatus: tx.status }))
             updateIXSBalance()
             addTransaction(stakeTx, {
-              summary: t`Stake ${amount} IXS for ${PERIOD.THREE_MONTHS}`,
+              summary: t`Stake ${amount} ${IXSCurrency?.symbol} for ${PERIOD.THREE_MONTHS}`,
             })
             break
           }
@@ -693,11 +696,11 @@ export function useGetPayouts() {
 
 export function useClaimRewards() {
   const staking = useIXSStakingContract()
-  const { account, chainId } = useActiveWeb3React()
+  const { account } = useActiveWeb3React()
   const { claims } = useStakingState()
   const getRewards = useGetVestedRewards()
   const getPayouts = useGetPayouts()
-  const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
+  const currency = useIXSCurrency()
   const dispatch = useDispatch<AppDispatch>()
 
   const addTransaction = useTransactionAdder()

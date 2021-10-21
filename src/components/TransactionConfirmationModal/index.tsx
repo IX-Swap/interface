@@ -3,6 +3,7 @@ import { Trans } from '@lingui/macro'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import useAddTokenToMetamask from 'hooks/useAddTokenToMetamask'
+import { useExplorerName } from 'hooks/useExplorerName'
 import React, { ReactNode } from 'react'
 import styled from 'styled-components'
 import Attention from '../../assets/images/attention.svg'
@@ -82,6 +83,7 @@ export function TransactionSubmittedContent({
   const { library } = useActiveWeb3React()
 
   const { addToken, success } = useAddTokenToMetamask(currencyToAdd)
+  const explorerName = useExplorerName()
 
   return (
     <ModalBlurWrapper>
@@ -125,7 +127,7 @@ export function TransactionSubmittedContent({
           <AutoColumn gap="12px" justify={'center'}>
             {chainId && hash && (
               <ExternalLink href={getExplorerLink(chainId, hash, ExplorerDataType.TRANSACTION)}>
-                <Trans>View on Etherscan</Trans>
+                <Trans>View on {explorerName}</Trans>
               </ExternalLink>
             )}
             <ButtonGradientBorder

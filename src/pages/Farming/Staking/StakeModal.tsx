@@ -10,10 +10,9 @@ import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import Row, { RowBetween, RowCenter, RowFixed } from 'components/Row'
 import { TextRow } from 'components/TextRow/TextRow'
 import { MouseoverTooltip } from 'components/Tooltip'
-import { IXS_ADDRESS } from 'constants/addresses'
 import { SupportedChainId } from 'constants/chains'
 import { periodsInDays, periodsInSeconds } from 'constants/stakingPeriods'
-import { useCurrency } from 'hooks/Tokens'
+import useIXSCurrency from 'hooks/useIXSCurrency'
 import { useActiveWeb3React } from 'hooks/web3'
 import { Dots } from 'pages/Pool/styleds'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
@@ -54,7 +53,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
   const poolSizeState = usePoolSizeState()
   const period = selectedTier?.period || PERIOD.ONE_WEEK
   const { chainId } = useActiveWeb3React()
-  const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
+  const currency = useIXSCurrency()
   const [poolLimitation, setPoolLimitation] = useState(calcPoolLimitation())
   const [isPoolLimitationLoading, setIsPoolLimitationLoading] = useState(poolSizeState[period] === POOL_SIZE_LOADING)
 

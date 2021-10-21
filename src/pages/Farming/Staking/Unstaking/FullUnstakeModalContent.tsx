@@ -3,9 +3,10 @@ import { ButtonIXSWide } from 'components/Button'
 import { StakeModalTop } from 'components/earn/styled'
 import Row, { RowBetween } from 'components/Row'
 import { TextRow } from 'components/TextRow/TextRow'
-import { IXS_ADDRESS, IXS_GOVERNANCE_ADDRESS } from 'constants/addresses'
+import { IXS_GOVERNANCE_ADDRESS } from 'constants/addresses'
 import { IStaking, periodsInDays } from 'constants/stakingPeriods'
 import { useCurrency } from 'hooks/Tokens'
+import useIXSCurrency from 'hooks/useIXSCurrency'
 import { useActiveWeb3React } from 'hooks/web3'
 import { Dots } from 'pages/Pool/styleds'
 import React, { useCallback, useEffect, useState } from 'react'
@@ -34,7 +35,7 @@ export function FullUnstake({ onDismiss, stake, onUnstake, onApprove }: Unstakin
   const IXSGovCurrency = useCurrency(IXS_GOVERNANCE_ADDRESS[chainId ?? 1])
   const IXSGovBalance = useCurrencyBalance(account ?? undefined, IXSGovCurrency ?? undefined)
   const { IXSGovAllowanceAmount, isApprovingIXSGov, isUnstaking } = useUnstakingState()
-  const IXSCurrency = useCurrency(IXS_ADDRESS[chainId ?? 1])
+  const IXSCurrency = useIXSCurrency()
 
   useEffect(() => {
     if (!IXSGovBalance) {

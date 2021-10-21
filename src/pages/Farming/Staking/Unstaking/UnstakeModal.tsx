@@ -1,23 +1,21 @@
 import { t } from '@lingui/macro'
+import { EarnModalContentWrapper } from 'components/earn/styled'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
+import { IStaking, PeriodsEnum } from 'constants/stakingPeriods'
+import useIXSCurrency from 'hooks/useIXSCurrency'
 import React, { useCallback, useEffect } from 'react'
 import { ApplicationModal } from 'state/application/actions'
 import { useModalOpen } from 'state/application/hooks'
-import { ModalBlurWrapper } from 'theme'
-import { EarnModalContentWrapper } from 'components/earn/styled'
 import {
   useCheckIXSGovAllowance,
-  useUnstakingState,
-  useUnstakeFrom,
   useIncreaseIXSGovAllowance,
+  useUnstakeFrom,
+  useUnstakingState,
 } from 'state/stake/unstake/hooks'
-import { IStaking, PeriodsEnum } from 'constants/stakingPeriods'
+import { useTransactionAdder } from 'state/transactions/hooks'
+import { ModalBlurWrapper } from 'theme'
 import { EarlyUnstake } from './EarlyUnstakeModalContent'
 import { FullUnstake } from './FullUnstakeModalContent'
-import { useTransactionAdder } from 'state/transactions/hooks'
-import { useActiveWeb3React } from 'hooks/web3'
-import { useCurrency } from 'hooks/Tokens'
-import { IXS_ADDRESS } from 'constants/addresses'
 
 interface UnstakingModalProps {
   onDismiss: () => void
@@ -43,8 +41,7 @@ export function UnstakeModal({ onDismiss, stake }: UnstakingModalProps) {
   const unstake = useUnstakeFrom(stake?.period)
   const increaseAllowance = useIncreaseIXSGovAllowance()
   const addTransaction = useTransactionAdder()
-  const { chainId } = useActiveWeb3React()
-  const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
+  const currency = useIXSCurrency()
 
   useEffect(() => {
     if (isOpen) {

@@ -1,5 +1,6 @@
 import { IXS_ADDRESS } from 'constants/addresses'
 import { useCurrency } from 'hooks/Tokens'
+import useIXSCurrency from 'hooks/useIXSCurrency'
 import { useActiveWeb3React } from 'hooks/web3'
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
@@ -28,7 +29,7 @@ export const Staking = () => {
   const { chainId, account } = useActiveWeb3React()
   const dispatch = useDispatch<AppDispatch>()
   const updateIXSBalance = useUpdateIXSBalance()
-  const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
+  const currency = useIXSCurrency()
   const balance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
   const getStakings = useGetStakings()
   const getRewards = useGetVestedRewards()
