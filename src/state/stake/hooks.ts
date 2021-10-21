@@ -312,9 +312,7 @@ export function useStakingStatus() {
 
   return status
 }
-// export function useMemoizedStakingContract() {
-//   return useMemo(() => {},[chainId])
-// }
+
 export function useStakingState(): AppState['staking'] {
   return useSelector<AppState, AppState['staking']>((state) => state.staking)
 }

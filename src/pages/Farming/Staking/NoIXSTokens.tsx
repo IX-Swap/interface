@@ -10,7 +10,13 @@ import React from 'react'
 import { Copy } from 'react-feather'
 import { ExternalLink, TYPE } from 'theme'
 import { ButtonRow, NoIXSTokensWrapper } from './style'
+import styled from 'styled-components'
+import { shortAddress } from 'utils'
 
+const StyledCopy = styled(Copy)`
+  width: 17px;
+  height: 17px;
+`
 export const NoIXSTokens = () => {
   const theme = useTheme()
   const currency = useIXSCurrency()
@@ -30,24 +36,24 @@ export const NoIXSTokens = () => {
           </TYPE.body3>
         )}
         {chainId && MATIC_TGE_CHAINS.includes(chainId) && (
-          <div style={{ cursor: 'pointer', width: '100%', height: '100%' }}>
+          <span style={{ display: 'inline-block' }}>
             <TYPE.body3>
               <Trans>
                 Got IXS on Ethereum? You can bridge them to Polygon. Use IXS contract address to find it on
-                AlianceBridge {IXS_ADDRESS[1]}
+                AlianceBridge {shortAddress(IXS_ADDRESS[1])}
               </Trans>
               {isCopied ? (
                 <span style={{ marginLeft: '5px' }}>
                   <Trans>Copied</Trans>
                 </span>
               ) : (
-                <IconWrapper size={17} style={{ display: 'inline', marginLeft: '5px', width: '17px', height: '17px' }}>
-                  <Copy />
+                <IconWrapper size={17} style={{ display: 'inline-block', marginLeft: '5px' }}>
+                  <StyledCopy />
                 </IconWrapper>
               )}
               .
             </TYPE.body3>
-          </div>
+          </span>
         )}
       </div>
       {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
@@ -78,7 +84,7 @@ export const NoIXSTokens = () => {
           {currency && (
             <ButtonIXSGradient
               as={ExternalLink}
-              style={{ textTransform: 'unset', width: '100%', textDecoration: 'none' }}
+              style={{ textTransform: 'unset', width: '250px', textDecoration: 'none' }}
               href={`https://alliancebridge.io/`}
               data-testid="staking-redirect-bridge"
             >
