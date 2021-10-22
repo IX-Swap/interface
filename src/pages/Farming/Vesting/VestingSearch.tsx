@@ -104,5 +104,6 @@ const Input = styled.input<{ addressChecked: boolean }>`
   padding-right: ${({ addressChecked }) => (addressChecked ? '100px' : '175px')};
   @media (max-width: 768px) {
     font-size: 16px;
+    padding-right: 22px;
   }
 `

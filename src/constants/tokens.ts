@@ -28,4 +28,6 @@ export const IXS: { [chainId: number]: Token } = {
   [3]: new Token(3, IXS_ADDRESS[3], 18, 'IXS', 'IXS'),
   [5]: new Token(5, IXS_ADDRESS[5], 18, 'IXS', 'IXS'),
   [42]: new Token(42, IXS_ADDRESS[42], 18, 'IXS', 'IXS'),
+  [80001]: new Token(80001, IXS_ADDRESS[80001], 18, 'IXS', 'IXS'),
+  [137]: new Token(137, IXS_ADDRESS[137], 18, 'IXS', 'IXS'),
 }

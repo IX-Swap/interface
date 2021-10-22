@@ -1,12 +1,11 @@
 import { createReducer } from '@reduxjs/toolkit'
-import {
-  getOneWeekHistoricalPoolSize,
-  getOneMonthHistoricalPoolSize,
-  getTwoMonthsHistoricalPoolSize,
-  getThreeMonthsHistoricalPoolSize,
-} from './actions'
-
 import { PERIOD } from 'state/stake/reducer'
+import {
+  getOneMonthHistoricalPoolSize,
+  getOneWeekHistoricalPoolSize,
+  getThreeMonthsHistoricalPoolSize,
+  getTwoMonthsHistoricalPoolSize,
+} from './actions'
 
 export const DEFAULT_POOL_SIZE_LIMIT = '2000000'
 export const POOL_SIZE_LOADING = '-1'

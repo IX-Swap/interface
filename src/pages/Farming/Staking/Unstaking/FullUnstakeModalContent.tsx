@@ -6,6 +6,7 @@ import { TextRow } from 'components/TextRow/TextRow'
 import { IXS_GOVERNANCE_ADDRESS } from 'constants/addresses'
 import { IStaking, periodsInDays } from 'constants/stakingPeriods'
 import { useCurrency } from 'hooks/Tokens'
+import useIXSCurrency from 'hooks/useIXSCurrency'
 import { useActiveWeb3React } from 'hooks/web3'
 import { Dots } from 'pages/Pool/styleds'
 import React, { useCallback, useEffect, useState } from 'react'
@@ -34,6 +35,7 @@ export function FullUnstake({ onDismiss, stake, onUnstake, onApprove }: Unstakin
   const IXSGovCurrency = useCurrency(IXS_GOVERNANCE_ADDRESS[chainId ?? 1])
   const IXSGovBalance = useCurrencyBalance(account ?? undefined, IXSGovCurrency ?? undefined)
   const { IXSGovAllowanceAmount, isApprovingIXSGov, isUnstaking } = useUnstakingState()
+  const IXSCurrency = useIXSCurrency()
 
   useEffect(() => {
     if (!IXSGovBalance) {
@@ -76,12 +78,15 @@ export function FullUnstake({ onDismiss, stake, onUnstake, onApprove }: Unstakin
           <CloseIcon onClick={wrappedOnDismiss} />
         </RowBetween>
         <Row marginTop={20} marginBottom={10}>
-          <IXSAmountToUnstake>{stakeAmount} IXS</IXSAmountToUnstake>
+          <IXSAmountToUnstake>
+            {stakeAmount} {IXSCurrency?.symbol}
+          </IXSAmountToUnstake>
         </Row>
         {IXSGovBalance && !isEnoughIXSGov() && (
           <TYPE.description2 color={'bg14'}>
             <Trans>
-              You don’t have enough IXSGov for unstake all available IXS ({stakeAmount} is available) 1 IXS = 1 IXGov
+              You don’t have enough IXSGov for unstake all available {IXSCurrency?.symbol} ({stakeAmount} is available)
+              1 {IXSCurrency?.symbol} = 1 IXGov
             </Trans>
           </TYPE.description2>
         )}
@@ -99,12 +104,14 @@ export function FullUnstake({ onDismiss, stake, onUnstake, onApprove }: Unstakin
             }
           />
           <TextRow textLeft={t`APY`} textRight={`${stake.apy}%`} />
-          <TextRow textLeft={t`Total rewards `} textRight={`${stake.reward} IXS`} />
+          <TextRow textLeft={t`Total rewards `} textRight={`${stake.reward} ${IXSCurrency?.symbol}`} />
           <TextRow
             textLeft={t`Instant reward payout today`}
             textRight={
               <EllipsedText>
-                <div>{floorTo4Decimals(stake.reward * 0.1)}&nbsp;IXS</div>
+                <div>
+                  {floorTo4Decimals(stake.reward * 0.1)}&nbsp; {IXSCurrency?.symbol}
+                </div>
               </EllipsedText>
             }
           />
@@ -112,7 +119,9 @@ export function FullUnstake({ onDismiss, stake, onUnstake, onApprove }: Unstakin
             textLeft={t`Rewards to be vested (10% weekly)`}
             textRight={
               <EllipsedText>
-                <div>{floorTo4Decimals(stake.reward * 0.9)}&nbsp;IXS</div>
+                <div>
+                  {floorTo4Decimals(stake.reward * 0.9)}&nbsp; {IXSCurrency?.symbol}
+                </div>
               </EllipsedText>
             }
           />
