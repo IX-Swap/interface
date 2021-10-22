@@ -467,7 +467,7 @@ export function useStakeFor(period?: PERIOD) {
             dispatch(stake.fulfilled({ txStatus: tx.status }))
             updateIXSBalance()
             addTransaction(stakeTx, {
-              summary: t`Stake ${amount} ${IXSCurrency?.symbol} for ${PERIOD.ONE_WEEK}`,
+              summary: t`Staked ${amount} ${IXSCurrency?.symbol} for ${PERIOD.ONE_WEEK}`,
             })
             break
           }
@@ -484,7 +484,7 @@ export function useStakeFor(period?: PERIOD) {
             dispatch(stake.fulfilled({ txStatus: tx.status }))
             updateIXSBalance()
             addTransaction(stakeTx, {
-              summary: t`Stake ${amount} ${IXSCurrency?.symbol} for ${PERIOD.ONE_MONTH}`,
+              summary: t`Staked ${amount} ${IXSCurrency?.symbol} for ${PERIOD.ONE_MONTH}`,
             })
             break
           }
@@ -501,7 +501,7 @@ export function useStakeFor(period?: PERIOD) {
             dispatch(stake.fulfilled({ txStatus: tx.status }))
             updateIXSBalance()
             addTransaction(stakeTx, {
-              summary: t`Stake ${amount} ${IXSCurrency?.symbol} for ${PERIOD.TWO_MONTHS}`,
+              summary: t`Staked ${amount} ${IXSCurrency?.symbol} for ${PERIOD.TWO_MONTHS}`,
             })
             break
           }
@@ -519,7 +519,7 @@ export function useStakeFor(period?: PERIOD) {
             dispatch(stake.fulfilled({ txStatus: tx.status }))
             updateIXSBalance()
             addTransaction(stakeTx, {
-              summary: t`Stake ${amount} ${IXSCurrency?.symbol} for ${PERIOD.THREE_MONTHS}`,
+              summary: t`Staked ${amount} ${IXSCurrency?.symbol} for ${PERIOD.THREE_MONTHS}`,
             })
             break
           }
