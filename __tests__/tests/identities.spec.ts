@@ -37,7 +37,7 @@ test("Check individual identity", async ({ page, kycForms },testInfo) => {
   });
 
   await test.step('Investor Status Declaration', async () => {
-    await kycForms.investorStatusDeclaration();
+    await kycForms.investorStatusDeclaration('individual');
     await click(kyc.buttons.SUBMIT, page);
   });
 
@@ -47,14 +47,12 @@ test("Check individual identity", async ({ page, kycForms },testInfo) => {
   });
 
   await test.step('Check full profile view', async () => {
-    await page.waitForSelector(kyc.USER_PHOTO)
-    const elementHandle = await page.$('//form');
-    await screenshotMatching("profile view" ,elementHandle);
+    await kycForms.checkAllViewUsingSnapshot(testInfo.title);
   });
 });
 
 
-test("Check Corporate identity", async ({ page, kycForms },testInfo) => {
+test.only("Check Corporate identity", async ({ page, kycForms },testInfo) => {
   await test.step('fill Personal Information Form', async () => {
     await click(kyc.type.CORPORATE, page);
     await kycForms.fillCorporateInformation();
@@ -85,9 +83,7 @@ test("Check Corporate identity", async ({ page, kycForms },testInfo) => {
   });
 
   await test.step('Check full profile view', async () => {
-    await page.waitForSelector(kyc.USER_PHOTO)
-    const elementHandle = await page.$('//form');
-    await screenshotMatching("corporate profile view" ,elementHandle);
+    await kycForms.checkAllViewUsingSnapshot(testInfo.title);
   });
 });
 test("Check Issuer identity", async ({ page, kycForms },testInfo) => {
@@ -113,8 +109,10 @@ test("Check Issuer identity", async ({ page, kycForms },testInfo) => {
     await kycForms.uploadCorporateDocuments();
     await click(kyc.buttons.SUBMIT, page);
   });
-  await page.waitForTimeout(10000)
-
+  
+  await test.step('Check full profile view', async () => {
+    await kycForms.checkAllViewUsingSnapshot(testInfo.title);
+  });
 });
 
 });

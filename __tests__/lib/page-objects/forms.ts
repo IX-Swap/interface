@@ -6,7 +6,7 @@ import {
   click,
   typeText,
   uploadFiles,
-  clearAndTypeText,waitForText
+  clearAndTypeText,waitForText,screenshotMatching
 } from "../helpers/helpers";
 
 class UserForms {
@@ -30,8 +30,11 @@ class UserForms {
     await click(kyc.field.corporate.LEGAL_ENTITY_VALUE, this.page);
   };
 
-
-
+  checkAllViewUsingSnapshot = async (screenName) => {
+  await this.page.waitForSelector(kyc.USER_PHOTO)
+  const elementHandle = await this.page.$('//form');
+  await screenshotMatching(screenName ,elementHandle);
+  };
 
   fillTaxDeclarationForm = async() => {
     await click(kyc.field.TAX_RESIDENT, this.page);
@@ -158,11 +161,12 @@ class UserForms {
     await typeText(kyc.field.IDENTIFICATION_NUMBER, "S4235022B", this.page);
     await click(kyc.checkbox.NO_US_RESIDENT, this.page);
   };
-  investorStatusDeclaration = async () => {
-    await click('[name="trustee"]', this.page);
+  investorStatusDeclaration = async (identities="default") => {
+    if (identities === "individual"){ await click('[name="personalAssets"]', this.page);}
+    else{ await click('[name="trustee"]', this.page);}
+    
     await click(kyc.checkbox.I_CONFIRM, this.page);
   };
-
   uploadDocuments = async () => {
     await uploadFiles(
       this.page,
