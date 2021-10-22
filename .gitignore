@@ -15,6 +15,7 @@ bfg.jar
 .scannerwork
 coverage
 reports
+.history
 
 # production
 /build
