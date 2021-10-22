@@ -48,6 +48,13 @@ export const Staking = () => {
       getStakings()
       updateIXSBalance()
     }
+    const timer = setTimeout(() => {
+      if (hasStakedSuccessfully || hasUnstakedSuccessfully) {
+        getStakings()
+        updateIXSBalance()
+      }
+    }, 20000)
+    return () => clearTimeout(timer)
   }, [getStakings, hasStakedSuccessfully, hasUnstakedSuccessfully])
 
   useEffect(() => {

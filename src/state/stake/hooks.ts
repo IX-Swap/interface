@@ -423,6 +423,7 @@ export function useCheckAllowance() {
       const stakingAddress = IXS_STAKING_V1_ADDRESS[chainId]
       const allowance = await IXSContract?.allowance(account, stakingAddress)
       const allowanceAmount = parseFloat(utils.formatUnits(allowance))
+      console.log({ receivedAllowanceAmount: allowanceAmount })
       dispatch(checkAllowance({ allowanceAmount }))
     } catch (error) {
       console.error('check allowance error: ', error)

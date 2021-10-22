@@ -76,6 +76,12 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
     if (!isApprovingIXS) {
       checkAllowance()
     }
+    const timer = setTimeout(() => {
+      if (!isApprovingIXS) {
+        checkAllowance()
+      }
+    }, 12000)
+    return () => clearTimeout(timer)
   }, [isApprovingIXS])
 
   useEffect(() => {
@@ -191,8 +197,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
   }, [termsAccepted, allowanceAmount, isApprovingIXS, isStaking, typedValue, error])
 
   const isAmountApproved = (): boolean => {
-    if (allowanceAmount >= parseFloat(typedValue)) return true
-    return false
+    return allowanceAmount >= parseFloat(typedValue)
   }
 
   return (
