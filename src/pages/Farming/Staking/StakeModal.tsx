@@ -66,6 +66,9 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
     if (filled && maxPoolSize) {
       return maxPoolSize.subtract(filled).toExact()
     }
+    if (maxPoolSize && !filled) {
+      return maxPoolSize.toExact()
+    }
     return ''
   }
 
