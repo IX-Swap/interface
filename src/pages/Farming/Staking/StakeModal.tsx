@@ -24,6 +24,7 @@ import {
   useCheckAllowance,
   useIncreaseAllowance,
   usePoolSizeState,
+  useSetTypedValue,
   useStakeFor,
   useStakingState,
 } from 'state/stake/hooks'
@@ -42,7 +43,8 @@ interface StakingModalProps {
 export function StakeModal({ onDismiss }: StakingModalProps) {
   const isOpen = useModalOpen(ApplicationModal.STAKE_IXS)
   // track and parse user input
-  const [typedValue, setTypedValue] = useState('')
+  const setTypedValue = useSetTypedValue()
+  const { typedValue } = useStakingState()
   const [termsAccepted, setTermsAccepted] = useState(false)
   const [error, setError] = useState('Please enter amount to stake')
   const increaseAllowance = useIncreaseAllowance()
@@ -71,18 +73,6 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
     setIsPoolLimitationLoading(poolSizeState[period] === POOL_SIZE_LOADING)
     setPoolLimitation(calcPoolLimitation())
   }, [poolSizeState[period]])
-
-  useEffect(() => {
-    if (!isApprovingIXS) {
-      checkAllowance()
-    }
-    const timer = setTimeout(() => {
-      if (!isApprovingIXS) {
-        checkAllowance()
-      }
-    }, 12000)
-    return () => clearTimeout(timer)
-  }, [isApprovingIXS])
 
   useEffect(() => {
     if (isOpen) {

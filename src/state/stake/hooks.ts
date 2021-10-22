@@ -39,6 +39,7 @@ import {
   increaseAllowance,
   saveStakingStatus,
   setTransactionInProgress,
+  setTypedValue,
   stake,
   updateIXSBalance,
 } from './actions'
@@ -387,6 +388,8 @@ export function useIncreaseAllowance() {
   const { chainId } = useActiveWeb3React()
   const addTransaction = useTransactionAdder()
   const IXSCurrency = useIXSCurrency()
+  const { typedValue } = useStakingState()
+  const fetchCheckAllowance = useCheckAllowance()
 
   return useCallback(
     async (amount: string) => {
@@ -399,6 +402,11 @@ export function useIncreaseAllowance() {
         const stakingAddress = IXS_STAKING_V1_ADDRESS[chainId]
         const allowanceTx = await tokenContract?.increaseAllowance(stakingAddress, stakeAmount)
         await allowanceTx.wait()
+        const newAllowance = await fetchCheckAllowance()
+        const nodeNotUpdated = (newAllowance || newAllowance === 0) && parseFloat(typedValue) > newAllowance
+        if (nodeNotUpdated) {
+          dispatch(checkAllowance({ allowanceAmount: parseFloat(typedValue) }))
+        }
         dispatch(increaseAllowance.fulfilled({ data: allowanceTx?.hash }))
         addTransaction(allowanceTx, {
           summary: t`Approve ${amount} ${IXSCurrency?.symbol}`,
@@ -407,7 +415,7 @@ export function useIncreaseAllowance() {
         dispatch(increaseAllowance.rejected({ errorMessage: error }))
       }
     },
-    [tokenContract, dispatch, chainId]
+    [tokenContract, dispatch, chainId, typedValue, fetchCheckAllowance]
   )
 }
 
@@ -424,8 +432,10 @@ export function useCheckAllowance() {
       const allowance = await IXSContract?.allowance(account, stakingAddress)
       const allowanceAmount = parseFloat(utils.formatUnits(allowance))
       dispatch(checkAllowance({ allowanceAmount }))
+      return allowanceAmount
     } catch (error) {
-      console.error('check allowance error: ', error)
+      dispatch(checkAllowance({ allowanceAmount: 0 }))
+      return null
     }
   }, [IXSContract, account, chainId, dispatch])
 }
@@ -638,6 +648,17 @@ export function useGetStakings() {
       console.error(`useGetStakings error `, error)
     }
   }, [staking, account, dispatch])
+}
+
+export function useSetTypedValue() {
+  const dispatch = useDispatch<AppDispatch>()
+
+  return useCallback(
+    (typed: string) => {
+      dispatch(setTypedValue({ typed }))
+    },
+    [dispatch]
+  )
 }
 
 export function useGetVestedRewards() {

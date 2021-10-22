@@ -7,6 +7,7 @@ export const getIsStakingPaused = createAction<{ isPaused: boolean }>('stake/isP
 export const changeAccount = createAction<{ newAccount: string }>('stake/changeAccount')
 export const checkAllowance = createAction<{ allowanceAmount: number }>('stake/checkAllowance')
 export const updateIXSBalance = createAction<{ IXSAmount: string }>('stake/updateIXSBalance')
+export const setTypedValue = createAction<{ typed: string }>('stake/setTypedValue')
 export const setTransactionInProgress = createAction<{ value: boolean }>('stake/setTransactionInProgress')
 
 export const increaseAllowance: Readonly<{

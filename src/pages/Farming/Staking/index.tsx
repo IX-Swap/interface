@@ -44,17 +44,23 @@ export const Staking = () => {
   }, [getStakings])
 
   useEffect(() => {
-    if (hasStakedSuccessfully || hasUnstakedSuccessfully) {
-      getStakings()
-      updateIXSBalance()
-    }
-    const timer = setTimeout(() => {
+    const checkStakings = () => {
       if (hasStakedSuccessfully || hasUnstakedSuccessfully) {
         getStakings()
         updateIXSBalance()
       }
+    }
+    checkStakings()
+    const timer20 = setTimeout(() => {
+      checkStakings()
     }, 20000)
-    return () => clearTimeout(timer)
+    const timer30 = setTimeout(() => {
+      checkStakings()
+    }, 30000)
+    return () => {
+      clearTimeout(timer20)
+      clearTimeout(timer30)
+    }
   }, [getStakings, hasStakedSuccessfully, hasUnstakedSuccessfully])
 
   useEffect(() => {

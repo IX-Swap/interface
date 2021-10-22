@@ -14,6 +14,7 @@ import {
   setTransactionInProgress,
   stake,
   updateIXSBalance,
+  setTypedValue,
 } from './actions'
 
 export enum StakingStatus {
@@ -140,6 +141,7 @@ interface StakingState {
   payoutsLoading: boolean
   claimLoading: boolean
   transactionInProgress: boolean
+  typedValue: string
 }
 
 const initialState: StakingState = {
@@ -170,6 +172,7 @@ const initialState: StakingState = {
   payoutsLoading: false,
   claimLoading: false,
   transactionInProgress: false,
+  typedValue: '',
 }
 
 export default createReducer<StakingState>(initialState, (builder) =>
@@ -281,5 +284,8 @@ export default createReducer<StakingState>(initialState, (builder) =>
     })
     .addCase(getIsStakingPaused, (state, { payload: { isPaused } }) => {
       state.isPaused = isPaused
+    })
+    .addCase(setTypedValue, (state, { payload: { typed } }) => {
+      state.typedValue = typed
     })
 )
