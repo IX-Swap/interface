@@ -17,8 +17,6 @@ export const TopInfoPanel: React.FC = () => {
   const USDCash = USDBalances?.availableBalance
   const SGDCash = SGDBalances?.availableBalance
 
-  console.log('SGDBalances', SGDBalances)
-
   if (USDBalances === undefined || SGDBalances === undefined) {
     return <LoadingIndicator />
   }
