@@ -3,8 +3,14 @@ import { Grid, Typography } from '@material-ui/core'
 import { useStyles } from './AvailableCash.styles'
 import { VSpacer } from 'components/VSpacer'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+import { formatAmount } from 'helpers/numbers'
 
-export const AvailableCash: React.FC = () => {
+export interface AvailableCashProps {
+  USDCash: number
+  SGDCash: number
+}
+
+export const AvailableCash = ({ USDCash, SGDCash }: AvailableCashProps) => {
   const classes = useStyles()
   const { isMobile } = useAppBreakpoints()
 
@@ -27,7 +33,7 @@ export const AvailableCash: React.FC = () => {
       >
         <Grid item>
           <Typography variant={'body1'} className={classes.value}>
-            US$ 3,456,789.00
+            US$ {formatAmount(USDCash)}
           </Typography>
         </Grid>
 
@@ -35,7 +41,7 @@ export const AvailableCash: React.FC = () => {
 
         <Grid item>
           <Typography variant={'body1'} className={classes.value}>
-            S$ 3,456,789.00
+            S$ {formatAmount(SGDCash)}
           </Typography>
         </Grid>
       </Grid>
