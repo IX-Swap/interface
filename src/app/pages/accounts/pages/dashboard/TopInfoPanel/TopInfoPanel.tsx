@@ -14,12 +14,19 @@ export const TopInfoPanel: React.FC = () => {
   const { list } = useVirtualAccount()
   const { data: USDBalances } = useGetBalances(list?.[0]._id)
   const { data: SGDBalances } = useGetBalances(list?.[1]._id)
-  const USDCash = USDBalances?.availableBalance
-  const SGDCash = SGDBalances?.availableBalance
 
   if (USDBalances === undefined || SGDBalances === undefined) {
     return <LoadingIndicator />
   }
+
+  const USDCash = USDBalances.availableBalance
+  const {
+    availableBalance,
+    primaryInvestmentBalance,
+    secondaryInvestmentBalance,
+    totalAssetBalance,
+    withdrawalAddressCount
+  } = SGDBalances
 
   return (
     <Card elevation={0} className={classes.container}>
@@ -31,22 +38,22 @@ export const TopInfoPanel: React.FC = () => {
           alignContent={'flex-start'}
           className={classes.wrapper}
         >
-          <AvailableCash USDCash={USDCash} SGDCash={SGDCash} />
+          <AvailableCash usd={USDCash} sgd={availableBalance} />
 
           <Grid item className={classes.line} />
 
           <Investments
-            primary={SGDBalances.primaryInvestmentBalance}
-            secondary={SGDBalances.secondaryInvestmentBalance}
+            primary={primaryInvestmentBalance}
+            secondary={secondaryInvestmentBalance}
           />
 
           <Grid item className={classes.line} />
 
-          <TotalAssetBalance value={SGDBalances.totalAssetBalance} />
+          <TotalAssetBalance value={totalAssetBalance} />
 
           <Grid item className={classes.line} />
 
-          <WithdrawalAddresses />
+          <WithdrawalAddresses number={withdrawalAddressCount} />
         </Grid>
       </CardContent>
     </Card>
