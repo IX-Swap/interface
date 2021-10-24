@@ -1,7 +1,6 @@
-import { includes } from 'lodash/includes'
 import { authForms } from '../selectors/auth'
 import { baseCreds } from '../helpers/creds'
-import { userRegistration } from '../helpers/api'
+import { userRegistration, enable2fa } from '../helpers/api'
 
 // import { userRegistration } from "../helpers/api-helpers";
 
@@ -18,18 +17,26 @@ class Authentication {
     this.page = page
   }
 
+  loginWithout2fa = async (email, password) => {
+    await typeText(authForms.fields.EMAIL, email, this.page)
+    await typeText(authForms.fields.PASSWORD, password, this.page)
+    await click(authForms.buttons.LOGIN, this.page)
+  }
+
   login = async (email, password) => {
     await typeText(authForms.fields.EMAIL, email, this.page)
     await typeText(authForms.fields.PASSWORD, password, this.page)
     await click(authForms.buttons.LOGIN, this.page)
-    if ([1, 2, 3, 0].includes(0)) {
-      console.log('yes')
+    //2FA
+    await click(authForms.buttons.TWO_FA, this.page)
+    for (let _ of [1, 2, 3]) {
+      await click(authForms.buttons.NEXT, this.page)
     }
-    // this.page.on('request', request => {
-    //   if (request.url().includes('.mozork.com/auth/profiles/'))
-    //   console.log(request.url())
-
-    // });
+    const code = await this.page.$$('input')
+    for (const digit of code) {
+      await digit.fill('1')
+    }
+    await click(authForms.buttons.ENABLE, this.page)
   }
 
   async submitRegistrationForm(email) {

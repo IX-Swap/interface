@@ -1,5 +1,5 @@
 // playwright.config.ts
-import { PlaywrightTestConfig } from "@playwright/test";
+import { PlaywrightTestConfig } from '@playwright/test'
 
 const config: PlaywrightTestConfig = {
   timeout: 180000,
@@ -11,30 +11,30 @@ const config: PlaywrightTestConfig = {
     headless: true,
     viewport: { width: 1920, height: 1080 },
     ignoreHTTPSErrors: true,
-    browserName: "chromium",
-    screenshot: "only-on-failure",
-    video: "off",
+    browserName: 'chromium',
+    screenshot: 'only-on-failure',
+    video: 'off'
   },
 
   projects: [
     {
-      name: "Chromium",
+      name: 'Chromium',
       retries: 1,
       timeout: 180000,
       use: {
         headless: true,
-        viewport: { width: 1920, height: 1080 },
+        viewport: { width: 1900, height: 1000 },
         ignoreHTTPSErrors: true,
-        browserName: "chromium",
-        screenshot: "only-on-failure",
+        browserName: 'chromium',
+        screenshot: 'only-on-failure',
         trace: 'on-first-retry',
-        video: "off",
+        video: 'off',
         httpCredentials: {
-          username: "ixprime",
-          password: "!nv35taX2K2!*",
-        },
-      },
-    },
-  ],
-};
-export default config;
+          username: 'ixprime',
+          password: '!nv35taX2K2!*'
+        }
+      }
+    }
+  ]
+}
+export default config
