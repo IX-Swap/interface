@@ -30,7 +30,7 @@ jobs:
       #   run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
       - run: npx playwright install-deps
       - run: npx playwright install
-      # - run: yarn
+      - run: yarn
       # - run: CI=false yarn build
       # - run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
       - run: yarn integration-test
