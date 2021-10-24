@@ -17,6 +17,8 @@ export const TopInfoPanel: React.FC = () => {
   const USDCash = USDBalances?.availableBalance
   const SGDCash = SGDBalances?.availableBalance
 
+  console.log('SGDBalances', SGDBalances)
+
   if (USDBalances === undefined || SGDBalances === undefined) {
     return <LoadingIndicator />
   }
@@ -42,7 +44,7 @@ export const TopInfoPanel: React.FC = () => {
 
           <Grid item className={classes.line} />
 
-          <TotalAssetBalance />
+          <TotalAssetBalance value={SGDBalances.totalAssetBalance} />
 
           <Grid item className={classes.line} />
 

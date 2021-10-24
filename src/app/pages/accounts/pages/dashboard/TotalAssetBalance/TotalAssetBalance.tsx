@@ -3,8 +3,13 @@ import { Grid, Typography } from '@material-ui/core'
 import { useStyles } from './TotalAssetBalance.styles'
 import { VSpacer } from 'components/VSpacer'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+import { formatAmount } from 'helpers/numbers'
 
-export const TotalAssetBalance: React.FC = () => {
+export interface TotalAssetBalanceProps {
+  value: number
+}
+
+export const TotalAssetBalance = ({ value }: TotalAssetBalanceProps) => {
   const classes = useStyles()
   const { isMobile } = useAppBreakpoints()
 
@@ -19,7 +24,7 @@ export const TotalAssetBalance: React.FC = () => {
       <VSpacer size={'extraSmall'} />
       <Grid item className={classes.secondBlock}>
         <Typography variant={'body1'} className={classes.value}>
-          S$ 3,456,789.00
+          S$ {formatAmount(value)}
         </Typography>
       </Grid>
     </Grid>
