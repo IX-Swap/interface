@@ -4,7 +4,12 @@ import { useStyles } from './Investments.styles'
 import { VSpacer } from 'components/VSpacer'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 
-export const Investments: React.FC = () => {
+export interface InvestmentsProps {
+  primary: number
+  secondary?: number
+}
+
+export const Investments = ({ primary, secondary }: InvestmentsProps) => {
   const classes = useStyles()
   const { isMobile } = useAppBreakpoints()
 
@@ -31,19 +36,23 @@ export const Investments: React.FC = () => {
           </Typography>
         </Grid>
 
-        <Grid item className={classes.space} />
+        {secondary !== undefined ? (
+          <>
+            <Grid item className={classes.space} />
 
-        <Grid item container alignItems={'center'} className={classes.item}>
-          <Typography variant={'subtitle2'} className={classes.label}>
-            Secondary:
-          </Typography>
+            <Grid item container alignItems={'center'} className={classes.item}>
+              <Typography variant={'subtitle2'} className={classes.label}>
+                Secondary:
+              </Typography>
 
-          <Box width={6} />
+              <Box width={6} />
 
-          <Typography variant={'body1'} className={classes.value}>
-            S$ 1,000,000.00
-          </Typography>
-        </Grid>
+              <Typography variant={'body1'} className={classes.value}>
+                S$ 1,000,000.00
+              </Typography>
+            </Grid>
+          </>
+        ) : null}
       </Grid>
     </Grid>
   )
