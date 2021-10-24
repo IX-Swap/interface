@@ -3,6 +3,7 @@ import { Box, Grid, Typography } from '@material-ui/core'
 import { useStyles } from './Investments.styles'
 import { VSpacer } from 'components/VSpacer'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+import { formatAmount } from 'helpers/numbers'
 
 export interface InvestmentsProps {
   primary: number
@@ -32,7 +33,7 @@ export const Investments = ({ primary, secondary }: InvestmentsProps) => {
           <Box width={6} />
 
           <Typography variant={'body1'} className={classes.value}>
-            S$ 1,000,000.00
+            S$ {formatAmount(primary)}
           </Typography>
         </Grid>
 
@@ -48,7 +49,7 @@ export const Investments = ({ primary, secondary }: InvestmentsProps) => {
               <Box width={6} />
 
               <Typography variant={'body1'} className={classes.value}>
-                S$ 1,000,000.00
+                S$ {formatAmount(secondary)}
               </Typography>
             </Grid>
           </>
