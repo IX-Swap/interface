@@ -10,7 +10,7 @@ import { useActiveWeb3React } from 'hooks/web3'
 import React, { useMemo } from 'react'
 import { isMobile } from 'react-device-detect'
 import { DesktopAndTablet, TYPE } from 'theme'
-import { OptionList, StakingTierCardWrapper } from './style'
+import { OptionList, StakingTierCardWrapper, SwitchNetworkWrap } from './style'
 
 export const StakingOtherNetworkCard = () => {
   const switchChain = useSwitchChain()
@@ -91,11 +91,11 @@ export const StakingOtherNetworkCard = () => {
         </RowCenter>
       )}
       {isMobile && (
-        <RowCenter style={{ marginBottom: '25px', marginTop: 'auto  ' }}>
+        <SwitchNetworkWrap>
           <TYPE.body1 fontWeight={400} style={{ width: '10rem', textAlign: 'center' }}>
             <Trans>Switch to Polygon in your Web3 browser</Trans>
           </TYPE.body1>
-        </RowCenter>
+        </SwitchNetworkWrap>
       )}
     </StakingTierCardWrapper>
   )

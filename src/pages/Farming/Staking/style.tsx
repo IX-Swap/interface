@@ -327,3 +327,8 @@ export const RowWithMarginTopAndBottom = styled(RowWithMarginTop)`
     margin-bottom: 15px;
   }
 `
+
+export const SwitchNetworkWrap = styled(RowCenter)`
+  margin-bottom: 25px;
+  margin-top: auto;
+`
