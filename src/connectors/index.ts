@@ -45,7 +45,8 @@ export const injected = new InjectedConnector({
 export const walletconnect = new WalletConnectConnector({
   rpc: NETWORK_URLS,
   qrcode: true,
-  pollingInterval: 15000,
+  bridge: 'https://bridge.walletconnect.org',
+  pollingInterval: 12000,
 })
 
 // mainnet only
