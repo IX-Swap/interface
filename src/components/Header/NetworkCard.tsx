@@ -34,7 +34,6 @@ const SelectorControls = styled(VioletCard)`
   }
   ${({ theme }) => theme.mediaWidth.upToSmall`
     margin: 0;
-    overflow: hidden;
     text-overflow: ellipsis;
     flex-shrink: 1;
     padding: 0;
@@ -72,6 +71,12 @@ const FlyoutMenu = styled.div`
   @media screen and (min-width: ${MEDIA_WIDTHS.upToSmall}px) {
     top: 67px;
   }
+  @media screen and (max-width: ${MEDIA_WIDTHS.upToExtraSmall}px) {
+    right: 70px;
+  }
+  @media screen and (max-width: 400px) {
+    right: 30px;
+  }
 `
 const FlyoutRow = styled.div<{ active: boolean }>`
   align-items: center;
@@ -100,7 +105,9 @@ const NetworkLabel = styled.div`
   flex: 1 1 auto;
 `
 
-const Selector = styled.div``
+const Selector = styled.div`
+  margin-right: 5px;
+`
 export const NetworkCard = () => {
   const { chainId, library, account } = useActiveWeb3React()
   const node = useRef<HTMLDivElement>()
