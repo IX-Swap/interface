@@ -220,16 +220,14 @@ function Web3StatusInner() {
         <Text>{error instanceof UnsupportedChainIdError ? <Trans>Wrong Network</Trans> : <Trans>Error</Trans>}</Text>
       </Web3StatusError>
     )
-  } else if (!isMobile) {
-    return (
-      <Web3StatusConnect id="connect-wallet" onClick={connectWallet} faded={!account}>
-        <Text style={{ fontWeight: 600 }}>
-          <Trans>Connect Wallet</Trans>
-        </Text>
-      </Web3StatusConnect>
-    )
   }
-  return null
+  return (
+    <Web3StatusConnect id="connect-wallet" onClick={connectWallet} faded={!account}>
+      <Text style={{ fontWeight: 600 }}>
+        <Trans>Connect Wallet</Trans>
+      </Text>
+    </Web3StatusConnect>
+  )
 }
 
 export default function Web3Status() {
