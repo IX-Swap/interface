@@ -41,7 +41,7 @@ export const useLogin = (referrer?: string) => {
       onError: (error: any) => {
         setAttempts(attempts + 1)
         setLocked(false)
-        if (error?.code === 'RECO-RLE291') {
+        if (error?.code === 'RECO-RLE291' || error?.code === 'RWC0-70531O') {
           setLocked(true)
         }
 
