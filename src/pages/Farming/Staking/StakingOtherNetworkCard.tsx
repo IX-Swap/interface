@@ -83,7 +83,7 @@ export const StakingOtherNetworkCard = () => {
           </OptionList>
         </TYPE.body1>
       </RowCenter>
-      {library?.provider?.isMetaMask && chainId && !isMobile && (
+      {library?.provider?.isMetaMask && chainId && (
         <RowCenter style={{ marginBottom: '50px', marginTop: 'auto' }}>
           <ButtonGradientBorder style={{ width: '100%' }} onClick={() => switchChain.addChain()}>
             Switch network
