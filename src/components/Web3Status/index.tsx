@@ -133,18 +133,12 @@ function Sock() {
 // eslint-disable-next-line react/prop-types
 function StatusIcon({ connector }: { connector: AbstractConnector }) {
   if (connector === injected) {
-    return (
-      <DesktopAndTablet>
-        <Identicon />
-      </DesktopAndTablet>
-    )
+    return <Identicon />
   } else if (connector === walletconnect) {
     return (
-      <DesktopAndTablet>
-        <IconWrapper size={16}>
-          <img src={WalletConnectIcon} alt={'WalletConnect'} />
-        </IconWrapper>
-      </DesktopAndTablet>
+      <IconWrapper size={16}>
+        <img src={WalletConnectIcon} alt={'WalletConnect'} />
+      </IconWrapper>
     )
   }
   // else if (connector === walletlink) {
