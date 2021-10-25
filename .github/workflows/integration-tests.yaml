@@ -32,7 +32,6 @@ jobs:
       # - run: CI=false yarn build
       # - run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
       - run: ls -la
-      - run: cd /home/runner/work/IXWebApp/__tests__
       - run: echo $PWD
       - run: yarn integration-test
       - uses: actions/upload-artifact@v2
