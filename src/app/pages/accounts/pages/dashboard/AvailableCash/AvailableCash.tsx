@@ -6,11 +6,11 @@ import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { formatAmount } from 'helpers/numbers'
 
 export interface AvailableCashProps {
-  USDCash: number
-  SGDCash: number
+  usd: number
+  sgd: number
 }
 
-export const AvailableCash = ({ USDCash, SGDCash }: AvailableCashProps) => {
+export const AvailableCash = ({ usd, sgd }: AvailableCashProps) => {
   const classes = useStyles()
   const { isMobile } = useAppBreakpoints()
 
@@ -33,7 +33,7 @@ export const AvailableCash = ({ USDCash, SGDCash }: AvailableCashProps) => {
       >
         <Grid item>
           <Typography variant={'body1'} className={classes.value}>
-            US$ {formatAmount(USDCash)}
+            US$ {formatAmount(usd)}
           </Typography>
         </Grid>
 
@@ -41,7 +41,7 @@ export const AvailableCash = ({ USDCash, SGDCash }: AvailableCashProps) => {
 
         <Grid item>
           <Typography variant={'body1'} className={classes.value}>
-            S$ {formatAmount(SGDCash)}
+            S$ {formatAmount(sgd)}
           </Typography>
         </Grid>
       </Grid>
