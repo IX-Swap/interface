@@ -10,7 +10,7 @@ import { useActiveWeb3React } from 'hooks/web3'
 import React, { useMemo } from 'react'
 import { isMobile } from 'react-device-detect'
 import { DesktopAndTablet, TYPE } from 'theme'
-import { OptionList, StakingTierCardWrapper } from './style'
+import { OptionList, StakingTierCardWrapper, SwitchNetworkWrap } from './style'
 
 export const StakingOtherNetworkCard = () => {
   const switchChain = useSwitchChain()
@@ -22,21 +22,25 @@ export const StakingOtherNetworkCard = () => {
         icon: PolygonRound,
         name: t`polygon`,
         options: [t`1 month — 18% APY`, t`2 month — 44% APY`, t`3 month — 88% APY`],
+        switchTitle: t`wanna stake on polygon?`,
       },
       [SupportedChainId.KOVAN]: {
         icon: PolygonRound,
         name: t`polygon`,
         options: [t`1 month — 18% APY`, t`2 month — 44% APY`, t`3 month — 88% APY`],
+        switchTitle: t`wanna stake on polygon?`,
       },
       [SupportedChainId.MATIC]: {
         icon: EthereumRound,
         name: t`ethereum`,
         options: [t`2 month — 44% APY`, t`3 month — 88% APY`],
+        switchTitle: t`other pools on ethereum`,
       },
       [SupportedChainId.MUMBAI]: {
         icon: EthereumRound,
         name: t`ethereum`,
         options: [],
+        switchTitle: t`other pools on ethereum`,
       },
     }),
     []
@@ -60,7 +64,7 @@ export const StakingOtherNetworkCard = () => {
       {chainId && (
         <RowCenter marginTop={18}>
           <TYPE.title5 lineHeight={'27px'} style={{ textTransform: 'uppercase', textAlign: 'center' }}>
-            <Trans>wanna stake on {computedSwitchToParams?.name}?</Trans>
+            <Trans>{computedSwitchToParams?.switchTitle}</Trans>
           </TYPE.title5>
         </RowCenter>
       )}
@@ -87,11 +91,11 @@ export const StakingOtherNetworkCard = () => {
         </RowCenter>
       )}
       {isMobile && (
-        <RowCenter style={{ marginBottom: '25px', marginTop: 'auto  ' }}>
+        <SwitchNetworkWrap>
           <TYPE.body1 fontWeight={400} style={{ width: '10rem', textAlign: 'center' }}>
             <Trans>Switch to Polygon in your Web3 browser</Trans>
           </TYPE.body1>
-        </RowCenter>
+        </SwitchNetworkWrap>
       )}
     </StakingTierCardWrapper>
   )

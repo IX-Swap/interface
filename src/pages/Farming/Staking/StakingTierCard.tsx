@@ -39,6 +39,10 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
     () => POOL_SIZE_LIMITS[(chainId ?? 1) as SupportedChainId][tier?.period || PERIOD.ONE_WEEK],
     [chainId, tier?.period]
   )
+  const shortLimit = useMemo(
+    () => POOL_SIZE_LIMIT_TEXTS[(chainId ?? 1) as SupportedChainId][tier?.period || PERIOD.ONE_WEEK],
+    [chainId, tier?.period]
+  )
   useEffect(() => {
     fetchHistoricalPoolSize(tier.period)
   }, [fetchHistoricalPoolSize, tier.period, hasStakedSuccessfully])
@@ -137,11 +141,12 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
       <RowWithMarginTop>
         <TYPE.body1 fontWeight={400}>
           <DesktopAndTablet>
-            <Trans>{POOL_SIZE_LIMIT_TEXTS[(chainId ?? 1) as SupportedChainId][tier?.period || PERIOD.ONE_WEEK]}</Trans>
+            <Trans>{shortLimit}</Trans>
           </DesktopAndTablet>
           <MobileOnly>
             <Trans>
-              {leftToFill}/{POOL_SIZE_LIMIT_TEXTS[(chainId ?? 1) as SupportedChainId][tier?.period || PERIOD.ONE_WEEK]}
+              {isLimitReached ? <></> : <>{leftToFill}/</>}
+              {shortLimit}
             </Trans>
           </MobileOnly>
         </TYPE.body1>
