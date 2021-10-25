@@ -49,3 +49,11 @@ export interface VAAuditOutboundItem {
   vaFileName: string
   createdAt: string
 }
+
+export interface VirtualAccountBalances {
+  availableBalance: number
+  primaryInvestmentBalance: number
+  secondaryInvestmentBalance: number
+  totalAssetBalance: number
+  withdrawalAddressCount: number
+}
