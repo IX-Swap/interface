@@ -22,13 +22,13 @@ export const StakingOtherNetworkCard = () => {
         icon: PolygonRound,
         name: t`polygon`,
         options: [t`1 month — 18% APY`, t`2 month — 44% APY`, t`3 month — 88% APY`],
-        switchTitle: t`wanna stake on polygon?`,
+        switchTitle: t`other pools on polygon`,
       },
       [SupportedChainId.KOVAN]: {
         icon: PolygonRound,
         name: t`polygon`,
         options: [t`1 month — 18% APY`, t`2 month — 44% APY`, t`3 month — 88% APY`],
-        switchTitle: t`wanna stake on polygon?`,
+        switchTitle: t`other pools on polygon`,
       },
       [SupportedChainId.MATIC]: {
         icon: EthereumRound,
@@ -83,7 +83,7 @@ export const StakingOtherNetworkCard = () => {
           </OptionList>
         </TYPE.body1>
       </RowCenter>
-      {library?.provider?.isMetaMask && chainId && !isMobile && (
+      {library?.provider?.isMetaMask && chainId && (
         <RowCenter style={{ marginBottom: '50px', marginTop: 'auto' }}>
           <ButtonGradientBorder style={{ width: '100%' }} onClick={() => switchChain.addChain()}>
             Switch network
