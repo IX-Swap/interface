@@ -35,7 +35,10 @@ export const TopInfoPanel: React.FC = () => {
 
           <Grid item className={classes.line} />
 
-          <Investments />
+          <Investments
+            primary={SGDBalances.primaryInvestmentBalance}
+            secondary={SGDBalances.secondaryInvestmentBalance}
+          />
 
           <Grid item className={classes.line} />
 
