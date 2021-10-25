@@ -42,7 +42,7 @@ export const TopInfoPanel: React.FC = () => {
 
           <Grid item className={classes.line} />
 
-          <TotalAssetBalance />
+          <TotalAssetBalance value={SGDBalances.totalAssetBalance} />
 
           <Grid item className={classes.line} />
 
