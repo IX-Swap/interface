@@ -73,6 +73,9 @@ export default function App() {
 
   const isAdminKyc = pathname.includes('admin-kyc')
   const validChainId = useMemo(() => {
+    if (!chainId) {
+      return true
+    }
     return chainId && Object.values(SUPPORTED_TGE_CHAINS).includes(chainId)
   }, [chainId])
 
