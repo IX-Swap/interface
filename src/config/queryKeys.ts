@@ -174,7 +174,8 @@ export const virtualAccountQueryKeys = {
   listUnassigned: 'unassigned-virtual-accounts',
   getByUserId: 'virtual-account',
   paymentMethod: 'payment-method',
-  getBalances: 'get-balances'
+  getBalances: 'get-balances',
+  getPortfolios: 'get-portfolios'
 }
 
 export const exchange = {

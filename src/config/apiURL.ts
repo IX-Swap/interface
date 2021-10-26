@@ -224,7 +224,9 @@ export const virtualAccounts = {
   uploadCSV: '/virtual-accounts/upload',
   disable: '/virtual-accounts/disable',
   getById: (id: string) => `/virtual-accounts/get-account/${id}`,
-  getBalances: (accountId: string) => `/virtual-accounts/balances/${accountId}`
+  getBalances: (accountId: string) => `/virtual-accounts/balances/${accountId}`,
+  getPortfolios: (accountId: string) =>
+    `/virtual-accounts/portfolios/${accountId}`
 }
 
 export const exchange = {

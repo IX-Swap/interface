@@ -3,17 +3,17 @@ import { virtualAccountQueryKeys } from 'config/queryKeys'
 import { useServices } from 'hooks/useServices'
 import { useQuery } from 'react-query'
 
-export const useGetBalances = (virtualAccountId: string) => {
+export const useGetPortfolios = (virtualAccountId: string) => {
   const { apiService } = useServices()
 
-  const getBalances = async () => {
-    const uri = virtualAccounts.getBalances(virtualAccountId)
+  const getPortfolios = async () => {
+    const uri = virtualAccounts.getPortfolios(virtualAccountId)
     return await apiService.post(uri, {})
   }
 
   const { data, ...rest } = useQuery(
-    [virtualAccountQueryKeys.getBalances, { virtualAccountId }],
-    getBalances
+    [virtualAccountQueryKeys.getPortfolios, { virtualAccountId }],
+    getPortfolios
   )
 
   return {
