@@ -73,6 +73,7 @@ export default function App() {
 
   const isAdminKyc = pathname.includes('admin-kyc')
   const validChainId = useMemo(() => {
+    console.log({ chainId })
     if (!chainId) {
       return true
     }
