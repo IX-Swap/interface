@@ -69,11 +69,10 @@ export default function App() {
   const isSettingsOpen = useModalOpen(ApplicationModal.SETTINGS)
   const { pathname } = useLocation()
   useAccount()
-  const { chainId } = useActiveWeb3React()
+  const { chainId, account } = useActiveWeb3React()
 
   const isAdminKyc = pathname.includes('admin-kyc')
   const validChainId = useMemo(() => {
-    console.log({ chainId })
     if (!chainId) {
       return true
     }
@@ -81,8 +80,8 @@ export default function App() {
   }, [chainId])
 
   const visibleBody = useMemo(() => {
-    return !isSettingsOpen && (validChainId || isAdminKyc)
-  }, [isAdminKyc, isSettingsOpen, validChainId])
+    return (!isSettingsOpen && (validChainId || isAdminKyc)) || !account
+  }, [isAdminKyc, isSettingsOpen, validChainId, account])
 
   return (
     <ErrorBoundary>
@@ -93,7 +92,7 @@ export default function App() {
       <Popups />
       <AppWrapper>
         {validChainId && !isAdminKyc && <Header />}
-        {chainId && !validChainId && !isAdminKyc && <ConnectToAppropriateNetwork />}
+        {chainId && !validChainId && !isAdminKyc && account && <ConnectToAppropriateNetwork />}
         <ToggleableBody isVisible={visibleBody} {...(isAdminKyc && { style: { marginTop: 26 } })}>
           <IXSBalanceModal />
           <Web3ReactManager>

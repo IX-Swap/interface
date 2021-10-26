@@ -493,7 +493,7 @@ export const TextGradient = styled.div`
   -webkit-text-fill-color: transparent;
 `
 export const ConnectToAppropriateNetwork = () => (
-  <ColumnCenter style={{ height: '100vh', justifyContent: 'center' }}>
+  <ColumnCenter style={{ height: '100vh', justifyContent: 'center', padding: '20px' }}>
     <TYPE.main0>
       <Trans>
         Please connect to one of the following networks: Main Ethereum, Kovan, Polygon Mainnet, Polygon Mumbai.
