@@ -30,14 +30,14 @@ export const ConnectWalletVesting = () => {
 
       <ButtonIXSWide
         onClick={connectWallet}
-        disabled={!!account}
+        disabled={!!account || isMobile}
         data-testid="connect-wallet-in-vesting"
         style={{ maxWidth: '308px', width: '100%' }}
       >
         <Trans>Connect Wallet</Trans>
       </ButtonIXSWide>
       {isMobile && (
-        <UseWeb3Browser>You can use web3 browser in Metamask app or another one to connect your wallet.</UseWeb3Browser>
+        <UseWeb3Browser>Use web3 browser in Metamask app or another one to connect your wallet.</UseWeb3Browser>
       )}
     </>
   )

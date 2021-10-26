@@ -82,7 +82,7 @@ export default function App() {
   const visibleBody = useMemo(() => {
     return (!isSettingsOpen && (validChainId || isAdminKyc)) || !account
   }, [isAdminKyc, isSettingsOpen, validChainId, account])
-  console.log({ chainId, account })
+
   return (
     <ErrorBoundary>
       <Route component={GoogleAnalyticsReporter} />
