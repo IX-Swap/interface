@@ -6,21 +6,20 @@ import {
   emailCreate,
   click,
   screenshotMatching,
-  waitForResponseInclude,
   waitForText
 } from '../lib/helpers/helpers'
 
-test.afterEach(async ({ page, context }, testInfo) => {
-  await page.close()
-})
-
-test.describe('Create Identity', () => {
-  let forEachEmail = emailCreate()
+test.describe('Check identities form', () => {
   test.beforeEach(async ({ page, baseURL, auth }, testInfo) => {
+    let forEachEmail = await emailCreate()
     await auth.submitRegistrationFormByAPI(forEachEmail)
   })
 
-  test('Check individual identity', async ({ page, kycForms }, testInfo) => {
+  test.afterEach(async ({ page, context }, testInfo) => {
+    await page.close()
+  })
+
+  test('Individual', async ({ page, kycForms }, testInfo) => {
     await test.step('Personal Information ', async () => {
       await click(kyc.type.INDIVIDUAL, page)
       await kycForms.fillPersonalInformationForm()
@@ -53,7 +52,7 @@ test.describe('Create Identity', () => {
     })
   })
 
-  test('Check Corporate identity', async ({ page, kycForms }, testInfo) => {
+  test('Corporate', async ({ page, kycForms }, testInfo) => {
     await test.step('fill Personal Information Form', async () => {
       await click(kyc.type.CORPORATE, page)
       await kycForms.fillCorporateInformation()
@@ -88,10 +87,33 @@ test.describe('Create Identity', () => {
 
     await test.step('Check full profile view', async () => {
       await waitForText(page, text.docs.docBenefitsAddressName)
-      // await kycForms.checkAllViewUsingSnapshot(testInfo.title)
+      await kycForms.checkAllViewUsingSnapshot(testInfo.title)
     })
   })
-  test('Issuer identity (skip step)', async ({ page, kycForms }, testInfo) => {
+  test('Check tax information', async ({ page, kycForms }, testInfo) => {
+    await test.step('fill Personal Information Form', async () => {
+      await click(kyc.type.CORPORATE, page)
+      await kycForms.fillCorporateInformation()
+      await kycForms.fillCorporateAddressForm()
+      await kycForms.fillCompanyAuthorizedPersonnel()
+      await click(kyc.buttons.SUBMIT, page)
+    })
+
+    await test.step('Directors and Beneficial Owner Details', async () => {
+      await kycForms.fillPeopleWithExecutiveAuthorityForm()
+      await kycForms.fillCorporateDirectorAddressForm()
+      await click(kyc.buttons.SUBMIT, page)
+    })
+
+    await test.step('fill Tax declaration form', async () => {
+      await kycForms.fillTaxDeclarationForm()
+      await click(kyc.buttons.CLICK_HERE, page)
+      const dialog = await page.waitForSelector(kyc.DIALOG_VIEW)
+      await screenshotMatching(testInfo.title, dialog)
+    })
+  })
+
+  test('Issuer(skip step)', async ({ page, kycForms }, testInfo) => {
     await test.step('fill Personal Information Form', async () => {
       await click(kyc.type.ISSUER, page)
       await kycForms.fillIssuerDetails()
@@ -119,7 +141,7 @@ test.describe('Create Identity', () => {
       await kycForms.checkAllViewUsingSnapshot(testInfo.title)
     })
   })
-  test('Check Issuer identity(full)', async ({ page, kycForms }, testInfo) => {
+  test('Issuer (full)', async ({ page, kycForms }, testInfo) => {
     await test.step('fill Personal Information Form', async () => {
       await click(kyc.type.ISSUER, page)
       await kycForms.fillIssuerFirstForm()

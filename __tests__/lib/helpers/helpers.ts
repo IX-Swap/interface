@@ -1,8 +1,8 @@
-import fetch from "node-fetch";
-const { format } = require("date-fns");
-const { expect } = require('@playwright/test');
-const DEFAULT_SELECTOR_TIMEOUT = 50000;
-const LOADER = '[data-test-id="loader"]';
+import fetch from 'node-fetch'
+const { format } = require('date-fns')
+const { expect } = require('@playwright/test')
+const DEFAULT_SELECTOR_TIMEOUT = 50000
+const LOADER = '[data-test-id="loader"]'
 
 // getTestAttribute(element) {
 //   return `[data-test-id="${element}"]`;
@@ -17,7 +17,6 @@ const LOADER = '[data-test-id="loader"]';
 //   expect(await page.isChecked(element), `The ${element} box is not checked`)
 //     .to.be.true;
 // },
-
 
 // async clearField(page, element) {
 //   await page.waitForSelector(element, {
@@ -36,7 +35,7 @@ const LOADER = '[data-test-id="loader"]';
 // },
 // //
 function emailCreate() {
-  return `Luch4${Math.floor(Math.random() * Math.floor(9999999999))}@wwjmp.com`;
+  return `Luch4${Date.now()}@wwjmp.com`
 }
 
 //   randomNumbers => {
@@ -44,92 +43,92 @@ function emailCreate() {
 //   },
 
 // upload file
-async function uploadFiles(page, element, file, resp = "yes") {
-  await page.waitForSelector(element, { state: "attached" });
-  const inputsFile = await page.$$(element);
+async function uploadFiles(page, element, file, resp = 'yes') {
+  await page.waitForSelector(element, { state: 'attached' })
+  const inputsFile = await page.$$(element)
   for (const element of inputsFile) {
-    await element.setInputFiles(file);
-    await element.evaluate((upload) =>
-      upload.dispatchEvent(new Event("change", { bubbles: true }))
-    );
-    if (resp === "yes") {
-      await page.waitForResponse((response) => {
+    await element.setInputFiles(file)
+    await element.evaluate(upload =>
+      upload.dispatchEvent(new Event('change', { bubbles: true }))
+    )
+    if (resp === 'yes') {
+      await page.waitForResponse(response => {
         return (
-          response.url() ===
-          `https://api.staging.mozork.com/dataroom` && response.status() === 200
-        );
-      });
+          response.url() === `https://api.staging.mozork.com/dataroom` &&
+          response.status() === 200
+        )
+      })
     }
   }
 }
 
 async function click(selector, page) {
   await page.waitForSelector(LOADER, {
-    state: "detached",
-    timeout: DEFAULT_SELECTOR_TIMEOUT,
-  });
+    state: 'detached',
+    timeout: DEFAULT_SELECTOR_TIMEOUT
+  })
   await page.waitForSelector(selector, {
-    state: "attached",
-    timeout: DEFAULT_SELECTOR_TIMEOUT,
-  });
+    state: 'attached',
+    timeout: DEFAULT_SELECTOR_TIMEOUT
+  })
   try {
-    await page.waitForTimeout(500);
-    await page.click(selector);
+    await page.waitForTimeout(500)
+    await page.click(selector)
   } catch {
-    throw new Error(`Could NOT find SELECTOR for click: ${selector}`);
+    throw new Error(`Could NOT find SELECTOR for click: ${selector}`)
   }
 }
 
 async function typeText(selector, words, page) {
   await page.waitForSelector(LOADER, {
-    state: "detached",
-    timeout: DEFAULT_SELECTOR_TIMEOUT,
-  });
+    state: 'detached',
+    timeout: DEFAULT_SELECTOR_TIMEOUT
+  })
   try {
     await page.waitForSelector(selector, {
-      state: "attached",
-      timeout: DEFAULT_SELECTOR_TIMEOUT,
-    });
+      state: 'attached',
+      timeout: DEFAULT_SELECTOR_TIMEOUT
+    })
 
-    await page.type(selector, words);
+    await page.type(selector, words)
   } catch {
-    throw new Error(`Could NOT find SELECTOR for type: ${selector}`);
+    throw new Error(`Could NOT find SELECTOR for type: ${selector}`)
   }
 }
 
 async function clearAndTypeText(selector, words, page) {
   await page.waitForSelector(selector, {
-    state: "attached",
-    timeout: DEFAULT_SELECTOR_TIMEOUT,
-  });
-  await page.focus(selector);
+    state: 'attached',
+    timeout: DEFAULT_SELECTOR_TIMEOUT
+  })
+  await page.focus(selector)
   const search = await page.waitForSelector(selector, {
-    state: "attached",
-    timeout: DEFAULT_SELECTOR_TIMEOUT,
-  });
-  const query = await search.evaluate((element) => element.value);
+    state: 'attached',
+    timeout: DEFAULT_SELECTOR_TIMEOUT
+  })
+  const query = await search.evaluate(element => element.value)
   for (const _ of query) {
-    await page.keyboard.press("Backspace");
+    await page.keyboard.press('Backspace')
   }
   try {
-    await page.waitForTimeout(500);
-    await page.type(selector, words);
+    await page.waitForTimeout(500)
+    await page.type(selector, words)
   } catch (error) {
-    console.error(error);
-    throw new Error(`Could not type text into select: ${selector}`);
+    console.error(error)
+    throw new Error(`Could not type text into select: ${selector}`)
   }
 }
 
-  async function waitForText(page, words) {
-    try {
-      await page.waitForSelector(`//*[contains(text(),'${words}')]`, {
-        state: "attached",
-        timeout: DEFAULT_SELECTOR_TIMEOUT,
-      });
-    } catch {
-      throw new Error(`Text: ${words} not found `);
-    }
+async function waitForText(page, words) {
+  try {
+    await page.waitForSelector(`//*[contains(text(),'${words}')]`, {
+      state: 'attached',
+      timeout: DEFAULT_SELECTOR_TIMEOUT
+    })
+  } catch {
+    throw new Error(`Text: ${words} not found `)
   }
+}
 
 //   async waitForValue(page, selector, value) {
 //     await page.waitForSelector(selector, {
@@ -159,34 +158,30 @@ async function clearAndTypeText(selector, words, page) {
 
 async function shouldExist(selector, page) {
   await page.waitForSelector(LOADER, {
-    state: "detached",
-    timeout: DEFAULT_SELECTOR_TIMEOUT,
-  });
+    state: 'detached',
+    timeout: DEFAULT_SELECTOR_TIMEOUT
+  })
   try {
     await page.waitForSelector(selector, {
-      state: "attached",
-      timeout: DEFAULT_SELECTOR_TIMEOUT,
-    });
+      state: 'attached',
+      timeout: DEFAULT_SELECTOR_TIMEOUT
+    })
   } catch {
-    throw new Error(`Selector: ${selector} does not exist`);
+    throw new Error(`Selector: ${selector} does not exist`)
   }
 }
 
-//   async shouldNotExist(selector, page) {
-//     await page.waitForSelector(LOADER, {
-//       state: "detached",
-//       timeout: DEFAULT_SELECTOR_TIMEOUT,
-//     });
-//     try {
-//       await page.waitForSelector(selector, {
-//         state: "detached",
-//         timeout: DEFAULT_SELECTOR_TIMEOUT,
-//       });
-//       return true;
-//     } catch {
-//       throw new Error(`Selector: ${selector} exist but should not `);
-//     }
-//   },
+async function shouldNotExist(selector, page) {
+  try {
+    await page.waitForSelector(selector, {
+      state: 'detached',
+      timeout: DEFAULT_SELECTOR_TIMEOUT
+    })
+    return true
+  } catch {
+    throw new Error(`Selector: ${selector} exist but should not `)
+  }
+}
 
 //   somewhereClick: async (page) => {
 //     const element = await page.waitForSelector(`[alt="logged-in-user"]`, {
@@ -200,42 +195,42 @@ async function shouldExist(selector, page) {
 //   },
 
 async function getLinkToConfirmRegistration(email, page) {
-  const partsEmail = email.split("@");
-  let results;
-  let link;
-  let messageId;
+  const partsEmail = email.split('@')
+  let results
+  let link
+  let messageId
 
   for (const i of [1, 2, 3, 4]) {
-    await page.waitForTimeout(5000);
+    await page.waitForTimeout(5000)
     results = await fetch(
       `https://www.1secmail.com/api/v1/?action=getMessages&login=${partsEmail[0]}&domain=${partsEmail[1]}`
-    ).then((res) => res.json());
+    ).then(res => res.json())
     if (results > 0) {
-      break;
+      break
     } else if (i === 4 && results === null) {
-      throw new Error(`Emails are not sent`);
+      throw new Error(`Emails are not sent`)
     }
   }
   for (const result of results) {
-    if (result.subject.includes("Invitation")) {
-      messageId = result.id;
-      break;
+    if (result.subject.includes('Invitation')) {
+      messageId = result.id
+      break
     } else {
-      messageId = results[0].id;
+      messageId = results[0].id
     }
   }
   try {
     link = await fetch(
       `https://www.1secmail.com/api/v1/?action=readMessage&login=${partsEmail[0]}&domain=${partsEmail[1]}&id=${messageId}`
-    ).then((res) => res.json());
-    const re = /(https?:\/\/\S+\w)/g;
-    const nameList = link.htmlBody.match(re);
-    const confLink = nameList[0].split('"');
-    return confLink[0];
+    ).then(res => res.json())
+    const re = /(https?:\/\/\S+\w)/g
+    const nameList = link.htmlBody.match(re)
+    const confLink = nameList[0].split('"')
+    return confLink[0]
   } catch (error) {
-    console.error(results);
-    console.error(link);
-    throw new Error(`Get link to confirm invite error`);
+    console.error(results)
+    console.error(link)
+    throw new Error(`Get link to confirm invite error`)
   }
 }
 
@@ -249,35 +244,33 @@ async function getLinkToConfirmRegistration(email, page) {
 //     return sum;
 //   },
 
-async function waitForResponseInclude  (page, responseText) {
-    try {
-      await page.waitForResponse(
-        (response) =>
-          response.url().includes(`${responseText}`) &&
-          response.status() === 200,
-        { timeout: DEFAULT_SELECTOR_TIMEOUT }
-      );
-      await page.waitForSelector(LOADER, {
-        state: "detached",
-        timeout: DEFAULT_SELECTOR_TIMEOUT,
-      });
-    } catch {
-      throw new Error(`Response url does NOT include: ${responseText} `);
-    }
-  }
-
-async function navigate(url, page, wait = "networkidle") {
+async function waitForResponseInclude(page, responseText) {
   try {
-    await page.goto(url, {
-      waitUntil: wait,
-      timeout: DEFAULT_SELECTOR_TIMEOUT,
-    });
-  } catch (error) {
-    console.error(error);
-    throw new Error(`Page is not loaded with wait parameter: ${wait} `);
+    await page.waitForResponse(
+      response =>
+        response.url().includes(`${responseText}`) && response.status() === 200,
+      { timeout: DEFAULT_SELECTOR_TIMEOUT }
+    )
+    await page.waitForSelector(LOADER, {
+      state: 'detached',
+      timeout: DEFAULT_SELECTOR_TIMEOUT
+    })
+  } catch {
+    throw new Error(`Response url does NOT include: ${responseText} `)
   }
 }
 
+async function navigate(url, page, wait = 'networkidle') {
+  try {
+    await page.goto(url, {
+      waitUntil: wait,
+      timeout: DEFAULT_SELECTOR_TIMEOUT
+    })
+  } catch (error) {
+    console.error(error)
+    throw new Error(`Page is not loaded with wait parameter: ${wait} `)
+  }
+}
 
 //   clickOnText: async (page, text, index = "1") => {
 //     await page.waitForSelector(LOADER, {
@@ -325,14 +318,15 @@ async function navigate(url, page, wait = "networkidle") {
 //     return secondPage;
 //   },
 
-async function screenshotMatching (name, page, range = 0.9)  {
-    const screenshot = await page.screenshot();
-    expect(screenshot).toMatchSnapshot(`${name}.png`, {
-      threshold: range,
-    });
-  }
+async function screenshotMatching(name, page, range = 0.9) {
+  const screenshot = await page.screenshot()
+  expect(screenshot).toMatchSnapshot(`${name}.png`, {
+    threshold: range
+  })
+}
 
 export {
+  shouldNotExist,
   screenshotMatching,
   click,
   uploadFiles,
@@ -342,5 +336,6 @@ export {
   emailCreate,
   navigate,
   clearAndTypeText,
-  waitForResponseInclude,waitForText
-};
+  waitForResponseInclude,
+  waitForText
+}

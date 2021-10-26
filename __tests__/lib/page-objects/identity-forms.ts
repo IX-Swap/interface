@@ -9,7 +9,8 @@ import {
   uploadFiles,
   clearAndTypeText,
   waitForText,
-  screenshotMatching
+  screenshotMatching,
+  shouldNotExist
 } from '../helpers/helpers'
 
 class UserForms {
@@ -21,7 +22,7 @@ class UserForms {
   checkIssuerView = async testInfo => {
     await click(kyc.buttons.SUBMIT_TEXT, this.page)
     await expect(this.page.locator('button[disabled]')).toHaveText('Submitted')
-    const dialog = await this.page.waitForSelector('[role="dialog"]')
+    const dialog = await this.page.waitForSelector(kyc.DIALOG_VIEW)
     await screenshotMatching(testInfo.title, dialog)
   }
 
@@ -53,6 +54,7 @@ class UserForms {
   checkAllViewUsingSnapshot = async screenName => {
     await this.page.waitForSelector(kyc.USER_PHOTO)
     const elementHandle = await this.page.$('//form')
+    await this.page.waitForTimeout(5000)
     await screenshotMatching(screenName, elementHandle)
   }
 
@@ -204,6 +206,7 @@ class UserForms {
     for (const item of list) {
       await uploadFiles(this.page, item, text.docs.pathToFile)
     }
+    await shouldNotExist(kyc.NOTIFICATION, this.page)
   }
 }
 export { UserForms }

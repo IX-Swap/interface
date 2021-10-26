@@ -1,6 +1,9 @@
 // const { getTestAttribute } = require("../helpers/helpers");
 
 export const kyc = {
+  NOTIFICATION: '[appearance="success"]',
+  DIALOG_VIEW: '[role="dialog"]',
+
   USER_PHOTO: '[src*="blob:https://staging.mozork.com/"]',
   type: {
     INDIVIDUAL: '[href="/app/identity/individuals/create"]',
@@ -11,7 +14,8 @@ export const kyc = {
     SUBMIT: "[type='submit']",
     // NEXT: '//button[text()="Next"]',
     SUBMIT_TEXT: 'text="Submit"',
-    OKAY: 'text="Okay"'
+    OKAY: 'text="Okay"',
+    CLICK_HERE: 'text="Click here"'
   },
 
   field: {
