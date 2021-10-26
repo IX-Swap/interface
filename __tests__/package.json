@@ -1,0 +1,26 @@
+{
+  "name": "@securer/e2e-tests",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "test:run": "web-scripts root:e2e --target=$CI_COMMIT_REF_NAME --test-group=$CI_NODE_INDEX --test-group-count=$CI_NODE_TOTAL -t=180 -r=2",
+    "test:debug": "ttt test --debug",
+    "test:dev": "ttt test --dev",
+    "test:file": "ttt test -r 1 -t 180",
+    "test:suite": "ttt test -s admin",
+    "test:time": "ttt test -t 90"
+  },
+  "dependencies": {
+    "@securer/web-scripts": "^1.0.0",
+    "node-fetch": "^2.6.0",
+    "playwright": "^1.15.2"
+  },
+  "peerDependencies": {
+    "tttest": "git+ssh://git@gitlab.titanium.codes:tools/tttest"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.15.2",
+    "allure-playwright": "^2.0.0-beta.13",
+    "experimental-allure-playwright": "0.0.3"
+  }
+}
