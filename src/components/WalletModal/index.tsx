@@ -133,7 +133,6 @@ export default function WalletModal({
 
     // if the connector is walletconnect and the user has already tried to connect, manually reset the connector
     if (connector instanceof WalletConnectConnector && connector.walletConnectProvider?.wc?.uri) {
-      console.log({ connector: connector.walletConnectProvider })
       connector.walletConnectProvider = undefined
     }
     if (connector) {
@@ -141,10 +140,8 @@ export default function WalletModal({
         await activate(connector, undefined, true)
       } catch (error) {
         if (error instanceof UnsupportedChainIdError) {
-          console.log({ unsupported: error })
           activate(connector) // a little janky...can't use setError because the connector isn't set
         } else {
-          console.log({ errorSimple: error })
           activate(connector) // a little janky...can't use setError because the connector isn't set
           setPendingError(true)
         }
