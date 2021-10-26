@@ -31,12 +31,20 @@ export const AchCredits = ({ accountId, currency }: DepositInfoProps) => {
     }
   ]
 
+  const extendedAchDetails = [
+    ...achDetails,
+    {
+      label: 'Time Estimation for Deposit:',
+      value: '1-3 Business Days'
+    }
+  ]
+
   return (
     <Grid direction='column'>
       <Grid item>
         <Box px={3} pb={3}>
           <Grid container spacing={1}>
-            <CashDepositDetails data={achDetails} />
+            <CashDepositDetails data={extendedAchDetails} />
           </Grid>
         </Box>
       </Grid>

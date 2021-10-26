@@ -8,7 +8,8 @@ export const homeURL = {
   getAccessReports: '/dataroom/reports-and-newsletters/list',
   getNewsList: '/resources/news',
   getTopIssuers: '/issuance/top-issuers',
-  getTopCorporates: '/issuance/top-corporates'
+  getTopCorporates: '/issuance/top-corporates',
+  getAtlasOneAccessReports: '/resources/reports'
 }
 
 export const authorizerURL = {
@@ -62,7 +63,9 @@ export const accountsURL = {
       `accounts/banks/${userId}/${bankId}`,
     create: (userId: string) => `/accounts/banks/${userId}`,
     update: (userId: string, bankId: string) =>
-      `/accounts/banks/${userId}/${bankId}`
+      `/accounts/banks/${userId}/${bankId}`,
+    remove: (userId: string, bankId: string) =>
+      `/accounts/banks/${userId}/${bankId}/remove`
   },
   cashDeposits: {
     getAll: (userId: string) => `/accounts/cash/deposits/${userId}`

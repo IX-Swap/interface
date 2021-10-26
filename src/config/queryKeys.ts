@@ -76,6 +76,7 @@ export const authorizerQueryKeys = {
 
 export const homeQueryKeys = {
   getAccessReports: 'access-reports',
+  getAtlasOneAccessReports: 'atlas-one-access-reports',
   getNewsList: 'news-list',
   getTopIssuers: 'top-issuers',
   getTopCoporates: 'top-corporate'

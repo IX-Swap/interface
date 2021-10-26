@@ -26,7 +26,7 @@ describe('DSOTermsView', () => {
     expect(LabelledValue).toHaveBeenCalledWith(
       {
         label: 'Investment Period',
-        value: dso.investmentPeriod
+        value: `${dso.investmentPeriod ?? ''} months`
       },
       {}
     )

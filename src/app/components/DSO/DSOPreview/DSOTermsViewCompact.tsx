@@ -36,8 +36,8 @@ export const DSOTermsViewCompact = ({ dso }: DSOTermsViewCompactProps) => {
       <Grid item container spacing={3}>
         <Grid item xs={12} md={4}>
           <LabelledValue
-            label='Investment Period (months)'
-            value={dso.investmentPeriod}
+            label='Investment Period'
+            value={`${dso.investmentPeriod ?? ''} months`}
           />
         </Grid>
 

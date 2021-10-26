@@ -11,5 +11,15 @@ export const useStyles = makeStyles(theme => ({
   },
   boldText: {
     fontWeight: 600
+  },
+  detailsLink: {
+    color: theme.palette.primary.main,
+    fontWeight: 500,
+    fontSize: 14,
+    marginLeft: theme.spacing(4.5),
+
+    '&:hover': {
+      opacity: 0.7
+    }
   }
 }))
