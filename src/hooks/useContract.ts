@@ -1,16 +1,17 @@
 import { Contract } from '@ethersproject/contracts'
 import { WETH9 } from '@ixswap1/sdk-core'
-import { abi as STAKING_REWARDS_ABI } from '@uniswap/liquidity-staker/build/StakingRewards.json'
-import { abi as MERKLE_DISTRIBUTOR_ABI } from '@uniswap/merkle-distributor/build/MerkleDistributor.json'
 import { abi as IIxsV2PairABI } from '@ixswap1/v2-core/build/IIxsV2Pair.json'
-import { abi as IIxsV2SwapRouter } from '@ixswap1/v2-periphery/build/IIxsV2SwapRouter.json'
-import { abi as IIxsV2LiquidityRouter } from '@ixswap1/v2-periphery/build/IIxsV2LiquidityRouter.json'
 import { abi as IIxsWSecABI } from '@ixswap1/v2-core/build/IIxsWSec.json'
-import { abi as IIxsVestedDistribution } from '@ixswap1/v2-core/build/IXSVestedDistribution.json'
+import { abi as IxsGovernanceToken } from '@ixswap1/v2-core/build/IxsGovernanceToken.json'
 import { abi as IxsReturningStakeBankPostIdoV1 } from '@ixswap1/v2-core/build/IxsReturningStakeBankPostIdoV1.json'
 import { abi as IxsToken } from '@ixswap1/v2-core/build/IxsToken.json'
-import { abi as IxsGovernanceToken } from '@ixswap1/v2-core/build/IxsGovernanceToken.json'
+import { abi as IIxsVestedDistribution } from '@ixswap1/v2-core/build/IXSVestedDistribution.json'
+import { abi as IIxsV2LiquidityRouter } from '@ixswap1/v2-periphery/build/IIxsV2LiquidityRouter.json'
+import { abi as IIxsV2SwapRouter } from '@ixswap1/v2-periphery/build/IIxsV2SwapRouter.json'
+import { abi as STAKING_REWARDS_ABI } from '@uniswap/liquidity-staker/build/StakingRewards.json'
+import { abi as MERKLE_DISTRIBUTOR_ABI } from '@uniswap/merkle-distributor/build/MerkleDistributor.json'
 import ARGENT_WALLET_DETECTOR_ABI from 'abis/argent-wallet-detector.json'
+import EIP_2612 from 'abis/eip_2612.json'
 import ENS_PUBLIC_RESOLVER_ABI from 'abis/ens-public-resolver.json'
 import ENS_ABI from 'abis/ens-registrar.json'
 import ERC20_ABI from 'abis/erc20.json'
@@ -19,24 +20,22 @@ import MULTICALL_ABI from 'abis/multicall2.json'
 import { Unisocks } from 'abis/types/Unisocks'
 import IXSOCKS_ABI from 'abis/unisocks.json'
 import WETH_ABI from 'abis/weth.json'
-import EIP_2612 from 'abis/eip_2612.json'
-
 import {
   ARGENT_WALLET_DETECTOR_ADDRESS,
-  MERKLE_DISTRIBUTOR_ADDRESS,
-  MULTICALL2_ADDRESSES,
-  SWAP_ROUTER_ADDRESS,
-  LIQUIDITY_ROUTER_ADDRESS,
   ENS_REGISTRAR_ADDRESSES,
-  SOCKS_CONTROLLER_ADDRESSES,
-  IXS_VESTING_ADDRESS,
-  IXS_STAKING_V1_ADDRESS,
   IXS_ADDRESS,
   IXS_GOVERNANCE_ADDRESS,
+  IXS_STAKING_V1_ADDRESS,
+  IXS_VESTING_ADDRESS,
+  LIQUIDITY_ROUTER_ADDRESS,
+  MERKLE_DISTRIBUTOR_ADDRESS,
+  MULTICALL2_ADDRESSES,
+  SOCKS_CONTROLLER_ADDRESSES,
+  SWAP_ROUTER_ADDRESS,
 } from 'constants/addresses'
 import { useMemo } from 'react'
 import { getContract } from 'utils'
-import { Erc20, ArgentWalletDetector, EnsPublicResolver, EnsRegistrar, Multicall2, Weth } from '../abis/types'
+import { ArgentWalletDetector, EnsPublicResolver, EnsRegistrar, Erc20, Multicall2, Weth } from '../abis/types'
 import { useActiveWeb3React } from './web3'
 
 // returns null on errors
@@ -50,8 +49,11 @@ export function useContract<T extends Contract = Contract>(
   return useMemo(() => {
     if (!addressOrAddressMap || !ABI || !library || !chainId) return null
     let address: string | undefined
-    if (typeof addressOrAddressMap === 'string') address = addressOrAddressMap
-    else address = addressOrAddressMap[chainId]
+    if (typeof addressOrAddressMap === 'string') {
+      address = addressOrAddressMap
+    } else {
+      address = addressOrAddressMap[chainId]
+    }
     if (!address) return null
     try {
       return getContract(address, ABI, library, withSignerIfPossible && account ? account : undefined)

@@ -1,21 +1,23 @@
 import { Trans } from '@lingui/macro'
 import IXSToken from 'assets/images/IXS-token.svg'
 import { IconWrapper } from 'components/AccountDetails/styleds'
+import Column from 'components/Column'
+import { RowCenter } from 'components/Row'
+import useIXSCurrency from 'hooks/useIXSCurrency'
+import useTheme from 'hooks/useTheme'
 import React from 'react'
 import { Box } from 'rebass'
-import { TYPE } from 'theme'
+import { useStakingStatus } from 'state/stake/hooks'
 import { StakingStatus } from 'state/stake/reducer'
-import { PromoTokenCardWrapper } from './style'
-import useTheme from 'hooks/useTheme'
-import Column from 'components/Column'
+import { TYPE } from 'theme'
 import { ConnectWalletButton } from './ConnectWalletButton'
 import { NoIXSTokens } from './NoIXSTokens'
-import { RowCenter } from 'components/Row'
-import { useStakingStatus } from 'state/stake/hooks'
+import { PromoTokenCardWrapper } from './style'
 
 export const PromoTokenCard = () => {
   const theme = useTheme()
   const stakingStatus = useStakingStatus()
+  const currency = useIXSCurrency()
   return (
     <PromoTokenCardWrapper data-testid="connect-wallet-card">
       <RowCenter id="promo-staking-wrapper">
@@ -28,8 +30,8 @@ export const PromoTokenCard = () => {
           <Box>
             <TYPE.body3>
               <Trans>
-                Staking is a great way to maximize the value of your holdings, instead of letting them sit idle in your
-                IXS account!
+                Staking is a great way to maximize the value of your holdings, instead of letting them sit idle in your{' '}
+                {currency?.symbol} account!
                 <br /> Once you have staked your assets, you can earn rewards on your holdings. This allows you to grow
                 your token holdings over time.
               </Trans>

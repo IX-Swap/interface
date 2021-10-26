@@ -1,11 +1,9 @@
 import { CurrencyAmount } from '@ixswap1/sdk-core'
 import { Trans } from '@lingui/macro'
-import { IXS_ADDRESS } from 'constants/addresses'
 import dayjs from 'dayjs'
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
-import { useCurrency } from 'hooks/Tokens'
+import useIXSCurrency from 'hooks/useIXSCurrency'
 import useTheme from 'hooks/useTheme'
-import { useActiveWeb3React } from 'hooks/web3'
 import React, { useCallback, useMemo } from 'react'
 import { defaults, Line } from 'react-chartjs-2'
 import { useDistributeCallback, useTableOptions, useVestingState } from 'state/vesting/hooks'
@@ -32,9 +30,8 @@ const sampleData = [
 
 export const VestingTable = ({ vestingStatus }: { vestingStatus: VestingStatus }) => {
   const distribute = useDistributeCallback()
-  const { chainId } = useActiveWeb3React()
   const options = useTableOptions()
-  const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
+  const currency = useIXSCurrency()
   const { payouts } = useVestingState()
   const theme = useTheme()
 

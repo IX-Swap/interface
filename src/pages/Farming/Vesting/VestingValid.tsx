@@ -4,8 +4,7 @@ import { ButtonIXSWide } from 'components/Button'
 import Column from 'components/Column'
 import { TextRow } from 'components/TextRow/TextRow'
 import { MouseoverTooltip } from 'components/Tooltip'
-import { IXS_ADDRESS } from 'constants/addresses'
-import { useCurrency } from 'hooks/Tokens'
+import useIXSCurrency from 'hooks/useIXSCurrency'
 import useTheme from 'hooks/useTheme'
 import { useActiveWeb3React } from 'hooks/web3'
 import React, { useState } from 'react'
@@ -20,8 +19,8 @@ export const VestingValid = () => {
   const theme = useTheme()
   const [isLoading, handleIsLoading] = useState(false)
   const { payouts, details } = useVestingState()
-  const { chainId, account } = useActiveWeb3React()
-  const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
+  const { account } = useActiveWeb3React()
+  const currency = useIXSCurrency()
   const nextPayment = closestFutureDate({ dates: getVestingDates({ payouts }) })
   const alreadyVested = getPayoutClosestToPresent({ payouts })
   const claim = useClaimAll()

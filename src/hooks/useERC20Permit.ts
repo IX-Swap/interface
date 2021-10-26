@@ -50,6 +50,12 @@ const PERMITTABLE_TOKENS: {
   [42]: {
     [IXS[42].address]: { type: PermitType.AMOUNT, name: 'Ixs Token' },
   },
+  [80001]: {
+    [IXS[80001].address]: { type: PermitType.AMOUNT, name: 'Ixs Token' },
+  },
+  [137]: {
+    [IXS[137].address]: { type: PermitType.AMOUNT, name: 'Ixs Token' },
+  },
 }
 
 export enum UseERC20PermitState {
