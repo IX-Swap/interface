@@ -25,6 +25,7 @@ interface Props {
 
 function getStatusMessage(accreditationRequest: AccreditationRequest | null, symbolText: string) {
   const status = accreditationRequest?.status
+  console.log(accreditationRequest)
   switch (status) {
     case AccreditationStatusEnum.PENDING:
     case AccreditationStatusEnum.PENDING_KYC:
@@ -32,9 +33,14 @@ function getStatusMessage(accreditationRequest: AccreditationRequest | null, sym
     case AccreditationStatusEnum.PENDING_CUSTODIAN:
       return t`KYC approved on primary issuer. Waiting for KYC approval on Custodian...`
     case AccreditationStatusEnum.FAILED:
-      return accreditationRequest?.message || t`Unknown error`
+      return (
+        accreditationRequest?.message ||
+        t`Could not verify KYC. Please check your account and/or KYC status on investax.io. Retry passing accreditation once your KYC is approved by primary issuer. [retry]`
+      )
     case AccreditationStatusEnum.REJECTED:
       return accreditationRequest?.message || t`Accreditation rejected`
+    case AccreditationStatusEnum.APPROVED:
+      return accreditationRequest?.message || t`Go to next step`
     case undefined:
     default:
       return t`You need to pass accreditation and KYC to start trading with the ${symbolText} token.`
