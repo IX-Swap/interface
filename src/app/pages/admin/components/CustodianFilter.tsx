@@ -11,28 +11,21 @@ export const CustodianFilter = ({
   custodian,
   defaultValue = ''
 }: CustodianFilterProps) => {
-  const getStringValue = (value: string | undefined) => {
-    const valueArray = value?.split(',')
-
-    if (value?.includes(custodian) ?? false) {
-      return valueArray?.filter(item => item !== custodian).join(',') ?? ''
-    }
-
-    return [...(valueArray ?? []), custodian]
-      .filter(item => item !== '')
-      .join(',')
+  const getStringValue = (value: string | undefined, checked: boolean) => {
+    const splitValue = value?.split(',') ?? []
+    const nextValue = checked
+      ? [...splitValue, custodian]
+      : splitValue.filter(item => item !== custodian)
+    return nextValue.join(',')
   }
 
   const getChecked = (value: string | undefined) => {
-    if (value === undefined) {
-      return false
-    }
-    return value.includes(custodian)
+    return value?.includes(custodian) ?? false
   }
   return (
     <SearchQueryFilter<'type'>
       name='type'
-      defaultValue={defaultValue !== null ? defaultValue : undefined}
+      defaultValue={defaultValue ?? undefined}
     >
       {({ value, onChange }) => (
         <FormControlLabel
@@ -40,8 +33,8 @@ export const CustodianFilter = ({
           control={
             <Checkbox
               checked={getChecked(value)}
-              onChange={() => {
-                onChange(getStringValue(value))
+              onChange={(_, checked) => {
+                onChange(getStringValue(value, checked))
               }}
               name='type'
               color='primary'
