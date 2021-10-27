@@ -24,15 +24,9 @@ export const ApproveButtons = ({ parsedAmounts }: { parsedAmounts: ParsedAmounts
   const theme = useTheme()
   const isArgentWallet = useIsArgentWallet()
 
-  const {
-    toggledTrade: trade,
-    allowedSlippage,
-    currencies,
-    inputError: swapInputError,
-    shouldGetAuthorization,
-  } = useDerivedSwapInfo()
+  const { currencies, inputError: swapInputError, shouldGetAuthorization } = useDerivedSwapInfo()
   const { expertMode } = useExpertModeManager()
-  const { priceImpactTooHigh, priceImpactSeverity, priceImpact } = usePriceImpact({ parsedAmounts })
+  const { priceImpactSeverity } = usePriceImpact({ parsedAmounts })
   const showApproveFlow =
     !isArgentWallet &&
     !swapInputError &&
@@ -41,11 +35,11 @@ export const ApproveButtons = ({ parsedAmounts }: { parsedAmounts: ParsedAmounts
       (approvalSubmitted && approvalState === ApprovalState.APPROVED)) &&
     !(priceImpactSeverity > 3 && !expertMode)
 
-  if (!showApproveFlow) {
+  if (!showApproveFlow || shouldGetAuthorization) {
     return null
   }
   return (
-    <AutoRow style={{ flexWrap: 'nowrap', width: '100%' }}>
+    <AutoRow style={{ flexWrap: 'nowrap', width: '100%', marginBottom: '10px' }}>
       <AutoColumn style={{ width: '100%' }} gap="12px">
         <ButtonIXSWide
           onClick={handleApprove}

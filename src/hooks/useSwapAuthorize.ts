@@ -1,4 +1,4 @@
-import { Currency, CurrencyAmount, Percent, TradeType } from '@ixswap1/sdk-core'
+import { Currency, CurrencyAmount, Percent, Token, TradeType } from '@ixswap1/sdk-core'
 import { Trade as V2Trade } from '@ixswap1/v2-sdk'
 import JSBI from 'jsbi'
 import { useCallback } from 'react'
@@ -6,25 +6,19 @@ import { useDispatch } from 'react-redux'
 import apiService from 'services/apiService'
 import { tokens } from 'services/apiUrls'
 import { AppDispatch } from 'state'
-import { useAccreditationStatus, useAreBothSecTokens, useSecTokenId } from 'state/secTokens/hooks'
-import { useSubmitAuthorizationToBrokerDealer } from 'state/swapHelper/hooks'
+import { useAreBothSecTokens, useSecTokenId } from 'state/secTokens/hooks'
+import { saveTokenInProgress } from 'state/swapHelper/actions'
+import { useSubmitAuthorizationToBrokerDealer, useSwapSecPairs } from 'state/swapHelper/hooks'
 import { authorizeSecToken } from 'state/user/actions'
 import { OrderType } from 'state/user/enum'
+import { useUserSecTokens } from 'state/user/hooks'
 import { currencyId } from 'utils/currencyId'
-import { useSwapPair } from './useSwapCallback'
 
 export interface AuthorizationParams {
   tokenId: number
   amount: string
   pairAddress?: string
   orderType: string
-}
-
-export function useSwapIsBothSecTokens(trade?: V2Trade<Currency, Currency, TradeType> | null) {
-  const id0 = trade?.inputAmount?.currency ? currencyId(trade?.inputAmount?.currency) : ''
-  const id1 = trade?.outputAmount?.currency ? currencyId(trade?.outputAmount?.currency) : ''
-  const areBothSecTokens = useAreBothSecTokens({ address0: id0, address1: id1 })
-  return areBothSecTokens
 }
 
 export const fetchTokenAuthorization = async ({ tokenId, amount, pairAddress, orderType }: AuthorizationParams) => {
@@ -76,56 +70,75 @@ interface SwapSecToken {
   selectedCurrency?: Currency
   firstIsSec: boolean
 }
-export function useSwapSecToken(
+
+export function getAuthorizationFirstStepDto(
   trade: V2Trade<Currency, Currency, TradeType> | null | undefined,
-  allowedSlippage: Percent
-): SwapSecToken {
+  allowedSlippage: Percent,
+  token?: Token | null
+) {
   const inputToken = trade?.inputAmount?.currency
   const outputToken = trade?.outputAmount?.currency
-  const firstIsSec = (inputToken as any)?.isSecToken
   const amount0 = trade ? getStringAmount(trade?.maximumAmountIn(allowedSlippage)) : ''
   const amount1 = trade ? getStringAmount(trade?.minimumAmountOut(allowedSlippage)) : ''
-
-  const tokenId0 = useSecTokenId({ currencyId: (inputToken as any)?.address })
-  const tokenId1 = useSecTokenId({ currencyId: (outputToken as any)?.address })
-
-  const amount = firstIsSec ? amount0 : amount1
-  const orderType = firstIsSec ? OrderType.SELL : OrderType.BUY
-  const usedToken = firstIsSec ? tokenId0 : tokenId1
-  const selectedCurrency = firstIsSec ? inputToken : outputToken
-  return { usedToken, amount, orderType, selectedCurrency, firstIsSec }
+  const isFirst = token?.address === inputToken?.wrapped.address
+  const isLast = token?.address === outputToken?.wrapped.address
+  if (isFirst) {
+    return {
+      usedToken: (token as any).tokenInfo?.id,
+      amount: amount0,
+      orderType: OrderType.SELL,
+      selectedCurrency: inputToken,
+      firstIsSec: true,
+    }
+  }
+  if (isLast) {
+    return {
+      usedToken: (token as any).tokenInfo?.id,
+      amount: amount1,
+      orderType: OrderType.BUY,
+      selectedCurrency: outputToken,
+      firstIsSec: false,
+    }
+  }
+  return null
 }
 
-export function useSwapAuthorize(
+export function useSwapAuthorizeFirstStep(
   trade: V2Trade<Currency, Currency, TradeType> | undefined,
   allowedSlippage: Percent,
   formRef: any
 ) {
-  const pair = useSwapPair(trade)
+  const pairs = useSwapSecPairs(trade)
   const getAuthorization = useGetTokenAuthorization()
   const submitToBrokerDealer = useSubmitAuthorizationToBrokerDealer()
-  const { usedToken, amount, orderType, selectedCurrency } = useSwapSecToken(trade, allowedSlippage)
-  const { accreditationRequest } = useAccreditationStatus((selectedCurrency as any)?.address)
+  const { secTokens } = useUserSecTokens()
+  const dispatch = useDispatch<AppDispatch>()
 
-  const fetchAuthorization = useCallback(async () => {
-    if (amount && pair?.isSecurity && accreditationRequest) {
+  const fetchAuthorization = useCallback(
+    async (token: Token) => {
       await getSwapAuthorization()
-    }
-    async function getSwapAuthorization() {
-      const pairAddress = pair?.liquidityToken.address
-      const result = await getAuthorization({ amount, orderType, pairAddress, tokenId: usedToken })
-      submitToBrokerDealer({ ...result, brokerDealerId: (accreditationRequest as any)?.brokerDealerId }, formRef)
-    }
-  }, [
-    getAuthorization,
-    pair?.isSecurity,
-    pair?.liquidityToken?.address,
-    submitToBrokerDealer,
-    accreditationRequest,
-    usedToken,
-    amount,
-    orderType,
-    formRef,
-  ])
+      async function getSwapAuthorization() {
+        const dto = getAuthorizationFirstStepDto(trade, allowedSlippage)
+        const isSecToken = Boolean(secTokens[token.address])
+        if (!isSecToken || !dto || (pairs[0] === null && pairs[1] === null)) {
+          return
+        }
+        const { usedToken, amount, orderType, firstIsSec } = dto
+        const accreditationRequest = (token as any).tokenInfo.accreditationRequest
+        if (!amount || !accreditationRequest) {
+          return
+        }
+        const pair = firstIsSec ? pairs?.[0] : pairs?.[1]
+        const pairAddress = pair?.liquidityToken?.address
+        if (!pairAddress) {
+          return
+        }
+        dispatch(saveTokenInProgress({ token }))
+        const result = await getAuthorization({ amount, orderType, pairAddress, tokenId: usedToken })
+        submitToBrokerDealer({ ...result, brokerDealerId: (accreditationRequest as any)?.brokerDealerId }, formRef)
+      }
+    },
+    [getAuthorization, pairs, submitToBrokerDealer, allowedSlippage, secTokens, trade, formRef]
+  )
   return fetchAuthorization
 }

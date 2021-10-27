@@ -1,6 +1,6 @@
 import { createAction } from '@reduxjs/toolkit'
 import { SwapAuthorization } from './typings'
-import { Currency, TradeType } from '@ixswap1/sdk-core'
+import { Currency, Token, TradeType } from '@ixswap1/sdk-core'
 import { Trade as V2Trade } from '@ixswap1/v2-sdk'
 
 export const saveAuthorization =
@@ -21,3 +21,7 @@ export const setOpenModal =
   createAction<{
     openModal: boolean
   }>('swapHelper/setOpenModal')
+
+export const saveTokenInProgress = createAction<{
+  token: Token | null
+}>('swapHelper/saveTokenInProgress')

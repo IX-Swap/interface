@@ -2,10 +2,9 @@ import { Currency, CurrencyAmount, Percent, Token, TradeType } from '@ixswap1/sd
 import { Trade as V2Trade } from '@ixswap1/v2-sdk'
 import { t } from '@lingui/macro'
 import * as H from 'history'
-import { useSwapPair } from 'hooks/useSwapCallback'
+import { useMissingAuthorizations } from 'hooks/useSwapCallback'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useSwapAuthorization } from 'state/swapHelper/hooks'
 import { useUserSingleHopOnly } from 'state/user/hooks'
 import { useAllTokens, useCurrency } from '../../hooks/Tokens'
 import useENS from '../../hooks/useENS'
@@ -178,8 +177,12 @@ export function useDerivedSwapInfo(): {
   if (balanceIn && amountIn && balanceIn.lessThan(amountIn)) {
     inputError = t`Insufficient ${amountIn.currency.symbol} balance`
   }
-  const pair = useSwapPair(v2Trade)
-  const authorization = useSwapAuthorization(v2Trade)
+
+  const missingAuthorizations = useMissingAuthorizations(v2Trade)
+  const shouldGetAuthorization = missingAuthorizations.length > 0
+  if (shouldGetAuthorization) {
+    inputError = t`Authorization missing`
+  }
   return {
     currencies,
     currencyBalances,
@@ -188,7 +191,7 @@ export function useDerivedSwapInfo(): {
     v2Trade: v2Trade ?? undefined,
     toggledTrade,
     allowedSlippage,
-    shouldGetAuthorization: Boolean(pair?.isSecurity) && !authorization,
+    shouldGetAuthorization,
   }
 }
 

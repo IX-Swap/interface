@@ -9,7 +9,12 @@ import UnsupportedCurrencyFooter from 'components/swap/UnsupportedCurrencyFooter
 import { TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
 import React, { useCallback, useMemo, useRef } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
-import { useOpenModal, useSetSwapState, useSwapConfirmDataFromURL } from 'state/swapHelper/hooks'
+import {
+  useOpenModal,
+  useSetSwapState,
+  useSwapConfirmDataFromURL,
+  useWatchAuthorizationExpire,
+} from 'state/swapHelper/hooks'
 import { AutoColumn } from '../../components/Column'
 import { CurrencyInput } from '../../components/swap/CurrencyInput'
 import { Wrapper } from '../../components/swap/styleds'
@@ -22,6 +27,7 @@ import { Field } from '../../state/swap/actions'
 import { useDerivedSwapInfo, useSwapActionHandlers, useSwapState } from '../../state/swap/hooks'
 import { maxAmountSpend } from '../../utils/maxAmountSpend'
 import AppBody from '../AppBody'
+import { AuthorizationButtons } from './AuthorizationButtons'
 import { BrokerDealerForm } from './BrokerDealerForm'
 import { SwapButtons } from './SwapButtons'
 import { useWatchApprovalSubmitted } from './useWatchApprovalSubmitted'
@@ -87,7 +93,7 @@ export default function Swap({ history }: RouteComponentProps) {
       ),
     [tradeToConfirm, trade]
   )
-
+  useWatchAuthorizationExpire()
   return (
     <>
       <TokenWarningModal history={history} />
@@ -110,6 +116,7 @@ export default function Swap({ history }: RouteComponentProps) {
 
             {showWrap ? null : <CurrentRate {...{ trade, allowedSlippage }} />}
             {showAcceptChanges ? <AcceptChanges handleAcceptChanges={handleAcceptChanges} /> : null}
+            <AuthorizationButtons formRef={formRef} />
             <SwapButtons formRef={formRef} parsedAmounts={parsedAmounts} showAcceptChanges={showAcceptChanges} />
           </AutoColumn>
         </Wrapper>

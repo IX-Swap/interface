@@ -1,20 +1,18 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Currency, Percent, TradeType } from '@ixswap1/sdk-core'
-import { Router, Trade as V2Trade } from '@ixswap1/v2-sdk'
+import { Router, Trade as V2Trade, TradeAuthorization } from '@ixswap1/v2-sdk'
 import { t } from '@lingui/macro'
 import { useCallback, useMemo } from 'react'
-import { useSwapAuthorization } from 'state/swapHelper/hooks'
+import { useDerivedSwapInfo } from 'state/swap/hooks'
+import { useAuthorizationsState } from 'state/swapHelper/hooks'
 import { useTransactionAdder } from '../state/transactions/hooks'
 import { isAddress, shortenAddress } from '../utils'
 import approveAmountCalldata from '../utils/approveAmountCalldata'
-import { calculateGasMargin } from '../utils/calculateGasMargin'
 import isZero from '../utils/isZero'
 import { useArgentWalletContract } from './useArgentWalletContract'
 import { useSwapRouterContract } from './useContract'
 import useENS from './useENS'
-import { useSwapSecToken } from './useSwapAuthorize'
 import useTransactionDeadline from './useTransactionDeadline'
-import { useV2Pair } from './useV2Pairs'
 import { useActiveWeb3React } from './web3'
 
 export enum SwapCallbackState {
@@ -42,43 +40,65 @@ interface FailedCall extends SwapCallEstimate {
   call: SwapCall
   error: Error
 }
-export function useSwapPair(
-  // trade to execute, required
-  trade?: V2Trade<Currency, Currency, TradeType> | null
-) {
-  const inputToken = trade?.inputAmount?.currency
-  const outputToken = trade?.outputAmount?.currency
-  const [, pair] = useV2Pair(inputToken ?? undefined, outputToken ?? undefined)
-  return pair
-}
-export function useAuthorization(trade: V2Trade<Currency, Currency, TradeType> | undefined): any | undefined {
-  const authorization = useSwapAuthorization(trade)
-  const addresses = useMultihopAuthorization(trade)
-  const pair = useSwapPair(trade)
-  if (!pair?.isSecurity || authorization === null) {
-    return undefined
-  } else {
-    const authorizationDigest = addresses.map((address) => {
-      return address === null ? address : authorization
-    })
-    console.log({ authorizationDigest })
-    return authorizationDigest
-  }
+
+export function useMissingAuthorizations(trade: V2Trade<Currency, Currency, TradeType> | undefined | null) {
+  const addresses = useSwapSecTokenAddresses(trade)
+  const authorizations = useAuthorizationsState()
+
+  return useMemo(() => {
+    return addresses.filter((address) => address !== null && !authorizations?.[address])
+  }, [addresses, authorizations])
 }
 
-export function useMultihopAuthorization(trade: V2Trade<Currency, Currency, TradeType> | undefined | null) {
-  const tokenPath = trade?.route?.path
-  const tokens = []
-  if (tokenPath) {
-    for (const token of tokenPath) {
-      if ((token as any)?.isSecToken) {
-        tokens.push(token.address)
-      } else {
-        tokens.push(null)
+export function useAuthorizationDigest(
+  trade: V2Trade<Currency, Currency, TradeType> | undefined
+): Array<TradeAuthorization | null> | undefined {
+  const authorizations = useAuthorizationsState()
+  const addresses = useSwapSecTokenAddresses(trade)
+  if (
+    !addresses ||
+    !authorizations ||
+    !Object.keys(authorizations).length ||
+    addresses.length === 0 ||
+    addresses.every((element) => element === null)
+  ) {
+    return undefined
+  }
+  const authorizationDigest: Array<TradeAuthorization | null> = addresses.map((address) => {
+    const addressAuthorization = address ? authorizations[address] : null
+    if (!addressAuthorization) {
+      return null
+    }
+    return {
+      v: addressAuthorization?.v,
+      r: addressAuthorization.r,
+      operator: addressAuthorization.operator,
+      s: addressAuthorization.s,
+      deadline: addressAuthorization.deadline,
+    }
+  })
+  console.log({ authorizationDigest })
+  return authorizationDigest
+}
+
+// returns an array in the form of [address, null, etc] only sec tokens have an address
+export function useSwapSecTokenAddresses(trade: V2Trade<Currency, Currency, TradeType> | undefined | null) {
+  return useMemo(() => {
+    const tokens = []
+    const tokenPath = trade?.route?.path
+    if (tokenPath) {
+      for (const index of tokenPath.keys()) {
+        const token = tokenPath[index]
+        const isFirstOrLast = index === 0 || index === tokenPath.length - 1
+        if ((token as any)?.isSecToken && isFirstOrLast) {
+          tokens.push(token.address)
+        } else {
+          tokens.push(null)
+        }
       }
     }
-  }
-  return tokens
+    return tokens
+  }, [trade?.route?.path])
 }
 /**
  * Returns the swap calls that can be used to make the trade
@@ -99,22 +119,23 @@ function useSwapCallArguments(
   const deadline = useTransactionDeadline()
   const routerContract = useSwapRouterContract()
   const argentWalletContract = useArgentWalletContract()
-  const pair = useSwapPair(trade)
-  const authorization = useAuthorization(trade)
+  // rewrite deadline here use the same value
+  const authorizationDigest = useAuthorizationDigest(trade)
+  const { shouldGetAuthorization } = useDerivedSwapInfo()
   return useCallback(async () => {
     if (!trade || !recipient || !library || !account || !chainId || !deadline) return []
     if (!routerContract) return []
-    if (pair?.isSecurity && authorization === undefined) {
+    if (shouldGetAuthorization) {
       return []
     }
     const swapMethods = []
-    const usedAuthorization = pair?.isSecurity ? authorization : undefined
+    console.log({ authorizationDigest })
     const options = {
       feeOnTransfer: false,
       allowedSlippage,
       recipient,
       deadline: deadline.toNumber(),
-      authorizationDigest: usedAuthorization,
+      authorizationDigest: (authorizationDigest as any) ?? undefined,
     }
     swapMethods.push(Router.swapCallParameters(trade, options))
 
@@ -125,7 +146,8 @@ function useSwapCallArguments(
           allowedSlippage,
           recipient,
           deadline: deadline.toNumber(),
-          authorizationDigest: usedAuthorization,
+          // typing to any because AuthorizationDigest does not accept null but it should
+          authorizationDigest: (authorizationDigest as any) || undefined,
         })
       )
     }
@@ -164,8 +186,8 @@ function useSwapCallArguments(
     recipient,
     routerContract,
     trade,
-    authorization,
-    pair,
+    authorizationDigest,
+    shouldGetAuthorization,
   ])
 }
 
