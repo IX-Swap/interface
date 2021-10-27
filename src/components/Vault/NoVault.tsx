@@ -28,13 +28,22 @@ function getStatusMessage(accreditationRequest: AccreditationRequest | null, sym
   switch (status) {
     case AccreditationStatusEnum.PENDING:
     case AccreditationStatusEnum.PENDING_KYC:
-      return t`Checking your KYC on primary issuer`
+      return t`Checking your KYC on ${accreditationRequest?.custodian?.name || 'primary issuer'}`
     case AccreditationStatusEnum.PENDING_CUSTODIAN:
-      return t`KYC approved on primary issuer. Waiting for KYC approval on Custodian...`
+      return t`KYC approved on ${
+        accreditationRequest?.custodian?.name || 'primary issuer'
+      }. Waiting for KYC approval on Custodian...`
     case AccreditationStatusEnum.FAILED:
-      return accreditationRequest?.message || t`Unknown error`
+      return (
+        accreditationRequest?.message ||
+        t`Could not verify KYC. Please check your account and/or KYC status on investax.io. Retry passing accreditation once your KYC is approved by ${
+          accreditationRequest?.custodian?.name || 'primary issuer'
+        }. [retry]`
+      )
     case AccreditationStatusEnum.REJECTED:
       return accreditationRequest?.message || t`Accreditation rejected`
+    case AccreditationStatusEnum.APPROVED:
+      return accreditationRequest?.message || t`Accreditation finished successfully`
     case undefined:
     default:
       return t`You need to pass accreditation and KYC to start trading with the ${symbolText} token.`
