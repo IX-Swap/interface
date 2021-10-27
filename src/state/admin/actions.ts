@@ -64,6 +64,9 @@ export interface KycList {
   prevPage: number
 }
 
+export interface BrokerDealerList {
+  data: any
+}
 export interface KycItem {
   createdAt: string
   custodianApplicationId?: number
@@ -144,6 +147,16 @@ export const getKycList: Readonly<{
   pending: createAction('admin/getKycList/pending'),
   fulfilled: createAction('admin/getKycList/fulfilled'),
   rejected: createAction('admin/getKycList/rejected'),
+}
+
+export const getBrokerDealerList: Readonly<{
+  pending: ActionCreatorWithoutPayload
+  fulfilled: ActionCreatorWithPayload<{ data: BrokerDealerList }>
+  rejected: ActionCreatorWithPayload<{ errorMessage: string }>
+}> = {
+  pending: createAction('admin/getBrokerDealerList/pending'),
+  fulfilled: createAction('admin/getBrokerDealerList/fulfilled'),
+  rejected: createAction('admin/getBrokerDealerList/rejected'),
 }
 
 export const postApproveKyc: Readonly<{
