@@ -311,7 +311,9 @@ export const atlasOneURL = {
 export const resources = {
   getSiteConfig: '/resources/siteConfig',
   createOrUpdateMasDisclosure: '/resources/siteConfig/masDisclosure',
-  acceptMasDisclosure: '/resources/siteConfig/masDisclosure/accept'
+  acceptMasDisclosure: '/resources/siteConfig/masDisclosure/accept',
+  uploadExchangeRules: '/resources/siteConfig/exchangeRules',
+  getExchangeRules: '/resources/siteConfig/exchangeRules'
 }
 
 export const virtualAccountsAudit = {
