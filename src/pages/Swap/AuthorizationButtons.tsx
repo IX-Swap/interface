@@ -17,17 +17,16 @@ export const AuthorizationButtons = ({ formRef }: { formRef: any }) => {
   return (
     <RowBetween style={{ flexWrap: 'wrap' }}>
       {missingAuthorizations.map((address) => (
-        <>
+        <React.Fragment key={address}>
           {address && secTokens[address] && (
             <ButtonIXSGradient
-              key={address}
               onClick={() => authorizeFirstStep(secTokens[address])}
               style={{ width: missingAuthorizations.length === 1 ? '100%' : 'fit-content' }}
             >
               Authorize {secTokens[address]?.symbol}
             </ButtonIXSGradient>
           )}
-        </>
+        </React.Fragment>
       ))}
     </RowBetween>
   )
