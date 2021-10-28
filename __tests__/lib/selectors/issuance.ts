@@ -1,12 +1,20 @@
 export const issuance = {
+  LOADER: 'text="loading..."',
+  ISSUANCE_TAB: '[href="/app/issuance/offerings"]',
   sections: { CREATE_DSO: '[href="/app/issuance/offerings/create"]' },
   dso: {
     TEXT_AREA: '[id="mui-rte-editor"]',
     LOGO: '[name="logo"]',
 
     buttons: {
+      REMOVE_FAQ: '[name="dso-faqs"] >> text="Remove"',
+      REMOVE: 'button >> text=Remove',
       ADD_NEW_VIDEO: 'text="ADD NEW VIDEO"',
-      ADD_NEW_FAQ: 'text="ADD NEW FAQ"'
+      ADD_NEW_FAQ: 'text="ADD NEW FAQ"',
+      ADD_TEAM_MEMBER: 'text="Add Team Member"',
+      SUBSCRIPTION_DOCUMENT: '[id="subscriptionDocument"]',
+      DATA_ROOM_FILE: '[id="dataroom-upload-and-append"]',
+      FINISH_LATER: 'text="Finish Later"'
     },
     fields: {
       FAQ_1: '[id="faqs[0].question"]',
@@ -15,8 +23,12 @@ export const issuance = {
       FAQ_2_ANSWER: '[id="faqs[1].answer"]',
       FAQ_3: '[id="faqs[2].question"]',
       FAQ_3_ANSWER: '[id="faqs[2].answer"]',
+      FAQ_INPUTS: '[name="dso-faqs"] fieldset',
       VIDEO_TITLE: '[id="videos[0].title"]',
       VIDEO_LINK: '[id="videos[0].link"]',
+      VIDEO_INPUTS: '[name="dso-videos"] fieldset',
+      TEAM_MEMBER_INPUTS: '[name="dso-team"] input',
+      TEAM_MEMBER_PHOTO: '[id="team[0].photo"]',
       TEAM_MEMBER_POSITION: '[id="team[0].position"]',
       TEAM_MEMBER_NAME: '[id="team[0].name"]',
       EQUITY_MULTIPLE: '[id="equityMultiple"]',

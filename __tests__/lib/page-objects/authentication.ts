@@ -1,6 +1,6 @@
 import { authForms } from '../selectors/auth'
 import { baseCreds } from '../helpers/creds'
-import { userRegistration, enable2fa } from '../helpers/api'
+import { userRegistration } from '../helpers/api'
 
 // import { userRegistration } from "../helpers/api-helpers";
 
@@ -39,10 +39,10 @@ class Authentication {
     await click(authForms.buttons.ENABLE, this.page)
   }
 
-  async submitRegistrationForm(email) {
+  submitRegistrationForm = async email => {
     const finishLoad = this.page.waitForNavigation()
     await click(authForms.buttons.REGISTRATION, this.page)
-    await typeText(authForms.fields.NAME, 'email', this.page)
+    await typeText(authForms.fields.NAME, 'testName', this.page)
     await typeText(authForms.fields.EMAIL, email, this.page)
     await typeText(authForms.fields.PASSWORD, baseCreds.PASSWORD, this.page)
     await click(authForms.buttons.AGREE, this.page)
@@ -52,8 +52,7 @@ class Authentication {
     await navigate(confirmLink, this.page)
   }
 
-  async submitRegistrationFormByAPI(email) {
-    console.log(email)
+  submitRegistrationFormByAPI = async email => {
     await userRegistration(email)
     const confirmLink = await getLinkToConfirmRegistration(email, this.page)
     await navigate(confirmLink, this.page)
