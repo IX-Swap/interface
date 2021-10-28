@@ -143,7 +143,7 @@
     "test:watch": "react-scripts test --env=jest-environment-jsdom-sixteen --runInBand",
     "test": "CI=true react-scripts test --env=jest-environment-jsdom-sixteen --colors --silent --runInBand",
     "test:ci": "CI=true react-scripts test --env=jest-environment-jsdom-sixteen --silent --coverage --testResultsProcessor jest-sonar-reporter --maxWorkers=75%",
-    "integration-test": "npx playwright test --reporter=line,allure-playwright --timeout 180000 --workers 2",
+    "integration-test": "echo $PWD",
     "eject": "react-scripts eject",
     "lint": "eslint --cache --fix \"src/**/*.{ts,tsx}\"",
     "format": "prettier --write \"src/**/*.tsx\"",

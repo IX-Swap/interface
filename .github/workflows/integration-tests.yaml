@@ -33,6 +33,7 @@ jobs:
       - run: | 
           cd __tests__
           yarn integration-test
+          npx playwright test --reporter=line,allure-playwright --timeout 180000 --workers 2
 
       - uses: actions/upload-artifact@v2
         if: always()
@@ -40,4 +41,3 @@ jobs:
           name: my-artifact
           path: ./
 
-          
