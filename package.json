@@ -37,6 +37,7 @@
     "mobx": "^5.15.4",
     "mobx-react": "^6.2.2",
     "mui-rte": "^1.19.0",
+    "playwright": "^1.16.0",
     "prettier": "^2.1.2",
     "prop-types": "^15.7.2",
     "pure-react-carousel": "^1.27.6",
