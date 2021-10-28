@@ -1,49 +1,46 @@
 import React from 'react'
 import {
-  Typography,
+  Button,
   Dialog as MUIDialog,
   DialogTitle,
-  DialogContent,
-  DialogProps,
-  DialogActions,
   Box,
-  useMediaQuery,
+  Typography,
+  DialogContent,
+  DialogActions,
   useTheme,
-  Button
+  useMediaQuery
 } from '@material-ui/core'
-import useStyles from 'app/pages/admin/components/SupportedTokensDialog/SupportedTokensDialog.styles'
+import { useHistory, useParams } from 'react-router-dom'
+import { CustodyManagementRoute } from 'app/pages/admin/router/config'
 import { VSpacer } from 'components/VSpacer'
-import { CustodyAccountsListItem } from 'types/custodyAccount'
+import useStyles from 'app/pages/admin/components/CustodyDetailsDialog/CustodyDetailsDialog.styles'
+import { useGetCustodianDetails } from 'app/pages/admin/hooks/useGetCustodianDetails'
+import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 
-export interface ModalProps extends Partial<DialogProps> {
-  open?: boolean
-  custodyAccount: CustodyAccountsListItem | null
-  onClose: () => void
-}
-
-export const SupportedTokensDialog = (props: ModalProps) => {
+export const CustodyDetailsDialog = () => {
+  const { replace } = useHistory()
   const theme = useTheme()
   const classes = useStyles()
-  const { open = false, onClose, custodyAccount } = props
-  const handleClose = () => onClose()
+  const params = useParams<{ accountId: string }>()
 
+  // TODO Change next line after backend api will change
+  const currentCustodyName = 'Investor Name'
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
-  // TODO added get token info function after complete backend api endpoint
-  // const {
-  //   mutation: [closeDeal, { isLoading }]
-  // } = useCloseDeal()
+  const { data, isLoading } = useGetCustodianDetails(params.accountId)
+
+  if (isLoading) {
+    return <LoadingIndicator />
+  }
 
   return (
     <MUIDialog
       maxWidth={'md'}
       fullWidth
       fullScreen={fullScreen}
-      open={open}
+      open={true}
       className={classes.root}
-      onClose={handleClose}
-      onBackdropClick={handleClose}
-      aria-labelledby='close-deal-modal-title'
-      aria-describedby='close-deal-modal-description'
+      aria-labelledby='custody-details-modal-title'
+      aria-describedby='custody-details-modal-description'
     >
       <DialogTitle className={classes.titleRoot}>
         <Box justifyContent='center' alignItems='center'>
@@ -53,7 +50,7 @@ export const SupportedTokensDialog = (props: ModalProps) => {
             align='center'
             className={classes.title}
           >
-            Tokens Supported for the {custodyAccount?.name}
+            Tokens Supported for the {currentCustodyName}
           </Typography>
         </Box>
       </DialogTitle>
@@ -64,9 +61,7 @@ export const SupportedTokensDialog = (props: ModalProps) => {
           justifyContent='center'
           className={classes.content}
         >
-          {/* TODO Remove fake info and added data from backend api when it will be complete */}
-          <pre>{JSON.stringify(custodyAccount, null, 2)}</pre>
-          <pre>{JSON.stringify(custodyAccount, null, 2)}</pre>
+          <pre>{JSON.stringify(data, null, 1)}</pre>
         </Box>
       </DialogContent>
       <VSpacer size={'small'} />
@@ -75,7 +70,7 @@ export const SupportedTokensDialog = (props: ModalProps) => {
           size='large'
           color='primary'
           variant='contained'
-          onClick={handleClose}
+          onClick={() => replace(CustodyManagementRoute.main)}
         >
           Close
         </Button>

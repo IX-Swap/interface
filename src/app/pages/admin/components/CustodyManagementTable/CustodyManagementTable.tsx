@@ -7,14 +7,10 @@ import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import { CustodyAccountsListItem } from 'types/custodyAccount'
 import { Actions } from './Actions'
 import { UnassignedCustodyDialog } from 'app/pages/admin/components/UnassignedCustodyDialog/UnassignedCustodyDialog'
-import { SupportedTokensDialog } from 'app/pages/admin/components/SupportedTokensDialog/SupportedTokensDialog'
+import { ActionsProps } from 'app/pages/authorizer/components/Actions'
 
 export const CustodyManagementTable = () => {
   const { getFilterValue } = useQueryFilter()
-  const [
-    isSupportedTokensDialogVisible,
-    setIsSupportedTokensDialogVisible
-  ] = useState<boolean>(false)
   const [
     isUnassignedCustodyDialogVisible,
     setIsUnassignedCustodyDialogVisible
@@ -23,11 +19,6 @@ export const CustodyManagementTable = () => {
     currentCustodyAccount,
     setCurrentCustodyAccount
   ] = useState<CustodyAccountsListItem | null>(null)
-
-  const handleLaunchButtonClick = (item: any) => {
-    setCurrentCustodyAccount(item.item)
-    setIsSupportedTokensDialogVisible(true)
-  }
 
   const handleLinkOffButtonClick = (item: any) => {
     setCurrentCustodyAccount(item.item)
@@ -38,18 +29,12 @@ export const CustodyManagementTable = () => {
     search: getFilterValue('search'),
     to: getFilterValue('toDate'),
     from: getFilterValue('fromDate'),
-    // TODO Remove fake value after fix backend api
-    // type: getFilterValue('type')
-    type: []
+    type: getFilterValue('type')
   }
 
-  const renderActions = (item: CustodyAccountsListItem) => {
+  const renderActions = (item: ActionsProps<CustodyAccountsListItem>) => {
     return (
-      <Actions
-        item={item}
-        onLaunchButtonClick={handleLaunchButtonClick}
-        onLinkOffButtonClick={handleLinkOffButtonClick}
-      />
+      <Actions item={item} onLinkOffButtonClick={handleLinkOffButtonClick} />
     )
   }
 
@@ -60,16 +45,11 @@ export const CustodyManagementTable = () => {
         open={isUnassignedCustodyDialogVisible}
         onClose={() => setIsUnassignedCustodyDialogVisible(false)}
       />
-      <SupportedTokensDialog
-        custodyAccount={currentCustodyAccount}
-        open={isSupportedTokensDialogVisible}
-        onClose={() => setIsSupportedTokensDialogVisible(false)}
-      />
       <TableView<CustodyAccountsListItem>
         uri={custodyAccounts.getList}
         name={custodyAccountsQueryKeys.getList}
         columns={columns}
-        actions={renderActions as any}
+        actions={renderActions}
         hasActions
         filter={filter as any}
         themeVariant={'primary'}

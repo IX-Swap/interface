@@ -27,7 +27,18 @@ export const AdminRoute = {
   masDisclosure: '/app/admin/masDisclosure',
   virtualAccountAudit: '/app/admin/virtualAccountAudit',
   virtualAccountTransactions: '/app/admin/virtualAccountTransactions',
-  custodyManagement: '/app/admin/custodyManagement'
+  custodyManagement: makeURL(['app', 'admin', 'custodyManagement'])
+}
+
+export const CustodyManagementRoute = {
+  main: makeURL(['app', 'admin', 'custodyManagement']),
+  custodyDetails: makeURL([
+    'app',
+    'admin',
+    'custodyManagement',
+    'accountId',
+    'viewDetails'
+  ])
 }
 
 export const adminLandingLinks: InternalRouteProps[] = [
