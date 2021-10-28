@@ -25,3 +25,8 @@ export const setOpenModal =
 export const saveTokenInProgress = createAction<{
   token: Token | null
 }>('swapHelper/saveTokenInProgress')
+
+export const setLoadingSwap =
+  createAction<{
+    isLoading: boolean
+  }>('swapHelper/setLoadingSwap')

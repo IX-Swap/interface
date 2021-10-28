@@ -13,6 +13,7 @@ import {
   useOpenModal,
   useSetSwapState,
   useSwapConfirmDataFromURL,
+  useSwapHelpersState,
   useWatchAuthorizationExpire,
 } from 'state/swapHelper/hooks'
 import { AutoColumn } from '../../components/Column'
@@ -36,7 +37,7 @@ export default function Swap({ history }: RouteComponentProps) {
   const { chainId } = useActiveWeb3React()
   const formRef = useRef() as any
   const { openModal, setOpenModal } = useOpenModal()
-
+  const { loadingSwap } = useSwapHelpersState()
   const { independentField, typedValue, recipient } = useSwapState()
 
   const { onUserInput, onChangeRecipient } = useSwapActionHandlers()
@@ -109,16 +110,19 @@ export default function Swap({ history }: RouteComponentProps) {
             txHash={txHash}
             isOpen={openModal}
           />
-          <AutoColumn gap={'1.25rem'}>
-            <CurrencyInput {...{ parsedAmounts, maxInputAmount, showWrap, currencies, handleHideConfirm }} />
+          {!loadingSwap && (
+            <AutoColumn gap={'1.25rem'}>
+              <CurrencyInput {...{ parsedAmounts, maxInputAmount, showWrap, currencies, handleHideConfirm }} />
 
-            {recipient !== null && !showWrap ? <EditRecipient {...{ recipient, onChangeRecipient }} /> : null}
+              {recipient !== null && !showWrap ? <EditRecipient {...{ recipient, onChangeRecipient }} /> : null}
 
-            {showWrap ? null : <CurrentRate {...{ trade, allowedSlippage }} />}
-            {showAcceptChanges ? <AcceptChanges handleAcceptChanges={handleAcceptChanges} /> : null}
-            <AuthorizationButtons formRef={formRef} />
-            <SwapButtons parsedAmounts={parsedAmounts} showAcceptChanges={showAcceptChanges} />
-          </AutoColumn>
+              {showWrap ? null : <CurrentRate {...{ trade, allowedSlippage }} />}
+              {showAcceptChanges ? <AcceptChanges handleAcceptChanges={handleAcceptChanges} /> : null}
+              <AuthorizationButtons formRef={formRef} />
+              <SwapButtons parsedAmounts={parsedAmounts} showAcceptChanges={showAcceptChanges} />
+            </AutoColumn>
+          )}
+          {loadingSwap && <>Loading...</>}
         </Wrapper>
       </AppBody>
       {!swapIsUnsupported ? null : (

@@ -1,5 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit'
-import { saveAuthorization, saveTokenInProgress, setOpenModal, setSwapState } from './actions'
+import { saveAuthorization, saveTokenInProgress, setLoadingSwap, setOpenModal, setSwapState } from './actions'
 import { SwapHelperState } from './typings'
 
 export const initialState: SwapHelperState = {
@@ -13,6 +13,7 @@ export const initialState: SwapHelperState = {
   },
   openModal: false,
   tokenInProgress: null,
+  loadingSwap: false,
 }
 
 export default createReducer(initialState, (builder) =>
@@ -46,5 +47,8 @@ export default createReducer(initialState, (builder) =>
     })
     .addCase(saveTokenInProgress, (state, { payload: { token } }) => {
       state.tokenInProgress = token
+    })
+    .addCase(setLoadingSwap, (state, { payload: { isLoading } }) => {
+      state.loadingSwap = isLoading
     })
 )
