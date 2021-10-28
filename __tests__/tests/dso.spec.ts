@@ -11,7 +11,7 @@ test.afterEach(async ({ page, context }, testInfo) => {
   await page.close()
 })
 test.describe('Check form`s view', () => {
-  test.only('DSO Information', async ({
+  test('DSO Information', async ({
     page,
     kycForms,
     issuanceSelectors
@@ -42,9 +42,11 @@ test('Fields video title and link should be added', async ({ dso }) => {
 })
 
 test('New DSO should be created ', async ({ page, dso }) => {
-  await dso.fillDsoInformationForm()
+  const token = (await dso.fillDsoInformationForm()).tokenName
   await dso.fillDsoPricingForm()
   await dso.fillDsoOfferingTermsForm()
   await dso.fillDsoTeamMembersForm()
   await dso.fillVideoAndFAQform()
+  const present = await dso.checkThatTheDsoWasCreated(token)
+  expect(present).toBe(true)
 })

@@ -1,20 +1,13 @@
-import { kyc } from '../selectors/kyc-form'
 import { issuance } from '../selectors/issuance'
-
 import { text } from '../helpers/text'
 import { baseCreds } from '../helpers/creds'
-
-// import { userRegistration } from "../helpers/api-helpers";
-import { expect } from '@playwright/test'
 
 import {
   click,
   typeText,
   uploadFiles,
-  clearAndTypeText,
   waitForText,
-  screenshotMatching,
-  shouldNotExist,
+  randomString,
   navigate
 } from '../helpers/helpers'
 
@@ -24,6 +17,12 @@ class Dso {
     this.page = page
   }
 
+  checkThatTheDsoWasCreated = async tokenName => {
+    await click(issuance.sections.VIEW_DSO_LISTENING, this.page)
+    const result = await waitForText(this.page, tokenName)
+    return result
+  }
+
   followToIssuanceTab = async auth => {
     await navigate(baseCreds.URL, this.page)
     await auth.loginWithout2fa(baseCreds.EMAIL_APPROVED, baseCreds.PASSWORD)
@@ -31,6 +30,8 @@ class Dso {
   }
 
   fillDsoInformationForm = async () => {
+    const tokenName = 'TokenName' + randomString()
+    const tokenSymbol = Date.now().toString().slice(-6)
     await uploadFiles(this.page, issuance.dso.LOGO, text.docs.pathToFile)
     await click(issuance.dso.listBox.CAPITAL_STRUCTURE, this.page)
     await click(issuance.dso.listBox.STRUCTURE_VALUE, this.page)
@@ -40,8 +41,8 @@ class Dso {
     await click(issuance.dso.listBox.CURRENCY_VALUE, this.page)
     await click(issuance.dso.listBox.NETWORK, this.page)
     await click(issuance.dso.listBox.NETWORK_VALUE, this.page)
-    await typeText(issuance.dso.fields.TOKEN_NAME, 'TokenName', this.page)
-    await typeText(issuance.dso.fields.TOKEN_SYMBOL, '#####', this.page)
+    await typeText(issuance.dso.fields.TOKEN_NAME, tokenName, this.page)
+    await typeText(issuance.dso.fields.TOKEN_SYMBOL, tokenSymbol, this.page)
     await typeText(issuance.dso.fields.ISSUER_NAME, 'Top issuer', this.page)
     await typeText(issuance.dso.fields.LAUNCH_DATE, '11112022', this.page)
     await typeText(issuance.dso.fields.COMPLETION_DATE, '11112023', this.page)
@@ -50,6 +51,7 @@ class Dso {
       's12345678900',
       this.page
     )
+    return { tokenSymbol, tokenName }
   }
   fillDsoPricingForm = async () => {
     await typeText(issuance.dso.fields.PRICEPER_UNIT, '100000', this.page)
@@ -116,7 +118,8 @@ class Dso {
     await typeText(issuance.dso.fields.FAQ_2_ANSWER, 'FAQ_2_ANSWER', this.page)
     await typeText(issuance.dso.fields.FAQ_3, 'FAQ_3', this.page)
     await typeText(issuance.dso.fields.FAQ_3_ANSWER, 'FAQ_3_ANSWER', this.page)
-    // await click(issuance.dso.buttons.FINISH_LATER, this.page)
+    await click(issuance.dso.buttons.FINISH_LATER, this.page)
+    await this.page.waitForTimeout(10000)
   }
 
   addNewTeamMember = async () => {

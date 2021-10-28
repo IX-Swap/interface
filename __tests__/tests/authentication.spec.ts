@@ -16,16 +16,17 @@ test.beforeEach(async ({ page, baseURL, auth }, testInfo) => {
 test.afterEach(async ({ page, context }, testInfo) => {
   await page.close()
 })
+test.describe('Functional test ', () => {
+  test('Check login', async ({ page, auth }) => {
+    await auth.loginWithout2fa(baseCreds.EMAIL, baseCreds.PASSWORD)
+    await shouldExist(kyc.type.INDIVIDUAL, page)
+  })
 
-test('Check login', async ({ page, auth }) => {
-  await auth.loginWithout2fa(baseCreds.EMAIL, baseCreds.PASSWORD)
-  await shouldExist(kyc.type.INDIVIDUAL, page)
-})
-
-test('Check Registration', async ({ page, auth }) => {
-  await auth.submitRegistrationForm(forEachEmail)
-  await auth.login(forEachEmail, baseCreds.PASSWORD)
-  await shouldExist(kyc.type.INDIVIDUAL, page)
+  test('Check Registration', async ({ page, auth }) => {
+    await auth.submitRegistrationForm(forEachEmail)
+    await auth.login(forEachEmail, baseCreds.PASSWORD)
+    await shouldExist(kyc.type.INDIVIDUAL, page)
+  })
 })
 
 test.describe('Check form`s view', () => {

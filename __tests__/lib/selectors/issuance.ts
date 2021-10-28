@@ -1,7 +1,10 @@
 export const issuance = {
   LOADER: 'text="loading..."',
   ISSUANCE_TAB: '[href="/app/issuance/offerings"]',
-  sections: { CREATE_DSO: '[href="/app/issuance/offerings/create"]' },
+  sections: {
+    CREATE_DSO: '[href="/app/issuance/offerings/create"]',
+    VIEW_DSO_LISTENING: '[href="/app/issuance/offerings"]'
+  },
   dso: {
     TEXT_AREA: '[id="mui-rte-editor"]',
     LOGO: '[name="logo"]',

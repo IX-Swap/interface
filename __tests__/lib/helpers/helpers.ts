@@ -3,6 +3,19 @@ import { expect } from '@playwright/test'
 
 const DEFAULT_SELECTOR_TIMEOUT = 50000
 
+const randomString = (length = 8) => {
+  // Declare all characters
+  let chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+
+  // Pick characers randomly
+  let str = ''
+  for (let i = 0; i < length; i++) {
+    str += chars.charAt(Math.floor(Math.random() * chars.length))
+  }
+
+  return str
+}
+
 function emailCreate() {
   return `Luch4${Date.now()}@wwjmp.com`
 }
@@ -82,6 +95,7 @@ async function waitForText(page, words) {
       state: 'attached',
       timeout: DEFAULT_SELECTOR_TIMEOUT
     })
+    return true
   } catch {
     throw new Error(`Text: ${words} not found `)
   }
@@ -193,5 +207,6 @@ export {
   navigate,
   clearAndTypeText,
   waitForResponseInclude,
-  waitForText
+  waitForText,
+  randomString
 }
