@@ -38,9 +38,7 @@ export const CustodyManagementTable = () => {
     search: getFilterValue('search'),
     to: getFilterValue('toDate'),
     from: getFilterValue('fromDate'),
-    // TODO Remove fake value after fix backend api
-    // type: getFilterValue('type')
-    type: []
+    type: getFilterValue('type')
   }
 
   const renderActions = (item: CustodyAccountsListItem) => {
