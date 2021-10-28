@@ -25,12 +25,18 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 14.17
-      - run: npx playwright install-deps
-      - run: npx playwright install
-      - run: yarn
-      - run: CI=false yarn build
-      - run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
-      - run: | 
+
+      - name: Set tests dependencies
+          run: npx playwright install-deps
+          run: npx playwright install
+          run: yarn
+          run: CI=false yarn build
+          run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+
+      - name: Run Tests
+        working-directory: ./__tests__
+        run: | 
+          echo $PWD
           cd __tests__
           yarn integration-test
           npx playwright test --reporter=line,allure-playwright --timeout 180000 --workers 2
@@ -39,5 +45,5 @@ jobs:
         if: always()
         with:
           name: my-artifact
-          path: ./
+          path: ./__tests__
 
