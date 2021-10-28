@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux'
 import apiService from 'services/apiService'
 import { tokens } from 'services/apiUrls'
 import { AppDispatch } from 'state'
-import { saveTokenInProgress } from 'state/swapHelper/actions'
+import { saveTokenInProgress, setLoadingSwap } from 'state/swapHelper/actions'
 import { useSubmitBrokerDealerForm, useSwapSecPairs } from 'state/swapHelper/hooks'
 import { authorizeSecToken } from 'state/user/actions'
 import { OrderType } from 'state/user/enum'
@@ -61,14 +61,6 @@ const getStringAmount = (amount: CurrencyAmount<Currency>) => {
   return String(division)
 }
 
-interface SwapSecToken {
-  usedToken?: number
-  amount: string
-  orderType: OrderType
-  selectedCurrency?: Currency
-  firstIsSec: boolean
-}
-
 export function getAuthorizationFirstStepDto(
   trade: V2Trade<Currency, Currency, TradeType> | null | undefined,
   allowedSlippage: Percent,
@@ -116,27 +108,33 @@ export function useSwapAuthorizeFirstStep(
     async (token: Token) => {
       await getSwapAuthorization()
       async function getSwapAuthorization() {
-        const dto = getAuthorizationFirstStepDto(trade, allowedSlippage, token)
-        const isSecToken = Boolean(secTokens[token.address])
-        if (!isSecToken || !dto || (pairs[0] === null && pairs[1] === null)) {
-          return
+        try {
+          const dto = getAuthorizationFirstStepDto(trade, allowedSlippage, token)
+          const isSecToken = Boolean(secTokens[token.address])
+          if (!isSecToken || !dto || (pairs[0] === null && pairs[1] === null)) {
+            return
+          }
+          const { usedToken, amount, orderType, firstIsSec } = dto
+          const accreditationRequest = (token as any).tokenInfo.accreditationRequest
+          if (!amount || !accreditationRequest) {
+            return
+          }
+          const pair = firstIsSec ? pairs?.[0] : pairs?.[1]
+          const pairAddress = pair?.liquidityToken?.address
+          if (!pairAddress) {
+            return
+          }
+          dispatch(setLoadingSwap({ isLoading: true }))
+          dispatch(saveTokenInProgress({ token }))
+          const result = await getAuthorization({ amount, orderType, pairAddress, tokenId: usedToken })
+          submitToBrokerDealer({
+            dto: { ...result, brokerDealerId: (accreditationRequest as any)?.brokerDealerId },
+            formRef,
+          })
+        } catch (e) {
+          dispatch(setLoadingSwap({ isLoading: false }))
+          dispatch(saveTokenInProgress({ token: null }))
         }
-        const { usedToken, amount, orderType, firstIsSec } = dto
-        const accreditationRequest = (token as any).tokenInfo.accreditationRequest
-        if (!amount || !accreditationRequest) {
-          return
-        }
-        const pair = firstIsSec ? pairs?.[0] : pairs?.[1]
-        const pairAddress = pair?.liquidityToken?.address
-        if (!pairAddress) {
-          return
-        }
-        dispatch(saveTokenInProgress({ token }))
-        const result = await getAuthorization({ amount, orderType, pairAddress, tokenId: usedToken })
-        submitToBrokerDealer({
-          dto: { ...result, brokerDealerId: (accreditationRequest as any)?.brokerDealerId },
-          formRef,
-        })
       }
     },
     [getAuthorization, pairs, submitToBrokerDealer, allowedSlippage, secTokens, trade, formRef]

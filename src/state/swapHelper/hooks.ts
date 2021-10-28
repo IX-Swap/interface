@@ -13,7 +13,7 @@ import { tokens } from 'services/apiUrls'
 import { completeDispatch } from 'utils/completeDispatch'
 import { getTokenExpiration, shouldRenewToken } from 'utils/time'
 import { AppDispatch, AppState } from '../index'
-import { saveAuthorization, saveTokenInProgress, setOpenModal, setSwapState } from './actions'
+import { saveAuthorization, saveTokenInProgress, setLoadingSwap, setOpenModal, setSwapState } from './actions'
 import { BrokerDealerSwapDto, SwapConfirmArguments } from './typings'
 
 export function useSwapHelpersState(): AppState['swapHelper'] {
@@ -142,14 +142,16 @@ export function useSwapConfirmDataFromURL(
     fetchAuthorization()
     async function fetchAuthorization() {
       if (!tokenInProgress) {
+        dispatch(setLoadingSwap({ isLoading: false }))
         return
       }
       const authorization = authorizations?.[tokenInProgress?.address]
       const accreditationRequest = (tokenInProgress as any)?.tokenInfo?.accreditationRequest
       if (!accreditationRequest || authorization) {
+        dispatch(setLoadingSwap({ isLoading: false }))
+        dispatch(saveTokenInProgress({ token: null }))
         return
       }
-
       const swapConfirm = {
         hash: (parsedQs?.hash as string) || '',
         encryptedData: (parsedQs?.result as string) || '',
@@ -158,18 +160,23 @@ export function useSwapConfirmDataFromURL(
       const address = (tokenInProgress as any)?.tokenInfo?.address
       try {
         if (!parsedQs?.hash || !parsedQs?.result || !accreditationRequest || !chainId || !address) {
+          dispatch(setLoadingSwap({ isLoading: false }))
+          dispatch(saveTokenInProgress({ token: null }))
           return
         }
-        dispatch(saveTokenInProgress({ token: null }))
 
         const response = await getSwapConfirmAuthorization({ ...swapConfirm })
         const data = response.data
         const { s, v, r, operator, deadline } = data
         const persistedAuthorization = { s, v, r, operator, deadline, expiresAt: getTokenExpiration('1 hour') }
         history.push(`/swap`)
+        dispatch(saveTokenInProgress({ token: null }))
+        dispatch(setLoadingSwap({ isLoading: false }))
         dispatch(saveAuthorization({ authorization: persistedAuthorization, chainId, address }))
       } catch (e) {
         console.log({ e })
+        dispatch(setLoadingSwap({ isLoading: false }))
+        dispatch(saveTokenInProgress({ token: null }))
       }
     }
   }, [tokenInProgress, chainId, authorizations, parsedQs?.hash, parsedQs?.result, history])

@@ -35,4 +35,5 @@ export interface SwapHelperState {
   localSwap: SwapLocalState
   openModal: boolean
   tokenInProgress?: Token | null
+  loadingSwap: boolean
 }

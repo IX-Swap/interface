@@ -5,7 +5,8 @@ import * as H from 'history'
 import { useMissingAuthorizations } from 'hooks/useSwapCallback'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useUserSingleHopOnly } from 'state/user/hooks'
+import { useSecTokens } from 'state/secTokens/hooks'
+import { useUserSecTokens, useUserSingleHopOnly } from 'state/user/hooks'
 import { useAllTokens, useCurrency } from '../../hooks/Tokens'
 import useENS from '../../hooks/useENS'
 import useParsedQueryString from '../../hooks/useParsedQueryString'
@@ -231,7 +232,7 @@ export function useDefaultsFromURLSearch():
 
 export const useImportNonDefaultTokens = () => {
   const loadedUrlParams = useDefaultsFromURLSearch()
-
+  const { secTokens } = useUserSecTokens()
   // token warning stuff
   const [loadedInputCurrency, loadedOutputCurrency] = [
     useCurrency(loadedUrlParams?.inputCurrencyId),
@@ -244,10 +245,11 @@ export const useImportNonDefaultTokens = () => {
 
   // dismiss warning if all imported tokens are in active lists
   const defaultTokens = useAllTokens()
+  const allTokens = { ...defaultTokens, ...secTokens }
   const importTokensNotInDefault =
     urlLoadedTokens &&
     urlLoadedTokens.filter((token: Token) => {
-      return !Boolean(token.address in defaultTokens)
+      return !Boolean(token.address in allTokens)
     })
 
   return { importTokensNotInDefault }
