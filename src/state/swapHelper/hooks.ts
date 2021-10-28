@@ -102,16 +102,6 @@ export function usePersistAuthorization() {
     [chainId]
   )
 }
-export function useSubmitAuthorizationToBrokerDealer() {
-  const { submitForm } = useSubmitBrokerDealerForm()
-  return useCallback(
-    async (dto: BrokerDealerSwapDto, formRef: any) => {
-      submitForm({ dto, formRef })
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [submitForm]
-  )
-}
 
 export function useSubmitBrokerDealerForm() {
   const submitForm = useCallback(({ dto, formRef }: { dto: BrokerDealerSwapDto; formRef: any }) => {
@@ -124,7 +114,10 @@ export function useSubmitBrokerDealerForm() {
       data,
       hash,
     }
-    if (formRef.current !== null) {
+    console.log('submitting')
+    console.log({ formRef, current: formRef.current })
+    if (formRef?.current) {
+      console.log('has current')
       formRef.current.action = endpoint
       for (const key in formValues) {
         const input = document.createElement('input')
@@ -135,7 +128,7 @@ export function useSubmitBrokerDealerForm() {
       formRef.current.submit()
     }
   }, [])
-  return { submitForm }
+  return submitForm
 }
 
 export function useSwapConfirmDataFromURL(

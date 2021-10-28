@@ -15,7 +15,7 @@ import {
 import { Version } from '../../hooks/useToggledVersion'
 import { useUserSingleHopOnly } from '../../state/user/hooks'
 
-export function useHandleSwap({ formRef, priceImpact }: { formRef: any; priceImpact: Percent | undefined }) {
+export function useHandleSwap({ priceImpact }: { priceImpact: Percent | undefined }) {
   const { showConfirm, tradeToConfirm, setSwapState } = useSetSwapState()
   const { account } = useActiveWeb3React()
   const { toggledTrade: trade, allowedSlippage, shouldGetAuthorization } = useDerivedSwapInfo()

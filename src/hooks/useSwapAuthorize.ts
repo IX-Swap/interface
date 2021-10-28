@@ -6,13 +6,11 @@ import { useDispatch } from 'react-redux'
 import apiService from 'services/apiService'
 import { tokens } from 'services/apiUrls'
 import { AppDispatch } from 'state'
-import { useAreBothSecTokens, useSecTokenId } from 'state/secTokens/hooks'
 import { saveTokenInProgress } from 'state/swapHelper/actions'
-import { useSubmitAuthorizationToBrokerDealer, useSwapSecPairs } from 'state/swapHelper/hooks'
+import { useSubmitBrokerDealerForm, useSwapSecPairs } from 'state/swapHelper/hooks'
 import { authorizeSecToken } from 'state/user/actions'
 import { OrderType } from 'state/user/enum'
 import { useUserSecTokens } from 'state/user/hooks'
-import { currencyId } from 'utils/currencyId'
 
 export interface AuthorizationParams {
   tokenId: number
@@ -110,7 +108,7 @@ export function useSwapAuthorizeFirstStep(
 ) {
   const pairs = useSwapSecPairs(trade)
   const getAuthorization = useGetTokenAuthorization()
-  const submitToBrokerDealer = useSubmitAuthorizationToBrokerDealer()
+  const submitToBrokerDealer = useSubmitBrokerDealerForm()
   const { secTokens } = useUserSecTokens()
   const dispatch = useDispatch<AppDispatch>()
 
@@ -118,7 +116,7 @@ export function useSwapAuthorizeFirstStep(
     async (token: Token) => {
       await getSwapAuthorization()
       async function getSwapAuthorization() {
-        const dto = getAuthorizationFirstStepDto(trade, allowedSlippage)
+        const dto = getAuthorizationFirstStepDto(trade, allowedSlippage, token)
         const isSecToken = Boolean(secTokens[token.address])
         if (!isSecToken || !dto || (pairs[0] === null && pairs[1] === null)) {
           return
@@ -135,7 +133,10 @@ export function useSwapAuthorizeFirstStep(
         }
         dispatch(saveTokenInProgress({ token }))
         const result = await getAuthorization({ amount, orderType, pairAddress, tokenId: usedToken })
-        submitToBrokerDealer({ ...result, brokerDealerId: (accreditationRequest as any)?.brokerDealerId }, formRef)
+        submitToBrokerDealer({
+          dto: { ...result, brokerDealerId: (accreditationRequest as any)?.brokerDealerId },
+          formRef,
+        })
       }
     },
     [getAuthorization, pairs, submitToBrokerDealer, allowedSlippage, secTokens, trade, formRef]

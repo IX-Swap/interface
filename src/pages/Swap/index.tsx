@@ -117,7 +117,7 @@ export default function Swap({ history }: RouteComponentProps) {
             {showWrap ? null : <CurrentRate {...{ trade, allowedSlippage }} />}
             {showAcceptChanges ? <AcceptChanges handleAcceptChanges={handleAcceptChanges} /> : null}
             <AuthorizationButtons formRef={formRef} />
-            <SwapButtons formRef={formRef} parsedAmounts={parsedAmounts} showAcceptChanges={showAcceptChanges} />
+            <SwapButtons parsedAmounts={parsedAmounts} showAcceptChanges={showAcceptChanges} />
           </AutoColumn>
         </Wrapper>
       </AppBody>

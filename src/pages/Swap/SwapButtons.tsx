@@ -27,11 +27,9 @@ import { usePriceImpact } from './usePriceImpact'
 import { useSwapApproval } from './useSwapApproval'
 
 export const SwapButtons = ({
-  formRef,
   parsedAmounts,
   showAcceptChanges,
 }: {
-  formRef: any
   showAcceptChanges: boolean
   parsedAmounts: ParsedAmounts | undefined
 }) => {
@@ -57,7 +55,7 @@ export const SwapButtons = ({
   // for expert mode
   const { expertMode } = useExpertModeManager()
   const { priceImpactTooHigh, priceImpactSeverity, priceImpact } = usePriceImpact({ parsedAmounts })
-  const handleSwap = useHandleSwap({ formRef, priceImpact })
+  const handleSwap = useHandleSwap({ priceImpact })
   // toggle wallet when disconnected
   const toggleWalletModal = useWalletModalToggle()
   const { error: swapCallbackError } = useSwapCallbackError(trade, allowedSlippage, recipient)

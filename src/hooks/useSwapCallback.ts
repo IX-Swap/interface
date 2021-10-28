@@ -21,6 +21,14 @@ export enum SwapCallbackState {
   VALID,
 }
 
+const EMPTY_AUTHORIZATION: TradeAuthorization = {
+  operator: '0x0000000000000000000000000000000000000000',
+  deadline: '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',
+  v: '0x0000000000000000000000000000000000000000000000000000000000000000',
+  r: '0x0000000000000000000000000000000000000000000000000000000000000000',
+  s: '0x0000000000000000000000000000000000000000000000000000000000000000',
+}
+
 interface SwapCall {
   address: string
   calldata: string
@@ -52,22 +60,16 @@ export function useMissingAuthorizations(trade: V2Trade<Currency, Currency, Trad
 
 export function useAuthorizationDigest(
   trade: V2Trade<Currency, Currency, TradeType> | undefined
-): Array<TradeAuthorization | null> | undefined {
+): Array<TradeAuthorization> | undefined {
   const authorizations = useAuthorizationsState()
   const addresses = useSwapSecTokenAddresses(trade)
-  if (
-    !addresses ||
-    !authorizations ||
-    !Object.keys(authorizations).length ||
-    addresses.length === 0 ||
-    addresses.every((element) => element === null)
-  ) {
+  if (!addresses || addresses.length === 0) {
     return undefined
   }
-  const authorizationDigest: Array<TradeAuthorization | null> = addresses.map((address) => {
-    const addressAuthorization = address ? authorizations[address] : null
+  const authorizationDigest: Array<TradeAuthorization> = addresses.map((address) => {
+    const addressAuthorization = address && authorizations ? authorizations[address] : null
     if (!addressAuthorization) {
-      return null
+      return EMPTY_AUTHORIZATION
     }
     return {
       v: addressAuthorization?.v,
@@ -77,7 +79,6 @@ export function useAuthorizationDigest(
       deadline: addressAuthorization.deadline,
     }
   })
-  console.log({ authorizationDigest })
   return authorizationDigest
 }
 
@@ -129,7 +130,6 @@ function useSwapCallArguments(
       return []
     }
     const swapMethods = []
-    console.log({ authorizationDigest })
     const options = {
       feeOnTransfer: false,
       allowedSlippage,
