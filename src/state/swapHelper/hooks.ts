@@ -142,14 +142,11 @@ export function useSwapConfirmDataFromURL(
     fetchAuthorization()
     async function fetchAuthorization() {
       if (!tokenInProgress) {
-        dispatch(setLoadingSwap({ isLoading: false }))
         return
       }
       const authorization = authorizations?.[tokenInProgress?.address]
       const accreditationRequest = (tokenInProgress as any)?.tokenInfo?.accreditationRequest
       if (!accreditationRequest || authorization) {
-        dispatch(setLoadingSwap({ isLoading: false }))
-        dispatch(saveTokenInProgress({ token: null }))
         return
       }
       const swapConfirm = {
@@ -160,8 +157,6 @@ export function useSwapConfirmDataFromURL(
       const address = (tokenInProgress as any)?.tokenInfo?.address
       try {
         if (!parsedQs?.hash || !parsedQs?.result || !accreditationRequest || !chainId || !address) {
-          dispatch(setLoadingSwap({ isLoading: false }))
-          dispatch(saveTokenInProgress({ token: null }))
           return
         }
 
@@ -169,10 +164,10 @@ export function useSwapConfirmDataFromURL(
         const data = response.data
         const { s, v, r, operator, deadline } = data
         const persistedAuthorization = { s, v, r, operator, deadline, expiresAt: getTokenExpiration('1 hour') }
-        history.push(`/swap`)
         dispatch(saveTokenInProgress({ token: null }))
         dispatch(setLoadingSwap({ isLoading: false }))
         dispatch(saveAuthorization({ authorization: persistedAuthorization, chainId, address }))
+        history.push(`/swap`)
       } catch (e) {
         console.log({ e })
         dispatch(setLoadingSwap({ isLoading: false }))

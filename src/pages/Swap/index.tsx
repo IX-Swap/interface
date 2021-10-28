@@ -32,6 +32,7 @@ import { AuthorizationButtons } from './AuthorizationButtons'
 import { BrokerDealerForm } from './BrokerDealerForm'
 import { SwapButtons } from './SwapButtons'
 import { useWatchApprovalSubmitted } from './useWatchApprovalSubmitted'
+import { LoaderThin } from 'components/Loader/LoaderThin'
 
 export default function Swap({ history }: RouteComponentProps) {
   const { chainId } = useActiveWeb3React()
@@ -110,19 +111,21 @@ export default function Swap({ history }: RouteComponentProps) {
             txHash={txHash}
             isOpen={openModal}
           />
-          {!loadingSwap && (
-            <AutoColumn gap={'1.25rem'}>
-              <CurrencyInput {...{ parsedAmounts, maxInputAmount, showWrap, currencies, handleHideConfirm }} />
 
-              {recipient !== null && !showWrap ? <EditRecipient {...{ recipient, onChangeRecipient }} /> : null}
+          <AutoColumn gap={'1.25rem'}>
+            <CurrencyInput {...{ parsedAmounts, maxInputAmount, showWrap, currencies, handleHideConfirm }} />
+            {!loadingSwap && (
+              <>
+                {recipient !== null && !showWrap ? <EditRecipient {...{ recipient, onChangeRecipient }} /> : null}
 
-              {showWrap ? null : <CurrentRate {...{ trade, allowedSlippage }} />}
-              {showAcceptChanges ? <AcceptChanges handleAcceptChanges={handleAcceptChanges} /> : null}
-              <AuthorizationButtons formRef={formRef} />
-              <SwapButtons parsedAmounts={parsedAmounts} showAcceptChanges={showAcceptChanges} />
-            </AutoColumn>
-          )}
-          {loadingSwap && <>Loading...</>}
+                {showWrap ? null : <CurrentRate {...{ trade, allowedSlippage }} />}
+                {showAcceptChanges ? <AcceptChanges handleAcceptChanges={handleAcceptChanges} /> : null}
+                <AuthorizationButtons formRef={formRef} />
+                <SwapButtons parsedAmounts={parsedAmounts} showAcceptChanges={showAcceptChanges} />
+              </>
+            )}
+            {loadingSwap && <LoaderThin size={48}></LoaderThin>}
+          </AutoColumn>
         </Wrapper>
       </AppBody>
       {!swapIsUnsupported ? null : (
