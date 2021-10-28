@@ -114,10 +114,7 @@ export function useSubmitBrokerDealerForm() {
       data,
       hash,
     }
-    console.log('submitting')
-    console.log({ formRef, current: formRef.current })
     if (formRef?.current) {
-      console.log('has current')
       formRef.current.action = endpoint
       for (const key in formValues) {
         const input = document.createElement('input')
@@ -152,12 +149,13 @@ export function useSwapConfirmDataFromURL(
       if (!accreditationRequest || authorization) {
         return
       }
+
       const swapConfirm = {
         hash: (parsedQs?.hash as string) || '',
         encryptedData: (parsedQs?.result as string) || '',
         brokerDealerId: accreditationRequest?.brokerDealerId,
       }
-      const address = tokenInProgress?.address
+      const address = (tokenInProgress as any)?.tokenInfo?.address
       try {
         if (!parsedQs?.hash || !parsedQs?.result || !accreditationRequest || !chainId || !address) {
           return
