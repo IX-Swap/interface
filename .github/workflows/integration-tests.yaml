@@ -27,11 +27,11 @@ jobs:
           node-version: 14.17
 
       - name: Set tests dependencies
-          run: npx playwright install-deps
-          run: npx playwright install
-          run: yarn
-          run: CI=false yarn build
-          run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+        run: npx playwright install-deps
+      - run: npx playwright install
+      - run: yarn
+      - run: CI=false yarn build
+      - run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 
       - name: Run Tests
         working-directory: ./__tests__
