@@ -13,12 +13,15 @@ name: Integration Tests
 #       - staging
 #       - ci-update
 on: [push]
+# on:
+#   deployment_status:
+#     branches: [staging,develop]
 
 jobs:
   integration-tests:
     name: Integration Tests
     runs-on: ubuntu-latest # or macos-latest, windows-latest
-
+    # if: github.event.deployment_status.state == 'success' 
     steps:
       - uses: actions/checkout@v2
       - name: Set up node
@@ -39,7 +42,11 @@ jobs:
           echo $PWD
           cd __tests__
           yarn integration-test
-          npx playwright test --reporter=line,allure-playwright --timeout 180000 --workers 2
+          npx playwright test --reporter=line,allure-playwright
+        env:
+        # This might depend on your test-runner/language binding
+          PLAYWRIGHT_TEST_BASE_URL: ${{ github.event.deployment_status.target_url }}
+          ENVIRONMENT_URL: '${{ env.DEPLOY_ENVIRONMENT }}'
 
       - uses: actions/upload-artifact@v2
         if: always()

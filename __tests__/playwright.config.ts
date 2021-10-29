@@ -2,10 +2,11 @@
 import { PlaywrightTestConfig } from '@playwright/test'
 
 const config: PlaywrightTestConfig = {
+  workers: process.env.CI ? 2 : undefined,
+  // reporter: process.env.CI ? [ ['github'], ['dot'] ] : 'list',
+  reporter: process.env.CI ? 'line' : 'list',
   timeout: 180000,
-  // reporter: [["list"], ["json", { outputFile: "test-results.json" }]],
-  // outputDir: 'screenshot',
-  // globalTimeout: 600000,
+  updateSnapshots: 'missing',
   use: {
     trace: 'on-first-retry',
     headless: true,
@@ -17,15 +18,33 @@ const config: PlaywrightTestConfig = {
   },
 
   projects: [
+    // {
+    //   name: 'Chromium',
+    //   retries: 1,
+    //   timeout: 180000,
+    //   use: {
+    //     headless: true,
+    //     viewport: { width: 1900, height: 1000 },
+    //     ignoreHTTPSErrors: true,
+    //     browserName: 'chromium',
+    //     screenshot: 'only-on-failure',
+    //     trace: 'on-first-retry',
+    //     video: 'off',
+    //     httpCredentials: {
+    //       username: 'ixprime',
+    //       password: '!nv35taX2K2!*'
+    //     }
+    //   }
+    // },
     {
-      name: 'Chromium',
+      name: 'Webkit',
       retries: 1,
       timeout: 180000,
       use: {
         headless: true,
         viewport: { width: 1900, height: 1000 },
         ignoreHTTPSErrors: true,
-        browserName: 'chromium',
+        browserName: 'webkit',
         screenshot: 'only-on-failure',
         trace: 'on-first-retry',
         video: 'off',
