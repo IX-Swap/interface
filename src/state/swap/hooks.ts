@@ -181,7 +181,7 @@ export function useDerivedSwapInfo(): {
 
   const missingAuthorizations = useMissingAuthorizations(v2Trade)
   const shouldGetAuthorization = missingAuthorizations.length > 0
-  if (shouldGetAuthorization) {
+  if (shouldGetAuthorization && !inputError) {
     inputError = t`Authorization missing`
   }
   return {
