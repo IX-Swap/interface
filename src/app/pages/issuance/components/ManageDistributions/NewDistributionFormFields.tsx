@@ -79,7 +79,6 @@ export const NewDistributionFormFields = ({
         <Grid item xs={12} md={3}>
           <Typography variant='subtitle1'>Schedule distribution</Typography>
           <VSpacer size='small' />
-          {/* @ts-ignore */}
           <TypedField
             component={DateTimePicker}
             customRenderer

@@ -42,7 +42,7 @@ export const ListingMarketInfo = () => {
             traded against
           </Typography>
           <VSpacer size={'small'} />
-          {/* @ts-ignore */}
+
           <TypedField
             customRenderer
             component={RadioGroup}
@@ -67,7 +67,7 @@ export const ListingMarketInfo = () => {
           <VSpacer size={'small'} />
           <Typography>Where do you want to list this Market?</Typography>
           <VSpacer size={'small'} />
-          {/* @ts-ignore */}
+
           <TypedField
             customRenderer
             component={RadioGroup}

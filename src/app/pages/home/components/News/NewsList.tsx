@@ -8,19 +8,19 @@ import { useTableWithPagination } from 'components/TableWithPagination/hooks/use
 import { useTheme } from '@material-ui/core/styles'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 
-export interface NewsListProps<T> {
+export interface NewsListProps {
   name: string
   uri: string
   queryEnabled?: boolean
   filter?: BaseFilter
 }
 
-export const NewsList = <T,>({
+export const NewsList = ({
   name,
   uri,
   filter,
   queryEnabled = true
-}: NewsListProps<T>): JSX.Element => {
+}: NewsListProps): JSX.Element => {
   const theme = useTheme()
   const classes = useStyles()
   const isTablet = useMediaQuery(theme.breakpoints.down('md'))

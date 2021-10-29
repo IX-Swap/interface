@@ -59,7 +59,6 @@ export const CommitmentIssuanceFields = (
         <Grid item md={4}>
           <Typography variant='subtitle1'>Release Date</Typography>
           <Box py={0.4} />
-          {/* @ts-ignore */}
           <TypedField
             name='releaseDate'
             label=''

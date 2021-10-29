@@ -3,6 +3,8 @@ import { useTheme } from '@material-ui/core/styles'
 import { SecuritiesMarketsTabs } from 'app/pages/home/components/SecuritiesMarketsTabs/SecuritiesMarketsTabs'
 import React from 'react'
 import { RootContainer } from 'ui/RootContainer'
+import AtlasLogoDark from 'assets/icons/atlas_logo.png'
+import AtlasLogoLight from 'assets/icons/atlas_logo_white.png'
 
 export const SecuritiesMarkets = () => {
   const theme = useTheme()
@@ -24,9 +26,9 @@ export const SecuritiesMarkets = () => {
             <img
               width={106}
               height={34}
-              src={require(theme.palette.type === 'light'
-                ? 'assets/icons/atlas_logo.png'
-                : 'assets/icons/atlas_logo_white.png')}
+              src={
+                theme.palette.type === 'light' ? AtlasLogoDark : AtlasLogoLight
+              }
               alt={'Atlas One Logo'}
             />
           </Grid>

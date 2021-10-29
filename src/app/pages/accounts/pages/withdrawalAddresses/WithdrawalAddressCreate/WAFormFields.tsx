@@ -53,7 +53,6 @@ export const WAFormFields = () => {
       </Grid>
 
       <Grid item>
-        {/* @ts-ignore */}
         <TypedField
           customRenderer
           valueExtractor={booleanValueExtractor}

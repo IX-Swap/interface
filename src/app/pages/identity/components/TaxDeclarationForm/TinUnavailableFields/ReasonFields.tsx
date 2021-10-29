@@ -34,7 +34,6 @@ export const ReasonFields = ({
 
   return (
     <Box ml={3}>
-      {/* @ts-ignore */}
       <TypedField
         customRenderer
         component={RadioGroup}

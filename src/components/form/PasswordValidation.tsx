@@ -54,10 +54,7 @@ export const PasswordValidation = () => {
     <Grid container direction='column' spacing={1}>
       {paswordErrorsList.map(error => (
         <Grid item>
-          <PasswordValidationItem
-            label={error.label}
-            invalid={passwordErrors?.types?.hasOwnProperty(error.type)}
-          />
+          <PasswordValidationItem label={error.label} invalid={false} />
         </Grid>
       ))}
     </Grid>
