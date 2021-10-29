@@ -22,6 +22,7 @@ import { AppStateProvider } from 'app/hooks/useAppState'
 import { Form } from 'components/form/Form'
 import { Toast } from 'components/Toast'
 import { AppThemeProvider } from 'AppThemeProvider'
+import { QueryCache, ReactQueryCacheProvider } from 'react-query'
 
 const generateClassName = createGenerateClassName({
   productionPrefix: 'ix'
@@ -47,7 +48,11 @@ export const BaseProviders: React.FC = ({ children }) => {
                       }
                     }}
                   >
-                    <Router history={history}>{children}</Router>
+                    <ReactQueryCacheProvider
+                      queryCache={new QueryCache({ frozen: true })}
+                    >
+                      <Router history={history}>{children}</Router>
+                    </ReactQueryCacheProvider>
                   </ServicesProvider>
                 </BreadcrumbsProvider>
               </ToastProvider>
