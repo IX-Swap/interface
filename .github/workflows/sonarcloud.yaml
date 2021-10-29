@@ -21,6 +21,7 @@ jobs:
         run: yarn build --if-present
 
       - name: Run Tests
+	run: yarn jest --clearCache
         run: yarn test:ci
         env:
           REACT_APP_API_URL: https://devapi.mozork.com
