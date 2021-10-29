@@ -35,8 +35,7 @@ describe('CustodyManagementTable', () => {
           search: undefined,
           to: undefined,
           from: undefined,
-          // TODO Change filter value after complete backend api endpoints
-          type: []
+          type: undefined
         },
         themeVariant: 'primary',
         paperProps: { variant: 'elevation', elevation: 0 }

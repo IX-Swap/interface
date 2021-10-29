@@ -16,6 +16,7 @@ import { OTPForm } from 'app/pages/issuance/components/Commitments/CloseDealDial
 import { VSpacer } from 'components/VSpacer'
 import { Close as CloseIcon } from '@material-ui/icons'
 import { CustodyAccountsListItem } from 'types/custodyAccount'
+import { useUnAssignCustody } from 'app/pages/admin/hooks/useUnAssignCustody'
 
 export interface ModalProps extends Partial<DialogProps> {
   open?: boolean
@@ -26,13 +27,12 @@ export interface ModalProps extends Partial<DialogProps> {
 export const UnassignedCustodyDialog = (props: ModalProps) => {
   const theme = useTheme()
   const classes = useStyles()
-
-  const { open = false, onClose } = props
+  const { open = false, custodyAccount, onClose } = props
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
-  // TODO added unassigned function after complete backend api endpoint
-  // const {
-  //   mutation: [closeDeal, { isLoading }]
-  // } = useCloseDeal()
+
+  const {
+    mutation: [unAssign, { isLoading }]
+  } = useUnAssignCustody()
 
   return (
     <MUIDialog
@@ -81,12 +81,14 @@ export const UnassignedCustodyDialog = (props: ModalProps) => {
       <DialogActions>
         <OTPForm
           data-testid='otp-form'
-          // TODO changed this prop after complete backend api
-          isLoading={false}
+          isLoading={isLoading}
           onClose={() => onClose()}
           onSubmit={async values => {
-            // TODO added unassigned function after complete backend api endpoint
-            // await closeDeal({ dso: dsoId, ...values })
+            await unAssign({
+              accountId:
+                custodyAccount?._id !== undefined ? custodyAccount._id : '',
+              ...values
+            })
             onClose()
           }}
         />
