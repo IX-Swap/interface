@@ -299,32 +299,28 @@ export function useSwapCallback(
                     data: calldata,
                     value,
                   }
-            return {
-              call,
-              gasEstimate: 900000,
-            }
-            // return library
-            //   .estimateGas(tx)
-            //   .then((gasEstimate) => {
-            //     return {
-            //       call,
-            //       gasEstimate,
-            //     }
-            //   })
-            //   .catch((gasError) => {
-            //     console.debug('Gas estimate failed, trying eth_call to extract error', call)
+            return library
+              .estimateGas(tx)
+              .then((gasEstimate) => {
+                return {
+                  call,
+                  gasEstimate,
+                }
+              })
+              .catch((gasError) => {
+                console.debug('Gas estimate failed, trying eth_call to extract error', call)
 
-            //     return library
-            //       .call(tx)
-            //       .then((result) => {
-            //         console.debug('Unexpected successful call after failed estimate gas', call, gasError, result)
-            //         return { call, error: new Error('Unexpected issue with estimating the gas. Please try again.') }
-            //       })
-            //       .catch((callError) => {
-            //         console.debug('Call threw error', call, callError)
-            //         return { call, error: new Error(swapErrorToUserReadableMessage(callError)) }
-            //       })
-            //   })
+                return library
+                  .call(tx)
+                  .then((result) => {
+                    console.debug('Unexpected successful call after failed estimate gas', call, gasError, result)
+                    return { call, error: new Error('Unexpected issue with estimating the gas. Please try again.') }
+                  })
+                  .catch((callError) => {
+                    console.debug('Call threw error', call, callError)
+                    return { call, error: new Error(swapErrorToUserReadableMessage(callError)) }
+                  })
+              })
           })
         )
 
