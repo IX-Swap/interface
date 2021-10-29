@@ -44,8 +44,8 @@ jobs:
           npx playwright test --reporter=line,allure-playwright
         env:
         # This might depend on your test-runner/language binding
-          PLAYWRIGHT_TEST_BASE_URL: ${{ github.event.deployment_status.target_url }}
-          ENVIRONMENT_URL: '${{ env.DEPLOY_ENVIRONMENT }}'
+          PLAYWRIGHT_TEST_BASE_URL: ${{ github.event.repo.name }}
+          ENVIRONMENT_URL: ${{ env.REACT_APP_API_URL }} 
 
       - uses: actions/upload-artifact@v2
         if: always()
