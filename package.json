@@ -138,7 +138,7 @@
     "build": "react-app-rewired build",
     "test:watch": "react-scripts test --env=jest-environment-jsdom-sixteen --runInBand",
     "test": "react-scripts test --env=jest-environment-jsdom-sixteen --colors --silent",
-    "test:ci": "CI=true react-scripts test --env=jest-environment-jsdom-sixteen --silent --coverage --testResultsProcessor jest-sonar-reporter --maxWorkers=75%",
+    "test:ci": "CI=true react-scripts test --env=jest-environment-jsdom-sixteen --silent --coverage --testResultsProcessor jest-sonar-reporter --maxWorkers=75% --clearCache",
     "eject": "react-scripts eject",
     "lint": "eslint --cache --fix \"src/**/*.{ts,tsx}\"",
     "format": "prettier --write \"src/**/*.tsx\"",
