@@ -38,6 +38,7 @@ async function uploadFiles(page, element, file, resp = 'yes') {
       })
     }
   }
+  return { inputsFile }
 }
 
 async function click(selector, page) {

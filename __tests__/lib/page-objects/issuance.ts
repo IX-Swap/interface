@@ -119,7 +119,6 @@ class Dso {
     await typeText(issuance.dso.fields.FAQ_3, 'FAQ_3', this.page)
     await typeText(issuance.dso.fields.FAQ_3_ANSWER, 'FAQ_3_ANSWER', this.page)
     await click(issuance.dso.buttons.FINISH_LATER, this.page)
-    await this.page.waitForTimeout(10000)
   }
 
   addNewTeamMember = async () => {
@@ -148,4 +147,82 @@ class Dso {
     return inputs.length
   }
 }
-export { Dso }
+class Listing {
+  page: any
+  constructor(page) {
+    this.page = page
+  }
+
+  fillListingGeneralInformationForm = async () => {
+    const tokenName = 'TokenName' + randomString()
+    const tokenSymbol = Date.now().toString().slice(-6)
+    await uploadFiles(this.page, issuance.dso.LOGO, text.docs.pathToFile)
+    await click(issuance.dso.listBox.CAPITAL_STRUCTURE, this.page)
+    await click(issuance.dso.listBox.STRUCTURE_VALUE, this.page)
+    await click(issuance.dso.listBox.CORPORATE, this.page)
+    await click(issuance.dso.listBox.CORPORATE_VALUE, this.page)
+    await click(issuance.dso.listBox.CURRENCY, this.page)
+    await click(issuance.dso.listBox.NETWORK, this.page)
+    await click(issuance.dso.listBox.NETWORK_VALUE, this.page)
+    await typeText(issuance.dso.fields.TOKEN_NAME, tokenName, this.page)
+    await typeText(issuance.dso.fields.TOKEN_SYMBOL, tokenSymbol, this.page)
+    await typeText(issuance.dso.fields.LAUNCH_DATE, '11112022', this.page)
+    await typeText(issuance.dso.fields.COMPLETION_DATE, '11112023', this.page)
+    return { tokenSymbol, tokenName }
+  }
+
+  fillListingPricingForm = async () => {
+    await typeText(
+      issuance.listings.fields.MIN_TRADE_AMOUNT,
+      '100000',
+      this.page
+    )
+
+    await typeText(
+      issuance.listings.fields.MAX_TRADE_AMOUNT,
+      '100000000',
+      this.page
+    )
+    await typeText(
+      issuance.listings.fields.RAISED_AMOUNT,
+      '100000000',
+      this.page
+    )
+  }
+
+  addAndFillTeamMemberForm = async () => {
+    await click(issuance.dso.buttons.ADD_TEAM_MEMBER, this.page)
+    await uploadFiles(
+      this.page,
+      issuance.dso.fields.TEAM_MEMBER_PHOTO,
+      text.docs.pathToFile
+    )
+    await typeText(
+      issuance.dso.fields.TEAM_MEMBER_NAME,
+      'Team member Name',
+      this.page
+    )
+    await typeText(
+      issuance.dso.fields.TEAM_MEMBER_POSITION,
+      'Team member Position',
+      this.page
+    )
+  }
+  fillDocumentsForm = async () => {
+    const docFields = await uploadFiles(
+      this.page,
+      issuance.listings.fields.DOCS,
+      text.docs.pathToFile
+    )
+    return docFields.inputsFile
+  }
+  checkThatTheListingWasCreated = async tokenName => {
+    await click(issuance.dso.buttons.FINISH_LATER, this.page)
+    await click(issuance.listings.buttons.SUBMIT, this.page)
+    // await click(issuance.ISSUANCE_TAB, this.page)
+    await click(issuance.sections.VIEW_EXCHANGE_LISTINGS, this.page)
+    const result = await waitForText(this.page, tokenName)
+    return result
+  }
+}
+export { Dso, Listing }

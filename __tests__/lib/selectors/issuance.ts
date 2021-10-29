@@ -3,8 +3,22 @@ export const issuance = {
   ISSUANCE_TAB: '[href="/app/issuance/offerings"]',
   sections: {
     CREATE_DSO: '[href="/app/issuance/offerings/create"]',
-    VIEW_DSO_LISTENING: '[href="/app/issuance/offerings"]'
+    VIEW_DSO_LISTENING: '[href="/app/issuance/offerings"]',
+    VIEW_EXCHANGE_LISTINGS: '[href="/app/otc-market/my-listings"]',
+    CREATE_EXCHANGE_LISTINGS: '[href="/app/otc-market/my-listings/create"]'
   },
+
+  listings: {
+    fields: {
+      MIN_TRADE_AMOUNT: '[id="minimumTradeUnits"]',
+      MAX_TRADE_AMOUNT: '[id="maximumTradeUnits"]',
+      RAISED_AMOUNT: '[id="raisedAmount"]',
+      DOCS: '[name="listing-documents"] input'
+    },
+    buttons: { SUBMIT: 'button >> text=Submit' },
+    listBox: {}
+  },
+
   dso: {
     TEXT_AREA: '[id="mui-rte-editor"]',
     LOGO: '[name="logo"]',

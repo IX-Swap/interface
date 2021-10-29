@@ -1,4 +1,3 @@
-import { kyc } from '../lib/selectors/kyc-form'
 import { test } from '../lib/fixtures/fixtures'
 import { expect } from '@playwright/test'
 import { click, shouldNotExist } from '../lib/helpers/helpers'
@@ -21,6 +20,16 @@ test.describe('Check form`s view', () => {
   })
 })
 
+test('New DSO should be created ', async ({ dso }) => {
+  const token = (await dso.fillDsoInformationForm()).tokenName
+  await dso.fillDsoPricingForm()
+  await dso.fillDsoOfferingTermsForm()
+  await dso.fillDsoTeamMembersForm()
+  await dso.fillVideoAndFAQform()
+  const present = await dso.checkThatTheDsoWasCreated(token)
+  expect(present).toBe(true)
+})
+
 test('Team member should be added', async ({ dso }) => {
   const inputs = await dso.addNewTeamMember()
   expect(inputs).toBe(6)
@@ -39,14 +48,4 @@ test('FAQ should be added and deleted', async ({ dso }) => {
 test('Fields video title and link should be added', async ({ dso }) => {
   const inputs = await dso.addNewVideoLinks()
   expect(inputs).toStrictEqual(8)
-})
-
-test('New DSO should be created ', async ({ page, dso }) => {
-  const token = (await dso.fillDsoInformationForm()).tokenName
-  await dso.fillDsoPricingForm()
-  await dso.fillDsoOfferingTermsForm()
-  await dso.fillDsoTeamMembersForm()
-  await dso.fillVideoAndFAQform()
-  const present = await dso.checkThatTheDsoWasCreated(token)
-  expect(present).toBe(true)
 })
