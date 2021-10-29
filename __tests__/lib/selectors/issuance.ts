@@ -9,14 +9,23 @@ export const issuance = {
   },
 
   listings: {
+    LOGO: '[name="listing-general-information"] [class="MuiAvatar-img"]',
     fields: {
       MIN_TRADE_AMOUNT: '[id="minimumTradeUnits"]',
       MAX_TRADE_AMOUNT: '[id="maximumTradeUnits"]',
       RAISED_AMOUNT: '[id="raisedAmount"]',
       DOCS: '[name="listing-documents"] input'
     },
-    buttons: { SUBMIT: 'button >> text=Submit' },
-    listBox: {}
+    buttons: {
+      IMPORT: 'text="IMPORT"',
+      SUBMIT: 'button >> text=Submit',
+      IMPORT_DSO: '[name="isNewListing"][value="no"]'
+    },
+    listBox: {
+      MY_DSO: 'text="My DSO"',
+      DSO_HYBRID_TEST:
+        '[data-value="614066d516b8f4031bfae569:610882b74d322d3d8bbd5882"]'
+    }
   },
 
   dso: {

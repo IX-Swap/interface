@@ -8,7 +8,9 @@ import {
   uploadFiles,
   waitForText,
   randomString,
-  navigate
+  navigate,
+  shouldNotExist,
+  shouldExist
 } from '../helpers/helpers'
 
 class Dso {
@@ -219,10 +221,21 @@ class Listing {
   checkThatTheListingWasCreated = async tokenName => {
     await click(issuance.dso.buttons.FINISH_LATER, this.page)
     await click(issuance.listings.buttons.SUBMIT, this.page)
-    // await click(issuance.ISSUANCE_TAB, this.page)
     await click(issuance.sections.VIEW_EXCHANGE_LISTINGS, this.page)
     const result = await waitForText(this.page, tokenName)
     return result
+  }
+
+  importDso = async () => {
+    await this.page.waitForTimeout(10000)
+    await click(issuance.listings.buttons.IMPORT_DSO, this.page)
+    await this.page.waitForTimeout(5000)
+    await click('[class*="MuiInputBase-root "]', this.page)
+    await click(issuance.listings.listBox.DSO_HYBRID_TEST, this.page)
+    await click(issuance.listings.buttons.IMPORT, this.page)
+    await shouldExist(issuance.listings.LOGO, this.page)
+    const importedForm = await this.page.$('//form')
+    return importedForm
   }
 }
 export { Dso, Listing }

@@ -18,33 +18,15 @@ const config: PlaywrightTestConfig = {
   },
 
   projects: [
-    // {
-    //   name: 'Chromium',
-    //   retries: 1,
-    //   timeout: 180000,
-    //   use: {
-    //     headless: true,
-    //     viewport: { width: 1900, height: 1000 },
-    //     ignoreHTTPSErrors: true,
-    //     browserName: 'chromium',
-    //     screenshot: 'only-on-failure',
-    //     trace: 'on-first-retry',
-    //     video: 'off',
-    //     httpCredentials: {
-    //       username: 'ixprime',
-    //       password: '!nv35taX2K2!*'
-    //     }
-    //   }
-    // },
     {
-      name: 'Webkit',
+      name: 'Chromium',
       retries: 1,
       timeout: 180000,
       use: {
         headless: true,
         viewport: { width: 1900, height: 1000 },
         ignoreHTTPSErrors: true,
-        browserName: 'webkit',
+        browserName: 'chromium',
         screenshot: 'only-on-failure',
         trace: 'on-first-retry',
         video: 'off',
@@ -54,6 +36,24 @@ const config: PlaywrightTestConfig = {
         }
       }
     }
+    // {
+    //   name: 'Webkit',
+    //   retries: 1,
+    //   timeout: 180000,
+    //   use: {
+    //     headless: true,
+    //     viewport: { width: 1900, height: 1000 },
+    //     ignoreHTTPSErrors: true,
+    //     browserName: 'webkit',
+    //     screenshot: 'only-on-failure',
+    //     trace: 'on-first-retry',
+    //     video: 'off',
+    //     httpCredentials: {
+    //       username: 'ixprime',
+    //       password: '!nv35taX2K2!*'
+    //     }
+    //   }
+    // }
   ]
 }
 export default config

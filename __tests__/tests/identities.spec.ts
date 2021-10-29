@@ -1,7 +1,6 @@
 import { kyc } from '../lib/selectors/kyc-form'
 import { text } from '../lib/helpers/text'
 import { test } from '../lib/fixtures/fixtures'
-import { expect } from '@playwright/test'
 import {
   emailCreate,
   click,
@@ -10,12 +9,12 @@ import {
 } from '../lib/helpers/helpers'
 
 test.describe('Check identities form', () => {
-  test.beforeEach(async ({ page, baseURL, auth }, testInfo) => {
+  test.beforeEach(async ({ auth }) => {
     let forEachEmail = await emailCreate()
     await auth.submitRegistrationFormByAPI(forEachEmail)
   })
 
-  test.afterEach(async ({ page, context }, testInfo) => {
+  test.afterEach(async ({ page }) => {
     await page.close()
   })
 

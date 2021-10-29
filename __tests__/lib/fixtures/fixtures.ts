@@ -2,10 +2,8 @@ import { test as base } from '@playwright/test'
 import { Authentication } from '../page-objects/authentication'
 import { UserForms } from '../page-objects/identity-forms'
 import { Dso, Listing } from '../page-objects/issuance'
-
 import { kyc } from '../selectors/kyc-form'
 import { issuance } from '../selectors/issuance'
-
 export const test = base.extend<{
   dso: Dso
   auth: Authentication

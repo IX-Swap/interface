@@ -1,12 +1,12 @@
 import fetch from 'node-fetch'
 import { expect } from '@playwright/test'
 
+const LOADER = '[role="progressbar"]'
 const DEFAULT_SELECTOR_TIMEOUT = 50000
 
 const randomString = (length = 8) => {
   // Declare all characters
   let chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-
   // Pick characers randomly
   let str = ''
   for (let i = 0; i < length; i++) {
@@ -42,12 +42,15 @@ async function uploadFiles(page, element, file, resp = 'yes') {
 }
 
 async function click(selector, page) {
+  await page.waitForSelector(LOADER, {
+    state: 'detached',
+    timeout: DEFAULT_SELECTOR_TIMEOUT
+  })
   await page.waitForSelector(selector, {
     state: 'attached',
     timeout: DEFAULT_SELECTOR_TIMEOUT
   })
   try {
-    await page.waitForTimeout(500)
     await page.click(selector)
   } catch {
     throw new Error(`Could NOT find SELECTOR for click: ${selector}`)
@@ -55,6 +58,10 @@ async function click(selector, page) {
 }
 
 async function typeText(selector, words, page) {
+  await page.waitForSelector(LOADER, {
+    state: 'detached',
+    timeout: DEFAULT_SELECTOR_TIMEOUT
+  })
   try {
     await page.waitForSelector(selector, {
       state: 'attached',
@@ -68,21 +75,25 @@ async function typeText(selector, words, page) {
 }
 
 async function clearAndTypeText(selector, words, page) {
-  await page.waitForSelector(selector, {
-    state: 'attached',
+  //wait until the page loader detached
+  await page.waitForSelector(LOADER, {
+    state: 'detached',
     timeout: DEFAULT_SELECTOR_TIMEOUT
   })
-  await page.focus(selector)
+
+  //wait element
   const search = await page.waitForSelector(selector, {
     state: 'attached',
     timeout: DEFAULT_SELECTOR_TIMEOUT
   })
+
+  //Focus and clear field
+  await page.focus(selector)
   const query = await search.evaluate(element => element.value)
   for (const _ of query) {
     await page.keyboard.press('Backspace')
   }
   try {
-    await page.waitForTimeout(500)
     await page.type(selector, words)
   } catch (error) {
     console.error(error)
