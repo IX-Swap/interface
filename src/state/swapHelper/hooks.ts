@@ -1,5 +1,6 @@
 import { Currency, Percent, TradeType } from '@ixswap1/sdk-core'
 import { Trade as V2Trade } from '@ixswap1/v2-sdk'
+import { t } from '@lingui/macro'
 import * as H from 'history'
 import { useCurrency } from 'hooks/Tokens'
 import useParsedQueryString from 'hooks/useParsedQueryString'
@@ -10,6 +11,8 @@ import { useCallback, useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import apiService from 'services/apiService'
 import { tokens } from 'services/apiUrls'
+import { setModalDetails } from 'state/application/actions'
+import { ModalType } from 'state/application/reducer'
 import { completeDispatch } from 'utils/completeDispatch'
 import { getTokenExpiration, shouldRenewToken } from 'utils/time'
 import { AppDispatch, AppState } from '../index'
@@ -141,14 +144,32 @@ export function useSwapConfirmDataFromURL(
   useEffect(() => {
     fetchAuthorization()
     async function fetchAuthorization() {
+      if (parsedQs?.isError) {
+        console.log('has error')
+        dispatch(saveTokenInProgress({ token: null }))
+        dispatch(setLoadingSwap({ isLoading: false }))
+        dispatch(
+          setModalDetails({
+            modalType: ModalType.ERROR,
+            modalTitle: t`Something went wrong`,
+            modalMessage: t`Please retry`,
+          })
+        )
+        history.push(`/swap`)
+        return
+      }
       if (!tokenInProgress) {
         return
       }
       const authorization = authorizations?.[tokenInProgress?.address]
       const accreditationRequest = (tokenInProgress as any)?.tokenInfo?.accreditationRequest
       if (!accreditationRequest || authorization) {
+        dispatch(saveTokenInProgress({ token: null }))
+        dispatch(setLoadingSwap({ isLoading: false }))
+        history.push(`/swap`)
         return
       }
+
       const swapConfirm = {
         hash: (parsedQs?.hash as string) || '',
         encryptedData: (parsedQs?.result as string) || '',
@@ -157,6 +178,7 @@ export function useSwapConfirmDataFromURL(
       const address = (tokenInProgress as any)?.tokenInfo?.address
       try {
         if (!parsedQs?.hash || !parsedQs?.result || !accreditationRequest || !chainId || !address) {
+          history.push(`/swap`)
           return
         }
 
@@ -172,6 +194,14 @@ export function useSwapConfirmDataFromURL(
         console.log({ e })
         dispatch(setLoadingSwap({ isLoading: false }))
         dispatch(saveTokenInProgress({ token: null }))
+        dispatch(
+          setModalDetails({
+            modalType: ModalType.ERROR,
+            modalTitle: t`Something went wrong`,
+            modalMessage: t`Please retry`,
+          })
+        )
+        history.push(`/swap`)
       }
     }
   }, [tokenInProgress, chainId, authorizations, parsedQs?.hash, parsedQs?.result, history])

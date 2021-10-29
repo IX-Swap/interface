@@ -33,6 +33,7 @@ import { BrokerDealerForm } from './BrokerDealerForm'
 import { SwapButtons } from './SwapButtons'
 import { useWatchApprovalSubmitted } from './useWatchApprovalSubmitted'
 import { LoaderThin } from 'components/Loader/LoaderThin'
+import { GeneralModal } from 'components/GeneralModal/GeneralModal'
 
 export default function Swap({ history }: RouteComponentProps) {
   const { chainId } = useActiveWeb3React()
@@ -99,6 +100,7 @@ export default function Swap({ history }: RouteComponentProps) {
   return (
     <>
       <TokenWarningModal history={history} />
+      <GeneralModal />
       <BrokerDealerForm ref={formRef} />
       <AppBody blurred={chainId !== undefined && !TGE_CHAINS_WITH_SWAP.includes(chainId)}>
         <SwapHeader />

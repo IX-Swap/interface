@@ -27,7 +27,7 @@ export function useHandleSwap({ priceImpact }: { priceImpact: Percent | undefine
   const [singleHopOnly] = useUserSingleHopOnly()
   // if missing authorization, don't swap. after successful swap, clear all authorizations
   const authorizationDigest = useAuthorizationDigest(trade)
-  const clearAuthorization = usePersistAuthorization()
+  const setAuthorization = usePersistAuthorization()
   const swapSecTokens = useSwapSecTokenAddresses(trade)
   const { error: swapCallbackError } = useSwapCallbackError(trade, allowedSlippage, recipient)
 
@@ -43,9 +43,10 @@ export function useHandleSwap({ priceImpact }: { priceImpact: Percent | undefine
     setOpenModal(true)
     try {
       const hash = await swapCallback()
+      console.log({ authorizationDigest, hash, swapSecTokens })
       if (authorizationDigest && swapSecTokens.length && !swapSecTokens.every((address) => address === null)) {
         for (const address in swapSecTokens) {
-          await clearAuthorization(null, address)
+          await setAuthorization(null, address)
         }
       }
       setSwapState({
@@ -93,7 +94,7 @@ export function useHandleSwap({ priceImpact }: { priceImpact: Percent | undefine
     authorizationDigest,
     shouldGetAuthorization,
     swapSecTokens,
-    clearAuthorization,
+    setAuthorization,
 
     swapCallbackError,
 
