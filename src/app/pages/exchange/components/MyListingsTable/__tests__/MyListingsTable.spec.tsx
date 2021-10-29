@@ -18,7 +18,7 @@ jest.mock('app/components/SearchFilter', () => ({
   SearchFilter: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/exchange/components/MyListingsTable/Actions', () => ({
+jest.mock('app/pages/exchange/components/MyListingsTable/ActionsType', () => ({
   Actions: jest.fn(() => null)
 }))
 

@@ -4,11 +4,11 @@ import AtlasLogoLight from 'assets/icons/atlas_logo_white.png'
 import AtlasLogoDark from 'assets/icons/atlas_logo.png'
 import InvestaXLogo from 'assets/icons/logo-color.svg'
 
-export interface ReportLogo {
+export interface ReportLogoProps {
   isAtlasOne: boolean
 }
 
-export const ReportLogo = ({ isAtlasOne }: ReportLogo) => {
+export const ReportLogo = ({ isAtlasOne }: ReportLogoProps) => {
   const theme = useTheme()
 
   return isAtlasOne ? (

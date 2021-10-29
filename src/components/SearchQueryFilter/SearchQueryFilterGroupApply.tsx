@@ -3,10 +3,10 @@ import { Button, ButtonProps } from '@material-ui/core'
 import { SearchQueryFilterGroupStateContext } from 'components/SearchQueryFilter/SearchQueryFilterGroup/context'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 
-export interface SearchQueryFilterGroupApply extends ButtonProps {}
+export interface SearchQueryFilterGroupApplyProps extends ButtonProps {}
 
 export const SearchQueryFilterGroupApply = (
-  props: SearchQueryFilterGroupApply
+  props: SearchQueryFilterGroupApplyProps
 ) => {
   const { children, ...rest } = props
   const filterGroupState = useContext(SearchQueryFilterGroupStateContext)
