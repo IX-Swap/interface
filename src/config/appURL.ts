@@ -13,8 +13,7 @@ export const urlParams = {
   tokenId: ':tokenId',
   category: ':category',
   userId: ':userId',
-  pairId: ':pairId',
-  accountId: ':accountId'
+  pairId: ':pairId'
 }
 
 export const urlAction = {
@@ -24,8 +23,7 @@ export const urlAction = {
   edit: 'edit',
   deposit: 'deposit',
   withdraw: 'withdraw',
-  makeInvestment: 'make-investment',
-  viewDetails: 'view-details'
+  makeInvestment: 'make-investment'
 }
 
 export const urlModule = {
@@ -71,8 +69,7 @@ export const urlFeature = {
   listings: `${AppFeature.Listings}`,
   buyerList: `${AppFeature.BuyerList}`,
   captable: AppFeature.CapTable,
-  manageDistributions: 'manage-distributions',
-  custodyManagement: `${AppFeature.CustodyManagement}`
+  manageDistributions: 'manage-distributions'
 }
 
 export const appURL = {

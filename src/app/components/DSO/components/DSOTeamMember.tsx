@@ -23,7 +23,6 @@ export const DSOTeamMember = (props: DSOTeamMemberProps) => {
   const { defaultValue, fieldId, index, remove } = props
   const { control } = useFormContext<{ team: DSOFormValues['team'] }>()
   const { isTablet } = useAppBreakpoints()
-
   return (
     <Grid
       item

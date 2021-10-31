@@ -34,13 +34,11 @@ export const CustodyDetailsDialog = () => {
 
   return (
     <MUIDialog
-      maxWidth={'md'}
+      open
       fullWidth
+      maxWidth={'md'}
       fullScreen={fullScreen}
-      open={true}
       className={classes.root}
-      aria-labelledby='custody-details-modal-title'
-      aria-describedby='custody-details-modal-description'
     >
       <DialogTitle className={classes.titleRoot}>
         <Box justifyContent='center' alignItems='center'>
