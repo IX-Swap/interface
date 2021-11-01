@@ -1,17 +1,13 @@
 import { Percent } from '@ixswap1/sdk-core'
+import { Pair } from '@ixswap1/v2-sdk'
 import { useActiveWeb3React } from 'hooks/web3'
 import { useCallback } from 'react'
 import ReactGA from 'react-ga'
 import { useDerivedSwapInfo, useSwapState } from 'state/swap/hooks'
-import { useClearAuthorization, useOpenModal, useSetSwapState } from 'state/swapHelper/hooks'
+import { useClearAuthorization, useOpenModal, useSetSwapState, useSwapSecPairs } from 'state/swapHelper/hooks'
 import confirmPriceImpactWithoutFee from '../../components/swap/confirmPriceImpactWithoutFee'
 import useENSAddress from '../../hooks/useENSAddress'
-import {
-  useAuthorizationDigest,
-  useSwapCallback,
-  useSwapCallbackError,
-  useSwapSecTokenAddresses,
-} from '../../hooks/useSwapCallback'
+import { useAuthorizationDigest, useSwapCallback, useSwapCallbackError } from '../../hooks/useSwapCallback'
 import { Version } from '../../hooks/useToggledVersion'
 import { useUserSingleHopOnly } from '../../state/user/hooks'
 
@@ -28,7 +24,7 @@ export function useHandleSwap({ priceImpact }: { priceImpact: Percent | undefine
   // if missing authorization, don't swap. after successful swap, clear all authorizations
   const authorizationDigest = useAuthorizationDigest(trade)
   const clearAuthorization = useClearAuthorization()
-  const swapSecTokens = useSwapSecTokenAddresses(trade)
+  const pairs = useSwapSecPairs(trade)
   const { error: swapCallbackError } = useSwapCallbackError(trade, allowedSlippage, recipient)
 
   return useCallback(async () => {
@@ -41,8 +37,9 @@ export function useHandleSwap({ priceImpact }: { priceImpact: Percent | undefine
     }
     setSwapState({ attemptingTxn: true, tradeToConfirm, showConfirm, swapErrorMessage: undefined, txHash: undefined })
     setOpenModal(true)
-    const onlySecTokens: string[] = swapSecTokens.filter((address): address is string => !!address)
-    console.log({ authorizationDigest, swapSecTokens, onlySecTokens })
+    const onlySecTokens: string[] = pairs
+      .filter((pair): pair is Pair => !!pair)
+      .map((pair) => pair.liquidityToken.address)
     try {
       const hash = await swapCallback()
       setSwapState({
@@ -93,11 +90,9 @@ export function useHandleSwap({ priceImpact }: { priceImpact: Percent | undefine
     singleHopOnly,
     authorizationDigest,
     shouldGetAuthorization,
-    swapSecTokens,
     clearAuthorization,
-
     swapCallbackError,
-
+    pairs,
     setOpenModal,
     setSwapState,
   ])

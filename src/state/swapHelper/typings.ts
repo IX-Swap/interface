@@ -18,6 +18,7 @@ export interface SwapConfirmArguments {
 
 export interface SwapAuthorization extends TradeAuthorization {
   expiresAt: number
+  amount: string
 }
 export interface SwapLocalState {
   showConfirm: boolean
