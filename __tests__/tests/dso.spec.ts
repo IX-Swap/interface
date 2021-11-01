@@ -1,6 +1,10 @@
 import { test } from '../lib/fixtures/fixtures'
 import { expect } from '@playwright/test'
-import { click, shouldNotExist } from '../lib/helpers/helpers'
+import {
+  click,
+  shouldNotExist,
+  screenshotMatching
+} from '../lib/helpers/helpers'
 
 test.beforeEach(async ({ page, dso, auth, issuanceSelectors }, testInfo) => {
   await dso.followToIssuanceTab(auth)
@@ -10,13 +14,10 @@ test.afterEach(async ({ page, context }, testInfo) => {
   await page.close()
 })
 test.describe('Check form`s view', () => {
-  test('DSO Information', async ({
-    page,
-    kycForms,
-    issuanceSelectors
-  }, testInfo) => {
+  test('DSO Information', async ({ page, issuanceSelectors }, testInfo) => {
     await shouldNotExist(issuanceSelectors.LOADER, page)
-    await kycForms.checkAllViewUsingSnapshot(testInfo.title)
+    const elementHandle = await page.$('//form')
+    await screenshotMatching(testInfo.title, elementHandle)
   })
 })
 
