@@ -92,8 +92,12 @@ export const SwapButtons = ({
           <ConfirmSwapInfo data-testid="confirm-swap-card-info" trade={trade} allowedSlippage={allowedSlippage} />
           {trade && <OutputInfo {...{ trade, recipient, allowedSlippage }} />}
           <BottomGrouping>
-            <ButtonIXSWide onClick={handleSwap} disabled={showAcceptChanges} data-testid="confirm-swap">
-              {shouldGetAuthorization ? <Trans>Get authorization</Trans> : <Trans>Confirm swap</Trans>}
+            <ButtonIXSWide
+              onClick={handleSwap}
+              disabled={showAcceptChanges || shouldGetAuthorization}
+              data-testid="confirm-swap"
+            >
+              <Trans>Confirm swap</Trans>
             </ButtonIXSWide>
           </BottomGrouping>
         </>
@@ -150,7 +154,8 @@ export const SwapButtons = ({
                   signatureState !== UseERC20PermitState.SIGNED) ||
                 !isValid ||
                 priceImpactTooHigh ||
-                !!swapCallbackError
+                !!swapCallbackError ||
+                shouldGetAuthorization
               }
             >
               <Text fontSize={18} fontWeight={600}>
@@ -161,7 +166,7 @@ export const SwapButtons = ({
                 ) : priceImpactSeverity > 2 ? (
                   <Trans>Price impact is high. Swap anyway</Trans>
                 ) : shouldGetAuthorization ? (
-                  <Trans>Get authorization</Trans>
+                  <Trans>Authorization missing</Trans>
                 ) : (
                   <Trans>Swap</Trans>
                 )}

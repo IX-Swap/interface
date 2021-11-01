@@ -1,5 +1,5 @@
-import { Currency, Percent, TradeType } from '@ixswap1/sdk-core'
-import { Trade as V2Trade } from '@ixswap1/v2-sdk'
+import { Currency, CurrencyAmount, Percent, TradeType } from '@ixswap1/sdk-core'
+import { Pair, Trade as V2Trade } from '@ixswap1/v2-sdk'
 import { t } from '@lingui/macro'
 import * as H from 'history'
 import { useCurrency } from 'hooks/Tokens'
@@ -23,7 +23,7 @@ import {
   setOpenModal,
   setSwapState,
 } from './actions'
-import { BrokerDealerSwapDto, SwapConfirmArguments } from './typings'
+import { BrokerDealerSwapDto, SwapAuthorization, SwapConfirmArguments } from './typings'
 
 export function useSwapHelpersState(): AppState['swapHelper'] {
   const data = useSelector<AppState, AppState['swapHelper']>((state) => state.swapHelper)
@@ -47,14 +47,81 @@ export function useClearAuthorization() {
     [chainId]
   )
 }
-export function useWatchAuthorizationExpire() {
+
+export const isDifferenceAcceptable = ({ cached, newSum }: { cached: number; newSum: number }) => {
+  const acceptedDifference = cached * 0.04
+  const actualDifference = Math.abs(cached - newSum)
+  return actualDifference <= acceptedDifference
+}
+export const getAddressIfChanged = ({
+  address,
+  authorizations,
+  amountToCompare,
+}: {
+  address?: string
+  authorizations:
+    | {
+        [address: string]: SwapAuthorization | null
+      }
+    | undefined
+  amountToCompare: CurrencyAmount<Currency> | undefined
+}) => {
+  if (address && amountToCompare) {
+    const authorization = authorizations?.[address]
+    if (authorization) {
+      const { amount } = authorization
+      const numberAmount = parseInt(amount, 10)
+      const numberInputAmount = parseInt(amountToCompare?.toExact() || '', 10)
+      if (!isNaN(numberAmount) && !isNaN(numberInputAmount)) {
+        if (!isDifferenceAcceptable({ cached: numberAmount, newSum: numberInputAmount })) {
+          return address
+        }
+      }
+    }
+  }
+  return null
+}
+
+export const getAddressesIfChangedAmount = ({
+  secPairs,
+  trade,
+  authorizations,
+}: {
+  secPairs: Array<Pair | null>
+  trade: V2Trade<Currency, Currency, TradeType> | undefined | null
+  authorizations:
+    | {
+        [address: string]: SwapAuthorization | null
+      }
+    | undefined
+}) => {
+  const adressesToRemove = []
+  const inputAmount = trade?.inputAmount
+  const outputAmount = trade?.outputAmount
+  const inputAddress = secPairs?.[0]?.liquidityToken.address
+  const outputAddress = secPairs?.[1]?.liquidityToken.address
+  const addressFirst = getAddressIfChanged({ address: inputAddress, authorizations, amountToCompare: inputAmount })
+  const addressSecond = getAddressIfChanged({ address: outputAddress, authorizations, amountToCompare: outputAmount })
+  if (addressFirst) {
+    adressesToRemove.push(addressFirst)
+  }
+  if (addressSecond) {
+    adressesToRemove.push(addressSecond)
+  }
+  return adressesToRemove
+}
+
+export function useWatchAuthorizationExpire(trade: V2Trade<Currency, Currency, TradeType> | undefined | null) {
   const authorizations = useAuthorizationsState()
   const { chainId } = useActiveWeb3React()
   const clearAuthorization = useClearAuthorization()
+  const { secPairs } = useSwapSecPairs(trade)
+
   useEffect(() => {
-    if (!authorizations) {
+    if (!authorizations || Object.keys(authorizations).length === 0 || (secPairs[0] === null && secPairs[1] === null)) {
       return
     }
+
     const authorizationKeys = Object.keys(authorizations)
     const adressesToDelete = authorizationKeys.filter((address) => {
       const authorization = authorizations?.[address]
@@ -63,7 +130,7 @@ export function useWatchAuthorizationExpire() {
     if (adressesToDelete?.length) {
       clearAuthorization(adressesToDelete)
     }
-  }, [chainId, authorizations, clearAuthorization])
+  }, [chainId, authorizations, clearAuthorization, secPairs])
 }
 
 // the swap will have at most 2 relevant sec tokens
@@ -84,7 +151,8 @@ export function useSwapSecPairs(trade: V2Trade<Currency, Currency, TradeType> | 
   const isFirstSec = Boolean(swapSecTokens[0])
   const isLastSec = Boolean(swapSecTokens[swapSecTokens?.length - 1])
   const secPairs = [isFirstSec ? pairs[0][1] : null, isLastSec ? pairs[1][1] : null]
-  return secPairs
+  const currencies = [currency0, currency1, currency3, currency4]
+  return { secPairs, currencies }
 }
 
 export function useSubmitBrokerDealerForm() {

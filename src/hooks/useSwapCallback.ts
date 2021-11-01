@@ -70,7 +70,7 @@ export function getTokenToPairMap(pairs: Array<Pair | null>) {
 export function useMissingAuthorizations(trade: V2Trade<Currency, Currency, TradeType> | undefined | null) {
   const addresses = useSwapSecTokenAddresses(trade)
   const authorizations = useAuthorizationsState()
-  const pairs = useSwapSecPairs(trade)
+  const { secPairs: pairs } = useSwapSecPairs(trade)
   return useMemo(() => {
     const tokenToPairMap = getTokenToPairMap(pairs)
     return addresses.filter((address) => address !== null && !authorizations?.[tokenToPairMap[address]])
@@ -82,7 +82,7 @@ export function useAuthorizationDigest(
 ): Array<TradeAuthorization> | undefined {
   const authorizations = useAuthorizationsState()
   const addresses = useSwapSecTokenAddresses(trade)
-  const pairs = useSwapSecPairs(trade)
+  const { secPairs: pairs } = useSwapSecPairs(trade)
   const authorizationDigest: Array<TradeAuthorization> | undefined = useMemo(() => {
     if (!addresses || addresses.length === 0) {
       return undefined

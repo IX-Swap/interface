@@ -98,7 +98,7 @@ export function useSwapAuthorizeFirstStep(
   allowedSlippage: Percent,
   formRef: any
 ) {
-  const pairs = useSwapSecPairs(trade)
+  const { secPairs: pairs } = useSwapSecPairs(trade)
   const getAuthorization = useGetTokenAuthorization()
   const submitToBrokerDealer = useSubmitBrokerDealerForm()
   const { secTokens } = useUserSecTokens()
