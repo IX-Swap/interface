@@ -4,9 +4,24 @@ import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, AppState } from 'state'
 import apiService from 'services/apiService'
 
-import { postLogin, getMe, logout, getKycList, postApproveKyc, postDeclineKyc, postKycReset } from './actions'
+import {
+  postLogin,
+  getMe,
+  logout,
+  getKycList,
+  getBrokerDealerList,
+  postApproveKyc,
+  postDeclineKyc,
+  postKycReset,
+  getBrokerDealerSwaps,
+} from './actions'
 import { admin } from 'services/apiUrls'
 import { useHistory } from 'react-router-dom'
+
+export enum BROKER_DEALERS_STATUS {
+  SUCCESS,
+  FAILED,
+}
 
 export enum STATUS {
   SUCCESS,
@@ -109,6 +124,16 @@ export const getKyc = async (params?: Record<string, string | number>) => {
   return result.data
 }
 
+export const getBrokerDealers = async (params?: Record<string, string | number>) => {
+  const result = await apiService.get(admin.brokerDealerList, undefined, params)
+  return result.data
+}
+
+export const getBrokerDealerAllSwaps = async (params?: Record<string, string | number>) => {
+  const result = await apiService.get(admin.getSwaps, undefined, params)
+  return result.data
+}
+
 export function useGetKycList() {
   const dispatch = useDispatch<AppDispatch>()
   const callback = useCallback(
@@ -121,6 +146,44 @@ export function useGetKycList() {
       } catch (error: any) {
         dispatch(getKycList.rejected({ errorMessage: 'Could not get kyc list' }))
         return KYC_LIST_STATUS.FAILED
+      }
+    },
+    [dispatch]
+  )
+  return callback
+}
+
+export function useBrokerDealerList() {
+  const dispatch = useDispatch<AppDispatch>()
+  const callback = useCallback(
+    async (params?: Record<string, string | number>) => {
+      try {
+        dispatch(getBrokerDealerList.pending())
+        const data = await getBrokerDealers(params)
+        dispatch(getBrokerDealerList.fulfilled({ data }))
+        return KYC_LIST_STATUS.SUCCESS
+      } catch (error: any) {
+        dispatch(getBrokerDealerList.rejected({ errorMessage: 'Could not get broker dealer list' }))
+        return KYC_LIST_STATUS.FAILED
+      }
+    },
+    [dispatch]
+  )
+  return callback
+}
+
+export function useFetchBrokerDealerSwaps() {
+  const dispatch = useDispatch<AppDispatch>()
+  const callback = useCallback(
+    async (params?: Record<string, string | number>) => {
+      try {
+        dispatch(getBrokerDealerSwaps.pending())
+        const data = await getBrokerDealerAllSwaps(params)
+        dispatch(getBrokerDealerSwaps.fulfilled({ data }))
+        return BROKER_DEALERS_STATUS.SUCCESS
+      } catch (error: any) {
+        dispatch(getBrokerDealerSwaps.rejected({ errorMessage: 'Could not fetch broker dealer swaps' }))
+        return BROKER_DEALERS_STATUS.FAILED
       }
     },
     [dispatch]

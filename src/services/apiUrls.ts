@@ -4,6 +4,8 @@ export const admin = {
   login: 'auth/login',
   me: 'auth/me',
   kycList: '/kyc/list',
+  brokerDealerList: '/broker-dealer/list',
+  getSwaps: 'broker-dealer/swaps/all',
   kycReset: (accreditationId: number) => `/kyc/restart/${accreditationId}`,
   approveKyc: (id: number) => `/kyc/approve/${id}`,
   declineKyc: (id: number) => `/kyc/decline/${id}`,
