@@ -8,7 +8,6 @@ import { useAdminState, useFetchBrokerDealerSwaps } from 'state/admin/hooks'
 import { shortenAddress } from 'utils'
 import { BodyRow, HeaderRow, Table } from '../Table'
 import { Pagination } from 'components/AdminKycTable/Pagination'
-import { usePairContract } from 'hooks/useContract'
 
 const headerCells = [t`Date`, t`Name`, t`Trader's wallet`, t`Trading pair`, t`Amount`, t`Response`, t`Status`]
 
@@ -58,8 +57,6 @@ export const AdminTransactionsTable = () => {
   const onPageChange = (page: number) => {
     getBrokerDealerSwaps({ page, offset })
   }
-
-  console.log('ya', items)
 
   useEffect(() => {
     getBrokerDealerSwaps({ page: 1, offset })
