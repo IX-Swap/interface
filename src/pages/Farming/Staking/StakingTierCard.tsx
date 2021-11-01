@@ -1,27 +1,27 @@
-import React, { useEffect, useState } from 'react'
 import { t, Trans } from '@lingui/macro'
 import { ReactComponent as InfoIcon } from 'assets/images/info-filled.svg'
 import IXSToken from 'assets/images/IXS-token.svg'
 import { IconWrapper } from 'components/AccountDetails/styleds'
 import { ButtonIXSWide } from 'components/Button'
+import { LoaderThin } from 'components/Loader/LoaderThin'
 import { RowCenter } from 'components/Row'
 import { MouseoverTooltip } from 'components/Tooltip'
+import { SupportedChainId } from 'constants/chains'
+import useIXSCurrency from 'hooks/useIXSCurrency'
+import { useActiveWeb3React } from 'hooks/web3'
+import React, { useEffect, useMemo, useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from 'state'
 import { ApplicationModal } from 'state/application/actions'
 import { useToggleModal } from 'state/application/hooks'
-import { TYPE } from 'theme'
-import { Tier, TIER_LIMIT, PERIOD } from 'state/stake/reducer'
-import { DEFAULT_POOL_SIZE_LIMIT, POOL_SIZE_LOADING } from 'state/stake/poolSizeReducer'
 import { selectTier } from 'state/stake/actions'
-import { StakingTierCardWrapper } from './style'
-import { AppDispatch } from 'state'
-import { useDispatch } from 'react-redux'
-import { useFetchHistoricalPoolSize, usePoolSizeState } from 'state/stake/hooks'
-import { useStakingState } from 'state/stake/hooks'
-import { LoaderThin } from 'components/Loader/LoaderThin'
+import { POOL_SIZE_LIMITS, POOL_SIZE_LIMIT_TEXTS } from 'state/stake/contstants'
+import { useFetchHistoricalPoolSize, usePoolSizeState, useStakingState } from 'state/stake/hooks'
+import { POOL_SIZE_LOADING } from 'state/stake/poolSizeReducer'
+import { PERIOD, Tier, TIER_LIMIT } from 'state/stake/reducer'
+import { DesktopAndTablet, MobileOnly, TYPE } from 'theme'
 import { formatNumber } from 'utils/formatNumber'
-import { useCurrency } from 'hooks/Tokens'
-import { IXS_ADDRESS } from 'constants/addresses'
-import { useActiveWeb3React } from 'hooks/web3'
+import { APYPercentage, APYWrapper, RowWithMarginTop, RowWithMarginTopAndBottom, StakingTierCardWrapper } from './style'
 
 export const StakingTierCard = ({ tier }: { tier: Tier }) => {
   const dispatch = useDispatch<AppDispatch>()
@@ -31,11 +31,18 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
   const fetchHistoricalPoolSize = useFetchHistoricalPoolSize()
   const poolSizeState = usePoolSizeState()
   const { hasStakedSuccessfully, isPaused } = useStakingState()
-  const ixsCurrency = useCurrency(IXS_ADDRESS[chainId ?? 1])
+  const ixsCurrency = useIXSCurrency()
   const [leftToFill, setLeftToFill] = useState(0)
   const [isPoolLimitationLoading, setIsPoolLimitationLoading] = useState(false)
   const [isLimitReached, setIsLimitReached] = useState(false)
-
+  const stringLimit = useMemo(
+    () => POOL_SIZE_LIMITS[(chainId ?? 1) as SupportedChainId][tier?.period || PERIOD.ONE_WEEK],
+    [chainId, tier?.period]
+  )
+  const shortLimit = useMemo(
+    () => POOL_SIZE_LIMIT_TEXTS[(chainId ?? 1) as SupportedChainId][tier?.period || PERIOD.ONE_WEEK],
+    [chainId, tier?.period]
+  )
   useEffect(() => {
     fetchHistoricalPoolSize(tier.period)
   }, [fetchHistoricalPoolSize, tier.period, hasStakedSuccessfully])
@@ -47,8 +54,8 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
     }
     setIsPoolLimitationLoading(false)
     const filled = poolSizeState[tier.period]
-    setLeftToFill(parseFloat(DEFAULT_POOL_SIZE_LIMIT) - parseFloat(filled))
-  }, [poolSizeState, tier.period])
+    setLeftToFill(parseFloat(stringLimit) - parseFloat(filled))
+  }, [poolSizeState, tier.period, chainId])
 
   useEffect(() => {
     if (leftToFill <= 1) {
@@ -93,7 +100,7 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
     }
     if (isPoolLimitationLoading) {
       return (
-        <RowCenter style={{ margin: 'auto' }}>
+        <RowCenter style={{ margin: 'auto', marginTop: '10px' }}>
           <LoaderThin />
           <TYPE.description3 fontWeight={400} opacity="0.5" marginLeft={2}>
             <Trans> tokens available for staking</Trans>
@@ -102,7 +109,7 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
       )
     } else {
       return (
-        <RowCenter style={{ margin: 'auto' }}>
+        <RowCenter style={{ margin: 'auto', marginTop: '10px' }}>
           <TYPE.description3 fontWeight={400} opacity="0.5">
             <Trans>
               <span style={{ fontWeight: 700 }}>{formatNumber(Math.floor(leftToFill))}</span> tokens available for
@@ -124,58 +131,69 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
           <Trans>{tier.period}</Trans>
         </TYPE.title5>
       </RowCenter>
-      <RowCenter>
+      <APYWrapper>
         <TYPE.description7 style={{ textTransform: 'uppercase' }}>
           <Trans>APY</Trans>
         </TYPE.description7>
-      </RowCenter>
-      <RowCenter>
-        <TYPE.main0>{tier.APY}%</TYPE.main0>
-      </RowCenter>
-      <RowCenter marginTop={15}>
+        <APYPercentage>{tier.APY}%</APYPercentage>
+      </APYWrapper>
+
+      <RowWithMarginTop>
         <TYPE.body1 fontWeight={400}>
-          <Trans>{tier.limit}</Trans>
+          <DesktopAndTablet>
+            <Trans>{shortLimit}</Trans>
+          </DesktopAndTablet>
+          <MobileOnly>
+            <Trans>
+              {isLimitReached ? <></> : <>{leftToFill}/</>}
+              {shortLimit}
+            </Trans>
+          </MobileOnly>
         </TYPE.body1>
         <MouseoverTooltip
           style={{ whiteSpace: 'pre-line' }}
           text={t`Maximum Capacity:
-                  ${isTierUnlimited ? 'Unlimited\n' : `2 000 000 ${ixsCurrency?.symbol}\n`}
+                  ${
+                    isTierUnlimited
+                      ? 'Unlimited\n'
+                      : `${POOL_SIZE_LIMITS[(chainId ?? 1) as SupportedChainId][tier?.period || PERIOD.ONE_WEEK]} ${
+                          ixsCurrency?.symbol
+                        }\n`
+                  }
 
                   Staked ${ixsCurrency?.symbol} in Pool: 
                   ${poolSizeState[tier.period]} ${ixsCurrency?.symbol}
 
-                  ${
-                    isTierUnlimited
-                      ? ''
-                      : '\nAvailable for staking: \n' + leftToFill + '/' + DEFAULT_POOL_SIZE_LIMIT + '.'
-                  }`}
+                  ${isTierUnlimited ? '' : '\nAvailable for staking: \n' + leftToFill + '/' + stringLimit + '.'}`}
         >
           <IconWrapper size={20} style={{ marginLeft: '12px' }}>
             <InfoIcon />
           </IconWrapper>
         </MouseoverTooltip>
-      </RowCenter>
-      <RowCenter marginTop={10} marginBottom={22}>
-        <TYPE.body1 fontWeight={400} style={{ textTransform: 'lowercase' }}>
-          <Trans>{tier.lockupPeriod} lock up period</Trans>
-        </TYPE.body1>
-        <MouseoverTooltip
-          style={{ whiteSpace: 'pre-line', textAlign: 'center' }}
-          text={t`Lock period means the time you won’t be able to unstake your ${
-            ixsCurrency?.symbol
-          } fully or partially. Please carefully consider the risks involved.
+      </RowWithMarginTop>
+      <RowWithMarginTopAndBottom>
+        <div style={{ width: '95%' }}>
+          <TYPE.body1 fontWeight={400} style={{ textTransform: 'lowercase', display: 'inline', width: '70%' }}>
+            <Trans>{tier.lockupPeriod} lock up period</Trans>
+          </TYPE.body1>
+          <MouseoverTooltip
+            style={{ whiteSpace: 'pre-line', textAlign: 'center' }}
+            text={t`Lock period means the time you won’t be able to unstake your ${
+              ixsCurrency?.symbol
+            } fully or partially. Please carefully consider the risks involved.
                 ${'' ?? ''}
                 You will be able to redeem your staked ${ixsCurrency?.symbol} fully or partially after lock period. `}
-        >
-          <IconWrapper size={20} style={{ marginLeft: '12px' }}>
-            <InfoIcon />
-          </IconWrapper>
-        </MouseoverTooltip>
-      </RowCenter>
+          >
+            <IconWrapper size={20} style={{ marginLeft: '10px', display: 'inline' }}>
+              <InfoIcon />
+            </IconWrapper>
+          </MouseoverTooltip>
+        </div>
+      </RowWithMarginTopAndBottom>
       <ButtonIXSWide onClick={selectPeriod} disabled={isPaused || isLimitReached}>
         <Trans>{getStakeButtonText()}</Trans>
       </ButtonIXSWide>
-      {renderPoolSize()}
+      <DesktopAndTablet>{renderPoolSize()}</DesktopAndTablet>
     </StakingTierCardWrapper>
   )
 }

@@ -10,12 +10,13 @@ import { ExternalLink } from 'theme'
 import { shortAddress } from 'utils'
 import { useWeb3React } from '@web3-react/core'
 import { useVestingState } from 'state/vesting/hooks'
+import useIXSCurrency from 'hooks/useIXSCurrency'
 
 export const ZeroBalanceVesting = () => {
   const theme = useTheme()
   const { account } = useWeb3React()
   const { customVestingAddress } = useVestingState()
-
+  const IXSCurrency = useIXSCurrency()
   if (customVestingAddress) {
     return (
       <NoVestingCustomAddress>
@@ -24,7 +25,7 @@ export const ZeroBalanceVesting = () => {
           <br />
           {shortAddress(customVestingAddress)}
           <br />
-          doesn’t have IXS vesting
+          doesn’t have {IXSCurrency?.symbol} vesting
         </Trans>
       </NoVestingCustomAddress>
     )
@@ -52,7 +53,7 @@ export const ZeroBalanceVesting = () => {
         as={ExternalLink}
         href="https://t.me/ixswapofficial"
       >
-        <Trans>IXS in Telegram</Trans>
+        <Trans>{IXSCurrency?.symbol} in Telegram</Trans>
         <IconWrapperWithBg size={8} style={{ marginLeft: '6px' }}>
           <ExternalBright />
         </IconWrapperWithBg>

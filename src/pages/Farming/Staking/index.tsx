@@ -1,5 +1,6 @@
 import { IXS_ADDRESS } from 'constants/addresses'
 import { useCurrency } from 'hooks/Tokens'
+import useIXSCurrency from 'hooks/useIXSCurrency'
 import { useActiveWeb3React } from 'hooks/web3'
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
@@ -10,7 +11,7 @@ import {
   useGetPayouts,
   useGetStakings,
   useGetVestedRewards,
-  useIsVestingPaused,
+  useIsStakingPaused,
   useStakingState,
   useUpdateIXSBalance,
 } from 'state/stake/hooks'
@@ -23,12 +24,12 @@ import { StakingPage } from './StakingPage'
 export const Staking = () => {
   const { IXSBalance, hasStakedSuccessfully, metaMaskAccount, stakings } = useStakingState()
   const { hasUnstakedSuccessfully } = useUnstakingState()
-  const isVestingPaused = useIsVestingPaused()
+  const isStakingPaused = useIsStakingPaused()
   const closeModals = useCloseModals()
   const { chainId, account } = useActiveWeb3React()
   const dispatch = useDispatch<AppDispatch>()
   const updateIXSBalance = useUpdateIXSBalance()
-  const currency = useCurrency(IXS_ADDRESS[chainId ?? 1])
+  const currency = useIXSCurrency()
   const balance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
   const getStakings = useGetStakings()
   const getRewards = useGetVestedRewards()
@@ -43,9 +44,22 @@ export const Staking = () => {
   }, [getStakings])
 
   useEffect(() => {
-    if (hasStakedSuccessfully || hasUnstakedSuccessfully) {
-      getStakings()
-      updateIXSBalance()
+    const checkStakings = () => {
+      if (hasStakedSuccessfully || hasUnstakedSuccessfully) {
+        getStakings()
+        updateIXSBalance()
+      }
+    }
+    checkStakings()
+    const timer20 = setTimeout(() => {
+      checkStakings()
+    }, 20000)
+    const timer30 = setTimeout(() => {
+      checkStakings()
+    }, 30000)
+    return () => {
+      clearTimeout(timer20)
+      clearTimeout(timer30)
     }
   }, [getStakings, hasStakedSuccessfully, hasUnstakedSuccessfully])
 
@@ -60,8 +74,8 @@ export const Staking = () => {
   }, [balance])
 
   useEffect(() => {
-    isVestingPaused()
-  }, [isVestingPaused])
+    isStakingPaused()
+  }, [isStakingPaused])
 
   useEffect(() => {
     if (hasStakedSuccessfully || hasUnstakedSuccessfully) {

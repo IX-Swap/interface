@@ -11,6 +11,7 @@ import { Trans } from '@lingui/macro'
 
 import Circle from '../../assets/images/blue-loader.svg'
 import { ExternalLink } from '../../theme/components'
+import { useExplorerName } from 'hooks/useExplorerName'
 
 const ConfirmOrLoadingWrapper = styled.div`
   width: 100%;
@@ -52,6 +53,7 @@ export function SubmittedView({
 }) {
   const theme = useContext(ThemeContext)
   const { chainId } = useActiveWeb3React()
+  const explorerName = useExplorerName()
 
   return (
     <ConfirmOrLoadingWrapper>
@@ -70,7 +72,7 @@ export function SubmittedView({
             style={{ marginLeft: '4px' }}
           >
             <TYPE.subHeader>
-              <Trans>View transaction on Etherscan</Trans>
+              <Trans>View transaction on {explorerName}</Trans>
             </TYPE.subHeader>
           </ExternalLink>
         )}

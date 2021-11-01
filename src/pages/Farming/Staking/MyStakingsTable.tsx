@@ -8,6 +8,7 @@ import Row from 'components/Row'
 import { Table } from 'components/Table'
 import { MouseoverTooltip } from 'components/Tooltip'
 import { IStaking } from 'constants/stakingPeriods'
+import useIXSCurrency from 'hooks/useIXSCurrency'
 import React from 'react'
 import { Box } from 'rebass'
 import { ApplicationModal } from 'state/application/actions'
@@ -16,6 +17,7 @@ import { useStakingState } from 'state/stake/hooks'
 import { TYPE } from 'theme'
 import {
   Container,
+  LoaderContainer,
   LockedTillColumn,
   MutedText,
   NoData,
@@ -23,7 +25,6 @@ import {
   StyledHeaderRow,
   Tier,
   UnstakeButton,
-  LoaderContainer,
 } from './style'
 import { UnstakeModal } from './Unstaking/UnstakeModal'
 import {
@@ -39,6 +40,7 @@ import {
 let activeStake: IStaking
 
 const Header = () => {
+  const currency = useIXSCurrency()
   return (
     <StyledHeaderRow>
       <div className="header-label">
@@ -50,7 +52,7 @@ const Header = () => {
         </div>
         <MouseoverTooltip
           style={{ whiteSpace: 'pre-line', textAlign: 'center' }}
-          text={t`Full amount of APY is applied only to amount of IXS staked till the end of staking period.`}
+          text={t`Full amount of APY is applied only to amount of ${currency?.symbol} staked till the end of staking period.`}
         >
           <IconWrapper size={20} style={{ marginLeft: '12px' }}>
             <InfoIcon />
@@ -77,7 +79,9 @@ const Header = () => {
           style={{ whiteSpace: 'pre-line', textAlign: 'center' }}
           text={t`Estimated rewards are based on assumption that your staked amount will be fully kept for the whole period of staking. In this case maximum APY will be applied 
                   ${'' ?? ''}
-                  If you partially or fully unstake your IXS before the end date - 5% APY will be applied to unstaked amount. `}
+                  If you partially or fully unstake your ${
+                    currency?.symbol
+                  } before the end date - 5% APY will be applied to unstaked amount. `}
         >
           <IconWrapper size={20} style={{ marginLeft: '12px' }}>
             <InfoIcon />
@@ -91,7 +95,7 @@ const Header = () => {
 const Body = () => {
   const { stakings } = useStakingState()
   const toggleUnstakeModal = useToggleModal(ApplicationModal.UNSTAKE_IXS)
-
+  const currency = useIXSCurrency()
   return (
     <>
       {stakings?.map((stake) => (
@@ -110,9 +114,13 @@ const Body = () => {
             </Row>
           </Column>
           <div>{getLockPeriod(stake.period)}</div>
-          <div>{formatAmount(stake.stakeAmount)} IXS</div>
+          <div>
+            {formatAmount(stake.stakeAmount)} {currency?.symbol}
+          </div>
           <div>{formatAmount(stake.distributeAmount)} IXSgov</div>
-          <div className="rewards">{formatAmount(stake.reward)} IXS</div>
+          <div className="rewards">
+            {formatAmount(stake.reward)} {currency?.symbol}
+          </div>
           {stake.canUnstake ? (
             <UnstakeButton
               onClick={() => {

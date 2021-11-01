@@ -43,8 +43,7 @@ export const injected = new InjectedConnector({
 })
 
 export const walletconnect = new WalletConnectConnector({
-  supportedChainIds: SUPPORTED_CHAIN_IDS,
-  infuraId: INFURA_KEY, // obviously a hack
+  rpc: NETWORK_URLS,
   qrcode: true,
   pollingInterval: 15000,
 })

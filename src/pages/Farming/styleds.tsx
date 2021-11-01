@@ -81,8 +81,8 @@ export const StakingWrapper = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   ${({ theme }) => theme.mediaWidth.upToMedium`
-     flex-direction: column;
-     align-items: center;
+    flex-direction: column;
+    align-items: center;
   `};
   ${({ theme }) => theme.mediaWidth.upToSmall`
     padding-left: 0px;
@@ -163,39 +163,6 @@ export const VestingContractDetails = styled.div`
   flex-direction: column;
   width: 100%;
 `
-export const StakingCard = styled.div`
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-radius: 30px;
-  display: flex;
-  background: ${({ theme }) => theme.bgG15};
-  flex-direction: column;
-`
-export const StakingPromoCard = styled(StakingCard)`
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding-top: 32px;
-  padding-bottom: 70px;
-  min-height: 330px;
-  width: 294px;
-`
-export const GetIXSStakingCard = styled(StakingPromoCard)`
-  padding: 35px 34px 37px 34px;
-`
-export const StackingPositionCard = styled(StakingCard)`
-  padding: 32px;
-  height: 458px;
-  min-width: 370px;
-  max-width: 415px;
-  justify-content: space-between;
-  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-      align-self: flex-start;
-      min-width: 330px;
-      max-width: 330px;
-      height: auto;
-  `};
-`
 export const ButtonRow = styled.div`
   display: flex;
   gap: 15px;
@@ -204,29 +171,6 @@ export const ButtonRow = styled.div`
       flex-direction: column;
       align-items: center;
       justify-content: center;
-  `};
-`
-export const TokenDescriptionWrapper = styled(Box)`
-  display: flex;
-  flex-direction: column;
-  height: 330px;
-  max-width: 820px;
-  min-width: 50%;
-  justify-content: space-between;
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-       height: auto
-
-  `};
-`
-export const TokenStakingDescriptionNumbers = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-top: 30px;
-  flex-wrap: wrap;
-  gap: 20px;
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-     flex-direction: column;
-     gap: 15px;
   `};
 `
 

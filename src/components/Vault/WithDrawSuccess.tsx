@@ -3,6 +3,7 @@ import { ButtonGradientBorder } from 'components/Button'
 import Column, { AutoColumn } from 'components/Column'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import { RowCenter } from 'components/Row'
+import { useExplorerName } from 'hooks/useExplorerName'
 import { useActiveWeb3React } from 'hooks/web3'
 import React from 'react'
 import { useIsTransactionPending } from 'state/transactions/hooks'
@@ -15,6 +16,8 @@ export const WithdrawSuccess = ({ onClose }: { onClose: () => void }) => {
   const { tx } = useWithdrawState()
   const isPending = useIsTransactionPending(tx)
   const { chainId } = useActiveWeb3React()
+  const explorerName = useExplorerName()
+
   return (
     <div style={{ position: 'relative' }}>
       <Column>
@@ -34,7 +37,7 @@ export const WithdrawSuccess = ({ onClose }: { onClose: () => void }) => {
         <AutoColumn gap="12px" justify={'center'}>
           {chainId && tx && (
             <ExternalLink href={getExplorerLink(chainId, tx, ExplorerDataType.TRANSACTION)}>
-              <Trans>View on Etherscan</Trans>
+              <Trans>View on {explorerName}</Trans>
             </ExternalLink>
           )}
           <ButtonGradientBorder
