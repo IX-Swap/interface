@@ -7,9 +7,6 @@ export const useGetBalances = (virtualAccountId: string) => {
   const { apiService } = useServices()
 
   const getBalances = async () => {
-    if (virtualAccountId === undefined) {
-      throw new Error('Oh no!')
-    }
     const uri = virtualAccounts.getBalances(virtualAccountId)
     return await apiService.post(uri, {})
   }

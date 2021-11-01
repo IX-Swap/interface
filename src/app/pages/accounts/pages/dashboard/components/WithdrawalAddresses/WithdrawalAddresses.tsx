@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, Grid, IconButton, Typography } from '@material-ui/core'
-import { useStyles } from 'app/pages/accounts/pages/dashboard/WithdrawalAddresses/WithdrawalAddresses.styles'
+import { useStyles } from './WithdrawalAddresses.styles'
 import { VSpacer } from 'components/VSpacer'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { WithdrawalAddressesRoute as paths } from 'app/pages/accounts/pages/withdrawalAddresses/router/config'

@@ -1,10 +1,36 @@
 import React from 'react'
-import { TopInfoPanel } from 'app/pages/accounts/pages/dashboard/TopInfoPanel/TopInfoPanel'
+import { TopInfoPanel } from 'app/pages/accounts/pages/dashboard/components/TopInfoPanel/TopInfoPanel'
+import { MarketPortfolio } from 'app/pages/accounts/pages/dashboard/components/MarketPortfolio/MarketPortfolio'
+import { Grid } from '@material-ui/core'
+import { VSpacer } from 'components/VSpacer'
+import { useGetPortfolios } from 'app/pages/accounts/hooks/useGetPortfolios'
+import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 
 export const Dashboard: React.FC = () => {
+  const { data, isLoading } = useGetPortfolios()
+
+  if (isLoading) {
+    return <LoadingIndicator />
+  }
+
   return (
-    <>
-      <TopInfoPanel />
-    </>
+    <Grid container direction={'column'}>
+      <Grid item>
+        <VSpacer size={'medium'} />
+        <TopInfoPanel />
+        <VSpacer size={'small'} />
+        <VSpacer size={'extraSmall'} />
+      </Grid>
+
+      <Grid container>
+        <Grid item xs={12}>
+          <MarketPortfolio
+            type={'primary'}
+            currencySymbol={'S$'}
+            marketInfo={data?.primaryMarket}
+          />
+        </Grid>
+      </Grid>
+    </Grid>
   )
 }

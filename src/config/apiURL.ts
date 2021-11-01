@@ -107,7 +107,8 @@ export const accountsURL = {
     getAllByUserId: (userId: string) => `/issuance/commitments/list/${userId}`,
     confirmCommitment: (commitmentId: string) =>
       `/issuance/commitments/${commitmentId}/confirmInvestment`
-  }
+  },
+  getPortfolios: (userId: string) => `/accounts/portfolios/${userId}`
 }
 
 export const issuanceURL = {
