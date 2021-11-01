@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux'
 import apiService from 'services/apiService'
 import { tokens } from 'services/apiUrls'
 import { AppDispatch } from 'state'
-import { saveTokenInProgress, setLoadingSwap } from 'state/swapHelper/actions'
+import { setAuthorizationInProgress, setLoadingSwap } from 'state/swapHelper/actions'
 import { useSubmitBrokerDealerForm, useSwapSecPairs } from 'state/swapHelper/hooks'
 import { authorizeSecToken } from 'state/user/actions'
 import { OrderType } from 'state/user/enum'
@@ -115,25 +115,36 @@ export function useSwapAuthorizeFirstStep(
             return
           }
           const { usedToken, amount, orderType, firstIsSec } = dto
-          const accreditationRequest = (token as any).tokenInfo.accreditationRequest
-          if (!amount || !accreditationRequest) {
-            return
-          }
+          const tokenInfo = (token as any)?.tokenInfo
+          const accreditationRequest = tokenInfo?.accreditationRequest
+          const brokerDealerId = (accreditationRequest as any)?.brokerDealerId
           const pair = firstIsSec ? pairs?.[0] : pairs?.[1]
           const pairAddress = pair?.liquidityToken?.address
-          if (!pairAddress) {
+          if (!amount || brokerDealerId === undefined || !pairAddress) {
             return
           }
           dispatch(setLoadingSwap({ isLoading: true }))
-          dispatch(saveTokenInProgress({ token }))
+
+          dispatch(
+            setAuthorizationInProgress({
+              authorizationInProgress: {
+                amount,
+                orderType,
+                pairAddress,
+                tokenAddress: tokenInfo?.address,
+                tokenId: tokenInfo?.id,
+                brokerDealerId,
+              },
+            })
+          )
           const result = await getAuthorization({ amount, orderType, pairAddress, tokenId: usedToken })
           submitToBrokerDealer({
-            dto: { ...result, brokerDealerId: (accreditationRequest as any)?.brokerDealerId },
+            dto: { ...result, brokerDealerId },
             formRef,
           })
         } catch (e) {
           dispatch(setLoadingSwap({ isLoading: false }))
-          dispatch(saveTokenInProgress({ token: null }))
+          dispatch(setAuthorizationInProgress({ authorizationInProgress: null }))
         }
       }
     },

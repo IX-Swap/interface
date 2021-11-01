@@ -3,7 +3,7 @@ import { useActiveWeb3React } from 'hooks/web3'
 import { useCallback } from 'react'
 import ReactGA from 'react-ga'
 import { useDerivedSwapInfo, useSwapState } from 'state/swap/hooks'
-import { useOpenModal, usePersistAuthorization, useSetSwapState } from 'state/swapHelper/hooks'
+import { useClearAuthorization, useOpenModal, useSetSwapState } from 'state/swapHelper/hooks'
 import confirmPriceImpactWithoutFee from '../../components/swap/confirmPriceImpactWithoutFee'
 import useENSAddress from '../../hooks/useENSAddress'
 import {
@@ -27,7 +27,7 @@ export function useHandleSwap({ priceImpact }: { priceImpact: Percent | undefine
   const [singleHopOnly] = useUserSingleHopOnly()
   // if missing authorization, don't swap. after successful swap, clear all authorizations
   const authorizationDigest = useAuthorizationDigest(trade)
-  const setAuthorization = usePersistAuthorization()
+  const clearAuthorization = useClearAuthorization()
   const swapSecTokens = useSwapSecTokenAddresses(trade)
   const { error: swapCallbackError } = useSwapCallbackError(trade, allowedSlippage, recipient)
 
@@ -41,14 +41,10 @@ export function useHandleSwap({ priceImpact }: { priceImpact: Percent | undefine
     }
     setSwapState({ attemptingTxn: true, tradeToConfirm, showConfirm, swapErrorMessage: undefined, txHash: undefined })
     setOpenModal(true)
+    const onlySecTokens: string[] = swapSecTokens.filter((address): address is string => !!address)
+    console.log({ authorizationDigest, swapSecTokens, onlySecTokens })
     try {
       const hash = await swapCallback()
-      console.log({ authorizationDigest, hash, swapSecTokens })
-      if (authorizationDigest && swapSecTokens.length && !swapSecTokens.every((address) => address === null)) {
-        for (const address in swapSecTokens) {
-          await setAuthorization(null, address)
-        }
-      }
       setSwapState({
         attemptingTxn: false,
         tradeToConfirm: undefined,
@@ -80,6 +76,10 @@ export function useHandleSwap({ priceImpact }: { priceImpact: Percent | undefine
         swapErrorMessage: (error as any)?.message as string,
         txHash: undefined,
       })
+    } finally {
+      if (authorizationDigest && onlySecTokens.length) {
+        clearAuthorization(onlySecTokens)
+      }
     }
   }, [
     priceImpact,
@@ -94,7 +94,7 @@ export function useHandleSwap({ priceImpact }: { priceImpact: Percent | undefine
     authorizationDigest,
     shouldGetAuthorization,
     swapSecTokens,
-    setAuthorization,
+    clearAuthorization,
 
     swapCallbackError,
 

@@ -1,5 +1,14 @@
 import { createReducer } from '@reduxjs/toolkit'
-import { saveAuthorization, saveTokenInProgress, setLoadingSwap, setOpenModal, setSwapState } from './actions'
+import { omit } from 'utils/omit'
+import {
+  clearAuthorization,
+  saveAuthorization,
+  saveTokenInProgress,
+  setAuthorizationInProgress,
+  setLoadingSwap,
+  setOpenModal,
+  setSwapState,
+} from './actions'
 import { SwapHelperState } from './typings'
 
 export const initialState: SwapHelperState = {
@@ -13,6 +22,7 @@ export const initialState: SwapHelperState = {
   },
   openModal: false,
   tokenInProgress: null,
+  authorizationInProgress: null,
   loadingSwap: false,
 }
 
@@ -26,6 +36,18 @@ export default createReducer(initialState, (builder) =>
           [chainId]: {
             ...state.authorizations[chainId],
             [address]: authorization,
+          },
+        },
+      }
+    })
+    .addCase(clearAuthorization, (state, { payload: { chainId, addresses } }) => {
+      const newAuthorization = omit(state.authorizations[chainId], addresses)
+      return {
+        ...state,
+        authorizations: {
+          ...state.authorizations,
+          [chainId]: {
+            ...newAuthorization,
           },
         },
       }
@@ -47,6 +69,9 @@ export default createReducer(initialState, (builder) =>
     })
     .addCase(saveTokenInProgress, (state, { payload: { token } }) => {
       state.tokenInProgress = token
+    })
+    .addCase(setAuthorizationInProgress, (state, { payload: { authorizationInProgress } }) => {
+      state.authorizationInProgress = authorizationInProgress
     })
     .addCase(setLoadingSwap, (state, { payload: { isLoading } }) => {
       state.loadingSwap = isLoading
