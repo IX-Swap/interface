@@ -12,7 +12,7 @@ import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { VSpacer } from 'components/VSpacer'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 import { TotalInvestmentInfo } from 'app/pages/accounts/pages/dashboard/components/TotalInvestmentInfo/TotalInvestmentInfo'
-import { MarketInfo } from 'app/pages/accounts/hooks/useGetPortfolios'
+import { MarketInfo } from 'types/portfolio'
 
 export interface MarketPortfolioProps {
   currencySymbol: string
