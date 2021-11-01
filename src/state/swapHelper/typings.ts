@@ -1,6 +1,5 @@
-import { TradeAuthorization } from '@ixswap1/v2-sdk'
-import { Currency, Token, TradeType } from '@ixswap1/sdk-core'
-import { Trade as V2Trade } from '@ixswap1/v2-sdk'
+import { Currency, TradeType } from '@ixswap1/sdk-core'
+import { Trade as V2Trade, TradeAuthorization } from '@ixswap1/v2-sdk'
 import { OrderType } from 'state/user/enum'
 
 export interface BrokerDealerSwapDto {
@@ -43,7 +42,6 @@ export interface SwapHelperState {
   }
   localSwap: SwapLocalState
   openModal: boolean
-  tokenInProgress?: Token | null
   authorizationInProgress?: AuthorizationInProgress | null
   loadingSwap: boolean
 }

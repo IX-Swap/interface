@@ -3,7 +3,6 @@ import { omit } from 'utils/omit'
 import {
   clearAuthorization,
   saveAuthorization,
-  saveTokenInProgress,
   setAuthorizationInProgress,
   setLoadingSwap,
   setOpenModal,
@@ -21,7 +20,6 @@ export const initialState: SwapHelperState = {
     txHash: undefined,
   },
   openModal: false,
-  tokenInProgress: null,
   authorizationInProgress: null,
   loadingSwap: false,
 }
@@ -67,9 +65,7 @@ export default createReducer(initialState, (builder) =>
     .addCase(setOpenModal, (state, { payload: { openModal } }) => {
       state.openModal = openModal
     })
-    .addCase(saveTokenInProgress, (state, { payload: { token } }) => {
-      state.tokenInProgress = token
-    })
+
     .addCase(setAuthorizationInProgress, (state, { payload: { authorizationInProgress } }) => {
       state.authorizationInProgress = authorizationInProgress
     })
