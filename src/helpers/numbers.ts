@@ -73,6 +73,10 @@ export const formatPercent = (value: number): string => `${value.toFixed(2)}%`
 export const toPercentage = (value: number): string =>
   `${(value * 100).toFixed(2)}%`
 
+export const getValueInPercentage = (total: number, value: number) => {
+  return (100 / total) * value
+}
+
 export const generateRandom = (length: number, chars: string): string => {
   let mask = ''
   if (chars.includes('a')) mask += 'abcdefghijklmnopqrstuvwxyz'

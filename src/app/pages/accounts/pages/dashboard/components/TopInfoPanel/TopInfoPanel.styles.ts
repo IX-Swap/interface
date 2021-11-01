@@ -7,10 +7,10 @@ export const useStyles = makeStyles(theme => ({
   },
   cardContent: {
     backgroundImage: `url(${TopographyImage})`,
-    paddingLeft: 16,
-    paddingRight: 16,
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
     '&:last-child': {
-      paddingBottom: 16
+      paddingBottom: theme.spacing(2)
     }
   },
   wrapper: {
@@ -29,8 +29,8 @@ export const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down('xs')]: {
       height: 1,
       width: '100%',
-      marginTop: 16,
-      marginBottom: 16
+      marginTop: theme.spacing(2),
+      marginBottom: theme.spacing(2)
     }
   }
 }))

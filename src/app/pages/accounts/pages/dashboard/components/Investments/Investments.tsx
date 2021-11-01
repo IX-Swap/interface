@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, Grid, Typography } from '@material-ui/core'
-import { useStyles } from './Investments.styles'
+import { useStyles } from 'app/pages/accounts/pages/dashboard/components/Investments/Investments.styles'
 import { VSpacer } from 'components/VSpacer'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { formatAmount } from 'helpers/numbers'

@@ -3,8 +3,8 @@ import { makeStyles } from '@material-ui/core/styles'
 export const useStyles = makeStyles(theme => ({
   wrapper: {
     color: '#fff',
-    paddingRight: 8,
-    paddingLeft: 8,
+    paddingRight: theme.spacing(1),
+    paddingLeft: theme.spacing(1),
     display: 'initial',
     textAlign: 'center',
     [theme.breakpoints.down('xs')]: {
@@ -19,7 +19,7 @@ export const useStyles = makeStyles(theme => ({
     paddingRight: 0,
     [theme.breakpoints.down('xs')]: {
       width: '50%',
-      paddingRight: 16
+      paddingRight: theme.spacing(2)
     }
   },
   secondBlock: {
@@ -46,6 +46,6 @@ export const useStyles = makeStyles(theme => ({
     whiteSpace: 'nowrap'
   },
   space: {
-    width: 24
+    width: theme.spacing(3)
   }
 }))

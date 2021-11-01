@@ -107,7 +107,8 @@ export const accountsURL = {
     getAllByUserId: (userId: string) => `/issuance/commitments/list/${userId}`,
     confirmCommitment: (commitmentId: string) =>
       `/issuance/commitments/${commitmentId}/confirmInvestment`
-  }
+  },
+  getPortfolios: (userId: string) => `/accounts/portfolios/${userId}`
 }
 
 export const issuanceURL = {
@@ -224,9 +225,7 @@ export const virtualAccounts = {
   uploadCSV: '/virtual-accounts/upload',
   disable: '/virtual-accounts/disable',
   getById: (id: string) => `/virtual-accounts/get-account/${id}`,
-  getBalances: (accountId: string) => `/virtual-accounts/balances/${accountId}`,
-  getPortfolios: (accountId: string) =>
-    `/virtual-accounts/portfolios/${accountId}`
+  getBalances: (accountId: string) => `/virtual-accounts/balances/${accountId}`
 }
 
 export const exchange = {
