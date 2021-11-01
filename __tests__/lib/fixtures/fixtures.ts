@@ -4,7 +4,9 @@ import { UserForms } from '../page-objects/identity-forms'
 import { Dso, Listing } from '../page-objects/issuance'
 import { kyc } from '../selectors/kyc-form'
 import { issuance } from '../selectors/issuance'
+import { text } from '../helpers/text'
 export const test = base.extend<{
+  textHelper: any
   dso: Dso
   auth: Authentication
   listing: Listing
@@ -38,5 +40,8 @@ export const test = base.extend<{
 
   issuanceSelectors: async ({ page }, use) => {
     await use(issuance)
+  },
+  textHelper: async ({ page }, use) => {
+    await use(text)
   }
 })

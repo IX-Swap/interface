@@ -1,6 +1,7 @@
 import { authForms } from '../selectors/auth'
 import { baseCreds } from '../helpers/creds'
 import { userRegistration } from '../helpers/api'
+import { text } from '../helpers/text'
 
 // import { userRegistration } from "../helpers/api-helpers";
 
@@ -8,7 +9,8 @@ import {
   click,
   typeText,
   getLinkToConfirmRegistration,
-  navigate
+  navigate,
+  waitForText
 } from '../helpers/helpers'
 
 class Authentication {
@@ -57,6 +59,22 @@ class Authentication {
     const confirmLink = await getLinkToConfirmRegistration(email, this.page)
     await navigate(confirmLink, this.page)
     await this.login(email, baseCreds.PASSWORD)
+  }
+
+  resetPassword = async email => {
+    await click(authForms.buttons.FORGOT, this.page)
+    await typeText(authForms.fields.EMAIL, email, this.page)
+    await click(authForms.buttons.SUBMIT, this.page)
+    const link = await getLinkToConfirmRegistration(email, this.page)
+    await navigate(link, this.page)
+    await typeText(authForms.fields.EMAIL, email, this.page)
+    await typeText(
+      authForms.fields.NEW_PASSWORD,
+      baseCreds.PASSWORD_RESET,
+      this.page
+    )
+    await click(authForms.buttons.SUBMIT, this.page)
+    await waitForText(this.page, text.notification.resetPassword)
   }
 }
 export { Authentication }

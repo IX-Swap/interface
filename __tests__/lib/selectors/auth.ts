@@ -2,7 +2,7 @@ export const authForms = {
   buttons: {
     LOGIN: "text='Login'",
     AGREE: '[name="agree"]',
-    SUBMIT: '[data-testid="submit"]',
+    SUBMIT: '[type="submit"]',
     REGISTRATION: '[href="/auth/register"]',
     FORGOT: '[href="/auth/reset"]',
     TWO_FA: '[href="/app/settings/setup-2fa"]',
@@ -12,6 +12,7 @@ export const authForms = {
   fields: {
     EMAIL: '[name="email"]',
     PASSWORD: '[id="password"]',
+    NEW_PASSWORD: '[id="newPassword"]',
     NAME: "[id='name']"
   }
 }

@@ -13,19 +13,28 @@ let forEachEmail = emailCreate()
 test.beforeEach(async ({ page, baseURL, auth }, testInfo) => {
   await navigate(baseCreds.URL, page)
 })
-test.afterEach(async ({ page, context }, testInfo) => {
+test.afterEach(async ({ page }, testInfo) => {
   await page.close()
 })
 test.describe('Functional test ', () => {
-  test('Check login', async ({ page, auth }) => {
+  test('The user be logged in', async ({ page, auth }) => {
     await auth.loginWithout2fa(baseCreds.EMAIL, baseCreds.PASSWORD)
     await shouldExist(kyc.type.INDIVIDUAL, page)
   })
 
-  test('Check Registration', async ({ page, auth }) => {
+  test('The user should be registered', async ({ page, auth }) => {
     await auth.submitRegistrationForm(forEachEmail)
     await auth.login(forEachEmail, baseCreds.PASSWORD)
     await shouldExist(kyc.type.INDIVIDUAL, page)
+  })
+
+  test('Account access restored(forgot password)', async ({ page, auth }) => {
+    await auth.resetPassword(baseCreds.EMAIL_FOR_RESET)
+    await auth.loginWithout2fa(
+      baseCreds.EMAIL_FOR_RESET,
+      baseCreds.PASSWORD_RESET
+    )
+    await shouldExist(kyc.MY_PROFILE, page)
   })
 })
 

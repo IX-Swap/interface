@@ -3,6 +3,7 @@
 export const kyc = {
   NOTIFICATION: '[appearance="success"]',
   DIALOG_VIEW: '[role="dialog"]',
+  MY_PROFILE: '[aria-controls="profile-menu"]',
 
   USER_PHOTO: '[src*="blob:https://staging.mozork.com/"]',
   type: {

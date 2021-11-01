@@ -52,8 +52,8 @@ class UserForms {
   }
 
   checkAllViewUsingSnapshot = async screenName => {
+    await this.page.waitForSelector(kyc.USER_PHOTO)
     await this.page.waitForTimeout(5000)
-    // await this.page.waitForSelector(kyc.USER_PHOTO)
     const elementHandle = await this.page.$('//form')
     await screenshotMatching(screenName, elementHandle)
   }

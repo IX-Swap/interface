@@ -165,13 +165,12 @@ async function getLinkToConfirmRegistration(email, page) {
     link = await fetch(
       `https://www.1secmail.com/api/v1/?action=readMessage&login=${partsEmail[0]}&domain=${partsEmail[1]}&id=${messageId}`
     ).then(res => res.json())
-    const re = /(https?:\/\/\S+\w)/g
+    const re = /https:[\'"]?([^\'" >]+\d+\w+)/g
     const nameList = link.htmlBody.match(re)
-    const confLink = nameList[0].split('"')
-    return confLink[0]
+    return nameList[0]
   } catch (error) {
-    console.error(results)
-    console.error(link)
+    // console.error(results)
+    // console.error(link)
     throw new Error(`Get link to confirm invite error`)
   }
 }

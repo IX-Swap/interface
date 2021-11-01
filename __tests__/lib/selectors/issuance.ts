@@ -22,7 +22,8 @@ export const issuance = {
       IMPORT_DSO: '[name="isNewListing"][value="no"]'
     },
     listBox: {
-      MY_DSO: 'text="My DSO"',
+      DSO_STATE: '[aria-disabled="true"]',
+      MY_DSO: '[class*="MuiInputBase-root "]',
       DSO_HYBRID_TEST:
         '[data-value="614066d516b8f4031bfae569:610882b74d322d3d8bbd5882"]'
     }

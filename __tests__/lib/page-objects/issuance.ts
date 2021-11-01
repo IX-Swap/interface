@@ -1,3 +1,4 @@
+import { waitFor } from '@testing-library/react'
 import { issuance } from '../selectors/issuance'
 import { text } from '../helpers/text'
 import { baseCreds } from '../helpers/creds'
@@ -10,7 +11,8 @@ import {
   randomString,
   navigate,
   shouldNotExist,
-  shouldExist
+  shouldExist,
+  clearAndTypeText
 } from '../helpers/helpers'
 
 class Dso {
@@ -155,6 +157,36 @@ class Listing {
     this.page = page
   }
 
+  checkError = async text => {
+    await click(issuance.dso.buttons.FINISH_LATER, this.page)
+    const error = await waitForText(this.page, text)
+    return error
+  }
+
+  fillListeningOfferingTermsForm = async () => {
+    await clearAndTypeText(
+      issuance.dso.fields.INVESTMENT_PERIOD,
+      '11',
+      this.page
+    )
+    await click(issuance.dso.listBox.CURRENCY, this.page)
+    await clearAndTypeText(issuance.dso.fields.DIVIDEND_YIELD, '10', this.page)
+    await clearAndTypeText(issuance.dso.fields.INTEREST_RATE, '10', this.page)
+    await clearAndTypeText(issuance.dso.fields.GROSS_IRR, '10', this.page)
+    await clearAndTypeText(
+      issuance.dso.fields.INVESTMENT_STRUCTURE,
+      'best Structure',
+      this.page
+    )
+    await click(issuance.dso.listBox.DISTRIBUTION_FREQUENCY, this.page)
+    await click(issuance.dso.listBox.DISTRIBUTION_VALUE, this.page)
+    await clearAndTypeText(issuance.dso.fields.LEVERAGE, '0.1', this.page)
+    await clearAndTypeText(
+      issuance.dso.fields.EQUITY_MULTIPLE,
+      '0.001',
+      this.page
+    )
+  }
   fillListingGeneralInformationForm = async () => {
     const tokenName = 'TokenName' + randomString()
     const tokenSymbol = Date.now().toString().slice(-6)
@@ -227,15 +259,15 @@ class Listing {
   }
 
   importDso = async () => {
-    await this.page.waitForTimeout(10000)
     await click(issuance.listings.buttons.IMPORT_DSO, this.page)
-    await this.page.waitForTimeout(5000)
-    await click('[class*="MuiInputBase-root "]', this.page)
+    await shouldNotExist(issuance.listings.listBox.DSO_STATE, this.page)
+    await click(issuance.listings.listBox.MY_DSO, this.page)
     await click(issuance.listings.listBox.DSO_HYBRID_TEST, this.page)
     await click(issuance.listings.buttons.IMPORT, this.page)
     await shouldExist(issuance.listings.LOGO, this.page)
     const importedForm = await this.page.$('//form')
     return importedForm
   }
+  editImportedDso = async () => {}
 }
 export { Dso, Listing }

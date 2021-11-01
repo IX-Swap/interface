@@ -5,5 +5,10 @@ export const text = {
     docBenefitsIdentify: 'lib/documents/docBenefitsIdentify.docx',
     docBenefitsAddressName: 'docBenefitsAddress.docx',
     docBenefitsIdentifyName: 'docBenefitsIdentify.docx'
-  }
+  },
+  errors: {
+    tokenSymbol:
+      'Token symbol is already registered, please choose a different symbol'
+  },
+  notification: { resetPassword: 'Password reset has been successful' }
 }
