@@ -1,6 +1,6 @@
 import React from 'react'
 import { Grid, Typography } from '@material-ui/core'
-import { useStyles } from 'app/pages/accounts/pages/dashboard/components/TotalAssetBalance/TotalAssetBalance.styles'
+import { useStyles } from './TotalAssetBalance.styles'
 import { VSpacer } from 'components/VSpacer'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { formatAmount } from 'helpers/numbers'
