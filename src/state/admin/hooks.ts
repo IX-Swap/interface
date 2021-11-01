@@ -13,9 +13,15 @@ import {
   postApproveKyc,
   postDeclineKyc,
   postKycReset,
+  getBrokerDealerSwaps,
 } from './actions'
 import { admin } from 'services/apiUrls'
 import { useHistory } from 'react-router-dom'
+
+export enum BROKER_DEALERS_STATUS {
+  SUCCESS,
+  FAILED,
+}
 
 export enum STATUS {
   SUCCESS,
@@ -123,6 +129,11 @@ export const getBrokerDealers = async (params?: Record<string, string | number>)
   return result.data
 }
 
+export const getBrokerDealerAllSwaps = async (params?: Record<string, string | number>) => {
+  const result = await apiService.get(admin.getSwaps, undefined, params)
+  return result.data
+}
+
 export function useGetKycList() {
   const dispatch = useDispatch<AppDispatch>()
   const callback = useCallback(
@@ -154,6 +165,25 @@ export function useBrokerDealerList() {
       } catch (error: any) {
         dispatch(getBrokerDealerList.rejected({ errorMessage: 'Could not get broker dealer list' }))
         return KYC_LIST_STATUS.FAILED
+      }
+    },
+    [dispatch]
+  )
+  return callback
+}
+
+export function useFetchBrokerDealerSwaps() {
+  const dispatch = useDispatch<AppDispatch>()
+  const callback = useCallback(
+    async (params?: Record<string, string | number>) => {
+      try {
+        dispatch(getBrokerDealerSwaps.pending())
+        const data = await getBrokerDealerAllSwaps(params)
+        dispatch(getBrokerDealerSwaps.fulfilled({ data }))
+        return BROKER_DEALERS_STATUS.SUCCESS
+      } catch (error: any) {
+        dispatch(getBrokerDealerSwaps.rejected({ errorMessage: 'Could not fetch broker dealer swaps' }))
+        return BROKER_DEALERS_STATUS.FAILED
       }
     },
     [dispatch]

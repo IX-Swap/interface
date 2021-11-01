@@ -67,6 +67,13 @@ export interface KycList {
 export interface BrokerDealerList {
   data: any
 }
+
+export interface BrokerDealerSwaps {
+  page: number
+  totalPages: number
+  items: any[]
+  offset: number
+}
 export interface KycItem {
   createdAt: string
   custodianApplicationId?: number
@@ -187,4 +194,14 @@ export const postKycReset: Readonly<{
   pending: createAction('admin/postKycReset/pending'),
   fulfilled: createAction('admin/postKycReset/fulfilled'),
   rejected: createAction('admin/postKycReset/rejected'),
+}
+
+export const getBrokerDealerSwaps: Readonly<{
+  pending: ActionCreatorWithoutPayload
+  fulfilled: ActionCreatorWithPayload<{ data: BrokerDealerSwaps }>
+  rejected: ActionCreatorWithPayload<{ errorMessage: string }>
+}> = {
+  pending: createAction('broker-dealer/swaps/pending'),
+  fulfilled: createAction('broker-dealer/swaps/fulfilled'),
+  rejected: createAction('broker-dealer/swaps/rejected'),
 }

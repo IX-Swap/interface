@@ -3,9 +3,10 @@ import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
 
-import { useAdminState, useBrokerDealerList, useGetMe } from 'state/admin/hooks'
+import { useAdminState, useGetMe } from 'state/admin/hooks'
 
 import { AdminKycTable } from '../../components/AdminKycTable'
+import { AdminTransactionsTable } from '../../components/AdminTransactionsTable'
 import { Navbar } from './Navbar'
 import { Search } from './Search'
 import { AutoColumn, ColumnCenter } from 'components/Column'
@@ -16,26 +17,19 @@ export const AdminKyc = () => {
   const [showKYC, setShowKYC] = useState(true)
   const history = useHistory()
   const getMe = useGetMe()
-  const { adminIsAuthenticated, adminError, brokerDealerList } = useAdminState()
-  const getBrokerDealerList = useBrokerDealerList()
-
-  console.log('ya', brokerDealerList)
+  const { adminIsAuthenticated, adminError } = useAdminState()
 
   useEffect(() => {
     if (!adminIsAuthenticated && adminError) {
       history.push('/admin-login')
     }
-  }, [adminIsAuthenticated, adminError, history, brokerDealerList])
+  }, [adminIsAuthenticated, adminError, history])
 
   useEffect(() => {
     if (localStorage.getItem('adminAccessToken')) {
       getMe()
     }
   }, [getMe])
-
-  useEffect(() => {
-    getBrokerDealerList({ page: 1, offset: 10 })
-  }, [getBrokerDealerList])
 
   return (
     <Container>
@@ -57,11 +51,13 @@ export const AdminKyc = () => {
             </AutoColumn>
           </ColumnCenter>
 
-          {showKYC && (
+          {showKYC ? (
             <>
               <Search />
               <AdminKycTable />
             </>
+          ) : (
+            <AdminTransactionsTable />
           )}
         </Body>
       )}
