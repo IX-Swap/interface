@@ -93,15 +93,24 @@ export const Market = () => {
         <FinancialSummary />
       </Grid>
 
-      <Box my={2} />
+      <Grid item>
+        <Box my={2} />
+      </Grid>
 
       <Grid
+        item
         container
-        direction={'column'}
+        direction='column'
         className={classes.wrapper}
         alignItems={'flex-start'}
+        xs={12}
       >
-        <Grid item className={classes.colorGrid} style={{ height: '100%' }}>
+        <Grid
+          item
+          className={classes.colorGrid}
+          style={{ height: '100%' }}
+          xs={12}
+        >
           <InvestorLiveOrderBook />
         </Grid>
 
@@ -123,7 +132,7 @@ export const Market = () => {
           </Grid>
         </Grid>
 
-        <Grid item container>
+        <Grid item container xs={12}>
           <PlaceOrderForm
             createOrderStatus={createOrderStatus}
             isFetching={isFetching}
