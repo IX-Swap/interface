@@ -334,5 +334,7 @@ export const virtualTransactions = {
 }
 
 export const blockchainNetworksURL = {
-  getSettings: (network: string) => `/blockchain/settings/${network}`
+  getSettings: (network: string) => `/blockchain/settings/${network}`,
+  getUpdateDecimal: (network: string, decimal: number) =>
+    `/blockchain/settings/decimal/${network}/${decimal}`
 }

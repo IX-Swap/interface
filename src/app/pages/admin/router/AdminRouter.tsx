@@ -16,7 +16,7 @@ import { MasDisclosure } from 'app/pages/admin/pages/MasDisclosure'
 import { Banner } from 'app/pages/admin/pages/Banner'
 import { VirtualAccountAudit } from 'app/pages/admin/pages/VirtualAccountAudit'
 import { VirtualAccountTransactions } from 'app/pages/admin/pages/VirtualAccountTransactions'
-import { BlockchainSettings } from '../pages/BlockchainSettings'
+import { BlockchainSettings } from 'app/pages/admin/pages/BlockchainSettings'
 
 export const AdminRouter = () => {
   return (

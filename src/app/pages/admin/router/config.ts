@@ -82,6 +82,6 @@ export const adminLandingLinks: InternalRouteProps[] = [
     label: 'Blockchain Settings',
     path: AdminRoute.blockchainSettings,
     color: '#246D97',
-    icon: VAAuditIcon
+    icon: VAAuditIcon // TODO update icon and color
   }
 ]

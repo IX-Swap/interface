@@ -1,7 +1,8 @@
 import { useServices } from 'hooks/useServices'
 import { useMutation } from 'react-query'
-import { useAuth } from '../../../../hooks/auth/useAuth'
-import { getIdFromObj } from '../../../../helpers/strings'
+import { useAuth } from 'hooks/auth/useAuth'
+import { getIdFromObj } from 'helpers/strings'
+import { blockchainNetworksURL } from 'config/apiURL'
 
 export const useUpdateDecimal = () => {
   const { apiService, snackbarService } = useServices()
@@ -16,17 +17,17 @@ export const useUpdateDecimal = () => {
     network: string
   }) => {
     return await apiService.put(
-      `/blockchain/settings/decimal/${network}/${decimal}`,
+      blockchainNetworksURL.getUpdateDecimal(network, decimal),
       {
         userId,
-        otp: ''
+        otp: '' // TODO fix otp
       }
     )
   }
 
   return useMutation(updateDecimal, {
     onSuccess: () => {
-      snackbarService.showSnackbar('Updated', 'success')
+      snackbarService.showSnackbar('Successfully updated decimal', 'success')
     },
     onError: () => {
       snackbarService.showSnackbar(
