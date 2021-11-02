@@ -26,7 +26,7 @@ export const Dashboard: React.FC = () => {
         <Grid item xs={12}>
           <MarketPortfolio
             type={'primary'}
-            currencySymbol={'S$'}
+            currencySymbol={'US$'}
             marketInfo={data?.primaryMarket}
           />
         </Grid>
