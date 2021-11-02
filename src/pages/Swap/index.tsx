@@ -97,6 +97,7 @@ export default function Swap({ history }: RouteComponentProps) {
     [tradeToConfirm, trade]
   )
   useWatchAuthorizationExpire(trade)
+  const showLoading = loadingSwap || (!trade && parsedAmounts.INPUT && !parsedAmounts.OUTPUT && typedValue)
   console.log({ parsedAmounts, currencies, trade, typedValue })
   return (
     <>
@@ -117,7 +118,7 @@ export default function Swap({ history }: RouteComponentProps) {
 
           <AutoColumn gap={'1.25rem'}>
             <CurrencyInput {...{ parsedAmounts, maxInputAmount, showWrap, currencies, handleHideConfirm }} />
-            {!loadingSwap && (
+            {!showLoading && (
               <>
                 {recipient !== null && !showWrap ? <EditRecipient {...{ recipient, onChangeRecipient }} /> : null}
 
@@ -127,7 +128,7 @@ export default function Swap({ history }: RouteComponentProps) {
                 <SwapButtons parsedAmounts={parsedAmounts} showAcceptChanges={showAcceptChanges} />
               </>
             )}
-            {loadingSwap && <LoaderThin size={48}></LoaderThin>}
+            {showLoading && <LoaderThin size={48}></LoaderThin>}
           </AutoColumn>
         </Wrapper>
       </AppBody>
