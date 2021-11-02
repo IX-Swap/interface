@@ -33,7 +33,7 @@ export interface TableViewRendererProps<T> {
 
 export interface TableViewProps<T> {
   name: string
-  uri: string
+  uri?: string
   queryEnabled?: boolean
   columns: Array<TableColumn<T>>
   bordered?: boolean
@@ -78,13 +78,13 @@ export const TableView = <T,>({
     setRowsPerPage,
     rowsPerPage,
     total
-  } = useTableWithPagination<T>(
-    name,
-    uri,
-    filter,
-    queryEnabled,
-    defaultRowsPerPage
-  )
+  } = useTableWithPagination<T>({
+    queryKey: name,
+    uri: uri,
+    defaultFilter: filter,
+    queryEnabled: queryEnabled,
+    defaultRowsPerPage: defaultRowsPerPage
+  })
 
   const theme = useTheme()
   const classes = useStyles()

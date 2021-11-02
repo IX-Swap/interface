@@ -25,7 +25,8 @@ export const AdminRoute = {
   banner: '/app/admin/banner',
   masDisclosure: '/app/admin/masDisclosure',
   virtualAccountAudit: '/app/admin/virtualAccountAudit',
-  virtualAccountTransactions: '/app/admin/virtualAccountTransactions'
+  virtualAccountTransactions: '/app/admin/virtualAccountTransactions',
+  blockchainSettings: '/app/admin/blockchainSettings'
 }
 
 export const adminLandingLinks: InternalRouteProps[] = [
@@ -74,6 +75,12 @@ export const adminLandingLinks: InternalRouteProps[] = [
   {
     label: 'Virtual Account Audit',
     path: AdminRoute.virtualAccountAudit,
+    color: '#246D97',
+    icon: VAAuditIcon
+  },
+  {
+    label: 'Blockchain Settings',
+    path: AdminRoute.blockchainSettings,
     color: '#246D97',
     icon: VAAuditIcon
   }

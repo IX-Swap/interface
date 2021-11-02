@@ -332,3 +332,7 @@ export const virtualAccountsAudit = {
 export const virtualTransactions = {
   getTransactions: 'https://hsbc.mozork.com/payments/transactions'
 }
+
+export const blockchainNetworksURL = {
+  getSettings: (network: string) => `/blockchain/settings/${network}`
+}
