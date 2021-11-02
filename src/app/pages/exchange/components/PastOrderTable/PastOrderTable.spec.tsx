@@ -1,5 +1,9 @@
 import React from 'react'
-import { renderWithUserStore, cleanup } from 'test-utils'
+import {
+  renderWithUserStore,
+  cleanup,
+  renderWithInitialWidth
+} from 'test-utils'
 import { TableView } from 'components/TableWithPagination/TableView'
 import * as useAuthHook from 'hooks/auth/useAuth'
 import { user } from '__fixtures__/user'
@@ -37,7 +41,10 @@ describe('PastOrderTable', () => {
   })
 
   it('renders PastOrderFilter without error', () => {
-    renderWithUserStore(<PastOrderTable pairId={initialFilterValues.pair} />)
+    renderWithInitialWidth(
+      <PastOrderTable pairId={initialFilterValues.pair} />,
+      'lg'
+    )
 
     expect(PastOrderFilter).toHaveBeenCalled()
   })
@@ -51,7 +58,7 @@ describe('PastOrderTable', () => {
     renderWithUserStore(<PastOrderTable pairId={initialFilterValues.pair} />)
 
     expect(TableView).toHaveBeenCalledWith(
-      {
+      expect.objectContaining({
         size: 'small',
         name: exchangeMarketQueryKeys.getOrdersList(
           user._id,
@@ -60,7 +67,7 @@ describe('PastOrderTable', () => {
         uri: exchangeMarket.getOrdersList(user._id),
         columns,
         filter: initialFilterValues
-      },
+      }),
       {}
     )
   })

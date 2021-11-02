@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import React from 'react'
 
 export interface Props {
-  transaction?: 'buy' | 'sell'
+  transaction?: 'BID' | 'ASK'
 }
 
 export const useStyles = makeStyles(theme => {
@@ -11,7 +11,7 @@ export const useStyles = makeStyles(theme => {
     if (transaction === undefined) {
       return undefined
     }
-    if (transaction === 'sell') {
+    if (transaction === 'ASK') {
       return theme.palette.error.main
     }
     return theme.palette.success.main
@@ -27,7 +27,7 @@ export const useStyles = makeStyles(theme => {
 })
 
 export interface TradesTableCellProps extends TableCellProps {
-  transaction?: 'buy' | 'sell'
+  transaction?: 'BID' | 'ASK'
 }
 
 export const TradesTableCell = ({

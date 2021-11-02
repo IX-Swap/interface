@@ -114,3 +114,45 @@ export const defaultSelectedColumns: Record<DSOTableColumn, boolean> = {
   totalFundraisingAmount: true,
   interestRate: true
 }
+
+export const compactColumns: Array<
+  TableColumn<DigitalSecurityOffering, DSOTableColumn>
+> = [
+  {
+    key: 'tokenName',
+    label: 'Offer Name',
+    render: renderDSONameAndStructure,
+    headAlign: 'left',
+    align: 'left'
+  },
+  {
+    key: 'completionDate',
+    label: 'Closing Date',
+    render: formatDateToMMDDYY,
+    headAlign: 'left',
+    align: 'left'
+  },
+  {
+    key: 'interestRate',
+    label: 'Expected Return',
+    render: renderExpectedReturn
+  },
+  {
+    key: 'minimumInvestment',
+    label: 'Min. Investment',
+    render: renderMinimumInvestment,
+    headAlign: 'left',
+    align: 'left'
+  },
+  {
+    key: 'totalFundraisingAmount',
+    label: 'Raising',
+    render: renderTotalFundraisingAmount,
+    headAlign: 'left',
+    align: 'left'
+  },
+  {
+    key: 'distributionFrequency',
+    label: 'Distribution Frequency'
+  }
+]

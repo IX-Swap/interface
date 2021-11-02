@@ -47,3 +47,40 @@ export const columns: Array<TableColumn<Order>> = [
     render: (_, order) => <CancelOrderButton order={order} />
   }
 ]
+
+export const compactColumns: Array<TableColumn<Order>> = [
+  {
+    key: 'amount',
+    label: 'Amount',
+    render: (_, value) => formatMoney(value.amount, '')
+  },
+  {
+    key: 'side',
+    label: 'Side',
+    render: getOrderSideName
+  },
+  {
+    key: 'timeInForce',
+    label: 'Time In Force'
+  },
+  {
+    key: 'price',
+    label: 'Price',
+    render: (_, value) => formatMoney(value.price, '')
+  },
+  {
+    key: 'total',
+    label: 'Total',
+    render: (_, value) => formatMoney(value.total, '')
+  },
+  {
+    key: 'filledPercent',
+    label: 'Filled',
+    render: formatPercent
+  },
+  {
+    key: 'date',
+    label: 'Date',
+    render: formatDateToMMDDYY
+  }
+]

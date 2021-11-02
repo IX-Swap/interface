@@ -16,7 +16,11 @@ export const useStyles = makeStyles(theme => ({
   textContent: {
     fontSize: 18,
     lineHeight: '40px',
-    color: '#fff'
+    color: '#fff',
+    [theme.breakpoints.down('md')]: {
+      fontSize: 14,
+      lineHeight: '16px'
+    }
   },
   currencySelect: {
     backgroundColor: '#fff'

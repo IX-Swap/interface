@@ -13,9 +13,11 @@ import {
 } from './constants'
 import { getMovingAverageParams } from './utils'
 
-export const TVChartContainer: React.FC<
-  Partial<ChartContainerProps>
-> = props => {
+export interface TVChartContainerProps extends Partial<ChartContainerProps> {
+  viewport?: 'small' | 'big'
+}
+
+export const TVChartContainer = (props: TVChartContainerProps) => {
   const {
     symbol,
     datafeed,
@@ -26,7 +28,8 @@ export const TVChartContainer: React.FC<
     theme,
     containerId,
     toolbarBg,
-    customCssUrl
+    customCssUrl,
+    viewport
   } = props
   const [tvWidget, setTradingChart] = React.useState<IChartingLibraryWidget>()
 
@@ -47,7 +50,8 @@ export const TVChartContainer: React.FC<
       },
       locale: 'en',
       disabled_features: disabledFeatures,
-      enabled_features: enabledFeatures,
+      enabled_features:
+        viewport === 'big' ? enabledFeatures : ['hide_left_toolbar_by_default'],
       charts_storage_url: 'https://saveload.tradingview.com',
       charts_storage_api_version: '1.1',
       client_id: 'tradingview.com',
@@ -76,7 +80,8 @@ export const TVChartContainer: React.FC<
     containerId,
     props.dataFeedUrl,
     toolbarBg,
-    customCssUrl
+    customCssUrl,
+    viewport
   ])
 
   React.useEffect(() => {

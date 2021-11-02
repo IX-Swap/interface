@@ -1,0 +1,50 @@
+import { Grid, Tab, Tabs } from '@material-ui/core'
+import { TVChartContainer } from 'app/pages/invest/components/TVChartContainer/TVChartContainer'
+import { TabPanel } from 'components/TabPanel'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+import React, { useState } from 'react'
+import { InvestorLiveOrderBook } from 'app/pages/exchange/components/InvestorLiveOrderBook/InvestorLiveOrderBook'
+import { MarketTrades } from 'app/pages/exchange/components/Trades/MarketTrades'
+import { MarketViewProps } from 'app/pages/exchange/components/Market/MarketGridView'
+
+export const TopSection = ({ symbol, datafeed }: MarketViewProps) => {
+  const [value, setValue] = useState(0)
+  const { theme } = useAppBreakpoints()
+
+  const handleChange = (_: any, newValue: number) => {
+    setValue(newValue)
+  }
+
+  return (
+    <Grid container spacing={0}>
+      <Grid item xs={12}>
+        <Tabs value={value} onChange={handleChange}>
+          <Tab label='Chart' />
+          <Tab label='Market Order' />
+          <Tab label='Market Trades' />
+        </Tabs>
+      </Grid>
+      <Grid item xs={12}>
+        <TabPanel value={value} index={0} pt={2}>
+          {symbol.length > 0 && (
+            <TVChartContainer
+              viewport='small'
+              data-testid={'tv-chart-container-data-test-id'}
+              datafeed={datafeed}
+              symbol={symbol}
+              theme={theme.palette.type === 'dark' ? 'Dark' : 'Light'}
+              toolbarBg={theme.palette.type === 'dark' ? '#292929' : ''}
+              customCssUrl={'./trading-view_dark.css'}
+            />
+          )}
+        </TabPanel>
+        <TabPanel value={value} index={1} pt={2}>
+          <InvestorLiveOrderBook />
+        </TabPanel>
+        <TabPanel value={value} index={2} pt={2}>
+          <MarketTrades />
+        </TabPanel>
+      </Grid>
+    </Grid>
+  )
+}
