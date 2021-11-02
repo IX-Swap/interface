@@ -21,7 +21,7 @@ export const UploadExchangeRules = () => {
   return (
     <Form>
       <Box pr={5}>
-        <Grid container spacing={2}>
+        <Grid container spacing={1}>
           {isLoading ? (
             <>{LOADING_TEXT}</>
           ) : (
@@ -29,10 +29,10 @@ export const UploadExchangeRules = () => {
               <Grid item xs={12}>
                 <FormSectionHeader title='Upload Document' />
               </Grid>
-              <Grid item xs={12} md={9}>
+              <Grid item xs={9} container alignItems='center'>
                 <Typography variant='subtitle1'>Exchange Rule</Typography>
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={data === undefined ? 3 : 12}>
                 <Grid container alignItems='center' wrap='nowrap'>
                   <DataroomUploader
                     name='exchangeRules'
