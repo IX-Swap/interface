@@ -4,7 +4,7 @@ import { useStyles } from 'app/pages/accounts/pages/dashboard/components/TopInfo
 import { AvailableCash } from 'app/pages/accounts/pages/dashboard/components/AvailableCash/AvailableCash'
 import { Investments } from 'app/pages/accounts/pages/dashboard/components/Investments/Investments'
 import { TotalAssetBalance } from 'app/pages/accounts/pages/dashboard/components/TotalAssetBalance/TotalAssetBalance'
-import { BlockchainWallets } from 'app/pages/accounts/pages/dashboard/components/WithdrawalAddresses/BlockchainWallets'
+import { BlockchainWallets } from 'app/pages/accounts/pages/dashboard/components/BlockchainWallets/BlockchainWallets'
 import { VirtualAccountInfo, BalancesInfo } from 'types/portfolio'
 
 export interface TopInfoPanelProps {
@@ -31,7 +31,7 @@ export const TopInfoPanel = ({ accounts, balances }: TopInfoPanelProps) => {
         <Grid
           container
           wrap={'nowrap'}
-          justify={'space-between'}
+          justify={'space-around'}
           alignContent={'flex-start'}
           className={classes.wrapper}
         >
