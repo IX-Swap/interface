@@ -42,6 +42,7 @@ export function useHandleSwap({ priceImpact }: { priceImpact: Percent | undefine
       secPairs: pairs,
       trade,
       authorizations,
+      allowedSlippage,
     })
     if (cleanUpAddresses.length) {
       clearAuthorization(cleanUpAddresses)
