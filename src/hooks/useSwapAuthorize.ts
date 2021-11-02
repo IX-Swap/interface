@@ -11,6 +11,7 @@ import { useSubmitBrokerDealerForm, useSwapSecPairs } from 'state/swapHelper/hoo
 import { authorizeSecToken } from 'state/user/actions'
 import { OrderType } from 'state/user/enum'
 import { useUserSecTokens } from 'state/user/hooks'
+import { getStringAmount } from 'utils/getStringAmount'
 
 export interface AuthorizationParams {
   tokenId: number
@@ -52,13 +53,6 @@ export const useGetTokenAuthorization = () => {
     },
     [dispatch]
   )
-}
-
-const getStringAmount = (amount: CurrencyAmount<Currency>) => {
-  const num = amount.numerator
-  const denum = amount.denominator
-  const division = JSBI.divide(num, denum)
-  return String(division)
 }
 
 export function getAuthorizationFirstStepDto(

@@ -13,6 +13,7 @@ import apiService from 'services/apiService'
 import { tokens } from 'services/apiUrls'
 import { setModalDetails } from 'state/application/actions'
 import { ModalType } from 'state/application/reducer'
+import { getStringAmount } from 'utils/getStringAmount'
 import { hexTimeToTokenExpirationTime, shouldRenewToken } from 'utils/time'
 import { AppDispatch, AppState } from '../index'
 import {
@@ -64,22 +65,20 @@ export const getAddressIfChanged = ({
         [address: string]: SwapAuthorization | null
       }
     | undefined
-  amountToCompare: CurrencyAmount<Currency> | undefined
+  amountToCompare: string
 }) => {
   if (address && amountToCompare) {
     const authorization = authorizations?.[address]
     if (authorization) {
       const { amount } = authorization
       const numberAmount = parseInt(amount, 10)
-      const stringToCompare = amountToCompare?.toSignificant()
-      const numberInputAmount = parseInt(amountToCompare?.toSignificant() || '', 10)
+      const numberInputAmount = parseInt(amountToCompare || '', 10)
       if (!isNaN(numberAmount) && !isNaN(numberInputAmount)) {
         if (!isDifferenceAcceptable({ cached: numberAmount, newSum: numberInputAmount })) {
           console.log({
             amountFromAuth: numberAmount,
             amountFromInput: numberInputAmount,
             amountToCompare,
-            stringToCompare,
           })
           return address
         }
@@ -93,9 +92,11 @@ export const getAddressesIfChangedAmount = ({
   secPairs,
   trade,
   authorizations,
+  allowedSlippage,
 }: {
   secPairs: Array<Pair | null>
   trade: V2Trade<Currency, Currency, TradeType> | undefined | null
+  allowedSlippage: Percent
   authorizations:
     | {
         [address: string]: SwapAuthorization | null
@@ -103,8 +104,8 @@ export const getAddressesIfChangedAmount = ({
     | undefined
 }) => {
   const adressesToRemove = []
-  const inputAmount = trade?.inputAmount
-  const outputAmount = trade?.outputAmount
+  const inputAmount = trade ? getStringAmount(trade?.maximumAmountIn(allowedSlippage)) : ''
+  const outputAmount = trade ? getStringAmount(trade?.minimumAmountOut(allowedSlippage)) : ''
   console.log({ inputAmount, outputAmount })
   const inputAddress = secPairs?.[0]?.liquidityToken.address
   const outputAddress = secPairs?.[1]?.liquidityToken.address
