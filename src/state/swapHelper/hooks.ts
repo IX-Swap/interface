@@ -74,7 +74,7 @@ export const getAddressIfChanged = ({
       const numberInputAmount = parseInt(amountToCompare?.toExact() || '', 10)
       if (!isNaN(numberAmount) && !isNaN(numberInputAmount)) {
         if (!isDifferenceAcceptable({ cached: numberAmount, newSum: numberInputAmount })) {
-          console.log({ amountFromAuth: numberAmount, amountFromInput: numberInputAmount })
+          console.log({ amountFromAuth: numberAmount, amountFromInput: numberInputAmount, amountToCompare })
           return address
         }
       }
@@ -99,6 +99,7 @@ export const getAddressesIfChangedAmount = ({
   const adressesToRemove = []
   const inputAmount = trade?.inputAmount
   const outputAmount = trade?.outputAmount
+  console.log({ inputAmount, outputAmount })
   const inputAddress = secPairs?.[0]?.liquidityToken.address
   const outputAddress = secPairs?.[1]?.liquidityToken.address
   const addressFirst = getAddressIfChanged({ address: inputAddress, authorizations, amountToCompare: inputAmount })
