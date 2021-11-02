@@ -3,14 +3,17 @@ import { render } from 'test-utils'
 import { BlockchainSettingsContent } from 'app/pages/admin/components/BlockchainSettingsContent/BlockchainSettingsContent'
 import * as UseBlockchainSettingsHook from 'app/pages/admin/hooks/useBlockchainSettings'
 import { generateQueryResult } from '__fixtures__/useQuery'
-import { BlockchainInfo } from 'app/pages/admin/components/BlockchainInfo/BlockchainInfo'
+import { BlockchainInfoList } from 'app/pages/admin/components/BlockchainInfo/BlockchainInfoList'
 import { BlockchainSettingsForm } from 'app/pages/admin/components/BlockchainSettingsForm/BlockchainSettingsForm'
 import { BlockchainMetaDataTable } from 'app/pages/admin/components/BlockchainMetaDataTable/BlockchainMetaDataTable'
 import { blockchainSettings } from '__fixtures__/blockchain'
 
-jest.mock('app/pages/admin/components/BlockchainInfo/BlockchainInfo', () => ({
-  BlockchainInfo: jest.fn(() => null)
-}))
+jest.mock(
+  'app/pages/admin/components/BlockchainInfo/BlockchainInfoList',
+  () => ({
+    BlockchainInfoList: jest.fn(() => null)
+  })
+)
 jest.mock(
   'app/pages/admin/components/BlockchainSettingsForm/BlockchainSettingsForm',
   () => ({
@@ -53,8 +56,8 @@ describe('BlockchainSettingsContent', () => {
     expect(queryByTestId('blockchain-settings-loader')).toBeNull()
     expect(queryByTestId('blockchain-settings-placeholder')).toBeNull()
 
-    expect(BlockchainInfo).toBeCalledWith(
-      { data: blockchainSettings.networks },
+    expect(BlockchainInfoList).toBeCalledWith(
+      { networks: blockchainSettings.networks },
       {}
     )
     expect(BlockchainSettingsForm).toBeCalledWith(
