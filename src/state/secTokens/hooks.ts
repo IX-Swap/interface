@@ -110,6 +110,7 @@ export function listToSecTokenMap(
         [token.address]: {
           token,
           list,
+          platform: tokenInfo.platform,
         },
       },
     }
@@ -144,5 +145,8 @@ export function useAccreditationStatus(currencyId?: string) {
   const isApproved = useMemo(() => {
     return status === AccreditationStatusEnum.APPROVED
   }, [status])
-  return { status, isApproved, accreditationRequest }
+  const platform = useMemo(() => {
+    return (secTokens[currencyId ?? ''] as any)?.tokenInfo?.platform || null
+  }, [secTokens, currencyId])
+  return { status, isApproved, accreditationRequest, platform }
 }

@@ -6,27 +6,28 @@ import useCopyClipboard from 'hooks/useCopyClipboard'
 import React from 'react'
 import { ExternalLink } from 'theme'
 import { shortenAddress } from 'utils'
-import PortisIcon from '../../assets/images/portisIcon.png'
 import { DetailsElement } from './DetailsElement'
-import { Details, IconWrapper } from './styleds'
+import { Details } from './styleds'
+import { SecTokenPlatform } from 'types/secToken'
 
 interface Props {
   currency?: Token
   accreditationRequest: AccreditationRequest | null
+  platform: SecTokenPlatform
 }
-export const TokenDetails = ({ currency, accreditationRequest }: Props) => {
+export const TokenDetails = ({ currency, platform }: Props) => {
   const [isCopied, setCopied] = useCopyClipboard()
   return (
     <Details>
       <div>
-        {accreditationRequest && (
+        {platform && (
           <DetailsElement
             title={<Trans>Issuer:</Trans>}
             content={
               <>
                 <Logo style={{ marginRight: '6px' }} currency={currency} size="27px" />
-                <ExternalLink href={accreditationRequest.custodian.website} style={{ textDecorationLine: 'underline' }}>
-                  {accreditationRequest.custodian.name}
+                <ExternalLink href={platform.website} style={{ textDecorationLine: 'underline' }}>
+                  {platform.name}
                 </ExternalLink>
               </>
             }
