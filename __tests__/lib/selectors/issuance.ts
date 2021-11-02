@@ -1,4 +1,6 @@
 export const issuance = {
+  BASE_FORM: '//form',
+  LISTING_FORM: '[data-testid="listing-form"]',
   LOADER: 'text="loading..."',
   ISSUANCE_TAB: '[href="/app/issuance/offerings"]',
   sections: {
@@ -9,7 +11,8 @@ export const issuance = {
   },
 
   listings: {
-    LOGO: '[name="listing-general-information"] [class="MuiAvatar-img"]',
+    GENERAL_FORM: '[name="listing-general-information"]',
+    LOGO: '[class="MuiAvatar-img"]',
     fields: {
       MIN_TRADE_AMOUNT: '[id="minimumTradeUnits"]',
       MAX_TRADE_AMOUNT: '[id="maximumTradeUnits"]',

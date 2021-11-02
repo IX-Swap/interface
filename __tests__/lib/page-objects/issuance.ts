@@ -264,10 +264,17 @@ class Listing {
     await click(issuance.listings.listBox.MY_DSO, this.page)
     await click(issuance.listings.listBox.DSO_HYBRID_TEST, this.page)
     await click(issuance.listings.buttons.IMPORT, this.page)
-    await shouldExist(issuance.listings.LOGO, this.page)
-    const importedForm = await this.page.$('//form')
+    await shouldExist(
+      `${issuance.listings.GENERAL_FORM} ${issuance.listings.LOGO}`,
+      this.page
+    )
+    const importedForm = await this.page.$(issuance.listings.GENERAL_FORM)
     return importedForm
   }
-  editImportedDso = async () => {}
+  removeTeamMember = async () => {
+    await click(issuance.dso.buttons.REMOVE, this.page)
+    const inputs = await this.page.$$(issuance.dso.fields.TEAM_MEMBER_NAME)
+    return inputs.length
+  }
 }
 export { Dso, Listing }

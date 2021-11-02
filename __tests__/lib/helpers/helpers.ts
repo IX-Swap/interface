@@ -200,6 +200,10 @@ async function navigate(url, page, wait = 'networkidle') {
 }
 
 async function screenshotMatching(name, page, range = 0.9) {
+  await page.waitForSelector(LOADER, {
+    state: 'detached',
+    timeout: DEFAULT_SELECTOR_TIMEOUT
+  })
   const screenshot = await page.screenshot()
   expect(screenshot).toMatchSnapshot(`${name}.png`, {
     threshold: range

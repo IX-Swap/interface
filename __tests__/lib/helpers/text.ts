@@ -10,5 +10,8 @@ export const text = {
     tokenSymbol:
       'Token symbol is already registered, please choose a different symbol'
   },
-  notification: { resetPassword: 'Password reset has been successful' }
+  notification: {
+    resetPassword: 'Password reset has been successful',
+    submitIdentity: 'Thanks For Submitting Your Identity!'
+  }
 }

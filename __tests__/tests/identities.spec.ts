@@ -7,17 +7,16 @@ import {
   screenshotMatching,
   waitForText
 } from '../lib/helpers/helpers'
+test.beforeEach(async ({ auth }) => {
+  let forEachEmail = await emailCreate()
+  await auth.submitRegistrationFormByAPI(forEachEmail)
+})
+
+test.afterEach(async ({ page }) => {
+  await page.close()
+})
 
 test.describe('Check identities form', () => {
-  test.beforeEach(async ({ auth }) => {
-    let forEachEmail = await emailCreate()
-    await auth.submitRegistrationFormByAPI(forEachEmail)
-  })
-
-  test.afterEach(async ({ page }) => {
-    await page.close()
-  })
-
   test('Individual', async ({ page, kycForms }, testInfo) => {
     await test.step('Personal Information ', async () => {
       await click(kyc.type.INDIVIDUAL, page)
@@ -84,31 +83,11 @@ test.describe('Check identities form', () => {
       await click(kyc.buttons.SUBMIT, page)
     })
 
-    await test.step('Check full profile view', async () => {
+    await test.step('Check the form submit', async () => {
       await waitForText(page, text.docs.docBenefitsAddressName)
       await kycForms.checkAllViewUsingSnapshot(testInfo.title)
-    })
-  })
-  test('Check tax information', async ({ page, kycForms }, testInfo) => {
-    await test.step('fill Personal Information Form', async () => {
-      await click(kyc.type.CORPORATE, page)
-      await kycForms.fillCorporateInformation()
-      await kycForms.fillCorporateAddressForm()
-      await kycForms.fillCompanyAuthorizedPersonnel()
-      await click(kyc.buttons.SUBMIT, page)
-    })
-
-    await test.step('Directors and Beneficial Owner Details', async () => {
-      await kycForms.fillPeopleWithExecutiveAuthorityForm()
-      await kycForms.fillCorporateDirectorAddressForm()
-      await click(kyc.buttons.SUBMIT, page)
-    })
-
-    await test.step('fill Tax declaration form', async () => {
-      await kycForms.fillTaxDeclarationForm()
-      await click(kyc.buttons.CLICK_HERE, page)
-      const dialog = await page.waitForSelector(kyc.DIALOG_VIEW)
-      await screenshotMatching(testInfo.title, dialog)
+      await click(kyc.buttons.SUBMIT_TEXT, page)
+      await waitForText(page, text.notification.submitIdentity)
     })
   })
 
@@ -138,6 +117,8 @@ test.describe('Check identities form', () => {
 
     await test.step('Check full profile view', async () => {
       await kycForms.checkAllViewUsingSnapshot(testInfo.title)
+      await click(kyc.buttons.SUBMIT_TEXT, page)
+      await waitForText(page, text.notification.submitIdentity)
     })
   })
   test('Issuer (full)', async ({ page, kycForms }, testInfo) => {
@@ -152,5 +133,49 @@ test.describe('Check identities form', () => {
       await click(kyc.buttons.SUBMIT, page)
       await kycForms.checkIssuerView(testInfo)
     })
+  })
+})
+
+test('Check tax information', async ({ page, kycForms }, testInfo) => {
+  await test.step('fill Personal Information Form', async () => {
+    await click(kyc.type.CORPORATE, page)
+    await kycForms.fillCorporateInformation()
+    await kycForms.fillCorporateAddressForm()
+    await kycForms.fillCompanyAuthorizedPersonnel()
+    await click(kyc.buttons.SUBMIT, page)
+  })
+
+  await test.step('Directors and Beneficial Owner Details', async () => {
+    await kycForms.fillPeopleWithExecutiveAuthorityForm()
+    await kycForms.fillCorporateDirectorAddressForm()
+    await click(kyc.buttons.SUBMIT, page)
+  })
+
+  await test.step('fill Tax declaration form', async () => {
+    await kycForms.fillTaxDeclarationForm()
+    await click(kyc.buttons.CLICK_HERE, page)
+    const dialog = await page.waitForSelector(kyc.DIALOG_VIEW)
+    await screenshotMatching(testInfo.title, dialog)
+  })
+})
+
+test('Check FATCA information', async ({ page, kycForms }, testInfo) => {
+  await test.step('fill Personal Information Form', async () => {
+    await click(kyc.type.INDIVIDUAL, page)
+    await kycForms.fillPersonalInformationForm()
+    await kycForms.fillAddressForm()
+    await click(kyc.buttons.SUBMIT, page)
+  })
+
+  await test.step('Financial Information', async () => {
+    await kycForms.fillFinancialInformation()
+    await click(kyc.buttons.SUBMIT, page)
+  })
+
+  await test.step('fill Tax declaration form', async () => {
+    await kycForms.fillTaxDeclaration()
+    await click(kyc.buttons.FATCA, page)
+    const dialog = await page.waitForSelector(kyc.DIALOG_VIEW)
+    await screenshotMatching(testInfo.title, dialog)
   })
 })

@@ -10,14 +10,14 @@ test.beforeEach(async ({ page, dso, auth, issuanceSelectors }, testInfo) => {
   await dso.followToIssuanceTab(auth)
   await click(issuanceSelectors.sections.CREATE_DSO, page)
 })
-test.afterEach(async ({ page, context }, testInfo) => {
+test.afterEach(async ({ page }) => {
   await page.close()
 })
 test.describe('Check form`s view', () => {
   test('DSO Information', async ({ page, issuanceSelectors }, testInfo) => {
     await shouldNotExist(issuanceSelectors.LOADER, page)
-    const elementHandle = await page.$('//form')
-    await screenshotMatching(testInfo.title, elementHandle)
+    const form = await page.$(issuanceSelectors.BASE_FORM)
+    await screenshotMatching(testInfo.title, form)
   })
 })
 

@@ -10,10 +10,10 @@ import {
   screenshotMatching
 } from '../lib/helpers/helpers'
 let forEachEmail = emailCreate()
-test.beforeEach(async ({ page, baseURL, auth }, testInfo) => {
+test.beforeEach(async ({ page }) => {
   await navigate(baseCreds.URL, page)
 })
-test.afterEach(async ({ page }, testInfo) => {
+test.afterEach(async ({ page }) => {
   await page.close()
 })
 test.describe('Functional test ', () => {
