@@ -19,7 +19,7 @@ export const BlockchainWallets = ({ count }: BlockchainWalletsProps) => {
     <Grid item className={classes.wrapper}>
       <Grid item className={classes.firstBlock}>
         <Typography variant={'subtitle2'} className={classes.label}>
-          Withdrawal Addresses
+          Blockchain Wallets
           {isMobile ? ':' : ''}
           <Box className={classes.iconBlock}>
             <IconButton
