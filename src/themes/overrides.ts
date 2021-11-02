@@ -15,10 +15,16 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
   },
   MuiDialog: {
     paper: {
-      borderRadius: 0
+      borderRadius: 10
     },
     paperWidthMd: {
       maxWidth: 800
+    }
+  },
+  MuiDialogContent: {
+    root: {
+      paddingLeft: 40,
+      paddingRight: 40
     }
   },
   MuiListItem: {

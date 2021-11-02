@@ -36,7 +36,11 @@ export const BlockchainSelector = () => {
                     value === id ? theme.palette.primary.main : 'transparent'
                 }}
               >
-                <img className={styles.icon} src={networkIconMap[name]} />
+                <img
+                  className={styles.icon}
+                  src={networkIconMap[name]}
+                  alt={name}
+                />
                 <Typography
                   variant='h5'
                   color='textPrimary'

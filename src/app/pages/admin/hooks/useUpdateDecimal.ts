@@ -4,6 +4,12 @@ import { useAuth } from 'hooks/auth/useAuth'
 import { getIdFromObj } from 'helpers/strings'
 import { blockchainNetworksURL } from 'config/apiURL'
 
+export interface UpdateDecimalArgs {
+  decimal: number
+  network: string
+  otp: string
+}
+
 export const useUpdateDecimal = () => {
   const { apiService, snackbarService } = useServices()
   const { user } = useAuth()
@@ -11,17 +17,12 @@ export const useUpdateDecimal = () => {
 
   const updateDecimal = async ({
     decimal,
-    network
-  }: {
-    decimal: number
-    network: string
-  }) => {
+    network,
+    otp
+  }: UpdateDecimalArgs) => {
     return await apiService.put(
       blockchainNetworksURL.getUpdateDecimal(network, decimal),
-      {
-        userId,
-        otp: '' // TODO fix otp
-      }
+      { userId, otp }
     )
   }
 

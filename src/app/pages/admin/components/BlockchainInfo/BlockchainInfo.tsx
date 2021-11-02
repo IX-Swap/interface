@@ -1,20 +1,24 @@
 import React from 'react'
 import { Grid, Typography } from '@material-ui/core'
 import { LabelledValue } from 'components/LabelledValue'
-import { BlockchainSettings } from 'types/blockchain'
+import { BlockchainNetwork } from 'types/blockchain'
 import kebabCase from 'lodash/kebabCase'
 
 interface BlockchainInfoProps {
-  data: BlockchainSettings['networks']
+  network: BlockchainNetwork
 }
 
-export const BlockchainInfo = ({ data }: BlockchainInfoProps) => {
+export const BlockchainInfo = ({ network }: BlockchainInfoProps) => {
   const renderWalletInfo = (
     address: string,
     balance: string,
     walletName: string
   ) => [
-    <Grid item xs={12} data-testid={`blockchain-info-${kebabCase(walletName)}`}>
+    <Grid
+      item
+      xs={12}
+      data-testid={`blockchain-info-${kebabCase(walletName)}-address`}
+    >
       <LabelledValue
         label={`${walletName} Address`}
         value={address}
@@ -23,7 +27,11 @@ export const BlockchainInfo = ({ data }: BlockchainInfoProps) => {
         labelWeight='thin'
       />
     </Grid>,
-    <Grid item xs={12}>
+    <Grid
+      item
+      xs={12}
+      data-testid={`blockchain-info-${kebabCase(walletName)}-balance`}
+    >
       <LabelledValue
         label={`${walletName} Balance`}
         value={balance}
@@ -35,35 +43,23 @@ export const BlockchainInfo = ({ data }: BlockchainInfoProps) => {
   ]
 
   return (
-    <>
-      {data.map(blockchain => (
-        <Grid data-testid='blockchain-info-container' container spacing={2}>
-          <Grid item xs={12}>
-            <Typography data-testid='blockchain-info-name' variant='h5'>
-              {blockchain.name} ({blockchain.symbol})
-            </Typography>
-          </Grid>
-          {blockchain.walletAddress !== undefined &&
-            renderWalletInfo(
-              blockchain.walletAddress,
-              blockchain.balance,
-              'Wallet'
-            )}
-          {blockchain.ownerAddress !== undefined &&
-            renderWalletInfo(
-              blockchain.ownerAddress,
-              blockchain.balance,
-              'Owner Wallet'
-            )}
-          {blockchain.reserveAddress !== undefined &&
-            blockchain.reserveBalance !== undefined &&
-            renderWalletInfo(
-              blockchain.reserveAddress,
-              blockchain.reserveBalance,
-              'Reserve Wallet'
-            )}
-        </Grid>
-      ))}
-    </>
+    <Grid data-testid='network.info-container' container spacing={2}>
+      <Grid item xs={12}>
+        <Typography data-testid='blockchain-network-info-name' variant='h5'>
+          {network.name} ({network.symbol})
+        </Typography>
+      </Grid>
+      {network.walletAddress !== undefined &&
+        renderWalletInfo(network.walletAddress, network.balance, 'Wallet')}
+      {network.ownerAddress !== undefined &&
+        renderWalletInfo(network.ownerAddress, network.balance, 'Owner Wallet')}
+      {network.reserveAddress !== undefined &&
+        network.reserveBalance !== undefined &&
+        renderWalletInfo(
+          network.reserveAddress,
+          network.reserveBalance,
+          'Reserve Wallet'
+        )}
+    </Grid>
   )
 }

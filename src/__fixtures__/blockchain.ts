@@ -7,15 +7,15 @@ export const blockchainSettings: BlockchainSettings = {
       name: 'Test Network',
       balance: '20.3451',
       symbol: 'XXX',
-      walletAddress: 'Wallet Address'
+      walletAddress: '1209282161'
     },
     {
       name: 'Test MainNet',
       symbol: 'XXX',
-      ownerAddress: 'Owner Address MainNet',
+      ownerAddress: '32134413213',
       balance: '100.3451',
       reserveBalance: '14.1233',
-      reserveAddress: 'Reserve Address MainNet'
+      reserveAddress: '99832671623'
     }
   ],
   metaDataFields: [
