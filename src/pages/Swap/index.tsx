@@ -97,6 +97,7 @@ export default function Swap({ history }: RouteComponentProps) {
     [tradeToConfirm, trade]
   )
   useWatchAuthorizationExpire(trade)
+  console.log({ parsedAmounts, currencies, trade, typedValue })
   return (
     <>
       <TokenWarningModal history={history} />
