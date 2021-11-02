@@ -75,11 +75,6 @@ export const getAddressIfChanged = ({
       const numberInputAmount = parseInt(amountToCompare || '', 10)
       if (!isNaN(numberAmount) && !isNaN(numberInputAmount)) {
         if (!isDifferenceAcceptable({ cached: numberAmount, newSum: numberInputAmount })) {
-          console.log({
-            amountFromAuth: numberAmount,
-            amountFromInput: numberInputAmount,
-            amountToCompare,
-          })
           return address
         }
       }
@@ -106,7 +101,6 @@ export const getAddressesIfChangedAmount = ({
   const adressesToRemove = []
   const inputAmount = trade ? getStringAmount(trade?.maximumAmountIn(allowedSlippage)) : ''
   const outputAmount = trade ? getStringAmount(trade?.minimumAmountOut(allowedSlippage)) : ''
-  console.log({ inputAmount, outputAmount })
   const inputAddress = secPairs?.[0]?.liquidityToken.address
   const outputAddress = secPairs?.[1]?.liquidityToken.address
   const addressFirst = getAddressIfChanged({ address: inputAddress, authorizations, amountToCompare: inputAmount })
@@ -248,7 +242,6 @@ export function useSwapConfirmDataFromURL(
           expiresAt: hexTimeToTokenExpirationTime(deadline),
           amount,
         }
-        console.log({ savedAmount: amount })
         dispatch(setLoadingSwap({ isLoading: false }))
         dispatch(setAuthorizationInProgress({ authorizationInProgress: null }))
         dispatch(saveAuthorization({ authorization: persistedAuthorization, chainId, address }))
