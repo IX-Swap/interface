@@ -29,7 +29,8 @@ export const useStyles = makeStyles(theme => ({
       width: '50%'
     },
     [theme.breakpoints.down('md')]: {
-      flexDirection: 'column'
+      flexDirection: 'column',
+      alignItems: 'flex-start'
     }
   },
   label: {

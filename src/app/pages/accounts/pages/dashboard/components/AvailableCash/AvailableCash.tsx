@@ -4,15 +4,26 @@ import { useStyles } from './AvailableCash.styles'
 import { VSpacer } from 'components/VSpacer'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { formatAmount } from 'helpers/numbers'
+import { VirtualAccountInfo } from 'types/portfolio'
 
 export interface AvailableCashProps {
-  usd: number
-  sgd: number
+  accounts: VirtualAccountInfo[] | undefined
 }
 
-export const AvailableCash = ({ usd, sgd }: AvailableCashProps) => {
+export const AvailableCash = ({ accounts }: AvailableCashProps) => {
   const classes = useStyles()
   const { isMobile } = useAppBreakpoints()
+
+  if (accounts === undefined) {
+    return null
+  }
+
+  const getCurrencySymbol = (currency: string) => {
+    if (currency === 'SGD') {
+      return 'S$'
+    }
+    return 'US$'
+  }
 
   return (
     <Grid item className={classes.wrapper}>
@@ -31,19 +42,18 @@ export const AvailableCash = ({ usd, sgd }: AvailableCashProps) => {
         justify={'space-between'}
         className={classes.secondBlock}
       >
-        <Grid item>
-          <Typography variant={'body1'} className={classes.value}>
-            US$ {formatAmount(usd)}
-          </Typography>
-        </Grid>
-
-        <Grid item className={classes.space} />
-
-        <Grid item>
-          <Typography variant={'body1'} className={classes.value}>
-            S$ {formatAmount(sgd)}
-          </Typography>
-        </Grid>
+        {accounts.map(({ currency, balance }, i) => {
+          return (
+            <>
+              <Typography variant={'body1'} className={classes.value}>
+                {getCurrencySymbol(currency)} {formatAmount(balance)}
+              </Typography>
+              {accounts.length - 1 !== i && (
+                <Grid item className={classes.space} />
+              )}
+            </>
+          )
+        })}
       </Grid>
     </Grid>
   )

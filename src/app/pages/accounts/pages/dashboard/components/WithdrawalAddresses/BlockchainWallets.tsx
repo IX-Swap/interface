@@ -7,11 +7,11 @@ import { WithdrawalAddressesRoute as paths } from 'app/pages/accounts/pages/with
 import { Launch as LaunchIcon } from '@material-ui/icons'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 
-export interface WithdrawalAddressesProps {
-  number: number
+export interface BlockchainWalletsProps {
+  count: number
 }
 
-export const WithdrawalAddresses = ({ number }: WithdrawalAddressesProps) => {
+export const BlockchainWallets = ({ count }: BlockchainWalletsProps) => {
   const classes = useStyles()
   const { isMobile } = useAppBreakpoints()
 
@@ -24,8 +24,7 @@ export const WithdrawalAddresses = ({ number }: WithdrawalAddressesProps) => {
           <Box className={classes.iconBlock}>
             <IconButton
               component={AppRouterLinkComponent}
-              to={paths.view}
-              params={{ withdrawalAddressId: number }}
+              to={paths.list}
               size='small'
             >
               <LaunchIcon className={classes.icon} />
@@ -38,7 +37,7 @@ export const WithdrawalAddresses = ({ number }: WithdrawalAddressesProps) => {
 
       <Grid item className={classes.secondBlock}>
         <Typography variant={'body1'} className={classes.value}>
-          {number}
+          {count}
         </Typography>
       </Grid>
     </Grid>

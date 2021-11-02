@@ -33,7 +33,7 @@ export const Investments = ({ primary, secondary }: InvestmentsProps) => {
           <Box width={6} />
 
           <Typography variant={'body1'} className={classes.value}>
-            S$ {formatAmount(primary)}
+            US$ {formatAmount(primary)}
           </Typography>
         </Grid>
 
@@ -49,7 +49,7 @@ export const Investments = ({ primary, secondary }: InvestmentsProps) => {
               <Box width={6} />
 
               <Typography variant={'body1'} className={classes.value}>
-                S$ {formatAmount(secondary)}
+                US$ {formatAmount(secondary)}
               </Typography>
             </Grid>
           </>

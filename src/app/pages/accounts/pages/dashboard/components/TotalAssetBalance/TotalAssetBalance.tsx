@@ -24,7 +24,7 @@ export const TotalAssetBalance = ({ value }: TotalAssetBalanceProps) => {
       <VSpacer size={'extraSmall'} />
       <Grid item className={classes.secondBlock}>
         <Typography variant={'body1'} className={classes.value}>
-          S$ {formatAmount(value)}
+          US$ {formatAmount(value)}
         </Typography>
       </Grid>
     </Grid>

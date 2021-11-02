@@ -17,7 +17,7 @@ export const Dashboard: React.FC = () => {
     <Grid container direction={'column'}>
       <Grid item>
         <VSpacer size={'medium'} />
-        <TopInfoPanel />
+        <TopInfoPanel accounts={data?.accounts} balances={data?.balances} />
         <VSpacer size={'small'} />
         <VSpacer size={'extraSmall'} />
       </Grid>
