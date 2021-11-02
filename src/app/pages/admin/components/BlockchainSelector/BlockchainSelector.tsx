@@ -26,8 +26,9 @@ export const BlockchainSelector = () => {
       {({ value, onChange }) => (
         <Grid container spacing={3}>
           {networks.map(([id, name]) => (
-            <Grid item xs={12} md={3}>
+            <Grid key={name} item xs={12} md={3}>
               <Button
+                data-testid='blockchain-selector-item'
                 onClick={() => onChange(id)}
                 component='span'
                 className={styles.item}

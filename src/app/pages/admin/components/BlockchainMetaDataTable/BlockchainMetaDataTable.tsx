@@ -10,5 +10,5 @@ interface BlockchainMetaDataTableProps {
 export const BlockchainMetaDataTable = ({
   data
 }: BlockchainMetaDataTableProps) => (
-  <TableView name='hui' columns={columns} fakeItems={data as any} />
+  <TableView name='hui' columns={columns} fakeItems={data ?? undefined} />
 )

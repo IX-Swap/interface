@@ -13,34 +13,36 @@ export const BlockchainInfo = ({ network }: BlockchainInfoProps) => {
     address: string,
     balance: string,
     walletName: string
-  ) => [
-    <Grid
-      item
-      xs={12}
-      data-testid={`blockchain-info-${kebabCase(walletName)}-address`}
-    >
-      <LabelledValue
-        label={`${walletName} Address`}
-        value={address}
-        labelFontSize={18}
-        valueFontSize={18}
-        labelWeight='thin'
-      />
-    </Grid>,
-    <Grid
-      item
-      xs={12}
-      data-testid={`blockchain-info-${kebabCase(walletName)}-balance`}
-    >
-      <LabelledValue
-        label={`${walletName} Balance`}
-        value={balance}
-        labelFontSize={18}
-        valueFontSize={18}
-        labelWeight='thin'
-      />
-    </Grid>
-  ]
+  ) => (
+    <>
+      <Grid
+        item
+        xs={12}
+        data-testid={`blockchain-info-${kebabCase(walletName)}-address`}
+      >
+        <LabelledValue
+          label={`${walletName} Address`}
+          value={address}
+          labelFontSize={18}
+          valueFontSize={18}
+          labelWeight='thin'
+        />
+      </Grid>
+      <Grid
+        item
+        xs={12}
+        data-testid={`blockchain-info-${kebabCase(walletName)}-balance`}
+      >
+        <LabelledValue
+          label={`${walletName} Balance`}
+          value={balance}
+          labelFontSize={18}
+          valueFontSize={18}
+          labelWeight='thin'
+        />
+      </Grid>
+    </>
+  )
 
   return (
     <Grid data-testid='network.info-container' container spacing={2}>

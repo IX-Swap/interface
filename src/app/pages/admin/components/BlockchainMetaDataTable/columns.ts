@@ -1,9 +1,7 @@
 import { TableColumn } from 'types/util'
-import { BlockchainSettings } from 'types/blockchain'
+import { MetaDataField } from 'types/blockchain'
 
-export const columns: Array<
-  TableColumn<BlockchainSettings['metaDataFields']>
-> = [
+export const columns: Array<TableColumn<MetaDataField>> = [
   {
     key: 'data-field',
     render: (_, item) => item?.[0],

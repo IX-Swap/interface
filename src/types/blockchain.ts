@@ -1,3 +1,5 @@
+export type MetaDataField = [string, string, string]
+
 export interface BlockchainNetwork {
   symbol: string
   name: string
@@ -12,7 +14,7 @@ export interface BlockchainNetwork {
 
 export interface BlockchainSettings {
   networks: BlockchainNetwork[]
-  metaDataFields: Array<[string, string, string]> | null
+  metaDataFields: MetaDataField[] | null
   decimal: number
 }
 
