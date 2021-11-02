@@ -33,22 +33,23 @@ export const OTPField = ({
   shouldAutoFocus = false,
   isInputNum = false
 }: OTPFieldProps) => {
+  const renderLabel = () =>
+    typeof label === 'string' ? (
+      <Typography component='p' align='center' variant='caption'>
+        {label}
+      </Typography>
+    ) : (
+      label
+    )
+
   return (
     <Grid container direction='column' spacing={1}>
-      {hasValue(label) ? (
-        <Grid item>
-          {typeof label === 'string' ? (
-            <Typography component='p' align='center' variant='caption'>
-              {label}
-            </Typography>
-          ) : (
-            label
-          )}
-        </Grid>
-      ) : null}
+      {hasValue(label) ? <Grid item>{renderLabel()}</Grid> : null}
       <Grid item>
         <OTPInputField
           fullwidth
+          name={path}
+          control={control}
           hasErrored={error}
           value={value}
           onChange={onChange}

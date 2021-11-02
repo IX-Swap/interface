@@ -135,7 +135,7 @@
     "start": "react-app-rewired start",
     "pre-install": "rimraf node_modules && yarn cache clean",
     "build": "react-app-rewired build",
-    "test:watch": "react-scripts test --env=jest-environment-jsdom-sixteen --runInBand --coverage",
+    "test:watch": "react-scripts test --env=jest-environment-jsdom-sixteen --runInBand --coverage --no-cache",
     "test": "CI=true react-scripts test --env=jest-environment-jsdom-sixteen --colors --silent --runInBand",
     "test:ci": "CI=true react-scripts test --env=jest-environment-jsdom-sixteen --silent --coverage --testResultsProcessor jest-sonar-reporter --maxWorkers=75%",
     "eject": "react-scripts eject",

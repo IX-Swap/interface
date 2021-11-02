@@ -1,10 +1,13 @@
 import { useStyles } from 'components/form/OTPInputField.styles'
 import React from 'react'
 import OtpInput, { OtpInputProps } from 'react-otp-input'
+import { Control } from 'react-hook-form'
 
 export interface OTPInputFieldArgs extends OtpInputProps {
   variant?: 'standard' | 'outlined'
   fullwidth?: boolean
+  name?: string
+  control: Control
 }
 
 export const OTPInputField = ({
