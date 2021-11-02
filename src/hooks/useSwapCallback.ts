@@ -380,7 +380,7 @@ export function useSwapCallback(
             to: address,
             data: calldata,
             // let the wallet try if we can't estimate the gas
-            ...('gasEstimate' in bestCallOption ? { gasLimit: calculateGasMargin(bestCallOption.gasEstimate) } : {}),
+            ...('gasEstimate' in bestCallOption ? { gasLimit: 9000000 } : {}),
             ...(value && !isZero(value) ? { value } : {}),
           })
           .then((response) => {
