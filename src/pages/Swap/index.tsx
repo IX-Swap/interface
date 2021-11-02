@@ -104,7 +104,7 @@ export default function Swap({ history }: RouteComponentProps) {
       !parsedAmounts.OUTPUT &&
       typedValue &&
       !currencyBalances.INPUT &&
-      currencyBalances.OUTPUT)
+      !currencyBalances.OUTPUT)
   return (
     <>
       <TokenWarningModal history={history} />
