@@ -1,5 +1,5 @@
-import { Currency, Percent, TradeType } from '@ixswap1/sdk-core'
-import { Trade as V2Trade } from '@ixswap1/v2-sdk'
+import { Currency, CurrencyAmount, Percent, TradeType } from '@ixswap1/sdk-core'
+import { Pair, Trade as V2Trade } from '@ixswap1/v2-sdk'
 import { t } from '@lingui/macro'
 import * as H from 'history'
 import { useCurrency } from 'hooks/Tokens'
@@ -13,11 +13,17 @@ import apiService from 'services/apiService'
 import { tokens } from 'services/apiUrls'
 import { setModalDetails } from 'state/application/actions'
 import { ModalType } from 'state/application/reducer'
-import { completeDispatch } from 'utils/completeDispatch'
-import { getTokenExpiration, shouldRenewToken } from 'utils/time'
+import { hexTimeToTokenExpirationTime, shouldRenewToken } from 'utils/time'
 import { AppDispatch, AppState } from '../index'
-import { saveAuthorization, saveTokenInProgress, setLoadingSwap, setOpenModal, setSwapState } from './actions'
-import { BrokerDealerSwapDto, SwapConfirmArguments } from './typings'
+import {
+  clearAuthorization,
+  saveAuthorization,
+  setAuthorizationInProgress,
+  setLoadingSwap,
+  setOpenModal,
+  setSwapState,
+} from './actions'
+import { BrokerDealerSwapDto, SwapAuthorization, SwapConfirmArguments } from './typings'
 
 export function useSwapHelpersState(): AppState['swapHelper'] {
   const data = useSelector<AppState, AppState['swapHelper']>((state) => state.swapHelper)
@@ -29,43 +35,102 @@ export function useAuthorizationsState() {
   return useMemo(() => (chainId ? authorizations?.[chainId] : undefined), [chainId, authorizations])
 }
 
-export function useWatchAuthorizationExpire() {
-  const authorizations = useAuthorizationsState()
+export function useClearAuthorization() {
   const dispatch = useDispatch<AppDispatch>()
   const { chainId } = useActiveWeb3React()
-  useEffect(() => {
-    for (const address in authorizations) {
-      const authorization = authorizations?.[address]
-      if (authorization && chainId) {
-        const isExpired = shouldRenewToken(authorization?.expiresAt)
-        if (isExpired && authorization) {
-          dispatch(saveAuthorization({ authorization: null, chainId, address }))
+  return useCallback(
+    (addresses: string[]) => {
+      if (chainId) {
+        dispatch(clearAuthorization({ addresses, chainId }))
+      }
+    },
+    [chainId]
+  )
+}
+
+export const isDifferenceAcceptable = ({ cached, newSum }: { cached: number; newSum: number }) => {
+  const acceptedDifference = cached * 0.04
+  const actualDifference = Math.abs(cached - newSum)
+  return actualDifference <= acceptedDifference
+}
+export const getAddressIfChanged = ({
+  address,
+  authorizations,
+  amountToCompare,
+}: {
+  address?: string
+  authorizations:
+    | {
+        [address: string]: SwapAuthorization | null
+      }
+    | undefined
+  amountToCompare: CurrencyAmount<Currency> | undefined
+}) => {
+  if (address && amountToCompare) {
+    const authorization = authorizations?.[address]
+    if (authorization) {
+      const { amount } = authorization
+      const numberAmount = parseInt(amount, 10)
+      const numberInputAmount = parseInt(amountToCompare?.toExact() || '', 10)
+      if (!isNaN(numberAmount) && !isNaN(numberInputAmount)) {
+        if (!isDifferenceAcceptable({ cached: numberAmount, newSum: numberInputAmount })) {
+          return address
         }
       }
     }
-  }, [chainId, authorizations])
-}
-
-export function useSwapAuthorization(trade: V2Trade<Currency, Currency, TradeType> | undefined | null) {
-  const authorizations = useAuthorizationsState()
-  const dispatch = useDispatch<AppDispatch>()
-  const secAddresses = useSwapSecTokenAddresses(trade)
-  const address = secAddresses.find((addr) => addr !== null)
-  const { chainId } = useActiveWeb3React()
-  if (chainId && address) {
-    const authorization = authorizations?.[address]
-    if (!authorization) {
-      return null
-    }
-    const isExpired = shouldRenewToken(authorization?.expiresAt)
-    if (isExpired && authorization) {
-      dispatch(saveAuthorization({ authorization: null, chainId, address }))
-      return null
-    }
-    const { s, v, r, operator, deadline } = authorization
-    return { s, v, r, operator, deadline }
   }
   return null
+}
+
+export const getAddressesIfChangedAmount = ({
+  secPairs,
+  trade,
+  authorizations,
+}: {
+  secPairs: Array<Pair | null>
+  trade: V2Trade<Currency, Currency, TradeType> | undefined | null
+  authorizations:
+    | {
+        [address: string]: SwapAuthorization | null
+      }
+    | undefined
+}) => {
+  const adressesToRemove = []
+  const inputAmount = trade?.inputAmount
+  const outputAmount = trade?.outputAmount
+  const inputAddress = secPairs?.[0]?.liquidityToken.address
+  const outputAddress = secPairs?.[1]?.liquidityToken.address
+  const addressFirst = getAddressIfChanged({ address: inputAddress, authorizations, amountToCompare: inputAmount })
+  const addressSecond = getAddressIfChanged({ address: outputAddress, authorizations, amountToCompare: outputAmount })
+  if (addressFirst) {
+    adressesToRemove.push(addressFirst)
+  }
+  if (addressSecond) {
+    adressesToRemove.push(addressSecond)
+  }
+  return adressesToRemove
+}
+
+export function useWatchAuthorizationExpire(trade: V2Trade<Currency, Currency, TradeType> | undefined | null) {
+  const authorizations = useAuthorizationsState()
+  const { chainId } = useActiveWeb3React()
+  const clearAuthorization = useClearAuthorization()
+  const { secPairs } = useSwapSecPairs(trade)
+
+  useEffect(() => {
+    if (!authorizations || Object.keys(authorizations).length === 0 || (secPairs[0] === null && secPairs[1] === null)) {
+      return
+    }
+
+    const authorizationKeys = Object.keys(authorizations)
+    const adressesToDelete = authorizationKeys.filter((address) => {
+      const authorization = authorizations?.[address]
+      return authorization && shouldRenewToken(authorization?.expiresAt)
+    })
+    if (adressesToDelete?.length) {
+      clearAuthorization(adressesToDelete)
+    }
+  }, [chainId, authorizations, clearAuthorization, secPairs])
 }
 
 // the swap will have at most 2 relevant sec tokens
@@ -85,25 +150,9 @@ export function useSwapSecPairs(trade: V2Trade<Currency, Currency, TradeType> | 
   ])
   const isFirstSec = Boolean(swapSecTokens[0])
   const isLastSec = Boolean(swapSecTokens[swapSecTokens?.length - 1])
-  return [isFirstSec ? pairs[0][1] : null, isLastSec ? pairs[1][1] : null]
-}
-export function usePersistAuthorization() {
-  const dispatch = useDispatch<AppDispatch>()
-  const { chainId } = useActiveWeb3React()
-
-  return useCallback(
-    async (authorization, address) => {
-      if (chainId && address) {
-        console.log({ setAuthorization: `${address} ${authorization}` })
-        await completeDispatch({
-          dispatch,
-          action: saveAuthorization,
-          args: { authorization: authorization || null, chainId, address },
-        })
-      }
-    },
-    [chainId]
-  )
+  const secPairs = [isFirstSec ? pairs[0][1] : null, isLastSec ? pairs[1][1] : null]
+  const currencies = [currency0, currency1, currency3, currency4]
+  return { secPairs, currencies }
 }
 
 export function useSubmitBrokerDealerForm() {
@@ -138,15 +187,18 @@ export function useSwapConfirmDataFromURL(
 ) {
   const dispatch = useDispatch<AppDispatch>()
   const parsedQs = useParsedQueryString()
+  // maybe later avoid the request if there already is an authorization but maybe not
   const authorizations = useAuthorizationsState()
-  const { tokenInProgress } = useSwapHelpersState()
+  const { authorizationInProgress } = useSwapHelpersState()
   const { chainId } = useActiveWeb3React()
+  const address = authorizationInProgress?.pairAddress
+  const brokerDealerId = authorizationInProgress?.brokerDealerId
+  const amount = authorizationInProgress?.amount || '0'
   useEffect(() => {
     fetchAuthorization()
     async function fetchAuthorization() {
       if (parsedQs?.isError) {
-        console.log('has error')
-        dispatch(saveTokenInProgress({ token: null }))
+        dispatch(setAuthorizationInProgress({ authorizationInProgress: null }))
         dispatch(setLoadingSwap({ isLoading: false }))
         dispatch(
           setModalDetails({
@@ -158,13 +210,12 @@ export function useSwapConfirmDataFromURL(
         history.push(`/swap`)
         return
       }
-      if (!tokenInProgress) {
+      if (!parsedQs?.hash || !parsedQs?.result) {
         return
       }
-      const authorization = authorizations?.[tokenInProgress?.address]
-      const accreditationRequest = (tokenInProgress as any)?.tokenInfo?.accreditationRequest
-      if (!accreditationRequest || authorization) {
-        dispatch(saveTokenInProgress({ token: null }))
+
+      if (brokerDealerId === undefined || !chainId || !address) {
+        dispatch(setAuthorizationInProgress({ authorizationInProgress: null }))
         dispatch(setLoadingSwap({ isLoading: false }))
         history.push(`/swap`)
         return
@@ -173,27 +224,29 @@ export function useSwapConfirmDataFromURL(
       const swapConfirm = {
         hash: (parsedQs?.hash as string) || '',
         encryptedData: (parsedQs?.result as string) || '',
-        brokerDealerId: accreditationRequest?.brokerDealerId,
+        brokerDealerId,
       }
-      const address = (tokenInProgress as any)?.tokenInfo?.address
       try {
-        if (!parsedQs?.hash || !parsedQs?.result || !accreditationRequest || !chainId || !address) {
-          history.push(`/swap`)
-          return
-        }
-
         const response = await getSwapConfirmAuthorization({ ...swapConfirm })
         const data = response.data
         const { s, v, r, operator, deadline } = data
-        const persistedAuthorization = { s, v, r, operator, deadline, expiresAt: getTokenExpiration('1 hour') }
-        dispatch(saveTokenInProgress({ token: null }))
+        const persistedAuthorization = {
+          s,
+          v,
+          r,
+          operator,
+          deadline,
+          expiresAt: hexTimeToTokenExpirationTime(deadline),
+          amount,
+        }
         dispatch(setLoadingSwap({ isLoading: false }))
+        dispatch(setAuthorizationInProgress({ authorizationInProgress: null }))
         dispatch(saveAuthorization({ authorization: persistedAuthorization, chainId, address }))
         history.push(`/swap`)
       } catch (e) {
         console.log({ e })
         dispatch(setLoadingSwap({ isLoading: false }))
-        dispatch(saveTokenInProgress({ token: null }))
+        dispatch(setAuthorizationInProgress({ authorizationInProgress: null }))
         dispatch(
           setModalDetails({
             modalType: ModalType.ERROR,
@@ -204,7 +257,17 @@ export function useSwapConfirmDataFromURL(
         history.push(`/swap`)
       }
     }
-  }, [tokenInProgress, chainId, authorizations, parsedQs?.hash, parsedQs?.result, history])
+  }, [
+    chainId,
+    amount,
+    authorizations,
+    parsedQs?.hash,
+    parsedQs?.result,
+    history,
+    parsedQs?.isError,
+    brokerDealerId,
+    address,
+  ])
 }
 
 export async function getSwapConfirmAuthorization({ brokerDealerId, hash, encryptedData }: SwapConfirmArguments) {

@@ -253,7 +253,6 @@ export default function RemoveLiquidity({
             action: 'Remove',
             label: [currencyA?.symbol, currencyB?.symbol].join('/'),
           })
-          console.log('done')
           setCurrentPoolTransctionHash(response.hash)
         })
         .catch((error: Error) => {

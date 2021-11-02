@@ -1,13 +1,15 @@
-import { createAction } from '@reduxjs/toolkit'
-import { SwapAuthorization } from './typings'
-import { Currency, Token, TradeType } from '@ixswap1/sdk-core'
+import { Currency, TradeType } from '@ixswap1/sdk-core'
 import { Trade as V2Trade } from '@ixswap1/v2-sdk'
+import { createAction } from '@reduxjs/toolkit'
+import { AuthorizationInProgress, SwapAuthorization } from './typings'
 
 export const saveAuthorization =
   createAction<{ authorization: SwapAuthorization | null; chainId: number; address: string }>(
     'swapHelper/saveAuthorization'
   )
-
+export const clearAuthorization = createAction<{ addresses: string[]; chainId: number }>(
+  'swapHelper/clearAuthorization'
+)
 export const setSwapState =
   createAction<{
     showConfirm: boolean
@@ -22,11 +24,11 @@ export const setOpenModal =
     openModal: boolean
   }>('swapHelper/setOpenModal')
 
-export const saveTokenInProgress = createAction<{
-  token: Token | null
-}>('swapHelper/saveTokenInProgress')
-
 export const setLoadingSwap =
   createAction<{
     isLoading: boolean
   }>('swapHelper/setLoadingSwap')
+
+export const setAuthorizationInProgress = createAction<{
+  authorizationInProgress?: AuthorizationInProgress | null
+}>('swapHelper/setAuthorizationInProgress')

@@ -1,17 +1,21 @@
 import { Percent } from '@ixswap1/sdk-core'
+import { Pair } from '@ixswap1/v2-sdk'
+import { t } from '@lingui/macro'
 import { useActiveWeb3React } from 'hooks/web3'
 import { useCallback } from 'react'
 import ReactGA from 'react-ga'
 import { useDerivedSwapInfo, useSwapState } from 'state/swap/hooks'
-import { useOpenModal, usePersistAuthorization, useSetSwapState } from 'state/swapHelper/hooks'
+import {
+  getAddressesIfChangedAmount,
+  useAuthorizationsState,
+  useClearAuthorization,
+  useOpenModal,
+  useSetSwapState,
+  useSwapSecPairs,
+} from 'state/swapHelper/hooks'
 import confirmPriceImpactWithoutFee from '../../components/swap/confirmPriceImpactWithoutFee'
 import useENSAddress from '../../hooks/useENSAddress'
-import {
-  useAuthorizationDigest,
-  useSwapCallback,
-  useSwapCallbackError,
-  useSwapSecTokenAddresses,
-} from '../../hooks/useSwapCallback'
+import { useAuthorizationDigest, useSwapCallback, useSwapCallbackError } from '../../hooks/useSwapCallback'
 import { Version } from '../../hooks/useToggledVersion'
 import { useUserSingleHopOnly } from '../../state/user/hooks'
 
@@ -27,12 +31,29 @@ export function useHandleSwap({ priceImpact }: { priceImpact: Percent | undefine
   const [singleHopOnly] = useUserSingleHopOnly()
   // if missing authorization, don't swap. after successful swap, clear all authorizations
   const authorizationDigest = useAuthorizationDigest(trade)
-  const setAuthorization = usePersistAuthorization()
-  const swapSecTokens = useSwapSecTokenAddresses(trade)
+  const clearAuthorization = useClearAuthorization()
+  const { secPairs: pairs } = useSwapSecPairs(trade)
   const { error: swapCallbackError } = useSwapCallbackError(trade, allowedSlippage, recipient)
+  const authorizations = useAuthorizationsState()
 
   return useCallback(async () => {
     const { callback: swapCallback } = await getSwapCallback()
+    const cleanUpAddresses = getAddressesIfChangedAmount({
+      secPairs: pairs,
+      trade,
+      authorizations,
+    })
+    if (cleanUpAddresses.length) {
+      clearAuthorization(cleanUpAddresses)
+      setSwapState({
+        attemptingTxn: false,
+        tradeToConfirm,
+        showConfirm: false,
+        swapErrorMessage: t`Amount changed. Please repeat authorization`,
+        txHash: undefined,
+      })
+      return
+    }
     if (swapCallbackError || !swapCallback || shouldGetAuthorization) {
       return
     }
@@ -41,14 +62,11 @@ export function useHandleSwap({ priceImpact }: { priceImpact: Percent | undefine
     }
     setSwapState({ attemptingTxn: true, tradeToConfirm, showConfirm, swapErrorMessage: undefined, txHash: undefined })
     setOpenModal(true)
+    const onlySecTokens: string[] = pairs
+      .filter((pair): pair is Pair => !!pair)
+      .map((pair) => pair.liquidityToken.address)
     try {
       const hash = await swapCallback()
-      console.log({ authorizationDigest, hash, swapSecTokens })
-      if (authorizationDigest && swapSecTokens.length && !swapSecTokens.every((address) => address === null)) {
-        for (const address in swapSecTokens) {
-          await setAuthorization(null, address)
-        }
-      }
       setSwapState({
         attemptingTxn: false,
         tradeToConfirm: undefined,
@@ -80,6 +98,10 @@ export function useHandleSwap({ priceImpact }: { priceImpact: Percent | undefine
         swapErrorMessage: (error as any)?.message as string,
         txHash: undefined,
       })
+    } finally {
+      if (authorizationDigest && onlySecTokens.length) {
+        clearAuthorization(onlySecTokens)
+      }
     }
   }, [
     priceImpact,
@@ -93,12 +115,11 @@ export function useHandleSwap({ priceImpact }: { priceImpact: Percent | undefine
     singleHopOnly,
     authorizationDigest,
     shouldGetAuthorization,
-    swapSecTokens,
-    setAuthorization,
-
+    clearAuthorization,
     swapCallbackError,
-
+    pairs,
     setOpenModal,
     setSwapState,
+    authorizations,
   ])
 }

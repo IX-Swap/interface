@@ -5,7 +5,7 @@ import * as H from 'history'
 import { useMissingAuthorizations } from 'hooks/useSwapCallback'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useSecTokens } from 'state/secTokens/hooks'
+import { useSetSwapState } from 'state/swapHelper/hooks'
 import { useUserSecTokens, useUserSingleHopOnly } from 'state/user/hooks'
 import { useAllTokens, useCurrency } from '../../hooks/Tokens'
 import useENS from '../../hooks/useENS'
@@ -110,7 +110,7 @@ export function useDerivedSwapInfo(): {
     [Field.OUTPUT]: { currencyId: outputCurrencyId },
     recipient,
   } = useSwapState()
-
+  const { swapErrorMessage } = useSetSwapState()
   const inputCurrency = useCurrency(inputCurrencyId)
   const outputCurrency = useCurrency(outputCurrencyId)
   const recipientLookup = useENS(recipient ?? undefined)
@@ -182,7 +182,11 @@ export function useDerivedSwapInfo(): {
   const missingAuthorizations = useMissingAuthorizations(v2Trade)
   const shouldGetAuthorization = missingAuthorizations.length > 0
   if (shouldGetAuthorization && !inputError) {
-    inputError = t`Authorization missing`
+    if (swapErrorMessage) {
+      inputError = swapErrorMessage
+    } else {
+      inputError = t`Authorization missing`
+    }
   }
   return {
     currencies,

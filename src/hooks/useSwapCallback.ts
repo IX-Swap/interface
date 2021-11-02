@@ -1,10 +1,10 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Currency, Percent, TradeType } from '@ixswap1/sdk-core'
-import { Router, Trade as V2Trade, TradeAuthorization } from '@ixswap1/v2-sdk'
+import { Pair, Router, Trade as V2Trade, TradeAuthorization } from '@ixswap1/v2-sdk'
 import { t } from '@lingui/macro'
 import { useCallback, useMemo } from 'react'
 import { useDerivedSwapInfo } from 'state/swap/hooks'
-import { useAuthorizationsState } from 'state/swapHelper/hooks'
+import { useAuthorizationsState, useSwapSecPairs } from 'state/swapHelper/hooks'
 import { useTransactionAdder } from '../state/transactions/hooks'
 import { isAddress, shortenAddress } from '../utils'
 import approveAmountCalldata from '../utils/approveAmountCalldata'
@@ -48,14 +48,33 @@ interface FailedCall extends SwapCallEstimate {
   call: SwapCall
   error: Error
 }
+export function getTokenToPairMap(pairs: Array<Pair | null>) {
+  const tokenToPairMap = pairs.reduce((previous, current) => {
+    const newMap: { [key: string]: string } = {}
+    const token0 = current?.token0
+    const token1 = current?.token1
+    const pairAddress = current?.liquidityToken.address
+    if (token0 && pairAddress) {
+      const address = (token0 as any)?.tokenInfo?.address as string
+      newMap[address] = pairAddress
+    }
+    if (token1 && pairAddress) {
+      const address = (token1 as any)?.tokenInfo?.address as string
+      newMap[address] = pairAddress
+    }
+    return { ...previous, ...newMap }
+  }, {} as { [key: string]: string })
+  return tokenToPairMap
+}
 
 export function useMissingAuthorizations(trade: V2Trade<Currency, Currency, TradeType> | undefined | null) {
   const addresses = useSwapSecTokenAddresses(trade)
   const authorizations = useAuthorizationsState()
-
+  const { secPairs: pairs } = useSwapSecPairs(trade)
   return useMemo(() => {
-    return addresses.filter((address) => address !== null && !authorizations?.[address])
-  }, [addresses, authorizations])
+    const tokenToPairMap = getTokenToPairMap(pairs)
+    return addresses.filter((address) => address !== null && !authorizations?.[tokenToPairMap[address]])
+  }, [addresses, authorizations, pairs])
 }
 
 export function useAuthorizationDigest(
@@ -63,22 +82,27 @@ export function useAuthorizationDigest(
 ): Array<TradeAuthorization> | undefined {
   const authorizations = useAuthorizationsState()
   const addresses = useSwapSecTokenAddresses(trade)
-  if (!addresses || addresses.length === 0) {
-    return undefined
-  }
-  const authorizationDigest: Array<TradeAuthorization> = addresses.map((address) => {
-    const addressAuthorization = address && authorizations ? authorizations[address] : null
-    if (!addressAuthorization) {
-      return EMPTY_AUTHORIZATION
+  const { secPairs: pairs } = useSwapSecPairs(trade)
+  const authorizationDigest: Array<TradeAuthorization> | undefined = useMemo(() => {
+    if (!addresses || addresses.length === 0) {
+      return undefined
     }
-    return {
-      v: addressAuthorization?.v,
-      r: addressAuthorization.r,
-      operator: addressAuthorization.operator,
-      s: addressAuthorization.s,
-      deadline: addressAuthorization.deadline,
-    }
-  })
+    const tokenToPairMap = getTokenToPairMap(pairs)
+    return addresses.map((address) => {
+      const addressAuthorization = address && authorizations ? authorizations[tokenToPairMap[address]] : null
+      if (!addressAuthorization) {
+        return EMPTY_AUTHORIZATION
+      }
+      return {
+        v: addressAuthorization?.v,
+        r: addressAuthorization.r,
+        operator: addressAuthorization.operator,
+        s: addressAuthorization.s,
+        deadline: addressAuthorization.deadline,
+      }
+    })
+  }, [addresses, authorizations, pairs])
+
   return authorizationDigest
 }
 
