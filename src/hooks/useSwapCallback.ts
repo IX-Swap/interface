@@ -74,6 +74,8 @@ export function useMissingAuthorizations(trade: V2Trade<Currency, Currency, Trad
   const { secPairs: pairs } = useSwapSecPairs(trade)
   return useMemo(() => {
     const tokenToPairMap = getTokenToPairMap(pairs)
+    console.log({ tokenToPairMap, authorizations, pairs })
+
     return addresses.filter((address) => address !== null && !authorizations?.[tokenToPairMap[address]])
   }, [addresses, authorizations, pairs])
 }
