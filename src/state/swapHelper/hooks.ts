@@ -71,10 +71,16 @@ export const getAddressIfChanged = ({
     if (authorization) {
       const { amount } = authorization
       const numberAmount = parseInt(amount, 10)
-      const numberInputAmount = parseInt(amountToCompare?.toExact() || '', 10)
+      const stringToCompare = amountToCompare?.toSignificant()
+      const numberInputAmount = parseInt(amountToCompare?.toSignificant() || '', 10)
       if (!isNaN(numberAmount) && !isNaN(numberInputAmount)) {
         if (!isDifferenceAcceptable({ cached: numberAmount, newSum: numberInputAmount })) {
-          console.log({ amountFromAuth: numberAmount, amountFromInput: numberInputAmount, amountToCompare })
+          console.log({
+            amountFromAuth: numberAmount,
+            amountFromInput: numberInputAmount,
+            amountToCompare,
+            stringToCompare,
+          })
           return address
         }
       }
