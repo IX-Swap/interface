@@ -41,6 +41,6 @@ export const useStyles = makeStyles(theme => ({
     whiteSpace: 'nowrap'
   },
   space: {
-    width: theme.spacing(3)
+    paddingRight: theme.spacing(3)
   }
 }))

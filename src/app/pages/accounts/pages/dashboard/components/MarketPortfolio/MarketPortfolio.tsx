@@ -58,7 +58,10 @@ export const MarketPortfolio = ({
   const amount = fundAmount + debtAmount + equityAmount + hybridAmount
 
   if (amount < totalAmount) {
-    chartData.push(['Others', totalAmount - amount])
+    chartData.push([
+      `Others (${formatDecimal(totalAmount - amount)})`,
+      totalAmount - amount
+    ])
   }
 
   const renderChart = () => (

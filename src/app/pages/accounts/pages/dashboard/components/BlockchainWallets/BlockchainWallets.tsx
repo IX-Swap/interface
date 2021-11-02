@@ -18,7 +18,11 @@ export const BlockchainWallets = ({ count }: BlockchainWalletsProps) => {
   return (
     <Grid item className={classes.wrapper}>
       <Grid item className={classes.firstBlock}>
-        <Typography variant={'subtitle2'} className={classes.label}>
+        <Typography
+          variant={'subtitle2'}
+          className={classes.label}
+          data-testid={'title'}
+        >
           Blockchain Wallets
           {isMobile ? ':' : ''}
           <Box className={classes.iconBlock}>
