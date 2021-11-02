@@ -5,6 +5,7 @@ import { t } from '@lingui/macro'
 import { useCallback, useMemo } from 'react'
 import { useDerivedSwapInfo } from 'state/swap/hooks'
 import { useAuthorizationsState, useSwapSecPairs } from 'state/swapHelper/hooks'
+import { calculateGasMargin } from 'utils/calculateGasMargin'
 import { useTransactionAdder } from '../state/transactions/hooks'
 import { isAddress, shortenAddress } from '../utils'
 import approveAmountCalldata from '../utils/approveAmountCalldata'
@@ -164,6 +165,7 @@ function useSwapCallArguments(
     swapMethods.push(Router.swapCallParameters(trade, options))
 
     if (trade.tradeType === TradeType.EXACT_INPUT) {
+      console.log('is exact input')
       swapMethods.push(
         Router.swapCallParameters(trade, {
           feeOnTransfer: true,
@@ -376,7 +378,7 @@ export function useSwapCallback(
             to: address,
             data: calldata,
             // let the wallet try if we can't estimate the gas
-            ...('gasEstimate' in bestCallOption ? { gasLimit: 9000000 } : {}),
+            ...('gasEstimate' in bestCallOption ? { gasLimit: calculateGasMargin(bestCallOption.gasEstimate) } : {}),
             ...(value && !isZero(value) ? { value } : {}),
           })
           .then((response) => {
