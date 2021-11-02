@@ -74,6 +74,7 @@ export const getAddressIfChanged = ({
       const numberInputAmount = parseInt(amountToCompare?.toExact() || '', 10)
       if (!isNaN(numberAmount) && !isNaN(numberInputAmount)) {
         if (!isDifferenceAcceptable({ cached: numberAmount, newSum: numberInputAmount })) {
+          console.log({ amountFromAuth: numberAmount, amountFromInput: numberInputAmount })
           return address
         }
       }
@@ -239,6 +240,7 @@ export function useSwapConfirmDataFromURL(
           expiresAt: hexTimeToTokenExpirationTime(deadline),
           amount,
         }
+        console.log({ savedAmount: amount })
         dispatch(setLoadingSwap({ isLoading: false }))
         dispatch(setAuthorizationInProgress({ authorizationInProgress: null }))
         dispatch(saveAuthorization({ authorization: persistedAuthorization, chainId, address }))
