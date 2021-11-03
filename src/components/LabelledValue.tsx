@@ -91,6 +91,7 @@ export const LabelledValue = (props: LabelledValueProps & GridProps) => {
       styles: {
         fontWeight: labelWeightMap[labelWeight],
         fontSize: reverse ? labelFontSize : undefined,
+        width: '100%',
         color: isNewThemeOn
           ? theme.palette.slider.activeColor
           : labelColor === 'default'
@@ -104,7 +105,8 @@ export const LabelledValue = (props: LabelledValueProps & GridProps) => {
         fontWeight: valueWeightMap[valueWeight],
         fontSize: reverse ? valueFontSize : undefined,
         color: valueColor ?? undefined,
-        opacity: isNewThemeOn ? 0.6 : 1
+        opacity: isNewThemeOn ? 0.6 : 1,
+        width: '100%'
       }
     }
   ]
@@ -113,7 +115,7 @@ export const LabelledValue = (props: LabelledValueProps & GridProps) => {
 
   return (
     <Grid {...rest} item container direction={direction}>
-      <Typography style={first.styles}>
+      <Typography style={first.styles} noWrap>
         {first.text}
         {row && !reverse && ':'}
       </Typography>
@@ -130,7 +132,7 @@ export const LabelledValue = (props: LabelledValueProps & GridProps) => {
           {last.text}
         </Box>
       ) : (
-        <Typography style={last.styles} align={align}>
+        <Typography style={last.styles} align={align} noWrap>
           {last.text}
         </Typography>
       )}

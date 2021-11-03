@@ -1,9 +1,8 @@
 import React from 'react'
-import { Box, Grid } from '@material-ui/core'
+import { Grid, Hidden } from '@material-ui/core'
 import { LabelledValue } from 'components/LabelledValue'
 import { DigitalSecurityOffering } from 'types/dso'
-import { VSpacer } from 'components/VSpacer'
-import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+import { DSOInvestButton } from 'app/components/DSO/components/DSOInvestButton'
 
 export interface DSOInvestorOverviewProps {
   dso: DigitalSecurityOffering
@@ -11,83 +10,52 @@ export interface DSOInvestorOverviewProps {
 
 export const DSOInvestorOverview = (props: DSOInvestorOverviewProps) => {
   const { dso } = props
-  const { isTablet, isMobile } = useAppBreakpoints()
-  const boxWidth = isMobile ? '100%' : isTablet ? '45%' : 'initial'
 
   return (
-    <Grid item container justify={'space-between'}>
-      <Box width={boxWidth}>
-        <Grid item>
-          <LabelledValue
-            label='Network'
-            value={dso.network?.name}
-            isNewThemeOn
-          />
+    <Grid container spacing={3}>
+      <Grid item xs={6} md={3}>
+        <LabelledValue label='Network' value={dso.network?.name} isNewThemeOn />
+      </Grid>
+      <Grid item xs={6} md={3}>
+        <LabelledValue label='Decimal' value={dso.decimalPlaces} isNewThemeOn />
+      </Grid>
+      <Grid item xs={6} md={3}>
+        <LabelledValue
+          label='Capital Structure'
+          value={dso.capitalStructure}
+          isNewThemeOn
+        />
+      </Grid>
+      <Grid item xs={6} md={3}>
+        <LabelledValue
+          label='Token Address'
+          value={dso.deploymentInfo?.token ?? ''}
+          isNewThemeOn
+        />
+      </Grid>
+      <Grid item xs={6} md={3}>
+        <LabelledValue
+          label='Launch Date'
+          value={dso.launchDate}
+          isNewThemeOn
+        />
+      </Grid>
+      <Grid item xs={6} md={3}>
+        <LabelledValue
+          label='Completion Date'
+          value={dso.completionDate}
+          isNewThemeOn
+        />
+      </Grid>
+      <Hidden mdUp>
+        <Grid item xs={12} container justify='flex-end'>
+          <Grid item>
+            <Grid item>
+              <DSOInvestButton dso={dso} />
+            </Grid>
+          </Grid>
         </Grid>
-
-        <VSpacer size={'small'} />
-        <VSpacer size={'extraSmall'} />
-
-        <Grid item>
-          <LabelledValue
-            label='Decimal'
-            value={dso.decimalPlaces}
-            isNewThemeOn
-          />
-        </Grid>
-
-        {isTablet && <VSpacer size={'small'} />}
-        {isTablet && <VSpacer size={'extraSmall'} />}
-      </Box>
-      <Box width={boxWidth}>
-        <Grid item>
-          <LabelledValue
-            label='Capital Structure'
-            value={dso.capitalStructure}
-            isNewThemeOn
-          />
-        </Grid>
-
-        <VSpacer size={'small'} />
-        <VSpacer size={'extraSmall'} />
-
-        <Grid item>
-          <LabelledValue
-            label='Token Address'
-            value={dso.deploymentInfo?.token ?? ''}
-            isNewThemeOn
-          />
-        </Grid>
-
-        {isTablet && <VSpacer size={'small'} />}
-        {isTablet && <VSpacer size={'extraSmall'} />}
-      </Box>
-
-      <Box width={boxWidth}>
-        <Grid item>
-          <LabelledValue
-            label='Launch Date'
-            value={dso.launchDate}
-            isNewThemeOn
-          />
-        </Grid>
-
-        {isTablet && <VSpacer size={'small'} />}
-        {isTablet && <VSpacer size={'extraSmall'} />}
-      </Box>
-
-      <Box width={boxWidth}>
-        <Grid item>
-          <LabelledValue
-            label='Completion Date'
-            value={dso.completionDate}
-            isNewThemeOn
-          />
-        </Grid>
-
-        {isTablet && <VSpacer size={'small'} />}
-        {isTablet && <VSpacer size={'extraSmall'} />}
-      </Box>
+      </Hidden>
     </Grid>
   )
 }
