@@ -10,11 +10,11 @@ interface Props {
 }
 export const DetailsElement = ({ title, content }: Props) => {
   return (
-    <GridElement>
+    <GridElement style={{ marginBottom: '13px' }}>
       <Row>
         <DescriptionTitle>{title}</DescriptionTitle>
         <TYPE.titleSmall color={'text2'}>
-          <Box marginLeft="13px" display="flex">
+          <Box marginLeft="14px" display="flex">
             {content}
           </Box>
         </TYPE.titleSmall>

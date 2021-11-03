@@ -133,18 +133,12 @@ function Sock() {
 // eslint-disable-next-line react/prop-types
 function StatusIcon({ connector }: { connector: AbstractConnector }) {
   if (connector === injected) {
-    return (
-      <DesktopAndTablet>
-        <Identicon />
-      </DesktopAndTablet>
-    )
+    return <Identicon />
   } else if (connector === walletconnect) {
     return (
-      <DesktopAndTablet>
-        <IconWrapper size={16}>
-          <img src={WalletConnectIcon} alt={'WalletConnect'} />
-        </IconWrapper>
-      </DesktopAndTablet>
+      <IconWrapper size={16}>
+        <img src={WalletConnectIcon} alt={'WalletConnect'} />
+      </IconWrapper>
     )
   }
   // else if (connector === walletlink) {
@@ -220,14 +214,16 @@ function Web3StatusInner() {
         <Text>{error instanceof UnsupportedChainIdError ? <Trans>Wrong Network</Trans> : <Trans>Error</Trans>}</Text>
       </Web3StatusError>
     )
+  } else if (!isMobile) {
+    return (
+      <Web3StatusConnect id="connect-wallet" onClick={connectWallet} faded={!account}>
+        <Text style={{ fontWeight: 600 }}>
+          <Trans>Connect Wallet</Trans>
+        </Text>
+      </Web3StatusConnect>
+    )
   }
-  return (
-    <Web3StatusConnect id="connect-wallet" onClick={connectWallet} faded={!account}>
-      <Text style={{ fontWeight: 600 }}>
-        <Trans>Connect Wallet</Trans>
-      </Text>
-    </Web3StatusConnect>
-  )
+  return null
 }
 
 export default function Web3Status() {

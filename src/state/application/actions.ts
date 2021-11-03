@@ -1,4 +1,5 @@
 import { createAction } from '@reduxjs/toolkit'
+import { ModalType } from './reducer'
 
 export type PopupContent = {
   txn: {
@@ -30,6 +31,7 @@ export enum ApplicationModal {
   UNSTAKE_IXS,
   IXS_BALANCE,
   NETWORK_SELECTOR,
+  GENERAL,
 }
 
 export const updateBlockNumber = createAction<{ chainId: number; blockNumber: number }>('application/updateBlockNumber')
@@ -37,3 +39,5 @@ export const setOpenModal = createAction<ApplicationModal | null>('application/s
 export const addPopup =
   createAction<{ key?: string; removeAfterMs?: number | null; content: PopupContent }>('application/addPopup')
 export const removePopup = createAction<{ key: string }>('application/removePopup')
+export const setModalDetails =
+  createAction<{ modalType: ModalType; modalTitle: string; modalMessage: string }>('application/setModalDetails')

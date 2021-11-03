@@ -64,6 +64,16 @@ export interface KycList {
   prevPage: number
 }
 
+export interface BrokerDealerList {
+  data: any
+}
+
+export interface BrokerDealerSwaps {
+  page: number
+  totalPages: number
+  items: any[]
+  offset: number
+}
 export interface KycItem {
   createdAt: string
   custodianApplicationId?: number
@@ -146,6 +156,16 @@ export const getKycList: Readonly<{
   rejected: createAction('admin/getKycList/rejected'),
 }
 
+export const getBrokerDealerList: Readonly<{
+  pending: ActionCreatorWithoutPayload
+  fulfilled: ActionCreatorWithPayload<{ data: BrokerDealerList }>
+  rejected: ActionCreatorWithPayload<{ errorMessage: string }>
+}> = {
+  pending: createAction('admin/getBrokerDealerList/pending'),
+  fulfilled: createAction('admin/getBrokerDealerList/fulfilled'),
+  rejected: createAction('admin/getBrokerDealerList/rejected'),
+}
+
 export const postApproveKyc: Readonly<{
   pending: ActionCreatorWithoutPayload
   fulfilled: ActionCreatorWithPayload<{ data: { id: number; status: string } }>
@@ -174,4 +194,14 @@ export const postKycReset: Readonly<{
   pending: createAction('admin/postKycReset/pending'),
   fulfilled: createAction('admin/postKycReset/fulfilled'),
   rejected: createAction('admin/postKycReset/rejected'),
+}
+
+export const getBrokerDealerSwaps: Readonly<{
+  pending: ActionCreatorWithoutPayload
+  fulfilled: ActionCreatorWithPayload<{ data: BrokerDealerSwaps }>
+  rejected: ActionCreatorWithPayload<{ errorMessage: string }>
+}> = {
+  pending: createAction('broker-dealer/swaps/pending'),
+  fulfilled: createAction('broker-dealer/swaps/fulfilled'),
+  rejected: createAction('broker-dealer/swaps/rejected'),
 }

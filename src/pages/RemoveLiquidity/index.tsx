@@ -10,6 +10,7 @@ import React, { useCallback, useMemo, useState } from 'react'
 import ReactGA from 'react-ga'
 import { RouteComponentProps } from 'react-router'
 import { Box, Text } from 'rebass'
+import { setPoolTransactionHash } from 'state/pool/hooks'
 import { routes } from 'utils/routes'
 import { ButtonIXSWide } from '../../components/Button'
 import { AutoColumn } from '../../components/Column'
@@ -53,6 +54,7 @@ export default function RemoveLiquidity({
 
   // toggle wallet when disconnected
   const toggleWalletModal = useWalletModalToggle()
+  const setCurrentPoolTransctionHash = setPoolTransactionHash()
 
   // burn state
   const { independentField, typedValue } = useBurnState()
@@ -120,6 +122,7 @@ export default function RemoveLiquidity({
   const addTransaction = useTransactionAdder()
 
   async function onRemove() {
+    setCurrentPoolTransctionHash(null)
     if (!chainId || !library || !account || !deadline || !router) throw new Error('missing dependencies')
     const { [Field.CURRENCY_A]: currencyAmountA, [Field.CURRENCY_B]: currencyAmountB } = parsedAmounts
     if (!currencyAmountA || !currencyAmountB) {
@@ -250,6 +253,7 @@ export default function RemoveLiquidity({
             action: 'Remove',
             label: [currencyA?.symbol, currencyB?.symbol].join('/'),
           })
+          setCurrentPoolTransctionHash(response.hash)
         })
         .catch((error: Error) => {
           setAttemptingTxn(false)
