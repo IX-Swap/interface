@@ -1,6 +1,5 @@
-import { Currency, CurrencyAmount, Percent, Token, TradeType } from '@ixswap1/sdk-core'
+import { Currency, Percent, Token, TradeType } from '@ixswap1/sdk-core'
 import { Trade as V2Trade } from '@ixswap1/v2-sdk'
-import JSBI from 'jsbi'
 import { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 import apiService from 'services/apiService'
@@ -12,7 +11,6 @@ import { authorizeSecToken } from 'state/user/actions'
 import { OrderType } from 'state/user/enum'
 import { useUserSecTokens } from 'state/user/hooks'
 import { getStringAmount } from 'utils/getStringAmount'
-
 export interface AuthorizationParams {
   tokenId: number
   amount: string
@@ -128,6 +126,7 @@ export function useSwapAuthorizeFirstStep(
                 tokenAddress: tokenInfo?.address,
                 tokenId: tokenInfo?.id,
                 brokerDealerId,
+                platform: tokenInfo?.platform?.name,
               },
             })
           )

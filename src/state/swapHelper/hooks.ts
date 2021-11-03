@@ -7,11 +7,13 @@ import useParsedQueryString from 'hooks/useParsedQueryString'
 import { useSwapSecTokenAddresses } from 'hooks/useSwapCallback'
 import { useV2Pairs } from 'hooks/useV2Pairs'
 import { useActiveWeb3React } from 'hooks/web3'
+import { platform } from 'os'
 import { useCallback, useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import apiService from 'services/apiService'
 import { tokens } from 'services/apiUrls'
 import { setModalDetails } from 'state/application/actions'
+import { useAddPopup } from 'state/application/hooks'
 import { ModalType } from 'state/application/reducer'
 import { getStringAmount } from 'utils/getStringAmount'
 import { hexTimeToTokenExpirationTime, shouldRenewToken } from 'utils/time'
@@ -24,6 +26,7 @@ import {
   setOpenModal,
   setSwapState,
 } from './actions'
+import { getMessage } from './getMessage'
 import { BrokerDealerSwapDto, SwapAuthorization, SwapConfirmArguments } from './typings'
 
 export function useSwapHelpersState(): AppState['swapHelper'] {
@@ -196,6 +199,7 @@ export function useSwapConfirmDataFromURL(
   const { chainId } = useActiveWeb3React()
   const address = authorizationInProgress?.pairAddress
   const brokerDealerId = authorizationInProgress?.brokerDealerId
+  const addPopup = useAddPopup()
   const amount = authorizationInProgress?.amount || '0'
   useEffect(() => {
     fetchAuthorization()
@@ -203,13 +207,12 @@ export function useSwapConfirmDataFromURL(
       if (parsedQs?.isError) {
         dispatch(setAuthorizationInProgress({ authorizationInProgress: null }))
         dispatch(setLoadingSwap({ isLoading: false }))
-        dispatch(
-          setModalDetails({
-            modalType: ModalType.ERROR,
-            modalTitle: t`Something went wrong`,
-            modalMessage: t`Please retry`,
-          })
-        )
+        addPopup({
+          info: {
+            success: false,
+            summary: getMessage({ name: authorizationInProgress?.platform ?? '', isError: true }),
+          },
+        })
         history.push(`/swap`)
         return
       }
@@ -245,24 +248,28 @@ export function useSwapConfirmDataFromURL(
         dispatch(setLoadingSwap({ isLoading: false }))
         dispatch(setAuthorizationInProgress({ authorizationInProgress: null }))
         dispatch(saveAuthorization({ authorization: persistedAuthorization, chainId, address }))
-        dispatch(
-          setModalDetails({
-            modalType: ModalType.SUCCESS,
-            modalTitle: t`Success`,
-            modalMessage: t`Transaction authorized by broker dealer`,
-          })
+        addPopup(
+          {
+            info: {
+              success: true,
+              summary: getMessage({ name: authorizationInProgress?.platform, isError: false }),
+            },
+          },
+          authorizationInProgress.pairAddress
         )
         history.push(`/swap`)
       } catch (e) {
         console.log({ e })
         dispatch(setLoadingSwap({ isLoading: false }))
         dispatch(setAuthorizationInProgress({ authorizationInProgress: null }))
-        dispatch(
-          setModalDetails({
-            modalType: ModalType.ERROR,
-            modalTitle: t`Something went wrong`,
-            modalMessage: t`Please retry`,
-          })
+        addPopup(
+          {
+            info: {
+              success: false,
+              summary: getMessage({ name: authorizationInProgress?.platform, isError: true }),
+            },
+          },
+          authorizationInProgress.pairAddress
         )
         history.push(`/swap`)
       }
@@ -277,6 +284,8 @@ export function useSwapConfirmDataFromURL(
     parsedQs?.isError,
     brokerDealerId,
     address,
+    authorizationInProgress,
+    addPopup,
   ])
 }
 
