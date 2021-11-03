@@ -247,7 +247,7 @@ export function useSwapConfirmDataFromURL(
         dispatch(saveAuthorization({ authorization: persistedAuthorization, chainId, address }))
         dispatch(
           setModalDetails({
-            modalType: ModalType.INFO,
+            modalType: ModalType.SUCCESS,
             modalTitle: t`Success`,
             modalMessage: t`Transaction authorized by broker dealer`,
           })
