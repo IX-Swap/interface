@@ -46,8 +46,6 @@ function getStatusMessage(
       )
     case AccreditationStatusEnum.REJECTED:
       return accreditationRequest?.message || t`Accreditation rejected`
-    case AccreditationStatusEnum.APPROVED:
-      return accreditationRequest?.message || t`Accreditation finished successfully`
     case undefined:
     default:
       return t`You need to pass accreditation and KYC to start trading with the ${symbolText} token.`
