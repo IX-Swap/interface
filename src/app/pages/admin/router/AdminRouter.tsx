@@ -17,12 +17,16 @@ import { Banner } from 'app/pages/admin/pages/Banner'
 import { VirtualAccountAudit } from 'app/pages/admin/pages/VirtualAccountAudit'
 import { VirtualAccountTransactions } from 'app/pages/admin/pages/VirtualAccountTransactions'
 import { BlockchainSettings } from 'app/pages/admin/pages/BlockchainSettings'
+import { RootContainer } from 'ui/RootContainer'
+import { privateClassNames } from 'helpers/classnames'
 
 export const AdminRouter = () => {
   return (
     <Switch>
       <AppRoute breadcrumb='Users' path={AdminRoute.users}>
-        <UserRouter />
+        <RootContainer className={privateClassNames()}>
+          <UserRouter />
+        </RootContainer>
       </AppRoute>
 
       <AppRoute
@@ -30,37 +34,51 @@ export const AdminRouter = () => {
         exact
         path={AdminRoute.accessReports}
       >
-        <AccessReports />
+        <RootContainer className={privateClassNames()}>
+          <AccessReports />
+        </RootContainer>
       </AppRoute>
 
       <AppRoute exact path={AdminRoute.createIndividualIdentity}>
-        <CreateIndividualAsAdmin />
+        <RootContainer className={privateClassNames()}>
+          <CreateIndividualAsAdmin />
+        </RootContainer>
       </AppRoute>
 
       <AppRoute exact path={AdminRoute.createCorporateIdentity}>
-        <CreateCorporateAsAdmin />
+        <RootContainer className={privateClassNames()}>
+          <CreateCorporateAsAdmin />
+        </RootContainer>
       </AppRoute>
 
       <AppRoute exact path={AdminRoute.createIssuerIdentity}>
-        <CreateIssuerAsAdmin />
+        <RootContainer className={privateClassNames()}>
+          <CreateIssuerAsAdmin />
+        </RootContainer>
       </AppRoute>
 
       <AppRoute
         path={AdminRoute.viewIndividualIdentity}
         breadcrumb='View Individual Identity'
       >
-        <ViewIndividualIdentity />
+        <RootContainer className={privateClassNames()}>
+          <ViewIndividualIdentity />
+        </RootContainer>
       </AppRoute>
 
       <AppRoute
         path={AdminRoute.viewCorporateIdentity}
         breadcrumb='View Corporate Identity'
       >
-        <ViewCorporateIdentity />
+        <RootContainer className={privateClassNames()}>
+          <ViewCorporateIdentity />
+        </RootContainer>
       </AppRoute>
 
       <AppRoute path={AdminRoute.identities} breadcrumb='Identities'>
-        <Identities />
+        <RootContainer className={privateClassNames()}>
+          <Identities />
+        </RootContainer>
       </AppRoute>
 
       <AppRoute
@@ -68,7 +86,9 @@ export const AdminRouter = () => {
         path={AdminRoute.virtualAccount}
         breadcrumb='Virtual Accounts'
       >
-        <VirtualAccounts />
+        <RootContainer className={privateClassNames()}>
+          <VirtualAccounts />
+        </RootContainer>
       </AppRoute>
 
       <AppRoute
@@ -76,11 +96,15 @@ export const AdminRouter = () => {
         path={AdminRoute.masDisclosure}
         breadcrumb='MAS Disclosure'
       >
-        <MasDisclosure />
+        <RootContainer className={privateClassNames()}>
+          <MasDisclosure />
+        </RootContainer>
       </AppRoute>
 
       <AppRoute exact path={AdminRoute.banner} breadcrumb='Banner'>
-        <Banner />
+        <RootContainer className={privateClassNames()}>
+          <Banner />
+        </RootContainer>
       </AppRoute>
 
       <AppRoute
@@ -88,7 +112,9 @@ export const AdminRouter = () => {
         path={AdminRoute.virtualAccountTransactions}
         breadcrumb='VA Transactions'
       >
-        <VirtualAccountTransactions />
+        <RootContainer className={privateClassNames()}>
+          <VirtualAccountTransactions />
+        </RootContainer>
       </AppRoute>
 
       <AppRoute
@@ -96,7 +122,9 @@ export const AdminRouter = () => {
         path={AdminRoute.virtualAccountAudit}
         breadcrumb='VA Audit'
       >
-        <VirtualAccountAudit />
+        <RootContainer className={privateClassNames()}>
+          <VirtualAccountAudit />
+        </RootContainer>
       </AppRoute>
 
       <AppRoute
@@ -108,7 +136,9 @@ export const AdminRouter = () => {
       </AppRoute>
 
       <AppRoute exact path={AdminRoute.landing}>
-        <LandingPage links={adminLandingLinks} title='Admin' />
+        <RootContainer className={privateClassNames()}>
+          <LandingPage links={adminLandingLinks} title='Admin' />
+        </RootContainer>
       </AppRoute>
     </Switch>
   )

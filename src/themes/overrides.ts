@@ -40,6 +40,19 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
       borderRadius: 8
     }
   },
+  MuiCardContent: {
+    root: {
+      padding: 32,
+      '&:last-child': {
+        paddingBottom: 32
+      }
+    }
+  },
+  MuiCardActions: {
+    root: {
+      padding: 32
+    }
+  },
   MuiTableCell: {
     root: {
       paddingTop: 12,

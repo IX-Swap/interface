@@ -16,7 +16,7 @@ export const BlockchainSettingsContent = () => {
 
   if (data !== undefined) {
     content = (
-      <Card>
+      <Card elevation={0}>
         <CardContent>
           <BlockchainInfoList networks={data.networks} />
           <Box height={40} />
