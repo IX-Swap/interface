@@ -35,14 +35,14 @@ jobs:
         run: npx playwright install-deps
       - run: npx playwright install
       - run: yarn
-      - run: CI=false yarn build
+      # - run: CI=false yarn build
       - run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 
       - name: Run Tests
-        working-directory: ./__tests__
         run: | 
-          echo $PWD
-          npx playwright test --reporter=line,allure-playwright
+          echo ${GITHUB_REF##*/}
+          yarn integration-test
+
 
 
       - uses: actions/upload-artifact@v2
