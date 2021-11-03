@@ -21,8 +21,6 @@ jobs:
   integration-tests:
     name: Integration Tests
     runs-on: ubuntu-latest # or macos-latest, windows-latest
-    env:
-      GH_REP: ${{GITHUB_REPOSITORY}}
     # if: github.event.deployment_status.state == 'success' 
     steps:
       - uses: actions/checkout@v2
@@ -40,9 +38,15 @@ jobs:
 
       - name: Run Tests
         run: | 
+<<<<<<< HEAD
           echo ${GITHUB_REF##*/}
           yarn integration-test
 
+=======
+          echo running on branch ${GITHUB_REF}
+          echo $PWD
+          npx playwright test --reporter=line,allure-playwright
+>>>>>>> a34dae432981b2aa50d29620321da6fe45e776d7
 
 
       - uses: actions/upload-artifact@v2
