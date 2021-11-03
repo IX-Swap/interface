@@ -7,7 +7,7 @@ export interface OTPInputFieldArgs extends OtpInputProps {
   variant?: 'standard' | 'outlined'
   fullwidth?: boolean
   name?: string
-  control: Control
+  control?: Control
 }
 
 export const OTPInputField = ({
