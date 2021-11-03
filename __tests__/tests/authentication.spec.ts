@@ -11,6 +11,7 @@ import {
 } from '../lib/helpers/helpers'
 let forEachEmail = emailCreate()
 test.beforeEach(async ({ page }) => {
+  console.log(baseCreds.GH_ENV)
   await navigate(baseCreds.URL, page)
 })
 test.afterEach(async ({ page }) => {

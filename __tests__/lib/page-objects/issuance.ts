@@ -1,4 +1,3 @@
-import { waitFor } from '@testing-library/react'
 import { issuance } from '../selectors/issuance'
 import { text } from '../helpers/text'
 import { baseCreds } from '../helpers/creds'

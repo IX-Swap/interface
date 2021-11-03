@@ -46,7 +46,8 @@ test.describe('Check identities form', () => {
     })
 
     await test.step('Check full profile view', async () => {
-      await kycForms.checkAllViewUsingSnapshot(testInfo.title)
+      await click(kyc.buttons.SUBMIT_TEXT, page)
+      await waitForText(page, text.notification.submitIdentity)
     })
   })
 

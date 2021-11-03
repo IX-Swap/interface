@@ -3,8 +3,8 @@ import { PlaywrightTestConfig } from '@playwright/test'
 
 const config: PlaywrightTestConfig = {
   workers: process.env.CI ? 2 : undefined,
-  // reporter: process.env.CI ? [ ['github'], ['dot'] ] : 'list',
-  reporter: process.env.CI ? 'line' : 'list',
+  reporter: process.env.CI ? [['github'], ['dot']] : 'list',
+  // reporter: process.env.CI ? 'line' : 'list',
   timeout: 180000,
   updateSnapshots: 'missing',
   use: {

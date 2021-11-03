@@ -6,7 +6,7 @@ const DEFAULT_SELECTOR_TIMEOUT = 50000
 
 const randomString = (length = 8) => {
   // Declare all characters
-  let chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+  let chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
   // Pick characers randomly
   let str = ''
   for (let i = 0; i < length; i++) {
