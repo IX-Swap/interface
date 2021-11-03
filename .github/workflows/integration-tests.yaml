@@ -37,9 +37,11 @@ jobs:
 
       - name: Run Tests
         run: | 
-          echo Reserved for GH_REP=${GITHUB_REPOSITORY##*/}
+          GH_REP=${GITHUB_REPOSITORY##*/}
+          echo ${GH_REP}
           echo GITHUB_REF=${GITHUB_REF}
           echo EXTRACT_GITHUB_REF=${GITHUB_REF##*/}
+          echo EXTRACT_GITHUB_REF_HEADS=$(echo ${GITHUB_REF#refs/heads/})
           yarn integration-test
 
 
