@@ -14,7 +14,7 @@ name: Integration Tests
 #       - ci-update
 on:
   push:
-    branches: [develop, staging, release]
+    branches: [develop, staging, e2e-tests]
 
 jobs:
   integration-tests:
