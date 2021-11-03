@@ -4,6 +4,7 @@ import { useStyles } from './TotalAssetBalance.styles'
 import { VSpacer } from 'components/VSpacer'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { formatAmount } from 'helpers/numbers'
+import { getTextWithOrWithoutColon } from 'helpers/strings'
 
 export interface TotalAssetBalanceProps {
   value: number
@@ -17,8 +18,7 @@ export const TotalAssetBalance = ({ value }: TotalAssetBalanceProps) => {
     <Grid item className={classes.wrapper}>
       <Grid item className={classes.firstBlock}>
         <Typography variant={'subtitle2'} className={classes.label}>
-          Total Asset Balance
-          {isMobile ? ':' : ''}
+          {getTextWithOrWithoutColon('Total Asset Balance', isMobile)}
         </Typography>
       </Grid>
       <VSpacer size={'extraSmall'} />

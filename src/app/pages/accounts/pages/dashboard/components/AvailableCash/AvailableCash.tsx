@@ -5,7 +5,7 @@ import { VSpacer } from 'components/VSpacer'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { formatAmount } from 'helpers/numbers'
 import { VirtualAccountInfo } from 'types/portfolio'
-import classnames from 'classnames'
+import { getTextWithOrWithoutColon } from 'helpers/strings'
 
 export interface AvailableCashProps {
   accounts: VirtualAccountInfo[] | undefined
@@ -13,25 +13,21 @@ export interface AvailableCashProps {
 
 export const AvailableCash = ({ accounts }: AvailableCashProps) => {
   const classes = useStyles()
-  const { isMobile, isTablet } = useAppBreakpoints()
+  const { isMobile } = useAppBreakpoints()
 
   if (accounts === undefined) {
     return null
   }
 
   const getCurrencySymbol = (currency: string) => {
-    if (currency === 'SGD') {
-      return 'S$'
-    }
-    return 'US$'
+    return currency === 'SGD' ? 'S$' : 'US$'
   }
 
   return (
     <Grid item className={classes.wrapper}>
       <Grid item className={classes.firstBlock}>
         <Typography variant={'subtitle2'} className={classes.label}>
-          Available Cash
-          {isMobile ? ':' : ''}
+          {getTextWithOrWithoutColon('Available Cash', isMobile)}
         </Typography>
       </Grid>
 
@@ -43,18 +39,15 @@ export const AvailableCash = ({ accounts }: AvailableCashProps) => {
         justify={'space-between'}
         className={classes.secondBlock}
       >
-        {accounts.map(({ currency, balance }, i) => {
+        {accounts.map(({ currency, balance }) => {
           return (
-            <Grid item key={balance.toString() + currency}>
-              <Typography
-                variant={'body1'}
-                className={classnames(classes.value, {
-                  [classes.space]: accounts.length - 1 !== i && !isTablet
-                })}
-              >
-                {getCurrencySymbol(currency)} {formatAmount(balance)}
-              </Typography>
-            </Grid>
+            <Typography
+              variant={'body1'}
+              className={classes.value}
+              key={balance.toString() + currency}
+            >
+              {getCurrencySymbol(currency)} {formatAmount(balance)}
+            </Typography>
           )
         })}
       </Grid>

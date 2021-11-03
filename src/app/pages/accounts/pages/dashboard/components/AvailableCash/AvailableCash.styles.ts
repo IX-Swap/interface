@@ -38,9 +38,11 @@ export const useStyles = makeStyles(theme => ({
     whiteSpace: 'nowrap'
   },
   value: {
-    whiteSpace: 'nowrap'
-  },
-  space: {
-    paddingRight: theme.spacing(3)
+    whiteSpace: 'nowrap',
+    [theme.breakpoints.up('lg')]: {
+      '&:not(:last-child)': {
+        paddingRight: theme.spacing(3)
+      }
+    }
   }
 }))

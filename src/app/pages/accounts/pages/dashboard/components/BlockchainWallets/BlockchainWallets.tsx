@@ -6,6 +6,7 @@ import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { WithdrawalAddressesRoute as paths } from 'app/pages/accounts/pages/withdrawalAddresses/router/config'
 import { Launch as LaunchIcon } from '@material-ui/icons'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+import { getTextWithOrWithoutColon } from 'helpers/strings'
 
 export interface BlockchainWalletsProps {
   count: number
@@ -23,8 +24,7 @@ export const BlockchainWallets = ({ count }: BlockchainWalletsProps) => {
           className={classes.label}
           data-testid={'title'}
         >
-          Blockchain Wallets
-          {isMobile ? ':' : ''}
+          {getTextWithOrWithoutColon('Blockchain Wallets', isMobile)}
           <Box className={classes.iconBlock}>
             <IconButton
               component={AppRouterLinkComponent}

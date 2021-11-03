@@ -1,4 +1,5 @@
 import { BalancesInfo, MarketInfo, VirtualAccountInfo } from 'types/portfolio'
+import { formatDecimal } from 'helpers/numbers'
 
 export const fakeVirtualAccountInfo: VirtualAccountInfo = {
   _id: '608108b8f23f7412a9ba1cd3',
@@ -21,3 +22,23 @@ export const fakeMarketInfo: MarketInfo = {
   fundAmount: 4000,
   totalAmount: 10000
 }
+
+export const chartData = [
+  ['Markets', 'Fund Status'],
+  [
+    `Fund (${formatDecimal(fakeMarketInfo.fundAmount)})`,
+    fakeMarketInfo.fundAmount
+  ],
+  [
+    `Debt (${formatDecimal(fakeMarketInfo.debtAmount)})`,
+    fakeMarketInfo.debtAmount
+  ],
+  [
+    `Equity (${formatDecimal(fakeMarketInfo.equityAmount)})`,
+    fakeMarketInfo.equityAmount
+  ],
+  [
+    `Hybrid (${formatDecimal(fakeMarketInfo.hybridAmount)})`,
+    fakeMarketInfo.hybridAmount
+  ]
+]
