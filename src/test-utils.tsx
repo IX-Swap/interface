@@ -1,6 +1,11 @@
 import React from 'react'
 import { Route, Router } from 'react-router-dom'
-import { render, RenderOptions, RenderResult } from '@testing-library/react'
+import {
+  render,
+  waitFor,
+  RenderOptions,
+  RenderResult
+} from '@testing-library/react'
 import {
   createGenerateClassName,
   StylesProvider,
@@ -170,6 +175,11 @@ export const renderHookWithForm = (
   )
 
   return renderHook(hookFn, { wrapper: WithForm })
+}
+
+export const invokeMutationFn = async (result: any, payload: any) => {
+  await waitFor(() => result.current)
+  await result.current[0](payload)
 }
 
 export * from '@testing-library/react'

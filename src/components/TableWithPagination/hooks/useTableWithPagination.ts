@@ -16,7 +16,7 @@ export interface UseTableWithPaginationReturnType<TData> {
 }
 
 interface UseTableWithPaginationParams {
-  queryKey: string
+  queryKey?: string
   uri?: string
   defaultFilter: BaseFilter | undefined
   queryEnabled: boolean

@@ -1,9 +1,9 @@
 import { act } from '@testing-library/react-hooks'
 import {
-  waitFor,
   renderHookWithServiceProvider,
   apiServiceMock,
-  snackbarServiceMock
+  snackbarServiceMock,
+  invokeMutationFn
 } from 'test-utils'
 import {
   UPDATE_DECIMAL_ERROR_MESSAGE,
@@ -35,8 +35,7 @@ describe('useUpdateDecimal', () => {
     await act(async () => {
       const { result } = renderHookWithServiceProvider(() => useUpdateDecimal())
 
-      await waitFor(() => result.current)
-      await result.current[0](payload)
+      await invokeMutationFn(result, payload)
 
       expect(apiServiceMock.put).toBeCalledTimes(1)
       expect(
@@ -57,8 +56,7 @@ describe('useUpdateDecimal', () => {
     await act(async () => {
       const { result } = renderHookWithServiceProvider(() => useUpdateDecimal())
 
-      await waitFor(() => result.current)
-      await result.current[0](payload)
+      await invokeMutationFn(result, payload)
 
       expect(snackbarServiceMock.showSnackbar).toBeCalledTimes(1)
       expect(snackbarServiceMock.showSnackbar).toBeCalledWith(
@@ -74,8 +72,7 @@ describe('useUpdateDecimal', () => {
     await act(async () => {
       const { result } = renderHookWithServiceProvider(() => useUpdateDecimal())
 
-      await waitFor(() => result.current)
-      await result.current[0](payload)
+      await invokeMutationFn(result, payload)
 
       expect(snackbarServiceMock.showSnackbar).toBeCalledTimes(1)
       expect(snackbarServiceMock.showSnackbar).toBeCalledWith(

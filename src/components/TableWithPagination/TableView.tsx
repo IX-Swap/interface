@@ -32,7 +32,7 @@ export interface TableViewRendererProps<T> {
 }
 
 export interface TableViewProps<T> {
-  name: string
+  name?: string
   uri?: string
   queryEnabled?: boolean
   columns: Array<TableColumn<T>>

@@ -8,6 +8,7 @@ import { ReactComponent as BannerIcon } from 'assets/icons/navigation/banner.svg
 import { ReactComponent as MasDisclosureIcon } from 'assets/icons/navigation/mas-disclosure.svg'
 import { ReactComponent as VAAuditIcon } from 'assets/icons/navigation/va-audit.svg'
 import { ReactComponent as VATransactionsIcon } from 'assets/icons/navigation/va-transactions.svg'
+import { ReactComponent as BlockchainSettingsIcon } from 'assets/icons/navigation/blockchain-settings.svg'
 
 export const AdminRoute = {
   landing: makeURL(['app', 'admin']),
@@ -81,7 +82,7 @@ export const adminLandingLinks: InternalRouteProps[] = [
   {
     label: 'Blockchain Settings',
     path: AdminRoute.blockchainSettings,
-    color: '#246D97',
-    icon: VAAuditIcon // TODO update icon and color
+    color: '#BEAA74',
+    icon: BlockchainSettingsIcon
   }
 ]
