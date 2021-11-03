@@ -79,7 +79,7 @@ export const DataroomUploader = (props: DataroomUploaderProps) => {
       await uploadFile({
         ...documentInfo,
         documents: Array.from(inputRef.current.files),
-        feature: feature
+        feature
       })
     }
   }
