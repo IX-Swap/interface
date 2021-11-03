@@ -21,12 +21,12 @@ jobs:
   integration-tests:
     name: Integration Tests
     runs-on: ubuntu-latest # or macos-latest, windows-latest
-    env:
-      GH_REP: ${{GITHUB_REPOSITORY}}
     # if: github.event.deployment_status.state == 'success' 
     steps:
       - uses: actions/checkout@v2
       - name: Set up node
+        env:
+          GH_REP: ${{GITHUB_REPOSITORY}}
         uses: actions/setup-node@v2
         with:
           node-version: 14.17
