@@ -25,8 +25,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Set up node
-        env:
-          GH_REP: ${{GITHUB_REPOSITORY}}
         uses: actions/setup-node@v2
         with:
           node-version: 14.17
@@ -41,6 +39,7 @@ jobs:
       - name: Run Tests
         working-directory: ./__tests__
         run: | 
+          echo running on branch ${GITHUB_REF}
           echo $PWD
           npx playwright test --reporter=line,allure-playwright
 
