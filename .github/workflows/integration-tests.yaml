@@ -21,6 +21,7 @@ jobs:
   integration-tests:
     name: Integration Tests
     runs-on: ubuntu-latest # or macos-latest, windows-latest
+
     # if: github.event.deployment_status.state == 'success' 
     steps:
       - uses: actions/checkout@v2
@@ -33,20 +34,14 @@ jobs:
         run: npx playwright install-deps
       - run: npx playwright install
       - run: yarn
-      # - run: CI=false yarn build
       - run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 
       - name: Run Tests
+        env:
+          GH_REP: ${GITHUB_REF##*/}
         run: | 
-<<<<<<< HEAD
-          echo ${GITHUB_REF##*/}
+          echo 
           yarn integration-test
-
-=======
-          echo running on branch ${GITHUB_REF}
-          echo $PWD
-          npx playwright test --reporter=line,allure-playwright
->>>>>>> a34dae432981b2aa50d29620321da6fe45e776d7
 
 
       - uses: actions/upload-artifact@v2

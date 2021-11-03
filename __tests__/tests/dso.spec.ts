@@ -21,7 +21,7 @@ test.describe('Check form`s view', () => {
   })
 })
 
-test('New DSO should be created ', async ({ dso }) => {
+test.only('New DSO should be created ', async ({ dso }) => {
   const token = (await dso.fillDsoInformationForm()).tokenName
   await dso.fillDsoPricingForm()
   await dso.fillDsoOfferingTermsForm()
