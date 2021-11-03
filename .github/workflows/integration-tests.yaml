@@ -40,16 +40,10 @@ jobs:
         env:
           GH_REP: ${GITHUB_REF##*/}
         run: | 
-<<<<<<< HEAD
           echo 
           yarn integration-test
 
 
-=======
-          echo ${GITHUB_REF##*/}
-          yarn integration-test
-
->>>>>>> 2f6ddad447bd2751078bff675046f424ef8fdd80
       - uses: actions/upload-artifact@v2
         if: always()
         with:
