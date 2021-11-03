@@ -5,34 +5,37 @@ import {
 } from '@material-ui/icons'
 import { Box, IconButton } from '@material-ui/core'
 import { CustodyAccountsListItem } from 'types/custodyAccount'
+import { AppRouterLinkComponent } from 'components/AppRouterLink'
+import { CustodyManagementRoute as paths } from 'app/pages/admin/router/config'
+import { ActionsProps } from 'app/pages/authorizer/components/Actions'
 
-export interface ActionsProps {
-  item: CustodyAccountsListItem
-  onLaunchButtonClick: (item: CustodyAccountsListItem) => void
+export interface CustodyActionsProps {
+  item: ActionsProps<CustodyAccountsListItem>
   onLinkOffButtonClick: (item: CustodyAccountsListItem) => void
 }
 
 export const Actions = ({
   item,
-  onLaunchButtonClick,
   onLinkOffButtonClick
-}: ActionsProps) => {
-  const handleLaunchButtonClick = () => {
-    onLaunchButtonClick(item)
-  }
-
+}: CustodyActionsProps) => {
   const handleLinkOffButtonClick = () => {
-    onLinkOffButtonClick(item)
+    onLinkOffButtonClick(item.item)
   }
+  const isInvestaXAccount = item.item.type === 'INVESTAX'
 
   return (
     <Box display={'flex'} justifyContent={'space-around'}>
       <IconButton
-        data-testid={'launch'}
+        disabled={isInvestaXAccount}
+        component={AppRouterLinkComponent}
+        to={paths.custodyDetails}
+        params={{ accountId: item.item.accountId }}
         size='small'
-        onClick={handleLaunchButtonClick}
       >
-        <LaunchIcon color='disabled' />
+        <LaunchIcon
+          color='disabled'
+          style={{ opacity: isInvestaXAccount ? 0.4 : 1 }}
+        />
       </IconButton>
       <IconButton
         data-testid={'link-off'}

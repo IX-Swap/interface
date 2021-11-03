@@ -224,5 +224,6 @@ export const virtualTransactionsQueryKeys = {
 }
 
 export const custodyAccountsQueryKeys = {
-  getList: 'custody-accounts-list'
+  getList: 'custody-accounts-list',
+  getCustodianDetails: 'get-custodian-details'
 }

@@ -313,7 +313,8 @@ export const resources = {
 
 export const custodyAccounts = {
   getList: 'accounts/custody-accounts/list',
-  unAssignCustody: '/accounts/custody-unassign'
+  getCustodianDetails: (accountId: string) =>
+    `/accounts/get-custodian/${accountId}`
 }
 
 export const virtualAccountsAudit = {

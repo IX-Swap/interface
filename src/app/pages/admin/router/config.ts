@@ -27,7 +27,12 @@ export const AdminRoute = {
   masDisclosure: '/app/admin/masDisclosure',
   virtualAccountAudit: '/app/admin/virtualAccountAudit',
   virtualAccountTransactions: '/app/admin/virtualAccountTransactions',
-  custodyManagement: '/app/admin/custodyManagement'
+  custodyManagement: '/app/admin/custody-management'
+}
+
+export const CustodyManagementRoute = {
+  main: '/app/admin/custody-management',
+  custodyDetails: '/app/admin/custody-management/:accountId/details'
 }
 
 export const adminLandingLinks: InternalRouteProps[] = [

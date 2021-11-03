@@ -4,8 +4,14 @@ import { Actions } from 'app/pages/admin/components/CustodyManagementTable/Actio
 import { fakeCustodyAccountsListItem } from '__fixtures__/custodyAccount'
 import { fireEvent, waitFor } from '@testing-library/dom'
 
+const fakeActionProps = {
+  cacheQueryKey: '',
+  item: {
+    fakeCustodyAccountsListItem
+  }
+}
+
 describe('Actions', () => {
-  const launchButtonHandleClick = jest.fn()
   const linkOffButtonHandleClick = jest.fn()
 
   afterEach(async () => {
@@ -16,35 +22,16 @@ describe('Actions', () => {
   it('renders without errors', () => {
     render(
       <Actions
-        item={fakeCustodyAccountsListItem}
-        onLaunchButtonClick={launchButtonHandleClick}
+        item={fakeActionProps as any}
         onLinkOffButtonClick={linkOffButtonHandleClick}
       />
     )
-  })
-
-  it('invokes onLaunchButtonClick function on launch button click', async () => {
-    const { getByTestId } = render(
-      <Actions
-        item={fakeCustodyAccountsListItem}
-        onLaunchButtonClick={launchButtonHandleClick}
-        onLinkOffButtonClick={linkOffButtonHandleClick}
-      />
-    )
-
-    const launchButton = getByTestId('launch')
-
-    fireEvent.click(launchButton)
-    await waitFor(() => {
-      expect(launchButtonHandleClick).toBeCalled()
-    })
   })
 
   it('invokes onLinkOffButtonClick function on link off button click', async () => {
     const { getByTestId } = render(
       <Actions
-        item={fakeCustodyAccountsListItem}
-        onLaunchButtonClick={launchButtonHandleClick}
+        item={fakeActionProps as any}
         onLinkOffButtonClick={linkOffButtonHandleClick}
       />
     )
