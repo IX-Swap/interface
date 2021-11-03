@@ -213,7 +213,7 @@ export function useSwapConfirmDataFromURL(
         history.push(`/swap`)
         return
       }
-      if (!parsedQs?.hash || !parsedQs?.result) {
+      if (!parsedQs?.hash || !parsedQs?.result || !authorizationInProgress) {
         return
       }
 
@@ -245,6 +245,13 @@ export function useSwapConfirmDataFromURL(
         dispatch(setLoadingSwap({ isLoading: false }))
         dispatch(setAuthorizationInProgress({ authorizationInProgress: null }))
         dispatch(saveAuthorization({ authorization: persistedAuthorization, chainId, address }))
+        dispatch(
+          setModalDetails({
+            modalType: ModalType.INFO,
+            modalTitle: t`Success`,
+            modalMessage: t`Transaction authorized by broker dealer`,
+          })
+        )
         history.push(`/swap`)
       } catch (e) {
         console.log({ e })
