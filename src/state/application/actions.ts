@@ -2,8 +2,12 @@ import { createAction } from '@reduxjs/toolkit'
 import { ModalType } from './reducer'
 
 export type PopupContent = {
-  txn: {
+  txn?: {
     hash: string
+    success: boolean
+    summary?: string
+  }
+  info?: {
     success: boolean
     summary?: string
   }
