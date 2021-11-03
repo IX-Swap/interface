@@ -1,4 +1,6 @@
 import { Currency } from '@ixswap1/sdk-core'
+import { SupportedChainId } from 'constants/chains'
+import { useActiveWeb3React } from 'hooks/web3'
 import React, { useMemo } from 'react'
 import styled from 'styled-components/macro'
 import EthereumLogo from '../../assets/images/ethereum-logo.png'
@@ -6,8 +8,24 @@ import useHttpLocations from '../../hooks/useHttpLocations'
 import { WrappedTokenInfo } from '../../state/lists/wrappedTokenInfo'
 import Logo from '../Logo'
 
-export const getTokenLogoURL = (address: string) =>
-  `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/${address}/logo.png`
+type Network = 'ethereum' | 'polygon'
+
+function chainIdToNetworkName(networkId: SupportedChainId): Network {
+  switch (networkId) {
+    case SupportedChainId.MAINNET:
+      return 'ethereum'
+    case SupportedChainId.MATIC:
+      return 'polygon'
+    case SupportedChainId.MUMBAI:
+      return 'polygon'
+    default:
+      return 'ethereum'
+  }
+}
+export const getTokenLogoURL = (address: string, chainId = SupportedChainId.MAINNET) => {
+  const network = chainIdToNetworkName(chainId)
+  return `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/${network}/assets/${address}/logo.png`
+}
 
 const StyledEthereumLogo = styled.img<{ size: string }>`
   width: ${({ size }) => size};
@@ -35,12 +53,12 @@ export default function CurrencyLogo({
   style?: React.CSSProperties
 }) {
   const uriLocations = useHttpLocations(currency instanceof WrappedTokenInfo ? currency.logoURI : undefined)
-
+  const { chainId } = useActiveWeb3React()
   const srcs: string[] = useMemo(() => {
     if (!currency || currency.isNative) return []
 
     if (currency.isToken) {
-      const defaultUrls = currency.chainId === 1 ? [getTokenLogoURL(currency.address)] : []
+      const defaultUrls = currency.chainId === 1 ? [getTokenLogoURL(currency.address, chainId)] : []
       if (currency instanceof WrappedTokenInfo) {
         return [...uriLocations, ...defaultUrls]
       }
