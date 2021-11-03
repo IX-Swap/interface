@@ -36,7 +36,7 @@ export const BlockchainSettingsForm = ({
       defaultValues={{ decimal }}
     >
       <Box display='flex' alignItems='center' justifyContent='space-between'>
-        <BlockchainSettingsDecimal />
+        <BlockchainSettingsDecimal network={network} decimal={decimal} />
         <FormOTPDialog
           triggerButtonProps={{
             size: 'large',
