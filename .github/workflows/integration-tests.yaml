@@ -14,7 +14,7 @@ name: Integration Tests
 #       - ci-update
 on:
   push:
-    branches: [develop, staging, e2e-tests]
+    branches: [develop, staging, release]
 
 jobs:
   integration-tests:
@@ -36,11 +36,12 @@ jobs:
       - run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
 
       - name: Run Tests
-        env:
-          GH_REP: ${{ GITHUB_REF##*/ }}
         run: | 
-          echo ${{github.event.deployment_status}}
-          echo ${github.event.deployment_status}
+          echo Reserved for GH_REP=${GITHUB_REPOSITORY##*/}
+          echo GITHUB_REF=${GITHUB_REF}
+          echo EXTRACT_GITHUB_REF=${GITHUB_REF##*/}
+          echo EXTRACT_GITHUB_REF_HEADS=$(echo ${GITHUB_REF#refs/heads/})
+          cd $GH_REP
           yarn integration-test
 
 

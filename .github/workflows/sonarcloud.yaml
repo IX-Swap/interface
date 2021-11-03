@@ -1,53 +1,38 @@
-name: Integration Tests
-
-# on:
-#   push:
-#     branches:
-#       - main
-#       - development
-#       - staging
-#   pull_request:
-#     branches:
-#       - main
-#       - development
-#       - staging
-#       - ci-update
+name: SonarCloud
 on:
-  push:
+  pull_request:
     branches: [develop, staging, release]
-
+    types: [opened, synchronize, reopened]
 jobs:
-  integration-tests:
-    name: Integration Tests
-    runs-on: ubuntu-latest # or macos-latest, windows-latest
-
-    # if: github.event.deployment_status.state == 'success' 
+  sonarcloud:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14.x]
     steps:
       - uses: actions/checkout@v2
-      - name: Set up node
-        uses: actions/setup-node@v2
         with:
-          node-version: 14.17
+          fetch-depth: 0
 
-      - name: Set tests dependencies
-        run: npx playwright install-deps
-      - run: npx playwright install
-      - run: yarn
-      - run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+      - name: Install packages
+        run: yarn
+
+      - name: Build
+        run: yarn build --if-present
 
       - name: Run Tests
-        run: | 
-          echo Reserved for GH_REP=${GITHUB_REPOSITORY##*/}
-          echo GITHUB_REF=${GITHUB_REF}
-          echo EXTRACT_GITHUB_REF=${GITHUB_REF##*/}
-          echo EXTRACT_GITHUB_REF_HEADS=$(echo ${GITHUB_REF#refs/heads/})
-          cd $GH_REP
-          yarn integration-test
+        run: yarn test:ci
+        env:
+          REACT_APP_API_URL: https://devapi.mozork.com
 
+      - name: Fix code coverage paths for Sonar
+        working-directory: ./coverage
+        run: |
+          sed -i 's/\/home\/runner\/work\/IXWebApp\/IXWebApp\//\/github\/workspace\//g' lcov.info
+          sed -i 's/\/home\/runner\/work\/IXWebApp\/IXWebApp\//\/github\/workspace\//g' test-report.xml
 
-      - uses: actions/upload-artifact@v2
-        if: always()
-        with:
-          name: my-artifact
-          path: ./allure-results
-
+      - name: Sonar Scan
+        uses: sonarsource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
