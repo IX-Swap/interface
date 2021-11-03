@@ -39,7 +39,7 @@ export const OfferingTerms = ({
       <Grid item xs={12} sm={6} md={4}>
         <LabelledValue
           label='Investment Period'
-          value={<PercentageNumber value={investmentPeriod} />}
+          value={`${investmentPeriod} months`}
         />
       </Grid>
 
