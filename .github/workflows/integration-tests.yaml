@@ -12,10 +12,10 @@ name: Integration Tests
 #       - development
 #       - staging
 #       - ci-update
-on: [push]
+on:
 # on:
 #   deployment_status:
-#     branches: [staging,develop]
+    branches: [staging,develop,e2e-tests]
 
 jobs:
   integration-tests:
@@ -38,9 +38,10 @@ jobs:
 
       - name: Run Tests
         env:
-          GH_REP: ${GITHUB_REF##*/}
+          GH_REP: ${{ GITHUB_REF##*/ }}
         run: | 
-          echo 
+          echo ${{github.event.deployment_status}}
+          echo ${github.event.deployment_status}
           yarn integration-test
 
 
