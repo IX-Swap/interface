@@ -3,7 +3,7 @@ import React from 'react'
 import OtpInput, { OtpInputProps } from 'react-otp-input'
 import { Control } from 'react-hook-form'
 
-export interface OTPInputFieldArgs extends OtpInputProps {
+export interface OTPInputFieldProps extends OtpInputProps {
   variant?: 'standard' | 'outlined'
   fullwidth?: boolean
   name?: string
@@ -15,7 +15,7 @@ export const OTPInputField = ({
   fullwidth = false,
   shouldAutoFocus = false,
   ...rest
-}: OTPInputFieldArgs) => {
+}: OTPInputFieldProps) => {
   const classes = useStyles()
 
   return (

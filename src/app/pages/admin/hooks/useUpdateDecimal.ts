@@ -4,6 +4,10 @@ import { useAuth } from 'hooks/auth/useAuth'
 import { getIdFromObj } from 'helpers/strings'
 import { blockchainNetworksURL } from 'config/apiURL'
 
+export const UPDATE_DECIMAL_SUCCESS_MESSAGE = 'Successfully updated decimal'
+export const UPDATE_DECIMAL_ERROR_MESSAGE =
+  "Couldn't update decimal at this time"
+
 export interface UpdateDecimalArgs {
   decimal: number
   network: string
@@ -28,13 +32,10 @@ export const useUpdateDecimal = () => {
 
   return useMutation(updateDecimal, {
     onSuccess: () => {
-      snackbarService.showSnackbar('Successfully updated decimal', 'success')
+      snackbarService.showSnackbar(UPDATE_DECIMAL_SUCCESS_MESSAGE, 'success')
     },
     onError: () => {
-      snackbarService.showSnackbar(
-        "Couldn't update decimal at this time",
-        'error'
-      )
+      snackbarService.showSnackbar(UPDATE_DECIMAL_ERROR_MESSAGE, 'error')
     }
   })
 }

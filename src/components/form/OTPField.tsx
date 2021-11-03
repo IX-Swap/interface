@@ -35,7 +35,12 @@ export const OTPField = ({
 }: OTPFieldProps) => {
   const renderLabel = () =>
     typeof label === 'string' ? (
-      <Typography component='p' align='center' variant='caption'>
+      <Typography
+        data-testid='otp-field-label'
+        component='p'
+        align='center'
+        variant='caption'
+      >
         {label}
       </Typography>
     ) : (

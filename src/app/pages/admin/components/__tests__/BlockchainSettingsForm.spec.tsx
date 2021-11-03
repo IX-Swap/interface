@@ -5,60 +5,70 @@ import { fireEvent, waitFor } from '@testing-library/react'
 import * as UseUpdateDecimalHook from 'app/pages/admin/hooks/useUpdateDecimal'
 import { generateMutationResult } from '__fixtures__/useQuery'
 import { history } from 'config/history'
+import { OTPInputFieldProps } from 'components/form/OTPInputField'
 
 jest.mock('components/form/OTPInputField', () => ({
-  OTPInputField: (props: any) => {
-    return (
-      <input
-        name={props.name}
-        id={props.name}
-        value={props.value}
-        onChange={event => {
-          props.control.setValue(props.name, event.target.value)
-        }}
-      />
-    )
-  }
+  OTPInputField: (props: OTPInputFieldProps) => (
+    <input
+      name={props.name}
+      id={props.name}
+      value={props.value}
+      onChange={event => {
+        props.control?.setValue(props?.name ?? 'otp', event.target.value)
+      }}
+    />
+  )
 }))
 
-const updateDecimal = jest.fn()
-jest
-  .spyOn(UseUpdateDecimalHook, 'useUpdateDecimal')
-  .mockReturnValue([updateDecimal, generateMutationResult({})])
-
 describe('BlockchainSettingsForm', () => {
-  const decimal = 10
+  const defaultDecimal = 10
+  const updatedDecimal = 6
+  const network = 'XTZ'
+  const otp = '123456'
+  const updateDecimal = jest.fn()
 
-  it('should render', async () => {
-    history.push('/?blockchainNetwork=XTZ')
+  jest
+    .spyOn(UseUpdateDecimalHook, 'useUpdateDecimal')
+    .mockReturnValue([updateDecimal, generateMutationResult({})])
+
+  it('should update decimal', async () => {
+    history.push(`/?blockchainNetwork=${network}`)
 
     const { getByLabelText, getByText, container } = render(
-      <BlockchainSettingsForm decimal={decimal} />
+      <BlockchainSettingsForm decimal={defaultDecimal} />
     )
 
     const decimalInput = getByLabelText('Decimals')
     const otpDialogButton = getByText('Update')
 
-    expect(decimalInput).toHaveValue(`${decimal}`)
-    fireEvent.change(decimalInput, { target: { value: 7 } })
-    expect(decimalInput).toHaveValue(`${7}`)
-    fireEvent.click(otpDialogButton)
+    // check for default value
+    expect(decimalInput).toHaveValue(`${defaultDecimal}`)
 
+    // update decimal value
+    fireEvent.change(decimalInput, { target: { value: updatedDecimal } })
+    expect(decimalInput).toHaveValue(`${updatedDecimal}`)
+
+    // open otp dialog
+    fireEvent.click(otpDialogButton)
     await waitFor(() => getByText('Please Enter Your 2FA'))
+
+    // enter otp code
     const dialogContent = container.querySelector('.MuiDialog-container')
     const otpInput = dialogContent?.querySelector('input')
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    fireEvent.change(otpInput!, { target: { value: '999999' } })
+    fireEvent.change(otpInput!, { target: { value: otp } })
 
+    // press confirm button
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     const confirmButton = getByText(/Confirm/).parentElement!
     expect(confirmButton).not.toBeDisabled()
     fireEvent.click(confirmButton)
+
     await waitFor(() => {
       expect(updateDecimal).toBeCalledWith({
-        decimal: 7,
-        otp: '999999',
-        network: 'XTZ'
+        decimal: updatedDecimal,
+        otp,
+        network
       })
     })
   })
