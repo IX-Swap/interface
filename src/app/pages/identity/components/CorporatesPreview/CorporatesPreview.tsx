@@ -39,7 +39,7 @@ export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
   return (
     <Card elevation={0}>
       <CardContent>
-        <Box px={5} pt={2} pb={2}>
+        <Box pt={2} pb={2}>
           <PreviewHeader
             title={`Corporate ${isIssuer ? 'Issuer' : 'Investor'}`}
             status={data.status}
@@ -52,13 +52,7 @@ export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
         </Box>
       </CardContent>
       <CardActions>
-        <Box
-          display='flex'
-          justifyContent='flex-end'
-          width='100%'
-          px={5}
-          pb={5}
-        >
+        <Box display='flex' justifyContent='flex-end' width='100%'>
           <EditButton
             link={
               isIssuer ? IdentityRoute.editIssuer : IdentityRoute.editCorporate

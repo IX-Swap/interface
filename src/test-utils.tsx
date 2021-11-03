@@ -1,6 +1,11 @@
 import React from 'react'
 import { Route, Router } from 'react-router-dom'
-import { render, RenderOptions, RenderResult } from '@testing-library/react'
+import {
+  render,
+  waitFor,
+  RenderOptions,
+  RenderResult
+} from '@testing-library/react'
 import {
   createGenerateClassName,
   StylesProvider,
@@ -125,9 +130,25 @@ export const renderWithDepositStore = (
   return render(ui, { wrapper: WithUserProvider })
 }
 
+export const apiServiceMock = {
+  put: jest.fn(),
+  get: jest.fn(),
+  post: jest.fn(),
+  delete: jest.fn(),
+  patch: jest.fn()
+}
+export const snackbarServiceMock = {
+  showSnackbar: jest.fn(),
+  showNotification: jest.fn(),
+  showOnboardingDialog: jest.fn()
+}
+
 export const renderHookWithServiceProvider = (
   hookFn: any,
-  store: object = {},
+  store: object = {
+    apiService: apiServiceMock,
+    snackbarService: snackbarServiceMock
+  },
   path?: string
 ): RenderHookResult<any, any> => {
   const WithServiceProvider: React.FC = ({ children }) => (
@@ -154,6 +175,11 @@ export const renderHookWithForm = (
   )
 
   return renderHook(hookFn, { wrapper: WithForm })
+}
+
+export const invokeMutationFn = async (result: any, payload: any) => {
+  await waitFor(() => result.current)
+  await result.current[0](payload)
 }
 
 export * from '@testing-library/react'
