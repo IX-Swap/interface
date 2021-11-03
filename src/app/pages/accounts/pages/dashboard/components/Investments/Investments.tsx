@@ -4,6 +4,7 @@ import { useStyles } from './Investments.styles'
 import { VSpacer } from 'components/VSpacer'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { formatAmount } from 'helpers/numbers'
+import { getTextWithOrWithoutColon } from 'helpers/strings'
 
 export interface InvestmentsProps {
   primary: number
@@ -18,14 +19,19 @@ export const Investments = ({ primary, secondary }: InvestmentsProps) => {
     <Grid item className={classes.wrapper}>
       <Grid item className={classes.firstBlock}>
         <Typography variant={'subtitle2'} className={classes.label}>
-          Investments
-          {isMobile ? ':' : ''}
+          {getTextWithOrWithoutColon('Investments', isMobile)}
         </Typography>
       </Grid>
 
       <VSpacer size={'extraSmall'} />
       <Grid item container wrap={'nowrap'} className={classes.secondBlock}>
-        <Grid item container alignItems={'center'} className={classes.item}>
+        <Grid
+          item
+          container
+          alignItems={'center'}
+          className={classes.item}
+          data-testid={'primary-investment'}
+        >
           <Typography variant={'subtitle2'} className={classes.label}>
             Primary:
           </Typography>
@@ -33,7 +39,7 @@ export const Investments = ({ primary, secondary }: InvestmentsProps) => {
           <Box width={6} />
 
           <Typography variant={'body1'} className={classes.value}>
-            S$ {formatAmount(primary)}
+            US$ {formatAmount(primary)}
           </Typography>
         </Grid>
 
@@ -41,7 +47,13 @@ export const Investments = ({ primary, secondary }: InvestmentsProps) => {
           <>
             <Grid item className={classes.space} />
 
-            <Grid item container alignItems={'center'} className={classes.item}>
+            <Grid
+              item
+              container
+              alignItems={'center'}
+              className={classes.item}
+              data-testid={'secondary-investment'}
+            >
               <Typography variant={'subtitle2'} className={classes.label}>
                 Secondary:
               </Typography>
@@ -49,7 +61,7 @@ export const Investments = ({ primary, secondary }: InvestmentsProps) => {
               <Box width={6} />
 
               <Typography variant={'body1'} className={classes.value}>
-                S$ {formatAmount(secondary)}
+                US$ {formatAmount(secondary)}
               </Typography>
             </Grid>
           </>

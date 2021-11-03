@@ -4,22 +4,30 @@ import { useStyles } from './AvailableCash.styles'
 import { VSpacer } from 'components/VSpacer'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { formatAmount } from 'helpers/numbers'
+import { VirtualAccountInfo } from 'types/portfolio'
+import { getTextWithOrWithoutColon } from 'helpers/strings'
 
 export interface AvailableCashProps {
-  usd: number
-  sgd: number
+  accounts: VirtualAccountInfo[] | undefined
 }
 
-export const AvailableCash = ({ usd, sgd }: AvailableCashProps) => {
+export const AvailableCash = ({ accounts }: AvailableCashProps) => {
   const classes = useStyles()
   const { isMobile } = useAppBreakpoints()
+
+  if (accounts === undefined) {
+    return null
+  }
+
+  const getCurrencySymbol = (currency: string) => {
+    return currency === 'SGD' ? 'S$' : 'US$'
+  }
 
   return (
     <Grid item className={classes.wrapper}>
       <Grid item className={classes.firstBlock}>
         <Typography variant={'subtitle2'} className={classes.label}>
-          Available Cash
-          {isMobile ? ':' : ''}
+          {getTextWithOrWithoutColon('Available Cash', isMobile)}
         </Typography>
       </Grid>
 
@@ -31,19 +39,17 @@ export const AvailableCash = ({ usd, sgd }: AvailableCashProps) => {
         justify={'space-between'}
         className={classes.secondBlock}
       >
-        <Grid item>
-          <Typography variant={'body1'} className={classes.value}>
-            US$ {formatAmount(usd)}
-          </Typography>
-        </Grid>
-
-        <Grid item className={classes.space} />
-
-        <Grid item>
-          <Typography variant={'body1'} className={classes.value}>
-            S$ {formatAmount(sgd)}
-          </Typography>
-        </Grid>
+        {accounts.map(({ currency, balance }) => {
+          return (
+            <Typography
+              variant={'body1'}
+              className={classes.value}
+              key={balance.toString() + currency}
+            >
+              {getCurrencySymbol(currency)} {formatAmount(balance)}
+            </Typography>
+          )
+        })}
       </Grid>
     </Grid>
   )
