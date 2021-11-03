@@ -40,8 +40,6 @@ jobs:
           echo Reserved for GH_REP=${GITHUB_REPOSITORY##*/}
           echo GITHUB_REF=${GITHUB_REF}
           echo EXTRACT_GITHUB_REF=${GITHUB_REF##*/}
-          echo EXTRACT_GITHUB_REF_HEADS=$(echo ${GITHUB_REF#refs/heads/})
-          cd $GH_REP
           yarn integration-test
 
 
