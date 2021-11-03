@@ -18,14 +18,20 @@ export const ModalPadding = styled.div`
    padding: 22px 8px 18px 8px;
   `};
 `
-export const GeneralModal = () => {
+export const GeneralModal = ({ scrollable = false }: { scrollable?: boolean }) => {
   const isOpen = useModalOpen(ApplicationModal.GENERAL)
   const { modalType, modalTitle, modalMessage } = useGeneralModalState()
   const toggle = useToggleModal(ApplicationModal.GENERAL)
   const onClose = () => toggle()
 
   return (
-    <RedesignedWideModal isOpen={isOpen} onDismiss={onClose} minHeight={false} maxHeight={'fit-content'} scrollable>
+    <RedesignedWideModal
+      isOpen={isOpen}
+      onDismiss={onClose}
+      minHeight={false}
+      maxHeight={'fit-content'}
+      scrollable={scrollable}
+    >
       <ModalBlurWrapper data-testid="generalModal">
         <ModalContentWrapper>
           <ModalPadding>
