@@ -42,9 +42,6 @@ const StyledPositionCard = styled(LightCard)`
 const StyledRowBetween = styled(RowBetween)`
   display: grid;
   grid-template-columns: auto auto;
-  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-      grid-template-columns: auto 122px;
-  `};
   > div:last-child {
     justify-self: right;
   }
@@ -52,6 +49,7 @@ const StyledRowBetween = styled(RowBetween)`
 
 const ShortenedAmount = styled(TYPE.body4)`
   max-width: 96px;
+  min-width: 0;
   width: 100%;
   white-space: nowrap;
   overflow: hidden;
