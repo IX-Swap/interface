@@ -130,7 +130,7 @@
     "pre-install": "rimraf node_modules && yarn cache clean",
     "test:watch": "react-scripts test --env=jest-environment-jsdom-sixteen --coverage",
     "test:gc": "react-scripts --expose-gc test --env=jest-environment-jsdom-sixteen --colors --logHeapUsage --silent",
-    "test:ci": "CI=true react-scripts --expose-gc test --env=jest-environment-jsdom-sixteen --silent --coverage --logHeapUsage --testResultsProcessor jest-sonar-reporter",
+    "test:ci": "CI=true react-scripts test --env=jest-environment-jsdom-sixteen --silent --coverage --logHeapUsage --testResultsProcessor jest-sonar-reporter",
     "lint": "eslint --cache --fix \"src/**/*.{ts,tsx}\"",
     "format": "prettier --write \"src/**/*.tsx\"",
     "storybook": "start-storybook -p 6006 -s public",
