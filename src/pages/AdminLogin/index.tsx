@@ -1,29 +1,29 @@
 import React, { useEffect } from 'react'
 import AppBody from 'pages/AppBody'
-import { AdminLogin } from '../../components/AdminLogin'
+// import { AdminLogin } from '../../components/AdminLogin'
 import { useAdminState, useGetMe } from 'state/admin/hooks'
 import { useHistory } from 'react-router-dom'
 
 export const AdminLoginPage = () => {
   const history = useHistory()
   const getMe = useGetMe()
-  const adminIsAuthenticated = useAdminState().adminIsAuthenticated
+  const { adminData } = useAdminState()
 
   useEffect(() => {
-    if (adminIsAuthenticated) {
+    if (adminData?.role === 'admin') {
       history.push('/admin-kyc')
+    } else {
+      history.push('/swap')
     }
-  }, [adminIsAuthenticated, history])
+  }, [history, adminData])
 
   useEffect(() => {
-    if (localStorage.getItem('adminAccessToken')) {
-      getMe()
+    const fetchMe = async () => {
+      await getMe()
     }
+
+    fetchMe()
   }, [getMe])
 
-  return (
-    <AppBody>
-      <AdminLogin />
-    </AppBody>
-  )
+  return <AppBody>{/* <AdminLogin /> */}</AppBody>
 }
