@@ -213,7 +213,8 @@ export const atlasOneQueryKeys = {
 }
 
 export const resourcesQueryKeys = {
-  getSiteConfig: () => 'site-config'
+  getSiteConfig: 'site-config',
+  exchangeRules: 'exchange-rules'
 }
 
 export const virtualAccountsAuditQueryKeys = {

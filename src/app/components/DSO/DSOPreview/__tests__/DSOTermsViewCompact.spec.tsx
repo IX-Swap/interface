@@ -39,7 +39,10 @@ describe('DSOTermsViewCompact', () => {
 
     expect(LabelledValue).toHaveBeenNthCalledWith(
       1,
-      { label: 'Investment Period (months)', value: dso.investmentPeriod },
+      {
+        label: 'Investment Period',
+        value: `${dso.investmentPeriod ?? ''} months`
+      },
       {}
     )
   })

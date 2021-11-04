@@ -14,7 +14,7 @@ export const useGetSiteConfig = () => {
   }
 
   const { data, ...rest } = useQuery(
-    [resourcesQueryKeys.getSiteConfig()],
+    [resourcesQueryKeys.getSiteConfig],
     fetchSiteConfig
   )
 
