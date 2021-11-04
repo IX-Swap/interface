@@ -139,7 +139,7 @@
     "test:watch": "react-scripts test --env=jest-environment-jsdom-sixteen --coverage",
     "test": "react-scripts test --env=jest-environment-jsdom-sixteen --colors --logHeapUsage --silent",
     "test:gc": "react-scripts --expose-gc test --env=jest-environment-jsdom-sixteen --colors --logHeapUsage --silent",
-    "test:ci": "CI=true react-scripts test --env=jest-environment-jsdom-sixteen --silent --coverage --testResultsProcessor jest-sonar-reporter --maxWorkers=75% --logHeapUsage",
+    "test:ci": "CI=true react-scripts test --env=jest-environment-jsdom-sixteen --silent --coverage --testResultsProcessor jest-sonar-reporter --maxWorkers=75% --logHeapUsage --no-cache",
     "eject": "react-scripts eject",
     "lint": "eslint --cache --fix \"src/**/*.{ts,tsx}\"",
     "format": "prettier --write \"src/**/*.tsx\"",
