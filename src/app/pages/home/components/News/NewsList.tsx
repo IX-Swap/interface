@@ -31,7 +31,13 @@ export const NewsList = ({
     setPage,
     rowsPerPage,
     total
-  } = useTableWithPagination<NewsItemType>(name, uri, filter, queryEnabled, 4)
+  } = useTableWithPagination<NewsItemType>({
+    queryKey: name,
+    uri: uri,
+    defaultFilter: filter,
+    queryEnabled: queryEnabled,
+    defaultRowsPerPage: 4
+  })
 
   const isSecondaryColor = (index: number) => {
     return isTablet ? index === 1 || index === 3 : index === 1 || index === 2

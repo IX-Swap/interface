@@ -8,6 +8,7 @@ import { ReactComponent as BannerIcon } from 'assets/icons/navigation/banner.svg
 import { ReactComponent as MasDisclosureIcon } from 'assets/icons/navigation/mas-disclosure.svg'
 import { ReactComponent as VAAuditIcon } from 'assets/icons/navigation/va-audit.svg'
 import { ReactComponent as VATransactionsIcon } from 'assets/icons/navigation/va-transactions.svg'
+import { ReactComponent as BlockchainSettingsIcon } from 'assets/icons/navigation/blockchain-settings.svg'
 
 export const AdminRoute = {
   landing: makeURL(['app', 'admin']),
@@ -25,7 +26,8 @@ export const AdminRoute = {
   banner: '/app/admin/banner',
   masDisclosure: '/app/admin/masDisclosure',
   virtualAccountAudit: '/app/admin/virtualAccountAudit',
-  virtualAccountTransactions: '/app/admin/virtualAccountTransactions'
+  virtualAccountTransactions: '/app/admin/virtualAccountTransactions',
+  blockchainSettings: '/app/admin/blockchainSettings'
 }
 
 export const adminLandingLinks: InternalRouteProps[] = [
@@ -76,5 +78,11 @@ export const adminLandingLinks: InternalRouteProps[] = [
     path: AdminRoute.virtualAccountAudit,
     color: '#246D97',
     icon: VAAuditIcon
+  },
+  {
+    label: 'Blockchain Settings',
+    path: AdminRoute.blockchainSettings,
+    color: '#BEAA74',
+    icon: BlockchainSettingsIcon
   }
 ]
