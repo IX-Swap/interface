@@ -31,6 +31,7 @@ export interface DataroomUploaderProps {
   multiple?: boolean
   accept?: DataroomFileType
   uri?: string
+  feature?: string
 }
 
 export const DataroomUploader = (props: DataroomUploaderProps) => {
@@ -44,7 +45,8 @@ export const DataroomUploader = (props: DataroomUploaderProps) => {
     render,
     accept = DataroomFileType.document,
     multiple = false,
-    uri = documentsURL.create
+    uri = documentsURL.create,
+    feature
   } = props
   const inputRef = useRef<HTMLInputElement | null>(null)
   const { watch } = useFormContext()
@@ -76,7 +78,8 @@ export const DataroomUploader = (props: DataroomUploaderProps) => {
     ) {
       await uploadFile({
         ...documentInfo,
-        documents: Array.from(inputRef.current.files)
+        documents: Array.from(inputRef.current.files),
+        feature
       })
     }
   }
