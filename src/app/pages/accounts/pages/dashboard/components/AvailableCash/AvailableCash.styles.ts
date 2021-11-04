@@ -29,7 +29,8 @@ export const useStyles = makeStyles(theme => ({
       width: '50%'
     },
     [theme.breakpoints.down('md')]: {
-      flexDirection: 'column'
+      flexDirection: 'column',
+      alignItems: 'flex-start'
     }
   },
   label: {
@@ -37,9 +38,11 @@ export const useStyles = makeStyles(theme => ({
     whiteSpace: 'nowrap'
   },
   value: {
-    whiteSpace: 'nowrap'
-  },
-  space: {
-    width: theme.spacing(3)
+    whiteSpace: 'nowrap',
+    [theme.breakpoints.up('lg')]: {
+      '&:not(:last-child)': {
+        paddingRight: theme.spacing(3)
+      }
+    }
   }
 }))

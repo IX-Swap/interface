@@ -32,7 +32,7 @@ export const useStyles = makeStyles(theme => ({
   },
   iconBlock: {
     position: 'absolute',
-    right: 0,
+    right: -8,
     top: -3
   },
   icon: {

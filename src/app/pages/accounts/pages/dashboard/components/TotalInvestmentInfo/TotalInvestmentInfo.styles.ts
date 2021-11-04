@@ -21,6 +21,10 @@ export const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(1.5),
     [theme.breakpoints.down('sm')]: {
       marginTop: 0
+    },
+    '&:hover': {
+      opacity: 0.6,
+      textDecoration: 'none'
     }
   },
   buttonText: {

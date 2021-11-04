@@ -17,7 +17,7 @@ export const Dashboard: React.FC = () => {
     <Grid container direction={'column'}>
       <Grid item>
         <VSpacer size={'medium'} />
-        <TopInfoPanel />
+        <TopInfoPanel accounts={data?.accounts} balances={data?.balances} />
         <VSpacer size={'small'} />
         <VSpacer size={'extraSmall'} />
       </Grid>
@@ -26,7 +26,7 @@ export const Dashboard: React.FC = () => {
         <Grid item xs={12}>
           <MarketPortfolio
             type={'primary'}
-            currencySymbol={'S$'}
+            currencySymbol={'US$'}
             marketInfo={data?.primaryMarket}
           />
         </Grid>

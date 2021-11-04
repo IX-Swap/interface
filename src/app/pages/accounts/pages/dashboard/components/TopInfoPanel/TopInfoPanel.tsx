@@ -4,29 +4,20 @@ import { useStyles } from 'app/pages/accounts/pages/dashboard/components/TopInfo
 import { AvailableCash } from 'app/pages/accounts/pages/dashboard/components/AvailableCash/AvailableCash'
 import { Investments } from 'app/pages/accounts/pages/dashboard/components/Investments/Investments'
 import { TotalAssetBalance } from 'app/pages/accounts/pages/dashboard/components/TotalAssetBalance/TotalAssetBalance'
-import { WithdrawalAddresses } from 'app/pages/accounts/pages/dashboard/components/WithdrawalAddresses/WithdrawalAddresses'
-import { useVirtualAccount } from 'app/pages/accounts/hooks/useVirtualAccount'
-import { useGetBalances } from 'app/pages/accounts/hooks/useGetBalances'
-import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
+import { BlockchainWallets } from 'app/pages/accounts/pages/dashboard/components/BlockchainWallets/BlockchainWallets'
+import { VirtualAccountInfo, BalancesInfo } from 'types/portfolio'
 
-export const TopInfoPanel: React.FC = () => {
+export interface TopInfoPanelProps {
+  accounts: VirtualAccountInfo[] | undefined
+  balances: BalancesInfo | undefined
+}
+
+export const TopInfoPanel = ({ accounts, balances }: TopInfoPanelProps) => {
   const classes = useStyles()
-  const { list } = useVirtualAccount()
-  const { data: USDBalances } = useGetBalances(list?.[0]._id)
-  const { data: SGDBalances } = useGetBalances(list?.[1]._id)
 
-  if (USDBalances === undefined || SGDBalances === undefined) {
-    return <LoadingIndicator />
+  if (accounts === undefined || balances === undefined) {
+    return null
   }
-
-  const USDCash = USDBalances.availableBalance
-  const {
-    availableBalance,
-    primaryInvestmentBalance,
-    secondaryInvestmentBalance,
-    totalAssetBalance,
-    withdrawalAddressCount
-  } = SGDBalances
 
   return (
     <Card elevation={0} className={classes.container}>
@@ -34,26 +25,23 @@ export const TopInfoPanel: React.FC = () => {
         <Grid
           container
           wrap={'nowrap'}
-          justify={'space-between'}
+          justify={'space-around'}
           alignContent={'flex-start'}
           className={classes.wrapper}
         >
-          <AvailableCash usd={USDCash} sgd={availableBalance} />
+          <AvailableCash accounts={accounts} />
 
           <Grid item className={classes.line} />
 
-          <Investments
-            primary={primaryInvestmentBalance}
-            secondary={secondaryInvestmentBalance}
-          />
+          <Investments primary={balances.primaryInvestmentBalance} />
 
           <Grid item className={classes.line} />
 
-          <TotalAssetBalance value={totalAssetBalance} />
+          <TotalAssetBalance value={balances.totalAssetBalance} />
 
           <Grid item className={classes.line} />
 
-          <WithdrawalAddresses number={withdrawalAddressCount} />
+          <BlockchainWallets count={balances.withdrawalAddressCount} />
         </Grid>
       </CardContent>
     </Card>

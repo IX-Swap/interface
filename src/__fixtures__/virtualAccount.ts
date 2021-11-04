@@ -1,4 +1,4 @@
-import { VirtualAccount, VirtualAccountBalances } from 'types/virtualAccount'
+import { VirtualAccount } from 'types/virtualAccount'
 import { managedUser } from '__fixtures__/user'
 
 export const virtualAccount: VirtualAccount = {
@@ -35,12 +35,4 @@ export const assignedVirtualAccount: VirtualAccount = {
   createdBy: '605d3c24fef70845f9be4cf1',
   status: 'Submitted',
   authorizations: []
-}
-
-export const fakeVirtualAccountBalances: VirtualAccountBalances = {
-  availableBalance: 12000000,
-  primaryInvestmentBalance: 0,
-  secondaryInvestmentBalance: 0,
-  totalAssetBalance: 12000000,
-  withdrawalAddressCount: 1
 }

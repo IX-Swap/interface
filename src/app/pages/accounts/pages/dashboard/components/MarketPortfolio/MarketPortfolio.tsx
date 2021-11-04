@@ -3,7 +3,7 @@ import { Chart } from 'react-google-charts'
 import { useTheme } from '@material-ui/core/styles'
 import { ChartWrapper } from 'app/pages/issuance/components/IssuanceLanding/ChartWrapper'
 import { InsightCard } from 'app/pages/issuance/components/CapTable/InsightCard'
-import { formatAmount, getValueInPercentage } from 'helpers/numbers'
+import { formatDecimal } from 'helpers/numbers'
 import { Button, Grid, Typography } from '@material-ui/core'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { InvestRoute } from 'app/pages/invest/router/config'
@@ -49,23 +49,20 @@ export const MarketPortfolio = ({
 
   const chartData = [
     ['Markets', 'Fund Status'],
-    [
-      `Fund (${formatAmount(fundAmount).split('.')[0]})`,
-      getValueInPercentage(totalAmount, fundAmount)
-    ],
-    [
-      `Debt (${formatAmount(debtAmount).split('.')[0]})`,
-      getValueInPercentage(totalAmount, debtAmount)
-    ],
-    [
-      `Equity (${formatAmount(equityAmount).split('.')[0]})`,
-      getValueInPercentage(totalAmount, equityAmount)
-    ],
-    [
-      `Hybrid (${formatAmount(hybridAmount).split('.')[0]})`,
-      getValueInPercentage(totalAmount, hybridAmount)
-    ]
+    [`Fund (${formatDecimal(fundAmount)})`, fundAmount],
+    [`Debt (${formatDecimal(debtAmount)})`, debtAmount],
+    [`Equity (${formatDecimal(equityAmount)})`, equityAmount],
+    [`Hybrid (${formatDecimal(hybridAmount)})`, hybridAmount]
   ]
+
+  const amount = fundAmount + debtAmount + equityAmount + hybridAmount
+
+  if (amount < totalAmount) {
+    chartData.push([
+      `Others (${formatDecimal(totalAmount - amount)})`,
+      totalAmount - amount
+    ])
+  }
 
   const renderChart = () => (
     <Grid item xs={isTablet ? 12 : 9} className={classes.chartWrapper}>
@@ -78,8 +75,13 @@ export const MarketPortfolio = ({
           width={'100%'}
           options={{
             pieHole: 0.5,
-            // TODO Need to add color gor Hybrid value
-            colors: ['#3266CC', '#DC3812', '#FF9703'],
+            colors: [
+              '#3266CC',
+              '#DC3812',
+              '#FF9703',
+              '#990099',
+              'rgb(204, 204, 204)'
+            ],
             backgroundColor: 'transparent',
             legend: {
               position: 'right',
@@ -98,7 +100,8 @@ export const MarketPortfolio = ({
               width: '100%',
               height: '100%'
             },
-            pieSliceText: 'value + %'
+            pieSliceText: 'value + %',
+            sliceVisibilityThreshold: 0
           }}
         />
       </ChartWrapper>

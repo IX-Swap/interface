@@ -20,6 +20,10 @@ export const formatAmount = (value: number) => {
   return value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
 }
 
+export const formatDecimal = (value: number) => {
+  return new Intl.NumberFormat('en-US', { style: 'decimal' }).format(value)
+}
+
 export const abbreviateNumber = (
   value: number | null,
   symbol?: string,
@@ -72,10 +76,6 @@ export const formatPercent = (value: number): string => `${value.toFixed(2)}%`
 
 export const toPercentage = (value: number): string =>
   `${(value * 100).toFixed(2)}%`
-
-export const getValueInPercentage = (total: number, value: number) => {
-  return (100 / total) * value
-}
 
 export const generateRandom = (length: number, chars: string): string => {
   let mask = ''
