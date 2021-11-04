@@ -1,6 +1,7 @@
 import React from 'react'
 import { Grid, Typography } from '@material-ui/core'
 import { useStyles } from './AvailableCash.styles'
+import { useStyles as useSharedStyles } from './../shared.styles'
 import { VSpacer } from 'components/VSpacer'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { formatAmount } from 'helpers/numbers'
@@ -13,6 +14,7 @@ export interface AvailableCashProps {
 
 export const AvailableCash = ({ accounts }: AvailableCashProps) => {
   const classes = useStyles()
+  const sharedClasses = useSharedStyles()
   const { isMobile } = useAppBreakpoints()
 
   if (accounts === undefined) {
@@ -24,7 +26,7 @@ export const AvailableCash = ({ accounts }: AvailableCashProps) => {
   }
 
   return (
-    <Grid item className={classes.wrapper}>
+    <Grid item className={sharedClasses.wrapper}>
       <Grid item className={classes.firstBlock}>
         <Typography variant={'subtitle2'} className={classes.label}>
           {getTextWithOrWithoutColon('Available Cash', isMobile)}
