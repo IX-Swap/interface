@@ -5,11 +5,6 @@ export enum FARMING_TABS {
   VESTING = 'VESTING',
 }
 
-export const FARMING_STRINGS = {
-  [FARMING_TABS.STAKING]: t`Staking IXS`,
-  [FARMING_TABS.VESTING]: t`Vesting IXS`,
-}
-
 export enum STAKING_TABS {
   ONGOING = 'ONGOING',
   UNSTAKED = 'UNSTAKED',

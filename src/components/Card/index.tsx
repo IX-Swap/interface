@@ -75,6 +75,10 @@ export const EmptyStateInfoCard = styled(Card)`
   flex-direction: column;
   background: ${({ theme }) => theme.bgG13};
   color: ${({ theme }) => theme.text2};
+  @media (max-width: 500px) {
+    min-height: fit-content;
+    padding: 1rem;
+  }
 `
 
 export const DarkCard = styled(Card)`
@@ -89,4 +93,13 @@ export const DarkCard = styled(Card)`
 export const SwapErrorCard = styled(DarkCard)`
   padding: 20px 36px;
   text-align: left;
+`
+export const BlueGreyCard = styled(Card)`
+  background: ${({ theme }) => `${theme.bg11}66`};
+  border-radius: 20px;
+  padding: 18px 25px;
+
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    padding: 16px 8px;
+  `};
 `

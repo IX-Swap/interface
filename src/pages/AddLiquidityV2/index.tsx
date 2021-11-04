@@ -9,6 +9,7 @@ import { Plus } from 'react-feather'
 import ReactGA from 'react-ga'
 import { RouteComponentProps } from 'react-router-dom'
 import { Box, Text } from 'rebass'
+import { setPoolTransactionHash } from 'state/pool/hooks'
 import { ThemeContext } from 'styled-components'
 import { routes } from 'utils/routes'
 import { ButtonGradient, ButtonIXSWide } from '../../components/Button'
@@ -40,6 +41,7 @@ import { Dots } from '../Pool/styleds'
 import { ModalBottom } from './ModalBottom'
 import { ModalHeader } from './ModalHeader'
 import { PricesAndPoolShare } from './PricesAndPoolShare'
+import { SecToSecWarning } from './SecToSecWarning'
 import { ToggleableBody } from './styleds'
 import { Tip } from './Tip'
 import { useHandleCurrencySelect } from './useHandleCurrencySelect'
@@ -80,9 +82,11 @@ export default function AddLiquidity({
     liquidityMinted,
     poolTokenPercentage,
     error,
+    areBothSecTokens,
   } = useDerivedMintInfo(currencyA ?? undefined, currencyB ?? undefined)
 
   const { onFieldAInput, onFieldBInput } = useMintActionHandlers(noLiquidity)
+  const setCurrentPoolTransctionHash = setPoolTransactionHash()
 
   const isValid = !error
 
@@ -131,6 +135,7 @@ export default function AddLiquidity({
   const addTransaction = useTransactionAdder()
 
   async function onAdd() {
+    setCurrentPoolTransctionHash(null)
     if (!chainId || !library || !account || !router) return
 
     const { [Field.CURRENCY_A]: parsedAmountA, [Field.CURRENCY_B]: parsedAmountB } = parsedAmounts
@@ -191,6 +196,7 @@ export default function AddLiquidity({
           })
 
           setTxHash(response.hash)
+          setCurrentPoolTransctionHash(response.hash)
 
           ReactGA.event({
             category: 'Liquidity',
@@ -323,6 +329,7 @@ export default function AddLiquidity({
                     price={price}
                   />
                 )}
+                {areBothSecTokens && <SecToSecWarning />}
                 <Box marginTop={'23px'}>
                   {addIsUnsupported ? (
                     <ButtonIXSWide disabled={true} data-testid="unsupported-asset">

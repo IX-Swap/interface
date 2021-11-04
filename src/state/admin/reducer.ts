@@ -6,10 +6,14 @@ import {
   logout,
   RawGetMePayload,
   KycList,
+  getBrokerDealerList,
+  getBrokerDealerSwaps,
+  BrokerDealerList,
   getKycList,
   postApproveKyc,
   postDeclineKyc,
   postKycReset,
+  BrokerDealerSwaps,
 } from './actions'
 
 export interface AdminState {
@@ -20,6 +24,8 @@ export interface AdminState {
   adminError: string | null
   adminData: RawGetMePayload
   kycList: KycList
+  brokerDealerList: BrokerDealerList
+  brokerDealerSwaps: BrokerDealerSwaps
 }
 
 const initialState: AdminState = {
@@ -38,6 +44,15 @@ const initialState: AdminState = {
     items: [],
     nextPage: 0,
     prevPage: 0,
+  },
+  brokerDealerList: {
+    data: null,
+  },
+  brokerDealerSwaps: {
+    items: [],
+    totalPages: 0,
+    page: 1,
+    offset: 50,
   },
 }
 
@@ -145,5 +160,27 @@ export default createReducer<AdminState>(initialState, (builder) =>
     .addCase(postKycReset.rejected, (state, { payload: { errorMessage } }) => {
       state.adminLoading = false
       state.adminError = errorMessage
+    })
+    .addCase(getBrokerDealerList.fulfilled, (state, { payload: { data } }) => {
+      state.adminLoading = false
+      state.adminError = null
+      state.brokerDealerList = data
+    })
+    .addCase(getBrokerDealerList.rejected, (state, { payload: { errorMessage } }) => {
+      state.adminLoading = false
+      state.adminError = errorMessage
+    })
+    .addCase(getBrokerDealerList.pending, (state) => {
+      state.adminLoading = true
+      state.adminError = null
+    })
+    .addCase(getBrokerDealerSwaps.fulfilled, (state, { payload: { data } }) => {
+      state.adminLoading = false
+      state.adminError = null
+      state.brokerDealerSwaps = data
+    })
+    .addCase(getBrokerDealerSwaps.pending, (state) => {
+      state.adminLoading = true
+      state.adminError = null
     })
 )

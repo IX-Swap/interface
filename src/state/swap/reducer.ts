@@ -1,5 +1,13 @@
 import { createReducer } from '@reduxjs/toolkit'
-import { Field, replaceSwapState, selectCurrency, setRecipient, switchCurrencies, typeInput } from './actions'
+import {
+  Field,
+  replaceSwapState,
+  selectCurrency,
+  setApprovalSubmitted,
+  setRecipient,
+  switchCurrencies,
+  typeInput,
+} from './actions'
 
 export interface SwapState {
   readonly independentField: Field
@@ -12,6 +20,7 @@ export interface SwapState {
   }
   // the typed recipient address or ENS name, or null if swap should go to sender
   readonly recipient: string | null
+  readonly approvalSubmitted: boolean
 }
 
 const initialState: SwapState = {
@@ -24,6 +33,7 @@ const initialState: SwapState = {
     currencyId: '',
   },
   recipient: null,
+  approvalSubmitted: false,
 }
 
 export default createReducer<SwapState>(initialState, (builder) =>
@@ -41,6 +51,7 @@ export default createReducer<SwapState>(initialState, (builder) =>
           independentField: field,
           typedValue: typedValue,
           recipient,
+          approvalSubmitted: state.approvalSubmitted,
         }
       }
     )
@@ -79,5 +90,8 @@ export default createReducer<SwapState>(initialState, (builder) =>
     })
     .addCase(setRecipient, (state, { payload: { recipient } }) => {
       state.recipient = recipient
+    })
+    .addCase(setApprovalSubmitted, (state, { payload: { approvalSubmitted } }) => {
+      state.approvalSubmitted = approvalSubmitted
     })
 )

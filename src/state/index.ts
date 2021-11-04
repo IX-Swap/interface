@@ -16,15 +16,16 @@ import auth from './auth/reducer'
 import secTokens from './secTokens/reducer'
 import eventLog from './eventLog/reducer'
 import admin from './admin/reducer'
-import swapHelper from './swap-helpers/reducer'
+import swapHelper from './swapHelper/reducer'
 import vesting from './vesting/reducer'
 import staking from './stake/reducer'
 import unstaking from './stake/unstake/reducer'
 import stakingPoolSize from './stake/poolSizeReducer'
+import pool from './pool/reducer'
 
 import brokerDealer from './brokerDealer/reducer'
 
-const PERSISTED_KEYS: string[] = ['user', 'transactions', 'lists', 'auth', 'swap']
+const PERSISTED_KEYS: string[] = ['user', 'transactions', 'lists', 'auth', 'swap', 'swapHelper']
 
 const store = configureStore({
   reducer: {
@@ -48,6 +49,7 @@ const store = configureStore({
     stakingPoolSize,
     brokerDealer,
     swapHelper,
+    pool,
   },
   middleware: [...getDefaultMiddleware({ thunk: true }), save({ states: PERSISTED_KEYS, debounce: 1000 })],
   preloadedState: load({ states: PERSISTED_KEYS }),

@@ -7,6 +7,7 @@ import { useCurrency } from 'hooks/Tokens'
 import React, { useMemo } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 import { Box } from 'rebass'
+import { useAccreditationStatus } from 'state/secTokens/hooks'
 import { LightBackground } from 'theme/Background'
 import { Container, Description, DescriptionText, InfoTitle, Logo, StyledTitleBig } from './styleds'
 import { TokenDetails } from './TokenDetails'
@@ -20,6 +21,8 @@ export default function SecTokenDetails({
   const description = useMemo(() => {
     return (currency as any)?.tokenInfo?.description
   }, [currency])
+  const { accreditationRequest, platform } = useAccreditationStatus(currencyId)
+
   return (
     <>
       <DepositPopup currency={currency} />
@@ -40,7 +43,7 @@ export default function SecTokenDetails({
             </ReadMore>
           </DescriptionText>
         </Description>
-        <TokenDetails currency={currency} />
+        <TokenDetails accreditationRequest={accreditationRequest} currency={currency} platform={platform} />
         <Vault currency={currency} currencyId={currencyId} />
       </Container>
     </>

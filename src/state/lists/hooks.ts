@@ -52,6 +52,8 @@ function combineMaps(map1: TokenAddressMap, map2: TokenAddressMap): TokenAddress
     [4]: { ...map1[4], ...map2[4] },
     [3]: { ...map1[3], ...map2[3] },
     [42]: { ...map1[42], ...map2[42] },
+    [137]: { ...map1[137], ...map2[137] },
+    [80001]: { ...map1[80001], ...map2[80001] },
     [5]: { ...map1[5], ...map2[5] },
   }
 }

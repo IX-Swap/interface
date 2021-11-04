@@ -1,4 +1,4 @@
-import { ColumnCenter } from 'components/Column'
+import Column, { AutoColumn, ColumnCenter } from 'components/Column'
 import styled from 'styled-components'
 
 export const PrerequisiteMessageWrapper = styled.div`
@@ -11,6 +11,7 @@ export const PrerequisiteMessageWrapper = styled.div`
   margin-top: 1rem;
 }
 `
+
 export const FoundPoolWrapper = styled(ColumnCenter)`
   justify-items: center;
   background: ${({ theme }) => theme.bg11};
@@ -20,4 +21,26 @@ export const FoundPoolWrapper = styled(ColumnCenter)`
   border-top-left-radius: 0;
   border-top-right-radius: 0;
   margin-top: 35px;
+`
+export const SelectCurrencyContainer = styled(AutoColumn)`
+  padding: 0 37px;
+  margin-bottom: 10px;
+  @media (max-width: 500px) {
+    padding: 0 0.7rem;
+  }
+`
+export const PrerequesiteMessageWrapper = styled(Column)`
+  padding: 0 0.7rem 1rem 0.7rem;
+  align-items: center;
+  gap: 20px;
+  padding: 0 36px 36px 36px;
+  @media (max-width: 500px) {
+    padding: 0 0.7rem 1rem 0.7rem;
+  }
+`
+export const PoolStateColumn = styled(Column)`
+  padding: 37px;
+  @media (max-width: 500px) {
+    padding: 1rem 0.7rem;
+  }
 `

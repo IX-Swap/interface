@@ -43,7 +43,7 @@ export const useAreBothSecTokens = ({ address0, address1 }: { address0?: string;
   const sec1 = useIsSecToken(address1)
   return useMemo(() => sec0 && sec1, [sec0, sec1])
 }
-export const useSecTokenId = ({ currencyId }: { currencyId?: string }) => {
+export const useSecTokenId = ({ currencyId }: { currencyId?: string }): number | undefined => {
   const { secTokens } = useSecTokens()
   const token = secTokens[currencyId ?? '']
 
@@ -110,6 +110,7 @@ export function listToSecTokenMap(
         [token.address]: {
           token,
           list,
+          platform: tokenInfo.platform,
         },
       },
     }
@@ -137,12 +138,14 @@ export function useSecTokensFromMap(tokenMap: SecTokenAddressMap): { [address: s
 
 export function useAccreditationStatus(currencyId?: string) {
   const { secTokens } = useUserSecTokens()
-  const accreditationRequest: AccreditationRequest | null = useMemo(() => {
-    return (secTokens[currencyId ?? ''] as any)?.tokenInfo?.accreditationRequest || null
-  }, [secTokens, currencyId])
-  const status: AccreditationStatusEnum | undefined = accreditationRequest?.status
-  const isApproved = useMemo(() => {
-    return status === AccreditationStatusEnum.APPROVED
-  }, [status])
-  return { status, isApproved, accreditationRequest }
+  const tokenInfo = (secTokens[currencyId ?? ''] as any)?.tokenInfo
+
+  return useMemo(() => {
+    const accreditationRequest: AccreditationRequest | null = tokenInfo?.accreditationRequest || null
+    const status: AccreditationStatusEnum | undefined = accreditationRequest?.status
+    const isApproved = status === AccreditationStatusEnum.APPROVED
+    const platform = tokenInfo?.platform || null
+
+    return { status, isApproved, accreditationRequest, platform }
+  }, [tokenInfo?.accreditationRequest, tokenInfo?.platform])
 }

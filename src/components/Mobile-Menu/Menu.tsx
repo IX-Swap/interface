@@ -8,12 +8,15 @@ import { routes } from 'utils/routes'
 
 import closeIcon from '../../assets/images/cross.svg'
 import { ExternalLink } from 'theme'
+import { useActiveWeb3React } from 'hooks/web3'
+import { MATIC_TGE_CHAINS, TGE_CHAINS_WITH_STAKING } from 'constants/addresses'
 
 interface Props {
   close: () => void
 }
 
 export const Menu = ({ close }: Props) => {
+  const { chainId } = useActiveWeb3React()
   useEffect(() => {
     const body = document.getElementsByTagName('body')[0]
     if (body) {
@@ -33,23 +36,27 @@ export const Menu = ({ close }: Props) => {
           <CloseIcon src={closeIcon} alt={closeIcon} onClick={close} />
         </CloseContainer>
         <MenuList>
-          <MenuListItem id={`swap-nav-link`} to={'/swap'} onClick={close} activeClassName="active-item">
-            <Trans>SWAP</Trans>
-          </MenuListItem>
-          <MenuListItem
-            onClick={close}
-            id={`pool-nav-link`}
-            to={'/pool'}
-            activeClassName="active-item"
-            isActive={(match, { pathname }) =>
-              Boolean(match) ||
-              pathname.startsWith('/add') ||
-              pathname.startsWith('/remove') ||
-              pathname.startsWith('/find')
-            }
-          >
-            <Trans>POOL</Trans>
-          </MenuListItem>
+          {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
+            <MenuListItem id={`swap-nav-link`} to={'/swap'} onClick={close} activeClassName="active-item">
+              <Trans>SWAP</Trans>
+            </MenuListItem>
+          )}
+          {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
+            <MenuListItem
+              onClick={close}
+              id={`pool-nav-link`}
+              to={'/pool'}
+              activeClassName="active-item"
+              isActive={(match, { pathname }) =>
+                Boolean(match) ||
+                pathname.startsWith('/add') ||
+                pathname.startsWith('/remove') ||
+                pathname.startsWith('/find')
+              }
+            >
+              <Trans>POOL</Trans>
+            </MenuListItem>
+          )}
           {SECURITY_TOKENS && (
             <MenuListItem
               activeClassName="active-item"
@@ -60,14 +67,19 @@ export const Menu = ({ close }: Props) => {
               <Trans>Security tokens</Trans>
             </MenuListItem>
           )}
-          <MenuListItem activeClassName="active-item" id={`stake-nav-link`} to={routes.staking} onClick={close}>
-            <Trans>Staking IXS</Trans>
-          </MenuListItem>
+          {chainId && TGE_CHAINS_WITH_STAKING.includes(chainId) && (
+            <MenuListItem activeClassName="active-item" id={`stake-nav-link`} to={routes.staking} onClick={close}>
+              <Trans>Staking IXS</Trans>
+            </MenuListItem>
+          )}
           <MenuListItem activeClassName="active-item" id={`vesting-nav-link`} to={routes.vesting} onClick={close}>
             <Trans>Vesting IXS</Trans>
           </MenuListItem>
           <ExternalListItem href={`https://lm.ixswap.io/`}>
-            <Trans>IXS Liquidity Mining</Trans>
+            <Trans>Liquidity Mining - Uniswap</Trans>
+          </ExternalListItem>
+          <ExternalListItem href={`https://ixswap.defiterm.io/`}>
+            <Trans>DeFi Terminal</Trans>
           </ExternalListItem>
         </MenuList>
       </Container>

@@ -33,7 +33,7 @@ export const BlurredOverlay = styled.div`
   justify-content: center;
   align-items: center;
   backdrop-filter: blur(10px);
-  border-radius: 45px;
+  border-radius: 25px;
   background: ${({ theme }) => theme.bgG16};
 `
 

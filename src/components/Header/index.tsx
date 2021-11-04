@@ -1,22 +1,23 @@
 import { Trans } from '@lingui/macro'
 import useScrollPosition from '@react-hook/window-scroll'
 import useLightBackground from 'components/AppBackground/useLightBackground'
+import { useNativeCurrency } from 'hooks/useNativeCurrencyName'
 import React from 'react'
 import { Text } from 'rebass'
 import styled from 'styled-components'
 import LogoDark from '../../assets/svg/logo-white.svg'
 import { useActiveWeb3React } from '../../hooks/web3'
 import { useETHBalances } from '../../state/wallet/hooks'
-import { VioletCard } from '../Card'
 import { MobileMenu } from '../Mobile-Menu'
 import { RowFixed } from '../Row'
 import Web3Status from '../Web3Status'
 import { HeaderLinks } from './HeaderLinks'
 import { IXSBalance } from './IXSBalance'
+import { NetworkCard } from './NetworkCard'
 
-const HeaderFrame = styled.div<{ showBackground: boolean; lightBackground: boolean; withNetwork: boolean }>`
+const HeaderFrame = styled.div<{ showBackground: boolean; lightBackground: boolean }>`
   display: grid;
-  grid-template-columns: 120px 1fr 120px;
+  grid-template-columns: 0.6fr auto 0.6fr;
   align-items: center;
   justify-content: space-between;
   align-items: center;
@@ -42,8 +43,12 @@ const HeaderFrame = styled.div<{ showBackground: boolean; lightBackground: boole
   }
   @media (max-width: 1080px) {
     grid-template-columns: auto 1fr auto;
-    grid-gap: 32px;
+    grid-gap: 28px;
     padding: 14px 18px;
+  }
+  @media (max-width: 500px) {
+    grid-gap: 7px;
+    grid-template-columns: auto 2fr auto;
   }
 `
 
@@ -102,23 +107,11 @@ const AccountElement = styled.div<{ active: boolean }>`
   background: ${({ theme }) => theme.bgG2};
   border-radius: 12px;
   white-space: nowrap;
-  width: 100%;
+  width: fit-content;
   cursor: pointer;
   :focus {
     border: 1px solid blue;
   }
-`
-
-const NetworkCard = styled(VioletCard)`
-  border-radius: 12px;
-  padding: 2px 3px;
-  background: transparent;
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-    margin: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    flex-shrink: 1;
-  `};
 `
 
 const BalanceText = styled(Text)`
@@ -173,13 +166,6 @@ export const StyledMenuButton = styled.button`
   }
 `
 
-const NETWORK_LABELS: { [chainId: number]: string } = {
-  [4]: 'Rinkeby',
-  [3]: 'Ropsten',
-  [5]: 'Görli',
-  [42]: 'Kovan',
-}
-
 const HeaderWrapper = styled.div`
   ${({ theme }) => theme.flexRowNoWrap}
   width: 100%;
@@ -189,19 +175,15 @@ const HeaderWrapper = styled.div`
   z-index: 2;
 `
 export default function Header() {
-  const { account, chainId } = useActiveWeb3React()
+  const { account } = useActiveWeb3React()
   const { hasLightBackground } = useLightBackground()
   const userEthBalance = useETHBalances(account ? [account] : [])?.[account ?? '']
-
+  const nativeCurrency = useNativeCurrency()
   const scrollY = useScrollPosition()
   return (
     <>
       <HeaderWrapper>
-        <HeaderFrame
-          showBackground={scrollY > 45}
-          lightBackground={hasLightBackground}
-          withNetwork={Boolean(chainId && NETWORK_LABELS[chainId])}
-        >
+        <HeaderFrame showBackground={scrollY > 45} lightBackground={hasLightBackground}>
           <HeaderRow>
             <Title href=".">
               <IXSIcon>
@@ -215,13 +197,13 @@ export default function Header() {
               <IXSBalance />
             </HeaderElement>
             <HeaderElement>
-              {chainId && NETWORK_LABELS[chainId] && (
-                <NetworkCard title={NETWORK_LABELS[chainId]}>{NETWORK_LABELS[chainId]}</NetworkCard>
-              )}
+              <NetworkCard />
               <AccountElement active={!!account} style={{ pointerEvents: 'auto' }}>
                 {account && userEthBalance ? (
                   <BalanceText style={{ flexShrink: 0 }} pl="0.75rem" pr="0.5rem" fontWeight={600}>
-                    <Trans>{userEthBalance?.toSignificant(4)} ETH</Trans>
+                    <Trans>
+                      {userEthBalance?.toSignificant(4)} {nativeCurrency}
+                    </Trans>
                   </BalanceText>
                 ) : null}
                 <Web3Status />

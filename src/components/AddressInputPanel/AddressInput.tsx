@@ -1,4 +1,5 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, ReactNode } from 'react'
+import { Box } from 'rebass'
 import { ContainerRow, Input, InputContainer, InputPanel } from './styleds'
 
 interface Props {
@@ -7,9 +8,12 @@ interface Props {
   value: string
   error: boolean
   onChange: (arg: string) => void
+  placeholder?: string
+  disabled?: boolean
+  rightItem?: ReactNode
 }
 
-export const AddressInput = ({ id, value, error, onChange }: Props) => {
+export const AddressInput = ({ id, value, error, onChange, placeholder, disabled, rightItem }: Props) => {
   const handleInput = useCallback(
     (event) => {
       const input = event.target.value
@@ -29,12 +33,14 @@ export const AddressInput = ({ id, value, error, onChange }: Props) => {
             autoCorrect="off"
             autoCapitalize="off"
             spellCheck="false"
-            placeholder="Wallet Address"
+            placeholder={placeholder || 'Wallet Address'}
             error={error}
             pattern="^(0x[a-fA-F0-9]{40})$"
             onChange={handleInput}
             value={value}
+            disabled={disabled}
           />
+          {rightItem && <Box marginLeft="auto">{rightItem}</Box>}
         </InputContainer>
       </ContainerRow>
     </InputPanel>

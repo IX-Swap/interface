@@ -7,7 +7,7 @@ export default function useAddTokenToMetamask(currencyToAdd: Currency | undefine
   addToken: () => void
   success: boolean | undefined
 } {
-  const { library } = useActiveWeb3React()
+  const { library, chainId } = useActiveWeb3React()
 
   const token: Token | undefined = currencyToAdd?.wrapped
 
@@ -25,7 +25,7 @@ export default function useAddTokenToMetamask(currencyToAdd: Currency | undefine
               address: token.address,
               symbol: token.symbol,
               decimals: token.decimals,
-              image: getTokenLogoURL(token.address),
+              image: getTokenLogoURL(token.address, chainId),
             },
           },
         })

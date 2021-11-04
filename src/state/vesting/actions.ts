@@ -11,7 +11,7 @@ export const saveIsVesting: Readonly<{
   rejected: createAction('vesting/saveIsVesting/rejected'),
   fulfilled: createAction('vesting/saveIsVesting/fulfilled'),
 }
-
+export const persistIsVesting = createAction<{ isVesting: boolean }>('vesting/persistIsVesting')
 export const saveAvailableClaim: Readonly<{
   pending: ActionCreatorWithoutPayload
   fulfilled: ActionCreatorWithPayload<{ availableClaim: string }>

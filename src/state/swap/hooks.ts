@@ -1,25 +1,46 @@
-import { t } from '@lingui/macro'
-import * as H from 'history'
-import useENS from '../../hooks/useENS'
 import { Currency, CurrencyAmount, Percent, Token, TradeType } from '@ixswap1/sdk-core'
 import { Trade as V2Trade } from '@ixswap1/v2-sdk'
+import { t } from '@lingui/macro'
+import * as H from 'history'
+import { useMissingAuthorizations } from 'hooks/useSwapCallback'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useActiveWeb3React } from '../../hooks/web3'
+import { useSetSwapState } from 'state/swapHelper/hooks'
+import { useUserSecTokens, useUserSingleHopOnly } from 'state/user/hooks'
 import { useAllTokens, useCurrency } from '../../hooks/Tokens'
+import useENS from '../../hooks/useENS'
+import useParsedQueryString from '../../hooks/useParsedQueryString'
 import useSwapSlippageTolerance from '../../hooks/useSwapSlippageTolerance'
 import { useV2TradeExactIn, useV2TradeExactOut } from '../../hooks/useV2Trade'
-import useParsedQueryString from '../../hooks/useParsedQueryString'
+import { useActiveWeb3React } from '../../hooks/web3'
 import { isAddress } from '../../utils'
 import { AppDispatch, AppState } from '../index'
 import { useCurrencyBalances } from '../wallet/hooks'
-import { Field, replaceSwapState, selectCurrency, setRecipient, switchCurrencies, typeInput } from './actions'
-import { useSwapIsBothSecTokens, useUserSingleHopOnly } from 'state/user/hooks'
-import { involvesAddress, tryParseAmount, queryParametersToSwapState } from './helpers'
+import {
+  Field,
+  replaceSwapState,
+  selectCurrency,
+  setApprovalSubmitted,
+  setRecipient,
+  switchCurrencies,
+  typeInput,
+} from './actions'
 import { BAD_RECIPIENT_ADDRESSES } from './constants'
+import { involvesAddress, queryParametersToSwapState, tryParseAmount } from './helpers'
 
 export function useSwapState(): AppState['swap'] {
   return useSelector<AppState, AppState['swap']>((state) => state.swap)
+}
+
+export function useSubmitApproval() {
+  const dispatch = useDispatch<AppDispatch>()
+
+  return useCallback(
+    (approval: boolean) => {
+      dispatch(setApprovalSubmitted({ approvalSubmitted: approval }))
+    },
+    [dispatch]
+  )
 }
 
 export function useSwapActionHandlers(): {
@@ -77,6 +98,7 @@ export function useDerivedSwapInfo(): {
   v2Trade: V2Trade<Currency, Currency, TradeType> | undefined
   toggledTrade: V2Trade<Currency, Currency, TradeType> | undefined
   allowedSlippage: Percent
+  shouldGetAuthorization: boolean
 } {
   const { account } = useActiveWeb3React()
 
@@ -88,7 +110,7 @@ export function useDerivedSwapInfo(): {
     [Field.OUTPUT]: { currencyId: outputCurrencyId },
     recipient,
   } = useSwapState()
-
+  const { swapErrorMessage } = useSetSwapState()
   const inputCurrency = useCurrency(inputCurrencyId)
   const outputCurrency = useCurrency(outputCurrencyId)
   const recipientLookup = useENS(recipient ?? undefined)
@@ -156,9 +178,15 @@ export function useDerivedSwapInfo(): {
   if (balanceIn && amountIn && balanceIn.lessThan(amountIn)) {
     inputError = t`Insufficient ${amountIn.currency.symbol} balance`
   }
-  const areBothSecTokens = useSwapIsBothSecTokens(v2Trade)
-  if (areBothSecTokens) {
-    inputError = t`Swapping two security tokens is not allowed`
+
+  const missingAuthorizations = useMissingAuthorizations(v2Trade)
+  const shouldGetAuthorization = missingAuthorizations.length > 0
+  if (shouldGetAuthorization && !inputError) {
+    if (swapErrorMessage) {
+      inputError = swapErrorMessage
+    } else {
+      inputError = t`Authorization missing`
+    }
   }
   return {
     currencies,
@@ -168,6 +196,7 @@ export function useDerivedSwapInfo(): {
     v2Trade: v2Trade ?? undefined,
     toggledTrade,
     allowedSlippage,
+    shouldGetAuthorization,
   }
 }
 
@@ -207,7 +236,7 @@ export function useDefaultsFromURLSearch():
 
 export const useImportNonDefaultTokens = () => {
   const loadedUrlParams = useDefaultsFromURLSearch()
-
+  const { secTokens } = useUserSecTokens()
   // token warning stuff
   const [loadedInputCurrency, loadedOutputCurrency] = [
     useCurrency(loadedUrlParams?.inputCurrencyId),
@@ -220,10 +249,11 @@ export const useImportNonDefaultTokens = () => {
 
   // dismiss warning if all imported tokens are in active lists
   const defaultTokens = useAllTokens()
+  const allTokens = { ...defaultTokens, ...secTokens }
   const importTokensNotInDefault =
     urlLoadedTokens &&
     urlLoadedTokens.filter((token: Token) => {
-      return !Boolean(token.address in defaultTokens)
+      return !Boolean(token.address in allTokens)
     })
 
   return { importTokensNotInDefault }

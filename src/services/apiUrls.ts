@@ -4,6 +4,8 @@ export const admin = {
   login: 'auth/login',
   me: 'auth/me',
   kycList: '/kyc/list',
+  brokerDealerList: '/broker-dealer/list',
+  getSwaps: 'broker-dealer/swaps/all',
   kycReset: (accreditationId: number) => `/kyc/restart/${accreditationId}`,
   approveKyc: (id: number) => `/kyc/approve/${id}`,
   declineKyc: (id: number) => `/kyc/decline/${id}`,
@@ -36,6 +38,7 @@ export const broker = {
 export const tokens = {
   fromUser: `/token/list`,
   authorize: (tokenId: number) => `/token/swap-authorize/${tokenId}`,
+  swapConfirm: (brokerDealerId: number) => `/token/swap-confirm/${brokerDealerId}`,
   all: `/token/list/all`,
   accreditation: (tokenId: number) => `token/accreditation/${tokenId}`,
 }

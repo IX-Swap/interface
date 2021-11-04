@@ -2,9 +2,11 @@ import { getAddress } from '@ethersproject/address'
 import { AddressZero } from '@ethersproject/constants'
 import { Contract } from '@ethersproject/contracts'
 import { JsonRpcSigner, Web3Provider } from '@ethersproject/providers'
-import { Token } from '@ixswap1/sdk-core'
+import { Currency, CurrencyAmount, Token } from '@ixswap1/sdk-core'
 import { FeeAmount } from 'constants/enums'
+import { BIG_INT_ZERO } from 'constants/misc'
 import { TokenAddressMap } from '../state/lists/hooks'
+import JSBI from 'jsbi'
 
 // returns the checksummed address if the address is valid, otherwise returns false
 export function isAddress(value: any): string | false {
@@ -63,4 +65,10 @@ export function isTokenOnList(tokenAddressMap: TokenAddressMap, token?: Token): 
 
 export function formattedFeeAmount(feeAmount: FeeAmount): number {
   return feeAmount / 10000
+}
+export function isAboveZero(amount: CurrencyAmount<Currency> | undefined) {
+  return amount && JSBI.greaterThan(amount?.quotient ?? BIG_INT_ZERO, BIG_INT_ZERO)
+}
+export function removeProtocolFromUrl(url: string): string {
+  return url.replace('http://', '').replace('https://', '')
 }

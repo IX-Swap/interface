@@ -1,53 +1,38 @@
 import { ButtonIXSGradient } from 'components/Button'
 import Column from 'components/Column'
 import { ModalBottomWrapper } from 'components/earn/styled'
-import Row from 'components/Row'
+import Row, { RowCenter } from 'components/Row'
 import { BodyRow, HeaderRow } from 'components/Table'
 import styled from 'styled-components'
-import { gradientBorder } from 'theme'
+import { gradientBorder, TYPE } from 'theme'
 
+export const CardsWrapper = styled.div`
+  overflow: auto;
+  max-width: 90vw;
+  ::-webkit-scrollbar-thumb {
+    display: none;
+  }
+  ::-webkit-scrollbar {
+    display: none;
+  }
+`
 export const CardsRow = styled(Row)`
   justify-content: center;
-  flex-wrap: wrap;
-  
-  > div {
-    margin-right: 16px;
-    margin-left: 16px;
-    margin-top: 0;
-  }
-
-  @media only screen and (max-width: 1007px) {
-    flex-wrap: wrap;
-
-    > div:nth-child(3){
-      margin-top: 33px;
-  };
+  flex-wrap: nowrap;
+  min-width: fit-content;
+  max-width: 100vw;
+  width: 100%;
+  gap: 33px;
 
   @media only screen and (max-width: 683px) {
     grid-template-columns: 100%;
 
     > div {
       justify-self: center;
-     }
-    > div:nth-child(2){
-      margin-top: 33px;
     }
-  };
+  } ;
 `
 
-export const StakingWrapper = styled.div`
-  display: flex;
-  padding-top: 42px;
-  gap: 90px;
-  padding-left: 15px;
-  padding-right: 15px;
-  flex-wrap: wrap;
-  justify-content: center;
-  ${({ theme }) => theme.mediaWidth.upToMedium`
-     flex-direction: column;
-     align-items: center;
-  `};
-`
 export const StakingCard = styled.div`
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -92,33 +77,7 @@ export const PromoTokenCardWrapper = styled(StakingCard)`
     }
   `};
 `
-export const GetIXSStakingCard = styled(PromoTokenCardWrapper)`
-  padding: 35px 34px 37px 34px;
-`
-export const StackingPositionCard = styled(StakingCard)`
-  padding: 32px;
-  height: 458px;
-  min-width: 370px;
-  max-width: 415px;
-  justify-content: space-between;
-  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-      align-self: flex-start;
-      min-width: 330px;
-      max-width: 330px;
-      height: auto;
-  `};
-`
-export const TokenStakingDescriptionNumbers = styled.div`
-  display: flex;
-  justify-content: space-between;
-  margin-top: 30px;
-  flex-wrap: wrap;
-  gap: 20px;
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-     flex-direction: column;
-     gap: 15px;
-  `};
-`
+
 export const NoIXSTokensWrapper = styled.div`
   position: relative;
   padding: 6% 15%;
@@ -158,8 +117,15 @@ export const StakingTierCardWrapper = styled(StakingCard)`
   padding-bottom: 0px;
   height: 466px;
   width: 294px;
-
-  &.fully-staked {
+  &.semi-muted {
+    background: radial-gradient(
+        79.76% 116.06% at 44.22% 136.36%,
+        rgba(102, 20, 206, 0.132) 0%,
+        rgba(26, 18, 58, 0) 100%
+      ),
+      rgba(44, 37, 74, 0.3);
+  }
+  &.muted {
     background: radial-gradient(
         79.76% 116.06% at 44.22% 136.36%,
         rgba(102, 20, 206, 0.132) 0%,
@@ -171,6 +137,10 @@ export const StakingTierCardWrapper = styled(StakingCard)`
     button {
       opacity: 1;
     }
+  }
+  @media only screen and (max-width: 683px) {
+    height: 379px;
+    width: 234px;
   }
 `
 
@@ -323,4 +293,42 @@ export const LoaderContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+`
+
+export const OptionList = styled.ul`
+  margin: 8px 0 0 0;
+  padding: 0;
+`
+export const APYWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  @media only screen and (max-width: 683px) {
+    flex-direction: row;
+    justify-content: center;
+    gap: 8px;
+  }
+`
+
+export const APYPercentage = styled(TYPE.main0)`
+  @media only screen and (max-width: 683px) {
+    font-size: 36px;
+  }
+`
+export const RowWithMarginTop = styled(RowCenter)`
+  margin-top: 15px;
+  @media only screen and (max-width: 683px) {
+    margin-top: 5px;
+  }
+`
+export const RowWithMarginTopAndBottom = styled(RowWithMarginTop)`
+  margin-bottom: 22px;
+  @media only screen and (max-width: 683px) {
+    margin-bottom: 15px;
+  }
+`
+
+export const SwitchNetworkWrap = styled(RowCenter)`
+  margin-bottom: 25px;
+  margin-top: auto;
 `

@@ -1,26 +1,33 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Currency, Percent, TradeType } from '@ixswap1/sdk-core'
-import { Router, Trade as V2Trade } from '@ixswap1/v2-sdk'
+import { Pair, Router, Trade as V2Trade, TradeAuthorization } from '@ixswap1/v2-sdk'
 import { t } from '@lingui/macro'
 import { useCallback, useMemo } from 'react'
-import { useSwapHelpersState } from 'state/swap-helpers/hooks'
-import { useSwapAuthorization } from 'state/user/hooks'
+import { useDerivedSwapInfo } from 'state/swap/hooks'
+import { useAuthorizationsState, useSwapSecPairs } from 'state/swapHelper/hooks'
+import { calculateGasMargin } from 'utils/calculateGasMargin'
 import { useTransactionAdder } from '../state/transactions/hooks'
 import { isAddress, shortenAddress } from '../utils'
 import approveAmountCalldata from '../utils/approveAmountCalldata'
-import { calculateGasMargin } from '../utils/calculateGasMargin'
 import isZero from '../utils/isZero'
 import { useArgentWalletContract } from './useArgentWalletContract'
 import { useSwapRouterContract } from './useContract'
 import useENS from './useENS'
 import useTransactionDeadline from './useTransactionDeadline'
-import { useV2Pair } from './useV2Pairs'
 import { useActiveWeb3React } from './web3'
 
 export enum SwapCallbackState {
   INVALID,
   LOADING,
   VALID,
+}
+
+const EMPTY_AUTHORIZATION: TradeAuthorization = {
+  operator: '0x0000000000000000000000000000000000000000',
+  deadline: '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',
+  v: '0x0000000000000000000000000000000000000000000000000000000000000000',
+  r: '0x0000000000000000000000000000000000000000000000000000000000000000',
+  s: '0x0000000000000000000000000000000000000000000000000000000000000000',
 }
 
 interface SwapCall {
@@ -42,7 +49,84 @@ interface FailedCall extends SwapCallEstimate {
   call: SwapCall
   error: Error
 }
+export function getTokenToPairMap(pairs: Array<Pair | null>) {
+  const tokenToPairMap = pairs.reduce((previous, current) => {
+    const newMap: { [key: string]: string } = {}
+    const token0 = current?.token0
+    const token1 = current?.token1
+    const pairAddress = current?.liquidityToken.address
+    if (token0 && pairAddress) {
+      const address = (token0 as any)?.tokenInfo?.address as string
+      newMap[address] = pairAddress
+    }
+    if (token1 && pairAddress) {
+      const address = (token1 as any)?.tokenInfo?.address as string
+      newMap[address] = pairAddress
+    }
+    return { ...previous, ...newMap }
+  }, {} as { [key: string]: string })
+  return tokenToPairMap
+}
 
+export function useMissingAuthorizations(trade: V2Trade<Currency, Currency, TradeType> | undefined | null) {
+  const addresses = useSwapSecTokenAddresses(trade)
+  const authorizations = useAuthorizationsState()
+  const { secPairs: pairs } = useSwapSecPairs(trade)
+  return useMemo(() => {
+    const tokenToPairMap = getTokenToPairMap(pairs)
+    const missingAddress = addresses.filter((address) => address !== null && !authorizations?.[tokenToPairMap[address]])
+    return missingAddress
+  }, [addresses, authorizations, pairs])
+}
+
+export function useAuthorizationDigest(
+  trade: V2Trade<Currency, Currency, TradeType> | undefined
+): Array<TradeAuthorization> | undefined {
+  const authorizations = useAuthorizationsState()
+  const addresses = useSwapSecTokenAddresses(trade)
+  const { secPairs: pairs } = useSwapSecPairs(trade)
+  const authorizationDigest: Array<TradeAuthorization> | undefined = useMemo(() => {
+    if (!addresses || addresses.length === 0) {
+      return undefined
+    }
+    const tokenToPairMap = getTokenToPairMap(pairs)
+    return addresses.map((address) => {
+      const addressAuthorization = address && authorizations ? authorizations[tokenToPairMap[address]] : null
+      if (!addressAuthorization) {
+        return EMPTY_AUTHORIZATION
+      }
+      return {
+        v: addressAuthorization?.v,
+        r: addressAuthorization.r,
+        operator: addressAuthorization.operator,
+        s: addressAuthorization.s,
+        deadline: addressAuthorization.deadline,
+      }
+    })
+  }, [addresses, authorizations, pairs])
+
+  return authorizationDigest
+}
+
+// returns an array in the form of [address, null, etc] only sec tokens have an address
+export function useSwapSecTokenAddresses(trade: V2Trade<Currency, Currency, TradeType> | undefined | null) {
+  return useMemo(() => {
+    const tokens = []
+    const tokenPath = trade?.route?.path
+    if (tokenPath) {
+      for (const index of tokenPath.keys()) {
+        const token = tokenPath[index]
+        const isFirstOrLast = index === 0 || index === tokenPath.length - 1
+        if ((token as any)?.isSecToken && isFirstOrLast) {
+          tokens.push(token.address)
+        } else {
+          tokens.push(null)
+        }
+      }
+    }
+    return tokens
+  }, [trade?.route?.path])
+}
 /**
  * Returns the swap calls that can be used to make the trade
  * @param trade trade to execute
@@ -62,41 +146,40 @@ function useSwapCallArguments(
   const deadline = useTransactionDeadline()
   const routerContract = useSwapRouterContract()
   const argentWalletContract = useArgentWalletContract()
-  const fetchAuthorization = useSwapAuthorization(trade, allowedSlippage)
-  const inputToken = trade?.inputAmount?.currency
-  const outputToken = trade?.outputAmount?.currency
-  const [, pair] = useV2Pair(inputToken ?? undefined, outputToken ?? undefined)
-  const { dto } = useSwapHelpersState()
+  // rewrite deadline here use the same value
+  const authorizationDigest = useAuthorizationDigest(trade)
+  const { shouldGetAuthorization } = useDerivedSwapInfo()
   return useCallback(async () => {
     if (!trade || !recipient || !library || !account || !chainId || !deadline) return []
     if (!routerContract) return []
-    const swapMethods = []
-    if (dto === null && pair?.isSecurity) {
-      await fetchAuthorization()
+    if (shouldGetAuthorization) {
       return []
     }
-    const usedAuthorization = undefined
+    const swapMethods = []
     const options = {
       feeOnTransfer: false,
       allowedSlippage,
       recipient,
       deadline: deadline.toNumber(),
-      authorizationDigest: usedAuthorization,
+      authorizationDigest: (authorizationDigest as any) ?? undefined,
     }
     swapMethods.push(Router.swapCallParameters(trade, options))
 
     if (trade.tradeType === TradeType.EXACT_INPUT) {
+      console.log('is exact input')
       swapMethods.push(
         Router.swapCallParameters(trade, {
           feeOnTransfer: true,
           allowedSlippage,
           recipient,
           deadline: deadline.toNumber(),
-          authorizationDigest: usedAuthorization,
+          // typing to any because AuthorizationDigest does not accept null but it should
+          authorizationDigest: (authorizationDigest as any) || undefined,
         })
       )
     }
     return swapMethods.map(({ methodName, args, value }) => {
+      console.log({ methodName, args, value })
       if (argentWalletContract && trade.inputAmount.currency.isToken) {
         return {
           address: argentWalletContract.address,
@@ -130,7 +213,8 @@ function useSwapCallArguments(
     recipient,
     routerContract,
     trade,
-    fetchAuthorization,
+    authorizationDigest,
+    shouldGetAuthorization,
   ])
 }
 
@@ -233,7 +317,6 @@ export function useSwapCallback(
         const estimatedCalls: SwapCallEstimate[] = await Promise.all(
           swapCalls.map((call) => {
             const { address, calldata, value } = call
-
             const tx =
               !value || isZero(value)
                 ? { from: account, to: address, data: calldata }
@@ -243,7 +326,6 @@ export function useSwapCallback(
                     data: calldata,
                     value,
                   }
-
             return library
               .estimateGas(tx)
               .then((gasEstimate) => {
@@ -297,7 +379,7 @@ export function useSwapCallback(
             to: address,
             data: calldata,
             // let the wallet try if we can't estimate the gas
-            ...('gasEstimate' in bestCallOption ? { gasLimit: calculateGasMargin(bestCallOption.gasEstimate) } : {}),
+            ...('gasEstimate' in bestCallOption ? { gasLimit: 9000000 } : {}),
             ...(value && !isZero(value) ? { value } : {}),
           })
           .then((response) => {

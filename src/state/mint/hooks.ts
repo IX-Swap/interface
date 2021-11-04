@@ -12,6 +12,7 @@ import { useTotalSupply } from '../../hooks/useTotalSupply'
 import { useActiveWeb3React } from '../../hooks/web3'
 import { tryParseAmount } from '../swap/helpers'
 import { useCurrencyBalances } from '../wallet/hooks'
+import { useAreBothSecTokens } from 'state/secTokens/hooks'
 
 const ZERO = JSBI.BigInt(0)
 
@@ -60,6 +61,7 @@ export function useDerivedMintInfo(
   liquidityMinted?: CurrencyAmount<Token>
   poolTokenPercentage?: Percent
   error?: string
+  areBothSecTokens: boolean
 } {
   const { account } = useActiveWeb3React()
 
@@ -79,7 +81,6 @@ export function useDerivedMintInfo(
   // pair
   const [pairState, pair] = useV2Pair(currencies[Field.CURRENCY_A], currencies[Field.CURRENCY_B])
   const totalSupply = useTotalSupply(pair?.liquidityToken)
-
   const noLiquidity: boolean =
     pairState === PairState.NOT_EXISTS ||
     Boolean(totalSupply && JSBI.equal(totalSupply.quotient, ZERO)) ||
@@ -176,7 +177,13 @@ export function useDerivedMintInfo(
     }
   }, [liquidityMinted, totalSupply])
 
+  const areBothSecTokens = useAreBothSecTokens({
+    address0: currencyA?.wrapped?.address,
+    address1: currencyB?.wrapped?.address,
+  })
+
   let error: string | undefined
+
   if (!account) {
     error = t`Connect Wallet`
   }
@@ -198,7 +205,9 @@ export function useDerivedMintInfo(
   if (currencyBAmount && currencyBalances?.[Field.CURRENCY_B]?.lessThan(currencyBAmount)) {
     error = t`Insufficient ${currencies[Field.CURRENCY_B]?.symbol} balance`
   }
-
+  if (areBothSecTokens) {
+    error = t`Sec to sec pools forbidden`
+  }
   return {
     dependentField,
     currencies,
@@ -211,5 +220,6 @@ export function useDerivedMintInfo(
     liquidityMinted,
     poolTokenPercentage,
     error,
+    areBothSecTokens,
   }
 }

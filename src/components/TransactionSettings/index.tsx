@@ -57,9 +57,6 @@ const StyledOptionRow = styled(OptionRow)`
   `}
 `
 const StyledOption = styled(Option)`
-  :focus {
-    background: ${({ theme }) => theme.bg12};
-  }
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
     width: fit-content;
     padding: 10px;
@@ -82,6 +79,7 @@ interface TransactionSettingsProps {
 
 export default function TransactionSettings({ placeholderSlippage }: TransactionSettingsProps) {
   const theme = useContext(ThemeContext)
+
   const { deadline, deadlineInput, deadlineError, parseCustomDeadline, resetDeadline } = useDeadline()
   const { userSlippageTolerance, slippageInput, slippageError, tooLow, tooHigh, resetSlippage, parseSlippageInput } =
     useSlippage()

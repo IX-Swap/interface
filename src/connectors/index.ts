@@ -22,9 +22,11 @@ const NETWORK_URLS: {
   [3]: `https://ropsten.infura.io/v3/${INFURA_KEY}`,
   [5]: `https://goerli.infura.io/v3/${INFURA_KEY}`,
   [42]: `https://kovan.infura.io/v3/${INFURA_KEY}`,
+  [80001]: `https://polygon-mumbai.infura.io/v3/${INFURA_KEY}`,
+  [137]: `https://polygon-mainnet.infura.io/v3/${INFURA_KEY}`,
 }
 
-const SUPPORTED_CHAIN_IDS = [1, 4, 3, 42, 5]
+const SUPPORTED_CHAIN_IDS = [1, 4, 3, 5, 42, 80001, 137]
 
 export const network = new NetworkConnector({
   urls: NETWORK_URLS,
@@ -42,9 +44,8 @@ export const injected = new InjectedConnector({
 
 export const walletconnect = new WalletConnectConnector({
   supportedChainIds: SUPPORTED_CHAIN_IDS,
-  infuraId: INFURA_KEY, // obviously a hack
+  rpc: NETWORK_URLS,
   qrcode: true,
-  pollingInterval: 15000,
 })
 
 // mainnet only

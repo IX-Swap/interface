@@ -12,6 +12,8 @@ import { routes } from 'utils/routes'
 import Row, { RowFixed } from '../Row'
 import { css } from 'styled-components'
 import { ExternalLink } from 'theme'
+import { useActiveWeb3React } from 'hooks/web3'
+import { MATIC_TGE_CHAINS, TGE_CHAINS_WITH_STAKING } from 'constants/addresses'
 const activeClassName = 'ACTIVE'
 
 const HeaderLinksWrap = styled(Row)<{ links: number }>`
@@ -99,16 +101,25 @@ const PopOverContent = styled.div`
 `
 
 const HeaderPopover = () => {
+  const { chainId } = useActiveWeb3React()
   return (
-    <PopOverContent onClick={(e) => (e ? e.stopPropagation() : null)}>
-      <SubMenuLink id={`stake-nav-link`} to={routes.staking}>
-        <Trans>Staking</Trans>
-      </SubMenuLink>
+    <PopOverContent
+      onClick={(e) => (e ? e.stopPropagation() : null)}
+      onMouseDown={(e) => (e ? e.stopPropagation() : null)}
+    >
+      {chainId !== undefined && TGE_CHAINS_WITH_STAKING.includes(chainId) && (
+        <SubMenuLink id={`stake-nav-link`} to={routes.staking}>
+          <Trans>Staking</Trans>
+        </SubMenuLink>
+      )}
       <SubMenuLink id={`vesting-nav-link`} to={routes.vesting}>
         <Trans>Vesting</Trans>
       </SubMenuLink>
       <SubMenuExternalLink href={`https://lm.ixswap.io/`}>
-        <Trans>IXS Liquidity Mining</Trans>
+        <Trans>Liquidity Mining - Uniswap</Trans>
+      </SubMenuExternalLink>
+      <SubMenuExternalLink href={`https://ixswap.defiterm.io/`}>
+        <Trans>DeFi Terminal</Trans>
       </SubMenuExternalLink>
     </PopOverContent>
   )
@@ -116,26 +127,30 @@ const HeaderPopover = () => {
 export const HeaderLinks = () => {
   const [open, toggle] = useToggle(false)
   const node = useRef<HTMLDivElement>()
-
+  const { chainId } = useActiveWeb3React()
   useOnClickOutside(node, open ? toggle : undefined)
 
   return (
     <HeaderLinksWrap links={SECURITY_TOKENS ? 4 : 3}>
-      <StyledNavLink id={`swap-nav-link`} to={'/swap'}>
-        <Trans>Swap</Trans>
-      </StyledNavLink>
-      <StyledNavLink
-        id={`pool-nav-link`}
-        to={'/pool'}
-        isActive={(match, { pathname }) =>
-          Boolean(match) ||
-          pathname.startsWith('/add') ||
-          pathname.startsWith('/remove') ||
-          pathname.startsWith('/find')
-        }
-      >
-        <Trans>Pool</Trans>
-      </StyledNavLink>
+      {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
+        <StyledNavLink id={`swap-nav-link`} to={'/swap'}>
+          <Trans>Swap</Trans>
+        </StyledNavLink>
+      )}
+      {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
+        <StyledNavLink
+          id={`pool-nav-link`}
+          to={'/pool'}
+          isActive={(match, { pathname }) =>
+            Boolean(match) ||
+            pathname.startsWith('/add') ||
+            pathname.startsWith('/remove') ||
+            pathname.startsWith('/find')
+          }
+        >
+          <Trans>Pool</Trans>
+        </StyledNavLink>
+      )}
 
       {SECURITY_TOKENS && (
         <StyledNavLink id={`stake-nav-link`} to={routes.securityTokens()}>
@@ -151,7 +166,7 @@ export const HeaderLinks = () => {
       >
         <Popover hideArrow show={open} content={<HeaderPopover />} placement={'bottom'}>
           <RowFixed onClick={toggle}>
-            <Trans>IXS Farming</Trans>
+            <Trans>IXS Farms</Trans>
             <ChevronElement showMore={open} />
           </RowFixed>
         </Popover>

@@ -5,6 +5,7 @@ import AppBody from 'pages/AppBody'
 import { AutoColumn } from '../../components/Column'
 import { SwapPoolTabs } from '../../components/NavigationTabs'
 import FullPositionCard from '../../components/PositionCard'
+import { LoaderThin } from 'components/Loader/LoaderThin'
 import { AddLiquidityButton } from './AddLiquidityButton'
 import { ImportPool } from './ImportPool'
 import { LiquidityTitle } from './LiquidityTitle'
@@ -13,7 +14,10 @@ import { LiquidityInnerTitle, MarginerTitle } from './styleds'
 import { useTokens } from './useTokens'
 import { ConnectWallet } from './ConnectWallet'
 import { useActiveWeb3React } from 'hooks/web3'
-import { SUPPORTED_TGE_CHAINS } from 'pages/App'
+import { TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
+import { getPoolTransactionHash } from 'state/pool/hooks'
+import { useIsTransactionPending } from 'state/transactions/hooks'
+import { RowCenter } from 'components/Row'
 
 const bodyProps = {
   padding: '0',
@@ -33,9 +37,12 @@ export default function Pool() {
     stakingInfosWithBalance,
   } = useTokens()
   const { chainId } = useActiveWeb3React()
+  const currentHashTransaction = getPoolTransactionHash()
+  const pending = useIsTransactionPending(currentHashTransaction)
+
   return (
     <>
-      <AppBody {...bodyProps} blurred={chainId === SUPPORTED_TGE_CHAINS.MAIN}>
+      <AppBody {...bodyProps} blurred={chainId !== undefined && !TGE_CHAINS_WITH_SWAP.includes(chainId)}>
         <SwapPoolTabs active={'pool'} />
         <AutoColumn gap="1.5rem" justify="center">
           <AutoColumn gap="md" style={{ width: '100%' }}>
@@ -54,21 +61,27 @@ export default function Pool() {
                 <LiquidityInnerTitle>
                   <Trans>My Liquidity</Trans>
                 </LiquidityInnerTitle>
-                <>
-                  {v2PairsWithoutStakedAmount.map((v2Pair) => (
-                    <FullPositionCard key={v2Pair.liquidityToken.address} pair={v2Pair} />
-                  ))}
-                  {stakingPairs.map(
-                    (stakingPair, i) =>
-                      stakingPair[1] && ( // skip pairs that arent loaded
-                        <FullPositionCard
-                          key={stakingInfosWithBalance[i].stakingRewardAddress}
-                          pair={stakingPair[1]}
-                          stakedBalance={stakingInfosWithBalance[i].stakedAmount}
-                        />
-                      )
-                  )}
-                </>
+                {!pending ? (
+                  <>
+                    {v2PairsWithoutStakedAmount.map((v2Pair) => (
+                      <FullPositionCard key={v2Pair.liquidityToken.address} pair={v2Pair} />
+                    ))}
+                    {stakingPairs.map(
+                      (stakingPair, i) =>
+                        stakingPair[1] && ( // skip pairs that arent loaded
+                          <FullPositionCard
+                            key={stakingInfosWithBalance[i].stakingRewardAddress}
+                            pair={stakingPair[1]}
+                            stakedBalance={stakingInfosWithBalance[i].stakedAmount}
+                          />
+                        )
+                    )}
+                  </>
+                ) : (
+                  <RowCenter style={{ margin: '68px 0px' }}>
+                    <LoaderThin size={128} />
+                  </RowCenter>
+                )}
                 <ImportPool />
               </TopStraightBackgroundWrapper>
             )}

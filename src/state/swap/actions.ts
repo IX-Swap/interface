@@ -17,3 +17,4 @@ export const replaceSwapState =
     recipient: string | null
   }>('swap/replaceSwapState')
 export const setRecipient = createAction<{ recipient: string | null }>('swap/setRecipient')
+export const setApprovalSubmitted = createAction<{ approvalSubmitted: boolean }>('swap/setApprovalSubmitted')

@@ -1,6 +1,12 @@
 import { AppBackground } from 'components/AppBackground'
 import { IXSBalanceModal } from 'components/Header/IXSBalanceModal'
 import { SECURITY_TOKENS } from 'config'
+import {
+  MATIC_TGE_CHAINS,
+  SUPPORTED_TGE_CHAINS,
+  TGE_CHAINS_WITH_STAKING,
+  TGE_CHAINS_WITH_SWAP,
+} from 'constants/addresses'
 import ApeModeQueryParamReader from 'hooks/useApeModeQueryParamReader'
 import { useActiveWeb3React } from 'hooks/web3'
 import React, { useMemo } from 'react'
@@ -28,7 +34,7 @@ import PoolFinder from './PoolFinder'
 import RemoveLiquidity from './RemoveLiquidity'
 import SecTokenDetails from './SecTokenDetails'
 import Swap from './Swap'
-import { RedirectPathToSwapOnly, RedirectPathToStaking, RedirectToSwap } from './Swap/redirects'
+import { RedirectPathToSwapOnly, RedirectPathToStaking, RedirectToSwap, RedirectPathToVesting } from './Swap/redirects'
 
 const AppWrapper = styled.div`
   display: flex;
@@ -58,22 +64,24 @@ const ToggleableBody = styled(BodyWrapper)<{ isVisible?: boolean }>`
 const Marginer = styled.div`
   margin-top: 5rem;
 `
-export const SUPPORTED_TGE_CHAINS = { MAIN: 1, KOVAN: 42 }
 
 export default function App() {
   const isSettingsOpen = useModalOpen(ApplicationModal.SETTINGS)
   const { pathname } = useLocation()
   useAccount()
-  const { chainId } = useActiveWeb3React()
+  const { chainId, account } = useActiveWeb3React()
 
   const isAdminKyc = pathname.includes('admin-kyc')
   const validChainId = useMemo(() => {
+    if (!chainId) {
+      return true
+    }
     return chainId && Object.values(SUPPORTED_TGE_CHAINS).includes(chainId)
   }, [chainId])
 
   const visibleBody = useMemo(() => {
-    return !isSettingsOpen && (validChainId || isAdminKyc)
-  }, [isAdminKyc, isSettingsOpen, validChainId])
+    return (!isSettingsOpen && (validChainId || isAdminKyc)) || !account
+  }, [isAdminKyc, isSettingsOpen, validChainId, account])
 
   return (
     <ErrorBoundary>
@@ -84,7 +92,7 @@ export default function App() {
       <Popups />
       <AppWrapper>
         {validChainId && !isAdminKyc && <Header />}
-        {chainId && !validChainId && !isAdminKyc && <ConnectToAppropriateNetwork />}
+        {chainId && !validChainId && !isAdminKyc && account && <ConnectToAppropriateNetwork />}
         <ToggleableBody isVisible={visibleBody} {...(isAdminKyc && { style: { marginTop: 26 } })}>
           <IXSBalanceModal />
           <Web3ReactManager>
@@ -92,26 +100,41 @@ export default function App() {
               <Route exact strict path="/admin-kyc" component={AdminKyc} />
               <Route exact strict path="/admin-login" component={AdminLoginPage} />
 
-              <Route exact strict path="/send" component={RedirectPathToSwapOnly} />
-              <Route exact strict path="/swap/:outputCurrency" component={RedirectToSwap} />
-              <Route exact strict path="/swap" component={Swap} />
-              <Route exact strict path="/find" component={PoolFinder} />
-              <Route exact strict path="/pool" component={PoolV2} />
+              {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
+                <Route exact strict path="/send" component={RedirectPathToSwapOnly} />
+              )}
+              {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
+                <Route exact strict path="/swap/:outputCurrency" component={RedirectToSwap} />
+              )}
+              {chainId && !MATIC_TGE_CHAINS.includes(chainId) && <Route exact strict path="/swap" component={Swap} />}
+              {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
+                <Route exact strict path="/find" component={PoolFinder} />
+              )}
+              {chainId && !MATIC_TGE_CHAINS.includes(chainId) && <Route exact strict path="/pool" component={PoolV2} />}
 
-              <Route exact strict path="/add/:currencyIdA?/:currencyIdB?" component={RedirectDuplicateTokenIdsV2} />
+              {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
+                <Route exact strict path="/add/:currencyIdA?/:currencyIdB?" component={RedirectDuplicateTokenIdsV2} />
+              )}
 
-              <Route exact strict path="/remove/:currencyIdA/:currencyIdB" component={RemoveLiquidity} />
+              {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
+                <Route exact strict path="/remove/:currencyIdA/:currencyIdB" component={RemoveLiquidity} />
+              )}
 
               {SECURITY_TOKENS && (
                 <Route exact strict path="/security-tokens/:currencyId" component={SecTokenDetails} />
               )}
               {SECURITY_TOKENS && <Route exact strict path={routes.securityTokens()} component={Custodian} />}
 
-              <Route exact strict path={routes.staking} component={StakingTab} />
+              {chainId && TGE_CHAINS_WITH_STAKING.includes(chainId) && (
+                <Route exact strict path={routes.staking} component={StakingTab} />
+              )}
               <Route exact strict path={routes.vesting} component={VestingTab} />
 
-              {chainId !== SUPPORTED_TGE_CHAINS.MAIN && <Route component={RedirectPathToSwapOnly} />}
-              {chainId === SUPPORTED_TGE_CHAINS.MAIN && <Route component={RedirectPathToStaking} />}
+              {chainId && TGE_CHAINS_WITH_SWAP.includes(chainId) && <Route component={RedirectPathToSwapOnly} />}
+              {chainId &&
+                [SUPPORTED_TGE_CHAINS.MAIN, SUPPORTED_TGE_CHAINS.MUMBAI, SUPPORTED_TGE_CHAINS.MATIC].includes(
+                  chainId
+                ) && <Route component={RedirectPathToStaking} />}
             </Switch>
           </Web3ReactManager>
           <Marginer />

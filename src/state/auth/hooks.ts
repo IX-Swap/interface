@@ -8,7 +8,6 @@ import { metamask } from 'services/apiUrls'
 import { AppDispatch, AppState } from 'state'
 import { clearEventLog } from 'state/eventLog/actions'
 import { clearUserData, saveAccount } from 'state/user/actions'
-import { shouldRenewToken } from 'utils/time'
 import { logout, postLogin } from './actions'
 
 export enum LOGIN_STATUS {
@@ -108,7 +107,7 @@ export function useLogin({ mustHavePreviousLogin = true }: { mustHavePreviousLog
         return LOGIN_STATUS.FAILED
       }
     },
-    [fetchToken, dispatch, getHasLogin, mustHavePreviousLogin, account]
+    [fetchToken, dispatch, getHasLogin, mustHavePreviousLogin, account, isLoggedIn, loginLoading]
   )
   return checkLogin
 }

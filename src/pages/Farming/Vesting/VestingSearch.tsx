@@ -4,7 +4,6 @@ import { useActiveWeb3React } from 'hooks/web3'
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { saveCustomVestingAddress } from 'state/vesting/actions'
-import { useVestingStatus } from 'state/vesting/hooks'
 import styled from 'styled-components'
 import { isValidAddress } from 'utils'
 import { ReactComponent as Close } from '../../../assets/images/cross.svg'
@@ -12,17 +11,14 @@ import { ReactComponent as Close } from '../../../assets/images/cross.svg'
 // todo use button inside search
 export const VestingSearch = () => {
   const dispatch = useDispatch()
-  const { getVesting } = useVestingStatus()
   const [address, handleAddres] = useState('')
   const [addressChecked, handleAddressChecked] = useState(false)
 
   const { account } = useActiveWeb3React()
 
   useEffect(() => {
-    if (address) {
-      dispatch(saveCustomVestingAddress({ customVestingAddress: '' }))
-      handleAddres('')
-    }
+    dispatch(saveCustomVestingAddress({ customVestingAddress: '' }))
+    handleAddres('')
   }, [account])
 
   const onChange = (e: { target: { value: string } }) => {
@@ -37,13 +33,11 @@ export const VestingSearch = () => {
   }
 
   const checkAddress = async (input?: string) => {
-    await getVesting(input || address)
     dispatch(saveCustomVestingAddress({ customVestingAddress: input || address }))
     handleAddressChecked(true)
   }
 
   const clear = async () => {
-    await getVesting('')
     dispatch(saveCustomVestingAddress({ customVestingAddress: '' }))
     handleAddres('')
     handleAddressChecked(false)
@@ -110,5 +104,6 @@ const Input = styled.input<{ addressChecked: boolean }>`
   padding-right: ${({ addressChecked }) => (addressChecked ? '100px' : '175px')};
   @media (max-width: 768px) {
     font-size: 16px;
+    padding-right: 22px;
   }
 `
