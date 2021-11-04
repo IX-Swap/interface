@@ -14,6 +14,17 @@ describe('MarketPortfolio', () => {
     jest.clearAllMocks()
   })
 
+  it('renders empty container when data is undefined', () => {
+    const { container } = render(
+      <MarketPortfolio
+        currencySymbol={'S$'}
+        type={'primary'}
+        marketInfo={undefined}
+      />
+    )
+    expect(container).toBeEmptyDOMElement()
+  })
+
   it('renders chart component with correct props', () => {
     render(
       <MarketPortfolio

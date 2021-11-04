@@ -42,3 +42,10 @@ export const chartData = [
     fakeMarketInfo.hybridAmount
   ]
 ]
+
+export const fakePortfolio = {
+  accounts: [fakeVirtualAccountInfo],
+  balances: fakeBalancesInfo,
+  primaryMarket: fakeMarketInfo,
+  secondaryMarket: fakeMarketInfo
+}
