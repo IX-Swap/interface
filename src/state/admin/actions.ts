@@ -71,7 +71,7 @@ export interface BrokerDealerList {
 export interface BrokerDealerSwaps {
   page: number
   totalPages: number
-  items: any[]
+  items: BrokerDealerSwapItem[]
   offset: number
 }
 export interface KycItem {
@@ -144,6 +144,32 @@ export interface KycItem {
     updatedAt: string
   }
   userId: number
+}
+
+export type BrokerDealerSwapItem = {
+  id: number
+  amount: string
+  brokerDealer: {
+    name: string
+  }
+  brokerDealerId: number
+  status: string
+  token: {
+    name: string
+    symbol: string
+    decimals: number
+  }
+  tokenId: number
+  user: {
+    ethAddress: string
+  }
+  data: {
+    amount: string
+    userEthAddress: string
+    pairAddress: string
+    tokenSymbol: string
+  }
+  createdAt: string
 }
 
 export const getKycList: Readonly<{
