@@ -15,9 +15,8 @@ export interface RoleManagementProps {
 }
 
 export const RoleManagement = ({ activeRoles }: RoleManagementProps) => {
-  const { selectedRoles, handleChange, handleUpdate } = useRoleManagement(
-    activeRoles
-  )
+  const { selectedRoles, handleChange, handleUpdate } =
+    useRoleManagement(activeRoles)
 
   return (
     <Grid container direction='column' spacing={2}>

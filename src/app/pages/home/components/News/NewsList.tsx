@@ -24,20 +24,14 @@ export const NewsList = ({
   const theme = useTheme()
   const classes = useStyles()
   const isTablet = useMediaQuery(theme.breakpoints.down('md'))
-  const {
-    items,
-    status,
-    page,
-    setPage,
-    rowsPerPage,
-    total
-  } = useTableWithPagination<NewsItemType>({
-    queryKey: name,
-    uri: uri,
-    defaultFilter: filter,
-    queryEnabled: queryEnabled,
-    defaultRowsPerPage: 4
-  })
+  const { items, status, page, setPage, rowsPerPage, total } =
+    useTableWithPagination<NewsItemType>({
+      queryKey: name,
+      uri: uri,
+      defaultFilter: filter,
+      queryEnabled: queryEnabled,
+      defaultRowsPerPage: 4
+    })
 
   const isSecondaryColor = (index: number) => {
     return isTablet ? index === 1 || index === 3 : index === 1 || index === 2
@@ -73,7 +67,7 @@ export const NewsList = ({
           nextIconButtonProps={{
             disabled: items.length < rowsPerPage || total === 0
           }}
-          onChangePage={(evt, newPage: number) => {
+          onPageChange={(evt, newPage: number) => {
             setPage(newPage)
           }}
         />

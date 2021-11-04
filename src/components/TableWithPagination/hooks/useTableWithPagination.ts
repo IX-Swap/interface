@@ -62,11 +62,14 @@ export const useTableWithPagination = <TData>({
     return result
   }
 
-  const { data: _data, status, fetchMore, isFetching } = useInfiniteQuery(
-    [queryKey, page, rowsPerPage, filter],
-    fetcher,
-    { enabled: uri !== undefined && queryEnabled }
-  )
+  const {
+    data: _data,
+    status,
+    fetchMore,
+    isFetching
+  } = useInfiniteQuery([queryKey, page, rowsPerPage, filter], fetcher, {
+    enabled: uri !== undefined && queryEnabled
+  })
 
   const data = useMemo(
     () => (_data !== undefined ? _data.filter(page => page !== undefined) : []),

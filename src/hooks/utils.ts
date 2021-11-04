@@ -19,7 +19,7 @@ export const convertDataArrayToMap = <T>(
   return data.reduce<any>(
     (acc, cur) => ({
       ...acc,
-      [(cur[key] as unknown) as string]: cur
+      [cur[key] as unknown as string]: cur
     }),
     {}
   )

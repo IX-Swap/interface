@@ -27,7 +27,6 @@ import { AppStateProvider } from 'app/hooks/useAppState'
 import { Form } from 'components/form/Form'
 import { Toast } from 'components/Toast'
 import { AppThemeProvider } from 'AppThemeProvider'
-import { QueryCache, ReactQueryCacheProvider } from 'react-query'
 
 export const apiServiceMock = {
   put: jest.fn(),
@@ -43,7 +42,6 @@ export const snackbarServiceMock = {
 }
 
 export const BaseProviders: React.FC = ({ children }) => {
-  const testQueryCache = new QueryCache()
   const generateClassName = createGenerateClassName({
     productionPrefix: 'ix'
   })
@@ -64,9 +62,7 @@ export const BaseProviders: React.FC = ({ children }) => {
                   }}
                 >
                   <BreadcrumbsProvider>
-                    <ReactQueryCacheProvider queryCache={testQueryCache}>
-                      <Router history={history}>{children}</Router>
-                    </ReactQueryCacheProvider>
+                    <Router history={history}>{children}</Router>
                   </BreadcrumbsProvider>
                 </ServicesProvider>
               </ToastProvider>

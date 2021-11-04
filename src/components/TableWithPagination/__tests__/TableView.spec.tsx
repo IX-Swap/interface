@@ -16,16 +16,17 @@ jest.mock('components/SelectionHelper', () => ({
 
 jest.mock('@material-ui/core/TablePagination', () => jest.fn(() => null))
 
-const useTableWithPaginationMockReturnValue: useTableWithPaginationHook.UseTableWithPaginationReturnType<any> = {
-  total: 0,
-  items: [],
-  setRowsPerPage: jest.fn(),
-  setPage: jest.fn(),
-  status: QueryStatus.Idle,
-  fetchMore: jest.fn(),
-  page: 0,
-  rowsPerPage: 5
-}
+const useTableWithPaginationMockReturnValue: useTableWithPaginationHook.UseTableWithPaginationReturnType<any> =
+  {
+    total: 0,
+    items: [],
+    setRowsPerPage: jest.fn(),
+    setPage: jest.fn(),
+    status: QueryStatus.Idle,
+    fetchMore: jest.fn(),
+    page: 0,
+    rowsPerPage: 5
+  }
 
 describe('TableView', () => {
   const props: TableViewProps<any> = {

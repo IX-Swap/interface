@@ -33,9 +33,8 @@ export const NewDistributionFormFields = ({
   const pricePerToken = watch('amountPerToken')
   const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
   const { data, isLoading } = useDSOById(dsoId, issuerId)
-  const { data: assetData, isLoading: assetIsLoading } = useBalancesByType(
-    'Currency'
-  )
+  const { data: assetData, isLoading: assetIsLoading } =
+    useBalancesByType('Currency')
 
   if (isLoading || assetIsLoading) {
     return null

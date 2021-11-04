@@ -3,7 +3,5 @@ import generateStoreHookAndProvider from 'helpers/generateStoreHookAndProvider'
 
 const store = new DepositStore()
 
-export const {
-  useStore: useDepositStore,
-  Provider: DepositStoreProvider
-} = generateStoreHookAndProvider<DepositStore>(store)
+export const { useStore: useDepositStore, Provider: DepositStoreProvider } =
+  generateStoreHookAndProvider<DepositStore>(store)

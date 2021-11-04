@@ -12,14 +12,8 @@ import { IdleDialog } from 'app/components/IdleDialog'
 import { useIdleTimers } from 'app/hooks/useIdleTimers'
 
 export const AppRoot = () => {
-  const {
-    open,
-    logoutTimer,
-    resetLogoutTimer,
-    closeDialog,
-    reset,
-    logout
-  } = useIdleTimers()
+  const { open, logoutTimer, resetLogoutTimer, closeDialog, reset, logout } =
+    useIdleTimers()
 
   useDataFromURL()
 

@@ -70,21 +70,14 @@ export const TableView = <T,>({
   size = 'medium',
   themeVariant = 'primary'
 }: TableViewProps<T>): JSX.Element => {
-  const {
-    items,
-    status,
-    page,
-    setPage,
-    setRowsPerPage,
-    rowsPerPage,
-    total
-  } = useTableWithPagination<T>({
-    queryKey: name,
-    uri: uri,
-    defaultFilter: filter,
-    queryEnabled: queryEnabled,
-    defaultRowsPerPage: defaultRowsPerPage
-  })
+  const { items, status, page, setPage, setRowsPerPage, rowsPerPage, total } =
+    useTableWithPagination<T>({
+      queryKey: name,
+      uri: uri,
+      defaultFilter: filter,
+      queryEnabled: queryEnabled,
+      defaultRowsPerPage: defaultRowsPerPage
+    })
 
   const theme = useTheme()
   const classes = useStyles()
@@ -238,7 +231,7 @@ export const TableView = <T,>({
               setPage(0)
               setRowsPerPage(parseInt(evt.target.value))
             }}
-            onChangePage={(evt, newPage: number) => {
+            onPageChange={(evt, newPage: number) => {
               setPage(newPage)
             }}
           />

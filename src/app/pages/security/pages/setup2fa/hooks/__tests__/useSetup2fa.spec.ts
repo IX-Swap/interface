@@ -35,7 +35,9 @@ describe('useSetup2fa', () => {
       const post = jest.fn().mockResolvedValueOnce({ data })
       const apiObj = { post }
 
-      renderHookWithServiceProvider(() => useSetup2fa(), { apiService: apiObj })
+      renderHookWithServiceProvider(() => useSetup2fa(), {
+        apiService: apiObj
+      })
 
       await waitFor(
         () => {
@@ -52,7 +54,9 @@ describe('useSetup2fa', () => {
       const post = jest.fn().mockRejectedValueOnce(unsuccessfulResponse)
       const apiObj = { post }
 
-      renderHookWithServiceProvider(() => useSetup2fa(), { apiService: apiObj })
+      renderHookWithServiceProvider(() => useSetup2fa(), {
+        apiService: apiObj
+      })
 
       await waitFor(
         () => {

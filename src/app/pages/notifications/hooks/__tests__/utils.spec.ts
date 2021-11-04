@@ -52,7 +52,10 @@ describe('filterNotifications', () => {
       feature: AppFeature.CashDeposits
     }
     const n2: Notification = { ...notification, feature: AppFeature.Offerings }
-    const n3: Notification = { ...notification, feature: AppFeature.Corporates }
+    const n3: Notification = {
+      ...notification,
+      feature: AppFeature.Corporates
+    }
 
     const filteredNotifications = filterNotifications(
       [AppFeature.CashDeposits, AppFeature.Offerings],
@@ -67,7 +70,10 @@ describe('filterNotifications', () => {
       feature: AppFeature.CashDeposits
     }
     const n2: Notification = { ...notification, feature: AppFeature.Offerings }
-    const n3: Notification = { ...notification, feature: AppFeature.Corporates }
+    const n3: Notification = {
+      ...notification,
+      feature: AppFeature.Corporates
+    }
 
     const filteredNotifications = filterNotifications(undefined, [n1, n2, n3])
     expect(filteredNotifications).toEqual([n1, n2, n3])
@@ -79,7 +85,10 @@ describe('filterNotifications', () => {
       feature: AppFeature.CashDeposits
     }
     const n2: Notification = { ...notification, feature: AppFeature.Offerings }
-    const n3: Notification = { ...notification, feature: AppFeature.Corporates }
+    const n3: Notification = {
+      ...notification,
+      feature: AppFeature.Corporates
+    }
 
     const filteredNotifications = filterNotifications([], [n1, n2, n3])
     expect(filteredNotifications).toEqual([])

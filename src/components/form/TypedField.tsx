@@ -80,7 +80,10 @@ export const TypedField = <
     if (onChange !== undefined) {
       onChange(value, path, control)
     } else {
-      control.setValue(path, value, { shouldValidate: true, shouldDirty: true })
+      control.setValue(path, value, {
+        shouldValidate: true,
+        shouldDirty: true
+      })
     }
   }
   const hasError = getErrorFromControl(path, control) !== undefined
