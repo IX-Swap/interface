@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { QueryStatus, useInfiniteQuery, useQueryCache } from 'react-query'
 import { useAPIService } from 'hooks/useAPIService'
 import { KeyValueMap, PaginatedData } from 'services/api/types'
@@ -57,21 +57,32 @@ export const useTableWithPagination = <TData>({
     }
 
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    return await apiService.post<PaginatedData<TData>>(uri!, payload)
+    const result = await apiService.post<PaginatedData<TData>>(uri!, payload)
+
+    return result
   }
 
-  const { data, status, fetchMore, isFetching } = useInfiniteQuery(
+  const { data: _data, status, fetchMore, isFetching } = useInfiniteQuery(
     [queryKey, page, rowsPerPage, filter],
     fetcher,
     { enabled: uri !== undefined && queryEnabled }
   )
 
-  const cached = queryCache.getQueryData<typeof data>([
-    queryKey,
-    prevPage,
-    rowsPerPage,
-    filter
-  ])
+  const data = useMemo(
+    () => (_data !== undefined ? _data.filter(page => page !== undefined) : []),
+    [_data]
+  )
+
+  const cached = useMemo(
+    () =>
+      queryCache.getQueryData<typeof data>([
+        queryKey,
+        prevPage,
+        rowsPerPage,
+        filter
+      ]),
+    [queryKey, prevPage, rowsPerPage, filter, queryCache]
+  )
   const previousPageData =
     cached !== undefined
       ? cached.map(page =>
@@ -82,7 +93,7 @@ export const useTableWithPagination = <TData>({
       : []
 
   const currentPageData =
-    data !== undefined
+    data !== undefined && data.length > 0
       ? data.map(page =>
           page.data !== undefined && page.data.length > 0
             ? page.data[0].documents.length > 0

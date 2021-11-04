@@ -3,7 +3,7 @@ import { render } from 'test-utils'
 import { withExtraActions } from 'app/pages/authorizer/components/withExtraActions'
 import { Actions } from 'app/pages/authorizer/components/Actions'
 
-jest.mock('app/pages/authorizer/components/ActionsType', () => ({
+jest.mock('app/pages/authorizer/components/Actions', () => ({
   Actions: jest.fn(() => null)
 }))
 

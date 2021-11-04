@@ -53,7 +53,7 @@ export const NewDistributionFormFields = ({
   )}`
 
   const asset = assetData.map[data?.currency._id ?? '']
-  if (pricePerToken * totalTokens >= asset.available) {
+  if (pricePerToken * totalTokens >= asset?.available) {
     isEnough = false
   }
 

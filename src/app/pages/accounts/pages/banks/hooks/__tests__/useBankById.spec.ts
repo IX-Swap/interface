@@ -1,5 +1,9 @@
-import { act } from '@testing-library/react-hooks'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import {
+  waitFor,
+  cleanup,
+  renderHookWithServiceProvider,
+  act
+} from 'test-utils'
 import * as useAuthHook from 'hooks/auth/useAuth'
 import {
   useBankById,
@@ -9,11 +13,9 @@ import { user } from '__fixtures__/user'
 import { bank } from '__fixtures__/authorizer'
 
 describe('useBankById', () => {
-  beforeEach(() => {
-    jest
-      .spyOn(useAuthHook, 'useAuth')
-      .mockImplementation(() => ({ user, isAuthenticated: true }))
-  })
+  jest
+    .spyOn(useAuthHook, 'useAuth')
+    .mockImplementation(() => ({ user, isAuthenticated: true }))
 
   afterEach(async () => {
     await cleanup()
