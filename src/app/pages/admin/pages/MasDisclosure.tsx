@@ -4,6 +4,7 @@ import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import React from 'react'
 import { VSpacer } from 'components/VSpacer'
 import { MasDisclosurePreviewCard } from 'app/pages/admin/components/MasDisclosurePreviewCard'
+import { UploadExchangeRules } from 'app/pages/admin/components/UploadExchangeRules/UploadExchangeRules'
 
 export const MasDisclosure = () => {
   return (
@@ -25,6 +26,12 @@ export const MasDisclosure = () => {
         <Grid item xs={12} md={3}>
           <MasDisclosurePreviewCard />
         </Grid>
+      </Grid>
+      <Grid item xs={12} md={9}>
+        <UploadExchangeRules />
+      </Grid>
+      <Grid item xs={12}>
+        <VSpacer size='large' />
       </Grid>
     </Grid>
   )

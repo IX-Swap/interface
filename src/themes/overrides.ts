@@ -15,10 +15,16 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
   },
   MuiDialog: {
     paper: {
-      borderRadius: 0
+      borderRadius: 10
     },
     paperWidthMd: {
       maxWidth: 800
+    }
+  },
+  MuiDialogContent: {
+    root: {
+      paddingLeft: 40,
+      paddingRight: 40
     }
   },
   MuiListItem: {
@@ -32,6 +38,19 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
   MuiCard: {
     root: {
       borderRadius: 8
+    }
+  },
+  MuiCardContent: {
+    root: {
+      padding: 32,
+      '&:last-child': {
+        paddingBottom: 32
+      }
+    }
+  },
+  MuiCardActions: {
+    root: {
+      padding: 32
     }
   },
   MuiTableCell: {

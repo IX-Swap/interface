@@ -24,7 +24,7 @@ export const DSOTermsView = ({ dso }: DSOTermsViewProps) => {
           <Grid item xs={12} md={4}>
             <LabelledValue
               label='Investment Period'
-              value={dso.investmentPeriod}
+              value={`${dso.investmentPeriod ?? ''} months`}
             />
           </Grid>
 

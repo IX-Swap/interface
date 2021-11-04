@@ -57,7 +57,7 @@ describe('IdentitiesList', () => {
     expect(LoadingIndicator).toHaveBeenCalled()
   })
 
-  it('renders NoIdentity Componenent when hasIdentity is false', () => {
+  it('renders NoIdentity Component when hasIdentity is false', () => {
     const useGetIdentitiesResponse = {
       hasIdentity: false,
       isLoadingIdentities: false
@@ -71,7 +71,7 @@ describe('IdentitiesList', () => {
     expect(NoIdentityView).toHaveBeenCalled()
   })
 
-  it('renders IdentityPreview Componenent when hasIdentity is false', () => {
+  it('renders IdentityPreview Component when hasIdentity is false', () => {
     const useGetIdentitiesResponse = {
       hasIdentity: true,
       isLoadingIdentities: false

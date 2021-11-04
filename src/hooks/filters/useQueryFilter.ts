@@ -33,6 +33,7 @@ export interface QueryFilters {
   transferDirection: string | undefined
   dso: string | undefined
   deploymentStatus: string | undefined
+  blockchainNetwork: string | undefined
   type: string | undefined
 }
 

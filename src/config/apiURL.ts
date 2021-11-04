@@ -8,7 +8,8 @@ export const homeURL = {
   getAccessReports: '/dataroom/reports-and-newsletters/list',
   getNewsList: '/resources/news',
   getTopIssuers: '/issuance/top-issuers',
-  getTopCorporates: '/issuance/top-corporates'
+  getTopCorporates: '/issuance/top-corporates',
+  getAtlasOneAccessReports: '/resources/reports'
 }
 
 export const authorizerURL = {
@@ -62,7 +63,9 @@ export const accountsURL = {
       `accounts/banks/${userId}/${bankId}`,
     create: (userId: string) => `/accounts/banks/${userId}`,
     update: (userId: string, bankId: string) =>
-      `/accounts/banks/${userId}/${bankId}`
+      `/accounts/banks/${userId}/${bankId}`,
+    remove: (userId: string, bankId: string) =>
+      `/accounts/banks/${userId}/${bankId}/remove`
   },
   cashDeposits: {
     getAll: (userId: string) => `/accounts/cash/deposits/${userId}`
@@ -308,7 +311,9 @@ export const atlasOneURL = {
 export const resources = {
   getSiteConfig: '/resources/siteConfig',
   createOrUpdateMasDisclosure: '/resources/siteConfig/masDisclosure',
-  acceptMasDisclosure: '/resources/siteConfig/masDisclosure/accept'
+  acceptMasDisclosure: '/resources/siteConfig/masDisclosure/accept',
+  uploadExchangeRules: '/resources/siteConfig/exchangeRules',
+  getExchangeRules: '/resources/siteConfig/exchangeRules'
 }
 
 export const custodyAccounts = {
@@ -335,4 +340,10 @@ export const virtualAccountsAudit = {
 
 export const virtualTransactions = {
   getTransactions: 'https://hsbc.mozork.com/payments/transactions'
+}
+
+export const blockchainNetworksURL = {
+  getSettings: (network: string) => `/blockchain/settings/${network}`,
+  getUpdateDecimal: (network: string, decimal: number) =>
+    `/blockchain/settings/decimal/${network}/${decimal}`
 }

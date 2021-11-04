@@ -9,8 +9,12 @@ import { useMarket } from 'app/pages/exchange/hooks/useMarket'
 import { useAssetById } from 'hooks/asset/useAssetById'
 import React from 'react'
 import { useParams } from 'react-router'
+import { InvestRoute as paths } from 'app/pages/invest/router/config'
+import { useStyles } from './FinancialSummary.styles'
+import { AppRouterLink } from 'components/AppRouterLink'
 
 export const FinancialSummary = () => {
+  const { detailsLink } = useStyles({ isNegative: false })
   const { pairId } = useParams<{
     pairId: string
   }>()
@@ -22,8 +26,31 @@ export const FinancialSummary = () => {
 
   return (
     <Grid container spacing={1} style={{ paddingLeft: 11, paddingRight: 24 }}>
-      <Grid item container xs={12} md={3} alignContent='center'>
-        <PairListDropdown pairName={data?.name} />
+      <Grid
+        item
+        container
+        xs={12}
+        md={3}
+        alignContent='center'
+        alignItems={'center'}
+      >
+        <Grid item>
+          <PairListDropdown pairName={data?.name} />
+        </Grid>
+        {marketData !== undefined ? (
+          <Grid item>
+            <AppRouterLink
+              className={detailsLink}
+              to={paths.viewListing}
+              params={{
+                userId: marketData.listing.createdBy,
+                listingId: marketData.listing._id
+              }}
+            >
+              View Details
+            </AppRouterLink>
+          </Grid>
+        ) : null}
       </Grid>
       <Grid item xs={12} md={6}>
         <Grid container justify='space-between'>

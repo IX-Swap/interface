@@ -23,14 +23,14 @@ export const PrimaryOfferings = () => {
     setRowsPerPage,
     rowsPerPage,
     total
-  } = useTableWithPagination(
-    dsoQueryKeys.getPromoted,
-    issuanceURL.dso.getAllPromoted,
-    { search: search ?? primaryOfferingSearch },
-    true,
-    5,
-    true
-  )
+  } = useTableWithPagination({
+    queryKey: dsoQueryKeys.getPromoted,
+    uri: issuanceURL.dso.getAllPromoted,
+    defaultFilter: { search: search ?? primaryOfferingSearch },
+    queryEnabled: true,
+    defaultRowsPerPage: 5,
+    disabledUseEffect: true
+  })
 
   if (status === 'loading' || items.length === undefined) {
     return null
