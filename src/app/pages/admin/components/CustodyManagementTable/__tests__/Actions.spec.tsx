@@ -2,13 +2,11 @@ import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { Actions } from 'app/pages/admin/components/CustodyManagementTable/Actions'
 import { fakeCustodyAccountsListItem } from '__fixtures__/custodyAccount'
-import { fireEvent, waitFor } from '@testing-library/dom'
+import { fireEvent } from '@testing-library/dom'
 
 const fakeActionProps = {
   cacheQueryKey: '',
-  item: {
-    fakeCustodyAccountsListItem
-  }
+  item: fakeCustodyAccountsListItem
 }
 
 describe('Actions', () => {
@@ -22,16 +20,16 @@ describe('Actions', () => {
   it('renders without errors', () => {
     render(
       <Actions
-        item={fakeActionProps as any}
+        item={fakeActionProps}
         onLinkOffButtonClick={linkOffButtonHandleClick}
       />
     )
   })
 
-  it('invokes onLinkOffButtonClick function on link off button click', async () => {
+  it('invokes onLinkOffButtonClick function on link off button click', () => {
     const { getByTestId } = render(
       <Actions
-        item={fakeActionProps as any}
+        item={fakeActionProps}
         onLinkOffButtonClick={linkOffButtonHandleClick}
       />
     )
@@ -39,8 +37,6 @@ describe('Actions', () => {
     const linkOffButton = getByTestId('link-off')
 
     fireEvent.click(linkOffButton)
-    await waitFor(() => {
-      expect(linkOffButtonHandleClick).toBeCalled()
-    })
+    expect(linkOffButtonHandleClick).toBeCalled()
   })
 })

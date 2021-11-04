@@ -2,13 +2,13 @@ import React from 'react'
 import { TableColumn } from 'types/util'
 import { getTimeAgoFromString } from 'helpers/dates'
 import { CustodyAccountsListItem } from 'types/custodyAccount'
-import { WalletAddressField } from 'app/pages/admin/components/CustodyManagementTable/WalletAddressField'
+import { WalletAddress } from 'app/components/WalletAddress'
 
 export const renderWalletAddress = (address: string) => {
   if (address === '' || address === null || address === undefined) {
     return '-'
   }
-  return <WalletAddressField address={address} />
+  return <WalletAddress address={address} />
 }
 
 export const renderCustodianName = (type: string) => {

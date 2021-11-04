@@ -11,24 +11,33 @@ import {
   useTheme,
   IconButton
 } from '@material-ui/core'
-import useStyles from 'app/pages/admin/components/UnassignedCustodyDialog/UnassignedCustodyDialog.styles'
+import useStyles from 'app/pages/admin/components/UnAssignCustodyDialog/UnAssignCustodyDialog.styles'
 import { OTPForm } from 'app/pages/issuance/components/Commitments/CloseDealDialog/OTPForm'
 import { VSpacer } from 'components/VSpacer'
 import { Close as CloseIcon } from '@material-ui/icons'
 import { CustodyAccountsListItem } from 'types/custodyAccount'
 import { useUnAssignCustody } from 'app/pages/admin/hooks/useUnAssignCustody'
+import { CloseDealArgs } from 'types/dso'
 
-export interface ModalProps extends Partial<DialogProps> {
+export interface UnAssignCustodyDialogProps extends Partial<DialogProps> {
   open?: boolean
   custodyAccount: CustodyAccountsListItem | null
   onClose: () => void
 }
 
-export const UnassignedCustodyDialog = (props: ModalProps) => {
+export const UnAssignCustodyDialog = (props: UnAssignCustodyDialogProps) => {
   const theme = useTheme()
   const classes = useStyles()
   const { open = false, custodyAccount, onClose } = props
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
+
+  const handleSubmit = async (values: CloseDealArgs) => {
+    await unAssign({
+      accountId: custodyAccount?._id !== undefined ? custodyAccount._id : '',
+      ...values
+    })
+    onClose()
+  }
 
   const {
     mutation: [unAssign, { isLoading }]
@@ -43,8 +52,6 @@ export const UnassignedCustodyDialog = (props: ModalProps) => {
       className={classes.root}
       onClose={() => onClose()}
       onBackdropClick={() => onClose()}
-      aria-labelledby='close-deal-modal-title'
-      aria-describedby='close-deal-modal-description'
     >
       <DialogTitle className={classes.titleRoot}>
         <IconButton
@@ -83,14 +90,7 @@ export const UnassignedCustodyDialog = (props: ModalProps) => {
           data-testid='otp-form'
           isLoading={isLoading}
           onClose={() => onClose()}
-          onSubmit={async values => {
-            await unAssign({
-              accountId:
-                custodyAccount?._id !== undefined ? custodyAccount._id : '',
-              ...values
-            })
-            onClose()
-          }}
+          onSubmit={handleSubmit}
         />
       </DialogActions>
     </MUIDialog>

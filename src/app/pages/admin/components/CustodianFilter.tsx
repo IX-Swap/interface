@@ -4,13 +4,9 @@ import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilte
 
 export interface CustodianFilterProps {
   custodian: 'HEX' | 'InvestaX'
-  defaultValue?: string | null
 }
 
-export const CustodianFilter = ({
-  custodian,
-  defaultValue = ''
-}: CustodianFilterProps) => {
+export const CustodianFilter = ({ custodian }: CustodianFilterProps) => {
   const getStringValue = (value: string | undefined, checked: boolean) => {
     const splitValue = value?.split(',') ?? []
     const nextValue = checked
@@ -23,10 +19,7 @@ export const CustodianFilter = ({
     return value?.includes(custodian) ?? false
   }
   return (
-    <SearchQueryFilter<'type'>
-      name='type'
-      defaultValue={defaultValue ?? undefined}
-    >
+    <SearchQueryFilter<'type'> name='type'>
       {({ value, onChange }) => (
         <FormControlLabel
           style={{ marginRight: 0 }}

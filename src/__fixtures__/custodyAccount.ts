@@ -1,3 +1,5 @@
+import { CustodyAccountsListItem } from 'types/custodyAccount'
+
 export const custodyAccountMock = {
   _id: '6090ede8da777221e21eb2f9',
   accountName: 'HexSafe',
@@ -30,7 +32,7 @@ export const custodyManagementItems = [
   }
 ]
 
-export const fakeCustodyAccountsListItem = {
+export const fakeCustodyAccountsListItem: CustodyAccountsListItem = {
   _id: '1',
   status: 'Approved',
   name: 'Gleb',
@@ -38,6 +40,6 @@ export const fakeCustodyAccountsListItem = {
   walletAddress: '34434',
   accountId: 32442,
   active: true,
-  assignedAt: new Date(),
+  assignedAt: '2021-04-27T04:21:39.140Z',
   type: 'hex'
 }

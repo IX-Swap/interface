@@ -1,7 +1,7 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { ViewListedTokens } from 'app/pages/admin/components/ViewListedTokens/ViewListedTokens'
-import { fireEvent, waitFor } from '@testing-library/dom'
+import { fireEvent } from '@testing-library/dom'
 
 describe('ViewListedTokens', () => {
   const radioHandleChange = jest.fn()
@@ -22,7 +22,7 @@ describe('ViewListedTokens', () => {
     )
   })
 
-  it('invokes onButtonClick function on button click', async () => {
+  it('invokes onButtonClick function on button click', () => {
     const { getByTestId } = render(
       <ViewListedTokens
         radioValue={'hex'}
@@ -34,8 +34,6 @@ describe('ViewListedTokens', () => {
     const button = getByTestId('button')
 
     fireEvent.click(button)
-    await waitFor(() => {
-      expect(buttonHandleClick).toBeCalled()
-    })
+    expect(buttonHandleClick).toBeCalled()
   })
 })

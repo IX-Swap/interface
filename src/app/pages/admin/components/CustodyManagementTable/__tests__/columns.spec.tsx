@@ -5,14 +5,11 @@ import {
   renderCustodianName
 } from 'app/pages/admin/components/CustodyManagementTable/columns'
 import { custodyManagementItems } from '__fixtures__/custodyAccount'
-import { WalletAddressField } from 'app/pages/admin/components/CustodyManagementTable/WalletAddressField'
+import { WalletAddress } from 'app/components/WalletAddress'
 
-jest.mock(
-  'app/pages/admin/components/CustodyManagementTable/WalletAddressField',
-  () => ({
-    WalletAddressField: jest.fn(() => null)
-  })
-)
+jest.mock('app/components/WalletAddress', () => ({
+  WalletAddress: jest.fn(() => null)
+}))
 
 describe('renderWalletAddress', () => {
   afterEach(async () => {
@@ -22,8 +19,8 @@ describe('renderWalletAddress', () => {
 
   it('returns wallet address field component', () => {
     render(<>{renderWalletAddress(custodyManagementItems[0].walletAddress)}</>)
-    expect(WalletAddressField).toHaveBeenCalledTimes(1)
-    expect(WalletAddressField).toHaveBeenCalledWith(
+    expect(WalletAddress).toHaveBeenCalledTimes(1)
+    expect(WalletAddress).toHaveBeenCalledWith(
       expect.objectContaining({
         address: custodyManagementItems[0].walletAddress
       }),

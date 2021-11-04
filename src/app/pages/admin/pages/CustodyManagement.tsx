@@ -1,24 +1,14 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Grid } from '@material-ui/core'
 import { VSpacer } from 'components/VSpacer'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { CustodyManagementTable } from 'app/pages/admin/components/CustodyManagementTable/CustodyManagementTable'
 import { CustodyManagementFilters } from 'app/pages/admin/components/CustodyManagementFilters'
 import { AccountsUnderCustody } from 'app/pages/admin/components/AccountsUnderCustody'
-import { ViewListedTokens } from 'app/pages/admin/components/ViewListedTokens/ViewListedTokens'
-import { ListedTokensDialog } from 'app/pages/admin/components/ListedTokensDialog/ListedTokensDialog'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 
 export const CustodyManagement = () => {
-  const [
-    isTokensListPopupVisible,
-    setIsTokensListPopupVisible
-  ] = useState<boolean>(false)
-  const [custodianValue, setCustodianValue] = useState<string>('hex')
-
   const { isMobile } = useAppBreakpoints()
-
-  const currentCustodianLabel = custodianValue === 'hex' ? 'HEX' : 'InvestaX'
 
   return (
     <Grid container direction='column'>
@@ -38,11 +28,7 @@ export const CustodyManagement = () => {
           sm={'auto'}
           style={{ width: 'max-content', marginTop: isMobile ? 30 : 0 }}
         >
-          <ViewListedTokens
-            radioValue={custodianValue}
-            onRadioChange={value => setCustodianValue(value)}
-            onButtonClick={() => setIsTokensListPopupVisible(true)}
-          />
+          {/* TODO Added ViewListedTokens component here when backend api will be ready */}
         </Grid>
       </Grid>
       <Grid item>
@@ -53,11 +39,7 @@ export const CustodyManagement = () => {
       <Grid item>
         <CustodyManagementTable />
       </Grid>
-      <ListedTokensDialog
-        open={isTokensListPopupVisible}
-        currentCustodian={currentCustodianLabel}
-        onClose={() => setIsTokensListPopupVisible(false)}
-      />
+      {/* TODO Added ListedTokensDialog component here when backend api will be ready */}
     </Grid>
   )
 }

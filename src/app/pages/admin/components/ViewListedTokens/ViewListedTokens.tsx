@@ -39,7 +39,7 @@ export const ViewListedTokens = ({
         variant={'contained'}
         color={'primary'}
         style={{ width: 172 }}
-        onClick={() => onButtonClick()}
+        onClick={onButtonClick}
       >
         View Listed Tokens
       </Button>

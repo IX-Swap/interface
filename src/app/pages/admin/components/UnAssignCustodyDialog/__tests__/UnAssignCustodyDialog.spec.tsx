@@ -1,12 +1,12 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { UnassignedCustodyDialog } from 'app/pages/admin/components/UnassignedCustodyDialog/UnassignedCustodyDialog'
+import { UnAssignCustodyDialog } from 'app/pages/admin/components/UnAssignCustodyDialog/UnAssignCustodyDialog'
 import { fakeCustodyAccountsListItem } from '__fixtures__/custodyAccount'
 import { Dialog } from '@material-ui/core'
 
 jest.mock('@material-ui/core/Dialog', () => jest.fn(() => null))
 
-describe('UnassignedCustodyDialog', () => {
+describe('UnAssignCustodyDialog', () => {
   const handleClose = jest.fn()
 
   afterEach(async () => {
@@ -16,7 +16,7 @@ describe('UnassignedCustodyDialog', () => {
 
   it('renders without errors', () => {
     render(
-      <UnassignedCustodyDialog
+      <UnAssignCustodyDialog
         custodyAccount={fakeCustodyAccountsListItem}
         onClose={handleClose}
       />
@@ -25,7 +25,7 @@ describe('UnassignedCustodyDialog', () => {
 
   it('renders mui dialog component with correct props when open is undefined ', () => {
     render(
-      <UnassignedCustodyDialog
+      <UnAssignCustodyDialog
         custodyAccount={fakeCustodyAccountsListItem}
         onClose={handleClose}
       />
@@ -41,7 +41,7 @@ describe('UnassignedCustodyDialog', () => {
 
   it('renders mui dialog component with correct props when open is true ', () => {
     render(
-      <UnassignedCustodyDialog
+      <UnAssignCustodyDialog
         open={true}
         custodyAccount={fakeCustodyAccountsListItem}
         onClose={handleClose}
@@ -58,7 +58,7 @@ describe('UnassignedCustodyDialog', () => {
 
   it('renders mui dialog component with correct props when open is false ', () => {
     render(
-      <UnassignedCustodyDialog
+      <UnAssignCustodyDialog
         open={false}
         custodyAccount={fakeCustodyAccountsListItem}
         onClose={handleClose}

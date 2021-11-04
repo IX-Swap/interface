@@ -4,7 +4,7 @@ export default makeStyles(theme => ({
   root: {
     '& .MuiDialog-paper': {
       borderRadius: 5,
-      margin: '2rem',
+      margin: theme.spacing(4),
 
       width: 'max-content',
       padding: theme.spacing(5),

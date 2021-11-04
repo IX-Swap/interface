@@ -6,7 +6,7 @@ import { custodyAccountsQueryKeys } from 'config/queryKeys'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import { CustodyAccountsListItem } from 'types/custodyAccount'
 import { Actions } from './Actions'
-import { UnassignedCustodyDialog } from 'app/pages/admin/components/UnassignedCustodyDialog/UnassignedCustodyDialog'
+import { UnAssignCustodyDialog } from 'app/pages/admin/components/UnAssignCustodyDialog/UnAssignCustodyDialog'
 import { ActionsProps } from 'app/pages/authorizer/components/Actions'
 
 export const CustodyManagementTable = () => {
@@ -40,7 +40,7 @@ export const CustodyManagementTable = () => {
 
   return (
     <>
-      <UnassignedCustodyDialog
+      <UnAssignCustodyDialog
         custodyAccount={currentCustodyAccount}
         open={isUnassignedCustodyDialogVisible}
         onClose={() => setIsUnassignedCustodyDialogVisible(false)}
@@ -51,7 +51,7 @@ export const CustodyManagementTable = () => {
         columns={columns}
         actions={renderActions}
         hasActions
-        filter={filter as any}
+        filter={filter}
         themeVariant={'primary'}
         paperProps={{ variant: 'elevation', elevation: 0 }}
       />
