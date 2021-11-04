@@ -17,6 +17,7 @@ import {
 import { RowCenter } from 'components/Row'
 import { AccreditationStatus } from './AccreditationStatus'
 import { SecTokenPlatform } from 'types/secToken'
+import { removeProtocolFromUrl } from 'utils'
 
 interface Props {
   currency?: Currency
@@ -40,9 +41,9 @@ function getStatusMessage(
     case AccreditationStatusEnum.FAILED:
       return (
         accreditationRequest?.message ||
-        t`Could not verify KYC. Please check your account and/or KYC status on investax.io. Retry passing accreditation once your KYC is approved by ${
-          platform?.name || 'primary issuer'
-        }. [retry]`
+        t`Could not verify KYC. Please check your account and/or KYC status on ${removeProtocolFromUrl(
+          platform?.website || 'primary issuer website'
+        )}. Retry passing accreditation once your KYC is approved by ${platform?.name || 'primary issuer'}. [retry]`
       )
     case AccreditationStatusEnum.REJECTED:
       return accreditationRequest?.message || t`Accreditation rejected`
