@@ -34,6 +34,7 @@ export interface AuthorizationInProgress {
   pairAddress?: string
   amount?: string
   orderType?: OrderType
+  platform?: string
 }
 export interface SwapHelperState {
   authorizations: {

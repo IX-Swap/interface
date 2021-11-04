@@ -2,12 +2,28 @@ import { t, Trans } from '@lingui/macro'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import dayjs from 'dayjs'
 import styled from 'styled-components'
-import React, { useEffect } from 'react'
+import React, { useEffect, FC } from 'react'
 
+import { IconWrapper } from 'components/AccountDetails/styleds'
 import { useAdminState, useFetchBrokerDealerSwaps } from 'state/admin/hooks'
 import { shortenAddress } from 'utils'
 import { BodyRow, HeaderRow, Table } from '../Table'
 import { Pagination } from 'components/AdminKycTable/Pagination'
+import useCopyClipboard from 'hooks/useCopyClipboard'
+import { BrokerDealerSwapItem } from 'state/admin/actions'
+import { Copy } from 'react-feather'
+
+interface RowProps {
+  item: BrokerDealerSwapItem
+}
+
+const StyledCopy = styled(Copy)`
+  margin-left: 8px;
+  cursor: pointer;
+  color: ${({ theme }) => theme.text1};
+  width: 17px;
+  height: 17px;
+`
 
 const headerCells = [t`Date`, t`Name`, t`Trader's wallet`, t`Trading pair`, t`Amount`, t`Response`, t`Status`]
 
@@ -21,6 +37,42 @@ const Header = () => {
   )
 }
 
+const Row: FC<RowProps> = ({ item }: RowProps) => {
+  const [copied, setCopied] = useCopyClipboard()
+  const {
+    id,
+    data: { amount },
+    user: { ethAddress },
+    brokerDealer: { name: broker },
+    status,
+    token,
+    createdAt,
+  } = item
+
+  return (
+    <StyledBodyRow key={`transaction-${id}`}>
+      <div>{dayjs(createdAt).format('MMM D, YYYY HH:mm')}</div>
+      <div>{broker}</div>
+      <Wallet>
+        {copied ? (
+          <Trans>Copied</Trans>
+        ) : (
+          <>
+            {shortenAddress(ethAddress || '')}
+            <IconWrapper size={18} onClick={() => setCopied(ethAddress || '')}>
+              <StyledCopy />
+            </IconWrapper>
+          </>
+        )}
+      </Wallet>
+      <div>{`ETH > ${token?.symbol}`}</div>
+      <div>{`${amount} ${token?.symbol}`}</div>
+      <div style={{ textTransform: 'capitalize' }}>{status}</div>
+      <div>{status === 'approved' || status === 'created' ? 'OK' : 'NOT OK'}</div>
+    </StyledBodyRow>
+  )
+}
+
 const Body = () => {
   const {
     brokerDealerSwaps: { items },
@@ -28,21 +80,9 @@ const Body = () => {
 
   return (
     <>
-      {items?.map(
-        ({ id, data: { amount }, user: { ethAddress }, brokerDealer: { name: broker }, status, token, createdAt }) => {
-          return (
-            <StyledBodyRow key={`transaction-${id}`}>
-              <div>{dayjs(createdAt).format('MMM D, YYYY HH:mm')}</div>
-              <div>{broker}</div>
-              <Wallet>{shortenAddress(ethAddress || '')}</Wallet>
-              <div>{`ETH > ${token?.symbol}`}</div>
-              <div>{`${amount} ${token?.symbol}`}</div>
-              <div style={{ textTransform: 'capitalize' }}>{status}</div>
-              <div>{status === 'approved' || status === 'created' ? 'OK' : 'NOT OK'}</div>
-            </StyledBodyRow>
-          )
-        }
-      )}
+      {items?.map((item, id) => (
+        <Row item={item} key={`transaction-${id}`} />
+      ))}
     </>
   )
 }

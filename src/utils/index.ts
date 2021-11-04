@@ -69,3 +69,6 @@ export function formattedFeeAmount(feeAmount: FeeAmount): number {
 export function isAboveZero(amount: CurrencyAmount<Currency> | undefined) {
   return amount && JSBI.greaterThan(amount?.quotient ?? BIG_INT_ZERO, BIG_INT_ZERO)
 }
+export function removeProtocolFromUrl(url: string): string {
+  return url.replace('http://', '').replace('https://', '')
+}
