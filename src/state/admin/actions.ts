@@ -168,6 +168,7 @@ export type BrokerDealerSwapItem = {
     userEthAddress: string
     pairAddress: string
     tokenSymbol: string
+    pairSymbol: string
   }
   createdAt: string
 }
