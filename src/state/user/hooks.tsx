@@ -1,5 +1,6 @@
 import { Percent, Token } from '@ixswap1/sdk-core'
 import { Pair } from '@ixswap1/v2-sdk'
+import { t } from '@lingui/macro'
 import { ERROR_ACCREDITATION_STATUSES } from 'components/Vault/enum'
 import { IXS_ADDRESS, IXS_GOVERNANCE_ADDRESS } from 'constants/addresses'
 import { SupportedLocale } from 'constants/locales'
@@ -10,9 +11,9 @@ import { useCallback, useEffect, useMemo } from 'react'
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import apiService from 'services/apiService'
 import { broker, kyc, tokens } from 'services/apiUrls'
-import { useChooseBrokerDealerModalToggle } from 'state/application/hooks'
+import { useAddPopup, useChooseBrokerDealerModalToggle } from 'state/application/hooks'
 import { saveToken } from 'state/auth/actions'
-import { LOGIN_STATUS, useAuthState, useLogin } from 'state/auth/hooks'
+import { LOGIN_STATUS, useAuthState, useLogin, useLogout, useUserisLoggedIn } from 'state/auth/hooks'
 import { clearEventLog } from 'state/eventLog/actions'
 import {
   listToSecTokenMap,
@@ -424,9 +425,11 @@ export function usePassAccreditation(
   currencyId?: string
 ): (tokenId: number, brokerDealerPairId: number) => Promise<void> {
   const dispatch = useDispatch<AppDispatch>()
-  const login = useLogin({ mustHavePreviousLogin: false, expireLogin: false })
+  const login = useLogin({ mustHavePreviousLogin: false })
   const fetchTokens = useFetchUserSecTokenListCallback()
   const toggle = useChooseBrokerDealerModalToggle()
+  const addPopup = useAddPopup()
+
   const { status: accreditationStatus, accreditationRequest } = useAccreditationStatus(currencyId)
   // note: prevent dispatch if using for list search or unsupported list
   return useCallback(
@@ -445,7 +448,16 @@ export function usePassAccreditation(
           }
           await postPassAccreditation({ tokenId })
         } else {
-          dispatch(passAccreditation.rejected({ errorMessage: 'Could not login.' }))
+          addPopup(
+            {
+              info: {
+                success: false,
+                summary: t`Could not get accredited because of login. Please try again`,
+              },
+            },
+            '2'
+          )
+          dispatch(passAccreditation.rejected({ errorMessage: 'Could not get accredited because of login.' }))
           return
         }
         await fetchTokens()
@@ -453,10 +465,19 @@ export function usePassAccreditation(
         toggle()
       } catch (error) {
         console.debug(`Failed to pass accreditation`, error)
+        addPopup(
+          {
+            info: {
+              success: false,
+              summary: t`Failed to pass accreditation ${String((error as any)?.message)}`,
+            },
+          },
+          '3'
+        )
         dispatch(passAccreditation.rejected({ errorMessage: String((error as any)?.message) }))
       }
     },
-    [dispatch, login, fetchTokens, toggle, accreditationRequest, accreditationStatus]
+    [dispatch, login, fetchTokens, toggle, addPopup, accreditationRequest, accreditationStatus]
   )
 }
 
@@ -464,40 +485,45 @@ export function useAccount() {
   const savedAccount = useUserAccountState()
   const { account } = useActiveWeb3React()
   const dispatch = useDispatch<AppDispatch>()
-  const login = useLogin({ mustHavePreviousLogin: true, expireLogin: true })
+  const { token, loginError, refreshToken } = useAuthState()
+  const login = useLogin({ mustHavePreviousLogin: true })
   const getUserSecTokens = useFetchUserSecTokenListCallback()
-  const { expiresAt, token } = useAuthState()
+  const logout = useLogout()
+  const isLoggedIn = useUserisLoggedIn()
+
   const authenticate = useCallback(async () => {
-    const status = await login()
-    if (status == LOGIN_STATUS.SUCCESS) {
+    const status = await login(true)
+    if (status == LOGIN_STATUS.SUCCESS && isLoggedIn) {
       getUserSecTokens()
     }
-  }, [login, getUserSecTokens])
-
-  // once in 30 seconds check for expired token
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (Boolean(token && shouldRenewToken(expiresAt) && account)) {
-        authenticate()
-      }
-    }, 30000)
-    return () => clearInterval(interval)
-  }, [expiresAt, account, authenticate, token])
+  }, [login, getUserSecTokens, account])
 
   // when user logins to another account clear his data and relogin him
   // run with an interval of 5 sec in cases when user changes fast from an account to another
   // so the user won't end up authenticated with a different account
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    const interval = setInterval(async () => {
       if (account && savedAccount && savedAccount !== account) {
-        dispatch(saveToken({ value: { token: '', expiresAt: 0 } }))
-        dispatch(clearUserData())
-        dispatch(clearEventLog())
-        authenticate()
-        dispatch(saveAccount({ account }))
+        dispatch(saveAccount({ account: '' }))
       }
     }, 5000)
     return () => clearInterval(interval)
   }, [account, savedAccount, dispatch, login, getUserSecTokens, authenticate])
+
+  // retry authentication on error
+  // useEffect(() => {
+  //   if (account && !refreshToken && !token) {
+  //     logout()
+  //     authenticate()
+  //   }
+  // }, [account, refreshToken, savedAccount, loginError, logout, authenticate])
+
+  // User connects with account
+  useEffect(() => {
+    if (account && !savedAccount) {
+      logout()
+      authenticate()
+    }
+  }, [account, savedAccount])
 }

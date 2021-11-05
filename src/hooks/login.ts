@@ -16,7 +16,7 @@ export const login = async ({ hash, account }: Props) => {
       })
       return result
     } catch (e) {
-      console.error({ ERROR: e })
+      console.error({ ERROR19: e })
     }
   }
   return null

@@ -166,7 +166,6 @@ function useSwapCallArguments(
     swapMethods.push(Router.swapCallParameters(trade, options))
 
     if (trade.tradeType === TradeType.EXACT_INPUT) {
-      console.log('is exact input')
       swapMethods.push(
         Router.swapCallParameters(trade, {
           feeOnTransfer: true,
