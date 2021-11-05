@@ -4,6 +4,14 @@ import { expect } from '@playwright/test'
 const LOADER = '[role="progressbar"]'
 const DEFAULT_SELECTOR_TIMEOUT = 50000
 
+async function waitNewPage(context, page, element) {
+  const [secondPage] = await Promise.all([
+    context.waitForEvent('page'),
+    page.click(element)
+  ])
+  return secondPage
+}
+
 const randomString = (length = 8) => {
   // Declare all characters
   let chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
@@ -223,5 +231,6 @@ export {
   clearAndTypeText,
   waitForResponseInclude,
   waitForText,
-  randomString
+  randomString,
+  waitNewPage
 }

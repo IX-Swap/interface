@@ -118,6 +118,7 @@ class UserForms {
       'BENEFICIAL FULL NAME',
       this.page
     )
+    await click(kyc.buttons.SUBMIT, this.page)
   }
 
   fillPeopleWithExecutiveAuthorityForm = async () => {
@@ -153,6 +154,7 @@ class UserForms {
       kyc.field.corporate.directors.DOCUMENTS,
       text.docs.pathToFile
     )
+    await click(kyc.buttons.SUBMIT, this.page)
   }
   fillPersonalInformationForm = async () => {
     await click(kyc.buttons.OKAY, this.page)
@@ -173,6 +175,7 @@ class UserForms {
     await click(kyc.field.ADDRESS_COUNTRY, this.page)
     await click('text="Azerbaijan"', this.page)
     await typeText(kyc.field.CITY, 'Baku', this.page)
+    await click(kyc.buttons.SUBMIT, this.page)
   }
 
   fillFinancialInformation = async () => {
@@ -186,6 +189,7 @@ class UserForms {
     await this.page.check(kyc.checkbox.INVESTMENTS)
     await click(kyc.checkbox.INVESTMENTS_VALUE, this.page)
     await click(kyc.checkbox.INHERITANCE_VALUE, this.page)
+    await click(kyc.buttons.SUBMIT, this.page)
   }
 
   fillTaxDeclaration = async () => {

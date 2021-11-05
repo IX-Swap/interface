@@ -12,6 +12,7 @@ export const text = {
   },
   notification: {
     resetPassword: 'Password reset has been successful',
-    submitIdentity: 'Thanks For Submitting Your Identity!'
+    submitIdentity: 'Thanks For Submitting Your Identity!',
+    custodyAddress: 'We Are Assigning You a Withdrawal Address'
   }
 }
