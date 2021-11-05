@@ -29,6 +29,7 @@ const TextWrap = styled(TYPE.titleBig)`
 `
 export const BalanceRow = ({ currency, account }: Props) => {
   const currencyBalance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
+  console.log('balance', currency)
   const toggle = useWithdrawModalToggle()
   return (
     <TitleStatusRow>

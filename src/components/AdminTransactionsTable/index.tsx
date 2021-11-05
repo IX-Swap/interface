@@ -1,6 +1,7 @@
 import { t, Trans } from '@lingui/macro'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import dayjs from 'dayjs'
+import { Copy } from 'react-feather'
 import styled from 'styled-components'
 import React, { useEffect, FC } from 'react'
 
@@ -11,7 +12,11 @@ import { BodyRow, HeaderRow, Table } from '../Table'
 import { Pagination } from 'components/AdminKycTable/Pagination'
 import useCopyClipboard from 'hooks/useCopyClipboard'
 import { BrokerDealerSwapItem } from 'state/admin/actions'
-import { Copy } from 'react-feather'
+import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
+import { useCurrencyBalance } from 'state/wallet/hooks'
+import { useCurrency } from 'hooks/Tokens'
+import { formatAmount } from 'pages/Farming/Staking/utils'
+import { Currency, CurrencyAmount } from '@ixswap1/sdk-core'
 
 interface RowProps {
   item: BrokerDealerSwapItem
@@ -41,13 +46,14 @@ const Row: FC<RowProps> = ({ item }: RowProps) => {
   const [copied, setCopied] = useCopyClipboard()
   const {
     id,
-    data: { amount, pairSymbol },
+    data: { amount, tokenAddress },
     user: { ethAddress },
     brokerDealer: { name: broker },
     status,
     token,
     createdAt,
   } = item
+  const currency = useCurrency(tokenAddress)
 
   return (
     <StyledBodyRow key={`transaction-${id}`}>
@@ -65,8 +71,8 @@ const Row: FC<RowProps> = ({ item }: RowProps) => {
           </>
         )}
       </Wallet>
-      <div>{`${pairSymbol?.split('-')?.join(' > ') ?? token?.symbol}`}</div>
-      <div>{`${amount} ${token?.symbol}`}</div>
+      <div>{`ETH > ${token?.symbol}`}</div>
+      <div>{`${CurrencyAmount.fromRawAmount(currency as Currency, amount).toFixed()} ${token?.symbol}`}</div>
       <div style={{ textTransform: 'capitalize' }}>{status}</div>
       <div>{status === 'approved' || status === 'created' ? 'OK' : 'NOT OK'}</div>
     </StyledBodyRow>
@@ -156,11 +162,11 @@ const Container = styled.div`
 `
 
 const StyledHeaderRow = styled(HeaderRow)`
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: 1fr 1fr 1fr 1fr 2fr 1fr 1fr;
   min-width: 1270px;
 `
 
 const StyledBodyRow = styled(BodyRow)`
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: 1fr 1fr 1fr 1fr 2fr 1fr 1fr;
   min-width: 1270px;
 `
