@@ -16,10 +16,17 @@ export interface AuthorizationParams {
   amount: string
   pairAddress?: string
   orderType: string
+  pairSymbol?: string
 }
 
-export const fetchTokenAuthorization = async ({ tokenId, amount, pairAddress, orderType }: AuthorizationParams) => {
-  const result = await apiService.post(tokens.authorize(tokenId), { amount, pairAddress, orderType })
+export const fetchTokenAuthorization = async ({
+  tokenId,
+  amount,
+  pairAddress,
+  orderType,
+  pairSymbol,
+}: AuthorizationParams) => {
+  const result = await apiService.post(tokens.authorize(tokenId), { amount, pairAddress, orderType, pairSymbol })
   return result.data
 }
 
@@ -30,18 +37,20 @@ export const useGetTokenAuthorization = () => {
     async ({
       amount,
       pairAddress,
+      pairSymbol,
       orderType,
       tokenId,
     }: {
       amount: string
       pairAddress?: string
+      pairSymbol?: string
       orderType: OrderType
       tokenId?: number
     }) => {
       if (!tokenId || !amount || !pairAddress || !orderType) return null
       dispatch(authorizeSecToken.pending())
       try {
-        const result = await fetchTokenAuthorization({ tokenId, amount, pairAddress, orderType })
+        const result = await fetchTokenAuthorization({ tokenId, amount, pairAddress, pairSymbol, orderType })
         dispatch(authorizeSecToken.fulfilled())
         return result
       } catch (e) {
@@ -112,6 +121,7 @@ export function useSwapAuthorizeFirstStep(
           const brokerDealerId = (accreditationRequest as any)?.brokerDealerId
           const pair = firstIsSec ? pairs?.[0] : pairs?.[1]
           const pairAddress = pair?.liquidityToken?.address
+
           if (!amount || brokerDealerId === undefined || !pairAddress) {
             return
           }
@@ -130,7 +140,8 @@ export function useSwapAuthorizeFirstStep(
               },
             })
           )
-          const result = await getAuthorization({ amount, orderType, pairAddress, tokenId: usedToken })
+          const pairSymbol = `${pair?.token0?.symbol}-${pair?.token1?.symbol}`
+          const result = await getAuthorization({ amount, orderType, pairAddress, pairSymbol, tokenId: usedToken })
           submitToBrokerDealer({
             dto: { ...result, brokerDealerId },
             formRef,
