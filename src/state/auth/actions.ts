@@ -8,6 +8,7 @@ export interface RawAuthPayload {
   refreshToken: string
 }
 export const saveToken = createAction<{ value: AuthPayload }>('auth/saveToken')
+export const clearToken = createAction('auth/clearToken')
 export const logout = createAction('auth/logout')
 export const postLogin: Readonly<{
   pending: ActionCreatorWithoutPayload

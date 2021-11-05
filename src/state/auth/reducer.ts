@@ -1,7 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit'
-import { addMulticallListeners } from 'state/multicall/actions'
-import { getTokenExpiration } from 'utils/time'
-import { logout, postLogin, saveToken } from './actions'
+import { clearToken, logout, postLogin, saveToken } from './actions'
 
 export interface AuthState {
   readonly token?: string
@@ -28,6 +26,9 @@ export default createReducer<AuthState>(initialState, (builder) =>
     .addCase(logout, (state) => {
       state.token = ''
       state.refreshToken = ''
+    })
+    .addCase(clearToken, (state) => {
+      state.token = ''
     })
     .addCase(postLogin.pending, (state) => {
       state.loginLoading = true

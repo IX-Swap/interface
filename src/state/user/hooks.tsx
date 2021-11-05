@@ -425,8 +425,6 @@ export function usePassAccreditation(
 ): (tokenId: number, brokerDealerPairId: number) => Promise<void> {
   const dispatch = useDispatch<AppDispatch>()
   const login = useLogin({ mustHavePreviousLogin: false })
-  const isLoggedIn = useUserisLoggedIn()
-  const { account } = useActiveWeb3React()
   const fetchTokens = useFetchUserSecTokenListCallback()
   const toggle = useChooseBrokerDealerModalToggle()
   const { status: accreditationStatus, accreditationRequest } = useAccreditationStatus(currencyId)

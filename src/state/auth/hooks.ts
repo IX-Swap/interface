@@ -67,9 +67,9 @@ export function useLogin({ mustHavePreviousLogin = true }: { mustHavePreviousLog
   const { account } = useActiveWeb3React()
   const checkLogin = useCallback(
     async (expireLogin = false) => {
-      if (loginLoading) {
-        return
-      }
+      // if (loginLoading) {
+      //   return
+      // }
       if (isLoggedIn && !expireLogin) {
         return LOGIN_STATUS.SUCCESS
       }
