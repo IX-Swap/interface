@@ -1,17 +1,5 @@
 name: Integration Tests
 
-# on:
-#   push:
-#     branches:
-#       - main
-#       - development
-#       - staging
-#   pull_request:
-#     branches:
-#       - main
-#       - development
-#       - staging
-#       - ci-update
 on:
   push:
     branches: [develop, staging, e2e-tests]
@@ -28,23 +16,16 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: 14.17
-
       - name: Set tests dependencies
         run: npx playwright install-deps
       - run: npx playwright install
       - run: yarn
       - run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
-
       - name: Run Tests
+        env:
+          GH_REP: ${{ GITHUB_REF }}
         run: | 
-          GH_REP=${GITHUB_REPOSITORY##*/}
-          echo ${GH_REP}
-          echo GITHUB_REF=${GITHUB_REF}
-          echo EXTRACT_GITHUB_REF=${GITHUB_REF##*/}
-          echo EXTRACT_GITHUB_REF_HEADS=$(echo ${GITHUB_REF#refs/heads/})
           yarn integration-test
-
-
       - uses: actions/upload-artifact@v2
         if: always()
         with:

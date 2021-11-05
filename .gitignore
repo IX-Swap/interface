@@ -16,7 +16,7 @@ bfg.jar
 coverage
 reports
 .history
-
+allure-results/
 # production
 /build
 
