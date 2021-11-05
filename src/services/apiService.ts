@@ -23,8 +23,8 @@ _axios.interceptors.response.use(responseSuccessInterceptor, async function resp
         const { auth: authState } = store.getState()
         if (authState.refreshToken) {
           store.dispatch(postLogin.pending())
-          const response = (await _axios.post(auth.refresh, { refreshToken: authState.refreshToken })) as RawAuthPayload
-          if (!response) {
+          const response = await _axios.post(auth.refresh, { refreshToken: authState.refreshToken })
+          if (!response?.data) {
             store.dispatch(
               postLogin.rejected({
                 errorMessage: 'No response on refresh token',
@@ -34,7 +34,7 @@ _axios.interceptors.response.use(responseSuccessInterceptor, async function resp
           }
           store.dispatch(
             postLogin.fulfilled({
-              auth: response,
+              auth: response?.data,
             })
           )
           return _axios(originalConfig)

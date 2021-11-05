@@ -67,9 +67,9 @@ export function useLogin({ mustHavePreviousLogin = true }: { mustHavePreviousLog
   const { account } = useActiveWeb3React()
   const checkLogin = useCallback(
     async (expireLogin = false) => {
-      // if (loginLoading) {
-      //   return
-      // }
+      if (loginLoading && !account) {
+        return
+      }
       if (isLoggedIn && !expireLogin) {
         return LOGIN_STATUS.SUCCESS
       }
@@ -81,7 +81,7 @@ export function useLogin({ mustHavePreviousLogin = true }: { mustHavePreviousLog
           const hasLogin = await getHasLogin(account)
           if (!hasLogin) {
             if (account) {
-              dispatch(postLogin.fulfilled({ auth: { accessToken: '', refreshToken: '' } }))
+              dispatch(postLogin.rejected({ errorMessage: 'User has no account' }))
               dispatch(saveAccount({ account }))
             }
             return LOGIN_STATUS.NO_ACCOUNT
@@ -95,9 +95,7 @@ export function useLogin({ mustHavePreviousLogin = true }: { mustHavePreviousLog
           dispatch(postLogin.rejected({ errorMessage: 'Could not login' }))
           return LOGIN_STATUS.FAILED
         } else {
-          if (account) {
-            dispatch(saveAccount({ account }))
-          }
+          dispatch(saveAccount({ account: account ?? '' }))
           dispatch(postLogin.fulfilled({ auth }))
           return LOGIN_STATUS.SUCCESS
         }
