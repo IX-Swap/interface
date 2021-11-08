@@ -23,7 +23,7 @@ jobs:
       - run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
       - name: Run Tests
         env:
-          GH_REP: ${{ GITHUB_REF }}
+          GH_REP: ${github.ref}
         run: | 
           yarn integration-test
       - uses: actions/upload-artifact@v2
