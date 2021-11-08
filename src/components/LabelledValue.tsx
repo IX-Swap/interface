@@ -115,7 +115,7 @@ export const LabelledValue = (props: LabelledValueProps & GridProps) => {
 
   return (
     <Grid {...rest} item container direction={direction}>
-      <Typography style={first.styles} noWrap>
+      <Typography style={first.styles}>
         {first.text}
         {row && !reverse && ':'}
       </Typography>
@@ -132,7 +132,7 @@ export const LabelledValue = (props: LabelledValueProps & GridProps) => {
           {last.text}
         </Box>
       ) : (
-        <Typography style={last.styles} align={align} noWrap>
+        <Typography style={last.styles} align={align}>
           {last.text}
         </Typography>
       )}

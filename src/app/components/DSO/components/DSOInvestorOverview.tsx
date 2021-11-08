@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Hidden } from '@material-ui/core'
+import { Grid, Hidden, Typography } from '@material-ui/core'
 import { LabelledValue } from 'components/LabelledValue'
 import { DigitalSecurityOffering } from 'types/dso'
 import { DSOInvestButton } from 'app/components/DSO/components/DSOInvestButton'
@@ -29,7 +29,15 @@ export const DSOInvestorOverview = (props: DSOInvestorOverviewProps) => {
       <Grid item xs={6} md={3}>
         <LabelledValue
           label='Token Address'
-          value={dso.deploymentInfo?.token ?? ''}
+          value={
+            <Typography
+              component='span'
+              noWrap
+              style={{ display: 'block', width: '100%' }}
+            >
+              {dso.deploymentInfo?.token ?? ''}
+            </Typography>
+          }
           isNewThemeOn
         />
       </Grid>
