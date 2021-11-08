@@ -1,6 +1,6 @@
 import { baseCreds } from '../lib/helpers/creds'
 import { test } from '../lib/fixtures/fixtures'
-import { click, navigate, screenshotMatching } from '../lib/helpers/helpers'
+import { click, navigate, shouldExist } from '../lib/helpers/helpers'
 import { expect } from '@playwright/test'
 
 test.beforeEach(async ({ page, auth, invest }) => {
@@ -10,8 +10,9 @@ test.beforeEach(async ({ page, auth, invest }) => {
 test.afterEach(async ({ page }) => {
   await page.close()
 })
+
 test.describe('Primary', () => {
-  test('Page with docs appears', async ({ investment, context }) => {
+  test('Download subscription docs', async ({ investment, context }) => {
     const pages = await investment.downloadDocument(context)
     expect(pages).toBe(2)
   })
@@ -20,7 +21,21 @@ test.describe('Primary', () => {
     await investment.createCustodyAddress()
   })
 
-  test.only('User should make an investment', async ({ investment, page }) => {
+  test('Check that the DSO landing exist', async ({ investment }) => {
+    await investment.checkThatInvestmentLandingAvailable()
+  })
+
+  test('Should be redirected to invest from landing', async ({
+    investment,
+    page,
+    invest
+  }) => {
+    await investment.checkThatInvestmentLandingAvailable()
+    await click(invest.buttons.INVEST_LANDING, page)
+    await shouldExist(invest.buttons.DOWNLOAD_DOC, page)
+  })
+
+  test('The investment should be created', async ({ investment }) => {
     await investment.createNewInvestment()
   })
 })

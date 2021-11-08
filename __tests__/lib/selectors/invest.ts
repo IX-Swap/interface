@@ -1,6 +1,7 @@
 export const invest = {
   INVEST_TAB: '[href="/app/invest"]',
   PRIMARY_SECTION: '[href="/app/invest"] >> text="Primary"',
+  LANDING_TABLES_PANEL: '[role="tabpanel"]',
 
   buttons: {
     INVEST: '[data-testid="otc-card-link"]',
@@ -8,6 +9,9 @@ export const invest = {
     DOWNLOAD_DOC: 'text="Download Subscription Document"',
     CREATE_CUSTODY_ADDRESS: 'text="Create custody withdrawal address"',
     SUBMIT_INVEST: 'button >> text="Invest"',
+    LEARN_MORE: 'span >> text="Learn More"',
+    INVEST_LANDING: '[href*="/view/make-investment"]',
+
     INVEST_ACCOUNT:
       '[href="/app/invest/offerings/617699e04f2dcc0e7d304e4d/6185361bf251660e58fd5ed0/view/make-investment"]'
   },

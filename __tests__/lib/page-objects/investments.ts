@@ -50,5 +50,12 @@ class Invest {
     await typeText(invest.fields.OTP, '111111', this.page)
     await click(invest.buttons.SUBMIT_INVEST, this.page)
   }
+
+  checkThatInvestmentLandingAvailable = async () => {
+    await click(invest.INVEST_TAB, this.page)
+    await click(invest.PRIMARY_SECTION, this.page)
+    await click(invest.buttons.LEARN_MORE, this.page)
+    await shouldExist(invest.LANDING_TABLES_PANEL, this.page)
+  }
 }
 export { Invest }
