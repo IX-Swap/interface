@@ -2,19 +2,13 @@ import * as React from 'react'
 import { render, cleanup } from 'test-utils'
 import { CustodyManagement } from 'app/pages/admin/pages/CustodyManagement/CustodyManagement'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
-import { VSpacer } from 'components/VSpacer'
 import { AccountsUnderCustody } from 'app/pages/admin/components/AccountsUnderCustody'
 import { CustodyManagementFilters } from 'app/pages/admin/components/CustodyManagementFilters'
 import { CustodyManagementTable } from 'app/pages/admin/components/CustodyManagementTable/CustodyManagementTable'
 import { ViewListedTokens } from 'app/pages/admin/components/ViewListedTokens/ViewListedTokens'
-import * as useAppBreakpoints from 'hooks/useAppBreakpoints'
 
 jest.mock('app/components/PageHeader/PageHeader', () => ({
   PageHeader: jest.fn(() => null)
-}))
-
-jest.mock('components/VSpacer', () => ({
-  VSpacer: jest.fn(() => null)
 }))
 
 jest.mock('app/pages/admin/components/AccountsUnderCustody', () => ({
@@ -66,30 +60,8 @@ describe('CustodyManagement', () => {
     )
   })
 
-  it('renders children with correct props', () => {
+  it('renders children', () => {
     render(<CustodyManagement />)
-    expect(VSpacer).toHaveBeenCalledTimes(3)
-    expect(VSpacer).toHaveBeenNthCalledWith(
-      1,
-      {
-        size: 'small'
-      },
-      {}
-    )
-    expect(VSpacer).toHaveBeenNthCalledWith(
-      2,
-      {
-        size: 'medium'
-      },
-      {}
-    )
-    expect(VSpacer).toHaveBeenNthCalledWith(
-      3,
-      {
-        size: 'medium'
-      },
-      {}
-    )
     expect(AccountsUnderCustody).toHaveBeenCalledTimes(1)
     expect(CustodyManagementFilters).toHaveBeenCalledTimes(1)
     expect(CustodyManagementTable).toHaveBeenCalledTimes(1)
@@ -124,23 +96,5 @@ describe('CustodyManagement', () => {
       }),
       {}
     )
-  })
-
-  it.skip('renders view listed tokens wrapper component with correct styles when isMobile is true', async () => {
-    jest.spyOn(useAppBreakpoints, 'useAppBreakpoints').mockReturnValueOnce({
-      isMobile: true
-    } as any)
-    const { getByTestId } = render(<CustodyManagement />)
-    const listedTokenWrapper = getByTestId('listed-tokens-wrapper')
-    expect(listedTokenWrapper).toHaveAttribute('style', 'margin-top: 30px;')
-  })
-
-  it('renders view listed tokens wrapper component with correct styles when isMobile is false', async () => {
-    jest.spyOn(useAppBreakpoints, 'useAppBreakpoints').mockReturnValueOnce({
-      isMobile: false
-    } as any)
-    const { getByTestId } = render(<CustodyManagement />)
-    const listedTokenWrapper = getByTestId('listed-tokens-wrapper')
-    expect(listedTokenWrapper).toHaveAttribute('style', 'margin-top: 0px;')
   })
 })
