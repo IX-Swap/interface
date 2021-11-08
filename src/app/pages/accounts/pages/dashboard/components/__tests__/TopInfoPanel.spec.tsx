@@ -93,8 +93,11 @@ describe('TopInfoPanel', () => {
       <TopInfoPanel accounts={[fakeVirtualAccountInfo]} balances={undefined} />
     )
 
-    expect(Investments).toHaveBeenCalledWith({ primary: 0 }, {})
-    expect(TotalAssetBalance).toHaveBeenCalledWith({ value: 0 }, {})
-    expect(BlockchainWalletsCount).toHaveBeenCalledWith({ count: 0 }, {})
+    expect(Investments).toHaveBeenCalledWith({ primary: undefined }, {})
+    expect(TotalAssetBalance).toHaveBeenCalledWith({ value: undefined }, {})
+    expect(BlockchainWalletsCount).toHaveBeenCalledWith(
+      { count: undefined },
+      {}
+    )
   })
 })
