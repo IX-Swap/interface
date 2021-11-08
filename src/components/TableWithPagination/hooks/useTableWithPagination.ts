@@ -15,14 +15,23 @@ export interface UseTableWithPaginationReturnType<TData> {
   total: number
 }
 
-export const useTableWithPagination = <TData>(
-  queryKey: string,
-  uri: string,
-  defaultFilter: BaseFilter | undefined,
-  queryEnabled: boolean,
-  defaultRowsPerPage?: number,
+interface UseTableWithPaginationParams {
+  queryKey?: string
+  uri?: string
+  defaultFilter: BaseFilter | undefined
+  queryEnabled: boolean
+  defaultRowsPerPage?: number
   disabledUseEffect?: boolean
-): UseTableWithPaginationReturnType<TData> => {
+}
+
+export const useTableWithPagination = <TData>({
+  queryKey,
+  uri,
+  defaultFilter,
+  queryEnabled,
+  defaultRowsPerPage,
+  disabledUseEffect
+}: UseTableWithPaginationParams): UseTableWithPaginationReturnType<TData> => {
   const queryCache = useQueryCache()
   const apiService = useAPIService()
   const [prevPage, setPrevPage] = useState(0)
@@ -47,13 +56,14 @@ export const useTableWithPagination = <TData>(
       ...(filter ?? {})
     }
 
-    return await apiService.post<PaginatedData<TData>>(uri, payload)
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    return await apiService.post<PaginatedData<TData>>(uri!, payload)
   }
 
   const { data, status, fetchMore, isFetching } = useInfiniteQuery(
     [queryKey, page, rowsPerPage, filter],
     fetcher,
-    { enabled: queryEnabled }
+    { enabled: uri !== undefined && queryEnabled }
   )
 
   const cached = queryCache.getQueryData<typeof data>([

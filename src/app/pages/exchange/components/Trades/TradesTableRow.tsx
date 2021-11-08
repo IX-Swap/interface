@@ -1,5 +1,5 @@
 import { TableRow } from '@material-ui/core'
-import { TradesTableCell } from 'app/pages/exchange/components/Trades/TradesTableCell'
+import { TradesTableCell } from 'app/pages/exchange/components/Trades/TradesTablecell'
 import { format24HTime } from 'helpers/dates'
 import { formatAmount } from 'helpers/numbers'
 import React from 'react'

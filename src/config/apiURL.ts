@@ -311,7 +311,9 @@ export const atlasOneURL = {
 export const resources = {
   getSiteConfig: '/resources/siteConfig',
   createOrUpdateMasDisclosure: '/resources/siteConfig/masDisclosure',
-  acceptMasDisclosure: '/resources/siteConfig/masDisclosure/accept'
+  acceptMasDisclosure: '/resources/siteConfig/masDisclosure/accept',
+  uploadExchangeRules: '/resources/siteConfig/exchangeRules',
+  getExchangeRules: '/resources/siteConfig/exchangeRules'
 }
 
 export const virtualAccountsAudit = {
@@ -331,4 +333,10 @@ export const virtualAccountsAudit = {
 
 export const virtualTransactions = {
   getTransactions: 'https://hsbc.mozork.com/payments/transactions'
+}
+
+export const blockchainNetworksURL = {
+  getSettings: (network: string) => `/blockchain/settings/${network}`,
+  getUpdateDecimal: (network: string, decimal: number) =>
+    `/blockchain/settings/decimal/${network}/${decimal}`
 }

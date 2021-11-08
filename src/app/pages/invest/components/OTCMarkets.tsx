@@ -21,14 +21,14 @@ export const OTCMarket = () => {
     setRowsPerPage,
     rowsPerPage,
     total
-  } = useTableWithPagination(
-    otcQueryKeys.getApprovedListingsList,
-    OTCUrl.getApprovedListingsList,
-    { search: search ?? otcMarketSearch },
-    true,
-    5,
-    true
-  )
+  } = useTableWithPagination({
+    queryKey: otcQueryKeys.getApprovedListingsList,
+    uri: OTCUrl.getApprovedListingsList,
+    defaultFilter: { search: search ?? otcMarketSearch },
+    queryEnabled: true,
+    defaultRowsPerPage: 5,
+    disabledUseEffect: true
+  })
   const classes = useStyles()
 
   if (status === 'loading' || items.length === undefined) {
