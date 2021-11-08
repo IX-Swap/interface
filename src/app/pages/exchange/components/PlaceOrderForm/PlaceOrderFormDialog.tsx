@@ -20,24 +20,15 @@ export const PlaceOrderFormDialog = ({
   const closeDrawer = () => {
     if (!isFetching) {
       setOpen(false)
+      setActive(undefined)
     }
-  }
-
-  const openDrawer = () => {
-    setOpen(true)
   }
 
   useEffect(() => {
     if (active !== undefined) {
-      openDrawer()
+      setOpen(true)
     }
   }, [active])
-
-  useEffect(() => {
-    if (!open) {
-      setActive(undefined)
-    }
-  }, [open])
 
   const setBuyActive = () => {
     setActive(0)

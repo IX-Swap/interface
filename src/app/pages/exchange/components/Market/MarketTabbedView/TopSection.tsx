@@ -5,9 +5,14 @@ import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import React, { useState } from 'react'
 import { InvestorLiveOrderBook } from 'app/pages/exchange/components/InvestorLiveOrderBook/InvestorLiveOrderBook'
 import { MarketTrades } from 'app/pages/exchange/components/Trades/MarketTrades'
-import { MarketViewProps } from 'app/pages/exchange/components/Market/MarketGridView'
+import { IBasicDataFeed } from 'types/charting_library/charting_library'
 
-export const TopSection = ({ symbol, datafeed }: MarketViewProps) => {
+export interface TopSectionProps {
+  symbol: string
+  datafeed?: IBasicDataFeed
+}
+
+export const TopSection = ({ symbol, datafeed }: TopSectionProps) => {
   const [value, setValue] = useState(0)
   const { theme } = useAppBreakpoints()
 

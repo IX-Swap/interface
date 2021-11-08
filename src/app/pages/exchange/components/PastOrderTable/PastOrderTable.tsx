@@ -18,8 +18,6 @@ import { exchangeMarket } from 'config/apiURL'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { Grid, Hidden } from '@material-ui/core'
 import { CompactBody } from 'components/TableWithPagination/CompactBody'
-import { CompactRowProps } from 'components/TableWithPagination/CompactRow'
-import { OrderDisplay } from 'app/pages/exchange/components/OpenOrders/OrderDisplay'
 
 export interface PostOrderTableProps {
   pairId: string
@@ -57,13 +55,7 @@ export const PastOrderTable = (props: PostOrderTableProps) => {
         >
           {isMiniLaptop
             ? (props: TableViewRendererProps<Order>) => (
-                <CompactBody
-                  {...props}
-                  columns={pastOrderCompactColumns}
-                  renderRow={(props: CompactRowProps<Order>) => (
-                    <OrderDisplay {...props} />
-                  )}
-                />
+                <CompactBody {...props} columns={pastOrderCompactColumns} />
               )
             : undefined}
         </TableView>

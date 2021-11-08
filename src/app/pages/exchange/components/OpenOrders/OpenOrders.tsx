@@ -16,8 +16,7 @@ import { exchangeMarketQueryKeys } from 'config/queryKeys'
 import { Order } from 'types/order'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { CompactBody } from 'components/TableWithPagination/CompactBody'
-import { CompactRowProps } from 'components/TableWithPagination/CompactRow'
-import { OrderDisplay } from 'app/pages/exchange/components/OpenOrders/OrderDisplay'
+import { OrderActions } from 'app/pages/exchange/components/OpenOrders/OrderActions'
 
 export const OpenOrders = () => {
   const { user } = useAuth()
@@ -39,6 +38,8 @@ export const OpenOrders = () => {
         }
         columns={columns}
         themeVariant={isMiniLaptop ? 'no-header' : 'primary'}
+        hasActions
+        actions={OrderActions}
         paperProps={
           isMiniLaptop
             ? {
@@ -50,13 +51,7 @@ export const OpenOrders = () => {
       >
         {isMiniLaptop
           ? (props: TableViewRendererProps<Order>) => (
-              <CompactBody
-                {...props}
-                columns={compactColumns}
-                renderRow={(props: CompactRowProps<Order>) => (
-                  <OrderDisplay {...props} />
-                )}
-              />
+              <CompactBody {...props} columns={compactColumns} />
             )
           : undefined}
       </TableView>

@@ -1,10 +1,14 @@
 import React from 'react'
-import { CancelOrderButton } from 'app/pages/exchange/components/OpenOrders/CancelOrderButton'
 import { formatDateToMMDDYY } from 'helpers/dates'
 import { formatMoney, formatPercent } from 'helpers/numbers'
 import { TableColumn } from 'types/util'
 import { getOrderSideName } from 'helpers/strings'
 import { Order } from 'types/order'
+import { Typography } from '@material-ui/core'
+
+export const renderTicker = (value: string, row: any) => {
+  return <Typography variant='subtitle1'>{value}</Typography>
+}
 
 export const columns: Array<TableColumn<Order>> = [
   {
@@ -40,15 +44,15 @@ export const columns: Array<TableColumn<Order>> = [
     key: 'filledPercent',
     label: 'Filled',
     render: formatPercent
-  },
-  {
-    key: 'cancel',
-    label: '',
-    render: (_, order) => <CancelOrderButton order={order} />
   }
 ]
 
 export const compactColumns: Array<TableColumn<Order>> = [
+  {
+    label: 'Ticker',
+    key: 'pair',
+    render: renderTicker
+  },
   {
     key: 'amount',
     label: 'Amount',
