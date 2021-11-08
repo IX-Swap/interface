@@ -4,15 +4,14 @@ import { useTheme } from '@material-ui/core/styles'
 import { ChartWrapper } from 'app/pages/issuance/components/IssuanceLanding/ChartWrapper'
 import { InsightCard } from 'app/pages/issuance/components/CapTable/InsightCard'
 import { formatDecimal } from 'helpers/numbers'
-import { Button, Grid, Typography } from '@material-ui/core'
-import { AppRouterLinkComponent } from 'components/AppRouterLink'
-import { InvestRoute } from 'app/pages/invest/router/config'
+import { Grid, Typography } from '@material-ui/core'
 import { useStyles } from './MarketPortfolio.styles'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { VSpacer } from 'components/VSpacer'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 import { TotalInvestmentInfo } from 'app/pages/accounts/pages/dashboard/components/TotalInvestmentInfo/TotalInvestmentInfo'
 import { MarketInfo } from 'types/portfolio'
+import { NoMarketInfo } from 'app/pages/accounts/pages/dashboard/components/NoMarketInfo/NoMarketInfo'
 
 export interface MarketPortfolioProps {
   currencySymbol: string
@@ -29,19 +28,14 @@ export const MarketPortfolio = ({
   const classes = useStyles()
   const { isTablet } = useAppBreakpoints()
 
-  if (marketInfo === undefined) {
-    return null
-  }
-
-  const {
-    equityAmount,
-    debtAmount,
-    fundAmount,
-    hybridAmount,
-    totalAmount
-  } = marketInfo
+  const equityAmount = marketInfo?.equityAmount ?? 0
+  const debtAmount = marketInfo?.debtAmount ?? 0
+  const fundAmount = marketInfo?.fundAmount ?? 0
+  const hybridAmount = marketInfo?.hybridAmount ?? 0
+  const totalAmount = marketInfo?.totalAmount ?? 0
 
   const hasMarketInfo = totalAmount !== 0
+
   const title =
     type === 'primary'
       ? 'Primary Market Portfolio'
@@ -141,42 +135,9 @@ export const MarketPortfolio = ({
     )
   }
 
-  const renderNoMarketInfo = () => {
-    return (
-      <Grid
-        container
-        direction={'column'}
-        alignItems={'center'}
-        justify={'center'}
-      >
-        <VSpacer size={'small'} />
-        <Grid item>
-          <Typography variant={'subtitle2'}>
-            You haven’t made any investments yet. Let’s make the first
-            investment.
-          </Typography>
-        </Grid>
-        <VSpacer size={'small'} />
-        <VSpacer size={'extraSmall'} />
-        <Grid item>
-          <Button
-            component={AppRouterLinkComponent}
-            to={InvestRoute.landing}
-            variant='contained'
-            color='primary'
-            disableElevation
-          >
-            primary market
-          </Button>
-        </Grid>
-        <VSpacer size={'medium'} />
-      </Grid>
-    )
-  }
-
   const renderMainContent = () => {
     if (!hasMarketInfo) {
-      return renderNoMarketInfo()
+      return <NoMarketInfo />
     }
     return renderChart()
   }

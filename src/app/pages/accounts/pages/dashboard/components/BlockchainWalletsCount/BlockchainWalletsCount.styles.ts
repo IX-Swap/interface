@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles'
 export const useStyles = makeStyles(theme => ({
   wrapper: {
     position: 'initial',
-    color: '#fff',
+    color: theme.palette.slider.activeColor,
     paddingRight: theme.spacing(1),
     paddingLeft: theme.spacing(1),
     display: 'initial',
@@ -36,7 +36,7 @@ export const useStyles = makeStyles(theme => ({
     top: -3
   },
   icon: {
-    color: '#fff'
+    color: theme.palette.slider.activeColor
   },
   label: {
     position: 'relative',

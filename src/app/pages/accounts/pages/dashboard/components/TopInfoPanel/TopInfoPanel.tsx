@@ -4,7 +4,7 @@ import { useStyles } from 'app/pages/accounts/pages/dashboard/components/TopInfo
 import { AvailableCash } from 'app/pages/accounts/pages/dashboard/components/AvailableCash/AvailableCash'
 import { Investments } from 'app/pages/accounts/pages/dashboard/components/Investments/Investments'
 import { TotalAssetBalance } from 'app/pages/accounts/pages/dashboard/components/TotalAssetBalance/TotalAssetBalance'
-import { BlockchainWallets } from 'app/pages/accounts/pages/dashboard/components/BlockchainWallets/BlockchainWallets'
+import { BlockchainWalletsCount } from 'app/pages/accounts/pages/dashboard/components/BlockchainWalletsCount/BlockchainWalletsCount'
 import { VirtualAccountInfo, BalancesInfo } from 'types/portfolio'
 
 export interface TopInfoPanelProps {
@@ -14,10 +14,6 @@ export interface TopInfoPanelProps {
 
 export const TopInfoPanel = ({ accounts, balances }: TopInfoPanelProps) => {
   const classes = useStyles()
-
-  if (accounts === undefined || balances === undefined) {
-    return null
-  }
 
   return (
     <Card elevation={0} className={classes.container}>
@@ -33,15 +29,17 @@ export const TopInfoPanel = ({ accounts, balances }: TopInfoPanelProps) => {
 
           <Grid item className={classes.line} />
 
-          <Investments primary={balances.primaryInvestmentBalance} />
+          <Investments primary={balances?.primaryInvestmentBalance ?? 0} />
 
           <Grid item className={classes.line} />
 
-          <TotalAssetBalance value={balances.totalAssetBalance} />
+          <TotalAssetBalance value={balances?.totalAssetBalance ?? 0} />
 
           <Grid item className={classes.line} />
 
-          <BlockchainWallets count={balances.withdrawalAddressCount} />
+          <BlockchainWalletsCount
+            count={balances?.withdrawalAddressCount ?? 0}
+          />
         </Grid>
       </CardContent>
     </Card>

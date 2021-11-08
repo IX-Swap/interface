@@ -5,10 +5,13 @@ import {
   fakeBalancesInfo,
   fakeVirtualAccountInfo
 } from '__fixtures__/portfolio'
-import { AvailableCash } from 'app/pages/accounts/pages/dashboard/components/AvailableCash/AvailableCash'
+import {
+  AvailableCash,
+  noAccountsInfo
+} from 'app/pages/accounts/pages/dashboard/components/AvailableCash/AvailableCash'
 import { Investments } from 'app/pages/accounts/pages/dashboard/components/Investments/Investments'
 import { TotalAssetBalance } from 'app/pages/accounts/pages/dashboard/components/TotalAssetBalance/TotalAssetBalance'
-import { BlockchainWallets } from 'app/pages/accounts/pages/dashboard/components/BlockchainWallets/BlockchainWallets'
+import { BlockchainWalletsCount } from 'app/pages/accounts/pages/dashboard/components/BlockchainWalletsCount/BlockchainWalletsCount'
 
 jest.mock(
   'app/pages/accounts/pages/dashboard/components/AvailableCash/AvailableCash',
@@ -32,9 +35,9 @@ jest.mock(
 )
 
 jest.mock(
-  'app/pages/accounts/pages/dashboard/components/BlockchainWallets/BlockchainWallets',
+  'app/pages/accounts/pages/dashboard/components/BlockchainWalletsCount/BlockchainWalletsCount',
   () => ({
-    BlockchainWallets: jest.fn(() => null)
+    BlockchainWalletsCount: jest.fn(() => null)
   })
 )
 
@@ -51,30 +54,6 @@ describe('TopInfoPanel', () => {
         balances={fakeBalancesInfo}
       />
     )
-  })
-
-  it('renders empty container when accounts is undefined', () => {
-    const { container } = render(
-      <TopInfoPanel accounts={undefined} balances={fakeBalancesInfo} />
-    )
-
-    expect(container).toBeEmptyDOMElement()
-  })
-
-  it('renders empty container when balances is undefined', () => {
-    const { container } = render(
-      <TopInfoPanel accounts={undefined} balances={fakeBalancesInfo} />
-    )
-
-    expect(container).toBeEmptyDOMElement()
-  })
-
-  it('renders empty container when accounts and balances is undefined', () => {
-    const { container } = render(
-      <TopInfoPanel accounts={undefined} balances={fakeBalancesInfo} />
-    )
-
-    expect(container).toBeEmptyDOMElement()
   })
 
   it('renders children with correct props', () => {
@@ -97,9 +76,25 @@ describe('TopInfoPanel', () => {
       { value: fakeBalancesInfo.totalAssetBalance },
       {}
     )
-    expect(BlockchainWallets).toHaveBeenCalledWith(
+    expect(BlockchainWalletsCount).toHaveBeenCalledWith(
       { count: fakeBalancesInfo.withdrawalAddressCount },
       {}
     )
+  })
+
+  it('renders children with correct props when accounts is undefined', () => {
+    render(<TopInfoPanel accounts={undefined} balances={fakeBalancesInfo} />)
+
+    expect(AvailableCash).toHaveBeenCalledWith({ accounts: noAccountsInfo }, {})
+  })
+
+  it('renders children with correct props when balances is undefined', () => {
+    render(
+      <TopInfoPanel accounts={[fakeVirtualAccountInfo]} balances={undefined} />
+    )
+
+    expect(Investments).toHaveBeenCalledWith({ primary: 0 }, {})
+    expect(TotalAssetBalance).toHaveBeenCalledWith({ value: 0 }, {})
+    expect(BlockchainWalletsCount).toHaveBeenCalledWith({ count: 0 }, {})
   })
 })

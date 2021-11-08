@@ -12,18 +12,21 @@ export interface AvailableCashProps {
   accounts: VirtualAccountInfo[] | undefined
 }
 
+export const getCurrencySymbol = (currency: string) => {
+  return currency === 'SGD' ? 'S$' : 'US$'
+}
+
+export const noAccountsInfo = [
+  { currency: 'USD', balance: 0 },
+  { currency: 'SGD', balance: 0 }
+]
+
 export const AvailableCash = ({ accounts }: AvailableCashProps) => {
   const classes = useStyles()
   const sharedClasses = useSharedStyles()
   const { isMobile } = useAppBreakpoints()
 
-  if (accounts === undefined) {
-    return null
-  }
-
-  const getCurrencySymbol = (currency: string) => {
-    return currency === 'SGD' ? 'S$' : 'US$'
-  }
+  const accountInfo = accounts ?? noAccountsInfo
 
   return (
     <Grid item className={sharedClasses.wrapper}>
@@ -41,11 +44,12 @@ export const AvailableCash = ({ accounts }: AvailableCashProps) => {
         justify={'space-between'}
         className={classes.secondBlock}
       >
-        {accounts.map(({ currency, balance }) => {
+        {accountInfo.map(({ currency, balance }) => {
           return (
             <Typography
               variant={'body1'}
               className={classes.value}
+              data-testid={'available-cash-item'}
               key={balance.toString() + currency}
             >
               {getCurrencySymbol(currency)} {formatAmount(balance)}

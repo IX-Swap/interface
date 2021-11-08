@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, Grid, IconButton, Typography } from '@material-ui/core'
-import { useStyles } from 'app/pages/accounts/pages/dashboard/components/BlockchainWallets/BlockchainWallets.styles'
+import { useStyles } from 'app/pages/accounts/pages/dashboard/components/BlockchainWalletsCount/BlockchainWalletsCount.styles'
 import { VSpacer } from 'components/VSpacer'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { WithdrawalAddressesRoute as paths } from 'app/pages/accounts/pages/withdrawalAddresses/router/config'
@@ -8,11 +8,13 @@ import { Launch as LaunchIcon } from '@material-ui/icons'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { getTextWithOrWithoutColon } from 'helpers/strings'
 
-export interface BlockchainWalletsProps {
+export interface BlockchainWalletsCountProps {
   count: number
 }
 
-export const BlockchainWallets = ({ count }: BlockchainWalletsProps) => {
+export const BlockchainWalletsCount = ({
+  count
+}: BlockchainWalletsCountProps) => {
   const classes = useStyles()
   const { isMobile } = useAppBreakpoints()
 
@@ -40,7 +42,11 @@ export const BlockchainWallets = ({ count }: BlockchainWalletsProps) => {
       <VSpacer size={'extraSmall'} />
 
       <Grid item className={classes.secondBlock}>
-        <Typography variant={'body1'} className={classes.value}>
+        <Typography
+          variant={'body1'}
+          className={classes.value}
+          data-testid={'count'}
+        >
           {count}
         </Typography>
       </Grid>

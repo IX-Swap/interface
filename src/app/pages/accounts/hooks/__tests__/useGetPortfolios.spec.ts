@@ -7,14 +7,15 @@ import {
   apiServiceMock
 } from 'test-utils'
 import { generateQueryResult } from '__fixtures__/useQuery'
-import { fakeVirtualAccountBalances } from '__fixtures__/virtualAccount'
+
 import { useGetPortfolios } from 'app/pages/accounts/hooks/useGetPortfolios'
 import * as UseAuth from 'hooks/auth/useAuth'
 import { user } from '__fixtures__/user'
+import { fakePortfolio } from '__fixtures__/portfolio'
 
 describe('useGetPortfolios', () => {
   const sampleResponse = generateQueryResult({
-    data: fakeVirtualAccountBalances
+    data: fakePortfolio
   })
 
   jest
@@ -26,7 +27,7 @@ describe('useGetPortfolios', () => {
     jest.clearAllMocks()
   })
 
-  it('expects', async () => {
+  it('expects request with correct parameters and correct response', async () => {
     apiServiceMock.get.mockResolvedValue(sampleResponse)
 
     await act(async () => {

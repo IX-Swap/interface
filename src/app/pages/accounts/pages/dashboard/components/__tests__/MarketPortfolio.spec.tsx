@@ -3,10 +3,18 @@ import { render, cleanup } from 'test-utils'
 import { MarketPortfolio } from 'app/pages/accounts/pages/dashboard/components/MarketPortfolio/MarketPortfolio'
 import { chartData, fakeMarketInfo } from '__fixtures__/portfolio'
 import { Chart } from 'react-google-charts'
+import { NoMarketInfo } from 'app/pages/accounts/pages/dashboard/components/NoMarketInfo/NoMarketInfo'
 
 jest.mock('react-google-charts', () => ({
   Chart: jest.fn(() => null)
 }))
+
+jest.mock(
+  'app/pages/accounts/pages/dashboard/components/NoMarketInfo/NoMarketInfo',
+  () => ({
+    NoMarketInfo: jest.fn(() => null)
+  })
+)
 
 describe('MarketPortfolio', () => {
   afterEach(async () => {
@@ -14,15 +22,15 @@ describe('MarketPortfolio', () => {
     jest.clearAllMocks()
   })
 
-  it('renders empty container when data is undefined', () => {
-    const { container } = render(
+  it('renders no market info component when data is undefined', () => {
+    render(
       <MarketPortfolio
         currencySymbol={'S$'}
         type={'primary'}
         marketInfo={undefined}
       />
     )
-    expect(container).toBeEmptyDOMElement()
+    expect(NoMarketInfo).toBeCalledTimes(1)
   })
 
   it('renders chart component with correct props', () => {
@@ -33,6 +41,7 @@ describe('MarketPortfolio', () => {
         marketInfo={fakeMarketInfo}
       />
     )
+    expect(NoMarketInfo).toBeCalledTimes(0)
     expect(Chart).toHaveBeenCalledWith(
       expect.objectContaining({
         data: chartData

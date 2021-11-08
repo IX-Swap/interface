@@ -1,7 +1,14 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { AvailableCash } from 'app/pages/accounts/pages/dashboard/components/AvailableCash/AvailableCash'
+import {
+  AvailableCash,
+  getCurrencySymbol,
+  noAccountsInfo
+} from 'app/pages/accounts/pages/dashboard/components/AvailableCash/AvailableCash'
 import { fakeVirtualAccountInfo } from '__fixtures__/portfolio'
+import { formatAmount } from 'helpers/numbers'
+
+const fakeArrayOfVirtualAccountInfo = [fakeVirtualAccountInfo]
 
 describe('AvailableCash', () => {
   afterEach(async () => {
@@ -10,12 +17,33 @@ describe('AvailableCash', () => {
   })
 
   it('renders without error', () => {
-    render(<AvailableCash accounts={[fakeVirtualAccountInfo]} />)
+    render(<AvailableCash accounts={fakeArrayOfVirtualAccountInfo} />)
   })
 
-  it('renders empty container when accounts is undefined', () => {
-    const { container } = render(<AvailableCash accounts={undefined} />)
-    expect(container).toBeEmptyDOMElement()
+  it('renders available cash info correctly', () => {
+    const { getAllByTestId } = render(
+      <AvailableCash accounts={fakeArrayOfVirtualAccountInfo} />
+    )
+
+    getAllByTestId('available-cash-item').forEach((it, i) =>
+      expect(it).toHaveTextContent(
+        `${getCurrencySymbol(
+          fakeArrayOfVirtualAccountInfo[i].currency
+        )} ${formatAmount(fakeArrayOfVirtualAccountInfo[i].balance)}`
+      )
+    )
+  })
+
+  it('renders available cash info correctly when accounts is undefined', () => {
+    const { getAllByTestId } = render(<AvailableCash accounts={undefined} />)
+
+    getAllByTestId('available-cash-item').forEach((it, i) =>
+      expect(it).toHaveTextContent(
+        `${getCurrencySymbol(noAccountsInfo[i].currency)} ${formatAmount(
+          noAccountsInfo[i].balance
+        )}`
+      )
+    )
   })
 
   it('renders title with correct text', () => {
