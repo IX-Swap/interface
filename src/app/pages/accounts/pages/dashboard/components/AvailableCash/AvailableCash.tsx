@@ -26,8 +26,6 @@ export const AvailableCash = ({ accounts }: AvailableCashProps) => {
   const sharedClasses = useSharedStyles()
   const { isMobile } = useAppBreakpoints()
 
-  const accountInfo = accounts ?? noAccountsInfo
-
   return (
     <Grid item className={sharedClasses.wrapper}>
       <Grid item className={classes.firstBlock}>
@@ -44,7 +42,7 @@ export const AvailableCash = ({ accounts }: AvailableCashProps) => {
         justify={'space-between'}
         className={classes.secondBlock}
       >
-        {accountInfo.map(({ currency, balance }) => {
+        {accounts?.map(({ currency, balance }) => {
           return (
             <Typography
               variant={'body1'}
@@ -59,4 +57,8 @@ export const AvailableCash = ({ accounts }: AvailableCashProps) => {
       </Grid>
     </Grid>
   )
+}
+
+AvailableCash.defaultProps = {
+  accounts: noAccountsInfo
 }

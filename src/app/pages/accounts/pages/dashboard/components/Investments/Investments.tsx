@@ -72,3 +72,5 @@ export const Investments = ({ primary, secondary }: InvestmentsProps) => {
     </Grid>
   )
 }
+
+Investments.defaultProps = { primary: 0 }

@@ -53,3 +53,7 @@ export const BlockchainWalletsCount = ({
     </Grid>
   )
 }
+
+BlockchainWalletsCount.defaultProps = {
+  count: 0
+}

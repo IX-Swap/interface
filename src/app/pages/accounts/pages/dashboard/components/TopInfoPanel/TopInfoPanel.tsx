@@ -29,17 +29,15 @@ export const TopInfoPanel = ({ accounts, balances }: TopInfoPanelProps) => {
 
           <Grid item className={classes.line} />
 
-          <Investments primary={balances?.primaryInvestmentBalance ?? 0} />
+          <Investments primary={balances?.primaryInvestmentBalance} />
 
           <Grid item className={classes.line} />
 
-          <TotalAssetBalance value={balances?.totalAssetBalance ?? 0} />
+          <TotalAssetBalance value={balances?.totalAssetBalance} />
 
           <Grid item className={classes.line} />
 
-          <BlockchainWalletsCount
-            count={balances?.withdrawalAddressCount ?? 0}
-          />
+          <BlockchainWalletsCount count={balances?.withdrawalAddressCount} />
         </Grid>
       </CardContent>
     </Card>

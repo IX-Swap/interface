@@ -32,3 +32,7 @@ export const TotalAssetBalance = ({ value }: TotalAssetBalanceProps) => {
     </Grid>
   )
 }
+
+TotalAssetBalance.defaultProps = {
+  value: 0
+}
