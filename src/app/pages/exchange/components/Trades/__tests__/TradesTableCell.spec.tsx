@@ -1,4 +1,4 @@
-import { TradesTableCell } from 'app/pages/exchange/components/Trades/TradesTableCell'
+import { TradesTableCell } from 'app/pages/exchange/components/Trades/TradesTablecell'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 
