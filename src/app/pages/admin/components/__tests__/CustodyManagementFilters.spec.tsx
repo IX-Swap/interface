@@ -5,17 +5,26 @@ import { CustodySearchFilter } from 'app/pages/admin/components/CustodySearchFil
 import { CustodiansFilter } from 'app/pages/admin/components/CustodiansFilter/CustodiansFilter'
 import { CustodyDatesFilter } from 'app/pages/admin/components/CustodyDatesFilter/CustodyDatesFilter'
 
-jest.mock('app/pages/admin/components/CustodySearchFilter', () => ({
-  CustodySearchFilter: jest.fn(() => null)
-}))
+jest.mock(
+  'app/pages/admin/components/CustodySearchFilter/CustodySearchFilter',
+  () => ({
+    CustodySearchFilter: jest.fn(() => null)
+  })
+)
 
-jest.mock('app/pages/admin/components/CustodiansFilter', () => ({
-  CustodiansFilter: jest.fn(() => null)
-}))
+jest.mock(
+  'app/pages/admin/components/CustodiansFilter/CustodiansFilter',
+  () => ({
+    CustodiansFilter: jest.fn(() => null)
+  })
+)
 
-jest.mock('app/pages/admin/components/CustodyDatesFilter', () => ({
-  CustodyDatesFilter: jest.fn(() => null)
-}))
+jest.mock(
+  'app/pages/admin/components/CustodyDatesFilter/CustodyDatesFilter',
+  () => ({
+    CustodyDatesFilter: jest.fn(() => null)
+  })
+)
 
 describe('CustodyManagementFilters', () => {
   afterEach(async () => {
