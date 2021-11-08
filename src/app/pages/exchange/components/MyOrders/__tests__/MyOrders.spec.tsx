@@ -30,7 +30,7 @@ describe('MyOrders', () => {
     render(<MyOrders showMyTrades />)
   })
 
-  it('renders correct tab', () => {
+  it('renders correct tab when showMyTrades is true', () => {
     const { getByRole } = render(<MyOrders showMyTrades />)
     const openOrdersTabButton = getByRole('tab', {
       name: 'Open Orders'
@@ -50,5 +50,26 @@ describe('MyOrders', () => {
 
     fireEvent.click(myTradesTabButton, { bubbles: true, cancellable: true })
     expect(MyTrades).toHaveBeenCalled()
+  })
+
+  it('renders correct tab when showMyTrades is not defined', () => {
+    const { getByRole, queryByRole } = render(<MyOrders />)
+    const openOrdersTabButton = getByRole('tab', {
+      name: 'Open Orders'
+    }) as HTMLButtonElement
+    const pastOrdersTabButton = getByRole('tab', {
+      name: 'Past Orders'
+    }) as HTMLButtonElement
+    const myTradesTabButton = queryByRole('tab', {
+      name: 'My Trades'
+    })
+
+    fireEvent.click(openOrdersTabButton, { bubbles: true, cancellable: true })
+    expect(OpenOrders).toHaveBeenCalled()
+
+    fireEvent.click(pastOrdersTabButton, { bubbles: true, cancellable: true })
+    expect(PastOrderTable).toHaveBeenCalled()
+
+    expect(myTradesTabButton).not.toBeInTheDocument()
   })
 })

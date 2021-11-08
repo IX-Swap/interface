@@ -10,6 +10,8 @@ export const renderTicker = (value: string, row: any) => {
   return <Typography variant='subtitle1'>{value}</Typography>
 }
 
+export const renderMoney = (value: any, row: any) => formatMoney(value, '')
+
 export const columns: Array<TableColumn<Order>> = [
   {
     key: 'date',
@@ -28,17 +30,17 @@ export const columns: Array<TableColumn<Order>> = [
   {
     key: 'price',
     label: 'Price',
-    render: (_, value) => formatMoney(value.price, '')
+    render: renderMoney
   },
   {
     key: 'amount',
     label: 'Amount',
-    render: (_, value) => formatMoney(value.amount, '')
+    render: renderMoney
   },
   {
     key: 'total',
     label: 'Total',
-    render: (_, value) => formatMoney(value.total, '')
+    render: renderMoney
   },
   {
     key: 'filledPercent',
@@ -56,7 +58,7 @@ export const compactColumns: Array<TableColumn<Order>> = [
   {
     key: 'amount',
     label: 'Amount',
-    render: (_, value) => formatMoney(value.amount, '')
+    render: renderMoney
   },
   {
     key: 'side',
@@ -70,12 +72,12 @@ export const compactColumns: Array<TableColumn<Order>> = [
   {
     key: 'price',
     label: 'Price',
-    render: (_, value) => formatMoney(value.price, '')
+    render: renderMoney
   },
   {
     key: 'total',
     label: 'Total',
-    render: (_, value) => formatMoney(value.total, '')
+    render: renderMoney
   },
   {
     key: 'filledPercent',
