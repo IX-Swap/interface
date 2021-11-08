@@ -1,13 +1,7 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { VSpacer } from 'components/VSpacer'
-import * as useAppBreakpoints from 'hooks/useAppBreakpoints'
-import { CustodyDatesFilter } from 'app/pages/admin/components/CustodyDatesFilter'
+import { CustodyDatesFilter } from 'app/pages/admin/components/CustodyDatesFilter/CustodyDatesFilter'
 import { DateFilter } from 'app/pages/admin/components/AssignedVirtualAccountsTable/DateFilter'
-
-jest.mock('components/VSpacer', () => ({
-  VSpacer: jest.fn(() => null)
-}))
 
 jest.mock('app/components/SearchFilter', () => ({
   SearchFilter: jest.fn(() => null)
@@ -49,36 +43,6 @@ describe('CustodyDatesFilter', () => {
         label: 'To',
         width: '100%'
       }),
-      {}
-    )
-  })
-
-  it('renders VSpacer components when isMobile is false', () => {
-    jest.spyOn(useAppBreakpoints, 'useAppBreakpoints').mockReturnValueOnce({
-      isMobile: false
-    } as any)
-    render(<CustodyDatesFilter />)
-    expect(VSpacer).toHaveBeenCalledTimes(0)
-  })
-
-  it('renders VSpacer components when isMobile is true', () => {
-    jest.spyOn(useAppBreakpoints, 'useAppBreakpoints').mockReturnValueOnce({
-      isMobile: true
-    } as any)
-    render(<CustodyDatesFilter />)
-    expect(VSpacer).toHaveBeenCalledTimes(2)
-    expect(VSpacer).toHaveBeenNthCalledWith(
-      1,
-      {
-        size: 'small'
-      },
-      {}
-    )
-    expect(VSpacer).toHaveBeenNthCalledWith(
-      2,
-      {
-        size: 'small'
-      },
       {}
     )
   })

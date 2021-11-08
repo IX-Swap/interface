@@ -1,11 +1,10 @@
 import React from 'react'
-import { Box, Grid, Typography } from '@material-ui/core'
-import { VSpacer } from 'components/VSpacer'
-import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+import { Grid, Typography } from '@material-ui/core'
 import { DateFilter } from 'app/pages/admin/components/AssignedVirtualAccountsTable/DateFilter'
+import { useStyles } from './CustodyDatesFilter.styles'
 
 export const CustodyDatesFilter = () => {
-  const { isMobile } = useAppBreakpoints()
+  const classes = useStyles()
 
   return (
     <Grid
@@ -17,16 +16,12 @@ export const CustodyDatesFilter = () => {
       alignItems={'center'}
       wrap={'wrap'}
     >
-      <Grid item xs={12} sm={'auto'}>
-        <Typography style={{ fontWeight: 600 }}>Date:</Typography>
-        {isMobile && <VSpacer size={'small'} />}
+      <Grid item xs={12} sm={'auto'} className={classes.firstItem}>
+        <Typography className={classes.text}>Date:</Typography>
       </Grid>
-      <Box pr={1} />
-      <Grid item xs={12} sm={true}>
+      <Grid item xs={12} sm={true} className={classes.secondItem}>
         <DateFilter name='fromDate' label='From' width={'100%'} />
-        {isMobile && <VSpacer size={'small'} />}
       </Grid>
-      <Box pr={3} />
       <Grid item xs={12} sm={true}>
         <DateFilter name='toDate' label='To' width={'100%'} />
       </Grid>

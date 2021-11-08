@@ -1,9 +1,9 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { CustodyManagementFilters } from 'app/pages/admin/components/CustodyManagementFilters'
-import { CustodySearchFilter } from 'app/pages/admin/components/CustodySearchFilter'
-import { CustodiansFilter } from 'app/pages/admin/components/CustodiansFilter'
-import { CustodyDatesFilter } from 'app/pages/admin/components/CustodyDatesFilter'
+import { CustodySearchFilter } from 'app/pages/admin/components/CustodySearchFilter/CustodySearchFilter'
+import { CustodiansFilter } from 'app/pages/admin/components/CustodiansFilter/CustodiansFilter'
+import { CustodyDatesFilter } from 'app/pages/admin/components/CustodyDatesFilter/CustodyDatesFilter'
 
 jest.mock('app/pages/admin/components/CustodySearchFilter', () => ({
   CustodySearchFilter: jest.fn(() => null)

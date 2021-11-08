@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { render, cleanup } from 'test-utils'
-import { CustodyManagement } from 'app/pages/admin/pages/CustodyManagement'
+import { CustodyManagement } from 'app/pages/admin/pages/CustodyManagement/CustodyManagement'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { VSpacer } from 'components/VSpacer'
 import { AccountsUnderCustody } from 'app/pages/admin/components/AccountsUnderCustody'
