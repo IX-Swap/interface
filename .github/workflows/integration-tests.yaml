@@ -1,9 +1,13 @@
 name: Integration Tests
 
 on:
-  push:
-    branches: [develop, staging, e2e-tests]
-    
+  deployment_status:
+    # does not work because it is ignored on deployment_status
+    branches:
+      - develop
+      - stage
+      - e2e_tests
+
 jobs:
   integration-tests:
     name: Integration Tests
