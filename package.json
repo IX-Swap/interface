@@ -64,7 +64,7 @@
     "socket.io-client": "^4.1.1",
     "standard": "^14.3.4",
     "tinycolor2": "^1.4.1",
-    "typescript": "^3.9.7",
+    "typescript": "3.9.9",
     "uno-material-ui": "^2.0.4",
     "use-debounce": "^5.2.0",
     "yarn": "^1.22.10",
