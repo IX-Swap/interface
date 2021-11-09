@@ -1,8 +1,5 @@
 import { LandingPage } from 'app/components/LandingPage/LandingPage'
 import { AccessReports } from 'app/pages/admin/pages/AccessReports'
-import { CreateCorporateAsAdmin } from 'app/pages/admin/pages/CreateCorporateAsAdmin'
-import { CreateIndividualAsAdmin } from 'app/pages/admin/pages/CreateIndividualAsAdmin'
-import { CreateIssuerAsAdmin } from 'app/pages/admin/pages/CreateIssuerAsAdmin'
 import { adminLandingLinks, AdminRoute } from 'app/pages/admin/router/config'
 import { AppRoute } from 'components/AppRoute'
 import { Identities } from 'app/pages/admin/pages/Identities'
@@ -36,24 +33,6 @@ export const AdminRouter = () => {
       >
         <RootContainer className={privateClassNames()}>
           <AccessReports />
-        </RootContainer>
-      </AppRoute>
-
-      <AppRoute exact path={AdminRoute.createIndividualIdentity}>
-        <RootContainer className={privateClassNames()}>
-          <CreateIndividualAsAdmin />
-        </RootContainer>
-      </AppRoute>
-
-      <AppRoute exact path={AdminRoute.createCorporateIdentity}>
-        <RootContainer className={privateClassNames()}>
-          <CreateCorporateAsAdmin />
-        </RootContainer>
-      </AppRoute>
-
-      <AppRoute exact path={AdminRoute.createIssuerIdentity}>
-        <RootContainer className={privateClassNames()}>
-          <CreateIssuerAsAdmin />
         </RootContainer>
       </AppRoute>
 
