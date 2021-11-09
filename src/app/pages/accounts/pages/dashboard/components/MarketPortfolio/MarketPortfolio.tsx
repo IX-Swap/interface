@@ -9,9 +9,9 @@ import { useStyles } from './MarketPortfolio.styles'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { VSpacer } from 'components/VSpacer'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
-import { TotalInvestmentInfoProps } from 'app/pages/accounts/pages/dashboard/components/TotalInvestmentInfo/TotalInvestmentInfoProps'
 import { MarketInfo } from 'types/portfolio'
 import { NoMarketInfo } from 'app/pages/accounts/pages/dashboard/components/NoMarketInfo/NoMarketInfo'
+import { TotalInvestmentInfo } from 'app/pages/accounts/pages/dashboard/components/TotalInvestmentInfo/TotalInvestmentInfoProps'
 
 export interface MarketPortfolioProps {
   currencySymbol: string
@@ -115,7 +115,7 @@ export const MarketPortfolio = ({
         alignItems={'flex-end'}
         justify={'center'}
       >
-        <TotalInvestmentInfoProps
+        <TotalInvestmentInfo
           value={totalAmount}
           currencySymbol={currencySymbol}
         />
@@ -128,7 +128,7 @@ export const MarketPortfolio = ({
       return null
     }
     return (
-      <TotalInvestmentInfoProps
+      <TotalInvestmentInfo
         value={totalAmount}
         currencySymbol={currencySymbol}
       />
