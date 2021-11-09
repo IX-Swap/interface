@@ -18,7 +18,7 @@
     "@types/dompurify": "^2.2.3",
     "@types/react-otp-input": "^2.0.0",
     "add": "^2.0.6",
-    "axios": "^0.21.1",
+    "axios": "^0.21.2",
     "babel-loader": "^8.1.0",
     "classnames": "^2.2.6",
     "country-json": "^1.1.0",
