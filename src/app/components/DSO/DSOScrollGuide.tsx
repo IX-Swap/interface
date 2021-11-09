@@ -9,14 +9,35 @@ export enum DSOFormSection {
   Pricing = 'dso-pricing',
   'Offering Terms' = 'dso-terms',
   'Information' = 'dso-profile',
-  'Documents' = 'dso-documents',
   'Team Members' = 'dso-team',
-  'FAQs' = 'dso-faqs',
-  'Videos' = 'dso-videos'
+  'Documents' = 'dso-documents',
+  'Videos' = 'dso-videos',
+  'FAQs' = 'dso-faqs'
 }
 
-export const DSOScrollGuide = () => {
+export interface DSOScrollGuideProps {
+  hasVideo: boolean
+  hasFAQ: boolean
+}
+
+export const DSOScrollGuide = ({
+  hasVideo = true,
+  hasFAQ = true
+}: DSOScrollGuideProps) => {
   const [hasActive, setHasActive] = useState(false)
+  let actualDSOFromSection = Object.entries(DSOFormSection)
+  if (!hasVideo) {
+    actualDSOFromSection = actualDSOFromSection.filter(
+      ([name, _]) => name !== 'Videos'
+    )
+  }
+
+  if (!hasFAQ) {
+    actualDSOFromSection = actualDSOFromSection.filter(
+      ([name, _]) => name !== 'FAQs'
+    )
+  }
+
   const firstLinkKey = Object.values(DSOFormSection)[0]
 
   return (
@@ -24,34 +45,36 @@ export const DSOScrollGuide = () => {
       <Typography variant='subtitle1'>Progress</Typography>
       <VSpacer size='small' />
       <ScrollGuide>
-        {Object.entries(DSOFormSection).map(([name, key]) => (
-          <ScrollGuideLink
-            key={key}
-            to={key}
-            spy
-            smooth
-            duration={300}
-            offset={-20}
-            onSetActive={() => {
-              setHasActive(true)
-            }}
-            onSetInactive={() => {
-              if (key === firstLinkKey) {
-                setHasActive(false)
+        {actualDSOFromSection.map(([name, key]) => {
+          return (
+            <ScrollGuideLink
+              key={key}
+              to={key}
+              spy
+              smooth
+              duration={300}
+              offset={-20}
+              onSetActive={() => {
+                setHasActive(true)
+              }}
+              onSetInactive={() => {
+                if (key === firstLinkKey) {
+                  setHasActive(false)
+                }
+              }}
+              activeClass='active'
+              className={
+                hasActive
+                  ? undefined
+                  : key === firstLinkKey
+                  ? 'active'
+                  : undefined
               }
-            }}
-            activeClass='active'
-            className={
-              hasActive
-                ? undefined
-                : key === firstLinkKey
-                ? 'active'
-                : undefined
-            }
-          >
-            {name}
-          </ScrollGuideLink>
-        ))}
+            >
+              {name}
+            </ScrollGuideLink>
+          )
+        })}
       </ScrollGuide>
     </>
   )

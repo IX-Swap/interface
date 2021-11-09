@@ -9,10 +9,11 @@ import { LabelledValue } from 'components/LabelledValue'
 export interface DSOSidebarProps {
   dso: DigitalSecurityOffering | undefined
   footer: Maybe<JSX.Element>
+  isNew?: boolean
 }
 
 export const DSOSidebar = (props: DSOSidebarProps) => {
-  const { dso, footer } = props
+  const { dso, footer, isNew = false } = props
 
   return (
     <Box position='sticky' top={90} marginLeft={8}>
@@ -26,7 +27,12 @@ export const DSOSidebar = (props: DSOSidebarProps) => {
         </Grid>
 
         <Grid item>
-          <DSOScrollGuide />
+          <DSOScrollGuide
+            hasVideo={
+              (dso?.videos !== undefined && dso.videos.length >= 1) || isNew
+            }
+            hasFAQ={(dso?.faqs !== undefined && dso.faqs.length >= 1) || isNew}
+          />
         </Grid>
 
         <Grid item>{footer}</Grid>
