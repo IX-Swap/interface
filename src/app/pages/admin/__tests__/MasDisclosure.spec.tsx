@@ -20,6 +20,13 @@ jest.mock('app/pages/admin/components/MasDisclosurePreviewCard', () => ({
   MasDisclosurePreviewCard: jest.fn(() => null)
 }))
 
+jest.mock(
+  'app/pages/admin/components/UploadExchangeRules/UploadExchangeRules',
+  () => ({
+    UploadExchangeRules: jest.fn(() => null)
+  })
+)
+
 describe('MasDisclosure', () => {
   afterEach(async () => {
     await cleanup()

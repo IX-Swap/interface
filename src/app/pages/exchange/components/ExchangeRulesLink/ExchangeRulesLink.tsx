@@ -1,15 +1,22 @@
 import React from 'react'
 import { Link } from '@material-ui/core'
-import { generateImgSrc } from 'helpers/generateImgSrc'
+import { useGetExchangeRules } from 'app/pages/admin/hooks/useGetExchangeRules'
+import { DownloadDocument } from 'components/dataroom/DownloadDocument'
 
 export const ExchangeRulesLink = () => {
+  const { data, isLoading } = useGetExchangeRules()
+
+  if (data === undefined || isLoading) {
+    return null
+  }
+
   return (
-    <Link
-      href={generateImgSrc('/IXExchangeRules.pdf')}
-      target='_blank'
-      rel='noopener noreferrer'
-    >
-      Exchange Rules
-    </Link>
+    <DownloadDocument documentId={data._id} ownerId={data.user}>
+      {({ download }) => (
+        <Link onClick={download} target='_blank' rel='noopener noreferrer'>
+          Exchange Rules
+        </Link>
+      )}
+    </DownloadDocument>
   )
 }

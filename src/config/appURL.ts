@@ -79,6 +79,7 @@ export const appURL = {
   ...urlService,
   ...urlFeature,
 
+  dashboard: `${AppFeature.Dashboard}`,
   cashDeposit: `${AppFeature.CashDeposits}`,
   cashWithdrawal: `${AppFeature.CashWithdrawals}`,
   dsDeposit: `${AppFeature.DigitalSecurityDeposits}`,
