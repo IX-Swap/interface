@@ -56,7 +56,7 @@ export const DSOFormFields = (props: DSOFormFieldsProps) => {
       </Element>
 
       <Element name={DSOFormSection.FAQs}>
-        <VSpacer size='extraSmall' />
+        <VSpacer size='large' />
         <DSOFAQs isNew={isNew} />
       </Element>
     </Fragment>
