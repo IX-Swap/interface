@@ -6,7 +6,7 @@ import { Launch } from '@material-ui/icons'
 import { useStyles } from './TotalInvestmentInfo.styles'
 import { formatMoney } from 'helpers/numbers'
 
-export interface TotalInvestmentInfo {
+export interface TotalInvestmentInfoProps {
   value: number
   currencySymbol: string
 }
@@ -14,7 +14,7 @@ export interface TotalInvestmentInfo {
 export const TotalInvestmentInfo = ({
   value,
   currencySymbol
-}: TotalInvestmentInfo) => {
+}: TotalInvestmentInfoProps) => {
   const classes = useStyles()
 
   return (
