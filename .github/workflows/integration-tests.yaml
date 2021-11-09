@@ -2,14 +2,14 @@ name: Integration Tests
 
 on:
   push:
-    branches: [staging, e2e-tests]
-
+    branches: [develop, staging, e2e-tests]
+    
 jobs:
   integration-tests:
     name: Integration Tests
     runs-on: ubuntu-latest # or macos-latest, windows-latest
 
-    # if: github.event.deployment_status.state == 'success' 
+    if: github.event.deployment_status.state == 'success' 
     steps:
       - uses: actions/checkout@v2
       - name: Set up node
