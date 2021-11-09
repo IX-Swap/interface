@@ -5,7 +5,7 @@ on:
     # does not work because it is ignored on deployment_status
     branches:
       - develop
-      - stage
+      - staging
       - e2e_tests
 
 jobs:
