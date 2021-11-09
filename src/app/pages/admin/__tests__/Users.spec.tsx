@@ -37,7 +37,7 @@ describe('Users', () => {
   })
 
   describe('renderActions', () => {
-    it('renders ActionsType component with correct data', () => {
+    it('renders Actions component with correct data', () => {
       const ref = {} as any
       const actionsView = renderActions(user, ref)
       expect(actionsView).toEqual(<Actions user={user} ref={ref} />)
