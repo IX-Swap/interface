@@ -1,6 +1,6 @@
+import { kyc } from './../selectors/kyc-form'
 import { authForms } from '../selectors/auth'
 import { baseCreds } from '../helpers/creds'
-import { userRegistration } from '../helpers/api'
 import { text } from '../helpers/text'
 import { invest } from '../selectors/invest'
 
@@ -56,6 +56,15 @@ class Invest {
     await click(invest.PRIMARY_SECTION, this.page)
     await click(invest.buttons.LEARN_MORE, this.page)
     await shouldExist(invest.LANDING_TABLES_PANEL, this.page)
+  }
+  makeSecondMarketInvestment = async () => {
+    await click(invest.INVEST_TAB, this.page)
+    await click(invest.SECOND_MARKET, this.page)
+  }
+
+  toSecondaryMarket = async () => {
+    await click(invest.INVEST_TAB, this.page)
+    await click(invest.SECOND_MARKET, this.page)
   }
 }
 export { Invest }

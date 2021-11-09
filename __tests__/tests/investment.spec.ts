@@ -1,6 +1,11 @@
 import { baseCreds } from '../lib/helpers/creds'
 import { test } from '../lib/fixtures/fixtures'
-import { click, navigate, shouldExist } from '../lib/helpers/helpers'
+import {
+  click,
+  navigate,
+  shouldExist,
+  screenshotMatching
+} from '../lib/helpers/helpers'
 import { expect } from '@playwright/test'
 
 test.beforeEach(async ({ page, auth, invest }) => {
@@ -37,5 +42,11 @@ test.describe('Primary', () => {
 
   test('The investment should be created', async ({ investment }) => {
     await investment.createNewInvestment()
+  })
+})
+
+test.describe('Secondary market', () => {
+  test('Disclosures window should exist', async ({ investment }) => {
+    await investment.toSecondaryMarket()
   })
 })

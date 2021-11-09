@@ -124,7 +124,7 @@ test('Check tax information', async ({ page, kycForms }, testInfo) => {
   await kycForms.fillTaxDeclarationForm()
   await click(kyc.buttons.CLICK_HERE, page)
   const dialog = await page.waitForSelector(kyc.DIALOG_VIEW)
-  // await screenshotMatching(testInfo.title, dialog)
+  await screenshotMatching(testInfo.title, dialog)
 })
 
 test('Check FATCA information', async ({ page, kycForms }, testInfo) => {
@@ -135,5 +135,5 @@ test('Check FATCA information', async ({ page, kycForms }, testInfo) => {
   await kycForms.fillTaxDeclaration()
   await click(kyc.buttons.FATCA, page)
   const dialog = await page.waitForSelector(kyc.DIALOG_VIEW)
-  // await screenshotMatching(testInfo.title, dialog)
+  await screenshotMatching(testInfo.title, dialog)
 })
