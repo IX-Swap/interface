@@ -107,7 +107,8 @@ export const accountsURL = {
     getAllByUserId: (userId: string) => `/issuance/commitments/list/${userId}`,
     confirmCommitment: (commitmentId: string) =>
       `/issuance/commitments/${commitmentId}/confirmInvestment`
-  }
+  },
+  getPortfolios: (userId: string) => `/accounts/portfolios/${userId}`
 }
 
 export const issuanceURL = {
@@ -223,7 +224,8 @@ export const virtualAccounts = {
   unassign: (accountId: string) => `/virtual-accounts/unassign/${accountId}`,
   uploadCSV: '/virtual-accounts/upload',
   disable: '/virtual-accounts/disable',
-  getById: (id: string) => `/virtual-accounts/get-account/${id}`
+  getById: (id: string) => `/virtual-accounts/get-account/${id}`,
+  getBalances: (accountId: string) => `/virtual-accounts/balances/${accountId}`
 }
 
 export const exchange = {
@@ -311,7 +313,9 @@ export const atlasOneURL = {
 export const resources = {
   getSiteConfig: '/resources/siteConfig',
   createOrUpdateMasDisclosure: '/resources/siteConfig/masDisclosure',
-  acceptMasDisclosure: '/resources/siteConfig/masDisclosure/accept'
+  acceptMasDisclosure: '/resources/siteConfig/masDisclosure/accept',
+  uploadExchangeRules: '/resources/siteConfig/exchangeRules',
+  getExchangeRules: '/resources/siteConfig/exchangeRules'
 }
 
 export const virtualAccountsAudit = {
@@ -331,4 +335,10 @@ export const virtualAccountsAudit = {
 
 export const virtualTransactions = {
   getTransactions: 'https://hsbc.mozork.com/payments/transactions'
+}
+
+export const blockchainNetworksURL = {
+  getSettings: (network: string) => `/blockchain/settings/${network}`,
+  getUpdateDecimal: (network: string, decimal: number) =>
+    `/blockchain/settings/decimal/${network}/${decimal}`
 }

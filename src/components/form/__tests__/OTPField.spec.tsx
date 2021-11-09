@@ -50,7 +50,9 @@ describe('OTPField', () => {
         numInputs: 6,
         isInputNum: true,
         variant: 'standard',
-        shouldAutoFocus: false
+        shouldAutoFocus: false,
+        name: undefined,
+        control: expect.any(Object)
       },
       {}
     )
@@ -63,5 +65,23 @@ describe('OTPField', () => {
     render(<OTPField {...props} />)
 
     expect(ErrorMessage).toHaveBeenCalled()
+  })
+
+  it('renders label when as a string', () => {
+    const { getByTestId } = render(<OTPField {...props} />)
+
+    expect(getByTestId('otp-field-label')).toHaveTextContent(
+      props.label as string
+    )
+  })
+
+  it('renders custom label component', () => {
+    const customLabelId = 'custom-label'
+    const labelText = 'OTP Field'
+    props.label = <span data-testid={customLabelId}>{labelText}</span>
+
+    const { getByTestId } = render(<OTPField {...props} />)
+
+    expect(getByTestId(customLabelId)).toHaveTextContent(labelText)
   })
 })
