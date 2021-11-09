@@ -144,7 +144,7 @@
     "test:watch": "react-scripts test --env=jest-environment-jsdom-sixteen --runInBand --coverage --no-cache",
     "test": "CI=true react-scripts test --env=jest-environment-jsdom-sixteen --colors --silent --runInBand",
     "test:ci": "CI=true react-scripts test --env=jest-environment-jsdom-sixteen --silent --coverage --testResultsProcessor jest-sonar-reporter --maxWorkers=75%",
-    "integration-test": "npx playwright test __tests__/tests  --reporter=line,allure-playwright --timeout 180000",
+    "integration-test": "playwright test __tests__/tests  --reporter=line,allure-playwright --timeout 180000",
     "eject": "react-scripts eject",
     "lint": "eslint --cache --fix \"src/**/*.{ts,tsx}\"",
     "format": "prettier --write \"src/**/*.tsx\"",

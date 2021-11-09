@@ -1,13 +1,14 @@
 name: Integration Tests
 
 on:
+  push:
+    branches:
+      - e2e_tests
   deployment_status:
-    # does not work because it is ignored on deployment_status
     branches:
       - develop
-      - stage
-      - e2e_tests
-
+      - staging
+      
 jobs:
   integration-tests:
     name: Integration Tests
@@ -25,12 +26,10 @@ jobs:
         run: npx playwright install-deps
       - run: npx playwright install
       - run: yarn
-      - run: echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
       - name: Run Tests
         env:
           GH_REP: ${{github.ref}}
-        run: | 
-          yarn integration-test
+        run: yarn integration-test
       - uses: actions/upload-artifact@v2
         if: always()
         with:

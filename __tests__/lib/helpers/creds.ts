@@ -3,7 +3,7 @@ dotenv.config()
 
 let baseCreds
 
-if ('ss' === 'ss') {
+if (process.env.GH_REP.indexOf('staging')) {
   baseCreds = {
     GH_ENV: process.env.GH_REP,
     URL: 'https://staging.mozork.com/',
@@ -17,6 +17,7 @@ if ('ss' === 'ss') {
   }
 } else {
   baseCreds = {
+    GH_ENV: process.env.GH_REP,
     URL: 'https://staging.mozork.com/',
     EMAIL: 'xe2v112a@mailinator.com',
     EMAIL_APPROVED: 'LuchNewMailIssuerDSOtest@wwjmp.com',

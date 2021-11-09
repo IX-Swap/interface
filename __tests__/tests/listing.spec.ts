@@ -11,7 +11,7 @@ test.afterEach(async ({ page }) => {
   await page.close()
 })
 
-test.describe('Listening', () => {
+test.describe('Listing', () => {
   test('Should be created and appears in the list', async ({
     listing,
     dso
@@ -31,7 +31,7 @@ test.describe('Listening', () => {
   })
 })
 let importedForm
-test.describe('Listening with imported dso', () => {
+test.describe('Listing with imported dso', () => {
   test.beforeEach(async ({ listing }) => {
     importedForm = await listing.importDso()
   })

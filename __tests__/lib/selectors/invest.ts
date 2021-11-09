@@ -27,6 +27,8 @@ export const invest = {
   },
   listBox: {
     DESTINATION_WALLET_ADDRESS: '[id="withdrawalAddress"]',
-    WALLET_ADDRESS_AQA_VALUE: '[data-value="6184dfe93899410e58bbe013"]'
+    WALLET_ADDRESS_AQA_VALUE: '[data-value="6184dfe93899410e58bbe013"]',
+    PAIR_NAME: '[data-testid="pairName"]',
+    PAIR_NAME_VALUE: 'a >> text="AQA##/SGD"'
   }
 }

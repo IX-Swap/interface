@@ -57,14 +57,14 @@ class Invest {
     await click(invest.buttons.LEARN_MORE, this.page)
     await shouldExist(invest.LANDING_TABLES_PANEL, this.page)
   }
-  makeSecondMarketInvestment = async () => {
-    await click(invest.INVEST_TAB, this.page)
-    await click(invest.SECOND_MARKET, this.page)
-  }
 
   toSecondaryMarket = async () => {
     await click(invest.INVEST_TAB, this.page)
     await click(invest.SECOND_MARKET, this.page)
+  }
+
+  makeSecondMarketInvestment = async () => {
+    this.toSecondaryMarket()
   }
 }
 export { Invest }
