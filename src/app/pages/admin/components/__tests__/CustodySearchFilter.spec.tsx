@@ -11,6 +11,7 @@ describe('CustodySearchFilter', () => {
     await cleanup()
     jest.clearAllMocks()
   })
+
   it('should match snapshot', () => {
     const { container } = render(<CustodySearchFilter />)
     expect(container).toMatchSnapshot()
