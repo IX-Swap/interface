@@ -4,7 +4,6 @@ import React from 'react'
 import { CloseColor, CloseIcon, ContentWrapper, HeaderRow, UpperSection } from './styleds'
 
 export const ErrorSection = ({ error, toggleWalletModal }: { error: any; toggleWalletModal: () => void }) => {
-  console.log({ error })
   return (
     <UpperSection>
       <CloseIcon onClick={toggleWalletModal}>
