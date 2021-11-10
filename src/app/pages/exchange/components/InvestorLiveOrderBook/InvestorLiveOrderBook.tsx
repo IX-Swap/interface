@@ -49,18 +49,18 @@ export const InvestorLiveOrderBook = () => {
       <Grid item style={{ flexGrow: 1 }}>
         <Box
           display='flex'
-          flexDirection={isMiniLaptop ? 'row' : 'column'}
+          flexDirection={{ xs: 'row', md: 'column' }}
           height='100%'
           flexWrap='nowrap'
           justifyContent='flex-start'
           alignContent='space-between'
         >
           <Box
-            height={isMiniLaptop ? 'auto' : 'calc(50% - 26px)'}
+            height={{ xs: 'auto', md: 'calc(50% - 26px)' }}
             overflow='hidden'
             flexShrink={1}
             flexGrow={1}
-            mr={isMiniLaptop ? 1 : 0}
+            mr={{ xs: 1, md: 0 }}
           >
             <OrderBook
               data={asks.slice(0, 15)}
@@ -78,11 +78,11 @@ export const InvestorLiveOrderBook = () => {
           </Hidden>
 
           <Box
-            height={isMiniLaptop ? 'auto' : 'calc(50% - 26px)'}
+            height={{ xs: 'auto', md: 'calc(50% - 26px)' }}
             overflow='hidden'
             flexGrow={0}
             flexShrink={1}
-            ml={isMiniLaptop ? 1 : 0}
+            ml={{ xs: 1, md: 0 }}
           >
             <OrderBook
               data={bids.slice(0, 15)}

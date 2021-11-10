@@ -65,7 +65,7 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
             }}
             TabIndicatorProps={{ children: <span /> }}
           >
-            {tabs.map((tabName, i) => {
+            {tabs.map(tabName => {
               return (
                 <Tab
                   key={tabName}

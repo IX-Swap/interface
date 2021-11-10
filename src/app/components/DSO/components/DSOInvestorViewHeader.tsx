@@ -5,6 +5,7 @@ import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { DigitalSecurityOffering } from 'types/dso'
 import { DSOInvestorOverview } from 'app/components/DSO/components/DSOInvestorOverview'
 import { DSOInvestButton } from 'app/components/DSO/components/DSOInvestButton'
+import { useStyles } from 'app/components/DSO/components/DSOInvestorViewHeader.styles'
 
 export interface DSOInvestorViewHeaderProps {
   dso: DigitalSecurityOffering
@@ -13,6 +14,7 @@ export interface DSOInvestorViewHeaderProps {
 export const DSOInvestorViewHeader = (props: DSOInvestorViewHeaderProps) => {
   const { dso } = props
   const { isMiniLaptop } = useAppBreakpoints()
+  const { container, logoContainer, tokenName, corporateName } = useStyles()
 
   return (
     <Box
@@ -26,7 +28,7 @@ export const DSOInvestorViewHeader = (props: DSOInvestorViewHeaderProps) => {
     >
       <Grid
         container
-        alignItems={isMiniLaptop ? 'flex-start' : 'center'}
+        className={container}
         justify='space-between'
         spacing={isMiniLaptop ? 3 : 6}
       >
@@ -34,7 +36,7 @@ export const DSOInvestorViewHeader = (props: DSOInvestorViewHeaderProps) => {
           item
           xs={12}
           container
-          justify={isMiniLaptop ? 'center' : 'space-between'}
+          className={logoContainer}
           alignItems='center'
         >
           <Grid
@@ -55,22 +57,12 @@ export const DSOInvestorViewHeader = (props: DSOInvestorViewHeaderProps) => {
 
             <Grid item container>
               <Grid item xs={12}>
-                <Typography
-                  variant='h2'
-                  style={{ fontSize: isMiniLaptop ? 14 : 40 }}
-                >
+                <Typography variant='h2' className={tokenName}>
                   {dso.tokenName} ({dso.tokenSymbol})
                 </Typography>
               </Grid>
               <Grid item xs={12}>
-                <Typography
-                  variant='h6'
-                  style={{
-                    fontWeight: 400,
-                    opacity: 0.7,
-                    fontSize: isMiniLaptop ? 14 : undefined
-                  }}
-                >
+                <Typography variant='h6' className={corporateName}>
                   {dso.corporate.companyLegalName}
                 </Typography>
               </Grid>
