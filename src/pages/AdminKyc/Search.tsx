@@ -17,7 +17,7 @@ export const Search = () => {
   return <Input placeholder={t`Search for Wallet or Token`} onChange={onSearchChange} />
 }
 
-const Input = styled.input`
+export const Input = styled.input`
   background-color: ${({ theme, value }) => (value ? theme.bg7 : theme.bg12)};
   font-size: 20px;
   border-radius: 100px;

@@ -4,14 +4,14 @@ import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
 
 import { useAdminState } from 'state/admin/hooks'
-
-import { AdminKycTable } from '../../components/AdminKycTable'
-import { AdminTransactionsTable } from '../../components/AdminTransactionsTable'
+import { AdminKycTable } from 'components/AdminKycTable'
+import { AdminTransactionsTable } from 'components/AdminTransactionsTable'
 import { Navbar } from './Navbar'
 import { Search } from './Search'
 import { AutoColumn, ColumnCenter } from 'components/Column'
 import { CustodianToggleWrapper } from 'pages/Custodian/styleds'
 import { Border, ToggleOption } from 'components/Tabs'
+import { AdminTransactionsTableSearch } from 'components/AdminTransactionsTable/Search'
 
 export const AdminKyc = () => {
   const [showKYC, setShowKYC] = useState(true)
@@ -50,7 +50,10 @@ export const AdminKyc = () => {
               <AdminKycTable />
             </>
           ) : (
-            <AdminTransactionsTable />
+            <>
+              <AdminTransactionsTableSearch />
+              <AdminTransactionsTable />
+            </>
           )}
         </Body>
       )}
