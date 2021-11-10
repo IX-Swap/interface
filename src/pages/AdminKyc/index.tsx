@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
 
-import { useAdminState } from 'state/admin/hooks'
+import { useAdminState, useGetMe } from 'state/admin/hooks'
 import { AdminKycTable } from 'components/AdminKycTable'
 import { AdminTransactionsTable } from 'components/AdminTransactionsTable'
 import { Navbar } from './Navbar'
@@ -16,13 +16,24 @@ import { AdminTransactionsTableSearch } from 'components/AdminTransactionsTable/
 export const AdminKyc = () => {
   const [showKYC, setShowKYC] = useState(true)
   const history = useHistory()
-  const { adminData, adminError } = useAdminState()
+  const { adminData, adminError, adminLoading } = useAdminState()
+  const getMe = useGetMe()
 
   useEffect(() => {
-    if ((!adminData && adminError) || adminData?.role !== 'admin') {
-      history.push('/admin-login')
+    if (adminData && adminData?.role === 'admin') {
+      history.push('/admin-kyc')
+    } else if (Boolean(!adminData && adminError && !adminLoading) || (adminData && adminData?.role !== 'admin')) {
+      history.push('/swap')
     }
-  }, [adminError, history, adminData])
+  }, [history, adminData, adminLoading, adminError])
+
+  useEffect(() => {
+    const fetchMe = async () => {
+      await getMe()
+    }
+
+    fetchMe()
+  }, [getMe])
 
   return (
     <Container>

@@ -22,7 +22,7 @@ export interface AdminState {
   adminLoading: boolean
   adminIsAuthenticated: boolean
   adminError: string | null
-  adminData: RawGetMePayload
+  adminData: RawGetMePayload | null
   kycList: KycList
   brokerDealerList: BrokerDealerList
   brokerDealerSwaps: BrokerDealerSwaps
@@ -33,7 +33,7 @@ const initialState: AdminState = {
   expiresAt: undefined,
   adminLoading: false,
   adminError: null,
-  adminData: {} as RawGetMePayload,
+  adminData: null,
   adminIsAuthenticated: Boolean(localStorage.getItem('adminAccessToken')),
   kycList: {
     page: 0,
@@ -63,7 +63,6 @@ export default createReducer<AdminState>(initialState, (builder) =>
       state.adminError = null
     })
     .addCase(postLogin.fulfilled, (state, { payload: { auth } }) => {
-      localStorage.setItem('adminAccessToken', auth.accessToken)
       state.adminLoading = false
       state.adminError = null
       const expirationTime = getTokenExpiration(auth.expiresIn)
@@ -85,17 +84,15 @@ export default createReducer<AdminState>(initialState, (builder) =>
       state.adminData = data
     })
     .addCase(getMe.rejected, (state, { payload: { errorMessage } }) => {
-      localStorage.removeItem('adminAccessToken')
       state.adminIsAuthenticated = false
       state.adminLoading = false
       state.adminError = errorMessage
     })
     .addCase(logout.fulfilled, (state) => {
-      localStorage.removeItem('adminAccessToken')
       state.adminIsAuthenticated = false
       state.adminLoading = false
       state.adminError = null
-      state.adminData = {} as RawGetMePayload
+      state.adminData = null
     })
     .addCase(getKycList.pending, (state) => {
       state.adminLoading = true
