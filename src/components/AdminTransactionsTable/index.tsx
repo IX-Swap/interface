@@ -17,7 +17,7 @@ interface RowProps {
   item: BrokerDealerSwapItem
 }
 
-const StyledCopy = styled(Copy)`
+export const StyledCopy = styled(Copy)`
   margin-left: 8px;
   cursor: pointer;
   color: ${({ theme }) => theme.text1};
