@@ -65,7 +65,7 @@ export const documentsArraySchema = yup.array<
 export const nameSchema = yup
   .string()
   .max(50, 'Maximum of 50 characters')
-  .matches(/^[aA-zZ](?:-?[aA-zZ]+)*$/, 'Invalid name')
+  .matches(/^[A-Z][aA-zZ\s]*$/, 'Invalid name')
 
 export const addressSchema = yup.object().shape<AddressValues>({
   line1: yup.string().required(validationMessages.required),
