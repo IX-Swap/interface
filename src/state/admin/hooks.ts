@@ -1,22 +1,19 @@
 import { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-
-import { AppDispatch, AppState } from 'state'
+import { useHistory } from 'react-router-dom'
 import apiService from 'services/apiService'
-
+import { admin } from 'services/apiUrls'
+import { AppDispatch, AppState } from 'state'
 import {
-  postLogin,
+  getBrokerDealerList,
+  getBrokerDealerSwaps,
+  getKycList,
   getMe,
   logout,
-  getKycList,
-  getBrokerDealerList,
   postApproveKyc,
   postDeclineKyc,
   postKycReset,
-  getBrokerDealerSwaps,
 } from './actions'
-import { admin } from 'services/apiUrls'
-import { useHistory } from 'react-router-dom'
 
 export enum BROKER_DEALERS_STATUS {
   SUCCESS,
