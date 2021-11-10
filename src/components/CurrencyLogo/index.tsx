@@ -65,7 +65,7 @@ export default function CurrencyLogo({
       return defaultUrls
     }
     return []
-  }, [currency, uriLocations])
+  }, [currency, uriLocations, chainId])
 
   if (currency?.isNative) {
     return <StyledEthereumLogo src={EthereumLogo} size={size} style={style} {...rest} />

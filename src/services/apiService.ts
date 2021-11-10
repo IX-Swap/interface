@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { API_URL } from 'config'
 import store from 'state'
-import { postLogin, RawAuthPayload } from 'state/auth/actions'
+import { postLogin } from 'state/auth/actions'
 import { saveAccount } from 'state/user/actions'
 import { auth, metamask } from './apiUrls'
 import { responseSuccessInterceptor } from './interceptors'
