@@ -36,18 +36,10 @@ describe('CustodyManagementFilters', () => {
     render(<CustodyManagementFilters />)
   })
 
-  it('renders search filter component', () => {
+  it('renders children', () => {
     render(<CustodyManagementFilters />)
     expect(CustodySearchFilter).toHaveBeenCalledTimes(1)
-  })
-
-  it('renders custodians filter component', () => {
-    render(<CustodyManagementFilters />)
     expect(CustodiansFilter).toHaveBeenCalledTimes(1)
-  })
-
-  it('renders dates filter component', () => {
-    render(<CustodyManagementFilters />)
     expect(CustodyDatesFilter).toHaveBeenCalledTimes(1)
   })
 })
