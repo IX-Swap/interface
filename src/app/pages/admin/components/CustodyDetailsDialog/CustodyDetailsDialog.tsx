@@ -24,9 +24,26 @@ export const CustodyDetailsDialog = () => {
   const params = useParams<{ accountId: string }>()
 
   // TODO Change next line after backend api will change
-  const currentCustodyName = 'Investor Name'
+
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const { data, isLoading } = useGetCustodianDetails(params.accountId)
+
+  if (data === undefined) {
+    return null
+  }
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  const { user, wallets, account_id, account_name } = data
+  const walletsWithOrderedDetails = wallets.map(
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    ({ asset_tickers, wallet_name }) => {
+      return { wallet_name, asset_tickers }
+    }
+  )
+  const details = {
+    account_id,
+    account_name,
+    wallets: walletsWithOrderedDetails
+  }
 
   if (isLoading) {
     return <LoadingIndicator />
@@ -48,7 +65,7 @@ export const CustodyDetailsDialog = () => {
             align='center'
             className={classes.title}
           >
-            Tokens Supported for the {currentCustodyName}
+            Tokens Supported for the {user.name}
           </Typography>
         </Box>
       </DialogTitle>
@@ -59,7 +76,7 @@ export const CustodyDetailsDialog = () => {
           justifyContent='center'
           className={classes.content}
         >
-          <pre>{JSON.stringify(data, null, 1)}</pre>
+          <pre>{JSON.stringify(details, null, 1)}</pre>
         </Box>
       </DialogContent>
       <VSpacer size={'small'} />

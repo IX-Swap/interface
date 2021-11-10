@@ -22,3 +22,17 @@ export interface CustodyAccountsListItem {
   assignedAt: string
   type: string
 }
+
+export interface CustodyDetails {
+  wallets: [
+    {
+      asset_tickers: string[]
+      wallet_name: string
+    }
+  ]
+  account_id: number
+  account_name: string
+  user: {
+    name: string
+  }
+}
