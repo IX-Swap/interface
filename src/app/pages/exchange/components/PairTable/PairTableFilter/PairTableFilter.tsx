@@ -16,7 +16,7 @@ export const PairTableFilter = () => {
         <SearchFilter
           fullWidth
           className={searchFilter}
-          inputAdormentPosition='end'
+          inputAdornmentPosition='end'
           placeholder='Search'
         />
       </Grid>

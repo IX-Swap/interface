@@ -39,6 +39,7 @@ export enum AppFeature {
   CapTable = 'captable',
   DealClosure = 'closure',
   TokenDeployment = 'token-deployment',
+  CustodyManagement = 'custody-management',
   Dashboard = 'dashboard'
 }
 

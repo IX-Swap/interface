@@ -318,6 +318,13 @@ export const resources = {
   getExchangeRules: '/resources/siteConfig/exchangeRules'
 }
 
+export const custodyAccounts = {
+  getList: 'accounts/custody-accounts/list',
+  unAssignCustody: '/accounts/custody-unassign',
+  getCustodianDetails: (accountId: string) =>
+    `/accounts/get-custodian/${accountId}`
+}
+
 export const virtualAccountsAudit = {
   getMT940Files: 'https://hsbc.mozork.com/audit/virtual-account/mt940/files',
   getMT942Files: 'https://hsbc.mozork.com/audit/virtual-account/mt942/files',

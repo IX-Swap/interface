@@ -37,7 +37,7 @@ export const News = () => {
           <SearchFilter
             fullWidth
             placeholder='Search'
-            inputAdormentPosition='end'
+            inputAdornmentPosition='end'
           />
         </Grid>
       </Grid>

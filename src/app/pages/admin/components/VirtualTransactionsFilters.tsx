@@ -17,7 +17,7 @@ export const VirtualTransactionsFilters = () => {
         <SearchFilter
           fullWidth
           placeholder='Search virtual account/ SWIFT'
-          inputAdormentPosition='start'
+          inputAdornmentPosition='start'
         />
         <VSpacer size={'small'} />
         <VSpacer size={'extraSmall'} />
