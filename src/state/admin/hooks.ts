@@ -48,39 +48,8 @@ export enum KYC_LIST_STATUS {
   FAILED,
 }
 
-interface Login {
-  email: string
-  password: string
-}
-
 export function useAdminState(): AppState['admin'] {
   return useSelector<AppState, AppState['admin']>((state) => state.admin)
-}
-
-export const login = async (data: Login) => {
-  const result = await apiService.post(admin.login, data)
-  return result.data
-}
-
-export function useLogin() {
-  const dispatch = useDispatch<AppDispatch>()
-  const getMe = useGetMe()
-  const callback = useCallback(
-    async (data: Login) => {
-      try {
-        dispatch(postLogin.pending())
-        const auth = await login(data)
-        dispatch(postLogin.fulfilled({ auth }))
-        await getMe()
-        return LOGIN_STATUS.SUCCESS
-      } catch (error: any) {
-        dispatch(postLogin.rejected({ errorMessage: 'Could not login.' }))
-        return LOGIN_STATUS.FAILED
-      }
-    },
-    [dispatch, getMe]
-  )
-  return callback
 }
 
 export const me = async () => {
@@ -110,7 +79,7 @@ export function useLogout() {
   const callback = useCallback(() => {
     try {
       dispatch(logout.fulfilled())
-      history.push('/admin-login')
+      history.push('/swap')
       return LOGOUT_STATUS.SUCCESS
     } catch (error: any) {
       return LOGOUT_STATUS.FAILED

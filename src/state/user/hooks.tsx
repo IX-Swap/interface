@@ -12,9 +12,7 @@ import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import apiService from 'services/apiService'
 import { broker, kyc, tokens } from 'services/apiUrls'
 import { useAddPopup, useChooseBrokerDealerModalToggle } from 'state/application/hooks'
-import { saveToken } from 'state/auth/actions'
-import { LOGIN_STATUS, useAuthState, useLogin, useLogout, useUserisLoggedIn } from 'state/auth/hooks'
-import { clearEventLog } from 'state/eventLog/actions'
+import { LOGIN_STATUS, useLogin, useLogout, useUserisLoggedIn } from 'state/auth/hooks'
 import {
   listToSecTokenMap,
   SecTokenAddressMap,
@@ -23,7 +21,6 @@ import {
 } from 'state/secTokens/hooks'
 import { useSimpleTokenBalanceWithLoading } from 'state/wallet/hooks'
 import { SecToken } from 'types/secToken'
-import { shouldRenewToken } from 'utils/time'
 import { BASES_TO_TRACK_LIQUIDITY_FOR, PINNED_PAIRS } from '../../constants/routing'
 import { useAllTokens, useCurrency } from '../../hooks/Tokens'
 import { useActiveWeb3React } from '../../hooks/web3'
@@ -31,7 +28,6 @@ import { AppDispatch, AppState } from '../index'
 import {
   addSerializedPair,
   addSerializedToken,
-  clearUserData,
   fetchUserSecTokenList,
   passAccreditation,
   removeSerializedToken,
@@ -485,7 +481,6 @@ export function useAccount() {
   const savedAccount = useUserAccountState()
   const { account } = useActiveWeb3React()
   const dispatch = useDispatch<AppDispatch>()
-  const { token, loginError, refreshToken } = useAuthState()
   const login = useLogin({ mustHavePreviousLogin: true })
   const getUserSecTokens = useFetchUserSecTokenListCallback()
   const logout = useLogout()
@@ -496,7 +491,7 @@ export function useAccount() {
     if (status == LOGIN_STATUS.SUCCESS && isLoggedIn) {
       getUserSecTokens()
     }
-  }, [login, getUserSecTokens, account])
+  }, [login, getUserSecTokens, isLoggedIn])
 
   // when user logins to another account clear his data and relogin him
   // run with an interval of 5 sec in cases when user changes fast from an account to another
@@ -510,14 +505,6 @@ export function useAccount() {
     }, 5000)
     return () => clearInterval(interval)
   }, [account, savedAccount, dispatch, login, getUserSecTokens, authenticate])
-
-  // retry authentication on error
-  // useEffect(() => {
-  //   if (account && !refreshToken && !token) {
-  //     logout()
-  //     authenticate()
-  //   }
-  // }, [account, refreshToken, savedAccount, loginError, logout, authenticate])
 
   // User connects with account
   useEffect(() => {
