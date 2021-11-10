@@ -12,7 +12,7 @@ import { Box, Text } from 'rebass'
 import { setPoolTransactionHash } from 'state/pool/hooks'
 import { ThemeContext } from 'styled-components'
 import { routes } from 'utils/routes'
-import { ButtonGradient, ButtonIXSWide } from '../../components/Button'
+import { ButtonGradient, ButtonIXSGradient, ButtonIXSWide } from '../../components/Button'
 import { AutoColumn, ColumnCenter } from '../../components/Column'
 import CurrencyInputPanel from '../../components/CurrencyInputPanel'
 import { AddRemoveTabs } from '../../components/NavigationTabs'
@@ -350,10 +350,11 @@ export default function AddLiquidity({
                         isValid && (
                           <ButtonRow marginBottom={'0.5rem'}>
                             {approvalA !== ApprovalState.APPROVED && (
-                              <ButtonGradient
+                              <ButtonIXSGradient
                                 onClick={approveACallback}
                                 disabled={approvalA === ApprovalState.PENDING}
                                 data-testid="approve-currency-a"
+                                style={{ flexGrow: approvalB !== ApprovalState.APPROVED ? 1 : 2 }}
                               >
                                 {approvalA === ApprovalState.PENDING ? (
                                   <Dots>
@@ -362,13 +363,14 @@ export default function AddLiquidity({
                                 ) : (
                                   <Trans>Approve {currencies[Field.CURRENCY_A]?.symbol}</Trans>
                                 )}
-                              </ButtonGradient>
+                              </ButtonIXSGradient>
                             )}
                             {approvalB !== ApprovalState.APPROVED && (
-                              <ButtonGradient
+                              <ButtonIXSGradient
                                 onClick={approveBCallback}
                                 disabled={approvalB === ApprovalState.PENDING}
                                 data-testid="approve-currency-b"
+                                style={{ flexGrow: approvalA !== ApprovalState.APPROVED ? 1 : 2 }}
                               >
                                 {approvalB === ApprovalState.PENDING ? (
                                   <Dots>
@@ -377,7 +379,7 @@ export default function AddLiquidity({
                                 ) : (
                                   <Trans>Approve {currencies[Field.CURRENCY_B]?.symbol}</Trans>
                                 )}
-                              </ButtonGradient>
+                              </ButtonIXSGradient>
                             )}
                           </ButtonRow>
                         )}
