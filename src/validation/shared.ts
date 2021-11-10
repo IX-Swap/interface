@@ -64,6 +64,7 @@ export const documentsArraySchema = yup.array<
 
 export const nameSchema = yup
   .string()
+  .trim()
   .max(50, 'Maximum of 50 characters')
   .matches(/^[A-Z][aA-zZ\s]*$/, 'Invalid name')
 
