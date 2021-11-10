@@ -6,7 +6,6 @@ import {
   unsuccessfulResponse,
   headers,
   postJSON,
-  postJSONString,
   postJSONHeaders,
   postFormData,
   postFormDataHeaders,
@@ -79,7 +78,7 @@ describe('apiService', () => {
     it('should send a request with JSON data', async () => {
       const expectedConfig = {
         method: 'post',
-        data: postJSONString,
+        data: postJSON,
         headers: postJSONHeaders,
         url
       }
@@ -93,7 +92,7 @@ describe('apiService', () => {
     it('should apply custom request config', async () => {
       const expectedConfig = {
         method: 'post',
-        data: postJSONString,
+        data: postJSON,
         headers: postJSONHeaders,
         url
       }
