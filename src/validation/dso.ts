@@ -122,7 +122,9 @@ export const dsoFormBaseValidationSchema = {
     .of(dsoVideoLinkSchema.required('Required'))
     .ensure()
     .required('Required'),
-  uniqueIdentifierCode: string().min(12).max(32)
+  uniqueIdentifierCode: string()
+    .min(12, 'Unique Identifier Code must be at least 12 characters')
+    .max(32)
 }
 
 export const createDSOValidationSchema = object()
