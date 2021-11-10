@@ -11,7 +11,8 @@ bfg.jar
 .scannerwork
 coverage
 reports
-
+.history
+allure-results/
 # production
 /build
 

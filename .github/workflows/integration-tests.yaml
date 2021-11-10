@@ -1,0 +1,38 @@
+name: Integration Tests
+
+on:
+  push:
+    branches:
+      - e2e_tests
+  deployment_status:
+    branches:
+      - develop
+      - staging
+      
+jobs:
+  integration-tests:
+    name: Integration Tests
+    runs-on: ubuntu-latest # or macos-latest, windows-latest
+
+    if: github.event.deployment_status.state == 'success' 
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up node
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14.17
+
+      - name: Set tests dependencies
+        run: npx playwright install-deps
+      - run: npx playwright install
+      - run: yarn
+      - name: Run Tests
+        env:
+          GH_REP: ${{github.ref}}
+        run: yarn integration-test
+      - uses: actions/upload-artifact@v2
+        if: always()
+        with:
+          name: my-artifact
+          path: ./allure-results
+
