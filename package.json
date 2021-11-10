@@ -29,7 +29,6 @@
     "add": "^2.0.6",
     "axios": "^0.21.2",
     "allure-playwright": "^2.0.0-beta.14",
-    "babel-loader": "^8.1.0",
     "classnames": "^2.2.6",
     "country-json": "^1.1.0",
     "currency-symbol-map": "5.0.1",
@@ -126,8 +125,7 @@
     "react-test-renderer": "^16.13.1"
   },
   "resolutions": {
-    "babel-loader": "8.1.0",
-    "react-scripts/eslint-webpack-plugin": "2.3.0"
+    "babel-loader": "8.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
