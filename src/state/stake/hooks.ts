@@ -455,13 +455,15 @@ export function useStakeFor(period?: PERIOD) {
         dispatch(stake.pending())
         switch (period) {
           case PERIOD.ONE_WEEK: {
-            const estimatedGas = await staking?.estimateGas.stakeForWeek(account, stakeAmount, noData)
+            // const estimatedGas = await staking?.estimateGas.stakeForWeek(account, stakeAmount, noData)
+            const estimatedGas = 900000
+
             if (!estimatedGas) {
               dispatch(stake.rejected({ errorMessage: 'cannot estimate gas' }))
               break
             }
             const stakeTx = await staking?.stakeForWeek(account, stakeAmount, noData, {
-              gasLimit: calculateGasMargin(estimatedGas),
+              gasLimit: estimatedGas,
             })
             const tx = await stakeTx.wait()
             dispatch(stake.fulfilled({ txStatus: tx.status }))
@@ -472,13 +474,15 @@ export function useStakeFor(period?: PERIOD) {
             break
           }
           case PERIOD.ONE_MONTH: {
-            const estimatedGas = await staking?.estimateGas.stakeForMonth(account, stakeAmount, noData)
+            // const estimatedGas = await staking?.estimateGas.stakeForMonth(account, stakeAmount, noData)
+            const estimatedGas = 900000
+
             if (!estimatedGas) {
               dispatch(stake.rejected({ errorMessage: 'cannot estimate gas' }))
               break
             }
             const stakeTx = await staking?.stakeForMonth(account, stakeAmount, noData, {
-              gasLimit: calculateGasMargin(estimatedGas),
+              gasLimit: estimatedGas,
             })
             const tx = await stakeTx.wait()
             dispatch(stake.fulfilled({ txStatus: tx.status }))
@@ -489,13 +493,14 @@ export function useStakeFor(period?: PERIOD) {
             break
           }
           case PERIOD.TWO_MONTHS: {
-            const estimatedGas = await staking?.estimateGas.stakeForTwoMonths(account, stakeAmount, noData)
+            // const estimatedGas = await staking?.estimateGas.stakeForTwoMonths(account, stakeAmount, noData)
+            const estimatedGas = 9000000
             if (!estimatedGas) {
               dispatch(stake.rejected({ errorMessage: 'cannot estimate gas' }))
               break
             }
             const stakeTx = await staking?.stakeForTwoMonths(account, stakeAmount, noData, {
-              gasLimit: calculateGasMargin(estimatedGas),
+              gasLimit: 900000,
             })
             const tx = await stakeTx.wait()
             dispatch(stake.fulfilled({ txStatus: tx.status }))
@@ -506,14 +511,16 @@ export function useStakeFor(period?: PERIOD) {
             break
           }
           case PERIOD.THREE_MONTHS: {
-            const estimatedGas = await staking?.estimateGas.stakeForThreeMonths(account, stakeAmount, noData)
+            // const estimatedGas = await staking?.estimateGas.stakeForThreeMonths(account, stakeAmount, noData)
+            const estimatedGas = 900000
+
             if (!estimatedGas) {
               dispatch(stake.rejected({ errorMessage: 'cannot estimate gas' }))
               updateIXSBalance()
               break
             }
             const stakeTx = await staking?.stakeForThreeMonths(account, stakeAmount, noData, {
-              gasLimit: calculateGasMargin(estimatedGas),
+              gasLimit: estimatedGas,
             })
             const tx = await stakeTx.wait()
             dispatch(stake.fulfilled({ txStatus: tx.status }))
