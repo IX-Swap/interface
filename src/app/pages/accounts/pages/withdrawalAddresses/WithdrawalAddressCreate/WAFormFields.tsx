@@ -1,18 +1,50 @@
 import React from 'react'
-import { Grid, Input } from '@material-ui/core'
+import { Grid } from '@material-ui/core'
 import { useFormContext } from 'react-hook-form'
-import { WithdrawalAddressFormValues } from 'types/withdrawalAddress'
+import {
+  BlockchainAddressVariant,
+  WithdrawalAddressFormValues
+} from 'types/withdrawalAddress'
 import { TypedField } from 'components/form/TypedField'
-import { BigCheckboxWithLabel } from 'components/form/BigCheckboxWithLabel'
-import { privateClassNames } from 'helpers/classnames'
 import { NetworkSelect } from 'components/form/NetworkSelect'
-import { booleanValueExtractor } from 'helpers/forms'
+import { Radios } from 'components/form/Radios'
+import { CreateWalletFields } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/CreateWalletFields'
+import { ConnectWalletFields } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/ConnectWalletFields'
+
+const radios: Array<{ label: string; value: BlockchainAddressVariant }> = [
+  {
+    label: 'Connect to Wallet',
+    value: 'connect'
+  },
+  {
+    label: 'Input Withdrawal Address',
+    value: 'create'
+  }
+]
 
 export const WAFormFields = () => {
-  const { control } = useFormContext<WithdrawalAddressFormValues>()
+  const { control, watch } = useFormContext<WithdrawalAddressFormValues>()
+  const variant = watch('variant')
+  const isCreateWallet = variant === 'create'
+  const isConnectWallet = variant === 'connect'
 
   return (
-    <React.Fragment>
+    <>
+      <Grid item>
+        <TypedField
+          customRenderer
+          control={control}
+          component={Radios}
+          name='variant'
+          label='Wallet Type'
+          items={radios}
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between'
+          }}
+        />
+      </Grid>
+
       <Grid item>
         <TypedField
           control={control}
@@ -22,46 +54,8 @@ export const WAFormFields = () => {
         />
       </Grid>
 
-      <Grid item>
-        <TypedField
-          className={privateClassNames()}
-          control={control}
-          component={Input}
-          name='label'
-          label='Address Label'
-        />
-      </Grid>
-
-      <Grid item>
-        <TypedField
-          className={privateClassNames()}
-          control={control}
-          component={Input}
-          name='memo'
-          label='Memo'
-        />
-      </Grid>
-
-      <Grid item>
-        <TypedField
-          className={privateClassNames()}
-          component={Input}
-          control={control}
-          name='address'
-          label='Withdrawal Address'
-        />
-      </Grid>
-
-      <Grid item>
-        <TypedField
-          customRenderer
-          valueExtractor={booleanValueExtractor}
-          component={BigCheckboxWithLabel}
-          control={control}
-          name='agree'
-          label='I understand and agree that InvestaX will check this address against fradulent activities.'
-        />
-      </Grid>
-    </React.Fragment>
+      {isCreateWallet && <CreateWalletFields />}
+      {isConnectWallet && <ConnectWalletFields />}
+    </>
   )
 }

@@ -1,10 +1,16 @@
 import * as yup from 'yup'
-import { WithdrawalAddressFormValues } from 'types/withdrawalAddress'
+import {
+  BlockchainAddressVariant,
+  WithdrawalAddressFormValues
+} from 'types/withdrawalAddress'
+import { BlockchainWallet } from 'components/form/WalletSelect'
 
 export const waFormValidationSchema = yup
   .object()
   .shape<WithdrawalAddressFormValues>({
+    variant: yup.string<BlockchainAddressVariant>().required('Required'),
     network: yup.string().required('Required'),
+    wallet: yup.string<BlockchainWallet>(),
     memo: yup.string(),
     label: yup.string().required('Required'),
     address: yup.string().required('Required'),
