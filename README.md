@@ -11,6 +11,18 @@
 - Linkedin: [IX Swap](https://www.linkedin.com/company/ixswap)
 - Mediun: [IX Swap](https://ixswap.medium.com/)
 
+# Development
+Environment: Machine on Linux or MacOS
+Dependencies: 
+  1. yarn - at least v 1.22.
+  2. npm - at least v 7.15.1
+  3. node - at least v 14.17.0
+Steps:
+1. Make sure your npm account is added to our [https://www.npmjs.com/settings/ixswap1/members](npm organization)
+2. run npm login. You need this to be able to install ixswap packages
+3. run `git clone git@github.com:IX-Swap/interface.git`
+4. run `yarn build`
+5. run `yarn start`
 ## Accessing IXswap
 
 The IXswap App supports swapping, adding liquidity, removing liquidity.
