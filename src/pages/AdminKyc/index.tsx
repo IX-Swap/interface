@@ -3,37 +3,26 @@ import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
 
-import { useAdminState, useGetMe } from 'state/admin/hooks'
-import { AdminKycTable } from 'components/AdminKycTable'
-import { AdminTransactionsTable } from 'components/AdminTransactionsTable'
+import { useAdminState } from 'state/admin/hooks'
+
+import { AdminKycTable } from '../../components/AdminKycTable'
+import { AdminTransactionsTable } from '../../components/AdminTransactionsTable'
 import { Navbar } from './Navbar'
 import { Search } from './Search'
 import { AutoColumn, ColumnCenter } from 'components/Column'
 import { CustodianToggleWrapper } from 'pages/Custodian/styleds'
 import { Border, ToggleOption } from 'components/Tabs'
-import { AdminTransactionsTableSearch } from 'components/AdminTransactionsTable/Search'
 
-export const AdminKyc = () => {
+const AdminKyc = () => {
   const [showKYC, setShowKYC] = useState(true)
   const history = useHistory()
-  const { adminData, adminError, adminLoading } = useAdminState()
-  const getMe = useGetMe()
+  const { adminData, adminError } = useAdminState()
 
   useEffect(() => {
-    if (adminData && adminData?.role === 'admin') {
-      history.push('/admin-kyc')
-    } else if (Boolean(!adminData && adminError && !adminLoading) || (adminData && adminData?.role !== 'admin')) {
-      history.push('/swap')
+    if ((!adminData && adminError) || adminData?.role !== 'admin') {
+      history.push('/admin-login')
     }
-  }, [history, adminData, adminLoading, adminError])
-
-  useEffect(() => {
-    const fetchMe = async () => {
-      await getMe()
-    }
-
-    fetchMe()
-  }, [getMe])
+  }, [adminError, history, adminData])
 
   return (
     <Container>
@@ -61,10 +50,7 @@ export const AdminKyc = () => {
               <AdminKycTable />
             </>
           ) : (
-            <>
-              <AdminTransactionsTableSearch />
-              <AdminTransactionsTable />
-            </>
+            <AdminTransactionsTable />
           )}
         </Body>
       )}
@@ -84,3 +70,5 @@ const Body = styled.div`
   margin: 0 auto;
   width: 100%;
 `
+
+export default AdminKyc

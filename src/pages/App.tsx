@@ -7,9 +7,16 @@ import {
   TGE_CHAINS_WITH_STAKING,
   TGE_CHAINS_WITH_SWAP,
 } from 'constants/addresses'
+const AdminKyc = lazy(() => import('./AdminKyc'))
+const AdminLoginPage = lazy(() => import('./AdminLogin'))
+const Custodian = lazy(() => import('./Custodian'))
+const RemoveLiquidity = lazy(() => import('./RemoveLiquidity'))
+const SecTokenDetails = lazy(() => import('./SecTokenDetails'))
+const Swap = lazy(() => import('./Swap'))
+const PoolV2 = lazy(() => import('./Pool/v2'))
 import ApeModeQueryParamReader from 'hooks/useApeModeQueryParamReader'
 import { useActiveWeb3React } from 'hooks/web3'
-import React, { useMemo } from 'react'
+import React, { useMemo, lazy, Suspense } from 'react'
 import { Route, Switch, useLocation } from 'react-router-dom'
 import { useAccount } from 'state/user/hooks'
 import styled from 'styled-components/macro'
@@ -24,16 +31,10 @@ import { ApplicationModal } from '../state/application/actions'
 import { useModalOpen } from '../state/application/hooks'
 import DarkModeQueryParamReader from '../theme/DarkModeQueryParamReader'
 import { RedirectDuplicateTokenIdsV2 } from './AddLiquidityV2/redirects'
-import { AdminKyc } from './AdminKyc'
-import Custodian from './Custodian'
 import { StakingTab } from './Farming/StakingTab'
 import { VestingTab } from './Farming/VestingTab'
-import PoolV2 from './Pool/v2'
 import PoolFinder from './PoolFinder'
-import RemoveLiquidity from './RemoveLiquidity'
-import SecTokenDetails from './SecTokenDetails'
-import Swap from './Swap'
-import { RedirectPathToStaking, RedirectPathToSwapOnly, RedirectToSwap } from './Swap/redirects'
+import { RedirectPathToSwapOnly, RedirectPathToStaking, RedirectToSwap } from './Swap/redirects'
 
 const AppWrapper = styled.div`
   display: flex;
@@ -95,45 +96,50 @@ export default function App() {
         <ToggleableBody isVisible={visibleBody} {...(isAdminKyc && { style: { marginTop: 26 } })}>
           <IXSBalanceModal />
           <Web3ReactManager>
-            <Switch>
-              <Route exact strict path="/admin-kyc" component={AdminKyc} />
+            <Suspense fallback={<></>}>
+              <Switch>
+                <Route exact strict path="/admin-kyc" component={AdminKyc} />
+                <Route exact strict path="/admin-login" component={AdminLoginPage} />
 
-              {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
-                <Route exact strict path="/send" component={RedirectPathToSwapOnly} />
-              )}
-              {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
-                <Route exact strict path="/swap/:outputCurrency" component={RedirectToSwap} />
-              )}
-              {chainId && !MATIC_TGE_CHAINS.includes(chainId) && <Route exact strict path="/swap" component={Swap} />}
-              {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
-                <Route exact strict path="/find" component={PoolFinder} />
-              )}
-              {chainId && !MATIC_TGE_CHAINS.includes(chainId) && <Route exact strict path="/pool" component={PoolV2} />}
+                {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
+                  <Route exact strict path="/send" component={RedirectPathToSwapOnly} />
+                )}
+                {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
+                  <Route exact strict path="/swap/:outputCurrency" component={RedirectToSwap} />
+                )}
+                {chainId && !MATIC_TGE_CHAINS.includes(chainId) && <Route exact strict path="/swap" component={Swap} />}
+                {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
+                  <Route exact strict path="/find" component={PoolFinder} />
+                )}
+                {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
+                  <Route exact strict path="/pool" component={PoolV2} />
+                )}
 
-              {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
-                <Route exact strict path="/add/:currencyIdA?/:currencyIdB?" component={RedirectDuplicateTokenIdsV2} />
-              )}
+                {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
+                  <Route exact strict path="/add/:currencyIdA?/:currencyIdB?" component={RedirectDuplicateTokenIdsV2} />
+                )}
 
-              {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
-                <Route exact strict path="/remove/:currencyIdA/:currencyIdB" component={RemoveLiquidity} />
-              )}
+                {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
+                  <Route exact strict path="/remove/:currencyIdA/:currencyIdB" component={RemoveLiquidity} />
+                )}
 
-              {SECURITY_TOKENS && (
-                <Route exact strict path="/security-tokens/:currencyId" component={SecTokenDetails} />
-              )}
-              {SECURITY_TOKENS && <Route exact strict path={routes.securityTokens()} component={Custodian} />}
+                {SECURITY_TOKENS && (
+                  <Route exact strict path="/security-tokens/:currencyId" component={SecTokenDetails} />
+                )}
+                {SECURITY_TOKENS && <Route exact strict path={routes.securityTokens()} component={Custodian} />}
 
-              {chainId && TGE_CHAINS_WITH_STAKING.includes(chainId) && (
-                <Route exact strict path={routes.staking} component={StakingTab} />
-              )}
-              <Route exact strict path={routes.vesting} component={VestingTab} />
+                {chainId && TGE_CHAINS_WITH_STAKING.includes(chainId) && (
+                  <Route exact strict path={routes.staking} component={StakingTab} />
+                )}
+                <Route exact strict path={routes.vesting} component={VestingTab} />
 
-              {chainId && TGE_CHAINS_WITH_SWAP.includes(chainId) && <Route component={RedirectPathToSwapOnly} />}
-              {chainId &&
-                [SUPPORTED_TGE_CHAINS.MAIN, SUPPORTED_TGE_CHAINS.MUMBAI, SUPPORTED_TGE_CHAINS.MATIC].includes(
-                  chainId
-                ) && <Route component={RedirectPathToStaking} />}
-            </Switch>
+                {chainId && TGE_CHAINS_WITH_SWAP.includes(chainId) && <Route component={RedirectPathToSwapOnly} />}
+                {chainId &&
+                  [SUPPORTED_TGE_CHAINS.MAIN, SUPPORTED_TGE_CHAINS.MUMBAI, SUPPORTED_TGE_CHAINS.MATIC].includes(
+                    chainId
+                  ) && <Route component={RedirectPathToStaking} />}
+              </Switch>
+            </Suspense>
           </Web3ReactManager>
           <Marginer />
         </ToggleableBody>
