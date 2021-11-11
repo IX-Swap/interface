@@ -79,24 +79,27 @@ export function useUnstakeFrom(period?: PeriodsEnum) {
         dispatch(unstake.pending())
         switch (period) {
           case PeriodsEnum.WEEK: {
-            const estimatedGas = await contract?.estimateGas.unstakeFromWeek(stakeIndex, noData)
+            // const estimatedGas = await contract?.estimateGas.unstakeFromWeek(stakeIndex, noData)
+            const estimatedGas = 900000
+
             if (!estimatedGas) {
               dispatch(unstake.rejected({ errorMessage: 'cannot estimate gas' }))
               break
             }
             unstakeTx = await contract?.unstakeFromWeek(stakeIndex, noData, {
-              gasLimit: calculateGasMargin(estimatedGas),
+              gasLimit: estimatedGas,
             })
             break
           }
           case PeriodsEnum.MONTH: {
-            const estimatedGas = await contract?.estimateGas.unstakeFromMonth(stakeIndex, noData)
+            // const estimatedGas = await contract?.estimateGas.unstakeFromMonth(stakeIndex, noData)
+            const estimatedGas = 900000
             if (!estimatedGas) {
               dispatch(unstake.rejected({ errorMessage: 'cannot estimate gas' }))
               break
             }
             unstakeTx = await contract?.unstakeFromMonth(stakeIndex, noData, {
-              gasLimit: calculateGasMargin(estimatedGas),
+              gasLimit: estimatedGas,
             })
             break
           }
@@ -106,13 +109,14 @@ export function useUnstakeFrom(period?: PeriodsEnum) {
               return
             }
             const stakeAmount = utils.parseUnits(amount.toString(), 'ether')
-            const estimatedGas = await contract?.estimateGas.unstakeFromTwoMonths(stakeAmount, stakeIndex, noData)
+            // const estimatedGas = await contract?.estimateGas.unstakeFromTwoMonths(stakeAmount, stakeIndex, noData)
+            const estimatedGas = 900000
             if (!estimatedGas) {
               dispatch(unstake.rejected({ errorMessage: 'cannot estimate gas' }))
               return
             }
             unstakeTx = await contract?.unstakeFromTwoMonths(stakeAmount, stakeIndex, noData, {
-              gasLimit: calculateGasMargin(estimatedGas),
+              gasLimit: 900000,
             })
             break
           }
@@ -122,13 +126,15 @@ export function useUnstakeFrom(period?: PeriodsEnum) {
               return
             }
             const stakeAmount = utils.parseUnits(amount.toString(), 'ether')
-            const estimatedGas = await contract?.estimateGas.unstakeFromThreeMonths(stakeAmount, stakeIndex, noData)
+            const estimatedGas = 900000
+
+            // const estimatedGas = await contract?.estimateGas.unstakeFromThreeMonths(stakeAmount, stakeIndex, noData)
             if (!estimatedGas) {
               dispatch(unstake.rejected({ errorMessage: 'cannot estimate gas' }))
               return
             }
             unstakeTx = await contract?.unstakeFromThreeMonths(stakeAmount, stakeIndex, noData, {
-              gasLimit: calculateGasMargin(estimatedGas),
+              gasLimit: 900000,
             })
             break
           }
