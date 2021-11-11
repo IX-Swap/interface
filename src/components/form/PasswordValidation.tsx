@@ -56,7 +56,7 @@ export const PasswordValidation = () => {
         <Grid item>
           <PasswordValidationItem
             label={error.label}
-            invalid={passwordErrors?.types?.hasOwnProperty(error.type)}
+            invalid={passwordErrors?.types?.[error.type]}
           />
         </Grid>
       ))}

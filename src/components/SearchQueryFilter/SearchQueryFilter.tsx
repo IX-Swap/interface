@@ -31,12 +31,8 @@ export const SearchQueryFilter = <TName extends QueryFilter>(
 ) => {
   const { children, name, defaultValue, groupFilter = false } = props
 
-  const {
-    getFilterValue,
-    getHasValue,
-    updateFilter,
-    removeFilter
-  } = useQueryFilter()
+  const { getFilterValue, getHasValue, updateFilter, removeFilter } =
+    useQueryFilter()
 
   const groupFilterState = useContext(SearchQueryFilterGroupStateContext)
   const groupFilterDispatch = useContext(SearchQueryFilterGroupDispatchContext)

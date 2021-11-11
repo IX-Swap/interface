@@ -1,14 +1,18 @@
 name: SonarCloud
 on:
   pull_request:
-    branches: [develop, staging, release]
+    branches:
+      - develop
+      - staging
+      - release
+      - CU-*
     types: [opened, synchronize, reopened]
 jobs:
   sonarcloud:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [14.x]
+        node-version: [16.x]
     steps:
       - uses: actions/checkout@v2
         with:

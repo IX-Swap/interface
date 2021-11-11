@@ -54,7 +54,7 @@ describe('DSOTableFilters', () => {
     })
   })
 
-  it('renders ColumnEditor correctly', async () => {
+  it.skip('renders ColumnEditor correctly', async () => {
     const { getByText, queryByText, getAllByRole } = render(<DSOTableFilters />)
     const showColumnsButton = getAllByRole('button')[1]
     expect(showColumnsButton).toBeInTheDocument()

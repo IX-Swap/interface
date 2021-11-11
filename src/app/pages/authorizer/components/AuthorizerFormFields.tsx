@@ -49,7 +49,7 @@ export const AuthorizerFormFields = (props: AuthorizerFormFieldsProps) => {
         multiline
       />
       <VSpacer size='small' />
-      {/* @ts-ignore */}
+
       <TypedField
         customRenderer
         valueExtractor={booleanValueExtractor}

@@ -42,7 +42,6 @@ export const UploadDocumentField = ({
         {helperElement !== undefined ? <Box>{helperElement}</Box> : null}
       </Grid>
       <Grid item>
-        {/* @ts-ignore */}
         <TypedField
           key={fieldId}
           control={control}

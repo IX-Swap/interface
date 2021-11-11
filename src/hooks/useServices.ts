@@ -22,11 +22,9 @@ const services = {
   snackbarService: null
 }
 
-export const {
-  useStore: useServices,
-  Provider: ServicesProvider
-} = generateStoreHookAndProvider<AppServices>(services as any, context => {
-  if (!isTestENV) {
-    context.snackbarService = useSnackbar()
-  }
-})
+export const { useStore: useServices, Provider: ServicesProvider } =
+  generateStoreHookAndProvider<AppServices>(services as any, context => {
+    if (!isTestENV) {
+      context.snackbarService = useSnackbar()
+    }
+  })

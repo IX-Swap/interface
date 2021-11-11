@@ -8,8 +8,7 @@ export const setupSentry = () => {
     Sentry.init({
       release: `ix-web-app@${APP_VERSION}`,
       environment: ENVIRONMENT,
-      dsn:
-        'https://4afbf02fe87d483fa71d4c895010ac76@o461614.ingest.sentry.io/5463633',
+      dsn: 'https://4afbf02fe87d483fa71d4c895010ac76@o461614.ingest.sentry.io/5463633',
       integrations: [
         new Integrations.BrowserTracing({
           routingInstrumentation: Sentry.reactRouterV5Instrumentation(history)

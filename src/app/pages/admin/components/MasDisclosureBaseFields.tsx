@@ -25,7 +25,7 @@ export const MasDisclosureBaseFields = () => {
       <Grid item xs={12} style={{ width: '100%' }}>
         <Card variant='outlined' style={{ height: 487, width: '100%' }}>
           <CardContent style={{ width: '100%' }}>
-            {/* @ts-ignore */}
+            {/* @ts-expect-error */}
             <TypedField
               control={control}
               component={RichTextEditor}

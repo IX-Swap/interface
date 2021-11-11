@@ -76,9 +76,8 @@ export const useDataFromURL = () => {
 
         case 'withdrawal-addresses': {
           const [withdrawalAddressId, action] = params
-          state[
-            stripColonFromURLParam(urlParams.withdrawalAddressId)
-          ] = withdrawalAddressId
+          state[stripColonFromURLParam(urlParams.withdrawalAddressId)] =
+            withdrawalAddressId
           break
         }
 

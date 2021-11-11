@@ -32,6 +32,7 @@ export class DataPulseProvider {
     }
   }
 
+  // eslint-disable-next-line accessor-pairs
   public set requestsPending(requestCount: number) {
     this._requestsPending = requestCount
   }

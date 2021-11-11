@@ -26,19 +26,12 @@ import { usePaymentMethod } from 'app/pages/accounts/pages/banks/hooks/usePaymen
 import { VSpacer } from 'components/VSpacer'
 
 export const Setup: React.FC = () => {
-  const {
-    watch,
-    control,
-    formState,
-    reset,
-    getValues
-  } = useFormContext<WithdrawCashFormValues>()
+  const { watch, control, formState, reset, getValues } =
+    useFormContext<WithdrawCashFormValues>()
   const bankId = watch('bankAccountId')
   const virtualAccountId = watch('virtualAccount')
-  const {
-    data: virtualAccountData,
-    isLoading: virtualAccountLoading
-  } = useVirtualAccount(virtualAccountId)
+  const { data: virtualAccountData, isLoading: virtualAccountLoading } =
+    useVirtualAccount(virtualAccountId)
 
   const { data: bankData, isLoading: bankLoading } = useBanksData()
 

@@ -26,7 +26,6 @@ export const InformationFields = () => {
       <FormSectionHeader title='Corporate Information' />
       <Grid container direction={'row'} alignItems={'flex-start'}>
         <Grid item style={{ paddingRight: 24 }}>
-          {/* @ts-ignore */}
           <TypedField
             customRenderer
             control={control}

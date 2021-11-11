@@ -12,7 +12,12 @@ import { CorporateAvatar } from 'components/CorporateAvatar'
 import { useTheme } from '@material-ui/core/styles'
 
 export interface TopListProps {
-  items: Array<{ imageURL?: string; user?: string; label: string; _id: string }>
+  items: Array<{
+    imageURL?: string
+    user?: string
+    label: string
+    _id: string
+  }>
 }
 
 export const TopList = (props: TopListProps) => {

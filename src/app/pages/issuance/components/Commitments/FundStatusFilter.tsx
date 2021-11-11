@@ -8,10 +8,6 @@ export const FundStatusFilter = () => {
   const value = getFilterValue('fundStatus')
 
   const handleChange = (event: ChangeEvent<{ value: string }>) => {
-    const {
-      target: { value }
-    } = event
-
     updateFilter('fundStatus', event.target.value)
   }
 

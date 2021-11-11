@@ -6,7 +6,7 @@ import { BankForm } from 'app/pages/accounts/pages/banks/components/BankForm'
 
 jest.mock('app/pages/accounts/pages/banks/hooks/useCreateBank')
 
-const useCreateBankMock = (useCreateBank as unknown) as jest.Mock<
+const useCreateBankMock = useCreateBank as unknown as jest.Mock<
   Partial<ReturnType<typeof useCreateBank>>
 >
 

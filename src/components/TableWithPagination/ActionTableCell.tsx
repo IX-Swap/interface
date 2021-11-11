@@ -1,11 +1,11 @@
 import React from 'react'
 import { TableCell } from '@material-ui/core'
-import { Actions } from 'app/pages/authorizer/components/Actions'
+import { ActionsType } from 'app/pages/authorizer/components/Actions'
 
 export interface ActionTableCellProps<T> {
   row: T
   cacheQueryKey: any
-  actions: Actions<T> | undefined
+  actions: ActionsType<T> | undefined
 }
 
 export const ActionTableCell = <T,>({

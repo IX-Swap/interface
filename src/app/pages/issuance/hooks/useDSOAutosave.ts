@@ -50,44 +50,40 @@ export const useDSOAutosave = (
     }
   )
 
-  const [
-    createDSODraft,
-    { isLoading: isCreating, isError: isCreatingError }
-  ] = useMutation(
-    async (payload: DSORequestArgs) => {
-      return await apiService.post<DigitalSecurityOffering>(
-        issuanceURL.dso.create(userId),
-        payload
-      )
-    },
-    {
-      onSuccess: data => {
-        replace(
-          generatePath(IssuanceRoute.edit, {
-            dsoId: data.data._id,
-            issuerId: data.data.user
-          })
+  const [createDSODraft, { isLoading: isCreating, isError: isCreatingError }] =
+    useMutation(
+      async (payload: DSORequestArgs) => {
+        return await apiService.post<DigitalSecurityOffering>(
+          issuanceURL.dso.create(userId),
+          payload
         )
+      },
+      {
+        onSuccess: data => {
+          replace(
+            generatePath(IssuanceRoute.edit, {
+              dsoId: data.data._id,
+              issuerId: data.data.user
+            })
+          )
+        }
       }
-    }
-  )
+    )
 
-  const [
-    updateDSODraft,
-    { isLoading: isUpdating, isError: isUpdatingError }
-  ] = useMutation(
-    async (payload: DSORequestArgs) => {
-      return await apiService.put(
-        issuanceURL.dso.update(issuerId, dsoId),
-        payload
-      )
-    },
-    {
-      onSuccess: () => {
-        void refetch()
+  const [updateDSODraft, { isLoading: isUpdating, isError: isUpdatingError }] =
+    useMutation(
+      async (payload: DSORequestArgs) => {
+        return await apiService.put(
+          issuanceURL.dso.update(issuerId, dsoId),
+          payload
+        )
+      },
+      {
+        onSuccess: () => {
+          void refetch()
+        }
       }
-    }
-  )
+    )
 
   const savedDSOFormValues = transformDSOToFormValues(dso)
   const wasSaved = dso !== undefined

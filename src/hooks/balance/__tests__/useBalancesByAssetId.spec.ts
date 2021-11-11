@@ -60,7 +60,7 @@ describe('useBalancesByAssetId', () => {
       const apiObj = { post }
 
       const { result } = renderHookWithServiceProvider(
-        () => useBalancesByAssetId((undefined as unknown) as string),
+        () => useBalancesByAssetId(undefined as unknown as string),
         { apiService: apiObj }
       )
 

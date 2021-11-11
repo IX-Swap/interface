@@ -7,10 +7,6 @@ export const PriceFilter = () => {
   const value = getFilterValue('isPriceAscending')
 
   const handleChange = (event: ChangeEvent<{ value: string }>) => {
-    const {
-      target: { value }
-    } = event
-
     updateFilter('isPriceAscending', event.target.value)
   }
 

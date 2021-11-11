@@ -29,7 +29,6 @@ export const CorporateAddressFields = () => {
           <AddressFields rootName='companyAddress' />
         </Grid>
         <Grid item>
-          {/* @ts-ignore */}
           <TypedField
             customRenderer
             component={Checkbox}

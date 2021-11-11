@@ -31,7 +31,6 @@ export const TinUnavailableFields = (props: TinUnavailableFieldsProps) => {
   return (
     <Grid container direction='column' spacing={2}>
       <Grid item>
-        {/* @ts-ignore */}
         <TypedField
           customRenderer
           component={Checkbox}

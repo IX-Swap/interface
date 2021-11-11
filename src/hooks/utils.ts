@@ -5,6 +5,7 @@ export const convertPaginatedResultToFlatArray = <DataType = any>(
   pages: Array<AxiosResponse<PaginatedData<DataType>>>
 ): DataType[] => {
   return pages
+    .filter(page => page !== undefined)
     .map(page =>
       page.data.reduce<DataType[]>((acc, cur) => [...acc, ...cur.documents], [])
     )
@@ -18,7 +19,7 @@ export const convertDataArrayToMap = <T>(
   return data.reduce<any>(
     (acc, cur) => ({
       ...acc,
-      [(cur[key] as unknown) as string]: cur
+      [cur[key] as unknown as string]: cur
     }),
     {}
   )

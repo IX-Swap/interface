@@ -35,7 +35,6 @@ export const abbreviateNumber = (
 
   const defaultFormatter = new Intl.NumberFormat('en-US', {
     maximumFractionDigits: 1,
-    // @ts-expect-error
     notation: 'compact',
     compactDisplay: 'short'
   })

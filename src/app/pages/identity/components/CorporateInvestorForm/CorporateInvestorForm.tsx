@@ -24,10 +24,8 @@ export const CorporateInvestorForm = ({ data }: CorporateInvestorFormProps) => {
   const updateMutation = useUpdateCorporate('investor')
   const submitMutation = useSubmitCorporate(openDialog)
   const { showPreIdentityCreateDialog } = useOnboardingDialog()
-  const {
-    isInvestorJourneyCompleted,
-    investorIdentities
-  } = useOnboardingJourneys()
+  const { isInvestorJourneyCompleted, investorIdentities } =
+    useOnboardingJourneys()
   const { location, replace } = useHistory()
 
   useEffect(() => {

@@ -54,8 +54,7 @@ export const closure: Closure = {
                 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
               createdAt: '2021-03-13T15:49:40.646Z',
               updatedAt: '2021-03-13T15:49:40.646Z',
-              url:
-                'https://http://localhost:3000/dataroom/raw/604cdf1480258b39a94f7879'
+              url: 'https://http://localhost:3000/dataroom/raw/604cdf1480258b39a94f7879'
             }
           ]
         }
@@ -84,8 +83,7 @@ export const closure: Closure = {
                 '8a6d06293cc79bd96bfb28b128668e2e4c7f74080a9c729b028a6119ff47f686',
               createdAt: '2021-03-13T15:50:30.953Z',
               updatedAt: '2021-03-13T15:50:30.953Z',
-              url:
-                'https://http://localhost:3000/dataroom/raw/604cdf4680258b39a94f787b'
+              url: 'https://http://localhost:3000/dataroom/raw/604cdf4680258b39a94f787b'
             },
             {
               _id: '604cdf4a80258b39a94f787c',
@@ -96,8 +94,7 @@ export const closure: Closure = {
                 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
               createdAt: '2021-03-13T15:50:34.373Z',
               updatedAt: '2021-03-13T15:50:34.373Z',
-              url:
-                'https://http://localhost:3000/dataroom/raw/604cdf4a80258b39a94f787c'
+              url: 'https://http://localhost:3000/dataroom/raw/604cdf4a80258b39a94f787c'
             }
           ]
         }
@@ -116,8 +113,7 @@ export const closure: Closure = {
                 '8a6d06293cc79bd96bfb28b128668e2e4c7f74080a9c729b028a6119ff47f686',
               createdAt: '2021-03-13T15:50:40.289Z',
               updatedAt: '2021-03-13T15:50:40.289Z',
-              url:
-                'https://http://localhost:3000/dataroom/raw/604cdf5080258b39a94f787d'
+              url: 'https://http://localhost:3000/dataroom/raw/604cdf5080258b39a94f787d'
             },
             {
               _id: '604cdf5480258b39a94f787e',
@@ -128,8 +124,7 @@ export const closure: Closure = {
                 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855',
               createdAt: '2021-03-13T15:50:44.789Z',
               updatedAt: '2021-03-13T15:50:44.789Z',
-              url:
-                'https://http://localhost:3000/dataroom/raw/604cdf5480258b39a94f787e'
+              url: 'https://http://localhost:3000/dataroom/raw/604cdf5480258b39a94f787e'
             }
           ]
         }

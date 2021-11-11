@@ -20,7 +20,7 @@ export const getItemOwnerId = (user: string | User) => {
   return typeof user === 'string' ? user : user._id
 }
 
-export type Actions<T> = (props: ActionsProps<T>) => ReactElement
+export type ActionsType<T> = (props: ActionsProps<T>) => ReactElement
 
 export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
   const { item, cacheQueryKey } = props
