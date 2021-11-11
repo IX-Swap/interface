@@ -37,7 +37,6 @@ export function FullUnstake({ onDismiss, stake, onUnstake, onApprove }: Unstakin
   const IXSGovBalance = useCurrencyBalance(account ?? undefined, IXSGovCurrency ?? undefined)
   const { IXSGovAllowanceAmount, isApprovingIXSGov, isUnstaking } = useUnstakingState()
   const IXSCurrency = useIXSCurrency()
-  console.log({ IXSGovAllowanceAmount })
   useEffect(() => {
     if (!IXSGovBalance) {
       setError('Please wait...')
