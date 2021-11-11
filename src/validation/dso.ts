@@ -123,8 +123,14 @@ export const dsoFormBaseValidationSchema = {
     .ensure()
     .required('Required'),
   uniqueIdentifierCode: string()
-    .min(12, 'Unique Identifier Code must be at least 12 characters')
-    .max(32)
+    .matches(
+      /^(|.{12,})$/,
+      'Unique Identifier Code must be at least 12 characters'
+    )
+    .matches(
+      /^(|.{,32})$/,
+      'Unique Identifier Code must be at most 32 characters'
+    )
 }
 
 export const createDSOValidationSchema = object()
