@@ -12,10 +12,7 @@ import { BodyRow, HeaderRow, Table } from '../Table'
 import { Pagination } from 'components/AdminKycTable/Pagination'
 import useCopyClipboard from 'hooks/useCopyClipboard'
 import { BrokerDealerSwapItem } from 'state/admin/actions'
-import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
-import { useCurrencyBalance } from 'state/wallet/hooks'
 import { useCurrency } from 'hooks/Tokens'
-import { formatAmount } from 'pages/Farming/Staking/utils'
 import { Currency, CurrencyAmount } from '@ixswap1/sdk-core'
 
 interface RowProps {
