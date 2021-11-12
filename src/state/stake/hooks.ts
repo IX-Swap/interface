@@ -39,7 +39,7 @@ import {
   setTransactionInProgress,
   setTypedValue,
   stake,
-  updateIXSBalance
+  updateIXSBalance,
 } from './actions'
 import { claimsAdapter, payoutsAdapter, rewardsAdapter, stakingsAdapter } from './utils'
 
