@@ -43,7 +43,7 @@ const Row: FC<RowProps> = ({ item }: RowProps) => {
   const [copied, setCopied] = useCopyClipboard()
   const {
     id,
-    data: { amount, tokenAddress },
+    data: { amount, tokenAddress, pairSymbol },
     user: { ethAddress },
     brokerDealer: { name: broker },
     status,
@@ -68,7 +68,7 @@ const Row: FC<RowProps> = ({ item }: RowProps) => {
           </>
         )}
       </Wallet>
-      <div>{`ETH > ${token?.symbol}`}</div>
+      <div>{`${pairSymbol?.split('-')?.join(' > ') ?? token?.symbol}`}</div>
       <div>{`${CurrencyAmount.fromRawAmount(currency as Currency, amount).toFixed()} ${token?.symbol}`}</div>
       <div style={{ textTransform: 'capitalize' }}>{status}</div>
       <div>{status === 'approved' || status === 'created' ? 'OK' : 'NOT OK'}</div>
