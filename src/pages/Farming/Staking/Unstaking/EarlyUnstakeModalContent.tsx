@@ -30,12 +30,7 @@ interface UnstakingModalProps {
   onApprove: (amount?: string) => void
 }
 
-function formatAmount(amount: number): string {
-  return amount?.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 10 })
-}
-
 export function EarlyUnstake({ onDismiss, stake, onUnstake, onApprove }: UnstakingModalProps) {
-  const stakeAmount = formatAmount(stake?.stakeAmount)
   const [typedValue, setTypedValue] = useState('')
   const [isEnoughAllowance, setIsEnoughAllowance] = useState(false)
   const [error, setError] = useState('Enter an amount')
@@ -44,7 +39,7 @@ export function EarlyUnstake({ onDismiss, stake, onUnstake, onApprove }: Unstaki
   const currency = useIXSCurrency()
   const IXSGovCurrency = useCurrency(IXS_GOVERNANCE_ADDRESS[chainId ?? 1])
   const IXSGovBalance = useCurrencyBalance(account ?? undefined, IXSGovCurrency ?? undefined)
-  const stakeIXSCurrencyAmount = tryParseAmount(stakeAmount, currency)
+  const stakeIXSCurrencyAmount = tryParseAmount(String(stake?.stakeAmount), currency)
   const theme = useTheme()
   const { IXSGovAllowanceAmount, isApprovingIXSGov, isUnstaking } = useUnstakingState()
 
