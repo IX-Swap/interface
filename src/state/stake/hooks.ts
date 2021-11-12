@@ -17,6 +17,7 @@ import { AppDispatch, AppState } from 'state'
 import { PERIOD, StakingStatus } from 'state/stake/reducer'
 import { useTransactionAdder } from 'state/transactions/hooks'
 import { useCurrencyBalance } from 'state/wallet/hooks'
+import { calculateGasMargin } from 'utils/calculateGasMargin'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { maxAmountSpend } from 'utils/maxAmountSpend'
 import { DAI, IXS, USDC, USDT, WBTC } from '../../constants/tokens'
@@ -453,15 +454,15 @@ export function useStakeFor(period?: PERIOD) {
         dispatch(stake.pending())
         switch (period) {
           case PERIOD.ONE_WEEK: {
-            // const estimatedGas = await staking?.estimateGas.stakeForWeek(account, stakeAmount, noData)
-            const estimatedGas = 900000
+            const estimatedGas = await staking?.estimateGas.stakeForWeek(account, stakeAmount, noData)
+            // const estimatedGas = 900000
 
             if (!estimatedGas) {
               dispatch(stake.rejected({ errorMessage: 'cannot estimate gas' }))
               break
             }
             const stakeTx = await staking?.stakeForWeek(account, stakeAmount, noData, {
-              gasLimit: estimatedGas,
+              gasLimit: calculateGasMargin(estimatedGas),
             })
             const tx = await stakeTx.wait()
             dispatch(stake.fulfilled({ txStatus: tx.status }))
@@ -472,15 +473,15 @@ export function useStakeFor(period?: PERIOD) {
             break
           }
           case PERIOD.ONE_MONTH: {
-            // const estimatedGas = await staking?.estimateGas.stakeForMonth(account, stakeAmount, noData)
-            const estimatedGas = 900000
+            const estimatedGas = await staking?.estimateGas.stakeForMonth(account, stakeAmount, noData)
+            // const estimatedGas = 900000
 
             if (!estimatedGas) {
               dispatch(stake.rejected({ errorMessage: 'cannot estimate gas' }))
               break
             }
             const stakeTx = await staking?.stakeForMonth(account, stakeAmount, noData, {
-              gasLimit: estimatedGas,
+              gasLimit: calculateGasMargin(estimatedGas),
             })
             const tx = await stakeTx.wait()
             dispatch(stake.fulfilled({ txStatus: tx.status }))
@@ -491,14 +492,14 @@ export function useStakeFor(period?: PERIOD) {
             break
           }
           case PERIOD.TWO_MONTHS: {
-            // const estimatedGas = await staking?.estimateGas.stakeForTwoMonths(account, stakeAmount, noData)
-            const estimatedGas = 900000
+            const estimatedGas = await staking?.estimateGas.stakeForTwoMonths(account, stakeAmount, noData)
+            // const estimatedGas = 900000
             if (!estimatedGas) {
               dispatch(stake.rejected({ errorMessage: 'cannot estimate gas' }))
               break
             }
             const stakeTx = await staking?.stakeForTwoMonths(account, stakeAmount, noData, {
-              gasLimit: 900000,
+              gasLimit: calculateGasMargin(estimatedGas),
             })
             const tx = await stakeTx.wait()
             dispatch(stake.fulfilled({ txStatus: tx.status }))
@@ -509,8 +510,8 @@ export function useStakeFor(period?: PERIOD) {
             break
           }
           case PERIOD.THREE_MONTHS: {
-            // const estimatedGas = await staking?.estimateGas.stakeForThreeMonths(account, stakeAmount, noData)
-            const estimatedGas = 900000
+            const estimatedGas = await staking?.estimateGas.stakeForThreeMonths(account, stakeAmount, noData)
+            // const estimatedGas = 900000
 
             if (!estimatedGas) {
               dispatch(stake.rejected({ errorMessage: 'cannot estimate gas' }))
@@ -518,7 +519,7 @@ export function useStakeFor(period?: PERIOD) {
               break
             }
             const stakeTx = await staking?.stakeForThreeMonths(account, stakeAmount, noData, {
-              gasLimit: estimatedGas,
+              gasLimit: calculateGasMargin(estimatedGas),
             })
             const tx = await stakeTx.wait()
             dispatch(stake.fulfilled({ txStatus: tx.status }))
