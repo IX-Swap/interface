@@ -494,7 +494,7 @@ export function useStakeFor(period?: PERIOD) {
           }
           case PERIOD.TWO_MONTHS: {
             // const estimatedGas = await staking?.estimateGas.stakeForTwoMonths(account, stakeAmount, noData)
-            const estimatedGas = 9000000
+            const estimatedGas = 900000
             if (!estimatedGas) {
               dispatch(stake.rejected({ errorMessage: 'cannot estimate gas' }))
               break
