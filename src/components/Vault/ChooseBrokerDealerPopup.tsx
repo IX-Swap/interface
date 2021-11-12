@@ -1,19 +1,18 @@
-import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
+import { ReactComponent as Checkmark } from 'assets/images/checked-solid-bg.svg'
+import { ButtonIXSWide } from 'components/Button'
+import { LoaderThin } from 'components/Loader/LoaderThin'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
-import Row, { RowBetween, RowCenter } from 'components/Row'
+import Row, { RowBetween } from 'components/Row'
 import React, { useCallback, useEffect, useState } from 'react'
 import { ApplicationModal } from 'state/application/actions'
 import { useChooseBrokerDealerModalToggle, useModalOpen } from 'state/application/hooks'
+import { useBrokerDealersState, useFetchBrokerDealers } from 'state/brokerDealer/hooks'
+import { usePassAccreditation, useUserState } from 'state/user/hooks'
+import styled from 'styled-components'
 import { ModalBlurWrapper, ModalContentWrapper } from 'theme'
 import { CloseIcon, TYPE } from '../../theme'
 import { ModalPadding } from './styleds'
-import { ButtonIXSWide } from 'components/Button'
-import { useFetchBrokerDealers, useBrokerDealersState } from 'state/brokerDealer/hooks'
-import { ReactComponent as Checkmark } from 'assets/images/checked-solid-bg.svg'
-import { usePassAccreditation, useUserState } from 'state/user/hooks'
-import { LoaderThin } from 'components/Loader/LoaderThin'
-import attention from 'assets/images/attention.svg'
 
 export const ChooseBrokerDealerPopup = ({ tokenId, currencyId }: { tokenId: any; currencyId?: string }) => {
   const isOpen = useModalOpen(ApplicationModal.CHOOSE_BROKER_DEALER)
@@ -21,7 +20,7 @@ export const ChooseBrokerDealerPopup = ({ tokenId, currencyId }: { tokenId: any;
 
   const { brokersData: brokerDealerPairs, brokersLoading, brokersError } = useBrokerDealersState()
   const [selectedBrokerPair, setSelectedBrokerPair] = useState(0)
-  const { loadingAccreditation, accreditationError } = useUserState()
+  const { loadingAccreditation } = useUserState()
   const fetchBrokerDealerPairs = useFetchBrokerDealers()
   useEffect(() => {
     if (tokenId) {
@@ -110,15 +109,6 @@ export const ChooseBrokerDealerPopup = ({ tokenId, currencyId }: { tokenId: any;
                 </div>
               )}
             </Row>
-            {accreditationError && (
-              <RowCenter style={{ gap: '10px' }}>
-                <img src={attention} alt="error" width="20px" height="20px" />
-                <TYPE.error error>
-                  <Trans>{accreditationError ?? 'Error occured.'}</Trans>
-                  &nbsp;&nbsp;<Trans>Please try again.</Trans>
-                </TYPE.error>
-              </RowCenter>
-            )}
           </StartAccreditationButtonWrapper>
         </ModalContentWrapper>
       </ModalBlurWrapper>

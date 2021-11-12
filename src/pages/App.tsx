@@ -25,7 +25,6 @@ import { useModalOpen } from '../state/application/hooks'
 import DarkModeQueryParamReader from '../theme/DarkModeQueryParamReader'
 import { RedirectDuplicateTokenIdsV2 } from './AddLiquidityV2/redirects'
 import { AdminKyc } from './AdminKyc'
-import { AdminLoginPage } from './AdminLogin'
 import Custodian from './Custodian'
 import { StakingTab } from './Farming/StakingTab'
 import { VestingTab } from './Farming/VestingTab'
@@ -34,7 +33,7 @@ import PoolFinder from './PoolFinder'
 import RemoveLiquidity from './RemoveLiquidity'
 import SecTokenDetails from './SecTokenDetails'
 import Swap from './Swap'
-import { RedirectPathToSwapOnly, RedirectPathToStaking, RedirectToSwap, RedirectPathToVesting } from './Swap/redirects'
+import { RedirectPathToStaking, RedirectPathToSwapOnly, RedirectToSwap } from './Swap/redirects'
 
 const AppWrapper = styled.div`
   display: flex;
@@ -98,7 +97,6 @@ export default function App() {
           <Web3ReactManager>
             <Switch>
               <Route exact strict path="/admin-kyc" component={AdminKyc} />
-              <Route exact strict path="/admin-login" component={AdminLoginPage} />
 
               {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
                 <Route exact strict path="/send" component={RedirectPathToSwapOnly} />

@@ -1,9 +1,9 @@
+import { ToggleWrapper } from 'components/Tabs'
 import styled from 'styled-components/macro'
 import { gradientBorder } from 'theme'
 import { hexToRGBA } from 'utils/themeHelper'
-import Column, { AutoColumn } from '../Column'
+import { AutoColumn } from '../Column'
 import Row, { RowBetween, RowFixed } from '../Row'
-import { ToggleWrapper } from 'components/Tabs'
 
 export const ModalInfo = styled.div`
   ${({ theme }) => theme.flexRowNoWrap}

@@ -54,7 +54,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
   const checkAllowance = useCheckAllowance()
   const poolSizeState = usePoolSizeState()
   const period = selectedTier?.period || PERIOD.ONE_WEEK
-  const { chainId } = useActiveWeb3React()
+  const { chainId, account } = useActiveWeb3React()
   const currency = useIXSCurrency()
   const [poolLimitation, setPoolLimitation] = useState(calcPoolLimitation())
   const [isPoolLimitationLoading, setIsPoolLimitationLoading] = useState(poolSizeState[period] === POOL_SIZE_LOADING)
@@ -87,6 +87,10 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
       onUserInput()
     }
   }, [isOpen])
+
+  useEffect(() => {
+    checkAllowance()
+  }, [account, checkAllowance])
 
   const wrappedOnDismiss = useCallback(() => {
     if (!isStaking && !isApprovingIXS) {

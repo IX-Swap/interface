@@ -1,9 +1,12 @@
 import { t, Trans } from '@lingui/macro'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import dayjs from 'dayjs'
+import { Copy } from 'react-feather'
 import styled from 'styled-components'
-import React, { useEffect, FC } from 'react'
+import React, { FC, useEffect, useState, ChangeEvent } from 'react'
 
+import { Input as SearchInput } from 'pages/AdminKyc/Search'
+import { isAddress } from 'utils'
 import { IconWrapper } from 'components/AccountDetails/styleds'
 import { useAdminState, useFetchBrokerDealerSwaps } from 'state/admin/hooks'
 import { shortenAddress } from 'utils'
@@ -11,19 +14,21 @@ import { BodyRow, HeaderRow, Table } from '../Table'
 import { Pagination } from 'components/AdminKycTable/Pagination'
 import useCopyClipboard from 'hooks/useCopyClipboard'
 import { BrokerDealerSwapItem } from 'state/admin/actions'
-import { Copy } from 'react-feather'
+import { useCurrency } from 'hooks/Tokens'
+import { Currency, CurrencyAmount } from '@ixswap1/sdk-core'
 
 interface RowProps {
   item: BrokerDealerSwapItem
 }
 
-const StyledCopy = styled(Copy)`
+export const StyledCopy = styled(Copy)`
   margin-left: 8px;
   cursor: pointer;
   color: ${({ theme }) => theme.text1};
   width: 17px;
   height: 17px;
 `
+let timer = null as any
 
 const headerCells = [t`Date`, t`Name`, t`Trader's wallet`, t`Trading pair`, t`Amount`, t`Response`, t`Status`]
 
@@ -41,13 +46,14 @@ const Row: FC<RowProps> = ({ item }: RowProps) => {
   const [copied, setCopied] = useCopyClipboard()
   const {
     id,
-    data: { amount },
+    data: { amount, tokenAddress, pairSymbol },
     user: { ethAddress },
     brokerDealer: { name: broker },
     status,
     token,
     createdAt,
   } = item
+  const currency = useCurrency(tokenAddress)
 
   return (
     <StyledBodyRow key={`transaction-${id}`}>
@@ -65,8 +71,8 @@ const Row: FC<RowProps> = ({ item }: RowProps) => {
           </>
         )}
       </Wallet>
-      <div>{`ETH > ${token?.symbol}`}</div>
-      <div>{`${amount} ${token?.symbol}`}</div>
+      <div>{`${pairSymbol?.split('-')?.join(' > ') ?? token?.symbol}`}</div>
+      <div>{`${CurrencyAmount.fromRawAmount(currency as Currency, amount).toFixed()} ${token?.symbol}`}</div>
       <div style={{ textTransform: 'capitalize' }}>{status}</div>
       <div>{status === 'approved' || status === 'created' ? 'OK' : 'NOT OK'}</div>
     </StyledBodyRow>
@@ -92,15 +98,26 @@ export const AdminTransactionsTable = () => {
     brokerDealerSwaps: { items, page, totalPages, offset },
     adminLoading,
   } = useAdminState()
+  const [searchValue, setSearchValue] = useState('')
   const getBrokerDealerSwaps = useFetchBrokerDealerSwaps()
 
   const onPageChange = (page: number) => {
-    getBrokerDealerSwaps({ page, offset })
+    getBrokerDealerSwaps({ page, offset, search: isAddress(searchValue) || searchValue === '' ? searchValue : '' })
   }
 
   useEffect(() => {
     getBrokerDealerSwaps({ page: 1, offset })
   }, [getBrokerDealerSwaps, offset])
+
+  const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target
+    setSearchValue(value)
+
+    if (isAddress(value) || value === '') {
+      clearTimeout(timer)
+      timer = setTimeout(() => getBrokerDealerSwaps({ page: 1, offset, search: value }), 250)
+    }
+  }
 
   return (
     <>
@@ -115,6 +132,7 @@ export const AdminTransactionsTable = () => {
         </NoData>
       ) : (
         <Container>
+          <SearchInput value={searchValue} placeholder={t`Search for Wallet`} onChange={onSearchChange} />
           <Table body={<Body />} header={<Header />} />
           <Pagination page={page} totalPages={totalPages} onPageChange={onPageChange} />
         </Container>
@@ -156,11 +174,11 @@ const Container = styled.div`
 `
 
 const StyledHeaderRow = styled(HeaderRow)`
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: 1fr 1fr 1fr 1fr 2fr 1fr 1fr;
   min-width: 1270px;
 `
 
 const StyledBodyRow = styled(BodyRow)`
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: 1fr 1fr 1fr 1fr 2fr 1fr 1fr;
   min-width: 1270px;
 `

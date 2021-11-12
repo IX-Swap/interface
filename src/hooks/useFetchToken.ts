@@ -11,23 +11,22 @@ interface Hash {
 export const useFetchToken = () => {
   const { account, library } = useActiveWeb3React()
   const fetchToken = useCallback(async () => {
-    if (account) {
-      try {
-        const { data } = await apiService.post<Hash>(metamask.challenge, { address: account })
-        if (data.hash) {
-          const result = await sign({ hash: data.hash, account, library })
-          if (result) {
-            const loginData = await login({ hash: result, account })
-            if (loginData) {
-              return loginData.data
-            }
-          }
-        }
-      } catch (e) {
-        console.error({ ERROR: e })
-      }
+    if (!account) {
+      throw new Error("User didn't connect a wallet")
     }
-    return null
+    const { data } = await apiService.post<Hash>(metamask.challenge, { address: account })
+    if (!data.hash) {
+      throw new Error('No hash received')
+    }
+    const result = await sign({ hash: data.hash, account, library })
+    if (!result) {
+      throw new Error('Login sign failed')
+    }
+    const loginData = await login({ hash: result, account })
+    if (!loginData) {
+      throw new Error('No login data received')
+    }
+    return loginData.data
   }, [account, library])
   return { fetchToken }
 }

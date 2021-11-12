@@ -21,7 +21,9 @@ interface Props {
   disabled?: boolean
 }
 const PERCENTAGES = ['25', '50', '75', '100']
-
+function formatAmount(amount: number): string {
+  return amount?.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 10 })
+}
 export const StakingInputPercentage = ({
   fieldTitle,
   maxAvailable,
@@ -33,6 +35,7 @@ export const StakingInputPercentage = ({
   infoText,
   disabled,
 }: Props) => {
+  const formattedMaxAvailable = formatAmount(Number(maxAvailable?.toSignificant(5)))
   const onPercentageInput = useCallback(
     (percentage: string) => {
       const fraction = new Percent(JSBI.BigInt(percentage), JSBI.BigInt(100))
@@ -59,7 +62,7 @@ export const StakingInputPercentage = ({
       <HighlightedInput style={{ marginTop: '11px' }}>
         <RowBetween style={{ flexWrap: 'wrap' }}>
           <StakingInput
-            placeholder={maxAvailable?.toSignificant(5)}
+            placeholder={formattedMaxAvailable}
             value={typedValue}
             error={Boolean(error)}
             onUserInput={onUserInput}
@@ -69,7 +72,7 @@ export const StakingInputPercentage = ({
           <AvailableBalance>
             <RowFixed>
               <Trans>Available:</Trans>&nbsp;
-              <span style={{ fontWeight: 600 }}>{maxAvailable?.toSignificant(5)}</span>
+              <span style={{ fontWeight: 600 }}>{formattedMaxAvailable}</span>
               {infoText && (
                 <MouseoverTooltip text={infoText} placement={'top-end'}>
                   <IconWrapper size={20} style={{ transform: 'rotate(180deg)', marginLeft: '7px' }}>

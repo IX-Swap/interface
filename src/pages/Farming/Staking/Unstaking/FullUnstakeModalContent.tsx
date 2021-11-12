@@ -29,6 +29,7 @@ function formatAmount(amount: number): string {
 
 export function FullUnstake({ onDismiss, stake, onUnstake, onApprove }: UnstakingModalProps) {
   const stakeAmount = formatAmount(stake?.stakeAmount)
+  const stringAmount = String(stake?.stakeAmount)
   const [isEnoughAllowance, setIsEnoughAllowance] = useState(true)
   const [error, setError] = useState('')
   const { chainId, account } = useActiveWeb3React()
@@ -36,7 +37,6 @@ export function FullUnstake({ onDismiss, stake, onUnstake, onApprove }: Unstakin
   const IXSGovBalance = useCurrencyBalance(account ?? undefined, IXSGovCurrency ?? undefined)
   const { IXSGovAllowanceAmount, isApprovingIXSGov, isUnstaking } = useUnstakingState()
   const IXSCurrency = useIXSCurrency()
-
   useEffect(() => {
     if (!IXSGovBalance) {
       setError('Please wait...')
@@ -50,12 +50,12 @@ export function FullUnstake({ onDismiss, stake, onUnstake, onApprove }: Unstakin
 
   useEffect(() => {
     if (!IXSGovAllowanceAmount) return
-    if (parseFloat(IXSGovAllowanceAmount) >= parseFloat(stakeAmount)) {
+    if (parseFloat(IXSGovAllowanceAmount) >= parseFloat(stringAmount)) {
       setIsEnoughAllowance(true)
     } else {
       setIsEnoughAllowance(false)
     }
-  }, [IXSGovAllowanceAmount, stakeAmount])
+  }, [IXSGovAllowanceAmount, stringAmount])
 
   const wrappedOnDismiss = useCallback(() => {
     if (!isUnstaking && !isApprovingIXSGov) {

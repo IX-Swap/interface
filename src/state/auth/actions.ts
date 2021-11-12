@@ -1,15 +1,15 @@
 import { ActionCreatorWithoutPayload, ActionCreatorWithPayload, createAction } from '@reduxjs/toolkit'
-import { timePeriods } from 'utils/time'
 export interface AuthPayload {
   token: string
-  expiresAt: number
+  refreshToken: string
 }
 export interface RawAuthPayload {
   accessToken: string
-  expiresIn: keyof typeof timePeriods
+  refreshToken: string
 }
 export const saveToken = createAction<{ value: AuthPayload }>('auth/saveToken')
-
+export const clearToken = createAction('auth/clearToken')
+export const logout = createAction('auth/logout')
 export const postLogin: Readonly<{
   pending: ActionCreatorWithoutPayload
   fulfilled: ActionCreatorWithPayload<{ auth: RawAuthPayload }>

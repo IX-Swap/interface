@@ -3,8 +3,7 @@ import { Currency, CurrencyAmount, Token, WETH9 } from '@ixswap1/sdk-core'
 import { Pair } from '@ixswap1/v2-sdk'
 import { t } from '@lingui/macro'
 import { abi as STAKING_REWARDS_ABI } from '@uniswap/liquidity-staker/build/StakingRewards.json'
-import { STAKING_CONTRACT_KOVAN } from 'config'
-import { IXS_STAKING_V1_ADDRESS } from 'constants/addresses'
+import { IXS_STAKING_V1_ADDRESS, SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 import stakingPeriodsData, { IStaking, PeriodsEnum } from 'constants/stakingPeriods'
 import { BigNumber, utils } from 'ethers'
 import { useCurrency } from 'hooks/Tokens'
@@ -22,7 +21,6 @@ import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { maxAmountSpend } from 'utils/maxAmountSpend'
 import { DAI, IXS, USDC, USDT, WBTC } from '../../constants/tokens'
 import { useActiveWeb3React } from '../../hooks/web3'
-import { calculateGasMargin } from '../../utils/calculateGasMargin'
 import { NEVER_RELOAD, useMultipleContractSingleData } from '../multicall/hooks'
 import { tryParseAmount } from '../swap/helpers'
 import {
@@ -455,13 +453,15 @@ export function useStakeFor(period?: PERIOD) {
         dispatch(stake.pending())
         switch (period) {
           case PERIOD.ONE_WEEK: {
-            const estimatedGas = await staking?.estimateGas.stakeForWeek(account, stakeAmount, noData)
+            // const estimatedGas = await staking?.estimateGas.stakeForWeek(account, stakeAmount, noData)
+            const estimatedGas = 900000
+
             if (!estimatedGas) {
               dispatch(stake.rejected({ errorMessage: 'cannot estimate gas' }))
               break
             }
             const stakeTx = await staking?.stakeForWeek(account, stakeAmount, noData, {
-              gasLimit: calculateGasMargin(estimatedGas),
+              gasLimit: estimatedGas,
             })
             const tx = await stakeTx.wait()
             dispatch(stake.fulfilled({ txStatus: tx.status }))
@@ -472,13 +472,15 @@ export function useStakeFor(period?: PERIOD) {
             break
           }
           case PERIOD.ONE_MONTH: {
-            const estimatedGas = await staking?.estimateGas.stakeForMonth(account, stakeAmount, noData)
+            // const estimatedGas = await staking?.estimateGas.stakeForMonth(account, stakeAmount, noData)
+            const estimatedGas = 900000
+
             if (!estimatedGas) {
               dispatch(stake.rejected({ errorMessage: 'cannot estimate gas' }))
               break
             }
             const stakeTx = await staking?.stakeForMonth(account, stakeAmount, noData, {
-              gasLimit: calculateGasMargin(estimatedGas),
+              gasLimit: estimatedGas,
             })
             const tx = await stakeTx.wait()
             dispatch(stake.fulfilled({ txStatus: tx.status }))
@@ -489,13 +491,14 @@ export function useStakeFor(period?: PERIOD) {
             break
           }
           case PERIOD.TWO_MONTHS: {
-            const estimatedGas = await staking?.estimateGas.stakeForTwoMonths(account, stakeAmount, noData)
+            // const estimatedGas = await staking?.estimateGas.stakeForTwoMonths(account, stakeAmount, noData)
+            const estimatedGas = 900000
             if (!estimatedGas) {
               dispatch(stake.rejected({ errorMessage: 'cannot estimate gas' }))
               break
             }
             const stakeTx = await staking?.stakeForTwoMonths(account, stakeAmount, noData, {
-              gasLimit: calculateGasMargin(estimatedGas),
+              gasLimit: 900000,
             })
             const tx = await stakeTx.wait()
             dispatch(stake.fulfilled({ txStatus: tx.status }))
@@ -506,14 +509,16 @@ export function useStakeFor(period?: PERIOD) {
             break
           }
           case PERIOD.THREE_MONTHS: {
-            const estimatedGas = await staking?.estimateGas.stakeForThreeMonths(account, stakeAmount, noData)
+            // const estimatedGas = await staking?.estimateGas.stakeForThreeMonths(account, stakeAmount, noData)
+            const estimatedGas = 900000
+
             if (!estimatedGas) {
               dispatch(stake.rejected({ errorMessage: 'cannot estimate gas' }))
               updateIXSBalance()
               break
             }
             const stakeTx = await staking?.stakeForThreeMonths(account, stakeAmount, noData, {
-              gasLimit: calculateGasMargin(estimatedGas),
+              gasLimit: estimatedGas,
             })
             const tx = await stakeTx.wait()
             dispatch(stake.fulfilled({ txStatus: tx.status }))
@@ -539,7 +544,7 @@ export function useStakeFor(period?: PERIOD) {
 export function useGetStakings() {
   const dispatch = useDispatch<AppDispatch>()
   const staking = useIXSStakingContract()
-  const { account } = useActiveWeb3React()
+  const { account, chainId } = useActiveWeb3React()
 
   return useCallback(async () => {
     try {
@@ -597,7 +602,10 @@ export function useGetStakings() {
           const lockMonths = periodsLockMonths[period]
 
           let endDateUnix, lockedTillUnix
-          if (STAKING_CONTRACT_KOVAN === '0x24108fD7fa1897a76488fe8B39fDBc7715916294') {
+          if (
+            chainId === SUPPORTED_TGE_CHAINS.KOVAN &&
+            IXS_STAKING_V1_ADDRESS[chainId] === '0x2ddCfC409Ba3116d8d0a2224FfDF30042686eDe8'
+          ) {
             endDateUnix = startDateUnix + testPeriodsMaturitySeconds[period]
             lockedTillUnix = startDateUnix + testPeriodsLockSeconds[period]
           } else {
@@ -647,7 +655,7 @@ export function useGetStakings() {
     } catch (error) {
       console.error(`useGetStakings error `, error)
     }
-  }, [staking, account, dispatch])
+  }, [staking, account, dispatch, chainId])
 }
 
 export function useSetTypedValue() {

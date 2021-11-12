@@ -21,6 +21,10 @@ export const metamask = {
   hasLogged: (hash: string) => `/metamask/hasLogged/${hash}`,
 }
 
+export const auth = {
+  refresh: `auth/refresh`,
+}
+
 export const kyc = {
   getAccreditation: (tokenId: number) => `kyc/getAccreditation/${tokenId}`,
   restartAccreditation: (accreditationRequestId: number) => `kyc/my/restart/${accreditationRequestId}`,
