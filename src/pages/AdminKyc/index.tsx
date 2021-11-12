@@ -11,7 +11,6 @@ import { Search } from './Search'
 import { AutoColumn, ColumnCenter } from 'components/Column'
 import { CustodianToggleWrapper } from 'pages/Custodian/styleds'
 import { Border, ToggleOption } from 'components/Tabs'
-import { AdminTransactionsTableSearch } from 'components/AdminTransactionsTable/Search'
 
 export const AdminKyc = () => {
   const [showKYC, setShowKYC] = useState(true)
@@ -62,7 +61,6 @@ export const AdminKyc = () => {
             </>
           ) : (
             <>
-              <AdminTransactionsTableSearch />
               <AdminTransactionsTable />
             </>
           )}

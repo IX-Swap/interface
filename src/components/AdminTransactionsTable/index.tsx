@@ -3,8 +3,10 @@ import { LoaderThin } from 'components/Loader/LoaderThin'
 import dayjs from 'dayjs'
 import { Copy } from 'react-feather'
 import styled from 'styled-components'
-import React, { useEffect, FC } from 'react'
+import React, { FC, useEffect, useState, ChangeEvent } from 'react'
 
+import { Input as SearchInput } from 'pages/AdminKyc/Search'
+import { isAddress } from 'utils'
 import { IconWrapper } from 'components/AccountDetails/styleds'
 import { useAdminState, useFetchBrokerDealerSwaps } from 'state/admin/hooks'
 import { shortenAddress } from 'utils'
@@ -26,6 +28,7 @@ export const StyledCopy = styled(Copy)`
   width: 17px;
   height: 17px;
 `
+let timer = null as any
 
 const headerCells = [t`Date`, t`Name`, t`Trader's wallet`, t`Trading pair`, t`Amount`, t`Response`, t`Status`]
 
@@ -95,15 +98,26 @@ export const AdminTransactionsTable = () => {
     brokerDealerSwaps: { items, page, totalPages, offset },
     adminLoading,
   } = useAdminState()
+  const [searchValue, setSearchValue] = useState('')
   const getBrokerDealerSwaps = useFetchBrokerDealerSwaps()
 
   const onPageChange = (page: number) => {
-    getBrokerDealerSwaps({ page, offset })
+    getBrokerDealerSwaps({ page, offset, search: isAddress(searchValue) || searchValue === '' ? searchValue : '' })
   }
 
   useEffect(() => {
     getBrokerDealerSwaps({ page: 1, offset })
   }, [getBrokerDealerSwaps, offset])
+
+  const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { value } = e.target
+    setSearchValue(value)
+
+    if (isAddress(value) || value === '') {
+      clearTimeout(timer)
+      timer = setTimeout(() => getBrokerDealerSwaps({ page: 1, offset, search: value }), 250)
+    }
+  }
 
   return (
     <>
@@ -118,6 +132,7 @@ export const AdminTransactionsTable = () => {
         </NoData>
       ) : (
         <Container>
+          <SearchInput value={searchValue} placeholder={t`Search for Wallet`} onChange={onSearchChange} />
           <Table body={<Body />} header={<Header />} />
           <Pagination page={page} totalPages={totalPages} onPageChange={onPageChange} />
         </Container>
