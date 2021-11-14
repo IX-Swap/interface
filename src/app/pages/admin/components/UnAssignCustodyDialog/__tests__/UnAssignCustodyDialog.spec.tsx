@@ -17,50 +17,16 @@ describe('UnAssignCustodyDialog', () => {
   it('renders without errors', () => {
     render(
       <UnAssignCustodyDialog
-        custodyAccount={fakeCustodyAccountsListItem}
+        custodyAccountId={fakeCustodyAccountsListItem.accountId}
         onClose={handleClose}
       />
     )
   })
 
-  it('renders mui dialog component with correct props when open is undefined ', () => {
+  it('renders closed mui dialog component when open prop is undefined ', () => {
     render(
       <UnAssignCustodyDialog
-        custodyAccount={fakeCustodyAccountsListItem}
-        onClose={handleClose}
-      />
-    )
-
-    expect(Dialog).toHaveBeenCalledWith(
-      expect.objectContaining({
-        open: false
-      }),
-      {}
-    )
-  })
-
-  it('renders mui dialog component with correct props when open is true ', () => {
-    render(
-      <UnAssignCustodyDialog
-        open={true}
-        custodyAccount={fakeCustodyAccountsListItem}
-        onClose={handleClose}
-      />
-    )
-
-    expect(Dialog).toHaveBeenCalledWith(
-      expect.objectContaining({
-        open: true
-      }),
-      {}
-    )
-  })
-
-  it('renders mui dialog component with correct props when open is false ', () => {
-    render(
-      <UnAssignCustodyDialog
-        open={false}
-        custodyAccount={fakeCustodyAccountsListItem}
+        custodyAccountId={fakeCustodyAccountsListItem.accountId}
         onClose={handleClose}
       />
     )

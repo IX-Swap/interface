@@ -15,26 +15,25 @@ import useStyles from 'app/pages/admin/components/UnAssignCustodyDialog/UnAssign
 import { OTPForm } from 'app/pages/issuance/components/Commitments/CloseDealDialog/OTPForm'
 import { VSpacer } from 'components/VSpacer'
 import { Close as CloseIcon } from '@material-ui/icons'
-import { CustodyAccountsListItem } from 'types/custodyAccount'
 import { useUnAssignCustody } from 'app/pages/admin/hooks/useUnAssignCustody'
 import { CloseDealArgs } from 'types/dso'
 
 export interface UnAssignCustodyDialogProps extends Partial<DialogProps> {
   open?: boolean
-  custodyAccount: CustodyAccountsListItem | null
+  custodyAccountId: number
   onClose: () => void
 }
 
 export const UnAssignCustodyDialog = (props: UnAssignCustodyDialogProps) => {
   const theme = useTheme()
   const classes = useStyles()
-  const { open = false, custodyAccount, onClose } = props
+  const { open = false, custodyAccountId, onClose } = props
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
 
   const handleSubmit = async (values: CloseDealArgs) => {
     await unAssign({
-      accountId: custodyAccount?._id !== undefined ? custodyAccount._id : '',
-      ...values
+      accountId: custodyAccountId,
+      otp: values.otp
     })
     onClose()
   }
