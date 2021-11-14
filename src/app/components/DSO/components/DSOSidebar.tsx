@@ -5,6 +5,7 @@ import { AuthorizableStatus } from 'app/pages/authorizer/components/Authorizable
 import { DigitalSecurityOffering } from 'types/dso'
 import { Maybe } from 'types/util'
 import { LabelledValue } from 'components/LabelledValue'
+import { isNonEmptyArray } from 'helpers/arrays'
 
 export interface DSOSidebarProps {
   dso: DigitalSecurityOffering | undefined
@@ -28,10 +29,8 @@ export const DSOSidebar = (props: DSOSidebarProps) => {
 
         <Grid item>
           <DSOScrollGuide
-            hasVideo={
-              (dso?.videos !== undefined && dso.videos.length >= 1) || isNew
-            }
-            hasFAQ={(dso?.faqs !== undefined && dso.faqs.length >= 1) || isNew}
+            hasVideo={isNonEmptyArray(dso?.videos) || isNew}
+            hasFAQ={isNonEmptyArray(dso?.faqs) || isNew}
           />
         </Grid>
 

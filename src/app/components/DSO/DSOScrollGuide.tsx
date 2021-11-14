@@ -26,15 +26,23 @@ export const DSOScrollGuide = ({
 }: DSOScrollGuideProps) => {
   const [hasActive, setHasActive] = useState(false)
   let actualDSOFromSection = Object.entries(DSOFormSection)
-  if (!hasVideo) {
-    actualDSOFromSection = actualDSOFromSection.filter(
-      ([name, _]) => name !== 'Videos'
-    )
+
+  const isSectionVisible = (name: string) => {
+    if (!hasVideo && !hasFAQ) {
+      return name !== 'Videos' && name !== 'FAQs'
+    }
+
+    if (!hasVideo) {
+      return name !== 'Videos'
+    }
+    if (!hasFAQ) {
+      return name !== 'FAQs'
+    }
   }
 
-  if (!hasFAQ) {
-    actualDSOFromSection = actualDSOFromSection.filter(
-      ([name, _]) => name !== 'FAQs'
+  if (!hasVideo || !hasFAQ) {
+    actualDSOFromSection = actualDSOFromSection.filter(([name, _]) =>
+      isSectionVisible(name)
     )
   }
 
