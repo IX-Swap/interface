@@ -16,7 +16,6 @@ export const DSOFundRaisingMilestone = () => {
       item
       xs={12}
     >
-      {/* @ts-ignore */}
       <TypedField
         control={control}
         component={RichTextEditor}

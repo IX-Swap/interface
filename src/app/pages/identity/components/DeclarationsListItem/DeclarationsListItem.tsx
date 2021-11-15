@@ -16,10 +16,20 @@ export const DeclarationsListItem = ({
     <Grid item xs={12}>
       <Box display={'flex'} alignItems={'flex-start'}>
         <Box style={{ opacity: 0.5 }}>
-          {value ? <DoneIcon /> : <CloseIcon />}
+          {value ? (
+            <DoneIcon data-testid='declarations-list-item-checked' />
+          ) : (
+            <CloseIcon data-testid='declarations-list-item-unchecked' />
+          )}
         </Box>
         <Box marginLeft={2}>
-          <Typography>{label}</Typography>
+          {React.isValidElement(label) ? (
+            label
+          ) : (
+            <Typography data-testid='declarations-list-item-label'>
+              {label}
+            </Typography>
+          )}
         </Box>
       </Box>
     </Grid>

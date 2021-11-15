@@ -1,4 +1,8 @@
-import { CustodyAccountsListItem, CustodyDetails } from 'types/custodyAccount'
+import {
+  CustodyAccountsListItem,
+  CustodyDetails,
+  CustodiansCount
+} from 'types/custodyAccount'
 
 export const custodyAccountMock = {
   _id: '6090ede8da777221e21eb2f9',
@@ -56,4 +60,11 @@ export const fakeCustodyDetails: CustodyDetails = {
   user: {
     name: 'name'
   }
+}
+
+export const fakeCustodiansCount: CustodiansCount = {
+  hexCount: 5,
+  investaxCount: 96,
+  hexPercent: '4.95',
+  investaxPercent: '95.05'
 }

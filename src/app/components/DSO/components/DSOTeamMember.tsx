@@ -34,7 +34,6 @@ export const DSOTeamMember = (props: DSOTeamMemberProps) => {
     >
       <Grid item container xs={12}>
         <Grid item xs={12} md={2}>
-          {/* @ts-ignore */}
           <TypedField
             customRenderer
             key={fieldId}
@@ -89,7 +88,6 @@ export const DSOTeamMember = (props: DSOTeamMemberProps) => {
             title='About'
             subtitle='Short Introduction about your team member'
           >
-            {/* @ts-ignore */}
             <TypedField
               key={fieldId}
               control={control}

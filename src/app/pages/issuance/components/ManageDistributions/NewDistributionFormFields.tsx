@@ -33,9 +33,8 @@ export const NewDistributionFormFields = ({
   const pricePerToken = watch('amountPerToken')
   const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
   const { data, isLoading } = useDSOById(dsoId, issuerId)
-  const { data: assetData, isLoading: assetIsLoading } = useBalancesByType(
-    'Currency'
-  )
+  const { data: assetData, isLoading: assetIsLoading } =
+    useBalancesByType('Currency')
 
   if (isLoading || assetIsLoading) {
     return null
@@ -52,7 +51,7 @@ export const NewDistributionFormFields = ({
     pricePerToken * totalTokens
   )}`
 
-  const asset = assetData.map[data?.currency._id ?? '']
+  const asset = assetData.map[data?.currency.symbol ?? '']
   if (pricePerToken * totalTokens >= asset.available) {
     isEnough = false
   }
@@ -79,7 +78,6 @@ export const NewDistributionFormFields = ({
         <Grid item xs={12} md={3}>
           <Typography variant='subtitle1'>Schedule distribution</Typography>
           <VSpacer size='small' />
-          {/* @ts-ignore */}
           <TypedField
             component={DateTimePicker}
             customRenderer

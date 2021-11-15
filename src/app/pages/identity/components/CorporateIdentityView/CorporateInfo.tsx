@@ -14,8 +14,9 @@ export interface CorporateInfoProps {
 export const CorporateInfo = ({ data }: CorporateInfoProps) => {
   const { isMobile } = useAppBreakpoints()
   const getLegalEntityStatus = (value: string) => {
-    const status = LEGAL_ENTITY_STATUS_LIST.find(item => item.value === value)
-      ?.name
+    const status = LEGAL_ENTITY_STATUS_LIST.find(
+      item => item.value === value
+    )?.name
     return status ?? value
   }
 

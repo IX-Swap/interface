@@ -30,7 +30,6 @@ export const AuthorizationDocuments = (props: AuthorizationDocumentsProps) => {
             <Grid item container wrap='wrap'>
               <SelectableDataroomHeader />
               {fields.map((field, index) => (
-                /* @ts-ignore */
                 <TypedField
                   customRenderer
                   key={field.id}

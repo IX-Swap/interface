@@ -11,11 +11,8 @@ export interface ConfirmDisableButtonProps {
 export const ConfirmDisableButton = ({
   successCallback
 }: ConfirmDisableButtonProps) => {
-  const {
-    hasSelected,
-    selected,
-    resetSelection
-  } = useSelectionHelperContext<VirtualAccount>()
+  const { hasSelected, selected, resetSelection } =
+    useSelectionHelperContext<VirtualAccount>()
   const [disableAccounts, { isLoading }] = useDisableVirtualAccounts()
 
   const handleConfirmDisable = async () => {

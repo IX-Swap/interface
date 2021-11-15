@@ -11,7 +11,6 @@ export const TaxResidencyFields = () => {
 
   return (
     <>
-      {/* @ts-ignore */}
       <TypedField
         customRenderer
         component={RadioGroup}

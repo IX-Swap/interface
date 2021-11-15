@@ -31,10 +31,10 @@ export const useParsedData = <T>(
 ): DataBucket<T> => {
   const raw = useMemo(() => data ?? [], [data])
   const list = useMemo(() => convertPaginatedResultToFlatArray<T>(raw), [raw])
-  const map = useMemo(() => convertDataArrayToMap<T>(dataKey, list), [
-    dataKey,
-    list
-  ])
+  const map = useMemo(
+    () => convertDataArrayToMap<T>(dataKey, list),
+    [dataKey, list]
+  )
 
   return useMemo(() => ({ raw, list, map }), [raw, list, map])
 }

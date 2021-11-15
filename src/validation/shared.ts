@@ -1,5 +1,5 @@
 import * as yup from 'yup'
-import 'yup-phone'
+import 'yup-phone-lite'
 import { passwordValidator } from 'validation/validators'
 import { DataroomFile, FormArrayElement } from 'types/dataroomFile'
 import { Maybe } from 'types/util'
@@ -58,14 +58,14 @@ export const taxIdentificationNumberSchema = yup
   .max(20, 'Maximum of 20 chracters')
   .matches(/^[a-zA-Z0-9]*$/, 'Must include only letters and numbers only')
 
-export const documentsArraySchema = yup.array<
-  FormArrayElement<Maybe<DataroomFile>>
->()
+export const documentsArraySchema =
+  yup.array<FormArrayElement<Maybe<DataroomFile>>>()
 
 export const nameSchema = yup
   .string()
+  .trim()
   .max(50, 'Maximum of 50 characters')
-  .matches(/^[aA-zZ](?:-?[aA-zZ]+)*$/, 'Invalid name')
+  .matches(/^[A-Z][aA-zZ\s]*$/, 'Invalid name')
 
 export const addressSchema = yup.object().shape<AddressValues>({
   line1: yup.string().required(validationMessages.required),

@@ -78,10 +78,11 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
     root: {
       fontWeight: 400,
       color: theme.palette.primary.light,
-      '&.MuiLink-underlineHover:active, &.MuiLink-underlineHover:visited, &.MuiLink-underlineAlways:active, &.MuiLink-underlineAlways:visited': {
-        color: theme.palette.primary.light,
-        textDecoration: 'none'
-      },
+      '&.MuiLink-underlineHover:active, &.MuiLink-underlineHover:visited, &.MuiLink-underlineAlways:active, &.MuiLink-underlineAlways:visited':
+        {
+          color: theme.palette.primary.light,
+          textDecoration: 'none'
+        },
 
       '&:hover': {
         cursor: 'pointer'

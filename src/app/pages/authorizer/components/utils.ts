@@ -7,15 +7,8 @@ export const convertAddressToString = (address: Address | undefined) => {
     return ''
   }
 
-  const {
-    line1,
-    line2,
-    city,
-    postalCode,
-    state,
-    country,
-    countryOfResidence
-  } = address
+  const { line1, line2, city, postalCode, state, country, countryOfResidence } =
+    address
   return `${line1} ${line2 ?? ''} ${city} ${postalCode ?? ''} ${state} ${
     country ?? countryOfResidence ?? ''
   }`

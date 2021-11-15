@@ -15,10 +15,8 @@ export const CustodyManagementTable = () => {
     isUnassignedCustodyDialogVisible,
     setIsUnassignedCustodyDialogVisible
   ] = useState<boolean>(false)
-  const [
-    currentCustodyAccount,
-    setCurrentCustodyAccount
-  ] = useState<CustodyAccountsListItem | null>(null)
+  const [currentCustodyAccount, setCurrentCustodyAccount] =
+    useState<CustodyAccountsListItem | null>(null)
 
   const handleLinkOffButtonClick = (item: any) => {
     setCurrentCustodyAccount(item.item)

@@ -32,6 +32,15 @@ export interface TypedFieldProps<
   ) => void
 }
 
+type FieldsToOverride =
+  | 'name'
+  | 'onChange'
+  | 'value'
+  | 'onBlur'
+  | 'onFocus'
+  | 'error'
+  | 'defaultValue'
+
 export const TypedField = <
   TFieldValues extends UnpackNestedValue<FieldValuesFromControl<TControl>>,
   TFieldName extends DeepPath<TFieldValues, TFieldName>,
@@ -40,7 +49,7 @@ export const TypedField = <
 >(
   props: {
     component: C
-  } & Omit<OverrideProps<React.ComponentProps<C>, C>, 'name'> &
+  } & Omit<OverrideProps<React.ComponentProps<C>, C>, FieldsToOverride> &
     TypedFieldProps<TFieldValues, TFieldName, TControl>
 ) => {
   const {
@@ -71,7 +80,10 @@ export const TypedField = <
     if (onChange !== undefined) {
       onChange(value, path, control)
     } else {
-      control.setValue(path, value, { shouldValidate: true, shouldDirty: true })
+      control.setValue(path, value, {
+        shouldValidate: true,
+        shouldDirty: true
+      })
     }
   }
   const hasError = getErrorFromControl(path, control) !== undefined
@@ -82,7 +94,7 @@ export const TypedField = <
   return (
     <TypedController
       name={path as any}
-      defaultValue={defaultValue as any}
+      defaultValue={defaultValue}
       render={controllerProps => {
         const elementProps = {
           ...rest,

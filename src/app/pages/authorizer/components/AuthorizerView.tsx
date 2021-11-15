@@ -137,11 +137,11 @@ export const AuthorizerView = <T,>(
                     style={{ marginBottom: 20 }}
                   >
                     <PromotionSwitch
-                      dso={(data as unknown) as DigitalSecurityOffering}
+                      dso={data as unknown as DigitalSecurityOffering}
                     />
 
                     <VisibilitySwitch
-                      dso={(data as unknown) as DigitalSecurityOffering}
+                      dso={data as unknown as DigitalSecurityOffering}
                     />
                   </Grid>
                 )}

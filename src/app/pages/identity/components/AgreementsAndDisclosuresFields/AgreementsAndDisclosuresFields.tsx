@@ -31,7 +31,6 @@ export const AgreementsAndDisclosuresFields = ({
         Review accept the following
       </Typography>
       <Grid item xs={12} sm={6} md={4}>
-        {/* @ts-ignore */}
         <TypedField
           customRenderer
           valueExtractor={booleanValueExtractor}
@@ -46,7 +45,6 @@ export const AgreementsAndDisclosuresFields = ({
         />
       </Grid>
       <Grid item xs={12} sm={6} md={4}>
-        {/* @ts-ignore */}
         <TypedField
           customRenderer
           valueExtractor={booleanValueExtractor}
@@ -58,7 +56,6 @@ export const AgreementsAndDisclosuresFields = ({
         />
       </Grid>
       <Grid item xs={12} sm={6} md={4}>
-        {/* @ts-ignore */}
         <TypedField
           customRenderer
           valueExtractor={booleanValueExtractor}

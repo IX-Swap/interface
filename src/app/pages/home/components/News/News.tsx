@@ -7,6 +7,8 @@ import { useTheme } from '@material-ui/core/styles'
 import { NewsList } from 'app/pages/home/components/News/NewsList'
 import { homeURL } from 'config/apiURL'
 import { homeQueryKeys } from 'config/queryKeys'
+import AtlasLogoLight from 'assets/icons/atlas_logo_white.png'
+import AtlasLogoDark from 'assets/icons/atlas_logo.png'
 
 export const News = () => {
   const classes = useStyles()
@@ -28,9 +30,7 @@ export const News = () => {
         <img
           width={106}
           height={34}
-          src={require(theme.palette.type === 'light'
-            ? 'assets/icons/atlas_logo.png'
-            : 'assets/icons/atlas_logo_white.png')}
+          src={theme.palette.type === 'light' ? AtlasLogoDark : AtlasLogoLight}
           alt={'Atlas One Logo'}
         />
         <Grid item xs={12} md={6} lg={3} className={classes.input}>

@@ -11,12 +11,6 @@ cp .env.example .env #and update .env file
 yarn start
 ```
 
-## Run StandardJS Fixes
-
-```
-yarn std // or npm run std
-```
-
 **Hosted Instance**
 
 [https://dev.mozork.com/](https://dev.mozork.com/)
@@ -26,3 +20,4 @@ yarn std // or npm run std
 Amplify Hooks
 - Production (https://github.com/InvestaX/IXWebApp/settings/hooks/265590521)
 - Development, MVP, and Staging (https://github.com/InvestaX/IXWebApp/settings/hooks/265590816)
+

@@ -9,6 +9,8 @@ import { RootContainer } from 'ui/RootContainer'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { BannersCarousel } from 'app/pages/invest/components/BannersCarousel'
 import { AtlasOneReports } from 'app/pages/home/components/AtlasOneReports/AtlasOneReports'
+import AtlasLogoLight from 'assets/icons/atlas_logo_white.png'
+import AtlasLogoDark from 'assets/icons/atlas_logo.png'
 
 export const Onboarding = () => {
   const { user } = useAuth()
@@ -36,9 +38,11 @@ export const Onboarding = () => {
               <img
                 width={106}
                 height={34}
-                src={require(theme.palette.type === 'light'
-                  ? 'assets/icons/atlas_logo.png'
-                  : 'assets/icons/atlas_logo_white.png')}
+                src={
+                  theme.palette.type === 'light'
+                    ? AtlasLogoDark
+                    : AtlasLogoLight
+                }
                 alt={'Atlas One Logo'}
               />
             </Grid>

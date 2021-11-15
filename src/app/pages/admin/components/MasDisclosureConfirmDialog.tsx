@@ -23,7 +23,7 @@ export const MasDisclosureConfirmDialog = ({
   }
 
   return (
-    <Dialog open={open} disablePortal>
+    <Dialog open={open} disablePortal data-testid='mas-disclosure-dialog'>
       <Box py='40px' px='60px' textAlign='center'>
         <Grid container direction='column' spacing={2}>
           <Grid item>

@@ -14,7 +14,7 @@ import {
   taxIdentificationNumberSchema
 } from 'validation/shared'
 import * as yup from 'yup'
-import 'yup-phone'
+import 'yup-phone-lite'
 import { validateUEN } from 'validation/validators'
 
 // TODO: change to InvestorCorporateInfoFormValues (currently getting TS2589)

@@ -105,7 +105,7 @@ export const Dropzone = (props: DropzoneProps) => {
         width={fullWidth ? '100%' : 128}
         height={type === 'banner' ? 245 : 128}
         className={container}
-        {...(getRootProps() as any)}
+        {...getRootProps()}
       >
         <input id={name} name={name} {...getInputProps()} disabled={disabled} />
         <DropzoneDisplay

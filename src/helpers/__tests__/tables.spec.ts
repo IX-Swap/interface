@@ -87,7 +87,7 @@ describe('renderIndividualOrCompanyName', () => {
 describe('getIndividualLastName', () => {
   it('returns empty string if individual is undefined', () => {
     expect(
-      getIndividualLastName((undefined as unknown) as IndividualIdentity)
+      getIndividualLastName(undefined as unknown as IndividualIdentity)
     ).toBe('')
   })
 
@@ -99,7 +99,7 @@ describe('getIndividualLastName', () => {
 describe('getCorporateLegalName', () => {
   it('returns empty string if corporate is undefined', () => {
     expect(
-      getCorporateLegalName((undefined as unknown) as CorporateIdentity)
+      getCorporateLegalName(undefined as unknown as CorporateIdentity)
     ).toBe('')
   })
 
@@ -111,9 +111,7 @@ describe('getCorporateLegalName', () => {
 describe('getCorporateRepresentativeName', () => {
   it('returns empty string if corporate is undefined', () => {
     expect(
-      getCorporateRepresentativeName(
-        (undefined as unknown) as CorporateIdentity
-      )
+      getCorporateRepresentativeName(undefined as unknown as CorporateIdentity)
     ).toBe('')
   })
 
