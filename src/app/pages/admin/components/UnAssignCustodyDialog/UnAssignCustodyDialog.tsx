@@ -44,6 +44,7 @@ export const UnAssignCustodyDialog = (props: UnAssignCustodyDialogProps) => {
 
   return (
     <MUIDialog
+      data-testid={'dialog'}
       maxWidth={'md'}
       fullWidth
       fullScreen={fullScreen}
@@ -94,4 +95,8 @@ export const UnAssignCustodyDialog = (props: UnAssignCustodyDialogProps) => {
       </DialogActions>
     </MUIDialog>
   )
+}
+
+UnAssignCustodyDialog.defaultProps = {
+  custodyAccountId: 0
 }
