@@ -2,10 +2,10 @@ import {
   corporateAccreditedInvestorValidator,
   individualAccreditedInvestorValidator,
   pastDateValidator,
-  uniqueIdentifierCodeLengthValidator,
   uniqueIdentifierCodeValidator
 } from 'validation/validators'
 import { DeclarationValue } from 'app/pages/identity/const/declarations'
+import { ValidationError } from 'yup'
 
 describe('individualAccreditedInvestorValidator', () => {
   it('returns false if value is null or undefined', () => {
@@ -134,21 +134,29 @@ describe('pastDateValidator', () => {
   })
 })
 
-describe('uniqueIdentifierCodeLengthValidator', () => {
-  it('returns correct message if value length less than 12', () => {
-    expect(uniqueIdentifierCodeLengthValidator('12345678')).toBe(
-      'Unique Identifier Code must be at least 12 characters'
+describe('uniqueIdentifierCodeValidator', () => {
+  it('returns instance of ValidationError with correct error message if value length less than 12', () => {
+    expect(uniqueIdentifierCodeValidator('123')).toEqual(
+      new ValidationError(
+        'Unique Identifier Code must be at least 12 characters',
+        '123',
+        'uniqueIdentifierCode'
+      )
     )
   })
 
-  it('returns correct message if value length more than 32', () => {
+  it('returns instance of ValidationError if value length more than 32', () => {
     expect(
-      uniqueIdentifierCodeLengthValidator('123456789012345678901234567890123')
-    ).toBe('Unique Identifier Code must be at most 32 characters')
+      uniqueIdentifierCodeValidator('123456789012345678901234567890123')
+    ).toEqual(
+      new ValidationError(
+        'Unique Identifier Code must be at most 32 characters',
+        '123',
+        'uniqueIdentifierCode'
+      )
+    )
   })
-})
 
-describe('uniqueIdentifierCodeValidator', () => {
   it('returns true if value is undefined', () => {
     expect(uniqueIdentifierCodeValidator(undefined)).toBe(true)
   })
