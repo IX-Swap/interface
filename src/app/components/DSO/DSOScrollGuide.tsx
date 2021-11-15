@@ -15,6 +15,25 @@ export enum DSOFormSection {
   'FAQs' = 'dso-faqs'
 }
 
+export const isSectionVisible = (
+  name: string,
+  showVideos: boolean,
+  showFAQs: boolean
+) => {
+  if (!showVideos && !showFAQs) {
+    return name !== 'Videos' && name !== 'FAQs'
+  }
+
+  if (!showVideos) {
+    return name !== 'Videos'
+  }
+  if (!showFAQs) {
+    return name !== 'FAQs'
+  }
+
+  return true
+}
+
 export interface DSOScrollGuideProps {
   hasVideo: boolean
   hasFAQ: boolean
@@ -27,24 +46,9 @@ export const DSOScrollGuide = ({
   const [hasActive, setHasActive] = useState(false)
   let actualDSOFromSection = Object.entries(DSOFormSection)
 
-  const isSectionVisible = (name: string) => {
-    if (!hasVideo && !hasFAQ) {
-      return name !== 'Videos' && name !== 'FAQs'
-    }
-
-    if (!hasVideo) {
-      return name !== 'Videos'
-    }
-    if (!hasFAQ) {
-      return name !== 'FAQs'
-    }
-
-    return true
-  }
-
   if (!hasVideo || !hasFAQ) {
     actualDSOFromSection = actualDSOFromSection.filter(([name, _]) =>
-      isSectionVisible(name)
+      isSectionVisible(name, hasVideo, hasFAQ)
     )
   }
 
@@ -58,6 +62,7 @@ export const DSOScrollGuide = ({
         {actualDSOFromSection.map(([name, key]) => {
           return (
             <ScrollGuideLink
+              data-testid={'link'}
               key={key}
               to={key}
               spy
