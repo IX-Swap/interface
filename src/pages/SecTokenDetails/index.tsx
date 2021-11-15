@@ -31,6 +31,8 @@ export default function SecTokenDetails({
   const { accreditationRequest, platform } = useAccreditationStatus(currencyId)
   const notApprovedToken = filteredSortedTokens.find(({ tokenInfo }: any) => tokenInfo.address === currencyId) || null
 
+  console.log('allo', accreditationRequest, platform)
+
   return (
     <>
       <DepositPopup currency={currency} />
