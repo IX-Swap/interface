@@ -1,13 +1,11 @@
 import { t } from '@lingui/macro'
 import { ReadMore } from 'components/ReadMore'
-import { ListType, useCurrencySearch } from 'components/SearchModal/useCurrencySearch'
 import { Vault } from 'components/Vault'
 import { DepositPopup } from 'components/Vault/DepositPopup'
 import { WithdrawPopup } from 'components/Vault/WithdrawPopup'
 import { useCurrency } from 'hooks/Tokens'
-import React, { useMemo, useRef } from 'react'
+import React, { useMemo } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
-import { FixedSizeList } from 'react-window'
 import { Box } from 'rebass'
 import { useAccreditationStatus } from 'state/secTokens/hooks'
 import { LightBackground } from 'theme/Background'
@@ -23,15 +21,7 @@ export default function SecTokenDetails({
   const description = useMemo(() => {
     return (currency as any)?.tokenInfo?.description
   }, [currency])
-  const listRef = useRef<FixedSizeList>()
-  const { filteredSortedTokens } = useCurrencySearch({
-    listRef,
-    list: ListType.OTHER,
-  })
   const { accreditationRequest, platform } = useAccreditationStatus(currencyId)
-  const notApprovedToken = filteredSortedTokens.find(({ tokenInfo }: any) => tokenInfo.address === currencyId) || null
-
-  console.log('allo', accreditationRequest, platform)
 
   return (
     <>
@@ -53,11 +43,7 @@ export default function SecTokenDetails({
             </ReadMore>
           </DescriptionText>
         </Description>
-        <TokenDetails
-          accreditationRequest={accreditationRequest}
-          currency={currency}
-          platform={notApprovedToken ? (notApprovedToken as any)?.tokenInfo.platform : platform}
-        />
+        <TokenDetails accreditationRequest={accreditationRequest} currency={currency} platform={platform} />
         <Vault currency={currency} currencyId={currencyId} />
       </Container>
     </>
