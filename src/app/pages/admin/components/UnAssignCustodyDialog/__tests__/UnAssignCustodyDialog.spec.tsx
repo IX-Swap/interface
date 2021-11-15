@@ -2,9 +2,6 @@ import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { UnAssignCustodyDialog } from 'app/pages/admin/components/UnAssignCustodyDialog/UnAssignCustodyDialog'
 import { fakeCustodyAccountsListItem } from '__fixtures__/custodyAccount'
-import { Dialog } from '@material-ui/core'
-
-jest.mock('@material-ui/core/Dialog', () => jest.fn(() => null))
 
 describe('UnAssignCustodyDialog', () => {
   const handleClose = jest.fn()
@@ -17,59 +14,40 @@ describe('UnAssignCustodyDialog', () => {
   it('renders without errors', () => {
     render(
       <UnAssignCustodyDialog
-        custodyAccount={fakeCustodyAccountsListItem}
+        custodyAccountId={fakeCustodyAccountsListItem.accountId}
         onClose={handleClose}
       />
     )
   })
 
-  it('renders mui dialog component with correct props when open is undefined ', () => {
-    render(
+  it('renders closed mui dialog component when open prop is undefined ', () => {
+    const { container } = render(
       <UnAssignCustodyDialog
-        custodyAccount={fakeCustodyAccountsListItem}
+        custodyAccountId={fakeCustodyAccountsListItem.accountId}
         onClose={handleClose}
       />
     )
-
-    expect(Dialog).toHaveBeenCalledWith(
-      expect.objectContaining({
-        open: false
-      }),
-      {}
-    )
+    expect(container).toBeEmptyDOMElement()
   })
 
-  it('renders mui dialog component with correct props when open is true ', () => {
-    render(
+  it('renders closed mui dialog component when open prop is false ', () => {
+    const { container } = render(
       <UnAssignCustodyDialog
-        open={true}
-        custodyAccount={fakeCustodyAccountsListItem}
+        custodyAccountId={fakeCustodyAccountsListItem.accountId}
         onClose={handleClose}
       />
     )
-
-    expect(Dialog).toHaveBeenCalledWith(
-      expect.objectContaining({
-        open: true
-      }),
-      {}
-    )
+    expect(container).toBeEmptyDOMElement()
   })
 
-  it('renders mui dialog component with correct props when open is false ', () => {
-    render(
+  it('renders opened mui dialog component when open prop is true ', () => {
+    const { getByTestId } = render(
       <UnAssignCustodyDialog
-        open={false}
-        custodyAccount={fakeCustodyAccountsListItem}
+        open
+        custodyAccountId={fakeCustodyAccountsListItem.accountId}
         onClose={handleClose}
       />
     )
-
-    expect(Dialog).toHaveBeenCalledWith(
-      expect.objectContaining({
-        open: false
-      }),
-      {}
-    )
+    expect(getByTestId('dialog')).toBeInTheDocument()
   })
 })

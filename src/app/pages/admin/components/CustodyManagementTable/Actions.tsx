@@ -22,6 +22,7 @@ export const Actions = ({
     onLinkOffButtonClick(item.item)
   }
   const isInvestaXAccount = item.item.type === 'INVESTAX'
+  const iconStyle = isInvestaXAccount ? { opacity: 0.4 } : {}
 
   return (
     <Box display={'flex'} justifyContent={'space-around'}>
@@ -32,17 +33,15 @@ export const Actions = ({
         params={{ accountId: item.item.accountId }}
         size='small'
       >
-        <LaunchIcon
-          color='disabled'
-          style={{ opacity: isInvestaXAccount ? 0.4 : 1 }}
-        />
+        <LaunchIcon color='disabled' style={iconStyle} />
       </IconButton>
       <IconButton
         data-testid={'link-off'}
         size='small'
+        disabled={isInvestaXAccount}
         onClick={handleLinkOffButtonClick}
       >
-        <LinkOffIcon color='disabled' />
+        <LinkOffIcon color='disabled' style={iconStyle} />
       </IconButton>
     </Box>
   )
