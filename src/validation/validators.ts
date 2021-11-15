@@ -242,3 +242,12 @@ export const validateUEN = (uen: any) => {
 
   return false
 }
+
+export const uniqueIdentifierCodeValidator = (value: string) => {
+  if (value.length < 12) {
+    return 'Unique Identifier Code must be at least 12 characters'
+  }
+  if (value.length > 32) {
+    return 'Unique Identifier Code must be at most 32 characters'
+  }
+}

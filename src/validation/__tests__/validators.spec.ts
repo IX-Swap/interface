@@ -1,7 +1,8 @@
 import {
   corporateAccreditedInvestorValidator,
   individualAccreditedInvestorValidator,
-  pastDateValidator
+  pastDateValidator,
+  uniqueIdentifierCodeValidator
 } from 'validation/validators'
 import { DeclarationValue } from 'app/pages/identity/const/declarations'
 
@@ -129,5 +130,19 @@ describe('pastDateValidator', () => {
 
   it('returns true if date is future date', () => {
     expect(pastDateValidator('2100-11-10T15:59:00.000Z')).toBe(true)
+  })
+})
+
+describe('uniqueIdentifierCodeValidator', () => {
+  it('returns correct message if value length less than 12', () => {
+    expect(uniqueIdentifierCodeValidator('12345678')).toBe(
+      'Unique Identifier Code must be at least 12 characters'
+    )
+  })
+
+  it('returns correct message if value length more than 32', () => {
+    expect(
+      uniqueIdentifierCodeValidator('123456789012345678901234567890123')
+    ).toBe('Unique Identifier Code must be at most 32 characters')
   })
 })

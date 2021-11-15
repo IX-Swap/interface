@@ -1,8 +1,8 @@
 import { DsoFAQItem, DSOFormValues, DsoTeamMember, DsoVideo } from 'types/dso'
 import { DataroomFile, FormArrayElement } from 'types/dataroomFile'
-import { string, number, array, object } from 'yup'
+import { string, number, array, object, ValidationError } from 'yup'
 import { dateSchema } from './shared'
-import { pastDateValidator } from './validators'
+import { pastDateValidator, uniqueIdentifierCodeValidator } from './validators'
 
 const numberTransformer = (cv: number, ov: any) => {
   return ov === '' ? undefined : cv
@@ -122,15 +122,19 @@ export const dsoFormBaseValidationSchema = {
     .of(dsoVideoLinkSchema.required('Required'))
     .ensure()
     .required('Required'),
-  uniqueIdentifierCode: string()
-    .matches(
-      /^(|.{12,})$/,
-      'Unique Identifier Code must be at least 12 characters'
-    )
-    .matches(
-      /^(|.{,32})$/,
-      'Unique Identifier Code must be at most 32 characters'
-    )
+  uniqueIdentifierCode: string().test(
+    'length',
+    'Required',
+    (value: string | undefined | null) => {
+      if (value !== null && value !== undefined && value.length > 0) {
+        const error = uniqueIdentifierCodeValidator(value)
+        return error !== undefined
+          ? new ValidationError(error, value, 'uniqueIdentifierCode')
+          : true
+      }
+      return true
+    }
+  )
 }
 
 export const createDSOValidationSchema = object()
