@@ -23,15 +23,27 @@ export const UserRouter = () => {
       <AppRoute exact path={AdminRoute.users}>
         <Users />
       </AppRoute>
-      <AppRoute exact path={AdminRoute.createIndividualIdentity}>
+      <AppRoute
+        exact
+        path={AdminRoute.createIndividualIdentity}
+        breadcrumb={'Create Individual Identity'}
+      >
         <CreateIndividualAsAdmin />
       </AppRoute>
 
-      <AppRoute exact path={AdminRoute.createCorporateIdentity}>
+      <AppRoute
+        exact
+        path={AdminRoute.createCorporateIdentity}
+        breadcrumb={'Create Corporate Identity'}
+      >
         <CreateCorporateAsAdmin />
       </AppRoute>
 
-      <AppRoute exact path={AdminRoute.createIssuerIdentity}>
+      <AppRoute
+        exact
+        path={AdminRoute.createIssuerIdentity}
+        breadcrumb={'Create Issuer Identity'}
+      >
         <CreateIssuerAsAdmin />
       </AppRoute>
     </Switch>
