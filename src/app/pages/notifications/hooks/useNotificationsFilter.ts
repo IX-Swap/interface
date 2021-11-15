@@ -26,9 +26,8 @@ export const useNotificationsFilter = () => {
   }
 
   useEffect(() => {
-    const savedFilters = storageService.get<NotificationFilter[]>(
-      'notificationFilter'
-    )
+    const savedFilters =
+      storageService.get<NotificationFilter[]>('notificationFilter')
     setFilter(savedFilters ?? defaultNotificationFilter)
   }, []) //eslint-disable-line
 

@@ -9,11 +9,8 @@ export interface ActionEnableToggleProps {
 }
 
 export const ActionEnableToggle = ({ enabled }: ActionEnableToggleProps) => {
-  const {
-    enabledToggleOpen,
-    closeEnabledToggle,
-    openEnabledToggle
-  } = useUserActionsDialog()
+  const { enabledToggleOpen, closeEnabledToggle, openEnabledToggle } =
+    useUserActionsDialog()
 
   return (
     <>

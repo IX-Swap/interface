@@ -70,11 +70,13 @@ export const Market = () => {
   }
 
   if (isPairIdFalsy(pairId)) {
-    return (
-      <Redirect
-        to={generatePath(OTCMarketRoute.market, { pairId: data?.list[0]._id })}
-      />
-    )
+    const firstPair = data.list[0]
+    const to =
+      firstPair !== undefined
+        ? generatePath(OTCMarketRoute.market, { pairId: data?.list[0]?._id })
+        : OTCMarketRoute.landing
+
+    return <Redirect to={to} />
   }
 
   return (

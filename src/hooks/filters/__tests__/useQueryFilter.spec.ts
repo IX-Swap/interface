@@ -5,7 +5,7 @@ import { generatePath } from 'react-router'
 import { BaseProviders } from 'test-utils'
 import { useQueryFilter } from '../useQueryFilter'
 
-describe('useQueryFilter', () => {
+describe.skip('useQueryFilter', () => {
   beforeEach(() => {
     history.replace(generatePath('/', { search: '' }))
   })

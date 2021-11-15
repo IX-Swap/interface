@@ -1,5 +1,5 @@
 import * as yup from 'yup'
-import 'yup-phone'
+import 'yup-phone-lite'
 import {
   addressSchema,
   emailSchema,

@@ -31,7 +31,6 @@ export const renderTotalFundraisingAmount = (
   const formatter = new Intl.NumberFormat('en-US', {
     maximumFractionDigits: 2,
     minimumFractionDigits: 2,
-    // @ts-expect-error
     notation: 'compact',
     compactDisplay: 'short'
   })

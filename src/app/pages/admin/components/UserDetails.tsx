@@ -7,11 +7,11 @@ import { hasValue } from 'helpers/forms'
 import { ManagedUser } from 'types/user'
 import { isResetActive } from 'helpers/isResetActive'
 
-export interface UserDetails {
+export interface UserDetailsProps {
   data: ManagedUser
 }
 
-export const UserDetails = ({ data }: UserDetails) => {
+export const UserDetails = ({ data }: UserDetailsProps) => {
   const isActive = isResetActive(
     data.isResetActive,
     new Date(data.resetExpiresOn ?? '')

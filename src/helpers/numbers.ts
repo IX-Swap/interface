@@ -20,6 +20,10 @@ export const formatAmount = (value: number) => {
   return value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
 }
 
+export const formatDecimal = (value: number) => {
+  return new Intl.NumberFormat('en-US', { style: 'decimal' }).format(value)
+}
+
 export const abbreviateNumber = (
   value: number | null,
   symbol?: string,
@@ -31,7 +35,6 @@ export const abbreviateNumber = (
 
   const defaultFormatter = new Intl.NumberFormat('en-US', {
     maximumFractionDigits: 1,
-    // @ts-expect-error
     notation: 'compact',
     compactDisplay: 'short'
   })

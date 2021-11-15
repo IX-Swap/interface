@@ -137,7 +137,7 @@ const apiService = {
   },
 
   _prepareBody(data: any) {
-    return this._isFormData(data) ? data : JSON.stringify(data)
+    return data
   }
 }
 

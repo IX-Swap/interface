@@ -25,7 +25,7 @@ export const Filters = ({
     <Grid container spacing={2} justify='space-between'>
       <Grid item xs={12} lg={4}>
         <SearchFilter
-          inputAdormentPosition='end'
+          inputAdornmentPosition='end'
           placeholder='Search'
           fullWidth
         />

@@ -6,7 +6,7 @@ import { BannerTable } from 'app/pages/admin/components/BannerTable'
 export const BannerList = () => {
   const { data: banners, isLoading } = useBannersList()
 
-  if (isLoading) {
+  if (isLoading || banners === undefined) {
     return null
   }
 

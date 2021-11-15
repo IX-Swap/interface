@@ -73,3 +73,6 @@ export const formatCamelCasedWithSpaces = (value: string) => {
 
   return str.replace(/([A-Z])/g, ' $1')
 }
+
+export const getTextWithOrWithoutColon = (text: string, hasColon: boolean) =>
+  hasColon ? text.concat(':') : text

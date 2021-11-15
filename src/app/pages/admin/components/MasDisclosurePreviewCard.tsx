@@ -2,6 +2,7 @@ import { Card, CardContent, Typography } from '@material-ui/core'
 import React from 'react'
 import { VSpacer } from 'components/VSpacer'
 import { useTheme } from '@material-ui/core/styles'
+import ExchangePreview from 'assets/images/exchange-preview.png'
 
 export const MasDisclosurePreviewCard = () => {
   const theme = useTheme()
@@ -22,7 +23,7 @@ export const MasDisclosurePreviewCard = () => {
         <img
           width={'100%'}
           height={'auto'}
-          src={require('assets/images/exchange-preview.png')}
+          src={ExchangePreview}
           alt={'exchange-preview'}
         />
         <VSpacer size={'small'} />

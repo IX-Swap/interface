@@ -10,3 +10,15 @@ export interface CustodyAccount {
   createdAt: string
   updatedAt: string
 }
+
+export interface CustodyAccountsListItem {
+  _id: string
+  status: string
+  name: string
+  userId: string
+  walletAddress: string
+  accountId: number
+  active: boolean
+  assignedAt: string
+  type: string
+}

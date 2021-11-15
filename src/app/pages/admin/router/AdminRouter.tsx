@@ -1,3 +1,5 @@
+import React from 'react'
+import { Switch } from 'react-router'
 import { LandingPage } from 'app/components/LandingPage/LandingPage'
 import { AccessReports } from 'app/pages/admin/pages/AccessReports'
 import { CreateCorporateAsAdmin } from 'app/pages/admin/pages/CreateCorporateAsAdmin'
@@ -8,8 +10,6 @@ import { AppRoute } from 'components/AppRoute'
 import { Identities } from 'app/pages/admin/pages/Identities'
 import { ViewCorporateIdentity } from 'app/pages/admin/pages/ViewCorporateIdentity'
 import { ViewIndividualIdentity } from 'app/pages/admin/pages/ViewIndividualIdentity'
-import React from 'react'
-import { Switch } from 'react-router'
 import { VirtualAccounts } from 'app/pages/admin/pages/VirtualAccounts'
 import { UserRouter } from 'app/pages/admin/router/UserRouter'
 import { MasDisclosure } from 'app/pages/admin/pages/MasDisclosure'
@@ -19,6 +19,7 @@ import { VirtualAccountTransactions } from 'app/pages/admin/pages/VirtualAccount
 import { BlockchainSettings } from 'app/pages/admin/pages/BlockchainSettings'
 import { RootContainer } from 'ui/RootContainer'
 import { privateClassNames } from 'helpers/classnames'
+import { CustodyManagementRouter } from 'app/pages/admin/router/CustodyManagementRouter'
 
 export const AdminRouter = () => {
   return (
@@ -133,6 +134,15 @@ export const AdminRouter = () => {
         breadcrumb='Blockchain Settings'
       >
         <BlockchainSettings />
+      </AppRoute>
+
+      <AppRoute
+        path={AdminRoute.custodyManagement}
+        breadcrumb='Custody Management'
+      >
+        <RootContainer className={privateClassNames()}>
+          <CustodyManagementRouter />
+        </RootContainer>
       </AppRoute>
 
       <AppRoute exact path={AdminRoute.landing}>

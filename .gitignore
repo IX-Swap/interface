@@ -1,7 +1,3 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-
-
 bfg.jar
 # dependencies
 /node_modules
@@ -15,7 +11,8 @@ bfg.jar
 .scannerwork
 coverage
 reports
-
+.history
+allure-results/
 # production
 /build
 

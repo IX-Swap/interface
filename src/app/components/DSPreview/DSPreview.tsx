@@ -9,7 +9,7 @@ export const DSPreview = () => {
   const params = useParams<{ balanceId: string }>()
   const balance = data.map[params.balanceId]
 
-  if (isLoading) {
+  if (isLoading || balance === undefined) {
     return null
   }
 

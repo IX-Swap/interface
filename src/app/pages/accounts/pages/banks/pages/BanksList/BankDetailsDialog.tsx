@@ -12,13 +12,17 @@ import React from 'react'
 import { Bank } from 'types/bank'
 import CloseIcon from '@material-ui/icons/Close'
 
-export interface BankDetailsDialog {
+export interface BankDetailsDialogProps {
   bank: Bank
   open: boolean
   close: () => void
 }
 
-export const BankDetailsDialog = ({ bank, open, close }: BankDetailsDialog) => {
+export const BankDetailsDialog = ({
+  bank,
+  open,
+  close
+}: BankDetailsDialogProps) => {
   const theme = useTheme()
   return (
     <Dialog open={open} maxWidth='sm' fullWidth>

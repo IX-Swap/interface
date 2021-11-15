@@ -27,9 +27,7 @@ describe('BankPreview', () => {
   })
 
   it('renders nothing if data is null', () => {
-    const { container } = render(
-      <BankPreview data={(null as unknown) as Bank} />
-    )
+    const { container } = render(<BankPreview data={null as unknown as Bank} />)
 
     expect(container).toBeEmptyDOMElement()
   })

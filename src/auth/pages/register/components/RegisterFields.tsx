@@ -57,7 +57,6 @@ export const RegisterFields = () => {
         <PasswordField showErrors />
       </Grid>
       <Grid item>
-        {/* @ts-ignore */}
         <TypedField
           customRenderer
           valueExtractor={booleanValueExtractor}

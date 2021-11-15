@@ -5,7 +5,7 @@ import { MasDisclosureBaseFields } from 'app/pages/admin/components/MasDisclosur
 import { RichTextEditor } from 'components/form/RichTextEditor'
 import { wysiwygValueExtractor } from 'helpers/forms'
 import { Form } from 'components/form/Form'
-import { fireEvent, waitFor } from '@testing-library/dom'
+import { fireEvent } from '@testing-library/dom'
 import * as useFormContext from 'react-hook-form'
 import * as useGetSiteConfig from 'app/pages/exchange/hooks/useGetSiteConfig'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
@@ -19,7 +19,6 @@ jest.mock('app/components/LoadingIndicator/LoadingIndicator', () => ({
 }))
 
 describe('MasDisclosureBaseFields', () => {
-  const setIsDialogOpen = jest.fn()
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
@@ -37,6 +36,7 @@ describe('MasDisclosureBaseFields', () => {
     jest
       .spyOn(useGetSiteConfig, 'useGetSiteConfig')
       .mockImplementation(() => ({ isLoading: true } as any))
+
     render(
       <Form>
         <MasDisclosureBaseFields />
@@ -72,7 +72,7 @@ describe('MasDisclosureBaseFields', () => {
     )
   })
 
-  it('calls setIsDialogOpen hook on update button click', async () => {
+  it('opens dialog when the button is clicked', async () => {
     const control = jest.fn()
     const watch = jest.fn().mockImplementation(() => 'test')
     jest
@@ -83,10 +83,8 @@ describe('MasDisclosureBaseFields', () => {
     jest
       .spyOn(useFormContext, 'useFormContext')
       .mockImplementation(() => ({ control: control, watch: watch } as any))
-    jest
-      .spyOn(React, 'useState')
-      .mockImplementation(() => [false, setIsDialogOpen])
-    const { getByText } = render(
+
+    const { getByText, getByTestId } = render(
       <Form>
         <MasDisclosureBaseFields />
       </Form>
@@ -94,8 +92,7 @@ describe('MasDisclosureBaseFields', () => {
 
     const updateButton = getByText('Update')
     fireEvent.click(updateButton)
-    await waitFor(() => {
-      expect(setIsDialogOpen).toBeCalledWith(true)
-    })
+
+    expect(getByTestId('mas-disclosure-dialog')).toBeInTheDocument()
   })
 })

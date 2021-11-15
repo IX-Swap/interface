@@ -10,34 +10,34 @@ import debounce from 'lodash/debounce'
 import { QueryFilter } from 'hooks/filters/useQueryFilter'
 
 interface SearchFilterProps extends OutlinedInputProps {
-  inputAdormentPosition?: 'start' | 'end'
+  inputAdornmentPosition?: 'start' | 'end'
   filterValue?: QueryFilter
 }
 
 export const SearchFilter = (props: SearchFilterProps) => {
   const {
-    inputAdormentPosition = 'start',
+    inputAdornmentPosition = 'start',
     filterValue = 'search',
     ...rest
   } = props
 
   return (
-    <SearchQueryFilter<'search'> name={filterValue}>
+    <SearchQueryFilter name={filterValue}>
       {({ value, onChange, onClear }) => (
         <OutlinedInput
           {...rest}
           margin='dense'
           defaultValue={value}
           startAdornment={
-            inputAdormentPosition === 'start' ? (
-              <InputAdornment position={inputAdormentPosition}>
+            inputAdornmentPosition === 'start' ? (
+              <InputAdornment position={inputAdornmentPosition}>
                 <Search color='disabled' />
               </InputAdornment>
             ) : null
           }
           endAdornment={
-            inputAdormentPosition === 'end' ? (
-              <InputAdornment position={inputAdormentPosition}>
+            inputAdornmentPosition === 'end' ? (
+              <InputAdornment position={inputAdornmentPosition}>
                 <Search color='disabled' />
               </InputAdornment>
             ) : null

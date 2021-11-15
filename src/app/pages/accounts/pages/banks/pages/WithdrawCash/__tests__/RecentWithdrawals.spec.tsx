@@ -25,7 +25,9 @@ describe('RecentWithdrawals', () => {
       .spyOn(useAuthHook, 'useAuth')
       .mockImplementation(() => ({ user: user, isAuthenticated: true }))
 
-    const useFormContextResponse = { watch: () => virtualAccount.accountNumber }
+    const useFormContextResponse = {
+      watch: () => virtualAccount.accountNumber
+    }
 
     jest
       .spyOn(useFormContext, 'useFormContext')

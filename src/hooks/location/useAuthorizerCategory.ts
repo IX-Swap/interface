@@ -4,5 +4,5 @@ import { AuthorizerCategory } from 'types/app'
 export const useAuthorizerCategory = () => {
   const { feature } = useCurrentLocationData()
 
-  return (feature as unknown) as AuthorizerCategory
+  return feature as unknown as AuthorizerCategory
 }

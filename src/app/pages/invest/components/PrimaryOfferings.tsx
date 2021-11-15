@@ -15,22 +15,15 @@ export const PrimaryOfferings = () => {
   const search = getFilterValue('search')
   const primaryOfferingSearch = getFilterValue('primaryOfferingSearch')
 
-  const {
-    items,
-    status,
-    page,
-    setPage,
-    setRowsPerPage,
-    rowsPerPage,
-    total
-  } = useTableWithPagination({
-    queryKey: dsoQueryKeys.getPromoted,
-    uri: issuanceURL.dso.getAllPromoted,
-    defaultFilter: { search: search ?? primaryOfferingSearch },
-    queryEnabled: true,
-    defaultRowsPerPage: 5,
-    disabledUseEffect: true
-  })
+  const { items, status, page, setPage, setRowsPerPage, rowsPerPage, total } =
+    useTableWithPagination({
+      queryKey: dsoQueryKeys.getPromoted,
+      uri: issuanceURL.dso.getAllPromoted,
+      defaultFilter: { search: search ?? primaryOfferingSearch },
+      queryEnabled: true,
+      defaultRowsPerPage: 5,
+      disabledUseEffect: true
+    })
 
   if (status === 'loading' || items.length === undefined) {
     return null
@@ -63,7 +56,7 @@ export const PrimaryOfferings = () => {
               setPage(0)
               setRowsPerPage(parseInt(evt.target.value))
             }}
-            onChangePage={(evt, newPage: number) => {
+            onPageChange={(evt, newPage: number) => {
               setPage(newPage)
             }}
           />

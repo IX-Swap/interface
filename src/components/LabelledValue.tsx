@@ -85,6 +85,12 @@ export const LabelledValue = (props: LabelledValueProps & GridProps) => {
 
   const theme = useTheme()
 
+  const labelColorMap = {
+    default: theme.palette.text.primary,
+    light: theme.palette.text.hint,
+    dark: 'rgba(255,255,255,.7)'
+  }
+
   const items = [
     {
       text: label,
@@ -94,9 +100,7 @@ export const LabelledValue = (props: LabelledValueProps & GridProps) => {
         width: '100%',
         color: isNewThemeOn
           ? theme.palette.slider.activeColor
-          : labelColor === 'default'
-          ? theme.palette.text.primary
-          : theme.palette.text.hint
+          : labelColorMap[labelColor]
       }
     },
     {

@@ -25,16 +25,13 @@ export const ReasonFields = ({
   index,
   defaultValue
 }: ReasonFieldsProps) => {
-  const {
-    control,
-    watch
-  } = useFormContext<IndividualTaxDeclarationFormValues>()
+  const { control, watch } =
+    useFormContext<IndividualTaxDeclarationFormValues>()
   const reason = watch(`taxResidencies[${index}].reason`)
   const isBReason = reason === 'B'
 
   return (
     <Box ml={3}>
-      {/* @ts-ignore */}
       <TypedField
         customRenderer
         component={RadioGroup}
