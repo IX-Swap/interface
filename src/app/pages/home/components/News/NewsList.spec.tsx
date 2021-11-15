@@ -10,16 +10,17 @@ import { NewsItem } from 'app/pages/home/components/News/NewsItem'
 import TablePagination from '@material-ui/core/TablePagination'
 import { news } from '__fixtures__/news'
 
-const useTableWithPaginationMockReturnValue: useTableWithPaginationHook.UseTableWithPaginationReturnType<any> = {
-  total: 4,
-  items: news,
-  setRowsPerPage: jest.fn(),
-  setPage: jest.fn(),
-  status: QueryStatus.Idle,
-  fetchMore: jest.fn(),
-  page: 0,
-  rowsPerPage: 4
-}
+const useTableWithPaginationMockReturnValue: useTableWithPaginationHook.UseTableWithPaginationReturnType<any> =
+  {
+    total: 4,
+    items: news,
+    setRowsPerPage: jest.fn(),
+    setPage: jest.fn(),
+    status: QueryStatus.Idle,
+    fetchMore: jest.fn(),
+    page: 0,
+    rowsPerPage: 4
+  }
 
 jest.mock('app/pages/home/components/News/NewsItem', () => ({
   NewsItem: jest.fn(() => null)

@@ -21,7 +21,7 @@ export const BannerTitle = ({ text, onChange }: BannerTitleProps) => {
     }
   }
   const onEditButtonClick = async () => {
-    await setIsEdit(!isEdit)
+    setIsEdit(!isEdit)
     if (!isEdit) {
       // @ts-expect-error
       inputRef.current.focus()

@@ -48,7 +48,7 @@ export const BannerBaseFields = () => {
       </Grid>
       <Grid item xs={12}>
         <VSpacer size={'medium'} />
-        {/* @ts-ignore */}
+        {/* @ts-expect-error */}
         <TypedField
           customRenderer
           component={Dropzone}

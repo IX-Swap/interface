@@ -6,14 +6,12 @@ import { useFormContext } from 'react-hook-form'
 import { privateClassNames } from 'helpers/classnames'
 import { Address } from 'app/pages/identity/types/forms'
 
-export interface AddressFieldsProps<FormType> {
+export interface AddressFieldsProps {
   rootName?: string
   defaultValue?: Address
 }
 
-export const AddressFields = <FormType,>(
-  props: AddressFieldsProps<FormType>
-): JSX.Element => {
+export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
   const { rootName = 'address', defaultValue } = props
   const { control } = useFormContext<Address>()
 

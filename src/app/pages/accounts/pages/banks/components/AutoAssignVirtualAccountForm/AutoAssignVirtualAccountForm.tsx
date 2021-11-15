@@ -18,10 +18,8 @@ export const AutoAssignVirtualAccountForm = ({
   const handleOpen = () => {
     setOpen(true)
   }
-  const [
-    assignVirtualAccount,
-    { isLoading, isSuccess }
-  ] = useAssignVirtualAccount(handleClose, isAdditional)
+  const [assignVirtualAccount, { isLoading, isSuccess }] =
+    useAssignVirtualAccount(handleClose, isAdditional)
   const handleSubmit = async (args: any) => {
     await assignVirtualAccount(args)
   }

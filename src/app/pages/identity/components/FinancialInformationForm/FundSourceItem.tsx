@@ -24,7 +24,6 @@ export const FundSourceItem = ({
     <Grid item key={field.name}>
       <Grid container>
         <Grid item xs={5}>
-          {/* @ts-ignore */}
           <TypedField
             customRenderer
             valueExtractor={booleanValueExtractor}

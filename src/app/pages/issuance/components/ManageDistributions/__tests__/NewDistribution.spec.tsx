@@ -17,7 +17,10 @@ describe('NewDistribution', () => {
     const { getByRole } = render(<NewDistribution />)
     const newDistributionButton = getByRole('button') as HTMLButtonElement
 
-    fireEvent.click(newDistributionButton, { cancellable: true, bubbles: true })
+    fireEvent.click(newDistributionButton, {
+      cancellable: true,
+      bubbles: true
+    })
     expect(/create new distribution/i).toBeTruthy()
   })
 })

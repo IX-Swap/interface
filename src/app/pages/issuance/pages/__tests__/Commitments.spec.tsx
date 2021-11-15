@@ -17,16 +17,17 @@ import { CloseDealDialog } from 'app/pages/issuance/components/Commitments/Close
 import Button from '@material-ui/core/Button'
 import { VSpacer } from 'components/VSpacer'
 
-const useTableWithPaginationMockReturnValue: useTableWithPaginationHook.UseTableWithPaginationReturnType<any> = {
-  total: 4,
-  items: [],
-  setRowsPerPage: jest.fn(),
-  setPage: jest.fn(),
-  status: QueryStatus.Idle,
-  fetchMore: jest.fn(),
-  page: 0,
-  rowsPerPage: 4
-}
+const useTableWithPaginationMockReturnValue: useTableWithPaginationHook.UseTableWithPaginationReturnType<any> =
+  {
+    total: 4,
+    items: [],
+    setRowsPerPage: jest.fn(),
+    setPage: jest.fn(),
+    status: QueryStatus.Idle,
+    fetchMore: jest.fn(),
+    page: 0,
+    rowsPerPage: 4
+  }
 
 jest.mock('app/components/LoadingIndicator/LoadingIndicator', () => ({
   LoadingIndicator: jest.fn(() => null)

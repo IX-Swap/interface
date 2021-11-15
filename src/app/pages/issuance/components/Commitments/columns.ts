@@ -9,7 +9,6 @@ export const renderCommitment = (commitmentValue: number, commitment: any) => {
     new Intl.NumberFormat('en-US', {
       maximumFractionDigits: 2,
       minimumFractionDigits: 2,
-      // @ts-expect-error
       notation: 'compact',
       compactDisplay: 'short'
     })

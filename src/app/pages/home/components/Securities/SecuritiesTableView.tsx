@@ -151,7 +151,7 @@ export const SecuritiesTableView = ({
             count={data.length}
             rowsPerPage={rowsPerPage}
             page={page}
-            onChangePage={handleChangePage}
+            onPageChange={handleChangePage}
             onChangeRowsPerPage={handleChangeRowsPerPage}
           />
         </Grid>

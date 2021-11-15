@@ -57,7 +57,6 @@ export const FundSourceSlider = ({
 
   return (
     <Box width={210} height={38}>
-      {/* @ts-expect-error */}
       <TypedField
         valueExtractor={sliderValueExtractor}
         customRenderer

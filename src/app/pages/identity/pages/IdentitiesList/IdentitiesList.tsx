@@ -9,11 +9,8 @@ import { RootContainer } from 'ui/RootContainer'
 import { AppContentWrapper } from 'ui/AppContentWrapper'
 
 export const IdentitiesList: React.FC = () => {
-  const {
-    hasIdentity,
-    isLoadingIdentities,
-    detailsOfIssuance
-  } = useGetIdentities()
+  const { hasIdentity, isLoadingIdentities, detailsOfIssuance } =
+    useGetIdentities()
 
   if (isLoadingIdentities) {
     return <LoadingIndicator />

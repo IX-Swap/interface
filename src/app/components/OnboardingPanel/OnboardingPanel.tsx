@@ -8,14 +8,8 @@ import { BottomPanel } from 'app/components/OnboardingPanel/BottomPanel'
 import { TopPanel } from 'app/components/OnboardingPanel/TopPanel'
 
 export const OnboardingPanel = () => {
-  const {
-    panel,
-    drawer,
-    drawerPaper,
-    drawerClose,
-    drawerOpen,
-    toggleButton
-  } = useStyles()
+  const { panel, drawer, drawerPaper, drawerClose, drawerOpen, toggleButton } =
+    useStyles()
 
   const { open, setOpen } = useOnboardingPanel()
 

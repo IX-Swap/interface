@@ -24,8 +24,6 @@ export const SearchQueryFilterGroupProvider = (
   const { children } = props
   const [state, dispatch] = useReducer(searchQueryFilterGroupReducer, {})
 
-  console.log(state)
-
   return (
     <SearchQueryFilterGroupDispatchContext.Provider value={dispatch}>
       <SearchQueryFilterGroupStateContext.Provider value={state}>

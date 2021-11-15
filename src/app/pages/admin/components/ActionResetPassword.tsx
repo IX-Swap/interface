@@ -10,11 +10,8 @@ export interface ActionResetPasswordProps {
 }
 
 export const ActionResetPassword = ({ data }: ActionResetPasswordProps) => {
-  const {
-    resetPasswordOpen,
-    closeResetPassword,
-    openResetPassword
-  } = useUserActionsDialog()
+  const { resetPasswordOpen, closeResetPassword, openResetPassword } =
+    useUserActionsDialog()
 
   const handleOpenResetPassword = () => {
     const isActive = isResetActive(

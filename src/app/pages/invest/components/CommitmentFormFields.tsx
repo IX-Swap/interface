@@ -34,7 +34,6 @@ export const CommitmentFormFields = (props: CommitmentFormFieldsProps) => {
   return (
     <Grid container direction='column' spacing={2}>
       <Grid item>
-        {/* @ts-ignore */}
         <TypedField
           customRenderer
           control={control}

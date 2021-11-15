@@ -38,9 +38,7 @@ describe('useUpdateDecimal', () => {
       await invokeMutationFn(result, payload)
 
       expect(apiServiceMock.put).toBeCalledTimes(1)
-      expect(
-        apiServiceMock.put
-      ).toBeCalledWith(
+      expect(apiServiceMock.put).toBeCalledWith(
         blockchainNetworksURL.getUpdateDecimal(
           payload.network,
           payload.decimal

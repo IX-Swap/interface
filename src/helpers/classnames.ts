@@ -1,5 +1,4 @@
 import classNames from 'classnames'
-import { ClassValue } from 'classnames/types'
 
-export const privateClassNames = (...classes: ClassValue[]): string =>
+export const privateClassNames = (...classes: any[]): string =>
   classNames(...classes, 'fs-exclude')

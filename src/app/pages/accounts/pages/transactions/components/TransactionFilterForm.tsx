@@ -6,15 +6,16 @@ export interface TransactionFilterFormProps extends PropsWithChildren<any> {}
 
 export const TransactionFilterForm = (props: TransactionFilterFormProps) => {
   const { data, isLoading } = useAssetsData()
+  const asset = data.list[0]
 
-  if (isLoading) {
+  if (isLoading || asset === undefined) {
     return null
   }
 
   return (
     <Form
       defaultValues={{
-        asset: data.list[0]._id,
+        asset: asset._id,
         from: null,
         to: null
       }}

@@ -23,7 +23,7 @@ export const DSOSubscriptionDocument = () => {
               <DataroomHeader />
             </Box>
           )}
-          {/* @ts-ignore */}
+
           <TypedField
             customRenderer
             control={control}
