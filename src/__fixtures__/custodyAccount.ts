@@ -1,4 +1,8 @@
-import { CustodiansCount, CustodyAccountsListItem } from 'types/custodyAccount'
+import {
+  CustodyAccountsListItem,
+  CustodyDetails,
+  CustodiansCount
+} from 'types/custodyAccount'
 
 export const custodyAccountMock = {
   _id: '6090ede8da777221e21eb2f9',
@@ -42,6 +46,20 @@ export const fakeCustodyAccountsListItem: CustodyAccountsListItem = {
   active: true,
   assignedAt: '2021-04-27T04:21:39.140Z',
   type: 'hex'
+}
+
+export const fakeCustodyDetails: CustodyDetails = {
+  wallets: [
+    {
+      asset_tickers: ['test1', 'test2'],
+      wallet_name: 'wallet name'
+    }
+  ],
+  account_id: 2,
+  account_name: 'account name',
+  user: {
+    name: 'name'
+  }
 }
 
 export const fakeCustodiansCount: CustodiansCount = {
