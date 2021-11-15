@@ -137,8 +137,10 @@ export function useSecTokensFromMap(tokenMap: SecTokenAddressMap): { [address: s
 }
 
 export function useAccreditationStatus(currencyId?: string) {
+  const { secTokens: userSecTokens } = useUserSecTokens()
   const { secTokens } = useSecTokens()
-  const tokenInfo = (secTokens[currencyId ?? ''] as any)?.tokenInfo
+  const token = userSecTokens[currencyId ?? ''] ?? secTokens[currencyId ?? '']
+  const tokenInfo = (token as any)?.tokenInfo
 
   return useMemo(() => {
     const accreditationRequest: AccreditationRequest | null = tokenInfo?.accreditationRequest || null
