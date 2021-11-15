@@ -22,3 +22,10 @@ export interface CustodyAccountsListItem {
   assignedAt: string
   type: string
 }
+
+export interface CustodiansCount {
+  hexCount: number
+  investaxCount: number
+  hexPercent: string
+  investaxPercent: string
+}
