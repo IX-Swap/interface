@@ -2,12 +2,12 @@ import { Grid } from '@material-ui/core'
 import React from 'react'
 import { TableColumn } from 'types/util'
 import get from 'lodash/get'
-import { Actions } from 'app/pages/authorizer/components/Actions'
+import { ActionsType } from 'app/pages/authorizer/components/Actions'
 
 export interface CompactRowProps<T> {
   data: T
   columns: Array<TableColumn<T, string>>
-  actions?: Actions<T>
+  actions?: ActionsType<T>
   hasActions?: boolean
 }
 
