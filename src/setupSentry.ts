@@ -6,7 +6,7 @@ import { history } from 'config/history'
 export const setupSentry = () => {
   if (process.env.NODE_ENV === 'production') {
     Sentry.init({
-      release: `ix-web-app@${APP_VERSION}`,
+      release: 'ix-web-app@pilot',
       environment: ENVIRONMENT,
       dsn: 'https://4afbf02fe87d483fa71d4c895010ac76@o461614.ingest.sentry.io/5463633',
       integrations: [
