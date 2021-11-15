@@ -15,7 +15,7 @@ import { periodsInDays, periodsInSeconds } from 'constants/stakingPeriods'
 import useIXSCurrency from 'hooks/useIXSCurrency'
 import { useActiveWeb3React } from 'hooks/web3'
 import { Dots } from 'pages/Pool/styleds'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Text } from 'rebass'
 import { ApplicationModal } from 'state/application/actions'
 import { useModalOpen } from 'state/application/hooks'
@@ -105,12 +105,12 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
     ym(84960586, 'reachGoal', 'stakingSubmitStakeButtonClicked')
   }
 
-  async function onApprove() {
+  const onApprove = useCallback(async () => {
     await increaseAllowance(typedValue)
 
     const { ym } = window
     ym(84960586, 'reachGoal', 'stakingApproveIXSButtonClicked')
-  }
+  }, [increaseAllowance, typedValue])
 
   // wrapped onUserInput to clear signatures
   const onUserInput = () => {
@@ -179,23 +179,38 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
     ym(84960586, 'reachGoal', 'stakingConditionsTermsClicked')
   }
 
-  const isDisabledStake = useCallback((): boolean => {
+  const isDisabledStake = useMemo((): boolean => {
+    if (isNaN(parseFloat(typedValue))) return true
     if (!termsAccepted || Boolean(error)) return true
     if (isApprovingIXS || isStaking) return true
     if (allowanceAmount < parseFloat(typedValue)) return true
     return false
   }, [termsAccepted, allowanceAmount, isApprovingIXS, isStaking, typedValue, error])
 
-  const isDisabledApprove = useCallback((): boolean => {
+  const isDisabledApprove = useMemo((): boolean => {
+    if (isNaN(parseFloat(typedValue))) return true
     if (!termsAccepted || Boolean(error)) return true
     if (isApprovingIXS || isStaking) return true
     if (allowanceAmount >= parseFloat(typedValue)) return true
     return false
   }, [termsAccepted, allowanceAmount, isApprovingIXS, isStaking, typedValue, error])
 
-  const isAmountApproved = (): boolean => {
-    return allowanceAmount >= parseFloat(typedValue)
-  }
+  const isAmountApproved = useMemo(() => allowanceAmount >= parseFloat(typedValue), [allowanceAmount, typedValue])
+
+  const approveButton = useMemo(
+    () => (
+      <ButtonIXSWide data-testid="approve-staking" disabled={isDisabledApprove || isAmountApproved} onClick={onApprove}>
+        {isApprovingIXS ? (
+          <Dots>
+            <Trans>Approving {currency?.symbol}</Trans>
+          </Dots>
+        ) : (
+          <>{isAmountApproved ? t`Approved ${currency?.symbol}` : t`Approve ${currency?.symbol}`}</>
+        )}
+      </ButtonIXSWide>
+    ),
+    [currency?.symbol, isAmountApproved, isApprovingIXS, isDisabledApprove, onApprove]
+  )
 
   return (
     <RedesignedWideModal isOpen={isOpen} onDismiss={wrappedOnDismiss} scrollable>
@@ -381,16 +396,8 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
               </TYPE.body1>
             </RowCenter>
             <ActionButtons>
-              <ButtonIXSWide data-testid="approve-staking" disabled={isDisabledApprove()} onClick={onApprove}>
-                {isApprovingIXS ? (
-                  <Dots>
-                    <Trans>Approving {currency?.symbol}</Trans>
-                  </Dots>
-                ) : (
-                  <>{isAmountApproved() ? t`Approved ${currency?.symbol}` : t`Approve ${currency?.symbol}`}</>
-                )}
-              </ButtonIXSWide>
-              <ButtonIXSWide data-testid="stake-button" disabled={isDisabledStake()} onClick={onStake}>
+              {approveButton}
+              <ButtonIXSWide data-testid="stake-button" disabled={isDisabledStake} onClick={onStake}>
                 {isStaking ? (
                   <Dots>
                     <Trans>Staking</Trans>
