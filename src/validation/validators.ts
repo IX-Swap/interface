@@ -5,6 +5,7 @@ import {
   IndividualDeclarations
 } from 'app/pages/identity/const/declarations'
 import { hasValue } from 'helpers/forms'
+import { ValidationError } from 'yup'
 
 const passwordPatterns = [/[A-Z]/, /[a-z]/, /[0-9]/, /[^A-Za-z0-9]/]
 
@@ -243,11 +244,23 @@ export const validateUEN = (uen: any) => {
   return false
 }
 
-export const uniqueIdentifierCodeValidator = (value: string) => {
+export const uniqueIdentifierCodeLengthValidator = (value: string) => {
   if (value.length < 12) {
     return 'Unique Identifier Code must be at least 12 characters'
   }
   if (value.length > 32) {
     return 'Unique Identifier Code must be at most 32 characters'
   }
+}
+
+export const uniqueIdentifierCodeValidator = (
+  value: string | undefined | null
+) => {
+  if (value !== null && value !== undefined && value.length > 0) {
+    const error = uniqueIdentifierCodeLengthValidator(value)
+    return error !== undefined
+      ? new ValidationError(error, value, 'uniqueIdentifierCode')
+      : true
+  }
+  return true
 }

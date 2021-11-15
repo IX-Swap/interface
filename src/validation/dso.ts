@@ -1,6 +1,6 @@
 import { DsoFAQItem, DSOFormValues, DsoTeamMember, DsoVideo } from 'types/dso'
 import { DataroomFile, FormArrayElement } from 'types/dataroomFile'
-import { string, number, array, object, ValidationError } from 'yup'
+import { string, number, array, object } from 'yup'
 import { dateSchema } from './shared'
 import { pastDateValidator, uniqueIdentifierCodeValidator } from './validators'
 
@@ -125,15 +125,7 @@ export const dsoFormBaseValidationSchema = {
   uniqueIdentifierCode: string().test(
     'length',
     'Required',
-    (value: string | undefined | null) => {
-      if (value !== null && value !== undefined && value.length > 0) {
-        const error = uniqueIdentifierCodeValidator(value)
-        return error !== undefined
-          ? new ValidationError(error, value, 'uniqueIdentifierCode')
-          : true
-      }
-      return true
-    }
+    uniqueIdentifierCodeValidator
   )
 }
 
