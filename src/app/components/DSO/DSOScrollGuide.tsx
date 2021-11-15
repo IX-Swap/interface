@@ -38,6 +38,8 @@ export const DSOScrollGuide = ({
     if (!hasFAQ) {
       return name !== 'FAQs'
     }
+
+    return true
   }
 
   if (!hasVideo || !hasFAQ) {
