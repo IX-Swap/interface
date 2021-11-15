@@ -14,6 +14,7 @@ import { dso } from '__fixtures__/authorizer'
 describe('NewDistributionFormFields', () => {
   const asset = {
     _id: '5f732c538a568b50914d8372',
+    symbol: 'SGD',
     available: 120000000
   }
 
@@ -24,7 +25,7 @@ describe('NewDistributionFormFields', () => {
       .mockImplementation(() => useDSOByIdResponse as any)
 
     const objResponse = generateInfiniteQueryResult({
-      map: { [asset._id]: asset },
+      map: { [asset.symbol]: asset },
       isLoading: false
     })
 
@@ -76,7 +77,7 @@ describe('NewDistributionFormFields', () => {
 
   it('returns null when isLoading', () => {
     const objResponse = generateInfiniteQueryResult({
-      map: { [asset._id]: asset },
+      map: { [asset.symbol]: asset },
       isLoading: true
     })
 
@@ -101,11 +102,12 @@ describe('NewDistributionFormFields', () => {
   it('renders warning text if not enough balance', () => {
     const assetInsufficent = {
       _id: '5f732c538a568b50914d8372',
+      symbol: 'SGD',
       available: 0
     }
 
     const objResponse = generateInfiniteQueryResult({
-      map: { [asset._id]: assetInsufficent },
+      map: { [asset.symbol]: assetInsufficent },
       isLoading: false
     })
 
