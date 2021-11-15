@@ -248,15 +248,16 @@ export const uniqueIdentifierCodeValidator = (
   value: string | undefined | null
 ) => {
   if (value !== null && value !== undefined && value.length > 0) {
-    const uniqueIdentifierCodeLengthValidator = (value: string) => {
+    const uniqueIdentifierCodeLengthValidator = () => {
       if (value.length < 12) {
         return 'Unique Identifier Code must be at least 12 characters'
       }
       if (value.length > 32) {
         return 'Unique Identifier Code must be at most 32 characters'
       }
+      return undefined
     }
-    const error = uniqueIdentifierCodeLengthValidator(value)
+    const error = uniqueIdentifierCodeLengthValidator()
     return error !== undefined
       ? new ValidationError(error, value, 'uniqueIdentifierCode')
       : true
