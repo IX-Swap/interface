@@ -20,7 +20,7 @@ describe('AccountsUnderCustody', () => {
     render(<AccountsUnderCustody />)
   })
 
-  it('renders Chart component correct when data is undefined', () => {
+  it('renders Chart component correctly when data is undefined', () => {
     jest.spyOn(useGetCustodianCount, 'useGetCustodiansCount').mockReturnValue({
       data: undefined,
       isLoading: false
@@ -30,7 +30,7 @@ describe('AccountsUnderCustody', () => {
     expect(container).toBeEmptyDOMElement()
   })
 
-  it('renders Chart component correct when data is loading', () => {
+  it('renders Chart component correctly when data is loading', () => {
     jest.spyOn(useGetCustodianCount, 'useGetCustodiansCount').mockReturnValue({
       data: fakeCustodiansCount,
       isLoading: true
