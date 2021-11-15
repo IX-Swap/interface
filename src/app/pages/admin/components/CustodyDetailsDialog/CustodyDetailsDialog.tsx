@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import React from 'react'
 import {
   Button,
@@ -16,6 +17,13 @@ import { VSpacer } from 'components/VSpacer'
 import useStyles from 'app/pages/admin/components/CustodyDetailsDialog/CustodyDetailsDialog.styles'
 import { useGetCustodianDetails } from 'app/pages/admin/hooks/useGetCustodianDetails'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
+import { Wallet } from 'types/custodyAccount'
+
+export const getWalletsWithOrderedDetails = (wallets: Wallet[]) =>
+  wallets.map(({ asset_tickers, wallet_name }) => ({
+    wallet_name,
+    asset_tickers
+  }))
 
 export const CustodyDetailsDialog = () => {
   const { replace } = useHistory()
@@ -23,26 +31,19 @@ export const CustodyDetailsDialog = () => {
   const classes = useStyles()
   const params = useParams<{ accountId: string }>()
 
-  // TODO Change next line after backend api will change
-
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const { data, isLoading } = useGetCustodianDetails(params.accountId)
 
   if (data === undefined) {
     return null
   }
-  // eslint-disable-next-line @typescript-eslint/naming-convention
+
   const { user, wallets, account_id, account_name } = data
-  const walletsWithOrderedDetails = wallets.map(
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    ({ asset_tickers, wallet_name }) => {
-      return { wallet_name, asset_tickers }
-    }
-  )
+
   const details = {
     account_id,
     account_name,
-    wallets: walletsWithOrderedDetails
+    wallets: getWalletsWithOrderedDetails(wallets)
   }
 
   if (isLoading) {
@@ -76,7 +77,7 @@ export const CustodyDetailsDialog = () => {
           justifyContent='center'
           className={classes.content}
         >
-          <pre>{JSON.stringify(details, null, 1)}</pre>
+          <pre data-testid={'content'}>{JSON.stringify(details, null, 1)}</pre>
         </Box>
       </DialogContent>
       <VSpacer size={'small'} />

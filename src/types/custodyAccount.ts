@@ -24,15 +24,15 @@ export interface CustodyAccountsListItem {
 }
 
 export interface CustodyDetails {
-  wallets: [
-    {
-      asset_tickers: string[]
-      wallet_name: string
-    }
-  ]
+  wallets: Wallet[]
   account_id: number
   account_name: string
   user: {
     name: string
   }
+}
+
+export interface Wallet {
+  asset_tickers: string[]
+  wallet_name: string
 }
