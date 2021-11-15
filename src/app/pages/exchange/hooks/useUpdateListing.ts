@@ -37,10 +37,9 @@ export const useUpdateListing = (
       )
 
       void snackbarService.showSnackbar('Success', 'success')
-      void queryCache.invalidateQueries([
-        exchangeListingsQueryKeys.getListingById,
-        listingId
-      ])
+      void queryCache.invalidateQueries(
+        exchangeListingsQueryKeys.getListingById(listingId, issuerId)
+      )
     },
     onError: (error: any) => {
       void snackbarService.showSnackbar(error.message, 'error')
