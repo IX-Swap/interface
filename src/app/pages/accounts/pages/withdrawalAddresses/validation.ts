@@ -8,7 +8,7 @@ import { BlockchainWallet } from 'components/form/WalletSelect'
 export const waFormValidationSchema = yup
   .object()
   .shape<WithdrawalAddressFormValues>({
-    variant: yup.string<BlockchainAddressVariant>().required('Required'),
+    variant: yup.string<BlockchainAddressVariant>().strip(true),
     network: yup.string().required('Required'),
     wallet: yup.string<BlockchainWallet>(),
     memo: yup.string(),

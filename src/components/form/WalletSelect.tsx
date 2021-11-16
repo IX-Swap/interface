@@ -2,9 +2,7 @@ import { MenuItem, Select, SelectProps } from '@material-ui/core'
 import React from 'react'
 
 export enum BlockchainWallet {
-  Metamask = 'Metamask',
-  Hedera = 'Hedera Wallet',
-  Tezos = 'Tezos Wallet'
+  Metamask = 'Metamask'
 }
 
 export const WalletSelect = (props: SelectProps) => {
@@ -14,7 +12,11 @@ export const WalletSelect = (props: SelectProps) => {
         Select Wallet
       </MenuItem>
       {Object.entries(BlockchainWallet).map(([label, value]) => (
-        <MenuItem key={value} value={value}>
+        <MenuItem
+          key={value}
+          value={value}
+          disabled={value !== BlockchainWallet.Metamask}
+        >
           {label}
         </MenuItem>
       ))}
