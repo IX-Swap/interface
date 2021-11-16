@@ -1,15 +1,12 @@
-import React from 'react'
 import { Grid } from '@material-ui/core'
+import { NetworkSelect } from 'components/form/NetworkSelect'
+import { Radios } from 'components/form/Radios'
+import { TypedField } from 'components/form/TypedField'
 import { useFormContext } from 'react-hook-form'
 import {
   BlockchainAddressVariant,
   WithdrawalAddressFormValues
 } from 'types/withdrawalAddress'
-import { TypedField } from 'components/form/TypedField'
-import { NetworkSelect } from 'components/form/NetworkSelect'
-import { Radios } from 'components/form/Radios'
-import { CreateWalletFields } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/CreateWalletFields'
-import { ConnectWalletFields } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/ConnectWalletFields'
 
 const radios: Array<{ label: string; value: BlockchainAddressVariant }> = [
   {
@@ -22,11 +19,10 @@ const radios: Array<{ label: string; value: BlockchainAddressVariant }> = [
   }
 ]
 
-export const WAFormFields = () => {
+export const WABaseFields = () => {
   const { control, watch } = useFormContext<WithdrawalAddressFormValues>()
-  const variant = watch('variant')
-  const isCreateWallet = variant === 'create'
-  const isConnectWallet = variant === 'connect'
+  const wallet = watch('wallet')
+  const hasWallet = wallet !== undefined
 
   return (
     <>
@@ -51,11 +47,9 @@ export const WAFormFields = () => {
           component={NetworkSelect}
           name='network'
           label='Blockchain Network'
+          disabled={hasWallet}
         />
       </Grid>
-
-      {isCreateWallet && <CreateWalletFields />}
-      {isConnectWallet && <ConnectWalletFields />}
     </>
   )
 }
