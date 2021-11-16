@@ -14,16 +14,18 @@
     "experimentalDecorators": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react",
+    "jsx": "react-jsx",
     "sourceMap": true,
     "inlineSources": true,
     "sourceRoot": "/",
-    "noErrorTruncation": false
+    "noErrorTruncation": false,
+    "noFallthroughCasesInSwitch": true
   },
   "apiUrl": "https://api.mozork.com",
   "include": [

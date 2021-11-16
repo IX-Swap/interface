@@ -36,7 +36,6 @@ export const IndividualInfoFields = (
     <Grid container>
       <Box>
         <Box marginRight={2}>
-          {/* @ts-ignore */}
           <TypedField
             customRenderer
             component={Dropzone}
@@ -86,7 +85,6 @@ export const IndividualInfoFields = (
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
-            {/* @ts-ignore */}
             <TypedField
               className={privateClassNames()}
               rootName={rootName}

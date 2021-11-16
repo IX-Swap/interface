@@ -10,7 +10,7 @@ jest.mock('app/pages/authorizer/components/Actions', () => ({
 describe('withExtraActions', () => {
   const item = {}
 
-  it('extends Actions component with provided props', () => {
+  it('extends ActionsType component with provided props', () => {
     const ExtendedActions = withExtraActions()
     render(<ExtendedActions item={item} cacheQueryKey={[]} />)
 

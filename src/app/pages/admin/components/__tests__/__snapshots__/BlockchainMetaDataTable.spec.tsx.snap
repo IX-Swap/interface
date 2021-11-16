@@ -1,0 +1,112 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BlockchainMetaDataTable should match snapshot 1`] = `
+<div>
+  <div
+    class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-item"
+    >
+      <div
+        class="MuiPaper-root MuiPaper-outlined MuiPaper-rounded"
+        style="background-color: inherit;"
+      >
+        <div
+          class="MuiTableContainer-root"
+        >
+          <table
+            aria-label="table"
+            class="MuiTable-root"
+            data-testid="table"
+          >
+            <thead
+              class="MuiTableHead-root"
+              style="background-color: rgb(20, 18, 114); height: 50px; display: table-header-group;"
+            >
+              <tr
+                class="MuiTableRow-root MuiTableRow-head"
+              >
+                <th
+                  class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft"
+                  scope="col"
+                >
+                  <b
+                    style="color: rgb(255, 255, 255);"
+                  >
+                    Smart Contract Data Field
+                  </b>
+                </th>
+                <th
+                  class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft"
+                  scope="col"
+                >
+                  <b
+                    style="color: rgb(255, 255, 255);"
+                  >
+                    Data Type
+                  </b>
+                </th>
+                <th
+                  class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft"
+                  scope="col"
+                >
+                  <b
+                    style="color: rgb(255, 255, 255);"
+                  >
+                    Source: Data Collection -&gt; Data Documents
+                  </b>
+                </th>
+              </tr>
+            </thead>
+            <tbody
+              class="MuiTableBody-root"
+            >
+              <tr
+                class="MuiTableRow-root"
+                style="background-color: rgb(255, 255, 255);"
+              >
+                <td
+                  class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"
+                >
+                  Name 1
+                </td>
+                <td
+                  class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"
+                >
+                  Description 1
+                </td>
+                <td
+                  class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"
+                >
+                  Value 1
+                </td>
+              </tr>
+              <tr
+                class="MuiTableRow-root"
+                style="background-color: rgb(248, 248, 253);"
+              >
+                <td
+                  class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"
+                >
+                  Name 2
+                </td>
+                <td
+                  class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"
+                >
+                  Description 2
+                </td>
+                <td
+                  class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"
+                >
+                  Value 2
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

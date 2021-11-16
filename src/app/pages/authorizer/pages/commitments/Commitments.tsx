@@ -8,12 +8,10 @@ import { useBulkAuthorizeCommitments } from 'app/pages/authorizer/hooks/useBulkA
 import { useSearchQuery } from 'hooks/useSearchQuery'
 
 export const Commitments: React.FC = () => {
-  const [approve, { isLoading: approveLoading }] = useBulkAuthorizeCommitments(
-    'approve'
-  )
-  const [reject, { isLoading: rejectLoading }] = useBulkAuthorizeCommitments(
-    'reject'
-  )
+  const [approve, { isLoading: approveLoading }] =
+    useBulkAuthorizeCommitments('approve')
+  const [reject, { isLoading: rejectLoading }] =
+    useBulkAuthorizeCommitments('reject')
 
   const searchQuery = useSearchQuery()
   const fundStatus = searchQuery.get('fundStatus')

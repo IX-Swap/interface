@@ -2,7 +2,6 @@ import React from 'react'
 import { ErrorBoundary } from '@sentry/react'
 import { Header } from 'app/components/Header/Header'
 import { Grid } from '@material-ui/core'
-import { useTheme } from '@material-ui/core/styles'
 import { AppError } from 'app/components/AppError'
 import { useDataFromURL } from 'hooks/location/useDataFromURL'
 import { SidebarContainer } from 'app/components/SidebarContainer/SidebarContainer'
@@ -13,17 +12,8 @@ import { IdleDialog } from 'app/components/IdleDialog'
 import { useIdleTimers } from 'app/hooks/useIdleTimers'
 
 export const AppRoot = () => {
-  const theme = useTheme()
-  const backgroundColor = theme.palette.backgrounds.default
-
-  const {
-    open,
-    logoutTimer,
-    resetLogoutTimer,
-    closeDialog,
-    reset,
-    logout
-  } = useIdleTimers()
+  const { open, logoutTimer, resetLogoutTimer, closeDialog, reset, logout } =
+    useIdleTimers()
 
   useDataFromURL()
 
@@ -34,7 +24,7 @@ export const AppRoot = () => {
           <Header />
         </Grid>
         <SidebarContainer />
-        <AppContentWrapper item container style={{ backgroundColor }}>
+        <AppContentWrapper item container>
           <OnboardingContentWrapper>
             <AppRouter />
           </OnboardingContentWrapper>

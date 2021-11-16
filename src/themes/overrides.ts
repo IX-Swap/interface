@@ -15,10 +15,16 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
   },
   MuiDialog: {
     paper: {
-      borderRadius: 0
+      borderRadius: 10
     },
     paperWidthMd: {
       maxWidth: 800
+    }
+  },
+  MuiDialogContent: {
+    root: {
+      paddingLeft: 40,
+      paddingRight: 40
     }
   },
   MuiListItem: {
@@ -32,6 +38,19 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
   MuiCard: {
     root: {
       borderRadius: 8
+    }
+  },
+  MuiCardContent: {
+    root: {
+      padding: 32,
+      '&:last-child': {
+        paddingBottom: 32
+      }
+    }
+  },
+  MuiCardActions: {
+    root: {
+      padding: 32
     }
   },
   MuiTableCell: {
@@ -59,10 +78,11 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
     root: {
       fontWeight: 400,
       color: theme.palette.primary.light,
-      '&.MuiLink-underlineHover:active, &.MuiLink-underlineHover:visited, &.MuiLink-underlineAlways:active, &.MuiLink-underlineAlways:visited': {
-        color: theme.palette.primary.light,
-        textDecoration: 'none'
-      },
+      '&.MuiLink-underlineHover:active, &.MuiLink-underlineHover:visited, &.MuiLink-underlineAlways:active, &.MuiLink-underlineAlways:visited':
+        {
+          color: theme.palette.primary.light,
+          textDecoration: 'none'
+        },
 
       '&:hover': {
         cursor: 'pointer'

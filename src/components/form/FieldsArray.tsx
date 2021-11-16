@@ -33,6 +33,7 @@ export const FieldsArray = <
 ) => {
   const { control, name, children } = props
   const fieldArray = useFieldArray<
+    // @ts-expect-error
     DeepPathValue<TFieldValues, DeepPathArray<TFieldValues, ['0']>>
   >({
     control,

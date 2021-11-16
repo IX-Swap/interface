@@ -46,10 +46,10 @@ describe('RequestStep', () => {
       .spyOn(useRequestPasswordResetHook, 'useRequestPasswordReset')
       .mockReturnValue([requestReset, generateMutationResult({})])
 
-    const {
-      getByText,
-      getByLabelText
-    } = renderWithPasswordResetStore(<RequestStep />, { setEmail })
+    const { getByText, getByLabelText } = renderWithPasswordResetStore(
+      <RequestStep />,
+      { setEmail }
+    )
     const email = getByLabelText(/email address/i)
     const submitButton = getByText(/reset/i)
 

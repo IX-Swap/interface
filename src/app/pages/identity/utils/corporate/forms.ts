@@ -91,11 +91,8 @@ export const getCorporateInvestorDocumentsFormValues = (
   data: CorporateIdentity | undefined
 ): IndividualDocumentsFormValues => {
   return data?.documents.reduce((result: any, document) => {
-    const {
-      evidenceOfAccreditation,
-      financialDocuments,
-      corporateDocuments
-    } = result
+    const { evidenceOfAccreditation, financialDocuments, corporateDocuments } =
+      result
 
     if (document.type === 'Evidence of Accreditation') {
       return {

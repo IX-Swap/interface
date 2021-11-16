@@ -47,7 +47,7 @@ describe('useWithdrawalAddressById', () => {
       const apiService = { get: getFn }
 
       const { result } = renderHookWithServiceProvider(
-        () => useWithdrawalAddressById((undefined as unknown) as string),
+        () => useWithdrawalAddressById(undefined as unknown as string),
         { apiService }
       )
 

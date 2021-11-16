@@ -8,10 +8,6 @@ export const VTDirectionFilter = () => {
   const value = getFilterValue('transferDirection')
 
   const handleChange = (event: ChangeEvent<{ value: string }>) => {
-    const {
-      target: { value }
-    } = event
-
     updateFilter('transferDirection', event.target.value)
   }
 

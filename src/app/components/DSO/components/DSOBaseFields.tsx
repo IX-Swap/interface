@@ -30,7 +30,6 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
           <FormSectionHeader title='DSO Information' />
         </Grid>
         <Grid item>
-          {/* @ts-ignore */}
           <TypedField
             customRenderer
             component={Dropzone}
@@ -145,7 +144,6 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
         <Grid item>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6}>
-              {/* @ts-ignore */}
               <TypedField
                 component={DateTimePicker}
                 customRenderer
@@ -161,7 +159,6 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
               />
             </Grid>
             <Grid item xs={12} md={6}>
-              {/* @ts-ignore */}
               <TypedField
                 component={DateTimePicker}
                 customRenderer

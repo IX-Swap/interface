@@ -11,34 +11,30 @@ export interface IndividualIdentityContainerProps {
   fallbackComponent?: ComponentType
 }
 
-export const IndividualIdentityContainer: FC<IndividualIdentityContainerProps> = ({
-  component,
-  loadingComponent,
-  errorComponent,
-  fallbackComponent
-}) => {
-  const { userId } = useParams<{ userId: string; identityId: string }>()
-  const { data, isLoading, isError } = useIndividualIdentity(userId)
+export const IndividualIdentityContainer: FC<IndividualIdentityContainerProps> =
+  ({ component, loadingComponent, errorComponent, fallbackComponent }) => {
+    const { userId } = useParams<{ userId: string; identityId: string }>()
+    const { data, isLoading, isError } = useIndividualIdentity(userId)
 
-  if (isLoading) {
-    return loadingComponent === undefined
-      ? null
-      : createElement(loadingComponent)
+    if (isLoading) {
+      return loadingComponent === undefined
+        ? null
+        : createElement(loadingComponent)
+    }
+
+    if (isError) {
+      return errorComponent === undefined ? null : createElement(errorComponent)
+    }
+
+    if (data === undefined) {
+      return fallbackComponent === undefined
+        ? null
+        : createElement(fallbackComponent)
+    }
+
+    if (component !== undefined) {
+      return createElement(component, { data })
+    }
+
+    return <IndividualIdentityView data={data} />
   }
-
-  if (isError) {
-    return errorComponent === undefined ? null : createElement(errorComponent)
-  }
-
-  if (data === undefined) {
-    return fallbackComponent === undefined
-      ? null
-      : createElement(fallbackComponent)
-  }
-
-  if (component !== undefined) {
-    return createElement(component, { data })
-  }
-
-  return <IndividualIdentityView data={data} />
-}

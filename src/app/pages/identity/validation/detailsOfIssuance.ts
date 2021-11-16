@@ -1,7 +1,7 @@
 import { DataroomFile } from 'types/dataroomFile'
 import { emailSchema, taxIdentificationNumberSchema } from 'validation/shared'
 import * as yup from 'yup'
-import 'yup-phone'
+import 'yup-phone-lite'
 
 export const issuerDetailsSchema = yup.object().shape<any>({
   fullName: yup.string().required('Required'),

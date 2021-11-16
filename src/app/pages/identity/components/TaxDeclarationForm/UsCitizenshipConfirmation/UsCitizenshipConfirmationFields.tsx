@@ -9,7 +9,6 @@ export const UsCitizenshipConfirmationFields = () => {
   const fatca = watch('fatca')
   return (
     <>
-      {/* @ts-ignore */}
       <TypedField
         customRenderer
         component={RadioGroup}
