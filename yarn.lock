@@ -4765,6 +4765,11 @@
   dependencies:
     "@types/node" "*"
 
+"@types/multicoin-address-validator@^0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@types/multicoin-address-validator/-/multicoin-address-validator-0.5.0.tgz#3888ec229c799652972849ae3456de7958f1424f"
+  integrity sha512-I0D2PiV0r5u9pmnFqx5F5tbI4v1Xek+KDMCiTIZMyXO3UM6VoFYt9Tpqk7jfOEXBMVjmkX7anYy6E6KZfnAihg==
+
 "@types/node-fetch@^2.5.7":
   version "2.5.10"
   resolved "https://registry.npmjs.org/@types/node-fetch/-/node-fetch-2.5.10.tgz"
@@ -7502,6 +7507,11 @@ browserify-aes@^1.0.0, browserify-aes@^1.0.4, browserify-aes@^1.0.6, browserify-
     inherits "^2.0.1"
     safe-buffer "^5.0.1"
 
+browserify-bignum@^1.3.0-2:
+  version "1.3.0-2"
+  resolved "https://registry.yarnpkg.com/browserify-bignum/-/browserify-bignum-1.3.0-2.tgz#ddc3b6ed607fd6c960966950e2b35a2b0c6fb9bf"
+  integrity sha1-3cO27WB/1slglmlQ4rNaKwxvub8=
+
 browserify-cipher@^1.0.0:
   version "1.0.1"
   resolved "https://registry.npmjs.org/browserify-cipher/-/browserify-cipher-1.0.1.tgz"
@@ -7679,7 +7689,7 @@ buffer@^4.3.0:
     ieee754 "^1.1.4"
     isarray "^1.0.0"
 
-buffer@^5.0.5, buffer@^5.2.0, buffer@^5.2.1, buffer@^5.4.3, buffer@^5.5.0, buffer@^5.6.0:
+buffer@^5.0.5, buffer@^5.1.0, buffer@^5.2.0, buffer@^5.2.1, buffer@^5.4.3, buffer@^5.5.0, buffer@^5.6.0:
   version "5.7.1"
   resolved "https://registry.npmjs.org/buffer/-/buffer-5.7.1.tgz"
   integrity sha512-EHcyIPBQ4BSGlvjB16k5KgAJ27CIsHY/2JBmCRReo48y9rQ3MaUzWX3KVlBa4U7MyX02HdVj0K7C3WaB3ju7FQ==
@@ -7703,6 +7713,11 @@ builtin-status-codes@^3.0.0:
   version "3.0.0"
   resolved "https://registry.npmjs.org/builtin-status-codes/-/builtin-status-codes-3.0.0.tgz"
   integrity sha1-hZgoeOIbmOHGZCXgPQF0eI9Wnug=
+
+bundle@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/bundle/-/bundle-2.1.0.tgz#ab47ccc48eb688f706e6ecd323d01db6854aa25e"
+  integrity sha512-d7TeT8m2HuymDjSEmMppWe/h5SSPPUZkaWKrAofx6gNXDdZ3FL/81oOTGPG+LIaZbNr9m4rtUi98Yw0Q1vHIIw==
 
 bytes@3.0.0:
   version "3.0.0"
@@ -7915,6 +7930,11 @@ caseless@~0.12.0:
   version "0.12.0"
   resolved "https://registry.npmjs.org/caseless/-/caseless-0.12.0.tgz"
   integrity sha1-G2gcIf+EAzyCZUMJBolCDRhxUdw=
+
+cbor-js@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/cbor-js/-/cbor-js-0.1.0.tgz#c80ce6120f387e8faa74370dfda21d965b8fc7f9"
+  integrity sha1-yAzmEg84fo+qdDcN/aIdlluPx/k=
 
 ccount@^1.0.0:
   version "1.1.0"
@@ -8130,6 +8150,13 @@ classnames@^2.2.5:
   version "2.3.1"
   resolved "https://registry.npmjs.org/classnames/-/classnames-2.3.1.tgz"
   integrity sha512-OlQdbZ7gLfGarSqxesMesDa5uz7KFbID8Kpq/SxIoNGDqY8lSYs0D+hhtBXhcdB3rcbXArFr7vlHheLk1voeNA==
+
+clean-css@^4.1.6:
+  version "4.2.4"
+  resolved "https://registry.yarnpkg.com/clean-css/-/clean-css-4.2.4.tgz#733bf46eba4e607c6891ea57c24a989356831178"
+  integrity sha512-EJUDT7nDVFDvaQgAo2G/PJvxmp1o/c6iXLbswsBbUFXi1Nr+AjA2cKmfbKDMjMvzEe75g3P6JkaDDAKk96A85A==
+  dependencies:
+    source-map "~0.6.0"
 
 clean-css@^4.2.3:
   version "4.2.3"
@@ -8747,6 +8774,13 @@ crc-32@^1.2.0:
     exit-on-epipe "~1.0.1"
     printj "~1.1.0"
 
+crc@^3.8.0:
+  version "3.8.0"
+  resolved "https://registry.yarnpkg.com/crc/-/crc-3.8.0.tgz#ad60269c2c856f8c299e2c4cc0de4556914056c6"
+  integrity sha512-iX3mfgcTMIq3ZKLIsVFAbv7+Mc10kxabAGQb8HvjA1o3T1PIYprbakQ65d3I+2HGHt6nSKkM9PYjgoJO2KcFBQ==
+  dependencies:
+    buffer "^5.1.0"
+
 create-ecdh@^4.0.0:
   version "4.0.4"
   resolved "https://registry.npmjs.org/create-ecdh/-/create-ecdh-4.0.4.tgz"
@@ -8873,6 +8907,11 @@ crypto-random-string@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/crypto-random-string/-/crypto-random-string-1.0.0.tgz"
   integrity sha1-ojD2T1aDEOFJgAmUB5DsmVRbyn4=
+
+css-b64-images@~0.2.5:
+  version "0.2.5"
+  resolved "https://registry.yarnpkg.com/css-b64-images/-/css-b64-images-0.2.5.tgz#42005d83204b2b4a5d93b6b1a5644133b5927a02"
+  integrity sha1-QgBdgyBLK0pdk7axpWRBM7WSegI=
 
 css-blank-pseudo@^0.1.4:
   version "0.1.4"
@@ -12411,7 +12450,7 @@ html-escaper@^2.0.0:
   resolved "https://registry.npmjs.org/html-escaper/-/html-escaper-2.0.2.tgz"
   integrity sha512-H2iMtd0I4Mt5eYiapRdIDjp+XzelXQ0tFE4JS7YFwFevXXMmOp9myNrUvCg0D6ws8iqkRPBfKHgbwig1SmlLfg==
 
-html-minifier-terser@^5.0.1:
+html-minifier-terser@^5.0.1, html-minifier-terser@^5.1.1:
   version "5.1.1"
   resolved "https://registry.npmjs.org/html-minifier-terser/-/html-minifier-terser-5.1.1.tgz"
   integrity sha512-ZPr5MNObqnV/T9akshPKbVgyOqLmy+Bxo7juKCfTfnjNniTAMdy4hz21YQqoofMBJD2kdREaqPPdThoR78Tgxg==
@@ -13979,6 +14018,11 @@ js-sha3@0.8.0, js-sha3@^0.8.0:
   resolved "https://registry.npmjs.org/js-sha3/-/js-sha3-0.8.0.tgz"
   integrity sha512-gF1cRrHhIzNfToc802P800N8PpXS+evLLXfsVpowqmAFR9uwbi89WvXg2QspOmXL8QL86J4T1EpFu+yUkwJY3Q==
 
+js-sha512@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/js-sha512/-/js-sha512-0.8.0.tgz#dd22db8d02756faccf19f218e3ed61ec8249f7d4"
+  integrity sha512-PWsmefG6Jkodqt+ePTvBZCSMFgN7Clckjd0O7su3I0+BW2QWUTJNzjktHsztGLhncP2h8mcF9V9Y2Ha59pAViQ==
+
 js-string-escape@^1.0.1:
   version "1.0.1"
   resolved "https://registry.npmjs.org/js-string-escape/-/js-string-escape-1.0.1.tgz"
@@ -14207,6 +14251,11 @@ jsprim@^1.2.2:
     extsprintf "1.3.0"
     json-schema "0.2.3"
     verror "1.10.0"
+
+jssha@^2.4.2:
+  version "2.4.2"
+  resolved "https://registry.yarnpkg.com/jssha/-/jssha-2.4.2.tgz#d950b095634928bd6b2bda1d42da9a3a762d65e9"
+  integrity sha512-/jsi/9C0S70zfkT/4UlKQa5E1xKurDnXcQizcww9JSR/Fv+uIbWM2btG+bFcL3iNoK9jIGS0ls9HWLr1iw0kFg==
 
 "jsx-ast-utils@^2.4.1 || ^3.0.0", jsx-ast-utils@^3.1.0:
   version "3.2.0"
@@ -14575,6 +14624,11 @@ lodash.get@^4, lodash.get@^4.4.2:
   version "4.4.2"
   resolved "https://registry.yarnpkg.com/lodash.get/-/lodash.get-4.4.2.tgz#2d177f652fa31e939b4438d5341499dfa3825e99"
   integrity sha1-LRd/ZS+jHpObRDjVNBSZ36OCXpk=
+
+lodash.isequal@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/lodash.isequal/-/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
+  integrity sha1-QVxEePK8wwEgwizhDtMib30+GOA=
 
 lodash.keys@^4.2.0:
   version "4.2.0"
@@ -15128,6 +15182,18 @@ mini-css-extract-plugin@0.11.3:
     schema-utils "^1.0.0"
     webpack-sources "^1.1.0"
 
+minify@^6.0.1:
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/minify/-/minify-6.0.1.tgz#d53413fc2e67b47642269087bc912da60ab6492e"
+  integrity sha512-JMG5VruvghXZ1VnPCffnpESUzrhNPTT/uNogew9CmPdd3zmohSEt8/HhPxpR7CiXnBYWExW2gGoagZxTy9rnLg==
+  dependencies:
+    clean-css "^4.1.6"
+    css-b64-images "~0.2.5"
+    debug "^4.1.0"
+    html-minifier-terser "^5.1.1"
+    terser "^5.3.2"
+    try-to-catch "^3.0.0"
+
 minimalistic-assert@^1.0.0, minimalistic-assert@^1.0.1:
   version "1.0.1"
   resolved "https://registry.npmjs.org/minimalistic-assert/-/minimalistic-assert-1.0.1.tgz"
@@ -15339,6 +15405,21 @@ multicodec@^3.0.1:
   dependencies:
     uint8arrays "^2.1.3"
     varint "^5.0.2"
+
+multicoin-address-validator@^0.5.2:
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/multicoin-address-validator/-/multicoin-address-validator-0.5.2.tgz#02f4574a6936bee17252571b2c410222cdb0e9f3"
+  integrity sha512-0X0g1dhWKhtpadIe+cwTonTObw7FrHZkJVfd9yjlPFnictOrVZOaMFWLU0iV1Ok9vl4oi8H0t4OWAAMRAuYwJw==
+  dependencies:
+    base-x "^3.0.8"
+    browserify-bignum "^1.3.0-2"
+    bundle "^2.1.0"
+    cbor-js "^0.1.0"
+    crc "^3.8.0"
+    js-sha512 "^0.8.0"
+    jssha "^2.4.2"
+    lodash.isequal "^4.5.0"
+    minify "^6.0.1"
 
 multihashes@^0.4.15, multihashes@~0.4.15:
   version "0.4.21"
@@ -19509,7 +19590,7 @@ source-map-support@^0.5.16, source-map-support@^0.5.6, source-map-support@~0.5.1
     buffer-from "^1.0.0"
     source-map "^0.6.0"
 
-source-map-support@^0.5.17:
+source-map-support@^0.5.17, source-map-support@~0.5.20:
   version "0.5.20"
   resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.5.20.tgz#12166089f8f5e5e8c56926b377633392dd2cb6c9"
   integrity sha512-n1lZZ8Ve4ksRqizaBQgxXDgKwttHDhyfQjA6YZZn8+AroHbsIz+JjwxQDxbp+7y5OYCI8t1Yk7etjD9CRd2hIw==
@@ -20324,6 +20405,15 @@ terser@^4.1.2, terser@^4.6.2, terser@^4.6.3, terser@^4.8.0:
     source-map "~0.6.1"
     source-map-support "~0.5.12"
 
+terser@^5.3.2:
+  version "5.10.0"
+  resolved "https://registry.yarnpkg.com/terser/-/terser-5.10.0.tgz#b86390809c0389105eb0a0b62397563096ddafcc"
+  integrity sha512-AMmF99DMfEDiRJfxfY5jj5wNH/bYO09cniSqhfoyxc8sFoYIgkJy86G04UoZU5VjlpnplVu0K6Tx6E9b5+DlHA==
+  dependencies:
+    commander "^2.20.0"
+    source-map "~0.7.2"
+    source-map-support "~0.5.20"
+
 terser@^5.3.4:
   version "5.7.0"
   resolved "https://registry.npmjs.org/terser/-/terser-5.7.0.tgz"
@@ -20577,6 +20667,11 @@ truffle-privatekey-provider@^1.2.0:
   dependencies:
     ethereumjs-wallet "^1.0.0"
     web3-provider-engine "^15.0.12"
+
+try-to-catch@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/try-to-catch/-/try-to-catch-3.0.0.tgz#a1903b44d13d5124c54d14a461d22ec1f52ea14b"
+  integrity sha512-eIm6ZXwR35jVF8By/HdbbkcaCDTBI5PpCPkejRKrYp0jyf/DbCCcRhHD7/O9jtFI3ewsqo9WctFEiJTS6i+CQA==
 
 tryer@^1.0.1:
   version "1.0.1"

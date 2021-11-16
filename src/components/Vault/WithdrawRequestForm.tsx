@@ -30,7 +30,7 @@ export const WithdrawRequestForm = ({ currency, changeModal }: Props) => {
   const { account } = useActiveWeb3React()
   const { amount, receiver, currencyId: cid } = useWithdrawState()
   const { secTokens } = useUserSecTokens()
-  const { onTypeAmount, onTypeReceiver, onCurrencySet } = useWithdrawActionHandlers()
+  const { onTypeAmount, onTypeReceiver, onCurrencySet, onSetNetWorkName } = useWithdrawActionHandlers()
   const { address, loading } = useENS(receiver)
   const error = Boolean(receiver.length > 0 && !loading && !address)
   const withdraw = useWithdrawCallback(cid, currency?.symbol)
@@ -43,6 +43,12 @@ export const WithdrawRequestForm = ({ currency, changeModal }: Props) => {
       onTypeReceiver(account ?? '')
     }
   }, [account, onTypeReceiver])
+
+  useEffect(() => {
+    if (networkName) {
+      onSetNetWorkName(networkName ?? '')
+    }
+  }, [networkName, onSetNetWorkName])
 
   const onClick = () => {
     const tokenId = (secTokens[cid ?? ''] as any)?.tokenInfo?.id
@@ -64,26 +70,13 @@ export const WithdrawRequestForm = ({ currency, changeModal }: Props) => {
   return (
     <div style={{ position: 'relative' }}>
       <Column style={{ gap: '25px', marginTop: '18px' }}>
-        {/* <Row style={{ marginTop: '18px' }}>
-          <TYPE.description3>
-            <b>
-              <Trans>Wrap to Sec info:</Trans>
-            </b>
-            &nbsp;
-            <Trans>
-              Donec sollicitudin molestie malesuada. Proin eget tortor risus. Curabitur arcu erat, accumsan id imperdiet
-              et, porttitor at sem. Vivamus suscipit tortor eget felis porttitor volutpat. Pellentesque in ipsum id orci
-              porta dapibus. Donec sollicitudin molestie malesuada
-            </Trans>
-          </TYPE.description3>
-        </Row> */}
         <Column>
           <TYPE.description3>
             <b>
               <Trans>Info:</Trans>
             </b>
             &nbsp;
-            <Trans>{`Your wrapped ${tokenInfo?.symbol} will be extracted from your Ethereum wallet and burnt automatically.`}</Trans>
+            <Trans>{`Your wrapped ${tokenInfo?.symbol} will be extracted from your ${networkName} wallet and burnt automatically.`}</Trans>
           </TYPE.description3>
         </Column>
         <Column style={{ gap: '11px' }}>

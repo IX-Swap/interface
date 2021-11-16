@@ -15,7 +15,8 @@ import { tryParseAmount } from 'state/swap/helpers'
 import { useTransactionAdder } from 'state/transactions/hooks'
 import { useCurrencyBalance } from 'state/wallet/hooks'
 import { isAddress } from 'utils'
-import { setCurrency, setTransaction, typeAmount, typeReceiver, withdrawCurrency } from './actions'
+import { setCurrency, setNetwork, setTransaction, typeAmount, typeReceiver, withdrawCurrency } from './actions'
+import walletValidator from 'multicoin-address-validator'
 
 export function useWithdrawState(): AppState['withdraw'] {
   return useSelector<AppState, AppState['withdraw']>((state) => state.withdraw)
@@ -25,6 +26,7 @@ export function useWithdrawActionHandlers(): {
   onTypeAmount: (typedValue: string) => void
   onTypeReceiver: (typedValue: string) => void
   onCurrencySet: (currencyId: string) => void
+  onSetNetWorkName: (networkName: string) => void
 } {
   const dispatch = useDispatch<AppDispatch>()
 
@@ -48,10 +50,17 @@ export function useWithdrawActionHandlers(): {
     },
     [dispatch]
   )
+  const onSetNetWorkName = useCallback(
+    (networkName: string) => {
+      dispatch(setNetwork({ networkName }))
+    },
+    [dispatch]
+  )
   return {
     onTypeAmount,
     onTypeReceiver,
     onCurrencySet,
+    onSetNetWorkName,
   }
 }
 
@@ -62,13 +71,12 @@ export function useDerivedWithdrawInfo(): {
 } {
   const { account } = useActiveWeb3React()
 
-  const { amount, receiver, currencyId } = useWithdrawState()
+  const { amount, receiver, currencyId, networkName } = useWithdrawState()
 
   const inputCurrency = useCurrency(currencyId)
 
   const parsedAmount = tryParseAmount(amount, inputCurrency ?? undefined)
   const balance = useCurrencyBalance(account ?? undefined, inputCurrency ?? undefined)
-
   let inputError: string | undefined
   if (!account) {
     inputError = t`Connect Wallet`
@@ -78,12 +86,19 @@ export function useDerivedWithdrawInfo(): {
     inputError = inputError ?? t`Enter an amount`
   }
 
-  const formattedTo = isAddress(receiver)
+  let formattedTo = isAddress(receiver)
   if (!receiver) {
     inputError = inputError ?? t`Enter a receiver`
   } else if (!formattedTo) {
-    inputError = inputError ?? t`Receiver is invalid`
+    const isValidForNetwork = walletValidator.validate(receiver, networkName ?? 'Ethereum')
+    if (!isValidForNetwork) {
+      inputError = inputError ?? t`Receiver is invalid`
+    }
+    if (isValidForNetwork) {
+      formattedTo = receiver
+    }
   }
+
   const sufficientBalance = parsedAmount && balance && !balance.lessThan(parsedAmount)
   if (!sufficientBalance) {
     inputError = inputError ?? t`Insufficient balance`
