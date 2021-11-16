@@ -2,19 +2,20 @@ name: Integration Tests
 
 on:
   push:
-    branches:
-      - e2e_tests
-  deployment_status:
-    branches:
-      - develop
+    branches: 
+      - e2e-investments
+
+  pull_request:
+    branches: 
       - staging
-      
+    types: 
+      - closed 
+     
 jobs:
   integration-tests:
+    if: github.event.pull_request.merged == true || github.event_name == 'push'
     name: Integration Tests
     runs-on: ubuntu-latest # or macos-latest, windows-latest
-
-    if: github.event.deployment_status.state == 'success' 
     steps:
       - uses: actions/checkout@v2
       - name: Set up node
@@ -23,16 +24,15 @@ jobs:
           node-version: 14.17
 
       - name: Set tests dependencies
-        run: npx playwright install-deps
-      - run: npx playwright install
-      - run: yarn
-      - name: Run Tests
+        run: yarn
+      - name: Run Integration Tests
         env:
           GH_REP: ${{github.ref}}
+          ALLURE_RESULTS_DIR: "reports/allure-results"
         run: yarn integration-test
       - uses: actions/upload-artifact@v2
         if: always()
         with:
           name: my-artifact
-          path: ./allure-results
+          path: ./reports
 
