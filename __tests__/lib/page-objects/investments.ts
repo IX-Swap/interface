@@ -1,18 +1,14 @@
-import { kyc } from './../selectors/kyc-form'
-import { authForms } from '../selectors/auth'
-import { baseCreds } from '../helpers/creds'
-import { text } from '../helpers/text'
-import { invest } from '../selectors/invest'
-
 import {
   click,
-  typeText,
-  waitNewPage,
-  navigate,
-  waitForText,
   shouldExist,
-  uploadFiles
+  typeText,
+  uploadFiles,
+  waitForText,
+  waitNewPage
 } from '../helpers/helpers'
+import { text } from '../helpers/text'
+import { invest } from '../selectors/invest'
+import { kyc } from './../selectors/kyc-form'
 
 class Invest {
   page: any
@@ -61,10 +57,41 @@ class Invest {
   toSecondaryMarket = async () => {
     await click(invest.INVEST_TAB, this.page)
     await click(invest.SECOND_MARKET, this.page)
+    await shouldExist(invest.GRAPH, this.page)
+    const present = await this.page.isVisible(kyc.DIALOG_VIEW)
+    if (present === true) {
+      console.log(present)
+      await click(invest.CHECKBOX, this.page)
+      await click(invest.buttons.I_AGREE, this.page)
+    }
   }
 
-  makeSecondMarketInvestment = async () => {
-    this.toSecondaryMarket()
+  secondMarketBuy = async () => {
+    await this.toSecondaryMarket()
+    await typeText(invest.fields.PRICE, '1', this.page)
+    await typeText(invest.fields.AMOUNT, '1', this.page)
+    await click(invest.buttons.PLACE_ORDER, this.page)
+    const toast = await this.page.innerText(invest.TOAST_NOTIFICATIONS)
+    return toast.includes('Order created')
+  }
+
+  secondMarketSell = async () => {
+    await this.toSecondaryMarket()
+    await click(invest.buttons.SELL, this.page)
+    await click(invest.listBox.PAIR_NAME, this.page)
+    await click(invest.listBox.AFHT_SGD_PAIR, this.page)
+    await typeText(invest.fields.PRICE, '1', this.page)
+    await typeText(invest.fields.AMOUNT, '1', this.page)
+    await click(invest.buttons.PLACE_ORDER, this.page)
+    const toast = await this.page.innerText(invest.TOAST_NOTIFICATIONS)
+    return toast.includes('Order created')
+  }
+
+  secondMarketCancelOrder = async () => {
+    await this.toSecondaryMarket()
+    await click(invest.buttons.CANCEL_ORDER, this.page)
+    const exist = await waitForText(this.page, 'Order Cancelled')
+    return exist
   }
 }
 export { Invest }
