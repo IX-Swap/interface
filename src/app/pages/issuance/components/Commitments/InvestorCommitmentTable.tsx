@@ -38,7 +38,7 @@ export const InvestorCommitmentTable = () => {
             name={dsoQueryKeys.getCommitmentsListByDSOId(dsoId)}
             columns={columns}
             filter={{
-              search,
+              searchInvestorName: search,
               fundStatus
             }}
             themeVariant={'primary'}
