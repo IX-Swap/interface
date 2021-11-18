@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { useFormContext } from 'react-hook-form'
-import { ethereumService } from 'services/ethereum'
 import { WithdrawalAddressFormValues } from 'types/withdrawalAddress'
 import { useGenerateWalletHash } from './useGenerateWalletHash'
 import { useVerifyWalletOwnership } from './useVerifyWalletOwnership'
@@ -14,7 +13,7 @@ export enum WalletConnectionStatus {
 }
 
 export function useConnectMetamaskWallet() {
-  const { snackbarService } = useServices()
+  const { snackbarService, web3Service } = useServices()
   const [status, setStatus] = useState(WalletConnectionStatus.IDLE)
   const { setValue, watch } = useFormContext<WithdrawalAddressFormValues>()
   const [generateWalletHash] = useGenerateWalletHash()
@@ -32,7 +31,7 @@ export function useConnectMetamaskWallet() {
       const walletHash = generateWalletHashResponse?.data
 
       if (walletHash !== undefined) {
-        const signedHash = await ethereumService.signWallet(walletHash, address)
+        const signedHash = await web3Service.signWallet(walletHash, address)
         const verifyOwnershipResponse = await verifyWalletOwnership({
           walletAddress: address,
           signedHash
@@ -54,7 +53,7 @@ export function useConnectMetamaskWallet() {
     setStatus(WalletConnectionStatus.INITIALISING)
 
     try {
-      const account = await ethereumService.getAccount()
+      const account = await web3Service.getAccount()
       setValue('address', account)
     } catch (error) {
       snackbarService.showSnackbar((error as Error).message, 'error')

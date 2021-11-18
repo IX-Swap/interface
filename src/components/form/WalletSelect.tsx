@@ -2,7 +2,7 @@ import { MenuItem, Select, SelectProps } from '@material-ui/core'
 import React from 'react'
 
 export enum BlockchainWallet {
-  Metamask = 'Metamask'
+  Metamask = 'METAMASK'
 }
 
 export const WalletSelect = (props: SelectProps) => {
