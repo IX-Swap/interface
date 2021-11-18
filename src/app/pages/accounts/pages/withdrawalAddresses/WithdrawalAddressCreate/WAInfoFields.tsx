@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Input } from '@material-ui/core'
+import { Grid, TextField } from '@material-ui/core'
 import { BigCheckboxWithLabel } from 'components/form/BigCheckboxWithLabel'
 import { TypedField } from 'components/form/TypedField'
 import { privateClassNames } from 'helpers/classnames'
@@ -16,9 +16,10 @@ export const WAInfoFields = () => {
         <TypedField
           className={privateClassNames()}
           control={control}
-          component={Input}
+          component={TextField}
           name='label'
           label='Address Label'
+          variant='outlined'
         />
       </Grid>
 
@@ -26,9 +27,10 @@ export const WAInfoFields = () => {
         <TypedField
           className={privateClassNames()}
           control={control}
-          component={Input}
+          component={TextField}
           name='memo'
           label='Memo'
+          variant='outlined'
         />
       </Grid>
 

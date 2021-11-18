@@ -1,5 +1,5 @@
-import { MenuItem, Select, SelectProps } from '@material-ui/core'
 import React from 'react'
+import { MenuItem, Select, SelectProps } from '@material-ui/core'
 
 export enum BlockchainWallet {
   Metamask = 'METAMASK'

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Input } from '@material-ui/core'
+import { Grid, TextField } from '@material-ui/core'
 import { TypedField } from 'components/form/TypedField'
 import { privateClassNames } from 'helpers/classnames'
 import { useFormContext } from 'react-hook-form'
@@ -14,10 +14,11 @@ export const WACreateFields = () => {
       <Grid item>
         <TypedField
           className={privateClassNames()}
-          component={Input}
+          component={TextField}
           control={control}
           name='address'
           label='Withdrawal Address'
+          variant='outlined'
         />
       </Grid>
 

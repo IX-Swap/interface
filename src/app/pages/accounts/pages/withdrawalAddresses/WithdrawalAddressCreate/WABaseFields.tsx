@@ -48,6 +48,7 @@ export const WABaseFields = () => {
           name='network'
           label='Blockchain Network'
           disabled={hasWallet}
+          variant='outlined'
         />
       </Grid>
     </>

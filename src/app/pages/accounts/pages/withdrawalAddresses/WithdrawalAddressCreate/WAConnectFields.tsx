@@ -2,7 +2,7 @@ import { useFormContext } from 'react-hook-form'
 import { WithdrawalAddressFormValues } from 'types/withdrawalAddress'
 import { TypedField } from 'components/form/TypedField'
 import { WalletSelect } from 'components/form/WalletSelect'
-import { Box, Grid, Input } from '@material-ui/core'
+import { Box, Grid, TextField } from '@material-ui/core'
 import { privateClassNames } from 'helpers/classnames'
 
 export const WAConnectFields = () => {
@@ -18,11 +18,12 @@ export const WAConnectFields = () => {
       {hasNetwork && (
         <Grid item>
           <TypedField
+            control={control}
             component={WalletSelect}
             name='wallet'
             label='Select Wallet'
-            control={control}
             disabled={hasAddress}
+            variant='outlined'
           />
         </Grid>
       )}
@@ -30,7 +31,8 @@ export const WAConnectFields = () => {
       <Grid component={Box} item display={addressDisplay}>
         <TypedField
           className={privateClassNames()}
-          component={Input}
+          component={TextField}
+          variant='outlined'
           name='address'
           label='Wallet Address'
           control={control}
