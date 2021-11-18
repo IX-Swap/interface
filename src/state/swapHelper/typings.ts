@@ -46,4 +46,5 @@ export interface SwapHelperState {
   openModal: boolean
   authorizationInProgress?: AuthorizationInProgress | null
   loadingSwap: boolean
+  swapId?: number
 }
