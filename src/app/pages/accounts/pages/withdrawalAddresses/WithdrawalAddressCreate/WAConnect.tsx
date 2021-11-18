@@ -10,6 +10,7 @@ import { Grid } from '@material-ui/core'
 import { WAConnectActions } from './WAConnectActions'
 import { WAConnectFields } from './WAConnectFields'
 import { WAInfoFields } from './WAInfoFields'
+import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 
 export const WAConnect = () => {
   const { status, getAccount, signWallet } = useConnectMetamaskWallet()
@@ -18,10 +19,11 @@ export const WAConnect = () => {
   const network = watch('network')
   const address = watch('address')
 
-  const isLoading = status === WalletConnectionStatus.LOADING
+  const isInitialising = status === WalletConnectionStatus.INITIALISING
+  const isVerified = status === WalletConnectionStatus.SUCCESS
+  const isVerifying = status === WalletConnectionStatus.VERIFYING
   const hasAddress = address !== undefined
   const hasNetwork = network !== undefined
-  const isVerified = status === WalletConnectionStatus.SUCCESS
 
   return (
     <>
@@ -30,8 +32,9 @@ export const WAConnect = () => {
       <WADialogActions>
         <Grid item container justify='flex-end'>
           <WAConnectActions
+            isVerifying={isVerifying}
             isVerified={isVerified}
-            isLoading={isLoading}
+            isLoading={isInitialising}
             hasNetwork={hasNetwork}
             hasAddress={hasAddress}
             getAccount={getAccount}
@@ -39,6 +42,14 @@ export const WAConnect = () => {
           />
         </Grid>
       </WADialogActions>
+
+      {isInitialising && (
+        <LoadingIndicator
+          opacity={1}
+          title='Initializing. Please Wait...'
+          message='By connecting a wallet, you agree to InvestaX’ Terms and Conditions and acknowledge that you have read and understand the InvestaX Privacy Policy.'
+        />
+      )}
     </>
   )
 }

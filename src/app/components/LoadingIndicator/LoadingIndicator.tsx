@@ -1,19 +1,23 @@
 import React from 'react'
 import {
-  Box,
   CircularProgress,
   Grid,
   GridProps,
   Typography
 } from '@material-ui/core'
+import { useStyles } from 'app/components/LoadingIndicator/LoadingIndicator.styles'
+import { VSpacer } from 'components/VSpacer'
 
 export interface LoadingIndicatorProps extends GridProps {
   size?: number
   message?: string
+  title?: string
+  opacity?: number
 }
 
 export const LoadingIndicator = (props: LoadingIndicatorProps) => {
-  const { size = 40, message, ...rest } = props
+  const { size, opacity, title, message, ...rest } = props
+  const classes = useStyles()
 
   return (
     <Grid
@@ -22,22 +26,23 @@ export const LoadingIndicator = (props: LoadingIndicatorProps) => {
       alignItems='center'
       justify='center'
       direction='column'
+      className={classes.wrapper}
       style={{
-        opacity: 0.75,
-        position: 'absolute',
-        left: 0,
-        top: 0,
-        bottom: 0,
-        right: 0,
-        backgroundColor: 'white'
+        opacity
       }}
     >
-      <CircularProgress size={size} />
+      {title !== undefined && <Typography variant='h3'>{title}</Typography>}
+      <VSpacer size='small' />
       {message !== undefined && (
-        <Box my={1}>
-          <Typography>{message}</Typography>
-        </Box>
+        <Typography align='center'>{message}</Typography>
       )}
+      <VSpacer size='medium' />
+      <CircularProgress size={size} />
     </Grid>
   )
+}
+
+LoadingIndicator.defaultProps = {
+  size: 40,
+  opacity: 0.75
 }

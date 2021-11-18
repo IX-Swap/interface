@@ -4,15 +4,17 @@ import { ethereumService } from 'services/ethereum'
 import { WithdrawalAddressFormValues } from 'types/withdrawalAddress'
 import { useGenerateWalletHash } from './useGenerateWalletHash'
 import { useVerifyWalletOwnership } from './useVerifyWalletOwnership'
+import { useServices } from 'hooks/useServices'
 
 export enum WalletConnectionStatus {
   IDLE,
-  LOADING,
-  SUCCESS,
-  ERROR
+  INITIALISING,
+  VERIFYING,
+  SUCCESS
 }
 
 export function useConnectMetamaskWallet() {
+  const { snackbarService } = useServices()
   const [status, setStatus] = useState(WalletConnectionStatus.IDLE)
   const { setValue, watch } = useFormContext<WithdrawalAddressFormValues>()
   const [generateWalletHash] = useGenerateWalletHash()
@@ -21,9 +23,10 @@ export function useConnectMetamaskWallet() {
   const address = watch('address')
 
   const signWallet = async () => {
+    setStatus(WalletConnectionStatus.VERIFYING)
+
     try {
       const generateWalletHashResponse = await generateWalletHash({
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         walletAddress: address
       })
       const walletHash = generateWalletHashResponse?.data
@@ -38,26 +41,25 @@ export function useConnectMetamaskWallet() {
         if (verifyOwnershipResponse?.data?.isVerified ?? false) {
           setStatus(WalletConnectionStatus.SUCCESS)
         } else {
-          setStatus(WalletConnectionStatus.ERROR)
+          snackbarService.showSnackbar('Failed to sign the wallet', 'error')
         }
       }
     } catch (error) {
-      setStatus(WalletConnectionStatus.ERROR)
+      snackbarService.showSnackbar((error as Error).message, 'error')
+      setStatus(WalletConnectionStatus.IDLE)
     }
   }
 
   const getAccount = async () => {
-    setStatus(WalletConnectionStatus.LOADING)
-
-    let account: string
+    setStatus(WalletConnectionStatus.INITIALISING)
 
     try {
-      account = await ethereumService.getAccount()
+      const account = await ethereumService.getAccount()
       setValue('address', account)
+    } catch (error) {
+      snackbarService.showSnackbar((error as Error).message, 'error')
+    } finally {
       setStatus(WalletConnectionStatus.IDLE)
-    } catch (e) {
-      alert((e as Error)?.message)
-      setStatus(WalletConnectionStatus.ERROR)
     }
   }
 

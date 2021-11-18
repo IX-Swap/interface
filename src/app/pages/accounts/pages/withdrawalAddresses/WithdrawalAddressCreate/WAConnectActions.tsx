@@ -4,6 +4,7 @@ import { Submit } from 'components/form/Submit'
 
 interface WAConnectActionsProps {
   isLoading: boolean
+  isVerifying: boolean
   isVerified: boolean
   hasNetwork: boolean
   hasAddress: boolean
@@ -14,6 +15,7 @@ interface WAConnectActionsProps {
 export const WAConnectActions = ({
   isLoading,
   isVerified,
+  isVerifying,
   hasAddress,
   hasNetwork,
   getAccount,
@@ -32,7 +34,7 @@ export const WAConnectActions = ({
       <Button
         color='primary'
         variant='outlined'
-        disabled={isLoading}
+        disabled={isVerifying}
         onClick={() => signWallet()}
       >
         Sign Challenge
