@@ -130,12 +130,12 @@ export default function WalletModal({
     [activate]
   )
 
-  useEffect(() => {
-    const isWalletConnect = localStorage.getItem('walletconnect')
-    if (isWalletConnect && isMobile && !account) {
-      tryActivation(walletconnect)
-    }
-  }, [account, tryActivation])
+  // useEffect(() => {
+  //   const isWalletConnect = localStorage.getItem('walletconnect')
+  //   if (isWalletConnect && isMobile && !account) {
+  //     tryActivation(walletconnect)
+  //   }
+  // }, [account, tryActivation])
 
   // close wallet modal if fortmatic modal is active
   // useEffect(() => {
