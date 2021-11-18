@@ -181,13 +181,8 @@ export const investmentGrowthChartOptions = {
 export const investmentChartNoDataText =
   'There is no investment at the moment. Once you receive investments in your deal you will be able to see all the charts.'
 
-export const accountsUnderCustodyChartOptions = {
+export const baseAccountsUnderCustodyChartOptions = {
   chartType: 'PieChart',
-  data: [
-    ['HEX', 'InvestaX'],
-    ['HEX', 20],
-    ['InvestaX', 80]
-  ],
   height: '100%',
   width: '100%',
   options: {
@@ -211,6 +206,6 @@ export const accountsUnderCustodyChartOptions = {
       bottom: 0,
       top: '10%'
     },
-    pieSliceText: 'value'
+    pieSliceText: 'value + %'
   }
 }

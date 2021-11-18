@@ -3,26 +3,22 @@ import { Chart } from 'react-google-charts'
 import { useTheme } from '@material-ui/core/styles'
 import { ChartWrapper } from 'app/pages/issuance/components/IssuanceLanding/ChartWrapper'
 import { InsightCard } from 'app/pages/issuance/components/CapTable/InsightCard'
+import { useGetCustodiansCount } from 'app/pages/admin/hooks/useGetCustodiansCount'
 
 export const AccountsUnderCustody = () => {
   const theme = useTheme()
-  // TODO Add correct load data function after complete backend api endpoint
-  // const { data, isLoading } = useTopInvestors()
 
-  // TODO Uncomment next 3 lines after complete backend api endpoint
-  // if (isLoading) {
-  //   return null
-  // }
+  const { data, isLoading } = useGetCustodiansCount()
 
-  const noData = [
+  if (isLoading || data === undefined) {
+    return null
+  }
+
+  const chartData = [
     ['HEX', 'InvestaX'],
-    ['HEX', 20],
-    ['InvestaX', 80]
+    ['HEX', data.hexCount],
+    ['InvestaX', data.investaxCount]
   ]
-  // TODO Uncomment next line after complete backend api endpoint
-  // const hasData = data !== undefined && data.length > 0
-  // TODO Remove next line after complete backend api endpoint
-  const hasData = false
 
   return (
     <InsightCard>
@@ -30,29 +26,24 @@ export const AccountsUnderCustody = () => {
         <Chart
           chartType='PieChart'
           loader={<div>Loading Chart</div>}
-          // TODO Uncomment next line after complete backend api endpoint
-          // data={hasData ? data : noData}
-          // TODO Remove next line after complete backend api endpoint
-          data={noData}
+          data={chartData}
           height={'100%'}
           width={'100%'}
           options={{
             pieHole: 0.35,
             colors: ['#109619', '#3266CC'],
             backgroundColor: 'transparent',
-            legend: !hasData
-              ? {
-                  position: 'right',
-                  textStyle: {
-                    color: theme.palette.getContrastText(
-                      theme.palette.backgrounds.default as any
-                    ),
-                    fontSize: 12,
-                    fontName: 'Poppins'
-                  }
-                }
-              : 'none',
-            enableInteractivity: hasData,
+            legend: {
+              position: 'right',
+              textStyle: {
+                color: theme.palette.getContrastText(
+                  theme.palette.backgrounds.default as any
+                ),
+                fontSize: 12,
+                fontName: 'Poppins'
+              }
+            },
+            enableInteractivity: false,
             chartArea: {
               width: '100%',
               height: '80%',
@@ -61,7 +52,7 @@ export const AccountsUnderCustody = () => {
               bottom: 0,
               top: '10%'
             },
-            pieSliceText: 'value'
+            pieSliceText: 'value + %'
           }}
         />
       </ChartWrapper>

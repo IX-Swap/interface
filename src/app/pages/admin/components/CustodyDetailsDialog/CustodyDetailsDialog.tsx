@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import React from 'react'
 import {
   Button,
@@ -16,6 +17,13 @@ import { VSpacer } from 'components/VSpacer'
 import useStyles from 'app/pages/admin/components/CustodyDetailsDialog/CustodyDetailsDialog.styles'
 import { useGetCustodianDetails } from 'app/pages/admin/hooks/useGetCustodianDetails'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
+import { Wallet } from 'types/custodyAccount'
+
+export const getWalletsWithOrderedDetails = (wallets: Wallet[]) =>
+  wallets.map(({ asset_tickers, wallet_name }) => ({
+    wallet_name,
+    asset_tickers
+  }))
 
 export const CustodyDetailsDialog = () => {
   const { replace } = useHistory()
@@ -23,10 +31,20 @@ export const CustodyDetailsDialog = () => {
   const classes = useStyles()
   const params = useParams<{ accountId: string }>()
 
-  // TODO Change next line after backend api will change
-  const currentCustodyName = 'Investor Name'
   const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
   const { data, isLoading } = useGetCustodianDetails(params.accountId)
+
+  if (data === undefined) {
+    return null
+  }
+
+  const { user, wallets, account_id, account_name } = data
+
+  const details = {
+    account_id,
+    account_name,
+    wallets: getWalletsWithOrderedDetails(wallets)
+  }
 
   if (isLoading) {
     return <LoadingIndicator />
@@ -48,7 +66,7 @@ export const CustodyDetailsDialog = () => {
             align='center'
             className={classes.title}
           >
-            Tokens Supported for the {currentCustodyName}
+            Tokens Supported for the {user.name}
           </Typography>
         </Box>
       </DialogTitle>
@@ -59,7 +77,7 @@ export const CustodyDetailsDialog = () => {
           justifyContent='center'
           className={classes.content}
         >
-          <pre>{JSON.stringify(data, null, 1)}</pre>
+          <pre data-testid={'content'}>{JSON.stringify(details, null, 1)}</pre>
         </Box>
       </DialogContent>
       <VSpacer size={'small'} />

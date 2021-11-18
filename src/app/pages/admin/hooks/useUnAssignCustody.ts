@@ -5,7 +5,8 @@ import { custodyAccounts } from 'config/apiURL'
 import { CloseDealArgs } from 'types/dso'
 
 interface UnAssignCustodyArgs extends CloseDealArgs {
-  accountId: string
+  accountId: number
+  otp: string
 }
 
 export const useUnAssignCustody = () => {

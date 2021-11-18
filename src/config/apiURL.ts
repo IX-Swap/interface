@@ -89,7 +89,7 @@ export const accountsURL = {
   },
   balance: {
     getAll: (userId: string) => `/accounts/balance/${userId}`,
-    getByUserId: (userId: string) => `/accounts/balance/${userId}`,
+    getByUserId: (userId: string) => `/accounts/currency-balance/${userId}`,
     getByAssetId: (userId: string, assetId: string) =>
       `/accounts/balance/${userId}/${assetId}`,
     getCurrencyBalanceByAssetId: (userId: string, assetId: string) =>
@@ -322,7 +322,8 @@ export const custodyAccounts = {
   getList: 'accounts/custody-accounts/list',
   unAssignCustody: '/accounts/custody-unassign',
   getCustodianDetails: (accountId: string) =>
-    `/accounts/get-custodian/${accountId}`
+    `/accounts/get-custodian/${accountId}`,
+  getCustodiansCount: '/accounts/get-custodians-count'
 }
 
 export const virtualAccountsAudit = {
