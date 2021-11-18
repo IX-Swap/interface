@@ -33,16 +33,7 @@ export const StyledCopy = styled(Copy)`
 `
 let timer = null as any
 
-const headerCells = [
-  t`Date`,
-  t`Name`,
-  t`Trader's wallet`,
-  t`Trading pair`,
-  t`Amount`,
-  t`Response`,
-  t`Status`,
-  t`Transaction link`,
-]
+const headerCells = [t`Date`, t`Name`, t`Trader's wallet`, t`Trading pair`, t`Amount`, t`Response`, t`Status`]
 
 const Header = () => {
   return (
@@ -88,7 +79,6 @@ const Row: FC<RowProps> = ({ item }: RowProps) => {
         {currency ? `${CurrencyAmount.fromRawAmount(currency as Currency, amount).toFixed()} ${token?.symbol}` : ''}
       </div>
       <div style={{ textTransform: 'capitalize' }}>{status}</div>
-      <div>{status === 'approved' || status === 'created' ? 'OK' : 'NOT OK'}</div>
       <div>
         {transactionHash && currency?.chainId && (
           <ExternalLink href={getExplorerLink(currency.chainId, transactionHash, ExplorerDataType.TRANSACTION)}>
@@ -195,11 +185,11 @@ const Container = styled.div`
 `
 
 const StyledHeaderRow = styled(HeaderRow)`
-  grid-template-columns: 1fr 1fr 1fr 1fr 2fr 1fr 0.5fr 1.5fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 2fr 1fr 1fr;
   min-width: 1270px;
 `
 
 const StyledBodyRow = styled(BodyRow)`
-  grid-template-columns: 1fr 1fr 1fr 1fr 2fr 1fr 0.5fr 1.5fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 2fr 1fr 1fr;
   min-width: 1270px;
 `
