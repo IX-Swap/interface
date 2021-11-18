@@ -87,7 +87,7 @@ export const Investors = () => {
             { label: 'Ownership (%)', key: 'user', render: renderOwnership }
           ]}
           filter={{
-            search,
+            searchInvestorName: search,
             fundStatus: 'Funds transferred'
           }}
           themeVariant={'primary'}
