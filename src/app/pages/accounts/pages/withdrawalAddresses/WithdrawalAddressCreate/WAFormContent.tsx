@@ -1,3 +1,4 @@
+import { Box } from '@material-ui/core'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
 import { WithdrawalAddressFormValues } from 'types/withdrawalAddress'
@@ -18,5 +19,5 @@ export const WAFormContent = () => {
     return <WACreate />
   }
 
-  return null
+  return <Box height={16} />
 }

@@ -9,6 +9,7 @@ export const useStyles = makeStyles(theme => ({
     left: 0,
     bottom: 0,
     right: 0,
-    backgroundColor: theme.palette.backgrounds.default
+    backgroundColor: theme.palette.backgrounds.default,
+    zIndex: 1
   }
 }))
