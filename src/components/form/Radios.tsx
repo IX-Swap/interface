@@ -6,7 +6,7 @@ import {
 } from '@material-ui/core'
 
 interface RadiosProps extends RadioGroupProps {
-  items: any[]
+  items: Array<{ label: string; value: string | number }>
 }
 
 export const Radios = (props: RadiosProps) => {
