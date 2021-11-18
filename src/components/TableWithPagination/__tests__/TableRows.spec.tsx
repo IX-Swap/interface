@@ -20,7 +20,8 @@ describe('TableRows', () => {
     uri: 'test/uri',
     items: [],
     cacheQueryKey: 'cache',
-    themeVariant: 'default'
+    themeVariant: 'default',
+    noDataComponent: <>No Data</>
   }
 
   afterEach(async () => {
@@ -56,7 +57,7 @@ describe('TableRows', () => {
   })
 
   it('renders TableRow with correct props when themeVariant is primary is true', async () => {
-    const extraProps = {
+    const extraProps: TableRowsProps<any> = {
       ...props,
       items: ['1', '2', '3'],
       themeVariant: 'primary'
