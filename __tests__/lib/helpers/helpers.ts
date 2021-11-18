@@ -127,6 +127,7 @@ async function shouldExist(selector, page) {
       state: 'attached',
       timeout: DEFAULT_SELECTOR_TIMEOUT
     })
+    return true
   } catch {
     throw new Error(`Selector: ${selector} does not exist`)
   }

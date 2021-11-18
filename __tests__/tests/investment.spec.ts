@@ -57,7 +57,7 @@ test.describe('Secondary market', () => {
   })
 
   test('The sell order should be cancelled', async ({ investment }) => {
-    const orderCancelled = await investment.secondMarketCancelOrder()
+    const orderCancelled = await investment.secondMarketCancelSellOrder()
     expect(orderCancelled).toBe(true)
   })
 })

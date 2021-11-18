@@ -130,7 +130,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "DISABLE_ESLINT_PLUGIN=true react-scripts build",
-    "integration-test": "playwright test __tests__/tests  --reporter=line,allure-playwright --timeout 180000",
+    "integration-test": "playwright test __tests__/tests",
     "eject": "react-scripts eject",
     "test": "react-scripts test --env=jest-environment-jsdom-sixteen --colors --logHeapUsage --silent",
     "pre-install": "rimraf node_modules && yarn cache clean",

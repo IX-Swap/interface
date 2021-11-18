@@ -36,6 +36,11 @@ test.describe('Functional test ', () => {
     )
     await shouldExist(kyc.MY_PROFILE, page)
   })
+
+  test('The user should be sign Out', async ({ auth }) => {
+    await auth.loginWithout2fa(baseCreds.EMAIL, baseCreds.PASSWORD)
+    await auth.signOut()
+  })
 })
 
 test.describe('Check form`s view', () => {
