@@ -29,7 +29,7 @@ export const NoWithdrawalAddressData = () => {
             </Grid>
             <Grid item xs={12}>
               <Typography variant='body1'>
-                All the withdrawal addresses added by you or assigned to you
+                All the blockchain addresses added by you or assigned to you
                 will be displayed here. Let’s add your first address.
               </Typography>
             </Grid>

@@ -12,7 +12,7 @@ export const WithdrawalAddressesList: React.FC = () => {
     <>
       <Grid container direction='column'>
         <Grid item>
-          <PageHeader title='My Blockchain Address' />
+          <PageHeader title='My Blockchain Addresses' />
         </Grid>
         <Grid
           item

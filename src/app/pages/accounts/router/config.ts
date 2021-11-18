@@ -65,7 +65,7 @@ export const accountsLandingLinks: InternalRouteProps[] = [
     icon: TransactionIcon
   },
   {
-    label: 'Withdrawal Addresses',
+    label: 'Blockchain Addresses',
     path: AccountsRoute.withdrawalAddresses,
     color: '#e6d200',
     icon: WithdrawalAddressIcon
