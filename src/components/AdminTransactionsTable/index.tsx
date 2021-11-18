@@ -16,6 +16,9 @@ import useCopyClipboard from 'hooks/useCopyClipboard'
 import { BrokerDealerSwapItem } from 'state/admin/actions'
 import { useCurrency } from 'hooks/Tokens'
 import { Currency, CurrencyAmount } from '@ixswap1/sdk-core'
+import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
+import { ExternalLink } from 'theme'
+import { getExplorerName } from 'hooks/useExplorerName'
 
 interface RowProps {
   item: BrokerDealerSwapItem
@@ -30,7 +33,16 @@ export const StyledCopy = styled(Copy)`
 `
 let timer = null as any
 
-const headerCells = [t`Date`, t`Name`, t`Trader's wallet`, t`Trading pair`, t`Amount`, t`Response`, t`Status`]
+const headerCells = [
+  t`Date`,
+  t`Name`,
+  t`Trader's wallet`,
+  t`Trading pair`,
+  t`Amount`,
+  t`Response`,
+  t`Status`,
+  t`Transaction link`,
+]
 
 const Header = () => {
   return (
@@ -52,9 +64,9 @@ const Row: FC<RowProps> = ({ item }: RowProps) => {
     status,
     token,
     createdAt,
+    transactionHash,
   } = item
   const currency = useCurrency(tokenAddress)
-
   return (
     <StyledBodyRow key={`transaction-${id}`}>
       <div>{dayjs(createdAt).format('MMM D, YYYY HH:mm')}</div>
@@ -72,9 +84,18 @@ const Row: FC<RowProps> = ({ item }: RowProps) => {
         )}
       </Wallet>
       <div>{`${pairSymbol?.split('-')?.join(' > ') ?? token?.symbol}`}</div>
-      <div>{`${CurrencyAmount.fromRawAmount(currency as Currency, amount).toFixed()} ${token?.symbol}`}</div>
+      <div>
+        {currency ? `${CurrencyAmount.fromRawAmount(currency as Currency, amount).toFixed()} ${token?.symbol}` : ''}
+      </div>
       <div style={{ textTransform: 'capitalize' }}>{status}</div>
       <div>{status === 'approved' || status === 'created' ? 'OK' : 'NOT OK'}</div>
+      <div>
+        {transactionHash && currency?.chainId && (
+          <ExternalLink href={getExplorerLink(currency.chainId, transactionHash, ExplorerDataType.TRANSACTION)}>
+            View on {getExplorerName(currency.chainId)}
+          </ExternalLink>
+        )}
+      </div>
     </StyledBodyRow>
   )
 }
@@ -174,11 +195,11 @@ const Container = styled.div`
 `
 
 const StyledHeaderRow = styled(HeaderRow)`
-  grid-template-columns: 1fr 1fr 1fr 1fr 2fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 2fr 1fr 0.5fr 1.5fr;
   min-width: 1270px;
 `
 
 const StyledBodyRow = styled(BodyRow)`
-  grid-template-columns: 1fr 1fr 1fr 1fr 2fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 2fr 1fr 0.5fr 1.5fr;
   min-width: 1270px;
 `

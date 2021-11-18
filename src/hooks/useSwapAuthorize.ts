@@ -142,10 +142,14 @@ export function useSwapAuthorizeFirstStep(
           )
           const pairSymbol = `${pair?.token0?.symbol}-${pair?.token1?.symbol}`
           const result = await getAuthorization({ amount, orderType, pairAddress, pairSymbol, tokenId: usedToken })
-          submitToBrokerDealer({
-            dto: { ...result, brokerDealerId },
-            formRef,
-          })
+          if (result) {
+            submitToBrokerDealer({
+              dto: { ...result, brokerDealerId },
+              formRef,
+            })
+          } else {
+            throw new Error('No result from server')
+          }
         } catch (e) {
           dispatch(setLoadingSwap({ isLoading: false }))
           dispatch(setAuthorizationInProgress({ authorizationInProgress: null }))

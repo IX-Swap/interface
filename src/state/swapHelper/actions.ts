@@ -4,12 +4,13 @@ import { createAction } from '@reduxjs/toolkit'
 import { AuthorizationInProgress, SwapAuthorization } from './typings'
 
 export const saveAuthorization =
-  createAction<{ authorization: SwapAuthorization | null; chainId: number; address: string }>(
+  createAction<{ authorization: SwapAuthorization | null; chainId: number; address: string; swapId: number }>(
     'swapHelper/saveAuthorization'
   )
 export const clearAuthorization = createAction<{ addresses: string[]; chainId: number }>(
   'swapHelper/clearAuthorization'
 )
+export const clearSwapId = createAction('swapHelper/clearSwapId')
 export const setSwapState =
   createAction<{
     showConfirm: boolean
