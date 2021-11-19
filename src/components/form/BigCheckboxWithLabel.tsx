@@ -21,7 +21,11 @@ export const BigCheckboxWithLabel = (
       checked={value}
       control={<BigCheckbox name={name} />}
       label={
-        <Typography variant='body1' color={error ? 'error' : 'inherit'}>
+        <Typography
+          variant='body1'
+          color={error ? 'error' : 'inherit'}
+          style={{ position: 'relative', top: 13, fontSize: 16 }}
+        >
           {label}
         </Typography>
       }
