@@ -7,6 +7,7 @@ export interface WithdrawalAddress extends AuthorizableWithIdentity {
   label: string
   address: string
   network: Network
+  wallet?: BlockchainWallet
   memo?: string
 }
 
