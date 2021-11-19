@@ -1,6 +1,6 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { WADialogTitle } from 'app/pages/accounts/pages/withdrawalAddresses/WADialog/WADialogTitle'
+import { WADialogTitle } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WADialog/WADialogTitle'
 
 describe('WADialogTitle', () => {
   afterEach(async () => {

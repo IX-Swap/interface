@@ -1,10 +1,9 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { WithdrawalAddressView } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressView/WithdrawalAddressView'
-import { WADialog } from 'app/pages/accounts/pages/withdrawalAddresses/WADialog/WADialog'
-import { WADialogTitle } from 'app/pages/accounts/pages/withdrawalAddresses/WADialog/WADialogTitle'
-import { WADialogContent } from 'app/pages/accounts/pages/withdrawalAddresses/WADialog/WADialogContent'
-import { WADialogActions } from 'app/pages/accounts/pages/withdrawalAddresses/WADialog/WADialogActions'
+import { WADialog } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WADialog/WADialog'
+import { WADialogTitle } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WADialog/WADialogTitle'
+import { WADialogContent } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WADialog/WADialogContent'
 
 jest.mock(
   'app/pages/accounts/pages/withdrawalAddresses/WADialog/WADialog',
@@ -77,3 +76,6 @@ describe('WithdrawalAddressView', () => {
     )
   })
 })
+function WADialogActions(WADialogActions: any) {
+  throw new Error('Function not implemented.')
+}

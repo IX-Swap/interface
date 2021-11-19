@@ -2,7 +2,7 @@ import React from 'react'
 import { Grid, Button } from '@material-ui/core'
 import { VSpacer } from 'components/VSpacer'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
-import { WithdrawalAddressesTable } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressesTable/WithdrawalAddressesTable'
+import { WithdrawalAddressesTable } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressesList/WithdrawalAddressesTable/WithdrawalAddressesTable'
 import { WithdrawalAddressesRoute } from 'app/pages/accounts/pages/withdrawalAddresses/router/config'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 

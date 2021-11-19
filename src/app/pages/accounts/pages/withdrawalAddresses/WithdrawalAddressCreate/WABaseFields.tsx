@@ -7,6 +7,7 @@ import {
   BlockchainAddressVariant,
   WithdrawalAddressFormValues
 } from 'types/withdrawalAddress'
+import React from 'react'
 
 const radios: Array<{ label: string; value: BlockchainAddressVariant }> = [
   {

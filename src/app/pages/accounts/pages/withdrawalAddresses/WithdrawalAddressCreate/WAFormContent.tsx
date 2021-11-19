@@ -2,22 +2,32 @@ import { Box } from '@material-ui/core'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
 import { WithdrawalAddressFormValues } from 'types/withdrawalAddress'
-import { WAConnect } from './WAConnect'
-import { WACreate } from './WACreate'
+import { WAConnect } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WAConnect'
+import { WACreate } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WACreate'
+import { WAOfferToCreateWallet } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WAOfferToCreateWallet/WAOfferToCreateWallet'
 
-export const WAFormContent = () => {
+export interface WAFormContentProps {
+  onLinkClick: () => void
+}
+
+export const WAFormContent = ({ onLinkClick }: WAFormContentProps) => {
   const { watch } = useFormContext<WithdrawalAddressFormValues>()
   const variant = watch('variant')
   const isCreate = variant === 'create'
   const isConnect = variant === 'connect'
 
   if (isConnect) {
-    return <WAConnect />
+    return <WAConnect onLinkClick={onLinkClick} />
   }
 
   if (isCreate) {
-    return <WACreate />
+    return <WACreate onLinkClick={onLinkClick} />
   }
 
-  return <Box height={16} />
+  return (
+    <>
+      <WAOfferToCreateWallet onClick={() => onLinkClick()} />
+      <Box height={16} />
+    </>
+  )
 }
