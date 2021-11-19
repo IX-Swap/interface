@@ -559,15 +559,20 @@ export function useGetStakings() {
         testPeriodsMaturitySeconds,
         SECONDS_IN_DAY,
       } = stakingPeriodsData
-
       const floorTo4Decimals = (num: number) => Math.floor((num + Number.EPSILON) * 10000) / 10000
-      const calculateReward = (
-        amount: number,
-        period: PeriodsEnum,
-        startDateUnix: number,
-        lockedUntilUnix: number,
+      const calculateReward = ({
+        amount,
+        period,
+        startDateUnix,
+        lockedUntilUnix,
+        endDateUnix,
+      }: {
+        amount: number
+        period: PeriodsEnum
+        startDateUnix: number
+        lockedUntilUnix: number
         endDateUnix: number
-      ) => {
+      }) => {
         // passedMaturity = амоунт* (APY in %)*days passed/365
         // !passedMaturity && passedLockIn = аммаунт* Пенальти Йелд (5%) * Сколько прошло со стейкинга в секундах / 365 дней в секундах
         const now = new Date().getTime() / 1000
@@ -587,7 +592,15 @@ export function useGetStakings() {
         }
         return reward
       }
-      const getCanUnstake = (lock_months: number, endDateUnix: number, lockedTill: number) => {
+      const getCanUnstake = ({
+        lock_months,
+        endDateUnix,
+        lockedTill,
+      }: {
+        lock_months: number
+        endDateUnix: number
+        lockedTill: number
+      }) => {
         const now = Date.now()
         if (lock_months === 0) {
           return now > endDateUnix * 1000
@@ -620,12 +633,22 @@ export function useGetStakings() {
             stakeAmount,
             distributeAmount: stakeAmount,
             apy: periodsApy[period],
-            reward: calculateReward(stakeAmount, period, startDateUnix, endDateUnix, lockedTillUnix),
+            reward: calculateReward({
+              amount: stakeAmount,
+              period,
+              startDateUnix,
+              endDateUnix,
+              lockedUntilUnix: lockedTillUnix,
+            }),
             lockMonths,
             startDateUnix,
             endDateUnix,
             lockedTillUnix,
-            canUnstake: getCanUnstake(lockMonths, endDateUnix, lockedTillUnix),
+            canUnstake: getCanUnstake({
+              lock_months: lockMonths,
+              endDateUnix: endDateUnix,
+              lockedTill: lockedTillUnix,
+            }),
             originalData: data,
             originalIndex: index,
           }
