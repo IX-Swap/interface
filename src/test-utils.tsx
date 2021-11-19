@@ -27,6 +27,7 @@ import { AppStateProvider } from 'app/hooks/useAppState'
 import { Form } from 'components/form/Form'
 import { Toast } from 'components/Toast'
 import { AppThemeProvider } from 'AppThemeProvider'
+import apiService from 'services/api'
 
 export const apiServiceMock = {
   put: jest.fn(),
@@ -41,7 +42,10 @@ export const snackbarServiceMock = {
   showOnboardingDialog: jest.fn()
 }
 
-export const BaseProviders: React.FC = ({ children }) => {
+export const BaseProviders: React.FC<{ mockAPI?: boolean }> = ({
+  children,
+  mockAPI = false
+}) => {
   const generateClassName = createGenerateClassName({
     productionPrefix: 'ix'
   })
@@ -57,7 +61,7 @@ export const BaseProviders: React.FC = ({ children }) => {
               >
                 <ServicesProvider
                   value={{
-                    apiService: apiServiceMock,
+                    apiService: mockAPI ? apiServiceMock : apiService,
                     snackbarService: snackbarServiceMock
                   }}
                 >
@@ -76,9 +80,16 @@ export const BaseProviders: React.FC = ({ children }) => {
 
 const customRenderer = (
   ui: any,
-  options?: Omit<RenderOptions, 'queries'>
+  options: Omit<RenderOptions, 'queries'> & { mockAPI?: boolean } = {}
 ): RenderResult => {
-  return render(ui, { wrapper: BaseProviders, ...options })
+  const { mockAPI, ...rest } = options
+
+  return render(ui, {
+    wrapper: ({ children }) => (
+      <BaseProviders mockAPI={mockAPI ?? true}>{children}</BaseProviders>
+    ),
+    ...rest
+  })
 }
 
 export const testComponentId = 'test-component'
@@ -176,7 +187,8 @@ export const renderHookWithForm = (
 
 export const invokeMutationFn = async (result: any, payload: any) => {
   await waitFor(() => result.current)
-  await result.current[0](payload)
+  const response = await result.current[0](payload)
+  return response
 }
 
 export * from '@testing-library/react'

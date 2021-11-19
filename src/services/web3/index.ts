@@ -2,7 +2,7 @@ import Web3 from 'web3'
 
 let _web3: any
 
-export const web3Service = {
+const web3Service = {
   get web3() {
     if (_web3 === undefined) {
       let web3
@@ -37,3 +37,5 @@ export const web3Service = {
     return result
   }
 }
+
+export default web3Service

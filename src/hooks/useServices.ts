@@ -5,7 +5,7 @@ import storageService from 'services/storage'
 import { adminService } from 'app/pages/admin/service'
 import { useSnackbar, SnackbarService } from 'hooks/useSnackbar'
 import { isTestENV } from 'config/history'
-import { web3Service } from 'services/web3'
+import web3Service from 'services/web3'
 
 export interface AppServices {
   apiService: typeof apiService

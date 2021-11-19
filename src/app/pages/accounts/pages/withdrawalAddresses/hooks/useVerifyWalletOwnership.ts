@@ -2,7 +2,7 @@ import { blockchainNetworksURL } from 'config/apiURL'
 import { useServices } from 'hooks/useServices'
 import { useMutation } from 'react-query'
 
-interface VerifyWalletOwnershipArgs {
+export interface VerifyWalletOwnershipArgs {
   walletAddress: string
   signedHash: string
 }

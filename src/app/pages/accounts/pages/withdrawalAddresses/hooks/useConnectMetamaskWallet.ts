@@ -65,7 +65,6 @@ export function useConnectMetamaskWallet() {
   return {
     status,
     getAccount,
-    generateWalletHash,
     signWallet
   }
 }
