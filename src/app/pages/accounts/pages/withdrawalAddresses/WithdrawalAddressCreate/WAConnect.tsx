@@ -15,14 +15,14 @@ export const WAConnect = () => {
   const { status, getAccount, signWallet } = useConnectMetamaskWallet()
 
   const { watch } = useFormContext<WithdrawalAddressFormValues>()
-  const network = watch('network')
+  const wallet = watch('wallet')
   const address = watch('address')
 
   const isInitialising = status === WalletConnectionStatus.INITIALISING
   const isVerified = status === WalletConnectionStatus.SUCCESS
   const isVerifying = status === WalletConnectionStatus.VERIFYING
   const hasAddress = address !== undefined
-  const hasNetwork = network !== undefined
+  const hasWallet = wallet !== undefined
 
   return (
     <>
@@ -34,7 +34,7 @@ export const WAConnect = () => {
             isVerifying={isVerifying}
             isVerified={isVerified}
             isLoading={isInitialising}
-            hasNetwork={hasNetwork}
+            hasWallet={hasWallet}
             hasAddress={hasAddress}
             getAccount={getAccount}
             signWallet={signWallet}

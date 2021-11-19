@@ -6,7 +6,7 @@ interface WAConnectActionsProps {
   isLoading: boolean
   isVerifying: boolean
   isVerified: boolean
-  hasNetwork: boolean
+  hasWallet: boolean
   hasAddress: boolean
   getAccount: Function
   signWallet: Function
@@ -17,7 +17,7 @@ export const WAConnectActions = ({
   isVerified,
   isVerifying,
   hasAddress,
-  hasNetwork,
+  hasWallet,
   getAccount,
   signWallet
 }: WAConnectActionsProps) => {
@@ -42,7 +42,7 @@ export const WAConnectActions = ({
     )
   }
 
-  if (hasNetwork) {
+  if (hasWallet) {
     return (
       <Button
         color='primary'

@@ -15,6 +15,7 @@ export const Radios = (props: RadiosProps) => {
     <RadioGroup {...rest}>
       {items.map(item => (
         <FormControlLabel
+          key={item.value}
           control={<Radio />}
           label={item.label}
           value={item.value}
