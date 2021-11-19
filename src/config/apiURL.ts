@@ -348,5 +348,7 @@ export const virtualTransactions = {
 export const blockchainNetworksURL = {
   getSettings: (network: string) => `/blockchain/settings/${network}`,
   getUpdateDecimal: (network: string, decimal: number) =>
-    `/blockchain/settings/decimal/${network}/${decimal}`
+    `/blockchain/settings/decimal/${network}/${decimal}`,
+  generateWalletHash: '/blockchain/wallets/generateWalletHash',
+  verifyWalletOwnership: '/blockchain/wallets/verifyOwnership'
 }

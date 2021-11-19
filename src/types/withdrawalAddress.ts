@@ -1,5 +1,6 @@
 import { Network } from './networks'
 import { AuthorizableWithIdentity } from './authorizer'
+import { BlockchainWallet } from 'components/form/WalletSelect'
 
 export interface WithdrawalAddress extends AuthorizableWithIdentity {
   _id: string
@@ -9,12 +10,16 @@ export interface WithdrawalAddress extends AuthorizableWithIdentity {
   memo?: string
 }
 
+export type BlockchainAddressVariant = 'connect' | 'create'
+
 export interface WithdrawalAddressFormValues {
+  variant: BlockchainAddressVariant
   label: WithdrawalAddress['label']
   address: WithdrawalAddress['address']
   network: Network['_id']
   memo?: WithdrawalAddress['memo']
   agree?: boolean
+  wallet?: BlockchainWallet
 }
 
 export interface MakeWithdrawalAddressArgs

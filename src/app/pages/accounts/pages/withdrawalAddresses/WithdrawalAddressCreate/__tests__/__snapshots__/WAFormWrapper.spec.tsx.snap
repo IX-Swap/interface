@@ -1,0 +1,465 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WAFormWrapper should work 1`] = `
+<div>
+  <form
+    data-testid="blockchain-address-form"
+    style="width: 100%;"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-item"
+      >
+        <div
+          class="MuiFormGroup-root"
+          control="[object Object]"
+          id="variant"
+          label="Wallet Type"
+          path="variant"
+          role="radiogroup"
+          style="flex-direction: row; justify-content: space-between;"
+        >
+          <label
+            class="MuiFormControlLabel-root"
+          >
+            <span
+              aria-disabled="false"
+              class="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-1 MuiRadio-root MuiRadio-colorSecondary PrivateSwitchBase-checked-2 Mui-checked MuiIconButton-colorSecondary"
+            >
+              <span
+                class="MuiIconButton-label"
+              >
+                <input
+                  class="PrivateSwitchBase-input-4"
+                  name="variant"
+                  type="radio"
+                  value="connect"
+                />
+                <div
+                  class="PrivateRadioButtonIcon-root-5 PrivateRadioButtonIcon-checked-7"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
+                    />
+                  </svg>
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root PrivateRadioButtonIcon-layer-6"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M8.465 8.465C9.37 7.56 10.62 7 12 7C14.76 7 17 9.24 17 12C17 13.38 16.44 14.63 15.535 15.535C14.63 16.44 13.38 17 12 17C9.24 17 7 14.76 7 12C7 10.62 7.56 9.37 8.465 8.465Z"
+                    />
+                  </svg>
+                </div>
+              </span>
+              <span
+                class="MuiTouchRipple-root"
+              />
+            </span>
+            <span
+              class="MuiTypography-root MuiFormControlLabel-label MuiTypography-body1"
+            >
+              Connect to Wallet
+            </span>
+          </label>
+          <label
+            class="MuiFormControlLabel-root"
+          >
+            <span
+              aria-disabled="false"
+              class="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-1 MuiRadio-root MuiRadio-colorSecondary MuiIconButton-colorSecondary"
+            >
+              <span
+                class="MuiIconButton-label"
+              >
+                <input
+                  class="PrivateSwitchBase-input-4"
+                  name="variant"
+                  type="radio"
+                  value="create"
+                />
+                <div
+                  class="PrivateRadioButtonIcon-root-5"
+                >
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
+                    />
+                  </svg>
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root PrivateRadioButtonIcon-layer-6"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M8.465 8.465C9.37 7.56 10.62 7 12 7C14.76 7 17 9.24 17 12C17 13.38 16.44 14.63 15.535 15.535C14.63 16.44 13.38 17 12 17C9.24 17 7 14.76 7 12C7 10.62 7.56 9.37 8.465 8.465Z"
+                    />
+                  </svg>
+                </div>
+              </span>
+              <span
+                class="MuiTouchRipple-root"
+              />
+            </span>
+            <span
+              class="MuiTypography-root MuiFormControlLabel-label MuiTypography-body1"
+            >
+              Input Withdrawal Address
+            </span>
+          </label>
+        </div>
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-item"
+      >
+        <div
+          class="MuiFormControl-root MuiFormControl-fullWidth"
+        >
+          <label
+            class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined MuiFormLabel-filled"
+            data-shrink="true"
+            for="network"
+          >
+            Blockchain Network
+          </label>
+          <div
+            class="MuiInputBase-root MuiOutlinedInput-root Mui-disabled Mui-disabled MuiInputBase-formControl"
+            data-testid="network-select"
+            style="min-width: 70px;"
+          >
+            <div
+              aria-disabled="true"
+              aria-haspopup="listbox"
+              aria-labelledby="network"
+              class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input Mui-disabled Mui-disabled Mui-disabled"
+              id="network"
+              role="button"
+            >
+              Ropsten Test Network (Public Ethereum)
+            </div>
+            <input
+              aria-hidden="true"
+              class="MuiSelect-nativeInput"
+              name="network"
+              tabindex="-1"
+              value="5f88035d7ae447ee9274d4fa"
+            />
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSelect-icon MuiSelect-iconOutlined Mui-disabled"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M7 10l5 5 5-5z"
+              />
+            </svg>
+            <fieldset
+              aria-hidden="true"
+              class="PrivateNotchedOutline-root-8 MuiOutlinedInput-notchedOutline"
+            >
+              <legend
+                class="PrivateNotchedOutline-legendLabelled-10 PrivateNotchedOutline-legendNotched-11"
+              >
+                <span>
+                  Blockchain Network
+                </span>
+              </legend>
+            </fieldset>
+          </div>
+        </div>
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-item"
+      >
+        <div
+          class="MuiFormControl-root MuiFormControl-fullWidth"
+        >
+          <label
+            class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined MuiFormLabel-filled"
+            data-shrink="true"
+            for="wallet"
+          >
+            Select Wallet
+          </label>
+          <div
+            class="MuiInputBase-root MuiOutlinedInput-root Mui-disabled Mui-disabled MuiInputBase-formControl"
+            data-testid="wallet-select"
+          >
+            <div
+              aria-disabled="true"
+              aria-haspopup="listbox"
+              aria-labelledby="wallet"
+              class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input Mui-disabled Mui-disabled Mui-disabled"
+              id="wallet"
+              role="button"
+            >
+              Metamask
+            </div>
+            <input
+              aria-hidden="true"
+              class="MuiSelect-nativeInput"
+              name="wallet"
+              tabindex="-1"
+              value="METAMASK"
+            />
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSelect-icon MuiSelect-iconOutlined Mui-disabled"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M7 10l5 5 5-5z"
+              />
+            </svg>
+            <fieldset
+              aria-hidden="true"
+              class="PrivateNotchedOutline-root-8 MuiOutlinedInput-notchedOutline"
+            >
+              <legend
+                class="PrivateNotchedOutline-legendLabelled-10 PrivateNotchedOutline-legendNotched-11"
+              >
+                <span>
+                  Select Wallet
+                </span>
+              </legend>
+            </fieldset>
+          </div>
+        </div>
+      </div>
+      <div
+        class="MuiBox-root MuiBox-root-13 MuiGrid-root MuiGrid-item"
+      >
+        <div
+          class="MuiFormControl-root MuiFormControl-fullWidth"
+        >
+          <label
+            class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined"
+            data-shrink="true"
+            for="address"
+          >
+            Wallet Address
+          </label>
+          <div
+            class="MuiFormControl-root MuiTextField-root fs-exclude"
+          >
+            <label
+              class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined Mui-disabled Mui-disabled"
+              data-shrink="false"
+              for="address"
+              id="address-label"
+            >
+              Wallet Address
+            </label>
+            <div
+              class="MuiInputBase-root MuiOutlinedInput-root Mui-disabled Mui-disabled MuiInputBase-formControl"
+            >
+              <input
+                aria-invalid="false"
+                class="MuiInputBase-input MuiOutlinedInput-input Mui-disabled Mui-disabled"
+                disabled=""
+                id="address"
+                name="address"
+                type="text"
+                value="5cc2c1a506a7b202ecb157de5383c084"
+              />
+              <fieldset
+                aria-hidden="true"
+                class="PrivateNotchedOutline-root-8 MuiOutlinedInput-notchedOutline"
+              >
+                <legend
+                  class="PrivateNotchedOutline-legendLabelled-10"
+                >
+                  <span>
+                    Wallet Address
+                  </span>
+                </legend>
+              </fieldset>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-item"
+      >
+        <div
+          class="MuiFormControl-root MuiFormControl-fullWidth"
+        >
+          <label
+            class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined"
+            data-shrink="true"
+            for="label"
+          >
+            Address Label
+          </label>
+          <div
+            class="MuiFormControl-root MuiTextField-root fs-exclude"
+          >
+            <label
+              class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined MuiFormLabel-filled"
+              data-shrink="true"
+              for="label"
+              id="label-label"
+            >
+              Address Label
+            </label>
+            <div
+              class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-formControl"
+            >
+              <input
+                aria-invalid="false"
+                class="MuiInputBase-input MuiOutlinedInput-input"
+                id="label"
+                name="label"
+                type="text"
+                value="My Metamask Wallet"
+              />
+              <fieldset
+                aria-hidden="true"
+                class="PrivateNotchedOutline-root-8 MuiOutlinedInput-notchedOutline"
+              >
+                <legend
+                  class="PrivateNotchedOutline-legendLabelled-10 PrivateNotchedOutline-legendNotched-11"
+                >
+                  <span>
+                    Address Label
+                  </span>
+                </legend>
+              </fieldset>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-item"
+      >
+        <div
+          class="MuiFormControl-root MuiFormControl-fullWidth"
+        >
+          <label
+            class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+            data-shrink="false"
+            for="memo"
+          >
+            Memo
+          </label>
+          <div
+            class="MuiFormControl-root MuiTextField-root fs-exclude"
+          >
+            <label
+              class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+              data-shrink="false"
+              for="memo"
+              id="memo-label"
+            >
+              Memo
+            </label>
+            <div
+              class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-formControl"
+            >
+              <input
+                aria-invalid="false"
+                class="MuiInputBase-input MuiOutlinedInput-input"
+                id="memo"
+                name="memo"
+                type="text"
+                value=""
+              />
+              <fieldset
+                aria-hidden="true"
+                class="PrivateNotchedOutline-root-8 MuiOutlinedInput-notchedOutline"
+              >
+                <legend
+                  class="PrivateNotchedOutline-legendLabelled-10"
+                >
+                  <span>
+                    Memo
+                  </span>
+                </legend>
+              </fieldset>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-item"
+      >
+        <label
+          class="MuiFormControlLabel-root"
+          id="agree"
+          path="agree"
+        >
+          <span
+            aria-disabled="false"
+            class="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-1 MuiCheckbox-root makeStyles-root-17 PrivateSwitchBase-checked-2 Mui-checked"
+          >
+            <span
+              class="MuiIconButton-label"
+            >
+              <input
+                aria-label="decorative checkbox"
+                class="PrivateSwitchBase-input-4"
+                data-indeterminate="false"
+                name="agree"
+                type="checkbox"
+                value=""
+              />
+              <span
+                class="makeStyles-icon-18 makeStyles-checkedIcon-19"
+              />
+            </span>
+          </span>
+          <span
+            class="MuiTypography-root MuiFormControlLabel-label MuiTypography-body1"
+          >
+            <p
+              class="MuiTypography-root MuiTypography-body1 MuiTypography-colorInherit"
+            >
+              I understand and agree that InvestaX will check this address against fradulent activities.
+            </p>
+          </span>
+        </label>
+      </div>
+      <div
+        class="MuiDialogActions-root MuiDialogActions-spacing"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-flex-end"
+        >
+          <button
+            class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-disableElevation"
+            tabindex="0"
+            type="submit"
+          >
+            <span
+              class="MuiButton-label"
+            >
+              Submit
+            </span>
+            <span
+              class="MuiTouchRipple-root"
+            />
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+`;

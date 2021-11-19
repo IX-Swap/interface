@@ -1,8 +1,9 @@
 import React from 'react'
-import { InputProps } from '@material-ui/core'
-import MuiPhoneNumber from 'material-ui-phone-number'
+import MuiPhoneNumber, {
+  MaterialUiPhoneNumberProps
+} from 'material-ui-phone-number'
 
-export const PhoneInput = (props: InputProps): JSX.Element => {
+export const PhoneInput = (props: MaterialUiPhoneNumberProps): JSX.Element => {
   return (
     <MuiPhoneNumber
       {...props}

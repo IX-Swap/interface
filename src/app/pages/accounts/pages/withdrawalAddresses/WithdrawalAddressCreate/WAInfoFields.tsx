@@ -1,34 +1,25 @@
 import React from 'react'
-import { Grid, Input } from '@material-ui/core'
+import { Grid, TextField } from '@material-ui/core'
+import { BigCheckboxWithLabel } from 'components/form/BigCheckboxWithLabel'
+import { TypedField } from 'components/form/TypedField'
+import { privateClassNames } from 'helpers/classnames'
+import { booleanValueExtractor } from 'helpers/forms'
 import { useFormContext } from 'react-hook-form'
 import { WithdrawalAddressFormValues } from 'types/withdrawalAddress'
-import { TypedField } from 'components/form/TypedField'
-import { BigCheckboxWithLabel } from 'components/form/BigCheckboxWithLabel'
-import { privateClassNames } from 'helpers/classnames'
-import { NetworkSelect } from 'components/form/NetworkSelect'
-import { booleanValueExtractor } from 'helpers/forms'
 
-export const WAFormFields = () => {
+export const WAInfoFields = () => {
   const { control } = useFormContext<WithdrawalAddressFormValues>()
 
   return (
-    <React.Fragment>
-      <Grid item>
-        <TypedField
-          control={control}
-          component={NetworkSelect}
-          name='network'
-          label='Blockchain Network'
-        />
-      </Grid>
-
+    <>
       <Grid item>
         <TypedField
           className={privateClassNames()}
           control={control}
-          component={Input}
+          component={TextField}
           name='label'
           label='Address Label'
+          variant='outlined'
         />
       </Grid>
 
@@ -36,19 +27,10 @@ export const WAFormFields = () => {
         <TypedField
           className={privateClassNames()}
           control={control}
-          component={Input}
+          component={TextField}
           name='memo'
           label='Memo'
-        />
-      </Grid>
-
-      <Grid item>
-        <TypedField
-          className={privateClassNames()}
-          component={Input}
-          control={control}
-          name='address'
-          label='Withdrawal Address'
+          variant='outlined'
         />
       </Grid>
 
@@ -62,6 +44,6 @@ export const WAFormFields = () => {
           label='I understand and agree that InvestaX will check this address against fradulent activities.'
         />
       </Grid>
-    </React.Fragment>
+    </>
   )
 }
