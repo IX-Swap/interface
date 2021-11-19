@@ -11,7 +11,8 @@ export const bankAccounts = {
     EDIT: '[data-testid="dropdown"] >> text="Edit"',
     SAVE: 'button >> text="Save"',
     SUBMIT_ACCOUNT: 'button >> text="Add Bank Account"',
-    CONFIRM: 'button >> text="Confirm"'
+    CONFIRM: 'button >> text="Confirm"',
+    CANCEL: 'a >> text="Cancel"'
   },
   fields: {
     BANK_NAME: "[id='bankName']",

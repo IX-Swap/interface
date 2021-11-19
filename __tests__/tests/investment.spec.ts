@@ -51,12 +51,12 @@ test.describe('Secondary market', () => {
     expect(orderCancelled).toBe(true)
   })
 
-  test('The sell order should be created', async ({ investment }) => {
+  test.skip('The sell order should be created', async ({ investment }) => {
     const orderCreated = await investment.secondMarketSell()
     expect(orderCreated).toBe(true)
   })
 
-  test('The sell order should be cancelled', async ({ investment }) => {
+  test.skip('The sell order should be cancelled', async ({ investment }) => {
     const orderCancelled = await investment.secondMarketCancelSellOrder()
     expect(orderCancelled).toBe(true)
   })

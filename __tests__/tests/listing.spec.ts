@@ -27,7 +27,7 @@ test.describe('Listing', () => {
 
   test('Check the form view', async ({ issuanceSelectors, page }, testInfo) => {
     const form = await page.waitForSelector(issuanceSelectors.LISTING_FORM)
-    await screenshotMatching(testInfo.title, form)
+    await screenshotMatching(testInfo.title, form, page)
   })
 })
 let importedForm
@@ -59,7 +59,7 @@ test.describe('Listing with imported dso', () => {
     expect(error).toBe(true)
   })
 
-  test('Should be imported', async ({}, testInfo) => {
-    await screenshotMatching(testInfo.title, importedForm)
+  test('Should be imported', async ({ page }, testInfo) => {
+    await screenshotMatching(testInfo.title, importedForm, page)
   })
 })

@@ -5,13 +5,11 @@ import { baseCreds } from '../helpers/creds'
 import {
   click,
   typeText,
-  uploadFiles,
   waitForText,
-  randomString,
-  navigate,
   shouldNotExist,
   shouldExist,
-  clearAndTypeText
+  clearAndTypeText,
+  waitForResponseInclude
 } from '../helpers/helpers'
 
 class BankAccounts {
@@ -85,6 +83,8 @@ class BankAccounts {
       await digit.fill('1')
     }
     await click(bankAccounts.buttons.CONFIRM, this.page)
+    await waitForResponseInclude(this.page, '/remove')
+    await shouldNotExist(bankAccounts.buttons.MORE, this.page)
   }
 }
 

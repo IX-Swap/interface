@@ -23,7 +23,7 @@ class UserForms {
     await click(kyc.buttons.SUBMIT_TEXT, this.page)
     await expect(this.page.locator('button[disabled]')).toHaveText('Submitted')
     const dialog = await this.page.waitForSelector(kyc.DIALOG_VIEW)
-    await screenshotMatching(testInfo.title, dialog)
+    await screenshotMatching(testInfo.title, dialog, this.page)
   }
 
   fillIssuerFirstForm = async () => {
@@ -55,7 +55,7 @@ class UserForms {
     await this.page.waitForSelector(kyc.USER_PHOTO)
     await this.page.waitForTimeout(5000)
     const elementHandle = await this.page.$('//form')
-    await screenshotMatching(screenName, elementHandle)
+    await screenshotMatching(screenName, elementHandle, this.page)
   }
 
   fillTaxDeclarationForm = async () => {

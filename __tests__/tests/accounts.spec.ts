@@ -1,7 +1,8 @@
 import { baseCreds } from '../lib/helpers/creds'
-import { navigate } from '../lib/helpers/helpers'
+import { navigate, click, shouldNotExist } from '../lib/helpers/helpers'
 import { test } from '../lib/fixtures/fixtures'
 import { expect } from '@playwright/test'
+import { bankAccounts } from '../lib/selectors/accounts'
 
 test.beforeEach(async ({ auth, page, bankAccount }) => {
   await navigate(baseCreds.URL, page)
@@ -14,6 +15,12 @@ test.afterEach(async ({ page }) => {
 })
 
 test.describe('Bank accounts', () => {
+  test('Account creation should be canceled', async ({ bankAccount, page }) => {
+    await bankAccount.fillAccountInfoForm()
+    await click(bankAccounts.buttons.CANCEL, page)
+    await shouldNotExist(bankAccounts.buttons.MORE, page)
+  })
+
   test('Account should be created', async ({ bankAccount }, testInfo) => {
     await bankAccount.fillAccountInfoForm()
     const account = await bankAccount.fillBankAddressForm()
@@ -24,12 +31,11 @@ test.describe('Bank accounts', () => {
     await bankAccount.viewBankAccount()
   })
 
-  test('Account should edited', async ({ bankAccount, page }) => {
+  test('Account should edited', async ({ bankAccount }) => {
     await bankAccount.editBankAccount()
   })
 
-  test.only('Account should removed', async ({ bankAccount, page }) => {
+  test('Account should removed', async ({ bankAccount }) => {
     await bankAccount.removeBankAccount()
-    await page.waitForTimeout(10000)
   })
 })
