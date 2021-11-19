@@ -69,7 +69,7 @@ export function useHandleSwap({ priceImpact }: { priceImpact: Percent | undefine
       .map((pair) => pair.liquidityToken.address)
     try {
       const hash = await swapCallback()
-      await saveSwapTx(hash)
+      await saveSwapTx({ transactionHash: hash, addresses: onlySecTokens })
       setSwapState({
         attemptingTxn: false,
         tradeToConfirm: undefined,

@@ -16,7 +16,6 @@ import { hexTimeToTokenExpirationTime, shouldRenewToken } from 'utils/time'
 import { AppDispatch, AppState } from '../index'
 import {
   clearAuthorization,
-  clearSwapId,
   saveAuthorization,
   setAuthorizationInProgress,
   setLoadingSwap,
@@ -37,19 +36,21 @@ export function useAuthorizationsState() {
 }
 
 export function useSaveSwapTx() {
-  const { swapId } = useSwapHelpersState()
-  const dispatch = useDispatch<AppDispatch>()
-
+  const authorizations = useAuthorizationsState()
   return useCallback(
-    async (transactionHash: string) => {
-      if (swapId) {
-        const response = await saveSwapTxHash({ swapId, transactionHash })
-        if (response) {
-          dispatch(clearSwapId())
-        }
+    async ({ transactionHash, addresses }: { transactionHash: string; addresses: string[] }) => {
+      if (!addresses.length) {
+        return
       }
+      const promises = addresses.map((address) => {
+        const authorization = authorizations?.[address]
+        if (authorization && authorization.swapId) {
+          return saveSwapTxHash({ swapId: authorization.swapId, transactionHash })
+        }
+      })
+      await Promise.allSettled(promises)
     },
-    [swapId, dispatch]
+    [authorizations]
   )
 }
 
@@ -259,10 +260,11 @@ export function useSwapConfirmDataFromURL(
           deadline,
           expiresAt: hexTimeToTokenExpirationTime(deadline),
           amount,
+          swapId,
         }
         dispatch(setLoadingSwap({ isLoading: false }))
         dispatch(setAuthorizationInProgress({ authorizationInProgress: null }))
-        dispatch(saveAuthorization({ authorization: persistedAuthorization, chainId, address, swapId }))
+        dispatch(saveAuthorization({ authorization: persistedAuthorization, chainId, address }))
         addPopup(
           {
             info: {
