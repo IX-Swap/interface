@@ -6,6 +6,7 @@ import { useAuth } from 'hooks/auth/useAuth'
 import { getIdFromObj } from 'helpers/strings'
 import { WithdrawalAddress } from 'types/withdrawalAddress'
 import { withdrawalAddressQueryKeys } from 'config/queryKeys'
+import { NoWithdrawalAddressData } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressesTable/NoWithdrawalAddressData'
 
 export const WithdrawalAddressesTable: React.FC = () => {
   const { user } = useAuth()
@@ -18,6 +19,7 @@ export const WithdrawalAddressesTable: React.FC = () => {
       columns={columns}
       hasActions
       actions={Actions}
+      noDataComponent={<NoWithdrawalAddressData />}
     />
   )
 }

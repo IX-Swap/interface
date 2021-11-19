@@ -10,6 +10,7 @@ export interface TableRowsProps<T> extends TableViewProps<T> {
   cacheQueryKey: any
   bordered: boolean
   themeVariant?: 'default' | 'primary' | 'no-header'
+  noDataComponent: JSX.Element
 }
 
 export const TableRows = <T,>(props: TableRowsProps<T>): JSX.Element => {
@@ -20,7 +21,8 @@ export const TableRows = <T,>(props: TableRowsProps<T>): JSX.Element => {
     hasActions = false,
     actions,
     cacheQueryKey,
-    themeVariant = 'default'
+    themeVariant = 'default',
+    noDataComponent
   } = props
 
   const theme = useTheme()
@@ -68,7 +70,7 @@ export const TableRows = <T,>(props: TableRowsProps<T>): JSX.Element => {
       ) : (
         <TableRow>
           <TableCell align='center' colSpan={columns.length + +!!hasActions}>
-            No Data
+            {noDataComponent}
           </TableCell>
         </TableRow>
       )}

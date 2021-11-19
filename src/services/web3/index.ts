@@ -1,8 +1,14 @@
 import Web3 from 'web3'
 
+interface Web3Service {
+  web3: any
+  getAccount: () => Promise<string | never>
+  signWallet: (walletHash: string, walletAddress: string) => Promise<string>
+}
+
 let _web3: any
 
-export const web3Service = {
+const web3Service: Web3Service = {
   get web3() {
     if (_web3 === undefined) {
       let web3
@@ -12,12 +18,7 @@ export const web3Service = {
       } else if (window.web3 !== undefined) {
         web3 = new Web3(window.web3.currentProvider)
       } else {
-        web3 = new Web3(
-          new Web3.providers.HttpProvider('http://127.0.0.1:8545')
-        )
-        console.error(
-          'Non-Ethereum browser detected. You should consider trying MetaMask!'
-        )
+        throw new Error('Metamask is not installed')
       }
 
       _web3 = web3
@@ -27,13 +28,19 @@ export const web3Service = {
   },
 
   async getAccount() {
-    const accounts = await this.web3.eth.requestAccounts()
-    return accounts[0]
+    try {
+      const accounts = await this.web3.eth.requestAccounts()
+      return accounts[0]
+    } catch (e) {
+      throw new Error('Failed to connect to Metamask, please try again')
+    }
   },
 
   async signWallet(walletHash: string, walletAddress: string) {
-    // TODO use ethers library to get Web3Provider
+    // in the future we might want to use ethers library to get Web3Provider
     const result = await this.web3.eth.personal.sign(walletHash, walletAddress)
     return result
   }
 }
+
+export default web3Service

@@ -8,7 +8,7 @@ export enum BlockchainWallet {
 
 export const WalletSelect = (props: SelectProps) => {
   return (
-    <Select {...props}>
+    <Select {...props} data-testid='wallet-select'>
       <MenuItem disabled value={undefined}>
         Select Wallet
       </MenuItem>
