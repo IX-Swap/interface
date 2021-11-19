@@ -99,8 +99,8 @@ export function listToSecTokenMap(
   if (result) return result
   const map = list.reduce<SecTokenAddressMap>((tokenMap, tokenInfo) => {
     const token = new WrappedTokenInfo(tokenInfo, undefined)
-    if (tokenMap[token.chainId]?.[token.address] !== undefined) {
-      console.error(new Error(`Duplicate token! ${token.address}`))
+    if (tokenMap[token?.chainId]?.[token?.address] !== undefined) {
+      console.error(new Error(`Duplicate token! ${token?.address}`))
       return tokenMap
     }
     return {
