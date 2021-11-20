@@ -210,7 +210,19 @@ exports[`WAFormWrapper should work 1`] = `
               id="wallet"
               role="button"
             >
-              Metamask
+              <div
+                class="MuiBox-root MuiBox-root-16"
+              >
+                <img
+                  alt="Metamask"
+                  src="metamask_another.png"
+                />
+                <span
+                  class="MuiBox-root MuiBox-root-17"
+                >
+                  Metamask
+                </span>
+              </div>
             </div>
             <input
               aria-hidden="true"
@@ -408,7 +420,7 @@ exports[`WAFormWrapper should work 1`] = `
         >
           <span
             aria-disabled="false"
-            class="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-1 MuiCheckbox-root makeStyles-root-17 PrivateSwitchBase-checked-2 Mui-checked"
+            class="MuiButtonBase-root MuiIconButton-root PrivateSwitchBase-root-1 MuiCheckbox-root makeStyles-root-22 PrivateSwitchBase-checked-2 Mui-checked"
           >
             <span
               class="MuiIconButton-label"
@@ -422,7 +434,7 @@ exports[`WAFormWrapper should work 1`] = `
                 value=""
               />
               <span
-                class="makeStyles-icon-18 makeStyles-checkedIcon-19"
+                class="makeStyles-icon-23 makeStyles-checkedIcon-24"
               />
             </span>
           </span>
@@ -430,7 +442,7 @@ exports[`WAFormWrapper should work 1`] = `
             class="MuiTypography-root MuiFormControlLabel-label MuiTypography-body1"
           >
             <p
-              class="MuiTypography-root MuiTypography-body1 MuiTypography-colorInherit"
+              class="MuiTypography-root makeStyles-text-21 MuiTypography-body1 MuiTypography-colorInherit"
             >
               I understand and agree that InvestaX will check this address against fradulent activities.
             </p>

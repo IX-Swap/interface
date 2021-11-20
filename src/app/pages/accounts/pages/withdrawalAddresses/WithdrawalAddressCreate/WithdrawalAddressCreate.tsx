@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { WADialog } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WADialog/WADialog'
 import { WADialogTitle } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WADialog/WADialogTitle'
 import { WADialogContent } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WADialog/WADialogContent'
@@ -7,19 +7,16 @@ import { CreateWalletDialog } from 'app/pages/accounts/pages/withdrawalAddresses
 import { CreateWalletDialogTitle } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/CreateWalletDialog/CreateWalletDialogTitle'
 import { CreateWalletDialogContent } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/CreateWalletDialog/CreateWalletDialogContent'
 import useStyles from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WADialog/WADialog.styles'
+import { WAOfferToCreateWallet } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WAOfferToCreateWallet/WAOfferToCreateWallet'
+import { useToggleValue } from 'hooks/useToggleValue'
 
 export const WithdrawalAddressCreate = () => {
-  const [isCreateWalletDialogVisible, setIsCreateWalletDialogVisible] =
-    useState<boolean>(false)
+  const [isCreateWalletDialogVisible, toggleIsCreateWalletDialogVisible] =
+    useToggleValue()
   const classes = useStyles({ isCreateWalletDialogVisible })
-
-  const handleOpenCreateWalletDialog = () => {
-    setIsCreateWalletDialogVisible(true)
-  }
-
-  const handleCloseCreateWalletDialog = () => {
-    setIsCreateWalletDialogVisible(false)
-  }
+  const hint = (
+    <WAOfferToCreateWallet onClick={toggleIsCreateWalletDialogVisible} />
+  )
 
   return (
     <>
@@ -32,7 +29,7 @@ export const WithdrawalAddressCreate = () => {
       >
         <WADialogTitle label='Add Withdrawal Address' />
         <WADialogContent>
-          <WAFormWrapper onLinkClick={handleOpenCreateWalletDialog} />
+          <WAFormWrapper hint={hint} />
         </WADialogContent>
       </WADialog>
       <CreateWalletDialog
@@ -41,11 +38,11 @@ export const WithdrawalAddressCreate = () => {
           root: classes.createDialog
         }}
         open
-        onClose={handleCloseCreateWalletDialog}
+        onClose={toggleIsCreateWalletDialogVisible}
       >
         <CreateWalletDialogTitle
           label='Create Wallet'
-          onButtonCloseClick={handleCloseCreateWalletDialog}
+          onButtonCloseClick={toggleIsCreateWalletDialogVisible}
         />
         <CreateWalletDialogContent />
       </CreateWalletDialog>

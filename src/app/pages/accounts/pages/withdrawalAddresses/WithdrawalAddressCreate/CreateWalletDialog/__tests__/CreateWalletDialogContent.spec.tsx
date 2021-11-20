@@ -1,4 +1,3 @@
-import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { CreateWalletDialogContent } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/CreateWalletDialog/CreateWalletDialogContent'
 

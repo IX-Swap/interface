@@ -1,17 +1,16 @@
-import React from 'react'
+import React, { ReactElement } from 'react'
 import { WACreateActions } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WACreateActions'
 import { WACreateFields } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WACreateFields'
-import { WAOfferToCreateWallet } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WAOfferToCreateWallet/WAOfferToCreateWallet'
 
 export interface WACreateProps {
-  onLinkClick: () => void
+  hint: ReactElement
 }
 
-export const WACreate = ({ onLinkClick }: WACreateProps) => {
+export const WACreate = ({ hint }: WACreateProps) => {
   return (
     <>
       <WACreateFields />
-      <WAOfferToCreateWallet onClick={() => onLinkClick()} />
+      {hint}
       <WACreateActions />
     </>
   )

@@ -6,6 +6,7 @@ import {
 import React from 'react'
 import { TypedFieldRenderComponentProps } from 'components/form/types'
 import { BigCheckbox } from 'app/components/BigCheckbox'
+import useStyles from './BigCheckboxWithLabel.styles'
 
 export interface BigCheckboxWithLabelProps
   extends Omit<FormControlLabelProps, 'control'> {}
@@ -14,6 +15,7 @@ export const BigCheckboxWithLabel = (
   props: BigCheckboxWithLabelProps & TypedFieldRenderComponentProps<boolean>
 ) => {
   const { name, value, label, error = true, control, ...rest } = props
+  const classes = useStyles()
 
   return (
     <FormControlLabel
@@ -24,7 +26,7 @@ export const BigCheckboxWithLabel = (
         <Typography
           variant='body1'
           color={error ? 'error' : 'inherit'}
-          style={{ position: 'relative', top: 13, fontSize: 16 }}
+          className={classes.text}
         >
           {label}
         </Typography>

@@ -1,10 +1,10 @@
 import React from 'react'
 import useStyles from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/CreateWalletDialog/CreateWalletDialog.styles'
-import DialogTitle from '@material-ui/core/DialogTitle'
 import CloseIcon from '@material-ui/icons/Close'
 import IconButton from '@material-ui/core/IconButton'
+import { CenteredDialogTitle } from 'ui/CenteredDialogTitle'
 
-export interface TitleProps {
+export interface CreateWalletDialogTitleProps {
   label: string
   onButtonCloseClick: () => void
 }
@@ -12,19 +12,15 @@ export const CreateWalletDialogTitle = ({
   label,
   onButtonCloseClick,
   ...rest
-}: TitleProps) => {
+}: CreateWalletDialogTitleProps) => {
   const classes = useStyles()
 
   return (
-    <DialogTitle disableTypography className={classes.title} {...rest}>
+    <CenteredDialogTitle {...rest}>
       {label}
-      <IconButton
-        aria-label='close'
-        onClick={onButtonCloseClick}
-        className={classes.closeBtn}
-      >
+      <IconButton aria-label='close' onClick={onButtonCloseClick}>
         <CloseIcon className={classes.closeIcon} />
       </IconButton>
-    </DialogTitle>
+    </CenteredDialogTitle>
   )
 }

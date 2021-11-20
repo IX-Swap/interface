@@ -1,8 +1,9 @@
 import { makeStyles } from '@material-ui/core/styles'
 
 export default makeStyles(theme => ({
-  link: {
-    color: theme.palette.slider.activeBackground,
-    cursor: 'pointer'
+  text: {
+    position: 'relative',
+    top: 13,
+    fontSize: 16
   }
 }))

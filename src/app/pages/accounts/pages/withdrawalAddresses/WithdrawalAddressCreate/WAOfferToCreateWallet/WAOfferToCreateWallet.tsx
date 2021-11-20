@@ -11,7 +11,7 @@ export const WAOfferToCreateWallet = ({ onClick }: WAInfoFieldsProps) => {
 
   return (
     <Grid item>
-      <Typography variant={'body2'} className={classes.text}>
+      <Typography variant={'body2'}>
         Do not have address?{' '}
         <Box component={'span'} className={classes.link} onClick={onClick}>
           Let’s create

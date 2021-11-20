@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles'
 
-export interface Props {
+export interface DialogVisibilityProps {
   isCreateWalletDialogVisible?: boolean
 }
 
@@ -17,14 +17,14 @@ export default makeStyles(theme => ({
     padding: theme.spacing(5, 8)
   },
   dialog: {
-    display: (props: Props) =>
+    display: (props: DialogVisibilityProps) =>
       props.isCreateWalletDialogVisible !== undefined &&
       props.isCreateWalletDialogVisible
         ? 'none'
         : 'initial'
   },
   createDialog: {
-    display: (props: Props) =>
+    display: (props: DialogVisibilityProps) =>
       props.isCreateWalletDialogVisible !== undefined &&
       props.isCreateWalletDialogVisible
         ? 'initial'

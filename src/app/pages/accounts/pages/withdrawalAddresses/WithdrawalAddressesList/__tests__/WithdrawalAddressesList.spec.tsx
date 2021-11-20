@@ -4,7 +4,7 @@ import { WithdrawalAddressesList } from 'app/pages/accounts/pages/withdrawalAddr
 import { WithdrawalAddressesTable } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressesList/WithdrawalAddressesTable/WithdrawalAddressesTable'
 
 jest.mock(
-  'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressesTable/WithdrawalAddressesTable',
+  'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressesList/WithdrawalAddressesTable/WithdrawalAddressesTable',
   () => ({ WithdrawalAddressesTable: jest.fn(() => null) })
 )
 

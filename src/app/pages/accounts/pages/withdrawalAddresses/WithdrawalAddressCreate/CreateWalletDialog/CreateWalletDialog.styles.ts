@@ -1,20 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles'
 
 export default makeStyles(theme => ({
-  title: {
-    position: 'relative',
-    margin: 0,
-    padding: theme.spacing(3),
-    backgroundColor: theme.palette.background.default,
-    textAlign: 'center',
-    fontWeight: 600,
-    fontSize: 16
-  },
-  closeBtn: {
-    position: 'absolute',
-    right: 12,
-    top: 12
-  },
   closeIcon: {
     fontSize: 22,
     fontWeight: 600
@@ -30,20 +16,22 @@ export default makeStyles(theme => ({
     padding: theme.spacing(2, 3),
     fontSize: 14,
     lineHeight: '21px',
-    color: '#666666',
     marginBottom: theme.spacing(3)
   },
   link: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    background: '#F6F1FF',
+    background:
+      theme.palette.type === 'light'
+        ? '#F6F1FF'
+        : theme.palette.backgrounds.alternativeLight,
+    color: theme.palette.slider.activeBackground,
     borderRadius: 15,
     padding: theme.spacing(2, 3)
   },
   linkText: {
-    fontSize: 16,
-    color: theme.palette.slider.activeBackground
+    fontSize: 16
   },
   icon: {
     width: 24,
