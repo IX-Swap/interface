@@ -2,11 +2,13 @@ import React from 'react'
 import { Box, Grid, Typography } from '@material-ui/core'
 import useStyles from './WAOfferToCreateWallet.styles'
 
-export interface WAInfoFieldsProps {
+export interface WAOfferToCreateWalletProps {
   onClick: () => void
 }
 
-export const WAOfferToCreateWallet = ({ onClick }: WAInfoFieldsProps) => {
+export const WAOfferToCreateWallet = ({
+  onClick
+}: WAOfferToCreateWalletProps) => {
   const classes = useStyles()
 
   return (
