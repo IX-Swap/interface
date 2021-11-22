@@ -28,7 +28,6 @@ interface Props {
 }
 export const WithdrawRequestForm = ({ currency, changeModal }: Props) => {
   const theme = useTheme()
-  const { account } = useActiveWeb3React()
   const { amount, receiver, currencyId: cid } = useWithdrawState()
   const { secTokens } = useUserSecTokens()
   const { onTypeAmount, onTypeReceiver, onCurrencySet, onSetNetWorkName } = useWithdrawActionHandlers()
@@ -40,12 +39,6 @@ export const WithdrawRequestForm = ({ currency, changeModal }: Props) => {
   const error = Boolean(receiver.length > 0 && !loading && !address && networkName === 'Ethereum')
 
   useEffect(() => {
-    if (account) {
-      onTypeReceiver(account ?? '')
-    }
-  }, [account, onTypeReceiver])
-
-  useEffect(() => {
     if (networkName) {
       onSetNetWorkName(networkName ?? '')
     }
@@ -53,7 +46,7 @@ export const WithdrawRequestForm = ({ currency, changeModal }: Props) => {
 
   const onClick = () => {
     const tokenId = (secTokens[cid ?? ''] as any)?.tokenInfo?.id
-    if (tokenId && !error && parsedAmount && !inputError) {
+    if (tokenId && !error && parsedAmount && !inputError && receiver) {
       withdraw({ id: tokenId, amount: parsedAmount.toExact(), onSuccess, onError, receiver })
     }
   }
