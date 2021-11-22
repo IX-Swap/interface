@@ -2,6 +2,7 @@ import { Currency } from '@ixswap1/sdk-core'
 import { Trans } from '@lingui/macro'
 import { ButtonIXSWide } from 'components/Button'
 import Column from 'components/Column'
+import { getNetworkFromToken } from 'components/CurrencyLogo'
 import Row from 'components/Row'
 import useENS from 'hooks/useENS'
 import useTheme from 'hooks/useTheme'
@@ -36,7 +37,7 @@ export const WithdrawRequestForm = ({ currency, changeModal }: Props) => {
   const withdraw = useWithdrawCallback(cid, currency?.symbol)
   const { parsedAmount, inputError } = useDerivedWithdrawInfo()
   const tokenInfo = (secTokens[(currency as any)?.address || ''] as any)?.tokenInfo
-  const networkName = tokenInfo?.network.charAt(0).toUpperCase() + tokenInfo?.network.slice(1) || ''
+  const networkName = getNetworkFromToken(tokenInfo)
 
   useEffect(() => {
     if (account) {
