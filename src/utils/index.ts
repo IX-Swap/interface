@@ -11,6 +11,9 @@ import walletValidator from 'multicoin-address-validator'
 
 // returns the checksummed address if the address is valid, otherwise returns false
 export function isAddress(value: any): string | false {
+  if (!value) {
+    return false
+  }
   try {
     return getAddress(value)
   } catch {
