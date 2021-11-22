@@ -127,6 +127,7 @@ async function shouldExist(selector, page) {
       state: 'attached',
       timeout: DEFAULT_SELECTOR_TIMEOUT
     })
+    return true
   } catch {
     throw new Error(`Selector: ${selector} does not exist`)
   }
@@ -207,12 +208,12 @@ async function navigate(url, page, wait = 'networkidle') {
   }
 }
 
-async function screenshotMatching(name, page, range = 0.9) {
+async function screenshotMatching(name: string, element, page, range = 0.9) {
   await page.waitForSelector(LOADER, {
     state: 'detached',
     timeout: DEFAULT_SELECTOR_TIMEOUT
   })
-  const screenshot = await page.screenshot()
+  const screenshot = await element.screenshot()
   expect(screenshot).toMatchSnapshot(`${name}.png`, {
     threshold: range
   })

@@ -11,7 +11,6 @@ import {
 } from '../lib/helpers/helpers'
 let forEachEmail = emailCreate()
 test.beforeEach(async ({ page }) => {
-  console.log(baseCreds.GH_ENV)
   await navigate(baseCreds.URL, page)
 })
 test.afterEach(async ({ page }) => {
@@ -37,20 +36,26 @@ test.describe('Functional test ', () => {
     )
     await shouldExist(kyc.MY_PROFILE, page)
   })
+
+  test('The user should be sign Out', async ({ auth }) => {
+    await auth.loginWithout2fa(baseCreds.EMAIL, baseCreds.PASSWORD)
+    await auth.signOut()
+  })
 })
 
 test.describe('Check form`s view', () => {
-  test('Login form', async ({ page }, testInfo) => {
-    await screenshotMatching(testInfo.title, page)
+  test.afterEach(async ({ page }, testInfo) => {
+    await screenshotMatching(testInfo.title, page, page)
+  })
+  test('Login form', async ({ page }) => {
+    await shouldExist(authForms.buttons.REGISTRATION, page)
   })
 
-  test('Registration form', async ({ page }, testInfo) => {
+  test('Registration form', async ({ page }) => {
     await click(authForms.buttons.REGISTRATION, page)
-    await screenshotMatching(testInfo.title, page)
   })
 
-  test('Forgot form', async ({ page }, testInfo) => {
+  test('Forgot form', async ({ page }) => {
     await click(authForms.buttons.FORGOT, page)
-    await screenshotMatching(testInfo.title, page)
   })
 })

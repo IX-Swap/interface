@@ -13,13 +13,6 @@ test.beforeEach(async ({ page, dso, auth, issuanceSelectors }, testInfo) => {
 test.afterEach(async ({ page }) => {
   await page.close()
 })
-test.describe('Check form`s view', () => {
-  test('DSO Information', async ({ page, issuanceSelectors }, testInfo) => {
-    await shouldNotExist(issuanceSelectors.LOADER, page)
-    const form = await page.$(issuanceSelectors.BASE_FORM)
-    await screenshotMatching(testInfo.title, form)
-  })
-})
 
 test('New DSO should be created ', async ({ dso, page }) => {
   const token = (await dso.fillDsoInformationForm()).tokenName
