@@ -15,6 +15,7 @@ import { DigitalSecuritiesRouter } from 'app/pages/accounts/pages/digitalSecurit
 import { WithdrawalAddressesRouter } from 'app/pages/accounts/pages/withdrawalAddresses/router/WithdrawalAddressesRouter'
 import { CommitmentsRouter } from 'app/pages/accounts/pages/commitments/router/CommitmentsRouter'
 import { Dashboard } from 'app/pages/accounts/pages/dashboard/Dashboard'
+import { Reports } from 'app/pages/accounts/pages/reports/Reports'
 
 export const AccountsRouter = () => {
   return (
@@ -59,6 +60,10 @@ export const AccountsRouter = () => {
 
       <AppRoute breadcrumb='Dashboard' path={AccountsRoute.dashboard}>
         <Dashboard />
+      </AppRoute>
+
+      <AppRoute breadcrumb='My Reports' path={AccountsRoute.reports}>
+        <Reports />
       </AppRoute>
 
       <AppRoute path={AccountsRoute.landing}>
