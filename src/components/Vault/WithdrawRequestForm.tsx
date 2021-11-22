@@ -32,12 +32,12 @@ export const WithdrawRequestForm = ({ currency, changeModal }: Props) => {
   const { amount, receiver, currencyId: cid } = useWithdrawState()
   const { secTokens } = useUserSecTokens()
   const { onTypeAmount, onTypeReceiver, onCurrencySet, onSetNetWorkName } = useWithdrawActionHandlers()
-  const { address, loading } = useENS(receiver)
-  const error = Boolean(receiver.length > 0 && !loading && !address)
   const withdraw = useWithdrawCallback(cid, currency?.symbol)
   const { parsedAmount, inputError } = useDerivedWithdrawInfo()
   const tokenInfo = (secTokens[(currency as any)?.address || ''] as any)?.tokenInfo
   const networkName = getNetworkFromToken(tokenInfo)
+  const { address, loading } = useENS(receiver)
+  const error = Boolean(receiver.length > 0 && !loading && !address && networkName === 'Ethereum')
 
   useEffect(() => {
     if (account) {

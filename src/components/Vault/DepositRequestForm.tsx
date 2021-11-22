@@ -52,9 +52,9 @@ export const DepositRequestForm = ({ currency }: Props) => {
   const { address, loading } = useENS(sender)
   const { secTokens } = useUserSecTokens()
   const deposit = useDepositCallback()
-  const error = Boolean(sender.length > 0 && !loading && !address)
   const tokenInfo = (secTokens[(currency as any)?.address || ''] as any)?.tokenInfo
   const networkName = getNetworkFromToken(tokenInfo)
+  const error = Boolean(sender.length > 0 && !loading && !address && networkName === 'Ethereum')
 
   const onClick = () => {
     const tokenId = (secTokens[cid ?? ''] as any)?.tokenInfo?.id

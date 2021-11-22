@@ -28,7 +28,7 @@ export const getTokenLogoURL = (address: string, chainId = SupportedChainId.MAIN
 }
 
 export const getNetworkFromToken = (tokenInfo: any) => {
-  return tokenInfo?.originalNetwork.charAt(0).toUpperCase() + tokenInfo?.originalNetwork.slice(1) || ''
+  return tokenInfo?.originalNetwork?.charAt(0)?.toUpperCase() + tokenInfo?.originalNetwork?.slice(1) || ''
 }
 
 const StyledEthereumLogo = styled.img<{ size: string }>`
