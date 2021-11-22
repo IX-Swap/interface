@@ -16,9 +16,7 @@ export const useStyles = makeStyles(theme => ({
     display: 'flex',
     alignItems: 'center',
     [theme.breakpoints.down('xs')]: {
-      width: '100%',
-      flexWrap: 'wrap',
-      justifyContent: 'flex-start'
+      flexWrap: 'wrap'
     }
   },
   filterWrapper: {
