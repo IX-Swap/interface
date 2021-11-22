@@ -12,7 +12,6 @@ _axios.defaults.baseURL = API_URL
 
 _axios.interceptors.response.use(responseSuccessInterceptor, async function responseErrorInterceptor(error: any) {
   const originalConfig = error?.config
-  console.log({ error })
   const shouldRetry = () => {
     const loginUrLs = [metamask.login, metamask.challenge]
     return !loginUrLs.includes(originalConfig.url)
