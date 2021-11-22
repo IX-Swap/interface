@@ -12,6 +12,7 @@ _axios.defaults.baseURL = API_URL
 
 _axios.interceptors.response.use(responseSuccessInterceptor, async function responseErrorInterceptor(error: any) {
   const originalConfig = error?.config
+  console.log({ error })
   const shouldRetry = () => {
     const loginUrLs = [metamask.login, metamask.challenge]
     return !loginUrLs.includes(originalConfig.url)
@@ -45,6 +46,10 @@ _axios.interceptors.response.use(responseSuccessInterceptor, async function resp
         console.error({ requestError: error.message })
         store.dispatch(postLogin.rejected({ errorMessage: error.message }))
       }
+    }
+    if (error?.response?.status === 403) {
+      const message = error?.response?.data?.message
+      throw new Error(message)
     }
   }
 })
