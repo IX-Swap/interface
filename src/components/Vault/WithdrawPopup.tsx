@@ -1,5 +1,6 @@
 import { Currency } from '@ixswap1/sdk-core'
 import { Trans } from '@lingui/macro'
+import { getNetworkFromToken } from 'components/CurrencyLogo'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import { RowBetween } from 'components/Row'
 import React, { useCallback, useEffect, useState } from 'react'
@@ -32,7 +33,7 @@ export const WithdrawPopup = ({ currency }: Props) => {
   const [modalView, setModalView] = useState<WithdrawModalView>(WithdrawModalView.WITHDRAW_REQUEST)
   const { loadingWithdraw } = useWithdrawState()
   const tokenInfo = (secTokens[(currency as any)?.address || ''] as any)?.tokenInfo
-  const networkName = tokenInfo?.network.charAt(0).toUpperCase() + tokenInfo?.network.slice(1) || ''
+  const networkName = getNetworkFromToken(tokenInfo)
   const onClose = useCallback(() => {
     setModalView(WithdrawModalView.WITHDRAW_REQUEST)
     toggle()

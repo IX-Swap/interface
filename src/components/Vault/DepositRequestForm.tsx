@@ -25,6 +25,7 @@ import { AmountInput } from './AmountInput'
 import { HideSmall, SmallOnly } from 'theme'
 import useTheme from 'hooks/useTheme'
 import info from '../../assets/images/info-filled.svg'
+import { getNetworkFromToken } from 'components/CurrencyLogo'
 
 export const ArrowWrapper = styled.div`
   padding: 7px 5px;
@@ -47,12 +48,13 @@ export const DepositRequestForm = ({ currency }: Props) => {
   const { account } = useActiveWeb3React()
   const { amount, sender, currencyId: cid } = useDepositState()
   const { inputError, parsedAmount } = useDerivedDepositInfo()
-  const { onTypeAmount, onTypeSender, onCurrencySet } = useDepositActionHandlers()
+  const { onTypeAmount, onTypeSender, onCurrencySet, onNetworkSet } = useDepositActionHandlers()
   const { address, loading } = useENS(sender)
   const { secTokens } = useUserSecTokens()
   const deposit = useDepositCallback()
   const error = Boolean(sender.length > 0 && !loading && !address)
   const tokenInfo = (secTokens[(currency as any)?.address || ''] as any)?.tokenInfo
+  const networkName = getNetworkFromToken(tokenInfo)
 
   const onClick = () => {
     const tokenId = (secTokens[cid ?? ''] as any)?.tokenInfo?.id
@@ -69,6 +71,12 @@ export const DepositRequestForm = ({ currency }: Props) => {
       onTypeSender(account ?? '')
     }
   }, [account, onTypeSender])
+
+  useEffect(() => {
+    if (networkName) {
+      onNetworkSet(networkName)
+    }
+  }, [onNetworkSet, networkName])
 
   useEffect(() => {
     const id = currencyId(currency)
@@ -90,12 +98,12 @@ export const DepositRequestForm = ({ currency }: Props) => {
           <Column style={{ marginTop: '20px', gap: '11px' }}>
             <Row>
               <TYPE.body1>
-                <Trans>{`From my ${tokenInfo?.network || ''} wallet`}</Trans>
+                <Trans>{`From my ${networkName || ''} wallet`}</Trans>
               </TYPE.body1>
             </Row>
             <AddressInput
               {...{ id: 'sender-input', value: sender ?? '', error, onChange: onTypeSender }}
-              placeholder={`Paste your ${tokenInfo?.network || ''} wallet`}
+              placeholder={`Paste your ${networkName || ''} wallet`}
             />
           </Column>
           <Column style={{ margin: '12px 0px', padding: '0 22px' }}>
@@ -144,7 +152,7 @@ export const DepositRequestForm = ({ currency }: Props) => {
           <Column style={{ marginTop: '20px', marginBottom: '16px', gap: '11px' }}>
             <Row>
               <TYPE.body1>
-                <Trans>{`To my ${tokenInfo?.network || ''} wallet`}</Trans>
+                <Trans>{`To my ${networkName || ''} wallet`}</Trans>
               </TYPE.body1>
             </Row>
             <AddressInput
@@ -154,7 +162,7 @@ export const DepositRequestForm = ({ currency }: Props) => {
                 error,
                 onChange: onTypeSender,
                 disabled: true,
-                placeholder: `Paste your ${tokenInfo?.network || ''} wallet`,
+                placeholder: `Paste your ${networkName || ''} wallet`,
               }}
             />
           </Column>
