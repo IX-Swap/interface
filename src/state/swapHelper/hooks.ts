@@ -42,10 +42,11 @@ export function useSaveSwapTx() {
       if (!addresses.length) {
         return
       }
-      const promises = addresses.map((address) => {
+      const promises = addresses.map(async (address) => {
         const authorization = authorizations?.[address]
         if (authorization && authorization.swapId) {
-          return saveSwapTxHash({ swapId: authorization.swapId, transactionHash })
+          const result = await saveSwapTxHash({ swapId: authorization.swapId, transactionHash })
+          return result
         }
       })
       await Promise.allSettled(promises)
