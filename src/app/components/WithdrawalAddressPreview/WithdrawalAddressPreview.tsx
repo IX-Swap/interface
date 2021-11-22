@@ -16,13 +16,18 @@ export const WithdrawalAddressPreview = (props: WithdrawalAddressViewProps) => {
 
   return (
     <Grid container justify='center' direction='column'>
-      <Grid container>
+      <Grid container spacing={3}>
         <Grid item xs={6}>
           <LabelledValue label='Network Type' value={data.network.name} />
         </Grid>
         <Grid item xs={6}>
           <LabelledValue label='Withdrawal Address' value={data.address} />
         </Grid>
+        {data.wallet !== undefined && (
+          <Grid item xs={6}>
+            <LabelledValue label='Wallet' value={data.wallet} />
+          </Grid>
+        )}
       </Grid>
       <Box py={2} />
       <Grid container>
