@@ -13,104 +13,110 @@ import {
 } from './constants'
 import { getMovingAverageParams } from './utils'
 
-export const TVChartContainer: React.FC<Partial<ChartContainerProps>> =
-  props => {
-    const {
-      symbol,
-      datafeed,
-      interval,
-      fullscreen,
-      width,
-      height,
-      theme,
-      containerId,
-      toolbarBg,
-      customCssUrl
-    } = props
-    const [tvWidget, setTradingChart] = React.useState<IChartingLibraryWidget>()
+export interface TVChartContainerProps extends Partial<ChartContainerProps> {
+  viewport?: 'small' | 'big'
+}
 
-    const createChart = React.useCallback(() => {
-      const chart = new Widget({
-        symbol: symbol ?? (sampleTVChartProps.symbol as string),
-        datafeed:
-          datafeed ??
-          new (window as any).Datafeeds.UDFCompatibleDatafeed(
-            props.dataFeedUrl ?? sampleTVChartProps.dataFeedUrl
-          ),
-        interval: interval ?? sampleTVChartProps.interval,
-        container_id: containerId ?? sampleTVChartProps.containerId,
-        library_path: `${process.env.PUBLIC_URL}/charting_library/`,
-        favorites: {
-          intervals: ['15', '60', '240', '1D', 'W'] as ResolutionString[],
-          chartTypes: ['Line', 'Candles']
-        },
-        locale: 'en',
-        disabled_features: disabledFeatures,
-        enabled_features: enabledFeatures,
-        charts_storage_url: 'https://saveload.tradingview.com',
-        charts_storage_api_version: '1.1',
-        client_id: 'tradingview.com',
-        user_id: 'public_user_id',
-        fullscreen: fullscreen ?? sampleTVChartProps.fullscreen,
-        autosize: false,
-        height: height ?? sampleTVChartProps.height,
-        width: width ?? sampleTVChartProps.width,
-        theme: theme ?? sampleTVChartProps.theme,
-        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone as any,
-        toolbar_bg: toolbarBg,
-        custom_css_url: customCssUrl,
-        overrides
-      })
+export const TVChartContainer = (props: TVChartContainerProps) => {
+  const {
+    symbol,
+    datafeed,
+    interval,
+    fullscreen,
+    width,
+    height,
+    theme,
+    containerId,
+    toolbarBg,
+    customCssUrl,
+    viewport
+  } = props
+  const [tvWidget, setTradingChart] = React.useState<IChartingLibraryWidget>()
 
-      setTradingChart(chart)
-    }, [
-      setTradingChart,
-      symbol,
-      datafeed,
-      interval,
-      fullscreen,
-      width,
-      height,
-      theme,
-      containerId,
-      props.dataFeedUrl,
-      toolbarBg,
-      customCssUrl
-    ])
+  const createChart = React.useCallback(() => {
+    const chart = new Widget({
+      symbol: symbol ?? (sampleTVChartProps.symbol as string),
+      datafeed:
+        datafeed ??
+        new (window as any).Datafeeds.UDFCompatibleDatafeed(
+          props.dataFeedUrl ?? sampleTVChartProps.dataFeedUrl
+        ),
+      interval: interval ?? sampleTVChartProps.interval,
+      container_id: containerId ?? sampleTVChartProps.containerId,
+      library_path: `${process.env.PUBLIC_URL}/charting_library/`,
+      favorites: {
+        intervals: ['15', '60', '240', '1D', 'W'] as ResolutionString[],
+        chartTypes: ['Line', 'Candles']
+      },
+      locale: 'en',
+      disabled_features: disabledFeatures,
+      enabled_features:
+        viewport === 'big' ? enabledFeatures : ['hide_left_toolbar_by_default'],
+      charts_storage_url: 'https://saveload.tradingview.com',
+      charts_storage_api_version: '1.1',
+      client_id: 'tradingview.com',
+      user_id: 'public_user_id',
+      fullscreen: fullscreen ?? sampleTVChartProps.fullscreen,
+      autosize: false,
+      height: height ?? sampleTVChartProps.height,
+      width: width ?? sampleTVChartProps.width,
+      theme: theme ?? sampleTVChartProps.theme,
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone as any,
+      toolbar_bg: toolbarBg,
+      custom_css_url: customCssUrl,
+      overrides
+    })
 
-    React.useEffect(() => {
-      if (tvWidget !== null && tvWidget !== undefined) {
-        tvWidget.onChartReady(() => {
-          const activeChart = tvWidget.activeChart()
-          void activeChart
-            // @ts-expect-error
-            .createStudy(...getMovingAverageParams(12, '#FF0000'))
-          void activeChart
-            // @ts-expect-error
-            .createStudy(...getMovingAverageParams(20, '#00FF00'))
-          void activeChart
-            // @ts-expect-error
-            .createStudy(...getMovingAverageParams(26, '#0000FF'))
-          void tvWidget.headerReady().then(function () {
-            const button = tvWidget.createButton()
-            button.setAttribute('title', 'Reset Chart')
-            button.addEventListener('click', function () {
-              tvWidget.activeChart().executeActionById('chartReset')
-            })
-            button.textContent = 'Reset Chart'
+    setTradingChart(chart)
+  }, [
+    setTradingChart,
+    symbol,
+    datafeed,
+    interval,
+    fullscreen,
+    width,
+    height,
+    theme,
+    containerId,
+    props.dataFeedUrl,
+    toolbarBg,
+    customCssUrl,
+    viewport
+  ])
+
+  React.useEffect(() => {
+    if (tvWidget !== null && tvWidget !== undefined) {
+      tvWidget.onChartReady(() => {
+        const activeChart = tvWidget.activeChart()
+        void activeChart
+          // @ts-expect-error
+          .createStudy(...getMovingAverageParams(12, '#FF0000'))
+        void activeChart
+          // @ts-expect-error
+          .createStudy(...getMovingAverageParams(20, '#00FF00'))
+        void activeChart
+          // @ts-expect-error
+          .createStudy(...getMovingAverageParams(26, '#0000FF'))
+        void tvWidget.headerReady().then(function () {
+          const button = tvWidget.createButton()
+          button.setAttribute('title', 'Reset Chart')
+          button.addEventListener('click', function () {
+            tvWidget.activeChart().executeActionById('chartReset')
           })
+          button.textContent = 'Reset Chart'
         })
-      }
-    }, [tvWidget])
+      })
+    }
+  }, [tvWidget])
 
-    React.useEffect(() => {
-      createChart()
-    }, [createChart])
+  React.useEffect(() => {
+    createChart()
+  }, [createChart])
 
-    return (
-      <div
-        id={containerId ?? sampleTVChartProps.containerId}
-        className={'TVChartContainer'}
-      />
-    )
-  }
+  return (
+    <div
+      id={containerId ?? sampleTVChartProps.containerId}
+      className={'TVChartContainer'}
+    />
+  )
+}

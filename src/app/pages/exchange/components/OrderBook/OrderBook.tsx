@@ -17,6 +17,7 @@ export interface OrderBookProps {
   tokenSymbol: string
   currency: ValidCurrency
   showHeader?: boolean
+  barOrigin?: 'left' | 'right'
 }
 
 export const OrderBook = ({
@@ -24,7 +25,8 @@ export const OrderBook = ({
   tokenSymbol,
   currency,
   data = [],
-  showHeader = false
+  showHeader = false,
+  barOrigin = 'right'
 }: OrderBookProps) => {
   return (
     <Table>
@@ -40,6 +42,7 @@ export const OrderBook = ({
             count={count}
             amount={amount}
             total={total}
+            barOrigin={barOrigin}
           />
         ))}
       </TableBody>

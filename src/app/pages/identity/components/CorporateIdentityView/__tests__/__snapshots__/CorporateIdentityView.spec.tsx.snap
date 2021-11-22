@@ -70,7 +70,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                 >
                   <p
                     class="MuiTypography-root MuiTypography-body1"
-                    style="font-weight: 700; color: rgb(68, 68, 68);"
+                    style="font-weight: 700; width: 100%; color: rgb(68, 68, 68);"
                   >
                     Company Name
                   </p>
@@ -79,7 +79,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                   />
                   <p
                     class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft"
-                    style="font-weight: 400; opacity: 1;"
+                    style="font-weight: 400; opacity: 1; width: 100%;"
                   >
                     InvestaX
                   </p>
@@ -93,7 +93,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                 >
                   <p
                     class="MuiTypography-root MuiTypography-body1"
-                    style="font-weight: 700; color: rgb(68, 68, 68);"
+                    style="font-weight: 700; width: 100%; color: rgb(68, 68, 68);"
                   >
                     Company Registration Number/UEN
                   </p>
@@ -102,7 +102,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                   />
                   <p
                     class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft"
-                    style="font-weight: 400; opacity: 1;"
+                    style="font-weight: 400; opacity: 1; width: 100%;"
                   >
                     123456
                   </p>
@@ -125,7 +125,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                 >
                   <p
                     class="MuiTypography-root MuiTypography-body1"
-                    style="font-weight: 700; color: rgb(68, 68, 68);"
+                    style="font-weight: 700; width: 100%; color: rgb(68, 68, 68);"
                   >
                     Country of Incorporation
                   </p>
@@ -134,7 +134,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                   />
                   <p
                     class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft"
-                    style="font-weight: 400; opacity: 1;"
+                    style="font-weight: 400; opacity: 1; width: 100%;"
                   >
                     Russian Federation
                   </p>
@@ -148,7 +148,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                 >
                   <p
                     class="MuiTypography-root MuiTypography-body1"
-                    style="font-weight: 700; color: rgb(68, 68, 68);"
+                    style="font-weight: 700; width: 100%; color: rgb(68, 68, 68);"
                   >
                     Legal Entity Status
                   </p>
@@ -157,7 +157,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                   />
                   <p
                     class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft"
-                    style="font-weight: 400; opacity: 1;"
+                    style="font-weight: 400; opacity: 1; width: 100%;"
                   >
                     other
                   </p>
@@ -203,7 +203,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
           >
             <p
               class="MuiTypography-root MuiTypography-body1"
-              style="font-weight: 700; color: rgb(68, 68, 68);"
+              style="font-weight: 700; width: 100%; color: rgb(68, 68, 68);"
             >
               Address for Correspondence
             </p>
@@ -212,7 +212,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
             />
             <p
               class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft"
-              style="font-weight: 400; opacity: 1;"
+              style="font-weight: 400; opacity: 1; width: 100%;"
             >
               Omsk, Russian Federation, Siberia, Address line 1, Address line 2, 123456
             </p>
@@ -226,7 +226,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
           >
             <p
               class="MuiTypography-root MuiTypography-body1"
-              style="font-weight: 700; color: rgb(68, 68, 68);"
+              style="font-weight: 700; width: 100%; color: rgb(68, 68, 68);"
             >
               Registered Address
             </p>
@@ -235,7 +235,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
             />
             <p
               class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft"
-              style="font-weight: 400; opacity: 1;"
+              style="font-weight: 400; opacity: 1; width: 100%;"
             >
               Omsk, Russian Federation, Siberia, Address line 1, Address line 2, 123456
             </p>

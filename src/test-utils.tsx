@@ -9,7 +9,8 @@ import {
 import {
   createGenerateClassName,
   StylesProvider,
-  ThemeProvider
+  ThemeProvider,
+  createMuiTheme
 } from '@material-ui/core/styles'
 import { history } from 'config/history'
 import { UserProvider } from 'auth/context'
@@ -183,6 +184,25 @@ export const renderHookWithForm = (
   )
 
   return renderHook(hookFn, { wrapper: WithForm })
+}
+
+export const renderWithInitialWidth = (ui: any, initialWidth: any) => {
+  const SizeWrapper = (props: any) => {
+    const defaultTheme = createMuiTheme()
+    const theme = createMuiTheme({
+      props: { ...defaultTheme, MuiWithWidth: { initialWidth } }
+    })
+
+    return (
+      <BaseProviders>
+        <UserProvider value={{ ...fakeUserStore }}>
+          <ThemeProvider theme={theme}>{props.children}</ThemeProvider>
+        </UserProvider>
+      </BaseProviders>
+    )
+  }
+
+  return render(ui, { wrapper: SizeWrapper })
 }
 
 export const invokeMutationFn = async (result: any, payload: any) => {

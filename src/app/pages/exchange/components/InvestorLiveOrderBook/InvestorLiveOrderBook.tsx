@@ -1,4 +1,4 @@
-import { Box, Grid, Typography, Table } from '@material-ui/core'
+import { Box, Grid, Typography, Table, Hidden } from '@material-ui/core'
 import { LiveTrackingPrice } from 'app/pages/exchange/components/LiveTrackingPrice/LiveTrackingPrice'
 import { OrderBook } from 'app/pages/exchange/components/OrderBook/OrderBook'
 import React from 'react'
@@ -6,11 +6,13 @@ import { useParams } from 'react-router-dom'
 import { useOrderBook } from 'app/pages/exchange/hooks/useOrderBook'
 import { useMarket } from 'app/pages/exchange/hooks/useMarket'
 import { OrderBookHeader } from 'app/pages/exchange/components/OrderBook/OrderBookHeader'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 
 export const InvestorLiveOrderBook = () => {
   const { pairId } = useParams<{ pairId: string }>()
   const { data: orderBookData } = useOrderBook(pairId)
   const { data: tradingPair } = useMarket(pairId)
+  const { isMiniLaptop } = useAppBreakpoints()
 
   if (orderBookData === undefined) {
     return null
@@ -32,50 +34,63 @@ export const InvestorLiveOrderBook = () => {
           <Typography variant='subtitle1'>Market Order</Typography>
         </Box>
       </Grid>
-      <Grid item>
-        <Table>
-          <OrderBookHeader
-            tokenSymbol={tradingPair?.listing.tokenSymbol}
-            currency={tradingPair?.listing.markets[0].currency}
-          />
-        </Table>
-      </Grid>
+
+      <Hidden mdDown>
+        <Grid item>
+          <Table>
+            <OrderBookHeader
+              tokenSymbol={tradingPair?.listing.tokenSymbol}
+              currency={tradingPair?.listing.markets[0].currency}
+            />
+          </Table>
+        </Grid>
+      </Hidden>
+
       <Grid item style={{ flexGrow: 1 }}>
         <Box
           display='flex'
-          flexDirection='column'
+          flexDirection={{ xs: 'row', md: 'column' }}
           height='100%'
           flexWrap='nowrap'
           justifyContent='flex-start'
           alignContent='space-between'
         >
           <Box
-            height='calc(50% - 26px)'
+            height={{ xs: 'auto', md: 'calc(50% - 26px)' }}
             overflow='hidden'
             flexShrink={1}
             flexGrow={1}
+            mr={{ xs: 1, md: 0 }}
           >
             <OrderBook
               data={asks.slice(0, 15)}
               currency={tradingPair?.listing.markets[0].currency}
               tokenSymbol={tradingPair?.listing.tokenSymbol}
               transaction='sell'
+              showHeader={isMiniLaptop}
             />
           </Box>
-          <Box py={2}>
-            <LiveTrackingPrice />
-          </Box>
+
+          <Hidden mdDown>
+            <Box py={2}>
+              <LiveTrackingPrice />
+            </Box>
+          </Hidden>
+
           <Box
-            height='calc(50% - 26px)'
+            height={{ xs: 'auto', md: 'calc(50% - 26px)' }}
             overflow='hidden'
             flexGrow={0}
             flexShrink={1}
+            ml={{ xs: 1, md: 0 }}
           >
             <OrderBook
               data={bids.slice(0, 15)}
               currency={tradingPair?.listing.markets[0].currency}
               tokenSymbol={tradingPair?.listing.tokenSymbol}
               transaction='buy'
+              barOrigin={isMiniLaptop ? 'left' : 'right'}
+              showHeader={isMiniLaptop}
             />
           </Box>
         </Box>
