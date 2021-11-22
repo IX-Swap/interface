@@ -13,7 +13,8 @@ export const AtlasOneReports = () => {
         variant: 'elevation',
         elevation: 0
       }}
-      themeVariant='no-header'
+      noHeader
+      themeVariant='default'
       bordered={false}
       columns={columns}
     />

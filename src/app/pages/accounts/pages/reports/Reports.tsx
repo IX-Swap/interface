@@ -3,6 +3,7 @@ import { Box, Grid, Typography } from '@material-ui/core'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { VSpacer } from 'components/VSpacer'
 import { Filters } from './components/Filters/Filters'
+import { ReportsTable } from 'app/pages/accounts/pages/reports/components/ReportsTable/ReportsTable'
 
 export const Reports: React.FC = () => {
   return (
@@ -28,8 +29,8 @@ export const Reports: React.FC = () => {
         </Grid>
       </Grid>
       <Grid item>
-        <VSpacer size={'small'} />
-        Table
+        <VSpacer size={'medium'} />
+        <ReportsTable />
       </Grid>
     </Grid>
   )

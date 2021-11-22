@@ -24,7 +24,8 @@ export const OutboundTable = () => {
       hasActions
       actions={Actions}
       filter={filter}
-      themeVariant={'no-header'}
+      noHeader
+      themeVariant={'default'}
       paperProps={{ variant: 'elevation', elevation: 0 }}
     />
   )

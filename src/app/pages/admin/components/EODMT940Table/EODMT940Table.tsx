@@ -24,7 +24,8 @@ export const EODMT940Table = () => {
       hasActions
       actions={Actions}
       filter={filter}
-      themeVariant={'no-header'}
+      themeVariant={'default'}
+      noHeader
       paperProps={{ variant: 'elevation', elevation: 0 }}
     />
   )
