@@ -25,7 +25,9 @@ import { AmountInput } from './AmountInput'
 import { HideSmall, SmallOnly } from 'theme'
 import useTheme from 'hooks/useTheme'
 import info from '../../assets/images/info-filled.svg'
-import { getNetworkFromToken } from 'components/CurrencyLogo'
+import { chainIdToNetworkName, getNetworkFromToken } from 'components/CurrencyLogo'
+import { capitalizeFirstLetter } from 'components/AdminKycTable/utils'
+import { SupportedChainId } from 'constants/chains'
 
 export const ArrowWrapper = styled.div`
   padding: 7px 5px;
@@ -45,7 +47,7 @@ interface Props {
 export const DepositRequestForm = ({ currency }: Props) => {
   const theme = useTheme()
   const showAboutWrapping = useShowAboutWrappingCallback()
-  const { account } = useActiveWeb3React()
+  const { account, chainId } = useActiveWeb3React()
   const { amount, sender, currencyId: cid } = useDepositState()
   const { inputError, parsedAmount } = useDerivedDepositInfo()
   const { onTypeAmount, onTypeSender, onCurrencySet, onNetworkSet } = useDepositActionHandlers()
@@ -55,22 +57,18 @@ export const DepositRequestForm = ({ currency }: Props) => {
   const tokenInfo = (secTokens[(currency as any)?.address || ''] as any)?.tokenInfo
   const networkName = getNetworkFromToken(tokenInfo)
   const error = Boolean(sender.length > 0 && !loading && !address && networkName === 'Ethereum')
-
+  const computedAddress = networkName === 'Ethereum' ? address : sender
+  const accountNetwork = chainId ? chainIdToNetworkName(chainId as SupportedChainId) : ''
   const onClick = () => {
     const tokenId = (secTokens[cid ?? ''] as any)?.tokenInfo?.id
-    if (tokenId && !error && parsedAmount && !inputError && address) {
+    if (tokenId && !error && parsedAmount && !inputError && computedAddress) {
       deposit({
         id: tokenId,
         amount: Number(parsedAmount?.toSignificant(5)),
-        fromAddress: address,
+        fromAddress: computedAddress || '',
       })
     }
   }
-  useEffect(() => {
-    if (account) {
-      onTypeSender(account ?? '')
-    }
-  }, [account, onTypeSender])
 
   useEffect(() => {
     if (networkName) {
@@ -152,17 +150,17 @@ export const DepositRequestForm = ({ currency }: Props) => {
           <Column style={{ marginTop: '20px', marginBottom: '16px', gap: '11px' }}>
             <Row>
               <TYPE.body1>
-                <Trans>{`To my ${networkName || ''} wallet`}</Trans>
+                <Trans>{`To your ${capitalizeFirstLetter(accountNetwork || '')} wallet`}</Trans>
               </TYPE.body1>
             </Row>
             <AddressInput
               {...{
                 id: 'sender-input',
-                value: address ? shortAddress(address) : '',
+                value: shortAddress(account || ''),
                 error,
                 onChange: onTypeSender,
                 disabled: true,
-                placeholder: `Paste your ${networkName || ''} wallet`,
+                placeholder: `Paste your ${capitalizeFirstLetter(accountNetwork || '')} wallet`,
               }}
             />
           </Column>

@@ -10,7 +10,7 @@ import Logo from '../Logo'
 
 type Network = 'ethereum' | 'polygon'
 
-function chainIdToNetworkName(networkId: SupportedChainId): Network {
+export function chainIdToNetworkName(networkId: SupportedChainId): Network {
   switch (networkId) {
     case SupportedChainId.MAINNET:
       return 'ethereum'
