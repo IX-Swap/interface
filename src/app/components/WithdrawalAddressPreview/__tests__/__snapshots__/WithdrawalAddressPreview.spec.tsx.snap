@@ -16,7 +16,7 @@ exports[`WithdrawalAddressPreview renders without error 1`] = `
         >
           <p
             class="MuiTypography-root MuiTypography-body1"
-            style="font-weight: 700; color: rgb(68, 68, 68);"
+            style="font-weight: 700; width: 100%; color: rgb(68, 68, 68);"
           >
             Network Type
           </p>
@@ -25,7 +25,7 @@ exports[`WithdrawalAddressPreview renders without error 1`] = `
           />
           <p
             class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft"
-            style="font-weight: 400; opacity: 1;"
+            style="font-weight: 400; opacity: 1; width: 100%;"
           >
             Ropsten Test Network (Public Ethereum)
           </p>
@@ -39,7 +39,7 @@ exports[`WithdrawalAddressPreview renders without error 1`] = `
         >
           <p
             class="MuiTypography-root MuiTypography-body1"
-            style="font-weight: 700; color: rgb(68, 68, 68);"
+            style="font-weight: 700; width: 100%; color: rgb(68, 68, 68);"
           >
             Withdrawal Address
           </p>
@@ -48,7 +48,7 @@ exports[`WithdrawalAddressPreview renders without error 1`] = `
           />
           <p
             class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft"
-            style="font-weight: 400; opacity: 1;"
+            style="font-weight: 400; opacity: 1; width: 100%;"
           >
             0x67ed490d810c41263758e7355cef720ffed68cbc
           </p>
