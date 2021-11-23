@@ -119,7 +119,7 @@ const Body = () => {
           </div>
           <div>{formatAmount(stake.distributeAmount)} IXSgov</div>
           <div className="rewards">
-            {formatAmount(stake.reward)} {currency?.symbol}
+            {formatAmount(stake?.totalReward)} {currency?.symbol}
           </div>
           {stake.canUnstake ? (
             <UnstakeButton
