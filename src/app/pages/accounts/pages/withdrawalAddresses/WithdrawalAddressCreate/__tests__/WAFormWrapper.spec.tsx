@@ -8,7 +8,7 @@ import { networks } from '__fixtures__/network'
 import { WAFormWrapper } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WAFormWrapper'
 import { user } from '__fixtures__/user'
 import * as useAuth from 'hooks/auth/useAuth'
-import { BlockchainWallet } from 'components/form/WalletSelect'
+import { BlockchainWallet } from 'config/blockchain'
 
 /* eslint-disable import/first */
 jest.deepUnmock('axios')

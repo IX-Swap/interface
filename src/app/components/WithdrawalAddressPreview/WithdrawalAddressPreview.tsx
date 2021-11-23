@@ -4,6 +4,7 @@ import { LabelledValue } from 'components/LabelledValue'
 import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
 import { WithdrawalAddress } from 'types/withdrawalAddress'
 import CheckIcon from '@material-ui/icons/Check'
+import { BlockchainWalletView } from 'app/components/BlockchainWalletView'
 
 export interface WithdrawalAddressViewProps {
   data: WithdrawalAddress
@@ -25,7 +26,10 @@ export const WithdrawalAddressPreview = (props: WithdrawalAddressViewProps) => {
         </Grid>
         {data.wallet !== undefined && (
           <Grid item xs={6}>
-            <LabelledValue label='Wallet' value={data.wallet} />
+            <LabelledValue
+              label='Wallet'
+              value={<BlockchainWalletView wallet={data.wallet} />}
+            />
           </Grid>
         )}
       </Grid>

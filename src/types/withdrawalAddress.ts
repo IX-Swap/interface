@@ -1,6 +1,6 @@
 import { Network } from './networks'
 import { AuthorizableWithIdentity } from './authorizer'
-import { BlockchainWallet } from 'components/form/WalletSelect'
+import { BlockchainWallet } from 'config/blockchain'
 
 export interface WithdrawalAddress extends AuthorizableWithIdentity {
   _id: string
