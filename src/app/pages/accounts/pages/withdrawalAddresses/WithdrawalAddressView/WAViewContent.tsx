@@ -24,7 +24,7 @@ export const WAViewContent = () => {
           <LabelledValue label='Address Label' value={data.label} />
         </Grid>
         <Grid item xs={8}>
-          <LabelledValue label='Withdrawal Address' value={data.address} />
+          <LabelledValue label='Blockchain Address' value={data.address} />
         </Grid>
         <Grid item xs={8}>
           <LabelledValue label='Memo' value={data.memo} />

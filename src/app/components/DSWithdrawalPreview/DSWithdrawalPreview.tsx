@@ -35,7 +35,7 @@ export const DSWithdrawalPreview = (props: DSWithdrawalPreviewProps) => {
 
         <Grid item xs={6}>
           <LabelledValue
-            label='Withdrawal Address'
+            label='Blockchain Address'
             value={data.recipientWallet}
           />
         </Grid>

@@ -33,7 +33,7 @@ describe('WithdrawalAddressPreview', () => {
     )
     expect(LabelledValue).toHaveBeenNthCalledWith(
       2,
-      { label: 'Withdrawal Address', value: withdrawalAddress.address },
+      { label: 'Blockchain Address', value: withdrawalAddress.address },
       {}
     )
   })

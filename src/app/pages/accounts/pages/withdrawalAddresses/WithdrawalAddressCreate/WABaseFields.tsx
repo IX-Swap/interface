@@ -15,7 +15,7 @@ const radios: Array<{ label: string; value: BlockchainAddressVariant }> = [
     value: 'connect'
   },
   {
-    label: 'Input Withdrawal Address',
+    label: 'Input Blockchain Address',
     value: 'create'
   }
 ]

@@ -36,7 +36,7 @@ describe('useCreateCustodianWallet', () => {
           expect(onSuccess).toHaveBeenCalledTimes(1)
 
           expect(snackbarObj.showSnackbar).toHaveBeenCalledWith(
-            'You have been assigned with the withdrawal address',
+            'You have been assigned with the blockchain address',
             'success'
           )
         },

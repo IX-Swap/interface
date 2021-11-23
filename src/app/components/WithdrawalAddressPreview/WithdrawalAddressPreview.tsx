@@ -21,7 +21,7 @@ export const WithdrawalAddressPreview = (props: WithdrawalAddressViewProps) => {
           <LabelledValue label='Network Type' value={data.network.name} />
         </Grid>
         <Grid item xs={6}>
-          <LabelledValue label='Withdrawal Address' value={data.address} />
+          <LabelledValue label='Blockchain Address' value={data.address} />
         </Grid>
       </Grid>
       <Box py={2} />
