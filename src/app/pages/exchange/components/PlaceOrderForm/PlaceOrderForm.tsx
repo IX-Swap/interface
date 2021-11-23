@@ -24,6 +24,7 @@ export interface PlaceOrderFormProps {
   currencyBalance: number
   isFetching?: boolean
   onSubmit: (bank: PlaceOrderArgs) => Promise<any>
+  defaultActiveTab?: number
 }
 
 export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
@@ -33,11 +34,12 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
   currencyBalance,
   tokenBalance,
   isFetching = false,
-  onSubmit
+  onSubmit,
+  defaultActiveTab = 0
 }) => {
-  const classes = useStyles()
   const tabs = ['BUY', 'SELL']
-  const [activeTabNameIdx, setActiveTabNameIdx] = useState(0)
+  const [activeTabNameIdx, setActiveTabNameIdx] = useState(defaultActiveTab)
+  const classes = useStyles(activeTabNameIdx)
   const balance = activeTabNameIdx === 0 ? currencyBalance : tokenBalance
   const totalCurrencyLabel = currencyLabel
   const { pairId } = useParams<{ pairId: string }>()

@@ -1,5 +1,11 @@
 import React from 'react'
-import { render, fireEvent, waitFor, cleanup } from 'test-utils'
+import {
+  render,
+  fireEvent,
+  waitFor,
+  cleanup,
+  renderWithInitialWidth
+} from 'test-utils'
 import { DSOTableFilters } from 'app/pages/invest/components/DSOTable/DSOTableFilters'
 import { history } from 'config/history'
 import {
@@ -54,8 +60,11 @@ describe('DSOTableFilters', () => {
     })
   })
 
-  it.skip('renders ColumnEditor correctly', async () => {
-    const { getByText, queryByText, getAllByRole } = render(<DSOTableFilters />)
+  it('renders ColumnEditor correctly', async () => {
+    const { getByText, queryByText, getAllByRole } = renderWithInitialWidth(
+      <DSOTableFilters />,
+      'lg'
+    )
     const showColumnsButton = getAllByRole('button')[1]
     expect(showColumnsButton).toBeInTheDocument()
     expect(queryByText('Add more columns')).not.toBeInTheDocument()

@@ -97,6 +97,7 @@ export const LabelledValue = (props: LabelledValueProps & GridProps) => {
       styles: {
         fontWeight: labelWeightMap[labelWeight],
         fontSize: reverse ? labelFontSize : undefined,
+        width: '100%',
         color: isNewThemeOn
           ? theme.palette.slider.activeColor
           : labelColorMap[labelColor]
@@ -108,7 +109,8 @@ export const LabelledValue = (props: LabelledValueProps & GridProps) => {
         fontWeight: valueWeightMap[valueWeight],
         fontSize: reverse ? valueFontSize : undefined,
         color: valueColor ?? undefined,
-        opacity: isNewThemeOn ? 0.6 : 1
+        opacity: isNewThemeOn ? 0.6 : 1,
+        width: '100%'
       }
     }
   ]

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Grid } from '@material-ui/core'
+import { Button, Grid, Hidden } from '@material-ui/core'
 import { CapitalStructureFilter } from 'app/pages/invest/components/DSOTable/CapitalStructureFilter'
 import { useDSOTableColumns } from 'app/pages/invest/hooks/useDSOTableColumns'
 import { SearchFilter } from 'app/components/SearchFilter'
@@ -9,19 +9,24 @@ import { LabelledValue } from 'components/LabelledValue'
 import { PriceFilter } from 'app/pages/invest/components/DSOTable/PriceFilter'
 import { NetworkFilter } from 'app/pages/invest/components/DSOTable/NetworkFilter'
 import { CurrencyFilter } from 'app/pages/admin/components/AssignedVirtualAccountsTable/CurrencyFilter'
-import useMediaQuery from '@material-ui/core/useMediaQuery'
 import { useTheme } from '@material-ui/core/styles'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+import FilterListIcon from '@material-ui/icons/FilterList'
 
 export const DSOTableFilters = () => {
   const { deselectColumn, selectColumn, columns } = useDSOTableColumns()
   const [showColumns, setShowColumns] = useState(false)
-  const toggleColumns = () => setShowColumns(value => !value)
+  const [showFilters, setShowFilters] = useState(false)
+  const toggleColumns = () => setShowColumns(!showColumns)
+  const toggleFilters = () => setShowFilters(!showFilters)
+
   const theme = useTheme()
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'))
+
+  const { isMobile, isMiniLaptop } = useAppBreakpoints()
 
   return (
     <Grid container direction='column' spacing={3}>
-      <Grid item container spacing={isMobile ? 4 : 0}>
+      <Grid item container spacing={isMiniLaptop ? 2 : 0}>
         <Grid item xs={12} md={10}>
           <SearchFilter
             style={{
@@ -33,43 +38,75 @@ export const DSOTableFilters = () => {
           />
         </Grid>
 
-        <Grid item xs={12} md={2}>
+        <Grid item xs={6} md={2}>
           <CapitalStructureFilter />
         </Grid>
+        <Hidden mdUp>
+          <Grid item xs={6}>
+            <Button
+              variant='contained'
+              color='primary'
+              disableElevation
+              fullWidth
+              onClick={toggleFilters}
+              style={{
+                color: theme.palette.primary.main,
+                backgroundColor: '#E4EDFF',
+                height: 40,
+                borderRadius: 20,
+                borderWidth: 1,
+                borderStyle: 'solid',
+                borderColor: showFilters
+                  ? theme.palette.primary.main
+                  : 'transparent'
+              }}
+              endIcon={<FilterListIcon />}
+            >
+              More Filters
+            </Button>
+          </Grid>
+        </Hidden>
       </Grid>
-      <Grid item container spacing={4}>
-        <Grid item xs={6} md={'auto'}>
-          <LabelledValue
-            row
-            alignItems={'center'}
-            label={'Price'}
-            value={<PriceFilter />}
-          />
-        </Grid>
-        <Grid item xs={6} md={'auto'}>
-          <LabelledValue
-            row
-            alignItems={'center'}
-            label={'Currency'}
-            value={
-              <Grid container>
-                <Grid>
-                  <CurrencyFilter defaultValue={null} currency={'SGD'} />
+      {(!isMiniLaptop || showFilters) && (
+        <Grid item container spacing={isMiniLaptop ? 1 : 4}>
+          <Grid item xs={6} md={'auto'}>
+            <LabelledValue
+              row
+              alignItems={'center'}
+              label={'Price'}
+              value={<PriceFilter />}
+            />
+          </Grid>
+          <Grid item xs={6} md={'auto'}>
+            <LabelledValue
+              row
+              alignItems={'center'}
+              label={'Currency'}
+              value={
+                <Grid container spacing={1}>
+                  <Grid item>
+                    <CurrencyFilter defaultValue={null} currency={'SGD'} />
+                  </Grid>
+                  <Grid item>
+                    <CurrencyFilter defaultValue={null} currency={'USD'} />
+                  </Grid>
                 </Grid>
-                <Grid style={{ marginLeft: theme.spacing(1) }}>
-                  <CurrencyFilter defaultValue={null} currency={'USD'} />
-                </Grid>
-              </Grid>
-            }
-          />
+              }
+            />
+          </Grid>
+          <Grid item xs={6} md={2}>
+            <NetworkFilter />
+          </Grid>
+          <Hidden mdDown>
+            <Grid item xs={6} md={2}>
+              <ColumnsEditorToggle
+                onClick={toggleColumns}
+                selected={showColumns}
+              />
+            </Grid>
+          </Hidden>
         </Grid>
-        <Grid item xs={6} md={2}>
-          <NetworkFilter />
-        </Grid>
-        <Grid item xs={6} md={2}>
-          <ColumnsEditorToggle onClick={toggleColumns} selected={showColumns} />
-        </Grid>
-      </Grid>
+      )}
 
       {showColumns && (
         <Grid item>

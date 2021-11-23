@@ -1,10 +1,16 @@
 import React from 'react'
-import { CancelOrderButton } from 'app/pages/exchange/components/OpenOrders/CancelOrderButton'
 import { formatDateToMMDDYY } from 'helpers/dates'
 import { formatMoney, formatPercent } from 'helpers/numbers'
 import { TableColumn } from 'types/util'
 import { getOrderSideName } from 'helpers/strings'
 import { Order } from 'types/order'
+import { Typography } from '@material-ui/core'
+
+export const renderTicker = (value: string, row: any) => {
+  return <Typography variant='subtitle1'>{value}</Typography>
+}
+
+export const renderMoney = (value: any, row: any) => formatMoney(value, '')
 
 export const columns: Array<TableColumn<Order>> = [
   {
@@ -24,17 +30,54 @@ export const columns: Array<TableColumn<Order>> = [
   {
     key: 'price',
     label: 'Price',
-    render: (_, value) => formatMoney(value.price, '')
+    render: renderMoney
   },
   {
     key: 'amount',
     label: 'Amount',
-    render: (_, value) => formatMoney(value.amount, '')
+    render: renderMoney
   },
   {
     key: 'total',
     label: 'Total',
-    render: (_, value) => formatMoney(value.total, '')
+    render: renderMoney
+  },
+  {
+    key: 'filledPercent',
+    label: 'Filled',
+    render: formatPercent
+  }
+]
+
+export const compactColumns: Array<TableColumn<Order>> = [
+  {
+    label: 'Ticker',
+    key: 'pair',
+    render: renderTicker
+  },
+  {
+    key: 'amount',
+    label: 'Amount',
+    render: renderMoney
+  },
+  {
+    key: 'side',
+    label: 'Side',
+    render: getOrderSideName
+  },
+  {
+    key: 'timeInForce',
+    label: 'Time In Force'
+  },
+  {
+    key: 'price',
+    label: 'Price',
+    render: renderMoney
+  },
+  {
+    key: 'total',
+    label: 'Total',
+    render: renderMoney
   },
   {
     key: 'filledPercent',
@@ -42,8 +85,8 @@ export const columns: Array<TableColumn<Order>> = [
     render: formatPercent
   },
   {
-    key: 'cancel',
-    label: '',
-    render: (_, order) => <CancelOrderButton order={order} />
+    key: 'date',
+    label: 'Date',
+    render: formatDateToMMDDYY
   }
 ]

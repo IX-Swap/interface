@@ -1,13 +1,16 @@
 import React from 'react'
-import { Box, Button } from '@material-ui/core'
+import { Box, Button, ButtonProps } from '@material-ui/core'
 import { useCancelOrder } from 'app/pages/exchange/hooks/useCancelOrder'
 import { Order } from 'types/order'
 
-export interface CancelOrderButtonProps {
+export interface CancelOrderButtonProps extends ButtonProps {
   order: Order
 }
 
-export const CancelOrderButton = ({ order }: CancelOrderButtonProps) => {
+export const CancelOrderButton = ({
+  order,
+  ...rest
+}: CancelOrderButtonProps) => {
   const [cancelOrder, { status }] = useCancelOrder(order._id)
   const handleClick = async () => {
     void cancelOrder({
@@ -27,6 +30,7 @@ export const CancelOrderButton = ({ order }: CancelOrderButtonProps) => {
         variant='text'
         color='primary'
         size='small'
+        {...rest}
       >
         Cancel
       </Button>

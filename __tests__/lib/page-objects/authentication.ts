@@ -76,5 +76,11 @@ class Authentication {
     await click(authForms.buttons.SUBMIT, this.page)
     await waitForText(this.page, text.notification.resetPassword)
   }
+
+  signOut = async () => {
+    await click(authForms.buttons.PROFILE_VIEW, this.page)
+    await click(authForms.buttons.SIGN_OUT, this.page)
+    await this.page.waitForURL('https://staging.mozork.com/auth/sign-in')
+  }
 }
 export { Authentication }

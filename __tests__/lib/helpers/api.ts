@@ -1,25 +1,22 @@
 import fetch from 'node-fetch'
-
+import { baseCreds } from './creds'
 export async function userRegistration(email) {
   try {
     // Registration company
     const user = {
       name: 'Fredericka Erickson',
       email: email,
-      password: 'Pa$$w0rd!qwe'
+      password: baseCreds.PASSWORD
     }
-    const register = await fetch(
-      `https://api.staging.mozork.com/auth/registrations`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-          Origin: 'https://staging.mozork.com/'
-        },
-        body: JSON.stringify(user)
-      }
-    ).then(res => res.json())
+    const register = await fetch(`${baseCreds.BASE_API}auth/registrations`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Origin: baseCreds.URL
+      },
+      body: JSON.stringify(user)
+    }).then(res => res.json())
     return register
   } catch (error) {
     console.log(error)

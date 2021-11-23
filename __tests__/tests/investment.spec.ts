@@ -1,14 +1,9 @@
 import { baseCreds } from '../lib/helpers/creds'
 import { test } from '../lib/fixtures/fixtures'
-import {
-  click,
-  navigate,
-  shouldExist,
-  screenshotMatching
-} from '../lib/helpers/helpers'
+import { click, navigate, shouldExist } from '../lib/helpers/helpers'
 import { expect } from '@playwright/test'
 
-test.beforeEach(async ({ page, auth, invest }) => {
+test.beforeEach(async ({ page, auth }) => {
   await navigate(baseCreds.URL, page)
   await auth.loginWithout2fa(baseCreds.EMAIL_APPROVED, baseCreds.PASSWORD)
 })
@@ -46,7 +41,23 @@ test.describe('Primary', () => {
 })
 
 test.describe('Secondary market', () => {
-  test('Disclosures window should exist', async ({ investment }) => {
-    await investment.toSecondaryMarket()
+  test('The buy order should be created', async ({ investment }) => {
+    const orderCreated = await investment.secondMarketBuy()
+    expect(orderCreated).toBe(true)
+  })
+
+  test('The buy order should be cancelled', async ({ investment }) => {
+    const orderCancelled = await investment.secondMarketCancelOrder()
+    expect(orderCancelled).toBe(true)
+  })
+
+  test.skip('The sell order should be created', async ({ investment }) => {
+    const orderCreated = await investment.secondMarketSell()
+    expect(orderCreated).toBe(true)
+  })
+
+  test.skip('The sell order should be cancelled', async ({ investment }) => {
+    const orderCancelled = await investment.secondMarketCancelSellOrder()
+    expect(orderCancelled).toBe(true)
   })
 })
