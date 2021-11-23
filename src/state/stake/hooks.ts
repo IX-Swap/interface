@@ -640,6 +640,13 @@ export function useGetStakings() {
               endDateUnix,
               lockedUntilUnix: lockedTillUnix,
             }),
+            totalReward: calculateReward({
+              amount: stakeAmount,
+              period,
+              startDateUnix,
+              endDateUnix: lockedTillUnix,
+              lockedUntilUnix: endDateUnix,
+            }),
             lockMonths,
             startDateUnix,
             endDateUnix,
