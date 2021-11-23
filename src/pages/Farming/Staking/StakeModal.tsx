@@ -33,6 +33,7 @@ import { convertPeriod, dateFormatter, PERIOD, TIER_LIMIT } from 'state/stake/re
 import { tryParseAmount } from 'state/swap/helpers'
 import styled from 'styled-components'
 import { CloseIcon, ModalBlurWrapper, TYPE } from 'theme'
+import { floorToDecimals } from 'utils/formatCurrencyAmount'
 import { ReactComponent as ArrowDown } from '../../../assets/images/arrow.svg'
 import { EllipsedText, ModalBottom, StakeInfoContainer } from './style'
 
@@ -165,11 +166,10 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
   }
 
   function estimateRewards() {
-    const floorTo4Decimals = (num: number) => Math.floor((num + Number.EPSILON) * 10000) / 10000
     if (selectedTier) {
       const rewards =
-        (parseInt(typedValue) * (selectedTier?.APY / 100) * periodsInDays[convertPeriod(selectedTier?.period)]) / 365
-      return rewards ? floorTo4Decimals(rewards) : 0
+        (parseFloat(typedValue) * (selectedTier?.APY / 100) * periodsInDays[convertPeriod(selectedTier?.period)]) / 365
+      return rewards ? floorToDecimals(rewards, 6) : 0
     }
     return 0
   }
