@@ -8,7 +8,7 @@ import { News } from 'app/pages/home/components/News/News'
 import { RootContainer } from 'ui/RootContainer'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { BannersCarousel } from 'app/pages/invest/components/BannersCarousel'
-import { AtlasOneReports } from 'app/pages/home/components/AtlasOneReports/AtlasOneReports'
+import { Reports } from 'app/pages/home/components/AccessReports/Reports'
 import AtlasLogoLight from 'assets/icons/atlas_logo_white.png'
 import AtlasLogoDark from 'assets/icons/atlas_logo.png'
 
@@ -47,7 +47,7 @@ export const Onboarding = () => {
               />
             </Grid>
             <Box my={2.5} />
-            <AtlasOneReports />
+            <Reports />
           </Grid>
 
           <Grid item xs={12}>

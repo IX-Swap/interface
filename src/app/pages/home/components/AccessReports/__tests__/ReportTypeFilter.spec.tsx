@@ -1,14 +1,14 @@
-import { ReportLogo } from 'app/pages/home/components/AtlasOneReports/ReportLogo'
+import { ReportTypeFilter } from 'app/pages/home/components/AccessReports/ReportTypeFilter'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 
-describe('ReportLogo', () => {
+describe('ReportTypeFilter', () => {
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
   })
 
   it('renders without errors', () => {
-    render(<ReportLogo isAtlasOne={true} />)
+    render(<ReportTypeFilter />)
   })
 })

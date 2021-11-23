@@ -2,9 +2,9 @@ import React from 'react'
 import { Box, Card } from '@material-ui/core'
 import { TableColumn } from 'types/util'
 import {
-  AtlasOneReportRow,
+  ReportRow,
   Report
-} from 'app/pages/home/components/AtlasOneReports/AtlasOneReportRow'
+} from 'app/pages/home/components/AccessReports/ReportRow'
 
 export const columns: Array<TableColumn<Report>> = [
   {
@@ -21,7 +21,7 @@ export const columns: Array<TableColumn<Report>> = [
             padding: '10px 30px'
           }}
         >
-          <AtlasOneReportRow item={row} />
+          <ReportRow item={row} />
         </Card>
       </Box>
     )
