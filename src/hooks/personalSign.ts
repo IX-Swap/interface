@@ -6,7 +6,7 @@ interface Props {
   library?: Web3Provider
 }
 export const sign = async ({ hash, account, library }: Props) => {
-  if (library && library.provider.isMetaMask && library.provider.request && hash && account) {
+  if (library && library.provider && library.provider.request && hash && account) {
     try {
       const message = getLoginMessage({ hash, account })
       const result = await library.provider.request({
