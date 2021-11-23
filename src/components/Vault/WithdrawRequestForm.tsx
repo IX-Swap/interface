@@ -29,6 +29,7 @@ interface Props {
 export const WithdrawRequestForm = ({ currency, changeModal }: Props) => {
   const theme = useTheme()
   const { amount, receiver, currencyId: cid } = useWithdrawState()
+  const { account } = useActiveWeb3React()
   const { secTokens } = useUserSecTokens()
   const { onTypeAmount, onTypeReceiver, onCurrencySet, onSetNetWorkName } = useWithdrawActionHandlers()
   const withdraw = useWithdrawCallback(cid, currency?.symbol)
@@ -89,7 +90,7 @@ export const WithdrawRequestForm = ({ currency, changeModal }: Props) => {
           <Row>
             <TYPE.description2 color={`${theme.text2}80`}>
               <Trans>{`${amount || '0'} ${tokenInfo?.symbol} tokens from your wallet ${
-                address && shortAddress(address || '')
+                account && shortAddress(account || '')
               } will be burned during withdrawal`}</Trans>
             </TYPE.description2>
           </Row>
