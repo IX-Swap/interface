@@ -39,6 +39,14 @@ export const formatDateToMMDDYY = (s?: string): string => {
   return s.length > 0 ? format(new Date(s), 'MM/dd/yyyy') : s
 }
 
+export const formatDate = (s?: string): string => {
+  if (s === undefined) {
+    return ''
+  }
+
+  return s.length > 0 ? format(new Date(s), `LLL d, yyyy`) : s
+}
+
 export const formatDateAndTime = (s?: string, seconds = false): string => {
   if (s === undefined) {
     return ''

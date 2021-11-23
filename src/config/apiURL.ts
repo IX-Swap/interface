@@ -111,6 +111,10 @@ export const accountsURL = {
   getPortfolios: (userId: string) => `/accounts/portfolios/${userId}`
 }
 
+export const reportsURL = {
+  getAccountInfo: (userId: string) => `/accounts/account-info/${userId}`
+}
+
 export const issuanceURL = {
   commitments: {
     overrideById: (commitmentId: string) =>

@@ -178,6 +178,10 @@ export const virtualAccountQueryKeys = {
   getPortfolios: 'get-portfolios'
 }
 
+export const reportsQueryKeys = {
+  getAccountInfo: 'get-account-info'
+}
+
 export const exchange = {
   marketList: 'market-list',
   tokenBalance: 'tokenBalance',

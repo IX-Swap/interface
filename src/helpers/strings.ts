@@ -76,3 +76,6 @@ export const formatCamelCasedWithSpaces = (value: string) => {
 
 export const getTextWithOrWithoutColon = (text: string, hasColon: boolean) =>
   hasColon ? text.concat(':') : text
+
+export const getValueOrPlaceholder = (value: string) =>
+  value === undefined || value.length < 1 ? '-' : value
