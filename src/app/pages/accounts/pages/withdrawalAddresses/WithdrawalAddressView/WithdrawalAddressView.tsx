@@ -1,10 +1,10 @@
 import React from 'react'
 import { Grid, Button, DialogActions } from '@material-ui/core'
-import { WADialog } from 'app/pages/accounts/pages/withdrawalAddresses/WADialog/WADialog'
-import { WADialogTitle } from 'app/pages/accounts/pages/withdrawalAddresses/WADialog/WADialogTitle'
-import { WADialogContent } from 'app/pages/accounts/pages/withdrawalAddresses/WADialog/WADialogContent'
+import { WADialog } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WADialog/WADialog'
+import { WADialogTitle } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WADialog/WADialogTitle'
+import { WADialogContent } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WADialog/WADialogContent'
 import { WAViewContent } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressView/WAViewContent'
-import { WithdrawalAddressesRoute } from '../router/config'
+import { WithdrawalAddressesRoute } from 'app/pages/accounts/pages/withdrawalAddresses/router/config'
 import { useHistory } from 'react-router-dom'
 
 export const WithdrawalAddressView = () => {
@@ -12,7 +12,7 @@ export const WithdrawalAddressView = () => {
 
   return (
     <WADialog open>
-      <WADialogTitle label='View Withdrawal Address' />
+      <WADialogTitle label='View Blockchain Address' />
       <WADialogContent>
         <WAViewContent />
       </WADialogContent>

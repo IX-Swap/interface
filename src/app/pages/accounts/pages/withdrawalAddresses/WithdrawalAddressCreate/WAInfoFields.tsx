@@ -1,6 +1,6 @@
 import React from 'react'
 import { Grid, TextField } from '@material-ui/core'
-import { BigCheckboxWithLabel } from 'components/form/BigCheckboxWithLabel'
+import { BigCheckboxWithLabel } from 'components/form/BigCheckboxWithLabel/BigCheckboxWithLabel'
 import { TypedField } from 'components/form/TypedField'
 import { privateClassNames } from 'helpers/classnames'
 import { booleanValueExtractor } from 'helpers/forms'

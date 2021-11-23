@@ -1,6 +1,6 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { WADialog } from 'app/pages/accounts/pages/withdrawalAddresses/WADialog/WADialog'
+import { WADialog } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WADialog/WADialog'
 
 describe('WADialog', () => {
   afterEach(async () => {

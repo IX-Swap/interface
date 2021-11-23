@@ -4,7 +4,7 @@ import { TypedFieldRenderComponentProps } from 'components/form/types'
 import {
   BigCheckboxWithLabel,
   BigCheckboxWithLabelProps
-} from 'components/form/BigCheckboxWithLabel'
+} from 'components/form/BigCheckboxWithLabel/BigCheckboxWithLabel'
 
 describe('BigCheckboxWithLabel', () => {
   const props: BigCheckboxWithLabelProps &

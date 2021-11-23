@@ -3,7 +3,7 @@ import { render, cleanup } from 'test-utils'
 import {
   Actions,
   ActionsProps
-} from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressesTable/Actions'
+} from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressesList/WithdrawalAddressesTable/Actions'
 import { withdrawalAddress } from '__fixtures__/withdrawalAddress'
 
 describe('Actions', () => {

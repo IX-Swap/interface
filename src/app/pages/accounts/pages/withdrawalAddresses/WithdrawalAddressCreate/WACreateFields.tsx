@@ -17,7 +17,7 @@ export const WACreateFields = () => {
           component={TextField}
           control={control}
           name='address'
-          label='Withdrawal Address'
+          label='Blockchain Address'
           variant='outlined'
         />
       </Grid>
