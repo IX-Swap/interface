@@ -1,8 +1,9 @@
 import { useServices } from 'hooks/useServices'
-import { useMutation } from 'react-query'
+import { useMutation, useQueryCache } from 'react-query'
 import apiService from 'services/api'
 import { custodyAccounts } from 'config/apiURL'
 import { CloseDealArgs } from 'types/dso'
+import { custodyAccountsQueryKeys } from 'config/queryKeys'
 
 interface UnAssignCustodyArgs extends CloseDealArgs {
   accountId: number
@@ -10,6 +11,7 @@ interface UnAssignCustodyArgs extends CloseDealArgs {
 }
 
 export const useUnAssignCustody = () => {
+  const queryCache = useQueryCache()
   const { snackbarService } = useServices()
   const url = custodyAccounts.unAssignCustody
   const mutateFn = async (args: UnAssignCustodyArgs) => {
@@ -18,11 +20,12 @@ export const useUnAssignCustody = () => {
 
   return {
     mutation: useMutation(mutateFn, {
-      onSuccess: response => {
+      onSuccess: () => {
         snackbarService.showSnackbar(
           'Custody unlinked successfully.',
           'success'
         )
+        void queryCache.invalidateQueries(custodyAccountsQueryKeys.getList)
       },
       onError: (error: any) => {
         snackbarService.showSnackbar(
