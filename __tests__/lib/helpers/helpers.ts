@@ -4,6 +4,14 @@ import { expect } from '@playwright/test'
 const LOADER = '[role="progressbar"]'
 const DEFAULT_SELECTOR_TIMEOUT = 50000
 
+const attachedState = {
+  state: 'attached',
+  timeout: DEFAULT_SELECTOR_TIMEOUT
+}
+const detachedState = {
+  state: 'detached',
+  timeout: DEFAULT_SELECTOR_TIMEOUT
+}
 async function waitNewPage(context, page, element) {
   const [secondPage] = await Promise.all([
     context.waitForEvent('page'),
@@ -30,7 +38,7 @@ function emailCreate() {
 
 // upload file
 async function uploadFiles(page, element, file, resp = 'yes') {
-  await page.waitForSelector(element, { state: 'attached' })
+  await page.waitForSelector(element, attachedState)
   const inputsFile = await page.$$(element)
   for (const element of inputsFile) {
     await element.setInputFiles(file)
@@ -50,14 +58,8 @@ async function uploadFiles(page, element, file, resp = 'yes') {
 }
 
 async function click(selector, page) {
-  await page.waitForSelector(LOADER, {
-    state: 'detached',
-    timeout: DEFAULT_SELECTOR_TIMEOUT
-  })
-  await page.waitForSelector(selector, {
-    state: 'attached',
-    timeout: DEFAULT_SELECTOR_TIMEOUT
-  })
+  await page.waitForSelector(LOADER, detachedState)
+  await page.waitForSelector(selector, attachedState)
   try {
     await page.click(selector)
   } catch {
@@ -66,15 +68,9 @@ async function click(selector, page) {
 }
 
 async function typeText(selector, words, page) {
-  await page.waitForSelector(LOADER, {
-    state: 'detached',
-    timeout: DEFAULT_SELECTOR_TIMEOUT
-  })
+  await page.waitForSelector(LOADER, detachedState)
   try {
-    await page.waitForSelector(selector, {
-      state: 'attached',
-      timeout: DEFAULT_SELECTOR_TIMEOUT
-    })
+    await page.waitForSelector(selector, attachedState)
 
     await page.type(selector, words)
   } catch {
@@ -84,25 +80,13 @@ async function typeText(selector, words, page) {
 
 async function clearAndTypeText(selector, words, page) {
   //wait until the page loader detached
-  await page.waitForSelector(LOADER, {
-    state: 'detached',
-    timeout: DEFAULT_SELECTOR_TIMEOUT
-  })
-
-  //wait element
-  const search = await page.waitForSelector(selector, {
-    state: 'attached',
-    timeout: DEFAULT_SELECTOR_TIMEOUT
-  })
-
-  //Focus and clear field
-  await page.focus(selector)
-  const query = await search.evaluate(element => element.value)
-  for (const _ of query) {
-    await page.keyboard.press('Backspace')
-  }
+  await page.waitForSelector(LOADER, detachedState)
   try {
-    await page.type(selector, words)
+    const field = await page.waitForSelector(selector, attachedState)
+    await field.click()
+    await page.keyboard.press('Control+A')
+    await page.keyboard.press('Backspace')
+    await field.type(words)
   } catch (error) {
     console.error(error)
     throw new Error(`Could not type text into select: ${selector}`)
@@ -111,10 +95,10 @@ async function clearAndTypeText(selector, words, page) {
 
 async function waitForText(page, words) {
   try {
-    await page.waitForSelector(`//*[contains(text(),'${words}')]`, {
-      state: 'attached',
-      timeout: DEFAULT_SELECTOR_TIMEOUT
-    })
+    await page.waitForSelector(
+      `//*[contains(text(),'${words}')]`,
+      attachedState
+    )
     return true
   } catch {
     throw new Error(`Text: ${words} not found `)
@@ -123,10 +107,7 @@ async function waitForText(page, words) {
 
 async function shouldExist(selector, page) {
   try {
-    await page.waitForSelector(selector, {
-      state: 'attached',
-      timeout: DEFAULT_SELECTOR_TIMEOUT
-    })
+    await page.waitForSelector(selector, attachedState)
     return true
   } catch {
     throw new Error(`Selector: ${selector} does not exist`)
@@ -135,10 +116,7 @@ async function shouldExist(selector, page) {
 
 async function shouldNotExist(selector, page) {
   try {
-    await page.waitForSelector(selector, {
-      state: 'detached',
-      timeout: DEFAULT_SELECTOR_TIMEOUT
-    })
+    await page.waitForSelector(selector, detachedState)
     return true
   } catch {
     throw new Error(`Selector: ${selector} exist but should not `)
@@ -209,10 +187,7 @@ async function navigate(url, page, wait = 'networkidle') {
 }
 
 async function screenshotMatching(name: string, element, page, range = 0.9) {
-  await page.waitForSelector(LOADER, {
-    state: 'detached',
-    timeout: DEFAULT_SELECTOR_TIMEOUT
-  })
+  await page.waitForSelector(LOADER, detachedState)
   const screenshot = await element.screenshot()
   expect(screenshot).toMatchSnapshot(`${name}.png`, {
     threshold: range

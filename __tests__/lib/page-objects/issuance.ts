@@ -149,6 +149,12 @@ class Dso {
     const inputs = await this.page.$$(issuance.dso.fields.VIDEO_INPUTS)
     return inputs.length
   }
+
+  followToFundsManagement = async (auth, email) => {
+    await navigate(baseCreds.URL, this.page)
+    await auth.loginWithout2fa(email, baseCreds.PASSWORD)
+    await click(issuance.FUNDS_MANAGEMENT_TAB, this.page)
+  }
 }
 class Listing {
   page: any

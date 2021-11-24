@@ -18,7 +18,7 @@ export const test = base.extend<{
   listing: Listing
   kycForms: UserForms
   kycSelectors: any
-  issuanceSelectors: any
+  issuance: any
   invest: any
   bankAccount: BankAccounts
 }>({
@@ -55,7 +55,7 @@ export const test = base.extend<{
     await use(kyc)
   },
 
-  issuanceSelectors: async ({ page }, use) => {
+  issuance: async ({ page }, use) => {
     await use(issuance)
   },
   textHelper: async ({ page }, use) => {
