@@ -28,6 +28,9 @@ const HeaderLinksWrap = styled(Row)<{ links: number }>`
   ${({ theme }) => theme.mediaWidth.upToMedium`
     justify-self: flex-end;
   `};
+  @media (max-width: 1200px) {
+    grid-gap: 18px;
+  }
   @media (max-width: 1080px) {
     display: none;
   }
@@ -124,14 +127,34 @@ const HeaderPopover = () => {
     </PopOverContent>
   )
 }
-export const HeaderLinks = () => {
-  const [open, toggle] = useToggle(false)
-  const node = useRef<HTMLDivElement>()
-  const { chainId } = useActiveWeb3React()
-  useOnClickOutside(node, open ? toggle : undefined)
 
+const NFTPopover = () => {
   return (
-    <HeaderLinksWrap links={SECURITY_TOKENS ? 4 : 3}>
+    <PopOverContent
+      onClick={(e) => (e ? e.stopPropagation() : null)}
+      onMouseDown={(e) => (e ? e.stopPropagation() : null)}
+    >
+      <SubMenuLink id={`nft-list-nav-link`} to={routes.nftList}>
+        <Trans>My NFTs</Trans>
+      </SubMenuLink>
+      <SubMenuLink id={`nft-create-nav-link`} to={routes.nftCreate}>
+        <Trans>Create NFT</Trans>
+      </SubMenuLink>
+    </PopOverContent>
+  )
+}
+
+export const HeaderLinks = () => {
+  const { chainId } = useActiveWeb3React()
+  const [open, toggle] = useToggle(false)
+  const [openNFT, toggleNFT] = useToggle(false)
+  const farmNode = useRef<HTMLDivElement>()
+  const nftNode = useRef<HTMLDivElement>()
+  useOnClickOutside(farmNode, open ? toggle : undefined)
+  useOnClickOutside(nftNode, openNFT ? toggleNFT : undefined)
+  console.log({ farmNode, nftNode })
+  return (
+    <HeaderLinksWrap links={SECURITY_TOKENS ? 5 : 4}>
       {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
         <StyledNavLink id={`swap-nav-link`} to={'/swap'}>
           <Trans>Swap</Trans>
@@ -159,7 +182,7 @@ export const HeaderLinks = () => {
       )}
 
       <StyledNavLink
-        ref={node as any}
+        ref={farmNode as any}
         id={`farming-nav-link`}
         to={'#'}
         isActive={(match, { pathname }) => pathname.startsWith('/vesting') || pathname.startsWith('/staking')}
@@ -168,6 +191,19 @@ export const HeaderLinks = () => {
           <RowFixed onClick={toggle}>
             <Trans>IXS Farms</Trans>
             <ChevronElement showMore={open} />
+          </RowFixed>
+        </Popover>
+      </StyledNavLink>
+      <StyledNavLink
+        ref={nftNode as any}
+        id={`nft-nav-link`}
+        to={'#'}
+        isActive={(match, { pathname }) => pathname.startsWith('/nft')}
+      >
+        <Popover hideArrow show={openNFT} content={<NFTPopover />} placement={'bottom'}>
+          <RowFixed onClick={toggleNFT}>
+            <Trans>NFT</Trans>
+            <ChevronElement showMore={openNFT} />
           </RowFixed>
         </Popover>
       </StyledNavLink>

@@ -9,6 +9,8 @@ import {
 } from 'constants/addresses'
 const AdminKyc = lazy(() => import('./AdminKyc'))
 const Custodian = lazy(() => import('./Custodian'))
+const CreateNFT = lazy(() => import('./CreateNFT'))
+const ListNFT = lazy(() => import('./ListNFT'))
 const RemoveLiquidity = lazy(() => import('./RemoveLiquidity'))
 const SecTokenDetails = lazy(() => import('./SecTokenDetails'))
 const Swap = lazy(() => import('./Swap'))
@@ -98,6 +100,8 @@ export default function App() {
             <Suspense fallback={<></>}>
               <Switch>
                 <Route exact strict path="/admin-kyc" component={AdminKyc} />
+                <Route exact strict path={routes.nftCreate} component={CreateNFT} />
+                <Route exact strict path={routes.nftList} component={ListNFT} />
 
                 {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
                   <Route exact strict path="/send" component={RedirectPathToSwapOnly} />
