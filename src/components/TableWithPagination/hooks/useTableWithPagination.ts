@@ -30,7 +30,7 @@ export const useTableWithPagination = <TData>({
   defaultFilter,
   queryEnabled,
   defaultRowsPerPage,
-  disabledUseEffect
+  disabledUseEffect = false
 }: UseTableWithPaginationParams): UseTableWithPaginationReturnType<TData> => {
   const queryCache = useQueryCache()
   const apiService = useAPIService()

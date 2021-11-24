@@ -41,7 +41,7 @@ exports[`WithdrawalAddressPreview renders without error 1`] = `
             class="MuiTypography-root MuiTypography-body1"
             style="font-weight: 700; width: 100%; color: rgb(68, 68, 68);"
           >
-            Withdrawal Address
+            Blockchain Address
           </p>
           <div
             class="MuiBox-root MuiBox-root-2"

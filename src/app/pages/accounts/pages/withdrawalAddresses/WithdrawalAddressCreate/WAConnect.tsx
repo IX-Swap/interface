@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ReactElement } from 'react'
 import {
   useConnectMetamaskWallet,
   WalletConnectionStatus
@@ -6,12 +6,16 @@ import {
 import { useFormContext } from 'react-hook-form'
 import { WithdrawalAddressFormValues } from 'types/withdrawalAddress'
 import { DialogActions, Grid } from '@material-ui/core'
-import { WAConnectActions } from './WAConnectActions'
-import { WAConnectFields } from './WAConnectFields'
-import { WAInfoFields } from './WAInfoFields'
+import { WAConnectActions } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WAConnectActions'
+import { WAConnectFields } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WAConnectFields'
+import { WAInfoFields } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WAInfoFields'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 
-export const WAConnect = () => {
+export interface WAConnectProps {
+  hint: ReactElement
+}
+
+export const WAConnect = ({ hint }: WAConnectProps) => {
   const { status, getAccount, signWallet } = useConnectMetamaskWallet()
 
   const { watch } = useFormContext<WithdrawalAddressFormValues>()
@@ -28,6 +32,7 @@ export const WAConnect = () => {
     <>
       <WAConnectFields />
       {isVerified && <WAInfoFields />}
+      {hint}
       <DialogActions>
         <Grid item container justify='flex-end'>
           <WAConnectActions

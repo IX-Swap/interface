@@ -7,14 +7,14 @@ import { TopIssuers } from 'app/pages/home/components/TopIssuers'
 import { TopCorporates } from 'app/pages/home/components/TopCorporates'
 import { News } from 'app/pages/home/components/News/News'
 import { BannersCarousel } from 'app/pages/invest/components/BannersCarousel'
-import { AtlasOneReports } from 'app/pages/home/components/AtlasOneReports/AtlasOneReports'
+import { Reports } from 'app/pages/home/components/AccessReports/Reports'
 
 jest.mock('app/pages/home/components/News/News', () => ({
   News: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/home/components/AtlasOneReports/AtlasOneReports', () => ({
-  AtlasOneReports: jest.fn(() => null)
+jest.mock('app/pages/home/components/AccessReports/Reports', () => ({
+  Reports: jest.fn(() => null)
 }))
 
 jest.mock('app/pages/home/components/TopIssuers', () => ({
@@ -48,7 +48,7 @@ describe('Onboarding', () => {
   it('renders components correctly', () => {
     render(<Onboarding />)
 
-    expect(AtlasOneReports).toHaveBeenCalled()
+    expect(Reports).toHaveBeenCalled()
     expect(TopIssuers).toHaveBeenCalled()
     expect(TopCorporates).toHaveBeenCalled()
     expect(BannersCarousel).toHaveBeenCalled()
