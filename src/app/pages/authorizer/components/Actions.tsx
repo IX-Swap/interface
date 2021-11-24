@@ -1,7 +1,6 @@
 import React, { ReactElement } from 'react'
 import { Launch as LaunchIcon } from '@material-ui/icons'
 import { Grid, IconButton, Box } from '@material-ui/core'
-import User from 'types/user'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { useApproveOrReject } from 'app/pages/authorizer/hooks/useApproveOrReject'
 import { getIdFromObj } from 'helpers/strings'
@@ -14,10 +13,6 @@ import { useLocation } from 'react-router'
 export interface ActionsProps<T> {
   item: T
   cacheQueryKey: any
-}
-
-export const getItemOwnerId = (user: string | User) => {
-  return typeof user === 'string' ? user : user._id
 }
 
 export type ActionsType<T> = (props: ActionsProps<T>) => ReactElement
@@ -50,7 +45,6 @@ export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
       ? history.push(`/app/authorizer/${category}/${id}/view`)
       : history.push(`/app/authorizer/${category}/${userId}/${id}/view`)
 
-  const isUnauthorized = (item as any).status === 'Submitted'
   const isLoading = isApproving || isRejecting
 
   return (
@@ -82,23 +76,21 @@ export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
       ) : (
         <>
           <Grid item style={{ minWidth: 26 }}>
-            {isUnauthorized && (
-              <Dropdown
-                arrow
-                contentTheme='dark'
-                trigger={props => (
-                  <ActionsDropdownTrigger {...props} isLoading={isLoading} />
-                )}
-                content={props => (
-                  <ActionsDropdownContent
-                    {...props}
-                    approve={approve}
-                    reject={reject}
-                    view={view}
-                  />
-                )}
-              />
-            )}
+            <Dropdown
+              arrow
+              contentTheme='dark'
+              trigger={props => (
+                <ActionsDropdownTrigger {...props} isLoading={isLoading} />
+              )}
+              content={props => (
+                <ActionsDropdownContent
+                  {...props}
+                  approve={approve}
+                  reject={reject}
+                  view={view}
+                />
+              )}
+            />
           </Grid>
         </>
       )}
