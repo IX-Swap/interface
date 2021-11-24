@@ -85,7 +85,8 @@ export const accountsURL = {
   },
   assets: {
     getById: (assetId: string) => `accounts/assets/${assetId}`,
-    getAll: '/accounts/assets/list'
+    getAll: '/accounts/assets/list',
+    custody: (userId: string) => `/custody/available-tokens/${userId}`
   },
   balance: {
     getAll: (userId: string) => `/accounts/balance/${userId}`,

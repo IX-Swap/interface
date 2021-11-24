@@ -44,6 +44,7 @@ export interface TableViewProps<T> {
   actions?: ActionsType<T>
   children?: (props: TableViewRendererProps<T>) => JSX.Element
   fakeItems?: T[]
+  fakeLoading?: boolean
   innerRef?: any
   selectionHelper?: UseSelectionHelperReturnType<T | unknown>
   paperProps?: PaperProps
@@ -65,6 +66,7 @@ export const TableView = <T,>({
   actions,
   children,
   fakeItems,
+  fakeLoading = false,
   innerRef,
   selectionHelper,
   paperProps = {},
@@ -153,7 +155,7 @@ export const TableView = <T,>({
   return (
     <Grid container direction='column'>
       <Grid item>
-        {status === 'loading' && <LinearProgress />}
+        {(status === 'loading' || fakeLoading) && <LinearProgress />}
         <Paper
           variant='outlined'
           style={{ backgroundColor: 'inherit' }}

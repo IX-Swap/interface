@@ -12,16 +12,8 @@ export const columns: Array<TableColumn<AssetBalance>> = [
     key: 'name'
   },
   {
-    label: 'Total Balance',
-    key: 'balance',
-    headAlign: 'right',
-    align: 'right',
-    secret: true,
-    render: formatAmount
-  },
-  {
-    label: 'Available Balance',
-    key: 'available',
+    label: 'Total Tokens',
+    key: 'total',
     headAlign: 'right',
     align: 'right',
     secret: true,
@@ -34,5 +26,22 @@ export const columns: Array<TableColumn<AssetBalance>> = [
     align: 'right',
     secret: true,
     render: formatAmount
+  },
+  {
+    label: 'Available Tokens',
+    key: 'available',
+    headAlign: 'right',
+    align: 'right',
+    secret: true,
+    render: formatAmount
   }
+]
+
+export const custodyColumns: Array<TableColumn<AssetBalance>> = [
+  ...columns.slice(0, 2),
+  {
+    label: 'Custody',
+    key: 'custody'
+  },
+  ...columns.slice(2)
 ]

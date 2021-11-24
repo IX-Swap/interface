@@ -104,7 +104,9 @@ export const digitalSecuritiesQueryKeys = {
   getDepositByUserId: (id: string) => generateQueryKey('ds-deposits', id),
   getWithdrawalsByUserId: (id: string) =>
     generateQueryKey('ds-withdrawals', id),
-  getByUserId: (id: string) => generateQueryKey('ds', id)
+  getByUserId: (id: string) => generateQueryKey('ds', id),
+  custody: (userId: string) => generateQueryKey('custody', userId),
+  selfCustody: (userId: string) => generateQueryKey('self-custody', userId)
 }
 
 export const transactionsQueryKeys = {
