@@ -152,7 +152,6 @@ export const HeaderLinks = () => {
   const nftNode = useRef<HTMLDivElement>()
   useOnClickOutside(farmNode, open ? toggle : undefined)
   useOnClickOutside(nftNode, openNFT ? toggleNFT : undefined)
-  console.log({ farmNode, nftNode })
   return (
     <HeaderLinksWrap links={SECURITY_TOKENS ? 5 : 4}>
       {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
