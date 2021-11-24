@@ -301,22 +301,11 @@ exports[`Reports should match snapshot 1`] = `
                     <td
                       class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
                     >
-                      <a
-                        aria-disabled="false"
-                        class="MuiTypography-root MuiLink-root MuiLink-underlineNone MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiTypography-colorPrimary"
-                        href="/app/accounts/reports/accounts-summary"
-                        role="button"
-                        tabindex="0"
+                      <p
+                        class="MuiTypography-root makeStyles-link-22 MuiTypography-body1 MuiTypography-colorPrimary"
                       >
-                        <span
-                          class="MuiButton-label"
-                        >
-                          View Report
-                        </span>
-                        <span
-                          class="MuiTouchRipple-root"
-                        />
-                      </a>
+                        View Report
+                      </p>
                     </td>
                   </tr>
                   <tr
@@ -336,22 +325,11 @@ exports[`Reports should match snapshot 1`] = `
                     <td
                       class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
                     >
-                      <a
-                        aria-disabled="false"
-                        class="MuiTypography-root MuiLink-root MuiLink-underlineNone MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiTypography-colorPrimary"
-                        href="/app/accounts/reports/trade-confirmation"
-                        role="button"
-                        tabindex="0"
+                      <p
+                        class="MuiTypography-root makeStyles-link-22 MuiTypography-body1 MuiTypography-colorPrimary"
                       >
-                        <span
-                          class="MuiButton-label"
-                        >
-                          View Report
-                        </span>
-                        <span
-                          class="MuiTouchRipple-root"
-                        />
-                      </a>
+                        View Report
+                      </p>
                     </td>
                   </tr>
                   <tr
@@ -371,22 +349,11 @@ exports[`Reports should match snapshot 1`] = `
                     <td
                       class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
                     >
-                      <a
-                        aria-disabled="false"
-                        class="MuiTypography-root MuiLink-root MuiLink-underlineNone MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiTypography-colorPrimary"
-                        href="/app/accounts/reports/aggregate-costs-and-charges"
-                        role="button"
-                        tabindex="0"
+                      <p
+                        class="MuiTypography-root makeStyles-link-22 MuiTypography-body1 MuiTypography-colorPrimary"
                       >
-                        <span
-                          class="MuiButton-label"
-                        >
-                          View Report
-                        </span>
-                        <span
-                          class="MuiTouchRipple-root"
-                        />
-                      </a>
+                        View Report
+                      </p>
                     </td>
                   </tr>
                   <tr
@@ -406,22 +373,11 @@ exports[`Reports should match snapshot 1`] = `
                     <td
                       class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
                     >
-                      <a
-                        aria-disabled="false"
-                        class="MuiTypography-root MuiLink-root MuiLink-underlineNone MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiTypography-colorPrimary"
-                        href="/app/accounts/reports/dividends"
-                        role="button"
-                        tabindex="0"
+                      <p
+                        class="MuiTypography-root makeStyles-link-22 MuiTypography-body1 MuiTypography-colorPrimary"
                       >
-                        <span
-                          class="MuiButton-label"
-                        >
-                          View Report
-                        </span>
-                        <span
-                          class="MuiTouchRipple-root"
-                        />
-                      </a>
+                        View Report
+                      </p>
                     </td>
                   </tr>
                 </tbody>
