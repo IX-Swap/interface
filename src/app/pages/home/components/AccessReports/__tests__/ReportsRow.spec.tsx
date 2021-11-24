@@ -1,19 +1,19 @@
 import {
-  AtlasOneReportRow,
+  ReportRow,
   Report
-} from 'app/pages/home/components/AtlasOneReports/AtlasOneReportRow'
+} from 'app/pages/home/components/AccessReports/ReportRow'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 
-jest.mock('app/pages/home/components/AtlasOneReports/ReportLogo', () => ({
+jest.mock('app/pages/home/components/AccessReports/ReportLogo', () => ({
   ReportLogo: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/home/components/AtlasOneReports/ReportViewButton', () => ({
+jest.mock('app/pages/home/components/AccessReports/ReportViewButton', () => ({
   ReportViewButton: jest.fn(() => null)
 }))
 
-describe('AtlasOneReportsRow', () => {
+describe('ReportsRow', () => {
   const report: Report = {
     _id: 'c146a34f-cd0d-4b88-aadc-9409ac62dcc1',
     title: 'Private Capital Markets for All',
@@ -36,29 +36,29 @@ describe('AtlasOneReportsRow', () => {
   })
 
   it('renders without errors', () => {
-    render(<AtlasOneReportRow item={report} />)
+    render(<ReportRow item={report} />)
   })
 
   it('renders correct title when report is atlas-one', () => {
-    const { getByText } = render(<AtlasOneReportRow item={report} />)
+    const { getByText } = render(<ReportRow item={report} />)
     expect(getByText('Private Capital Markets for All')).toBeTruthy()
   })
 
   it('renders correct title when report is investax', () => {
     const { getByText } = render(
-      <AtlasOneReportRow item={{ ...report, reportType: 'dataroom' }} />
+      <ReportRow item={{ ...report, reportType: 'dataroom' }} />
     )
     expect(getByText('sample.pdf')).toBeTruthy()
   })
 
   it('renders correct label when report is atlas-one', () => {
-    const { getByText } = render(<AtlasOneReportRow item={report} />)
+    const { getByText } = render(<ReportRow item={report} />)
     expect(getByText('Atlas One Research')).toBeTruthy()
   })
 
   it('renders correct label when report is investax report', () => {
     const { getByText } = render(
-      <AtlasOneReportRow item={{ ...report, reportType: 'dataroom' }} />
+      <ReportRow item={{ ...report, reportType: 'dataroom' }} />
     )
     expect(getByText('InvestaX Access Report')).toBeTruthy()
   })

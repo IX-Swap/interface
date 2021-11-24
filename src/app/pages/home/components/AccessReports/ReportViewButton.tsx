@@ -1,5 +1,5 @@
 import { Button } from '@material-ui/core'
-import { Report } from 'app/pages/home/components/AtlasOneReports/AtlasOneReportRow'
+import { Report } from 'app/pages/home/components/AccessReports/ReportRow'
 import { getDocumentType, isImage } from 'components/dataroom/DataroomColumns'
 import { useDownloadRawDocument } from 'hooks/useDownloadRawDocument'
 import { convertBlobToFile, openFileInNewTab } from 'hooks/utils'

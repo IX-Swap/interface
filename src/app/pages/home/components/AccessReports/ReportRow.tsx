@@ -5,8 +5,8 @@ import { getDocumentType, isImage } from 'components/dataroom/DataroomColumns'
 import { documentIcons } from 'helpers/rendering'
 import { ViewDocument } from 'app/components/DSO/components/ViewDocument'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
-import { ReportLogo } from 'app/pages/home/components/AtlasOneReports/ReportLogo'
-import { ReportViewButton } from 'app/pages/home/components/AtlasOneReports/ReportViewButton'
+import { ReportLogo } from 'app/pages/home/components/AccessReports/ReportLogo'
+import { ReportViewButton } from 'app/pages/home/components/AccessReports/ReportViewButton'
 
 export interface PublicFile {
   publicUrl: string
@@ -26,11 +26,11 @@ export interface Report {
   reportType: 'dataroom' | 'atlasone'
 }
 
-export interface AtlasOneReportRowProps {
+export interface ReportRowProps {
   item: Report
 }
 
-export const AtlasOneReportRow = ({ item }: AtlasOneReportRowProps) => {
+export const ReportRow = ({ item }: ReportRowProps) => {
   const { isTablet } = useAppBreakpoints()
 
   const isAtlasOne = item.reportType === 'atlasone'

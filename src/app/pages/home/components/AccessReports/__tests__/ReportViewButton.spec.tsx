@@ -1,5 +1,5 @@
-import { Report } from 'app/pages/home/components/AtlasOneReports/AtlasOneReportRow'
-import { ReportViewButton } from 'app/pages/home/components/AtlasOneReports/ReportViewButton'
+import { Report } from 'app/pages/home/components/AccessReports/ReportRow'
+import { ReportViewButton } from 'app/pages/home/components/AccessReports/ReportViewButton'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 
