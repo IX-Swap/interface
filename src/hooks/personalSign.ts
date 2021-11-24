@@ -12,7 +12,7 @@ export const sign = async ({ hash, account, library }: Props) => {
       const message = getLoginMessage({ hash, account })
       const result = await library.provider.request({
         method: 'personal_sign',
-        params: [message, account],
+        params: [hash, account],
       })
       return result
     } catch (e) {
