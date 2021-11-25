@@ -4,6 +4,7 @@ import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { VSpacer } from 'components/VSpacer'
 import { ReportsInfo } from 'app/pages/accounts/pages/reports/components/ReportsInfo/ReportsInfo'
 import { Actions } from './components/Actions/Actions'
+import { ReportsAccordion } from 'app/pages/accounts/pages/reports/components/ReportsAccordion/ReportsAccordion'
 
 export const AccountsSummary: React.FC = () => {
   return (
@@ -19,7 +20,14 @@ export const AccountsSummary: React.FC = () => {
 
       <Grid item>
         <VSpacer size={'medium'} />
-        Table
+
+        <ReportsAccordion summary={'Open Positions'}>
+          <div>Open Positions</div>
+        </ReportsAccordion>
+
+        <ReportsAccordion summary={'Cash Report'}>
+          <div>Cash Report</div>
+        </ReportsAccordion>
       </Grid>
     </Grid>
   )
