@@ -43,6 +43,9 @@ export const issuance = {
     TOKEN_DEPLOY_SECTION: 'text=Deploy Token',
 
     buttons: {
+      PREVIEW: '[data-testid="preview"]',
+      SAVE: 'button >> text="Save"',
+      SUBMIT: 'button >> text="Submit"',
       TOKEN_DEPLOY: 'button >> text=Deploy',
       CREATE_DSO: '[role="button"][href="/app/issuance/offerings/create"]',
       REMOVE_FAQ: '[name="dso-faqs"] >> text="Remove"',
@@ -54,7 +57,8 @@ export const issuance = {
       DATA_ROOM_FILE: '[id="dataroom-upload-and-append"]',
       FINISH_LATER: 'text="Finish Later"',
       VIEW_THIS_DSO: 'text=View this DSO',
-      VIEW_MY_DSO: 'text=View My DSOs'
+      VIEW_MY_DSO: 'text=View My DSOs',
+      EDIT_DSO: 'text=Edit DSO'
     },
     fields: {
       FAQ_1: '[id="faqs[0].question"]',
