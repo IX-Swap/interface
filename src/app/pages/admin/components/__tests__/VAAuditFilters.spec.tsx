@@ -45,7 +45,7 @@ describe('VAAuditFilters', () => {
       expect.objectContaining({
         fullWidth: true,
         placeholder: 'Search',
-        inputAdormentPosition: 'start'
+        inputAdornmentPosition: 'start'
       }),
       {}
     )

@@ -71,7 +71,7 @@ export const AuthorizerRouter = () => {
       </AppRoute>
 
       <AppRoute
-        breadcrumb='Withdrawal Addresses'
+        breadcrumb='Blockchain Addresses'
         path={AuthorizerRoute.withdrawalAddresses}
       >
         <AuthorizerWithdrawalAddressesRouter />

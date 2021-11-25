@@ -28,7 +28,7 @@ exports[`BlockchainInfo should match snapshot 1`] = `
       >
         <p
           class="MuiTypography-root MuiTypography-body1"
-          style="font-weight: 500; color: rgb(68, 68, 68);"
+          style="font-weight: 500; width: 100%; color: rgb(68, 68, 68);"
         >
           Owner Wallet Address
         </p>
@@ -37,7 +37,7 @@ exports[`BlockchainInfo should match snapshot 1`] = `
         />
         <p
           class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft"
-          style="font-weight: 400; opacity: 1;"
+          style="font-weight: 400; opacity: 1; width: 100%;"
         >
           32134413213
         </p>
@@ -52,7 +52,7 @@ exports[`BlockchainInfo should match snapshot 1`] = `
       >
         <p
           class="MuiTypography-root MuiTypography-body1"
-          style="font-weight: 500; color: rgb(68, 68, 68);"
+          style="font-weight: 500; width: 100%; color: rgb(68, 68, 68);"
         >
           Owner Wallet Balance
         </p>
@@ -61,7 +61,7 @@ exports[`BlockchainInfo should match snapshot 1`] = `
         />
         <p
           class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft"
-          style="font-weight: 400; opacity: 1;"
+          style="font-weight: 400; opacity: 1; width: 100%;"
         >
           100.3451
         </p>
@@ -76,7 +76,7 @@ exports[`BlockchainInfo should match snapshot 1`] = `
       >
         <p
           class="MuiTypography-root MuiTypography-body1"
-          style="font-weight: 500; color: rgb(68, 68, 68);"
+          style="font-weight: 500; width: 100%; color: rgb(68, 68, 68);"
         >
           Reserve Wallet Address
         </p>
@@ -85,7 +85,7 @@ exports[`BlockchainInfo should match snapshot 1`] = `
         />
         <p
           class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft"
-          style="font-weight: 400; opacity: 1;"
+          style="font-weight: 400; opacity: 1; width: 100%;"
         >
           99832671623
         </p>
@@ -100,7 +100,7 @@ exports[`BlockchainInfo should match snapshot 1`] = `
       >
         <p
           class="MuiTypography-root MuiTypography-body1"
-          style="font-weight: 500; color: rgb(68, 68, 68);"
+          style="font-weight: 500; width: 100%; color: rgb(68, 68, 68);"
         >
           Reserve Wallet Balance
         </p>
@@ -109,7 +109,7 @@ exports[`BlockchainInfo should match snapshot 1`] = `
         />
         <p
           class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft"
-          style="font-weight: 400; opacity: 1;"
+          style="font-weight: 400; opacity: 1; width: 100%;"
         >
           14.1233
         </p>

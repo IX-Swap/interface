@@ -10,7 +10,11 @@ export const useStyles = makeStyles(theme => ({
     paddingTop: theme.spacing(5),
     paddingRight: theme.spacing(2),
     paddingLeft: theme.spacing(3),
-    paddingBottom: theme.spacing(5)
+    paddingBottom: theme.spacing(5),
+    [theme.breakpoints.down('md')]: {
+      paddingRight: theme.spacing(1),
+      paddingLeft: theme.spacing(1)
+    }
   },
   colorGrid: {
     backgroundColor:

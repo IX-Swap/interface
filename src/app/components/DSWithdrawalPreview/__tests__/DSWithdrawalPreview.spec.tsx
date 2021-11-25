@@ -47,7 +47,7 @@ describe('DSWithdrawalPreview', () => {
     expect(LabelledValue).toHaveBeenNthCalledWith(
       3,
       {
-        label: 'Withdrawal Address',
+        label: 'Blockchain Address',
         value: props.data.recipientWallet
       },
       {}

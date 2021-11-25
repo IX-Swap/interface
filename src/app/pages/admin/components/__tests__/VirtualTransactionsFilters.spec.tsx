@@ -69,7 +69,7 @@ describe('VirtualTransactionsFilters', () => {
       expect.objectContaining({
         fullWidth: true,
         placeholder: 'Search virtual account/ SWIFT',
-        inputAdormentPosition: 'start'
+        inputAdornmentPosition: 'start'
       }),
       {}
     )

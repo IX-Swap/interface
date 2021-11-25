@@ -19,10 +19,10 @@ export const DeclarationsList = ({
         <Typography variant={'subtitle1'}>{title}</Typography>
       </Grid>
       <Grid item container spacing={2}>
-        {Object.entries(data).map(item => {
+        {Object.entries(data).map((item, index) => {
           const key = labelMap[item[0]]
           const value = item[1]
-          return <DeclarationsListItem label={key} value={value} />
+          return <DeclarationsListItem key={index} label={key} value={value} />
         })}
       </Grid>
     </Grid>

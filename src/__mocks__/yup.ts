@@ -18,3 +18,4 @@ export const boolean = mockYup.boolean
 export const mixed = mockYup.mixed
 export const bool = mockYup.bool
 export const ref = mockYup.ref
+export const ValidationError = mockYup.ValidationError

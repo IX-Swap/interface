@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Button, Typography, useTheme } from '@material-ui/core'
+import { Grid, Button, Typography, useTheme, Hidden } from '@material-ui/core'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { InvestRoute } from 'app/pages/invest/router/config'
 import { VSpacer } from 'components/VSpacer'
@@ -35,7 +35,10 @@ export const InvestLanding = () => {
       </Grid>
       <VSpacer size='medium' />
       <PromotedDSOs />
-      <VSpacer size='medium' />
+      <Hidden mdDown>
+        <VSpacer size='medium' />
+      </Hidden>
+
       <Grid container direction='column' spacing={4}>
         <Grid item>
           <Typography variant='h4'>More Offers for You</Typography>

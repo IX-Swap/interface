@@ -27,6 +27,7 @@ export const BlockchainSettingsContent = () => {
       </Card>
     )
   }
+
   return (
     <>
       {isLoading && <LinearProgress data-testid='blockchain-settings-loader' />}

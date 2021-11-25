@@ -24,7 +24,7 @@ export const SecondaryMarketTable = () => {
           <SearchFilter
             fullWidth
             filterValue={'secondaryMarketSearch'}
-            inputAdormentPosition='end'
+            inputAdornmentPosition='end'
             placeholder='Search'
           />
         </Grid>
@@ -49,7 +49,7 @@ export const SecondaryMarketTable = () => {
           columns={columns}
           hasActions
           actions={Actions}
-          filter={{ search: search ?? secondaryMarketSearch } as any}
+          filter={{ listingKeyword: search ?? secondaryMarketSearch } as any}
         />
       </Grid>
     </Grid>

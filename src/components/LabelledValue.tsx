@@ -85,17 +85,22 @@ export const LabelledValue = (props: LabelledValueProps & GridProps) => {
 
   const theme = useTheme()
 
+  const labelColorMap = {
+    default: theme.palette.text.primary,
+    light: theme.palette.text.hint,
+    dark: 'rgba(255,255,255,.7)'
+  }
+
   const items = [
     {
       text: label,
       styles: {
         fontWeight: labelWeightMap[labelWeight],
         fontSize: reverse ? labelFontSize : undefined,
+        width: '100%',
         color: isNewThemeOn
           ? theme.palette.slider.activeColor
-          : labelColor === 'default'
-          ? theme.palette.text.primary
-          : theme.palette.text.hint
+          : labelColorMap[labelColor]
       }
     },
     {
@@ -104,7 +109,8 @@ export const LabelledValue = (props: LabelledValueProps & GridProps) => {
         fontWeight: valueWeightMap[valueWeight],
         fontSize: reverse ? valueFontSize : undefined,
         color: valueColor ?? undefined,
-        opacity: isNewThemeOn ? 0.6 : 1
+        opacity: isNewThemeOn ? 0.6 : 1,
+        width: '100%'
       }
     }
   ]

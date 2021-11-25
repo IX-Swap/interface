@@ -26,7 +26,7 @@ export const MyListingsTable = () => {
             <SearchFilter
               fullWidth
               placeholder='Search'
-              inputAdormentPosition='start'
+              inputAdornmentPosition='start'
             />
           </Box>
         </Grid>

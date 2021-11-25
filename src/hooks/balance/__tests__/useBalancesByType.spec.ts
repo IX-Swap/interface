@@ -39,16 +39,19 @@ describe('useBalancesByType', () => {
         () => {
           expect(result.current.status).toBe('success')
           expect(parsedDataFn).toHaveBeenCalledTimes(2)
-          expect(parsedDataFn).toHaveBeenNthCalledWith(1, undefined, 'assetId')
+          expect(parsedDataFn).toHaveBeenNthCalledWith(1, undefined, 'symbol')
           expect(parsedDataFn).toHaveBeenNthCalledWith(
             2,
             [{ data: balance }],
-            'assetId'
+            'symbol'
           )
-          expect(post).toHaveBeenCalledWith(`/accounts/balance/${user._id}`, {
-            ...paginationArgs,
-            type: asset.type
-          })
+          expect(post).toHaveBeenCalledWith(
+            `/accounts/currency-balance/${user._id}`,
+            {
+              ...paginationArgs,
+              type: asset.type
+            }
+          )
         },
         { timeout: 1000 }
       )

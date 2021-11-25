@@ -32,6 +32,9 @@ export const useBalancesByType = (
 
   return {
     ...rest,
-    data: useParsedData<AssetBalance>(data, 'assetId')
+    data: useParsedData<AssetBalance>(
+      data,
+      type === 'Currency' ? 'symbol' : 'assetId'
+    )
   }
 }

@@ -18,7 +18,7 @@ export const AvailableBalance = () => {
   const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
   const { data: dsoData } = useDSOById(dsoId, issuerId)
   if (assetData !== undefined) {
-    const asset = assetData.map[dsoData?.currency._id ?? '']
+    const asset = assetData.map[dsoData?.currency.symbol ?? '']
     value = formatMoney(asset?.available ?? 0, asset?.symbol ?? '')
   }
 

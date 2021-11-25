@@ -22,6 +22,7 @@ import { statusColumn } from 'app/pages/authorizer/hooks/useAuthorizerView'
 import { UseSelectionHelperReturnType } from 'hooks/useSelectionHelper'
 import { useTheme } from '@material-ui/core/styles'
 import useStyles from './TableView.styles'
+import { NoData } from 'app/components/NoData/NoData'
 
 export interface TableViewRendererProps<T> {
   items: T[]
@@ -49,6 +50,7 @@ export interface TableViewProps<T> {
   defaultRowsPerPage?: number
   size?: Size
   themeVariant?: 'default' | 'primary' | 'no-header'
+  noDataComponent?: JSX.Element
 }
 
 export const TableView = <T,>({
@@ -68,7 +70,8 @@ export const TableView = <T,>({
   paperProps = {},
   defaultRowsPerPage,
   size = 'medium',
-  themeVariant = 'primary'
+  themeVariant = 'primary',
+  noDataComponent = <NoData title='No Data' />
 }: TableViewProps<T>): JSX.Element => {
   const { items, status, page, setPage, setRowsPerPage, rowsPerPage, total } =
     useTableWithPagination<T>({
@@ -210,6 +213,7 @@ export const TableView = <T,>({
                   actions={actions}
                   cacheQueryKey={cacheQueryKey}
                   themeVariant={themeVariant}
+                  noDataComponent={noDataComponent}
                 />
               )}
             </Table>

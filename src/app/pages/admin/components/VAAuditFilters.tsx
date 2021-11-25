@@ -20,7 +20,7 @@ export const VAAuditFilters = () => {
         <SearchFilter
           fullWidth
           placeholder='Search'
-          inputAdormentPosition='start'
+          inputAdornmentPosition='start'
         />
         {(isMobile || isTablet) && <VSpacer size={'small'} />}
       </Grid>

@@ -57,6 +57,14 @@ export const formatTime = (s?: string): string => {
   return format(new Date(s), 'hh:mmaa')
 }
 
+export const format24HTime = (s?: string): string => {
+  if (s === undefined) {
+    return ''
+  }
+
+  return format(new Date(s), 'HH:mm:ss')
+}
+
 export const getTimeAgo = (datetime: string) => {
   try {
     const now = Date.now()

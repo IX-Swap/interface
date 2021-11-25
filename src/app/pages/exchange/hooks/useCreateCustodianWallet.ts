@@ -24,7 +24,7 @@ export const useCreateCustodianWallet = ({
     onSuccess: data => {
       onSuccess()
       void snackbarService.showSnackbar(
-        'You have been assigned with the withdrawal address',
+        'You have been assigned with the blockchain address',
         'success'
       )
     },

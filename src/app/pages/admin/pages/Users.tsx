@@ -29,7 +29,7 @@ export const Users = () => {
         <SearchFilter
           fullWidth
           placeholder='Search'
-          inputAdormentPosition='end'
+          inputAdornmentPosition='end'
         />
       </Grid>
       <Grid item>

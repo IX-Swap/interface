@@ -9,14 +9,49 @@ export enum DSOFormSection {
   Pricing = 'dso-pricing',
   'Offering Terms' = 'dso-terms',
   'Information' = 'dso-profile',
-  'Documents' = 'dso-documents',
   'Team Members' = 'dso-team',
-  'FAQs' = 'dso-faqs',
-  'Videos' = 'dso-videos'
+  'Documents' = 'dso-documents',
+  'Videos' = 'dso-videos',
+  'FAQs' = 'dso-faqs'
 }
 
-export const DSOScrollGuide = () => {
+export const isSectionVisible = (
+  name: string,
+  showVideos: boolean,
+  showFAQs: boolean
+) => {
+  if (!showVideos && !showFAQs) {
+    return name !== 'Videos' && name !== 'FAQs'
+  }
+
+  if (!showVideos) {
+    return name !== 'Videos'
+  }
+  if (!showFAQs) {
+    return name !== 'FAQs'
+  }
+
+  return true
+}
+
+export interface DSOScrollGuideProps {
+  hasVideo: boolean
+  hasFAQ: boolean
+}
+
+export const DSOScrollGuide = ({
+  hasVideo = true,
+  hasFAQ = true
+}: DSOScrollGuideProps) => {
   const [hasActive, setHasActive] = useState(false)
+  let actualDSOFromSection = Object.entries(DSOFormSection)
+
+  if (!hasVideo || !hasFAQ) {
+    actualDSOFromSection = actualDSOFromSection.filter(([name, _]) =>
+      isSectionVisible(name, hasVideo, hasFAQ)
+    )
+  }
+
   const firstLinkKey = Object.values(DSOFormSection)[0]
 
   return (
@@ -24,34 +59,37 @@ export const DSOScrollGuide = () => {
       <Typography variant='subtitle1'>Progress</Typography>
       <VSpacer size='small' />
       <ScrollGuide>
-        {Object.entries(DSOFormSection).map(([name, key]) => (
-          <ScrollGuideLink
-            key={key}
-            to={key}
-            spy
-            smooth
-            duration={300}
-            offset={-20}
-            onSetActive={() => {
-              setHasActive(true)
-            }}
-            onSetInactive={() => {
-              if (key === firstLinkKey) {
-                setHasActive(false)
+        {actualDSOFromSection.map(([name, key]) => {
+          return (
+            <ScrollGuideLink
+              data-testid={'link'}
+              key={key}
+              to={key}
+              spy
+              smooth
+              duration={300}
+              offset={-20}
+              onSetActive={() => {
+                setHasActive(true)
+              }}
+              onSetInactive={() => {
+                if (key === firstLinkKey) {
+                  setHasActive(false)
+                }
+              }}
+              activeClass='active'
+              className={
+                hasActive
+                  ? undefined
+                  : key === firstLinkKey
+                  ? 'active'
+                  : undefined
               }
-            }}
-            activeClass='active'
-            className={
-              hasActive
-                ? undefined
-                : key === firstLinkKey
-                ? 'active'
-                : undefined
-            }
-          >
-            {name}
-          </ScrollGuideLink>
-        ))}
+            >
+              {name}
+            </ScrollGuideLink>
+          )
+        })}
       </ScrollGuide>
     </>
   )

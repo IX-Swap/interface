@@ -7,7 +7,8 @@ import { CorporateInfo } from 'app/pages/identity/components/CorporateIdentityVi
 import React from 'react'
 import { IdentityDocumentsView } from 'app/pages/identity/components/IdentityDocumentsView/IdentityDocumentsView'
 import { CountryTaxDeclaration } from 'app/pages/identity/components/CountryTaxDeclarations/CountryTaxDeclaration'
-import { CorporateIdentity } from '../../types/forms'
+import { InvestorDeclarationView } from 'app/pages/identity/components/IndividualIdentityView/InvestorDeclarationView/InvestorDeclarationView'
+import { CorporateIdentity } from 'app/pages/identity/types/forms'
 
 export interface CorporateIdentityViewProps {
   data: CorporateIdentity
@@ -44,6 +45,10 @@ export const CorporateIdentityView = ({ data }: CorporateIdentityViewProps) => {
           personnel={data.beneficialOwners ?? []}
           showDocumentHeader
         />
+      </Grid>
+      <Grid item>
+        <FormSectionHeader title='Investor Declaration' />
+        <InvestorDeclarationView identityType='corporate' data={data} />
       </Grid>
       <Grid item>
         <FormSectionHeader title='Tax Declaration' />
