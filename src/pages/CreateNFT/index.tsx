@@ -1,6 +1,19 @@
+import { Trans } from '@lingui/macro'
 import React from 'react'
+import { TYPE } from 'theme'
+import { CreateForm } from './CreateForm'
+import { Container, StyledTab } from './styleds'
 
 const Create = () => {
-  return <div>Create NFT</div>
+  return (
+    <Container width={['100%']} maxWidth={'1000px'}>
+      <StyledTab>
+        <TYPE.title4>
+          <Trans>Create NFT</Trans>
+        </TYPE.title4>
+      </StyledTab>
+      <CreateForm />
+    </Container>
+  )
 }
 export default Create
