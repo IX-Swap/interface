@@ -21,7 +21,7 @@ export const columns: Array<TableColumn<WithdrawalAddress>> = [
   },
   {
     key: 'address',
-    label: 'Withdrawal Address',
+    label: 'Blockchain Address',
     render: renderAddressColumn
   }
 ]

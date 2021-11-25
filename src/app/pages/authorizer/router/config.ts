@@ -80,7 +80,7 @@ export const authorizerLandingLinks: InternalRouteProps[] = [
     icon: CommitmentIcon
   },
   {
-    label: 'Withdrawal Addresses',
+    label: 'Blockchain Addresses',
     path: AuthorizerRoute.withdrawalAddresses,
     color: '#e6d200',
     icon: WithdrawalAddressIcon

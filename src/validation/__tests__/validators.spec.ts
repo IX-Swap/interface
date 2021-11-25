@@ -1,9 +1,11 @@
 import {
   corporateAccreditedInvestorValidator,
   individualAccreditedInvestorValidator,
-  pastDateValidator
+  pastDateValidator,
+  uniqueIdentifierCodeValidator
 } from 'validation/validators'
 import { DeclarationValue } from 'app/pages/identity/const/declarations'
+import { ValidationError } from 'yup'
 
 describe('individualAccreditedInvestorValidator', () => {
   it('returns false if value is null or undefined', () => {
@@ -129,5 +131,41 @@ describe('pastDateValidator', () => {
 
   it('returns true if date is future date', () => {
     expect(pastDateValidator('2100-11-10T15:59:00.000Z')).toBe(true)
+  })
+})
+
+describe('uniqueIdentifierCodeValidator', () => {
+  it('returns instance of ValidationError with correct error message if value length less than 12', () => {
+    expect(uniqueIdentifierCodeValidator('123')).toEqual(
+      new ValidationError(
+        'Unique Identifier Code must be at least 12 characters',
+        '123',
+        'uniqueIdentifierCode'
+      )
+    )
+  })
+
+  it('returns instance of ValidationError if value length more than 32', () => {
+    expect(
+      uniqueIdentifierCodeValidator('123456789012345678901234567890123')
+    ).toEqual(
+      new ValidationError(
+        'Unique Identifier Code must be at most 32 characters',
+        '123',
+        'uniqueIdentifierCode'
+      )
+    )
+  })
+
+  it('returns true if value is undefined', () => {
+    expect(uniqueIdentifierCodeValidator(undefined)).toBe(true)
+  })
+
+  it('returns true if value is null', () => {
+    expect(uniqueIdentifierCodeValidator(null)).toBe(true)
+  })
+
+  it('returns true if value is empty string', () => {
+    expect(uniqueIdentifierCodeValidator('')).toBe(true)
   })
 })

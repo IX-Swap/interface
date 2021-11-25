@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { PlaceOrderForm } from 'app/pages/exchange/components/PlaceOrderForm/PlaceOrderForm'
-import { Box, Grid } from '@material-ui/core'
-import { MyOrders } from 'app/pages/exchange/components/MyOrders/MyOrders'
+import { Box, Grid, Hidden } from '@material-ui/core'
 import { FinancialSummary } from 'app/pages/exchange/components/FinancialSummary/FinancialSummary'
 import { useStyles } from 'app/pages/exchange/pages/market/Market.styles'
-import { InvestorLiveOrderBook } from 'app/pages/exchange/components/InvestorLiveOrderBook/InvestorLiveOrderBook'
-import { TVChartContainer } from 'app/pages/invest/components/TVChartContainer/TVChartContainer'
-import { Trades } from 'app/pages/exchange/components/Trades/Trades'
 import { getDataFeed } from 'app/pages/invest/components/TVChartContainer/services/datafeed'
 import { IBasicDataFeed } from 'types/charting_library'
 import { generatePath, Redirect, useParams } from 'react-router'
@@ -24,7 +19,9 @@ import { useTokenBalance } from 'app/pages/exchange/hooks/useTokenBalance'
 import { DisclosureDialog } from 'app/pages/exchange/components/DisclosureDialog/DisclosureDialog'
 import { useGetSiteConfig } from 'app/pages/exchange/hooks/useGetSiteConfig'
 import { ExchangeRulesLink } from 'app/pages/exchange/components/ExchangeRulesLink/ExchangeRulesLink'
-import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+import { MarketTabbedView } from 'app/pages/exchange/components/Market/MarketTabbedView/MarketTabbedView'
+import { MarketGridView } from 'app/pages/exchange/components/Market/MarketGridView'
+import { PlaceOrderFormDialog } from 'app/pages/exchange/components/PlaceOrderForm/PlaceOrderFormDialog'
 
 export const Market = () => {
   const [isDisclosureVisible, setIsDisclosureVisible] = useState<boolean>(false)
@@ -49,7 +46,6 @@ export const Market = () => {
     isFetching,
     createOrderStatus
   } = useCustodianWalletSubmit()
-  const { theme } = useAppBreakpoints()
   const [datafeed] = React.useState<IBasicDataFeed>(() => getDataFeed())
   const { pairId } = useParams<{ pairId: string }>()
   const { data, isLoading } = useMarketList()
@@ -95,51 +91,56 @@ export const Market = () => {
         <FinancialSummary />
       </Grid>
 
-      <Box my={2} />
+      <Grid item>
+        <Box my={2} />
+      </Grid>
 
-      <Grid
-        container
-        direction={'column'}
-        className={classes.wrapper}
-        alignItems={'flex-start'}
-      >
-        <Grid item className={classes.colorGrid} style={{ height: '100%' }}>
-          <InvestorLiveOrderBook />
-        </Grid>
-
-        <Grid item container>
-          <Grid item className={classes.middleBlock} xs={12}>
-            {symbol.length > 0 && (
-              <TVChartContainer
-                data-testid={'lol'}
-                datafeed={datafeed}
-                symbol={symbol}
-                theme={theme.palette.type === 'dark' ? 'Dark' : 'Light'}
-                toolbarBg={theme.palette.type === 'dark' ? '#292929' : ''}
-                customCssUrl={'./trading-view_dark.css'}
-              />
-            )}
-          </Grid>
-          <Grid item className={classes.colorGrid} xs={12}>
-            <MyOrders />
-          </Grid>
-        </Grid>
-
-        <Grid item container>
-          <PlaceOrderForm
+      <Hidden mdDown>
+        <Grid item xs={12}>
+          <MarketGridView
+            symbol={symbol}
+            datafeed={datafeed}
             createOrderStatus={createOrderStatus}
             isFetching={isFetching}
-            currencyLabel={currencyName}
-            tokenLabel={tokenName}
+            currencyName={currencyName}
+            tokenName={tokenName}
             currencyBalance={currencyBalance}
-            tokenBalance={
-              tokenBalance?.data !== undefined ? tokenBalance.data.amount : 0
-            }
-            onSubmit={submitForm}
+            tokenBalance={tokenBalance}
+            submitForm={submitForm}
           />
-          <Trades />
         </Grid>
-      </Grid>
+      </Hidden>
+      <Hidden mdUp>
+        <MarketTabbedView
+          symbol={symbol}
+          datafeed={datafeed}
+          createOrderStatus={createOrderStatus}
+          isFetching={isFetching}
+          currencyName={currencyName}
+          tokenName={tokenName}
+          currencyBalance={currencyBalance}
+          tokenBalance={tokenBalance}
+          submitForm={submitForm}
+        />
+      </Hidden>
+      <Hidden mdUp>
+        <PlaceOrderFormDialog
+          symbol={symbol}
+          datafeed={datafeed}
+          createOrderStatus={createOrderStatus}
+          isFetching={isFetching}
+          currencyName={currencyName}
+          tokenName={tokenName}
+          currencyBalance={currencyBalance}
+          tokenBalance={tokenBalance}
+          submitForm={submitForm}
+        />
+      </Hidden>
+      <Hidden mdUp>
+        <Grid item>
+          <Box my={2} />
+        </Grid>
+      </Hidden>
     </Box>
   )
 }

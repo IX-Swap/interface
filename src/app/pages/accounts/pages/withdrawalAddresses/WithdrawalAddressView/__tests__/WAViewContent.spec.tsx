@@ -96,7 +96,7 @@ describe('WithdrawalAddressViewContent', () => {
     )
     expect(LabelledValue).toHaveBeenNthCalledWith(
       3,
-      { label: 'Withdrawal Address', value: withdrawalAddress.address },
+      { label: 'Blockchain Address', value: withdrawalAddress.address },
       {}
     )
     expect(LabelledValue).toHaveBeenNthCalledWith(

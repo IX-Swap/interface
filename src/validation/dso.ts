@@ -2,7 +2,7 @@ import { DsoFAQItem, DSOFormValues, DsoTeamMember, DsoVideo } from 'types/dso'
 import { DataroomFile, FormArrayElement } from 'types/dataroomFile'
 import { string, number, array, object } from 'yup'
 import { dateSchema } from './shared'
-import { pastDateValidator } from './validators'
+import { pastDateValidator, uniqueIdentifierCodeValidator } from './validators'
 
 const numberTransformer = (cv: number, ov: any) => {
   return ov === '' ? undefined : cv
@@ -122,7 +122,11 @@ export const dsoFormBaseValidationSchema = {
     .of(dsoVideoLinkSchema.required('Required'))
     .ensure()
     .required('Required'),
-  uniqueIdentifierCode: string().min(12).max(32)
+  uniqueIdentifierCode: string().test(
+    'length',
+    'Required',
+    uniqueIdentifierCodeValidator
+  )
 }
 
 export const createDSOValidationSchema = object()

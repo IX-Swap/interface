@@ -14,11 +14,11 @@ export const ViewDSO = () => {
   }
 
   return (
-    <Grid container direction='column'>
-      <Grid item>
+    <Grid container spacing={3}>
+      <Grid item xs={12}>
         <PageHeader title={data.tokenName} />
       </Grid>
-      <Grid item>
+      <Grid item xs={12}>
         <DSOInvestorView dso={data} />
       </Grid>
     </Grid>

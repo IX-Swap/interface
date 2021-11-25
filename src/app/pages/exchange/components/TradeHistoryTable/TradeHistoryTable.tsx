@@ -39,8 +39,8 @@ export const TradeHistoryTable = () => {
       </Grid>
       <Grid item>
         <TableView<TradeHistory>
-          uri={exchangeUrl.userTrades(userId)}
-          name={exchangeQueryKeys.userTrades(userId)}
+          uri={exchangeUrl.userOrders(userId)}
+          name={exchangeQueryKeys.userOrders(userId)}
           columns={columns}
           filter={filter}
           paperProps={{ variant: 'elevation', elevation: 0 }}
