@@ -1,48 +1,45 @@
 import React, { useCallback, useState } from 'react'
-import { useDropzone } from 'react-dropzone'
+import { useDropzone, FileWithPath } from 'react-dropzone'
 import { ImageContainer, PreviewParent, StyledClose, StyledLogo } from './styleds'
 import { SvgIconWrapper } from 'theme'
+import { getfileType } from './utils'
+import { FileTypes } from './types'
 
 interface Props {
   onDrop: (file: any) => void
-  file: any
+  file: FileWithPath | null
 }
-const Preview = ({ file, filePath, onDelete }: { file: any; filePath: string; onDelete: (e: any) => void }) => {
-  if (!(file && filePath)) {
-    return (
-      <PreviewParent>
-        <StyledLogo />
-      </PreviewParent>
-    )
-  }
-  const fileType = String(file?.type)
-  const extension = String(file?.name?.split('.')[1])
-  if (fileType?.startsWith('image')) {
-    return (
-      <PreviewParent>
-        <img src={filePath} />
-        <StyledClose onClick={(e) => onDelete(e)} />
-      </PreviewParent>
-    )
-  }
-  if (fileType?.startsWith('video')) {
-    return (
-      <PreviewParent>
-        <video src={filePath} controls loop />
-        <StyledClose onClick={(e) => onDelete(e)} />
-      </PreviewParent>
-    )
-  }
-  if (fileType?.startsWith('audio')) {
-    return (
-      <PreviewParent>
-        <audio src={filePath} controls />
-        <StyledClose onClick={(e) => onDelete(e)} />
-      </PreviewParent>
-    )
-  }
-
-  return null
+const Preview = ({
+  file,
+  filePath,
+  onDelete,
+}: {
+  file: FileWithPath | null
+  filePath: string
+  onDelete: (e: any) => void
+}) => {
+  const getPreviewElement = useCallback(() => {
+    const fileType = getfileType(file)
+    switch (fileType) {
+      case FileTypes.AUDIO:
+        return <audio src={filePath} controls />
+      case FileTypes.VIDEO:
+        return <video src={filePath} controls loop />
+      case FileTypes.IMAGE:
+        return <img src={filePath} />
+      default:
+        if (!filePath && !file) {
+          return <StyledLogo />
+        }
+        return null
+    }
+  }, [file, filePath])
+  return (
+    <PreviewParent>
+      {getPreviewElement()}
+      {file && <StyledClose onClick={(e) => onDelete(e)} />}
+    </PreviewParent>
+  )
 }
 
 export default function Upload({ onDrop, file }: Props) {
@@ -67,22 +64,18 @@ export default function Upload({ onDrop, file }: Props) {
     },
     [onDrop, setFilePath]
   )
-  // useEffect(() => {
-  //   if (!file && filePath) {
-  //     URL.revokeObjectURL(filePath)
-  //     setFilePath('')
-  //   }
-  // }, [file, filePath])
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop: onDropInput })
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop: onDropInput,
+    accept: 'image/*,video/*,audio/*,webgl/*,.glb,.gltf',
+  })
   console.log({ file, filePath })
   return (
     <div {...getRootProps()}>
-      <input {...getInputProps()} multiple={false} accept="image/*,video/*,audio/*,webgl/*,.glb,.gltf" />
+      <input {...getInputProps()} multiple={false} />
       {isDragActive ? <p>Drop the files here ...</p> : <p>Drag and drop some files here, or click to select files</p>}
       <ImageContainer>
         <Preview filePath={filePath} file={file} onDelete={onDelete} />
-        {/* <ImageOverlay /> */}
       </ImageContainer>
     </div>
   )

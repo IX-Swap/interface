@@ -6,7 +6,7 @@ import { Container, StyledTab } from './styleds'
 
 const Create = () => {
   return (
-    <Container width={['100%']} maxWidth={'1000px'}>
+    <Container width={['100%']} maxWidth={'900px'}>
       <StyledTab>
         <TYPE.title4>
           <Trans>Create NFT</Trans>

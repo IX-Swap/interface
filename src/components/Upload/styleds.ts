@@ -3,6 +3,7 @@ import { ReactComponent as Close } from '../../assets/images/x.svg'
 import { ReactComponent as LogoDark } from '../../assets/svg/logo-white.svg'
 
 export const PreviewParent = styled.div`
+  cursor: pointer;
   position: relative;
   display: flex;
   width: 100%;
