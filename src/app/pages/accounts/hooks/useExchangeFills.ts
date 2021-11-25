@@ -7,7 +7,7 @@ import { getIdFromObj } from 'helpers/strings'
 import { ExchangeFill } from 'types/reports'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 
-export const useGetExchangeFills = () => {
+export const useExchangeFills = () => {
   const { user } = useAuth()
   const userId = getIdFromObj(user)
   const { apiService } = useServices()

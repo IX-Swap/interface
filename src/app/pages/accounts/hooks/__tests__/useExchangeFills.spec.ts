@@ -7,12 +7,12 @@ import {
 } from 'test-utils'
 import * as useAuthHook from 'hooks/auth/useAuth'
 import { user } from '__fixtures__/user'
-import { useGetExchangeFills } from 'app/pages/accounts/hooks/useExchangeFills'
+import { useExchangeFills } from 'app/pages/accounts/hooks/useExchangeFills'
 import { fakeExchangeFill } from '__fixtures__/reports'
 import { accountsURL } from 'config/apiURL'
 import { generateQueryResult } from '__fixtures__/useQuery'
 
-describe('useGetExchangeFills', () => {
+describe('useExchangeFills', () => {
   const sampleResponse = generateQueryResult({
     data: [fakeExchangeFill]
   })
@@ -34,7 +34,7 @@ describe('useGetExchangeFills', () => {
 
       await act(async () => {
         const { result } = renderHookWithServiceProvider(() => {
-          return useGetExchangeFills()
+          return useExchangeFills()
         })
 
         await waitFor(() => result.current.data)

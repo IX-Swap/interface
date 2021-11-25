@@ -108,18 +108,17 @@ export const accountsURL = {
     confirmCommitment: (commitmentId: string) =>
       `/issuance/commitments/${commitmentId}/confirmInvestment`
   },
+  dashboard: {
+    getPortfolios: (userId: string) => `/accounts/portfolios/${userId}`
+  },
   reports: {
+    getAccountInfo: (userId: string) => `/accounts/account-info/${userId}`,
     getActivitySummary: '/resources/financialReports/activitySummary',
     getExchangeFills: (userId: string) => `/exchange/fills/list/${userId}`,
     getFeesHistory: '/virtual-accounts/fees-history',
     getDistributionHistory: (userId: string) =>
       `/issuance/distribution-history/${userId}`
-  },
-  getPortfolios: (userId: string) => `/accounts/portfolios/${userId}`
-}
-
-export const reportsURL = {
-  getAccountInfo: (userId: string) => `/accounts/account-info/${userId}`
+  }
 }
 
 export const issuanceURL = {

@@ -1,4 +1,4 @@
-import { reportsURL } from 'config/apiURL'
+import { accountsURL } from 'config/apiURL'
 import { reportsQueryKeys } from 'config/queryKeys'
 import { useServices } from 'hooks/useServices'
 import { useQuery } from 'react-query'
@@ -12,7 +12,7 @@ export const useGetAccountInfo = () => {
   const { apiService } = useServices()
 
   const getAccountInfo = async () => {
-    const uri = reportsURL.getAccountInfo(userId)
+    const uri = accountsURL.reports.getAccountInfo(userId)
     return await apiService.get<AccountInfo>(uri)
   }
 

@@ -1,5 +1,5 @@
 import { act } from '@testing-library/react-hooks'
-import { reportsURL } from 'config/apiURL'
+import { accountsURL } from 'config/apiURL'
 import {
   waitFor,
   cleanup,
@@ -38,7 +38,7 @@ describe('useGetAccountInfo', () => {
 
       expect(result.current.data).toEqual(sampleResponse.data)
       expect(apiServiceMock.get).toHaveBeenCalledWith(
-        reportsURL.getAccountInfo(user._id)
+        accountsURL.reports.getAccountInfo(user._id)
       )
     })
   })
