@@ -5,8 +5,12 @@ import { VSpacer } from 'components/VSpacer'
 import { ReportsInfo } from 'app/pages/accounts/pages/reports/components/ReportsInfo/ReportsInfo'
 import { Actions } from './components/Actions/Actions'
 import { ReportsAccordion } from 'app/pages/accounts/pages/reports/components/ReportsAccordion/ReportsAccordion'
+import { useGetActivitySummary } from 'app/pages/accounts/hooks/useGetActivitySummary'
 
 export const AccountsSummary: React.FC = () => {
+  const { data, isLoading } = useGetActivitySummary()
+  console.log(data, isLoading)
+
   return (
     <Grid container direction={'column'}>
       <Grid item>

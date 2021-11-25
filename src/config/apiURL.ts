@@ -108,6 +108,13 @@ export const accountsURL = {
     confirmCommitment: (commitmentId: string) =>
       `/issuance/commitments/${commitmentId}/confirmInvestment`
   },
+  reports: {
+    getActivitySummary: '/resources/financialReports/activitySummary',
+    getExchangeFills: (userId: string) => `/exchange/fills/list/${userId}`,
+    getFeesHistory: '/virtual-accounts/fees-history',
+    getDistributionHistory: (userId: string) =>
+      `/issuance/distribution-history/${userId}`
+  },
   getPortfolios: (userId: string) => `/accounts/portfolios/${userId}`
 }
 
