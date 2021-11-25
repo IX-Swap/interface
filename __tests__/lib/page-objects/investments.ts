@@ -67,6 +67,7 @@ class Invest {
     await typeText(invest.fields.AMOUNT, '1', this.page)
     await click(invest.buttons.PLACE_ORDER, this.page)
     const toast = await this.page.innerText(invest.TOAST_NOTIFICATIONS)
+    console.log(toast)
     return toast.includes('Order created')
   }
 
