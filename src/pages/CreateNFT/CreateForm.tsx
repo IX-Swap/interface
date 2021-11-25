@@ -1,11 +1,11 @@
+import { t, Trans } from '@lingui/macro'
+import { Label } from '@rebass/forms'
+import { ButtonGradient } from 'components/Button'
+import { ContainerRow, Input, InputContainer, InputPanel, Textarea } from 'components/Input'
+import Upload from 'components/Upload'
 import React, { useState } from 'react'
 import { Box, Flex } from 'rebass'
-import { Label, Input, Select, Textarea, Radio, Checkbox } from '@rebass/forms'
-import { ButtonGradient } from 'components/Button'
-import Upload from 'components/Upload'
 import { ExternalLink, TYPE } from 'theme'
-import { t, Trans } from '@lingui/macro'
-
 export const CreateForm = () => {
   const [file, setFile] = useState(null)
   const [name, setName] = useState('')
@@ -44,7 +44,26 @@ export const CreateForm = () => {
               </Box>
             </Box>
           </Label>
-          <Input onChange={(e) => setName(e?.target?.value)} placeholder={t`Item name`} />
+          <InputPanel id={'item-name'}>
+            <ContainerRow>
+              <InputContainer>
+                <Input
+                  onChange={(e) => setName(e?.target?.value)}
+                  placeholder={t`Item name`}
+                  className="item-name-input"
+                  type="text"
+                  autoComplete="off"
+                  autoCorrect="off"
+                  autoCapitalize="off"
+                  spellCheck="false"
+                  error={false}
+                  pattern=".*$"
+                  value={name}
+                  disabled={false}
+                />
+              </InputContainer>
+            </ContainerRow>
+          </InputPanel>
         </Box>
       </Flex>
       <Flex mx={-2} mb={4}>
@@ -60,7 +79,26 @@ export const CreateForm = () => {
               about it. You are welcome to link to your own webpage with more details.
             </TYPE.descriptionThin>
           </Label>
-          <Input onChange={(e) => setLink(e?.target?.value)} placeholder={t`https://yoursite.io/item/123`} />
+          <InputPanel id={'item-name'}>
+            <ContainerRow>
+              <InputContainer>
+                <Input
+                  className="item-link-input"
+                  type="text"
+                  autoComplete="off"
+                  autoCorrect="off"
+                  autoCapitalize="off"
+                  spellCheck="false"
+                  error={false}
+                  pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm"
+                  value={link}
+                  disabled={false}
+                  onChange={(e) => setLink(e?.target?.value)}
+                  placeholder={`https://yoursite.io/item/123`}
+                />
+              </InputContainer>
+            </ContainerRow>
+          </InputPanel>
         </Box>
       </Flex>
       <Flex mx={-2} mb={4}>
@@ -80,6 +118,7 @@ export const CreateForm = () => {
             </TYPE.descriptionThin>
           </Label>
           <Textarea
+            style={{ height: '150px' }}
             onChange={(e) => setDescription(e?.target?.value)}
             placeholder={t`Provide a detailed description of your item`}
           />
