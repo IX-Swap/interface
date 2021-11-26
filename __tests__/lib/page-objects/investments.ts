@@ -56,7 +56,6 @@ class Invest {
     await shouldExist(invest.GRAPH, this.page)
     const present = await this.page.isVisible(kyc.DIALOG_VIEW)
     if (present === true) {
-      console.log(present)
       await click(invest.CHECKBOX, this.page)
       await click(invest.buttons.I_AGREE, this.page)
     }
@@ -68,6 +67,7 @@ class Invest {
     await typeText(invest.fields.AMOUNT, '1', this.page)
     await click(invest.buttons.PLACE_ORDER, this.page)
     const toast = await this.page.innerText(invest.TOAST_NOTIFICATIONS)
+    console.log(toast)
     return toast.includes('Order created')
   }
 

@@ -17,7 +17,7 @@ test.afterEach(async ({ page }) => {
   await page.close()
 })
 test.describe('Functional test ', () => {
-  test('The user be logged in', async ({ page, auth }) => {
+  test('User should be logged in', async ({ page, auth }) => {
     await auth.loginWithout2fa(baseCreds.EMAIL, baseCreds.PASSWORD)
     await shouldExist(kyc.type.INDIVIDUAL, page)
   })

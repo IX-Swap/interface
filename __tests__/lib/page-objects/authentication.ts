@@ -80,7 +80,7 @@ class Authentication {
   signOut = async () => {
     await click(authForms.buttons.PROFILE_VIEW, this.page)
     await click(authForms.buttons.SIGN_OUT, this.page)
-    await this.page.waitForURL('https://staging.mozork.com/auth/sign-in')
+    await this.page.waitForURL(`${baseCreds.URL}auth/sign-in`)
   }
 }
 export { Authentication }
