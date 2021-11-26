@@ -36,6 +36,9 @@ export enum ApplicationModal {
   IXS_BALANCE,
   NETWORK_SELECTOR,
   GENERAL,
+  PROPERTIES,
+  LEVELS,
+  STATS,
 }
 
 export const updateBlockNumber = createAction<{ chainId: number; blockNumber: number }>('application/updateBlockNumber')

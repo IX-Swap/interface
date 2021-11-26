@@ -6,6 +6,8 @@ import Upload from 'components/Upload'
 import React, { useState } from 'react'
 import { Box, Flex } from 'rebass'
 import { ExternalLink, TYPE } from 'theme'
+import { Traits } from './Traits'
+import { TraitType } from './types'
 export const CreateForm = () => {
   const [file, setFile] = useState(null)
   const [name, setName] = useState('')
@@ -34,7 +36,7 @@ export const CreateForm = () => {
       </Flex>
       <Flex mx={-2} mb={4}>
         <Box width={1} px={2}>
-          <Label htmlFor="name" flexDirection="column" mb={1}>
+          <Label htmlFor="name" flexDirection="column" mb={2}>
             <Box mb={1}>
               <Box display="flex">
                 <TYPE.body>
@@ -68,7 +70,7 @@ export const CreateForm = () => {
       </Flex>
       <Flex mx={-2} mb={4}>
         <Box width={1} px={2}>
-          <Label htmlFor="link" flexDirection="column" mb={1}>
+          <Label htmlFor="link" flexDirection="column" mb={2}>
             <Box mb={1}>
               <TYPE.body>
                 <Trans>External Link</Trans>
@@ -103,7 +105,7 @@ export const CreateForm = () => {
       </Flex>
       <Flex mx={-2} mb={4}>
         <Box width={1} px={2}>
-          <Label htmlFor="description" flexDirection="column" mb={1}>
+          <Label htmlFor="description" flexDirection="column" mb={2}>
             <Box mb={1}>
               <TYPE.body>
                 <Trans>Description</Trans>
@@ -123,6 +125,15 @@ export const CreateForm = () => {
             placeholder={t`Provide a detailed description of your item`}
           />
         </Box>
+      </Flex>
+      <Flex mx={-2} mb={4}>
+        <Traits type={TraitType.RECTANGLE} />
+      </Flex>
+      <Flex mx={-2} mb={4}>
+        <Traits type={TraitType.PROGRESS} />
+      </Flex>
+      <Flex mx={-2} mb={4}>
+        <Traits type={TraitType.NUMBER} />
       </Flex>
       <Flex mx={-2} flexWrap="wrap">
         <Box px={2} mr="auto">
