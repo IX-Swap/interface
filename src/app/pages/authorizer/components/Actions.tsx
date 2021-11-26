@@ -45,7 +45,9 @@ export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
       ? history.push(`/app/authorizer/${category}/${id}/view`)
       : history.push(`/app/authorizer/${category}/${userId}/${id}/view`)
 
+  const isUnauthorized = (item as any).status === 'Submitted'
   const isLoading = isApproving || isRejecting
+  const isItCommitments = category === 'commitments'
 
   return (
     <Grid container wrap='nowrap' justify='flex-end'>
@@ -70,27 +72,28 @@ export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
       <Grid item>
         <Box px={1} />
       </Grid>
-      {category === 'commitments' &&
-      (item as any).fundStatus !== 'Funds on hold' ? (
+      {isItCommitments && (item as any).fundStatus !== 'Funds on hold' ? (
         <></>
       ) : (
         <>
           <Grid item style={{ minWidth: 26 }}>
-            <Dropdown
-              arrow
-              contentTheme='dark'
-              trigger={props => (
-                <ActionsDropdownTrigger {...props} isLoading={isLoading} />
-              )}
-              content={props => (
-                <ActionsDropdownContent
-                  {...props}
-                  approve={approve}
-                  reject={reject}
-                  view={view}
-                />
-              )}
-            />
+            {(isUnauthorized || isItCommitments) && (
+              <Dropdown
+                arrow
+                contentTheme='dark'
+                trigger={props => (
+                  <ActionsDropdownTrigger {...props} isLoading={isLoading} />
+                )}
+                content={props => (
+                  <ActionsDropdownContent
+                    {...props}
+                    approve={approve}
+                    reject={reject}
+                    view={view}
+                  />
+                )}
+              />
+            )}
           </Grid>
         </>
       )}
