@@ -82,6 +82,10 @@ class UserForms {
     await click(kyc.field.corporate.LEGAL_ENTITY_STATUS, this.page)
     await click(kyc.field.corporate.LEGAL_ENTITY_VALUE, this.page)
   }
+  updateData = async () => {
+    await click('text="Update"', this.page)
+    await waitForRequestInclude(this.page, 'identity/corporates/', 'GET')
+  }
   editCorporateInformation = async () => {
     const string = randomString()
     await click(kyc.buttons.EDIT, this.page)
@@ -105,11 +109,18 @@ class UserForms {
       'Kyiv' + string,
       this.page
     )
-    return [corporateName, regNumber, city, state]
+    await this.updateData()
+    await click(kyc.buttons.SUBMIT, this.page)
+
+    const directorName = await clearAndTypeText(
+      kyc.field.issuer.FULL_NAME,
+      'director' + string,
+      this.page
+    )
+    await this.updateData()
+    return [corporateName, regNumber, city, state, directorName]
   }
   checkThatTheChangesSaved = async (fields: Array<[]>) => {
-    await click('text="Update"', this.page)
-    await waitForRequestInclude(this.page, 'identity/corporates/', 'GET')
     await click(kyc.CREATE_IDENTITY_SECTION, this.page)
     await click(kyc.buttons.VIEW, this.page)
     for (let item of fields) {
