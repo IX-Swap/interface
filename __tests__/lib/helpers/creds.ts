@@ -16,7 +16,8 @@ export const baseCreds = {
   CREATE_DSO_MORE_OPTIONS: 'lorepag@mailinator.com',
   VIEW_DSO_MORE_OPTIONS: 'qyle@mailinator.com',
   PASSWORD: 'Pa$$w0rd!qwe',
-  PASSWORD_RESET: 'Pa$$w0rd!qwe1A'
+  PASSWORD_RESET: 'Pa$$w0rd!qwe1A',
+  EDIT_CORPORATE: 'corporateideintety@mailinator.com'
 }
 // } else {
 //   baseCreds = {

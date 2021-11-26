@@ -11,13 +11,20 @@ import {
   waitForText,
   screenshotMatching,
   shouldNotExist,
-  randomString
+  randomString,
+  waitForRequestInclude
 } from '../helpers/helpers'
 
 class UserForms {
   page: any
   constructor(page) {
     this.page = page
+  }
+
+  followToViewIdentity = async () => {
+    await click(kyc.HOME_SECTION, this.page)
+    await click(kyc.CREATE_IDENTITY_SECTION, this.page)
+    await click(kyc.buttons.VIEW, this.page)
   }
 
   checkIssuerView = async testInfo => {
@@ -77,20 +84,38 @@ class UserForms {
   }
   editCorporateInformation = async () => {
     const string = randomString()
-    await click(kyc.buttons.OKAY, this.page)
-    await uploadFiles(this.page, kyc.field.corporate.LOGO, text.docs.pathToFile)
-    await clearAndTypeText(kyc.field.corporate.NAME, 'name' + string, this.page)
-    await clearAndTypeText(
+    await click(kyc.buttons.EDIT, this.page)
+    const corporateName = await clearAndTypeText(
+      kyc.field.corporate.NAME,
+      'name' + string,
+      this.page
+    )
+    const regNumber = await clearAndTypeText(
       kyc.field.REGISTRATION_NUMBER,
       '1990' + string,
       this.page
     )
-    await click(kyc.field.corporate.COMPANY_OF_INCORPORATION, this.page)
-    await click(kyc.field.TAX_RESIDENT_VALUE, this.page)
-    await click(kyc.field.corporate.LEGAL_ENTITY_STATUS, this.page)
-    await click(kyc.field.corporate.LEGAL_ENTITY_VALUE, this.page)
+    const city = await clearAndTypeText(
+      kyc.field.corporate.CITY,
+      'Baku' + string,
+      this.page
+    )
+    const state = await clearAndTypeText(
+      kyc.field.corporate.STATE,
+      'Kyiv' + string,
+      this.page
+    )
+    return [corporateName, regNumber, city, state]
   }
-
+  checkThatTheChangesSaved = async (fields: Array<[]>) => {
+    await click('text="Update"', this.page)
+    await waitForRequestInclude(this.page, 'identity/corporates/', 'GET')
+    await click(kyc.CREATE_IDENTITY_SECTION, this.page)
+    await click(kyc.buttons.VIEW, this.page)
+    for (let item of fields) {
+      await waitForText(this.page, item)
+    }
+  }
   fillCorporateAddressForm = async () => {
     await typeText(kyc.field.corporate.POSTAL_CODE, '123441', this.page)
     await typeText(kyc.field.corporate.ADDRESS1, 'line1', this.page)

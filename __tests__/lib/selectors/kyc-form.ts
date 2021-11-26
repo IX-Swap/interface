@@ -4,8 +4,10 @@ export const kyc = {
   NOTIFICATION: '[appearance="success"]',
   DIALOG_VIEW: '[role="dialog"]',
   MY_PROFILE: '[aria-controls="profile-menu"]',
-
+  HOME_SECTION: '[href="/app/home"]',
   USER_PHOTO: '[src*="blob:https://staging.mozork.com/"]',
+  CREATE_IDENTITY_SECTION: '[href="/app/identity"]',
+
   type: {
     INDIVIDUAL: '[href="/app/identity/individuals/create"]',
     CORPORATE: '[href="/app/identity/corporates/create"]',
@@ -15,6 +17,8 @@ export const kyc = {
     SUBMIT: "[type='submit']",
     SUBMIT_TEXT: '//*[text()="Submit"]',
     OKAY: 'text="Okay"',
+    EDIT: 'text="Edit"',
+    VIEW: 'text="View"',
     CLICK_HERE: 'text="Click here"',
     FATCA: 'span >> text=FATCA'
   },

@@ -16,6 +16,7 @@ jobs:
     if: github.event.pull_request.merged == true || github.event_name == 'push'
     name: Integration Tests
     runs-on: ubuntu-latest # or macos-latest, windows-latest
+    continue-on-error: true
     steps:
       - uses: actions/checkout@v2
       - name: Set up node
@@ -30,6 +31,7 @@ jobs:
           GH_REP: ${{github.ref}}
           ALLURE_RESULTS_DIR: "reports/allure-results"
         run: yarn integration-test
+      if: always()  
       - uses: actions/upload-artifact@v2
         if: always()
         with:

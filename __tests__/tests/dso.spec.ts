@@ -41,11 +41,7 @@ test.describe('Check functionality', () => {
     expect(inputs).toStrictEqual(8)
   })
 
-  test.skip('The "Preview" should be available', async ({
-    dso,
-    issuance,
-    page
-  }) => {
+  test('The "Preview" should be available', async ({ dso, issuance, page }) => {
     await dso.fillDsoInformationForm()
     await dso.fillDsoPricingForm()
     await dso.fillDsoOfferingTermsForm()

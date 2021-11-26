@@ -87,6 +87,7 @@ async function clearAndTypeText(selector, words, page) {
     await page.keyboard.press('Control+A')
     await page.keyboard.press('Backspace')
     await field.type(words)
+    return words
   } catch (error) {
     console.error(error)
     throw new Error(`Could not type text into select: ${selector}`)
@@ -173,6 +174,18 @@ async function waitForResponseInclude(page, responseText) {
     throw new Error(`Response url does NOT include: ${responseText} `)
   }
 }
+async function waitForRequestInclude(page, requestText, method = 'GET') {
+  try {
+    await page.waitForRequest(
+      request =>
+        request.url().includes(requestText) && request.method() === method
+    )
+  } catch {
+    throw new Error(
+      `Request url does NOT include: ${requestText} or the method is not ${method} `
+    )
+  }
+}
 
 async function navigate(url, page, wait = 'networkidle') {
   try {
@@ -206,6 +219,7 @@ export {
   navigate,
   clearAndTypeText,
   waitForResponseInclude,
+  waitForRequestInclude,
   waitForText,
   randomString,
   waitNewPage

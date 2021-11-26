@@ -137,3 +137,20 @@ test.describe('Check identities form', () => {
     await screenshotMatching(testInfo.title, dialog, page)
   })
 })
+
+test.describe('Edit identities form', () => {
+  test.beforeEach(async ({ page, auth }) => {
+    await navigate(baseCreds.URL, page)
+    await auth.loginWithout2fa(baseCreds.EDIT_CORPORATE, baseCreds.PASSWORD)
+  })
+
+  test.afterEach(async ({ page }) => {
+    await page.close()
+  })
+
+  test.only('The "Corporate" KYC should be editable', async ({ kycForms }) => {
+    await kycForms.followToViewIdentity()
+    const fields = await kycForms.editCorporateInformation()
+    await kycForms.checkThatTheChangesSaved(fields)
+  })
+})
