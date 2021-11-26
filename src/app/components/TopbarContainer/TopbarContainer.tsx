@@ -18,7 +18,6 @@ import { HomeOutlined as HomeIcon } from '@material-ui/icons'
 import { Grid } from '@material-ui/core'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { InvestRoute } from 'app/pages/invest/router/config'
-import { HomeRoute } from 'app/pages/home/router/config'
 import {
   authorizerLandingLinks,
   AuthorizerRoute
@@ -29,7 +28,7 @@ import {
 } from 'app/pages/exchange/router/config'
 import { TopbarLinkContainer } from 'app/components/TopbarContainer/components/TopbarLinkContainer'
 import { TopbarLinkDropdown } from 'app/components/TopbarContainer/components/TopbarLinkDropdown'
-import { AppRoute } from 'app/router/config'
+import { HomeRoute } from 'app/pages/home/router/config'
 
 export const TopbarContainer = () => {
   const isAuthorizer = useIsAuthorizer()
@@ -39,11 +38,6 @@ export const TopbarContainer = () => {
 
   const isSuperUser = isAuthorizer || isAdmin
   const links = [
-    {
-      label: 'Home',
-      link: HomeRoute.landing,
-      icon: HomeIcon
-    },
     {
       label: 'Accounts',
       link: AccountsRoute.landing,
@@ -71,6 +65,12 @@ export const TopbarContainer = () => {
     })
   }
 
+  links.push({
+    label: 'Education Centre',
+    link: HomeRoute.landing,
+    icon: HomeIcon
+  } as any)
+
   if (isSuperUser) {
     links.push({
       label: 'Authorizer',
@@ -79,13 +79,13 @@ export const TopbarContainer = () => {
     })
   }
 
-  const homeLinks = [
-    {
-      label: 'Create Identity',
-      path: AppRoute.identity
-    },
+  const educationCentreLinks = [
     {
       label: 'News',
+      path: HomeRoute.news
+    },
+    {
+      label: 'Reports',
       path: HomeRoute.landing
     },
     {
@@ -135,8 +135,8 @@ export const TopbarContainer = () => {
 
   const dropdownLinksItems = (name: string) => {
     switch (name) {
-      case 'Home':
-        return homeLinks
+      case 'Education Centre':
+        return educationCentreLinks
       case 'Authorizer':
         return [
           {
@@ -166,11 +166,11 @@ export const TopbarContainer = () => {
     <Grid style={{ display: 'flex' }}>
       {links.map(link => {
         if (
-          link.label === 'Home' ||
           link.label === 'Accounts' ||
           link.label === 'Authorizer' ||
           link.label === 'Invest' ||
-          link.label === 'Issuance'
+          link.label === 'Issuance' ||
+          link.label === 'Education Centre'
         ) {
           return (
             <TopbarLinkDropdown

@@ -1,20 +1,13 @@
-import { Onboarding } from 'app/pages/home/pages/Onboarding'
-import * as useAuth from 'hooks/auth/useAuth'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { user } from '__fixtures__/user'
 import { TopIssuers } from 'app/pages/home/components/TopIssuers'
 import { TopCorporates } from 'app/pages/home/components/TopCorporates'
-import { News } from 'app/pages/home/components/News/News'
+import { News as NewsComponent } from 'app/pages/home/components/News/News'
 import { BannersCarousel } from 'app/pages/invest/components/BannersCarousel'
-import { Reports } from 'app/pages/home/components/AccessReports/Reports'
+import { News } from 'app/pages/home/pages/News'
 
 jest.mock('app/pages/home/components/News/News', () => ({
   News: jest.fn(() => null)
-}))
-
-jest.mock('app/pages/home/components/AccessReports/Reports', () => ({
-  Reports: jest.fn(() => null)
 }))
 
 jest.mock('app/pages/home/components/TopIssuers', () => ({
@@ -29,40 +22,22 @@ jest.mock('app/pages/invest/components/BannersCarousel', () => ({
   BannersCarousel: jest.fn(() => null)
 }))
 
-describe('Onboarding', () => {
+describe('News', () => {
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
   })
 
   it('renders without errors', () => {
-    const objResponse = {
-      user: user
-    }
-
-    jest.spyOn(useAuth, 'useAuth').mockImplementation(() => objResponse as any)
-
-    render(<Onboarding />)
+    render(<News />)
   })
 
   it('renders components correctly', () => {
-    render(<Onboarding />)
+    render(<News />)
 
-    expect(Reports).toHaveBeenCalled()
     expect(TopIssuers).toHaveBeenCalled()
     expect(TopCorporates).toHaveBeenCalled()
     expect(BannersCarousel).toHaveBeenCalled()
-    expect(News).toHaveBeenCalled()
-  })
-
-  it('renders correct user name', () => {
-    const objResponse = {
-      user: user
-    }
-
-    jest.spyOn(useAuth, 'useAuth').mockImplementation(() => objResponse as any)
-    const { getByText } = render(<Onboarding />)
-
-    expect(getByText(`Welcome, ${user.name}`)).toBeTruthy()
+    expect(NewsComponent).toHaveBeenCalled()
   })
 })

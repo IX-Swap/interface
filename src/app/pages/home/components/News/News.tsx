@@ -23,7 +23,7 @@ export const News = () => {
   return (
     <>
       <Grid container alignItems={'center'}>
-        <Typography variant='h4'>News</Typography>
+        <Typography variant='h2'>News</Typography>
         <Typography variant='body2' className={classes.text}>
           In Partnership With
         </Typography>
