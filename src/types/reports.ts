@@ -15,18 +15,20 @@ export interface AccountInfo {
   date: string
 }
 
-export interface OpenPositions {
+export interface Pair {
+  _id: string
+  listing: string
+  name: string
+  quote: string
+  createdAt: string
+  updatedAt: string
+  __v: 0
+}
+
+export interface OpenPositionItem {
   totalFilled: number
   _id: string
-  pair: {
-    _id: string
-    listing: string
-    name: string
-    quote: string
-    createdAt: string
-    updatedAt: string
-    __v: 0
-  }
+  pair: Pair
   side: string
   price: number
   amount: number
@@ -53,7 +55,7 @@ export interface CashReports {
 }
 
 export interface ActivitySummary {
-  openPositions: OpenPositions
+  openPositions: OpenPositionItem[]
   openPositionsTotal: OpenPositionsTotal
   cashReports: CashReports
 }

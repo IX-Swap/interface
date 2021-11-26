@@ -57,6 +57,19 @@ export const formatDateAndTime = (s?: string, seconds = false): string => {
     : s
 }
 
+export const formatReportsDateAndTime = (
+  s?: string,
+  seconds = false
+): string => {
+  if (s === undefined) {
+    return '-'
+  }
+
+  return s.length > 0
+    ? format(new Date(s), `yyyy-MM-dd, hh:mm${seconds ? ':ss' : ''} a`)
+    : s
+}
+
 export const formatTime = (s?: string): string => {
   if (s === undefined) {
     return ''

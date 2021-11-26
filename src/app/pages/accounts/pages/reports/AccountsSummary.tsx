@@ -6,10 +6,21 @@ import { ReportsInfo } from 'app/pages/accounts/pages/reports/components/Reports
 import { Actions } from './components/Actions/Actions'
 import { ReportsAccordion } from 'app/pages/accounts/pages/reports/components/ReportsAccordion/ReportsAccordion'
 import { useGetActivitySummary } from 'app/pages/accounts/hooks/useGetActivitySummary'
+import { OpenPositionTable } from 'app/pages/accounts/pages/reports/components/OpenPositionTable/OpenPositionTable'
+import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 
 export const AccountsSummary: React.FC = () => {
   const { data, isLoading } = useGetActivitySummary()
-  console.log(data, isLoading)
+
+  if (isLoading) {
+    return <LoadingIndicator />
+  }
+
+  if (data === undefined) {
+    return null
+  }
+
+  const { openPositions, openPositionsTotal } = data
 
   return (
     <Grid container direction={'column'}>
@@ -26,7 +37,10 @@ export const AccountsSummary: React.FC = () => {
         <VSpacer size={'medium'} />
 
         <ReportsAccordion summary={'Open Positions'}>
-          <div>Open Positions</div>
+          <OpenPositionTable
+            openPositions={openPositions}
+            openPositionsTotal={openPositionsTotal}
+          />
         </ReportsAccordion>
 
         <ReportsAccordion summary={'Cash Report'}>
