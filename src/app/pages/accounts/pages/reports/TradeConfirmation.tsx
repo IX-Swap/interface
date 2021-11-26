@@ -10,7 +10,7 @@ import { TradesTable } from 'app/pages/accounts/pages/reports/components/TradesT
 
 export const TradeConfirmation: React.FC = () => {
   const { data, isLoading } = useExchangeFills()
-  console.log(data, isLoading)
+
   if (isLoading) {
     return <LoadingIndicator />
   }

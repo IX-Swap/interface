@@ -22,16 +22,5 @@ export const useStyles = makeStyles(theme => ({
   },
   row: {
     backgroundColor: '#F7F7F7'
-  },
-  lastRow: {
-    backgroundColor: '#E7E7E7',
-    '& > th': {
-      fontSize: 14,
-      fontWeight: 600
-    },
-    '& > td': {
-      fontSize: 14,
-      fontWeight: 600
-    }
   }
 }))
