@@ -118,7 +118,15 @@ class UserForms {
       this.page
     )
     await this.updateData()
-    return [corporateName, regNumber, city, state, directorName]
+    await click(kyc.buttons.SUBMIT, this.page)
+    const taxNumber = await clearAndTypeText(
+      kyc.field.TAX_RESIDENT_IDENTIFICATION,
+      'S' + string,
+      this.page
+    )
+    await this.updateData()
+
+    return [corporateName, regNumber, city, state, directorName, taxNumber]
   }
   checkThatTheChangesSaved = async (fields: Array<[]>) => {
     await click(kyc.CREATE_IDENTITY_SECTION, this.page)
@@ -212,7 +220,7 @@ class UserForms {
     await click(kyc.buttons.OKAY, this.page)
 
     await uploadFiles(this.page, kyc.field.PHOTO, text.docs.pathToFile)
-    await typeText(kyc.field.MIDDLENAME, 'middle', this.page)
+    await typeText(kyc.field.MIDDLENAME, 'Middle', this.page)
     await typeText(kyc.field.DATA, '12/11/1990', this.page)
     await clearAndTypeText(kyc.field.PHONE_NUMBER, '13022462220', this.page)
     await click(kyc.field.CITIZENSHIP, this.page)

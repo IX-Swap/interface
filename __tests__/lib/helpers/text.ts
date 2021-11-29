@@ -13,6 +13,6 @@ export const text = {
   notification: {
     resetPassword: 'Password reset has been successful',
     submitIdentity: 'Thanks For Submitting Your Identity!',
-    custodyAddress: 'You have been assigned with the withdrawal address'
+    custodyAddress: 'You have been assigned with the blockchain address'
   }
 }

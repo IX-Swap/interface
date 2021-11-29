@@ -46,12 +46,7 @@ async function uploadFiles(page, element, file, resp = 'yes') {
       upload.dispatchEvent(new Event('change', { bubbles: true }))
     )
     if (resp === 'yes') {
-      await page.waitForResponse(response => {
-        return (
-          response.url() === `https://api.staging.mozork.com/dataroom` &&
-          response.status() === 200
-        )
-      })
+      await waitForResponseInclude(page, '/dataroom')
     }
   }
   return { inputsFile }
