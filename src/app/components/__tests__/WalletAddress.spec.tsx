@@ -23,12 +23,6 @@ describe('WalletAddress', () => {
     render(<WalletAddress {...props} />)
   })
 
-  it('renders truncated value', () => {
-    const { container } = render(<WalletAddress {...props} />)
-
-    expect(container).toHaveTextContent('1234...7890')
-  })
-
   it('renders AppRouterLink if link is true', () => {
     render(<WalletAddress {...props} link />)
 
