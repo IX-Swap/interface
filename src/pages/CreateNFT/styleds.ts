@@ -1,6 +1,6 @@
+import { AlertTriangle, BarChart2, List, Star, Unlock } from 'react-feather'
 import { Box } from 'rebass'
 import styled, { css } from 'styled-components'
-import { List, Star, BarChart2 } from 'react-feather'
 
 export const Container = styled(Box)`
   height: fit-content;
@@ -29,5 +29,11 @@ export const StyledStarIcon = styled(Star)`
   ${TraitsIcon}
 `
 export const StyledBarChart = styled(BarChart2)`
+  ${TraitsIcon}
+`
+export const StyledUnlock = styled(Unlock)`
+  ${TraitsIcon}
+`
+export const StyledTriangle = styled(AlertTriangle)`
   ${TraitsIcon}
 `

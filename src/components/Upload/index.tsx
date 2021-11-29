@@ -3,11 +3,12 @@ import { useDropzone, FileWithPath } from 'react-dropzone'
 import { ImageContainer, PreviewParent, StyledClose, StyledLogo } from './styleds'
 import { SvgIconWrapper } from 'theme'
 import { getfileType } from './utils'
-import { FileTypes } from './types'
+import { AcceptFiles, FileTypes } from './types'
 
 interface Props {
   onDrop: (file: any) => void
   file: FileWithPath | null
+  accept?: AcceptFiles
 }
 const Preview = ({
   file,
@@ -42,7 +43,7 @@ const Preview = ({
   )
 }
 
-export default function Upload({ onDrop, file }: Props) {
+export default function Upload({ onDrop, file, accept = AcceptFiles.ALL }: Props) {
   const [filePath, setFilePath] = useState<string>('')
   const onDropInput = useCallback(
     (acceptedFiles) => {
@@ -67,9 +68,8 @@ export default function Upload({ onDrop, file }: Props) {
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: onDropInput,
-    accept: 'image/*,video/*,audio/*,webgl/*,.glb,.gltf',
+    accept,
   })
-  console.log({ file, filePath })
   return (
     <div {...getRootProps()}>
       <input {...getInputProps()} multiple={false} />

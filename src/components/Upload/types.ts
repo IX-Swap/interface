@@ -11,3 +11,8 @@ export const commonFileTypes: Array<FileTypes | string | undefined> = [
   FileTypes.VIDEO,
   FileTypes.AUDIO,
 ]
+
+export enum AcceptFiles {
+  IMAGE = 'image/*',
+  ALL = 'image/*,video/*,audio/*,webgl/*,.glb,.gltf',
+}

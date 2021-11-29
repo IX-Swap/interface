@@ -1,10 +1,10 @@
+import { ButtonPlus } from 'components/Button'
 import Column from 'components/Column'
-import React, { useMemo, useCallback } from 'react'
-import { traitsSubtitle, traitsTitle, TraitType } from './types'
-import { List, Type } from 'react-feather'
-import { StyledBarChart, StyledListIcon, StyledStarIcon } from './styleds'
 import { RowBetween, RowStart } from 'components/Row'
+import React, { useCallback } from 'react'
 import { TYPE } from 'theme'
+import { StyledBarChart, StyledListIcon, StyledStarIcon } from './styleds'
+import { traitsSubtitle, traitsTitle, TraitType } from './types'
 
 export const TraitsPanel = ({ type }: { type: TraitType }) => {
   const getIcon = useCallback(() => {
@@ -28,6 +28,12 @@ export const TraitsPanel = ({ type }: { type: TraitType }) => {
             <TYPE.descriptionThin>{traitsSubtitle[type]}</TYPE.descriptionThin>
           </Column>
         </RowStart>
+        <ButtonPlus
+          width="60px"
+          onClick={() => {
+            console.log('test')
+          }}
+        />
       </RowBetween>
     </Column>
   )

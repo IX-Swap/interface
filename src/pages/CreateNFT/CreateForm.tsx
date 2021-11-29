@@ -3,13 +3,20 @@ import { Label } from '@rebass/forms'
 import { ButtonGradient } from 'components/Button'
 import { ContainerRow, Input, InputContainer, InputPanel, Textarea } from 'components/Input'
 import Upload from 'components/Upload'
+import { AcceptFiles, FileTypes } from 'components/Upload/types'
+import { getfileType } from 'components/Upload/utils'
+import { FileWithPath } from 'file-selector'
 import React, { useState } from 'react'
 import { Box, Flex } from 'rebass'
+import { KeyValues, pinFileToIPFS } from 'services/pinataService'
 import { ExternalLink, TYPE } from 'theme'
+import { NSFWRadio } from './NSFWRadio'
 import { Traits } from './Traits'
 import { TraitType } from './types'
+
 export const CreateForm = () => {
-  const [file, setFile] = useState(null)
+  const [file, setFile] = useState<FileWithPath | null>(null)
+  const [preview, setPreview] = useState<FileWithPath | null>(null)
   const [name, setName] = useState('')
   const [link, setLink] = useState('')
   const [description, setDescription] = useState('')
@@ -18,28 +25,65 @@ export const CreateForm = () => {
     setFile(file)
   }
 
+  const onSubmit = async (e: any) => {
+    e.preventDefault()
+    if (!file || !name) {
+      return
+    }
+    const keyValues: KeyValues = {}
+    if (description) {
+      keyValues.description = description
+    }
+    if (link) {
+      keyValues.link = link
+    }
+    try {
+      const result = await pinFileToIPFS({ file, name, keyValues })
+      console.log(result)
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
   return (
-    <Box as="form" onSubmit={(e) => e.preventDefault()} py={3}>
+    <Box as="form" onSubmit={(e: any) => onSubmit(e)} py={3}>
       <Flex mx={-2} mb={4}>
         <Box width={1} px={2}>
-          <Label htmlFor="file" flexDirection="column" mb={1}>
+          <Label htmlFor="file" flexDirection="column" mb={3}>
             <Box display="flex">
-              <TYPE.body>Image, Video, Audio, or 3D Model.</TYPE.body>
+              <TYPE.body fontWeight={600}>Image, Video, Audio, or 3D Model.</TYPE.body>
               <TYPE.error error>*</TYPE.error>
             </Box>
-            <TYPE.descriptionThin>
+            <TYPE.descriptionThin fontSize={13}>
               File types supported: JPG, PNG, GIF, SVG, MP4, WEBM, MP3, WAV, OGG, GLB, GLTF. Max size: 100 MB
             </TYPE.descriptionThin>
           </Label>
           <Upload onDrop={onDrop} file={file} />
         </Box>
       </Flex>
+      {file && getfileType(file) !== FileTypes.IMAGE && (
+        <Flex mx={-2} mb={4}>
+          <Box width={1} px={2}>
+            <Label htmlFor="preview" flexDirection="column" mb={3}>
+              <Box display="flex">
+                <TYPE.body fontWeight={600}>Preview Image</TYPE.body>
+                <TYPE.error error>*</TYPE.error>
+              </Box>
+              <TYPE.descriptionThin fontSize={13}>
+                Because you’ve included multimedia, you’ll need to provide an image (PNG, JPG, or GIF) for the card
+                display of your item.
+              </TYPE.descriptionThin>
+            </Label>
+            <Upload onDrop={(previewFile) => setPreview(previewFile)} file={preview} accept={AcceptFiles.IMAGE} />
+          </Box>
+        </Flex>
+      )}
       <Flex mx={-2} mb={4}>
         <Box width={1} px={2}>
-          <Label htmlFor="name" flexDirection="column" mb={2}>
+          <Label htmlFor="name" flexDirection="column" mb={3}>
             <Box mb={1}>
               <Box display="flex">
-                <TYPE.body>
+                <TYPE.body fontWeight={600}>
                   <Trans>Name</Trans>
                 </TYPE.body>
                 <TYPE.error error>*</TYPE.error>
@@ -70,13 +114,13 @@ export const CreateForm = () => {
       </Flex>
       <Flex mx={-2} mb={4}>
         <Box width={1} px={2}>
-          <Label htmlFor="link" flexDirection="column" mb={2}>
+          <Label htmlFor="link" flexDirection="column" mb={3}>
             <Box mb={1}>
-              <TYPE.body>
+              <TYPE.body fontWeight={600}>
                 <Trans>External Link</Trans>
               </TYPE.body>
             </Box>
-            <TYPE.descriptionThin>
+            <TYPE.descriptionThin fontSize={13}>
               We will include a link to this URL on this item&apos;s detail page, so that users can click to learn more
               about it. You are welcome to link to your own webpage with more details.
             </TYPE.descriptionThin>
@@ -92,7 +136,7 @@ export const CreateForm = () => {
                   autoCapitalize="off"
                   spellCheck="false"
                   error={false}
-                  pattern="^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm"
+                  pattern=".*$"
                   value={link}
                   disabled={false}
                   onChange={(e) => setLink(e?.target?.value)}
@@ -105,13 +149,13 @@ export const CreateForm = () => {
       </Flex>
       <Flex mx={-2} mb={4}>
         <Box width={1} px={2}>
-          <Label htmlFor="description" flexDirection="column" mb={2}>
+          <Label htmlFor="description" flexDirection="column" mb={3}>
             <Box mb={1}>
-              <TYPE.body>
+              <TYPE.body fontWeight={600}>
                 <Trans>Description</Trans>
               </TYPE.body>
             </Box>
-            <TYPE.descriptionThin>
+            <TYPE.descriptionThin fontSize={13}>
               The description will be included on the item&apos;s detail page underneath its image.{' '}
               <ExternalLink href={'https://www.markdownguide.org/cheat-sheet/'} style={{ fontWeight: 600 }}>
                 Markdown
@@ -134,6 +178,9 @@ export const CreateForm = () => {
       </Flex>
       <Flex mx={-2} mb={4}>
         <Traits type={TraitType.NUMBER} />
+      </Flex>
+      <Flex mx={-2} mb={4}>
+        <NSFWRadio />
       </Flex>
       <Flex mx={-2} flexWrap="wrap">
         <Box px={2} mr="auto">
