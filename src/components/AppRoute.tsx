@@ -45,7 +45,7 @@ export const AppRoute = memo((props: AppRouteProps) => {
       !path.startsWith(AppPath.identity)
     ) {
       showEnable2FADialog()
-      return <Redirect to={AppPath.educationCentre} />
+      return <Redirect to={AppPath.identity} />
     }
   }
 

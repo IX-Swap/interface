@@ -1,5 +1,4 @@
 import * as useOnboardingDialog from 'app/components/OnboardingDialog/hooks/useOnboardingDialog'
-import { HomeRoute } from 'app/pages/educationCentre/router/config'
 import { AppRoute } from 'components/AppRoute'
 import { history } from 'config/history'
 import * as useCachedUser from 'hooks/auth/useCachedUser'
@@ -44,7 +43,7 @@ describe('AppRoute', () => {
       .mockImplementation(() => undefined as any)
 
     render(
-      <AppRoute path={HomeRoute.landing}>
+      <AppRoute path={AppPath.identity}>
         <div>App</div>
       </AppRoute>
     )
@@ -89,6 +88,6 @@ describe('AppRoute', () => {
       </AppRoute>
     )
 
-    expect(history.location.pathname).toBe(AppPath.home)
+    expect(history.location.pathname).toBe(AppPath.identity)
   })
 })

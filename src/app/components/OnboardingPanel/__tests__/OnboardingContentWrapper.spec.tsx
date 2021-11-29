@@ -16,7 +16,7 @@ jest.mock('auth/components/LoadingFullScreen', () => ({
 
 describe('ContentWrapper', () => {
   beforeEach(() => {
-    history.push('/app/educationCentre')
+    history.push('/app/settings')
   })
 
   afterEach(async () => {

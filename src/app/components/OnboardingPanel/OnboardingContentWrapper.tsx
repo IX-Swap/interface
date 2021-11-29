@@ -49,6 +49,7 @@ export const OnboardingContentWrapper = ({
     return <>{children}</>
   }
   const pathnameBase = pathname.split('/').slice(0, 3).join('/')
+  console.log('pathnameBase', pathnameBase)
 
   if (!isIdentitiesLoaded) {
     return <LoadingFullScreen />

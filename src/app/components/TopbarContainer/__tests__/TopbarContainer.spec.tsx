@@ -4,10 +4,10 @@ import * as acl from 'helpers/acl'
 import { AccountsRoute } from 'app/pages/accounts/router/config'
 import { InvestRoute } from 'app/pages/invest/router/config'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
-import { HomeRoute } from 'app/pages/educationCentre/router/config'
 import { AuthorizerRoute } from 'app/pages/authorizer/router/config'
 import { TopbarContainer } from 'app/components/TopbarContainer/TopbarContainer'
 import { TopbarLinkContainer } from 'app/components/TopbarContainer/components/TopbarLinkContainer'
+import { AppRoute } from 'app/router/config'
 
 jest.mock('assets/icons/navigation/invest.svg', () => ({
   ReactComponent: jest.fn(() => null)
@@ -51,14 +51,6 @@ describe('Topbar', () => {
     expect(TopbarLinkContainer).toHaveBeenNthCalledWith(
       1,
       expect.objectContaining({
-        label: 'Education Centre',
-        link: HomeRoute.landing
-      }),
-      {}
-    )
-    expect(TopbarLinkContainer).toHaveBeenNthCalledWith(
-      2,
-      expect.objectContaining({
         label: 'Accounts',
         link: AccountsRoute.landing,
         disabled: true
@@ -66,10 +58,18 @@ describe('Topbar', () => {
       {}
     )
     expect(TopbarLinkContainer).toHaveBeenNthCalledWith(
-      3,
+      2,
       expect.objectContaining({
         label: 'Invest',
         link: InvestRoute.landing
+      }),
+      {}
+    )
+    expect(TopbarLinkContainer).toHaveBeenNthCalledWith(
+      3,
+      expect.objectContaining({
+        label: 'Education Centre',
+        link: AppRoute.educationCentre
       }),
       {}
     )
@@ -83,14 +83,6 @@ describe('Topbar', () => {
     expect(TopbarLinkContainer).toHaveBeenNthCalledWith(
       1,
       expect.objectContaining({
-        label: 'Education Centre',
-        link: HomeRoute.landing
-      }),
-      {}
-    )
-    expect(TopbarLinkContainer).toHaveBeenNthCalledWith(
-      2,
-      expect.objectContaining({
         label: 'Accounts',
         link: AccountsRoute.landing,
         disabled: true
@@ -98,7 +90,7 @@ describe('Topbar', () => {
       {}
     )
     expect(TopbarLinkContainer).toHaveBeenNthCalledWith(
-      3,
+      2,
       expect.objectContaining({
         label: 'Invest',
         link: InvestRoute.landing
@@ -106,10 +98,18 @@ describe('Topbar', () => {
       {}
     )
     expect(TopbarLinkContainer).toHaveBeenNthCalledWith(
-      4,
+      3,
       expect.objectContaining({
         label: 'Issuance',
         link: IssuanceRoute.list
+      }),
+      {}
+    )
+    expect(TopbarLinkContainer).toHaveBeenNthCalledWith(
+      4,
+      expect.objectContaining({
+        label: 'Education Centre',
+        link: AppRoute.educationCentre
       }),
       {}
     )
@@ -124,14 +124,6 @@ describe('Topbar', () => {
     expect(TopbarLinkContainer).toHaveBeenNthCalledWith(
       1,
       expect.objectContaining({
-        label: 'Education Centre',
-        link: HomeRoute.landing
-      }),
-      {}
-    )
-    expect(TopbarLinkContainer).toHaveBeenNthCalledWith(
-      2,
-      expect.objectContaining({
         label: 'Accounts',
         link: AccountsRoute.landing,
         disabled: true
@@ -139,10 +131,18 @@ describe('Topbar', () => {
       {}
     )
     expect(TopbarLinkContainer).toHaveBeenNthCalledWith(
-      3,
+      2,
       expect.objectContaining({
         label: 'Invest',
         link: InvestRoute.landing
+      }),
+      {}
+    )
+    expect(TopbarLinkContainer).toHaveBeenNthCalledWith(
+      3,
+      expect.objectContaining({
+        label: 'Education Centre',
+        link: AppRoute.educationCentre
       }),
       {}
     )
@@ -165,14 +165,6 @@ describe('Topbar', () => {
     expect(TopbarLinkContainer).toHaveBeenNthCalledWith(
       1,
       expect.objectContaining({
-        label: 'Education Centre',
-        link: HomeRoute.landing
-      }),
-      {}
-    )
-    expect(TopbarLinkContainer).toHaveBeenNthCalledWith(
-      2,
-      expect.objectContaining({
         label: 'Accounts',
         link: AccountsRoute.landing,
         disabled: true
@@ -180,7 +172,7 @@ describe('Topbar', () => {
       {}
     )
     expect(TopbarLinkContainer).toHaveBeenNthCalledWith(
-      3,
+      2,
       expect.objectContaining({
         label: 'Invest',
         link: InvestRoute.landing
@@ -188,10 +180,18 @@ describe('Topbar', () => {
       {}
     )
     expect(TopbarLinkContainer).toHaveBeenNthCalledWith(
-      4,
+      3,
       expect.objectContaining({
         label: 'Funds Management',
         link: IssuanceRoute.insight
+      }),
+      {}
+    )
+    expect(TopbarLinkContainer).toHaveBeenNthCalledWith(
+      4,
+      expect.objectContaining({
+        label: 'Education Centre',
+        link: AppRoute.educationCentre
       }),
       {}
     )

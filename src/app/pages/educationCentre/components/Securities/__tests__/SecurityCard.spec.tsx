@@ -2,7 +2,7 @@ import {
   Security,
   SecurityCard
 } from 'app/pages/educationCentre/components/Securities/SecurityCard'
-import { HomeRoute } from 'app/pages/educationCentre/router/config'
+import { EducationCentreRoute } from 'app/pages/educationCentre/router/config'
 import { stringTruncate } from 'config/utils'
 import React from 'react'
 import { generatePath } from 'react-router-dom'
@@ -61,7 +61,7 @@ describe('SecurityCard', () => {
 
     expect(link).toHaveAttribute(
       'href',
-      generatePath(HomeRoute.security, {
+      generatePath(EducationCentreRoute.security, {
         ticker: 'REALTOKEN-S-3432-HARDING-ST-DETROIT-MI'
       })
     )
