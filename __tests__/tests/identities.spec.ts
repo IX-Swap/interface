@@ -147,10 +147,9 @@ test.describe('Edit identities form', () => {
   test.afterEach(async ({ page }) => {
     await page.close()
   })
-  test.only('The "Corporate" KYC should be editable', async ({ kycForms }) => {
+  test('The "Corporate" KYC should be editable', async ({ kycForms }) => {
     await kycForms.followToViewIdentity()
     const fields = await kycForms.editCorporateInformation()
-
     await kycForms.checkThatTheChangesSaved(fields)
   })
 })
