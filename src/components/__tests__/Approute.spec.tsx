@@ -1,5 +1,5 @@
 import * as useOnboardingDialog from 'app/components/OnboardingDialog/hooks/useOnboardingDialog'
-import { HomeRoute } from 'app/pages/home/router/config'
+import { HomeRoute } from 'app/pages/educationCentre/router/config'
 import { AppRoute } from 'components/AppRoute'
 import { history } from 'config/history'
 import * as useCachedUser from 'hooks/auth/useCachedUser'
@@ -70,7 +70,7 @@ describe('AppRoute', () => {
     expect(history.location.pathname).toBe(AppPath.identity)
   })
 
-  it('redirects to home page when is2FAEnabled is false', () => {
+  it('redirects to educationCentre page when is2FAEnabled is false', () => {
     jest
       .spyOn(useCachedUser, 'useCachedUser')
       .mockImplementation(() => user as any)

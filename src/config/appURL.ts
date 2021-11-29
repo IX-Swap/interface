@@ -41,7 +41,6 @@ export const urlService = {
   market: `${AppService.Market}`,
   settings: 'settings',
   admin: 'admin',
-  home: 'home',
   notifications: 'notifications',
   OTCMarket: `${AppService.OTCMarket}`
 }

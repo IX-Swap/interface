@@ -1,6 +1,6 @@
 import React from 'react'
 import { Box, Grid } from '@material-ui/core'
-import { AccessReports as AccessReportsTable } from 'app/pages/home/components/AccessReports'
+import { AccessReports as AccessReportsTable } from 'app/pages/educationCentre/components/AccessReports'
 import { UploadAccessReport } from 'app/pages/admin/components/UploadAccessReport'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 

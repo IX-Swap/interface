@@ -28,7 +28,7 @@ export const AppRoute = memo((props: AppRouteProps) => {
   } else {
     if (
       !isAccredited &&
-      !path.startsWith(AppPath.home) &&
+      !path.startsWith(AppPath.educationCentre) &&
       !path.startsWith(AppPath.identity) &&
       !path.startsWith(AppPath.security) &&
       !path.startsWith(AppPath.notifications)
@@ -40,12 +40,12 @@ export const AppRoute = memo((props: AppRouteProps) => {
     if (
       !is2FAEnabled &&
       !path.startsWith(AppPath.security) &&
-      !path.startsWith(AppPath.home) &&
+      !path.startsWith(AppPath.educationCentre) &&
       !path.startsWith(AppPath.notifications) &&
       !path.startsWith(AppPath.identity)
     ) {
       showEnable2FADialog()
-      return <Redirect to={AppPath.home} />
+      return <Redirect to={AppPath.educationCentre} />
     }
   }
 

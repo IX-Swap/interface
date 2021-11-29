@@ -14,7 +14,7 @@ import { SwipeableDrawer } from '@material-ui/core'
 import { useAppActions, useAppState } from 'app/hooks/useAppState'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { InvestRoute } from 'app/pages/invest/router/config'
-import { HomeRoute } from 'app/pages/home/router/config'
+import { EducationCentreRoute } from 'app/pages/educationCentre/router/config'
 import { AuthorizerRoute } from 'app/pages/authorizer/router/config'
 import { OTCMarketRoute } from 'app/pages/exchange/router/config'
 
@@ -29,8 +29,8 @@ export const SidebarContainer = () => {
   const isSuperUser = isAuthorizer || isAdmin
   const links = [
     {
-      label: 'Home',
-      link: HomeRoute.landing,
+      label: 'Education Centre',
+      link: EducationCentreRoute.reports,
       icon: HomeIcon
     },
     {

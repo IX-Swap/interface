@@ -8,8 +8,8 @@ import { useLocation } from 'react-router-dom'
 import { useOnboardingJourneys } from 'app/components/OnboardingPanel/hooks/useOnboardingJourneys'
 import { IdentityRoute } from 'app/pages/identity/router/config'
 import { SecurityRoute } from 'app/pages/security/router/config'
-import { HomeRoute } from 'app/pages/home/router/config'
 import { LoadingFullScreen } from 'auth/components/LoadingFullScreen'
+import { AppRoute } from 'app/router/config'
 
 export interface OnboardingContentWrapperProps {
   children: React.ReactNode
@@ -37,7 +37,7 @@ export const OnboardingContentWrapper = ({
 
   const onboardingBasePaths = [
     SecurityRoute.landing,
-    HomeRoute.landing,
+    AppRoute.educationCentre,
     IdentityRoute.list
   ]
 

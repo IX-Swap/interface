@@ -4,7 +4,7 @@ import * as acl from 'helpers/acl'
 import { AccountsRoute } from 'app/pages/accounts/router/config'
 import { InvestRoute } from 'app/pages/invest/router/config'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
-import { HomeRoute } from 'app/pages/home/router/config'
+import { HomeRoute } from 'app/pages/educationCentre/router/config'
 import { AuthorizerRoute } from 'app/pages/authorizer/router/config'
 import { TopbarContainer } from 'app/components/TopbarContainer/TopbarContainer'
 import { TopbarLinkContainer } from 'app/components/TopbarContainer/components/TopbarLinkContainer'
@@ -51,7 +51,7 @@ describe('Topbar', () => {
     expect(TopbarLinkContainer).toHaveBeenNthCalledWith(
       1,
       expect.objectContaining({
-        label: 'Home',
+        label: 'Education Centre',
         link: HomeRoute.landing
       }),
       {}
@@ -83,7 +83,7 @@ describe('Topbar', () => {
     expect(TopbarLinkContainer).toHaveBeenNthCalledWith(
       1,
       expect.objectContaining({
-        label: 'Home',
+        label: 'Education Centre',
         link: HomeRoute.landing
       }),
       {}
@@ -124,7 +124,7 @@ describe('Topbar', () => {
     expect(TopbarLinkContainer).toHaveBeenNthCalledWith(
       1,
       expect.objectContaining({
-        label: 'Home',
+        label: 'Education Centre',
         link: HomeRoute.landing
       }),
       {}
@@ -165,7 +165,7 @@ describe('Topbar', () => {
     expect(TopbarLinkContainer).toHaveBeenNthCalledWith(
       1,
       expect.objectContaining({
-        label: 'Home',
+        label: 'Education Centre',
         link: HomeRoute.landing
       }),
       {}

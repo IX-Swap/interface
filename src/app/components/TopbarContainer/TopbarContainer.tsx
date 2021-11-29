@@ -14,7 +14,6 @@ import { ReactComponent as InvestIcon } from 'assets/icons/navigation/invest.svg
 import { ReactComponent as AccountsIcon } from 'assets/icons/navigation/account.svg'
 import { ReactComponent as IssuanceIcon } from 'assets/icons/navigation/issuance.svg'
 import { ReactComponent as AuthorizerIcon } from 'assets/icons/navigation/authorizer.svg'
-import { HomeOutlined as HomeIcon } from '@material-ui/icons'
 import { Grid } from '@material-ui/core'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { InvestRoute } from 'app/pages/invest/router/config'
@@ -28,7 +27,8 @@ import {
 } from 'app/pages/exchange/router/config'
 import { TopbarLinkContainer } from 'app/components/TopbarContainer/components/TopbarLinkContainer'
 import { TopbarLinkDropdown } from 'app/components/TopbarContainer/components/TopbarLinkDropdown'
-import { HomeRoute } from 'app/pages/home/router/config'
+import { EducationCentreRoute } from 'app/pages/educationCentre/router/config'
+import { AppRoute } from 'app/router/config'
 
 export const TopbarContainer = () => {
   const isAuthorizer = useIsAuthorizer()
@@ -67,8 +67,7 @@ export const TopbarContainer = () => {
 
   links.push({
     label: 'Education Centre',
-    link: HomeRoute.landing,
-    icon: HomeIcon
+    link: AppRoute.educationCentre
   } as any)
 
   if (isSuperUser) {
@@ -82,15 +81,15 @@ export const TopbarContainer = () => {
   const educationCentreLinks = [
     {
       label: 'News',
-      path: HomeRoute.news
+      path: EducationCentreRoute.news
     },
     {
       label: 'Reports',
-      path: HomeRoute.landing
+      path: EducationCentreRoute.reports
     },
     {
       label: 'Research Terminal',
-      path: HomeRoute.securitiesMarkets
+      path: EducationCentreRoute.securitiesMarkets
     }
   ]
 
