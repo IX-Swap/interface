@@ -3,7 +3,7 @@
 import { PlaywrightTestConfig } from '@playwright/test'
 
 const config: PlaywrightTestConfig = {
-  workers: 1,
+  workers: 6,
   timeout: 180000,
   updateSnapshots: 'missing',
   reporter: [['allure-playwright'], ['list']],

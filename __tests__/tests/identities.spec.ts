@@ -141,13 +141,30 @@ test.describe('Check identities form', () => {
 test.describe('Edit identities form', () => {
   test.beforeEach(async ({ page, auth }) => {
     await navigate(baseCreds.URL, page)
-    await auth.loginWithout2fa(baseCreds.EDIT_CORPORATE, baseCreds.PASSWORD)
   })
 
   test.afterEach(async ({ page }) => {
     await page.close()
   })
-  test('The "Corporate" KYC should be editable', async ({ kycForms }) => {
+  test('The "Corporate" KYC should be editable', async ({ kycForms, auth }) => {
+    await auth.loginWithout2fa(baseCreds.EDIT_CORPORATE, baseCreds.PASSWORD)
+    await kycForms.followToViewIdentity()
+    const fields = await kycForms.editCorporateInformation()
+    await kycForms.checkThatTheChangesSaved(fields)
+  })
+
+  test('The "Individual" KYC should be editable', async ({
+    kycForms,
+    auth
+  }) => {
+    await auth.loginWithout2fa(baseCreds.EDIT_INDIVIDUAL, baseCreds.PASSWORD)
+    await kycForms.followToViewIdentity()
+    const fields = await kycForms.editIndividualInformation()
+    await kycForms.checkThatTheChangesSaved(fields)
+  })
+
+  test('The "Issuer" KYC should be editable', async ({ kycForms, auth }) => {
+    await auth.loginWithout2fa(baseCreds.EDIT_ISSUER, baseCreds.PASSWORD)
     await kycForms.followToViewIdentity()
     const fields = await kycForms.editCorporateInformation()
     await kycForms.checkThatTheChangesSaved(fields)

@@ -97,6 +97,9 @@ export const kyc = {
     ADDRESS_COUNTRY: '[id="address.country"]',
     CITY: 'input[name="address.city"]',
     MIDDLENAME: 'input[name="middleName"]',
+    FIRS_NAME: '[id="firstName"]',
+    LAST_NAME: '[id="lastName"]',
+
     NATIONAL: '[name="nationality"]',
     OCCUPATION: '[id="occupation"]',
     EMPLOYMENT_STATUS: '[id="employmentStatus"]',

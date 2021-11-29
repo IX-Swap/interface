@@ -84,7 +84,7 @@ class UserForms {
   }
   updateData = async () => {
     await click('text="Update"', this.page)
-    await waitForRequestInclude(this.page, 'identity/corporates/', 'GET')
+    await waitForRequestInclude(this.page, 'identity/', 'GET')
   }
   editCorporateInformation = async () => {
     const string = randomString()
@@ -271,6 +271,48 @@ class UserForms {
       await uploadFiles(this.page, item, text.docs.pathToFile)
     }
     await shouldNotExist(kyc.NOTIFICATION, this.page)
+  }
+
+  editIndividualInformation = async () => {
+    const string = randomString()
+    await click(kyc.buttons.EDIT, this.page)
+    const corporateName = await clearAndTypeText(
+      kyc.field.FIRS_NAME,
+      'Name' + string,
+      this.page
+    )
+    const regNumber = await clearAndTypeText(
+      kyc.field.MIDDLENAME,
+      'Middle' + string,
+      this.page
+    )
+    const city = await clearAndTypeText(
+      kyc.field.CITY,
+      'City' + string,
+      this.page
+    )
+    const state = await clearAndTypeText(
+      kyc.field.ADDRESS,
+      'Kyiv' + string,
+      this.page
+    )
+    await this.updateData()
+    await click(kyc.buttons.SUBMIT, this.page)
+
+    const occupationName = await clearAndTypeText(
+      kyc.field.OCCUPATION,
+      'Occupation' + string,
+      this.page
+    )
+    const employer = await clearAndTypeText(
+      kyc.field.EMPLOYER,
+      'Employer' + string,
+      this.page
+    )
+
+    await this.updateData()
+
+    return [corporateName, regNumber, city, state, occupationName, employer]
   }
 }
 export { UserForms }

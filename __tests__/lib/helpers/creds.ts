@@ -17,7 +17,9 @@ export const baseCreds = {
   VIEW_DSO_MORE_OPTIONS: 'qyle@mailinator.com',
   PASSWORD: 'Pa$$w0rd!qwe',
   PASSWORD_RESET: 'Pa$$w0rd!qwe1A',
-  EDIT_CORPORATE: 'corporateideintety@mailinator.com'
+  EDIT_CORPORATE: 'corporateideintety@mailinator.com',
+  EDIT_INDIVIDUAL: 'individual@mailinator.com',
+  EDIT_ISSUER: 'issuerinvest@mailinator.com'
 }
 // } else {
 //   baseCreds = {
