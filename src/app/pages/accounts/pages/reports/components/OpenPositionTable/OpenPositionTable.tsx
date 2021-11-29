@@ -18,19 +18,20 @@ export interface OpenPositionTableProps {
 }
 
 export const createRow = (
-  pairName: string,
+  pair: string,
   price: string | number,
-  currentValue: string | number
+  currentValue: string | number,
+  unrealizedPnl: string | number
 ) => {
   return {
-    pair: { name: pairName },
-    createdAt: '',
+    pair: pair,
+    date: '',
     amount: '',
     price,
     costValue: '',
     lastTradePrice: '',
     currentValue,
-    unrealizedPnl: ''
+    unrealizedPnl
   }
 }
 
@@ -52,12 +53,13 @@ export const OpenPositionTable = ({
   ]
 
   const rows = [
-    createRow('Tokens', '', ''),
+    createRow('Tokens', '', '', ''),
     ...openPositions,
     createRow(
       'Total',
       openPositionsTotal.totalCostPrice,
-      openPositionsTotal.totalCurrentValue
+      openPositionsTotal.totalCurrentValue,
+      openPositionsTotal.totalUnrealizedPnl
     )
   ]
 
@@ -90,14 +92,14 @@ export const OpenPositionTable = ({
         <TableBody>
           {rows.map((row, i) => (
             <TableRow
-              key={row.pair.name}
+              key={row.pair}
               className={getRowClassName(i, rows.length - 1)}
             >
               <TableCell component='th' scope='row' className={classes.column}>
-                {row.pair.name}
+                {row.pair}
               </TableCell>
               <TableCell align='right' className={classes.column}>
-                {formatReportsDateAndTime(row.createdAt)}
+                {formatReportsDateAndTime(row.date)}
               </TableCell>
               <TableCell align='right' className={classes.column}>
                 {row.amount}

@@ -26,23 +26,31 @@ export interface Pair {
 }
 
 export interface OpenPositionItem {
-  totalFilled: number
-  _id: string
-  pair: Pair
-  side: string
-  price: number
   amount: number
-  createdAt: string
+  average: number
+  costValue: number
+  currentValue: number
+  date: string
+  filled: number
+  filledPercent: number
+  lastTradePrice: number
+  name: string
+  pair: string
+  pairId: string
+  price: number
+  side: string
+  status: string
+  timeInForce: string
+  total: number
   type: string
   unrealizedPnl: number
-  costValue: number
-  lastTradePrice: number
-  currentValue: number
+  _id: string
 }
 
 export interface OpenPositionsTotal {
   totalCostPrice: number
   totalCurrentValue: number
+  totalUnrealizedPnl: number
 }
 
 export interface CashReports {
