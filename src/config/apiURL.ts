@@ -113,11 +113,14 @@ export const accountsURL = {
   },
   reports: {
     getAccountInfo: (userId: string) => `/accounts/account-info/${userId}`,
-    getActivitySummary: '/resources/financialReports/activitySummary',
-    getExchangeFills: (userId: string) => `/exchange/fills/list/${userId}`,
-    getFeesHistory: '/virtual-accounts/fees-history',
-    getDistributionHistory: (userId: string) =>
-      `/issuance/distribution-history/${userId}`
+    getActivitySummary: (userId: string) =>
+      `/resources/financialReports/activitySummary/${userId}`,
+    getTradeConfirmation: (userId: string) =>
+      `/resources/financialReports/tradeConfirmation/${userId}`,
+    getFeeAndCharges: (userId: string) =>
+      `resources/financialReports/feeAndCharges/${userId}`,
+    getDividends: (userId: string) =>
+      `/resources/financialReports/dividends/${userId}`
   }
 }
 

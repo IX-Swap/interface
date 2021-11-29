@@ -7,14 +7,14 @@ import {
 } from 'test-utils'
 import * as useAuthHook from 'hooks/auth/useAuth'
 import { user } from '__fixtures__/user'
-import { useExchangeFills } from 'app/pages/accounts/hooks/useExchangeFills'
-import { fakeExchangeFill } from '__fixtures__/reports'
+import { fakeFeeAndCharges } from '__fixtures__/reports'
 import { accountsURL } from 'config/apiURL'
 import { generateQueryResult } from '__fixtures__/useQuery'
+import { useFeeAndCharges } from 'app/pages/accounts/hooks/useFeeAndCharges'
 
-describe('useExchangeFills', () => {
+describe('useFeeAndCharges', () => {
   const sampleResponse = generateQueryResult({
-    data: [fakeExchangeFill]
+    data: fakeFeeAndCharges
   })
 
   beforeEach(() => {
@@ -34,14 +34,14 @@ describe('useExchangeFills', () => {
 
       await act(async () => {
         const { result } = renderHookWithServiceProvider(() => {
-          return useExchangeFills()
+          return useFeeAndCharges()
         })
 
         await waitFor(() => result.current.data)
 
         expect(result.current.data).toEqual(sampleResponse.data)
         expect(apiServiceMock.post).toHaveBeenCalledWith(
-          accountsURL.reports.getExchangeFills(user._id),
+          accountsURL.reports.getFeeAndCharges(user._id),
           {
             from: undefined,
             to: undefined

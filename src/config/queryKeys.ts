@@ -181,9 +181,9 @@ export const virtualAccountQueryKeys = {
 export const reportsQueryKeys = {
   getAccountInfo: 'get-account-info',
   getActivitySummary: 'get-activity-summary',
-  getExchangeFills: 'get-exchange-fills',
-  getFeesHistory: 'get-fees-history',
-  getDistributionHistory: 'get-distribution-history'
+  getTradeConfirmation: 'get-trade-confirmation',
+  getFeeAndCharges: 'get-fee-and-charges',
+  getDividends: 'get-dividends'
 }
 
 export const exchange = {

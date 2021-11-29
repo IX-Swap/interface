@@ -4,10 +4,10 @@ import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { VSpacer } from 'components/VSpacer'
 import { ReportsInfo } from 'app/pages/accounts/pages/reports/components/ReportsInfo/ReportsInfo'
 import { ReportsAccordion } from 'app/pages/accounts/pages/reports/components/ReportsAccordion/ReportsAccordion'
-import { useGetFeesHistory } from 'app/pages/accounts/hooks/useGetFeesHistory'
+import { useFeeAndCharges } from 'app/pages/accounts/hooks/useFeeAndCharges'
 
 export const AggregatedCostsAndCharges: React.FC = () => {
-  const { data, isLoading } = useGetFeesHistory()
+  const { data, isLoading } = useFeeAndCharges()
   console.log(data, isLoading)
 
   return (

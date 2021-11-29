@@ -11,7 +11,7 @@ export const fakeAccountInfo: AccountInfo = {
   date: '2021-11-23T11:01:14.920Z'
 }
 
-export const fakeActivitySummaryApiResponse = {
+export const fakeActivitySummary = {
   openPositions: [
     {
       totalFilled: 0,
@@ -98,4 +98,32 @@ export const fakeExchangeFill = {
   amount: 50,
   createdAt: '2021-10-26T09:31:18.696Z',
   id: '6177cae6a75869553bcdc07c'
+}
+
+export const fakeFeeAndCharges = {
+  usd: [],
+  totalUsd: 0,
+  sgd: [
+    {
+      _id: '61a42c39347c8f6c19d00cb8',
+      user: '60731869332485e38ae74ca1',
+      amount: 10,
+      description: 'Primary issuance fee',
+      currency: 'SGD',
+      createdAt: '2021-11-29T01:26:17.997Z',
+      updatedAt: '2021-11-29T01:26:17.997Z',
+      __v: 0
+    }
+  ],
+  totalSgd: 10
+}
+
+export const fakeDividend = {
+  _id: '618b3ce8d37a1612e25e323f',
+  currency: 'SGD',
+  createdAt: '2021-11-10T03:30:48.692Z',
+  dividendPerShare: 1,
+  numberOfToken: 1000,
+  totalAmount: 1000,
+  tokenSymbol: 'HEHEHI'
 }

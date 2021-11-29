@@ -2,27 +2,30 @@ import { accountsURL } from 'config/apiURL'
 import { reportsQueryKeys } from 'config/queryKeys'
 import { useServices } from 'hooks/useServices'
 import { useQuery } from 'react-query'
-import { ExchangeFill } from 'types/reports'
+import { ActivitySummary } from 'types/reports'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
+import { useAuth } from 'hooks/auth/useAuth'
+import { getIdFromObj } from 'helpers/strings'
 
-export const useGetFeesHistory = () => {
+export const useActivitySummary = () => {
+  const { user } = useAuth()
+  const userId = getIdFromObj(user)
   const { apiService } = useServices()
   const { getFilterValue } = useQueryFilter()
   const toDate = getFilterValue('toDate')
   const fromDate = getFilterValue('fromDate')
 
-  const getFeesHistory = async () => {
-    const uri = accountsURL.reports.getFeesHistory
-
-    return await apiService.post<ExchangeFill[]>(uri, {
+  const getActivitySummary = async () => {
+    const uri = accountsURL.reports.getActivitySummary(userId)
+    return await apiService.post<ActivitySummary>(uri, {
       from: fromDate,
       to: toDate
     })
   }
 
   const { data, ...rest } = useQuery(
-    [reportsQueryKeys.getFeesHistory],
-    getFeesHistory
+    [reportsQueryKeys.getActivitySummary, { userId }],
+    getActivitySummary
   )
 
   return {

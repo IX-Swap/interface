@@ -60,17 +60,9 @@ export interface ActivitySummary {
   cashReports: CashReports
 }
 
-export interface ExchangeFill {
+export interface TradeConfirmationItem {
   _id: string
-  pair: {
-    _id: string
-    listing: string
-    name: string
-    quote: string
-    createdAt: string
-    updatedAt: string
-    __v: number
-  }
+  pair: Pair
   side: string
   price: number
   amount: number

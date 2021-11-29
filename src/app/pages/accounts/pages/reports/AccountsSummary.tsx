@@ -5,12 +5,12 @@ import { VSpacer } from 'components/VSpacer'
 import { ReportsInfo } from 'app/pages/accounts/pages/reports/components/ReportsInfo/ReportsInfo'
 import { Actions } from './components/Actions/Actions'
 import { ReportsAccordion } from 'app/pages/accounts/pages/reports/components/ReportsAccordion/ReportsAccordion'
-import { useGetActivitySummary } from 'app/pages/accounts/hooks/useGetActivitySummary'
+import { useActivitySummary } from 'app/pages/accounts/hooks/useActivitySummary'
 import { OpenPositionTable } from 'app/pages/accounts/pages/reports/components/OpenPositionTable/OpenPositionTable'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 
 export const AccountsSummary: React.FC = () => {
-  const { data, isLoading } = useGetActivitySummary()
+  const { data, isLoading } = useActivitySummary()
 
   if (isLoading) {
     return <LoadingIndicator />

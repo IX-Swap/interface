@@ -4,12 +4,12 @@ import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { VSpacer } from 'components/VSpacer'
 import { ReportsInfo } from 'app/pages/accounts/pages/reports/components/ReportsInfo/ReportsInfo'
 import { ReportsAccordion } from 'app/pages/accounts/pages/reports/components/ReportsAccordion/ReportsAccordion'
-import { useExchangeFills } from 'app/pages/accounts/hooks/useExchangeFills'
+import { useTradeConfirmation } from 'app/pages/accounts/hooks/useTradeConfirmation'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 import { TradesTable } from 'app/pages/accounts/pages/reports/components/TradesTable/TradesTable'
 
 export const TradeConfirmation: React.FC = () => {
-  const { data, isLoading } = useExchangeFills()
+  const { data, isLoading } = useTradeConfirmation()
 
   if (isLoading) {
     return <LoadingIndicator />
