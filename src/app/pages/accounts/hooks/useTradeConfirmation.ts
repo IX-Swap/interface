@@ -24,7 +24,7 @@ export const useTradeConfirmation = () => {
   }
 
   const { data, ...rest } = useQuery(
-    [reportsQueryKeys.getTradeConfirmation, { userId }],
+    [reportsQueryKeys.getTradeConfirmation, { userId, fromDate, toDate }],
     getTradeConfirmation
   )
 

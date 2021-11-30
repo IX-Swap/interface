@@ -25,7 +25,7 @@ export const useFeeAndCharges = () => {
   }
 
   const { data, ...rest } = useQuery(
-    [reportsQueryKeys.getFeeAndCharges, { userId }],
+    [reportsQueryKeys.getFeeAndCharges, { userId, fromDate, toDate }],
     getFeeAndCharges
   )
 

@@ -24,7 +24,7 @@ export const useActivitySummary = () => {
   }
 
   const { data, ...rest } = useQuery(
-    [reportsQueryKeys.getActivitySummary, { userId }],
+    [reportsQueryKeys.getActivitySummary, { userId, fromDate, toDate }],
     getActivitySummary
   )
 

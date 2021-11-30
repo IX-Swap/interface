@@ -24,7 +24,7 @@ export const useDividends = () => {
   }
 
   const { data, ...rest } = useQuery(
-    [reportsQueryKeys.getDividends, { userId }],
+    [reportsQueryKeys.getDividends, { userId, fromDate, toDate }],
     getDividends
   )
 

@@ -22,24 +22,20 @@ export const ReportsAccordion = ({
 
   const { getFilterValue, updateFilter } = useQueryFilter()
   const expandedSectionsValues = getFilterValue('expandedSections') ?? ''
+  const hasExpanded = expandedSectionsValues?.includes(summary)
+
+  const handleChange = () =>
+    updateFilter(
+      'expandedSections',
+      hasExpanded
+        ? expandedSectionsValues?.replace(summary, '')
+        : expandedSectionsValues?.concat(summary)
+    )
 
   return (
     <Accordion
-      expanded={
-        expandedSectionsValues !== undefined &&
-        expandedSectionsValues?.includes(summary)
-      }
-      onChange={() =>
-        expandedSectionsValues?.includes(summary)
-          ? updateFilter(
-              'expandedSections',
-              expandedSectionsValues?.replace(summary, '')
-            )
-          : updateFilter(
-              'expandedSections',
-              expandedSectionsValues?.concat(summary)
-            )
-      }
+      expanded={expandedSectionsValues !== undefined && hasExpanded}
+      onChange={handleChange}
       classes={{ root: classes.root }}
     >
       <AccordionSummary
