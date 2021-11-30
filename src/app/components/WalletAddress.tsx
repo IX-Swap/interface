@@ -6,18 +6,19 @@ import { useSnackbar } from 'hooks/useSnackbar'
 import { AppRouterLink } from 'components/AppRouterLink'
 import { Network } from 'types/networks'
 import { getBlockchainUrl } from 'app/components/DSO/utils'
-import { NoOverflowText } from 'app/components/NoOverflowText'
 
 export interface WalletAddressProps {
   address: string
   link?: boolean
   network?: Network
+  long?: boolean
 }
 
 export const WalletAddress = ({
   address,
   network,
-  link = false
+  link = false,
+  long = false
 }: WalletAddressProps) => {
   const { showSnackbar } = useSnackbar()
   const handleCopy = () => {
@@ -27,14 +28,16 @@ export const WalletAddress = ({
 
   const addressUrl = getBlockchainUrl(address, network, 'address')
 
+  const textContent = long
+    ? address
+    : `${address.slice(0, 4)}...${address.slice(address.length - 4)}`
+
   if (address === '') {
     return null
   }
 
   return (
-    <span
-      style={{ display: 'inline-flex', alignItems: 'center', maxWidth: '100%' }}
-    >
+    <span style={{ display: 'inline-flex', alignItems: 'center' }}>
       {link ? (
         <AppRouterLink
           target='_blank'
@@ -42,10 +45,10 @@ export const WalletAddress = ({
           underline='always'
           color='primary'
         >
-          <NoOverflowText text={address} />
+          {textContent}
         </AppRouterLink>
       ) : (
-        <NoOverflowText text={address} />
+        textContent
       )}
       <Box px={0.5} />
       <IconButton
