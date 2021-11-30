@@ -5,6 +5,7 @@ import { ContainerRow, Input, InputContainer, InputPanel, Textarea } from 'compo
 import Upload from 'components/Upload'
 import { AcceptFiles, FileTypes } from 'components/Upload/types'
 import { getfileType } from 'components/Upload/utils'
+import { SupportedChainId } from 'constants/chains'
 import { FileWithPath } from 'file-selector'
 import React, { useState } from 'react'
 import { Box, Flex } from 'rebass'
@@ -12,6 +13,7 @@ import { KeyValues, pinFileToIPFS } from 'services/pinataService'
 import { ApplicationModal } from 'state/application/actions'
 import { useToggleModal } from 'state/application/hooks'
 import { ExternalLink, TYPE } from 'theme'
+import { ChainDropdown } from './ChainDropdown'
 import { LevelsPopup } from './LevelsPopup'
 import { NSFWRadio } from './NSFWRadio'
 import { PropertiesPopup } from './PropertiesPopup'
@@ -36,6 +38,7 @@ export const CreateForm = () => {
   const [levels, setLevels] = useState<Array<{ name: string; value: number; max: number }>>([])
   const [stats, setStats] = useState<Array<{ name: string; value: number; max: number }>>([])
   const [isNSFW, setIsNSFW] = useState(false)
+  const [selectedChain, setSelectedChain] = useState(SupportedChainId.MAINNET)
   const onDrop = (file: any) => {
     setFile(file)
   }
@@ -62,6 +65,7 @@ export const CreateForm = () => {
       keyValues.levels = JSON.stringify(levels)
     }
     keyValues.isNSFW = String(isNSFW)
+    keyValues.selectedChain = selectedChain
     try {
       const result = await pinFileToIPFS({ file, name, keyValues })
       console.log(result)
@@ -213,6 +217,18 @@ export const CreateForm = () => {
         </Flex>
         <Flex mx={-2} mb={4}>
           <NSFWRadio active={isNSFW} setActive={setIsNSFW} />
+        </Flex>
+        <Flex my={4}>
+          <Box width={1}>
+            <Label htmlFor="chainId" flexDirection="column" mb={3}>
+              <Box mb={1}>
+                <TYPE.body fontWeight={600}>
+                  <Trans> Blockchain</Trans>
+                </TYPE.body>
+              </Box>
+            </Label>
+            <ChainDropdown onSelect={setSelectedChain} selectedChain={selectedChain} />
+          </Box>
         </Flex>
         <Flex mx={-2} flexWrap="wrap">
           <Box px={2} mr="auto">

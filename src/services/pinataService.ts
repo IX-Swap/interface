@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { PINATA_API_KEY, PINATA_SECRET_API_KEY } from 'config'
+import { SupportedChainId } from 'constants/chains'
 import { FileWithPath } from 'file-selector'
 
 export const endpoint = 'https://api.pinata.cloud'
@@ -15,6 +16,7 @@ export interface KeyValues {
   levels?: any
   stats?: any
   isNSFW?: any
+  selectedChain?: SupportedChainId
 }
 interface PinProps {
   file: FileWithPath

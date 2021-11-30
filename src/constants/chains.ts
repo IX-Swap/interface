@@ -8,6 +8,16 @@ export enum SupportedChainId {
   MUMBAI = 80001,
 }
 
+export const NETWORK_LABELS: { [chainId: number]: string } = {
+  [1]: 'Ethereum',
+  [4]: 'Rinkeby',
+  [3]: 'Ropsten',
+  [5]: 'Görli',
+  [42]: 'Kovan',
+  [80001]: 'Polygon Mumbai',
+  [137]: 'Polygon Mainnet',
+}
+
 export const ALL_SUPPORTED_CHAIN_IDS: SupportedChainId[] = [
   SupportedChainId.MAINNET,
 
