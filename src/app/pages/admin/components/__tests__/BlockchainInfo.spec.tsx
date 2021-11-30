@@ -55,4 +55,13 @@ describe('BlockchainInfo', () => {
       getByTestId('blockchain-info-reserve-wallet-balance')
     ).toHaveTextContent(network.reserveBalance as string)
   })
+
+  it('should render RPC URL', () => {
+    const network = blockchainSettings.networks[1]
+    const { getByTestId } = render(<BlockchainInfo network={network} />)
+
+    expect(getByTestId('blockchain-network-rpc-url')).toHaveTextContent(
+      network.rpc
+    )
+  })
 })

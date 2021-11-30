@@ -16,6 +16,7 @@ jobs:
     if: github.event.pull_request.merged == true || github.event_name == 'push'
     name: Integration Tests
     runs-on: ubuntu-latest # or macos-latest, windows-latest
+    continue-on-error: true
     steps:
       - uses: actions/checkout@v2
       - name: Set up node

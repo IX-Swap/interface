@@ -85,6 +85,7 @@ export const TableView = <T,>({
     })
 
   const theme = useTheme()
+  const isLoading = status === 'loading'
   const classes = useStyles()
   const headColor =
     themeVariant === 'primary'
@@ -215,6 +216,7 @@ export const TableView = <T,>({
                   actions={actions}
                   cacheQueryKey={cacheQueryKey}
                   themeVariant={themeVariant}
+                  isLoading={isLoading}
                   noDataComponent={noDataComponent}
                 />
               )}
