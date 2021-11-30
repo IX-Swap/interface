@@ -47,7 +47,7 @@ export const BasicOverview = ({
       <Grid item xs={12} sm={6} md={8}>
         <LabelledValue
           label='Token Address'
-          value={<WalletAddress long address={tokenAddress} />}
+          value={<WalletAddress address={tokenAddress} />}
         />
       </Grid>
     </Grid>
