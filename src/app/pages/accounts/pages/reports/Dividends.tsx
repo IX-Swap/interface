@@ -5,10 +5,19 @@ import { VSpacer } from 'components/VSpacer'
 import { ReportsInfo } from 'app/pages/accounts/pages/reports/components/ReportsInfo/ReportsInfo'
 import { ReportsAccordion } from 'app/pages/accounts/pages/reports/components/ReportsAccordion/ReportsAccordion'
 import { useDividends } from 'app/pages/accounts/hooks/useGetDistributionHistory'
+import { DividendsTable } from 'app/pages/accounts/pages/reports/components/DividendsTable/DividendsTable'
+import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 
 export const Dividends: React.FC = () => {
   const { data, isLoading } = useDividends()
-  console.log(data, isLoading)
+
+  if (isLoading) {
+    return <LoadingIndicator />
+  }
+
+  if (data === undefined) {
+    return null
+  }
 
   return (
     <Grid container direction={'column'}>
@@ -23,7 +32,7 @@ export const Dividends: React.FC = () => {
         <VSpacer size={'medium'} />
 
         <ReportsAccordion summary={'Dividends'}>
-          <div>Dividends</div>
+          <DividendsTable data={data} />
         </ReportsAccordion>
       </Grid>
     </Grid>

@@ -8,13 +8,13 @@ import {
 import * as useAuthHook from 'hooks/auth/useAuth'
 import { user } from '__fixtures__/user'
 import { useTradeConfirmation } from 'app/pages/accounts/hooks/useTradeConfirmation'
-import { fakeExchangeFill } from '__fixtures__/reports'
+import { fakeTradeConfirmationItem } from '__fixtures__/reports'
 import { accountsURL } from 'config/apiURL'
 import { generateQueryResult } from '__fixtures__/useQuery'
 
 describe('useTradeConfirmation', () => {
   const sampleResponse = generateQueryResult({
-    data: [fakeExchangeFill]
+    data: [fakeTradeConfirmationItem]
   })
 
   beforeEach(() => {

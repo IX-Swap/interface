@@ -65,15 +65,44 @@ export interface CashReports {
 export interface ActivitySummary {
   openPositions: OpenPositionItem[]
   openPositionsTotal: OpenPositionsTotal
-  cashReports: CashReports
+  cashReports: CashReports[]
 }
 
 export interface TradeConfirmationItem {
   _id: string
-  pair: Pair
-  side: string
   price: number
-  amount: number
   createdAt: string
-  id: string
+  pair: string
+  quantity: number
+  total: number
+  fee: number
+  type: string
+}
+
+export interface Account {
+  _id: string
+  user: string
+  amount: number
+  description: string
+  currency: string
+  createdAt: string
+  updatedAt: string
+  __v: number
+}
+
+export interface FeeAndCharges {
+  usd: Account[]
+  totalUsd: number
+  sgd: Account[]
+  totalSgd: number
+}
+
+export interface Dividend {
+  _id: string
+  currency: string
+  createdAt: string
+  dividendPerShare: number
+  numberOfToken: number
+  totalAmount: number
+  tokenSymbol: string
 }

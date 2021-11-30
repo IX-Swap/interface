@@ -15,7 +15,7 @@ export const useTradeConfirmation = () => {
   const toDate = getFilterValue('toDate')
   const fromDate = getFilterValue('fromDate')
 
-  const getExchangeFills = async () => {
+  const getTradeConfirmation = async () => {
     const uri = accountsURL.reports.getTradeConfirmation(userId)
     return await apiService.post<TradeConfirmationItem[]>(uri, {
       from: fromDate,
@@ -25,7 +25,7 @@ export const useTradeConfirmation = () => {
 
   const { data, ...rest } = useQuery(
     [reportsQueryKeys.getTradeConfirmation, { userId }],
-    getExchangeFills
+    getTradeConfirmation
   )
 
   return {

@@ -10,7 +10,7 @@ import {
 import { useStyles } from './OpenPositionTable.styles'
 import { OpenPositionItem, OpenPositionsTotal } from 'types/reports'
 import { formatReportsDateAndTime } from 'helpers/dates'
-import { formatAmount, formatDecimal } from 'helpers/numbers'
+import { formatAmount } from 'helpers/numbers'
 
 export interface OpenPositionTableProps {
   openPositions: OpenPositionItem[]

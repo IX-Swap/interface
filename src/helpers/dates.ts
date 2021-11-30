@@ -65,6 +65,12 @@ export const formatReportsDateAndTime = (
     return '-'
   }
 
+  const date = new Date(s)
+
+  if (date.toString() === 'Invalid Date') {
+    return s
+  }
+
   return s.length > 0
     ? format(new Date(s), `yyyy-MM-dd, hh:mm${seconds ? ':ss' : ''} a`)
     : s

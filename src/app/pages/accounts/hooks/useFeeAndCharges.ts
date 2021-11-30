@@ -2,7 +2,7 @@ import { accountsURL } from 'config/apiURL'
 import { reportsQueryKeys } from 'config/queryKeys'
 import { useServices } from 'hooks/useServices'
 import { useQuery } from 'react-query'
-import { TradeConfirmationItem } from 'types/reports'
+import { FeeAndCharges } from 'types/reports'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import { useAuth } from 'hooks/auth/useAuth'
 import { getIdFromObj } from 'helpers/strings'
@@ -15,10 +15,10 @@ export const useFeeAndCharges = () => {
   const toDate = getFilterValue('toDate')
   const fromDate = getFilterValue('fromDate')
 
-  const getFeesHistory = async () => {
+  const getFeeAndCharges = async () => {
     const uri = accountsURL.reports.getFeeAndCharges(userId)
 
-    return await apiService.post<TradeConfirmationItem[]>(uri, {
+    return await apiService.post<FeeAndCharges>(uri, {
       from: fromDate,
       to: toDate
     })
@@ -26,7 +26,7 @@ export const useFeeAndCharges = () => {
 
   const { data, ...rest } = useQuery(
     [reportsQueryKeys.getFeeAndCharges, { userId }],
-    getFeesHistory
+    getFeeAndCharges
   )
 
   return {

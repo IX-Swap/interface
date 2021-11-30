@@ -16,12 +16,12 @@ export interface TradesTableProps {
   data: TradeConfirmationItem[]
 }
 
-export const createRow = (pairName: string) => {
+export const createRow = (pair: string) => {
   return {
-    pair: { name: pairName },
+    pair: pair,
     createdAt: '',
-    side: '',
-    amount: '',
+    type: '',
+    quantity: '',
     price: '',
     total: '',
     fee: ''
@@ -49,9 +49,6 @@ export const TradesTable = ({ data }: TradesTableProps) => {
   const valueFormatAmount = (value: string | number) =>
     typeof value === 'number' ? formatAmount(value) : value
 
-  const getTypeValue = (side: string) =>
-    side.length ? (side === 'BID' ? 'SELL' : 'BUY') : side
-
   return (
     <TableContainer>
       <Table>
@@ -66,29 +63,33 @@ export const TradesTable = ({ data }: TradesTableProps) => {
         </TableHead>
         <TableBody>
           {rows.map((row, i) => (
-            <TableRow key={row.pair.name} className={getRowClassName(i)}>
-              <TableCell component='th' scope='row' className={classes.column}>
-                {row.pair.name}
+            <TableRow key={row.pair} className={getRowClassName(i)}>
+              <TableCell
+                component='th'
+                scope='row'
+                align={'left'}
+                className={classes.column}
+              >
+                {row.pair}
               </TableCell>
               <TableCell align='left' className={classes.column}>
                 {formatReportsDateAndTime(row.createdAt)}
               </TableCell>
               <TableCell align='left' className={classes.column}>
-                {getTypeValue(row.side)}
+                {row.type}
               </TableCell>
               <TableCell align='right' className={classes.column}>
-                {row.amount}
+                {row.quantity}
               </TableCell>
               <TableCell align='right' className={classes.column}>
                 {valueFormatAmount(row.price)}
               </TableCell>
-              {/*TODO Uncomment this after updating backend api endpoints*/}
-              {/*<TableCell align='right' className={classes.column}>*/}
-              {/*  {valueFormatAmount(row.total)}*/}
-              {/*</TableCell>*/}
-              {/*<TableCell align='right' className={classes.column}>*/}
-              {/*  {valueFormatAmount(row.fee)}*/}
-              {/*</TableCell>*/}
+              <TableCell align='right' className={classes.column}>
+                {valueFormatAmount(row.total)}
+              </TableCell>
+              <TableCell align='right' className={classes.column}>
+                {valueFormatAmount(row.fee)}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

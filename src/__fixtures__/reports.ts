@@ -1,4 +1,12 @@
-import { AccountInfo } from 'types/reports'
+import {
+  AccountInfo,
+  ActivitySummary,
+  CashReports,
+  Dividend,
+  OpenPositionItem,
+  OpenPositionsTotal,
+  TradeConfirmationItem
+} from 'types/reports'
 
 export const fakeAccountInfo: AccountInfo = {
   name: 'Thi Nguyen',
@@ -11,93 +19,58 @@ export const fakeAccountInfo: AccountInfo = {
   date: '2021-11-23T11:01:14.920Z'
 }
 
-export const fakeActivitySummary = {
-  openPositions: [
-    {
-      totalFilled: 0,
-      _id: '6177cc78a75869553bcdc1fe',
-      pair: {
-        _id: '6107717ebb48af392c948cf7',
-        listing: '61077150bb48af392c948cf2',
-        name: 'RHTC/SGD',
-        quote: '5fd7199deb87068672a27015',
-        createdAt: '2021-08-02T04:15:58.783Z',
-        updatedAt: '2021-08-02T04:15:58.783Z',
-        __v: 0
-      },
-      side: 'BID',
-      price: 11,
-      amount: 10,
-      createdAt: '2021-10-26T09:38:00.844Z',
-      type: 'BUY',
-      unrealizedPnl: -15,
-      costValue: 110,
-      lastTradePrice: 12.5,
-      currentValue: 125
-    },
-    {
-      totalFilled: 0,
-      _id: '6125c319f03baa1b2c7481ed',
-      pair: {
-        _id: '6107717ebb48af392c948cf7',
-        listing: '61077150bb48af392c948cf2',
-        name: 'RHTC/SGD',
-        quote: '5fd7199deb87068672a27015',
-        createdAt: '2021-08-02T04:15:58.783Z',
-        updatedAt: '2021-08-02T04:15:58.783Z',
-        __v: 0
-      },
-      side: 'BID',
-      price: 7,
-      amount: 10,
-      createdAt: '2021-08-25T04:12:09.889Z',
-      type: 'BUY',
-      unrealizedPnl: -55,
-      costValue: 70,
-      lastTradePrice: 12.5,
-      currentValue: 125
-    }
-  ],
-  openPositionsTotal: {
-    totalCostPrice: 18,
-    totalCurrentValue: 250
-  },
-  cashReports: [
-    {
-      _id: '60d41b15695e8c352f46a599',
-      currency: 'USD',
-      startingCash: 92000000,
-      fees: 0,
-      withdrawals: 0,
-      endingCash: 92000000
-    },
-    {
-      _id: '60d42f2af64e0a47346a4fee',
-      currency: 'SGD',
-      startingCash: 10050080,
-      fees: 0,
-      withdrawals: 0,
-      endingCash: 10050080
-    }
-  ]
+export const fakeOpenPositionItem: OpenPositionItem = {
+  _id: '617f85f33558188dbcd50723',
+  type: 'BUY',
+  side: 'BID',
+  price: 2000,
+  amount: 3,
+  date: '2021-11-01T06:15:15.824Z',
+  pair: 'RHTC/SGD',
+  pairId: '6119f6c578df6a9a1d50f719',
+  total: 6000,
+  filled: 3,
+  filledPercent: 100,
+  average: 2000,
+  status: 'FILLED',
+  timeInForce: 'Good till cancel',
+  name: 'RHTC',
+  unrealizedPnl: 0,
+  costValue: 6000,
+  lastTradePrice: 2000,
+  currentValue: 6000
 }
 
-export const fakeExchangeFill = {
-  _id: '6177cae6a75869553bcdc07c',
-  pair: {
-    _id: '6107717ebb48af392c948cf7',
-    listing: '61077150bb48af392c948cf2',
-    name: 'RHTC/SGD',
-    quote: '5fd7199deb87068672a27015',
-    createdAt: '2021-08-02T04:15:58.783Z',
-    updatedAt: '2021-08-02T04:15:58.783Z',
-    __v: 0
-  },
-  side: 'BID',
-  price: 12.5,
-  amount: 50,
-  createdAt: '2021-10-26T09:31:18.696Z',
-  id: '6177cae6a75869553bcdc07c'
+export const fakeOpenPositionsTotal: OpenPositionsTotal = {
+  totalCostPrice: 5033,
+  totalCurrentValue: 146000,
+  totalUnrealizedPnl: -79835
+}
+
+export const fakeCashReports: CashReports = {
+  _id: '60c9713c6b8a1d7ce5816df3',
+  currency: 'USD',
+  startingCash: 0,
+  fees: 0,
+  withdrawals: 0,
+  endingCash: 0
+}
+
+export const fakeActivitySummary: ActivitySummary = {
+  openPositions: [fakeOpenPositionItem],
+  openPositionsTotal: fakeOpenPositionsTotal,
+  cashReports: [fakeCashReports]
+}
+
+export const fakeTradeConfirmationItem: TradeConfirmationItem = {
+  _id: '60b072815b5ae5da2c5e2aba',
+  price: 10,
+  createdAt: '2021-05-28T04:33:05.332Z',
+  pair: 'HKUV/SGD',
+  quantity: 10,
+  total: 100,
+  fee: 0,
+  type: 'SELL'
 }
 
 export const fakeFeeAndCharges = {
@@ -118,7 +91,7 @@ export const fakeFeeAndCharges = {
   totalSgd: 10
 }
 
-export const fakeDividend = {
+export const fakeDividend: Dividend = {
   _id: '618b3ce8d37a1612e25e323f',
   currency: 'SGD',
   createdAt: '2021-11-10T03:30:48.692Z',
