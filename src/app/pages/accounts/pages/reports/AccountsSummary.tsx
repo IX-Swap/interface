@@ -13,11 +13,19 @@ import { CashReportTable } from 'app/pages/accounts/pages/reports/components/Cas
 export const AccountsSummary: React.FC = () => {
   const { data, isLoading } = useActivitySummary()
 
+  const hasOpenPositionsTotal =
+    data !== undefined &&
+    data.openPositions !== undefined &&
+    data.openPositions.length > 0
+
+  const hasCashReports = data !== undefined && data.cashReports !== undefined
+
   if (isLoading) {
     return <LoadingIndicator />
   }
 
-  if (data === undefined) {
+  if (!hasOpenPositionsTotal && !hasCashReports) {
+    // TODO Add UI for state without any data
     return null
   }
 
@@ -37,16 +45,20 @@ export const AccountsSummary: React.FC = () => {
       <Grid item>
         <VSpacer size={'medium'} />
 
-        <ReportsAccordion summary={'Open Positions'}>
-          <OpenPositionTable
-            openPositions={openPositions}
-            openPositionsTotal={openPositionsTotal}
-          />
-        </ReportsAccordion>
+        {hasOpenPositionsTotal && (
+          <ReportsAccordion summary={'Open Positions'}>
+            <OpenPositionTable
+              openPositions={openPositions}
+              openPositionsTotal={openPositionsTotal}
+            />
+          </ReportsAccordion>
+        )}
 
-        <ReportsAccordion summary={'Cash Report'}>
-          <CashReportTable data={cashReports} />
-        </ReportsAccordion>
+        {hasCashReports && (
+          <ReportsAccordion summary={'Cash Report'}>
+            <CashReportTable data={cashReports} />
+          </ReportsAccordion>
+        )}
       </Grid>
     </Grid>
   )

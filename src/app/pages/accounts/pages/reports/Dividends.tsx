@@ -15,7 +15,8 @@ export const Dividends: React.FC = () => {
     return <LoadingIndicator />
   }
 
-  if (data === undefined) {
+  if (data === undefined || data.length < 1) {
+    // TODO Add UI for state without any data
     return null
   }
 
