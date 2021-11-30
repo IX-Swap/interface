@@ -3,7 +3,7 @@ import {
   BlockchainAddressVariant,
   WithdrawalAddressFormValues
 } from 'types/withdrawalAddress'
-import { BlockchainWallet } from 'components/form/WalletSelect'
+import { BlockchainWallet } from 'config/blockchain'
 
 export const waFormValidationSchema = yup
   .object()

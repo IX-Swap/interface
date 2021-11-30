@@ -4,6 +4,7 @@ import { Grid, Icon, Tooltip, Typography, Box } from '@material-ui/core'
 import ErrorOutlineRoundedIcon from '@material-ui/icons/ErrorOutlineRounded'
 import NumberFormat from 'react-number-format'
 import { moneyNumberFormat } from 'config/numberFormat'
+import { DSOTotalUnitsInfo } from 'app/components/DSO/components/DSOTotalUnitsInfo'
 
 export const DSOTotalUnits = () => {
   const { watch } = useFormContext()
@@ -11,13 +12,14 @@ export const DSOTotalUnits = () => {
   const unitPrice = watch('pricePerUnit')
   const totalUnits = parseFloat(totalAmount) / parseFloat(unitPrice)
 
-  return !isNaN(totalUnits) && totalUnits !== 0 ? (
+  if (isNaN(totalUnits)) return null
+
+  return (
     <Grid
       container
       direction='column'
       justify='flex-end'
       alignItems='flex-start'
-      spacing={0}
     >
       <Grid item container justify='flex-start' alignItems='center'>
         <Typography style={{ lineHeight: '100%' }} variant='subtitle1'>
@@ -25,7 +27,7 @@ export const DSOTotalUnits = () => {
         </Typography>
         <Box pr={1} />
         <Tooltip
-          title='No. of units investor will get under minimum investment'
+          title='No. of units that will be deployed.'
           placement='right'
           arrow
         >
@@ -41,6 +43,7 @@ export const DSOTotalUnits = () => {
           displayType='text'
         />
       </Typography>
+      <DSOTotalUnitsInfo />
     </Grid>
-  ) : null
+  )
 }

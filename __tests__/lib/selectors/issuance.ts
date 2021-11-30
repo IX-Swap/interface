@@ -3,6 +3,9 @@ export const issuance = {
   LISTING_FORM: '[data-testid="listing-form"]',
   LOADER: 'text="loading..."',
   ISSUANCE_TAB: '[href="/app/issuance/offerings"]',
+  FUNDS_MANAGEMENT_TAB:
+    '[href="/app/issuance/offerings/:issuerId/:dsoId/overview"]',
+
   sections: {
     CREATE_DSO: '[href="/app/issuance/offerings/create"]',
     VIEW_DSO_LISTENING: '[href="/app/issuance/offerings"]',
@@ -33,10 +36,18 @@ export const issuance = {
   },
 
   dso: {
+    DSO_INFORMATION: '[name="dso-information"]',
+    FORM: '[data-testid="dso-form"]',
     TEXT_AREA: '[id="mui-rte-editor"]',
     LOGO: '[name="logo"]',
+    TOKEN_DEPLOY_SECTION: 'text=Deploy Token',
 
     buttons: {
+      PREVIEW: '[data-testid="preview"]',
+      SAVE: 'button >> text="Save"',
+      SUBMIT: 'button >> text="Submit"',
+      TOKEN_DEPLOY: 'button >> text=Deploy',
+      CREATE_DSO: '[role="button"][href="/app/issuance/offerings/create"]',
       REMOVE_FAQ: '[name="dso-faqs"] >> text="Remove"',
       REMOVE: 'button >> text=Remove',
       ADD_NEW_VIDEO: 'text="ADD NEW VIDEO"',
@@ -44,7 +55,10 @@ export const issuance = {
       ADD_TEAM_MEMBER: 'text="Add Team Member"',
       SUBSCRIPTION_DOCUMENT: '[id="subscriptionDocument"]',
       DATA_ROOM_FILE: '[id="dataroom-upload-and-append"]',
-      FINISH_LATER: 'text="Finish Later"'
+      FINISH_LATER: 'text="Finish Later"',
+      VIEW_THIS_DSO: 'text=View this DSO',
+      VIEW_MY_DSO: 'text=View My DSOs',
+      EDIT_DSO: 'text=Edit DSO'
     },
     fields: {
       FAQ_1: '[id="faqs[0].question"]',

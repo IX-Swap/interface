@@ -13,7 +13,6 @@ export const kyc = {
   },
   buttons: {
     SUBMIT: "[type='submit']",
-    // NEXT: '//button[text()="Next"]',
     SUBMIT_TEXT: '//*[text()="Submit"]',
     OKAY: 'text="Okay"',
     CLICK_HERE: 'text="Click here"',
