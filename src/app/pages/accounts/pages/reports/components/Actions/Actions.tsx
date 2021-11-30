@@ -1,22 +1,35 @@
 import React from 'react'
 import { Box, Typography } from '@material-ui/core'
 import { useStyles } from './Actions.styles'
+import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 
 export interface ActionsProps {
-  onExpandClick: () => void
-  onContractClick: () => void
+  sectionSummaries: string[]
 }
 
-export const Actions = ({ onContractClick, onExpandClick }: ActionsProps) => {
+export const Actions = ({ sectionSummaries }: ActionsProps) => {
   const classes = useStyles()
+
+  const { removeFilter, updateFilter } = useQueryFilter()
 
   return (
     <Box display={'flex'}>
-      <Typography className={classes.link} onClick={onExpandClick}>
+      <Typography
+        className={classes.link}
+        onClick={() =>
+          updateFilter(
+            'expandedSections',
+            sectionSummaries.reduce((acc, it) => acc.concat(it), '')
+          )
+        }
+      >
         Expand All
       </Typography>
       <Box className={classes.line}>|</Box>
-      <Typography className={classes.link} onClick={onContractClick}>
+      <Typography
+        className={classes.link}
+        onClick={() => removeFilter('expandedSections')}
+      >
         Contract All
       </Typography>
     </Box>

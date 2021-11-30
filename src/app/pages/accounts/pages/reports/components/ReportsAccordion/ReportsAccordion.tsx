@@ -1,4 +1,4 @@
-import React, { ReactElement, useState } from 'react'
+import React, { ReactElement } from 'react'
 import {
   Accordion,
   AccordionDetails,
@@ -7,6 +7,7 @@ import {
 } from '@material-ui/core'
 import { useStyles } from './ReportsAccordion.styles'
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
+import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 
 export interface ReportsAccordionProps {
   summary: string
@@ -18,12 +19,27 @@ export const ReportsAccordion = ({
   children
 }: ReportsAccordionProps) => {
   const classes = useStyles()
-  const [isOpen, setIsOpen] = useState<boolean>(true)
+
+  const { getFilterValue, updateFilter } = useQueryFilter()
+  const expandedSectionsValues = getFilterValue('expandedSections') ?? ''
 
   return (
     <Accordion
-      expanded={isOpen}
-      onChange={() => setIsOpen(!isOpen)}
+      expanded={
+        expandedSectionsValues !== undefined &&
+        expandedSectionsValues?.includes(summary)
+      }
+      onChange={() =>
+        expandedSectionsValues?.includes(summary)
+          ? updateFilter(
+              'expandedSections',
+              expandedSectionsValues?.replace(summary, '')
+            )
+          : updateFilter(
+              'expandedSections',
+              expandedSectionsValues?.concat(summary)
+            )
+      }
       classes={{ root: classes.root }}
     >
       <AccordionSummary

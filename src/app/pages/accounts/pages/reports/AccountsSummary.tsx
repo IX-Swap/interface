@@ -39,7 +39,7 @@ export const AccountsSummary: React.FC = () => {
       </Grid>
 
       <ReportsInfo>
-        <Actions onContractClick={() => null} onExpandClick={() => null} />
+        <Actions sectionSummaries={['Open Positions', 'Cash Report']} />
       </ReportsInfo>
 
       <Grid item>
