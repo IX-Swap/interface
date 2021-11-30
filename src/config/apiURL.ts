@@ -74,7 +74,8 @@ export const accountsURL = {
     create: (userId: string) => `/accounts/cash/withdrawals/${userId}`
   },
   dsWithdrawals: {
-    create: (userId: string) => `/accounts/security/withdrawals/${userId}`
+    create: (userId: string) => `/accounts/security/withdrawals/${userId}`,
+    createCustodyWithdrawal: '/custody/withdrawals'
   },
   withdrawalAddresses: {
     getById: (userId: string, withdrawalAddressId: string) =>
@@ -86,7 +87,8 @@ export const accountsURL = {
   assets: {
     getById: (assetId: string) => `accounts/assets/${assetId}`,
     getAll: '/accounts/assets/list',
-    custody: (userId: string) => `/custody/available-tokens/${userId}`
+    custody: (userId: string) => `/custody/available-tokens/${userId}`,
+    getTokenInfo: '/custody/token-info'
   },
   balance: {
     getAll: (userId: string) => `/accounts/balance/${userId}`,
