@@ -511,3 +511,9 @@ export const ModalPadding = styled.div`
    padding: 22px 8px 18px 8px;
   `};
 `
+export const ellipsisText = css`
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`

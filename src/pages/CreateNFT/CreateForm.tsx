@@ -12,6 +12,7 @@ import { KeyValues, pinFileToIPFS } from 'services/pinataService'
 import { ApplicationModal } from 'state/application/actions'
 import { useToggleModal } from 'state/application/hooks'
 import { ExternalLink, TYPE } from 'theme'
+import { LevelsPopup } from './LevelsPopup'
 import { NSFWRadio } from './NSFWRadio'
 import { PropertiesPopup } from './PropertiesPopup'
 import { Traits } from './Traits'
@@ -24,8 +25,17 @@ export const CreateForm = () => {
   const [link, setLink] = useState('')
   const [description, setDescription] = useState('')
   const toggle = useToggleModal(ApplicationModal.PROPERTIES)
+  const [activeTraitType, setActiveTraitType] = useState(TraitType.PROGRESS)
+  const toggleNumeric = useToggleModal(ApplicationModal.LEVELS)
 
+  const toggleLevelsStats = (traitType: TraitType) => {
+    setActiveTraitType(traitType)
+    toggleNumeric()
+  }
   const [properties, setProperties] = useState<Array<{ name: string; value: string }>>([])
+  const [levels, setLevels] = useState<Array<{ name: string; value: number; max: number }>>([])
+  const [stats, setStats] = useState<Array<{ name: string; value: number; max: number }>>([])
+
   const onDrop = (file: any) => {
     setFile(file)
   }
@@ -52,6 +62,11 @@ export const CreateForm = () => {
 
   return (
     <>
+      <LevelsPopup
+        levels={activeTraitType === TraitType.PROGRESS ? levels : stats}
+        setLevels={activeTraitType === TraitType.PROGRESS ? setLevels : setStats}
+        traitType={activeTraitType}
+      />
       <PropertiesPopup properties={properties} setProperties={setProperties} />
       <Box as="form" onSubmit={(e: any) => onSubmit(e)} py={3}>
         <Flex mx={-2} mb={4}>
@@ -178,13 +193,13 @@ export const CreateForm = () => {
           </Box>
         </Flex>
         <Flex mx={-2} mb={4} onClick={toggle}>
-          <Traits type={TraitType.RECTANGLE} />
+          <Traits type={TraitType.RECTANGLE} traitList={properties} />
         </Flex>
-        <Flex mx={-2} mb={4}>
-          <Traits type={TraitType.PROGRESS} />
+        <Flex mx={-2} mb={4} onClick={() => toggleLevelsStats(TraitType.PROGRESS)}>
+          <Traits type={TraitType.PROGRESS} traitList={levels} />
         </Flex>
-        <Flex mx={-2} mb={4}>
-          <Traits type={TraitType.NUMBER} />
+        <Flex mx={-2} mb={4} onClick={() => toggleLevelsStats(TraitType.NUMBER)}>
+          <Traits type={TraitType.NUMBER} traitList={stats} />
         </Flex>
         <Flex mx={-2} mb={4}>
           <NSFWRadio />
