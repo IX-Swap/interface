@@ -7,7 +7,8 @@ export const blockchainSettings: BlockchainSettings = {
       name: 'Test Network',
       balance: '20.3451',
       symbol: 'XXX',
-      walletAddress: '1209282161'
+      walletAddress: '1209282161',
+      rpc: 'https://rpc-url.com'
     },
     {
       name: 'Test MainNet',
@@ -15,7 +16,8 @@ export const blockchainSettings: BlockchainSettings = {
       ownerAddress: '32134413213',
       balance: '100.3451',
       reserveBalance: '14.1233',
-      reserveAddress: '99832671623'
+      reserveAddress: '99832671623',
+      rpc: 'https://rpc-url-2.com'
     }
   ],
   metaDataFields: [

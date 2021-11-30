@@ -60,8 +60,18 @@ export const BlockchainInfo = ({ network }: BlockchainInfoProps) => {
         renderWalletInfo(
           network.reserveAddress,
           network.reserveBalance,
+
           'Reserve Wallet'
         )}
+      <Grid item data-testid='blockchain-network-rpc-url'>
+        <LabelledValue
+          label='RPC URL'
+          value={network.rpc}
+          labelFontSize={18}
+          valueFontSize={18}
+          labelWeight='thin'
+        />
+      </Grid>
     </Grid>
   )
 }

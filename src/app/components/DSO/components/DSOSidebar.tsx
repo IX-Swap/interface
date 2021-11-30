@@ -27,7 +27,7 @@ export const DSOSidebar = (props: DSOSidebarProps) => {
           />
         </Grid>
 
-        <Grid item>
+        <Grid item data-testid='progress-section'>
           <DSOScrollGuide
             hasVideo={isNonEmptyArray(dso?.videos) || isNew}
             hasFAQ={isNonEmptyArray(dso?.faqs) || isNew}
