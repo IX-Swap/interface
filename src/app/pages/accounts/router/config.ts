@@ -80,7 +80,6 @@ export const accountsLandingLinks: InternalRouteProps[] = [
   {
     label: 'My Reports',
     path: AccountsRoute.reports,
-    color: '#e6d200',
-    icon: WithdrawalAddressIcon
+    color: '#e6d200'
   }
 ]
