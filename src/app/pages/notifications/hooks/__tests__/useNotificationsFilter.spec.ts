@@ -4,7 +4,7 @@ import {
   defaultNotificationFilter,
   useNotificationsFilter
 } from 'app/pages/notifications/hooks/useNotificationsFilter'
-import { NotificationFilter } from 'types/app'
+import { NotificationFilterFeatures } from 'types/app'
 
 describe('useNotificationsFilter', () => {
   afterEach(async () => {
@@ -22,13 +22,13 @@ describe('useNotificationsFilter', () => {
     const { result } = renderHook(() => useNotificationsFilter())
 
     await act(async () => {
-      result.current.handleClick(NotificationFilter.Authentication)
+      result.current.handleClick(NotificationFilterFeatures.Authentication)
 
       await waitFor(
         () => {
           expect(result.current.filter).toEqual(
             defaultNotificationFilter.filter(
-              i => i !== NotificationFilter.Authentication
+              i => i !== NotificationFilterFeatures.Authentication
             )
           )
         },
@@ -40,11 +40,11 @@ describe('useNotificationsFilter', () => {
   it('adds item from filter on click', async () => {
     const { result } = renderHook(() => useNotificationsFilter())
     const filtersWithoutAuth = defaultNotificationFilter.filter(
-      i => i !== NotificationFilter.Authentication
+      i => i !== NotificationFilterFeatures.Authentication
     )
 
     await act(async () => {
-      result.current.handleClick(NotificationFilter.Authentication)
+      result.current.handleClick(NotificationFilterFeatures.Authentication)
       await waitFor(
         () => expect(result.current.filter).toEqual(filtersWithoutAuth),
         { timeout: 1000 }
@@ -53,10 +53,10 @@ describe('useNotificationsFilter', () => {
 
     const filtersWithAuth = [
       ...filtersWithoutAuth,
-      NotificationFilter.Authentication
+      NotificationFilterFeatures.Authentication
     ]
     await act(async () => {
-      result.current.handleClick(NotificationFilter.Authentication)
+      result.current.handleClick(NotificationFilterFeatures.Authentication)
       await waitFor(
         () => expect(result.current.filter).toEqual(filtersWithAuth),
         { timeout: 1000 }

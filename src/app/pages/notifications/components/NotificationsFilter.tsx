@@ -1,7 +1,7 @@
 import React from 'react'
 import { FormControlLabel, Grid, Typography } from '@material-ui/core'
 import { useNotificationsFilter } from 'app/pages/notifications/hooks/useNotificationsFilter'
-import { NotificationFilter } from 'types/app'
+import { NotificationFilterFeatures } from 'types/app'
 import { BigCheckbox } from 'app/components/BigCheckbox'
 import { formatCamelCasedWithSpaces } from 'helpers/strings'
 import { SidebarTitle } from 'ui/Sidebar/SidebarTitle'
@@ -17,7 +17,7 @@ export const NotificationsFilter = () => {
       </SidebarTitle>
 
       <SidebarSection padded>
-        {Object.entries(NotificationFilter).map(([key, value]) => (
+        {Object.entries(NotificationFilterFeatures).map(([key, value]) => (
           <Grid item key={key}>
             <FormControlLabel
               label={formatCamelCasedWithSpaces(key)}

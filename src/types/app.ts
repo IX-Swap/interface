@@ -43,7 +43,7 @@ export enum AppFeature {
   Dashboard = 'dashboard'
 }
 
-export enum NotificationFilter {
+export enum NotificationFilterFeatures {
   Authentication = 'logins',
   BankAccounts = 'bank-accounts',
   Deposits = 'deposits',
@@ -53,7 +53,8 @@ export enum NotificationFilter {
   Individuals = 'individuals',
   Commitments = 'commitments',
   Offerings = 'offerings',
-  Deployments = 'deployments'
+  Deployments = 'deployments',
+  IssuanceDetails = 'issuance-details'
 }
 
 export enum AuthorizerCategory {

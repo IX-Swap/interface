@@ -91,7 +91,7 @@ export const LabelledValue = (props: LabelledValueProps & GridProps) => {
     dark: 'rgba(255,255,255,.7)'
   }
 
-  const items = [
+  const items: Array<{ text: string; styles: React.CSSProperties }> = [
     {
       text: label,
       styles: {
@@ -110,7 +110,8 @@ export const LabelledValue = (props: LabelledValueProps & GridProps) => {
         fontSize: reverse ? valueFontSize : undefined,
         color: valueColor ?? undefined,
         opacity: isNewThemeOn ? 0.6 : 1,
-        width: '100%'
+        width: '100%',
+        wordBreak: 'break-word'
       }
     }
   ]

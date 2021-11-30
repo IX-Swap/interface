@@ -11,7 +11,8 @@ import {
   navigate,
   shouldNotExist,
   shouldExist,
-  clearAndTypeText
+  clearAndTypeText,
+  waitForResponseInclude
 } from '../helpers/helpers'
 
 class Dso {
@@ -20,7 +21,25 @@ class Dso {
     this.page = page
   }
 
+  editDsoInformationForm = async () => {
+    const tokenName = 'TokenName' + randomString()
+    const tokenSymbol = Date.now().toString().slice(-6)
+    await clearAndTypeText(issuance.dso.fields.TOKEN_NAME, tokenName, this.page)
+    await clearAndTypeText(
+      issuance.dso.fields.TOKEN_SYMBOL,
+      tokenSymbol,
+      this.page
+    )
+    await click(issuance.dso.buttons.SAVE, this.page)
+    await click(issuance.dso.buttons.SUBMIT, this.page)
+    await waitForResponseInclude(this.page, '/submit')
+    const tokenNameExist = await waitForText(this.page, tokenName)
+    const tokenNameSymbol = await waitForText(this.page, tokenSymbol)
+    return [tokenNameExist, tokenNameSymbol]
+  }
+
   checkThatTheDsoWasCreated = async tokenName => {
+    await click(issuance.dso.buttons.FINISH_LATER, this.page)
     await click(issuance.sections.VIEW_DSO_LISTENING, this.page)
     const result = await waitForText(this.page, tokenName)
     return result
@@ -121,7 +140,6 @@ class Dso {
     await typeText(issuance.dso.fields.FAQ_2_ANSWER, 'FAQ_2_ANSWER', this.page)
     await typeText(issuance.dso.fields.FAQ_3, 'FAQ_3', this.page)
     await typeText(issuance.dso.fields.FAQ_3_ANSWER, 'FAQ_3_ANSWER', this.page)
-    await click(issuance.dso.buttons.FINISH_LATER, this.page)
   }
 
   addNewTeamMember = async () => {
@@ -148,6 +166,12 @@ class Dso {
     await click(issuance.dso.buttons.ADD_NEW_VIDEO, this.page)
     const inputs = await this.page.$$(issuance.dso.fields.VIDEO_INPUTS)
     return inputs.length
+  }
+
+  followToFundsManagement = async (auth, email) => {
+    await navigate(baseCreds.URL, this.page)
+    await auth.loginWithout2fa(email, baseCreds.PASSWORD)
+    await click(issuance.FUNDS_MANAGEMENT_TAB, this.page)
   }
 }
 class Listing {

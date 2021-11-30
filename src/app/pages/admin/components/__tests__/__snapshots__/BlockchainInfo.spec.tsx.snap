@@ -37,7 +37,7 @@ exports[`BlockchainInfo should match snapshot 1`] = `
         />
         <p
           class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft"
-          style="font-weight: 400; opacity: 1; width: 100%;"
+          style="font-weight: 400; opacity: 1; width: 100%; word-break: break-word;"
         >
           32134413213
         </p>
@@ -61,7 +61,7 @@ exports[`BlockchainInfo should match snapshot 1`] = `
         />
         <p
           class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft"
-          style="font-weight: 400; opacity: 1; width: 100%;"
+          style="font-weight: 400; opacity: 1; width: 100%; word-break: break-word;"
         >
           100.3451
         </p>
@@ -85,7 +85,7 @@ exports[`BlockchainInfo should match snapshot 1`] = `
         />
         <p
           class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft"
-          style="font-weight: 400; opacity: 1; width: 100%;"
+          style="font-weight: 400; opacity: 1; width: 100%; word-break: break-word;"
         >
           99832671623
         </p>
@@ -109,9 +109,33 @@ exports[`BlockchainInfo should match snapshot 1`] = `
         />
         <p
           class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft"
-          style="font-weight: 400; opacity: 1; width: 100%;"
+          style="font-weight: 400; opacity: 1; width: 100%; word-break: break-word;"
         >
           14.1233
+        </p>
+      </div>
+    </div>
+    <div
+      class="MuiGrid-root MuiGrid-item"
+      data-testid="blockchain-network-rpc-url"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body1"
+          style="font-weight: 500; width: 100%; color: rgb(68, 68, 68);"
+        >
+          RPC URL
+        </p>
+        <div
+          class="MuiBox-root MuiBox-root-5"
+        />
+        <p
+          class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft"
+          style="font-weight: 400; opacity: 1; width: 100%; word-break: break-word;"
+        >
+          https://rpc-url-2.com
         </p>
       </div>
     </div>

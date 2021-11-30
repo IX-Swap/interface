@@ -10,7 +10,8 @@ import {
   clearAndTypeText,
   waitForText,
   screenshotMatching,
-  shouldNotExist
+  shouldNotExist,
+  randomString
 } from '../helpers/helpers'
 
 class UserForms {
@@ -69,6 +70,21 @@ class UserForms {
     await uploadFiles(this.page, kyc.field.corporate.LOGO, text.docs.pathToFile)
     await typeText(kyc.field.corporate.NAME, 'middle', this.page)
     await typeText(kyc.field.REGISTRATION_NUMBER, '1990', this.page)
+    await click(kyc.field.corporate.COMPANY_OF_INCORPORATION, this.page)
+    await click(kyc.field.TAX_RESIDENT_VALUE, this.page)
+    await click(kyc.field.corporate.LEGAL_ENTITY_STATUS, this.page)
+    await click(kyc.field.corporate.LEGAL_ENTITY_VALUE, this.page)
+  }
+  editCorporateInformation = async () => {
+    const string = randomString()
+    await click(kyc.buttons.OKAY, this.page)
+    await uploadFiles(this.page, kyc.field.corporate.LOGO, text.docs.pathToFile)
+    await clearAndTypeText(kyc.field.corporate.NAME, 'name' + string, this.page)
+    await clearAndTypeText(
+      kyc.field.REGISTRATION_NUMBER,
+      '1990' + string,
+      this.page
+    )
     await click(kyc.field.corporate.COMPANY_OF_INCORPORATION, this.page)
     await click(kyc.field.TAX_RESIDENT_VALUE, this.page)
     await click(kyc.field.corporate.LEGAL_ENTITY_STATUS, this.page)

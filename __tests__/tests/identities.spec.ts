@@ -1,22 +1,25 @@
 import { kyc } from '../lib/selectors/kyc-form'
 import { text } from '../lib/helpers/text'
 import { test } from '../lib/fixtures/fixtures'
+import { baseCreds } from '../lib/helpers/creds'
+
 import {
   emailCreate,
   click,
   screenshotMatching,
-  waitForText
+  waitForText,
+  navigate
 } from '../lib/helpers/helpers'
-test.beforeEach(async ({ auth }) => {
-  let forEachEmail = await emailCreate()
-  await auth.submitRegistrationFormByAPI(forEachEmail)
-})
-
-test.afterEach(async ({ page }) => {
-  await page.close()
-})
 
 test.describe('Check identities form', () => {
+  test.beforeEach(async ({ auth }) => {
+    let forEachEmail = await emailCreate()
+    await auth.submitRegistrationFormByAPI(forEachEmail)
+  })
+
+  test.afterEach(async ({ page }) => {
+    await page.close()
+  })
   test('Individual', async ({ page, kycForms }, testInfo) => {
     await test.step('Personal Information ', async () => {
       await click(kyc.type.INDIVIDUAL, page)
@@ -42,7 +45,6 @@ test.describe('Check identities form', () => {
       await waitForText(page, text.notification.submitIdentity)
     })
   })
-
   test('Corporate', async ({ page, kycForms }, testInfo) => {
     await test.step('fill Personal Information Form', async () => {
       await click(kyc.type.CORPORATE, page)
@@ -70,7 +72,6 @@ test.describe('Check identities form', () => {
 
     await test.step('Check the form submit', async () => {
       await waitForText(page, text.docs.docBenefitsAddressName)
-      // await kycForms.checkAllViewUsingSnapshot(testInfo.title)
       await click(kyc.buttons.SUBMIT_TEXT, page)
       await waitForText(page, text.notification.submitIdentity)
     })
@@ -112,28 +113,27 @@ test.describe('Check identities form', () => {
       await kycForms.checkIssuerView(testInfo)
     })
   })
-})
+  test('Check tax information', async ({ page, kycForms }, testInfo) => {
+    await click(kyc.type.CORPORATE, page)
+    await kycForms.fillCorporateInformation()
+    await kycForms.fillCorporateAddressForm()
+    await kycForms.fillCompanyAuthorizedPersonnel()
+    await kycForms.fillPeopleWithExecutiveAuthorityForm()
+    await kycForms.fillCorporateDirectorAddressForm()
+    await kycForms.fillTaxDeclarationForm()
+    await click(kyc.buttons.CLICK_HERE, page)
+    const dialog = await page.waitForSelector(kyc.DIALOG_VIEW)
+    await screenshotMatching(testInfo.title, dialog, page)
+  })
 
-test('Check tax information', async ({ page, kycForms }, testInfo) => {
-  await click(kyc.type.CORPORATE, page)
-  await kycForms.fillCorporateInformation()
-  await kycForms.fillCorporateAddressForm()
-  await kycForms.fillCompanyAuthorizedPersonnel()
-  await kycForms.fillPeopleWithExecutiveAuthorityForm()
-  await kycForms.fillCorporateDirectorAddressForm()
-  await kycForms.fillTaxDeclarationForm()
-  await click(kyc.buttons.CLICK_HERE, page)
-  const dialog = await page.waitForSelector(kyc.DIALOG_VIEW)
-  await screenshotMatching(testInfo.title, dialog, page)
-})
-
-test('Check FATCA information', async ({ page, kycForms }, testInfo) => {
-  await click(kyc.type.INDIVIDUAL, page)
-  await kycForms.fillPersonalInformationForm()
-  await kycForms.fillAddressForm()
-  await kycForms.fillFinancialInformation()
-  await kycForms.fillTaxDeclaration()
-  await click(kyc.buttons.FATCA, page)
-  const dialog = await page.waitForSelector(kyc.DIALOG_VIEW)
-  await screenshotMatching(testInfo.title, dialog, page)
+  test('Check FATCA information', async ({ page, kycForms }, testInfo) => {
+    await click(kyc.type.INDIVIDUAL, page)
+    await kycForms.fillPersonalInformationForm()
+    await kycForms.fillAddressForm()
+    await kycForms.fillFinancialInformation()
+    await kycForms.fillTaxDeclaration()
+    await click(kyc.buttons.FATCA, page)
+    const dialog = await page.waitForSelector(kyc.DIALOG_VIEW)
+    await screenshotMatching(testInfo.title, dialog, page)
+  })
 })
