@@ -35,7 +35,7 @@ export const CreateForm = () => {
   const [properties, setProperties] = useState<Array<{ name: string; value: string }>>([])
   const [levels, setLevels] = useState<Array<{ name: string; value: number; max: number }>>([])
   const [stats, setStats] = useState<Array<{ name: string; value: number; max: number }>>([])
-
+  const [isNSFW, setIsNSFW] = useState(false)
   const onDrop = (file: any) => {
     setFile(file)
   }
@@ -52,6 +52,16 @@ export const CreateForm = () => {
     if (link) {
       keyValues.link = link
     }
+    if (properties.length) {
+      keyValues.properties = JSON.stringify(properties)
+    }
+    if (stats.length) {
+      keyValues.stats = JSON.stringify(stats)
+    }
+    if (levels.length) {
+      keyValues.levels = JSON.stringify(levels)
+    }
+    keyValues.isNSFW = String(isNSFW)
     try {
       const result = await pinFileToIPFS({ file, name, keyValues })
       console.log(result)
@@ -202,7 +212,7 @@ export const CreateForm = () => {
           <Traits type={TraitType.NUMBER} traitList={stats} />
         </Flex>
         <Flex mx={-2} mb={4}>
-          <NSFWRadio />
+          <NSFWRadio active={isNSFW} setActive={setIsNSFW} />
         </Flex>
         <Flex mx={-2} flexWrap="wrap">
           <Box px={2} mr="auto">

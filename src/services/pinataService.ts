@@ -11,6 +11,10 @@ const authHeaders = {
 export interface KeyValues {
   description?: string
   link?: string
+  properties?: any
+  levels?: any
+  stats?: any
+  isNSFW?: any
 }
 interface PinProps {
   file: FileWithPath

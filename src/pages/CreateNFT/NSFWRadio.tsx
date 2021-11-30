@@ -7,7 +7,7 @@ import React from 'react'
 import { TYPE } from 'theme'
 import { StyledTriangle } from './styleds'
 
-export const NSFWRadio = () => {
+export const NSFWRadio = ({ active, setActive }: { active: boolean; setActive: (param: boolean) => void }) => {
   return (
     <Column style={{ width: '100%', gap: '10px' }}>
       <Column style={{ width: '100%' }}>
@@ -23,7 +23,7 @@ export const NSFWRadio = () => {
               </TYPE.descriptionThin>
             </Column>
           </RowStart>
-          <Toggle id="toggle-nsfw" isActive={true} toggle={() => console.log('test1')} />
+          <Toggle id="toggle-nsfw" isActive={active} toggle={() => setActive(!active)} />
         </RowBetween>
       </Column>
       <Line />
