@@ -47,7 +47,7 @@ export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
 
   const isUnauthorized = (item as any).status === 'Submitted'
   const isLoading = isApproving || isRejecting
-  const isItCommitments = category === 'commitments'
+  const isCommitment = category === 'commitments'
 
   return (
     <Grid container wrap='nowrap' justify='flex-end'>
@@ -72,12 +72,12 @@ export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
       <Grid item>
         <Box px={1} />
       </Grid>
-      {isItCommitments && (item as any).fundStatus !== 'Funds on hold' ? (
+      {isCommitment && (item as any).fundStatus !== 'Funds on hold' ? (
         <></>
       ) : (
         <>
           <Grid item style={{ minWidth: 26 }}>
-            {(isUnauthorized || isItCommitments) && (
+            {(isUnauthorized || isCommitment) && (
               <Dropdown
                 arrow
                 contentTheme='dark'
