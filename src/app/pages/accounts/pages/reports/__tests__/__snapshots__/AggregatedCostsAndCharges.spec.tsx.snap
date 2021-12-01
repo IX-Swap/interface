@@ -1,6 +1,247 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AggregatedCostsAndCharges should match snapshot 1`] = `
+exports[`AggregatedCostsAndCharges should match snapshot when data is loaded successfully 1`] = `
+<div>
+  <div
+    class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-item"
+    >
+      <div
+        class="MuiGrid-root makeStyles-container-3 MuiGrid-container MuiGrid-direction-xs-column"
+      >
+        <div
+          class="MuiGrid-root makeStyles-header-2 MuiGrid-container"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center"
+          >
+            <h2
+              class="MuiTypography-root MuiTypography-h2"
+            >
+              Aggregated Costs and Charges
+            </h2>
+          </div>
+        </div>
+        <div
+          class="MuiGrid-root"
+        >
+          <nav
+            class="MuiTypography-root MuiBreadcrumbs-root MuiTypography-body1 MuiTypography-colorTextSecondary"
+          >
+            <ol
+              class="MuiBreadcrumbs-ol"
+            />
+          </nav>
+        </div>
+      </div>
+      <div
+        class="MuiBox-root MuiBox-root-5"
+      />
+    </div>
+    <div
+      class="MuiGrid-root makeStyles-wrapper-9 MuiGrid-container MuiGrid-direction-xs-column MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center"
+      style="opacity: 0.75;"
+    >
+      <div
+        class="MuiBox-root MuiBox-root-10"
+      />
+      <div
+        class="MuiBox-root MuiBox-root-11"
+      />
+      <div
+        class="MuiCircularProgress-root MuiCircularProgress-colorPrimary MuiCircularProgress-indeterminate"
+        role="progressbar"
+        style="width: 40px; height: 40px;"
+      >
+        <svg
+          class="MuiCircularProgress-svg"
+          viewBox="22 22 44 44"
+        >
+          <circle
+            class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate"
+            cx="44"
+            cy="44"
+            fill="none"
+            r="20.2"
+            stroke-width="3.6"
+          />
+        </svg>
+      </div>
+    </div>
+    <div
+      class="MuiGrid-root MuiGrid-item"
+    >
+      <div
+        class="MuiBox-root MuiBox-root-12"
+      />
+      <div
+        class="MuiPaper-root MuiAccordion-root makeStyles-root-13 MuiAccordion-rounded MuiPaper-elevation1 MuiPaper-rounded"
+      >
+        <div
+          aria-disabled="false"
+          aria-expanded="false"
+          class="MuiButtonBase-root MuiAccordionSummary-root makeStyles-summaryWrapper-14"
+          role="button"
+          tabindex="0"
+        >
+          <div
+            class="MuiAccordionSummary-content makeStyles-summaryContent-15"
+          >
+            <p
+              class="MuiTypography-root makeStyles-summary-16 MuiTypography-body1 MuiTypography-colorPrimary"
+            >
+              Fees (SGD)
+            </p>
+          </div>
+          <div
+            aria-disabled="false"
+            aria-hidden="true"
+            class="MuiButtonBase-root MuiIconButton-root MuiAccordionSummary-expandIcon MuiIconButton-edgeEnd"
+          >
+            <span
+              class="MuiIconButton-label"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-colorPrimary"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"
+                />
+              </svg>
+            </span>
+            <span
+              class="MuiTouchRipple-root"
+            />
+          </div>
+        </div>
+        <div
+          class="MuiCollapse-root MuiCollapse-hidden"
+          style="min-height: 0px;"
+        >
+          <div
+            class="MuiCollapse-wrapper"
+          >
+            <div
+              class="MuiCollapse-wrapperInner"
+            >
+              <div
+                role="region"
+              >
+                <div
+                  class="MuiAccordionDetails-root makeStyles-detailsWrapper-17"
+                >
+                  <div
+                    class="MuiTableContainer-root"
+                  >
+                    <table
+                      class="MuiTable-root"
+                    >
+                      <thead
+                        class="MuiTableHead-root"
+                      >
+                        <tr
+                          class="MuiTableRow-root MuiTableRow-head"
+                        >
+                          <th
+                            class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-18 MuiTableCell-alignLeft"
+                            scope="col"
+                          >
+                            Date
+                          </th>
+                          <th
+                            class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-18 MuiTableCell-alignCenter"
+                            scope="col"
+                          >
+                            Description
+                          </th>
+                          <th
+                            class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-18 MuiTableCell-alignLeft"
+                            scope="col"
+                          >
+                            Amount
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody
+                        class="MuiTableBody-root"
+                      >
+                        <tr
+                          class="MuiTableRow-root makeStyles-row-23 makeStyles-row-28"
+                        >
+                          <th
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-20"
+                            role="cell"
+                            scope="row"
+                          />
+                          <td
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-20 MuiTableCell-alignLeft"
+                          >
+                            Other Fees
+                          </td>
+                          <td
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-20 MuiTableCell-alignRight"
+                          />
+                        </tr>
+                        <tr
+                          class="MuiTableRow-root makeStyles-row-23 makeStyles-row-30"
+                        >
+                          <th
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-20"
+                            role="cell"
+                            scope="row"
+                          >
+                            2021-11-29, 04:26 AM
+                          </th>
+                          <td
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-20 MuiTableCell-alignLeft"
+                          >
+                            Primary issuance fee
+                          </td>
+                          <td
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-20 MuiTableCell-alignRight"
+                          >
+                            10.00
+                          </td>
+                        </tr>
+                        <tr
+                          class="MuiTableRow-root makeStyles-row-23 makeStyles-row-32"
+                        >
+                          <th
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-20"
+                            role="cell"
+                            scope="row"
+                          >
+                            Total
+                          </th>
+                          <td
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-20 MuiTableCell-alignLeft"
+                          />
+                          <td
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-20 MuiTableCell-alignRight"
+                          >
+                            10.00
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`AggregatedCostsAndCharges should match snapshot when data is loading 1`] = `
 <div>
   <div
     class="MuiGrid-root makeStyles-wrapper-1 MuiGrid-container MuiGrid-direction-xs-column MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center"
@@ -34,3 +275,5 @@ exports[`AggregatedCostsAndCharges should match snapshot 1`] = `
   </div>
 </div>
 `;
+
+exports[`AggregatedCostsAndCharges should match snapshot when data is undefined 1`] = `<div />`;

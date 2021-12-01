@@ -5,7 +5,7 @@ import {
   Dividend,
   OpenPositionItem,
   OpenPositionsTotal,
-  TradeConfirmationItem
+  TradeItem
 } from 'types/reports'
 
 export const fakeAccountInfo: AccountInfo = {
@@ -62,7 +62,7 @@ export const fakeActivitySummary: ActivitySummary = {
   cashReports: [fakeCashReports]
 }
 
-export const fakeTradeConfirmationItem: TradeConfirmationItem = {
+export const fakeTradeItem: TradeItem = {
   _id: '60b072815b5ae5da2c5e2aba',
   price: 10,
   createdAt: '2021-05-28T04:33:05.332Z',

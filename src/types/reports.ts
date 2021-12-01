@@ -68,7 +68,7 @@ export interface ActivitySummary {
   cashReports: CashReports[]
 }
 
-export interface TradeConfirmationItem {
+export interface TradeItem {
   _id: string
   price: number
   createdAt: string

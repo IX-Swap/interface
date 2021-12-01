@@ -4,7 +4,7 @@ import { useServices } from 'hooks/useServices'
 import { useQuery } from 'react-query'
 import { useAuth } from 'hooks/auth/useAuth'
 import { getIdFromObj } from 'helpers/strings'
-import { TradeConfirmationItem } from 'types/reports'
+import { TradeItem } from 'types/reports'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 
 export const useTradeConfirmation = () => {
@@ -17,7 +17,7 @@ export const useTradeConfirmation = () => {
 
   const getTradeConfirmation = async () => {
     const uri = accountsURL.reports.getTradeConfirmation(userId)
-    return await apiService.post<TradeConfirmationItem[]>(uri, {
+    return await apiService.post<TradeItem[]>(uri, {
       from: fromDate,
       to: toDate
     })

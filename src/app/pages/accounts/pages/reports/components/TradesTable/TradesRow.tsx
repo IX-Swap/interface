@@ -8,12 +8,12 @@ import {
   TableRow
 } from '@material-ui/core'
 import { useStyles } from '../shared.styles'
-import { OpenPositionItem, TradeConfirmationItem } from 'types/reports'
+import { OpenPositionItem, TradeItem } from 'types/reports'
 import { formatReportsDateAndTime } from 'helpers/dates'
 import { formatAmount } from 'helpers/numbers'
 
 export interface TradesRowProps {
-  row: TradeConfirmationItem | any
+  row: TradeItem | any
   index: number
 }
 

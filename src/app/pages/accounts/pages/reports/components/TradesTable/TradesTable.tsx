@@ -8,11 +8,11 @@ import {
   TableRow
 } from '@material-ui/core'
 import { useStyles } from '../shared.styles'
-import { TradeConfirmationItem } from 'types/reports'
+import { TradeItem } from 'types/reports'
 import { TradesRow } from 'app/pages/accounts/pages/reports/components/TradesTable/TradesRow'
 
 export interface TradesTableProps {
-  data: TradeConfirmationItem[]
+  data: TradeItem[]
 }
 
 export const createRow = (pair: string) => {
