@@ -17,25 +17,16 @@ export const Actions = ({ item }: ActionsProps) => {
   const fromDate = getFilterValue('fromDate')
   const { push } = useHistory()
 
-  const getPath = () => {
-    if (toDate !== undefined && fromDate !== undefined) {
-      return `${href}?toDate=${toDate}&fromDate=${fromDate}`
-    }
-    if (toDate !== undefined) {
-      return `${href}?toDate=${toDate}`
-    }
-    if (fromDate !== undefined) {
-      return `${href}?fromDate=${fromDate}`
-    }
-    return href
-  }
+  const params = new URLSearchParams()
+  params.append('fromDate', fromDate ?? '')
+  params.append('toDate', toDate ?? '')
 
   return (
     <Typography
       variant={'body1'}
       color={'primary'}
       className={classes.link}
-      onClick={() => push(getPath())}
+      onClick={() => push({ pathname: href, search: params.toString() })}
     >
       View Report
     </Typography>

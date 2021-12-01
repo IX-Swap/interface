@@ -5,7 +5,7 @@ import { Actions } from './Actions'
 import { ReportsRoute } from 'app/pages/accounts/pages/reports/router/config'
 import { ReportsItem } from 'types/reports'
 
-const items: ReportsItem[] = [
+export const reportsItems: ReportsItem[] = [
   {
     name: 'Accounts Summary',
     type: 'HTML View',
@@ -31,7 +31,7 @@ export const ReportsTable: React.FC = () => {
       columns={columns}
       hasActions
       actions={Actions}
-      fakeItems={items}
+      fakeItems={reportsItems}
       themeVariant='primary'
     />
   )

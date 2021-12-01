@@ -10,8 +10,8 @@ export interface TableRowsProps<T> extends TableViewProps<T> {
   cacheQueryKey: any
   bordered: boolean
   isLoading: boolean
-  noHeader?: boolean
   themeVariant?: 'default' | 'primary'
+  noHeader?: boolean
 }
 
 export const TableRows = <T,>(props: TableRowsProps<T>): JSX.Element => {
