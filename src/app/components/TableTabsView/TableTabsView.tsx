@@ -5,17 +5,24 @@ import useStyles from './TableTabsView.styles'
 
 export interface TabsContent {
   panel: React.ReactNode
-  label: string
+  label: React.ReactNode
+  disabled?: boolean
+  component?: React.ReactNode
 }
 
 export interface TableTabsViewProps {
   tabs: TabsContent[]
   onChange?: (event: object, value: any) => void
+  variant?: 'primary' | 'secondary'
 }
 
-export const TableTabsView = ({ tabs, onChange }: TableTabsViewProps) => {
+export const TableTabsView = ({
+  tabs,
+  onChange,
+  variant = 'primary'
+}: TableTabsViewProps) => {
   const [activeTab, setActiveTab] = useState(0)
-  const classes = useStyles()
+  const classes = useStyles({ variant })
 
   const handleChange = (event: React.ChangeEvent<{}>, index: number) => {
     setActiveTab(index)
@@ -25,25 +32,35 @@ export const TableTabsView = ({ tabs, onChange }: TableTabsViewProps) => {
   return (
     <Fragment>
       <Tabs
-        classes={{ indicator: classes.indicator }}
+        classes={{ indicator: classes.indicator, root: classes.tabsRoot }}
         value={activeTab}
         onChange={handleChange}
       >
-        {tabs.map((tab, index) => (
-          <Tab
-            key={index}
-            classes={{
-              root: classes.tabRoot,
-              selected: classes.tabRootSelected
-            }}
-            label={tab.label}
-          />
-        ))}
+        {tabs.map(({ label, disabled, component }, index) =>
+          component !== undefined ? (
+            <Box key={index}>{component}</Box>
+          ) : (
+            <Tab
+              key={index}
+              classes={{
+                root: classes.tabRoot,
+                selected: classes.tabRootSelected
+              }}
+              disabled={disabled}
+              label={label}
+            />
+          )
+        )}
       </Tabs>
 
       <Box className={classes.content}>
         {tabs.map((tab, index) => (
-          <TabPanel index={index} key={index} value={activeTab}>
+          <TabPanel
+            index={index}
+            key={index}
+            value={activeTab}
+            withoutSpacing={variant !== 'primary'}
+          >
             {tab.panel}
           </TabPanel>
         ))}

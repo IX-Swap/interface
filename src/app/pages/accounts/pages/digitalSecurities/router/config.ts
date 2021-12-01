@@ -9,11 +9,5 @@ export const DSRoute = {
     'balanceId',
     'deposit'
   ]),
-  withdraw: makeURL([
-    'app',
-    'account',
-    'digitalSecurity',
-    'balanceId',
-    'withdraw'
-  ])
+  withdraw: makeURL(['app', 'account', 'digitalSecurity', 'withdraw'])
 }
