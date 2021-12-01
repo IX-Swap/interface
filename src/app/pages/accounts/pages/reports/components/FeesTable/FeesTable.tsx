@@ -7,7 +7,7 @@ import {
   TableHead,
   TableRow
 } from '@material-ui/core'
-import { useStyles } from 'app/pages/accounts/pages/reports/components/FeesTable/FeesTable.styles'
+import { useStyles } from '../shared.styles'
 import { formatReportsDateAndTime } from 'helpers/dates'
 import { formatAmount } from 'helpers/numbers'
 import { Account } from 'types/reports'

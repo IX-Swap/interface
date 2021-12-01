@@ -6,7 +6,7 @@ import {
   TableContainer,
   TableRow
 } from '@material-ui/core'
-import { useStyles } from './CashReportTable.styles'
+import { useStyles } from '../shared.styles'
 import { CashReports } from 'types/reports'
 import { formatAmount } from 'helpers/numbers'
 

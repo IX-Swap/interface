@@ -7,7 +7,7 @@ import {
   TableHead,
   TableRow
 } from '@material-ui/core'
-import { useStyles } from 'app/pages/accounts/pages/reports/components/TradesTable/TradesTable.styles'
+import { useStyles } from '../shared.styles'
 import { TradeConfirmationItem } from 'types/reports'
 import { formatReportsDateAndTime } from 'helpers/dates'
 import { formatAmount } from 'helpers/numbers'

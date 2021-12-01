@@ -7,7 +7,7 @@ import {
   TableHead,
   TableRow
 } from '@material-ui/core'
-import { useStyles } from './OpenPositionTable.styles'
+import { useStyles } from '../shared.styles'
 import { OpenPositionItem, OpenPositionsTotal } from 'types/reports'
 import { formatReportsDateAndTime } from 'helpers/dates'
 import { formatAmount } from 'helpers/numbers'

@@ -13,9 +13,17 @@ export const useStyles = makeStyles(theme => ({
     padding: theme.spacing(0.5, 2),
     fontSize: 14
   },
+  spacedColumn: {
+    padding: theme.spacing(0.5, 2, 0.5, 3),
+    fontSize: 14
+  },
   firstRow: {
     backgroundColor: '#F2F2FF',
     '& > th': {
+      fontSize: 14,
+      fontWeight: 600
+    },
+    '& > td': {
       fontSize: 14,
       fontWeight: 600
     }
