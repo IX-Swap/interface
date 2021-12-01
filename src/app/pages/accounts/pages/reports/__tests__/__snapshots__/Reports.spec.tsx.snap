@@ -1,0 +1,392 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Reports should match snapshot 1`] = `
+<div>
+  <div
+    class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-item"
+    >
+      <div
+        class="MuiGrid-root makeStyles-container-3 MuiGrid-container MuiGrid-direction-xs-column"
+      >
+        <div
+          class="MuiGrid-root makeStyles-header-2 MuiGrid-container"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center"
+          >
+            <h2
+              class="MuiTypography-root MuiTypography-h2"
+            >
+              Reports
+            </h2>
+          </div>
+        </div>
+        <div
+          class="MuiGrid-root"
+        >
+          <nav
+            class="MuiTypography-root MuiBreadcrumbs-root MuiTypography-body1 MuiTypography-colorTextSecondary"
+          >
+            <ol
+              class="MuiBreadcrumbs-ol"
+            />
+          </nav>
+        </div>
+      </div>
+    </div>
+    <div
+      class="MuiGrid-root MuiGrid-item"
+    >
+      <div
+        class="MuiBox-root MuiBox-root-5"
+      />
+      <h4
+        class="MuiTypography-root MuiTypography-h4"
+      >
+        Default Statements
+      </h4>
+      <div
+        class="MuiBox-root MuiBox-root-6"
+      />
+    </div>
+    <div
+      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-item"
+      >
+        <div
+          class="MuiBox-root MuiBox-root-7"
+        >
+          <p
+            class="MuiTypography-root MuiTypography-body1"
+          >
+            View, manage and track your accounting reports and taxations.
+          </p>
+        </div>
+      </div>
+      <div
+        class="MuiGrid-root MuiGrid-item"
+      >
+        <div
+          class="MuiBox-root MuiBox-root-12 makeStyles-wrapper-8"
+        >
+          <h6
+            class="MuiTypography-root makeStyles-filterText-9 MuiTypography-subtitle1"
+          >
+            Select Date:
+          </h6>
+          <div
+            class="MuiBox-root MuiBox-root-13 makeStyles-filtersWrapper-10"
+          >
+            <div
+              class="MuiBox-root MuiBox-root-14 makeStyles-filterWrapper-11"
+            >
+              <div
+                class="MuiFormControl-root MuiTextField-root denseAdornments MuiFormControl-fullWidth"
+                style="width: 150px;"
+              >
+                <label
+                  class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-marginDense MuiInputLabel-outlined"
+                  data-shrink="false"
+                >
+                  From
+                </label>
+                <div
+                  class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiOutlinedInput-adornedEnd MuiInputBase-marginDense MuiOutlinedInput-marginDense"
+                >
+                  <input
+                    aria-invalid="false"
+                    class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiOutlinedInput-inputAdornedEnd MuiInputBase-inputMarginDense MuiOutlinedInput-inputMarginDense"
+                    placeholder="mm/dd/yy"
+                    type="text"
+                    value=""
+                  />
+                  <div
+                    class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-marginDense"
+                  >
+                    <button
+                      aria-label="change date"
+                      class="MuiButtonBase-root MuiIconButton-root"
+                      tabindex="0"
+                      type="button"
+                    >
+                      <span
+                        class="MuiIconButton-label"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"
+                          />
+                          <path
+                            d="M0 0h24v24H0z"
+                            fill="none"
+                          />
+                        </svg>
+                      </span>
+                      <span
+                        class="MuiTouchRipple-root"
+                      />
+                    </button>
+                  </div>
+                  <fieldset
+                    aria-hidden="true"
+                    class="PrivateNotchedOutline-root-15 MuiOutlinedInput-notchedOutline"
+                  >
+                    <legend
+                      class="PrivateNotchedOutline-legendLabelled-17"
+                    >
+                      <span>
+                        From
+                      </span>
+                    </legend>
+                  </fieldset>
+                </div>
+                
+              </div>
+            </div>
+            <div
+              class="MuiBox-root MuiBox-root-19 makeStyles-filterWrapper-11"
+            >
+              <div
+                class="MuiFormControl-root MuiTextField-root denseAdornments MuiFormControl-fullWidth"
+                style="width: 150px;"
+              >
+                <label
+                  class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-marginDense MuiInputLabel-outlined"
+                  data-shrink="false"
+                >
+                  To
+                </label>
+                <div
+                  class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiOutlinedInput-adornedEnd MuiInputBase-marginDense MuiOutlinedInput-marginDense"
+                >
+                  <input
+                    aria-invalid="false"
+                    class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiOutlinedInput-inputAdornedEnd MuiInputBase-inputMarginDense MuiOutlinedInput-inputMarginDense"
+                    placeholder="mm/dd/yy"
+                    type="text"
+                    value=""
+                  />
+                  <div
+                    class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-marginDense"
+                  >
+                    <button
+                      aria-label="change date"
+                      class="MuiButtonBase-root MuiIconButton-root"
+                      tabindex="0"
+                      type="button"
+                    >
+                      <span
+                        class="MuiIconButton-label"
+                      >
+                        <svg
+                          aria-hidden="true"
+                          class="MuiSvgIcon-root"
+                          focusable="false"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"
+                          />
+                          <path
+                            d="M0 0h24v24H0z"
+                            fill="none"
+                          />
+                        </svg>
+                      </span>
+                      <span
+                        class="MuiTouchRipple-root"
+                      />
+                    </button>
+                  </div>
+                  <fieldset
+                    aria-hidden="true"
+                    class="PrivateNotchedOutline-root-15 MuiOutlinedInput-notchedOutline"
+                  >
+                    <legend
+                      class="PrivateNotchedOutline-legendLabelled-17"
+                    >
+                      <span>
+                        To
+                      </span>
+                    </legend>
+                  </fieldset>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="MuiGrid-root MuiGrid-item"
+    >
+      <div
+        class="MuiBox-root MuiBox-root-20"
+      />
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item"
+        >
+          <div
+            class="MuiPaper-root MuiPaper-outlined MuiPaper-rounded"
+            style="background-color: inherit;"
+          >
+            <div
+              class="MuiTableContainer-root"
+            >
+              <table
+                aria-label="table"
+                class="MuiTable-root"
+                data-testid="table"
+              >
+                <thead
+                  class="MuiTableHead-root"
+                  style="background-color: rgb(20, 18, 114); height: 50px; display: none;"
+                >
+                  <tr
+                    class="MuiTableRow-root MuiTableRow-head"
+                  >
+                    <th
+                      class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft"
+                      scope="col"
+                    >
+                      <b
+                        style="color: rgb(255, 255, 255);"
+                      />
+                    </th>
+                    <th
+                      class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft"
+                      scope="col"
+                    >
+                      <b
+                        style="color: rgb(255, 255, 255);"
+                      />
+                    </th>
+                    <th
+                      class="MuiTableCell-root MuiTableCell-head"
+                      scope="col"
+                    />
+                  </tr>
+                </thead>
+                <tbody
+                  class="MuiTableBody-root"
+                >
+                  <tr
+                    class="MuiTableRow-root"
+                    style="background-color: rgb(255, 255, 255);"
+                  >
+                    <td
+                      class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"
+                    >
+                      Accounts Summary
+                    </td>
+                    <td
+                      class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"
+                    >
+                      HTML View
+                    </td>
+                    <td
+                      class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
+                    >
+                      <p
+                        class="MuiTypography-root makeStyles-link-22 MuiTypography-body1 MuiTypography-colorPrimary"
+                      >
+                        View Report
+                      </p>
+                    </td>
+                  </tr>
+                  <tr
+                    class="MuiTableRow-root"
+                    style="background-color: rgb(248, 248, 253);"
+                  >
+                    <td
+                      class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"
+                    >
+                      Trade Confirmation
+                    </td>
+                    <td
+                      class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"
+                    >
+                      HTML View
+                    </td>
+                    <td
+                      class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
+                    >
+                      <p
+                        class="MuiTypography-root makeStyles-link-22 MuiTypography-body1 MuiTypography-colorPrimary"
+                      >
+                        View Report
+                      </p>
+                    </td>
+                  </tr>
+                  <tr
+                    class="MuiTableRow-root"
+                    style="background-color: rgb(255, 255, 255);"
+                  >
+                    <td
+                      class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"
+                    >
+                      Aggregated Costs and Charges
+                    </td>
+                    <td
+                      class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"
+                    >
+                      HTML View
+                    </td>
+                    <td
+                      class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
+                    >
+                      <p
+                        class="MuiTypography-root makeStyles-link-22 MuiTypography-body1 MuiTypography-colorPrimary"
+                      >
+                        View Report
+                      </p>
+                    </td>
+                  </tr>
+                  <tr
+                    class="MuiTableRow-root"
+                    style="background-color: rgb(248, 248, 253);"
+                  >
+                    <td
+                      class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"
+                    >
+                      Dividends
+                    </td>
+                    <td
+                      class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"
+                    >
+                      HTML View
+                    </td>
+                    <td
+                      class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
+                    >
+                      <p
+                        class="MuiTypography-root makeStyles-link-22 MuiTypography-body1 MuiTypography-colorPrimary"
+                      >
+                        View Report
+                      </p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

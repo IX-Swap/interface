@@ -37,7 +37,8 @@ export const OpenOrders = () => {
           } as any
         }
         columns={columns}
-        themeVariant={isMiniLaptop ? 'no-header' : 'primary'}
+        noHeader={isMiniLaptop}
+        themeVariant={'primary'}
         hasActions
         actions={OrderActions}
         paperProps={

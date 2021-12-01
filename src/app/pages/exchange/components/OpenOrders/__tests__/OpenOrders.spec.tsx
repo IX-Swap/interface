@@ -55,7 +55,8 @@ describe('OpenOrders', () => {
 
     expect(TableView).toHaveBeenCalledWith(
       expect.objectContaining({
-        themeVariant: 'no-header',
+        themeVariant: 'primary',
+        noHeader: true,
         paperProps: {
           variant: 'elevation',
           elevation: 0
