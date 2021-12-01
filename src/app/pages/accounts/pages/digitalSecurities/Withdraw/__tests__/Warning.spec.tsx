@@ -1,4 +1,4 @@
-import { Warning } from '@material-ui/icons'
+import { Warning } from 'app/pages/accounts/pages/digitalSecurities/Withdraw/Warning'
 import * as useTokenInfo from 'app/pages/accounts/hooks/useTokenInfo'
 import { Form } from 'components/form/Form'
 import React from 'react'
