@@ -43,7 +43,8 @@ export const PastOrderTable = (props: PostOrderTableProps) => {
           uri={exchangeMarket.getOrdersList(userId)}
           columns={columns}
           filter={{ ...filter, orderType: 'PAST' } as any}
-          themeVariant={isMiniLaptop ? 'no-header' : 'primary'}
+          themeVariant={'primary'}
+          noHeader={isMiniLaptop}
           paperProps={
             isMiniLaptop
               ? {

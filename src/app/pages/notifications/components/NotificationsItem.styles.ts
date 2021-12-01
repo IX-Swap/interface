@@ -2,7 +2,8 @@ import { makeStyles } from '@material-ui/core/styles'
 
 export const useStyles = makeStyles(theme => ({
   container: {
-    border: `1px solid ${theme.palette.divider}`
+    border: `1px solid ${theme.palette.divider}`,
+    maxWidth: `calc(100vw - 16px)`
   },
   inner: {
     padding: '10px 14px',

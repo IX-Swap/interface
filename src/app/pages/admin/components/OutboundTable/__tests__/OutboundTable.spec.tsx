@@ -36,7 +36,8 @@ describe('OutboundTable', () => {
           to: undefined,
           from: undefined
         },
-        themeVariant: 'no-header',
+        themeVariant: 'default',
+        noHeader: true,
         paperProps: { variant: 'elevation', elevation: 0 }
       }),
       {}
