@@ -7,13 +7,14 @@ import { AcceptFiles, FileTypes } from 'components/Upload/types'
 import { getfileType } from 'components/Upload/utils'
 import { SupportedChainId } from 'constants/chains'
 import { FileWithPath } from 'file-selector'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box, Flex } from 'rebass'
 import { KeyValues, pinFileToIPFS } from 'services/pinataService'
 import { ApplicationModal } from 'state/application/actions'
 import { useToggleModal } from 'state/application/hooks'
 import { ExternalLink, TYPE } from 'theme'
 import { ChainDropdown } from './ChainDropdown'
+import { useGetSupply, useMint } from './hooks'
 import { LevelsPopup } from './LevelsPopup'
 import { NSFWRadio } from './NSFWRadio'
 import { PropertiesPopup } from './PropertiesPopup'
@@ -34,6 +35,8 @@ export const CreateForm = () => {
     setActiveTraitType(traitType)
     toggleNumeric()
   }
+  const mint = useMint()
+  const getSupply = useGetSupply()
   const [properties, setProperties] = useState<Array<{ name: string; value: string }>>([])
   const [levels, setLevels] = useState<Array<{ name: string; value: number; max: number }>>([])
   const [stats, setStats] = useState<Array<{ name: string; value: number; max: number }>>([])
@@ -43,35 +46,41 @@ export const CreateForm = () => {
     setFile(file)
   }
 
+  useEffect(() => {
+    getSupply()
+  })
+
   const onSubmit = async (e: any) => {
     e.preventDefault()
-    if (!file || !name) {
-      return
-    }
-    const keyValues: KeyValues = {}
-    if (description) {
-      keyValues.description = description
-    }
-    if (link) {
-      keyValues.link = link
-    }
-    if (properties.length) {
-      keyValues.properties = JSON.stringify(properties)
-    }
-    if (stats.length) {
-      keyValues.stats = JSON.stringify(stats)
-    }
-    if (levels.length) {
-      keyValues.levels = JSON.stringify(levels)
-    }
-    keyValues.isNSFW = String(isNSFW)
-    keyValues.selectedChain = selectedChain
-    try {
-      const result = await pinFileToIPFS({ file, name, keyValues })
-      console.log(result)
-    } catch (e) {
-      console.log(e)
-    }
+    await mint()
+    return
+    // if (!file || !name) {
+    //   return
+    // }
+    // const keyValues: KeyValues = {}
+    // if (description) {
+    //   keyValues.description = description
+    // }
+    // if (link) {
+    //   keyValues.link = link
+    // }
+    // if (properties.length) {
+    //   keyValues.properties = JSON.stringify(properties)
+    // }
+    // if (stats.length) {
+    //   keyValues.stats = JSON.stringify(stats)
+    // }
+    // if (levels.length) {
+    //   keyValues.levels = JSON.stringify(levels)
+    // }
+    // keyValues.isNSFW = String(isNSFW)
+    // keyValues.selectedChain = selectedChain
+    // try {
+    //   const result = await pinFileToIPFS({ file, name, keyValues })
+    //   console.log(result)
+    // } catch (e) {
+    //   console.log(e)
+    // }
   }
 
   return (
@@ -82,7 +91,7 @@ export const CreateForm = () => {
         traitType={activeTraitType}
       />
       <PropertiesPopup properties={properties} setProperties={setProperties} />
-      <Box as="form" onSubmit={(e: any) => onSubmit(e)} py={3}>
+      <Box as="form" py={3}>
         <Flex mx={-2} mb={4}>
           <Box width={1} px={2}>
             <Label htmlFor="file" flexDirection="column" mb={3}>
@@ -231,7 +240,7 @@ export const CreateForm = () => {
           </Box>
         </Flex>
         <Flex mx={-2} flexWrap="wrap">
-          <Box px={2} mr="auto">
+          <Box px={2} mr="auto" onClick={(e) => onSubmit(e)}>
             <ButtonGradient width="140px">Create</ButtonGradient>
           </Box>
         </Flex>
