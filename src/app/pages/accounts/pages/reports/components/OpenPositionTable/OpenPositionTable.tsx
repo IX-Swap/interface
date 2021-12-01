@@ -9,8 +9,7 @@ import {
 } from '@material-ui/core'
 import { useStyles } from '../shared.styles'
 import { OpenPositionItem, OpenPositionsTotal } from 'types/reports'
-import { formatReportsDateAndTime } from 'helpers/dates'
-import { formatAmount } from 'helpers/numbers'
+import { OpenPositionRow } from 'app/pages/accounts/pages/reports/components/OpenPositionTable/OpenPositionRow'
 
 export interface OpenPositionTableProps {
   openPositions: OpenPositionItem[]
@@ -39,7 +38,7 @@ export const OpenPositionTable = ({
   openPositions,
   openPositionsTotal
 }: OpenPositionTableProps) => {
-  const classes = useStyles()
+  const classes = useStyles({})
 
   const headCells = [
     { label: 'Symbol', align: 'left' },
@@ -63,20 +62,6 @@ export const OpenPositionTable = ({
     )
   ]
 
-  const getRowClassName = (i: number, length: number) => {
-    switch (i) {
-      case 0:
-        return classes.firstRow
-      case length:
-        return classes.lastRow
-      default:
-        return classes.row
-    }
-  }
-
-  const valueFormatAmount = (value: string | number) =>
-    typeof value === 'number' ? formatAmount(value) : value
-
   return (
     <TableContainer>
       <Table>
@@ -91,35 +76,12 @@ export const OpenPositionTable = ({
         </TableHead>
         <TableBody>
           {rows.map((row, i) => (
-            <TableRow
+            <OpenPositionRow
+              row={row}
+              index={i}
+              rowsLength={rows.length}
               key={row.pair}
-              className={getRowClassName(i, rows.length - 1)}
-            >
-              <TableCell component='th' scope='row' className={classes.column}>
-                {row.pair}
-              </TableCell>
-              <TableCell align='right' className={classes.column}>
-                {formatReportsDateAndTime(row.date)}
-              </TableCell>
-              <TableCell align='right' className={classes.column}>
-                {row.amount}
-              </TableCell>
-              <TableCell align='right' className={classes.column}>
-                {valueFormatAmount(row.price)}
-              </TableCell>
-              <TableCell align='right' className={classes.column}>
-                {valueFormatAmount(row.costValue)}
-              </TableCell>
-              <TableCell align='right' className={classes.column}>
-                {valueFormatAmount(row.lastTradePrice)}
-              </TableCell>
-              <TableCell align='right' className={classes.column}>
-                {valueFormatAmount(row.currentValue)}
-              </TableCell>
-              <TableCell align='right' className={classes.column}>
-                {valueFormatAmount(row.unrealizedPnl)}
-              </TableCell>
-            </TableRow>
+            />
           ))}
         </TableBody>
       </Table>

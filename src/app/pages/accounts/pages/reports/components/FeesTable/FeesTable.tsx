@@ -8,9 +8,8 @@ import {
   TableRow
 } from '@material-ui/core'
 import { useStyles } from '../shared.styles'
-import { formatReportsDateAndTime } from 'helpers/dates'
-import { formatAmount } from 'helpers/numbers'
 import { Account } from 'types/reports'
+import { FeesRow } from 'app/pages/accounts/pages/reports/components/FeesTable/FeesRow'
 
 export interface FeesTableProps {
   accounts: Account[]
@@ -30,7 +29,7 @@ export const createRow = (
 }
 
 export const FeesTable = ({ accounts, total }: FeesTableProps) => {
-  const classes = useStyles()
+  const classes = useStyles({})
 
   const headCells = [
     { label: 'Date', align: 'left' },
@@ -44,20 +43,6 @@ export const FeesTable = ({ accounts, total }: FeesTableProps) => {
     ...accounts,
     createRow('Total', '', total)
   ]
-
-  const getRowClassName = (i: number, length: number) => {
-    switch (i) {
-      case 0:
-        return classes.firstRow
-      case length:
-        return classes.lastRow
-      default:
-        return classes.row
-    }
-  }
-
-  const valueFormatAmount = (value: string | number) =>
-    typeof value === 'number' ? formatAmount(value) : value
 
   return (
     <TableContainer>
@@ -73,20 +58,12 @@ export const FeesTable = ({ accounts, total }: FeesTableProps) => {
         </TableHead>
         <TableBody>
           {rows.map((row, i) => (
-            <TableRow
-              key={row.createdAt}
-              className={getRowClassName(i, rows.length - 1)}
-            >
-              <TableCell component='th' scope='row' className={classes.column}>
-                {formatReportsDateAndTime(row.createdAt)}
-              </TableCell>
-              <TableCell align='left' className={classes.column}>
-                {row.description}
-              </TableCell>
-              <TableCell align='right' className={classes.column}>
-                {valueFormatAmount(row.amount)}
-              </TableCell>
-            </TableRow>
+            <FeesRow
+              row={row}
+              rowsLength={rows.length}
+              index={i}
+              key={row.description}
+            />
           ))}
         </TableBody>
       </Table>

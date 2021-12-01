@@ -4,7 +4,7 @@ import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { VSpacer } from 'components/VSpacer'
 import { ReportsInfo } from 'app/pages/accounts/pages/reports/components/ReportsInfo/ReportsInfo'
 import { ReportsAccordion } from 'app/pages/accounts/pages/reports/components/ReportsAccordion/ReportsAccordion'
-import { useDividends } from 'app/pages/accounts/hooks/useGetDistributionHistory'
+import { useDividends } from 'app/pages/accounts/hooks/useDividends'
 import { DividendsTable } from 'app/pages/accounts/pages/reports/components/DividendsTable/DividendsTable'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 

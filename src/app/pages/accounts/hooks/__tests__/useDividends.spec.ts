@@ -10,7 +10,7 @@ import { user } from '__fixtures__/user'
 import { fakeDividend } from '__fixtures__/reports'
 import { accountsURL } from 'config/apiURL'
 import { generateQueryResult } from '__fixtures__/useQuery'
-import { useDividends } from 'app/pages/accounts/hooks/useGetDistributionHistory'
+import { useDividends } from 'app/pages/accounts/hooks/useDividends'
 
 describe('useDividends', () => {
   const sampleResponse = generateQueryResult({
