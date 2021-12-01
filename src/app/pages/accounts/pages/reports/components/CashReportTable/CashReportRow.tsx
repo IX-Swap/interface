@@ -2,7 +2,7 @@ import React from 'react'
 import { TableCell, TableRow } from '@material-ui/core'
 import { useStyles } from '../shared.styles'
 import { CashReports } from 'types/reports'
-import { formatAmount } from 'helpers/numbers'
+import { formatValue } from 'app/pages/accounts/pages/reports/helper'
 
 export interface CashReportRowProps {
   row: CashReports | any
@@ -11,9 +11,6 @@ export interface CashReportRowProps {
 
 export const CashReportRow = ({ row, index }: CashReportRowProps) => {
   const classes = useStyles({ rowIdx: index })
-
-  const valueFormatAmount = (value: string | number) =>
-    typeof value === 'number' ? formatAmount(value) : value
 
   return (
     <TableRow key={row.total} className={classes.row}>
@@ -31,7 +28,7 @@ export const CashReportRow = ({ row, index }: CashReportRowProps) => {
         align={'right'}
         className={classes.cashColumn}
       >
-        {valueFormatAmount(row.total)}
+        {formatValue(row.total)}
       </TableCell>
     </TableRow>
   )

@@ -3,7 +3,7 @@ import { TableCell, TableRow } from '@material-ui/core'
 import { useStyles } from '../shared.styles'
 import { OpenPositionItem } from 'types/reports'
 import { formatReportsDateAndTime } from 'helpers/dates'
-import { formatAmount } from 'helpers/numbers'
+import { formatValue } from 'app/pages/accounts/pages/reports/helper'
 
 export interface OpenPositionRowProps {
   rowsLength: number
@@ -18,9 +18,6 @@ export const OpenPositionRow = ({
 }: OpenPositionRowProps) => {
   const classes = useStyles({ rowIdx: index, rowsLength: rowsLength })
 
-  const valueFormatAmount = (value: string | number) =>
-    typeof value === 'number' ? formatAmount(value) : value
-
   return (
     <TableRow key={row.pair} className={classes.row}>
       <TableCell component='th' scope='row' className={classes.column}>
@@ -33,19 +30,19 @@ export const OpenPositionRow = ({
         {row.amount}
       </TableCell>
       <TableCell align='right' className={classes.column}>
-        {valueFormatAmount(row.price)}
+        {formatValue(row.price)}
       </TableCell>
       <TableCell align='right' className={classes.column}>
-        {valueFormatAmount(row.costValue)}
+        {formatValue(row.costValue)}
       </TableCell>
       <TableCell align='right' className={classes.column}>
-        {valueFormatAmount(row.lastTradePrice)}
+        {formatValue(row.lastTradePrice)}
       </TableCell>
       <TableCell align='right' className={classes.column}>
-        {valueFormatAmount(row.currentValue)}
+        {formatValue(row.currentValue)}
       </TableCell>
       <TableCell align='right' className={classes.column}>
-        {valueFormatAmount(row.unrealizedPnl)}
+        {formatValue(row.unrealizedPnl)}
       </TableCell>
     </TableRow>
   )

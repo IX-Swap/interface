@@ -2,8 +2,8 @@ import React from 'react'
 import { TableCell, TableRow } from '@material-ui/core'
 import { useStyles } from '../shared.styles'
 import { formatReportsDateAndTime } from 'helpers/dates'
-import { formatAmount } from 'helpers/numbers'
 import { Account } from 'types/reports'
+import { formatValue } from 'app/pages/accounts/pages/reports/helper'
 
 export interface FeesRowProps {
   rowsLength: number
@@ -14,9 +14,6 @@ export interface FeesRowProps {
 export const FeesRow = ({ row, rowsLength, index }: FeesRowProps) => {
   const classes = useStyles({ rowIdx: index, rowsLength: rowsLength })
 
-  const valueFormatAmount = (value: string | number) =>
-    typeof value === 'number' ? formatAmount(value) : value
-
   return (
     <TableRow key={row.createdAt} className={classes.row}>
       <TableCell component='th' scope='row' className={classes.column}>
@@ -26,7 +23,7 @@ export const FeesRow = ({ row, rowsLength, index }: FeesRowProps) => {
         {row.description}
       </TableCell>
       <TableCell align='right' className={classes.column}>
-        {valueFormatAmount(row.amount)}
+        {formatValue(row.amount)}
       </TableCell>
     </TableRow>
   )

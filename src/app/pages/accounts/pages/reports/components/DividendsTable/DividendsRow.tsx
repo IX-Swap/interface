@@ -3,7 +3,7 @@ import { TableCell, TableRow } from '@material-ui/core'
 import { useStyles } from '../shared.styles'
 import { Dividend } from 'types/reports'
 import { formatReportsDateAndTime } from 'helpers/dates'
-import { formatAmount } from 'helpers/numbers'
+import { formatValue } from 'app/pages/accounts/pages/reports/helper'
 
 export interface DividendsRowProps {
   row: Dividend | any
@@ -11,9 +11,6 @@ export interface DividendsRowProps {
 
 export const DividendsRow = ({ row }: DividendsRowProps) => {
   const classes = useStyles({})
-
-  const valueFormatAmount = (value: string | number) =>
-    typeof value === 'number' ? formatAmount(value) : value
 
   return (
     <TableRow key={row.createdAt} className={classes.row}>
@@ -27,10 +24,10 @@ export const DividendsRow = ({ row }: DividendsRowProps) => {
         {row.dividendPerShare}
       </TableCell>
       <TableCell align='left' className={classes.column}>
-        {valueFormatAmount(row.numberOfToken)}
+        {formatValue(row.numberOfToken)}
       </TableCell>
       <TableCell align='right' className={classes.column}>
-        {valueFormatAmount(row.totalAmount)}
+        {formatValue(row.totalAmount)}
       </TableCell>
     </TableRow>
   )
