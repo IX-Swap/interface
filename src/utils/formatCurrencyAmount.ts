@@ -4,7 +4,9 @@ import JSBI from 'jsbi'
 export function floorTo4Decimals(num: number) {
   return Math.floor((num + Number.EPSILON) * 10000) / 10000
 }
-
+export function floorToDecimals(num: number, decimals = 4) {
+  return Math.floor((num + Number.EPSILON) * Math.pow(10, decimals)) / Math.pow(10, decimals)
+}
 export function formatCurrencyAmount(amount: CurrencyAmount<Currency> | undefined, sigFigs: number) {
   if (!amount) {
     return '-'

@@ -1,10 +1,9 @@
-import React from 'react'
 import { Trans } from '@lingui/macro'
-
-import { RowBetween, RowFixed } from '../Row'
-import { StyledPageHeader, TYPE } from '../../theme'
 import SettingsTab from 'components/Settings'
+import React from 'react'
 import { useDerivedSwapInfo } from 'state/swap/hooks'
+import { StyledPageHeader, TYPE } from '../../theme'
+import { RowBetween, RowFixed } from '../Row'
 
 export default function SwapHeader() {
   const { allowedSlippage } = useDerivedSwapInfo()

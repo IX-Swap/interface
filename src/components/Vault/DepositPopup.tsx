@@ -22,6 +22,7 @@ import { ModalPadding } from './styleds'
 import { ButtonText } from 'components/Button'
 import { useUserSecTokens } from 'state/user/hooks'
 import { DepositAboutWrapping } from './DepositAboutWrapping'
+import { getNetworkFromToken } from 'components/CurrencyLogo'
 
 interface Props {
   currency?: Currency
@@ -34,7 +35,7 @@ export const DepositPopup = ({ currency }: Props) => {
   const { modalView } = useDepositState()
   const dispatch = useDispatch<AppDispatch>()
   const tokenInfo = (secTokens[(currency as any)?.address || ''] as any)?.tokenInfo
-
+  const networkName = getNetworkFromToken(tokenInfo)
   const onClose = useCallback(() => {
     dispatch(setModalView({ view: DepositModalView.CREATE_REQUEST }))
     dispatch(setError({ errorMessage: '' }))
@@ -63,9 +64,7 @@ export const DepositPopup = ({ currency }: Props) => {
               ) : (
                 <TYPE.title5>
                   <Trans>{`Deposit ${tokenInfo?.symbol || ''} ${
-                    modalView === DepositModalView.SEND_INFO
-                      ? `to 1st Digital Custodian`
-                      : `from ${tokenInfo?.network || ''}`
+                    modalView === DepositModalView.SEND_INFO ? `to 1st Digital Custodian` : `from ${networkName || ''}`
                   }`}</Trans>
                 </TYPE.title5>
               )}

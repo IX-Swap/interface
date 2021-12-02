@@ -3,6 +3,7 @@ import { Currency, Percent, TradeType } from '@ixswap1/sdk-core'
 import { Pair, Router, Trade as V2Trade, TradeAuthorization } from '@ixswap1/v2-sdk'
 import { t } from '@lingui/macro'
 import { useCallback, useMemo } from 'react'
+import { useSecTokens } from 'state/secTokens/hooks'
 import { useDerivedSwapInfo } from 'state/swap/hooks'
 import { useAuthorizationsState, useSwapSecPairs } from 'state/swapHelper/hooks'
 import { calculateGasMargin } from 'utils/calculateGasMargin'
@@ -110,6 +111,7 @@ export function useAuthorizationDigest(
 
 // returns an array in the form of [address, null, etc] only sec tokens have an address
 export function useSwapSecTokenAddresses(trade: V2Trade<Currency, Currency, TradeType> | undefined | null) {
+  const { secTokens } = useSecTokens()
   return useMemo(() => {
     const tokens = []
     const tokenPath = trade?.route?.path
@@ -117,7 +119,8 @@ export function useSwapSecTokenAddresses(trade: V2Trade<Currency, Currency, Trad
       for (const index of tokenPath.keys()) {
         const token = tokenPath[index]
         const isFirstOrLast = index === 0 || index === tokenPath.length - 1
-        if ((token as any)?.isSecToken && isFirstOrLast) {
+        const isSecToken = Boolean(secTokens[token.address])
+        if (isSecToken && isFirstOrLast) {
           tokens.push(token.address)
         } else {
           tokens.push(null)
@@ -125,7 +128,7 @@ export function useSwapSecTokenAddresses(trade: V2Trade<Currency, Currency, Trad
       }
     }
     return tokens
-  }, [trade?.route?.path])
+  }, [trade?.route?.path, secTokens])
 }
 /**
  * Returns the swap calls that can be used to make the trade

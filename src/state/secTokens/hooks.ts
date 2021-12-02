@@ -99,8 +99,8 @@ export function listToSecTokenMap(
   if (result) return result
   const map = list.reduce<SecTokenAddressMap>((tokenMap, tokenInfo) => {
     const token = new WrappedTokenInfo(tokenInfo, undefined)
-    if (tokenMap[token.chainId]?.[token.address] !== undefined) {
-      console.error(new Error(`Duplicate token! ${token.address}`))
+    if (tokenMap[token?.chainId]?.[token?.address] !== undefined) {
+      console.error(new Error(`Duplicate token! ${token?.address}`))
       return tokenMap
     }
     return {
@@ -137,8 +137,10 @@ export function useSecTokensFromMap(tokenMap: SecTokenAddressMap): { [address: s
 }
 
 export function useAccreditationStatus(currencyId?: string) {
+  const { secTokens: userSecTokens } = useUserSecTokens()
   const { secTokens } = useSecTokens()
-  const tokenInfo = (secTokens[currencyId ?? ''] as any)?.tokenInfo
+  const token = userSecTokens[currencyId ?? ''] ?? secTokens[currencyId ?? '']
+  const tokenInfo = (token as any)?.tokenInfo
 
   return useMemo(() => {
     const accreditationRequest: AccreditationRequest | null = tokenInfo?.accreditationRequest || null

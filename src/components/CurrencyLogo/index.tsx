@@ -10,7 +10,7 @@ import Logo from '../Logo'
 
 type Network = 'ethereum' | 'polygon'
 
-function chainIdToNetworkName(networkId: SupportedChainId): Network {
+export function chainIdToNetworkName(networkId: SupportedChainId): Network {
   switch (networkId) {
     case SupportedChainId.MAINNET:
       return 'ethereum'
@@ -25,6 +25,10 @@ function chainIdToNetworkName(networkId: SupportedChainId): Network {
 export const getTokenLogoURL = (address: string, chainId = SupportedChainId.MAINNET) => {
   const network = chainIdToNetworkName(chainId)
   return `https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/${network}/assets/${address}/logo.png`
+}
+
+export const getNetworkFromToken = (tokenInfo: any) => {
+  return tokenInfo?.originalNetwork?.charAt(0)?.toUpperCase() + tokenInfo?.originalNetwork?.slice(1) || ''
 }
 
 const StyledEthereumLogo = styled.img<{ size: string }>`

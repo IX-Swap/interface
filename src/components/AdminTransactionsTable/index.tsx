@@ -16,6 +16,9 @@ import useCopyClipboard from 'hooks/useCopyClipboard'
 import { BrokerDealerSwapItem } from 'state/admin/actions'
 import { useCurrency } from 'hooks/Tokens'
 import { Currency, CurrencyAmount } from '@ixswap1/sdk-core'
+import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
+import { ExternalLink } from 'theme'
+import { getExplorerName } from 'hooks/useExplorerName'
 
 interface RowProps {
   item: BrokerDealerSwapItem
@@ -52,9 +55,9 @@ const Row: FC<RowProps> = ({ item }: RowProps) => {
     status,
     token,
     createdAt,
+    transactionHash,
   } = item
   const currency = useCurrency(tokenAddress)
-
   return (
     <StyledBodyRow key={`transaction-${id}`}>
       <div>{dayjs(createdAt).format('MMM D, YYYY HH:mm')}</div>
@@ -72,9 +75,17 @@ const Row: FC<RowProps> = ({ item }: RowProps) => {
         )}
       </Wallet>
       <div>{`${pairSymbol?.split('-')?.join(' > ') ?? token?.symbol}`}</div>
-      <div>{`${CurrencyAmount.fromRawAmount(currency as Currency, amount).toFixed()} ${token?.symbol}`}</div>
+      <div>
+        {currency ? `${CurrencyAmount.fromRawAmount(currency as Currency, amount).toFixed()} ${token?.symbol}` : ''}
+      </div>
       <div style={{ textTransform: 'capitalize' }}>{status}</div>
-      <div>{status === 'approved' || status === 'created' ? 'OK' : 'NOT OK'}</div>
+      <div>
+        {transactionHash && currency?.chainId && (
+          <ExternalLink href={getExplorerLink(currency.chainId, transactionHash, ExplorerDataType.TRANSACTION)}>
+            View on {getExplorerName(currency.chainId)}
+          </ExternalLink>
+        )}
+      </div>
     </StyledBodyRow>
   )
 }

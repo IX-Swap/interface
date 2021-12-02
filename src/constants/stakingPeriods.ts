@@ -12,6 +12,7 @@ export interface IStaking {
   distributeAmount: number
   apy: number
   reward: number
+  totalReward: number
   lockMonths: number
   startDateUnix: number
   endDateUnix: number

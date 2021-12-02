@@ -9,7 +9,7 @@ import { useActiveWeb3React } from 'hooks/web3'
 import { useCallback, useEffect, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import apiService from 'services/apiService'
-import { tokens } from 'services/apiUrls'
+import { broker, tokens } from 'services/apiUrls'
 import { useAddPopup } from 'state/application/hooks'
 import { getStringAmount } from 'utils/getStringAmount'
 import { hexTimeToTokenExpirationTime, shouldRenewToken } from 'utils/time'
@@ -33,6 +33,26 @@ export function useAuthorizationsState() {
   const { authorizations } = useSwapHelpersState()
   const { chainId } = useActiveWeb3React()
   return useMemo(() => (chainId ? authorizations?.[chainId] : undefined), [chainId, authorizations])
+}
+
+export function useSaveSwapTx() {
+  const authorizations = useAuthorizationsState()
+  return useCallback(
+    async ({ transactionHash, addresses }: { transactionHash: string; addresses: string[] }) => {
+      if (!addresses.length) {
+        return
+      }
+      const promises = addresses.map(async (address) => {
+        const authorization = authorizations?.[address]
+        if (authorization && authorization.swapId) {
+          const result = await saveSwapTxHash({ swapId: authorization.swapId, transactionHash })
+          return result
+        }
+      })
+      await Promise.allSettled(promises)
+    },
+    [authorizations]
+  )
 }
 
 export function useClearAuthorization() {
@@ -231,7 +251,8 @@ export function useSwapConfirmDataFromURL(
       try {
         const response = await getSwapConfirmAuthorization({ ...swapConfirm })
         const data = response.data
-        const { s, v, r, operator, deadline } = data
+        const { s, v, r, operator, deadline } = data.authorization
+        const swapId = data.swapId
         const persistedAuthorization = {
           s,
           v,
@@ -240,6 +261,7 @@ export function useSwapConfirmDataFromURL(
           deadline,
           expiresAt: hexTimeToTokenExpirationTime(deadline),
           amount,
+          swapId,
         }
         dispatch(setLoadingSwap({ isLoading: false }))
         dispatch(setAuthorizationInProgress({ authorizationInProgress: null }))
@@ -287,6 +309,11 @@ export function useSwapConfirmDataFromURL(
 
 export async function getSwapConfirmAuthorization({ brokerDealerId, hash, encryptedData }: SwapConfirmArguments) {
   const response = await apiService.post(tokens.swapConfirm(brokerDealerId), { hash, encryptedData })
+  return response
+}
+
+export async function saveSwapTxHash({ swapId, transactionHash }: { swapId: number; transactionHash: string }) {
+  const response = await apiService.post(broker.storeTx(), { swapId, transactionHash })
   return response
 }
 

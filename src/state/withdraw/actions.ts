@@ -1,6 +1,7 @@
 import { ActionCreatorWithoutPayload, ActionCreatorWithPayload, createAction } from '@reduxjs/toolkit'
 
 export const typeAmount = createAction<{ typedValue: string }>('withdraw/typeAmount')
+export const setNetwork = createAction<{ networkName: string }>('withdraw/setNetwork')
 export const typeReceiver = createAction<{ typedValue: string }>('withdraw/typeReceiver')
 export const setTransaction = createAction<{ tx: string }>('withdraw/setTransaction')
 export const setCurrency = createAction<{ currencyId: string }>('withdraw/setCurrency')

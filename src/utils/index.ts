@@ -7,17 +7,32 @@ import { FeeAmount } from 'constants/enums'
 import { BIG_INT_ZERO } from 'constants/misc'
 import { TokenAddressMap } from '../state/lists/hooks'
 import JSBI from 'jsbi'
+import walletValidator from 'multicoin-address-validator'
 
 // returns the checksummed address if the address is valid, otherwise returns false
 export function isAddress(value: any): string | false {
+  if (!value) {
+    return false
+  }
   try {
     return getAddress(value)
   } catch {
+    if (walletValidator.validate(value, 'Tezos') || walletValidator.validate(value, 'Algorand')) {
+      return value
+    }
     return false
   }
 }
 
-export const isValidAddress = (value: string): string | false => (/^0x[a-fA-F0-9]{40}$/.test(value) ? value : false)
+export const isValidAddress = (value: string): string | false => {
+  const isValid = /^0x[a-fA-F0-9]{40}$/.test(value) ? value : false
+  if (!isValid) {
+    if (walletValidator.validate(value, 'Tezos') || walletValidator.validate(value, 'Algorand')) {
+      return value
+    }
+  }
+  return isValid
+}
 
 // shorten the checksummed version of the input address to have 0x + 4 characters at start and end
 export function shortenAddress(address: string, chars = 4): string {
@@ -25,7 +40,7 @@ export function shortenAddress(address: string, chars = 4): string {
   if (!parsed) {
     throw Error(`Invalid 'address' parameter '${address}'.`)
   }
-  return `${parsed.substring(0, chars + 2)}...${parsed.substring(42 - chars)}`
+  return `${parsed.substring(0, chars + 2)}...${parsed.substring(parsed?.length - chars)}`
 }
 
 export function shortAddress(address: string, chars = 4): string {
@@ -33,7 +48,7 @@ export function shortAddress(address: string, chars = 4): string {
   if (!parsed) {
     return `Invalid 'address' '${address}'`
   }
-  return `${parsed.substring(0, chars + 2)}...${parsed.substring(42 - chars)}`
+  return `${parsed.substring(0, chars + 2)}...${parsed.substring(parsed?.length - chars)}`
 }
 
 // account is not optional

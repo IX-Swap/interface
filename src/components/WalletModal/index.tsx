@@ -4,11 +4,11 @@ import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core'
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import { AutoRow } from 'components/Row'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { isMobile } from 'react-device-detect'
 import ReactGA from 'react-ga'
 import MetamaskIcon from '../../assets/images/metamask.png'
-import { injected } from '../../connectors'
+import { injected, walletconnect } from '../../connectors'
 // import { OVERLAY_READY } from '../../connectors/Fortmatic'
 import { SUPPORTED_WALLETS } from '../../constants/wallet'
 import usePrevious from '../../hooks/usePrevious'
@@ -76,6 +76,7 @@ export default function WalletModal({
       setWalletView(WALLET_VIEWS.ACCOUNT)
     }
   }, [walletModalOpen])
+
   // close modal when a connection is successful
   const activePrevious = usePrevious(active)
   const connectorPrevious = usePrevious(connector)
@@ -85,44 +86,56 @@ export default function WalletModal({
     }
   }, [setWalletView, active, error, connector, walletModalOpen, activePrevious, connectorPrevious])
 
-  const tryActivation = async (connector: AbstractConnector | undefined) => {
-    let name = ''
-    Object.keys(SUPPORTED_WALLETS).map((key) => {
-      if (connector === SUPPORTED_WALLETS[key].connector) {
-        return (name = SUPPORTED_WALLETS[key].name)
+  const tryActivation = useCallback(
+    async (connector: AbstractConnector | undefined) => {
+      let name = ''
+      Object.keys(SUPPORTED_WALLETS).map((key) => {
+        if (connector === SUPPORTED_WALLETS[key].connector) {
+          return (name = SUPPORTED_WALLETS[key].name)
+        }
+        return true
+      })
+      // log selected wallet
+
+      const { ym } = window
+      ym(84960586, 'reachGoal', 'commonMetamaskChosenAsWallet')
+
+      ReactGA.event({
+        category: 'Wallet',
+        action: 'Change Wallet',
+        label: name,
+      })
+      setPendingWallet(connector) // set wallet for pending view
+      setWalletView(WALLET_VIEWS.PENDING)
+
+      // if the connector is walletconnect and the user has already tried to connect, manually reset the connector
+      if (connector instanceof WalletConnectConnector && connector.walletConnectProvider?.wc?.uri) {
+        console.log('resetting the connector')
+        connector.walletConnectProvider = undefined
       }
-      return true
-    })
-    // log selected wallet
-
-    const { ym } = window
-    ym(84960586, 'reachGoal', 'commonMetamaskChosenAsWallet')
-
-    ReactGA.event({
-      category: 'Wallet',
-      action: 'Change Wallet',
-      label: name,
-    })
-    setPendingWallet(connector) // set wallet for pending view
-    setWalletView(WALLET_VIEWS.PENDING)
-
-    // if the connector is walletconnect and the user has already tried to connect, manually reset the connector
-    if (connector instanceof WalletConnectConnector && connector.walletConnectProvider?.wc?.uri) {
-      connector.walletConnectProvider = undefined
-    }
-    if (connector) {
-      try {
-        await activate(connector, undefined, true)
-      } catch (error) {
-        if (error instanceof UnsupportedChainIdError) {
-          activate(connector) // a little janky...can't use setError because the connector isn't set
-        } else {
-          activate(connector) // a little janky...can't use setError because the connector isn't set
-          setPendingError(true)
+      if (connector) {
+        console.log({ connector })
+        try {
+          await activate(connector, undefined, true)
+        } catch (error) {
+          if (error instanceof UnsupportedChainIdError) {
+            activate(connector) // a little janky...can't use setError because the connector isn't set
+          } else {
+            activate(connector) // a little janky...can't use setError because the connector isn't set
+            setPendingError(true)
+          }
         }
       }
-    }
-  }
+    },
+    [activate]
+  )
+
+  // useEffect(() => {
+  //   const isWalletConnect = localStorage.getItem('walletconnect')
+  //   if (isWalletConnect && isMobile && !account) {
+  //     tryActivation(walletconnect)
+  //   }
+  // }, [account, tryActivation])
 
   // close wallet modal if fortmatic modal is active
   // useEffect(() => {
@@ -250,9 +263,9 @@ export default function WalletModal({
             <AutoRow style={{ flexWrap: 'nowrap' }}>
               <TYPE.main fontSize={14}>
                 <Trans>
-                  By connecting a wallet, you agree to IXSwap’{' '}
+                  By connecting a wallet, you agree to IXSwap’s{' '}
                   <ExternalLink href="https://ixswap.io/terms-and-conditions/">Terms and Conditions</ExternalLink> and
-                  acknowledge that you have read and understand the{' '}
+                  acknowledge that you have read and understood the{' '}
                   <ExternalLink href="https://ixswap.io/privacy-policy/">IXSwap Privacy Policy</ExternalLink>.
                 </Trans>
               </TYPE.main>

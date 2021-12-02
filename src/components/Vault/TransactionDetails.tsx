@@ -111,12 +111,13 @@ export const TransactionDetails = ({ currency }: Props) => {
                 {activeEvent?.fromAddress && (
                   <Row style={{ marginTop: '16px', flexWrap: 'wrap' }}>
                     <TYPE.buttonMuted>
-                      <Trans>Sent from:</Trans>&nbsp;&nbsp;
+                      {isDeposit(activeEvent.type) && <Trans>Sent from:</Trans>}
+                      {isWithdraw(activeEvent.type) && <Trans>Sent to:</Trans>}&nbsp;&nbsp;
                     </TYPE.buttonMuted>
                     <TYPE.body3>{shortenAddress(activeEvent?.fromAddress)}</TYPE.body3>
                   </Row>
                 )}
-                {activeEvent.depositAddress && (
+                {activeEvent.depositAddress && isDeposit(activeEvent.type) && (
                   <Row
                     style={{ marginTop: '16px', flexWrap: 'wrap' }}
                     onClick={() => setCopied(activeEvent.depositAddress ?? '')}

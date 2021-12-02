@@ -172,6 +172,7 @@ export type BrokerDealerSwapItem = {
     tokenAddress: string
   }
   createdAt: string
+  transactionHash?: string | null
 }
 
 export const getKycList: Readonly<{

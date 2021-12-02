@@ -10,6 +10,7 @@ import {
   useAuthorizationsState,
   useClearAuthorization,
   useOpenModal,
+  useSaveSwapTx,
   useSetSwapState,
   useSwapSecPairs,
 } from 'state/swapHelper/hooks'
@@ -27,7 +28,7 @@ export function useHandleSwap({ priceImpact }: { priceImpact: Percent | undefine
   const { setOpenModal } = useOpenModal()
   const getSwapCallback = useSwapCallback(trade, allowedSlippage, recipient)
   const { address: recipientAddress } = useENSAddress(recipient)
-
+  const saveSwapTx = useSaveSwapTx()
   const [singleHopOnly] = useUserSingleHopOnly()
   // if missing authorization, don't swap. after successful swap, clear all authorizations
   const authorizationDigest = useAuthorizationDigest(trade)
@@ -68,6 +69,7 @@ export function useHandleSwap({ priceImpact }: { priceImpact: Percent | undefine
       .map((pair) => pair.liquidityToken.address)
     try {
       const hash = await swapCallback()
+      await saveSwapTx({ transactionHash: hash, addresses: onlySecTokens })
       setSwapState({
         attemptingTxn: false,
         tradeToConfirm: undefined,

@@ -12,7 +12,7 @@ import { AutoColumn, ColumnCenter } from 'components/Column'
 import { CustodianToggleWrapper } from 'pages/Custodian/styleds'
 import { Border, ToggleOption } from 'components/Tabs'
 
-export const AdminKyc = () => {
+const AdminKyc = () => {
   const [showKYC, setShowKYC] = useState(true)
   const history = useHistory()
   const { adminData, adminError, adminLoading } = useAdminState()
@@ -82,3 +82,5 @@ const Body = styled.div`
   margin: 0 auto;
   width: 100%;
 `
+
+export default AdminKyc

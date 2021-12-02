@@ -33,6 +33,7 @@ export const kyc = {
 export const broker = {
   choose: (pairId: number) => `broker-dealer/choose/${pairId}`,
   pairs: (tokenId: number) => `broker-dealer/${tokenId}/pairs`,
+  storeTx: () => `/broker-dealer/swaps/add-hash`,
 }
 
 export const tokens = {

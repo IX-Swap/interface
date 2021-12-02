@@ -45,6 +45,7 @@
     "@types/luxon": "^1.24.4",
     "@types/md5": "^2.3.1",
     "@types/multicodec": "^1.0.0",
+    "@types/multicoin-address-validator": "^0.5.0",
     "@types/node": "^15.6.1",
     "@types/qs": "^6.9.2",
     "@types/react": "^17.0.2",
@@ -93,6 +94,7 @@
     "luxon": "^1.25.0",
     "md5": "^2.3.0",
     "multicodec": "^3.0.1",
+    "multicoin-address-validator": "^0.5.2",
     "multihashes": "^4.0.2",
     "node-vibrant": "^3.1.5",
     "polished": "^3.3.2",
@@ -134,8 +136,8 @@
     "workbox-routing": "^6.1.0",
     "workbox-strategies": "^6.1.0"
   },
-  "resolutions": {
-    "@walletconnect/web3-provider": "1.4.2-rc.2"
+   "resolutions": {
+    "@walletconnect/ethereum-provider": "1.6.5"
   },
   "scripts": {
     "compile-contract-types": "yarn compile-external-abi-types",

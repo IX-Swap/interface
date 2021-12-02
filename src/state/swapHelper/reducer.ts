@@ -50,6 +50,7 @@ export default createReducer(initialState, (builder) =>
         },
       }
     })
+
     .addCase(
       setSwapState,
       (state, { payload: { showConfirm, tradeToConfirm, attemptingTxn, swapErrorMessage, txHash } }) => {

@@ -46,6 +46,10 @@ _axios.interceptors.response.use(responseSuccessInterceptor, async function resp
         store.dispatch(postLogin.rejected({ errorMessage: error.message }))
       }
     }
+    if (error?.response?.status === 403) {
+      const message = error?.response?.data?.message
+      throw new Error(message)
+    }
   }
 })
 
