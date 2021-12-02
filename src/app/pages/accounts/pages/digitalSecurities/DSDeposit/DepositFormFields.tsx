@@ -19,7 +19,7 @@ export const DepositFormFields: React.FC = () => {
 
   const snackbar = useSnackbar()
   const handleCopy = async () => {
-    await navigator.clipboard.writeText(address)
+    await navigator.clipboard.writeText(address ?? '')
     snackbar.showSnackbar('Copied to clipboard', 'info')
   }
 
