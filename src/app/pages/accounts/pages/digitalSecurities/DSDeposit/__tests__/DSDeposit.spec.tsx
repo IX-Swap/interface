@@ -1,7 +1,7 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { RecentDeposits } from 'app/pages/accounts/pages/digitalSecurities/DSDeposit/RecentDeposits'
-import { DepositView } from 'app/pages/accounts/pages/digitalSecurities/DSDeposit/DepositView'
+import { DepositForm } from 'app/pages/accounts/pages/digitalSecurities/DSDeposit/DepositForm'
 
 import { DSDeposit } from 'app/pages/accounts/pages/digitalSecurities/DSDeposit/DSDeposit'
 
@@ -28,6 +28,6 @@ describe('DepositView', () => {
     render(<DSDeposit />)
 
     expect(RecentDeposits).toHaveBeenCalledTimes(1)
-    expect(DepositView).toHaveBeenCalledTimes(1)
+    expect(DepositForm).toHaveBeenCalledTimes(1)
   })
 })

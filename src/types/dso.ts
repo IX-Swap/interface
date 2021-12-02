@@ -188,3 +188,12 @@ export interface DSOActivity {
 export interface CloseDealArgs {
   otp: string
 }
+
+export interface DepositAddress {
+  account_id: number
+  wallet_name: string
+  asset_ticker: string
+  deposit_address: string
+  hd_path: string
+  depositQRCodeUrl: string
+}

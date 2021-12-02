@@ -73,6 +73,9 @@ export const accountsURL = {
   cashWithdrawals: {
     create: (userId: string) => `/accounts/cash/withdrawals/${userId}`
   },
+  digitalSecurities: {
+    getDepositAddress: '/custody/deposits/getDepositAddress'
+  },
   dsWithdrawals: {
     create: (userId: string) => `/accounts/security/withdrawals/${userId}`,
     createCustodyWithdrawal: '/custody/withdrawals'

@@ -1,6 +1,6 @@
 import React from 'react'
 import { cleanup, render } from 'test-utils'
-import { AssetView } from 'app/pages/accounts/pages/digitalSecurities/DSDeposit/AssetView'
+import { DepositFormFields } from 'app/pages/accounts/pages/digitalSecurities/DSDeposit/DepositFormFields'
 import * as snackbar from 'hooks/useSnackbar'
 import { asset } from '__fixtures__/authorizer'
 import * as balances from 'hooks/balance/useAllBalances'
@@ -15,7 +15,7 @@ Object.assign(navigator, { clipboard: { writeText: () => {} } })
 
 jest.spyOn(navigator.clipboard, 'writeText').mockImplementation(async () => {})
 
-describe('AssetView', () => {
+describe('DepositFormFields', () => {
   const showSnackbar = jest.fn()
   const balanceId = balance.assetId
   const address = '12nfq3r45678900awn2noag3459an'
@@ -38,7 +38,7 @@ describe('AssetView', () => {
   it('renders without error', async () => {
     render(
       <Route path={DSRoute.deposit}>
-        <AssetView />
+        <DepositFormFields />
       </Route>
     )
   })
@@ -46,7 +46,7 @@ describe('AssetView', () => {
   it('invokes showSnackbar on Button click', async () => {
     const { getByRole } = render(
       <Route path={DSRoute.deposit}>
-        <AssetView />
+        <DepositFormFields />
       </Route>
     )
     const container = getByRole('button')
@@ -61,7 +61,7 @@ describe('AssetView', () => {
   it('copies address to clipboard', async () => {
     const { getByRole } = render(
       <Route path={DSRoute.deposit}>
-        <AssetView />
+        <DepositFormFields />
       </Route>
     )
     const container = getByRole('button')
@@ -77,7 +77,7 @@ describe('AssetView', () => {
   it('displays address', () => {
     const { container } = render(
       <Route path={DSRoute.deposit}>
-        <AssetView />
+        <DepositFormFields />
       </Route>
     )
 

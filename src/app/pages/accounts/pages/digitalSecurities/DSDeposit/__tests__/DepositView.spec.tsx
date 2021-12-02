@@ -1,32 +1,26 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { DepositView } from 'app/pages/accounts/pages/digitalSecurities/DSDeposit/DepositView'
-import { AssetView } from 'app/pages/accounts/pages/digitalSecurities/DSDeposit/AssetView'
-import { AssetInfo } from 'app/pages/accounts/pages/digitalSecurities/DSDeposit/AssetInfo'
+import { DepositForm } from 'app/pages/accounts/pages/digitalSecurities/DSDeposit/DepositForm'
+import { DepositFormFields } from 'app/pages/accounts/pages/digitalSecurities/DSDeposit/DepositFormFields'
 
 jest.mock(
-  'app/pages/accounts/pages/digitalSecurities/DSDeposit/AssetView',
-  () => ({ AssetView: jest.fn(() => null) })
-)
-jest.mock(
-  'app/pages/accounts/pages/digitalSecurities/DSDeposit/AssetInfo',
-  () => ({ AssetInfo: jest.fn(() => null) })
+  'app/pages/accounts/pages/digitalSecurities/DSDeposit/DepositFormFields',
+  () => ({ DepositFormFields: jest.fn(() => null) })
 )
 
-describe('DepositView', () => {
+describe('DepositForm', () => {
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
   })
 
   it('renders without error', () => {
-    render(<DepositView />)
+    render(<DepositForm />)
   })
 
-  it('renders BalancesList, AssetView & DSDepositInput', () => {
-    render(<DepositView />)
+  it('renders DepositFormFields', () => {
+    render(<DepositForm />)
 
-    expect(AssetView).toHaveBeenCalledTimes(1)
-    expect(AssetInfo).toHaveBeenCalledTimes(1)
+    expect(DepositFormFields).toHaveBeenCalledTimes(1)
   })
 })
