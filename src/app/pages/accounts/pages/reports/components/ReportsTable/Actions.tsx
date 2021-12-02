@@ -22,7 +22,7 @@ export const Actions = ({ item }: ActionsProps) => {
     params.append('fromDate', fromDate)
   }
   if (toDate !== undefined) {
-    params.append('fromDate', toDate)
+    params.append('toDate', toDate)
   }
 
   return (

@@ -312,3 +312,5 @@ exports[`TradeConfirmation should match snapshot when data is loading 1`] = `
 `;
 
 exports[`TradeConfirmation should match snapshot when data is undefined 1`] = `<div />`;
+
+exports[`TradeConfirmation should match snapshot when data length is 0 1`] = `<div />`;

@@ -73,21 +73,21 @@ export const fakeTradeItem: TradeItem = {
   type: 'SELL'
 }
 
+export const fakeFee = {
+  _id: '61a42c39347c8f6c19d00cb8',
+  user: '60731869332485e38ae74ca1',
+  amount: 10,
+  description: 'Primary issuance fee',
+  currency: 'SGD',
+  createdAt: '2021-11-29T01:26:17.997Z',
+  updatedAt: '2021-11-29T01:26:17.997Z',
+  __v: 0
+}
+
 export const fakeFeeAndCharges = {
-  usd: [],
+  usd: [fakeFee],
   totalUsd: 0,
-  sgd: [
-    {
-      _id: '61a42c39347c8f6c19d00cb8',
-      user: '60731869332485e38ae74ca1',
-      amount: 10,
-      description: 'Primary issuance fee',
-      currency: 'SGD',
-      createdAt: '2021-11-29T01:26:17.997Z',
-      updatedAt: '2021-11-29T01:26:17.997Z',
-      __v: 0
-    }
-  ],
+  sgd: [fakeFee],
   totalSgd: 10
 }
 

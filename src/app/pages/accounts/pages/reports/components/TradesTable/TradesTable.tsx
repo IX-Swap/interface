@@ -27,18 +27,18 @@ export const createRow = (pair: string) => {
   }
 }
 
+export const headCells = [
+  { label: '', align: 'left' },
+  { label: 'Date', align: 'left' },
+  { label: 'Type', align: 'left' },
+  { label: 'Quantity', align: 'right' },
+  { label: 'Price', align: 'right' },
+  { label: 'Total', align: 'right' },
+  { label: 'Fee', align: 'right' }
+]
+
 export const TradesTable = ({ data }: TradesTableProps) => {
   const classes = useStyles({})
-
-  const headCells = [
-    { label: '', align: 'left' },
-    { label: 'Date', align: 'left' },
-    { label: 'Type', align: 'left' },
-    { label: 'Quantity', align: 'right' },
-    { label: 'Price', align: 'right' },
-    { label: 'Total', align: 'right' },
-    { label: 'Fee', align: 'right' }
-  ]
 
   const rows = [createRow('Securities Pair'), ...data]
 
@@ -48,7 +48,11 @@ export const TradesTable = ({ data }: TradesTableProps) => {
         <TableHead>
           <TableRow>
             {headCells.map(({ label, align }) => (
-              <TableCell align={align as any} className={classes.headColumn}>
+              <TableCell
+                align={align as any}
+                className={classes.headColumn}
+                data-testid={'cell'}
+              >
                 {label}
               </TableCell>
             ))}

@@ -38,4 +38,14 @@ describe('Dividends', () => {
     const { container } = render(<Dividends />)
     expect(container).toMatchSnapshot()
   })
+
+  it('should match snapshot when data length is 0', () => {
+    jest.spyOn(useDividends, 'useDividends').mockReturnValue({
+      data: [],
+      isLoading: false
+    } as any)
+
+    const { container } = render(<Dividends />)
+    expect(container).toMatchSnapshot()
+  })
 })

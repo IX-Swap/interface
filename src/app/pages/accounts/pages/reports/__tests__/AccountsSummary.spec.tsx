@@ -29,9 +29,29 @@ describe('AccountsSummary', () => {
     expect(container).toMatchSnapshot()
   })
 
-  it('should match snapshot when data is loaded successfully', () => {
+  it('should match snapshot when all data is loaded successfully', () => {
     jest.spyOn(useActivitySummary, 'useActivitySummary').mockReturnValue({
       data: fakeActivitySummary,
+      isLoading: false
+    } as any)
+
+    const { container } = render(<AccountsSummary />)
+    expect(container).toMatchSnapshot()
+  })
+
+  it('should match snapshot when data is loaded successfully and openPositions is empty array', () => {
+    jest.spyOn(useActivitySummary, 'useActivitySummary').mockReturnValue({
+      data: { fakeActivitySummary, openPositions: [] },
+      isLoading: false
+    } as any)
+
+    const { container } = render(<AccountsSummary />)
+    expect(container).toMatchSnapshot()
+  })
+
+  it('should match snapshot when data is loaded successfully and fakeCashReports is empty array', () => {
+    jest.spyOn(useActivitySummary, 'useActivitySummary').mockReturnValue({
+      data: { fakeActivitySummary, cashReports: [] },
       isLoading: false
     } as any)
 

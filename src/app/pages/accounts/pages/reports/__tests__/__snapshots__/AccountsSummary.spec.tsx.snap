@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`AccountsSummary should match snapshot when data is loaded successfully 1`] = `
+exports[`AccountsSummary should match snapshot when all data is loaded successfully 1`] = `
 <div>
   <div
     class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column"
@@ -496,6 +496,135 @@ exports[`AccountsSummary should match snapshot when data is loaded successfully 
   </div>
 </div>
 `;
+
+exports[`AccountsSummary should match snapshot when data is loaded successfully and fakeCashReports is empty array 1`] = `
+<div>
+  <div
+    class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-item"
+    >
+      <div
+        class="MuiGrid-root makeStyles-container-3 MuiGrid-container MuiGrid-direction-xs-column"
+      >
+        <div
+          class="MuiGrid-root makeStyles-header-2 MuiGrid-container"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center"
+          >
+            <h2
+              class="MuiTypography-root MuiTypography-h2"
+            >
+              Activity Summary
+            </h2>
+          </div>
+        </div>
+        <div
+          class="MuiGrid-root"
+        >
+          <nav
+            class="MuiTypography-root MuiBreadcrumbs-root MuiTypography-body1 MuiTypography-colorTextSecondary"
+          >
+            <ol
+              class="MuiBreadcrumbs-ol"
+            />
+          </nav>
+        </div>
+      </div>
+      <div
+        class="MuiBox-root MuiBox-root-5"
+      />
+    </div>
+    <div
+      class="MuiGrid-root MuiGrid-item"
+    >
+      <div
+        class="MuiBox-root MuiBox-root-9"
+      />
+      <div
+        class="MuiPaper-root MuiAccordion-root makeStyles-root-10 MuiAccordion-rounded MuiPaper-elevation1 MuiPaper-rounded"
+      >
+        <div
+          aria-disabled="false"
+          aria-expanded="false"
+          class="MuiButtonBase-root MuiAccordionSummary-root makeStyles-summaryWrapper-11"
+          role="button"
+          tabindex="0"
+        >
+          <div
+            class="MuiAccordionSummary-content makeStyles-summaryContent-12"
+          >
+            <p
+              class="MuiTypography-root makeStyles-summary-13 MuiTypography-body1 MuiTypography-colorPrimary"
+            >
+              Cash Report
+            </p>
+          </div>
+          <div
+            aria-disabled="false"
+            aria-hidden="true"
+            class="MuiButtonBase-root MuiIconButton-root MuiAccordionSummary-expandIcon MuiIconButton-edgeEnd"
+          >
+            <span
+              class="MuiIconButton-label"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-colorPrimary"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"
+                />
+              </svg>
+            </span>
+            <span
+              class="MuiTouchRipple-root"
+            />
+          </div>
+        </div>
+        <div
+          class="MuiCollapse-root MuiCollapse-hidden"
+          style="min-height: 0px;"
+        >
+          <div
+            class="MuiCollapse-wrapper"
+          >
+            <div
+              class="MuiCollapse-wrapperInner"
+            >
+              <div
+                role="region"
+              >
+                <div
+                  class="MuiAccordionDetails-root makeStyles-detailsWrapper-14"
+                >
+                  <div
+                    class="MuiTableContainer-root"
+                  >
+                    <table
+                      class="MuiTable-root"
+                    >
+                      <tbody
+                        class="MuiTableBody-root"
+                      />
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`AccountsSummary should match snapshot when data is loaded successfully and openPositions is empty array 1`] = `<div />`;
 
 exports[`AccountsSummary should match snapshot when data is loading 1`] = `
 <div>
