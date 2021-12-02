@@ -163,7 +163,10 @@ test.describe('Edit identities form', () => {
     await kycForms.checkThatTheChangesSaved(fields)
   })
 
-  test('The "Issuer" KYC should be editable', async ({ kycForms, auth }) => {
+  test.skip('(need to add edit button) The "Issuer" KYC should be editable', async ({
+    kycForms,
+    auth
+  }) => {
     await auth.loginWithout2fa(baseCreds.EDIT_ISSUER, baseCreds.PASSWORD)
     await kycForms.followToViewIdentity()
     const fields = await kycForms.editCorporateInformation()

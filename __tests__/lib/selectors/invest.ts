@@ -1,4 +1,5 @@
 export const invest = {
+  TABLE: '[data-testid="table"]',
   TOAST_NOTIFICATIONS: '[data-testid="notification-inner"]',
   INVEST_TAB: '[href="/app/invest"]',
   PRIMARY_SECTION: '[href="/app/invest"] >> text="Primary"',
@@ -6,6 +7,8 @@ export const invest = {
   SECOND_MARKET: '[href="/app/otc-market"]',
   CHECKBOX: '[type="checkbox"]',
   GRAPH: '[data-testid="pairName"]',
+  COMMITMENTS: '[href="/app/invest/commitments"]',
+  OFFERS: '[href*="/app/invest/offerings/"]',
 
   buttons: {
     INVEST: '[data-testid="otc-card-link"]',
@@ -20,6 +23,8 @@ export const invest = {
     I_AGREE: 'button >> text="I Agree"',
     DECLINE: 'button >> text="Decline"',
     SELL: 'button >> text="SELL"',
+    VIEW_SECOND_DSO:
+      '[href="/app/invest/commitments/618e3111cc078c0e59014af5/view"]',
     INVEST_ACCOUNT:
       '[href="/app/invest/offerings/617699e04f2dcc0e7d304e4d/6185361bf251660e58fd5ed0/view/make-investment"]'
   },

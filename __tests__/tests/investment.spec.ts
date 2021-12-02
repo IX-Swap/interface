@@ -61,3 +61,29 @@ test.describe('Secondary market', () => {
     expect(orderCancelled).toBe(true)
   })
 })
+test.describe('My Commitments', () => {
+  test('The Commitments table should exist', async ({ page, investment }) => {
+    await investment.checkCommitmentsPage()
+    await expect(page).toHaveURL(`${baseCreds.URL}app/invest/commitments`)
+  })
+
+  test('The Commitment view should contain', async ({ investment }) => {
+    await investment.checkCommitmentsPage()
+    const locator = await investment.checkRedirectionToCommitment()
+    await expect(locator).toContainText([
+      'Company Name',
+      'Issued By',
+      'Issued Date',
+      'Digital Security',
+      'Price Per Unit',
+      'Total Amount',
+      'Number Of Units'
+    ])
+  })
+  test('The Commitment view should redirect to the DSO view page', async ({
+    investment
+  }) => {
+    await investment.checkCommitmentsPage()
+    await investment.checkRedirectionToCommitment()
+  })
+})

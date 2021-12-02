@@ -118,7 +118,14 @@ async function shouldNotExist(selector, page) {
     throw new Error(`Selector: ${selector} exist but should not `)
   }
 }
-
+async function isDisabledList(list: Array<[]>, page) {
+  let result = new Array()
+  for (const item of list) {
+    const isDis = await page.isDisabled(item)
+    result.push(isDis)
+  }
+  return result
+}
 async function getLinkToConfirmRegistration(email, page) {
   const partsEmail = email.split('@')
   let results
@@ -217,5 +224,6 @@ export {
   waitForRequestInclude,
   waitForText,
   randomString,
-  waitNewPage
+  waitNewPage,
+  isDisabledList
 }

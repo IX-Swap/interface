@@ -96,5 +96,19 @@ class Invest {
     const exist = await waitForText(this.page, 'Order Cancelled')
     return exist
   }
+
+  checkCommitmentsPage = async () => {
+    await click(invest.INVEST_TAB, this.page)
+    await click(invest.PRIMARY_SECTION, this.page)
+    await click(invest.COMMITMENTS, this.page)
+    await shouldExist(invest.TABLE, this.page)
+  }
+  checkRedirectionToCommitment = async () => {
+    await click(invest.buttons.VIEW_SECOND_DSO, this.page)
+    const locator = this.page.locator(
+      '[class="MuiGrid-root fs-exclude MuiGrid-container MuiGrid-spacing-xs-4"]'
+    )
+    return locator
+  }
 }
 export { Invest }

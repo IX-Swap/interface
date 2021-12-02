@@ -24,6 +24,7 @@ class Dso {
   editDsoInformationForm = async () => {
     const tokenName = 'TokenName' + randomString()
     const tokenSymbol = Date.now().toString().slice(-6)
+    await click(issuance.dso.buttons.EDIT_DSO, this.page)
     await clearAndTypeText(issuance.dso.fields.TOKEN_NAME, tokenName, this.page)
     await clearAndTypeText(
       issuance.dso.fields.TOKEN_SYMBOL,
@@ -193,9 +194,7 @@ class Listing {
       this.page
     )
     await click(issuance.dso.listBox.CURRENCY, this.page)
-    await clearAndTypeText(issuance.dso.fields.DIVIDEND_YIELD, '10', this.page)
     await clearAndTypeText(issuance.dso.fields.INTEREST_RATE, '10', this.page)
-    await clearAndTypeText(issuance.dso.fields.GROSS_IRR, '10', this.page)
     await clearAndTypeText(
       issuance.dso.fields.INVESTMENT_STRUCTURE,
       'best Structure',
@@ -204,11 +203,6 @@ class Listing {
     await click(issuance.dso.listBox.DISTRIBUTION_FREQUENCY, this.page)
     await click(issuance.dso.listBox.DISTRIBUTION_VALUE, this.page)
     await clearAndTypeText(issuance.dso.fields.LEVERAGE, '0.1', this.page)
-    await clearAndTypeText(
-      issuance.dso.fields.EQUITY_MULTIPLE,
-      '0.001',
-      this.page
-    )
   }
   fillListingGeneralInformationForm = async () => {
     const tokenName = 'TokenName' + randomString()

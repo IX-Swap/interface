@@ -1,6 +1,6 @@
 import { test } from '../lib/fixtures/fixtures'
 import { expect } from '@playwright/test'
-import { click, shouldExist } from '../lib/helpers/helpers'
+import { click, shouldExist, isDisabledList } from '../lib/helpers/helpers'
 import { baseCreds } from '../lib/helpers/creds'
 
 test.afterEach(async ({ page }) => {
@@ -41,7 +41,11 @@ test.describe('Check functionality', () => {
     expect(inputs).toStrictEqual(8)
   })
 
-  test('The "Preview" should be available', async ({ dso, issuance, page }) => {
+  test.skip('(need to implement)The "Preview" should be available', async ({
+    dso,
+    issuance,
+    page
+  }) => {
     await dso.fillDsoInformationForm()
     await dso.fillDsoPricingForm()
     await dso.fillDsoOfferingTermsForm()
@@ -56,6 +60,14 @@ test('DSO creation is available', async ({ dso, auth, page, issuance }) => {
   await dso.followToFundsManagement(auth, baseCreds.CREATE_DSO_MORE_OPTIONS)
   await click(issuance.dso.buttons.CREATE_DSO, page)
   await shouldExist(issuance.dso.FORM, page)
+})
+test('The fields should be editable if the DSO has not started.', async ({
+  dso,
+  auth
+}) => {
+  await dso.followToFundsManagement(auth, baseCreds.DSO_EDIT)
+  const formsIsEdited = await dso.editDsoInformationForm()
+  expect(formsIsEdited).toStrictEqual([true, true])
 })
 
 test.describe('Funds Management More Option section', () => {
@@ -86,25 +98,42 @@ test.describe('Funds Management More Option section', () => {
       await click(issuance.dso.buttons.EDIT_DSO, page)
     })
 
-    test('The Network field should be disabled', async ({ page, issuance }) => {
-      expect(
-        await page.getAttribute(issuance.dso.listBox.NETWORK, 'aria-disabled')
-      ).toBe('true')
-    })
-
-    test('Dividend Yield,Gross IRR,Equity Multiple fields should be disabled if Capital Structure = Debt', async ({
+    test('The Fields should be disabled if DSO started', async ({
       page,
       issuance
     }) => {
-      const dividend = await page.isDisabled(issuance.dso.fields.DIVIDEND_YIELD)
-      const gross = await page.isDisabled(issuance.dso.fields.GROSS_IRR)
-      const equity = await page.isDisabled(issuance.dso.fields.EQUITY_MULTIPLE)
-      expect([dividend, gross, equity]).toStrictEqual([true, true, true])
+      const result = await isDisabledList(
+        [
+          issuance.dso.fields.TOKEN_NAME,
+          issuance.dso.fields.IDENTIFIER_CODE,
+          issuance.dso.fields.LAUNCH_DATE,
+          issuance.dso.fields.TOKEN_SYMBOL
+        ],
+        page
+      )
+      const network = await page.getAttribute(
+        issuance.dso.listBox.NETWORK,
+        'aria-disabled'
+      )
+      expect([result, network]).toStrictEqual([
+        [true, true, true, true],
+        'true'
+      ])
     })
 
-    test('The form should be editable', async ({ dso, page }) => {
-      const formsIsEdited = await dso.editDsoInformationForm()
-      expect(formsIsEdited).toStrictEqual([true, true])
+    test('The fields should be disabled if Capital Structure = Debt', async ({
+      page,
+      issuance
+    }) => {
+      const result = await isDisabledList(
+        [
+          issuance.dso.fields.DIVIDEND_YIELD,
+          issuance.dso.fields.GROSS_IRR,
+          issuance.dso.fields.EQUITY_MULTIPLE
+        ],
+        page
+      )
+      expect(result).toStrictEqual([true, true, true])
     })
   })
 })
