@@ -19,6 +19,7 @@ export const useGetSupply = () => {
   const nft = useNftContract()
   return useCallback(async () => {
     const res = await nft?.totalSupply()
-    console.log({ res })
+    const uri = await nft?.tokenURI(1)
+    console.log({ res, uri })
   }, [nft])
 }
