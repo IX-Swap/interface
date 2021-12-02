@@ -1,16 +1,8 @@
 import React from 'react'
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow
-} from '@material-ui/core'
+import { TableCell, TableRow } from '@material-ui/core'
 import { useStyles } from '../shared.styles'
-import { OpenPositionItem, TradeItem } from 'types/reports'
+import { TradeItem } from 'types/reports'
 import { formatReportsDateAndTime } from 'helpers/dates'
-import { formatAmount } from 'helpers/numbers'
 import { formatValue } from 'app/pages/accounts/pages/reports/helper'
 
 export interface TradesRowProps {

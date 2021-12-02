@@ -49,9 +49,7 @@ export const ReportsInfo = ({ children = undefined }: ReportsInfoProps) => {
   return (
     <Grid item container alignItems={'center'} spacing={3}>
       {items.map(([name, value]) => (
-        <Grid item>
-          <InfoItem label={name} value={getValueOrPlaceholder(value)} />
-        </Grid>
+        <InfoItem label={name} value={getValueOrPlaceholder(value)} />
       ))}
 
       {renderAction()}
