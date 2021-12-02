@@ -149,40 +149,47 @@ exports[`TradeConfirmation should match snapshot when data is loaded successfull
                         >
                           <th
                             class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-18 MuiTableCell-alignLeft"
+                            data-testid="cell"
                             scope="col"
                           />
                           <th
                             class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-18 MuiTableCell-alignLeft"
+                            data-testid="cell"
                             scope="col"
                           >
                             Date
                           </th>
                           <th
                             class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-18 MuiTableCell-alignLeft"
+                            data-testid="cell"
                             scope="col"
                           >
                             Type
                           </th>
                           <th
                             class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-18 MuiTableCell-alignRight"
+                            data-testid="cell"
                             scope="col"
                           >
                             Quantity
                           </th>
                           <th
                             class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-18 MuiTableCell-alignRight"
+                            data-testid="cell"
                             scope="col"
                           >
                             Price
                           </th>
                           <th
                             class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-18 MuiTableCell-alignRight"
+                            data-testid="cell"
                             scope="col"
                           >
                             Total
                           </th>
                           <th
                             class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-18 MuiTableCell-alignRight"
+                            data-testid="cell"
                             scope="col"
                           >
                             Fee
