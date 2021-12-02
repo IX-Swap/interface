@@ -9,7 +9,7 @@ describe('OnboardingDialog', () => {
     message: [
       'Increase your account security by enabling two factor authentication when signing into platform'
     ],
-    action: '/app/home',
+    action: '/app/educationCentre',
     actionLabel: 'Enable 2FA',
     closeLabel: 'Skip',
     closeArrow: false

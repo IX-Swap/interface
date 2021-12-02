@@ -27,13 +27,4 @@ describe('RedirectToDefaultPage', () => {
     render(<RedirectToDefaultPage />)
     expect(history.location.pathname).toEqual(AppRoute.identity)
   })
-
-  it('renders Home Page when isAccredited is true', () => {
-    jest
-      .spyOn(useIsAccredited, 'useIsAccredited')
-      .mockImplementation(() => true as any)
-
-    render(<RedirectToDefaultPage />)
-    expect(history.location.pathname).toEqual(AppRoute.home)
-  })
 })

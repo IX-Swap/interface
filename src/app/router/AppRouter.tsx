@@ -2,7 +2,7 @@ import React from 'react'
 import { AppRoute as AppPath } from 'app/router/config'
 import { AppRoute } from 'components/AppRoute'
 import { Switch } from 'react-router-dom'
-import { HomeRoot } from 'app/pages/home/HomeRoot'
+import { EducationCentreRoot } from 'app/pages/educationCentre/EducationCentreRoot'
 import { IssuanceRoot } from 'app/pages/issuance/IssuanceRoot'
 import { SecurityRoot } from 'app/pages/security/SecurityRoot'
 import { NotificationsRoot } from 'app/pages/notifications/NotificationsRoot'
@@ -21,8 +21,8 @@ export const AppRouter = () => {
         <AccountsRoot />
       </AppRoute>
 
-      <AppRoute path={AppPath.home}>
-        <HomeRoot />
+      <AppRoute path={AppPath.educationCentre}>
+        <EducationCentreRoot />
       </AppRoute>
 
       <AppRoute breadcrumb='Identity' path={AppPath.identity}>
