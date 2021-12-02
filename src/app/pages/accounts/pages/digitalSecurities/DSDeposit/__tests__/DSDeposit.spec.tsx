@@ -9,9 +9,10 @@ jest.mock(
   'app/pages/accounts/pages/digitalSecurities/DSDeposit/RecentDeposits',
   () => ({ RecentDeposits: jest.fn(() => null) })
 )
+
 jest.mock(
-  'app/pages/accounts/pages/digitalSecurities/DSDeposit/DepositView',
-  () => ({ DepositView: jest.fn(() => null) })
+  'app/pages/accounts/pages/digitalSecurities/DSDeposit/DepositForm',
+  () => ({ DepositForm: jest.fn(() => null) })
 )
 
 describe('DepositView', () => {
