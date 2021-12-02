@@ -93,13 +93,6 @@ export const AccreditationButtonRow = styled.div`
   `};
 `
 
-export const ModalPadding = styled.div`
-  padding: 37px 40px 19px 40px;
-  ${({ theme }) => theme.mediaWidth.upToSmall`
-   padding: 22px 8px 18px 8px;
-  `};
-`
-
 export const StyledTitle = styled(TYPE.title4)`
   @media (max-width: 768px) {
     font-size: 28px !important;

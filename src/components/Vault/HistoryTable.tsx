@@ -1,6 +1,6 @@
 import { Currency } from '@ixswap1/sdk-core'
 import { Trans } from '@lingui/macro'
-import { styled } from '@storybook/theming'
+import styled from 'styled-components'
 import { ChevronElement } from 'components/ChevronElement'
 import Popover from 'components/Popover'
 import { RowCenter, RowFixed } from 'components/Row'

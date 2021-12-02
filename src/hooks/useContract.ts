@@ -10,6 +10,7 @@ import { abi as IIxsV2LiquidityRouter } from '@ixswap1/v2-periphery/build/IIxsV2
 import { abi as IIxsV2SwapRouter } from '@ixswap1/v2-periphery/build/IIxsV2SwapRouter.json'
 import { abi as STAKING_REWARDS_ABI } from '@uniswap/liquidity-staker/build/StakingRewards.json'
 import { abi as MERKLE_DISTRIBUTOR_ABI } from '@uniswap/merkle-distributor/build/MerkleDistributor.json'
+import NFT_ABI from 'abis/nft-contract.json'
 import ARGENT_WALLET_DETECTOR_ABI from 'abis/argent-wallet-detector.json'
 import EIP_2612 from 'abis/eip_2612.json'
 import ENS_PUBLIC_RESOLVER_ABI from 'abis/ens-public-resolver.json'
@@ -30,6 +31,7 @@ import {
   LIQUIDITY_ROUTER_ADDRESS,
   MERKLE_DISTRIBUTOR_ADDRESS,
   MULTICALL2_ADDRESSES,
+  NFT_ADDRESS,
   SOCKS_CONTROLLER_ADDRESSES,
   SWAP_ROUTER_ADDRESS,
 } from 'constants/addresses'
@@ -66,6 +68,10 @@ export function useContract<T extends Contract = Contract>(
 
 export function useTokenContract(tokenAddress?: string, withSignerIfPossible?: boolean) {
   return useContract<Erc20>(tokenAddress, ERC20_ABI, withSignerIfPossible)
+}
+
+export function useNftContract() {
+  return useContract(NFT_ADDRESS, NFT_ABI)
 }
 
 export function useVestingContract() {
