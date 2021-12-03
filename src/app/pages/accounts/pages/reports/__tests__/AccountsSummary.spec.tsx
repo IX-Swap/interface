@@ -7,7 +7,7 @@ import timezoneMock from 'timezone-mock'
 
 describe('AccountsSummary', () => {
   beforeAll(() => {
-    timezoneMock.register('US/Pacific')
+    timezoneMock.register('UTC')
   })
 
   afterEach(async () => {
