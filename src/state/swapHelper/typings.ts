@@ -1,4 +1,6 @@
-import { TradeAuthorization } from '@ixswap1/v2-sdk'
+import { Currency, TradeType } from '@ixswap1/sdk-core'
+import { Trade as V2Trade, TradeAuthorization } from '@ixswap1/v2-sdk'
+import { OrderType } from 'state/user/enum'
 
 export interface BrokerDealerSwapDto {
   callbackEndpoint?: string
@@ -16,12 +18,33 @@ export interface SwapConfirmArguments {
 
 export interface SwapAuthorization extends TradeAuthorization {
   expiresAt: number
+  amount: string
+  swapId?: number
 }
-
+export interface SwapLocalState {
+  showConfirm: boolean
+  tradeToConfirm: V2Trade<Currency, Currency, TradeType> | undefined
+  attemptingTxn: boolean
+  swapErrorMessage: string | undefined
+  txHash: string | undefined
+}
+export interface AuthorizationInProgress {
+  tokenAddress?: string
+  tokenId?: number
+  brokerDealerId?: number
+  pairAddress?: string
+  amount?: string
+  orderType?: OrderType
+  platform?: string
+}
 export interface SwapHelperState {
   authorizations: {
     [chainId: number]: {
       [address: string]: SwapAuthorization | null
     }
   }
+  localSwap: SwapLocalState
+  openModal: boolean
+  authorizationInProgress?: AuthorizationInProgress | null
+  loadingSwap: boolean
 }

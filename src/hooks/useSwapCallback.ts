@@ -1,26 +1,34 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Currency, Percent, TradeType } from '@ixswap1/sdk-core'
-import { Router, Trade as V2Trade } from '@ixswap1/v2-sdk'
+import { Pair, Router, Trade as V2Trade, TradeAuthorization } from '@ixswap1/v2-sdk'
 import { t } from '@lingui/macro'
 import { useCallback, useMemo } from 'react'
-import { useSwapAuthorization } from 'state/swapHelper/hooks'
+import { useSecTokens } from 'state/secTokens/hooks'
+import { useDerivedSwapInfo } from 'state/swap/hooks'
+import { useAuthorizationsState, useSwapSecPairs } from 'state/swapHelper/hooks'
+import { calculateGasMargin } from 'utils/calculateGasMargin'
 import { useTransactionAdder } from '../state/transactions/hooks'
 import { isAddress, shortenAddress } from '../utils'
 import approveAmountCalldata from '../utils/approveAmountCalldata'
-import { calculateGasMargin } from '../utils/calculateGasMargin'
 import isZero from '../utils/isZero'
 import { useArgentWalletContract } from './useArgentWalletContract'
 import { useSwapRouterContract } from './useContract'
 import useENS from './useENS'
-import { useSwapSecToken } from './useSwapAuthorize'
 import useTransactionDeadline from './useTransactionDeadline'
-import { useV2Pair } from './useV2Pairs'
 import { useActiveWeb3React } from './web3'
 
 export enum SwapCallbackState {
   INVALID,
   LOADING,
   VALID,
+}
+
+const EMPTY_AUTHORIZATION: TradeAuthorization = {
+  operator: '0x0000000000000000000000000000000000000000',
+  deadline: '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',
+  v: '0x0000000000000000000000000000000000000000000000000000000000000000',
+  r: '0x0000000000000000000000000000000000000000000000000000000000000000',
+  s: '0x0000000000000000000000000000000000000000000000000000000000000000',
 }
 
 interface SwapCall {
@@ -42,43 +50,85 @@ interface FailedCall extends SwapCallEstimate {
   call: SwapCall
   error: Error
 }
-export function useSwapPair(
-  // trade to execute, required
-  trade?: V2Trade<Currency, Currency, TradeType> | null
-) {
-  const inputToken = trade?.inputAmount?.currency
-  const outputToken = trade?.outputAmount?.currency
-  const [, pair] = useV2Pair(inputToken ?? undefined, outputToken ?? undefined)
-  return pair
-}
-export function useAuthorization(trade: V2Trade<Currency, Currency, TradeType> | undefined): any | undefined {
-  const authorization = useSwapAuthorization(trade)
-  const addresses = useMultihopAuthorization(trade)
-  const pair = useSwapPair(trade)
-  if (!pair?.isSecurity || authorization === null) {
-    return undefined
-  } else {
-    const authorizationDigest = addresses.map((address) => {
-      return address === null ? address : authorization
-    })
-    console.log({ authorizationDigest })
-    return authorizationDigest
-  }
+export function getTokenToPairMap(pairs: Array<Pair | null>) {
+  const tokenToPairMap = pairs.reduce((previous, current) => {
+    const newMap: { [key: string]: string } = {}
+    const token0 = current?.token0
+    const token1 = current?.token1
+    const pairAddress = current?.liquidityToken.address
+    if (token0 && pairAddress) {
+      const address = (token0 as any)?.tokenInfo?.address as string
+      newMap[address] = pairAddress
+    }
+    if (token1 && pairAddress) {
+      const address = (token1 as any)?.tokenInfo?.address as string
+      newMap[address] = pairAddress
+    }
+    return { ...previous, ...newMap }
+  }, {} as { [key: string]: string })
+  return tokenToPairMap
 }
 
-export function useMultihopAuthorization(trade: V2Trade<Currency, Currency, TradeType> | undefined | null) {
-  const tokenPath = trade?.route?.path
-  const tokens = []
-  if (tokenPath) {
-    for (const token of tokenPath) {
-      if ((token as any)?.isSecToken) {
-        tokens.push(token.address)
-      } else {
-        tokens.push(null)
+export function useMissingAuthorizations(trade: V2Trade<Currency, Currency, TradeType> | undefined | null) {
+  const addresses = useSwapSecTokenAddresses(trade)
+  const authorizations = useAuthorizationsState()
+  const { secPairs: pairs } = useSwapSecPairs(trade)
+  return useMemo(() => {
+    const tokenToPairMap = getTokenToPairMap(pairs)
+    const missingAddress = addresses.filter((address) => address !== null && !authorizations?.[tokenToPairMap[address]])
+    return missingAddress
+  }, [addresses, authorizations, pairs])
+}
+
+export function useAuthorizationDigest(
+  trade: V2Trade<Currency, Currency, TradeType> | undefined
+): Array<TradeAuthorization> | undefined {
+  const authorizations = useAuthorizationsState()
+  const addresses = useSwapSecTokenAddresses(trade)
+  const { secPairs: pairs } = useSwapSecPairs(trade)
+  const authorizationDigest: Array<TradeAuthorization> | undefined = useMemo(() => {
+    if (!addresses || addresses.length === 0) {
+      return undefined
+    }
+    const tokenToPairMap = getTokenToPairMap(pairs)
+    return addresses.map((address) => {
+      const addressAuthorization = address && authorizations ? authorizations[tokenToPairMap[address]] : null
+      if (!addressAuthorization) {
+        return EMPTY_AUTHORIZATION
+      }
+      return {
+        v: addressAuthorization?.v,
+        r: addressAuthorization.r,
+        operator: addressAuthorization.operator,
+        s: addressAuthorization.s,
+        deadline: addressAuthorization.deadline,
+      }
+    })
+  }, [addresses, authorizations, pairs])
+
+  return authorizationDigest
+}
+
+// returns an array in the form of [address, null, etc] only sec tokens have an address
+export function useSwapSecTokenAddresses(trade: V2Trade<Currency, Currency, TradeType> | undefined | null) {
+  const { secTokens } = useSecTokens()
+  return useMemo(() => {
+    const tokens = []
+    const tokenPath = trade?.route?.path
+    if (tokenPath) {
+      for (const index of tokenPath.keys()) {
+        const token = tokenPath[index]
+        const isFirstOrLast = index === 0 || index === tokenPath.length - 1
+        const isSecToken = Boolean(secTokens[token.address])
+        if (isSecToken && isFirstOrLast) {
+          tokens.push(token.address)
+        } else {
+          tokens.push(null)
+        }
       }
     }
-  }
-  return tokens
+    return tokens
+  }, [trade?.route?.path, secTokens])
 }
 /**
  * Returns the swap calls that can be used to make the trade
@@ -99,22 +149,22 @@ function useSwapCallArguments(
   const deadline = useTransactionDeadline()
   const routerContract = useSwapRouterContract()
   const argentWalletContract = useArgentWalletContract()
-  const pair = useSwapPair(trade)
-  const authorization = useAuthorization(trade)
+  // rewrite deadline here use the same value
+  const authorizationDigest = useAuthorizationDigest(trade)
+  const { shouldGetAuthorization } = useDerivedSwapInfo()
   return useCallback(async () => {
     if (!trade || !recipient || !library || !account || !chainId || !deadline) return []
     if (!routerContract) return []
-    if (pair?.isSecurity && authorization === undefined) {
+    if (shouldGetAuthorization) {
       return []
     }
     const swapMethods = []
-    const usedAuthorization = pair?.isSecurity ? authorization : undefined
     const options = {
       feeOnTransfer: false,
       allowedSlippage,
       recipient,
       deadline: deadline.toNumber(),
-      authorizationDigest: usedAuthorization,
+      authorizationDigest: (authorizationDigest as any) ?? undefined,
     }
     swapMethods.push(Router.swapCallParameters(trade, options))
 
@@ -125,7 +175,8 @@ function useSwapCallArguments(
           allowedSlippage,
           recipient,
           deadline: deadline.toNumber(),
-          authorizationDigest: usedAuthorization,
+          // typing to any because AuthorizationDigest does not accept null but it should
+          authorizationDigest: (authorizationDigest as any) || undefined,
         })
       )
     }
@@ -164,8 +215,8 @@ function useSwapCallArguments(
     recipient,
     routerContract,
     trade,
-    authorization,
-    pair,
+    authorizationDigest,
+    shouldGetAuthorization,
   ])
 }
 
@@ -277,32 +328,28 @@ export function useSwapCallback(
                     data: calldata,
                     value,
                   }
-            return {
-              call,
-              gasEstimate: 900000,
-            }
-            // return library
-            //   .estimateGas(tx)
-            //   .then((gasEstimate) => {
-            //     return {
-            //       call,
-            //       gasEstimate,
-            //     }
-            //   })
-            //   .catch((gasError) => {
-            //     console.debug('Gas estimate failed, trying eth_call to extract error', call)
+            return library
+              .estimateGas(tx)
+              .then((gasEstimate) => {
+                return {
+                  call,
+                  gasEstimate,
+                }
+              })
+              .catch((gasError) => {
+                console.debug('Gas estimate failed, trying eth_call to extract error', call)
 
-            //     return library
-            //       .call(tx)
-            //       .then((result) => {
-            //         console.debug('Unexpected successful call after failed estimate gas', call, gasError, result)
-            //         return { call, error: new Error('Unexpected issue with estimating the gas. Please try again.') }
-            //       })
-            //       .catch((callError) => {
-            //         console.debug('Call threw error', call, callError)
-            //         return { call, error: new Error(swapErrorToUserReadableMessage(callError)) }
-            //       })
-            //   })
+                return library
+                  .call(tx)
+                  .then((result) => {
+                    console.debug('Unexpected successful call after failed estimate gas', call, gasError, result)
+                    return { call, error: new Error('Unexpected issue with estimating the gas. Please try again.') }
+                  })
+                  .catch((callError) => {
+                    console.debug('Call threw error', call, callError)
+                    return { call, error: new Error(swapErrorToUserReadableMessage(callError)) }
+                  })
+              })
           })
         )
 

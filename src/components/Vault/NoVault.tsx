@@ -16,23 +16,35 @@ import {
 } from './enum'
 import { RowCenter } from 'components/Row'
 import { AccreditationStatus } from './AccreditationStatus'
+import { SecTokenPlatform } from 'types/secToken'
+import { removeProtocolFromUrl } from 'utils'
 
 interface Props {
   currency?: Currency
   status?: AccreditationStatusEnum
   accreditationRequest: AccreditationRequest | null
+  platform: SecTokenPlatform | null
 }
 
-function getStatusMessage(accreditationRequest: AccreditationRequest | null, symbolText: string) {
+function getStatusMessage(
+  accreditationRequest: AccreditationRequest | null,
+  symbolText: string,
+  platform: SecTokenPlatform | null
+) {
   const status = accreditationRequest?.status
   switch (status) {
     case AccreditationStatusEnum.PENDING:
     case AccreditationStatusEnum.PENDING_KYC:
-      return t`Checking your KYC on primary issuer`
+      return t`Checking your KYC on ${platform?.name || 'primary issuer'}`
     case AccreditationStatusEnum.PENDING_CUSTODIAN:
-      return t`KYC approved on primary issuer. Waiting for KYC approval on Custodian...`
+      return t`KYC approved on ${platform?.name || 'primary issuer'}. Waiting for KYC approval on Custodian...`
     case AccreditationStatusEnum.FAILED:
-      return accreditationRequest?.message || t`Unknown error`
+      return (
+        accreditationRequest?.message ||
+        t`Could not verify KYC. Please check your account and/or KYC status on ${removeProtocolFromUrl(
+          platform?.website || 'primary issuer website'
+        )}. Retry passing accreditation once your KYC is approved by ${platform?.name || 'primary issuer'}. [retry]`
+      )
     case AccreditationStatusEnum.REJECTED:
       return accreditationRequest?.message || t`Accreditation rejected`
     case undefined:
@@ -40,7 +52,7 @@ function getStatusMessage(accreditationRequest: AccreditationRequest | null, sym
       return t`You need to pass accreditation and KYC to start trading with the ${symbolText} token.`
   }
 }
-export const NoVault = ({ currency, status, accreditationRequest }: Props) => {
+export const NoVault = ({ currency, status, accreditationRequest, platform }: Props) => {
   const symbolText = useMemo(() => currency?.symbol ?? currency?.name ?? '', [currency])
   const { account } = useActiveWeb3React()
   const toggleWalletModal = useWalletModalToggle()
@@ -57,7 +69,7 @@ export const NoVault = ({ currency, status, accreditationRequest }: Props) => {
       {status && <AccreditationStatus status={status} />}
 
       <VaultStatusDescription>
-        <TYPE.descriptionThin>{getStatusMessage(accreditationRequest, symbolText)}</TYPE.descriptionThin>
+        <TYPE.descriptionThin>{getStatusMessage(accreditationRequest, symbolText, platform)}</TYPE.descriptionThin>
       </VaultStatusDescription>
 
       <RowCenter>

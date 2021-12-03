@@ -2,7 +2,7 @@ import { Currency, CurrencyAmount } from '@ixswap1/sdk-core'
 import { t } from '@lingui/macro'
 import { useCurrency } from 'hooks/Tokens'
 import { useActiveWeb3React } from 'hooks/web3'
-import { MouseEventHandler, useCallback } from 'react'
+import { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import apiService from 'services/apiService'
 import { custody } from 'services/apiUrls'
@@ -11,8 +11,9 @@ import { setLogItem } from 'state/eventLog/actions'
 import { useEventState, useGetEventCallback } from 'state/eventLog/hooks'
 import { tryParseAmount } from 'state/swap/helpers'
 import { isAddress } from 'utils'
-import { depositSecTokens, setCurrency, setModalView, typeAmount, typeSender } from './actions'
+import { depositSecTokens, setCurrency, setModalView, setNetworkName, typeAmount, typeSender } from './actions'
 import { DepositModalView } from './reducer'
+import walletValidator from 'multicoin-address-validator'
 
 export function useDepositState(): AppState['deposit'] {
   return useSelector<AppState, AppState['deposit']>((state) => state.deposit)
@@ -22,6 +23,7 @@ export function useDepositActionHandlers(): {
   onTypeAmount: (typedValue: string) => void
   onTypeSender: (typedValue: string) => void
   onCurrencySet: (currencyId: string) => void
+  onNetworkSet: (networkName: string) => void
 } {
   const dispatch = useDispatch<AppDispatch>()
 
@@ -45,10 +47,17 @@ export function useDepositActionHandlers(): {
     },
     [dispatch]
   )
+  const onNetworkSet = useCallback(
+    (networkName: string) => {
+      dispatch(setNetworkName({ networkName }))
+    },
+    [dispatch]
+  )
   return {
     onTypeAmount,
     onTypeSender,
     onCurrencySet,
+    onNetworkSet,
   }
 }
 
@@ -59,7 +68,7 @@ export function useDerivedDepositInfo(): {
 } {
   const { account } = useActiveWeb3React()
 
-  const { amount, sender, currencyId } = useDepositState()
+  const { amount, sender, currencyId, networkName } = useDepositState()
 
   const inputCurrency = useCurrency(currencyId)
 
@@ -74,11 +83,17 @@ export function useDerivedDepositInfo(): {
     inputError = inputError ?? t`Enter an amount`
   }
 
-  const formattedFrom = isAddress(sender)
+  let formattedFrom = isAddress(sender)
   if (!sender) {
     inputError = inputError ?? t`Enter a sender`
   } else if (!formattedFrom) {
-    inputError = inputError ?? t`Sender is invalid`
+    const isValidForNetwork = walletValidator.validate(sender, networkName ?? 'Ethereum')
+    if (!isValidForNetwork) {
+      inputError = inputError ?? t`Sender is invalid`
+    }
+    if (isValidForNetwork) {
+      formattedFrom = sender
+    }
   }
 
   return {

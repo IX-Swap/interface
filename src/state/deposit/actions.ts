@@ -9,6 +9,7 @@ export enum Field {
 export const typeAmount = createAction<{ typedValue: string }>('deposit/typeAmount')
 export const typeSender = createAction<{ typedValue: string }>('deposit/typeSender')
 export const setCurrency = createAction<{ currencyId: string }>('deposit/setCurrency')
+export const setNetworkName = createAction<{ networkName: string }>('deposit/setNetworkName')
 export const setError = createAction<{ errorMessage: string }>('deposit/setError')
 export const setLoading = createAction<{ loading: boolean }>('deposit/setLoading')
 export const setModalView = createAction<{ view: DepositModalView }>('deposit/setModalView')

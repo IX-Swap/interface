@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
-import utc from 'dayjs/plugin/utc'
 import duration from 'dayjs/plugin/duration'
+import utc from 'dayjs/plugin/utc'
 
 dayjs.extend(utc)
 dayjs.extend(duration)
@@ -20,7 +20,10 @@ export const getTokenExpiration = (time: keyof typeof timePeriods) => {
   const timeAfterInterval = currentUTCTime + timePeriods[time] - 2 * timePeriods['1 minute']
   return timeAfterInterval
 }
-
+export const hexTimeToTokenExpirationTime = (hex: string) => {
+  const decimal = parseInt(hex, 16)
+  return isNaN(decimal) ? getTokenExpiration('1 hour') : decimal - 2 * timePeriods['1 minute']
+}
 // renew token when expiration has passed current time
 export const shouldRenewToken = (time?: number) => {
   if (time === undefined) {

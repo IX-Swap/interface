@@ -181,7 +181,9 @@ export const ButtonIXSGradient = styled(ButtonPrimary)<{ confirmed?: boolean; di
   white-space: no-wrap;
 
   :hover {
-    opacity: 0.8;
+    @media (min-width: 1000px) {
+      opacity: 0.8;
+    }
   }
   :active {
     opacity: 0.9;

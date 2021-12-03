@@ -51,7 +51,6 @@ export const SUPPORTED_WALLETS: { [key: string]: WalletInfo } = {
     href: null,
     color: '#4196FC',
     mobile: true,
-    mobileOnly: true,
   },
   // WALLET_LINK: {
   //   connector: walletlink,

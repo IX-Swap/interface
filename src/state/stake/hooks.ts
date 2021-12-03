@@ -3,8 +3,7 @@ import { Currency, CurrencyAmount, Token, WETH9 } from '@ixswap1/sdk-core'
 import { Pair } from '@ixswap1/v2-sdk'
 import { t } from '@lingui/macro'
 import { abi as STAKING_REWARDS_ABI } from '@uniswap/liquidity-staker/build/StakingRewards.json'
-import { STAKING_CONTRACT_KOVAN } from 'config'
-import { IXS_STAKING_V1_ADDRESS } from 'constants/addresses'
+import { IXS_STAKING_V1_ADDRESS, SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 import stakingPeriodsData, { IStaking, PeriodsEnum } from 'constants/stakingPeriods'
 import { BigNumber, utils } from 'ethers'
 import { useCurrency } from 'hooks/Tokens'
@@ -18,11 +17,11 @@ import { AppDispatch, AppState } from 'state'
 import { PERIOD, StakingStatus } from 'state/stake/reducer'
 import { useTransactionAdder } from 'state/transactions/hooks'
 import { useCurrencyBalance } from 'state/wallet/hooks'
+import { calculateGasMargin } from 'utils/calculateGasMargin'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { maxAmountSpend } from 'utils/maxAmountSpend'
 import { DAI, IXS, USDC, USDT, WBTC } from '../../constants/tokens'
 import { useActiveWeb3React } from '../../hooks/web3'
-import { calculateGasMargin } from '../../utils/calculateGasMargin'
 import { NEVER_RELOAD, useMultipleContractSingleData } from '../multicall/hooks'
 import { tryParseAmount } from '../swap/helpers'
 import {
@@ -456,6 +455,8 @@ export function useStakeFor(period?: PERIOD) {
         switch (period) {
           case PERIOD.ONE_WEEK: {
             const estimatedGas = await staking?.estimateGas.stakeForWeek(account, stakeAmount, noData)
+            // const estimatedGas = 900000
+
             if (!estimatedGas) {
               dispatch(stake.rejected({ errorMessage: 'cannot estimate gas' }))
               break
@@ -473,6 +474,8 @@ export function useStakeFor(period?: PERIOD) {
           }
           case PERIOD.ONE_MONTH: {
             const estimatedGas = await staking?.estimateGas.stakeForMonth(account, stakeAmount, noData)
+            // const estimatedGas = 900000
+
             if (!estimatedGas) {
               dispatch(stake.rejected({ errorMessage: 'cannot estimate gas' }))
               break
@@ -490,6 +493,7 @@ export function useStakeFor(period?: PERIOD) {
           }
           case PERIOD.TWO_MONTHS: {
             const estimatedGas = await staking?.estimateGas.stakeForTwoMonths(account, stakeAmount, noData)
+            // const estimatedGas = 900000
             if (!estimatedGas) {
               dispatch(stake.rejected({ errorMessage: 'cannot estimate gas' }))
               break
@@ -507,6 +511,8 @@ export function useStakeFor(period?: PERIOD) {
           }
           case PERIOD.THREE_MONTHS: {
             const estimatedGas = await staking?.estimateGas.stakeForThreeMonths(account, stakeAmount, noData)
+            // const estimatedGas = 900000
+
             if (!estimatedGas) {
               dispatch(stake.rejected({ errorMessage: 'cannot estimate gas' }))
               updateIXSBalance()
@@ -539,7 +545,7 @@ export function useStakeFor(period?: PERIOD) {
 export function useGetStakings() {
   const dispatch = useDispatch<AppDispatch>()
   const staking = useIXSStakingContract()
-  const { account } = useActiveWeb3React()
+  const { account, chainId } = useActiveWeb3React()
 
   return useCallback(async () => {
     try {
@@ -553,15 +559,20 @@ export function useGetStakings() {
         testPeriodsMaturitySeconds,
         SECONDS_IN_DAY,
       } = stakingPeriodsData
-
       const floorTo4Decimals = (num: number) => Math.floor((num + Number.EPSILON) * 10000) / 10000
-      const calculateReward = (
-        amount: number,
-        period: PeriodsEnum,
-        startDateUnix: number,
-        lockedUntilUnix: number,
+      const calculateReward = ({
+        amount,
+        period,
+        startDateUnix,
+        lockedUntilUnix,
+        endDateUnix,
+      }: {
+        amount: number
+        period: PeriodsEnum
+        startDateUnix: number
+        lockedUntilUnix: number
         endDateUnix: number
-      ) => {
+      }) => {
         // passedMaturity = амоунт* (APY in %)*days passed/365
         // !passedMaturity && passedLockIn = аммаунт* Пенальти Йелд (5%) * Сколько прошло со стейкинга в секундах / 365 дней в секундах
         const now = new Date().getTime() / 1000
@@ -581,7 +592,15 @@ export function useGetStakings() {
         }
         return reward
       }
-      const getCanUnstake = (lock_months: number, endDateUnix: number, lockedTill: number) => {
+      const getCanUnstake = ({
+        lock_months,
+        endDateUnix,
+        lockedTill,
+      }: {
+        lock_months: number
+        endDateUnix: number
+        lockedTill: number
+      }) => {
         const now = Date.now()
         if (lock_months === 0) {
           return now > endDateUnix * 1000
@@ -597,7 +616,10 @@ export function useGetStakings() {
           const lockMonths = periodsLockMonths[period]
 
           let endDateUnix, lockedTillUnix
-          if (STAKING_CONTRACT_KOVAN === '0x24108fD7fa1897a76488fe8B39fDBc7715916294') {
+          if (
+            chainId === SUPPORTED_TGE_CHAINS.KOVAN &&
+            IXS_STAKING_V1_ADDRESS[chainId] === '0x2ddCfC409Ba3116d8d0a2224FfDF30042686eDe8'
+          ) {
             endDateUnix = startDateUnix + testPeriodsMaturitySeconds[period]
             lockedTillUnix = startDateUnix + testPeriodsLockSeconds[period]
           } else {
@@ -611,12 +633,29 @@ export function useGetStakings() {
             stakeAmount,
             distributeAmount: stakeAmount,
             apy: periodsApy[period],
-            reward: calculateReward(stakeAmount, period, startDateUnix, endDateUnix, lockedTillUnix),
+            reward: calculateReward({
+              amount: stakeAmount,
+              period,
+              startDateUnix,
+              endDateUnix,
+              lockedUntilUnix: lockedTillUnix,
+            }),
+            totalReward: calculateReward({
+              amount: stakeAmount,
+              period,
+              startDateUnix,
+              endDateUnix: lockedTillUnix,
+              lockedUntilUnix: endDateUnix,
+            }),
             lockMonths,
             startDateUnix,
             endDateUnix,
             lockedTillUnix,
-            canUnstake: getCanUnstake(lockMonths, endDateUnix, lockedTillUnix),
+            canUnstake: getCanUnstake({
+              lock_months: lockMonths,
+              endDateUnix: endDateUnix,
+              lockedTill: lockedTillUnix,
+            }),
             originalData: data,
             originalIndex: index,
           }
@@ -647,7 +686,7 @@ export function useGetStakings() {
     } catch (error) {
       console.error(`useGetStakings error `, error)
     }
-  }, [staking, account, dispatch])
+  }, [staking, account, dispatch, chainId])
 }
 
 export function useSetTypedValue() {

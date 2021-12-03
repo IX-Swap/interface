@@ -21,7 +21,7 @@ import { tryParseAmount } from 'state/swap/helpers'
 import { useCurrencyBalance } from 'state/wallet/hooks'
 import styled from 'styled-components'
 import { CloseIcon, TYPE } from 'theme'
-import { floorTo4Decimals } from 'utils/formatCurrencyAmount'
+import { floorToDecimals } from 'utils/formatCurrencyAmount'
 import { EllipsedText, ModalBottom, StakeInfoContainer } from '../style'
 interface UnstakingModalProps {
   onDismiss: () => void
@@ -42,7 +42,6 @@ export function EarlyUnstake({ onDismiss, stake, onUnstake, onApprove }: Unstaki
   const stakeIXSCurrencyAmount = tryParseAmount(String(stake?.stakeAmount), currency)
   const theme = useTheme()
   const { IXSGovAllowanceAmount, isApprovingIXSGov, isUnstaking } = useUnstakingState()
-
   useEffect(() => {
     if (!IXSGovAllowanceAmount) return
     if (parseFloat(IXSGovAllowanceAmount) >= parseFloat(typedValue)) {
@@ -169,7 +168,7 @@ export function EarlyUnstake({ onDismiss, stake, onUnstake, onApprove }: Unstaki
             textRight={
               <EllipsedText>
                 <div>
-                  {floorTo4Decimals(stake.reward * 0.1)}&nbsp;{currency?.symbol}
+                  {floorToDecimals(stake.reward * 0.1, 6)}&nbsp;{currency?.symbol}
                 </div>
               </EllipsedText>
             }
@@ -179,7 +178,7 @@ export function EarlyUnstake({ onDismiss, stake, onUnstake, onApprove }: Unstaki
             textRight={
               <EllipsedText>
                 <div>
-                  {floorTo4Decimals(stake.reward * 0.9)}&nbsp;{currency?.symbol}
+                  {floorToDecimals(stake.reward * 0.9, 6)}&nbsp;{currency?.symbol}
                 </div>
               </EllipsedText>
             }

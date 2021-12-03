@@ -37,7 +37,6 @@ export function FullUnstake({ onDismiss, stake, onUnstake, onApprove }: Unstakin
   const IXSGovBalance = useCurrencyBalance(account ?? undefined, IXSGovCurrency ?? undefined)
   const { IXSGovAllowanceAmount, isApprovingIXSGov, isUnstaking } = useUnstakingState()
   const IXSCurrency = useIXSCurrency()
-
   useEffect(() => {
     if (!IXSGovBalance) {
       setError('Please wait...')
@@ -66,7 +65,7 @@ export function FullUnstake({ onDismiss, stake, onUnstake, onApprove }: Unstakin
 
   function isEnoughIXSGov(): boolean {
     if (!IXSGovBalance) return false
-    return parseFloat(IXSGovBalance.toSignificant(5)) >= stake?.stakeAmount
+    return parseFloat(IXSGovBalance.toSignificant(10)) >= stake?.stakeAmount
   }
 
   return (
@@ -99,7 +98,7 @@ export function FullUnstake({ onDismiss, stake, onUnstake, onApprove }: Unstakin
             textRight={
               <EllipsedText>
                 <div>
-                  {stakeAmount}&nbsp;IXSGov ({IXSGovBalance?.toSignificant(4)} <Trans>available</Trans>)
+                  {stakeAmount}&nbsp;IXSGov ({IXSGovBalance?.toSignificant(8)} <Trans>available</Trans>)
                 </div>
               </EllipsedText>
             }

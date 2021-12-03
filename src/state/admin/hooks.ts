@@ -1,12 +1,24 @@
 import { useCallback } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-
-import { AppDispatch, AppState } from 'state'
-import apiService from 'services/apiService'
-
-import { postLogin, getMe, logout, getKycList, postApproveKyc, postDeclineKyc, postKycReset } from './actions'
-import { admin } from 'services/apiUrls'
 import { useHistory } from 'react-router-dom'
+import apiService from 'services/apiService'
+import { admin } from 'services/apiUrls'
+import { AppDispatch, AppState } from 'state'
+import {
+  getBrokerDealerList,
+  getBrokerDealerSwaps,
+  getKycList,
+  getMe,
+  logout,
+  postApproveKyc,
+  postDeclineKyc,
+  postKycReset,
+} from './actions'
+
+export enum BROKER_DEALERS_STATUS {
+  SUCCESS,
+  FAILED,
+}
 
 export enum STATUS {
   SUCCESS,
@@ -33,39 +45,8 @@ export enum KYC_LIST_STATUS {
   FAILED,
 }
 
-interface Login {
-  email: string
-  password: string
-}
-
 export function useAdminState(): AppState['admin'] {
   return useSelector<AppState, AppState['admin']>((state) => state.admin)
-}
-
-export const login = async (data: Login) => {
-  const result = await apiService.post(admin.login, data)
-  return result.data
-}
-
-export function useLogin() {
-  const dispatch = useDispatch<AppDispatch>()
-  const getMe = useGetMe()
-  const callback = useCallback(
-    async (data: Login) => {
-      try {
-        dispatch(postLogin.pending())
-        const auth = await login(data)
-        dispatch(postLogin.fulfilled({ auth }))
-        await getMe()
-        return LOGIN_STATUS.SUCCESS
-      } catch (error: any) {
-        dispatch(postLogin.rejected({ errorMessage: 'Could not login.' }))
-        return LOGIN_STATUS.FAILED
-      }
-    },
-    [dispatch, getMe]
-  )
-  return callback
 }
 
 export const me = async () => {
@@ -95,7 +76,7 @@ export function useLogout() {
   const callback = useCallback(() => {
     try {
       dispatch(logout.fulfilled())
-      history.push('/admin-login')
+      history.push('/swap')
       return LOGOUT_STATUS.SUCCESS
     } catch (error: any) {
       return LOGOUT_STATUS.FAILED
@@ -106,6 +87,16 @@ export function useLogout() {
 
 export const getKyc = async (params?: Record<string, string | number>) => {
   const result = await apiService.get(admin.kycList, undefined, params)
+  return result.data
+}
+
+export const getBrokerDealers = async (params?: Record<string, string | number>) => {
+  const result = await apiService.get(admin.brokerDealerList, undefined, params)
+  return result.data
+}
+
+export const getBrokerDealerAllSwaps = async (params?: Record<string, string | number>) => {
+  const result = await apiService.get(admin.getSwaps, undefined, params)
   return result.data
 }
 
@@ -121,6 +112,44 @@ export function useGetKycList() {
       } catch (error: any) {
         dispatch(getKycList.rejected({ errorMessage: 'Could not get kyc list' }))
         return KYC_LIST_STATUS.FAILED
+      }
+    },
+    [dispatch]
+  )
+  return callback
+}
+
+export function useBrokerDealerList() {
+  const dispatch = useDispatch<AppDispatch>()
+  const callback = useCallback(
+    async (params?: Record<string, string | number>) => {
+      try {
+        dispatch(getBrokerDealerList.pending())
+        const data = await getBrokerDealers(params)
+        dispatch(getBrokerDealerList.fulfilled({ data }))
+        return KYC_LIST_STATUS.SUCCESS
+      } catch (error: any) {
+        dispatch(getBrokerDealerList.rejected({ errorMessage: 'Could not get broker dealer list' }))
+        return KYC_LIST_STATUS.FAILED
+      }
+    },
+    [dispatch]
+  )
+  return callback
+}
+
+export function useFetchBrokerDealerSwaps() {
+  const dispatch = useDispatch<AppDispatch>()
+  const callback = useCallback(
+    async (params?: Record<string, string | number>) => {
+      try {
+        dispatch(getBrokerDealerSwaps.pending())
+        const data = await getBrokerDealerAllSwaps(params)
+        dispatch(getBrokerDealerSwaps.fulfilled({ data }))
+        return BROKER_DEALERS_STATUS.SUCCESS
+      } catch (error: any) {
+        dispatch(getBrokerDealerSwaps.rejected({ errorMessage: 'Could not fetch broker dealer swaps' }))
+        return BROKER_DEALERS_STATUS.FAILED
       }
     },
     [dispatch]

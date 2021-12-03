@@ -80,6 +80,8 @@ export function useUnstakeFrom(period?: PeriodsEnum) {
         switch (period) {
           case PeriodsEnum.WEEK: {
             const estimatedGas = await contract?.estimateGas.unstakeFromWeek(stakeIndex, noData)
+            // const estimatedGas = 900000
+
             if (!estimatedGas) {
               dispatch(unstake.rejected({ errorMessage: 'cannot estimate gas' }))
               break
@@ -91,6 +93,7 @@ export function useUnstakeFrom(period?: PeriodsEnum) {
           }
           case PeriodsEnum.MONTH: {
             const estimatedGas = await contract?.estimateGas.unstakeFromMonth(stakeIndex, noData)
+            // const estimatedGas = 900000
             if (!estimatedGas) {
               dispatch(unstake.rejected({ errorMessage: 'cannot estimate gas' }))
               break
@@ -107,6 +110,7 @@ export function useUnstakeFrom(period?: PeriodsEnum) {
             }
             const stakeAmount = utils.parseUnits(amount.toString(), 'ether')
             const estimatedGas = await contract?.estimateGas.unstakeFromTwoMonths(stakeAmount, stakeIndex, noData)
+            // const estimatedGas = 900000
             if (!estimatedGas) {
               dispatch(unstake.rejected({ errorMessage: 'cannot estimate gas' }))
               return
@@ -122,6 +126,7 @@ export function useUnstakeFrom(period?: PeriodsEnum) {
               return
             }
             const stakeAmount = utils.parseUnits(amount.toString(), 'ether')
+            // const estimatedGas = 900000
             const estimatedGas = await contract?.estimateGas.unstakeFromThreeMonths(stakeAmount, stakeIndex, noData)
             if (!estimatedGas) {
               dispatch(unstake.rejected({ errorMessage: 'cannot estimate gas' }))

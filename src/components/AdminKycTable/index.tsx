@@ -1,15 +1,19 @@
 import { t, Trans } from '@lingui/macro'
+import { StyledCopy } from 'components/AdminTransactionsTable'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import dayjs from 'dayjs'
-import React, { useEffect } from 'react'
+import useCopyClipboard from 'hooks/useCopyClipboard'
+import React, { FC, useEffect } from 'react'
 import { useAdminState, useGetKycList } from 'state/admin/hooks'
 import styled from 'styled-components'
 import { shortenAddress } from 'utils'
 import { BodyRow, HeaderRow, Table } from '../Table'
 import { FirstStepStatus } from './FirstStepStatus'
 import { MoreActions } from './MoreActions'
+import { IconWrapper } from 'components/AccountDetails/styleds'
 import { Pagination } from './Pagination'
 import { SecondStepStatus } from './SecondStepStatus'
+import { KycItem } from 'state/admin/actions'
 
 const headerCells = [
   t`Wallet address`,
@@ -19,6 +23,10 @@ const headerCells = [
   t`Step 1 - Primary issuer`,
   t`Step 2 - Custodian`,
 ]
+
+interface RowProps {
+  item: KycItem
+}
 
 const Header = () => {
   return (
@@ -30,44 +38,60 @@ const Header = () => {
   )
 }
 
+const Row: FC<RowProps> = ({ item }: RowProps) => {
+  const [copied, setCopied] = useCopyClipboard()
+  const {
+    id,
+    user: { ethAddress },
+    custodian: { name: custodian },
+    brokerDealer: { name: broker },
+    status,
+    token,
+    createdAt,
+    kyc,
+  } = item
+
+  return (
+    <StyledBodyRow key={id}>
+      <Wallet>
+        {copied ? (
+          <Trans>Copied</Trans>
+        ) : (
+          <>
+            {shortenAddress(ethAddress || '')}
+            <IconWrapper size={18} onClick={() => setCopied(ethAddress || '')}>
+              <StyledCopy />
+            </IconWrapper>
+          </>
+        )}
+      </Wallet>
+      <div>{token?.symbol || '-'}</div>
+      <div>{dayjs(createdAt).format('MMM D, YYYY HH:mm')}</div>
+      <div>
+        {broker} - {custodian}
+      </div>
+      <div>
+        <FirstStepStatus status={status} kyc={kyc} broker={broker} />
+      </div>
+      <div>
+        <SecondStepStatus status={status} id={id} />
+      </div>
+      <div>
+        <MoreActions id={id} />
+      </div>
+    </StyledBodyRow>
+  )
+}
+
 const Body = () => {
   const {
     kycList: { items },
   } = useAdminState()
   return (
     <>
-      {items?.map(
-        ({
-          id,
-          user: { ethAddress },
-          custodian: { name: custodian },
-          brokerDealer: { name: broker },
-          status,
-          token,
-          createdAt,
-          kyc,
-        }) => {
-          return (
-            <StyledBodyRow key={id}>
-              <Wallet>{shortenAddress(ethAddress || '')}</Wallet>
-              <div>{token?.symbol || '-'}</div>
-              <div>{dayjs(createdAt).format('MMM D, YYYY HH:mm')}</div>
-              <div>
-                {broker} - {custodian}
-              </div>
-              <div>
-                <FirstStepStatus status={status} kyc={kyc} broker={broker} />
-              </div>
-              <div>
-                <SecondStepStatus status={status} id={id} />
-              </div>
-              <div>
-                <MoreActions id={id} />
-              </div>
-            </StyledBodyRow>
-          )
-        }
-      )}
+      {items?.map((item) => {
+        return <Row key={`kyc-table-${item.id}`} item={item} />
+      })}
     </>
   )
 }

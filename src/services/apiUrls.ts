@@ -4,6 +4,8 @@ export const admin = {
   login: 'auth/login',
   me: 'auth/me',
   kycList: '/kyc/list',
+  brokerDealerList: '/broker-dealer/list',
+  getSwaps: 'broker-dealer/swaps/all',
   kycReset: (accreditationId: number) => `/kyc/restart/${accreditationId}`,
   approveKyc: (id: number) => `/kyc/approve/${id}`,
   declineKyc: (id: number) => `/kyc/decline/${id}`,
@@ -19,6 +21,10 @@ export const metamask = {
   hasLogged: (hash: string) => `/metamask/hasLogged/${hash}`,
 }
 
+export const auth = {
+  refresh: `auth/refresh`,
+}
+
 export const kyc = {
   getAccreditation: (tokenId: number) => `kyc/getAccreditation/${tokenId}`,
   restartAccreditation: (accreditationRequestId: number) => `kyc/my/restart/${accreditationRequestId}`,
@@ -27,6 +33,7 @@ export const kyc = {
 export const broker = {
   choose: (pairId: number) => `broker-dealer/choose/${pairId}`,
   pairs: (tokenId: number) => `broker-dealer/${tokenId}/pairs`,
+  storeTx: () => `/broker-dealer/swaps/add-hash`,
 }
 
 export const tokens = {

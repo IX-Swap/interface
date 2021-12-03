@@ -99,8 +99,8 @@ export function listToSecTokenMap(
   if (result) return result
   const map = list.reduce<SecTokenAddressMap>((tokenMap, tokenInfo) => {
     const token = new WrappedTokenInfo(tokenInfo, undefined)
-    if (tokenMap[token.chainId]?.[token.address] !== undefined) {
-      console.error(new Error(`Duplicate token! ${token.address}`))
+    if (tokenMap[token?.chainId]?.[token?.address] !== undefined) {
+      console.error(new Error(`Duplicate token! ${token?.address}`))
       return tokenMap
     }
     return {
@@ -110,6 +110,7 @@ export function listToSecTokenMap(
         [token.address]: {
           token,
           list,
+          platform: tokenInfo.platform,
         },
       },
     }
@@ -136,13 +137,17 @@ export function useSecTokensFromMap(tokenMap: SecTokenAddressMap): { [address: s
 }
 
 export function useAccreditationStatus(currencyId?: string) {
-  const { secTokens } = useUserSecTokens()
-  const accreditationRequest: AccreditationRequest | null = useMemo(() => {
-    return (secTokens[currencyId ?? ''] as any)?.tokenInfo?.accreditationRequest || null
-  }, [secTokens, currencyId])
-  const status: AccreditationStatusEnum | undefined = accreditationRequest?.status
-  const isApproved = useMemo(() => {
-    return status === AccreditationStatusEnum.APPROVED
-  }, [status])
-  return { status, isApproved, accreditationRequest }
+  const { secTokens: userSecTokens } = useUserSecTokens()
+  const { secTokens } = useSecTokens()
+  const token = userSecTokens[currencyId ?? ''] ?? secTokens[currencyId ?? '']
+  const tokenInfo = (token as any)?.tokenInfo
+
+  return useMemo(() => {
+    const accreditationRequest: AccreditationRequest | null = tokenInfo?.accreditationRequest || null
+    const status: AccreditationStatusEnum | undefined = accreditationRequest?.status
+    const isApproved = status === AccreditationStatusEnum.APPROVED
+    const platform = tokenInfo?.platform || null
+
+    return { status, isApproved, accreditationRequest, platform }
+  }, [tokenInfo?.accreditationRequest, tokenInfo?.platform])
 }

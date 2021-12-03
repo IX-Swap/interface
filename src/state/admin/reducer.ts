@@ -6,10 +6,14 @@ import {
   logout,
   RawGetMePayload,
   KycList,
+  getBrokerDealerList,
+  getBrokerDealerSwaps,
+  BrokerDealerList,
   getKycList,
   postApproveKyc,
   postDeclineKyc,
   postKycReset,
+  BrokerDealerSwaps,
 } from './actions'
 
 export interface AdminState {
@@ -18,8 +22,10 @@ export interface AdminState {
   adminLoading: boolean
   adminIsAuthenticated: boolean
   adminError: string | null
-  adminData: RawGetMePayload
+  adminData: RawGetMePayload | null
   kycList: KycList
+  brokerDealerList: BrokerDealerList
+  brokerDealerSwaps: BrokerDealerSwaps
 }
 
 const initialState: AdminState = {
@@ -27,7 +33,7 @@ const initialState: AdminState = {
   expiresAt: undefined,
   adminLoading: false,
   adminError: null,
-  adminData: {} as RawGetMePayload,
+  adminData: null,
   adminIsAuthenticated: Boolean(localStorage.getItem('adminAccessToken')),
   kycList: {
     page: 0,
@@ -39,6 +45,15 @@ const initialState: AdminState = {
     nextPage: 0,
     prevPage: 0,
   },
+  brokerDealerList: {
+    data: null,
+  },
+  brokerDealerSwaps: {
+    items: [],
+    totalPages: 0,
+    page: 1,
+    offset: 50,
+  },
 }
 
 export default createReducer<AdminState>(initialState, (builder) =>
@@ -48,7 +63,6 @@ export default createReducer<AdminState>(initialState, (builder) =>
       state.adminError = null
     })
     .addCase(postLogin.fulfilled, (state, { payload: { auth } }) => {
-      localStorage.setItem('adminAccessToken', auth.accessToken)
       state.adminLoading = false
       state.adminError = null
       const expirationTime = getTokenExpiration(auth.expiresIn)
@@ -70,17 +84,15 @@ export default createReducer<AdminState>(initialState, (builder) =>
       state.adminData = data
     })
     .addCase(getMe.rejected, (state, { payload: { errorMessage } }) => {
-      localStorage.removeItem('adminAccessToken')
       state.adminIsAuthenticated = false
       state.adminLoading = false
       state.adminError = errorMessage
     })
     .addCase(logout.fulfilled, (state) => {
-      localStorage.removeItem('adminAccessToken')
       state.adminIsAuthenticated = false
       state.adminLoading = false
       state.adminError = null
-      state.adminData = {} as RawGetMePayload
+      state.adminData = null
     })
     .addCase(getKycList.pending, (state) => {
       state.adminLoading = true
@@ -145,5 +157,27 @@ export default createReducer<AdminState>(initialState, (builder) =>
     .addCase(postKycReset.rejected, (state, { payload: { errorMessage } }) => {
       state.adminLoading = false
       state.adminError = errorMessage
+    })
+    .addCase(getBrokerDealerList.fulfilled, (state, { payload: { data } }) => {
+      state.adminLoading = false
+      state.adminError = null
+      state.brokerDealerList = data
+    })
+    .addCase(getBrokerDealerList.rejected, (state, { payload: { errorMessage } }) => {
+      state.adminLoading = false
+      state.adminError = errorMessage
+    })
+    .addCase(getBrokerDealerList.pending, (state) => {
+      state.adminLoading = true
+      state.adminError = null
+    })
+    .addCase(getBrokerDealerSwaps.fulfilled, (state, { payload: { data } }) => {
+      state.adminLoading = false
+      state.adminError = null
+      state.brokerDealerSwaps = data
+    })
+    .addCase(getBrokerDealerSwaps.pending, (state) => {
+      state.adminLoading = true
+      state.adminError = null
     })
 )

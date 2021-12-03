@@ -145,7 +145,7 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
           </DesktopAndTablet>
           <MobileOnly>
             <Trans>
-              {isLimitReached ? <></> : <>{leftToFill}/</>}
+              {isLimitReached ? <></> : <>{leftToFill.toFixed()}/</>}
               {shortLimit}
             </Trans>
           </MobileOnly>
@@ -172,12 +172,22 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
         </MouseoverTooltip>
       </RowWithMarginTop>
       <RowWithMarginTopAndBottom>
-        <div style={{ width: '95%' }}>
-          <TYPE.body1 fontWeight={400} style={{ textTransform: 'lowercase', display: 'inline', width: '70%' }}>
-            <Trans>{tier.lockupPeriod} lock up period</Trans>
-          </TYPE.body1>
+        <div style={{ width: '95%', display: 'flex' }}>
+          <DesktopAndTablet>
+            <TYPE.body1 fontWeight={400} style={{ textTransform: 'lowercase', display: 'inline', width: '70%' }}>
+              <Trans>{tier.lockupPeriod} lock up period</Trans>
+            </TYPE.body1>
+          </DesktopAndTablet>
+          <MobileOnly>
+            <TYPE.body1 fontWeight={400} style={{ textTransform: 'lowercase', display: 'inline', width: '70%' }}>
+              <Trans>{tier.lockupPeriod} lock up</Trans>
+            </TYPE.body1>
+          </MobileOnly>
           <MouseoverTooltip
-            style={{ whiteSpace: 'pre-line', textAlign: 'center' }}
+            style={{
+              whiteSpace: 'pre-line',
+              textAlign: 'center',
+            }}
             text={t`Lock period means the time you won’t be able to unstake your ${
               ixsCurrency?.symbol
             } fully or partially. Please carefully consider the risks involved.

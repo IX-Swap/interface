@@ -111,12 +111,13 @@ export const TransactionDetails = ({ currency }: Props) => {
                 {activeEvent?.fromAddress && (
                   <Row style={{ marginTop: '16px', flexWrap: 'wrap' }}>
                     <TYPE.buttonMuted>
-                      <Trans>Sent from:</Trans>&nbsp;&nbsp;
+                      {isDeposit(activeEvent.type) && <Trans>Sent from:</Trans>}
+                      {isWithdraw(activeEvent.type) && <Trans>Sent to:</Trans>}&nbsp;&nbsp;
                     </TYPE.buttonMuted>
                     <TYPE.body3>{shortenAddress(activeEvent?.fromAddress)}</TYPE.body3>
                   </Row>
                 )}
-                {activeEvent.depositAddress && (
+                {activeEvent.depositAddress && isDeposit(activeEvent.type) && (
                   <Row
                     style={{ marginTop: '16px', flexWrap: 'wrap' }}
                     onClick={() => setCopied(activeEvent.depositAddress ?? '')}
@@ -143,7 +144,7 @@ export const TransactionDetails = ({ currency }: Props) => {
                     </SvgIconWrapper>
                   </RowCenter>
                 )}
-                {isPending(activeEvent.type, status) && isDeposit(activeEvent.type) && (
+                {/* {isPending(activeEvent.type, status) && isDeposit(activeEvent.type) && (
                   <RowCenter style={{ marginTop: '45px', marginBottom: '45px' }}>
                     <ButtonGradientBorder
                       data-testid="cancel"
@@ -153,7 +154,7 @@ export const TransactionDetails = ({ currency }: Props) => {
                       {isDeposit(activeEvent.type) && <Trans>Cancel deposit</Trans>}
                     </ButtonGradientBorder>
                   </RowCenter>
-                )}
+                )} */}
                 {depositError && (
                   <RowCenter style={{ marginTop: '16px', opacity: '0.7' }}>
                     <TYPE.description2>{depositError}</TYPE.description2>

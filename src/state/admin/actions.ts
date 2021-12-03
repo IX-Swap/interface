@@ -64,6 +64,16 @@ export interface KycList {
   prevPage: number
 }
 
+export interface BrokerDealerList {
+  data: any
+}
+
+export interface BrokerDealerSwaps {
+  page: number
+  totalPages: number
+  items: BrokerDealerSwapItem[]
+  offset: number
+}
 export interface KycItem {
   createdAt: string
   custodianApplicationId?: number
@@ -136,6 +146,35 @@ export interface KycItem {
   userId: number
 }
 
+export type BrokerDealerSwapItem = {
+  id: number
+  amount: string
+  brokerDealer: {
+    name: string
+  }
+  brokerDealerId: number
+  status: string
+  token: {
+    name: string
+    symbol: string
+    decimals: number
+  }
+  tokenId: number
+  user: {
+    ethAddress: string
+  }
+  data: {
+    amount: string
+    userEthAddress: string
+    pairAddress: string
+    tokenSymbol: string
+    pairSymbol: string
+    tokenAddress: string
+  }
+  createdAt: string
+  transactionHash?: string | null
+}
+
 export const getKycList: Readonly<{
   pending: ActionCreatorWithoutPayload
   fulfilled: ActionCreatorWithPayload<{ data: KycList }>
@@ -144,6 +183,16 @@ export const getKycList: Readonly<{
   pending: createAction('admin/getKycList/pending'),
   fulfilled: createAction('admin/getKycList/fulfilled'),
   rejected: createAction('admin/getKycList/rejected'),
+}
+
+export const getBrokerDealerList: Readonly<{
+  pending: ActionCreatorWithoutPayload
+  fulfilled: ActionCreatorWithPayload<{ data: BrokerDealerList }>
+  rejected: ActionCreatorWithPayload<{ errorMessage: string }>
+}> = {
+  pending: createAction('admin/getBrokerDealerList/pending'),
+  fulfilled: createAction('admin/getBrokerDealerList/fulfilled'),
+  rejected: createAction('admin/getBrokerDealerList/rejected'),
 }
 
 export const postApproveKyc: Readonly<{
@@ -174,4 +223,14 @@ export const postKycReset: Readonly<{
   pending: createAction('admin/postKycReset/pending'),
   fulfilled: createAction('admin/postKycReset/fulfilled'),
   rejected: createAction('admin/postKycReset/rejected'),
+}
+
+export const getBrokerDealerSwaps: Readonly<{
+  pending: ActionCreatorWithoutPayload
+  fulfilled: ActionCreatorWithPayload<{ data: BrokerDealerSwaps }>
+  rejected: ActionCreatorWithPayload<{ errorMessage: string }>
+}> = {
+  pending: createAction('broker-dealer/swaps/pending'),
+  fulfilled: createAction('broker-dealer/swaps/fulfilled'),
+  rejected: createAction('broker-dealer/swaps/rejected'),
 }

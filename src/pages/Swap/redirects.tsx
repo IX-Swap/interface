@@ -9,9 +9,7 @@ import { ApplicationModal, setOpenModal } from '../../state/application/actions'
 export function RedirectPathToSwapOnly({ location }: RouteComponentProps) {
   return <Redirect to={{ ...location, pathname: routes.swap }} />
 }
-export function RedirectPathToVesting({ location }: RouteComponentProps) {
-  return <Redirect to={{ ...location, pathname: routes.vesting }} />
-}
+
 export function RedirectPathToStaking({ location }: RouteComponentProps) {
   return <Redirect to={{ ...location, pathname: routes.staking }} />
 }

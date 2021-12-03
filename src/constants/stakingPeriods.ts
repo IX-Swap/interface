@@ -12,6 +12,7 @@ export interface IStaking {
   distributeAmount: number
   apy: number
   reward: number
+  totalReward: number
   lockMonths: number
   startDateUnix: number
   endDateUnix: number
@@ -55,10 +56,10 @@ const periodsLockMonths = {
 
 //<<<< testing, remove on prod
 export const testPeriodsLockSeconds = {
-  [periods.WEEK]: 5 * 60,
-  [periods.MONTH]: 10 * 60,
-  [periods.TWO_MONTHS]: 10 * 60,
-  [periods.THREE_MONTHS]: 15 * 60,
+  [periods.WEEK]: 2 * 60,
+  [periods.MONTH]: 5 * 60,
+  [periods.TWO_MONTHS]: 5 * 60,
+  [periods.THREE_MONTHS]: 10 * 60,
 }
 export const testPeriodsMaturitySeconds = {
   [periods.WEEK]: 5 * 60,

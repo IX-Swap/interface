@@ -13,6 +13,14 @@ export interface SecToken extends TokenInfo {
   deletedAt: string | null
   isSecToken: true
   contractAddress?: string
+  platform?: SecTokenPlatform
+}
+
+export interface SecTokenPlatform {
+  description: string
+  id: number
+  name: string
+  website: string
 }
 
 export interface TokenUser {

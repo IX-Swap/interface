@@ -1,13 +1,57 @@
 import axios from 'axios'
 import { API_URL } from 'config'
 import store from 'state'
-import { responseErrorInterceptor, responseSuccessInterceptor } from './interceptors'
+import { postLogin } from 'state/auth/actions'
+import { saveAccount } from 'state/user/actions'
+import { auth, metamask } from './apiUrls'
+import { responseSuccessInterceptor } from './interceptors'
 import { APIServiceRequestConfig, KeyValueMap, RequestConfig } from './types'
 
 const _axios = axios.create()
 _axios.defaults.baseURL = API_URL
-// _axios.defaults.withCredentials = true
-_axios.interceptors.response.use(responseSuccessInterceptor, responseErrorInterceptor)
+
+_axios.interceptors.response.use(responseSuccessInterceptor, async function responseErrorInterceptor(error: any) {
+  const originalConfig = error?.config
+  const shouldRetry = () => {
+    const loginUrLs = [metamask.login, metamask.challenge]
+    return !loginUrLs.includes(originalConfig.url)
+  }
+  if (shouldRetry() && error?.response) {
+    if (error.response.status === 401 && !originalConfig._retry) {
+      originalConfig._retry = true
+      try {
+        const { auth: authState } = store.getState()
+        if (authState.refreshToken) {
+          store.dispatch(postLogin.pending())
+          const response = await _axios.post(auth.refresh, { refreshToken: authState.refreshToken })
+          if (!response?.data) {
+            store.dispatch(
+              postLogin.rejected({
+                errorMessage: 'No response on refresh token',
+              })
+            )
+            return
+          }
+          store.dispatch(
+            postLogin.fulfilled({
+              auth: response?.data,
+            })
+          )
+          return _axios(originalConfig)
+        } else {
+          store.dispatch(saveAccount({ account: '' }))
+        }
+      } catch (error) {
+        console.error({ requestError: error.message })
+        store.dispatch(postLogin.rejected({ errorMessage: error.message }))
+      }
+    }
+    if (error?.response?.status === 403) {
+      const message = error?.response?.data?.message
+      throw new Error(message)
+    }
+  }
+})
 
 const apiService = {
   async request<T = any>({ method, uri, data, axiosConfig = {}, params = {} }: APIServiceRequestConfig) {
@@ -74,7 +118,6 @@ const apiService = {
     } else {
       message = error.message
     }
-    console.log({ ERROR1: error.response.data })
     return message
   },
 
@@ -101,11 +144,10 @@ const apiService = {
   },
 
   _prepareHeaders(data: any) {
-    const isAdmin = window.location.hash === '#/admin-kyc' || window.location.hash === '#/admin-login'
     const headers: KeyValueMap = {}
-    const { auth, admin } = store.getState()
-    if (auth.token || admin.token) {
-      headers.Authorization = `Bearer ${isAdmin ? admin.token : auth.token}`
+    const { auth } = store.getState()
+    if (auth.token) {
+      headers.Authorization = `Bearer ${auth.token}`
     }
 
     if (data !== undefined && !this._isFormData(data)) {

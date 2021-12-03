@@ -312,7 +312,7 @@ export const APYWrapper = styled.div`
 
 export const APYPercentage = styled(TYPE.main0)`
   @media only screen and (max-width: 683px) {
-    font-size: 36px;
+    font-size: 36px !important;
   }
 `
 export const RowWithMarginTop = styled(RowCenter)`

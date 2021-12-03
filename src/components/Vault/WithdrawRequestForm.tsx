@@ -2,6 +2,7 @@ import { Currency } from '@ixswap1/sdk-core'
 import { Trans } from '@lingui/macro'
 import { ButtonIXSWide } from 'components/Button'
 import Column from 'components/Column'
+import { getNetworkFromToken } from 'components/CurrencyLogo'
 import Row from 'components/Row'
 import useENS from 'hooks/useENS'
 import useTheme from 'hooks/useTheme'
@@ -27,26 +28,26 @@ interface Props {
 }
 export const WithdrawRequestForm = ({ currency, changeModal }: Props) => {
   const theme = useTheme()
-  const { account } = useActiveWeb3React()
   const { amount, receiver, currencyId: cid } = useWithdrawState()
+  const { account } = useActiveWeb3React()
   const { secTokens } = useUserSecTokens()
-  const { onTypeAmount, onTypeReceiver, onCurrencySet } = useWithdrawActionHandlers()
-  const { address, loading } = useENS(receiver)
-  const error = Boolean(receiver.length > 0 && !loading && !address)
+  const { onTypeAmount, onTypeReceiver, onCurrencySet, onSetNetWorkName } = useWithdrawActionHandlers()
   const withdraw = useWithdrawCallback(cid, currency?.symbol)
   const { parsedAmount, inputError } = useDerivedWithdrawInfo()
   const tokenInfo = (secTokens[(currency as any)?.address || ''] as any)?.tokenInfo
-  const networkName = tokenInfo?.network.charAt(0).toUpperCase() + tokenInfo?.network.slice(1) || ''
+  const networkName = getNetworkFromToken(tokenInfo)
+  const { address, loading } = useENS(receiver)
+  const error = Boolean(receiver.length > 0 && !loading && !address && networkName === 'Ethereum')
 
   useEffect(() => {
-    if (account) {
-      onTypeReceiver(account ?? '')
+    if (networkName) {
+      onSetNetWorkName(networkName ?? '')
     }
-  }, [account, onTypeReceiver])
+  }, [networkName, onSetNetWorkName])
 
   const onClick = () => {
     const tokenId = (secTokens[cid ?? ''] as any)?.tokenInfo?.id
-    if (tokenId && !error && parsedAmount && !inputError) {
+    if (tokenId && !error && parsedAmount && !inputError && receiver) {
       withdraw({ id: tokenId, amount: parsedAmount.toExact(), onSuccess, onError, receiver })
     }
   }
@@ -64,26 +65,13 @@ export const WithdrawRequestForm = ({ currency, changeModal }: Props) => {
   return (
     <div style={{ position: 'relative' }}>
       <Column style={{ gap: '25px', marginTop: '18px' }}>
-        {/* <Row style={{ marginTop: '18px' }}>
-          <TYPE.description3>
-            <b>
-              <Trans>Wrap to Sec info:</Trans>
-            </b>
-            &nbsp;
-            <Trans>
-              Donec sollicitudin molestie malesuada. Proin eget tortor risus. Curabitur arcu erat, accumsan id imperdiet
-              et, porttitor at sem. Vivamus suscipit tortor eget felis porttitor volutpat. Pellentesque in ipsum id orci
-              porta dapibus. Donec sollicitudin molestie malesuada
-            </Trans>
-          </TYPE.description3>
-        </Row> */}
         <Column>
           <TYPE.description3>
             <b>
               <Trans>Info:</Trans>
             </b>
             &nbsp;
-            <Trans>{`Your wrapped ${tokenInfo?.symbol} will be extracted from your Ethereum wallet and burnt automatically.`}</Trans>
+            <Trans>{`Your wrapped ${tokenInfo?.symbol} will be extracted from your ${networkName} wallet and burnt automatically.`}</Trans>
           </TYPE.description3>
         </Column>
         <Column style={{ gap: '11px' }}>
@@ -102,7 +90,7 @@ export const WithdrawRequestForm = ({ currency, changeModal }: Props) => {
           <Row>
             <TYPE.description2 color={`${theme.text2}80`}>
               <Trans>{`${amount || '0'} ${tokenInfo?.symbol} tokens from your wallet ${
-                address && shortAddress(address || '')
+                account && shortAddress(account || '')
               } will be burned during withdrawal`}</Trans>
             </TYPE.description2>
           </Row>

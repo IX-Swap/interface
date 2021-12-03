@@ -21,6 +21,7 @@ import vesting from './vesting/reducer'
 import staking from './stake/reducer'
 import unstaking from './stake/unstake/reducer'
 import stakingPoolSize from './stake/poolSizeReducer'
+import pool from './pool/reducer'
 
 import brokerDealer from './brokerDealer/reducer'
 
@@ -48,6 +49,7 @@ const store = configureStore({
     stakingPoolSize,
     brokerDealer,
     swapHelper,
+    pool,
   },
   middleware: [...getDefaultMiddleware({ thunk: true }), save({ states: PERSISTED_KEYS, debounce: 1000 })],
   preloadedState: load({ states: PERSISTED_KEYS }),

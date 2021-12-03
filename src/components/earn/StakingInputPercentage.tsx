@@ -26,7 +26,9 @@ function formatAmount(amount: number): string {
 }
 
 const PERCENTAGES = ['25', '50', '75', '100']
-
+function formatAmount(amount: number): string {
+  return amount?.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 10 })
+}
 export const StakingInputPercentage = ({
   fieldTitle,
   maxAvailable,
