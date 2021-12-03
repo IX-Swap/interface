@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Grid } from '@material-ui/core'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { VSpacer } from 'components/VSpacer'
@@ -8,9 +8,15 @@ import { useTradeConfirmation } from 'app/pages/accounts/hooks/useTradeConfirmat
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 import { TradesTable } from 'app/pages/accounts/pages/reports/components/TradesTable/TradesTable'
 import { NoData } from 'app/pages/accounts/pages/reports/components/NoData/NoData'
+import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 
 export const TradeConfirmation = () => {
+  const { updateFilter } = useQueryFilter()
   const { data, isLoading } = useTradeConfirmation()
+
+  useEffect(() => {
+    updateFilter('expandedSections', 'Trades')
+  }, [])
 
   const renderContent = () => {
     if (data === undefined || data.length < 1) {

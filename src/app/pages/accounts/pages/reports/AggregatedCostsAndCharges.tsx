@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Grid } from '@material-ui/core'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { VSpacer } from 'components/VSpacer'
@@ -8,9 +8,15 @@ import { useFeeAndCharges } from 'app/pages/accounts/hooks/useFeeAndCharges'
 import { FeesTable } from 'app/pages/accounts/pages/reports/components/FeesTable/FeesTable'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 import { NoData } from 'app/pages/accounts/pages/reports/components/NoData/NoData'
+import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 
 export const AggregatedCostsAndCharges: React.FC = () => {
   const { data, isLoading } = useFeeAndCharges()
+  const { updateFilter } = useQueryFilter()
+
+  useEffect(() => {
+    updateFilter('expandedSections', 'Fees (SGD),Fees (USD)')
+  }, [])
 
   const hasSGDData =
     data !== undefined && data.sgd !== undefined && data.sgd.length > 0

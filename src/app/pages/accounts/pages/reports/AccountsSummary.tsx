@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Grid } from '@material-ui/core'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { VSpacer } from 'components/VSpacer'
@@ -10,8 +10,10 @@ import { OpenPositionTable } from 'app/pages/accounts/pages/reports/components/O
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 import { CashReportTable } from 'app/pages/accounts/pages/reports/components/CashReportTable/CashReportTable'
 import { NoData } from 'app/pages/accounts/pages/reports/components/NoData/NoData'
+import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 
 export const AccountsSummary: React.FC = () => {
+  const { updateFilter } = useQueryFilter()
   const { data, isLoading } = useActivitySummary()
 
   const hasOpenPositionsTotal =
@@ -21,6 +23,10 @@ export const AccountsSummary: React.FC = () => {
 
   const hasCashReports = data !== undefined && data.cashReports !== undefined
   const hasNoData = !hasOpenPositionsTotal && !hasCashReports
+
+  useEffect(() => {
+    updateFilter('expandedSections', 'Open Positions,Cash Report')
+  }, [])
 
   const renderContent = () => {
     if (hasNoData) {

@@ -19,7 +19,10 @@ export const Actions = ({ sectionSummaries }: ActionsProps) => {
         onClick={() =>
           updateFilter(
             'expandedSections',
-            sectionSummaries.reduce((acc, it) => acc.concat(it), '')
+            sectionSummaries.reduce(
+              (acc, it, i) => acc.concat(i === 0 ? it : `,${it}`),
+              ''
+            )
           )
         }
       >
