@@ -7,17 +7,24 @@ import { ReportsAccordion } from 'app/pages/accounts/pages/reports/components/Re
 import { useTradeConfirmation } from 'app/pages/accounts/hooks/useTradeConfirmation'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 import { TradesTable } from 'app/pages/accounts/pages/reports/components/TradesTable/TradesTable'
+import { NoData } from 'app/pages/accounts/pages/reports/components/NoData/NoData'
 
-export const TradeConfirmation: React.FC = () => {
+export const TradeConfirmation = () => {
   const { data, isLoading } = useTradeConfirmation()
+
+  const renderContent = () => {
+    if (data === undefined || data.length < 1) {
+      return <NoData />
+    }
+    return (
+      <ReportsAccordion summary={'Trades'}>
+        <TradesTable data={data} />
+      </ReportsAccordion>
+    )
+  }
 
   if (isLoading) {
     return <LoadingIndicator />
-  }
-
-  if (data === undefined || data.length < 1) {
-    // TODO Add UI for state without any data
-    return null
   }
 
   return (
@@ -31,10 +38,7 @@ export const TradeConfirmation: React.FC = () => {
 
       <Grid item>
         <VSpacer size={'medium'} />
-
-        <ReportsAccordion summary={'Trades'}>
-          <TradesTable data={data} />
-        </ReportsAccordion>
+        {renderContent()}
       </Grid>
     </Grid>
   )

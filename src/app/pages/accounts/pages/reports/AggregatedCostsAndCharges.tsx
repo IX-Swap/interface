@@ -7,6 +7,7 @@ import { ReportsAccordion } from 'app/pages/accounts/pages/reports/components/Re
 import { useFeeAndCharges } from 'app/pages/accounts/hooks/useFeeAndCharges'
 import { FeesTable } from 'app/pages/accounts/pages/reports/components/FeesTable/FeesTable'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
+import { NoData } from 'app/pages/accounts/pages/reports/components/NoData/NoData'
 
 export const AggregatedCostsAndCharges: React.FC = () => {
   const { data, isLoading } = useFeeAndCharges()
@@ -16,13 +17,29 @@ export const AggregatedCostsAndCharges: React.FC = () => {
   const hasUSDData =
     data !== undefined && data.usd !== undefined && data.usd.length > 0
 
-  if (isLoading) {
-    return <LoadingIndicator />
+  const renderContent = () => {
+    if (!hasSGDData && !hasUSDData) {
+      return <NoData />
+    }
+    if (hasSGDData) {
+      return (
+        <ReportsAccordion summary={'Fees (SGD)'}>
+          <FeesTable accounts={data.sgd} total={data.totalSgd} />
+        </ReportsAccordion>
+      )
+    }
+
+    if (hasUSDData) {
+      return (
+        <ReportsAccordion summary={'Fees (USD)'}>
+          <FeesTable accounts={data.usd} total={data.totalUsd} />
+        </ReportsAccordion>
+      )
+    }
   }
 
-  if (!hasSGDData && !hasUSDData) {
-    // TODO Add UI for state without any data
-    return null
+  if (isLoading) {
+    return <LoadingIndicator />
   }
 
   return (
@@ -36,18 +53,7 @@ export const AggregatedCostsAndCharges: React.FC = () => {
 
       <Grid item>
         <VSpacer size={'medium'} />
-
-        {hasSGDData && (
-          <ReportsAccordion summary={'Fees (SGD)'}>
-            <FeesTable accounts={data.sgd} total={data.totalSgd} />
-          </ReportsAccordion>
-        )}
-
-        {hasUSDData && (
-          <ReportsAccordion summary={'Fees (USD)'}>
-            <FeesTable accounts={data.usd} total={data.totalUsd} />
-          </ReportsAccordion>
-        )}
+        {renderContent()}
       </Grid>
     </Grid>
   )

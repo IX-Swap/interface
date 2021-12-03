@@ -7,17 +7,24 @@ import { ReportsAccordion } from 'app/pages/accounts/pages/reports/components/Re
 import { useDividends } from 'app/pages/accounts/hooks/useDividends'
 import { DividendsTable } from 'app/pages/accounts/pages/reports/components/DividendsTable/DividendsTable'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
+import { NoData } from 'app/pages/accounts/pages/reports/components/NoData/NoData'
 
 export const Dividends: React.FC = () => {
   const { data, isLoading } = useDividends()
 
-  if (isLoading) {
-    return <LoadingIndicator />
+  const renderContent = () => {
+    if (data === undefined || data.length < 1) {
+      return <NoData />
+    }
+    return (
+      <ReportsAccordion summary={'Dividends'}>
+        <DividendsTable data={data} />
+      </ReportsAccordion>
+    )
   }
 
-  if (data === undefined || data.length < 1) {
-    // TODO Add UI for state without any data
-    return null
+  if (isLoading) {
+    return <LoadingIndicator />
   }
 
   return (
@@ -31,10 +38,7 @@ export const Dividends: React.FC = () => {
 
       <Grid item>
         <VSpacer size={'medium'} />
-
-        <ReportsAccordion summary={'Dividends'}>
-          <DividendsTable data={data} />
-        </ReportsAccordion>
+        {renderContent()}
       </Grid>
     </Grid>
   )
