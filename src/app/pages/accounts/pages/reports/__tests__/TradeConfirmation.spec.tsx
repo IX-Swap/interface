@@ -9,16 +9,6 @@ describe('TradeConfirmation', () => {
     await cleanup()
   })
 
-  it('should match snapshot when data is loading', () => {
-    jest.spyOn(useTradeConfirmation, 'useTradeConfirmation').mockReturnValue({
-      data: [fakeTradeItem],
-      isLoading: true
-    } as any)
-
-    const { container } = render(<TradeConfirmation />)
-    expect(container).toMatchSnapshot()
-  })
-
   it('should match snapshot when data is undefined', () => {
     jest.spyOn(useTradeConfirmation, 'useTradeConfirmation').mockReturnValue({
       data: undefined,

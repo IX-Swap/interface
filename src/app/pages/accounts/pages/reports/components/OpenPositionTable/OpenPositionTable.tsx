@@ -10,6 +10,7 @@ import {
 import { useStyles } from '../shared.styles'
 import { OpenPositionItem, OpenPositionsTotal } from 'types/reports'
 import { OpenPositionRow } from 'app/pages/accounts/pages/reports/components/OpenPositionTable/OpenPositionRow'
+import { TableCellItem } from 'types/table'
 
 export interface OpenPositionTableProps {
   openPositions: OpenPositionItem[]
@@ -21,18 +22,16 @@ export const createRow = (
   price: string | number,
   currentValue: string | number,
   unrealizedPnl: string | number
-) => {
-  return {
-    pair: pair,
-    date: '',
-    amount: '',
-    price,
-    costValue: '',
-    lastTradePrice: '',
-    currentValue,
-    unrealizedPnl
-  }
-}
+) => ({
+  pair: pair,
+  date: '',
+  amount: '',
+  price,
+  costValue: '',
+  lastTradePrice: '',
+  currentValue,
+  unrealizedPnl
+})
 
 export const OpenPositionTable = ({
   openPositions,
@@ -40,7 +39,7 @@ export const OpenPositionTable = ({
 }: OpenPositionTableProps) => {
   const classes = useStyles({})
 
-  const headCells = [
+  const headCells: TableCellItem[] = [
     { label: 'Symbol', align: 'left' },
     { label: 'Open', align: 'left' },
     { label: 'Quantity', align: 'right' },
@@ -68,7 +67,7 @@ export const OpenPositionTable = ({
         <TableHead>
           <TableRow>
             {headCells.map(({ label, align }) => (
-              <TableCell align={align as any} className={classes.headColumn}>
+              <TableCell align={align} className={classes.headColumn}>
                 {label}
               </TableCell>
             ))}

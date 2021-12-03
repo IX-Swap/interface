@@ -10,6 +10,7 @@ import {
 import { useStyles } from '../shared.styles'
 import { Dividend } from 'types/reports'
 import { DividendsRow } from 'app/pages/accounts/pages/reports/components/DividendsTable/DividendsRow'
+import { TableCellItem } from 'types/table'
 
 export interface DividendsTableProps {
   data: Dividend[]
@@ -18,7 +19,7 @@ export interface DividendsTableProps {
 export const DividendsTable = ({ data }: DividendsTableProps) => {
   const classes = useStyles({})
 
-  const headCells = [
+  const headCells: TableCellItem[] = [
     { label: 'Date', align: 'left' },
     { label: 'Token', align: 'left' },
     { label: 'Dividend Per Share', align: 'left' },
@@ -32,7 +33,7 @@ export const DividendsTable = ({ data }: DividendsTableProps) => {
         <TableHead>
           <TableRow>
             {headCells.map(({ label, align }) => (
-              <TableCell align={align as any} className={classes.headColumn}>
+              <TableCell align={align} className={classes.headColumn}>
                 {label}
               </TableCell>
             ))}

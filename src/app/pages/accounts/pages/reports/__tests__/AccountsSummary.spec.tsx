@@ -9,16 +9,6 @@ describe('AccountsSummary', () => {
     await cleanup()
   })
 
-  it('should match snapshot when data is loading', () => {
-    jest.spyOn(useActivitySummary, 'useActivitySummary').mockReturnValue({
-      data: fakeActivitySummary,
-      isLoading: true
-    } as any)
-
-    const { container } = render(<AccountsSummary />)
-    expect(container).toMatchSnapshot()
-  })
-
   it('should match snapshot when data is undefined', () => {
     jest.spyOn(useActivitySummary, 'useActivitySummary').mockReturnValue({
       data: undefined,

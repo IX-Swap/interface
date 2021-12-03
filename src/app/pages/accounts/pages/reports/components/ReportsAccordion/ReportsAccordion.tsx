@@ -21,7 +21,7 @@ export const ReportsAccordion = ({
   const classes = useStyles()
 
   const { getFilterValue, updateFilter } = useQueryFilter()
-  const expandedSectionsValues = getFilterValue('expandedSections') ?? ''
+  const expandedSectionsValues = getFilterValue('expandedSections', '')
   const hasExpanded = expandedSectionsValues?.includes(summary)
 
   const handleChange = () =>

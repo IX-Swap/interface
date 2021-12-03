@@ -9,16 +9,6 @@ describe('Dividends', () => {
     await cleanup()
   })
 
-  it('should match snapshot when data is loading', () => {
-    jest.spyOn(useDividends, 'useDividends').mockReturnValue({
-      data: [fakeDividend],
-      isLoading: true
-    } as any)
-
-    const { container } = render(<Dividends />)
-    expect(container).toMatchSnapshot()
-  })
-
   it('should match snapshot when data is undefined', () => {
     jest.spyOn(useDividends, 'useDividends').mockReturnValue({
       data: undefined,

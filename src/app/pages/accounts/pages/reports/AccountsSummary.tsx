@@ -21,7 +21,7 @@ export const AccountsSummary: React.FC = () => {
     data.openPositions !== undefined &&
     data.openPositions.length > 0
 
-  const hasCashReports = data !== undefined && data.cashReports !== undefined
+  const hasCashReports = data?.cashReports !== undefined
   const hasNoData = !hasOpenPositionsTotal && !hasCashReports
 
   useEffect(() => {

@@ -3,7 +3,7 @@ import { TableCell, TableRow } from '@material-ui/core'
 import { useStyles } from '../shared.styles'
 import { formatReportsDateAndTime } from 'helpers/dates'
 import { Account } from 'types/reports'
-import { formatValue } from 'app/pages/accounts/pages/reports/helper'
+import { formatAmountValue } from 'helpers/numbers'
 
 export interface FeesRowProps {
   rowsLength: number
@@ -23,7 +23,7 @@ export const FeesRow = ({ row, rowsLength, index }: FeesRowProps) => {
         {row.description}
       </TableCell>
       <TableCell align='right' className={classes.column}>
-        {formatValue(row.amount)}
+        {formatAmountValue(row.amount)}
       </TableCell>
     </TableRow>
   )

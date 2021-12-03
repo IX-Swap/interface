@@ -10,6 +10,7 @@ import {
 import { useStyles } from '../shared.styles'
 import { Account } from 'types/reports'
 import { FeesRow } from 'app/pages/accounts/pages/reports/components/FeesTable/FeesRow'
+import { TableCellItem } from 'types/table'
 
 export interface FeesTableProps {
   accounts: Account[]
@@ -20,18 +21,16 @@ export const createRow = (
   createdAt: string,
   description: string,
   amount: number | string
-) => {
-  return {
-    createdAt,
-    description,
-    amount: amount
-  }
-}
+) => ({
+  createdAt,
+  description,
+  amount: amount
+})
 
 export const FeesTable = ({ accounts, total }: FeesTableProps) => {
   const classes = useStyles({})
 
-  const headCells = [
+  const headCells: TableCellItem[] = [
     { label: 'Date', align: 'left' },
     { label: 'Description', align: 'center' },
     { label: 'Amount', align: 'left' }
@@ -50,7 +49,7 @@ export const FeesTable = ({ accounts, total }: FeesTableProps) => {
         <TableHead>
           <TableRow>
             {headCells.map(({ label, align }) => (
-              <TableCell align={align as any} className={classes.headColumn}>
+              <TableCell align={align} className={classes.headColumn}>
                 {label}
               </TableCell>
             ))}

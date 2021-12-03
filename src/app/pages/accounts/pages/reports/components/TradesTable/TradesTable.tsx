@@ -15,17 +15,15 @@ export interface TradesTableProps {
   data: TradeItem[]
 }
 
-export const createRow = (pair: string) => {
-  return {
-    pair: pair,
-    createdAt: '',
-    type: '',
-    quantity: '',
-    price: '',
-    total: '',
-    fee: ''
-  }
-}
+export const createRow = (pair: string) => ({
+  pair: pair,
+  createdAt: '',
+  type: '',
+  quantity: '',
+  price: '',
+  total: '',
+  fee: ''
+})
 
 export const headCells = [
   { label: '', align: 'left' },

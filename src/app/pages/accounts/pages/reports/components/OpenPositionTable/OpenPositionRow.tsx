@@ -3,7 +3,7 @@ import { TableCell, TableRow } from '@material-ui/core'
 import { useStyles } from '../shared.styles'
 import { OpenPositionItem } from 'types/reports'
 import { formatReportsDateAndTime } from 'helpers/dates'
-import { formatValue } from 'app/pages/accounts/pages/reports/helper'
+import { formatAmountValue } from 'helpers/numbers'
 
 export interface OpenPositionRowProps {
   rowsLength: number
@@ -30,19 +30,19 @@ export const OpenPositionRow = ({
         {row.amount}
       </TableCell>
       <TableCell align='right' className={classes.column}>
-        {formatValue(row.price)}
+        {formatAmountValue(row.price)}
       </TableCell>
       <TableCell align='right' className={classes.column}>
-        {formatValue(row.costValue)}
+        {formatAmountValue(row.costValue)}
       </TableCell>
       <TableCell align='right' className={classes.column}>
-        {formatValue(row.lastTradePrice)}
+        {formatAmountValue(row.lastTradePrice)}
       </TableCell>
       <TableCell align='right' className={classes.column}>
-        {formatValue(row.currentValue)}
+        {formatAmountValue(row.currentValue)}
       </TableCell>
       <TableCell align='right' className={classes.column}>
-        {formatValue(row.unrealizedPnl)}
+        {formatAmountValue(row.unrealizedPnl)}
       </TableCell>
     </TableRow>
   )

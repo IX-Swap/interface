@@ -3,7 +3,7 @@ import { TableCell, TableRow } from '@material-ui/core'
 import { useStyles } from '../shared.styles'
 import { TradeItem } from 'types/reports'
 import { formatReportsDateAndTime } from 'helpers/dates'
-import { formatValue } from 'app/pages/accounts/pages/reports/helper'
+import { formatAmountValue } from 'helpers/numbers'
 
 export interface TradesRowProps {
   row: TradeItem | any
@@ -33,13 +33,13 @@ export const TradesRow = ({ row, index }: TradesRowProps) => {
         {row.quantity}
       </TableCell>
       <TableCell align='right' className={classes.column}>
-        {formatValue(row.price)}
+        {formatAmountValue(row.price)}
       </TableCell>
       <TableCell align='right' className={classes.column}>
-        {formatValue(row.total)}
+        {formatAmountValue(row.total)}
       </TableCell>
       <TableCell align='right' className={classes.column}>
-        {formatValue(row.fee)}
+        {formatAmountValue(row.fee)}
       </TableCell>
     </TableRow>
   )

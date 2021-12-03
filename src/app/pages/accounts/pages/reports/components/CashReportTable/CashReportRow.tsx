@@ -2,7 +2,7 @@ import React from 'react'
 import { TableCell, TableRow } from '@material-ui/core'
 import { useStyles } from '../shared.styles'
 import { CashReports } from 'types/reports'
-import { formatValue } from 'app/pages/accounts/pages/reports/helper'
+import { formatAmountValue } from 'helpers/numbers'
 
 export interface CashReportRowProps {
   row: CashReports | any
@@ -28,7 +28,7 @@ export const CashReportRow = ({ row, index }: CashReportRowProps) => {
         align={'right'}
         className={classes.cashColumn}
       >
-        {formatValue(row.total)}
+        {formatAmountValue(row.total)}
       </TableCell>
     </TableRow>
   )

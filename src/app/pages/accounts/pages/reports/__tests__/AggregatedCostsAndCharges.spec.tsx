@@ -9,16 +9,6 @@ describe('AggregatedCostsAndCharges', () => {
     await cleanup()
   })
 
-  it('should match snapshot when data is loading', () => {
-    jest.spyOn(useFeeAndCharges, 'useFeeAndCharges').mockReturnValue({
-      data: fakeFeeAndCharges,
-      isLoading: true
-    } as any)
-
-    const { container } = render(<AggregatedCostsAndCharges />)
-    expect(container).toMatchSnapshot()
-  })
-
   it('should match snapshot when data is undefined', () => {
     jest.spyOn(useFeeAndCharges, 'useFeeAndCharges').mockReturnValue({
       data: undefined,

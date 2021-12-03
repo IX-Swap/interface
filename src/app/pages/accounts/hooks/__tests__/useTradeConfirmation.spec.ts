@@ -1,7 +1,5 @@
-import { act } from '@testing-library/react-hooks'
 import {
   waitFor,
-  cleanup,
   renderHookWithServiceProvider,
   apiServiceMock
 } from 'test-utils'
@@ -17,37 +15,26 @@ describe('useTradeConfirmation', () => {
     data: [fakeTradeItem]
   })
 
-  beforeEach(() => {
+  it('expects request with correct parameters and correct response', async () => {
     jest
       .spyOn(useAuthHook, 'useAuth')
       .mockImplementation(() => ({ user, isAuthenticated: true }))
-  })
 
-  afterEach(async () => {
-    await cleanup()
-    jest.clearAllMocks()
-  })
+    apiServiceMock.post.mockResolvedValue(sampleResponse)
 
-  it('expects request with correct parameters and correct response', async () => {
-    await act(async () => {
-      apiServiceMock.post.mockResolvedValue(sampleResponse)
-
-      await act(async () => {
-        const { result } = renderHookWithServiceProvider(() => {
-          return useTradeConfirmation()
-        })
-
-        await waitFor(() => result.current.data)
-
-        expect(result.current.data).toEqual(sampleResponse.data)
-        expect(apiServiceMock.post).toHaveBeenCalledWith(
-          accountsURL.reports.getTradeConfirmation(user._id),
-          {
-            from: undefined,
-            to: undefined
-          }
-        )
-      })
+    const { result } = renderHookWithServiceProvider(() => {
+      return useTradeConfirmation()
     })
+
+    await waitFor(() => result.current.data)
+
+    expect(result.current.data).toEqual(sampleResponse.data)
+    expect(apiServiceMock.post).toHaveBeenCalledWith(
+      accountsURL.reports.getTradeConfirmation(user._id),
+      {
+        from: undefined,
+        to: undefined
+      }
+    )
   })
 })
