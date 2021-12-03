@@ -35,9 +35,12 @@ export const DepositFormFields: React.FC = () => {
       <LayoutWrapper>
         <LabelledValue label='Address' value={address ?? '-'} />
       </LayoutWrapper>
-      <LayoutWrapper>
-        <img src={QRCodeURL} alt='QR Code' />
-      </LayoutWrapper>
+      {QRCodeURL !== undefined && (
+        <LayoutWrapper>
+          <img src={QRCodeURL} alt='QR Code' />
+        </LayoutWrapper>
+      )}
+
       <LayoutWrapper>
         <Warning />
       </LayoutWrapper>
