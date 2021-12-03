@@ -19,6 +19,7 @@ import { useIXSBalance, useIXSGovBalance } from 'state/user/hooks'
 import styled from 'styled-components'
 import { ModalBlurWrapper, TextGradient } from 'theme'
 import { ModalContentWrapper } from 'theme/components'
+import { formatAmount } from 'utils/formatCurrencyAmount'
 import { CloseIcon, TYPE } from '../../theme'
 
 const ModalPadding = styled.div`
@@ -33,10 +34,6 @@ const AdjustableColumn = styled(Column)`
       gap: 22px;
   `};
 `
-
-function formatAmount(amount: number) {
-  return amount.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 10 })
-}
 
 export const IXSBalanceModal = () => {
   const IXSBalance = useIXSBalance()

@@ -14,17 +14,13 @@ import { useUnstakingState } from 'state/stake/unstake/hooks'
 import { useCurrencyBalance } from 'state/wallet/hooks'
 import styled from 'styled-components'
 import { CloseIcon, TYPE } from 'theme'
-import { floorTo4Decimals } from 'utils/formatCurrencyAmount'
+import { floorTo4Decimals, formatAmount } from 'utils/formatCurrencyAmount'
 import { EllipsedText, ModalBottom, StakeInfoContainer } from '../style'
 interface UnstakingModalProps {
   onDismiss: () => void
   stake: IStaking
   onUnstake: () => void
   onApprove: (amount?: string) => void
-}
-
-function formatAmount(amount: number): string {
-  return amount?.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 10 })
 }
 
 export function FullUnstake({ onDismiss, stake, onUnstake, onApprove }: UnstakingModalProps) {
@@ -65,7 +61,7 @@ export function FullUnstake({ onDismiss, stake, onUnstake, onApprove }: Unstakin
 
   function isEnoughIXSGov(): boolean {
     if (!IXSGovBalance) return false
-    return parseFloat(IXSGovBalance.toSignificant(5)) >= stake?.stakeAmount
+    return parseFloat(IXSGovBalance.toSignificant(10)) >= stake?.stakeAmount
   }
 
   return (
@@ -98,7 +94,7 @@ export function FullUnstake({ onDismiss, stake, onUnstake, onApprove }: Unstakin
             textRight={
               <EllipsedText>
                 <div>
-                  {stakeAmount}&nbsp;IXSGov ({IXSGovBalance?.toSignificant(4)} <Trans>available</Trans>)
+                  {stakeAmount}&nbsp;IXSGov ({IXSGovBalance?.toSignificant(8)} <Trans>available</Trans>)
                 </div>
               </EllipsedText>
             }

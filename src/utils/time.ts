@@ -62,3 +62,21 @@ export const getNextPayoutTime = ({ payouts }: { payouts: [number, string][] }) 
   const futurePayouts = payouts.filter((value) => value[0] - currentDate >= 0)
   return futurePayouts.length > 0 ? futurePayouts[0] : null
 }
+
+export const dateFormatter = new Intl.DateTimeFormat('en-US', {
+  year: 'numeric',
+  month: 'short',
+  day: '2-digit',
+})
+
+export function formatDate(dateUnix: number) {
+  return dateFormatter.format(new Date(dateUnix * 1000))
+}
+
+export function getDateShortTime(dateUnix: number) {
+  return new Date(dateUnix * 1000).toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })
+}
+
+export function getDateFullTime(dateUnix: number) {
+  return new Date(dateUnix * 1000).toLocaleTimeString('en-GB')
+}
