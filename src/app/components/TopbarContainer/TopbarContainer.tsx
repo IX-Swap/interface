@@ -14,11 +14,9 @@ import { ReactComponent as InvestIcon } from 'assets/icons/navigation/invest.svg
 import { ReactComponent as AccountsIcon } from 'assets/icons/navigation/account.svg'
 import { ReactComponent as IssuanceIcon } from 'assets/icons/navigation/issuance.svg'
 import { ReactComponent as AuthorizerIcon } from 'assets/icons/navigation/authorizer.svg'
-import { HomeOutlined as HomeIcon } from '@material-ui/icons'
 import { Grid } from '@material-ui/core'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { InvestRoute } from 'app/pages/invest/router/config'
-import { HomeRoute } from 'app/pages/home/router/config'
 import {
   authorizerLandingLinks,
   AuthorizerRoute
@@ -29,6 +27,7 @@ import {
 } from 'app/pages/exchange/router/config'
 import { TopbarLinkContainer } from 'app/components/TopbarContainer/components/TopbarLinkContainer'
 import { TopbarLinkDropdown } from 'app/components/TopbarContainer/components/TopbarLinkDropdown'
+import { EducationCentreRoute } from 'app/pages/educationCentre/router/config'
 import { AppRoute } from 'app/router/config'
 
 export const TopbarContainer = () => {
@@ -39,11 +38,6 @@ export const TopbarContainer = () => {
 
   const isSuperUser = isAuthorizer || isAdmin
   const links = [
-    {
-      label: 'Home',
-      link: HomeRoute.landing,
-      icon: HomeIcon
-    },
     {
       label: 'Accounts',
       link: AccountsRoute.landing,
@@ -71,6 +65,11 @@ export const TopbarContainer = () => {
     })
   }
 
+  links.push({
+    label: 'Education Centre',
+    link: AppRoute.educationCentre
+  } as any)
+
   if (isSuperUser) {
     links.push({
       label: 'Authorizer',
@@ -79,18 +78,18 @@ export const TopbarContainer = () => {
     })
   }
 
-  const homeLinks = [
-    {
-      label: 'Create Identity',
-      path: AppRoute.identity
-    },
+  const educationCentreLinks = [
     {
       label: 'News',
-      path: HomeRoute.landing
+      path: EducationCentreRoute.news
+    },
+    {
+      label: 'Reports',
+      path: EducationCentreRoute.reports
     },
     {
       label: 'Research Terminal',
-      path: HomeRoute.securitiesMarkets
+      path: EducationCentreRoute.securitiesMarkets
     }
   ]
 
@@ -135,8 +134,8 @@ export const TopbarContainer = () => {
 
   const dropdownLinksItems = (name: string) => {
     switch (name) {
-      case 'Home':
-        return homeLinks
+      case 'Education Centre':
+        return educationCentreLinks
       case 'Authorizer':
         return [
           {
@@ -166,11 +165,11 @@ export const TopbarContainer = () => {
     <Grid style={{ display: 'flex' }}>
       {links.map(link => {
         if (
-          link.label === 'Home' ||
           link.label === 'Accounts' ||
           link.label === 'Authorizer' ||
           link.label === 'Invest' ||
-          link.label === 'Issuance'
+          link.label === 'Issuance' ||
+          link.label === 'Education Centre'
         ) {
           return (
             <TopbarLinkDropdown
