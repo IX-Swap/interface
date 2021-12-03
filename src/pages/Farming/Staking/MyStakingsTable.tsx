@@ -15,6 +15,8 @@ import { ApplicationModal } from 'state/application/actions'
 import { useToggleModal } from 'state/application/hooks'
 import { useStakingState } from 'state/stake/hooks'
 import { TYPE } from 'theme'
+import { formatAmount } from 'utils/formatCurrencyAmount'
+import { formatDate, getDateFullTime, getDateShortTime } from 'utils/time'
 import {
   Container,
   LoaderContainer,
@@ -27,15 +29,7 @@ import {
   UnstakeButton,
 } from './style'
 import { UnstakeModal } from './Unstaking/UnstakeModal'
-import {
-  formatAmount,
-  formatDate,
-  getDateFullTime,
-  getDateShortTime,
-  getLockPeriod,
-  getPeriodDigit,
-  getPeriodString,
-} from './utils'
+import { getLockPeriod, getPeriodDigit, getPeriodString } from './utils'
 
 let activeStake: IStaking
 
