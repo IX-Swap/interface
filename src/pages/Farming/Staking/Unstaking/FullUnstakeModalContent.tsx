@@ -14,17 +14,13 @@ import { useUnstakingState } from 'state/stake/unstake/hooks'
 import { useCurrencyBalance } from 'state/wallet/hooks'
 import styled from 'styled-components'
 import { CloseIcon, TYPE } from 'theme'
-import { floorTo4Decimals } from 'utils/formatCurrencyAmount'
+import { floorTo4Decimals, formatAmount } from 'utils/formatCurrencyAmount'
 import { EllipsedText, ModalBottom, StakeInfoContainer } from '../style'
 interface UnstakingModalProps {
   onDismiss: () => void
   stake: IStaking
   onUnstake: () => void
   onApprove: (amount?: string) => void
-}
-
-function formatAmount(amount: number): string {
-  return amount?.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 10 })
 }
 
 export function FullUnstake({ onDismiss, stake, onUnstake, onApprove }: UnstakingModalProps) {

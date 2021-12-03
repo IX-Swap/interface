@@ -34,3 +34,7 @@ export function formatPrice(price: Price<Currency, Currency> | undefined, sigFig
 
   return price.toSignificant(sigFigs)
 }
+
+export function formatAmount(amount: number) {
+  return amount.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 10 })
+}
