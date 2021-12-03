@@ -36,7 +36,6 @@ export const CreateForm = () => {
     toggleNumeric()
   }
   const mint = useMint()
-  const getSupply = useGetSupply()
   const [properties, setProperties] = useState<Array<{ name: string; value: string }>>([])
   const [levels, setLevels] = useState<Array<{ name: string; value: number; max: number }>>([])
   const [stats, setStats] = useState<Array<{ name: string; value: number; max: number }>>([])
@@ -45,10 +44,6 @@ export const CreateForm = () => {
   const onDrop = (file: any) => {
     setFile(file)
   }
-
-  useEffect(() => {
-    getSupply()
-  })
 
   const onSubmit = async (e: any) => {
     e.preventDefault()
