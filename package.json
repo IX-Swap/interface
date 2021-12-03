@@ -183,7 +183,7 @@
         "statements": 50
       }
     },
-    "globalSetup": "../global-setup.js"
+    "globalSetup": "./global-setup.js"
   },
   "jestSonar": {
     "reportPath": "coverage",
