@@ -68,7 +68,7 @@ export const formatReportsDateAndTime = (s?: string): string => {
     return s
   }
 
-  return s.length > 0 ? format(new Date(s), `yyyy-MM-dd, hh:mm a`) : s
+  return s.length > 0 ? format(date, `yyyy-MM-dd, hh:mm a`) : s
 }
 
 export const formatTime = (s?: string): string => {
