@@ -22,10 +22,6 @@ interface Props {
   disabled?: boolean
 }
 
-function formatAmount(amount: number): string {
-  return amount?.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 10 })
-}
-
 const PERCENTAGES = ['25', '50', '75', '100']
 
 export const StakingInputPercentage = ({
