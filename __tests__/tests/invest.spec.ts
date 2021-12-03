@@ -67,23 +67,22 @@ test.describe('My Commitments', () => {
     await expect(page).toHaveURL(`${baseCreds.URL}app/invest/commitments`)
   })
 
-  test('The Commitment view should contain', async ({ investment }) => {
+  test('The Commitment view should contain', async ({
+    investment,
+    textHelper
+  }) => {
     await investment.checkCommitmentsPage()
     const locator = await investment.checkRedirectionToCommitment()
-    await expect(locator).toContainText([
-      'Company Name',
-      'Issued By',
-      'Issued Date',
-      'Digital Security',
-      'Price Per Unit',
-      'Total Amount',
-      'Number Of Units'
-    ])
+    await expect(locator).toContainText(textHelper.commitmentsView)
   })
   test('The Commitment view should redirect to the DSO view page', async ({
-    investment
+    investment,
+    invest,
+    page
   }) => {
     await investment.checkCommitmentsPage()
     await investment.checkRedirectionToCommitment()
+    await click(invest.OFFERS, page)
+    await expect(page).toHaveURL(/app\/invest\/offerings\/\S+\/view/g)
   })
 })

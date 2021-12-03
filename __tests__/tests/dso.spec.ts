@@ -137,3 +137,14 @@ test.describe('Funds Management More Option section', () => {
     })
   })
 })
+
+test.describe('Commitments', () => {
+  test.beforeEach(async ({ dso, auth, page, invest }) => {
+    await dso.followToIssuanceTab(auth)
+    await click(invest.ISSUANCE_COMMITMENTS, page)
+  })
+  test('The page and table should exist', async ({ page, invest }) => {
+    await expect(page).toHaveURL(/app\/issuance\/commitments\/\S+/g)
+    await shouldExist(invest.TABLE, page)
+  })
+})

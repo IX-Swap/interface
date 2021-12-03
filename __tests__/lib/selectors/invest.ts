@@ -7,7 +7,8 @@ export const invest = {
   SECOND_MARKET: '[href="/app/otc-market"]',
   CHECKBOX: '[type="checkbox"]',
   GRAPH: '[data-testid="pairName"]',
-  COMMITMENTS: '[href="/app/invest/commitments"]',
+  ACCOUNTS_COMMITMENTS: '[href="/app/invest/commitments"]',
+  ISSUANCE_COMMITMENTS: '[href="/app/issuance/commitments/:issuerId/:dsoId"]',
   OFFERS: '[href*="/app/invest/offerings/"]',
 
   buttons: {

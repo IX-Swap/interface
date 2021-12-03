@@ -1,4 +1,13 @@
 export const text = {
+  commitmentsView: [
+    'Company Name',
+    'Issued By',
+    'Issued Date',
+    'Digital Security',
+    'Price Per Unit',
+    'Total Amount',
+    'Number Of Units'
+  ],
   docs: {
     pathToFile: '__tests__/lib/documents/test-img.jpg',
     docBenefitsAddress: '__tests__/lib/documents/docBenefitsAddress.docx',

@@ -66,8 +66,11 @@ class Invest {
     await typeText(invest.fields.PRICE, '1', this.page)
     await typeText(invest.fields.AMOUNT, '1', this.page)
     await click(invest.buttons.PLACE_ORDER, this.page)
-    const toast = await this.page.innerText(invest.TOAST_NOTIFICATIONS)
-    return toast.includes('Order created')
+    const orderInTable = await shouldExist(
+      invest.TABLE + ' tbody tr',
+      this.page
+    )
+    return orderInTable
   }
 
   secondMarketSell = async () => {
@@ -100,7 +103,7 @@ class Invest {
   checkCommitmentsPage = async () => {
     await click(invest.INVEST_TAB, this.page)
     await click(invest.PRIMARY_SECTION, this.page)
-    await click(invest.COMMITMENTS, this.page)
+    await click(invest.ACCOUNTS_COMMITMENTS, this.page)
     await shouldExist(invest.TABLE, this.page)
   }
   checkRedirectionToCommitment = async () => {
