@@ -182,7 +182,8 @@
         "lines": 50,
         "statements": 50
       }
-    }
+    },
+    "globalSetup": "../global-setup.js"
   },
   "jestSonar": {
     "reportPath": "coverage",

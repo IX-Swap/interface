@@ -5,13 +5,7 @@ import { fakeDividend } from '__fixtures__/reports'
 import * as useDividends from 'app/pages/accounts/hooks/useDividends'
 
 describe('Dividends', () => {
-  const RealDate = Date
-  beforeAll(() => {
-    global.Date.now = jest.fn(() => new Date('2019-04-22T10:20:30Z').getTime())
-  })
-
   afterEach(async () => {
-    global.Date = RealDate
     await cleanup()
   })
 
