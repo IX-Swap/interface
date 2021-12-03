@@ -29,11 +29,12 @@ import {
   useStakingState,
 } from 'state/stake/hooks'
 import { POOL_SIZE_LOADING } from 'state/stake/poolSizeReducer'
-import { convertPeriod, dateFormatter, PERIOD, TIER_LIMIT } from 'state/stake/reducer'
+import { convertPeriod, PERIOD, TIER_LIMIT } from 'state/stake/reducer'
 import { tryParseAmount } from 'state/swap/helpers'
 import styled from 'styled-components'
 import { CloseIcon, ModalBlurWrapper, TYPE } from 'theme'
 import { floorToDecimals } from 'utils/formatCurrencyAmount'
+import { dateFormatter } from 'utils/time'
 import { ReactComponent as ArrowDown } from '../../../assets/images/arrow.svg'
 import { EllipsedText, ModalBottom, StakeInfoContainer } from './style'
 

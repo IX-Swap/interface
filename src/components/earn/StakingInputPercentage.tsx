@@ -9,6 +9,7 @@ import { Trans } from '@lingui/macro'
 import { MouseoverTooltip } from 'components/Tooltip'
 import { IconWrapper } from 'components/AccountDetails/styleds'
 import { ReactComponent as InfoIcon } from 'assets/images/attention.svg'
+import { formatAmount } from 'utils/formatCurrencyAmount'
 interface Props {
   fieldTitle: string
   maxAvailable?: CurrencyAmount<Currency>
@@ -26,9 +27,7 @@ function formatAmount(amount: number): string {
 }
 
 const PERCENTAGES = ['25', '50', '75', '100']
-function formatAmount(amount: number): string {
-  return amount?.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 10 })
-}
+
 export const StakingInputPercentage = ({
   fieldTitle,
   maxAvailable,

@@ -31,12 +31,6 @@ export enum PERIOD {
   THREE_MONTHS = '3 months',
 }
 
-export const dateFormatter = new Intl.DateTimeFormat('en-US', {
-  year: 'numeric',
-  month: 'short',
-  day: '2-digit',
-})
-
 export function convertPeriod(period?: PERIOD): string {
   switch (period) {
     case PERIOD.ONE_WEEK: {
