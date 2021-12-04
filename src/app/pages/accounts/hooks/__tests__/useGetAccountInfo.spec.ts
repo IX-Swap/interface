@@ -1,7 +1,6 @@
 import { accountsURL } from 'config/apiURL'
 import {
   waitFor,
-  cleanup,
   renderHookWithServiceProvider,
   apiServiceMock
 } from 'test-utils'
@@ -16,16 +15,11 @@ describe('useGetAccountInfo', () => {
     data: fakeAccountInfo
   })
 
-  jest
-    .spyOn(UseAuth, 'useAuth')
-    .mockReturnValue({ user, isAuthenticated: true })
-
-  afterEach(async () => {
-    await cleanup()
-    jest.clearAllMocks()
-  })
-
   it('expects request with correct parameters and correct response', async () => {
+    jest
+      .spyOn(UseAuth, 'useAuth')
+      .mockReturnValue({ user, isAuthenticated: true })
+
     apiServiceMock.get.mockResolvedValue(sampleResponse)
 
     const { result } = renderHookWithServiceProvider(() => useGetAccountInfo())

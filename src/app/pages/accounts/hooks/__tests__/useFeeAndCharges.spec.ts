@@ -1,6 +1,5 @@
 import {
   waitFor,
-  cleanup,
   renderHookWithServiceProvider,
   apiServiceMock
 } from 'test-utils'
@@ -16,18 +15,11 @@ describe('useFeeAndCharges', () => {
     data: fakeFeeAndCharges
   })
 
-  beforeEach(() => {
+  it('expects request with correct parameters and correct response', async () => {
     jest
       .spyOn(useAuthHook, 'useAuth')
       .mockImplementation(() => ({ user, isAuthenticated: true }))
-  })
 
-  afterEach(async () => {
-    await cleanup()
-    jest.clearAllMocks()
-  })
-
-  it('expects request with correct parameters and correct response', async () => {
     apiServiceMock.post.mockResolvedValue(sampleResponse)
 
     const { result } = renderHookWithServiceProvider(() => {
