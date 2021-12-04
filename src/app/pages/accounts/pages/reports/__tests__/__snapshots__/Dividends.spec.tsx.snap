@@ -160,7 +160,7 @@ exports[`Dividends should match snapshot when data is loaded successfully 1`] = 
                             role="cell"
                             scope="row"
                           >
-                            2021-11-10, 06:30 AM
+                            2021-11-10, 03:30 AM
                           </th>
                           <td
                             class="MuiTableCell-root MuiTableCell-body makeStyles-column-17 MuiTableCell-alignLeft"

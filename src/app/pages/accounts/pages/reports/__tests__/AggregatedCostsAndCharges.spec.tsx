@@ -3,16 +3,10 @@ import { render, cleanup } from 'test-utils'
 import { AggregatedCostsAndCharges } from 'app/pages/accounts/pages/reports/AggregatedCostsAndCharges'
 import { fakeFeeAndCharges } from '__fixtures__/reports'
 import * as useFeeAndCharges from 'app/pages/accounts/hooks/useFeeAndCharges'
-import timezoneMock from 'timezone-mock'
 
 describe('AggregatedCostsAndCharges', () => {
-  beforeAll(() => {
-    timezoneMock.register('US/Pacific')
-  })
-
   afterEach(async () => {
     await cleanup()
-    timezoneMock.unregister()
   })
 
   it('should match snapshot when data is undefined', () => {

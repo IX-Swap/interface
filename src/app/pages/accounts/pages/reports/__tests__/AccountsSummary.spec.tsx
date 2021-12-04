@@ -3,16 +3,10 @@ import { render, cleanup } from 'test-utils'
 import { AccountsSummary } from 'app/pages/accounts/pages/reports/AccountsSummary'
 import * as useActivitySummary from 'app/pages/accounts/hooks/useActivitySummary'
 import { fakeActivitySummary } from '__fixtures__/reports'
-import timezoneMock from 'timezone-mock'
 
 describe('AccountsSummary', () => {
-  beforeAll(() => {
-    timezoneMock.register('UTC')
-  })
-
   afterEach(async () => {
     await cleanup()
-    timezoneMock.unregister()
   })
 
   it('should match snapshot when data is undefined', () => {

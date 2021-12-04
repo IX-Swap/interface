@@ -3,16 +3,10 @@ import { render, cleanup } from 'test-utils'
 import { TradeConfirmation } from 'app/pages/accounts/pages/reports/TradeConfirmation'
 import { fakeTradeItem } from '__fixtures__/reports'
 import * as useTradeConfirmation from 'app/pages/accounts/hooks/useTradeConfirmation'
-import timezoneMock from 'timezone-mock'
 
 describe('TradeConfirmation', () => {
-  beforeAll(() => {
-    timezoneMock.register('US/Pacific')
-  })
-
   afterEach(async () => {
     await cleanup()
-    timezoneMock.unregister()
   })
 
   it('should match snapshot when data is undefined', () => {

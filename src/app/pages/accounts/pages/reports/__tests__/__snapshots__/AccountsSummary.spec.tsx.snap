@@ -215,7 +215,7 @@ exports[`AccountsSummary should match snapshot when all data is loaded successfu
                           <td
                             class="MuiTableCell-root MuiTableCell-body makeStyles-column-17 MuiTableCell-alignRight"
                           >
-                            2021-11-01, 09:15 AM
+                            2021-11-01, 06:15 AM
                           </td>
                           <td
                             class="MuiTableCell-root MuiTableCell-body makeStyles-column-17 MuiTableCell-alignRight"

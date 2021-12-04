@@ -20,9 +20,6 @@ describe('Dividends', () => {
   })
 
   it('should match snapshot when data is loaded successfully', () => {
-    jest
-      .spyOn(Date.prototype, 'toLocaleTimeString')
-      .mockImplementation(() => '12:00:00')
     jest.spyOn(useDividends, 'useDividends').mockReturnValue({
       data: [fakeDividend],
       isLoading: false

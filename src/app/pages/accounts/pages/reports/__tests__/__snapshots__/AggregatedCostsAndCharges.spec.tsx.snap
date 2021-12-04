@@ -165,7 +165,7 @@ exports[`AggregatedCostsAndCharges should match snapshot when all data is loaded
                             role="cell"
                             scope="row"
                           >
-                            2021-11-29, 04:26 AM
+                            2021-11-29, 01:26 AM
                           </th>
                           <td
                             class="MuiTableCell-root MuiTableCell-body makeStyles-column-17 MuiTableCell-alignLeft"
