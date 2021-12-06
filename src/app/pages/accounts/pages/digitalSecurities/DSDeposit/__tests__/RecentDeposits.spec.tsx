@@ -48,8 +48,7 @@ describe('RecentDeposits', () => {
       expect.objectContaining({
         uri,
         name,
-        columns,
-        filter: { asset: balance.assetId }
+        columns
       }),
       {}
     )
