@@ -3,12 +3,6 @@ import { Box, Typography } from '@material-ui/core'
 import { useStyles } from './Actions.styles'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 
-export const getExpandedSectionsValues = (sectionSummaries: string[]) =>
-  sectionSummaries.reduce(
-    (acc, it, i) => acc.concat(i === 0 ? it : `,${it}`),
-    ''
-  )
-
 export interface ActionsProps {
   sectionSummaries: string[]
 }
@@ -23,10 +17,7 @@ export const Actions = ({ sectionSummaries }: ActionsProps) => {
       <Typography
         className={classes.link}
         onClick={() =>
-          updateFilter(
-            'expandedSections',
-            getExpandedSectionsValues(sectionSummaries)
-          )
+          updateFilter('expandedSections', sectionSummaries.join(','))
         }
       >
         Expand All

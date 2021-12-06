@@ -16,10 +16,7 @@ export const AccountsSummary: React.FC = () => {
   const { updateFilter } = useQueryFilter()
   const { data, isLoading } = useActivitySummary()
 
-  const hasOpenPositionsTotal =
-    data !== undefined &&
-    data.openPositions !== undefined &&
-    data.openPositions.length > 0
+  const hasOpenPositionsTotal = !!data?.openPositions?.length
 
   const hasCashReports = data?.cashReports !== undefined
   const hasNoData = !hasOpenPositionsTotal && !hasCashReports

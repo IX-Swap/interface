@@ -18,10 +18,8 @@ export const AggregatedCostsAndCharges: React.FC = () => {
     updateFilter('expandedSections', 'Fees (SGD),Fees (USD)')
   }, [])
 
-  const hasSGDData =
-    data !== undefined && data.sgd !== undefined && data.sgd.length > 0
-  const hasUSDData =
-    data !== undefined && data.usd !== undefined && data.usd.length > 0
+  const hasSGDData = !!data?.sgd?.length
+  const hasUSDData = !!data?.usd?.length
 
   const renderContent = () => {
     if (!hasSGDData && !hasUSDData) {

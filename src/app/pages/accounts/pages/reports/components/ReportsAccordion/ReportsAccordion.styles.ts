@@ -11,7 +11,10 @@ export const useStyles = makeStyles(theme => ({
     minHeight: 'auto!important',
     flexDirection: 'row-reverse',
     justifyContent: 'flex-end',
-    background: '#F6F8FA',
+    background:
+      theme.palette.type === 'light'
+        ? '#F6F8FA'
+        : theme.palette.backgrounds.light,
     border: '1px solid #BFD9FF'
   },
   summaryContent: {

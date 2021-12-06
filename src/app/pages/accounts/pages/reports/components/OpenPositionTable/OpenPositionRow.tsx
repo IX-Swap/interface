@@ -1,13 +1,13 @@
 import React from 'react'
 import { TableCell, TableRow } from '@material-ui/core'
 import { useStyles } from '../shared.styles'
-import { OpenPositionItem } from 'types/reports'
 import { formatReportsDateAndTime } from 'helpers/dates'
 import { formatAmountValue } from 'helpers/numbers'
+import { OpenPositionRowData } from 'app/pages/accounts/pages/reports/components/OpenPositionTable/OpenPositionTable'
 
 export interface OpenPositionRowProps {
   rowsLength: number
-  row: OpenPositionItem | any
+  row: OpenPositionRowData
   index: number
 }
 
@@ -24,7 +24,7 @@ export const OpenPositionRow = ({
         {row.pair}
       </TableCell>
       <TableCell align='right' className={classes.column}>
-        {formatReportsDateAndTime(row.date)}
+        {formatReportsDateAndTime(row.date, '')}
       </TableCell>
       <TableCell align='right' className={classes.column}>
         {row.amount}

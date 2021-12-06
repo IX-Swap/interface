@@ -7,28 +7,31 @@ export interface CashReportTableProps {
   data: CashReports[]
 }
 
-export enum CashReportLabels {
-  startingCash = 'Starting cash',
-  fees = 'Other Fees',
-  withdrawals = 'Withdrawals',
-  endingCash = 'Ending Cash'
+type LabelKeys = keyof Omit<CashReports, '_id' | 'currency'>
+
+export const cashReportLabelsMap: Record<
+  keyof Omit<CashReports, '_id' | 'currency'>,
+  string
+> = {
+  startingCash: 'Starting cash',
+  fees: 'Other Fees',
+  withdrawals: 'Withdrawals',
+  endingCash: 'Ending Cash'
 }
 
-export const createRow = (currency: string, total: string) => {
-  return {
-    currency,
-    total
-  }
+export interface CashRowData {
+  currency: string
+  total: string
 }
 
 export const CashReportTable = ({ data }: CashReportTableProps) => {
   const rows = [
     ...data.map(({ currency, _id, ...item }) => [
-      createRow(currency, 'Total'),
-      ...Object.entries(item).map(([key, value]) =>
-        // @ts-ignore
-        createRow(CashReportLabels[key], value)
-      )
+      { currency: currency, total: 'Total' },
+      ...Object.entries(item as CashReports).map(([key, value]) => ({
+        currency: cashReportLabelsMap[key as LabelKeys],
+        total: value
+      }))
     ])
   ]
 

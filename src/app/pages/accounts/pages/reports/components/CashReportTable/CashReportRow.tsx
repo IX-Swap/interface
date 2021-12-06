@@ -1,11 +1,11 @@
 import React from 'react'
 import { TableCell, TableRow } from '@material-ui/core'
 import { useStyles } from '../shared.styles'
-import { CashReports } from 'types/reports'
 import { formatAmountValue } from 'helpers/numbers'
+import { CashRowData } from 'app/pages/accounts/pages/reports/components/CashReportTable/CashReportTable'
 
 export interface CashReportRowProps {
-  row: CashReports | any
+  row: CashRowData
   index: number
 }
 

@@ -1,12 +1,12 @@
 import React from 'react'
 import { TableCell, TableRow } from '@material-ui/core'
 import { useStyles } from '../shared.styles'
-import { TradeItem } from 'types/reports'
 import { formatReportsDateAndTime } from 'helpers/dates'
 import { formatAmountValue } from 'helpers/numbers'
+import { TradeRowData } from 'app/pages/accounts/pages/reports/components/TradesTable/TradesTable'
 
 export interface TradesRowProps {
-  row: TradeItem | any
+  row: TradeRowData
   index: number
 }
 

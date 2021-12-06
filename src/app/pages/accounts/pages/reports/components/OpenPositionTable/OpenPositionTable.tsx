@@ -17,21 +17,16 @@ export interface OpenPositionTableProps {
   openPositionsTotal: OpenPositionsTotal
 }
 
-export const createRow = (
-  pair: string,
-  price: string | number,
-  currentValue: string | number,
+export interface OpenPositionRowData {
+  pair: string
+  date: string
+  amount: string
+  price: string | number
+  costValue: string
+  lastTradePrice: string
+  currentValue: string | number
   unrealizedPnl: string | number
-) => ({
-  pair: pair,
-  date: '',
-  amount: '',
-  price,
-  costValue: '',
-  lastTradePrice: '',
-  currentValue,
-  unrealizedPnl
-})
+}
 
 export const OpenPositionTable = ({
   openPositions,
@@ -51,14 +46,14 @@ export const OpenPositionTable = ({
   ]
 
   const rows = [
-    createRow('Tokens', '', '', ''),
+    { pair: 'Tokens', price: '', currentValue: '', unrealizedPnl: '' },
     ...openPositions,
-    createRow(
-      'Total',
-      openPositionsTotal.totalCostPrice,
-      openPositionsTotal.totalCurrentValue,
-      openPositionsTotal.totalUnrealizedPnl
-    )
+    {
+      pair: 'Total',
+      price: openPositionsTotal.totalCostPrice,
+      currentValue: openPositionsTotal.totalCurrentValue,
+      unrealizedPnl: openPositionsTotal.totalUnrealizedPnl
+    }
   ]
 
   return (
@@ -76,7 +71,7 @@ export const OpenPositionTable = ({
         <TableBody>
           {rows.map((row, i) => (
             <OpenPositionRow
-              row={row}
+              row={row as OpenPositionRowData}
               index={i}
               rowsLength={rows.length}
               key={row.pair}

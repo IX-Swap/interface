@@ -22,9 +22,7 @@ describe('useDividends', () => {
 
     apiServiceMock.post.mockResolvedValue(sampleResponse)
 
-    const { result } = renderHookWithServiceProvider(() => {
-      return useDividends()
-    })
+    const { result } = renderHookWithServiceProvider(useDividends)
 
     await waitFor(() => result.current.data)
 

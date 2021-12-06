@@ -56,10 +56,10 @@ export interface OpenPositionsTotal {
 export interface CashReports {
   _id: string
   currency: string
-  startingCash: number
-  fees: number
-  withdrawals: number
-  endingCash: number
+  startingCash: number | string
+  fees: number | string
+  withdrawals: number | string
+  endingCash: number | string
 }
 
 export interface ActivitySummary {

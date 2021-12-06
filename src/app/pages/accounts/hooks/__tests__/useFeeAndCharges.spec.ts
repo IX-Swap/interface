@@ -22,9 +22,7 @@ describe('useFeeAndCharges', () => {
 
     apiServiceMock.post.mockResolvedValue(sampleResponse)
 
-    const { result } = renderHookWithServiceProvider(() => {
-      return useFeeAndCharges()
-    })
+    const { result } = renderHookWithServiceProvider(useFeeAndCharges)
 
     await waitFor(() => result.current.data)
 

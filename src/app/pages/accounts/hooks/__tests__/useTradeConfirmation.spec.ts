@@ -22,9 +22,7 @@ describe('useTradeConfirmation', () => {
 
     apiServiceMock.post.mockResolvedValue(sampleResponse)
 
-    const { result } = renderHookWithServiceProvider(() => {
-      return useTradeConfirmation()
-    })
+    const { result } = renderHookWithServiceProvider(useTradeConfirmation)
 
     await waitFor(() => result.current.data)
 

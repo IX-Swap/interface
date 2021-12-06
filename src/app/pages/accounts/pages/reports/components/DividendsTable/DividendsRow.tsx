@@ -6,7 +6,7 @@ import { formatReportsDateAndTime } from 'helpers/dates'
 import { formatAmountValue } from 'helpers/numbers'
 
 export interface DividendsRowProps {
-  row: Dividend | any
+  row: Dividend
 }
 
 export const DividendsRow = ({ row }: DividendsRowProps) => {

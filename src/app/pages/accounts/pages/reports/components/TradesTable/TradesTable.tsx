@@ -15,15 +15,15 @@ export interface TradesTableProps {
   data: TradeItem[]
 }
 
-export const createRow = (pair: string) => ({
-  pair: pair,
-  createdAt: '',
-  type: '',
-  quantity: '',
-  price: '',
-  total: '',
-  fee: ''
-})
+export interface TradeRowData {
+  pair: string
+  createdAt: string
+  type: string
+  quantity: number | string
+  price: number | string
+  total: number | string
+  fee: number | string
+}
 
 export const headCells = [
   { label: '', align: 'left' },
@@ -38,7 +38,18 @@ export const headCells = [
 export const TradesTable = ({ data }: TradesTableProps) => {
   const classes = useStyles({})
 
-  const rows = [createRow('Securities Pair'), ...data]
+  const rows: TradeRowData[] = [
+    {
+      pair: 'Securities Pair',
+      createdAt: '',
+      type: '',
+      quantity: '',
+      price: '',
+      total: '',
+      fee: ''
+    },
+    ...data
+  ]
 
   return (
     <TableContainer>

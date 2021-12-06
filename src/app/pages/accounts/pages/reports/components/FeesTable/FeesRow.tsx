@@ -2,12 +2,12 @@ import React from 'react'
 import { TableCell, TableRow } from '@material-ui/core'
 import { useStyles } from '../shared.styles'
 import { formatReportsDateAndTime } from 'helpers/dates'
-import { Account } from 'types/reports'
 import { formatAmountValue } from 'helpers/numbers'
+import { FeeRowData } from 'app/pages/accounts/pages/reports/components/FeesTable/FeesTable'
 
 export interface FeesRowProps {
   rowsLength: number
-  row: Account | any
+  row: FeeRowData
   index: number
 }
 

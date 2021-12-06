@@ -1,6 +1,6 @@
-export type Align = 'inherit' | 'left' | 'center' | 'right' | 'justify'
+import { TableCellProps } from '@material-ui/core'
 
 export interface TableCellItem {
   label: string
-  align: Align
+  align: TableCellProps['align']
 }

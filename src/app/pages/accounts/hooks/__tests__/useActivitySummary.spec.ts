@@ -22,9 +22,7 @@ describe('useActivitySummary', () => {
 
     apiServiceMock.post.mockResolvedValue(sampleResponse)
 
-    const { result } = renderHookWithServiceProvider(() => {
-      return useActivitySummary()
-    })
+    const { result } = renderHookWithServiceProvider(useActivitySummary)
 
     await waitFor(() => result.current.data)
 

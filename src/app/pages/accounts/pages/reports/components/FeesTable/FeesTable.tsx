@@ -17,15 +17,11 @@ export interface FeesTableProps {
   total: number
 }
 
-export const createRow = (
-  createdAt: string,
-  description: string,
-  amount: number | string
-) => ({
-  createdAt,
-  description,
-  amount: amount
-})
+export interface FeeRowData {
+  createdAt: string
+  description: string
+  amount: string | number
+}
 
 export const FeesTable = ({ accounts, total }: FeesTableProps) => {
   const classes = useStyles({})
@@ -36,11 +32,10 @@ export const FeesTable = ({ accounts, total }: FeesTableProps) => {
     { label: 'Amount', align: 'left' }
   ]
 
-  const rows = [
-    // TODO Add other fees amount after complete backend api
-    createRow('', 'Other Fees', ''),
+  const rows: FeeRowData[] = [
+    { createdAt: '', description: 'Other Fees', amount: '' },
     ...accounts,
-    createRow('Total', '', total)
+    { createdAt: 'Total', description: '', amount: total }
   ]
 
   return (

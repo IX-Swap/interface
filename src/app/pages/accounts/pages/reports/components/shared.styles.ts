@@ -11,7 +11,10 @@ export const useStyles = makeStyles(theme => ({
     padding: theme.spacing(0.5, 2),
     fontSize: 14,
     fontWeight: 600,
-    backgroundColor: '#F7F7F7'
+    backgroundColor:
+      theme.palette.type === 'light'
+        ? '#F7F7F7'
+        : theme.palette.backgrounds.light
   },
   cashColumn: {
     padding: ({ rowIdx }: StyleProps) =>
@@ -42,7 +45,13 @@ export const useStyles = makeStyles(theme => ({
   },
   row: {
     backgroundColor: ({ rowIdx }: StyleProps) =>
-      rowIdx === 0 ? '#F2F2FF' : '#F7F7F7',
+      rowIdx === 0
+        ? theme.palette.type === 'light'
+          ? '#F2F2FF'
+          : theme.palette.backgrounds.alternativeLight
+        : theme.palette.type === 'light'
+        ? '#F7F7F7'
+        : theme.palette.backgrounds.light,
     '& > th': {
       fontSize: ({ rowIdx, rowsLength }: StyleProps) =>
         rowIdx === 0 || (rowIdx !== undefined && rowIdx + 1 === rowsLength)
@@ -65,7 +74,10 @@ export const useStyles = makeStyles(theme => ({
     }
   },
   lastRow: {
-    backgroundColor: '#E7E7E7',
+    backgroundColor:
+      theme.palette.type === 'light'
+        ? '#E7E7E7'
+        : theme.palette.backgrounds.alternativeLight,
     '& > th': {
       fontSize: 14,
       fontWeight: 600
