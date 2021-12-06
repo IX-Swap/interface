@@ -1,8 +1,10 @@
+import { baseCreds } from '../helpers/creds'
 import {
   click,
   shouldExist,
   typeText,
   uploadFiles,
+  waitForRequestInclude,
   waitForText,
   waitNewPage
 } from '../helpers/helpers'
@@ -66,6 +68,11 @@ class Invest {
     await typeText(invest.fields.PRICE, '1', this.page)
     await typeText(invest.fields.AMOUNT, '1', this.page)
     await click(invest.buttons.PLACE_ORDER, this.page)
+    await waitForRequestInclude(
+      this.page,
+      `${baseCreds.BASE_API}exchange/orders`,
+      'POST'
+    )
     const orderInTable = await shouldExist(
       invest.TABLE + ' tbody tr',
       this.page

@@ -155,8 +155,7 @@ async function getLinkToConfirmRegistration(email, page) {
     link = await fetch(
       `https://www.1secmail.com/api/v1/?action=readMessage&login=${partsEmail[0]}&domain=${partsEmail[1]}&id=${messageId}`
     ).then(res => res.json())
-    const re =
-      /https:\/\/staging\.mozork\.com\/app\/invest\/offerings\/\S+\/view/g
+    const re = /https:[\'"]?([^\'" >]+\d+\w+)/g
     const nameList = link.htmlBody.match(re)
     return nameList[0]
   } catch (error) {

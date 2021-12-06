@@ -41,12 +41,12 @@ test.describe('Primary', () => {
 })
 
 test.describe('Secondary market', () => {
-  test('The buy order should be created', async ({ investment }) => {
+  test.only('The buy order should be created', async ({ investment }) => {
     const orderCreated = await investment.secondMarketBuy()
     expect(orderCreated).toBe(true)
   })
 
-  test('The buy order should be cancelled', async ({ investment }) => {
+  test.only('The buy order should be cancelled', async ({ investment }) => {
     const orderCancelled = await investment.secondMarketCancelOrder()
     expect(orderCancelled).toBe(true)
   })
@@ -62,8 +62,10 @@ test.describe('Secondary market', () => {
   })
 })
 test.describe('My Commitments', () => {
-  test('The Commitments table should exist', async ({ page, investment }) => {
+  test.beforeEach(async ({ investment }) => {
     await investment.checkCommitmentsPage()
+  })
+  test('The Commitments table should exist', async ({ page }) => {
     await expect(page).toHaveURL(`${baseCreds.URL}app/invest/commitments`)
   })
 
@@ -71,7 +73,6 @@ test.describe('My Commitments', () => {
     investment,
     textHelper
   }) => {
-    await investment.checkCommitmentsPage()
     const locator = await investment.checkRedirectionToCommitment()
     await expect(locator).toContainText(textHelper.commitmentsView)
   })
@@ -80,7 +81,6 @@ test.describe('My Commitments', () => {
     invest,
     page
   }) => {
-    await investment.checkCommitmentsPage()
     await investment.checkRedirectionToCommitment()
     await click(invest.OFFERS, page)
     await expect(page).toHaveURL(/app\/invest\/offerings\/\S+\/view/g)
