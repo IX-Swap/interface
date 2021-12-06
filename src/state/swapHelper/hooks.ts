@@ -249,14 +249,7 @@ export function useSwapConfirmDataFromURL(
 
   const fetchAuthorization = useCallback(async () => {
     console.log({ qs: hash, brokerDealerId: brokerDealerId, chainId, address, length })
-    if (brokerDealerId === undefined) {
-      return
-    }
-    if (!(chainId && address)) {
-      return
-    }
-    if (!length) {
-      history.push('/swap')
+    if (brokerDealerId === undefined || !chainId || !address || !length) {
       return
     }
 
