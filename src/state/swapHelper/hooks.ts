@@ -236,8 +236,11 @@ export function useSwapConfirmDataFromURL(
       if (!parsedQs?.hash || !parsedQs?.result) {
         return
       }
-      if (!authorizationInProgress && parsedQs?.result) {
+      if (!authorizationInProgress && parsedQs?.result && parsedQs?.hash) {
         history.push(`/swap`)
+        return
+      }
+      if (!authorizationInProgress) {
         return
       }
       if (brokerDealerId === undefined || !chainId || !address) {
@@ -277,7 +280,7 @@ export function useSwapConfirmDataFromURL(
               summary: getMessage({ name: authorizationInProgress?.platform, isError: false }),
             },
           },
-          authorizationInProgress.pairAddress
+          authorizationInProgress?.pairAddress
         )
         history.push(`/swap`)
       } catch (e) {
