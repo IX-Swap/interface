@@ -248,16 +248,15 @@ export function useSwapConfirmDataFromURL(
   }, [showPopup, clearState])
 
   const fetchAuthorization = useCallback(async () => {
-    console.log({ qs: hash, brokerDealerId: brokerDealerId })
+    console.log({ qs: hash, brokerDealerId: brokerDealerId, chainId, address, length })
+    if (brokerDealerId === undefined) {
+      return
+    }
     if (!(chainId && address)) {
-      clearState()
       return
     }
     if (!length) {
       history.push('/swap')
-      return
-    }
-    if (brokerDealerId === undefined) {
       return
     }
 
