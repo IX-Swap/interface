@@ -8,7 +8,7 @@ import { text } from '../helpers/text'
 import {
   click,
   typeText,
-  getLinkToConfirmRegistration,
+  getMessage,
   navigate,
   waitForText
 } from '../helpers/helpers'
@@ -17,6 +17,12 @@ class Authentication {
   page: any
   constructor(page) {
     this.page = page
+  }
+  confirmation = async email => {
+    const re = /https:[\'"]?([^\'" >]+\d+\w+)/g
+    const message = await getMessage(email, this.page)
+    const confirmLink = message.htmlBody.match(re)[0]
+    await navigate(confirmLink, this.page)
   }
 
   loginWithout2fa = async (email, password) => {
@@ -50,23 +56,19 @@ class Authentication {
     await click(authForms.buttons.AGREE, this.page)
     await click(authForms.buttons.SUBMIT, this.page)
     await finishLoad
-    const confirmLink = await getLinkToConfirmRegistration(email, this.page)
-    await navigate(confirmLink, this.page)
+    await this.confirmation(email)
   }
 
   submitRegistrationFormByAPI = async email => {
     await userRegistration(email)
-    const confirmLink = await getLinkToConfirmRegistration(email, this.page)
-    await navigate(confirmLink, this.page)
+    await this.confirmation(email)
     await this.login(email, baseCreds.PASSWORD)
   }
 
   resetPassword = async email => {
     await click(authForms.buttons.FORGOT, this.page)
     await typeText(authForms.fields.EMAIL, email, this.page)
-    await click(authForms.buttons.SUBMIT, this.page)
-    const link = await getLinkToConfirmRegistration(email, this.page)
-    await navigate(link, this.page)
+    await this.confirmation(email)
     await typeText(authForms.fields.EMAIL, email, this.page)
     await typeText(
       authForms.fields.NEW_PASSWORD,

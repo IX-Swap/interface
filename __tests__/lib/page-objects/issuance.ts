@@ -12,13 +12,32 @@ import {
   shouldNotExist,
   shouldExist,
   clearAndTypeText,
-  waitForResponseInclude
+  waitForResponseInclude,
+  getMessage
 } from '../helpers/helpers'
 
 class Dso {
   page: any
   constructor(page) {
     this.page = page
+  }
+
+  capitalCall = async () => {
+    await click('button >> text="Capital Call"', this.page)
+    await typeText(
+      '[role="dialog"] input',
+      'luch41638787427054@wwjmp.com',
+      this.page
+    )
+    await click('[data-placeholder="true"]', this.page)
+    await click('button >> text="Confirm"', this.page)
+    await waitForText(this.page, 'Email has been sent to investors')
+    const response = await getMessage(
+      'luch41638787427054@wwjmp.com',
+      this.page,
+      'Capital call'
+    )
+    return response
   }
 
   editDsoInformationForm = async () => {

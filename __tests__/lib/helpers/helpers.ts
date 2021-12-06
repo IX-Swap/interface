@@ -126,7 +126,8 @@ async function isDisabledList(list: Array<[]>, page) {
   }
   return result
 }
-async function getLinkToConfirmRegistration(email, page) {
+
+async function getMessage(email, page, messageTitle = 'Invitation') {
   const partsEmail = email.split('@')
   let results
   let link
@@ -144,7 +145,7 @@ async function getLinkToConfirmRegistration(email, page) {
     }
   }
   for (const result of results) {
-    if (result.subject.includes('Invitation')) {
+    if (result.subject.includes(messageTitle)) {
       messageId = result.id
       break
     } else {
@@ -155,16 +156,13 @@ async function getLinkToConfirmRegistration(email, page) {
     link = await fetch(
       `https://www.1secmail.com/api/v1/?action=readMessage&login=${partsEmail[0]}&domain=${partsEmail[1]}&id=${messageId}`
     ).then(res => res.json())
-    const re = /https:[\'"]?([^\'" >]+\d+\w+)/g
-    const nameList = link.htmlBody.match(re)
-    return nameList[0]
+    return link
   } catch (error) {
-    // console.error(results)
-    // console.error(link)
-    throw new Error(`Get link to confirm invite error`)
+    console.error(results)
+    console.error(link)
+    throw new Error(`"Get message" by API doesn't work `)
   }
 }
-
 async function waitForResponseInclude(page, responseText) {
   try {
     await page.waitForResponse(
@@ -215,7 +213,7 @@ export {
   click,
   uploadFiles,
   typeText,
-  getLinkToConfirmRegistration,
+  getMessage,
   shouldExist,
   emailCreate,
   navigate,

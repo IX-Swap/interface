@@ -147,4 +147,11 @@ test.describe('Commitments', () => {
     await expect(page).toHaveURL(/app\/issuance\/commitments\/\S+/g)
     await shouldExist(invest.TABLE, page)
   })
+
+  test('Investor should received the "Capital call" message', async ({
+    dso
+  }) => {
+    const messageTitle = await dso.capitalCall()
+    expect(messageTitle.subject).toBe('Capital call')
+  })
 })

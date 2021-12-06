@@ -41,12 +41,12 @@ test.describe('Primary', () => {
 })
 
 test.describe('Secondary market', () => {
-  test.only('The buy order should be created', async ({ investment }) => {
+  test('The buy order should be created', async ({ investment }) => {
     const orderCreated = await investment.secondMarketBuy()
     expect(orderCreated).toBe(true)
   })
 
-  test.only('The buy order should be cancelled', async ({ investment }) => {
+  test('The buy order should be cancelled', async ({ investment }) => {
     const orderCancelled = await investment.secondMarketCancelOrder()
     expect(orderCancelled).toBe(true)
   })
