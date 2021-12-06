@@ -220,6 +220,7 @@ export function useSwapConfirmDataFromURL(
   useEffect(() => {
     fetchAuthorization()
     async function fetchAuthorization() {
+      console.log({ parsedQs, authorizationInProgress })
       if (parsedQs?.isError) {
         dispatch(setAuthorizationInProgress({ authorizationInProgress: null }))
         dispatch(setLoadingSwap({ isLoading: false }))
@@ -232,10 +233,13 @@ export function useSwapConfirmDataFromURL(
         history.push(`/swap`)
         return
       }
-      if (!parsedQs?.hash || !parsedQs?.result || !authorizationInProgress) {
+      if (!parsedQs?.hash || !parsedQs?.result) {
         return
       }
-
+      if (!authorizationInProgress && parsedQs?.result) {
+        history.push(`/swap`)
+        return
+      }
       if (brokerDealerId === undefined || !chainId || !address) {
         dispatch(setAuthorizationInProgress({ authorizationInProgress: null }))
         dispatch(setLoadingSwap({ isLoading: false }))
