@@ -4,6 +4,7 @@ export const invest = {
   INVEST_TAB: '[href="/app/invest"]',
   PRIMARY_SECTION: '[href="/app/invest"] >> text="Primary"',
   LANDING_TABLES_PANEL: '[role="tabpanel"]',
+  OVERVIEW_PAGE: '[href="/app/invest/overview"]',
   SECOND_MARKET: '[href="/app/otc-market"]',
   CHECKBOX: '[type="checkbox"]',
   GRAPH: '[data-testid="pairName"]',
@@ -30,9 +31,10 @@ export const invest = {
       '[href="/app/invest/offerings/617699e04f2dcc0e7d304e4d/6185361bf251660e58fd5ed0/view/make-investment"]'
   },
   fields: {
+    SEARCH: '[placeholder="Search"]',
     PRICE: '[id="price"]',
     AMOUNT: '[id="amount"]',
-    SEARCH: '[placeholder="Search Offers"]',
+    // SEARCH: '[placeholder="Search Offers"]',
     UPLOAD_SIGNED_DOC: '[name="signedSubscriptionDocument"]',
     NUMBER_UNITS: '[id="numberOfUnits"]',
     OTP: '[id="otp"]'

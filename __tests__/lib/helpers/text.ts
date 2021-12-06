@@ -1,4 +1,5 @@
 export const text = {
+  dsoName: 'AQAcommitments',
   commitmentsView: [
     'Company Name',
     'Issued By',

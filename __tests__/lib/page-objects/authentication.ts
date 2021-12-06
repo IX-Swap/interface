@@ -68,6 +68,7 @@ class Authentication {
   resetPassword = async email => {
     await click(authForms.buttons.FORGOT, this.page)
     await typeText(authForms.fields.EMAIL, email, this.page)
+    await click(authForms.buttons.SUBMIT, this.page)
     await this.confirmation(email)
     await typeText(authForms.fields.EMAIL, email, this.page)
     await typeText(

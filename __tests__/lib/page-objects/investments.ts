@@ -16,6 +16,23 @@ class Invest {
   constructor(page) {
     this.page = page
   }
+
+  checkSearch = async () => {
+    await click(invest.fields.SEARCH, this.page)
+    await typeText(invest.fields.SEARCH, text.dsoName, this.page)
+    await waitForRequestInclude(
+      this.page,
+      `${baseCreds.BASE_API}exchange/markets/list`,
+      'POST'
+    )
+    await shouldExist('[data-testid="icon-button"]', this.page)
+  }
+
+  toTheOverviewPage = async () => {
+    await click(invest.INVEST_TAB, this.page)
+    await click(invest.OVERVIEW_PAGE, this.page)
+  }
+
   goToAvailableDso = async () => {
     await click(invest.INVEST_TAB, this.page)
     await click(invest.PRIMARY_SECTION, this.page)
