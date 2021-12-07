@@ -37,6 +37,7 @@ export interface QueryFilters {
   type: string | undefined
   reportType: string | undefined
   expandedSections: string | undefined
+  subfunds: string | undefined
 }
 
 export type QueryFilter = keyof QueryFilters

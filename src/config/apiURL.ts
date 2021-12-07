@@ -175,6 +175,9 @@ export const issuanceURL = {
     closure: (closureId: string, issuerId: string) =>
       `/issuance/closure/${closureId}/${issuerId}`,
     getDSOList: '/issuance/dso/list'
+  },
+  vcc: {
+    getDSOList: (corporateId: string) => `/vcc/dsos/list/${corporateId}`
   }
 }
 
