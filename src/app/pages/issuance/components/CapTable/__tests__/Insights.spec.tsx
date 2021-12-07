@@ -3,8 +3,8 @@ import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { PricePerToken } from 'app/pages/issuance/components/CapTable/PricePerToken'
 import { TotalTokens } from 'app/pages/issuance/components/CapTable/TotalTokens'
-import { AmountRaised } from 'app/pages/issuance/components/IssuanceLanding/AmountRaised'
-import { TotalInvestors } from 'app/pages/issuance/components/IssuanceLanding/TotalInvestors'
+import { TotalInvestors } from 'app/pages/issuance/components/CapTable/TotalInvestors'
+import { AmountRaised } from 'app/pages/issuance/components/CapTable/AmountRaised'
 
 jest.mock('app/pages/issuance/components/CapTable/PricePerToken', () => ({
   PricePerToken: jest.fn(() => null)
@@ -14,16 +14,13 @@ jest.mock('app/pages/issuance/components/CapTable/TotalTokens', () => ({
   TotalTokens: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/issuance/components/IssuanceLanding/AmountRaised', () => ({
+jest.mock('app/pages/issuance/components/CapTable/AmountRaised', () => ({
   AmountRaised: jest.fn(() => null)
 }))
 
-jest.mock(
-  'app/pages/issuance/components/IssuanceLanding/TotalInvestors',
-  () => ({
-    TotalInvestors: jest.fn(() => null)
-  })
-)
+jest.mock('app/pages/issuance/components/CapTable/TotalInvestors', () => ({
+  TotalInvestors: jest.fn(() => null)
+}))
 
 describe('Insights', () => {
   afterEach(async () => {

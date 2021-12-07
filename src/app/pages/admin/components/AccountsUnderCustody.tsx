@@ -2,7 +2,7 @@ import React from 'react'
 import { Chart } from 'react-google-charts'
 import { useTheme } from '@material-ui/core/styles'
 import { ChartWrapper } from 'app/pages/issuance/components/IssuanceLanding/ChartWrapper'
-import { InsightCard } from 'app/pages/issuance/components/CapTable/InsightCard'
+import { InsightCard } from 'app/pages/issuance/components/InsightCard'
 import { useGetCustodiansCount } from 'app/pages/admin/hooks/useGetCustodiansCount'
 
 export const AccountsUnderCustody = () => {
