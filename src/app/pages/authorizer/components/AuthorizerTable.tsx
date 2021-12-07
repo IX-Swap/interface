@@ -21,7 +21,7 @@ interface AuthorizerViewProps<T>
   title: string
   selectable?: boolean
   selectionActions?: AuthorizerSelectionActions
-  themeVariant?: 'default' | 'primary' | 'no-header'
+  themeVariant?: 'default' | 'primary'
 }
 
 export const AuthorizerTable = <T,>(

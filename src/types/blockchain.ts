@@ -4,6 +4,7 @@ export interface BlockchainNetwork {
   symbol: string
   name: string
   balance: string
+  rpc: string
 
   walletAddress?: string
   ownerAddress?: string

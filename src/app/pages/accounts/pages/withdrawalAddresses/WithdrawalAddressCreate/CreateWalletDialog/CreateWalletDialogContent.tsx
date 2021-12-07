@@ -1,7 +1,7 @@
 import React from 'react'
 import useStyles from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/CreateWalletDialog/CreateWalletDialog.styles'
 import DialogContent from '@material-ui/core/DialogContent'
-import { Grid, Typography } from '@material-ui/core'
+import { Grid, Link, Typography } from '@material-ui/core'
 import { CreateWalletLink } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/CreateWalletDialog/CreateWalletLink'
 import AlgorandIcon from 'assets/images/algorand.png'
 import MetamaskIcon from 'assets/images/metamask.png'
@@ -39,7 +39,15 @@ export const CreateWalletDialogContent: React.FC = () => {
       <Typography variant={'body2'} className={classes.content}>
         Please select any wallet from the below and install on your device. Once
         you install the wallet, copy the address (address eg: 0x23....4567) and
-        add it on our withdrawal address selecting correct network.
+        add it on our withdrawal address selecting correct network. Read our{' '}
+        <Link
+          color='primary'
+          target='_blank'
+          href={`${process.env.PUBLIC_URL}/documents/Combined Instructions for Wallets.pdf`}
+        >
+          guide
+        </Link>{' '}
+        to learn more on installation and adding process.
       </Typography>
       <Grid container spacing={3} direction={'column'}>
         {links.map(item => (

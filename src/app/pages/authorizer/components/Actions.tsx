@@ -1,7 +1,6 @@
 import React, { ReactElement } from 'react'
 import { Launch as LaunchIcon } from '@material-ui/icons'
 import { Grid, IconButton, Box } from '@material-ui/core'
-import User from 'types/user'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { useApproveOrReject } from 'app/pages/authorizer/hooks/useApproveOrReject'
 import { getIdFromObj } from 'helpers/strings'
@@ -14,10 +13,6 @@ import { useLocation } from 'react-router'
 export interface ActionsProps<T> {
   item: T
   cacheQueryKey: any
-}
-
-export const getItemOwnerId = (user: string | User) => {
-  return typeof user === 'string' ? user : user._id
 }
 
 export type ActionsType<T> = (props: ActionsProps<T>) => ReactElement
@@ -52,6 +47,7 @@ export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
 
   const isUnauthorized = (item as any).status === 'Submitted'
   const isLoading = isApproving || isRejecting
+  const isCommitment = category === 'commitments'
 
   return (
     <Grid container wrap='nowrap' justify='flex-end'>
@@ -76,13 +72,12 @@ export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
       <Grid item>
         <Box px={1} />
       </Grid>
-      {category === 'commitments' &&
-      (item as any).fundStatus !== 'Funds on hold' ? (
+      {isCommitment && (item as any).fundStatus !== 'Funds on hold' ? (
         <></>
       ) : (
         <>
           <Grid item style={{ minWidth: 26 }}>
-            {isUnauthorized && (
+            {(isUnauthorized || isCommitment) && (
               <Dropdown
                 arrow
                 contentTheme='dark'
