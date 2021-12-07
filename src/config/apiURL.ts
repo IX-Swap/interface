@@ -114,7 +114,20 @@ export const accountsURL = {
     confirmCommitment: (commitmentId: string) =>
       `/issuance/commitments/${commitmentId}/confirmInvestment`
   },
-  getPortfolios: (userId: string) => `/accounts/portfolios/${userId}`
+  dashboard: {
+    getPortfolios: (userId: string) => `/accounts/portfolios/${userId}`
+  },
+  reports: {
+    getAccountInfo: (userId: string) => `/accounts/account-info/${userId}`,
+    getActivitySummary: (userId: string) =>
+      `/resources/financialReports/activitySummary/${userId}`,
+    getTradeConfirmation: (userId: string) =>
+      `/resources/financialReports/tradeConfirmation/${userId}`,
+    getFeeAndCharges: (userId: string) =>
+      `resources/financialReports/feeAndCharges/${userId}`,
+    getDividends: (userId: string) =>
+      `/resources/financialReports/dividends/${userId}`
+  }
 }
 
 export const issuanceURL = {

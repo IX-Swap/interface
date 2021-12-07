@@ -3,6 +3,10 @@ import { Switch } from 'react-router-dom'
 import { AppRoute } from 'components/AppRoute'
 import { ReportsRoute } from 'app/pages/accounts/pages/reports/router/config'
 import { Reports } from 'app/pages/accounts/pages/reports/Reports'
+import { AccountsSummary } from 'app/pages/accounts/pages/reports/AccountsSummary'
+import { TradeConfirmation } from 'app/pages/accounts/pages/reports/TradeConfirmation'
+import { AggregatedCostsAndCharges } from 'app/pages/accounts/pages/reports/AggregatedCostsAndCharges'
+import { Dividends } from 'app/pages/accounts/pages/reports/Dividends'
 
 export const ReportsRouter = () => {
   return (
@@ -15,25 +19,25 @@ export const ReportsRouter = () => {
         breadcrumb='Accounts Summary'
         path={ReportsRoute.accountsSummary}
       >
-        Accounts Summary
+        <AccountsSummary />
       </AppRoute>
 
       <AppRoute
         breadcrumb='Trade Confirmation'
         path={ReportsRoute.tradeConfirmation}
       >
-        Trade Confirmation
+        <TradeConfirmation />
       </AppRoute>
 
       <AppRoute
         breadcrumb='Aggregated Costs and Charges'
         path={ReportsRoute.aggregateCostsAndCharges}
       >
-        Aggregated Costs and Charges
+        <AggregatedCostsAndCharges />
       </AppRoute>
 
       <AppRoute breadcrumb='Dividends' path={ReportsRoute.dividends}>
-        Dividends
+        <Dividends />
       </AppRoute>
     </Switch>
   )

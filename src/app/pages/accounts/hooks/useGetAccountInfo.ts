@@ -1,24 +1,24 @@
 import { accountsURL } from 'config/apiURL'
-import { virtualAccountQueryKeys } from 'config/queryKeys'
+import { reportsQueryKeys } from 'config/queryKeys'
 import { useServices } from 'hooks/useServices'
 import { useQuery } from 'react-query'
 import { useAuth } from 'hooks/auth/useAuth'
 import { getIdFromObj } from 'helpers/strings'
-import { AccountPortfolio } from 'types/portfolio'
+import { AccountInfo } from 'types/reports'
 
-export const useGetPortfolios = () => {
+export const useGetAccountInfo = () => {
   const { user } = useAuth()
   const userId = getIdFromObj(user)
   const { apiService } = useServices()
 
-  const getPortfolios = async () => {
-    const uri = accountsURL.dashboard.getPortfolios(userId)
-    return await apiService.get<AccountPortfolio>(uri)
+  const getAccountInfo = async () => {
+    const uri = accountsURL.reports.getAccountInfo(userId)
+    return await apiService.get<AccountInfo>(uri)
   }
 
   const { data, ...rest } = useQuery(
-    [virtualAccountQueryKeys.getPortfolios, { userId }],
-    getPortfolios
+    [reportsQueryKeys.getAccountInfo, { userId }],
+    getAccountInfo
   )
 
   return {

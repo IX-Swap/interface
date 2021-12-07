@@ -36,6 +36,7 @@ export interface QueryFilters {
   blockchainNetwork: string | undefined
   type: string | undefined
   reportType: string | undefined
+  expandedSections: string | undefined
 }
 
 export type QueryFilter = keyof QueryFilters

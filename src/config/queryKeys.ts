@@ -180,6 +180,14 @@ export const virtualAccountQueryKeys = {
   getPortfolios: 'get-portfolios'
 }
 
+export const reportsQueryKeys = {
+  getAccountInfo: 'get-account-info',
+  getActivitySummary: 'get-activity-summary',
+  getTradeConfirmation: 'get-trade-confirmation',
+  getFeeAndCharges: 'get-fee-and-charges',
+  getDividends: 'get-dividends'
+}
+
 export const exchange = {
   marketList: 'market-list',
   tokenBalance: 'tokenBalance',

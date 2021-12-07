@@ -26,8 +26,8 @@ export const Reports = () => {
           filter={{
             reportType: getFilterValue('reportType')
           }}
+          themeVariant='primary'
           noHeader
-          themeVariant={'default'}
           bordered={false}
           columns={columns}
         />

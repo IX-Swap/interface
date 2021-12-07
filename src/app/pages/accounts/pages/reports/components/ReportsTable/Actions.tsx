@@ -18,8 +18,12 @@ export const Actions = ({ item }: ActionsProps) => {
   const { push } = useHistory()
 
   const params = new URLSearchParams()
-  params.append('fromDate', fromDate ?? '')
-  params.append('toDate', toDate ?? '')
+  if (fromDate !== undefined) {
+    params.append('fromDate', fromDate)
+  }
+  if (toDate !== undefined) {
+    params.append('toDate', toDate)
+  }
 
   return (
     <Typography
