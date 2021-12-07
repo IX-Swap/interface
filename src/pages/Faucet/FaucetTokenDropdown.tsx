@@ -5,6 +5,8 @@ import styled from 'styled-components'
 import { TYPE } from 'theme'
 import { ChevronElement } from 'components/ChevronElement'
 import { DarkBlueCard } from 'components/Card'
+import { testTokens } from 'constants/addresses'
+import { IFaucetToken } from '.'
 
 export const PopOverContent = styled.div`
   display: flex;
@@ -17,13 +19,13 @@ export const FaucetTokenDropdown = ({
   onSelect,
   selectedToken,
 }: {
-  onSelect: (token: string) => void
-  selectedToken: string
+  onSelect: (token: IFaucetToken) => void
+  selectedToken: IFaucetToken
 }) => {
   const [isOpen, setIsOpen] = useState(false)
   const close = () => setIsOpen(false)
   const selectToken = useCallback(
-    (newToken: string) => {
+    (newToken: IFaucetToken) => {
       onSelect(newToken)
       close()
     },
@@ -32,10 +34,10 @@ export const FaucetTokenDropdown = ({
   const popOverContent = useCallback(() => {
     return (
       <PopOverContent style={{ cursor: 'pointer', width: '320px' }}>
-        {['Apple', 'Coinbase', 'Tesla'].map((token) => {
+        {testTokens.map((token) => {
           return (
-            <RowStart key={`token-${token}`} onClick={() => selectToken(token)}>
-              {token}
+            <RowStart key={`token-${token.address}`} onClick={() => selectToken(token)}>
+              {token.name}
             </RowStart>
           )
         })}
@@ -48,7 +50,7 @@ export const FaucetTokenDropdown = ({
       <RowBetween>
         <RowBetween>
           <RowStart>
-            <TYPE.body2>{selectedToken}</TYPE.body2>
+            <TYPE.body2>{selectedToken.name}</TYPE.body2>
           </RowStart>
         </RowBetween>
         <Popover show={isOpen} content={popOverContent()} placement="bottom-end" close={close}>

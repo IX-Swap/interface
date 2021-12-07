@@ -1,29 +1,34 @@
 import React, { useState } from 'react'
-import Column, { ColumnCenter } from 'components/Column'
+import Column from 'components/Column'
 import { useActiveWeb3React } from 'hooks/web3'
 import AppBody from 'pages/AppBody'
-import { TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
+import { testTokens, TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
 import { StyledPageHeader, TYPE } from 'theme'
-import Row, { RowBetween, RowFixed } from 'components/Row'
+import Row, { RowFixed } from 'components/Row'
 import { Trans } from '@lingui/macro'
 import { ButtonIXSWide } from 'components/Button'
 import { AddressInput } from 'components/AddressInputPanel/AddressInput'
-import { useDepositActionHandlers, useDepositState } from 'state/deposit/hooks'
-import useENS from 'hooks/useENS'
 import { FaucetTokenDropdown } from './FaucetTokenDropdown'
+import { useDistributeToken } from 'state/faucet/hooks'
+
+export interface IFaucetToken {
+  name: string
+  symbol: string
+  address: string
+}
 
 export default function Faucet() {
-  const { chainId } = useActiveWeb3React()
-  const [selectedToken, setSelectedToken] = useState('Apple')
-  const { sender } = useDepositState()
-  const { onTypeSender } = useDepositActionHandlers()
-  const { address, loading } = useENS(sender)
-  const error = Boolean(sender.length > 0 && !address && !loading)
+  const { account, chainId } = useActiveWeb3React()
+  const [selectedToken, setSelectedToken] = useState<IFaucetToken>(testTokens[0])
+  const distributeToken = useDistributeToken(selectedToken.address)
+
+  const handleSubmitClicked = () => {
+    distributeToken()
+  }
 
   return (
     <>
       <AppBody blurred={chainId !== undefined && !TGE_CHAINS_WITH_SWAP.includes(chainId)}>
-        {/* <ColumnCenter style={{ paddingBottom: '26px' }}> */}
         <StyledPageHeader>
           <RowFixed>
             <TYPE.black fontWeight={600} fontSize={22} style={{ marginRight: '8px' }}>
@@ -32,9 +37,7 @@ export default function Faucet() {
           </RowFixed>
         </StyledPageHeader>
         <TYPE.body3>
-          <Trans>
-            This faucet transfers TestToken on Matic testnets and parent chain. Confirm details before submitting.
-          </Trans>
+          <Trans>This faucet transfers test tokens on Kovan testnet. Confirm details before submitting.</Trans>
         </TYPE.body3>
 
         <Column style={{ marginTop: '45px', gap: '11px' }}>
@@ -53,20 +56,19 @@ export default function Faucet() {
             </TYPE.body1>
           </Row>
           <AddressInput
-            {...{ id: 'sender-input', value: sender ?? '', error, onChange: onTypeSender }}
-            placeholder="Paste your wallet"
+            {...{
+              id: 'sender-input',
+              value: account ?? '',
+              disabled: true,
+              placeholder: 'Paste your wallet',
+              error: !account,
+            }}
           />
         </Column>
 
-        <ButtonIXSWide
-          marginTop="33px"
-          onClick={() => {
-            console.log('privet')
-          }}
-        >
+        <ButtonIXSWide marginTop="33px" onClick={handleSubmitClicked}>
           <Trans>Submit</Trans>
         </ButtonIXSWide>
-        {/* </ColumnCenter> */}
       </AppBody>
     </>
   )

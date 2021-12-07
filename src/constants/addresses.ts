@@ -95,3 +95,9 @@ export const STAKING_ALTERNATE_MAP = {
   [SupportedChainId.MATIC]: SupportedChainId.MAINNET,
   [SupportedChainId.MUMBAI]: SupportedChainId.KOVAN,
 }
+
+export const testTokens = [
+  { name: 'Apple', symbol: 'FAAPL', address: '0x4af89c907fba907d9ba74cb44ebf8a7a65c53e6e' },
+  { name: 'Coinbase', symbol: 'FCOIN', address: '0x6a2951cc518efadd7beec657a99554d17a7a85cd' },
+  { name: 'Tesla', symbol: 'FTSLA', address: '0x1d722f4334ad3f0154e3e3711378f534a07e4329' },
+]
