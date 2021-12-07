@@ -248,7 +248,6 @@ export function useSwapConfirmDataFromURL(
   }, [showPopup, clearState])
 
   const fetchAuthorization = useCallback(async () => {
-    console.log({ qs: hash, brokerDealerId: brokerDealerId, chainId, address, length })
     if (brokerDealerId === undefined || !chainId || !address || !length) {
       return
     }
@@ -281,7 +280,7 @@ export function useSwapConfirmDataFromURL(
       showPopup({ success: false })
       clearState()
     }
-  }, [chainId, amount, hash, result, history, brokerDealerId, address, length, clearState, dispatch, showPopup])
+  }, [chainId, amount, hash, result, brokerDealerId, address, length, clearState, dispatch, showPopup])
 
   useEffect(() => {
     confirm()
