@@ -21,6 +21,7 @@ export const WithdrawalAddressForm = (
       {...rest}
       onSubmit={handleSubmit}
       validationSchema={waFormValidationSchema}
+      defaultValues={{ variant: 'create' }}
       data-testid='blockchain-address-form'
     >
       {children}
