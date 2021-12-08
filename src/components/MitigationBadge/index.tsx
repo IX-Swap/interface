@@ -1,7 +1,7 @@
 import { t } from '@lingui/macro'
 import Tooltip from 'components/Tooltip'
 import React, { useCallback, useState } from 'react'
-import styled, { css } from 'styled-components'
+import styled from 'styled-components'
 
 const GreenBadge = styled.span`
   padding: 0px 3px;
