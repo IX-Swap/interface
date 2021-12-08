@@ -1,7 +1,9 @@
-import Popover from 'components/Popover'
-import { RowBetween, RowStart } from 'components/Row'
+import { isMobile } from 'react-device-detect'
 import React, { useCallback, useState } from 'react'
 import styled from 'styled-components'
+
+import Popover from 'components/Popover'
+import { RowBetween, RowStart } from 'components/Row'
 import { TYPE } from 'theme'
 import { ChevronElement } from 'components/ChevronElement'
 import { DarkBlueCard } from 'components/Card'
@@ -33,7 +35,7 @@ export const FaucetTokenDropdown = ({
   )
   const popOverContent = useCallback(() => {
     return (
-      <PopOverContent style={{ cursor: 'pointer', width: '320px' }}>
+      <PopOverContent style={{ cursor: 'pointer', width: isMobile ? '100%' : '320px' }}>
         {testTokens.map((token) => {
           return (
             <RowStart key={`token-${token.address}`} onClick={() => selectToken(token)}>

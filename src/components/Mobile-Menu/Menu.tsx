@@ -87,6 +87,11 @@ export const Menu = ({ close }: Props) => {
           <MenuListItem activeClassName="active-item" id={`nft-list-nav-link`} to={routes.nftList} onClick={close}>
             <Trans>My NFTs</Trans>
           </MenuListItem>
+          {chainId && TGE_CHAINS_WITH_STAKING.includes(chainId) && (
+            <MenuListItem activeClassName="active-item" id={`faucet-nav-link`} to={'/faucet'} onClick={close}>
+              <Trans>Faucet</Trans>
+            </MenuListItem>
+          )}
         </MenuList>
       </Container>
     </ModalContainer>
@@ -98,7 +103,7 @@ const ModalContainer = styled.div`
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   backdrop-filter: blur(36px);
   z-index: 9999;
   padding: 32px 18px;
@@ -106,6 +111,7 @@ const ModalContainer = styled.div`
   background: ${({ theme }) => theme.bgG16};
   @media (max-width: 1080px) {
     display: block;
+    overflow-y: scroll;
   }
 `
 

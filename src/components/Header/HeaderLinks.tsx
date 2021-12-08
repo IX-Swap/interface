@@ -153,7 +153,7 @@ export const HeaderLinks = () => {
   useOnClickOutside(farmNode, open ? toggle : undefined)
   useOnClickOutside(nftNode, openNFT ? toggleNFT : undefined)
   return (
-    <HeaderLinksWrap links={SECURITY_TOKENS ? 5 : 4}>
+    <HeaderLinksWrap links={SECURITY_TOKENS ? 6 : 5}>
       {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
         <StyledNavLink id={`swap-nav-link`} to={'/swap'}>
           <Trans>Swap</Trans>
@@ -206,6 +206,11 @@ export const HeaderLinks = () => {
           </RowFixed>
         </Popover>
       </StyledNavLink>
+      {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
+        <StyledNavLink id={`faucet-nav-link`} to={'/faucet'}>
+          <Trans>Faucet</Trans>
+        </StyledNavLink>
+      )}
     </HeaderLinksWrap>
   )
 }
