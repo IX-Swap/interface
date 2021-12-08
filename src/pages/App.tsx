@@ -34,6 +34,7 @@ import DarkModeQueryParamReader from '../theme/DarkModeQueryParamReader'
 import { RedirectDuplicateTokenIdsV2 } from './AddLiquidityV2/redirects'
 import { StakingTab } from './Farming/StakingTab'
 import { VestingTab } from './Farming/VestingTab'
+import Faucet from './Faucet'
 import PoolFinder from './PoolFinder'
 import { RedirectPathToSwapOnly, RedirectPathToStaking, RedirectToSwap } from './Swap/redirects'
 
@@ -123,6 +124,10 @@ export default function App() {
 
                 {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
                   <Route exact strict path="/remove/:currencyIdA/:currencyIdB" component={RemoveLiquidity} />
+                )}
+
+                {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
+                  <Route exact strict path="/faucet" component={Faucet} />
                 )}
 
                 {SECURITY_TOKENS && (

@@ -15,6 +15,7 @@ import ARGENT_WALLET_DETECTOR_ABI from 'abis/argent-wallet-detector.json'
 import EIP_2612 from 'abis/eip_2612.json'
 import ENS_PUBLIC_RESOLVER_ABI from 'abis/ens-public-resolver.json'
 import ENS_ABI from 'abis/ens-registrar.json'
+import FAUCET_ABI from 'abis/faucet-contract.json'
 import ERC20_ABI from 'abis/erc20.json'
 import ERC20_BYTES32_ABI from 'abis/erc20_bytes32.json'
 import MULTICALL_ABI from 'abis/multicall2.json'
@@ -143,4 +144,8 @@ export function useStakingContract(stakingAddress?: string, withSignerIfPossible
 
 export function useSocksController(): Unisocks | null {
   return useContract<Unisocks>(SOCKS_CONTROLLER_ADDRESSES, IXSOCKS_ABI, false)
+}
+
+export function useFaucetContract(tokenAddress: string) {
+  return useContract(tokenAddress, FAUCET_ABI, true)
 }

@@ -7,18 +7,18 @@ interface Props {
   // the typed string value
   value: string
   error: boolean
-  onChange: (arg: string) => void
+  onChange?: ((arg: string) => void) | null
   placeholder?: string
   disabled?: boolean
   rightItem?: ReactNode
 }
 
-export const AddressInput = ({ id, value, error, onChange, placeholder, disabled, rightItem }: Props) => {
+export const AddressInput = ({ id, value, error, placeholder, disabled, rightItem, onChange = null }: Props) => {
   const handleInput = useCallback(
     (event) => {
       const input = event.target.value
       const withoutSpaces = input.replace(/\s+/g, '')
-      onChange(withoutSpaces)
+      onChange && onChange(withoutSpaces)
     },
     [onChange]
   )
