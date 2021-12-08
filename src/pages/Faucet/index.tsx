@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 
 import Column from 'components/Column'
-import { shortAddress } from 'utils'
 import { useActiveWeb3React } from 'hooks/web3'
 import AppBody from 'pages/AppBody'
 import { testTokens, TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
@@ -12,6 +11,8 @@ import { ButtonIXSWide } from 'components/Button'
 import { AddressInput } from 'components/AddressInputPanel/AddressInput'
 import { FaucetTokenDropdown } from './FaucetTokenDropdown'
 import { useDistributeToken } from 'state/faucet/hooks'
+import { shortAddress } from 'utils'
+import { useAddPopup } from 'state/application/hooks'
 
 export interface IFaucetToken {
   name: string
@@ -23,9 +24,27 @@ export default function Faucet() {
   const { account, chainId } = useActiveWeb3React()
   const [selectedToken, setSelectedToken] = useState<IFaucetToken>(testTokens[0])
   const distributeToken = useDistributeToken(selectedToken.address)
+  const addPopup = useAddPopup()
 
-  const handleSubmitClicked = () => {
-    distributeToken()
+  const handleSubmitClicked = async () => {
+    const { transaction, minutesToWait }: any = await distributeToken()
+
+    addPopup(
+      transaction
+        ? {
+            txn: {
+              ...transaction,
+              hash: transaction.transactionHash,
+              summary: `Sent 10 ${selectedToken.symbol} to ${shortAddress(transaction.to || '')}`,
+            },
+          }
+        : {
+            info: {
+              success: false,
+              summary: `You have to wait ${minutesToWait} ${minutesToWait === 1 ? 'minute' : 'minutes'}`,
+            },
+          }
+    )
   }
 
   return (
