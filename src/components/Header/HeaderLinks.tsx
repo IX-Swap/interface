@@ -28,8 +28,11 @@ const HeaderLinksWrap = styled(Row)<{ links: number }>`
   ${({ theme }) => theme.mediaWidth.upToMedium`
     justify-self: flex-end;
   `};
+  @media (max-width: 1250px) {
+    grid-gap: 16px;
+  }
   @media (max-width: 1200px) {
-    grid-gap: 18px;
+    grid-gap: 13px;
   }
   @media (max-width: 1080px) {
     display: none;
@@ -59,11 +62,9 @@ const navLinkStyles = css`
   :focus {
     color: ${({ theme }) => darken(0.05, theme.text2)};
   }
-  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-   font-size: 1rem;
-  padding: 5px 13px;
-
-  `};
+  @media (max-width: 1200px) {
+    font-size: 18px;
+  }
 `
 const StyledNavLink = styled(NavLink).attrs({
   activeClassName,
