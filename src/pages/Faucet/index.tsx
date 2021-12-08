@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
+
 import Column from 'components/Column'
+import { shortAddress } from 'utils'
 import { useActiveWeb3React } from 'hooks/web3'
 import AppBody from 'pages/AppBody'
 import { testTokens, TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
@@ -58,7 +60,7 @@ export default function Faucet() {
           <AddressInput
             {...{
               id: 'sender-input',
-              value: account ?? '',
+              value: shortAddress(account ?? ''),
               disabled: true,
               placeholder: 'Paste your wallet',
               error: !account,
