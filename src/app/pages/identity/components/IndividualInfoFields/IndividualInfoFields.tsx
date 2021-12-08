@@ -5,7 +5,7 @@ import { TypedField } from 'components/form/TypedField'
 import { documentValueExtractor } from 'app/components/DSO/utils'
 import { dateTimeValueExtractor, plainValueExtractor } from 'helpers/forms'
 import { NationalitySelect } from 'components/form/NationalitySelect'
-import { useIndividualInfoDefaultEmail } from 'hooks/auth/useIndividualInfoDefaultEmail'
+import { useIndividualDefaultInfo } from 'hooks/auth/useIndividualDefaultInfo'
 import { DataroomFileType } from 'config/dataroom'
 import { privateClassNames } from 'helpers/classnames'
 import { Dropzone } from 'components/dataroom/Dropzone'
@@ -24,14 +24,18 @@ export const IndividualInfoFields = (
 ): JSX.Element => {
   const { rootName } = props
   const { control } = useFormContext<IndividualPersonalInformation>()
-  const { email: defaultEmail } = useIndividualInfoDefaultEmail(rootName)
+  const {
+    email: defaultEmail,
+    firstName: defaultFirstName,
+    lastName: defaultLastName,
+    middleName: defaultMiddleName
+  } = useIndividualDefaultInfo(rootName)
   const { isMobile } = useAppBreakpoints()
 
   return (
     <Grid container>
       <Box>
         <Box marginRight={2}>
-          {/* @ts-ignore */}
           <TypedField
             customRenderer
             component={Dropzone}
@@ -54,6 +58,7 @@ export const IndividualInfoFields = (
               control={control}
               name='firstName'
               label='First Name'
+              defaultValue={defaultFirstName}
               variant='outlined'
             />
           </Grid>
@@ -64,6 +69,7 @@ export const IndividualInfoFields = (
               control={control}
               name='middleName'
               label='Middle Name'
+              defaultValue={defaultMiddleName}
               variant='outlined'
             />
           </Grid>
@@ -74,11 +80,11 @@ export const IndividualInfoFields = (
               control={control}
               name='lastName'
               label='Last Name'
+              defaultValue={defaultLastName}
               variant='outlined'
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
-            {/* @ts-ignore */}
             <TypedField
               className={privateClassNames()}
               rootName={rootName}

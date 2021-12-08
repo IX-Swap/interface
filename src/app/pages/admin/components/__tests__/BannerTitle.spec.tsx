@@ -6,7 +6,6 @@ import { fireEvent, waitFor } from '@testing-library/dom'
 
 describe('BannerTitle', () => {
   const changeHandler = jest.fn()
-  const setIsEdit = jest.fn()
 
   afterEach(async () => {
     await cleanup()
@@ -36,9 +35,7 @@ describe('BannerTitle', () => {
     })
   })
 
-  it('calls setIsEdit hook and input focus on button click', async () => {
-    jest.spyOn(React, 'useState').mockImplementation(() => [false, setIsEdit])
-
+  it('focuses input on button click', () => {
     const { getByTestId } = render(
       <Form>
         <BannerTitle text={'title'} onChange={changeHandler} />
@@ -48,36 +45,19 @@ describe('BannerTitle', () => {
     const button = getByTestId('button')
     const input = getByTestId('input')
     fireEvent.click(button)
-    await waitFor(() => {
-      expect(setIsEdit).toHaveBeenCalledWith(true)
-      expect(input).toHaveFocus()
-    })
-  })
 
-  it('calls setIsEdit hook with false value when input is blur', async () => {
-    jest.spyOn(React, 'useState').mockImplementation(() => [false, setIsEdit])
-
-    const { getByTestId } = render(
-      <Form>
-        <BannerTitle text={'title'} onChange={changeHandler} />
-      </Form>
-    )
-
-    const input = getByTestId('input')
-    fireEvent.keyUp(input, { keyCode: '13' })
-    await waitFor(() => {
-      expect(setIsEdit).toHaveBeenCalledWith(false)
-    })
+    expect(input).toHaveFocus()
   })
 
   it('renders Grid components with correct props when isEdit is true', () => {
-    jest.spyOn(React, 'useState').mockImplementation(() => [true, setIsEdit])
-
     const { getByTestId } = render(
       <Form>
         <BannerTitle text={'title'} onChange={changeHandler} />
       </Form>
     )
+
+    const button = getByTestId('button')
+    fireEvent.click(button)
 
     const firstGrid = getByTestId('firstGrid')
     const secondGrid = getByTestId('secondGrid')
@@ -89,8 +69,6 @@ describe('BannerTitle', () => {
   })
 
   it('renders Grid components with correct props when isEdit is false', () => {
-    jest.spyOn(React, 'useState').mockImplementation(() => [false, setIsEdit])
-
     const { getByTestId } = render(
       <Form>
         <BannerTitle text={'title'} onChange={changeHandler} />

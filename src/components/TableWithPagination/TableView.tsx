@@ -15,32 +15,33 @@ import {
   Size
 } from '@material-ui/core'
 import { TableColumn, BaseFilter } from 'types/util'
-import { Actions } from 'app/pages/authorizer/components/Actions'
+import { ActionsType } from 'app/pages/authorizer/components/Actions'
 import { useTableWithPagination } from 'components/TableWithPagination/hooks/useTableWithPagination'
 import { TableRows } from 'components/TableWithPagination/TableRows'
 import { statusColumn } from 'app/pages/authorizer/hooks/useAuthorizerView'
 import { UseSelectionHelperReturnType } from 'hooks/useSelectionHelper'
 import { useTheme } from '@material-ui/core/styles'
 import useStyles from './TableView.styles'
+import { NoData } from 'app/components/NoData/NoData'
 
 export interface TableViewRendererProps<T> {
   items: T[]
   columns: Array<TableColumn<T>>
   hasActions: boolean
-  actions?: Actions<T>
+  actions?: ActionsType<T>
   cacheQueryKey: any
 }
 
 export interface TableViewProps<T> {
-  name: string
-  uri: string
+  name?: string
+  uri?: string
   queryEnabled?: boolean
   columns: Array<TableColumn<T>>
   bordered?: boolean
   filter?: BaseFilter
   hasActions?: boolean
   hasStatus?: boolean
-  actions?: Actions<T>
+  actions?: ActionsType<T>
   children?: (props: TableViewRendererProps<T>) => JSX.Element
   fakeItems?: T[]
   innerRef?: any
@@ -49,6 +50,7 @@ export interface TableViewProps<T> {
   defaultRowsPerPage?: number
   size?: Size
   themeVariant?: 'default' | 'primary' | 'no-header'
+  noDataComponent?: JSX.Element
 }
 
 export const TableView = <T,>({
@@ -68,25 +70,20 @@ export const TableView = <T,>({
   paperProps = {},
   defaultRowsPerPage,
   size = 'medium',
-  themeVariant = 'primary'
+  themeVariant = 'primary',
+  noDataComponent = <NoData title='No Data' />
 }: TableViewProps<T>): JSX.Element => {
-  const {
-    items,
-    status,
-    page,
-    setPage,
-    setRowsPerPage,
-    rowsPerPage,
-    total
-  } = useTableWithPagination<T>(
-    name,
-    uri,
-    filter,
-    queryEnabled,
-    defaultRowsPerPage
-  )
+  const { items, status, page, setPage, setRowsPerPage, rowsPerPage, total } =
+    useTableWithPagination<T>({
+      queryKey: name,
+      uri: uri,
+      defaultFilter: filter,
+      queryEnabled: queryEnabled,
+      defaultRowsPerPage: defaultRowsPerPage
+    })
 
   const theme = useTheme()
+  const isLoading = status === 'loading'
   const classes = useStyles()
   const headColor =
     themeVariant === 'primary'
@@ -157,7 +154,7 @@ export const TableView = <T,>({
   return (
     <Grid container direction='column'>
       <Grid item>
-        {status === 'loading' && <LinearProgress />}
+        {isLoading && <LinearProgress />}
         <Paper
           variant='outlined'
           style={{ backgroundColor: 'inherit' }}
@@ -217,6 +214,8 @@ export const TableView = <T,>({
                   actions={actions}
                   cacheQueryKey={cacheQueryKey}
                   themeVariant={themeVariant}
+                  isLoading={isLoading}
+                  noDataComponent={noDataComponent}
                 />
               )}
             </Table>
@@ -238,7 +237,7 @@ export const TableView = <T,>({
               setPage(0)
               setRowsPerPage(parseInt(evt.target.value))
             }}
-            onChangePage={(evt, newPage: number) => {
+            onPageChange={(evt, newPage: number) => {
               setPage(newPage)
             }}
           />

@@ -68,14 +68,14 @@ export const DSOPreview = (props: DSOPreviewProps) => {
         <DSOInformationView dso={data} />
       </Element>
 
-      <Element name={DSOFormSection.Documents}>
-        <VSpacer size='large' />
-        <DSODataroomView dso={data} />
-      </Element>
-
       <Element name={DSOFormSection['Team Members']}>
         <VSpacer size='large' />
         <DSOTeamView dso={data} />
+      </Element>
+
+      <Element name={DSOFormSection.Documents}>
+        <VSpacer size='large' />
+        <DSODataroomView dso={data} />
       </Element>
 
       {renderVideosFormSection()}

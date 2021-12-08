@@ -180,3 +180,32 @@ export const investmentGrowthChartOptions = {
 
 export const investmentChartNoDataText =
   'There is no investment at the moment. Once you receive investments in your deal you will be able to see all the charts.'
+
+export const baseAccountsUnderCustodyChartOptions = {
+  chartType: 'PieChart',
+  height: '100%',
+  width: '100%',
+  options: {
+    pieHole: 0.35,
+    colors: ['#109619', '#3266CC'],
+    backgroundColor: 'transparent',
+    legend: {
+      position: 'right',
+      textStyle: {
+        fontSize: 12,
+        color: 'rgba(0, 0, 0, 0.87)',
+        fontName: 'Poppins'
+      }
+    },
+    enableInteractivity: false,
+    chartArea: {
+      width: '100%',
+      height: '80%',
+      left: 0,
+      right: 0,
+      bottom: 0,
+      top: '10%'
+    },
+    pieSliceText: 'value + %'
+  }
+}

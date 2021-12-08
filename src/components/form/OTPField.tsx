@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 import { Typography, Grid, FormHelperText } from '@material-ui/core'
 import { OTPInputField } from 'components/form/OTPInputField'
 import { ErrorMessage } from '@hookform/error-message'
@@ -7,7 +7,7 @@ import { hasValue } from 'helpers/forms'
 export interface OTPFieldProps {
   value?: any
   error?: boolean
-  label?: string
+  label?: string | ReactNode
   hasHelperText?: boolean
   helperText?: string
   onChange?: any
@@ -33,18 +33,28 @@ export const OTPField = ({
   shouldAutoFocus = false,
   isInputNum = false
 }: OTPFieldProps) => {
+  const renderLabel = () =>
+    typeof label === 'string' ? (
+      <Typography
+        data-testid='otp-field-label'
+        component='p'
+        align='center'
+        variant='caption'
+      >
+        {label}
+      </Typography>
+    ) : (
+      label
+    )
+
   return (
     <Grid container direction='column' spacing={1}>
-      {hasValue(label) ? (
-        <Grid item>
-          <Typography component='p' align='center' variant='caption'>
-            {label}
-          </Typography>
-        </Grid>
-      ) : null}
+      {hasValue(label) ? <Grid item>{renderLabel()}</Grid> : null}
       <Grid item>
         <OTPInputField
           fullwidth
+          name={path}
+          control={control}
           hasErrored={error}
           value={value}
           onChange={onChange}

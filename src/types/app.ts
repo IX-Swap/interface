@@ -37,10 +37,13 @@ export enum AppFeature {
   Users = 'users',
   VirtualAccounts = 'virtual-accounts',
   CapTable = 'captable',
-  DealClosure = 'closure'
+  DealClosure = 'closure',
+  TokenDeployment = 'token-deployment',
+  CustodyManagement = 'custody-management',
+  Dashboard = 'dashboard'
 }
 
-export enum NotificationFilter {
+export enum NotificationFilterFeatures {
   Authentication = 'logins',
   BankAccounts = 'bank-accounts',
   Deposits = 'deposits',
@@ -50,7 +53,8 @@ export enum NotificationFilter {
   Individuals = 'individuals',
   Commitments = 'commitments',
   Offerings = 'offerings',
-  Deployments = 'deployments'
+  Deployments = 'deployments',
+  IssuanceDetails = 'issuance-details'
 }
 
 export enum AuthorizerCategory {
@@ -65,5 +69,6 @@ export enum AuthorizerCategory {
   WithdrawalAddresses = 'withdrawal-addresses',
   Listings = 'listings',
   VirtualAccounts = 'virtual-accounts',
-  DealClosure = 'closure'
+  DealClosure = 'closure',
+  TokenDeployment = 'token-deployment'
 }

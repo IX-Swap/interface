@@ -29,6 +29,7 @@ export type AuthorizableStatus =
   | 'Closed'
   | 'Pending'
   | 'Draft'
+  | 'Complete'
   | ''
 
 export type FundStatus =
@@ -39,6 +40,8 @@ export type FundStatus =
   | 'Rejected'
   | 'Failed'
   | ''
+
+export type DeploymentStatus = 'DEPLOYED' | 'PENDING' | ''
 export interface NumberFormat {
   currency: string
 }
@@ -52,6 +55,8 @@ export interface BaseFilter {
   asset?: string
   type?: string
   search?: string
+  searchInvestorName?: string
+  listingKeyword?: string
   from?: string
   to?: string
   capitalStructure?: string
@@ -61,6 +66,7 @@ export interface BaseFilter {
   network?: string
   isPriceAscending?: boolean
   fundStatus?: string
+  reportType?: string
 }
 
 export interface InternalRouteBase {

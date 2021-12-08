@@ -8,30 +8,30 @@ import { useTableWithPagination } from 'components/TableWithPagination/hooks/use
 import { useTheme } from '@material-ui/core/styles'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
 
-export interface NewsListProps<T> {
+export interface NewsListProps {
   name: string
   uri: string
   queryEnabled?: boolean
   filter?: BaseFilter
 }
 
-export const NewsList = <T,>({
+export const NewsList = ({
   name,
   uri,
   filter,
   queryEnabled = true
-}: NewsListProps<T>): JSX.Element => {
+}: NewsListProps): JSX.Element => {
   const theme = useTheme()
   const classes = useStyles()
   const isTablet = useMediaQuery(theme.breakpoints.down('md'))
-  const {
-    items,
-    status,
-    page,
-    setPage,
-    rowsPerPage,
-    total
-  } = useTableWithPagination<NewsItemType>(name, uri, filter, queryEnabled, 4)
+  const { items, status, page, setPage, rowsPerPage, total } =
+    useTableWithPagination<NewsItemType>({
+      queryKey: name,
+      uri: uri,
+      defaultFilter: filter,
+      queryEnabled: queryEnabled,
+      defaultRowsPerPage: 4
+    })
 
   const isSecondaryColor = (index: number) => {
     return isTablet ? index === 1 || index === 3 : index === 1 || index === 2
@@ -67,7 +67,7 @@ export const NewsList = <T,>({
           nextIconButtonProps={{
             disabled: items.length < rowsPerPage || total === 0
           }}
-          onChangePage={(evt, newPage: number) => {
+          onPageChange={(evt, newPage: number) => {
             setPage(newPage)
           }}
         />

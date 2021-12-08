@@ -10,7 +10,7 @@ export const AuthorizerWithdrawalAddressesRouter = () => {
     <Switch>
       <AppRoute
         exact
-        breadcrumb='Withdrawal Address Details'
+        breadcrumb='Blockchain Address Details'
         path='/app/authorizer/withdrawal-addresses/:userId/:addressId/view'
       >
         <WithdrawalAddressAuthorization />

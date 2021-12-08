@@ -9,6 +9,7 @@ export interface DeployTokenButtonProps {
   isDeployed: boolean
   onClick: () => any
   deploymentInfo?: DeploymentInfo
+  hideTextStatus?: boolean
 }
 
 export const DeployTokenButton = (props: DeployTokenButtonProps) => {
@@ -17,7 +18,8 @@ export const DeployTokenButton = (props: DeployTokenButtonProps) => {
     isDeployed,
     isInitializing,
     deploymentInfo,
-    onClick
+    onClick,
+    hideTextStatus = false
   } = props
   const deployed = isDeployed || deploymentInfo !== undefined
 
@@ -33,20 +35,22 @@ export const DeployTokenButton = (props: DeployTokenButtonProps) => {
           Deploy
         </Button>
       </Grid>
-      <Grid item>
-        {!deployed && isInitializing && (
-          <Typography>Getting info...</Typography>
-        )}
-        {!deployed && isDeploying && (
-          <Typography>Token is being deployed...</Typography>
-        )}
-        {deployed && (
-          <Typography>
-            Successfully deployed at{' '}
-            {formatDateAndTime(deploymentInfo?.updatedAt ?? '')}
-          </Typography>
-        )}
-      </Grid>
+      {!hideTextStatus && (
+        <Grid item>
+          {!deployed && isInitializing && (
+            <Typography>Getting info...</Typography>
+          )}
+          {!deployed && isDeploying && (
+            <Typography>Token is being deployed...</Typography>
+          )}
+          {deployed && (
+            <Typography>
+              Successfully deployed at{' '}
+              {formatDateAndTime(deploymentInfo?.updatedAt ?? '')}
+            </Typography>
+          )}
+        </Grid>
+      )}
     </Grid>
   )
 }

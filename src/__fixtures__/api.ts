@@ -19,7 +19,6 @@ export const customConfig = {
 }
 
 export const postJSON = { message: 'hello' }
-export const postJSONString = JSON.stringify(postJSON)
 export const postJSONHeaders = {
   ...headers,
   'Content-Type': 'application/json'

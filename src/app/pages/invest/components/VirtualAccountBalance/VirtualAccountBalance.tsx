@@ -15,11 +15,13 @@ import { useStyles } from 'app/pages/invest/components/VirtualAccountBalance/Vir
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { VirtualAccount } from 'types/virtualAccount'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 
 export const VirtualAccountBalance = () => {
   const { list, isLoading } = useVirtualAccount()
   const [selected, setSelected] = useState<'SGD' | 'USD'>('SGD')
   const classes = useStyles()
+  const { isMiniLaptop } = useAppBreakpoints()
 
   const handleSelect = (event: React.ChangeEvent<{ value: unknown }>) => {
     setSelected(event.target.value as 'SGD' | 'USD')
@@ -48,7 +50,7 @@ export const VirtualAccountBalance = () => {
   return (
     <Card elevation={0} className={classes.container}>
       <CardContent className={classes.cardContent}>
-        <Grid container spacing={3} alignContent='center'>
+        <Grid container spacing={2} alignContent='center'>
           <Grid item xs={12} md={4}>
             <Typography className={classes.textContent}>
               Account Number:{' '}
@@ -65,7 +67,14 @@ export const VirtualAccountBalance = () => {
               </Box>
             </Typography>
           </Grid>
-          <Grid item xs={12} md={4} container spacing={1} justify='flex-end'>
+          <Grid
+            item
+            xs={12}
+            md={4}
+            container
+            spacing={1}
+            justify={isMiniLaptop ? 'flex-start' : 'flex-end'}
+          >
             <Grid item>
               <FormControl variant='outlined'>
                 <Select

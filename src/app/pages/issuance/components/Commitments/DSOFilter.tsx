@@ -5,9 +5,8 @@ import { NoDeals } from 'app/pages/issuance/components/IssuanceLanding/NoDeals'
 import { useDSOFilter } from 'app/pages/issuance/hooks/useDSOFilter'
 
 export const DSOFilter = () => {
-  const { data, isLoading, selected, handleChange } = useDSOFilter(
-    'commitments'
-  )
+  const { data, isLoading, selected, handleChange } =
+    useDSOFilter('commitments')
 
   if (isLoading) {
     return null

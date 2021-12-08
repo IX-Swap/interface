@@ -13,22 +13,15 @@ export const OTCMarket = () => {
   const { getFilterValue } = useQueryFilter()
   const search = getFilterValue('search')
   const otcMarketSearch = getFilterValue('otcMarketSearch')
-  const {
-    items,
-    status,
-    page,
-    setPage,
-    setRowsPerPage,
-    rowsPerPage,
-    total
-  } = useTableWithPagination(
-    otcQueryKeys.getApprovedListingsList,
-    OTCUrl.getApprovedListingsList,
-    { search: search ?? otcMarketSearch },
-    true,
-    5,
-    true
-  )
+  const { items, status, page, setPage, setRowsPerPage, rowsPerPage, total } =
+    useTableWithPagination({
+      queryKey: otcQueryKeys.getApprovedListingsList,
+      uri: OTCUrl.getApprovedListingsList,
+      defaultFilter: { search: search ?? otcMarketSearch },
+      queryEnabled: true,
+      defaultRowsPerPage: 5,
+      disabledUseEffect: true
+    })
   const classes = useStyles()
 
   if (status === 'loading' || items.length === undefined) {
@@ -57,7 +50,7 @@ export const OTCMarket = () => {
               setPage(0)
               setRowsPerPage(parseInt(evt.target.value))
             }}
-            onChangePage={(evt, newPage: number) => {
+            onPageChange={(evt, newPage: number) => {
               setPage(newPage)
             }}
           />

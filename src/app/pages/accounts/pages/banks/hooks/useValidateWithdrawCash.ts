@@ -11,13 +11,8 @@ interface BalancesByBankIdReturnObj {
 }
 
 export const useValidateWithdrawCash = (): BalancesByBankIdReturnObj => {
-  const {
-    watch,
-    setError,
-    clearErrors,
-    errors,
-    formState
-  } = useFormContext<WithdrawCashFormValues>()
+  const { watch, setError, clearErrors, errors, formState } =
+    useFormContext<WithdrawCashFormValues>()
   const bankId = watch('bankAccountId')
   const amount = watch('amount', 0)
   const virtualAccountId = watch('virtualAccount')
@@ -29,10 +24,8 @@ export const useValidateWithdrawCash = (): BalancesByBankIdReturnObj => {
   const assetId = getIdFromObj(bank?.currency)
   const { data: asset, isSuccess: assetSuccess } = useAssetById(assetId)
 
-  const {
-    data: virtualAccountData,
-    isSuccess: virtualAccountSuccess
-  } = useVirtualAccount(virtualAccountId)
+  const { data: virtualAccountData, isSuccess: virtualAccountSuccess } =
+    useVirtualAccount(virtualAccountId)
 
   if (bankSuccess && assetSuccess && virtualAccountSuccess) {
     if (

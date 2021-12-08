@@ -17,7 +17,6 @@ export const DSOIntroduction = () => {
       xs={12}
       md={12}
     >
-      {/* @ts-ignore */}
       <TypedField
         component={RichTextEditor}
         customRenderer

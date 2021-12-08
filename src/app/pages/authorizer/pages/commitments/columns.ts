@@ -22,7 +22,7 @@ export const columns: Array<TableColumn<Commitment>> = [
     label: 'Capital Structure'
   },
   {
-    key: 'dso.status',
+    key: 'dso.dealStatus',
     label: 'DSO Status',
     render: renderDealStatus
   },

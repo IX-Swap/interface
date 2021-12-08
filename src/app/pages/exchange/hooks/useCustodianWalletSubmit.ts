@@ -10,22 +10,20 @@ export const useCustodianWalletSubmit = () => {
   const [openDialog, setOpenDialog] = useState<boolean>(false)
   const [form, setForm] = useState<PlaceOrderArgs>()
   const [placeOrder, { status: createOrderStatus }] = useCreateOrder()
-  const [
-    checkExistsCustodianWallet,
-    { status: existCustodianWalletStatus }
-  ] = useExistsCustodianWallet({
-    userId: getIdFromObj(user),
-    onSuccess: async ({ response }) => {
-      if (response === null) {
+  const [checkExistsCustodianWallet, { status: existCustodianWalletStatus }] =
+    useExistsCustodianWallet({
+      userId: getIdFromObj(user),
+      onSuccess: async ({ response }) => {
+        if (response === null) {
+          setOpenDialog(true)
+        } else {
+          await placeOrder(form)
+        }
+      },
+      onError: () => {
         setOpenDialog(true)
-      } else {
-        await placeOrder(form)
       }
-    },
-    onError: () => {
-      setOpenDialog(true)
-    }
-  })
+    })
   const submitForm = useCallback(
     async (args: PlaceOrderArgs) => {
       setForm(args)

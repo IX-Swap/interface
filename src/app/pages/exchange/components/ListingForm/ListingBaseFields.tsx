@@ -31,7 +31,6 @@ export const ListingBaseFields = (props: ListingBaseFieldsProps) => {
           <FormSectionHeader title='General Information' />
         </Grid>
         <Grid item>
-          {/* @ts-ignore */}
           <TypedField
             customRenderer
             component={Dropzone}
@@ -136,7 +135,6 @@ export const ListingBaseFields = (props: ListingBaseFieldsProps) => {
         <Grid item>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6}>
-              {/* @ts-ignore */}
               <TypedField
                 component={DateTimePicker}
                 customRenderer
@@ -153,7 +151,6 @@ export const ListingBaseFields = (props: ListingBaseFieldsProps) => {
               />
             </Grid>
             <Grid item xs={12} md={6}>
-              {/* @ts-ignore */}
               <TypedField
                 component={DateTimePicker}
                 customRenderer

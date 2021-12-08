@@ -60,6 +60,37 @@ export const network: Network = {
   updatedAt: '2020-10-15T08:07:57.264Z'
 }
 
+const algorandNetwork: Network = {
+  nativeCurrency: {
+    name: 'Algorand',
+    symbol: 'ALGO',
+    decimals: 0
+  },
+  explorer: {
+    urls: {
+      home: 'https://goalseeker.purestake.io',
+      transaction:
+        'https://goalseeker.purestake.io/algorand/testnet/transaction/%s',
+      address: 'https://goalseeker.purestake.io/algorand/testnet/account/%s',
+      token: 'https://goalseeker.purestake.io/algorand/testnet/search/%s'
+    },
+    name: 'Goalseeker for algorand',
+    description:
+      'Goalseeker is the leading BlockChain Explorer, Search, API and Analytics Platform for Algorand, a decentralized smart contracts platform.'
+  },
+  supportsEvm: true,
+  hasUTXO: false,
+  _id: '611a2458c8f34bf9cc34589c',
+  name: 'ALGOD V2.2.0 TESTNET',
+  chainId: 6,
+  createdAt: '2021-08-16T08:39:52.372Z',
+  isSandbox: true,
+  networkCode: 'ALGO_TESTNET',
+  networkId: 6,
+  nodes: [],
+  updatedAt: '2021-08-16T08:39:52.372Z'
+}
+
 export const networks: Network[] = [
   network,
   {
@@ -121,5 +152,6 @@ export const networks: Network[] = [
       }
     ],
     updatedAt: '2020-10-15T08:07:57.264Z'
-  }
+  },
+  algorandNetwork
 ]

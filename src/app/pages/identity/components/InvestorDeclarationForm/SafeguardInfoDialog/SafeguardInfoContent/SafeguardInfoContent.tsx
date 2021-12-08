@@ -8,7 +8,7 @@ export const SafeguardInfoContent = () => {
         <Grid item>
           <Typography>
             Accredited investors are considered to be sophisticated investors
-            and hence eligble to enjoy more flexible and swift investments not
+            and hence eligible to enjoy more flexible and swift investments not
             available to the general public. Accredited investors are expected
             to understand more sophisticated investment products and the risks
             associated with them, and have the ability to conduct their own due
@@ -23,9 +23,9 @@ export const SafeguardInfoContent = () => {
             securities, such as shares and debentures, units in business trusts
             and collective investment schemes (commonly referred to as mutual
             funds or investment funds) (“Investment Products”) before the
-            prospectus or profile statment is registered with the Monetary
+            prospectus or profile statement is registered with the Monetary
             Authority of Singapore (sec. 25(3) and (4)(a), 300(2A) and (2B)(a)
-            SFA). You may thus recieve information that may not meet regulatory
+            SFA). You may thus receive information that may not meet regulatory
             requirements for public distribution.
           </Typography>
         </Grid>

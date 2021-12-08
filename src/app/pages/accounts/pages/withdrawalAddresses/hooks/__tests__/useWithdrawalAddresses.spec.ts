@@ -48,9 +48,7 @@ describe('useWithdrawalAddresses', () => {
             [{ data: [withdrawalAddress] }],
             '_id'
           )
-          expect(
-            post
-          ).toHaveBeenCalledWith(
+          expect(post).toHaveBeenCalledWith(
             `/accounts/withdrawal-addresses/list/${user._id}`,
             { ...paginationArgs, status: 'Approved' }
           )

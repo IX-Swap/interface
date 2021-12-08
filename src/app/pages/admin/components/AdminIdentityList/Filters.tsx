@@ -12,7 +12,7 @@ export const Filters = () => {
           <SearchFilter
             fullWidth
             placeholder='Search'
-            inputAdormentPosition='end'
+            inputAdornmentPosition='end'
           />
         </Box>
       </Grid>

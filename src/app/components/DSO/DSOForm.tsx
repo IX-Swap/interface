@@ -33,7 +33,7 @@ export const DSOForm = (props: DSOFormProps) => {
         </Grid>
 
         <Grid item lg={3}>
-          <DSOSidebar dso={data} footer={<DSOFormActions dso={data} />} />
+          <DSOSidebar isNew dso={data} footer={<DSOFormActions dso={data} />} />
         </Grid>
       </Grid>
     </Form>

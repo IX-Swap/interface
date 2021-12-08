@@ -5,6 +5,7 @@ import { moneyNumberFormat } from 'config/numberFormat'
 import { numericValueExtractor } from 'helpers/forms'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
+import { useIndividualDefaultInfo } from 'hooks/auth/useIndividualDefaultInfo'
 
 export const basicInformationFields = [
   {
@@ -18,8 +19,18 @@ export const basicInformationFields = [
   { name: 'industry', label: 'Industry' }
 ]
 
-export const IssuerDetails = () => {
+export interface IssuerDetailFieldsProps {
+  rootName?: string
+}
+
+export const IssuerDetails = (props: IssuerDetailFieldsProps) => {
+  const { rootName } = props
   const { control } = useFormContext()
+  const {
+    firstName: defaultFirstName,
+    lastName: defaultLastName,
+    middleName: defaultMiddleName
+  } = useIndividualDefaultInfo(rootName)
 
   return (
     <Grid container direction='column' spacing={6}>
@@ -36,6 +47,16 @@ export const IssuerDetails = () => {
                 name={field.name}
                 label={field.label}
                 variant='outlined'
+                defaultValue={
+                  field.name === 'fullName'
+                    ? `${defaultFirstName as string}
+                        ${defaultMiddleName as string}
+                       ${defaultLastName as string}`
+                        .replace(/\s\s+/g, ' ')
+                        .replace('undefined', '')
+                        .replace('  ', ' ')
+                    : ''
+                }
               />
             </Grid>
           ))}

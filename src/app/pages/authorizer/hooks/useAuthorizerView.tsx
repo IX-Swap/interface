@@ -16,8 +16,7 @@ export const renderStatusColumn = (s: string): JSX.Element => (
   <AuthorizableStatus status={s} isNewTheme compact={false} />
 )
 
-export const renderDealStatus = (s: string): JSX.Element => {
-  const status = s === 'Approved' ? 'Open' : s
+export const renderDealStatus = (status: string): JSX.Element => {
   return <AuthorizableStatus status={status} isNewTheme compact={false} />
 }
 

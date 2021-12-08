@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Typography } from '@material-ui/core'
+import { Box, Button, Grid, Paper, Typography } from '@material-ui/core'
 import { DateTimePicker } from 'components/form/_DateTimePicker'
 import { NumericFieldCapsule } from 'components/form/NumericFieldCapsule'
 import { TypedField } from 'components/form/TypedField'
@@ -10,27 +10,51 @@ import React from 'react'
 import { useFormContext } from 'react-hook-form'
 import { VSpacer } from 'components/VSpacer'
 import { OTPDialog } from 'app/pages/accounts/pages/banks/pages/WithdrawCash/OTPDialog'
+import { useParams } from 'react-router'
+import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
+import { useBalancesByType } from 'hooks/balance/useBalancesByType'
 
 export interface NewDistributionFormFieldsProps {
   currency: ValidCurrency
   showOtp: boolean
   showOTPForm: () => void
   closeOTPForm: () => void
+  disabled?: boolean
 }
 
 export const NewDistributionFormFields = ({
   currency,
   showOtp,
   showOTPForm,
-  closeOTPForm
+  closeOTPForm,
+  disabled = false
 }: NewDistributionFormFieldsProps) => {
   const { control, watch } = useFormContext()
-  const pricePerToken = watch('pricePerToken')
-  const totalDistributions = 5
+  const pricePerToken = watch('amountPerToken')
+  const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
+  const { data, isLoading } = useDSOById(dsoId, issuerId)
+  const { data: assetData, isLoading: assetIsLoading } =
+    useBalancesByType('Currency')
+
+  if (isLoading || assetIsLoading) {
+    return null
+  }
+
+  let totalTokens = 0
+  let isEnough = true
+
+  if (data !== undefined && assetData !== undefined) {
+    totalTokens = (data.insight?.raisedTotal ?? 0) / data.pricePerUnit
+  }
 
   const totalDistributionAmount = `${currency} ${formatAmount(
-    pricePerToken * totalDistributions
+    pricePerToken * totalTokens
   )}`
+
+  const asset = assetData.map[data?.currency.symbol ?? '']
+  if (pricePerToken * totalTokens >= asset.available) {
+    isEnough = false
+  }
 
   return (
     <>
@@ -44,7 +68,7 @@ export const NewDistributionFormFields = ({
             control={control}
             component={NumericFieldCapsule}
             label='Price Per Token'
-            name='pricePerToken'
+            name='amountPerToken'
             numberFormat={moneyNumberFormat}
             valueExtractor={numericValueExtractor}
             variant='outlined'
@@ -54,7 +78,6 @@ export const NewDistributionFormFields = ({
         <Grid item xs={12} md={3}>
           <Typography variant='subtitle1'>Schedule distribution</Typography>
           <VSpacer size='small' />
-          {/* @ts-ignore */}
           <TypedField
             component={DateTimePicker}
             customRenderer
@@ -76,12 +99,31 @@ export const NewDistributionFormFields = ({
             </Grid>
           </Grid>
         </Grid>
+        {!isEnough && (
+          <Grid item xs={12} md={6} lg={4}>
+            <Paper
+              elevation={0}
+              style={{
+                backgroundColor: '#FFF5F5',
+                borderLeft: '4px solid #F33E3E',
+                padding: '8px 16px'
+              }}
+            >
+              <Typography variant='caption' color='error'>
+                Distribution will not be complete because of insufficient
+                balance. Please fund your account.
+              </Typography>
+            </Paper>
+          </Grid>
+        )}
+
         <Grid item xs={12}>
           <Button
             type='button'
             onClick={showOTPForm}
             color='primary'
             variant='contained'
+            disabled={disabled || !isEnough}
           >
             initiate distribution
           </Button>

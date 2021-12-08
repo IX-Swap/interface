@@ -8,7 +8,7 @@ interface SidebarSectionProps {
 }
 
 export const SidebarSectionComponent = styled(
-  (props: SidebarSectionProps & BoxProps) => <Box {...props} />
+  ({ padded, ...props }: SidebarSectionProps & BoxProps) => <Box {...props} />
 )({
   marginBottom: ({ theme }: SidebarSectionProps) => theme.spacing(3),
   paddingLeft: ({ theme, padded = false }: SidebarSectionProps) =>

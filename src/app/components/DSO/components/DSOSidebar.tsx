@@ -5,14 +5,16 @@ import { AuthorizableStatus } from 'app/pages/authorizer/components/Authorizable
 import { DigitalSecurityOffering } from 'types/dso'
 import { Maybe } from 'types/util'
 import { LabelledValue } from 'components/LabelledValue'
+import { isNonEmptyArray } from 'helpers/arrays'
 
 export interface DSOSidebarProps {
   dso: DigitalSecurityOffering | undefined
   footer: Maybe<JSX.Element>
+  isNew?: boolean
 }
 
 export const DSOSidebar = (props: DSOSidebarProps) => {
-  const { dso, footer } = props
+  const { dso, footer, isNew = false } = props
 
   return (
     <Box position='sticky' top={90} marginLeft={8}>
@@ -25,8 +27,11 @@ export const DSOSidebar = (props: DSOSidebarProps) => {
           />
         </Grid>
 
-        <Grid item>
-          <DSOScrollGuide />
+        <Grid item data-testid='progress-section'>
+          <DSOScrollGuide
+            hasVideo={isNonEmptyArray(dso?.videos) || isNew}
+            hasFAQ={isNonEmptyArray(dso?.faqs) || isNew}
+          />
         </Grid>
 
         <Grid item>{footer}</Grid>

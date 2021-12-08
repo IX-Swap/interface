@@ -35,8 +35,6 @@ setupSentry()
 setupFullStory()
 setupGoogleAnalytics()
 
-console.log(`App version: ${APP_VERSION}`) // eslint-disable-line
-
 const IXApp = () => {
   return (
     <StylesProvider generateClassName={generateClassName}>

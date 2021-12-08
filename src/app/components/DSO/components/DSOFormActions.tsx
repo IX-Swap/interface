@@ -17,6 +17,7 @@ export const DSOFormActions = (props: DSOFormActionsProps) => {
   return (
     <>
       <Button
+        data-testid='preview'
         variant={'contained'}
         color='primary'
         disableElevation

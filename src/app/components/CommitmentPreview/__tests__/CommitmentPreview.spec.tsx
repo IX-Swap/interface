@@ -113,7 +113,7 @@ describe('CommitmentPreview', () => {
     expect(LabelledValue).toHaveBeenNthCalledWith(
       9,
       {
-        label: 'Withdrawal Address',
+        label: 'Blockchain Address',
         value: expect.anything()
       },
       {}

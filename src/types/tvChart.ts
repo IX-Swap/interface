@@ -19,6 +19,8 @@ export interface ChartContainerProps {
   // tvWidget: IChartingLibraryWidget | null
   // setTradingChart: (tvWidget: IChartingLibraryWidget) => void
   dataFeedUrl?: string
+  toolbarBg?: string
+  customCssUrl?: string
 }
 export interface HistoryParams {
   symbol: string

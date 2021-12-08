@@ -26,7 +26,8 @@ export const AuthorizerRoute = {
   issuanceDetails: makeURL(['app', 'authorizer', 'issuanceDetails']),
   listings: '/app/authorizer/listings',
   virtualAccounts: '/app/authorizer/virtual-accounts',
-  dealClosure: '/app/authorizer/closure'
+  dealClosure: '/app/authorizer/closure',
+  tokenDeployment: '/app/authorizer/token-deployment'
 }
 
 export const authorizerLandingLinks: InternalRouteProps[] = [
@@ -79,7 +80,7 @@ export const authorizerLandingLinks: InternalRouteProps[] = [
     icon: CommitmentIcon
   },
   {
-    label: 'Withdrawal Addresses',
+    label: 'Blockchain Addresses',
     path: AuthorizerRoute.withdrawalAddresses,
     color: '#e6d200',
     icon: WithdrawalAddressIcon
@@ -99,6 +100,12 @@ export const authorizerLandingLinks: InternalRouteProps[] = [
   {
     label: 'Virtual Accounts',
     path: AuthorizerRoute.virtualAccounts,
+    color: '#0FA3A3',
+    icon: VirtualAccountIcon
+  },
+  {
+    label: 'Token Deployment',
+    path: AuthorizerRoute.tokenDeployment,
     color: '#0FA3A3',
     icon: VirtualAccountIcon
   }

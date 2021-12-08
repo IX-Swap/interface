@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core'
+import { Box, Grid, Hidden } from '@material-ui/core'
 import { ChangeSummaryValue } from 'app/pages/exchange/components/FinancialSummary/ChangeSummaryValue'
 import { MoreDetails } from 'app/pages/exchange/components/FinancialSummary/MoreDetails'
 import { NumberSummaryValue } from 'app/pages/exchange/components/FinancialSummary/NumberSummaryValue'
@@ -21,64 +21,81 @@ export const FinancialSummary = () => {
   )
 
   return (
-    <Grid container spacing={1} style={{ paddingLeft: 11, paddingRight: 24 }}>
-      <Grid item container xs={12} md={3} alignContent='center'>
-        <PairListDropdown pairName={data?.name} />
+    <Grid container spacing={1}>
+      <Grid item xs={12} md={3}>
+        <Box
+          display='flex'
+          justifyContent={{ xs: 'space-between', md: 'flex-start' }}
+          alignItems='flex-start'
+          padding={1}
+        >
+          <Box flexGrow={1} width={{ xs: '50%', md: '100%' }}>
+            <PairListDropdown pairName={data?.name} />
+          </Box>
+          <Hidden mdUp>
+            <Box
+              flexGrow={1}
+              width='50%'
+              display='flex'
+              justifyContent='flex-end'
+            >
+              <MoreDetails />
+            </Box>
+          </Hidden>
+        </Box>
       </Grid>
-      <Grid item xs={12} md={6}>
-        <Grid container justify='space-between'>
-          <Grid item>
-            <SummaryItem
-              label='Last Trade Price'
-              value={
-                <NumberSummaryValue
-                  value={data?.latestPrice}
-                  isNegative={data?.latestPrice < 0}
-                />
-              }
-            />
-          </Grid>
-          <Grid item>
-            <SummaryItem
-              label='24H Change'
-              value={
-                <ChangeSummaryValue
-                  value={data?._24hChangePercentage}
-                  isNegative={data?._24hChangePercentage < 0}
-                />
-              }
-            />
-          </Grid>
-          <Grid item>
-            <SummaryItem
-              label='24H High'
-              value={<NumberSummaryValue value={data?._24h.high} />}
-            />
-          </Grid>
-          <Grid item>
-            <SummaryItem
-              label='24H Low'
-              value={<NumberSummaryValue value={data?._24h.low} />}
-            />
-          </Grid>
-          <Grid item>
-            <SummaryItem
-              label={`24H Volume (${assetData?.symbol ?? ''})`}
-              value={<NumberSummaryValue value={data?._24h.volume} />}
-            />
-          </Grid>
+      <Grid item xs={12} md={7}>
+        <Box
+          padding={{ xs: 1, md: 0 }}
+          display={{ xs: 'grid', md: 'flex' }}
+          justifyContent='space-between'
+          gridTemplateColumns='1fr 1fr 1fr'
+          gridGap={8}
+        >
+          <SummaryItem
+            label='Last Trade Price'
+            value={
+              <NumberSummaryValue
+                value={data?.latestPrice}
+                isNegative={data?.latestPrice < 0}
+              />
+            }
+          />
+          <SummaryItem
+            label='24H Change'
+            value={
+              <ChangeSummaryValue
+                value={data?._24hChangePercentage}
+                isNegative={data?._24hChangePercentage < 0}
+              />
+            }
+          />
+          <SummaryItem
+            label='24H High'
+            value={<NumberSummaryValue value={data?._24h.high} />}
+          />
+          <SummaryItem
+            label='24H Low'
+            value={<NumberSummaryValue value={data?._24h.low} />}
+          />
+          <SummaryItem
+            label={`24H Volume (${assetData?.symbol ?? ''})`}
+            value={<NumberSummaryValue value={data?._24h.volume} />}
+          />
+        </Box>
+      </Grid>
+      <Hidden smDown>
+        <Grid
+          item
+          container
+          xs={12}
+          md={2}
+          alignContent='center'
+          justify='flex-end'
+        >
+          <MoreDetails />
         </Grid>
-      </Grid>
-      <Grid
-        item
-        container
-        xs={12}
-        md={3}
-        alignContent='center'
-        justify='flex-end'
-      >
-        <MoreDetails />
-      </Grid>
+      </Hidden>
     </Grid>
   )
 }

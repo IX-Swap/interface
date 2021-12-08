@@ -1,22 +1,19 @@
-import React from 'react'
-import { Grid } from '@material-ui/core'
-import { Submit } from 'components/form/Submit'
+import React, { ReactElement } from 'react'
 import { WithdrawalAddressForm } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WAForm'
-import { WAFormFields } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WAFormFields'
-import { WADialogActions } from 'app/pages/accounts/pages/withdrawalAddresses/WADialog/WADialogActions'
+import { WABaseFields } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WABaseFields'
+import { WAFormContent } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WAFormContent'
+import { Grid } from '@material-ui/core'
 
-export const WAFormWrapper = () => {
+export interface WAFormWrapperProps {
+  hint: ReactElement
+}
+
+export const WAFormWrapper = ({ hint }: WAFormWrapperProps) => {
   return (
     <WithdrawalAddressForm defaultValues={{ agree: false }}>
       <Grid container direction='column' spacing={3}>
-        <WAFormFields />
-        <WADialogActions>
-          <Grid item container justify='center'>
-            <Submit color='primary' variant='contained'>
-              Submit
-            </Submit>
-          </Grid>
-        </WADialogActions>
+        <WABaseFields />
+        <WAFormContent hint={hint} />
       </Grid>
     </WithdrawalAddressForm>
   )

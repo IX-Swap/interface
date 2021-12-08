@@ -6,7 +6,7 @@ import {
   responseSuccessInterceptor
 } from 'services/api/interceptors'
 
-const _axios = axios.create()
+export const _axios = axios.create()
 _axios.defaults.baseURL = API_URL
 _axios.defaults.withCredentials = true
 _axios.interceptors.response.use(
@@ -137,7 +137,7 @@ const apiService = {
   },
 
   _prepareBody(data: any) {
-    return this._isFormData(data) ? data : JSON.stringify(data)
+    return data
   }
 }
 

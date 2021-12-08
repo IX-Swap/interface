@@ -5,10 +5,8 @@ import generateStoreHookAndProvider from 'helpers/generateStoreHookAndProvider'
 describe('generateStoreHookAndProvider', () => {
   it('generates useStore hook and Provider correctly so that generated hook consumes correct context value', () => {
     const store = { action: jest.fn(), value: true }
-    const {
-      useStore: useMyStore,
-      Provider: MyProvider
-    } = generateStoreHookAndProvider(store)
+    const { useStore: useMyStore, Provider: MyProvider } =
+      generateStoreHookAndProvider(store)
     const wrapper: React.FC = ({ children }) => (
       <MyProvider>{children}</MyProvider>
     )

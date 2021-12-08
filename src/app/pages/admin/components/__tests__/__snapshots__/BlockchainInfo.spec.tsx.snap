@@ -1,0 +1,144 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BlockchainInfo should match snapshot 1`] = `
+<div>
+  <div
+    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2"
+    data-testid="network.info-container"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+    >
+      <h5
+        class="MuiTypography-root MuiTypography-h5"
+        data-testid="blockchain-network-info-name"
+      >
+        Test MainNet
+         (
+        XXX
+        )
+      </h5>
+    </div>
+    <div
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+      data-testid="blockchain-info-owner-wallet-address"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body1"
+          style="font-weight: 500; width: 100%; color: rgb(68, 68, 68);"
+        >
+          Owner Wallet Address
+        </p>
+        <div
+          class="MuiBox-root MuiBox-root-1"
+        />
+        <p
+          class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft"
+          style="font-weight: 400; opacity: 1; width: 100%; word-break: break-word;"
+        >
+          32134413213
+        </p>
+      </div>
+    </div>
+    <div
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+      data-testid="blockchain-info-owner-wallet-balance"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body1"
+          style="font-weight: 500; width: 100%; color: rgb(68, 68, 68);"
+        >
+          Owner Wallet Balance
+        </p>
+        <div
+          class="MuiBox-root MuiBox-root-2"
+        />
+        <p
+          class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft"
+          style="font-weight: 400; opacity: 1; width: 100%; word-break: break-word;"
+        >
+          100.3451
+        </p>
+      </div>
+    </div>
+    <div
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+      data-testid="blockchain-info-reserve-wallet-address"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body1"
+          style="font-weight: 500; width: 100%; color: rgb(68, 68, 68);"
+        >
+          Reserve Wallet Address
+        </p>
+        <div
+          class="MuiBox-root MuiBox-root-3"
+        />
+        <p
+          class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft"
+          style="font-weight: 400; opacity: 1; width: 100%; word-break: break-word;"
+        >
+          99832671623
+        </p>
+      </div>
+    </div>
+    <div
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+      data-testid="blockchain-info-reserve-wallet-balance"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body1"
+          style="font-weight: 500; width: 100%; color: rgb(68, 68, 68);"
+        >
+          Reserve Wallet Balance
+        </p>
+        <div
+          class="MuiBox-root MuiBox-root-4"
+        />
+        <p
+          class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft"
+          style="font-weight: 400; opacity: 1; width: 100%; word-break: break-word;"
+        >
+          14.1233
+        </p>
+      </div>
+    </div>
+    <div
+      class="MuiGrid-root MuiGrid-item"
+      data-testid="blockchain-network-rpc-url"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body1"
+          style="font-weight: 500; width: 100%; color: rgb(68, 68, 68);"
+        >
+          RPC URL
+        </p>
+        <div
+          class="MuiBox-root MuiBox-root-5"
+        />
+        <p
+          class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft"
+          style="font-weight: 400; opacity: 1; width: 100%; word-break: break-word;"
+        >
+          https://rpc-url-2.com
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+`;

@@ -31,7 +31,6 @@ export const DeclarationsListFields = ({
       {data.map(item => {
         return (
           <Grid item xs={12} key={item.name}>
-            {/* @ts-ignore */}
             <TypedField
               customRenderer
               valueExtractor={booleanValueExtractor}

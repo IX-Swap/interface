@@ -3,18 +3,18 @@ import * as useAuth from 'hooks/auth/useAuth'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { user } from '__fixtures__/user'
-import { AccessReports } from 'app/pages/home/components/AccessReports'
 import { TopIssuers } from 'app/pages/home/components/TopIssuers'
 import { TopCorporates } from 'app/pages/home/components/TopCorporates'
 import { News } from 'app/pages/home/components/News/News'
 import { BannersCarousel } from 'app/pages/invest/components/BannersCarousel'
+import { Reports } from 'app/pages/home/components/AccessReports/Reports'
 
 jest.mock('app/pages/home/components/News/News', () => ({
   News: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/home/components/AccessReports', () => ({
-  AccessReports: jest.fn(() => null)
+jest.mock('app/pages/home/components/AccessReports/Reports', () => ({
+  Reports: jest.fn(() => null)
 }))
 
 jest.mock('app/pages/home/components/TopIssuers', () => ({
@@ -48,7 +48,7 @@ describe('Onboarding', () => {
   it('renders components correctly', () => {
     render(<Onboarding />)
 
-    expect(AccessReports).toHaveBeenCalled()
+    expect(Reports).toHaveBeenCalled()
     expect(TopIssuers).toHaveBeenCalled()
     expect(TopCorporates).toHaveBeenCalled()
     expect(BannersCarousel).toHaveBeenCalled()
