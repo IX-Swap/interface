@@ -13,6 +13,7 @@ import { FaucetTokenDropdown } from './FaucetTokenDropdown'
 import { useDistributeToken } from 'state/faucet/hooks'
 import { shortAddress } from 'utils'
 import { useAddPopup } from 'state/application/hooks'
+import { useTransactionAdder } from 'state/transactions/hooks'
 
 export interface IFaucetToken {
   name: string
@@ -25,26 +26,26 @@ export default function Faucet() {
   const [selectedToken, setSelectedToken] = useState<IFaucetToken>(testTokens[0])
   const distributeToken = useDistributeToken(selectedToken.address)
   const addPopup = useAddPopup()
+  const addTransaction = useTransactionAdder()
 
   const handleSubmitClicked = async () => {
     const { transaction, minutesToWait }: any = await distributeToken()
 
-    addPopup(
-      transaction
-        ? {
-            txn: {
-              ...transaction,
-              hash: transaction.transactionHash,
-              summary: `Sent 10 ${selectedToken.symbol} to ${shortAddress(transaction.to || '')}`,
-            },
-          }
-        : {
-            info: {
-              success: false,
-              summary: `You have to wait ${minutesToWait} ${minutesToWait === 1 ? 'minute' : 'minutes'}`,
-            },
-          }
-    )
+    if (transaction) {
+      addTransaction(
+        { ...transaction, hash: transaction.transactionHash },
+        {
+          summary: `Sent 10 ${selectedToken.symbol} to ${shortAddress(transaction.from || '')}`,
+        }
+      )
+    } else {
+      addPopup({
+        info: {
+          success: false,
+          summary: `You have to wait ${minutesToWait} ${minutesToWait === 1 ? 'minute' : 'minutes'}`,
+        },
+      })
+    }
   }
 
   return (
