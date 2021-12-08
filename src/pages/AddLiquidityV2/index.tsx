@@ -2,6 +2,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { TransactionResponse } from '@ethersproject/providers'
 import { Currency, CurrencyAmount, Percent, WETH9 } from '@ixswap1/sdk-core'
 import { t, Trans } from '@lingui/macro'
+import MitigationBadge from 'components/MitigationBadge'
 import UnsupportedCurrencyFooter from 'components/swap/UnsupportedCurrencyFooter'
 import { ConfirmationModalContent } from 'components/TransactionConfirmationModal/ConfirmationModalContent'
 import React, { useCallback, useContext, useState } from 'react'
@@ -38,6 +39,7 @@ import { calculateSlippageAmount } from '../../utils/calculateSlippageAmount'
 import { maxAmountSpend } from '../../utils/maxAmountSpend'
 import AppBody from '../AppBody'
 import { Dots } from '../Pool/styleds'
+import { MitigationToggle } from './MitigationToggle'
 import { ModalBottom } from './ModalBottom'
 import { ModalHeader } from './ModalHeader'
 import { PricesAndPoolShare } from './PricesAndPoolShare'
@@ -45,7 +47,6 @@ import { SecToSecWarning } from './SecToSecWarning'
 import { ToggleableBody } from './styleds'
 import { Tip } from './Tip'
 import { useHandleCurrencySelect } from './useHandleCurrencySelect'
-
 const DEFAULT_ADD_V2_SLIPPAGE_TOLERANCE = new Percent(50, 10_000)
 
 export default function AddLiquidity({
@@ -93,7 +94,10 @@ export default function AddLiquidity({
   // modal and loading
   const [showConfirm, setShowConfirm] = useState<boolean>(false)
   const [attemptingTxn, setAttemptingTxn] = useState<boolean>(false) // clicked confirm
-
+  const [enableMitigation, setEnableMitigation] = useState<boolean>(false)
+  const toggleMitigation = useCallback(() => {
+    setEnableMitigation(!enableMitigation)
+  }, [enableMitigation, setEnableMitigation])
   // txn values
   const deadline = useTransactionDeadline() // custom from users settings
   const allowedSlippage = useUserSlippageToleranceWithDefault(DEFAULT_ADD_V2_SLIPPAGE_TOLERANCE) // custom from users
@@ -329,6 +333,7 @@ export default function AddLiquidity({
                     price={price}
                   />
                 )}
+                {noLiquidity && <MitigationToggle active={enableMitigation} toggle={toggleMitigation} />}
                 {areBothSecTokens && <SecToSecWarning />}
                 <Box marginTop={'23px'}>
                   {addIsUnsupported ? (
