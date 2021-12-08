@@ -27,7 +27,7 @@ export const AssetsUnderManagement = () => {
           height={'100%'}
           width={'100%'}
           options={{
-            pieHole: 0.35,
+            pieHole: 0.45,
             colors: ['#3266CC', '#990099', '#109619', '#FF9703', '#DC3812'],
             backgroundColor: 'transparent',
             legend: {
