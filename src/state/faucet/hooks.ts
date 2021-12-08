@@ -11,7 +11,7 @@ export const useDistributeToken = (tokenAddress: string) => {
   return useCallback(async () => {
     if (faucetContract) {
       const { _hex } = await faucetContract.timeToFaucet()
-      const secondsToWait = parseInt(_hex, 16)
+      const minutesToWait = Math.ceil(parseInt(_hex, 16) / 60)
       const result = await faucetContract.faucet({
         gasLimit: 900000,
       })
@@ -21,9 +21,9 @@ export const useDistributeToken = (tokenAddress: string) => {
         { ...finished, hash: finished.transactionHash },
         {
           summary:
-            secondsToWait === 0
+            minutesToWait === 0
               ? `Sent to ${shortAddress(finished.to || '')}`
-              : `You have to wait ${Math.ceil(secondsToWait / 60)} minute`,
+              : `You have to wait ${minutesToWait} ${minutesToWait === 1 ? 'minute' : 'minutes'}`,
         }
       )
     }
