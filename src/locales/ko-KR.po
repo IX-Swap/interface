@@ -1,34 +1,25 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2021-06-01 00:37+0000\n"
-"Mime-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Generator: @lingui/cli\n"
-"Language: ko\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"X-Crowdin-Project: uniswap-interface\n"
-"X-Crowdin-Project-ID: 458284\n"
-"X-Crowdin-Language: ko\n"
-"X-Crowdin-File: en-US.po\n"
-"X-Crowdin-File-ID: 4\n"
-"Project-Id-Version: uniswap-interface\n"
-"Language-Team: Korean\n"
-"PO-Revision-Date: 2021-06-01 01:34\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
 "Last-Translator: \n"
+"Language: \n"
+"Language-Team: \n"
+"Content-Type: \n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
 
 #: src/components/earn/PoolCard.tsx
 msgid "${0}"
 msgstr "${0}"
 
-#: src/components/earn/PoolCard.tsx
-msgid "${0} ETH"
-msgstr "${0} ETH"
 
-#: 
-#~ msgid "(clear all)"
-#~ msgstr "(모두 지우기)"
+#: src/components/earn/PoolCard.tsx
+msgid "${0} {nativeCurrency}"
+msgstr ""
+
 
 #: src/components/InputStepCounter/InputStepCounter.tsx
 msgid "+{feeAmountFormatted}%"
@@ -51,9 +42,47 @@ msgstr "0.05 % 수수료"
 msgid "0.3% fee"
 msgstr "0.3 % 수수료"
 
+#: src/state/stake/contstants.ts
+#: src/state/stake/contstants.ts
+#: src/state/stake/contstants.ts
+msgid "1 mln"
+msgstr ""
+
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+msgid "1 month — 18% APY"
+msgstr ""
+
 #: src/components/FeeSelector/index.tsx
 msgid "1% fee"
 msgstr "1 % 수수료"
+
+#: src/state/stake/contstants.ts
+#: src/state/stake/contstants.ts
+#: src/state/stake/contstants.ts
+#: src/state/stake/contstants.ts
+#: src/state/stake/contstants.ts
+msgid "2 mln"
+msgstr ""
+
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+msgid "2 month — 44% APY"
+msgstr ""
+
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+msgid "3 month — 88% APY"
+msgstr ""
+
+#: src/state/stake/contstants.ts
+#: src/state/stake/contstants.ts
+#: src/state/stake/contstants.ts
+#: src/state/stake/contstants.ts
+msgid "500k"
+msgstr ""
 
 #: src/pages/PoolFinder/index.tsx
 msgid "<0>Loading</0>"
@@ -98,6 +127,7 @@ msgid "Active"
 msgstr "유효한"
 
 #: src/components/PositionCard/index.tsx
+#: src/pages/CreateNFT/LevelsPopup.tsx
 msgid "Add"
 msgstr "더하다"
 
@@ -105,6 +135,10 @@ msgstr "더하다"
 #: src/pages/Pool/AddLiquidityButton.tsx
 msgid "Add Liquidity"
 msgstr "유동성 추가"
+
+#: src/pages/CreateNFT/PropertiesPopup.tsx
+msgid "Add Properties"
+msgstr ""
 
 #: src/pages/PoolFinder/index.tsx
 msgid "Add liquidity"
@@ -119,9 +153,6 @@ msgstr ""
 msgid "Add {0} to Metamask"
 msgstr ""
 
-#: 
-#~ msgid "Add {0} to Metamask <0/>"
-#~ msgstr "추가 {0} Metamask에 <0 />"
 
 #: src/pages/AddLiquidityV2/index.tsx
 #: src/pages/AddLiquidityV2/index.tsx
@@ -136,7 +167,7 @@ msgstr "추가됨 {0}"
 msgid "All"
 msgstr ""
 
-#: src/pages/Swap/index.tsx
+#: src/pages/Swap/ApproveButtons.tsx
 msgid "Allow IXSwap to use your {0}"
 msgstr "IXSwap이 {0}를 사용하도록 허용"
 
@@ -148,24 +179,30 @@ msgstr "높은 가격 영향 거래를 허용하고 확인 화면을 건너 뜁�
 msgid "Always make sure the URL is<0>app.ixswap.io</0> - bookmark it to be safe."
 msgstr "항상 URL이 <0> app.ixswap.io </ 0>인지 확인하고 안전을 위해 북마크하십시오."
 
+#: src/components/AdminTransactionsTable/index.tsx
 #: src/components/Vault/HistoryTable.tsx
 #: src/pages/Farming/Staking/MyStakingsTable.tsx
 msgid "Amount"
+msgstr ""
+
+#: src/pages/Swap/handleSwap.ts
+msgid "Amount changed. Please repeat authorization"
 msgstr ""
 
 #: src/state/stake/hooks.ts
 msgid "Amount exceeds balance"
 msgstr ""
 
+
+
 #: src/pages/Farming/Staking/StakeModal.tsx
-msgid "Amount of IXS to stake"
+msgid "Amount of {0} to stake"
 msgstr ""
 
 #: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
-msgid "Amount of IXS to unstake"
+msgid "Amount of {0} to unstake"
 msgstr ""
 
-#: src/components/Vault/DepositSendInfo.tsx
 #: src/components/Vault/TransactionDetails.tsx
 msgid "Amount:"
 msgstr ""
@@ -179,19 +216,12 @@ msgstr ""
 msgid "An error occurred when trying to execute this swap. You may need to increase your slippage tolerance. If that does not work, there may be an incompatibility with the token you are trading."
 msgstr ""
 
-#: 
-#~ msgid "An error occurred when trying to execute this swap. You may need to increase your slippage tolerance. If that does not work, there may be an incompatibility with the token you are trading. Note fee on transfer and rebase tokens are incompatible with Uniswap V3."
-#~ msgstr "이 스왑을 실행하는 중에 오류가 발생했습니다. 미끄러짐 허용치를 높여야 할 수도 있습니다. 그래도 작동하지 않으면 거래중인 토큰과 호환되지 않을 수 있습니다. 전송 및 리베이스 토큰에 대한 참고 수수료는 Uniswap V3와 호환되지 않습니다."
-
 #: src/components/AdminKycTable/SecondStepStatus.tsx
 #: src/components/AdminKycTable/SecondStepStatus.tsx
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Approve"
 msgstr "승인"
 
-#: src/pages/Farming/Staking/StakeModal.tsx
-msgid "Approve IXS"
-msgstr ""
 
 #: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
 #: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
@@ -200,15 +230,17 @@ msgstr ""
 
 #: src/pages/AddLiquidityV2/index.tsx
 #: src/pages/AddLiquidityV2/index.tsx
+#: src/pages/Farming/Staking/StakeModal.tsx
 msgid "Approve {0}"
 msgstr "{0}승인"
 
-#: src/state/stake/hooks.ts
-msgid "Approve {amount} IXS"
-msgstr ""
 
 #: src/state/stake/unstake/hooks.ts
 msgid "Approve {amount} IXSGov"
+msgstr ""
+
+#: src/state/stake/hooks.ts
+msgid "Approve {amount} {0}"
 msgstr ""
 
 #: src/components/AdminKycTable/FirstStepStatus.tsx
@@ -217,17 +249,15 @@ msgstr ""
 msgid "Approved"
 msgstr "승인 됨"
 
+
 #: src/pages/Farming/Staking/StakeModal.tsx
-msgid "Approved IXS"
+msgid "Approved {0}"
 msgstr ""
 
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Approving"
 msgstr "승인"
 
-#: src/pages/Farming/Staking/StakeModal.tsx
-msgid "Approving IXS"
-msgstr ""
 
 #: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
 #: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
@@ -236,6 +266,7 @@ msgstr ""
 
 #: src/pages/AddLiquidityV2/index.tsx
 #: src/pages/AddLiquidityV2/index.tsx
+#: src/pages/Farming/Staking/StakeModal.tsx
 msgid "Approving {0}"
 msgstr "{0}승인"
 
@@ -243,7 +274,7 @@ msgstr "{0}승인"
 msgid "Are you sure?"
 msgstr "확실합니까?"
 
-#: src/components/Vault/DepositRequestForm.tsx
+#: src/components/Vault/DepositAboutWrapping.tsx
 msgid ""
 "At the moment, security tokens are kept by the custodian and can only be regulated by him. This is done to\n"
 "prevent theft and fraudulent transactions. Your security tokens (further as a SEC) cannot be controlled or\n"
@@ -252,9 +283,11 @@ msgid ""
 "as a wSEC)."
 msgstr ""
 
-#: 
-#~ msgid "Available to deposit: {0}"
-#~ msgstr "입금 가능 : {0}"
+#: src/pages/Swap/SwapButtons.tsx
+#: src/state/swap/hooks.ts
+msgid "Authorization missing"
+msgstr ""
+
 
 #: src/components/earn/StakingInputPercentage.tsx
 #: src/pages/Farming/Staking/StakeModal.tsx
@@ -269,8 +302,9 @@ msgstr "뒤"
 msgid "Balance of IXGov"
 msgstr ""
 
+
 #: src/components/Header/IXSBalanceModal.tsx
-msgid "Balance of IXS"
+msgid "Balance of {0}"
 msgstr ""
 
 #: src/components/CurrencyInputPanel/index.tsx
@@ -293,49 +327,55 @@ msgstr "대부분의 쌍에 가장 적합합니다."
 msgid "Best for stable pairs."
 msgstr "안정적인 쌍에 가장 적합합니다."
 
+#: src/pages/CreateNFT/CreateForm.tsx
+msgid "Blockchain"
+msgstr ""
+
 #: src/components/Blocklist/index.tsx
 msgid "Blocked address"
 msgstr "차단 된 주소"
 
+#: src/pages/Farming/Staking/NoIXSTokens.tsx
+msgid "Bridge IXS to Polygon"
+msgstr ""
+
 #: src/components/Vault/ChooseBrokerDealerPopup.tsx
 msgid "Broker dealer and Custodian"
+msgstr ""
+
+#: src/pages/AdminKyc/index.tsx
+msgid "Broker-dealer Transactions"
 msgstr ""
 
 #: src/components/SearchModal/ImportList.tsx
 msgid "By adding this list you are implicitly trusting that the data is correct. Anyone can create a list, including creating fake versions of existing lists and lists that claim to represent projects that do not have one."
 msgstr "이 목록을 추가하면 데이터가 정확하다는 것을 암시 적으로 신뢰하게됩니다. 기존 목록의 가짜 버전 및 목록이없는 프로젝트를 대표한다고 주장하는 목록을 만드는 등 누구나 목록을 만들 수 있습니다."
 
+
 #: src/components/WalletModal/index.tsx
-msgid "By connecting a wallet, you agree to IXSwap’ <0>Terms and Conditions</0> and acknowledge that you have read and understand the <1>IXSwap Privacy Policy</1>."
-msgstr "지갑을 연결하면 IXSwap의 <0> 이용 약관 </ 0>에 동의하고 <1> IXSwap 개인 정보 보호 정책 </ 1>을 읽고 이해했음을 인정합니다."
-
-#: 
-#: 
-#~ msgid "Cancel"
-#~ msgstr ""
-
-#: src/components/Vault/TransactionDetails.tsx
-msgid "Cancel deposit"
+msgid "By connecting a wallet, you agree to IXSwap’s <0>Terms and Conditions</0> and acknowledge that you have read and understood the <1>IXSwap Privacy Policy</1>."
 msgstr ""
+
+#: 
+
 
 #: src/components/Vault/enum.ts
 msgid "Cancelled"
 msgstr ""
 
-#: 
-#~ msgid "Change"
-#~ msgstr "변화"
 
-#: 
-#~ msgid "Check"
-#~ msgstr ""
+#: src/pages/CreateNFT/PropertiesPopup.tsx
+msgid "Character"
+msgstr ""
+
 
 #: src/pages/Farming/Vesting/VestingSearch.tsx
 msgid "Check any address"
 msgstr ""
 
+
 #: src/components/Vault/NoVault.tsx
-msgid "Checking your KYC on primary issuer"
+msgid "Checking your KYC on {0}"
 msgstr ""
 
 #: src/components/CurrencyInputPanel/index.tsx
@@ -353,9 +393,6 @@ msgstr ""
 msgid "Choose token to find your liquidity"
 msgstr ""
 
-#: 
-#~ msgid "Choose token to find your liquidity."
-#~ msgstr "유동성을 찾으려면 토큰을 선택하십시오."
 
 #: src/pages/Farming/Staking/UnstakedTable.tsx
 #: src/pages/Farming/Vesting/VestingValid.tsx
@@ -367,9 +404,6 @@ msgid "Claim IXS"
 msgstr "IXS 청구"
 
 #: 
-#: 
-#~ msgid "Claim accumulated IXS rewards"
-#~ msgstr "누적 된 IXS 보상 청구"
 
 #: src/state/stake/hooks.ts
 msgid "Claim rewards {formattedAmount}"
@@ -388,28 +422,24 @@ msgid "Claimed"
 msgstr ""
 
 #: 
-#: 
-#~ msgid "Claimed IXS!"
-#~ msgstr "IXS 획득!"
 
 #: src/pages/Farming/Staking/UnstakedTable.tsx
 msgid "Claimed rewards"
 msgstr ""
 
+
 #: src/state/vesting/hooks.ts
-msgid "Claimed {0} IXS"
+msgid "Claimed {0} {1}"
 msgstr ""
 
 #: 
-#: 
-#~ msgid "Claiming {0} IXS"
-#~ msgstr "{0} IXS 획득"
 
 #: src/components/AccountDetails/index.tsx
 #: src/components/SearchModal/ManageTokens.tsx
 msgid "Clear all"
 msgstr "모두 지우기"
 
+#: src/components/GeneralModal/GeneralModal.tsx
 #: src/components/TransactionConfirmationModal/index.tsx
 #: src/components/TransactionConfirmationModal/index.tsx
 #: src/components/Vault/DepositError.tsx
@@ -422,9 +452,6 @@ msgstr "닫기"
 msgid "Coming soon"
 msgstr ""
 
-#: 
-#~ msgid "Common bases"
-#~ msgstr "공통 기지"
 
 #: src/components/Vault/enum.ts
 #: src/components/Vault/enum.ts
@@ -444,7 +471,7 @@ msgstr "공급 확인"
 msgid "Confirm Swap"
 msgstr "스왑 확인"
 
-#: src/pages/Swap/index.tsx
+#: src/pages/Swap/SwapButtons.tsx
 msgid "Confirm swap"
 msgstr ""
 
@@ -460,7 +487,7 @@ msgstr "지갑에서이 거래를 확인하세요"
 #: src/pages/Farming/Vesting/ConnectWalletVesting.tsx
 #: src/pages/Pool/ConnectWallet.tsx
 #: src/pages/RemoveLiquidity/index.tsx
-#: src/pages/Swap/index.tsx
+#: src/pages/Swap/SwapButtons.tsx
 #: src/state/burn/hooks.ts
 #: src/state/deposit/hooks.ts
 #: src/state/mint/hooks.ts
@@ -470,9 +497,6 @@ msgstr "지갑에서이 거래를 확인하세요"
 msgid "Connect Wallet"
 msgstr "지갑 연결"
 
-#: 
-#~ msgid "Connect a wallet"
-#~ msgstr "지갑 연결"
 
 #: src/pages/Pool/v2.tsx
 msgid "Connect a wallet to view your Liquidity."
@@ -494,9 +518,6 @@ msgstr "지갑에 연결하여 풀 찾기"
 msgid "Connect to your Web3 wallet to view your vesting progress"
 msgstr ""
 
-#: 
-#~ msgid "Connect wallet"
-#~ msgstr "지갑 연결"
 
 #: src/components/AccountDetails/index.tsx
 msgid "Connected with {name}"
@@ -507,9 +528,13 @@ msgid "Contract:"
 msgstr ""
 
 #: src/components/AccountDetails/Copy.tsx
+#: src/components/AdminKycTable/index.tsx
+#: src/components/AdminTransactionsTable/index.tsx
+#: src/components/Vault/DepositSendInfo.tsx
 #: src/components/Vault/DepositSendInfo.tsx
 #: src/components/Vault/TransactionDetails.tsx
 #: src/components/Vault/WithdrawPending.tsx
+#: src/pages/Farming/Staking/NoIXSTokens.tsx
 msgid "Copied"
 msgstr "복사 됨"
 
@@ -525,9 +550,20 @@ msgstr "주소 복사"
 msgid "Copy this address and send tokens to this wallet."
 msgstr ""
 
-#: 
-#~ msgid "Could not submit withdraw request"
-#~ msgstr ""
+#: src/state/user/hooks.tsx
+msgid "Could not get accredited because of login. Please try again"
+msgstr ""
+
+
+#: src/components/Vault/NoVault.tsx
+msgid "Could not verify KYC. Please check your account and/or KYC status on {0}. Retry passing accreditation once your KYC is approved by {1}. [retry]"
+msgstr ""
+
+#: src/components/Header/HeaderLinks.tsx
+#: src/components/Mobile-Menu/Menu.tsx
+#: src/pages/CreateNFT/index.tsx
+msgid "Create NFT"
+msgstr ""
 
 #: src/pages/AddLiquidityV2/ModalBottom.tsx
 msgid "Create Pool & Supply"
@@ -553,10 +589,8 @@ msgstr ""
 msgid "Current Rate"
 msgstr "현재 비율"
 
-#: 
-#~ msgid "Custodian"
-#~ msgstr "후견인"
 
+#: src/components/AdminTransactionsTable/index.tsx
 #: src/components/Vault/HistoryTable.tsx
 msgid "Date"
 msgstr ""
@@ -567,6 +601,11 @@ msgstr ""
 
 #: src/components/Vault/TransactionDetails.tsx
 msgid "Date:"
+msgstr ""
+
+#: src/components/Header/HeaderLinks.tsx
+#: src/components/Mobile-Menu/Menu.tsx
+msgid "DeFi Terminal"
 msgstr ""
 
 #: src/components/TransactionSettings/index.tsx
@@ -583,25 +622,18 @@ msgstr ""
 msgid "Deposit"
 msgstr "예금"
 
-#: 
-#~ msgid "Deposit liquidity"
-#~ msgstr "예금 유동성"
+
 
 #: src/components/Vault/DepositPopup.tsx
-msgid "Deposit {0} from {1}"
+msgid "Deposit {0} {1}"
 msgstr ""
 
-#: 
-#~ msgid "Deposited liquidity:"
-#~ msgstr "예금 유동성 :"
 
-#: 
-#~ msgid "Deposited {0} IXS-V2"
-#~ msgstr "{0} IXS-V2 입금"
 
-#: 
-#~ msgid "Depositing Liquidity"
-#~ msgstr "유동성 입금"
+
+#: src/pages/CreateNFT/CreateForm.tsx
+msgid "Description"
+msgstr ""
 
 #: src/pages/Farming/Vesting/VestingValid.tsx
 msgid "Details"
@@ -615,9 +647,6 @@ msgstr "멀티 홉 비활성화"
 msgid "Disconnect"
 msgstr "연결 해제"
 
-#: 
-#~ msgid "Dismiss"
-#~ msgstr "버리다"
 
 #: src/pages/Farming/Staking/StakeModal.tsx
 #: src/pages/Farming/Staking/StakeModal.tsx
@@ -637,12 +666,12 @@ msgid "Download"
 msgstr ""
 
 #: src/pages/AddLiquidityV2/SecToSecWarning.tsx
-msgid "Due to increased risk and no reliable mechanism to mitigate IL risks we temporarily disabled the SEC to SEC pools"
+msgid ""
+"Due to increased risk and no reliable mechanism to mitigate IL risks we temporarily disabled the SEC to\n"
+"SEC pools"
 msgstr ""
 
-#: src/components/AdminLogin/index.tsx
-msgid "Email"
-msgstr ""
+
 
 #: src/pages/Farming/Vesting/VestingValid.tsx
 msgid "End Date"
@@ -660,9 +689,6 @@ msgstr "수신자를 입력하세요."
 msgid "Enter a sender"
 msgstr ""
 
-#: src/components/AdminLogin/index.tsx
-msgid "Enter a valid email"
-msgstr ""
 
 #: src/components/TransactionSettings/index.tsx
 msgid "Enter a valid slippage percentage"
@@ -677,13 +703,7 @@ msgstr "유효한 미끄러짐 비율을 입력하세요."
 msgid "Enter an amount"
 msgstr "금액을 입력하세요."
 
-#: src/components/AdminLogin/index.tsx
-msgid "Enter the email"
-msgstr ""
 
-#: src/components/AdminLogin/index.tsx
-msgid "Enter the password"
-msgstr ""
 
 #: src/components/SearchModal/ManageLists.tsx
 msgid "Enter valid list location"
@@ -736,11 +756,15 @@ msgstr ""
 msgid "Estimated rewards"
 msgstr ""
 
+
+
+
+
 #: src/pages/Farming/Staking/MyStakingsTable.tsx
 msgid ""
 "Estimated rewards are based on assumption that your staked amount will be fully kept for the whole period of staking. In this case maximum APY will be applied \n"
 "{0}\n"
-"If you partially or fully unstake your IXS before the end date - 5% APY will be applied to unstaked amount."
+"If you partially or fully unstake your {1} before the end date - 5% APY will be applied to unstaked amount."
 msgstr ""
 
 #: src/hooks/useSwitchChain.ts
@@ -760,6 +784,14 @@ msgstr "전문가 모드"
 msgid "Expert mode turns off the confirm transaction prompt and allows high slippage trades that often result in bad rates and lost funds."
 msgstr "전문가 모드는 거래 확인 프롬프트를 끄고 종종 나쁜 금리와 자금 손실을 초래하는 높은 미끄러짐 거래를 허용합니다."
 
+#: src/pages/CreateNFT/NSFWRadio.tsx
+msgid "Explicit & Sensitive Content"
+msgstr ""
+
+#: src/pages/CreateNFT/CreateForm.tsx
+msgid "External Link"
+msgstr ""
+
 #: src/components/AdminKycTable/FirstStepStatus.tsx
 #: src/components/AdminKycTable/SecondStepStatus.tsx
 #: src/components/Vault/AccreditationStatus.tsx
@@ -767,12 +799,22 @@ msgstr "전문가 모드는 거래 확인 프롬프트를 끄고 종종 나쁜 �
 msgid "Failed"
 msgstr ""
 
+#: src/state/user/hooks.tsx
+msgid "Failed to pass accreditation {0}"
+msgstr ""
+
+#: src/components/Header/HeaderLinks.tsx
+#: src/components/Mobile-Menu/Menu.tsx
+msgid "Faucet"
+msgstr ""
+
 #: src/components/SearchModal/CommonBases.tsx
 msgid "Featured Tokens"
 msgstr ""
 
+
 #: src/pages/Farming/Vesting/ZeroBalanceVesting.tsx
-msgid "Found address<0/>{0}<1/>doesn’t have IXS vesting"
+msgid "Found address<0/>{0}<1/>doesn’t have {1} vesting"
 msgstr ""
 
 #: src/components/swap/CurrencyInput.tsx
@@ -788,38 +830,36 @@ msgstr "(최대)"
 msgid "From my {0} wallet"
 msgstr ""
 
+
 #: src/pages/Farming/Staking/MyStakingsTable.tsx
-msgid "Full amount of APY is applied only to amount of IXS staked till the end of staking period."
+msgid "Full amount of APY is applied only to amount of {0} staked till the end of staking period."
 msgstr ""
 
-#: src/pages/Swap/index.tsx
-#: src/pages/Swap/index.tsx
-msgid "Get authorization"
+#: src/pages/Farming/Staking/GasWarning.tsx
+msgid "Gas fees may be very high for staking. Note that in order to submit staking, two transactions must be signed. The second transaction might be significantly more expensive than the first one. Please<0>check Gas fees</0>."
 msgstr ""
+
+#: src/pages/Faucet/index.tsx
+msgid "Get Test Tokens"
+msgstr ""
+
+#: 
 
 #: src/pages/Farming/Staking/NoIXSTokens.tsx
 msgid "Go to Telegram"
 msgstr ""
 
-#: 
-#~ msgid "Having vesting on {0}? Switch"
-#~ msgstr ""
-
-#: src/pages/Farming/Vesting/PrivateBuyer.tsx
-msgid "Hi! Сurrently you have <0>{0}</0> of unvested IXS that will be vested over the next <1>{1} months</1>. Your next IXS payment will be available on <2>8 October</2> and vesting balances will be updated here."
+#: src/pages/Farming/Staking/NoIXSTokens.tsx
+msgid "Got IXS on Ethereum? You can bridge them to Polygon. Use IXS contract address to find it on AlianceBridge {0}"
 msgstr ""
+
+
 
 #: src/pages/SecTokenDetails/index.tsx
 msgid "Hide"
 msgstr ""
 
-#: 
-#~ msgid "High Price Impact"
-#~ msgstr "높은 가격 영향"
 
-#: src/pages/Swap/index.tsx
-msgid "High price impact"
-msgstr ""
 
 #: src/components/Vault/HistoryBlock.tsx
 msgid "History"
@@ -841,26 +881,15 @@ msgstr ""
 msgid "I want to withdraw:"
 msgstr ""
 
-#: src/components/Header/HeaderLinks.tsx
-msgid "IXS Farming"
-msgstr ""
 
 #: src/components/Header/HeaderLinks.tsx
-#: src/components/Mobile-Menu/Menu.tsx
-msgid "IXS Liquidity Mining"
+msgid "IXS Farms"
 msgstr ""
 
 #: 
-#~ msgid "IXS Rewards"
-#~ msgstr "IXS 보상"
 
-#: 
-#~ msgid "IXS Rewards (on quit)"
-#~ msgstr "IXS 보상 (종료시)"
 
-#: src/pages/Farming/Vesting/ZeroBalanceVesting.tsx
-msgid "IXS in Telegram"
-msgstr ""
+
 
 #: src/pages/RemoveLiquidity/ModalBottom.tsx
 msgid "IXS {0}/{1} Burned"
@@ -871,18 +900,26 @@ msgstr "IXS {0}/{1} 버닝"
 msgid "IXSGov to return"
 msgstr ""
 
+#: 
+
+
+
+
+
+
 #: src/pages/Farming/Staking/StakeModal.tsx
 #: src/pages/Farming/Staking/StakeModal.tsx
 msgid ""
-"IXSgov is a tokenized asset representing your staked IXS on a 1:1 basis. IXSwap distributes the IXSgov to your wallet.\n"
-"{0}\n"
-"You should swap your IXSgov back to IXS during the unstaking process. \n"
+"IXSgov is a tokenized asset representing your staked {0} on a 1:1 basis. IXSwap distributes the IXSgov to your wallet.\n"
 "{1}\n"
-"*Do note that IXS received will be equal to your IXSgov holdings at the time of swap."
+"You should swap your IXSgov back to {2} during the unstaking process. \n"
+"{3}\n"
+"*Do note that {4} received will be equal to your IXSgov holdings at the time of swap."
 msgstr ""
 
+
 #: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
-msgid "If you partially or fully unstake your IXS before the end date - 5% APY will be applied to unstaked amount."
+msgid "If you partially or fully unstake your {0} before the end date - 5% APY will be applied to unstaked amount."
 msgstr ""
 
 #: src/components/SearchModal/ImportList.tsx
@@ -962,11 +999,11 @@ msgstr ""
 msgid "Insufficient balance"
 msgstr ""
 
-#: src/pages/Swap/index.tsx
+#: src/pages/Swap/SwapButtons.tsx
 msgid "Insufficient liquidity for this trade"
 msgstr "이 거래를위한 불충분 한 유동성"
 
-#: src/pages/Swap/index.tsx
+#: src/pages/Swap/SwapButtons.tsx
 msgid "Insufficient liquidity for this trade. Try enabling multi-hop trades."
 msgstr "이 거래에 대한 유동성이 충분하지 않습니다. 멀티 홉 거래를 활성화하십시오."
 
@@ -993,8 +1030,26 @@ msgstr "잘못된 수신자"
 msgid "Issuer:"
 msgstr ""
 
+#: src/pages/CreateNFT/CreateForm.tsx
+msgid "Item name"
+msgstr ""
+
+#: src/pages/AdminKyc/index.tsx
+msgid "KYC"
+msgstr ""
+
+
 #: src/components/Vault/NoVault.tsx
-msgid "KYC approved on primary issuer. Waiting for KYC approval on Custodian..."
+msgid "KYC approved on {0}. Waiting for KYC approval on Custodian..."
+msgstr ""
+
+#: src/pages/CreateNFT/types.ts
+msgid "Levels"
+msgstr ""
+
+#: src/components/Header/HeaderLinks.tsx
+#: src/components/Mobile-Menu/Menu.tsx
+msgid "Liquidity Mining - Uniswap"
 msgstr ""
 
 #: src/pages/Pool/LiquidityTitle.tsx
@@ -1025,11 +1080,15 @@ msgstr "로딩 중"
 msgid "Lock Period"
 msgstr ""
 
+
+
+
+
 #: src/pages/Farming/Staking/StakingTierCard.tsx
 msgid ""
-"Lock period means the time you won’t be able to unstake your IXS fully or partially. Please carefully consider the risks involved.\n"
-"{0}\n"
-"You will be able to redeem your staked IXS fully or partially after lock period."
+"Lock period means the time you won’t be able to unstake your {0} fully or partially. Please carefully consider the risks involved.\n"
+"{1}\n"
+"You will be able to redeem your staked {2} fully or partially after lock period."
 msgstr ""
 
 #: src/pages/Farming/Staking/MyStakingsTable.tsx
@@ -1049,9 +1108,6 @@ msgstr "MAX"
 msgid "Make sure the URL is<0>app.ixswap.io</0>"
 msgstr "URL이 <0> app.ixswap.io </ 0>인지 확인하세요."
 
-#: 
-#~ msgid "Manage"
-#~ msgstr "꾸리다"
 
 #: src/components/SearchModal/CurrencySearch.tsx
 msgid "Manage Token List"
@@ -1061,9 +1117,6 @@ msgstr "토큰 목록 관리"
 msgid "Manage this Pool"
 msgstr ""
 
-#: 
-#~ msgid "Manage this pool."
-#~ msgstr "이 풀을 관리합니다."
 
 #: src/components/NavigationTabs/index.tsx
 msgid "Manage tokens"
@@ -1083,13 +1136,19 @@ msgstr "최대"
 msgid "Max Price"
 msgstr "최고 가격"
 
+
+
+
+
+
+
 #: src/pages/Farming/Staking/StakingTierCard.tsx
 msgid ""
 "Maximum Capacity:\n"
 "{0}\n"
-"Staked IXS in Pool: \n"
-"{1} IXS\n"
-"{2}"
+"Staked {1} in Pool: \n"
+"{2} {3}\n"
+"{4}"
 msgstr ""
 
 #: src/components/AdminKycTable/RejectModal.tsx
@@ -1110,14 +1169,16 @@ msgstr "최소 가격"
 msgid "Minimum received"
 msgstr "최소 수령"
 
-#: 
-#~ msgid "Minutes"
-#~ msgstr "의사록"
 
 #: src/pages/Pool/NoPairs.tsx
 #: src/pages/Pool/v2.tsx
 msgid "My Liquidity"
 msgstr "내 유동성"
+
+#: src/components/Header/HeaderLinks.tsx
+#: src/components/Mobile-Menu/Menu.tsx
+msgid "My NFTs"
+msgstr ""
 
 #: src/pages/Custodian/index.tsx
 msgid "My Securities"
@@ -1135,9 +1196,18 @@ msgstr "내 수영장 공유"
 msgid "My {symbolText} Vault"
 msgstr ""
 
-#: src/components/Vault/DepositSendInfo.tsx
-msgid "Need to send"
+#: src/components/Header/HeaderLinks.tsx
+msgid "NFT"
 msgstr ""
+
+#: src/components/AdminTransactionsTable/index.tsx
+#: src/pages/CreateNFT/CreateForm.tsx
+#: src/pages/CreateNFT/LevelsPopup.tsx
+#: src/pages/CreateNFT/PropertiesPopup.tsx
+#: src/pages/CreateNFT/PropertiesPopup.tsx
+msgid "Name"
+msgstr ""
+
 
 #: src/components/SearchModal/CurrencyList.tsx
 msgid "Needs accreditation"
@@ -1152,6 +1222,7 @@ msgid "Next rewards on"
 msgstr ""
 
 #: src/components/AdminKycTable/index.tsx
+#: src/components/AdminTransactionsTable/index.tsx
 msgid "No data"
 msgstr ""
 
@@ -1173,13 +1244,19 @@ msgstr "검색 결과가 없습니다."
 msgid "No securities found."
 msgstr ""
 
-#: 
-#~ msgid "OFF"
-#~ msgstr "떨어져서"
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Not enough {0}"
+msgstr ""
 
-#: 
-#~ msgid "ON"
-#~ msgstr "의 위에"
+#: src/pages/CreateNFT/types.ts
+msgid "Numerical traits that just show as numbers"
+msgstr ""
+
+#: src/pages/CreateNFT/types.ts
+msgid "Numerical traits that show as a progress bar"
+msgstr ""
+
+
 
 #: src/components/Settings/ExpertModeModal.tsx
 msgid "ONLY USE THIS MODE IF YOU KNOW WHAT YOU ARE DOING."
@@ -1193,9 +1270,6 @@ msgstr "이런! 알 수없는 오류가 발생했습니다. 페이지를 새로 
 msgid "Other"
 msgstr ""
 
-#: 
-#~ msgid "Other Sec tokens"
-#~ msgstr ""
 
 #: src/components/Badge/RangeBadge.tsx
 msgid "Out of range"
@@ -1240,9 +1314,6 @@ msgstr ""
 msgid "Passing accreditation"
 msgstr ""
 
-#: src/components/AdminLogin/index.tsx
-msgid "Password"
-msgstr ""
 
 #: src/components/AdminKycTable/FirstStepStatus.tsx
 #: src/components/AdminKycTable/SecondStepStatus.tsx
@@ -1277,9 +1348,6 @@ msgstr ""
 msgid "Please connect to one of the following networks: Main Ethereum, Kovan, Polygon Mainnet, Polygon Mumbai."
 msgstr ""
 
-#: 
-#~ msgid "Please connect to the Kovan or Main Ethereum network."
-#~ msgstr ""
 
 #: src/components/WalletModal/ErrorSection.tsx
 msgid "Please connect to the appropriate Ethereum network."
@@ -1289,9 +1357,6 @@ msgstr "적절한 이더 리움 네트워크에 연결하십시오."
 msgid "Please provide sender’s address in order to approve this transaction. Other adresses will be rejected."
 msgstr ""
 
-#: src/components/Vault/ChooseBrokerDealerPopup.tsx
-msgid "Please try again."
-msgstr ""
 
 #: src/components/Settings/ExpertModeModal.tsx
 msgid "Please type the word \"{confirmWord}\" to enable expert mode."
@@ -1315,9 +1380,10 @@ msgstr "풀을 찾았습니다!"
 msgid "Pool limitation:"
 msgstr ""
 
-#: 
-#~ msgid "Pool limitation: 2 000 000"
-#~ msgstr ""
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Pool limits exceeded"
+msgstr ""
 
 #: src/components/earn/PoolCard.tsx
 msgid "Pool rate"
@@ -1335,18 +1401,9 @@ msgid "Price"
 msgstr "가격"
 
 #: 
-#: 
-#~ msgid "Price Impact"
-#~ msgstr "가격 영향"
+
 
 #: 
-#~ msgid "Price Impact Too High"
-#~ msgstr "가격 영향이 너무 높음"
-
-#: 
-#: 
-#~ msgid "Price Impact is high. Swap Anyway"
-#~ msgstr "가격 영향이 높습니다. 어쨌든 스왑"
 
 #: src/components/swap/AcceptChanges.tsx
 #: src/components/swap/SwapModalHeader.tsx
@@ -1358,12 +1415,11 @@ msgstr "가격 업데이트"
 msgid "Price impact"
 msgstr ""
 
-#: src/pages/Swap/index.tsx
-#: src/pages/Swap/index.tsx
+#: src/pages/Swap/SwapButtons.tsx
 msgid "Price impact is high. Swap anyway"
 msgstr ""
 
-#: src/pages/Swap/index.tsx
+#: src/pages/Swap/SwapButtons.tsx
 msgid "Price impact too high"
 msgstr ""
 
@@ -1377,6 +1433,18 @@ msgstr ""
 
 #: src/pages/Farming/Vesting/VestingTable.tsx
 msgid "Progress"
+msgstr ""
+
+#: src/pages/CreateNFT/types.ts
+msgid "Properties"
+msgstr ""
+
+#: src/pages/CreateNFT/PropertiesPopup.tsx
+msgid "Properties show up underneath your item, are clickable, and can be filtered in your collection's sidebar."
+msgstr ""
+
+#: src/pages/CreateNFT/CreateForm.tsx
+msgid "Provide a detailed description of your item"
 msgstr ""
 
 #: src/pages/AddLiquidityV2/ModalBottom.tsx
@@ -1415,9 +1483,6 @@ msgstr ""
 msgid "Rejected"
 msgstr ""
 
-#: 
-#~ msgid "Released {0} IXS"
-#~ msgstr ""
 
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Remove"
@@ -1457,6 +1522,10 @@ msgstr "{0} {1} 및 {2} {3}제거"
 msgid "Requested"
 msgstr ""
 
+#: src/components/AdminTransactionsTable/index.tsx
+msgid "Response"
+msgstr ""
+
 #: src/components/Settings/SettingsModal.tsx
 msgid "Restricts swaps to direct pairs only."
 msgstr "스왑을 직접 쌍으로 만 제한합니다."
@@ -1465,9 +1534,6 @@ msgstr "스왑을 직접 쌍으로 만 제한합니다."
 msgid "Retry pass accreditation"
 msgstr ""
 
-#: 
-#~ msgid "Return"
-#~ msgstr "반환"
 
 #: src/pages/Farming/Staking/UnstakedTable.tsx
 msgid "Rewards in vesting"
@@ -1495,6 +1561,10 @@ msgstr ""
 msgid "SWAP"
 msgstr ""
 
+#: src/components/AdminTransactionsTable/index.tsx
+msgid "Search for Wallet"
+msgstr ""
+
 #: src/pages/AdminKyc/Search.tsx
 msgid "Search for Wallet or Token"
 msgstr ""
@@ -1508,7 +1578,7 @@ msgstr "주소 검색 또는 붙여 넣기"
 msgid "Sec to sec pools forbidden"
 msgstr ""
 
-#: src/components/Vault/DepositRequestForm.tsx
+#: src/components/Vault/DepositAboutWrapping.tsx
 msgid ""
 "Second reason you need wSEC is to be able to trade SEC for other ERC-20 tokens on decentralized platforms like\n"
 "IXS. Because decentralized platforms running on Ethereum use smart contracts to facilitate trades directly\n"
@@ -1529,26 +1599,28 @@ msgstr ""
 msgid "Select Pool"
 msgstr "풀 선택"
 
+#: src/components/Header/NetworkCard.tsx
+msgid "Select a network"
+msgstr ""
+
 #: src/components/FeeSelector/index.tsx
 msgid "Select a pool type based on your preferred liquidity provider fee."
 msgstr "선호하는 유동성 공급자 수수료에 따라 풀 유형을 선택하십시오."
 
-#: 
-#~ msgid "Select a token"
-#~ msgstr "토큰 선택"
 
 #: src/components/SearchModal/CurrencySearch.tsx
 #: src/components/swap/CurrencyInput.tsx
 msgid "Select a token to swap"
 msgstr "교환 할 토큰을 선택하세요."
 
+#: src/pages/Faucet/index.tsx
+msgid "Select token"
+msgstr ""
+
 #: src/components/Vault/WithdrawRequestForm.tsx
 msgid "Send"
 msgstr ""
 
-#: src/components/Vault/DepositSendInfo.tsx
-msgid "Send {0} here"
-msgstr ""
 
 #: src/components/Vault/TransactionDetails.tsx
 msgid "Send {0} to:"
@@ -1558,13 +1630,7 @@ msgstr ""
 msgid "Sender is invalid"
 msgstr ""
 
-#: 
-#~ msgid "Sender's wallet"
-#~ msgstr ""
 
-#: src/components/Vault/DepositSendInfo.tsx
-msgid "Sender’s wallet:"
-msgstr ""
 
 #: src/components/Vault/WithdrawPending.tsx
 msgid "Sending {amount} {0} here"
@@ -1574,13 +1640,18 @@ msgstr ""
 msgid "Sent from:"
 msgstr ""
 
+#: src/components/Vault/TransactionDetails.tsx
+msgid "Sent to:"
+msgstr ""
+
+#: src/pages/CreateNFT/NSFWRadio.tsx
+msgid "Set this item as explicit and sensitive content"
+msgstr ""
+
 #: src/pages/AddLiquidityV2/ModalBottom.tsx
 msgid "Share of Pool"
 msgstr "풀 점유율"
 
-#: 
-#~ msgid "Show Portis"
-#~ msgstr "Portis 표시"
 
 #: src/components/TransactionSettings/index.tsx
 #: src/components/swap/AdvancedSwapDetails.tsx
@@ -1600,16 +1671,24 @@ msgstr "문제가 발생했습니다"
 msgid "Something went wrong. Could not deposit amount"
 msgstr ""
 
+#: src/pages/CreateNFT/LevelsPopup.tsx
+msgid "Speed"
+msgstr ""
+
 #: src/pages/Farming/Staking/StakeModal.tsx
 #: src/pages/Farming/Staking/StakeModal.tsx
 msgid "Stake"
 msgstr ""
 
+#: 
+#: 
+#: 
+
 #: src/state/stake/hooks.ts
 #: src/state/stake/hooks.ts
 #: src/state/stake/hooks.ts
 #: src/state/stake/hooks.ts
-msgid "Stake {amount} IXS for {0}"
+msgid "Staked {amount} {0} for {1}"
 msgstr ""
 
 #: src/components/Header/HeaderLinks.tsx
@@ -1618,7 +1697,6 @@ msgid "Staking"
 msgstr ""
 
 #: src/components/Mobile-Menu/Menu.tsx
-#: src/pages/Farming/Vesting/enum.ts
 msgid "Staking IXS"
 msgstr ""
 
@@ -1626,12 +1704,21 @@ msgstr ""
 msgid "Staking amount"
 msgstr ""
 
+
 #: src/pages/Farming/Staking/PromoTokenCard.tsx
-msgid "Staking is a great way to maximize the value of your holdings, instead of letting them sit idle in your IXS account!<0/> Once you have staked your assets, you can earn rewards on your holdings. This allows you to grow your token holdings over time."
+msgid "Staking is a great way to maximize the value of your holdings, instead of letting them sit idle in your {0} account!<0/> Once you have staked your assets, you can earn rewards on your holdings. This allows you to grow your token holdings over time."
+msgstr ""
+
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+msgid "Staking options:"
 msgstr ""
 
 #: src/pages/Farming/Staking/StakingTiers.tsx
 msgid "Staking will be opened soon. Wait for the official announcement on <0>our channels</0>."
+msgstr ""
+
+#: src/pages/Farming/StakingTab.tsx
+msgid "Staking {0}"
 msgstr ""
 
 #: src/pages/Farming/Vesting/VestingValid.tsx
@@ -1646,8 +1733,13 @@ msgstr ""
 msgid "Start again"
 msgstr ""
 
+#: src/pages/CreateNFT/types.ts
+msgid "Stats"
+msgstr ""
+
 #: src/components/AdminKycTable/FirstStepStatus.tsx
 #: src/components/AdminKycTable/SecondStepStatus.tsx
+#: src/components/AdminTransactionsTable/index.tsx
 #: src/components/Vault/HistoryTable.tsx
 msgid "Status"
 msgstr ""
@@ -1665,6 +1757,10 @@ msgstr ""
 msgid "Step 2 - Custodian"
 msgstr ""
 
+#: src/pages/Faucet/index.tsx
+msgid "Submit"
+msgstr ""
+
 #: src/pages/AddLiquidityV2/index.tsx
 msgid "Supply"
 msgstr "공급"
@@ -1677,27 +1773,27 @@ msgstr "{0} {1} 및 {2} {3}공급"
 #: src/components/NavigationTabs/index.tsx
 #: src/components/swap/SwapHeader.tsx
 #: src/pages/Farming/Staking/NoIXSTokens.tsx
-#: src/pages/Swap/index.tsx
-#: src/pages/Swap/index.tsx
+#: src/pages/Swap/SwapButtons.tsx
 msgid "Swap"
 msgstr "교환"
 
-#: src/state/swap/hooks.ts
-msgid "Swapping two security tokens is not allowed"
-msgstr ""
 
 #: src/components/swap/ConfirmSwapModal.tsx
 #: src/components/swap/PendingSuccesModals.tsx
 msgid "Swapping {0} {1} for {2} {3}"
 msgstr "{0} {1} 을 {2} {3}교체"
 
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+msgid "Switch to Polygon in your Web3 browser"
+msgstr ""
+
+#: src/pages/CreateNFT/types.ts
+msgid "Textual traits that show up as rectangles"
+msgstr ""
+
 #: src/hooks/useSwapCallback.ts
 msgid "The IXswap invariant x*y=k was not satisfied by the swap. This usually means one of the tokens you are swapping incorporates custom behavior on transfer."
 msgstr ""
-
-#: 
-#~ msgid "The Uniswap invariant x*y=k was not satisfied by the swap. This usually means one of the tokens you are swapping incorporates custom behavior on transfer."
-#~ msgstr "Uniswap 불변 x * y = k가 스왑에 의해 충족되지 않았습니다. 이는 일반적으로 스와핑하는 토큰 중 하나가 전송시 사용자 지정 동작을 통합 함을 의미합니다."
 
 #: src/hooks/useSwapCallback.ts
 msgid "The input token cannot be transferred. There may be an issue with the input token."
@@ -1712,10 +1808,6 @@ msgstr "시장 가격이 지정된 가격 범위를 벗어났습니다. 단일 �
 msgid "The output token cannot be transferred. There may be an issue with the output token."
 msgstr "출력 토큰을 전송할 수 없습니다. 출력 토큰에 문제가있을 수 있습니다."
 
-#: 
-#~ msgid "The output token cannot be transferred. There may be an issue with the output token. Note fee on transfer and rebase tokens are incompatible with Uniswap V3."
-#~ msgstr "출력 토큰을 전송할 수 없습니다. 출력 토큰에 문제가있을 수 있습니다. 전송 및 리베이스 토큰에 대한 참고 수수료는 Uniswap V3와 호환되지 않습니다."
-
 #: src/components/Badge/RangeBadge.tsx
 msgid "The price of this pool is outside of your selected range. Your position is not currently earning fees."
 msgstr "이 풀의 가격이 선택한 범위를 벗어났습니다. 귀하의 직책은 현재 수수료를 받고 있지 않습니다."
@@ -1728,32 +1820,30 @@ msgstr "이 풀의 가격은 선택한 범위 내에 있습니다. 귀하의 직
 msgid "The transaction could not be sent because the deadline has passed. Please check that your transaction deadline is not too low."
 msgstr "기한이 지났기 때문에 거래를 보낼 수 없습니다. 거래 기한이 너무 낮지 않은지 확인하십시오."
 
-#: 
-#~ msgid "These tokens are commonly paired with other tokens."
-#~ msgstr "이러한 토큰은 일반적으로 다른 토큰과 쌍을 이룹니다."
+
+
+
+
 
 #: src/pages/Farming/Staking/StakeModal.tsx
 msgid ""
-"This amount of rewards is based on assumption that your staked amount will be kept for the whole period of {0}. In this case your APY will be {1}%. If you partially or fully unstake your IXS before the end date 5% APY will be applied to unstaked amount. \n"
-"{2}\n"
+"This amount of rewards is based on assumption that your staked amount will be kept for the whole period of {0}. In this case your APY will be {1}%. If you partially or fully unstake your {2} before the end date 5% APY will be applied to unstaked amount. \n"
+"{3}\n"
 "Please note your rewards will vest over 10 weeks after unstaking."
+msgstr ""
+
+#: src/pages/Faucet/index.tsx
+msgid "This faucet transfers test tokens on Kovan testnet. Confirm details before submitting."
 msgstr ""
 
 #: src/components/SearchModal/ImportToken.tsx
 msgid "This token doesn't appear on the active list(s). Make sure this is the token that you want to trade"
 msgstr ""
 
-#: 
-#~ msgid "This token doesn't appear on the active token list(s). Make sure this is the token that you want to trade."
-#~ msgstr "이 토큰은 활성 토큰 목록에 표시되지 않습니다. 이것이 거래하려는 토큰인지 확인하십시오."
 
 #: src/hooks/useSwapCallback.ts
 msgid "This transaction will not succeed due to price movement. Try increasing your slippage tolerance."
 msgstr ""
-
-#: 
-#~ msgid "This transaction will not succeed due to price movement. Try increasing your slippage tolerance. Note fee on transfer and rebase tokens are incompatible with Uniswap V3."
-#~ msgstr "이 거래는 가격 변동으로 인해 성공하지 못합니다. 미끄러짐 허용치를 높이십시오. 전송 및 리베이스 토큰에 대한 참고 수수료는 Uniswap V3와 호환되지 않습니다."
 
 #: src/hooks/useSwapCallback.ts
 msgid "This transaction will not succeed either due to price movement or fee on transfer. Try increasing your slippage tolerance."
@@ -1767,16 +1857,17 @@ msgstr ""
 msgid "Tip:"
 msgstr "팁:"
 
-#: 
-#~ msgid "Tip: Custom tokens are stored locally in your browser"
-#~ msgstr "팁 : 사용자 지정 토큰은 브라우저에 로컬로 저장됩니다."
+
+
+
 
 #: src/pages/Farming/Staking/Unstaking/UnstakeModal.tsx
 msgid ""
-"Tip: To unstake IXS tokens you need to have enough IXSgov tokens. \n"
-"You can unstake IXS tokens equal to the number of IXSgov tokens in your account."
+"Tip: To unstake {0} tokens you need to have enough IXSgov tokens. \n"
+"You can unstake {1} tokens equal to the number of IXSgov tokens in your account."
 msgstr ""
 
+#: src/components/Vault/DepositSendInfo.tsx
 #: src/components/swap/CurrencyInput.tsx
 #: src/components/swap/SwapModalHeader.tsx
 msgid "To"
@@ -1786,13 +1877,19 @@ msgstr "에"
 msgid "To (at least)"
 msgstr "(적어도)"
 
+
 #: src/pages/Farming/Staking/NoIXSTokens.tsx
-msgid "To buy IXS click on swap below or find us on our Telegram channel to learn more."
+msgid "To buy {0} click on swap below or find us on our Telegram channel to learn more."
+msgstr ""
+
+#: 
+
+#: src/components/Vault/WithdrawRequestForm.tsx
+msgid "To my {networkName} wallet"
 msgstr ""
 
 #: src/components/Vault/DepositRequestForm.tsx
-#: src/components/Vault/WithdrawRequestForm.tsx
-msgid "To my {0} wallet"
+msgid "To your {0} wallet"
 msgstr ""
 
 #: src/components/AdminKycTable/index.tsx
@@ -1825,9 +1922,14 @@ msgstr "총 입금"
 msgid "Total rewards"
 msgstr ""
 
-#: 
-#~ msgid "Transaction Settings"
-#~ msgstr "거래 설정"
+#: src/components/AdminTransactionsTable/index.tsx
+msgid "Trader's wallet"
+msgstr ""
+
+#: src/components/AdminTransactionsTable/index.tsx
+msgid "Trading pair"
+msgstr ""
+
 
 #: src/components/TransactionConfirmationModal/index.tsx
 #: src/components/Vault/WithDrawSuccess.tsx
@@ -1842,6 +1944,14 @@ msgstr "거래 마감"
 msgid "Transaction settings"
 msgstr ""
 
+#: src/state/swapHelper/getMessage.ts
+msgid "Transaction was not authorized by {name} broker-dealer. Something went wrong, try again later."
+msgstr ""
+
+#: src/state/swapHelper/getMessage.ts
+msgid "Transaction was successfully authorized by {name} broker-dealer.You can proceed with swapping."
+msgstr ""
+
 #: src/components/WalletModal/PendingView.tsx
 msgid "Try Again"
 msgstr "다시 시도하십시오"
@@ -1850,22 +1960,23 @@ msgstr "다시 시도하십시오"
 msgid "Turn On Expert Mode"
 msgstr "전문가 모드 켜기"
 
-#: 
-#: 
-#~ msgid "Unclaimed IXS"
-#~ msgstr "미 청구 IXS"
-
-#: src/components/Vault/NoVault.tsx
-msgid "Unknown error"
+#: src/pages/CreateNFT/PropertiesPopup.tsx
+msgid "Type"
 msgstr ""
+
+#: 
+
 
 #: src/hooks/useSwapCallback.ts
 msgid "Unknown error{0}. Try increasing your slippage tolerance."
 msgstr ""
 
-#: 
-#~ msgid "Unknown error{0}. Try increasing your slippage tolerance. Note fee on transfer and rebase tokens are incompatible with Uniswap V3."
-#~ msgstr "알 수없는 오류{0}. 미끄러짐 허용치를 높이십시오. 전송 및 리베이스 토큰에 대한 참고 수수료는 Uniswap V3와 호환되지 않습니다."
+#: src/state/stake/contstants.ts
+#: src/state/stake/contstants.ts
+#: src/state/stake/contstants.ts
+#: src/state/stake/contstants.ts
+msgid "Unlimited"
+msgstr ""
 
 #: src/pages/Farming/Staking/MyStakingsTable.tsx
 #: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
@@ -1875,12 +1986,14 @@ msgstr ""
 msgid "Unstake"
 msgstr ""
 
-#: src/pages/Farming/Staking/Unstaking/UnstakeModal.tsx
-msgid "Unstake {0} IXS"
-msgstr ""
 
 #: src/pages/Farming/Staking/Unstaking/UnstakeModal.tsx
-msgid "Unstake {amount} IXS"
+msgid "Unstake {0} {1}"
+msgstr ""
+
+
+#: src/pages/Farming/Staking/Unstaking/UnstakeModal.tsx
+msgid "Unstake {amount} {0}"
 msgstr ""
 
 #: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
@@ -1896,11 +2009,11 @@ msgstr "지원되지 않는 자산"
 msgid "Unsupported Assets"
 msgstr "지원되지 않는 자산"
 
-#: src/pages/Swap/index.tsx
+#: src/pages/Swap/SwapButtons.tsx
 msgid "Unsupported asset"
 msgstr ""
 
-#: src/pages/Swap/index.tsx
+#: src/pages/Swap/typings.ts
 msgid "Unwrap"
 msgstr "풀다"
 
@@ -1912,6 +2025,10 @@ msgstr "목록 업데이트"
 msgid "Use this tool to find pairs that don't automatically appear in the interface."
 msgstr "이 도구를 사용하여 인터페이스에 자동으로 나타나지 않는 쌍을 찾으십시오."
 
+#: src/pages/CreateNFT/LevelsPopup.tsx
+msgid "Value"
+msgstr ""
+
 #: src/components/Header/HeaderLinks.tsx
 msgid "Vesting"
 msgstr ""
@@ -1921,7 +2038,6 @@ msgid "Vesting Amount"
 msgstr ""
 
 #: src/components/Mobile-Menu/Menu.tsx
-#: src/pages/Farming/Vesting/enum.ts
 msgid "Vesting IXS"
 msgstr ""
 
@@ -1929,30 +2045,41 @@ msgstr ""
 msgid "Vesting on {0}? Switch networks"
 msgstr ""
 
+#: src/pages/Farming/VestingTab.tsx
+msgid "Vesting {0}"
+msgstr ""
+
 #: src/components/SearchModal/ManageLists.tsx
 msgid "View list"
 msgstr "목록보기"
 
-#: src/components/TransactionConfirmationModal/index.tsx
-#: src/components/Vault/WithDrawSuccess.tsx
-msgid "View on Etherscan"
-msgstr "Etherscan에서보기"
+#: 
 
 #: src/components/AccountDetails/index.tsx
 msgid "View on Explorer"
+msgstr ""
+
+#: src/components/TransactionConfirmationModal/index.tsx
+#: src/components/Vault/WithDrawSuccess.tsx
+msgid "View on {explorerName}"
 msgstr ""
 
 #: src/components/PositionCard/PoolInformation.tsx
 msgid "View pool information<0>↗</0>"
 msgstr "풀 정보보기 <0>↗</0>"
 
+
 #: src/components/ModalViews/index.tsx
-msgid "View transaction on Etherscan"
-msgstr "Etherscan에서 거래보기"
+msgid "View transaction on {explorerName}"
+msgstr ""
 
 #: src/components/TransactionConfirmationModal/index.tsx
 msgid "Waiting For Confirmation"
 msgstr "확인을 기다리는 중"
+
+#: src/pages/Faucet/index.tsx
+msgid "Wallet Address"
+msgstr ""
 
 #: src/components/AdminKycTable/index.tsx
 msgid "Wallet address"
@@ -1962,30 +2089,21 @@ msgstr ""
 msgid "Warning:"
 msgstr ""
 
-#: 
-#~ msgid "Weekly Rewards"
-#~ msgstr "주간 보상"
 
 #: src/pages/AddLiquidityV2/Tip.tsx
 #: src/pages/AddLiquidityV2/Tip.tsx
 msgid "When you add liquidity, you will receive pool tokens representing your position. These tokens automatically earn fees proportional to your share of the pool, and can be redeemed at any time."
 msgstr "유동성을 추가하면 귀하의 포지션을 나타내는 풀 토큰을 받게됩니다. 이 토큰은 풀 점유율에 비례하여 자동으로 수수료를 적립하며 언제든지 사용할 수 있습니다."
 
-#: 
-#~ msgid "When you claim without withdrawing your liquidity remains in the mining pool."
-#~ msgstr "인출하지 않고 청구하면 유동성이 채굴 풀에 남아 있습니다."
 
-#: src/components/Vault/DepositRequestForm.tsx
+#: src/components/Vault/DepositAboutWrapping.tsx
 msgid ""
 "When you make a deposit, we create a wrap token and transfer it to your balance. In the future, you have the\n"
 "ability to manage it - change, sell, stake, etc. 1 security token = 1 wrapped token (1 SEC = wSEC)"
 msgstr ""
 
-#: 
-#~ msgid "When you withdraw, your IXS is claimed and your liquidity is removed from the mining pool."
-#~ msgstr "출금하면 IXS가 청구되고 유동성이 마이닝 풀에서 제거됩니다."
 
-#: src/components/Vault/DepositRequestForm.tsx
+#: src/components/Vault/DepositAboutWrapping.tsx
 msgid ""
 "When you “wrap” SEC, you are actually not so much wrapping as trading through a smart contract for an equal\n"
 "token called wSEC. If you want to get back a simple SEC, you need to &quot;unfold&quot; it. AKA will exchange\n"
@@ -1996,9 +2114,6 @@ msgstr ""
 msgid "When your assets have been unstaked they will be transferred to your Metamask"
 msgstr ""
 
-#: 
-#~ msgid "Where to send?"
-#~ msgstr ""
 
 #: src/components/Vault/TransactionDetails.tsx
 msgid "Will be cancelled automatically in {deadlineIn} hours"
@@ -2010,14 +2125,8 @@ msgstr ""
 msgid "Withdraw"
 msgstr "빼다"
 
-#: 
-#~ msgid "Withdraw & Claim"
-#~ msgstr "철회 및 청구"
 
 #: 
-#: 
-#~ msgid "Withdraw deposited liquidity"
-#~ msgstr "예치 된 유동성 인출"
 
 #: src/components/Vault/WithdrawPopup.tsx
 msgid "Withdraw from Custodian"
@@ -2027,15 +2136,9 @@ msgstr ""
 msgid "Withdraw {amount} {currencySymbol}"
 msgstr ""
 
-#: 
-#~ msgid "Withdrawing {0} IXS-V2"
-#~ msgstr "{0} IXS-V2 출금"
 
-#: 
-#~ msgid "Withdrew IXS-V2!"
-#~ msgstr "IXS-V2 철수!"
 
-#: src/pages/Swap/index.tsx
+#: src/pages/Swap/typings.ts
 msgid "Wrap"
 msgstr "싸다"
 
@@ -2044,11 +2147,20 @@ msgstr "싸다"
 msgid "Wrong Network"
 msgstr "잘못된 네트워크"
 
+#: src/pages/Farming/Staking/StakeModal.tsx
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Wrong {0} amount"
+msgstr ""
+
+#: src/components/WalletModal/ErrorSection.tsx
+msgid "You already have a connection in progress. Please check your wallet extension/app"
+msgstr ""
+
 #: src/pages/AddLiquidityV2/index.tsx
 msgid "You are creating a pool"
 msgstr "풀을 만들고 있습니다."
 
-#: src/pages/Swap/index.tsx
+#: src/pages/Swap/ApproveButtons.tsx
 msgid "You can now trade {0}"
 msgstr "{0}거래 할 수 있습니다."
 
@@ -2056,12 +2168,14 @@ msgstr "{0}거래 할 수 있습니다."
 msgid "You can test it on Kovan"
 msgstr ""
 
+
 #: src/pages/Farming/Staking/NoIXSTokens.tsx
-msgid "You don't have any IXS tokens available!"
+msgid "You don't have any {0} tokens available!"
 msgstr ""
 
+
 #: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
-msgid "You don’t have enough IXSGov for unstake all available IXS ({stakeAmount} is available) 1 IXS = 1 IXGov"
+msgid "You don’t have enough IXSGov for unstake all available {0} ({stakeAmount} is available) 1 {1} = 1 IXGov"
 msgstr ""
 
 #: src/pages/PoolFinder/index.tsx
@@ -2076,7 +2190,7 @@ msgstr ""
 msgid "You have no rewards at the moment"
 msgstr ""
 
-#: src/pages/Swap/index.tsx
+#: src/pages/Swap/ApproveButtons.tsx
 msgid "You must give the IXS smart contracts permission to use your {0}. You only have to do this once per token."
 msgstr "{0}을 사용하려면 IXS 스마트 계약에 권한을 부여해야합니다. 토큰 당 한 번만이 작업을 수행하면됩니다."
 
@@ -2093,8 +2207,9 @@ msgstr ""
 msgid "You will receive"
 msgstr "당신은 받게 될 것입니다"
 
+
 #: src/pages/Farming/Staking/StakingTiers.tsx
-msgid "You will receive 1 IXSGov for each 1 staked IXS."
+msgid "You will receive 1 IXSGov for each 1 staked {0}."
 msgstr ""
 
 #: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
@@ -2125,11 +2240,13 @@ msgstr "귀하의 포지션은 유동성이 없으며 수수료를받지 않습�
 msgid "Your rate"
 msgstr "귀하의 요금"
 
+
+
 #: src/pages/Farming/Staking/StakeModal.tsx
 msgid ""
-"Your staked IXS will be locked for {0} till {1}. Until that time you won’t be able to unstake your IXS fully or partially. Please carefully consider the risks involved.\n"
-"{2}\n"
-"You will be able to redeem your staked IXS fully or partially after {3}."
+"Your staked {0} will be locked for {1} till {2}. Until that time you won’t be able to unstake your {3} fully or partially. Please carefully consider the risks involved.\n"
+"{4}\n"
+"You will be able to redeem your staked {5} fully or partially after {6}."
 msgstr ""
 
 #: src/pages/Farming/Vesting/VestingValid.tsx
@@ -2144,17 +2261,11 @@ msgstr "귀하의 거래는 프론트 런일 수 있습니다"
 msgid "Your transaction may fail"
 msgstr "거래가 실패 할 수 있습니다"
 
-#: 
-#~ msgid "Your transaction will revert if it is pending for more than this period of time."
-#~ msgstr "이 기간 이상 보류중인 거래는 되돌려집니다."
 
 #: src/components/TransactionSettings/index.tsx
 msgid "Your transaction will revert if it is pending for more than this period of time. Value range 1 - 180 min."
 msgstr ""
 
-#: 
-#~ msgid "Your transaction will revert if the price changes unfavorably by more than this percentage."
-#~ msgstr "가격이이 비율 이상으로 불리하게 변경되면 거래가 취소됩니다."
 
 #: src/components/TransactionSettings/index.tsx
 msgid "Your transaction will revert if the price changes unfavorably by more than this percentage. Value range 0-50%"
@@ -2165,7 +2276,7 @@ msgid "Your transactions will appear here..."
 msgstr "거래 내역이 여기에 표시됩니다 ..."
 
 #: src/components/Vault/WithdrawRequestForm.tsx
-msgid "Your wrapped {0} will be extracted from your Ethereum wallet and burnt automatically."
+msgid "Your wrapped {0} will be extracted from your {networkName} wallet and burnt automatically."
 msgstr ""
 
 #: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
@@ -2193,6 +2304,11 @@ msgstr ""
 msgid "error"
 msgstr ""
 
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+msgid "ethereum"
+msgstr ""
+
 #: src/components/Web3Status/index.tsx
 msgid "has socks emoji"
 msgstr "양말 이모티콘 있음"
@@ -2205,8 +2321,31 @@ msgstr "https : // 또는 ipfs : // 또는 ENS 이름"
 msgid "minutes"
 msgstr ""
 
+#: src/pages/CreateNFT/LevelsPopup.tsx
+msgid "of"
+msgstr ""
+
 #: src/components/Vault/ExistingVault.tsx
 msgid "on {0} custodian"
+msgstr ""
+
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+msgid "other pools on ethereum"
+msgstr ""
+
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+msgid "other pools on polygon"
+msgstr ""
+
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+msgid "polygon"
+msgstr ""
+
+#: src/pages/CreateNFT/LevelsPopup.tsx
+msgid "show up underneath your item, are clickable, and can be filtered in your collection's sidebar."
 msgstr ""
 
 #: src/components/Vault/enum.ts
@@ -2223,12 +2362,10 @@ msgid "via {0}"
 msgstr "{0}통해"
 
 #: src/components/AdminKycTable/RejectModal.tsx
-#: src/components/AdminLogin/index.tsx
 #: src/components/Header/IXSBalanceModal.tsx
 #: src/components/Toggle/index.tsx
-#: src/components/Vault/ChooseBrokerDealerPopup.tsx
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
 #: src/pages/Farming/Staking/StakingTableTabs.tsx
-#: src/pages/Farming/Staking/StakingTierCard.tsx
 #: src/pages/Farming/Staking/StakingTierCard.tsx
 #: src/pages/Farming/Staking/StakingTierCard.tsx
 msgid "{0}"
@@ -2247,42 +2384,50 @@ msgstr "{0} 사용자 지정 토큰"
 msgid "{0} Deposited"
 msgstr "{0} 입금"
 
-#: src/components/Header/index.tsx
-msgid "{0} ETH"
-msgstr "{0} ETH"
 
 #: src/components/earn/PoolCard.tsx
 #: src/components/earn/PoolCard.tsx
 msgid "{0} IXS / week"
 msgstr "{0} IXS / 주"
 
-#: 
-#~ msgid "{0} IXS-V2"
-#~ msgstr "{0} IXS-V2"
 
 #: src/components/Web3Status/index.tsx
 msgid "{0} Pending"
 msgstr "{0} 보류 중"
 
+#: src/pages/Farming/Vesting/ZeroBalanceVesting.tsx
+msgid "{0} in Telegram"
+msgstr ""
+
+#: src/pages/Farming/Staking/StakingTierCard.tsx
+msgid "{0} lock up"
+msgstr ""
+
 #: src/pages/Farming/Staking/StakingTierCard.tsx
 msgid "{0} lock up period"
 msgstr ""
 
-#: 
-#~ msgid "{0} sent to:"
-#~ msgstr ""
 
 #: src/components/SearchModal/ImportList.tsx
 #: src/components/SearchModal/ManageLists.tsx
 msgid "{0} tokens"
 msgstr "토큰 {0}"
 
-#: 
-#~ msgid "{0} {1}"
-#~ msgstr ""
+
+#: src/components/Vault/DepositSendInfo.tsx
+msgid "{0} {1} from"
+msgstr ""
 
 #: src/components/Vault/WithdrawRequestForm.tsx
 msgid "{0} {1} tokens from your wallet {2} will be burned during withdrawal"
+msgstr ""
+
+#: src/components/Vault/WithdrawPopup.tsx
+msgid "{0} {1} will be extracted from your {networkName} wallet and burnt automatically."
+msgstr ""
+
+#: src/components/Header/index.tsx
+msgid "{0} {nativeCurrency}"
 msgstr ""
 
 #: src/components/SearchModal/CurrencyList.tsx
@@ -2295,15 +2440,27 @@ msgstr "{0} • 사용자가 추가"
 msgid "{0}%"
 msgstr "{0}%"
 
+#: src/pages/Farming/Staking/StakingTierCard.tsx
+msgid "{0}{shortLimit}"
+msgstr ""
+
 #: src/components/Vault/TransactionDetails.tsx
 msgid "{0} {1}"
+msgstr ""
+
+#: src/components/GeneralModal/GeneralModal.tsx
+msgid "{modalTitle}"
 msgstr ""
 
 #: src/components/AdminKycTable/Pagination.tsx
 msgid "{page} of {totalPages}"
 msgstr ""
 
-#: src/components/Vault/DepositRequestForm.tsx
+#: src/pages/Farming/Staking/StakingTierCard.tsx
+msgid "{shortLimit}"
+msgstr ""
+
+#: src/components/Vault/DepositAboutWrapping.tsx
 msgid "{text}"
 msgstr ""
 
