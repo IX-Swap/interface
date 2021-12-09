@@ -81,6 +81,6 @@ export const CHAIN_INFO: ChainInfoMap = {
     },
     logoUrl: polygonLogoUrl,
     rpcUrls: ['https://rpc-mumbai.matic.today'],
-    blockExplorerUrls: ['https://explorer-mumbai.maticvigil.com/'],
+    blockExplorerUrls: ['https://mumbai.polygonscan.com/', 'https://explorer-mumbai.maticvigil.com/'],
   },
 }

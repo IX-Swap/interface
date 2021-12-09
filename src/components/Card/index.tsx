@@ -37,6 +37,13 @@ export const YellowCard = styled(Card)`
   color: ${({ theme }) => theme.yellow3};
   font-weight: 500;
 `
+export const DarkBlueCard = styled(Card)`
+  background-color: ${({ theme }) => theme.bg7};
+  color: ${({ theme }) => theme.text2};
+  font-weight: 500;
+  border-radius: 36px;
+  padding: 15px 31px 15px 27px;
+`
 export const VioletCard = styled(Card)`
   background-color: ${({ theme }) => theme.bg1};
   color: ${({ theme }) => theme.text2};

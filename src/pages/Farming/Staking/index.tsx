@@ -1,5 +1,3 @@
-import { IXS_ADDRESS } from 'constants/addresses'
-import { useCurrency } from 'hooks/Tokens'
 import useIXSCurrency from 'hooks/useIXSCurrency'
 import { useActiveWeb3React } from 'hooks/web3'
 import React, { useEffect } from 'react'

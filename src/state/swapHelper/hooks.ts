@@ -3,7 +3,7 @@ import { Pair, Trade as V2Trade } from '@ixswap1/v2-sdk'
 import * as H from 'history'
 import { useCurrency } from 'hooks/Tokens'
 import useParsedQueryString from 'hooks/useParsedQueryString'
-import { useSwapSecTokenAddresses } from 'hooks/useSwapCallback'
+import { useMissingAuthorizations, useSwapSecTokenAddresses } from 'hooks/useSwapCallback'
 import { useV2Pairs } from 'hooks/useV2Pairs'
 import { useActiveWeb3React } from 'hooks/web3'
 import { useCallback, useEffect, useMemo } from 'react'
@@ -210,101 +210,90 @@ export function useSwapConfirmDataFromURL(
   const dispatch = useDispatch<AppDispatch>()
   const parsedQs = useParsedQueryString()
   // maybe later avoid the request if there already is an authorization but maybe not
-  const authorizations = useAuthorizationsState()
   const { authorizationInProgress } = useSwapHelpersState()
   const { chainId } = useActiveWeb3React()
   const address = authorizationInProgress?.pairAddress
   const brokerDealerId = authorizationInProgress?.brokerDealerId
+  const platform = authorizationInProgress?.platform
+  const missingAuthorizations = useMissingAuthorizations(trade)
   const addPopup = useAddPopup()
+  const length = missingAuthorizations?.length
+  const { isError, result, hash } = parsedQs
   const amount = authorizationInProgress?.amount || '0'
-  useEffect(() => {
-    fetchAuthorization()
-    async function fetchAuthorization() {
-      if (parsedQs?.isError) {
-        dispatch(setAuthorizationInProgress({ authorizationInProgress: null }))
-        dispatch(setLoadingSwap({ isLoading: false }))
-        addPopup({
+
+  const showPopup = useCallback(
+    ({ success }: { success: boolean }) => {
+      addPopup(
+        {
           info: {
-            success: false,
-            summary: getMessage({ name: authorizationInProgress?.platform ?? '', isError: true }),
+            success,
+            summary: getMessage({ name: platform ?? '', isError: !success }),
           },
-        })
-        history.push(`/swap`)
-        return
-      }
-      if (!parsedQs?.hash || !parsedQs?.result || !authorizationInProgress) {
-        return
-      }
+        },
+        address ?? undefined
+      )
+    },
+    [addPopup, address, platform]
+  )
 
-      if (brokerDealerId === undefined || !chainId || !address) {
-        dispatch(setAuthorizationInProgress({ authorizationInProgress: null }))
-        dispatch(setLoadingSwap({ isLoading: false }))
-        history.push(`/swap`)
+  const clearState = useCallback(() => {
+    dispatch(setAuthorizationInProgress({ authorizationInProgress: null }))
+    dispatch(setLoadingSwap({ isLoading: false }))
+    history.push(`/swap`)
+  }, [dispatch, history])
+
+  const processError = useCallback(() => {
+    showPopup({ success: false })
+    clearState()
+  }, [showPopup, clearState])
+
+  const fetchAuthorization = useCallback(async () => {
+    if (brokerDealerId === undefined || !chainId || !address || !length) {
+      return
+    }
+
+    const swapConfirm = {
+      hash: (hash as string) || '',
+      encryptedData: (result as string) || '',
+      brokerDealerId,
+    }
+    try {
+      const response = await getSwapConfirmAuthorization({ ...swapConfirm })
+      const data = response.data
+      const { s, v, r, operator, deadline } = data.authorization
+      const swapId = data.swapId
+      const persistedAuthorization = {
+        s,
+        v,
+        r,
+        operator,
+        deadline,
+        expiresAt: hexTimeToTokenExpirationTime(deadline),
+        amount,
+        swapId,
+      }
+      dispatch(saveAuthorization({ authorization: persistedAuthorization, chainId, address }))
+      showPopup({ success: true })
+      clearState()
+    } catch (e) {
+      console.log({ e })
+      showPopup({ success: false })
+      clearState()
+    }
+  }, [chainId, amount, hash, result, brokerDealerId, address, length, clearState, dispatch, showPopup])
+
+  useEffect(() => {
+    confirm()
+    async function confirm() {
+      if (isError) {
+        processError()
         return
       }
-
-      const swapConfirm = {
-        hash: (parsedQs?.hash as string) || '',
-        encryptedData: (parsedQs?.result as string) || '',
-        brokerDealerId,
-      }
-      try {
-        const response = await getSwapConfirmAuthorization({ ...swapConfirm })
-        const data = response.data
-        const { s, v, r, operator, deadline } = data.authorization
-        const swapId = data.swapId
-        const persistedAuthorization = {
-          s,
-          v,
-          r,
-          operator,
-          deadline,
-          expiresAt: hexTimeToTokenExpirationTime(deadline),
-          amount,
-          swapId,
-        }
-        dispatch(setLoadingSwap({ isLoading: false }))
-        dispatch(setAuthorizationInProgress({ authorizationInProgress: null }))
-        dispatch(saveAuthorization({ authorization: persistedAuthorization, chainId, address }))
-        addPopup(
-          {
-            info: {
-              success: true,
-              summary: getMessage({ name: authorizationInProgress?.platform, isError: false }),
-            },
-          },
-          authorizationInProgress.pairAddress
-        )
-        history.push(`/swap`)
-      } catch (e) {
-        console.log({ e })
-        dispatch(setLoadingSwap({ isLoading: false }))
-        dispatch(setAuthorizationInProgress({ authorizationInProgress: null }))
-        addPopup(
-          {
-            info: {
-              success: false,
-              summary: getMessage({ name: authorizationInProgress?.platform, isError: true }),
-            },
-          },
-          authorizationInProgress.pairAddress
-        )
-        history.push(`/swap`)
+      if (hash && result) {
+        await fetchAuthorization()
       }
     }
-  }, [
-    chainId,
-    amount,
-    authorizations,
-    parsedQs?.hash,
-    parsedQs?.result,
-    history,
-    parsedQs?.isError,
-    brokerDealerId,
-    address,
-    authorizationInProgress,
-    addPopup,
-  ])
+  }, [hash, result, isError, fetchAuthorization, processError])
 }
 
 export async function getSwapConfirmAuthorization({ brokerDealerId, hash, encryptedData }: SwapConfirmArguments) {

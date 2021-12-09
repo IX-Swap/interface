@@ -21,7 +21,7 @@ export const ChevronElement = ({ showMore, setShowMore }: Props) => {
     <RowFixed gap="8px">
       <ButtonEmpty
         data-testid="openTable"
-        padding="6px 8px"
+        padding="6px 3px"
         borderRadius="12px"
         width="100%"
         onClick={() => {
