@@ -1,13 +1,27 @@
 msgid ""
 msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language: \n"
+"Language-Team: \n"
+"Content-Type: \n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
 
 #: src/components/earn/PoolCard.tsx
 msgid "${0}"
 msgstr "${0}"
 
+#: 
+#~ msgid "${0} ETH"
+#~ msgstr "${0} ETH"
+
 #: src/components/earn/PoolCard.tsx
-msgid "${0} ETH"
-msgstr "${0} ETH"
+msgid "${0} {nativeCurrency}"
+msgstr ""
 
 #: 
 #~ msgid "(clear all)"
@@ -34,9 +48,47 @@ msgstr "0,05% gebyr"
 msgid "0.3% fee"
 msgstr "0,3% gebyr"
 
+#: src/state/stake/contstants.ts
+#: src/state/stake/contstants.ts
+#: src/state/stake/contstants.ts
+msgid "1 mln"
+msgstr ""
+
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+msgid "1 month — 18% APY"
+msgstr ""
+
 #: src/components/FeeSelector/index.tsx
 msgid "1% fee"
 msgstr "1% gebyr"
+
+#: src/state/stake/contstants.ts
+#: src/state/stake/contstants.ts
+#: src/state/stake/contstants.ts
+#: src/state/stake/contstants.ts
+#: src/state/stake/contstants.ts
+msgid "2 mln"
+msgstr ""
+
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+msgid "2 month — 44% APY"
+msgstr ""
+
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+msgid "3 month — 88% APY"
+msgstr ""
+
+#: src/state/stake/contstants.ts
+#: src/state/stake/contstants.ts
+#: src/state/stake/contstants.ts
+#: src/state/stake/contstants.ts
+msgid "500k"
+msgstr ""
 
 #: src/pages/PoolFinder/index.tsx
 msgid "<0>Loading</0>"
@@ -81,6 +133,7 @@ msgid "Active"
 msgstr "Aktiv"
 
 #: src/components/PositionCard/index.tsx
+#: src/pages/CreateNFT/LevelsPopup.tsx
 msgid "Add"
 msgstr "Tilføj"
 
@@ -88,6 +141,10 @@ msgstr "Tilføj"
 #: src/pages/Pool/AddLiquidityButton.tsx
 msgid "Add Liquidity"
 msgstr "Tilføj Likviditet"
+
+#: src/pages/CreateNFT/PropertiesPopup.tsx
+msgid "Add Properties"
+msgstr ""
 
 #: src/pages/PoolFinder/index.tsx
 msgid "Add liquidity"
@@ -119,7 +176,7 @@ msgstr "Tilføjet {0}"
 msgid "All"
 msgstr ""
 
-#: src/pages/Swap/index.tsx
+#: src/pages/Swap/ApproveButtons.tsx
 msgid "Allow IXSwap to use your {0}"
 msgstr "Tillad IXSwap at bruge din {0}"
 
@@ -131,24 +188,36 @@ msgstr "Tillad høj pris påvirkning handler og springe over bekræftelsesskærm
 msgid "Always make sure the URL is<0>app.ixswap.io</0> - bookmark it to be safe."
 msgstr "Sørg altid for, at URL'en er <0> app.ixswap.io </0> - bogmærke det for at være sikkert."
 
+#: src/components/AdminTransactionsTable/index.tsx
 #: src/components/Vault/HistoryTable.tsx
 #: src/pages/Farming/Staking/MyStakingsTable.tsx
 msgid "Amount"
+msgstr ""
+
+#: src/pages/Swap/handleSwap.ts
+msgid "Amount changed. Please repeat authorization"
 msgstr ""
 
 #: src/state/stake/hooks.ts
 msgid "Amount exceeds balance"
 msgstr ""
 
+#: 
+#~ msgid "Amount of IXS to stake"
+#~ msgstr ""
+
+#: 
+#~ msgid "Amount of IXS to unstake"
+#~ msgstr ""
+
 #: src/pages/Farming/Staking/StakeModal.tsx
-msgid "Amount of IXS to stake"
+msgid "Amount of {0} to stake"
 msgstr ""
 
 #: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
-msgid "Amount of IXS to unstake"
+msgid "Amount of {0} to unstake"
 msgstr ""
 
-#: src/components/Vault/DepositSendInfo.tsx
 #: src/components/Vault/TransactionDetails.tsx
 msgid "Amount:"
 msgstr ""
@@ -168,9 +237,9 @@ msgstr ""
 msgid "Approve"
 msgstr "Godkend"
 
-#: src/pages/Farming/Staking/StakeModal.tsx
-msgid "Approve IXS"
-msgstr ""
+#: 
+#~ msgid "Approve IXS"
+#~ msgstr ""
 
 #: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
 #: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
@@ -179,15 +248,20 @@ msgstr ""
 
 #: src/pages/AddLiquidityV2/index.tsx
 #: src/pages/AddLiquidityV2/index.tsx
+#: src/pages/Farming/Staking/StakeModal.tsx
 msgid "Approve {0}"
 msgstr "Godkend {0}"
 
-#: src/state/stake/hooks.ts
-msgid "Approve {amount} IXS"
-msgstr ""
+#: 
+#~ msgid "Approve {amount} IXS"
+#~ msgstr ""
 
 #: src/state/stake/unstake/hooks.ts
 msgid "Approve {amount} IXSGov"
+msgstr ""
+
+#: src/state/stake/hooks.ts
+msgid "Approve {amount} {0}"
 msgstr ""
 
 #: src/components/AdminKycTable/FirstStepStatus.tsx
@@ -196,17 +270,21 @@ msgstr ""
 msgid "Approved"
 msgstr "Godkendt"
 
+#: 
+#~ msgid "Approved IXS"
+#~ msgstr ""
+
 #: src/pages/Farming/Staking/StakeModal.tsx
-msgid "Approved IXS"
+msgid "Approved {0}"
 msgstr ""
 
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Approving"
 msgstr "Godkendelse"
 
-#: src/pages/Farming/Staking/StakeModal.tsx
-msgid "Approving IXS"
-msgstr ""
+#: 
+#~ msgid "Approving IXS"
+#~ msgstr ""
 
 #: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
 #: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
@@ -215,6 +293,7 @@ msgstr ""
 
 #: src/pages/AddLiquidityV2/index.tsx
 #: src/pages/AddLiquidityV2/index.tsx
+#: src/pages/Farming/Staking/StakeModal.tsx
 msgid "Approving {0}"
 msgstr "Godkender {0}"
 
@@ -222,13 +301,18 @@ msgstr "Godkender {0}"
 msgid "Are you sure?"
 msgstr "Er du sikker?"
 
-#: src/components/Vault/DepositRequestForm.tsx
+#: src/components/Vault/DepositAboutWrapping.tsx
 msgid ""
 "At the moment, security tokens are kept by the custodian and can only be regulated by him. This is done to\n"
 "prevent theft and fraudulent transactions. Your security tokens (further as a SEC) cannot be controlled or\n"
 "moved, but you have the rights to own them. Relatively speaking, you can dispose of your rights to your own\n"
 "security tokens. First reason to do this, we tokenize your token ownership and call it wrapped tokens (further\n"
 "as a wSEC)."
+msgstr ""
+
+#: src/pages/Swap/SwapButtons.tsx
+#: src/state/swap/hooks.ts
+msgid "Authorization missing"
 msgstr ""
 
 #: 
@@ -248,8 +332,12 @@ msgstr "Tilbage"
 msgid "Balance of IXGov"
 msgstr ""
 
+#: 
+#~ msgid "Balance of IXS"
+#~ msgstr ""
+
 #: src/components/Header/IXSBalanceModal.tsx
-msgid "Balance of IXS"
+msgid "Balance of {0}"
 msgstr ""
 
 #: src/components/CurrencyInputPanel/index.tsx
@@ -272,30 +360,46 @@ msgstr "Bedst for de fleste par."
 msgid "Best for stable pairs."
 msgstr "Bedst for stabile par."
 
+#: src/pages/CreateNFT/CreateForm.tsx
+msgid "Blockchain"
+msgstr ""
+
 #: src/components/Blocklist/index.tsx
 msgid "Blocked address"
 msgstr "Blokeret adresse"
 
+#: src/pages/Farming/Staking/NoIXSTokens.tsx
+msgid "Bridge IXS to Polygon"
+msgstr ""
+
 #: src/components/Vault/ChooseBrokerDealerPopup.tsx
 msgid "Broker dealer and Custodian"
+msgstr ""
+
+#: src/pages/AdminKyc/index.tsx
+msgid "Broker-dealer Transactions"
 msgstr ""
 
 #: src/components/SearchModal/ImportList.tsx
 msgid "By adding this list you are implicitly trusting that the data is correct. Anyone can create a list, including creating fake versions of existing lists and lists that claim to represent projects that do not have one."
 msgstr "Ved at tilføje denne liste har du implicit tillid til, at dataene er korrekte. Alle kan oprette en liste, herunder skabe falske versioner af eksisterende lister og lister, der hævder at repræsentere projekter, der ikke har en."
 
+#: 
+#~ msgid "By connecting a wallet, you agree to IXSwap’ <0>Terms and Conditions</0> and acknowledge that you have read and understand the <1>IXSwap Privacy Policy</1>."
+#~ msgstr "Ved at forbinde en tegnebog accepterer du IXSwap '<0> vilkår og betingelser </0> og anerkender at du har læst og forstået <1> IXSwap-fortrolighedspolitikken </1>."
+
 #: src/components/WalletModal/index.tsx
-msgid "By connecting a wallet, you agree to IXSwap’ <0>Terms and Conditions</0> and acknowledge that you have read and understand the <1>IXSwap Privacy Policy</1>."
-msgstr "Ved at forbinde en tegnebog accepterer du IXSwap '<0> vilkår og betingelser </0> og anerkender at du har læst og forstået <1> IXSwap-fortrolighedspolitikken </1>."
+msgid "By connecting a wallet, you agree to IXSwap’s <0>Terms and Conditions</0> and acknowledge that you have read and understood the <1>IXSwap Privacy Policy</1>."
+msgstr ""
 
 #: 
 #: 
 #~ msgid "Cancel"
 #~ msgstr ""
 
-#: src/components/Vault/TransactionDetails.tsx
-msgid "Cancel deposit"
-msgstr ""
+#: 
+#~ msgid "Cancel deposit"
+#~ msgstr ""
 
 #: src/components/Vault/enum.ts
 msgid "Cancelled"
@@ -305,6 +409,10 @@ msgstr ""
 #~ msgid "Change"
 #~ msgstr "Skift"
 
+#: src/pages/CreateNFT/PropertiesPopup.tsx
+msgid "Character"
+msgstr ""
+
 #: 
 #~ msgid "Check"
 #~ msgstr ""
@@ -313,8 +421,12 @@ msgstr ""
 msgid "Check any address"
 msgstr ""
 
+#: 
+#~ msgid "Checking your KYC on primary issuer"
+#~ msgstr ""
+
 #: src/components/Vault/NoVault.tsx
-msgid "Checking your KYC on primary issuer"
+msgid "Checking your KYC on {0}"
 msgstr ""
 
 #: src/components/CurrencyInputPanel/index.tsx
@@ -375,8 +487,12 @@ msgstr ""
 msgid "Claimed rewards"
 msgstr ""
 
+#: 
+#~ msgid "Claimed {0} IXS"
+#~ msgstr ""
+
 #: src/state/vesting/hooks.ts
-msgid "Claimed {0} IXS"
+msgid "Claimed {0} {1}"
 msgstr ""
 
 #: 
@@ -389,6 +505,7 @@ msgstr ""
 msgid "Clear all"
 msgstr "Ryd alle"
 
+#: src/components/GeneralModal/GeneralModal.tsx
 #: src/components/TransactionConfirmationModal/index.tsx
 #: src/components/TransactionConfirmationModal/index.tsx
 #: src/components/Vault/DepositError.tsx
@@ -423,7 +540,7 @@ msgstr "Bekræft Tilførsel"
 msgid "Confirm Swap"
 msgstr "Bekræft skift"
 
-#: src/pages/Swap/index.tsx
+#: src/pages/Swap/SwapButtons.tsx
 msgid "Confirm swap"
 msgstr ""
 
@@ -439,7 +556,7 @@ msgstr "Bekræft denne transaktion i din tegnebog"
 #: src/pages/Farming/Vesting/ConnectWalletVesting.tsx
 #: src/pages/Pool/ConnectWallet.tsx
 #: src/pages/RemoveLiquidity/index.tsx
-#: src/pages/Swap/index.tsx
+#: src/pages/Swap/SwapButtons.tsx
 #: src/state/burn/hooks.ts
 #: src/state/deposit/hooks.ts
 #: src/state/mint/hooks.ts
@@ -486,9 +603,13 @@ msgid "Contract:"
 msgstr ""
 
 #: src/components/AccountDetails/Copy.tsx
+#: src/components/AdminKycTable/index.tsx
+#: src/components/AdminTransactionsTable/index.tsx
+#: src/components/Vault/DepositSendInfo.tsx
 #: src/components/Vault/DepositSendInfo.tsx
 #: src/components/Vault/TransactionDetails.tsx
 #: src/components/Vault/WithdrawPending.tsx
+#: src/pages/Farming/Staking/NoIXSTokens.tsx
 msgid "Copied"
 msgstr "Kopieret"
 
@@ -504,9 +625,23 @@ msgstr "Kopiér Adresse"
 msgid "Copy this address and send tokens to this wallet."
 msgstr ""
 
+#: src/state/user/hooks.tsx
+msgid "Could not get accredited because of login. Please try again"
+msgstr ""
+
 #: 
 #~ msgid "Could not submit withdraw request"
 #~ msgstr ""
+
+#: src/components/Vault/NoVault.tsx
+msgid "Could not verify KYC. Please check your account and/or KYC status on {0}. Retry passing accreditation once your KYC is approved by {1}. [retry]"
+msgstr ""
+
+#: src/components/Header/HeaderLinks.tsx
+#: src/components/Mobile-Menu/Menu.tsx
+#: src/pages/CreateNFT/index.tsx
+msgid "Create NFT"
+msgstr ""
 
 #: src/pages/AddLiquidityV2/ModalBottom.tsx
 msgid "Create Pool & Supply"
@@ -536,6 +671,7 @@ msgstr "Nuværende sats"
 #~ msgid "Custodian"
 #~ msgstr "Depotmand"
 
+#: src/components/AdminTransactionsTable/index.tsx
 #: src/components/Vault/HistoryTable.tsx
 msgid "Date"
 msgstr ""
@@ -546,6 +682,11 @@ msgstr ""
 
 #: src/components/Vault/TransactionDetails.tsx
 msgid "Date:"
+msgstr ""
+
+#: src/components/Header/HeaderLinks.tsx
+#: src/components/Mobile-Menu/Menu.tsx
+msgid "DeFi Terminal"
 msgstr ""
 
 #: src/components/TransactionSettings/index.tsx
@@ -566,8 +707,12 @@ msgstr "Depositum"
 #~ msgid "Deposit liquidity"
 #~ msgstr "Indskud likviditet"
 
+#: 
+#~ msgid "Deposit {0} from {1}"
+#~ msgstr ""
+
 #: src/components/Vault/DepositPopup.tsx
-msgid "Deposit {0} from {1}"
+msgid "Deposit {0} {1}"
 msgstr ""
 
 #: 
@@ -581,6 +726,10 @@ msgstr ""
 #: 
 #~ msgid "Depositing Liquidity"
 #~ msgstr "Indlån Likviditet"
+
+#: src/pages/CreateNFT/CreateForm.tsx
+msgid "Description"
+msgstr ""
 
 #: src/pages/Farming/Vesting/VestingValid.tsx
 msgid "Details"
@@ -616,12 +765,18 @@ msgid "Download"
 msgstr ""
 
 #: src/pages/AddLiquidityV2/SecToSecWarning.tsx
-msgid "Due to increased risk and no reliable mechanism to mitigate IL risks we temporarily disabled the SEC to SEC pools"
+msgid ""
+"Due to increased risk and no reliable mechanism to mitigate IL risks we temporarily disabled the SEC to\n"
+"SEC pools"
 msgstr ""
 
-#: src/components/AdminLogin/index.tsx
-msgid "Email"
-msgstr ""
+#: 
+#~ msgid "Due to increased risk and no reliable mechanism to mitigate IL risks we temporarily disabled the SEC to SEC pools"
+#~ msgstr ""
+
+#: 
+#~ msgid "Email"
+#~ msgstr ""
 
 #: src/pages/Farming/Vesting/VestingValid.tsx
 msgid "End Date"
@@ -639,9 +794,9 @@ msgstr "Indtast en modtager"
 msgid "Enter a sender"
 msgstr ""
 
-#: src/components/AdminLogin/index.tsx
-msgid "Enter a valid email"
-msgstr ""
+#: 
+#~ msgid "Enter a valid email"
+#~ msgstr ""
 
 #: src/components/TransactionSettings/index.tsx
 msgid "Enter a valid slippage percentage"
@@ -656,13 +811,13 @@ msgstr "Indtast en gyldig glideprocent"
 msgid "Enter an amount"
 msgstr "Indtast et beløb"
 
-#: src/components/AdminLogin/index.tsx
-msgid "Enter the email"
-msgstr ""
+#: 
+#~ msgid "Enter the email"
+#~ msgstr ""
 
-#: src/components/AdminLogin/index.tsx
-msgid "Enter the password"
-msgstr ""
+#: 
+#~ msgid "Enter the password"
+#~ msgstr ""
 
 #: src/components/SearchModal/ManageLists.tsx
 msgid "Enter valid list location"
@@ -715,11 +870,18 @@ msgstr ""
 msgid "Estimated rewards"
 msgstr ""
 
+#: 
+#~ msgid ""
+#~ "Estimated rewards are based on assumption that your staked amount will be fully kept for the whole period of staking. In this case maximum APY will be applied \n"
+#~ "{0}\n"
+#~ "If you partially or fully unstake your IXS before the end date - 5% APY will be applied to unstaked amount."
+#~ msgstr ""
+
 #: src/pages/Farming/Staking/MyStakingsTable.tsx
 msgid ""
 "Estimated rewards are based on assumption that your staked amount will be fully kept for the whole period of staking. In this case maximum APY will be applied \n"
 "{0}\n"
-"If you partially or fully unstake your IXS before the end date - 5% APY will be applied to unstaked amount."
+"If you partially or fully unstake your {1} before the end date - 5% APY will be applied to unstaked amount."
 msgstr ""
 
 #: src/hooks/useSwitchChain.ts
@@ -739,6 +901,14 @@ msgstr "Eksperttilstand"
 msgid "Expert mode turns off the confirm transaction prompt and allows high slippage trades that often result in bad rates and lost funds."
 msgstr "Eksperttilstand slukker for bekræftelsen transaktion prompt og tillader høj slippage handler, der ofte resulterer i dårlige satser og tabte midler."
 
+#: src/pages/CreateNFT/NSFWRadio.tsx
+msgid "Explicit & Sensitive Content"
+msgstr ""
+
+#: src/pages/CreateNFT/CreateForm.tsx
+msgid "External Link"
+msgstr ""
+
 #: src/components/AdminKycTable/FirstStepStatus.tsx
 #: src/components/AdminKycTable/SecondStepStatus.tsx
 #: src/components/Vault/AccreditationStatus.tsx
@@ -746,12 +916,25 @@ msgstr "Eksperttilstand slukker for bekræftelsen transaktion prompt og tillader
 msgid "Failed"
 msgstr ""
 
+#: src/state/user/hooks.tsx
+msgid "Failed to pass accreditation {0}"
+msgstr ""
+
+#: src/components/Header/HeaderLinks.tsx
+#: src/components/Mobile-Menu/Menu.tsx
+msgid "Faucet"
+msgstr ""
+
 #: src/components/SearchModal/CommonBases.tsx
 msgid "Featured Tokens"
 msgstr ""
 
+#: 
+#~ msgid "Found address<0/>{0}<1/>doesn’t have IXS vesting"
+#~ msgstr ""
+
 #: src/pages/Farming/Vesting/ZeroBalanceVesting.tsx
-msgid "Found address<0/>{0}<1/>doesn’t have IXS vesting"
+msgid "Found address<0/>{0}<1/>doesn’t have {1} vesting"
 msgstr ""
 
 #: src/components/swap/CurrencyInput.tsx
@@ -767,26 +950,42 @@ msgstr "Fra (mest)"
 msgid "From my {0} wallet"
 msgstr ""
 
+#: 
+#~ msgid "Full amount of APY is applied only to amount of IXS staked till the end of staking period."
+#~ msgstr ""
+
 #: src/pages/Farming/Staking/MyStakingsTable.tsx
-msgid "Full amount of APY is applied only to amount of IXS staked till the end of staking period."
+msgid "Full amount of APY is applied only to amount of {0} staked till the end of staking period."
 msgstr ""
 
-#: src/pages/Swap/index.tsx
-#: src/pages/Swap/index.tsx
-msgid "Get authorization"
+#: src/pages/Farming/Staking/GasWarning.tsx
+msgid "Gas fees may be very high for staking. Note that in order to submit staking, two transactions must be signed. The second transaction might be significantly more expensive than the first one. Please<0>check Gas fees</0>."
 msgstr ""
+
+#: src/pages/Faucet/index.tsx
+msgid "Get Test Tokens"
+msgstr ""
+
+#: 
+#: 
+#~ msgid "Get authorization"
+#~ msgstr ""
 
 #: src/pages/Farming/Staking/NoIXSTokens.tsx
 msgid "Go to Telegram"
+msgstr ""
+
+#: src/pages/Farming/Staking/NoIXSTokens.tsx
+msgid "Got IXS on Ethereum? You can bridge them to Polygon. Use IXS contract address to find it on AlianceBridge {0}"
 msgstr ""
 
 #: 
 #~ msgid "Having vesting on {0}? Switch"
 #~ msgstr ""
 
-#: src/pages/Farming/Vesting/PrivateBuyer.tsx
-msgid "Hi! Сurrently you have <0>{0}</0> of unvested IXS that will be vested over the next <1>{1} months</1>. Your next IXS payment will be available on <2>8 October</2> and vesting balances will be updated here."
-msgstr ""
+#: 
+#~ msgid "Hi! Сurrently you have <0>{0}</0> of unvested IXS that will be vested over the next <1>{1} months</1>. Your next IXS payment will be available on <2>8 October</2> and vesting balances will be updated here."
+#~ msgstr ""
 
 #: src/pages/SecTokenDetails/index.tsx
 msgid "Hide"
@@ -796,9 +995,9 @@ msgstr ""
 #~ msgid "High Price Impact"
 #~ msgstr "Høj Prisvirkning"
 
-#: src/pages/Swap/index.tsx
-msgid "High price impact"
-msgstr ""
+#: 
+#~ msgid "High price impact"
+#~ msgstr ""
 
 #: src/components/Vault/HistoryBlock.tsx
 msgid "History"
@@ -820,14 +1019,18 @@ msgstr ""
 msgid "I want to withdraw:"
 msgstr ""
 
-#: src/components/Header/HeaderLinks.tsx
-msgid "IXS Farming"
-msgstr ""
+#: 
+#~ msgid "IXS Farming"
+#~ msgstr ""
 
 #: src/components/Header/HeaderLinks.tsx
-#: src/components/Mobile-Menu/Menu.tsx
-msgid "IXS Liquidity Mining"
+msgid "IXS Farms"
 msgstr ""
+
+#: 
+#: 
+#~ msgid "IXS Liquidity Mining"
+#~ msgstr ""
 
 #: 
 #~ msgid "IXS Rewards"
@@ -837,9 +1040,9 @@ msgstr ""
 #~ msgid "IXS Rewards (on quit)"
 #~ msgstr "IXS-belønninger (ved afslutning)"
 
-#: src/pages/Farming/Vesting/ZeroBalanceVesting.tsx
-msgid "IXS in Telegram"
-msgstr ""
+#: 
+#~ msgid "IXS in Telegram"
+#~ msgstr ""
 
 #: src/pages/RemoveLiquidity/ModalBottom.tsx
 msgid "IXS {0}/{1} Burned"
@@ -850,18 +1053,32 @@ msgstr "IXS {0}/{1} Brændt"
 msgid "IXSGov to return"
 msgstr ""
 
+#: 
+#: 
+#~ msgid ""
+#~ "IXSgov is a tokenized asset representing your staked IXS on a 1:1 basis. IXSwap distributes the IXSgov to your wallet.\n"
+#~ "{0}\n"
+#~ "You should swap your IXSgov back to IXS during the unstaking process. \n"
+#~ "{1}\n"
+#~ "*Do note that IXS received will be equal to your IXSgov holdings at the time of swap."
+#~ msgstr ""
+
 #: src/pages/Farming/Staking/StakeModal.tsx
 #: src/pages/Farming/Staking/StakeModal.tsx
 msgid ""
-"IXSgov is a tokenized asset representing your staked IXS on a 1:1 basis. IXSwap distributes the IXSgov to your wallet.\n"
-"{0}\n"
-"You should swap your IXSgov back to IXS during the unstaking process. \n"
+"IXSgov is a tokenized asset representing your staked {0} on a 1:1 basis. IXSwap distributes the IXSgov to your wallet.\n"
 "{1}\n"
-"*Do note that IXS received will be equal to your IXSgov holdings at the time of swap."
+"You should swap your IXSgov back to {2} during the unstaking process. \n"
+"{3}\n"
+"*Do note that {4} received will be equal to your IXSgov holdings at the time of swap."
 msgstr ""
 
+#: 
+#~ msgid "If you partially or fully unstake your IXS before the end date - 5% APY will be applied to unstaked amount."
+#~ msgstr ""
+
 #: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
-msgid "If you partially or fully unstake your IXS before the end date - 5% APY will be applied to unstaked amount."
+msgid "If you partially or fully unstake your {0} before the end date - 5% APY will be applied to unstaked amount."
 msgstr ""
 
 #: src/components/SearchModal/ImportList.tsx
@@ -941,11 +1158,11 @@ msgstr ""
 msgid "Insufficient balance"
 msgstr ""
 
-#: src/pages/Swap/index.tsx
+#: src/pages/Swap/SwapButtons.tsx
 msgid "Insufficient liquidity for this trade"
 msgstr "Utilstrækkelig likviditet til denne handel"
 
-#: src/pages/Swap/index.tsx
+#: src/pages/Swap/SwapButtons.tsx
 msgid "Insufficient liquidity for this trade. Try enabling multi-hop trades."
 msgstr "Utilstrækkelig likviditet til denne handel. Prøv at aktivere multi-hop handler."
 
@@ -972,8 +1189,29 @@ msgstr "Ugyldig modtager"
 msgid "Issuer:"
 msgstr ""
 
+#: src/pages/CreateNFT/CreateForm.tsx
+msgid "Item name"
+msgstr ""
+
+#: src/pages/AdminKyc/index.tsx
+msgid "KYC"
+msgstr ""
+
+#: 
+#~ msgid "KYC approved on primary issuer. Waiting for KYC approval on Custodian..."
+#~ msgstr ""
+
 #: src/components/Vault/NoVault.tsx
-msgid "KYC approved on primary issuer. Waiting for KYC approval on Custodian..."
+msgid "KYC approved on {0}. Waiting for KYC approval on Custodian..."
+msgstr ""
+
+#: src/pages/CreateNFT/types.ts
+msgid "Levels"
+msgstr ""
+
+#: src/components/Header/HeaderLinks.tsx
+#: src/components/Mobile-Menu/Menu.tsx
+msgid "Liquidity Mining - Uniswap"
 msgstr ""
 
 #: src/pages/Pool/LiquidityTitle.tsx
@@ -1004,11 +1242,18 @@ msgstr "Indlæser"
 msgid "Lock Period"
 msgstr ""
 
+#: 
+#~ msgid ""
+#~ "Lock period means the time you won’t be able to unstake your IXS fully or partially. Please carefully consider the risks involved.\n"
+#~ "{0}\n"
+#~ "You will be able to redeem your staked IXS fully or partially after lock period."
+#~ msgstr ""
+
 #: src/pages/Farming/Staking/StakingTierCard.tsx
 msgid ""
-"Lock period means the time you won’t be able to unstake your IXS fully or partially. Please carefully consider the risks involved.\n"
-"{0}\n"
-"You will be able to redeem your staked IXS fully or partially after lock period."
+"Lock period means the time you won’t be able to unstake your {0} fully or partially. Please carefully consider the risks involved.\n"
+"{1}\n"
+"You will be able to redeem your staked {2} fully or partially after lock period."
 msgstr ""
 
 #: src/pages/Farming/Staking/MyStakingsTable.tsx
@@ -1062,13 +1307,22 @@ msgstr "Maks."
 msgid "Max Price"
 msgstr "Max Pris"
 
+#: 
+#~ msgid ""
+#~ "Maximum Capacity:\n"
+#~ "{0}\n"
+#~ "Staked IXS in Pool: \n"
+#~ "{1} IXS\n"
+#~ "{2}"
+#~ msgstr ""
+
 #: src/pages/Farming/Staking/StakingTierCard.tsx
 msgid ""
 "Maximum Capacity:\n"
 "{0}\n"
-"Staked IXS in Pool: \n"
-"{1} IXS\n"
-"{2}"
+"Staked {1} in Pool: \n"
+"{2} {3}\n"
+"{4}"
 msgstr ""
 
 #: src/components/AdminKycTable/RejectModal.tsx
@@ -1098,6 +1352,11 @@ msgstr "Minimum modtaget"
 msgid "My Liquidity"
 msgstr "Min likviditet"
 
+#: src/components/Header/HeaderLinks.tsx
+#: src/components/Mobile-Menu/Menu.tsx
+msgid "My NFTs"
+msgstr ""
+
 #: src/pages/Custodian/index.tsx
 msgid "My Securities"
 msgstr ""
@@ -1114,9 +1373,21 @@ msgstr "Min poolandel"
 msgid "My {symbolText} Vault"
 msgstr ""
 
-#: src/components/Vault/DepositSendInfo.tsx
-msgid "Need to send"
+#: src/components/Header/HeaderLinks.tsx
+msgid "NFT"
 msgstr ""
+
+#: src/components/AdminTransactionsTable/index.tsx
+#: src/pages/CreateNFT/CreateForm.tsx
+#: src/pages/CreateNFT/LevelsPopup.tsx
+#: src/pages/CreateNFT/PropertiesPopup.tsx
+#: src/pages/CreateNFT/PropertiesPopup.tsx
+msgid "Name"
+msgstr ""
+
+#: 
+#~ msgid "Need to send"
+#~ msgstr ""
 
 #: src/components/SearchModal/CurrencyList.tsx
 msgid "Needs accreditation"
@@ -1131,6 +1402,7 @@ msgid "Next rewards on"
 msgstr ""
 
 #: src/components/AdminKycTable/index.tsx
+#: src/components/AdminTransactionsTable/index.tsx
 msgid "No data"
 msgstr ""
 
@@ -1150,6 +1422,18 @@ msgstr "Ingen resultater fundet."
 
 #: src/pages/Custodian/EmptyState.tsx
 msgid "No securities found."
+msgstr ""
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Not enough {0}"
+msgstr ""
+
+#: src/pages/CreateNFT/types.ts
+msgid "Numerical traits that just show as numbers"
+msgstr ""
+
+#: src/pages/CreateNFT/types.ts
+msgid "Numerical traits that show as a progress bar"
 msgstr ""
 
 #: 
@@ -1219,9 +1503,9 @@ msgstr ""
 msgid "Passing accreditation"
 msgstr ""
 
-#: src/components/AdminLogin/index.tsx
-msgid "Password"
-msgstr ""
+#: 
+#~ msgid "Password"
+#~ msgstr ""
 
 #: src/components/AdminKycTable/FirstStepStatus.tsx
 #: src/components/AdminKycTable/SecondStepStatus.tsx
@@ -1268,9 +1552,9 @@ msgstr "Opret forbindelse til det relevante Ethereum-netværk."
 msgid "Please provide sender’s address in order to approve this transaction. Other adresses will be rejected."
 msgstr ""
 
-#: src/components/Vault/ChooseBrokerDealerPopup.tsx
-msgid "Please try again."
-msgstr ""
+#: 
+#~ msgid "Please try again."
+#~ msgstr ""
 
 #: src/components/Settings/ExpertModeModal.tsx
 msgid "Please type the word \"{confirmWord}\" to enable expert mode."
@@ -1297,6 +1581,10 @@ msgstr ""
 #: 
 #~ msgid "Pool limitation: 2 000 000"
 #~ msgstr ""
+
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Pool limits exceeded"
+msgstr ""
 
 #: src/components/earn/PoolCard.tsx
 msgid "Pool rate"
@@ -1337,12 +1625,11 @@ msgstr "Pris Opdateret"
 msgid "Price impact"
 msgstr ""
 
-#: src/pages/Swap/index.tsx
-#: src/pages/Swap/index.tsx
+#: src/pages/Swap/SwapButtons.tsx
 msgid "Price impact is high. Swap anyway"
 msgstr ""
 
-#: src/pages/Swap/index.tsx
+#: src/pages/Swap/SwapButtons.tsx
 msgid "Price impact too high"
 msgstr ""
 
@@ -1356,6 +1643,18 @@ msgstr ""
 
 #: src/pages/Farming/Vesting/VestingTable.tsx
 msgid "Progress"
+msgstr ""
+
+#: src/pages/CreateNFT/types.ts
+msgid "Properties"
+msgstr ""
+
+#: src/pages/CreateNFT/PropertiesPopup.tsx
+msgid "Properties show up underneath your item, are clickable, and can be filtered in your collection's sidebar."
+msgstr ""
+
+#: src/pages/CreateNFT/CreateForm.tsx
+msgid "Provide a detailed description of your item"
 msgstr ""
 
 #: src/pages/AddLiquidityV2/ModalBottom.tsx
@@ -1436,6 +1735,10 @@ msgstr "Fjerner {0} {1} og {2} {3}"
 msgid "Requested"
 msgstr ""
 
+#: src/components/AdminTransactionsTable/index.tsx
+msgid "Response"
+msgstr ""
+
 #: src/components/Settings/SettingsModal.tsx
 msgid "Restricts swaps to direct pairs only."
 msgstr "Begræns swaps til direkte par."
@@ -1474,6 +1777,10 @@ msgstr ""
 msgid "SWAP"
 msgstr ""
 
+#: src/components/AdminTransactionsTable/index.tsx
+msgid "Search for Wallet"
+msgstr ""
+
 #: src/pages/AdminKyc/Search.tsx
 msgid "Search for Wallet or Token"
 msgstr ""
@@ -1487,7 +1794,7 @@ msgstr "Søg eller indsæt adresse"
 msgid "Sec to sec pools forbidden"
 msgstr ""
 
-#: src/components/Vault/DepositRequestForm.tsx
+#: src/components/Vault/DepositAboutWrapping.tsx
 msgid ""
 "Second reason you need wSEC is to be able to trade SEC for other ERC-20 tokens on decentralized platforms like\n"
 "IXS. Because decentralized platforms running on Ethereum use smart contracts to facilitate trades directly\n"
@@ -1508,6 +1815,10 @@ msgstr ""
 msgid "Select Pool"
 msgstr "Vælg Pool"
 
+#: src/components/Header/NetworkCard.tsx
+msgid "Select a network"
+msgstr ""
+
 #: src/components/FeeSelector/index.tsx
 msgid "Select a pool type based on your preferred liquidity provider fee."
 msgstr "Vælg en pulje type baseret på din foretrukne likviditet udbyder gebyr."
@@ -1521,13 +1832,17 @@ msgstr "Vælg en pulje type baseret på din foretrukne likviditet udbyder gebyr.
 msgid "Select a token to swap"
 msgstr "Vælg et token, du vil bytte"
 
+#: src/pages/Faucet/index.tsx
+msgid "Select token"
+msgstr ""
+
 #: src/components/Vault/WithdrawRequestForm.tsx
 msgid "Send"
 msgstr ""
 
-#: src/components/Vault/DepositSendInfo.tsx
-msgid "Send {0} here"
-msgstr ""
+#: 
+#~ msgid "Send {0} here"
+#~ msgstr ""
 
 #: src/components/Vault/TransactionDetails.tsx
 msgid "Send {0} to:"
@@ -1541,9 +1856,9 @@ msgstr ""
 #~ msgid "Sender's wallet"
 #~ msgstr ""
 
-#: src/components/Vault/DepositSendInfo.tsx
-msgid "Sender’s wallet:"
-msgstr ""
+#: 
+#~ msgid "Sender’s wallet:"
+#~ msgstr ""
 
 #: src/components/Vault/WithdrawPending.tsx
 msgid "Sending {amount} {0} here"
@@ -1551,6 +1866,14 @@ msgstr ""
 
 #: src/components/Vault/TransactionDetails.tsx
 msgid "Sent from:"
+msgstr ""
+
+#: src/components/Vault/TransactionDetails.tsx
+msgid "Sent to:"
+msgstr ""
+
+#: src/pages/CreateNFT/NSFWRadio.tsx
+msgid "Set this item as explicit and sensitive content"
 msgstr ""
 
 #: src/pages/AddLiquidityV2/ModalBottom.tsx
@@ -1579,16 +1902,27 @@ msgstr "Noget gik galt"
 msgid "Something went wrong. Could not deposit amount"
 msgstr ""
 
+#: src/pages/CreateNFT/LevelsPopup.tsx
+msgid "Speed"
+msgstr ""
+
 #: src/pages/Farming/Staking/StakeModal.tsx
 #: src/pages/Farming/Staking/StakeModal.tsx
 msgid "Stake"
 msgstr ""
 
+#: 
+#: 
+#: 
+#: 
+#~ msgid "Stake {amount} IXS for {0}"
+#~ msgstr ""
+
 #: src/state/stake/hooks.ts
 #: src/state/stake/hooks.ts
 #: src/state/stake/hooks.ts
 #: src/state/stake/hooks.ts
-msgid "Stake {amount} IXS for {0}"
+msgid "Staked {amount} {0} for {1}"
 msgstr ""
 
 #: src/components/Header/HeaderLinks.tsx
@@ -1597,7 +1931,6 @@ msgid "Staking"
 msgstr ""
 
 #: src/components/Mobile-Menu/Menu.tsx
-#: src/pages/Farming/Vesting/enum.ts
 msgid "Staking IXS"
 msgstr ""
 
@@ -1605,12 +1938,24 @@ msgstr ""
 msgid "Staking amount"
 msgstr ""
 
+#: 
+#~ msgid "Staking is a great way to maximize the value of your holdings, instead of letting them sit idle in your IXS account!<0/> Once you have staked your assets, you can earn rewards on your holdings. This allows you to grow your token holdings over time."
+#~ msgstr ""
+
 #: src/pages/Farming/Staking/PromoTokenCard.tsx
-msgid "Staking is a great way to maximize the value of your holdings, instead of letting them sit idle in your IXS account!<0/> Once you have staked your assets, you can earn rewards on your holdings. This allows you to grow your token holdings over time."
+msgid "Staking is a great way to maximize the value of your holdings, instead of letting them sit idle in your {0} account!<0/> Once you have staked your assets, you can earn rewards on your holdings. This allows you to grow your token holdings over time."
+msgstr ""
+
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+msgid "Staking options:"
 msgstr ""
 
 #: src/pages/Farming/Staking/StakingTiers.tsx
 msgid "Staking will be opened soon. Wait for the official announcement on <0>our channels</0>."
+msgstr ""
+
+#: src/pages/Farming/StakingTab.tsx
+msgid "Staking {0}"
 msgstr ""
 
 #: src/pages/Farming/Vesting/VestingValid.tsx
@@ -1625,8 +1970,13 @@ msgstr ""
 msgid "Start again"
 msgstr ""
 
+#: src/pages/CreateNFT/types.ts
+msgid "Stats"
+msgstr ""
+
 #: src/components/AdminKycTable/FirstStepStatus.tsx
 #: src/components/AdminKycTable/SecondStepStatus.tsx
+#: src/components/AdminTransactionsTable/index.tsx
 #: src/components/Vault/HistoryTable.tsx
 msgid "Status"
 msgstr ""
@@ -1644,6 +1994,10 @@ msgstr ""
 msgid "Step 2 - Custodian"
 msgstr ""
 
+#: src/pages/Faucet/index.tsx
+msgid "Submit"
+msgstr ""
+
 #: src/pages/AddLiquidityV2/index.tsx
 msgid "Supply"
 msgstr "Forsyning"
@@ -1656,19 +2010,26 @@ msgstr "Forsyning {0} {1} og {2} {3}"
 #: src/components/NavigationTabs/index.tsx
 #: src/components/swap/SwapHeader.tsx
 #: src/pages/Farming/Staking/NoIXSTokens.tsx
-#: src/pages/Swap/index.tsx
-#: src/pages/Swap/index.tsx
+#: src/pages/Swap/SwapButtons.tsx
 msgid "Swap"
 msgstr "Byt"
 
-#: src/state/swap/hooks.ts
-msgid "Swapping two security tokens is not allowed"
-msgstr ""
+#: 
+#~ msgid "Swapping two security tokens is not allowed"
+#~ msgstr ""
 
 #: src/components/swap/ConfirmSwapModal.tsx
 #: src/components/swap/PendingSuccesModals.tsx
 msgid "Swapping {0} {1} for {2} {3}"
 msgstr "Byt {0} {1} til {2} {3}"
+
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+msgid "Switch to Polygon in your Web3 browser"
+msgstr ""
+
+#: src/pages/CreateNFT/types.ts
+msgid "Textual traits that show up as rectangles"
+msgstr ""
 
 #: src/hooks/useSwapCallback.ts
 msgid "The IXswap invariant x*y=k was not satisfied by the swap. This usually means one of the tokens you are swapping incorporates custom behavior on transfer."
@@ -1703,11 +2064,22 @@ msgstr "Transaktionen kunne ikke sendes, fordi fristen er udløbet. Kontroller, 
 #~ msgid "These tokens are commonly paired with other tokens."
 #~ msgstr "Disse tokens er almindeligt parret med andre tokens."
 
+#: 
+#~ msgid ""
+#~ "This amount of rewards is based on assumption that your staked amount will be kept for the whole period of {0}. In this case your APY will be {1}%. If you partially or fully unstake your IXS before the end date 5% APY will be applied to unstaked amount. \n"
+#~ "{2}\n"
+#~ "Please note your rewards will vest over 10 weeks after unstaking."
+#~ msgstr ""
+
 #: src/pages/Farming/Staking/StakeModal.tsx
 msgid ""
-"This amount of rewards is based on assumption that your staked amount will be kept for the whole period of {0}. In this case your APY will be {1}%. If you partially or fully unstake your IXS before the end date 5% APY will be applied to unstaked amount. \n"
-"{2}\n"
+"This amount of rewards is based on assumption that your staked amount will be kept for the whole period of {0}. In this case your APY will be {1}%. If you partially or fully unstake your {2} before the end date 5% APY will be applied to unstaked amount. \n"
+"{3}\n"
 "Please note your rewards will vest over 10 weeks after unstaking."
+msgstr ""
+
+#: src/pages/Faucet/index.tsx
+msgid "This faucet transfers test tokens on Kovan testnet. Confirm details before submitting."
 msgstr ""
 
 #: src/components/SearchModal/ImportToken.tsx
@@ -1738,12 +2110,19 @@ msgstr "Tip:"
 #~ msgid "Tip: Custom tokens are stored locally in your browser"
 #~ msgstr "Tip: Brugerdefinerede tokens gemmes lokalt i din browser"
 
+#: 
+#~ msgid ""
+#~ "Tip: To unstake IXS tokens you need to have enough IXSgov tokens. \n"
+#~ "You can unstake IXS tokens equal to the number of IXSgov tokens in your account."
+#~ msgstr ""
+
 #: src/pages/Farming/Staking/Unstaking/UnstakeModal.tsx
 msgid ""
-"Tip: To unstake IXS tokens you need to have enough IXSgov tokens. \n"
-"You can unstake IXS tokens equal to the number of IXSgov tokens in your account."
+"Tip: To unstake {0} tokens you need to have enough IXSgov tokens. \n"
+"You can unstake {1} tokens equal to the number of IXSgov tokens in your account."
 msgstr ""
 
+#: src/components/Vault/DepositSendInfo.tsx
 #: src/components/swap/CurrencyInput.tsx
 #: src/components/swap/SwapModalHeader.tsx
 msgid "To"
@@ -1753,13 +2132,25 @@ msgstr "Til"
 msgid "To (at least)"
 msgstr "Til (mindst)"
 
+#: 
+#~ msgid "To buy IXS click on swap below or find us on our Telegram channel to learn more."
+#~ msgstr ""
+
 #: src/pages/Farming/Staking/NoIXSTokens.tsx
-msgid "To buy IXS click on swap below or find us on our Telegram channel to learn more."
+msgid "To buy {0} click on swap below or find us on our Telegram channel to learn more."
+msgstr ""
+
+#: 
+#: 
+#~ msgid "To my {0} wallet"
+#~ msgstr ""
+
+#: src/components/Vault/WithdrawRequestForm.tsx
+msgid "To my {networkName} wallet"
 msgstr ""
 
 #: src/components/Vault/DepositRequestForm.tsx
-#: src/components/Vault/WithdrawRequestForm.tsx
-msgid "To my {0} wallet"
+msgid "To your {0} wallet"
 msgstr ""
 
 #: src/components/AdminKycTable/index.tsx
@@ -1792,6 +2183,14 @@ msgstr "I alt deponeret"
 msgid "Total rewards"
 msgstr ""
 
+#: src/components/AdminTransactionsTable/index.tsx
+msgid "Trader's wallet"
+msgstr ""
+
+#: src/components/AdminTransactionsTable/index.tsx
+msgid "Trading pair"
+msgstr ""
+
 #: 
 #~ msgid "Transaction Settings"
 #~ msgstr "Transaktionsindstillinger"
@@ -1809,6 +2208,14 @@ msgstr "Frist for transaktion"
 msgid "Transaction settings"
 msgstr ""
 
+#: src/state/swapHelper/getMessage.ts
+msgid "Transaction was not authorized by {name} broker-dealer. Something went wrong, try again later."
+msgstr ""
+
+#: src/state/swapHelper/getMessage.ts
+msgid "Transaction was successfully authorized by {name} broker-dealer.You can proceed with swapping."
+msgstr ""
+
 #: src/components/WalletModal/PendingView.tsx
 msgid "Try Again"
 msgstr "Prøv Igen"
@@ -1817,17 +2224,28 @@ msgstr "Prøv Igen"
 msgid "Turn On Expert Mode"
 msgstr "Slå Eksperttilstand Til"
 
+#: src/pages/CreateNFT/PropertiesPopup.tsx
+msgid "Type"
+msgstr ""
+
 #: 
 #: 
 #~ msgid "Unclaimed IXS"
 #~ msgstr "Uhævdet IXS"
 
-#: src/components/Vault/NoVault.tsx
-msgid "Unknown error"
-msgstr ""
+#: 
+#~ msgid "Unknown error"
+#~ msgstr ""
 
 #: src/hooks/useSwapCallback.ts
 msgid "Unknown error{0}. Try increasing your slippage tolerance."
+msgstr ""
+
+#: src/state/stake/contstants.ts
+#: src/state/stake/contstants.ts
+#: src/state/stake/contstants.ts
+#: src/state/stake/contstants.ts
+msgid "Unlimited"
 msgstr ""
 
 #: src/pages/Farming/Staking/MyStakingsTable.tsx
@@ -1838,12 +2256,20 @@ msgstr ""
 msgid "Unstake"
 msgstr ""
 
-#: src/pages/Farming/Staking/Unstaking/UnstakeModal.tsx
-msgid "Unstake {0} IXS"
-msgstr ""
+#: 
+#~ msgid "Unstake {0} IXS"
+#~ msgstr ""
 
 #: src/pages/Farming/Staking/Unstaking/UnstakeModal.tsx
-msgid "Unstake {amount} IXS"
+msgid "Unstake {0} {1}"
+msgstr ""
+
+#: 
+#~ msgid "Unstake {amount} IXS"
+#~ msgstr ""
+
+#: src/pages/Farming/Staking/Unstaking/UnstakeModal.tsx
+msgid "Unstake {amount} {0}"
 msgstr ""
 
 #: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
@@ -1859,11 +2285,11 @@ msgstr "Ikke Understøttet Aktiv"
 msgid "Unsupported Assets"
 msgstr "Ikke-Understøttede Aktiver"
 
-#: src/pages/Swap/index.tsx
+#: src/pages/Swap/SwapButtons.tsx
 msgid "Unsupported asset"
 msgstr ""
 
-#: src/pages/Swap/index.tsx
+#: src/pages/Swap/typings.ts
 msgid "Unwrap"
 msgstr "Unwrap"
 
@@ -1875,6 +2301,10 @@ msgstr "Opdater liste"
 msgid "Use this tool to find pairs that don't automatically appear in the interface."
 msgstr "Brug dette værktøj til at finde par, der ikke automatisk vises i grænsefladen."
 
+#: src/pages/CreateNFT/LevelsPopup.tsx
+msgid "Value"
+msgstr ""
+
 #: src/components/Header/HeaderLinks.tsx
 msgid "Vesting"
 msgstr ""
@@ -1884,7 +2314,6 @@ msgid "Vesting Amount"
 msgstr ""
 
 #: src/components/Mobile-Menu/Menu.tsx
-#: src/pages/Farming/Vesting/enum.ts
 msgid "Vesting IXS"
 msgstr ""
 
@@ -1892,30 +2321,47 @@ msgstr ""
 msgid "Vesting on {0}? Switch networks"
 msgstr ""
 
+#: src/pages/Farming/VestingTab.tsx
+msgid "Vesting {0}"
+msgstr ""
+
 #: src/components/SearchModal/ManageLists.tsx
 msgid "View list"
 msgstr "Vis liste"
 
-#: src/components/TransactionConfirmationModal/index.tsx
-#: src/components/Vault/WithDrawSuccess.tsx
-msgid "View on Etherscan"
-msgstr "Se på Etherscan"
+#: 
+#: 
+#~ msgid "View on Etherscan"
+#~ msgstr "Se på Etherscan"
 
 #: src/components/AccountDetails/index.tsx
 msgid "View on Explorer"
+msgstr ""
+
+#: src/components/TransactionConfirmationModal/index.tsx
+#: src/components/Vault/WithDrawSuccess.tsx
+msgid "View on {explorerName}"
 msgstr ""
 
 #: src/components/PositionCard/PoolInformation.tsx
 msgid "View pool information<0>↗</0>"
 msgstr "Se pooloplysninger <0>↗</0>"
 
+#: 
+#~ msgid "View transaction on Etherscan"
+#~ msgstr "Se transaktion på Etherscan"
+
 #: src/components/ModalViews/index.tsx
-msgid "View transaction on Etherscan"
-msgstr "Se transaktion på Etherscan"
+msgid "View transaction on {explorerName}"
+msgstr ""
 
 #: src/components/TransactionConfirmationModal/index.tsx
 msgid "Waiting For Confirmation"
 msgstr "Venter På Bekræftelse"
+
+#: src/pages/Faucet/index.tsx
+msgid "Wallet Address"
+msgstr ""
 
 #: src/components/AdminKycTable/index.tsx
 msgid "Wallet address"
@@ -1938,7 +2384,7 @@ msgstr "Når du tilføjer likviditet, modtager du pool-tokens, der repræsentere
 #~ msgid "When you claim without withdrawing your liquidity remains in the mining pool."
 #~ msgstr "Når du hævder uden at hæve din likviditet forbliver i minedrift puljen."
 
-#: src/components/Vault/DepositRequestForm.tsx
+#: src/components/Vault/DepositAboutWrapping.tsx
 msgid ""
 "When you make a deposit, we create a wrap token and transfer it to your balance. In the future, you have the\n"
 "ability to manage it - change, sell, stake, etc. 1 security token = 1 wrapped token (1 SEC = wSEC)"
@@ -1948,7 +2394,7 @@ msgstr ""
 #~ msgid "When you withdraw, your IXS is claimed and your liquidity is removed from the mining pool."
 #~ msgstr "Når du hæver, hæves din IXS og din likviditet fjernes fra minepuljen."
 
-#: src/components/Vault/DepositRequestForm.tsx
+#: src/components/Vault/DepositAboutWrapping.tsx
 msgid ""
 "When you “wrap” SEC, you are actually not so much wrapping as trading through a smart contract for an equal\n"
 "token called wSEC. If you want to get back a simple SEC, you need to &quot;unfold&quot; it. AKA will exchange\n"
@@ -1998,7 +2444,7 @@ msgstr ""
 #~ msgid "Withdrew IXS-V2!"
 #~ msgstr "Tilbagetræk IXS-V2!"
 
-#: src/pages/Swap/index.tsx
+#: src/pages/Swap/typings.ts
 msgid "Wrap"
 msgstr "Ombryd"
 
@@ -2007,11 +2453,20 @@ msgstr "Ombryd"
 msgid "Wrong Network"
 msgstr "Forkert Netværk"
 
+#: src/pages/Farming/Staking/StakeModal.tsx
+#: src/pages/Farming/Staking/StakeModal.tsx
+msgid "Wrong {0} amount"
+msgstr ""
+
+#: src/components/WalletModal/ErrorSection.tsx
+msgid "You already have a connection in progress. Please check your wallet extension/app"
+msgstr ""
+
 #: src/pages/AddLiquidityV2/index.tsx
 msgid "You are creating a pool"
 msgstr "Du opretter en pool"
 
-#: src/pages/Swap/index.tsx
+#: src/pages/Swap/ApproveButtons.tsx
 msgid "You can now trade {0}"
 msgstr "Du kan nu handle {0}"
 
@@ -2019,12 +2474,20 @@ msgstr "Du kan nu handle {0}"
 msgid "You can test it on Kovan"
 msgstr ""
 
+#: 
+#~ msgid "You don't have any IXS tokens available!"
+#~ msgstr ""
+
 #: src/pages/Farming/Staking/NoIXSTokens.tsx
-msgid "You don't have any IXS tokens available!"
+msgid "You don't have any {0} tokens available!"
 msgstr ""
 
+#: 
+#~ msgid "You don’t have enough IXSGov for unstake all available IXS ({stakeAmount} is available) 1 IXS = 1 IXGov"
+#~ msgstr ""
+
 #: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
-msgid "You don’t have enough IXSGov for unstake all available IXS ({stakeAmount} is available) 1 IXS = 1 IXGov"
+msgid "You don’t have enough IXSGov for unstake all available {0} ({stakeAmount} is available) 1 {1} = 1 IXGov"
 msgstr ""
 
 #: src/pages/PoolFinder/index.tsx
@@ -2039,7 +2502,7 @@ msgstr ""
 msgid "You have no rewards at the moment"
 msgstr ""
 
-#: src/pages/Swap/index.tsx
+#: src/pages/Swap/ApproveButtons.tsx
 msgid "You must give the IXS smart contracts permission to use your {0}. You only have to do this once per token."
 msgstr "Du skal give IXS smarte kontrakter tilladelse til at bruge din {0}. Du skal kun gøre dette en gang pr. Token."
 
@@ -2056,8 +2519,12 @@ msgstr ""
 msgid "You will receive"
 msgstr "Du vil modtage"
 
+#: 
+#~ msgid "You will receive 1 IXSGov for each 1 staked IXS."
+#~ msgstr ""
+
 #: src/pages/Farming/Staking/StakingTiers.tsx
-msgid "You will receive 1 IXSGov for each 1 staked IXS."
+msgid "You will receive 1 IXSGov for each 1 staked {0}."
 msgstr ""
 
 #: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
@@ -2088,11 +2555,13 @@ msgstr "Din stilling har 0 likviditet, og tjener ikke gebyrer."
 msgid "Your rate"
 msgstr "Din sats"
 
+
+
 #: src/pages/Farming/Staking/StakeModal.tsx
 msgid ""
-"Your staked IXS will be locked for {0} till {1}. Until that time you won’t be able to unstake your IXS fully or partially. Please carefully consider the risks involved.\n"
-"{2}\n"
-"You will be able to redeem your staked IXS fully or partially after {3}."
+"Your staked {0} will be locked for {1} till {2}. Until that time you won’t be able to unstake your {3} fully or partially. Please carefully consider the risks involved.\n"
+"{4}\n"
+"You will be able to redeem your staked {5} fully or partially after {6}."
 msgstr ""
 
 #: src/pages/Farming/Vesting/VestingValid.tsx
@@ -2128,7 +2597,7 @@ msgid "Your transactions will appear here..."
 msgstr "Dine transaktioner vises her..."
 
 #: src/components/Vault/WithdrawRequestForm.tsx
-msgid "Your wrapped {0} will be extracted from your Ethereum wallet and burnt automatically."
+msgid "Your wrapped {0} will be extracted from your {networkName} wallet and burnt automatically."
 msgstr ""
 
 #: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
@@ -2156,6 +2625,11 @@ msgstr ""
 msgid "error"
 msgstr ""
 
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+msgid "ethereum"
+msgstr ""
+
 #: src/components/Web3Status/index.tsx
 msgid "has socks emoji"
 msgstr "har sokker emoji"
@@ -2168,8 +2642,31 @@ msgstr "https: // eller ipfs: // eller ENS-navn"
 msgid "minutes"
 msgstr ""
 
+#: src/pages/CreateNFT/LevelsPopup.tsx
+msgid "of"
+msgstr ""
+
 #: src/components/Vault/ExistingVault.tsx
 msgid "on {0} custodian"
+msgstr ""
+
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+msgid "other pools on ethereum"
+msgstr ""
+
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+msgid "other pools on polygon"
+msgstr ""
+
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
+msgid "polygon"
+msgstr ""
+
+#: src/pages/CreateNFT/LevelsPopup.tsx
+msgid "show up underneath your item, are clickable, and can be filtered in your collection's sidebar."
 msgstr ""
 
 #: src/components/Vault/enum.ts
@@ -2186,12 +2683,10 @@ msgid "via {0}"
 msgstr "via {0}"
 
 #: src/components/AdminKycTable/RejectModal.tsx
-#: src/components/AdminLogin/index.tsx
 #: src/components/Header/IXSBalanceModal.tsx
 #: src/components/Toggle/index.tsx
-#: src/components/Vault/ChooseBrokerDealerPopup.tsx
+#: src/pages/Farming/Staking/StakingOtherNetworkCard.tsx
 #: src/pages/Farming/Staking/StakingTableTabs.tsx
-#: src/pages/Farming/Staking/StakingTierCard.tsx
 #: src/pages/Farming/Staking/StakingTierCard.tsx
 #: src/pages/Farming/Staking/StakingTierCard.tsx
 msgid "{0}"
@@ -2210,9 +2705,9 @@ msgstr "{0} Brugerdefinerede poletter"
 msgid "{0} Deposited"
 msgstr "{0} Indbetalt"
 
-#: src/components/Header/index.tsx
-msgid "{0} ETH"
-msgstr "{0} ETH"
+#: 
+#~ msgid "{0} ETH"
+#~ msgstr "{0} ETH"
 
 #: src/components/earn/PoolCard.tsx
 #: src/components/earn/PoolCard.tsx
@@ -2226,6 +2721,14 @@ msgstr "{0} IXS / uge"
 #: src/components/Web3Status/index.tsx
 msgid "{0} Pending"
 msgstr "{0} Afventer"
+
+#: src/pages/Farming/Vesting/ZeroBalanceVesting.tsx
+msgid "{0} in Telegram"
+msgstr ""
+
+#: src/pages/Farming/Staking/StakingTierCard.tsx
+msgid "{0} lock up"
+msgstr ""
 
 #: src/pages/Farming/Staking/StakingTierCard.tsx
 msgid "{0} lock up period"
@@ -2244,8 +2747,20 @@ msgstr "{0} tokens"
 #~ msgid "{0} {1}"
 #~ msgstr ""
 
+#: src/components/Vault/DepositSendInfo.tsx
+msgid "{0} {1} from"
+msgstr ""
+
 #: src/components/Vault/WithdrawRequestForm.tsx
 msgid "{0} {1} tokens from your wallet {2} will be burned during withdrawal"
+msgstr ""
+
+#: src/components/Vault/WithdrawPopup.tsx
+msgid "{0} {1} will be extracted from your {networkName} wallet and burnt automatically."
+msgstr ""
+
+#: src/components/Header/index.tsx
+msgid "{0} {nativeCurrency}"
 msgstr ""
 
 #: src/components/SearchModal/CurrencyList.tsx
@@ -2258,15 +2773,27 @@ msgstr "{0} • Tilføjet af bruger"
 msgid "{0}%"
 msgstr "{0}%"
 
+#: src/pages/Farming/Staking/StakingTierCard.tsx
+msgid "{0}{shortLimit}"
+msgstr ""
+
 #: src/components/Vault/TransactionDetails.tsx
 msgid "{0} {1}"
+msgstr ""
+
+#: src/components/GeneralModal/GeneralModal.tsx
+msgid "{modalTitle}"
 msgstr ""
 
 #: src/components/AdminKycTable/Pagination.tsx
 msgid "{page} of {totalPages}"
 msgstr ""
 
-#: src/components/Vault/DepositRequestForm.tsx
+#: src/pages/Farming/Staking/StakingTierCard.tsx
+msgid "{shortLimit}"
+msgstr ""
+
+#: src/components/Vault/DepositAboutWrapping.tsx
 msgid "{text}"
 msgstr ""
 
