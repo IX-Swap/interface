@@ -73,9 +73,7 @@ export const LIQUIDITY_ROUTER_ADDRESS: { [key: number]: string } = {
   [80001]: '',
   [137]: '',
 }
-export const MERKLE_DISTRIBUTOR_ADDRESS: { [chainId: number]: string } = {
-  [1]: '0x090D4613473dEE047c3f2706764f49E0821D256e',
-}
+
 export const V2_CORE_FACTORY_ADDRESSES = constructSameAddressMap(FACTORY_ADDRESS)
 export const ARGENT_WALLET_DETECTOR_ADDRESS: { [chainId: number]: string } = {
   [1]: '0xeca4B0bDBf7c55E9b7925919d03CbF8Dc82537E8',

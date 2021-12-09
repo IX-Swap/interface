@@ -1,22 +1,5 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2021-06-01 00:37+0000\n"
-"Mime-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Generator: @lingui/cli\n"
-"Language: tr\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Crowdin-Project: uniswap-interface\n"
-"X-Crowdin-Project-ID: 458284\n"
-"X-Crowdin-Language: tr\n"
-"X-Crowdin-File: en-US.po\n"
-"X-Crowdin-File-ID: 4\n"
-"Project-Id-Version: uniswap-interface\n"
-"Language-Team: Turkish\n"
-"PO-Revision-Date: 2021-06-01 01:34\n"
-"Report-Msgid-Bugs-To: \n"
-"Last-Translator: \n"
 
 #: src/components/earn/PoolCard.tsx
 msgid "${0}"
@@ -178,10 +161,6 @@ msgstr ""
 #: src/hooks/useSwapCallback.ts
 msgid "An error occurred when trying to execute this swap. You may need to increase your slippage tolerance. If that does not work, there may be an incompatibility with the token you are trading."
 msgstr ""
-
-#: 
-#~ msgid "An error occurred when trying to execute this swap. You may need to increase your slippage tolerance. If that does not work, there may be an incompatibility with the token you are trading. Note fee on transfer and rebase tokens are incompatible with Uniswap V3."
-#~ msgstr "Bu değişimi gerçekleştirmeye çalışırken bir hata oluştu. Kayma toleransınızı artırmanız gerekebilir. Bu işe yaramazsa, işlem yaptığınız jetonla uyumsuzluk olabilir. Transfer ve yeniden ödeme jetonları üzerindeki not ücreti, Uniswap V3 ile uyumlu değildir."
 
 #: src/components/AdminKycTable/SecondStepStatus.tsx
 #: src/components/AdminKycTable/SecondStepStatus.tsx
@@ -1695,10 +1674,6 @@ msgstr "{0} {1} yerine {2} {3}"
 msgid "The IXswap invariant x*y=k was not satisfied by the swap. This usually means one of the tokens you are swapping incorporates custom behavior on transfer."
 msgstr ""
 
-#: 
-#~ msgid "The Uniswap invariant x*y=k was not satisfied by the swap. This usually means one of the tokens you are swapping incorporates custom behavior on transfer."
-#~ msgstr "Uniswap değişmez x * y = k, takas tarafından karşılanmadı. Bu genellikle, takas ettiğiniz jetonlardan birinin aktarım sırasında özel davranış içerdiği anlamına gelir."
-
 #: src/hooks/useSwapCallback.ts
 msgid "The input token cannot be transferred. There may be an issue with the input token."
 msgstr "Giriş jetonu aktarılamaz. Giriş jetonuyla ilgili bir sorun olabilir."
@@ -1711,10 +1686,6 @@ msgstr "Piyasa fiyatı, belirttiğiniz fiyat aralığının dışında. Yalnızc
 #: src/hooks/useSwapCallback.ts
 msgid "The output token cannot be transferred. There may be an issue with the output token."
 msgstr "Çıkış belirteci aktarılamaz. Çıkış belirteciyle ilgili bir sorun olabilir."
-
-#: 
-#~ msgid "The output token cannot be transferred. There may be an issue with the output token. Note fee on transfer and rebase tokens are incompatible with Uniswap V3."
-#~ msgstr "Çıkış belirteci aktarılamaz. Çıkış belirteciyle ilgili bir sorun olabilir. Transfer ve yeniden ödeme jetonları üzerindeki not ücreti, Uniswap V3 ile uyumlu değildir."
 
 #: src/components/Badge/RangeBadge.tsx
 msgid "The price of this pool is outside of your selected range. Your position is not currently earning fees."
@@ -1750,10 +1721,6 @@ msgstr ""
 #: src/hooks/useSwapCallback.ts
 msgid "This transaction will not succeed due to price movement. Try increasing your slippage tolerance."
 msgstr ""
-
-#: 
-#~ msgid "This transaction will not succeed due to price movement. Try increasing your slippage tolerance. Note fee on transfer and rebase tokens are incompatible with Uniswap V3."
-#~ msgstr "Fiyat hareketi nedeniyle bu işlem başarılı olmayacak. Kayma toleransınızı artırmayı deneyin. Transfer ve yeniden ödeme jetonları üzerindeki not ücreti, Uniswap V3 ile uyumlu değildir."
 
 #: src/hooks/useSwapCallback.ts
 msgid "This transaction will not succeed either due to price movement or fee on transfer. Try increasing your slippage tolerance."
@@ -1862,10 +1829,6 @@ msgstr ""
 #: src/hooks/useSwapCallback.ts
 msgid "Unknown error{0}. Try increasing your slippage tolerance."
 msgstr ""
-
-#: 
-#~ msgid "Unknown error{0}. Try increasing your slippage tolerance. Note fee on transfer and rebase tokens are incompatible with Uniswap V3."
-#~ msgstr "Bilinmeyen hata{0}. Kayma toleransınızı artırmayı deneyin. Transfer ve yeniden ödeme jetonları üzerindeki not ücreti, Uniswap V3 ile uyumlu değildir."
 
 #: src/pages/Farming/Staking/MyStakingsTable.tsx
 #: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx

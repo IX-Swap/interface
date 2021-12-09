@@ -9,9 +9,6 @@ describe('#contenthashToUri', () => {
       'ipfs://QmPgEqyV3m8SB52BS2j2mJpu9zGprhj2BGCHtRiiw2fdM1'
     )
   })
-  it('uniswap.eth contenthash', () => {
-    expect(contenthashToUri('0xe5010170000f6170702e756e69737761702e6f7267')).toEqual('ipns://app.uniswap.org')
-  })
 })
 
 describe('#hexToUint8Array', () => {
