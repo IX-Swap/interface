@@ -15,17 +15,11 @@ msgstr ""
 msgid "${0}"
 msgstr "${0}"
 
-#: 
-#~ msgid "${0} ETH"
-#~ msgstr "${0} ЕТХ"
 
 #: src/components/earn/PoolCard.tsx
 msgid "${0} {nativeCurrency}"
 msgstr ""
 
-#: 
-#~ msgid "(clear all)"
-#~ msgstr "(избриши све)"
 
 #: src/components/InputStepCounter/InputStepCounter.tsx
 msgid "+{feeAmountFormatted}%"
@@ -159,9 +153,6 @@ msgstr ""
 msgid "Add {0} to Metamask"
 msgstr ""
 
-#: 
-#~ msgid "Add {0} to Metamask <0/>"
-#~ msgstr "Додајте {0} у Метамаск <0 />"
 
 #: src/pages/AddLiquidityV2/index.tsx
 #: src/pages/AddLiquidityV2/index.tsx
@@ -202,13 +193,7 @@ msgstr ""
 msgid "Amount exceeds balance"
 msgstr ""
 
-#: 
-#~ msgid "Amount of IXS to stake"
-#~ msgstr ""
 
-#: 
-#~ msgid "Amount of IXS to unstake"
-#~ msgstr ""
 
 #: src/pages/Farming/Staking/StakeModal.tsx
 msgid "Amount of {0} to stake"
@@ -237,9 +222,6 @@ msgstr ""
 msgid "Approve"
 msgstr "Одобри"
 
-#: 
-#~ msgid "Approve IXS"
-#~ msgstr ""
 
 #: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
 #: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
@@ -252,9 +234,6 @@ msgstr ""
 msgid "Approve {0}"
 msgstr "Одобри {0}"
 
-#: 
-#~ msgid "Approve {amount} IXS"
-#~ msgstr ""
 
 #: src/state/stake/unstake/hooks.ts
 msgid "Approve {amount} IXSGov"
@@ -270,9 +249,6 @@ msgstr ""
 msgid "Approved"
 msgstr "Одобрено"
 
-#: 
-#~ msgid "Approved IXS"
-#~ msgstr ""
 
 #: src/pages/Farming/Staking/StakeModal.tsx
 msgid "Approved {0}"
@@ -282,9 +258,6 @@ msgstr ""
 msgid "Approving"
 msgstr "Одобравање"
 
-#: 
-#~ msgid "Approving IXS"
-#~ msgstr ""
 
 #: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
 #: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
@@ -315,9 +288,6 @@ msgstr ""
 msgid "Authorization missing"
 msgstr ""
 
-#: 
-#~ msgid "Available to deposit: {0}"
-#~ msgstr "Доступно за полог: {0}"
 
 #: src/components/earn/StakingInputPercentage.tsx
 #: src/pages/Farming/Staking/StakeModal.tsx
@@ -332,9 +302,6 @@ msgstr "Назад"
 msgid "Balance of IXGov"
 msgstr ""
 
-#: 
-#~ msgid "Balance of IXS"
-#~ msgstr ""
 
 #: src/components/Header/IXSBalanceModal.tsx
 msgid "Balance of {0}"
@@ -384,46 +351,28 @@ msgstr ""
 msgid "By adding this list you are implicitly trusting that the data is correct. Anyone can create a list, including creating fake versions of existing lists and lists that claim to represent projects that do not have one."
 msgstr "Додавањем ове листе имплицитно верујете да су подаци тачни. Свако може да креира листу, укључујући стварање лажних верзија постојећих листа и листа за које се тврди да представљају пројекте који их немају."
 
-#: 
-#~ msgid "By connecting a wallet, you agree to IXSwap’ <0>Terms and Conditions</0> and acknowledge that you have read and understand the <1>IXSwap Privacy Policy</1>."
-#~ msgstr "Повезивањем новчаника прихватате <0> Услове и одредбе </0> компаније IXSwap и потврђујете да сте прочитали и разумели <1> политику приватности IXSwap </1>."
 
 #: src/components/WalletModal/index.tsx
 msgid "By connecting a wallet, you agree to IXSwap’s <0>Terms and Conditions</0> and acknowledge that you have read and understood the <1>IXSwap Privacy Policy</1>."
 msgstr ""
 
 #: 
-#: 
-#~ msgid "Cancel"
-#~ msgstr ""
 
-#: 
-#~ msgid "Cancel deposit"
-#~ msgstr ""
 
 #: src/components/Vault/enum.ts
 msgid "Cancelled"
 msgstr ""
 
-#: 
-#~ msgid "Change"
-#~ msgstr "Промена"
 
 #: src/pages/CreateNFT/PropertiesPopup.tsx
 msgid "Character"
 msgstr ""
 
-#: 
-#~ msgid "Check"
-#~ msgstr ""
 
 #: src/pages/Farming/Vesting/VestingSearch.tsx
 msgid "Check any address"
 msgstr ""
 
-#: 
-#~ msgid "Checking your KYC on primary issuer"
-#~ msgstr ""
 
 #: src/components/Vault/NoVault.tsx
 msgid "Checking your KYC on {0}"
@@ -444,9 +393,6 @@ msgstr ""
 msgid "Choose token to find your liquidity"
 msgstr ""
 
-#: 
-#~ msgid "Choose token to find your liquidity."
-#~ msgstr "Изаберите жетон да бисте пронашли своју ликвидност."
 
 #: src/pages/Farming/Staking/UnstakedTable.tsx
 #: src/pages/Farming/Vesting/VestingValid.tsx
@@ -458,9 +404,6 @@ msgid "Claim IXS"
 msgstr "Преузми УНИ"
 
 #: 
-#: 
-#~ msgid "Claim accumulated IXS rewards"
-#~ msgstr "Потраживања сакупила УНИ награде"
 
 #: src/state/stake/hooks.ts
 msgid "Claim rewards {formattedAmount}"
@@ -479,26 +422,17 @@ msgid "Claimed"
 msgstr ""
 
 #: 
-#: 
-#~ msgid "Claimed IXS!"
-#~ msgstr "Захтевано УНИ!"
 
 #: src/pages/Farming/Staking/UnstakedTable.tsx
 msgid "Claimed rewards"
 msgstr ""
 
-#: 
-#~ msgid "Claimed {0} IXS"
-#~ msgstr ""
 
 #: src/state/vesting/hooks.ts
 msgid "Claimed {0} {1}"
 msgstr ""
 
 #: 
-#: 
-#~ msgid "Claiming {0} IXS"
-#~ msgstr "Тврдња {0} УНИ"
 
 #: src/components/AccountDetails/index.tsx
 #: src/components/SearchModal/ManageTokens.tsx
@@ -518,9 +452,6 @@ msgstr "Близу"
 msgid "Coming soon"
 msgstr ""
 
-#: 
-#~ msgid "Common bases"
-#~ msgstr "Заједничке основе"
 
 #: src/components/Vault/enum.ts
 #: src/components/Vault/enum.ts
@@ -566,9 +497,6 @@ msgstr "Потврдите ову трансакцију у новчанику"
 msgid "Connect Wallet"
 msgstr "Повежите новчаник"
 
-#: 
-#~ msgid "Connect a wallet"
-#~ msgstr "Прикључите новчаник"
 
 #: src/pages/Pool/v2.tsx
 msgid "Connect a wallet to view your Liquidity."
@@ -590,9 +518,6 @@ msgstr "Повежите се са новчаником да бисте прон
 msgid "Connect to your Web3 wallet to view your vesting progress"
 msgstr ""
 
-#: 
-#~ msgid "Connect wallet"
-#~ msgstr "Повежите новчаник"
 
 #: src/components/AccountDetails/index.tsx
 msgid "Connected with {name}"
@@ -629,9 +554,6 @@ msgstr ""
 msgid "Could not get accredited because of login. Please try again"
 msgstr ""
 
-#: 
-#~ msgid "Could not submit withdraw request"
-#~ msgstr ""
 
 #: src/components/Vault/NoVault.tsx
 msgid "Could not verify KYC. Please check your account and/or KYC status on {0}. Retry passing accreditation once your KYC is approved by {1}. [retry]"
@@ -667,9 +589,6 @@ msgstr ""
 msgid "Current Rate"
 msgstr "Тренутна стопа"
 
-#: 
-#~ msgid "Custodian"
-#~ msgstr "Скрбник"
 
 #: src/components/AdminTransactionsTable/index.tsx
 #: src/components/Vault/HistoryTable.tsx
@@ -703,29 +622,14 @@ msgstr ""
 msgid "Deposit"
 msgstr "Депозит"
 
-#: 
-#~ msgid "Deposit liquidity"
-#~ msgstr "Ликвидност депозита"
 
-#: 
-#~ msgid "Deposit {0} from {1}"
-#~ msgstr ""
 
 #: src/components/Vault/DepositPopup.tsx
 msgid "Deposit {0} {1}"
 msgstr ""
 
-#: 
-#~ msgid "Deposited liquidity:"
-#~ msgstr "Депонована ликвидност:"
 
-#: 
-#~ msgid "Deposited {0} IXS-V2"
-#~ msgstr "Положено {0} УНИ-В2"
 
-#: 
-#~ msgid "Depositing Liquidity"
-#~ msgstr "Депозит ликвидности"
 
 #: src/pages/CreateNFT/CreateForm.tsx
 msgid "Description"
@@ -743,9 +647,6 @@ msgstr "Онемогући Мултихопс"
 msgid "Disconnect"
 msgstr "Прекини везу"
 
-#: 
-#~ msgid "Dismiss"
-#~ msgstr "Одбаци"
 
 #: src/pages/Farming/Staking/StakeModal.tsx
 #: src/pages/Farming/Staking/StakeModal.tsx
@@ -770,13 +671,7 @@ msgid ""
 "SEC pools"
 msgstr ""
 
-#: 
-#~ msgid "Due to increased risk and no reliable mechanism to mitigate IL risks we temporarily disabled the SEC to SEC pools"
-#~ msgstr ""
 
-#: 
-#~ msgid "Email"
-#~ msgstr ""
 
 #: src/pages/Farming/Vesting/VestingValid.tsx
 msgid "End Date"
@@ -794,9 +689,6 @@ msgstr "Унесите примаоца"
 msgid "Enter a sender"
 msgstr ""
 
-#: 
-#~ msgid "Enter a valid email"
-#~ msgstr ""
 
 #: src/components/TransactionSettings/index.tsx
 msgid "Enter a valid slippage percentage"
@@ -811,13 +703,7 @@ msgstr "Унесите важећи проценат клизања"
 msgid "Enter an amount"
 msgstr "Унесите износ"
 
-#: 
-#~ msgid "Enter the email"
-#~ msgstr ""
 
-#: 
-#~ msgid "Enter the password"
-#~ msgstr ""
 
 #: src/components/SearchModal/ManageLists.tsx
 msgid "Enter valid list location"
@@ -870,12 +756,9 @@ msgstr ""
 msgid "Estimated rewards"
 msgstr ""
 
-#: 
-#~ msgid ""
-#~ "Estimated rewards are based on assumption that your staked amount will be fully kept for the whole period of staking. In this case maximum APY will be applied \n"
-#~ "{0}\n"
-#~ "If you partially or fully unstake your IXS before the end date - 5% APY will be applied to unstaked amount."
-#~ msgstr ""
+
+
+
 
 #: src/pages/Farming/Staking/MyStakingsTable.tsx
 msgid ""
@@ -929,9 +812,6 @@ msgstr ""
 msgid "Featured Tokens"
 msgstr ""
 
-#: 
-#~ msgid "Found address<0/>{0}<1/>doesn’t have IXS vesting"
-#~ msgstr ""
 
 #: src/pages/Farming/Vesting/ZeroBalanceVesting.tsx
 msgid "Found address<0/>{0}<1/>doesn’t have {1} vesting"
@@ -950,9 +830,6 @@ msgstr "Од (највише)"
 msgid "From my {0} wallet"
 msgstr ""
 
-#: 
-#~ msgid "Full amount of APY is applied only to amount of IXS staked till the end of staking period."
-#~ msgstr ""
 
 #: src/pages/Farming/Staking/MyStakingsTable.tsx
 msgid "Full amount of APY is applied only to amount of {0} staked till the end of staking period."
@@ -967,9 +844,6 @@ msgid "Get Test Tokens"
 msgstr ""
 
 #: 
-#: 
-#~ msgid "Get authorization"
-#~ msgstr ""
 
 #: src/pages/Farming/Staking/NoIXSTokens.tsx
 msgid "Go to Telegram"
@@ -979,25 +853,13 @@ msgstr ""
 msgid "Got IXS on Ethereum? You can bridge them to Polygon. Use IXS contract address to find it on AlianceBridge {0}"
 msgstr ""
 
-#: 
-#~ msgid "Having vesting on {0}? Switch"
-#~ msgstr ""
 
-#: 
-#~ msgid "Hi! Сurrently you have <0>{0}</0> of unvested IXS that will be vested over the next <1>{1} months</1>. Your next IXS payment will be available on <2>8 October</2> and vesting balances will be updated here."
-#~ msgstr ""
 
 #: src/pages/SecTokenDetails/index.tsx
 msgid "Hide"
 msgstr ""
 
-#: 
-#~ msgid "High Price Impact"
-#~ msgstr "Утицај високе цене"
 
-#: 
-#~ msgid "High price impact"
-#~ msgstr ""
 
 #: src/components/Vault/HistoryBlock.tsx
 msgid "History"
@@ -1019,30 +881,15 @@ msgstr ""
 msgid "I want to withdraw:"
 msgstr ""
 
-#: 
-#~ msgid "IXS Farming"
-#~ msgstr ""
 
 #: src/components/Header/HeaderLinks.tsx
 msgid "IXS Farms"
 msgstr ""
 
 #: 
-#: 
-#~ msgid "IXS Liquidity Mining"
-#~ msgstr ""
 
-#: 
-#~ msgid "IXS Rewards"
-#~ msgstr "IXS награде"
 
-#: 
-#~ msgid "IXS Rewards (on quit)"
-#~ msgstr "IXS награде (напуштање)"
 
-#: 
-#~ msgid "IXS in Telegram"
-#~ msgstr ""
 
 #: src/pages/RemoveLiquidity/ModalBottom.tsx
 msgid "IXS {0}/{1} Burned"
@@ -1054,14 +901,11 @@ msgid "IXSGov to return"
 msgstr ""
 
 #: 
-#: 
-#~ msgid ""
-#~ "IXSgov is a tokenized asset representing your staked IXS on a 1:1 basis. IXSwap distributes the IXSgov to your wallet.\n"
-#~ "{0}\n"
-#~ "You should swap your IXSgov back to IXS during the unstaking process. \n"
-#~ "{1}\n"
-#~ "*Do note that IXS received will be equal to your IXSgov holdings at the time of swap."
-#~ msgstr ""
+
+
+
+
+
 
 #: src/pages/Farming/Staking/StakeModal.tsx
 #: src/pages/Farming/Staking/StakeModal.tsx
@@ -1073,9 +917,6 @@ msgid ""
 "*Do note that {4} received will be equal to your IXSgov holdings at the time of swap."
 msgstr ""
 
-#: 
-#~ msgid "If you partially or fully unstake your IXS before the end date - 5% APY will be applied to unstaked amount."
-#~ msgstr ""
 
 #: src/pages/Farming/Staking/Unstaking/EarlyUnstakeModalContent.tsx
 msgid "If you partially or fully unstake your {0} before the end date - 5% APY will be applied to unstaked amount."
@@ -1197,9 +1038,6 @@ msgstr ""
 msgid "KYC"
 msgstr ""
 
-#: 
-#~ msgid "KYC approved on primary issuer. Waiting for KYC approval on Custodian..."
-#~ msgstr ""
 
 #: src/components/Vault/NoVault.tsx
 msgid "KYC approved on {0}. Waiting for KYC approval on Custodian..."
@@ -1242,12 +1080,9 @@ msgstr "Лоадинг"
 msgid "Lock Period"
 msgstr ""
 
-#: 
-#~ msgid ""
-#~ "Lock period means the time you won’t be able to unstake your IXS fully or partially. Please carefully consider the risks involved.\n"
-#~ "{0}\n"
-#~ "You will be able to redeem your staked IXS fully or partially after lock period."
-#~ msgstr ""
+
+
+
 
 #: src/pages/Farming/Staking/StakingTierCard.tsx
 msgid ""
@@ -1273,9 +1108,6 @@ msgstr "МАКС"
 msgid "Make sure the URL is<0>app.ixswap.io</0>"
 msgstr "Уверите се да је URL <0>app.ixswap.io</0>"
 
-#: 
-#~ msgid "Manage"
-#~ msgstr "Управљати"
 
 #: src/components/SearchModal/CurrencySearch.tsx
 msgid "Manage Token List"
@@ -1285,9 +1117,6 @@ msgstr "Управљање листом токена"
 msgid "Manage this Pool"
 msgstr ""
 
-#: 
-#~ msgid "Manage this pool."
-#~ msgstr "Управљајте овим базеном."
 
 #: src/components/NavigationTabs/index.tsx
 msgid "Manage tokens"
@@ -1307,14 +1136,11 @@ msgstr "Макс"
 msgid "Max Price"
 msgstr "Мак Прице"
 
-#: 
-#~ msgid ""
-#~ "Maximum Capacity:\n"
-#~ "{0}\n"
-#~ "Staked IXS in Pool: \n"
-#~ "{1} IXS\n"
-#~ "{2}"
-#~ msgstr ""
+
+
+
+
+
 
 #: src/pages/Farming/Staking/StakingTierCard.tsx
 msgid ""
@@ -1343,9 +1169,6 @@ msgstr "Мин. Цена"
 msgid "Minimum received"
 msgstr "Минимално примљено"
 
-#: 
-#~ msgid "Minutes"
-#~ msgstr "Минута"
 
 #: src/pages/Pool/NoPairs.tsx
 #: src/pages/Pool/v2.tsx
@@ -1385,9 +1208,6 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: 
-#~ msgid "Need to send"
-#~ msgstr ""
 
 #: src/components/SearchModal/CurrencyList.tsx
 msgid "Needs accreditation"
@@ -1436,13 +1256,7 @@ msgstr ""
 msgid "Numerical traits that show as a progress bar"
 msgstr ""
 
-#: 
-#~ msgid "OFF"
-#~ msgstr "ВАН"
 
-#: 
-#~ msgid "ON"
-#~ msgstr "НА"
 
 #: src/components/Settings/ExpertModeModal.tsx
 msgid "ONLY USE THIS MODE IF YOU KNOW WHAT YOU ARE DOING."
@@ -1456,9 +1270,6 @@ msgstr "Упс! Дошло је до непознате грешке. Освеж
 msgid "Other"
 msgstr ""
 
-#: 
-#~ msgid "Other Sec tokens"
-#~ msgstr ""
 
 #: src/components/Badge/RangeBadge.tsx
 msgid "Out of range"
@@ -1503,9 +1314,6 @@ msgstr ""
 msgid "Passing accreditation"
 msgstr ""
 
-#: 
-#~ msgid "Password"
-#~ msgstr ""
 
 #: src/components/AdminKycTable/FirstStepStatus.tsx
 #: src/components/AdminKycTable/SecondStepStatus.tsx
@@ -1540,9 +1348,6 @@ msgstr ""
 msgid "Please connect to one of the following networks: Main Ethereum, Kovan, Polygon Mainnet, Polygon Mumbai."
 msgstr ""
 
-#: 
-#~ msgid "Please connect to the Kovan or Main Ethereum network."
-#~ msgstr ""
 
 #: src/components/WalletModal/ErrorSection.tsx
 msgid "Please connect to the appropriate Ethereum network."
@@ -1552,9 +1357,6 @@ msgstr "Повежите се са одговарајућом мрежом Ет�
 msgid "Please provide sender’s address in order to approve this transaction. Other adresses will be rejected."
 msgstr ""
 
-#: 
-#~ msgid "Please try again."
-#~ msgstr ""
 
 #: src/components/Settings/ExpertModeModal.tsx
 msgid "Please type the word \"{confirmWord}\" to enable expert mode."
@@ -1578,9 +1380,6 @@ msgstr "Базен пронађен!"
 msgid "Pool limitation:"
 msgstr ""
 
-#: 
-#~ msgid "Pool limitation: 2 000 000"
-#~ msgstr ""
 
 #: src/pages/Farming/Staking/StakeModal.tsx
 msgid "Pool limits exceeded"
@@ -1602,18 +1401,9 @@ msgid "Price"
 msgstr "Цена"
 
 #: 
-#: 
-#~ msgid "Price Impact"
-#~ msgstr "Утицај на цену"
+
 
 #: 
-#~ msgid "Price Impact Too High"
-#~ msgstr "Учинак на цену је превисок"
-
-#: 
-#: 
-#~ msgid "Price Impact is high. Swap Anyway"
-#~ msgstr "Утицај на цену је висок. Замените свеједно"
 
 #: src/components/swap/AcceptChanges.tsx
 #: src/components/swap/SwapModalHeader.tsx
@@ -1693,9 +1483,6 @@ msgstr ""
 msgid "Rejected"
 msgstr ""
 
-#: 
-#~ msgid "Released {0} IXS"
-#~ msgstr ""
 
 #: src/pages/RemoveLiquidity/index.tsx
 msgid "Remove"
@@ -1747,9 +1534,6 @@ msgstr "Ограничава замене само на директне пар�
 msgid "Retry pass accreditation"
 msgstr ""
 
-#: 
-#~ msgid "Return"
-#~ msgstr "Повратак"
 
 #: src/pages/Farming/Staking/UnstakedTable.tsx
 msgid "Rewards in vesting"
@@ -1823,9 +1607,6 @@ msgstr ""
 msgid "Select a pool type based on your preferred liquidity provider fee."
 msgstr "Изаберите врсту базена на основу жељене накнаде за провајдера ликвидности."
 
-#: 
-#~ msgid "Select a token"
-#~ msgstr "Изаберите жетон"
 
 #: src/components/SearchModal/CurrencySearch.tsx
 #: src/components/swap/CurrencyInput.tsx
@@ -1840,9 +1621,6 @@ msgstr ""
 msgid "Send"
 msgstr ""
 
-#: 
-#~ msgid "Send {0} here"
-#~ msgstr ""
 
 #: src/components/Vault/TransactionDetails.tsx
 msgid "Send {0} to:"
@@ -1852,13 +1630,7 @@ msgstr ""
 msgid "Sender is invalid"
 msgstr ""
 
-#: 
-#~ msgid "Sender's wallet"
-#~ msgstr ""
 
-#: 
-#~ msgid "Sender’s wallet:"
-#~ msgstr ""
 
 #: src/components/Vault/WithdrawPending.tsx
 msgid "Sending {amount} {0} here"
@@ -1880,9 +1652,6 @@ msgstr ""
 msgid "Share of Pool"
 msgstr "Удео базена"
 
-#: 
-#~ msgid "Show Portis"
-#~ msgstr "Покажи Портис"
 
 #: src/components/TransactionSettings/index.tsx
 #: src/components/swap/AdvancedSwapDetails.tsx
@@ -1914,9 +1683,6 @@ msgstr ""
 #: 
 #: 
 #: 
-#: 
-#~ msgid "Stake {amount} IXS for {0}"
-#~ msgstr ""
 
 #: src/state/stake/hooks.ts
 #: src/state/stake/hooks.ts
@@ -1938,9 +1704,6 @@ msgstr ""
 msgid "Staking amount"
 msgstr ""
 
-#: 
-#~ msgid "Staking is a great way to maximize the value of your holdings, instead of letting them sit idle in your IXS account!<0/> Once you have staked your assets, you can earn rewards on your holdings. This allows you to grow your token holdings over time."
-#~ msgstr ""
 
 #: src/pages/Farming/Staking/PromoTokenCard.tsx
 msgid "Staking is a great way to maximize the value of your holdings, instead of letting them sit idle in your {0} account!<0/> Once you have staked your assets, you can earn rewards on your holdings. This allows you to grow your token holdings over time."
@@ -2014,9 +1777,6 @@ msgstr "Снабдевање {0} {1} и {2} {3}"
 msgid "Swap"
 msgstr "Замените"
 
-#: 
-#~ msgid "Swapping two security tokens is not allowed"
-#~ msgstr ""
 
 #: src/components/swap/ConfirmSwapModal.tsx
 #: src/components/swap/PendingSuccesModals.tsx
@@ -2060,16 +1820,10 @@ msgstr "Цена овог базена је у вашем одабраном о�
 msgid "The transaction could not be sent because the deadline has passed. Please check that your transaction deadline is not too low."
 msgstr "Трансакција није могла бити послата јер је рок истекао. Молимо вас да проверите да ваш рок за трансакцију није пренизак."
 
-#: 
-#~ msgid "These tokens are commonly paired with other tokens."
-#~ msgstr "Ови токени су обично упарени са другим токенима."
 
-#: 
-#~ msgid ""
-#~ "This amount of rewards is based on assumption that your staked amount will be kept for the whole period of {0}. In this case your APY will be {1}%. If you partially or fully unstake your IXS before the end date 5% APY will be applied to unstaked amount. \n"
-#~ "{2}\n"
-#~ "Please note your rewards will vest over 10 weeks after unstaking."
-#~ msgstr ""
+
+
+
 
 #: src/pages/Farming/Staking/StakeModal.tsx
 msgid ""
@@ -2086,9 +1840,6 @@ msgstr ""
 msgid "This token doesn't appear on the active list(s). Make sure this is the token that you want to trade"
 msgstr ""
 
-#: 
-#~ msgid "This token doesn't appear on the active token list(s). Make sure this is the token that you want to trade."
-#~ msgstr "Овај токен се не појављује на листи активних токена. Уверите се да је ово жетон којим желите да тргујете."
 
 #: src/hooks/useSwapCallback.ts
 msgid "This transaction will not succeed due to price movement. Try increasing your slippage tolerance."
@@ -2106,15 +1857,9 @@ msgstr ""
 msgid "Tip:"
 msgstr "Савет:"
 
-#: 
-#~ msgid "Tip: Custom tokens are stored locally in your browser"
-#~ msgstr "Савет: Прилагођени токени се чувају локално у вашем прегледачу"
 
-#: 
-#~ msgid ""
-#~ "Tip: To unstake IXS tokens you need to have enough IXSgov tokens. \n"
-#~ "You can unstake IXS tokens equal to the number of IXSgov tokens in your account."
-#~ msgstr ""
+
+
 
 #: src/pages/Farming/Staking/Unstaking/UnstakeModal.tsx
 msgid ""
@@ -2132,18 +1877,12 @@ msgstr "До"
 msgid "To (at least)"
 msgstr "До (најмање)"
 
-#: 
-#~ msgid "To buy IXS click on swap below or find us on our Telegram channel to learn more."
-#~ msgstr ""
 
 #: src/pages/Farming/Staking/NoIXSTokens.tsx
 msgid "To buy {0} click on swap below or find us on our Telegram channel to learn more."
 msgstr ""
 
 #: 
-#: 
-#~ msgid "To my {0} wallet"
-#~ msgstr ""
 
 #: src/components/Vault/WithdrawRequestForm.tsx
 msgid "To my {networkName} wallet"
@@ -2191,9 +1930,6 @@ msgstr ""
 msgid "Trading pair"
 msgstr ""
 
-#: 
-#~ msgid "Transaction Settings"
-#~ msgstr "Трансацтион Сеттингс"
 
 #: src/components/TransactionConfirmationModal/index.tsx
 #: src/components/Vault/WithDrawSuccess.tsx
@@ -2229,13 +1965,7 @@ msgid "Type"
 msgstr ""
 
 #: 
-#: 
-#~ msgid "Unclaimed IXS"
-#~ msgstr "УНИ без захтева"
 
-#: 
-#~ msgid "Unknown error"
-#~ msgstr ""
 
 #: src/hooks/useSwapCallback.ts
 msgid "Unknown error{0}. Try increasing your slippage tolerance."
@@ -2256,17 +1986,11 @@ msgstr ""
 msgid "Unstake"
 msgstr ""
 
-#: 
-#~ msgid "Unstake {0} IXS"
-#~ msgstr ""
 
 #: src/pages/Farming/Staking/Unstaking/UnstakeModal.tsx
 msgid "Unstake {0} {1}"
 msgstr ""
 
-#: 
-#~ msgid "Unstake {amount} IXS"
-#~ msgstr ""
 
 #: src/pages/Farming/Staking/Unstaking/UnstakeModal.tsx
 msgid "Unstake {amount} {0}"
@@ -2330,9 +2054,6 @@ msgid "View list"
 msgstr "Погледајте листу"
 
 #: 
-#: 
-#~ msgid "View on Etherscan"
-#~ msgstr "Поглед на Етхерсцан-у"
 
 #: src/components/AccountDetails/index.tsx
 msgid "View on Explorer"
@@ -2347,9 +2068,6 @@ msgstr ""
 msgid "View pool information<0>↗</0>"
 msgstr "Погледајте информације о базену <0>↗</0>"
 
-#: 
-#~ msgid "View transaction on Etherscan"
-#~ msgstr "Погледајте трансакцију на Етхерсцан-у"
 
 #: src/components/ModalViews/index.tsx
 msgid "View transaction on {explorerName}"
@@ -2371,18 +2089,12 @@ msgstr ""
 msgid "Warning:"
 msgstr ""
 
-#: 
-#~ msgid "Weekly Rewards"
-#~ msgstr "Недељне награде"
 
 #: src/pages/AddLiquidityV2/Tip.tsx
 #: src/pages/AddLiquidityV2/Tip.tsx
 msgid "When you add liquidity, you will receive pool tokens representing your position. These tokens automatically earn fees proportional to your share of the pool, and can be redeemed at any time."
 msgstr "Када додате ликвидност, добићете токене базена који представљају вашу позицију. Ови токени аутоматски зарађују накнаде пропорционалне вашем уделу у фонду и могу се искористити у било ком тренутку."
 
-#: 
-#~ msgid "When you claim without withdrawing your liquidity remains in the mining pool."
-#~ msgstr "Када потражите без повлачења, ваша ликвидност остаје у рударском фонду."
 
 #: src/components/Vault/DepositAboutWrapping.tsx
 msgid ""
@@ -2390,9 +2102,6 @@ msgid ""
 "ability to manage it - change, sell, stake, etc. 1 security token = 1 wrapped token (1 SEC = wSEC)"
 msgstr ""
 
-#: 
-#~ msgid "When you withdraw, your IXS is claimed and your liquidity is removed from the mining pool."
-#~ msgstr "Када се повучете, полаже се право на ваш УНИ и ваша ликвидност се уклања из базе рудника."
 
 #: src/components/Vault/DepositAboutWrapping.tsx
 msgid ""
@@ -2405,9 +2114,6 @@ msgstr ""
 msgid "When your assets have been unstaked they will be transferred to your Metamask"
 msgstr ""
 
-#: 
-#~ msgid "Where to send?"
-#~ msgstr ""
 
 #: src/components/Vault/TransactionDetails.tsx
 msgid "Will be cancelled automatically in {deadlineIn} hours"
@@ -2419,14 +2125,8 @@ msgstr ""
 msgid "Withdraw"
 msgstr "Повуците"
 
-#: 
-#~ msgid "Withdraw & Claim"
-#~ msgstr "Повуци и затражи"
 
 #: 
-#: 
-#~ msgid "Withdraw deposited liquidity"
-#~ msgstr "Повући депоновану ликвидност"
 
 #: src/components/Vault/WithdrawPopup.tsx
 msgid "Withdraw from Custodian"
@@ -2436,13 +2136,7 @@ msgstr ""
 msgid "Withdraw {amount} {currencySymbol}"
 msgstr ""
 
-#: 
-#~ msgid "Withdrawing {0} IXS-V2"
-#~ msgstr "Повлачење {0} УНИ-В2"
 
-#: 
-#~ msgid "Withdrew IXS-V2!"
-#~ msgstr "Повукао УНИ-В2!"
 
 #: src/pages/Swap/typings.ts
 msgid "Wrap"
@@ -2474,17 +2168,11 @@ msgstr "Сада можете трговати {0}"
 msgid "You can test it on Kovan"
 msgstr ""
 
-#: 
-#~ msgid "You don't have any IXS tokens available!"
-#~ msgstr ""
 
 #: src/pages/Farming/Staking/NoIXSTokens.tsx
 msgid "You don't have any {0} tokens available!"
 msgstr ""
 
-#: 
-#~ msgid "You don’t have enough IXSGov for unstake all available IXS ({stakeAmount} is available) 1 IXS = 1 IXGov"
-#~ msgstr ""
 
 #: src/pages/Farming/Staking/Unstaking/FullUnstakeModalContent.tsx
 msgid "You don’t have enough IXSGov for unstake all available {0} ({stakeAmount} is available) 1 {1} = 1 IXGov"
@@ -2519,9 +2207,6 @@ msgstr ""
 msgid "You will receive"
 msgstr "Добићете"
 
-#: 
-#~ msgid "You will receive 1 IXSGov for each 1 staked IXS."
-#~ msgstr ""
 
 #: src/pages/Farming/Staking/StakingTiers.tsx
 msgid "You will receive 1 IXSGov for each 1 staked {0}."
@@ -2576,17 +2261,11 @@ msgstr "Ваша трансакција може бити извршена"
 msgid "Your transaction may fail"
 msgstr "Ваша трансакција може пропасти"
 
-#: 
-#~ msgid "Your transaction will revert if it is pending for more than this period of time."
-#~ msgstr "Ваша трансакција ће се вратити ако је на чекању дуже од овог временског периода."
 
 #: src/components/TransactionSettings/index.tsx
 msgid "Your transaction will revert if it is pending for more than this period of time. Value range 1 - 180 min."
 msgstr ""
 
-#: 
-#~ msgid "Your transaction will revert if the price changes unfavorably by more than this percentage."
-#~ msgstr "Ваша трансакција ће се вратити ако се цена неповољно промени за више од овог процента."
 
 #: src/components/TransactionSettings/index.tsx
 msgid "Your transaction will revert if the price changes unfavorably by more than this percentage. Value range 0-50%"
@@ -2705,18 +2384,12 @@ msgstr "{0} Прилагођени жетони"
 msgid "{0} Deposited"
 msgstr "{0} Депоновано"
 
-#: 
-#~ msgid "{0} ETH"
-#~ msgstr "{0} ЕТХ"
 
 #: src/components/earn/PoolCard.tsx
 #: src/components/earn/PoolCard.tsx
 msgid "{0} IXS / week"
 msgstr "{0} УНИ / недељно"
 
-#: 
-#~ msgid "{0} IXS-V2"
-#~ msgstr "{0} УНИ-В2"
 
 #: src/components/Web3Status/index.tsx
 msgid "{0} Pending"
@@ -2734,18 +2407,12 @@ msgstr ""
 msgid "{0} lock up period"
 msgstr ""
 
-#: 
-#~ msgid "{0} sent to:"
-#~ msgstr ""
 
 #: src/components/SearchModal/ImportList.tsx
 #: src/components/SearchModal/ManageLists.tsx
 msgid "{0} tokens"
 msgstr "{0} жетона"
 
-#: 
-#~ msgid "{0} {1}"
-#~ msgstr ""
 
 #: src/components/Vault/DepositSendInfo.tsx
 msgid "{0} {1} from"
