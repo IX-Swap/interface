@@ -1,19 +1,19 @@
-import React, { useState } from 'react'
-
-import Column from 'components/Column'
+import { Trans } from '@lingui/macro'
+import { AddressInput } from 'components/AddressInputPanel/AddressInput'
+import { ButtonIXSWide } from 'components/Button'
+import { TipCard } from 'components/Card'
+import Column, { ColumnCenter } from 'components/Column'
+import Row, { RowFixed } from 'components/Row'
+import { testTokens, TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
 import { useActiveWeb3React } from 'hooks/web3'
 import AppBody from 'pages/AppBody'
-import { testTokens, TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
-import { StyledPageHeader, TYPE } from 'theme'
-import Row, { RowFixed } from 'components/Row'
-import { Trans } from '@lingui/macro'
-import { ButtonIXSWide } from 'components/Button'
-import { AddressInput } from 'components/AddressInputPanel/AddressInput'
-import { FaucetTokenDropdown } from './FaucetTokenDropdown'
-import { useDistributeToken } from 'state/faucet/hooks'
-import { shortAddress } from 'utils'
+import React, { useState } from 'react'
 import { useAddPopup } from 'state/application/hooks'
+import { useDistributeToken } from 'state/faucet/hooks'
 import { useTransactionAdder } from 'state/transactions/hooks'
+import { ExternalLink, StyledPageHeader, TYPE } from 'theme'
+import { shortAddress } from 'utils'
+import { FaucetTokenDropdown } from './FaucetTokenDropdown'
 
 export interface IFaucetToken {
   name: string
@@ -48,50 +48,76 @@ export default function Faucet() {
     }
   }
 
+  const blurred = chainId !== undefined && !TGE_CHAINS_WITH_SWAP.includes(chainId)
+
   return (
     <>
-      <AppBody blurred={chainId !== undefined && !TGE_CHAINS_WITH_SWAP.includes(chainId)}>
-        <StyledPageHeader>
-          <RowFixed>
-            <TYPE.black fontWeight={600} fontSize={22} style={{ marginRight: '8px' }}>
-              <Trans>Get Test Tokens</Trans>
-            </TYPE.black>
-          </RowFixed>
-        </StyledPageHeader>
-        <TYPE.body3>
-          <Trans>This faucet transfers test tokens on Kovan testnet. Confirm details before submitting.</Trans>
-        </TYPE.body3>
-
-        <Column style={{ marginTop: '45px', gap: '11px' }}>
-          <Row>
+      <ColumnCenter>
+        {!blurred && (
+          <TipCard style={{ maxWidth: '592px' }} padding="1rem 36px">
             <TYPE.body1>
-              <Trans>Select token</Trans>
+              In order to get tokens, you must have Еthereum on Kovan. You can get some in the following faucets:
             </TYPE.body1>
-          </Row>
-          <FaucetTokenDropdown selectedToken={selectedToken} onSelect={setSelectedToken} />
-        </Column>
 
-        <Column style={{ marginTop: '22px', gap: '11px' }}>
-          <Row>
-            <TYPE.body1>
-              <Trans>Wallet Address</Trans>
-            </TYPE.body1>
-          </Row>
-          <AddressInput
-            {...{
-              id: 'sender-input',
-              value: shortAddress(account ?? ''),
-              disabled: true,
-              placeholder: 'Paste your wallet',
-              error: !account,
-            }}
-          />
-        </Column>
+            <Column style={{ gap: '10px', marginTop: '5px' }}>
+              <ExternalLink style={{ fontSize: '14px' }} href="https://faucets.chain.link/kovan">
+                - https://faucets.chain.link/kovan
+              </ExternalLink>
 
-        <ButtonIXSWide marginTop="33px" onClick={handleSubmitClicked}>
-          <Trans>Submit</Trans>
-        </ButtonIXSWide>
-      </AppBody>
+              <ExternalLink style={{ fontSize: '14px' }} href="https://ethdrop.dev/">
+                - https://ethdrop.dev
+              </ExternalLink>
+            </Column>
+          </TipCard>
+        )}
+
+        <AppBody blurred={blurred}>
+          <StyledPageHeader>
+            <RowFixed>
+              <TYPE.black fontWeight={600} fontSize={22} style={{ marginRight: '8px' }}>
+                <Trans>Get Test Tokens</Trans>
+              </TYPE.black>
+            </RowFixed>
+          </StyledPageHeader>
+          <TYPE.body3>
+            <Trans>This faucet transfers test tokens on Kovan testnet. Confirm details before submitting.</Trans>
+          </TYPE.body3>
+
+          <TYPE.body3>
+            <Trans>You will receive 10 {selectedToken.name} tokens. The request can be repeated once every hour.</Trans>
+          </TYPE.body3>
+
+          <Column style={{ marginTop: '45px', gap: '11px' }}>
+            <Row>
+              <TYPE.body1>
+                <Trans>Select token</Trans>
+              </TYPE.body1>
+            </Row>
+            <FaucetTokenDropdown selectedToken={selectedToken} onSelect={setSelectedToken} />
+          </Column>
+
+          <Column style={{ marginTop: '22px', gap: '11px' }}>
+            <Row>
+              <TYPE.body1>
+                <Trans>Wallet Address</Trans>
+              </TYPE.body1>
+            </Row>
+            <AddressInput
+              {...{
+                id: 'sender-input',
+                value: shortAddress(account ?? ''),
+                disabled: true,
+                placeholder: 'Paste your wallet',
+                error: !account,
+              }}
+            />
+          </Column>
+
+          <ButtonIXSWide marginTop="33px" onClick={handleSubmitClicked}>
+            <Trans>Submit</Trans>
+          </ButtonIXSWide>
+        </AppBody>
+      </ColumnCenter>
     </>
   )
 }
