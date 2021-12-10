@@ -234,16 +234,16 @@ export function swapErrorToUserReadableMessage(error: any): string {
 
   if (reason?.indexOf('execution reverted: ') === 0) reason = reason.substr('execution reverted: '.length)
   switch (reason) {
-    case 'UniswapV2Router: EXPIRED':
+    case 'IxsV2Router: EXPIRED':
       return t`The transaction could not be sent because the deadline has passed. Please check that your transaction deadline is not too low.`
-    case 'UniswapV2Router: INSUFFICIENT_OUTPUT_AMOUNT':
-    case 'UniswapV2Router: EXCESSIVE_INPUT_AMOUNT':
+    case 'IxsV2Router: INSUFFICIENT_OUTPUT_AMOUNT':
+    case 'IxsV2Router: EXCESSIVE_INPUT_AMOUNT':
       return t`This transaction will not succeed either due to price movement or fee on transfer. Try increasing your slippage tolerance.`
     case 'TransferHelper: TRANSFER_FROM_FAILED':
       return t`The input token cannot be transferred. There may be an issue with the input token.`
-    case 'UniswapV2: TRANSFER_FAILED':
+    case 'IxsV2: TRANSFER_FAILED':
       return t`The output token cannot be transferred. There may be an issue with the output token.`
-    case 'UniswapV2: K':
+    case 'IxsV2: K':
       return t`The IXswap invariant x*y=k was not satisfied by the swap. This usually means one of the tokens you are swapping incorporates custom behavior on transfer.`
     case 'Too little received':
     case 'Too much requested':

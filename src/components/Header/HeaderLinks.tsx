@@ -28,8 +28,11 @@ const HeaderLinksWrap = styled(Row)<{ links: number }>`
   ${({ theme }) => theme.mediaWidth.upToMedium`
     justify-self: flex-end;
   `};
+  @media (max-width: 1250px) {
+    grid-gap: 16px;
+  }
   @media (max-width: 1200px) {
-    grid-gap: 18px;
+    grid-gap: 13px;
   }
   @media (max-width: 1080px) {
     display: none;
@@ -59,11 +62,9 @@ const navLinkStyles = css`
   :focus {
     color: ${({ theme }) => darken(0.05, theme.text2)};
   }
-  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-   font-size: 1rem;
-  padding: 5px 13px;
-
-  `};
+  @media (max-width: 1200px) {
+    font-size: 18px;
+  }
 `
 const StyledNavLink = styled(NavLink).attrs({
   activeClassName,
@@ -153,7 +154,7 @@ export const HeaderLinks = () => {
   useOnClickOutside(farmNode, open ? toggle : undefined)
   useOnClickOutside(nftNode, openNFT ? toggleNFT : undefined)
   return (
-    <HeaderLinksWrap links={SECURITY_TOKENS ? 5 : 4}>
+    <HeaderLinksWrap links={SECURITY_TOKENS ? 6 : 5}>
       {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
         <StyledNavLink id={`swap-nav-link`} to={'/swap'}>
           <Trans>Swap</Trans>
@@ -206,6 +207,11 @@ export const HeaderLinks = () => {
           </RowFixed>
         </Popover>
       </StyledNavLink>
+      {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
+        <StyledNavLink id={`faucet-nav-link`} to={'/faucet'}>
+          <Trans>Faucet</Trans>
+        </StyledNavLink>
+      )}
     </HeaderLinksWrap>
   )
 }
