@@ -1,20 +1,19 @@
-import React, { useState } from 'react'
-
+import { Trans } from '@lingui/macro'
+import { AddressInput } from 'components/AddressInputPanel/AddressInput'
+import { ButtonIXSWide } from 'components/Button'
+import { TipCard } from 'components/Card'
 import Column, { ColumnCenter } from 'components/Column'
+import Row, { RowFixed } from 'components/Row'
+import { testTokens, TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
 import { useActiveWeb3React } from 'hooks/web3'
 import AppBody from 'pages/AppBody'
-import { testTokens, TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
-import { ExternalLink, StyledPageHeader, TYPE } from 'theme'
-import Row, { RowFixed } from 'components/Row'
-import { Trans } from '@lingui/macro'
-import { ButtonIXSWide } from 'components/Button'
-import { AddressInput } from 'components/AddressInputPanel/AddressInput'
-import { FaucetTokenDropdown } from './FaucetTokenDropdown'
-import { useDistributeToken } from 'state/faucet/hooks'
-import { shortAddress } from 'utils'
+import React, { useState } from 'react'
 import { useAddPopup } from 'state/application/hooks'
+import { useDistributeToken } from 'state/faucet/hooks'
 import { useTransactionAdder } from 'state/transactions/hooks'
-import { VioletCard } from 'components/Card'
+import { ExternalLink, StyledPageHeader, TYPE } from 'theme'
+import { shortAddress } from 'utils'
+import { FaucetTokenDropdown } from './FaucetTokenDropdown'
 
 export interface IFaucetToken {
   name: string
@@ -55,25 +54,21 @@ export default function Faucet() {
     <>
       <ColumnCenter>
         {!blurred && (
-          <VioletCard style={{ maxWidth: '592px' }} padding="1rem 36px">
+          <TipCard style={{ maxWidth: '592px' }} padding="1rem 36px">
             <TYPE.body1>
-              In order to get tokens, you must have some ethereum on Kovan. You can get some in the following faucets:
+              In order to get tokens, you must have Еthereum on Kovan. You can get some in the following faucets:
             </TYPE.body1>
 
-            <ul>
-              <li>
-                <ExternalLink style={{ fontSize: '11px' }} href="https://faucets.chain.link/kovan">
-                  https://faucets.chain.link/kovan
-                </ExternalLink>
-              </li>
+            <Column style={{ gap: '10px', marginTop: '5px' }}>
+              <ExternalLink style={{ fontSize: '14px' }} href="https://faucets.chain.link/kovan">
+                - https://faucets.chain.link/kovan
+              </ExternalLink>
 
-              <li>
-                <ExternalLink style={{ fontSize: '11px' }} href="https://ethdrop.dev/">
-                  https://ethdrop.dev
-                </ExternalLink>
-              </li>
-            </ul>
-          </VioletCard>
+              <ExternalLink style={{ fontSize: '14px' }} href="https://ethdrop.dev/">
+                - https://ethdrop.dev
+              </ExternalLink>
+            </Column>
+          </TipCard>
         )}
 
         <AppBody blurred={blurred}>
