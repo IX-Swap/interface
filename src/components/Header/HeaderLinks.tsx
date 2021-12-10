@@ -28,13 +28,13 @@ const HeaderLinksWrap = styled(Row)<{ links: number }>`
   ${({ theme }) => theme.mediaWidth.upToMedium`
     justify-self: flex-end;
   `};
+  @media (max-width: 1500px) {
+    grid-gap: 18px;
+  }
   @media (max-width: 1250px) {
-    grid-gap: 16px;
+    grid-gap: 12px;
   }
   @media (max-width: 1200px) {
-    grid-gap: 13px;
-  }
-  @media (max-width: 1080px) {
     display: none;
   }
 `
@@ -62,8 +62,14 @@ const navLinkStyles = css`
   :focus {
     color: ${({ theme }) => darken(0.05, theme.text2)};
   }
-  @media (max-width: 1200px) {
+  @media (max-width: 1500px) {
     font-size: 18px;
+  }
+  @media (max-width: 1300px) {
+    font-size: 16px;
+  }
+  @media (max-width: 1250px) {
+    font-size: 15px;
   }
 `
 const StyledNavLink = styled(NavLink).attrs({
