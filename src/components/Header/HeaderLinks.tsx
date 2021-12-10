@@ -157,7 +157,7 @@ export const HeaderLinks = () => {
     <HeaderLinksWrap links={SECURITY_TOKENS ? 6 : 5}>
       {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
         <StyledNavLink id={`swap-nav-link`} to={'/swap'}>
-          <Trans>Swap</Trans>
+          <Trans>Secondary Market</Trans>
         </StyledNavLink>
       )}
       {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
@@ -171,7 +171,7 @@ export const HeaderLinks = () => {
             pathname.startsWith('/find')
           }
         >
-          <Trans>Pool</Trans>
+          <Trans>Liquidity Pool</Trans>
         </StyledNavLink>
       )}
 
