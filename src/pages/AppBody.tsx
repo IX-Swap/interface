@@ -1,8 +1,14 @@
 import { Trans } from '@lingui/macro'
-import { ColumnCenter } from 'components/Column'
 import React from 'react'
 import styled from 'styled-components/macro'
+
+import Column, { ColumnCenter } from 'components/Column'
 import { TYPE } from 'theme'
+import { switchToNetwork } from 'hooks/switchToNetwork'
+import { useActiveWeb3React } from 'hooks/web3'
+import { SupportedChainId } from 'constants/chains'
+import { ButtonText } from 'components/Button'
+import Row from 'components/Row'
 
 export const BodyWrapper = styled.div<{ margin?: string; padding?: string; paddingXS?: string }>`
   position: relative;
@@ -41,21 +47,36 @@ export const BlurredOverlay = styled.div`
  * The styled container element that wraps the content of most pages and the tabs.
  */
 export default function AppBody({ children, blurred, ...rest }: { children: React.ReactNode; blurred?: boolean }) {
+  const { library } = useActiveWeb3React()
+
+  const handleCovanClick = () => {
+    if (library && library?.provider?.isMetaMask) {
+      switchToNetwork({ library, chainId: SupportedChainId.KOVAN })
+    }
+  }
+
   return (
     <React.Fragment>
       <BodyWrapper {...rest}>
         {blurred && (
           <BlurredOverlay>
-            <TYPE.titleBig fontWeight={600}>
-              <ColumnCenter>
-                <div>
-                  <Trans>Coming soon</Trans>
-                </div>
-                <div>
-                  <Trans>You can test it on Kovan</Trans>
-                </div>
-              </ColumnCenter>
-            </TYPE.titleBig>
+            <Column>
+              <TYPE.titleBig marginBottom="33px" fontWeight={600}>
+                <ColumnCenter>
+                  <Trans>Mainnet to be deployed soon.</Trans>
+                </ColumnCenter>
+              </TYPE.titleBig>
+              <TYPE.titleSmall fontWeight={600}>
+                <ColumnCenter>
+                  <Row>
+                    <Trans>To use our playground you might switch to</Trans>
+                    <ButtonText marginLeft="4px" onClick={handleCovanClick}>
+                      <Trans>Kovan Testnet.</Trans>
+                    </ButtonText>
+                  </Row>
+                </ColumnCenter>
+              </TYPE.titleSmall>
+            </Column>
           </BlurredOverlay>
         )}
         {children}
