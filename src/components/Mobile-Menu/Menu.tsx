@@ -109,7 +109,7 @@ const ModalContainer = styled.div`
   padding: 32px 18px;
   display: none;
   background: ${({ theme }) => theme.bgG16};
-  @media (max-width: 1080px) {
+  @media (max-width: 1200px) {
     display: block;
     overflow-y: scroll;
   }
