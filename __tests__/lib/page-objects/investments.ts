@@ -1,8 +1,10 @@
+import { baseCreds } from '../helpers/creds'
 import {
   click,
   shouldExist,
   typeText,
   uploadFiles,
+  waitForRequestInclude,
   waitForText,
   waitNewPage
 } from '../helpers/helpers'
@@ -14,6 +16,23 @@ class Invest {
   constructor(page) {
     this.page = page
   }
+
+  checkSearch = async () => {
+    await click(invest.fields.SEARCH, this.page)
+    await typeText(invest.fields.SEARCH, text.dsoName, this.page)
+    await waitForRequestInclude(
+      this.page,
+      `${baseCreds.BASE_API}exchange/markets/list`,
+      'POST'
+    )
+    await shouldExist('[data-testid="icon-button"]', this.page)
+  }
+
+  toTheOverviewPage = async () => {
+    await click(invest.INVEST_TAB, this.page)
+    await click(invest.OVERVIEW_PAGE, this.page)
+  }
+
   goToAvailableDso = async () => {
     await click(invest.INVEST_TAB, this.page)
     await click(invest.PRIMARY_SECTION, this.page)
@@ -66,9 +85,16 @@ class Invest {
     await typeText(invest.fields.PRICE, '1', this.page)
     await typeText(invest.fields.AMOUNT, '1', this.page)
     await click(invest.buttons.PLACE_ORDER, this.page)
-    const toast = await this.page.innerText(invest.TOAST_NOTIFICATIONS)
-    console.log(toast)
-    return toast.includes('Order created')
+    await waitForRequestInclude(
+      this.page,
+      `${baseCreds.BASE_API}exchange/orders`,
+      'POST'
+    )
+    const orderInTable = await shouldExist(
+      invest.TABLE + ' tbody tr',
+      this.page
+    )
+    return orderInTable
   }
 
   secondMarketSell = async () => {
@@ -96,6 +122,20 @@ class Invest {
     await click(invest.buttons.CANCEL_ORDER, this.page)
     const exist = await waitForText(this.page, 'Order Cancelled')
     return exist
+  }
+
+  checkCommitmentsPage = async () => {
+    await click(invest.INVEST_TAB, this.page)
+    await click(invest.PRIMARY_SECTION, this.page)
+    await click(invest.ACCOUNTS_COMMITMENTS, this.page)
+    await shouldExist(invest.TABLE, this.page)
+  }
+  checkRedirectionToCommitment = async () => {
+    await click(invest.buttons.VIEW_SECOND_DSO, this.page)
+    const locator = this.page.locator(
+      '[class="MuiGrid-root fs-exclude MuiGrid-container MuiGrid-spacing-xs-4"]'
+    )
+    return locator
   }
 }
 export { Invest }

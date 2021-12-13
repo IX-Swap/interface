@@ -31,7 +31,7 @@ export const issuance = {
       DSO_STATE: '[aria-disabled="true"]',
       MY_DSO: '[class*="MuiInputBase-root "]',
       DSO_HYBRID_TEST:
-        '[data-value="614066d516b8f4031bfae569:610882b74d322d3d8bbd5882"]'
+        '[data-value="619f5dfcc3f27a0e5f2abde8:6183f9f31c353d0e65ec9b66"]'
     }
   },
 
@@ -102,7 +102,7 @@ export const issuance = {
       CURRENCY_VALUE: 'text="USD"',
 
       CORPORATE: '[id="corporate"]',
-      CORPORATE_VALUE: 'text="Test Company"',
+      CORPORATE_VALUE: 'text="AQA Invest"',
 
       CAPITAL_STRUCTURE: '[id="capitalStructure"]',
       STRUCTURE_VALUE: '[data-value="Equity"]',

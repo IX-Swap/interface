@@ -3,7 +3,7 @@ name: Integration Tests
 on:
   push:
     branches: 
-      - e2e-investments
+      - e2e-edit-identity
 
   pull_request:
     branches: 
@@ -30,6 +30,7 @@ jobs:
         env:
           GH_REP: ${{github.ref}}
           ALLURE_RESULTS_DIR: "reports/allure-results"
+          NODE_OPTIONS: "--max-old-space-size=8192"
         run: yarn integration-test
       - uses: actions/upload-artifact@v2
         if: always()

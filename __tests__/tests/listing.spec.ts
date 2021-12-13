@@ -48,7 +48,6 @@ test.describe('Listing with imported dso', () => {
 
   test('Token validation error appears', async ({ listing, textHelper }) => {
     await listing.fillDocumentsForm()
-    await listing.fillListingPricingForm()
     await listing.fillListeningOfferingTermsForm()
     const error = await listing.checkError(textHelper.errors.tokenSymbol)
     expect(error).toBe(true)

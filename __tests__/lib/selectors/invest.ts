@@ -1,11 +1,16 @@
 export const invest = {
+  TABLE: '[data-testid="table"]',
   TOAST_NOTIFICATIONS: '[data-testid="notification-inner"]',
   INVEST_TAB: '[href="/app/invest"]',
   PRIMARY_SECTION: '[href="/app/invest"] >> text="Primary"',
   LANDING_TABLES_PANEL: '[role="tabpanel"]',
+  OVERVIEW_PAGE: '[href="/app/invest/overview"]',
   SECOND_MARKET: '[href="/app/otc-market"]',
   CHECKBOX: '[type="checkbox"]',
   GRAPH: '[data-testid="pairName"]',
+  ACCOUNTS_COMMITMENTS: '[href="/app/invest/commitments"]',
+  ISSUANCE_COMMITMENTS: '[href="/app/issuance/commitments/:issuerId/:dsoId"]',
+  OFFERS: '[href*="/app/invest/offerings/"]',
 
   buttons: {
     INVEST: '[data-testid="otc-card-link"]',
@@ -20,13 +25,16 @@ export const invest = {
     I_AGREE: 'button >> text="I Agree"',
     DECLINE: 'button >> text="Decline"',
     SELL: 'button >> text="SELL"',
+    VIEW_SECOND_DSO:
+      '[href="/app/invest/commitments/618e3111cc078c0e59014af5/view"]',
     INVEST_ACCOUNT:
       '[href="/app/invest/offerings/617699e04f2dcc0e7d304e4d/6185361bf251660e58fd5ed0/view/make-investment"]'
   },
   fields: {
+    SEARCH: '[placeholder="Search"]',
     PRICE: '[id="price"]',
     AMOUNT: '[id="amount"]',
-    SEARCH: '[placeholder="Search Offers"]',
+    // SEARCH: '[placeholder="Search Offers"]',
     UPLOAD_SIGNED_DOC: '[name="signedSubscriptionDocument"]',
     NUMBER_UNITS: '[id="numberOfUnits"]',
     OTP: '[id="otp"]'
