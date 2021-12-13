@@ -2,14 +2,15 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { TransactionResponse } from '@ethersproject/providers'
 import { Currency, CurrencyAmount, Percent, WETH9 } from '@ixswap1/sdk-core'
 import { t, Trans } from '@lingui/macro'
+import MitigationBadge from 'components/MitigationBadge'
 import UnsupportedCurrencyFooter from 'components/swap/UnsupportedCurrencyFooter'
 import { ConfirmationModalContent } from 'components/TransactionConfirmationModal/ConfirmationModalContent'
-import React, { useCallback, useContext, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { Plus } from 'react-feather'
 import ReactGA from 'react-ga'
 import { RouteComponentProps } from 'react-router-dom'
 import { Box, Text } from 'rebass'
-import { setPoolTransactionHash } from 'state/pool/hooks'
+import { setPoolTransactionHash, useMitigationEnabled } from 'state/pool/hooks'
 import { ThemeContext } from 'styled-components'
 import { routes } from 'utils/routes'
 import { ButtonGradient, ButtonIXSGradient, ButtonIXSWide } from '../../components/Button'
@@ -38,6 +39,7 @@ import { calculateSlippageAmount } from '../../utils/calculateSlippageAmount'
 import { maxAmountSpend } from '../../utils/maxAmountSpend'
 import AppBody from '../AppBody'
 import { Dots } from '../Pool/styleds'
+import { MitigationToggle } from './MitigationToggle'
 import { ModalBottom } from './ModalBottom'
 import { ModalHeader } from './ModalHeader'
 import { PricesAndPoolShare } from './PricesAndPoolShare'
@@ -45,7 +47,6 @@ import { SecToSecWarning } from './SecToSecWarning'
 import { ToggleableBody } from './styleds'
 import { Tip } from './Tip'
 import { useHandleCurrencySelect } from './useHandleCurrencySelect'
-
 const DEFAULT_ADD_V2_SLIPPAGE_TOLERANCE = new Percent(50, 10_000)
 
 export default function AddLiquidity({
@@ -84,16 +85,18 @@ export default function AddLiquidity({
     error,
     areBothSecTokens,
   } = useDerivedMintInfo(currencyA ?? undefined, currencyB ?? undefined)
-
   const { onFieldAInput, onFieldBInput } = useMintActionHandlers(noLiquidity)
   const setCurrentPoolTransctionHash = setPoolTransactionHash()
 
   const isValid = !error
-
+  const mitigationEnabled = useMitigationEnabled(pair?.liquidityToken?.address)
   // modal and loading
   const [showConfirm, setShowConfirm] = useState<boolean>(false)
   const [attemptingTxn, setAttemptingTxn] = useState<boolean>(false) // clicked confirm
-
+  const [enableMitigation, setEnableMitigation] = useState<boolean>(false)
+  const toggleMitigation = useCallback(() => {
+    setEnableMitigation(!enableMitigation)
+  }, [enableMitigation, setEnableMitigation])
   // txn values
   const deadline = useTransactionDeadline() // custom from users settings
   const allowedSlippage = useUserSlippageToleranceWithDefault(DEFAULT_ADD_V2_SLIPPAGE_TOLERANCE) // custom from users
@@ -150,7 +153,7 @@ export default function AddLiquidity({
 
     let estimate,
       method: (...args: any) => Promise<TransactionResponse>,
-      args: Array<string | string[] | number>,
+      args: Array<string | string[] | number | boolean>,
       value: BigNumber | null
     if (currencyA.isNative || currencyB.isNative) {
       const tokenBIsETH = currencyB.isNative
@@ -164,6 +167,9 @@ export default function AddLiquidity({
         account,
         deadline.toHexString(),
       ]
+      if (noLiquidity) {
+        args.push(enableMitigation)
+      }
       value = BigNumber.from((tokenBIsETH ? parsedAmountB : parsedAmountA).quotient.toString())
     } else {
       estimate = router.estimateGas.addLiquidity
@@ -178,6 +184,9 @@ export default function AddLiquidity({
         account,
         deadline.toHexString(),
       ]
+      if (noLiquidity) {
+        args.push(enableMitigation)
+      }
       value = null
     }
     setAttemptingTxn(true)
@@ -288,7 +297,7 @@ export default function AddLiquidity({
       <ToggleableBody isVisible={!showConfirm}>
         <Tip noLiquidity={noLiquidity} isCreate={isCreate} />
         <AppBody>
-          <AddRemoveTabs creating={isCreate} adding={true} />
+          <AddRemoveTabs creating={isCreate} adding={true} showBadge={mitigationEnabled} />
           <>
             <AutoColumn gap="17px">
               <CurrencyInputPanel
@@ -329,6 +338,7 @@ export default function AddLiquidity({
                     price={price}
                   />
                 )}
+                {noLiquidity && <MitigationToggle active={enableMitigation} toggle={toggleMitigation} />}
                 {areBothSecTokens && <SecToSecWarning />}
                 <Box marginTop={'23px'}>
                   {addIsUnsupported ? (

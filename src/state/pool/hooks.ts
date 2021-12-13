@@ -1,7 +1,10 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { useCallback } from 'react'
+import { Contract } from 'ethers'
+import { usePairContract } from 'hooks/useContract'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, AppState } from 'state'
+import { isExternal } from 'util/types'
 import { setPoolTransctionHash } from './actions'
 
 export function getPoolTransactionHash(): null | string {
@@ -17,4 +20,26 @@ export const setPoolTransactionHash = () => {
     },
     [dispatch]
   )
+}
+
+export const useMitigationEnabled = (liquidityAddress?: string) => {
+  const pairContract: Contract | null = usePairContract(liquidityAddress)
+  const [mitigationEnabled, setMitigationEnabled] = useState(false)
+
+  const checkMitigation = useCallback(async () => {
+    if (!pairContract) {
+      return false
+    }
+    const isEnabled = await pairContract.mitigationEnabled()
+    return isEnabled
+  }, [pairContract])
+
+  useEffect(() => {
+    async function check() {
+      const result = await checkMitigation()
+      setMitigationEnabled(result)
+    }
+    check()
+  }, [checkMitigation])
+  return mitigationEnabled
 }

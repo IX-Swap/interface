@@ -10,7 +10,7 @@ import React, { useCallback, useMemo, useState } from 'react'
 import ReactGA from 'react-ga'
 import { RouteComponentProps } from 'react-router'
 import { Box, Text } from 'rebass'
-import { setPoolTransactionHash } from 'state/pool/hooks'
+import { setPoolTransactionHash, useMitigationEnabled } from 'state/pool/hooks'
 import { routes } from 'utils/routes'
 import { ButtonIXSWide } from '../../components/Button'
 import { AutoColumn } from '../../components/Column'
@@ -59,6 +59,7 @@ export default function RemoveLiquidity({
   // burn state
   const { independentField, typedValue } = useBurnState()
   const { pair, parsedAmounts, error } = useDerivedBurnInfo(currencyA ?? undefined, currencyB ?? undefined)
+  const mitigationEnabled = useMitigationEnabled(pair?.liquidityToken?.address)
 
   const isValid = !error
 
@@ -315,7 +316,7 @@ export default function RemoveLiquidity({
         }
       />
       <RemoveLiquidityBody>
-        <AddRemoveTabs creating={false} adding={false} />
+        <AddRemoveTabs creating={false} adding={false} showBadge={mitigationEnabled} />
         <Box>
           <AutoColumn gap="md">
             <RemoveAmount {...{ parsedAmounts, formattedAmounts, onUserInput }} />

@@ -63,17 +63,16 @@ export const IXS_STAKING_V1_ADDRESS: { [key: number]: string } = {
 }
 export const SWAP_ROUTER_ADDRESS: { [key: number]: string } = {
   [1]: '',
-  [42]: '0xF7C90cF724Ef6136cbC1B22d5AdED757e48B3888',
+  [42]: '0xa345dCB1d06b20490c1c01D5bB76AAC37f9212D3',
   [80001]: '',
   [137]: '',
 }
 export const LIQUIDITY_ROUTER_ADDRESS: { [key: number]: string } = {
   [1]: '',
-  [42]: '0xD306285ee5D6e89E6B07985973669BDd7dE4Af2e',
+  [42]: '0xCc49B6B3De85ff809B1837E3aD9A029dF91e295C',
   [80001]: '',
   [137]: '',
 }
-
 export const V2_CORE_FACTORY_ADDRESSES = constructSameAddressMap(FACTORY_ADDRESS)
 export const ARGENT_WALLET_DETECTOR_ADDRESS: { [chainId: number]: string } = {
   [1]: '0xeca4B0bDBf7c55E9b7925919d03CbF8Dc82537E8',
