@@ -39,6 +39,7 @@ export const TopInvestors = ({
           pieStartAngle: -45,
           colors: hasData ? undefined : ['lightgrey'],
           backgroundColor: 'transparent',
+          pieSliceText: hasData ? 'percentage' : 'label',
           legend: hasData
             ? {
                 position: position,
