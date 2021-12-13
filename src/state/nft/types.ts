@@ -17,6 +17,5 @@ export interface NFTImage {
 }
 
 export interface NFTState {
-  readonly images: { [id: number]: NFTImage }
-  readonly imageIds: { [id: number]: string }
+  readonly images: { [id: string]: NFTImage }
 }

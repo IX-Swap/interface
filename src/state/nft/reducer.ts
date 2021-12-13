@@ -1,10 +1,9 @@
 import { createReducer } from '@reduxjs/toolkit'
-import { saveImage, saveImageIds } from './actions'
-import { NFTState } from './types'
+import { saveImage, saveImages } from './actions'
+import { NFTImage, NFTState } from './types'
 
 const initialState: NFTState = {
   images: {},
-  imageIds: {},
 }
 
 export default createReducer<NFTState>(initialState, (builder) =>
@@ -12,7 +11,12 @@ export default createReducer<NFTState>(initialState, (builder) =>
     .addCase(saveImage, (state, { payload: { image, id } }) => {
       state.images[id] = image
     })
-    .addCase(saveImageIds, (state, { payload: { ids } }) => {
-      state.imageIds = ids.reduce((a, v) => ({ ...a, [v]: '' }), {})
+
+    .addCase(saveImages, (state, { payload: { images, ids } }) => {
+      const initial: { [id: string]: NFTImage } = {}
+      const newImageMap = ids.reduce((accum, current: number, id) => {
+        return { ...accum, [String(current)]: images[id] }
+      }, initial)
+      state.images = newImageMap
     })
 )
