@@ -141,8 +141,7 @@ export default function Swap({ history }: RouteComponentProps) {
             )}
             {showLoading && <LoaderThin size={48}></LoaderThin>}
           </AutoColumn>
-          {showFakeApproval && <FakeBrokerDealerApproval />}
-          {false && <ButtonGradient onClick={() => setShowFakeApproval(true)}>Confirm</ButtonGradient>}
+          {showFakeApproval && <FakeBrokerDealerApproval formRef={formRef} />}
         </Wrapper>
       </AppBody>
       {!swapIsUnsupported ? null : (

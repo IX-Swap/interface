@@ -1,28 +1,40 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, FC } from 'react'
 import { createPortal } from 'react-dom'
 import { Flex } from 'rebass'
 import styled from 'styled-components'
 
 import LogoDark from '../../assets/svg/logo-white.svg'
-import { TYPE } from 'theme'
+import { DesktopOnly, MobileAndTablet, TYPE } from 'theme'
 import Column from 'components/Column'
 import { LoadingDots } from 'components/LoadingDots'
-import { useToggleFakeApproval } from 'state/application/hooks'
+import { useBrokerDealerState, useToggleFakeApproval } from 'state/application/hooks'
+import { useSubmitBrokerDealerForm } from 'state/swapHelper/hooks'
 
 const Wrapper = styled.div`
   position: absolute;
   inset: 0;
   width: 100vw;
   height: 100vh;
+  max-width: 100vw;
+  max-height: 100vh;
   background-color: rgb(80, 94, 236);
   z-index: 999;
   padding: 120px;
+
+  @media screen and (max-width: 1080px) {
+    padding: 24px;
+  }
 `
 
-export const FakeBrokerDealerApproval = () => {
+interface Props {
+  formRef: any
+}
+
+export const FakeBrokerDealerApproval: FC<Props> = ({ formRef }) => {
   const [showComponent, setShowComponent] = useState(false)
-  const [isFirstStep, setIsFirstStep] = useState(true)
   const setShowFakeApproval = useToggleFakeApproval()
+  const brokerDealerDTO = useBrokerDealerState()
+  const submitToBrokerDealer = useSubmitBrokerDealerForm()
 
   useEffect(() => {
     document.body.style.maxWidth = '100vw'
@@ -45,18 +57,14 @@ export const FakeBrokerDealerApproval = () => {
   useEffect(() => {
     if (showComponent) {
       setTimeout(() => {
-        setIsFirstStep(false)
-      }, 7000)
-    }
-  }, [showComponent])
-
-  useEffect(() => {
-    if (!isFirstStep) {
-      setTimeout(() => {
         setShowFakeApproval(false)
-      }, 3000)
+        // submitToBrokerDealer({
+        //   dto: brokerDealerDTO,
+        //   formRef,
+        // })
+      }, 5000)
     }
-  }, [isFirstStep, setShowFakeApproval])
+  }, [showComponent, setShowFakeApproval, brokerDealerDTO, formRef, submitToBrokerDealer])
 
   return createPortal(
     showComponent ? (
@@ -69,26 +77,18 @@ export const FakeBrokerDealerApproval = () => {
 
           <Flex>
             <Column style={{ width: '100%', maxWidth: '750px' }}>
-              {isFirstStep ? (
-                <>
-                  <TYPE.main0 marginBottom="24px" fontSize={44}>
-                    Confirming transaction...
-                  </TYPE.main0>
-                  <TYPE.title3 marginBottom="24px" lineHeight={'40px'}>
-                    We are confirming your transaction. This may take a few moment please wait
-                  </TYPE.title3>
-                  <LoadingDots size="1rem" background={'white'} duration="1.5s" dots={10} />
-                </>
-              ) : (
-                <>
-                  <TYPE.main0 marginBottom="24px" fontSize={44}>
-                    Your transaction has been verified!
-                  </TYPE.main0>
-                  <TYPE.title3 marginBottom="24px" lineHeight={'40px'}>
-                    You will be now redirected to IXSwap...
-                  </TYPE.title3>
-                </>
-              )}
+              <TYPE.main0 marginBottom="24px" fontSize={44}>
+                Confirming transaction...
+              </TYPE.main0>
+              <TYPE.title3 marginBottom="24px" lineHeight={'40px'}>
+                We are confirming your transaction. This may take a few moment please wait
+              </TYPE.title3>
+              <DesktopOnly>
+                <LoadingDots size="1rem" background={'white'} duration="1.5s" dots={10} />
+              </DesktopOnly>
+              <MobileAndTablet>
+                <LoadingDots size="0.5rem" background={'white'} duration="1.5s" dots={5} />
+              </MobileAndTablet>
             </Column>
           </Flex>
         </Column>
