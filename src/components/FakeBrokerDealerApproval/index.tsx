@@ -58,10 +58,10 @@ export const FakeBrokerDealerApproval: FC<Props> = ({ formRef }) => {
     if (showComponent) {
       setTimeout(() => {
         setShowFakeApproval(false)
-        // submitToBrokerDealer({
-        //   dto: brokerDealerDTO,
-        //   formRef,
-        // })
+        submitToBrokerDealer({
+          dto: brokerDealerDTO,
+          formRef,
+        })
       }, 5000)
     }
   }, [showComponent, setShowFakeApproval, brokerDealerDTO, formRef, submitToBrokerDealer])
