@@ -2,7 +2,7 @@ import { useCallback, useMemo } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useActiveWeb3React } from '../../hooks/web3'
 import { AppDispatch, AppState } from '../index'
-import { addPopup, ApplicationModal, PopupContent, removePopup, setOpenModal } from './actions'
+import { addPopup, ApplicationModal, PopupContent, removePopup, setOpenModal, setShowFakeApproval } from './actions'
 
 export function useBlockNumber(): number | undefined {
   const { chainId } = useActiveWeb3React()
@@ -19,6 +19,15 @@ export function useToggleModal(modal: ApplicationModal): () => void {
   const open = useModalOpen(modal)
   const dispatch = useDispatch<AppDispatch>()
   return useCallback(() => dispatch(setOpenModal(open ? null : modal)), [dispatch, modal, open])
+}
+
+export function useToggleFakeApproval() {
+  const dispatch = useDispatch<AppDispatch>()
+  return useCallback((showValue: boolean) => dispatch(setShowFakeApproval({ showValue })), [dispatch])
+}
+
+export function useFakeApprovalState(): boolean {
+  return useSelector((state: AppState) => state.application.showFakeApproval)
 }
 
 export function useOpenModal(modal: ApplicationModal): () => void {

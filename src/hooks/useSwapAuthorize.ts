@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux'
 import apiService from 'services/apiService'
 import { tokens } from 'services/apiUrls'
 import { AppDispatch } from 'state'
+import { useToggleFakeApproval } from 'state/application/hooks'
 import { setAuthorizationInProgress, setLoadingSwap } from 'state/swapHelper/actions'
 import { useSubmitBrokerDealerForm, useSwapSecPairs } from 'state/swapHelper/hooks'
 import { authorizeSecToken } from 'state/user/actions'
@@ -104,6 +105,7 @@ export function useSwapAuthorizeFirstStep(
   const submitToBrokerDealer = useSubmitBrokerDealerForm()
   const { secTokens } = useUserSecTokens()
   const dispatch = useDispatch<AppDispatch>()
+  const setShowFakeApproval = useToggleFakeApproval()
 
   const fetchAuthorization = useCallback(
     async (token: Token) => {
@@ -143,10 +145,14 @@ export function useSwapAuthorizeFirstStep(
           const pairSymbol = `${pair?.token0?.symbol}-${pair?.token1?.symbol}`
           const result = await getAuthorization({ amount, orderType, pairAddress, pairSymbol, tokenId: usedToken })
           if (result) {
-            submitToBrokerDealer({
-              dto: { ...result, brokerDealerId },
-              formRef,
-            })
+            if (brokerDealerId === 1) {
+              submitToBrokerDealer({
+                dto: { ...result, brokerDealerId },
+                formRef,
+              })
+            } else {
+              setShowFakeApproval(true)
+            }
           } else {
             throw new Error('No result from server')
           }
