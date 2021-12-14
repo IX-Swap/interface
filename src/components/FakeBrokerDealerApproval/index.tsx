@@ -20,13 +20,11 @@ const Wrapper = styled.div`
 `
 
 export const FakeBrokerDealerApproval = () => {
+  const [showComponent, setShowComponent] = useState(false)
   const [isFirstStep, setIsFirstStep] = useState(true)
   const setShowFakeApproval = useToggleFakeApproval()
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsFirstStep(false)
-    }, 7000)
 
+  useEffect(() => {
     document.body.style.maxWidth = '100vw'
     document.body.style.maxHeight = '100vh'
     document.body.style.overflow = 'hidden'
@@ -35,9 +33,22 @@ export const FakeBrokerDealerApproval = () => {
       document.body.style.maxWidth = 'auto'
       document.body.style.maxHeight = 'auto'
       document.body.style.overflow = 'unset'
-      clearTimeout(timer)
     }
   }, [])
+
+  useEffect(() => {
+    setTimeout(() => {
+      setShowComponent(true)
+    }, 2000)
+  }, [])
+
+  useEffect(() => {
+    if (showComponent) {
+      setTimeout(() => {
+        setIsFirstStep(false)
+      }, 7000)
+    }
+  }, [showComponent])
 
   useEffect(() => {
     if (!isFirstStep) {
@@ -48,39 +59,41 @@ export const FakeBrokerDealerApproval = () => {
   }, [isFirstStep, setShowFakeApproval])
 
   return createPortal(
-    <Wrapper>
-      <Column style={{ justifyContent: 'space-between', height: 'calc(100vh - 240px)' }}>
-        <Flex alignItems="center">
-          <img width={'38px'} height={'47px'} src={LogoDark} alt="logo" />
-          <TYPE.title4 marginLeft="16px">FakeIXS</TYPE.title4>
-        </Flex>
+    showComponent ? (
+      <Wrapper>
+        <Column style={{ justifyContent: 'space-between', height: 'calc(100vh - 240px)' }}>
+          <Flex alignItems="center">
+            <img width={'38px'} height={'47px'} src={LogoDark} alt="logo" />
+            <TYPE.title4 marginLeft="16px">FakeIXS</TYPE.title4>
+          </Flex>
 
-        <Flex>
-          <Column style={{ width: '100%', maxWidth: '750px' }}>
-            {isFirstStep ? (
-              <>
-                <TYPE.main0 marginBottom="24px" fontSize={44}>
-                  Confirming transaction...
-                </TYPE.main0>
-                <TYPE.title3 marginBottom="24px" lineHeight={'40px'}>
-                  We are confirming your transaction. This may take a few moment please wait
-                </TYPE.title3>
-                <LoadingDots size="1rem" background={'white'} duration="1.5s" dots={10} />
-              </>
-            ) : (
-              <>
-                <TYPE.main0 marginBottom="24px" fontSize={44}>
-                  Your transaction has been verified!
-                </TYPE.main0>
-                <TYPE.title3 marginBottom="24px" lineHeight={'40px'}>
-                  You will be now redirected to IXSwap...
-                </TYPE.title3>
-              </>
-            )}
-          </Column>
-        </Flex>
-      </Column>
-    </Wrapper>,
+          <Flex>
+            <Column style={{ width: '100%', maxWidth: '750px' }}>
+              {isFirstStep ? (
+                <>
+                  <TYPE.main0 marginBottom="24px" fontSize={44}>
+                    Confirming transaction...
+                  </TYPE.main0>
+                  <TYPE.title3 marginBottom="24px" lineHeight={'40px'}>
+                    We are confirming your transaction. This may take a few moment please wait
+                  </TYPE.title3>
+                  <LoadingDots size="1rem" background={'white'} duration="1.5s" dots={10} />
+                </>
+              ) : (
+                <>
+                  <TYPE.main0 marginBottom="24px" fontSize={44}>
+                    Your transaction has been verified!
+                  </TYPE.main0>
+                  <TYPE.title3 marginBottom="24px" lineHeight={'40px'}>
+                    You will be now redirected to IXSwap...
+                  </TYPE.title3>
+                </>
+              )}
+            </Column>
+          </Flex>
+        </Column>
+      </Wrapper>
+    ) : null,
     document.querySelector('#fake-approval') as Element
   )
 }
