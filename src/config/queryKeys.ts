@@ -149,8 +149,8 @@ export const dsoQueryKeys = {
   getCommitmentsListByDSOId: (dsoId: string) =>
     generateQueryKey('commitments-list', dsoId),
   closure: (closureId: string) => generateQueryKey('closure', closureId),
-  vccDSOList: (corporateId: string) =>
-    generateQueryKey('vcc-dso-list', corporateId)
+  vccDSOList: (corporateId: string, status: string) =>
+    generateQueryKey('vcc-dso-list', corporateId, status)
 }
 
 export const otcQueryKeys = {

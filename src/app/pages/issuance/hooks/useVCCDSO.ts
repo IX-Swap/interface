@@ -5,6 +5,7 @@ import useAuth from 'hooks/auth/useAuth'
 import { useServices } from 'hooks/useServices'
 import { useQuery } from 'react-query'
 import { useAllCorporates } from 'app/pages/identity/hooks/useAllCorporates'
+import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 
 export const useVCCDSO = () => {
   const { user } = useAuth()
@@ -12,20 +13,26 @@ export const useVCCDSO = () => {
   const userId = getIdFromObj(user)
   const { data: corporateIdentities, isLoading: corporateIdentitiesIsLoading } =
     useAllCorporates({
+      status: 'Approved',
       userId
     })
-  const corporateID = getIdFromObj(corporateIdentities.list[0])
+  const corporateId = getIdFromObj(corporateIdentities.list[0])
+  const { getFilterValue } = useQueryFilter()
+  const status = getFilterValue('status')
 
   const getDSOList = async () => {
-    const uri = issuanceURL.vcc.getDSOList(corporateID)
-    return await apiService.get(uri + '?status=Open')
+    const uri = issuanceURL.vcc.getDSOList
+    return await apiService.post(uri, {
+      status,
+      corporateId
+    })
   }
 
   const { data, isLoading, ...rest } = useQuery(
-    dsoQueryKeys.vccDSOList(corporateID),
+    dsoQueryKeys.vccDSOList(corporateId, status ?? ''),
     getDSOList,
     {
-      enabled: !corporateIdentitiesIsLoading && corporateID !== undefined
+      enabled: !corporateIdentitiesIsLoading && corporateId !== undefined
     }
   )
   return {

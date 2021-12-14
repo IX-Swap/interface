@@ -23,7 +23,7 @@ describe('useVCCDSO', () => {
   it('it returns correct data', async () => {
     await act(async () => {
       const apiFn = jest.fn().mockResolvedValueOnce(successfulResponse)
-      const apiObj = { get: apiFn }
+      const apiObj = { post: apiFn }
 
       const { result } = renderHookWithServiceProvider(() => useVCCDSO(), {
         apiService: apiObj
