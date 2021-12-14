@@ -94,7 +94,13 @@ export const STAKING_ALTERNATE_MAP = {
   [SupportedChainId.MUMBAI]: SupportedChainId.KOVAN,
 }
 
-export const testTokens = [
+export const testStableCoinsTokens = [
+  { name: 'Tether USD', symbol: 'USDT', address: '0x9eacd4317b9623cb43b6afbe121e2a9a2426aa2b' },
+  { name: 'Ixswap Stable Coin', symbol: 'IUSDC', address: '0xb10c4ec295225688461ddbc6d30e8291e9934464' },
+  { name: 'Ixswap Stable Coin DAI', symbol: 'IDAI', address: '0x8234ff99e7c1bfc45f076af399fd89e034e710dc' },
+]
+
+export const testSecTokens = [
   { name: 'Apple', symbol: 'FAAPL', address: '0x4af89c907fba907d9ba74cb44ebf8a7a65c53e6e' },
   { name: 'Coinbase', symbol: 'FCOIN', address: '0x6a2951cc518efadd7beec657a99554d17a7a85cd' },
   { name: 'Tesla', symbol: 'FTSLA', address: '0x1d722f4334ad3f0154e3e3711378f534a07e4329' },

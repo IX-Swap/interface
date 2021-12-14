@@ -1,17 +1,17 @@
 import { Trans } from '@lingui/macro'
 import { AddressInput } from 'components/AddressInputPanel/AddressInput'
-import { ButtonIXSWide } from 'components/Button'
+import { ButtonGradient, ButtonIXSWide } from 'components/Button'
 import { TipCard } from 'components/Card'
 import Column, { ColumnCenter } from 'components/Column'
 import Row, { RowFixed } from 'components/Row'
-import { testTokens, TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
+import { testStableCoinsTokens, TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
+import { useCurrency } from 'hooks/Tokens'
+import useAddTokenToMetamask from 'hooks/useAddTokenToMetamask'
 import { useActiveWeb3React } from 'hooks/web3'
 import AppBody from 'pages/AppBody'
 import React, { useState } from 'react'
-import { useAddPopup } from 'state/application/hooks'
 import { useDistributeToken } from 'state/faucet/hooks'
-import { useTransactionAdder } from 'state/transactions/hooks'
-import { ExternalLink, StyledPageHeader, TYPE } from 'theme'
+import { ExternalLink, StyledPageHeader, TextGradient, TYPE } from 'theme'
 import { shortAddress } from 'utils'
 import { FaucetTokenDropdown } from './FaucetTokenDropdown'
 
@@ -22,30 +22,15 @@ export interface IFaucetToken {
 }
 
 export default function Faucet() {
-  const { account, chainId } = useActiveWeb3React()
-  const [selectedToken, setSelectedToken] = useState<IFaucetToken>(testTokens[0])
-  const distributeToken = useDistributeToken(selectedToken.address)
-  const addPopup = useAddPopup()
-  const addTransaction = useTransactionAdder()
+  const { account, chainId, library } = useActiveWeb3React()
+  const [selectedToken, setSelectedToken] = useState<IFaucetToken>(testStableCoinsTokens[0])
+  const distributeToken = useDistributeToken(selectedToken)
+  const selectedCurrency = useCurrency(selectedToken.address)
+  const addCurrency = useAddTokenToMetamask(selectedCurrency ?? undefined)
+  const isStableCoin = testStableCoinsTokens.filter((token) => token.address === selectedToken.address).length > 0
 
   const handleSubmitClicked = async () => {
-    const { transaction, minutesToWait }: any = await distributeToken()
-
-    if (transaction) {
-      addTransaction(
-        { ...transaction, hash: transaction.transactionHash },
-        {
-          summary: `Sent 10 ${selectedToken.symbol} to ${shortAddress(transaction.from || '')}`,
-        }
-      )
-    } else {
-      addPopup({
-        info: {
-          success: false,
-          summary: `You have to wait ${minutesToWait} ${minutesToWait === 1 ? 'minute' : 'minutes'}`,
-        },
-      })
-    }
+    await distributeToken()
   }
 
   const blurred = chainId !== undefined && !TGE_CHAINS_WITH_SWAP.includes(chainId)
@@ -84,10 +69,28 @@ export default function Faucet() {
           </TYPE.body3>
 
           <TYPE.body3>
-            <Trans>You will receive 10 {selectedToken.name} tokens. The request can be repeated once every hour.</Trans>
+            <Trans>
+              You will receive {isStableCoin ? '100' : '10'} {selectedToken.name} tokens. The request can be repeated
+              once every hour.
+            </Trans>
           </TYPE.body3>
-
-          <Column style={{ marginTop: '45px', gap: '11px' }}>
+          <Column style={{ marginTop: '15px' }}>
+            {selectedCurrency && library?.provider?.isMetaMask && (
+              <ButtonGradient
+                style={{ cursor: 'pointer' }}
+                onClick={() => !addCurrency.success && addCurrency.addToken()}
+              >
+                {!addCurrency.success ? (
+                  <Trans>
+                    Add {selectedToken.name} ({selectedToken.symbol}) to Metamask
+                  </Trans>
+                ) : (
+                  <Trans>Added!</Trans>
+                )}
+              </ButtonGradient>
+            )}
+          </Column>
+          <Column style={{ marginTop: '25px', gap: '11px' }}>
             <Row>
               <TYPE.body1>
                 <Trans>Select token</Trans>
