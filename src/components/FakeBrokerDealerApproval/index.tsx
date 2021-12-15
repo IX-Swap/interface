@@ -81,7 +81,7 @@ export const FakeBrokerDealerApproval: FC<Props> = ({ formRef }) => {
                 Confirming transaction...
               </TYPE.main0>
               <TYPE.title3 marginBottom="24px" lineHeight={'40px'}>
-                We are confirming your transaction. This may take a few moment please wait
+                We are confirming your transaction. This may take a few moments. Please wait
               </TYPE.title3>
               <DesktopOnly>
                 <LoadingDots size="1rem" background={'white'} duration="1.5s" dots={10} />

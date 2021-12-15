@@ -148,7 +148,7 @@ export function useSwapAuthorizeFirstStep(
           dispatch(setBrokerDealerData({ ...result, brokerDealerId }))
 
           if (result) {
-            if (brokerDealerId === 1) {
+            if (brokerDealerId !== 2) {
               submitToBrokerDealer({
                 dto: { ...result, brokerDealerId },
                 formRef,
