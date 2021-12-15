@@ -1,9 +1,11 @@
 import { Trans } from '@lingui/macro'
 import { ChevronElement } from 'components/ChevronElement'
+import MitigationBadge from 'components/MitigationBadge'
 import JSBI from 'jsbi'
 import { darken } from 'polished'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useMitigationEnabled } from 'state/pool/hooks'
 import styled from 'styled-components/macro'
 import { routes } from 'utils/routes'
 import { BIG_INT_ZERO } from '../../constants/misc'
@@ -51,11 +53,13 @@ export default function FullPositionCard({ pair, stakedBalance }: PositionCardPr
   } = usePair({
     pair,
   })
+  const mitigationEnabled = useMitigationEnabled(pair?.liquidityToken?.address)
   return (
     <StyledPositionCard>
       <AutoColumn gap="12px">
         <FixedHeightRow>
           <CurrencyHeader currency0={currency0} currency1={currency1} />
+          {mitigationEnabled && <MitigationBadge />}
           <ChevronElement showMore={showMore} setShowMore={setShowMore} />
         </FixedHeightRow>
 

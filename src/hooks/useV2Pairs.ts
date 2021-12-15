@@ -50,6 +50,7 @@ export function useV2Pairs(
         token1,
         secTokens,
       })
+
       return [
         PairState.EXISTS,
         new Pair(

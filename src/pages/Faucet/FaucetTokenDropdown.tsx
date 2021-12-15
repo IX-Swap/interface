@@ -7,7 +7,7 @@ import { RowBetween, RowStart } from 'components/Row'
 import { TYPE } from 'theme'
 import { ChevronElement } from 'components/ChevronElement'
 import { DarkBlueCard } from 'components/Card'
-import { testTokens } from 'constants/addresses'
+import { testSecTokens, testStableCoinsTokens } from 'constants/addresses'
 import { IFaucetToken } from '.'
 
 export const PopOverContent = styled.div`
@@ -36,7 +36,7 @@ export const FaucetTokenDropdown = ({
   const popOverContent = useCallback(() => {
     return (
       <PopOverContent style={{ cursor: 'pointer', width: isMobile ? '100%' : '320px' }}>
-        {testTokens.map((token) => {
+        {[...testStableCoinsTokens, ...testSecTokens].map((token) => {
           return (
             <RowStart key={`token-${token.address}`} onClick={() => selectToken(token)}>
               {token.name}

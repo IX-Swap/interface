@@ -38,7 +38,7 @@ export const Menu = ({ close }: Props) => {
         <MenuList>
           {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
             <MenuListItem id={`swap-nav-link`} to={'/swap'} onClick={close} activeClassName="active-item">
-              <Trans>SWAP</Trans>
+              <Trans>SECONDARY MARKET</Trans>
             </MenuListItem>
           )}
           {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
@@ -54,7 +54,7 @@ export const Menu = ({ close }: Props) => {
                 pathname.startsWith('/find')
               }
             >
-              <Trans>POOL</Trans>
+              <Trans>LIQUIDITY POOL</Trans>
             </MenuListItem>
           )}
           {SECURITY_TOKENS && (
@@ -109,7 +109,7 @@ const ModalContainer = styled.div`
   padding: 32px 18px;
   display: none;
   background: ${({ theme }) => theme.bgG16};
-  @media (max-width: 1080px) {
+  @media (max-width: 1200px) {
     display: block;
     overflow-y: scroll;
   }
