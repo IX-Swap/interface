@@ -38,6 +38,7 @@ import { useMemo } from 'react'
 import { getContract } from 'utils'
 import { ArgentWalletDetector, EnsPublicResolver, EnsRegistrar, Erc20, Multicall2, Weth } from '../abis/types'
 import { useActiveWeb3React } from './web3'
+import NFT_CREATE_ABI from 'abis/nft-contract-create.json'
 
 // returns null on errors
 export function useContract<T extends Contract = Contract>(
@@ -70,7 +71,7 @@ export function useTokenContract(tokenAddress?: string, withSignerIfPossible?: b
 }
 
 export function useNftContract() {
-  return useContract(NFT_ADDRESS, NFT_ABI)
+  return useContract('0xadc2e42d74f57028d7be2da41ba9643bdb70d99b', NFT_CREATE_ABI)
 }
 
 export function useVestingContract() {

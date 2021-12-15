@@ -7,11 +7,13 @@ import { AcceptFiles, FileTypes } from 'components/Upload/types'
 import { getfileType } from 'components/Upload/utils'
 import { SupportedChainId } from 'constants/chains'
 import { FileWithPath } from 'file-selector'
+import { useActiveWeb3React } from 'hooks/web3'
 import React, { useEffect, useState } from 'react'
 import { Box, Flex } from 'rebass'
 import { KeyValues, pinFileToIPFS } from 'services/pinataService'
 import { ApplicationModal } from 'state/application/actions'
 import { useToggleModal } from 'state/application/hooks'
+import { deployNFTCollection } from 'state/nft/hooks'
 import { ExternalLink, TYPE } from 'theme'
 import { ChainDropdown } from './ChainDropdown'
 import { useGetSupply, useMint } from './hooks'
@@ -30,7 +32,7 @@ export const CreateForm = () => {
   const toggle = useToggleModal(ApplicationModal.PROPERTIES)
   const [activeTraitType, setActiveTraitType] = useState(TraitType.PROGRESS)
   const toggleNumeric = useToggleModal(ApplicationModal.LEVELS)
-
+  const { account, library } = useActiveWeb3React()
   const toggleLevelsStats = (traitType: TraitType) => {
     setActiveTraitType(traitType)
     toggleNumeric()
@@ -47,7 +49,10 @@ export const CreateForm = () => {
 
   const onSubmit = async (e: any) => {
     e.preventDefault()
-    await mint()
+    if (account && library) {
+      deployNFTCollection({ address: account, library })
+    }
+    // await mint()
     return
     // if (!file || !name) {
     //   return

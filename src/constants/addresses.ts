@@ -105,3 +105,9 @@ export const testSecTokens = [
   { name: 'Coinbase', symbol: 'FCOIN', address: '0x6a2951cc518efadd7beec657a99554d17a7a85cd' },
   { name: 'Tesla', symbol: 'FTSLA', address: '0x1d722f4334ad3f0154e3e3711378f534a07e4329' },
 ]
+
+const nftContracts = [
+  '0x51A4ecEA34b816208E9bB55815CfddE3E59d049e',
+  '0x6d6814b54E62fA836Af3547aFdA303b0d92B354c',
+  '0xcDCe3253425e7F18835A9919F829B7eEdF43973C',
+]
