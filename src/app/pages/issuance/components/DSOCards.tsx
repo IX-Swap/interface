@@ -65,8 +65,7 @@ export const DSOCards = () => {
             percentRaised={data?.totalAmountRaisedPercent ?? 0}
             value={abbreviateNumber(
               data?.totalAmountRaised ?? null,
-              // TODO Add symbol value after update backend api endpoints
-              'SGD',
+              data?.currency,
               false,
               undefined,
               false

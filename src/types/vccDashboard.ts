@@ -1,4 +1,5 @@
 export interface SubFundStats {
+  currency: string
   totalInvestors: number
   totalDSOs: number
   pendingAuthorizations: number
