@@ -21,6 +21,15 @@ export default function SecTokenDetails({
   const description = useMemo(() => {
     return (currency as any)?.tokenInfo?.description
   }, [currency])
+
+  const originalAddress = useMemo(() => {
+    return (currency as any)?.tokenInfo?.originalAddress
+  }, [currency])
+
+  const originalName = useMemo(() => {
+    return (currency as any)?.tokenInfo?.originalName
+  }, [currency])
+
   const { accreditationRequest, platform } = useAccreditationStatus(currencyId)
 
   return (
@@ -43,7 +52,13 @@ export default function SecTokenDetails({
             </ReadMore>
           </DescriptionText>
         </Description>
-        <TokenDetails accreditationRequest={accreditationRequest} currency={currency} platform={platform} />
+        <TokenDetails
+          accreditationRequest={accreditationRequest}
+          currency={currency}
+          platform={platform}
+          originalAddress={originalAddress}
+          originalName={originalName}
+        />
         <Vault currency={currency} currencyId={currencyId} />
       </Container>
     </>

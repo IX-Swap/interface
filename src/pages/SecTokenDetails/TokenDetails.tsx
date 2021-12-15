@@ -14,9 +14,13 @@ interface Props {
   currency?: Token
   accreditationRequest: AccreditationRequest | null
   platform: SecTokenPlatform
+  originalAddress: string | null
+  originalName: string | null
 }
-export const TokenDetails = ({ currency, platform }: Props) => {
+export const TokenDetails = ({ currency, platform, originalAddress, originalName }: Props) => {
   const [isCopied, setCopied] = useCopyClipboard()
+  const [originAddIsCopied, setOriginAddCopied] = useCopyClipboard()
+
   return (
     <Details>
       <div>
@@ -38,6 +42,15 @@ export const TokenDetails = ({ currency, platform }: Props) => {
             <DetailsElement
               title={<Trans>Contract:</Trans>}
               content={isCopied ? <Trans>Copied!</Trans> : shortenAddress(currency?.address ?? '')}
+            />
+          </div>
+        )}
+        {originalName && <DetailsElement title={<Trans>Original Contract:</Trans>} content={originalName ?? ''} />}
+        {originalAddress && (
+          <div onClick={() => setOriginAddCopied(originalAddress ?? '')}>
+            <DetailsElement
+              title={<Trans>Original Address:</Trans>}
+              content={originAddIsCopied ? <Trans>Copied!</Trans> : shortenAddress(originalAddress ?? '')}
             />
           </div>
         )}
