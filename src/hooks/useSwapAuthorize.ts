@@ -121,6 +121,7 @@ export function useSwapAuthorizeFirstStep(
           const { usedToken, amount, orderType, firstIsSec } = dto
           const tokenInfo = (token as any)?.tokenInfo
           const accreditationRequest = tokenInfo?.accreditationRequest
+          const brokerDealerName = tokenInfo?.platform?.name
           const brokerDealerId = (accreditationRequest as any)?.brokerDealerId
           const pair = firstIsSec ? pairs?.[0] : pairs?.[1]
           const pairAddress = pair?.liquidityToken?.address
@@ -148,7 +149,7 @@ export function useSwapAuthorizeFirstStep(
           dispatch(setBrokerDealerData({ ...result, brokerDealerId }))
 
           if (result) {
-            if (brokerDealerId !== 2) {
+            if (brokerDealerName !== 'FakeIXS') {
               submitToBrokerDealer({
                 dto: { ...result, brokerDealerId },
                 formRef,

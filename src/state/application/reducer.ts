@@ -79,6 +79,6 @@ export default createReducer(initialState, (builder) =>
       state.showFakeApproval = showValue
     })
     .addCase(setBrokerDealerData, (state, { payload: { newData } }) => {
-      state.showFakeApproval = newData
+      state.brokerDealerData = newData
     })
 )
