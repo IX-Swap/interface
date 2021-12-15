@@ -3,13 +3,15 @@ import { ToggleButton } from '@material-ui/lab'
 import { StyledToggleButtonGroup } from 'app/pages/issuance/components/DSOFilters/StyledToggleButtonGroup'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
 import React from 'react'
+import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 
 export const StatusFilter = () => {
+  const { updateFilters } = useQueryFilter()
   return (
     <SearchQueryFilter name='status' defaultValue='Closed'>
-      {({ value, onChange }) => {
+      {({ value }) => {
         const handleChange = (_: any, value: string) => {
-          onChange(value)
+          updateFilters({ status: value, subfunds: '' })
         }
         return (
           <StyledToggleButtonGroup
