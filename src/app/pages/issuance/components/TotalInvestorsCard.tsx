@@ -10,7 +10,7 @@ import { LabelIcon } from 'app/pages/issuance/components/CapTable/LabelIcon'
 export interface TotalInvestorsCardProps {
   isNewThemeOn?: boolean
   showIcon?: boolean
-  total: number
+  total: number | undefined
 }
 
 export const TotalInvestorsCard = ({
@@ -18,6 +18,10 @@ export const TotalInvestorsCard = ({
   showIcon = false,
   total
 }: TotalInvestorsCardProps) => {
+  if (total === undefined) {
+    return null
+  }
+
   return (
     <ChartWrapper py={isNewThemeOn ? 2.5 : undefined}>
       <Grid container justify='space-between' alignItems='center'>

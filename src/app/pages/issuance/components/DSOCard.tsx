@@ -6,16 +6,21 @@ import { InsightValue } from 'app/pages/issuance/components/IssuanceLanding/Insi
 import { VSpacer } from 'components/VSpacer'
 
 export interface DSOCardProps {
-  value: number
+  value: number | undefined
   icon: JSX.Element
+  title: string
 }
 
-export const DSOCard = ({ value, icon }: DSOCardProps) => {
+export const DSOCard = ({ value, icon, title }: DSOCardProps) => {
+  if (value === undefined) {
+    return null
+  }
+
   return (
     <ChartWrapper py={2.5}>
       <Grid container justify='space-between' alignItems='center'>
         <Grid item>
-          <ChartTitle title='Total DSOs' small icon={icon} />
+          <ChartTitle title={title} small icon={icon} />
           <VSpacer size='extraSmall' />
           <InsightValue value={value} />
         </Grid>

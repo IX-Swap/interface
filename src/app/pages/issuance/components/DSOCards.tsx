@@ -1,6 +1,5 @@
 import React from 'react'
 import { Grid } from '@material-ui/core'
-import { InsightCard } from 'app/pages/issuance/components/InsightCard'
 import { AmountRaisedCard } from 'app/pages/issuance/components/AmountRaisedCard'
 import { TotalInvestorsCard } from 'app/pages/issuance/components/TotalInvestorsCard'
 import { DSOCard } from 'app/pages/issuance/components/DSOCard'
@@ -8,52 +7,80 @@ import { LabelIcon } from 'app/pages/issuance/components/CapTable/LabelIcon'
 import { ReactComponent as TokenIcon } from 'assets/icons/token.svg'
 import { ReactComponent as DollarIcon } from 'assets/icons/green_dollar.svg'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
+import { useVCCFundStats } from 'app/pages/issuance/hooks/useVCCFundStats'
+import { abbreviateNumber } from 'helpers/numbers'
+import { DSOCardWrapper } from 'app/pages/issuance/components/DSOCardWrapper'
 
 export const DSOCards = () => {
   const { getFilterValue } = useQueryFilter()
   const status = getFilterValue('status')
   const isStatusClosed = status === 'Closed'
+  const { data, isLoading } = useVCCFundStats()
+
+  const hasFirstCardInfo = data?.totalDSOs !== undefined
+  const hasSecondCardInfo = isStatusClosed
+    ? data?.totalInvestors !== undefined
+    : data?.pendingAuthorizations !== undefined
+  const hasThirdCardInfo = isStatusClosed
+    ? data?.totalAmountRaisedPercent !== undefined &&
+      data?.totalAmountRaised !== undefined
+    : data?.totalInvestors !== undefined
+
+  if (isLoading) {
+    return null
+  }
 
   return (
     <Grid container spacing={3}>
-      <Grid item xs={12} md={3}>
-        <InsightCard>
-          <DSOCard
-            value={5}
-            icon={<LabelIcon bgColor='#F2F2FE' icon={<TokenIcon />} />}
+      <DSOCardWrapper hasValue={hasFirstCardInfo}>
+        <DSOCard
+          title={'Total DSOs'}
+          value={data?.totalDSOs}
+          icon={<LabelIcon bgColor='#F2F2FE' icon={<TokenIcon />} />}
+        />
+      </DSOCardWrapper>
+
+      <DSOCardWrapper hasValue={hasSecondCardInfo}>
+        {isStatusClosed ? (
+          <TotalInvestorsCard
+            isNewThemeOn
+            showIcon
+            total={data?.totalInvestors}
           />
-        </InsightCard>
-      </Grid>
+        ) : (
+          <DSOCard
+            title={'Pending Authorizations'}
+            value={data?.pendingAuthorizations}
+            icon={<LabelIcon bgColor='#EEF7F1' icon={<DollarIcon />} />}
+          />
+        )}
+      </DSOCardWrapper>
 
-      <Grid item xs={12} md={3}>
-        <InsightCard>
-          {isStatusClosed ? (
-            <TotalInvestorsCard isNewThemeOn showIcon total={300} />
-          ) : (
-            <DSOCard
-              value={123}
-              icon={<LabelIcon bgColor='#EEF7F1' icon={<DollarIcon />} />}
-            />
-          )}
-        </InsightCard>
-      </Grid>
-
-      <Grid item xs={12} md={3}>
-        <InsightCard>
-          {isStatusClosed ? (
-            <AmountRaisedCard
-              showIcon
-              isNewThemeOn
-              showFundraiseTooltip
-              percentRaised={50}
-              value={'SGD 120K'}
-              total={'Total'}
-            />
-          ) : (
-            <TotalInvestorsCard isNewThemeOn showIcon total={300} />
-          )}
-        </InsightCard>
-      </Grid>
+      <DSOCardWrapper hasValue={hasThirdCardInfo}>
+        {isStatusClosed ? (
+          <AmountRaisedCard
+            showIcon
+            isNewThemeOn
+            showFundraiseTooltip
+            percentRaised={data?.totalAmountRaisedPercent ?? 0}
+            value={abbreviateNumber(
+              data?.totalAmountRaised ?? null,
+              // TODO Add symbol value after update backend api endpoints
+              'SGD',
+              false,
+              undefined,
+              false
+            )}
+            total={'Total'}
+          />
+        ) : (
+          <TotalInvestorsCard
+            isNewThemeOn
+            showIcon
+            total={data?.totalInvestors}
+          />
+        )}
+      </DSOCardWrapper>
     </Grid>
   )
 }
