@@ -30,12 +30,12 @@ export const SubFundSelect = () => {
           options.length > 0 && selected?.length === options.length
 
         const getStringValue = (selectedValues: any) => {
-          const names = selectedValues.map((id: String) => {
-            const option = options.find((option: any) => option.id === id)
+          const names = selectedValues.map((id: string) => {
+            const option = options.find((item: any) => item.id === id)
             return option?.name ?? null
           })
 
-          return names?.filter((n: String) => n).join(',')
+          return names?.filter((n: string) => n).join(',')
         }
 
         const handleChange = (event: any) => {
