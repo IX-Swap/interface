@@ -87,7 +87,6 @@ export default function AddLiquidity({
   } = useDerivedMintInfo(currencyA ?? undefined, currencyB ?? undefined)
   const { onFieldAInput, onFieldBInput } = useMintActionHandlers(noLiquidity)
   const setCurrentPoolTransctionHash = setPoolTransactionHash()
-
   const isValid = !error
   const mitigationEnabled = useMitigationEnabled(pair?.liquidityToken?.address)
   // modal and loading
@@ -167,7 +166,7 @@ export default function AddLiquidity({
         account,
         deadline.toHexString(),
       ]
-      if (noLiquidity) {
+      if (Boolean(pair?.liquidityToken?.address)) {
         args.push(enableMitigation)
       }
       value = BigNumber.from((tokenBIsETH ? parsedAmountB : parsedAmountA).quotient.toString())
@@ -184,7 +183,7 @@ export default function AddLiquidity({
         account,
         deadline.toHexString(),
       ]
-      if (noLiquidity) {
+      if (Boolean(pair?.liquidityToken?.address)) {
         args.push(enableMitigation)
       }
       value = null
@@ -338,7 +337,9 @@ export default function AddLiquidity({
                     price={price}
                   />
                 )}
-                {noLiquidity && <MitigationToggle active={enableMitigation} toggle={toggleMitigation} />}
+                {!Boolean(pair?.liquidityToken?.address) && (
+                  <MitigationToggle active={enableMitigation} toggle={toggleMitigation} />
+                )}
                 {areBothSecTokens && <SecToSecWarning />}
                 <Box marginTop={'23px'}>
                   {addIsUnsupported ? (
