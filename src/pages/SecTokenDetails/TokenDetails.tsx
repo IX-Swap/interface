@@ -3,8 +3,11 @@ import { Trans } from '@lingui/macro'
 import { Logo } from './styleds'
 import { AccreditationRequest } from 'components/Vault/enum'
 import useCopyClipboard from 'hooks/useCopyClipboard'
-import React from 'react'
-import { ExternalLink } from 'theme'
+import useAddTokenToMetamask from 'hooks/useAddTokenToMetamask'
+import { useActiveWeb3React } from 'hooks/web3'
+import React, { useMemo } from 'react'
+import { ExternalLink, TextGradient } from 'theme'
+import { RowBetween } from 'components/Row'
 import { shortenAddress } from 'utils'
 import { DetailsElement } from './DetailsElement'
 import { Details } from './styleds'
@@ -14,10 +17,19 @@ interface Props {
   currency?: Token
   accreditationRequest: AccreditationRequest | null
   platform: SecTokenPlatform
-  originalAddress: string | null
-  originalName: string | null
 }
-export const TokenDetails = ({ currency, platform, originalAddress, originalName }: Props) => {
+export const TokenDetails = ({ currency, platform }: Props) => {
+  const originalAddress = useMemo(() => {
+    return (currency as any)?.tokenInfo?.originalAddress
+  }, [currency])
+
+  const originalName = useMemo(() => {
+    return (currency as any)?.tokenInfo?.originalName
+  }, [currency])
+
+  const addIXS = useAddTokenToMetamask(currency ?? undefined)
+  const { library } = useActiveWeb3React()
+
   const [isCopied, setCopied] = useCopyClipboard()
   const [originAddIsCopied, setOriginAddCopied] = useCopyClipboard()
 
@@ -39,17 +51,27 @@ export const TokenDetails = ({ currency, platform, originalAddress, originalName
         )}
         {currency?.address && (
           <div onClick={() => setCopied(currency?.address ?? '')}>
-            <DetailsElement
-              title={<Trans>Contract:</Trans>}
-              content={isCopied ? <Trans>Copied!</Trans> : shortenAddress(currency?.address ?? '')}
-            />
+            <RowBetween style={{ gap: '5px' }}>
+              <DetailsElement
+                title={<Trans>Contract:</Trans>}
+                content={isCopied ? <Trans>Copied!</Trans> : shortenAddress(currency?.address ?? '')}
+              />
+              {currency && library?.provider?.isMetaMask && (
+                <TextGradient
+                  style={{ cursor: 'pointer', marginBottom: '0.75rem', fontSize: '18px', lineHeight: '27px' }}
+                  onClick={() => !addIXS.success && addIXS.addToken()}
+                >
+                  {!addIXS.success ? <Trans>Add to Metamask</Trans> : null}
+                </TextGradient>
+              )}
+            </RowBetween>
           </div>
         )}
-        {originalName && <DetailsElement title={<Trans>Original Contract:</Trans>} content={originalName ?? ''} />}
+        {originalName && <DetailsElement title={<Trans>Original Name:</Trans>} content={originalName ?? ''} />}
         {originalAddress && (
           <div onClick={() => setOriginAddCopied(originalAddress ?? '')}>
             <DetailsElement
-              title={<Trans>Original Address:</Trans>}
+              title={<Trans>Original Contract:</Trans>}
               content={originAddIsCopied ? <Trans>Copied!</Trans> : shortenAddress(originalAddress ?? '')}
             />
           </div>
