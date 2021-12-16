@@ -10,18 +10,18 @@ import {
 import React from 'react'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
 import { hasValue } from 'helpers/forms'
-
-const options = [
-  'IXD SF 1',
-  'IXD SF 2',
-  'IXD SF 3',
-  'IXD SF 4',
-  'IXD SF 5',
-  'IXD SF 6',
-  'IXD SF 7'
-]
+import { useVCCDSO } from 'app/pages/issuance/hooks/useVCCDSO'
+import { DigitalSecurityOffering } from 'types/dso'
 
 export const SubFundSelect = () => {
+  const { data } = useVCCDSO()
+
+  const options =
+    data?.map((item: DigitalSecurityOffering) => ({
+      name: item.tokenName,
+      id: item._id
+    })) ?? []
+
   return (
     <SearchQueryFilter name='subfunds'>
       {({ value, onChange }) => {
@@ -29,12 +29,23 @@ export const SubFundSelect = () => {
         const isAllSelected =
           options.length > 0 && selected?.length === options.length
 
-        const getStringValue = (selectedValues: any) => selectedValues.join(',')
+        const getStringValue = (selectedValues: any) => {
+          const names = selectedValues.map((id: string) => {
+            const option = options.find((item: any) => item.id === id)
+            return option?.name ?? null
+          })
+
+          return names?.filter((n: string) => n).join(',')
+        }
 
         const handleChange = (event: any) => {
           const targetValue = event.target.value
           if (targetValue[targetValue.length - 1] === 'all') {
-            onChange(isAllSelected ? [] : getStringValue(options))
+            onChange(
+              isAllSelected
+                ? []
+                : options.map((option: any) => option.id).join(',')
+            )
             return
           }
           onChange(targetValue)
@@ -69,23 +80,29 @@ export const SubFundSelect = () => {
                 }
               }}
             >
-              <MenuItem value='all'>
-                <ListItemIcon>
-                  <Checkbox
-                    checked={isAllSelected}
-                    indeterminate={
-                      selected.length > 0 && selected.length < options.length
-                    }
-                  />
-                </ListItemIcon>
-                <ListItemText primary='Select All' />
-              </MenuItem>
-              {options.map(option => (
-                <MenuItem key={option} value={option}>
+              {options?.length > 0 ? (
+                <MenuItem value='all'>
                   <ListItemIcon>
-                    <Checkbox checked={selected.includes(option)} />
+                    <Checkbox
+                      checked={isAllSelected}
+                      indeterminate={
+                        selected.length > 0 && selected.length < options.length
+                      }
+                    />
                   </ListItemIcon>
-                  <ListItemText primary={option} />
+                  <ListItemText primary='Select All' />
+                </MenuItem>
+              ) : (
+                <MenuItem value='none' disabled>
+                  <ListItemText primary='No Subfunds found' />
+                </MenuItem>
+              )}
+              {options?.map((option: any) => (
+                <MenuItem key={option.id} value={option.id}>
+                  <ListItemIcon>
+                    <Checkbox checked={selected.includes(option.id)} />
+                  </ListItemIcon>
+                  <ListItemText primary={option.name} />
                 </MenuItem>
               ))}
             </Select>
