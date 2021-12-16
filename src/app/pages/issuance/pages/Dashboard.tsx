@@ -31,7 +31,7 @@ export const Dashboard = () => {
           <AssetsUnderManagement assets={data?.assetsUnderManagement} />
         </Grid>
         <Grid item xs={12} md={6}>
-          <TopInvestorsTable />
+          <TopInvestorsTable investors={data?.topInvestors} />
         </Grid>
       </Grid>
     </Grid>

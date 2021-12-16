@@ -1,5 +1,4 @@
 import React from 'react'
-import { InsightCard } from 'app/pages/issuance/components/CapTable/InsightCard'
 import {
   Table,
   TableBody,
@@ -13,6 +12,8 @@ import { TableCellItem } from 'types/table'
 import { ChartTitle } from 'app/pages/issuance/components/IssuanceLanding/ChartTitle'
 import Box from '@material-ui/core/Box'
 import { useStyles } from './shared.styles'
+import { InsightCard } from 'app/pages/issuance/components/InsightCard'
+import { TopInvestor } from 'types/vccDashboard'
 
 const headCells: TableCellItem[] = [
   { label: 'Sub-Fund', align: 'left' },
@@ -20,45 +21,45 @@ const headCells: TableCellItem[] = [
   { label: 'Amount', align: 'right' }
 ]
 
-// TODO Remove this after complete backend api endpoint
-const rows = [
-  { subFund: 'IXD SF 1', name: 'Justina Jones', amount: 3125612 },
-  { subFund: 'IXD SF 2', name: 'Geovany Runolfsson', amount: 3125612 },
-  { subFund: 'IXD SF 3', name: 'Nichole Mertz', amount: 3125612 },
-  { subFund: 'IXD SF 4', name: 'Emilia Morar', amount: 3125612 },
-  { subFund: 'IXD SF 5', name: 'Issac Bauch', amount: 3125612 }
-]
+export interface TopInvestorsTableProps {
+  investors: TopInvestor[] | undefined
+}
 
-export const TopInvestorsTable = () => {
+export const TopInvestorsTable = ({ investors }: TopInvestorsTableProps) => {
   const classes = useStyles()
-  // TODO Add real data this after complete backend api endpoint
+
+  if (investors === undefined || investors.length < 1) {
+    return null
+  }
 
   return (
     <InsightCard>
       <Box padding={3} paddingBottom={1} className={classes.wrapper}>
-        <ChartTitle title='Total Tokens' />
-        <TableContainer>
-          <Table>
-            <TableHead>
-              <TableRow>
-                {headCells.map(({ label, align }) => (
-                  <TableCell align={align} className={classes.headColumn}>
-                    {label}
-                  </TableCell>
+        <ChartTitle title='Top Investors From Closed' />
+        <Box padding={1}>
+          <TableContainer>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  {headCells.map(({ label, align }) => (
+                    <TableCell align={align} className={classes.headColumn}>
+                      {label}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {investors.map(({ dsoName, investorName, amount }) => (
+                  <TopInvestorsRow
+                    subFund={dsoName}
+                    name={investorName}
+                    amount={amount}
+                  />
                 ))}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows.map(({ subFund, name, amount }) => (
-                <TopInvestorsRow
-                  subFund={subFund}
-                  name={name}
-                  amount={amount}
-                />
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
       </Box>
     </InsightCard>
   )
