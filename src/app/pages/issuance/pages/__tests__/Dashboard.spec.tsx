@@ -12,7 +12,8 @@ describe('Dashboard', () => {
     jest.clearAllMocks()
   })
 
-  it('renders without errors', () => {
-    render(<Dashboard />)
+  it('should match snapshot', () => {
+    const { container } = render(<Dashboard />)
+    expect(container).toMatchSnapshot()
   })
 })

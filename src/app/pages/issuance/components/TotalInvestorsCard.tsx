@@ -3,27 +3,26 @@ import { Grid } from '@material-ui/core'
 import { ChartTitle } from 'app/pages/issuance/components/IssuanceLanding/ChartTitle'
 import { ChartWrapper } from 'app/pages/issuance/components/IssuanceLanding/ChartWrapper'
 import { InsightValue } from 'app/pages/issuance/components/IssuanceLanding/InsightValue'
-import { useTotalInvestors } from 'app/pages/issuance/hooks/useTotalInvestors'
 import { VSpacer } from 'components/VSpacer'
 import { ReactComponent as PeopleIcon } from 'assets/icons/people_black_24dp.svg'
 import { LabelIcon } from 'app/pages/issuance/components/CapTable/LabelIcon'
 
-export interface TotalInvestorsProps {
+export interface TotalInvestorsCardProps {
   isNewThemeOn?: boolean
   showIcon?: boolean
+  total: number | undefined
+  small?: boolean
 }
 
-export const TotalInvestors = ({
+export const TotalInvestorsCard = ({
   isNewThemeOn = false,
-  showIcon = false
-}: TotalInvestorsProps) => {
-  const { data, isLoading } = useTotalInvestors()
-
-  if (isLoading) {
+  showIcon = false,
+  total,
+  small = true
+}: TotalInvestorsCardProps) => {
+  if (total === undefined) {
     return null
   }
-
-  const total = data?.total ?? 0
 
   return (
     <ChartWrapper py={isNewThemeOn ? 2.5 : undefined}>
@@ -31,7 +30,7 @@ export const TotalInvestors = ({
         <Grid item>
           <ChartTitle
             title='Total Investors'
-            small
+            small={small}
             icon={
               showIcon ? (
                 <LabelIcon

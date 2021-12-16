@@ -1,12 +1,12 @@
 import { act } from '@testing-library/react-hooks'
 import * as useAllCorporates from 'app/pages/identity/hooks/useAllCorporates'
-import { useVCCDSO } from 'app/pages/issuance/hooks/useVCCDSO'
 import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
 import { successfulResponse } from '__fixtures__/api'
 import { corporate } from '__fixtures__/identity'
 import { generateInfiniteQueryResult } from '__fixtures__/useQuery'
+import { useVCCFundStats } from 'app/pages/issuance/hooks/useVCCFundStats'
 
-describe('useVCCDSO', () => {
+describe('useVCCFundStats', () => {
   beforeEach(() => {
     const objResponse = generateInfiniteQueryResult({ list: [corporate] })
 
@@ -25,13 +25,16 @@ describe('useVCCDSO', () => {
       const apiFn = jest.fn().mockResolvedValueOnce(successfulResponse)
       const apiObj = { post: apiFn }
 
-      const { result } = renderHookWithServiceProvider(() => useVCCDSO(), {
-        apiService: apiObj
-      })
+      const { result } = renderHookWithServiceProvider(
+        () => useVCCFundStats(),
+        {
+          apiService: apiObj
+        }
+      )
 
       await waitFor(
         () => {
-          expect(result.current.data).toEqual(successfulResponse.data)
+          expect(result.current.data).toEqual(successfulResponse.data[0])
         },
         { timeout: 1000 }
       )

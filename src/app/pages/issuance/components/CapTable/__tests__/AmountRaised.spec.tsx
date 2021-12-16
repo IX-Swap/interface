@@ -1,12 +1,12 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { AmountRaised } from 'app/pages/issuance/components/IssuanceLanding/AmountRaised'
 import * as useDSOByIdHook from 'app/pages/invest/hooks/useDSOById'
 import { dso } from '__fixtures__/authorizer'
 import { abbreviateNumber } from 'helpers/numbers'
 import { ChartTitle } from 'app/pages/issuance/components/IssuanceLanding/ChartTitle'
 import { VSpacer } from 'components/VSpacer'
 import { DonutChart } from 'app/pages/issuance/components/IssuanceLanding/DonutChart'
+import { AmountRaised } from 'app/pages/issuance/components/CapTable/AmountRaised'
 
 jest.mock('app/pages/issuance/components/IssuanceLanding/ChartTitle', () => ({
   ChartTitle: jest.fn(() => null)

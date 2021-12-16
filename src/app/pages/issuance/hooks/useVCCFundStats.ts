@@ -6,8 +6,9 @@ import { useServices } from 'hooks/useServices'
 import { useQuery } from 'react-query'
 import { useAllCorporates } from 'app/pages/identity/hooks/useAllCorporates'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
+import { SubFundStats } from 'types/vccDashboard'
 
-export const useVCCDSO = () => {
+export const useVCCFundStats = () => {
   const { user } = useAuth()
   const { apiService } = useServices()
   const userId = getIdFromObj(user)
@@ -19,24 +20,26 @@ export const useVCCDSO = () => {
   const corporateId = getIdFromObj(corporateIdentities.list[0])
   const { getFilterValue } = useQueryFilter()
   const status = getFilterValue('status')
+  const subFunds = getFilterValue('subfunds')
 
-  const getDSOList = async () => {
-    const uri = issuanceURL.vcc.getDSOList
-    return await apiService.post(uri, {
-      status,
+  const getSubFundStats = async () => {
+    const uri = issuanceURL.vcc.getSubFundStats
+    return await apiService.post<SubFundStats[]>(uri, {
+      fundStatus: status,
+      dsos: subFunds?.split(','),
       corporateId
     })
   }
 
   const { data, isLoading, ...rest } = useQuery(
-    dsoQueryKeys.vccDSOList(corporateId, status ?? ''),
-    getDSOList,
+    dsoQueryKeys.vccSubFundStats(corporateId, status ?? '', subFunds ?? ''),
+    getSubFundStats,
     {
       enabled: !corporateIdentitiesIsLoading && corporateId !== undefined
     }
   )
   return {
-    data: data?.data,
+    data: data?.data[0],
     isLoading: corporateIdentitiesIsLoading || isLoading,
     ...rest
   }
