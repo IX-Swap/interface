@@ -1,10 +1,10 @@
-import { AxiosRequestConfig, Method } from 'axios'
+import { AxiosRequestConfig } from 'axios'
 
 export interface RequestConfig extends AxiosRequestConfig {
   needsAuth?: boolean
 }
 export interface APIServiceRequestConfig {
-  method: Method
+  method: any
   uri: string
   axiosConfig: RequestConfig
   data?: any

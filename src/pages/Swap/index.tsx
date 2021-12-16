@@ -34,6 +34,9 @@ import { SwapButtons } from './SwapButtons'
 import { useWatchApprovalSubmitted } from './useWatchApprovalSubmitted'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import { GeneralModal } from 'components/GeneralModal/GeneralModal'
+import { FakeBrokerDealerApproval } from 'components/FakeBrokerDealerApproval/index'
+import { useFakeApprovalState, useToggleFakeApproval } from 'state/application/hooks'
+import { ButtonGradient } from 'components/Button'
 
 export default function Swap({ history }: RouteComponentProps) {
   const { chainId } = useActiveWeb3React()
@@ -41,6 +44,8 @@ export default function Swap({ history }: RouteComponentProps) {
   const { openModal, setOpenModal } = useOpenModal()
   const { loadingSwap } = useSwapHelpersState()
   const { independentField, typedValue, recipient } = useSwapState()
+  const showFakeApproval = useFakeApprovalState()
+  const setShowFakeApproval = useToggleFakeApproval()
 
   const { onUserInput, onChangeRecipient } = useSwapActionHandlers()
 
@@ -136,6 +141,7 @@ export default function Swap({ history }: RouteComponentProps) {
             )}
             {showLoading && <LoaderThin size={48}></LoaderThin>}
           </AutoColumn>
+          {showFakeApproval && <FakeBrokerDealerApproval formRef={formRef} />}
         </Wrapper>
       </AppBody>
       {!swapIsUnsupported ? null : (
