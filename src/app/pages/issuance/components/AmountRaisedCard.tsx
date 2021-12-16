@@ -16,6 +16,7 @@ export interface AmountRaisedCardProps {
   value: string
   total: string
   percentRaised: number
+  small?: boolean
 }
 
 export const AmountRaisedCard = ({
@@ -24,7 +25,8 @@ export const AmountRaisedCard = ({
   showIcon = false,
   value,
   total,
-  percentRaised
+  percentRaised,
+  small = true
 }: AmountRaisedCardProps) => {
   return (
     <ChartWrapper py={isNewThemeOn ? 2.5 : undefined}>
@@ -32,7 +34,7 @@ export const AmountRaisedCard = ({
         <Grid item>
           <ChartTitle
             title='Amount Raised'
-            small
+            small={small}
             icon={
               showIcon ? (
                 <LabelIcon

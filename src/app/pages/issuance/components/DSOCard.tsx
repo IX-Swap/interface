@@ -20,7 +20,7 @@ export const DSOCard = ({ value, icon, title }: DSOCardProps) => {
     <ChartWrapper py={2.5}>
       <Grid container justify='space-between' alignItems='center'>
         <Grid item>
-          <ChartTitle title={title} small icon={icon} />
+          <ChartTitle title={title} icon={icon} />
           <VSpacer size='extraSmall' />
           <InsightValue value={value} />
         </Grid>

@@ -46,6 +46,7 @@ export const DSOCards = () => {
             isNewThemeOn
             showIcon
             total={data?.totalInvestors}
+            small={false}
           />
         ) : (
           <DSOCard
@@ -60,12 +61,13 @@ export const DSOCards = () => {
         {isStatusClosed ? (
           <AmountRaisedCard
             showIcon
+            small={false}
             isNewThemeOn
             showFundraiseTooltip
             percentRaised={data?.totalAmountRaisedPercent ?? 0}
             value={abbreviateNumber(
               data?.totalAmountRaised ?? null,
-              data?.currency,
+              data?.currency.toUpperCase(),
               false,
               undefined,
               false
@@ -77,6 +79,7 @@ export const DSOCards = () => {
             isNewThemeOn
             showIcon
             total={data?.totalInvestors}
+            small={false}
           />
         )}
       </DSOCardWrapper>

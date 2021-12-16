@@ -11,12 +11,14 @@ export interface TotalInvestorsCardProps {
   isNewThemeOn?: boolean
   showIcon?: boolean
   total: number | undefined
+  small?: boolean
 }
 
 export const TotalInvestorsCard = ({
   isNewThemeOn = false,
   showIcon = false,
-  total
+  total,
+  small = true
 }: TotalInvestorsCardProps) => {
   if (total === undefined) {
     return null
@@ -28,7 +30,7 @@ export const TotalInvestorsCard = ({
         <Grid item>
           <ChartTitle
             title='Total Investors'
-            small
+            small={small}
             icon={
               showIcon ? (
                 <LabelIcon
