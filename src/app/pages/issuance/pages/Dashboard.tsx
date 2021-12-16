@@ -5,21 +5,29 @@ import { DSOFilters } from 'app/pages/issuance/components/DSOFilters/DSOFilters'
 import { VSpacer } from 'components/VSpacer'
 import { DSOCards } from 'app/pages/issuance/components/DSOCards'
 import { AssetsUnderManagement } from 'app/pages/issuance/components/AssetsUnderManagement'
+import { useVCCFundStats } from 'app/pages/issuance/hooks/useVCCFundStats'
 
 export const Dashboard = () => {
+  const { data } = useVCCFundStats()
+
   return (
     <Grid container spacing={3}>
       <Grid item xs={12}>
         <PageHeader title='InvestaX Digital Fund VCC' />
       </Grid>
+
       <Grid item xs={12}>
         <DSOFilters />
         <VSpacer size={'medium'} />
       </Grid>
-      <DSOCards />
+
+      <Grid item container>
+        <DSOCards />
+      </Grid>
+
       <Grid item container xs={12} spacing={3}>
         <Grid item xs={12} md={6}>
-          <AssetsUnderManagement />
+          <AssetsUnderManagement assets={data?.assetsUnderManagement} />
         </Grid>
       </Grid>
     </Grid>

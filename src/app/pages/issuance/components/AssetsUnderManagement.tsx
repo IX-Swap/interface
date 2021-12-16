@@ -2,19 +2,25 @@ import React from 'react'
 import { Chart } from 'react-google-charts'
 import { useTheme } from '@material-ui/core/styles'
 import { ChartWrapper } from 'app/pages/issuance/components/IssuanceLanding/ChartWrapper'
-import { InsightCard } from 'app/pages/issuance/components/CapTable/InsightCard'
+import { InsightCard } from 'app/pages/issuance/components/InsightCard'
+import { AssetUnderManagement } from 'types/vccDashboard'
 
-export const AssetsUnderManagement = () => {
+export interface AssetsUnderManagementProps {
+  assets: AssetUnderManagement[] | undefined
+}
+
+export const AssetsUnderManagement = ({
+  assets
+}: AssetsUnderManagementProps) => {
   const theme = useTheme()
 
-  // TODO Add real data after complete backend api endpoint
-  const fakeChartData = [
+  if (assets === undefined || assets.length < 1) {
+    return null
+  }
+
+  const data = [
     ['Asset', 'Value'],
-    ['IXD SF 1', 30],
-    ['IXD SF 2', 25],
-    ['IXD SF 3', 20],
-    ['IXD SF 4', 15],
-    ['IXD SF 5', 10]
+    ...assets.map(item => [item.dsoName, item.amount])
   ]
 
   return (
@@ -23,7 +29,7 @@ export const AssetsUnderManagement = () => {
         <Chart
           chartType='PieChart'
           loader={<div>Loading Chart</div>}
-          data={fakeChartData}
+          data={data}
           height={'100%'}
           width={'100%'}
           options={{
