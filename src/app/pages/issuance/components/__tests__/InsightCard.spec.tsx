@@ -1,4 +1,4 @@
-import { InsightCard } from 'app/pages/issuance/components/CapTable/InsightCard'
+import { InsightCard } from 'app/pages/issuance/components/InsightCard'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 

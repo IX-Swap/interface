@@ -41,7 +41,7 @@ describe('DonutChart', () => {
           enableInteractivity: false,
           legend: 'none',
           pieHole: 0.75,
-          pieStartAngle: 0,
+          pieStartAngle: 270,
           chartArea: {
             width: 48,
             height: 48
@@ -68,7 +68,7 @@ describe('DonutChart', () => {
           enableInteractivity: false,
           legend: 'none',
           pieHole: 0.75,
-          pieStartAngle: 0,
+          pieStartAngle: 270,
           chartArea: {
             width: 58,
             height: 58

@@ -1,6 +1,6 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { TotalInvestors } from 'app/pages/issuance/components/IssuanceLanding/TotalInvestors'
+import { TotalInvestors } from 'app/pages/issuance/components/CapTable/TotalInvestors'
 import * as useTotalInvestorsHook from 'app/pages/issuance/hooks/useTotalInvestors'
 import { InsightValue } from 'app/pages/issuance/components/IssuanceLanding/InsightValue'
 import { generateQueryResult } from '__fixtures__/useQuery'

@@ -9,13 +9,13 @@ import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicat
 import { PageHeader } from 'app/pages/issuance/components/Commitments/PageHeader'
 import { QueryStatus } from 'react-query'
 import { DSOFilter } from 'app/pages/issuance/components/Commitments/DSOFilter'
-import { AmountRaised } from 'app/pages/issuance/components/IssuanceLanding/AmountRaised'
 import { TargetFundraise } from 'app/pages/issuance/components/IssuanceLanding/TargetFundraise'
 import { CountdownTimer } from 'app/pages/issuance/components/CountdownTimer/CountdownTimer'
 import { InvestorCommitmentTable } from 'app/pages/issuance/components/Commitments/InvestorCommitmentTable'
 import { CloseDealDialog } from 'app/pages/issuance/components/Commitments/CloseDealDialog/CloseDealDialog'
 import Button from '@material-ui/core/Button'
 import { VSpacer } from 'components/VSpacer'
+import { AmountRaised } from 'app/pages/issuance/components/CapTable/AmountRaised'
 
 const useTableWithPaginationMockReturnValue: useTableWithPaginationHook.UseTableWithPaginationReturnType<any> =
   {
@@ -41,7 +41,7 @@ jest.mock('app/pages/issuance/components/Commitments/DSOFilter', () => ({
   DSOFilter: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/issuance/components/IssuanceLanding/AmountRaised', () => ({
+jest.mock('app/pages/issuance/components/CapTable/AmountRaised', () => ({
   AmountRaised: jest.fn(() => null)
 }))
 
