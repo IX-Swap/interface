@@ -149,7 +149,7 @@ export function useSwapAuthorizeFirstStep(
           dispatch(setBrokerDealerData({ ...result, brokerDealerId }))
 
           if (result) {
-            if (brokerDealerName !== 'FakeIXS') {
+            if (!result?.endpoint.includes('fake-approve')) {
               submitToBrokerDealer({
                 dto: { ...result, brokerDealerId },
                 formRef,
