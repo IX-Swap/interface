@@ -72,7 +72,7 @@ export const FakeBrokerDealerApproval: FC<Props> = ({ formRef }) => {
         <Column style={{ justifyContent: 'space-between', height: 'calc(100vh - 240px)' }}>
           <Flex alignItems="center">
             <img width={'38px'} height={'47px'} src={LogoDark} alt="logo" />
-            <TYPE.title4 marginLeft="16px">FakeIXS</TYPE.title4>
+            <TYPE.title4 marginLeft="16px">PG-Dealer</TYPE.title4>
           </Flex>
 
           <Flex>
