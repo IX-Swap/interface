@@ -27,12 +27,14 @@ export const Dashboard = () => {
         <DSOCards />
       </Grid>
 
-      <Grid item container xs={12} spacing={3}>
-        <Grid item xs={12} md={6}>
-          <AssetsUnderManagement assets={data?.assetsUnderManagement} />
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <TopInvestorsTable investors={data?.topInvestors} />
+      <Grid item container xs={12}>
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={6}>
+            <AssetsUnderManagement assets={data?.assetsUnderManagement} />
+          </Grid>
+          <Grid item xs={12} md={6}>
+            <TopInvestorsTable investors={data?.topInvestors} />
+          </Grid>
         </Grid>
       </Grid>
 
