@@ -20,7 +20,7 @@ describe('useVCCFundStats', () => {
     jest.clearAllMocks()
   })
 
-  it('it returns correct data', async () => {
+  it('returns correct response from api', async () => {
     await act(async () => {
       const apiFn = jest.fn().mockResolvedValueOnce(successfulResponse)
       const apiObj = { post: apiFn }
