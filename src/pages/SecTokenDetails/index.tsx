@@ -21,6 +21,7 @@ export default function SecTokenDetails({
   const description = useMemo(() => {
     return (currency as any)?.tokenInfo?.description
   }, [currency])
+
   const { accreditationRequest, platform } = useAccreditationStatus(currencyId)
 
   return (
