@@ -7,7 +7,6 @@ import useCopyClipboard from 'hooks/useCopyClipboard'
 import useAddTokenToMetamask from 'hooks/useAddTokenToMetamask'
 import { useCurrency } from 'hooks/Tokens'
 import { useActiveWeb3React } from 'hooks/web3'
-import { IXS_GOVERNANCE_ADDRESS } from 'constants/addresses'
 import { ExternalLink, TextGradient } from 'theme'
 import { RowStart } from 'components/Row'
 import { shortenAddress } from 'utils'
@@ -29,11 +28,11 @@ export const TokenDetails = ({ currency, platform }: Props) => {
     return (currency as any)?.tokenInfo?.originalName
   }, [currency])
 
-  const IXSGovCurrency = useCurrency(IXS_GOVERNANCE_ADDRESS[originalAddress ?? 1])
+  const originalIXSCurrency = useCurrency(originalAddress)
   const { library } = useActiveWeb3React()
 
-  const addIXSGov = useAddTokenToMetamask(IXSGovCurrency ?? undefined)
   const addIXS = useAddTokenToMetamask(currency ?? undefined)
+  const addIXSOriginal = useAddTokenToMetamask(originalIXSCurrency ?? undefined)
 
   const [isCopied, setCopied] = useCopyClipboard()
   const [originAddIsCopied, setOriginAddCopied] = useCopyClipboard()
@@ -84,9 +83,9 @@ export const TokenDetails = ({ currency, platform }: Props) => {
             {currency && library?.provider?.isMetaMask && (
               <TextGradient
                 style={{ cursor: 'pointer', marginBottom: '0.75rem', fontSize: '18px', lineHeight: '27px' }}
-                onClick={() => !addIXSGov.success && addIXSGov.addToken()}
+                onClick={() => !addIXSOriginal.success && addIXSOriginal.addToken()}
               >
-                {!addIXSGov.success ? <Trans>Add to Metamask</Trans> : null}
+                {!addIXSOriginal.success ? <Trans>Add to Metamask</Trans> : null}
               </TextGradient>
             )}
           </RowStart>
