@@ -7,6 +7,7 @@ import { DSOCards } from 'app/pages/issuance/components/DSOCards'
 import { AssetsUnderManagement } from 'app/pages/issuance/components/AssetsUnderManagement'
 import { useVCCFundStats } from 'app/pages/issuance/hooks/useVCCFundStats'
 import { TopInvestorsTable } from 'app/pages/issuance/components/TopInvestorsTable/TopInvestorsTable'
+import { NetAssetValueChart } from 'app/pages/issuance/components/NetAssetValueChart/NetAssetValueChart'
 
 export const Dashboard = () => {
   const { data } = useVCCFundStats()
@@ -33,6 +34,10 @@ export const Dashboard = () => {
         <Grid item xs={12} md={6}>
           <TopInvestorsTable investors={data?.topInvestors} />
         </Grid>
+      </Grid>
+
+      <Grid item xs={12}>
+        <NetAssetValueChart />
       </Grid>
     </Grid>
   )

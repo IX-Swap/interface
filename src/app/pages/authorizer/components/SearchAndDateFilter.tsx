@@ -10,16 +10,17 @@ import { ClosedDSOsFilter } from 'app/pages/authorizer/components/ClosedDSOFilte
 
 export const SearchAndDateFilter = () => {
   const category = useAuthorizerCategory()
+  const isCommitments = category === 'commitments'
   return (
     <SearchQueryFilterGroup>
       <Grid container direction='column' spacing={3} style={{ paddingTop: 24 }}>
-        {category === 'commitments' && (
+        {isCommitments && (
           <Grid item xs={12}>
             <ClosedDSOsFilter />
           </Grid>
         )}
         <Grid item xs={12}>
-          <GroupedSearchFilter />
+          <GroupedSearchFilter isCommitment={isCommitments} />
         </Grid>
         <Grid item xs={12}>
           <GroupedDateTimeFilter

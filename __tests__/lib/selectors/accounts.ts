@@ -34,3 +34,7 @@ export const bankAccounts = {
     COUNTRY_VALUE: '[data-value="Ukraine"]'
   }
 }
+
+export const commitments = {
+  COMMITMENTS_SECTION: '[href="/app/accounts/commitments"]'
+}

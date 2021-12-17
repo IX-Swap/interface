@@ -1,5 +1,3 @@
-import { renderStatusColumn } from 'app/pages/authorizer/hooks/useAuthorizerView'
-
 export const columns = [
   {
     key: 'currency.symbol',
@@ -23,10 +21,5 @@ export const columns = [
     key: 'swiftCode',
     label: 'Swift Code',
     secret: true
-  },
-  {
-    key: 'status',
-    label: 'Status',
-    render: renderStatusColumn
   }
 ]
