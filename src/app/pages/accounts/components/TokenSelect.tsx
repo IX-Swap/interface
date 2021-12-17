@@ -5,17 +5,14 @@ import { AssetBalance } from 'types/balance'
 
 export const TokenSelect = React.forwardRef((props: SelectProps, ref) => {
   const { data, isLoading } = useGetCustody()
-
-  if (data === undefined || isLoading) {
-    return null
-  }
+  const label = isLoading || data === undefined ? 'No tokens' : props.label
 
   return (
-    <Select {...props} ref={ref}>
+    <Select {...props} label={label} ref={ref}>
       <MenuItem disabled value={undefined}>
-        {props.label}
+        {label}
       </MenuItem>
-      {data.map((token: AssetBalance) => (
+      {data?.map((token: AssetBalance) => (
         <MenuItem key={token.symbol} value={token.symbol}>
           {token.name}
         </MenuItem>
@@ -23,3 +20,7 @@ export const TokenSelect = React.forwardRef((props: SelectProps, ref) => {
     </Select>
   )
 })
+
+TokenSelect.defaultProps = {
+  label: 'No tokens'
+}
