@@ -13,10 +13,11 @@ import { Box, Flex } from 'rebass'
 import { KeyValues, pinFileToIPFS } from 'services/pinataService'
 import { ApplicationModal } from 'state/application/actions'
 import { useToggleModal } from 'state/application/hooks'
-import { deployNFTCollection } from 'state/nft/hooks'
+import { deployNFTCollection, useDeployNFT } from 'state/nft/hooks'
 import { ExternalLink, TYPE } from 'theme'
 import { ChainDropdown } from './ChainDropdown'
-import { useGetSupply, useMint } from './hooks'
+import { CollectionDropdown } from './CollectionDropdown'
+import { useGetSupply, useManageCreateForm, useMint } from './hooks'
 import { LevelsPopup } from './LevelsPopup'
 import { NSFWRadio } from './NSFWRadio'
 import { PropertiesPopup } from './PropertiesPopup'
@@ -24,34 +25,49 @@ import { Traits } from './Traits'
 import { TraitType } from './types'
 
 export const CreateForm = () => {
-  const [file, setFile] = useState<FileWithPath | null>(null)
-  const [preview, setPreview] = useState<FileWithPath | null>(null)
-  const [name, setName] = useState('')
-  const [link, setLink] = useState('')
-  const [description, setDescription] = useState('')
+  const {
+    file,
+    setFile,
+    preview,
+    setPreview,
+    name,
+    setName,
+    link,
+    setLink,
+    description,
+    setDescription,
+    activeTraitType,
+    setActiveTraitType,
+    properties,
+    setProperties,
+    levels,
+    setLevels,
+    stats,
+    setStats,
+    isNSFW,
+    setIsNSFW,
+    selectedChain,
+    setSelectedChain,
+    collection,
+    setCollection,
+  } = useManageCreateForm()
+
+  const deployNFT = useDeployNFT()
   const toggle = useToggleModal(ApplicationModal.PROPERTIES)
-  const [activeTraitType, setActiveTraitType] = useState(TraitType.PROGRESS)
   const toggleNumeric = useToggleModal(ApplicationModal.LEVELS)
-  const { account, library } = useActiveWeb3React()
   const toggleLevelsStats = (traitType: TraitType) => {
     setActiveTraitType(traitType)
     toggleNumeric()
   }
   const mint = useMint()
-  const [properties, setProperties] = useState<Array<{ name: string; value: string }>>([])
-  const [levels, setLevels] = useState<Array<{ name: string; value: number; max: number }>>([])
-  const [stats, setStats] = useState<Array<{ name: string; value: number; max: number }>>([])
-  const [isNSFW, setIsNSFW] = useState(false)
-  const [selectedChain, setSelectedChain] = useState(SupportedChainId.MAINNET)
+
   const onDrop = (file: any) => {
     setFile(file)
   }
 
   const onSubmit = async (e: any) => {
     e.preventDefault()
-    if (account && library) {
-      deployNFTCollection({ address: account, library })
-    }
+    deployNFT({ name: 'New Collection' })
     // await mint()
     return
     // if (!file || !name) {
@@ -155,6 +171,21 @@ export const CreateForm = () => {
                 </InputContainer>
               </ContainerRow>
             </InputPanel>
+          </Box>
+        </Flex>
+        <Flex mx={-2} mb={4} flexDirection={'column'}>
+          <Label htmlFor="collection" flexDirection="column" mb={3}>
+            <Box mb={1}>
+              <Box display="flex">
+                <TYPE.body fontWeight={600}>
+                  <Trans>Collection</Trans>
+                </TYPE.body>
+                <TYPE.error error>*</TYPE.error>
+              </Box>
+            </Box>
+          </Label>
+          <Box width={1} px={2}>
+            <CollectionDropdown onSelect={setCollection} selectedCollection={collection} />
           </Box>
         </Flex>
         <Flex mx={-2} mb={4}>

@@ -11,7 +11,7 @@ import { useCallback, useEffect, useMemo } from 'react'
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import apiService from 'services/apiService'
 import { broker, kyc, tokens } from 'services/apiUrls'
-import { useAddPopup, useChooseBrokerDealerModalToggle } from 'state/application/hooks'
+import { useChooseBrokerDealerModalToggle, useShowError } from 'state/application/hooks'
 import { LOGIN_STATUS, useLogin, useLogout, useUserisLoggedIn } from 'state/auth/hooks'
 import {
   listToSecTokenMap,
@@ -424,8 +424,7 @@ export function usePassAccreditation(
   const login = useLogin({ mustHavePreviousLogin: false })
   const fetchTokens = useFetchUserSecTokenListCallback()
   const toggle = useChooseBrokerDealerModalToggle()
-  const addPopup = useAddPopup()
-
+  const showError = useShowError()
   const { status: accreditationStatus, accreditationRequest } = useAccreditationStatus(currencyId)
   // note: prevent dispatch if using for list search or unsupported list
   return useCallback(
@@ -444,15 +443,7 @@ export function usePassAccreditation(
           }
           await postPassAccreditation({ tokenId })
         } else {
-          addPopup(
-            {
-              info: {
-                success: false,
-                summary: t`Could not get accredited because of login. Please try again`,
-              },
-            },
-            '2'
-          )
+          showError(t`Could not get accredited because of login. Please try again`)
           dispatch(passAccreditation.rejected({ errorMessage: 'Could not get accredited because of login.' }))
           return
         }
@@ -461,19 +452,11 @@ export function usePassAccreditation(
         toggle()
       } catch (error) {
         console.debug(`Failed to pass accreditation`, error)
-        addPopup(
-          {
-            info: {
-              success: false,
-              summary: t`Failed to pass accreditation ${String((error as any)?.message)}`,
-            },
-          },
-          '3'
-        )
+        showError(t`Failed to pass accreditation ${String((error as any)?.message)}`)
         dispatch(passAccreditation.rejected({ errorMessage: String((error as any)?.message) }))
       }
     },
-    [dispatch, login, fetchTokens, toggle, addPopup, accreditationRequest, accreditationStatus]
+    [dispatch, login, fetchTokens, toggle, showError, accreditationRequest, accreditationStatus]
   )
 }
 

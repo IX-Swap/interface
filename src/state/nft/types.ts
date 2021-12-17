@@ -19,3 +19,12 @@ export interface NFTImage {
 export interface NFTState {
   readonly images: { [id: string]: NFTImage }
 }
+
+export interface NFTCollection {
+  id?: number
+  name: string
+  address: string
+  featured: string
+  logo: string
+  banner: string
+}
