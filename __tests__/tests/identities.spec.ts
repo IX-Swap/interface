@@ -137,3 +137,39 @@ test.describe('Check identities form', () => {
     await screenshotMatching(testInfo.title, dialog, page)
   })
 })
+
+test.describe('Edit identities form', () => {
+  test.beforeEach(async ({ page, auth }) => {
+    await navigate(baseCreds.URL, page)
+  })
+
+  test.afterEach(async ({ page }) => {
+    await page.close()
+  })
+  test('The "Corporate" KYC should be editable', async ({ kycForms, auth }) => {
+    await auth.loginWithout2fa(baseCreds.EDIT_CORPORATE, baseCreds.PASSWORD)
+    await kycForms.followToViewIdentity()
+    const fields = await kycForms.editCorporateInformation()
+    await kycForms.checkThatTheChangesSaved(fields)
+  })
+
+  test('The "Individual" KYC should be editable', async ({
+    kycForms,
+    auth
+  }) => {
+    await auth.loginWithout2fa(baseCreds.EDIT_INDIVIDUAL, baseCreds.PASSWORD)
+    await kycForms.followToViewIdentity()
+    const fields = await kycForms.editIndividualInformation()
+    await kycForms.checkThatTheChangesSaved(fields)
+  })
+
+  test.skip('(need to add edit button) The "Issuer" KYC should be editable', async ({
+    kycForms,
+    auth
+  }) => {
+    await auth.loginWithout2fa(baseCreds.EDIT_ISSUER, baseCreds.PASSWORD)
+    await kycForms.followToViewIdentity()
+    const fields = await kycForms.editCorporateInformation()
+    await kycForms.checkThatTheChangesSaved(fields)
+  })
+})

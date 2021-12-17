@@ -4,9 +4,10 @@ import { ChartWrapper } from 'app/pages/issuance/components/IssuanceLanding/Char
 import { useTopInvestors } from 'app/pages/issuance/hooks/useTopInvestors'
 import { useTheme } from '@material-ui/core/styles'
 
+export type LegendPosition = 'right' | 'left' | 'bottom' | 'top'
 export interface TopInvestorsProps {
   title?: string
-  position?: 'right' | 'left' | 'bottom' | 'top'
+  position?: LegendPosition
 }
 
 export const TopInvestors = ({
@@ -39,6 +40,7 @@ export const TopInvestors = ({
           pieStartAngle: -45,
           colors: hasData ? undefined : ['lightgrey'],
           backgroundColor: 'transparent',
+          pieSliceText: hasData ? 'percentage' : 'label',
           legend: hasData
             ? {
                 position: position,

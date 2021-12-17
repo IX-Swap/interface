@@ -22,6 +22,7 @@ export const SecondaryMarketTable = () => {
       <Grid item container justify={'space-between'}>
         <Grid item xs={3}>
           <SearchFilter
+            data-testid='secondaryMarketSearch'
             fullWidth
             filterValue={'secondaryMarketSearch'}
             inputAdornmentPosition='end'

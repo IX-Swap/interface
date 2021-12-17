@@ -1,4 +1,14 @@
 export const text = {
+  dsoName: 'AQAcommitments',
+  commitmentsView: [
+    'Company Name',
+    'Issued By',
+    'Issued Date',
+    'Digital Security',
+    'Price Per Unit',
+    'Total Amount',
+    'Number Of Units'
+  ],
   docs: {
     pathToFile: '__tests__/lib/documents/test-img.jpg',
     docBenefitsAddress: '__tests__/lib/documents/docBenefitsAddress.docx',
@@ -13,6 +23,6 @@ export const text = {
   notification: {
     resetPassword: 'Password reset has been successful',
     submitIdentity: 'Thanks For Submitting Your Identity!',
-    custodyAddress: 'You have been assigned with the withdrawal address'
+    custodyAddress: 'You have been assigned with the blockchain address'
   }
 }

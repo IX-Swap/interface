@@ -1,13 +1,18 @@
 import { baseCreds } from '../lib/helpers/creds'
-import { navigate, click, shouldNotExist } from '../lib/helpers/helpers'
+import {
+  navigate,
+  click,
+  shouldNotExist,
+  shouldExist
+} from '../lib/helpers/helpers'
 import { test } from '../lib/fixtures/fixtures'
 import { expect } from '@playwright/test'
-import { bankAccounts } from '../lib/selectors/accounts'
+import { bankAccounts, commitments } from '../lib/selectors/accounts'
 
-test.beforeEach(async ({ auth, page, bankAccount }) => {
+test.beforeEach(async ({ auth, page }) => {
   await navigate(baseCreds.URL, page)
   await auth.loginWithout2fa(baseCreds.BANK_ACCOUNT, baseCreds.PASSWORD)
-  await bankAccount.toBankAccounts()
+  await click(bankAccounts.ACCOUNTS_SECTION, page)
 })
 
 test.afterEach(async ({ page }) => {
@@ -15,6 +20,9 @@ test.afterEach(async ({ page }) => {
 })
 
 test.describe('Bank accounts', () => {
+  test.beforeEach(async ({ page }) => {
+    await click(bankAccounts.BANK_ACCOUNTS, page)
+  })
   test('Account creation should be canceled', async ({ bankAccount, page }) => {
     await bankAccount.fillAccountInfoForm()
     await click(bankAccounts.buttons.CANCEL, page)
@@ -37,5 +45,12 @@ test.describe('Bank accounts', () => {
 
   test('Account should removed', async ({ bankAccount }) => {
     await bankAccount.removeBankAccount()
+  })
+})
+test.describe('Commitments', () => {
+  test('The page and table should exist', async ({ page, invest }) => {
+    await click(commitments.COMMITMENTS_SECTION, page)
+    await expect(page).toHaveURL(`${baseCreds.URL}app/accounts/commitments`)
+    await shouldExist(invest.TABLE, page)
   })
 })

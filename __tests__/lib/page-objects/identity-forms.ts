@@ -11,13 +11,20 @@ import {
   waitForText,
   screenshotMatching,
   shouldNotExist,
-  randomString
+  randomString,
+  waitForRequestInclude
 } from '../helpers/helpers'
 
 class UserForms {
   page: any
   constructor(page) {
     this.page = page
+  }
+
+  followToViewIdentity = async () => {
+    await click(kyc.HOME_SECTION, this.page)
+    await click(kyc.CREATE_IDENTITY_SECTION, this.page)
+    await click(kyc.buttons.VIEW, this.page)
   }
 
   checkIssuerView = async testInfo => {
@@ -75,22 +82,59 @@ class UserForms {
     await click(kyc.field.corporate.LEGAL_ENTITY_STATUS, this.page)
     await click(kyc.field.corporate.LEGAL_ENTITY_VALUE, this.page)
   }
+  updateData = async () => {
+    await click('text="Update"', this.page)
+    await waitForRequestInclude(this.page, 'identity/', 'GET')
+  }
   editCorporateInformation = async () => {
     const string = randomString()
-    await click(kyc.buttons.OKAY, this.page)
-    await uploadFiles(this.page, kyc.field.corporate.LOGO, text.docs.pathToFile)
-    await clearAndTypeText(kyc.field.corporate.NAME, 'name' + string, this.page)
-    await clearAndTypeText(
+    await click(kyc.buttons.EDIT, this.page)
+    const corporateName = await clearAndTypeText(
+      kyc.field.corporate.NAME,
+      'name' + string,
+      this.page
+    )
+    const regNumber = await clearAndTypeText(
       kyc.field.REGISTRATION_NUMBER,
       '1990' + string,
       this.page
     )
-    await click(kyc.field.corporate.COMPANY_OF_INCORPORATION, this.page)
-    await click(kyc.field.TAX_RESIDENT_VALUE, this.page)
-    await click(kyc.field.corporate.LEGAL_ENTITY_STATUS, this.page)
-    await click(kyc.field.corporate.LEGAL_ENTITY_VALUE, this.page)
-  }
+    const city = await clearAndTypeText(
+      kyc.field.corporate.CITY,
+      'Baku' + string,
+      this.page
+    )
+    const state = await clearAndTypeText(
+      kyc.field.corporate.STATE,
+      'Kyiv' + string,
+      this.page
+    )
+    await this.updateData()
+    await click(kyc.buttons.SUBMIT, this.page)
 
+    const directorName = await clearAndTypeText(
+      kyc.field.issuer.FULL_NAME,
+      'director' + string,
+      this.page
+    )
+    await this.updateData()
+    await click(kyc.buttons.SUBMIT, this.page)
+    const taxNumber = await clearAndTypeText(
+      kyc.field.TAX_RESIDENT_IDENTIFICATION,
+      'S' + string,
+      this.page
+    )
+    await this.updateData()
+
+    return [corporateName, regNumber, city, state, directorName, taxNumber]
+  }
+  checkThatTheChangesSaved = async (fields: Array<[]>) => {
+    await click(kyc.CREATE_IDENTITY_SECTION, this.page)
+    await click(kyc.buttons.VIEW, this.page)
+    for (let item of fields) {
+      await waitForText(this.page, item)
+    }
+  }
   fillCorporateAddressForm = async () => {
     await typeText(kyc.field.corporate.POSTAL_CODE, '123441', this.page)
     await typeText(kyc.field.corporate.ADDRESS1, 'line1', this.page)
@@ -176,7 +220,7 @@ class UserForms {
     await click(kyc.buttons.OKAY, this.page)
 
     await uploadFiles(this.page, kyc.field.PHOTO, text.docs.pathToFile)
-    await typeText(kyc.field.MIDDLENAME, 'middle', this.page)
+    await typeText(kyc.field.MIDDLENAME, 'Middle', this.page)
     await typeText(kyc.field.DATA, '12/11/1990', this.page)
     await clearAndTypeText(kyc.field.PHONE_NUMBER, '13022462220', this.page)
     await click(kyc.field.CITIZENSHIP, this.page)
@@ -227,6 +271,48 @@ class UserForms {
       await uploadFiles(this.page, item, text.docs.pathToFile)
     }
     await shouldNotExist(kyc.NOTIFICATION, this.page)
+  }
+
+  editIndividualInformation = async () => {
+    const string = randomString()
+    await click(kyc.buttons.EDIT, this.page)
+    const corporateName = await clearAndTypeText(
+      kyc.field.FIRS_NAME,
+      'Name' + string,
+      this.page
+    )
+    const regNumber = await clearAndTypeText(
+      kyc.field.MIDDLENAME,
+      'Middle' + string,
+      this.page
+    )
+    const city = await clearAndTypeText(
+      kyc.field.CITY,
+      'City' + string,
+      this.page
+    )
+    const state = await clearAndTypeText(
+      kyc.field.ADDRESS,
+      'Kyiv' + string,
+      this.page
+    )
+    await this.updateData()
+    await click(kyc.buttons.SUBMIT, this.page)
+
+    const occupationName = await clearAndTypeText(
+      kyc.field.OCCUPATION,
+      'Occupation' + string,
+      this.page
+    )
+    const employer = await clearAndTypeText(
+      kyc.field.EMPLOYER,
+      'Employer' + string,
+      this.page
+    )
+
+    await this.updateData()
+
+    return [corporateName, regNumber, city, state, occupationName, employer]
   }
 }
 export { UserForms }

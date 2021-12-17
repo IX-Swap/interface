@@ -1,6 +1,9 @@
 import { Dashboard } from 'app/pages/issuance/pages/Dashboard'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
+import { generateQueryResult } from '__fixtures__/useQuery'
+import * as useVCCFundStats from 'app/pages/issuance/hooks/useVCCFundStats'
+import { fakeSubFundStats } from '__fixtures__/vccDashboard'
 
 jest.mock('app/pages/issuance/components/DSOFilters/DSOFilters', () => ({
   DSOFilters: jest.fn(() => null)
@@ -13,6 +16,13 @@ describe('Dashboard', () => {
   })
 
   it('should match snapshot', () => {
+    jest.spyOn(useVCCFundStats, 'useVCCFundStats').mockReturnValue(
+      generateQueryResult({
+        data: fakeSubFundStats,
+        isLoading: false
+      })
+    )
+
     const { container } = render(<Dashboard />)
     expect(container).toMatchSnapshot()
   })

@@ -9,6 +9,7 @@ import { useVCCFundStats } from 'app/pages/issuance/hooks/useVCCFundStats'
 import { TopInvestorsTable } from 'app/pages/issuance/components/TopInvestorsTable/TopInvestorsTable'
 import { InvestmentsOverview } from 'app/pages/issuance/components/InvestmentsOverview'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
+import { NetAssetValueChart } from 'app/pages/issuance/components/NetAssetValueChart/NetAssetValueChart'
 
 export const Dashboard = () => {
   const { data } = useVCCFundStats()
@@ -53,6 +54,10 @@ export const Dashboard = () => {
             />
           </Grid>
         </Grid>
+      </Grid>
+
+      <Grid item xs={12}>
+        <NetAssetValueChart />
       </Grid>
     </Grid>
   )
