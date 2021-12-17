@@ -1,6 +1,6 @@
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { NoData } from 'app/pages/issuance/components/NetAssetValueChart/NoData'
+import { NoData } from 'app/pages/issuance/components/LineChart/NoData'
 
 describe('NoData', () => {
   afterEach(async () => {

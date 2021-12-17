@@ -367,60 +367,8 @@ exports[`Dashboard should match snapshot 1`] = `
               <h6
                 class="MuiTypography-root MuiTypography-subtitle1"
               >
-                Net Asset Value
+                Investors
               </h6>
-            </div>
-            <div
-              class="MuiGrid-root MuiGrid-item"
-            >
-              <div
-                class="MuiFormControl-root MuiFormControl-fullWidth"
-                style="width: 300px;"
-              >
-                <div
-                  class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-formControl"
-                >
-                  <div
-                    aria-haspopup="listbox"
-                    aria-labelledby="periodical-label"
-                    class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input"
-                    role="button"
-                    tabindex="0"
-                  >
-                    Quarterly
-                  </div>
-                  <input
-                    aria-hidden="true"
-                    class="MuiSelect-nativeInput"
-                    tabindex="-1"
-                    value="Quarterly"
-                  />
-                  <svg
-                    aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSelect-icon MuiSelect-iconOutlined"
-                    focusable="false"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      d="M7 10l5 5 5-5z"
-                    />
-                  </svg>
-                  <fieldset
-                    aria-hidden="true"
-                    class="PrivateNotchedOutline-root-22 MuiOutlinedInput-notchedOutline"
-                    style="padding-left: 8px;"
-                  >
-                    <legend
-                      class="PrivateNotchedOutline-legend-23"
-                      style="width: 0.01px;"
-                    >
-                      <span>
-                        ​
-                      </span>
-                    </legend>
-                  </fieldset>
-                </div>
-              </div>
             </div>
           </div>
           <div

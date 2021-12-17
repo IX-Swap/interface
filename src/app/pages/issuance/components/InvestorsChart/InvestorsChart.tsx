@@ -1,9 +1,8 @@
 import React from 'react'
 import { Grid, Paper, Typography } from '@material-ui/core'
-import { PeriodicalFilter } from 'app/pages/issuance/components/NetAssetValueChart/PeriodicalFilter'
 import { LineChart } from 'app/pages/issuance/components/LineChart/LineChart'
 
-export const NetAssetValueChart = () => {
+export const InvestorsChart = () => {
   const data = undefined
 
   return (
@@ -21,10 +20,7 @@ export const NetAssetValueChart = () => {
           alignItems='center'
         >
           <Grid item>
-            <Typography variant='subtitle1'>Net Asset Value</Typography>
-          </Grid>
-          <Grid item>
-            <PeriodicalFilter />
+            <Typography variant='subtitle1'>Investors</Typography>
           </Grid>
         </Grid>
         <Grid item xs={12}>
