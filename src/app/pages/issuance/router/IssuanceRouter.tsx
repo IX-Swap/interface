@@ -12,11 +12,20 @@ import { AppRoute } from 'components/AppRoute'
 import { Commitments } from 'app/pages/issuance/pages/Commitments'
 import { useIsIssuer } from 'helpers/acl'
 import { CapTableRouter } from 'app/pages/issuance/router/CapTableRouter'
+import { Dashboard } from 'app/pages/issuance/pages/Dashboard'
 
 export const IssuanceRouter = () => {
   const isIssuer = useIsIssuer()
   return (
     <Switch>
+      <AppRoute
+        breadcrumb='InvestaX Digital Fund VCC'
+        exact
+        path={IssuanceRoute.dashboard}
+      >
+        <Dashboard />
+      </AppRoute>
+
       <AppRoute
         breadcrumb='Create Digital Security Offering'
         exact
