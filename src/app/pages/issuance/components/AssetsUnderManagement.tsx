@@ -3,35 +3,38 @@ import { Chart } from 'react-google-charts'
 import { useTheme } from '@material-ui/core/styles'
 import { ChartWrapper } from 'app/pages/issuance/components/IssuanceLanding/ChartWrapper'
 import { InsightCard } from 'app/pages/issuance/components/InsightCard'
-import { useGetCustodiansCount } from 'app/pages/admin/hooks/useGetCustodiansCount'
+import { AssetUnderManagement } from 'types/vccDashboard'
 
-export const AccountsUnderCustody = () => {
+export interface AssetsUnderManagementProps {
+  assets: AssetUnderManagement[] | undefined
+}
+
+export const AssetsUnderManagement = ({
+  assets
+}: AssetsUnderManagementProps) => {
   const theme = useTheme()
 
-  const { data, isLoading } = useGetCustodiansCount()
-
-  if (isLoading || data === undefined) {
+  if (assets === undefined || assets.length < 1) {
     return null
   }
 
-  const chartData = [
-    ['HEX', 'InvestaX'],
-    ['HEX', data.hexCount],
-    ['InvestaX', data.investaxCount]
+  const data = [
+    ['Asset', 'Value'],
+    ...assets.map(item => [item.dsoName, item.amount])
   ]
 
   return (
     <InsightCard>
-      <ChartWrapper title={'Accounts Under Custody'}>
+      <ChartWrapper title={'Assets Under Management'}>
         <Chart
           chartType='PieChart'
           loader={<div>Loading Chart</div>}
-          data={chartData}
+          data={data}
           height={'100%'}
           width={'100%'}
           options={{
-            pieHole: 0.35,
-            colors: ['#109619', '#3266CC'],
+            pieHole: 0.45,
+            colors: ['#3266CC', '#990099', '#109619', '#FF9703', '#DC3812'],
             backgroundColor: 'transparent',
             legend: {
               position: 'right',
@@ -39,7 +42,7 @@ export const AccountsUnderCustody = () => {
                 color: theme.palette.getContrastText(
                   theme.palette.backgrounds.default as any
                 ),
-                fontSize: 12,
+                fontSize: 14,
                 fontName: 'Poppins'
               }
             },
@@ -52,6 +55,7 @@ export const AccountsUnderCustody = () => {
               bottom: 0,
               top: '10%'
             },
+            pieStartAngle: 330,
             pieSliceText: 'value + %'
           }}
         />

@@ -177,7 +177,8 @@ export const issuanceURL = {
     getDSOList: '/issuance/dso/list'
   },
   vcc: {
-    getDSOList: '/vcc/dsos/list'
+    getDSOList: '/vcc/dsos/list',
+    getSubFundStats: 'vcc/subFundStats'
   }
 }
 

@@ -1,0 +1,459 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Dashboard should match snapshot 1`] = `
+<div>
+  <div
+    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+    >
+      <div
+        class="MuiGrid-root makeStyles-container-3 MuiGrid-container MuiGrid-direction-xs-column"
+      >
+        <div
+          class="MuiGrid-root makeStyles-header-2 MuiGrid-container"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center"
+          >
+            <h2
+              class="MuiTypography-root MuiTypography-h2"
+            >
+              InvestaX Digital Fund VCC
+            </h2>
+          </div>
+        </div>
+        <div
+          class="MuiGrid-root"
+        >
+          <nav
+            class="MuiTypography-root MuiBreadcrumbs-root MuiTypography-body1 MuiTypography-colorTextSecondary"
+          >
+            <ol
+              class="MuiBreadcrumbs-ol"
+            />
+          </nav>
+        </div>
+      </div>
+    </div>
+    <div
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+    >
+      <div
+        class="MuiBox-root MuiBox-root-5"
+      />
+    </div>
+    <div
+      class="MuiGrid-root MuiGrid-container MuiGrid-item"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
+        >
+          <div
+            class="MuiPaper-root MuiCard-root MuiPaper-outlined MuiPaper-rounded"
+            style="background-color: rgb(255, 255, 255);"
+          >
+            <div
+              class="MuiBox-root MuiBox-root-6"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-item"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-wrap-xs-nowrap"
+                  >
+                    <div
+                      class="MuiGrid-root MuiGrid-item"
+                    >
+                      <div
+                        class="MuiBox-root MuiBox-root-7"
+                      >
+                        <svg>
+                          token.svg
+                        </svg>
+                      </div>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item"
+                    >
+                      <h6
+                        class="MuiTypography-root MuiTypography-subtitle1 MuiTypography-colorTextPrimary MuiTypography-noWrap"
+                        style="line-height: 25px;"
+                      >
+                        Total DSOs
+                      </h6>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiBox-root MuiBox-root-8"
+                  />
+                  <p
+                    class="MuiTypography-root makeStyles-root-9 MuiTypography-body1"
+                  >
+                    2
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
+        >
+          <div
+            class="MuiPaper-root MuiCard-root MuiPaper-outlined MuiPaper-rounded"
+            style="background-color: rgb(255, 255, 255);"
+          >
+            <div
+              class="MuiBox-root MuiBox-root-10"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-item"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-wrap-xs-nowrap"
+                  >
+                    <div
+                      class="MuiGrid-root MuiGrid-item"
+                    >
+                      <div
+                        class="MuiBox-root MuiBox-root-11"
+                      >
+                        <svg>
+                          green_dollar.svg
+                        </svg>
+                      </div>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item"
+                    >
+                      <h6
+                        class="MuiTypography-root MuiTypography-subtitle1 MuiTypography-colorTextPrimary MuiTypography-noWrap"
+                        style="line-height: 25px;"
+                      >
+                        Pending Authorizations
+                      </h6>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiBox-root MuiBox-root-12"
+                  />
+                  <p
+                    class="MuiTypography-root makeStyles-root-9 MuiTypography-body1"
+                  >
+                    0
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3"
+        >
+          <div
+            class="MuiPaper-root MuiCard-root MuiPaper-outlined MuiPaper-rounded"
+            style="background-color: rgb(255, 255, 255);"
+          >
+            <div
+              class="MuiBox-root MuiBox-root-13"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-item"
+                >
+                  <div
+                    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-wrap-xs-nowrap"
+                  >
+                    <div
+                      class="MuiGrid-root MuiGrid-item"
+                    >
+                      <div
+                        class="MuiBox-root MuiBox-root-14"
+                      >
+                        <svg
+                          style="fill: #F6C559; width: 16px;"
+                        >
+                          people_black_24dp.svg
+                        </svg>
+                      </div>
+                    </div>
+                    <div
+                      class="MuiGrid-root MuiGrid-item"
+                    >
+                      <h6
+                        class="MuiTypography-root MuiTypography-subtitle1 MuiTypography-colorTextPrimary MuiTypography-noWrap"
+                        style="line-height: 25px;"
+                      >
+                        Total Investors
+                      </h6>
+                    </div>
+                  </div>
+                  <div
+                    class="MuiBox-root MuiBox-root-15"
+                  />
+                  <p
+                    class="MuiTypography-root makeStyles-root-9 MuiTypography-body1"
+                  >
+                    10
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
+        >
+          <div
+            class="MuiPaper-root MuiCard-root MuiPaper-outlined MuiPaper-rounded"
+            style="background-color: rgb(255, 255, 255);"
+          >
+            <div
+              class="MuiBox-root MuiBox-root-16"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-wrap-xs-nowrap"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-item"
+                >
+                  <h6
+                    class="MuiTypography-root MuiTypography-subtitle1 MuiTypography-colorTextPrimary MuiTypography-noWrap"
+                    style="line-height: 25px;"
+                  >
+                    Assets Under Management
+                  </h6>
+                </div>
+              </div>
+              <div>
+                Loading Chart
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6"
+        >
+          <div
+            class="MuiPaper-root MuiCard-root MuiPaper-outlined MuiPaper-rounded"
+            style="background-color: rgb(255, 255, 255);"
+          >
+            <div
+              class="MuiBox-root MuiBox-root-20 makeStyles-wrapper-17"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-wrap-xs-nowrap"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-item"
+                >
+                  <h6
+                    class="MuiTypography-root MuiTypography-subtitle1 MuiTypography-colorTextPrimary MuiTypography-noWrap"
+                    style="line-height: 25px;"
+                  >
+                    Top Investors From Closed
+                  </h6>
+                </div>
+              </div>
+              <div
+                class="MuiBox-root MuiBox-root-21"
+              >
+                <div
+                  class="MuiTableContainer-root"
+                >
+                  <table
+                    class="MuiTable-root"
+                  >
+                    <thead
+                      class="MuiTableHead-root"
+                    >
+                      <tr
+                        class="MuiTableRow-root MuiTableRow-head"
+                      >
+                        <th
+                          class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-18 MuiTableCell-alignLeft"
+                          scope="col"
+                        >
+                          Sub-Fund
+                        </th>
+                        <th
+                          class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-18 MuiTableCell-alignLeft"
+                          scope="col"
+                        >
+                          Investor Name
+                        </th>
+                        <th
+                          class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-18 MuiTableCell-alignRight"
+                          scope="col"
+                        >
+                          Amount
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody
+                      class="MuiTableBody-root"
+                    >
+                      <tr
+                        class="MuiTableRow-root"
+                      >
+                        <th
+                          class="MuiTableCell-root MuiTableCell-body makeStyles-column-19 MuiTableCell-alignLeft"
+                          role="cell"
+                          scope="row"
+                        >
+                          Access Token
+                        </th>
+                        <th
+                          class="MuiTableCell-root MuiTableCell-body makeStyles-column-19 MuiTableCell-alignLeft"
+                          role="cell"
+                          scope="row"
+                        >
+                          aditya test 2
+                        </th>
+                        <th
+                          class="MuiTableCell-root MuiTableCell-body makeStyles-column-19 MuiTableCell-alignRight"
+                          role="cell"
+                          scope="row"
+                        >
+                          2,000,000.00
+                        </th>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+    >
+      <div
+        class="MuiPaper-root MuiPaper-outlined MuiPaper-rounded"
+        style="padding: 16px 16px 80px 16px;"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between MuiGrid-grid-xs-12"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-item"
+            >
+              <h6
+                class="MuiTypography-root MuiTypography-subtitle1"
+              >
+                Net Asset Value
+              </h6>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item"
+            >
+              <div
+                class="MuiFormControl-root MuiFormControl-fullWidth"
+                style="width: 300px;"
+              >
+                <div
+                  class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-formControl"
+                >
+                  <div
+                    aria-haspopup="listbox"
+                    aria-labelledby="periodical-label"
+                    class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input"
+                    role="button"
+                    tabindex="0"
+                  >
+                    Quarterly
+                  </div>
+                  <input
+                    aria-hidden="true"
+                    class="MuiSelect-nativeInput"
+                    tabindex="-1"
+                    value="Quarterly"
+                  />
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSelect-icon MuiSelect-iconOutlined"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M7 10l5 5 5-5z"
+                    />
+                  </svg>
+                  <fieldset
+                    aria-hidden="true"
+                    class="PrivateNotchedOutline-root-22 MuiOutlinedInput-notchedOutline"
+                    style="padding-left: 8px;"
+                  >
+                    <legend
+                      class="PrivateNotchedOutline-legend-23"
+                      style="width: 0.01px;"
+                    >
+                      <span>
+                        ​
+                      </span>
+                    </legend>
+                  </fieldset>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-justify-content-xs-center MuiGrid-grid-xs-12"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-item"
+                >
+                  <svg>
+                    empty-box.svg
+                  </svg>
+                </div>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+              >
+                <p
+                  class="MuiTypography-root MuiTypography-body1 MuiTypography-alignCenter"
+                >
+                  There is no investment at the moment. Once you receive investments in your deal you will be able to see the charts.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

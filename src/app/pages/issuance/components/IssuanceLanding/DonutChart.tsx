@@ -32,7 +32,7 @@ export const DonutChart = ({
         ]}
         options={{
           pieHole: 0.75,
-          pieStartAngle: 0,
+          pieStartAngle: 270,
           colors: isNewThemeOn
             ? ['#F5BD25', '#EFF0F4']
             : ['rgb(245,189,37)', 'lightgrey'],
