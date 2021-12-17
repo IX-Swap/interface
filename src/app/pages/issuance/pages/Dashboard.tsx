@@ -7,7 +7,7 @@ import { DSOCards } from 'app/pages/issuance/components/DSOCards'
 import { AssetsUnderManagement } from 'app/pages/issuance/components/AssetsUnderManagement'
 import { useVCCFundStats } from 'app/pages/issuance/hooks/useVCCFundStats'
 import { TopInvestorsTable } from 'app/pages/issuance/components/TopInvestorsTable/TopInvestorsTable'
-import { InvestmntsOverview } from 'app/pages/issuance/components/InvestmentsOverview'
+import { InvestmentsOverview } from 'app/pages/issuance/components/InvestmentsOverview'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 
 export const Dashboard = () => {
@@ -31,16 +31,27 @@ export const Dashboard = () => {
         <DSOCards />
       </Grid>
 
-      <Grid item container xs={12} spacing={3}>
-        <Grid item xs={12} md={6}>
-          {isStatusClosed ? (
-            <AssetsUnderManagement assets={data?.assetsUnderManagement} />
-          ) : (
-            <InvestmntsOverview />
-          )}
-        </Grid>
-        <Grid item xs={12} md={6}>
-          <TopInvestorsTable investors={data?.topInvestors} />
+      <Grid item container>
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={6}>
+            {isStatusClosed ? (
+              <AssetsUnderManagement assets={data?.assetsUnderManagement} />
+            ) : (
+              // TODO Change assetsUnderManagement field name to investmentsOverview or how it will be after update backend api
+              <InvestmentsOverview investments={data?.assetsUnderManagement} />
+            )}
+          </Grid>
+
+          <Grid item xs={12} md={6}>
+            <TopInvestorsTable
+              investors={data?.topInvestors}
+              title={
+                isStatusClosed
+                  ? 'Top Investors From Closed'
+                  : 'Top Investors Open Deals'
+              }
+            />
+          </Grid>
         </Grid>
       </Grid>
     </Grid>

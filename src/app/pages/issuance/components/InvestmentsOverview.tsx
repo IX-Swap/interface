@@ -2,8 +2,9 @@ import React from 'react'
 import { Chart } from 'react-google-charts'
 import { useTheme } from '@material-ui/core/styles'
 import { ChartWrapper } from 'app/pages/issuance/components/IssuanceLanding/ChartWrapper'
-import { InsightCard } from 'app/pages/issuance/components/CapTable/InsightCard'
 import { formatAmountValue } from 'helpers/numbers'
+import { InsightCard } from 'app/pages/issuance/components/InsightCard'
+import { AssetUnderManagement } from 'types/vccDashboard'
 
 const createCustomHTMLTooltip = (raised: number, target: number) => {
   return (
@@ -21,11 +22,86 @@ const createCustomHTMLTooltip = (raised: number, target: number) => {
   )
 }
 
-export const InvestmntsOverview = () => {
+const createEmptyHTMLTooltip = () => {
+  return '<div/>'
+}
+
+const getChartItem = (
+  name: string,
+  totalAmount: number,
+  amount: number,
+  index: number,
+  isEmpty?: boolean
+) => {
+  const totalValue = 100
+  const value = (amount / totalAmount) * 100
+
+  return [
+    name,
+    value,
+    getRowColor(index),
+    isEmpty !== undefined && isEmpty
+      ? createEmptyHTMLTooltip()
+      : createCustomHTMLTooltip(amount, totalAmount),
+    totalValue - value,
+    '#ECECEC',
+    isEmpty !== undefined && isEmpty
+      ? createEmptyHTMLTooltip()
+      : createCustomHTMLTooltip(amount, totalAmount)
+  ]
+}
+
+const getChartItems = (investments: AssetUnderManagement[] | undefined) => {
+  let chartItems: any[] = []
+
+  if (investments !== undefined) {
+    chartItems = investments.map((item, i) =>
+      getChartItem(item.dsoName, item.totalAmount, item.amount, i)
+    )
+  }
+
+  if (chartItems.length >= 5) {
+    return chartItems.slice(0, 5)
+  }
+
+  while (chartItems.length < 5) {
+    chartItems.push(getChartItem('', 100, 0, chartItems.length, true))
+  }
+
+  return chartItems
+}
+
+export const getRowColor = (index: number) => {
+  switch (index) {
+    case 0:
+      return '#FF9703'
+    case 1:
+      return '#109619'
+    case 2:
+      return '#990099'
+    case 3:
+      return '#3266CC'
+    case 4:
+      return '#03FF59'
+    default:
+      return '#FF9703'
+  }
+}
+
+export interface InvestmentsOverviewProps {
+  investments: AssetUnderManagement[] | undefined
+}
+
+export const InvestmentsOverview = ({
+  investments
+}: InvestmentsOverviewProps) => {
   const theme = useTheme()
 
-  // TODO Add real data after complete backend api endpoint
-  const fakeChartData = [
+  if (investments === undefined || investments.length < 1) {
+    return null
+  }
+
+  const data = [
     [
       'Asset',
       'Raised',
@@ -35,51 +111,7 @@ export const InvestmntsOverview = () => {
       { role: 'style' },
       { role: 'tooltip', type: 'string', p: { html: true } }
     ],
-    [
-      'IXD SF 1',
-      80,
-      '#FF9703',
-      createCustomHTMLTooltip(80, 20),
-      20,
-      '#ECECEC',
-      createCustomHTMLTooltip(80, 20)
-    ],
-    [
-      'IXD SF 2',
-      60,
-      '#109619',
-      createCustomHTMLTooltip(60, 40),
-      40,
-      '#ECECEC',
-      createCustomHTMLTooltip(60, 40)
-    ],
-    [
-      'IXD SF 3',
-      70,
-      '#990099',
-      createCustomHTMLTooltip(70, 30),
-      30,
-      '#ECECEC',
-      createCustomHTMLTooltip(70, 30)
-    ],
-    [
-      'IXD SF 4',
-      40,
-      '#3266CC',
-      createCustomHTMLTooltip(40, 60),
-      60,
-      '#ECECEC',
-      createCustomHTMLTooltip(40, 60)
-    ],
-    [
-      'IXD SF 5',
-      20,
-      '#03FF59',
-      createCustomHTMLTooltip(20, 80),
-      80,
-      '#ECECEC',
-      createCustomHTMLTooltip(20, 80)
-    ]
+    ...getChartItems(investments)
   ]
 
   return (
@@ -88,7 +120,7 @@ export const InvestmntsOverview = () => {
         <Chart
           chartType='BarChart'
           loader={<div>Loading Chart</div>}
-          data={fakeChartData}
+          data={data}
           height={'100%'}
           width={'100%'}
           options={{
@@ -104,12 +136,12 @@ export const InvestmntsOverview = () => {
                 fontName: 'Poppins'
               }
             },
-            bar: { groupWidth: '70%' },
+            bar: { groupWidth: 26 },
             enableInteractivity: true,
             chartArea: {
               width: '100%',
               height: '80%',
-              left: '14%',
+              left: 0,
               right: 0,
               bottom: 0,
               top: '10%'
@@ -118,6 +150,9 @@ export const InvestmntsOverview = () => {
               gridlines: {
                 color: 'transparent'
               }
+            },
+            vAxis: {
+              textPosition: 'in'
             },
             tooltip: { isHtml: true }
           }}
