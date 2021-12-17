@@ -32,7 +32,7 @@ export const Details = styled.div`
   justify-content: space-between;
 `
 export const GridElement = styled.div`
-  width: 260px;
+  width: fit-content;
 `
 export const ReadMoreButton = styled(ButtonEmpty)`
   display: inline-block;
