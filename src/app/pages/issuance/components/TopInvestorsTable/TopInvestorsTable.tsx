@@ -23,9 +23,13 @@ const headCells: TableCellItem[] = [
 
 export interface TopInvestorsTableProps {
   investors: TopInvestor[] | undefined
+  title: string
 }
 
-export const TopInvestorsTable = ({ investors }: TopInvestorsTableProps) => {
+export const TopInvestorsTable = ({
+  investors,
+  title
+}: TopInvestorsTableProps) => {
   const classes = useStyles()
 
   if (investors === undefined || investors.length < 1) {
@@ -35,7 +39,7 @@ export const TopInvestorsTable = ({ investors }: TopInvestorsTableProps) => {
   return (
     <InsightCard>
       <Box padding={3} paddingBottom={1} className={classes.wrapper}>
-        <ChartTitle title='Top Investors From Closed' />
+        <ChartTitle title={title} />
         <Box padding={1}>
           <TableContainer>
             <Table>

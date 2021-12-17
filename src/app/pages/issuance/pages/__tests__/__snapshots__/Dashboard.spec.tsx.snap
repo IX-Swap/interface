@@ -217,7 +217,7 @@ exports[`Dashboard should match snapshot 1`] = `
       </div>
     </div>
     <div
-      class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12"
+      class="MuiGrid-root MuiGrid-container MuiGrid-item"
     >
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3"
@@ -242,7 +242,7 @@ exports[`Dashboard should match snapshot 1`] = `
                     class="MuiTypography-root MuiTypography-subtitle1 MuiTypography-colorTextPrimary MuiTypography-noWrap"
                     style="line-height: 25px;"
                   >
-                    Assets Under Management
+                    Investments Overview
                   </h6>
                 </div>
               </div>
@@ -272,7 +272,7 @@ exports[`Dashboard should match snapshot 1`] = `
                     class="MuiTypography-root MuiTypography-subtitle1 MuiTypography-colorTextPrimary MuiTypography-noWrap"
                     style="line-height: 25px;"
                   >
-                    Top Investors From Closed
+                    Top Investors Open Deals
                   </h6>
                 </div>
               </div>
