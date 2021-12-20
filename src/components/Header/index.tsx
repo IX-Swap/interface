@@ -17,7 +17,7 @@ import { NetworkCard } from './NetworkCard'
 
 const HeaderFrame = styled.div<{ showBackground: boolean; lightBackground: boolean }>`
   display: grid;
-  grid-template-columns: 0.6fr auto 0.6fr;
+  grid-template-columns: 0.3fr auto 0.3fr;
   align-items: center;
   justify-content: space-between;
   align-items: center;
@@ -36,10 +36,8 @@ const HeaderFrame = styled.div<{ showBackground: boolean; lightBackground: boole
   background-size: 100% 200%;
   /* box-shadow: 0px 0px 0px 1px ${({ theme, showBackground }) => (showBackground ? theme.bg2 : 'transparent;')}; */
   transition: background-position 0.1s, box-shadow 0.1s;
-
-  @media (max-width: 1280px) {
+  @media (max-width: 1400px) {
     grid-template-columns: auto 1fr auto;
-    grid-gap: 32px;
   }
   @media (max-width: 1080px) {
     grid-template-columns: auto 1fr auto;

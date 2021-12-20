@@ -28,13 +28,10 @@ const HeaderLinksWrap = styled(Row)<{ links: number }>`
   ${({ theme }) => theme.mediaWidth.upToMedium`
     justify-self: flex-end;
   `};
-  @media (max-width: 1500px) {
+  @media (max-width: 1600px) {
     grid-gap: 18px;
   }
-  @media (max-width: 1250px) {
-    grid-gap: 12px;
-  }
-  @media (max-width: 1200px) {
+  @media (max-width: 1400px) {
     display: none;
   }
 `
@@ -102,6 +99,9 @@ const SubMenuExternalLink = styled(ExternalLink)`
     text-decoration: none;
   }
 `
+const MenuExternalLink = styled(ExternalLink)`
+  ${navLinkStyles};
+`
 const PopOverContent = styled.div`
   display: flex;
   gap: 6px;
@@ -160,7 +160,7 @@ export const HeaderLinks = () => {
   useOnClickOutside(farmNode, open ? toggle : undefined)
   useOnClickOutside(nftNode, openNFT ? toggleNFT : undefined)
   return (
-    <HeaderLinksWrap links={SECURITY_TOKENS ? 6 : 5}>
+    <HeaderLinksWrap links={SECURITY_TOKENS ? 7 : 6}>
       {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
         <StyledNavLink id={`swap-nav-link`} to={'/swap'}>
           <Trans>Secondary Market</Trans>
@@ -218,6 +218,9 @@ export const HeaderLinks = () => {
           <Trans>Faucet</Trans>
         </StyledNavLink>
       )}
+      <MenuExternalLink href={'https://info.ixswap.io/home'}>
+        <Trans>Charts</Trans>
+      </MenuExternalLink>
     </HeaderLinksWrap>
   )
 }

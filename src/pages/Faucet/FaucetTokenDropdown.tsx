@@ -3,12 +3,14 @@ import React, { useCallback, useState } from 'react'
 import styled from 'styled-components'
 
 import Popover from 'components/Popover'
-import { RowBetween, RowStart } from 'components/Row'
+import Row, { RowBetween, RowStart } from 'components/Row'
 import { TYPE } from 'theme'
 import { ChevronElement } from 'components/ChevronElement'
 import { DarkBlueCard } from 'components/Card'
 import { testSecTokens, testStableCoinsTokens } from 'constants/addresses'
 import { IFaucetToken } from '.'
+import { Trans } from '@lingui/macro'
+import { Line } from 'components/Line'
 
 export const PopOverContent = styled.div`
   display: flex;
@@ -36,7 +38,27 @@ export const FaucetTokenDropdown = ({
   const popOverContent = useCallback(() => {
     return (
       <PopOverContent style={{ cursor: 'pointer', width: isMobile ? '100%' : '320px' }}>
-        {[...testStableCoinsTokens, ...testSecTokens].map((token) => {
+        <RowStart>
+          <TYPE.body2 style={{ fontWeight: 600 }}>
+            <Trans>Non-Security Tokens</Trans>
+          </TYPE.body2>
+        </RowStart>
+        {[...testStableCoinsTokens].map((token) => {
+          return (
+            <RowStart key={`token-${token.address}`} onClick={() => selectToken(token)}>
+              {token.name}
+            </RowStart>
+          )
+        })}
+        <Row style={{ padding: '0', margin: '5px 0' }}>
+          <Line />
+        </Row>
+        <RowStart>
+          <TYPE.body2 style={{ fontWeight: 600 }}>
+            <Trans>Security Tokens</Trans>
+          </TYPE.body2>
+        </RowStart>
+        {[...testSecTokens].map((token) => {
           return (
             <RowStart key={`token-${token.address}`} onClick={() => selectToken(token)}>
               {token.name}
