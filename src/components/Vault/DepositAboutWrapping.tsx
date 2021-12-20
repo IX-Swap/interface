@@ -18,7 +18,7 @@ export const DepositAboutWrapping: FC = () => {
     `,
     t`
     When you “wrap” SEC, you are actually not so much wrapping as trading through a smart contract for an equal
-    token called wSEC. If you want to get back a simple SEC, you need to &quot;unfold&quot; it. AKA will exchange
+    token called wSEC. If you want to get back a simple SEC, you need to "unfold" it. AKA will exchange
     it for a simple SEC.
     `,
     t`When you make a deposit, we create a wrap token and transfer it to your balance. In the future, you have the

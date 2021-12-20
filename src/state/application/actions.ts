@@ -39,6 +39,7 @@ export enum ApplicationModal {
   PROPERTIES,
   LEVELS,
   STATS,
+  ABOUT_WRAPPING,
 }
 
 export const updateBlockNumber = createAction<{ chainId: number; blockNumber: number }>('application/updateBlockNumber')

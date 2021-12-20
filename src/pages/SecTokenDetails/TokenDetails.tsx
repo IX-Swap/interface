@@ -1,21 +1,21 @@
 import { Token } from '@ixswap1/sdk-core'
 import { Trans } from '@lingui/macro'
-import { Logo } from './styleds'
-import { AccreditationRequest } from 'components/Vault/enum'
-import React, { useMemo } from 'react'
-import useCopyClipboard from 'hooks/useCopyClipboard'
-import useAddTokenToMetamask from 'hooks/useAddTokenToMetamask'
-import { useCurrency } from 'hooks/Tokens'
-import { useActiveWeb3React } from 'hooks/web3'
-import { ExternalLink, TextGradient } from 'theme'
+import { ButtonGradient } from 'components/Button'
 import { RowStart } from 'components/Row'
+import { AboutWrapping } from 'components/Vault/AboutWrapping'
+import { AccreditationRequest } from 'components/Vault/enum'
+import { useCurrency } from 'hooks/Tokens'
+import useAddTokenToMetamask from 'hooks/useAddTokenToMetamask'
+import useCopyClipboard from 'hooks/useCopyClipboard'
+import { useActiveWeb3React } from 'hooks/web3'
+import React, { useMemo } from 'react'
+import { ApplicationModal } from 'state/application/actions'
+import { useToggleModal } from 'state/application/hooks'
+import { ExternalLink, TextGradient } from 'theme'
+import { SecTokenPlatform } from 'types/secToken'
 import { shortenAddress } from 'utils'
 import { DetailsElement } from './DetailsElement'
-import { Details } from './styleds'
-import { SecTokenPlatform } from 'types/secToken'
-import { useShowAboutWrappingCallback } from 'state/deposit/hooks'
-import { ButtonGradient } from 'components/Button'
-
+import { Details, Logo } from './styleds'
 interface Props {
   currency?: Token
   accreditationRequest: AccreditationRequest | null
@@ -28,8 +28,7 @@ export const TokenDetails = ({ currency, platform }: Props) => {
 
   const originalCurrency = useCurrency(originalAddress)
   const { library } = useActiveWeb3React()
-  const showAboutWrapping = useShowAboutWrappingCallback()
-
+  const toggleAbout = useToggleModal(ApplicationModal.ABOUT_WRAPPING)
   const addCurrency = useAddTokenToMetamask(currency ?? undefined)
   const addOriginalCurrency = useAddTokenToMetamask(originalCurrency ?? undefined)
 
@@ -38,6 +37,7 @@ export const TokenDetails = ({ currency, platform }: Props) => {
 
   return (
     <Details>
+      <AboutWrapping />
       <div>
         {platform && (
           <DetailsElement
@@ -70,7 +70,7 @@ export const TokenDetails = ({ currency, platform }: Props) => {
             )}
             <ButtonGradient
               style={{ width: '146px', alignSelf: 'flex-start', marginBottom: '13px' }}
-              onClick={showAboutWrapping}
+              onClick={toggleAbout}
             >
               <Trans>About Wrapping</Trans>
             </ButtonGradient>
