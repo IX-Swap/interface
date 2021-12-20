@@ -37,7 +37,8 @@ const HeaderFrame = styled.div<{ showBackground: boolean; lightBackground: boole
   /* box-shadow: 0px 0px 0px 1px ${({ theme, showBackground }) => (showBackground ? theme.bg2 : 'transparent;')}; */
   transition: background-position 0.1s, box-shadow 0.1s;
   @media (max-width: 1400px) {
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: 2fr auto auto;
+    grid-gap: 28px;
   }
   @media (max-width: 1080px) {
     grid-template-columns: auto 1fr auto;

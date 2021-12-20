@@ -24,7 +24,7 @@ const IconContainer = styled.div`
   text-align: right;
   width: 100%;
   display: none;
-  @media (max-width: 1200px) {
+  @media (max-width: 1400px) {
     display: flex;
     align-items: center;
     justify-content: flex-end;
