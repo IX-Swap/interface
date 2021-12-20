@@ -14,7 +14,6 @@ export interface WithdrawalAddress extends AuthorizableWithIdentity {
 export type BlockchainAddressVariant = 'connect' | 'create'
 
 export interface WithdrawalAddressFormValues {
-  variant: BlockchainAddressVariant
   label: WithdrawalAddress['label']
   address: WithdrawalAddress['address']
   network: Network['_id']

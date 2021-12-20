@@ -1,27 +1,28 @@
 import { useState } from 'react'
-import { useFormContext } from 'react-hook-form'
-import { WithdrawalAddressFormValues } from 'types/withdrawalAddress'
 import { useGenerateWalletHash } from './useGenerateWalletHash'
 import { useVerifyWalletOwnership } from './useVerifyWalletOwnership'
 import { useServices } from 'hooks/useServices'
+import { useMakeWithdrawalAddress } from './useMakeWithdrawalAddress'
+import { WithdrawalAddressFormValues } from 'types/withdrawalAddress'
 
 export enum WalletConnectionStatus {
   IDLE,
   INITIALISING,
+  INITIALISED,
   VERIFYING,
+  ERROR,
   SUCCESS
 }
 
 export function useConnectMetamaskWallet() {
   const { snackbarService, web3Service } = useServices()
   const [status, setStatus] = useState(WalletConnectionStatus.IDLE)
-  const { setValue, watch } = useFormContext<WithdrawalAddressFormValues>()
   const [generateWalletHash] = useGenerateWalletHash()
   const [verifyWalletOwnership] = useVerifyWalletOwnership()
+  const [makeWithdrawalAddress] = useMakeWithdrawalAddress()
 
-  const address = watch('address')
-
-  const signWallet = async () => {
+  const signWallet = async (values: WithdrawalAddressFormValues) => {
+    const { address } = values
     setStatus(WalletConnectionStatus.VERIFYING)
 
     try {
@@ -38,27 +39,33 @@ export function useConnectMetamaskWallet() {
         })
 
         if (verifyOwnershipResponse?.data?.isVerified ?? false) {
-          setStatus(WalletConnectionStatus.SUCCESS)
+          const response = await makeWithdrawalAddress(values)
+          // @ts-expect-error
+          if (response?.status < 400) {
+            setStatus(WalletConnectionStatus.SUCCESS)
+          } else {
+            setStatus(WalletConnectionStatus.ERROR)
+          }
         } else {
+          setStatus(WalletConnectionStatus.ERROR)
           snackbarService.showSnackbar('Failed to sign the wallet', 'error')
         }
       }
     } catch (error) {
       snackbarService.showSnackbar((error as Error).message, 'error')
-      setStatus(WalletConnectionStatus.IDLE)
+      setStatus(WalletConnectionStatus.ERROR)
     }
   }
 
-  const getAccount = async () => {
+  const getAccount = async (address: string) => {
     setStatus(WalletConnectionStatus.INITIALISING)
 
     try {
-      const account = await web3Service.getAccount()
-      setValue('address', account)
+      await web3Service.getAccount(address)
+      setStatus(WalletConnectionStatus.INITIALISED)
     } catch (error) {
-      snackbarService.showSnackbar((error as Error).message, 'error')
-    } finally {
       setStatus(WalletConnectionStatus.IDLE)
+      snackbarService.showSnackbar((error as Error).message, 'error')
     }
   }
 

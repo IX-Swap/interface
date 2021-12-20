@@ -369,5 +369,6 @@ export const blockchainNetworksURL = {
   getUpdateDecimal: (network: string, decimal: number) =>
     `/blockchain/settings/decimal/${network}/${decimal}`,
   generateWalletHash: '/blockchain/wallets/generateWalletHash',
-  verifyWalletOwnership: '/blockchain/wallets/verifyOwnership'
+  verifyWalletOwnership: '/blockchain/wallets/verifyOwnership',
+  checkAddress: `/blockchain/wallets/detectNetwork`
 }
