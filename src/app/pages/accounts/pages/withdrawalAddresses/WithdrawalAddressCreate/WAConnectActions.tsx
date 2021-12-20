@@ -7,53 +7,39 @@ interface WAConnectActionsProps {
   isVerifying: boolean
   isVerified: boolean
   hasWallet: boolean
-  hasAddress: boolean
+  allowConnect: boolean
   getAccount: Function
-  signWallet: Function
 }
 
 export const WAConnectActions = ({
   isLoading,
   isVerified,
   isVerifying,
-  hasAddress,
+  allowConnect,
   hasWallet,
-  getAccount,
-  signWallet
+  getAccount
 }: WAConnectActionsProps) => {
-  if (isVerified) {
+  if (hasWallet) {
     return (
-      <Submit color='primary' variant='contained'>
-        Submit
+      <Submit
+        color='primary'
+        variant='contained'
+        disableElevation
+        disabled={isVerifying || isLoading}
+      >
+        Sign and Save
       </Submit>
     )
   }
 
-  if (hasAddress) {
-    return (
-      <Button
-        color='primary'
-        variant='outlined'
-        disabled={isVerifying}
-        onClick={() => signWallet()}
-      >
-        Sign Challenge
-      </Button>
-    )
-  }
-
-  if (hasWallet) {
-    return (
-      <Button
-        color='primary'
-        variant='outlined'
-        onClick={() => getAccount()}
-        disabled={isLoading}
-      >
-        Connect Wallet
-      </Button>
-    )
-  }
-
-  return null
+  return (
+    <Button
+      color='primary'
+      variant='outlined'
+      onClick={() => getAccount()}
+      disabled={!allowConnect || isLoading}
+    >
+      Connect
+    </Button>
+  )
 }

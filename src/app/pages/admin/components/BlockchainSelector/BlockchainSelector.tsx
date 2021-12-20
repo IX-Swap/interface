@@ -4,17 +4,7 @@ import { useStyles } from './BlockchainSelector.styles'
 import { BlockchainNetworks } from 'types/blockchain'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
 import { useTheme } from '@material-ui/core/styles'
-import AlgorandIcon from 'assets/images/algorand.png'
-import EthereumIcon from 'assets/images/ethereum.png'
-import HederaIcon from 'assets/images/hedera.png'
-import TezosIcon from 'assets/images/tezos.png'
-
-const networkIconMap = {
-  [BlockchainNetworks.ETH]: EthereumIcon,
-  [BlockchainNetworks.XTZ]: TezosIcon,
-  [BlockchainNetworks.HBAR]: HederaIcon,
-  [BlockchainNetworks.ALGO]: AlgorandIcon
-}
+import { networkIconMap } from 'config/blockchain'
 
 export const BlockchainSelector = () => {
   const styles = useStyles()
@@ -39,7 +29,7 @@ export const BlockchainSelector = () => {
               >
                 <img
                   className={styles.icon}
-                  src={networkIconMap[name]}
+                  src={networkIconMap[id as keyof typeof networkIconMap]}
                   alt={name}
                 />
                 <Typography
