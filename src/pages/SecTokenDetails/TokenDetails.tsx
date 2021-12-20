@@ -53,7 +53,7 @@ export const TokenDetails = ({ currency, platform }: Props) => {
           />
         )}
         {currency?.address && (
-          <RowStart style={{ gap: '5px' }}>
+          <RowStart style={{ gap: '5px', flexWrap: 'wrap' }}>
             <div onClick={() => setCopied(currency?.address ?? '')}>
               <DetailsElement
                 title={<Trans>Wrapped {currency?.symbol}:</Trans>}
@@ -77,7 +77,7 @@ export const TokenDetails = ({ currency, platform }: Props) => {
           </RowStart>
         )}
         {originalAddress && (
-          <RowStart style={{ gap: '5px' }}>
+          <RowStart style={{ gap: '5px', flexWrap: 'wrap' }}>
             <div onClick={() => setOriginAddCopied(originalAddress ?? '')}>
               <DetailsElement
                 title={<Trans>{originalCurrency?.symbol || 'Original token'}:</Trans>}
