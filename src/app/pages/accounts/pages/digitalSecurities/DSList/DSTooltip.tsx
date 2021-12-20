@@ -1,4 +1,4 @@
-import { Box } from '@material-ui/core'
+import { Box, Typography } from '@material-ui/core'
 import { WithdrawalAddressTooltip } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressesList/WithdrawalAddressTooltip'
 import React from 'react'
 
@@ -7,7 +7,14 @@ export const DSTooltip = () => {
     <Box p={1}>
       <WithdrawalAddressTooltip
         placement='right-end'
-        title='Custody wallets are recommended for holding your assets, as this would enable full trading of your assets on the platform. Self custody wallets are an alternative option for holding tokens in your own wallet of choice and hence available tokens cannot be displayed.'
+        title={
+          <Typography>
+            Custody wallets are recommended for holding your assets, as this
+            would enable full trading of your assets on the platform. Self
+            custody wallets are an alternative option for holding tokens in your
+            own wallet of choice and hence available tokens cannot be displayed.
+          </Typography>
+        }
       />
     </Box>
   )
