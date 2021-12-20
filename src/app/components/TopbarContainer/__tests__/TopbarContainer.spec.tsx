@@ -182,14 +182,6 @@ describe('Topbar', () => {
     expect(TopbarLinkContainer).toHaveBeenNthCalledWith(
       3,
       expect.objectContaining({
-        label: 'Funds Management',
-        link: IssuanceRoute.insight
-      }),
-      {}
-    )
-    expect(TopbarLinkContainer).toHaveBeenNthCalledWith(
-      4,
-      expect.objectContaining({
         label: 'Education Centre',
         link: AppRoute.educationCentre
       }),

@@ -50,13 +50,6 @@ export const TopbarContainer = () => {
     }
   ]
 
-  if (isFundManager) {
-    links.push({
-      label: 'Funds Management',
-      link: IssuanceRoute.insight
-    } as any)
-  }
-
   if (isIssuer) {
     links.push({
       label: 'Issuance',
@@ -119,6 +112,13 @@ export const TopbarContainer = () => {
     { label: 'Create Exchange Listings', path: OTCMarketRoute.createListing },
     { label: 'View Exchange Listings', path: OTCMarketRoute.myListings }
   ]
+
+  if (isFundManager) {
+    newIssuanceLandingLinks.unshift({
+      label: 'Overview',
+      path: IssuanceRoute.insight
+    })
+  }
 
   if (isIssuer) {
     newIssuanceLandingLinks.push({
