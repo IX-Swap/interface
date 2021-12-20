@@ -23,7 +23,16 @@ export function isAddress(value: any): string | false {
     return false
   }
 }
-
+export function isEthChainAddress(value: any): string | false {
+  if (!value) {
+    return false
+  }
+  try {
+    return getAddress(value)
+  } catch {
+    return false
+  }
+}
 export const isValidAddress = (value: string): string | false => {
   const isValid = /^0x[a-fA-F0-9]{40}$/.test(value) ? value : false
   if (!isValid) {

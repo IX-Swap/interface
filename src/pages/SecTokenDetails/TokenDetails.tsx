@@ -13,6 +13,8 @@ import { shortenAddress } from 'utils'
 import { DetailsElement } from './DetailsElement'
 import { Details } from './styleds'
 import { SecTokenPlatform } from 'types/secToken'
+import { useShowAboutWrappingCallback } from 'state/deposit/hooks'
+import { ButtonGradient } from 'components/Button'
 
 interface Props {
   currency?: Token
@@ -24,15 +26,12 @@ export const TokenDetails = ({ currency, platform }: Props) => {
     return (currency as any)?.tokenInfo?.originalAddress
   }, [currency])
 
-  const originalName = useMemo(() => {
-    return (currency as any)?.tokenInfo?.originalName
-  }, [currency])
-
-  const originalIXSCurrency = useCurrency(originalAddress)
+  const originalCurrency = useCurrency(originalAddress)
   const { library } = useActiveWeb3React()
+  const showAboutWrapping = useShowAboutWrappingCallback()
 
-  const addIXS = useAddTokenToMetamask(currency ?? undefined)
-  const addIXSOriginal = useAddTokenToMetamask(originalIXSCurrency ?? undefined)
+  const addCurrency = useAddTokenToMetamask(currency ?? undefined)
+  const addOriginalCurrency = useAddTokenToMetamask(originalCurrency ?? undefined)
 
   const [isCopied, setCopied] = useCopyClipboard()
   const [originAddIsCopied, setOriginAddCopied] = useCopyClipboard()
@@ -57,35 +56,40 @@ export const TokenDetails = ({ currency, platform }: Props) => {
           <RowStart style={{ gap: '5px' }}>
             <div onClick={() => setCopied(currency?.address ?? '')}>
               <DetailsElement
-                title={<Trans>Contract:</Trans>}
+                title={<Trans>Wrapped {currency?.symbol}:</Trans>}
                 content={isCopied ? <Trans>Copied!</Trans> : shortenAddress(currency?.address ?? '')}
               />
             </div>
             {currency && library?.provider?.isMetaMask && (
               <TextGradient
                 style={{ cursor: 'pointer', marginBottom: '0.75rem', fontSize: '18px', lineHeight: '27px' }}
-                onClick={() => !addIXS.success && addIXS.addToken()}
+                onClick={() => !addCurrency.success && addCurrency.addToken()}
               >
-                {!addIXS.success ? <Trans>Add to Metamask</Trans> : null}
+                {!addCurrency.success ? <Trans>Add to Metamask</Trans> : null}
               </TextGradient>
             )}
+            <ButtonGradient
+              style={{ width: '146px', alignSelf: 'flex-start', marginBottom: '13px' }}
+              onClick={showAboutWrapping}
+            >
+              <Trans>About Wrapping</Trans>
+            </ButtonGradient>
           </RowStart>
         )}
-        {originalName && <DetailsElement title={<Trans>Original Name:</Trans>} content={originalName ?? ''} />}
         {originalAddress && (
           <RowStart style={{ gap: '5px' }}>
             <div onClick={() => setOriginAddCopied(originalAddress ?? '')}>
               <DetailsElement
-                title={<Trans>Original Contract:</Trans>}
+                title={<Trans>{originalCurrency?.symbol || 'Original token'}:</Trans>}
                 content={originAddIsCopied ? <Trans>Copied!</Trans> : shortenAddress(originalAddress ?? '')}
               />
             </div>
-            {currency && library?.provider?.isMetaMask && (
+            {originalCurrency && library?.provider?.isMetaMask && (
               <TextGradient
                 style={{ cursor: 'pointer', marginBottom: '0.75rem', fontSize: '18px', lineHeight: '27px' }}
-                onClick={() => !addIXSOriginal.success && addIXSOriginal.addToken()}
+                onClick={() => !addOriginalCurrency.success && addOriginalCurrency.addToken()}
               >
-                {!addIXSOriginal.success ? <Trans>Add to Metamask</Trans> : null}
+                {!addOriginalCurrency.success ? <Trans>Add to Metamask</Trans> : null}
               </TextGradient>
             )}
           </RowStart>

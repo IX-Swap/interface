@@ -14,6 +14,8 @@ import { isAddress } from 'utils'
 import { depositSecTokens, setCurrency, setModalView, setNetworkName, typeAmount, typeSender } from './actions'
 import { DepositModalView } from './reducer'
 import walletValidator from 'multicoin-address-validator'
+import { ApplicationModal } from 'state/application/actions'
+import { useModalOpen, useToggleModal } from 'state/application/hooks'
 
 export function useDepositState(): AppState['deposit'] {
   return useSelector<AppState, AppState['deposit']>((state) => state.deposit)
@@ -186,10 +188,14 @@ export function useCancelDepositCallback(): ({ requestId, onSuccess }: CancelDep
 
 export const useShowAboutWrappingCallback = () => {
   const dispatch = useDispatch<AppDispatch>()
-
+  const open = useModalOpen(ApplicationModal.DEPOSIT)
+  const toggle = useToggleModal(ApplicationModal.DEPOSIT)
   return useCallback(() => {
+    if (!open) {
+      toggle()
+    }
     dispatch(setModalView({ view: DepositModalView.ABOUT_WRAPPING }))
-  }, [dispatch])
+  }, [dispatch, open, toggle])
 }
 
 export function useHideAboutWrappingCallback() {
