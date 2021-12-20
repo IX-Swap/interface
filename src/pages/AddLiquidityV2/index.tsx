@@ -149,7 +149,7 @@ export default function AddLiquidity({
       [Field.CURRENCY_A]: calculateSlippageAmount(parsedAmountA, noLiquidity ? ZERO_PERCENT : allowedSlippage)[0],
       [Field.CURRENCY_B]: calculateSlippageAmount(parsedAmountB, noLiquidity ? ZERO_PERCENT : allowedSlippage)[0],
     }
-
+    const isCreating = !Boolean(pair?.liquidityToken?.address)
     let estimate,
       method: (...args: any) => Promise<TransactionResponse>,
       args: Array<string | string[] | number | boolean>,
@@ -166,7 +166,7 @@ export default function AddLiquidity({
         account,
         deadline.toHexString(),
       ]
-      if (Boolean(pair?.liquidityToken?.address)) {
+      if (isCreating) {
         args.push(enableMitigation)
       }
       value = BigNumber.from((tokenBIsETH ? parsedAmountB : parsedAmountA).quotient.toString())
@@ -183,7 +183,7 @@ export default function AddLiquidity({
         account,
         deadline.toHexString(),
       ]
-      if (Boolean(pair?.liquidityToken?.address)) {
+      if (isCreating) {
         args.push(enableMitigation)
       }
       value = null
