@@ -5,6 +5,8 @@ import * as useGetCustody from 'app/pages/accounts/hooks/useGetCustody'
 import { generateQueryResult } from '__fixtures__/useQuery'
 import { balance } from '__fixtures__/balance'
 
+jest.mock('@material-ui/core/MenuItem', () => jest.fn(() => null))
+
 describe('TokenSelect', () => {
   beforeEach(() => {
     const objResponse = generateQueryResult({
@@ -24,35 +26,5 @@ describe('TokenSelect', () => {
 
   it('renders without errors', () => {
     render(<TokenSelect />)
-  })
-
-  it('returns null when data is undefined', () => {
-    const objResponse = generateQueryResult({
-      data: undefined,
-      isLoading: false
-    })
-
-    jest
-      .spyOn(useGetCustody, 'useGetCustody')
-      .mockImplementation(() => objResponse as any)
-
-    const { container } = render(<TokenSelect />)
-
-    expect(container).toBeEmptyDOMElement()
-  })
-
-  it('returns null when isLoading', () => {
-    const objResponse = generateQueryResult({
-      data: [balance],
-      isLoading: true
-    })
-
-    jest
-      .spyOn(useGetCustody, 'useGetCustody')
-      .mockImplementation(() => objResponse as any)
-
-    const { container } = render(<TokenSelect />)
-
-    expect(container).toBeEmptyDOMElement()
   })
 })
