@@ -14,6 +14,7 @@ import { css } from 'styled-components'
 import { ExternalLink } from 'theme'
 import { useActiveWeb3React } from 'hooks/web3'
 import { MATIC_TGE_CHAINS, TGE_CHAINS_WITH_STAKING } from 'constants/addresses'
+import { SupportedChainId } from 'constants/chains'
 const activeClassName = 'ACTIVE'
 
 const HeaderLinksWrap = styled(Row)<{ links: number }>`
@@ -180,13 +181,11 @@ export const HeaderLinks = () => {
           <Trans>Liquidity Pool</Trans>
         </StyledNavLink>
       )}
-
       {SECURITY_TOKENS && (
         <StyledNavLink id={`stake-nav-link`} to={routes.securityTokens()}>
           <Trans>Security tokens</Trans>
         </StyledNavLink>
       )}
-
       <StyledNavLink
         ref={farmNode as any}
         id={`farming-nav-link`}
@@ -218,9 +217,11 @@ export const HeaderLinks = () => {
           <Trans>Faucet</Trans>
         </StyledNavLink>
       )}
-      <MenuExternalLink href={'https://info.ixswap.io/home'}>
-        <Trans>Charts</Trans>
-      </MenuExternalLink>
+      {chainId && chainId === SupportedChainId.KOVAN && (
+        <MenuExternalLink href={'https://info.ixswap.io/home'}>
+          <Trans>Charts</Trans>
+        </MenuExternalLink>
+      )}
     </HeaderLinksWrap>
   )
 }
