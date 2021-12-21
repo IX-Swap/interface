@@ -3,8 +3,15 @@ import { green, grey } from '@material-ui/core/colors'
 import { Overrides } from '@material-ui/core/styles/overrides'
 import { rte } from 'themes/rte'
 import tinycolor from 'tinycolor2'
+import { CSSProperties } from 'react'
 
-export const getThemeOverrides = (theme: Theme): Overrides => ({
+interface LabOverrides {
+  MuiSkeleton: {
+    root: CSSProperties
+  }
+}
+
+export const getThemeOverrides = (theme: Theme): Overrides & LabOverrides => ({
   ...rte(theme),
   MuiCssBaseline: {
     '@global': {
@@ -33,6 +40,11 @@ export const getThemeOverrides = (theme: Theme): Overrides => ({
         color: theme.palette?.sidebar.activeColor,
         backgroundColor: theme.palette?.sidebar.activeBackground
       }
+    }
+  },
+  MuiSkeleton: {
+    root: {
+      borderRadius: 6
     }
   },
   MuiCard: {

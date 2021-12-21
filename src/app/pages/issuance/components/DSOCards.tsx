@@ -9,7 +9,7 @@ import { ReactComponent as DollarIcon } from 'assets/icons/green_dollar.svg'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import { useVCCFundStats } from 'app/pages/issuance/hooks/useVCCFundStats'
 import { abbreviateNumber } from 'helpers/numbers'
-import { DSOCardWrapper } from 'app/pages/issuance/components/DSOCardWrapper'
+import { DSOCardWrapper } from 'app/pages/issuance/components/DSOCardWrapper/DSOCardWrapper'
 
 export const DSOCards = () => {
   const { getFilterValue } = useQueryFilter()
@@ -17,22 +17,9 @@ export const DSOCards = () => {
   const isStatusClosed = status === 'Closed'
   const { data, isLoading } = useVCCFundStats()
 
-  const hasFirstCardInfo = data?.totalDSOs !== undefined
-  const hasSecondCardInfo = isStatusClosed
-    ? data?.totalInvestors !== undefined
-    : data?.pendingAuthorizations !== undefined
-  const hasThirdCardInfo = isStatusClosed
-    ? data?.totalAmountRaisedPercent !== undefined &&
-      data?.totalAmountRaised !== undefined
-    : data?.totalInvestors !== undefined
-
-  if (isLoading) {
-    return null
-  }
-
   return (
     <Grid container spacing={3}>
-      <DSOCardWrapper hasValue={hasFirstCardInfo}>
+      <DSOCardWrapper isLoading={isLoading}>
         <DSOCard
           title={'Total DSOs'}
           value={data?.totalDSOs}
@@ -40,7 +27,7 @@ export const DSOCards = () => {
         />
       </DSOCardWrapper>
 
-      <DSOCardWrapper hasValue={hasSecondCardInfo}>
+      <DSOCardWrapper isLoading={isLoading}>
         {isStatusClosed ? (
           <TotalInvestorsCard
             isNewThemeOn
@@ -57,7 +44,7 @@ export const DSOCards = () => {
         )}
       </DSOCardWrapper>
 
-      <DSOCardWrapper hasValue={hasThirdCardInfo}>
+      <DSOCardWrapper isLoading={isLoading}>
         {isStatusClosed ? (
           <AmountRaisedCard
             showIcon
