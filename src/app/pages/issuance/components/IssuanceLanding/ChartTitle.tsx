@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { ReactElement } from 'react'
 import { Grid, Typography } from '@material-ui/core'
 
 export interface ChartTitleProps {
-  title: string
+  title: ReactElement | string
   small?: boolean
   icon?: JSX.Element
 }
