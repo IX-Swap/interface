@@ -1,20 +1,28 @@
 import React from 'react'
 import { Grid } from '@material-ui/core'
 import { InsightCard } from 'app/pages/issuance/components/InsightCard'
+import { Skeleton } from '@material-ui/lab'
 
 export interface DSOCardWrapperProps {
   children: JSX.Element
-  hasValue: boolean
+  isLoading: boolean
 }
 
-export const DSOCardWrapper = ({ children, hasValue }: DSOCardWrapperProps) => {
-  if (!hasValue) {
-    return null
-  }
-
+export const DSOCardWrapper = ({
+  children,
+  isLoading
+}: DSOCardWrapperProps) => {
   return (
     <Grid item xs={12} md={3}>
-      <InsightCard>{children}</InsightCard>
+      {isLoading ? (
+        <Skeleton variant='rect' height={112} />
+      ) : (
+        <InsightCard>{children}</InsightCard>
+      )}
     </Grid>
   )
+}
+
+DSOCardWrapper.defaultProps = {
+  isLoading: true
 }

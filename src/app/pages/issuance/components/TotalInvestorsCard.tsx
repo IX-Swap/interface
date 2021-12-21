@@ -20,10 +20,6 @@ export const TotalInvestorsCard = ({
   total,
   small = true
 }: TotalInvestorsCardProps) => {
-  if (total === undefined) {
-    return null
-  }
-
   return (
     <ChartWrapper py={isNewThemeOn ? 2.5 : undefined}>
       <Grid container justify='space-between' alignItems='center'>
@@ -41,7 +37,7 @@ export const TotalInvestorsCard = ({
             }
           />
           {isNewThemeOn && <VSpacer size='extraSmall' />}
-          <InsightValue value={total} />
+          <InsightValue value={total ?? 0} />
         </Grid>
       </Grid>
     </ChartWrapper>

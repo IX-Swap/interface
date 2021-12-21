@@ -12,7 +12,7 @@ import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import { NetAssetValueChart } from 'app/pages/issuance/components/NetAssetValueChart/NetAssetValueChart'
 
 export const Dashboard = () => {
-  const { data } = useVCCFundStats()
+  const { data, isLoading } = useVCCFundStats()
   const { getFilterValue } = useQueryFilter()
   const status = getFilterValue('status')
   const isStatusClosed = status === 'Closed'
@@ -39,12 +39,16 @@ export const Dashboard = () => {
               <AssetsUnderManagement assets={data?.assetsUnderManagement} />
             ) : (
               // TODO Change assetsUnderManagement field name to investmentsOverview or how it will be after update backend api
-              <InvestmentsOverview investments={data?.assetsUnderManagement} />
+              <InvestmentsOverview
+                isLoading={isLoading}
+                investments={data?.assetsUnderManagement}
+              />
             )}
           </Grid>
 
           <Grid item xs={12} md={6}>
             <TopInvestorsTable
+              isLoading={isLoading}
               investors={data?.topInvestors}
               title={
                 isStatusClosed

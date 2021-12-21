@@ -5,6 +5,7 @@ import { ChartWrapper } from 'app/pages/issuance/components/IssuanceLanding/Char
 import { formatAmountValue } from 'helpers/numbers'
 import { InsightCard } from 'app/pages/issuance/components/InsightCard'
 import { AssetUnderManagement } from 'types/vccDashboard'
+import { Skeleton } from '@material-ui/lab'
 
 const createCustomHTMLTooltip = (raised: number, target: number) => {
   return (
@@ -90,15 +91,31 @@ export const getRowColor = (index: number) => {
 
 export interface InvestmentsOverviewProps {
   investments: AssetUnderManagement[] | undefined
+  isLoading: boolean
 }
 
 export const InvestmentsOverview = ({
-  investments
+  investments,
+  isLoading
 }: InvestmentsOverviewProps) => {
   const theme = useTheme()
 
-  if (investments === undefined || investments.length < 1) {
-    return null
+  if (isLoading) {
+    return (
+      <InsightCard>
+        <ChartWrapper title={<Skeleton width={220} />}>
+          <Skeleton
+            variant='rect'
+            height={26}
+            style={{ marginBottom: 10, marginTop: 21 }}
+          />
+          <Skeleton variant='rect' height={26} style={{ marginBottom: 10 }} />
+          <Skeleton variant='rect' height={26} style={{ marginBottom: 10 }} />
+          <Skeleton variant='rect' height={26} style={{ marginBottom: 10 }} />
+          <Skeleton variant='rect' height={26} style={{ marginBottom: 10 }} />
+        </ChartWrapper>
+      </InsightCard>
+    )
   }
 
   const data = [
