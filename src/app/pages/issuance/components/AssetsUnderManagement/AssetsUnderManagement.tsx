@@ -20,13 +20,8 @@ export const AssetsUnderManagement = ({
   let data: Array<[string, string | number]> = [['Asset', 'Value']]
 
   if (assets !== undefined && assets.length > 0) {
-    // data = data.concat(assets.map(item => [item.dsoName, item.amount]))
+    data = data.concat(assets.map(item => [item.dsoName, item.amount]))
   }
-
-  data = data.concat([
-    ['DSO 1', 30],
-    ['DSO 2', 90]
-  ])
 
   if (isLoading) {
     return <AssetsUnderManagementSkeleton />
