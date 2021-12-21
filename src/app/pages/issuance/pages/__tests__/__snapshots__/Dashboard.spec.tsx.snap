@@ -280,67 +280,13 @@ exports[`Dashboard should match snapshot 1`] = `
                 class="MuiBox-root MuiBox-root-21"
               >
                 <div
-                  class="MuiTableContainer-root"
+                  class="MuiBox-root MuiBox-root-22"
                 >
-                  <table
-                    class="MuiTable-root"
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 MuiTypography-colorTextSecondary"
                   >
-                    <thead
-                      class="MuiTableHead-root"
-                    >
-                      <tr
-                        class="MuiTableRow-root MuiTableRow-head"
-                      >
-                        <th
-                          class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-18 MuiTableCell-alignLeft"
-                          scope="col"
-                        >
-                          Sub-Fund
-                        </th>
-                        <th
-                          class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-18 MuiTableCell-alignLeft"
-                          scope="col"
-                        >
-                          Investor Name
-                        </th>
-                        <th
-                          class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-18 MuiTableCell-alignRight"
-                          scope="col"
-                        >
-                          Amount
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody
-                      class="MuiTableBody-root"
-                    >
-                      <tr
-                        class="MuiTableRow-root"
-                      >
-                        <th
-                          class="MuiTableCell-root MuiTableCell-body makeStyles-column-19 MuiTableCell-alignLeft"
-                          role="cell"
-                          scope="row"
-                        >
-                          Access Token
-                        </th>
-                        <th
-                          class="MuiTableCell-root MuiTableCell-body makeStyles-column-19 MuiTableCell-alignLeft"
-                          role="cell"
-                          scope="row"
-                        >
-                          aditya test 2
-                        </th>
-                        <th
-                          class="MuiTableCell-root MuiTableCell-body makeStyles-column-19 MuiTableCell-alignRight"
-                          role="cell"
-                          scope="row"
-                        >
-                          2,000,000.00
-                        </th>
-                      </tr>
-                    </tbody>
-                  </table>
+                    There is no investment at the moment. Once you receive investments in your deals you will be able to see the table.
+                  </p>
                 </div>
               </div>
             </div>
@@ -369,6 +315,58 @@ exports[`Dashboard should match snapshot 1`] = `
               >
                 Investors
               </h6>
+            </div>
+            <div
+              class="MuiGrid-root MuiGrid-item"
+            >
+              <div
+                class="MuiFormControl-root MuiFormControl-fullWidth"
+                style="width: 300px;"
+              >
+                <div
+                  class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-formControl"
+                >
+                  <div
+                    aria-haspopup="listbox"
+                    aria-labelledby="periodical-label"
+                    class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input"
+                    role="button"
+                    tabindex="0"
+                  >
+                    Quarterly
+                  </div>
+                  <input
+                    aria-hidden="true"
+                    class="MuiSelect-nativeInput"
+                    tabindex="-1"
+                    value="Quarterly"
+                  />
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSelect-icon MuiSelect-iconOutlined"
+                    focusable="false"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      d="M7 10l5 5 5-5z"
+                    />
+                  </svg>
+                  <fieldset
+                    aria-hidden="true"
+                    class="PrivateNotchedOutline-root-23 MuiOutlinedInput-notchedOutline"
+                    style="padding-left: 8px;"
+                  >
+                    <legend
+                      class="PrivateNotchedOutline-legend-24"
+                      style="width: 0.01px;"
+                    >
+                      <span>
+                        ​
+                      </span>
+                    </legend>
+                  </fieldset>
+                </div>
+              </div>
             </div>
           </div>
           <div
