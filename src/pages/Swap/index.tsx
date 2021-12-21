@@ -1,5 +1,8 @@
 import { Currency, CurrencyAmount } from '@ixswap1/sdk-core'
 import { Trade as V2Trade } from '@ixswap1/v2-sdk'
+import { FakeBrokerDealerApproval } from 'components/FakeBrokerDealerApproval/index'
+import { GeneralModal } from 'components/GeneralModal/GeneralModal'
+import { LoaderThin } from 'components/Loader/LoaderThin'
 import { AcceptChanges } from 'components/swap/AcceptChanges'
 import { CurrentRate } from 'components/swap/CurrentRate'
 import { EditRecipient } from 'components/swap/EditRecipient'
@@ -9,6 +12,7 @@ import UnsupportedCurrencyFooter from 'components/swap/UnsupportedCurrencyFooter
 import { TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
 import React, { useCallback, useMemo, useRef } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
+import { useFakeApprovalState } from 'state/application/hooks'
 import {
   useOpenModal,
   useSetSwapState,
@@ -32,11 +36,6 @@ import { AuthorizationButtons } from './AuthorizationButtons'
 import { BrokerDealerForm } from './BrokerDealerForm'
 import { SwapButtons } from './SwapButtons'
 import { useWatchApprovalSubmitted } from './useWatchApprovalSubmitted'
-import { LoaderThin } from 'components/Loader/LoaderThin'
-import { GeneralModal } from 'components/GeneralModal/GeneralModal'
-import { FakeBrokerDealerApproval } from 'components/FakeBrokerDealerApproval/index'
-import { useFakeApprovalState, useToggleFakeApproval } from 'state/application/hooks'
-import { ButtonGradient } from 'components/Button'
 
 export default function Swap({ history }: RouteComponentProps) {
   const { chainId } = useActiveWeb3React()
@@ -45,7 +44,6 @@ export default function Swap({ history }: RouteComponentProps) {
   const { loadingSwap } = useSwapHelpersState()
   const { independentField, typedValue, recipient } = useSwapState()
   const showFakeApproval = useFakeApprovalState()
-  const setShowFakeApproval = useToggleFakeApproval()
 
   const { onUserInput, onChangeRecipient } = useSwapActionHandlers()
 

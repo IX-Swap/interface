@@ -17,6 +17,7 @@ import {
   listToSecTokenMap,
   SecTokenAddressMap,
   useAccreditationStatus,
+  useSecToken,
   useSecTokensFromMap,
 } from 'state/secTokens/hooks'
 import { useSimpleTokenBalanceWithLoading } from 'state/wallet/hooks'
@@ -363,6 +364,18 @@ export const useUserSecTokens = () => {
   const secMap = listToSecTokenMap(listCache, userSecTokens)
   const secTokens = useSecTokensFromMap(secMap)
   return { secTokens }
+}
+
+export const useAccreditedToken = ({ currencyId }: { currencyId?: string }) => {
+  const { secTokens } = useUserSecTokens()
+  const secToken = useSecToken({ currencyId })
+  const currency = useCurrency(currencyId)
+  return useMemo(() => {
+    if (currencyId && currency && secToken && !secTokens[currencyId]) {
+      return undefined
+    }
+    return currency
+  }, [currencyId, secTokens, secToken, currency])
 }
 
 export const useIXSBalance = () => {
