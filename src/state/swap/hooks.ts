@@ -5,8 +5,9 @@ import * as H from 'history'
 import { useMissingAuthorizations } from 'hooks/useSwapCallback'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useSecTokens } from 'state/secTokens/hooks'
 import { useSetSwapState } from 'state/swapHelper/hooks'
-import { useUserSecTokens, useUserSingleHopOnly } from 'state/user/hooks'
+import { useAccreditedToken, useUserSecTokens, useUserSingleHopOnly } from 'state/user/hooks'
 import { useAllTokens, useCurrency } from '../../hooks/Tokens'
 import useENS from '../../hooks/useENS'
 import useParsedQueryString from '../../hooks/useParsedQueryString'
@@ -213,17 +214,17 @@ export function useDefaultsFromURLSearch():
   useEffect(() => {
     if (!chainId) return
     const parsed = queryParametersToSwapState(parsedQs)
-
+    const parsedInputCurrency = parsed[Field.INPUT].currencyId
+    const parsedOutputCurrency = parsed[Field.OUTPUT].currencyId
+    if (!parsedInputCurrency && !parsedOutputCurrency) {
+      return
+    }
     dispatch(
       replaceSwapState({
         typedValue: parsed.typedValue ? parsed.typedValue : state.typedValue,
         field: parsed.independentField ? parsed.independentField : state.independentField,
-        inputCurrencyId: parsed[Field.INPUT].currencyId
-          ? parsed[Field.INPUT].currencyId
-          : state[Field.INPUT].currencyId,
-        outputCurrencyId: parsed[Field.OUTPUT].currencyId
-          ? parsed[Field.OUTPUT].currencyId
-          : state[Field.OUTPUT].currencyId,
+        inputCurrencyId: parsedInputCurrency || state[Field.INPUT].currencyId,
+        outputCurrencyId: parsedOutputCurrency || state[Field.OUTPUT].currencyId,
         recipient: parsed.recipient ? parsed.recipient : state.recipient,
       })
     )
