@@ -2,10 +2,9 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { TransactionResponse } from '@ethersproject/providers'
 import { Currency, CurrencyAmount, Percent, WETH9 } from '@ixswap1/sdk-core'
 import { t, Trans } from '@lingui/macro'
-import MitigationBadge from 'components/MitigationBadge'
 import UnsupportedCurrencyFooter from 'components/swap/UnsupportedCurrencyFooter'
 import { ConfirmationModalContent } from 'components/TransactionConfirmationModal/ConfirmationModalContent'
-import React, { useCallback, useContext, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useState } from 'react'
 import { Plus } from 'react-feather'
 import ReactGA from 'react-ga'
 import { RouteComponentProps } from 'react-router-dom'
@@ -13,7 +12,7 @@ import { Box, Text } from 'rebass'
 import { setPoolTransactionHash, useMitigationEnabled } from 'state/pool/hooks'
 import { ThemeContext } from 'styled-components'
 import { routes } from 'utils/routes'
-import { ButtonGradient, ButtonIXSGradient, ButtonIXSWide } from '../../components/Button'
+import { ButtonIXSGradient, ButtonIXSWide } from '../../components/Button'
 import { AutoColumn, ColumnCenter } from '../../components/Column'
 import CurrencyInputPanel from '../../components/CurrencyInputPanel'
 import { AddRemoveTabs } from '../../components/NavigationTabs'
@@ -21,7 +20,6 @@ import { MinimalPositionCard } from '../../components/PositionCard/MinimalPositi
 import { ButtonRow } from '../../components/Row'
 import TransactionConfirmationModal from '../../components/TransactionConfirmationModal'
 import { ZERO_PERCENT } from '../../constants/misc'
-import { useCurrency } from '../../hooks/Tokens'
 import { ApprovalState, useApproveCallback } from '../../hooks/useApproveCallback'
 import { useLiquidityRouterContract } from '../../hooks/useContract'
 import { useIsSwapUnsupported } from '../../hooks/useIsSwapUnsupported'
@@ -32,7 +30,7 @@ import { useWalletModalToggle } from '../../state/application/hooks'
 import { Field } from '../../state/mint/actions'
 import { useDerivedMintInfo, useMintActionHandlers, useMintState } from '../../state/mint/hooks'
 import { useTransactionAdder } from '../../state/transactions/hooks'
-import { useIsExpertMode, useUserSlippageToleranceWithDefault } from '../../state/user/hooks'
+import { useAccreditedToken, useIsExpertMode, useUserSlippageToleranceWithDefault } from '../../state/user/hooks'
 import { ModalBlurWrapper, TYPE } from '../../theme'
 import { calculateGasMargin } from '../../utils/calculateGasMargin'
 import { calculateSlippageAmount } from '../../utils/calculateSlippageAmount'
@@ -58,8 +56,8 @@ export default function AddLiquidity({
   const { account, chainId, library } = useActiveWeb3React()
   const theme = useContext(ThemeContext)
 
-  const currencyA = useCurrency(currencyIdA)
-  const currencyB = useCurrency(currencyIdB)
+  const currencyA = useAccreditedToken({ currencyId: currencyIdA })
+  const currencyB = useAccreditedToken({ currencyId: currencyIdB })
 
   const oneCurrencyIsWETH = Boolean(
     chainId && ((currencyA && currencyA.equals(WETH9[chainId])) || (currencyB && currencyB.equals(WETH9[chainId])))
