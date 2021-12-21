@@ -20,7 +20,7 @@ export const LineChart = ({ data }: LineChartProps) => {
           height: 400,
           chartArea: {
             left: 40,
-            top: 10,
+            top: 30,
             width: '95%',
             height: 300
           },
