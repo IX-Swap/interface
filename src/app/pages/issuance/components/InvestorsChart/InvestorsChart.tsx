@@ -1,14 +1,20 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Grid, Paper, Typography } from '@material-ui/core'
 import { LineChart } from 'app/pages/issuance/components/LineChart/LineChart'
 import { format } from 'date-fns'
-// import { InvestorsSkeleton } from 'app/pages/issuance/components/InvestorsChart/InvestorsSkeleton'
+import { InvestorsChartSkeleton } from 'app/pages/issuance/components/InvestorsChart/InvestorsChartSkeleton'
 
 export const InvestorsChart = () => {
-  // TODO Uncomment this after complete backend api
-  // if (isLoading) {
-  //   return <InvestorsSkeleton />
-  // }
+  const [isLoading, setIsLoading] = useState<boolean>(true)
+
+  // TODO Remove this after complete backend api
+  useEffect(() => {
+    setTimeout(() => setIsLoading(false), 3000)
+  }, [])
+
+  if (isLoading) {
+    return <InvestorsChartSkeleton />
+  }
 
   // TODO Remove this after complete backend api
   const fakeData = [
