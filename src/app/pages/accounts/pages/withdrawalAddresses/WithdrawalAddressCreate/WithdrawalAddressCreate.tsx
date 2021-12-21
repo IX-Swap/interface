@@ -2,13 +2,13 @@ import React from 'react'
 import { WADialog } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WADialog/WADialog'
 import { WADialogTitle } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WADialog/WADialogTitle'
 import { WADialogContent } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WADialog/WADialogContent'
-import { WAFormWrapper } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WAFormWrapper'
 import { CreateWalletDialog } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/CreateWalletDialog/CreateWalletDialog'
 import { CreateWalletDialogTitle } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/CreateWalletDialog/CreateWalletDialogTitle'
 import { CreateWalletDialogContent } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/CreateWalletDialog/CreateWalletDialogContent'
 import useStyles from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WADialog/WADialog.styles'
 import { WAOfferToCreateWallet } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WAOfferToCreateWallet/WAOfferToCreateWallet'
 import { useToggleValue } from 'hooks/useToggleValue'
+import { WithdrawalAddressForm } from './WAForm'
 
 export const WithdrawalAddressCreate = () => {
   const [isCreateWalletDialogVisible, toggleIsCreateWalletDialogVisible] =
@@ -29,7 +29,7 @@ export const WithdrawalAddressCreate = () => {
       >
         <WADialogTitle label='Add Blockchain Address' />
         <WADialogContent>
-          <WAFormWrapper hint={hint} />
+          <WithdrawalAddressForm hint={hint} />
         </WADialogContent>
       </WADialog>
       <CreateWalletDialog

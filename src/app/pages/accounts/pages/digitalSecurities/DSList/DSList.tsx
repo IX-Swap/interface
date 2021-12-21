@@ -3,6 +3,7 @@ import { Button, Grid } from '@material-ui/core'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { DSTabs } from 'app/pages/accounts/pages/digitalSecurities/DSList/DSTabs'
 import { DSRoute } from 'app/pages/accounts/pages/digitalSecurities/router/config'
+import { AppRouterLinkComponent } from 'components/AppRouterLink'
 
 export const DSList: React.FC = () => {
   return (
@@ -12,13 +13,23 @@ export const DSList: React.FC = () => {
       </Grid>
       <Grid item xs={12} container spacing={1} justifyContent='flex-end'>
         <Grid item>
-          <Button variant='outlined' color='primary' href={DSRoute.deposit}>
-            deposit
+          <Button
+            component={AppRouterLinkComponent}
+            variant='outlined'
+            color='primary'
+            to={DSRoute.deposit}
+          >
+            Deposit
           </Button>
         </Grid>
         <Grid item>
-          <Button variant='outlined' color='primary' href={DSRoute.withdraw}>
-            withdraw
+          <Button
+            component={AppRouterLinkComponent}
+            variant='outlined'
+            color='primary'
+            to={DSRoute.withdraw}
+          >
+            Withdraw
           </Button>
         </Grid>
       </Grid>
