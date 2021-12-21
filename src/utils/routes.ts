@@ -10,4 +10,6 @@ export const routes = {
   securityTokens: (currency?: Currency) => `/security-tokens${currency ? `/${currencyId(currency)}` : ''}`,
   staking: '/staking',
   vesting: '/vesting',
+  nftList: '/nft',
+  nftCreate: '/nft-create',
 }

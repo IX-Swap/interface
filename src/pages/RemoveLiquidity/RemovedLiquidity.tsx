@@ -45,11 +45,6 @@ export const RemovedLiquidity = ({ currencyIdA, currencyIdB, chainId, formattedA
   const oneCurrencyIsWETH = Boolean(
     chainId && WETH9[chainId] && (currencyA?.equals(WETH9[chainId]) || currencyB?.equals(WETH9[chainId]))
   )
-  // ask Cucer why there is no staking info
-  // const stakingInfo = useStakingInfo()
-  // const stakingInfosWithBalance = stakingInfo?.filter((pool) =>
-  //   JSBI.greaterThan(pool.stakedAmount.quotient, BIG_INT_ZERO)
-  // )
   return (
     <RemovedLiquidityWrapper>
       <AutoColumn gap="10px">

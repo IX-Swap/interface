@@ -9,6 +9,8 @@ import {
 } from 'constants/addresses'
 const AdminKyc = lazy(() => import('./AdminKyc'))
 const Custodian = lazy(() => import('./Custodian'))
+const CreateNFT = lazy(() => import('./CreateNFT'))
+const ListNFT = lazy(() => import('./ListNFT'))
 const RemoveLiquidity = lazy(() => import('./RemoveLiquidity'))
 const SecTokenDetails = lazy(() => import('./SecTokenDetails'))
 const Swap = lazy(() => import('./Swap'))
@@ -32,6 +34,7 @@ import DarkModeQueryParamReader from '../theme/DarkModeQueryParamReader'
 import { RedirectDuplicateTokenIdsV2 } from './AddLiquidityV2/redirects'
 import { StakingTab } from './Farming/StakingTab'
 import { VestingTab } from './Farming/VestingTab'
+import Faucet from './Faucet'
 import PoolFinder from './PoolFinder'
 import { RedirectPathToSwapOnly, RedirectPathToStaking, RedirectToSwap } from './Swap/redirects'
 
@@ -98,6 +101,8 @@ export default function App() {
             <Suspense fallback={<></>}>
               <Switch>
                 <Route exact strict path="/admin-kyc" component={AdminKyc} />
+                <Route exact strict path={routes.nftCreate} component={CreateNFT} />
+                <Route exact strict path={routes.nftList} component={ListNFT} />
 
                 {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
                   <Route exact strict path="/send" component={RedirectPathToSwapOnly} />
@@ -119,6 +124,10 @@ export default function App() {
 
                 {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
                   <Route exact strict path="/remove/:currencyIdA/:currencyIdB" component={RemoveLiquidity} />
+                )}
+
+                {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
+                  <Route exact strict path="/faucet" component={Faucet} />
                 )}
 
                 {SECURITY_TOKENS && (

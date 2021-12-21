@@ -124,5 +124,7 @@ export function useHandleSwap({ priceImpact }: { priceImpact: Percent | undefine
     setOpenModal,
     setSwapState,
     authorizations,
+    allowedSlippage,
+    saveSwapTx,
   ])
 }

@@ -50,6 +50,13 @@ export const useSecTokenId = ({ currencyId }: { currencyId?: string }): number |
   return (token as any)?.tokenInfo?.id
 }
 
+export const useSecToken = ({ currencyId }: { currencyId?: string }): number | undefined => {
+  const { secTokens } = useSecTokens()
+  const token = secTokens[currencyId ?? '']
+
+  return token as any
+}
+
 const listCache: WeakMap<SecToken[], SecTokenAddressMap> | null =
   typeof WeakMap !== 'undefined' ? new WeakMap<SecToken[], SecTokenAddressMap>() : null
 

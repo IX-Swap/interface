@@ -14,6 +14,7 @@ import { css } from 'styled-components'
 import { ExternalLink } from 'theme'
 import { useActiveWeb3React } from 'hooks/web3'
 import { MATIC_TGE_CHAINS, TGE_CHAINS_WITH_STAKING } from 'constants/addresses'
+import { SupportedChainId } from 'constants/chains'
 const activeClassName = 'ACTIVE'
 
 const HeaderLinksWrap = styled(Row)<{ links: number }>`
@@ -28,7 +29,10 @@ const HeaderLinksWrap = styled(Row)<{ links: number }>`
   ${({ theme }) => theme.mediaWidth.upToMedium`
     justify-self: flex-end;
   `};
-  @media (max-width: 1080px) {
+  @media (max-width: 1600px) {
+    grid-gap: 18px;
+  }
+  @media (max-width: 1400px) {
     display: none;
   }
 `
@@ -56,11 +60,15 @@ const navLinkStyles = css`
   :focus {
     color: ${({ theme }) => darken(0.05, theme.text2)};
   }
-  ${({ theme }) => theme.mediaWidth.upToExtraSmall`
-   font-size: 1rem;
-  padding: 5px 13px;
-
-  `};
+  @media (max-width: 1500px) {
+    font-size: 18px;
+  }
+  @media (max-width: 1300px) {
+    font-size: 16px;
+  }
+  @media (max-width: 1250px) {
+    font-size: 15px;
+  }
 `
 const StyledNavLink = styled(NavLink).attrs({
   activeClassName,
@@ -91,6 +99,9 @@ const SubMenuExternalLink = styled(ExternalLink)`
   :focus {
     text-decoration: none;
   }
+`
+const MenuExternalLink = styled(ExternalLink)`
+  ${navLinkStyles};
 `
 const PopOverContent = styled.div`
   display: flex;
@@ -124,17 +135,36 @@ const HeaderPopover = () => {
     </PopOverContent>
   )
 }
-export const HeaderLinks = () => {
-  const [open, toggle] = useToggle(false)
-  const node = useRef<HTMLDivElement>()
-  const { chainId } = useActiveWeb3React()
-  useOnClickOutside(node, open ? toggle : undefined)
 
+const NFTPopover = () => {
   return (
-    <HeaderLinksWrap links={SECURITY_TOKENS ? 4 : 3}>
+    <PopOverContent
+      onClick={(e) => (e ? e.stopPropagation() : null)}
+      onMouseDown={(e) => (e ? e.stopPropagation() : null)}
+    >
+      <SubMenuLink id={`nft-list-nav-link`} to={routes.nftList}>
+        <Trans>My NFTs</Trans>
+      </SubMenuLink>
+      <SubMenuLink id={`nft-create-nav-link`} to={routes.nftCreate}>
+        <Trans>Create NFT</Trans>
+      </SubMenuLink>
+    </PopOverContent>
+  )
+}
+
+export const HeaderLinks = () => {
+  const { chainId } = useActiveWeb3React()
+  const [open, toggle] = useToggle(false)
+  const [openNFT, toggleNFT] = useToggle(false)
+  const farmNode = useRef<HTMLDivElement>()
+  const nftNode = useRef<HTMLDivElement>()
+  useOnClickOutside(farmNode, open ? toggle : undefined)
+  useOnClickOutside(nftNode, openNFT ? toggleNFT : undefined)
+  return (
+    <HeaderLinksWrap links={SECURITY_TOKENS ? 7 : 6}>
       {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
         <StyledNavLink id={`swap-nav-link`} to={'/swap'}>
-          <Trans>Swap</Trans>
+          <Trans>Secondary Market</Trans>
         </StyledNavLink>
       )}
       {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
@@ -148,18 +178,16 @@ export const HeaderLinks = () => {
             pathname.startsWith('/find')
           }
         >
-          <Trans>Pool</Trans>
+          <Trans>Liquidity Pool</Trans>
         </StyledNavLink>
       )}
-
       {SECURITY_TOKENS && (
         <StyledNavLink id={`stake-nav-link`} to={routes.securityTokens()}>
           <Trans>Security tokens</Trans>
         </StyledNavLink>
       )}
-
       <StyledNavLink
-        ref={node as any}
+        ref={farmNode as any}
         id={`farming-nav-link`}
         to={'#'}
         isActive={(match, { pathname }) => pathname.startsWith('/vesting') || pathname.startsWith('/staking')}
@@ -171,6 +199,31 @@ export const HeaderLinks = () => {
           </RowFixed>
         </Popover>
       </StyledNavLink>
+      {false && (
+        <StyledNavLink
+          ref={nftNode as any}
+          id={`nft-nav-link`}
+          to={'#'}
+          isActive={(match, { pathname }) => pathname.startsWith('/nft')}
+        >
+          <Popover hideArrow show={openNFT} content={<NFTPopover />} placement={'bottom'}>
+            <RowFixed onClick={toggleNFT}>
+              <Trans>NFT</Trans>
+              <ChevronElement showMore={openNFT} />
+            </RowFixed>
+          </Popover>
+        </StyledNavLink>
+      )}
+      {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
+        <StyledNavLink id={`faucet-nav-link`} to={'/faucet'}>
+          <Trans>Faucet</Trans>
+        </StyledNavLink>
+      )}
+      {chainId && chainId === SupportedChainId.KOVAN && (
+        <MenuExternalLink href={'https://info.ixswap.io/home'}>
+          <Trans>Charts</Trans>
+        </MenuExternalLink>
+      )}
     </HeaderLinksWrap>
   )
 }

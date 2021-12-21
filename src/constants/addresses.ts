@@ -11,8 +11,16 @@ export const MULTICALL2_ADDRESSES = {
   [80001]: '0xBC3B2826B3968a877C82D274A0389c16fBBcc742',
   [137]: '0x65Eed76951B6660bb0b80AF8D8A3AC6b10C6e65F',
 }
-
-export const SUPPORTED_TGE_CHAINS = { MAIN: 1, KOVAN: 42, MATIC: 137, MUMBAI: 80001 }
+export const NFT_ADDRESS = {
+  [1]: '',
+  [4]: '0x6ECc7A1dCe9DD04A18a03bf0a537E9F77cd194fA',
+  [3]: '',
+  [5]: '',
+  [42]: '0x0725dE8514802C9Ca1cd7AA317351B2035939c29',
+  [80001]: '',
+  [137]: '',
+}
+export const SUPPORTED_TGE_CHAINS = { MAIN: 1, KOVAN: 42, MATIC: 137, MUMBAI: 80001, RINKEBY: 4 }
 export const TGE_CHAINS_WITH_SWAP = [SUPPORTED_TGE_CHAINS.KOVAN]
 export const TGE_CHAINS_WITH_STAKING = [
   SUPPORTED_TGE_CHAINS.KOVAN,
@@ -22,6 +30,7 @@ export const TGE_CHAINS_WITH_STAKING = [
 ]
 export const ETHEREUM_TGE_CHAINS = [SUPPORTED_TGE_CHAINS.KOVAN, SUPPORTED_TGE_CHAINS.MAIN]
 export const MATIC_TGE_CHAINS = [SUPPORTED_TGE_CHAINS.MATIC, SUPPORTED_TGE_CHAINS.MUMBAI]
+export const MAIN_TGE_CHAINS = [SUPPORTED_TGE_CHAINS.MAIN, SUPPORTED_TGE_CHAINS.MATIC]
 // the rest are same as kovan for now
 export const IXS_ADDRESS: { [key: number]: string } = {
   [1]: '0x73d7c860998CA3c01Ce8c808F5577d94d545d1b4',
@@ -54,18 +63,15 @@ export const IXS_STAKING_V1_ADDRESS: { [key: number]: string } = {
 }
 export const SWAP_ROUTER_ADDRESS: { [key: number]: string } = {
   [1]: '',
-  [42]: '0xF7C90cF724Ef6136cbC1B22d5AdED757e48B3888',
+  [42]: '0xa345dCB1d06b20490c1c01D5bB76AAC37f9212D3',
   [80001]: '',
   [137]: '',
 }
 export const LIQUIDITY_ROUTER_ADDRESS: { [key: number]: string } = {
   [1]: '',
-  [42]: '0xD306285ee5D6e89E6B07985973669BDd7dE4Af2e',
+  [42]: '0xCc49B6B3De85ff809B1837E3aD9A029dF91e295C',
   [80001]: '',
   [137]: '',
-}
-export const MERKLE_DISTRIBUTOR_ADDRESS: { [chainId: number]: string } = {
-  [1]: '0x090D4613473dEE047c3f2706764f49E0821D256e',
 }
 export const V2_CORE_FACTORY_ADDRESSES = constructSameAddressMap(FACTORY_ADDRESS)
 export const ARGENT_WALLET_DETECTOR_ADDRESS: { [chainId: number]: string } = {
@@ -77,9 +83,6 @@ export const ENS_REGISTRAR_ADDRESSES = {
   [4]: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
   [3]: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
 }
-export const SOCKS_CONTROLLER_ADDRESSES = {
-  [1]: '0x65770b5283117639760beA3F867b69b3697a91dd',
-}
 
 export const STAKING_ALTERNATE_MAP = {
   [SupportedChainId.MAINNET]: SupportedChainId.KOVAN,
@@ -87,3 +90,15 @@ export const STAKING_ALTERNATE_MAP = {
   [SupportedChainId.MATIC]: SupportedChainId.MAINNET,
   [SupportedChainId.MUMBAI]: SupportedChainId.KOVAN,
 }
+
+export const testStableCoinsTokens = [
+  { name: 'Tether USD', symbol: 'USDT', address: '0x9eacd4317b9623cb43b6afbe121e2a9a2426aa2b' },
+  { name: 'Ixswap Stable Coin', symbol: 'IUSDC', address: '0xb10c4ec295225688461ddbc6d30e8291e9934464' },
+  { name: 'Ixswap Stable Coin DAI', symbol: 'IDAI', address: '0x8234ff99e7c1bfc45f076af399fd89e034e710dc' },
+]
+
+export const testSecTokens = [
+  { name: 'Apple', symbol: 'FAAPL', address: '0x4af89c907fba907d9ba74cb44ebf8a7a65c53e6e' },
+  { name: 'Coinbase', symbol: 'FCOIN', address: '0x6a2951cc518efadd7beec657a99554d17a7a85cd' },
+  { name: 'Tesla', symbol: 'FTSLA', address: '0x1d722f4334ad3f0154e3e3711378f534a07e4329' },
+]

@@ -5,6 +5,7 @@ import { useDispatch } from 'react-redux'
 import apiService from 'services/apiService'
 import { tokens } from 'services/apiUrls'
 import { AppDispatch } from 'state'
+import { useSetBrokerDealerData, useToggleFakeApproval } from 'state/application/hooks'
 import { setAuthorizationInProgress, setLoadingSwap } from 'state/swapHelper/actions'
 import { useSubmitBrokerDealerForm, useSwapSecPairs } from 'state/swapHelper/hooks'
 import { authorizeSecToken } from 'state/user/actions'
@@ -104,6 +105,8 @@ export function useSwapAuthorizeFirstStep(
   const submitToBrokerDealer = useSubmitBrokerDealerForm()
   const { secTokens } = useUserSecTokens()
   const dispatch = useDispatch<AppDispatch>()
+  const setShowFakeApproval = useToggleFakeApproval()
+  const setBrokerDealerData = useSetBrokerDealerData()
 
   const fetchAuthorization = useCallback(
     async (token: Token) => {
@@ -118,6 +121,7 @@ export function useSwapAuthorizeFirstStep(
           const { usedToken, amount, orderType, firstIsSec } = dto
           const tokenInfo = (token as any)?.tokenInfo
           const accreditationRequest = tokenInfo?.accreditationRequest
+          const brokerDealerName = tokenInfo?.platform?.name
           const brokerDealerId = (accreditationRequest as any)?.brokerDealerId
           const pair = firstIsSec ? pairs?.[0] : pairs?.[1]
           const pairAddress = pair?.liquidityToken?.address
@@ -142,11 +146,17 @@ export function useSwapAuthorizeFirstStep(
           )
           const pairSymbol = `${pair?.token0?.symbol}-${pair?.token1?.symbol}`
           const result = await getAuthorization({ amount, orderType, pairAddress, pairSymbol, tokenId: usedToken })
+          dispatch(setBrokerDealerData({ ...result, brokerDealerId }))
+
           if (result) {
-            submitToBrokerDealer({
-              dto: { ...result, brokerDealerId },
-              formRef,
-            })
+            if (!result?.endpoint.includes('fake-approve')) {
+              submitToBrokerDealer({
+                dto: { ...result, brokerDealerId },
+                formRef,
+              })
+            } else {
+              setShowFakeApproval(true)
+            }
           } else {
             throw new Error('No result from server')
           }

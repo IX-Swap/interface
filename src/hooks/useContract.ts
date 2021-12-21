@@ -8,17 +8,16 @@ import { abi as IxsToken } from '@ixswap1/v2-core/build/IxsToken.json'
 import { abi as IIxsVestedDistribution } from '@ixswap1/v2-core/build/IXSVestedDistribution.json'
 import { abi as IIxsV2LiquidityRouter } from '@ixswap1/v2-periphery/build/IIxsV2LiquidityRouter.json'
 import { abi as IIxsV2SwapRouter } from '@ixswap1/v2-periphery/build/IIxsV2SwapRouter.json'
-import { abi as STAKING_REWARDS_ABI } from '@uniswap/liquidity-staker/build/StakingRewards.json'
-import { abi as MERKLE_DISTRIBUTOR_ABI } from '@uniswap/merkle-distributor/build/MerkleDistributor.json'
 import ARGENT_WALLET_DETECTOR_ABI from 'abis/argent-wallet-detector.json'
 import EIP_2612 from 'abis/eip_2612.json'
 import ENS_PUBLIC_RESOLVER_ABI from 'abis/ens-public-resolver.json'
 import ENS_ABI from 'abis/ens-registrar.json'
 import ERC20_ABI from 'abis/erc20.json'
 import ERC20_BYTES32_ABI from 'abis/erc20_bytes32.json'
+import FAUCET_ABI from 'abis/faucet-contract.json'
+import FAUCET_STABLE_ABI from 'abis/faucet-stable-contract.json'
 import MULTICALL_ABI from 'abis/multicall2.json'
-import { Unisocks } from 'abis/types/Unisocks'
-import IXSOCKS_ABI from 'abis/unisocks.json'
+import NFT_ABI from 'abis/nft-contract.json'
 import WETH_ABI from 'abis/weth.json'
 import {
   ARGENT_WALLET_DETECTOR_ADDRESS,
@@ -28,9 +27,8 @@ import {
   IXS_STAKING_V1_ADDRESS,
   IXS_VESTING_ADDRESS,
   LIQUIDITY_ROUTER_ADDRESS,
-  MERKLE_DISTRIBUTOR_ADDRESS,
   MULTICALL2_ADDRESSES,
-  SOCKS_CONTROLLER_ADDRESSES,
+  NFT_ADDRESS,
   SWAP_ROUTER_ADDRESS,
 } from 'constants/addresses'
 import { useMemo } from 'react'
@@ -66,6 +64,10 @@ export function useContract<T extends Contract = Contract>(
 
 export function useTokenContract(tokenAddress?: string, withSignerIfPossible?: boolean) {
   return useContract<Erc20>(tokenAddress, ERC20_ABI, withSignerIfPossible)
+}
+
+export function useNftContract() {
+  return useContract(NFT_ADDRESS, NFT_ABI)
 }
 
 export function useVestingContract() {
@@ -122,19 +124,12 @@ export function useLiquidityRouterContract(): Contract | null {
 export function useMulticall2Contract() {
   return useContract<Multicall2>(MULTICALL2_ADDRESSES, MULTICALL_ABI, false) as Multicall2
 }
-
-export function useMerkleDistributorContract() {
-  return useContract(MERKLE_DISTRIBUTOR_ADDRESS, MERKLE_DISTRIBUTOR_ABI, true)
-}
-
 export function useBurnWSecContract(address: string | undefined) {
   return useContract(address, IIxsWSecABI, true)
 }
-
-export function useStakingContract(stakingAddress?: string, withSignerIfPossible?: boolean) {
-  return useContract(stakingAddress, STAKING_REWARDS_ABI, withSignerIfPossible)
+export function useFaucetContract(tokenAddress: string) {
+  return useContract(tokenAddress, FAUCET_ABI, true)
 }
-
-export function useSocksController(): Unisocks | null {
-  return useContract<Unisocks>(SOCKS_CONTROLLER_ADDRESSES, IXSOCKS_ABI, false)
+export function useStableFaucetContract(tokenAddress: string) {
+  return useContract(tokenAddress, FAUCET_STABLE_ABI, true)
 }

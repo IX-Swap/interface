@@ -14,7 +14,7 @@ import { ApplicationModal } from 'state/application/actions'
 import { useModalOpen, useToggleTransactionModal } from 'state/application/hooks'
 import { useCancelDepositCallback, useDepositState } from 'state/deposit/hooks'
 import { useEventState } from 'state/eventLog/hooks'
-import { ModalBlurWrapper, ModalContentWrapper, SvgIconWrapper, TYPE } from 'theme'
+import { ModalBlurWrapper, ModalContentWrapper, SvgIconWrapper, TYPE, ModalPadding } from 'theme'
 import { shortenAddress } from 'utils'
 import { durationInHours } from 'utils/time'
 import Success from '../../assets/images/success.svg'
@@ -29,7 +29,6 @@ import {
   isSuccessTransaction,
   isWithdraw,
 } from './enum'
-import { ModalPadding } from './styleds'
 
 interface Props {
   currency?: Currency
