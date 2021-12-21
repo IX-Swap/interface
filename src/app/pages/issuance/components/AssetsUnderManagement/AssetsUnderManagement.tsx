@@ -4,24 +4,33 @@ import { useTheme } from '@material-ui/core/styles'
 import { ChartWrapper } from 'app/pages/issuance/components/IssuanceLanding/ChartWrapper'
 import { InsightCard } from 'app/pages/issuance/components/InsightCard'
 import { AssetUnderManagement } from 'types/vccDashboard'
+import { AssetsUnderManagementSkeleton } from './AssetsUnderManagementSkeleton'
 
 export interface AssetsUnderManagementProps {
   assets: AssetUnderManagement[] | undefined
+  isLoading: boolean
 }
 
 export const AssetsUnderManagement = ({
-  assets
+  assets,
+  isLoading
 }: AssetsUnderManagementProps) => {
   const theme = useTheme()
 
-  if (assets === undefined || assets.length < 1) {
-    return null
+  let data: Array<[string, string | number]> = [['Asset', 'Value']]
+
+  if (assets !== undefined && assets.length > 0) {
+    // data = data.concat(assets.map(item => [item.dsoName, item.amount]))
   }
 
-  const data = [
-    ['Asset', 'Value'],
-    ...assets.map(item => [item.dsoName, item.amount])
-  ]
+  data = data.concat([
+    ['DSO 1', 30],
+    ['DSO 2', 90]
+  ])
+
+  if (isLoading) {
+    return <AssetsUnderManagementSkeleton />
+  }
 
   return (
     <InsightCard>

@@ -4,10 +4,10 @@ import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { DSOFilters } from 'app/pages/issuance/components/DSOFilters/DSOFilters'
 import { VSpacer } from 'components/VSpacer'
 import { DSOCards } from 'app/pages/issuance/components/DSOCards'
-import { AssetsUnderManagement } from 'app/pages/issuance/components/AssetsUnderManagement'
+import { AssetsUnderManagement } from 'app/pages/issuance/components/AssetsUnderManagement/AssetsUnderManagement'
 import { useVCCFundStats } from 'app/pages/issuance/hooks/useVCCFundStats'
 import { TopInvestorsTable } from 'app/pages/issuance/components/TopInvestorsTable/TopInvestorsTable'
-import { InvestmentsOverview } from 'app/pages/issuance/components/InvestmentsOverview'
+import { InvestmentsOverview } from 'app/pages/issuance/components/InvestmentsOverview/InvestmentsOverview'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import { NetAssetValueChart } from 'app/pages/issuance/components/NetAssetValueChart/NetAssetValueChart'
 
@@ -36,7 +36,10 @@ export const Dashboard = () => {
         <Grid container spacing={3}>
           <Grid item xs={12} md={6}>
             {isStatusClosed ? (
-              <AssetsUnderManagement assets={data?.assetsUnderManagement} />
+              <AssetsUnderManagement
+                isLoading={isLoading}
+                assets={data?.assetsUnderManagement}
+              />
             ) : (
               // TODO Change assetsUnderManagement field name to investmentsOverview or how it will be after update backend api
               <InvestmentsOverview

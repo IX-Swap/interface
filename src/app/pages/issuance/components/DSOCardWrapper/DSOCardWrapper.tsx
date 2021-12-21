@@ -1,7 +1,7 @@
 import React from 'react'
 import { Grid } from '@material-ui/core'
 import { InsightCard } from 'app/pages/issuance/components/InsightCard'
-import { Skeleton } from '@material-ui/lab'
+import { DSOCardWrapperSkeleton } from './DSOCardWrapperSkeleton'
 
 export interface DSOCardWrapperProps {
   children: JSX.Element
@@ -14,11 +14,9 @@ export const DSOCardWrapper = ({
 }: DSOCardWrapperProps) => {
   return (
     <Grid item xs={12} md={3}>
-      {isLoading ? (
-        <Skeleton variant='rect' height={112} />
-      ) : (
-        <InsightCard>{children}</InsightCard>
-      )}
+      <InsightCard>
+        {isLoading ? <DSOCardWrapperSkeleton /> : children}
+      </InsightCard>
     </Grid>
   )
 }

@@ -9,7 +9,7 @@ import { ReactComponent as DollarIcon } from 'assets/icons/green_dollar.svg'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import { useVCCFundStats } from 'app/pages/issuance/hooks/useVCCFundStats'
 import { abbreviateNumber } from 'helpers/numbers'
-import { DSOCardWrapper } from 'app/pages/issuance/components/DSOCardWrapper'
+import { DSOCardWrapper } from 'app/pages/issuance/components/DSOCardWrapper/DSOCardWrapper'
 
 export const DSOCards = () => {
   const { getFilterValue } = useQueryFilter()
