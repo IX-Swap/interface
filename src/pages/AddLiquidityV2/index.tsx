@@ -166,6 +166,8 @@ export default function AddLiquidity({
       ]
       if (isCreating) {
         args.push(enableMitigation)
+      } else {
+        args.push(mitigationEnabled)
       }
       value = BigNumber.from((tokenBIsETH ? parsedAmountB : parsedAmountA).quotient.toString())
     } else {
