@@ -1,5 +1,13 @@
 import { createReducer } from '@reduxjs/toolkit'
-import { setCurrency, setNetwork, setTransaction, typeAmount, typeReceiver, withdrawCurrency } from './actions'
+import {
+  setCurrency,
+  setNetwork,
+  setTransaction,
+  typeAmount,
+  typeReceiver,
+  withdrawCurrency,
+  resetWithdraw,
+} from './actions'
 
 export interface WithdrawState {
   readonly amount: string
@@ -59,5 +67,10 @@ export default createReducer<WithdrawState>(initialState, (builder) =>
     })
     .addCase(setTransaction, (state, { payload: { tx } }) => {
       state.tx = tx
+    })
+    .addCase(resetWithdraw, (state, {}) => {
+      state.amount = initialState.amount
+      state.currencyId = initialState.currencyId
+      state.receiver = initialState.receiver
     })
 )
