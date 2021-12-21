@@ -3,6 +3,7 @@ export interface ModalProps {
   onDismiss: () => void
   minHeight?: number | false
   maxHeight?: number | string
+  maxWidth?: number |string
   initialFocusRef?: React.RefObject<any>
   children?: React.ReactNode
   topContent?: React.ReactNode
