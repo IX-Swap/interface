@@ -216,11 +216,15 @@ export function useDefaultsFromURLSearch():
 
     dispatch(
       replaceSwapState({
-        typedValue: state.typedValue || parsed.typedValue,
-        field: state.independentField || parsed.independentField,
-        inputCurrencyId: state[Field.INPUT].currencyId || parsed[Field.INPUT].currencyId,
-        outputCurrencyId: state[Field.OUTPUT].currencyId || parsed[Field.OUTPUT].currencyId,
-        recipient: state.recipient || parsed.recipient,
+        typedValue: parsed.typedValue ? parsed.typedValue : state.typedValue,
+        field: parsed.independentField ? parsed.independentField : state.independentField,
+        inputCurrencyId: parsed[Field.INPUT].currencyId
+          ? parsed[Field.INPUT].currencyId
+          : state[Field.INPUT].currencyId,
+        outputCurrencyId: parsed[Field.OUTPUT].currencyId
+          ? parsed[Field.OUTPUT].currencyId
+          : state[Field.OUTPUT].currencyId,
+        recipient: parsed.recipient ? parsed.recipient : state.recipient,
       })
     )
 
