@@ -15,6 +15,7 @@ import { InsightCard } from 'app/pages/issuance/components/InsightCard'
 import { TopInvestor } from 'types/vccDashboard'
 import { TopInvestorsTableSkeleton } from './TopInvestorsTableSkeleton'
 import { headCells } from './data'
+import { NoInvestmentsMessage } from '../NoInvestmentsMessage'
 
 export interface TopInvestorsTableProps {
   investors: TopInvestor[] | undefined
@@ -28,6 +29,7 @@ export const TopInvestorsTable = ({
   isLoading
 }: TopInvestorsTableProps) => {
   const classes = useStyles()
+  const hasInvestors = investors?.length === 0
 
   if (isLoading) {
     return <TopInvestorsTableSkeleton />
@@ -38,28 +40,32 @@ export const TopInvestorsTable = ({
       <Box padding={3} paddingBottom={1} className={classes.wrapper}>
         <ChartTitle title={title} />
         <Box py={1}>
-          <TableContainer>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  {headCells.map(({ label, align }) => (
-                    <TableCell align={align} className={classes.headColumn}>
-                      {label}
-                    </TableCell>
+          {hasInvestors ? (
+            <TableContainer>
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    {headCells.map(({ label, align }) => (
+                      <TableCell align={align} className={classes.headColumn}>
+                        {label}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {investors?.map(({ dsoName, investorName, amount }) => (
+                    <TopInvestorsRow
+                      subFund={dsoName}
+                      name={investorName}
+                      amount={amount}
+                    />
                   ))}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {investors?.map(({ dsoName, investorName, amount }) => (
-                  <TopInvestorsRow
-                    subFund={dsoName}
-                    name={investorName}
-                    amount={amount}
-                  />
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
+                </TableBody>
+              </Table>
+            </TableContainer>
+          ) : (
+            <NoInvestmentsMessage message='There is no investment at the moment. Once you receive investments in your deals you will be able to see the table.' />
+          )}
         </Box>
       </Box>
     </InsightCard>

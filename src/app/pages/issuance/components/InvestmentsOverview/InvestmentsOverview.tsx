@@ -6,6 +6,7 @@ import { formatAmountValue } from 'helpers/numbers'
 import { InsightCard } from 'app/pages/issuance/components/InsightCard'
 import { AssetUnderManagement } from 'types/vccDashboard'
 import { InvestmentsOverviewSkeleton } from './InvestmentsOverviewSkeleton'
+import { NoInvestmentsMessage } from '../NoInvestmentsMessage'
 
 const createCustomHTMLTooltip = (raised: number, target: number) => {
   return (
@@ -99,6 +100,7 @@ export const InvestmentsOverview = ({
   isLoading
 }: InvestmentsOverviewProps) => {
   const theme = useTheme()
+  const hasInvestments = investments !== undefined && investments?.length > 0
 
   if (isLoading) {
     return <InvestmentsOverviewSkeleton />
@@ -120,46 +122,50 @@ export const InvestmentsOverview = ({
   return (
     <InsightCard>
       <ChartWrapper title={'Investments Overview'}>
-        <Chart
-          chartType='BarChart'
-          loader={<div>Loading Chart</div>}
-          data={data}
-          height={'100%'}
-          width={'100%'}
-          options={{
-            isStacked: true,
-            backgroundColor: 'transparent',
-            legend: {
-              position: 'none',
-              textStyle: {
-                color: theme.palette.getContrastText(
-                  theme.palette.backgrounds.default as any
-                ),
-                fontSize: 14,
-                fontName: 'Poppins'
-              }
-            },
-            bar: { groupWidth: 26 },
-            enableInteractivity: true,
-            chartArea: {
-              width: '100%',
-              height: '80%',
-              left: 0,
-              right: 0,
-              bottom: 0,
-              top: '10%'
-            },
-            hAxis: {
-              gridlines: {
-                color: 'transparent'
-              }
-            },
-            vAxis: {
-              textPosition: 'in'
-            },
-            tooltip: { isHtml: true }
-          }}
-        />
+        {hasInvestments ? (
+          <Chart
+            chartType='BarChart'
+            loader={<div>Loading Chart</div>}
+            data={data}
+            height={'100%'}
+            width={'100%'}
+            options={{
+              isStacked: true,
+              backgroundColor: 'transparent',
+              legend: {
+                position: 'none',
+                textStyle: {
+                  color: theme.palette.getContrastText(
+                    theme.palette.backgrounds.default as any
+                  ),
+                  fontSize: 14,
+                  fontName: 'Poppins'
+                }
+              },
+              bar: { groupWidth: 26 },
+              enableInteractivity: true,
+              chartArea: {
+                width: '100%',
+                height: '80%',
+                left: 0,
+                right: 0,
+                bottom: 0,
+                top: '10%'
+              },
+              hAxis: {
+                gridlines: {
+                  color: 'transparent'
+                }
+              },
+              vAxis: {
+                textPosition: 'in'
+              },
+              tooltip: { isHtml: true }
+            }}
+          />
+        ) : (
+          <NoInvestmentsMessage message='There is no investment at the moment. Once you receive investments in your deals you will be able to see the chart.' />
+        )}
       </ChartWrapper>
     </InsightCard>
   )
