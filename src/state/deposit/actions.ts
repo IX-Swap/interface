@@ -13,6 +13,7 @@ export const setNetworkName = createAction<{ networkName: string }>('deposit/set
 export const setError = createAction<{ errorMessage: string }>('deposit/setError')
 export const setLoading = createAction<{ loading: boolean }>('deposit/setLoading')
 export const setModalView = createAction<{ view: DepositModalView }>('deposit/setModalView')
+export const resetDeposit = createAction<undefined>('deposit/reset')
 export const depositSecTokens: Readonly<{
   pending: ActionCreatorWithoutPayload
   fulfilled: ActionCreatorWithoutPayload

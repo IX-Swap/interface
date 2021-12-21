@@ -4,7 +4,7 @@ import { ButtonText } from 'components/Button'
 import { getNetworkFromToken } from 'components/CurrencyLogo'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import Row, { RowBetween } from 'components/Row'
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { Box } from 'rebass'
 import { AppDispatch } from 'state'
@@ -42,7 +42,6 @@ export const DepositPopup = ({ currency }: Props) => {
     toggle()
     hideAboutWrapping()
   }, [toggle])
-
   return (
     <RedesignedWideModal isOpen={isOpen} onDismiss={onClose} minHeight={false} maxHeight={'fit-content'} scrollable>
       <ModalBlurWrapper data-testid="depositPopup">

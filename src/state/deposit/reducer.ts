@@ -8,6 +8,7 @@ import {
   setNetworkName,
   typeAmount,
   typeSender,
+  resetDeposit,
 } from './actions'
 export enum DepositModalView {
   CREATE_REQUEST,
@@ -79,5 +80,10 @@ export default createReducer<DepositState>(initialState, (builder) =>
     })
     .addCase(setNetworkName, (state, { payload: { networkName } }) => {
       state.networkName = networkName
+    })
+    .addCase(resetDeposit, (state, {}) => {
+      state.amount = initialState.amount
+      state.currencyId = initialState.currencyId
+      state.sender = initialState.sender
     })
 )
