@@ -50,8 +50,13 @@ const StyledCloseIcon = styled(X)`
 
   position: absolute;
 
-  top: 2rem;
-  right: 2rem;
+  top: 0.75rem;
+  right: 1rem;
+
+  @media (min-width: 720px) {
+    top: 2rem;
+    right: 2rem;
+  }
 
   :hover {
     cursor: pointer;
