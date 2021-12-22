@@ -1,13 +1,13 @@
 import React, { useCallback, useContext } from 'react'
+import styled, { ThemeContext } from 'styled-components'
 import { t, Trans } from '@lingui/macro'
 import { X } from 'react-feather'
+import { isMobile } from 'react-device-detect'
 import { Text } from 'rebass'
-import styled, { ThemeContext } from 'styled-components'
 import { useExpertModeManager } from '../../state/user/hooks'
-import { ButtonError, ButtonPrimary } from '../Button'
+import { ButtonPrimary } from '../Button'
 import { AutoColumn } from '../Column'
 import Modal from '../Modal'
-import { RowBetween } from '../Row'
 
 const ExpertModalContentWrapper = styled.div`
   display: flex;
@@ -16,7 +16,11 @@ const ExpertModalContentWrapper = styled.div`
 
   position: relative;
 
-  padding: 4rem 2rem;
+  padding: 2rem 0.5rem;
+
+  @media (min-width: 960px) {
+    padding: 4rem 6rem;
+  }
 
   border-radius: 20px;
   background: radial-gradient(53.24% 225.7% at 49.91% 82.11%, rgba(123, 66, 169, 0.04) 0%, rgba(237, 3, 118, 0.02) 100%),
@@ -31,7 +35,11 @@ const ExpertModalOuterBorder = styled.div`
   background: radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.099) 0%, rgba(26, 18, 58, 0) 100%),
     rgba(44, 37, 74, 0.2);
 
-  border-radius: 45px;
+  border-radius: 20px;
+
+  @media (min-width: 720px) {
+    border-radius: 45px;
+  }
 
   width: 100%;
 `
@@ -100,7 +108,7 @@ export const ExpertModeModal = ({ showConfirmation = false, toggleConfirmation }
     <Modal isOpen={showConfirmation} onDismiss={() => toggleConfirmation(false)} maxHeight={100} maxWidth="550px">
       <ExpertModalOuterBorder>
         <ExpertModalContentWrapper>
-          <AutoColumn gap="30px" style={{ padding: '2rem', maxWidth: '400px' }}>
+          <AutoColumn gap="30px" style={{ maxWidth: '400px' }}>
             <Text fontWeight={600} fontSize={28} lineHeight="42px" color={theme.bg10}>
               <Trans>Are you sure?</Trans>
             </Text>
