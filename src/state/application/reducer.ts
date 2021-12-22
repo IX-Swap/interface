@@ -7,6 +7,8 @@ import {
   ApplicationModal,
   setOpenModal,
   setModalDetails,
+  setShowFakeApproval,
+  setBrokerDealerData,
 } from './actions'
 
 type PopupList = Array<{ key: string; show: boolean; content: PopupContent; removeAfterMs: number | null }>
@@ -22,6 +24,8 @@ export interface ApplicationState {
   readonly modalType: ModalType
   readonly modalTitle: string
   readonly modalMessage: string
+  readonly showFakeApproval: boolean
+  readonly brokerDealerData: any
 }
 
 const initialState: ApplicationState = {
@@ -31,6 +35,8 @@ const initialState: ApplicationState = {
   modalType: ModalType.INFO,
   modalTitle: '',
   modalMessage: '',
+  showFakeApproval: false,
+  brokerDealerData: {},
 }
 
 export default createReducer(initialState, (builder) =>
@@ -68,5 +74,11 @@ export default createReducer(initialState, (builder) =>
           p.show = false
         }
       })
+    })
+    .addCase(setShowFakeApproval, (state, { payload: { showValue } }) => {
+      state.showFakeApproval = showValue
+    })
+    .addCase(setBrokerDealerData, (state, { payload: { newData } }) => {
+      state.brokerDealerData = newData
     })
 )

@@ -31,7 +31,7 @@ export const WithdrawRequestForm = ({ currency, changeModal }: Props) => {
   const { amount, receiver, currencyId: cid } = useWithdrawState()
   const { account } = useActiveWeb3React()
   const { secTokens } = useUserSecTokens()
-  const { onTypeAmount, onTypeReceiver, onCurrencySet, onSetNetWorkName } = useWithdrawActionHandlers()
+  const { onTypeAmount, onTypeReceiver, onCurrencySet, onSetNetWorkName, onResetWithdraw } = useWithdrawActionHandlers()
   const withdraw = useWithdrawCallback(cid, currency?.symbol)
   const { parsedAmount, inputError } = useDerivedWithdrawInfo()
   const tokenInfo = (secTokens[(currency as any)?.address || ''] as any)?.tokenInfo
@@ -61,6 +61,10 @@ export const WithdrawRequestForm = ({ currency, changeModal }: Props) => {
     const id = currencyId(currency)
     onCurrencySet(id)
   }, [currency, onCurrencySet])
+
+  useEffect(() => {
+    onResetWithdraw()
+  }, [])
 
   return (
     <div style={{ position: 'relative' }}>

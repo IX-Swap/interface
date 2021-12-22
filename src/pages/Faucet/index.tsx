@@ -1,9 +1,10 @@
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { AddressInput } from 'components/AddressInputPanel/AddressInput'
 import { ButtonGradient, ButtonIXSWide } from 'components/Button'
 import { TipCard } from 'components/Card'
 import Column, { ColumnCenter } from 'components/Column'
 import Row, { RowFixed } from 'components/Row'
+import { WarningCard } from 'components/WarningCard'
 import { testStableCoinsTokens, TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
 import { useCurrency } from 'hooks/Tokens'
 import useAddTokenToMetamask from 'hooks/useAddTokenToMetamask'
@@ -11,7 +12,7 @@ import { useActiveWeb3React } from 'hooks/web3'
 import AppBody from 'pages/AppBody'
 import React, { useState } from 'react'
 import { useDistributeToken } from 'state/faucet/hooks'
-import { ExternalLink, StyledPageHeader, TextGradient, TYPE } from 'theme'
+import { ExternalLink, StyledPageHeader, TYPE } from 'theme'
 import { shortAddress } from 'utils'
 import { FaucetTokenDropdown } from './FaucetTokenDropdown'
 
@@ -60,10 +61,14 @@ export default function Faucet() {
           <StyledPageHeader>
             <RowFixed>
               <TYPE.black fontWeight={600} fontSize={22} style={{ marginRight: '8px' }}>
-                <Trans>Get Test Tokens</Trans>
+                <Trans>Get IXSwap Playground Test Tokens</Trans>
               </TYPE.black>
             </RowFixed>
           </StyledPageHeader>
+          <WarningCard
+            style={{ padding: '15px 10px', marginBottom: '10px' }}
+            message={t`These tokens are fake, they were made only for testing IXSwap Playground on Kovan`}
+          />
           <TYPE.body3>
             <Trans>This faucet transfers test tokens on Kovan testnet. Confirm details before submitting.</Trans>
           </TYPE.body3>
@@ -74,22 +79,6 @@ export default function Faucet() {
               once every hour.
             </Trans>
           </TYPE.body3>
-          <Column style={{ marginTop: '15px' }}>
-            {selectedCurrency && library?.provider?.isMetaMask && (
-              <ButtonGradient
-                style={{ cursor: 'pointer' }}
-                onClick={() => !addCurrency.success && addCurrency.addToken()}
-              >
-                {!addCurrency.success ? (
-                  <Trans>
-                    Add {selectedToken.name} ({selectedToken.symbol}) to Metamask
-                  </Trans>
-                ) : (
-                  <Trans>Added!</Trans>
-                )}
-              </ButtonGradient>
-            )}
-          </Column>
           <Column style={{ marginTop: '25px', gap: '11px' }}>
             <Row>
               <TYPE.body1>
@@ -115,8 +104,23 @@ export default function Faucet() {
               }}
             />
           </Column>
-
-          <ButtonIXSWide marginTop="33px" onClick={handleSubmitClicked}>
+          <Column style={{ marginTop: '20px' }}>
+            {selectedCurrency && library?.provider?.isMetaMask && (
+              <ButtonGradient
+                style={{ cursor: 'pointer' }}
+                onClick={() => !addCurrency.success && addCurrency.addToken()}
+              >
+                {!addCurrency.success ? (
+                  <Trans>
+                    Add {selectedToken.name} ({selectedToken.symbol}) to Metamask
+                  </Trans>
+                ) : (
+                  <Trans>Added!</Trans>
+                )}
+              </ButtonGradient>
+            )}
+          </Column>
+          <ButtonIXSWide marginTop="20px" onClick={handleSubmitClicked}>
             <Trans>Submit</Trans>
           </ButtonIXSWide>
         </AppBody>

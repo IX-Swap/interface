@@ -18,8 +18,6 @@ import FAUCET_ABI from 'abis/faucet-contract.json'
 import FAUCET_STABLE_ABI from 'abis/faucet-stable-contract.json'
 import MULTICALL_ABI from 'abis/multicall2.json'
 import NFT_ABI from 'abis/nft-contract.json'
-import { Unisocks } from 'abis/types/Unisocks'
-import IXSOCKS_ABI from 'abis/unisocks.json'
 import WETH_ABI from 'abis/weth.json'
 import {
   ARGENT_WALLET_DETECTOR_ADDRESS,
@@ -31,7 +29,6 @@ import {
   LIQUIDITY_ROUTER_ADDRESS,
   MULTICALL2_ADDRESSES,
   NFT_ADDRESS,
-  SOCKS_CONTROLLER_ADDRESSES,
   SWAP_ROUTER_ADDRESS,
 } from 'constants/addresses'
 import { useMemo } from 'react'
@@ -131,10 +128,6 @@ export function useMulticall2Contract() {
 export function useBurnWSecContract(address: string | undefined) {
   return useContract(address, IIxsWSecABI, true)
 }
-export function useSocksController(): Unisocks | null {
-  return useContract<Unisocks>(SOCKS_CONTROLLER_ADDRESSES, IXSOCKS_ABI, false)
-}
-
 export function useFaucetContract(tokenAddress: string) {
   return useContract(tokenAddress, FAUCET_ABI, true)
 }

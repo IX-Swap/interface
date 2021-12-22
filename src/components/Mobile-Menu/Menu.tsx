@@ -10,6 +10,7 @@ import closeIcon from '../../assets/images/cross.svg'
 import { ExternalLink } from 'theme'
 import { useActiveWeb3React } from 'hooks/web3'
 import { MATIC_TGE_CHAINS, TGE_CHAINS_WITH_STAKING } from 'constants/addresses'
+import { SupportedChainId } from 'constants/chains'
 
 interface Props {
   close: () => void
@@ -92,6 +93,11 @@ export const Menu = ({ close }: Props) => {
               <Trans>Faucet</Trans>
             </MenuListItem>
           )}
+          {chainId && chainId === SupportedChainId.KOVAN && (
+            <ExternalListItem href={`https://info.ixswap.io/home`}>
+              <Trans>Charts</Trans>
+            </ExternalListItem>
+          )}
         </MenuList>
       </Container>
     </ModalContainer>
@@ -109,7 +115,7 @@ const ModalContainer = styled.div`
   padding: 32px 18px;
   display: none;
   background: ${({ theme }) => theme.bgG16};
-  @media (max-width: 1200px) {
+  @media (max-width: 1400px) {
     display: block;
     overflow-y: scroll;
   }
@@ -139,11 +145,11 @@ const CloseIcon = styled.img`
 const MenuList = styled.div`
   display: grid;
   grid-template-columns: 100%;
-  grid-gap: 8px;
+  grid-gap: 6px;
   justify-content: center;
 `
 const listItemStyle = css`
-  height: 56px;
+  height: 54px;
   font-weight: 600;
   font-size: 22px;
   text-transform: uppercase;
