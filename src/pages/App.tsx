@@ -10,6 +10,7 @@ import {
 const AdminKyc = lazy(() => import('./AdminKyc'))
 const Custodian = lazy(() => import('./Custodian'))
 const CreateNFT = lazy(() => import('./CreateNFT'))
+const UpdateNFT = lazy(() => import('./UpdateNFT'))
 const ListNFT = lazy(() => import('./ListNFT'))
 const RemoveLiquidity = lazy(() => import('./RemoveLiquidity'))
 const SecTokenDetails = lazy(() => import('./SecTokenDetails'))
@@ -103,6 +104,7 @@ export default function App() {
                 <Route exact strict path="/admin-kyc" component={AdminKyc} />
                 <Route exact strict path={routes.nftCreate} component={CreateNFT} />
                 <Route exact strict path={routes.nftList} component={ListNFT} />
+                <Route exact strict path="/nft/:id/edit" component={UpdateNFT} />
 
                 {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
                   <Route exact strict path="/send" component={RedirectPathToSwapOnly} />

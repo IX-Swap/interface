@@ -2,14 +2,15 @@ import styled from 'styled-components'
 import { ReactComponent as Close } from '../../assets/images/x.svg'
 import { ReactComponent as LogoDark } from '../../assets/svg/logo-white.svg'
 
-export const PreviewParent = styled.div`
+export const PreviewParent = styled.div<{ isLogo: boolean; width: string; height: string }>`
   cursor: pointer;
   position: relative;
   display: flex;
-  width: 100%;
-  height: 100%;
+  width: ${({ width }) => width};
+  height: ${({ height }) => height};
   padding: 20px;
   border: 1px dashed white;
+  border-radius: ${({ isLogo }) => (isLogo ? '50%' : '0px')};
   video,
   img,
   audio {
@@ -18,8 +19,9 @@ export const PreviewParent = styled.div`
   }
   video,
   img {
-    width: 90%;
-    height: 90%;
+    width: ${({ isLogo }) => (isLogo ? '300px' : '90%')};
+    height: ${({ isLogo }) => (isLogo ? '300px' : '90%')};
+    border-radius: ${({ isLogo }) => (isLogo ? '50%' : '0px')};
     object-fit: scale-down;
   }
 `
@@ -38,8 +40,8 @@ export const ImageOverlay = styled.div`
   top: 0;
   right: 0;
 `
-export const ImageContainer = styled.div`
-  width: 350px;
+export const ImageContainer = styled.div<{ isBanner: boolean }>`
+  width: ${({ isBanner }) => (isBanner ? '100%' : '350px')};
   height: 257px;
   position: relative;
 `
@@ -47,8 +49,8 @@ export const StyledClose = styled(Close)`
   position: relative;
   align-self: flex-start;
   justify-self: right;
-  width: 25px;
-  height: 25px;
+  min-width: 25px;
+  min-height: 25px;
   top: -18px;
   right: -15px;
 `

@@ -9,15 +9,25 @@ interface Props {
   onDrop: (file: any) => void
   file: FileWithPath | null
   accept?: AcceptFiles
+  isLogo?: boolean
+  isBanner?: boolean
+  width?: string
+  height?: string
 }
 const Preview = ({
   file,
   filePath,
   onDelete,
+  isLogo,
+  width,
+  height,
 }: {
   file: FileWithPath | null
   filePath: string
   onDelete: (e: any) => void
+  isLogo: boolean
+  width: string
+  height: string
 }) => {
   const getPreviewElement = useCallback(() => {
     const fileType = getfileType(file)
@@ -36,14 +46,22 @@ const Preview = ({
     }
   }, [file, filePath])
   return (
-    <PreviewParent>
+    <PreviewParent width={width} height={height} isLogo={isLogo}>
       {getPreviewElement()}
       {file && <StyledClose onClick={(e) => onDelete(e)} />}
     </PreviewParent>
   )
 }
 
-export default function Upload({ onDrop, file, accept = AcceptFiles.ALL }: Props) {
+export default function Upload({
+  onDrop,
+  file,
+  isLogo = false,
+  isBanner = false,
+  width = '100%',
+  height = '100%',
+  accept = AcceptFiles.ALL,
+}: Props) {
   const [filePath, setFilePath] = useState<string>('')
   const onDropInput = useCallback(
     (acceptedFiles) => {
@@ -74,8 +92,8 @@ export default function Upload({ onDrop, file, accept = AcceptFiles.ALL }: Props
     <div {...getRootProps()}>
       <input {...getInputProps()} multiple={false} />
       {isDragActive ? <p>Drop the files here ...</p> : <p>Drag and drop some files here, or click to select files</p>}
-      <ImageContainer>
-        <Preview filePath={filePath} file={file} onDelete={onDelete} />
+      <ImageContainer isBanner={isBanner}>
+        <Preview width={width} height={height} isLogo={isLogo} filePath={filePath} file={file} onDelete={onDelete} />
       </ImageContainer>
     </div>
   )
