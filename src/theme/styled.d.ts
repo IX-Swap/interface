@@ -55,6 +55,7 @@ export interface Colors {
   borderG1: Gradient
   modalBG: Color
   advancedBG: Color
+  divider: Color
 
   //blues
   primary1: Color

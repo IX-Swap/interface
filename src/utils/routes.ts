@@ -12,4 +12,5 @@ export const routes = {
   vesting: '/vesting',
   nftList: '/nft',
   nftCreate: '/nft-create',
+  nftCollections: '/nft/collections',
 }
