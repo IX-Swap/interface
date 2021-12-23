@@ -5,6 +5,7 @@ import { AccountsRoute } from 'app/pages/accounts/router/config'
 import { InvestRoute } from 'app/pages/invest/router/config'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
 import { AuthorizerRoute } from 'app/pages/authorizer/router/config'
+import { FundsManagementRoute } from 'app/pages/fundsManagement/router/config'
 import { TopbarContainer } from 'app/components/TopbarContainer/TopbarContainer'
 import { TopbarLinkContainer } from 'app/components/TopbarContainer/components/TopbarLinkContainer'
 import { AppRoute } from 'app/router/config'
@@ -181,6 +182,14 @@ describe('Topbar', () => {
     )
     expect(TopbarLinkContainer).toHaveBeenNthCalledWith(
       3,
+      expect.objectContaining({
+        label: 'Funds Management',
+        link: FundsManagementRoute.dashboard
+      }),
+      {}
+    )
+    expect(TopbarLinkContainer).toHaveBeenNthCalledWith(
+      4,
       expect.objectContaining({
         label: 'Education Centre',
         link: AppRoute.educationCentre
