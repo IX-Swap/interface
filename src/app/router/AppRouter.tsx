@@ -58,7 +58,7 @@ export const AppRouter = () => {
         <OTCMarketRoot />
       </AppRoute>
 
-      <AppRoute breadcrumb='Funds Management' path={AppPath.fundsManagement}>
+      <AppRoute path={AppPath.fundsManagement}>
         <FundsManagementRoot />
       </AppRoute>
 
