@@ -12,6 +12,7 @@ import { LayoutWrapper } from 'app/pages/accounts/pages/digitalSecurities/DSDepo
 export const DepositFormFields: React.FC = () => {
   const { watch } = useFormContext()
   const tokenSymbol = watch('token')
+  const hasTokenSymbol = tokenSymbol !== ''
 
   const { data } = useDepositAddress(tokenSymbol)
   const address = data?.deposit_address
@@ -28,33 +29,37 @@ export const DepositFormFields: React.FC = () => {
       <Grid item xs={12}>
         <TokensField />
       </Grid>
+      {hasTokenSymbol && (
+        <>
+          <LayoutWrapper>
+            <Network />
+          </LayoutWrapper>
 
-      <LayoutWrapper>
-        <Network />
-      </LayoutWrapper>
-      <LayoutWrapper>
-        <LabelledValue label='Address' value={address ?? '-'} />
-      </LayoutWrapper>
-      {QRCodeURL !== undefined && (
-        <LayoutWrapper>
-          <img src={QRCodeURL} alt='QR Code' />
-        </LayoutWrapper>
+          <LayoutWrapper>
+            <LabelledValue label='Address' value={address} />
+          </LayoutWrapper>
+
+          <LayoutWrapper>
+            <img src={QRCodeURL} alt='QR Code' />
+          </LayoutWrapper>
+
+          <LayoutWrapper>
+            <Warning />
+          </LayoutWrapper>
+
+          <LayoutWrapper>
+            <Button
+              onClick={handleCopy}
+              variant='contained'
+              color='primary'
+              disabled={address === undefined}
+              style={{ width: '100%' }}
+            >
+              Copy Address
+            </Button>
+          </LayoutWrapper>
+        </>
       )}
-
-      <LayoutWrapper>
-        <Warning />
-      </LayoutWrapper>
-      <LayoutWrapper>
-        <Button
-          onClick={handleCopy}
-          variant='contained'
-          color='primary'
-          disabled={address === undefined}
-          style={{ width: '100%' }}
-        >
-          Copy Address
-        </Button>
-      </LayoutWrapper>
     </>
   )
 }

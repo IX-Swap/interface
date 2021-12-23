@@ -6,7 +6,8 @@ import { useServices } from 'hooks/useServices'
 import { useQuery } from 'react-query'
 import { useAllCorporates } from 'app/pages/identity/hooks/useAllCorporates'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
-import { SubFundStats } from 'types/vccDashboard'
+import { InvestmentStats, SubFundStats } from 'types/vccDashboard'
+import { subMonths } from 'date-fns'
 
 export const useVCCFundStats = () => {
   const { user } = useAuth()
@@ -22,25 +23,63 @@ export const useVCCFundStats = () => {
   const status = getFilterValue('status')
   const subFunds = getFilterValue('subfunds')
 
-  const getSubFundStats = async () => {
-    const uri = issuanceURL.vcc.getSubFundStats
-    return await apiService.post<SubFundStats[]>(uri, {
-      fundStatus: status,
-      dsos: subFunds?.split(','),
-      corporateId
+  const filters = {
+    fundStatus: status,
+    dsos: subFunds?.split(','),
+    corporateId
+  }
+  const queryKeyParams: [string, string, string] = [
+    corporateId,
+    status ?? '',
+    subFunds ?? ''
+  ]
+  const queryOptions = {
+    enabled:
+      !corporateIdentitiesIsLoading &&
+      corporateId !== undefined &&
+      subFunds &&
+      subFunds.length > 0
+  }
+
+  const getSubFundInvestmentStats = async () => {
+    const uri = issuanceURL.vcc.getInvestmentStats
+    const now = Date.now()
+
+    return await apiService.post<InvestmentStats[]>(uri, {
+      ...filters,
+      start: subMonths(now, 12),
+      end: new Date(now)
     })
   }
 
-  const { data, isLoading, ...rest } = useQuery(
-    dsoQueryKeys.vccSubFundStats(corporateId, status ?? '', subFunds ?? ''),
+  const getSubFundStats = async () => {
+    const uri = issuanceURL.vcc.getSubFundStats
+    return await apiService.post<SubFundStats[]>(uri, filters)
+  }
+
+  const subFundStatsQuery = useQuery(
+    dsoQueryKeys.vccSubFundStats(...queryKeyParams),
     getSubFundStats,
-    {
-      enabled: !corporateIdentitiesIsLoading && corporateId !== undefined
-    }
+    queryOptions
   )
+
+  const subFundInvestmentStatsQuery = useQuery(
+    dsoQueryKeys.vccSubFundInvestmentStats(...queryKeyParams),
+    getSubFundInvestmentStats,
+    queryOptions
+  )
+
   return {
-    data: data?.data[0],
-    isLoading: corporateIdentitiesIsLoading || isLoading,
-    ...rest
+    subFundStats: {
+      ...subFundStatsQuery,
+      isLoading: corporateIdentitiesIsLoading || subFundStatsQuery.isLoading,
+      data: subFundStatsQuery.data?.data?.[0]
+    },
+    subFundInvestmentStats: {
+      ...subFundInvestmentStatsQuery,
+      isLoading:
+        corporateIdentitiesIsLoading || subFundInvestmentStatsQuery.isLoading,
+      data: subFundInvestmentStatsQuery.data?.data?.[0]
+    }
   }
 }

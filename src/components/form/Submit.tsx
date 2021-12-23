@@ -14,6 +14,7 @@ export const Submit: React.FC<SubmitProps> = props => {
     variant = 'contained',
     color = 'primary',
     createOrderStatus = '',
+    disabled,
     ...rest
   } = props
   const { formState, reset } = useFormContext()
@@ -30,7 +31,9 @@ export const Submit: React.FC<SubmitProps> = props => {
       disableElevation
       variant={variant}
       color={color}
-      disabled={watchIsDirty ? !isDirty : false || isSubmitting}
+      disabled={
+        Boolean(disabled) || (watchIsDirty ? !isDirty : false || isSubmitting)
+      }
       type='submit'
       {...rest}
     >

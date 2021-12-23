@@ -9,10 +9,16 @@ import { useVCCFundStats } from 'app/pages/issuance/hooks/useVCCFundStats'
 import { TopInvestorsTable } from 'app/pages/issuance/components/TopInvestorsTable/TopInvestorsTable'
 import { InvestmentsOverview } from 'app/pages/issuance/components/InvestmentsOverview/InvestmentsOverview'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
-import { NetAssetValueChart } from 'app/pages/issuance/components/NetAssetValueChart/NetAssetValueChart'
+import { InvestorsChart } from 'app/pages/issuance/components/InvestorsChart/InvestorsChart'
 
 export const Dashboard = () => {
-  const { data, isLoading } = useVCCFundStats()
+  const {
+    subFundInvestmentStats: {
+      data: subFundInvestmentStatsData,
+      isLoading: isSubFundInvestmentStatsLoading
+    },
+    subFundStats: { data: subFundStatsData, isLoading: isSubFundStatsLoading }
+  } = useVCCFundStats()
   const { getFilterValue } = useQueryFilter()
   const status = getFilterValue('status')
   const isStatusClosed = status === 'Closed'
@@ -37,22 +43,22 @@ export const Dashboard = () => {
           <Grid item xs={12} md={6}>
             {isStatusClosed ? (
               <AssetsUnderManagement
-                isLoading={isLoading}
-                assets={data?.assetsUnderManagement}
+                isLoading={isSubFundStatsLoading}
+                assets={subFundStatsData?.assetsUnderManagement}
               />
             ) : (
               // TODO Change assetsUnderManagement field name to investmentsOverview or how it will be after update backend api
               <InvestmentsOverview
-                isLoading={isLoading}
-                investments={data?.assetsUnderManagement}
+                isLoading={isSubFundStatsLoading}
+                investments={subFundStatsData?.assetsUnderManagement}
               />
             )}
           </Grid>
 
           <Grid item xs={12} md={6}>
             <TopInvestorsTable
-              isLoading={isLoading}
-              investors={data?.topInvestors}
+              isLoading={isSubFundStatsLoading}
+              investors={subFundStatsData?.topInvestors}
               title={
                 isStatusClosed
                   ? 'Top Investors From Closed'
@@ -63,9 +69,14 @@ export const Dashboard = () => {
         </Grid>
       </Grid>
 
-      <Grid item xs={12}>
-        <NetAssetValueChart />
-      </Grid>
+      {!isStatusClosed && (
+        <Grid item xs={12}>
+          <InvestorsChart
+            investmentStats={subFundInvestmentStatsData}
+            isLoading={isSubFundInvestmentStatsLoading}
+          />
+        </Grid>
+      )}
     </Grid>
   )
 }

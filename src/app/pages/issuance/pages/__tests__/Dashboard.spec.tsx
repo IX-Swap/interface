@@ -16,12 +16,13 @@ describe('Dashboard', () => {
   })
 
   it('should match snapshot', () => {
-    jest.spyOn(useVCCFundStats, 'useVCCFundStats').mockReturnValue(
-      generateQueryResult({
+    jest.spyOn(useVCCFundStats, 'useVCCFundStats').mockReturnValue({
+      subFundStats: generateQueryResult({
         data: fakeSubFundStats,
         isLoading: false
-      })
-    )
+      }),
+      subFundInvestmentStats: generateQueryResult({})
+    })
 
     const { container } = render(<Dashboard />)
     expect(container).toMatchSnapshot()

@@ -1,12 +1,9 @@
 import { Box, Grid } from '@material-ui/core'
-import { TokensField } from 'app/pages/accounts/pages/digitalSecurities/Withdraw/TokensField'
-import { WithdrawalAmount } from 'app/pages/accounts/pages/digitalSecurities/Withdraw/WithdrawalAmount'
-import { WithdrawTo } from 'app/pages/accounts/pages/digitalSecurities/Withdraw/WithdrawTo'
 import { withdrawValidationSchema } from 'app/pages/accounts/validation'
 import { Form } from 'components/form/Form'
 import React from 'react'
 import { useCustodyWithdrawal } from 'app/pages/accounts/hooks/useCustodyWithdrawal'
-import { ConfirmButton } from 'app/pages/accounts/pages/digitalSecurities/Withdraw/ConfirmButton'
+import { WithdrawFormFields } from 'app/pages/accounts/pages/digitalSecurities/Withdraw/WithdrawFormFields'
 
 export interface WithdrawFormValues {
   token: string
@@ -48,18 +45,7 @@ export const WithdrawForm = () => {
     >
       <Box maxWidth={900} m='0 auto'>
         <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <TokensField />
-          </Grid>
-          <Grid item xs={12}>
-            <WithdrawTo />
-          </Grid>
-          <Grid item xs={12}>
-            <WithdrawalAmount />
-          </Grid>
-          <Grid item xs={12}>
-            <ConfirmButton disabled={isLoading} isSuccess={isSuccess} />
-          </Grid>
+          <WithdrawFormFields isLoading={isLoading} isSuccess={isSuccess} />
         </Grid>
       </Box>
     </Form>
