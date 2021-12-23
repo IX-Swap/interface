@@ -8,7 +8,7 @@ import { balanceQueryKeys } from 'config/queryKeys'
 import { accountsURL } from 'config/apiURL'
 
 export const useBalancesByAssetId = (
-  assetId: string
+  assetId?: string
 ): UsePaginatedQueryData<AssetBalance> => {
   const { user } = useAuth()
   const payload = { ...paginationArgs, userId: user?._id, assetId }
@@ -27,7 +27,7 @@ export const useBalancesByAssetId = (
   const { data, ...rest } = useInfiniteQuery(
     [balanceQueryKeys.getByAssetId, payload],
     getBalancesByAssetId,
-    { enabled: (assetId ?? '') !== '' }
+    { enabled: assetId !== undefined && assetId.length > 0 }
   )
 
   return {

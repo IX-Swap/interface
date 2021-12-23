@@ -46,7 +46,8 @@ export const balanceQueryKeys = {
   getAll: 'all-balances',
   getByAssetId: 'balances-by-asset-id',
   getByType: 'balances-by-type',
-  getByUserId: (id: string) => generateQueryKey('balance', id)
+  getByUserId: (id: string) => generateQueryKey('balance', id),
+  getDistribution: (dsoId: string) => generateQueryKey('distributions', dsoId)
 }
 
 export const authorizerQueryKeys = {
