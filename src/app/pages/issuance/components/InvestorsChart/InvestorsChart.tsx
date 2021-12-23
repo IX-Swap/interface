@@ -18,24 +18,26 @@ export const InvestorsChart = ({
     return <InvestorsChartSkeleton />
   }
 
-  if (investmentStats === undefined) return null
+  let data
 
-  const labels = Object.values(investmentStats).map(stats => stats.dsoName)
-  const dates = Object.values(investmentStats)[0].data.map(value =>
-    format(new Date(Number(value.year), Number(value.month) - 1), 'MMM yyyy')
-  )
+  if (investmentStats !== undefined) {
+    const labels = Object.values(investmentStats).map(stats => stats.dsoName)
+    const dates = Object.values(investmentStats)[0].data.map(value =>
+      format(new Date(Number(value.year), Number(value.month) - 1), 'MMM yyyy')
+    )
 
-  const values = dates.map<any[]>((date, index) => {
-    return [
-      date,
-      ...Object.values(investmentStats).reduce(
-        (acc, cur) => [...acc, cur.data[index].count] as any,
-        []
-      )
-    ]
-  })
+    const values = dates.map<any[]>((date, index) => {
+      return [
+        date,
+        ...Object.values(investmentStats).reduce(
+          (acc, cur) => [...acc, cur.data[index].count] as any,
+          []
+        )
+      ]
+    })
 
-  const data = [[{ type: 'string', label: 'Month' }, ...labels], ...values]
+    data = [[{ type: 'string', label: 'Month' }, ...labels], ...values]
+  }
 
   return (
     <Paper
