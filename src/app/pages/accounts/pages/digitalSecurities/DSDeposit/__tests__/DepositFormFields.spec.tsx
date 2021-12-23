@@ -43,12 +43,12 @@ describe('DepositFormFields', () => {
   })
 
   it('invokes showSnackbar on Button click', async () => {
-    const { getByRole } = render(
+    const { getByText } = render(
       <Form>
         <DepositFormFields />
       </Form>
     )
-    const button = getByRole('button')
+    const button = getByText('Copy Address')
 
     fireEvent.click(button)
 
@@ -58,12 +58,12 @@ describe('DepositFormFields', () => {
   })
 
   it('copies address to clipboard', async () => {
-    const { getByRole } = render(
+    const { getByText } = render(
       <Form>
         <DepositFormFields />
       </Form>
     )
-    const button = getByRole('button')
+    const button = getByText('Copy Address')
 
     fireEvent.click(button)
 
