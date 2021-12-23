@@ -34,7 +34,11 @@ export const useVCCFundStats = () => {
     subFunds ?? ''
   ]
   const queryOptions = {
-    enabled: !corporateIdentitiesIsLoading && corporateId !== undefined
+    enabled:
+      !corporateIdentitiesIsLoading &&
+      corporateId !== undefined &&
+      subFunds &&
+      subFunds.length > 0
   }
 
   const getSubFundInvestmentStats = async () => {
