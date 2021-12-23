@@ -18,6 +18,7 @@ export const LineChart = ({ data }: LineChartProps) => {
         data={data}
         options={{
           height: 400,
+          colors: ['#FF9703', '#109619', '#990099', '#3266CC', '#03FF59'],
           chartArea: {
             left: 40,
             top: 30,
@@ -26,6 +27,7 @@ export const LineChart = ({ data }: LineChartProps) => {
           },
           tooltip: { isHtml: true },
           legend: { position: 'bottom', alignment: 'start' },
+          vAxis: { format: '#' },
           hAxis: {
             baselineColor: 'transparent',
             gridlines: {

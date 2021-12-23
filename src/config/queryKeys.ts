@@ -152,7 +152,13 @@ export const dsoQueryKeys = {
   vccDSOList: (corporateId: string, status: string) =>
     generateQueryKey('vcc-dso-list', corporateId, status),
   vccSubFundStats: (corporateId: string, status: string, dsos: string) =>
-    generateQueryKey('vcc-dso-list', corporateId, status, dsos)
+    generateQueryKey('vcc-subfund-stats', corporateId, status, dsos),
+  vccSubFundInvestmentStats: (
+    corporateId: string,
+    status: string,
+    dsos: string
+  ) =>
+    generateQueryKey('vcc-subfund-investment-stats', corporateId, status, dsos)
 }
 
 export const otcQueryKeys = {

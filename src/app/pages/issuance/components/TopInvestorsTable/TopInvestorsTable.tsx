@@ -29,7 +29,7 @@ export const TopInvestorsTable = ({
   isLoading
 }: TopInvestorsTableProps) => {
   const classes = useStyles()
-  const hasInvestors = investors?.length === 0
+  const hasInvestors = investors !== undefined && investors.length > 0
 
   if (isLoading) {
     return <TopInvestorsTableSkeleton />

@@ -15,7 +15,9 @@ export const DSOCards = () => {
   const { getFilterValue } = useQueryFilter()
   const status = getFilterValue('status')
   const isStatusClosed = status === 'Closed'
-  const { data, isLoading } = useVCCFundStats()
+  const {
+    subFundStats: { data, isLoading }
+  } = useVCCFundStats()
 
   return (
     <Grid container spacing={3}>

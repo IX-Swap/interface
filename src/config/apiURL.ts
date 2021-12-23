@@ -178,7 +178,8 @@ export const issuanceURL = {
   },
   vcc: {
     getDSOList: '/vcc/dsos/list',
-    getSubFundStats: 'vcc/subfund-stats'
+    getSubFundStats: 'vcc/subfund-stats',
+    getInvestmentStats: 'vcc/subfund-growth-graph'
   }
 }
 

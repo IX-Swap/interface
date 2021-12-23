@@ -9,6 +9,17 @@ export interface SubFundStats {
   assetsUnderManagement: AssetUnderManagement[]
 }
 
+export interface InvestmentStats {
+  [key: string]: {
+    dsoName: string
+    data: Array<{
+      count: number
+      month: string
+      year: string
+    }>
+  }
+}
+
 export interface TopInvestor {
   dsoId: string
   dsoName: string
