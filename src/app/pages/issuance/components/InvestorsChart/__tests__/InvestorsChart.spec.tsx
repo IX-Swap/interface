@@ -9,10 +9,6 @@ jest.mock(
   })
 )
 
-jest.mock('app/pages/issuance/components/NetAssetValueChart/NoData', () => ({
-  NoData: jest.fn(() => null)
-}))
-
 describe('InvestorsChart', () => {
   afterEach(async () => {
     await cleanup()
