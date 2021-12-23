@@ -1,4 +1,4 @@
-import { Dashboard } from 'app/pages/issuance/pages/Dashboard'
+import { Dashboard } from 'app/pages/fundsManagement/pages/Dashboard'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 import { generateQueryResult } from '__fixtures__/useQuery'

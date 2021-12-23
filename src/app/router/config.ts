@@ -10,5 +10,6 @@ export const AppRoute = {
   OTCMarket: makeURL(['app', 'OTCMarket']),
   security: makeURL(['app', 'settings']),
   notifications: makeURL(['app', 'notifications']),
-  educationCentre: '/app/education-centre'
+  educationCentre: '/app/education-centre',
+  fundsManagement: '/app/funds-management'
 }

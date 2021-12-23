@@ -28,6 +28,7 @@ import {
 import { TopbarLinkContainer } from 'app/components/TopbarContainer/components/TopbarLinkContainer'
 import { TopbarLinkDropdown } from 'app/components/TopbarContainer/components/TopbarLinkDropdown'
 import { EducationCentreRoute } from 'app/pages/educationCentre/router/config'
+import { FundsManagementRoute } from 'app/pages/fundsManagement/router/config'
 import { AppRoute } from 'app/router/config'
 
 export const TopbarContainer = () => {
@@ -53,8 +54,9 @@ export const TopbarContainer = () => {
   if (isFundManager) {
     links.push({
       label: 'Funds Management',
-      link: IssuanceRoute.insight
-    } as any)
+      link: FundsManagementRoute.dashboard,
+      icon: () => null
+    })
   }
 
   if (isIssuer) {
@@ -120,6 +122,13 @@ export const TopbarContainer = () => {
     { label: 'Create Exchange Listings', path: OTCMarketRoute.createListing },
     { label: 'View Exchange Listings', path: OTCMarketRoute.myListings }
   ]
+
+  if (isFundManager) {
+    newIssuanceLandingLinks.unshift({
+      label: 'Overview',
+      path: IssuanceRoute.insight
+    })
+  }
 
   if (isIssuer) {
     newIssuanceLandingLinks.push({

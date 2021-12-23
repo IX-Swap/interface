@@ -12,6 +12,7 @@ import { InvestRoot } from 'app/pages/invest/InvestRoot'
 import { AdminRoot } from 'app/pages/admin/AdminRoot'
 import { AuthorizerRoot } from 'app/pages/authorizer/AuthorizerRoot'
 import { OTCMarketRoot } from 'app/pages/exchange/OTCMarketRoot'
+import { FundsManagementRoot } from 'app/pages/fundsManagement/FundsManagementRoot'
 import { RedirectToDefaultPage } from 'app/RedirectToDefaultPage'
 
 export const AppRouter = () => {
@@ -55,6 +56,10 @@ export const AppRouter = () => {
 
       <AppRoute breadcrumb='Market' path={AppPath.OTCMarket}>
         <OTCMarketRoot />
+      </AppRoute>
+
+      <AppRoute path={AppPath.fundsManagement}>
+        <FundsManagementRoot />
       </AppRoute>
 
       <RedirectToDefaultPage />
