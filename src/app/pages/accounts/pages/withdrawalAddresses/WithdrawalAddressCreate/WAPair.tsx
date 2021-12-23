@@ -9,13 +9,19 @@ import {
 } from 'config/blockchain'
 
 interface WAPairProps {
-  wallet?: string
+  wallet?: BlockchainWallet
   networkCode?: string
 }
 
-const labels: Record<string, string> = {
+const walletLabels: Record<BlockchainWallet, string> = {
   // wallets
   METAMASK: 'Metamask',
+  TEMPLE: 'Temple',
+  MYALGO: 'My Algo',
+  HBAR: 'Hbar'
+}
+
+const blockchainLabels: Record<string, string> = {
   // networks
   ETH: 'Ethereum',
   XTZ: 'Tezos',
@@ -34,8 +40,7 @@ const styles: Record<string, CSSProperties> = {
 export const WAPair = ({ wallet, networkCode }: WAPairProps) => {
   if (wallet === undefined || networkCode === undefined) return null
 
-  const walletIcon =
-    blockchainWalletIcons[wallet as BlockchainWallet] ?? UnknownWalletIcon
+  const walletIcon = blockchainWalletIcons[wallet] ?? UnknownWalletIcon
   const networkIcon =
     networkIconMap[networkCode as keyof typeof networkIconMap] ??
     UnknownNetworkIcon
@@ -45,13 +50,13 @@ export const WAPair = ({ wallet, networkCode }: WAPairProps) => {
       <Box flex={1} display='flex' alignItems='center'>
         <img style={styles.icon} src={walletIcon} />
         <Typography color='textSecondary'>
-          {labels[wallet] ?? 'Other'} Wallet
+          {walletLabels[wallet] ?? 'Other'} Wallet
         </Typography>
       </Box>
       <Box flex={1} display='flex' alignItems='center'>
         <img style={styles.icon} src={networkIcon} />
         <Typography color='textSecondary'>
-          {labels[networkCode] ?? 'Other'} Blockchain
+          {blockchainLabels[networkCode] ?? 'Other'} Blockchain
         </Typography>
       </Box>
     </Box>
