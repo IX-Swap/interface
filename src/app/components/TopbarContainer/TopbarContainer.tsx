@@ -28,6 +28,7 @@ import {
 import { TopbarLinkContainer } from 'app/components/TopbarContainer/components/TopbarLinkContainer'
 import { TopbarLinkDropdown } from 'app/components/TopbarContainer/components/TopbarLinkDropdown'
 import { EducationCentreRoute } from 'app/pages/educationCentre/router/config'
+import { FundsManagementRoute } from 'app/pages/fundsManagement/router/config'
 import { AppRoute } from 'app/router/config'
 
 export const TopbarContainer = () => {
@@ -49,6 +50,14 @@ export const TopbarContainer = () => {
       icon: InvestIcon
     }
   ]
+
+  if (isFundManager) {
+    links.push({
+      label: 'Funds Management',
+      link: FundsManagementRoute.dashboard,
+      icon: () => null
+    })
+  }
 
   if (isIssuer) {
     links.push({
