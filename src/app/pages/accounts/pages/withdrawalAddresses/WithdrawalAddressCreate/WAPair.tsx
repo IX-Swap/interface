@@ -51,7 +51,7 @@ export const WAPair = ({ wallet, networkCode }: WAPairProps) => {
       <Box flex={1} display='flex' alignItems='center'>
         <img style={styles.icon} src={networkIcon} />
         <Typography color='textSecondary'>
-          {labels[networkCode] ?? 'Other'} Network
+          {labels[networkCode] ?? 'Other'} Blockchain
         </Typography>
       </Box>
     </Box>

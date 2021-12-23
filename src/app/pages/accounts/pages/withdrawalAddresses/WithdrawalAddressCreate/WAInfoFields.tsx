@@ -41,7 +41,7 @@ export const WAInfoFields = () => {
           component={BigCheckboxWithLabel}
           control={control}
           name='agree'
-          label='I understand and agree that InvestaX will check this address against fradulent activities.'
+          label='I understand and agree that InvestaX will check this address against fraudulent activities.'
         />
       </Grid>
     </>
