@@ -46,9 +46,6 @@ export const PastDistributionsTable = ({
             },
             { label: 'Status', key: 'status', render: renderStatusColumn }
           ]}
-          filter={{
-            status: 'Complete'
-          }}
           themeVariant='primary'
         />
       </Grid>
