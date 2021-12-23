@@ -11,11 +11,13 @@ import {
 const AdminKyc = lazy(() => import('./AdminKyc'))
 const Custodian = lazy(() => import('./Custodian'))
 const CreateNFT = lazy(() => import('./CreateNFT'))
+const UpdateNFT = lazy(() => import('./UpdateNFT'))
 const ListNFT = lazy(() => import('./ListNFT'))
 const RemoveLiquidity = lazy(() => import('./RemoveLiquidity'))
 const SecTokenDetails = lazy(() => import('./SecTokenDetails'))
 const Swap = lazy(() => import('./Swap'))
 const PoolV2 = lazy(() => import('./Pool/v2'))
+const NFTCollections = lazy(() => import('./NFTCollections'))
 import ApeModeQueryParamReader from 'hooks/useApeModeQueryParamReader'
 import { useActiveWeb3React } from 'hooks/web3'
 import React, { useMemo, lazy, Suspense } from 'react'
@@ -105,6 +107,8 @@ export default function App() {
                 <Route exact strict path="/admin" component={AdminKyc} />
                 <Route exact strict path={routes.nftCreate} component={CreateNFT} />
                 <Route exact strict path={routes.nftList} component={ListNFT} />
+                <Route exact strict path={routes.nftCollections} component={NFTCollections} />
+                <Route exact strict path="/nft/:id/edit" component={UpdateNFT} />
 
                 {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
                   <Route exact strict path="/send" component={RedirectPathToSwapOnly} />
