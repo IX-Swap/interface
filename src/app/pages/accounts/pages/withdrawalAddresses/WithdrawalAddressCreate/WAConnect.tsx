@@ -99,7 +99,7 @@ export const WAConnect = ({ hint, status, getAccount }: WAConnectProps) => {
         </Grid>
       )}
       {hasWallet && <WAInfoFields />}
-      {hint}
+      {!hasWallet && hint}
       <DialogActions>
         <Grid item container justify='flex-end'>
           <WAConnectActions
