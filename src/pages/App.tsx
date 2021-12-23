@@ -1,5 +1,6 @@
 import { AppBackground } from 'components/AppBackground'
 import { IXSBalanceModal } from 'components/Header/IXSBalanceModal'
+import PlaygroundModal from 'components/PlaygroundModal'
 import { SECURITY_TOKENS } from 'config'
 import {
   MATIC_TGE_CHAINS,
@@ -93,6 +94,7 @@ export default function App() {
       <AppBackground />
       <Popups />
       <AppWrapper>
+        <PlaygroundModal />
         {validChainId && !isAdminKyc && <Header />}
         {chainId && !validChainId && !isAdminKyc && account && <ConnectToAppropriateNetwork />}
         <ToggleableBody isVisible={visibleBody} {...(isAdminKyc && { style: { marginTop: 26 } })}>
