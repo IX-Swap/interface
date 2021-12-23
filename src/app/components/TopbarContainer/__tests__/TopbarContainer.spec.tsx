@@ -5,6 +5,7 @@ import { AccountsRoute } from 'app/pages/accounts/router/config'
 import { InvestRoute } from 'app/pages/invest/router/config'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
 import { AuthorizerRoute } from 'app/pages/authorizer/router/config'
+import { FundsManagementRoute } from 'app/pages/fundsManagement/router/config'
 import { TopbarContainer } from 'app/components/TopbarContainer/TopbarContainer'
 import { TopbarLinkContainer } from 'app/components/TopbarContainer/components/TopbarLinkContainer'
 import { AppRoute } from 'app/router/config'
@@ -101,7 +102,7 @@ describe('Topbar', () => {
       3,
       expect.objectContaining({
         label: 'Issuance',
-        link: IssuanceRoute.list
+        link: IssuanceRoute.dashboard
       }),
       {}
     )
@@ -183,7 +184,7 @@ describe('Topbar', () => {
       3,
       expect.objectContaining({
         label: 'Funds Management',
-        link: IssuanceRoute.insight
+        link: FundsManagementRoute.dashboard
       }),
       {}
     )

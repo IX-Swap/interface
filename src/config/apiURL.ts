@@ -175,6 +175,11 @@ export const issuanceURL = {
     closure: (closureId: string, issuerId: string) =>
       `/issuance/closure/${closureId}/${issuerId}`,
     getDSOList: '/issuance/dso/list'
+  },
+  vcc: {
+    getDSOList: '/vcc/dsos/list',
+    getSubFundStats: 'vcc/subfund-stats',
+    getInvestmentStats: 'vcc/subfund-growth-graph'
   }
 }
 

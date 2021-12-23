@@ -1,18 +1,14 @@
-import { InsightCard } from 'app/pages/issuance/components/CapTable/InsightCard'
+import { StyledToggleButtonGroup } from 'app/pages/issuance/components/DSOFilters/StyledToggleButtonGroup'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
 
-describe('InsightCard', () => {
+describe('StyledToggleButtonGroup', () => {
   afterEach(async () => {
     await cleanup()
     jest.clearAllMocks()
   })
 
   it('renders without errors', () => {
-    render(
-      <InsightCard>
-        <div />
-      </InsightCard>
-    )
+    render(<StyledToggleButtonGroup />)
   })
 })

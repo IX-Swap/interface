@@ -15,6 +15,7 @@ import { CapTableRouter } from 'app/pages/issuance/router/CapTableRouter'
 
 export const IssuanceRouter = () => {
   const isIssuer = useIsIssuer()
+
   return (
     <Switch>
       <AppRoute
