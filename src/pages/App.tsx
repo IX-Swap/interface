@@ -1,26 +1,15 @@
 import { AppBackground } from 'components/AppBackground'
 import { IXSBalanceModal } from 'components/Header/IXSBalanceModal'
 import PlaygroundModal from 'components/PlaygroundModal'
-import { SECURITY_TOKENS } from 'config'
 import {
   MATIC_TGE_CHAINS,
   SUPPORTED_TGE_CHAINS,
   TGE_CHAINS_WITH_STAKING,
   TGE_CHAINS_WITH_SWAP,
 } from 'constants/addresses'
-const AdminKyc = lazy(() => import('./AdminKyc'))
-const Custodian = lazy(() => import('./Custodian'))
-const CreateNFT = lazy(() => import('./CreateNFT'))
-const UpdateNFT = lazy(() => import('./UpdateNFT'))
-const ListNFT = lazy(() => import('./ListNFT'))
-const RemoveLiquidity = lazy(() => import('./RemoveLiquidity'))
-const SecTokenDetails = lazy(() => import('./SecTokenDetails'))
-const Swap = lazy(() => import('./Swap'))
-const PoolV2 = lazy(() => import('./Pool/v2'))
-const NFTCollections = lazy(() => import('./NFTCollections'))
 import ApeModeQueryParamReader from 'hooks/useApeModeQueryParamReader'
 import { useActiveWeb3React } from 'hooks/web3'
-import React, { useMemo, lazy, Suspense } from 'react'
+import React, { lazy, Suspense, useMemo } from 'react'
 import { Route, Switch, useLocation } from 'react-router-dom'
 import { useAccount } from 'state/user/hooks'
 import styled from 'styled-components/macro'
@@ -39,7 +28,18 @@ import { StakingTab } from './Farming/StakingTab'
 import { VestingTab } from './Farming/VestingTab'
 import Faucet from './Faucet'
 import PoolFinder from './PoolFinder'
-import { RedirectPathToSwapOnly, RedirectPathToStaking, RedirectToSwap } from './Swap/redirects'
+import { RedirectPathToStaking, RedirectPathToSwapOnly, RedirectToSwap } from './Swap/redirects'
+
+const AdminKyc = lazy(() => import('./AdminKyc'))
+const Custodian = lazy(() => import('./Custodian'))
+const CreateNFT = lazy(() => import('./CreateNFT'))
+const ListNFT = lazy(() => import('./ListNFT'))
+const RemoveLiquidity = lazy(() => import('./RemoveLiquidity'))
+const SecTokenDetails = lazy(() => import('./SecTokenDetails'))
+const Swap = lazy(() => import('./Swap'))
+const PoolV2 = lazy(() => import('./Pool/v2'))
+const NFTCollections = lazy(() => import('./NFTCollections'))
+const UpdateNFT = lazy(() => import('./UpdateNFT'))
 
 const AppWrapper = styled.div`
   display: flex;
@@ -136,10 +136,8 @@ export default function App() {
                   <Route exact strict path="/faucet" component={Faucet} />
                 )}
 
-                {SECURITY_TOKENS && (
-                  <Route exact strict path="/security-tokens/:currencyId" component={SecTokenDetails} />
-                )}
-                {SECURITY_TOKENS && <Route exact strict path={routes.securityTokens()} component={Custodian} />}
+                <Route exact strict path="/security-tokens/:currencyId" component={SecTokenDetails} />
+                <Route exact strict path={routes.securityTokens()} component={Custodian} />
 
                 {chainId && TGE_CHAINS_WITH_STAKING.includes(chainId) && (
                   <Route exact strict path={routes.staking} component={StakingTab} />

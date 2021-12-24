@@ -1,20 +1,19 @@
 import { Trans } from '@lingui/macro'
 import { ChevronElement } from 'components/ChevronElement'
 import Popover from 'components/Popover'
-import { SECURITY_TOKENS } from 'config'
+import { MATIC_TGE_CHAINS, TGE_CHAINS_WITH_STAKING } from 'constants/addresses'
+import { SupportedChainId } from 'constants/chains'
 import { useOnClickOutside } from 'hooks/useOnClickOutside'
 import useToggle from 'hooks/useToggle'
+import { useActiveWeb3React } from 'hooks/web3'
 import { darken } from 'polished'
 import React, { useRef } from 'react'
 import { NavLink } from 'react-router-dom'
+import { css } from 'styled-components'
 import styled from 'styled-components/macro'
+import { ExternalLink } from 'theme'
 import { routes } from 'utils/routes'
 import Row, { RowFixed } from '../Row'
-import { css } from 'styled-components'
-import { ExternalLink } from 'theme'
-import { useActiveWeb3React } from 'hooks/web3'
-import { MATIC_TGE_CHAINS, TGE_CHAINS_WITH_STAKING } from 'constants/addresses'
-import { SupportedChainId } from 'constants/chains'
 const activeClassName = 'ACTIVE'
 
 const HeaderLinksWrap = styled(Row)<{ links: number }>`
@@ -161,7 +160,7 @@ export const HeaderLinks = () => {
   useOnClickOutside(farmNode, open ? toggle : undefined)
   useOnClickOutside(nftNode, openNFT ? toggleNFT : undefined)
   return (
-    <HeaderLinksWrap links={SECURITY_TOKENS ? 7 : 6}>
+    <HeaderLinksWrap links={7}>
       {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
         <StyledNavLink id={`swap-nav-link`} to={'/swap'}>
           <Trans>Secondary Market</Trans>
@@ -181,11 +180,11 @@ export const HeaderLinks = () => {
           <Trans>Liquidity Pool</Trans>
         </StyledNavLink>
       )}
-      {SECURITY_TOKENS && (
-        <StyledNavLink id={`stake-nav-link`} to={routes.securityTokens()}>
-          <Trans>Security tokens</Trans>
-        </StyledNavLink>
-      )}
+
+      <StyledNavLink id={`stake-nav-link`} to={routes.securityTokens()}>
+        <Trans>Security tokens</Trans>
+      </StyledNavLink>
+
       <StyledNavLink
         ref={farmNode as any}
         id={`farming-nav-link`}
