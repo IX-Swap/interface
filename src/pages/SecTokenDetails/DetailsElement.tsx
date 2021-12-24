@@ -10,7 +10,7 @@ interface Props {
 }
 export const DetailsElement = ({ title, content }: Props) => {
   return (
-    <GridElement style={{ marginBottom: '13px' }}>
+    <GridElement style={{ marginBottom: '0.75rem' }}>
       <Row>
         <DescriptionTitle>{title}</DescriptionTitle>
         <TYPE.titleSmall color={'text2'}>

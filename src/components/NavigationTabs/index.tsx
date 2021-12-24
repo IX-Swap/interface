@@ -10,6 +10,7 @@ import styled from 'styled-components/macro'
 import { CloseIcon, StyledPageHeader } from 'theme'
 import { ReactComponent as ArrowLeft } from '../../assets/images/arrow-back.svg'
 import { RowBetween, RowStart } from '../Row'
+import MitigationBadge from 'components/MitigationBadge'
 
 const Tabs = styled.div`
   ${({ theme }) => theme.flexRowNoWrap}
@@ -135,10 +136,12 @@ export function AddRemoveTabs({
   adding,
   creating,
   positionID,
+  showBadge = false,
 }: {
   adding: boolean
   creating: boolean
   positionID?: string | undefined
+  showBadge?: boolean
 }) {
   // reset states on back
   const dispatch = useDispatch<AppDispatch>()
@@ -146,28 +149,31 @@ export function AddRemoveTabs({
   return (
     <Tabs>
       <StyledPageHeader>
-        <RowStart style={{ padding: '0' }}>
-          <HistoryLink
-            to={'/pool' + (!!positionID ? `/${positionID.toString()}` : '')}
-            onClick={() => {
-              if (adding) {
-                dispatch(resetMintState())
-              }
-            }}
-          >
-            <Box marginRight={'0.5rem'}>
-              <ArrowLeft />
-            </Box>
-          </HistoryLink>
+        <RowBetween style={{ padding: '0' }}>
+          <RowStart>
+            <HistoryLink
+              to={'/pool' + (!!positionID ? `/${positionID.toString()}` : '')}
+              onClick={() => {
+                if (adding) {
+                  dispatch(resetMintState())
+                }
+              }}
+            >
+              <Box marginRight={'0.5rem'}>
+                <ArrowLeft />
+              </Box>
+            </HistoryLink>
 
-          {creating ? (
-            <Trans>Create a pair</Trans>
-          ) : adding ? (
-            <Trans>Add Liquidity</Trans>
-          ) : (
-            <Trans>Remove Liquidity</Trans>
-          )}
-        </RowStart>
+            {creating ? (
+              <Trans>Create a pair</Trans>
+            ) : adding ? (
+              <Trans>Add Liquidity</Trans>
+            ) : (
+              <Trans>Remove Liquidity</Trans>
+            )}
+          </RowStart>
+          {showBadge && <MitigationBadge />}
+        </RowBetween>
       </StyledPageHeader>
     </Tabs>
   )

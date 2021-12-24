@@ -8,11 +8,10 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { ApplicationModal } from 'state/application/actions'
 import { useChooseBrokerDealerModalToggle, useModalOpen } from 'state/application/hooks'
 import { useBrokerDealersState, useFetchBrokerDealers } from 'state/brokerDealer/hooks'
-import { usePassAccreditation, useUserState } from 'state/user/hooks'
+import { useFetchUserSecTokenListCallback, usePassAccreditation, useUserState } from 'state/user/hooks'
 import styled from 'styled-components'
-import { ModalBlurWrapper, ModalContentWrapper } from 'theme'
+import { ModalBlurWrapper, ModalContentWrapper, ModalPadding } from 'theme'
 import { CloseIcon, TYPE } from '../../theme'
-import { ModalPadding } from './styleds'
 
 export const ChooseBrokerDealerPopup = ({ tokenId, currencyId }: { tokenId: any; currencyId?: string }) => {
   const isOpen = useModalOpen(ApplicationModal.CHOOSE_BROKER_DEALER)
@@ -21,6 +20,7 @@ export const ChooseBrokerDealerPopup = ({ tokenId, currencyId }: { tokenId: any;
   const { brokersData: brokerDealerPairs, brokersLoading, brokersError } = useBrokerDealersState()
   const [selectedBrokerPair, setSelectedBrokerPair] = useState(0)
   const { loadingAccreditation } = useUserState()
+  const fetchList = useFetchUserSecTokenListCallback()
   const fetchBrokerDealerPairs = useFetchBrokerDealers()
   useEffect(() => {
     if (tokenId) {
@@ -38,7 +38,13 @@ export const ChooseBrokerDealerPopup = ({ tokenId, currencyId }: { tokenId: any;
     toggle()
   }, [toggle])
 
-  const passAccreditation = usePassAccreditation(currencyId)
+  const onSuccess = () => {
+    setTimeout(() => {
+      fetchList()
+    }, 10000)
+  }
+
+  const passAccreditation = usePassAccreditation(currencyId, onSuccess)
 
   return (
     <RedesignedWideModal

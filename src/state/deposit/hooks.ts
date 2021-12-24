@@ -11,9 +11,19 @@ import { setLogItem } from 'state/eventLog/actions'
 import { useEventState, useGetEventCallback } from 'state/eventLog/hooks'
 import { tryParseAmount } from 'state/swap/helpers'
 import { isAddress } from 'utils'
-import { depositSecTokens, setCurrency, setModalView, setNetworkName, typeAmount, typeSender } from './actions'
+import {
+  depositSecTokens,
+  setCurrency,
+  setModalView,
+  setNetworkName,
+  typeAmount,
+  typeSender,
+  resetDeposit,
+} from './actions'
 import { DepositModalView } from './reducer'
 import walletValidator from 'multicoin-address-validator'
+import { ApplicationModal } from 'state/application/actions'
+import { useModalOpen, useToggleModal } from 'state/application/hooks'
 
 export function useDepositState(): AppState['deposit'] {
   return useSelector<AppState, AppState['deposit']>((state) => state.deposit)
@@ -24,6 +34,7 @@ export function useDepositActionHandlers(): {
   onTypeSender: (typedValue: string) => void
   onCurrencySet: (currencyId: string) => void
   onNetworkSet: (networkName: string) => void
+  onResetDeposit: () => void
 } {
   const dispatch = useDispatch<AppDispatch>()
 
@@ -53,11 +64,15 @@ export function useDepositActionHandlers(): {
     },
     [dispatch]
   )
+  const onResetDeposit = useCallback(() => {
+    dispatch(resetDeposit())
+  }, [dispatch])
   return {
     onTypeAmount,
     onTypeSender,
     onCurrencySet,
     onNetworkSet,
+    onResetDeposit,
   }
 }
 
@@ -186,10 +201,14 @@ export function useCancelDepositCallback(): ({ requestId, onSuccess }: CancelDep
 
 export const useShowAboutWrappingCallback = () => {
   const dispatch = useDispatch<AppDispatch>()
-
+  const open = useModalOpen(ApplicationModal.DEPOSIT)
+  const toggle = useToggleModal(ApplicationModal.DEPOSIT)
   return useCallback(() => {
+    if (!open) {
+      toggle()
+    }
     dispatch(setModalView({ view: DepositModalView.ABOUT_WRAPPING }))
-  }, [dispatch])
+  }, [dispatch, open, toggle])
 }
 
 export function useHideAboutWrappingCallback() {

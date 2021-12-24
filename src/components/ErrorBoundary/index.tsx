@@ -3,7 +3,7 @@ import React, { ErrorInfo } from 'react'
 import ReactGA from 'react-ga'
 import styled from 'styled-components/macro'
 import { TYPE } from '../../theme'
-import { AutoColumn } from '../Column'
+import { AutoColumn, ColumnCenter } from '../Column'
 import { AutoRow } from '../Row'
 
 const FallbackWrapper = styled.div`
@@ -37,16 +37,17 @@ const SomethingWentWrongWrapper = styled.div`
 
 type ErrorBoundaryState = {
   error: Error | null
+  isChunkError: boolean
 }
 
 export default class ErrorBoundary extends React.Component<unknown, ErrorBoundaryState> {
   constructor(props: unknown) {
     super(props)
-    this.state = { error: null }
+    this.state = { error: null, isChunkError: false }
   }
 
   static getDerivedStateFromError(error: Error): ErrorBoundaryState {
-    return { error }
+    return { error, isChunkError: /Loading chunk [\d]+ failed/.test(error.message) }
   }
 
   componentDidCatch(error: Error, errorInfo: ErrorInfo) {
@@ -58,8 +59,27 @@ export default class ErrorBoundary extends React.Component<unknown, ErrorBoundar
   }
 
   render() {
-    const { error } = this.state
-    if (error !== null) {
+    const { error, isChunkError } = this.state
+
+    if (error !== null && isChunkError) {
+      return (
+        <FallbackWrapper style={{ height: '100vh', textAlign: 'center' }}>
+          <BodyWrapper style={{ height: '100%' }}>
+            <ColumnCenter style={{ justifyContent: 'center', height: '100%' }}>
+              <SomethingWentWrongWrapper>
+                <TYPE.label fontSize={24} fontWeight={600}>
+                  <Trans>Error occured while loading the content</Trans>
+                </TYPE.label>
+
+                <TYPE.label fontSize={20} fontWeight={600}>
+                  <Trans>Please, refresh the page</Trans>
+                </TYPE.label>
+              </SomethingWentWrongWrapper>
+            </ColumnCenter>
+          </BodyWrapper>
+        </FallbackWrapper>
+      )
+    } else if (error !== null) {
       // find out what is this const encodedBody = encodeURIComponent(issueBody(error))
       return (
         <FallbackWrapper>

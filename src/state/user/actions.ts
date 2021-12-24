@@ -62,3 +62,7 @@ export const authorizeSecToken: Readonly<{
   fulfilled: createAction('user/authorizeSecToken/fulfilled'),
   rejected: createAction('user/authorizeSecToken/rejected'),
 }
+
+export const updateUnderstoodPlayground = createAction<{ understood: boolean }>(
+  'application/updateUnderstoodPlayground'
+)

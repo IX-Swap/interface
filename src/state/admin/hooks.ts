@@ -61,10 +61,10 @@ export function useGetMe() {
       dispatch(getMe.pending())
       const data = await me()
       dispatch(getMe.fulfilled({ data }))
-      return GET_ME_STATUS.SUCCESS
+      return data
     } catch (error: any) {
       dispatch(getMe.rejected({ errorMessage: 'Could not get me' }))
-      return GET_ME_STATUS.FAILED
+      return null
     }
   }, [dispatch])
   return callback

@@ -36,10 +36,17 @@ export enum ApplicationModal {
   IXS_BALANCE,
   NETWORK_SELECTOR,
   GENERAL,
+  PROPERTIES,
+  LEVELS,
+  STATS,
+  ABOUT_WRAPPING,
+  PLAYGROUND_WARNING,
 }
 
 export const updateBlockNumber = createAction<{ chainId: number; blockNumber: number }>('application/updateBlockNumber')
 export const setOpenModal = createAction<ApplicationModal | null>('application/setOpenModal')
+export const setShowFakeApproval = createAction<{ showValue: boolean }>('application/setShowFakeApproval')
+export const setBrokerDealerData = createAction<{ newData: any }>('application/setBrokerDealerData')
 export const addPopup =
   createAction<{ key?: string; removeAfterMs?: number | null; content: PopupContent }>('application/addPopup')
 export const removePopup = createAction<{ key: string }>('application/removePopup')

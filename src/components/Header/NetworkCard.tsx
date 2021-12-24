@@ -1,4 +1,4 @@
-import { CHAIN_INFO, SupportedChainId } from 'constants/chains'
+import { CHAIN_INFO, NETWORK_LABELS, SupportedChainId } from 'constants/chains'
 import { useOnClickOutside } from 'hooks/useOnClickOutside'
 import { useActiveWeb3React } from 'hooks/web3'
 import React, { useMemo, useRef } from 'react'
@@ -10,16 +10,6 @@ import { ChevronElement } from 'components/ChevronElement'
 import { MEDIA_WIDTHS } from 'theme'
 import { Trans } from '@lingui/macro'
 import { switchToNetwork } from 'hooks/switchToNetwork'
-
-const NETWORK_LABELS: { [chainId: number]: string } = {
-  [1]: 'Ethereum',
-  [4]: 'Rinkeby',
-  [3]: 'Ropsten',
-  [5]: 'Görli',
-  [42]: 'Kovan',
-  [80001]: 'Polygon Mumbai',
-  [137]: 'Polygon Mainnet',
-}
 
 const SelectorControls = styled(VioletCard)`
   border-radius: 12px;

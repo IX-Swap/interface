@@ -1,6 +1,6 @@
 import { getTokenLogoURL } from './../components/CurrencyLogo/index'
 import { Currency, Token } from '@ixswap1/sdk-core'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useActiveWeb3React } from 'hooks/web3'
 
 export default function useAddTokenToMetamask(currencyToAdd: Currency | undefined): {
@@ -12,6 +12,9 @@ export default function useAddTokenToMetamask(currencyToAdd: Currency | undefine
   const token: Token | undefined = currencyToAdd?.wrapped
 
   const [success, setSuccess] = useState<boolean | undefined>()
+  useEffect(() => {
+    setSuccess(false)
+  }, [currencyToAdd])
 
   const addToken = useCallback(() => {
     if (library && library.provider.isMetaMask && library.provider.request && token) {

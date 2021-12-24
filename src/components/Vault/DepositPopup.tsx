@@ -1,28 +1,27 @@
 import { Currency } from '@ixswap1/sdk-core'
 import { Trans } from '@lingui/macro'
+import { ButtonText } from 'components/Button'
+import { getNetworkFromToken } from 'components/CurrencyLogo'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import Row, { RowBetween } from 'components/Row'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { Box } from 'rebass'
 import { AppDispatch } from 'state'
-import { ReactComponent as ArrowLeft } from '../../assets/images/arrow-back.svg'
 import { ApplicationModal } from 'state/application/actions'
 import { useDepositModalToggle, useModalOpen } from 'state/application/hooks'
 import { setError, setLoading, setModalView } from 'state/deposit/actions'
 import { useDepositState, useHideAboutWrappingCallback } from 'state/deposit/hooks'
 import { DepositModalView } from 'state/deposit/reducer'
-import { ModalBlurWrapper, ModalContentWrapper } from 'theme'
+import { useUserSecTokens } from 'state/user/hooks'
+import { ModalBlurWrapper, ModalContentWrapper, ModalPadding } from 'theme'
+import { ReactComponent as ArrowLeft } from '../../assets/images/arrow-back.svg'
 import { CloseIcon, TYPE } from '../../theme'
+import { DepositAboutWrapping } from './DepositAboutWrapping'
 import { DepositError } from './DepositError'
 import { DepositPending } from './DepositPending'
 import { DepositRequestForm } from './DepositRequestForm'
 import { DepositSendInfo } from './DepositSendInfo'
-import { ModalPadding } from './styleds'
-import { ButtonText } from 'components/Button'
-import { useUserSecTokens } from 'state/user/hooks'
-import { DepositAboutWrapping } from './DepositAboutWrapping'
-import { getNetworkFromToken } from 'components/CurrencyLogo'
 
 interface Props {
   currency?: Currency
@@ -43,7 +42,6 @@ export const DepositPopup = ({ currency }: Props) => {
     toggle()
     hideAboutWrapping()
   }, [toggle])
-
   return (
     <RedesignedWideModal isOpen={isOpen} onDismiss={onClose} minHeight={false} maxHeight={'fit-content'} scrollable>
       <ModalBlurWrapper data-testid="depositPopup">

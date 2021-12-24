@@ -1,21 +1,15 @@
 import { AppBackground } from 'components/AppBackground'
 import { IXSBalanceModal } from 'components/Header/IXSBalanceModal'
-import { SECURITY_TOKENS } from 'config'
+import PlaygroundModal from 'components/PlaygroundModal'
 import {
   MATIC_TGE_CHAINS,
   SUPPORTED_TGE_CHAINS,
   TGE_CHAINS_WITH_STAKING,
   TGE_CHAINS_WITH_SWAP,
 } from 'constants/addresses'
-const AdminKyc = lazy(() => import('./AdminKyc'))
-const Custodian = lazy(() => import('./Custodian'))
-const RemoveLiquidity = lazy(() => import('./RemoveLiquidity'))
-const SecTokenDetails = lazy(() => import('./SecTokenDetails'))
-const Swap = lazy(() => import('./Swap'))
-const PoolV2 = lazy(() => import('./Pool/v2'))
 import ApeModeQueryParamReader from 'hooks/useApeModeQueryParamReader'
 import { useActiveWeb3React } from 'hooks/web3'
-import React, { useMemo, lazy, Suspense } from 'react'
+import React, { lazy, Suspense, useMemo } from 'react'
 import { Route, Switch, useLocation } from 'react-router-dom'
 import { useAccount } from 'state/user/hooks'
 import styled from 'styled-components/macro'
@@ -32,8 +26,17 @@ import DarkModeQueryParamReader from '../theme/DarkModeQueryParamReader'
 import { RedirectDuplicateTokenIdsV2 } from './AddLiquidityV2/redirects'
 import { StakingTab } from './Farming/StakingTab'
 import { VestingTab } from './Farming/VestingTab'
+import Faucet from './Faucet'
 import PoolFinder from './PoolFinder'
-import { RedirectPathToSwapOnly, RedirectPathToStaking, RedirectToSwap } from './Swap/redirects'
+import { RedirectPathToStaking, RedirectPathToSwapOnly, RedirectToSwap } from './Swap/redirects'
+const AdminKyc = lazy(() => import('./AdminKyc'))
+const Custodian = lazy(() => import('./Custodian'))
+const CreateNFT = lazy(() => import('./CreateNFT'))
+const ListNFT = lazy(() => import('./ListNFT'))
+const RemoveLiquidity = lazy(() => import('./RemoveLiquidity'))
+const SecTokenDetails = lazy(() => import('./SecTokenDetails'))
+const Swap = lazy(() => import('./Swap'))
+const PoolV2 = lazy(() => import('./Pool/v2'))
 
 const AppWrapper = styled.div`
   display: flex;
@@ -70,7 +73,7 @@ export default function App() {
   useAccount()
   const { chainId, account } = useActiveWeb3React()
 
-  const isAdminKyc = pathname.includes('admin-kyc')
+  const isAdminKyc = pathname.includes('admin')
   const validChainId = useMemo(() => {
     if (!chainId) {
       return true
@@ -90,6 +93,7 @@ export default function App() {
       <AppBackground />
       <Popups />
       <AppWrapper>
+        <PlaygroundModal />
         {validChainId && !isAdminKyc && <Header />}
         {chainId && !validChainId && !isAdminKyc && account && <ConnectToAppropriateNetwork />}
         <ToggleableBody isVisible={visibleBody} {...(isAdminKyc && { style: { marginTop: 26 } })}>
@@ -97,7 +101,9 @@ export default function App() {
           <Web3ReactManager>
             <Suspense fallback={<></>}>
               <Switch>
-                <Route exact strict path="/admin-kyc" component={AdminKyc} />
+                <Route exact strict path="/admin" component={AdminKyc} />
+                <Route exact strict path={routes.nftCreate} component={CreateNFT} />
+                <Route exact strict path={routes.nftList} component={ListNFT} />
 
                 {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
                   <Route exact strict path="/send" component={RedirectPathToSwapOnly} />
@@ -121,10 +127,12 @@ export default function App() {
                   <Route exact strict path="/remove/:currencyIdA/:currencyIdB" component={RemoveLiquidity} />
                 )}
 
-                {SECURITY_TOKENS && (
-                  <Route exact strict path="/security-tokens/:currencyId" component={SecTokenDetails} />
+                {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
+                  <Route exact strict path="/faucet" component={Faucet} />
                 )}
-                {SECURITY_TOKENS && <Route exact strict path={routes.securityTokens()} component={Custodian} />}
+
+                <Route exact strict path="/security-tokens/:currencyId" component={SecTokenDetails} />
+                <Route exact strict path={routes.securityTokens()} component={Custodian} />
 
                 {chainId && TGE_CHAINS_WITH_STAKING.includes(chainId) && (
                   <Route exact strict path={routes.staking} component={StakingTab} />

@@ -20,6 +20,7 @@ import {
   toggleURLWarning,
   updateHideClosedPositions,
   updateMatchesDarkMode,
+  updateUnderstoodPlayground,
   updateUserDarkMode,
   updateUserDeadline,
   updateUserExpertMode,
@@ -76,6 +77,7 @@ export interface UserState {
 
   timestamp: number
   URLWarningVisible: boolean
+  hasUnderstoodPlayground: boolean
 }
 
 function pairKey(token0Address: string, token1Address: string) {
@@ -103,6 +105,7 @@ export const initialState: UserState = {
   loadingAccreditation: false,
   userSecTokens: [],
   secTokenAuthorizations: {},
+  hasUnderstoodPlayground: false,
 }
 
 export default createReducer(initialState, (builder) =>
@@ -255,5 +258,8 @@ export default createReducer(initialState, (builder) =>
     .addCase(clearUserData, (state) => {
       state.secTokenAuthorizations = {}
       state.userSecTokens = []
+    })
+    .addCase(updateUnderstoodPlayground, (state, { payload: { understood } }) => {
+      state.hasUnderstoodPlayground = understood
     })
 )

@@ -505,3 +505,15 @@ export const ModalContentWrapper = styled(Column)`
   position: relative;
   background: ${({ theme }) => theme.bgG4};
 `
+export const ModalPadding = styled.div`
+  padding: 37px 40px 19px 40px;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+   padding: 22px 8px 18px 8px;
+  `};
+`
+export const ellipsisText = css`
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`

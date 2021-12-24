@@ -17,6 +17,7 @@ import {
   listToSecTokenMap,
   SecTokenAddressMap,
   useAccreditationStatus,
+  useSecToken,
   useSecTokensFromMap,
 } from 'state/secTokens/hooks'
 import { useSimpleTokenBalanceWithLoading } from 'state/wallet/hooks'
@@ -365,6 +366,18 @@ export const useUserSecTokens = () => {
   return { secTokens }
 }
 
+export const useAccreditedToken = ({ currencyId }: { currencyId?: string }) => {
+  const { secTokens } = useUserSecTokens()
+  const secToken = useSecToken({ currencyId })
+  const currency = useCurrency(currencyId)
+  return useMemo(() => {
+    if (currencyId && currency && secToken && !secTokens[currencyId]) {
+      return undefined
+    }
+    return currency
+  }, [currencyId, secTokens, secToken, currency])
+}
+
 export const useIXSBalance = () => {
   const { account, chainId } = useActiveWeb3React()
   const currency = useIXSCurrency()
@@ -418,7 +431,8 @@ export const chooseBrokerDealer = async ({ pairId }: { pairId: number }) => {
 }
 
 export function usePassAccreditation(
-  currencyId?: string
+  currencyId?: string,
+  onSuccess?: () => void
 ): (tokenId: number, brokerDealerPairId: number) => Promise<void> {
   const dispatch = useDispatch<AppDispatch>()
   const login = useLogin({ mustHavePreviousLogin: false })
@@ -459,6 +473,7 @@ export function usePassAccreditation(
         await fetchTokens()
         dispatch(passAccreditation.fulfilled())
         toggle()
+        onSuccess && onSuccess()
       } catch (error) {
         console.debug(`Failed to pass accreditation`, error)
         addPopup(
@@ -473,7 +488,7 @@ export function usePassAccreditation(
         dispatch(passAccreditation.rejected({ errorMessage: String((error as any)?.message) }))
       }
     },
-    [dispatch, login, fetchTokens, toggle, addPopup, accreditationRequest, accreditationStatus]
+    [dispatch, login, fetchTokens, toggle, addPopup, accreditationRequest, accreditationStatus, onSuccess]
   )
 }
 

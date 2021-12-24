@@ -1,10 +1,10 @@
 import React from 'react'
 import useTheme from 'hooks/useTheme'
 import { darken } from 'polished'
-import { Check, ChevronDown } from 'react-feather'
+import { Check, ChevronDown, Plus } from 'react-feather'
 import { Button as RebassButton, ButtonProps as ButtonPropsOriginal } from 'rebass/styled-components'
 import styled from 'styled-components/macro'
-import { RowBetween } from '../Row'
+import { RowBetween, RowCenter } from '../Row'
 import { gradientBorder } from 'theme'
 
 type ButtonProps = Omit<ButtonPropsOriginal, 'css'>
@@ -459,4 +459,18 @@ export function ButtonRadioChecked({ active = false, children, ...rest }: { acti
       </ActiveOutlined>
     )
   }
+}
+
+export const ButtonOutLinedThick = styled(ButtonOutlined)`
+  border: 2px solid ${({ theme }) => theme.text2};
+`
+
+export const ButtonPlus = ({ disabled = false, ...rest }: { disabled?: boolean } & ButtonProps) => {
+  return (
+    <ButtonOutLinedThick {...rest} disabled={disabled}>
+      <RowCenter>
+        <Plus size={24} />
+      </RowCenter>
+    </ButtonOutLinedThick>
+  )
 }
