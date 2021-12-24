@@ -1,17 +1,13 @@
 import { Trans } from '@lingui/macro'
-import React, { useEffect } from 'react'
-import styled, { css } from 'styled-components'
-import { NavLink } from 'react-router-dom'
-import { SECURITY_TOKENS } from 'config'
-
-import { routes } from 'utils/routes'
-
-import closeIcon from '../../assets/images/cross.svg'
-import { ExternalLink } from 'theme'
-import { useActiveWeb3React } from 'hooks/web3'
 import { MATIC_TGE_CHAINS, TGE_CHAINS_WITH_STAKING } from 'constants/addresses'
 import { SupportedChainId } from 'constants/chains'
-
+import { useActiveWeb3React } from 'hooks/web3'
+import React, { useEffect } from 'react'
+import { NavLink } from 'react-router-dom'
+import styled, { css } from 'styled-components'
+import { ExternalLink } from 'theme'
+import { routes } from 'utils/routes'
+import closeIcon from '../../assets/images/cross.svg'
 interface Props {
   close: () => void
 }
@@ -58,16 +54,16 @@ export const Menu = ({ close }: Props) => {
               <Trans>LIQUIDITY POOL</Trans>
             </MenuListItem>
           )}
-          {SECURITY_TOKENS && (
-            <MenuListItem
-              activeClassName="active-item"
-              id={`stake-nav-link`}
-              to={routes.securityTokens()}
-              onClick={close}
-            >
-              <Trans>Security tokens</Trans>
-            </MenuListItem>
-          )}
+
+          <MenuListItem
+            activeClassName="active-item"
+            id={`stake-nav-link`}
+            to={routes.securityTokens()}
+            onClick={close}
+          >
+            <Trans>Security tokens</Trans>
+          </MenuListItem>
+
           {chainId && TGE_CHAINS_WITH_STAKING.includes(chainId) && (
             <MenuListItem activeClassName="active-item" id={`stake-nav-link`} to={routes.staking} onClick={close}>
               <Trans>Staking IXS</Trans>

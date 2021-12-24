@@ -1,4 +1,3 @@
-import { SECURITY_TOKENS } from 'config'
 import useInterval from 'hooks/useInterval'
 import useIsWindowVisible from 'hooks/useIsWindowVisible'
 import { useActiveWeb3React } from 'hooks/web3'
@@ -17,7 +16,7 @@ export default function Updater(): null {
   const { refreshToken } = useAuthState()
   const savedAccount = useUserAccountState()
   const fetchListCallback = useCallback(async () => {
-    if (!isWindowVisible || !SECURITY_TOKENS || !savedAccount) {
+    if (!isWindowVisible || !savedAccount) {
       return
     }
     fetchList().catch((error) => console.debug('interval user sec token list fetching error', error))
