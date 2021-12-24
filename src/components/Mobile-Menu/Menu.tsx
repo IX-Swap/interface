@@ -82,12 +82,21 @@ export const Menu = ({ close }: Props) => {
           <ExternalListItem href={`https://ixswap.defiterm.io/`}>
             <Trans>DeFi Terminal</Trans>
           </ExternalListItem>
-          <MenuListItem activeClassName="active-item" id={`create-nft-nav-link`} to={routes.nftCreate} onClick={close}>
-            <Trans>Create NFT</Trans>
-          </MenuListItem>
-          <MenuListItem activeClassName="active-item" id={`nft-list-nav-link`} to={routes.nftList} onClick={close}>
-            <Trans>My NFTs</Trans>
-          </MenuListItem>
+          {false && (
+            <MenuListItem
+              activeClassName="active-item"
+              id={`create-nft-nav-link`}
+              to={routes.nftCreate}
+              onClick={close}
+            >
+              <Trans>Create NFT</Trans>
+            </MenuListItem>
+          )}
+          {false && (
+            <MenuListItem activeClassName="active-item" id={`nft-list-nav-link`} to={routes.nftList} onClick={close}>
+              <Trans>My NFTs</Trans>
+            </MenuListItem>
+          )}
           {chainId && TGE_CHAINS_WITH_STAKING.includes(chainId) && (
             <MenuListItem activeClassName="active-item" id={`faucet-nav-link`} to={'/faucet'} onClick={close}>
               <Trans>Faucet</Trans>
