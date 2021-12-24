@@ -96,7 +96,9 @@ export const testStableCoinsTokens = [
   { name: 'Ixswap Stable Coin', symbol: 'IUSDC', address: '0xb10c4ec295225688461ddbc6d30e8291e9934464' },
   { name: 'Ixswap Stable Coin DAI', symbol: 'IDAI', address: '0x8234ff99e7c1bfc45f076af399fd89e034e710dc' },
 ]
-
+export const ixSwapToken = [
+  { name: 'IXSwap Token', symbol: 'IXS', address: '0xA1997c88a60dCe7BF92A3644DA21e1FfC8F96dC2' },
+]
 export const testSecTokens = [
   { name: 'Apple', symbol: 'FAAPL', address: '0x4af89c907fba907d9ba74cb44ebf8a7a65c53e6e' },
   { name: 'Coinbase', symbol: 'FCOIN', address: '0x6a2951cc518efadd7beec657a99554d17a7a85cd' },
