@@ -163,12 +163,8 @@ export default function AddLiquidity({
         amountsMin[tokenBIsETH ? Field.CURRENCY_B : Field.CURRENCY_A].toString(), // eth min
         account,
         deadline.toHexString(),
+        isCreating ? enableMitigation : mitigationEnabled,
       ]
-      if (isCreating) {
-        args.push(enableMitigation)
-      } else {
-        args.push(mitigationEnabled)
-      }
       value = BigNumber.from((tokenBIsETH ? parsedAmountB : parsedAmountA).quotient.toString())
     } else {
       estimate = router.estimateGas.addLiquidity
@@ -182,12 +178,11 @@ export default function AddLiquidity({
         amountsMin[Field.CURRENCY_B].toString(),
         account,
         deadline.toHexString(),
+        isCreating ? enableMitigation : mitigationEnabled,
       ]
-      if (isCreating) {
-        args.push(enableMitigation)
-      }
       value = null
     }
+
     setAttemptingTxn(true)
     await estimate(...args, value ? { value } : {})
       .then((estimatedGasLimit) =>

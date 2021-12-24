@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
 import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
@@ -18,21 +18,29 @@ const AdminKyc = () => {
   const { adminData, adminError, adminLoading } = useAdminState()
   const getMe = useGetMe()
 
+  const fetchMe = useCallback(async () => {
+    const result = await getMe()
+
+    if (result && result?.role === 'admin') {
+      history.push('/admin')
+    } else {
+      history.push('/')
+    }
+  }, [getMe, history])
+
   useEffect(() => {
+    if (!adminData) {
+      fetchMe()
+      return
+    }
+
     if (adminData && adminData?.role === 'admin') {
-      history.push('/admin-kyc')
-    } else if (Boolean(!adminData && adminError && !adminLoading) || (adminData && adminData?.role !== 'admin')) {
-      history.push('/swap')
-    }
-  }, [history, adminData, adminLoading, adminError])
-
-  useEffect(() => {
-    const fetchMe = async () => {
-      await getMe()
+      history.push('/admin')
+      return
     }
 
-    fetchMe()
-  }, [getMe])
+    history.push('/')
+  }, [getMe, adminData, history, fetchMe])
 
   return (
     <Container>

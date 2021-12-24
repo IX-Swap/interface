@@ -50,7 +50,7 @@ export const DepositRequestForm = ({ currency }: Props) => {
   const { account, chainId } = useActiveWeb3React()
   const { amount, sender, currencyId: cid } = useDepositState()
   const { inputError, parsedAmount } = useDerivedDepositInfo()
-  const { onTypeAmount, onTypeSender, onCurrencySet, onNetworkSet } = useDepositActionHandlers()
+  const { onTypeAmount, onTypeSender, onCurrencySet, onNetworkSet, onResetDeposit } = useDepositActionHandlers()
   const { address, loading } = useENS(sender)
   const { secTokens } = useUserSecTokens()
   const deposit = useDepositCallback()
@@ -59,6 +59,11 @@ export const DepositRequestForm = ({ currency }: Props) => {
   const error = Boolean(sender.length > 0 && !loading && !address && networkName === 'Ethereum')
   const computedAddress = networkName === 'Ethereum' ? address : sender
   const accountNetwork = chainId ? chainIdToNetworkName(chainId as SupportedChainId) : ''
+
+  useEffect(() => {
+    onResetDeposit()
+  }, [])
+
   const onClick = () => {
     const tokenId = (secTokens[cid ?? ''] as any)?.tokenInfo?.id
     if (tokenId && !error && parsedAmount && !inputError && computedAddress) {

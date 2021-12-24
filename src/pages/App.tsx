@@ -1,5 +1,6 @@
 import { AppBackground } from 'components/AppBackground'
 import { IXSBalanceModal } from 'components/Header/IXSBalanceModal'
+import PlaygroundModal from 'components/PlaygroundModal'
 import { SECURITY_TOKENS } from 'config'
 import {
   MATIC_TGE_CHAINS,
@@ -73,7 +74,7 @@ export default function App() {
   useAccount()
   const { chainId, account } = useActiveWeb3React()
 
-  const isAdminKyc = pathname.includes('admin-kyc')
+  const isAdminKyc = pathname.includes('admin')
   const validChainId = useMemo(() => {
     if (!chainId) {
       return true
@@ -93,6 +94,7 @@ export default function App() {
       <AppBackground />
       <Popups />
       <AppWrapper>
+        <PlaygroundModal />
         {validChainId && !isAdminKyc && <Header />}
         {chainId && !validChainId && !isAdminKyc && account && <ConnectToAppropriateNetwork />}
         <ToggleableBody isVisible={visibleBody} {...(isAdminKyc && { style: { marginTop: 26 } })}>
@@ -100,7 +102,7 @@ export default function App() {
           <Web3ReactManager>
             <Suspense fallback={<></>}>
               <Switch>
-                <Route exact strict path="/admin-kyc" component={AdminKyc} />
+                <Route exact strict path="/admin" component={AdminKyc} />
                 <Route exact strict path={routes.nftCreate} component={CreateNFT} />
                 <Route exact strict path={routes.nftList} component={ListNFT} />
 

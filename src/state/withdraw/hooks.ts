@@ -15,7 +15,15 @@ import { tryParseAmount } from 'state/swap/helpers'
 import { useTransactionAdder } from 'state/transactions/hooks'
 import { useCurrencyBalance } from 'state/wallet/hooks'
 import { isAddress } from 'utils'
-import { setCurrency, setNetwork, setTransaction, typeAmount, typeReceiver, withdrawCurrency } from './actions'
+import {
+  setCurrency,
+  setNetwork,
+  setTransaction,
+  typeAmount,
+  typeReceiver,
+  withdrawCurrency,
+  resetWithdraw,
+} from './actions'
 import walletValidator from 'multicoin-address-validator'
 
 export function useWithdrawState(): AppState['withdraw'] {
@@ -27,6 +35,7 @@ export function useWithdrawActionHandlers(): {
   onTypeReceiver: (typedValue: string) => void
   onCurrencySet: (currencyId: string) => void
   onSetNetWorkName: (networkName: string) => void
+  onResetWithdraw: () => void
 } {
   const dispatch = useDispatch<AppDispatch>()
 
@@ -56,11 +65,15 @@ export function useWithdrawActionHandlers(): {
     },
     [dispatch]
   )
+  const onResetWithdraw = useCallback(() => {
+    dispatch(resetWithdraw())
+  }, [dispatch])
   return {
     onTypeAmount,
     onTypeReceiver,
     onCurrencySet,
     onSetNetWorkName,
+    onResetWithdraw,
   }
 }
 
