@@ -1,5 +1,6 @@
 import { Currency } from '@ixswap1/sdk-core'
 import { SupportedChainId } from 'constants/chains'
+import { useSimpleTokens } from 'hooks/Tokens'
 import { useActiveWeb3React } from 'hooks/web3'
 import React, { useMemo } from 'react'
 import styled from 'styled-components/macro'
@@ -56,7 +57,12 @@ export default function CurrencyLogo({
   size?: string
   style?: React.CSSProperties
 }) {
-  const uriLocations = useHttpLocations(currency instanceof WrappedTokenInfo ? currency.logoURI : undefined)
+  const tokens = useSimpleTokens()
+  const uri =
+    currency instanceof WrappedTokenInfo
+      ? currency.logoURI || (tokens[currency.address] as any)?.tokenInfo?.logoURI
+      : undefined
+  const uriLocations = useHttpLocations(uri)
   const { chainId } = useActiveWeb3React()
   const srcs: string[] = useMemo(() => {
     if (!currency || currency.isNative) return []
