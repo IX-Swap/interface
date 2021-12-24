@@ -1,4 +1,5 @@
-import './index.css'
+import * as Sentry from '@sentry/react'
+import { Integrations } from '@sentry/tracing'
 import { createWeb3ReactRoot, Web3ReactProvider } from '@web3-react/core'
 import React, { StrictMode } from 'react'
 import { isMobile } from 'react-device-detect'
@@ -9,20 +10,18 @@ import { HashRouter } from 'react-router-dom'
 import Blocklist from './components/Blocklist'
 import { NetworkContextName } from './constants/misc'
 import { LanguageProvider } from './i18n'
+import './index.css'
 import App from './pages/App'
-import store from './state'
 import * as serviceWorkerRegistration from './serviceWorkerRegistration'
+import store from './state'
 import ApplicationUpdater from './state/application/updater'
 import ListsUpdater from './state/lists/updater'
 import MulticallUpdater from './state/multicall/updater'
-import TransactionUpdater from './state/transactions/updater'
 import SecTokenListUpdater from './state/secTokens/updater'
+import TransactionUpdater from './state/transactions/updater'
 import UserUpdater from './state/user/updater'
 import ThemeProvider, { ThemedGlobalStyle } from './theme'
 import getLibrary from './utils/getLibrary'
-import { SECURITY_TOKENS } from 'config'
-import * as Sentry from '@sentry/react'
-import { Integrations } from '@sentry/tracing'
 
 const Web3ProviderNetwork = createWeb3ReactRoot(NetworkContextName)
 
@@ -58,7 +57,7 @@ function Updaters() {
       <ApplicationUpdater />
       <TransactionUpdater />
       <MulticallUpdater />
-      {SECURITY_TOKENS && <SecTokenListUpdater />}
+      <SecTokenListUpdater />
     </>
   )
 }
