@@ -60,7 +60,7 @@ export default function SecTokensList({
       itemCount={itemData.length}
       itemSize={itemHeight}
       itemKey={itemKey}
-      style={{ overflow: 'hidden' }}
+      style={{ overflowY: 'scroll' }}
     >
       {Row}
     </List>
