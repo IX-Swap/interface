@@ -7,6 +7,7 @@ import brokerDealer from './brokerDealer/reducer'
 import burn from './burn/reducer'
 import deposit from './deposit/reducer'
 import eventLog from './eventLog/reducer'
+import faucet from './faucet/reducer'
 import { updateVersion } from './global/actions'
 import lists from './lists/reducer'
 import mint from './mint/reducer'
@@ -50,6 +51,7 @@ const store = configureStore({
     swapHelper,
     pool,
     nft,
+    faucet,
   },
   middleware: [...getDefaultMiddleware({ thunk: true }), save({ states: PERSISTED_KEYS, debounce: 1000 })],
   preloadedState: load({ states: PERSISTED_KEYS }),
