@@ -63,7 +63,7 @@ export default function PlaygroundModal() {
           <ModalBottom>
             <ActionButtons>
               <ButtonIXSWide data-testid="understood-button" onClick={onUnderstood}>
-                <Trans>I understood</Trans>
+                <Trans>I understand</Trans>
               </ButtonIXSWide>
             </ActionButtons>
           </ModalBottom>
