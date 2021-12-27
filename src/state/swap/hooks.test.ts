@@ -20,17 +20,7 @@ describe('hooks', () => {
         recipient: null,
       })
     })
-    test('does not duplicate eth for invalid output token', () => {
-      expect(
-        queryParametersToSwapState(parse('?outputCurrency=invalid', { parseArrays: false, ignoreQueryPrefix: true }))
-      ).toEqual({
-        [Field.INPUT]: { currencyId: 'ETH' },
-        [Field.OUTPUT]: { currencyId: '' },
-        typedValue: '',
-        independentField: Field.INPUT,
-        recipient: null,
-      })
-    })
+
     test('output ETH only', () => {
       expect(
         queryParametersToSwapState(
