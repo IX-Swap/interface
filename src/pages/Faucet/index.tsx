@@ -21,6 +21,7 @@ export interface IFaucetToken {
   name: string
   symbol: string
   address: string
+  contractAddress?: string
 }
 
 enum FaucetStates {
