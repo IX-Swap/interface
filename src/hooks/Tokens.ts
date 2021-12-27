@@ -51,9 +51,14 @@ function useTokensFromMap(tokenMap: TokenAddressMap, includeUserAdded: boolean):
   }, [chainId, userAddedTokens, tokenMap, includeUserAdded])
 }
 
-export function useAllTokens(): { [address: string]: Token } {
+export function useSimpleTokens(): { [address: string]: Token } {
   const allTokens = useCombinedActiveList()
   const tokens = useTokensFromMap(allTokens, true)
+  return tokens
+}
+
+export function useAllTokens(): { [address: string]: Token } {
+  const tokens = useSimpleTokens()
   const { secTokens } = useSecTokens()
   return useMemo(() => ({ ...tokens, ...secTokens }), [tokens, secTokens])
 }

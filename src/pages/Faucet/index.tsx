@@ -10,8 +10,9 @@ import { useCurrency } from 'hooks/Tokens'
 import useAddTokenToMetamask from 'hooks/useAddTokenToMetamask'
 import { useActiveWeb3React } from 'hooks/web3'
 import AppBody from 'pages/AppBody'
+import { Dots } from 'pages/Pool/styleds'
 import React, { useState } from 'react'
-import { useDistributeToken } from 'state/faucet/hooks'
+import { useDistributeToken, useFaucetState } from 'state/faucet/hooks'
 import { ExternalLink, StyledPageHeader, TYPE } from 'theme'
 import { shortAddress } from 'utils'
 import { FaucetTokenDropdown } from './FaucetTokenDropdown'
@@ -22,6 +23,12 @@ export interface IFaucetToken {
   address: string
 }
 
+enum FaucetStates {
+  INITAL,
+  SUCCESS,
+  ERROR,
+}
+
 export default function Faucet() {
   const { account, chainId, library } = useActiveWeb3React()
   const [selectedToken, setSelectedToken] = useState<IFaucetToken>(testStableCoinsTokens[0])
@@ -29,11 +36,21 @@ export default function Faucet() {
   const selectedCurrency = useCurrency(selectedToken.address)
   const addCurrency = useAddTokenToMetamask(selectedCurrency ?? undefined)
   const isStableCoin = testStableCoinsTokens.filter((token) => token.address === selectedToken.address).length > 0
-
+  const [success, setSuccess] = useState(FaucetStates.INITAL)
+  const { loadingFaucet } = useFaucetState()
   const handleSubmitClicked = async () => {
-    await distributeToken()
+    const result = await distributeToken()
+    if (result?.transaction) {
+      setSuccess(FaucetStates.SUCCESS)
+    } else {
+      setSuccess(FaucetStates.ERROR)
+    }
   }
 
+  const onSelectToken = (token: IFaucetToken) => {
+    setSuccess(FaucetStates.INITAL)
+    setSelectedToken(token)
+  }
   const blurred = chainId !== undefined && !TGE_CHAINS_WITH_SWAP.includes(chainId)
 
   return (
@@ -85,7 +102,7 @@ export default function Faucet() {
                 <Trans>Select token</Trans>
               </TYPE.body1>
             </Row>
-            <FaucetTokenDropdown selectedToken={selectedToken} onSelect={setSelectedToken} />
+            <FaucetTokenDropdown selectedToken={selectedToken} onSelect={onSelectToken} />
           </Column>
 
           <Column style={{ marginTop: '22px', gap: '11px' }}>
@@ -120,8 +137,15 @@ export default function Faucet() {
               </ButtonGradient>
             )}
           </Column>
-          <ButtonIXSWide marginTop="20px" onClick={handleSubmitClicked}>
-            <Trans>Submit</Trans>
+          <ButtonIXSWide marginTop="20px" onClick={handleSubmitClicked} disabled={loadingFaucet}>
+            {success === FaucetStates.INITAL && !loadingFaucet && <Trans>Submit</Trans>}
+            {loadingFaucet && (
+              <Trans>
+                <Dots>Loading</Dots>
+              </Trans>
+            )}
+            {success === FaucetStates.SUCCESS && !loadingFaucet && <Trans>Success!</Trans>}
+            {success === FaucetStates.ERROR && !loadingFaucet && <Trans>Error. Please try again later</Trans>}
           </ButtonIXSWide>
         </AppBody>
       </ColumnCenter>
