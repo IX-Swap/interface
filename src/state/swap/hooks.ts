@@ -215,11 +215,9 @@ export function useDefaultsFromURLSearch():
   useEffect(() => {
     if (!chainId) return
     const parsed = queryParametersToSwapState(parsedQs)
-    let parsedInputCurrency = parsed[Field.INPUT].currencyId
+    const parsedInputCurrency = parsed[Field.INPUT].currencyId
     const parsedOutputCurrency = parsed[Field.OUTPUT].currencyId
-    if (!parsedInputCurrency && !parsedOutputCurrency && noAuthorizations) {
-      parsedInputCurrency = 'ETH'
-    } else if (!parsedInputCurrency && !parsedOutputCurrency) {
+    if (!parsedInputCurrency && !parsedOutputCurrency) {
       return
     }
     dispatch(
