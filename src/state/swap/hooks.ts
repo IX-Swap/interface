@@ -5,9 +5,8 @@ import * as H from 'history'
 import { useMissingAuthorizations } from 'hooks/useSwapCallback'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { useSecTokens } from 'state/secTokens/hooks'
-import { useSetSwapState } from 'state/swapHelper/hooks'
-import { useAccreditedToken, useUserSecTokens, useUserSingleHopOnly } from 'state/user/hooks'
+import { useAuthorizationsState, useSetSwapState } from 'state/swapHelper/hooks'
+import { useUserSecTokens, useUserSingleHopOnly } from 'state/user/hooks'
 import { useAllTokens, useCurrency } from '../../hooks/Tokens'
 import useENS from '../../hooks/useENS'
 import useParsedQueryString from '../../hooks/useParsedQueryString'
@@ -208,15 +207,19 @@ export function useDefaultsFromURLSearch():
   const { chainId } = useActiveWeb3React()
   const dispatch = useDispatch<AppDispatch>()
   const parsedQs = useParsedQueryString()
+  const authorizations = useAuthorizationsState()
+  const noAuthorizations = !authorizations || Object.keys(authorizations).length === 0
   const [result, setResult] =
     useState<{ inputCurrencyId: string | undefined; outputCurrencyId: string | undefined } | undefined>()
   const state = useSwapState()
   useEffect(() => {
     if (!chainId) return
     const parsed = queryParametersToSwapState(parsedQs)
-    const parsedInputCurrency = parsed[Field.INPUT].currencyId
+    let parsedInputCurrency = parsed[Field.INPUT].currencyId
     const parsedOutputCurrency = parsed[Field.OUTPUT].currencyId
-    if (!parsedInputCurrency && !parsedOutputCurrency) {
+    if (!parsedInputCurrency && !parsedOutputCurrency && noAuthorizations) {
+      parsedInputCurrency = 'ETH'
+    } else if (!parsedInputCurrency && !parsedOutputCurrency) {
       return
     }
     dispatch(
