@@ -25,7 +25,9 @@ export const TokenDetails = ({ currency, platform }: Props) => {
   const originalAddress = useMemo(() => {
     return (currency as any)?.tokenInfo?.originalAddress
   }, [currency])
-
+  const originalSymbol = useMemo(() => {
+    return (currency as any)?.tokenInfo?.originalSymbol
+  }, [currency])
   const originalCurrency = useCurrency(originalAddress)
   const { library } = useActiveWeb3React()
   const toggleAbout = useToggleModal(ApplicationModal.ABOUT_WRAPPING)
@@ -34,7 +36,6 @@ export const TokenDetails = ({ currency, platform }: Props) => {
 
   const [isCopied, setCopied] = useCopyClipboard()
   const [originAddIsCopied, setOriginAddCopied] = useCopyClipboard()
-
   return (
     <Details>
       <AboutWrapping />
@@ -80,7 +81,7 @@ export const TokenDetails = ({ currency, platform }: Props) => {
           <RowStart style={{ gap: '5px', flexWrap: 'wrap' }}>
             <div onClick={() => setOriginAddCopied(originalAddress ?? '')}>
               <DetailsElement
-                title={<Trans>{originalCurrency?.symbol || 'Original token'}:</Trans>}
+                title={<Trans>{originalSymbol || 'Original token'}:</Trans>}
                 content={originAddIsCopied ? <Trans>Copied!</Trans> : shortenAddress(originalAddress ?? '')}
               />
             </div>
