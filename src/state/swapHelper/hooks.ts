@@ -254,40 +254,43 @@ export function useSwapConfirmDataFromURL(
     clearState()
   }, [showPopup, clearState])
 
-  const fetchAuthorization = useCallback(async () => {
-    if (brokerDealerId === undefined || !chainId || !address || !length) {
-      return
-    }
-
-    const swapConfirm = {
-      hash: (hash as string) || '',
-      encryptedData: (result as string) || '',
-      brokerDealerId,
-    }
-    try {
-      const response = await getSwapConfirmAuthorization({ ...swapConfirm })
-      const data = response.data
-      const { s, v, r, operator, deadline } = data.authorization
-      const swapId = data.swapId
-      const persistedAuthorization = {
-        s,
-        v,
-        r,
-        operator,
-        deadline,
-        expiresAt: hexTimeToTokenExpirationTime(deadline),
-        amount,
-        swapId,
+  const fetchAuthorization = useCallback(
+    async ({ hash, result }: { hash: string; result: string }) => {
+      if (brokerDealerId === undefined || !chainId || !address || !length || !hash) {
+        return
       }
-      dispatch(saveAuthorization({ authorization: persistedAuthorization, chainId, address }))
-      showPopup({ success: true })
-      clearState()
-    } catch (e) {
-      console.log({ e })
-      showPopup({ success: false })
-      clearState()
-    }
-  }, [chainId, amount, hash, result, brokerDealerId, address, length, clearState, dispatch, showPopup])
+
+      const swapConfirm = {
+        hash,
+        encryptedData: result,
+        brokerDealerId,
+      }
+      try {
+        const response = await getSwapConfirmAuthorization({ ...swapConfirm })
+        const data = response.data
+        const { s, v, r, operator, deadline } = data.authorization
+        const swapId = data.swapId
+        const persistedAuthorization = {
+          s,
+          v,
+          r,
+          operator,
+          deadline,
+          expiresAt: hexTimeToTokenExpirationTime(deadline),
+          amount,
+          swapId,
+        }
+        dispatch(saveAuthorization({ authorization: persistedAuthorization, chainId, address }))
+        showPopup({ success: true })
+        clearState()
+      } catch (e) {
+        console.log({ e })
+        showPopup({ success: false })
+        clearState()
+      }
+    },
+    [chainId, amount, brokerDealerId, address, length, clearState, showPopup]
+  )
 
   useEffect(() => {
     confirm()
@@ -297,7 +300,7 @@ export function useSwapConfirmDataFromURL(
         return
       }
       if (hash && result) {
-        await fetchAuthorization()
+        await fetchAuthorization({ hash: (hash as string) || '', result: (result as string) || '' })
       }
     }
   }, [hash, result, isError, fetchAuthorization, processError])
