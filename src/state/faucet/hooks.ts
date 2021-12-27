@@ -10,10 +10,20 @@ import { useSelector } from 'react-redux'
 import { useAppDispatch } from 'state/hooks'
 import { setFaucetLoading } from './actions'
 
-export const useDistributeToken = ({ address, symbol }: { address: string; symbol: string; name: string }) => {
-  const faucetContract = useFaucetContract(address)
-  const stableFaucetContract = useStableFaucetContract(address)
-  const IXSFaucetContract = useIXSFaucetContract(address)
+export const useDistributeToken = ({
+  address,
+  symbol,
+  contractAddress,
+}: {
+  address: string
+  symbol: string
+  name: string
+  contractAddress?: string
+}) => {
+  const usedAddress = contractAddress ?? address
+  const faucetContract = useFaucetContract(usedAddress)
+  const stableFaucetContract = useStableFaucetContract(usedAddress)
+  const IXSFaucetContract = useIXSFaucetContract(usedAddress)
   const addPopup = useAddPopup()
   const addTransaction = useTransactionAdder()
   const dispatch = useAppDispatch()
