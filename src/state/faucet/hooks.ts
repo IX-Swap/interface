@@ -1,7 +1,7 @@
 import { useCallback } from 'react'
 
-import { useFaucetContract, useStableFaucetContract } from 'hooks/useContract'
-import { testStableCoinsTokens } from 'constants/addresses'
+import { useFaucetContract, useIXSFaucetContract, useStableFaucetContract } from 'hooks/useContract'
+import { ixSwapToken, testStableCoinsTokens } from 'constants/addresses'
 import { useAddPopup } from 'state/application/hooks'
 import { useTransactionAdder } from 'state/transactions/hooks'
 import { t } from '@lingui/macro'
@@ -10,9 +10,20 @@ import { useSelector } from 'react-redux'
 import { useAppDispatch } from 'state/hooks'
 import { setFaucetLoading } from './actions'
 
-export const useDistributeToken = ({ address, symbol }: { address: string; symbol: string; name: string }) => {
-  const faucetContract = useFaucetContract(address)
-  const stableFaucetContract = useStableFaucetContract(address)
+export const useDistributeToken = ({
+  address,
+  symbol,
+  contractAddress,
+}: {
+  address: string
+  symbol: string
+  name: string
+  contractAddress?: string
+}) => {
+  const usedAddress = contractAddress ?? address
+  const faucetContract = useFaucetContract(usedAddress)
+  const stableFaucetContract = useStableFaucetContract(usedAddress)
+  const IXSFaucetContract = useIXSFaucetContract(usedAddress)
   const addPopup = useAddPopup()
   const addTransaction = useTransactionAdder()
   const dispatch = useAppDispatch()
@@ -27,7 +38,8 @@ export const useDistributeToken = ({ address, symbol }: { address: string; symbo
     }
     try {
       const isStableCoin = testStableCoinsTokens.filter((token) => token.address === address).length > 0
-      const usedContract = isStableCoin ? stableFaucetContract : faucetContract
+      const isIXS = ixSwapToken[0].address === address
+      const usedContract = isStableCoin ? stableFaucetContract : isIXS ? IXSFaucetContract : faucetContract
       if (usedContract) {
         dispatch(setFaucetLoading({ loading: true }))
         const timeToFaucetFun = usedContract?.timeToFaucet || usedContract?.getTimeToFaucet
@@ -56,7 +68,7 @@ export const useDistributeToken = ({ address, symbol }: { address: string; symbo
       dispatch(setFaucetLoading({ loading: false }))
       showError(t`Could not use the faucet. Please try again later`)
     }
-  }, [faucetContract, stableFaucetContract, address, symbol, addTransaction, addPopup])
+  }, [faucetContract, stableFaucetContract, IXSFaucetContract, address, symbol, addTransaction, addPopup])
 }
 
 export function useFaucetState(): AppState['faucet'] {
