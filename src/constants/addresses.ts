@@ -100,7 +100,7 @@ export const ixSwapToken = [
   { name: 'IXSwap Token', symbol: 'IXS', address: '0xA1997c88a60dCe7BF92A3644DA21e1FfC8F96dC2' },
 ]
 export const testSecTokens = [
-  { name: 'Apple', symbol: 'FAAPL', address: '0x4af89c907fba907d9ba74cb44ebf8a7a65c53e6e' },
-  { name: 'Coinbase', symbol: 'FCOIN', address: '0x6a2951cc518efadd7beec657a99554d17a7a85cd' },
-  { name: 'Tesla', symbol: 'FTSLA', address: '0x1d722f4334ad3f0154e3e3711378f534a07e4329' },
+  { name: 'Apple', symbol: 'AAPL', address: '0x4af89c907fba907d9ba74cb44ebf8a7a65c53e6e' },
+  { name: 'Coinbase', symbol: 'COIN', address: '0x6a2951cc518efadd7beec657a99554d17a7a85cd' },
+  { name: 'Tesla', symbol: 'TSLA', address: '0x1d722f4334ad3f0154e3e3711378f534a07e4329' },
 ]
