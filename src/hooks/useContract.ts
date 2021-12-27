@@ -133,3 +133,6 @@ export function useFaucetContract(tokenAddress: string) {
 export function useStableFaucetContract(tokenAddress: string) {
   return useContract(tokenAddress, FAUCET_STABLE_ABI, true)
 }
+export function useIXSFaucetContract(tokenAddress: string) {
+  return useContract(tokenAddress, FAUCET_STABLE_ABI, true)
+}
