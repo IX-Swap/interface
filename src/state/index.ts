@@ -23,6 +23,7 @@ import unstaking from './stake/unstake/reducer'
 import stakingPoolSize from './stake/poolSizeReducer'
 import pool from './pool/reducer'
 import faucet from './faucet/reducer'
+import nft from './nft/reducer'
 
 import brokerDealer from './brokerDealer/reducer'
 
@@ -52,6 +53,7 @@ const store = configureStore({
     swapHelper,
     pool,
     faucet,
+    nft,
   },
   middleware: [...getDefaultMiddleware({ thunk: true }), save({ states: PERSISTED_KEYS, debounce: 1000 })],
   preloadedState: load({ states: PERSISTED_KEYS }),
