@@ -97,7 +97,12 @@ export const testStableCoinsTokens = [
   { name: 'Ixswap Stable Coin DAI', symbol: 'IDAI', address: '0x8234ff99e7c1bfc45f076af399fd89e034e710dc' },
 ]
 export const ixSwapToken = [
-  { name: 'IXSwap Token', symbol: 'IXS', address: '0xA1997c88a60dCe7BF92A3644DA21e1FfC8F96dC2' },
+  {
+    name: 'IXSwap Token',
+    symbol: 'IXS',
+    address: '0xA1997c88a60dCe7BF92A3644DA21e1FfC8F96dC2',
+    contractAddress: '0x10367e146e497267a9fc0c4f47702005f194a13c',
+  },
 ]
 export const testSecTokens = [
   { name: 'Apple', symbol: 'AAPL', address: '0x4af89c907fba907d9ba74cb44ebf8a7a65c53e6e' },

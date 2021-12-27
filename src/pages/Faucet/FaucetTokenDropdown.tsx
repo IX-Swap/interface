@@ -7,7 +7,7 @@ import Row, { RowBetween, RowStart } from 'components/Row'
 import { TYPE } from 'theme'
 import { ChevronElement } from 'components/ChevronElement'
 import { DarkBlueCard } from 'components/Card'
-import { testSecTokens, testStableCoinsTokens } from 'constants/addresses'
+import { ixSwapToken, testSecTokens, testStableCoinsTokens } from 'constants/addresses'
 import { IFaucetToken } from '.'
 import { Trans } from '@lingui/macro'
 import { Line } from 'components/Line'
@@ -44,6 +44,13 @@ export const FaucetTokenDropdown = ({
           </TYPE.body2>
         </RowStart>
         {[...testStableCoinsTokens].map((token) => {
+          return (
+            <RowStart key={`token-${token.address}`} onClick={() => selectToken(token)}>
+              {token.name}
+            </RowStart>
+          )
+        })}
+        {[...ixSwapToken].map((token) => {
           return (
             <RowStart key={`token-${token.address}`} onClick={() => selectToken(token)}>
               {token.name}
