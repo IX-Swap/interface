@@ -115,3 +115,18 @@ export function useGeneralModalState() {
   const { modalType, modalTitle, modalMessage } = applicationState
   return { modalType, modalTitle, modalMessage }
 }
+
+export function useShowError() {
+  const addPopup = useAddPopup()
+  return useCallback(
+    async (message: string) => {
+      addPopup({
+        info: {
+          success: false,
+          summary: message,
+        },
+      })
+    },
+    [addPopup]
+  )
+}

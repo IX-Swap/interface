@@ -16,7 +16,7 @@ export const NFT_ADDRESS = {
   [4]: '0x6ECc7A1dCe9DD04A18a03bf0a537E9F77cd194fA',
   [3]: '',
   [5]: '',
-  [42]: '0x0725dE8514802C9Ca1cd7AA317351B2035939c29',
+  [42]: '0x4DB7dc4bDc3848F4E948A8a8bB31a9d2021D05a6',
   [80001]: '',
   [137]: '',
 }
@@ -97,7 +97,12 @@ export const testStableCoinsTokens = [
   { name: 'Ixswap Stable Coin DAI', symbol: 'IDAI', address: '0x8234ff99e7c1bfc45f076af399fd89e034e710dc' },
 ]
 export const ixSwapToken = [
-  { name: 'IXSwap Token', symbol: 'IXS', address: '0xA1997c88a60dCe7BF92A3644DA21e1FfC8F96dC2' },
+  {
+    name: 'IXSwap Token',
+    symbol: 'IXS',
+    address: '0xA1997c88a60dCe7BF92A3644DA21e1FfC8F96dC2',
+    contractAddress: '0x10367e146e497267a9fc0c4f47702005f194a13c',
+  },
 ]
 export const testSecTokens = [
   { name: 'Apple', symbol: 'AAPL', address: '0x4af89c907fba907d9ba74cb44ebf8a7a65c53e6e' },

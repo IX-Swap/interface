@@ -7,14 +7,17 @@ import { AcceptFiles, FileTypes } from 'components/Upload/types'
 import { getfileType } from 'components/Upload/utils'
 import { SupportedChainId } from 'constants/chains'
 import { FileWithPath } from 'file-selector'
+import { useActiveWeb3React } from 'hooks/web3'
 import React, { useEffect, useState } from 'react'
 import { Box, Flex } from 'rebass'
 import { KeyValues, pinFileToIPFS } from 'services/pinataService'
 import { ApplicationModal } from 'state/application/actions'
 import { useToggleModal } from 'state/application/hooks'
+import { useDeployNFT } from 'state/nft/hooks'
 import { ExternalLink, TYPE } from 'theme'
 import { ChainDropdown } from './ChainDropdown'
-import { useGetSupply, useMint } from './hooks'
+import { CollectionDropdown } from './CollectionDropdown'
+import { useGetSupply, useManageCreateForm, useMint } from './hooks'
 import { LevelsPopup } from './LevelsPopup'
 import { NSFWRadio } from './NSFWRadio'
 import { PropertiesPopup } from './PropertiesPopup'
@@ -22,37 +25,50 @@ import { Traits } from './Traits'
 import { TraitType } from './types'
 
 export const CreateForm = () => {
-  const [file, setFile] = useState<FileWithPath | null>(null)
-  const [preview, setPreview] = useState<FileWithPath | null>(null)
-  const [name, setName] = useState('')
-  const [link, setLink] = useState('')
-  const [description, setDescription] = useState('')
-  const toggle = useToggleModal(ApplicationModal.PROPERTIES)
-  const [activeTraitType, setActiveTraitType] = useState(TraitType.PROGRESS)
-  const toggleNumeric = useToggleModal(ApplicationModal.LEVELS)
+  const {
+    file,
+    setFile,
+    preview,
+    setPreview,
+    name,
+    setName,
+    link,
+    setLink,
+    description,
+    setDescription,
+    activeTraitType,
+    setActiveTraitType,
+    properties,
+    setProperties,
+    levels,
+    setLevels,
+    stats,
+    setStats,
+    isNSFW,
+    setIsNSFW,
+    selectedChain,
+    setSelectedChain,
+    collection,
+    setCollection,
+  } = useManageCreateForm()
 
+  const deployNFT = useDeployNFT()
+  const toggle = useToggleModal(ApplicationModal.PROPERTIES)
+  const toggleNumeric = useToggleModal(ApplicationModal.LEVELS)
   const toggleLevelsStats = (traitType: TraitType) => {
     setActiveTraitType(traitType)
     toggleNumeric()
   }
   const mint = useMint()
-  const getSupply = useGetSupply()
-  const [properties, setProperties] = useState<Array<{ name: string; value: string }>>([])
-  const [levels, setLevels] = useState<Array<{ name: string; value: number; max: number }>>([])
-  const [stats, setStats] = useState<Array<{ name: string; value: number; max: number }>>([])
-  const [isNSFW, setIsNSFW] = useState(false)
-  const [selectedChain, setSelectedChain] = useState(SupportedChainId.MAINNET)
+
   const onDrop = (file: any) => {
     setFile(file)
   }
 
-  useEffect(() => {
-    getSupply()
-  })
-
   const onSubmit = async (e: any) => {
     e.preventDefault()
-    await mint()
+    deployNFT({ name: 'New Collection' })
+    // await mint()
     return
     // if (!file || !name) {
     //   return
@@ -155,6 +171,21 @@ export const CreateForm = () => {
                 </InputContainer>
               </ContainerRow>
             </InputPanel>
+          </Box>
+        </Flex>
+        <Flex mx={-2} mb={4} flexDirection={'column'}>
+          <Label htmlFor="collection" flexDirection="column" mb={3}>
+            <Box mb={1}>
+              <Box display="flex">
+                <TYPE.body fontWeight={600}>
+                  <Trans>Collection</Trans>
+                </TYPE.body>
+                <TYPE.error error>*</TYPE.error>
+              </Box>
+            </Box>
+          </Label>
+          <Box width={1} px={2}>
+            <CollectionDropdown onSelect={setCollection} selectedCollection={collection} />
           </Box>
         </Flex>
         <Flex mx={-2} mb={4}>

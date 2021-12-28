@@ -1,4 +1,3 @@
-import useIXSCurrency from 'hooks/useIXSCurrency'
 import { useActiveWeb3React } from 'hooks/web3'
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
@@ -11,28 +10,25 @@ import {
   useGetVestedRewards,
   useIsStakingPaused,
   useStakingState,
-  useUpdateIXSBalance,
+  useStakingStatus,
 } from 'state/stake/hooks'
+import { StakingStatus } from 'state/stake/reducer'
 import { useUnstakingState } from 'state/stake/unstake/hooks'
-import { useCurrencyBalance } from 'state/wallet/hooks'
 import { StakingWrapper } from '../styleds'
 import { PromoTokenCard } from './PromoTokenCard'
 import { StakingPage } from './StakingPage'
 
 export const Staking = () => {
-  const { IXSBalance, hasStakedSuccessfully, metaMaskAccount, stakings } = useStakingState()
+  const { hasStakedSuccessfully, metaMaskAccount } = useStakingState()
   const { hasUnstakedSuccessfully } = useUnstakingState()
   const isStakingPaused = useIsStakingPaused()
   const closeModals = useCloseModals()
   const { chainId, account } = useActiveWeb3React()
   const dispatch = useDispatch<AppDispatch>()
-  const updateIXSBalance = useUpdateIXSBalance()
-  const currency = useIXSCurrency()
-  const balance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
   const getStakings = useGetStakings()
   const getRewards = useGetVestedRewards()
   const getPayouts = useGetPayouts()
-
+  const status = useStakingStatus()
   useEffect(() => {
     getRewards()
   }, [getRewards, hasStakedSuccessfully, hasUnstakedSuccessfully])
@@ -45,7 +41,6 @@ export const Staking = () => {
     const checkStakings = () => {
       if (hasStakedSuccessfully || hasUnstakedSuccessfully) {
         getStakings()
-        updateIXSBalance()
       }
     }
     checkStakings()
@@ -66,12 +61,6 @@ export const Staking = () => {
   }, [getPayouts, hasStakedSuccessfully, hasUnstakedSuccessfully])
 
   useEffect(() => {
-    if (balance) {
-      updateIXSBalance()
-    }
-  }, [balance])
-
-  useEffect(() => {
     isStakingPaused()
   }, [isStakingPaused])
 
@@ -86,15 +75,14 @@ export const Staking = () => {
       dispatch(changeAccount({ newAccount: 'null' }))
     } else if (account !== metaMaskAccount) {
       dispatch(changeAccount({ newAccount: account }))
-      updateIXSBalance()
     }
   }, [chainId, account, metaMaskAccount, dispatch])
 
   function renderStakingPage() {
-    if ((IXSBalance && parseFloat(IXSBalance) > 0) || stakings.length !== 0) {
+    if (status !== StakingStatus.CONNECT_WALLET && status !== StakingStatus.NO_IXS) {
       return <StakingPage />
     } else {
-      return <PromoTokenCard />
+      return <PromoTokenCard stakingStatus={status} />
     }
   }
 

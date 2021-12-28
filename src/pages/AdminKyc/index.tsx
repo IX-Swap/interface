@@ -78,13 +78,13 @@ const AdminKyc = () => {
   )
 }
 
-const Container = styled.div`
+export const Container = styled.div`
   width: 100vw;
   display: flex;
   flex-direction: column;
 `
 
-const Body = styled.div`
+export const Body = styled.div`
   padding: 0 30px;
   max-width: 1610px;
   margin: 0 auto;

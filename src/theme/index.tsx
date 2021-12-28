@@ -123,6 +123,7 @@ export function colors(darkMode: boolean): Colors {
       : 'linear-gradient(116.36deg, #7b42a9 33.43%, #ed0376 95.41%);',
     modalBG: darkMode ? 'rgba(0,0,0,0.9)' : 'rgba(0,0,0,0.3)',
     advancedBG: darkMode ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.6)',
+    divider: darkMode ? 'rgba(43, 43, 43, 0.435)' : 'rgba(43, 43, 43, 0.035)',
 
     //primary colors
     primary1: darkMode ? '#2172E5' : '#ff007a',

@@ -29,6 +29,7 @@ import { VestingTab } from './Farming/VestingTab'
 import Faucet from './Faucet'
 import PoolFinder from './PoolFinder'
 import { RedirectPathToStaking, RedirectPathToSwapOnly, RedirectToSwap } from './Swap/redirects'
+
 const AdminKyc = lazy(() => import('./AdminKyc'))
 const Custodian = lazy(() => import('./Custodian'))
 const CreateNFT = lazy(() => import('./CreateNFT'))
@@ -38,6 +39,8 @@ const SecTokenDetails = lazy(() => import('./SecTokenDetails'))
 const Swap = lazy(() => import('./Swap'))
 const PoolV2 = lazy(() => import('./Pool/v2'))
 const NftImport = lazy(() => import('./NftImport'))
+const NFTCollections = lazy(() => import('./NFTCollections'))
+const UpdateNFT = lazy(() => import('./UpdateNFT'))
 
 const AppWrapper = styled.div`
   display: flex;
@@ -105,6 +108,8 @@ export default function App() {
                 <Route exact strict path="/admin" component={AdminKyc} />
                 <Route exact strict path={routes.nftCreate} component={CreateNFT} />
                 <Route exact strict path={routes.nftList} component={ListNFT} />
+                <Route exact strict path={routes.nftCollections} component={NFTCollections} />
+                <Route exact strict path="/nft/:id/edit" component={UpdateNFT} />
 
                 {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
                   <Route exact strict path="/send" component={RedirectPathToSwapOnly} />
