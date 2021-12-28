@@ -13,7 +13,7 @@ const ToggleElement = styled.span<{ isActive?: boolean; isOnSwitch?: boolean }>`
   }
 `
 
-const StyledToggle = styled.button<{ isActive?: boolean; activeElement?: boolean }>`
+const StyledToggle = styled.button<{ isActive?: boolean; activeElement?: boolean; disabled?: boolean }>`
   border-radius: 36px;
   box-shadow: 0px 0px 4px rgba(182, 111, 242, 0.25);
   border: 1px solid ${({ theme }) => theme.popUpInputBorder};
@@ -45,9 +45,10 @@ export interface ToggleProps {
   isActive: boolean
   toggle: () => void
   showLabel?: boolean
+  disabled?: boolean
 }
 
-export default function Toggle({ id, isActive, toggle, showLabel = true }: ToggleProps) {
+export default function Toggle({ id, isActive, toggle, showLabel = true, disabled = false }: ToggleProps) {
   return (
     <ToggleContainer>
       {showLabel && (
@@ -56,7 +57,7 @@ export default function Toggle({ id, isActive, toggle, showLabel = true }: Toggl
         </LabelContainer>
       )}
       <MirrorImage>
-        <StyledToggle id={id} isActive={isActive} onClick={toggle}>
+        <StyledToggle id={id} isActive={isActive} onClick={toggle} disabled={disabled}>
           <ToggleElement isActive={isActive} isOnSwitch={true}></ToggleElement>
           <ToggleElement isActive={!isActive} isOnSwitch={false}></ToggleElement>
         </StyledToggle>
