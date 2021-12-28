@@ -22,7 +22,7 @@ export const ChooseBrokerDealerPopup = ({ tokenId, currencyId }: { tokenId: any;
   const { brokersData: brokerDealerPairs, brokersLoading, brokersError } = useBrokerDealersState()
   const [selectedBrokerPair, setSelectedBrokerPair] = useState(0)
   const { loadingAccreditation } = useUserState()
-  const tokenName = (useCurrency(currencyId) as any)?.tokenInfo?.name || null
+  const tokenName = (useCurrency(currencyId) as any)?.tokenInfo?.symbol || null
   const fetchList = useFetchUserSecTokenListCallback()
   const fetchBrokerDealerPairs = useFetchBrokerDealers()
 
@@ -68,22 +68,22 @@ export const ChooseBrokerDealerPopup = ({ tokenId, currencyId }: { tokenId: any;
                 </TYPE.title5>
                 <CloseIcon data-testid="cross" onClick={onClose} className="close-icon" />
               </ModalHeader>
-              <Row style={{ opacity: '0.7', marginTop: '18px' }}>
+              <Row style={{ marginTop: '18px' }}>
                 <TYPE.description2 fontWeight={400}>
                   <Trans>{`Choose the pair of third-party services you want to use for ${tokenName} token.`}</Trans>
                 </TYPE.description2>
               </Row>
-              <Row style={{ opacity: '0.7', marginTop: '18px' }}>
-                <TYPE.description2 fontWeight={600}>
+              <Row style={{ marginTop: '18px' }}>
+                <TYPE.description2 display="inline" style={{ whiteSpace: 'nowrap' }} fontWeight={600}>
                   <Trans>Broker-dealer</Trans>
+                  &nbsp;
                 </TYPE.description2>
-                &nbsp;
-                <TYPE.description2 fontWeight={400}>
+                <TYPE.description2 display="inline" fontWeight={400}>
                   <Trans>{`will check and confirm every transaction with ${tokenName} token.`}</Trans>
                 </TYPE.description2>
               </Row>
-              <Row style={{ opacity: '0.7' }}>
-                <TYPE.description2 fontWeight={600}>
+              <Row>
+                <TYPE.description2 style={{ whiteSpace: 'nowrap' }} fontWeight={600}>
                   <Trans>Custodian</Trans>
                 </TYPE.description2>
                 &nbsp;
