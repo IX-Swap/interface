@@ -4,7 +4,9 @@ import { ButtonIXSWide } from 'components/Button'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import Row, { RowBetween } from 'components/Row'
+import { useCurrency } from 'hooks/Tokens'
 import React, { useCallback, useEffect, useState } from 'react'
+import { Flex } from 'rebass'
 import { ApplicationModal } from 'state/application/actions'
 import { useChooseBrokerDealerModalToggle, useModalOpen } from 'state/application/hooks'
 import { useBrokerDealersState, useFetchBrokerDealers } from 'state/brokerDealer/hooks'
@@ -20,8 +22,10 @@ export const ChooseBrokerDealerPopup = ({ tokenId, currencyId }: { tokenId: any;
   const { brokersData: brokerDealerPairs, brokersLoading, brokersError } = useBrokerDealersState()
   const [selectedBrokerPair, setSelectedBrokerPair] = useState(0)
   const { loadingAccreditation } = useUserState()
+  const tokenName = (useCurrency(currencyId) as any)?.tokenInfo?.name || null
   const fetchList = useFetchUserSecTokenListCallback()
   const fetchBrokerDealerPairs = useFetchBrokerDealers()
+
   useEffect(() => {
     if (tokenId) {
       fetchBrokerDealerPairs(tokenId)
@@ -55,45 +59,73 @@ export const ChooseBrokerDealerPopup = ({ tokenId, currencyId }: { tokenId: any;
       mobileMaxHeight={90}
     >
       <ModalBlurWrapper data-testid="choose-broker-dealer-and-custodian-popup">
-        <ModalContentWrapper style={{ borderRadius: '12px' }}>
-          <ModalPadding>
-            <ModalHeader>
-              <TYPE.title5>
-                <Trans>Broker dealer and Custodian</Trans>
-              </TYPE.title5>
-              <CloseIcon data-testid="cross" onClick={onClose} className="close-icon" />
-            </ModalHeader>
-            <Row style={{ opacity: '0.7', marginTop: '18px' }}>
-              <TYPE.description2>
-                <Trans>Please choose broker dealer and custodian to start accreditation process</Trans>
-              </TYPE.description2>
-            </Row>
-          </ModalPadding>
-          <div id="broker-dealer-and-custodian-list" style={{ marginTop: '8px' }}>
+        <ModalContentWrapper style={{ borderRadius: '12px', backgroundColor: '#272046' }}>
+          <div style={{ backgroundColor: '#0F0518', borderRadius: '12px 12px 0px 0px' }}>
+            <ModalPadding>
+              <ModalHeader>
+                <TYPE.title5>
+                  <Trans>Broker dealer and Custodian pair</Trans>
+                </TYPE.title5>
+                <CloseIcon data-testid="cross" onClick={onClose} className="close-icon" />
+              </ModalHeader>
+              <Row style={{ opacity: '0.7', marginTop: '18px' }}>
+                <TYPE.description2 fontWeight={400}>
+                  <Trans>{`Choose the pair of third-party services you want to use for ${tokenName} token.`}</Trans>
+                </TYPE.description2>
+              </Row>
+              <Row style={{ opacity: '0.7', marginTop: '18px' }}>
+                <TYPE.description2 fontWeight={600}>
+                  <Trans>Broker-dealer</Trans>
+                </TYPE.description2>
+                &nbsp;
+                <TYPE.description2 fontWeight={400}>
+                  <Trans>{`will check and confirm every transaction with ${tokenName} token.`}</Trans>
+                </TYPE.description2>
+              </Row>
+              <Row style={{ opacity: '0.7' }}>
+                <TYPE.description2 fontWeight={600}>
+                  <Trans>Custodian</Trans>
+                </TYPE.description2>
+                &nbsp;
+                <TYPE.description2 fontWeight={400}>
+                  <Trans>{`will keep your ${tokenName} in a safe place.`}</Trans>
+                </TYPE.description2>
+              </Row>
+            </ModalPadding>
+          </div>
+
+          <div id="broker-dealer-and-custodian-list" style={{ marginTop: '25px' }}>
             {brokersLoading && (
               <div style={{ margin: 'auto', display: 'table' }}>
                 <LoaderThin size={32} />
               </div>
             )}
             {brokersError && <div style={{ margin: 'auto', display: 'table' }}>Something went wrong</div>}
+            <BrokerDealersGridHeader>
+              <TYPE.description2>Broker-dealer</TYPE.description2>
+              <div />
+              <TYPE.description2>Custodian</TYPE.description2>
+              <div />
+            </BrokerDealersGridHeader>
             {brokerDealerPairs?.map((pair) => (
-              <BrokerDealerAndCustodianPair
+              <BrokerDealersGrid
                 key={pair?.id}
                 onClick={() => setSelectedBrokerPair(pair?.id)}
                 className={`${selectedBrokerPair === pair?.id ? 'selected' : ''}`}
               >
-                <div className="pair-text">
-                  <TYPE.body4>{pair?.pair?.brokerDealer?.name}</TYPE.body4>&nbsp;—&nbsp;
-                  <TYPE.body4 style={{ fontWeight: 400 }}>{pair?.pair?.custodian?.name}</TYPE.body4>
-                </div>
-                <IconWrapper size={28}>
+                <TYPE.body4>{pair?.pair?.brokerDealer?.name}</TYPE.body4>
+                <Flex alignItems="center">
+                  <Line />
+                </Flex>
+                <TYPE.body4 style={{ fontWeight: 400 }}>{pair?.pair?.custodian?.name}</TYPE.body4>
+                <IconWrapper size={28} style={{ marginLeft: 'auto', marginRight: 0 }}>
                   {selectedBrokerPair === pair?.id ? (
                     <Checkmark className="selected-checkmark" />
                   ) : (
                     <CheckmarkPlaceholder />
                   )}
                 </IconWrapper>
-              </BrokerDealerAndCustodianPair>
+              </BrokerDealersGrid>
             ))}
           </div>
           <StartAccreditationButtonWrapper>
@@ -136,6 +168,7 @@ const ModalHeader = styled(RowBetween)`
 const BrokerDealerAndCustodianPair = styled(Row)`
   padding: 10px 0;
   justify-content: space-between;
+  background-color: #edceff0a;
   cursor: pointer;
   &:hover,
   &.selected {
@@ -151,6 +184,27 @@ const BrokerDealerAndCustodianPair = styled(Row)`
       margin: 0 16px;
     `};
   }
+`
+
+const BrokerDealersGridHeader = styled.div`
+  display: grid;
+  grid-template-columns: 115px 30px 200px 1fr;
+  padding: 10px 40px;
+`
+
+const BrokerDealersGrid = styled(BrokerDealersGridHeader)`
+  cursor: pointer;
+  &:hover,
+  &.selected {
+    background-color: #edceff0a;
+  }
+`
+
+const Line = styled.div`
+  height: 3px;
+  width: 10px;
+  background-color: #edceff;
+  opacity: 0.5;
 `
 
 const CheckmarkPlaceholder = styled.div`
