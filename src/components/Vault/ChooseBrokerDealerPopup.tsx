@@ -113,11 +113,11 @@ export const ChooseBrokerDealerPopup = ({ tokenId, currencyId }: { tokenId: any;
                 onClick={() => setSelectedBrokerPair(pair?.id)}
                 className={`${selectedBrokerPair === pair?.id ? 'selected' : ''}`}
               >
-                <TYPE.body4>{pair?.pair?.brokerDealer?.name}</TYPE.body4>
+                <Text>{pair?.pair?.brokerDealer?.name}</Text>
                 <Flex alignItems="center">
                   <Line />
                 </Flex>
-                <TYPE.body4 style={{ fontWeight: 400 }}>{pair?.pair?.custodian?.name}</TYPE.body4>
+                <Text style={{ fontWeight: 400 }}>{pair?.pair?.custodian?.name}</Text>
                 <IconWrapper size={28} style={{ marginLeft: 'auto', marginRight: 0 }}>
                   {selectedBrokerPair === pair?.id ? (
                     <Checkmark className="selected-checkmark" />
@@ -165,30 +165,16 @@ const ModalHeader = styled(RowBetween)`
   `};
 `
 
-const BrokerDealerAndCustodianPair = styled(Row)`
-  padding: 10px 0;
-  justify-content: space-between;
-  background-color: #edceff0a;
-  cursor: pointer;
-  &:hover,
-  &.selected {
-    background-color: #edceff0a;
-  }
-
-  .pair-text {
-    margin: 0 18px 0 40px;
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
-    ${({ theme }) => theme.mediaWidth.upToSmall`
-      margin: 0 16px;
-    `};
-  }
+const Text = styled(TYPE.body4)`
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-right: 8px !important;
 `
 
 const BrokerDealersGridHeader = styled.div`
   display: grid;
-  grid-template-columns: 115px 30px 200px 1fr;
+  grid-template-columns: 115px 30px 1fr auto;
   padding: 10px 40px;
 `
 
