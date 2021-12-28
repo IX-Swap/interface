@@ -13,6 +13,7 @@ import apiService from 'services/apiService'
 import { broker, kyc, tokens } from 'services/apiUrls'
 import { useChooseBrokerDealerModalToggle, useShowError } from 'state/application/hooks'
 import { LOGIN_STATUS, useLogin, useLogout, useUserisLoggedIn } from 'state/auth/hooks'
+import { useAuthState } from 'state/auth/hooks'
 import {
   listToSecTokenMap,
   SecTokenAddressMap,
@@ -483,6 +484,21 @@ export function useAccount() {
   const getUserSecTokens = useFetchUserSecTokenListCallback()
   const logout = useLogout()
   const isLoggedIn = useUserisLoggedIn()
+
+  const { loginError } = useAuthState()
+
+  //when there is an authorization error, then we clear the contents of the savedAccount
+  const checkAuthError = useCallback(() => {
+    if (loginError) {
+      dispatch(saveAccount({ account: '' }))
+    }
+  }, [loginError])
+
+  useEffect(() => {
+    const timerFunc = setTimeout(checkAuthError, 20000)
+
+    return () => clearTimeout(timerFunc)
+  }, [checkAuthError])
 
   const authenticate = useCallback(async () => {
     const status = await login(true)

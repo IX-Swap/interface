@@ -13,7 +13,6 @@ import {
   selectTier,
   setTransactionInProgress,
   stake,
-  updateIXSBalance,
   setTypedValue,
 } from './actions'
 
@@ -128,7 +127,6 @@ interface StakingState {
   isPaused: boolean
   metaMaskAccount: string | null
   allowanceAmount: number
-  IXSBalance: string | null
   rewards: VestingReward[]
   payouts: [number, string][][]
   claims: any[]
@@ -158,7 +156,6 @@ const initialState: StakingState = {
   isPaused: false,
   metaMaskAccount: localStorage.getItem('account'),
   allowanceAmount: 0,
-  IXSBalance: localStorage.getItem('IXSBalance'),
   rewards: [],
   rewardsLoading: false,
   payouts: [],
@@ -174,17 +171,11 @@ export default createReducer<StakingState>(initialState, (builder) =>
     .addCase(saveStakingStatus, (state, { payload: { status } }) => {
       state.status = status
     })
-    .addCase(updateIXSBalance, (state, { payload: { IXSAmount } }) => {
-      state.IXSBalance = IXSAmount
-      localStorage.setItem('IXSBalance', IXSAmount)
-    })
     .addCase(changeAccount, (state, { payload: { newAccount } }) => {
-      localStorage.setItem('IXSBalance', '0')
       state.metaMaskAccount = newAccount
       localStorage.setItem('account', newAccount)
       if (newAccount === 'null') {
         state.stakings = []
-        state.IXSBalance = '0'
       }
     })
     .addCase(selectTier, (state, { payload: { tier } }) => {

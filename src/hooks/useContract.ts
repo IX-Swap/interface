@@ -15,6 +15,7 @@ import ENS_ABI from 'abis/ens-registrar.json'
 import ERC20_ABI from 'abis/erc20.json'
 import ERC20_BYTES32_ABI from 'abis/erc20_bytes32.json'
 import FAUCET_ABI from 'abis/faucet-contract.json'
+import IXS_FAUCET_ABI from 'abis/ixs-faucet-abi.json'
 import FAUCET_STABLE_ABI from 'abis/faucet-stable-contract.json'
 import MULTICALL_ABI from 'abis/multicall2.json'
 import NFT_ABI from 'abis/nft-contract.json'
@@ -133,4 +134,7 @@ export function useFaucetContract(tokenAddress: string) {
 }
 export function useStableFaucetContract(tokenAddress: string) {
   return useContract(tokenAddress, FAUCET_STABLE_ABI, true)
+}
+export function useIXSFaucetContract(tokenAddress: string) {
+  return useContract(tokenAddress, IXS_FAUCET_ABI, true)
 }
