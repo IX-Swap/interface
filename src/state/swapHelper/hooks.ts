@@ -238,17 +238,11 @@ export function useSwapConfirmDataFromURL(
   )
 
   const clearState = useCallback(() => {
-    const inputAddress = trade?.inputAmount?.currency?.wrapped?.address
-    const outputAddress = trade?.outputAmount?.currency?.wrapped?.address
     dispatch(setAuthorizationInProgress({ authorizationInProgress: null }))
 
     dispatch(setLoadingSwap({ isLoading: false }))
-    if (inputAddress && outputAddress) {
-      history.push(`/swap?inputCurrency=${inputAddress}&outputCurrency=${outputAddress}`)
-    } else {
-      history.push('/swap')
-    }
-  }, [history, trade])
+    history.push(`/swap`)
+  }, [history])
 
   const processError = useCallback(() => {
     showPopup({ success: false })
