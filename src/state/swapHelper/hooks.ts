@@ -220,7 +220,7 @@ export function useSwapConfirmDataFromURL(
   const length = missingAuthorizations?.length
   const { isError, result, hash } = parsedQs
   const amount = authorizationInProgress?.amount || '0'
-
+  console.log({ missingAuthorizations })
   const showPopup = useCallback(
     ({ success }: { success: boolean }) => {
       addPopup(
@@ -242,12 +242,12 @@ export function useSwapConfirmDataFromURL(
     dispatch(setAuthorizationInProgress({ authorizationInProgress: null }))
 
     dispatch(setLoadingSwap({ isLoading: false }))
-    if (inputAddress) {
+    if (inputAddress && outputAddress) {
       history.push(`/swap?inputCurrency=${inputAddress}&outputCurrency=${outputAddress}`)
     } else {
       history.push('/swap')
     }
-  }, [dispatch, history, trade])
+  }, [history, trade])
 
   const processError = useCallback(() => {
     showPopup({ success: false })
@@ -259,7 +259,7 @@ export function useSwapConfirmDataFromURL(
       if (brokerDealerId === undefined || !chainId || !address || !length || !hash) {
         return
       }
-
+      console.log({ chainId, amount, brokerDealerId, address, length, clearState, showPopup })
       const swapConfirm = {
         hash,
         encryptedData: result,
@@ -295,15 +295,23 @@ export function useSwapConfirmDataFromURL(
   useEffect(() => {
     confirm()
     async function confirm() {
+      console.log({ hash, result, fetchAuthorization })
+      if (hash && result) {
+        await fetchAuthorization({ hash: (hash as string) || '', result: (result as string) || '' })
+        return
+      }
+    }
+  }, [hash, result, fetchAuthorization])
+
+  useEffect(() => {
+    checkError()
+    async function checkError() {
       if (isError) {
         processError()
         return
       }
-      if (hash && result) {
-        await fetchAuthorization({ hash: (hash as string) || '', result: (result as string) || '' })
-      }
     }
-  }, [hash, result, isError, fetchAuthorization, processError])
+  }, [processError, isError])
 }
 
 export async function getSwapConfirmAuthorization({ brokerDealerId, hash, encryptedData }: SwapConfirmArguments) {
