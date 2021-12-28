@@ -6,7 +6,7 @@ import useParsedQueryString from 'hooks/useParsedQueryString'
 import { useMissingAuthorizations, useSwapSecTokenAddresses } from 'hooks/useSwapCallback'
 import { useV2Pairs } from 'hooks/useV2Pairs'
 import { useActiveWeb3React } from 'hooks/web3'
-import { useCallback, useEffect, useMemo } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import apiService from 'services/apiService'
 import { broker, tokens } from 'services/apiUrls'
@@ -217,6 +217,7 @@ export function useSwapConfirmDataFromURL(
   const platform = authorizationInProgress?.platform
   const missingAuthorizations = useMissingAuthorizations(trade)
   const addPopup = useAddPopup()
+  const [receivedAuthorization, setReceivedAuthorization] = useState(false)
   const length = missingAuthorizations?.length
   const { isError, result, hash } = parsedQs
   const amount = authorizationInProgress?.amount || '0'
@@ -237,17 +238,11 @@ export function useSwapConfirmDataFromURL(
   )
 
   const clearState = useCallback(() => {
-    const inputAddress = trade?.inputAmount?.currency?.wrapped?.address
-    const outputAddress = trade?.outputAmount?.currency?.wrapped?.address
     dispatch(setAuthorizationInProgress({ authorizationInProgress: null }))
 
     dispatch(setLoadingSwap({ isLoading: false }))
-    if (inputAddress) {
-      history.push(`/swap?inputCurrency=${inputAddress}&outputCurrency=${outputAddress}`)
-    } else {
-      history.push('/swap')
-    }
-  }, [dispatch, history, trade])
+    history.push(`/swap`)
+  }, [history])
 
   const processError = useCallback(() => {
     showPopup({ success: false })
@@ -259,7 +254,6 @@ export function useSwapConfirmDataFromURL(
       if (brokerDealerId === undefined || !chainId || !address || !length || !hash) {
         return
       }
-
       const swapConfirm = {
         hash,
         encryptedData: result,
@@ -280,6 +274,7 @@ export function useSwapConfirmDataFromURL(
           amount,
           swapId,
         }
+        setReceivedAuthorization(true)
         dispatch(saveAuthorization({ authorization: persistedAuthorization, chainId, address }))
         showPopup({ success: true })
         clearState()
@@ -295,15 +290,22 @@ export function useSwapConfirmDataFromURL(
   useEffect(() => {
     confirm()
     async function confirm() {
+      if (hash && result && !receivedAuthorization) {
+        await fetchAuthorization({ hash: (hash as string) || '', result: (result as string) || '' })
+        return
+      }
+    }
+  }, [hash, result, fetchAuthorization, receivedAuthorization])
+
+  useEffect(() => {
+    checkError()
+    async function checkError() {
       if (isError) {
         processError()
         return
       }
-      if (hash && result) {
-        await fetchAuthorization({ hash: (hash as string) || '', result: (result as string) || '' })
-      }
     }
-  }, [hash, result, isError, fetchAuthorization, processError])
+  }, [processError, isError])
 }
 
 export async function getSwapConfirmAuthorization({ brokerDealerId, hash, encryptedData }: SwapConfirmArguments) {
