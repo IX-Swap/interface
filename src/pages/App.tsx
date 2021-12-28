@@ -38,6 +38,7 @@ const RemoveLiquidity = lazy(() => import('./RemoveLiquidity'))
 const SecTokenDetails = lazy(() => import('./SecTokenDetails'))
 const Swap = lazy(() => import('./Swap'))
 const PoolV2 = lazy(() => import('./Pool/v2'))
+const NftImport = lazy(() => import('./NftImport'))
 const NFTCollections = lazy(() => import('./NFTCollections'))
 const UpdateNFT = lazy(() => import('./UpdateNFT'))
 
@@ -138,6 +139,8 @@ export default function App() {
 
                 <Route exact strict path="/security-tokens/:currencyId" component={SecTokenDetails} />
                 <Route exact strict path={routes.securityTokens()} component={Custodian} />
+
+                <Route exact strict path="/nft/collections/import" component={NftImport} />
 
                 {chainId && TGE_CHAINS_WITH_STAKING.includes(chainId) && (
                   <Route exact strict path={routes.staking} component={StakingTab} />
