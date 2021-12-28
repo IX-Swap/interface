@@ -257,10 +257,10 @@ export function useSwapConfirmDataFromURL(
 
   const fetchAuthorization = useCallback(
     async ({ hash, result }: { hash: string; result: string }) => {
-      if (brokerDealerId === undefined || !chainId || !address || !length || !hash || receivedAuthorization) {
+      console.log({ chainId, amount, brokerDealerId, address, length, clearState, showPopup })
+      if (brokerDealerId === undefined || !chainId || !address || !length || !hash) {
         return
       }
-      console.log({ chainId, amount, brokerDealerId, address, length, clearState, showPopup })
       const swapConfirm = {
         hash,
         encryptedData: result,
@@ -297,13 +297,13 @@ export function useSwapConfirmDataFromURL(
   useEffect(() => {
     confirm()
     async function confirm() {
-      console.log({ hash, result, fetchAuthorization })
-      if (hash && result) {
+      console.log({ hash, result, fetchAuthorization, receivedAuthorization })
+      if (hash && result && !receivedAuthorization) {
         await fetchAuthorization({ hash: (hash as string) || '', result: (result as string) || '' })
         return
       }
     }
-  }, [hash, result, fetchAuthorization])
+  }, [hash, result, fetchAuthorization, receivedAuthorization])
 
   useEffect(() => {
     checkError()
