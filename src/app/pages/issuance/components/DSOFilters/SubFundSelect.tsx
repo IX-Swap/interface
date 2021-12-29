@@ -7,17 +7,30 @@ import {
   MenuItem,
   Select
 } from '@material-ui/core'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
 import { hasValue } from 'helpers/forms'
 import { useVCCDSO } from 'app/pages/issuance/hooks/useVCCDSO'
-import { DigitalSecurityOffering } from 'types/dso'
+import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 
 export const SubFundSelect = () => {
-  const { data } = useVCCDSO()
+  const { data, isLoading } = useVCCDSO()
+  const { getFilterValue, getHasValue, updateFilter } = useQueryFilter()
+  const status = getFilterValue('status')
+
+  useEffect(() => {
+    if (!getHasValue('subfunds') && data !== undefined) {
+      updateFilter('subfunds', data.map(dso => dso._id).join(','))
+    }
+    // since the functions inside useQueryFilter are not wrapped
+    // in useCallback they will cause this effect to trigger more often than needed
+    // also at this point it's quite hard to determine why it happens, because it's
+    // related not only to the lack of useCallback
+    // eslint-disable-next-line
+  }, [status, data])
 
   const options =
-    data?.map((item: DigitalSecurityOffering) => ({
+    data?.map(item => ({
       name: item.tokenName,
       id: item._id
     })) ?? []
@@ -43,8 +56,8 @@ export const SubFundSelect = () => {
           if (targetValue[targetValue.length - 1] === 'all') {
             onChange(
               isAllSelected
-                ? []
-                : options.map((option: any) => option.id).join(',')
+                ? ''
+                : options?.map((option: any) => option.id).join(',')
             )
             return
           }
@@ -62,6 +75,7 @@ export const SubFundSelect = () => {
               value={selected}
               onChange={handleChange}
               renderValue={getStringValue}
+              disabled={isLoading}
               MenuProps={{
                 PaperProps: {
                   style: {

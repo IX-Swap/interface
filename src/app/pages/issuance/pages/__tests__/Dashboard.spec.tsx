@@ -4,6 +4,7 @@ import { render, cleanup } from 'test-utils'
 import { generateQueryResult } from '__fixtures__/useQuery'
 import * as useVCCFundStats from 'app/pages/issuance/hooks/useVCCFundStats'
 import { fakeSubFundStats } from '__fixtures__/vccDashboard'
+import { history } from 'config/history'
 
 jest.mock('app/pages/issuance/components/DSOFilters/DSOFilters', () => ({
   DSOFilters: jest.fn(() => null)
@@ -16,6 +17,8 @@ describe('Dashboard', () => {
   })
 
   it('should match snapshot', () => {
+    history.push(`/?subfunds=fakesubfundid`)
+
     jest.spyOn(useVCCFundStats, 'useVCCFundStats').mockReturnValue({
       subFundStats: generateQueryResult({
         data: fakeSubFundStats,
