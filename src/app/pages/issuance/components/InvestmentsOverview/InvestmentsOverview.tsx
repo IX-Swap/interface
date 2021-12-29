@@ -67,7 +67,7 @@ const getChartItems = (investments: AssetUnderManagement[] | undefined) => {
   }
 
   while (chartItems.length < 5) {
-    chartItems.push(getChartItem('', 100, 0, chartItems.length, true))
+    chartItems.push(getChartItem('', 0, 0, chartItems.length, true))
   }
 
   return chartItems
