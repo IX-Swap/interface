@@ -36,8 +36,6 @@ export const InvestorsChart = ({
       ]
     })
 
-    values.shift()
-
     data = [[{ type: 'string', label: 'Month' }, ...labels], ...values]
   }
 
@@ -56,7 +54,7 @@ export const InvestorsChart = ({
           alignItems='center'
         >
           <Grid item>
-            <Typography variant='subtitle1'>New investors</Typography>
+            <Typography variant='subtitle1'>Investors</Typography>
           </Grid>
         </Grid>
         <Grid item xs={12}>
