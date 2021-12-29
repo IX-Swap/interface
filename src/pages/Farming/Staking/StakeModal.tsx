@@ -11,6 +11,7 @@ import Row, { RowBetween, RowCenter, RowFixed } from 'components/Row'
 import { TextRow } from 'components/TextRow/TextRow'
 import { MouseoverTooltip } from 'components/Tooltip'
 import { SupportedChainId } from 'constants/chains'
+import { BIG_INT_ZERO } from 'constants/misc'
 import { periodsInDays, periodsInSeconds } from 'constants/stakingPeriods'
 import useIXSCurrency from 'hooks/useIXSCurrency'
 import { useActiveWeb3React } from 'hooks/web3'
@@ -31,13 +32,14 @@ import {
 import { POOL_SIZE_LOADING } from 'state/stake/poolSizeReducer'
 import { convertPeriod, PERIOD, TIER_LIMIT } from 'state/stake/reducer'
 import { tryParseAmount } from 'state/swap/helpers'
+import { useIXSBalance } from 'state/user/hooks'
 import styled from 'styled-components'
 import { CloseIcon, ModalBlurWrapper, TYPE } from 'theme'
-import { floorToDecimals } from 'utils/formatCurrencyAmount'
+import { floorToDecimals, formatAmount } from 'utils/formatCurrencyAmount'
 import { dateFormatter } from 'utils/time'
 import { ReactComponent as ArrowDown } from '../../../assets/images/arrow.svg'
 import { EllipsedText, ModalBottom, StakeInfoContainer } from './style'
-
+import JSBI from 'jsbi'
 interface StakingModalProps {
   onDismiss: () => void
 }
@@ -51,7 +53,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
   const [error, setError] = useState('Please enter amount to stake')
   const increaseAllowance = useIncreaseAllowance()
   const amountOfIXStoStakeInput = useRef<HTMLInputElement>(null)
-  const { selectedTier, isApprovingIXS, isStaking, allowanceAmount, IXSBalance } = useStakingState()
+  const { selectedTier, isApprovingIXS, isStaking, allowanceAmount } = useStakingState()
   const stake = useStakeFor(selectedTier?.period)
   const checkAllowance = useCheckAllowance()
   const poolSizeState = usePoolSizeState()
@@ -60,6 +62,10 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
   const currency = useIXSCurrency()
   const [poolLimitation, setPoolLimitation] = useState(calcPoolLimitation())
   const [isPoolLimitationLoading, setIsPoolLimitationLoading] = useState(poolSizeState[period] === POOL_SIZE_LOADING)
+  const IXSBalance = useIXSBalance()
+  const balanceNum = Number(IXSBalance?.amount?.toSignificant(12))
+  const balanceString = formatAmount(balanceNum)
+  const hasBalance = JSBI.greaterThan(IXSBalance?.amount?.quotient ?? BIG_INT_ZERO, BIG_INT_ZERO)
 
   function calcPoolLimitation(): string {
     const filled = tryParseAmount(poolSizeState[period], currency ?? undefined)
@@ -120,9 +126,9 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
       const value = amountOfIXStoStakeInput.current.value
       const cleanedValue = value.match(/\d{0,}\.?\d{0,4}/)?.[0] || ''
       setTypedValue(cleanedValue)
-      if (IXSBalance) {
+      if (hasBalance) {
         const fTypedIXSAmount = parseFloat(cleanedValue)
-        const fIXSbalance = parseFloat(IXSBalance)
+        const fIXSbalance = balanceNum
         if (fTypedIXSAmount > fIXSbalance) {
           setError(t`Not enough ${currency?.symbol}`)
         } else if (fTypedIXSAmount <= 0 || !fTypedIXSAmount) {
@@ -140,9 +146,9 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
   }
 
   const onMaxClick = () => {
-    if (amountOfIXStoStakeInput?.current && IXSBalance && poolLimitation) {
-      if (parseFloat(poolLimitation) > parseFloat(IXSBalance)) {
-        amountOfIXStoStakeInput.current.value = IXSBalance
+    if (amountOfIXStoStakeInput?.current && hasBalance && poolLimitation) {
+      if (parseFloat(poolLimitation) > balanceNum) {
+        amountOfIXStoStakeInput.current.value = balanceString
       } else {
         amountOfIXStoStakeInput.current.value = poolLimitation
       }
@@ -267,7 +273,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                 <InputHintRight>
                   <RowFixed>
                     <Trans>Available:</Trans>&nbsp;
-                    <span style={{ fontWeight: 600 }}>{IXSBalance}</span>
+                    <span style={{ fontWeight: 600 }}>{balanceString}</span>
                     <MaxButton onClick={onMaxClick}>
                       <Trans>Max</Trans>
                     </MaxButton>

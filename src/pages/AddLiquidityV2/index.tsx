@@ -4,7 +4,7 @@ import { Currency, CurrencyAmount, Percent, WETH9 } from '@ixswap1/sdk-core'
 import { t, Trans } from '@lingui/macro'
 import UnsupportedCurrencyFooter from 'components/swap/UnsupportedCurrencyFooter'
 import { ConfirmationModalContent } from 'components/TransactionConfirmationModal/ConfirmationModalContent'
-import React, { useCallback, useContext, useState } from 'react'
+import React, { useCallback, useContext, useMemo, useState } from 'react'
 import { Plus } from 'react-feather'
 import ReactGA from 'react-ga'
 import { RouteComponentProps } from 'react-router-dom'
@@ -58,6 +58,16 @@ export default function AddLiquidity({
 
   const currencyA = useAccreditedToken({ currencyId: currencyIdA })
   const currencyB = useAccreditedToken({ currencyId: currencyIdB })
+  const [enableMitigation, setEnableMitigation] = useState<boolean>(false)
+  const disableToggleMitigation = useMemo(() => {
+    if ((currencyA as any)?.isSecToken || (currencyB as any)?.isSecToken) {
+      setEnableMitigation(true)
+      return true
+    } else {
+      setEnableMitigation(false)
+      return false
+    }
+  }, [currencyA, currencyB])
 
   const oneCurrencyIsWETH = Boolean(
     chainId && ((currencyA && currencyA.equals(WETH9[chainId])) || (currencyB && currencyB.equals(WETH9[chainId])))
@@ -90,7 +100,6 @@ export default function AddLiquidity({
   // modal and loading
   const [showConfirm, setShowConfirm] = useState<boolean>(false)
   const [attemptingTxn, setAttemptingTxn] = useState<boolean>(false) // clicked confirm
-  const [enableMitigation, setEnableMitigation] = useState<boolean>(false)
   const toggleMitigation = useCallback(() => {
     setEnableMitigation(!enableMitigation)
   }, [enableMitigation, setEnableMitigation])
@@ -333,7 +342,11 @@ export default function AddLiquidity({
                   />
                 )}
                 {!Boolean(pair?.liquidityToken?.address) && (
-                  <MitigationToggle active={enableMitigation} toggle={toggleMitigation} />
+                  <MitigationToggle
+                    active={enableMitigation}
+                    toggle={toggleMitigation}
+                    disabled={disableToggleMitigation}
+                  />
                 )}
                 {areBothSecTokens && <SecToSecWarning />}
                 <Box marginTop={'23px'}>
