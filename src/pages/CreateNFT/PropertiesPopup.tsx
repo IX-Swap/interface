@@ -10,8 +10,8 @@ import React, { useState } from 'react'
 import { Box, Flex } from 'rebass'
 import { ApplicationModal } from 'state/application/actions'
 import { useModalOpen, useToggleModal } from 'state/application/hooks'
+import { Trait } from 'state/nft/types'
 import { CloseIcon, ModalBlurWrapper, ModalContentWrapper, ModalPadding, TYPE } from 'theme'
-import { Trait } from './types'
 
 export const PropertiesPopup = ({
   properties,

@@ -1,9 +1,9 @@
 import Column from 'components/Column'
 import { Line } from 'components/Line'
 import React from 'react'
+import { TraitType, Trait, NumericTrait } from 'state/nft/types'
 import { TraitsPanel } from './TraitsPanel'
 import { TraitsShow } from './TraitsShow'
-import { NumericTrait, Trait, TraitType } from './types'
 
 export const Traits = ({ type, traitList }: { type: TraitType; traitList: Array<Trait> | Array<NumericTrait> }) => {
   return (

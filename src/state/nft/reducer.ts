@@ -1,15 +1,17 @@
 import { createReducer } from '@reduxjs/toolkit'
-import { saveImage, saveImages, importNftCollection } from './actions'
+import { saveImage, saveImages, importNftCollection, setCreateNftLoading } from './actions'
 import { NFTImage, NFTState } from './types'
 
 export interface NftState {
   collectionId?: string
   images: any
+  createLoading: boolean
 }
 
 const initialState: NftState = {
   collectionId: undefined,
   images: {},
+  createLoading: false,
 }
 
 export default createReducer<NFTState>(initialState, (builder) =>
@@ -28,6 +30,12 @@ export default createReducer<NFTState>(initialState, (builder) =>
       return {
         ...state,
         collectionId: id,
+      }
+    })
+    .addCase(setCreateNftLoading, (state, { payload: { loading } }) => {
+      return {
+        ...state,
+        createLoading: loading,
       }
     })
 )

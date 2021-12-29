@@ -5,9 +5,10 @@ import { useCallback, useState } from 'react'
 import { FileWithPath } from 'react-dropzone'
 import apiService from 'services/apiService'
 import { nft } from 'services/apiUrls'
-import { NFTCollection } from 'state/nft/types'
+import { useAppDispatch } from 'state/hooks'
+import { setCreateNftLoading } from 'state/nft/actions'
+import { CollectionCreateProps, NFTCollection, NftCreateProps, TraitType } from 'state/nft/types'
 import { collections } from './mocks'
-import { TraitType } from './types'
 
 export const useMint = () => {
   const nft = useNftContract()
@@ -88,7 +89,27 @@ export const useManageCreateForm = () => {
   }
 }
 
-export const createNftAsset = async (nft: any) => {
-  const result = await apiService.post(nft.create, { amount, pairAddress, orderType, pairSymbol })
+export const createNftAsset = async (nftDto: NftCreateProps) => {
+  const result = await apiService.post(nft.create, nftDto)
   return result.data
+}
+
+export const createNftCollection = async (collectionDto: CollectionCreateProps) => {
+  const result = await apiService.post(nft.createCollection, collectionDto)
+  return result.data
+}
+
+export const useCreateNft = () => {
+  const dispatch = useAppDispatch()
+  return useCallback(async (nftDto: NftCreateProps) => {
+    try {
+      dispatch(setCreateNftLoading({ loading: true }))
+      const data = await createNftAsset(nftDto)
+      console.log({ data })
+      dispatch(setCreateNftLoading({ loading: false }))
+    } catch (e) {
+      dispatch(setCreateNftLoading({ loading: false }))
+      console.log({ e })
+    }
+  }, [])
 }

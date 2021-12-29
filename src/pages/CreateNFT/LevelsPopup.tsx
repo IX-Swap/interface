@@ -12,7 +12,7 @@ import { Box, Flex } from 'rebass'
 import { ApplicationModal } from 'state/application/actions'
 import { useModalOpen, useToggleModal } from 'state/application/hooks'
 import { CloseIcon, ModalBlurWrapper, ModalContentWrapper, ModalPadding, TYPE } from 'theme'
-import { NumericTrait, traitsTitle, TraitType } from './types'
+import { NumericTrait, traitsTitle, TraitType } from 'state/nft/types'
 
 export const LevelsPopup = ({
   levels,

@@ -2,7 +2,7 @@ import axios from 'axios'
 import { PINATA_API_KEY, PINATA_SECRET_API_KEY } from 'config'
 import { SupportedChainId } from 'constants/chains'
 import { FileWithPath } from 'file-selector'
-import { NumericTrait } from 'pages/CreateNFT/types'
+import { NftCreateProps } from 'state/nft/types'
 
 export const endpoint = 'https://api.pinata.cloud'
 
@@ -10,19 +10,7 @@ const authHeaders = {
   pinata_api_key: PINATA_API_KEY,
   pinata_secret_api_key: PINATA_SECRET_API_KEY,
 }
-export interface KeyValues {
-  description?: string
-  link?: string
-  attributes?: Array<any>
-  isNSFW?: any
-  selectedChain?: SupportedChainId
-}
-interface PinProps {
-  file: FileWithPath
-  name: string
-  keyValues: KeyValues
-}
-export const pinFileToIPFS = async ({ file, name, keyValues }: PinProps) => {
+export const pinFileToIPFS = async ({ file, name, keyValues }: any) => {
   try {
     const formData = new FormData()
     const requestMeta = {

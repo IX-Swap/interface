@@ -4,9 +4,9 @@ import IXSProgressBar from 'components/IXSProgressBar'
 import Row, { RowBetween } from 'components/Row'
 import React from 'react'
 import { Flex } from 'rebass'
+import { NumericTrait, Trait, TraitType } from 'state/nft/types'
 import styled from 'styled-components'
 import { ellipsisText, TYPE } from 'theme'
-import { NumericTrait, Trait, TraitType } from './types'
 
 const EllipsisBody2 = styled(TYPE.body2)`
   ${ellipsisText}

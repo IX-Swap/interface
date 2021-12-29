@@ -11,21 +11,19 @@ import { useActiveWeb3React } from 'hooks/web3'
 import { property } from 'lodash'
 import React, { useCallback, useEffect, useState } from 'react'
 import { Box, Flex } from 'rebass'
-import { KeyValues, pinFileToIPFS } from 'services/pinataService'
 import { ApplicationModal } from 'state/application/actions'
 import { useToggleModal } from 'state/application/hooks'
 import { useDeployNFT } from 'state/nft/hooks'
-import { NFTCollection } from 'state/nft/types'
+import { NFTCollection, displayType, TraitType, KeyValues } from 'state/nft/types'
 import { ExternalLink, TYPE } from 'theme'
 import { ChainDropdown } from './ChainDropdown'
 import { CollectionDropdown } from './CollectionDropdown'
 import { FreezeRadio } from './FreezeRadio'
-import { useGetSupply, useManageCreateForm, useMint } from './hooks'
+import { useCreateNft, useGetSupply, useManageCreateForm, useMint } from './hooks'
 import { LevelsPopup } from './LevelsPopup'
 import { NSFWRadio } from './NSFWRadio'
 import { PropertiesPopup } from './PropertiesPopup'
 import { Traits } from './Traits'
-import { displayType, TraitType } from './types'
 
 export const CreateForm = () => {
   const {
@@ -60,6 +58,7 @@ export const CreateForm = () => {
   } = useManageCreateForm()
   const [showCreateNewCollection, setShowCreateNewCollection] = useState(false)
   const deployNFT = useDeployNFT()
+  const createNFTAsset = useCreateNft()
   const toggle = useToggleModal(ApplicationModal.PROPERTIES)
   const toggleNumeric = useToggleModal(ApplicationModal.LEVELS)
   const toggleLevelsStats = (traitType: TraitType) => {
@@ -108,6 +107,9 @@ export const CreateForm = () => {
     return keyValues
   }
   const getCreateNftDto = () => {
+    if (!file || !name) {
+      return null
+    }
     return {
       file,
       name,
@@ -121,11 +123,12 @@ export const CreateForm = () => {
     //   deployNFT({ name: newCollectionName })
     // }
     // await mint()
-    if (!file || !name) {
+
+    const nftDto = getCreateNftDto()
+    if (!nftDto) {
       return
     }
-    const nftDto = getCreateNftDto()
-    console.log({ nftDto })
+    await createNFTAsset(nftDto)
     try {
     } catch (e) {
       console.log(e)
