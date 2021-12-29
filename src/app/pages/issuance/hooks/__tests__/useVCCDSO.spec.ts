@@ -5,9 +5,11 @@ import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
 import { successfulResponse } from '__fixtures__/api'
 import { corporate } from '__fixtures__/identity'
 import { generateInfiniteQueryResult } from '__fixtures__/useQuery'
+import { history } from 'config/history'
 
 describe('useVCCDSO', () => {
   beforeEach(() => {
+    history.push('/?status=Closed')
     const objResponse = generateInfiniteQueryResult({ list: [corporate] })
 
     jest
