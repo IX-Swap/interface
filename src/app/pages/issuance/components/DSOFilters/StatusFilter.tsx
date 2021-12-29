@@ -8,7 +8,7 @@ import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 export const StatusFilter = () => {
   const { updateFilters } = useQueryFilter()
   return (
-    <SearchQueryFilter name='status' defaultValue='Closed'>
+    <SearchQueryFilter name='status' defaultValue='Open'>
       {({ value }) => {
         const handleChange = (_: any, value: string) => {
           updateFilters({ status: value, subfunds: '' })

@@ -10,6 +10,7 @@ import { useVCCFundStats } from 'app/pages/issuance/hooks/useVCCFundStats'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { VSpacer } from 'components/VSpacer'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
+import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 
 export const Dashboard = () => {
   const {
@@ -21,7 +22,9 @@ export const Dashboard = () => {
   } = useVCCFundStats()
   const { getFilterValue } = useQueryFilter()
   const status = getFilterValue('status')
+  const subfunds = getFilterValue('subfunds')
   const isStatusClosed = status === 'Closed'
+  const hasSubfunds = subfunds !== undefined
 
   return (
     <Grid container spacing={3}>
@@ -34,48 +37,53 @@ export const Dashboard = () => {
         <VSpacer size={'medium'} />
       </Grid>
 
-      <Grid item container>
-        <DSOCards />
-      </Grid>
-
-      <Grid item container>
-        <Grid container spacing={3}>
-          <Grid item xs={12} md={6}>
-            {isStatusClosed ? (
-              <AssetsUnderManagement
-                isLoading={isSubFundStatsLoading}
-                assets={subFundStatsData?.assetsUnderManagement}
-              />
-            ) : (
-              // TODO Change assetsUnderManagement field name to investmentsOverview or how it will be after update backend api
-              <InvestmentsOverview
-                isLoading={isSubFundStatsLoading}
-                investments={subFundStatsData?.assetsUnderManagement}
-              />
-            )}
+      {hasSubfunds ? (
+        <>
+          <Grid item container>
+            <DSOCards />
           </Grid>
 
-          <Grid item xs={12} md={6}>
-            <TopInvestorsTable
-              isLoading={isSubFundStatsLoading}
-              investors={subFundStatsData?.topInvestors}
-              title={
-                isStatusClosed
-                  ? 'Top Investors From Closed'
-                  : 'Top Investors Open Deals'
-              }
-            />
-          </Grid>
-        </Grid>
-      </Grid>
+          <Grid item container>
+            <Grid container spacing={3}>
+              <Grid item xs={12} md={6}>
+                {isStatusClosed ? (
+                  <AssetsUnderManagement
+                    isLoading={isSubFundStatsLoading}
+                    assets={subFundStatsData?.assetsUnderManagement}
+                  />
+                ) : (
+                  <InvestmentsOverview
+                    isLoading={isSubFundStatsLoading}
+                    investments={subFundStatsData?.assetsUnderManagement}
+                  />
+                )}
+              </Grid>
 
-      {!isStatusClosed && (
-        <Grid item xs={12}>
-          <InvestorsChart
-            investmentStats={subFundInvestmentStatsData}
-            isLoading={isSubFundInvestmentStatsLoading}
-          />
-        </Grid>
+              <Grid item xs={12} md={6}>
+                <TopInvestorsTable
+                  isLoading={isSubFundStatsLoading}
+                  investors={subFundStatsData?.topInvestors}
+                  title={
+                    isStatusClosed
+                      ? 'Top Investors From Closed'
+                      : 'Top Investors Open Deals'
+                  }
+                />
+              </Grid>
+            </Grid>
+          </Grid>
+
+          {!isStatusClosed && (
+            <Grid item xs={12}>
+              <InvestorsChart
+                investmentStats={subFundInvestmentStatsData}
+                isLoading={isSubFundInvestmentStatsLoading}
+              />
+            </Grid>
+          )}
+        </>
+      ) : (
+        <LoadingIndicator />
       )}
     </Grid>
   )
