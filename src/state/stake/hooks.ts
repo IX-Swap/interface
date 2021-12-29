@@ -311,7 +311,7 @@ export function useStakingStatus() {
       saveStatus(StakingStatus.STAKING)
       return
     }
-    if (!hasStaking && !hasBalance && status !== StakingStatus.NO_IXS) {
+    if (account && !hasStaking && !hasBalance && status !== StakingStatus.NO_IXS) {
       saveStatus(StakingStatus.NO_IXS)
       return
     }
