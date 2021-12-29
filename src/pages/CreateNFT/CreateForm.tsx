@@ -5,21 +5,23 @@ import { ContainerRow, Input, InputContainer, InputPanel, Textarea } from 'compo
 import Upload from 'components/Upload'
 import { AcceptFiles, FileTypes } from 'components/Upload/types'
 import { getfileType } from 'components/Upload/utils'
-import { SupportedChainId } from 'constants/chains'
-import { FileWithPath } from 'file-selector'
-import { useActiveWeb3React } from 'hooks/web3'
-import { property } from 'lodash'
 import React, { useCallback, useEffect, useState } from 'react'
 import { Box, Flex } from 'rebass'
 import { ApplicationModal } from 'state/application/actions'
 import { useToggleModal } from 'state/application/hooks'
-import { useDeployNFT } from 'state/nft/hooks'
-import { NFTCollection, displayType, TraitType, KeyValues } from 'state/nft/types'
+import {
+  useCreateNft,
+  useDeployCollection,
+  useFetchMyCollections,
+  useManageCreateForm,
+  useMint,
+  useNFTState,
+} from 'state/nft/hooks'
+import { NFTCollection, TraitType } from 'state/nft/types'
+import { groupKeyValues } from 'state/nft/utils'
 import { ExternalLink, TYPE } from 'theme'
-import { ChainDropdown } from './ChainDropdown'
 import { CollectionDropdown } from './CollectionDropdown'
 import { FreezeRadio } from './FreezeRadio'
-import { useCreateNft, useGetSupply, useManageCreateForm, useMint } from './hooks'
 import { LevelsPopup } from './LevelsPopup'
 import { NSFWRadio } from './NSFWRadio'
 import { PropertiesPopup } from './PropertiesPopup'
@@ -57,10 +59,11 @@ export const CreateForm = () => {
     setFreeze,
   } = useManageCreateForm()
   const [showCreateNewCollection, setShowCreateNewCollection] = useState(false)
-  const deployNFT = useDeployNFT()
+  const deployCollection = useDeployCollection()
   const createNFTAsset = useCreateNft()
   const toggle = useToggleModal(ApplicationModal.PROPERTIES)
   const toggleNumeric = useToggleModal(ApplicationModal.LEVELS)
+  const fetchMyCollection = useFetchMyCollections()
   const toggleLevelsStats = (traitType: TraitType) => {
     setActiveTraitType(traitType)
     toggleNumeric()
@@ -82,53 +85,34 @@ export const CreateForm = () => {
     setFile(file)
   }
 
-  const groupKeyValues = () => {
-    const keyValues: KeyValues = {}
-    if (description) {
-      keyValues.description = description
-    }
-    if (link) {
-      keyValues.link = link
-    }
-    const usedProperties = properties.map((property) => ({
-      ...property,
-      [`display_type`]: displayType[TraitType.RECTANGLE],
-    }))
-    const usedStats = stats.map((property) => ({
-      ...property,
-      [`display_type`]: displayType[TraitType.NUMBER],
-    }))
-    const usedLevels = levels.map((property) => ({
-      ...property,
-      [`display_type`]: displayType[TraitType.PROGRESS],
-    }))
-    keyValues.attributes = [...usedProperties, ...usedStats, ...usedLevels]
-    keyValues.isNSFW = String(isNSFW)
-    return keyValues
-  }
+  useEffect(() => {
+    fetchMyCollection()
+  }, [fetchMyCollection])
+
   const getCreateNftDto = () => {
-    if (!file || !name) {
+    if (!name || !file) {
       return null
     }
     return {
       file,
       name,
       freeze,
-      keyValues: groupKeyValues(),
+      keyValues: groupKeyValues({ description, link, properties, stats, levels, isNSFW }),
     }
   }
   const onSubmit = async (e: any) => {
     e.preventDefault()
-    // if (newCollectionName && showCreateNewCollection) {
-    //   deployNFT({ name: newCollectionName })
-    // }
+
     // await mint()
 
     const nftDto = getCreateNftDto()
     if (!nftDto) {
       return
     }
-    await createNFTAsset(nftDto)
+    const assetUri = await createNFTAsset(nftDto)
+    if (newCollectionName && showCreateNewCollection) {
+      deployCollection({ name: newCollectionName })
+    }
     try {
     } catch (e) {
       console.log(e)
@@ -143,7 +127,7 @@ export const CreateForm = () => {
         traitType={activeTraitType}
       />
       <PropertiesPopup properties={properties} setProperties={setProperties} />
-      <Box as="form" py={3}>
+      <Box py={3}>
         <Flex mx={-2} mb={4}>
           <Box width={1} px={2}>
             <Label htmlFor="file" flexDirection="column" mb={3}>

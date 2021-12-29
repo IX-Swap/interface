@@ -20,17 +20,14 @@ export interface NFTImage {
   attributes: (NFTAttribute | NFTAttributeDisplay)[]
 }
 
-export interface NFTState {
-  readonly images: { [id: string]: NFTImage }
-}
-
 export interface NFTCollection {
   id?: number
   name: string
   address: string
-  featured: string
-  logo: string
-  banner: string
+  description?: string
+  // featured: string
+  logo?: string
+  banner?: string
 }
 
 export enum TraitType {
@@ -73,7 +70,14 @@ export interface KeyValues {
   isNSFW?: any
   // selectedChain?: SupportedChainId
 }
-
+export interface GroupKeyValuesInput {
+  description?: string
+  link?: string
+  stats: Array<NumericTrait>
+  levels: Array<NumericTrait>
+  properties: Array<Trait>
+  isNSFW?: boolean
+}
 export interface NftCreateProps {
   file: FileWithPath
   name: string
