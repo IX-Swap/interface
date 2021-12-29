@@ -6,7 +6,15 @@ import useTheme from 'hooks/useTheme'
 import React from 'react'
 import { TYPE } from 'theme'
 
-export const MitigationToggle = ({ active, toggle }: { active: boolean; toggle: () => void }) => {
+export const MitigationToggle = ({
+  active,
+  toggle,
+  disabled = false,
+}: {
+  active: boolean
+  toggle: () => void
+  disabled?: boolean
+}) => {
   const theme = useTheme()
   return (
     <RowBetween>
@@ -23,7 +31,7 @@ export const MitigationToggle = ({ active, toggle }: { active: boolean; toggle: 
           }
         />
       </RowFixed>
-      <Toggle id="toggle-enable-mitigation-button" isActive={active} toggle={toggle} />
+      <Toggle id="toggle-enable-mitigation-button" isActive={active} disabled={disabled} toggle={toggle} />
     </RowBetween>
   )
 }

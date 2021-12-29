@@ -6,7 +6,7 @@ import useParsedQueryString from 'hooks/useParsedQueryString'
 import { useMissingAuthorizations, useSwapSecTokenAddresses } from 'hooks/useSwapCallback'
 import { useV2Pairs } from 'hooks/useV2Pairs'
 import { useActiveWeb3React } from 'hooks/web3'
-import { useCallback, useEffect, useMemo } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import apiService from 'services/apiService'
 import { broker, tokens } from 'services/apiUrls'
@@ -217,6 +217,7 @@ export function useSwapConfirmDataFromURL(
   const platform = authorizationInProgress?.platform
   const missingAuthorizations = useMissingAuthorizations(trade)
   const addPopup = useAddPopup()
+  const [receivedAuthorization, setReceivedAuthorization] = useState(false)
   const length = missingAuthorizations?.length
   const { isError, result, hash } = parsedQs
   const amount = authorizationInProgress?.amount || '0'
@@ -238,62 +239,73 @@ export function useSwapConfirmDataFromURL(
 
   const clearState = useCallback(() => {
     dispatch(setAuthorizationInProgress({ authorizationInProgress: null }))
+
     dispatch(setLoadingSwap({ isLoading: false }))
     history.push(`/swap`)
-  }, [dispatch, history])
+  }, [history])
 
   const processError = useCallback(() => {
     showPopup({ success: false })
     clearState()
   }, [showPopup, clearState])
 
-  const fetchAuthorization = useCallback(async () => {
-    if (brokerDealerId === undefined || !chainId || !address || !length) {
-      return
-    }
-
-    const swapConfirm = {
-      hash: (hash as string) || '',
-      encryptedData: (result as string) || '',
-      brokerDealerId,
-    }
-    try {
-      const response = await getSwapConfirmAuthorization({ ...swapConfirm })
-      const data = response.data
-      const { s, v, r, operator, deadline } = data.authorization
-      const swapId = data.swapId
-      const persistedAuthorization = {
-        s,
-        v,
-        r,
-        operator,
-        deadline,
-        expiresAt: hexTimeToTokenExpirationTime(deadline),
-        amount,
-        swapId,
+  const fetchAuthorization = useCallback(
+    async ({ hash, result }: { hash: string; result: string }) => {
+      if (brokerDealerId === undefined || !chainId || !address || !length || !hash) {
+        return
       }
-      dispatch(saveAuthorization({ authorization: persistedAuthorization, chainId, address }))
-      showPopup({ success: true })
-      clearState()
-    } catch (e) {
-      console.log({ e })
-      showPopup({ success: false })
-      clearState()
-    }
-  }, [chainId, amount, hash, result, brokerDealerId, address, length, clearState, dispatch, showPopup])
+      const swapConfirm = {
+        hash,
+        encryptedData: result,
+        brokerDealerId,
+      }
+      try {
+        const response = await getSwapConfirmAuthorization({ ...swapConfirm })
+        const data = response.data
+        const { s, v, r, operator, deadline } = data.authorization
+        const swapId = data.swapId
+        const persistedAuthorization = {
+          s,
+          v,
+          r,
+          operator,
+          deadline,
+          expiresAt: hexTimeToTokenExpirationTime(deadline),
+          amount,
+          swapId,
+        }
+        setReceivedAuthorization(true)
+        dispatch(saveAuthorization({ authorization: persistedAuthorization, chainId, address }))
+        showPopup({ success: true })
+        clearState()
+      } catch (e) {
+        console.log({ e })
+        showPopup({ success: false })
+        clearState()
+      }
+    },
+    [chainId, amount, brokerDealerId, address, length, clearState, showPopup]
+  )
 
   useEffect(() => {
     confirm()
     async function confirm() {
+      if (hash && result && !receivedAuthorization) {
+        await fetchAuthorization({ hash: (hash as string) || '', result: (result as string) || '' })
+        return
+      }
+    }
+  }, [hash, result, fetchAuthorization, receivedAuthorization])
+
+  useEffect(() => {
+    checkError()
+    async function checkError() {
       if (isError) {
         processError()
         return
       }
-      if (hash && result) {
-        await fetchAuthorization()
-      }
     }
-  }, [hash, result, isError, fetchAuthorization, processError])
+  }, [processError, isError])
 }
 
 export async function getSwapConfirmAuthorization({ brokerDealerId, hash, encryptedData }: SwapConfirmArguments) {

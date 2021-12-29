@@ -4,6 +4,7 @@ import { Pair } from '@ixswap1/v2-sdk'
 import { t } from '@lingui/macro'
 import { abi as STAKING_REWARDS_ABI } from '@uniswap/liquidity-staker/build/StakingRewards.json'
 import { IXS_STAKING_V1_ADDRESS, SUPPORTED_TGE_CHAINS } from 'constants/addresses'
+import { BIG_INT_ZERO } from 'constants/misc'
 import stakingPeriodsData, { IStaking, PeriodsEnum } from 'constants/stakingPeriods'
 import { BigNumber, utils } from 'ethers'
 import { useCurrency } from 'hooks/Tokens'
@@ -16,6 +17,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, AppState } from 'state'
 import { PERIOD, StakingStatus } from 'state/stake/reducer'
 import { useTransactionAdder } from 'state/transactions/hooks'
+import { useIXSBalance } from 'state/user/hooks'
 import { useCurrencyBalance } from 'state/wallet/hooks'
 import { calculateGasMargin } from 'utils/calculateGasMargin'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
@@ -40,7 +42,6 @@ import {
   setTransactionInProgress,
   setTypedValue,
   stake,
-  updateIXSBalance,
 } from './actions'
 import { claimsAdapter, payoutsAdapter, rewardsAdapter, stakingsAdapter } from './utils'
 
@@ -283,32 +284,38 @@ export function useDerivedIXSStakeInfo({ typedValue, currencyId }: { typedValue:
     error,
   }
 }
-
-export function useStakingStatus() {
-  const { status } = useStakingState()
-  const { account } = useActiveWeb3React()
+export function useSaveStakingStatus() {
   const dispatch = useDispatch<AppDispatch>()
-  const currency = useIXSCurrency()
-  const balance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
-  // adjust this when we have staking contracts
-  const hasStaking = true
-  const updateIXSBalance = useUpdateIXSBalance()
 
+  const saveStatus = useCallback(
+    (status: StakingStatus) => {
+      dispatch(saveStakingStatus({ status }))
+    },
+    [dispatch]
+  )
+  return saveStatus
+}
+export function useStakingStatus() {
+  const { status, stakings, rewards, payouts } = useStakingState()
+  const { account } = useActiveWeb3React()
+  const IXSBalance = useIXSBalance()
+  const hasBalance = JSBI.greaterThan(IXSBalance?.amount?.quotient ?? BIG_INT_ZERO, BIG_INT_ZERO)
+  const saveStatus = useSaveStakingStatus()
+  const hasStaking = stakings.length || rewards.length || payouts.length
   useEffect(() => {
-    if (!account) {
-      dispatch(saveStakingStatus({ status: StakingStatus.CONNECT_WALLET }))
-    } else if (!balance?.greaterThan('0')) {
-      dispatch(saveStakingStatus({ status: StakingStatus.NO_IXS }))
-    } else if (hasStaking) {
-      dispatch(saveStakingStatus({ status: StakingStatus.STAKING }))
-    } else {
-      dispatch(saveStakingStatus({ status: StakingStatus.NO_STAKE }))
+    if (!account && status !== StakingStatus.CONNECT_WALLET) {
+      saveStatus(StakingStatus.CONNECT_WALLET)
+      return
     }
-  }, [balance, account, dispatch, hasStaking])
-
-  useEffect(() => {
-    updateIXSBalance()
-  }, [account, balance])
+    if ((hasStaking || hasBalance) && status !== StakingStatus.STAKING) {
+      saveStatus(StakingStatus.STAKING)
+      return
+    }
+    if (account && !hasStaking && !hasBalance && status !== StakingStatus.NO_IXS) {
+      saveStatus(StakingStatus.NO_IXS)
+      return
+    }
+  }, [hasBalance, account, saveStatus, hasStaking, status])
 
   return status
 }
@@ -319,18 +326,6 @@ export function useStakingState(): AppState['staking'] {
 
 export function usePoolSizeState(): AppState['stakingPoolSize'] {
   return useSelector<AppState, AppState['stakingPoolSize']>((state) => state.stakingPoolSize)
-}
-
-export function useUpdateIXSBalance() {
-  const dispatch = useDispatch<AppDispatch>()
-  const { account } = useActiveWeb3React()
-  const currency = useIXSCurrency()
-  const balance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
-  return useCallback(async () => {
-    const maxAmountInput = maxAmountSpend(balance)
-    const IXSAmount = maxAmountInput ? maxAmountInput?.toFixed(3) : '0'
-    dispatch(updateIXSBalance({ IXSAmount }))
-  }, [dispatch, balance])
 }
 
 export function useFetchHistoricalPoolSize() {
@@ -443,7 +438,6 @@ export function useStakeFor(period?: PERIOD) {
   const dispatch = useDispatch<AppDispatch>()
   const staking = useIXSStakingContract()
   const { account } = useActiveWeb3React()
-  const updateIXSBalance = useUpdateIXSBalance()
   const addTransaction = useTransactionAdder()
   const IXSCurrency = useIXSCurrency()
   return useCallback(
@@ -466,7 +460,6 @@ export function useStakeFor(period?: PERIOD) {
             })
             const tx = await stakeTx.wait()
             dispatch(stake.fulfilled({ txStatus: tx.status }))
-            updateIXSBalance()
             addTransaction(stakeTx, {
               summary: t`Staked ${amount} ${IXSCurrency?.symbol} for ${PERIOD.ONE_WEEK}`,
             })
@@ -485,7 +478,6 @@ export function useStakeFor(period?: PERIOD) {
             })
             const tx = await stakeTx.wait()
             dispatch(stake.fulfilled({ txStatus: tx.status }))
-            updateIXSBalance()
             addTransaction(stakeTx, {
               summary: t`Staked ${amount} ${IXSCurrency?.symbol} for ${PERIOD.ONE_MONTH}`,
             })
@@ -503,7 +495,6 @@ export function useStakeFor(period?: PERIOD) {
             })
             const tx = await stakeTx.wait()
             dispatch(stake.fulfilled({ txStatus: tx.status }))
-            updateIXSBalance()
             addTransaction(stakeTx, {
               summary: t`Staked ${amount} ${IXSCurrency?.symbol} for ${PERIOD.TWO_MONTHS}`,
             })
@@ -515,7 +506,6 @@ export function useStakeFor(period?: PERIOD) {
 
             if (!estimatedGas) {
               dispatch(stake.rejected({ errorMessage: 'cannot estimate gas' }))
-              updateIXSBalance()
               break
             }
             const stakeTx = await staking?.stakeForThreeMonths(account, stakeAmount, noData, {
@@ -523,7 +513,6 @@ export function useStakeFor(period?: PERIOD) {
             })
             const tx = await stakeTx.wait()
             dispatch(stake.fulfilled({ txStatus: tx.status }))
-            updateIXSBalance()
             addTransaction(stakeTx, {
               summary: t`Staked ${amount} ${IXSCurrency?.symbol} for ${PERIOD.THREE_MONTHS}`,
             })
@@ -538,7 +527,7 @@ export function useStakeFor(period?: PERIOD) {
         dispatch(stake.rejected({ errorMessage: error }))
       }
     },
-    [staking, account, dispatch, period]
+    [staking, account, dispatch, period, addTransaction, IXSCurrency?.symbol]
   )
 }
 

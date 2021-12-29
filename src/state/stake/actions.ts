@@ -6,7 +6,6 @@ export const selectTier = createAction<{ tier: Tier }>('stake/selectTier')
 export const getIsStakingPaused = createAction<{ isPaused: boolean }>('stake/isPaused')
 export const changeAccount = createAction<{ newAccount: string }>('stake/changeAccount')
 export const checkAllowance = createAction<{ allowanceAmount: number }>('stake/checkAllowance')
-export const updateIXSBalance = createAction<{ IXSAmount: string }>('stake/updateIXSBalance')
 export const setTypedValue = createAction<{ typed: string }>('stake/setTypedValue')
 export const setTransactionInProgress = createAction<{ value: boolean }>('stake/setTransactionInProgress')
 

@@ -7,16 +7,14 @@ import useIXSCurrency from 'hooks/useIXSCurrency'
 import useTheme from 'hooks/useTheme'
 import React from 'react'
 import { Box } from 'rebass'
-import { useStakingStatus } from 'state/stake/hooks'
 import { StakingStatus } from 'state/stake/reducer'
 import { TYPE } from 'theme'
 import { ConnectWalletButton } from './ConnectWalletButton'
 import { NoIXSTokens } from './NoIXSTokens'
 import { PromoTokenCardWrapper } from './style'
 
-export const PromoTokenCard = () => {
+export const PromoTokenCard = ({ stakingStatus }: { stakingStatus: StakingStatus }) => {
   const theme = useTheme()
-  const stakingStatus = useStakingStatus()
   const currency = useIXSCurrency()
   return (
     <PromoTokenCardWrapper data-testid="connect-wallet-card">

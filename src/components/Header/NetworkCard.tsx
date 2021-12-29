@@ -140,6 +140,7 @@ export const NetworkCard = () => {
               <FlyoutHeader>
                 <Trans>Select a network</Trans>
               </FlyoutHeader>
+              <Row targetChain={SupportedChainId.KOVAN} />
               <Row targetChain={SupportedChainId.MAINNET} />
               <Row targetChain={SupportedChainId.MATIC} />
             </FlyoutMenu>
