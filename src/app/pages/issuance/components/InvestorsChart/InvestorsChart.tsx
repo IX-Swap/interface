@@ -36,6 +36,9 @@ export const InvestorsChart = ({
       ]
     })
 
+    // TODO remove when backend PR will be approved (January 2022)
+    values.shift()
+
     data = [[{ type: 'string', label: 'Month' }, ...labels], ...values]
   }
 
@@ -54,7 +57,7 @@ export const InvestorsChart = ({
           alignItems='center'
         >
           <Grid item>
-            <Typography variant='subtitle1'>Investors</Typography>
+            <Typography variant='subtitle1'>New investors</Typography>
           </Grid>
         </Grid>
         <Grid item xs={12}>
