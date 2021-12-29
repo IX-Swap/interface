@@ -6,6 +6,7 @@ import { useServices } from 'hooks/useServices'
 import { useQuery } from 'react-query'
 import { useAllCorporates } from 'app/pages/identity/hooks/useAllCorporates'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
+import { DigitalSecurityOffering } from 'types/dso'
 
 export const useVCCDSO = () => {
   const { user } = useAuth()
@@ -22,7 +23,7 @@ export const useVCCDSO = () => {
 
   const getDSOList = async () => {
     const uri = issuanceURL.vcc.getDSOList
-    return await apiService.post(uri, {
+    return await apiService.post<DigitalSecurityOffering[]>(uri, {
       status,
       corporateId
     })
@@ -32,7 +33,11 @@ export const useVCCDSO = () => {
     dsoQueryKeys.vccDSOList(corporateId, status ?? ''),
     getDSOList,
     {
-      enabled: !corporateIdentitiesIsLoading && corporateId !== undefined
+      staleTime: 60 * 1000 * 5, // cache data for 5 minutes
+      enabled:
+        !corporateIdentitiesIsLoading &&
+        corporateId !== undefined &&
+        status !== undefined
     }
   )
   return {
