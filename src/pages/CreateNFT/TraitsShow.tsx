@@ -6,7 +6,7 @@ import React from 'react'
 import { Flex } from 'rebass'
 import styled from 'styled-components'
 import { ellipsisText, TYPE } from 'theme'
-import { TraitType } from './types'
+import { NumericTrait, Trait, TraitType } from './types'
 
 const EllipsisBody2 = styled(TYPE.body2)`
   ${ellipsisText}
@@ -14,15 +14,9 @@ const EllipsisBody2 = styled(TYPE.body2)`
 const EllipsisBody3 = styled(TYPE.body3)`
   ${ellipsisText}
 `
-export const TraitsShow = ({
-  type,
-  traitList,
-}: {
-  type: TraitType
-  traitList: Array<{ name: string; value: string }> | Array<{ name: string; value: number; max: number }>
-}) => {
+export const TraitsShow = ({ type, traitList }: { type: TraitType; traitList: Array<Trait> | Array<NumericTrait> }) => {
   const getMax = (trait: any) => {
-    return trait?.max
+    return trait?.max_value
   }
   return (
     <Flex flexDirection={type === TraitType.RECTANGLE ? 'row' : 'column'} style={{ gap: '10px' }} flexWrap="wrap">
@@ -31,7 +25,7 @@ export const TraitsShow = ({
           return (
             <LightCard key={index} style={{ width: '150px' }}>
               <Column>
-                <EllipsisBody2>{trait?.name}</EllipsisBody2>
+                <EllipsisBody2>{trait?.trait_type}</EllipsisBody2>
                 <EllipsisBody3>{trait?.value}</EllipsisBody3>
               </Column>
             </LightCard>
@@ -40,7 +34,7 @@ export const TraitsShow = ({
           return (
             <LightCard key={index} style={{ width: '100%' }}>
               <RowBetween>
-                <EllipsisBody2 style={{ width: 'max-content' }}>{trait?.name}</EllipsisBody2>
+                <EllipsisBody2 style={{ width: 'max-content' }}>{trait?.trait_type}</EllipsisBody2>
                 <EllipsisBody3 style={{ width: 'max-content' }}>
                   {trait?.value} of {getMax(trait)}
                 </EllipsisBody3>
@@ -52,7 +46,7 @@ export const TraitsShow = ({
             <LightCard key={index} style={{ width: '100%' }}>
               <Column>
                 <RowBetween>
-                  <EllipsisBody2 style={{ width: 'max-content' }}>{trait?.name}</EllipsisBody2>
+                  <EllipsisBody2 style={{ width: 'max-content' }}>{trait?.trait_type}</EllipsisBody2>
                   <EllipsisBody3 style={{ width: 'max-content' }}>
                     {trait?.value} of {getMax(trait)}
                   </EllipsisBody3>

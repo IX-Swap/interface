@@ -8,21 +8,24 @@ import { getfileType } from 'components/Upload/utils'
 import { SupportedChainId } from 'constants/chains'
 import { FileWithPath } from 'file-selector'
 import { useActiveWeb3React } from 'hooks/web3'
-import React, { useEffect, useState } from 'react'
+import { property } from 'lodash'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Box, Flex } from 'rebass'
 import { KeyValues, pinFileToIPFS } from 'services/pinataService'
 import { ApplicationModal } from 'state/application/actions'
 import { useToggleModal } from 'state/application/hooks'
 import { useDeployNFT } from 'state/nft/hooks'
+import { NFTCollection } from 'state/nft/types'
 import { ExternalLink, TYPE } from 'theme'
 import { ChainDropdown } from './ChainDropdown'
 import { CollectionDropdown } from './CollectionDropdown'
+import { FreezeRadio } from './FreezeRadio'
 import { useGetSupply, useManageCreateForm, useMint } from './hooks'
 import { LevelsPopup } from './LevelsPopup'
 import { NSFWRadio } from './NSFWRadio'
 import { PropertiesPopup } from './PropertiesPopup'
 import { Traits } from './Traits'
-import { TraitType } from './types'
+import { displayType, TraitType } from './types'
 
 export const CreateForm = () => {
   const {
@@ -50,8 +53,12 @@ export const CreateForm = () => {
     setSelectedChain,
     collection,
     setCollection,
+    newCollectionName,
+    setNewCollectionName,
+    freeze,
+    setFreeze,
   } = useManageCreateForm()
-
+  const [showCreateNewCollection, setShowCreateNewCollection] = useState(false)
   const deployNFT = useDeployNFT()
   const toggle = useToggleModal(ApplicationModal.PROPERTIES)
   const toggleNumeric = useToggleModal(ApplicationModal.LEVELS)
@@ -59,44 +66,70 @@ export const CreateForm = () => {
     setActiveTraitType(traitType)
     toggleNumeric()
   }
+  const onSelectCreateCollection = useCallback(() => {
+    setCollection(null)
+    setShowCreateNewCollection(true)
+  }, [setCollection])
+  const onSetCollection = useCallback(
+    (collection: NFTCollection) => {
+      setShowCreateNewCollection(false)
+      setCollection(collection)
+    },
+    [setCollection]
+  )
   const mint = useMint()
 
   const onDrop = (file: any) => {
     setFile(file)
   }
 
+  const groupKeyValues = () => {
+    const keyValues: KeyValues = {}
+    if (description) {
+      keyValues.description = description
+    }
+    if (link) {
+      keyValues.link = link
+    }
+    const usedProperties = properties.map((property) => ({
+      ...property,
+      [`display_type`]: displayType[TraitType.RECTANGLE],
+    }))
+    const usedStats = stats.map((property) => ({
+      ...property,
+      [`display_type`]: displayType[TraitType.NUMBER],
+    }))
+    const usedLevels = levels.map((property) => ({
+      ...property,
+      [`display_type`]: displayType[TraitType.PROGRESS],
+    }))
+    keyValues.attributes = [...usedProperties, ...usedStats, ...usedLevels]
+    keyValues.isNSFW = String(isNSFW)
+    return keyValues
+  }
+  const getCreateNftDto = () => {
+    return {
+      file,
+      name,
+      freeze,
+      keyValues: groupKeyValues(),
+    }
+  }
   const onSubmit = async (e: any) => {
     e.preventDefault()
-    deployNFT({ name: 'New Collection' })
+    // if (newCollectionName && showCreateNewCollection) {
+    //   deployNFT({ name: newCollectionName })
+    // }
     // await mint()
-    return
-    // if (!file || !name) {
-    //   return
-    // }
-    // const keyValues: KeyValues = {}
-    // if (description) {
-    //   keyValues.description = description
-    // }
-    // if (link) {
-    //   keyValues.link = link
-    // }
-    // if (properties.length) {
-    //   keyValues.properties = JSON.stringify(properties)
-    // }
-    // if (stats.length) {
-    //   keyValues.stats = JSON.stringify(stats)
-    // }
-    // if (levels.length) {
-    //   keyValues.levels = JSON.stringify(levels)
-    // }
-    // keyValues.isNSFW = String(isNSFW)
-    // keyValues.selectedChain = selectedChain
-    // try {
-    //   const result = await pinFileToIPFS({ file, name, keyValues })
-    //   console.log(result)
-    // } catch (e) {
-    //   console.log(e)
-    // }
+    if (!file || !name) {
+      return
+    }
+    const nftDto = getCreateNftDto()
+    console.log({ nftDto })
+    try {
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   return (
@@ -185,9 +218,50 @@ export const CreateForm = () => {
             </Box>
           </Label>
           <Box width={1} px={2}>
-            <CollectionDropdown onSelect={setCollection} selectedCollection={collection} />
+            <CollectionDropdown
+              onSelectCreateCollection={onSelectCreateCollection}
+              onSelect={onSetCollection}
+              selectedCollection={collection}
+              newCollectionName={newCollectionName}
+            />
           </Box>
         </Flex>
+        {showCreateNewCollection && (
+          <Flex mx={-2} mb={4}>
+            <Box width={1} px={2}>
+              <Label htmlFor="link" flexDirection="column" mb={3}>
+                <Box mb={1}>
+                  <TYPE.body fontWeight={600}>
+                    <Trans>New Collection Name</Trans>
+                  </TYPE.body>
+                </Box>
+                <TYPE.descriptionThin fontSize={13}>
+                  It can be changed later on our platform, but it cannot be changed on blockchain
+                </TYPE.descriptionThin>
+              </Label>
+              <InputPanel id={'collection-name'}>
+                <ContainerRow>
+                  <InputContainer>
+                    <Input
+                      className="collection-name-input"
+                      type="text"
+                      autoComplete="off"
+                      autoCorrect="off"
+                      autoCapitalize="off"
+                      spellCheck="false"
+                      error={false}
+                      pattern=".*$"
+                      value={newCollectionName}
+                      disabled={false}
+                      onChange={(e) => setNewCollectionName(e?.target?.value)}
+                      placeholder={`my-cool-collection`}
+                    />
+                  </InputContainer>
+                </ContainerRow>
+              </InputPanel>
+            </Box>
+          </Flex>
+        )}
         <Flex mx={-2} mb={4}>
           <Box width={1} px={2}>
             <Label htmlFor="link" flexDirection="column" mb={3}>
@@ -258,7 +332,11 @@ export const CreateForm = () => {
         <Flex mx={-2} mb={4}>
           <NSFWRadio active={isNSFW} setActive={setIsNSFW} />
         </Flex>
-        <Flex my={4}>
+        <Flex mx={-2} mb={4}>
+          <FreezeRadio active={freeze} setActive={setFreeze} />
+        </Flex>
+        {/* For the moment we will deploy on the chain the user is on */}
+        {/* <Flex my={4}>
           <Box width={1}>
             <Label htmlFor="chainId" flexDirection="column" mb={3}>
               <Box mb={1}>
@@ -269,7 +347,8 @@ export const CreateForm = () => {
             </Label>
             <ChainDropdown onSelect={setSelectedChain} selectedChain={selectedChain} />
           </Box>
-        </Flex>
+        </Flex> */}
+
         <Flex mx={-2} flexWrap="wrap">
           <Box px={2} mr="auto" onClick={(e) => onSubmit(e)}>
             <ButtonGradient width="140px">Create</ButtonGradient>

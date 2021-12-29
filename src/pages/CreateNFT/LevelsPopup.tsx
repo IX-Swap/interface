@@ -12,20 +12,20 @@ import { Box, Flex } from 'rebass'
 import { ApplicationModal } from 'state/application/actions'
 import { useModalOpen, useToggleModal } from 'state/application/hooks'
 import { CloseIcon, ModalBlurWrapper, ModalContentWrapper, ModalPadding, TYPE } from 'theme'
-import { traitsTitle, TraitType } from './types'
+import { NumericTrait, traitsTitle, TraitType } from './types'
 
 export const LevelsPopup = ({
   levels,
   setLevels,
   traitType,
 }: {
-  levels: Array<{ name: string; value: number; max: number }>
-  setLevels: (properties: Array<{ name: string; value: number; max: number }>) => void
+  levels: Array<NumericTrait>
+  setLevels: (properties: Array<NumericTrait>) => void
   traitType: TraitType
 }) => {
   const isOpen = useModalOpen(ApplicationModal.LEVELS)
   const toggle = useToggleModal(ApplicationModal.LEVELS)
-  const [localLevels, setLocalLevels] = useState<Array<{ name: string; value: number; max: number }>>([])
+  const [localLevels, setLocalLevels] = useState<Array<NumericTrait>>([])
   const theme = useTheme()
   const onClose = () => {
     toggle()
@@ -33,12 +33,14 @@ export const LevelsPopup = ({
 
   useEffect(() => {
     if (isOpen) {
-      setLocalLevels([...levels, { name: '', value: 3, max: 5 }])
+      setLocalLevels([...levels, { trait_type: '', value: 3, max_value: 5 }])
     }
   }, [isOpen, levels])
 
   const saveFinalLevels = () => {
-    const copy = [...localLevels].filter((record) => record.name && record.max > 0 && record.max >= record.value)
+    const copy = [...localLevels].filter(
+      (record) => record.trait_type && record.max_value > 0 && record.max_value >= record.value
+    )
     setLevels(copy)
     setLocalLevels(copy)
     onClose()
@@ -46,7 +48,7 @@ export const LevelsPopup = ({
 
   const deleteLevel = ({ index }: { index: number }) => {
     if (localLevels.length === 1) {
-      setLocalLevels([{ name: '', value: 3, max: 5 }])
+      setLocalLevels([{ trait_type: '', value: 3, max_value: 5 }])
       return
     }
     const copy = [...localLevels]
@@ -55,28 +57,28 @@ export const LevelsPopup = ({
   }
 
   const addLevel = () => {
-    const updated = [...localLevels, { name: '', value: 3, max: 5 }]
+    const updated = [...localLevels, { trait_type: '', value: 3, max_value: 5 }]
     setLocalLevels(updated)
   }
 
   const updateLocalLevels = ({
     index,
-    name,
+    trait_type,
     value,
-    max,
+    max_value,
   }: {
     index: number
-    name?: string
+    trait_type?: string
     value?: number
-    max?: number
+    max_value?: number
   }) => {
     const copy = [...localLevels]
     const updated = copy.map((record, i) => {
       if (i === index) {
         return {
-          name: name === undefined ? record.name : name,
+          trait_type: trait_type === undefined ? record.trait_type : trait_type,
           value: value === undefined ? record.value : value,
-          max: max === undefined ? record.max : max,
+          max_value: max_value === undefined ? record.max_value : max_value,
         }
       }
       return record
@@ -133,7 +135,7 @@ export const LevelsPopup = ({
                           <ContainerRow>
                             <InputContainer>
                               <Input
-                                onChange={(e) => updateLocalLevels({ index, name: e?.target?.value })}
+                                onChange={(e) => updateLocalLevels({ index, trait_type: e?.target?.value })}
                                 placeholder={t`Speed`}
                                 className={`name-input`}
                                 type="text"
@@ -143,7 +145,7 @@ export const LevelsPopup = ({
                                 spellCheck="false"
                                 error={false}
                                 pattern=".*$"
-                                value={level.name}
+                                value={level.trait_type}
                                 disabled={false}
                               />
                             </InputContainer>
@@ -182,9 +184,9 @@ export const LevelsPopup = ({
                                 <NumericalInput
                                   className="max-input"
                                   maxLength={6}
-                                  value={level.max}
+                                  value={level.max_value}
                                   placeholder={'5'}
-                                  onUserInput={(e) => updateLocalLevels({ index, max: Number(e) })}
+                                  onUserInput={(e) => updateLocalLevels({ index, max_value: Number(e) })}
                                 />
                               </InputContainer>
                             </ContainerRow>

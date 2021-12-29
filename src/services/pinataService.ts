@@ -2,6 +2,7 @@ import axios from 'axios'
 import { PINATA_API_KEY, PINATA_SECRET_API_KEY } from 'config'
 import { SupportedChainId } from 'constants/chains'
 import { FileWithPath } from 'file-selector'
+import { NumericTrait } from 'pages/CreateNFT/types'
 
 export const endpoint = 'https://api.pinata.cloud'
 
@@ -12,9 +13,7 @@ const authHeaders = {
 export interface KeyValues {
   description?: string
   link?: string
-  properties?: any
-  levels?: any
-  stats?: any
+  attributes?: Array<any>
   isNSFW?: any
   selectedChain?: SupportedChainId
 }

@@ -3,6 +3,9 @@ import { useNftContract } from 'hooks/useContract'
 import { useActiveWeb3React } from 'hooks/web3'
 import { useCallback, useState } from 'react'
 import { FileWithPath } from 'react-dropzone'
+import apiService from 'services/apiService'
+import { nft } from 'services/apiUrls'
+import { NFTCollection } from 'state/nft/types'
 import { collections } from './mocks'
 import { TraitType } from './types'
 
@@ -41,14 +44,18 @@ export const useManageCreateForm = () => {
   const [preview, setPreview] = useState<FileWithPath | null>(null)
   const [name, setName] = useState('')
   const [link, setLink] = useState('')
-  const [collection, setCollection] = useState(collections[0])
+  const [freeze, setFreeze] = useState(false)
+  const [collection, setCollection] = useState<NFTCollection | null>(collections[0])
   const [description, setDescription] = useState('')
   const [activeTraitType, setActiveTraitType] = useState(TraitType.PROGRESS)
-  const [properties, setProperties] = useState<Array<{ name: string; value: string }>>([])
-  const [levels, setLevels] = useState<Array<{ name: string; value: number; max: number }>>([])
-  const [stats, setStats] = useState<Array<{ name: string; value: number; max: number }>>([])
+  const [properties, setProperties] = useState<Array<{ trait_type: string; value: string }>>([])
+  const [levels, setLevels] = useState<Array<{ trait_type: string; value: number; max_value: number }>>([])
+  const [stats, setStats] = useState<Array<{ trait_type: string; value: number; max_value: number }>>([])
   const [isNSFW, setIsNSFW] = useState(false)
-  const [selectedChain, setSelectedChain] = useState(chainId ? (chainId as SupportedChainId) : SupportedChainId.MAINNET)
+  const [newCollectionName, setNewCollectionName] = useState('')
+  const [selectedChain, setSelectedChain] = useState<SupportedChainId>(
+    chainId ? (chainId as SupportedChainId) : SupportedChainId.MAINNET
+  )
   return {
     file,
     setFile,
@@ -74,5 +81,14 @@ export const useManageCreateForm = () => {
     setSelectedChain,
     collection,
     setCollection,
+    newCollectionName,
+    setNewCollectionName,
+    freeze,
+    setFreeze,
   }
+}
+
+export const createNftAsset = async (nft: any) => {
+  const result = await apiService.post(nft.create, { amount, pairAddress, orderType, pairSymbol })
+  return result.data
 }

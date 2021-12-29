@@ -35,7 +35,9 @@ export const broker = {
   pairs: (tokenId: number) => `broker-dealer/${tokenId}/pairs`,
   storeTx: () => `/broker-dealer/swaps/add-hash`,
 }
-
+export const nft = {
+  create: `nft`,
+}
 export const tokens = {
   fromUser: `/token/list`,
   authorize: (tokenId: number) => `/token/swap-authorize/${tokenId}`,
