@@ -52,7 +52,6 @@ export const Dashboard = () => {
                     assets={subFundStatsData?.assetsUnderManagement}
                   />
                 ) : (
-                  // TODO Change assetsUnderManagement field name to investmentsOverview or how it will be after update backend api
                   <InvestmentsOverview
                     isLoading={isSubFundStatsLoading}
                     investments={subFundStatsData?.assetsUnderManagement}
