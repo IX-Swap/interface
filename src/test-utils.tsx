@@ -43,14 +43,14 @@ export const snackbarServiceMock = {
   showOnboardingDialog: jest.fn()
 }
 
+const generateClassName = createGenerateClassName({
+  productionPrefix: 'ix'
+})
+
 export const BaseProviders: React.FC<{ mockAPI?: boolean }> = ({
   children,
   mockAPI = false
 }) => {
-  const generateClassName = createGenerateClassName({
-    productionPrefix: 'ix'
-  })
-
   return (
     <StylesProvider generateClassName={generateClassName}>
       <AppThemeProvider>
