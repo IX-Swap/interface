@@ -24,7 +24,7 @@ export const DSOSubmitButton = (props: DSOSubmitButtonProps) => {
       color='primary'
       variant='contained'
       disableElevation
-      disabled={isLoading}
+      disabled={isLoading || dso?.status !== 'Draft'}
       onClick={handleClick}
     >
       Submit
