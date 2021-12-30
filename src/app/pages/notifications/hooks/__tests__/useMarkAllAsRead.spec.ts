@@ -1,5 +1,5 @@
 import { act } from '@testing-library/react-hooks'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { useMarkAllAsRead } from 'app/pages/notifications/hooks/useMarkAllAsRead'
 import { unsuccessfulResponse, successfulResponse } from '__fixtures__/api'
 import * as utilsHook from 'app/pages/notifications/hooks/utils'
@@ -19,7 +19,6 @@ describe('useMarkAllAsRead', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

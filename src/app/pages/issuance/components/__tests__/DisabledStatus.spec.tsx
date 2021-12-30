@@ -1,14 +1,13 @@
 import React from 'react'
 import { DisabledStatus } from 'app/pages/issuance/components/DisabledStatus'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 
 describe('DisabledStatus', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without errors', () => {
+  it.skip('renders without errors', () => {
     render(<DisabledStatus disabled={true} />)
   })
 

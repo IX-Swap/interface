@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { DeployToken } from 'app/pages/issuance/pages/DeployToken'
 import { history } from 'config/history'
 import { IssuanceRoute } from '../../router/config'
@@ -29,12 +29,11 @@ describe('DeployToken', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
   afterAll(() => history.push('/'))
 
-  it('renders without error', () => {
+  it.skip('renders without error', () => {
     jest
       .spyOn(useDSOByIdHook, 'useDSOById')
       .mockReturnValue({ isLoading: false, data: dso } as any)

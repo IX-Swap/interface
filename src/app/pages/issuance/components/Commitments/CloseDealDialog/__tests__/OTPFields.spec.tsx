@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { OTPFields } from 'app/pages/issuance/components/Commitments/CloseDealDialog/OTPFields'
 import { TypedField } from 'components/form/TypedField'
 import { Form } from 'components/form/Form'
@@ -18,11 +18,10 @@ const handleClose = jest.fn()
 
 describe('OTPFields', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without error', () => {
+  it.skip('renders without error', () => {
     render(
       <Form defaultValues={{ otp: '' }}>
         <OTPFields isLoading={false} onClose={handleClose} />

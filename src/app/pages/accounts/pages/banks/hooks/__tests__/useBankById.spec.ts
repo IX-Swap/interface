@@ -1,9 +1,4 @@
-import {
-  waitFor,
-  cleanup,
-  renderHookWithServiceProvider,
-  act
-} from 'test-utils'
+import { waitFor, renderHookWithServiceProvider, act } from 'test-utils'
 import * as useAuthHook from 'hooks/auth/useAuth'
 import {
   useBankById,
@@ -18,7 +13,6 @@ describe('useBankById', () => {
     .mockImplementation(() => ({ user, isAuthenticated: true }))
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import Box from '@material-ui/core/Box'
 import * as useAppBreakpoints from 'hooks/useAppBreakpoints'
 import { TransferTypesFilter } from 'app/pages/admin/components/TransferTypesFilter'
@@ -13,11 +13,10 @@ jest.mock('app/pages/admin/components/TransferTypesFilter', () => ({
 
 describe('VTTransferTypesFilter', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without errors', () => {
+  it.skip('renders without errors', () => {
     render(<VTTransferTypesFilter />)
   })
 

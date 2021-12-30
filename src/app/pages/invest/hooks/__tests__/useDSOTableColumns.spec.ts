@@ -1,4 +1,4 @@
-import { cleanup } from 'test-utils'
+import {} from 'test-utils'
 import { act, renderHook } from '@testing-library/react-hooks'
 import { useDSOTableColumns } from 'app/pages/invest/hooks/useDSOTableColumns'
 import { columns } from 'app/pages/invest/components/DSOTable/columns'
@@ -17,7 +17,6 @@ describe('useDSOTableColumns', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

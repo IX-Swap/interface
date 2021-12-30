@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import * as useUserActionsDialog from 'app/pages/admin/hooks/useUserActionsDialog'
 import { DialogEnabledToggle } from 'app/pages/admin/components/DialogEnabledToggle'
 import { ButtonError } from 'app/components/ButtonError'
@@ -28,11 +28,10 @@ describe('ActionEnableToggle', () => {
   )
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without errors', () => {
+  it.skip('renders without errors', () => {
     render(<ActionEnableToggle enabled={true} />)
   })
 

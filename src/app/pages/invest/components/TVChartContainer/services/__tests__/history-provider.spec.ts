@@ -1,6 +1,6 @@
 import { charts } from 'config/apiURL'
 import apiService from 'services/api'
-import { cleanup } from 'test-utils'
+import {} from 'test-utils'
 import { getBars } from '../history-provider'
 import { sampleResponse, symbolData, sampleBars } from '__fixtures__/tvChart'
 import {
@@ -18,7 +18,6 @@ describe('getBars', () => {
   const rangeEndDate = 456
   const resolution = '240' as ResolutionString
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

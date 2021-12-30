@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import {
   AuthorizerIdentities,
   AuthorizerIdentitiesProps
@@ -18,11 +18,10 @@ describe('AuthorizerIdentities', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without error', () => {
+  it.skip('renders without error', () => {
     render(<AuthorizerIdentities {...props} />)
   })
 

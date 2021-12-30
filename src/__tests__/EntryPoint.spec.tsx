@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup, waitFor } from 'test-utils'
+import { render, waitFor } from 'test-utils'
 import { EntryPoint } from 'EntryPoint'
 import { LoadingFullScreen } from 'auth/components/LoadingFullScreen'
 import * as useAppInit from 'hooks/useAppInit'
@@ -20,11 +20,10 @@ jest.mock('app/AppRoot', () => ({
 
 describe('EntryPoint', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without error', () => {
+  it.skip('renders without error', () => {
     const objResponse = {
       isFinished: true,
       isSuccess: true

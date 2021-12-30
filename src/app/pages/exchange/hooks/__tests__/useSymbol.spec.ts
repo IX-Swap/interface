@@ -1,5 +1,5 @@
 import { waitFor } from '@testing-library/react'
-import { act, cleanup, renderHook } from '@testing-library/react-hooks'
+import { act, renderHook } from '@testing-library/react-hooks'
 import { BaseProviders } from 'test-utils'
 import { useSymbol } from 'app/pages/exchange/hooks/useSymbol'
 import { pair } from '__fixtures__/tradingPair'
@@ -11,7 +11,6 @@ describe('useSymbol', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

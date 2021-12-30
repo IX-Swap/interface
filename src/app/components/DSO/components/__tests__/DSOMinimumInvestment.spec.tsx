@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { DSOMinimumInvestment } from 'app/components/DSO/components/DSOMinimumInvestment'
 import { Form } from 'components/form/Form'
 import { dso, asset } from '__fixtures__/authorizer'
@@ -13,11 +13,10 @@ jest
 
 describe('DSOMinimumInvestment', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without errors', () => {
+  it.skip('renders without errors', () => {
     render(
       <Form defaultValues={transformDSOToFormValues({ ...dso })}>
         <DSOMinimumInvestment />

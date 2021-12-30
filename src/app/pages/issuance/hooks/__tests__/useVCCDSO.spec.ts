@@ -1,7 +1,7 @@
 import { act } from '@testing-library/react-hooks'
 import * as useAllCorporates from 'app/pages/identity/hooks/useAllCorporates'
 import { useVCCDSO } from 'app/pages/issuance/hooks/useVCCDSO'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { successfulResponse } from '__fixtures__/api'
 import { corporate } from '__fixtures__/identity'
 import { generateInfiniteQueryResult } from '__fixtures__/useQuery'
@@ -18,7 +18,6 @@ describe('useVCCDSO', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

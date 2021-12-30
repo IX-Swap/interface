@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { Chart } from 'react-google-charts'
 import { InvestmentGrowthChart } from 'app/pages/issuance/components/InvestmentGrowthChart'
 import * as useInvestmentGrowthHook from 'app/pages/issuance/hooks/useInvestmentGrowth'
@@ -16,11 +16,10 @@ jest.mock('react-google-charts', () => ({
 
 describe('InvestmentGrowthChart', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without errors', () => {
+  it.skip('renders without errors', () => {
     jest.spyOn(useInvestmentGrowthHook, 'useInvestmentGrowth').mockReturnValue(
       generateQueryResult({
         data: investmentGrowthChartData,

@@ -1,14 +1,13 @@
 import { act } from '@testing-library/react-hooks'
 import { useUpdateCorporateByUserId } from 'app/pages/admin/hooks/useUpdateCorporateByUserId'
 import { identityURL } from 'config/apiURL'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { corporate } from '__fixtures__/identity'
 import { generateMutationResult } from '__fixtures__/useQuery'
 import { user } from '__fixtures__/user'
 
 describe('useUpdateCorporateByUserId', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

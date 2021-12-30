@@ -1,9 +1,8 @@
 import socketService from 'services/socket'
-import { cleanup } from 'test-utils'
+import {} from 'test-utils'
 
 describe('socketService', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

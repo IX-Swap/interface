@@ -1,4 +1,4 @@
-import { renderHook, cleanup, act } from '@testing-library/react-hooks'
+import { renderHook, act } from '@testing-library/react-hooks'
 import { useAdminView } from 'app/pages/admin/hooks/useAdminView'
 import { user } from '__fixtures__/user'
 import { AppRole } from 'helpers/acl'
@@ -7,7 +7,6 @@ describe('useAdminView', () => {
   const refresh = jest.fn()
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

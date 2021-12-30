@@ -1,5 +1,5 @@
 import { act } from '@testing-library/react-hooks'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { useDeleteFile } from 'hooks/useDeleteFile'
 import { unsuccessfulResponse, successfulResponse } from '__fixtures__/api'
 import { document } from '__fixtures__/identity'
@@ -8,7 +8,6 @@ import { user } from '__fixtures__/user'
 
 describe('useDeleteFile', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

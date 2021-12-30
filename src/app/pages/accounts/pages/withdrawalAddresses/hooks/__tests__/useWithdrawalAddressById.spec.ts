@@ -1,5 +1,5 @@
 import { act } from '@testing-library/react-hooks'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { useWithdrawalAddressById } from 'app/pages/accounts/pages/withdrawalAddresses/hooks/useWithdrawalAddressById'
 import { withdrawalAddress } from '__fixtures__/withdrawalAddress'
 import { user } from '__fixtures__/user'
@@ -8,7 +8,6 @@ import * as useAuthHook from 'hooks/auth/useAuth'
 
 describe('useWithdrawalAddressById', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

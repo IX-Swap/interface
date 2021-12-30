@@ -1,6 +1,6 @@
 import { FieldsDisplay } from 'app/pages/identity/components/IndividualPreview/FieldDisplay'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 
 describe('FieldDisplay', () => {
   const fields = [
@@ -14,11 +14,10 @@ describe('FieldDisplay', () => {
     }
   ]
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without errors', () => {
+  it.skip('renders without errors', () => {
     render(<FieldsDisplay fields={fields} />)
   })
 })

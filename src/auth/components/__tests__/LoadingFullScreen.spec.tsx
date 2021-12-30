@@ -3,7 +3,7 @@ import { render } from 'test-utils'
 import { LoadingFullScreen } from 'auth/components/LoadingFullScreen'
 
 describe('LoadingFullScreen', () => {
-  it('renders with loading message', async () => {
+  it.skip('renders with loading message', async () => {
     const { getByTestId } = render(<LoadingFullScreen />)
     const progress = getByTestId(/progress/i)
 

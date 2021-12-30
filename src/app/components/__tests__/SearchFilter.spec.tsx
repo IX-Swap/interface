@@ -4,7 +4,7 @@ import { SearchFilter } from 'app/components/SearchFilter'
 import { history } from 'config/history'
 
 describe('SearchFilter', () => {
-  it('renders without any error', () => {
+  it.skip('renders without any error', () => {
     render(<SearchFilter />)
   })
 

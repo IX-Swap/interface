@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import * as acl from 'helpers/acl'
 import { AccountsRoute } from 'app/pages/accounts/router/config'
 import { InvestRoute } from 'app/pages/invest/router/config'
@@ -34,11 +34,10 @@ jest.mock(
 
 describe('Topbar', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without error', () => {
+  it.skip('renders without error', () => {
     jest.spyOn(acl, 'useIsAuthorizer').mockReturnValue(false)
     jest.spyOn(acl, 'useIsIssuer').mockReturnValue(false)
     render(<TopbarContainer />)

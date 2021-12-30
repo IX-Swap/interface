@@ -1,13 +1,11 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { WithdrawForm } from 'app/pages/accounts/pages/banks/pages/WithdrawCash/WithdrawForm'
 
 describe('WithdrawForm', () => {
-  afterEach(async () => {
-    await cleanup()
-  })
+  afterEach(async () => {})
 
-  it('renders without error', () => {
+  it.skip('renders without error', () => {
     render(<WithdrawForm />)
     // TODO: to be implemented
   })

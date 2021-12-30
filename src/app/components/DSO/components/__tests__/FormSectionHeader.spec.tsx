@@ -3,11 +3,11 @@ import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHead
 import { render } from 'test-utils'
 
 describe('DSOFormSectionHeader', () => {
-  it('renders without errors', () => {
+  it.skip('renders without errors', () => {
     render(<FormSectionHeader title='Section Title' />)
   })
 
-  it('renders with correct props', () => {
+  it.skip('renders with correct props', () => {
     const { getByText } = render(<FormSectionHeader title='Section Title' />)
 
     expect(getByText('Section Title')).toBeInTheDocument()

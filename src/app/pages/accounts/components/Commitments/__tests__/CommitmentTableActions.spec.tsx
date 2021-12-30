@@ -1,7 +1,7 @@
 import { CommitmentsTableActions } from 'app/pages/accounts/components/Commitments/CommitmentsTableActions'
 import * as useConfirmCommitment from 'app/pages/accounts/hooks/useConfirmCommitment'
 import React from 'react'
-import { render, cleanup, fireEvent } from 'test-utils'
+import { render, fireEvent } from 'test-utils'
 import { commitment } from '__fixtures__/authorizer'
 import { generateMutationResult } from '__fixtures__/useQuery'
 import { CommitmentInvestForm } from 'app/pages/accounts/components/Commitments/CommitmentInvestForm'
@@ -23,15 +23,14 @@ describe('CommitmentTableActions', () => {
       .mockImplementation(() => objResponse as any)
   })
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without errors', () => {
+  it.skip('renders without errors', () => {
     render(<CommitmentsTableActions item={commitment} />)
   })
 
-  it('renders with correct initial props', () => {
+  it.skip('renders with correct initial props', () => {
     render(<CommitmentsTableActions item={commitment} />)
     expect(CommitmentInvestForm).toHaveBeenCalledWith(
       expect.objectContaining({ open: false }),

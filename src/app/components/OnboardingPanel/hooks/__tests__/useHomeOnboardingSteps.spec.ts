@@ -3,13 +3,12 @@ import {
   defaultOnboardingSteps,
   getIdentityOnboardingSteps
 } from 'app/components/OnboardingPanel/hooks/utils'
-import { waitFor, cleanup } from 'test-utils'
+import { waitFor } from 'test-utils'
 import * as useOnboardingJourneys from 'app/components/OnboardingPanel/hooks/useOnboardingJourneys'
 import { useHomeOnboardingSteps } from 'app/components/OnboardingPanel/hooks/useHomeOnboardingSteps'
 
 describe('useHomeOnboardingSteps', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

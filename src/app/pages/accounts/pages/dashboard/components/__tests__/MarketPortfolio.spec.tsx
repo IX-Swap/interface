@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { MarketPortfolio } from 'app/pages/accounts/pages/dashboard/components/MarketPortfolio/MarketPortfolio'
 import { chartData, fakeMarketInfo } from '__fixtures__/portfolio'
 import { Chart } from 'react-google-charts'
@@ -18,7 +18,6 @@ jest.mock(
 
 describe('MarketPortfolio', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

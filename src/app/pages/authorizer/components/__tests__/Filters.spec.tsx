@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { Filters } from 'app/pages/authorizer/components/Filters'
 
 jest.mock('app/pages/authorizer/components/StatusFilter', () => ({
@@ -10,9 +10,7 @@ jest.mock('app/pages/authorizer/components/SearchAndDateFilter', () => ({
 }))
 
 describe('Filters', () => {
-  afterEach(async () => {
-    await cleanup()
-  })
+  afterEach(async () => {})
 
   it('renders title, StatusFilter and SearchAndDateFilter', async () => {
     const { getByText, getByTestId } = render(<Filters />)

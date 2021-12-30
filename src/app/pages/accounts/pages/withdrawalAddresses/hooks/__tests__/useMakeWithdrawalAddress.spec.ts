@@ -1,5 +1,5 @@
 import { act } from '@testing-library/react-hooks'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { MakeWithdrawalAddressArgs } from 'types/withdrawalAddress'
 import { user } from '__fixtures__/user'
 import { network } from '__fixtures__/network'
@@ -22,7 +22,6 @@ describe('useMakeWithdrawalAddress', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

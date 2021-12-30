@@ -1,14 +1,12 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { TradeConfirmation } from 'app/pages/accounts/pages/reports/TradeConfirmation'
 import { fakeTradeItem } from '__fixtures__/reports'
 import * as useTradeConfirmation from 'app/pages/accounts/hooks/useTradeConfirmation'
 import { generateQueryResult } from '__fixtures__/useQuery'
 
 describe('TradeConfirmation', () => {
-  afterEach(async () => {
-    await cleanup()
-  })
+  afterEach(async () => {})
 
   it('should match snapshot when data is undefined', () => {
     jest.spyOn(useTradeConfirmation, 'useTradeConfirmation').mockReturnValue(

@@ -6,7 +6,7 @@ import { EducationCentreRoute } from 'app/pages/educationCentre/router/config'
 import { stringTruncate } from 'config/utils'
 import React from 'react'
 import { generatePath } from 'react-router-dom'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 
 export const sampleSecurity: Security = {
   amountRaised: '$63,999',
@@ -47,11 +47,10 @@ export const sampleSecurity: Security = {
 
 describe('SecurityCard', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without errors', () => {
+  it.skip('renders without errors', () => {
     render(<SecurityCard {...sampleSecurity} />)
   })
 

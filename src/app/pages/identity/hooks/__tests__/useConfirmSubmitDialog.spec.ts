@@ -1,10 +1,9 @@
 import { act, renderHook } from '@testing-library/react-hooks'
 import { useConfirmSubmitDialog } from 'app/pages/identity/hooks/useConfirmSubmitDialog'
-import { waitFor, cleanup } from 'test-utils'
+import { waitFor } from 'test-utils'
 
 describe('useConfirmSubmitDialog', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

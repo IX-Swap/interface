@@ -1,6 +1,6 @@
 import { DSOFilters } from 'app/pages/issuance/components/DSOFilters/DSOFilters'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 
 jest.mock('app/pages/issuance/components/DSOFilters/StatusFilter', () => ({
   StatusFilter: jest.fn(() => null)
@@ -12,11 +12,10 @@ jest.mock('app/pages/issuance/components/DSOFilters/SubFundSelect', () => ({
 
 describe('DSOFilter', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without errors', () => {
+  it.skip('renders without errors', () => {
     render(<DSOFilters />)
   })
 })

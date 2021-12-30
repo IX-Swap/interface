@@ -1,13 +1,11 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { Table } from 'app/pages/accounts/pages/banks/pages/BanksList/Table'
 
 describe('Table', () => {
-  afterEach(async () => {
-    await cleanup()
-  })
+  afterEach(async () => {})
 
-  it('renders without error', () => {
+  it.skip('renders without error', () => {
     render(<Table />)
   })
 })

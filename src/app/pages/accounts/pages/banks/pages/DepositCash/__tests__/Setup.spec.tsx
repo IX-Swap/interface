@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { Setup } from 'app/pages/accounts/pages/banks/pages/DepositCash/Setup'
 import { asset } from '__fixtures__/authorizer'
 import { Form } from 'components/form/Form'
@@ -11,11 +11,10 @@ jest.mock('components/form/AssetSelect/AssetSelect', () => ({
 
 describe('Setup', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without error', () => {
+  it.skip('renders without error', () => {
     const { getByLabelText } = render(
       <Form>
         <Setup />

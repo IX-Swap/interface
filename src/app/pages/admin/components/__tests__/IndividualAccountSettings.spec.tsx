@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { IndividualAccountSettings } from 'app/pages/admin/components/IndividualAccountSettings'
 import * as useIndividualAccountSettings from 'app/pages/admin/hooks/useIndividualAccountSettings'
 import { TabPanel } from 'app/pages/admin/components/TabPanel'
@@ -36,11 +36,10 @@ describe('IndividualAccountSettings', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without errors', () => {
+  it.skip('renders without errors', () => {
     render(<IndividualAccountSettings activeRoles={roles} />)
   })
 

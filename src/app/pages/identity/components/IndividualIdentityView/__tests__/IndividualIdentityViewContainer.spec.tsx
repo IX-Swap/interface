@@ -1,7 +1,7 @@
 import { IndividualIdentityViewContainer } from 'app/pages/identity/components/IndividualIdentityView/IndividualIdentityViewContainer'
 import * as useIndividualIdentity from 'hooks/identity/useIndividualIdentity'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { individual } from '__fixtures__/identity'
 import { generateQueryResult } from '__fixtures__/useQuery'
 
@@ -9,11 +9,10 @@ window.URL.revokeObjectURL = jest.fn()
 
 describe('IndividualIdentityView', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without errors', () => {
+  it.skip('renders without errors', () => {
     const useIndividualIdentityResponse = generateQueryResult({
       data: individual,
       isLoading: false

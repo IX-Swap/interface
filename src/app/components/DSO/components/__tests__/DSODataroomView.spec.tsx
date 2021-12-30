@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { DSODataroomView } from 'app/components/DSO/components/DSODataroomView'
 import { dso } from '__fixtures__/authorizer'
 import * as Typography from '@material-ui/core'
@@ -23,11 +23,10 @@ jest.mock('components/dataroom/DataroomViewRow', () => ({
 
 describe('DSODataroomView', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without error', () => {
+  it.skip('renders without error', () => {
     render(<DSODataroomView dso={dso} />)
   })
 

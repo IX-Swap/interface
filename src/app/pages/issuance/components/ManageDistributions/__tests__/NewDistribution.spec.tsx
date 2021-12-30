@@ -1,15 +1,14 @@
 import { fireEvent } from '@testing-library/react'
 import { NewDistribution } from 'app/pages/issuance/components/ManageDistributions/NewDistribution'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 
 describe('NewDistribution', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without errors', () => {
+  it.skip('renders without errors', () => {
     render(<NewDistribution />)
   })
 

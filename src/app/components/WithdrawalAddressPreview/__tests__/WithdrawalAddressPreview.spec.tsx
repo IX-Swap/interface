@@ -9,7 +9,7 @@ import {
 describe('WithdrawalAddressPreview', () => {
   const props: WithdrawalAddressViewProps = { data: withdrawalAddress }
 
-  it('renders without error', () => {
+  it.skip('renders without error', () => {
     const { container } = render(<WithdrawalAddressPreview {...props} />)
     expect(container).toMatchSnapshot()
   })

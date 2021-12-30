@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { TopCorporates } from 'app/pages/educationCentre/components/TopCorporates'
 import * as useTopCorporates from 'app/pages/educationCentre/hooks/useTopCorporates'
 import { corporate } from '__fixtures__/identity'
@@ -10,11 +10,10 @@ jest.mock('app/pages/educationCentre/components/TopList', () => ({
 
 describe('TopCorporates', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without errors', () => {
+  it.skip('renders without errors', () => {
     const objResponse = { data: [corporate], isLoading: false }
 
     jest

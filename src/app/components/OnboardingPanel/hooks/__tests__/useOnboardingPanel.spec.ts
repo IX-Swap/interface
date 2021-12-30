@@ -1,11 +1,10 @@
 import { act, renderHook } from '@testing-library/react-hooks'
 import { useOnboardingPanel } from 'app/components/OnboardingPanel/hooks/useOnboardingPanel'
 import * as useAppState from 'app/hooks/useAppState'
-import { waitFor, cleanup } from 'test-utils'
+import { waitFor } from 'test-utils'
 
 describe('useOnboardingPanel', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

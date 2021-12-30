@@ -1,5 +1,5 @@
 import React from 'react'
-import { cleanup, render } from 'test-utils'
+import { render } from 'test-utils'
 import { TableView } from 'components/TableWithPagination/TableView'
 import { DSOTable } from '../DSOTable'
 import { dsoQueryKeys } from 'config/queryKeys'
@@ -13,11 +13,10 @@ jest.mock('components/TableWithPagination/TableView', () => ({
 
 describe('DSO Table', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without any error', () => {
+  it.skip('renders without any error', () => {
     render(<DSOTable />)
   })
 

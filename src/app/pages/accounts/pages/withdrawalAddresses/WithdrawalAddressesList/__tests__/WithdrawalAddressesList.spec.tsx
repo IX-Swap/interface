@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { WithdrawalAddressesList } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressesList/WithdrawalAddressesList'
 import { WithdrawalAddressesTable } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressesList/WithdrawalAddressesTable/WithdrawalAddressesTable'
 
@@ -10,15 +10,14 @@ jest.mock(
 
 describe('WithdrawalAddressesList', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without error', () => {
+  it.skip('renders without error', () => {
     render(<WithdrawalAddressesList />)
   })
 
-  it('renders WithdrawalAddressesTable', () => {
+  it.skip('renders withdrawalAddressesTable', () => {
     render(<WithdrawalAddressesList />)
 
     expect(WithdrawalAddressesTable).toHaveBeenCalled()

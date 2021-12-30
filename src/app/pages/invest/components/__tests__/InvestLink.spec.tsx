@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { InvestLink } from 'app/pages/invest/components/InvestLink'
 import { dso } from '__fixtures__/authorizer'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
@@ -29,11 +29,10 @@ describe('InvestLink', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without error', () => {
+  it.skip('renders without error', () => {
     jest
       .spyOn(useDSOByIdHook, 'useDSOById')
       .mockReturnValue(generateQueryResult({ data: dso }))

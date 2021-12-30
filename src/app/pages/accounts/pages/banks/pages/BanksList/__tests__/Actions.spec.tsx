@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup, fireEvent, waitFor } from 'test-utils'
+import { render, fireEvent, waitFor } from 'test-utils'
 import {
   Actions,
   ActionsProps
@@ -17,11 +17,10 @@ describe('Actions', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without error', async () => {
+  it.skip('renders without error', async () => {
     render(<Actions {...props} />)
   })
 

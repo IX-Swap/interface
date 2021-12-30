@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { CommitmentIssuanceForm } from 'app/components/CommitmentIssuance/CommitmentIssuanceForm'
 import * as useCommitmentIssuanceHook from 'app/pages/authorizer/hooks/useCommitmentIssuance'
 
@@ -13,11 +13,10 @@ describe('CommitmentIssuanceForm', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without error', () => {
+  it.skip('renders without error', () => {
     render(<CommitmentIssuanceForm />)
   })
 })

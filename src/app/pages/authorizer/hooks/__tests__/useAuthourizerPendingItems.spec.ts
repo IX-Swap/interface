@@ -1,7 +1,7 @@
 import { act } from '@testing-library/react-hooks'
 import { useAuthorizerPendingItems } from 'app/pages/authorizer/hooks/useAuthorizerPendingItems'
 import * as useTableWithPagination from 'components/TableWithPagination/hooks/useTableWithPagination'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { AuthorizerCategory } from 'types/app'
 import { successfulResponse } from '__fixtures__/api'
 
@@ -18,7 +18,6 @@ describe('useAuthourizerPendingItems.spec.ts', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

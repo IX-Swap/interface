@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { DownloadAccessDocument } from 'app/pages/educationCentre/components/DownloadAccessDocument'
 import { emptyFile } from '__fixtures__/file'
 import * as useDownloadRawDocument from 'hooks/useDownloadRawDocument'
@@ -7,11 +7,10 @@ import { fireEvent } from '@testing-library/react'
 
 describe('DownloadAccessDocument', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without errors', () => {
+  it.skip('renders without errors', () => {
     const downloadDocumentFn = jest.fn()
     const downloadDocument = [downloadDocumentFn, { isLoading: false }]
 

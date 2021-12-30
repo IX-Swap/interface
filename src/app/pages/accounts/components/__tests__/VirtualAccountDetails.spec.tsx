@@ -1,17 +1,16 @@
 import { VirtualAccountDetails } from 'app/pages/accounts/components/VirtualAccountDetails'
 import * as useVirtualAccount from 'app/pages/accounts/hooks/useVirtualAccount'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { generateQueryResult } from '__fixtures__/useQuery'
 import { virtualAccountsSample } from '__fixtures__/virtualAccounts'
 
 describe('VirtualAccountDetails', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without errors', () => {
+  it.skip('renders without errors', () => {
     const useVirtualsAccountResponse = generateQueryResult({
       data: virtualAccountsSample[0]
     })

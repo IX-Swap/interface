@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { UserStatus } from 'app/pages/admin/components/UserStatus'
 import { managedUser } from '__fixtures__/user'
 import { Status } from 'app/pages/admin/components/Status'
@@ -10,11 +10,10 @@ jest.mock('app/pages/admin/components/Status', () => ({
 
 describe('UserStatus', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without errors', () => {
+  it.skip('renders without errors', () => {
     render(<UserStatus data={managedUser} />)
   })
 

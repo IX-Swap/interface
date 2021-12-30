@@ -2,11 +2,10 @@ import {
   columns,
   renderDate
 } from 'app/pages/admin/components/AdminIdentityList/columns'
-import { cleanup } from 'test-utils'
+import {} from 'test-utils'
 
 describe('columns', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

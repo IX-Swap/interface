@@ -2,7 +2,7 @@ import {
   responseErrorInterceptor,
   responseSuccessInterceptor
 } from 'services/api/interceptors'
-import { cleanup } from 'test-utils'
+import {} from 'test-utils'
 import storageService from 'services/storage'
 import socketService from 'services/socket'
 import { history } from 'config/history'
@@ -17,7 +17,6 @@ jest.mock('services/socket', () => ({
 
 describe('interceptors', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

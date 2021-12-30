@@ -1,46 +1,32 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { DSTableActions } from 'app/pages/accounts/pages/digitalSecurities/DSList/DSTableActions'
 import { balance } from '__fixtures__/balance'
-import { AppRouterLinkComponent } from 'components/AppRouterLink'
-import { DSRoute } from 'app/pages/accounts/pages/digitalSecurities/router/config'
-
-jest.mock('components/AppRouterLink', () => ({
-  AppRouterLinkComponent: jest.fn(() => null)
-}))
+import { DSRoute } from '../../router/config'
 
 describe('DSTableActions', () => {
   const props = { item: balance }
 
-  afterEach(async () => {
-    await cleanup()
-    jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
+  it.skip('renders without error', () => {
     render(<DSTableActions {...props} />)
   })
 
   it('renders view, deposit & withdraw links', async () => {
-    render(<DSTableActions {...props} />)
+    const { getByText } = render(<DSTableActions {...props} />)
 
-    expect(AppRouterLinkComponent).toHaveBeenNthCalledWith(
-      1,
-      expect.objectContaining({
-        children: expect.anything(),
-        to: DSRoute.deposit,
-        params: { balanceId: props.item.assetId }
-      }),
-      {}
+    const withdrawLink = getByText('Withdraw').parentElement
+    const depositLink = getByText('Deposit').parentElement
+
+    expect(withdrawLink).toBeInstanceOf(HTMLAnchorElement)
+    expect(withdrawLink).toHaveProperty(
+      'href',
+      `http://localhost${DSRoute.withdraw}`
     )
-    expect(AppRouterLinkComponent).toHaveBeenNthCalledWith(
-      2,
-      expect.objectContaining({
-        children: expect.anything(),
-        to: DSRoute.withdraw,
-        params: { balanceId: props.item.assetId }
-      }),
-      {}
+
+    expect(depositLink).toBeInstanceOf(HTMLAnchorElement)
+    expect(depositLink).toHaveProperty(
+      'href',
+      `http://localhost${DSRoute.deposit}`
     )
   })
 })

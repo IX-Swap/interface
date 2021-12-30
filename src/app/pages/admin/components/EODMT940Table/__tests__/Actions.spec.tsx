@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { Actions, ActionsProps } from '../Actions'
 import { virtualAccountsAuditItemSample } from '__fixtures__/virtualAccountsAudit'
 import * as useDownloadRawMT940File from 'app/pages/admin/hooks/useDownloadRawMT940File'
@@ -11,11 +11,10 @@ describe('Actions', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without error', () => {
+  it.skip('renders without error', () => {
     render(<Actions {...props} />)
   })
 

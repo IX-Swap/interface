@@ -1,4 +1,4 @@
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import {
   renderTicker,
   renderMoney
@@ -6,7 +6,6 @@ import {
 
 describe('columns', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

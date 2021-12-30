@@ -1,11 +1,5 @@
 import React from 'react'
-import {
-  render,
-  fireEvent,
-  waitFor,
-  cleanup,
-  renderWithInitialWidth
-} from 'test-utils'
+import { render, fireEvent, waitFor, renderWithInitialWidth } from 'test-utils'
 import { DSOTableFilters } from 'app/pages/invest/components/DSOTable/DSOTableFilters'
 import { history } from 'config/history'
 import {
@@ -40,11 +34,10 @@ describe('DSOTableFilters', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without any errors', () => {
+  it.skip('renders without any errors', () => {
     render(<DSOTableFilters />)
   })
 

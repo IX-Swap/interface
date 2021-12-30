@@ -1,6 +1,6 @@
 import { CommitmentsTable } from 'app/pages/accounts/components/Commitments/CommitmentsTable'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { TableView } from 'components/TableWithPagination/TableView'
 import * as useAuth from 'hooks/auth/useAuth'
 import { user } from '__fixtures__/user'
@@ -20,11 +20,10 @@ describe('CommitmentsTable', () => {
     jest.spyOn(useAuth, 'useAuth').mockImplementation(() => objResponse as any)
   })
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without errors', () => {
+  it.skip('renders without errors', () => {
     render(<CommitmentsTable />)
   })
 

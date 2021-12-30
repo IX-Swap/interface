@@ -1,16 +1,15 @@
 import { DSOInvestButton } from 'app/components/DSO/components/DSOInvestButton'
 import * as useAuth from 'hooks/auth/useAuth'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { dso } from '__fixtures__/authorizer'
 
 describe('DSOInvestButton', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without errors', () => {
+  it.skip('renders without errors', () => {
     render(<DSOInvestButton dso={dso} />)
   })
 

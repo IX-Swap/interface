@@ -2,7 +2,7 @@ import { InvestorDeclarationForm } from 'app/pages/identity/components/InvestorD
 import { Form } from 'components/form/Form'
 import * as useServices from 'hooks/useServices'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 
 describe('InvestorDeclarationForm', () => {
   const showSnackbarFn = jest.fn()
@@ -16,11 +16,10 @@ describe('InvestorDeclarationForm', () => {
       .mockImplementation(() => useServicesResponse as any)
   })
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without errors', () => {
+  it.skip('renders without errors', () => {
     render(
       <Form>
         <InvestorDeclarationForm />

@@ -1,7 +1,7 @@
 import { act } from '@testing-library/react-hooks'
 import { IdentityRoute } from 'app/pages/identity/router/config'
 import { generatePath } from 'react-router-dom'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { individual } from '__fixtures__/identity'
 import { generateMutationResult } from '__fixtures__/useQuery'
 import { user } from '__fixtures__/user'
@@ -28,7 +28,6 @@ describe('useSubmitIndividual', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

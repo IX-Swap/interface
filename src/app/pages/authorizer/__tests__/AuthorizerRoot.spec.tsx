@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { AuthorizerRoot } from 'app/pages/authorizer/AuthorizerRoot'
 import { history } from 'config/history'
 
@@ -9,11 +9,10 @@ describe('AuthorizerRoot', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without error', () => {
+  it.skip('renders without error', () => {
     render(<AuthorizerRoot />)
   })
 })

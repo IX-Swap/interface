@@ -1,15 +1,14 @@
 import { sampleSecurity } from 'app/pages/educationCentre/components/Securities/__tests__/SecurityCard.spec'
 import { SecurityViewHeader } from 'app/pages/educationCentre/components/SecurityViewHeader/SecurityViewHeader'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 
 describe('SecurityViewHeader', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without errors', () => {
+  it.skip('renders without errors', () => {
     render(<SecurityViewHeader data={sampleSecurity} />)
   })
 

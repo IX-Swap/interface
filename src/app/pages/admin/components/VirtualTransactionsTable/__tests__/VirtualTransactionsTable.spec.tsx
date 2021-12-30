@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { TableView } from 'components/TableWithPagination/TableView'
 import { columns } from '../columns'
 import { virtualTransactions } from 'config/apiURL'
@@ -12,11 +12,10 @@ jest.mock('components/TableWithPagination/TableView', () => ({
 
 describe('VirtualTransactionsTable', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without error', () => {
+  it.skip('renders without error', () => {
     render(<VirtualTransactionsTable />)
   })
 

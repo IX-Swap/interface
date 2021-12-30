@@ -1,6 +1,6 @@
 import { CreateIndividualAsAdmin } from 'app/pages/admin/pages/CreateIndividualAsAdmin'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 
 jest.mock(
   'app/pages/admin/components/AdminIndividualInvestorForm/AdminIndividualInvestorForm',
@@ -11,11 +11,10 @@ jest.mock(
 
 describe('CreateIndividualAsAdmin', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without errors', () => {
+  it.skip('renders without errors', () => {
     render(<CreateIndividualAsAdmin />)
   })
 })

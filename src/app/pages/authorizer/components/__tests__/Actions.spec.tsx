@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { Actions } from 'app/pages/authorizer/components/Actions'
 import { bank, commitment } from '__fixtures__/authorizer'
 import { history } from 'config/history'
@@ -19,7 +19,6 @@ describe('Actions', () => {
 
   afterEach(async () => {
     jest.clearAllMocks()
-    await cleanup()
   })
 
   it('renders view button', () => {

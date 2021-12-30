@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import Typography from '@material-ui/core/Typography'
 import { CloseDealDialog } from 'app/pages/issuance/components/Commitments/CloseDealDialog/CloseDealDialog'
 import { fireEvent, waitFor } from '@testing-library/dom'
@@ -19,11 +19,10 @@ describe('CloseDealDialog', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without error', () => {
+  it.skip('renders without error', () => {
     render(<CloseDealDialog open={false} toggleOpen={handleToggle} />)
   })
 

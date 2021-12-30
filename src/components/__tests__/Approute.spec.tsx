@@ -3,7 +3,7 @@ import { AppRoute } from 'components/AppRoute'
 import { history } from 'config/history'
 import * as useCachedUser from 'hooks/auth/useCachedUser'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { user } from '__fixtures__/user'
 import { AppRoute as AppPath } from 'app/router/config'
 import * as useIsAccredited from 'helpers/acl'
@@ -21,11 +21,10 @@ describe('AppRoute', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without errors', () => {
+  it.skip('renders without errors', () => {
     jest
       .spyOn(useCachedUser, 'useCachedUser')
       .mockImplementation(() => user as any)

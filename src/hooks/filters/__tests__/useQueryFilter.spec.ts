@@ -1,5 +1,5 @@
 import { waitFor } from '@testing-library/react'
-import { act, cleanup, renderHook } from '@testing-library/react-hooks'
+import { act, renderHook } from '@testing-library/react-hooks'
 import { history } from 'config/history'
 import { generatePath } from 'react-router'
 import { BaseProviders } from 'test-utils'
@@ -11,7 +11,6 @@ describe.skip('useQueryFilter', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

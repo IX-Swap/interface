@@ -4,7 +4,7 @@ import * as useBalancesByType from 'hooks/balance/useBalancesByType'
 import * as useDSOById from 'app/pages/invest/hooks/useDSOById'
 
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import {
   generateInfiniteQueryResult,
   generateQueryResult
@@ -35,11 +35,10 @@ describe('NewDistributionFormFields', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without errors', () => {
+  it.skip('renders without errors', () => {
     render(
       <Form>
         <NewDistributionFormFields

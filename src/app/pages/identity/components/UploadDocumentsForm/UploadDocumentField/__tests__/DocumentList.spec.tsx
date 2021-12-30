@@ -1,7 +1,7 @@
 import { DocumentList } from 'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/DocumentList'
 import { Form } from 'components/form/Form'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 
 describe('DocumentList', () => {
   const documents = [
@@ -10,11 +10,10 @@ describe('DocumentList', () => {
   ]
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without errors', () => {
+  it.skip('renders without errors', () => {
     render(
       <Form defaultValues={{ proof: documents }}>
         <DocumentList name='proof' />

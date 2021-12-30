@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import {
   SupportingDocuments,
   SupportingDocumentsProps
@@ -10,11 +10,10 @@ describe('SupportingDocuments', () => {
   const props: SupportingDocumentsProps = { data: documents }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without error', () => {
+  it.skip('renders without error', () => {
     render(<SupportingDocuments {...props} />)
   })
 })

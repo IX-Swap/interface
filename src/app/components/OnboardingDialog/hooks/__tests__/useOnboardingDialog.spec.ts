@@ -1,5 +1,5 @@
 import * as useSnackbar from 'hooks/useSnackbar'
-import { cleanup } from 'test-utils'
+import {} from 'test-utils'
 
 describe('useOnboardingDialog', () => {
   const mockShowOnboardingDialog = jest.fn()
@@ -14,7 +14,6 @@ describe('useOnboardingDialog', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

@@ -1,4 +1,4 @@
-import { act, waitFor, cleanup, renderHookWithForm } from 'test-utils'
+import { act, waitFor, renderHookWithForm } from 'test-utils'
 import { useValidateWithdrawCash } from 'app/pages/accounts/pages/banks/hooks/useValidateWithdrawCash'
 import { balance } from '__fixtures__/balance'
 import { bank, asset } from '__fixtures__/authorizer'
@@ -15,7 +15,6 @@ import { virtualAccountsSample } from '__fixtures__/virtualAccounts'
 
 describe('useValidateWithdrawCash', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

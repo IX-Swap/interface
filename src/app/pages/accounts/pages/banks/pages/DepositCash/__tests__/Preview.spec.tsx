@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { Preview } from 'app/pages/accounts/pages/banks/pages/DepositCash/Preview'
 import { asset, cashDeposit } from '__fixtures__/authorizer'
 import { GenericPreview } from 'app/components/GenericPreview/GenericPreview'
@@ -29,11 +29,10 @@ describe('Preview', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without error', () => {
+  it.skip('renders without error', () => {
     render(
       <Form defaultValues={formValues}>
         <Preview depositCode={depositCode} />

@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { RecentDeposits } from 'app/pages/accounts/pages/digitalSecurities/DSDeposit/RecentDeposits'
 import { TableView } from 'components/TableWithPagination/TableView'
 import * as useAuthHook from 'hooks/auth/useAuth'
@@ -21,11 +21,10 @@ describe('RecentDeposits', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without error', () => {
+  it.skip('renders without error', () => {
     render(<RecentDeposits />)
   })
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { cleanup, render } from 'test-utils'
+import { render } from 'test-utils'
 import ViewBank from 'app/pages/accounts/pages/banks/pages/ViewBank/ViewBank'
 import { bank } from '__fixtures__/authorizer'
 import { BankPreview } from 'app/components/BankPreview/BankPreview'
@@ -25,7 +25,6 @@ describe('ViewBank', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

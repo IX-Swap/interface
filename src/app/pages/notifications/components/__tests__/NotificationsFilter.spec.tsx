@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { fireEvent, waitFor } from '@testing-library/react'
 import { NotificationFilterFeatures } from 'types/app'
 import * as notificationsFilterHook from 'app/pages/notifications/hooks/useNotificationsFilter'
@@ -17,11 +17,10 @@ describe('NotificationsFilter', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without error', () => {
+  it.skip('renders without error', () => {
     render(<NotificationsFilter />)
   })
 

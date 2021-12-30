@@ -1,4 +1,4 @@
-import { cleanup, act } from '@testing-library/react-hooks'
+import { act } from '@testing-library/react-hooks'
 import { useCustomField } from 'hooks/customFields/useCustomField'
 import { renderHookWithServiceProvider, waitFor } from 'test-utils'
 import { AppFeature, AppService } from 'types/app'
@@ -21,9 +21,7 @@ describe('useCustomField', () => {
     })
   })
 
-  afterEach(async () => {
-    await cleanup()
-  })
+  afterEach(async () => {})
 
   it('makes a request to correct api endpoint', async () => {
     const apiService = {

@@ -2,7 +2,7 @@ import { SubFundSelect } from 'app/pages/issuance/components/DSOFilters/SubFundS
 import * as useVCCDSO from 'app/pages/issuance/hooks/useVCCDSO'
 import { history } from 'config/history'
 import React from 'react'
-import { render, cleanup, fireEvent, within, waitFor } from 'test-utils'
+import { render, fireEvent, within, waitFor } from 'test-utils'
 import { dso } from '__fixtures__/authorizer'
 import { generateQueryResult } from '__fixtures__/useQuery'
 
@@ -18,11 +18,10 @@ describe('SubFundSelect', () => {
       .mockImplementation(() => objResponse as any)
   })
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without errors', () => {
+  it.skip('renders without errors', () => {
     render(<SubFundSelect />)
   })
 

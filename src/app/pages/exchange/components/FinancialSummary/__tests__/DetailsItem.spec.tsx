@@ -3,7 +3,7 @@ import {
   DetailsItemProps
 } from 'app/pages/exchange/components/FinancialSummary/DetailsItem'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 
 describe('DetailsItem', () => {
   const props: DetailsItemProps = {
@@ -11,11 +11,10 @@ describe('DetailsItem', () => {
     label: 'Open'
   }
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without errors', () => {
+  it.skip('renders without errors', () => {
     render(<DetailsItem {...props} />)
   })
 })

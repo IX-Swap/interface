@@ -1,13 +1,11 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { DSWithdrawals } from 'app/pages/authorizer/pages/dsWithdrawals/DSWithdrawals'
 
 describe('DSWithdrawals', () => {
-  afterEach(async () => {
-    await cleanup()
-  })
+  afterEach(async () => {})
 
-  it('renders without throwing', async () => {
+  it.skip('renders without throwing', async () => {
     render(<DSWithdrawals />)
   })
 })

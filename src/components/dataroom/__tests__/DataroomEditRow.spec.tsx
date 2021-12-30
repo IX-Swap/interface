@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { DataroomColumns } from 'components/dataroom/DataroomColumns'
 import {
   DataroomEditRow,
@@ -19,11 +19,10 @@ describe('DataroomEditRow', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without error', () => {
+  it.skip('renders without error', () => {
     render(<DataroomEditRow {...props} />)
   })
 

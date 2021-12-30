@@ -1,17 +1,16 @@
 import * as useVirtualAccount from 'app/pages/accounts/hooks/useVirtualAccount'
 import { VirtualAccountBalance } from 'app/pages/invest/components/VirtualAccountBalance/VirtualAccountBalance'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { generateMutationResult } from '__fixtures__/useQuery'
 import { virtualAccount } from '__fixtures__/virtualAccount'
 
 describe('VirtualAccountBalance', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without errors', () => {
+  it.skip('renders without errors', () => {
     const objResponse = {
       ...generateMutationResult({ data: virtualAccount }),
       list: [virtualAccount]

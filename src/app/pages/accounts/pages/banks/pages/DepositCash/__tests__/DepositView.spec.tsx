@@ -1,5 +1,5 @@
 import React from 'react'
-import { cleanup, renderWithDepositStore } from 'test-utils'
+import { renderWithDepositStore } from 'test-utils'
 import { DepositView } from 'app/pages/accounts/pages/banks/pages/DepositCash/DepositView'
 import { Setup } from 'app/pages/accounts/pages/banks/pages/DepositCash/Setup'
 import { Preview } from 'app/pages/accounts/pages/banks/pages/DepositCash/Preview'
@@ -54,7 +54,6 @@ jest.mock(
 
 describe('DepositView', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

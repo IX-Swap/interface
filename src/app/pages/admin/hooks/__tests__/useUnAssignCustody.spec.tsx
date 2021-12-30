@@ -1,12 +1,11 @@
 import { act } from '@testing-library/react-hooks'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { unsuccessfulResponse, successfulResponse } from '__fixtures__/api'
 import { capitalCallArgs } from '__fixtures__/capitalCall'
 import { useUnAssignCustody } from 'app/pages/admin/hooks/useUnAssignCustody'
 
 describe('useUnAssignCustody', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

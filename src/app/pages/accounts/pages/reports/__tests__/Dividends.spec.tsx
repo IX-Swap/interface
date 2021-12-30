@@ -1,14 +1,12 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { Dividends } from 'app/pages/accounts/pages/reports/Dividends'
 import { fakeDividend } from '__fixtures__/reports'
 import * as useDividends from 'app/pages/accounts/hooks/useDividends'
 import { generateQueryResult } from '__fixtures__/useQuery'
 
 describe('Dividends', () => {
-  afterEach(async () => {
-    await cleanup()
-  })
+  afterEach(async () => {})
 
   it('should match snapshot when data is undefined', () => {
     jest.spyOn(useDividends, 'useDividends').mockReturnValue(

@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { DepositCash } from 'app/pages/accounts/pages/banks/pages/DepositCash/DepositCash'
 import * as useVirtualAccount from 'app/pages/accounts/hooks/useVirtualAccount'
 import { generateQueryResult } from '__fixtures__/useQuery'
@@ -20,9 +20,7 @@ jest.mock(
 )
 
 describe('DepositCash', () => {
-  afterEach(async () => {
-    await cleanup()
-  })
+  afterEach(async () => {})
 
   it('renders RecentDeposits without error', () => {
     const objResponse = generateQueryResult({

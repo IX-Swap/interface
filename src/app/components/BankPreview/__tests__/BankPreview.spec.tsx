@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import {
   BankPreview,
   BankViewProps
@@ -18,11 +18,10 @@ describe('BankPreview', () => {
   const props: BankViewProps = { data: bank }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without error', () => {
+  it.skip('renders without error', () => {
     render(<BankPreview {...props} />)
   })
 

@@ -3,7 +3,7 @@ import { ChartTitle } from 'app/pages/issuance/components/IssuanceLanding/ChartT
 import { render } from 'test-utils'
 
 describe('ChartTitle', () => {
-  it('renders without errors', () => {
+  it.skip('renders without errors', () => {
     render(<ChartTitle title='Test Title' />)
   })
 

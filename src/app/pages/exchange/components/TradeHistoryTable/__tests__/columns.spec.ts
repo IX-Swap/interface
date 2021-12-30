@@ -1,9 +1,8 @@
 import { columns } from 'app/pages/exchange/components/TradeHistoryTable/columns'
-import { cleanup } from 'test-utils'
+import {} from 'test-utils'
 
 describe('columns', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

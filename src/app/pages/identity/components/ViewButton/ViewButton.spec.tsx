@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { ViewButton } from 'app/pages/identity/components/ViewButton/ViewButton'
@@ -10,11 +10,10 @@ jest.mock('components/AppRouterLink', () => ({
 
 describe('ViewButton', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without error', () => {
+  it.skip('renders without error', () => {
     render(<ViewButton link='/' />)
   })
 
