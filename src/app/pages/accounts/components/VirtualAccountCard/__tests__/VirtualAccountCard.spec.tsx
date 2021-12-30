@@ -7,10 +7,6 @@ describe('VirtualAccountCard', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<VirtualAccountCard label='Virtual Account Number' info={<></>} />)
-  })
-
   it('renders props correctly', () => {
     const { getByText } = render(
       <VirtualAccountCard label='Virtual Account Number' info='1234567890' />

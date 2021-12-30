@@ -8,14 +8,6 @@ describe('InvestorAgreements', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(
-      <Form>
-        <InvestorAgreements type='corporate' />
-      </Form>
-    )
-  })
-
   it('renders correct data when type is corporate', () => {
     const { getByText } = render(
       <Form>

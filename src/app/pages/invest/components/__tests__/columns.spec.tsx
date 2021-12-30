@@ -29,10 +29,6 @@ describe('renderCommitmentAvatar', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<>{renderCommitmentAvatar('', commitment)}</>)
-  })
-
   it('renders DSOLogo with correct props', () => {
     render(<>{renderCommitmentAvatar('', commitment)}</>)
 

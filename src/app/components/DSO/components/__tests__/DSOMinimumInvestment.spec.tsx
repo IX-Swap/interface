@@ -16,14 +16,6 @@ describe('DSOMinimumInvestment', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(
-      <Form defaultValues={transformDSOToFormValues({ ...dso })}>
-        <DSOMinimumInvestment />
-      </Form>
-    )
-  })
-
   it('renders correct data when minimumInvestment and pricePerUnit have value more than 0', () => {
     const { getByText } = render(
       <Form

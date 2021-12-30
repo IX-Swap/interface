@@ -24,14 +24,6 @@ describe('TaxResidencyFields', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(
-      <Form>
-        <TaxResidencyFields />
-      </Form>
-    )
-  })
-
   it('renders components correctly', () => {
     render(
       <Form>

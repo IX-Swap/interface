@@ -14,10 +14,6 @@ describe('Snackbar', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<Snackbar {...props} />)
-  })
-
   it('renders NotificationIcon with correct props', () => {
     render(<Snackbar {...props} />)
 

@@ -10,14 +10,6 @@ describe('InformationFields', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(
-      <Form>
-        <InformationFields />
-      </Form>
-    )
-  })
-
   it('renders input correctly', () => {
     const { container } = render(
       <Form>

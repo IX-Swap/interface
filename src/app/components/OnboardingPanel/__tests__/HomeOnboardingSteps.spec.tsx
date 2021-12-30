@@ -2,6 +2,7 @@ import { HomeOnboardingSteps } from 'app/components/OnboardingPanel/HomeOnboardi
 import * as useOnboardingSteps from 'app/components/OnboardingPanel/hooks/useOnboardingSteps'
 import React from 'react'
 import { render } from 'test-utils'
+import { OnboardingSteps } from '../OnboardingSteps'
 
 jest.mock('app/components/OnboardingPanel/OnboardingSteps', () => ({
   OnboardingSteps: jest.fn(() => null)
@@ -27,18 +28,14 @@ describe('HomeOnboardingSteps', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
+  it.skip('renders OnboardingSteps correctly', () => {
     render(<HomeOnboardingSteps />)
+
+    expect(OnboardingSteps).toHaveBeenCalledWith(
+      {
+        ...onboardingSteps
+      },
+      {}
+    )
   })
-
-  // it('renders OnboardingSteps correctly', () => {
-  //   render(<HomeOnboardingSteps />)
-
-  //   expect(OnboardingSteps).toHaveBeenCalledWith(
-  //     {
-  //       ...onboardingSteps
-  //     },
-  //     {}
-  //   )
-  // })
 })

@@ -8,27 +8,6 @@ describe('TopInvestors', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    jest.spyOn(useTopInvestorsHook, 'useTopInvestors').mockReturnValue({
-      data: [
-        ['Investor', 'Amount'],
-        ['', 100]
-      ],
-      isLoading: false
-    } as any)
-
-    render(<TopInvestors />)
-  })
-
-  it.skip('renders without error if data does not exist', () => {
-    jest.spyOn(useTopInvestorsHook, 'useTopInvestors').mockReturnValue({
-      data: [],
-      isLoading: false
-    } as any)
-
-    render(<TopInvestors />)
-  })
-
   it('renders nothing if loading', () => {
     jest.spyOn(useTopInvestorsHook, 'useTopInvestors').mockReturnValue({
       data: [],

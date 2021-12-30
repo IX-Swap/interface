@@ -54,21 +54,6 @@ describe('IdentityPreview', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    const objResponse = {
-      hasIdentity: true,
-      isLoadingIdentities: false,
-      individualIdentity: individual,
-      corporateIdentities: { list: [corporate] }
-    }
-
-    jest
-      .spyOn(useGetIdentities, 'useGetIdentities')
-      .mockImplementation(() => objResponse as any)
-
-    render(<IdentityPreview />)
-  })
-
   it('renders loading indicator when isLoadingIdentities is true', () => {
     const objResponse = {
       hasIdentity: true,

@@ -30,10 +30,6 @@ describe('DialogResetPassword', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<DialogResetPassword {...props} />)
-  })
-
   it('calls useResetPassword hook with correct ars', () => {
     render(<DialogResetPassword {...props} />)
 

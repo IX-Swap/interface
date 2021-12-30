@@ -54,10 +54,6 @@ describe('DetailsOfIssuanceForm', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<DetailsOfIssuanceForm />)
-  })
-
   it('shows create dialog box on render when details of issuance is undefined', () => {
     const undefinedResponse = generateQueryResult({
       data: undefined,

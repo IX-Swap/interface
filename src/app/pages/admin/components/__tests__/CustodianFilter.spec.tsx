@@ -10,10 +10,6 @@ describe('CustodianFilter', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<CustodianFilter custodian={'HEX'} />)
-  })
-
   it('renders label control component', () => {
     render(<CustodianFilter custodian={'HEX'} />)
     expect(FormControlLabel).toHaveBeenCalledTimes(1)

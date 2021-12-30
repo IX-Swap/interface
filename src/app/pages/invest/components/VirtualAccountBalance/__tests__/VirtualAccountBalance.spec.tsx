@@ -10,18 +10,6 @@ describe('VirtualAccountBalance', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    const objResponse = {
-      ...generateMutationResult({ data: virtualAccount }),
-      list: [virtualAccount]
-    }
-
-    jest
-      .spyOn(useVirtualAccount, 'useVirtualAccount')
-      .mockImplementation(() => objResponse as any)
-    render(<VirtualAccountBalance />)
-  })
-
   it('returns null when isLoading is true', () => {
     const objResponse = {
       ...generateMutationResult({ data: virtualAccount, isLoading: true }),

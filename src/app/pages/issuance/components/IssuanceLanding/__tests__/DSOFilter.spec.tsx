@@ -20,16 +20,6 @@ describe('DSOFilter', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    jest.spyOn(useDSOFilterHook, 'useDSOFilter').mockReturnValue({
-      ...generateInfiniteQueryResult({ list: [] }),
-      handleChange,
-      selected: null
-    })
-
-    render(<DSOFilter />)
-  })
-
   it('renders DSOSelect correctly', () => {
     jest.spyOn(useDSOFilterHook, 'useDSOFilter').mockReturnValue({
       ...generateInfiniteQueryResult({ list: [dso] }),

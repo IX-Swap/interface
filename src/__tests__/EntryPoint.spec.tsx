@@ -23,19 +23,6 @@ describe('EntryPoint', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    const objResponse = {
-      isFinished: true,
-      isSuccess: true
-    }
-
-    jest
-      .spyOn(useAppInit, 'useAppInit')
-      .mockImplementation(() => objResponse as any)
-
-    render(<EntryPoint />)
-  })
-
   it('renders LoadingFullScreen if !isFinished', () => {
     const objResponse = {
       isFinished: false,

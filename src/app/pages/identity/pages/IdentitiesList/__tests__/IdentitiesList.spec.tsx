@@ -29,19 +29,6 @@ describe('IdentitiesList', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    const useGetIdentitiesResponse = {
-      hasIdentity: true,
-      isLoadingIdentities: false
-    }
-
-    jest
-      .spyOn(useGetIdentities, 'useGetIdentities')
-      .mockImplementation(() => useGetIdentitiesResponse as any)
-
-    render(<IdentitiesList />)
-  })
-
   it('renders loading icon when isLoadingIdentities is true', () => {
     const useGetIdentitiesResponse = {
       hasIdentity: true,

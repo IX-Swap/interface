@@ -20,14 +20,6 @@ describe('IndividualInfoFields', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(
-      <Form>
-        <IndividualInfoFields {...props} />
-      </Form>
-    )
-  })
-
   it('renders EditableField correctly', () => {
     render(
       <Form>

@@ -44,10 +44,6 @@ describe('CommitmentFormWrapper', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<CommitmentFormWrapper />)
-  })
-
   it('renders nothing if loading', () => {
     jest
       .spyOn(useDSOByIdHook, 'useDSOById')

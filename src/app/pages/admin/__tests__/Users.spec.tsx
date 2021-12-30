@@ -17,10 +17,6 @@ describe('Users', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<Users />)
-  })
-
   it('renders TableView with correct props', () => {
     render(<Users />)
 

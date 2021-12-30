@@ -14,10 +14,6 @@ describe('AgreementsAndDisclosuresView', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<AgreementsAndDisclosuresView data={individual} />)
-  })
-
   it('renders correct label if isCorporateIssuerForm is true', () => {
     const { getByText } = render(
       <AgreementsAndDisclosuresView data={individual} isCorporateIssuerForm />

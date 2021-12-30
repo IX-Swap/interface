@@ -12,10 +12,6 @@ describe('MasDisclosureForm', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<MasDisclosureForm />)
-  })
-
   it('renders MasDisclosureBaseFields', () => {
     render(<MasDisclosureForm />)
     expect(MasDisclosureBaseFields).toHaveBeenCalledTimes(1)

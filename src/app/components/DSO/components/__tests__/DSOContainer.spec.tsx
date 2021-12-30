@@ -9,10 +9,6 @@ describe('DSOContainer', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<DSOContainer>{children}</DSOContainer>)
-  })
-
   it('renders title and children', () => {
     const { getByText, getByTestId } = render(
       <DSOContainer title='Test Container'>{children}</DSOContainer>

@@ -21,10 +21,6 @@ describe('ChangePassword', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<ChangePassword />)
-  })
-
   it('renders Form & Submit', () => {
     render(<ChangePassword />)
 

@@ -7,10 +7,6 @@ describe('Section', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<Section title='Section Title' />)
-  })
-
   it('renders props correctly', () => {
     const { getByText } = render(
       <Section title='Section Title' subtitle='Subtitle' />

@@ -39,10 +39,6 @@ describe('TokenDeploymentView', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<TokenDeploymentView data={dso} />)
-  })
-
   it.skip('renders with correct props', () => {
     render(<TokenDeploymentView data={dso} />)
 

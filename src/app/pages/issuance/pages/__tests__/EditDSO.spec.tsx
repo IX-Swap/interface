@@ -23,10 +23,6 @@ describe('EditDSO', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<EditDSO />)
-  })
-
   it('renders DSO with correct props', () => {
     jest
       .spyOn(useDSOByIdHook, 'useDSOById')

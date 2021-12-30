@@ -15,10 +15,6 @@ describe('YearlyAnalysis', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<YearlyAnalysis data={sampleSecurity} />)
-  })
-
   it('renders oneYearLowPrice data with correct value', () => {
     const { getByText } = render(<YearlyAnalysis data={sampleSecurity} />)
 

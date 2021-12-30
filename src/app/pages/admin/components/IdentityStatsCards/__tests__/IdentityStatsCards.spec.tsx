@@ -19,21 +19,9 @@ describe('IdentityStatsCards', () => {
       totalLastWeek: 2
     }
   }
-  const useIdentityStatsResponse = generateQueryResult({
-    data,
-    isLoading: false
-  })
 
   afterEach(async () => {
     jest.clearAllMocks()
-  })
-
-  it.skip('renders without errors', () => {
-    jest
-      .spyOn(useIdentityStats, 'useIdentityStats')
-      .mockImplementation(() => useIdentityStatsResponse as any)
-
-    render(<IdentityStatsCards />)
   })
 
   it('renders null when loading', () => {

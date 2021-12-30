@@ -8,15 +8,6 @@ describe('CorporateAddress', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(
-      <CorporateAddress
-        registeredAddress={corporate.companyAddress}
-        mailingAddress={corporate.mailingAddress}
-      />
-    )
-  })
-
   it('does not render mailing address when it is undefined', () => {
     const { queryByText } = render(
       <CorporateAddress

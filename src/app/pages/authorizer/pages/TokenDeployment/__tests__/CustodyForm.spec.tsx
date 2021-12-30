@@ -19,13 +19,6 @@ describe('CustodyForm', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    jest
-      .spyOn(useTokenListing, 'useTokenListing')
-      .mockImplementation(() => objResponse as any)
-    render(<CustodyForm />)
-  })
-
   it('renders CustodyFormFields with correct props', () => {
     jest
       .spyOn(useTokenListing, 'useTokenListing')

@@ -8,14 +8,6 @@ describe('CorporateAddressFields', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(
-      <Form>
-        <CorporateAddressFields />
-      </Form>
-    )
-  })
-
   it('renders Mailing Address fields when isMailingAddressSame is false', () => {
     const { container } = render(
       <Form defaultValues={{ isMailingAddressSame: false }}>

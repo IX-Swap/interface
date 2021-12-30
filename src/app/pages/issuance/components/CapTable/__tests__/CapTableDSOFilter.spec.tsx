@@ -15,10 +15,6 @@ describe('CapTableDSOFilter', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<CapTableDSOFilter />)
-  })
-
   it('renders nul when isLoading', () => {
     const objResponse = { isLoading: true, data: { list: [] } }
 

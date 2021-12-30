@@ -9,10 +9,6 @@ describe('BackButton', () => {
 
   afterEach(async () => {})
 
-  it.skip('renders without error', () => {
-    renderWithDepositStore(<BackButton />, fakeDepositStore)
-  })
-
   it('invokes setCurrentStep on button click', async () => {
     const { getByRole } = renderWithDepositStore(
       <BackButton />,

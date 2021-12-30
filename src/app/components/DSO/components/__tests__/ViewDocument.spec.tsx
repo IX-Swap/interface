@@ -30,10 +30,6 @@ describe('ViewDocument', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<ViewDocument {...props}>{props.children}</ViewDocument>)
-  })
-
   it('invokes convertBlobToFile if data is defined', () => {
     jest.spyOn(rawDocumentHook, 'useRawDocument').mockReturnValue(
       generateQueryResult({

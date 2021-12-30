@@ -17,10 +17,6 @@ describe('TwoFaDialog', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<TwoFaDialog {...props} />)
-  })
-
   it('renders nothing if isOpen is false', async () => {
     const { container } = render(<TwoFaDialog {...props} isOpen={false} />)
     expect(container).toBeEmptyDOMElement()

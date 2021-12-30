@@ -29,10 +29,6 @@ describe('ViewIdentityAction', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<ViewIdentityAction {...props} />)
-  })
-
   it('renders view link correctly', () => {
     const { getByRole, rerender } = render(<ViewIdentityAction {...props} />)
     const viewButton = getByRole('button')

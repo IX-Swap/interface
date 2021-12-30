@@ -46,10 +46,6 @@ describe('DSOForm', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<DSOForm {...props} />)
-  })
-
   it('renders form field components', () => {
     render(<DSOForm {...props} />)
     expect(DSOBaseFields).toHaveBeenCalled()

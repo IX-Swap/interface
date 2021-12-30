@@ -36,10 +36,6 @@ describe('Securities', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<Securities data={[sampleSecurity]} isLoading={false} view='grid' />)
-  })
-
   it('renders SecuritiesGrid when view === grid', () => {
     render(<Securities data={[sampleSecurity]} isLoading={false} view='grid' />)
 

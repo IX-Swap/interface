@@ -8,16 +8,6 @@ describe('CompanyPersonnel', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(
-      <CompanyPersonnel
-        personnel={corporate.representatives[0]}
-        showDocumentHeader={false}
-        documentsTitle='Documents'
-      />
-    )
-  })
-
   it('does not render address when it is undefined', () => {
     const { queryByText } = render(
       <CompanyPersonnel

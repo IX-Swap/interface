@@ -8,14 +8,6 @@ describe('IssuerDetails', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(
-      <Form>
-        <IssuerDetails />
-      </Form>
-    )
-  })
-
   it('renders correct fields', () => {
     const { getByLabelText } = render(
       <Form>

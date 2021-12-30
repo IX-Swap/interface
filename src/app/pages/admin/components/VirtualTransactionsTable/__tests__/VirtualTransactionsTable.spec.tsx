@@ -15,10 +15,6 @@ describe('VirtualTransactionsTable', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<VirtualTransactionsTable />)
-  })
-
   it('renders TableView with correct props', () => {
     render(<VirtualTransactionsTable />)
 

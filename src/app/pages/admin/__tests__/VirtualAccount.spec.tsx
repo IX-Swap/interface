@@ -15,10 +15,6 @@ describe('VirtualAccounts', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<VirtualAccounts />)
-  })
-
   it('renders SelectionHelper with correct props', () => {
     render(<VirtualAccounts />)
 

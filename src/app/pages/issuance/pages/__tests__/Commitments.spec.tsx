@@ -84,10 +84,6 @@ describe('Commitments', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<Commitments />)
-  })
-
   it('renders LoadingIndicator when isLoading is true', () => {
     jest
       .spyOn(useDSOByIdHook, 'useDSOById')

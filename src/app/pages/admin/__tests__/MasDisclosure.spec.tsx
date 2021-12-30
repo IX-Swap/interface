@@ -32,10 +32,6 @@ describe('MasDisclosure', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<MasDisclosure />)
-  })
-
   it('renders PageHeader with correct props', () => {
     render(<MasDisclosure />)
 

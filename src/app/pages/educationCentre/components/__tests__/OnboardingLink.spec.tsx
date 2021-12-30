@@ -15,10 +15,6 @@ describe('OnboardingLink', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<OnboardingLink {...props} />)
-  })
-
   it('renders props correctly', () => {
     const { getByText, container } = render(<OnboardingLink {...props} />)
 

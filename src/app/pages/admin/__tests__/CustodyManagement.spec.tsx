@@ -45,10 +45,6 @@ describe('CustodyManagement', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<CustodyManagement />)
-  })
-
   it('renders page header component with correct props', () => {
     render(<CustodyManagement />)
     expect(PageHeader).toHaveBeenCalledWith(

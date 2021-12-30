@@ -20,10 +20,6 @@ describe('BannersCarousel', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<BannersCarousel />)
-  })
-
   it('renders if data is undefined', () => {
     jest
       .spyOn(useBannersList, 'useBannersList')

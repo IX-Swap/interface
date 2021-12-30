@@ -17,16 +17,6 @@ describe('PromotedDSOs', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    jest.spyOn(usePromotedDSOsHook, 'usePromotedDSOs').mockReturnValue(
-      generateInfiniteQueryResult({
-        queryStatus: QueryStatus.Success
-      })
-    )
-
-    render(<PromotedDSOs />)
-  })
-
   it('renders nothing if loading', () => {
     jest.spyOn(usePromotedDSOsHook, 'usePromotedDSOs').mockReturnValue(
       generateInfiniteQueryResult({

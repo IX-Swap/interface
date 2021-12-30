@@ -18,10 +18,6 @@ describe('CapitalCallDialog', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<CapitalCallDialog open={false} toggleOpen={handleToggle} />)
-  })
-
   it('renders Typography with correct props', () => {
     render(<CapitalCallDialog open={true} toggleOpen={handleToggle} />)
 

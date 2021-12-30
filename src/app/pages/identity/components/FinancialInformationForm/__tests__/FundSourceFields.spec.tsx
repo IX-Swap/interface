@@ -13,14 +13,6 @@ describe('FundSourceFields', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(
-      <Form defaultValues={defaultValue}>
-        <FundSourceFields />
-      </Form>
-    )
-  })
-
   it('renders fundSource labels correctly', () => {
     const { getByLabelText } = render(
       <Form defaultValues={defaultValue}>

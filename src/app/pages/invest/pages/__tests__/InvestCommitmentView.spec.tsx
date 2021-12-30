@@ -25,10 +25,6 @@ describe('InvestCommitmentView', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<InvestCommitmentView />)
-  })
-
   it('renders nothing if loading', () => {
     jest
       .spyOn(useCommitmentByIdHook, 'useCommitmentById')

@@ -39,14 +39,6 @@ describe('TaxResidencyField', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(
-      <Form defaultValues={defaultValues}>
-        <TaxResidencyField {...props} />
-      </Form>
-    )
-  })
-
   it('renders field default values correctly', () => {
     const { container } = render(
       <Form defaultValues={defaultValues}>

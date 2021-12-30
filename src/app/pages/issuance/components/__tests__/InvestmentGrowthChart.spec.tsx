@@ -19,16 +19,6 @@ describe('InvestmentGrowthChart', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    jest.spyOn(useInvestmentGrowthHook, 'useInvestmentGrowth').mockReturnValue(
-      generateQueryResult({
-        data: investmentGrowthChartData,
-        isLoading: false
-      })
-    )
-    render(<InvestmentGrowthChart />)
-  })
-
   it('renders Chart with correct props', () => {
     jest.spyOn(useInvestmentGrowthHook, 'useInvestmentGrowth').mockReturnValue(
       generateQueryResult({

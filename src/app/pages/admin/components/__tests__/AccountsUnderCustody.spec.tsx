@@ -15,10 +15,6 @@ describe('AccountsUnderCustody', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<AccountsUnderCustody />)
-  })
-
   it('renders Chart component correctly when data is undefined', () => {
     jest.spyOn(useGetCustodianCount, 'useGetCustodiansCount').mockReturnValue({
       data: undefined,

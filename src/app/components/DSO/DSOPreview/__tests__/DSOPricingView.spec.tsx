@@ -13,10 +13,6 @@ describe('DSOPricingView', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<DSOPricingView dso={dso} />)
-  })
-
   it('renders data correctly', () => {
     const editedDSO = {
       ...dso,

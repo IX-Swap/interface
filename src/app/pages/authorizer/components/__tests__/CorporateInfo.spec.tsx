@@ -23,10 +23,6 @@ describe('CorporateInfo', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<CorporateInfo {...props} />)
-  })
-
   it('renders companyLegalName correctly', () => {
     const { container } = render(<CorporateInfo {...props} />)
 

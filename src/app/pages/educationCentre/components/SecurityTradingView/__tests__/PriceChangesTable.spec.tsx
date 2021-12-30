@@ -8,10 +8,6 @@ describe('PriceChangesTable', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<PriceChangesTable data={sampleSecurity} />)
-  })
-
   it('renders correct value for priceChange24Hours', () => {
     const { getByText } = render(<PriceChangesTable data={sampleSecurity} />)
 

@@ -20,14 +20,6 @@ describe('EstimatedValue', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(
-      <Form defaultValues={{ totalAmount: 123 }}>
-        <EstimatedValue {...props} />
-      </Form>
-    )
-  })
-
   it('renders LabelledValue with correct props', () => {
     render(
       <Form defaultValues={{ totalAmount: 123 }}>

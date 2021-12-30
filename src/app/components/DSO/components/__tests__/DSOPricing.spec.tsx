@@ -33,14 +33,6 @@ describe('DSOPricing', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(
-      <Form>
-        <DSOPricing />
-      </Form>
-    )
-  })
-
   it('renders EditableField with correct props', () => {
     render(
       <Form>

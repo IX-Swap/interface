@@ -27,14 +27,6 @@ describe('AuthorizedPersonnel', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(
-      <Form>
-        <AuthorizedPersonnel {...props} />
-      </Form>
-    )
-  })
-
   it('handles append buttons correctly', () => {
     const { getByText } = render(
       <Form>

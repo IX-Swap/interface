@@ -19,10 +19,6 @@ describe('DeployTokenButton', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<DeployTokenButton {...props} />)
-  })
-
   it('displays initializing message if isInitializing is true', () => {
     const { container } = render(
       <DeployTokenButton {...props} isInitializing />

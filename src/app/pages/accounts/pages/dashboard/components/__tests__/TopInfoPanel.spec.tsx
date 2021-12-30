@@ -46,15 +46,6 @@ describe('TopInfoPanel', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(
-      <TopInfoPanel
-        accounts={[fakeVirtualAccountInfo]}
-        balances={fakeBalancesInfo}
-      />
-    )
-  })
-
   it('renders children with correct props', () => {
     render(
       <TopInfoPanel

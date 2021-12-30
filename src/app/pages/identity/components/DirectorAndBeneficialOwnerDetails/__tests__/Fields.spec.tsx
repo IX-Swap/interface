@@ -48,14 +48,6 @@ describe('Fields', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(
-      <Form>
-        <Fields {...props} />
-      </Form>
-    )
-  })
-
   it('render FormSectionHeader when index > 0', () => {
     render(
       <Form>

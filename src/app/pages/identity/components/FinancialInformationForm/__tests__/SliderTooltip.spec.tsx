@@ -13,10 +13,6 @@ describe('SliderTooltip', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<SliderTooltip {...props} />)
-  })
-
   it('renders props correctly', () => {
     const { getByText } = render(<SliderTooltip {...props} />)
 

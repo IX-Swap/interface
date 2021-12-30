@@ -37,12 +37,6 @@ describe('Topbar', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    jest.spyOn(acl, 'useIsAuthorizer').mockReturnValue(false)
-    jest.spyOn(acl, 'useIsIssuer').mockReturnValue(false)
-    render(<TopbarContainer />)
-  })
-
   it('renders TopbarLink correctly', () => {
     jest.spyOn(acl, 'useIsAuthorizer').mockReturnValue(false)
     jest.spyOn(acl, 'useIsIssuer').mockReturnValue(false)

@@ -8,19 +8,6 @@ describe('PairList', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    const objResponse = {
-      data: {
-        list: []
-      }
-    }
-
-    jest
-      .spyOn(useMarketList, 'useMarketList')
-      .mockImplementation(() => objResponse as any)
-    render(<PairList />)
-  })
-
   it('renders null when data is undefined', () => {
     const objResponse = {
       data: undefined

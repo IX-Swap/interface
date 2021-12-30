@@ -15,10 +15,6 @@ describe('OptInAgreements', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<OptInAgreements />)
-  })
-
   it('renders OptOutInfoDialog when showOptOutDialog is true', () => {
     render(<OptInAgreements showOptOutDialog={true} />)
 

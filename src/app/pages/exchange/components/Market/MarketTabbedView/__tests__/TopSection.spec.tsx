@@ -48,10 +48,6 @@ describe('TopSection', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<TopSection {...props} />)
-  })
-
   it('renders correct tab', () => {
     const { getByRole } = render(<TopSection {...props} />)
     const chartTabButton = getByRole('tab', {

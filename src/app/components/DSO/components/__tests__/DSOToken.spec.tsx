@@ -16,13 +16,6 @@ describe('DSOToken', () => {
   })
   afterAll(() => history.push('/'))
 
-  it.skip('renders without error', () => {
-    jest
-      .spyOn(useDSOByIdHook, 'useDSOById')
-      .mockReturnValue({ isLoading: false, data: dso } as any)
-    render(<DSOToken />)
-  })
-
   it('renders nothing if loading', () => {
     jest
       .spyOn(useDSOByIdHook, 'useDSOById')

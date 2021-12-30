@@ -7,10 +7,6 @@ describe('Setup2FAGuide', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<Setup2FAGuide />)
-  })
-
   it('renders components correctly', () => {
     const { queryAllByAltText, getByText } = render(<Setup2FAGuide />)
 

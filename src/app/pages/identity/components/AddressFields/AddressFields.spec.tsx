@@ -20,14 +20,6 @@ describe('AddressFields', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(
-      <Form>
-        <AddressFields {...props} />
-      </Form>
-    )
-  })
-
   it('defaults rootPath to "address"', () => {
     render(
       <Form>

@@ -17,14 +17,6 @@ describe('OnboardingPanel', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    jest
-      .spyOn(useOnboardingSteps, 'useOnboardingSteps')
-      .mockImplementation(() => objResponse as any)
-
-    render(<OnboardingPanel />)
-  })
-
   it('renders Drawer correctly', () => {
     jest
       .spyOn(useOnboardingSteps, 'useOnboardingSteps')

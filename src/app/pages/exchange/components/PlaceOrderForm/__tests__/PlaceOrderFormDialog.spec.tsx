@@ -29,10 +29,6 @@ describe('PlaceOrderFormDialog', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<PlaceOrderFormDialog {...props} />)
-  })
-
   it('opens drawer with buy tab active when Buy button is pressed', () => {
     const { getByRole } = render(<PlaceOrderFormDialog {...props} />)
     const buyButton = getByRole('button', {

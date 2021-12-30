@@ -18,10 +18,6 @@ describe('BalanceDetails', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<BalanceDetails {...props} />)
-  })
-
   it('renders title correctly', () => {
     const { container } = render(<BalanceDetails {...props} />)
 

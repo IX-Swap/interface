@@ -13,10 +13,6 @@ describe('UserIdentitiesStatus', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<UserIdentitiesStatus data={managedUser} />)
-  })
-
   it('renders props correctly', () => {
     render(<UserIdentitiesStatus data={managedUser} />)
 

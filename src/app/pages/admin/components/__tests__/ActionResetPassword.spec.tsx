@@ -28,10 +28,6 @@ describe('ActionResetPassword', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<ActionResetPassword data={managedUser} />)
-  })
-
   it('renders components with correct props', () => {
     const date = new Date()
 

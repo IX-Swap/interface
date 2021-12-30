@@ -16,15 +16,6 @@ describe('Actions', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(
-      <Actions
-        item={fakeActionProps}
-        onLinkOffButtonClick={linkOffButtonHandleClick}
-      />
-    )
-  })
-
   it('invokes onLinkOffButtonClick function on link off button click', () => {
     const { getByTestId } = render(
       <Actions

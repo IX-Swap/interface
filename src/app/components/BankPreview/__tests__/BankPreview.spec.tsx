@@ -21,10 +21,6 @@ describe('BankPreview', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<BankPreview {...props} />)
-  })
-
   it('renders nothing if data is null', () => {
     const { container } = render(<BankPreview data={null as unknown as Bank} />)
 

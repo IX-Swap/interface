@@ -14,14 +14,6 @@ describe('DSOBusinessModel', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(
-      <Form>
-        <DSOBusinessModel />
-      </Form>
-    )
-  })
-
   it('renders EditableField with correct props', () => {
     render(
       <Form>

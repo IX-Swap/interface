@@ -18,10 +18,6 @@ describe('DSOFAQsView', () => {
 
   const faq = { faqs: [faqItem] } as any
 
-  it.skip('renders without error', () => {
-    render(<DSOFAQsView dso={faq} />)
-  })
-
   it('renders title', () => {
     render(<DSOFAQsView dso={faq} />)
 

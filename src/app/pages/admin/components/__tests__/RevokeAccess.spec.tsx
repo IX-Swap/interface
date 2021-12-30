@@ -23,10 +23,6 @@ describe('RevokeAccess', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<RevokeAccess />)
-  })
-
   it('calls revokeAccess fn when form is submitted', async () => {
     await act(async () => {
       const { getByText } = render(<RevokeAccess />)

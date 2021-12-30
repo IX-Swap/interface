@@ -37,10 +37,6 @@ describe('DropzoneDisplay', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<DropzoneDisplay {...props} />)
-  })
-
   it('renders Avatar if multiple is false', () => {
     render(<DropzoneDisplay {...props} />)
 

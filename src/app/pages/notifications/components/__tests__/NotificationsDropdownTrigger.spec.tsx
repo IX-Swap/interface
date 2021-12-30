@@ -14,10 +14,6 @@ describe('NotificationsDropdownTrigger', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<NotificationsDropdownTrigger {...props} />)
-  })
-
   it('displays ureadCount correctly if count greater than 99', () => {
     jest
       .spyOn(useNotificationsHook, 'useNotifications')

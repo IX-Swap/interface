@@ -16,10 +16,6 @@ describe('Actions', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<Actions {...props} />)
-  })
-
   it('renders AppRouterLink with correct props', () => {
     render(<Actions {...props} />)
 

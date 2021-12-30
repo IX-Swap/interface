@@ -28,10 +28,6 @@ describe('CardContent', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<CardContent {...primaryProps} />)
-  })
-
   it('renders Closing Date with correct props when type is Primary', () => {
     render(<CardContent {...primaryProps} />)
 

@@ -24,10 +24,6 @@ describe('DSTable', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<DSTable />)
-  })
-
   it('renders TableView with correct props', () => {
     const uri = accountsURL.balance.getAll(user._id)
     const name = digitalSecuritiesQueryKeys.getByUserId(user._id)

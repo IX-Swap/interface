@@ -18,17 +18,6 @@ describe('AccessReportActions', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    const deleteFn = jest.fn()
-    const deleteFileResponse = [deleteFn, { isLoading: false }]
-
-    jest
-      .spyOn(useDeleteFile, 'useDeleteFile')
-      .mockImplementation(() => deleteFileResponse as any)
-
-    render(<AccessReportActions document={emptyFile} />)
-  })
-
   it.skip('renders with correct document data', () => {
     const deleteFn = jest.fn()
     const deleteFileResponse = [deleteFn, { isLoading: false }]

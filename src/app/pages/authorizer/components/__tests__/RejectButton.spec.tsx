@@ -27,14 +27,6 @@ describe('RejectButton', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(
-      <Form>
-        <RejectButton {...props} />
-      </Form>
-    )
-  })
-
   it('invokes reject when button is clicked', async () => {
     const { getByText } = render(
       <Form>

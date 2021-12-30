@@ -7,10 +7,6 @@ describe('Status', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<Status status='enabled' />)
-  })
-
   it('renders props correctly', () => {
     const { getByText, container, rerender } = render(
       <Status status='enabled' />

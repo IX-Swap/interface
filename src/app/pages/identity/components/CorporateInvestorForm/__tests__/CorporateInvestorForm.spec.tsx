@@ -98,10 +98,6 @@ describe('CorporateInvestorForm', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<CorporateInvestorForm data={corporate} />)
-  })
-
   it('invokes showPreIdentityCreateDialog when data undefined', () => {
     const useAllCorporatesZeroResponse = generateInfiniteQueryResult({
       map: {

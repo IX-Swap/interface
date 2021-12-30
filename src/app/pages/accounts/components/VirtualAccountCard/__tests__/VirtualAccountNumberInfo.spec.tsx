@@ -7,17 +7,6 @@ describe('VirtualAccountNumberInfo', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(
-      <VirtualAccountNumberInfo
-        currency='SGD'
-        accountNumber='1234567890123456'
-        availableBalance={100000}
-        onHold={123}
-      />
-    )
-  })
-
   it('renders props without errors', () => {
     const { getByText } = render(
       <VirtualAccountNumberInfo

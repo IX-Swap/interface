@@ -22,10 +22,6 @@ describe('ClosedDSOFilter', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<ClosedDSOsFilter />)
-  })
-
   it('calls handleChange correctly when select has value', () => {
     const objResponse = {
       getFilterValue: jest.fn(() => {}),

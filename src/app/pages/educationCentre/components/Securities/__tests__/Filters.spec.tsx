@@ -12,10 +12,6 @@ describe('Filters', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<Filters view='grid' toggleView={() => {}} />)
-  })
-
   it('renders AppIcon when view === grid', () => {
     render(<Filters view='grid' toggleView={() => {}} showViewToggle />)
 

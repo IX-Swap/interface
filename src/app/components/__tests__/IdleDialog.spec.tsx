@@ -13,19 +13,6 @@ describe('IdleDialog', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(
-      <IdleDialog
-        open
-        closeDialog={mockClose}
-        reset={mockReset}
-        logout={mockLogout}
-        logoutTimer={10}
-        resetLogoutTimer={mockResetLogoutTimer}
-      />
-    )
-  })
-
   it('calls keep logged in button correctly', () => {
     const { getByRole } = render(
       <IdleDialog

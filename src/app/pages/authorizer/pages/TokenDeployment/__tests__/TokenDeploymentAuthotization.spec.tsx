@@ -22,10 +22,6 @@ describe('TokenDeploymentAuthorization', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<TokenDeploymentAuthorization />)
-  })
-
   it('renders null when data is undefined', () => {
     const objResponse = generateQueryResult({
       data: undefined,

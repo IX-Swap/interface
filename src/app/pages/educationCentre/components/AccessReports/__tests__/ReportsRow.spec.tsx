@@ -40,10 +40,6 @@ describe('ReportsRow', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<ReportRow item={report} />)
-  })
-
   it('renders correct title when report is atlas-one', () => {
     const { getByText } = render(<ReportRow item={report} />)
     expect(getByText('Private Capital Markets for All')).toBeTruthy()

@@ -25,10 +25,6 @@ describe('DataCard', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<DataCard link={link} variant={0} />)
-  })
-
   it('does not render render number when status is loading', () => {
     const objResponse = {
       total: 100,

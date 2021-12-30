@@ -8,10 +8,6 @@ describe('KeyData', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<KeyData data={sampleSecurity} />)
-  })
-
   it('renders correct value for Estimated Market Capitalization', () => {
     const { getByText } = render(<KeyData data={sampleSecurity} />)
 

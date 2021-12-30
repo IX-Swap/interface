@@ -29,10 +29,6 @@ describe('DialogEnabledToggle', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<DialogEnabledToggle {...props} />)
-  })
-
   it('calls useEnabledToggle hook with correct ars', () => {
     render(<DialogEnabledToggle {...props} />)
 

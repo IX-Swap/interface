@@ -7,10 +7,6 @@ describe('FundSourceHeader', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<FundSourceHeader />)
-  })
-
   it('renders content correctly', () => {
     const { getByText } = render(<FundSourceHeader />)
 

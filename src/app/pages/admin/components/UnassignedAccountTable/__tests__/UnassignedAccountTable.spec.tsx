@@ -29,10 +29,6 @@ describe('UnassignedAccountTable', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<UnassignedAccountsTable />)
-  })
-
   it('renders TableView with correct props', () => {
     render(<UnassignedAccountsTable />)
 

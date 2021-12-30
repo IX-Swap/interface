@@ -24,10 +24,6 @@ describe('ApproveSelectionButton', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<RejectSelectionButton reject={rejectAction} disabled={false} />)
-  })
-
   it('renders ApproveButton with correct props', () => {
     render(<RejectSelectionButton reject={rejectAction} disabled={false} />)
 

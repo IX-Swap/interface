@@ -17,14 +17,6 @@ describe('BannerBaseFields', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(
-      <Form>
-        <BannerBaseFields />
-      </Form>
-    )
-  })
-
   it('renders editable fields correctly', () => {
     render(
       <Form>

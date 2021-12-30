@@ -30,10 +30,6 @@ describe('CommitmentFormCancelButton', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<CommitmentFormCancelButton {...props} />)
-  })
-
   it('renders AppRouterLink with correct props', () => {
     render(
       <Route path={InvestRoute.makeInvestment}>

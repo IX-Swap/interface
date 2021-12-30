@@ -29,14 +29,6 @@ describe('AmountRaised', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    jest
-      .spyOn(useDSOByIdHook, 'useDSOById')
-      .mockReturnValue({ data: dso, isSuccess: true } as any)
-
-    render(<AmountRaised />)
-  })
-
   it.skip('renders with props without error', () => {
     jest
       .spyOn(useDSOByIdHook, 'useDSOById')

@@ -14,14 +14,6 @@ describe('FormError', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(
-      <Form>
-        <FormError {...props} />
-      </Form>
-    )
-  })
-
   it('does not calls render function if there is no error', () => {
     jest.spyOn(useFormErrorHook, 'useFormError').mockReturnValue({
       hasError: false,

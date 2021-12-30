@@ -31,10 +31,6 @@ describe('SkipButton', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<SkipButton mutation={mutation} />)
-  })
-
   it('opens and closes dialog boxes by pressing skip and cancel button respectively', async () => {
     const { container, getByText, getByRole, queryByText } = render(
       <SkipButton mutation={mutation} />

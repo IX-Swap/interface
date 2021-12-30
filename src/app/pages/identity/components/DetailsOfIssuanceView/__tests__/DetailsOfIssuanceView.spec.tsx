@@ -10,19 +10,6 @@ describe('DetailsOfIssuanceView', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    const objResponse = generateQueryResult({
-      data: detailsOfIssuance,
-      isLoading: false
-    })
-
-    jest
-      .spyOn(useDetailsOfIssuance, 'useDetailsOfIssuance')
-      .mockImplementation(() => objResponse as any)
-
-    render(<DetailsOfIssuanceView />)
-  })
-
   it('renders null when isLoading', () => {
     const objResponse = generateQueryResult({
       data: detailsOfIssuance,

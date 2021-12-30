@@ -18,10 +18,6 @@ describe('TopPanel', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<TopPanel />)
-  })
-
   it('renders correct component based on path', () => {
     render(
       <MemoryRouter initialEntries={['/app/settings/setup-2fa']}>

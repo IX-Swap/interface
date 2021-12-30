@@ -11,10 +11,6 @@ describe('Trades', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<Trades />)
-  })
-
   it('renders correct styles if theme type is dark', () => {
     jest.spyOn(useAppBreakpoints, 'useAppBreakpoints').mockReturnValueOnce({
       theme: {

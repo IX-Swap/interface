@@ -20,14 +20,6 @@ describe('Preview', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(
-      <Form>
-        <AlertAndOTP {...props} />
-      </Form>
-    )
-  })
-
   it('renders alert and otp input', () => {
     render(
       <Form>

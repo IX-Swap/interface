@@ -7,10 +7,6 @@ describe('Info', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<Info title='Info' info={['one', 'two']} />)
-  })
-
   it('renders props correctly', () => {
     const { getByText } = render(<Info title='Info' info={['one', 'two']} />)
 

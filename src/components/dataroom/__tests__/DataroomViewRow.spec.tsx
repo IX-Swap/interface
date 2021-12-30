@@ -26,10 +26,6 @@ describe('DataroomViewRow', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<DataroomViewRow {...props} />)
-  })
-
   it('renders DataroomColumns correctly', () => {
     render(<DataroomViewRow {...props} />)
 

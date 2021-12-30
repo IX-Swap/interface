@@ -10,14 +10,6 @@ describe('RedirectToDefaultPage', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    jest
-      .spyOn(useIsAccredited, 'useIsAccredited')
-      .mockImplementation(() => true as any)
-
-    render(<RedirectToDefaultPage />)
-  })
-
   it('renders Identity Page when isAccredited is false', () => {
     jest
       .spyOn(useIsAccredited, 'useIsAccredited')

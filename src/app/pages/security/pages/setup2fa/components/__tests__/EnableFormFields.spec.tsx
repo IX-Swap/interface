@@ -13,14 +13,6 @@ describe('EnableFormFields', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(
-      <Form>
-        <EnableFormFields />
-      </Form>
-    )
-  })
-
   it('renders otp field correctly', () => {
     render(
       <Form defaultValues={{ opt: '123456' }}>

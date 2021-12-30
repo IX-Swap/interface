@@ -25,14 +25,6 @@ describe('FundSourceSlider', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(
-      <Form>
-        <FundSourceSlider {...props} />
-      </Form>
-    )
-  })
-
   it('renders the slider disabled by default', () => {
     render(
       <Form>

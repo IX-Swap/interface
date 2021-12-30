@@ -18,10 +18,6 @@ describe('CommitmentInvestForm', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<CommitmentInvestForm submit={submitFn} close={closeFn} open />)
-  })
-
   it('renders otp dialog correctly', () => {
     render(<CommitmentInvestForm submit={submitFn} close={closeFn} open />)
     expect(CommitmentInvestOTPDialog).toHaveBeenCalledWith(

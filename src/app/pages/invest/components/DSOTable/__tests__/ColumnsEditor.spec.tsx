@@ -19,10 +19,6 @@ describe('ColumnsEditor', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<ColumnsEditor {...props} />)
-  })
-
   it('renders correct title', () => {
     const { getByText } = render(<ColumnsEditor {...props} />)
 

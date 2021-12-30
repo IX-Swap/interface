@@ -12,10 +12,6 @@ describe('SecurityTradingView', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<SecurityTradingView data={sampleSecurity} />)
-  })
-
   it('renders currentPrice correctly', () => {
     jest
       .spyOn(UseTimeSeriesHook, 'useTimeSeries')

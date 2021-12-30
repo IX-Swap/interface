@@ -18,10 +18,6 @@ describe('VTDirectionFilter', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<VTDirectionFilter />)
-  })
-
   it('renders input label with correct props', () => {
     render(<VTDirectionFilter />)
 

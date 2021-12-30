@@ -21,14 +21,6 @@ describe('DSOBaseFields', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(
-      <Form>
-        <DSOBaseFields {...props} />
-      </Form>
-    )
-  })
-
   it('renders EditableField with correct props', () => {
     render(
       <Form>

@@ -8,14 +8,6 @@ describe('RegionalMap', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    jest
-      .spyOn(useInvestorsByCountryHook, 'useInvestorsByCountry')
-      .mockReturnValue({ data: [], isLoading: false } as any)
-
-    render(<RegionalMap />)
-  })
-
   it('renders nothing if loading', () => {
     jest
       .spyOn(useInvestorsByCountryHook, 'useInvestorsByCountry')

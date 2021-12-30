@@ -8,14 +8,6 @@ describe('RevokeAccessFields', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(
-      <Form>
-        <RevokeAccessFields />
-      </Form>
-    )
-  })
-
   it('renders components correctly', () => {
     const { getByText } = render(
       <Form>

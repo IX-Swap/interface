@@ -28,10 +28,6 @@ describe('CorporateOnboardingSteps', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<CorporateOnboardingSteps />)
-  })
-
   it('renders OnboardingSteps correctly', () => {
     render(<CorporateOnboardingSteps />)
 

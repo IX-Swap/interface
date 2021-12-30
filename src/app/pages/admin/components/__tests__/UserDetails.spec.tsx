@@ -19,10 +19,6 @@ describe('UserDetails', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<UserDetails data={managedUser} />)
-  })
-
   it('renders components with correct props', () => {
     const { getByText } = render(<UserDetails data={managedUser} />)
 

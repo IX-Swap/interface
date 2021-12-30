@@ -11,16 +11,6 @@ describe('ViewListedTokens', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(
-      <ViewListedTokens
-        radioValue={'hex'}
-        onRadioChange={radioHandleChange}
-        onButtonClick={buttonHandleClick}
-      />
-    )
-  })
-
   it('invokes onButtonClick function on button click', () => {
     const { getByTestId } = render(
       <ViewListedTokens

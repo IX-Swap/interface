@@ -15,10 +15,6 @@ describe('StatCard', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<StatCard {...props} />)
-  })
-
   it('renders props correctly', () => {
     const { getByText } = render(<StatCard {...props} />)
 

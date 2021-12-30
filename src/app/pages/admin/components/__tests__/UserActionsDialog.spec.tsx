@@ -22,10 +22,6 @@ describe('UserActionsDialog', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<UserActionsDialog {...dialogProps} />)
-  })
-
   it('renders props correctly', () => {
     const { getByText } = render(<UserActionsDialog {...dialogProps} />)
 

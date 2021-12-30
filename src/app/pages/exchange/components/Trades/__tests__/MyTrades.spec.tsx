@@ -8,18 +8,6 @@ describe('MyTrades', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    const objResponse = {
-      data: []
-    }
-
-    jest
-      .spyOn(useTradeHistory, 'useTradeHistory')
-      .mockImplementation(() => objResponse as any)
-
-    render(<MyTrades />)
-  })
-
   it('renders null when data is undefined', () => {
     const objResponse = {
       data: undefined

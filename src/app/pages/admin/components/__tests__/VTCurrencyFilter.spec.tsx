@@ -19,10 +19,6 @@ describe('VTCurrencyFilter', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<VTCurrencyFilter />)
-  })
-
   it('renders empty box components when isMobile is true', () => {
     jest.spyOn(useAppBreakpoints, 'useAppBreakpoints').mockReturnValueOnce({
       isMobile: true

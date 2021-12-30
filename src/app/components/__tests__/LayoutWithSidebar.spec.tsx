@@ -16,10 +16,6 @@ describe('LayoutWithSidebar', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<LayoutWithSidebar {...props} />)
-  })
-
   it('renders sidebar and content', () => {
     render(<LayoutWithSidebar {...props} />)
 

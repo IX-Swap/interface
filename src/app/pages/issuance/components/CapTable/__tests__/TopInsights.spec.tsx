@@ -12,10 +12,6 @@ describe('TopInsights', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<TopInsights />)
-  })
-
   it('renders components correctly', () => {
     render(<TopInsights />)
     expect(TopInvestors).toHaveBeenCalledWith(

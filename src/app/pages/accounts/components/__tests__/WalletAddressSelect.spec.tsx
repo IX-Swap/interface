@@ -21,10 +21,6 @@ describe('WalletAddressSelect', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<WalletAddressSelect />)
-  })
-
   it('returns null when data is undefined', () => {
     const objResponse = generateQueryResult({
       data: undefined,

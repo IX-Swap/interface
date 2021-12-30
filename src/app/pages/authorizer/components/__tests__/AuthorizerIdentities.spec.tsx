@@ -21,10 +21,6 @@ describe('AuthorizerIdentities', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<AuthorizerIdentities {...props} />)
-  })
-
   it('renders CorporateInfo once per corporates with correct props', () => {
     render(<AuthorizerIdentities {...props} />)
 

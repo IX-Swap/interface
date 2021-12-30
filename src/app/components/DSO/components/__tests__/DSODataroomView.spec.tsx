@@ -26,10 +26,6 @@ describe('DSODataroomView', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<DSODataroomView dso={dso} />)
-  })
-
   it('renders title when showTitle is false', () => {
     render(<DSODataroomView dso={dso} showTitle={false} />)
 

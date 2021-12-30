@@ -15,10 +15,6 @@ describe('DSOTeamAddButton', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<DSOChapterAddButton {...props} />)
-  })
-
   it('invokes append function with index on button click', async () => {
     const { getByRole } = render(<DSOChapterAddButton {...props} />)
 

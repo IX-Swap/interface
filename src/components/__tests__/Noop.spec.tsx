@@ -7,10 +7,6 @@ describe('Noop', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<Noop />)
-  })
-
   it('renders nothing', () => {
     const { container } = render(<Noop />)
 

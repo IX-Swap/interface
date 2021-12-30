@@ -15,10 +15,6 @@ describe('Actions', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<Actions {...props} />)
-  })
-
   it('renders disabled IconButton component when downloadFile function isLoading', () => {
     const downloadFileFn = jest.fn()
     const downloadFile = [downloadFileFn, { isLoading: true }]

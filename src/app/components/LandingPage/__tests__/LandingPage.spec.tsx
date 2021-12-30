@@ -24,10 +24,6 @@ describe('LandingPage', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<LandingPage {...props} />)
-  })
-
   it('renders LandingPageItem with correct props for each link', () => {
     render(<LandingPage {...props} />)
 

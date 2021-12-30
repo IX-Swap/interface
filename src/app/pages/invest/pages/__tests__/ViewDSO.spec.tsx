@@ -28,14 +28,6 @@ describe('ViewDSO', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    jest
-      .spyOn(useDSOByIdHook, 'useDSOById')
-      .mockReturnValue({ isLoading: false, data: dso } as any)
-
-    render(<ViewDSO />)
-  })
-
   it('renders nothing if loading', () => {
     jest
       .spyOn(useDSOByIdHook, 'useDSOById')

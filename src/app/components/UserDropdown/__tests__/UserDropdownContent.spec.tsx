@@ -25,10 +25,6 @@ describe('UserDropdownContent', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<UserDropdownContent {...props} />)
-  })
-
   it('renders UserDropdownItem with correct props', () => {
     render(<UserDropdownContent {...props} />)
 

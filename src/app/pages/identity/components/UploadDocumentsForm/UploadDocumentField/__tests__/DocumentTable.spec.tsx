@@ -27,14 +27,6 @@ describe('DocumentTable', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(
-      <Form>
-        <DocumentTable {...props} />
-      </Form>
-    )
-  })
-
   it('renders document lists correctly', () => {
     render(
       <Form>

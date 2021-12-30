@@ -26,10 +26,6 @@ describe('CommitmentIssuance', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<CommitmentIssuance {...props} />)
-  })
-
   it('renders CommitmentIssuanceForm with correct props', () => {
     render(<CommitmentIssuance {...props} />)
 

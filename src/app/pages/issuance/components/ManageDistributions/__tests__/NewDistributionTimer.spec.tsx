@@ -49,10 +49,6 @@ describe('NextDistributionTimer', () => {
     dateNowSpy.mockRestore()
   })
 
-  it.skip('renders without errors', () => {
-    render(<NextDistributionTimer />)
-  })
-
   it('renders title with correct props', () => {
     render(<NextDistributionTimer />)
 

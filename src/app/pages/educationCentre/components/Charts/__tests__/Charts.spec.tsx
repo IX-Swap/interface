@@ -13,10 +13,6 @@ describe('Charts', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<Charts data={[sampleSecurity]} isLoading={false} />)
-  })
-
   it('renders loading indicator when isLoading', () => {
     render(<Charts data={[sampleSecurity]} isLoading={true} />)
     expect(LoadingIndicator).toHaveBeenCalled()

@@ -13,10 +13,6 @@ describe('DSOTermsView', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<DSOTermsView dso={dso} />)
-  })
-
   it('render data correctly', () => {
     const { getByText } = render(<DSOTermsView dso={dso} />)
 

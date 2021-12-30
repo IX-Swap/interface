@@ -15,10 +15,6 @@ describe('renderStatusColumn', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<>{renderStatusColumn('Test Status')}</>)
-  })
-
   it('renders AuthorizableStatus with correct props', () => {
     render(<>{renderStatusColumn('Test Status')}</>)
 

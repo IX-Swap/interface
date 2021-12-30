@@ -26,10 +26,6 @@ describe('CommitmentTableActions', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<CommitmentsTableActions item={commitment} />)
-  })
-
   it.skip('renders with correct initial props', () => {
     render(<CommitmentsTableActions item={commitment} />)
     expect(CommitmentInvestForm).toHaveBeenCalledWith(

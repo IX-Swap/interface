@@ -18,10 +18,6 @@ describe('NotificationsDropdownContent', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<NotificationsDropdownContent {...props} />)
-  })
-
   it('renders ViewAllNotifications with correct props', () => {
     render(<NotificationsDropdownContent {...props} />)
 

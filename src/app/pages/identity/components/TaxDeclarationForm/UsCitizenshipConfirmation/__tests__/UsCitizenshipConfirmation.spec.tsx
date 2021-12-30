@@ -8,14 +8,6 @@ describe('UsCitizenshipConfirmation', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(
-      <Form>
-        <UsCitizenshipConfirmation />
-      </Form>
-    )
-  })
-
   it('displays label correctly', () => {
     const { getByText } = render(
       <Form>

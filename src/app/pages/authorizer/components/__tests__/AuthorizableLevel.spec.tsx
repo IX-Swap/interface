@@ -12,10 +12,6 @@ describe('AuthorizableLevel', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<AuthorizableLevel />)
-  })
-
   it('renders nothing if level is undefined', () => {
     const { container } = render(
       <AuthorizableLevel {...props} level={undefined} />

@@ -21,10 +21,6 @@ describe('UserIdentitySelect', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<UserIdentitySelect {...props} />)
-  })
-
   it('renders "No Identity Created Yet" if hasIdentity is false', () => {
     const { getByText } = render(<UserIdentitySelect {...props} />)
 

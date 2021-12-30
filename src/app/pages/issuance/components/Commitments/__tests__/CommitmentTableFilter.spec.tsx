@@ -26,10 +26,6 @@ describe('CommitmentTableFilter', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<CommitmentTableFilter />)
-  })
-
   it('renders SearchFilter with correct props', () => {
     render(<CommitmentTableFilter />)
     expect(SearchFilter).toHaveBeenCalledTimes(1)

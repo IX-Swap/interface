@@ -12,10 +12,6 @@ describe('DateFilter', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<DateFilter name='fromDate' label='From' />)
-  })
-
   it('renders DateTimePickerComponent with correct props', () => {
     render(<DateFilter name='fromDate' label='From' />)
     expect(DateTimePickerComponent).toHaveBeenCalledTimes(1)

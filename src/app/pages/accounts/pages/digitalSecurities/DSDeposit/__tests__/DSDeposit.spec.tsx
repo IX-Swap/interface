@@ -13,10 +13,6 @@ describe('DepositView', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<DSDeposit />)
-  })
-
   it('renders DepositForm component', () => {
     render(<DSDeposit />)
 

@@ -16,10 +16,6 @@ describe('VTTransferTypesFilter', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<VTTransferTypesFilter />)
-  })
-
   it('renders empty box components when isMobile is true', () => {
     jest.spyOn(useAppBreakpoints, 'useAppBreakpoints').mockReturnValueOnce({
       isMobile: true

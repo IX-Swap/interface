@@ -27,14 +27,6 @@ describe('DSOTerms', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(
-      <Form>
-        <DSOTerms />
-      </Form>
-    )
-  })
-
   it('renders EditableField with correct props', () => {
     render(
       <Form>

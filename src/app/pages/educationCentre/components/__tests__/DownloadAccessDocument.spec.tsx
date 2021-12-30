@@ -10,17 +10,6 @@ describe('DownloadAccessDocument', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    const downloadDocumentFn = jest.fn()
-    const downloadDocument = [downloadDocumentFn, { isLoading: false }]
-
-    jest
-      .spyOn(useDownloadRawDocument, 'useDownloadRawDocument')
-      .mockImplementation(() => downloadDocument as any)
-
-    render(<DownloadAccessDocument documentId={emptyFile._id} />)
-  })
-
   it('calls correct function when button is clicked', () => {
     const downloadDocumentFn = jest.fn()
     const downloadDocument = [downloadDocumentFn, { isLoading: false }]

@@ -21,10 +21,6 @@ describe('DSOCardContent', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<DSOCardContent {...props} />)
-  })
-
   it('renders DSOInvestLink with correct props', () => {
     render(<DSOCardContent {...props} />)
 

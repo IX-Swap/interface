@@ -47,10 +47,6 @@ describe('ViewUser', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<ViewUser />)
-  })
-
   it('renders componenst with correct props', () => {
     render(<ViewUser />)
 

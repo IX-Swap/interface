@@ -33,10 +33,6 @@ describe('CompactRow', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<CompactRow {...props} />)
-  })
-
   it('renders actions correctly', () => {
     render(<CompactRow {...props} />)
 

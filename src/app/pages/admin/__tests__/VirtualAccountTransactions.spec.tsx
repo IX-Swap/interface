@@ -31,10 +31,6 @@ describe('VirtualAccountTransactions', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<VirtualAccountTransactions />)
-  })
-
   it('renders VSpacer components when isMiniLaptop is false', () => {
     jest.spyOn(useAppBreakpoints, 'useAppBreakpoints').mockReturnValueOnce({
       isMiniLaptop: false

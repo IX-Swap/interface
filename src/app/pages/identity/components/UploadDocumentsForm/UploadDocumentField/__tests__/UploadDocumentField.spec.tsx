@@ -18,14 +18,6 @@ describe('UploadDocumentField', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(
-      <Form>
-        <UploadDocumentField {...props} />
-      </Form>
-    )
-  })
-
   it('renders props correctly', () => {
     const { container, getByText, getByTitle } = render(
       <Form>

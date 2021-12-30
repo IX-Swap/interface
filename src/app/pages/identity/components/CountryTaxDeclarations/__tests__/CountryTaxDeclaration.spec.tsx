@@ -1,15 +1,10 @@
 import { CountryTaxDeclaration } from 'app/pages/identity/components/CountryTaxDeclarations/CountryTaxDeclaration'
 import React from 'react'
 import { render } from 'test-utils'
-import { corporate } from '__fixtures__/identity'
 
 describe('CountryTaxDeclaration', () => {
   afterEach(async () => {
     jest.clearAllMocks()
-  })
-
-  it.skip('renders without errors', () => {
-    render(<CountryTaxDeclaration taxResidencies={corporate.taxResidencies} />)
   })
 
   it('renders null when taxResidencies is undefined', () => {

@@ -9,10 +9,6 @@ describe('BlockchainWalletsCount', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<BlockchainWalletsCount count={count} />)
-  })
-
   it('renders title with correct text', () => {
     const { getByTestId } = render(<BlockchainWalletsCount count={count} />)
     expect(getByTestId('title')).toHaveTextContent('Blockchain Wallets')

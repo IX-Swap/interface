@@ -7,10 +7,6 @@ describe('Side', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<Side side='ASK' />)
-  })
-
   it('renders SELL when side is BID', () => {
     const { getByText } = render(<Side side='BID' />)
     expect(getByText('SELL')).toBeTruthy()

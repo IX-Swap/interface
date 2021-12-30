@@ -18,10 +18,6 @@ describe('CustodyDetailsDialog', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<CustodyDetailsDialog />)
-  })
-
   it('renders empty component when data is undefined', () => {
     jest
       .spyOn(useGetCustodianDetails, 'useGetCustodianDetails')

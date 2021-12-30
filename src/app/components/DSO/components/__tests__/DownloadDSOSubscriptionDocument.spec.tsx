@@ -22,10 +22,6 @@ describe('DownloadDSOSubscriptionDocument', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<DownloadDSOSubscriptionDocument {...props} />)
-  })
-
   it('invokes download function on button click', async () => {
     const { getByRole } = render(<DownloadDSOSubscriptionDocument {...props} />)
 

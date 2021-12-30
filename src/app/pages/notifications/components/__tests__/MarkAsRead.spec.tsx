@@ -26,10 +26,6 @@ describe('MarkAsRead', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<MarkAsRead {...props} />)
-  })
-
   it('invokes useMarkAsRead mutation fn when button is clicked', async () => {
     const { getByRole } = render(<MarkAsRead {...props} />)
 

@@ -27,10 +27,6 @@ describe('DSO', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<DSO {...props} />)
-  })
-
   it('renders nothing if loading', () => {
     jest
       .spyOn(useDSOByIdHook, 'useDSOById')

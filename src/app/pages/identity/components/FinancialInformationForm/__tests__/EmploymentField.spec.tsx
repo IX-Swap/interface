@@ -8,14 +8,6 @@ describe('EmploymentField', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(
-      <Form>
-        <EmploymentField />
-      </Form>
-    )
-  })
-
   it('renders fields correctly', () => {
     const { getByLabelText, queryAllByText } = render(
       <Form>

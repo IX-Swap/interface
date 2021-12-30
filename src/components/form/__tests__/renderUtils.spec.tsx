@@ -8,10 +8,6 @@ describe('queryStatusRenderer', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<>{queryStatusRenderer(QueryStatus.Loading)}</>)
-  })
-
   it('renders loading if loading', () => {
     const { container } = render(
       <>{queryStatusRenderer(QueryStatus.Loading)}</>

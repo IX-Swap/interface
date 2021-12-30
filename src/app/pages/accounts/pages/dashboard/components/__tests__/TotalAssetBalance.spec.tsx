@@ -9,10 +9,6 @@ describe('TotalAssetBalance', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<TotalAssetBalance value={totalAssetBalance} />)
-  })
-
   it('renders title with correct text', () => {
     const { getByText } = render(
       <TotalAssetBalance value={totalAssetBalance} />

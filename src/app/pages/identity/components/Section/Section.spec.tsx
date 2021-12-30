@@ -18,10 +18,6 @@ describe('Section', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<Section {...props} />)
-  })
-
   it('renders footer correctly', () => {
     const { queryByTestId } = render(<Section {...props} />)
 

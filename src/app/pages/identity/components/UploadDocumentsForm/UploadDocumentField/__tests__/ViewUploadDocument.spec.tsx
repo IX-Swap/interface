@@ -31,14 +31,6 @@ describe('ViewUploadDocument', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(
-      <Form>
-        <ViewUploadedDocument documentId={document._id} />
-      </Form>
-    )
-  })
-
   it('handles download correctly', () => {
     const { container } = render(
       <Form>

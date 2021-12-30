@@ -14,10 +14,6 @@ describe('NotificationView', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<NotificationView {...props} />)
-  })
-
   it('renders message, subject, createdAt correctly', () => {
     const { container } = render(<NotificationView {...props} />)
 

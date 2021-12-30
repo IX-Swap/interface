@@ -31,10 +31,6 @@ describe('TopList', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<TopList {...props} />)
-  })
-
   it('renders IndividualAvatar when user is not undefined', () => {
     const { getByText } = render(<TopList {...props} />)
 

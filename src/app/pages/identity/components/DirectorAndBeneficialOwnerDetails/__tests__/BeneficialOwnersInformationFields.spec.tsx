@@ -22,14 +22,6 @@ describe('BeneficialOwnersFields', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(
-      <Form>
-        <BeneficialOwnersInformationFields {...props} />
-      </Form>
-    )
-  })
-
   it('renders labels and components correctly', () => {
     const { getByLabelText } = render(
       <Form defaultValues={defaultValues}>

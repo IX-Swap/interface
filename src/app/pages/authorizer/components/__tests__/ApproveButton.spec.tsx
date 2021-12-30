@@ -29,14 +29,6 @@ describe('ApproveButton', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(
-      <Form>
-        <ApproveButton {...props} />
-      </Form>
-    )
-  })
-
   it('invokes approve when button is clicked', async () => {
     const { getByText } = render(
       <Form defaultValues={{ comment: '', sharedWithUser: false }}>

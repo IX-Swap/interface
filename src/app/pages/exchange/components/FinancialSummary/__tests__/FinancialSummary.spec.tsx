@@ -14,10 +14,6 @@ describe('FinancialSummary', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<FinancialSummary />)
-  })
-
   it('renders view details link when marketData is undefined', () => {
     jest.spyOn(useMarket, 'useMarket').mockReturnValue(
       generateQueryResult({

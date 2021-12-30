@@ -8,17 +8,6 @@ describe('InvestorLiveOrderBook', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    const objResponse = {
-      data: { asks: [], bids: [] }
-    }
-
-    jest
-      .spyOn(useOrderBook, 'useOrderBook')
-      .mockImplementation(() => objResponse as any)
-    render(<InvestorLiveOrderBook tokenSymbol='IXPS' currency='SGD' />)
-  })
-
   it('renders null when data is undefined', () => {
     const objResponse = {
       data: undefined

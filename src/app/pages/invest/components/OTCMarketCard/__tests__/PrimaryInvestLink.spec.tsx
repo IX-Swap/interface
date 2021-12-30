@@ -36,10 +36,6 @@ describe('PrimaryInvestLink', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<PrimaryInvestLink {...primaryProps} />)
-  })
-
   it('renders Button with correct props when type is Primary', () => {
     render(<PrimaryInvestLink {...primaryProps} />)
 

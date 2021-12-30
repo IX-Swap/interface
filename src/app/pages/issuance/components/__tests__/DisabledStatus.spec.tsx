@@ -7,10 +7,6 @@ describe('DisabledStatus', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<DisabledStatus disabled={true} />)
-  })
-
   it('renders disabled when disabled is true', () => {
     const { getByText } = render(<DisabledStatus disabled={true} />)
     expect(getByText(/disabled/i)).toBeTruthy()

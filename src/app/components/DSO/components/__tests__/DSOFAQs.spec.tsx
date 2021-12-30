@@ -19,14 +19,6 @@ describe('DSOFAQs', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(
-      <Form defaultValues={{ faqs: [] }}>
-        <DSOFAQs />
-      </Form>
-    )
-  })
-
   it('renders DSOTeamAddButton', () => {
     render(
       <Form defaultValues={{ faqs: [] }}>

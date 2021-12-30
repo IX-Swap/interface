@@ -13,14 +13,6 @@ describe('LoginFields', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(
-      <Form>
-        <LoginFields />
-      </Form>
-    )
-  })
-
   it('renders email and password', () => {
     render(
       <Form>

@@ -11,14 +11,6 @@ describe('BannerTitle', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(
-      <Form>
-        <BannerTitle text={'title'} onChange={changeHandler} />
-      </Form>
-    )
-  })
-
   it('calls onChange handler when input has changed', async () => {
     const { getByTestId } = render(
       <Form>

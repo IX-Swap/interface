@@ -13,14 +13,6 @@ describe('PasswordField', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(
-      <Form>
-        <PasswordField />
-      </Form>
-    )
-  })
-
   it('renders components correctly', () => {
     const { rerender } = render(
       <Form>

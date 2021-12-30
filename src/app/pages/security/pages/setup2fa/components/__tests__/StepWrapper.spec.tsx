@@ -16,10 +16,6 @@ describe('StepWrapper', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<StepWrapper {...props} />)
-  })
-
   it('renders props correctly', () => {
     const { getByText } = render(<StepWrapper {...props} />)
 

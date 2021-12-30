@@ -23,10 +23,6 @@ describe('UserActions', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<UserActions data={managedUser} />)
-  })
-
   it('renders components with correct props', () => {
     render(<UserActions data={managedUser} />)
 

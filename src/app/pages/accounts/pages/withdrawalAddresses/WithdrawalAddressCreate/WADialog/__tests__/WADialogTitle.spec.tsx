@@ -7,10 +7,6 @@ describe('WADialogTitle', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<WADialogTitle label='Test label' />)
-  })
-
   it('renders label correctly', () => {
     const { container } = render(<WADialogTitle label='Test label' />)
 

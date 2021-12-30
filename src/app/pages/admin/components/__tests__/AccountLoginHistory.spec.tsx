@@ -37,10 +37,6 @@ describe('AccountLoginHitory', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<AccountLoginHistory />)
-  })
-
   it('renders components correctly', () => {
     render(
       <Route path={AdminRoute.view}>

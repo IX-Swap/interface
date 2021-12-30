@@ -10,10 +10,6 @@ describe('BooleanColumn', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<BooleanColumn value={true} />)
-  })
-
   it('renders default labels and colors when none is provided', () => {
     const { getByText, container, rerender } = render(
       <BooleanColumn value={true} />

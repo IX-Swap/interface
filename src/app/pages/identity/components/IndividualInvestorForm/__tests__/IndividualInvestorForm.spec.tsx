@@ -79,10 +79,6 @@ describe('IndividualInvestorForm', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<IndividualInvestorForm />)
-  })
-
   it('renders loading text when isLoading', () => {
     const useIndividualIdentityResponse = generateQueryResult({
       data: individual,

@@ -18,10 +18,6 @@ describe('CancelOrderButton', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<CancelOrderButton order={orders[0]} />)
-  })
-
   it('calls mutate function correctly', () => {
     const { getByRole } = render(<CancelOrderButton order={order} />)
     const cancelButton = getByRole('button', {

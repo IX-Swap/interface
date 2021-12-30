@@ -20,10 +20,6 @@ describe('DialogConfirmRoleChange', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<DialogConfirmRoleChange {...props} />)
-  })
-
   it('renders nothing if open is false', () => {
     const { queryByTestId } = render(
       <DialogConfirmRoleChange {...props} open={false} />

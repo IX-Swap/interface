@@ -19,19 +19,6 @@ describe('Dropzone', () => {
     multiple: false
   }
 
-  it.skip('renders without error', () => {
-    jest.spyOn(useAuthHook, 'useAuth').mockReturnValue({
-      isAuthenticated: false,
-      user: undefined
-    })
-
-    render(
-      <Form>
-        <Dropzone {...props} />
-      </Form>
-    )
-  })
-
   it('renders correct component when value is null and user is undefined', () => {
     jest.spyOn(useAuthHook, 'useAuth').mockReturnValue({
       isAuthenticated: false,

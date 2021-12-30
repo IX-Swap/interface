@@ -16,10 +16,6 @@ describe('SecuritiesMarketsTabs', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<SecuritiesMarketsTabs />)
-  })
-
   it('renders Securities as default Tab', () => {
     render(<SecuritiesMarketsTabs />)
     expect(Securities).toHaveBeenCalled()

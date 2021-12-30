@@ -32,10 +32,6 @@ describe('RejectionMessage', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<RejectionMessage {...props} />)
-  })
-
   it('renders nothing if data is undefined', () => {
     const { container } = render(
       <RejectionMessage {...props} data={undefined} />

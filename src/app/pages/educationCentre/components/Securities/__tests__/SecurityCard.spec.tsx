@@ -50,10 +50,6 @@ describe('SecurityCard', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<SecurityCard {...sampleSecurity} />)
-  })
-
   it('renders path correctly', () => {
     const { container } = render(<SecurityCard {...sampleSecurity} />)
     const link = container.querySelector('a') as HTMLAnchorElement

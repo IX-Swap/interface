@@ -25,15 +25,6 @@ describe('TargetFundraise', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    jest.spyOn(useDSOByIdHook, 'useDSOById').mockReturnValue({
-      data: dso,
-      isSuccess: true
-    } as any)
-
-    render(<TargetFundraise />)
-  })
-
   it('renders InsightValue correctly if not loaded', () => {
     jest.spyOn(useDSOByIdHook, 'useDSOById').mockReturnValue({
       data: dso,

@@ -31,10 +31,6 @@ describe('ActionEnableToggle', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<ActionEnableToggle enabled={true} />)
-  })
-
   it('renders components with correct props when enabled is true', () => {
     const { getByText } = render(<ActionEnableToggle enabled={true} />)
 

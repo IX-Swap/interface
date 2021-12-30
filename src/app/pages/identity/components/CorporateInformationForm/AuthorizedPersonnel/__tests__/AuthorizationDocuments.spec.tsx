@@ -15,14 +15,6 @@ describe('AuthorizationDocuments', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(
-      <Form>
-        <AuthorizationDocuments {...props} />
-      </Form>
-    )
-  })
-
   it('renders components and input fields correctly', () => {
     const { container, getByText } = render(
       <Form

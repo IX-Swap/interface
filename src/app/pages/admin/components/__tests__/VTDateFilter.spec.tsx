@@ -31,10 +31,6 @@ describe('VTDateFilter', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<VTDateFilter />)
-  })
-
   it('renders empty box components', () => {
     render(<VTDateFilter />)
 

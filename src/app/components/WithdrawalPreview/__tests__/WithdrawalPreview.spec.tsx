@@ -25,10 +25,6 @@ describe('WithdrawalPreview', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<WithdrawalPreview {...props} />)
-  })
-
   it('renders LabelledValue with correct props', () => {
     render(<WithdrawalPreview {...props} />)
 

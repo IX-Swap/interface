@@ -19,10 +19,6 @@ describe('News', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<News />)
-  })
-
   it.skip('renders with NewsList with correct props', () => {
     render(<News />)
     expect(NewsList).toBeCalledWith(

@@ -22,10 +22,6 @@ describe('CloseDealDialog', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<CloseDealDialog open={false} toggleOpen={handleToggle} />)
-  })
-
   it('renders Typography with correct props', () => {
     render(<CloseDealDialog open={true} toggleOpen={handleToggle} />)
 

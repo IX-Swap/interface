@@ -24,10 +24,6 @@ describe('ReportViewButton', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<ReportViewButton isAtlasOne={true} item={report} />)
-  })
-
   it('renders correct view button label when report type is atlas one', () => {
     const { getByText } = render(
       <ReportViewButton isAtlasOne={true} item={report} />

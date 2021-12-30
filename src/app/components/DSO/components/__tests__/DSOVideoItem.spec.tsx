@@ -22,20 +22,6 @@ describe('DSOVideoItem', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(
-      <Form>
-        <DSOVideoItem
-          defaultValue={videoLink}
-          isNew={true}
-          index={1}
-          fieldId={'213'}
-          remove={removeFn}
-        />
-      </Form>
-    )
-  })
-
   it('renders inputs with correct props ', () => {
     render(
       <Form>

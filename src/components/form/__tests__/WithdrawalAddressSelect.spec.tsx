@@ -5,7 +5,6 @@ import { useWithdrawalAddresses } from 'app/pages/accounts/pages/withdrawalAddre
 import { generateInfiniteQueryResult } from '__fixtures__/useQuery'
 import { QueryStatus } from 'react-query'
 import { LOADING_TEXT } from '../renderUtils'
-import { withdrawalAddress } from '__fixtures__/withdrawalAddress'
 
 jest.mock(
   'app/pages/accounts/pages/withdrawalAddresses/hooks/useWithdrawalAddresses'
@@ -18,13 +17,6 @@ const useWithdrawalAddressesMock = useWithdrawalAddresses as jest.Mock<
 describe('WithdrawalAddressSelect', () => {
   afterEach(async () => {
     jest.clearAllMocks()
-  })
-
-  it.skip('renders without error', () => {
-    useWithdrawalAddressesMock.mockReturnValue(
-      generateInfiniteQueryResult({ list: [withdrawalAddress] })
-    )
-    render(<WithdrawalAddressSelect />)
   })
 
   it('renders loading if loading', () => {

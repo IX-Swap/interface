@@ -25,14 +25,6 @@ describe('CorporateProfiles', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(
-      <Form defaultValues={defaultValues}>
-        <CorporateProfilesFields {...props} />
-      </Form>
-    )
-  })
-
   it('renders IndividualInfoFields for every element in field array', () => {
     const values = { [props.type]: [{}, {}, {}] }
     render(

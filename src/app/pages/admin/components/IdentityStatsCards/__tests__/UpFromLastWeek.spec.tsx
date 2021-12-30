@@ -7,10 +7,6 @@ describe('UpFromLastWeek', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<UpFromLastWeek value={'5'} />)
-  })
-
   it('renders props correctly', () => {
     const { getByText } = render(<UpFromLastWeek value={'5'} />)
 

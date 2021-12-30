@@ -14,11 +14,6 @@ describe('Onboarding2FA', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    jest.spyOn(useAuth, 'useAuth').mockImplementation(() => objResponse as any)
-    render(<Onboarding2FA />)
-  })
-
   it('renders a In Progress based on totpConfirmed is false', () => {
     jest.spyOn(useAuth, 'useAuth').mockImplementation(() => objResponse as any)
     const { getByText } = render(<Onboarding2FA />)

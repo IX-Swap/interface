@@ -25,10 +25,6 @@ describe('MyOrders', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<MyOrders showMyTrades />)
-  })
-
   it('renders correct tab when showMyTrades is true', () => {
     const { getByRole } = render(<MyOrders showMyTrades />)
     const openOrdersTabButton = getByRole('tab', {

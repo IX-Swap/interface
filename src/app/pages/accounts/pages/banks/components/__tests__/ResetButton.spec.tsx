@@ -9,15 +9,6 @@ describe('ResetButton', () => {
 
   afterEach(async () => {})
 
-  it.skip('renders without error', () => {
-    renderWithDepositStore(
-      <Form>
-        <ResetButton />
-      </Form>,
-      fakeDepositStore
-    )
-  })
-
   it('invokes clear on button click', async () => {
     const { getByRole } = renderWithDepositStore(
       <Form>

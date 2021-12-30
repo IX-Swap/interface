@@ -23,14 +23,6 @@ describe('ContentWrapper', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(
-      <OnboardingContentWrapper>
-        <div />
-      </OnboardingContentWrapper>
-    )
-  })
-
   it('does not render wrapper when not in the onboardingPages path', () => {
     history.push('/some/other/path')
 

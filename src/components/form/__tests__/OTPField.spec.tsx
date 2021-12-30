@@ -31,10 +31,6 @@ describe('OTPField', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<OTPField />)
-  })
-
   it('renders props correctly', () => {
     const { getByText } = render(<OTPField {...props} />)
 

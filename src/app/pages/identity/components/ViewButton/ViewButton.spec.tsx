@@ -13,10 +13,6 @@ describe('ViewButton', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<ViewButton link='/' />)
-  })
-
   it('renders AppRouterLink with default params & replace', () => {
     render(<ViewButton link='/' />)
 

@@ -22,10 +22,6 @@ describe('DeclarationList', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<DeclarationsList {...props} />)
-  })
-
   it('renders props correctly', () => {
     const { getByText } = render(<DeclarationsList {...props} />)
 

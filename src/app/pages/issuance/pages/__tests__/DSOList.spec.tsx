@@ -18,10 +18,6 @@ describe('DSOList', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<DSOList />)
-  })
-
   it('renders AppRouterLink with correct props', () => {
     render(<DSOList />)
 

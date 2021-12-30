@@ -18,18 +18,6 @@ describe('AdminCorporateIdentityView', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    const useAllCorporatesByUserIdResponse = generateInfiniteQueryResult({
-      list: [corporate],
-      isLoading: false
-    })
-
-    jest
-      .spyOn(useAllCorporatesByUserId, 'useAllCorporatesByUserId')
-      .mockImplementation(() => useAllCorporatesByUserIdResponse as any)
-    render(<AdminCorporateIdentityView />)
-  })
-
   it('renders null when isLoading = true', () => {
     const useAllCorporatesByUserIdResponse = generateInfiniteQueryResult({
       list: [corporate],

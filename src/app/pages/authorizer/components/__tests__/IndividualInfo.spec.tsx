@@ -25,10 +25,6 @@ describe('IndividualInfo', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<IndividualInfo {...props} />)
-  })
-
   // it('renders ViewDocument with correct props', () => {
   //   render(<IndividualInfo {...props} />)
   //

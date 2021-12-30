@@ -14,10 +14,6 @@ describe('UserRouter', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<UserRouter />)
-  })
-
   it('renders Approute with userId breadcrumb when userId is defined', () => {
     history.push({
       pathname: AdminRoute.view,

@@ -18,10 +18,6 @@ describe('WalletAddress', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<WalletAddress {...props} />)
-  })
-
   it('renders AppRouterLink if link is true', () => {
     render(<WalletAddress {...props} link />)
 

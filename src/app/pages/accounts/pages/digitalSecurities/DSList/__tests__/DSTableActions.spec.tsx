@@ -7,10 +7,6 @@ import { DSRoute } from '../../router/config'
 describe('DSTableActions', () => {
   const props = { item: balance }
 
-  it.skip('renders without error', () => {
-    render(<DSTableActions {...props} />)
-  })
-
   it('renders view, deposit & withdraw links', async () => {
     const { getByText } = render(<DSTableActions {...props} />)
 

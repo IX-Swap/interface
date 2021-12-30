@@ -16,10 +16,6 @@ describe('Header', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<Header />)
-  })
-
   it('renders UserDropdown with correct props', () => {
     render(<Header />)
 

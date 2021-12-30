@@ -39,10 +39,6 @@ describe('IndividualAccountSettings', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<IndividualAccountSettings activeRoles={roles} />)
-  })
-
   it('renders components with correct props', () => {
     const { getByText } = render(
       <IndividualAccountSettings activeRoles={roles} />

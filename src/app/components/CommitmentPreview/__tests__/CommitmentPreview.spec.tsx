@@ -8,7 +8,6 @@ import { commitment } from '__fixtures__/authorizer'
 import { LabelledValue } from 'components/LabelledValue'
 import { formatDateAndTime } from 'helpers/dates'
 import { formatMoney } from 'helpers/numbers'
-import { Commitment } from 'types/commitment'
 
 jest.mock('components/LabelledValue', () => ({
   LabelledValue: jest.fn(() => null)
@@ -26,17 +25,6 @@ describe('CommitmentPreview', () => {
 
   afterEach(async () => {
     jest.clearAllMocks()
-  })
-
-  it.skip('renders without error', () => {
-    render(
-      <CommitmentPreview
-        data={{
-          ...(props.data as Commitment),
-          withdrawalAddress: undefined
-        }}
-      />
-    )
   })
 
   it('renders nothing if data is null', () => {

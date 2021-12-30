@@ -40,10 +40,6 @@ describe('DSOPreview', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<DSOPreview {...props} />)
-  })
-
   it('renders DSOToken', () => {
     render(<DSOPreview {...props} />)
 

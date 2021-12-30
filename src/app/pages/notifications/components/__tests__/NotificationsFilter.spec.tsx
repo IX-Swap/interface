@@ -20,10 +20,6 @@ describe('NotificationsFilter', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<NotificationsFilter />)
-  })
-
   it('checks filter checkbox based on filter value from hook', async () => {
     const { getByLabelText } = render(<NotificationsFilter />)
 

@@ -28,10 +28,6 @@ describe('CapTablePageHeader', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<CapTablePageHeader />)
-  })
-
   it('renders correct token name', () => {
     const { getByText } = render(<CapTablePageHeader />)
     expect(getByText(dso.tokenName)).toBeTruthy()

@@ -22,10 +22,6 @@ describe('ColumnsEditorItem', () => {
     render(<ColumnsEditorItem {...props} />)
   })
 
-  it.skip('renders without error if selected', () => {
-    render(<ColumnsEditorItem {...props} isSelected />)
-  })
-
   it('renders button and label correctly', () => {
     const { getByText, getByRole } = render(<ColumnsEditorItem {...props} />)
     expect(getByRole('button')).toBeInTheDocument()

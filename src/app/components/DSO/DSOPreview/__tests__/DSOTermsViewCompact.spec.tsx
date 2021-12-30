@@ -29,10 +29,6 @@ describe('DSOTermsViewCompact', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<DSOTermsViewCompact {...props} />)
-  })
-
   it('renders Investment Period with correct props', () => {
     render(<DSOTermsViewCompact {...props} />)
 

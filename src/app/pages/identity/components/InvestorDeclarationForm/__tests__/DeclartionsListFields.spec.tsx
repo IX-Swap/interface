@@ -20,14 +20,6 @@ describe('DeclartionsListFields', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(
-      <Form>
-        <DeclarationsListFields {...props} />
-      </Form>
-    )
-  })
-
   it('renders title correctly', () => {
     const { getByText } = render(
       <Form>

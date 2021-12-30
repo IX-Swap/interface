@@ -12,10 +12,6 @@ describe('EditButton', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<EditButton link='/' />)
-  })
-
   it('renders AppRouterLink with default params & replace', () => {
     render(<EditButton link='/' />)
 

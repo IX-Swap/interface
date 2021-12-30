@@ -7,10 +7,6 @@ describe('AvailableBalanceInfo', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<AvailableBalanceInfo currency='USD' amount={50000} />)
-  })
-
   it('renders props correctly', () => {
     const { getByText } = render(
       <AvailableBalanceInfo currency='USD' amount={50000} />

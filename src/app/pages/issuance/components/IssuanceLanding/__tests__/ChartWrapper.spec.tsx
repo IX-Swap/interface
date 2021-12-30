@@ -12,10 +12,6 @@ describe('ChartWrapper', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<ChartWrapper title='test title' small />)
-  })
-
   it('renders ChartTitle with correct props', () => {
     render(<ChartWrapper title='test title' small />)
     expect(ChartTitle).toHaveBeenNthCalledWith(

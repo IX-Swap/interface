@@ -21,10 +21,6 @@ describe('DSOTeamView', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<DSOTeamView dso={dso} />)
-  })
-
   it('renders title', () => {
     render(<DSOTeamView dso={dso} />)
 

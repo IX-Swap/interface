@@ -27,14 +27,6 @@ describe('DirectorsAndBeneficialOwnerFields', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(
-      <Form>
-        <DirectorsAndBeneficialOwnerFields name='directors' />
-      </Form>
-    )
-  })
-
   it('renders components correctly', () => {
     render(
       <Form defaultValues={defaultValues}>

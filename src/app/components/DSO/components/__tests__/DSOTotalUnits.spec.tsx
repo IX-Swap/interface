@@ -8,14 +8,6 @@ describe('DSOTotalUnits', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(
-      <Form defaultValues={{ totalFundraisingAmount: 100000, pricePerUnit: 5 }}>
-        <DSOTotalUnits />
-      </Form>
-    )
-  })
-
   it('renders correct data when totalFundraisingAmount and pricePerUnit have value more than 0', () => {
     const { getByText } = render(
       <Form defaultValues={{ totalFundraisingAmount: 100000, pricePerUnit: 5 }}>

@@ -23,14 +23,6 @@ describe('CommitmentFormFields', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(
-      <Form defaultValues={{ totalAmount: 100, pricePerUnit: 50 }}>
-        <CommitmentFormFields {...props} />
-      </Form>
-    )
-  })
-
   it('renders EditableField with correct props', () => {
     render(
       <Form defaultValues={{ totalAmount: 0, pricePerUnit: 0 }}>

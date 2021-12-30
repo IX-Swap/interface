@@ -26,10 +26,6 @@ describe('Step3Backup', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<Step3Backup />)
-  })
-
   it('renders store.key', () => {
     jest.spyOn(setupContext, 'useSetup2faStore').mockReturnValue({ ...store })
 

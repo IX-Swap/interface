@@ -12,10 +12,6 @@ describe('OnboardingSteps', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<OnboardingSteps steps={onboardingSteps} activeStep={0} />)
-  })
-
   it('renders steps correctly', () => {
     const { getByText } = render(
       <OnboardingSteps steps={onboardingSteps} activeStep={0} />

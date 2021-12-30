@@ -17,10 +17,6 @@ describe('DSOProgressBar', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<DSOProgressBar {...props} />)
-  })
-
   it('renders BorderLinearProgress with correct props', () => {
     render(<DSOProgressBar {...props} />)
 

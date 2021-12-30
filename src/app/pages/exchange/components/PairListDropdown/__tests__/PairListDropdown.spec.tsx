@@ -12,10 +12,6 @@ describe('PairListDropdown', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<PairListDropdown pairName='IXPS/SGD' />)
-  })
-
   it('renders ClickAwayListener when anchorEl is null', () => {
     const anchorEl = null
     jest

@@ -16,10 +16,6 @@ describe('DSOTeamRemoveButton', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<DSOTeamRemoveButton {...props} />)
-  })
-
   it('invokes remove function with index on button click', async () => {
     const { getByRole } = render(<DSOTeamRemoveButton {...props} />)
 

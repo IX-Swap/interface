@@ -19,20 +19,6 @@ describe('DSODetails', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<DSODetails {...props} />)
-  })
-
-  it.skip('renders without error if dso.totalFundraisingAmount is null', () => {
-    render(
-      <DSODetails {...props} dso={{ ...dso, totalFundraisingAmount: null }} />
-    )
-  })
-
-  it.skip('renders without error if dso.minimumInvestment is null', () => {
-    render(<DSODetails {...props} dso={{ ...dso, minimumInvestment: null }} />)
-  })
-
   it('renders LabelledValue with correct props', () => {
     render(<DSODetails {...props} />)
 

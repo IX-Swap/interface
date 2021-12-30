@@ -9,14 +9,6 @@ describe('PasswordValidationDisplay', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(
-      <Form>
-        <PasswordValidation />
-      </Form>
-    )
-  })
-
   it('renders correct component when password has no value', () => {
     const { getByText } = render(
       <Form>

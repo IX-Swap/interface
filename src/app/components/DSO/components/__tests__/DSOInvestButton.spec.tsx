@@ -9,10 +9,6 @@ describe('DSOInvestButton', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<DSOInvestButton dso={dso} />)
-  })
-
   it('renders button as disabled when createdBy and userId is equal', () => {
     const objResponse = {
       user: {

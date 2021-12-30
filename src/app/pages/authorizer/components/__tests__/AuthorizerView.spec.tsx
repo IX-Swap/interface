@@ -41,16 +41,6 @@ describe('AuthorizerView', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    const { _id, authorizations, createdAt, status, updatedAt } = bank
-    render(
-      <AuthorizerView
-        {...props}
-        data={{ _id, authorizations, createdAt, status, updatedAt }}
-      />
-    )
-  })
-
   it('renders AuthorizableLevel with correct props', () => {
     render(<AuthorizerView {...props} />)
 

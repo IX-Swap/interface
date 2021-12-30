@@ -10,10 +10,6 @@ describe('CorporateInfo', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<CorporateInfo data={corporate} />)
-  })
-
   it('renders data labels correctly', () => {
     const { getByText } = render(<CorporateInfo data={corporate} />)
     expect(getByText('Company Name')).toBeTruthy()

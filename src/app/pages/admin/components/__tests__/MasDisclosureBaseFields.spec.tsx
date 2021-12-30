@@ -23,14 +23,6 @@ describe('MasDisclosureBaseFields', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(
-      <Form>
-        <MasDisclosureBaseFields />
-      </Form>
-    )
-  })
-
   it('renders when useGetSiteConfig isLoading is true', async () => {
     jest
       .spyOn(useGetSiteConfig, 'useGetSiteConfig')

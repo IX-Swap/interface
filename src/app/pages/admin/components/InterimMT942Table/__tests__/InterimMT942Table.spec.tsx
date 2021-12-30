@@ -16,10 +16,6 @@ describe('InterimMT942Table', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<InterimMT942Table />)
-  })
-
   it('renders TableView with correct props', () => {
     render(<InterimMT942Table />)
 

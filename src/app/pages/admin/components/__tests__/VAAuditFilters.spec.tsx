@@ -33,10 +33,6 @@ describe('VAAuditFilters', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<VAAuditFilters />)
-  })
-
   it('renders SearchFilter with correct props', () => {
     render(<VAAuditFilters />)
     expect(SearchFilter).toHaveBeenCalledTimes(1)

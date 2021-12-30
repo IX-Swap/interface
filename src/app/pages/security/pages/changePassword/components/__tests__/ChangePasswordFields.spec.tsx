@@ -2,7 +2,6 @@ import React from 'react'
 import { render } from 'test-utils'
 import * as changePasswordHook from '../../hooks/useChangePassword'
 import { ChangePassword } from 'app/pages/security/pages/changePassword/ChangePassword'
-import { ChangePasswordFields } from 'app/pages/security/pages/changePassword/components/ChangePasswordFields'
 import { Form } from 'components/form/Form'
 import { TypedField } from 'components/form/TypedField'
 
@@ -21,14 +20,6 @@ describe('ChangePasswordFields', () => {
 
   afterEach(async () => {
     jest.clearAllMocks()
-  })
-
-  it.skip('renders without error', () => {
-    render(
-      <Form>
-        <ChangePasswordFields />
-      </Form>
-    )
   })
 
   it('renders fields', () => {

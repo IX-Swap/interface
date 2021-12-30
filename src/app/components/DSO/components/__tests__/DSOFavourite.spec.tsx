@@ -31,10 +31,6 @@ describe('DSOFavourite', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<DSOFavorite dependentQueryKeys={[]} dso={dso} />)
-  })
-
   it('renders IconButton with correct props when isStarred is true', () => {
     const { getByTestId } = render(
       <DSOFavorite dependentQueryKeys={[]} dso={dso} />

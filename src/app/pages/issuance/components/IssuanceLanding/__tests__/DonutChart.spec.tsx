@@ -22,10 +22,6 @@ describe('DonutChart', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<DonutChart {...defaultDonatChartProps} />)
-  })
-
   it('renders Chart with correct props when isNewThemeOn is false', () => {
     render(<DonutChart {...defaultDonatChartProps} />)
 

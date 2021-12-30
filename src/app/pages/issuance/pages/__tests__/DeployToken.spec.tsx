@@ -33,13 +33,6 @@ describe('DeployToken', () => {
   })
   afterAll(() => history.push('/'))
 
-  it.skip('renders without error', () => {
-    jest
-      .spyOn(useDSOByIdHook, 'useDSOById')
-      .mockReturnValue({ isLoading: false, data: dso } as any)
-    render(<DeployToken />)
-  })
-
   it('renders DSOTitle with correct props', () => {
     jest
       .spyOn(useDSOByIdHook, 'useDSOById')

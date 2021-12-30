@@ -11,14 +11,6 @@ describe('ConfirmationDialog', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(
-      <Form defaultValues={{ currency: 'SGD' }}>
-        <ConfirmationDialog onClose={onCloseMock} open />
-      </Form>
-    )
-  })
-
   it('calls onClose function when close button is called', () => {
     const { getByText } = render(
       <Form defaultValues={{ currency: 'SGD' }}>

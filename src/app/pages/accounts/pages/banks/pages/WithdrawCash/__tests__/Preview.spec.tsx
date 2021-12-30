@@ -29,20 +29,6 @@ describe('Preview', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    useBanksDataMock.mockReturnValue(
-      generateInfiniteQueryResult({
-        map: { [bank._id]: bank }
-      })
-    )
-
-    render(
-      <Form defaultValues={formValues}>
-        <Preview />
-      </Form>
-    )
-  })
-
   it('renders nothing if status is loading', () => {
     useBanksDataMock.mockReturnValue(
       generateInfiniteQueryResult({

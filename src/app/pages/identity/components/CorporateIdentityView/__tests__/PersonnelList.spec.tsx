@@ -17,10 +17,6 @@ describe('PersonnelList', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<PersonnelList personnel={personnels} />)
-  })
-
   it('returns null when personnels length < 1', () => {
     const { container } = render(<PersonnelList personnel={[]} />)
 

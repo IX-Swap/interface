@@ -18,10 +18,6 @@ describe('TotalTokens', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<TotalTokens />)
-  })
-
   it('renders correct value', () => {
     const { getByText } = render(<TotalTokens />)
 

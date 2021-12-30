@@ -19,14 +19,6 @@ describe('DSOVideoLinks', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(
-      <Form defaultValues={{ videos: [] }}>
-        <DSOVideoLinks />
-      </Form>
-    )
-  })
-
   it('renders DSOTeamAddButton', () => {
     render(
       <Form defaultValues={{ videos: [] }}>

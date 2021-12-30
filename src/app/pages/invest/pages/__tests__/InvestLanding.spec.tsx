@@ -17,10 +17,6 @@ describe('InvestLanding', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<InvestLanding />)
-  })
-
   it('has a link to Commitments Page', () => {
     const { getByRole } = render(<InvestLanding />)
     expect(

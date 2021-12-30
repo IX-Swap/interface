@@ -19,16 +19,6 @@ describe('CommitmentStatsChart', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    jest.spyOn(useCommitmentStatsHook, 'useCommitmentStats').mockReturnValue(
-      generateQueryResult({
-        data: commitmentChartData,
-        isLoading: false
-      })
-    )
-    render(<CommitmentStatsChart />)
-  })
-
   it('renders Chart with correct props', () => {
     jest.spyOn(useCommitmentStatsHook, 'useCommitmentStats').mockReturnValue(
       generateQueryResult({

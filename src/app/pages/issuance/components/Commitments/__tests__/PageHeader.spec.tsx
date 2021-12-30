@@ -18,10 +18,6 @@ describe('PageHeader', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<PageHeader {...pageHeaderProps} />)
-  })
-
   it('renders AppRouterLink with correct props', () => {
     render(<PageHeader {...pageHeaderProps} />)
     expect(AppRouterLink).toHaveBeenCalledWith(

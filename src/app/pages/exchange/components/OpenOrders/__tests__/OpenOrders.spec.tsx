@@ -23,11 +23,6 @@ describe('OpenOrders', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    history.push(OTCMarketRoute.market, { pairId: '1234567890' })
-    renderWithUserStore(<OpenOrders />)
-  })
-
   it('renders TableView with correct props on mdUp viewport', () => {
     history.push(OTCMarketRoute.market, { pairId: '1234567890' })
     renderWithUserStore(<OpenOrders />)

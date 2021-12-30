@@ -16,10 +16,6 @@ describe('SidebarLink', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<SidebarLinkContainer {...props} />)
-  })
-
   it('renders label correctly', () => {
     const { container } = render(<SidebarLinkContainer {...props} />)
 

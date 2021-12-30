@@ -16,10 +16,6 @@ describe('OutboundTable', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<OutboundTable />)
-  })
-
   it('renders TableView with correct props', () => {
     render(<OutboundTable />)
 

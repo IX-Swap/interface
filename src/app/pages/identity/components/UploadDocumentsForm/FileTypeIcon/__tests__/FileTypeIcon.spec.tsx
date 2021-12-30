@@ -7,10 +7,6 @@ describe('FileTypeIcon', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<FileTypeIcon fileType='png' />)
-  })
-
   it('renders props correctly', () => {
     const { getByText } = render(<FileTypeIcon fileType='png' />)
 

@@ -12,10 +12,6 @@ describe('PreviewHeader', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<PreviewHeader title='Individual Investor' status='Draft' />)
-  })
-
   it('renders status component as success when status is Approved', () => {
     render(<PreviewHeader title='Individual Investor' status='Approved' />)
 

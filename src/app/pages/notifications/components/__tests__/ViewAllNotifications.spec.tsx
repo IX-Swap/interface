@@ -14,10 +14,6 @@ describe('ViewAllNotifications', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<ViewAllNotifications />)
-  })
-
   it('renders AppRouterLink with correct props', () => {
     render(<ViewAllNotifications />)
 

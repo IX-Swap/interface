@@ -10,13 +10,6 @@ describe('Promo Banner', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    jest
-      .spyOn(usePromo, 'usePromo')
-      .mockReturnValue(generateQueryResult({ data: mockPromoData }))
-    render(<PromoBanner />)
-  })
-
   it.skip('renders with the fetched data correctly', () => {
     jest
       .spyOn(usePromo, 'usePromo')

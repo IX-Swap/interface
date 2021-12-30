@@ -23,10 +23,6 @@ describe('GenericPreview', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<GenericPreview {...props} />)
-  })
-
   it('renders LabelledValue with correct props for each item', () => {
     render(<GenericPreview {...props} />)
 

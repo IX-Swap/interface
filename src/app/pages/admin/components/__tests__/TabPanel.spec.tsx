@@ -19,10 +19,6 @@ describe('TabPanel', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<TabPanel {...props} />)
-  })
-
   it('renders container as hidden when value and index are not equal', () => {
     props.value = 1
     render(<TabPanel {...props} />)

@@ -9,14 +9,6 @@ describe('AuthorizedPersonnelFields', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(
-      <Form>
-        <AuthorizedPersonnelFields />
-      </Form>
-    )
-  })
-
   it('renders adds fields when Add more button is clicked correctly', () => {
     const { container, getByText } = render(
       <Form defaultValues={{ representatives: [{}] }}>

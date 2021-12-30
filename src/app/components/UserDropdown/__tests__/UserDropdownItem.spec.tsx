@@ -31,10 +31,6 @@ describe('UserDropdownItem', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<UserDropdownItem {...props} />)
-  })
-
   it('calls onClick when clicked', async () => {
     const { getByRole } = render(<UserDropdownItem {...props} />)
 

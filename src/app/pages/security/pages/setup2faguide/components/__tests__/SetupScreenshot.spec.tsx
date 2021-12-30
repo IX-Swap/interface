@@ -14,10 +14,6 @@ describe('SetupScreenshot', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<SetupScreenshot {...props} />)
-  })
-
   it('renders props correctly', () => {
     const { getByText } = render(<SetupScreenshot {...props} />)
 

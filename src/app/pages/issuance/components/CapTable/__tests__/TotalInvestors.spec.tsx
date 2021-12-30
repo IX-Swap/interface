@@ -14,14 +14,6 @@ describe('TotalInvestors', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    jest
-      .spyOn(useTotalInvestorsHook, 'useTotalInvestors')
-      .mockReturnValue(generateQueryResult({ data: {} }))
-
-    render(<TotalInvestors />)
-  })
-
   it('renders nothing if loading', () => {
     jest
       .spyOn(useTotalInvestorsHook, 'useTotalInvestors')

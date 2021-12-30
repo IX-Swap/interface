@@ -12,10 +12,6 @@ describe('Reports', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<Reports />)
-  })
-
   it('renders components correctly', () => {
     render(<Reports />)
 

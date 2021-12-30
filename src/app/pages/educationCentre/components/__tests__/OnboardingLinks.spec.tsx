@@ -20,10 +20,6 @@ describe('OnboardingLinks', () => {
     history.push(AppRoute.home)
   })
 
-  it.skip('renders without errors', () => {
-    render(<OnboardingLinks />)
-  })
-
   it('renders all links if user has no completed Indentity Journey', () => {
     const objResponse = {
       isIssuerJourneyCompleted: false,

@@ -10,17 +10,6 @@ describe('VirtualAccountDetails', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    const useVirtualsAccountResponse = generateQueryResult({
-      data: virtualAccountsSample[0]
-    })
-
-    jest
-      .spyOn(useVirtualAccount, 'useVirtualAccount')
-      .mockImplementation(() => useVirtualsAccountResponse as any)
-    render(<VirtualAccountDetails />)
-  })
-
   it('returns null when isLoading is true', () => {
     const useVirtualAccountsResponse = generateQueryResult({
       data: virtualAccountsSample[0],

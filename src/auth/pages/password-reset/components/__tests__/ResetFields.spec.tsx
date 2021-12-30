@@ -13,14 +13,6 @@ describe('ResetFields', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(
-      <Form>
-        <ResetFields />
-      </Form>
-    )
-  })
-
   it('renders email and new password fields', () => {
     render(
       <Form>

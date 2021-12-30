@@ -13,10 +13,6 @@ describe('DocumentNamePreviewButton', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<DocumentNamePreviewButton {...props} />)
-  })
-
   it('renders correctly if value is undefined', () => {
     const { container } = render(<DocumentNamePreviewButton />)
 

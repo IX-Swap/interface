@@ -16,10 +16,6 @@ describe('EODMT940Table', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<EODMT940Table />)
-  })
-
   it('renders TableView with correct props', () => {
     render(<EODMT940Table />)
 

@@ -22,10 +22,6 @@ describe('Actions', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<Actions item={order} />)
-  })
-
   it('renders Cancel button when status is not Cancelled', () => {
     const { getByText } = render(<Actions item={order} />)
     expect(getByText('CANCEL')).toBeTruthy()

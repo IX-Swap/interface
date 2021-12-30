@@ -24,18 +24,6 @@ describe('AppRoute', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    jest
-      .spyOn(useCachedUser, 'useCachedUser')
-      .mockImplementation(() => user as any)
-
-    render(
-      <AppRoute path={'/'}>
-        <div>App</div>
-      </AppRoute>
-    )
-  })
-
   it('redirects to auth page when user is undefined', () => {
     jest
       .spyOn(useCachedUser, 'useCachedUser')

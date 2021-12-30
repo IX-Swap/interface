@@ -23,10 +23,6 @@ describe('TaxDeclarationForm', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<TaxDeclarationForm />)
-  })
-
   it('renders child components correctly', () => {
     render(<TaxDeclarationForm />)
 

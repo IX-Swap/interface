@@ -32,14 +32,6 @@ describe('Preview', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(
-      <Form defaultValues={formValues}>
-        <Preview depositCode={depositCode} />
-      </Form>
-    )
-  })
-
   it('calls GenericPreview with correct items', () => {
     render(
       <Form defaultValues={formValues}>

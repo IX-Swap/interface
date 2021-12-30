@@ -10,10 +10,6 @@ describe('Landing', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<Landing />)
-  })
-
   it('renders TwoFaDialog if totpConfirmed is false', () => {
     jest.spyOn(authHook, 'useAuth').mockImplementation(() => ({
       isAuthenticated: true,

@@ -23,10 +23,6 @@ describe('DSPreview', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<DSPreview />)
-  })
-
   it('renders nothing if loading', () => {
     jest.spyOn(useBalancesByTypeHook, 'useBalancesByType').mockReturnValue(
       generateInfiniteQueryResult({

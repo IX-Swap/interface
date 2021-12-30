@@ -8,10 +8,6 @@ describe('NewDistribution', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<NewDistribution />)
-  })
-
   it('renders from when New Distribution button is clicked', () => {
     const { getByRole } = render(<NewDistribution />)
     const newDistributionButton = getByRole('button') as HTMLButtonElement

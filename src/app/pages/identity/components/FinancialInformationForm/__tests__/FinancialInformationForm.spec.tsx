@@ -23,10 +23,6 @@ describe('FinancialInformationForm', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<FinancialInformationForm />)
-  })
-
   it('renders components without errors', () => {
     render(<FinancialInformationForm />)
 

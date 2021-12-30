@@ -12,10 +12,6 @@ describe('CreateDSO', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<CreateDSO />)
-  })
-
   it('renders DSOForm with correct props', () => {
     render(<CreateDSO />)
 

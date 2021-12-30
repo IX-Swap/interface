@@ -15,10 +15,6 @@ describe('IndividualUploadDocumentsForm', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<CorporateUploadDocumentsForm />)
-  })
-
   it('renders Upload fields correctly for the investor', () => {
     render(<CorporateUploadDocumentsForm corporateType='investor' />)
 

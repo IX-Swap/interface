@@ -17,10 +17,6 @@ describe('DataroomColumns', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<DataroomColumns {...props} />)
-  })
-
   it('renders title if document is null', () => {
     const { container } = render(<DataroomColumns {...props} document={null} />)
     expect(container).toHaveTextContent(props.title)

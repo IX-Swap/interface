@@ -16,10 +16,6 @@ describe('ViewUserColumn', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<ViewUserColumn userId='user-id' />)
-  })
-
   it('renders IconButton with correct props', () => {
     render(<ViewUserColumn userId='user-id' />)
 

@@ -26,14 +26,6 @@ describe('ViewUploadedBanner', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(
-      <Form>
-        <ViewUploadedBanner bannerId={document._id} />
-      </Form>
-    )
-  })
-
   it('handles download correctly', () => {
     const { container } = render(
       <Form>

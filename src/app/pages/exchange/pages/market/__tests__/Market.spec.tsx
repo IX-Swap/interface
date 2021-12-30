@@ -31,10 +31,6 @@ describe('Market', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<Market />)
-  })
-
   // it('renders tv chart container with correct props', () => {
   //   jest.spyOn(useSymbol, 'useSymbol').mockReturnValueOnce({
   //     symbol: 'RHTC/SGD'

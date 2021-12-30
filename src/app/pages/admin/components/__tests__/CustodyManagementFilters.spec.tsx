@@ -31,10 +31,6 @@ describe('CustodyManagementFilters', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<CustodyManagementFilters />)
-  })
-
   it('renders children', () => {
     render(<CustodyManagementFilters />)
     expect(CustodySearchFilter).toHaveBeenCalledTimes(1)

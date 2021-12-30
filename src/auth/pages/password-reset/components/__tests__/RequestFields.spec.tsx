@@ -13,14 +13,6 @@ describe('RequestFields', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(
-      <Form>
-        <RequestFields />
-      </Form>
-    )
-  })
-
   it('renders email field', () => {
     render(
       <Form>

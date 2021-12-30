@@ -14,10 +14,6 @@ describe('LandingPageItem', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<LandingPageItem {...props} />)
-  })
-
   it('renders icon correctly', () => {
     render(<LandingPageItem {...props} />)
 

@@ -26,10 +26,6 @@ describe('RoleManagement', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<RoleManagement activeRoles={roles} />)
-  })
-
   it('renders components correctly', () => {
     const { getByText } = render(<RoleManagement activeRoles={roles} />)
 

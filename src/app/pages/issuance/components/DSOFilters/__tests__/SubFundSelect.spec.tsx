@@ -21,10 +21,6 @@ describe('SubFundSelect', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<SubFundSelect />)
-  })
-
   it('shows correct options', () => {
     const { getByRole, getByText } = render(<SubFundSelect />)
     fireEvent.mouseDown(getByRole('button'))

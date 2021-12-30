@@ -27,14 +27,6 @@ describe('CommitmentHeader', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(
-      <Form>
-        <CommitmentHeader {...props} />
-      </Form>
-    )
-  })
-
   it('renders DSOTitle with correct props', () => {
     render(
       <Form>

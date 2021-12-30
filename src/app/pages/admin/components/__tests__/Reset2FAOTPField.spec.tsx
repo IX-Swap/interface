@@ -22,10 +22,6 @@ describe('PasswordResetOTPField', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<Reset2FAOTPField {...fieldProps} />)
-  })
-
   it('renders props correctly', () => {
     fieldProps.errorMessage = 'Field Error'
 

@@ -25,10 +25,6 @@ describe('SelectionActions', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<SelectionActions actions={{}} />)
-  })
-
   it('renders correct props', () => {
     const approveAction = {
       action: jest.fn(() => {}),

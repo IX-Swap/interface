@@ -10,10 +10,6 @@ describe('MasDisclosurePreviewCard', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<MasDisclosurePreviewCard />)
-  })
-
   it('renders text content correctly', () => {
     render(<MasDisclosurePreviewCard />)
 

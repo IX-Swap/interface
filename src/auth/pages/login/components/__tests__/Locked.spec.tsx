@@ -7,10 +7,6 @@ describe('Locked', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<Locked email='email@investax.io' />)
-  })
-
   it('shows initial timer values', () => {
     const { getByText } = render(<Locked email='email@investax.io' />)
 

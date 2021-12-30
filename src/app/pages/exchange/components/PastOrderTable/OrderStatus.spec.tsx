@@ -8,10 +8,6 @@ jest.mock('@material-ui/core/Typography', () => jest.fn(() => null))
 describe('OrderStatus', () => {
   afterEach(async () => {})
 
-  it.skip('renders without error', () => {
-    render(<OrderStatus status={'OPEN'} />)
-  })
-
   it('renders Typography with filled status and correct prop', () => {
     render(<OrderStatus status={'FILLED'} />)
 

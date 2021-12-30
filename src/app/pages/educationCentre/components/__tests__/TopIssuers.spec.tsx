@@ -13,16 +13,6 @@ describe('TopIssuers', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    const objResponse = { data: [individual], isLoading: false }
-
-    jest
-      .spyOn(useTopIssuers, 'useTopIssuers')
-      .mockImplementation(() => objResponse as any)
-
-    render(<TopIssuers />)
-  })
-
   it('renders null when isLoading is true', () => {
     const objResponse = { data: [individual], isLoading: true }
 

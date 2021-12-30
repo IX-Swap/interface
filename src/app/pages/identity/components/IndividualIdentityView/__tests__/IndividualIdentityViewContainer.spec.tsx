@@ -12,18 +12,6 @@ describe('IndividualIdentityView', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    const useIndividualIdentityResponse = generateQueryResult({
-      data: individual,
-      isLoading: false
-    })
-
-    jest
-      .spyOn(useIndividualIdentity, 'useIndividualIdentity')
-      .mockImplementation(() => useIndividualIdentityResponse as any)
-    render(<IndividualIdentityViewContainer />)
-  })
-
   it('renders null when isLoading', () => {
     const useIndividualIdentityResponse = generateQueryResult({
       data: individual,

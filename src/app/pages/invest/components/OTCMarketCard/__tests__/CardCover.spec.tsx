@@ -36,10 +36,6 @@ describe('CardCover', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<CardCover {...primaryProps} />)
-  })
-
   it('renders DSOLogo with correct props when type is Primary', () => {
     render(<CardCover {...primaryProps} />)
 

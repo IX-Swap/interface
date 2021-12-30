@@ -8,10 +8,6 @@ describe('TaxDeclarationView', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<TaxDeclarationView data={individual} />)
-  })
-
   it('renders correct label and content when singaporeOnly is false', () => {
     const { getByText } = render(<TaxDeclarationView data={individual} />)
 

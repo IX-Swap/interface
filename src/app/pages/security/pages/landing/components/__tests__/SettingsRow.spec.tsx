@@ -17,10 +17,6 @@ describe('SettingsRow', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<SettingsRow {...props} />)
-  })
-
   it('does not renders image if image prop is undefined', () => {
     const { queryByAltText } = render(
       <SettingsRow {...props} image={undefined} />

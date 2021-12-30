@@ -14,10 +14,6 @@ describe('NoIdentity', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<NoIdentity {...props} />)
-  })
-
   it('renders button correctly', () => {
     const { getByText } = render(<NoIdentity {...props} />)
 

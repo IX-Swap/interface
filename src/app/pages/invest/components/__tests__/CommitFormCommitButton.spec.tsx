@@ -10,19 +10,6 @@ describe('CommitmentFormCommitButton', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(
-      <Form>
-        <CommitmentFormCommitButton
-          assetId='123'
-          minInvestment={100}
-          dsoId='123'
-          currency='$'
-        />
-      </Form>
-    )
-  })
-
   it('submits correct data', async () => {
     const makeCommitment = jest.fn(() => {})
     const objResponse = {

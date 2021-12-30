@@ -16,20 +16,6 @@ describe('PlaceOrderForm', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(
-      <Form>
-        <PlaceOrderForm
-          tokenLabel={'IXPS'}
-          currencyLabel={'SGD'}
-          tokenBalance={300}
-          currencyBalance={15000}
-          onSubmit={async () => {}}
-        />
-      </Form>
-    )
-  })
-
   it('renders PlaceOrderFields with correct props if BUY tab active', () => {
     render(
       <Form>

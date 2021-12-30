@@ -20,10 +20,6 @@ describe('DSOVideoLinksView', () => {
 
   const dsoVideo = { videos: [videoLink] } as any
 
-  it.skip('renders without error', () => {
-    render(<DSOVideoLinksView dso={dsoVideo} />)
-  })
-
   it('renders FormSectionHeader', () => {
     render(<DSOVideoLinksView dso={dsoVideo} />)
 

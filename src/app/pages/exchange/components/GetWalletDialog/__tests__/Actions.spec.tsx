@@ -15,10 +15,6 @@ describe('Actions', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<Actions {...props} />)
-  })
-
   it('renders Button component with correct props', () => {
     render(<Actions {...props} />)
     expect(Button).toHaveBeenCalledWith(

@@ -23,10 +23,6 @@ describe('CommitmentsTable', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<CommitmentsTable />)
-  })
-
   it('renders TableView with correct props', () => {
     render(<CommitmentsTable />)
     expect(TableView).toHaveBeenCalledWith(

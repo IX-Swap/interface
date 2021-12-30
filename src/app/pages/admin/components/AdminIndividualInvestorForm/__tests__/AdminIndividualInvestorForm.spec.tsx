@@ -53,10 +53,6 @@ describe('AdminIndividualInvestorForm', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<AdminIndividualInvestorForm />)
-  })
-
   it('renders loading text when isLoading', () => {
     const useIndividualIdentityByIdResponse = generateQueryResult({
       data: individual,

@@ -68,10 +68,6 @@ describe('MarketGridView', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<MarketGridView {...props} />)
-  })
-
   it('renders TVCharContainer correctly when symbol is defined and theme is dark', () => {
     render(<MarketGridView {...props} />)
     expect(TVChartContainer).toHaveBeenCalledWith(

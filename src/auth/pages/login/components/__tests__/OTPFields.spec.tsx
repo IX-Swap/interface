@@ -13,14 +13,6 @@ describe('OTPFields', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(
-      <Form>
-        <OTPFields isLoading={false} />
-      </Form>
-    )
-  })
-
   it('renders OTP', () => {
     render(
       <Form>

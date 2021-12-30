@@ -22,10 +22,6 @@ describe('Banner', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<Banner />)
-  })
-
   it('renders PageHeader with correct props', () => {
     jest
       .spyOn(useBannersList, 'useBannersList')

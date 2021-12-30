@@ -35,14 +35,6 @@ describe('CountdownTimer', () => {
     dateNowSpy.mockRestore()
   })
 
-  it.skip('renders without errors', () => {
-    jest
-      .spyOn(useDSOByIdHook, 'useDSOById')
-      .mockReturnValue({ isLoading: false, data: dso } as any)
-
-    render(<CountdownTimer />)
-  })
-
   it.skip('renders without data', () => {
     jest
       .spyOn(useDSOByIdHook, 'useDSOById')

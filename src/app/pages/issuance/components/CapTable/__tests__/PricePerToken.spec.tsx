@@ -17,10 +17,6 @@ describe('PricePerToken', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<PricePerToken />)
-  })
-
   it('renders correct value when dso is defined', () => {
     const { getByText } = render(<PricePerToken />)
     expect(getByText('S$ 1')).toBeTruthy()

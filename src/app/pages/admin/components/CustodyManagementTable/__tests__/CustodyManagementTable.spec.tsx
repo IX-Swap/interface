@@ -18,10 +18,6 @@ describe('CustodyManagementTable', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<CustodyManagementTable />)
-  })
-
   it('renders table with correct props', () => {
     render(<CustodyManagementTable />)
     expect(TableView).toHaveBeenCalledWith(

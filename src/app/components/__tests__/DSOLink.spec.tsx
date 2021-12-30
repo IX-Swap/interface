@@ -16,10 +16,6 @@ describe('DSOLink', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<DSOLink {...props} />)
-  })
-
   it('renders correct text', () => {
     const { container } = render(<DSOLink {...props} />)
 

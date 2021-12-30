@@ -36,10 +36,6 @@ describe('Step2Scan', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<Step2Scan />)
-  })
-
   it('renders store.key', () => {
     const { getByText } = render(<Step2Scan />)
     expect(getByText(store.key)).toBeTruthy()

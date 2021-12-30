@@ -10,9 +10,6 @@ describe('LoadingMessage', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<LoadingMessage />)
-  })
   it('calls Typography with correct props', () => {
     render(<LoadingMessage />)
     expect(Typography).toHaveBeenCalledWith(

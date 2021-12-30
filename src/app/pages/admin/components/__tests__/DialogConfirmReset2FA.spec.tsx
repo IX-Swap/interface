@@ -42,10 +42,6 @@ describe('DialogConfirmReset2FA', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<DialogConfirmReset2FA {...props} />)
-  })
-
   it('calls useReset2FA hook with correct ars', () => {
     render(<DialogConfirmReset2FA {...props} />)
 

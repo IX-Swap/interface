@@ -24,10 +24,6 @@ describe('RecentDeposits', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<RecentDeposits />)
-  })
-
   it('renders TableView with correct props', () => {
     const userId = user._id
     jest.spyOn(useAuthHook, 'useAuth').mockImplementation(() => ({

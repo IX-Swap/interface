@@ -8,10 +8,6 @@ describe('FinancialView', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<FinancialView data={individual} />)
-  })
-
   it('renders fundsource correctly when it is checked', () => {
     const fundSource = individual?.sourceOfFund?.[0]
     const { getByText } = render(<FinancialView data={individual} />)

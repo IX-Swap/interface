@@ -27,10 +27,6 @@ describe('Insights', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<Insights />)
-  })
-
   it('renders correct components', () => {
     render(<Insights />)
     expect(PricePerToken).toHaveBeenCalled()

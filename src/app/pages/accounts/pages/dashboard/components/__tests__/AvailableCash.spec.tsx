@@ -15,10 +15,6 @@ describe('AvailableCash', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<AvailableCash accounts={fakeArrayOfVirtualAccountInfo} />)
-  })
-
   it('renders available cash info correctly', () => {
     const { getAllByTestId } = render(
       <AvailableCash accounts={fakeArrayOfVirtualAccountInfo} />

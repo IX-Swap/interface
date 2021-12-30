@@ -20,10 +20,6 @@ describe('AuthorizerForm', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<AuthorizerForm {...props} />)
-  })
-
   it('renders AuthorizerFormFields  with correct props', () => {
     render(<AuthorizerForm {...props} />)
 

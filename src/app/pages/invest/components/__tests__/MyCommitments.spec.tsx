@@ -23,10 +23,6 @@ describe('MyCommitments', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<MyCommitments />)
-  })
-
   it('renders TableView with correct props', () => {
     render(<MyCommitments />)
 

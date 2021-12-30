@@ -33,10 +33,6 @@ describe('render DSO Name', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<>{renderDSONameAndStructure(tokenName, dso)}</>)
-  })
-
   it('renders DSOName with correct props', () => {
     render(<>{renderDSONameAndStructure(tokenName, dso)}</>)
 
@@ -57,10 +53,6 @@ describe('render Price With Currency', () => {
 
   const price = 890000
 
-  it.skip('renders without error', () => {
-    render(<>{renderPriceWithCurrency(price, dso)}</>)
-  })
-
   it('renders PriceWithCurrency with correct props', () => {
     render(<>{renderPriceWithCurrency(price, dso)}</>)
 
@@ -77,10 +69,6 @@ describe('render Price With Currency', () => {
 describe('render DSO Raised', () => {
   afterEach(async () => {
     jest.clearAllMocks()
-  })
-
-  it.skip('renders without error', () => {
-    render(<>{renderDSOStatus(dsoInsight, dso)}</>)
   })
 
   it('renders DSORaised with correct props', () => {
@@ -103,10 +91,6 @@ describe('render DSO Total Fundraising Amount', () => {
 
   const raising = 25000
 
-  it.skip('renders without error', () => {
-    render(<>{renderTotalFundraisingAmount(raising, dso)}</>)
-  })
-
   it('renders correct', () => {
     const { container } = render(
       <>{renderTotalFundraisingAmount(raising, dso)}</>
@@ -122,10 +106,6 @@ describe('render DSO Minimum Investment', () => {
   })
 
   const minimumInvestment = 1000
-
-  it.skip('renders without error', () => {
-    render(<>{renderMinimumInvestment(minimumInvestment, dso)}</>)
-  })
 
   it('renders correct', () => {
     const { container } = render(
@@ -146,10 +126,6 @@ describe('render DSO Expected Return', () => {
   const dsoDebt = { ...dso, capitalStructure: 'Debt' }
   const dsoHybrid = { ...dso, capitalStructure: 'Hybrid' }
   const dsoEquity = { ...dso, capitalStructure: 'Equity' }
-
-  it.skip('renders without error', () => {
-    render(<>{renderExpectedReturn(expectedReturn, dso)}</>)
-  })
 
   it('renders correct when capitalStructure is Debt', () => {
     const { container } = render(

@@ -15,10 +15,6 @@ describe('TextError', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<TextError {...props} />)
-  })
-
   it('renders nothing if error is undefined', () => {
     const { container } = render(<TextError error={undefined} />)
 

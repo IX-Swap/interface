@@ -15,14 +15,6 @@ describe('PersonnelInformation', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(
-      <Form>
-        <PersonnelInformation {...props} />
-      </Form>
-    )
-  })
-
   it('renders input fields with default values correctly', () => {
     const { container } = render(
       <Form

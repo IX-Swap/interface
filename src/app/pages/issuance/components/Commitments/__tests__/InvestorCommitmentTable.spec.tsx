@@ -28,10 +28,6 @@ describe('InvestorCommitmentTable', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<InvestorCommitmentTable />)
-  })
-
   it('renders PageHeader with correct props', () => {
     render(<InvestorCommitmentTable />)
 

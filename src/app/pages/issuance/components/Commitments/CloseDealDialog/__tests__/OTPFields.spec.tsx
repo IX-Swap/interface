@@ -21,14 +21,6 @@ describe('OTPFields', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(
-      <Form defaultValues={{ otp: '' }}>
-        <OTPFields isLoading={false} onClose={handleClose} />
-      </Form>
-    )
-  })
-
   it('renders OTP with correct props', () => {
     render(
       <Form defaultValues={{ otp: '' }}>

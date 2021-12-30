@@ -35,10 +35,6 @@ describe('Actions', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<Actions {...props} ref={ref} />)
-  })
-
   it('renders DialogConfirmRoleChange with correct props', () => {
     render(<Actions {...props} ref={ref} />)
 

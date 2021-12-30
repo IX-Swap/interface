@@ -25,14 +25,6 @@ describe('DirectorsInformationFields', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(
-      <Form defaultValues={defaultValues}>
-        <DirectorsInformationFields {...props} />
-      </Form>
-    )
-  })
-
   it('renders labels and components correctly', () => {
     const { getByLabelText } = render(
       <Form defaultValues={defaultValues}>

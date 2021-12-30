@@ -8,10 +8,6 @@ describe('SecurityViewHeader', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<SecurityViewHeader data={sampleSecurity} />)
-  })
-
   it('renders logo correctly', () => {
     const { container } = render(<SecurityViewHeader data={sampleSecurity} />)
     const logo = container.querySelector('img') as HTMLImageElement

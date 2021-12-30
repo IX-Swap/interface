@@ -8,10 +8,6 @@ describe('IdentitySubmitConfirmation', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<IdentitySubmitConfirmationDialog open closeDialog={() => {}} />)
-  })
-
   it('invokes close func when close button is clicked', () => {
     const closeFunc = jest.fn()
     const { getByRole } = render(

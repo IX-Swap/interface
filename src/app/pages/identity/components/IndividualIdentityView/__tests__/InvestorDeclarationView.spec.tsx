@@ -8,10 +8,6 @@ describe('InvestorDeclarationView', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<InvestorDeclarationView data={individual} />)
-  })
-
   it('renders DeclarationList title correctly when identityType is individual', () => {
     const { getByText } = render(
       <InvestorDeclarationView data={individual} identityType='individual' />

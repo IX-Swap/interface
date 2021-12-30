@@ -7,10 +7,6 @@ describe('WADialogTitle', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<FormDialogTitle label='Test label' onClose={() => {}} />)
-  })
-
   it('renders label correctly', () => {
     const { container } = render(
       <FormDialogTitle label='Test label' onClose={() => {}} />

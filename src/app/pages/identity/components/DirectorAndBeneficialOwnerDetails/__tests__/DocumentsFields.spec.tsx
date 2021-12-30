@@ -25,14 +25,6 @@ describe('DocumentsFields', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(
-      <Form defaultValues={defaultValues}>
-        <DocumentFields {...props} />
-      </Form>
-    )
-  })
-
   it('renders labels and components correctly', () => {
     const { getByText } = render(
       <Form defaultValues={defaultValues}>

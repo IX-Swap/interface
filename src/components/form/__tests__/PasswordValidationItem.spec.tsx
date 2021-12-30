@@ -13,10 +13,6 @@ describe('PasswordValidationItem', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<PasswordValidationItem invalid={true} label='Invalid' />)
-  })
-
   it('renders components correctly', () => {
     const { getByText, rerender } = render(
       <PasswordValidationItem invalid={true} label='Invalid' />

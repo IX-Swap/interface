@@ -32,14 +32,6 @@ describe('InvestLink', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    jest
-      .spyOn(useDSOByIdHook, 'useDSOById')
-      .mockReturnValue(generateQueryResult({ data: dso }))
-
-    render(<InvestLink />)
-  })
-
   it('renders nothing if loading', () => {
     jest
       .spyOn(useDSOByIdHook, 'useDSOById')

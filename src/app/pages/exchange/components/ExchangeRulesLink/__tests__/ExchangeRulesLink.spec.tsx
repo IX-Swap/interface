@@ -21,10 +21,6 @@ describe('ExchangeRulesLink', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<ExchangeRulesLink />)
-  })
-
   it('renders null when data is undefined', () => {
     const objResponse = generateQueryResult({
       data: undefined,

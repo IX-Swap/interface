@@ -11,8 +11,6 @@ describe('StatusFilterItem', () => {
     onClick: jest.fn()
   }
 
-  afterEach(cleanup)
-
   it.skip('renders with correct props', async () => {
     const { getByText } = render(<StatusFilterItem {...props} />)
     const title = getByText(props.title)

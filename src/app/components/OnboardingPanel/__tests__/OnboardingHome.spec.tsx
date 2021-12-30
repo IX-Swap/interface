@@ -14,11 +14,6 @@ describe('OnboardingHome', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    jest.spyOn(useAuth, 'useAuth').mockImplementation(() => objResponse as any)
-    render(<OnboardingHome />)
-  })
-
   it('renders a link based on totpConfirmed is false', () => {
     jest.spyOn(useAuth, 'useAuth').mockImplementation(() => objResponse as any)
     const { getByText } = render(<OnboardingHome />)

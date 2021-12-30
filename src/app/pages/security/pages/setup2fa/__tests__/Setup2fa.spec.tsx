@@ -48,10 +48,6 @@ describe('Setup2fa', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<Setup2fa />)
-  })
-
   it('renders Step1Download if activeStep is 0', () => {
     jest.spyOn(setupContext, 'useSetup2faStore').mockReturnValue({
       ...baseContext,

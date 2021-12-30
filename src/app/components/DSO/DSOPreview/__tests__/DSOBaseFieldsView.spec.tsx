@@ -20,10 +20,6 @@ describe('DSOBaseFieldsView', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<DSOBaseFieldsView dso={dso} />)
-  })
-
   it('renders DSLogo correctly', () => {
     render(<DSOBaseFieldsView dso={dso} />)
 

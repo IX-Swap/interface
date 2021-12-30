@@ -11,15 +11,6 @@ describe('SecurityView', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    const objResponse = generateQueryResult({ data: [sampleSecurity] })
-
-    jest
-      .spyOn(useSecurities, 'useSecurities')
-      .mockImplementation(() => objResponse as any)
-    render(<SecurityView />)
-  })
-
   it('renders null when data is undefined', () => {
     history.push('/app?ticker=REALTOKEN-S-3432-HARDING-ST-DETROIT-MI')
     const objResponse = generateQueryResult({ data: undefined })

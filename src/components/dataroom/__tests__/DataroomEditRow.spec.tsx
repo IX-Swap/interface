@@ -22,10 +22,6 @@ describe('DataroomEditRow', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<DataroomEditRow {...props} />)
-  })
-
   it('renders input correctly', () => {
     const { queryByTestId } = render(<DataroomEditRow {...props} />)
 

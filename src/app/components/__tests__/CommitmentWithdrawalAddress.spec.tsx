@@ -19,10 +19,6 @@ describe('CommitmentWalletAddress', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<CommitmentWithdrawalAddress {...props} />)
-  })
-
   it('renders WalletAddress with correct props', () => {
     render(<CommitmentWithdrawalAddress {...props} />)
 

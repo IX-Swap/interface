@@ -30,17 +30,6 @@ describe('EditBank', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    useBanksDataMock.mockReturnValue(
-      generateInfiniteQueryResult({
-        map: { [bank._id]: bank },
-        queryStatus: QueryStatus.Loading
-      })
-    )
-
-    render(<EditBank />)
-  })
-
   it('renders nothing if loading', () => {
     useBanksDataMock.mockReturnValue(
       generateInfiniteQueryResult({

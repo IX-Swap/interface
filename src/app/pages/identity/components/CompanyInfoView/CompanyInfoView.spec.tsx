@@ -17,10 +17,6 @@ describe('CompanyInfoView', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<CompanyInfoView {...props} />)
-  })
-
   it('renders Avatar with correct props', () => {
     render(<CompanyInfoView {...props} />)
 

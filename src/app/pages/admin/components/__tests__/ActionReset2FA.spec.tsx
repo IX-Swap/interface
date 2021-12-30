@@ -31,10 +31,6 @@ describe('ActionReset2FA', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<ActionReset2FA />)
-  })
-
   it('renders components with correct props', () => {
     const { getByText } = render(<ActionReset2FA />)
 

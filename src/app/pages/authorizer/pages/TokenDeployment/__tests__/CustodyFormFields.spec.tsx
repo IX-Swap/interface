@@ -8,14 +8,6 @@ describe('CustodyFormFields', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(
-      <Form defaultValues={{ custody: 'HEX' }}>
-        <CustodyFormFields isLoading={false} />
-      </Form>
-    )
-  })
-
   it('renders button disabled when custody is undefined', () => {
     const { container } = render(
       <Form defaultValues={{ custody: undefined }}>

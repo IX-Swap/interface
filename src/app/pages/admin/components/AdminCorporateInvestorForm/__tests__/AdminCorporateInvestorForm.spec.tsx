@@ -59,10 +59,6 @@ describe('AdminCorporateInvestorForm', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<AdminCorporateInvestorForm />)
-  })
-
   it('renders loading text when isLoading', () => {
     const useAllCorporatesByUserIdResponse = generateInfiniteQueryResult({
       list: [corporate],

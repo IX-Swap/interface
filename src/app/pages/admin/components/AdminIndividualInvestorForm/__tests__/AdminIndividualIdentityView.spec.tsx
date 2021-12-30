@@ -18,17 +18,6 @@ describe('AdminIndividualIdentityView', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    const useIndividualIdentityByIdResponse = generateQueryResult({
-      data: individual,
-      isLoading: false
-    })
-    jest
-      .spyOn(useIndividualIdentityById, 'useIndividualIdentityById')
-      .mockImplementation(() => useIndividualIdentityByIdResponse as any)
-    render(<AdminIndividualIdentityView />)
-  })
-
   it('returns null when loading', () => {
     const useIndividualIdentityByIdResponse = generateQueryResult({
       data: individual,

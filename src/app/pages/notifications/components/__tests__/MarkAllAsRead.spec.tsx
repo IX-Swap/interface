@@ -19,13 +19,6 @@ describe('MarkAllAsRead', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    jest
-      .spyOn(notificationsHook, 'useNotifications')
-      .mockReturnValue({ unreadCount: 1 } as any)
-    render(<MarkAllAsRead />)
-  })
-
   it('will call mutation function when button is clicked', async () => {
     jest
       .spyOn(notificationsHook, 'useNotifications')

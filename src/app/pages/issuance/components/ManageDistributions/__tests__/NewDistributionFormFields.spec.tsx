@@ -38,19 +38,6 @@ describe('NewDistributionFormFields', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(
-      <Form>
-        <NewDistributionFormFields
-          currency='SGD'
-          showOtp={false}
-          showOTPForm={() => {}}
-          closeOTPForm={() => {}}
-        />
-      </Form>
-    )
-  })
-
   it('returns null when isLoading', () => {
     const useDSOByIdResponse = generateQueryResult({
       data: dso,

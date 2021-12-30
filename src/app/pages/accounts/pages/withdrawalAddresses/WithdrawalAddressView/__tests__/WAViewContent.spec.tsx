@@ -27,14 +27,6 @@ describe('WithdrawalAddressViewContent', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    jest
-      .spyOn(useWithdrawalAddressByIdHook, 'useWithdrawalAddressById')
-      .mockReturnValue(generateQueryResult({ data: withdrawalAddress }))
-
-    render(<WAViewContent />)
-  })
-
   it('passes correct withdrawal address id to the useWithdrawalAddressById hook', () => {
     jest
       .spyOn(useWithdrawalAddressByIdHook, 'useWithdrawalAddressById')

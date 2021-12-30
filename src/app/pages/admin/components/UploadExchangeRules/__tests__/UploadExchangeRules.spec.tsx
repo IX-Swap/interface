@@ -26,10 +26,6 @@ describe('UploadExchangeRules', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<UploadExchangeRules />)
-  })
-
   it('returns LOADING_TEXT when isLoading', () => {
     const objResponse = generateQueryResult({
       data: document,

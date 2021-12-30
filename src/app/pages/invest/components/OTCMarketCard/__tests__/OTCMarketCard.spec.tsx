@@ -39,10 +39,6 @@ describe('OTCMarketCard', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<OTCMarketCard {...primaryProps} />)
-  })
-
   it('renders CardCover with correct primaryProps', () => {
     render(<OTCMarketCard {...primaryProps} />)
 

@@ -11,10 +11,6 @@ describe('Investments', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(<Investments primary={primaryInvestment} />)
-  })
-
   it('renders title with correct text', () => {
     const { getByText } = render(<Investments primary={primaryInvestment} />)
     expect(getByText('Investments')).toBeInTheDocument()

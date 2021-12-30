@@ -13,14 +13,6 @@ describe('MasDisclosureConfirmDialog', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(
-      <Form>
-        <MasDisclosureConfirmDialog onClose={onCloseMock} open />
-      </Form>
-    )
-  })
-
   it('calls onClose function on cancel button click', () => {
     const { getByText } = render(
       <Form>

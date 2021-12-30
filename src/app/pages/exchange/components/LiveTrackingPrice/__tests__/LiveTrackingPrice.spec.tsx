@@ -17,32 +17,6 @@ describe('LiveTrackingPrice', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    const objResponse = {
-      marketTrades: [
-        {
-          price: 1000,
-          side: 'BID'
-        },
-        {
-          price: 900
-        }
-      ]
-    }
-
-    jest
-      .spyOn(useTradeHistory, 'useTradeHistory')
-      .mockImplementation(() => objResponse as any)
-
-    const useLastPriceResponse = { data: 1000 }
-
-    jest
-      .spyOn(useLastPrice, 'useLastPrice')
-      .mockImplementation(() => useLastPriceResponse as any)
-
-    render(<LiveTrackingPrice />)
-  })
-
   it('renders null when data is undefined', () => {
     const objResponse = {
       marketTrades: undefined

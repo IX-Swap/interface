@@ -26,10 +26,6 @@ describe('PreviewDSO', () => {
 
   afterAll(() => history.push('/'))
 
-  it.skip('renders without error', () => {
-    render(<PreviewDSO />)
-  })
-
   it('renders DSOPreview with correct props', () => {
     render(<PreviewDSO />)
 

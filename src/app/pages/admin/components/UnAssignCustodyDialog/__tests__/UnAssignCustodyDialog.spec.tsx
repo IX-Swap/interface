@@ -10,15 +10,6 @@ describe('UnAssignCustodyDialog', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(
-      <UnAssignCustodyDialog
-        custodyAccountId={fakeCustodyAccountsListItem.accountId}
-        onClose={handleClose}
-      />
-    )
-  })
-
   it('renders closed mui dialog component when open prop is undefined ', () => {
     const { container } = render(
       <UnAssignCustodyDialog

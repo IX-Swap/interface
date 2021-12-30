@@ -19,10 +19,6 @@ describe('CustodyDatesFilter', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<CustodyDatesFilter />)
-  })
-
   it('renders DateFilter components with correct props', () => {
     render(<CustodyDatesFilter />)
     expect(DateFilter).toHaveBeenCalledTimes(2)

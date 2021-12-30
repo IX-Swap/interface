@@ -22,15 +22,6 @@ describe('AssetBalance', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    jest
-      .spyOn(useBalancesByAssetIdHook, 'useBalancesByAssetId')
-      .mockReturnValue(
-        generateInfiniteQueryResult({ map: { [asset._id]: balance } })
-      )
-    render(<AssetBalance {...props} />)
-  })
-
   it('renders nothing if loading', () => {
     jest
       .spyOn(useBalancesByAssetIdHook, 'useBalancesByAssetId')

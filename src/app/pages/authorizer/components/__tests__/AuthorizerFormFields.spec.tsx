@@ -41,14 +41,6 @@ describe('AuthorizerForm', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(
-      <Form>
-        <AuthorizerFormFields {...props} />
-      </Form>
-    )
-  })
-
   it('renders TextInput  with correct props', () => {
     render(
       <Form>

@@ -13,14 +13,6 @@ describe('AgreementsAndDisclosuresFields', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without error', () => {
-    render(
-      <Form>
-        <AgreementsAndDisclosuresFields />
-      </Form>
-    )
-  })
-
   it('renders fields correctly', () => {
     render(
       <Form>

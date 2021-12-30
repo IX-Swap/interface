@@ -15,10 +15,6 @@ describe('FundStatusFilter', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<FundStatusFilter />)
-  })
-
   it('renders InputLabel with correct props', () => {
     render(<FundStatusFilter />)
     expect(InputLabel).toHaveBeenCalledTimes(1)

@@ -28,10 +28,6 @@ describe('CompactBody', () => {
     jest.clearAllMocks()
   })
 
-  it.skip('renders without errors', () => {
-    render(<CompactBody {...props} />)
-  })
-
   it('renders correct number of rows', () => {
     const { container } = render(<CompactBody {...props} />)
     const rows = container.querySelectorAll('tr')
