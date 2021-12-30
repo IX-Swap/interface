@@ -7,7 +7,6 @@ import {
   RenderResult
 } from '@testing-library/react'
 import {
-  createGenerateClassName,
   StylesProvider,
   ThemeProvider,
   createMuiTheme
@@ -43,16 +42,12 @@ export const snackbarServiceMock = {
   showOnboardingDialog: jest.fn()
 }
 
-const generateClassName = createGenerateClassName({
-  productionPrefix: 'ix'
-})
-
 export const BaseProviders: React.FC<{ mockAPI?: boolean }> = ({
   children,
   mockAPI = false
 }) => {
   return (
-    <StylesProvider generateClassName={generateClassName}>
+    <StylesProvider>
       <AppThemeProvider>
         {theme => (
           <ThemeProvider theme={theme}>
