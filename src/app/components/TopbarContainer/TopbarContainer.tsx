@@ -116,7 +116,6 @@ export const TopbarContainer = () => {
   ]
 
   const newIssuanceLandingLinks = [
-    { label: 'InvestaX Digital Fund VCC', path: IssuanceRoute.dashboard },
     { label: 'Create New DSO', path: IssuanceRoute.create },
     { label: 'View DSO Listings', path: IssuanceRoute.list },
     { label: 'Create Exchange Listings', path: OTCMarketRoute.createListing },

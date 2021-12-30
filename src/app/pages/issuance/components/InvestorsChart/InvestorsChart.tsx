@@ -57,7 +57,7 @@ export const InvestorsChart = ({
           alignItems='center'
         >
           <Grid item>
-            <Typography variant='subtitle1'>New investors</Typography>
+            <Typography variant='subtitle1'>Investors</Typography>
           </Grid>
         </Grid>
         <Grid item xs={12}>

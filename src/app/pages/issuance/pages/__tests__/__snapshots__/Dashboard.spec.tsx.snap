@@ -367,7 +367,7 @@ exports[`Dashboard should match snapshot 1`] = `
               <h6
                 class="MuiTypography-root MuiTypography-subtitle1"
               >
-                New investors
+                Investors
               </h6>
             </div>
           </div>
