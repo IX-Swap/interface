@@ -21,9 +21,6 @@ jobs:
       - name: Install packages
         run: yarn
 
-      - name: Build
-        run: yarn build --if-present
-
       - name: Run Tests
         run: yarn test:ci
         env:
