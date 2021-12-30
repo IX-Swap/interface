@@ -93,7 +93,7 @@ export const WAConnect = ({ hint, status, getAccount }: WAConnectProps) => {
       {isSuccess && !allowConnect && (
         <Grid item xs={12}>
           <Alert severity='error'>
-            We cannot detect your wallet at the moment. Connection of other
+            We cannot connect your wallet at the moment. Connection of other
             wallets to the platform is coming soon.
           </Alert>
         </Grid>
