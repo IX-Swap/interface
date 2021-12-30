@@ -77,17 +77,24 @@ export const TableView = <T,>({
   noHeader = false,
   noDataComponent = <NoData title='No Data' />
 }: TableViewProps<T>): JSX.Element => {
-  const { items, status, page, setPage, setRowsPerPage, rowsPerPage, total } =
-    useTableWithPagination<T>({
-      queryKey: name,
-      uri: uri,
-      defaultFilter: filter,
-      queryEnabled: queryEnabled,
-      defaultRowsPerPage: defaultRowsPerPage
-    })
+  const {
+    items,
+    status,
+    isLoading,
+    page,
+    setPage,
+    setRowsPerPage,
+    rowsPerPage,
+    total
+  } = useTableWithPagination<T>({
+    queryKey: name,
+    uri: uri,
+    defaultFilter: filter,
+    queryEnabled: queryEnabled,
+    defaultRowsPerPage: defaultRowsPerPage
+  })
 
   const theme = useTheme()
-  const isLoading = status === 'loading'
   const classes = useStyles()
   const headColor =
     themeVariant === 'primary'
