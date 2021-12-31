@@ -1,7 +1,7 @@
 import { issuanceURL } from 'config/apiURL'
 import { dsoQueryKeys } from 'config/queryKeys'
 import { getIdFromObj } from 'helpers/strings'
-import useAuth from 'hooks/auth/useAuth'
+import { useAuth } from 'hooks/auth/useAuth'
 import { useServices } from 'hooks/useServices'
 import { useQuery } from 'react-query'
 import { useAllCorporates } from 'app/pages/identity/hooks/useAllCorporates'

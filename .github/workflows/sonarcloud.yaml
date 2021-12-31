@@ -1,5 +1,8 @@
 name: SonarCloud
 on:
+  push:
+    branches:
+      - tests-performance-*
   pull_request:
     branches:
       - develop
