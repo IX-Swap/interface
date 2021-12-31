@@ -1,4 +1,3 @@
-import React from 'react'
 import { render, waitFor } from 'test-utils'
 import { Form } from 'components/form/Form'
 import {
@@ -13,7 +12,7 @@ import { networks } from '__fixtures__/network'
 jest.deepUnmock('axios')
 import { _axios } from 'services/api'
 
-describe('DSOTotalUnitsInfo', () => {
+describe.skip('DSOTotalUnitsInfo', () => {
   const axiosMock = new MockAdapter(_axios)
 
   beforeAll(() => {
