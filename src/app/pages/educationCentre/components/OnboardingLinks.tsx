@@ -1,9 +1,9 @@
 import React from 'react'
 import { Box, Hidden, Typography } from '@material-ui/core'
 import { OnboardingLink } from 'app/pages/educationCentre/components/OnboardingLink'
-import { ReactComponent as IndividualIcon } from 'assets/icons/navigation/individual.svg'
-import { ReactComponent as CorporateIcon } from 'assets/icons/navigation/corporate.svg'
-import { ReactComponent as FundraiseIcon } from 'assets/icons/navigation/asset-balance.svg'
+import IndividualIcon from 'assets/icons/navigation/individual.svg'
+import CorporateIcon from 'assets/icons/navigation/corporate.svg'
+import FundraiseIcon from 'assets/icons/navigation/asset-balance.svg'
 import { IdentityRoute } from 'app/pages/identity/router/config'
 import { useOnboardingJourneys } from 'app/components/OnboardingPanel/hooks/useOnboardingJourneys'
 

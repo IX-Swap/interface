@@ -10,6 +10,7 @@ import { RouteProps, Redirect } from 'react-router-dom'
 
 export interface AppRouteProps extends RouteProps {
   path: string
+  exact?: boolean
   breadcrumb?: string
 }
 

@@ -1,6 +1,6 @@
 import { Box, Typography } from '@material-ui/core'
 import React from 'react'
-import { ReactComponent as EmptyBox } from 'assets/icons/empty-box.svg'
+import EmptyBox from 'assets/icons/empty-box.svg'
 import { VSpacer } from 'components/VSpacer'
 
 export const NoData = () => {

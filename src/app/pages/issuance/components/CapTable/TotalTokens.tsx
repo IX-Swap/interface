@@ -8,7 +8,7 @@ import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
 import { formatAmount } from 'helpers/numbers'
 import { VSpacer } from 'components/VSpacer'
 import { LabelIcon } from 'app/pages/issuance/components/CapTable/LabelIcon'
-import { ReactComponent as TotalTokensIcon } from 'assets/icons/generating_tokens_black_24dp.svg'
+import TotalTokensIcon from 'assets/icons/generating_tokens_black_24dp.svg'
 
 export const TotalTokens = () => {
   const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()

@@ -7,7 +7,7 @@ export const useGoogleAnalytics = () => {
 
   useEffect(() => {
     if (GOOGLE_ANALYTICS === 'true') {
-      history.listen(location => {
+      history.listen((locations: Location) => {
         window.gtag('event', 'page_view', {
           page_title: location.pathname,
           page_location: location.pathname,

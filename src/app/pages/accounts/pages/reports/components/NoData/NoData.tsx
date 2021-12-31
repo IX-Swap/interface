@@ -1,7 +1,7 @@
 import { useStyles } from './NoData.styles'
 import { Box, Grid, Typography } from '@material-ui/core'
 import React from 'react'
-import { ReactComponent as NoDataImage } from 'assets/images/no_data.svg'
+import NoDataImage from 'assets/images/no_data.svg'
 import { VSpacer } from 'components/VSpacer'
 
 export const NoData = () => {

@@ -6,6 +6,7 @@ import {} from 'test-utils'
 import storageService from 'services/storage'
 import socketService from 'services/socket'
 import { history } from 'config/history'
+import { AxiosError } from 'axios'
 
 jest.mock('services/storage', () => ({
   remove: jest.fn(() => null)
@@ -29,8 +30,8 @@ describe('interceptors', () => {
         thrownError = error
       }
 
-      expect(thrownError.code).toEqual('ERRCODE')
-      expect(thrownError.message).toEqual('error message')
+      expect((thrownError as AxiosError).code).toEqual('ERRCODE')
+      expect((thrownError as AxiosError).message).toEqual('error message')
     })
 
     it('throws correct error message when error.response is defined', () => {
@@ -48,8 +49,10 @@ describe('interceptors', () => {
         thrownError = error
       }
 
-      expect(thrownError.code).toEqual('RESERRCODE')
-      expect(thrownError.message).toEqual('response error message')
+      expect((thrownError as AxiosError).code).toEqual('RESERRCODE')
+      expect((thrownError as AxiosError).message).toEqual(
+        'response error message'
+      )
     })
 
     it('throws correct error message when error.response is undefined and error code is undefined', () => {
@@ -60,8 +63,8 @@ describe('interceptors', () => {
         thrownError = error
       }
 
-      expect(thrownError.code).toEqual('ERRNAME')
-      expect(thrownError.message).toEqual('error message')
+      expect((thrownError as AxiosError).code).toEqual('ERRNAME')
+      expect((thrownError as AxiosError).message).toEqual('error message')
     })
 
     it('handles access denied errors correctly', () => {

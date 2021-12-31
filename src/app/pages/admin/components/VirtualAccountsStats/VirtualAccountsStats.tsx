@@ -3,9 +3,9 @@ import { StatCard } from 'app/pages/admin/components/StatCard/StatCard'
 import { useServices } from 'hooks/useServices'
 import React from 'react'
 import { useQuery } from 'react-query'
-import { ReactComponent as TotalIcon } from 'assets/icons/virtual-accounts/total.svg'
-import { ReactComponent as AssignedIcon } from 'assets/icons/virtual-accounts/assigned.svg'
-import { ReactComponent as UnassignedIcon } from 'assets/icons/virtual-accounts/unassigned.svg'
+import TotalIcon from 'assets/icons/virtual-accounts/total.svg'
+import AssignedIcon from 'assets/icons/virtual-accounts/assigned.svg'
+import UnassignedIcon from 'assets/icons/virtual-accounts/unassigned.svg'
 import { CurrencyInfo } from 'app/pages/admin/components/VirtualAccountsStats/CurrencyInfo'
 
 export const VirtualAccountsStats = () => {

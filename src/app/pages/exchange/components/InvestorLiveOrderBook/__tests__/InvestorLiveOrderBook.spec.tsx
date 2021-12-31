@@ -16,9 +16,7 @@ describe('InvestorLiveOrderBook', () => {
     jest
       .spyOn(useOrderBook, 'useOrderBook')
       .mockImplementation(() => objResponse as any)
-    const { container } = render(
-      <InvestorLiveOrderBook tokenSymbol='IXPS' currency='SGD' />
-    )
+    const { container } = render(<InvestorLiveOrderBook />)
     expect(container).toBeEmptyDOMElement()
   })
 })

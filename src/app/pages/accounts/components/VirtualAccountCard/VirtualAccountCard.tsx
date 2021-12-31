@@ -1,6 +1,6 @@
 import { Box } from '@material-ui/core'
 import React from 'react'
-import { ReactComponent as Card } from 'assets/images/card.svg'
+import Card from 'assets/images/card.svg'
 import { useStyles } from 'app/pages/accounts/components/VirtualAccountCard/VirtualAccountCard.styles'
 
 export interface VirtualAccountCardProps {

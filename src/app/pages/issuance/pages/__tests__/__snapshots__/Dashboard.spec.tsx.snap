@@ -75,9 +75,7 @@ exports[`Dashboard should match snapshot 1`] = `
                       <div
                         class="MuiBox-root MuiBox-root-7"
                       >
-                        <svg>
-                          token.svg
-                        </svg>
+                        <image-mock />
                       </div>
                     </div>
                     <div
@@ -129,9 +127,7 @@ exports[`Dashboard should match snapshot 1`] = `
                       <div
                         class="MuiBox-root MuiBox-root-11"
                       >
-                        <svg>
-                          green_dollar.svg
-                        </svg>
+                        <image-mock />
                       </div>
                     </div>
                     <div
@@ -183,11 +179,9 @@ exports[`Dashboard should match snapshot 1`] = `
                       <div
                         class="MuiBox-root MuiBox-root-14"
                       >
-                        <svg
+                        <image-mock
                           style="fill: #F6C559; width: 16px;"
-                        >
-                          people_black_24dp.svg
-                        </svg>
+                        />
                       </div>
                     </div>
                     <div
@@ -377,9 +371,7 @@ exports[`Dashboard should match snapshot 1`] = `
             <div
               class="MuiBox-root MuiBox-root-22"
             >
-              <svg>
-                empty-box.svg
-              </svg>
+              <image-mock />
               <div
                 class="MuiBox-root MuiBox-root-23"
               />

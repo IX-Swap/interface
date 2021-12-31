@@ -1,5 +1,5 @@
 import { Box, Typography } from '@material-ui/core'
-import { ReactComponent as DocumentIcon } from 'assets/icons/document.svg'
+import DocumentIcon from 'assets/icons/document.svg'
 import { useStyles } from 'app/pages/identity/components/UploadDocumentsForm/FileTypeIcon/FileTypeIcon.styles'
 import React from 'react'
 

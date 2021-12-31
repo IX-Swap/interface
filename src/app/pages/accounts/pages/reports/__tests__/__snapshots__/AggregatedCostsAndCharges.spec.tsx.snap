@@ -9,10 +9,10 @@ exports[`AggregatedCostsAndCharges should match snapshot when all data is loaded
       class="MuiGrid-root MuiGrid-item"
     >
       <div
-        class="MuiGrid-root makeStyles-container-21 MuiGrid-container MuiGrid-direction-xs-column"
+        class="MuiGrid-root makeStyles-container-22 MuiGrid-container MuiGrid-direction-xs-column"
       >
         <div
-          class="MuiGrid-root makeStyles-header-20 MuiGrid-container"
+          class="MuiGrid-root makeStyles-header-21 MuiGrid-container"
         >
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center"
@@ -37,60 +37,30 @@ exports[`AggregatedCostsAndCharges should match snapshot when all data is loaded
         </div>
       </div>
       <div
-        class="MuiBox-root MuiBox-root-23"
+        class="MuiBox-root MuiBox-root-24"
       />
-    </div>
-    <div
-      class="MuiGrid-root makeStyles-wrapper-27 MuiGrid-container MuiGrid-direction-xs-column MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center"
-      style="opacity: 0.75;"
-    >
-      <div
-        class="MuiBox-root MuiBox-root-28"
-      />
-      <div
-        class="MuiBox-root MuiBox-root-29"
-      />
-      <div
-        class="MuiCircularProgress-root MuiCircularProgress-colorPrimary MuiCircularProgress-indeterminate"
-        role="progressbar"
-        style="width: 40px; height: 40px;"
-      >
-        <svg
-          class="MuiCircularProgress-svg"
-          viewBox="22 22 44 44"
-        >
-          <circle
-            class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate"
-            cx="44"
-            cy="44"
-            fill="none"
-            r="20.2"
-            stroke-width="3.6"
-          />
-        </svg>
-      </div>
     </div>
     <div
       class="MuiGrid-root MuiGrid-item"
     >
       <div
-        class="MuiBox-root MuiBox-root-30"
+        class="MuiBox-root MuiBox-root-28"
       />
       <div
-        class="MuiPaper-root MuiAccordion-root makeStyles-root-31 MuiAccordion-rounded MuiPaper-elevation1 MuiPaper-rounded"
+        class="MuiPaper-root MuiAccordion-root makeStyles-root-29 MuiAccordion-rounded MuiPaper-elevation1 MuiPaper-rounded"
       >
         <div
           aria-disabled="false"
           aria-expanded="false"
-          class="MuiButtonBase-root MuiAccordionSummary-root makeStyles-summaryWrapper-32"
+          class="MuiButtonBase-root MuiAccordionSummary-root makeStyles-summaryWrapper-30"
           role="button"
           tabindex="0"
         >
           <div
-            class="MuiAccordionSummary-content makeStyles-summaryContent-33"
+            class="MuiAccordionSummary-content makeStyles-summaryContent-31"
           >
             <p
-              class="MuiTypography-root makeStyles-summary-34 MuiTypography-body1 MuiTypography-colorPrimary"
+              class="MuiTypography-root makeStyles-summary-32 MuiTypography-body1 MuiTypography-colorPrimary"
             >
               Fees (SGD)
             </p>
@@ -133,7 +103,7 @@ exports[`AggregatedCostsAndCharges should match snapshot when all data is loaded
                 role="region"
               >
                 <div
-                  class="MuiAccordionDetails-root makeStyles-detailsWrapper-35"
+                  class="MuiAccordionDetails-root makeStyles-detailsWrapper-33"
                 >
                   <div
                     class="MuiTableContainer-root"
@@ -148,19 +118,19 @@ exports[`AggregatedCostsAndCharges should match snapshot when all data is loaded
                           class="MuiTableRow-root MuiTableRow-head"
                         >
                           <th
-                            class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-36 MuiTableCell-alignLeft"
+                            class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-34 MuiTableCell-alignLeft"
                             scope="col"
                           >
                             Date
                           </th>
                           <th
-                            class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-36 MuiTableCell-alignCenter"
+                            class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-34 MuiTableCell-alignCenter"
                             scope="col"
                           >
                             Description
                           </th>
                           <th
-                            class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-36 MuiTableCell-alignLeft"
+                            class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-34 MuiTableCell-alignLeft"
                             scope="col"
                           >
                             Amount
@@ -171,58 +141,58 @@ exports[`AggregatedCostsAndCharges should match snapshot when all data is loaded
                         class="MuiTableBody-root"
                       >
                         <tr
-                          class="MuiTableRow-root makeStyles-row-41 makeStyles-row-46"
+                          class="MuiTableRow-root makeStyles-row-39 makeStyles-row-44"
                         >
                           <th
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-38"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36"
                             role="cell"
                             scope="row"
                           />
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-38 MuiTableCell-alignLeft"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignLeft"
                           >
                             Other Fees
                           </td>
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-38 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignRight"
                           />
                         </tr>
                         <tr
-                          class="MuiTableRow-root makeStyles-row-41 makeStyles-row-48"
+                          class="MuiTableRow-root makeStyles-row-39 makeStyles-row-46"
                         >
                           <th
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-38"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36"
                             role="cell"
                             scope="row"
                           >
                             2021-11-29, 01:26 AM
                           </th>
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-38 MuiTableCell-alignLeft"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignLeft"
                           >
                             Primary issuance fee
                           </td>
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-38 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignRight"
                           >
                             10.00
                           </td>
                         </tr>
                         <tr
-                          class="MuiTableRow-root makeStyles-row-41 makeStyles-row-50"
+                          class="MuiTableRow-root makeStyles-row-39 makeStyles-row-48"
                         >
                           <th
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-38"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36"
                             role="cell"
                             scope="row"
                           >
                             Total
                           </th>
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-38 MuiTableCell-alignLeft"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignLeft"
                           />
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-38 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignRight"
                           >
                             10.00
                           </td>
@@ -296,11 +266,9 @@ exports[`AggregatedCostsAndCharges should match snapshot when data is loaded suc
           <div
             class="MuiBox-root MuiBox-root-64"
           />
-          <svg
+          <image-mock
             style="max-width: 100%;"
-          >
-            no_data.svg
-          </svg>
+          />
         </div>
         <div
           class="MuiGrid-root MuiGrid-item"
@@ -386,11 +354,9 @@ exports[`AggregatedCostsAndCharges should match snapshot when data is loaded suc
           <div
             class="MuiBox-root MuiBox-root-83"
           />
-          <svg
+          <image-mock
             style="max-width: 100%;"
-          >
-            no_data.svg
-          </svg>
+          />
         </div>
         <div
           class="MuiGrid-root MuiGrid-item"
@@ -506,11 +472,9 @@ exports[`AggregatedCostsAndCharges should match snapshot when data is undefined 
           <div
             class="MuiBox-root MuiBox-root-16"
           />
-          <svg
+          <image-mock
             style="max-width: 100%;"
-          >
-            no_data.svg
-          </svg>
+          />
         </div>
         <div
           class="MuiGrid-root MuiGrid-item"

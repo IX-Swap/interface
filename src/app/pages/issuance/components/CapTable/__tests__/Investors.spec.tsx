@@ -4,6 +4,7 @@ import { render } from 'test-utils'
 import { generateQueryResult } from '__fixtures__/useQuery'
 import * as useDSOById from 'app/pages/invest/hooks/useDSOById'
 import { dso } from '__fixtures__/authorizer'
+import { history } from 'config/history'
 
 jest.mock('components/TableWithPagination/TableView', () => ({
   TableView: jest.fn(() => null)
@@ -22,26 +23,10 @@ describe('Investors', () => {
   })
 
   it.skip('renders without errors', async () => {
-    jest.mock('react-router-dom', () => ({
-      ...jest.requireActual('react-router-dom'),
-      useParams: () => ({
-        dsoId: '1',
-        issuerId: '2'
-      })
-    }))
-
     render(<Investors />)
   })
 
   it('renders null when data is undefined', () => {
-    jest.mock('react-router-dom', () => ({
-      ...jest.requireActual('react-router-dom'),
-      useParams: () => ({
-        dsoId: '1',
-        issuerId: '2'
-      })
-    }))
-
     const objResponse = generateQueryResult({ data: undefined })
     jest
       .spyOn(useDSOById, 'useDSOById')
@@ -52,14 +37,6 @@ describe('Investors', () => {
   })
 
   it('renders null when isLoading', () => {
-    jest.mock('react-router-dom', () => ({
-      ...jest.requireActual('react-router-dom'),
-      useParams: () => ({
-        dsoId: '1',
-        issuerId: '2'
-      })
-    }))
-
     const objResponse = generateQueryResult({ data: dso, isLoading: true })
     jest
       .spyOn(useDSOById, 'useDSOById')
@@ -70,14 +47,6 @@ describe('Investors', () => {
   })
 
   it('renders null when dsoid is undefined', () => {
-    jest.mock('react-router-dom', () => ({
-      ...jest.requireActual('react-router-dom'),
-      useParams: () => ({
-        dsoId: undefined,
-        issuerId: '2'
-      })
-    }))
-
     const objResponse = generateQueryResult({ data: dso, isLoading: true })
     jest
       .spyOn(useDSOById, 'useDSOById')
@@ -88,14 +57,6 @@ describe('Investors', () => {
   })
 
   it('renders null when issuerId is undefined', () => {
-    jest.mock('react-router-dom', () => ({
-      ...jest.requireActual('react-router-dom'),
-      useParams: () => ({
-        dsoId: '1',
-        issuerId: undefined
-      })
-    }))
-
     const objResponse = generateQueryResult({ data: dso, isLoading: true })
     jest
       .spyOn(useDSOById, 'useDSOById')

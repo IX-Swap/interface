@@ -4,7 +4,7 @@ import { ChartTitle } from 'app/pages/issuance/components/IssuanceLanding/ChartT
 import { ChartWrapper } from 'app/pages/issuance/components/IssuanceLanding/ChartWrapper'
 import { InsightValue } from 'app/pages/issuance/components/IssuanceLanding/InsightValue'
 import { VSpacer } from 'components/VSpacer'
-import { ReactComponent as PeopleIcon } from 'assets/icons/people_black_24dp.svg'
+import PeopleIcon from 'assets/icons/people_black_24dp.svg'
 import { LabelIcon } from 'app/pages/issuance/components/CapTable/LabelIcon'
 
 export interface TotalInvestorsCardProps {

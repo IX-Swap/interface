@@ -5,7 +5,7 @@ import {
   Link,
   Typography
 } from '@material-ui/core'
-import { ReactComponent as Arrow } from 'assets/icons/arrow.svg'
+import Arrow from 'assets/icons/arrow.svg'
 import React, { useState } from 'react'
 import { useStyles } from './NewsItem.style'
 import classNames from 'classnames'

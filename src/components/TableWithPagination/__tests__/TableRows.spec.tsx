@@ -10,6 +10,7 @@ jest.mock('@material-ui/core/TableRow', () => jest.fn(() => null))
 
 describe('TableRows', () => {
   const props: TableRowsProps<any> = {
+    isLoading: false,
     actions: undefined,
     bordered: false,
     children: undefined,

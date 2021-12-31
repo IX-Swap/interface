@@ -1,6 +1,6 @@
 import React from 'react'
 import { Grid, Typography } from '@material-ui/core'
-import { ReactComponent as SuccessIcon } from 'assets/icons/success.svg'
+import SuccessIcon from 'assets/icons/success.svg'
 
 export interface SuccessViewProps {
   title: string

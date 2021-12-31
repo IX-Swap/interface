@@ -9,7 +9,8 @@ import {
 import {
   StylesProvider,
   ThemeProvider,
-  createMuiTheme
+  createMuiTheme,
+  createGenerateClassName
 } from '@material-ui/core/styles'
 import { history } from 'config/history'
 import { UserProvider } from 'auth/context'
@@ -42,12 +43,16 @@ export const snackbarServiceMock = {
   showOnboardingDialog: jest.fn()
 }
 
+const generateClassName = createGenerateClassName({
+  productionPrefix: 'ix'
+})
+
 export const BaseProviders: React.FC<{ mockAPI?: boolean }> = ({
   children,
   mockAPI = false
 }) => {
   return (
-    <StylesProvider>
+    <StylesProvider generateClassName={generateClassName}>
       <AppThemeProvider>
         {theme => (
           <ThemeProvider theme={theme}>
