@@ -4,9 +4,8 @@ import { useAuth } from 'hooks/auth/useAuth'
 import { getIdFromObj } from 'helpers/strings'
 import { identityURL } from 'config/apiURL'
 import { identityQueryKeys } from 'config/queryKeys'
-import { useHistory } from 'react-router-dom'
 import { IdentityRoute } from 'app/pages/identity/router/config'
-import { generatePath } from 'react-router-dom'
+import { generatePath, useHistory } from 'react-router-dom'
 import { IndividualIdentity } from 'app/pages/identity/types/forms'
 
 export const useCreateIndividual = () => {
@@ -26,6 +25,7 @@ export const useCreateIndividual = () => {
       void snackbarService.showSnackbar(data.message, 'success')
       await queryCache.invalidateQueries(identityQueryKeys.getIndividual)
 
+      // eslint-disable-next-line
       if (location.pathname.endsWith('create')) {
         replace(
           generatePath(IdentityRoute.editIndividual, {

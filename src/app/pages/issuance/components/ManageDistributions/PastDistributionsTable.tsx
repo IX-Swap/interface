@@ -24,7 +24,7 @@ export const PastDistributionsTable = ({
       <Grid item xs={12}>
         <TableView<any>
           uri={'/issuance/distribution/list'}
-          name={`distributions-${dsoId}`}
+          name={`distributions-${dsoId ?? ''}`}
           columns={[
             {
               label: 'Date',
