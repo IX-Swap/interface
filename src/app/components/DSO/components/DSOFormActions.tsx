@@ -2,9 +2,8 @@ import React from 'react'
 import { Box, Button } from '@material-ui/core'
 import { DigitalSecurityOffering } from 'types/dso'
 import { DSOFinishLaterButton } from 'app/components/DSO/components/DSOFinishLaterButton'
-import { useHistory } from 'react-router-dom'
+import { useHistory, generatePath } from 'react-router-dom'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
-import { generatePath } from 'react-router-dom'
 
 export interface DSOFormActionsProps {
   dso: DigitalSecurityOffering | undefined

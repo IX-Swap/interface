@@ -5,9 +5,8 @@ import { useMutation, useQueryCache } from 'react-query'
 import { investQueryKeys } from 'config/queryKeys'
 import { getIdFromObj } from 'helpers/strings'
 import { issuanceURL } from 'config/apiURL'
-import { generatePath, useHistory } from 'react-router-dom'
+import { generatePath, useHistory, useParams } from 'react-router-dom'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
-import { useParams } from 'react-router-dom'
 
 export const useSubmitDSO = (dsoId: string) => {
   const { apiService, snackbarService } = useServices()

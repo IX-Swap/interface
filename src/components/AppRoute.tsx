@@ -6,8 +6,7 @@ import { SentryRoute } from 'components/SentryRoute'
 import { useIsAccredited, useIsEnabled2FA } from 'helpers/acl'
 import { useCachedUser } from 'hooks/auth/useCachedUser'
 import React, { memo } from 'react'
-import { RouteProps } from 'react-router-dom'
-import { Redirect } from 'react-router-dom'
+import { RouteProps, Redirect } from 'react-router-dom'
 
 export interface AppRouteProps extends RouteProps {
   path: string
