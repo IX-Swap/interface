@@ -5,6 +5,11 @@ const APP_VERSION: string
 
 declare module 'material-ui-phone-number'
 
+declare module '*.svg' {
+  const contents: string
+  export default contents
+}
+
 declare global {
   interface Window {
     ethereum: any

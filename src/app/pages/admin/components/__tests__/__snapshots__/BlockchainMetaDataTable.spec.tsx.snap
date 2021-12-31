@@ -4,20 +4,31 @@ exports[`BlockchainMetaDataTable should match snapshot 1`] = `
 <div>
   <div
     class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column"
+    data-component="TableView"
+    data-element="Grid"
+    data-source-file="TableView.tsx"
   >
     <div
       class="MuiGrid-root MuiGrid-item"
+      data-element="Grid"
+      data-source-file="TableView.tsx"
     >
       <div
         class="MuiPaper-root MuiPaper-outlined MuiPaper-rounded"
+        data-element="Paper"
+        data-source-file="TableView.tsx"
         style="background-color: inherit;"
       >
         <div
           class="MuiTableContainer-root"
+          data-element="TableContainer"
+          data-source-file="TableView.tsx"
         >
           <table
             aria-label="table"
             class="MuiTable-root"
+            data-element="Table"
+            data-source-file="TableView.tsx"
             data-testid="table"
           >
             <thead
@@ -61,6 +72,9 @@ exports[`BlockchainMetaDataTable should match snapshot 1`] = `
             </thead>
             <tbody
               class="MuiTableBody-root"
+              data-component="TableRows"
+              data-element="TableBody"
+              data-source-file="TableRows.tsx"
             >
               <tr
                 class="MuiTableRow-root"
@@ -68,16 +82,25 @@ exports[`BlockchainMetaDataTable should match snapshot 1`] = `
               >
                 <td
                   class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"
+                  data-component="TableCellWrapper"
+                  data-element="TableCell"
+                  data-source-file="TableCellWrapper.tsx"
                 >
                   Name 1
                 </td>
                 <td
                   class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"
+                  data-component="TableCellWrapper"
+                  data-element="TableCell"
+                  data-source-file="TableCellWrapper.tsx"
                 >
                   Description 1
                 </td>
                 <td
                   class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"
+                  data-component="TableCellWrapper"
+                  data-element="TableCell"
+                  data-source-file="TableCellWrapper.tsx"
                 >
                   Value 1
                 </td>
@@ -88,16 +111,25 @@ exports[`BlockchainMetaDataTable should match snapshot 1`] = `
               >
                 <td
                   class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"
+                  data-component="TableCellWrapper"
+                  data-element="TableCell"
+                  data-source-file="TableCellWrapper.tsx"
                 >
                   Name 2
                 </td>
                 <td
                   class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"
+                  data-component="TableCellWrapper"
+                  data-element="TableCell"
+                  data-source-file="TableCellWrapper.tsx"
                 >
                   Description 2
                 </td>
                 <td
                   class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"
+                  data-component="TableCellWrapper"
+                  data-element="TableCell"
+                  data-source-file="TableCellWrapper.tsx"
                 >
                   Value 2
                 </td>

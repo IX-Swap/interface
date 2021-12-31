@@ -4,21 +4,35 @@ exports[`AccountsSummary should match snapshot when all data is loaded successfu
 <div>
   <div
     class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column"
+    data-component="AccountsSummary"
+    data-element="Grid"
+    data-source-file="AccountsSummary.tsx"
   >
     <div
       class="MuiGrid-root MuiGrid-item"
+      data-element="Grid"
+      data-source-file="AccountsSummary.tsx"
     >
       <div
-        class="MuiGrid-root makeStyles-container-22 MuiGrid-container MuiGrid-direction-xs-column"
+        class="MuiGrid-root makeStyles-container-21 MuiGrid-container MuiGrid-direction-xs-column"
+        data-component="PageHeader"
+        data-element="Grid"
+        data-source-file="PageHeader.tsx"
       >
         <div
-          class="MuiGrid-root makeStyles-header-21 MuiGrid-container"
+          class="MuiGrid-root makeStyles-header-20 MuiGrid-container"
+          data-element="Grid"
+          data-source-file="PageHeader.tsx"
         >
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center"
+            data-element="Grid"
+            data-source-file="PageHeader.tsx"
           >
             <h2
               class="MuiTypography-root MuiTypography-h2"
+              data-element="Typography"
+              data-source-file="PageHeader.tsx"
             >
               Activity Summary
             </h2>
@@ -29,6 +43,9 @@ exports[`AccountsSummary should match snapshot when all data is loaded successfu
         >
           <nav
             class="MuiTypography-root MuiBreadcrumbs-root MuiTypography-body1 MuiTypography-colorTextSecondary"
+            data-component="Breadcrumbs"
+            data-element="MuiBreadcrumbs"
+            data-source-file="Breadcrumbs.tsx"
           >
             <ol
               class="MuiBreadcrumbs-ol"
@@ -37,30 +54,86 @@ exports[`AccountsSummary should match snapshot when all data is loaded successfu
         </div>
       </div>
       <div
-        class="MuiBox-root MuiBox-root-24"
+        class="MuiBox-root MuiBox-root-23"
+        data-component="VSpacer"
+        data-element="Box"
+        data-source-file="VSpacer.tsx"
       />
     </div>
     <div
-      class="MuiGrid-root MuiGrid-item"
+      class="MuiGrid-root makeStyles-wrapper-27 MuiGrid-container MuiGrid-direction-xs-column MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center"
+      data-component="LoadingIndicator"
+      data-element="Grid"
+      data-source-file="LoadingIndicator.tsx"
+      style="opacity: 0.75;"
     >
       <div
         class="MuiBox-root MuiBox-root-28"
+        data-component="VSpacer"
+        data-element="Box"
+        data-source-file="VSpacer.tsx"
       />
       <div
-        class="MuiPaper-root MuiAccordion-root makeStyles-root-29 MuiAccordion-rounded MuiPaper-elevation1 MuiPaper-rounded"
+        class="MuiBox-root MuiBox-root-29"
+        data-component="VSpacer"
+        data-element="Box"
+        data-source-file="VSpacer.tsx"
+      />
+      <div
+        class="MuiCircularProgress-root MuiCircularProgress-colorPrimary MuiCircularProgress-indeterminate"
+        data-element="CircularProgress"
+        data-source-file="LoadingIndicator.tsx"
+        role="progressbar"
+        style="width: 40px; height: 40px;"
+      >
+        <svg
+          class="MuiCircularProgress-svg"
+          viewBox="22 22 44 44"
+        >
+          <circle
+            class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate"
+            cx="44"
+            cy="44"
+            fill="none"
+            r="20.2"
+            stroke-width="3.6"
+          />
+        </svg>
+      </div>
+    </div>
+    <div
+      class="MuiGrid-root MuiGrid-item"
+      data-element="Grid"
+      data-source-file="AccountsSummary.tsx"
+    >
+      <div
+        class="MuiBox-root MuiBox-root-30"
+        data-component="VSpacer"
+        data-element="Box"
+        data-source-file="VSpacer.tsx"
+      />
+      <div
+        class="MuiPaper-root MuiAccordion-root makeStyles-root-31 MuiAccordion-rounded MuiPaper-elevation1 MuiPaper-rounded"
+        data-component="ReportsAccordion"
+        data-element="Accordion"
+        data-source-file="ReportsAccordion.tsx"
       >
         <div
           aria-disabled="false"
           aria-expanded="false"
-          class="MuiButtonBase-root MuiAccordionSummary-root makeStyles-summaryWrapper-30"
+          class="MuiButtonBase-root MuiAccordionSummary-root makeStyles-summaryWrapper-32"
+          data-element="AccordionSummary"
+          data-source-file="ReportsAccordion.tsx"
           role="button"
           tabindex="0"
         >
           <div
-            class="MuiAccordionSummary-content makeStyles-summaryContent-31"
+            class="MuiAccordionSummary-content makeStyles-summaryContent-33"
           >
             <p
-              class="MuiTypography-root makeStyles-summary-32 MuiTypography-body1 MuiTypography-colorPrimary"
+              class="MuiTypography-root makeStyles-summary-34 MuiTypography-body1 MuiTypography-colorPrimary"
+              data-element="Typography"
+              data-source-file="ReportsAccordion.tsx"
             >
               Open Positions
             </p>
@@ -103,64 +176,75 @@ exports[`AccountsSummary should match snapshot when all data is loaded successfu
                 role="region"
               >
                 <div
-                  class="MuiAccordionDetails-root makeStyles-detailsWrapper-33"
+                  class="MuiAccordionDetails-root makeStyles-detailsWrapper-35"
+                  data-element="AccordionDetails"
+                  data-source-file="ReportsAccordion.tsx"
                 >
                   <div
                     class="MuiTableContainer-root"
+                    data-component="OpenPositionTable"
+                    data-element="TableContainer"
+                    data-source-file="OpenPositionTable.tsx"
                   >
                     <table
                       class="MuiTable-root"
+                      data-element="Table"
+                      data-source-file="OpenPositionTable.tsx"
                     >
                       <thead
                         class="MuiTableHead-root"
+                        data-element="TableHead"
+                        data-source-file="OpenPositionTable.tsx"
                       >
                         <tr
                           class="MuiTableRow-root MuiTableRow-head"
+                          data-element="TableRow"
+                          data-source-file="OpenPositionTable.tsx"
                         >
                           <th
-                            class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-34 MuiTableCell-alignLeft"
+                            class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-36 MuiTableCell-alignLeft"
                             scope="col"
                           >
                             Symbol
                           </th>
                           <th
-                            class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-34 MuiTableCell-alignLeft"
+                            class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-36 MuiTableCell-alignLeft"
                             scope="col"
                           >
                             Open
                           </th>
                           <th
-                            class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-34 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-36 MuiTableCell-alignRight"
                             scope="col"
                           >
                             Quantity
                           </th>
                           <th
-                            class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-34 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-36 MuiTableCell-alignRight"
                             scope="col"
                           >
                             Cost price
                           </th>
                           <th
-                            class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-34 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-36 MuiTableCell-alignRight"
                             scope="col"
                           >
                             Cost value
                           </th>
                           <th
-                            class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-34 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-36 MuiTableCell-alignRight"
                             scope="col"
                           >
                             Last Trade Price
                           </th>
                           <th
-                            class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-34 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-36 MuiTableCell-alignRight"
                             scope="col"
                           >
                             Current Value
                           </th>
                           <th
-                            class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-34 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-36 MuiTableCell-alignRight"
                             scope="col"
                           >
                             Unrealized P/L
@@ -169,119 +253,178 @@ exports[`AccountsSummary should match snapshot when all data is loaded successfu
                       </thead>
                       <tbody
                         class="MuiTableBody-root"
+                        data-element="TableBody"
+                        data-source-file="OpenPositionTable.tsx"
                       >
                         <tr
-                          class="MuiTableRow-root makeStyles-row-39 makeStyles-row-44"
+                          class="MuiTableRow-root makeStyles-row-41 makeStyles-row-46"
+                          data-component="OpenPositionRow"
+                          data-element="TableRow"
+                          data-source-file="OpenPositionRow.tsx"
                         >
                           <th
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-38"
+                            data-element="TableCell"
+                            data-source-file="OpenPositionRow.tsx"
                             role="cell"
                             scope="row"
                           >
                             Tokens
                           </th>
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-38 MuiTableCell-alignRight"
+                            data-element="TableCell"
+                            data-source-file="OpenPositionRow.tsx"
                           />
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-38 MuiTableCell-alignRight"
+                            data-element="TableCell"
+                            data-source-file="OpenPositionRow.tsx"
                           />
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-38 MuiTableCell-alignRight"
+                            data-element="TableCell"
+                            data-source-file="OpenPositionRow.tsx"
                           />
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-38 MuiTableCell-alignRight"
+                            data-element="TableCell"
+                            data-source-file="OpenPositionRow.tsx"
                           />
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-38 MuiTableCell-alignRight"
+                            data-element="TableCell"
+                            data-source-file="OpenPositionRow.tsx"
                           />
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-38 MuiTableCell-alignRight"
+                            data-element="TableCell"
+                            data-source-file="OpenPositionRow.tsx"
                           />
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-38 MuiTableCell-alignRight"
+                            data-element="TableCell"
+                            data-source-file="OpenPositionRow.tsx"
                           />
                         </tr>
                         <tr
-                          class="MuiTableRow-root makeStyles-row-39 makeStyles-row-46"
+                          class="MuiTableRow-root makeStyles-row-41 makeStyles-row-48"
+                          data-component="OpenPositionRow"
+                          data-element="TableRow"
+                          data-source-file="OpenPositionRow.tsx"
                         >
                           <th
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-38"
+                            data-element="TableCell"
+                            data-source-file="OpenPositionRow.tsx"
                             role="cell"
                             scope="row"
                           >
                             RHTC/SGD
                           </th>
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-38 MuiTableCell-alignRight"
+                            data-element="TableCell"
+                            data-source-file="OpenPositionRow.tsx"
                           >
                             2021-11-01, 06:15 AM
                           </td>
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-38 MuiTableCell-alignRight"
+                            data-element="TableCell"
+                            data-source-file="OpenPositionRow.tsx"
                           >
                             3
                           </td>
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-38 MuiTableCell-alignRight"
+                            data-element="TableCell"
+                            data-source-file="OpenPositionRow.tsx"
                           >
                             2,000.00
                           </td>
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-38 MuiTableCell-alignRight"
+                            data-element="TableCell"
+                            data-source-file="OpenPositionRow.tsx"
                           >
                             6,000.00
                           </td>
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-38 MuiTableCell-alignRight"
+                            data-element="TableCell"
+                            data-source-file="OpenPositionRow.tsx"
                           >
                             2,000.00
                           </td>
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-38 MuiTableCell-alignRight"
+                            data-element="TableCell"
+                            data-source-file="OpenPositionRow.tsx"
                           >
                             6,000.00
                           </td>
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-38 MuiTableCell-alignRight"
+                            data-element="TableCell"
+                            data-source-file="OpenPositionRow.tsx"
                           >
                             0.00
                           </td>
                         </tr>
                         <tr
-                          class="MuiTableRow-root makeStyles-row-39 makeStyles-row-48"
+                          class="MuiTableRow-root makeStyles-row-41 makeStyles-row-50"
+                          data-component="OpenPositionRow"
+                          data-element="TableRow"
+                          data-source-file="OpenPositionRow.tsx"
                         >
                           <th
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-38"
+                            data-element="TableCell"
+                            data-source-file="OpenPositionRow.tsx"
                             role="cell"
                             scope="row"
                           >
                             Total
                           </th>
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-38 MuiTableCell-alignRight"
+                            data-element="TableCell"
+                            data-source-file="OpenPositionRow.tsx"
                           />
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-38 MuiTableCell-alignRight"
+                            data-element="TableCell"
+                            data-source-file="OpenPositionRow.tsx"
                           />
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-38 MuiTableCell-alignRight"
+                            data-element="TableCell"
+                            data-source-file="OpenPositionRow.tsx"
                           >
                             5,033.00
                           </td>
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-38 MuiTableCell-alignRight"
+                            data-element="TableCell"
+                            data-source-file="OpenPositionRow.tsx"
                           />
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-38 MuiTableCell-alignRight"
+                            data-element="TableCell"
+                            data-source-file="OpenPositionRow.tsx"
                           />
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-38 MuiTableCell-alignRight"
+                            data-element="TableCell"
+                            data-source-file="OpenPositionRow.tsx"
                           >
                             146,000.00
                           </td>
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-38 MuiTableCell-alignRight"
+                            data-element="TableCell"
+                            data-source-file="OpenPositionRow.tsx"
                           >
                             -79,835.00
                           </td>
@@ -304,21 +447,35 @@ exports[`AccountsSummary should match snapshot when data is loaded successfully 
 <div>
   <div
     class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column"
+    data-component="AccountsSummary"
+    data-element="Grid"
+    data-source-file="AccountsSummary.tsx"
   >
     <div
       class="MuiGrid-root MuiGrid-item"
+      data-element="Grid"
+      data-source-file="AccountsSummary.tsx"
     >
       <div
-        class="MuiGrid-root makeStyles-container-73 MuiGrid-container MuiGrid-direction-xs-column"
+        class="MuiGrid-root makeStyles-container-68 MuiGrid-container MuiGrid-direction-xs-column"
+        data-component="PageHeader"
+        data-element="Grid"
+        data-source-file="PageHeader.tsx"
       >
         <div
-          class="MuiGrid-root makeStyles-header-72 MuiGrid-container"
+          class="MuiGrid-root makeStyles-header-67 MuiGrid-container"
+          data-element="Grid"
+          data-source-file="PageHeader.tsx"
         >
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center"
+            data-element="Grid"
+            data-source-file="PageHeader.tsx"
           >
             <h2
               class="MuiTypography-root MuiTypography-h2"
+              data-element="Typography"
+              data-source-file="PageHeader.tsx"
             >
               Activity Summary
             </h2>
@@ -329,6 +486,9 @@ exports[`AccountsSummary should match snapshot when data is loaded successfully 
         >
           <nav
             class="MuiTypography-root MuiBreadcrumbs-root MuiTypography-body1 MuiTypography-colorTextSecondary"
+            data-component="Breadcrumbs"
+            data-element="MuiBreadcrumbs"
+            data-source-file="Breadcrumbs.tsx"
           >
             <ol
               class="MuiBreadcrumbs-ol"
@@ -337,30 +497,45 @@ exports[`AccountsSummary should match snapshot when data is loaded successfully 
         </div>
       </div>
       <div
-        class="MuiBox-root MuiBox-root-75"
+        class="MuiBox-root MuiBox-root-70"
+        data-component="VSpacer"
+        data-element="Box"
+        data-source-file="VSpacer.tsx"
       />
     </div>
     <div
       class="MuiGrid-root MuiGrid-item"
+      data-element="Grid"
+      data-source-file="AccountsSummary.tsx"
     >
       <div
-        class="MuiBox-root MuiBox-root-79"
+        class="MuiBox-root MuiBox-root-74"
+        data-component="VSpacer"
+        data-element="Box"
+        data-source-file="VSpacer.tsx"
       />
       <div
-        class="MuiPaper-root MuiAccordion-root makeStyles-root-80 MuiAccordion-rounded MuiPaper-elevation1 MuiPaper-rounded"
+        class="MuiPaper-root MuiAccordion-root makeStyles-root-75 MuiAccordion-rounded MuiPaper-elevation1 MuiPaper-rounded"
+        data-component="ReportsAccordion"
+        data-element="Accordion"
+        data-source-file="ReportsAccordion.tsx"
       >
         <div
           aria-disabled="false"
           aria-expanded="false"
-          class="MuiButtonBase-root MuiAccordionSummary-root makeStyles-summaryWrapper-81"
+          class="MuiButtonBase-root MuiAccordionSummary-root makeStyles-summaryWrapper-76"
+          data-element="AccordionSummary"
+          data-source-file="ReportsAccordion.tsx"
           role="button"
           tabindex="0"
         >
           <div
-            class="MuiAccordionSummary-content makeStyles-summaryContent-82"
+            class="MuiAccordionSummary-content makeStyles-summaryContent-77"
           >
             <p
-              class="MuiTypography-root makeStyles-summary-83 MuiTypography-body1 MuiTypography-colorPrimary"
+              class="MuiTypography-root makeStyles-summary-78 MuiTypography-body1 MuiTypography-colorPrimary"
+              data-element="Typography"
+              data-source-file="ReportsAccordion.tsx"
             >
               Cash Report
             </p>
@@ -403,16 +578,25 @@ exports[`AccountsSummary should match snapshot when data is loaded successfully 
                 role="region"
               >
                 <div
-                  class="MuiAccordionDetails-root makeStyles-detailsWrapper-84"
+                  class="MuiAccordionDetails-root makeStyles-detailsWrapper-79"
+                  data-element="AccordionDetails"
+                  data-source-file="ReportsAccordion.tsx"
                 >
                   <div
                     class="MuiTableContainer-root"
+                    data-component="CashReportTable"
+                    data-element="TableContainer"
+                    data-source-file="CashReportTable.tsx"
                   >
                     <table
                       class="MuiTable-root"
+                      data-element="Table"
+                      data-source-file="CashReportTable.tsx"
                     >
                       <tbody
                         class="MuiTableBody-root"
+                        data-element="TableBody"
+                        data-source-file="CashReportTable.tsx"
                       />
                     </table>
                   </div>

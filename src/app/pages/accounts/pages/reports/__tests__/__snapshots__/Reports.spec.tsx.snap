@@ -4,21 +4,35 @@ exports[`Reports should match snapshot 1`] = `
 <div>
   <div
     class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column"
+    data-component="Reports"
+    data-element="Grid"
+    data-source-file="Reports.tsx"
   >
     <div
       class="MuiGrid-root MuiGrid-item"
+      data-element="Grid"
+      data-source-file="Reports.tsx"
     >
       <div
         class="MuiGrid-root makeStyles-container-3 MuiGrid-container MuiGrid-direction-xs-column"
+        data-component="PageHeader"
+        data-element="Grid"
+        data-source-file="PageHeader.tsx"
       >
         <div
           class="MuiGrid-root makeStyles-header-2 MuiGrid-container"
+          data-element="Grid"
+          data-source-file="PageHeader.tsx"
         >
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center"
+            data-element="Grid"
+            data-source-file="PageHeader.tsx"
           >
             <h2
               class="MuiTypography-root MuiTypography-h2"
+              data-element="Typography"
+              data-source-file="PageHeader.tsx"
             >
               Reports
             </h2>
@@ -29,6 +43,9 @@ exports[`Reports should match snapshot 1`] = `
         >
           <nav
             class="MuiTypography-root MuiBreadcrumbs-root MuiTypography-body1 MuiTypography-colorTextSecondary"
+            data-component="Breadcrumbs"
+            data-element="MuiBreadcrumbs"
+            data-source-file="Breadcrumbs.tsx"
           >
             <ol
               class="MuiBreadcrumbs-ol"
@@ -39,30 +56,48 @@ exports[`Reports should match snapshot 1`] = `
     </div>
     <div
       class="MuiGrid-root MuiGrid-item"
+      data-element="Grid"
+      data-source-file="Reports.tsx"
     >
       <div
         class="MuiBox-root MuiBox-root-5"
+        data-component="VSpacer"
+        data-element="Box"
+        data-source-file="VSpacer.tsx"
       />
       <h4
         class="MuiTypography-root MuiTypography-h4"
+        data-element="Typography"
+        data-source-file="Reports.tsx"
       >
         Default Statements
       </h4>
       <div
         class="MuiBox-root MuiBox-root-6"
+        data-component="VSpacer"
+        data-element="Box"
+        data-source-file="VSpacer.tsx"
       />
     </div>
     <div
       class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-space-between"
+      data-element="Grid"
+      data-source-file="Reports.tsx"
     >
       <div
         class="MuiGrid-root MuiGrid-item"
+        data-element="Grid"
+        data-source-file="Reports.tsx"
       >
         <div
           class="MuiBox-root MuiBox-root-7"
+          data-element="Box"
+          data-source-file="Reports.tsx"
         >
           <p
             class="MuiTypography-root MuiTypography-body1"
+            data-element="Typography"
+            data-source-file="Reports.tsx"
           >
             View, manage and track your accounting reports and taxations.
           </p>
@@ -70,23 +105,36 @@ exports[`Reports should match snapshot 1`] = `
       </div>
       <div
         class="MuiGrid-root MuiGrid-item"
+        data-element="Grid"
+        data-source-file="Reports.tsx"
       >
         <div
           class="MuiBox-root MuiBox-root-12 makeStyles-wrapper-8"
+          data-component="Filters"
+          data-element="Box"
+          data-source-file="Filters.tsx"
         >
           <h6
             class="MuiTypography-root makeStyles-filterText-9 MuiTypography-subtitle1"
+            data-element="Typography"
+            data-source-file="Filters.tsx"
           >
             Select Date:
           </h6>
           <div
             class="MuiBox-root MuiBox-root-13 makeStyles-filtersWrapper-10"
+            data-element="Box"
+            data-source-file="Filters.tsx"
           >
             <div
               class="MuiBox-root MuiBox-root-14 makeStyles-filterWrapper-11"
+              data-element="Box"
+              data-source-file="Filters.tsx"
             >
               <div
                 class="MuiFormControl-root MuiTextField-root denseAdornments MuiFormControl-fullWidth"
+                data-element="KeyboardDateTimePicker"
+                data-source-file="_DateTimePicker.tsx"
                 style="width: 150px;"
               >
                 <label
@@ -155,9 +203,13 @@ exports[`Reports should match snapshot 1`] = `
             </div>
             <div
               class="MuiBox-root MuiBox-root-19 makeStyles-filterWrapper-11"
+              data-element="Box"
+              data-source-file="Filters.tsx"
             >
               <div
                 class="MuiFormControl-root MuiTextField-root denseAdornments MuiFormControl-fullWidth"
+                data-element="KeyboardDateTimePicker"
+                data-source-file="_DateTimePicker.tsx"
                 style="width: 150px;"
               >
                 <label
@@ -230,26 +282,42 @@ exports[`Reports should match snapshot 1`] = `
     </div>
     <div
       class="MuiGrid-root MuiGrid-item"
+      data-element="Grid"
+      data-source-file="Reports.tsx"
     >
       <div
         class="MuiBox-root MuiBox-root-20"
+        data-component="VSpacer"
+        data-element="Box"
+        data-source-file="VSpacer.tsx"
       />
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column"
+        data-component="TableView"
+        data-element="Grid"
+        data-source-file="TableView.tsx"
       >
         <div
           class="MuiGrid-root MuiGrid-item"
+          data-element="Grid"
+          data-source-file="TableView.tsx"
         >
           <div
             class="MuiPaper-root MuiPaper-outlined MuiPaper-rounded"
+            data-element="Paper"
+            data-source-file="TableView.tsx"
             style="background-color: inherit;"
           >
             <div
               class="MuiTableContainer-root"
+              data-element="TableContainer"
+              data-source-file="TableView.tsx"
             >
               <table
                 aria-label="table"
                 class="MuiTable-root"
+                data-element="Table"
+                data-source-file="TableView.tsx"
                 data-testid="table"
               >
                 <thead
@@ -283,6 +351,9 @@ exports[`Reports should match snapshot 1`] = `
                 </thead>
                 <tbody
                   class="MuiTableBody-root"
+                  data-component="TableRows"
+                  data-element="TableBody"
+                  data-source-file="TableRows.tsx"
                 >
                   <tr
                     class="MuiTableRow-root"
@@ -290,19 +361,31 @@ exports[`Reports should match snapshot 1`] = `
                   >
                     <td
                       class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"
+                      data-component="TableCellWrapper"
+                      data-element="TableCell"
+                      data-source-file="TableCellWrapper.tsx"
                     >
                       Accounts Summary
                     </td>
                     <td
                       class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"
+                      data-component="TableCellWrapper"
+                      data-element="TableCell"
+                      data-source-file="TableCellWrapper.tsx"
                     >
                       HTML View
                     </td>
                     <td
                       class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
+                      data-component="ActionTableCell"
+                      data-element="TableCell"
+                      data-source-file="ActionTableCell.tsx"
                     >
                       <p
                         class="MuiTypography-root makeStyles-link-22 MuiTypography-body1 MuiTypography-colorPrimary"
+                        data-component="Actions"
+                        data-element="Typography"
+                        data-source-file="Actions.tsx"
                       >
                         View Report
                       </p>
@@ -314,19 +397,31 @@ exports[`Reports should match snapshot 1`] = `
                   >
                     <td
                       class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"
+                      data-component="TableCellWrapper"
+                      data-element="TableCell"
+                      data-source-file="TableCellWrapper.tsx"
                     >
                       Trade Confirmation
                     </td>
                     <td
                       class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"
+                      data-component="TableCellWrapper"
+                      data-element="TableCell"
+                      data-source-file="TableCellWrapper.tsx"
                     >
                       HTML View
                     </td>
                     <td
                       class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
+                      data-component="ActionTableCell"
+                      data-element="TableCell"
+                      data-source-file="ActionTableCell.tsx"
                     >
                       <p
                         class="MuiTypography-root makeStyles-link-22 MuiTypography-body1 MuiTypography-colorPrimary"
+                        data-component="Actions"
+                        data-element="Typography"
+                        data-source-file="Actions.tsx"
                       >
                         View Report
                       </p>
@@ -338,19 +433,31 @@ exports[`Reports should match snapshot 1`] = `
                   >
                     <td
                       class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"
+                      data-component="TableCellWrapper"
+                      data-element="TableCell"
+                      data-source-file="TableCellWrapper.tsx"
                     >
                       Aggregated Costs and Charges
                     </td>
                     <td
                       class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"
+                      data-component="TableCellWrapper"
+                      data-element="TableCell"
+                      data-source-file="TableCellWrapper.tsx"
                     >
                       HTML View
                     </td>
                     <td
                       class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
+                      data-component="ActionTableCell"
+                      data-element="TableCell"
+                      data-source-file="ActionTableCell.tsx"
                     >
                       <p
                         class="MuiTypography-root makeStyles-link-22 MuiTypography-body1 MuiTypography-colorPrimary"
+                        data-component="Actions"
+                        data-element="Typography"
+                        data-source-file="Actions.tsx"
                       >
                         View Report
                       </p>
@@ -362,19 +469,31 @@ exports[`Reports should match snapshot 1`] = `
                   >
                     <td
                       class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"
+                      data-component="TableCellWrapper"
+                      data-element="TableCell"
+                      data-source-file="TableCellWrapper.tsx"
                     >
                       Dividends
                     </td>
                     <td
                       class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"
+                      data-component="TableCellWrapper"
+                      data-element="TableCell"
+                      data-source-file="TableCellWrapper.tsx"
                     >
                       HTML View
                     </td>
                     <td
                       class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight"
+                      data-component="ActionTableCell"
+                      data-element="TableCell"
+                      data-source-file="ActionTableCell.tsx"
                     >
                       <p
                         class="MuiTypography-root makeStyles-link-22 MuiTypography-body1 MuiTypography-colorPrimary"
+                        data-component="Actions"
+                        data-element="Typography"
+                        data-source-file="Actions.tsx"
                       >
                         View Report
                       </p>

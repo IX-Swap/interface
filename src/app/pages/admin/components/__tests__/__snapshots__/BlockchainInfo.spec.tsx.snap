@@ -4,13 +4,20 @@ exports[`BlockchainInfo should match snapshot 1`] = `
 <div>
   <div
     class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2"
+    data-component="BlockchainInfo"
+    data-element="Grid"
+    data-source-file="BlockchainInfo.tsx"
     data-testid="network.info-container"
   >
     <div
       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+      data-element="Grid"
+      data-source-file="BlockchainInfo.tsx"
     >
       <h5
         class="MuiTypography-root MuiTypography-h5"
+        data-element="Typography"
+        data-source-file="BlockchainInfo.tsx"
         data-testid="blockchain-network-info-name"
       >
         Test MainNet
@@ -25,9 +32,14 @@ exports[`BlockchainInfo should match snapshot 1`] = `
     >
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column"
+        data-component="LabelledValue"
+        data-element="Grid"
+        data-source-file="LabelledValue.tsx"
       >
         <p
           class="MuiTypography-root MuiTypography-body1"
+          data-element="Typography"
+          data-source-file="LabelledValue.tsx"
           style="font-weight: 500; width: 100%; color: rgb(68, 68, 68);"
         >
           Owner Wallet Address
@@ -49,9 +61,14 @@ exports[`BlockchainInfo should match snapshot 1`] = `
     >
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column"
+        data-component="LabelledValue"
+        data-element="Grid"
+        data-source-file="LabelledValue.tsx"
       >
         <p
           class="MuiTypography-root MuiTypography-body1"
+          data-element="Typography"
+          data-source-file="LabelledValue.tsx"
           style="font-weight: 500; width: 100%; color: rgb(68, 68, 68);"
         >
           Owner Wallet Balance
@@ -73,9 +90,14 @@ exports[`BlockchainInfo should match snapshot 1`] = `
     >
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column"
+        data-component="LabelledValue"
+        data-element="Grid"
+        data-source-file="LabelledValue.tsx"
       >
         <p
           class="MuiTypography-root MuiTypography-body1"
+          data-element="Typography"
+          data-source-file="LabelledValue.tsx"
           style="font-weight: 500; width: 100%; color: rgb(68, 68, 68);"
         >
           Reserve Wallet Address
@@ -97,9 +119,14 @@ exports[`BlockchainInfo should match snapshot 1`] = `
     >
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column"
+        data-component="LabelledValue"
+        data-element="Grid"
+        data-source-file="LabelledValue.tsx"
       >
         <p
           class="MuiTypography-root MuiTypography-body1"
+          data-element="Typography"
+          data-source-file="LabelledValue.tsx"
           style="font-weight: 500; width: 100%; color: rgb(68, 68, 68);"
         >
           Reserve Wallet Balance
@@ -117,13 +144,20 @@ exports[`BlockchainInfo should match snapshot 1`] = `
     </div>
     <div
       class="MuiGrid-root MuiGrid-item"
+      data-element="Grid"
+      data-source-file="BlockchainInfo.tsx"
       data-testid="blockchain-network-rpc-url"
     >
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column"
+        data-component="LabelledValue"
+        data-element="Grid"
+        data-source-file="LabelledValue.tsx"
       >
         <p
           class="MuiTypography-root MuiTypography-body1"
+          data-element="Typography"
+          data-source-file="LabelledValue.tsx"
           style="font-weight: 500; width: 100%; color: rgb(68, 68, 68);"
         >
           RPC URL

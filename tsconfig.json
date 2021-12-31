@@ -20,7 +20,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx",
+    "jsx": "react",
     "sourceMap": true,
     "inlineSources": true,
     "sourceRoot": "/",
@@ -32,12 +32,14 @@
     "src/index.tsx",
     "src/wdyr.ts",
     "src/react-app-env.d.ts",
-    "src/setupTests.ts",
+    "tests/setupTests.ts",
     "src/test-utils.tsx",
     "src/__mocks__/**/*",
     "src/__fixtures__/**/*"
   ],
   "exclude": [
+    "node_modules",
+    "jest.config.js",
     "**/*.test.{ts,tsx}"
   ]
 }
