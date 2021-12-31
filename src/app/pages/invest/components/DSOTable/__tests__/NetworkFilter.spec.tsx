@@ -6,7 +6,7 @@ import { useAllNetworks } from 'app/pages/accounts/pages/withdrawalAddresses/hoo
 import { generateQueryResult } from '__fixtures__/useQuery'
 import { networks } from '__fixtures__/network'
 import { history } from 'config/history'
-import { generatePath } from 'react-router'
+import { generatePath } from 'react-router-dom'
 
 jest.mock('app/pages/accounts/pages/withdrawalAddresses/hooks/useAllNetworks')
 

@@ -5,7 +5,7 @@ import { authURL } from 'config/apiURL'
 import { managedUser } from '__fixtures__/user'
 import { generateMutationResult } from '__fixtures__/useQuery'
 import { history } from 'config/history'
-import { generatePath } from 'react-router'
+import { generatePath } from 'react-router-dom'
 import { AdminRoute } from 'app/pages/admin/router/config'
 
 describe('useRevokeAccess', () => {

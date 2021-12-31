@@ -8,7 +8,7 @@ import { history } from 'config/history'
 import { Dropdown } from 'app/components/Dropdown/Dropdown'
 import { ActionsDropdownTrigger } from 'app/pages/authorizer/components/ActionsDropdownTrigger'
 import { ActionsDropdownContent } from 'app/pages/authorizer/components/ActionsDropdownContent'
-import { useLocation } from 'react-router'
+import { useLocation } from 'react-router-dom'
 
 export interface ActionsProps<T> {
   item: T

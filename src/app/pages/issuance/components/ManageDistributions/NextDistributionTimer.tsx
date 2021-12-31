@@ -5,7 +5,7 @@ import { useCountdown } from 'app/pages/issuance/hooks/useCountdown'
 import { TimeDisplay } from 'app/pages/issuance/components/CountdownTimer/TimeDisplay'
 import { getTimeUnitsToDisplay } from 'helpers/countdownTimer'
 import { useNextDistribution } from 'app/pages/issuance/hooks/useNextDistribution'
-import { useParams } from 'react-router'
+import { useParams } from 'react-router-dom'
 
 export interface CountdownTimerProps {
   my?: number

@@ -5,7 +5,7 @@ import { successfulResponse } from '__fixtures__/api'
 import { managedUser } from '__fixtures__/user'
 import * as useSetRoles from 'app/pages/admin/hooks/useSetRoles'
 import { history } from 'config/history'
-import { generatePath } from 'react-router'
+import { generatePath } from 'react-router-dom'
 import { AdminRoute } from 'app/pages/admin/router/config'
 
 describe('useRoleManagement', () => {

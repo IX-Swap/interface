@@ -6,7 +6,7 @@ import {
 } from 'app/pages/exchange/components/Trades/TradesTableRow'
 import { TradesTableHeader } from 'app/pages/exchange/components/Trades/TradesTableHeader'
 import { useMarket } from 'app/pages/exchange/hooks/useMarket'
-import { useParams } from 'react-router'
+import { useParams } from 'react-router-dom'
 
 export interface TradesTableProps {
   data: TradesTableRowProps[]

@@ -1,7 +1,7 @@
 import { useParsedData } from 'hooks/useParsedData'
 import { useServices } from 'hooks/useServices'
 import { useInfiniteQuery } from 'react-query'
-import { useParams } from 'react-router'
+import { useParams } from 'react-router-dom'
 import { balanceQueryKeys } from 'config/queryKeys'
 
 export const useDistribution = () => {

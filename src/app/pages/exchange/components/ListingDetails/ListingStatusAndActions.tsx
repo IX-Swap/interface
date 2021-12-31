@@ -3,7 +3,7 @@ import { AuthorizableStatus } from 'app/pages/authorizer/components/Authorizable
 import { SubmitListingButton } from 'app/pages/exchange/components/ListingDetails/SubmitListingButton'
 import { OTCMarketRoute } from 'app/pages/exchange/router/config'
 import React from 'react'
-import { generatePath, useHistory } from 'react-router'
+import { generatePath, useHistory } from 'react-router-dom'
 import { ListingView } from 'types/listing'
 
 export interface ListingStatusAndActionsProps {

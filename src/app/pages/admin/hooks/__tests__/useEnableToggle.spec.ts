@@ -8,7 +8,7 @@ import { generateMutationResult } from '__fixtures__/useQuery'
 import { usersQueryKeys } from 'config/queryKeys'
 import { AdminRoute } from 'app/pages/admin/router/config'
 import { history } from 'config/history'
-import { generatePath } from 'react-router'
+import { generatePath } from 'react-router-dom'
 
 describe('useEnabledToggle', () => {
   const qc = ReactQuery.queryCache

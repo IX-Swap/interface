@@ -6,7 +6,7 @@ import {
 } from 'app/pages/admin/components/AdminIdentityList/ViewIdentityAction'
 import * as useAuth from 'hooks/auth/useAuth'
 import { AdminRoute } from 'app/pages/admin/router/config'
-import { generatePath } from 'react-router'
+import { generatePath } from 'react-router-dom'
 
 describe('ViewIdentityAction', () => {
   const props: ViewIdentityActionProps = {

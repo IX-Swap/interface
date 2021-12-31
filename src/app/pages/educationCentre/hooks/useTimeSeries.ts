@@ -1,7 +1,7 @@
 import { atlasOneURL } from 'config/apiURL'
 import { useServices } from 'hooks/useServices'
 import { useQuery } from 'react-query'
-import { useParams } from 'react-router'
+import { useParams } from 'react-router-dom'
 
 export const useTimeSeries = () => {
   const { apiService } = useServices()

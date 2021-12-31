@@ -1,6 +1,6 @@
 import { TrackingPrice } from 'app/pages/exchange/components/LiveTrackingPrice/TrackingPrice'
 import React from 'react'
-import { useParams } from 'react-router'
+import { useParams } from 'react-router-dom'
 import { useLastPrice } from 'app/pages/exchange/hooks/useLastPrice'
 import { useTradeHistory } from 'app/pages/exchange/hooks/useTradeHistory'
 

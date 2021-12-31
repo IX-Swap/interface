@@ -1,5 +1,5 @@
 import React from 'react'
-import { Switch } from 'react-router'
+import { Switch } from 'react-router-dom'
 import { LandingPage } from 'app/components/LandingPage/LandingPage'
 import { AccessReports } from 'app/pages/admin/pages/AccessReports'
 import { adminLandingLinks, AdminRoute } from 'app/pages/admin/router/config'

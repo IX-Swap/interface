@@ -5,7 +5,7 @@ import { useMutation, useQueryCache } from 'react-query'
 import { investQueryKeys } from 'config/queryKeys'
 import { getIdFromObj } from 'helpers/strings'
 import { issuanceURL } from 'config/apiURL'
-import { generatePath, useHistory } from 'react-router'
+import { generatePath, useHistory } from 'react-router-dom'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
 import { useParams } from 'react-router-dom'
 

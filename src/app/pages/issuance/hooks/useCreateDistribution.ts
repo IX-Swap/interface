@@ -1,6 +1,6 @@
 import { useServices } from 'hooks/useServices'
 import { useMutation, useQueryCache } from 'react-query'
-import { useParams } from 'react-router'
+import { useParams } from 'react-router-dom'
 import { balanceQueryKeys } from 'config/queryKeys'
 
 export const useCreateDistribution = () => {

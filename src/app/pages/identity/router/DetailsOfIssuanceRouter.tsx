@@ -1,6 +1,6 @@
 import React from 'react'
 import { AppRoute } from 'components/AppRoute'
-import { Switch } from 'react-router'
+import { Switch } from 'react-router-dom'
 import { CreateDetailsOfIssuance } from 'app/pages/identity/pages/CreateDetailsOfIssuance/CreateDetailsOfIssuance'
 import { IdentityRoute } from 'app/pages/identity/router/config'
 

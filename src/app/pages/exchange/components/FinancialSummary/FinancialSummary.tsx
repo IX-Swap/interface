@@ -8,7 +8,7 @@ import { useFinancialSummary } from 'app/pages/exchange/hooks/useFinancialSummar
 import { useMarket } from 'app/pages/exchange/hooks/useMarket'
 import { useAssetById } from 'hooks/asset/useAssetById'
 import React from 'react'
-import { useParams } from 'react-router'
+import { useParams } from 'react-router-dom'
 
 export const FinancialSummary = () => {
   const { pairId } = useParams<{

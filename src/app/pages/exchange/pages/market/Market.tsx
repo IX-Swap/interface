@@ -4,7 +4,7 @@ import { FinancialSummary } from 'app/pages/exchange/components/FinancialSummary
 import { useStyles } from 'app/pages/exchange/pages/market/Market.styles'
 import { getDataFeed } from 'app/pages/invest/components/TVChartContainer/services/datafeed'
 import { IBasicDataFeed } from 'types/charting_library'
-import { generatePath, Redirect, useParams } from 'react-router'
+import { generatePath, Redirect, useParams } from 'react-router-dom'
 import { useMarketList } from 'app/pages/exchange/hooks/useMarketList'
 import { OTCMarketRoute } from 'app/pages/exchange/router/config'
 import { GetWalletDialog } from '../../components/GetWalletDialog/GetWalletDialog'

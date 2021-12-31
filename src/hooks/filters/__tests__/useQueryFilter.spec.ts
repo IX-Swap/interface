@@ -1,7 +1,7 @@
 import { waitFor } from '@testing-library/react'
 import { act, renderHook } from '@testing-library/react-hooks'
 import { history } from 'config/history'
-import { generatePath } from 'react-router'
+import { generatePath } from 'react-router-dom'
 import { BaseProviders } from 'test-utils'
 import { useQueryFilter } from '../useQueryFilter'
 

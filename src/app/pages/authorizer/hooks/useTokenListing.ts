@@ -1,6 +1,6 @@
 import { useServices } from 'hooks/useServices'
 import { useMutation } from 'react-query'
-import { useParams } from 'react-router'
+import { useParams } from 'react-router-dom'
 
 export const useTokenListing = () => {
   const { dsoId } = useParams<{ dsoId: string }>()

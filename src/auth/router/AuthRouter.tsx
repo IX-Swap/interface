@@ -1,5 +1,5 @@
 import React from 'react'
-import { Redirect, Switch } from 'react-router'
+import { Redirect, Switch } from 'react-router-dom'
 import { Confirmation } from 'auth/pages/confirmation/Confirmation'
 import { LoginContainer } from 'auth/pages/login/LoginContainer'
 import { PasswordReset } from 'auth/pages/password-reset/PasswordReset'

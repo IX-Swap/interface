@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useVerifySignup } from 'auth/hooks/useVerifySignup'
 import { LoadingFullScreen } from 'auth/components/LoadingFullScreen'
-import { useHistory } from 'react-router'
+import { useHistory } from 'react-router-dom'
 import { useSearchQuery } from 'hooks/useSearchQuery'
 import { AuthRoute } from 'auth/router/config'
 

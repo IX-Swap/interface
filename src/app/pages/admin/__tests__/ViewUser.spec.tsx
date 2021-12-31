@@ -9,7 +9,7 @@ import { UserDetails } from 'app/pages/admin/components/UserDetails'
 import { UserStatus } from 'app/pages/admin/components/UserStatus'
 import { IndividualAccountSettings } from 'app/pages/admin/components/IndividualAccountSettings'
 import { history } from 'config/history'
-import { generatePath } from 'react-router'
+import { generatePath } from 'react-router-dom'
 import { AdminRoute } from 'app/pages/admin/router/config'
 
 jest.mock('app/pages/admin/components/UserDetails', () => ({

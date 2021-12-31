@@ -3,7 +3,7 @@ import { render } from 'test-utils'
 import { CapitalStructureFilter } from 'app/pages/invest/components/DSOTable/CapitalStructureFilter'
 import { fireEvent, waitFor } from '@testing-library/dom'
 import { history } from 'config/history'
-import { generatePath } from 'react-router'
+import { generatePath } from 'react-router-dom'
 import { capitalStructures } from 'config/defaults'
 
 describe('Capital Structure Filter', () => {

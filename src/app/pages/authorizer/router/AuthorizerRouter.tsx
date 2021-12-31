@@ -12,7 +12,7 @@ import {
 } from 'app/pages/authorizer/router/config'
 import { AppRoute } from 'components/AppRoute'
 import React from 'react'
-import { Switch } from 'react-router'
+import { Switch } from 'react-router-dom'
 import { AuthorizerIssuanceDetailsRouter } from 'app/pages/authorizer/pages/issuanceDetails/router/AuthorizerIssuanceDetailsRouter'
 import { AuthorizerListingsRouter } from '../pages/listings/router/AuthorizerListingsRouter'
 import { AuthorizerVirtualAccountsRouter } from 'app/pages/authorizer/pages/VirtualAccounts/router/AuthorizerVirtualAccountsRouter'
