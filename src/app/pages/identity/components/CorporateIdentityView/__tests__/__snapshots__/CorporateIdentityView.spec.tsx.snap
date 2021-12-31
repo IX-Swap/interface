@@ -4,26 +4,16 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
 <div>
   <div
     class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-6 MuiGrid-direction-xs-column"
-    data-component="CorporateIdentityView"
-    data-element="Grid"
-    data-source-file="CorporateIdentityView.tsx"
   >
     <div
       class="MuiGrid-root MuiGrid-item"
-      data-element="Grid"
-      data-source-file="CorporateIdentityView.tsx"
       style="padding-bottom: 0px;"
     >
       <div
         class="MuiBox-root MuiBox-root-1"
-        data-component="FormSectionHeader"
-        data-element="Box"
-        data-source-file="FormSectionHeader.tsx"
       >
         <h5
           class="MuiTypography-root MuiTypography-h5"
-          data-element="Typography"
-          data-source-file="FormSectionHeader.tsx"
         >
           Overview
         </h5>
@@ -38,21 +28,13 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
         />
         <div
           class="MuiBox-root MuiBox-root-4"
-          data-component="VSpacer"
-          data-element="Box"
-          data-source-file="VSpacer.tsx"
         />
       </div>
       <div
         class="MuiBox-root MuiBox-root-5"
-        data-component="CorporateInfo"
-        data-element="Box"
-        data-source-file="CorporateInfo.tsx"
       >
         <div
           class="MuiBox-root MuiBox-root-6"
-          data-element="Box"
-          data-source-file="CorporateInfo.tsx"
         >
           <div
             class="MuiAvatar-root MuiAvatar-square MuiAvatar-colorDefault"
@@ -72,35 +54,22 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
         </div>
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column"
-          data-element="Grid"
-          data-source-file="CorporateInfo.tsx"
         >
           <div
             class="MuiGrid-root MuiGrid-item"
-            data-element="Grid"
-            data-source-file="CorporateInfo.tsx"
             style="padding-bottom: 0px;"
           >
             <div
               class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3"
-              data-element="Grid"
-              data-source-file="CorporateInfo.tsx"
             >
               <div
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4"
-                data-element="Grid"
-                data-source-file="CorporateInfo.tsx"
               >
                 <div
                   class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column"
-                  data-component="LabelledValue"
-                  data-element="Grid"
-                  data-source-file="LabelledValue.tsx"
                 >
                   <p
                     class="MuiTypography-root MuiTypography-body1"
-                    data-element="Typography"
-                    data-source-file="LabelledValue.tsx"
                     style="font-weight: 700; width: 100%; color: rgb(68, 68, 68);"
                   >
                     Company Name
@@ -118,19 +87,12 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
               </div>
               <div
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4"
-                data-element="Grid"
-                data-source-file="CorporateInfo.tsx"
               >
                 <div
                   class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column"
-                  data-component="LabelledValue"
-                  data-element="Grid"
-                  data-source-file="LabelledValue.tsx"
                 >
                   <p
                     class="MuiTypography-root MuiTypography-body1"
-                    data-element="Typography"
-                    data-source-file="LabelledValue.tsx"
                     style="font-weight: 700; width: 100%; color: rgb(68, 68, 68);"
                   >
                     Company Registration Number/UEN
@@ -150,30 +112,19 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
           </div>
           <div
             class="MuiGrid-root MuiGrid-item"
-            data-element="Grid"
-            data-source-file="CorporateInfo.tsx"
             style="padding-top: 0px;"
           >
             <div
               class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3"
-              data-element="Grid"
-              data-source-file="CorporateInfo.tsx"
             >
               <div
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4"
-                data-element="Grid"
-                data-source-file="CorporateInfo.tsx"
               >
                 <div
                   class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column"
-                  data-component="LabelledValue"
-                  data-element="Grid"
-                  data-source-file="LabelledValue.tsx"
                 >
                   <p
                     class="MuiTypography-root MuiTypography-body1"
-                    data-element="Typography"
-                    data-source-file="LabelledValue.tsx"
                     style="font-weight: 700; width: 100%; color: rgb(68, 68, 68);"
                   >
                     Country of Incorporation
@@ -191,19 +142,12 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
               </div>
               <div
                 class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4"
-                data-element="Grid"
-                data-source-file="CorporateInfo.tsx"
               >
                 <div
                   class="MuiGrid-root fs-exclude MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column"
-                  data-component="LabelledValue"
-                  data-element="Grid"
-                  data-source-file="LabelledValue.tsx"
                 >
                   <p
                     class="MuiTypography-root MuiTypography-body1"
-                    data-element="Typography"
-                    data-source-file="LabelledValue.tsx"
                     style="font-weight: 700; width: 100%; color: rgb(68, 68, 68);"
                   >
                     Legal Entity Status
@@ -226,19 +170,12 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
     </div>
     <div
       class="MuiGrid-root MuiGrid-item"
-      data-element="Grid"
-      data-source-file="CorporateIdentityView.tsx"
     >
       <div
         class="MuiBox-root MuiBox-root-11"
-        data-component="FormSectionHeader"
-        data-element="Box"
-        data-source-file="FormSectionHeader.tsx"
       >
         <h5
           class="MuiTypography-root MuiTypography-h5"
-          data-element="Typography"
-          data-source-file="FormSectionHeader.tsx"
         >
           Address
         </h5>
@@ -253,30 +190,19 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
         />
         <div
           class="MuiBox-root MuiBox-root-14"
-          data-component="VSpacer"
-          data-element="Box"
-          data-source-file="VSpacer.tsx"
         />
       </div>
       <div
         class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3"
-        data-component="CorporateAddress"
-        data-element="Grid"
-        data-source-file="CorporateAddress.tsx"
       >
         <div
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
         >
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column"
-            data-component="LabelledValue"
-            data-element="Grid"
-            data-source-file="LabelledValue.tsx"
           >
             <p
               class="MuiTypography-root MuiTypography-body1"
-              data-element="Typography"
-              data-source-file="LabelledValue.tsx"
               style="font-weight: 700; width: 100%; color: rgb(68, 68, 68);"
             >
               Address for Correspondence
@@ -294,19 +220,12 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
         </div>
         <div
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-4"
-          data-element="Grid"
-          data-source-file="CorporateAddress.tsx"
         >
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column"
-            data-component="LabelledValue"
-            data-element="Grid"
-            data-source-file="LabelledValue.tsx"
           >
             <p
               class="MuiTypography-root MuiTypography-body1"
-              data-element="Typography"
-              data-source-file="LabelledValue.tsx"
               style="font-weight: 700; width: 100%; color: rgb(68, 68, 68);"
             >
               Registered Address
@@ -326,19 +245,12 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
     </div>
     <div
       class="MuiGrid-root MuiGrid-item"
-      data-element="Grid"
-      data-source-file="CorporateIdentityView.tsx"
     >
       <div
         class="MuiBox-root MuiBox-root-17"
-        data-component="FormSectionHeader"
-        data-element="Box"
-        data-source-file="FormSectionHeader.tsx"
       >
         <h5
           class="MuiTypography-root MuiTypography-h5"
-          data-element="Typography"
-          data-source-file="FormSectionHeader.tsx"
         >
           Company Authorized Personnel
         </h5>
@@ -353,27 +265,17 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
         />
         <div
           class="MuiBox-root MuiBox-root-20"
-          data-component="VSpacer"
-          data-element="Box"
-          data-source-file="VSpacer.tsx"
         />
       </div>
     </div>
     <div
       class="MuiGrid-root MuiGrid-item"
-      data-element="Grid"
-      data-source-file="CorporateIdentityView.tsx"
     >
       <div
         class="MuiBox-root MuiBox-root-21"
-        data-component="FormSectionHeader"
-        data-element="Box"
-        data-source-file="FormSectionHeader.tsx"
       >
         <h5
           class="MuiTypography-root MuiTypography-h5"
-          data-element="Typography"
-          data-source-file="FormSectionHeader.tsx"
         >
           Directors/Partners/People with Executive Authority
         </h5>
@@ -388,28 +290,18 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
         />
         <div
           class="MuiBox-root MuiBox-root-24"
-          data-component="VSpacer"
-          data-element="Box"
-          data-source-file="VSpacer.tsx"
         />
       </div>
     </div>
     <div
       class="MuiGrid-root MuiGrid-item"
-      data-element="Grid"
-      data-source-file="CorporateIdentityView.tsx"
       style="padding-bottom: 0px; padding-top: 0px;"
     >
       <div
         class="MuiBox-root MuiBox-root-25"
-        data-component="FormSectionHeader"
-        data-element="Box"
-        data-source-file="FormSectionHeader.tsx"
       >
         <h5
           class="MuiTypography-root MuiTypography-h5"
-          data-element="Typography"
-          data-source-file="FormSectionHeader.tsx"
         >
           Beneficial Owners Information
         </h5>
@@ -424,27 +316,17 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
         />
         <div
           class="MuiBox-root MuiBox-root-28"
-          data-component="VSpacer"
-          data-element="Box"
-          data-source-file="VSpacer.tsx"
         />
       </div>
     </div>
     <div
       class="MuiGrid-root MuiGrid-item"
-      data-element="Grid"
-      data-source-file="CorporateIdentityView.tsx"
     >
       <div
         class="MuiBox-root MuiBox-root-29"
-        data-component="FormSectionHeader"
-        data-element="Box"
-        data-source-file="FormSectionHeader.tsx"
       >
         <h5
           class="MuiTypography-root MuiTypography-h5"
-          data-element="Typography"
-          data-source-file="FormSectionHeader.tsx"
         >
           Investor Declaration
         </h5>
@@ -459,56 +341,34 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
         />
         <div
           class="MuiBox-root MuiBox-root-32"
-          data-component="VSpacer"
-          data-element="Box"
-          data-source-file="VSpacer.tsx"
         />
       </div>
       <div
         class="MuiGrid-root MuiGrid-container"
-        data-component="InvestorDeclarationView"
-        data-element="Grid"
-        data-source-file="InvestorDeclarationView.tsx"
       >
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-4"
-          data-component="DeclarationsList"
-          data-element="Grid"
-          data-source-file="DeclarationsList.tsx"
         >
           <div
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
-            data-element="Grid"
-            data-source-file="DeclarationsList.tsx"
           >
             <h6
               class="MuiTypography-root MuiTypography-subtitle1"
-              data-element="Typography"
-              data-source-file="DeclarationsList.tsx"
             >
               I declare that I am a corporate "Accredited Investor"
             </h6>
           </div>
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-item"
-            data-element="Grid"
-            data-source-file="DeclarationsList.tsx"
           >
             <div
               class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
-              data-component="DeclarationsListItem"
-              data-element="Grid"
-              data-source-file="DeclarationsListItem.tsx"
             >
               <div
                 class="MuiBox-root MuiBox-root-33"
-                data-element="Box"
-                data-source-file="DeclarationsListItem.tsx"
               >
                 <div
                   class="MuiBox-root MuiBox-root-34"
-                  data-element="Box"
-                  data-source-file="DeclarationsListItem.tsx"
                   style="opacity: 0.5;"
                 >
                   <svg
@@ -525,8 +385,6 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                 </div>
                 <div
                   class="MuiBox-root MuiBox-root-35"
-                  data-element="Box"
-                  data-source-file="DeclarationsListItem.tsx"
                 >
                   <p
                     class="MuiTypography-root MuiTypography-body1"
@@ -539,19 +397,12 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
             </div>
             <div
               class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
-              data-component="DeclarationsListItem"
-              data-element="Grid"
-              data-source-file="DeclarationsListItem.tsx"
             >
               <div
                 class="MuiBox-root MuiBox-root-36"
-                data-element="Box"
-                data-source-file="DeclarationsListItem.tsx"
               >
                 <div
                   class="MuiBox-root MuiBox-root-37"
-                  data-element="Box"
-                  data-source-file="DeclarationsListItem.tsx"
                   style="opacity: 0.5;"
                 >
                   <svg
@@ -568,8 +419,6 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                 </div>
                 <div
                   class="MuiBox-root MuiBox-root-38"
-                  data-element="Box"
-                  data-source-file="DeclarationsListItem.tsx"
                 >
                   <p
                     class="MuiTypography-root MuiTypography-body1"
@@ -582,19 +431,12 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
             </div>
             <div
               class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
-              data-component="DeclarationsListItem"
-              data-element="Grid"
-              data-source-file="DeclarationsListItem.tsx"
             >
               <div
                 class="MuiBox-root MuiBox-root-39"
-                data-element="Box"
-                data-source-file="DeclarationsListItem.tsx"
               >
                 <div
                   class="MuiBox-root MuiBox-root-40"
-                  data-element="Box"
-                  data-source-file="DeclarationsListItem.tsx"
                   style="opacity: 0.5;"
                 >
                   <svg
@@ -611,8 +453,6 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                 </div>
                 <div
                   class="MuiBox-root MuiBox-root-41"
-                  data-element="Box"
-                  data-source-file="DeclarationsListItem.tsx"
                 >
                   <p
                     class="MuiTypography-root MuiTypography-body1"
@@ -625,19 +465,12 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
             </div>
             <div
               class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
-              data-component="DeclarationsListItem"
-              data-element="Grid"
-              data-source-file="DeclarationsListItem.tsx"
             >
               <div
                 class="MuiBox-root MuiBox-root-42"
-                data-element="Box"
-                data-source-file="DeclarationsListItem.tsx"
               >
                 <div
                   class="MuiBox-root MuiBox-root-43"
-                  data-element="Box"
-                  data-source-file="DeclarationsListItem.tsx"
                   style="opacity: 0.5;"
                 >
                   <svg
@@ -654,8 +487,6 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                 </div>
                 <div
                   class="MuiBox-root MuiBox-root-44"
-                  data-element="Box"
-                  data-source-file="DeclarationsListItem.tsx"
                 >
                   <p
                     class="MuiTypography-root MuiTypography-body1"
@@ -668,19 +499,12 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
             </div>
             <div
               class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
-              data-component="DeclarationsListItem"
-              data-element="Grid"
-              data-source-file="DeclarationsListItem.tsx"
             >
               <div
                 class="MuiBox-root MuiBox-root-45"
-                data-element="Box"
-                data-source-file="DeclarationsListItem.tsx"
               >
                 <div
                   class="MuiBox-root MuiBox-root-46"
-                  data-element="Box"
-                  data-source-file="DeclarationsListItem.tsx"
                   style="opacity: 0.5;"
                 >
                   <svg
@@ -697,8 +521,6 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                 </div>
                 <div
                   class="MuiBox-root MuiBox-root-47"
-                  data-element="Box"
-                  data-source-file="DeclarationsListItem.tsx"
                 >
                   <p
                     class="MuiTypography-root MuiTypography-body1"
@@ -711,19 +533,12 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
             </div>
             <div
               class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
-              data-component="DeclarationsListItem"
-              data-element="Grid"
-              data-source-file="DeclarationsListItem.tsx"
             >
               <div
                 class="MuiBox-root MuiBox-root-48"
-                data-element="Box"
-                data-source-file="DeclarationsListItem.tsx"
               >
                 <div
                   class="MuiBox-root MuiBox-root-49"
-                  data-element="Box"
-                  data-source-file="DeclarationsListItem.tsx"
                   style="opacity: 0.5;"
                 >
                   <svg
@@ -740,8 +555,6 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                 </div>
                 <div
                   class="MuiBox-root MuiBox-root-50"
-                  data-element="Box"
-                  data-source-file="DeclarationsListItem.tsx"
                 >
                   <p
                     class="MuiTypography-root MuiTypography-body1"
@@ -756,24 +569,15 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
         </div>
         <div
           class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
-          data-element="Grid"
-          data-source-file="InvestorDeclarationView.tsx"
         >
           <div
             class="MuiBox-root MuiBox-root-51"
-            data-element="Box"
-            data-source-file="InvestorDeclarationView.tsx"
           >
             <div
               class="MuiBox-root MuiBox-root-53 makeStyles-formHeader-52"
-              data-component="FormSectionHeader"
-              data-element="Box"
-              data-source-file="FormSectionHeader.tsx"
             >
               <h5
                 class="MuiTypography-root MuiTypography-h5"
-                data-element="Typography"
-                data-source-file="FormSectionHeader.tsx"
               >
                 Opt-In Requirement
               </h5>
@@ -782,43 +586,27 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
         </div>
         <div
           class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-4"
-          data-component="DeclarationsList"
-          data-element="Grid"
-          data-source-file="DeclarationsList.tsx"
         >
           <div
             class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
-            data-element="Grid"
-            data-source-file="DeclarationsList.tsx"
           >
             <h6
               class="MuiTypography-root MuiTypography-subtitle1"
-              data-element="Typography"
-              data-source-file="DeclarationsList.tsx"
             >
               I confirm to be treated as an “Accredited Investor” by InvestaX
             </h6>
           </div>
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 MuiGrid-item"
-            data-element="Grid"
-            data-source-file="DeclarationsList.tsx"
           >
             <div
               class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
-              data-component="DeclarationsListItem"
-              data-element="Grid"
-              data-source-file="DeclarationsListItem.tsx"
             >
               <div
                 class="MuiBox-root MuiBox-root-54"
-                data-element="Box"
-                data-source-file="DeclarationsListItem.tsx"
               >
                 <div
                   class="MuiBox-root MuiBox-root-55"
-                  data-element="Box"
-                  data-source-file="DeclarationsListItem.tsx"
                   style="opacity: 0.5;"
                 >
                   <svg
@@ -835,20 +623,14 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                 </div>
                 <div
                   class="MuiBox-root MuiBox-root-56"
-                  data-element="Box"
-                  data-source-file="DeclarationsListItem.tsx"
                 >
                   <p
                     class="MuiTypography-root MuiTypography-body1"
-                    data-element="Typography"
-                    data-source-file="OptInAgreements.tsx"
                   >
                     I give my consent to IC SG Pte Ltd dba InvestaX to treat me as an “Accredited Investor”.
                   </p>
                   <p
                     class="MuiTypography-root MuiTypography-body1"
-                    data-element="Typography"
-                    data-source-file="OptInAgreements.tsx"
                   >
                     I have been informed of and understand the consequences of my qualification as an Accredited Investor, in particular the reduced regulatory investor 
                     <span
@@ -861,8 +643,6 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                   </p>
                   <p
                     class="MuiTypography-root MuiTypography-body1"
-                    data-element="Typography"
-                    data-source-file="OptInAgreements.tsx"
                   >
                     I have been informed of and understand my right to
                      
@@ -878,19 +658,12 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
     </div>
     <div
       class="MuiGrid-root MuiGrid-item"
-      data-element="Grid"
-      data-source-file="CorporateIdentityView.tsx"
     >
       <div
         class="MuiBox-root MuiBox-root-57"
-        data-component="FormSectionHeader"
-        data-element="Box"
-        data-source-file="FormSectionHeader.tsx"
       >
         <h5
           class="MuiTypography-root MuiTypography-h5"
-          data-element="Typography"
-          data-source-file="FormSectionHeader.tsx"
         >
           Tax Declaration
         </h5>
@@ -905,27 +678,17 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
         />
         <div
           class="MuiBox-root MuiBox-root-60"
-          data-component="VSpacer"
-          data-element="Box"
-          data-source-file="VSpacer.tsx"
         />
       </div>
     </div>
     <div
       class="MuiGrid-root MuiGrid-item"
-      data-element="Grid"
-      data-source-file="CorporateIdentityView.tsx"
     >
       <div
         class="MuiBox-root MuiBox-root-61"
-        data-component="FormSectionHeader"
-        data-element="Box"
-        data-source-file="FormSectionHeader.tsx"
       >
         <h5
           class="MuiTypography-root MuiTypography-h5"
-          data-element="Typography"
-          data-source-file="FormSectionHeader.tsx"
         >
           Company Documents
         </h5>
@@ -940,37 +703,22 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
         />
         <div
           class="MuiBox-root MuiBox-root-64"
-          data-component="VSpacer"
-          data-element="Box"
-          data-source-file="VSpacer.tsx"
         />
       </div>
       <div
         class="MuiTableContainer-root"
-        data-component="IdentityDocumentsView"
-        data-element="TableContainer"
-        data-source-file="IdentityDocumentsView.tsx"
       >
         <table
           class="MuiTable-root"
-          data-element="Table"
-          data-source-file="IdentityDocumentsView.tsx"
         >
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-wrap-xs-nowrap MuiGrid-align-items-xs-flex-start"
-            data-component="DataroomHeader"
-            data-element="Grid"
-            data-source-file="DataroomHeader.tsx"
           >
             <div
               class="MuiBox-root MuiBox-root-65"
-              data-element="Box"
-              data-source-file="DataroomHeader.tsx"
             >
               <p
                 class="MuiTypography-root MuiTypography-body1"
-                data-element="Typography"
-                data-source-file="DataroomHeader.tsx"
                 style="font-weight: 500;"
               >
                 File
@@ -978,13 +726,9 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
             </div>
             <div
               class="MuiBox-root MuiBox-root-66"
-              data-element="Box"
-              data-source-file="DataroomHeader.tsx"
             >
               <p
                 class="MuiTypography-root MuiTypography-body1"
-                data-element="Typography"
-                data-source-file="DataroomHeader.tsx"
                 style="font-weight: 500;"
               >
                 Type
@@ -992,13 +736,9 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
             </div>
             <div
               class="MuiBox-root MuiBox-root-67"
-              data-element="Box"
-              data-source-file="DataroomHeader.tsx"
             >
               <p
                 class="MuiTypography-root MuiTypography-body1"
-                data-element="Typography"
-                data-source-file="DataroomHeader.tsx"
                 style="font-weight: 500;"
               >
                 Uploaded At
@@ -1006,14 +746,10 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
             </div>
             <div
               class="MuiBox-root MuiBox-root-68"
-              data-element="Box"
-              data-source-file="DataroomHeader.tsx"
             />
           </div>
           <tbody
             class="MuiTableBody-root"
-            data-element="TableBody"
-            data-source-file="IdentityDocumentsView.tsx"
           />
         </table>
       </div>

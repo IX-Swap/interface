@@ -32,10 +32,10 @@ config.devServer = {
 }
 config.stats = 'normal'
 // config.plugins.push(new ReactRefreshWebpackPlugin())
-config.plugins.push(
-  new webpack.DefinePlugin({
-    __DEV__: true
-  })
-)
+// config.plugins.push(
+//   new webpack.DefinePlugin({
+//     __DEV__: true
+//   })
+// )
 
 module.exports = { ...config }

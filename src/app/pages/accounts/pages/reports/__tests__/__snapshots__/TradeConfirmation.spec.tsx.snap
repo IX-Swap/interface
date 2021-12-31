@@ -4,35 +4,21 @@ exports[`TradeConfirmation should match snapshot when data is loaded successfull
 <div>
   <div
     class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column"
-    data-component="TradeConfirmation"
-    data-element="Grid"
-    data-source-file="TradeConfirmation.tsx"
   >
     <div
       class="MuiGrid-root MuiGrid-item"
-      data-element="Grid"
-      data-source-file="TradeConfirmation.tsx"
     >
       <div
         class="MuiGrid-root makeStyles-container-21 MuiGrid-container MuiGrid-direction-xs-column"
-        data-component="PageHeader"
-        data-element="Grid"
-        data-source-file="PageHeader.tsx"
       >
         <div
           class="MuiGrid-root makeStyles-header-20 MuiGrid-container"
-          data-element="Grid"
-          data-source-file="PageHeader.tsx"
         >
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center"
-            data-element="Grid"
-            data-source-file="PageHeader.tsx"
           >
             <h2
               class="MuiTypography-root MuiTypography-h2"
-              data-element="Typography"
-              data-source-file="PageHeader.tsx"
             >
               Trade Confirmation
             </h2>
@@ -43,9 +29,6 @@ exports[`TradeConfirmation should match snapshot when data is loaded successfull
         >
           <nav
             class="MuiTypography-root MuiBreadcrumbs-root MuiTypography-body1 MuiTypography-colorTextSecondary"
-            data-component="Breadcrumbs"
-            data-element="MuiBreadcrumbs"
-            data-source-file="Breadcrumbs.tsx"
           >
             <ol
               class="MuiBreadcrumbs-ol"
@@ -55,34 +38,20 @@ exports[`TradeConfirmation should match snapshot when data is loaded successfull
       </div>
       <div
         class="MuiBox-root MuiBox-root-23"
-        data-component="VSpacer"
-        data-element="Box"
-        data-source-file="VSpacer.tsx"
       />
     </div>
     <div
       class="MuiGrid-root makeStyles-wrapper-27 MuiGrid-container MuiGrid-direction-xs-column MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center"
-      data-component="LoadingIndicator"
-      data-element="Grid"
-      data-source-file="LoadingIndicator.tsx"
       style="opacity: 0.75;"
     >
       <div
         class="MuiBox-root MuiBox-root-28"
-        data-component="VSpacer"
-        data-element="Box"
-        data-source-file="VSpacer.tsx"
       />
       <div
         class="MuiBox-root MuiBox-root-29"
-        data-component="VSpacer"
-        data-element="Box"
-        data-source-file="VSpacer.tsx"
       />
       <div
         class="MuiCircularProgress-root MuiCircularProgress-colorPrimary MuiCircularProgress-indeterminate"
-        data-element="CircularProgress"
-        data-source-file="LoadingIndicator.tsx"
         role="progressbar"
         style="width: 40px; height: 40px;"
       >
@@ -103,27 +72,17 @@ exports[`TradeConfirmation should match snapshot when data is loaded successfull
     </div>
     <div
       class="MuiGrid-root MuiGrid-item"
-      data-element="Grid"
-      data-source-file="TradeConfirmation.tsx"
     >
       <div
         class="MuiBox-root MuiBox-root-30"
-        data-component="VSpacer"
-        data-element="Box"
-        data-source-file="VSpacer.tsx"
       />
       <div
         class="MuiPaper-root MuiAccordion-root makeStyles-root-31 MuiAccordion-rounded MuiPaper-elevation1 MuiPaper-rounded"
-        data-component="ReportsAccordion"
-        data-element="Accordion"
-        data-source-file="ReportsAccordion.tsx"
       >
         <div
           aria-disabled="false"
           aria-expanded="false"
           class="MuiButtonBase-root MuiAccordionSummary-root makeStyles-summaryWrapper-32"
-          data-element="AccordionSummary"
-          data-source-file="ReportsAccordion.tsx"
           role="button"
           tabindex="0"
         >
@@ -132,8 +91,6 @@ exports[`TradeConfirmation should match snapshot when data is loaded successfull
           >
             <p
               class="MuiTypography-root makeStyles-summary-34 MuiTypography-body1 MuiTypography-colorPrimary"
-              data-element="Typography"
-              data-source-file="ReportsAccordion.tsx"
             >
               Trades
             </p>
@@ -177,29 +134,18 @@ exports[`TradeConfirmation should match snapshot when data is loaded successfull
               >
                 <div
                   class="MuiAccordionDetails-root makeStyles-detailsWrapper-35"
-                  data-element="AccordionDetails"
-                  data-source-file="ReportsAccordion.tsx"
                 >
                   <div
                     class="MuiTableContainer-root"
-                    data-component="TradesTable"
-                    data-element="TableContainer"
-                    data-source-file="TradesTable.tsx"
                   >
                     <table
                       class="MuiTable-root"
-                      data-element="Table"
-                      data-source-file="TradesTable.tsx"
                     >
                       <thead
                         class="MuiTableHead-root"
-                        data-element="TableHead"
-                        data-source-file="TradesTable.tsx"
                       >
                         <tr
                           class="MuiTableRow-root MuiTableRow-head"
-                          data-element="TableRow"
-                          data-source-file="TradesTable.tsx"
                         >
                           <th
                             class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-36 MuiTableCell-alignLeft"
@@ -252,19 +198,12 @@ exports[`TradeConfirmation should match snapshot when data is loaded successfull
                       </thead>
                       <tbody
                         class="MuiTableBody-root"
-                        data-element="TableBody"
-                        data-source-file="TradesTable.tsx"
                       >
                         <tr
                           class="MuiTableRow-root makeStyles-row-41 makeStyles-row-46"
-                          data-component="TradesRow"
-                          data-element="TableRow"
-                          data-source-file="TradesRow.tsx"
                         >
                           <th
                             class="MuiTableCell-root MuiTableCell-body makeStyles-column-38 MuiTableCell-alignLeft"
-                            data-element="TableCell"
-                            data-source-file="TradesRow.tsx"
                             role="cell"
                             scope="row"
                           >
@@ -272,45 +211,28 @@ exports[`TradeConfirmation should match snapshot when data is loaded successfull
                           </th>
                           <td
                             class="MuiTableCell-root MuiTableCell-body makeStyles-column-38 MuiTableCell-alignLeft"
-                            data-element="TableCell"
-                            data-source-file="TradesRow.tsx"
                           />
                           <td
                             class="MuiTableCell-root MuiTableCell-body makeStyles-column-38 MuiTableCell-alignLeft"
-                            data-element="TableCell"
-                            data-source-file="TradesRow.tsx"
                           />
                           <td
                             class="MuiTableCell-root MuiTableCell-body makeStyles-column-38 MuiTableCell-alignRight"
-                            data-element="TableCell"
-                            data-source-file="TradesRow.tsx"
                           />
                           <td
                             class="MuiTableCell-root MuiTableCell-body makeStyles-column-38 MuiTableCell-alignRight"
-                            data-element="TableCell"
-                            data-source-file="TradesRow.tsx"
                           />
                           <td
                             class="MuiTableCell-root MuiTableCell-body makeStyles-column-38 MuiTableCell-alignRight"
-                            data-element="TableCell"
-                            data-source-file="TradesRow.tsx"
                           />
                           <td
                             class="MuiTableCell-root MuiTableCell-body makeStyles-column-38 MuiTableCell-alignRight"
-                            data-element="TableCell"
-                            data-source-file="TradesRow.tsx"
                           />
                         </tr>
                         <tr
                           class="MuiTableRow-root makeStyles-row-41 makeStyles-row-48"
-                          data-component="TradesRow"
-                          data-element="TableRow"
-                          data-source-file="TradesRow.tsx"
                         >
                           <th
                             class="MuiTableCell-root MuiTableCell-body makeStyles-column-38 MuiTableCell-alignLeft"
-                            data-element="TableCell"
-                            data-source-file="TradesRow.tsx"
                             role="cell"
                             scope="row"
                           >
@@ -318,43 +240,31 @@ exports[`TradeConfirmation should match snapshot when data is loaded successfull
                           </th>
                           <td
                             class="MuiTableCell-root MuiTableCell-body makeStyles-column-38 MuiTableCell-alignLeft"
-                            data-element="TableCell"
-                            data-source-file="TradesRow.tsx"
                           >
                             2021-05-28, 04:33 AM
                           </td>
                           <td
                             class="MuiTableCell-root MuiTableCell-body makeStyles-column-38 MuiTableCell-alignLeft"
-                            data-element="TableCell"
-                            data-source-file="TradesRow.tsx"
                           >
                             SELL
                           </td>
                           <td
                             class="MuiTableCell-root MuiTableCell-body makeStyles-column-38 MuiTableCell-alignRight"
-                            data-element="TableCell"
-                            data-source-file="TradesRow.tsx"
                           >
                             10
                           </td>
                           <td
                             class="MuiTableCell-root MuiTableCell-body makeStyles-column-38 MuiTableCell-alignRight"
-                            data-element="TableCell"
-                            data-source-file="TradesRow.tsx"
                           >
                             10.00
                           </td>
                           <td
                             class="MuiTableCell-root MuiTableCell-body makeStyles-column-38 MuiTableCell-alignRight"
-                            data-element="TableCell"
-                            data-source-file="TradesRow.tsx"
                           >
                             100.00
                           </td>
                           <td
                             class="MuiTableCell-root MuiTableCell-body makeStyles-column-38 MuiTableCell-alignRight"
-                            data-element="TableCell"
-                            data-source-file="TradesRow.tsx"
                           >
                             0.00
                           </td>

@@ -12,7 +12,6 @@ module.exports = {
       {
         regenerator: true
       }
-    ],
-    '@fullstory/babel-plugin-annotate-react'
+    ]
   ]
 }
