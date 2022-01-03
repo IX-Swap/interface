@@ -159,8 +159,8 @@
     "pre-install": "rimraf node_modules && yarn cache clean",
     "test:watch": "TZ=UTC react-scripts test --env=jest-environment-jsdom-sixteen --coverage",
     "test:ci": "CI=true jest --env=jest-environment-jsdom-sixteen --silent --coverage --testResultsProcessor=jest-sonar-reporter --maxWorkers=75%",
-    "lint": "eslint --cache --fix .",
-    "format": "prettier --write \"src/**/*.tsx\"",
+    "lint": "eslint --cache --fix 'src/**/*.{ts,tsx}'",
+    "format": "prettier --write 'src/**/*.tsx'",
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public"
   },

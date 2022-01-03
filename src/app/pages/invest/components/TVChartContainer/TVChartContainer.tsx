@@ -43,7 +43,6 @@ export const TVChartContainer = (props: TVChartContainerProps) => {
         ),
       interval: interval ?? sampleTVChartProps.interval,
       container_id: containerId ?? sampleTVChartProps.containerId,
-      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
       library_path: `${process.env.PUBLIC_URL}/charting_library/`,
       favorites: {
         intervals: ['15', '60', '240', '1D', 'W'] as ResolutionString[],

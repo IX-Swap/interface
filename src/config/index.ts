@@ -1,4 +1,4 @@
-import { Bank } from '../types/bank'
+import { Bank } from 'types/bank'
 import { getAPIUrl, getEnvironment, getSocketTransports } from './utils'
 
 export const API_URL = getAPIUrl(process.env.REACT_APP_API_URL)

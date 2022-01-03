@@ -8,10 +8,7 @@ export const useCreateIndividualByUserId = (userId?: string) => {
   const uri = identityURL.individuals.create(userId)
 
   const createOrUpdateIndividual = async (values: any) => {
-    if (!userId) {
-      throw new Error('userId is required')
-    }
-
+    if (userId === undefined) return
     return await apiService.put<IndividualIdentity>(uri, values)
   }
 
