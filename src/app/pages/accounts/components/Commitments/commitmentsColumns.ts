@@ -1,3 +1,4 @@
+import { renderStatusColumn } from 'app/pages/authorizer/hooks/useAuthorizerView'
 import {
   renderDSONameAndStructure,
   renderExpectedReturn,
@@ -51,5 +52,10 @@ export const commitmentsColumns: Array<TableColumn<Commitment>> = [
     key: 'dso.interestRate',
     label: 'Expected Return',
     render: renderCommitmentDSOExpectedReturn
+  },
+  {
+    key: 'status',
+    label: 'Status',
+    render: renderStatusColumn
   }
 ]
