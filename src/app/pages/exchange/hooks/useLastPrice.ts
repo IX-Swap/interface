@@ -17,7 +17,7 @@ export const useLastPrice = (id?: string) => {
   }
 
   useEffect(() => {
-    if (!id) return
+    if (id === undefined) return
 
     const onUrl = exchange.lastPrice.on(id)
     socket?.on(onUrl, onDataReceived)

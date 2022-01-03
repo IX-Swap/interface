@@ -17,7 +17,7 @@ export const useOrderBook = (id?: string) => {
   }
 
   useEffect(() => {
-    if (!id) return
+    if (id === undefined) return
 
     const onUrl = exchange.orderBook.on(id)
     socket?.on(onUrl, onDataReceived)

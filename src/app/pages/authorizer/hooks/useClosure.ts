@@ -1,7 +1,7 @@
 import { useQuery } from 'react-query'
 import { useAuth } from 'hooks/auth/useAuth'
 import { useServices } from 'hooks/useServices'
-import { getIdFromObj } from 'helpers/strings'
+import { getIdFromObj, isEmptyString } from 'helpers/strings'
 import { dsoQueryKeys } from 'config/queryKeys'
 import { issuanceURL } from 'config/apiURL'
 import { Closure } from 'app/pages/authorizer/pages/DealClosures/DealClosures'
@@ -18,7 +18,7 @@ export const useClosure = (closureId?: string, issuerId?: string) => {
     dsoQueryKeys.closure(closureId),
     fetchClosure,
     {
-      enabled: !!closureId && !!userId
+      enabled: !isEmptyString(closureId) && !isEmptyString(userId)
     }
   )
 

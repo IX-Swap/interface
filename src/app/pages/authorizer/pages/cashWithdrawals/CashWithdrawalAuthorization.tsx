@@ -9,6 +9,7 @@ import { PaginatedData } from 'services/api/types'
 import { AppFeature } from 'types/app'
 import { CashWithdrawal } from 'types/cashWithdrawal'
 import { WithdrawalPreview } from 'app/components/WithdrawalPreview/WithdrawalPreview'
+import { isEmptyString } from 'helpers/strings'
 
 export const CashWithdrawalAuthorization = () => {
   const { apiService } = useServices()
@@ -29,9 +30,11 @@ export const CashWithdrawalAuthorization = () => {
     return null
   }
 
-  const cashWithdrawal = cashWithdrawalId ? map[cashWithdrawalId] : undefined
+  const cashWithdrawal = !isEmptyString(cashWithdrawalId)
+    ? map[cashWithdrawalId]
+    : undefined
 
-  if (!cashWithdrawal) return null
+  if (cashWithdrawal == null) return null
 
   return (
     <AuthorizerView

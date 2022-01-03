@@ -13,7 +13,7 @@ export const EditBank: React.FC = () => {
   const [updateBank] = useUpdateBank()
 
   const handleSubmit = async (values: BankFormValues): Promise<void> => {
-    if (!bankId) return
+    if (bankId === undefined) return
     await updateBank({ ...values, bankId })
   }
 

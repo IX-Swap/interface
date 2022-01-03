@@ -6,7 +6,8 @@ import { PaginatedData } from 'services/api/types'
 import { identityQueryKeys } from 'config/queryKeys'
 import { identityURL } from 'config/apiURL'
 import { AuthorizableStatus } from 'types/util'
-import { CorporateIdentity } from '../../identity/types/forms'
+import { CorporateIdentity } from 'app/pages/identity/types/forms'
+import { isEmptyString } from 'helpers/strings'
 
 export interface UseAllCorporatesArgs {
   userId?: string
@@ -33,7 +34,7 @@ export const useAllCorporatesByUserId = (
     [identityQueryKeys.getAllCorporateByUserId(userId), payload],
     getAllCorporates,
     {
-      enabled: !!userId
+      enabled: !isEmptyString(userId)
     }
   )
 

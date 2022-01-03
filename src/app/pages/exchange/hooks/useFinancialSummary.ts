@@ -17,7 +17,7 @@ export const useFinancialSummary = (id?: string) => {
   }
 
   useEffect(() => {
-    if (!id) return
+    if (id === undefined) return
 
     const onUrl = exchange.summary.on(id)
     socket?.on(onUrl, onDataReceived)

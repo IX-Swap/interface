@@ -9,6 +9,7 @@ import { PaginatedData } from 'services/api/types'
 import { AppFeature } from 'types/app'
 import { DSWithdrawal } from 'types/dsWithdrawal'
 import { DSWithdrawalPreview } from 'app/components/DSWithdrawalPreview/DSWithdrawalPreview'
+import { isEmptyString } from 'helpers/strings'
 
 export const DSWithdrawalAuthorization = () => {
   const { apiService } = useServices()
@@ -32,9 +33,11 @@ export const DSWithdrawalAuthorization = () => {
     return null
   }
 
-  const dsWithdrawal = dsWithdrawalId ? map[dsWithdrawalId] : undefined
+  const dsWithdrawal = !isEmptyString(dsWithdrawalId)
+    ? map[dsWithdrawalId]
+    : undefined
 
-  if (!dsWithdrawal) {
+  if (dsWithdrawal == null) {
     // TODO handle not found case
     return null
   }

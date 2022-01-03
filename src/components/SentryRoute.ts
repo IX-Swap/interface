@@ -1,5 +1,5 @@
 import { withSentryRouting } from '@sentry/react'
 import { Route } from 'react-router-dom'
 
-// @ts-ignore
+// @ts-expect-error
 export const SentryRoute = withSentryRouting(Route)

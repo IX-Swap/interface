@@ -13,6 +13,7 @@ import { useStyles } from 'app/pages/exchange/components/PlaceOrderForm/PlaceOrd
 import { Submit } from 'components/form/Submit'
 import { transformPlaceOrderFormValuesToArgs } from 'app/pages/exchange/utils/order'
 import { useParams } from 'react-router-dom'
+import { isEmptyString } from '../../../../../helpers/strings'
 
 export type ActiveTabName = 'BUY' | 'SELL'
 
@@ -44,7 +45,7 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
   const totalCurrencyLabel = currencyLabel
   const { pairId } = useParams<{ pairId: string }>()
   const handleSubmit = async (values: PlaceOrderFormValues) => {
-    if (!pairId) return
+    if (isEmptyString(pairId)) return
 
     await onSubmit(
       transformPlaceOrderFormValuesToArgs(

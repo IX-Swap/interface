@@ -13,7 +13,7 @@ export const useNextDistribution = (dsoId?: string) => {
     ['nextDistribution', dsoId],
     getNextDistribution,
     {
-      enabled: !!dsoId
+      enabled: dsoId !== undefined && dsoId !== ''
     }
   )
 

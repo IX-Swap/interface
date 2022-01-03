@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import { AppFeature } from 'types/app'
 
 export const apiURL = {

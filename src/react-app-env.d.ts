@@ -1,3 +1,16 @@
 declare module '*.pdf'
-declare module '*.svg'
-declare module '*.png'
+
+declare module '*.png' {
+  const content: string
+  export default content
+}
+
+declare module '*.svg' {
+  import { FunctionComponent } from 'react'
+
+  const content: string
+  const ReactComponent: FunctionComponent
+
+  export const ReactComponent
+  export default content
+}

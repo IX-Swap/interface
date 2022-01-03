@@ -104,18 +104,22 @@
     "@types/socket.io-client": "^1.4.33",
     "@types/tinycolor2": "^1.4.2",
     "@types/yup": "^0.29.4",
-    "@typescript-eslint/eslint-plugin": "^5.2.0",
-    "@typescript-eslint/parser": "^5.2.0",
+    "@typescript-eslint/eslint-plugin": "^5.8.1",
+    "@typescript-eslint/parser": "^5.8.1",
     "allure-playwright": "^2.0.0-beta.14",
     "axios-mock-adapter": "^1.20.0",
+    "babel-eslint": "^10.1.0",
     "babel-plugin-import": "^1.13.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
     "concurrently": "^6.4.0",
     "css-loader": "^6.5.1",
-    "eslint": "^6.6.0",
+    "eslint": "^8.6.0",
     "eslint-config-prettier": "^6.12.0",
     "eslint-config-react-app": "^6.0.0",
     "eslint-config-standard-with-typescript": "^18.0.2",
+    "eslint-plugin-flowtype": "^8.0.3",
+    "eslint-plugin-import": "^2.25.4",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^3.1.3",
     "eslint-plugin-react": "^7.20.0",
@@ -155,7 +159,7 @@
     "pre-install": "rimraf node_modules && yarn cache clean",
     "test:watch": "TZ=UTC react-scripts test --env=jest-environment-jsdom-sixteen --coverage",
     "test:ci": "CI=true jest --env=jest-environment-jsdom-sixteen --silent --coverage --testResultsProcessor=jest-sonar-reporter --maxWorkers=75%",
-    "lint": "eslint --cache --fix \"src/**/*.{ts,tsx}\"",
+    "lint": "eslint --cache --fix .",
     "format": "prettier --write \"src/**/*.tsx\"",
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public"
@@ -183,9 +187,9 @@
     "reportFile": "test-report.xml"
   },
   "lint-staged": {
-    "src/**/*.{ts,tsx}": [
-      "yarn lint",
-      "yarn format"
+    "*.{ts,tsx}": [
+      "eslint --fix --cache",
+      "prettier --write"
     ]
   },
   "husky": {

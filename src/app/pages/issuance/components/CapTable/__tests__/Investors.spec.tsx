@@ -4,7 +4,6 @@ import { render } from 'test-utils'
 import { generateQueryResult } from '__fixtures__/useQuery'
 import * as useDSOById from 'app/pages/invest/hooks/useDSOById'
 import { dso } from '__fixtures__/authorizer'
-import { history } from 'config/history'
 
 jest.mock('components/TableWithPagination/TableView', () => ({
   TableView: jest.fn(() => null)

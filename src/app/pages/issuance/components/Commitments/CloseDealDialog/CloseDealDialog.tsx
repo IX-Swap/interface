@@ -74,7 +74,7 @@ export const CloseDealDialog = (props: ModalProps) => {
             isLoading={isLoading}
             onClose={() => toggleOpen()}
             onSubmit={async values => {
-              if (dsoId) {
+              if (dsoId !== undefined) {
                 await closeDeal({ dso: dsoId, ...values })
                 toggleOpen()
               }

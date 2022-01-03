@@ -24,7 +24,7 @@ export const useTradeHistory = (id?: string) => {
   }
 
   useEffect(() => {
-    if (!id) return
+    if (id === undefined) return
 
     const onUrl = exchange.tradeHistory.on(id)
     const onMyFills = exchange.tradeHistory.onMyFills(id)

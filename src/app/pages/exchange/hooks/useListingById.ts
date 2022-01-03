@@ -1,7 +1,7 @@
 import { useQuery } from 'react-query'
 import { useAuth } from 'hooks/auth/useAuth'
 import { useServices } from 'hooks/useServices'
-import { getIdFromObj } from 'helpers/strings'
+import { getIdFromObj, isEmptyString } from 'helpers/strings'
 import { exchangeListingsQueryKeys } from 'config/queryKeys'
 import { listingsURL } from 'config/apiURL'
 import { isValidDSOId } from 'helpers/isValidDSOId'
@@ -18,7 +18,7 @@ export const useListingById = (listingId?: string, issuerId?: string) => {
       issuerId ?? getIdFromObj(user)
     ),
     fetchListing,
-    { enabled: !!listingId && isValidDSOId(listingId) }
+    { enabled: !isEmptyString(listingId) && isValidDSOId(listingId) }
   )
 
   return {

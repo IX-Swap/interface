@@ -37,6 +37,8 @@ export const useDeployToken = (tokenId?: string) => {
   }
 
   const deploy = () => {
+    if (tokenId === undefined) return
+
     setIsDeploying(true)
 
     // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
@@ -49,7 +51,7 @@ export const useDeployToken = (tokenId?: string) => {
   }
 
   useEffect(() => {
-    if (!tokenId) return
+    if (tokenId === undefined) return
 
     socket?.on(`x-token-lite/${tokenId}`, onMessageReceived)
     socket?.emit('x-token-lite/deploy/initialize', tokenId)

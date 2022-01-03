@@ -3,6 +3,7 @@ import { useMutation, useQueryCache } from 'react-query'
 import { identityURL } from 'config/apiURL'
 import { identityQueryKeys } from 'config/queryKeys'
 import { CorporateIdentity } from 'app/pages/identity/types/forms'
+import { isEmptyString } from 'helpers/strings'
 
 export const useSubmitCorporateById = (
   userId?: string,
@@ -12,13 +13,7 @@ export const useSubmitCorporateById = (
   const queryCache = useQueryCache()
 
   const submitCorporate = async () => {
-    if (!userId) {
-      throw new Error('userId is required')
-    }
-
-    if (!identityId) {
-      throw new Error('identityId is required')
-    }
+    if (isEmptyString(userId) || isEmptyString(identityId)) return
 
     const uri = identityURL.corporates.submit(identityId)
     return await apiService.patch<CorporateIdentity>(uri, {})

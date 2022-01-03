@@ -3,6 +3,7 @@ import { useMutation, useQueryCache } from 'react-query'
 import { identityURL } from 'config/apiURL'
 import { identityQueryKeys } from 'config/queryKeys'
 import { CorporateIdentity } from 'app/pages/identity/types/forms'
+import { isEmptyString } from 'helpers/strings'
 
 export const useCreateCorporateByUserId = (
   userId?: string,
@@ -12,9 +13,7 @@ export const useCreateCorporateByUserId = (
   const queryCache = useQueryCache()
 
   const createCorporate = async (values: any) => {
-    if (!userId) {
-      throw new Error('userId is required')
-    }
+    if (isEmptyString(userId)) return
 
     const uri = identityURL.corporates.create(userId)
     return await apiService.post<CorporateIdentity>(uri, {
