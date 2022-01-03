@@ -10,15 +10,12 @@ import { Box, Flex } from 'rebass'
 import { ApplicationModal } from 'state/application/actions'
 import { useToggleModal } from 'state/application/hooks'
 import {
-  useCreateNft,
-  useDeployCollection,
+  useAssetFormState,
+  useCreateAssetActionHandlers,
+  useCreateNftAssetForm,
   useFetchMyCollections,
-  useManageCreateForm,
-  useMint,
-  useNFTState,
 } from 'state/nft/hooks'
 import { NFTCollection, TraitType } from 'state/nft/types'
-import { groupKeyValues } from 'state/nft/utils'
 import { ExternalLink, TYPE } from 'theme'
 import { CollectionDropdown } from './CollectionDropdown'
 import { FreezeRadio } from './FreezeRadio'
@@ -30,103 +27,73 @@ import { Traits } from './Traits'
 export const CreateForm = () => {
   const {
     file,
-    setFile,
-    preview,
-    setPreview,
     name,
-    setName,
-    link,
-    setLink,
     description,
-    setDescription,
-    activeTraitType,
-    setActiveTraitType,
-    properties,
-    setProperties,
-    levels,
-    setLevels,
-    stats,
-    setStats,
-    isNSFW,
-    setIsNSFW,
-    selectedChain,
-    setSelectedChain,
-    collection,
-    setCollection,
-    newCollectionName,
-    setNewCollectionName,
     freeze,
-    setFreeze,
-  } = useManageCreateForm()
+    link,
+    properties,
+    stats,
+    levels,
+    isNSFW,
+    preview,
+    collection,
+    newCollectionName,
+    activeTraitType,
+  } = useAssetFormState()
+  const {
+    onSelectFile,
+    onSelectPreview,
+    onSetName,
+    onSetLink,
+    onSetFreeze,
+    onSetDescription,
+    onSetActiveTraitType,
+    onSetProperties,
+    onSetLevels,
+    onSetStats,
+    onSetIsNSFW,
+    onSetCollection,
+    onSetNewCollectionName,
+  } = useCreateAssetActionHandlers()
   const [showCreateNewCollection, setShowCreateNewCollection] = useState(false)
-  const deployCollection = useDeployCollection()
-  const createNFTAsset = useCreateNft()
+  const createAsset = useCreateNftAssetForm()
   const toggle = useToggleModal(ApplicationModal.PROPERTIES)
   const toggleNumeric = useToggleModal(ApplicationModal.LEVELS)
   const fetchMyCollection = useFetchMyCollections()
   const toggleLevelsStats = (traitType: TraitType) => {
-    setActiveTraitType(traitType)
+    onSetActiveTraitType(traitType)
     toggleNumeric()
   }
   const onSelectCreateCollection = useCallback(() => {
-    setCollection(null)
+    onSetCollection(null)
     setShowCreateNewCollection(true)
-  }, [setCollection])
-  const onSetCollection = useCallback(
+  }, [onSetCollection])
+
+  const onSelectCollection = useCallback(
     (collection: NFTCollection) => {
       setShowCreateNewCollection(false)
-      setCollection(collection)
+      onSetCollection(collection)
     },
-    [setCollection]
+    [onSetCollection]
   )
-  const mint = useMint()
-
-  const onDrop = (file: any) => {
-    setFile(file)
-  }
 
   useEffect(() => {
     fetchMyCollection()
   }, [fetchMyCollection])
 
-  const getCreateNftDto = () => {
-    if (!name || !file) {
-      return null
-    }
-    return {
-      file,
-      name,
-      freeze,
-      keyValues: groupKeyValues({ description, link, properties, stats, levels, isNSFW }),
-    }
-  }
   const onSubmit = async (e: any) => {
     e.preventDefault()
-
-    // await mint()
-
-    const nftDto = getCreateNftDto()
-    if (!nftDto) {
-      return
-    }
-    const assetUri = await createNFTAsset(nftDto)
-    if (newCollectionName && showCreateNewCollection) {
-      deployCollection({ name: newCollectionName })
-    }
-    try {
-    } catch (e) {
-      console.log(e)
-    }
+    await createAsset()
   }
 
   return (
     <>
       <LevelsPopup
         levels={activeTraitType === TraitType.PROGRESS ? levels : stats}
-        setLevels={activeTraitType === TraitType.PROGRESS ? setLevels : setStats}
+        setLevels={activeTraitType === TraitType.PROGRESS ? onSetLevels : onSetStats}
         traitType={activeTraitType}
       />
-      <PropertiesPopup properties={properties} setProperties={setProperties} />
+      <PropertiesPopup properties={properties} setProperties={onSetProperties} />
       <Box py={3}>
         <Flex mx={-2} mb={4}>
           <Box width={1} px={2}>
@@ -139,7 +106,7 @@ export const CreateForm = () => {
                 File types supported: JPG, PNG, GIF, SVG, MP4, WEBM, MP3, WAV, OGG, GLB, GLTF. Max size: 100 MB
               </TYPE.descriptionThin>
             </Label>
-            <Upload onDrop={onDrop} file={file} />
+            <Upload onDrop={onSelectFile} file={file} />
           </Box>
         </Flex>
         {file && getfileType(file) !== FileTypes.IMAGE && (
@@ -155,7 +122,11 @@ export const CreateForm = () => {
                   display of your item.
                 </TYPE.descriptionThin>
               </Label>
-              <Upload onDrop={(previewFile) => setPreview(previewFile)} file={preview} accept={AcceptFiles.IMAGE} />
+              <Upload
+                onDrop={(previewFile) => onSelectPreview(previewFile)}
+                file={preview}
+                accept={AcceptFiles.IMAGE}
+              />
             </Box>
           </Flex>
         )}
@@ -175,7 +146,7 @@ export const CreateForm = () => {
               <ContainerRow>
                 <InputContainer>
                   <Input
-                    onChange={(e) => setName(e?.target?.value)}
+                    onChange={(e) => onSetName(e?.target?.value)}
                     placeholder={t`Item name`}
                     className="item-name-input"
                     type="text"
@@ -207,7 +178,7 @@ export const CreateForm = () => {
           <Box width={1} px={2}>
             <CollectionDropdown
               onSelectCreateCollection={onSelectCreateCollection}
-              onSelect={onSetCollection}
+              onSelect={onSelectCollection}
               selectedCollection={collection}
               newCollectionName={newCollectionName}
             />
@@ -223,7 +194,8 @@ export const CreateForm = () => {
                   </TYPE.body>
                 </Box>
                 <TYPE.descriptionThin fontSize={13}>
-                  It can be changed later on our platform, but it cannot be changed on blockchain
+                  Create a new collection to keep up to 1000 items. The name can be changed later on our platform, but
+                  it cannot be changed on blockchain
                 </TYPE.descriptionThin>
               </Label>
               <InputPanel id={'collection-name'}>
@@ -240,7 +212,7 @@ export const CreateForm = () => {
                       pattern=".*$"
                       value={newCollectionName}
                       disabled={false}
-                      onChange={(e) => setNewCollectionName(e?.target?.value)}
+                      onChange={(e) => onSetNewCollectionName(e?.target?.value)}
                       placeholder={`my-cool-collection`}
                     />
                   </InputContainer>
@@ -276,7 +248,7 @@ export const CreateForm = () => {
                     pattern=".*$"
                     value={link}
                     disabled={false}
-                    onChange={(e) => setLink(e?.target?.value)}
+                    onChange={(e) => onSetLink(e?.target?.value)}
                     placeholder={`https://yoursite.io/item/123`}
                   />
                 </InputContainer>
@@ -302,7 +274,7 @@ export const CreateForm = () => {
             </Label>
             <Textarea
               style={{ height: '150px' }}
-              onChange={(e) => setDescription(e?.target?.value)}
+              onChange={(e) => onSetDescription(e?.target?.value)}
               placeholder={t`Provide a detailed description of your item`}
             />
           </Box>
@@ -317,10 +289,10 @@ export const CreateForm = () => {
           <Traits type={TraitType.NUMBER} traitList={stats} />
         </Flex>
         <Flex mx={-2} mb={4}>
-          <NSFWRadio active={isNSFW} setActive={setIsNSFW} />
+          <NSFWRadio active={isNSFW} setActive={onSetIsNSFW} />
         </Flex>
         <Flex mx={-2} mb={4}>
-          <FreezeRadio active={freeze} setActive={setFreeze} />
+          <FreezeRadio active={freeze} setActive={onSetFreeze} />
         </Flex>
         {/* For the moment we will deploy on the chain the user is on */}
         {/* <Flex my={4}>

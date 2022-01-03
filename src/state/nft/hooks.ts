@@ -1,9 +1,11 @@
+import { Description } from '@ethersproject/properties'
 import { t } from '@lingui/macro'
 import NFT_CREATE_ABI from 'abis/nft-contract-create.json'
 import axios from 'axios'
 import NFT_BYTE_CODE from 'byte-code/nft-contract-byte-code.json'
 import { SupportedChainId } from 'constants/chains'
-import { useNftContract } from 'hooks/useContract'
+import { Contract } from 'ethers'
+import { getNftContract, useNftContract } from 'hooks/useContract'
 import { useActiveWeb3React } from 'hooks/web3'
 import { useCallback, useEffect, useState } from 'react'
 import { FileWithPath } from 'react-dropzone'
@@ -13,12 +15,31 @@ import { nft } from 'services/apiUrls'
 import { AppDispatch, AppState } from 'state'
 import { useShowError } from 'state/application/hooks'
 import { useAppDispatch } from 'state/hooks'
-import { setCollections, setCollectionsLoading, setCreateNftLoading } from 'state/nft/actions'
-import { NFTCollection, NftCreateProps, TraitType } from 'state/nft/types'
+import {
+  setActiveTraitType,
+  setCollection,
+  setCollections,
+  setCollectionsLoading,
+  setCreateNftLoading,
+  setDescription,
+  setFile,
+  setFreeze,
+  setLevels,
+  setLink,
+  setName,
+  setNewCollectionName,
+  setNSFW,
+  setPreview,
+  setProperties,
+  setSelectedContractAddress,
+  setStats,
+} from 'state/nft/actions'
+import { AssetForm, NFTCollection, NftCreateProps, NumericTrait, Trait, TraitType } from 'state/nft/types'
 import { useTransactionAdder } from 'state/transactions/hooks'
 import { wait } from 'utils/retry'
 import { saveImages } from './actions'
 import { CollectionCreateProps } from './types'
+import { groupKeyValues } from './utils'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const Web3 = require('web3') // for some reason import Web3 from web3 didn't see eth module
@@ -48,38 +69,38 @@ export function useNFTState(): AppState['nft'] {
   return useSelector<AppState, AppState['nft']>((state) => state.nft)
 }
 
-export const useGetUserTokens = () => {
-  // make api call to my-tokens
-  const dispatch = useDispatch<AppDispatch>()
-  const nft = useNftContract()
+// export const useGetUserTokens = () => {
+//   // make api call to my-tokens
+//   const dispatch = useDispatch<AppDispatch>()
+//   const nft = useNftContract()
 
-  return useCallback(async () => {
-    const tokenIds = [2, 3]
-    //
-    console.log('gettting metadata')
-    const promises = tokenIds.map(async (id: number) => {
-      const uri = await nft?.tokenURI(Number(id))
-      return uri
-    })
-    const uris = await Promise.all(promises)
-    const metadataPromises = uris.map(async (uri: string) => {
-      console.log({ uri })
-      const json = await axios.get(uri)
-      await wait(4000)
-      return json.data
-    })
-    const jsons = await Promise.all(metadataPromises)
-    dispatch(saveImages({ images: jsons, ids: tokenIds }))
-    console.log({ jsons })
-  }, [nft, dispatch])
-}
+//   return useCallback(async () => {
+//     const tokenIds = [2, 3]
+//     //
+//     console.log('gettting metadata')
+//     const promises = tokenIds.map(async (id: number) => {
+//       const uri = await nft?.tokenURI(Number(id))
+//       return uri
+//     })
+//     const uris = await Promise.all(promises)
+//     const metadataPromises = uris.map(async (uri: string) => {
+//       console.log({ uri })
+//       const json = await axios.get(uri)
+//       await wait(4000)
+//       return json.data
+//     })
+//     const jsons = await Promise.all(metadataPromises)
+//     dispatch(saveImages({ images: jsons, ids: tokenIds }))
+//     console.log({ jsons })
+//   }, [nft, dispatch])
+// }
 
-export const useGetNftData = () => {
-  const getUserTokens = useGetUserTokens()
-  useEffect(() => {
-    getUserTokens()
-  }, [getUserTokens])
-}
+// export const useGetNftData = () => {
+//   const getUserTokens = useGetUserTokens()
+//   useEffect(() => {
+//     getUserTokens()
+//   }, [getUserTokens])
+// }
 
 export const useDeployCollection = () => {
   const { account, library } = useActiveWeb3React()
@@ -91,12 +112,13 @@ export const useDeployCollection = () => {
         if (!account || !library) {
           return
         }
+        console.log('Deploy contract')
         const web3 = new Web3(library.provider)
         const contract = new web3.eth.Contract(NFT_CREATE_ABI)
         const myContract = contract
           .deploy({
             data: NFT_BYTE_CODE['byteCode'],
-            arguments: [1000, 'IXS NFT', 'IXSNFT'],
+            arguments: [1000, `IXS-${name}`, 'IXSNFT'],
           })
           .encodeABI()
 
@@ -111,6 +133,7 @@ export const useDeployCollection = () => {
         addTransaction(result, { summary: t`Created your ${name} collection successfully` })
         const resp = await result.wait()
         console.log({ result, resp })
+        return resp?.contractAddress
       } catch (e) {
         showError(t`Could not create collection ${e?.message}`)
       }
@@ -119,82 +142,158 @@ export const useDeployCollection = () => {
   )
 }
 
-export const useMint = () => {
-  const nft = useNftContract()
-  const { account } = useActiveWeb3React()
-  return useCallback(async () => {
-    const res = await nft?.mint(
-      account,
-      'https://gateway.pinata.cloud/ipfs/QmbXjjSG7ovdNhTkHu6VYYQ9hRf787tYBdSW6syKwm18WU',
-      {
-        gasLimit: 900000,
-      }
-    )
-    const params = await res.wait()
-    console.log({ res, params })
-  }, [nft, account])
+export const mintNFT = async ({
+  nft,
+  account,
+  assetURI,
+}: {
+  nft: Contract | null
+  assetURI: string
+  account?: string | null
+}) => {
+  const res = await nft?.mint(account, assetURI, {
+    gasLimit: 900000,
+  })
+  const params = await res.wait()
+  const status = params.status
+  // mint transaction will have status 0 if fail and 1 if success
+  return Boolean(status)
 }
 
-export const useGetSupply = () => {
-  const nft = useNftContract()
-  return useCallback(async () => {
-    try {
-      const res = await nft?.totalSupply()
-      const uri = await nft?.tokenURI(2)
-      console.log({ res, uri })
-    } catch (e) {
-      console.error('cant get uri or supply')
-    }
-  }, [nft])
+// export const useGetSupply = () => {
+//   const nft = useNftContract()
+//   return useCallback(async () => {
+//     try {
+//       const res = await nft?.totalSupply()
+//       const uri = await nft?.tokenURI(2)
+//       console.log({ res, uri })
+//     } catch (e) {
+//       console.error('cant get uri or supply')
+//     }
+//   }, [nft])
+// }
+
+export function useAssetFormState(): AppState['assetForm'] {
+  return useSelector<AppState, AppState['assetForm']>((state) => state.assetForm)
 }
 
-export const useManageCreateForm = () => {
-  const { chainId } = useActiveWeb3React()
-  const [file, setFile] = useState<FileWithPath | null>(null)
-  const [preview, setPreview] = useState<FileWithPath | null>(null)
-  const [name, setName] = useState('')
-  const [link, setLink] = useState('')
-  const [freeze, setFreeze] = useState(false)
-  const [collection, setCollection] = useState<NFTCollection | null>(null)
-  const [description, setDescription] = useState('')
-  const [activeTraitType, setActiveTraitType] = useState(TraitType.PROGRESS)
-  const [properties, setProperties] = useState<Array<{ trait_type: string; value: string }>>([])
-  const [levels, setLevels] = useState<Array<{ trait_type: string; value: number; max_value: number }>>([])
-  const [stats, setStats] = useState<Array<{ trait_type: string; value: number; max_value: number }>>([])
-  const [isNSFW, setIsNSFW] = useState(false)
-  const [newCollectionName, setNewCollectionName] = useState('')
-  const [selectedChain, setSelectedChain] = useState<SupportedChainId>(
-    chainId ? (chainId as SupportedChainId) : SupportedChainId.MAINNET
+export function useCreateAssetActionHandlers(): {
+  onSelectFile: (file: FileWithPath | null) => void
+  onSelectPreview: (file: FileWithPath | null) => void
+  onSetName: (name: string) => void
+  onSetLink: (link: string) => void
+  onSetFreeze: (freeze: boolean) => void
+  onSetDescription: (description: string) => void
+  onSetActiveTraitType: (trait: TraitType) => void
+  onSetProperties: (properties: Array<Trait>) => void
+  onSetLevels: (levels: Array<NumericTrait>) => void
+  onSetStats: (stats: Array<NumericTrait>) => void
+  onSetIsNSFW: (isNSFW: boolean) => void
+  onSetCollection: (collection: NFTCollection | null) => void
+  onSetNewCollectionName: (name: string) => void
+  onSetActiveContractAddress: (address: string) => void
+} {
+  const dispatch = useDispatch<AppDispatch>()
+
+  const onSelectFile = useCallback(
+    (file: FileWithPath | null) => {
+      dispatch(setFile({ file }))
+    },
+    [dispatch]
+  )
+  const onSelectPreview = useCallback(
+    (file: FileWithPath | null) => {
+      dispatch(setPreview({ file }))
+    },
+    [dispatch]
+  )
+  const onSetName = useCallback(
+    (name: string) => {
+      dispatch(setName({ name }))
+    },
+    [dispatch]
+  )
+  const onSetLink = useCallback(
+    (link: string) => {
+      dispatch(setLink({ link }))
+    },
+    [dispatch]
+  )
+  const onSetFreeze = useCallback(
+    (freeze: boolean) => {
+      dispatch(setFreeze({ freeze }))
+    },
+    [dispatch]
+  )
+  const onSetDescription = useCallback(
+    (description: string) => {
+      dispatch(setDescription({ description }))
+    },
+    [dispatch]
+  )
+  const onSetActiveTraitType = useCallback(
+    (trait: TraitType) => {
+      dispatch(setActiveTraitType({ trait }))
+    },
+    [dispatch]
+  )
+  const onSetProperties = useCallback(
+    (properties: Array<Trait>) => {
+      dispatch(setProperties({ properties }))
+    },
+    [dispatch]
+  )
+  const onSetLevels = useCallback(
+    (levels: Array<NumericTrait>) => {
+      dispatch(setLevels({ levels }))
+    },
+    [dispatch]
+  )
+  const onSetStats = useCallback(
+    (stats: Array<NumericTrait>) => {
+      dispatch(setStats({ stats }))
+    },
+    [dispatch]
+  )
+  const onSetIsNSFW = useCallback(
+    (isNSFW: boolean) => {
+      dispatch(setNSFW({ isNSFW }))
+    },
+    [dispatch]
+  )
+  const onSetCollection = useCallback(
+    (collection: NFTCollection | null) => {
+      dispatch(setCollection({ collection }))
+    },
+    [dispatch]
+  )
+  const onSetNewCollectionName = useCallback(
+    (name: string) => {
+      dispatch(setNewCollectionName({ name }))
+    },
+    [dispatch]
+  )
+  const onSetActiveContractAddress = useCallback(
+    (address: string) => {
+      dispatch(setSelectedContractAddress({ address }))
+    },
+    [dispatch]
   )
   return {
-    file,
-    setFile,
-    preview,
-    setPreview,
-    name,
-    setName,
-    link,
-    setLink,
-    description,
-    setDescription,
-    activeTraitType,
-    setActiveTraitType,
-    properties,
-    setProperties,
-    levels,
-    setLevels,
-    stats,
-    setStats,
-    isNSFW,
-    setIsNSFW,
-    selectedChain,
-    setSelectedChain,
-    collection,
-    setCollection,
-    newCollectionName,
-    setNewCollectionName,
-    freeze,
-    setFreeze,
+    onSelectFile,
+    onSelectPreview,
+    onSetName,
+    onSetLink,
+    onSetFreeze,
+    onSetDescription,
+    onSetActiveTraitType,
+    onSetProperties,
+    onSetLevels,
+    onSetStats,
+    onSetIsNSFW,
+    onSetCollection,
+    onSetNewCollectionName,
+    onSetActiveContractAddress,
   }
 }
 
@@ -205,12 +304,12 @@ export const useCreateNft = () => {
       dispatch(setCreateNftLoading({ loading: true }))
       const data = await createNftAsset(nftDto)
       console.log({ data })
-      const newCID = data?.CID
+      const assetURI = data?.metaUrl
       dispatch(setCreateNftLoading({ loading: false }))
-      return `https://gateway.pinata.cloud/ipfs/${newCID}`
+      return assetURI
     } catch (e) {
       dispatch(setCreateNftLoading({ loading: false }))
-      console.log({ e })
+      throw e
     }
   }, [])
 }
@@ -234,4 +333,78 @@ export const useFetchMyCollections = () => {
       console.log({ e })
     }
   }, [account])
+}
+
+const getCreateNftDto = ({
+  name,
+  file,
+  freeze,
+  description,
+  link,
+  properties,
+  stats,
+  levels,
+  isNSFW,
+}: AssetForm): NftCreateProps | null => {
+  if (!name || !file) {
+    return null
+  }
+  const dto: NftCreateProps = {
+    file,
+    name,
+    keyValues: groupKeyValues({ description, link, properties, stats, levels, isNSFW }),
+  }
+  if (freeze) {
+    dto.freeze = freeze
+  }
+  return dto
+}
+
+export const useCreateNftAssetForm = () => {
+  const deployCollection = useDeployCollection()
+  const createNFTAsset = useCreateNft()
+  const form = useAssetFormState()
+  const { collection, newCollectionName } = form
+  const { library, account, chainId } = useActiveWeb3React()
+  const { onSetActiveContractAddress } = useCreateAssetActionHandlers()
+  return useCallback(async () => {
+    try {
+      // first we create the asset on backend (uploading all files, etc, and get an assetUri)
+      const nftDto = getCreateNftDto(form)
+      if (!nftDto) {
+        return
+      }
+      const assetURI = await createNFTAsset(nftDto)
+      // end creating asset
+
+      // we create a contract instance either with the selected collection, or we create a new one on the spot
+      // let contractInstance
+      //this is contract instance with test contract created by me
+      const contractInstance = getNftContract({
+        addressOrAddressMap: '0xadc2e42d74f57028d7be2da41ba9643bdb70d99b',
+        library,
+        account,
+        chainId,
+      })
+      // if (collection) {
+      //   contractInstance = getNftContract({ addressOrAddressMap: collection?.address, library, account, chainId })
+      // } else {
+      //   if (newCollectionName) {
+      //     const contractAddress = await deployCollection({ name: newCollectionName })
+      //     if (contractAddress) {
+      //       contractInstance = getNftContract({ addressOrAddressMap: contractAddress, library, account, chainId })
+      //     }
+      //   }
+      // }
+      // end getting contract instance
+      if (contractInstance) {
+        await mintNFT({ nft: contractInstance, account, assetURI })
+        const supply = await contractInstance?.getTokenId()
+        console.log({ supply })
+        //redirect to individual asset page
+      }
+    } catch (e) {
+      console.log(e)
+    }
+  }, [account, chainId, collection, createNFTAsset, deployCollection, form, library, newCollectionName])
 }

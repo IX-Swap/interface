@@ -1,9 +1,9 @@
 import React from 'react'
-import { useGetNftData } from 'state/nft/hooks'
+// import { useGetNftData } from 'state/nft/hooks'
 import { NFTCards } from './NFTCards'
 
 const List = () => {
-  useGetNftData()
+  // useGetNftData()
   return (
     <>
       <div>My NFTS</div>

@@ -1,11 +1,11 @@
 import { createReducer } from '@reduxjs/toolkit'
 import {
+  importNftCollection,
   saveImage,
   saveImages,
-  importNftCollection,
-  setCreateNftLoading,
   setCollections,
   setCollectionsLoading,
+  setCreateNftLoading,
 } from './actions'
 import { NFTCollection, NFTImage } from './types'
 

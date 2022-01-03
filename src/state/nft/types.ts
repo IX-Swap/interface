@@ -82,7 +82,7 @@ export interface NftCreateProps {
   file: FileWithPath
   name: string
   keyValues: KeyValues
-  freeze: boolean
+  freeze?: boolean
 }
 
 export interface CollectionCreateProps {
@@ -95,4 +95,21 @@ export interface CollectionUpdateProps {
   description: string
   logo: FileWithPath
   cover: FileWithPath
+}
+
+export interface AssetForm {
+  file: FileWithPath | null
+  preview: FileWithPath | null
+  name: string
+  link: string
+  freeze: boolean
+  collection: NFTCollection | null
+  description: string
+  activeTraitType: TraitType
+  properties: Array<Trait>
+  levels: Array<NumericTrait>
+  stats: Array<NumericTrait>
+  isNSFW: boolean
+  newCollectionName: string
+  selectedContractAddress: string
 }
