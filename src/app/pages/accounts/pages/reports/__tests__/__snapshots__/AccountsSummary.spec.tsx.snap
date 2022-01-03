@@ -482,9 +482,6 @@ exports[`AccountsSummary should match snapshot when data is loaded successfully 
           <div
             class="MuiBox-root MuiBox-root-64"
           />
-          <image-mock
-            style="max-width: 100%;"
-          />
         </div>
         <div
           class="MuiGrid-root MuiGrid-item"
@@ -599,9 +596,6 @@ exports[`AccountsSummary should match snapshot when data is undefined 1`] = `
         >
           <div
             class="MuiBox-root MuiBox-root-16"
-          />
-          <image-mock
-            style="max-width: 100%;"
           />
         </div>
         <div

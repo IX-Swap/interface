@@ -266,9 +266,6 @@ exports[`AggregatedCostsAndCharges should match snapshot when data is loaded suc
           <div
             class="MuiBox-root MuiBox-root-64"
           />
-          <image-mock
-            style="max-width: 100%;"
-          />
         </div>
         <div
           class="MuiGrid-root MuiGrid-item"
@@ -353,9 +350,6 @@ exports[`AggregatedCostsAndCharges should match snapshot when data is loaded suc
         >
           <div
             class="MuiBox-root MuiBox-root-83"
-          />
-          <image-mock
-            style="max-width: 100%;"
           />
         </div>
         <div
@@ -471,9 +465,6 @@ exports[`AggregatedCostsAndCharges should match snapshot when data is undefined 
         >
           <div
             class="MuiBox-root MuiBox-root-16"
-          />
-          <image-mock
-            style="max-width: 100%;"
           />
         </div>
         <div
