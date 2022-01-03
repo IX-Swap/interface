@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Button, Card, Grid } from '@material-ui/core'
 import { CountdownTimer } from '../components/CountdownTimer/CountdownTimer'
-import { AmountRaised } from '../components/IssuanceLanding/AmountRaised'
+import { AmountRaised } from 'app/pages/issuance/components/CapTable/AmountRaised'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { VSpacer } from 'components/VSpacer'
 import { useParams } from 'react-router-dom'

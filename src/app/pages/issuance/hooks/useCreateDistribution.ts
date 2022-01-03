@@ -1,6 +1,7 @@
 import { useServices } from 'hooks/useServices'
 import { useMutation, useQueryCache } from 'react-query'
 import { useParams } from 'react-router'
+import { balanceQueryKeys } from 'config/queryKeys'
 
 export const useCreateDistribution = () => {
   const { apiService, snackbarService } = useServices()
@@ -23,7 +24,8 @@ export const useCreateDistribution = () => {
         'success'
       )
 
-      void queryCache.invalidateQueries(`distributions-${dsoId}`)
+      void queryCache.invalidateQueries(balanceQueryKeys.getDistribution(dsoId))
+      void queryCache.invalidateQueries([balanceQueryKeys.getByAssetId])
     },
     onError: (error?: any) => {
       void snackbarService.showSnackbar(error?.message, 'error')

@@ -5,6 +5,7 @@ import { AuthorizableStatus } from 'types/util'
 export interface QueryFilters {
   search: string | undefined
   searchToken: string | undefined
+  searchTokenName: string | undefined
   primaryOfferingSearch: string | undefined
   otcMarketSearch: string | undefined
   secondaryMarketSearch: string | undefined
@@ -36,6 +37,9 @@ export interface QueryFilters {
   blockchainNetwork: string | undefined
   type: string | undefined
   reportType: string | undefined
+  expandedSections: string | undefined
+  subfunds: string | undefined
+  periodical: string | undefined
 }
 
 export type QueryFilter = keyof QueryFilters

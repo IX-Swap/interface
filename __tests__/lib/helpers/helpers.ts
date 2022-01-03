@@ -46,12 +46,7 @@ async function uploadFiles(page, element, file, resp = 'yes') {
       upload.dispatchEvent(new Event('change', { bubbles: true }))
     )
     if (resp === 'yes') {
-      await page.waitForResponse(response => {
-        return (
-          response.url() === `https://api.staging.mozork.com/dataroom` &&
-          response.status() === 200
-        )
-      })
+      await waitForResponseInclude(page, '/dataroom')
     }
   }
   return { inputsFile }
@@ -87,6 +82,7 @@ async function clearAndTypeText(selector, words, page) {
     await page.keyboard.press('Control+A')
     await page.keyboard.press('Backspace')
     await field.type(words)
+    return words
   } catch (error) {
     console.error(error)
     throw new Error(`Could not type text into select: ${selector}`)
@@ -122,8 +118,16 @@ async function shouldNotExist(selector, page) {
     throw new Error(`Selector: ${selector} exist but should not `)
   }
 }
+async function isDisabledList(list: Array<[]>, page) {
+  let result = new Array()
+  for (const item of list) {
+    const isDis = await page.isDisabled(item)
+    result.push(isDis)
+  }
+  return result
+}
 
-async function getLinkToConfirmRegistration(email, page) {
+async function getMessage(email, page, messageTitle = 'Invitation') {
   const partsEmail = email.split('@')
   let results
   let link
@@ -141,7 +145,7 @@ async function getLinkToConfirmRegistration(email, page) {
     }
   }
   for (const result of results) {
-    if (result.subject.includes('Invitation')) {
+    if (result.subject.includes(messageTitle)) {
       messageId = result.id
       break
     } else {
@@ -152,16 +156,13 @@ async function getLinkToConfirmRegistration(email, page) {
     link = await fetch(
       `https://www.1secmail.com/api/v1/?action=readMessage&login=${partsEmail[0]}&domain=${partsEmail[1]}&id=${messageId}`
     ).then(res => res.json())
-    const re = /https:[\'"]?([^\'" >]+\d+\w+)/g
-    const nameList = link.htmlBody.match(re)
-    return nameList[0]
+    return link
   } catch (error) {
-    // console.error(results)
-    // console.error(link)
-    throw new Error(`Get link to confirm invite error`)
+    console.error(results)
+    console.error(link)
+    throw new Error(`"Get message" by API doesn't work `)
   }
 }
-
 async function waitForResponseInclude(page, responseText) {
   try {
     await page.waitForResponse(
@@ -171,6 +172,18 @@ async function waitForResponseInclude(page, responseText) {
     )
   } catch {
     throw new Error(`Response url does NOT include: ${responseText} `)
+  }
+}
+async function waitForRequestInclude(page, requestText, method = 'GET') {
+  try {
+    await page.waitForRequest(
+      request =>
+        request.url().includes(requestText) && request.method() === method
+    )
+  } catch {
+    throw new Error(
+      `Request url does NOT include: ${requestText} or the method is not ${method} `
+    )
   }
 }
 
@@ -200,13 +213,15 @@ export {
   click,
   uploadFiles,
   typeText,
-  getLinkToConfirmRegistration,
+  getMessage,
   shouldExist,
   emailCreate,
   navigate,
   clearAndTypeText,
   waitForResponseInclude,
+  waitForRequestInclude,
   waitForText,
   randomString,
-  waitNewPage
+  waitNewPage,
+  isDisabledList
 }

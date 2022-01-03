@@ -12,7 +12,9 @@ export const useStyles = makeStyles(theme => ({
     justifyContent: 'flex-start'
   },
   icon: {
-    marginRight: theme.spacing(2.5)
+    marginRight: theme.spacing(2.5),
+    width: 'auto',
+    height: 40
   },
   label: {
     textTransform: 'capitalize'

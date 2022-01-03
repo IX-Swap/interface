@@ -24,7 +24,8 @@ export const InterimMT942Table = () => {
       hasActions
       actions={Actions}
       filter={filter}
-      themeVariant={'no-header'}
+      noHeader
+      themeVariant={'default'}
       paperProps={{ variant: 'elevation', elevation: 0 }}
     />
   )

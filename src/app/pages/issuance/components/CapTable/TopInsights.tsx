@@ -1,5 +1,5 @@
 import { Grid } from '@material-ui/core'
-import { InsightCard } from 'app/pages/issuance/components/CapTable/InsightCard'
+import { InsightCard } from 'app/pages/issuance/components/InsightCard'
 import { TopInvestors } from 'app/pages/issuance/components/IssuanceLanding/TopInvestors'
 import React from 'react'
 

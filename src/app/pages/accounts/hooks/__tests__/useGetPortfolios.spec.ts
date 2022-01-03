@@ -37,7 +37,7 @@ describe('useGetPortfolios', () => {
 
       expect(result.current.data).toEqual(sampleResponse.data)
       expect(apiServiceMock.get).toHaveBeenCalledWith(
-        accountsURL.getPortfolios(user._id)
+        accountsURL.dashboard.getPortfolios(user._id)
       )
     })
   })

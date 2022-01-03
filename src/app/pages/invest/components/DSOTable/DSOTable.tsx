@@ -60,7 +60,8 @@ export const DSOTable = () => {
                   ? isPriceAscending === 'yes'
                   : undefined
             }}
-            themeVariant={isMiniLaptop ? 'no-header' : 'primary'}
+            noHeader={isMiniLaptop}
+            themeVariant={'primary'}
           >
             {isMiniLaptop
               ? (props: TableViewRendererProps<DigitalSecurityOffering>) => (

@@ -14,7 +14,7 @@ export const BlockchainWalletView = ({ wallet }: BlockchainWalletViewProps) => {
 
   return (
     <Box display={'flex'} alignItems={'center'}>
-      <img src={blockchainWalletIcons[wallet]} alt={label} />
+      <img src={blockchainWalletIcons[wallet]} alt={label} width={40} />
       <Box component={'span'} marginLeft={2}>
         {label}
       </Box>

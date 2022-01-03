@@ -6,7 +6,8 @@ import {
   DSOInsight,
   DSOActivity,
   DsoFAQItem,
-  DsoVideo
+  DsoVideo,
+  DepositAddress
 } from 'types/dso'
 import { corporate, asset } from './authorizer'
 import { emptyFile } from '__fixtures__/file'
@@ -277,4 +278,14 @@ export const activity: DSOActivity = {
     individual,
     corporates: [corporate]
   }
+}
+
+export const fakeDepositAddress: DepositAddress = {
+  account_id: 68,
+  wallet_name: 'ZeroKey',
+  asset_ticker: 'IX-RHTC ERC-20',
+  deposit_address: '0xF5fC80766b57E0e1ff5D6b1861559a775F28cFB3',
+  hd_path: "m/44'/60'/0'/0/0",
+  depositQRCodeUrl:
+    'https://chart.googleapis.com/chart?chs=166x166&chld=L|0&cht=qr&chl=0xF5fC80766b57E0e1ff5D6b1861559a775F28cFB3'
 }

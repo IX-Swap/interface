@@ -64,7 +64,9 @@ export const useSnackbar = (): SnackbarService => {
           }`
         ],
         actionLabel: 'Okay',
-        action: waitingForIssuerApproval ? '/app/home' : '/app/invest'
+        action: waitingForIssuerApproval
+          ? '/app/educationCentre'
+          : '/app/invest'
       }
 
       if (waitingForInvestorApproval || waitingForIssuerApproval) {

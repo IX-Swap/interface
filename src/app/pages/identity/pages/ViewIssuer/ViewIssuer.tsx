@@ -3,6 +3,8 @@ import { CorporateIssuerView } from 'app/pages/identity/components/CorporateIssu
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { Grid } from '@material-ui/core'
 import { CorporateIdentityContainer } from 'app/pages/identity/containers/CorporateIdentityContainer'
+import { EditButton } from 'app/pages/identity/components/EditButton/EditButton'
+import { IdentityRoute } from 'app/pages/identity/router/config'
 
 export const ViewIssuer = () => {
   return (
@@ -11,6 +13,12 @@ export const ViewIssuer = () => {
         <Grid container>
           <Grid item xs={12}>
             <PageHeader title={data.companyLegalName} />
+          </Grid>
+          <Grid container item xs={12} justify='flex-end' alignItems='center'>
+            <EditButton
+              link={IdentityRoute.editIssuer}
+              params={{ identityId: data._id, userId: data.user._id }}
+            />
           </Grid>
           <Grid item xs={12}>
             <CorporateIssuerView data={data} />

@@ -85,3 +85,20 @@ export const bankFormValidationSchema = yup.object().shape<BankFormValues>({
   swiftCode: yup.string().required('Required'),
   address: addressValidationSchema.required('Required')
 })
+
+export const withdrawValidationSchema = yup.object().shape({
+  token: yup.string().required('Required'),
+  addressType: yup.string(),
+  existingAddress: yup.string().when('addressType', {
+    is: (val: string) => val === 'existing',
+    then: yup.string().required('Required'),
+    otherwise: yup.string()
+  }),
+  newAddress: yup.string().when('addressType', {
+    is: (val: string) => val === 'new',
+    then: yup.string().required('Required'),
+    otherwise: yup.string()
+  }),
+  amount: yup.number().required('Required'),
+  memo: yup.string()
+})
