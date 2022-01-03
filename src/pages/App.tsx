@@ -41,6 +41,7 @@ const PoolV2 = lazy(() => import('./Pool/v2'))
 const NftImport = lazy(() => import('./NftImport'))
 const NFTCollections = lazy(() => import('./NFTCollections'))
 const UpdateNFT = lazy(() => import('./UpdateNFT'))
+const NftAssetPage = lazy(() => import('./NFTAsset'))
 
 const AppWrapper = styled.div`
   display: flex;
@@ -141,6 +142,7 @@ export default function App() {
                 <Route exact strict path={routes.securityTokens()} component={Custodian} />
 
                 <Route exact strict path="/nft/collections/import" component={NftImport} />
+                <Route exact strict path="/nft/collections/:collectionAddress/:itemId" component={NftAssetPage} />
 
                 {chainId && TGE_CHAINS_WITH_STAKING.includes(chainId) && (
                   <Route exact strict path={routes.staking} component={StakingTab} />
