@@ -20,6 +20,15 @@ export interface NFTImage {
   attributes: (NFTAttribute | NFTAttributeDisplay)[]
 }
 
+export interface NFTImageShow {
+  name: string
+  description: string
+  image: string
+  date?: number
+  attributes: (NFTAttribute | NFTAttributeDisplay)[]
+  isNSFW: string
+}
+
 export interface NFTCollection {
   id?: number
   name: string

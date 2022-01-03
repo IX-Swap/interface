@@ -1,4 +1,4 @@
-import React, { useState, useCallback, ReactElement } from 'react'
+import React, { useState, useCallback, ReactElement, useEffect } from 'react'
 import styled from 'styled-components'
 
 import Column from 'components/Column'
@@ -10,6 +10,9 @@ import { ReactComponent as PropertiesIconSvg } from '../../assets/images/nft-pro
 import { ReactComponent as LevelsIconSvg } from '../../assets/images/nft-levels.svg'
 import { ReactComponent as NsfwIconSvg } from '../../assets/images/nft-nsfw.svg'
 import { ReactComponent as StatIconSvg } from '../../assets/images/nft-stat.svg'
+import { RouteComponentProps } from 'react-router-dom'
+import { useGetNFTDetails } from 'state/nft/hooks'
+import { NFTImage, NFTImageShow } from 'state/nft/types'
 
 const item = {
   name: 'Mushroom Rock',
@@ -327,31 +330,50 @@ const NftAttributesContainer = styled.div`
   margin-top: 2rem;
 `
 
-const NftAssetPage = () => {
-  const date = React.useMemo(() => new Date(item.date), [])
-  const isNSFW = item.attributes.find((attr) => attr.trait_type === 'isNSFW')?.value ?? false
+const NftAssetPage = ({
+  match: {
+    params: { collectionAddress, itemId },
+  },
+  history,
+}: RouteComponentProps<{ collectionAddress?: string; itemId?: string }>) => {
+  const getNFTDetails = useGetNFTDetails(collectionAddress, Number(itemId))
+  const [item, setItem] = useState<NFTImageShow | null>(null)
+  // const date = React.useMemo(() => new Date(item.date), [])
+  const isNSFW = item?.isNSFW === 'true'
 
-  const stats = item.attributes.filter((attr) => attr.display_type === 'stat') as NftStat[]
-  const levels = item.attributes.filter((attr) => attr.display_type === 'level') as NftLevel[]
-  const rectangles = item.attributes.filter((attr) => attr.display_type === 'rectangle') as NftProperty[]
+  // const stats = item.attributes.filter((attr) => attr.display_type === 'stat') as NftStat[]
+  // const levels = item.attributes.filter((attr) => attr.display_type === 'level') as NftLevel[]
+  // const rectangles = item.attributes.filter((attr) => attr.display_type === 'rectangle') as NftProperty[]
 
+  useEffect(() => {
+    async function getDetails() {
+      if (collectionAddress && itemId !== undefined) {
+        const data = await getNFTDetails()
+        setItem(data)
+      }
+    }
+    getDetails()
+  }, [getNFTDetails, collectionAddress, itemId])
+  if (!item) {
+    return null
+  }
   return (
     <NftAssetPageWrapper>
       <NftImage src={item.image} />
 
       <NftInfoContainer>
         <div>
-          <Row justify="space-between">
+          {/* <Row justify="space-between">
             <TYPE.main>Created by {item.creator}</TYPE.main>
             <TYPE.body3>{date.toDateString()}</TYPE.body3>
-          </Row>
+          </Row> */}
 
           <TYPE.titleBig>{item.name}</TYPE.titleBig>
           <TYPE.body>{item.description}</TYPE.body>
         </div>
 
         <NftAttributesContainer>
-          <NftAttributeSection
+          {/* <NftAttributeSection
             title="Properties"
             description="Textual traits that show up as rectangles"
             icon={<PropertiesIconSvg stroke="2px" scale={0.7} fill="#ead1f9" />}
@@ -359,11 +381,11 @@ const NftAssetPage = () => {
             {rectangles.map((rectangle, idx) => (
               <NftProperty key={`prop-${idx}`} property={rectangle} />
             ))}
-          </NftAttributeSection>
+          </NftAttributeSection> */}
 
           <Divider />
 
-          <NftAttributeSection
+          {/* <NftAttributeSection
             title="Levels"
             description="Numerical traits that just show as numbers"
             icon={<LevelsIconSvg stroke="2px" scale={0.7} fill="#ead1f9" />}
@@ -371,11 +393,11 @@ const NftAssetPage = () => {
             {levels.map((level, idx) => (
               <NftLevel key={`level-${idx}`} level={level} />
             ))}
-          </NftAttributeSection>
+          </NftAttributeSection> */}
 
           <Divider />
 
-          <NftAttributeSection
+          {/* <NftAttributeSection
             title="Stats"
             description="Numerical traits that show as a progress bar"
             icon={<StatIconSvg stroke="2px" scale={0.7} fill="#ead1f9" />}
@@ -383,7 +405,7 @@ const NftAssetPage = () => {
             {stats.map((stat, idx) => (
               <NftStat key={`stat-${idx}`} stat={stat} />
             ))}
-          </NftAttributeSection>
+          </NftAttributeSection> */}
 
           <Divider />
 

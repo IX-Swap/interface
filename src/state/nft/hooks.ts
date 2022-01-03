@@ -40,6 +40,7 @@ import { wait } from 'utils/retry'
 import { saveImages } from './actions'
 import { CollectionCreateProps } from './types'
 import { groupKeyValues } from './utils'
+import * as H from 'history'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const Web3 = require('web3') // for some reason import Web3 from web3 didn't see eth module
@@ -160,18 +161,22 @@ export const mintNFT = async ({
   return Boolean(status)
 }
 
-// export const useGetSupply = () => {
-//   const nft = useNftContract()
-//   return useCallback(async () => {
-//     try {
-//       const res = await nft?.totalSupply()
-//       const uri = await nft?.tokenURI(2)
-//       console.log({ res, uri })
-//     } catch (e) {
-//       console.error('cant get uri or supply')
-//     }
-//   }, [nft])
-// }
+export const useGetNFTDetails = (contractAddress?: string, itemId?: number) => {
+  const nft = useNftContract(contractAddress)
+  return useCallback(async () => {
+    try {
+      if (!nft || itemId === undefined) {
+        return null
+      }
+      const URI = await nft?.tokenURI(itemId)
+      const json = await axios.get(URI)
+      const data = json.data
+      return data
+    } catch (e) {
+      console.error('cant get uri')
+    }
+  }, [nft, itemId])
+}
 
 export function useAssetFormState(): AppState['assetForm'] {
   return useSelector<AppState, AppState['assetForm']>((state) => state.assetForm)
@@ -326,6 +331,7 @@ export const useFetchMyCollections = () => {
       const response = await getCollections(account)
       console.log({ response })
       const collections = response.data
+      console.log({ collections })
       dispatch(setCollections({ collections }))
       dispatch(setCollectionsLoading({ loading: true }))
     } catch (e) {
@@ -360,7 +366,7 @@ const getCreateNftDto = ({
   return dto
 }
 
-export const useCreateNftAssetForm = () => {
+export const useCreateNftAssetForm = (history: H.History) => {
   const deployCollection = useDeployCollection()
   const createNFTAsset = useCreateNft()
   const form = useAssetFormState()
@@ -378,33 +384,39 @@ export const useCreateNftAssetForm = () => {
       // end creating asset
 
       // we create a contract instance either with the selected collection, or we create a new one on the spot
-      // let contractInstance
+      let contractInstance
+      let contractAddress
       //this is contract instance with test contract created by me
-      const contractInstance = getNftContract({
-        addressOrAddressMap: '0xadc2e42d74f57028d7be2da41ba9643bdb70d99b',
-        library,
-        account,
-        chainId,
-      })
-      // if (collection) {
-      //   contractInstance = getNftContract({ addressOrAddressMap: collection?.address, library, account, chainId })
-      // } else {
-      //   if (newCollectionName) {
-      //     const contractAddress = await deployCollection({ name: newCollectionName })
-      //     if (contractAddress) {
-      //       contractInstance = getNftContract({ addressOrAddressMap: contractAddress, library, account, chainId })
-      //     }
-      //   }
-      // }
+      // const contractInstance = getNftContract({
+      //   addressOrAddressMap: '0xadc2e42d74f57028d7be2da41ba9643bdb70d99b',
+      //   library,
+      //   account,
+      //   chainId,
+      // })
+      if (collection) {
+        contractInstance = getNftContract({ addressOrAddressMap: collection?.address, library, account, chainId })
+        contractAddress = collection.address
+      } else {
+        if (newCollectionName) {
+          const newContractAddress = await deployCollection({ name: newCollectionName })
+          contractAddress = newContractAddress
+          if (contractAddress) {
+            contractInstance = getNftContract({ addressOrAddressMap: contractAddress, library, account, chainId })
+            await createNftCollection({ name: newCollectionName, address: contractAddress })
+          }
+        }
+      }
       // end getting contract instance
       if (contractInstance) {
         await mintNFT({ nft: contractInstance, account, assetURI })
         const supply = await contractInstance?.getTokenId()
         console.log({ supply })
+        // supply shows how many. index starts at 0
+        history.push(`/nft/collections/${contractAddress}/${supply - 1}`)
         //redirect to individual asset page
       }
     } catch (e) {
       console.log(e)
     }
-  }, [account, chainId, collection, createNFTAsset, deployCollection, form, library, newCollectionName])
+  }, [account, chainId, collection, createNFTAsset, deployCollection, form, library, , history, newCollectionName])
 }

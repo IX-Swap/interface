@@ -6,6 +6,7 @@ import Upload from 'components/Upload'
 import { AcceptFiles, FileTypes } from 'components/Upload/types'
 import { getfileType } from 'components/Upload/utils'
 import React, { useCallback, useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import { Box, Flex } from 'rebass'
 import { ApplicationModal } from 'state/application/actions'
 import { useToggleModal } from 'state/application/hooks'
@@ -23,6 +24,7 @@ import { LevelsPopup } from './LevelsPopup'
 import { NSFWRadio } from './NSFWRadio'
 import { PropertiesPopup } from './PropertiesPopup'
 import { Traits } from './Traits'
+import * as H from 'history'
 
 export const CreateForm = () => {
   const {
@@ -56,7 +58,8 @@ export const CreateForm = () => {
     onSetNewCollectionName,
   } = useCreateAssetActionHandlers()
   const [showCreateNewCollection, setShowCreateNewCollection] = useState(false)
-  const createAsset = useCreateNftAssetForm()
+  const history = useHistory()
+  const createAsset = useCreateNftAssetForm(history)
   const toggle = useToggleModal(ApplicationModal.PROPERTIES)
   const toggleNumeric = useToggleModal(ApplicationModal.LEVELS)
   const fetchMyCollection = useFetchMyCollections()
