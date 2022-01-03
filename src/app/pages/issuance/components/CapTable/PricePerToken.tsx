@@ -8,7 +8,7 @@ import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
 import { abbreviateNumber } from 'helpers/numbers'
 import { VSpacer } from 'components/VSpacer'
 import { LabelIcon } from 'app/pages/issuance/components/CapTable/LabelIcon'
-import MonetizationOnIcon from 'assets/icons/monetization_on_black_24dp.svg'
+import { ReactComponent as MonetizationOnIcon } from 'assets/icons/monetization_on_black_24dp.svg'
 
 export const PricePerToken = () => {
   const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()

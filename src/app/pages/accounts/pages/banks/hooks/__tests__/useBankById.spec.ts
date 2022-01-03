@@ -70,7 +70,7 @@ describe('useBankById', () => {
     await act(async () => {
       const getFn = jest.fn().mockResolvedValueOnce({ data: bank })
       const apiObj = { get: getFn }
-      const args: UseBankByIdArgs = { bankId: undefined as unknown as string }
+      const args: UseBankByIdArgs = { bankId: undefined }
 
       const { result } = renderHookWithServiceProvider(
         () => useBankById(args),

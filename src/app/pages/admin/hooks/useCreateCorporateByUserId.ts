@@ -24,7 +24,7 @@ export const useCreateCorporateByUserId = (
 
   return useMutation(createCorporate, {
     onSuccess: async data => {
-      snackbarService.showSnackbar(data.message, 'success')
+      snackbarService.showSnackbar(data?.message, 'success')
       await queryCache.invalidateQueries(
         identityQueryKeys.getAllCorporateByUserId(userId)
       )

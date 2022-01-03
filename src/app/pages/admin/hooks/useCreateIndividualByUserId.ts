@@ -14,7 +14,7 @@ export const useCreateIndividualByUserId = (userId?: string) => {
 
   return useMutation(createOrUpdateIndividual, {
     onSuccess: async data => {
-      snackbarService.showSnackbar(data.message, 'success')
+      snackbarService.showSnackbar(data?.message, 'success')
     },
     onError: (error: any) => {
       snackbarService.showSnackbar(error.message, 'error')

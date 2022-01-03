@@ -6,7 +6,7 @@ import { InsightValue } from 'app/pages/issuance/components/IssuanceLanding/Insi
 import { formatMoney } from 'helpers/numbers'
 import { VSpacer } from 'components/VSpacer'
 import { LabelIcon } from 'app/pages/issuance/components/CapTable/LabelIcon'
-import PaymentsIcon from 'assets/icons/payments_black_24dp.svg'
+import { ReactComponent as PaymentsIcon } from 'assets/icons/payments_black_24dp.svg'
 import { useBalancesByAssetId } from 'hooks/balance/useBalancesByAssetId'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
 import { useParams } from 'react-router-dom'

@@ -31,7 +31,7 @@ export const useUpdateCorporateByUserId = (
 
   return useMutation(updateCorporate, {
     onSuccess: async data => {
-      void snackbarService.showSnackbar(data.message, 'success')
+      void snackbarService.showSnackbar(data?.message, 'success')
       await queryCache.invalidateQueries(
         identityQueryKeys.getAllCorporateByUserId(userId)
       )

@@ -21,7 +21,7 @@ export const useSubmitCorporateById = (
 
   return useMutation(submitCorporate, {
     onSuccess: async data => {
-      snackbarService.showSnackbar(data.message, 'success')
+      snackbarService.showSnackbar(data?.message, 'success')
       await queryCache.invalidateQueries(
         identityQueryKeys.getAllCorporateByUserId(userId)
       )

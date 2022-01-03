@@ -6,7 +6,7 @@ import { InsightValue } from 'app/pages/issuance/components/IssuanceLanding/Insi
 import { DonutChart } from 'app/pages/issuance/components/IssuanceLanding/DonutChart'
 import { VSpacer } from 'components/VSpacer'
 import { FundraiseTooltip } from 'app/pages/issuance/components/IssuanceLanding/FundraiseTooltip'
-import AmountsRaisedIcon from 'assets/icons/payments_black_24dp.svg'
+import { ReactComponent as AmountsRaisedIcon } from 'assets/icons/payments_black_24dp.svg'
 import { LabelIcon } from 'app/pages/issuance/components/CapTable/LabelIcon'
 
 export interface AmountRaisedCardProps {
