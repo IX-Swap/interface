@@ -1,3 +1,4 @@
+import React from 'react'
 import userEvent from '@testing-library/user-event'
 import MockAdapter from 'axios-mock-adapter'
 import { accountsURL, blockchainNetworksURL } from 'config/apiURL'

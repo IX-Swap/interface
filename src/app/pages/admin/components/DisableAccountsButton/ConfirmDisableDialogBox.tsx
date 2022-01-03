@@ -34,7 +34,7 @@ export const ConfirmDisableDialogBox = ({
         </DialogContent>
         <VSpacer size='small' />
         <DialogActions>
-          <Grid container spacing={2} justify='center'>
+          <Grid container spacing={2} justifyContent='center'>
             <Grid item>
               <Button variant='outlined' color='primary' onClick={close}>
                 Cancel

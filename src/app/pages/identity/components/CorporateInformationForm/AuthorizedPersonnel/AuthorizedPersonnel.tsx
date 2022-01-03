@@ -50,7 +50,7 @@ export const AuthorizedPersonnel = (props: AuthorizedPersonnelProps) => {
       <Grid item>
         <AuthorizationDocuments {...props} />
       </Grid>
-      <Grid item container justify='flex-end' spacing={2}>
+      <Grid item container justifyContent='flex-end' spacing={2}>
         {total > 1 ? (
           <Grid item>
             <Button variant='outlined' color='primary' onClick={handleRemove}>

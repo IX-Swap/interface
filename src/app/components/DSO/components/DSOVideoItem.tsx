@@ -64,7 +64,7 @@ export const DSOVideoItem = (props: DSOVideoItemProps) => {
         <Grid
           item
           container
-          justify='flex-end'
+          justifyContent='flex-end'
           alignItems='flex-end'
           direction='column'
         >

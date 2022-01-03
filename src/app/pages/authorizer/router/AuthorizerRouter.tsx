@@ -102,7 +102,7 @@ export const AuthorizerRouter = () => {
         <TokenDeploymentRouter />
       </AppRoute>
 
-      <AppRoute exact path={AuthorizerRoute.landing}>
+      <AppRoute path={AuthorizerRoute.landing}>
         <AuthorizerLandingPage
           links={authorizerLandingLinks}
           title='Authorization'

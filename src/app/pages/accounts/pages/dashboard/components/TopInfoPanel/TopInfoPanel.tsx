@@ -21,7 +21,7 @@ export const TopInfoPanel = ({ accounts, balances }: TopInfoPanelProps) => {
         <Grid
           container
           wrap={'nowrap'}
-          justify={'space-around'}
+          justifyContent={'space-around'}
           alignContent={'flex-start'}
           className={classes.wrapper}
         >

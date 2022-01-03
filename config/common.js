@@ -1,9 +1,14 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-require('webpack')
+const path = require('path')
+const webpack = require('webpack')
+const dotenv = require('dotenv')
+
+dotenv.config()
 
 module.exports = {
   resolve: {
-    extensions: ['*', '.js', '.jsx', '.ts', '.tsx']
+    extensions: ['*', '.js', '.jsx', '.ts', '.tsx'],
+    modules: ['src', 'node_modules']
   },
   entry: ['./src/index.tsx'],
   performance: {
@@ -69,6 +74,9 @@ module.exports = {
       template: './public/index.html',
       title: 'InvestaX',
       favicon: './public/favicon.ico'
+    }),
+    new webpack.DefinePlugin({
+      'process.env': JSON.stringify(process.env)
     })
   ]
 }

@@ -1,3 +1,4 @@
+import React from 'react'
 import { RootContainer } from 'ui/RootContainer'
 import { FundsManagementRouter } from './router/FundsManagementRouter'
 

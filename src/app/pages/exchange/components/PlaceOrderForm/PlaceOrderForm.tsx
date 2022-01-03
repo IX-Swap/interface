@@ -44,6 +44,8 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
   const totalCurrencyLabel = currencyLabel
   const { pairId } = useParams<{ pairId: string }>()
   const handleSubmit = async (values: PlaceOrderFormValues) => {
+    if (!pairId) return
+
     await onSubmit(
       transformPlaceOrderFormValuesToArgs(
         values,
@@ -83,7 +85,7 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
           item
           container
           alignItems={'flex-end'}
-          justify={'space-between'}
+          justifyContent={'space-between'}
           className={classes.balanceWrapper}
         >
           <Grid item>

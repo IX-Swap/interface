@@ -19,7 +19,13 @@ export const ViewInvestor = () => {
           <Grid item xs={12}>
             <RejectionMessage data={data} />
           </Grid>
-          <Grid xs={12} container item justify='flex-end' alignItems='center'>
+          <Grid
+            xs={12}
+            container
+            item
+            justifyContent='flex-end'
+            alignItems='center'
+          >
             <EditButton
               link={IdentityRoute.editCorporate}
               params={{ identityId: data._id, userId: data.user._id }}

@@ -6,7 +6,7 @@ import { identityURL } from 'config/apiURL'
 import { IndividualIdentity } from 'app/pages/identity/types/forms'
 
 export const useIndividualIdentityById = (
-  userId: string
+  userId?: string
 ): UseQueryData<IndividualIdentity> => {
   const getIndividual = async () => {
     const uri = identityURL.individuals.get(userId)
@@ -15,7 +15,8 @@ export const useIndividualIdentityById = (
 
   const { data, ...rest } = useQuery(
     [identityQueryKeys.getIndividual, { userId }],
-    getIndividual
+    getIndividual,
+    { enabled: !!userId }
   )
 
   return {

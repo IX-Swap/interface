@@ -46,7 +46,9 @@ describe('AuthorizerTable', () => {
         status: '',
         search: undefined,
         fundStatus: '',
-        commitmentDSO: undefined
+        searchTokenName: '',
+        dso: '',
+        deploymentStatus: undefined
       }
     })
 
@@ -57,8 +59,9 @@ describe('AuthorizerTable', () => {
     )
 
     expect(withExtraActions).toHaveBeenCalled()
+
     expect(TableView).toHaveBeenCalledWith(
-      {
+      expect.objectContaining({
         name: props.name,
         uri: props.uri,
         columns: [...props.columns],
@@ -70,12 +73,13 @@ describe('AuthorizerTable', () => {
           isAssigned: undefined,
           from: undefined,
           to: undefined,
-          search: undefined,
+          searchTokenName: '',
           fundStatus: '',
-          commitmentDSO: undefined
+          dso: '',
+          deploymentStatus: undefined
         },
         themeVariant: 'primary'
-      },
+      }),
       {}
     )
   })

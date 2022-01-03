@@ -81,7 +81,7 @@ export const AdminRouter = () => {
         </RootContainer>
       </AppRoute>
 
-      <AppRoute exact path={AdminRoute.banner} breadcrumb='Banner'>
+      <AppRoute path={AdminRoute.banner} breadcrumb='Banner'>
         <RootContainer className={privateClassNames()}>
           <Banner />
         </RootContainer>
@@ -124,7 +124,7 @@ export const AdminRouter = () => {
         </RootContainer>
       </AppRoute>
 
-      <AppRoute exact path={AdminRoute.landing}>
+      <AppRoute path={AdminRoute.landing}>
         <RootContainer className={privateClassNames()}>
           <LandingPage links={adminLandingLinks} title='Admin' />
         </RootContainer>

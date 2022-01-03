@@ -28,26 +28,26 @@ export const authorizerURL = {
 export const identityURL = {
   corporates: {
     getAllBySuperUser: '/identity/corporates/list',
-    getAllByUserId: (userId: string) => `/identity/corporates/${userId}/list`,
-    create: (userId: string) => `/identity/corporates/${userId}`,
-    update: (userId: string, corporateId: string) =>
+    getAllByUserId: (userId?: string) => `/identity/corporates/${userId}/list`,
+    create: (userId?: string) => `/identity/corporates/${userId}`,
+    update: (userId?: string, corporateId?: string) =>
       `/identity/corporates/${userId}/${corporateId}`,
-    submit: (id: string) => `/identity/corporates/${id}/submit`,
-    get: (userId: string, identityId: string) =>
+    submit: (id?: string) => `/identity/corporates/${id}/submit`,
+    get: (userId?: string, identityId?: string) =>
       `/identity/corporates/${userId}/${identityId}`
   },
   individuals: {
-    create: (userId: string) => `/identity/individuals/${userId}`,
-    update: (userId: string) => `/identity/individuals/${userId}`,
-    get: (userId: string) => `/identity/individuals/${userId}`,
-    submit: (id: string) => `/identity/individuals/${id}/submit`
+    create: (userId?: string) => `/identity/individuals/${userId}`,
+    update: (userId?: string) => `/identity/individuals/${userId}`,
+    get: (userId?: string) => `/identity/individuals/${userId}`,
+    submit: (id?: string) => `/identity/individuals/${id}/submit`
   },
   detailsOfIssuance: {
-    create: (userId: string) => `/identity/issuance-detail/${userId}`,
-    update: (userId: string, issuanceId: string) =>
+    create: (userId?: string) => `/identity/issuance-detail/${userId}`,
+    update: (userId?: string, issuanceId?: string) =>
       `/identity/issuance-detail/${userId}/${issuanceId}`,
-    get: (userId: string) => `/identity/issuance-detail/${userId}`,
-    submit: (issuanceId: string) =>
+    get: (userId?: string) => `/identity/issuance-detail/${userId}`,
+    submit: (issuanceId?: string) =>
       `/identity/issuance-detail/${issuanceId}/submit`
   },
   stats: {
@@ -58,121 +58,122 @@ export const identityURL = {
 
 export const accountsURL = {
   banks: {
-    getAll: (userId: string) => `/accounts/banks/list/${userId}`,
-    getById: (userId: string, bankId: string) =>
+    getAll: (userId?: string) => `/accounts/banks/list/${userId}`,
+    getById: (userId?: string, bankId?: string) =>
       `accounts/banks/${userId}/${bankId}`,
-    create: (userId: string) => `/accounts/banks/${userId}`,
-    update: (userId: string, bankId: string) =>
+    create: (userId?: string) => `/accounts/banks/${userId}`,
+    update: (userId?: string, bankId?: string) =>
       `/accounts/banks/${userId}/${bankId}`,
-    remove: (userId: string, bankId: string) =>
+    remove: (userId?: string, bankId?: string) =>
       `/accounts/banks/${userId}/${bankId}/remove`
   },
   cashDeposits: {
-    getAll: (userId: string) => `/accounts/cash/deposits/${userId}`
+    getAll: (userId?: string) => `/accounts/cash/deposits/${userId}`
   },
   cashWithdrawals: {
-    create: (userId: string) => `/accounts/cash/withdrawals/${userId}`
+    create: (userId?: string) => `/accounts/cash/withdrawals/${userId}`
   },
   digitalSecurities: {
     getDepositAddress: '/custody/deposits/getDepositAddress'
   },
   dsWithdrawals: {
-    create: (userId: string) => `/accounts/security/withdrawals/${userId}`,
+    create: (userId?: string) => `/accounts/security/withdrawals/${userId}`,
     createCustodyWithdrawal: '/custody/withdrawals'
   },
   withdrawalAddresses: {
-    getById: (userId: string, withdrawalAddressId: string) =>
+    getById: (userId?: string, withdrawalAddressId?: string) =>
       `accounts/withdrawal-addresses/${userId}/${withdrawalAddressId}`,
-    create: (userId: string) => `/accounts/withdrawal-addresses/${userId}`,
-    getAll: (userId: string) => `/accounts/withdrawal-addresses/list/${userId}`,
+    create: (userId?: string) => `/accounts/withdrawal-addresses/${userId}`,
+    getAll: (userId?: string) =>
+      `/accounts/withdrawal-addresses/list/${userId}`,
     getAllNetworks: '/blockchain/networks'
   },
   assets: {
-    getById: (assetId: string) => `accounts/assets/${assetId}`,
+    getById: (assetId?: string) => `accounts/assets/${assetId}`,
     getAll: '/accounts/assets/list',
-    custody: (userId: string) => `/custody/available-tokens/${userId}`,
+    custody: (userId?: string) => `/custody/available-tokens/${userId}`,
     getTokenInfo: '/custody/token-info'
   },
   balance: {
-    getAll: (userId: string) => `/accounts/balance/${userId}`,
-    getByUserId: (userId: string) => `/accounts/currency-balance/${userId}`,
-    getByAssetId: (userId: string, assetId: string) =>
+    getAll: (userId?: string) => `/accounts/balance/${userId}`,
+    getByUserId: (userId?: string) => `/accounts/currency-balance/${userId}`,
+    getByAssetId: (userId?: string, assetId?: string) =>
       `/accounts/balance/${userId}/${assetId}`,
-    getCurrencyBalanceByAssetId: (userId: string, assetId: string) =>
+    getCurrencyBalanceByAssetId: (userId?: string, assetId?: string) =>
       `/accounts/currency-balance/${userId}/${assetId}`
   },
   virtualAccounts: {
-    withdraw: (userId: string, virtualAccountId: string) =>
+    withdraw: (userId?: string, virtualAccountId?: string) =>
       `/virtual-accounts/withdrawals/${virtualAccountId}/${userId}`,
-    getAllTransactions: (userId: string, virtualAccountId: string) =>
+    getAllTransactions: (userId?: string, virtualAccountId?: string) =>
       `/virtual-accounts/transactions/list/${virtualAccountId}/${userId}`,
-    getPaymentMethods: (country: string, swiftCode: string) =>
+    getPaymentMethods: (country?: string, swiftCode?: string) =>
       `/accounts/banks/payment-method?country=${country}&swiftCode=${swiftCode}`
   },
   commitments: {
-    getAllByUserId: (userId: string) => `/issuance/commitments/list/${userId}`,
-    confirmCommitment: (commitmentId: string) =>
+    getAllByUserId: (userId?: string) => `/issuance/commitments/list/${userId}`,
+    confirmCommitment: (commitmentId?: string) =>
       `/issuance/commitments/${commitmentId}/confirmInvestment`
   },
   dashboard: {
-    getPortfolios: (userId: string) => `/accounts/portfolios/${userId}`
+    getPortfolios: (userId?: string) => `/accounts/portfolios/${userId}`
   },
   reports: {
-    getAccountInfo: (userId: string) => `/accounts/account-info/${userId}`,
-    getActivitySummary: (userId: string) =>
+    getAccountInfo: (userId?: string) => `/accounts/account-info/${userId}`,
+    getActivitySummary: (userId?: string) =>
       `/resources/financialReports/activitySummary/${userId}`,
-    getTradeConfirmation: (userId: string) =>
+    getTradeConfirmation: (userId?: string) =>
       `/resources/financialReports/tradeConfirmation/${userId}`,
-    getFeeAndCharges: (userId: string) =>
+    getFeeAndCharges: (userId?: string) =>
       `resources/financialReports/feeAndCharges/${userId}`,
-    getDividends: (userId: string) =>
+    getDividends: (userId?: string) =>
       `/resources/financialReports/dividends/${userId}`
   }
 }
 
 export const issuanceURL = {
   commitments: {
-    overrideById: (commitmentId: string) =>
+    overrideById: (commitmentId?: string) =>
       `/issuance/commitments/${commitmentId}/override`,
-    createDSOActivity: (userId: string, dsoId: string) =>
+    createDSOActivity: (userId?: string, dsoId?: string) =>
       `/issuance/dso/${userId}/${dsoId}/activities`,
-    getById: (userId: string, commitmentId: string) =>
+    getById: (userId?: string, commitmentId?: string) =>
       `/issuance/commitments/${userId}/${commitmentId}`,
-    invest: (userId: string) => `/issuance/commitments/${userId}`,
-    commit: (userId: string) => `/issuance/commitments/${userId}/commit`,
-    getAll: (userId: string) => `/issuance/commitments/${userId}`,
-    getByDSOId: (dsoId: string) => `/issuance/dso/${dsoId}/commitments/list`
+    invest: (userId?: string) => `/issuance/commitments/${userId}`,
+    commit: (userId?: string) => `/issuance/commitments/${userId}/commit`,
+    getAll: (userId?: string) => `/issuance/commitments/${userId}`,
+    getByDSOId: (dsoId?: string) => `/issuance/dso/${dsoId}/commitments/list`
   },
   dso: {
     getAllPromoted: '/issuance/dso/promoted/list',
     getAllApproved: '/issuance/dso/approved/list',
-    favorite: (dsoId: string) => `/issuance/dso/favorites/${dsoId}`,
-    topCountries: (dsoId: string) =>
+    favorite: (dsoId?: string) => `/issuance/dso/favorites/${dsoId}`,
+    topCountries: (dsoId?: string) =>
       `/issuance/dso/${dsoId}/charts/top-countries`,
-    totalInvestors: (dsoId: string) =>
+    totalInvestors: (dsoId?: string) =>
       `/issuance/dso/${dsoId}/charts/total-investors`,
-    topInvestors: (dsoId: string) =>
+    topInvestors: (dsoId?: string) =>
       `/issuance/dso/${dsoId}/charts/top-investors`,
-    commitmentsStats: (dsoId: string) =>
+    commitmentsStats: (dsoId?: string) =>
       `/issuance/dso/${dsoId}/charts/commitment-stats`,
-    investmentGrowth: (dsoId: string) =>
+    investmentGrowth: (dsoId?: string) =>
       `/issuance/dso/${dsoId}/charts/investment-growth`,
-    getById: (userId: string, dsoId: string) =>
+    getById: (userId?: string, dsoId?: string) =>
       `/issuance/dso/${userId}/${dsoId}`,
-    create: (userId: string) => `/issuance/dso/${userId}`,
-    getByUserId: (userId: string) => `/issuance/dso/list/${userId}`,
-    update: (userId: string, dsoId: string) =>
+    create: (userId?: string) => `/issuance/dso/${userId}`,
+    getByUserId: (userId?: string) => `/issuance/dso/list/${userId}`,
+    update: (userId?: string, dsoId?: string) =>
       `/issuance/dso/${userId}/${dsoId}`,
-    submit: (userId: string, dsoId: string) =>
+    submit: (userId?: string, dsoId?: string) =>
       `/issuance/dso/${userId}/${dsoId}/submit`,
-    getActivitiesList: (userId: string, dsoId: string) =>
+    getActivitiesList: (userId?: string, dsoId?: string) =>
       `/issuance/dso/${userId}/${dsoId}/activities/list`,
-    promote: (dsoId: string) => `/issuance/dso/${dsoId}/promote`,
-    disable: (dsoId: string) => `/issuance/dso/${dsoId}/disable`,
-    capitalCall: (userId: string, dsoId: string) =>
+    promote: (dsoId?: string) => `/issuance/dso/${dsoId}/promote`,
+    disable: (dsoId?: string) => `/issuance/dso/${dsoId}/disable`,
+    capitalCall: (userId?: string, dsoId?: string) =>
       `/issuance/dso/${userId}/${dsoId}/capitalCall`,
     closeDeal: () => `/issuance/closure/create`,
-    closure: (closureId: string, issuerId: string) =>
+    closure: (closureId?: string, issuerId?: string) =>
       `/issuance/closure/${closureId}/${issuerId}`,
     getDSOList: '/issuance/dso/list'
   },
@@ -185,105 +186,106 @@ export const issuanceURL = {
 
 export const authURL = {
   login: '/auth/sign-in',
-  changePassword: (userId: string) => `/auth/password/change/${userId}`,
+  changePassword: (userId?: string) => `/auth/password/change/${userId}`,
   resetPassword: '/auth/password/reset/start',
   resetPasswordConfirm: '/auth/password/reset/confirm',
-  enable2fa: (userId: string, otp: string) =>
+  enable2fa: (userId?: string, otp?: string) =>
     `/auth/2fa/setup/${userId}/confirm/${otp}`,
-  setup2fa: (userId: string) => `/auth/2fa/setup/${userId}`,
+  setup2fa: (userId?: string) => `/auth/2fa/setup/${userId}`,
   register: '/auth/registrations',
   registerConfirm: '/auth/registrations/confirm',
-  reset2fa: (userId: string) => `/auth/2fa/reset/${userId}`,
-  getLoginHistory: (userId: string) => `auth/users/${userId}/logins`,
+  reset2fa: (userId?: string) => `/auth/2fa/reset/${userId}`,
+  getLoginHistory: (userId?: string) => `auth/users/${userId}/logins`,
   revokeAccess: '/auth/users/revoke'
 }
 
 export const userURL = {
-  getUserById: (userId: string) => `/auth/user/${userId}`,
+  getUserById: (userId?: string) => `/auth/user/${userId}`,
   getAll: '/auth/users/list',
-  getUserProfile: (userId: string) => `/auth/profiles/${userId}`,
-  updateRoles: (userId: string) => `/auth/users/${userId}/roles`,
-  getCustomFields: (userId: string, service: string, feature: string) =>
+  getUserProfile: (userId?: string) => `/auth/profiles/${userId}`,
+  updateRoles: (userId?: string) => `/auth/users/${userId}/roles`,
+  getCustomFields: (userId?: string, service?: string, feature?: string) =>
     `/core/custom-fields/${service}/${feature}/${userId}`,
-  updateCustomFields: (userId: string) => `/core/custom-fields/${userId}`,
+  updateCustomFields: (userId?: string) => `/core/custom-fields/${userId}`,
   enableUser: '/auth/users/status'
 }
 
 export const notificationsURL = {
-  markReadById: (userId: string, notificationId: string) =>
+  markReadById: (userId?: string, notificationId?: string) =>
     `/core/notifications/mark-read/${userId}/${notificationId}`,
-  markAllAsRead: (userId: string) =>
+  markAllAsRead: (userId?: string) =>
     `/core/notifications/mark-read/all/${userId}`
 }
 
 export const documentsURL = {
-  getAll: (userId: string) => `/dataroom/list/${userId}`,
-  getById: (userId: string, fileId: string) =>
+  getAll: (userId?: string) => `/dataroom/list/${userId}`,
+  getById: (userId?: string, fileId?: string) =>
     `/dataroom/raw/${userId}/${fileId}`,
-  getBySuperUser: (fileId: string) => `/dataroom/raw/${fileId}`,
+  getBySuperUser: (fileId?: string) => `/dataroom/raw/${fileId}`,
   create: '/dataroom',
-  deleteById: (userId: string | undefined, fileId: string) =>
+  deleteById: (userId?: string | undefined, fileId?: string) =>
     userId === undefined
       ? `/dataroom/${fileId}`
       : `/dataroom/${userId}/${fileId}`,
-  deleteBySuperUser: (fileId: string) => `/dataroom/${fileId}`,
+  deleteBySuperUser: (fileId?: string) => `/dataroom/${fileId}`,
   uploadAccessReport: '/dataroom/reports-and-newsletters',
-  getAccessReport: (fileId: string) =>
+  getAccessReport: (fileId?: string) =>
     `/dataroom/reports-and-newsletters/${fileId}`
 }
 
 export const bannerURL = {
   uploadBanner: '/resources/banners',
   getBannersList: '/resources/banners',
-  deleteBanner: (bannerId: string) => `/resources/banners/${bannerId}`,
-  getRowBanner: (bannerId: string) => `/resources/banners/raw/${bannerId}`,
-  updateBanner: (bannerId: string) => `/resources/banners/${bannerId}`
+  deleteBanner: (bannerId?: string) => `/resources/banners/${bannerId}`,
+  getRowBanner: (bannerId?: string) => `/resources/banners/raw/${bannerId}`,
+  updateBanner: (bannerId?: string) => `/resources/banners/${bannerId}`
 }
 
 export const virtualAccounts = {
   getAll: '/virtual-accounts/list',
   add: '/virtual-accounts',
-  getByUserId: (userId: string) => `/virtual-accounts/${userId}`,
+  getByUserId: (userId?: string) => `/virtual-accounts/${userId}`,
   assign: '/virtual-accounts/assign',
-  unassign: (accountId: string) => `/virtual-accounts/unassign/${accountId}`,
+  unassign: (accountId?: string) => `/virtual-accounts/unassign/${accountId}`,
   uploadCSV: '/virtual-accounts/upload',
   disable: '/virtual-accounts/disable',
-  getById: (id: string) => `/virtual-accounts/get-account/${id}`,
-  getBalances: (accountId: string) => `/virtual-accounts/balances/${accountId}`
+  getById: (id?: string) => `/virtual-accounts/get-account/${id}`,
+  getBalances: (accountId?: string) => `/virtual-accounts/balances/${accountId}`
 }
 
 export const exchange = {
   marketList: '/exchange/markets/list',
-  userOrders: (userId: string) => `/exchange/orders/list/${userId}`,
-  userTrades: (userId: string) => `/exchange/trades/list/${userId}`,
+  userOrders: (userId?: string) => `/exchange/orders/list/${userId}`,
+  userTrades: (userId?: string) => `/exchange/trades/list/${userId}`,
   tradeHistory: {
     emit: 'fills/get',
-    onMyFills: (tokenId: string) => `myfills/${tokenId}`,
-    on: (tokenId: string) => `fills/${tokenId}`
+    onMyFills: (tokenId?: string) => `myfills/${tokenId}`,
+    on: (tokenId?: string) => `fills/${tokenId}`
   },
   orderBook: {
     emit: 'orderbook/get',
-    on: (tokenId: string) => `orderbook/${tokenId}`
+    on: (tokenId?: string) => `orderbook/${tokenId}`
   },
   lastPrice: {
     emit: 'price/get',
-    on: (tokenId: string) => `price/${tokenId}`
+    on: (tokenId?: string) => `price/${tokenId}`
   },
   tokenBalance: {
     emit: 'tokenBalance/get',
-    on: (userId: string) => `tokenBalance/${userId}`
+    on: (userId?: string) => `tokenBalance/${userId}`
   },
   summary: {
     emit: 'metrics24h/get',
-    on: (tokenId: string) => `metrics24h/${tokenId}`
+    on: (tokenId?: string) => `metrics24h/${tokenId}`
   },
-  getMetrics: (tokenId: string) => `/exchange/pair/financialMetrics/${tokenId}`,
-  currentHoldings: (userId: string) => `/accounts/holdings/${userId}`,
-  cancelOrder: (userId: string, orderId: string) =>
+  getMetrics: (tokenId?: string) =>
+    `/exchange/pair/financialMetrics/${tokenId}`,
+  currentHoldings: (userId?: string) => `/accounts/holdings/${userId}`,
+  cancelOrder: (userId?: string, orderId?: string) =>
     `/exchange/orders/cancel/${userId}/${orderId}`,
-  getListing: (userId: string, listingId: string) =>
+  getListing: (userId?: string, listingId?: string) =>
     `/exchange/listing/${userId}/${listingId}`,
-  getMarket: (pairId: string) => `/exchange/markets/pair/${pairId}`
+  getMarket: (pairId?: string) => `/exchange/markets/pair/${pairId}`
 }
 
 export const OTCUrl = {
@@ -295,12 +297,12 @@ export const placeOrderURL = {
 }
 
 export const exchangeMarket = {
-  getOrdersList: (userId: string) => `exchange/orders/list/${userId}`
+  getOrdersList: (userId?: string) => `exchange/orders/list/${userId}`
 }
 
 export const listings = {
-  getListByUser: (userId: string) => `exchange/listing/list/${userId}`,
-  submitListing: (userId: string, listingId: string) =>
+  getListByUser: (userId?: string) => `exchange/listing/list/${userId}`,
+  submitListing: (userId?: string, listingId?: string) =>
     `/exchange/listing/${userId}/${listingId}/submit`
 }
 
@@ -313,15 +315,15 @@ export const charts = {
 }
 
 export const custodyAccount = {
-  get: (userId: string) => `/custody/account/${userId}`,
+  get: (userId?: string) => `/custody/account/${userId}`,
   create: '/custody/account/assign'
 }
 
 export const listingsURL = {
-  getById: (userId: string, listingId: string) =>
+  getById: (userId?: string, listingId?: string) =>
     `/exchange/listing/${userId}/${listingId}`,
-  create: (userId: string) => `/exchange/listing/${userId}`,
-  update: (userId: string, dsoId: string) =>
+  create: (userId?: string) => `/exchange/listing/${userId}`,
+  update: (userId?: string, dsoId?: string) =>
     `/exchange/listing/${userId}/${dsoId}`
 }
 
@@ -345,7 +347,7 @@ export const resources = {
 export const custodyAccounts = {
   getList: 'accounts/custody-accounts/list',
   unAssignCustody: '/accounts/custody-unassign',
-  getCustodianDetails: (accountId: string) =>
+  getCustodianDetails: (accountId?: string) =>
     `/accounts/get-custodian/${accountId}`,
   getCustodiansCount: '/accounts/get-custodians-count'
 }
@@ -355,13 +357,13 @@ export const virtualAccountsAudit = {
   getMT942Files: 'https://hsbc.mozork.com/audit/virtual-account/mt942/files',
   getOutboundFiles:
     'https://hsbc.mozork.com/audit/virtual-account/outbound/files',
-  getRawMT940File: (fileId: string) =>
+  getRawMT940File: (fileId?: string) =>
     `https://hsbc.mozork.com/audit/virtual-account/mt940/files/raw/${fileId}`,
-  getRawMT942File: (fileId: string) =>
+  getRawMT942File: (fileId?: string) =>
     `https://hsbc.mozork.com/audit/virtual-account/mt942/files/raw/${fileId}`,
-  getRawOutboundACKFile: (fileId: string) =>
+  getRawOutboundACKFile: (fileId?: string) =>
     `https://hsbc.mozork.com/audit/virtual-account/outbound/files/raw/${fileId}`,
-  getRawOutboundVAFile: (fileId: string) =>
+  getRawOutboundVAFile: (fileId?: string) =>
     `https://hsbc.mozork.com/audit/virtual-account/outbound/files/raw/va/${fileId}`
 }
 
@@ -370,8 +372,8 @@ export const virtualTransactions = {
 }
 
 export const blockchainNetworksURL = {
-  getSettings: (network: string) => `/blockchain/settings/${network}`,
-  getUpdateDecimal: (network: string, decimal: number) =>
+  getSettings: (network?: string) => `/blockchain/settings/${network}`,
+  getUpdateDecimal: (network?: string, decimal?: number) =>
     `/blockchain/settings/decimal/${network}/${decimal}`,
   generateWalletHash: '/blockchain/wallets/generateWalletHash',
   verifyWalletOwnership: '/blockchain/wallets/verifyOwnership',

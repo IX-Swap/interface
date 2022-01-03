@@ -29,7 +29,9 @@ export const CashWithdrawalAuthorization = () => {
     return null
   }
 
-  const cashWithdrawal = map[cashWithdrawalId]
+  const cashWithdrawal = cashWithdrawalId ? map[cashWithdrawalId] : undefined
+
+  if (!cashWithdrawal) return null
 
   return (
     <AuthorizerView

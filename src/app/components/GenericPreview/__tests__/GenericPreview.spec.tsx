@@ -34,7 +34,7 @@ describe('GenericPreview', () => {
           label: item.label,
           value: item.value,
           row: true,
-          justify: 'space-between',
+          justifyContent: 'space-between',
           className: item.secret === true ? privateClassNames() : ''
         },
         {}

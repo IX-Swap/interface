@@ -74,9 +74,7 @@ exports[`Dashboard should match snapshot 1`] = `
                     >
                       <div
                         class="MuiBox-root MuiBox-root-7"
-                      >
-                        <image-mock />
-                      </div>
+                      />
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item"
@@ -126,9 +124,7 @@ exports[`Dashboard should match snapshot 1`] = `
                     >
                       <div
                         class="MuiBox-root MuiBox-root-11"
-                      >
-                        <image-mock />
-                      </div>
+                      />
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item"
@@ -178,11 +174,7 @@ exports[`Dashboard should match snapshot 1`] = `
                     >
                       <div
                         class="MuiBox-root MuiBox-root-14"
-                      >
-                        <image-mock
-                          style="fill: #F6C559; width: 16px;"
-                        />
-                      </div>
+                      />
                     </div>
                     <div
                       class="MuiGrid-root MuiGrid-item"

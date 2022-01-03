@@ -20,7 +20,7 @@ export const DSONameAndStructure: React.FC<DSONameAndStructureProps> = ({
   return (
     <Grid
       container
-      justify='flex-start'
+      justifyContent='flex-start'
       alignItems='center'
       wrap='nowrap'
       spacing={3}

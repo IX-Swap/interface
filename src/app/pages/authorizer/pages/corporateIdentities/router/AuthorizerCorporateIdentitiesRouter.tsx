@@ -16,7 +16,7 @@ export const AuthorizerCorporateIdentitiesRouter = () => {
         <CorporateAuthorization />
       </AppRoute>
 
-      <AppRoute exact path={AuthorizerRoute.corporateIdentities}>
+      <AppRoute path={AuthorizerRoute.corporateIdentities}>
         <CorporateIdentities />
       </AppRoute>
     </Switch>

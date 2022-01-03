@@ -1,6 +1,6 @@
 import React from 'react'
 import { Badge, IconButton } from '@material-ui/core'
-import Notifications from 'assets/icons/navigation/notifications.svg'
+import { ReactComponent as Notifications } from 'assets/icons/navigation/notifications.svg'
 import { DropdownTriggerProps } from 'app/components/Dropdown/Dropdown'
 import { useNotifications } from 'app/pages/notifications/hooks/useNotifications'
 

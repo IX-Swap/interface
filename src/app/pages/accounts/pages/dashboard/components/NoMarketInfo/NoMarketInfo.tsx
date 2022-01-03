@@ -10,7 +10,7 @@ export const NoMarketInfo = () => {
       container
       direction={'column'}
       alignItems={'center'}
-      justify={'center'}
+      justifyContent={'center'}
     >
       <VSpacer size={'small'} />
       <Grid item>

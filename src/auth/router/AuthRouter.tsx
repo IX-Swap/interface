@@ -10,19 +10,19 @@ import { AppRoute } from 'components/AppRoute'
 export const AuthRouter = () => {
   return (
     <Switch>
-      <AppRoute exact path={AuthRoute.login}>
+      <AppRoute path={AuthRoute.login}>
         <LoginContainer />
       </AppRoute>
 
-      <AppRoute exact path={AuthRoute.signup}>
+      <AppRoute path={AuthRoute.signup}>
         <Register />
       </AppRoute>
 
-      <AppRoute exact path={AuthRoute.passwordReset}>
+      <AppRoute path={AuthRoute.passwordReset}>
         <PasswordReset />
       </AppRoute>
 
-      <AppRoute exact path={AuthRoute.confirm}>
+      <AppRoute path={AuthRoute.confirm}>
         <Confirmation />
       </AppRoute>
 

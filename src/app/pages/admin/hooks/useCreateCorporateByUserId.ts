@@ -5,13 +5,17 @@ import { identityQueryKeys } from 'config/queryKeys'
 import { CorporateIdentity } from 'app/pages/identity/types/forms'
 
 export const useCreateCorporateByUserId = (
-  userId: string,
-  corporateType: string
+  userId?: string,
+  corporateType?: string
 ) => {
   const { snackbarService, apiService } = useServices()
   const queryCache = useQueryCache()
 
   const createCorporate = async (values: any) => {
+    if (!userId) {
+      throw new Error('userId is required')
+    }
+
     const uri = identityURL.corporates.create(userId)
     return await apiService.post<CorporateIdentity>(uri, {
       ...values,

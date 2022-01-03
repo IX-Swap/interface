@@ -101,7 +101,7 @@ export const WAConnect = ({ hint, status, getAccount }: WAConnectProps) => {
       {hasWallet && <WAInfoFields />}
       {!hasWallet && hint}
       <DialogActions>
-        <Grid item container justify='flex-end'>
+        <Grid item container justifyContent='flex-end'>
           <WAConnectActions
             isVerifying={isVerifying}
             isVerified={isVerified}

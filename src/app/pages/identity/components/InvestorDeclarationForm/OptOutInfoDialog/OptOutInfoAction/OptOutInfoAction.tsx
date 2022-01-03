@@ -19,7 +19,7 @@ export const OptOutInfoAction: React.FC<OptOutInfoActionProps> = ({
 
   return (
     <>
-      <Grid container justify='center'>
+      <Grid container justifyContent='center'>
         <Grid item>
           <StyledButton color='primary' onClick={close} variant='outlined'>
             Cancel

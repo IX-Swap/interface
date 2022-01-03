@@ -51,7 +51,7 @@ export const DisclosureDialog = ({
         <Divider />
       </DialogContentText>
       <DialogActions classes={{ root: classes.actions }}>
-        <Grid container justify={'space-between'} alignItems={'center'}>
+        <Grid container justifyContent={'space-between'} alignItems={'center'}>
           <Grid item>
             <Box className={classes.box}>
               <FormControlLabel
@@ -74,7 +74,7 @@ export const DisclosureDialog = ({
 
         <VSpacer size={'small'} />
         <VSpacer size={'extraSmall'} />
-        <Grid container justify={'flex-end'} style={{ marginLeft: 0 }}>
+        <Grid container justifyContent={'flex-end'} style={{ marginLeft: 0 }}>
           <Grid item>
             <Button
               type={'button'}

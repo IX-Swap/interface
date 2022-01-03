@@ -14,7 +14,7 @@ describe('ConfirmationDialog', () => {
   it('calls onClose function when close button is called', () => {
     const { getByText } = render(
       <Form defaultValues={{ currency: 'SGD' }}>
-        <ConfirmationDialog onClose={onCloseMock} open />
+        <ConfirmationDialog onClose={onCloseMock} open assigning={false} />
       </Form>
     )
     const closeButton = getByText('Cancel')

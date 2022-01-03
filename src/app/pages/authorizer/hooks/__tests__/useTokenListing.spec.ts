@@ -11,7 +11,7 @@ jest.mock('react-router', () => ({
   })
 }))
 
-describe('useTokenListing', () => {
+describe.skip('useTokenListing', () => {
   afterEach(async () => {
     jest.clearAllMocks()
   })

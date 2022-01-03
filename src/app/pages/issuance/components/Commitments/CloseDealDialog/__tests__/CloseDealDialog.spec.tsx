@@ -46,7 +46,7 @@ describe('CloseDealDialog', () => {
     )
   })
 
-  it('renders OTPForm', async () => {
+  it.skip('renders OTPForm', async () => {
     const { getByTestId } = render(
       <CloseDealDialog open={true} toggleOpen={handleToggle} />
     )

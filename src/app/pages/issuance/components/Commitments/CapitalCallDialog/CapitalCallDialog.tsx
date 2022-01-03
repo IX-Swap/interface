@@ -122,7 +122,11 @@ export const CapitalCallDialog = (props: ModalProps) => {
             )
           }}
         />
-        <Grid container justify={'flex-end'} className={classes.buttonsBlock}>
+        <Grid
+          container
+          justifyContent={'flex-end'}
+          className={classes.buttonsBlock}
+        >
           <Button
             variant={'outlined'}
             color={'primary'}

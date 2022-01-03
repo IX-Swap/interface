@@ -55,7 +55,7 @@ export const IdleDialog = ({
             </Typography>
           </Box>
         </DialogContent>
-        <Grid container justify='center' spacing={2}>
+        <Grid container justifyContent='center' spacing={2}>
           <Grid item>
             <Button variant='outlined' color='primary' onClick={handleLogout}>
               No, log me out

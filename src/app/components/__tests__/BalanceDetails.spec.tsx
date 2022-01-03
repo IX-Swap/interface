@@ -31,7 +31,7 @@ describe('BalanceDetails', () => {
       1,
       {
         label: 'Total Balance',
-        value: props.data.balance,
+        value: props.data?.balance,
         labelWeight: 'thin',
         row: true
       },
@@ -41,7 +41,7 @@ describe('BalanceDetails', () => {
       2,
       {
         label: 'On Hold Balance',
-        value: props.data.onHold,
+        value: props.data?.onHold,
         labelWeight: 'thin',
         row: true
       },
@@ -51,7 +51,7 @@ describe('BalanceDetails', () => {
       3,
       {
         label: 'Available Balance',
-        value: props.data.available,
+        value: props.data?.available,
         labelWeight: 'thin',
         row: true
       },

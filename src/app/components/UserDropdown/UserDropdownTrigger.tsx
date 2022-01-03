@@ -1,5 +1,5 @@
 import React from 'react'
-import UserIcon from 'assets/icons/navigation/user.svg'
+import { ReactComponent as UserIcon } from 'assets/icons/navigation/user.svg'
 import { IconButton } from '@material-ui/core'
 import { DropdownTriggerProps } from 'app/components/Dropdown/Dropdown'
 

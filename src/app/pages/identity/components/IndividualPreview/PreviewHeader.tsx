@@ -12,7 +12,7 @@ export const PreviewHeader = ({ title, status }: PreviewHeaderProps) => {
   const classes = useStyles()
   return (
     <Box className={classes.previewHeader}>
-      <Grid container justify='space-between' alignContent='center'>
+      <Grid container justifyContent='space-between' alignContent='center'>
         <Grid item>
           <Typography variant='h5'>{title}</Typography>
         </Grid>

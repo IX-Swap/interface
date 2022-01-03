@@ -17,7 +17,7 @@ describe('OnboardingLinks', () => {
   })
 
   beforeEach(() => {
-    history.push(AppRoute.home)
+    history.push(AppRoute.identity)
   })
 
   it('renders all links if user has no completed Indentity Journey', () => {

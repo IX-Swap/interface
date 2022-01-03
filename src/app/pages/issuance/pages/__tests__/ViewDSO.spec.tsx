@@ -4,6 +4,7 @@ import { history } from 'config/history'
 import { ViewDSO } from 'app/pages/issuance/pages/ViewDSO'
 import { dso } from '__fixtures__/authorizer'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
+import { DSO } from 'app/pages/issuance/components/DSO'
 import { generatePath, Route } from 'react-router-dom'
 
 jest.mock('app/pages/issuance/components/DSO', () => ({

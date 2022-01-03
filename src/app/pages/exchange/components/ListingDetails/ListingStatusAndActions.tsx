@@ -17,7 +17,13 @@ export const ListingStatusAndActions = ({
 
   return (
     <Grid container spacing={6} direction='column'>
-      <Grid item container spacing={1} justify='flex-end' alignItems='center'>
+      <Grid
+        item
+        container
+        spacing={1}
+        justifyContent='flex-end'
+        alignItems='center'
+      >
         <Grid item>
           <Typography variant='body1' color='textSecondary'>
             Status:{' '}
@@ -27,7 +33,7 @@ export const ListingStatusAndActions = ({
           <AuthorizableStatus compact={false} status={data.status} />
         </Grid>
       </Grid>
-      <Grid item container spacing={1} justify='flex-end'>
+      <Grid item container spacing={1} justifyContent='flex-end'>
         <Grid item>
           <Button
             variant='outlined'

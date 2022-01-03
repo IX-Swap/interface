@@ -91,7 +91,7 @@ export const FinancialSummary = () => {
           xs={12}
           md={2}
           alignContent='center'
-          justify='flex-end'
+          justifyContent='flex-end'
         >
           <MoreDetails />
         </Grid>

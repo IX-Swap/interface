@@ -7,11 +7,12 @@ import { useBalancesByType } from 'hooks/balance/useBalancesByType'
 export const DSPreview = () => {
   const { data, isLoading } = useBalancesByType('Security')
   const params = useParams<{ balanceId: string }>()
-  const balance = data.map[params.balanceId]
 
-  if (isLoading || balance === undefined) {
+  if (isLoading || params.balanceId === undefined) {
     return null
   }
+
+  const balance = data.map[params.balanceId]
 
   return (
     <Grid container spacing={4}>

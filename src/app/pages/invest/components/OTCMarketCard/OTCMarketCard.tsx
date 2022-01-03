@@ -59,7 +59,7 @@ export const OTCMarketCard = (props: OTCMarketCardProps) => {
           </>
         ) : null}
 
-        <Grid container item justify='flex-end' alignItems={'center'}>
+        <Grid container item justifyContent='flex-end' alignItems={'center'}>
           {type !== 'OTC' ? (
             <Typography
               className={classNames(

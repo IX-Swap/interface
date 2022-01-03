@@ -6,7 +6,7 @@ export interface ActionProps {
 }
 export const Actions: React.FC<ActionProps> = ({ action }) => {
   return (
-    <Grid container justify='center'>
+    <Grid container justifyContent='center'>
       <Grid item>
         <Button
           color='primary'

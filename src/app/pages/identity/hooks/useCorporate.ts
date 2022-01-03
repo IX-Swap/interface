@@ -5,8 +5,8 @@ import { useQuery } from 'react-query'
 import { CorporateIdentity } from '../types/forms'
 
 export interface UseCorporateArgs {
-  userId: string
-  identityId: string
+  userId?: string
+  identityId?: string
 }
 
 export const useCorporate = (args: UseCorporateArgs) => {
@@ -21,7 +21,8 @@ export const useCorporate = (args: UseCorporateArgs) => {
 
   const { data, ...rest } = useQuery(
     [identityQueryKeys.getCorporate(userId, identityId)],
-    fetcher
+    fetcher,
+    { enabled: !!userId && !!identityId }
   )
 
   return {

@@ -20,7 +20,7 @@ export const UserRouter = () => {
       >
         <ViewUser />
       </AppRoute>
-      <AppRoute exact path={AdminRoute.users}>
+      <AppRoute path={AdminRoute.users}>
         <Users />
       </AppRoute>
       <AppRoute

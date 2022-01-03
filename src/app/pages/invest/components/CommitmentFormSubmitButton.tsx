@@ -8,8 +8,8 @@ import { CommitmentFormValues } from 'types/commitment'
 export interface CommitmentFormSubmitButtonProps {
   assetId: string
   minInvestment: number | null
-  dsoId: string
   currency: string
+  dsoId?: string
 }
 
 export const CommitmentFormSubmitButton = ({
@@ -25,6 +25,8 @@ export const CommitmentFormSubmitButton = ({
   const { handleSubmit } = useFormContext()
 
   const submit = handleSubmit(async (data: CommitmentFormValues) => {
+    if (!dsoId) return
+
     await makeInvestment({
       numberOfUnits: data.numberOfUnits,
       otp: data.otp,

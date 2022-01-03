@@ -7,7 +7,7 @@ import { listingsURL } from 'config/apiURL'
 import { isValidDSOId } from 'helpers/isValidDSOId'
 import { Listing } from 'app/pages/exchange/types/listings'
 
-export const useListingById = (listingId: string, issuerId?: string) => {
+export const useListingById = (listingId?: string, issuerId?: string) => {
   const { user } = useAuth()
   const { apiService } = useServices()
   const url = listingsURL.getById(issuerId ?? getIdFromObj(user), listingId)
@@ -18,7 +18,7 @@ export const useListingById = (listingId: string, issuerId?: string) => {
       issuerId ?? getIdFromObj(user)
     ),
     fetchListing,
-    { enabled: isValidDSOId(listingId) }
+    { enabled: !!listingId && isValidDSOId(listingId) }
   )
 
   return {

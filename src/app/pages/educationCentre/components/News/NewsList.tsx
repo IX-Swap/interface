@@ -55,7 +55,7 @@ export const NewsList = ({
         ))}
       </Grid>
 
-      <Grid container justify={'flex-end'}>
+      <Grid container justifyContent={'flex-end'}>
         <TablePagination
           count={-1}
           page={page}

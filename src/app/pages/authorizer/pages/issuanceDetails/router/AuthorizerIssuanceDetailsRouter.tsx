@@ -16,7 +16,7 @@ export const AuthorizerIssuanceDetailsRouter = () => {
         <IssuanceDetailsAuthorization />
       </AppRoute>
 
-      <AppRoute exact path={AuthorizerRoute.issuanceDetails}>
+      <AppRoute path={AuthorizerRoute.issuanceDetails}>
         <IssuanceDetails />
       </AppRoute>
     </Switch>

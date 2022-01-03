@@ -10,7 +10,7 @@ export const NoChartData: React.FC<NoChartDataProps> = ({
   return (
     <Grid
       container
-      justify='center'
+      justifyContent='center'
       alignItems='center'
       style={{
         minHeight: '200px',

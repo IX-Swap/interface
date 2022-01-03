@@ -41,7 +41,7 @@ export const DSOVideoLinks = ({ isNew = false }: DSOVideoLinksProps) => {
               })}
             </Grid>
             <VSpacer size={'small'} />
-            <Grid item container justify='flex-end' alignItems='center'>
+            <Grid item container justifyContent='flex-end' alignItems='center'>
               <FormError name={fieldName} render={TextError} />
               <DSOChapterAddButton append={append} text={'ADD NEW VIDEO'} />
             </Grid>

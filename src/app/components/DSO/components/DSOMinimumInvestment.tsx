@@ -19,7 +19,7 @@ export const DSOMinimumInvestment = () => {
     <Grid
       container
       direction='column'
-      justify='flex-end'
+      justifyContent='flex-end'
       alignItems='flex-start'
       spacing={0}
     >

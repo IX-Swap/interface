@@ -9,7 +9,7 @@ export const TaxDeclarationInfoAction: React.FC<
 > = ({ close }) => {
   return (
     <>
-      <Grid container justify='center'>
+      <Grid container justifyContent='center'>
         <Grid item>
           <Button color='primary' onClick={close} variant='contained'>
             Ok

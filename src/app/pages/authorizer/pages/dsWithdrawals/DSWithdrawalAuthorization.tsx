@@ -32,7 +32,12 @@ export const DSWithdrawalAuthorization = () => {
     return null
   }
 
-  const dsWithdrawal = map[dsWithdrawalId]
+  const dsWithdrawal = dsWithdrawalId ? map[dsWithdrawalId] : undefined
+
+  if (!dsWithdrawal) {
+    // TODO handle not found case
+    return null
+  }
 
   return (
     <AuthorizerView

@@ -14,8 +14,8 @@ export const InvestOverview = () => {
 
   return (
     <>
-      <Grid container justify='space-between'>
-        <Grid item container justify={'flex-end'}>
+      <Grid container justifyContent='space-between'>
+        <Grid item container justifyContent={'flex-end'}>
           <Grid item xs={4}>
             <OverviewPageFilters />
           </Grid>

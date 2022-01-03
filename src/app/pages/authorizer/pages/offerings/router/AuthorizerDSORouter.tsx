@@ -16,7 +16,7 @@ export const AuthorizerDSORouter = () => {
         <DSOAuthorization />
       </AppRoute>
 
-      <AppRoute exact path={AuthorizerRoute.offerings}>
+      <AppRoute path={AuthorizerRoute.offerings}>
         <Offerings />
       </AppRoute>
     </Switch>

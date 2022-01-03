@@ -56,7 +56,7 @@ export const DSOInvestorOverview = (props: DSOInvestorOverviewProps) => {
         />
       </Grid>
       <Hidden mdUp>
-        <Grid item xs={12} container justify='flex-end'>
+        <Grid item xs={12} container justifyContent='flex-end'>
           <Grid item>
             <Grid item>
               <DSOInvestButton dso={dso} />

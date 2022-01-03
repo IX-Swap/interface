@@ -9,7 +9,7 @@ import { AuthorizableStatus } from 'types/util'
 import { CorporateIdentity } from '../../identity/types/forms'
 
 export interface UseAllCorporatesArgs {
-  userId: string
+  userId?: string
   status?: AuthorizableStatus
   type?: 'investor' | 'issuer'
 }
@@ -31,7 +31,10 @@ export const useAllCorporatesByUserId = (
 
   const { data, ...rest } = useInfiniteQuery(
     [identityQueryKeys.getAllCorporateByUserId(userId), payload],
-    getAllCorporates
+    getAllCorporates,
+    {
+      enabled: !!userId
+    }
   )
 
   const parsedData = useParsedData<CorporateIdentity>(data, '_id')

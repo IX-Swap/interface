@@ -32,7 +32,12 @@ export const NextDistributionTimer = ({
 
   return (
     <Box my={my} mx={mx} style={{ width: 'max-content' }}>
-      <Grid container alignItems='center' justify='center' direction='column'>
+      <Grid
+        container
+        alignItems='center'
+        justifyContent='center'
+        direction='column'
+      >
         <Typography style={{ fontWeight: isNewThemeOn ? 500 : 'initial' }}>
           Next Distribution
         </Typography>

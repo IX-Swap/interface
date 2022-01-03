@@ -38,7 +38,7 @@ export const IssuanceLanding = () => {
       <PageHeader title={data?.tokenName} showBreadcrumbs={false} />
       <Grid
         container
-        justify='space-between'
+        justifyContent='space-between'
         wrap={!isTablet ? 'wrap' : 'wrap-reverse'}
       >
         <Grid
@@ -120,7 +120,7 @@ export const IssuanceLanding = () => {
             item
             xs={12}
             direction='column'
-            justify={isValidDSOId(dsoId) ? 'flex-start' : 'center'}
+            justifyContent={isValidDSOId(dsoId) ? 'flex-start' : 'center'}
             variant='outlined'
             style={{ padding: theme.spacing(4) }}
           >

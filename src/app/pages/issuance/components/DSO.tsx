@@ -4,8 +4,8 @@ import { DSOForm } from 'app/components/DSO/DSOForm'
 import { DSOView } from 'app/components/DSO/DSOView'
 
 export interface DSOProps {
-  dsoId: string
-  issuerId: string
+  dsoId?: string
+  issuerId?: string
   isEditing?: boolean
   showAuthorizations?: boolean
   showSidebar?: boolean

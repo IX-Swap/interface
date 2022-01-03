@@ -21,7 +21,7 @@ export const CompactRow = <T,>({
     <Grid container spacing={1} alignItems='flex-start'>
       {columns.map(({ label, key, render }, index) =>
         index === 0 ? (
-          <React.Fragment>
+          <React.Fragment key={key}>
             <Grid item xs={8}>
               {key.length > 0 &&
                 (typeof render === 'function'
@@ -29,7 +29,7 @@ export const CompactRow = <T,>({
                   : get(data, key))}
             </Grid>
             {hasActions ? (
-              <Grid item xs={4} container justify='flex-end'>
+              <Grid item xs={4} container justifyContent='flex-end'>
                 {actions?.({ item: data, cacheQueryKey: undefined }) ?? null}
               </Grid>
             ) : (

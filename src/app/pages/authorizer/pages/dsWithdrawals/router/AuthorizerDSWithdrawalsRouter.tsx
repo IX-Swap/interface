@@ -16,7 +16,7 @@ export const AuthorizerDSWithdrwalsRouter = () => {
         <DSWithdrawalAuthorization />
       </AppRoute>
 
-      <AppRoute exact path={AuthorizerRoute.dsWithdrawals}>
+      <AppRoute path={AuthorizerRoute.dsWithdrawals}>
         <DSWithdrawals />
       </AppRoute>
     </Switch>

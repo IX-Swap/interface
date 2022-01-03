@@ -50,7 +50,7 @@ export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
   const isCommitment = category === 'commitments'
 
   return (
-    <Grid container wrap='nowrap' justify='flex-end'>
+    <Grid container wrap='nowrap' justifyContent='flex-end'>
       <Grid item>
         <IconButton
           component={AppRouterLinkComponent}

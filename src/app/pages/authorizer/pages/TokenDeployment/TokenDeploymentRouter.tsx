@@ -16,7 +16,7 @@ export const TokenDeploymentRouter = () => {
         <TokenDeploymentAuthorization />
       </AppRoute>
 
-      <AppRoute exact path={AuthorizerRoute.tokenDeployment}>
+      <AppRoute path={AuthorizerRoute.tokenDeployment}>
         <TokenDeployments />
       </AppRoute>
     </Switch>

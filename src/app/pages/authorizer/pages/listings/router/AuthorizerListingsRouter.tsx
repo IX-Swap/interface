@@ -14,7 +14,7 @@ export const AuthorizerListingsRouter = () => {
       >
         <ListingAuthorization />
       </AppRoute>
-      <AppRoute exact path='/app/authorizer/listings'>
+      <AppRoute path='/app/authorizer/listings'>
         <Listings />
       </AppRoute>
     </Switch>

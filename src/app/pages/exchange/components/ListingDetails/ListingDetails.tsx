@@ -24,7 +24,7 @@ export const ListingDetails = ({
       <Grid item>
         <PageHeader title={data.tokenName} showBreadcrumbs />
       </Grid>
-      <Grid item container justify='flex-end' spacing={1}>
+      <Grid item container justifyContent='flex-end' spacing={1}>
         <Grid item xs={12} sm={8}>
           <ListingHeader
             logoId={data.logo}

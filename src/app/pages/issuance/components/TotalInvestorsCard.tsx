@@ -4,7 +4,7 @@ import { ChartTitle } from 'app/pages/issuance/components/IssuanceLanding/ChartT
 import { ChartWrapper } from 'app/pages/issuance/components/IssuanceLanding/ChartWrapper'
 import { InsightValue } from 'app/pages/issuance/components/IssuanceLanding/InsightValue'
 import { VSpacer } from 'components/VSpacer'
-import PeopleIcon from 'assets/icons/people_black_24dp.svg'
+import { ReactComponent as PeopleIcon } from 'assets/icons/people_black_24dp.svg'
 import { LabelIcon } from 'app/pages/issuance/components/CapTable/LabelIcon'
 
 export interface TotalInvestorsCardProps {
@@ -22,7 +22,7 @@ export const TotalInvestorsCard = ({
 }: TotalInvestorsCardProps) => {
   return (
     <ChartWrapper py={isNewThemeOn ? 2.5 : undefined}>
-      <Grid container justify='space-between' alignItems='center'>
+      <Grid container justifyContent='space-between' alignItems='center'>
         <Grid item>
           <ChartTitle
             title='Total Investors'

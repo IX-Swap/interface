@@ -68,9 +68,9 @@ export const PairListDropdown = ({ pairName }: PairListDropdownProps) => {
   }
 
   return (
-    <Grid container spacing={1} justify='flex-start' alignItems='center'>
+    <Grid container spacing={1} justifyContent='flex-start' alignItems='center'>
       <Grid item>
-        <Grid container direction='column' justify='flex-start'>
+        <Grid container direction='column' justifyContent='flex-start'>
           <Grid item>
             <Typography
               data-testid={'pairName'}

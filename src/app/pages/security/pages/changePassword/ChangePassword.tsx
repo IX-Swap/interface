@@ -23,7 +23,7 @@ export const ChangePassword = () => {
   return (
     <Container>
       <PageHeader title='Change Password' />
-      <Grid container alignItems='center' justify='center'>
+      <Grid container alignItems='center' justifyContent='center'>
         <Grid container lg={4} item>
           <Form
             defaultValues={defaultValues}

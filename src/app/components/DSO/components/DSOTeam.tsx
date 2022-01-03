@@ -38,7 +38,12 @@ export const DSOTeam = () => {
                       ))}
                     </Grid>
                   </Grid>
-                  <Grid item container justify='flex-end' alignItems='center'>
+                  <Grid
+                    item
+                    container
+                    justifyContent='flex-end'
+                    alignItems='center'
+                  >
                     <FormError name={fieldName} render={TextError} />
                     <DSOChapterAddButton append={append} />
                   </Grid>

@@ -9,7 +9,7 @@ import {
 import {
   StylesProvider,
   ThemeProvider,
-  createMuiTheme,
+  createTheme,
   createGenerateClassName
 } from '@material-ui/core/styles'
 import { history } from 'config/history'
@@ -188,8 +188,8 @@ export const renderHookWithForm = (
 
 export const renderWithInitialWidth = (ui: any, initialWidth: any) => {
   const SizeWrapper = (props: any) => {
-    const defaultTheme = createMuiTheme()
-    const theme = createMuiTheme({
+    const defaultTheme = createTheme()
+    const theme = createTheme({
       props: { ...defaultTheme, MuiWithWidth: { initialWidth } }
     })
 

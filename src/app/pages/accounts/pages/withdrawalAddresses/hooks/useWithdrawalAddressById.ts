@@ -8,13 +8,14 @@ import { withdrawalAddressQueryKeys } from 'config/queryKeys'
 import { accountsURL } from 'config/apiURL'
 
 export const useWithdrawalAddressById = (
-  withdrawalAddressId: string,
+  withdrawalAddressId?: string,
   userId?: string
 ): UseQueryData<WithdrawalAddress> => {
   const { apiService } = useServices()
   const { user } = useAuth()
+  const _userId = userId ?? getIdFromObj(user)
   const uri = accountsURL.withdrawalAddresses.getById(
-    userId ?? getIdFromObj(user),
+    _userId,
     withdrawalAddressId
   )
   const getWithdrawalAddress = async () => {
@@ -22,13 +23,9 @@ export const useWithdrawalAddressById = (
   }
 
   const { data, ...rest } = useQuery(
-    [
-      withdrawalAddressQueryKeys.getAddressById,
-      userId ?? getIdFromObj(user),
-      withdrawalAddressId
-    ],
+    [withdrawalAddressQueryKeys.getAddressById, _userId, withdrawalAddressId],
     getWithdrawalAddress,
-    { enabled: (withdrawalAddressId ?? '') !== '' }
+    { enabled: !!withdrawalAddressId && !!_userId }
   )
 
   return {

@@ -11,7 +11,7 @@ export const DSOList = () => {
       <Grid item>
         <PageHeader title='My DSOs' />
       </Grid>
-      <Grid item container justify='flex-end'>
+      <Grid item container justifyContent='flex-end'>
         <Button
           component={AppRouterLinkComponent}
           size='large'

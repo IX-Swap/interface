@@ -16,7 +16,7 @@ export const AuthorizerCashWithdrawalsRouter = () => {
         <CashWithdrawalAuthorization />
       </AppRoute>
 
-      <AppRoute exact path={AuthorizerRoute.cashWithdrawals}>
+      <AppRoute path={AuthorizerRoute.cashWithdrawals}>
         <CashWithdrawals />
       </AppRoute>
     </Switch>

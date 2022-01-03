@@ -7,7 +7,7 @@ import { NotificationsList } from 'app/pages/notifications/components/Notificati
 export const Notifications = () => {
   return (
     <Grid container direction='column'>
-      <Grid item container justify='flex-end'>
+      <Grid item container justifyContent='flex-end'>
         <MarkAllAsRead />
       </Grid>
       <VSpacer size='small' />

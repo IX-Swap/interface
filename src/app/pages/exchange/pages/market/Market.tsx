@@ -83,7 +83,7 @@ export const Market = () => {
     <Box className={classes.container}>
       <DisclosureDialog content={masDisclosure} isOpen={isDisclosureVisible} />
       <GetWalletDialog open={openDialog} toggleOpen={setOpenDialog} />
-      <Grid item container xs={12} justify='flex-end'>
+      <Grid item container xs={12} justifyContent='flex-end'>
         <ExchangeRulesLink />
       </Grid>
       <Box my={2} />

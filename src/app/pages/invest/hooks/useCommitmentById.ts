@@ -6,22 +6,19 @@ import { getIdFromObj } from 'helpers/strings'
 import { investQueryKeys } from 'config/queryKeys'
 import { issuanceURL } from 'config/apiURL'
 
-export const useCommitmentById = (commitmentId: string, userId?: string) => {
+export const useCommitmentById = (commitmentId?: string, userId?: string) => {
   const { user } = useAuth()
   const { apiService } = useServices()
-  const url = issuanceURL.commitments.getById(
-    userId ?? getIdFromObj(user),
-    commitmentId
-  )
+  const _userId = userId ?? getIdFromObj(user)
+  const url = issuanceURL.commitments.getById(_userId, commitmentId)
 
   const fetchCommitment = async () => await apiService.get<Commitment>(url)
   const { data, ...rest } = useQuery(
-    [
-      investQueryKeys.getCommitmentById,
-      commitmentId,
-      userId ?? getIdFromObj(user)
-    ],
-    fetchCommitment
+    [investQueryKeys.getCommitmentById, commitmentId, _userId],
+    fetchCommitment,
+    {
+      enabled: !!commitmentId && !!_userId
+    }
   )
 
   return {

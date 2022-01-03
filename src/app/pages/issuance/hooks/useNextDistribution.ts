@@ -1,7 +1,7 @@
 import { useServices } from 'hooks/useServices'
 import { useQuery } from 'react-query'
 
-export const useNextDistribution = (dsoId: string) => {
+export const useNextDistribution = (dsoId?: string) => {
   const { apiService } = useServices()
   const getNextDistribution = async () => {
     return await apiService.post('/issuance/distribution/nextDistribution', {
@@ -11,7 +11,10 @@ export const useNextDistribution = (dsoId: string) => {
 
   const { data, ...rest } = useQuery(
     ['nextDistribution', dsoId],
-    getNextDistribution
+    getNextDistribution,
+    {
+      enabled: !!dsoId
+    }
   )
 
   return {

@@ -22,7 +22,7 @@ export const TotalTokens = () => {
 
   return (
     <ChartWrapper py={2.5}>
-      <Grid container justify='space-between' alignItems='center'>
+      <Grid container justifyContent='space-between' alignItems='center'>
         <Grid item>
           <ChartTitle
             title='Total Tokens'

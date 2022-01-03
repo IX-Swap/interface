@@ -30,7 +30,7 @@ export const Section = (
   return (
     <Accordion expanded={expanded} onChange={toggleExpanded} variant='outlined'>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-        <Grid container justify='space-between'>
+        <Grid container justifyContent='space-between'>
           <Grid item>
             <Typography variant='h6' className={classes.sectionHeader}>
               {title}

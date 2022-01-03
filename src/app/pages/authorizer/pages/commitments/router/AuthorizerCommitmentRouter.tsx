@@ -16,7 +16,7 @@ export const AuthorizerCommitmentRouter = () => {
         <CommitmentAuthorization />
       </AppRoute>
 
-      <AppRoute exact path={AuthorizerRoute.commitments}>
+      <AppRoute path={AuthorizerRoute.commitments}>
         <Commitments />
       </AppRoute>
     </Switch>

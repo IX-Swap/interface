@@ -16,7 +16,7 @@ export const AuthorizerIndividualIdentitiesRouter = () => {
         <IndividualAuthorization />
       </AppRoute>
 
-      <AppRoute exact path={AuthorizerRoute.individualIdentities}>
+      <AppRoute path={AuthorizerRoute.individualIdentities}>
         <IndividualIdentities />
       </AppRoute>
     </Switch>

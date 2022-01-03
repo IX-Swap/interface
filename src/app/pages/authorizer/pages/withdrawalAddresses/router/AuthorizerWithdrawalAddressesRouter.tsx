@@ -16,7 +16,7 @@ export const AuthorizerWithdrawalAddressesRouter = () => {
         <WithdrawalAddressAuthorization />
       </AppRoute>
 
-      <AppRoute exact path={AuthorizerRoute.withdrawalAddresses}>
+      <AppRoute path={AuthorizerRoute.withdrawalAddresses}>
         <WithdrawalAddresses />
       </AppRoute>
     </Switch>

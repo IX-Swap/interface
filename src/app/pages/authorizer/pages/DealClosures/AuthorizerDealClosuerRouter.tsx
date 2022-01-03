@@ -16,7 +16,7 @@ export const AuthorizerDealClosureRouter = () => {
         <DealClosureAuthorization />
       </AppRoute>
 
-      <AppRoute exact path={AuthorizerRoute.dealClosure}>
+      <AppRoute path={AuthorizerRoute.dealClosure}>
         <DealClosures />
       </AppRoute>
     </Switch>

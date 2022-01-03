@@ -12,7 +12,7 @@ jest.mock('components/form/TypedField', () => ({
 }))
 
 describe('AddressFields', () => {
-  const props: AddressFieldsProps<any> = {
+  const props: AddressFieldsProps = {
     rootName: 'companyAddress'
   }
 

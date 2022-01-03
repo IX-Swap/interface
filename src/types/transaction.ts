@@ -7,7 +7,7 @@ export interface Transaction {
   symbol: string
   name: string
   type: 'Currency' | 'Security'
-  numberFormat: NumberFormat
+  numberFormat: NumberFormat<any>
   createdAt: string
   updatedAt: string
 }

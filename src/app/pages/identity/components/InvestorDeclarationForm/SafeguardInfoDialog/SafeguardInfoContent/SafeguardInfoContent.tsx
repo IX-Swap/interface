@@ -4,7 +4,7 @@ import { Grid, Typography } from '@material-ui/core'
 export const SafeguardInfoContent = () => {
   return (
     <>
-      <Grid container justify='center' spacing={2}>
+      <Grid container justifyContent='center' spacing={2}>
         <Grid item>
           <Typography>
             Accredited investors are considered to be sophisticated investors
