@@ -23,7 +23,9 @@ const baseCreds = {
   EDIT_INDIVIDUAL: 'individual@mailinator.com',
   EDIT_ISSUER: 'issuerinvest@mailinator.com',
   DSO_EDIT: 'dsoCorporateUser@mailinator.com',
-  MAIL_FOR_CAPITAL_CALL: 'luch41638787427054@wwjmp.com'
+  MAIL_FOR_CAPITAL_CALL: 'luch41638787427054@wwjmp.com',
+  AUTHORIZER_USER: 'authorizerTests@esiix.com',
+  commitments: 'qamyro@mailinator.com'
 }
 
 export { baseCreds }

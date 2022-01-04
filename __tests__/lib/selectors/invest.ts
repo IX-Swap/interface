@@ -1,4 +1,5 @@
 export const invest = {
+  PRIMARY_CARD: '[data-testid="icon-button"]',
   TABLE: '[data-testid="table"]',
   TOAST_NOTIFICATIONS: '[data-testid="notification-inner"]',
   INVEST_TAB: '[href="/app/invest"]',

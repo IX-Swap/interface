@@ -1,9 +1,12 @@
 import fetch from 'node-fetch'
 import { baseCreds } from './creds'
 const defaultHeaders = {
+  Connection: 'keep-alive',
   'Content-Type': 'application/json',
-  Accept: 'application/json',
-  Origin: baseCreds.URL
+  'Accept-Encoding': 'gzip, deflate, br',
+  'Content-Length': '352',
+  Accept: '*/*',
+  host: 'api.staging.mozork.com'
 }
 export async function userRegistration(email) {
   try {
@@ -31,14 +34,41 @@ export async function getCookies(email) {
       email: email,
       password: baseCreds.PASSWORD
     }
-    const cookies = await fetch(`${baseCreds.BASE_API}auth/sign-in`, {
+    const request = await fetch(`${baseCreds.BASE_API}auth/sign-in`, {
       method: 'POST',
       headers: defaultHeaders,
       body: JSON.stringify(user)
-    }).then(res => res.headers.raw()['set-cookie'])
-    return cookies
+    })
+    const cookies = request.headers.raw()['set-cookie']
+    return { cookies, request }
   } catch (error) {
     console.log(error)
     throw new Error(`Get cookies by API failed`)
+  }
+}
+
+export async function postRequest(body, cookies, link, method = 'POST') {
+  try {
+    // Registration company
+    const request = await fetch(baseCreds.BASE_API + link, {
+      method: method,
+      body: JSON.stringify(body),
+      headers: {
+        Connection: 'keep-alive',
+        'Content-Type': 'application/json',
+        'Accept-Encoding': 'gzip, deflate, br',
+        Accept: '*/*',
+        host: 'api.staging.mozork.com',
+        Cookie: cookies
+      }
+    })
+    if (request.status !== 200) {
+      console.log(request)
+      throw new Error(`Post request by API failed: ${request.statusText}`)
+    }
+    return request
+  } catch (error) {
+    console.log(error)
+    throw new Error(`Post request by API failed`)
   }
 }

@@ -17,15 +17,9 @@ class Invest {
     this.page = page
   }
 
-  checkSearch = async () => {
-    await click(invest.fields.SEARCH, this.page)
-    await typeText(invest.fields.SEARCH, text.dsoName, this.page)
-    await waitForRequestInclude(
-      this.page,
-      `${baseCreds.BASE_API}exchange/markets/list`,
-      'POST'
-    )
-    await shouldExist('[data-testid="icon-button"]', this.page)
+  checkSearch = async (searchField, words, api) => {
+    await searchField.type(words)
+    await waitForRequestInclude(this.page, baseCreds.BASE_API + api, 'POST')
   }
 
   toTheOverviewPage = async () => {

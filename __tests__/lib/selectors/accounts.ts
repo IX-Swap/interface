@@ -38,3 +38,6 @@ export const bankAccounts = {
 export const commitments = {
   COMMITMENTS_SECTION: '[href="/app/accounts/commitments"]'
 }
+export const cashWithdrawals = {
+  CASHWITHDRAWALS_SECTION: '[href="/app/accounts/cash-withdrawals"]'
+}

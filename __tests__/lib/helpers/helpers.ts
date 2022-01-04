@@ -163,6 +163,7 @@ async function getMessage(email, page, messageTitle = 'Invitation') {
     throw new Error(`"Get message" by API doesn't work `)
   }
 }
+
 async function waitForResponseInclude(page, responseText) {
   try {
     await page.waitForResponse(
@@ -174,6 +175,7 @@ async function waitForResponseInclude(page, responseText) {
     throw new Error(`Response url does NOT include: ${responseText} `)
   }
 }
+
 async function waitForRequestInclude(page, requestText, method = 'GET') {
   try {
     await page.waitForRequest(
@@ -206,7 +208,12 @@ async function screenshotMatching(name: string, element, page, range = 0.9) {
     threshold: range
   })
 }
-
+async function getCount(page, element) {
+  await page.waitForSelector(element, attachedState)
+  // Do not add wait for element
+  const sum = await page.$$eval(element, elements => elements.length)
+  return sum
+}
 export {
   shouldNotExist,
   screenshotMatching,
@@ -223,5 +230,6 @@ export {
   waitForText,
   randomString,
   waitNewPage,
-  isDisabledList
+  isDisabledList,
+  getCount
 }

@@ -1,6 +1,5 @@
 import { kyc } from '../selectors/kyc-form'
 import { text } from '../helpers/text'
-// import { userRegistration } from "../helpers/api-helpers";
 import { expect } from '@playwright/test'
 
 import {
@@ -31,7 +30,7 @@ class UserForms {
     await click(kyc.buttons.SUBMIT_TEXT, this.page)
     await expect(this.page.locator('button[disabled]')).toHaveText('Submitted')
     const dialog = await this.page.waitForSelector(kyc.DIALOG_VIEW)
-    await screenshotMatching(testInfo.title, dialog, this.page)
+    // await screenshotMatching(testInfo.title, dialog, this.page)
   }
 
   fillIssuerFirstForm = async () => {

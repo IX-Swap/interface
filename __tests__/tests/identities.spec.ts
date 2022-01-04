@@ -123,7 +123,7 @@ test.describe('Check identities form', () => {
     await kycForms.fillTaxDeclarationForm()
     await click(kyc.buttons.CLICK_HERE, page)
     const dialog = await page.waitForSelector(kyc.DIALOG_VIEW)
-    await screenshotMatching(testInfo.title, dialog, page)
+    // await screenshotMatching(testInfo.title, dialog, page)
   })
 
   test('Check FATCA information', async ({ page, kycForms }, testInfo) => {
@@ -134,7 +134,7 @@ test.describe('Check identities form', () => {
     await kycForms.fillTaxDeclaration()
     await click(kyc.buttons.FATCA, page)
     const dialog = await page.waitForSelector(kyc.DIALOG_VIEW)
-    await screenshotMatching(testInfo.title, dialog, page)
+    // await screenshotMatching(testInfo.title, dialog, page)
   })
 })
 
