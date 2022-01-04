@@ -8,6 +8,7 @@ const config = require('./common')
 
 config.mode = 'production'
 config.stats = 'verbose'
+config.devtool = false
 
 config.output = {
   path: path.join(process.cwd(), 'build'),
