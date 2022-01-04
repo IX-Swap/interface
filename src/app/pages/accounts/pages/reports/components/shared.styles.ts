@@ -21,7 +21,11 @@ export const useStyles = makeStyles(theme => ({
       rowIdx === 2 || rowIdx === 3
         ? theme.spacing(0.5, 2, 0.5, 3)
         : theme.spacing(0.5, 2),
-    fontSize: 14
+    fontSize: 14,
+    border: '1px solid #DDDDDD',
+    '&:first-of-type': {
+      borderRightColor: 'transparent'
+    }
   },
   column: {
     border: '1px solid #DDDDDD',
