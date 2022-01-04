@@ -2,9 +2,9 @@ import { Grid, Tab, Tabs } from '@material-ui/core'
 import { MarketTrades } from 'app/pages/exchange/components/Trades/MarketTrades'
 import { MyTrades } from 'app/pages/exchange/components/Trades/MyTrades'
 import { useStyles } from 'app/pages/exchange/components/Trades/Trades.styles'
-import { TabPanel } from 'components/TabPanel'
-import React, { useState } from 'react'
+import { MarketTabPanel } from 'components/MarketTabPanel'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+import React, { useState } from 'react'
 
 export const Trades = () => {
   const { tab } = useStyles()
@@ -35,12 +35,12 @@ export const Trades = () => {
         </Tabs>
       </Grid>
       <Grid item>
-        <TabPanel pt={1} value={activeTab} index={0}>
+        <MarketTabPanel pt={1} value={activeTab} index={0}>
           <MarketTrades />
-        </TabPanel>
-        <TabPanel pt={1} value={activeTab} index={1}>
+        </MarketTabPanel>
+        <MarketTabPanel pt={1} value={activeTab} index={1}>
           <MyTrades />
-        </TabPanel>
+        </MarketTabPanel>
       </Grid>
     </Grid>
   )
