@@ -25,7 +25,7 @@ export const BankDetailsDialog = ({
 }: BankDetailsDialogProps) => {
   const theme = useTheme()
   return (
-    <Dialog open={open} maxWidth='sm' fullWidth>
+    <Dialog open={open} maxWidth='sm' fullWidth onClose={close}>
       <Box position='relative'>
         <Grid container spacing={2}>
           <Grid item xs={12}>

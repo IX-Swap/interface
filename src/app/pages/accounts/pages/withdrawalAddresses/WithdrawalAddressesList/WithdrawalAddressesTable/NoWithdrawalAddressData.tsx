@@ -1,6 +1,6 @@
 import React from 'react'
 import { Grid, Box, Typography, Button } from '@material-ui/core'
-import AddressEmptyState from 'assets/address-empty-state.svg'
+import { ReactComponent as AddressEmptyState } from 'assets/address-empty-state.svg'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { WithdrawalAddressesRoute } from 'app/pages/accounts/pages/withdrawalAddresses/router/config'
 

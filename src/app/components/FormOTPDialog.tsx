@@ -47,12 +47,7 @@ export const FormOTPDialog = (props: FormOTPDialogProps) => {
         {...props.triggerButtonProps}
         disabled={isTriggerDisabled}
       />
-      <Dialog
-        disablePortal
-        open={isOpen}
-        maxWidth='md'
-        onBackdropClick={closeDialog}
-      >
+      <Dialog disablePortal open={isOpen} maxWidth='md' onClose={closeDialog}>
         <CenteredDialogTitle>
           Please Enter Your 2FA
           <IconButton onClick={closeDialog}>

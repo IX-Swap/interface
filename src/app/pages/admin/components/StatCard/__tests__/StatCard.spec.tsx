@@ -1,7 +1,7 @@
 import { StatCard } from 'app/pages/admin/components/StatCard/StatCard'
 import React from 'react'
 import { render } from 'test-utils'
-import TotalUsersIcon from 'assets/icons/users.svg'
+import { ReactComponent as TotalUsersIcon } from 'assets/icons/users.svg'
 
 describe('StatCard', () => {
   const props = {

@@ -34,6 +34,7 @@ export const useVCCFundStats = () => {
     subFunds ?? ''
   ]
   const queryOptions = {
+    retry: 0,
     enabled:
       !corporateIdentitiesIsLoading &&
       corporateId !== undefined &&

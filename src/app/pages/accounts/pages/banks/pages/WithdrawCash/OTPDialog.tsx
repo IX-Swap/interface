@@ -82,7 +82,7 @@ export const OTPDialog = (props: OTPDialogProps) => {
   const { close, open, title } = props
 
   return (
-    <Dialog disablePortal open={open} maxWidth='md' onBackdropClick={close}>
+    <Dialog disablePortal open={open} maxWidth='md' onClose={close}>
       <Box py={4} px={10}>
         <DialogTitle>
           <Typography

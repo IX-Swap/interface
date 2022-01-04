@@ -2,6 +2,7 @@ const webpack = require('webpack')
 const path = require('path')
 const BundleAnalyzerPlugin =
   require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const CopyPlugin = require('copy-webpack-plugin')
 
 const config = require('./common')
 
@@ -17,6 +18,25 @@ config.output = {
 config.plugins.push(
   new BundleAnalyzerPlugin({
     analyzerMode: 'json'
+  })
+)
+
+config.plugins.push(
+  new CopyPlugin({
+    patterns: [
+      {
+        from: 'public/documents',
+        to: 'documents'
+      },
+      {
+        from: 'public/datafeeds',
+        to: 'datafeeds'
+      },
+      {
+        from: 'public/charting_library',
+        to: 'charting_library'
+      }
+    ]
   })
 )
 

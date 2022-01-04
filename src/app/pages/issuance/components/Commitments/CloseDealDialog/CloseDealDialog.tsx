@@ -39,7 +39,6 @@ export const CloseDealDialog = (props: ModalProps) => {
       open={open}
       className={classes.root}
       onClose={() => toggleOpen(false)}
-      onBackdropClick={() => toggleOpen(false)}
       aria-labelledby='close-deal-modal-title'
       aria-describedby='close-deal-modal-description'
     >

@@ -52,7 +52,6 @@ export const CapitalCallDialog = (props: ModalProps) => {
       open={open}
       className={classes.root}
       onClose={() => toggleOpen(false)}
-      onBackdropClick={() => toggleOpen(false)}
       aria-labelledby='capital-call-modal-title'
       aria-describedby='capital-call-modal-description'
     >
