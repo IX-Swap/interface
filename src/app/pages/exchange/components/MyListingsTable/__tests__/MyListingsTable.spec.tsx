@@ -28,8 +28,6 @@ describe('MyListingsTable', () => {
     status: 'Draft,Submitted,Approved,Rejected'
   }
 
-  afterEach(async () => {})
-
   it.skip('renders without error', async () => {
     renderWithUserStore(<MyListingsTable />)
   })

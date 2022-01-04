@@ -24,7 +24,6 @@
     "dompurify": "^2.3.1",
     "draft-js": "^0.11.5",
     "draftjs-to-html": "^0.9.1",
-    "html-webpack-plugin": "^5.5.0",
     "kaktana-react-lightweight-charts": "^2.0.0",
     "lodash": "^4.17.21",
     "material-ui-phone-number": "^2.2.6",
@@ -58,6 +57,7 @@
     "typescript": "^4.1.2",
     "uno-material-ui": "^2.0.4",
     "use-debounce": "^5.2.0",
+    "web3": "^1.6.1",
     "yup": "^0.28.3",
     "yup-phone-lite": "^1.1.0"
   },
@@ -127,6 +127,7 @@
     "eslint-plugin-react-hooks": "^4.0.8",
     "eslint-plugin-standard": "^4.0.1",
     "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.5.0",
     "husky": "^4.2.5",
     "jest": "24.9.0",
     "jest-environment-jsdom-sixteen": "^1.0.3",
@@ -155,21 +156,14 @@
     "start": "NODE_ENV=development webpack serve --color --progress",
     "build": "NODE_ENV=production webpack --color --progress",
     "integration-test": "concurrently \"yarn start\" \"wait-on http-get://localhost:3000 && playwright test __tests__/tests \" --kill-others --success first",
-    "eject": "react-scripts eject",
     "test": "jest --env=jest-environment-jsdom-sixteen --colors --silent",
-    "pre-install": "rimraf node_modules && yarn cache clean",
-    "test:watch": "TZ=UTC react-scripts test --env=jest-environment-jsdom-sixteen --coverage",
+    "test:watch": "jest --watch --env=jest-environment-jsdom-sixteen --coverage",
     "test:ci": "CI=true jest --env=jest-environment-jsdom-sixteen --silent --coverage --testResultsProcessor=jest-sonar-reporter --maxWorkers=75%",
+    "pre-install": "rimraf node_modules && yarn cache clean",
     "lint": "eslint --cache --fix 'src/**/*.{ts,tsx}'",
     "format": "prettier --write 'src/**/*.tsx'",
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
   },
   "browserslist": {
     "production": [

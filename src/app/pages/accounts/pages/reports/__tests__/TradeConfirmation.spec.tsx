@@ -6,8 +6,6 @@ import * as useTradeConfirmation from 'app/pages/accounts/hooks/useTradeConfirma
 import { generateQueryResult } from '__fixtures__/useQuery'
 
 describe('TradeConfirmation', () => {
-  afterEach(async () => {})
-
   it('should match snapshot when data is undefined', () => {
     jest.spyOn(useTradeConfirmation, 'useTradeConfirmation').mockReturnValue(
       generateQueryResult({

@@ -9,8 +9,6 @@ jest.mock('components/form/TypedField', () => ({
 }))
 
 describe('BankForm', () => {
-  afterEach(async () => {})
-
   it.skip('renders without erorr', () => {
     render(
       <Form>

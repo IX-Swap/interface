@@ -1,5 +1,4 @@
 import { columns } from 'app/pages/exchange/components/YourOrdersTable/columns'
-import {} from 'test-utils'
 
 describe('columns', () => {
   afterEach(async () => {

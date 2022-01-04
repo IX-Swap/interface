@@ -20,8 +20,6 @@ describe('useUpdateCustomField', () => {
     })
   })
 
-  afterEach(async () => {})
-
   it('makes a request to correct api endpoint with correct payload', async () => {
     const apiService = {
       put: jest.fn()

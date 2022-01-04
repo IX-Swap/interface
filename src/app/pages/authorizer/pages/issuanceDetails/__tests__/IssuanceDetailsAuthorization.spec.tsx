@@ -5,8 +5,6 @@ import { generateQueryResult } from '__fixtures__/useQuery'
 import * as useDetailsOfIssuance from 'app/pages/identity/hooks/useDetailsOfIssuance'
 
 describe('IssuanceDetailsAuthorization', () => {
-  afterEach(async () => {})
-
   it.skip('renders without errors', async () => {
     render(<IssuanceDetailsAuthorization />)
   })

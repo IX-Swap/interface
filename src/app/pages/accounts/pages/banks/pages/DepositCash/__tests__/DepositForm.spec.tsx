@@ -6,8 +6,6 @@ import { DepositForm } from 'app/pages/accounts/pages/banks/pages/DepositCash/De
 import { generateMutationResult } from '__fixtures__/useQuery'
 
 describe('DepositForm', () => {
-  afterEach(async () => {})
-
   it('renders Form without error', async () => {
     const button = <button type='submit'>Submit</button>
     const mutateFn = jest.fn()

@@ -21,8 +21,6 @@ describe('useCustomField', () => {
     })
   })
 
-  afterEach(async () => {})
-
   it('makes a request to correct api endpoint', async () => {
     const apiService = {
       get: jest.fn()

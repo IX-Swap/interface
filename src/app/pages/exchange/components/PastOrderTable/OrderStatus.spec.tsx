@@ -6,8 +6,6 @@ import Typography from '@material-ui/core/Typography'
 jest.mock('@material-ui/core/Typography', () => jest.fn(() => null))
 
 describe('OrderStatus', () => {
-  afterEach(async () => {})
-
   it('renders Typography with filled status and correct prop', () => {
     render(<OrderStatus status={'FILLED'} />)
 

@@ -1,5 +1,4 @@
-// import Web3 from 'web3'
-const Web3 = Object
+import Web3 from 'web3'
 
 interface Web3Service {
   web3: any

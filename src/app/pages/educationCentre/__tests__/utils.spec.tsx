@@ -5,7 +5,6 @@ import {
   timeRange
 } from 'app/pages/educationCentre/utils'
 import { sub } from 'date-fns'
-import {} from 'test-utils'
 
 const sampleSecurities = [sampleSecurity]
 

@@ -2,7 +2,7 @@ import {
   getIssuerDetailsFormValues,
   getIssuerDocumentsFormValues
 } from 'app/pages/identity/utils/detailsOfIssuance/forms'
-import {} from 'test-utils'
+
 import { detailsOfIssuance, document } from '__fixtures__/identity'
 
 describe('forms', () => {

@@ -2,7 +2,7 @@ import {
   getIssuerDetailsRequestPayload,
   getIssuerDocumentsRequestPayload
 } from 'app/pages/identity/utils/detailsOfIssuance/requests'
-import {} from 'test-utils'
+
 import { detailsOfIssuanceFormValues } from '__fixtures__/identity'
 
 describe('requests', () => {

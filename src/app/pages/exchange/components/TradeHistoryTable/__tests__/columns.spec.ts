@@ -1,5 +1,4 @@
 import { columns } from 'app/pages/exchange/components/TradeHistoryTable/columns'
-import {} from 'test-utils'
 
 describe('columns', () => {
   afterEach(async () => {

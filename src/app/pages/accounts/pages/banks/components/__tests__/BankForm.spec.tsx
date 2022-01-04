@@ -27,8 +27,6 @@ describe('BankForm', () => {
     onSubmit: submit
   }
 
-  afterEach(async () => {})
-
   it.skip('renders without erorr', () => {
     render(<BankForm {...props} />)
   })

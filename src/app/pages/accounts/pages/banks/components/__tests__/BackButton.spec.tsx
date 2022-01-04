@@ -7,8 +7,6 @@ import { DepositStoreStep } from 'app/pages/accounts/pages/banks/context/store'
 describe('BackButton', () => {
   const fakeDepositStore = { setCurrentStep: jest.fn() }
 
-  afterEach(async () => {})
-
   it('invokes setCurrentStep on button click', async () => {
     const { getByRole } = renderWithDepositStore(
       <BackButton />,

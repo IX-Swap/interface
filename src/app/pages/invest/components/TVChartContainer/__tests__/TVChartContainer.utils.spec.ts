@@ -1,4 +1,3 @@
-import {} from 'test-utils'
 import { getLanguageFromURL, getMovingAverageParams } from '../utils'
 
 describe('getMovingAverageParams', () => {

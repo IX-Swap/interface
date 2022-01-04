@@ -20,8 +20,6 @@ jest.mock(
 )
 
 describe('DepositCash', () => {
-  afterEach(async () => {})
-
   it('renders RecentDeposits without error', () => {
     const objResponse = generateQueryResult({
       data: virtualAccountsSample,

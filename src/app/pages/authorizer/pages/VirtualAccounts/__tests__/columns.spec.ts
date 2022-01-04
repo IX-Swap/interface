@@ -1,5 +1,4 @@
 import { columns } from 'app/pages/authorizer/pages/VirtualAccounts/columns'
-import {} from 'test-utils'
 
 describe('columns', () => {
   afterEach(async () => {

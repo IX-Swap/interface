@@ -9,8 +9,6 @@ import { ReportsRoute } from 'app/pages/accounts/pages/reports/router/config'
 describe('Actions', () => {
   const fakeDate = '2021-11-29T01:26:17.997Z'
 
-  afterEach(async () => {})
-
   it('invokes change URL function on button click', async () => {
     const { getByText } = render(<Actions item={reportsItems[0]} />)
     fireEvent.click(getByText('View Report'))

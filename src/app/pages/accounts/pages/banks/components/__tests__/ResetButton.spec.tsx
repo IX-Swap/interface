@@ -7,8 +7,6 @@ import { Form } from 'components/form/Form'
 describe('ResetButton', () => {
   const fakeDepositStore = { clear: jest.fn() }
 
-  afterEach(async () => {})
-
   it('invokes clear on button click', async () => {
     const { getByRole } = renderWithDepositStore(
       <Form>

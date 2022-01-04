@@ -13,7 +13,7 @@ import { networks } from '__fixtures__/network'
 jest.deepUnmock('axios')
 import { _axios } from 'services/api'
 
-describe.skip('DSOTotalUnitsInfo', () => {
+describe('DSOTotalUnitsInfo', () => {
   const axiosMock = new MockAdapter(_axios)
 
   beforeAll(() => {

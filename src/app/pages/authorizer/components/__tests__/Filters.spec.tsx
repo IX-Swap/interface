@@ -10,8 +10,6 @@ jest.mock('app/pages/authorizer/components/SearchAndDateFilter', () => ({
 }))
 
 describe('Filters', () => {
-  afterEach(async () => {})
-
   it('renders title, StatusFilter and SearchAndDateFilter', async () => {
     const { getByText, getByTestId } = render(<Filters />)
     const title = getByText(/filters/i)

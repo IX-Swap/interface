@@ -2,7 +2,6 @@ import {
   columns,
   renderDate
 } from 'app/pages/admin/components/AdminIdentityList/columns'
-import {} from 'test-utils'
 
 describe('columns', () => {
   afterEach(async () => {

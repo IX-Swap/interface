@@ -1,5 +1,4 @@
 import { columns } from 'app/pages/exchange/components/CurrentHoldingsTable/columns'
-import {} from 'test-utils'
 
 describe('columns', () => {
   afterEach(async () => {

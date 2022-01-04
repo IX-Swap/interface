@@ -2,7 +2,7 @@ import {
   getIdentityOnboardingSteps,
   getIdentityStatus
 } from 'app/components/OnboardingPanel/hooks/utils'
-import {} from 'test-utils'
+
 import { individual } from '__fixtures__/identity'
 
 describe('getIdentityOnboardingSteps', () => {

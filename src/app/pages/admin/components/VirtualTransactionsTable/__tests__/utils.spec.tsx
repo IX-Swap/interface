@@ -1,4 +1,3 @@
-import {} from 'test-utils'
 import {
   getCorrectDirectionFilterValues,
   renderAmount,

@@ -4,10 +4,6 @@ import { SearchFilter } from 'app/components/SearchFilter'
 import { history } from 'config/history'
 
 describe('SearchFilter', () => {
-  it.skip('renders without any error', () => {
-    render(<SearchFilter />)
-  })
-
   it('renders input element', () => {
     const { getByRole, getByPlaceholderText } = render(
       <SearchFilter placeholder='Search' />

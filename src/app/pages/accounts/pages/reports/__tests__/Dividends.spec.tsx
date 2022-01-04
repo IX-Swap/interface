@@ -6,8 +6,6 @@ import * as useDividends from 'app/pages/accounts/hooks/useDividends'
 import { generateQueryResult } from '__fixtures__/useQuery'
 
 describe('Dividends', () => {
-  afterEach(async () => {})
-
   it('should match snapshot when data is undefined', () => {
     jest.spyOn(useDividends, 'useDividends').mockReturnValue(
       generateQueryResult({

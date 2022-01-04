@@ -1,5 +1,4 @@
 import socketService from 'services/socket'
-import {} from 'test-utils'
 
 describe('socketService', () => {
   afterEach(async () => {

@@ -1,6 +1,6 @@
 import { charts } from 'config/apiURL'
 import apiService from 'services/api'
-import {} from 'test-utils'
+
 import { getBars } from '../history-provider'
 import { sampleResponse, symbolData, sampleBars } from '__fixtures__/tvChart'
 import {

@@ -1,5 +1,4 @@
 import apiService from 'services/api'
-import {} from 'test-utils'
 
 import { symbolData, sampleResponse, sampleBars } from '__fixtures__/tvChart'
 import { ResolutionString } from 'types/charting_library'

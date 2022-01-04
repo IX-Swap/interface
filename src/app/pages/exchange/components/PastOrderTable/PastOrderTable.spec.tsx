@@ -28,8 +28,6 @@ describe('PastOrderTable', () => {
     pair: '1'
   }
 
-  afterEach(async () => {})
-
   it.skip('renders without error', async () => {
     renderWithUserStore(<PastOrderTable pairId={'1'} />)
   })

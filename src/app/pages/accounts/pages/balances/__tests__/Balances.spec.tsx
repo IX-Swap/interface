@@ -12,12 +12,6 @@ jest.mock('components/TableWithPagination/TableView', () => ({
 }))
 
 describe('Balances', () => {
-  afterEach(async () => {})
-
-  it.skip('renders without error', async () => {
-    renderWithUserStore(<Balances />)
-  })
-
   it('renders TableView with correct props if user exists', () => {
     jest.spyOn(useAuthHook, 'useAuth').mockReturnValue({
       isAuthenticated: true,

@@ -6,8 +6,6 @@ import { fakeActivitySummary } from '__fixtures__/reports'
 import { generateQueryResult } from '__fixtures__/useQuery'
 
 describe('AccountsSummary', () => {
-  afterEach(async () => {})
-
   it('should match snapshot when data is undefined', () => {
     jest.spyOn(useActivitySummary, 'useActivitySummary').mockReturnValue(
       generateQueryResult({
