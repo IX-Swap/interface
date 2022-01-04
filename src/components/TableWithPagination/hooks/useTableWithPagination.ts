@@ -7,6 +7,7 @@ import { BaseFilter } from 'types/util'
 export interface UseTableWithPaginationReturnType<TData> {
   items: TData[]
   status: QueryStatus
+  isLoading: boolean
   page: number
   rowsPerPage: number
   fetchMore: Function
@@ -66,7 +67,9 @@ export const useTableWithPagination = <TData>({
     data: _data,
     status,
     fetchMore,
-    isFetching
+    isFetching,
+    isLoading,
+    isFetchingMore
   } = useInfiniteQuery([queryKey, page, rowsPerPage, filter], fetcher, {
     enabled: uri !== undefined && queryEnabled
   })
@@ -112,7 +115,8 @@ export const useTableWithPagination = <TData>({
     data[data.length - 1].data.length > 0
       ? data[data.length - 1].data[0].count ?? 0
       : 0
-  const items = isFetching ? previousPageData : currentPageData
+  const isActuallyLoading = isLoading || isFetching || Boolean(isFetchingMore)
+  const items = isActuallyLoading ? previousPageData : currentPageData
   const _page = status === 'loading' ? 0 : page
 
   const _setPage = (nextPage: number): void => {
@@ -133,6 +137,7 @@ export const useTableWithPagination = <TData>({
     fetchMore,
     setRowsPerPage,
     rowsPerPage,
-    status
+    status,
+    isLoading: isActuallyLoading
   }
 }

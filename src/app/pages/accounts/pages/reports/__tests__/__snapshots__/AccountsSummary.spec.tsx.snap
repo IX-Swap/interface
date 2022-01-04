@@ -295,6 +295,173 @@ exports[`AccountsSummary should match snapshot when all data is loaded successfu
           </div>
         </div>
       </div>
+      <div
+        class="MuiPaper-root MuiAccordion-root makeStyles-root-10 MuiAccordion-rounded MuiPaper-elevation1 MuiPaper-rounded"
+      >
+        <div
+          aria-disabled="false"
+          aria-expanded="false"
+          class="MuiButtonBase-root MuiAccordionSummary-root makeStyles-summaryWrapper-11"
+          role="button"
+          tabindex="0"
+        >
+          <div
+            class="MuiAccordionSummary-content makeStyles-summaryContent-12"
+          >
+            <p
+              class="MuiTypography-root makeStyles-summary-13 MuiTypography-body1 MuiTypography-colorPrimary"
+            >
+              Cash Report
+            </p>
+          </div>
+          <div
+            aria-disabled="false"
+            aria-hidden="true"
+            class="MuiButtonBase-root MuiIconButton-root MuiAccordionSummary-expandIcon MuiIconButton-edgeEnd"
+          >
+            <span
+              class="MuiIconButton-label"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-colorPrimary"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"
+                />
+              </svg>
+            </span>
+            <span
+              class="MuiTouchRipple-root"
+            />
+          </div>
+        </div>
+        <div
+          class="MuiCollapse-root MuiCollapse-hidden"
+          style="min-height: 0px;"
+        >
+          <div
+            class="MuiCollapse-wrapper"
+          >
+            <div
+              class="MuiCollapse-wrapperInner"
+            >
+              <div
+                role="region"
+              >
+                <div
+                  class="MuiAccordionDetails-root makeStyles-detailsWrapper-14"
+                >
+                  <div
+                    class="MuiTableContainer-root"
+                  >
+                    <table
+                      class="MuiTable-root"
+                    >
+                      <tbody
+                        class="MuiTableBody-root"
+                      >
+                        <tr
+                          class="MuiTableRow-root makeStyles-row-20 makeStyles-row-31"
+                        >
+                          <th
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-cashColumn-16 makeStyles-cashColumn-30 MuiTableCell-alignLeft"
+                            role="cell"
+                            scope="row"
+                          >
+                            USD
+                          </th>
+                          <th
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-cashColumn-16 makeStyles-cashColumn-30 MuiTableCell-alignRight"
+                            role="cell"
+                            scope="row"
+                          >
+                            Total
+                          </th>
+                        </tr>
+                        <tr
+                          class="MuiTableRow-root makeStyles-row-20 makeStyles-row-33"
+                        >
+                          <th
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-cashColumn-16 makeStyles-cashColumn-32 MuiTableCell-alignLeft"
+                            role="cell"
+                            scope="row"
+                          >
+                            Starting cash
+                          </th>
+                          <th
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-cashColumn-16 makeStyles-cashColumn-32 MuiTableCell-alignRight"
+                            role="cell"
+                            scope="row"
+                          >
+                            0.00
+                          </th>
+                        </tr>
+                        <tr
+                          class="MuiTableRow-root makeStyles-row-20 makeStyles-row-35"
+                        >
+                          <th
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-cashColumn-16 makeStyles-cashColumn-34 MuiTableCell-alignLeft"
+                            role="cell"
+                            scope="row"
+                          >
+                            Other Fees
+                          </th>
+                          <th
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-cashColumn-16 makeStyles-cashColumn-34 MuiTableCell-alignRight"
+                            role="cell"
+                            scope="row"
+                          >
+                            0.00
+                          </th>
+                        </tr>
+                        <tr
+                          class="MuiTableRow-root makeStyles-row-20 makeStyles-row-37"
+                        >
+                          <th
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-cashColumn-16 makeStyles-cashColumn-36 MuiTableCell-alignLeft"
+                            role="cell"
+                            scope="row"
+                          >
+                            Withdrawals
+                          </th>
+                          <th
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-cashColumn-16 makeStyles-cashColumn-36 MuiTableCell-alignRight"
+                            role="cell"
+                            scope="row"
+                          >
+                            0.00
+                          </th>
+                        </tr>
+                        <tr
+                          class="MuiTableRow-root makeStyles-row-20 makeStyles-row-39"
+                        >
+                          <th
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-cashColumn-16 makeStyles-cashColumn-38 MuiTableCell-alignLeft"
+                            role="cell"
+                            scope="row"
+                          >
+                            Ending Cash
+                          </th>
+                          <th
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-cashColumn-16 makeStyles-cashColumn-38 MuiTableCell-alignRight"
+                            role="cell"
+                            scope="row"
+                          >
+                            0.00
+                          </th>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
