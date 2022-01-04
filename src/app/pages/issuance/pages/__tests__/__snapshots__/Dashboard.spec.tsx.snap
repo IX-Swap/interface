@@ -363,7 +363,6 @@ exports[`Dashboard should match snapshot 1`] = `
             <div
               class="MuiBox-root MuiBox-root-22"
             >
-              <image-mock />
               <div
                 class="MuiBox-root MuiBox-root-23"
               />
