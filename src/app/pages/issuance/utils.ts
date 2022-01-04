@@ -11,6 +11,7 @@ import { hasValue } from 'helpers/forms'
 import { DataroomFile, FormArray } from 'types/dataroomFile'
 import { ListingFormValues } from 'app/pages/exchange/types/listings'
 import * as yup from 'yup'
+import { AssetUnderManagement } from 'types/vccDashboard'
 
 export const numberToPercentage = (value: any) => {
   if (value === null || value === undefined || value === '') {
@@ -147,3 +148,10 @@ export const newDistributionValidationSchema = yup.object().shape({
   dateOfDistribution: yup.string().required('This is a required field'),
   otp: yup.string().required('This is a required field')
 })
+
+export const sortAssetsByAmount = (assets?: AssetUnderManagement[]) => {
+  if (assets == null || assets === undefined) {
+    return assets
+  }
+  return [...assets].sort((first, second) => second.amount - first.amount)
+}
