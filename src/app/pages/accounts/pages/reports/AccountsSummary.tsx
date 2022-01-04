@@ -32,24 +32,23 @@ export const AccountsSummary: React.FC = () => {
 
     const { openPositions, openPositionsTotal, cashReports } = data
 
-    if (hasOpenPositionsTotal) {
-      return (
-        <ReportsAccordion summary={'Open Positions'}>
-          <OpenPositionTable
-            openPositions={openPositions}
-            openPositionsTotal={openPositionsTotal}
-          />
-        </ReportsAccordion>
-      )
-    }
-
-    if (hasCashReports) {
-      return (
-        <ReportsAccordion summary={'Cash Report'}>
-          <CashReportTable data={cashReports} />
-        </ReportsAccordion>
-      )
-    }
+    return (
+      <>
+        {hasOpenPositionsTotal && (
+          <ReportsAccordion summary={'Open Positions'}>
+            <OpenPositionTable
+              openPositions={openPositions}
+              openPositionsTotal={openPositionsTotal}
+            />
+          </ReportsAccordion>
+        )}
+        {hasCashReports && (
+          <ReportsAccordion summary={'Cash Report'}>
+            <CashReportTable data={cashReports} />
+          </ReportsAccordion>
+        )}
+      </>
+    )
   }
 
   if (isLoading) {
