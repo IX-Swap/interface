@@ -25,7 +25,8 @@ const useTableWithPaginationMockReturnValue: useTableWithPaginationHook.UseTable
     status: QueryStatus.Idle,
     fetchMore: jest.fn(),
     page: 0,
-    rowsPerPage: 5
+    rowsPerPage: 5,
+    isLoading: false
   }
 
 describe('TableView', () => {

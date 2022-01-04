@@ -26,7 +26,8 @@ const useTableWithPaginationMockReturnValue: useTableWithPaginationHook.UseTable
     status: QueryStatus.Idle,
     fetchMore: jest.fn(),
     page: 0,
-    rowsPerPage: 4
+    rowsPerPage: 4,
+    isLoading: false
   }
 
 jest.mock('app/components/LoadingIndicator/LoadingIndicator', () => ({
