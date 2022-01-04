@@ -36,9 +36,6 @@ export const InvestorsChart = ({
       ]
     })
 
-    // TODO remove when backend PR will be approved (January 2022)
-    values.shift()
-
     data = [[{ type: 'string', label: 'Month' }, ...labels], ...values]
   }
 
