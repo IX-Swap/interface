@@ -34,6 +34,11 @@ export const getThemeOverrides = (theme: Theme): Overrides & LabOverrides => ({
       paddingRight: 40
     }
   },
+  MuiDialogActions: {
+    root: {
+      paddingBottom: 40
+    }
+  },
   MuiListItem: {
     root: {
       '&$selected': {

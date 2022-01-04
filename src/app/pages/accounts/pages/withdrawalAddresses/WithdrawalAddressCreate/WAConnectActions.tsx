@@ -35,7 +35,8 @@ export const WAConnectActions = ({
   return (
     <Button
       color='primary'
-      variant='outlined'
+      variant='contained'
+      disableElevation
       onClick={() => getAccount()}
       disabled={!allowConnect || isLoading}
     >
