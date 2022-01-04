@@ -7,7 +7,7 @@ config.mode = 'development'
 config.stats = 'normal'
 
 config.output = {
-  filename: '[name]-[hash].js',
+  filename: '[name]-[fullhash].js',
   publicPath: '/'
 }
 

@@ -8,20 +8,7 @@ dotenv.config()
 module.exports = {
   resolve: {
     extensions: ['*', '.js', '.jsx', '.ts', '.tsx'],
-    modules: ['src', 'node_modules'],
-    fallback: {
-      fs: false,
-      tls: false,
-      net: false,
-      path: false,
-      zlib: false,
-      http: false,
-      https: false,
-      stream: false,
-      crypto: false,
-      os: false,
-      'crypto-browserify': false
-    }
+    modules: ['src', 'node_modules']
   },
   entry: ['./src/index.tsx'],
   performance: {
@@ -36,7 +23,7 @@ module.exports = {
         use: 'babel-loader'
       },
       {
-        test: /\.(ts|tsx)$/,
+        test: /\.tsx?$/,
         use: 'ts-loader',
         exclude: /(node_modules)/
       },
