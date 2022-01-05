@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { Snackbar, SnackbarProps } from 'hooks/Snackbar'
 import { NotificationIcon } from 'app/pages/notifications/components/NotificationIcon'
 
@@ -11,12 +11,7 @@ describe('Snackbar', () => {
   const props: SnackbarProps = { message: 'Cool!', variant: 'success' }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<Snackbar {...props} />)
   })
 
   it('renders NotificationIcon with correct props', () => {

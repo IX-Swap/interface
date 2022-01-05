@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { dso } from '__fixtures__/authorizer'
 import {
   PrimaryInvestLink,
@@ -33,12 +33,7 @@ describe('PrimaryInvestLink', () => {
     component: AppRouterLinkComponent
   }
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<PrimaryInvestLink {...primaryProps} />)
   })
 
   it('renders Button with correct props when type is Primary', () => {

@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { VAAuditFilters } from 'app/pages/admin/components/VAAuditFilters'
 import { SearchFilter } from 'app/components/SearchFilter'
 import Typography from '@material-ui/core/Typography'
@@ -30,12 +30,7 @@ jest.mock('@material-ui/core/Typography', () => jest.fn(() => null))
 
 describe('VAAuditFilters', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<VAAuditFilters />)
   })
 
   it('renders SearchFilter with correct props', () => {

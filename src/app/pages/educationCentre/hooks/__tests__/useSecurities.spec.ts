@@ -2,12 +2,11 @@ import { act } from '@testing-library/react-hooks'
 import { useSecurities } from 'app/pages/educationCentre/hooks/useSecurities'
 import { atlasOneURL } from 'config/apiURL'
 import { history } from 'config/history'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { generateQueryResult } from '__fixtures__/useQuery'
 
 describe('useSecurities', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

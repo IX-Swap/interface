@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { MarkAllAsRead } from 'app/pages/notifications/components/MarkAllAsRead'
 import * as notificationsHook from 'app/pages/notifications/hooks/useNotifications'
 import * as useMarkAllAsReadHook from 'app/pages/notifications/hooks/useMarkAllAsRead'
@@ -16,15 +16,7 @@ describe('MarkAllAsRead', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    jest
-      .spyOn(notificationsHook, 'useNotifications')
-      .mockReturnValue({ unreadCount: 1 } as any)
-    render(<MarkAllAsRead />)
   })
 
   it('will call mutation function when button is clicked', async () => {

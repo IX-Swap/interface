@@ -92,7 +92,7 @@ export const FormStep = (props: FormStepProps) => {
       <Grid item>{createElement(step.component)}</Grid>
       <VSpacer size='large' />
 
-      <Grid item container justify='flex-end'>
+      <Grid item container justifyContent='flex-end'>
         <Box display='flex'>
           {skippable !== undefined && skippable && !isLastStep && (
             <Fragment>

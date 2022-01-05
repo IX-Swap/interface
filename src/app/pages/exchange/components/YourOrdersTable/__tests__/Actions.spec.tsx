@@ -1,7 +1,7 @@
 import { Actions } from 'app/pages/exchange/components/YourOrdersTable/Actions'
 import { Order } from 'app/pages/exchange/components/YourOrdersTable/YourOrderstable'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 
 describe('Actions', () => {
   const order: Order = {
@@ -19,12 +19,7 @@ describe('Actions', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<Actions item={order} />)
   })
 
   it('renders Cancel button when status is not Cancelled', () => {

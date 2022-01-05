@@ -18,7 +18,7 @@ export const WithdrawalAddressesList: React.FC = () => {
           item
           container
           xs={12}
-          justify='flex-end'
+          justifyContent='flex-end'
           spacing={1}
           alignItems='center'
         >

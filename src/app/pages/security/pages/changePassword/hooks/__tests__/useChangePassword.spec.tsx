@@ -1,12 +1,11 @@
 import { act } from '@testing-library/react-hooks'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { useChangePassword } from 'app/pages/security/pages/changePassword/hooks/useChangePassword'
 import { changePasswordArgs } from '__fixtures__/security'
 import { unsuccessfulResponse, successfulResponse } from '__fixtures__/api'
 
 describe('useChangePassword', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

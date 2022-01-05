@@ -47,7 +47,6 @@ export const GetWalletDialog = (props: ModalProps) => {
       open={open}
       className={classes.root}
       onClose={() => toggleOpen(false)}
-      onBackdropClick={() => toggleOpen(false)}
       aria-labelledby='getwallet-modal-title'
       aria-describedby='getwallet-modal-description'
     >

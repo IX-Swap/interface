@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import {
   LandingPage,
   LandingPageProps
@@ -21,12 +21,7 @@ describe('LandingPage', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<LandingPage {...props} />)
   })
 
   it('renders LandingPageItem with correct props for each link', () => {

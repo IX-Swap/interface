@@ -8,7 +8,7 @@ import { history } from 'config/history'
 import * as useIndividualIdentity from 'hooks/identity/useIndividualIdentity'
 import React from 'react'
 import { generatePath } from 'react-router-dom'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { individual } from '__fixtures__/identity'
 import {
   generateMutationResult,
@@ -76,12 +76,7 @@ describe('IndividualInvestorForm', () => {
       .mockImplementation(() => useConfirmSubmitDialogResponse as any)
   })
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<IndividualInvestorForm />)
   })
 
   it('renders loading text when isLoading', () => {

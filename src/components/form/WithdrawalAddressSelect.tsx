@@ -8,26 +8,27 @@ export interface WithdrawalAddressSelectProps extends SelectProps {
   network?: string
 }
 
-export const WithdrawalAddressSelect: React.FC<WithdrawalAddressSelectProps> =
-  props => {
-    const { network, ...rest } = props
-    const { data, status } = useWithdrawalAddresses({ network })
+export const WithdrawalAddressSelect: React.FC<
+  WithdrawalAddressSelectProps
+> = props => {
+  const { network, ...rest } = props
+  const { data, status } = useWithdrawalAddresses({ network })
 
-    const queryStatus = queryStatusRenderer(status)
-    if (queryStatus !== undefined) return queryStatus
+  const queryStatus = queryStatusRenderer(status)
+  if (queryStatus !== undefined) return queryStatus
 
-    const filteredAddresses = data.list.filter(
-      ({ status }) => status === 'Approved'
-    )
+  const filteredAddresses = data.list.filter(
+    ({ status }) => status === 'Approved'
+  )
 
-    return (
-      <Select {...rest}>
-        <MenuItem value=''>I don't want to specify a wallet</MenuItem>
-        {filteredAddresses.map(({ label, _id }) => (
-          <MenuItem key={_id} value={_id} className={privateClassNames()}>
-            {label}
-          </MenuItem>
-        ))}
-      </Select>
-    )
-  }
+  return (
+    <Select {...rest}>
+      <MenuItem value=''>I don't want to specify a wallet</MenuItem>
+      {filteredAddresses.map(({ label, _id }) => (
+        <MenuItem key={_id} value={_id} className={privateClassNames()}>
+          {label}
+        </MenuItem>
+      ))}
+    </Select>
+  )
+}

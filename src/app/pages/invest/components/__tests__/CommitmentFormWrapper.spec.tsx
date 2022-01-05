@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { CommitmentFormWrapper } from 'app/pages/invest/components/CommitmentFormWrapper'
 import * as useDSOByIdHook from 'app/pages/invest/hooks/useDSOById'
 import { history } from 'config/history'
@@ -41,12 +41,7 @@ describe('CommitmentFormWrapper', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<CommitmentFormWrapper />)
   })
 
   it('renders nothing if loading', () => {

@@ -12,8 +12,9 @@ interface GetIdFromObjProps extends Record<string, any> {
 export const getIdFromObj = (value?: GetIdFromObjProps | null): string =>
   value?._id ?? ''
 
-export const isEmptyString = (value: string | null | undefined) =>
-  value?.length === 0
+export const isEmptyString = (value: string | null | undefined) => {
+  return value === undefined || value === null || value.trim().length === 0
+}
 
 export const compareStrings = (a: string, b: string) => a === b
 

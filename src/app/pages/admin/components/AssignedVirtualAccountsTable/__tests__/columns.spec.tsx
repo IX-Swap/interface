@@ -1,11 +1,10 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { columns } from 'app/pages/admin/components/AssignedVirtualAccountsTable/columns'
 
 describe('columns', () => {
   describe('assigned.renderAssignedDate', () => {
     afterEach(async () => {
-      await cleanup()
       jest.clearAllMocks()
     })
 
@@ -37,7 +36,6 @@ describe('columns', () => {
 
   describe('renderAmount', () => {
     afterEach(async () => {
-      await cleanup()
       jest.clearAllMocks()
     })
 

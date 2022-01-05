@@ -1,6 +1,6 @@
 import { UserIdentitiesStatus } from 'app/pages/admin/components/UserIdentitiesStatus'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { managedUser } from '__fixtures__/user'
 import { UserIdentitySelect } from 'app/pages/admin/components/UserIdentitySelect'
 
@@ -10,12 +10,7 @@ jest.mock('app/pages/admin/components/UserIdentitySelect', () => ({
 
 describe('UserIdentitiesStatus', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<UserIdentitiesStatus data={managedUser} />)
   })
 
   it('renders props correctly', () => {

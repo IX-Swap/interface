@@ -19,8 +19,8 @@
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react-jsx",
+    "noEmit": false,
+    "jsx": "react",
     "sourceMap": true,
     "inlineSources": true,
     "sourceRoot": "/",
@@ -29,15 +29,11 @@
   "apiUrl": "https://api.mozork.com",
   "include": [
     "src/**/*",
-    "src/index.tsx",
-    "src/wdyr.ts",
-    "src/react-app-env.d.ts",
-    "src/setupTests.ts",
-    "src/test-utils.tsx",
-    "src/__mocks__/**/*",
-    "src/__fixtures__/**/*"
+    "tests/*.ts",
   ],
   "exclude": [
+    "node_modules",
+    "jest.config.js",
     "**/*.test.{ts,tsx}"
   ]
 }

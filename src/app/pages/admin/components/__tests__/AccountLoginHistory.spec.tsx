@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { AccountLoginHistory } from 'app/pages/admin/components/AccountLoginHistory'
 import { managedUser } from '__fixtures__/user'
 import * as useQueryFilter from 'hooks/filters/useQueryFilter'
@@ -34,12 +34,7 @@ describe('AccountLoginHitory', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<AccountLoginHistory />)
   })
 
   it('renders components correctly', () => {

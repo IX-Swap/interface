@@ -1,7 +1,7 @@
 import { TokenDeploymentAuthorization } from 'app/pages/authorizer/pages/TokenDeployment/TokenDeploymentAuthorization'
 import * as useDSOById from 'app/pages/invest/hooks/useDSOById'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { dso } from '__fixtures__/authorizer'
 import { generateQueryResult } from '__fixtures__/useQuery'
 
@@ -19,12 +19,7 @@ describe('TokenDeploymentAuthorization', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<TokenDeploymentAuthorization />)
   })
 
   it('renders null when data is undefined', () => {

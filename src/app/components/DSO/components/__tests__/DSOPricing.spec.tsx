@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { DSOPricing } from 'app/components/DSO/components/DSOPricing'
 import { DSOMinimumInvestment } from 'app/components/DSO/components/DSOMinimumInvestment'
 import { DSOTotalUnits } from 'app/components/DSO/components/DSOTotalUnits'
@@ -30,16 +30,7 @@ describe('DSOPricing', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(
-      <Form>
-        <DSOPricing />
-      </Form>
-    )
   })
 
   it('renders EditableField with correct props', () => {

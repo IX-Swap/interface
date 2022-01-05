@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import * as createCustody from 'app/pages/exchange/hooks/useCreateCustodianWallet'
 import * as snackbar from 'hooks/useSnackbar'
 import { GetWalletDialog, ModalProps } from '../GetWalletDialog'
@@ -23,7 +23,6 @@ describe('GetWalletDialog', () => {
       .mockReturnValue([createCustodianWallet, { isLoading: false }] as any)
   })
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

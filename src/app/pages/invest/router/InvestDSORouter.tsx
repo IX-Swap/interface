@@ -3,7 +3,7 @@ import { InvestRoute } from 'app/pages/invest/router/config'
 import { ViewDSO } from 'app/pages/invest/pages/ViewDSO'
 import { AppRoute } from 'components/AppRoute'
 import React from 'react'
-import { Switch } from 'react-router'
+import { Switch } from 'react-router-dom'
 
 export const InvestDSORouter = () => {
   return (

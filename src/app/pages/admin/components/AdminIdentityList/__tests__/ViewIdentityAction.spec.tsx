@@ -1,12 +1,12 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import {
   ViewIdentityAction,
   ViewIdentityActionProps
 } from 'app/pages/admin/components/AdminIdentityList/ViewIdentityAction'
 import * as useAuth from 'hooks/auth/useAuth'
 import { AdminRoute } from 'app/pages/admin/router/config'
-import { generatePath } from 'react-router'
+import { generatePath } from 'react-router-dom'
 
 describe('ViewIdentityAction', () => {
   const props: ViewIdentityActionProps = {
@@ -26,12 +26,7 @@ describe('ViewIdentityAction', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<ViewIdentityAction {...props} />)
   })
 
   it('renders view link correctly', () => {

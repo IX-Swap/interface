@@ -14,7 +14,7 @@ export interface DSOCardProps {
 export const DSOCard = ({ value, icon, title }: DSOCardProps) => {
   return (
     <ChartWrapper py={2.5}>
-      <Grid container justify='space-between' alignItems='center'>
+      <Grid container justifyContent='space-between' alignItems='center'>
         <Grid item>
           <ChartTitle title={title} icon={icon} />
           <VSpacer size='extraSmall' />

@@ -1,7 +1,7 @@
 import * as useGetIdentities from 'app/components/OnboardingPanel/hooks/useGetIdentities'
 import { IdentityPreview } from 'app/pages/identity/components/IdentityPreview/IdentityPreview'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { corporate, detailsOfIssuance, individual } from '__fixtures__/identity'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 import { CorporateIdentityButton } from 'app/pages/identity/components/IdentityPreview/CorporateIdentityButton'
@@ -51,23 +51,7 @@ jest.mock(
 
 describe('IdentityPreview', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    const objResponse = {
-      hasIdentity: true,
-      isLoadingIdentities: false,
-      individualIdentity: individual,
-      corporateIdentities: { list: [corporate] }
-    }
-
-    jest
-      .spyOn(useGetIdentities, 'useGetIdentities')
-      .mockImplementation(() => objResponse as any)
-
-    render(<IdentityPreview />)
   })
 
   it('renders loading indicator when isLoadingIdentities is true', () => {

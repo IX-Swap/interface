@@ -12,7 +12,8 @@ import { PlaceOrderFields } from 'app/pages/exchange/components/PlaceOrderFields
 import { useStyles } from 'app/pages/exchange/components/PlaceOrderForm/PlaceOrderForm.styles'
 import { Submit } from 'components/form/Submit'
 import { transformPlaceOrderFormValuesToArgs } from 'app/pages/exchange/utils/order'
-import { useParams } from 'react-router'
+import { useParams } from 'react-router-dom'
+import { isEmptyString } from 'helpers/strings'
 
 export type ActiveTabName = 'BUY' | 'SELL'
 
@@ -44,6 +45,8 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
   const totalCurrencyLabel = currencyLabel
   const { pairId } = useParams<{ pairId: string }>()
   const handleSubmit = async (values: PlaceOrderFormValues) => {
+    if (isEmptyString(pairId)) return
+
     await onSubmit(
       transformPlaceOrderFormValuesToArgs(
         values,
@@ -83,7 +86,7 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
           item
           container
           alignItems={'flex-end'}
-          justify={'space-between'}
+          justifyContent={'space-between'}
           className={classes.balanceWrapper}
         >
           <Grid item>

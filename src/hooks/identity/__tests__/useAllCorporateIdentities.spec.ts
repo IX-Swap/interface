@@ -1,4 +1,3 @@
-import { cleanup } from 'test-utils'
 import * as useAuthHook from 'hooks/auth/useAuth'
 import * as useParsedDataHook from 'hooks/useParsedData'
 import { user } from '__fixtures__/user'
@@ -16,7 +15,6 @@ describe('useAllCorporateIdentities', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

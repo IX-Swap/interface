@@ -53,7 +53,7 @@ export const Setup2FA = () => {
         5. Scan the QR showing in InvestaX into your authenticator app.
       </Grid>
       <Grid item>
-        <Grid container justify='center'>
+        <Grid container justifyContent='center'>
           <Grid item xs={12} md={8}>
             <img
               width='auto%'

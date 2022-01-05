@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import {
   CommitmentIssuance,
   CommitmentIssuanceProps
@@ -23,12 +23,7 @@ describe('CommitmentIssuance', () => {
     data: commitment
   }
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<CommitmentIssuance {...props} />)
   })
 
   it('renders CommitmentIssuanceForm with correct props', () => {

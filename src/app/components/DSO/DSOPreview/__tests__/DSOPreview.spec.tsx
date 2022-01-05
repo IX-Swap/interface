@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import {
   DSOPreview,
   DSOPreviewProps
@@ -37,12 +37,7 @@ describe('DSOPreview', () => {
   const props: DSOPreviewProps = { data: dso, showAuthorizations: false }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<DSOPreview {...props} />)
   })
 
   it('renders DSOToken', () => {

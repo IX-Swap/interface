@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { PageHeader } from 'app/pages/issuance/components/Commitments/PageHeader'
 import { AppRouterLink } from 'components/AppRouterLink'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
@@ -15,12 +15,7 @@ const pageHeaderProps = {
 
 describe('PageHeader', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<PageHeader {...pageHeaderProps} />)
   })
 
   it('renders AppRouterLink with correct props', () => {

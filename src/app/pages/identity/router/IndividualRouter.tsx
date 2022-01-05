@@ -1,6 +1,6 @@
 import React from 'react'
 import { AppRoute } from 'components/AppRoute'
-import { Switch } from 'react-router'
+import { Switch } from 'react-router-dom'
 import { CreateIndividual } from 'app/pages/identity/pages/CreateIndividual/CreateIndividual'
 import { EditIndividual } from 'app/pages/identity/pages/EditIndividual/EditIndividual'
 import { ViewIndividual } from 'app/pages/identity/pages/ViewIndividual/ViewIndividual'

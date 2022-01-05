@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { Form } from 'components/form/Form'
 import { DSOChapterAddButton } from 'app/components/DSO/components/DSOChapterAddButton'
 import { videoLink } from '__fixtures__/issuance'
@@ -16,16 +16,7 @@ jest.mock('app/components/DSO/components/DSOVideoItem', () => ({
 
 describe('DSOVideoLinks', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(
-      <Form defaultValues={{ videos: [] }}>
-        <DSOVideoLinks />
-      </Form>
-    )
   })
 
   it('renders DSOTeamAddButton', () => {

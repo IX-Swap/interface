@@ -2,7 +2,7 @@ import { useMutation } from 'react-query'
 import { useServices } from 'hooks/useServices'
 import { CommitmentIssuanceArgs } from 'types/commitment'
 import { issuanceURL } from 'config/apiURL'
-import { useParams } from 'react-router'
+import { useParams } from 'react-router-dom'
 
 export const useCommitmentIssuance = () => {
   const { apiService, snackbarService } = useServices()

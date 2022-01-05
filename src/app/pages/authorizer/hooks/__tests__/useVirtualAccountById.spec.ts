@@ -1,12 +1,11 @@
 import { act } from '@testing-library/react-hooks'
 import { useVirtualAccountById } from 'app/pages/authorizer/hooks/useVirtualAccountById'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { generateQueryResult } from '__fixtures__/useQuery'
 import { virtualAccount } from '__fixtures__/virtualAccount'
 
 describe('useVirtualAccountById', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

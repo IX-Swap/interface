@@ -16,7 +16,7 @@ export const WAViewContent = () => {
 
   return (
     <>
-      <Grid container direction='column' justify='center' spacing={3}>
+      <Grid container direction='column' justifyContent='center' spacing={3}>
         <Grid item xs={8}>
           <LabelledValue label='Blockchain Network' value={data.network.name} />
         </Grid>

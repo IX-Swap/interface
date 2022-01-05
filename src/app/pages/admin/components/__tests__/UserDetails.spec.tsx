@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { UserDetails } from 'app/pages/admin/components/UserDetails'
 import { managedUser } from '__fixtures__/user'
 import { LabelledValue } from 'components/LabelledValue'
@@ -16,12 +16,7 @@ jest.mock('app/pages/admin/components/UserActions', () => ({
 
 describe('UserDetails', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<UserDetails data={managedUser} />)
   })
 
   it('renders components with correct props', () => {

@@ -26,7 +26,7 @@ export const AddVirtualAccountsButton = () => {
       >
         ADD ACCOUNTS
       </Button>
-      <FormDialog open={open} onBackdropClick={closeDialog}>
+      <FormDialog open={open} onClose={closeDialog}>
         <FormDialogTitle
           label='Add New Virtual Accounts'
           onClose={closeDialog}

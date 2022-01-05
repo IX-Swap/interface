@@ -1,20 +1,11 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { RevokeAccessFields } from 'app/pages/admin/components/RevokeAccessFields'
 import { Form } from 'components/form/Form'
 
 describe('RevokeAccessFields', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(
-      <Form>
-        <RevokeAccessFields />
-      </Form>
-    )
   })
 
   it('renders components correctly', () => {

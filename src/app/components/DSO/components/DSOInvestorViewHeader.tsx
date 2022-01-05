@@ -29,7 +29,7 @@ export const DSOInvestorViewHeader = (props: DSOInvestorViewHeaderProps) => {
       <Grid
         container
         className={container}
-        justify='space-between'
+        justifyContent='space-between'
         spacing={isMiniLaptop ? 3 : 6}
       >
         <Grid

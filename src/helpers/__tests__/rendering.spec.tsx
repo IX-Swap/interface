@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import {
   wysiwygToHtml,
   renderAddressColumn,
@@ -26,7 +26,6 @@ describe('wysiwygToHtml', () => {
 
 describe('renderAddressColumn', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
@@ -38,7 +37,6 @@ describe('renderAddressColumn', () => {
 
 describe('renderDateAndTimeField', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

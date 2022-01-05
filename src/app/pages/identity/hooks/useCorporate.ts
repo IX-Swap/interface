@@ -2,11 +2,12 @@ import { identityURL } from 'config/apiURL'
 import { identityQueryKeys } from 'config/queryKeys'
 import { useServices } from 'hooks/useServices'
 import { useQuery } from 'react-query'
-import { CorporateIdentity } from '../types/forms'
+import { CorporateIdentity } from 'app/pages/identity/types/forms'
+import { isEmptyString } from 'helpers/strings'
 
 export interface UseCorporateArgs {
-  userId: string
-  identityId: string
+  userId?: string
+  identityId?: string
 }
 
 export const useCorporate = (args: UseCorporateArgs) => {
@@ -21,7 +22,8 @@ export const useCorporate = (args: UseCorporateArgs) => {
 
   const { data, ...rest } = useQuery(
     [identityQueryKeys.getCorporate(userId, identityId)],
-    fetcher
+    fetcher,
+    { enabled: !isEmptyString(userId) && !isEmptyString(identityId) }
   )
 
   return {

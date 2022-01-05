@@ -1,5 +1,5 @@
 import { act } from '@testing-library/react-hooks'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { useUpdateDSO } from 'app/pages/issuance/hooks/useUpdateDSO'
 import { unsuccessfulResponse, successfulResponse } from '__fixtures__/api'
 import * as useAuthHook from 'hooks/auth/useAuth'
@@ -24,7 +24,6 @@ describe('useUpdateDSO', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

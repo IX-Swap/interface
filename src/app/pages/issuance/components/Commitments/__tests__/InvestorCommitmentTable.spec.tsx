@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup, renderWithUserStore } from 'test-utils'
+import { render, renderWithUserStore } from 'test-utils'
 import { CommitmentTableFilter } from 'app/pages/issuance/components/Commitments/CommitmentTableFilters'
 import { TableView } from 'components/TableWithPagination/TableView'
 import { InvestorCommitmentTable } from 'app/pages/issuance/components/Commitments/InvestorCommitmentTable'
@@ -25,12 +25,7 @@ jest.mock('components/TableWithPagination/TableView', () => ({
 
 describe('InvestorCommitmentTable', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<InvestorCommitmentTable />)
   })
 
   it('renders PageHeader with correct props', () => {

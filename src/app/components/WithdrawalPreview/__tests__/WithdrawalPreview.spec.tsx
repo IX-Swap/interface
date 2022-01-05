@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import {
   WithdrawalPreview,
   WithdrawalViewProps
@@ -22,12 +22,7 @@ describe('WithdrawalPreview', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<WithdrawalPreview {...props} />)
   })
 
   it('renders LabelledValue with correct props', () => {

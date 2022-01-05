@@ -2,7 +2,7 @@ import { act, renderHook } from '@testing-library/react-hooks'
 import { useGetIdentities } from 'app/components/OnboardingPanel/hooks/useGetIdentities'
 import * as useAllCorporateIdentities from 'app/pages/identity/hooks/useAllCorporates'
 import * as useIndividualIdentity from 'hooks/identity/useIndividualIdentity'
-import { waitFor, cleanup } from 'test-utils'
+import { waitFor } from 'test-utils'
 import { corporate, individual } from '__fixtures__/identity'
 
 describe('useGetIdentities', () => {
@@ -23,7 +23,6 @@ describe('useGetIdentities', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

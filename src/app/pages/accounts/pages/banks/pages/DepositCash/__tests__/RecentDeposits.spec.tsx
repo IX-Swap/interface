@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { RecentDeposits } from 'app/pages/accounts/pages/banks/pages/DepositCash/RecentDeposits'
 import { TableView } from 'components/TableWithPagination/TableView'
 import { user } from '__fixtures__/user'
@@ -36,7 +36,6 @@ describe('RecentDeposits', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

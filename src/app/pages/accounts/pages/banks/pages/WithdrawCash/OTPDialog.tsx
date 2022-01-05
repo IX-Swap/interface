@@ -41,7 +41,7 @@ export const OTPDialogContent = ({
       </DialogContent>
       <VSpacer size='small' />
       <DialogActions>
-        <Grid container spacing={2} justify='center'>
+        <Grid container spacing={2} justifyContent='center'>
           <Grid item>
             <Button variant='outlined' color='primary' onClick={close}>
               Cancel
@@ -82,7 +82,7 @@ export const OTPDialog = (props: OTPDialogProps) => {
   const { close, open, title } = props
 
   return (
-    <Dialog disablePortal open={open} maxWidth='md' onBackdropClick={close}>
+    <Dialog disablePortal open={open} maxWidth='md' onClose={close}>
       <Box py={4} px={10}>
         <DialogTitle>
           <Typography

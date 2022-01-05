@@ -1,5 +1,5 @@
 import { act } from '@testing-library/react-hooks'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { unsuccessfulResponse } from '__fixtures__/api'
 import { QueryOrMutationCallbacks } from 'hooks/types'
 import { useUploadBanner } from 'app/pages/admin/hooks/useUploadBanner'
@@ -16,7 +16,6 @@ describe('useUploadBanner', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

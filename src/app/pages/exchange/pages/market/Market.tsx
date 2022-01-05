@@ -3,8 +3,8 @@ import { Box, Grid, Hidden } from '@material-ui/core'
 import { FinancialSummary } from 'app/pages/exchange/components/FinancialSummary/FinancialSummary'
 import { useStyles } from 'app/pages/exchange/pages/market/Market.styles'
 import { getDataFeed } from 'app/pages/invest/components/TVChartContainer/services/datafeed'
-import { IBasicDataFeed } from 'types/charting_library'
-import { generatePath, Redirect, useParams } from 'react-router'
+import { IBasicDataFeed } from 'charting_library'
+import { generatePath, Redirect, useParams } from 'react-router-dom'
 import { useMarketList } from 'app/pages/exchange/hooks/useMarketList'
 import { OTCMarketRoute } from 'app/pages/exchange/router/config'
 import { GetWalletDialog } from '../../components/GetWalletDialog/GetWalletDialog'
@@ -83,7 +83,7 @@ export const Market = () => {
     <Box className={classes.container}>
       <DisclosureDialog content={masDisclosure} isOpen={isDisclosureVisible} />
       <GetWalletDialog open={openDialog} toggleOpen={setOpenDialog} />
-      <Grid item container xs={12} justify='flex-end'>
+      <Grid item container xs={12} justifyContent='flex-end'>
         <ExchangeRulesLink />
       </Grid>
       <Box my={2} />

@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup, BaseProviders } from 'test-utils'
+import { render, BaseProviders } from 'test-utils'
 import * as useDSOByIdHook from 'app/pages/invest/hooks/useDSOById'
 import * as useTableWithPaginationHook from 'components/TableWithPagination/hooks/useTableWithPagination'
 import * as useAppBreakpoints from 'hooks/useAppBreakpoints'
@@ -26,7 +26,8 @@ const useTableWithPaginationMockReturnValue: useTableWithPaginationHook.UseTable
     status: QueryStatus.Idle,
     fetchMore: jest.fn(),
     page: 0,
-    rowsPerPage: 4
+    rowsPerPage: 4,
+    isLoading: false
   }
 
 jest.mock('app/components/LoadingIndicator/LoadingIndicator', () => ({
@@ -81,12 +82,7 @@ jest.mock('@material-ui/core/Button', () => jest.fn(() => null))
 
 describe('Commitments', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<Commitments />)
   })
 
   it('renders LoadingIndicator when isLoading is true', () => {

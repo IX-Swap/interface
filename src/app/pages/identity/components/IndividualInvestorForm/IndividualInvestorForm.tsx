@@ -7,7 +7,7 @@ import { useOnboardingDialog } from 'app/components/OnboardingDialog/hooks/useOn
 import { useOnboardingJourneys } from 'app/components/OnboardingPanel/hooks/useOnboardingJourneys'
 import { individualInvestorFormSteps } from './steps'
 import { getIdentityDefaultActiveStep } from 'app/pages/identity/utils/shared'
-import { generatePath, useHistory } from 'react-router'
+import { generatePath, useHistory } from 'react-router-dom'
 import { IdentityRoute } from 'app/pages/identity/router/config'
 import { IdentitySubmitConfirmationDialog } from 'app/pages/identity/components/IdentitySubmitConfirmationDialog/IdentitySubmitConfirmationDialog'
 import { useConfirmSubmitDialog } from 'app/pages/identity/hooks/useConfirmSubmitDialog'

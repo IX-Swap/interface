@@ -1,7 +1,7 @@
 import { IndividualOnboardingSteps } from 'app/components/OnboardingPanel/IndividualOnboardingSteps'
 import * as useOnboardingSteps from 'app/components/OnboardingPanel/hooks/useOnboardingSteps'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { OnboardingSteps } from 'app/components/OnboardingPanel/OnboardingSteps'
 
 jest.mock('app/components/OnboardingPanel/OnboardingSteps', () => ({
@@ -25,12 +25,7 @@ describe('IndividualOnboardingSteps', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<IndividualOnboardingSteps />)
   })
 
   it('renders OnboardingSteps correctly', () => {

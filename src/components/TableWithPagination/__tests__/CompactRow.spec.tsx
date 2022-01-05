@@ -3,7 +3,7 @@ import {
   CompactRowProps
 } from 'components/TableWithPagination/CompactRow'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import get from 'lodash/get'
 
 describe('CompactRow', () => {
@@ -30,12 +30,7 @@ describe('CompactRow', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<CompactRow {...props} />)
   })
 
   it('renders actions correctly', () => {

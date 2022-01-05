@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import {
   NoIdentity,
   NoIdentityProps
@@ -11,12 +11,7 @@ describe('NoIdentity', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<NoIdentity {...props} />)
   })
 
   it('renders button correctly', () => {

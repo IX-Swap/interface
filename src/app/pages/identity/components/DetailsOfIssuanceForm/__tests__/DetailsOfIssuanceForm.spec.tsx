@@ -6,7 +6,7 @@ import * as useUpdateDetailsOfIssuance from 'app/pages/identity/hooks/useUpdateD
 import { IdentityRoute } from 'app/pages/identity/router/config'
 import { history } from 'config/history'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { detailsOfIssuance } from '__fixtures__/identity'
 import {
   generateMutationResult,
@@ -51,12 +51,7 @@ describe('DetailsOfIssuanceForm', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<DetailsOfIssuanceForm />)
   })
 
   it('shows create dialog box on render when details of issuance is undefined', () => {

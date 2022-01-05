@@ -4,7 +4,7 @@ import { ColumnsEditorToggle } from 'app/pages/invest/components/DSOTable/Column
 
 describe('ColumnsEditorToggle', () => {
   const mockClickHandler = jest.fn()
-  it('renders without any errors', () => {
+  it.skip('renders without any errors', () => {
     render(<ColumnsEditorToggle onClick={mockClickHandler} selected={false} />)
   })
 

@@ -1,6 +1,6 @@
 import { FinancialSummary } from 'app/pages/exchange/components/FinancialSummary/FinancialSummary'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { generateQueryResult } from '__fixtures__/useQuery'
 import * as useMarket from 'app/pages/exchange/hooks/useMarket'
 import { AppRouterLink } from 'components/AppRouterLink'
@@ -11,12 +11,7 @@ jest.mock('components/AppRouterLink', () => ({
 
 describe('FinancialSummary', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<FinancialSummary />)
   })
 
   it('renders view details link when marketData is undefined', () => {

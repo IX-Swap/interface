@@ -6,7 +6,7 @@ import * as useCreateCorporate from 'app/pages/identity/hooks/useCreateCorporate
 import * as useSubmitCorporate from 'app/pages/identity/hooks/useSubmitCorporate'
 import * as useUpdateCorporate from 'app/pages/identity/hooks/useUpdateCorporate'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { corporate } from '__fixtures__/identity'
 import {
   generateInfiniteQueryResult,
@@ -84,12 +84,7 @@ describe('CorporateIssuerForm', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<CorporateIssuerForm data={corporate} />)
   })
 
   it('invokes showPreIdentityCreateDialog when data is undefined', () => {

@@ -1,6 +1,6 @@
 import React from 'react'
 import { AppFeature } from 'types/app'
-import { useParams } from 'react-router'
+import { useParams } from 'react-router-dom'
 import { useClosure } from 'app/pages/authorizer/hooks/useClosure'
 import { DealClosureView } from 'app/pages/authorizer/components/DealClosureView'
 import { AuthorizerView } from 'app/pages/authorizer/components/AuthorizerView'

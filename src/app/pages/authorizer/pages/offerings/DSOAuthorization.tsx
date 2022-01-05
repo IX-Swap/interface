@@ -2,7 +2,7 @@ import React from 'react'
 import { AuthorizerView } from 'app/pages/authorizer/components/AuthorizerView'
 import { AppFeature } from 'types/app'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
-import { useParams } from 'react-router'
+import { useParams } from 'react-router-dom'
 import { DSOView } from 'app/components/DSO/DSOView'
 
 export const DSOAuthorization = () => {

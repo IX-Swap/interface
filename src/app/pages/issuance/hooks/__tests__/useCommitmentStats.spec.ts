@@ -1,5 +1,5 @@
 import { act } from '@testing-library/react-hooks'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { useCommitmentStats } from 'app/pages/issuance/hooks/useCommitmentStats'
 import * as useIssuanceQueryHook from 'app/pages/issuance/hooks/useIssuanceQuery'
 import { dso } from '__fixtures__/authorizer'
@@ -11,7 +11,6 @@ describe('useCommitmentStats', () => {
   const apiObj = { get: getFn }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

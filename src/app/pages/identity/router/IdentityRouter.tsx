@@ -1,6 +1,6 @@
 import { IdentitiesList } from 'app/pages/identity/pages/IdentitiesList/IdentitiesList'
 import React from 'react'
-import { Switch } from 'react-router'
+import { Switch } from 'react-router-dom'
 import { IdentityRoute } from './config'
 import { AppRoute } from 'components/AppRoute'
 import { IndividualRouter } from 'app/pages/identity/router/IndividualRouter'

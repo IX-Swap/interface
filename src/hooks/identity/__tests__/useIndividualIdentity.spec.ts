@@ -1,5 +1,5 @@
 import { act } from '@testing-library/react-hooks'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import * as useAuthHook from 'hooks/auth/useAuth'
 import { useIndividualIdentity } from 'hooks/identity/useIndividualIdentity'
 import { user } from '__fixtures__/user'
@@ -13,7 +13,6 @@ describe('useIndividualIdentity', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

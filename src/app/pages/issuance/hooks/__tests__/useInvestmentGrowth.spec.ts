@@ -1,5 +1,5 @@
 import { act } from '@testing-library/react-hooks'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import * as useIssuanceQueryHook from 'app/pages/issuance/hooks/useIssuanceQuery'
 import { dso } from '__fixtures__/authorizer'
 import { investmentGrowthChartData } from '__fixtures__/chart'
@@ -13,7 +13,6 @@ describe('useInvestmentGrowth', () => {
   const apiObj = { get: getFn }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

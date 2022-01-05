@@ -3,18 +3,19 @@ import { useServices } from 'hooks/useServices'
 import { useQuery } from 'react-query'
 import { useAuth } from 'hooks/auth/useAuth'
 import { WithdrawalAddress } from 'types/withdrawalAddress'
-import { getIdFromObj } from 'helpers/strings'
+import { getIdFromObj, isEmptyString } from 'helpers/strings'
 import { withdrawalAddressQueryKeys } from 'config/queryKeys'
 import { accountsURL } from 'config/apiURL'
 
 export const useWithdrawalAddressById = (
-  withdrawalAddressId: string,
+  withdrawalAddressId?: string,
   userId?: string
 ): UseQueryData<WithdrawalAddress> => {
   const { apiService } = useServices()
   const { user } = useAuth()
+  const _userId = userId ?? getIdFromObj(user)
   const uri = accountsURL.withdrawalAddresses.getById(
-    userId ?? getIdFromObj(user),
+    _userId,
     withdrawalAddressId
   )
   const getWithdrawalAddress = async () => {
@@ -22,13 +23,9 @@ export const useWithdrawalAddressById = (
   }
 
   const { data, ...rest } = useQuery(
-    [
-      withdrawalAddressQueryKeys.getAddressById,
-      userId ?? getIdFromObj(user),
-      withdrawalAddressId
-    ],
+    [withdrawalAddressQueryKeys.getAddressById, _userId, withdrawalAddressId],
     getWithdrawalAddress,
-    { enabled: (withdrawalAddressId ?? '') !== '' }
+    { enabled: !isEmptyString(withdrawalAddressId) && !isEmptyString(_userId) }
   )
 
   return {

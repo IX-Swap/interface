@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { SelectionHelper } from 'components/SelectionHelper'
 import {
   itemComparator,
@@ -12,12 +12,7 @@ jest.mock('components/SelectionHelper', () => ({
 
 describe('VirtualAccounts', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<VirtualAccounts />)
   })
 
   it('renders SelectionHelper with correct props', () => {

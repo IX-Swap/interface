@@ -1,7 +1,7 @@
 import * as useGetExchangeRules from 'app/pages/admin/hooks/useGetExchangeRules'
 import { ExchangeRulesLink } from 'app/pages/exchange/components/ExchangeRulesLink/ExchangeRulesLink'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { generateQueryResult } from '__fixtures__/useQuery'
 import { document } from '__fixtures__/identity'
 
@@ -18,12 +18,7 @@ describe('ExchangeRulesLink', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<ExchangeRulesLink />)
   })
 
   it('renders null when data is undefined', () => {

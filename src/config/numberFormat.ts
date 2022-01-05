@@ -1,17 +1,17 @@
 import { NumberFormatProps } from 'react-number-format'
 
-export const positiveNumberFormat: NumberFormatProps = {
+export const positiveNumberFormat: NumberFormatProps<any> = {
   allowNegative: false,
   inputMode: 'numeric',
   decimalScale: 0
 }
 
-export const numberFormat: NumberFormatProps = {
+export const numberFormat: NumberFormatProps<any> = {
   allowNegative: false,
   inputMode: 'numeric'
 }
 
-export const percentageNumberFormat: NumberFormatProps = {
+export const percentageNumberFormat: NumberFormatProps<any> = {
   allowNegative: false,
   decimalScale: 3,
   inputMode: 'numeric',
@@ -19,7 +19,7 @@ export const percentageNumberFormat: NumberFormatProps = {
   isNumericString: true
 }
 
-export const monthsNumberFormat: NumberFormatProps = {
+export const monthsNumberFormat: NumberFormatProps<any> = {
   allowNegative: false,
   isNumericString: true,
   inputMode: 'numeric',
@@ -27,7 +27,7 @@ export const monthsNumberFormat: NumberFormatProps = {
   suffix: ' months'
 }
 
-export const moneyNumberFormat: NumberFormatProps = {
+export const moneyNumberFormat: NumberFormatProps<any> = {
   decimalScale: 2,
   inputMode: 'numeric',
   thousandSeparator: true,
@@ -36,7 +36,7 @@ export const moneyNumberFormat: NumberFormatProps = {
   allowNegative: false
 }
 
-export const leadingZerosNumberFormat: NumberFormatProps = {
+export const leadingZerosNumberFormat: NumberFormatProps<any> = {
   ...positiveNumberFormat,
   isNumericString: true,
   allowLeadingZeros: true

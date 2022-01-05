@@ -75,7 +75,7 @@ export const BankForm: React.FC<BankFormProps> = props => {
           <VSpacer size='small' />
         </Grid>
 
-        <Grid container item xs={12} justify='center'>
+        <Grid container item xs={12} justifyContent='center'>
           <Button
             component={AppRouterLinkComponent}
             to={BanksRoute.list}

@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { TargetFundraise } from 'app/pages/issuance/components/IssuanceLanding/TargetFundraise'
 import * as useDSOByIdHook from 'app/pages/invest/hooks/useDSOById'
 import { InsightValue } from 'app/pages/issuance/components/IssuanceLanding/InsightValue'
@@ -22,17 +22,7 @@ jest.mock('components/VSpacer', () => ({
 
 describe('TargetFundraise', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    jest.spyOn(useDSOByIdHook, 'useDSOById').mockReturnValue({
-      data: dso,
-      isSuccess: true
-    } as any)
-
-    render(<TargetFundraise />)
   })
 
   it('renders InsightValue correctly if not loaded', () => {

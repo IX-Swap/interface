@@ -24,14 +24,6 @@ jest.mock('app/components/DSO/components/DSOFundRaisingMilestone', () => ({
 }))
 
 describe('DSOInformationProfile', () => {
-  it('renders without errors', () => {
-    render(
-      <Form>
-        <DSOInformationProfile />
-      </Form>
-    )
-  })
-
   it('renders components correctly', () => {
     render(
       <Form>

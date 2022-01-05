@@ -38,7 +38,7 @@ export const CashDepositButton = ({
       >
         CASH DEPOSIT
       </Button>
-      <FormDialog maxWidth='md' open={open} onBackdropClick={closeDialog}>
+      <FormDialog maxWidth='md' open={open} onClose={closeDialog}>
         <FormDialogTitle
           label='Desposit to Virtual Account'
           onClose={closeDialog}

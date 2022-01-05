@@ -1,6 +1,6 @@
 import { act } from '@testing-library/react-hooks'
 import { useCreateCorporateByUserId } from 'app/pages/admin/hooks/useCreateCorporateByUserId'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { generateMutationResult } from '__fixtures__/useQuery'
 import { user } from '__fixtures__/user'
 import * as ReactQuery from 'react-query'
@@ -15,7 +15,6 @@ describe('useCreateCorporateByUserId', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

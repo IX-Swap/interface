@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { Step3Backup } from 'app/pages/security/pages/setup2fa/components/Step3Backup'
 import * as setupContext from '../../context'
 import { Setup2faStore } from '../../context/store'
@@ -23,12 +23,7 @@ describe('Step3Backup', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<Step3Backup />)
   })
 
   it('renders store.key', () => {

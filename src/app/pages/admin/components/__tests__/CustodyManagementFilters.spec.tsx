@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { CustodyManagementFilters } from 'app/pages/admin/components/CustodyManagementFilters'
 import { CustodySearchFilter } from 'app/pages/admin/components/CustodySearchFilter/CustodySearchFilter'
 import { CustodiansFilter } from 'app/pages/admin/components/CustodiansFilter/CustodiansFilter'
@@ -28,12 +28,7 @@ jest.mock(
 
 describe('CustodyManagementFilters', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<CustodyManagementFilters />)
   })
 
   it('renders children', () => {

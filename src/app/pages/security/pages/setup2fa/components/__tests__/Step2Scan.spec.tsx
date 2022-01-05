@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { Step2Scan } from 'app/pages/security/pages/setup2fa/components/Step2Scan'
 import * as setupContext from 'app/pages/security/pages/setup2fa/context'
 import * as setupHook from 'app/pages/security/pages/setup2fa/hooks/useSetup2fa'
@@ -33,12 +33,7 @@ describe('Step2Scan', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<Step2Scan />)
   })
 
   it('renders store.key', () => {

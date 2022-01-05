@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import {
   DocumentNamePreviewButton,
   DocumentNamePreviewButtonProps
@@ -10,12 +10,7 @@ describe('DocumentNamePreviewButton', () => {
   const props: DocumentNamePreviewButtonProps = { value: document }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<DocumentNamePreviewButton {...props} />)
   })
 
   it('renders correctly if value is undefined', () => {

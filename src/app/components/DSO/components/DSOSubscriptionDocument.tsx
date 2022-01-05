@@ -40,7 +40,7 @@ export const DSOSubscriptionDocument = () => {
             }}
           />
         </Grid>
-        <Grid item container justify='flex-end'>
+        <Grid item container justifyContent='flex-end'>
           <FormError name='subscriptionDocument' render={TextError} />
         </Grid>
       </Grid>

@@ -23,9 +23,9 @@ export const Step2Scan = () => {
         </Grid>
         <Grid item>
           {!isLoading && (
-            <Grid container justify='center'>
+            <Grid container justifyContent='center'>
               <Box pt={4} pb={3}>
-                <Grid container justify='center' alignItems='center'>
+                <Grid container justifyContent='center' alignItems='center'>
                   <Grid item>
                     <div
                       data-testid='store-image'

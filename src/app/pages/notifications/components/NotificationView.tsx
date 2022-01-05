@@ -46,7 +46,7 @@ export const NotificationView = (props: NotificationViewProps) => {
           container
           direction='column'
           alignItems='flex-end'
-          justify='space-between'
+          justifyContent='space-between'
           className={classes.actions}
         >
           {action}

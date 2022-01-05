@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { notification } from '__fixtures__/notification'
 import { getTimeAgo } from 'helpers/dates'
 import { NotificationView, NotificationViewProps } from '../NotificationView'
@@ -11,12 +11,7 @@ describe('NotificationView', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<NotificationView {...props} />)
   })
 
   it('renders message, subject, createdAt correctly', () => {

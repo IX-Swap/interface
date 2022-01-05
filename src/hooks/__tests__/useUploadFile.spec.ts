@@ -1,5 +1,5 @@
 import { act } from '@testing-library/react-hooks'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { useUploadFile, UploadDocumentArgs } from 'hooks/useUploadFile'
 import { unsuccessfulResponse } from '__fixtures__/api'
 import * as useAuthHook from 'hooks/auth/useAuth'
@@ -18,7 +18,6 @@ describe('useUploadFile', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

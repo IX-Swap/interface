@@ -1,7 +1,7 @@
 import { act } from '@testing-library/react-hooks'
 import { useCreateDistribution } from 'app/pages/issuance/hooks/useCreateDistribution'
 import * as useQueryCache from 'react-query'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { successfulResponse, unsuccessfulResponse } from '__fixtures__/api'
 
 describe('useCreateDistribution', () => {
@@ -25,7 +25,6 @@ describe('useCreateDistribution', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

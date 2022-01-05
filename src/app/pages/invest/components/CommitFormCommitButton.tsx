@@ -8,8 +8,8 @@ import { useMakeCommitment } from 'app/pages/invest/hooks/useMakeCommitment'
 export interface CommitmentFormCommitButtonProps {
   assetId: string
   minInvestment: number | null
-  dsoId: string
   currency: string
+  dsoId?: string
 }
 
 export const CommitmentFormCommitButton = ({

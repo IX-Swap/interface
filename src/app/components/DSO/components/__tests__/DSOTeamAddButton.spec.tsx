@@ -1,6 +1,6 @@
 import { fireEvent, waitFor } from '@testing-library/react'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import {
   DSOChapterAddButton,
   DSOTeamAddButtonProps
@@ -12,12 +12,7 @@ describe('DSOTeamAddButton', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<DSOChapterAddButton {...props} />)
   })
 
   it('invokes append function with index on button click', async () => {

@@ -1,7 +1,7 @@
 import { accountsURL } from 'config/apiURL'
 import { digitalSecuritiesQueryKeys } from 'config/queryKeys'
 import { getIdFromObj } from 'helpers/strings'
-import useAuth from 'hooks/auth/useAuth'
+import { useAuth } from 'hooks/auth/useAuth'
 import { useServices } from 'hooks/useServices'
 import { useQuery } from 'react-query'
 

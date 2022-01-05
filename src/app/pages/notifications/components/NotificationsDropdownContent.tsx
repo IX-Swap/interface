@@ -11,16 +11,16 @@ export const NotificationsDropdownContent = (props: DropdownContentProps) => {
 
   return (
     <Grid container direction='column' className={classes.container}>
-      <Grid item container justify='center'>
+      <Grid item container justifyContent='center'>
         <Typography variant='h5'>Notifications</Typography>
       </Grid>
-      <Grid item container justify='flex-end'>
+      <Grid item container justifyContent='flex-end'>
         <MarkAllAsRead variant='text' />
       </Grid>
       <Grid item className={classes.list}>
         <NotificationsVirtualizedList />
       </Grid>
-      <Grid item container justify='center'>
+      <Grid item container justifyContent='center'>
         <ViewAllNotifications onClick={props.injectedProps.close} />
       </Grid>
     </Grid>

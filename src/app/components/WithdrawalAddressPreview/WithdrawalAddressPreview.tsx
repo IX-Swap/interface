@@ -16,7 +16,7 @@ export const WithdrawalAddressPreview = (props: WithdrawalAddressViewProps) => {
   useSetPageTitle(data.network.name)
 
   return (
-    <Grid container justify='center' direction='column'>
+    <Grid container justifyContent='center' direction='column'>
       <Grid container spacing={3}>
         <Grid item xs={6}>
           <LabelledValue label='Network Type' value={data.network.name} />

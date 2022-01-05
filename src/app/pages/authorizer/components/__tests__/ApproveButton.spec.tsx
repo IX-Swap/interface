@@ -1,6 +1,6 @@
 import { fireEvent, waitFor } from '@testing-library/react'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import {
   ApproveButton,
   ApproveButtonProps
@@ -26,16 +26,7 @@ describe('ApproveButton', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(
-      <Form>
-        <ApproveButton {...props} />
-      </Form>
-    )
   })
 
   it('invokes approve when button is clicked', async () => {

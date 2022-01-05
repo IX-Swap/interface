@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup, fireEvent, waitFor } from 'test-utils'
+import { render, fireEvent, waitFor } from 'test-utils'
 import { CommitmentFormSubmitButton } from 'app/pages/invest/components/CommitmentFormSubmitButton'
 import { Form } from 'components/form/Form'
 import * as useMakeCommitment from 'app/pages/invest/hooks/useMakeCommitment'
@@ -7,21 +7,7 @@ import * as useCommitmentValidator from 'app/pages/invest/hooks/useCommitmentVal
 
 describe('CommitmentFormSubmitButton', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(
-      <Form>
-        <CommitmentFormSubmitButton
-          assetId='123'
-          minInvestment={100}
-          dsoId='123'
-          currency='$'
-        />
-      </Form>
-    )
   })
 
   it('submits correct data', async () => {

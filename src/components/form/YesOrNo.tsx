@@ -25,7 +25,7 @@ export const YesOrNo = (props: Partial<YesOrNoProps>): JSX.Element => {
         container
         item
         xs={6}
-        justify='center'
+        justifyContent='center'
         direction='column'
         alignItems='center'
       >
@@ -45,7 +45,7 @@ export const YesOrNo = (props: Partial<YesOrNoProps>): JSX.Element => {
         container
         item
         xs={6}
-        justify='center'
+        justifyContent='center'
         direction='column'
         alignItems='center'
       >

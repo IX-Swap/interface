@@ -1,5 +1,5 @@
 import { act } from '@testing-library/react-hooks'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { useSetup2fa } from 'app/pages/security/pages/setup2fa/hooks/useSetup2fa'
 import { useSetup2faStore } from '../../context'
 import { TwoFaData } from 'app/pages/security/pages/setup2fa/types'
@@ -21,7 +21,6 @@ describe('useSetup2fa', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

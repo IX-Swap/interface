@@ -3,16 +3,11 @@ import {
   BooleanColumn,
   BooleanColumnProps
 } from 'app/pages/admin/components/BooleanColumn'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 
 describe('BooleanColumn', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<BooleanColumn value={true} />)
   })
 
   it('renders default labels and colors when none is provided', () => {

@@ -4,9 +4,10 @@ import apiService from 'services/api'
 import { identityQueryKeys } from 'config/queryKeys'
 import { identityURL } from 'config/apiURL'
 import { IndividualIdentity } from 'app/pages/identity/types/forms'
+import { isEmptyString } from 'helpers/strings'
 
 export const useIndividualIdentityById = (
-  userId: string
+  userId?: string
 ): UseQueryData<IndividualIdentity> => {
   const getIndividual = async () => {
     const uri = identityURL.individuals.get(userId)
@@ -15,7 +16,8 @@ export const useIndividualIdentityById = (
 
   const { data, ...rest } = useQuery(
     [identityQueryKeys.getIndividual, { userId }],
-    getIndividual
+    getIndividual,
+    { enabled: !isEmptyString(userId) }
   )
 
   return {

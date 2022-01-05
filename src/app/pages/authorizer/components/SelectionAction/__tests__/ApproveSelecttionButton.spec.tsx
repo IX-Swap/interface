@@ -1,6 +1,6 @@
 import { ApproveSelectionButton } from 'app/pages/authorizer/components/SelectionAction/ApproveSelectionButton'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { ApproveButton } from 'app/pages/authorizer/components/ApproveButton'
 import * as useSelectionHelperContext from 'components/SelectionHelper'
 import { commitment } from '__fixtures__/authorizer'
@@ -21,12 +21,7 @@ describe('ApproveSelectionButton', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<ApproveSelectionButton approve={approveAction} disabled={false} />)
   })
 
   it('renders ApproveButton with correct props', () => {

@@ -20,7 +20,13 @@ export const ViewIndividual = () => {
           <Grid item xs={12}>
             <RejectionMessage data={data} />
           </Grid>
-          <Grid container item xs={12} justify='flex-end' alignItems='center'>
+          <Grid
+            container
+            item
+            xs={12}
+            justifyContent='flex-end'
+            alignItems='center'
+          >
             <EditButton
               link={IdentityRoute.editIndividual}
               params={{ identityId: data._id, userId: data.user._id }} // TODO: ask backend to unify user field for all objects

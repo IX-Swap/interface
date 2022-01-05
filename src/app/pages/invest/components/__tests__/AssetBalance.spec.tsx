@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import {
   AssetBalance,
   AssetBalanceProps
@@ -19,17 +19,7 @@ describe('AssetBalance', () => {
   const props: AssetBalanceProps = { assetId: asset._id, symbol: 'SGD' }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    jest
-      .spyOn(useBalancesByAssetIdHook, 'useBalancesByAssetId')
-      .mockReturnValue(
-        generateInfiniteQueryResult({ map: { [asset._id]: balance } })
-      )
-    render(<AssetBalance {...props} />)
   })
 
   it('renders nothing if loading', () => {

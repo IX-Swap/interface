@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { dso } from '__fixtures__/authorizer'
 import { history } from 'config/history'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
@@ -21,15 +21,10 @@ describe('PreviewDSO', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
   afterAll(() => history.push('/'))
-
-  it('renders without error', () => {
-    render(<PreviewDSO />)
-  })
 
   it('renders DSOPreview with correct props', () => {
     render(<PreviewDSO />)

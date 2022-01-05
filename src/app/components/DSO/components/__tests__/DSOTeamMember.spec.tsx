@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { Form } from 'components/form/Form'
 import { DSOTeamRemoveButton } from 'app/components/DSO/components/DSOTeamRemoveButton'
 import { TypedField } from 'components/form/TypedField'
@@ -27,16 +27,7 @@ describe('DSOTeamMember', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(
-      <Form defaultValues={{ team: [teamMember] }}>
-        <DSOTeamMember {...props} />
-      </Form>
-    )
   })
 
   it('renders DSOTeamRemoveButton', () => {

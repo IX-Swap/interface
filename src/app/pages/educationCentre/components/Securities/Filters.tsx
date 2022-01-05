@@ -22,7 +22,7 @@ export const Filters = ({
 }: FiltersProps) => {
   const { isMiniLaptop } = useAppBreakpoints()
   return (
-    <Grid container spacing={2} justify='space-between'>
+    <Grid container spacing={2} justifyContent='space-between'>
       <Grid item xs={12} lg={4}>
         <SearchFilter
           inputAdornmentPosition='end'
@@ -34,7 +34,7 @@ export const Filters = ({
         <Grid
           container
           spacing={2}
-          justify={isMiniLaptop ? 'flex-start' : 'flex-end'}
+          justifyContent={isMiniLaptop ? 'flex-start' : 'flex-end'}
         >
           <Grid item>
             <IndustryFilter />

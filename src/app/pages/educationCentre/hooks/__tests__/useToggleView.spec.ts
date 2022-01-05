@@ -1,9 +1,8 @@
-import { renderHook, cleanup } from '@testing-library/react-hooks'
+import { renderHook } from '@testing-library/react-hooks'
 import { useToggleView } from 'app/pages/educationCentre/hooks/useToggleView'
 
 describe('useToggleView', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

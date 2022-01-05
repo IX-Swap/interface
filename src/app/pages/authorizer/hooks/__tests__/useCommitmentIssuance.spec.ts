@@ -1,7 +1,7 @@
 import { act } from '@testing-library/react-hooks'
 import { history } from 'config/history'
 import { generatePath } from 'react-router-dom'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { unsuccessfulResponse, successfulResponse } from '__fixtures__/api'
 import { commitment } from '__fixtures__/authorizer'
 import { useCommitmentIssuance } from '../useCommitmentIssuance'
@@ -18,7 +18,6 @@ describe('useMarkAsRead', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

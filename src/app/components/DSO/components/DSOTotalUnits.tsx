@@ -18,10 +18,10 @@ export const DSOTotalUnits = () => {
     <Grid
       container
       direction='column'
-      justify='flex-end'
+      justifyContent='flex-end'
       alignItems='flex-start'
     >
-      <Grid item container justify='flex-start' alignItems='center'>
+      <Grid item container justifyContent='flex-start' alignItems='center'>
         <Typography style={{ lineHeight: '100%' }} variant='subtitle1'>
           Total Units
         </Typography>

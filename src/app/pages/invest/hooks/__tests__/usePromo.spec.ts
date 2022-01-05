@@ -1,12 +1,11 @@
 import { act } from '@testing-library/react-hooks'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { usePromo } from 'app/pages/invest/hooks/usePromo'
 import { mockPromoData } from '__fixtures__/promo'
 import { generateQueryResult } from '__fixtures__/useQuery'
 
 describe('usePromo', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

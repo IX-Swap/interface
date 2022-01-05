@@ -29,7 +29,13 @@ export const IndividualIdentityDisplay = ({
       <Grid item xs={12}>
         <RejectionMessage data={data} />
       </Grid>
-      <Grid container item xs={12} justify='flex-end' alignItems='center'>
+      <Grid
+        container
+        item
+        xs={12}
+        justifyContent='flex-end'
+        alignItems='center'
+      >
         {adminId === data.createdBy ? (
           <EditButton
             link={AdminRoute.createIndividualIdentity}

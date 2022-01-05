@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import Box from '@material-ui/core/Box'
 import * as useAppBreakpoints from 'hooks/useAppBreakpoints'
 import { VTTransferTypesFilter } from 'app/pages/admin/components/VTTransferTypesFilter'
@@ -38,12 +38,7 @@ jest.mock('app/pages/admin/components/VTDirectionFilter', () => ({
 
 describe('VirtualTransactionsFilters', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<VirtualTransactionsFilters />)
   })
 
   it('renders empty box components when isMobile is true', () => {

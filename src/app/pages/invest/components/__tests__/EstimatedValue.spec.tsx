@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import {
   EstimatedValue,
   EstimatedValueProps
@@ -17,16 +17,7 @@ describe('EstimatedValue', () => {
   const props: EstimatedValueProps = { symbol: asset.symbol }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(
-      <Form defaultValues={{ totalAmount: 123 }}>
-        <EstimatedValue {...props} />
-      </Form>
-    )
   })
 
   it('renders LabelledValue with correct props', () => {

@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { TypedField } from 'components/form/TypedField'
 import { Form } from 'components/form/Form'
 import { BannerBaseFields } from 'app/pages/admin/components/BannerBaseFields'
@@ -14,16 +14,7 @@ jest.mock('components/form/TypedField', () => ({
 
 describe('BannerBaseFields', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(
-      <Form>
-        <BannerBaseFields />
-      </Form>
-    )
   })
 
   it('renders editable fields correctly', () => {

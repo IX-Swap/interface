@@ -1,15 +1,10 @@
 import { Locked } from 'auth/pages/login/components/Locked'
 import React from 'react'
-import { render, cleanup, waitFor } from 'test-utils'
+import { render, waitFor } from 'test-utils'
 
 describe('Locked', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<Locked email='email@investax.io' />)
   })
 
   it('shows initial timer values', () => {

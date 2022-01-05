@@ -6,10 +6,11 @@ import { PaginatedData } from 'services/api/types'
 import { identityQueryKeys } from 'config/queryKeys'
 import { identityURL } from 'config/apiURL'
 import { AuthorizableStatus } from 'types/util'
-import { CorporateIdentity } from '../../identity/types/forms'
+import { CorporateIdentity } from 'app/pages/identity/types/forms'
+import { isEmptyString } from 'helpers/strings'
 
 export interface UseAllCorporatesArgs {
-  userId: string
+  userId?: string
   status?: AuthorizableStatus
   type?: 'investor' | 'issuer'
 }
@@ -31,7 +32,10 @@ export const useAllCorporatesByUserId = (
 
   const { data, ...rest } = useInfiniteQuery(
     [identityQueryKeys.getAllCorporateByUserId(userId), payload],
-    getAllCorporates
+    getAllCorporates,
+    {
+      enabled: !isEmptyString(userId)
+    }
   )
 
   const parsedData = useParsedData<CorporateIdentity>(data, '_id')

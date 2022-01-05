@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { TextError, TextErrorProps } from 'components/TextError'
 
 describe('TextError', () => {
@@ -12,12 +12,7 @@ describe('TextError', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<TextError {...props} />)
   })
 
   it('renders nothing if error is undefined', () => {

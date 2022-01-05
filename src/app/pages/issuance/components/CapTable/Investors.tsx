@@ -48,7 +48,7 @@ export const Investors = () => {
   return (
     <Grid container spacing={3}>
       <Grid item xs={12}>
-        <Grid container justify='space-between' alignItems='center'>
+        <Grid container justifyContent='space-between' alignItems='center'>
           <Grid item xs={12} md={4}>
             <SearchFilter fullWidth placeholder='Search Name' />
           </Grid>

@@ -1,6 +1,6 @@
 import React from 'react'
 import { AuthorizerView } from 'app/pages/authorizer/components/AuthorizerView'
-import { useParams } from 'react-router'
+import { useParams } from 'react-router-dom'
 import { AppFeature } from 'types/app'
 import { useGetIdentities } from 'app/components/OnboardingPanel/hooks/useGetIdentities'
 import { IndividualIdentity } from 'app/pages/identity/types/forms'

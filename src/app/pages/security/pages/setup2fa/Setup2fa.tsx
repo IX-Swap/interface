@@ -52,7 +52,7 @@ export const Setup2fa = () => {
             </Stepper>
             <Grid
               container
-              justify='center'
+              justifyContent='center'
               alignItems='center'
               direction='column'
             >
@@ -65,7 +65,7 @@ export const Setup2fa = () => {
                 <Grid
                   container
                   spacing={3}
-                  justify='center'
+                  justifyContent='center'
                   alignItems='center'
                 >
                   {store.activeStep > 0 &&

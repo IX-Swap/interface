@@ -24,7 +24,7 @@ export const optOutRequirements = [
 export const OptOutInfoContent = () => {
   return (
     <>
-      <Grid container justify='center' spacing={2}>
+      <Grid container justifyContent='center' spacing={2}>
         <Grid item>
           <Typography>
             1. I/We (“Accredited Investor” or “AI”) wish to inform you that I/We
