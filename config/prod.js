@@ -16,11 +16,11 @@ config.output = {
   filename: 'js/[name].[chunkhash].js'
 }
 
-config.plugins.push(
-  new BundleAnalyzerPlugin({
-    analyzerMode: 'json'
-  })
-)
+// config.plugins.push(
+//   new BundleAnalyzerPlugin({
+//     analyzerMode: 'json'
+//   })
+// )
 
 config.plugins.push(
   new CopyPlugin({

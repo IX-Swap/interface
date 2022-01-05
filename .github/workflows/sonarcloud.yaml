@@ -21,13 +21,13 @@ jobs:
       - name: Install packages
         run: yarn
 
+      - name: Run Build
+        run: yarn build
+
       - name: Run Tests
         run: yarn test:ci
         env:
           REACT_APP_API_URL: https://devapi.mozork.com
-
-      - name: Run Build
-        run: yarn build
 
       - name: Fix code coverage paths for Sonar
         working-directory: ./coverage
