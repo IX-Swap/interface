@@ -3,7 +3,7 @@ import {
   widget as Widget,
   ResolutionString,
   IChartingLibraryWidget
-} from 'types/charting_library'
+} from 'charting_library'
 import { ChartContainerProps } from 'types/tvChart'
 import {
   disabledFeatures,

@@ -1,4 +1,4 @@
-import { LanguageCode } from 'types/charting_library'
+import { LanguageCode } from 'charting_library'
 
 export function getLanguageFromURL(): LanguageCode | null {
   const regex = new RegExp('[\\?&]lang=([^&#]*)')

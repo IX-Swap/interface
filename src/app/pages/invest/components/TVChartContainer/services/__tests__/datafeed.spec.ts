@@ -14,7 +14,7 @@ import {
   ResolveCallback,
   SearchSymbolsCallback,
   ServerTimeCallback
-} from 'types/charting_library'
+} from 'charting_library'
 import { SYMBOL_SEARCH_LIMIT } from '../../constants'
 
 describe('onReady', () => {
