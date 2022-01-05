@@ -13,7 +13,7 @@ export const Reports: React.FC = () => {
       </Grid>
       <Grid item>
         <VSpacer size={'small'} />
-        <Typography variant={'h4'}>Default Statements</Typography>
+        <Typography variant={'h4'}>Statements</Typography>
         <VSpacer size={'small'} />
       </Grid>
       <Grid
