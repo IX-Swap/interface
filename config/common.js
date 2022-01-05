@@ -18,22 +18,9 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.jsx?$/,
-        exclude: /(node_modules)/,
-        use: 'babel-loader'
-      },
-      {
         test: /\.tsx?$/,
         use: 'ts-loader',
         exclude: /(node_modules)/
-      },
-      {
-        test: /\.(woff|woff2|ttf)(\?.*)?$/,
-        exclude: /(node_modules)/,
-        loader: 'file-loader',
-        options: {
-          name: '[path][name].[ext]'
-        }
       },
       {
         test: /\.svg(\?.*)?$/,
