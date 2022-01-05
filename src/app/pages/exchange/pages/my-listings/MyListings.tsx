@@ -6,11 +6,7 @@ import { MyListingsTable } from 'app/pages/exchange/components/MyListingsTable/M
 export const MyListings = () => {
   return (
     <RootContainer>
-      <PageHeader
-        title={'My Listings'}
-        alignment='center'
-        showBreadcrumbs={true}
-      />
+      <PageHeader title={'My Listings'} showBreadcrumbs={true} />
       <MyListingsTable />
     </RootContainer>
   )
