@@ -149,9 +149,5 @@ export const newDistributionValidationSchema = yup.object().shape({
   otp: yup.string().required('This is a required field')
 })
 
-export const sortAssetsByAmount = (assets?: AssetUnderManagement[]) => {
-  if (assets == null || assets === undefined) {
-    return assets
-  }
-  return [...assets].sort((first, second) => second.amount - first.amount)
-}
+export const sortAssetsByAmount = (assets?: AssetUnderManagement[]) =>
+  assets?.sort((first, second) => second.amount - first.amount)
