@@ -40,6 +40,7 @@ export interface QueryFilters {
   expandedSections: string | undefined
   subfunds: string | undefined
   periodical: string | undefined
+  tab: string | undefined
 }
 
 export type QueryFilter = keyof QueryFilters

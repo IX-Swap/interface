@@ -5,7 +5,7 @@ import { SearchQueryFilterGroup } from 'components/SearchQueryFilter/SearchQuery
 import { SearchQueryFilterGroupApply } from 'components/SearchQueryFilter/SearchQueryFilterGroupApply'
 import { SearchQueryFilterGroupReset } from 'components/SearchQueryFilter/SearchQueryFilterGroupReset'
 import React from 'react'
-import { OTCMarketRoute } from '../../router/config'
+import { OTCMarketRoute } from 'app/pages/exchange/router/config'
 
 export const PastOrderFilter = () => {
   return (
@@ -51,7 +51,7 @@ export const PastOrderFilter = () => {
         <Grid item>
           <AppRouterLink
             style={{ whiteSpace: 'nowrap' }}
-            to={OTCMarketRoute.holdings}
+            to={`${OTCMarketRoute.holdings}?tab=1`}
             color='primary'
             underline='always'
             className={'link'}
