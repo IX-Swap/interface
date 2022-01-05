@@ -12,6 +12,7 @@ const detachedState = {
   state: 'detached',
   timeout: DEFAULT_SELECTOR_TIMEOUT
 }
+
 async function waitNewPage(context, page, element) {
   const [secondPage] = await Promise.all([
     context.waitForEvent('page'),
@@ -54,8 +55,8 @@ async function uploadFiles(page, element, file, resp = 'yes') {
 
 async function click(selector, page) {
   await page.waitForSelector(LOADER, detachedState)
-  await page.waitForSelector(selector, attachedState)
   try {
+    await page.waitForSelector(selector, attachedState)
     await page.click(selector)
   } catch {
     throw new Error(`Could NOT find SELECTOR for click: ${selector}`)
@@ -66,7 +67,6 @@ async function typeText(selector, words, page) {
   await page.waitForSelector(LOADER, detachedState)
   try {
     await page.waitForSelector(selector, attachedState)
-
     await page.type(selector, words)
   } catch {
     throw new Error(`Could NOT find SELECTOR for type: ${selector}`)

@@ -14,7 +14,8 @@ export const authorizerEl = {
     BLOCKCHAIN_ADDRESSES: '[href="/app/authorizer/withdrawal-addresses"]',
     PROPOSED_FUNDRAISING_DETAILS: '[href="/app/authorizer/issuance-details"]',
     LISTINGS: '[href="/app/authorizer/listings"]',
-    VIRTUAL_ACCOUNT: '[href="/app/authorizer/virtual-accounts"]'
+    VIRTUAL_ACCOUNT: '[href="/app/authorizer/virtual-accounts"]',
+    TOKEN_DEPLOYMENT: '[href="/app/authorizer/token-deployment"]'
   },
 
   buttons: {

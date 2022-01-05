@@ -1,6 +1,7 @@
 export const invest = {
   PRIMARY_CARD: '[data-testid="icon-button"]',
   TABLE: '[data-testid="table"]',
+  ROW: 'tbody tr',
   TOAST_NOTIFICATIONS: '[data-testid="notification-inner"]',
   INVEST_TAB: '[href="/app/invest"]',
   PRIMARY_SECTION: '[href="/app/invest"] >> text="Primary"',

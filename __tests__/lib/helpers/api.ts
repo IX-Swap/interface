@@ -1,5 +1,6 @@
 import fetch from 'node-fetch'
 import { baseCreds } from './creds'
+
 const defaultHeaders = {
   Connection: 'keep-alive',
   'Content-Type': 'application/json',
@@ -27,6 +28,7 @@ export async function userRegistration(email) {
     throw new Error(`Company registration by API failed`)
   }
 }
+
 export async function getCookies(email) {
   try {
     // Registration company

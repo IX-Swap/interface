@@ -161,13 +161,13 @@ class Authorizer {
   rejectBankAccount = async () => {
     await this.reject()
     await navigate(baseCreds.URL + text.requests.bankAccount, this.page)
-    await shouldExist(`${invest.TABLE} >> text="Rejected"`, this.page)
+    // await shouldExist(`${invest.TABLE} >> text="Rejected"`, this.page)
   }
 
   approveBankAccount = async () => {
     await this.approve()
     await navigate(baseCreds.URL + text.requests.bankAccount, this.page)
-    await shouldExist(`${invest.TABLE} >> text="Approved"`, this.page)
+    // await shouldExist(`${invest.TABLE} >> text="Approved"`, this.page)
   }
 
   approveCashWithdraw = async () => {

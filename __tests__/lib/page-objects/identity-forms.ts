@@ -21,7 +21,7 @@ class UserForms {
   }
 
   followToViewIdentity = async () => {
-    await click(kyc.HOME_SECTION, this.page)
+    await click(kyc.MY_PROFILE, this.page)
     await click(kyc.CREATE_IDENTITY_SECTION, this.page)
     await click(kyc.buttons.VIEW, this.page)
   }

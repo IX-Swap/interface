@@ -70,73 +70,73 @@ test('The fields should be editable if the DSO has not started.', async ({
   expect(formsIsEdited).toStrictEqual([true, true])
 })
 
-test.describe('Funds Management More Option section', () => {
-  test.beforeEach(async ({ dso, auth }) => {
-    await dso.followToFundsManagement(auth, baseCreds.VIEW_DSO_MORE_OPTIONS)
-  })
-  test('View DSO is available', async ({ issuance, page }) => {
-    await click(issuance.dso.buttons.VIEW_THIS_DSO, page)
-    await shouldExist(issuance.dso.DSO_INFORMATION, page)
-  })
+// test.describe('Funds Management More Option section', () => {
+//   test.beforeEach(async ({ dso, auth }) => {
+//     await dso.followToFundsManagement(auth, baseCreds.VIEW_DSO_MORE_OPTIONS)
+//   })
+//   test('View DSO is available', async ({ issuance, page }) => {
+//     await click(issuance.dso.buttons.VIEW_THIS_DSO, page)
+//     await shouldExist(issuance.dso.DSO_INFORMATION, page)
+//   })
 
-  test('View My DSOs is available', async ({ issuance, page }) => {
-    await click(issuance.dso.buttons.VIEW_MY_DSO, page)
-    await expect(page).toHaveURL(`${baseCreds.URL}app/issuance/offerings`)
-  })
+//   test('View My DSOs is available', async ({ issuance, page }) => {
+//     await click(issuance.dso.buttons.VIEW_MY_DSO, page)
+//     await expect(page).toHaveURL(`${baseCreds.URL}app/issuance/offerings`)
+//   })
 
-  test('Deploy Token is available', async ({ issuance, page }) => {
-    await click(issuance.dso.TOKEN_DEPLOY_SECTION, page)
-    await shouldExist(issuance.dso.buttons.TOKEN_DEPLOY, page)
-  })
+//   test('Deploy Token is available', async ({ issuance, page }) => {
+//     await click(issuance.dso.TOKEN_DEPLOY_SECTION, page)
+//     await shouldExist(issuance.dso.buttons.TOKEN_DEPLOY, page)
+//   })
 
-  test('DSO editing is available', async ({ page, issuance }) => {
-    await click(issuance.dso.buttons.EDIT_DSO, page)
-    await shouldExist(issuance.dso.FORM, page)
-  })
-  test.describe('Edit form', () => {
-    test.beforeEach(async ({ issuance, page }) => {
-      await click(issuance.dso.buttons.EDIT_DSO, page)
-    })
+//   test('DSO editing is available', async ({ page, issuance }) => {
+//     await click(issuance.dso.buttons.EDIT_DSO, page)
+//     await shouldExist(issuance.dso.FORM, page)
+//   })
+//   test.describe('Edit form', () => {
+//     test.beforeEach(async ({ issuance, page }) => {
+//       await click(issuance.dso.buttons.EDIT_DSO, page)
+//     })
 
-    test('The Fields should be disabled if DSO started', async ({
-      page,
-      issuance
-    }) => {
-      const result = await isDisabledList(
-        [
-          issuance.dso.fields.TOKEN_NAME,
-          issuance.dso.fields.IDENTIFIER_CODE,
-          issuance.dso.fields.LAUNCH_DATE,
-          issuance.dso.fields.TOKEN_SYMBOL
-        ],
-        page
-      )
-      const network = await page.getAttribute(
-        issuance.dso.listBox.NETWORK,
-        'aria-disabled'
-      )
-      expect([result, network]).toStrictEqual([
-        [true, true, true, true],
-        'true'
-      ])
-    })
+//     test('The Fields should be disabled if DSO started', async ({
+//       page,
+//       issuance
+//     }) => {
+//       const result = await isDisabledList(
+//         [
+//           issuance.dso.fields.TOKEN_NAME,
+//           issuance.dso.fields.IDENTIFIER_CODE,
+//           issuance.dso.fields.LAUNCH_DATE,
+//           issuance.dso.fields.TOKEN_SYMBOL
+//         ],
+//         page
+//       )
+//       const network = await page.getAttribute(
+//         issuance.dso.listBox.NETWORK,
+//         'aria-disabled'
+//       )
+//       expect([result, network]).toStrictEqual([
+//         [true, true, true, true],
+//         'true'
+//       ])
+//     })
 
-    test('The fields should be disabled if Capital Structure = Debt', async ({
-      page,
-      issuance
-    }) => {
-      const result = await isDisabledList(
-        [
-          issuance.dso.fields.DIVIDEND_YIELD,
-          issuance.dso.fields.GROSS_IRR,
-          issuance.dso.fields.EQUITY_MULTIPLE
-        ],
-        page
-      )
-      expect(result).toStrictEqual([true, true, true])
-    })
-  })
-})
+//     test('The fields should be disabled if Capital Structure = Debt', async ({
+//       page,
+//       issuance
+//     }) => {
+//       const result = await isDisabledList(
+//         [
+//           issuance.dso.fields.DIVIDEND_YIELD,
+//           issuance.dso.fields.GROSS_IRR,
+//           issuance.dso.fields.EQUITY_MULTIPLE
+//         ],
+//         page
+//       )
+//       expect(result).toStrictEqual([true, true, true])
+//     })
+//   })
+// })
 
 test.describe('Commitments', () => {
   test.beforeEach(async ({ dso, auth, page, invest }) => {

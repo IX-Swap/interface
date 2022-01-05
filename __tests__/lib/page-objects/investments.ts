@@ -84,10 +84,7 @@ class Invest {
       `${baseCreds.BASE_API}exchange/orders`,
       'POST'
     )
-    const orderInTable = await shouldExist(
-      invest.TABLE + ' tbody tr',
-      this.page
-    )
+    const orderInTable = await shouldExist(invest.TABLE + invest.ROW, this.page)
     return orderInTable
   }
 

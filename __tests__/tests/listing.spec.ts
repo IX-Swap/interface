@@ -30,10 +30,9 @@ test.describe('Listing', () => {
     await screenshotMatching(testInfo.title, form, page)
   })
 })
-let importedForm
 test.describe('Listing with imported dso', () => {
   test.beforeEach(async ({ listing }) => {
-    importedForm = await listing.importDso()
+    await listing.importDso()
   })
 
   test('Team member should be deleted', async ({ listing }) => {
@@ -51,9 +50,5 @@ test.describe('Listing with imported dso', () => {
     await listing.fillListeningOfferingTermsForm()
     const error = await listing.checkError(textHelper.errors.tokenSymbol)
     expect(error).toBe(true)
-  })
-
-  test('Should be imported', async ({ page }, testInfo) => {
-    await screenshotMatching(testInfo.title, importedForm, page)
   })
 })

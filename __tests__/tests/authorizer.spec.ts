@@ -652,10 +652,10 @@ test.describe('Check Virtual Accounts page', () => {
   const corporate = text.requests.virtualAccounts
   let approved, rejected
   test.beforeEach(async ({ page, authorizer }) => {
-    // const userEmail = await authorizer.getUserForVirtualAccountCreation()
-    await authorizer.createVirtualAccount('luch41635948775506@wwjmp.com')
-    // rejected = await authorizer.getDataForIdentityTable(rejectedApi, corporate)
-    // approved = await authorizer.getDataForIdentityTable(approvedApi, corporate)
+    const userEmail = await authorizer.getUserForVirtualAccountCreation()
+    await authorizer.createVirtualAccount(userEmail)
+    rejected = await authorizer.getDataForIdentityTable(rejectedApi, corporate)
+    approved = await authorizer.getDataForIdentityTable(approvedApi, corporate)
     await click(authorizerEl.pages.VIRTUAL_ACCOUNT, page)
   })
   test('Check profile view from the dropdown list', async ({ page }) => {
@@ -700,5 +700,39 @@ test.describe('Check Virtual Accounts page', () => {
       corporate
     )
     expect(approved + 1).toEqual(allApproved)
+  })
+})
+
+test.describe('Check Token Deployment page', () => {
+  test.beforeEach(async ({ page }) => {
+    await click(authorizerEl.pages.TOKEN_DEPLOYMENT, page)
+  })
+  test('The Token view page should be available', async ({ page }) => {
+    await click(invest.buttons.VIEW_INVEST, page)
+    await expect(page).toHaveURL(
+      /app\/authorizer\/token-deployment\/\S+\/view/g
+    )
+  })
+
+  test('Check that tokens only with pending status ', async ({ page }) => {
+    await click('text="Pending"', page)
+    const pending = await getCount(page, 'text="PENDING"')
+    const rowsOnTable = await page.locator(invest.ROW).count()
+    expect(pending).toBe(rowsOnTable)
+  })
+
+  test('Check that tokens only with Deployed status ', async ({ page }) => {
+    await click('text="Deployed"', page)
+    const pending = await getCount(page, 'text="DEPLOYED"')
+    const rowsOnTable = await page.locator(invest.ROW).count()
+    expect(pending).toBe(rowsOnTable)
+  })
+
+  test('Search should work', async ({ authorizer }) => {
+    const table = await authorizer.checkAuthorizePagesSearch(
+      'Cucumber',
+      'issuance/dso/deployments/list'
+    )
+    await expect(table).toContainText('Cucumber')
   })
 })

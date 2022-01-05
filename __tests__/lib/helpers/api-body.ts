@@ -1,17 +1,17 @@
 const time6 = Date.now().toString().slice(-6)
 export const bankAccount = {
-  bankName: 'Edward Dejesus',
-  accountHolderName: 'Kenneth Horton',
-  asset: '5fc25b144f97ed7f3444cac2',
-  bankAccountNumber: '365',
-  swiftCode: 'Dolore enim et dolor',
+  bankName: 'Teegan Ward',
+  accountHolderName: 'Hayley Solis',
+  asset: '5fc25b004f97ed7f3444cac1',
+  bankAccountNumber: time6,
+  swiftCode: 'Aut perspiciatis op',
   address: {
-    line1: '490 Second Drive',
-    line2: 'Id fugiat laboris vo',
-    city: 'Kyiv',
-    state: 'Ukraine',
+    line1: '99 Rocky Clarendon Road',
+    line2: 'In ad voluptates est',
+    city: 'Lorem ut qui accusam',
+    state: 'Sint tempor sed odio',
     country: 'Ukraine',
-    postalCode: 'Assumenda alias omni'
+    postalCode: '10000'
   }
 }
 
@@ -22,12 +22,7 @@ export const cashWithdrawal = {
 }
 export const rejectedFunds = { skip: 0, limit: 5, fundStatus: 'Rejected' }
 export const rejectedApi = { skip: 0, limit: 5, status: 'Rejected' }
-// export const rejectedApi = {
-//   skip: 0,
-//   limit: 25,
-//   status: 'Rejected',
-//   isAssigned: false
-// }
+
 export const approvedApi = { skip: 0, limit: 5, status: 'Approved' }
 
 export const commitment = {
