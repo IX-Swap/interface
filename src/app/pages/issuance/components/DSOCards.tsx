@@ -56,7 +56,7 @@ export const DSOCards = () => {
             percentRaised={data?.totalAmountRaisedPercent ?? 0}
             value={abbreviateNumber(
               data?.totalAmountRaised ?? null,
-              data?.currency.toUpperCase(),
+              data?.currency?.toUpperCase(),
               false,
               undefined,
               false

@@ -12,7 +12,21 @@ export const fakeAssetUnderManagement = {
   totalAmount: 500000,
   percent: 374.4
 }
-
+export const fakeAssetUnderManagement2 = {
+  dsoId: '5fea2b2490c3b06d1f4374f8',
+  dsoName: 'marvel token 2',
+  amount: 187,
+  totalAmount: 500000,
+  percent: 374.4
+}
+export const fakeAssetsUnderManagement = [
+  fakeAssetUnderManagement2,
+  fakeAssetUnderManagement
+]
+export const sortedFakeAssetsUnderManagement = [
+  fakeAssetUnderManagement,
+  fakeAssetUnderManagement2
+]
 export const fakeSubFundStats = {
   totalInvestors: 10,
   topInvestors: [fakeTopInvestor],

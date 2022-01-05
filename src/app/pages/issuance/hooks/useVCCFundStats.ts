@@ -8,6 +8,7 @@ import { useAllCorporates } from 'app/pages/identity/hooks/useAllCorporates'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import { InvestmentStats, SubFundStats } from 'types/vccDashboard'
 import { subMonths } from 'date-fns'
+import { sortAssetsByAmount } from '../utils'
 
 export const useVCCFundStats = () => {
   const { user } = useAuth()
@@ -68,12 +69,17 @@ export const useVCCFundStats = () => {
     getSubFundInvestmentStats,
     queryOptions
   )
-
+  const data = {
+    ...subFundStatsQuery.data?.data?.[0],
+    assetsUnderManagement: sortAssetsByAmount(
+      subFundStatsQuery.data?.data?.[0].assetsUnderManagement
+    )
+  }
   return {
     subFundStats: {
       ...subFundStatsQuery,
       isLoading: corporateIdentitiesIsLoading || subFundStatsQuery.isLoading,
-      data: subFundStatsQuery.data?.data?.[0]
+      data
     },
     subFundInvestmentStats: {
       ...subFundInvestmentStatsQuery,
