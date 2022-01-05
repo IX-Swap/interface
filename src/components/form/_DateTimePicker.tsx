@@ -13,7 +13,6 @@ export const DateTimePickerComponent = (props: KeyboardDateTimePickerProps) => {
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <KeyboardDateTimePicker
         {...props}
-        disableToolbar
         variant='dialog'
         format='MM/dd/yyyy'
         placeholder='mm/dd/yy'
