@@ -1,15 +1,11 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { AggregatedCostsAndCharges } from 'app/pages/accounts/pages/reports/AggregatedCostsAndCharges'
 import { fakeFeeAndCharges } from '__fixtures__/reports'
 import * as useFeeAndCharges from 'app/pages/accounts/hooks/useFeeAndCharges'
 import { generateQueryResult } from '__fixtures__/useQuery'
 
 describe('AggregatedCostsAndCharges', () => {
-  afterEach(async () => {
-    await cleanup()
-  })
-
   it('should match snapshot when data is undefined', () => {
     jest.spyOn(useFeeAndCharges, 'useFeeAndCharges').mockReturnValue(
       generateQueryResult({

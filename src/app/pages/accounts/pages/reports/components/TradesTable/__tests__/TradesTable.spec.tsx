@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import {
   headCells,
   TradesTable
@@ -8,7 +8,6 @@ import { fakeTradeItem } from '__fixtures__/reports'
 
 describe('TradesTable', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

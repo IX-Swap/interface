@@ -1,6 +1,6 @@
 import { CommitmentInvestForm } from 'app/pages/accounts/components/Commitments/CommitmentInvestForm'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { CommitmentInvestOTPDialog } from 'app/pages/accounts/components/Commitments/CommitmentInvestOTPDialog'
 
 jest.mock(
@@ -15,12 +15,7 @@ describe('CommitmentInvestForm', () => {
   const closeFn = jest.fn()
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<CommitmentInvestForm submit={submitFn} close={closeFn} open />)
   })
 
   it('renders otp dialog correctly', () => {

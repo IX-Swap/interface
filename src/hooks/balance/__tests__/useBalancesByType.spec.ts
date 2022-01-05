@@ -1,5 +1,5 @@
 import { act } from '@testing-library/react-hooks'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import * as useAuthHook from 'hooks/auth/useAuth'
 import * as useParsedDataHook from 'hooks/useParsedData'
 import { useBalancesByType } from 'hooks/balance/useBalancesByType'
@@ -21,7 +21,6 @@ describe('useBalancesByType', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { RecentWithdrawals } from 'app/pages/accounts/pages/banks/pages/WithdrawCash/RecentWithdrawals'
 import { TableView } from 'components/TableWithPagination/TableView'
 import { user } from '__fixtures__/user'
@@ -16,7 +16,6 @@ jest.mock('components/TableWithPagination/TableView', () => ({
 
 describe('RecentWithdrawals', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

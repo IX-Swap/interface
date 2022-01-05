@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import {
   DSODetails,
   DSODetailsProps
@@ -16,22 +16,7 @@ describe('DSODetails', () => {
   const props: DSODetailsProps = { dso: dso }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<DSODetails {...props} />)
-  })
-
-  it('renders without error if dso.totalFundraisingAmount is null', () => {
-    render(
-      <DSODetails {...props} dso={{ ...dso, totalFundraisingAmount: null }} />
-    )
-  })
-
-  it('renders without error if dso.minimumInvestment is null', () => {
-    render(<DSODetails {...props} dso={{ ...dso, minimumInvestment: null }} />)
   })
 
   it('renders LabelledValue with correct props', () => {

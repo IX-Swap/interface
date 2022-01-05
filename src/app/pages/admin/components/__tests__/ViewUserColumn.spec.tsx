@@ -1,6 +1,6 @@
 import React from 'react'
 import { ViewUserColumn } from 'app/pages/admin/components/ViewUserColumn'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import IconButton from '@material-ui/core/IconButton'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { AdminRoute } from 'app/pages/admin/router/config'
@@ -13,12 +13,7 @@ jest.mock('components/AppRouterLink', () => ({
 
 describe('ViewUserColumn', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<ViewUserColumn userId='user-id' />)
   })
 
   it('renders IconButton with correct props', () => {

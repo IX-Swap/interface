@@ -44,7 +44,7 @@ export const PageHeader = (props: PageHeaderProps) => {
           [classes.noMargin]: noMargin
         })}
       >
-        <Grid item container alignItems='center' justify={justify}>
+        <Grid item container alignItems='center' justifyContent={justify}>
           {hasBackButton && <BackButton className={classes.backButton} />}
           <Typography variant={variant}>{title}</Typography>
         </Grid>

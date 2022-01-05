@@ -78,7 +78,7 @@ export const AuthorizerView = <T,>(
                   item
                   container
                   alignItems='center'
-                  justify='space-between'
+                  justifyContent='space-between'
                   style={{ marginBottom: 24 }}
                 >
                   <Typography variant='h3'>
@@ -133,7 +133,7 @@ export const AuthorizerView = <T,>(
                   <Grid
                     container
                     item
-                    justify='flex-end'
+                    justifyContent='flex-end'
                     style={{ marginBottom: 20 }}
                   >
                     <PromotionSwitch

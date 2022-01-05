@@ -9,7 +9,7 @@ import {
   ResetStep,
   completePasswordResetInitialValues
 } from 'auth/pages/password-reset/ResetStep'
-import { cleanup } from '@testing-library/react'
+import {} from '@testing-library/react'
 import { completePasswordResetArgs } from '__fixtures__/auth'
 import { PasswordResetStep } from 'auth/context/password-reset/types'
 import * as useCompletePasswordResetHook from 'auth/hooks/useCompletePasswordReset'
@@ -18,7 +18,6 @@ import { generateMutationResult } from '__fixtures__/useQuery'
 describe('ResetStep', () => {
   afterEach(async () => {
     jest.clearAllMocks()
-    await cleanup()
   })
 
   it('renders the form with correct default values and disabled button', () => {

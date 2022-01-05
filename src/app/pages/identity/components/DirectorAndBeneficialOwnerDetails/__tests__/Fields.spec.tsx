@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { Form } from 'components/form/Form'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
 import { fireEvent } from '@testing-library/react'
@@ -45,16 +45,7 @@ describe('Fields', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(
-      <Form>
-        <Fields {...props} />
-      </Form>
-    )
   })
 
   it('render FormSectionHeader when index > 0', () => {

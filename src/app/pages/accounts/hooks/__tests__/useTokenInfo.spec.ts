@@ -1,11 +1,10 @@
 import { act } from '@testing-library/react-hooks'
 import { useTokenInfo } from 'app/pages/accounts/hooks/useTokenInfo'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { successfulResponse } from '__fixtures__/api'
 
 describe('useTokenInfo', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

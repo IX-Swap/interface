@@ -1,5 +1,5 @@
 import React from 'react'
-import { Switch } from 'react-router'
+import { Switch } from 'react-router-dom'
 import { AppRoute } from 'components/AppRoute'
 import { AuthorizerRoute } from 'app/pages/authorizer/router/config'
 import { IssuanceDetails } from 'app/pages/authorizer/pages/issuanceDetails/IssuanceDetails'
@@ -16,7 +16,7 @@ export const AuthorizerIssuanceDetailsRouter = () => {
         <IssuanceDetailsAuthorization />
       </AppRoute>
 
-      <AppRoute exact path={AuthorizerRoute.issuanceDetails}>
+      <AppRoute path={AuthorizerRoute.issuanceDetails}>
         <IssuanceDetails />
       </AppRoute>
     </Switch>

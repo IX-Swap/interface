@@ -1,4 +1,4 @@
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import {
   renderCommitmentDSOLogo,
   renderCommitmentDSOFundRaisingAmount,
@@ -25,7 +25,6 @@ jest.mock('helpers/numbers', () => ({
 
 describe('commitmentsColumns', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

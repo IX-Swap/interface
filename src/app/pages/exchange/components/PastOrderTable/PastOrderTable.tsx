@@ -20,7 +20,7 @@ import { Grid, Hidden } from '@material-ui/core'
 import { CompactBody } from 'components/TableWithPagination/CompactBody'
 
 export interface PostOrderTableProps {
-  pairId: string
+  pairId?: string
 }
 
 export const PastOrderTable = (props: PostOrderTableProps) => {

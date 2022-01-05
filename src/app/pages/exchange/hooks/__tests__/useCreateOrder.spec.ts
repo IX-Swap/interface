@@ -1,12 +1,11 @@
 import { act } from '@testing-library/react-hooks'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { unsuccessfulResponse, successfulResponse } from '__fixtures__/api'
 import { useCreateOrder } from 'app/pages/exchange/hooks/useCreateOrder'
 import { createOrderArgument } from '__fixtures__/orders'
 
 describe('useCreateOrder', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

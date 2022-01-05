@@ -4,7 +4,7 @@ import { TableView } from 'components/TableWithPagination/TableView'
 import { formatDateToMMDDYY } from 'helpers/dates'
 import { renderAmount } from 'helpers/tables'
 import React from 'react'
-import { useParams } from 'react-router'
+import { useParams } from 'react-router-dom'
 import { DigitalSecurityOffering } from 'types/dso'
 
 export interface PastDistributionsTableProps {
@@ -24,7 +24,7 @@ export const PastDistributionsTable = ({
       <Grid item xs={12}>
         <TableView<any>
           uri={'/issuance/distribution/list'}
-          name={`distributions-${dsoId}`}
+          name={`distributions-${dsoId ?? ''}`}
           columns={[
             {
               label: 'Date',

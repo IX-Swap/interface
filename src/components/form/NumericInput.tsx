@@ -2,13 +2,13 @@ import React from 'react'
 import { Input, InputProps, OutlinedInput } from '@material-ui/core'
 import NumberFormat, { NumberFormatProps } from 'react-number-format'
 
-const InputComponent: React.FC = (props: NumberFormatProps) => {
+const InputComponent: React.FC = (props: NumberFormatProps<any>) => {
   const { onValueChange, onChange, inputRef, ...rest } = props
   return <NumberFormat {...rest} onValueChange={onValueChange} />
 }
 
 export interface NumericInputProps {
-  numberFormat: NumberFormatProps
+  numberFormat: NumberFormatProps<any>
   onChange?: any
   variant?: 'outlined' | 'standard'
 }

@@ -19,7 +19,12 @@ export const StatCard = ({
   return (
     <Card variant='outlined' className={root}>
       <CardContent className={content}>
-        <Grid container direction='column' spacing={2} justify='space-between'>
+        <Grid
+          container
+          direction='column'
+          spacing={2}
+          justifyContent='space-between'
+        >
           <Grid item>
             <Grid container spacing={1} alignItems='center'>
               <Grid item className={titleIcon}>

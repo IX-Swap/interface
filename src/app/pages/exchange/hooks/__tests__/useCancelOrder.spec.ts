@@ -4,7 +4,7 @@ import {
   CancelOrderArgs
 } from 'app/pages/exchange/hooks/useCancelOrder'
 import * as useAuth from 'hooks/auth/useAuth'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { successfulResponse } from '__fixtures__/api'
 import { user } from '__fixtures__/user'
 import { exchange as exchangeApiUrls } from 'config/apiURL'
@@ -28,7 +28,6 @@ describe('useCancelOrder', () => {
     jest.spyOn(useAuth, 'useAuth').mockImplementation(() => objResponse as any)
   })
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

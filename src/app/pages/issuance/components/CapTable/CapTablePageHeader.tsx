@@ -9,7 +9,7 @@ export const CapTablePageHeader = () => {
   const { data } = useDSOById(dsoId, issuerId)
 
   return (
-    <Grid container justify='space-between' alignContent='center'>
+    <Grid container justifyContent='space-between' alignContent='center'>
       <Grid item>
         <Typography variant='h4' style={{ lineHeight: '40px' }}>
           {data?.tokenName}

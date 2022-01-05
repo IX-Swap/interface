@@ -11,7 +11,7 @@ export const GenericPreview = (props: GenericPreviewProps) => {
   const { items } = props
 
   return (
-    <Grid container justify='center' direction='column'>
+    <Grid container justifyContent='center' direction='column'>
       <Grid container spacing={1}>
         {items.map((e, i) => (
           <LabelledValue
@@ -20,7 +20,7 @@ export const GenericPreview = (props: GenericPreviewProps) => {
             label={e.label}
             value={e.value}
             row
-            justify='space-between'
+            justifyContent='space-between'
           />
         ))}
       </Grid>

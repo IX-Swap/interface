@@ -1,7 +1,7 @@
 import { LiveTrackingPrice } from 'app/pages/exchange/components/LiveTrackingPrice/LiveTrackingPrice'
 import * as useTradeHistory from 'app/pages/exchange/hooks/useTradeHistory'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { TrackingPrice } from 'app/pages/exchange/components/LiveTrackingPrice/TrackingPrice'
 import * as useLastPrice from 'app/pages/exchange/hooks/useLastPrice'
 
@@ -14,34 +14,7 @@ jest.mock(
 
 describe('LiveTrackingPrice', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    const objResponse = {
-      marketTrades: [
-        {
-          price: 1000,
-          side: 'BID'
-        },
-        {
-          price: 900
-        }
-      ]
-    }
-
-    jest
-      .spyOn(useTradeHistory, 'useTradeHistory')
-      .mockImplementation(() => objResponse as any)
-
-    const useLastPriceResponse = { data: 1000 }
-
-    jest
-      .spyOn(useLastPrice, 'useLastPrice')
-      .mockImplementation(() => useLastPriceResponse as any)
-
-    render(<LiveTrackingPrice />)
   })
 
   it('renders null when data is undefined', () => {

@@ -1,7 +1,7 @@
 import { Securities } from 'app/pages/educationCentre/components/Securities/Securities'
 import * as useToggleView from 'app/pages/educationCentre/hooks/useToggleView'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { SecuritiesGrid } from 'app/pages/educationCentre/components/Securities/SecuritiesGrid'
 import { SecuritiesTableView } from 'app/pages/educationCentre/components/Securities/SecuritiesTableView'
 import { sampleSecurity } from 'app/pages/educationCentre/components/Securities/__tests__/SecurityCard.spec'
@@ -33,12 +33,7 @@ describe('Securities', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<Securities data={[sampleSecurity]} isLoading={false} view='grid' />)
   })
 
   it('renders SecuritiesGrid when view === grid', () => {

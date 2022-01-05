@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { OnboardingSteps } from 'app/components/OnboardingPanel/OnboardingSteps'
 
 describe('OnboardingSteps', () => {
@@ -9,12 +9,7 @@ describe('OnboardingSteps', () => {
   ]
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<OnboardingSteps steps={onboardingSteps} activeStep={0} />)
   })
 
   it('renders steps correctly', () => {

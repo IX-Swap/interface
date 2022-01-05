@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import {
   TopList,
   TopListProps
@@ -28,12 +28,7 @@ describe('TopList', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<TopList {...props} />)
   })
 
   it('renders IndividualAvatar when user is not undefined', () => {

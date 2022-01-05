@@ -3,7 +3,7 @@ import { AdminCorporateIssuerForm } from 'app/pages/admin/components/AdminCorpor
 import { VSpacer } from 'components/VSpacer'
 import React from 'react'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
-import { useParams } from 'react-router'
+import { useParams } from 'react-router-dom'
 import { useUserById } from 'app/pages/admin/hooks/useUserById'
 
 export const CreateIssuerAsAdmin = () => {

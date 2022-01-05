@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { Typography } from '@material-ui/core'
 import { MasDisclosure } from 'app/pages/admin/pages/MasDisclosure'
@@ -29,12 +29,7 @@ jest.mock(
 
 describe('MasDisclosure', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<MasDisclosure />)
   })
 
   it('renders PageHeader with correct props', () => {

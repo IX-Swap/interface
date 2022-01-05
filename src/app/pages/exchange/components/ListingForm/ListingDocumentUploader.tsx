@@ -55,7 +55,9 @@ export const ListingDocumentUploader = ({
 
               <Grid
                 container
-                justify={fields.length <= 0 ? 'space-between' : 'flex-end'}
+                justifyContent={
+                  fields.length <= 0 ? 'space-between' : 'flex-end'
+                }
                 alignItems={'center'}
               >
                 {fields.length <= 0 ? (

@@ -5,7 +5,7 @@ import { LoginArgs } from 'types/auth'
 import apiService from 'services/api'
 import { authURL } from 'config/apiURL'
 import { useState } from 'react'
-import { useLocation } from 'react-router'
+import { useLocation } from 'react-router-dom'
 
 export const useLogin = (referrer?: string) => {
   const [step, setStep] = useState<'login' | 'otp'>('login')
@@ -22,7 +22,7 @@ export const useLogin = (referrer?: string) => {
     return await apiService.post<User>(url, args)
   }
 
-  const location = useLocation<any>()
+  const location: any = useLocation()
 
   return {
     mutation: useMutation(mutateFn, {

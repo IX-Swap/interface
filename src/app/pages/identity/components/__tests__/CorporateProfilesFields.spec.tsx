@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { IndividualInfoFields } from 'app/pages/identity/components/IndividualInfoFields/IndividualInfoFields'
 import {
   CorporateProfilesFields,
@@ -22,16 +22,7 @@ describe('CorporateProfiles', () => {
   const defaultValues = { [props.type]: [] }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(
-      <Form defaultValues={defaultValues}>
-        <CorporateProfilesFields {...props} />
-      </Form>
-    )
   })
 
   it('renders IndividualInfoFields for every element in field array', () => {

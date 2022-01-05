@@ -3,12 +3,11 @@ import { useHasIdentity } from 'app/pages/educationCentre/hooks/useHasIdentity'
 import * as useAllCorporateIdentities from 'app/pages/identity/hooks/useAllCorporates'
 import * as useIndividualIdentity from 'hooks/identity/useIndividualIdentity'
 import { QueryStatus } from 'react-query'
-import { waitFor, cleanup } from 'test-utils'
+import { waitFor } from 'test-utils'
 import { generateQueryResult } from '__fixtures__/useQuery'
 
 describe('useHasIdentity', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

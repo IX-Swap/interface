@@ -1,6 +1,6 @@
 import { act } from '@testing-library/react-hooks'
 import { useIdentityStats } from 'app/pages/admin/hooks/useIdentityStats'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { generateQueryResult } from '__fixtures__/useQuery'
 
 describe('useIdentityStats', () => {
@@ -26,7 +26,6 @@ describe('useIdentityStats', () => {
   const apiFn = jest.fn().mockResolvedValueOnce(useIdentityStatsResponse)
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

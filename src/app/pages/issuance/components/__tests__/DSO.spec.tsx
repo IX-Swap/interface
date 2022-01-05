@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { DSO, DSOProps } from 'app/pages/issuance/components/DSO'
 import { dso } from '__fixtures__/authorizer'
 import * as useDSOByIdHook from 'app/pages/invest/hooks/useDSOById'
@@ -24,12 +24,7 @@ describe('DSO', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<DSO {...props} />)
   })
 
   it('renders nothing if loading', () => {

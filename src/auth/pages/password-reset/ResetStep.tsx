@@ -48,12 +48,12 @@ export const ResetStep: React.FC = () => {
     >
       <Grid container direction='column' spacing={2}>
         <ResetFields />
-        <Grid item container justify='center'>
+        <Grid item container justifyContent='center'>
           <Submit variant='contained' color='primary' size='large'>
             Complete
           </Submit>
         </Grid>
-        <Grid item container justify='center'>
+        <Grid item container justifyContent='center'>
           <Button color='primary' size='large' onClick={goBack}>
             Back
           </Button>

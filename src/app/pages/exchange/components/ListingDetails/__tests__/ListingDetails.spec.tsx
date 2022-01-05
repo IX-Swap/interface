@@ -1,16 +1,10 @@
 import { ListingDetails } from 'app/pages/exchange/components/ListingDetails/ListingDetails'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
-import { listing } from '__fixtures__/listings'
+import { render } from 'test-utils'
 
 describe('ListingDetails', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<ListingDetails data={listing} />)
   })
 
   it('renders null when listing is undefined', () => {

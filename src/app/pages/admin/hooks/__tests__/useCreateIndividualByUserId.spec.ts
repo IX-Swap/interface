@@ -1,13 +1,12 @@
 import { act } from '@testing-library/react-hooks'
 import { useCreateIndividualByUserId } from 'app/pages/admin/hooks/useCreateIndividualByUserId'
 import { identityURL } from 'config/apiURL'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { generateMutationResult } from '__fixtures__/useQuery'
 import { user } from '__fixtures__/user'
 
 describe('useCreateIndividualByUserId', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

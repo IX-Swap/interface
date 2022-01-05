@@ -1,6 +1,6 @@
 import React from 'react'
 import * as useAuth from 'hooks/auth/useAuth'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { Onboarding2FA } from 'app/components/OnboardingPanel/Onboarding2FA'
 
 describe('Onboarding2FA', () => {
@@ -11,13 +11,7 @@ describe('Onboarding2FA', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    jest.spyOn(useAuth, 'useAuth').mockImplementation(() => objResponse as any)
-    render(<Onboarding2FA />)
   })
 
   it('renders a In Progress based on totpConfirmed is false', () => {

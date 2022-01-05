@@ -6,7 +6,7 @@ import { useMarkPairAsFavorite } from 'app/pages/exchange/hooks/useMarkPairAsFav
 import { OTCMarketRoute } from 'app/pages/exchange/router/config'
 import { AppRouterLink } from 'components/AppRouterLink'
 import React from 'react'
-import { generatePath } from 'react-router'
+import { generatePath } from 'react-router-dom'
 
 export interface PairNameProps {
   pair: Pair

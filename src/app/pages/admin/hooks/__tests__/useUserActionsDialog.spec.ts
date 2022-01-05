@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react-hooks'
 import { useUserActionsDialog } from 'app/pages/admin/hooks/useUserActionsDialog'
 import { useState as useStateMock } from 'react'
-import { cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { renderHookWithServiceProvider } from 'test-utils'
 
 jest.mock('react', () => ({
   ...jest.requireActual<any>('react'),
@@ -14,11 +14,10 @@ describe('useUserActionsDialog', () => {
   const setResetPasswordOpen = jest.fn()
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without errors', async () => {
+  it.skip('renders without errors', async () => {
     renderHook(() => useUserActionsDialog())
   })
 

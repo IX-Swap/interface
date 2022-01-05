@@ -4,7 +4,7 @@ import { useServices } from 'hooks/useServices'
 import { useEffect, useMemo } from 'react'
 import { useQuery, useQueryCache } from 'react-query'
 
-export const useFinancialSummary = (id: string) => {
+export const useFinancialSummary = (id?: string) => {
   const { socketService } = useServices()
   const socket = useMemo(() => socketService.socket, [socketService.socket])
   const queryCache = useQueryCache()
@@ -17,6 +17,8 @@ export const useFinancialSummary = (id: string) => {
   }
 
   useEffect(() => {
+    if (id === undefined) return
+
     const onUrl = exchange.summary.on(id)
     socket?.on(onUrl, onDataReceived)
     socket?.emit(exchange.summary.emit, id)

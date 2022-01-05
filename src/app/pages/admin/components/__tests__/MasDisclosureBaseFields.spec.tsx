@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { TypedField } from 'components/form/TypedField'
 import { MasDisclosureBaseFields } from 'app/pages/admin/components/MasDisclosureBaseFields'
 import { RichTextEditor } from 'components/form/RichTextEditor'
@@ -20,16 +20,7 @@ jest.mock('app/components/LoadingIndicator/LoadingIndicator', () => ({
 
 describe('MasDisclosureBaseFields', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(
-      <Form>
-        <MasDisclosureBaseFields />
-      </Form>
-    )
   })
 
   it('renders when useGetSiteConfig isLoading is true', async () => {

@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { Setup } from 'app/pages/accounts/pages/banks/pages/WithdrawCash/Setup'
 import { bank } from '__fixtures__/authorizer'
 import { useBanksData } from 'app/pages/accounts/pages/banks/hooks/useBanksData'
@@ -21,7 +21,6 @@ describe('Setup', () => {
 
   afterEach(async () => {
     jest.clearAllMocks()
-    await cleanup()
   })
 
   it('will not render inputs if bankId is undefined', () => {

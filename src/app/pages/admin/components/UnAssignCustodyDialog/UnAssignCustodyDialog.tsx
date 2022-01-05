@@ -51,7 +51,6 @@ export const UnAssignCustodyDialog = (props: UnAssignCustodyDialogProps) => {
       open={open}
       className={classes.root}
       onClose={() => onClose()}
-      onBackdropClick={() => onClose()}
     >
       <DialogTitle className={classes.titleRoot}>
         <IconButton

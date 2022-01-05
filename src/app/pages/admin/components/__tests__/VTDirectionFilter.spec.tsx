@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup, fireEvent, waitFor } from 'test-utils'
+import { render, fireEvent, waitFor } from 'test-utils'
 import { VTDirectionFilter } from 'app/pages/admin/components/VTDirectionFilter'
 import { InputLabel } from '@material-ui/core'
 import { history } from 'config/history'
@@ -15,12 +15,7 @@ describe('VTDirectionFilter', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<VTDirectionFilter />)
   })
 
   it('renders input label with correct props', () => {

@@ -1,4 +1,4 @@
-import { cleanup, act } from '@testing-library/react-hooks'
+import { act } from '@testing-library/react-hooks'
 import { renderHookWithServiceProvider, waitFor } from 'test-utils'
 import { AppService, AppFeature } from 'types/app'
 import { useUpdateCustomField } from '../useUpdateCustomField'
@@ -18,10 +18,6 @@ describe('useUpdateCustomField', () => {
       isAuthenticated: true,
       user
     })
-  })
-
-  afterEach(async () => {
-    await cleanup()
   })
 
   it('makes a request to correct api endpoint with correct payload', async () => {

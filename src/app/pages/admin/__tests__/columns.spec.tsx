@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import columns from 'app/pages/admin/columns'
 
 describe('columns', () => {
   describe('twoFactorAuth.render', () => {
     afterEach(async () => {
-      await cleanup()
       jest.clearAllMocks()
     })
 

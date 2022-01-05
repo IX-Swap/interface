@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup, fireEvent } from 'test-utils'
+import { render, fireEvent } from 'test-utils'
 import { CancelOrderButton } from 'app/pages/exchange/components/OpenOrders/CancelOrderButton'
 import { orders } from '__fixtures__/orders'
 import * as useCancelOrder from 'app/pages/exchange/hooks/useCancelOrder'
@@ -15,12 +15,7 @@ describe('CancelOrderButton', () => {
       .mockImplementation(() => objResponse as any)
   })
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<CancelOrderButton order={orders[0]} />)
   })
 
   it('calls mutate function correctly', () => {

@@ -2,7 +2,7 @@ import { act } from '@testing-library/react-hooks'
 import { useRemoveBank } from 'app/pages/accounts/pages/banks/hooks/useRemoveBank'
 import { accountsURL } from 'config/apiURL'
 import * as useAuth from 'hooks/auth/useAuth'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { successfulResponse } from '__fixtures__/api'
 import { user } from '__fixtures__/user'
 
@@ -14,7 +14,6 @@ describe('useRemoveBank', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

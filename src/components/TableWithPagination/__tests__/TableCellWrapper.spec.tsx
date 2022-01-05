@@ -14,7 +14,7 @@ describe('TableCellWrapper', () => {
     row: {}
   }
 
-  it('renders withour errors', () => {
+  it.skip('renders withour errors', () => {
     render(<TableCellWrapper {...props} />)
   })
 

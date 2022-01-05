@@ -7,10 +7,10 @@ import {
   RenderResult
 } from '@testing-library/react'
 import {
-  createGenerateClassName,
   StylesProvider,
   ThemeProvider,
-  createMuiTheme
+  createTheme,
+  createGenerateClassName
 } from '@material-ui/core/styles'
 import { history } from 'config/history'
 import { UserProvider } from 'auth/context'
@@ -43,14 +43,14 @@ export const snackbarServiceMock = {
   showOnboardingDialog: jest.fn()
 }
 
+const generateClassName = createGenerateClassName({
+  productionPrefix: 'ix'
+})
+
 export const BaseProviders: React.FC<{ mockAPI?: boolean }> = ({
   children,
   mockAPI = false
 }) => {
-  const generateClassName = createGenerateClassName({
-    productionPrefix: 'ix'
-  })
-
   return (
     <StylesProvider generateClassName={generateClassName}>
       <AppThemeProvider>
@@ -188,8 +188,8 @@ export const renderHookWithForm = (
 
 export const renderWithInitialWidth = (ui: any, initialWidth: any) => {
   const SizeWrapper = (props: any) => {
-    const defaultTheme = createMuiTheme()
-    const theme = createMuiTheme({
+    const defaultTheme = createTheme()
+    const theme = createTheme({
       props: { ...defaultTheme, MuiWithWidth: { initialWidth } }
     })
 
@@ -211,5 +211,7 @@ export const invokeMutationFn = async (result: any, payload: any) => {
   return response
 }
 
+// eslint-disable-next-line import/export
 export * from '@testing-library/react'
+// eslint-disable-next-line import/export
 export { customRenderer as render }

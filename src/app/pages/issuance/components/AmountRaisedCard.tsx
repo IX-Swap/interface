@@ -30,7 +30,12 @@ export const AmountRaisedCard = ({
 }: AmountRaisedCardProps) => {
   return (
     <ChartWrapper py={isNewThemeOn ? 2.5 : undefined}>
-      <Grid container justify='space-between' alignItems='center' wrap='nowrap'>
+      <Grid
+        container
+        justifyContent='space-between'
+        alignItems='center'
+        wrap='nowrap'
+      >
         <Grid item>
           <ChartTitle
             title='Amount Raised'

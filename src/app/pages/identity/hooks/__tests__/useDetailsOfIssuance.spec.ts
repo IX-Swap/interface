@@ -1,11 +1,10 @@
 import { act } from '@testing-library/react-hooks'
 import { useDetailsOfIssuance } from 'app/pages/identity/hooks/useDetailsOfIssuance'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { successfulResponse } from '__fixtures__/api'
 
 describe('useDetailsOfIssuance', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

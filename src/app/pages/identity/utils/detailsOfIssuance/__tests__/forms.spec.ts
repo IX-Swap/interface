@@ -2,12 +2,11 @@ import {
   getIssuerDetailsFormValues,
   getIssuerDocumentsFormValues
 } from 'app/pages/identity/utils/detailsOfIssuance/forms'
-import { cleanup } from 'test-utils'
+
 import { detailsOfIssuance, document } from '__fixtures__/identity'
 
 describe('forms', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

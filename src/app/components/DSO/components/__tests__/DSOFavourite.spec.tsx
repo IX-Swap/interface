@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { DSOFavorite } from 'app/components/DSOFavorite'
 import * as useToggleDSOFavorite from 'app/pages/invest/hooks/useToggleDSOFavorite'
 import { dso } from '__fixtures__/authorizer'
@@ -28,12 +28,7 @@ describe('DSOFavourite', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<DSOFavorite dependentQueryKeys={[]} dso={dso} />)
   })
 
   it('renders IconButton with correct props when isStarred is true', () => {

@@ -1,13 +1,12 @@
 import { act } from '@testing-library/react-hooks'
 import { useMarketList } from 'app/pages/exchange/hooks/useMarketList'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { generateInfiniteQueryResult } from '__fixtures__/useQuery'
 
 describe('useMarketList', () => {
   const response = generateInfiniteQueryResult({})
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

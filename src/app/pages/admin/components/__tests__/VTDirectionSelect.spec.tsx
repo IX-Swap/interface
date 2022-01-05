@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { transferDirections } from 'config/defaults'
 import { MenuItem, Select } from '@material-ui/core'
 import { renderMenuItems } from 'helpers/rendering'
@@ -17,7 +17,6 @@ jest.mock('helpers/rendering', () => ({
 
 describe('VTDirectionSelect', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

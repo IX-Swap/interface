@@ -3,7 +3,7 @@ import { IssuerDetailsView } from 'app/pages/identity/components/DetailsOfIssuan
 import { IdentityDocumentsView } from 'app/pages/identity/components/IdentityDocumentsView/IdentityDocumentsView'
 import { useDetailsOfIssuance } from 'app/pages/identity/hooks/useDetailsOfIssuance'
 import React from 'react'
-import { useParams } from 'react-router'
+import { useParams } from 'react-router-dom'
 import { AppFeature } from 'types/app'
 
 import { AuthorizerView } from 'app/pages/authorizer/components/AuthorizerView'

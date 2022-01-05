@@ -30,7 +30,7 @@ export const PrimaryOfferings = () => {
   }
 
   return (
-    <Grid container justify={'flex-end'}>
+    <Grid container justifyContent={'flex-end'}>
       <Grid container item wrap={'wrap'} className={classes.container}>
         {(items as DigitalSecurityOffering[]).map((dso, i) => (
           <Grid item key={dso._id}>
@@ -52,7 +52,7 @@ export const PrimaryOfferings = () => {
             rowsPerPage={rowsPerPage}
             labelRowsPerPage={'Items per page'}
             page={page}
-            onChangeRowsPerPage={evt => {
+            onRowsPerPageChange={evt => {
               setPage(0)
               setRowsPerPage(parseInt(evt.target.value))
             }}

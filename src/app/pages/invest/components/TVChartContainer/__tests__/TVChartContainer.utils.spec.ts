@@ -1,9 +1,7 @@
-import { cleanup } from 'test-utils'
 import { getLanguageFromURL, getMovingAverageParams } from '../utils'
 
 describe('getMovingAverageParams', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
@@ -25,7 +23,6 @@ describe('getMovingAverageParams', () => {
 
 describe('getLanguageFromURL', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

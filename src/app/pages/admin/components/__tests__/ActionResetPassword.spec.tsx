@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { ActionResetPassword } from 'app/pages/admin/components/ActionResetPassword'
 import { managedUser } from '__fixtures__/user'
 import * as useUserActionsDialog from 'app/pages/admin/hooks/useUserActionsDialog'
@@ -25,12 +25,7 @@ describe('ActionResetPassword', () => {
   )
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<ActionResetPassword data={managedUser} />)
   })
 
   it('renders components with correct props', () => {

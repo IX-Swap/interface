@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { fireEvent, waitFor } from '@testing-library/react'
 import {
   DownloadDSOSubscriptionDocument,
@@ -19,12 +19,7 @@ describe('DownloadDSOSubscriptionDocument', () => {
       .mockReturnValue([mutate, { isLoading: false } as any])
   })
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<DownloadDSOSubscriptionDocument {...props} />)
   })
 
   it('invokes download function on button click', async () => {

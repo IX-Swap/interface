@@ -1,7 +1,7 @@
 import { IdentityStatsCards } from 'app/pages/admin/components/IdentityStatsCards/IdentityStatsCards'
 import * as useIdentityStats from 'app/pages/admin/hooks/useIdentityStats'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { generateQueryResult } from '__fixtures__/useQuery'
 
 describe('IdentityStatsCards', () => {
@@ -19,22 +19,9 @@ describe('IdentityStatsCards', () => {
       totalLastWeek: 2
     }
   }
-  const useIdentityStatsResponse = generateQueryResult({
-    data,
-    isLoading: false
-  })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    jest
-      .spyOn(useIdentityStats, 'useIdentityStats')
-      .mockImplementation(() => useIdentityStatsResponse as any)
-
-    render(<IdentityStatsCards />)
   })
 
   it('renders null when loading', () => {

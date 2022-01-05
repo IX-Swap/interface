@@ -4,11 +4,12 @@ import { paginationArgs } from 'config/defaults'
 import { useParsedData } from 'hooks/useParsedData'
 import { useServices } from 'hooks/useServices'
 import { useInfiniteQuery } from 'react-query'
-import { useParams } from 'react-router'
+import { useParams } from 'react-router-dom'
 import { PaginatedData } from 'services/api/types'
 import { AppFeature } from 'types/app'
 import { CashWithdrawal } from 'types/cashWithdrawal'
 import { WithdrawalPreview } from 'app/components/WithdrawalPreview/WithdrawalPreview'
+import { isEmptyString } from 'helpers/strings'
 
 export const CashWithdrawalAuthorization = () => {
   const { apiService } = useServices()
@@ -29,7 +30,11 @@ export const CashWithdrawalAuthorization = () => {
     return null
   }
 
-  const cashWithdrawal = map[cashWithdrawalId]
+  const cashWithdrawal = !isEmptyString(cashWithdrawalId)
+    ? map[cashWithdrawalId]
+    : undefined
+
+  if (cashWithdrawal == null) return null
 
   return (
     <AuthorizerView

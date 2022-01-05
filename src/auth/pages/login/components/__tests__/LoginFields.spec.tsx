@@ -1,5 +1,5 @@
 import React from 'react'
-import { cleanup, render } from 'test-utils'
+import { render } from 'test-utils'
 import { LoginFields } from 'auth/pages/login/components/LoginFields'
 import { TypedField } from 'components/form/TypedField'
 import { Form } from 'components/form/Form'
@@ -11,15 +11,6 @@ jest.mock('components/form/TypedField', () => ({
 describe('LoginFields', () => {
   afterEach(async () => {
     jest.clearAllMocks()
-    await cleanup()
-  })
-
-  it('renders without error', () => {
-    render(
-      <Form>
-        <LoginFields />
-      </Form>
-    )
   })
 
   it('renders email and password', () => {

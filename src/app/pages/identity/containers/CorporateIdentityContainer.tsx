@@ -2,7 +2,7 @@ import React, { ComponentType, createElement } from 'react'
 import { useCorporate } from 'app/pages/identity/hooks/useCorporate'
 import { CorporateIdentityView } from 'app/pages/identity/components/CorporateIdentityView/CorporateIdentityView'
 import { CorporateIssuerView } from 'app/pages/identity/components/CorporateIssuerView/CorporateIssuerView'
-import { useParams } from 'react-router'
+import { useParams } from 'react-router-dom'
 import { CorporateIdentity } from '../types/forms'
 
 export interface CorporateIdentityContainerProps {

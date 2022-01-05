@@ -1,6 +1,6 @@
 import { Insights } from 'app/pages/issuance/components/CapTable/Insights'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { PricePerToken } from 'app/pages/issuance/components/CapTable/PricePerToken'
 import { TotalTokens } from 'app/pages/issuance/components/CapTable/TotalTokens'
 import { TotalInvestors } from 'app/pages/issuance/components/CapTable/TotalInvestors'
@@ -24,12 +24,7 @@ jest.mock('app/pages/issuance/components/CapTable/TotalInvestors', () => ({
 
 describe('Insights', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<Insights />)
   })
 
   it('renders correct components', () => {

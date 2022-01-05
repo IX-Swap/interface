@@ -8,7 +8,7 @@ import { Switch } from 'react-router-dom'
 export const SecuritiesMarketsRouter = () => {
   return (
     <Switch>
-      <AppRoute exact path={EducationCentreRoute.security}>
+      <AppRoute path={EducationCentreRoute.security}>
         <SecurityView />
       </AppRoute>
       <AppRoute path={EducationCentreRoute.securitiesMarkets}>

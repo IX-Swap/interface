@@ -1,4 +1,4 @@
-import { cleanup, act } from '@testing-library/react-hooks'
+import { act } from '@testing-library/react-hooks'
 import { renderHookWithServiceProvider, waitFor } from 'test-utils'
 import { useToggleDSOFavorite } from 'app/pages/invest/hooks/useToggleDSOFavorite'
 import { successfulResponse } from '__fixtures__/api'
@@ -26,7 +26,6 @@ describe('useToggleDSOFavorite', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

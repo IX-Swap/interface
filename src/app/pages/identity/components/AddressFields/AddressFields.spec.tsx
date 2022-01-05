@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { TypedField } from 'components/form/TypedField'
 import { Form } from 'components/form/Form'
 import {
@@ -12,21 +12,12 @@ jest.mock('components/form/TypedField', () => ({
 }))
 
 describe('AddressFields', () => {
-  const props: AddressFieldsProps<any> = {
+  const props: AddressFieldsProps = {
     rootName: 'companyAddress'
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(
-      <Form>
-        <AddressFields {...props} />
-      </Form>
-    )
   })
 
   it('defaults rootPath to "address"', () => {

@@ -1,6 +1,6 @@
 import React from 'react'
 import { AuthorizerView } from 'app/pages/authorizer/components/AuthorizerView'
-import { useParams } from 'react-router'
+import { useParams } from 'react-router-dom'
 import { AppFeature } from 'types/app'
 import { useWithdrawalAddressById } from 'app/pages/accounts/pages/withdrawalAddresses/hooks/useWithdrawalAddressById'
 import { WithdrawalAddressPreview } from 'app/components/WithdrawalAddressPreview/WithdrawalAddressPreview'

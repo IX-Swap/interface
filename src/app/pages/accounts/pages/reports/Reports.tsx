@@ -16,7 +16,12 @@ export const Reports: React.FC = () => {
         <Typography variant={'h4'}>Statements</Typography>
         <VSpacer size={'small'} />
       </Grid>
-      <Grid item container justify={'space-between'} alignItems={'center'}>
+      <Grid
+        item
+        container
+        justifyContent={'space-between'}
+        alignItems={'center'}
+      >
         <Grid item>
           <Box marginRight={2} marginTop={2} marginBottom={2}>
             <Typography variant={'body1'}>

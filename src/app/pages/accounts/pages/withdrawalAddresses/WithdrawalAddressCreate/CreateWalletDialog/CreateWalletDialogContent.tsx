@@ -47,7 +47,7 @@ export const CreateWalletDialogContent: React.FC = () => {
         <Link
           color='primary'
           target='_blank'
-          href={`${process.env.PUBLIC_URL}/documents/Combined Instructions for Wallets.pdf`}
+          href='/documents/Combined Instructions for Wallets.pdf'
         >
           guide
         </Link>{' '}

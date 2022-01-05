@@ -1,7 +1,7 @@
 import { AdminRoute } from 'app/pages/admin/router/config'
 import { AppRoute } from 'components/AppRoute'
 import React from 'react'
-import { Switch, useLocation } from 'react-router'
+import { Switch, useLocation } from 'react-router-dom'
 import { Users } from 'app/pages/admin/pages/Users'
 import { ViewUser } from 'app/pages/admin/pages/ViewUser'
 import { CreateIndividualAsAdmin } from 'app/pages/admin/pages/CreateIndividualAsAdmin'
@@ -20,7 +20,7 @@ export const UserRouter = () => {
       >
         <ViewUser />
       </AppRoute>
-      <AppRoute exact path={AdminRoute.users}>
+      <AppRoute path={AdminRoute.users}>
         <Users />
       </AppRoute>
       <AppRoute

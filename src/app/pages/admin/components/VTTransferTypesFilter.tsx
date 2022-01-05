@@ -14,7 +14,7 @@ export const VTTransferTypesFilter = () => {
       md={5}
       lg={4}
       alignItems={'center'}
-      justify={'flex-start'}
+      justifyContent={'flex-start'}
     >
       <Grid item xs={3} sm={'auto'}>
         <Typography style={{ fontWeight: 600 }}>Types of Transfer:</Typography>

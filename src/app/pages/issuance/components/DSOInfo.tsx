@@ -15,8 +15,13 @@ export const DSOInfo = () => {
   }
 
   return (
-    <Grid container justify='center' direction='column' alignItems='center'>
-      <Grid item container spacing={1} justify='center'>
+    <Grid
+      container
+      justifyContent='center'
+      direction='column'
+      alignItems='center'
+    >
+      <Grid item container spacing={1} justifyContent='center'>
         <Grid item>
           <AuthorizableStatus status={data.status} compact={false} />
         </Grid>

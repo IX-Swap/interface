@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { DonutChart } from 'app/pages/issuance/components/IssuanceLanding/DonutChart'
 import { Chart } from 'react-google-charts'
 import Typography from '@material-ui/core/Typography'
@@ -19,12 +19,7 @@ const donutChartPropsWithText = { ...defaultDonatChartProps, text: 'text' }
 
 describe('DonutChart', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<DonutChart {...defaultDonatChartProps} />)
   })
 
   it('renders Chart with correct props when isNewThemeOn is false', () => {

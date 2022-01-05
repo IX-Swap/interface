@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import {
   DSOCardCover,
   DSOCardCoverProps
@@ -18,12 +18,7 @@ jest.mock('components/AppRouterLink', () => ({
 describe('DSOCardCover', () => {
   const props: DSOCardCoverProps = { dso: dso, viewURL: 'foo' }
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<DSOCardCover {...props} />)
   })
 
   it('renders DSOLogo with correct props', () => {

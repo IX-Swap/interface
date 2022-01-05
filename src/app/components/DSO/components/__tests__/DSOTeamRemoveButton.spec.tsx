@@ -1,6 +1,6 @@
 import { fireEvent, waitFor } from '@testing-library/react'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import {
   DSOTeamRemoveButton,
   DSOTeamRemoveButtonProps
@@ -13,12 +13,7 @@ describe('DSOTeamRemoveButton', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<DSOTeamRemoveButton {...props} />)
   })
 
   it('invokes remove function with index on button click', async () => {

@@ -22,15 +22,15 @@ export const InvestRouter = () => {
         <InvestDSORouter />
       </AppRoute>
 
-      <AppRoute exact path={InvestRoute.viewListing}>
+      <AppRoute path={InvestRoute.viewListing}>
         <ViewListing />
       </AppRoute>
 
-      <AppRoute exact path={InvestRoute.landing}>
+      <AppRoute path={InvestRoute.landing}>
         <InvestLanding />
       </AppRoute>
 
-      <AppRoute exact path={InvestRoute.overview}>
+      <AppRoute path={InvestRoute.overview}>
         <InvestOverview />
       </AppRoute>
     </Switch>

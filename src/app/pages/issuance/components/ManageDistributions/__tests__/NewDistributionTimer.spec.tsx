@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import * as useDSOByIdHook from 'app/pages/invest/hooks/useDSOById'
 import * as useCountdown from 'app/pages/issuance/hooks/useCountdown'
 import { dso } from '__fixtures__/authorizer'
@@ -42,16 +42,11 @@ describe('NextDistributionTimer', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
   afterAll(() => {
     dateNowSpy.mockRestore()
-  })
-
-  it('renders without errors', () => {
-    render(<NextDistributionTimer />)
   })
 
   it('renders title with correct props', () => {

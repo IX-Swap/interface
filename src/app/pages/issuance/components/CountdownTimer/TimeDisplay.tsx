@@ -21,7 +21,7 @@ export const TimeDisplay = ({
     return label
   }
   return (
-    <Grid container alignItems='flex-start' justify='center'>
+    <Grid container alignItems='flex-start' justifyContent='center'>
       {unitsToDisplay.map((unit, i) => (
         <React.Fragment key={unit}>
           <TimeUnit

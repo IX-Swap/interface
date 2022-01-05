@@ -1,11 +1,10 @@
 import { act } from '@testing-library/react-hooks'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { unsuccessfulResponse, successfulResponse } from '__fixtures__/api'
 import { useAcceptMASDisclosure } from 'app/pages/exchange/hooks/useAcceptMASDisclosure'
 
 describe('useAcceptMASDisclosure', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

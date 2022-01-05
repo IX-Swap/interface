@@ -3,7 +3,7 @@ import { Grid } from '@material-ui/core'
 import { VSpacer } from 'components/VSpacer'
 import { AdminIndividualInvestorForm } from 'app/pages/admin/components/AdminIndividualInvestorForm/AdminIndividualInvestorForm'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
-import { useParams } from 'react-router'
+import { useParams } from 'react-router-dom'
 import { useUserById } from 'app/pages/admin/hooks/useUserById'
 
 export const CreateIndividualAsAdmin: React.FC = () => {

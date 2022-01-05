@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import {
   LandingPageItem,
   LandingPageItemProps
@@ -11,12 +11,7 @@ describe('LandingPageItem', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<LandingPageItem {...props} />)
   })
 
   it('renders icon correctly', () => {

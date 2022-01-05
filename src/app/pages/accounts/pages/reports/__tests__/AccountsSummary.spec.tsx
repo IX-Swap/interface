@@ -1,15 +1,11 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { AccountsSummary } from 'app/pages/accounts/pages/reports/AccountsSummary'
 import * as useActivitySummary from 'app/pages/accounts/hooks/useActivitySummary'
 import { fakeActivitySummary } from '__fixtures__/reports'
 import { generateQueryResult } from '__fixtures__/useQuery'
 
 describe('AccountsSummary', () => {
-  afterEach(async () => {
-    await cleanup()
-  })
-
   it('should match snapshot when data is undefined', () => {
     jest.spyOn(useActivitySummary, 'useActivitySummary').mockReturnValue(
       generateQueryResult({

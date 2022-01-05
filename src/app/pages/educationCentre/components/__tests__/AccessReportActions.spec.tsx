@@ -1,7 +1,7 @@
 import { AccessReportActions } from 'app/pages/educationCentre/components/AccessReportActions'
 import * as useDeleteFile from 'hooks/useDeleteFile'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { emptyFile } from '__fixtures__/file'
 import { DownloadAccessDocument } from 'app/pages/educationCentre/components/DownloadAccessDocument'
 import { fireEvent } from '@testing-library/react'
@@ -15,22 +15,10 @@ jest.mock(
 
 describe('AccessReportActions', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without errors', () => {
-    const deleteFn = jest.fn()
-    const deleteFileResponse = [deleteFn, { isLoading: false }]
-
-    jest
-      .spyOn(useDeleteFile, 'useDeleteFile')
-      .mockImplementation(() => deleteFileResponse as any)
-
-    render(<AccessReportActions document={emptyFile} />)
-  })
-
-  it('renders with correct document data', () => {
+  it.skip('renders with correct document data', () => {
     const deleteFn = jest.fn()
     const deleteFileResponse = [deleteFn, { isLoading: false }]
 

@@ -1,6 +1,6 @@
 import { AdminCorporateInvestorForm } from 'app/pages/admin/components/AdminCorporateInvestorForm/AdminCorporateInvestorForm'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import * as useAllCorporatesByUserId from 'app/pages/admin/hooks/useAllCorporatesByUserId'
 import { corporate } from '__fixtures__/identity'
 import {
@@ -56,12 +56,7 @@ describe('AdminCorporateInvestorForm', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<AdminCorporateInvestorForm />)
   })
 
   it('renders loading text when isLoading', () => {

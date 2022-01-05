@@ -1,11 +1,10 @@
 import { act } from '@testing-library/react-hooks'
 import { useNextDistribution } from 'app/pages/issuance/hooks/useNextDistribution'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { successfulResponse } from '__fixtures__/api'
 
 describe('useNextDistribution', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

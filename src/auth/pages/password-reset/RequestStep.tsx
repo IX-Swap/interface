@@ -34,7 +34,7 @@ export const RequestStep: React.FC = () => {
     >
       <Grid container direction='column' spacing={2}>
         <RequestFields />
-        <Grid item container justify='center'>
+        <Grid item container justifyContent='center'>
           <Submit variant='contained' color='primary' size='large'>
             Reset
           </Submit>

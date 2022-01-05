@@ -17,7 +17,7 @@ export const TwoFaDialog = ({ closeFn, nextFn, isOpen }: TwoFaDialogProps) => {
         <Typography align='center'>
           To increase your account security, please enable 2FA.
         </Typography>
-        <Grid container justify='center'>
+        <Grid container justifyContent='center'>
           <Box
             width='60%'
             mt={4}
@@ -27,7 +27,7 @@ export const TwoFaDialog = ({ closeFn, nextFn, isOpen }: TwoFaDialogProps) => {
             component='button'
             onClick={nextFn}
           >
-            <Grid container alignItems='center' justify='center'>
+            <Grid container alignItems='center' justifyContent='center'>
               <Grid item>
                 <img src={gAuthImg} className={classes.btnImg} alt='gAuth' />
               </Grid>

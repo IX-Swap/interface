@@ -11,7 +11,7 @@ export interface SecurityViewHeaderProps {
 
 export const SecurityViewHeader = ({ data }: SecurityViewHeaderProps) => {
   return (
-    <Grid container spacing={3} justify='space-between'>
+    <Grid container spacing={3} justifyContent='space-between'>
       <Grid item>
         <Grid container spacing={3}>
           <Grid item>
@@ -32,7 +32,7 @@ export const SecurityViewHeader = ({ data }: SecurityViewHeaderProps) => {
             <Grid
               container
               direction='column'
-              justify='center'
+              justifyContent='center'
               style={{ height: '100%' }}
             >
               <Grid item>
@@ -50,7 +50,7 @@ export const SecurityViewHeader = ({ data }: SecurityViewHeaderProps) => {
         </Grid>
       </Grid>
       <Grid item style={{ paddingTop: 20 }}>
-        <Grid container spacing={3} justify='flex-end'>
+        <Grid container spacing={3} justifyContent='flex-end'>
           <Grid item>
             <LabelledValue
               label='Current Price:'

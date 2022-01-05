@@ -26,7 +26,7 @@ export const DSOToken = () => {
   const tokenUrl = getBlockchainUrl(token, data.network, 'token')
 
   return (
-    <Grid container alignItems='center' justify='space-between'>
+    <Grid container alignItems='center' justifyContent='space-between'>
       <Grid item>
         {token !== undefined ? (
           <AppRouterLink

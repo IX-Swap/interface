@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { SliderTooltip } from 'app/pages/identity/components/FinancialInformationForm/SliderTooltip'
 
 describe('SliderTooltip', () => {
@@ -10,12 +10,7 @@ describe('SliderTooltip', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<SliderTooltip {...props} />)
   })
 
   it('renders props correctly', () => {

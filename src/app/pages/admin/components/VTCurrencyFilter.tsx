@@ -14,7 +14,7 @@ export const VTCurrencyFilter = () => {
       md={4}
       lg={2}
       alignItems={'center'}
-      justify={'flex-start'}
+      justifyContent={'flex-start'}
     >
       <Grid item xs={4} sm={'auto'}>
         <Typography style={{ fontWeight: 600 }}>Currency:</Typography>

@@ -2,7 +2,7 @@ import { NewDistributionFormFields } from 'app/pages/issuance/components/ManageD
 import { useCreateDistribution } from 'app/pages/issuance/hooks/useCreateDistribution'
 import { Form } from 'components/form/Form'
 import React, { useState } from 'react'
-import { useParams } from 'react-router'
+import { useParams } from 'react-router-dom'
 
 export const NewDistributionForm = () => {
   const { dsoId } = useParams<{ dsoId: string }>()

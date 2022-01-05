@@ -23,7 +23,7 @@ export const DSOFavorite = (props: DSOFavoriteProps) => {
 
   return (
     <Box pl={1} mr={-1}>
-      <Grid container justify='center' alignItems='center'>
+      <Grid container justifyContent='center' alignItems='center'>
         {isLoading ? (
           <CircularProgress thickness={5.5} size={16} />
         ) : (

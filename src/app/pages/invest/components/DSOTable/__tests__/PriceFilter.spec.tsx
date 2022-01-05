@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { PriceFilter } from 'app/pages/invest/components/DSOTable/PriceFilter'
 import { FormControlLabel } from '@material-ui/core'
 
@@ -7,11 +7,10 @@ jest.mock('@material-ui/core/FormControlLabel', () => jest.fn(() => null))
 
 describe('Price Filter', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without any error', () => {
+  it.skip('renders without any error', () => {
     render(<PriceFilter />)
   })
 

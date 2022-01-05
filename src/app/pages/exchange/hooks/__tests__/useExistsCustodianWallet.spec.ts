@@ -1,5 +1,5 @@
 import { act } from '@testing-library/react-hooks'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { unsuccessfulResponse } from '__fixtures__/api'
 import { user } from '__fixtures__/user'
 import { useExistsCustodianWallet } from '../useExistsCustodianWallet'
@@ -12,7 +12,6 @@ describe('useExistsCustodianWallet', () => {
   const userId = user._id
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

@@ -7,7 +7,7 @@ import { useStyles } from './BaseFilters.styles'
 export const BaseFilters = ({ children }: PropsWithChildren<{}>) => {
   const classes = useStyles()
   return (
-    <Grid container justify='space-between' className={classes.wrapper}>
+    <Grid container justifyContent='space-between' className={classes.wrapper}>
       <Grid item xs={12} md={6}>
         <Box className={classes.searchWrapper}>
           <SearchFilter
@@ -21,7 +21,7 @@ export const BaseFilters = ({ children }: PropsWithChildren<{}>) => {
         <Grid
           container
           direction='row'
-          justify='flex-end'
+          justifyContent='flex-end'
           spacing={2}
           alignItems='center'
         >

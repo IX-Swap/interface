@@ -1,8 +1,7 @@
 import apiService from 'services/api'
-import { cleanup } from 'test-utils'
 
 import { symbolData, sampleResponse, sampleBars } from '__fixtures__/tvChart'
-import { ResolutionString } from 'types/charting_library'
+import { ResolutionString } from 'charting_library'
 import { DataPulseProvider } from '../data-pulse-provider'
 
 describe('DataPulseProvider', () => {
@@ -10,7 +9,6 @@ describe('DataPulseProvider', () => {
   const firstResolution = '120' as ResolutionString
   const secondResolution = '240' as ResolutionString
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

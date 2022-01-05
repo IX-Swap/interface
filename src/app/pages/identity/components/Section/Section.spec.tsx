@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import {
   Section,
   IdentitySectionProps
@@ -15,12 +15,7 @@ describe('Section', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<Section {...props} />)
   })
 
   it('renders footer correctly', () => {

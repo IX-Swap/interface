@@ -1,13 +1,12 @@
 import { act } from '@testing-library/react-hooks'
 import { useUserById } from 'app/pages/admin/hooks/useUserById'
 import { userURL } from 'config/apiURL'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { successfulResponse } from '__fixtures__/api'
 import { managedUser } from '__fixtures__/user'
 
 describe('useUserById', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

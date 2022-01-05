@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { DepositCashAlert } from 'app/pages/accounts/pages/banks/components/DepositCashAlert'
 import { Form } from 'components/form/Form'
 import { CashTransactionAlert } from 'app/pages/accounts/pages/banks/components/CashTransactionAlert'
@@ -16,7 +16,6 @@ jest.mock(
 
 describe('DepositCashAlert', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

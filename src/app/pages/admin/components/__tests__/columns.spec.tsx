@@ -1,13 +1,12 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import columns from 'app/pages/admin/components/columns'
 import { loginHistory } from '__fixtures__/user'
 
 describe('columns', () => {
   describe('createdAt.render', () => {
     afterEach(async () => {
-      await cleanup()
       jest.clearAllMocks()
     })
 
@@ -30,7 +29,6 @@ describe('columns', () => {
 
   describe('ip.render', () => {
     afterEach(async () => {
-      await cleanup()
       jest.clearAllMocks()
     })
 
@@ -50,7 +48,6 @@ describe('columns', () => {
 
   describe('userAgent.render', () => {
     afterEach(async () => {
-      await cleanup()
       jest.clearAllMocks()
     })
 

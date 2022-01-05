@@ -14,7 +14,7 @@ export const AuthRoot: React.FC = () => {
     <Grid
       className={container}
       container
-      justify='center'
+      justifyContent='center'
       alignItems='center'
       alignContent='center'
     >
@@ -22,7 +22,7 @@ export const AuthRoot: React.FC = () => {
         <AuthWrapper
           container
           direction='column'
-          justify='center'
+          justifyContent='center'
           wrap='nowrap'
           spacing={0}
         >
@@ -32,7 +32,11 @@ export const AuthRoot: React.FC = () => {
                 <Box className={formContainer}>
                   <Grid container direction='column' spacing={4}>
                     <Grid item>
-                      <Grid container justify='center' alignItems='center'>
+                      <Grid
+                        container
+                        justifyContent='center'
+                        alignItems='center'
+                      >
                         <Grid item>
                           <AppLogo color />
                         </Grid>

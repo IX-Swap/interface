@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { user } from '__fixtures__/user'
 import DialogConfirmRoleChange, {
   DialogConfirmRoleChangeProps
@@ -17,12 +17,7 @@ describe('DialogConfirmRoleChange', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<DialogConfirmRoleChange {...props} />)
   })
 
   it('renders nothing if open is false', () => {

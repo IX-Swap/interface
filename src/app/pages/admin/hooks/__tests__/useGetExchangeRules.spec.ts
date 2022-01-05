@@ -1,11 +1,10 @@
 import { act } from '@testing-library/react-hooks'
 import { useGetExchangeRules } from 'app/pages/admin/hooks/useGetExchangeRules'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { successfulResponse } from '__fixtures__/api'
 
 describe('useGetExchangeRules', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

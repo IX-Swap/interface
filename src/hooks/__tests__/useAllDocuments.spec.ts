@@ -1,5 +1,5 @@
 import { act } from '@testing-library/react-hooks'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import * as useParsedDataHook from 'hooks/useParsedData'
 import { useAllDocuments } from 'hooks/useAllDocuments'
 import { paginationArgs } from 'config/defaults'
@@ -15,7 +15,6 @@ describe('useAllDocuments', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

@@ -22,7 +22,7 @@ export const TotalInvestorsCard = ({
 }: TotalInvestorsCardProps) => {
   return (
     <ChartWrapper py={isNewThemeOn ? 2.5 : undefined}>
-      <Grid container justify='space-between' alignItems='center'>
+      <Grid container justifyContent='space-between' alignItems='center'>
         <Grid item>
           <ChartTitle
             title='Total Investors'

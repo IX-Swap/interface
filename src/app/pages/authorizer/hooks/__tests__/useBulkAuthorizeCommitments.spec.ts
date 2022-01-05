@@ -2,7 +2,7 @@ import { act } from '@testing-library/react-hooks'
 import { useBulkAuthorizeCommitments } from 'app/pages/authorizer/hooks/useBulkAuthorizeCommitment'
 import { authorizerURL } from 'config/apiURL'
 import * as useAuthorizerCategory from 'hooks/location/useAuthorizerCategory'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { commitment } from '__fixtures__/authorizer'
 import { generateMutationResult } from '__fixtures__/useQuery'
 
@@ -15,7 +15,6 @@ describe('useBulkAuthorizeCommitments', () => {
       .mockImplementation(() => objResponse as any)
   })
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { VirtualAccountTransactions } from 'app/pages/admin/pages/VirtualAccountTransactions'
 import * as useAppBreakpoints from 'hooks/useAppBreakpoints'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
@@ -28,12 +28,7 @@ jest.mock(
 
 describe('VirtualAccountTransactions', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<VirtualAccountTransactions />)
   })
 
   it('renders VSpacer components when isMiniLaptop is false', () => {

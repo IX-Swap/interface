@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import {
   DeployTokenButton,
   DeployTokenButtonProps
@@ -16,12 +16,7 @@ describe('DeployTokenButton', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<DeployTokenButton {...props} />)
   })
 
   it('displays initializing message if isInitializing is true', () => {

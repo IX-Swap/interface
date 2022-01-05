@@ -1,7 +1,7 @@
 import { sampleSecurity } from 'app/pages/educationCentre/components/Securities/__tests__/SecurityCard.spec'
 import { YearlyAnalysis } from 'app/pages/educationCentre/components/SecurityTradingView/YearlyAnalysis'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { formatMoney } from 'helpers/numbers'
 
 jest.mock('helpers/numbers', () => ({
@@ -12,12 +12,7 @@ jest.mock('helpers/numbers', () => ({
 
 describe('YearlyAnalysis', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<YearlyAnalysis data={sampleSecurity} />)
   })
 
   it('renders oneYearLowPrice data with correct value', () => {

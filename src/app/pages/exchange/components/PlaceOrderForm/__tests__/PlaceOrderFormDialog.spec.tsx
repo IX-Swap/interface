@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { PlaceOrderFormDialog } from 'app/pages/exchange/components/PlaceOrderForm/PlaceOrderFormDialog'
 import { MarketViewProps } from 'app/pages/exchange/components/Market/MarketGridView'
 import { PlaceOrderForm } from 'app/pages/exchange/components/PlaceOrderForm/PlaceOrderForm'
@@ -26,12 +26,7 @@ describe('PlaceOrderFormDialog', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<PlaceOrderFormDialog {...props} />)
   })
 
   it('opens drawer with buy tab active when Buy button is pressed', () => {

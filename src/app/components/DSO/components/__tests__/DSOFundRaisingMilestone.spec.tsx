@@ -1,5 +1,5 @@
 import React from 'react'
-import { cleanup, render } from 'test-utils'
+import { render } from 'test-utils'
 import { DSOFundRaisingMilestone } from 'app/components/DSO/components/DSOFundRaisingMilestone'
 import { TypedField } from 'components/form/TypedField'
 import { wysiwygValueExtractor } from 'helpers/forms'
@@ -11,16 +11,7 @@ jest.mock('components/form/TypedField', () => ({
 
 describe('DSOFundRaisingMilestone', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(
-      <Form>
-        <DSOFundRaisingMilestone />
-      </Form>
-    )
   })
 
   it('renders EditableField with correct props', () => {

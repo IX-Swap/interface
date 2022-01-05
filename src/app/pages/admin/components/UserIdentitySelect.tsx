@@ -66,7 +66,7 @@ export const UserIdentitySelect = ({
   }
 
   return (
-    <Grid container spacing={1} justify='flex-start' alignItems='center'>
+    <Grid container spacing={1} justifyContent='flex-start' alignItems='center'>
       <Grid item xs={6}>
         <FormControl fullWidth>
           <InputLabel variant='outlined'>Identity Status</InputLabel>

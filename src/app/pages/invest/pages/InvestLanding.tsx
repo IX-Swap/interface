@@ -12,7 +12,7 @@ export const InvestLanding = () => {
 
   return (
     <>
-      <Grid container justify='space-between' spacing={4}>
+      <Grid container justifyContent='space-between' spacing={4}>
         <Grid item xs={12}>
           <VirtualAccountBalance />
         </Grid>

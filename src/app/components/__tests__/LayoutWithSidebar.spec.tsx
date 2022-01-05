@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import {
   LayoutWithSidebar,
   LayoutWithSidebarProps
@@ -13,12 +13,7 @@ describe('LayoutWithSidebar', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<LayoutWithSidebar {...props} />)
   })
 
   it('renders sidebar and content', () => {

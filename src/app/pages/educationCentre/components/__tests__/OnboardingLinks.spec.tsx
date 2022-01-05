@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { OnboardingLink } from 'app/pages/educationCentre/components/OnboardingLink'
 import { OnboardingLinks } from 'app/pages/educationCentre/components/OnboardingLinks'
 import * as useOnboardingJourneys from 'app/components/OnboardingPanel/hooks/useOnboardingJourneys'
@@ -13,16 +13,11 @@ jest.mock('app/pages/educationCentre/components/OnboardingLink', () => ({
 
 describe('OnboardingLinks', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
   beforeEach(() => {
-    history.push(AppRoute.home)
-  })
-
-  it('renders without errors', () => {
-    render(<OnboardingLinks />)
+    history.push(AppRoute.identity)
   })
 
   it('renders all links if user has no completed Indentity Journey', () => {

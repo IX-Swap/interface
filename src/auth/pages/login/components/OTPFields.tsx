@@ -36,7 +36,7 @@ export const OTPFields = ({ isLoading }: OTPFieldsProps) => {
           shouldAutoFocus
         />
       </Grid>
-      <Grid item container justify='center'>
+      <Grid item container justifyContent='center'>
         <Submit
           style={{ width: 150 }}
           size='large'

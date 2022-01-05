@@ -1,15 +1,10 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { Status } from 'app/pages/admin/components/Status'
 
 describe('Status', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<Status status='enabled' />)
   })
 
   it('renders props correctly', () => {

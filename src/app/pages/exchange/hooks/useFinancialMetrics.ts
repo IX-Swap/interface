@@ -2,7 +2,7 @@ import { exchange as exchangeApiUrls } from 'config/apiURL'
 import { exchange as exchangeQueryKeys } from 'config/queryKeys'
 import { useServices } from 'hooks/useServices'
 import { useQuery } from 'react-query'
-import { useParams } from 'react-router'
+import { useParams } from 'react-router-dom'
 
 export const useFinancialMetrics = () => {
   const { pairId } = useParams<{ pairId: string }>()

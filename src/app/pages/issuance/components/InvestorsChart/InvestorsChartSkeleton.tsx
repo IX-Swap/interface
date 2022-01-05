@@ -16,8 +16,8 @@ export const InvestorsChartSkeleton = () => {
             <VSpacer size={'small'} />
           </Grid>
           <Grid container spacing={2}>
-            {[0, 1, 2].map(() => (
-              <Grid item xs={1}>
+            {[0, 1, 2].map(item => (
+              <Grid key={item} item xs={1}>
                 <Skeleton variant={'rect'} width={'100%'} height={25} />
               </Grid>
             ))}

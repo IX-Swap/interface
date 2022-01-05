@@ -1,7 +1,7 @@
 import { act } from '@testing-library/react-hooks'
 import { useConfirmCommitment } from 'app/pages/accounts/hooks/useConfirmCommitment'
 import { accountsURL } from 'config/apiURL'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { generateMutationResult } from '__fixtures__/useQuery'
 
 describe('useConfirmCommitment', () => {
@@ -9,7 +9,6 @@ describe('useConfirmCommitment', () => {
   const url = accountsURL.commitments.confirmCommitment('1234')
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

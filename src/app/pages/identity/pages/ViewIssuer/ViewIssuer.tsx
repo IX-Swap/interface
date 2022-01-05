@@ -14,7 +14,13 @@ export const ViewIssuer = () => {
           <Grid item xs={12}>
             <PageHeader title={data.companyLegalName} />
           </Grid>
-          <Grid container item xs={12} justify='flex-end' alignItems='center'>
+          <Grid
+            container
+            item
+            xs={12}
+            justifyContent='flex-end'
+            alignItems='center'
+          >
             <EditButton
               link={IdentityRoute.editIssuer}
               params={{ identityId: data._id, userId: data.user._id }}

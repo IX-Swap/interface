@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { FundStatusFilter } from 'app/pages/issuance/components/Commitments/FundStatusFilter'
 import InputLabel from '@material-ui/core/InputLabel'
 import { FundStatusSelect } from 'app/pages/issuance/components/Commitments/FundStatusSelect'
@@ -12,12 +12,7 @@ jest.mock('@material-ui/core/InputLabel', () => jest.fn(() => null))
 
 describe('FundStatusFilter', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<FundStatusFilter />)
   })
 
   it('renders InputLabel with correct props', () => {

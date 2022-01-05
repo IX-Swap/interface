@@ -6,7 +6,7 @@ import { Grid } from '@material-ui/core'
 import { renderPriceWithCurrency } from 'app/pages/invest/components/DSOTable/columns'
 
 export const renderDSOLogo = (dsoId: string) => (
-  <Grid container justify='center' alignItems='center'>
+  <Grid container justifyContent='center' alignItems='center'>
     <DSOLogo dsoId={dsoId} size={70} />
   </Grid>
 )

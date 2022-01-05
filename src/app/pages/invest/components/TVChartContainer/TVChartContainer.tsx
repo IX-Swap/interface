@@ -3,7 +3,7 @@ import {
   widget as Widget,
   ResolutionString,
   IChartingLibraryWidget
-} from 'types/charting_library'
+} from 'charting_library'
 import { ChartContainerProps } from 'types/tvChart'
 import {
   disabledFeatures,
@@ -43,7 +43,7 @@ export const TVChartContainer = (props: TVChartContainerProps) => {
         ),
       interval: interval ?? sampleTVChartProps.interval,
       container_id: containerId ?? sampleTVChartProps.containerId,
-      library_path: `${process.env.PUBLIC_URL}/charting_library/`,
+      library_path: '/charting_library/',
       favorites: {
         intervals: ['15', '60', '240', '1D', 'W'] as ResolutionString[],
         chartTypes: ['Line', 'Candles']
