@@ -2,14 +2,12 @@ name: Integration Tests
 
 on:
   push:
-    branches: 
-      - e2e-edit-identity
-
   pull_request:
     branches: 
       - staging
     types: 
-      - closed 
+      - closed
+
      
 jobs:
   integration-tests:
