@@ -6,8 +6,9 @@ const dotenv = require('dotenv')
 dotenv.config()
 
 module.exports = {
+  context: process.cwd(),
   resolve: {
-    extensions: ['*', '.js', '.jsx', '.ts', '.tsx'],
+    extensions: ['.js', '.jsx', '.ts', '.tsx'],
     modules: ['src', 'node_modules']
   },
   entry: ['./src/index.tsx'],
@@ -19,8 +20,13 @@ module.exports = {
     rules: [
       {
         test: /\.tsx?$/,
-        use: 'ts-loader',
-        exclude: /(node_modules)/
+        use: {
+          loader: 'ts-loader',
+          options: {
+            transpileOnly: true
+          }
+        },
+        include: path.resolve(process.cwd(), 'src')
       },
       {
         test: /\.svg(\?.*)?$/,
