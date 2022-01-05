@@ -74,6 +74,9 @@ export const useVCCFundStats = () => {
     ...subFundStatsQuery.data?.data?.[0],
     assetsUnderManagement: sortAssetsByAmount(
       subFundStatsQuery.data?.data?.[0].assetsUnderManagement
+    ),
+    topInvestors: sortAssetsByAmount(
+      subFundStatsQuery.data?.data?.[0].topInvestors
     )
   }
   return {
