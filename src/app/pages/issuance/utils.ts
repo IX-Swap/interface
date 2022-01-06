@@ -162,10 +162,8 @@ export const sortByAmountAndAlpha = ({
   stringA,
   stringB
 }: SortAmountAndAlphaArgs) => {
-  const stringALower = stringA.toLowerCase()
-  const stringBLower = stringB.toLowerCase()
   if (amountA === amountB) {
-    return stringALower.toLowerCase() > stringBLower.toLowerCase() ? 1 : -1
+    return stringA.toLowerCase() > stringB.toLowerCase() ? 1 : -1
   }
   return amountB - amountA
 }
