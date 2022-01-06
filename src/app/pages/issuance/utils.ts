@@ -149,13 +149,50 @@ export const newDistributionValidationSchema = yup.object().shape({
   otp: yup.string().required('This is a required field')
 })
 
-export const sortAssetsByAmount = (
-  assets?: AssetUnderManagement[] | TopInvestor[]
-) =>
-  assets?.sort((first, second) => {
-    if (first.amount === second.amount) {
-      if (first.dsoName > second.dsoName) return 1
-      if (first.dsoName < second.dsoName) return -1
+export interface SortAmountAndAlphaProps {
+  amount0: number
+  amount1: number
+  string1: string
+  string0: string
+}
+
+export const sortByAmountAndAlpha = ({
+  amount0,
+  amount1,
+  string0,
+  string1
+}: SortAmountAndAlphaProps) => {
+  const string0Lower = string0.toLowerCase()
+  const string1Lower = string1.toLowerCase()
+  if (amount0 === amount1) {
+    if (string0Lower > string1Lower) {
+      return 1
     }
-    return second.amount - first.amount
+    if (string0Lower < string1Lower) {
+      return -1
+    }
+  }
+  return amount1 - amount0
+}
+
+export const sortInvestors = (investors?: TopInvestor[]) => {
+  return investors?.sort((first, second) => {
+    return sortByAmountAndAlpha({
+      amount0: first.amount,
+      amount1: second.amount,
+      string0: first.investorName,
+      string1: second.investorName
+    })
   })
+}
+
+export const sortAssets = (assets?: AssetUnderManagement[]) => {
+  return assets?.sort((first, second) => {
+    return sortByAmountAndAlpha({
+      amount0: first.amount,
+      amount1: second.amount,
+      string0: first.dsoName,
+      string1: second.dsoName
+    })
+  })
+}

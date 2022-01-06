@@ -3,7 +3,9 @@ import { getCorporateLegalName } from 'helpers/tables'
 import { activity, faqItem, videoLink } from '__fixtures__/issuance'
 import {
   fakeAssetsUnderManagement,
-  sortedFakeAssetsUnderManagement
+  fakeInvestors,
+  sortedFakeAssetsUnderManagement,
+  sortedFakeInvestors
 } from '__fixtures__/vccDashboard'
 import {
   getActivityUserInfo,
@@ -13,7 +15,8 @@ import {
   getVideosFieldsPayload,
   numberToPercentage,
   percentageToNumber,
-  sortAssetsByAmount
+  sortAssets,
+  sortInvestors
 } from '../utils'
 
 describe('getActivityUserInfo', () => {
@@ -163,10 +166,16 @@ describe('getUpdateDSOPayload', () => {
   })
 })
 
-describe('sortAssetsByAmount', () => {
-  it('Sorts Assets under management by decreasing amount', () => {
-    expect(sortAssetsByAmount(fakeAssetsUnderManagement)).toEqual(
+describe('sortAssets', () => {
+  it('Sorts Assets under management by decreasing amount and alphabetically', () => {
+    expect(sortAssets(fakeAssetsUnderManagement)).toEqual(
       sortedFakeAssetsUnderManagement
     )
+  })
+})
+
+describe('sortInvestors', () => {
+  it('Sorts investors by decreasing amount and alphabetically', () => {
+    expect(sortInvestors(fakeInvestors)).toEqual(sortedFakeInvestors)
   })
 })
