@@ -1,4 +1,3 @@
-import React, { useMemo } from 'react'
 import {
   Table,
   TableBody,
@@ -7,9 +6,10 @@ import {
   TableHead,
   TableRow
 } from '@material-ui/core'
-import { useStyles } from '../shared.styles'
-import { TradeItem } from 'types/reports'
 import { TradesRow } from 'app/pages/accounts/pages/reports/components/TradesTable/TradesRow'
+import React from 'react'
+import { TradeItem } from 'types/reports'
+import { useStyles } from '../shared.styles'
 
 export interface TradesTableProps {
   data: TradeItem[]
