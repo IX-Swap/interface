@@ -1,19 +1,19 @@
+import React, { useState } from 'react'
 import { Grid, Tab, Tabs } from '@material-ui/core'
-import { PlaceOrderFields } from 'app/pages/exchange/components/PlaceOrderFields/PlaceOrderFields'
-import { useStyles } from 'app/pages/exchange/components/PlaceOrderForm/PlaceOrderForm.styles'
+import { Form } from 'components/form/Form'
+import { formatMoney } from 'helpers/numbers'
+import { TabPanel } from 'components/TabPanel'
+import { LabelledValue } from 'components/LabelledValue'
 import {
   PlaceOrderArgs,
   PlaceOrderFormValues
 } from 'app/pages/exchange/types/form'
-import { transformPlaceOrderFormValuesToArgs } from 'app/pages/exchange/utils/order'
-import { Form } from 'components/form/Form'
+import { PlaceOrderFields } from 'app/pages/exchange/components/PlaceOrderFields/PlaceOrderFields'
+import { useStyles } from 'app/pages/exchange/components/PlaceOrderForm/PlaceOrderForm.styles'
 import { Submit } from 'components/form/Submit'
-import { LabelledValue } from 'components/LabelledValue'
-import { TabPanel } from 'components/TabPanel'
-import { formatMoney } from 'helpers/numbers'
-import { isEmptyString } from 'helpers/strings'
-import React, { useState } from 'react'
+import { transformPlaceOrderFormValuesToArgs } from 'app/pages/exchange/utils/order'
 import { useParams } from 'react-router-dom'
+import { isEmptyString } from 'helpers/strings'
 
 export type ActiveTabName = 'BUY' | 'SELL'
 
@@ -42,7 +42,6 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
   const [activeTabNameIdx, setActiveTabNameIdx] = useState(defaultActiveTab)
   const classes = useStyles(activeTabNameIdx)
   const balance = activeTabNameIdx === 0 ? currencyBalance : tokenBalance
-  const disabled = isFetching || balance === 0
   const totalCurrencyLabel = currencyLabel
   const { pairId } = useParams<{ pairId: string }>()
   const handleSubmit = async (values: PlaceOrderFormValues) => {
@@ -122,7 +121,7 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
         <Grid item className={classes.buttonWrapper}>
           <Submit
             createOrderStatus={createOrderStatus}
-            disabled={disabled}
+            disabled={isFetching}
             data-testid='submit'
             size='large'
             variant='contained'
