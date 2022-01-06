@@ -149,39 +149,34 @@ export const newDistributionValidationSchema = yup.object().shape({
   otp: yup.string().required('This is a required field')
 })
 
-export interface SortAmountAndAlphaProps {
-  amount0: number
-  amount1: number
-  string1: string
-  string0: string
+export interface SortAmountAndAlphaArgs {
+  amountA: number
+  amountB: number
+  stringA: string
+  stringB: string
 }
 
 export const sortByAmountAndAlpha = ({
-  amount0,
-  amount1,
-  string0,
-  string1
-}: SortAmountAndAlphaProps) => {
-  const string0Lower = string0.toLowerCase()
-  const string1Lower = string1.toLowerCase()
-  if (amount0 === amount1) {
-    if (string0Lower > string1Lower) {
-      return 1
-    }
-    if (string0Lower < string1Lower) {
-      return -1
-    }
+  amountA,
+  amountB,
+  stringA,
+  stringB
+}: SortAmountAndAlphaArgs) => {
+  const stringALower = stringA.toLowerCase()
+  const stringBLower = stringB.toLowerCase()
+  if (amountA === amountB) {
+    return stringALower.toLowerCase() > stringBLower.toLowerCase() ? 1 : -1
   }
-  return amount1 - amount0
+  return amountB - amountA
 }
 
 export const sortInvestors = (investors?: TopInvestor[]) => {
   return investors?.sort((first, second) => {
     return sortByAmountAndAlpha({
-      amount0: first.amount,
-      amount1: second.amount,
-      string0: first.investorName,
-      string1: second.investorName
+      amountA: first.amount,
+      amountB: second.amount,
+      stringA: first.investorName,
+      stringB: second.investorName
     })
   })
 }
@@ -189,10 +184,10 @@ export const sortInvestors = (investors?: TopInvestor[]) => {
 export const sortAssets = (assets?: AssetUnderManagement[]) => {
   return assets?.sort((first, second) => {
     return sortByAmountAndAlpha({
-      amount0: first.amount,
-      amount1: second.amount,
-      string0: first.dsoName,
-      string1: second.dsoName
+      amountA: first.amount,
+      amountB: second.amount,
+      stringA: first.dsoName,
+      stringB: second.dsoName
     })
   })
 }
