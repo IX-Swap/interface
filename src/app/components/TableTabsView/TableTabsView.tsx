@@ -35,12 +35,14 @@ export const TableTabsView = ({
 
   return (
     <SearchQueryFilter<'tab'> name='tab' defaultValue='0'>
-      {({ value, onChange }) => (
+      {({ value, onChange: onChangeFilter }) => (
         <Fragment>
           <Tabs
             classes={{ indicator: classes.indicator, root: classes.tabsRoot }}
             value={Number(value)}
-            onChange={(event, index) => handleChange(event, index, onChange)}
+            onChange={(event, index) =>
+              handleChange(event, index, onChangeFilter)
+            }
           >
             {tabs.map(({ label, disabled, component }, index) =>
               component !== undefined ? (
