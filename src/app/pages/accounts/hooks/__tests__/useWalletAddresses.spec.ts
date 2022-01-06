@@ -1,10 +1,9 @@
 import { act } from '@testing-library/react-hooks'
 import { useWalletAddresses } from 'app/pages/accounts/hooks/useWalletAddresses'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 
 describe('useWalletAddresses', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

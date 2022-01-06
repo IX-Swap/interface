@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { UserDropdown } from 'app/components/UserDropdown/UserDropdown'
 import { Dropdown } from 'app/components/Dropdown/Dropdown'
 import { UserDropdownTrigger } from 'app/components/UserDropdown/UserDropdownTrigger'
@@ -17,12 +17,7 @@ jest.mock('app/components/UserDropdown/UserDropdownContent', () => ({
 
 describe('UserDropdown', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<UserDropdown />)
   })
 
   it('renders Dropdown with correct props', () => {

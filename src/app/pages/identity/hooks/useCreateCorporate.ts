@@ -4,7 +4,7 @@ import { useMutation, useQueryCache } from 'react-query'
 import { getIdFromObj } from 'helpers/strings'
 import { identityURL } from 'config/apiURL'
 import { identityQueryKeys } from 'config/queryKeys'
-import { generatePath, useHistory } from 'react-router'
+import { generatePath, useHistory } from 'react-router-dom'
 import { IdentityRoute } from 'app/pages/identity/router/config'
 import { CorporateIdentity } from 'app/pages/identity/types/forms'
 

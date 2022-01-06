@@ -2,7 +2,6 @@ import { act } from '@testing-library/react-hooks'
 import { accountsURL } from 'config/apiURL'
 import {
   waitFor,
-  cleanup,
   renderHookWithServiceProvider,
   apiServiceMock
 } from 'test-utils'
@@ -23,7 +22,6 @@ describe('useGetPortfolios', () => {
     .mockReturnValue({ user, isAuthenticated: true })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

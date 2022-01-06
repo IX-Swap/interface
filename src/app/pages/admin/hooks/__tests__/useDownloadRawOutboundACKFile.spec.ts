@@ -1,5 +1,5 @@
 import { act } from '@testing-library/react-hooks'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { unsuccessfulResponse, successfulResponse } from '__fixtures__/api'
 import { document } from '__fixtures__/identity'
 import { useDownloadRawOutboundACKFile } from 'app/pages/admin/hooks/useDownloadRawOutboundACKFile'
@@ -9,7 +9,6 @@ describe('useDownloadRawOutboundACKFile', () => {
   const callbacks = { onSuccess: jest.fn(), onError: jest.fn() }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

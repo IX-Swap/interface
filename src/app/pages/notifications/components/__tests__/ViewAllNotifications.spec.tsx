@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { ViewAllNotifications } from 'app/pages/notifications/components/ViewAllNotifications'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 
@@ -11,12 +11,7 @@ jest.mock('components/AppRouterLink', () => ({
 
 describe('ViewAllNotifications', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<ViewAllNotifications />)
   })
 
   it('renders AppRouterLink with correct props', () => {

@@ -4,7 +4,7 @@ import { PastOrderTable } from 'app/pages/exchange/components/PastOrderTable/Pas
 import { MyTrades } from 'app/pages/exchange/components/Trades/MyTrades'
 import { TabPanel } from 'components/TabPanel'
 import React, { useState } from 'react'
-import { useParams } from 'react-router'
+import { useParams } from 'react-router-dom'
 
 export interface MyOrdersProps {
   showMyTrades?: boolean

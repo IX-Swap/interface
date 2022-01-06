@@ -44,7 +44,7 @@ export const Register: React.FC = observer(() => {
         <Grid item xs={12}>
           <RegisterFields />
         </Grid>
-        <Grid item container justify='center'>
+        <Grid item container justifyContent='center'>
           <Submit
             data-testid='submit'
             style={{ width: 150 }}

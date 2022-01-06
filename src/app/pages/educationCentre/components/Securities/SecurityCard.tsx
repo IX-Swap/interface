@@ -91,13 +91,13 @@ export const SecurityCard = ({
             container
             direction='column'
             spacing={4}
-            justify='space-between'
+            justifyContent='space-between'
           >
             <Grid item>
               <Grid
                 container
                 spacing={2}
-                justify='space-between'
+                justifyContent='space-between'
                 alignItems='center'
                 wrap='nowrap'
               >
@@ -118,7 +118,7 @@ export const SecurityCard = ({
                 <Grid item xs={10}>
                   <Grid
                     container
-                    justify='space-between'
+                    justifyContent='space-between'
                     wrap='nowrap'
                     spacing={1}
                   >
@@ -126,7 +126,7 @@ export const SecurityCard = ({
                       <Grid
                         container
                         direction='column'
-                        justify='center'
+                        justifyContent='center'
                         style={{ height: '100%' }}
                       >
                         <Grid item>
@@ -151,7 +151,7 @@ export const SecurityCard = ({
                       <Grid
                         container
                         direction='column'
-                        justify='center'
+                        justifyContent='center'
                         style={{ height: '100%' }}
                       >
                         <Grid item>
@@ -184,7 +184,7 @@ export const SecurityCard = ({
               </Typography>
             </Grid>
             <Grid item>
-              <Grid container spacing={2} justify='space-between'>
+              <Grid container spacing={2} justifyContent='space-between'>
                 <Grid item>
                   <LabelledValue
                     labelWeight='default'

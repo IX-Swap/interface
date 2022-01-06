@@ -35,7 +35,7 @@ export const SecurityTradingView = ({ data }: SecurityTradingViewProps) => {
   return (
     <Grid container spacing={3}>
       <Grid item xs={12}>
-        <Grid container justify='flex-end'>
+        <Grid container justifyContent='flex-end'>
           <Grid item>
             <Typography
               variant='subtitle1'

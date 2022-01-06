@@ -1,10 +1,9 @@
 import { act } from '@testing-library/react-hooks'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { useLogout } from 'auth/hooks/useLogout'
 
 describe('useLogout', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

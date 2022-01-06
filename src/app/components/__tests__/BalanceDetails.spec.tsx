@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import {
   BalanceDetails,
   BalanceDetailsProps
@@ -15,12 +15,7 @@ describe('BalanceDetails', () => {
   const props: BalanceDetailsProps = { data: balance }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<BalanceDetails {...props} />)
   })
 
   it('renders title correctly', () => {
@@ -36,7 +31,7 @@ describe('BalanceDetails', () => {
       1,
       {
         label: 'Total Balance',
-        value: props.data.balance,
+        value: props.data?.balance,
         labelWeight: 'thin',
         row: true
       },
@@ -46,7 +41,7 @@ describe('BalanceDetails', () => {
       2,
       {
         label: 'On Hold Balance',
-        value: props.data.onHold,
+        value: props.data?.onHold,
         labelWeight: 'thin',
         row: true
       },
@@ -56,7 +51,7 @@ describe('BalanceDetails', () => {
       3,
       {
         label: 'Available Balance',
-        value: props.data.available,
+        value: props.data?.available,
         labelWeight: 'thin',
         row: true
       },

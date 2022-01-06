@@ -57,7 +57,7 @@ export const Fields = ({
           />
         </Grid>
         <Grid item>
-          <Grid container justify='flex-end' spacing={2}>
+          <Grid container justifyContent='flex-end' spacing={2}>
             {total > 1 ? (
               <Grid item>
                 <Button

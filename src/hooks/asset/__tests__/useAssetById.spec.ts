@@ -1,11 +1,10 @@
 import { act } from '@testing-library/react-hooks'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { useAssetById } from 'hooks/asset/useAssetById'
 import { asset } from '__fixtures__/authorizer'
 
 describe('useAssetById', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

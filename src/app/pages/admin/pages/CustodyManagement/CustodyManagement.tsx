@@ -14,7 +14,7 @@ export const CustodyManagement = () => {
       <Grid item className={classes.title}>
         <PageHeader title='Custody Management' />
       </Grid>
-      <Grid item container justify={'space-between'}>
+      <Grid item container justifyContent={'space-between'}>
         <Grid item xs={12} sm={7} md={5} lg={4} className={classes.firstItem}>
           <AccountsUnderCustody />
         </Grid>

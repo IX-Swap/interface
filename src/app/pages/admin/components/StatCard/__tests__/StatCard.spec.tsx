@@ -1,6 +1,6 @@
 import { StatCard } from 'app/pages/admin/components/StatCard/StatCard'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { ReactComponent as TotalUsersIcon } from 'assets/icons/users.svg'
 
 describe('StatCard', () => {
@@ -12,12 +12,7 @@ describe('StatCard', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<StatCard {...props} />)
   })
 
   it('renders props correctly', () => {

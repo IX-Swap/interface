@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { bank } from '__fixtures__/authorizer'
 import { WithdrawCashAlert } from 'app/pages/accounts/pages/banks/components/WithdrawCashAlert'
 import { CashTransactionAlert } from 'app/pages/accounts/pages/banks/components/CashTransactionAlert'
@@ -24,7 +24,6 @@ const useBanksDataMock = useBanksData as jest.Mock<
 
 describe('WithdrawCashAlert', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

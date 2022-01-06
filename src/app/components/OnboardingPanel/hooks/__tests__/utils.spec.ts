@@ -2,12 +2,11 @@ import {
   getIdentityOnboardingSteps,
   getIdentityStatus
 } from 'app/components/OnboardingPanel/hooks/utils'
-import { cleanup } from 'test-utils'
+
 import { individual } from '__fixtures__/identity'
 
 describe('getIdentityOnboardingSteps', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
@@ -28,7 +27,6 @@ describe('getIdentityOnboardingSteps', () => {
 
 describe('getIdentityStatus', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

@@ -1,6 +1,6 @@
 import { charts } from 'config/apiURL'
 import apiService from 'services/api'
-import { cleanup } from 'test-utils'
+
 import {
   onReady,
   resolveSymbol,
@@ -14,13 +14,12 @@ import {
   ResolveCallback,
   SearchSymbolsCallback,
   ServerTimeCallback
-} from 'types/charting_library'
+} from 'charting_library'
 import { SYMBOL_SEARCH_LIMIT } from '../../constants'
 
 describe('onReady', () => {
   let callback: OnReadyCallback
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
@@ -52,7 +51,6 @@ describe('resolveSymbol', () => {
   const symbolName = 'TST'
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
@@ -87,7 +85,6 @@ describe('getServerTime', () => {
   const validTime = 123
   let callback: ServerTimeCallback
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
@@ -121,7 +118,6 @@ describe('searchSymbols', () => {
   const symbolType = 'Currency'
   let onResult: SearchSymbolsCallback
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

@@ -4,7 +4,7 @@ import {
   RequestStep,
   requestPasswordResetInitialValues
 } from 'auth/pages/password-reset/RequestStep'
-import { cleanup } from '@testing-library/react'
+import {} from '@testing-library/react'
 import { requestPasswordResetArgs } from '__fixtures__/auth'
 import { history } from 'config/history'
 import * as useRequestPasswordResetHook from 'auth/hooks/useRequestPasswordReset'
@@ -14,7 +14,6 @@ import { AuthRoute } from 'auth/router/config'
 describe('RequestStep', () => {
   afterEach(async () => {
     jest.clearAllMocks()
-    await cleanup()
   })
 
   it('renders the form with correct default values', () => {

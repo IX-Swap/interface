@@ -29,7 +29,7 @@ export const OTCMarket = () => {
   }
 
   return (
-    <Grid container justify={'flex-end'}>
+    <Grid container justifyContent={'flex-end'}>
       <Grid container item wrap={'wrap'} className={classes.container}>
         {(items as DigitalSecurityOffering[]).map((otc, i) => (
           <Grid item key={otc._id}>
@@ -46,7 +46,7 @@ export const OTCMarket = () => {
             count={total}
             rowsPerPage={rowsPerPage}
             page={page}
-            onChangeRowsPerPage={evt => {
+            onRowsPerPageChange={evt => {
               setPage(0)
               setRowsPerPage(parseInt(evt.target.value))
             }}

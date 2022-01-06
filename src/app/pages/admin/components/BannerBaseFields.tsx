@@ -23,7 +23,7 @@ export const BannerBaseFields = () => {
     <Grid container>
       <Grid item xs={12}>
         <VSpacer size={'medium'} />
-        <Grid container alignItems={'center'} justify={'space-between'}>
+        <Grid container alignItems={'center'} justifyContent={'space-between'}>
           <Grid item xs={8}>
             <BannerTitle
               text={title}

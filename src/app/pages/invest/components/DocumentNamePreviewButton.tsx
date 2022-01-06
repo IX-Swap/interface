@@ -6,21 +6,22 @@ export interface DocumentNamePreviewButtonProps {
   value?: DataroomFile
 }
 
-export const DocumentNamePreviewButton: React.FC<DocumentNamePreviewButtonProps> =
-  ({ value }) => {
-    const hasValue = value !== undefined
+export const DocumentNamePreviewButton: React.FC<
+  DocumentNamePreviewButtonProps
+> = ({ value }) => {
+  const hasValue = value !== undefined
 
-    return (
-      <Button
-        variant='contained'
-        component='span'
-        fullWidth
-        style={{ textTransform: 'none' }}
-        disableElevation={hasValue}
-      >
-        {!hasValue
-          ? 'Upload Signed Subscription Document'.toUpperCase()
-          : value?.originalFileName}
-      </Button>
-    )
-  }
+  return (
+    <Button
+      variant='contained'
+      component='span'
+      fullWidth
+      style={{ textTransform: 'none' }}
+      disableElevation={hasValue}
+    >
+      {!hasValue
+        ? 'Upload Signed Subscription Document'.toUpperCase()
+        : value?.originalFileName}
+    </Button>
+  )
+}

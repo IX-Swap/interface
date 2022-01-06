@@ -1,5 +1,5 @@
 import { act } from '@testing-library/react-hooks'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { useCommitmentActivity } from 'app/pages/invest/hooks/useCommitmentActivity'
 import { successfulResponse } from '__fixtures__/api'
 import { dso } from '__fixtures__/authorizer'
@@ -9,7 +9,6 @@ import { issuanceURL } from 'config/apiURL'
 
 describe('useCommitmentActivity', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

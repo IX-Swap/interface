@@ -96,7 +96,7 @@ export const useCountdown = (endDate: string | undefined): TimerResults => {
 
     const countdownInterval = setInterval(() => {
       getCountdown(countdownInterval)
-    }, interval)
+    }, interval) as unknown as NodeJS.Timeout
 
     return () => clearInterval(countdownInterval)
   }, [endDate])

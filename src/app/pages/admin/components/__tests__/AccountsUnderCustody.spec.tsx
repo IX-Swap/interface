@@ -1,6 +1,6 @@
 import React from 'react'
 import { Chart } from 'react-google-charts'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { AccountsUnderCustody } from 'app/pages/admin/components/AccountsUnderCustody'
 import { baseAccountsUnderCustodyChartOptions } from '__fixtures__/chart'
 import * as useGetCustodianCount from 'app/pages/admin/hooks/useGetCustodiansCount'
@@ -12,12 +12,7 @@ jest.mock('react-google-charts', () => ({
 
 describe('AccountsUnderCustody', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<AccountsUnderCustody />)
   })
 
   it('renders Chart component correctly when data is undefined', () => {

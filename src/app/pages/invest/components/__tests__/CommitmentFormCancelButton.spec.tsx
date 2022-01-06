@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import {
   CommitmentFormCancelButton,
   CommitmentFormCancelButtonProps
@@ -27,12 +27,7 @@ describe('CommitmentFormCancelButton', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<CommitmentFormCancelButton {...props} />)
   })
 
   it('renders AppRouterLink with correct props', () => {

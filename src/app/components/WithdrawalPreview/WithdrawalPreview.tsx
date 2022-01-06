@@ -16,7 +16,7 @@ export const WithdrawalPreview = (props: WithdrawalViewProps) => {
   useSetPageTitle(data.bank.bankName)
 
   return (
-    <Grid container justify='center' direction='column' spacing={4}>
+    <Grid container justifyContent='center' direction='column' spacing={4}>
       <Grid item container spacing={4}>
         <Grid item xs={4}>
           <LabelledValue label='Bank Name' value={data.bank.bankName} />

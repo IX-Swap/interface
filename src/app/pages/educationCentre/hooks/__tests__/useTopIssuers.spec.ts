@@ -1,11 +1,10 @@
 import { act } from '@testing-library/react-hooks'
 import { useTopIssuers } from 'app/pages/educationCentre/hooks/useTopIssuers'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { successfulResponse } from '__fixtures__/api'
 
 describe('useTopIssuers', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

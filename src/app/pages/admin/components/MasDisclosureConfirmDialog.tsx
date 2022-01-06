@@ -38,7 +38,7 @@ export const MasDisclosureConfirmDialog = ({
           </Grid>
           <Grid item>
             <VSpacer size='small' />
-            <Grid container spacing={1} justify='center'>
+            <Grid container spacing={1} justifyContent='center'>
               <Grid item>
                 <Button
                   onClick={onClose}

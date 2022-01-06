@@ -1,4 +1,3 @@
-import { cleanup } from 'test-utils'
 import {
   getCorrectDirectionFilterValues,
   renderAmount,
@@ -11,7 +10,6 @@ import { formatMoney } from 'helpers/numbers'
 
 describe('renderFromField', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
@@ -69,7 +67,6 @@ describe('renderFromField', () => {
 
 describe('renderToField', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
@@ -127,7 +124,6 @@ describe('renderToField', () => {
 
 describe('getCorrectDirectionFilterValues', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
@@ -146,7 +142,6 @@ describe('getCorrectDirectionFilterValues', () => {
 
 describe('renderDirection', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
@@ -161,7 +156,6 @@ describe('renderDirection', () => {
 
 describe('renderAmount', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

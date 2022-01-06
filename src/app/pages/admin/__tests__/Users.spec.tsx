@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { Users, renderActions } from 'app/pages/admin/pages/Users'
 import { TableView } from 'components/TableWithPagination/TableView'
 import columns from 'app/pages/admin/columns'
@@ -14,12 +14,7 @@ jest.mock('components/TableWithPagination/TableView', () => ({
 
 describe('Users', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<Users />)
   })
 
   it('renders TableView with correct props', () => {

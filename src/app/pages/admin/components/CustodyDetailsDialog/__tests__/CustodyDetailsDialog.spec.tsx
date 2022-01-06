@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import {
   CustodyDetailsDialog,
   getWalletsWithOrderedDetails
@@ -15,12 +15,7 @@ jest.mock('app/components/LoadingIndicator/LoadingIndicator', () => ({
 
 describe('CustodyDetailsDialog', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<CustodyDetailsDialog />)
   })
 
   it('renders empty component when data is undefined', () => {

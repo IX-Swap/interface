@@ -1,5 +1,5 @@
 import React from 'react'
-import { Switch } from 'react-router'
+import { Switch } from 'react-router-dom'
 import { AppRoute } from 'components/AppRoute'
 import { AuthorizerRoute } from 'app/pages/authorizer/router/config'
 import { DSOAuthorization } from 'app/pages/authorizer/pages/offerings/DSOAuthorization'
@@ -16,7 +16,7 @@ export const AuthorizerDSORouter = () => {
         <DSOAuthorization />
       </AppRoute>
 
-      <AppRoute exact path={AuthorizerRoute.offerings}>
+      <AppRoute path={AuthorizerRoute.offerings}>
         <Offerings />
       </AppRoute>
     </Switch>

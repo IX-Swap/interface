@@ -16,7 +16,12 @@ export const AuthorizerLandingPage = (props: LandingPageProps) => {
   return (
     <RootContainer>
       <PageHeader title={title} showBreadcrumbs={false} />
-      <Grid container justify='center' alignItems='flex-start' spacing={3}>
+      <Grid
+        container
+        justifyContent='center'
+        alignItems='flex-start'
+        spacing={3}
+      >
         {links.map((link, index) => (
           <Grid item key={index}>
             <DataCard link={link} variant={index % 5} />

@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import {
   renderWalletAddress,
   renderCustodianName
@@ -13,7 +13,6 @@ jest.mock('app/components/WalletAddress', () => ({
 
 describe('renderWalletAddress', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

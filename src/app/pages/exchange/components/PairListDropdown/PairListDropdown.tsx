@@ -9,7 +9,7 @@ import { PairList } from 'app/pages/exchange/components/PairList/PairList'
 import { PairTableFilter } from 'app/pages/exchange/components/PairTable/PairTableFilter/PairTableFilter'
 import { useMarket } from 'app/pages/exchange/hooks/useMarket'
 import React, { useEffect, useRef } from 'react'
-import { useParams } from 'react-router'
+import { useParams } from 'react-router-dom'
 import useStyles from './PairListDropdown.styles'
 import { InvestRoute as paths } from 'app/pages/invest/router/config'
 import { AppRouterLink } from 'components/AppRouterLink'
@@ -68,9 +68,9 @@ export const PairListDropdown = ({ pairName }: PairListDropdownProps) => {
   }
 
   return (
-    <Grid container spacing={1} justify='flex-start' alignItems='center'>
+    <Grid container spacing={1} justifyContent='flex-start' alignItems='center'>
       <Grid item>
-        <Grid container direction='column' justify='flex-start'>
+        <Grid container direction='column' justifyContent='flex-start'>
           <Grid item>
             <Typography
               data-testid={'pairName'}

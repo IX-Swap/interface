@@ -10,7 +10,7 @@ import React from 'react'
 import { useFormContext } from 'react-hook-form'
 import { VSpacer } from 'components/VSpacer'
 import { OTPDialog } from 'app/pages/accounts/pages/banks/pages/WithdrawCash/OTPDialog'
-import { useParams } from 'react-router'
+import { useParams } from 'react-router-dom'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
 import { useBalancesByType } from 'hooks/balance/useBalancesByType'
 

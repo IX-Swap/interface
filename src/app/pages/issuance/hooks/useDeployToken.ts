@@ -8,7 +8,7 @@ export interface DeployTokenMessage {
   message: string
 }
 
-export const useDeployToken = (tokenId: string) => {
+export const useDeployToken = (tokenId?: string) => {
   const { socketService } = useServices()
   const socket = useMemo(() => socketService.socket, [socketService.socket])
   const [isInitializing, setIsInitializing] = useState(true)
@@ -37,6 +37,8 @@ export const useDeployToken = (tokenId: string) => {
   }
 
   const deploy = () => {
+    if (tokenId === undefined) return
+
     setIsDeploying(true)
 
     // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
@@ -49,6 +51,8 @@ export const useDeployToken = (tokenId: string) => {
   }
 
   useEffect(() => {
+    if (tokenId === undefined) return
+
     socket?.on(`x-token-lite/${tokenId}`, onMessageReceived)
     socket?.emit('x-token-lite/deploy/initialize', tokenId)
 

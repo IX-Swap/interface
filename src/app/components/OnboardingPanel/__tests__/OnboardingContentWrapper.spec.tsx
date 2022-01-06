@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { OnboardingContentWrapper } from 'app/components/OnboardingPanel/OnboardingContentWrapper'
 import { OnboardingPanel } from 'app/components/OnboardingPanel/OnboardingPanel'
 import { LoadingFullScreen } from 'auth/components/LoadingFullScreen'
@@ -20,16 +20,7 @@ describe('ContentWrapper', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(
-      <OnboardingContentWrapper>
-        <div />
-      </OnboardingContentWrapper>
-    )
   })
 
   it('does not render wrapper when not in the onboardingPages path', () => {

@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { TopIssuers } from 'app/pages/educationCentre/components/TopIssuers'
 import { TopCorporates } from 'app/pages/educationCentre/components/TopCorporates'
 import { News as NewsComponent } from 'app/pages/educationCentre/components/News/News'
@@ -24,12 +24,7 @@ jest.mock('app/pages/invest/components/BannersCarousel', () => ({
 
 describe('News', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<News />)
   })
 
   it('renders components correctly', () => {

@@ -4,7 +4,7 @@ import { VSpacer } from 'components/VSpacer'
 import { CorporateInvestorForm } from 'app/pages/identity/components/CorporateInvestorForm/CorporateInvestorForm'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { useAllCorporates } from 'app/pages/identity/hooks/useAllCorporates'
-import { generatePath, Redirect } from 'react-router'
+import { generatePath, Redirect } from 'react-router-dom'
 import { IdentityRoute } from 'app/pages/identity/router/config'
 
 export const CreateInvestor = () => {

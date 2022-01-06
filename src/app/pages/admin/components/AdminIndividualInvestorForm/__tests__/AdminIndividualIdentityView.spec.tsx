@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { AdminIndividualIdentityView } from 'app/pages/admin/components/AdminIndividualInvestorForm/AdminIndividualIdentityView'
 import * as useIndividualIdentityById from 'app/pages/admin/hooks/useIndividualIdentityById'
 import { individual } from '__fixtures__/identity'
@@ -15,19 +15,7 @@ describe('AdminIndividualIdentityView', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    const useIndividualIdentityByIdResponse = generateQueryResult({
-      data: individual,
-      isLoading: false
-    })
-    jest
-      .spyOn(useIndividualIdentityById, 'useIndividualIdentityById')
-      .mockImplementation(() => useIndividualIdentityByIdResponse as any)
-    render(<AdminIndividualIdentityView />)
   })
 
   it('returns null when loading', () => {

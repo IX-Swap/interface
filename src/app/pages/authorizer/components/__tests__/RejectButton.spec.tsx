@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup, waitFor, fireEvent } from 'test-utils'
+import { render, waitFor, fireEvent } from 'test-utils'
 import {
   RejectButton,
   RejectButtonProps
@@ -24,16 +24,7 @@ describe('RejectButton', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(
-      <Form>
-        <RejectButton {...props} />
-      </Form>
-    )
   })
 
   it('invokes reject when button is clicked', async () => {

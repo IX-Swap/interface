@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import {
   CommitmentFormFields,
   CommitmentFormFieldsProps
@@ -20,16 +20,7 @@ describe('CommitmentFormFields', () => {
   const props: CommitmentFormFieldsProps = { symbol: asset.symbol }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(
-      <Form defaultValues={{ totalAmount: 100, pricePerUnit: 50 }}>
-        <CommitmentFormFields {...props} />
-      </Form>
-    )
   })
 
   it('renders EditableField with correct props', () => {

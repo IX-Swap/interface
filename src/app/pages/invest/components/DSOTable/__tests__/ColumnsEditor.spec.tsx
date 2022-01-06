@@ -1,5 +1,5 @@
 import React from 'react'
-import { cleanup, render } from 'test-utils'
+import { render } from 'test-utils'
 import { ColumnsEditor, ColumnsEditorProps } from '../ColumnsEditor'
 import { columns } from 'app/pages/invest/components/DSOTable/columns'
 import { ColumnsEditorItem } from 'app/pages/invest/components/DSOTable/ColumnsEditorItem'
@@ -16,12 +16,7 @@ describe('ColumnsEditor', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<ColumnsEditor {...props} />)
   })
 
   it('renders correct title', () => {

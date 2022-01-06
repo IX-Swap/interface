@@ -4,7 +4,7 @@ import { useQuery, useQueryCache } from 'react-query'
 import { exchange as exchangeQueryKeys } from 'config/queryKeys'
 import { exchange } from 'config/apiURL'
 
-export const useOrderBook = (id: string) => {
+export const useOrderBook = (id?: string) => {
   const { socketService } = useServices()
   const socket = useMemo(() => socketService.socket, [socketService.socket])
   const queryCache = useQueryCache()
@@ -17,6 +17,8 @@ export const useOrderBook = (id: string) => {
   }
 
   useEffect(() => {
+    if (id === undefined) return
+
     const onUrl = exchange.orderBook.on(id)
     socket?.on(onUrl, onDataReceived)
     socket?.emit(exchange.orderBook.emit, id)

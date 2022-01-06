@@ -1,16 +1,11 @@
 import { sampleSecurity } from 'app/pages/educationCentre/components/Securities/__tests__/SecurityCard.spec'
 import { PriceChangesTable } from 'app/pages/educationCentre/components/SecurityTradingView/PriceChangesTable'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 
 describe('PriceChangesTable', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<PriceChangesTable data={sampleSecurity} />)
   })
 
   it('renders correct value for priceChange24Hours', () => {

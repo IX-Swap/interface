@@ -17,7 +17,7 @@ export const DSWithdrawalPreview = (props: DSWithdrawalPreviewProps) => {
   useSetPageTitle(getOfferingName(data))
 
   return (
-    <Grid container justify='center' direction='column'>
+    <Grid container justifyContent='center' direction='column'>
       <Grid container spacing={3}>
         <Grid item xs={6}>
           <LabelledValue

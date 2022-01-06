@@ -19,7 +19,12 @@ export const FundraiseTooltip = ({
       arrow
       title={
         <Box p={1} maxWidth={140}>
-          <Grid container spacing={1} justify='center' direction='column'>
+          <Grid
+            container
+            spacing={1}
+            justifyContent='center'
+            direction='column'
+          >
             <Grid item>
               <Typography variant='caption'>
                 <Box component='span' fontWeight='bold'>

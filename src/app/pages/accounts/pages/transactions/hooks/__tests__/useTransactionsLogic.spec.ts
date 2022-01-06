@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react-hooks'
-import { act, waitFor, cleanup } from 'test-utils'
+import { act, waitFor } from 'test-utils'
 import {
   useTransactionsLogic,
   initialTransactionFilter
@@ -7,7 +7,6 @@ import {
 
 describe('useTransactionsLogic', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

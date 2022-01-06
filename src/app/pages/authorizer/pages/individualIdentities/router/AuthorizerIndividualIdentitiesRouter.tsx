@@ -1,5 +1,5 @@
 import React from 'react'
-import { Switch } from 'react-router'
+import { Switch } from 'react-router-dom'
 import { AppRoute } from 'components/AppRoute'
 import { AuthorizerRoute } from 'app/pages/authorizer/router/config'
 import { IndividualIdentities } from 'app/pages/authorizer/pages/individualIdentities/IndividualIdentities'
@@ -16,7 +16,7 @@ export const AuthorizerIndividualIdentitiesRouter = () => {
         <IndividualAuthorization />
       </AppRoute>
 
-      <AppRoute exact path={AuthorizerRoute.individualIdentities}>
+      <AppRoute path={AuthorizerRoute.individualIdentities}>
         <IndividualIdentities />
       </AppRoute>
     </Switch>

@@ -2,7 +2,7 @@ import { useAuthorizerCategory } from 'hooks/location/useAuthorizerCategory'
 import { authorizerItemMap } from 'app/pages/authorizer/authorizerItemMap'
 import { useServices } from 'hooks/useServices'
 import { useMutation, useQueryCache } from 'react-query'
-import { useHistory, useLocation } from 'react-router'
+import { useHistory, useLocation } from 'react-router-dom'
 
 export interface UseApproveOrRejectArgs {
   id: string

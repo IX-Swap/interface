@@ -3,7 +3,7 @@ import { useIdleTimers } from 'app/hooks/useIdleTimers'
 import * as useLogout from 'auth/hooks/useLogout'
 import { idleLogoutTime } from 'config/defaults'
 import * as useIdleTimer from 'react-idle-timer'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 
 describe('useIdleTimers', () => {
   const mockLogout = jest.fn(() => null)
@@ -23,7 +23,6 @@ describe('useIdleTimers', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

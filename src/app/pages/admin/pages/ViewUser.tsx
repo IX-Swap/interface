@@ -4,7 +4,7 @@ import { useUserById } from 'app/pages/admin/hooks/useUserById'
 import { UserDetails } from 'app/pages/admin/components/UserDetails'
 import { UserStatus } from 'app/pages/admin/components/UserStatus'
 import { IndividualAccountSettings } from 'app/pages/admin/components/IndividualAccountSettings'
-import { useParams } from 'react-router'
+import { useParams } from 'react-router-dom'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { UserIdentitiesStatus } from 'app/pages/admin/components/UserIdentitiesStatus'
 

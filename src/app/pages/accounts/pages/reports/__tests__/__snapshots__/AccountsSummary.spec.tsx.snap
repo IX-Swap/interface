@@ -9,10 +9,10 @@ exports[`AccountsSummary should match snapshot when all data is loaded successfu
       class="MuiGrid-root MuiGrid-item"
     >
       <div
-        class="MuiGrid-root makeStyles-container-3 MuiGrid-container MuiGrid-direction-xs-column"
+        class="MuiGrid-root makeStyles-container-22 MuiGrid-container MuiGrid-direction-xs-column"
       >
         <div
-          class="MuiGrid-root makeStyles-header-2 MuiGrid-container"
+          class="MuiGrid-root makeStyles-header-21 MuiGrid-container"
         >
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center"
@@ -37,30 +37,30 @@ exports[`AccountsSummary should match snapshot when all data is loaded successfu
         </div>
       </div>
       <div
-        class="MuiBox-root MuiBox-root-5"
+        class="MuiBox-root MuiBox-root-24"
       />
     </div>
     <div
       class="MuiGrid-root MuiGrid-item"
     >
       <div
-        class="MuiBox-root MuiBox-root-9"
+        class="MuiBox-root MuiBox-root-28"
       />
       <div
-        class="MuiPaper-root MuiAccordion-root makeStyles-root-10 MuiAccordion-rounded MuiPaper-elevation1 MuiPaper-rounded"
+        class="MuiPaper-root MuiAccordion-root makeStyles-root-29 MuiAccordion-rounded MuiPaper-elevation1 MuiPaper-rounded"
       >
         <div
           aria-disabled="false"
           aria-expanded="false"
-          class="MuiButtonBase-root MuiAccordionSummary-root makeStyles-summaryWrapper-11"
+          class="MuiButtonBase-root MuiAccordionSummary-root makeStyles-summaryWrapper-30"
           role="button"
           tabindex="0"
         >
           <div
-            class="MuiAccordionSummary-content makeStyles-summaryContent-12"
+            class="MuiAccordionSummary-content makeStyles-summaryContent-31"
           >
             <p
-              class="MuiTypography-root makeStyles-summary-13 MuiTypography-body1 MuiTypography-colorPrimary"
+              class="MuiTypography-root makeStyles-summary-32 MuiTypography-body1 MuiTypography-colorPrimary"
             >
               Open Positions
             </p>
@@ -103,7 +103,7 @@ exports[`AccountsSummary should match snapshot when all data is loaded successfu
                 role="region"
               >
                 <div
-                  class="MuiAccordionDetails-root makeStyles-detailsWrapper-14"
+                  class="MuiAccordionDetails-root makeStyles-detailsWrapper-33"
                 >
                   <div
                     class="MuiTableContainer-root"
@@ -118,49 +118,49 @@ exports[`AccountsSummary should match snapshot when all data is loaded successfu
                           class="MuiTableRow-root MuiTableRow-head"
                         >
                           <th
-                            class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-15 MuiTableCell-alignLeft"
+                            class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-34 MuiTableCell-alignLeft"
                             scope="col"
                           >
                             Symbol
                           </th>
                           <th
-                            class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-15 MuiTableCell-alignLeft"
+                            class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-34 MuiTableCell-alignLeft"
                             scope="col"
                           >
                             Open
                           </th>
                           <th
-                            class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-15 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-34 MuiTableCell-alignRight"
                             scope="col"
                           >
                             Quantity
                           </th>
                           <th
-                            class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-15 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-34 MuiTableCell-alignRight"
                             scope="col"
                           >
                             Cost price
                           </th>
                           <th
-                            class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-15 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-34 MuiTableCell-alignRight"
                             scope="col"
                           >
                             Cost value
                           </th>
                           <th
-                            class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-15 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-34 MuiTableCell-alignRight"
                             scope="col"
                           >
                             Last Trade Price
                           </th>
                           <th
-                            class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-15 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-34 MuiTableCell-alignRight"
                             scope="col"
                           >
                             Current Value
                           </th>
                           <th
-                            class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-15 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-34 MuiTableCell-alignRight"
                             scope="col"
                           >
                             Unrealized P/L
@@ -171,117 +171,117 @@ exports[`AccountsSummary should match snapshot when all data is loaded successfu
                         class="MuiTableBody-root"
                       >
                         <tr
-                          class="MuiTableRow-root makeStyles-row-20 makeStyles-row-25"
+                          class="MuiTableRow-root makeStyles-row-39 makeStyles-row-44"
                         >
                           <th
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-17"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36"
                             role="cell"
                             scope="row"
                           >
                             Tokens
                           </th>
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-17 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignRight"
                           />
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-17 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignRight"
                           />
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-17 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignRight"
                           />
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-17 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignRight"
                           />
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-17 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignRight"
                           />
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-17 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignRight"
                           />
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-17 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignRight"
                           />
                         </tr>
                         <tr
-                          class="MuiTableRow-root makeStyles-row-20 makeStyles-row-27"
+                          class="MuiTableRow-root makeStyles-row-39 makeStyles-row-46"
                         >
                           <th
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-17"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36"
                             role="cell"
                             scope="row"
                           >
                             RHTC/SGD
                           </th>
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-17 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignRight"
                           >
                             2021-11-01, 06:15 AM
                           </td>
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-17 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignRight"
                           >
                             3
                           </td>
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-17 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignRight"
                           >
                             2,000.00
                           </td>
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-17 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignRight"
                           >
                             6,000.00
                           </td>
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-17 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignRight"
                           >
                             2,000.00
                           </td>
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-17 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignRight"
                           >
                             6,000.00
                           </td>
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-17 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignRight"
                           >
                             0.00
                           </td>
                         </tr>
                         <tr
-                          class="MuiTableRow-root makeStyles-row-20 makeStyles-row-29"
+                          class="MuiTableRow-root makeStyles-row-39 makeStyles-row-48"
                         >
                           <th
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-17"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36"
                             role="cell"
                             scope="row"
                           >
                             Total
                           </th>
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-17 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignRight"
                           />
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-17 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignRight"
                           />
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-17 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignRight"
                           >
                             5,033.00
                           </td>
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-17 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignRight"
                           />
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-17 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignRight"
                           />
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-17 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignRight"
                           >
                             146,000.00
                           </td>
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-17 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignRight"
                           >
                             -79,835.00
                           </td>
@@ -296,20 +296,20 @@ exports[`AccountsSummary should match snapshot when all data is loaded successfu
         </div>
       </div>
       <div
-        class="MuiPaper-root MuiAccordion-root makeStyles-root-10 MuiAccordion-rounded MuiPaper-elevation1 MuiPaper-rounded"
+        class="MuiPaper-root MuiAccordion-root makeStyles-root-29 MuiAccordion-rounded MuiPaper-elevation1 MuiPaper-rounded"
       >
         <div
           aria-disabled="false"
           aria-expanded="false"
-          class="MuiButtonBase-root MuiAccordionSummary-root makeStyles-summaryWrapper-11"
+          class="MuiButtonBase-root MuiAccordionSummary-root makeStyles-summaryWrapper-30"
           role="button"
           tabindex="0"
         >
           <div
-            class="MuiAccordionSummary-content makeStyles-summaryContent-12"
+            class="MuiAccordionSummary-content makeStyles-summaryContent-31"
           >
             <p
-              class="MuiTypography-root makeStyles-summary-13 MuiTypography-body1 MuiTypography-colorPrimary"
+              class="MuiTypography-root makeStyles-summary-32 MuiTypography-body1 MuiTypography-colorPrimary"
             >
               Cash Report
             </p>
@@ -352,7 +352,7 @@ exports[`AccountsSummary should match snapshot when all data is loaded successfu
                 role="region"
               >
                 <div
-                  class="MuiAccordionDetails-root makeStyles-detailsWrapper-14"
+                  class="MuiAccordionDetails-root makeStyles-detailsWrapper-33"
                 >
                   <div
                     class="MuiTableContainer-root"
@@ -364,17 +364,17 @@ exports[`AccountsSummary should match snapshot when all data is loaded successfu
                         class="MuiTableBody-root"
                       >
                         <tr
-                          class="MuiTableRow-root makeStyles-row-20 makeStyles-row-31"
+                          class="MuiTableRow-root makeStyles-row-39 makeStyles-row-50"
                         >
                           <th
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-cashColumn-16 makeStyles-cashColumn-30 MuiTableCell-alignLeft"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-cashColumn-35 makeStyles-cashColumn-49 MuiTableCell-alignLeft"
                             role="cell"
                             scope="row"
                           >
                             USD
                           </th>
                           <th
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-cashColumn-16 makeStyles-cashColumn-30 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-cashColumn-35 makeStyles-cashColumn-49 MuiTableCell-alignRight"
                             role="cell"
                             scope="row"
                           >
@@ -382,17 +382,17 @@ exports[`AccountsSummary should match snapshot when all data is loaded successfu
                           </th>
                         </tr>
                         <tr
-                          class="MuiTableRow-root makeStyles-row-20 makeStyles-row-33"
+                          class="MuiTableRow-root makeStyles-row-39 makeStyles-row-52"
                         >
                           <th
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-cashColumn-16 makeStyles-cashColumn-32 MuiTableCell-alignLeft"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-cashColumn-35 makeStyles-cashColumn-51 MuiTableCell-alignLeft"
                             role="cell"
                             scope="row"
                           >
                             Starting cash
                           </th>
                           <th
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-cashColumn-16 makeStyles-cashColumn-32 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-cashColumn-35 makeStyles-cashColumn-51 MuiTableCell-alignRight"
                             role="cell"
                             scope="row"
                           >
@@ -400,17 +400,17 @@ exports[`AccountsSummary should match snapshot when all data is loaded successfu
                           </th>
                         </tr>
                         <tr
-                          class="MuiTableRow-root makeStyles-row-20 makeStyles-row-35"
+                          class="MuiTableRow-root makeStyles-row-39 makeStyles-row-54"
                         >
                           <th
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-cashColumn-16 makeStyles-cashColumn-34 MuiTableCell-alignLeft"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-cashColumn-35 makeStyles-cashColumn-53 MuiTableCell-alignLeft"
                             role="cell"
                             scope="row"
                           >
                             Other Fees
                           </th>
                           <th
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-cashColumn-16 makeStyles-cashColumn-34 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-cashColumn-35 makeStyles-cashColumn-53 MuiTableCell-alignRight"
                             role="cell"
                             scope="row"
                           >
@@ -418,17 +418,17 @@ exports[`AccountsSummary should match snapshot when all data is loaded successfu
                           </th>
                         </tr>
                         <tr
-                          class="MuiTableRow-root makeStyles-row-20 makeStyles-row-37"
+                          class="MuiTableRow-root makeStyles-row-39 makeStyles-row-56"
                         >
                           <th
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-cashColumn-16 makeStyles-cashColumn-36 MuiTableCell-alignLeft"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-cashColumn-35 makeStyles-cashColumn-55 MuiTableCell-alignLeft"
                             role="cell"
                             scope="row"
                           >
                             Withdrawals
                           </th>
                           <th
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-cashColumn-16 makeStyles-cashColumn-36 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-cashColumn-35 makeStyles-cashColumn-55 MuiTableCell-alignRight"
                             role="cell"
                             scope="row"
                           >
@@ -436,17 +436,17 @@ exports[`AccountsSummary should match snapshot when all data is loaded successfu
                           </th>
                         </tr>
                         <tr
-                          class="MuiTableRow-root makeStyles-row-20 makeStyles-row-39"
+                          class="MuiTableRow-root makeStyles-row-39 makeStyles-row-58"
                         >
                           <th
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-cashColumn-16 makeStyles-cashColumn-38 MuiTableCell-alignLeft"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-cashColumn-35 makeStyles-cashColumn-57 MuiTableCell-alignLeft"
                             role="cell"
                             scope="row"
                           >
                             Ending Cash
                           </th>
                           <th
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-cashColumn-16 makeStyles-cashColumn-38 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-body makeStyles-cashColumn-35 makeStyles-cashColumn-57 MuiTableCell-alignRight"
                             role="cell"
                             scope="row"
                           >
@@ -476,10 +476,10 @@ exports[`AccountsSummary should match snapshot when data is loaded successfully 
       class="MuiGrid-root MuiGrid-item"
     >
       <div
-        class="MuiGrid-root makeStyles-container-3 MuiGrid-container MuiGrid-direction-xs-column"
+        class="MuiGrid-root makeStyles-container-83 MuiGrid-container MuiGrid-direction-xs-column"
       >
         <div
-          class="MuiGrid-root makeStyles-header-2 MuiGrid-container"
+          class="MuiGrid-root makeStyles-header-82 MuiGrid-container"
         >
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center"
@@ -504,30 +504,30 @@ exports[`AccountsSummary should match snapshot when data is loaded successfully 
         </div>
       </div>
       <div
-        class="MuiBox-root MuiBox-root-5"
+        class="MuiBox-root MuiBox-root-85"
       />
     </div>
     <div
       class="MuiGrid-root MuiGrid-item"
     >
       <div
-        class="MuiBox-root MuiBox-root-9"
+        class="MuiBox-root MuiBox-root-89"
       />
       <div
-        class="MuiPaper-root MuiAccordion-root makeStyles-root-10 MuiAccordion-rounded MuiPaper-elevation1 MuiPaper-rounded"
+        class="MuiPaper-root MuiAccordion-root makeStyles-root-90 MuiAccordion-rounded MuiPaper-elevation1 MuiPaper-rounded"
       >
         <div
           aria-disabled="false"
           aria-expanded="false"
-          class="MuiButtonBase-root MuiAccordionSummary-root makeStyles-summaryWrapper-11"
+          class="MuiButtonBase-root MuiAccordionSummary-root makeStyles-summaryWrapper-91"
           role="button"
           tabindex="0"
         >
           <div
-            class="MuiAccordionSummary-content makeStyles-summaryContent-12"
+            class="MuiAccordionSummary-content makeStyles-summaryContent-92"
           >
             <p
-              class="MuiTypography-root makeStyles-summary-13 MuiTypography-body1 MuiTypography-colorPrimary"
+              class="MuiTypography-root makeStyles-summary-93 MuiTypography-body1 MuiTypography-colorPrimary"
             >
               Cash Report
             </p>
@@ -570,7 +570,7 @@ exports[`AccountsSummary should match snapshot when data is loaded successfully 
                 role="region"
               >
                 <div
-                  class="MuiAccordionDetails-root makeStyles-detailsWrapper-14"
+                  class="MuiAccordionDetails-root makeStyles-detailsWrapper-94"
                 >
                   <div
                     class="MuiTableContainer-root"
@@ -603,10 +603,10 @@ exports[`AccountsSummary should match snapshot when data is loaded successfully 
       class="MuiGrid-root MuiGrid-item"
     >
       <div
-        class="MuiGrid-root makeStyles-container-3 MuiGrid-container MuiGrid-direction-xs-column"
+        class="MuiGrid-root makeStyles-container-64 MuiGrid-container MuiGrid-direction-xs-column"
       >
         <div
-          class="MuiGrid-root makeStyles-header-2 MuiGrid-container"
+          class="MuiGrid-root makeStyles-header-63 MuiGrid-container"
         >
           <div
             class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center"
@@ -631,51 +631,46 @@ exports[`AccountsSummary should match snapshot when data is loaded successfully 
         </div>
       </div>
       <div
-        class="MuiBox-root MuiBox-root-5"
+        class="MuiBox-root MuiBox-root-66"
       />
     </div>
     <div
       class="MuiGrid-root MuiGrid-item"
     >
       <div
-        class="MuiBox-root MuiBox-root-9"
+        class="MuiBox-root MuiBox-root-70"
       />
       <div
-        class="MuiGrid-root makeStyles-wrapper-10 MuiGrid-container MuiGrid-direction-xs-column MuiGrid-align-items-xs-center"
+        class="MuiGrid-root makeStyles-wrapper-71 MuiGrid-container MuiGrid-direction-xs-column MuiGrid-align-items-xs-center"
       >
         <div
           class="MuiGrid-root MuiGrid-item"
         >
           <div
-            class="MuiBox-root MuiBox-root-13"
+            class="MuiBox-root MuiBox-root-74"
           />
-          <svg
-            style="max-width: 100%;"
-          >
-            no_data.svg
-          </svg>
         </div>
         <div
           class="MuiGrid-root MuiGrid-item"
         >
           <div
-            class="MuiBox-root MuiBox-root-14"
+            class="MuiBox-root MuiBox-root-75"
           />
           <p
-            class="MuiTypography-root makeStyles-subtitle-11 MuiTypography-body1"
+            class="MuiTypography-root makeStyles-subtitle-72 MuiTypography-body1"
           >
             This page is empty.
           </p>
           <div
-            class="MuiBox-root MuiBox-root-15"
+            class="MuiBox-root MuiBox-root-76"
           />
           <p
-            class="MuiTypography-root makeStyles-content-12 MuiTypography-body1"
+            class="MuiTypography-root makeStyles-content-73 MuiTypography-body1"
           >
             There are no records to display for the selected report.
           </p>
           <div
-            class="MuiBox-root MuiBox-root-16"
+            class="MuiBox-root MuiBox-root-77"
           />
         </div>
       </div>
@@ -769,11 +764,6 @@ exports[`AccountsSummary should match snapshot when data is undefined 1`] = `
           <div
             class="MuiBox-root MuiBox-root-16"
           />
-          <svg
-            style="max-width: 100%;"
-          >
-            no_data.svg
-          </svg>
         </div>
         <div
           class="MuiGrid-root MuiGrid-item"

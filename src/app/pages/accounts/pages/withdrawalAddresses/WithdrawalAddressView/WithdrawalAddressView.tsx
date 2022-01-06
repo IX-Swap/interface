@@ -17,7 +17,7 @@ export const WithdrawalAddressView = () => {
         <WAViewContent />
       </WADialogContent>
       <DialogActions>
-        <Grid container xs={12} justify='center'>
+        <Grid container xs={12} justifyContent='center'>
           <Button
             variant='contained'
             color='primary'

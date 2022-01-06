@@ -12,7 +12,7 @@ export const CommitmentInvestOTPDialog = ({
   open
 }: CommitmentInvestOTPDialogProps) => {
   return (
-    <Dialog disablePortal open={open} maxWidth='md' onBackdropClick={close}>
+    <Dialog disablePortal open={open} maxWidth='md' onClose={close}>
       <Box py={4} px={10}>
         <DialogTitle>
           <Typography

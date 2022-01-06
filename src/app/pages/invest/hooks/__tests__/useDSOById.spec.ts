@@ -1,5 +1,5 @@
 import { act } from '@testing-library/react-hooks'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
 import { successfulResponse } from '__fixtures__/api'
 import { dso } from '__fixtures__/authorizer'
@@ -8,7 +8,6 @@ import { user } from '__fixtures__/user'
 
 describe('useDSOById', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

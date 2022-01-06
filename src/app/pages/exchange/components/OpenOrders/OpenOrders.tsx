@@ -10,7 +10,7 @@ import {
 } from 'app/pages/exchange/components/OpenOrders/columns'
 import { useAuth } from 'hooks/auth/useAuth'
 import { getIdFromObj } from 'helpers/strings'
-import { useParams } from 'react-router'
+import { useParams } from 'react-router-dom'
 import { exchangeMarket } from 'config/apiURL'
 import { exchangeMarketQueryKeys } from 'config/queryKeys'
 import { Order } from 'types/order'

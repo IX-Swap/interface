@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { CapitalStructureSelect } from 'components/form/CapitalStructureSelect'
 import { capitalStructures } from 'config/defaults'
 import { MenuItem, Select } from '@material-ui/core'
@@ -17,7 +17,6 @@ jest.mock('helpers/rendering', () => ({
 
 describe('CapitalStructureSelect', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

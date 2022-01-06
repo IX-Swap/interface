@@ -10,4 +10,10 @@ declare global {
     ethereum: any
     web3: any
   }
+
+  namespace NodeJS {
+    interface ProcessEnv {
+      NODE_ENV: 'development' | 'production' | 'test'
+    }
+  }
 }

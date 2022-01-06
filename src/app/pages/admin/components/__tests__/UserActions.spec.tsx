@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { UserActions } from 'app/pages/admin/components/UserActions'
 import { managedUser } from '__fixtures__/user'
 import { ActionReset2FA } from 'app/pages/admin/components/ActionReset2FA'
@@ -20,12 +20,7 @@ jest.mock('app/pages/admin/components/ActionResetPassword', () => ({
 
 describe('UserActions', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<UserActions data={managedUser} />)
   })
 
   it('renders components with correct props', () => {

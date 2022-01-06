@@ -2,7 +2,7 @@ import { useMutation } from 'react-query'
 import { RequestPasswordResetArgs } from 'types/auth'
 import { useServices } from 'hooks/useServices'
 import { authURL } from 'config/apiURL'
-import { useHistory } from 'react-router'
+import { useHistory } from 'react-router-dom'
 import { AuthRoute } from 'auth/router/config'
 
 export const useRequestPasswordReset = () => {

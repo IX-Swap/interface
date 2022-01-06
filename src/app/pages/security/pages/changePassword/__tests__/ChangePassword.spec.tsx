@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { ChangePassword } from 'app/pages/security/pages/changePassword/ChangePassword'
 import { Submit } from 'components/form/Submit'
 import { Form } from 'components/form/Form'
@@ -18,12 +18,7 @@ jest.mock(
 
 describe('ChangePassword', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<ChangePassword />)
   })
 
   it('renders Form & Submit', () => {

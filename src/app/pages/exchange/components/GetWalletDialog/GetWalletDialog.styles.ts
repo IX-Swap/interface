@@ -2,9 +2,15 @@ import { makeStyles } from '@material-ui/core/styles'
 
 export default makeStyles(theme => ({
   root: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     '& .MuiDialog-paper': {
       borderRadius: 5,
       margin: '1.5rem'
+    },
+    '& .MuiDialog-container': {
+      height: 'fit-content'
     }
   },
   titleRoot: {
@@ -29,10 +35,9 @@ export default makeStyles(theme => ({
     fontWeight: 600
   },
   closeButton: {
-    marginLeft: '3rem',
-    display: 'inline-block',
-    [theme.breakpoints.down('sm')]: {
-      marginLeft: '0.25rem'
-    }
+    position: 'absolute',
+    top: '0.2rem',
+    right: '0.2rem',
+    display: 'inline-block'
   }
 }))

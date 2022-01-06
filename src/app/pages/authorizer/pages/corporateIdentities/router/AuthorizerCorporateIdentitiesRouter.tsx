@@ -1,5 +1,5 @@
 import React from 'react'
-import { Switch } from 'react-router'
+import { Switch } from 'react-router-dom'
 import { AppRoute } from 'components/AppRoute'
 import { AuthorizerRoute } from 'app/pages/authorizer/router/config'
 import { CorporateAuthorization } from 'app/pages/authorizer/pages/corporateIdentities/CorporateAuthorization'
@@ -16,7 +16,7 @@ export const AuthorizerCorporateIdentitiesRouter = () => {
         <CorporateAuthorization />
       </AppRoute>
 
-      <AppRoute exact path={AuthorizerRoute.corporateIdentities}>
+      <AppRoute path={AuthorizerRoute.corporateIdentities}>
         <CorporateIdentities />
       </AppRoute>
     </Switch>

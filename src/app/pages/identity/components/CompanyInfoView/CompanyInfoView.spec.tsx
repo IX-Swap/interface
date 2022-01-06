@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 
 import { corporate } from '__fixtures__/identity'
 import { Avatar } from 'components/Avatar'
@@ -14,12 +14,7 @@ describe('CompanyInfoView', () => {
   const props: CompanyInfoViewProps = { data: corporate }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<CompanyInfoView {...props} />)
   })
 
   it('renders Avatar with correct props', () => {

@@ -73,7 +73,7 @@ export const VirtualAccountBalance = () => {
             md={4}
             container
             spacing={1}
-            justify={isMiniLaptop ? 'flex-start' : 'flex-end'}
+            justifyContent={isMiniLaptop ? 'flex-start' : 'flex-end'}
           >
             <Grid item>
               <FormControl variant='outlined'>

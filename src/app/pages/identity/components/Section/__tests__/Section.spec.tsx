@@ -1,15 +1,10 @@
 import { Section } from 'app/pages/identity/components/Section/Section'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 
 describe('Section', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<Section title='Section Title' />)
   })
 
   it('renders props correctly', () => {

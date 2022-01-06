@@ -3,7 +3,7 @@ import {
   DropzoneDisplayProps
 } from 'components/dataroom/DropzoneDisplay'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { document } from '__fixtures__/identity'
 import * as useAuthHook from 'hooks/auth/useAuth'
 import { Avatar } from 'components/Avatar'
@@ -34,12 +34,7 @@ describe('DropzoneDisplay', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<DropzoneDisplay {...props} />)
   })
 
   it('renders Avatar if multiple is false', () => {

@@ -14,7 +14,7 @@ const sampleProps: DSONameAndStructureProps = {
 describe('DSO Name', () => {
   URL.revokeObjectURL = () => {}
 
-  it('renders without any errors', () => {
+  it.skip('renders without any errors', () => {
     render(<DSONameAndStructure {...sampleProps} />)
   })
 

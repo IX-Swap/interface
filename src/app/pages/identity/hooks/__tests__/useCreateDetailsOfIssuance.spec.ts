@@ -1,7 +1,7 @@
 import { act } from '@testing-library/react-hooks'
 import { useCreateDetailsOfIssuance } from 'app/pages/identity/hooks/useCreateDetailsOfIssuance'
 import * as useAuth from 'hooks/auth/useAuth'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { user } from '__fixtures__/user'
 
 describe('useCreateDetailsOfIssuance', () => {
@@ -10,7 +10,6 @@ describe('useCreateDetailsOfIssuance', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

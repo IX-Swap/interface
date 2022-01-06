@@ -22,7 +22,7 @@ const renderTime = (time: string) => (
 
 const renderIp = (ip: string, loginHistory: LoginHistory) => (
   <Link href={loginHistory.geolocation.whois} target='_blank'>
-    <Grid container justify='space-between'>
+    <Grid container justifyContent='space-between'>
       <Typography noWrap>
         {`${ip} ( ${[
           loginHistory.geolocation.city,

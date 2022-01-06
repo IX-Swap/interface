@@ -1,5 +1,5 @@
 import { act } from '@testing-library/react-hooks'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import * as useParsedDataHook from 'hooks/useParsedData'
 import { paginationArgs } from 'config/defaults'
 import { usePromotedDSOs } from 'app/pages/invest/hooks/usePromotedDSOs'
@@ -16,7 +16,6 @@ describe('usePromotedDSOs', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

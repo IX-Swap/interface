@@ -9,11 +9,12 @@ import { PageHeader } from 'app/components/PageHeader/PageHeader'
 const ViewBank = () => {
   const params = useParams<{ bankId: string }>()
   const { data, status } = useBanksData()
-  const bank = data.map[params.bankId]
 
-  if (status === 'loading') {
+  if (status === 'loading' || params.bankId === undefined) {
     return null
   }
+
+  const bank = data.map[params.bankId]
 
   return (
     <Grid container direction='column'>

@@ -1,15 +1,11 @@
 import { fireEvent } from '@testing-library/react'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import * as useDepositCashHook from 'app/pages/accounts/pages/banks/hooks/useDepositCash'
 import { DepositForm } from 'app/pages/accounts/pages/banks/pages/DepositCash/DepositForm'
 import { generateMutationResult } from '__fixtures__/useQuery'
 
 describe('DepositForm', () => {
-  afterEach(async () => {
-    await cleanup()
-  })
-
   it('renders Form without error', async () => {
     const button = <button type='submit'>Submit</button>
     const mutateFn = jest.fn()

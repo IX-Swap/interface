@@ -1,16 +1,11 @@
 import { InvestorDeclarationView } from 'app/pages/identity/components/IndividualIdentityView/InvestorDeclarationView/InvestorDeclarationView'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { individual } from '__fixtures__/identity'
 
 describe('InvestorDeclarationView', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<InvestorDeclarationView data={individual} />)
   })
 
   it('renders DeclarationList title correctly when identityType is individual', () => {

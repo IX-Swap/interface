@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { CompactBody } from 'components/TableWithPagination/CompactBody'
 import { dso } from '__fixtures__/authorizer'
 import { CompactRow } from 'components/TableWithPagination/CompactRow'
@@ -25,12 +25,7 @@ describe('CompactBody', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<CompactBody {...props} />)
   })
 
   it('renders correct number of rows', () => {

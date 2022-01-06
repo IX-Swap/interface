@@ -3,7 +3,6 @@ import { act } from '@testing-library/react-hooks'
 import { custodyAccounts } from 'config/apiURL'
 import {
   waitFor,
-  cleanup,
   renderHookWithServiceProvider,
   apiServiceMock
 } from 'test-utils'
@@ -16,7 +15,6 @@ describe('useGetCustodiansCount', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

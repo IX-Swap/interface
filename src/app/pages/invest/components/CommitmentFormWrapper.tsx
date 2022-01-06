@@ -36,7 +36,7 @@ export const CommitmentFormWrapper = () => {
         <Grid item>
           <CommitmentHeader dso={data} />
         </Grid>
-        <Grid item container justify='center'>
+        <Grid item container justifyContent='center'>
           <Card style={{ width: 450 }} elevation={0}>
             <CardContent>
               <DownloadDSOSubscriptionDocument
@@ -55,7 +55,7 @@ export const CommitmentFormWrapper = () => {
                 network={data.network?._id}
               />
               <VSpacer size='medium' />
-              <Grid container spacing={2} justify='center'>
+              <Grid container spacing={2} justifyContent='center'>
                 <Grid item xs={4}>
                   <CommitmentFormCancelButton />
                 </Grid>

@@ -1,5 +1,5 @@
 import { waitFor } from '@testing-library/react'
-import { act, cleanup, renderHook } from '@testing-library/react-hooks'
+import { act, renderHook } from '@testing-library/react-hooks'
 import { BaseProviders } from 'test-utils'
 import { useSearchFilter } from '../useSearchFilter'
 
@@ -9,7 +9,6 @@ describe('useSearchFilter', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

@@ -30,7 +30,7 @@ export const Login = ({ hidden, isLoading, attempts = 0 }: LoginProps) => {
           </Grid>
         )}
 
-        <Grid item container justify='center'>
+        <Grid item container justifyContent='center'>
           <Submit
             style={{ width: 150 }}
             size='large'

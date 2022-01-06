@@ -1,8 +1,8 @@
 import React from 'react'
 import { Box, Button } from '@material-ui/core'
 import { DigitalSecurityOffering } from 'types/dso'
-import { useHistory } from 'react-router'
-import { generatePath } from 'react-router-dom'
+import { useHistory, generatePath } from 'react-router-dom'
+
 import { OTCMarketRoute } from 'app/pages/exchange/router/config'
 import { ListingFinishLaterButton } from 'app/pages/exchange/components/ListingForm/ListinfFInishLaterButton'
 import { getIdFromObj } from 'helpers/strings'

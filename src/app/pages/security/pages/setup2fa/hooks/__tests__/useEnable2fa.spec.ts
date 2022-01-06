@@ -1,5 +1,5 @@
 import { act } from '@testing-library/react-hooks'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { useEnable2fa } from 'app/pages/security/pages/setup2fa/hooks/useEnable2fa'
 import { unsuccessfulResponse, successfulResponse } from '__fixtures__/api'
 import { enable2faArgs } from '__fixtures__/security'
@@ -17,7 +17,6 @@ describe('useEnable2fa', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

@@ -32,7 +32,7 @@ export const Snackbar = (props: SnackbarProps) => {
           container
           direction='column'
           alignItems='flex-end'
-          justify='space-between'
+          justifyContent='space-between'
           className={classes.actions}
         >
           <IconButton onClick={() => onDismiss()} size='small'>

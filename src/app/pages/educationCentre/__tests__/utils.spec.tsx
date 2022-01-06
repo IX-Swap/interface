@@ -5,13 +5,11 @@ import {
   timeRange
 } from 'app/pages/educationCentre/utils'
 import { sub } from 'date-fns'
-import { cleanup } from 'test-utils'
 
 const sampleSecurities = [sampleSecurity]
 
 describe('getTotalCapitalization', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
@@ -40,7 +38,6 @@ describe('getTotalCapitalization', () => {
 
 describe('getChartData', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
@@ -106,7 +103,6 @@ describe('getChartData', () => {
 
 describe('timeRange', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

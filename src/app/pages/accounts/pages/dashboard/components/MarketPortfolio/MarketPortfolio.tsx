@@ -113,7 +113,7 @@ export const MarketPortfolio = ({
         direction={'column'}
         xs={isTablet ? 'auto' : 3}
         alignItems={'flex-end'}
-        justify={'center'}
+        justifyContent={'center'}
       >
         <TotalInvestmentInfo
           value={totalAmount}

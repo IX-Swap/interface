@@ -15,7 +15,12 @@ export const DataPreview = ({ avatar, userId, fields }: DataPreviewProps) => {
 
   return (
     <Box display='flex' flexDirection={isMobile ? 'column' : 'row'}>
-      <Avatar documentId={avatar} ownerId={userId} variant='circle' size={96} />
+      <Avatar
+        documentId={avatar}
+        ownerId={userId}
+        variant='circular'
+        size={96}
+      />
       <Box p={3} />
       <FieldsDisplay fields={fields} />
     </Box>

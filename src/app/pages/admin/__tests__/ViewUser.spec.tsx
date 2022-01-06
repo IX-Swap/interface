@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { ViewUser } from 'app/pages/admin/pages/ViewUser'
 import { managedUser } from '__fixtures__/user'
 import * as useUserByIdHook from 'app/pages/admin/hooks/useUserById'
@@ -9,7 +9,7 @@ import { UserDetails } from 'app/pages/admin/components/UserDetails'
 import { UserStatus } from 'app/pages/admin/components/UserStatus'
 import { IndividualAccountSettings } from 'app/pages/admin/components/IndividualAccountSettings'
 import { history } from 'config/history'
-import { generatePath } from 'react-router'
+import { generatePath } from 'react-router-dom'
 import { AdminRoute } from 'app/pages/admin/router/config'
 
 jest.mock('app/pages/admin/components/UserDetails', () => ({
@@ -44,12 +44,7 @@ describe('ViewUser', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<ViewUser />)
   })
 
   it('renders componenst with correct props', () => {

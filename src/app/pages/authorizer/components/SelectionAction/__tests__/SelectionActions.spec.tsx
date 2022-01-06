@@ -1,6 +1,6 @@
 import { SelectionActions } from 'app/pages/authorizer/components/SelectionAction/SelectionActions'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { ApproveSelectionButton } from 'app/pages/authorizer/components/SelectionAction/ApproveSelectionButton'
 import { RejectSelectionButton } from 'app/pages/authorizer/components/SelectionAction/RejectSelectionButton'
 
@@ -22,12 +22,7 @@ describe('SelectionActions', () => {
   beforeEach(() => {})
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<SelectionActions actions={{}} />)
   })
 
   it('renders correct props', () => {

@@ -1,6 +1,6 @@
 import { SetupScreenshot } from 'app/pages/security/pages/setup2faguide/components/SetupScreenshot'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 
 describe('SetupScreenshot', () => {
   const props = {
@@ -11,12 +11,7 @@ describe('SetupScreenshot', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<SetupScreenshot {...props} />)
   })
 
   it('renders props correctly', () => {

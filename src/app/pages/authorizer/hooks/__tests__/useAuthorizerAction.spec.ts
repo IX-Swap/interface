@@ -1,5 +1,5 @@
 import { act } from '@testing-library/react-hooks'
-import { cleanup, renderHookWithServiceProvider, waitFor } from 'test-utils'
+import { renderHookWithServiceProvider, waitFor } from 'test-utils'
 import { useAuthorizerAction } from 'app/pages/authorizer/hooks/useAuthorizerAction'
 import { successfulResponse, unsuccessfulResponse } from '__fixtures__/api'
 import { bank } from '__fixtures__/authorizer'
@@ -16,7 +16,6 @@ describe('useAuthorizerAction', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

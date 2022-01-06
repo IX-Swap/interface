@@ -13,7 +13,7 @@ export const Setup: React.FC = () => {
   const asset = watch('asset')
 
   return (
-    <Grid container justify='center' direction='column' spacing={2}>
+    <Grid container justifyContent='center' direction='column' spacing={2}>
       <Grid item>
         <TypedField
           control={control}

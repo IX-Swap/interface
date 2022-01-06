@@ -4,7 +4,7 @@ import { getIdFromObj } from 'helpers/strings'
 import { useAuth } from 'hooks/auth/useAuth'
 import { useServices } from 'hooks/useServices'
 import { useQuery } from 'react-query'
-import { useParams } from 'react-router'
+import { useParams } from 'react-router-dom'
 import { ListingView } from 'types/listing'
 
 export const useListing = () => {

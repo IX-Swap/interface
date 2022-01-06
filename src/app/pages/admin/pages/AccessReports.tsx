@@ -10,7 +10,7 @@ export const AccessReports = () => {
       <Grid item xs={12}>
         <PageHeader title='Access Reports' />
       </Grid>
-      <Grid item xs={12} container justify='flex-end'>
+      <Grid item xs={12} container justifyContent='flex-end'>
         <Box>
           <UploadAccessReport />
         </Box>

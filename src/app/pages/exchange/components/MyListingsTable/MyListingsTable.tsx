@@ -20,7 +20,7 @@ export const MyListingsTable = () => {
   return (
     <>
       <VSpacer size={'small'} />
-      <Grid container justify='space-between' alignItems='center'>
+      <Grid container justifyContent='space-between' alignItems='center'>
         <Grid item xs={12} md={4}>
           <Box width={256} pt={2}>
             <SearchFilter

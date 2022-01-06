@@ -41,7 +41,7 @@ export const Charts = ({ data, isLoading }: ChartsProps) => {
         </Typography>
       </Grid>
       <Grid item xs={12}>
-        <Grid container justify='center' alignItems='center' spacing={1}>
+        <Grid container justifyContent='center' alignItems='center' spacing={1}>
           <Grid item>
             <Typography variant='body1'>
               <Box component={'span'} fontWeight={600}>

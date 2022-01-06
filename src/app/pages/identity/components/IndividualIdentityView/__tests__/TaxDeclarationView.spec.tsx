@@ -1,16 +1,11 @@
 import { TaxDeclarationView } from 'app/pages/identity/components/IndividualIdentityView/TaxDeclarationView/TaxDeclarationView'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { individual } from '__fixtures__/identity'
 
 describe('TaxDeclarationView', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<TaxDeclarationView data={individual} />)
   })
 
   it('renders correct label and content when singaporeOnly is false', () => {

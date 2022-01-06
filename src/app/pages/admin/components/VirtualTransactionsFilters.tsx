@@ -22,7 +22,13 @@ export const VirtualTransactionsFilters = () => {
         <VSpacer size={'small'} />
         <VSpacer size={'extraSmall'} />
       </Grid>
-      <Grid item container xs={12} wrap={'wrap'} justify={'space-between'}>
+      <Grid
+        item
+        container
+        xs={12}
+        wrap={'wrap'}
+        justifyContent={'space-between'}
+      >
         <VTDateFilter />
         {!isMiniLaptop && <Box pr={3} />}
         <VTCurrencyFilter />

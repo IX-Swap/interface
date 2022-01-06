@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { ReportsInfo } from 'app/pages/accounts/pages/reports/components/ReportsInfo/ReportsInfo'
 import * as useGetAccountInfo from 'app/pages/accounts/hooks/useGetAccountInfo'
 import { fakeAccountInfo } from '__fixtures__/reports'
@@ -11,7 +11,6 @@ jest.mock('app/components/LoadingIndicator/LoadingIndicator', () => ({
 
 describe('ReportsInfo', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

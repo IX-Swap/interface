@@ -37,7 +37,7 @@ export const Commitments = () => {
       <Grid
         item
         container
-        justify={'space-between'}
+        justifyContent={'space-between'}
         alignItems={'center'}
         style={{
           marginTop: theme.spacing(3.5),
@@ -49,7 +49,7 @@ export const Commitments = () => {
           <PageHeader title={data?.tokenName} />
           {isMiniLaptop && <VSpacer size={'small'} />}
         </Grid>
-        <Grid item container xs={12} lg={3} justify={'space-between'}>
+        <Grid item container xs={12} lg={3} justifyContent={'space-between'}>
           <Grid item xs={12} sm={6} md={4} lg={7}>
             <DSOFilter />
             {isMobile && <VSpacer size={'small'} />}
@@ -57,7 +57,7 @@ export const Commitments = () => {
           <Grid
             item
             container
-            justify={'flex-end'}
+            justifyContent={'flex-end'}
             xs={12}
             sm={6}
             md={6}
@@ -77,7 +77,7 @@ export const Commitments = () => {
 
       <Grid
         container
-        justify='space-between'
+        justifyContent='space-between'
         wrap={!isTablet ? 'wrap' : 'wrap-reverse'}
       >
         <Grid
@@ -86,7 +86,7 @@ export const Commitments = () => {
           direction='row'
           spacing={0}
           xs={12}
-          justify={'space-between'}
+          justifyContent={'space-between'}
         >
           <Grid item container xs={12} md={8} lg={5} spacing={isTablet ? 0 : 3}>
             <Grid item xs={12} md={6}>
@@ -114,7 +114,7 @@ export const Commitments = () => {
           <Grid
             item
             container
-            justify={isTablet ? 'center' : 'flex-end'}
+            justifyContent={isTablet ? 'center' : 'flex-end'}
             xs={12}
             md={2}
             style={{ marginTop: isTablet ? theme.spacing(2) : 0 }}

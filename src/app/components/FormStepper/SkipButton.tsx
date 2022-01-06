@@ -73,7 +73,7 @@ export const SkipButton = ({ mutation }: SkipButtonProps) => {
           </Typography>
           <VSpacer size='medium' />
           <DialogActions>
-            <Grid container spacing={2} justify='center'>
+            <Grid container spacing={2} justifyContent='center'>
               <Grid item>
                 <Button
                   color='primary'

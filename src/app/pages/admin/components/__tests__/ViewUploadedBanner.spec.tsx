@@ -1,7 +1,7 @@
 import { fireEvent } from '@testing-library/react'
 import { Form } from 'components/form/Form'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { document } from '__fixtures__/identity'
 import { generateMutationResult } from '__fixtures__/useQuery'
 import * as useDownloadRawBanner from 'app/pages/admin/hooks/useDownloadRawBanner'
@@ -23,16 +23,7 @@ describe('ViewUploadedBanner', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(
-      <Form>
-        <ViewUploadedBanner bannerId={document._id} />
-      </Form>
-    )
   })
 
   it('handles download correctly', () => {

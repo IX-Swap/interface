@@ -1,5 +1,5 @@
 import React from 'react'
-import { cleanup, render } from 'test-utils'
+import { render } from 'test-utils'
 import { CashTransactionAlert } from 'app/pages/accounts/pages/banks/components/CashTransactionAlert'
 import * as assetsContext from 'hooks/asset/useAssetsData'
 import { asset, cashDeposit } from '__fixtures__/authorizer'
@@ -12,7 +12,6 @@ describe('CashTransactionAlert', () => {
   const amount = cashDeposit.amount
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

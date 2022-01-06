@@ -39,7 +39,7 @@ export const AvailableCash = ({ accounts }: AvailableCashProps) => {
       <Grid
         item
         container
-        justify={'space-between'}
+        justifyContent={'space-between'}
         className={classes.secondBlock}
       >
         {accounts?.map(({ currency, balance }) => {

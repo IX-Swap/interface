@@ -1,6 +1,6 @@
 import { PairListDropdown } from 'app/pages/exchange/components/PairListDropdown/PairListDropdown'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { ClickAwayListener } from '@material-ui/core'
 import { fireEvent, waitFor } from '@testing-library/dom'
 
@@ -9,12 +9,7 @@ jest.mock('@material-ui/core/ClickAwayListener', () => jest.fn(() => null))
 describe('PairListDropdown', () => {
   const setAnchorEl = jest.fn()
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<PairListDropdown pairName='IXPS/SGD' />)
   })
 
   it('renders ClickAwayListener when anchorEl is null', () => {

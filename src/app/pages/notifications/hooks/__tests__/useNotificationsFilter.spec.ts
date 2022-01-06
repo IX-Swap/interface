@@ -1,5 +1,5 @@
 import { renderHook, act } from '@testing-library/react-hooks'
-import { waitFor, cleanup } from 'test-utils'
+import { waitFor } from 'test-utils'
 import {
   defaultNotificationFilter,
   useNotificationsFilter
@@ -8,7 +8,6 @@ import { NotificationFilterFeatures } from 'types/app'
 
 describe('useNotificationsFilter', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

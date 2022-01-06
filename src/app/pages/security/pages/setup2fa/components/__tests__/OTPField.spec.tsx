@@ -1,5 +1,5 @@
 import React from 'react'
-import { cleanup, render } from 'test-utils'
+import { render } from 'test-utils'
 import { TypedField } from 'components/form/TypedField'
 import { Form } from 'components/form/Form'
 import { OTPField } from 'app/pages/security/pages/setup2fa/components/OTPField'
@@ -11,15 +11,6 @@ jest.mock('components/form/TypedField', () => ({
 describe('RequestFields', () => {
   afterEach(async () => {
     jest.clearAllMocks()
-    await cleanup()
-  })
-
-  it('renders without error', () => {
-    render(
-      <Form>
-        <OTPField />
-      </Form>
-    )
   })
 
   it('renders email field', () => {

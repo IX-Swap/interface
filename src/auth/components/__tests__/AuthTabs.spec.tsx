@@ -1,12 +1,11 @@
 import React from 'react'
 import { fireEvent, renderWithUserStore, fakeUserStore } from 'test-utils'
 import { AuthTabs } from 'auth/components/AuthTabs'
-import { cleanup } from '@testing-library/react'
+import {} from '@testing-library/react'
 
 describe('AuthTabs', () => {
   afterEach(async () => {
     jest.clearAllMocks()
-    await cleanup()
   })
 
   it('renders correctly with Login tab active by default', () => {

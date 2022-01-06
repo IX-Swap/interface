@@ -19,7 +19,7 @@ export const Page404 = () => {
         <Grid
           item
           container
-          justify={isMobile ? 'center' : 'flex-start'}
+          justifyContent={isMobile ? 'center' : 'flex-start'}
           alignItems={'flex-start'}
           className={classes.topBlock}
         >
@@ -33,7 +33,7 @@ export const Page404 = () => {
           container
           spacing={2}
           direction='column'
-          justify='center'
+          justifyContent='center'
           alignItems='center'
         >
           <Grid item>

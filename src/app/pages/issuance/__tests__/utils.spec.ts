@@ -1,3 +1,10 @@
+import { getPersonName } from 'helpers/strings'
+import { getCorporateLegalName } from 'helpers/tables'
+import { activity, faqItem, videoLink } from '__fixtures__/issuance'
+import {
+  fakeAssetsUnderManagement,
+  sortedFakeAssetsUnderManagement
+} from '__fixtures__/vccDashboard'
 import {
   getActivityUserInfo,
   getCreateDSOPayload,
@@ -5,11 +12,9 @@ import {
   getUpdateDSOPayload,
   getVideosFieldsPayload,
   numberToPercentage,
-  percentageToNumber
+  percentageToNumber,
+  sortAssetsByAmount
 } from '../utils'
-import { activity, faqItem, videoLink } from '__fixtures__/issuance'
-import { getPersonName } from 'helpers/strings'
-import { getCorporateLegalName } from 'helpers/tables'
 
 describe('getActivityUserInfo', () => {
   it('returns photo and name of the person if individual identity is present', () => {
@@ -155,5 +160,13 @@ describe('getUpdateDSOPayload', () => {
   it('returns payload with videos and faqs fields', () => {
     console.log(getUpdateDSOPayload({}))
     expect(getUpdateDSOPayload({})).toEqual({ faqs: [], videos: [] })
+  })
+})
+
+describe('sortAssetsByAmount', () => {
+  it('Sorts Assets under management by decreasing amount', () => {
+    expect(sortAssetsByAmount(fakeAssetsUnderManagement)).toEqual(
+      sortedFakeAssetsUnderManagement
+    )
   })
 })

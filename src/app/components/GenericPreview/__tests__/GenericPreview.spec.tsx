@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import {
   GenericPreview,
   GenericPreviewProps
@@ -20,12 +20,7 @@ describe('GenericPreview', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<GenericPreview {...props} />)
   })
 
   it('renders LabelledValue with correct props for each item', () => {
@@ -39,7 +34,7 @@ describe('GenericPreview', () => {
           label: item.label,
           value: item.value,
           row: true,
-          justify: 'space-between',
+          justifyContent: 'space-between',
           className: item.secret === true ? privateClassNames() : ''
         },
         {}

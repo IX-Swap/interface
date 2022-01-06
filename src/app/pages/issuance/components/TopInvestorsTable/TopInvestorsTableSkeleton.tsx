@@ -27,7 +27,11 @@ export const TopInvestorsTableSkeleton = () => {
               <TableHead>
                 <TableRow>
                   {headCells.map(({ label, align }) => (
-                    <TableCell align={align} className={classes.headColumn}>
+                    <TableCell
+                      key={label}
+                      align={align}
+                      className={classes.headColumn}
+                    >
                       <Skeleton width={80} />
                     </TableCell>
                   ))}
@@ -35,8 +39,8 @@ export const TopInvestorsTableSkeleton = () => {
               </TableHead>
 
               <TableBody>
-                {new Array(4).fill(null).map(() => (
-                  <TableRow>
+                {new Array(4).fill(null).map((_, index) => (
+                  <TableRow key={index}>
                     <TableCell>
                       <Skeleton />
                     </TableCell>

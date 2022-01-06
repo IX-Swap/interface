@@ -8,5 +8,3 @@ export const useAuth = () => {
     user: user
   }
 }
-
-export default useAuth

@@ -4,7 +4,7 @@ import {
 } from 'app/pages/identity/components/FinancialInformationForm/FundSourceSlider'
 import { Form } from 'components/form/Form'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { TypedField } from 'components/form/TypedField'
 import * as useFormContext from 'react-hook-form'
 
@@ -22,16 +22,7 @@ describe('FundSourceSlider', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(
-      <Form>
-        <FundSourceSlider {...props} />
-      </Form>
-    )
   })
 
   it('renders the slider disabled by default', () => {

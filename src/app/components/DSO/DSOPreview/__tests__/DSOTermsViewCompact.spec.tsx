@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { dso } from '__fixtures__/authorizer'
 import {
   DSOTermsViewCompact,
@@ -26,12 +26,7 @@ describe('DSOTermsViewCompact', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<DSOTermsViewCompact {...props} />)
   })
 
   it('renders Investment Period with correct props', () => {
@@ -39,10 +34,10 @@ describe('DSOTermsViewCompact', () => {
 
     expect(LabelledValue).toHaveBeenNthCalledWith(
       1,
-      {
+      expect.objectContaining({
         label: 'Investment Period',
         value: `${dso.investmentPeriod ?? ''} months`
-      },
+      }),
       {}
     )
   })
@@ -86,7 +81,10 @@ describe('DSOTermsViewCompact', () => {
 
     expect(LabelledValue).toHaveBeenNthCalledWith(
       4,
-      { label: 'Investment Structure', value: dso.investmentStructure },
+      expect.objectContaining({
+        label: 'Investment Structure',
+        value: dso.investmentStructure
+      }),
       {}
     )
   })
@@ -148,7 +146,10 @@ describe('DSOTermsViewCompact', () => {
 
     expect(LabelledValue).toHaveBeenNthCalledWith(
       5,
-      { label: 'Distribution Frequency', value: dso.distributionFrequency },
+      expect.objectContaining({
+        label: 'Distribution Frequency',
+        value: dso.distributionFrequency
+      }),
       {}
     )
   })
@@ -158,7 +159,10 @@ describe('DSOTermsViewCompact', () => {
 
     expect(LabelledValue).toHaveBeenNthCalledWith(
       6,
-      { label: 'Distribution Frequency', value: dso.distributionFrequency },
+      expect.objectContaining({
+        label: 'Distribution Frequency',
+        value: dso.distributionFrequency
+      }),
       {}
     )
   })
@@ -168,7 +172,10 @@ describe('DSOTermsViewCompact', () => {
 
     expect(LabelledValue).toHaveBeenNthCalledWith(
       8,
-      { label: 'Distribution Frequency', value: dso.distributionFrequency },
+      expect.objectContaining({
+        label: 'Distribution Frequency',
+        value: dso.distributionFrequency
+      }),
       {}
     )
   })

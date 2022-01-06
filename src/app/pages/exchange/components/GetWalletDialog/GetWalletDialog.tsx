@@ -47,16 +47,12 @@ export const GetWalletDialog = (props: ModalProps) => {
       open={open}
       className={classes.root}
       onClose={() => toggleOpen(false)}
-      onBackdropClick={() => toggleOpen(false)}
       aria-labelledby='getwallet-modal-title'
       aria-describedby='getwallet-modal-description'
     >
       <Box py={3} px={2.5}>
         <DialogTitle className={classes.titleRoot}>
           <Box justifyContent='center' alignItems='center'>
-            <Typography variant='h6' component='span' align='center'>
-              You need a custody wallet address to trade
-            </Typography>
             <IconButton
               aria-label='close'
               onClick={() => toggleOpen(false)}
@@ -64,6 +60,9 @@ export const GetWalletDialog = (props: ModalProps) => {
             >
               <CloseIcon />
             </IconButton>
+            <Typography variant='h6' component='span' align='center'>
+              You need a custody wallet address to trade
+            </Typography>
           </Box>
         </DialogTitle>
         <DialogContent style={{ overflowY: 'initial' }}>

@@ -3,11 +3,12 @@ import { useServices } from 'hooks/useServices'
 import { useQuery } from 'react-query'
 import { useAuth } from 'hooks/auth/useAuth'
 import { Bank } from 'types/bank'
-import { getIdFromObj } from 'helpers/strings'
+import { getIdFromObj, isEmptyString } from 'helpers/strings'
 import { banksQueryKeys } from 'config/queryKeys'
 import { accountsURL } from 'config/apiURL'
+
 export interface UseBankByIdArgs {
-  bankId: string
+  bankId?: string
   ownerId?: string
 }
 
@@ -22,7 +23,7 @@ export const useBankById = (args: UseBankByIdArgs): UseQueryData<Bank> => {
   const { data, ...rest } = useQuery(
     [banksQueryKeys.getById, userId, bankId],
     getBank,
-    { enabled: (bankId ?? '') !== '' }
+    { enabled: !isEmptyString(bankId) && !isEmptyString(userId) }
   )
 
   return {

@@ -19,7 +19,7 @@ import { useDebounce } from 'use-debounce'
 import isEqual from 'lodash/isEqual'
 import { transformDSOToFormValues } from 'app/components/DSO/utils'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
-import { generatePath, useHistory } from 'react-router'
+import { generatePath, useHistory } from 'react-router-dom'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
 
 export const useDSOAutosave = (

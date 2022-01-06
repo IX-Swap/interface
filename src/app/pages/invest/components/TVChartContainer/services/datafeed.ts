@@ -9,7 +9,7 @@ import {
   SearchSymbolsCallback,
   ServerTimeCallback,
   SubscribeBarsCallback
-} from 'types/charting_library'
+} from 'charting_library'
 import { charts } from 'config/apiURL'
 import apiService from 'services/api'
 import { SYMBOL_SEARCH_LIMIT, UPDATE_FREQUENCY } from '../constants'

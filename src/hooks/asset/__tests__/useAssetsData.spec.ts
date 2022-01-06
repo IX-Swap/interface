@@ -1,5 +1,5 @@
 import { act } from '@testing-library/react-hooks'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import * as useParsedDataHook from 'hooks/useParsedData'
 import { useAssetsData } from 'hooks/asset/useAssetsData'
 import { asset } from '__fixtures__/authorizer'
@@ -15,7 +15,6 @@ describe('useAssetsData', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

@@ -26,7 +26,7 @@ export const DepositView: React.FC = observer(() => {
 
   return (
     <DepositForm depositCode={depositCode}>
-      <Grid container justify='center'>
+      <Grid container justifyContent='center'>
         <Grid
           item
           xs={12}

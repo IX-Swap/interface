@@ -1,5 +1,5 @@
 import { act } from '@testing-library/react-hooks'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { generateQueryResult } from '__fixtures__/useQuery'
 import { useGetSiteConfig } from 'app/pages/exchange/hooks/useGetSiteConfig'
 
@@ -7,7 +7,6 @@ describe('useGetSiteConfig', () => {
   const response = generateQueryResult({})
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

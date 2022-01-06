@@ -4,7 +4,7 @@ import { ChangePasswordFormValues } from '../types'
 import { useAuth } from 'hooks/auth/useAuth'
 import { getIdFromObj } from 'helpers/strings'
 import { authURL } from 'config/apiURL'
-import { useHistory } from 'react-router'
+import { useHistory } from 'react-router-dom'
 import { SecurityRoute } from 'app/pages/security/router/config'
 
 export const useChangePassword = () => {

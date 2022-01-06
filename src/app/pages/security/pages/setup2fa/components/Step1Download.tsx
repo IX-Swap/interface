@@ -21,7 +21,7 @@ export const Step1Download = () => (
       </Grid>
       <Grid item>
         <Box paddingY={4}>
-          <Grid container justify='center' spacing={2}>
+          <Grid container justifyContent='center' spacing={2}>
             <Grid item>
               <Link
                 href='https://apps.apple.com/us/app/google-authenticator/id388497605'

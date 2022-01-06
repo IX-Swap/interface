@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { CustodySearchFilter } from 'app/pages/admin/components/CustodySearchFilter/CustodySearchFilter'
 
 jest.mock('app/components/SearchFilter', () => ({
@@ -8,7 +8,6 @@ jest.mock('app/components/SearchFilter', () => ({
 
 describe('CustodySearchFilter', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

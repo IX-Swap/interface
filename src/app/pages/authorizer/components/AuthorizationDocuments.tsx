@@ -45,7 +45,7 @@ export const AuthorizationDocuments = (props: AuthorizationDocumentsProps) => {
               ))}
             </Grid>
 
-            <Grid item container justify='space-between'>
+            <Grid item container justifyContent='space-between'>
               <DataroomUploaderWithFileTypeSelector
                 append={append}
                 documentInfo={{ feature, resourceId }}

@@ -16,7 +16,7 @@ export const LandingPage = (props: LandingPageProps) => {
   return (
     <RootContainer>
       <PageHeader title={title} alignment='center' showBreadcrumbs={false} />
-      <Grid item container justify='center' alignItems='flex-start'>
+      <Grid item container justifyContent='center' alignItems='flex-start'>
         {links.map((link, index) => (
           <LandingPageItem key={index} link={link} />
         ))}

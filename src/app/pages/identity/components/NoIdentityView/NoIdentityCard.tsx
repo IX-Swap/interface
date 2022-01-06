@@ -13,7 +13,7 @@ export const NoIdentityCard = () => {
             md={6}
             container
             alignContent='center'
-            justify='center'
+            justifyContent='center'
           >
             <Grid item>
               <CreateProfile style={{ maxWidth: '100%' }} />
@@ -25,7 +25,7 @@ export const NoIdentityCard = () => {
             md={6}
             container
             alignContent='center'
-            justify='center'
+            justifyContent='center'
           >
             <Grid item>
               <Typography variant='h5' align='center'>
