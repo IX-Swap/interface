@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { Slider } from '@material-ui/core'
 import { useStyles } from 'app/pages/exchange/components/PlaceOrderSlider/PlaceOrderSlider.style'
@@ -20,19 +20,29 @@ export const PlaceOrderSlider: React.FC<PlaceOrderFieldsProps> = ({
   const price = watch('price')
   const amount = watch('amount')
   const [slider, setSlider] = useState(sliderRange.from)
+  const marks = useMemo(() => {
+    return Array.from({ length: sliderRange.to + 1 }, (x, i) => i).map(
+      element => ({
+        label: '',
+        value: element
+      })
+    )
+  }, [sliderRange.to])
 
   useEffect(() => {
-    if (price !== undefined && amount !== undefined) {
+    const noPrice = price === undefined || price === null || price === 0
+    const noAmount = amount === undefined || amount === null
+    if (noPrice || noAmount) {
+      setValue('total', null)
+    }
+    if (noAmount || balance === 0) {
+      setSlider(sliderRange.from)
+      return
+    }
+    setSlider((amount / balance) * sliderRange.to)
+    if (!noPrice) {
       const totalValue = price * amount
       setValue('total', totalValue)
-      const newSliderValue =
-        (sliderRange.maxPercentageValue / balance) *
-        totalValue *
-        (sliderRange.to / sliderRange.maxPercentageValue)
-      setSlider(newSliderValue)
-    } else {
-      setValue('total', null)
-      setSlider(sliderRange.from)
     }
   }, [amount, price, balance]) // eslint-disable-line
 
@@ -41,7 +51,8 @@ export const PlaceOrderSlider: React.FC<PlaceOrderFieldsProps> = ({
       value={slider}
       min={sliderRange.from}
       max={sliderRange.to}
-      marks
+      step={0.05}
+      marks={marks}
       classes={{
         rail: classes.rail,
         track: classes.track,
@@ -49,13 +60,9 @@ export const PlaceOrderSlider: React.FC<PlaceOrderFieldsProps> = ({
         mark: classes.mark,
         markActive: classes.markActive
       }}
-      disabled={price === null || price === undefined}
       data-testid='slider'
       onChange={(evt, value) => {
-        const newAmount =
-          value !== 0
-            ? ((balance / sliderRange.to) * (value as number)) / price
-            : null
+        const newAmount = balance * ((value as number) / sliderRange.to)
         setSlider(value as number)
         setValue('amount', newAmount)
       }}
