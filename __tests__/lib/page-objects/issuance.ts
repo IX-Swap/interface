@@ -191,7 +191,7 @@ class Dso {
   followToFundsManagement = async (auth, email) => {
     await navigate(baseCreds.URL, this.page)
     await auth.loginWithout2fa(email, baseCreds.PASSWORD)
-    // await click(issuance.ISSUANCE_TAB, this.page)
+    await click(issuance.ISSUANCE_TAB, this.page)
     await click(issuance.FUNDS_MANAGEMENT_TAB, this.page)
   }
 }

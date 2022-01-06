@@ -84,9 +84,9 @@ export const dso = {
     }
   ],
   faqs: [
-    { question: 'qwe', answer: 'qweq' },
-    { question: 'qwe', answer: 'qwe' },
-    { question: 'qwe', answer: 'qwe' }
+    { question: 'question1', answer: 'answer1' },
+    { question: 'question2', answer: 'answer2' },
+    { question: 'question3', answer: 'answer3' }
   ],
   documents: ['61c0573ecfca8d0e6d030aca']
 }
