@@ -34,13 +34,8 @@ export const headCells = [
   { label: 'Price', align: 'right' },
   { label: 'Total', align: 'right' }
 ]
-export const headCellsWithFee = [...headCells, { label: 'Fee', align: 'right' }]
-export const TradesTable = ({ data, hideFee = false }: TradesTableProps) => {
+export const TradesTable = ({ data }: TradesTableProps) => {
   const classes = useStyles({})
-  const cells = useMemo(
-    () => (hideFee ? headCells : headCellsWithFee),
-    [hideFee]
-  )
   const rows: TradeRowData[] = [
     {
       pair: 'Securities Pair',
@@ -59,7 +54,7 @@ export const TradesTable = ({ data, hideFee = false }: TradesTableProps) => {
       <Table>
         <TableHead>
           <TableRow>
-            {cells.map(({ label, align }) => (
+            {headCells.map(({ label, align }) => (
               <TableCell
                 align={align as any}
                 className={classes.headColumn}
@@ -72,7 +67,7 @@ export const TradesTable = ({ data, hideFee = false }: TradesTableProps) => {
         </TableHead>
         <TableBody>
           {rows.map((row, i) => (
-            <TradesRow row={row} index={i} key={row.pair} hideFee={hideFee} />
+            <TradesRow row={row} index={i} key={row.pair} />
           ))}
         </TableBody>
       </Table>
