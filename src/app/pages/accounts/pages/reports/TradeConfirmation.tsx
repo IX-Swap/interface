@@ -24,7 +24,7 @@ export const TradeConfirmation = () => {
     }
     return (
       <ReportsAccordion summary={'Trades'}>
-        <TradesTable data={data} />
+        <TradesTable data={data} hideFee />
       </ReportsAccordion>
     )
   }

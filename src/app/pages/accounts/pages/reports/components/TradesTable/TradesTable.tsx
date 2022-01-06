@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import {
   Table,
   TableBody,
@@ -13,6 +13,7 @@ import { TradesRow } from 'app/pages/accounts/pages/reports/components/TradesTab
 
 export interface TradesTableProps {
   data: TradeItem[]
+  hideFee?: boolean
 }
 
 export interface TradeRowData {
@@ -31,13 +32,15 @@ export const headCells = [
   { label: 'Type', align: 'left' },
   { label: 'Quantity', align: 'right' },
   { label: 'Price', align: 'right' },
-  { label: 'Total', align: 'right' },
-  { label: 'Fee', align: 'right' }
+  { label: 'Total', align: 'right' }
 ]
-
-export const TradesTable = ({ data }: TradesTableProps) => {
+export const headCellsWithFee = [...headCells, { label: 'Fee', align: 'right' }]
+export const TradesTable = ({ data, hideFee = false }: TradesTableProps) => {
   const classes = useStyles({})
-
+  const cells = useMemo(
+    () => (hideFee ? headCells : headCellsWithFee),
+    [hideFee]
+  )
   const rows: TradeRowData[] = [
     {
       pair: 'Securities Pair',
@@ -56,7 +59,7 @@ export const TradesTable = ({ data }: TradesTableProps) => {
       <Table>
         <TableHead>
           <TableRow>
-            {headCells.map(({ label, align }) => (
+            {cells.map(({ label, align }) => (
               <TableCell
                 align={align as any}
                 className={classes.headColumn}
@@ -69,7 +72,7 @@ export const TradesTable = ({ data }: TradesTableProps) => {
         </TableHead>
         <TableBody>
           {rows.map((row, i) => (
-            <TradesRow row={row} index={i} key={row.pair} />
+            <TradesRow row={row} index={i} key={row.pair} hideFee={hideFee} />
           ))}
         </TableBody>
       </Table>

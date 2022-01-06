@@ -8,9 +8,10 @@ import { TradeRowData } from 'app/pages/accounts/pages/reports/components/Trades
 export interface TradesRowProps {
   row: TradeRowData
   index: number
+  hideFee?: boolean
 }
 
-export const TradesRow = ({ row, index }: TradesRowProps) => {
+export const TradesRow = ({ row, index, hideFee = false }: TradesRowProps) => {
   const classes = useStyles({ rowIdx: index })
 
   return (
@@ -38,9 +39,11 @@ export const TradesRow = ({ row, index }: TradesRowProps) => {
       <TableCell align='right' className={classes.column}>
         {formatAmountValue(row.total)}
       </TableCell>
-      <TableCell align='right' className={classes.column}>
-        {formatAmountValue(row.fee)}
-      </TableCell>
+      {!hideFee && (
+        <TableCell align='right' className={classes.column}>
+          {formatAmountValue(row.fee)}
+        </TableCell>
+      )}
     </TableRow>
   )
 }
