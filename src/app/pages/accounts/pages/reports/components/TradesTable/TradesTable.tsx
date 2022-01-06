@@ -13,7 +13,6 @@ import { useStyles } from '../shared.styles'
 
 export interface TradesTableProps {
   data: TradeItem[]
-  hideFee?: boolean
 }
 
 export interface TradeRowData {
