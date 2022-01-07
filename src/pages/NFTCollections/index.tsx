@@ -21,13 +21,18 @@ import { tabs } from './mocks'
 import LogoWhite from '../../assets/svg/logo-white.svg'
 import { ReactComponent as Edit } from '../../assets/images/edit-circle-white.svg'
 import { ButtonEmpty } from 'components/Button'
+import { useActiveWeb3React } from 'hooks/web3'
+import { NFTConnectWallet } from 'components/NFTConnectWallet'
 
 const NFTCollections: FC = () => {
   const [selectedTabId, setSelectedTabId] = useState(1)
+  const { account } = useActiveWeb3React()
 
   const handleTabChange = (id: number) => {
     setSelectedTabId(id)
   }
+
+  if (!account) return <NFTConnectWallet />
 
   return (
     <Container>

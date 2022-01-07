@@ -19,6 +19,7 @@ import { ButtonConfirmed, ButtonPrimary } from 'components/Button'
 import styled from 'styled-components'
 import { CHAIN_INFO } from 'constants/chains'
 import { useDispatch } from 'react-redux'
+import { NFTConnectWallet } from 'components/NFTConnectWallet'
 
 const NftLinkInput = styled(Input)`
   padding: 0.4rem;
@@ -85,6 +86,8 @@ export default function Faucet() {
   const chain = (chainId && CHAIN_INFO[chainId]) || null
   const blurred = chainId !== undefined && !TGE_CHAINS_WITH_SWAP.includes(chainId)
   const showExtraInput = chainId === SUPPORTED_TGE_CHAINS.MAIN || SUPPORTED_TGE_CHAINS.MATIC
+
+  if (!account) return <NFTConnectWallet />
 
   return (
     <AppBody blurred={blurred}>
