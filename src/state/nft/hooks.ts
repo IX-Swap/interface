@@ -41,6 +41,7 @@ import { saveImages } from './actions'
 import { CollectionCreateProps } from './types'
 import { groupKeyValues } from './utils'
 import * as H from 'history'
+import { exception } from 'react-ga'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const Web3 = require('web3') // for some reason import Web3 from web3 didn't see eth module
@@ -416,7 +417,8 @@ export const useCreateNftAssetForm = (history: H.History) => {
         //redirect to individual asset page
       }
     } catch (e) {
-      console.log(e)
+      console.log({ e })
+      throw new Error('An error occured when creating NFT')
     }
   }, [account, chainId, collection, createNFTAsset, deployCollection, form, library, , history, newCollectionName])
 }
