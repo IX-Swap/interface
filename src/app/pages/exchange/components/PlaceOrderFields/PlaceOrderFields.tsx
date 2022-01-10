@@ -52,7 +52,7 @@ export const PlaceOrderFields: React.FC<PlaceOrderFieldsProps> = ({
         <TypedField
           component={NumericInput}
           name={'amount'}
-          label={'Amount'}
+          label={'Quantity'}
           control={control}
           variant='outlined'
           numberFormat={numberFormat}
