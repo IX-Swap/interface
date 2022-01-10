@@ -4,7 +4,7 @@ import { exchange as exchangeQueryKeys } from 'config/queryKeys'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import { useParsedData } from 'hooks/useParsedData'
 import { useServices } from 'hooks/useServices'
-import { useMemo } from 'react'
+import { useCallback, useMemo } from 'react'
 import { useInfiniteQuery } from 'react-query'
 import { PaginatedData } from 'services/api/types'
 
@@ -21,17 +21,26 @@ export const useMarketList = (showFilter: boolean | undefined = false) => {
   const { getFilterValue } = useQueryFilter()
   const { data: favorites } = useFavoritePairs()
   const context = showFilter ? 'withFilter' : ''
+  const pairFilter = getFilterValue('pairFilter')
+  const search = getFilterValue('search')
+  const sortBy = getFilterValue('sortBy')
+  const orderBy = getFilterValue('orderBy')
+
+  const getSearchQuery = useCallback((pairFilter?: string, search = '') => {
+    const isAll = pairFilter === 'all'
+    if (isAll) {
+      return ''
+    }
+    const isCurrency = pairFilter !== 'favorite' && Boolean(pairFilter)
+    return isCurrency ? pairFilter : search
+  }, [])
+
   const filters = useMemo(() => {
-    const pairFilter = getFilterValue('pairFilter')
     const pairFilterIsFavorite = pairFilter === 'favorite'
-    const pairFilterIsCurrency =
-      pairFilter !== 'all' && pairFilter !== 'favorite' && Boolean(pairFilter)
     const isFavorite = pairFilterIsFavorite ? true : undefined
     const currency = pairFilterIsFavorite ? 'all' : pairFilter
-    const search = getFilterValue('search')
-    const sortBy = getFilterValue('sortBy')
-    const orderBy = getFilterValue('orderBy')
-    const searchFilter = pairFilterIsCurrency ? pairFilter : search
+
+    const searchFilter = getSearchQuery(pairFilter, search)
     const filters = {
       search: showFilter ? searchFilter : undefined,
       isFavorite: showFilter ? isFavorite : undefined,
@@ -41,7 +50,7 @@ export const useMarketList = (showFilter: boolean | undefined = false) => {
     }
 
     return filters
-  }, [showFilter, getFilterValue])
+  }, [showFilter, pairFilter, search, orderBy, sortBy, getSearchQuery])
 
   const fetchMarketList = async (
     queryKey: string,

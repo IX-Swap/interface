@@ -12,12 +12,14 @@ import { QueryFilter } from 'hooks/filters/useQueryFilter'
 interface SearchFilterProps extends OutlinedInputProps {
   inputAdornmentPosition?: 'start' | 'end'
   filterValue?: QueryFilter
+  onInputCb?: (value: string) => void
 }
 
 export const SearchFilter = (props: SearchFilterProps) => {
   const {
     inputAdornmentPosition = 'start',
     filterValue = 'search',
+    onInputCb,
     ...rest
   } = props
 
@@ -49,6 +51,7 @@ export const SearchFilter = (props: SearchFilterProps) => {
 
               if (value !== '') {
                 onChange(value)
+                onInputCb?.(value)
               } else {
                 onClear()
               }

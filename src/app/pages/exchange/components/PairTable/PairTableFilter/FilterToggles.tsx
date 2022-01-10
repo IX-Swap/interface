@@ -9,7 +9,7 @@ export const FilterToggles = () => {
   const { filterButton, favoriteButton } = useStyles()
 
   return (
-    <SearchQueryFilter<'pairFilter'> name='pairFilter' defaultValue='all'>
+    <SearchQueryFilter<'pairFilter'> name='pairFilter' defaultValue=''>
       {({ value, onChange }) => (
         <ToggleButtonGroup
           exclusive
