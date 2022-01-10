@@ -13,6 +13,8 @@ import { ReactComponent as StatIconSvg } from '../../assets/images/nft-stat.svg'
 import { RouteComponentProps } from 'react-router-dom'
 import { useGetNFTDetails } from 'state/nft/hooks'
 import { NFTImage, NFTImageShow } from 'state/nft/types'
+import { NFTConnectWallet } from 'components/NFTConnectWallet'
+import { useActiveWeb3React } from 'hooks/web3'
 
 const item = {
   name: 'Mushroom Rock',
@@ -340,6 +342,7 @@ const NftAssetPage = ({
   const [item, setItem] = useState<NFTImageShow | null>(null)
   // const date = React.useMemo(() => new Date(item.date), [])
   const isNSFW = item?.isNSFW === 'true'
+  const { account } = useActiveWeb3React()
 
   // const stats = item.attributes.filter((attr) => attr.display_type === 'stat') as NftStat[]
   // const levels = item.attributes.filter((attr) => attr.display_type === 'level') as NftLevel[]
@@ -354,9 +357,13 @@ const NftAssetPage = ({
     }
     getDetails()
   }, [getNFTDetails, collectionAddress, itemId])
+
+  if (!account) return <NFTConnectWallet />
+
   if (!item) {
     return null
   }
+
   return (
     <NftAssetPageWrapper>
       <NftImage src={item.image} />
