@@ -2,6 +2,7 @@ import { useFavoritePairs } from 'app/pages/exchange/hooks/useFavoritePairs'
 import { exchange as exchangeURL } from 'config/apiURL'
 import { exchange as exchangeQueryKeys } from 'config/queryKeys'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
+import { PairFilter } from 'hooks/types'
 import { useParsedData } from 'hooks/useParsedData'
 import { useServices } from 'hooks/useServices'
 import { useCallback, useMemo } from 'react'
@@ -27,11 +28,12 @@ export const useMarketList = (showFilter: boolean | undefined = false) => {
   const orderBy = getFilterValue('orderBy')
 
   const getSearchQuery = useCallback((pairFilter?: string, search = '') => {
-    const isAll = pairFilter === 'all'
+    const isAll = pairFilter === PairFilter.ALL
     if (isAll) {
       return ''
     }
-    const isCurrency = pairFilter !== 'favorite' && Boolean(pairFilter)
+    const isCurrency =
+      pairFilter === PairFilter.SGD || pairFilter === PairFilter.USD
     return isCurrency ? pairFilter : search
   }, [])
 

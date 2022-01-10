@@ -4,6 +4,7 @@ import { useStyles } from 'app/pages/exchange/components/PairTable/PairTableFilt
 import { Star } from '@material-ui/icons'
 import classNames from 'classnames'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
+import { PairFilter } from 'hooks/types'
 
 export const FilterToggles = () => {
   const { filterButton, favoriteButton } = useStyles()
@@ -25,13 +26,25 @@ export const FilterToggles = () => {
           >
             <Star fontSize='small' />
           </ToggleButton>
-          <ToggleButton disableRipple className={filterButton} value='all'>
+          <ToggleButton
+            disableRipple
+            className={filterButton}
+            value={PairFilter.ALL}
+          >
             All
           </ToggleButton>
-          <ToggleButton disableRipple className={filterButton} value='SGD'>
+          <ToggleButton
+            disableRipple
+            className={filterButton}
+            value={PairFilter.SGD}
+          >
             SGD
           </ToggleButton>
-          <ToggleButton disableRipple className={filterButton} value='USD'>
+          <ToggleButton
+            disableRipple
+            className={filterButton}
+            value={PairFilter.USD}
+          >
             USD
           </ToggleButton>
         </ToggleButtonGroup>
