@@ -1,13 +1,11 @@
 import { useFavoritePairs } from 'app/pages/exchange/hooks/useFavoritePairs'
 import { exchange as exchangeURL } from 'config/apiURL'
 import { exchange as exchangeQueryKeys } from 'config/queryKeys'
-import { useQueryFilter } from 'hooks/filters/useQueryFilter'
-import { PairFilter } from 'hooks/types'
 import { useParsedData } from 'hooks/useParsedData'
 import { useServices } from 'hooks/useServices'
-import { useCallback, useMemo } from 'react'
 import { useInfiniteQuery } from 'react-query'
 import { PaginatedData } from 'services/api/types'
+import useMarketListFilters from './useMarketListFilters'
 
 export interface Pair {
   _id: string
@@ -19,50 +17,20 @@ export interface Pair {
 
 export const useMarketList = (showFilter: boolean | undefined = false) => {
   const { apiService } = useServices()
-  const { getFilterValue } = useQueryFilter()
   const { data: favorites } = useFavoritePairs()
   const context = showFilter ? 'withFilter' : ''
-  const pairFilter = getFilterValue('pairFilter')
-  const search = getFilterValue('search')
-  const sortBy = getFilterValue('sortBy')
-  const orderBy = getFilterValue('orderBy')
-
-  const getSearchQuery = useCallback((pairFilter?: string, search = '') => {
-    const isAll = pairFilter === PairFilter.ALL
-    if (isAll) {
-      return ''
-    }
-    const isCurrency =
-      pairFilter === PairFilter.SGD || pairFilter === PairFilter.USD
-    return isCurrency ? pairFilter : search
-  }, [])
-
-  const filters = useMemo(() => {
-    const pairFilterIsFavorite = pairFilter === 'favorite'
-    const isFavorite = pairFilterIsFavorite ? true : undefined
-    const currency = pairFilterIsFavorite ? 'all' : pairFilter
-
-    const searchFilter = getSearchQuery(pairFilter, search)
-    const filters = {
-      search: showFilter ? searchFilter : undefined,
-      isFavorite: showFilter ? isFavorite : undefined,
-      currency: showFilter ? currency : undefined,
-      sortBy: showFilter ? sortBy : undefined,
-      orderBy: showFilter ? orderBy : undefined
-    }
-
-    return filters
-  }, [showFilter, pairFilter, search, orderBy, sortBy, getSearchQuery])
+  const filters = useMarketListFilters(showFilter)
 
   const fetchMarketList = async (
     queryKey: string,
-    filters?: any,
+    usedFilters?: any,
     cursor: number | undefined = 0
   ) => {
+    const { listingKeyword } = usedFilters
     return await apiService.post<PaginatedData<Pair>>(exchangeURL.marketList, {
       skip: cursor,
       limit: 25,
-      listingKeyword: filters.search
+      listingKeyword
     })
   }
 
@@ -76,12 +44,7 @@ export const useMarketList = (showFilter: boolean | undefined = false) => {
   )
 
   const filterByFavorite = (list: Pair[]) => {
-    const pairFilter = getFilterValue('pairFilter')
-    if (
-      pairFilter === 'favorite' &&
-      favorites !== undefined &&
-      favorites.length > 0
-    ) {
+    if (favorites !== undefined && favorites.length > 0) {
       return list.filter((pair: Pair) => favorites.includes(pair._id))
     }
     return list
@@ -92,7 +55,10 @@ export const useMarketList = (showFilter: boolean | undefined = false) => {
     data: {
       raw: parsedData.raw,
       map: parsedData.map,
-      list: showFilter ? filterByFavorite(parsedData.list) : parsedData.list
+      list:
+        filters.isFavorite ?? false
+          ? filterByFavorite(parsedData.list)
+          : parsedData.list
     },
     ...rest
   }
