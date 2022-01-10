@@ -157,13 +157,6 @@ exports[`TradeConfirmation should match snapshot when data is loaded successfull
                           >
                             Total
                           </th>
-                          <th
-                            class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-34 MuiTableCell-alignRight"
-                            data-testid="cell"
-                            scope="col"
-                          >
-                            Fee
-                          </th>
                         </tr>
                       </thead>
                       <tbody
@@ -184,9 +177,6 @@ exports[`TradeConfirmation should match snapshot when data is loaded successfull
                           />
                           <td
                             class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignLeft"
-                          />
-                          <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignRight"
                           />
                           <td
                             class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignRight"
@@ -232,11 +222,6 @@ exports[`TradeConfirmation should match snapshot when data is loaded successfull
                             class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignRight"
                           >
                             100.00
-                          </td>
-                          <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignRight"
-                          >
-                            0.00
                           </td>
                         </tr>
                       </tbody>

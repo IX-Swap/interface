@@ -38,9 +38,6 @@ export const TradesRow = ({ row, index }: TradesRowProps) => {
       <TableCell align='right' className={classes.column}>
         {formatAmountValue(row.total)}
       </TableCell>
-      <TableCell align='right' className={classes.column}>
-        {formatAmountValue(row.fee)}
-      </TableCell>
     </TableRow>
   )
 }
