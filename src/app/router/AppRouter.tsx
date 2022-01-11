@@ -14,8 +14,19 @@ import { AuthorizerRoot } from 'app/pages/authorizer/AuthorizerRoot'
 import { OTCMarketRoot } from 'app/pages/exchange/OTCMarketRoot'
 import { FundsManagementRoot } from 'app/pages/fundsManagement/FundsManagementRoot'
 import { RedirectToDefaultPage } from 'app/RedirectToDefaultPage'
+import {
+  useIsAdmin,
+  useIsAuthorizer,
+  useIsFundManager,
+  useIsIssuer
+} from 'helpers/acl'
 
 export const AppRouter = () => {
+  const isAuthorizer = useIsAuthorizer()
+  const isAdmin = useIsAdmin()
+  const isIssuer = useIsIssuer()
+  const isFundManager = useIsFundManager()
+
   return (
     <Switch>
       <AppRoute breadcrumb='Accounts' path={AppPath.accounts}>
@@ -30,16 +41,8 @@ export const AppRouter = () => {
         <IdentityRoot />
       </AppRoute>
 
-      <AppRoute breadcrumb='Issuance' path={AppPath.issuance}>
-        <IssuanceRoot />
-      </AppRoute>
-
       <AppRoute breadcrumb='Invest' path={AppPath.invest}>
         <InvestRoot />
-      </AppRoute>
-
-      <AppRoute breadcrumb='Admin' path={AppPath.admin}>
-        <AdminRoot />
       </AppRoute>
 
       <AppRoute path={AppPath.security}>
@@ -50,17 +53,33 @@ export const AppRouter = () => {
         <NotificationsRoot />
       </AppRoute>
 
-      <AppRoute breadcrumb='Authorization' path={AppPath.authorizer}>
-        <AuthorizerRoot />
-      </AppRoute>
-
       <AppRoute breadcrumb='Market' path={AppPath.OTCMarket}>
         <OTCMarketRoot />
       </AppRoute>
 
-      <AppRoute path={AppPath.fundsManagement}>
-        <FundsManagementRoot />
-      </AppRoute>
+      {isIssuer && (
+        <AppRoute breadcrumb='Issuance' path={AppPath.issuance}>
+          <IssuanceRoot />
+        </AppRoute>
+      )}
+
+      {isAdmin && (
+        <AppRoute breadcrumb='Admin' path={AppPath.admin}>
+          <AdminRoot />
+        </AppRoute>
+      )}
+
+      {isFundManager && (
+        <AppRoute path={AppPath.fundsManagement}>
+          <FundsManagementRoot />
+        </AppRoute>
+      )}
+
+      {isAuthorizer && (
+        <AppRoute breadcrumb='Authorization' path={AppPath.authorizer}>
+          <AuthorizerRoot />
+        </AppRoute>
+      )}
 
       <RedirectToDefaultPage />
     </Switch>
