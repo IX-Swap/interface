@@ -1,7 +1,7 @@
 import { Theme } from '@material-ui/core'
 import { green, grey } from '@material-ui/core/colors'
 import { Overrides } from '@material-ui/core/styles/overrides'
-import { rte } from 'themes/rte'
+import { rte } from 'themes/old/rte'
 import tinycolor from 'tinycolor2'
 import { CSSProperties } from 'react'
 

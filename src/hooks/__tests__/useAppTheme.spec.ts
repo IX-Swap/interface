@@ -2,7 +2,7 @@ import { waitFor } from 'test-utils'
 import { renderHook, act } from '@testing-library/react-hooks'
 import { useAppTheme } from '../useAppTheme'
 import storageService from 'services/storage'
-import { AppTheme } from 'themes'
+import { AppTheme } from 'themes/old'
 
 describe('useAppTheme', () => {
   afterEach(async () => {

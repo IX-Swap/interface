@@ -1,7 +1,7 @@
 import { useMediaQuery } from '@material-ui/core'
 import { useMemo, useState } from 'react'
 import storageService from 'services/storage'
-import { AppTheme, getAppTheme } from 'themes'
+import { AppTheme, getAppTheme } from 'themes/new'
 
 export const useAppTheme = () => {
   const savedTheme = storageService.get('app-theme', AppTheme.Light) as AppTheme
