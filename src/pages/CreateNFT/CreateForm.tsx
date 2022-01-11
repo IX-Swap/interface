@@ -86,10 +86,13 @@ export const CreateForm = () => {
   )
 
   const checkValidation = useCallback(() => {
-    if (file && name) {
+    if (file && name && (collection || newCollectionName)) {
       setValidationStatus(getfileType(file) !== FileTypes.IMAGE ? !preview : false)
+      return
     }
-  }, [file, name, preview])
+
+    setValidationStatus(true)
+  }, [file, name, collection, newCollectionName, preview])
 
   useEffect(() => {
     setError(null)
