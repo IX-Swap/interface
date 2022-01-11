@@ -10,8 +10,8 @@ import { useGoogleAnalytics } from './hooks/useGoogleAnalytics'
 
 const AuthRoot = React.lazy(
   async () =>
-    await import('auth/AuthRoot').then(({ AuthRoot }) => ({
-      default: AuthRoot
+    await import('auth/AuthRootWrapper').then(({ AuthRootWrapper }) => ({
+      default: AuthRootWrapper
     }))
 )
 const AppRoot = React.lazy(
