@@ -47,7 +47,13 @@ import { exception } from 'react-ga'
 const Web3 = require('web3') // for some reason import Web3 from web3 didn't see eth module
 
 export const createNftCollection = async (collectionDto: CollectionCreateProps) => {
-  const result = await apiService.post(nft.createCollection, collectionDto)
+  const { name, address } = collectionDto
+
+  const formData = new FormData()
+  formData.append('name', name)
+  formData.append('address', address)
+
+  const result = await apiService.post(nft.createCollection, formData)
   return result.data
 }
 
@@ -114,7 +120,7 @@ export const useDeployCollection = () => {
         if (!account || !library) {
           return
         }
-        console.log('Deploy contract')
+        //Deploy contract
         const web3 = new Web3(library.provider)
         const contract = new web3.eth.Contract(NFT_CREATE_ABI)
         const myContract = contract
