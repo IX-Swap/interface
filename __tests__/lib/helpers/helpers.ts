@@ -1,5 +1,7 @@
 import fetch from 'node-fetch'
 import { expect } from '@playwright/test'
+import { baseCreds } from '../helpers/creds'
+import { getCookies } from '../helpers/api'
 
 const LOADER = '[role="progressbar"]'
 const DEFAULT_SELECTOR_TIMEOUT = 50000
@@ -14,10 +16,7 @@ const detachedState = {
 }
 
 async function waitNewPage(context, page, element) {
-  const [secondPage] = await Promise.all([
-    context.waitForEvent('page'),
-    page.click(element)
-  ])
+  const [secondPage] = await Promise.all([context.waitForEvent('page'), page.click(element)])
   return secondPage
 }
 
@@ -43,9 +42,7 @@ async function uploadFiles(page, element, file, resp = 'yes') {
   const inputsFile = await page.$$(element)
   for (const element of inputsFile) {
     await element.setInputFiles(file)
-    await element.evaluate(upload =>
-      upload.dispatchEvent(new Event('change', { bubbles: true }))
-    )
+    await element.evaluate(upload => upload.dispatchEvent(new Event('change', { bubbles: true })))
     if (resp === 'yes') {
       await waitForResponseInclude(page, '/dataroom')
     }
@@ -91,10 +88,7 @@ async function clearAndTypeText(selector, words, page) {
 
 async function waitForText(page, words) {
   try {
-    await page.waitForSelector(
-      `//*[contains(text(),'${words}')]`,
-      attachedState
-    )
+    await page.waitForSelector(`//*[contains(text(),'${words}')]`, attachedState)
     return true
   } catch {
     throw new Error(`Text: ${words} not found `)
@@ -135,9 +129,7 @@ async function getMessage(email, page, messageTitle = 'Invitation') {
 
   for (const i of [1, 2, 3, 4]) {
     await page.waitForTimeout(5000)
-    results = await fetch(
-      `https://www.1secmail.com/api/v1/?action=getMessages&login=${partsEmail[0]}&domain=${partsEmail[1]}`
-    ).then(res => res.json())
+    results = await fetch(`https://www.1secmail.com/api/v1/?action=getMessages&login=${partsEmail[0]}&domain=${partsEmail[1]}`).then(res => res.json())
     if (results > 0) {
       break
     } else if (i === 4 && results === null) {
@@ -153,9 +145,7 @@ async function getMessage(email, page, messageTitle = 'Invitation') {
     }
   }
   try {
-    link = await fetch(
-      `https://www.1secmail.com/api/v1/?action=readMessage&login=${partsEmail[0]}&domain=${partsEmail[1]}&id=${messageId}`
-    ).then(res => res.json())
+    link = await fetch(`https://www.1secmail.com/api/v1/?action=readMessage&login=${partsEmail[0]}&domain=${partsEmail[1]}&id=${messageId}`).then(res => res.json())
     return link
   } catch (error) {
     console.error(results)
@@ -166,11 +156,7 @@ async function getMessage(email, page, messageTitle = 'Invitation') {
 
 async function waitForResponseInclude(page, responseText) {
   try {
-    await page.waitForResponse(
-      response =>
-        response.url().includes(`${responseText}`) && response.status() === 200,
-      { timeout: DEFAULT_SELECTOR_TIMEOUT }
-    )
+    await page.waitForResponse(response => response.url().includes(`${responseText}`) && response.status() === 200, { timeout: DEFAULT_SELECTOR_TIMEOUT })
   } catch {
     throw new Error(`Response url does NOT include: ${responseText} `)
   }
@@ -178,14 +164,9 @@ async function waitForResponseInclude(page, responseText) {
 
 async function waitForRequestInclude(page, requestText, method = 'GET') {
   try {
-    await page.waitForRequest(
-      request =>
-        request.url().includes(requestText) && request.method() === method
-    )
+    await page.waitForRequest(request => request.url().includes(requestText) && request.method() === method)
   } catch {
-    throw new Error(
-      `Request url does NOT include: ${requestText} or the method is not ${method} `
-    )
+    throw new Error(`Request url does NOT include: ${requestText} or the method is not ${method} `)
   }
 }
 
@@ -214,6 +195,7 @@ async function getCount(page, element) {
   const sum = await page.$$eval(element, elements => elements.length)
   return sum
 }
+
 export {
   shouldNotExist,
   screenshotMatching,

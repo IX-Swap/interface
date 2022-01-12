@@ -2,6 +2,8 @@ export const text = {
   dsoName: 'AQAcommitments',
   secondaryName: 'TestAQA',
   requests: {
+    IXPS_SGD_PAIR:
+      'app/otc-market/market/61a71463ad10390e378804e3?sortBy=pair&orderBy=ASC',
     search: 'exchange/markets/list',
     bankAccount: 'app/accounts/bank-accounts',
     cashWithdrawal: 'app/accounts/cash-withdrawals',

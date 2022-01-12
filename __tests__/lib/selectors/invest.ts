@@ -44,7 +44,7 @@ export const invest = {
   listBox: {
     DESTINATION_WALLET_ADDRESS: '[id="withdrawalAddress"]',
     WALLET_ADDRESS_AQA_VALUE: '[data-value="6184dfe93899410e58bbe013"]',
-    AFHT_SGD_PAIR: '[href="/app/otc-market/market/6142b268cc94760d9b527184"]',
+    IXPS_SGD_PAIR: '[href="/app/otc-market/market/61a71463ad10390e378804e3"]',
     PAIR_NAME: '[data-testid="pairName"]',
     PAIR_NAME_VALUE: 'a >> text="AQA##/SGD"'
   }

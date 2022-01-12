@@ -1,6 +1,6 @@
 // playwright.config.ts
 
-import { PlaywrightTestConfig } from '@playwright/test'
+import { PlaywrightTestConfig, devices } from '@playwright/test'
 
 const config: PlaywrightTestConfig = {
   workers: 6,
@@ -10,7 +10,7 @@ const config: PlaywrightTestConfig = {
   outputDir: 'reports',
   projects: [
     {
-      name: 'Chromium',
+      name: 'Chrome',
       // retries: 1,
       timeout: 180000,
       use: {
@@ -27,6 +27,24 @@ const config: PlaywrightTestConfig = {
         }
       }
     }
+    // {
+    //   name: 'Webkit',
+    //   // retries: 1,
+    //   timeout: 180000,
+    //   use: {
+    //     headless: true,
+    //     viewport: { width: 1900, height: 1000 },
+    //     ignoreHTTPSErrors: true,
+    //     browserName: 'webkit',
+    //     screenshot: 'only-on-failure',
+    //     trace: 'on-first-retry',
+    //     video: 'off',
+    //     httpCredentials: {
+    //       username: 'ixprime',
+    //       password: '!nv35taX2K2!*'
+    //     }
+    //   }
+    // }
   ]
 }
 export default config

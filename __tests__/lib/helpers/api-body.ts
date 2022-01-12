@@ -15,6 +15,22 @@ export const bankAccount = {
   }
 }
 
+export const sellOrder = {
+  pair: '61a71463ad10390e378804e3',
+  side: 'ASK',
+  type: 'LIMIT',
+  price: 10,
+  amount: 5
+}
+
+export const buyOrder = {
+  pair: '61a71463ad10390e378804e3',
+  side: 'BID',
+  type: 'LIMIT',
+  price: 10,
+  amount: 5
+}
+
 export const cashWithdrawal = {
   bankAccountId: '6184e40e3899410e58bbe152',
   amount: 1,

@@ -12,10 +12,7 @@ test.afterEach(async ({ page }) => {
 })
 
 test.describe('Listing', () => {
-  test('Should be created and appears in the list', async ({
-    listing,
-    dso
-  }) => {
+  test('Should be created and appears in the list', async ({ listing, dso }) => {
     const token = (await listing.fillListingGeneralInformationForm()).tokenName
     await listing.fillDocumentsForm()
     await listing.addAndFillTeamMemberForm()

@@ -74,3 +74,32 @@ export async function postRequest(body, cookies, link, method = 'POST') {
     throw new Error(`Post request by API failed`)
   }
 }
+export async function getRequest(cookies, link) {
+  try {
+    // Registration company
+    const request = await fetch(baseCreds.BASE_API + link, {
+      method: 'GET',
+      headers: {
+        Connection: 'keep-alive',
+        'Content-Type': 'application/json',
+        'Accept-Encoding': 'gzip, deflate, br',
+        Accept: '*/*',
+        host: 'api.staging.mozork.com',
+        Cookie: cookies
+      }
+    }).then(request => request.json())
+    return request
+  } catch (error) {
+    console.log(error)
+    throw new Error(`GET request by API failed`)
+  }
+}
+
+export async function getCookiesForAllAccounts(list = [baseCreds.firstExchange, baseCreds.secondExchange, baseCreds.thirdExchange]) {
+  let result = new Array()
+  for (const item of list) {
+    const cookie = await (await getCookies(item)).cookies
+    result.push(cookie)
+  }
+  return result
+}

@@ -25,7 +25,13 @@ const baseCreds = {
   DSO_EDIT: 'dsoCorporateUser@mailinator.com',
   MAIL_FOR_CAPITAL_CALL: 'luch41638787427054@wwjmp.com',
   AUTHORIZER_USER: 'authorizerTests@esiix.com',
-  commitments: 'qamyro@mailinator.com'
+  commitments: 'qamyro@mailinator.com',
+  firstExchange: 'pochtamoyapochta123+firstexchange@gmail.com',
+  firstUserId: '61dbf9f4c9056c0daf9c92ea',
+  secondExchange: 'pochtamoyapochta123+secondEchange@gmail.com',
+  secondUserId: '61dbfb32c9056c0daf9c943e',
+  thirdExchange: 'pochtamoyapochta123+thirdExchange@gmail.com',
+  thirdUserId: '61dbfd3ac9056c0daf9c9589'
 }
 
 export { baseCreds }

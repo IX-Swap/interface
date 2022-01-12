@@ -10,7 +10,8 @@ import {
   typeText,
   getMessage,
   navigate,
-  waitForText
+  waitForText,
+  shouldExist
 } from '../helpers/helpers'
 
 class Authentication {
@@ -29,6 +30,7 @@ class Authentication {
     await typeText(authForms.fields.EMAIL, email, this.page)
     await typeText(authForms.fields.PASSWORD, password, this.page)
     await click(authForms.buttons.LOGIN, this.page)
+    await shouldExist(authForms.buttons.PROFILE_VIEW, this.page)
   }
 
   login = async (email, password) => {
