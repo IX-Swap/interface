@@ -3,6 +3,7 @@ import { Label } from '@rebass/forms'
 import styled from 'styled-components'
 import { ButtonGradient } from 'components/Button'
 import { LoaderThin } from 'components/Loader/LoaderThin'
+import { NftSizeLimit } from 'constants/misc'
 import { ContainerRow, Input, InputContainer, InputPanel, Textarea } from 'components/Input'
 import Upload from 'components/Upload'
 import { AcceptFiles, FileTypes } from 'components/Upload/types'
@@ -85,6 +86,13 @@ export const CreateForm = () => {
     [onSetCollection]
   )
 
+  const checkFileSize = useCallback(() => {
+    if (file) {
+      const validation = file.size > NftSizeLimit ? `File is larger than ${NftSizeLimit} bytes` : null
+      setError(validation)
+    }
+  }, [file])
+
   const checkValidation = useCallback(() => {
     if (file && name && (collection || newCollectionName)) {
       setValidationStatus(getfileType(file) !== FileTypes.IMAGE ? !preview : false)
@@ -93,6 +101,10 @@ export const CreateForm = () => {
 
     setValidationStatus(true)
   }, [file, name, collection, newCollectionName, preview])
+
+  useEffect(() => {
+    checkFileSize()
+  }, [checkFileSize])
 
   useEffect(() => {
     setError(null)
