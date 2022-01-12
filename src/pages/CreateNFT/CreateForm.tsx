@@ -2,6 +2,7 @@ import { t, Trans } from '@lingui/macro'
 import { Label } from '@rebass/forms'
 import styled from 'styled-components'
 import { ButtonGradient } from 'components/Button'
+import { WarningCard } from 'components/WarningCard'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import { NftSizeLimit } from 'constants/misc'
 import { ContainerRow, Input, InputContainer, InputPanel, Textarea } from 'components/Input'
@@ -64,6 +65,7 @@ export const CreateForm = () => {
   const [isNotValid, setValidationStatus] = useState(true)
   const [pending, setPending] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [beyondLimit, setLimit] = useState<string | null>(null)
   const history = useHistory()
   const createAsset = useCreateNftAssetForm(history)
   const toggle = useToggleModal(ApplicationModal.PROPERTIES)
@@ -89,27 +91,30 @@ export const CreateForm = () => {
   const checkFileSize = useCallback(() => {
     if (file) {
       const validation = file.size > NftSizeLimit ? `File is larger than ${NftSizeLimit} bytes` : null
-      setError(validation)
+      setLimit(validation)
+      return
     }
+
+    setLimit(null)
   }, [file])
 
   const checkValidation = useCallback(() => {
-    if (file && name && (collection || newCollectionName)) {
+    if (!beyondLimit && file && name && (collection || newCollectionName)) {
       setValidationStatus(getfileType(file) !== FileTypes.IMAGE ? !preview : false)
       return
     }
 
     setValidationStatus(true)
-  }, [file, name, collection, newCollectionName, preview])
-
-  useEffect(() => {
-    checkFileSize()
-  }, [checkFileSize])
+  }, [beyondLimit, file, name, collection, newCollectionName, preview])
 
   useEffect(() => {
     setError(null)
     checkValidation()
   }, [checkValidation])
+
+  useEffect(() => {
+    checkFileSize()
+  }, [checkFileSize])
 
   useEffect(() => {
     fetchMyCollection()
@@ -181,6 +186,12 @@ export const CreateForm = () => {
               </TYPE.descriptionThin>
             </Label>
             <Upload onDrop={onSelectFile} file={file} />
+
+            {beyondLimit && (
+              <TYPE.error fontWeight={500} fontSize={16} error>
+                {beyondLimit}
+              </TYPE.error>
+            )}
           </Box>
         </Flex>
         {file && getfileType(file) !== FileTypes.IMAGE && (
