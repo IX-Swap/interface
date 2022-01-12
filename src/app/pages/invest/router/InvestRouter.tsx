@@ -26,7 +26,7 @@ export const InvestRouter = () => {
         <ViewListing />
       </AppRoute>
 
-      <AppRoute path={InvestRoute.landing}>
+      <AppRoute exact path={InvestRoute.landing}>
         <InvestLanding />
       </AppRoute>
 
