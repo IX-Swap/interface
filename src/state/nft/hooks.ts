@@ -125,7 +125,7 @@ export const useDeployCollection = () => {
 
         const params = {
           from: account,
-          gasLimit: Web3.utils.toHex('10000000'),
+          gasLimit: Web3.utils.toHex('2650000 '),
           gasPrice: Web3.utils.toHex(Web3.utils.toWei('30', 'gwei')),
           data: myContract,
         }
