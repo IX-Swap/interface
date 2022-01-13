@@ -67,7 +67,7 @@ export const getStatusColor = (action: ActionTypes, status: ActionHistoryStatus)
   return StatusColors[status]
 }
 export const getActionStatusText = (action: ActionTypes, status: ActionHistoryStatus) => {
-  if (isDeposit(action) && status === ActionHistoryStatus.APPROVED) {
+  if (isDeposit(action) && status === ActionHistoryStatus.PENDING) {
     return TransactionHistoryStatusText[ActionHistoryStatus.PENDING]
   }
 

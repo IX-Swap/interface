@@ -35,7 +35,7 @@ export const ExistingVault = ({ currency, custodian }: Props) => {
         </ButtonIXSGradient>
       </TitleStatusRow>
       <BalanceRow currency={currency} account={account} />
-      <HistoryBlock currency={currency} />
+      <HistoryBlock currency={currency} account={account} />
     </ExistingWrapper>
   )
 }
