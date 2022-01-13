@@ -124,7 +124,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
   const onUserInput = () => {
     if (amountOfIXStoStakeInput?.current?.value) {
       const value = amountOfIXStoStakeInput.current.value
-      const cleanedValue = value.match(/\d{0,}\.?\d{0,4}/)?.[0] || ''
+      const cleanedValue = value.replace(/\s/g, '').match(/\d{0,}\.?\d{0,4}/)?.[0] || ''
       setTypedValue(cleanedValue)
       if (hasBalance) {
         const fTypedIXSAmount = parseFloat(cleanedValue)
@@ -147,7 +147,9 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
 
   const onMaxClick = () => {
     if (amountOfIXStoStakeInput?.current && hasBalance && poolLimitation) {
+      console.log('event if', amountOfIXStoStakeInput?.current, poolLimitation)
       if (parseFloat(poolLimitation) > balanceNum) {
+        console.log('event parse', parseFloat(poolLimitation), balanceNum, balanceString.trim())
         amountOfIXStoStakeInput.current.value = balanceString
       } else {
         amountOfIXStoStakeInput.current.value = poolLimitation
@@ -193,6 +195,8 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
     if (allowanceAmount < parseFloat(typedValue)) return true
     return false
   }, [termsAccepted, allowanceAmount, isApprovingIXS, isStaking, typedValue, error])
+
+  console.log('event', isDisabledStake)
 
   const isDisabledApprove = useMemo((): boolean => {
     if (isNaN(parseFloat(typedValue))) return true
