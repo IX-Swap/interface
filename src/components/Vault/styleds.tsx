@@ -115,7 +115,7 @@ export const StatusIcons = {
 }
 
 export const getStatusIcon = (action = ActionTypes.DEPOSIT, status: ActionHistoryStatus) => {
-  if (isDeposit(action) && status === ActionHistoryStatus.APPROVED) {
+  if (isDeposit(action) && status === ActionHistoryStatus.PENDING) {
     return StatusIcons[ActionHistoryStatus.PENDING]
   }
   return StatusIcons[status]
