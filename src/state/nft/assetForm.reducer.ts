@@ -34,6 +34,7 @@ const initialState: AssetForm = {
   newCollectionName: '',
   selectedContractAddress: '',
   maxSupply: 1000,
+  maxSupplyRange: 10000,
 }
 
 export default createReducer<AssetForm>(initialState, (builder) =>

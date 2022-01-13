@@ -35,7 +35,7 @@ export const CreateForm = () => {
   const {
     file,
     name,
-    description,
+    maxSupplyRange,
     freeze,
     link,
     properties,
@@ -69,7 +69,6 @@ export const CreateForm = () => {
   const [pending, setPending] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [beyondLimit, setLimit] = useState<string | null>(null)
-  const maxSupplyValue = 10000
   const history = useHistory()
   const createAsset = useCreateNftAssetForm(history)
   const toggle = useToggleModal(ApplicationModal.PROPERTIES)
@@ -317,14 +316,14 @@ export const CreateForm = () => {
                   id="supply-value"
                   min={1}
                   step={1}
-                  max={maxSupplyValue}
+                  max={maxSupplyRange}
                   value={maxSupply}
                   onChange={(e) => onSetMaxSupply(e)}
                 />
               </Flex>
               <Flex justifyContent="space-between">
                 <TYPE.body>{maxSupply}</TYPE.body>
-                <TYPE.body>{maxSupplyValue}</TYPE.body>
+                <TYPE.body>{maxSupplyRange}</TYPE.body>
               </Flex>
             </Box>
           </Flex>
