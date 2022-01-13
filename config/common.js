@@ -61,7 +61,7 @@ module.exports = {
       {
         test: /\.(woff|woff2|ttf|otf)(\?.*)?$/,
         exclude: /(node_modules)/,
-        loader: 'file-loader',
+        loader: 'url-loader',
         options: {
           name: '[path][name].[ext]'
         }

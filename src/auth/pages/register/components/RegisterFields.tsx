@@ -6,24 +6,41 @@ import { SignupArgs } from 'types/auth'
 import { PasswordField } from 'components/form/PasswordField'
 import { booleanValueExtractor } from 'helpers/forms'
 import { Checkbox } from 'components/form/Checkbox'
+import { useStyles } from 'auth/pages/register/Register.styles'
 
-const CheckboxLabel = () => (
-  <Typography component='span' variant='body2'>
-    I have read and agree to the{' '}
-    <Link href='https://investax.io/terms-of-use/' target='_blank'>
-      {' '}
-      Terms &amp; Conditions
-    </Link>
-    ,{' '}
-    <Link href='https://investax.io/privacy/' target='_blank'>
-      Privacy Policy
-    </Link>{' '}
-    and{' '}
-    <Link href='https://investax.io/disclosure/' target='_blank'>
-      Regulatory Disclosures
-    </Link>
-  </Typography>
-)
+const CheckboxLabel = () => {
+  const { label, link } = useStyles()
+
+  return (
+    <Typography component='span' variant='body2' className={label}>
+      I have read and agree to the{' '}
+      <Link
+        href='https://investax.io/terms-of-use/'
+        target='_blank'
+        className={link}
+      >
+        {' '}
+        Terms &amp; Conditions
+      </Link>
+      ,{' '}
+      <Link
+        href='https://investax.io/privacy/'
+        target='_blank'
+        className={link}
+      >
+        Privacy Policy
+      </Link>{' '}
+      and{' '}
+      <Link
+        href='https://investax.io/disclosure/'
+        target='_blank'
+        className={link}
+      >
+        Regulatory Disclosures
+      </Link>
+    </Typography>
+  )
+}
 
 export const RegisterFields = () => {
   const { control } = useFormContext<SignupArgs>()
@@ -33,9 +50,7 @@ export const RegisterFields = () => {
       <Grid item>
         <TypedField
           control={control}
-          customRenderer
           component={TextField}
-          variant='outlined'
           name='name'
           label='Full Name'
           fullWidth
@@ -43,12 +58,10 @@ export const RegisterFields = () => {
       </Grid>
       <Grid item>
         <TypedField
-          customRenderer
           control={control}
           component={TextField}
-          variant='outlined'
           name='email'
-          label='Email Address'
+          label='Email'
           type='email'
           fullWidth
         />

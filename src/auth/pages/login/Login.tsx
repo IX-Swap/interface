@@ -1,9 +1,11 @@
 import React from 'react'
-import { Grid, Typography, Box } from '@material-ui/core'
+import { Grid, Typography, Box, Divider } from '@material-ui/core'
 import { Submit } from 'components/form/Submit'
 import { LoginFields } from 'auth/pages/login/components/LoginFields'
 import { AppRouterLink } from 'components/AppRouterLink'
 import { AuthRoute } from 'auth/router/config'
+import { useStyles } from './Login.styles'
+import { VSpacer } from 'components/VSpacer'
 
 export interface LoginProps {
   hidden: boolean
@@ -12,11 +14,16 @@ export interface LoginProps {
 }
 
 export const Login = ({ hidden, isLoading, attempts = 0 }: LoginProps) => {
+  const { title, link } = useStyles()
+
   return (
     <Box display={hidden ? 'none' : 'block'}>
       <Grid container direction='column' spacing={2}>
         <Grid item>
-          <Typography align='center'>Log In with your account</Typography>
+          <Typography className={title} variant={'h3'} align='center'>
+            Sign In
+          </Typography>
+          <VSpacer size={'small'} />
         </Grid>
         <Grid item>
           <LoginFields />
@@ -32,7 +39,7 @@ export const Login = ({ hidden, isLoading, attempts = 0 }: LoginProps) => {
 
         <Grid item container justifyContent='center'>
           <Submit
-            style={{ width: 150 }}
+            fullWidth
             size='large'
             variant='contained'
             color='primary'
@@ -43,17 +50,14 @@ export const Login = ({ hidden, isLoading, attempts = 0 }: LoginProps) => {
           </Submit>
         </Grid>
         <Grid item>
-          <Typography align='center'>
-            Don’t have any account?{' '}
-            <AppRouterLink to={AuthRoute.signup}>
-              Create an Account.
-            </AppRouterLink>
-          </Typography>
+          <VSpacer size={'small'} />
+          <Divider />
         </Grid>
         <Grid item>
           <Typography align='center'>
-            <AppRouterLink to={AuthRoute.passwordReset}>
-              Forgot Password?
+            Don’t have an account?
+            <AppRouterLink to={AuthRoute.signup} className={link}>
+              Create an Account.
             </AppRouterLink>
           </Typography>
         </Grid>
