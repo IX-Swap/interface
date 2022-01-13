@@ -147,9 +147,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
 
   const onMaxClick = () => {
     if (amountOfIXStoStakeInput?.current && hasBalance && poolLimitation) {
-      console.log('event if', amountOfIXStoStakeInput?.current, poolLimitation)
       if (parseFloat(poolLimitation) > balanceNum) {
-        console.log('event parse', parseFloat(poolLimitation), balanceNum, balanceString.trim())
         amountOfIXStoStakeInput.current.value = balanceString
       } else {
         amountOfIXStoStakeInput.current.value = poolLimitation
