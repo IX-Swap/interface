@@ -1,18 +1,16 @@
-import React from 'react'
 import { Box, Button } from '@material-ui/core'
-import { DigitalSecurityOffering } from 'types/dso'
 import { DSOFinishLaterButton } from 'app/components/DSO/components/DSOFinishLaterButton'
-import { useHistory, generatePath } from 'react-router-dom'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
+import { useSaveDSO } from 'app/pages/issuance/hooks/useSaveDSO'
 
-export interface DSOFormActionsProps {
-  dso: DigitalSecurityOffering | undefined
-}
+import React from 'react'
+import { generatePath, useHistory } from 'react-router-dom'
+import { DSOFormActionsProps } from 'types/dso'
 
 export const DSOFormActions = (props: DSOFormActionsProps) => {
-  const { dso } = props
+  const { dso, schema } = props
   const { push } = useHistory()
-
+  const { onSubmit, isLoading } = useSaveDSO({ dso, schema })
   return (
     <>
       {dso !== undefined && (
@@ -36,7 +34,11 @@ export const DSOFormActions = (props: DSOFormActionsProps) => {
 
       <Box mx={1} component='span' />
 
-      <DSOFinishLaterButton dso={dso} />
+      <DSOFinishLaterButton
+        dso={dso}
+        isLoading={isLoading}
+        onSubmit={onSubmit}
+      />
     </>
   )
 }

@@ -10,137 +10,173 @@ const numberTransformer = (cv: number, ov: any) => {
 
 export const dsoTeamMemberSchema = object().shape<DsoTeamMember>({
   about: string(),
-  name: string().required('Required'),
-  position: string().required('Required'),
-  photo: string().required('Required')
+  name: string().required('Team member name is required'),
+  position: string().required('Team member position is required'),
+  photo: string().required('Team member photo is required')
 })
 
-export const dsoFAQItemSchema = object().shape<DsoFAQItem>({
-  question: string().required('Required'),
-  answer: string().required('Required')
-})
+export const dsoFAQItemSchema = object().shape<DsoFAQItem>(
+  {
+    question: string().when('answer', {
+      is: answer => Boolean(answer),
+      then: string().required('Question is required when answer is provided')
+    }),
+    answer: string().when('question', {
+      is: question => Boolean(question),
+      then: string().required('Answer is required when question is provided')
+    })
+  },
+  [
+    ['answer', 'question'],
+    ['question', 'answer']
+  ]
+)
 
-export const dsoVideoLinkSchema = object().shape<DsoVideo>({
-  title: string().required('Required'),
-  link: string().required('Required')
-})
+export const dsoVideoLinkSchema = object().shape<DsoVideo>(
+  {
+    title: string().when('link', {
+      is: link => Boolean(link),
+      then: string().required('Video title is required when link is provided')
+    }),
+    link: string().when('title', {
+      is: title => Boolean(title),
+      then: string().required(
+        'Video link is required when video title is provided'
+      )
+    })
+  },
+  [
+    ['title', 'link'],
+    ['link', 'title']
+  ]
+)
 
 export const dsoFormBaseValidationSchema = {
-  businessModel: string().required('Required'),
-  capitalStructure: string().required('Required'),
+  businessModel: string().required('Business model is required'),
+  capitalStructure: string().required('Capital structure is required'),
   corporate: string()
     .max(50, 'Maximum of 50 characters')
-    .required('This field is required')
+    .required('Corporate is required')
     .matches(
       /^[a-zA-Z0-9.,-;]+([a-zA-Z0-9.,-; ]+)*$/,
-      'Must include only letters, numbers and this special characters . , -'
+      'Corporate must include only letters, numbers and this special characters . , -'
     ),
-  currency: string().required('Required'),
+  currency: string().required('Currency is required'),
   distributionFrequency: string().when('capitalStructure', {
     is: capitalStructure =>
       capitalStructure === 'Equity' || capitalStructure === 'Debt',
-    then: string().required('Required')
+    then: string().required('Distribution frequency is required')
   }),
   dividendYield: number()
     .transform(numberTransformer)
     .when('capitalStructure', {
       is: 'Equity',
-      then: number().transform(numberTransformer).required('Required')
+      then: number()
+        .transform(numberTransformer)
+        .required('Dividend yield is required')
     }),
   equityMultiple: number()
     .transform(numberTransformer)
     .when('capitalStructure', {
       is: 'Equity',
-      then: number().transform(numberTransformer).required('Required')
+      then: number()
+        .transform(numberTransformer)
+        .required('Equity multiple is required')
     }),
-  fundraisingMilestone: string().required('Required'),
+  fundraisingMilestone: string().required('Fundraising milestone is required'),
   grossIRR: number()
     .transform(numberTransformer)
     .when('capitalStructure', {
       is: 'Equity',
-      then: number().transform(numberTransformer).required('Required')
+      then: number()
+        .transform(numberTransformer)
+        .required('Gross IRR is required')
     }),
   interestRate: number()
     .transform(numberTransformer)
     .when('capitalStructure', {
       is: 'Debt',
-      then: number().transform(numberTransformer).required('Required')
+      then: number()
+        .transform(numberTransformer)
+        .required('Interest rate is required')
     }),
-  introduction: string().required('Required'),
+  introduction: string().required('Introduction is required'),
   investmentPeriod: number()
     .transform(numberTransformer)
     .when('capitalStructure', {
       is: capitalStructure =>
         capitalStructure === 'Equity' || capitalStructure === 'Debt',
-      then: number().transform(numberTransformer).required('Required')
+      then: number()
+        .transform(numberTransformer)
+        .required('Investment period is required')
     }),
   investmentStructure: string().when('capitalStructure', {
     is: capitalStructure =>
       capitalStructure === 'Equity' || capitalStructure === 'Debt',
-    then: string().required('Required')
+    then: string().required('Investment structure is required')
   }),
-  issuerName: string().required('Required'),
+  issuerName: string().required('Issuer name is required'),
   launchDate: dateSchema
-    .required('Required')
+    .required('Launch date is is required')
     .test('pastDate', 'Launch Date must be future date', pastDateValidator),
   completionDate: dateSchema
-    .required('Required')
+    .required('Completion date is required')
     .test('futureDate', 'Launch Date must be future date', pastDateValidator),
   leverage: number()
     .transform(numberTransformer)
     .when('capitalStructure', {
       is: 'Debt',
-      then: number().transform(numberTransformer).required('Required')
+      then: number()
+        .transform(numberTransformer)
+        .required('Leverage is required')
     }),
   minimumInvestment: number()
     .typeError('Minimum investment must be a number')
     .nullable()
-    .required('Required'),
+    .required('Minimum investment is required'),
   pricePerUnit: number()
     .typeError('Price per unit must be a number')
     .nullable()
-    .required('Required'),
+    .required('Price per unit is required'),
   subscriptionDocument: object<DataroomFile>(),
   tokenName: string()
-    .required('Required')
+    .required('Token name is required')
     .matches(
       /(?<=\s+|^)[a-zA-Z]+(?=\s+|$)/g,
       'Token name must not have special characters'
     ),
-  tokenSymbol: string().required('Required'),
+  tokenSymbol: string().required('Token symbol is required'),
   totalFundraisingAmount: number()
+    .required('Total fundraising amount is required')
     .typeError('Total fundraising amount must be a number')
-    .nullable()
-    .required('Required'),
-  useOfProceeds: string().required('Required'),
-  logo: string().required('Required'),
+    .nullable(),
+  useOfProceeds: string().required('Use of proceeds is required'),
+  logo: string().required('Logo is required'),
   policyBuilder: object(),
   status: string(),
   documents: array<FormArrayElement<DataroomFile>>()
     .ensure()
-    .required('Required'),
+    .required('Documents are required'),
   team: array<DsoTeamMember>()
-    .of(dsoTeamMemberSchema.required('Required'))
+    .of(dsoTeamMemberSchema.required('Team member details are required'))
     .ensure()
-    .required('Required'),
+    .required('Team member is required'),
   faqs: array<DsoFAQItem>()
     .of(dsoFAQItemSchema.required('Required'))
-    .ensure()
-    .required('Required'),
+    .required('Faqs are required'),
   videos: array<DsoVideo>()
-    .of(dsoVideoLinkSchema.required('Required'))
-    .ensure()
+    .of(dsoVideoLinkSchema.required('Videos are required'))
     .required('Required'),
   uniqueIdentifierCode: string().test(
     'length',
-    'Required',
+    'Unique identifier code is required',
     uniqueIdentifierCodeValidator
   )
 }
 
 export const createDSOValidationSchema = object()
   .shape<DSOFormValues>({
-    network: string().required('Required'),
+    network: string().required('Network is required'),
     ...dsoFormBaseValidationSchema
   })
   .notRequired()
