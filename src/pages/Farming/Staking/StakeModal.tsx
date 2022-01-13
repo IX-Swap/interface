@@ -124,7 +124,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
   const onUserInput = () => {
     if (amountOfIXStoStakeInput?.current?.value) {
       const value = amountOfIXStoStakeInput.current.value
-      const cleanedValue = value.match(/\d{0,}\.?\d{0,4}/)?.[0] || ''
+      const cleanedValue = value.replace(/\s/g, '').match(/\d{0,}\.?\d{0,4}/)?.[0] || ''
       setTypedValue(cleanedValue)
       if (hasBalance) {
         const fTypedIXSAmount = parseFloat(cleanedValue)
