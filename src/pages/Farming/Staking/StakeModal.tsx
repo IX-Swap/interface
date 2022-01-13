@@ -194,8 +194,6 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
     return false
   }, [termsAccepted, allowanceAmount, isApprovingIXS, isStaking, typedValue, error])
 
-  console.log('event', isDisabledStake)
-
   const isDisabledApprove = useMemo((): boolean => {
     if (isNaN(parseFloat(typedValue))) return true
     if (!termsAccepted || Boolean(error)) return true
