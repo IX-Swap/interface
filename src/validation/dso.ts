@@ -103,10 +103,7 @@ export const dsoFormBaseValidationSchema = {
   subscriptionDocument: object<DataroomFile>(),
   tokenName: string()
     .required('Required')
-    .matches(
-      /(?<=\s+|^)[a-zA-Z]+(?=\s+|$)/g,
-      'Token name must not have special characters'
-    ),
+    .matches(/^[a-zA-Z\s]*$/g, 'Token name must not have special characters'),
   tokenSymbol: string().required('Required'),
   totalFundraisingAmount: number()
     .typeError('Total fundraising amount must be a number')
