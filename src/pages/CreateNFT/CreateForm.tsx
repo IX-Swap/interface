@@ -29,6 +29,7 @@ import { NSFWRadio } from './NSFWRadio'
 import { PropertiesPopup } from './PropertiesPopup'
 import { Traits } from './Traits'
 import * as H from 'history'
+import Slider from 'components/Slider'
 
 export const CreateForm = () => {
   const {
@@ -42,6 +43,7 @@ export const CreateForm = () => {
     levels,
     isNSFW,
     preview,
+    maxSupply,
     collection,
     newCollectionName,
     activeTraitType,
@@ -60,12 +62,14 @@ export const CreateForm = () => {
     onSetIsNSFW,
     onSetCollection,
     onSetNewCollectionName,
+    onSetMaxSupply,
   } = useCreateAssetActionHandlers()
   const [showCreateNewCollection, setShowCreateNewCollection] = useState(false)
   const [isNotValid, setValidationStatus] = useState(true)
   const [pending, setPending] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [beyondLimit, setLimit] = useState<string | null>(null)
+  const maxSupplyValue = 10000
   const history = useHistory()
   const createAsset = useCreateNftAssetForm(history)
   const toggle = useToggleModal(ApplicationModal.PROPERTIES)
@@ -303,6 +307,25 @@ export const CreateForm = () => {
                   </InputContainer>
                 </ContainerRow>
               </InputPanel>
+              <Flex flexDirection="column" mt={4}>
+                <Label htmlFor="supply-value" mb={2}>
+                  <TYPE.body fontWeight={600}>
+                    <Trans>Select max number of items in collection</Trans>
+                  </TYPE.body>
+                </Label>
+                <Slider
+                  id="supply-value"
+                  min={1}
+                  step={1}
+                  max={maxSupplyValue}
+                  value={maxSupply}
+                  onChange={(e) => onSetMaxSupply(e)}
+                />
+              </Flex>
+              <Flex justifyContent="space-between">
+                <TYPE.body>{maxSupply}</TYPE.body>
+                <TYPE.body>{maxSupplyValue}</TYPE.body>
+              </Flex>
             </Box>
           </Flex>
         )}

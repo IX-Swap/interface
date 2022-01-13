@@ -121,4 +121,5 @@ export interface AssetForm {
   isNSFW: boolean
   newCollectionName: string
   selectedContractAddress: string
+  maxSupply: number
 }
