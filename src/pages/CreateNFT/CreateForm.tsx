@@ -70,7 +70,7 @@ export const CreateForm = () => {
   const [beyondLimit, setLimit] = useState<string | null>(null)
   const [isLogged, setAuthState] = useState(false)
 
-  const login = useLogin({ mustHavePreviousLogin: false })
+  const login = useLogin({ mustHavePreviousLogin: true })
   const showError = useShowError()
   const history = useHistory()
   const createAsset = useCreateNftAssetForm(history)
@@ -129,7 +129,9 @@ export const CreateForm = () => {
 
   useEffect(() => {
     if (!isLogged && !pending) {
-      checkAuthorization()
+      const timerFunc = setTimeout(checkAuthorization, 3000)
+
+      return () => clearTimeout(timerFunc)
     }
   }, [isLogged, checkAuthorization])
 
