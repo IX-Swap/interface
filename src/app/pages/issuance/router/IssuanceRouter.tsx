@@ -1,5 +1,5 @@
 import React from 'react'
-import { Switch } from 'react-router-dom'
+import { Redirect, Switch } from 'react-router-dom'
 import { CreateDSO } from 'app/pages/issuance/pages/CreateDSO'
 import { DeployToken } from 'app/pages/issuance/pages/DeployToken'
 import { DSOList } from 'app/pages/issuance/pages/DSOList'
@@ -18,6 +18,9 @@ export const IssuanceRouter = () => {
 
   return (
     <Switch>
+      <AppRoute exact path={IssuanceRoute.root}>
+        <Redirect to={IssuanceRoute.insight} />
+      </AppRoute>
       <AppRoute
         breadcrumb='Create Digital Security Offering'
         exact
