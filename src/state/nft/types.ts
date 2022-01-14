@@ -122,5 +122,4 @@ export interface AssetForm {
   newCollectionName: string
   selectedContractAddress: string
   maxSupply: number
-  maxSupplyRange: number
 }

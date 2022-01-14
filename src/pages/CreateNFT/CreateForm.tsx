@@ -1,17 +1,16 @@
+import React, { useCallback, useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom'
+import { Box, Flex } from 'rebass'
 import { t, Trans } from '@lingui/macro'
 import { Label } from '@rebass/forms'
 import styled from 'styled-components'
 import { ButtonGradient } from 'components/Button'
-import { WarningCard } from 'components/WarningCard'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import { NftSizeLimit } from 'constants/misc'
 import { ContainerRow, Input, InputContainer, InputPanel, Textarea } from 'components/Input'
 import Upload from 'components/Upload'
 import { AcceptFiles, FileTypes } from 'components/Upload/types'
 import { getfileType } from 'components/Upload/utils'
-import React, { useCallback, useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
-import { Box, Flex } from 'rebass'
 import { ApplicationModal } from 'state/application/actions'
 import { useToggleModal } from 'state/application/hooks'
 import {
@@ -28,14 +27,13 @@ import { LevelsPopup } from './LevelsPopup'
 import { NSFWRadio } from './NSFWRadio'
 import { PropertiesPopup } from './PropertiesPopup'
 import { Traits } from './Traits'
-import * as H from 'history'
 import Slider from 'components/Slider'
+import { MAX_SUPPLY_RANGE } from 'state/nft/constants'
 
 export const CreateForm = () => {
   const {
     file,
     name,
-    maxSupplyRange,
     freeze,
     link,
     properties,
@@ -316,14 +314,14 @@ export const CreateForm = () => {
                   id="supply-value"
                   min={1}
                   step={1}
-                  max={maxSupplyRange}
+                  max={MAX_SUPPLY_RANGE}
                   value={maxSupply}
                   onChange={(e) => onSetMaxSupply(e)}
                 />
               </Flex>
               <Flex justifyContent="space-between">
                 <TYPE.body>{maxSupply}</TYPE.body>
-                <TYPE.body>{maxSupplyRange}</TYPE.body>
+                <TYPE.body>{MAX_SUPPLY_RANGE}</TYPE.body>
               </Flex>
             </Box>
           </Flex>
