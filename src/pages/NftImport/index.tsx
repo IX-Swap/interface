@@ -19,7 +19,8 @@ import { ButtonConfirmed, ButtonPrimary } from 'components/Button'
 import styled from 'styled-components'
 import { CHAIN_INFO } from 'constants/chains'
 import { useDispatch } from 'react-redux'
-import { NFTConnectWallet } from 'components/NFTConnectWallet'
+import { useNftColelctionImport } from 'state/nft/hooks'
+import { useHistory } from 'react-router-dom'
 
 const NftLinkInput = styled(Input)`
   padding: 0.4rem;
@@ -56,7 +57,8 @@ export default function Faucet() {
 
   const [error, setError] = useState<string | null>(null)
 
-  const dispatch = useDispatch()
+  const history = useHistory()
+  const importNft = useNftColelctionImport(history)
 
   useEffect(() => {
     try {
@@ -128,7 +130,7 @@ export default function Faucet() {
 
         {error && <TYPE.error error>{error}</TYPE.error>}
 
-        <ButtonPrimary disabled={error !== null} onClick={() => dispatch(importNftCollection({ id: nftId }))}>
+        <ButtonPrimary disabled={error !== null} onClick={() => importNft({ address: nftId })}>
           Submit
         </ButtonPrimary>
       </AutoColumn>
