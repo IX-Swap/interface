@@ -101,7 +101,7 @@ export function getNftContract({
   chainId,
   account,
 }: Omit<ContractInstanceProps, 'ABI' | 'withSignerIfPossible'>) {
-  return getContractInstance({ addressOrAddressMap, library, chainId, account, ABI: NFT_CREATE_ABI })
+  return getContractInstance({ addressOrAddressMap, library, chainId, account, ABI: NFT_ABI })
 }
 export function useVestingContract() {
   return useContract(IXS_VESTING_ADDRESS, IIxsVestedDistribution, true)

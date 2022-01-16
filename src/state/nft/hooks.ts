@@ -134,7 +134,7 @@ export const useDeployCollection = () => {
 
         const params = {
           from: account,
-          gasLimit: Web3.utils.toHex('2650000 '),
+          gasLimit: Web3.utils.toHex('4500000 '),
           gasPrice: Web3.utils.toHex(Web3.utils.toWei('30', 'gwei')),
           data: myContract,
         }
@@ -533,7 +533,7 @@ export const useCreateNftAssetForm = (history: H.History) => {
       // end getting contract instance
       if (contractInstance) {
         await mintNFT({ nft: contractInstance, account, assetURI })
-        const supply = await contractInstance?.getTokenId()
+        const supply = await contractInstance?.totalSupply()
         console.log({ supply })
         // supply shows how many. index starts at 0
         history.push(`/nft/collections/${contractAddress}/${supply - 1}`)
