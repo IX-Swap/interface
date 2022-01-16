@@ -43,12 +43,19 @@ import { saveImages } from './actions'
 import { CollectionCreateProps } from './types'
 import { groupKeyValues } from './utils'
 import * as H from 'history'
+import { exception } from 'react-ga'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const Web3 = require('web3') // for some reason import Web3 from web3 didn't see eth module
 
 export const createNftCollection = async (collectionDto: CollectionCreateProps) => {
-  const result = await apiService.post(nft.createCollection, collectionDto)
+  const { name, address } = collectionDto
+
+  const formData = new FormData()
+  formData.append('name', name)
+  formData.append('address', address)
+
+  const result = await apiService.post(nft.createCollection, formData)
   return result.data
 }
 
@@ -115,7 +122,7 @@ export const useDeployCollection = () => {
         if (!account || !library) {
           return
         }
-        console.log('Deploy contract')
+        //Deploy contract
         const web3 = new Web3(library.provider)
         const contract = new web3.eth.Contract(NFT_CREATE_ABI)
         const myContract = contract
@@ -127,7 +134,7 @@ export const useDeployCollection = () => {
 
         const params = {
           from: account,
-          gasLimit: Web3.utils.toHex('10000000'),
+          gasLimit: Web3.utils.toHex('2650000 '),
           gasPrice: Web3.utils.toHex(Web3.utils.toWei('30', 'gwei')),
           data: myContract,
         }
