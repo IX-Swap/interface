@@ -7,6 +7,7 @@ import { importNftCollection } from 'state/nft/actions'
 
 import { RowFixed } from 'components/Row'
 import Column, { AutoColumn } from 'components/Column'
+import { NFTConnectWallet } from 'components/NFTConnectWallet'
 
 import { SUPPORTED_TGE_CHAINS, TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
 
