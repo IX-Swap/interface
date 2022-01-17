@@ -101,7 +101,10 @@ export const personnelProfileSchema = yup.object().shape<Personnel>({
     .mixed<DataroomFile[], object>()
     .required(validationMessages.required),
   address: addressSchema.required(validationMessages.required),
-  percentageShareholding: yup.number().required(validationMessages.required)
+  percentageShareholding: yup
+    .number()
+    .typeError('Percentage shareholding must be a number')
+    .required(validationMessages.required)
 })
 
 export const personnelArraySchema = yup
