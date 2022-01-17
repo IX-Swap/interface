@@ -11,8 +11,13 @@ export const useStyles = makeStyles(theme => ({
     color: theme.palette.text.primary
   },
   forgotLink: {
+    position: 'relative',
     color: theme.palette.text.primary,
     opacity: 0.5,
-    textTransform: 'uppercase'
+    textTransform: 'uppercase',
+    top: -8
+  },
+  text: {
+    color: '#ffffff20'
   }
 }))

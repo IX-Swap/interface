@@ -1,5 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles'
 import EarthImage from '../../images/digital_earth.png'
+import DotsImage from '../../images/background_dots.png'
 
 export const useStyles = makeStyles(theme => ({
   container: {
@@ -35,20 +36,25 @@ export const useStyles = makeStyles(theme => ({
   },
   background: {
     width: '45%',
-    backgroundColor: theme.palette.backgrounds.alternative,
+    // backgroundColor: theme.palette.backgrounds.alternative,
     paddingTop: theme.spacing(12.5),
     paddingBottom: theme.spacing(7.5),
+    backgroundColor: '#0E1F42',
+    backgroundImage: `url(${DotsImage})`,
+    backgroundPosition: 'right center',
+    // background: `radial-gradient(50.29% 51.61% at 13.59% 48.39%, rgba(0, 0, 0, 0) 46.41%, #000000 73.61%)`,
+
     [theme.breakpoints.down('sm')]: {
       display: 'none'
     }
   },
   backgroundImage: {
     height: '100%',
-    background: `radial-gradient(50.29% 51.61% at 13.59% 48.39%, rgba(0, 0, 0, 0) 46.41%, #000000 73.61%)`,
-    backgroundPosition: 'center right',
-    backgroundSize: 'cover',
     mixBlendMode: 'screen',
-    backgroundImage: `url(${EarthImage})`
+    backgroundImage: `url(${EarthImage})`,
+    backgroundPosition: '100% center',
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover'
   },
   formWrapper: {
     position: 'relative',

@@ -40,10 +40,10 @@ export const Register: React.FC = observer(() => {
     >
       <Grid container direction='column' spacing={2}>
         <Grid item>
-          <Typography align='center' className={title}>
+          <Typography align='center' variant={'h3'} className={title}>
             Sign up
           </Typography>
-          <VSpacer size={'small'} />
+          <VSpacer size={'medium'} />
         </Grid>
         <Grid item xs={12}>
           <RegisterFields />

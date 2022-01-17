@@ -35,7 +35,7 @@ export const RequestStep: React.FC = () => {
       validationSchema={requestPasswordResetValidationSchema}
       onSubmit={handleSubmit}
     >
-      <Grid container direction='column' spacing={2}>
+      <Grid container direction='column' spacing={4}>
         <Grid item>
           <Typography className={title} variant={'h3'} align='center'>
             Forgot <br /> Password?

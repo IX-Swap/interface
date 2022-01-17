@@ -13,15 +13,19 @@ export const LoginFields = () => {
   const { control } = useFormContext<LoginArgs>()
 
   return (
-    <Grid container spacing={2} direction='column'>
+    <Grid container spacing={4} direction='column'>
       <Grid item>
         <TypedField
           control={control}
           fullWidth
           component={TextField}
+          placeholder={'Email Address'}
           name='email'
           label='Email'
           type='email'
+          InputLabelProps={{
+            shrink: true
+          }}
         />
       </Grid>
 

@@ -24,16 +24,27 @@ export const getThemeOverrides = (
   theme: Theme
 ): Partial<Overrides> & Partial<LabOverrides> => ({
   ...rte(theme),
-  // MuiCssBaseline: {
-  //   '@global': {
-  //     '@font-face': [monumentExtendedBold, monumentGroteskRegular]
-  //   }
-  // },
+  MuiFormHelperText: {
+    root: {
+      '&.Mui-error': {
+        color: '#FF8080',
+        textAlign: 'right',
+        paddingTop: 6
+      }
+    }
+  },
   MuiInputLabel: {
     root: {
-      transform: 'translate(0, 1.5px) scale(0.75)!important',
+      transform: 'translate(0, -11px) !important',
       transformOrigin: 'top left',
-      fontSize: 16
+      fontSize: 16,
+
+      '&.Mui-focused': {
+        color: '#ffffff'
+      },
+      '&.Mui-error': {
+        color: '#ffffff'
+      }
     }
   },
   MuiInput: {
@@ -62,20 +73,26 @@ export const getThemeOverrides = (
       paddingLeft: 24,
       paddingRight: 24,
       height: '100%',
-      boxShadow: '0 0 0 100px #1A397C inset',
+      backgroundColor: '#1a397c40',
+      boxShadow: 'none',
       borderRadius: 8,
       boxSizing: 'border-box',
-      opacity: 0.2,
       color: '#ffffff',
       fontSize: 16,
-      '&:-internal-autofill-selected': {
-        color: '#ffffff!important'
+      '&:-webkit-autofill': {
+        WebkitBoxShadow: '0 0 0 100px #1a397c inset',
+        WebkitTextFillColor: '#ffffff',
+        transition: 'background-color 5000s ease-in-out 0s'
       },
-      '&:invalid': {
-        boxShadow: '0 0 0 100px #1A397C inset'
+      '&:-webkit-autofill:focus': {
+        WebkitBoxShadow: '0 0 0 100px #ffffff inset',
+        WebkitTextFillColor: '#334466',
+        transition: 'none'
       },
-      '&:focus': {
-        border: '2px solid #0055FF'
+      '.Mui-focused &': {
+        backgroundColor: '#ffffff',
+        color: '#000000',
+        border: 'none'
       }
     },
     inputMarginDense: {
@@ -98,25 +115,40 @@ export const getThemeOverrides = (
       height: 60
     }
   },
+  MuiButton: {
+    label: {
+      fontSize: 12
+    },
+    contained: {
+      borderRadius: 8,
+      '&.Mui-disabled': {
+        backgroundColor: '#0055FF20'
+      }
+    }
+  },
   MuiIconButton: {
     label: {
       width: 20,
       height: 20,
       color: '#0055FF',
-      background: '#0055FF',
+      background: '#102756',
       borderRadius: 4,
       zIndex: 3,
-      border: '1px solid #0055FF',
+      border: '1px solid #102756',
 
       '.Mui-checked &': {
         color: '#ffffff',
-        background: '#ffffff'
+        background: '#0055FF',
+        border: '1px solid #0055FF'
       }
     }
   },
   MuiSvgIcon: {
     root: {
-      fill: '#0055FF'
+      fill: '#102756',
+      '.Mui-checked &': {
+        fill: '#0055FF'
+      }
     }
   }
 })

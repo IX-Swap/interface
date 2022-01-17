@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from 'test-utils'
-import { PasswordValidationItem } from 'components/form/PasswordValidationItem'
+import { PasswordValidationItem } from 'components/form/PasswordValidationItem/PasswordValidationItem'
 import CloseIcon from '@material-ui/icons/Close'
 import CheckIcon from '@material-ui/icons/Check'
 import { green, red } from '@material-ui/core/colors'

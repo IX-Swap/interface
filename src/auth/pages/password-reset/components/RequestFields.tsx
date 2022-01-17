@@ -15,6 +15,10 @@ export const RequestFields = () => {
         fullWidth
         name='email'
         label='Email'
+        placeholder={'Email'}
+        InputLabelProps={{
+          shrink: true
+        }}
       />
     </Grid>
   )

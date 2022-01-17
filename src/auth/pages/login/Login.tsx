@@ -14,7 +14,7 @@ export interface LoginProps {
 }
 
 export const Login = ({ hidden, isLoading, attempts = 0 }: LoginProps) => {
-  const { title, link } = useStyles()
+  const { title, link, text } = useStyles()
 
   return (
     <Box display={hidden ? 'none' : 'block'}>
@@ -23,7 +23,7 @@ export const Login = ({ hidden, isLoading, attempts = 0 }: LoginProps) => {
           <Typography className={title} variant={'h3'} align='center'>
             Sign In
           </Typography>
-          <VSpacer size={'small'} />
+          <VSpacer size={'medium'} />
         </Grid>
         <Grid item>
           <LoginFields />
@@ -54,8 +54,8 @@ export const Login = ({ hidden, isLoading, attempts = 0 }: LoginProps) => {
           <Divider />
         </Grid>
         <Grid item>
-          <Typography align='center'>
-            Don’t have an account?
+          <Typography align='center' className={text}>
+            Don’t have an account?{' '}
             <AppRouterLink to={AuthRoute.signup} className={link}>
               Create an Account.
             </AppRouterLink>

@@ -1,24 +1,21 @@
-// import MonumentExtendedBold from '../../../public/fonts/monument-extended/MonumentExtended-Bold.ttf'
-// import MonumentGroteskRegular from '../../../public/fonts/monument-grotesk/MonumentGrotesk-Regular.otf'
-//
-// export const monumentExtendedBold = {
-//   fontFamily: 'MonumentExtended',
-//   fontStyle: 'normal',
-//   fontWeight: '700',
-//   fontDisplay: 'swap',
-//   src: `url(${MonumentExtendedBold}) format('truetype')`
-// }
-//
-// export const monumentGroteskRegular = {
-//   fontFamily: 'MonumentGrotesk',
-//   fontStyle: 'normal',
-//   fontWeight: '500',
-//   src: `url(${MonumentGroteskRegular})`
-// }
-
 export const typography = {
-  fontFamily: ['Monument Grotesk', 'Monument Extended'].join(','),
+  fontFamily: ['Monument Grotesk'].join(','),
+  h1: {
+    fontFamily: '"Monument Extended", sans-serif'
+  },
+  h2: {
+    fontFamily: '"Monument Extended", sans-serif'
+  },
   h3: {
+    fontFamily: '"Monument Extended", sans-serif'
+  },
+  h4: {
+    fontFamily: '"Monument Extended", sans-serif'
+  },
+  h5: {
+    fontFamily: '"Monument Extended", sans-serif'
+  },
+  h6: {
     fontFamily: '"Monument Extended", sans-serif'
   },
   subtitle1: {

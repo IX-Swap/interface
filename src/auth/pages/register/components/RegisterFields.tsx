@@ -44,16 +44,21 @@ const CheckboxLabel = () => {
 
 export const RegisterFields = () => {
   const { control } = useFormContext<SignupArgs>()
+  const { bottomBlock, topBlock } = useStyles()
 
   return (
-    <Grid container spacing={2} direction='column'>
+    <Grid container spacing={4} direction='column'>
       <Grid item>
         <TypedField
           control={control}
           component={TextField}
           name='name'
           label='Full Name'
+          placeholder={'Full Name'}
           fullWidth
+          InputLabelProps={{
+            shrink: true
+          }}
         />
       </Grid>
       <Grid item>
@@ -64,12 +69,16 @@ export const RegisterFields = () => {
           label='Email'
           type='email'
           fullWidth
+          placeholder={'Email'}
+          InputLabelProps={{
+            shrink: true
+          }}
         />
       </Grid>
-      <Grid item>
+      <Grid item className={topBlock}>
         <PasswordField showErrors />
       </Grid>
-      <Grid item>
+      <Grid item className={bottomBlock}>
         <TypedField
           customRenderer
           valueExtractor={booleanValueExtractor}

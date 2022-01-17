@@ -20,7 +20,12 @@ export const PasswordField = ({ showErrors = false }: PasswordFieldProps) => {
           name='password'
           label='Password'
           type={'password'}
+          placeholder={'Password'}
+          InputLabelProps={{
+            shrink: true
+          }}
           fullWidth
+          customRenderer
         />
       </Grid>
       {showErrors ? (
