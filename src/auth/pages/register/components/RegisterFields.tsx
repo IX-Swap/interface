@@ -69,7 +69,7 @@ export const RegisterFields = () => {
           label='Email'
           type='email'
           fullWidth
-          placeholder={'Email'}
+          placeholder={'Email Address'}
           InputLabelProps={{
             shrink: true
           }}

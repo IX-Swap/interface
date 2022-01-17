@@ -8,7 +8,7 @@ jest.mock('components/form/TypedField', () => ({
   TypedField: jest.fn(() => null)
 }))
 
-describe('RegistetFields', () => {
+describe('RegisterFields', () => {
   afterEach(async () => {
     jest.clearAllMocks()
   })
@@ -24,7 +24,11 @@ describe('RegistetFields', () => {
       1,
       expect.objectContaining({
         name: 'name',
-        label: 'Full Name'
+        label: 'Full Name',
+        placeholder: 'Full Name',
+        InputLabelProps: {
+          shrink: true
+        }
       }),
       {}
     )
@@ -33,7 +37,11 @@ describe('RegistetFields', () => {
       2,
       expect.objectContaining({
         name: 'email',
-        label: 'Email Address'
+        label: 'Email',
+        placeholder: 'Email Address',
+        InputLabelProps: {
+          shrink: true
+        }
       }),
       {}
     )

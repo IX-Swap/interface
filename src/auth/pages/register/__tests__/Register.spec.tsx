@@ -37,7 +37,7 @@ describe('Register', () => {
     const { getByLabelText, getByTestId } = render(<Register />)
     const form = getByTestId('register-form')
     const name = getByLabelText(/name/i)
-    const email = getByLabelText(/email address/i)
+    const email = getByLabelText(/email/i)
     const agree = getByTestId('agree-to-terms')
     const password = getByLabelText(/password/i)
 
@@ -57,7 +57,7 @@ describe('Register', () => {
 
     const { getByLabelText, getByTestId } = renderWithUserStore(<Register />)
     const name = getByLabelText(/name/i)
-    const email = getByLabelText(/email address/i)
+    const email = getByLabelText(/email/i)
     const password = getByLabelText(/password/i)
     const agree = getByTestId('agree-to-terms')
     const signupButton = getByTestId('submit')
