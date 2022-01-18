@@ -7,10 +7,5 @@ import useStyles from './ToastContainer.styles'
 
 export const ToastContainer = (props: ToastContainerProps) => {
   const classes = useStyles()
-  return (
-    <DefaultToastContainer
-      {...props}
-      className={classes.root}
-    ></DefaultToastContainer>
-  )
+  return <DefaultToastContainer {...props} className={classes.root} />
 }
