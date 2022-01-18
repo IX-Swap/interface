@@ -7,7 +7,7 @@ test.afterEach(async ({ page }) => {
   await page.close()
 })
 test.describe('Check functionality', () => {
-  test.beforeEach(async ({ page, dso, auth, issuance }, testInfo) => {
+  test.beforeEach(async ({ page, dso, auth, issuance }) => {
     await dso.followToIssuanceTab(auth)
     await click(issuance.sections.CREATE_DSO, page)
   })

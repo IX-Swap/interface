@@ -14,7 +14,7 @@ test.describe('Check identities form', () => {
   test.afterEach(async ({ page }) => {
     await page.close()
   })
-  test.only('Individual', async ({ page, kycForms }, testInfo) => {
+  test('Individual', async ({ page, kycForms }, testInfo) => {
     await test.step('Personal Information ', async () => {
       await click(kyc.type.INDIVIDUAL, page)
       await kycForms.fillPersonalInformationForm()
@@ -130,7 +130,7 @@ test.describe('Check identities form', () => {
 })
 
 test.describe('Edit identities form', () => {
-  test.beforeEach(async ({ page, auth }) => {
+  test.beforeEach(async ({ page }) => {
     await navigate(baseCreds.URL, page)
   })
 

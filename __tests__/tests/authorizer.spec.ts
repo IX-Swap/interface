@@ -471,60 +471,44 @@ test.describe('Check Listings page', () => {
   })
 })
 
-// test.describe('Check Virtual Accounts page', () => {
-//   const corporate = text.requests.virtualAccounts
-//   let approved, rejected
-//   test.beforeEach(async ({ page, authorizer }) => {
-//     const userEmail = await authorizer.getUserForVirtualAccountCreation()
-//     await authorizer.createVirtualAccount(userEmail)
-//     rejected = await authorizer.getDataForIdentityTable(rejectedApi, corporate)
-//     approved = await authorizer.getDataForIdentityTable(approvedApi, corporate)
-//     await click(authorizerEl.pages.VIRTUAL_ACCOUNT, page)
-//   })
-//   test('Check profile view from the dropdown list', async ({ page }) => {
-//     await click(authorizerEl.buttons.MORE, page)
-//     await click(authorizerEl.buttons.VIEW, page)
-//     await expect(page).toHaveURL(
-//       /app\/authorizer\/virtual-accounts\/\S+\/view/g
-//     )
-//   })
+test.skip('Check Virtual Accounts page', () => {
+  const corporate = text.requests.virtualAccounts
+  let approved, rejected
+  test.beforeEach(async ({ page, authorizer }) => {
+    const userEmail = await authorizer.getUserForVirtualAccountCreation()
+    // await authorizer.createVirtualAccount(userEmail)
+    rejectedApi['isAssigned'] = false
+    rejected = await authorizer.getDataForIdentityTable(rejectedApi, corporate)
+    approved = await authorizer.getDataForIdentityTable(approvedApi, corporate)
+    await click(authorizerEl.pages.VIRTUAL_ACCOUNT, page)
+  })
+  test('Check profile view from the dropdown list', async ({ page }) => {
+    await click(authorizerEl.buttons.MORE, page)
+    await click(authorizerEl.buttons.VIEW, page)
+    await expect(page).toHaveURL(/app\/authorizer\/virtual-accounts\/\S+\/view/g)
+  })
 
-//   test('Should be rejected from the view page', async ({
-//     authorizer,
-//     page
-//   }) => {
-//     await click(invest.buttons.VIEW_INVEST, page)
-//     await authorizer.reject()
-//     const allRejected = await authorizer.getDataForIdentityTable(
-//       rejectedApi,
-//       corporate
-//     )
-//     expect(allRejected).toEqual(rejected + 1)
-//   })
+  test('Should be rejected from the view page', async ({ authorizer, page }) => {
+    await click(invest.buttons.VIEW_INVEST, page)
+    await authorizer.reject()
+    const allRejected = await authorizer.getDataForIdentityTable(rejectedApi, corporate)
+    expect(allRejected).toEqual(rejected + 1)
+  })
 
-//   test('Should be rejected from the table', async ({ authorizer, page }) => {
-//     await click(authorizerEl.buttons.MORE, page)
-//     await authorizer.reject()
-//     const allRejected = await authorizer.getDataForIdentityTable(
-//       rejectedApi,
-//       corporate
-//     )
-//     expect(rejected + 1).toEqual(allRejected)
-//   })
+  test('Should be rejected from the table', async ({ authorizer, page }) => {
+    await click(authorizerEl.buttons.MORE, page)
+    await authorizer.reject()
+    const allRejected = await authorizer.getDataForIdentityTable(rejectedApi, corporate)
+    expect(rejected + 1).toEqual(allRejected)
+  })
 
-//   test('Should be approved from the view page', async ({
-//     authorizer,
-//     page
-//   }) => {
-//     await click(invest.buttons.VIEW_INVEST, page)
-//     await authorizer.approve()
-//     const allApproved = await authorizer.getDataForIdentityTable(
-//       approvedApi,
-//       corporate
-//     )
-//     expect(approved + 1).toEqual(allApproved)
-//   })
-// })
+  test('Should be approved from the view page', async ({ authorizer, page }) => {
+    await click(invest.buttons.VIEW_INVEST, page)
+    await authorizer.approve()
+    const allApproved = await authorizer.getDataForIdentityTable(approvedApi, corporate)
+    expect(approved + 1).toEqual(allApproved)
+  })
+})
 
 test.describe('Check Token Deployment page', () => {
   test.beforeEach(async ({ page }) => {

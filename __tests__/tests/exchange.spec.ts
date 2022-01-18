@@ -38,6 +38,7 @@ if (baseCreds.URL.includes('dev')) {
         expect(getBalancesBefore.user2SGDBalance.outstanding).toEqual(getBalancesAfter.user2SGDBalance.outstanding - 50)
       })
     })
+
     test('Full match order (SELL first)', async ({ investment, auth }) => {
       await test.step('The sell order should be created', async () => {
         await postRequest(sellOrder, cookiesUser_3, text.requests.orderExchange)
@@ -95,6 +96,7 @@ if (baseCreds.URL.includes('dev')) {
         })
       })
     })
+
     test('Full match order (SELL with price that is lower than BID Price)', async ({ investment, auth }) => {
       await test.step('The buy order should be created', async () => {
         buyOrder['price'] = 8
@@ -113,6 +115,7 @@ if (baseCreds.URL.includes('dev')) {
         expect(getBalancesBefore.user3SGDBalance.outstanding).toEqual(getBalancesAfter.user3SGDBalance.outstanding + 40)
       })
     })
+
     test('Full match order (BUY with price that is higher than ASK Price)', async ({ investment, auth }) => {
       await test.step('The sell order should be created', async () => {
         await postRequest(sellOrder, cookiesUser_3, text.requests.orderExchange)
