@@ -241,15 +241,16 @@ export const useNftColelctionImport = (history: H.History) => {
         ])
 
         if (result !== account || balance === 0) {
-          showError('Cannot import collection, you are not the owner')
+          //showError('Cannot import collection, you are not the owner')
+          history.push(`/nft/collections/${address}`)
           return
         }
 
         const name = await contract.methods.name().call()
-
         await apiService.post(nft.createCollection, { name, address })
 
         dispatch(importNftCollection({ id: address }))
+
         history.push(`/nft/collections/${address}`)
       } catch (e) {
         showError(`Error when importing NFT collection: ${(e as Error).message}`)
@@ -449,7 +450,7 @@ export const useFetchMyCollections = () => {
       dispatch(setCollectionsLoading({ loading: true }))
     } catch (e) {
       dispatch(setCollectionsLoading({ loading: true }))
-      throw new Error(message)
+      throw new Error(`An error occured when creating NFT: ${(e as Error).message}`)
     }
   }, [account])
 }
