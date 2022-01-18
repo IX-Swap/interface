@@ -57,7 +57,7 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
   }
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit} resetAfterSubmit>
       <Grid container direction={'column'} className={classes.container}>
         <Grid item>
           <Tabs
