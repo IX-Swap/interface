@@ -1,3 +1,6 @@
+import React, { useCallback, useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom'
+import { Box, Flex } from 'rebass'
 import { t, Trans } from '@lingui/macro'
 import { Label } from '@rebass/forms'
 import styled from 'styled-components'
@@ -31,6 +34,8 @@ import { LevelsPopup } from './LevelsPopup'
 import { NSFWRadio } from './NSFWRadio'
 import { PropertiesPopup } from './PropertiesPopup'
 import { Traits } from './Traits'
+import Slider from 'components/Slider'
+import { MAX_SUPPLY_RANGE } from 'state/nft/constants'
 
 export const CreateForm = () => {
   const {
@@ -44,6 +49,7 @@ export const CreateForm = () => {
     levels,
     isNSFW,
     preview,
+    maxSupply,
     collection,
     newCollectionName,
     activeTraitType,
@@ -62,6 +68,7 @@ export const CreateForm = () => {
     onSetIsNSFW,
     onSetCollection,
     onSetNewCollectionName,
+    onSetMaxSupply,
   } = useCreateAssetActionHandlers()
   const [showCreateNewCollection, setShowCreateNewCollection] = useState(false)
   const [isNotValid, setValidationStatus] = useState(true)
@@ -331,6 +338,25 @@ export const CreateForm = () => {
                   </InputContainer>
                 </ContainerRow>
               </InputPanel>
+              <Flex flexDirection="column" mt={4}>
+                <Label htmlFor="supply-value" mb={2}>
+                  <TYPE.body fontWeight={600}>
+                    <Trans>Select max number of items in collection</Trans>
+                  </TYPE.body>
+                </Label>
+                <Slider
+                  id="supply-value"
+                  min={1}
+                  step={1}
+                  max={MAX_SUPPLY_RANGE}
+                  value={maxSupply}
+                  onChange={(e) => onSetMaxSupply(e)}
+                />
+              </Flex>
+              <Flex justifyContent="space-between">
+                <TYPE.body>{maxSupply}</TYPE.body>
+                <TYPE.body>{MAX_SUPPLY_RANGE}</TYPE.body>
+              </Flex>
             </Box>
           </Flex>
         )}
