@@ -36,7 +36,7 @@ describe('LoginContainer', () => {
   it('handles user input', () => {
     const { getByLabelText, getByTestId } = render(<LoginContainer />)
     const form = getByTestId('login-form')
-    const email = getByLabelText(/email address/i)
+    const email = getByLabelText(/email/i)
     const password = getByLabelText(/password/i)
 
     fireEvent.change(email, { target: { value: loginArgs.email } })
@@ -61,7 +61,7 @@ describe('LoginContainer', () => {
     })
 
     const { getByText, getByLabelText } = render(<LoginContainer />)
-    const email = getByLabelText(/email address/i)
+    const email = getByLabelText(/email/i)
     const password = getByLabelText(/password/i)
     const loginButton = getByText(/login/i)
 
@@ -92,7 +92,7 @@ describe('LoginContainer', () => {
     })
 
     const { getByText } = render(<LoginContainer />)
-    const forgotPasswordButton = getByText(/forgot password/i)
+    const forgotPasswordButton = getByText(/forgot/i)
 
     fireEvent.click(forgotPasswordButton)
     expect(history.location.pathname).toBe(AuthRoute.passwordReset)

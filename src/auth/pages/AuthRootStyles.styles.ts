@@ -1,38 +1,69 @@
 import { makeStyles } from '@material-ui/core/styles'
+import EarthImage from '../../images/digital_earth.png'
+import DotsImage from '../../images/background_dots.png'
 
 export const useStyles = makeStyles(theme => ({
   container: {
     width: '100vw',
     minHeight: '100vh',
-    backgroundColor: theme.palette.backgrounds.light,
+    background: `radial-gradient(140.5% 224.8% at 149.5% 9.6%, rgba(65, 128, 255, 0.4) 1.56%, rgba(31, 106, 255, 0.4) 38.45%, rgba(0, 85, 255, 0) 100%), ${theme.palette.backgrounds.alternative}`,
+    backgroundSize: 'auto',
+    backgroundPosition: '-35% center',
     position: 'relative',
-    paddingTop: 36,
-    paddingBottom: 36,
+    paddingTop: 0,
+    paddingBottom: 0,
     [theme.breakpoints.down('sm')]: {
-      padding: '24px 16px',
+      padding: theme.spacing(3, 2),
       height: 'auto',
       marginLeft: 0
     }
   },
-  formContainer: {
-    display: 'grid',
+  wrapper: {
+    width: '55%',
+    minHeight: '100%',
+    position: 'relative',
+    backgroundColor: 'transparent',
+    display: 'flex',
+    justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: theme.palette.backgrounds.default,
-    border: `1px solid ${theme.palette.divider}`,
-    borderRight: 'none',
-    borderTopRightRadius: 0,
-    borderBottomRightRadius: 0,
-    borderTopLeftRadius: theme.shape.borderRadius,
-    borderBottomLeftRadius: theme.shape.borderRadius,
-    paddingTop: 35,
-    paddingBottom: 35,
-    paddingLeft: 50,
-    paddingRight: 50,
-    minHeight: 550,
     [theme.breakpoints.down('sm')]: {
-      borderBottomLeftRadius: 0,
-      borderTopRightRadius: theme.shape.borderRadius,
-      borderRight: `1px solid ${theme.palette.divider}`
+      width: '100%'
     }
+  },
+  formContainer: {
+    marginTop: 'auto',
+    marginBottom: 'auto'
+  },
+  background: {
+    width: '45%',
+    // backgroundColor: theme.palette.backgrounds.alternative,
+    paddingTop: theme.spacing(12.5),
+    paddingBottom: theme.spacing(7.5),
+    backgroundColor: '#0E1F42',
+    backgroundImage: `url(${DotsImage})`,
+    backgroundPosition: 'right center',
+    // background: `radial-gradient(50.29% 51.61% at 13.59% 48.39%, rgba(0, 0, 0, 0) 46.41%, #000000 73.61%)`,
+
+    [theme.breakpoints.down('sm')]: {
+      display: 'none'
+    }
+  },
+  backgroundImage: {
+    height: '100%',
+    mixBlendMode: 'screen',
+    backgroundImage: `url(${EarthImage})`,
+    backgroundPosition: '100% center',
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover'
+  },
+  formWrapper: {
+    position: 'relative',
+    height: '100%',
+    maxWidth: 480
+  },
+  logo: {
+    position: 'absolute',
+    left: 0,
+    top: 33
   }
 }))

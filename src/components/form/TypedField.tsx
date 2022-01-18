@@ -128,7 +128,7 @@ export const TypedField = <
         }
 
         return (
-          <FormControl fullWidth>
+          <FormControl fullWidth variant={rest?.variant}>
             <InputLabel
               htmlFor={path}
               variant={rest?.variant}
@@ -137,7 +137,8 @@ export const TypedField = <
                 hasStartAdornment ||
                 isFocused ||
                 hasValue(controllerProps.value) ||
-                (props.displayEmpty === true && controllerProps.value === '')
+                (props.displayEmpty === true && controllerProps.value === '') ||
+                rest?.variant !== 'standard'
               }
             >
               {label}

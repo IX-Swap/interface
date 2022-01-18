@@ -3,12 +3,14 @@ import { registerFormValidationSchema } from 'validation/auth'
 import { SignupArgs } from 'types/auth'
 import { observer } from 'mobx-react'
 import { useSignup } from 'auth/hooks/useSignup'
-import { Grid, Typography } from '@material-ui/core'
+import { Divider, Grid, Typography } from '@material-ui/core'
 import { Form } from 'components/form/Form'
 import { RegisterFields } from 'auth/pages/register/components/RegisterFields'
 import { Submit } from 'components/form/Submit'
 import { AppRouterLink } from 'components/AppRouterLink'
 import { AuthRoute } from 'auth/router/config'
+import { useStyles } from './Register.styles'
+import { VSpacer } from 'components/VSpacer'
 
 export const registerFormInitialValues = {
   name: '',
@@ -18,6 +20,7 @@ export const registerFormInitialValues = {
 }
 
 export const Register: React.FC = observer(() => {
+  const { title, question, link } = useStyles()
   const [signup, { isLoading }] = useSignup()
   const handleSubmit = async (values: SignupArgs) => {
     await signup({
@@ -37,9 +40,10 @@ export const Register: React.FC = observer(() => {
     >
       <Grid container direction='column' spacing={2}>
         <Grid item>
-          <Typography align='center'>
-            Please fill in all the details to create a new account.
+          <Typography align='center' variant={'h3'} className={title}>
+            Sign up
           </Typography>
+          <VSpacer size={'medium'} />
         </Grid>
         <Grid item xs={12}>
           <RegisterFields />
@@ -47,19 +51,25 @@ export const Register: React.FC = observer(() => {
         <Grid item container justifyContent='center'>
           <Submit
             data-testid='submit'
-            style={{ width: 150 }}
+            fullWidth
             size='large'
             variant='contained'
             color='primary'
             disabled={isLoading}
           >
-            Create
+            Create an account
           </Submit>
         </Grid>
         <Grid item>
-          <Typography align='center'>
+          <VSpacer size={'small'} />
+          <Divider />
+        </Grid>
+        <Grid item>
+          <Typography align='center' className={question}>
             Already have an account?{' '}
-            <AppRouterLink to={AuthRoute.login}>Log In.</AppRouterLink>
+            <AppRouterLink to={AuthRoute.login} className={link}>
+              Sign In.
+            </AppRouterLink>
           </Typography>
         </Grid>
       </Grid>

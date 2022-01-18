@@ -2,11 +2,11 @@ import * as createPalette from '@material-ui/core/styles/createPalette' // eslin
 import { CSSProperties } from '@material-ui/core/styles'
 
 export interface AppBackgrounds {
-  default: CSSProperties['color']
-  light: CSSProperties['color']
-  lighter: CSSProperties['color']
-  alternativeLight: CSSProperties['color']
-  alternative: CSSProperties['color']
+  default: string
+  light: string
+  lighter: string
+  alternativeLight: string
+  alternative: string
 }
 
 declare module '@material-ui/core/styles/createPalette' {

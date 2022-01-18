@@ -1,7 +1,7 @@
 import React from 'react'
 import { Grid, Radio, Typography } from '@material-ui/core'
 import { useFormError } from 'hooks/useFormError'
-import { themeColors } from 'themes/colors'
+import { themeColors } from 'themes/old/colors'
 
 export interface YesOrNoProps {
   name: string

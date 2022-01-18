@@ -6,6 +6,8 @@ import { PasswordReset } from 'auth/pages/password-reset/PasswordReset'
 import { Register } from 'auth/pages/register/Register'
 import { AuthRoute } from 'auth/router/config'
 import { AppRoute } from 'components/AppRoute'
+import { SuccessfulSignup } from 'auth/pages/successful-signup/SuccessfulSignup'
+import { SuccessfulReset } from 'auth/pages/successful-reset/SuccessfulReset'
 
 export const AuthRouter = () => {
   return (
@@ -18,8 +20,16 @@ export const AuthRouter = () => {
         <Register />
       </AppRoute>
 
+      <AppRoute exact path={AuthRoute.successfulSignup}>
+        <SuccessfulSignup />
+      </AppRoute>
+
       <AppRoute exact path={AuthRoute.passwordReset}>
         <PasswordReset />
+      </AppRoute>
+
+      <AppRoute exact path={AuthRoute.successfulPasswordReset}>
+        <SuccessfulReset />
       </AppRoute>
 
       <AppRoute exact path={AuthRoute.confirm}>

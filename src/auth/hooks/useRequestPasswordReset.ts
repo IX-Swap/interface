@@ -4,6 +4,7 @@ import { useServices } from 'hooks/useServices'
 import { authURL } from 'config/apiURL'
 import { useHistory } from 'react-router-dom'
 import { AuthRoute } from 'auth/router/config'
+import { history } from 'config/history'
 
 export const useRequestPasswordReset = () => {
   const { apiService, snackbarService } = useServices()
@@ -19,6 +20,7 @@ export const useRequestPasswordReset = () => {
       void snackbarService.showSnackbar(
         `Email has been sent to ${data.data.email}`
       )
+      history.push(AuthRoute.successfulPasswordReset)
     }
   })
 }

@@ -24,7 +24,7 @@ describe('RequestFields', () => {
       1,
       expect.objectContaining({
         name: 'email',
-        label: 'Email Address'
+        label: 'Email'
       }),
       {}
     )
