@@ -4,23 +4,27 @@ import { Box, Flex } from 'rebass'
 import { t, Trans } from '@lingui/macro'
 import { Label } from '@rebass/forms'
 import styled from 'styled-components'
+import { ExternalLink, TYPE } from 'theme'
+import { NftSizeLimit } from 'constants/misc'
+
 import { ButtonGradient } from 'components/Button'
 import { LoaderThin } from 'components/Loader/LoaderThin'
-import { NftSizeLimit } from 'constants/misc'
 import { ContainerRow, Input, InputContainer, InputPanel, Textarea } from 'components/Input'
 import Upload from 'components/Upload'
 import { AcceptFiles, FileTypes } from 'components/Upload/types'
 import { getfileType } from 'components/Upload/utils'
+
+import { LOGIN_STATUS, useLogin } from 'state/auth/hooks'
 import { ApplicationModal } from 'state/application/actions'
-import { useToggleModal } from 'state/application/hooks'
+import { useToggleModal, useShowError } from 'state/application/hooks'
+import { NFTCollection, TraitType } from 'state/nft/types'
 import {
   useAssetFormState,
   useCreateAssetActionHandlers,
   useCreateNftAssetForm,
   useFetchMyCollections,
 } from 'state/nft/hooks'
-import { NFTCollection, TraitType } from 'state/nft/types'
-import { ExternalLink, TYPE } from 'theme'
+
 import { CollectionDropdown } from './CollectionDropdown'
 import { FreezeRadio } from './FreezeRadio'
 import { LevelsPopup } from './LevelsPopup'
@@ -34,6 +38,7 @@ export const CreateForm = () => {
   const {
     file,
     name,
+    description,
     freeze,
     link,
     properties,
@@ -67,11 +72,29 @@ export const CreateForm = () => {
   const [pending, setPending] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [beyondLimit, setLimit] = useState<string | null>(null)
+  const [isLogged, setAuthState] = useState(false)
+
+  const login = useLogin({ mustHavePreviousLogin: false })
+  const showError = useShowError()
   const history = useHistory()
   const createAsset = useCreateNftAssetForm(history)
   const toggle = useToggleModal(ApplicationModal.PROPERTIES)
   const toggleNumeric = useToggleModal(ApplicationModal.LEVELS)
   const fetchMyCollection = useFetchMyCollections()
+
+  const checkAuthorization = useCallback(async () => {
+    setPending(true)
+    const status = await login()
+
+    if (status !== LOGIN_STATUS.SUCCESS) {
+      showError(t`To create NFT you need to login. Please try again`)
+      history.push('/swap')
+    }
+
+    setAuthState(true)
+    setPending(false)
+  }, [login, setAuthState, history, showError])
+
   const toggleLevelsStats = (traitType: TraitType) => {
     onSetActiveTraitType(traitType)
     toggleNumeric()
@@ -107,6 +130,14 @@ export const CreateForm = () => {
 
     setValidationStatus(true)
   }, [beyondLimit, file, name, collection, newCollectionName, preview])
+
+  useEffect(() => {
+    if (!isLogged && !pending) {
+      const timerFunc = setTimeout(checkAuthorization, 3000)
+
+      return () => clearTimeout(timerFunc)
+    }
+  }, [isLogged, checkAuthorization])
 
   useEffect(() => {
     setError(null)
