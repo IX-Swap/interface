@@ -57,6 +57,9 @@ jobs:
           cp -fv $HOME/terraform/terraform /usr/local/bin/  && \
           terraform --version
 
+      - name: Checkout
+        uses: actions/checkout@v2
+
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -78,9 +81,6 @@ jobs:
 #          if [[ -f .env ]]; then rm -v .env; else echo " File .env not found!!!"; fi && \
 #          if [[ -f ".env.${{ env.ENVIRONMENT }}" ]]; then cp -v .env.${{ env.ENVIRONMENT }}; else echo " File .env.${{ env.ENVIRONMENT }} not found!!!"; fi
 
-      - name: Checkout
-        uses: actions/checkout@v2
-
       - name: Create .env using AWS SSM Paramter Store
         run: |
           export CI=${{ env.CI }} AWS_REGION=${{ env.AWS_REGION }}  AWS_APP_NAME=${{ env.AWS_APP_NAME }} ENVIRONMENT=${{ env.ENVIRONMENT }}
@@ -92,7 +92,7 @@ jobs:
         run: |
           export CI=false   && \
           yarn install --frozen-lockfile  &&\
-          npm ls babel-loader  &&\
+          npm ls babel-loader
           yarn run build
 
       - name: Sync AWS S3 Bucket
