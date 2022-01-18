@@ -70,7 +70,7 @@ export const CreateForm = () => {
   const [beyondLimit, setLimit] = useState<string | null>(null)
   const [isLogged, setAuthState] = useState(false)
 
-  const login = useLogin({ mustHavePreviousLogin: true })
+  const login = useLogin({ mustHavePreviousLogin: false })
   const showError = useShowError()
   const history = useHistory()
   const createAsset = useCreateNftAssetForm(history)

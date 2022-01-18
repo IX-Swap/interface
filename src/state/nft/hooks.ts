@@ -450,7 +450,7 @@ export const useFetchMyCollections = () => {
       dispatch(setCollectionsLoading({ loading: true }))
     } catch (e) {
       dispatch(setCollectionsLoading({ loading: true }))
-      throw new Error(`An error occured when creating NFT: ${(e as Error).message}`)
+      console.log(e)
     }
   }, [account])
 }
