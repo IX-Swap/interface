@@ -5,7 +5,7 @@ import NFT_ABI from 'abis/nft-contract.json'
 import axios from 'axios'
 import NFT_BYTE_CODE from 'byte-code/nft-contract-byte-code.json'
 import { SupportedChainId } from 'constants/chains'
-import { Contract } from 'ethers'
+import { BigNumber, Contract } from 'ethers'
 import { getNftContract, useNftContract } from 'hooks/useContract'
 import { useActiveWeb3React } from 'hooks/web3'
 import { useCallback, useEffect, useMemo, useState } from 'react'
@@ -124,7 +124,7 @@ export const useDeployCollection = () => {
         }
         //Deploy contract
         const web3 = new Web3(library.provider)
-        const contract = new web3.eth.Contract(NFT_CREATE_ABI)
+        const contract = new web3.eth.Contract(NFT_ABI)
         const myContract = contract
           .deploy({
             data: NFT_BYTE_CODE['byteCode'],
@@ -167,7 +167,7 @@ export const useNftCollection = (address: string) => {
 
   const [info, setInfo] = useState<NftCollectionInfo | undefined>(undefined)
   const [page, setPage] = useState(0)
-  const [hasMore, setHasMore] = useState(true)
+  const [hasMore, setHasMore] = useState(false)
   const loading = useMemo(() => info === null, [info])
 
   const pageSize = 20
@@ -198,27 +198,37 @@ export const useNftCollection = (address: string) => {
       return
     }
 
-    const size = page * pageSize > info.supply ? info.supply - page * pageSize : pageSize
+    console.log(info.supply)
+    console.log((page + 1) & pageSize)
+    console.log(info.supply - page * pageSize)
+
+    const size = (page + 1) * pageSize > info.supply ? info.supply - page * pageSize : pageSize
+
+    if (size < 0) {
+      return
+    }
 
     const tokenIndexes = Array(size)
       .fill(null)
       .map((item, idx) => idx)
 
-    const tokenURIs = await Promise.all(tokenIndexes.map((item) => contract.methods.tokenURI(item).call()))
+    console.log('Indexes: ', tokenIndexes)
 
+    const tokenURIs: string[] = await Promise.all(
+      tokenIndexes.map((item) => contract.methods.tokenURI(BigNumber.from(item)).call())
+    )
+
+    setHasMore((page + 1) * pageSize <= info.supply)
     setPage(page + 1)
 
-    console.log(info)
-    console.log(tokenURIs)
-    console.log(page)
-  }, [contract.methods, info, loading, page])
+    console.log('Info: ', info)
+    console.log('URIs: ', tokenURIs)
+    console.log('Page: ', page)
 
-  return {
-    loading,
-    info,
-    hasMore,
-    fetchTokens,
-  }
+    return tokenURIs
+  }, [contract.methods, hasMore, info, loading, page])
+
+  return useMemo(() => ({ loading, info, hasMore, fetchTokens }), [fetchTokens, hasMore, info, loading])
 }
 
 export const useNftColelctionImport = (history: H.History) => {
