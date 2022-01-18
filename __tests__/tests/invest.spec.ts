@@ -42,7 +42,7 @@ test.describe('', () => {
 
   test.describe('Secondary market', () => {
     test('The buy order should be created', async ({ investment }) => {
-      const orderCreated = await investment.secondMarketBuy()
+      const orderCreated = await investment.secondMarketBuy('10', '5')
       expect(orderCreated).toBe(true)
     })
 
@@ -52,7 +52,7 @@ test.describe('', () => {
     })
 
     test.skip('The sell order should be created', async ({ investment }) => {
-      const orderCreated = await investment.secondMarketSell()
+      const orderCreated = await investment.secondMarketSell('10', '5')
       expect(orderCreated).toBe(true)
     })
 

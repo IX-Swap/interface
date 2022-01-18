@@ -14,7 +14,7 @@ test.describe('Check identities form', () => {
   test.afterEach(async ({ page }) => {
     await page.close()
   })
-  test('Individual', async ({ page, kycForms }, testInfo) => {
+  test.only('Individual', async ({ page, kycForms }, testInfo) => {
     await test.step('Personal Information ', async () => {
       await click(kyc.type.INDIVIDUAL, page)
       await kycForms.fillPersonalInformationForm()

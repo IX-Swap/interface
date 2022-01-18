@@ -275,7 +275,7 @@ test.describe('Check Commitments page', () => {
   const corporate = text.requests.commitments
   let approved, rejected
   test.beforeEach(async ({ page, authorizer }) => {
-    // await authorizer.createCommitmentsByApi()
+    await authorizer.createCommitmentsByApi()
     rejected = await authorizer.getDataForIdentityTable(rejectedFunds, corporate)
     approved = await authorizer.getDataForIdentityTable(approvedApi, corporate)
     await click(authorizerEl.pages.COMMITMENTS, page)
@@ -287,6 +287,7 @@ test.describe('Check Commitments page', () => {
   })
 
   test('Should be rejected from the view page', async ({ authorizer, page }) => {
+    await page.pause()
     await click(invest.buttons.VIEW_INVEST, page)
     await authorizer.reject()
     const allRejected = await authorizer.getDataForIdentityTable(rejectedFunds, corporate)

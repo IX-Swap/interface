@@ -7,7 +7,7 @@ const defaultHeaders = {
   'Accept-Encoding': 'gzip, deflate, br',
   'Content-Length': '352',
   Accept: '*/*',
-  host: 'api.staging.mozork.com'
+  host: baseCreds.HOST
 }
 export async function userRegistration(email) {
   try {
@@ -60,7 +60,7 @@ export async function postRequest(body, cookies, link, method = 'POST') {
         'Content-Type': 'application/json',
         'Accept-Encoding': 'gzip, deflate, br',
         Accept: '*/*',
-        host: 'api.staging.mozork.com',
+        host: baseCreds.HOST,
         Cookie: cookies
       }
     })
@@ -68,7 +68,7 @@ export async function postRequest(body, cookies, link, method = 'POST') {
       console.log(request)
       throw new Error(`Post request by API failed: ${request.statusText}`)
     }
-    return request
+    return request.json()
   } catch (error) {
     console.log(error)
     throw new Error(`Post request by API failed`)
@@ -84,7 +84,7 @@ export async function getRequest(cookies, link) {
         'Content-Type': 'application/json',
         'Accept-Encoding': 'gzip, deflate, br',
         Accept: '*/*',
-        host: 'api.staging.mozork.com',
+        host: baseCreds.HOST,
         Cookie: cookies
       }
     }).then(request => request.json())

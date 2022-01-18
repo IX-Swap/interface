@@ -22,10 +22,10 @@ test.describe('Listing', () => {
     expect(appears).toBe(true)
   })
 
-  test('Check the form view', async ({ issuance, page }, testInfo) => {
-    const form = await page.waitForSelector(issuance.LISTING_FORM)
-    await screenshotMatching(testInfo.title, form, page)
-  })
+  // test('Check the form view', async ({ issuance, page }, testInfo) => {
+  //   const form = await page.waitForSelector(issuance.LISTING_FORM)
+  //   await screenshotMatching(testInfo.title, form, page)
+  // })
 })
 test.describe('Listing with imported dso', () => {
   test.beforeEach(async ({ listing }) => {

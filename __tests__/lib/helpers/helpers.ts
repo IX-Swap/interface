@@ -1,7 +1,5 @@
 import fetch from 'node-fetch'
 import { expect } from '@playwright/test'
-import { baseCreds } from '../helpers/creds'
-import { getCookies } from '../helpers/api'
 
 const LOADER = '[role="progressbar"]'
 const DEFAULT_SELECTOR_TIMEOUT = 50000
@@ -75,9 +73,7 @@ async function clearAndTypeText(selector, words, page) {
   await page.waitForSelector(LOADER, detachedState)
   try {
     const field = await page.waitForSelector(selector, attachedState)
-    await field.click()
-    await page.keyboard.press('Control+A')
-    await page.keyboard.press('Backspace')
+    await field.fill('')
     await field.type(words)
     return words
   } catch (error) {
@@ -189,6 +185,7 @@ async function screenshotMatching(name: string, element, page, range = 0.9) {
     threshold: range
   })
 }
+
 async function getCount(page, element) {
   await page.waitForSelector(element, attachedState)
   // Do not add wait for element

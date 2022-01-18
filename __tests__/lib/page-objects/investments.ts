@@ -11,25 +11,49 @@ class Invest {
   }
 
   getBalance = async (cookies, userId) => {
-    const balance = (await getRequest(cookies, `virtual-accounts/` + userId)).data[0].documents[1].balance
-    return balance
+    const resp = await getRequest(cookies, `virtual-accounts/` + userId)
+    try {
+      const balance = resp.data[0].documents[0].balance
+      return balance
+    } catch (error) {
+      console.log('getBalance', error)
+      console.log(resp.data[0].documents)
+    }
   }
 
   getTokenBalance = async (cookies, userId) => {
-    const balance = (await getRequest(cookies, `custody/available-tokens/` + userId)).data[0].documents[3]
-    return balance
+    const resp = await getRequest(cookies, `custody/available-tokens/` + userId)
+    try {
+      const balance = resp.data[0].documents[0]
+      return balance
+    } catch (error) {
+      console.log('getTokenBalance', error)
+      console.log(resp.data[0].documents)
+    }
   }
+
+  // getTokenBalance = async (cookies, userId) => {
+  //   const resp = await getRequest(cookies, `custody/balances/` + userId)
+
+  //   try {
+  //     const balance = resp.data.balances
+  //     return balance
+  //   } catch (error) {
+  //     console.log('getTokenBalance', error)
+  //     console.log(resp.data[0].documents)
+  //   }
+  // }
 
   fullBalances = async cookies => {
     const user1tokenBalance = await this.getTokenBalance(cookies[0], baseCreds.firstUserId)
     const user2tokenBalance = await this.getTokenBalance(cookies[1], baseCreds.secondUserId)
     const user3tokenBalance = await this.getTokenBalance(cookies[2], baseCreds.thirdUserId)
 
-    const user1SGDnBalance = await this.getBalance(cookies[0], baseCreds.firstUserId)
+    const user1SGDBalance = await this.getBalance(cookies[0], baseCreds.firstUserId)
     const user2SGDBalance = await this.getBalance(cookies[1], baseCreds.secondUserId)
     const user3SGDBalance = await this.getBalance(cookies[2], baseCreds.thirdUserId)
 
-    return { user1tokenBalance, user1SGDnBalance, user2tokenBalance, user2SGDBalance, user3tokenBalance, user3SGDBalance }
+    return { user1tokenBalance, user1SGDBalance, user2tokenBalance, user2SGDBalance, user3tokenBalance, user3SGDBalance }
   }
 
   checkSearch = async (searchField, words, api) => {
@@ -74,7 +98,7 @@ class Invest {
     await shouldExist(invest.LANDING_TABLES_PANEL, this.page)
   }
 
-  toSecondaryMarket = async (link = text.requests.IXPS_SGD_PAIR) => {
+  toSecondaryMarket = async (link = text.requests.TOKEN_SGD_PAIR) => {
     await navigate(baseCreds.URL + link, this.page)
     await shouldExist(invest.GRAPH, this.page)
     const present = await this.page.isVisible(kyc.DIALOG_VIEW)
@@ -85,6 +109,8 @@ class Invest {
   }
 
   secondMarketBuy = async (price, amount) => {
+    await this.page.waitForTimeout(5000)
+
     await typeText(invest.fields.PRICE, price, this.page)
     await typeText(invest.fields.AMOUNT, amount, this.page)
     await click(invest.buttons.PLACE_ORDER, this.page)
@@ -112,12 +138,12 @@ class Invest {
   //   const exist = await waitForText(this.page, 'Order Cancelled')
   //   return exist
   // }
-  // secondMarketCancelOrder = async () => {
-  //   await this.toSecondaryMarket()
-  //   await click(invest.buttons.CANCEL_ORDER, this.page)
-  //   const exist = await waitForText(this.page, 'Order Cancelled')
-  //   return exist
-  // }
+  secondMarketCancelOrder = async () => {
+    await this.toSecondaryMarket()
+    await click(invest.buttons.CANCEL_ORDER, this.page)
+    const exist = await waitForText(this.page, 'Order Cancelled')
+    return exist
+  }
 
   checkCommitmentsPage = async () => {
     await click(invest.INVEST_TAB, this.page)

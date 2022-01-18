@@ -1,14 +1,16 @@
 const dotenv = require('dotenv')
 dotenv.config()
 
-let baseUrl = 'https://staging.mozork.com/'
+const setENV = 'staging'
+let baseUrl = `https://${setENV}.mozork.com/`
 if (process.env.GH_REP?.includes('staging')) {
   baseUrl = 'http://localhost:3000/'
 }
 
 const baseCreds = {
   GH_ENV: process.env.GH_REP,
-  BASE_API: 'https://api.staging.mozork.com/',
+  HOST: `api.${setENV}.mozork.com`,
+  BASE_API: `https://api.${setENV}.mozork.com/`,
   URL: baseUrl,
   EMAIL: 'xe2v112a@mailinator.com',
   EMAIL_APPROVED: 'lopezmichaela1b031@gmail.com',
@@ -26,12 +28,12 @@ const baseCreds = {
   MAIL_FOR_CAPITAL_CALL: 'luch41638787427054@wwjmp.com',
   AUTHORIZER_USER: 'authorizerTests@esiix.com',
   commitments: 'qamyro@mailinator.com',
-  firstExchange: 'pochtamoyapochta123+firstexchange@gmail.com',
-  firstUserId: '61dbf9f4c9056c0daf9c92ea',
-  secondExchange: 'pochtamoyapochta123+secondEchange@gmail.com',
-  secondUserId: '61dbfb32c9056c0daf9c943e',
-  thirdExchange: 'pochtamoyapochta123+thirdExchange@gmail.com',
-  thirdUserId: '61dbfd3ac9056c0daf9c9589'
+  firstExchange: 'test_dev_exchange_1_user@esiix.com',
+  firstUserId: '61e1640547ade252462cec89',
+  secondExchange: 'test_dev_exchange_2_user@esiix.com',
+  secondUserId: '61e167f447ade252462cf19e',
+  thirdExchange: 'test_dev_exchange_3_user@esiix.com',
+  thirdUserId: '61e1696047ade252462cf361'
 }
 
 export { baseCreds }
