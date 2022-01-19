@@ -7,6 +7,7 @@ export const text = {
     bankAccount: 'app/accounts/bank-accounts',
     cashWithdrawal: 'app/accounts/cash-withdrawals',
     identityIndividualsList: 'identity/individuals/list',
+    individualsRejectedList: 'app/authorizer/individuals?authorizationStatus=Rejected',
     identityCorporatesList: 'identity/corporates/list',
     orderExchange: 'exchange/orders',
     dsoList: 'issuance/dso/list',

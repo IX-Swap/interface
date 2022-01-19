@@ -21,7 +21,7 @@ test.describe('', () => {
       expect(pages).toBe(2)
     })
 
-    test('Custody address should be created', async ({ investment }) => {
+    test.skip('(Bug)Custody address should be created', async ({ investment }) => {
       await investment.createCustodyAddress()
     })
 
@@ -40,7 +40,7 @@ test.describe('', () => {
     })
   })
 
-  test.describe('Secondary market', () => {
+  test.skip('Secondary market', () => {
     test('The buy order should be created', async ({ investment }) => {
       const orderCreated = await investment.secondMarketBuy('10', '5')
       expect(orderCreated).toBe(true)
@@ -51,12 +51,12 @@ test.describe('', () => {
       expect(orderCancelled).toBe(true)
     })
 
-    test.skip('The sell order should be created', async ({ investment }) => {
+    test('The sell order should be created', async ({ investment }) => {
       const orderCreated = await investment.secondMarketSell('10', '5')
       expect(orderCreated).toBe(true)
     })
 
-    test.skip('The sell order should be cancelled', async ({ investment }) => {
+    test('The sell order should be cancelled', async ({ investment }) => {
       const orderCancelled = await investment.secondMarketCancelSellOrder()
       expect(orderCancelled).toBe(true)
     })

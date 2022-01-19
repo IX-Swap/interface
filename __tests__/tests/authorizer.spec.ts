@@ -125,7 +125,8 @@ test.describe('Check Individual Identities page', () => {
     await expect(page).toHaveURL(/app\/authorizer\/individuals\/\S+\/view/g)
   })
 
-  test('Search should work', async ({ authorizer }) => {
+  test('Search should work', async ({ authorizer, page }) => {
+    await navigate(baseCreds.URL + text.requests.individualsRejectedList, page)
     const table = await authorizer.checkAuthorizePagesSearch('Fredericka', text.requests.identityIndividualsList)
     await expect(table).toContainText('Fredericka')
   })
@@ -137,6 +138,7 @@ test.describe('Check Individual Identities page', () => {
     expect(rejected + 1).toEqual(allRejected)
   })
   test('Should be approved from the view page', async ({ authorizer, page }) => {
+    await navigate(baseCreds.URL + text.requests.individualsRejectedList, page)
     await click(invest.buttons.VIEW_INVEST, page)
     await authorizer.approve()
     const allApproved = await authorizer.getDataForIdentityTable(approvedApi)

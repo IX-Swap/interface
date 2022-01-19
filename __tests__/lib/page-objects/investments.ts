@@ -130,14 +130,14 @@ class Invest {
     return toast.includes('Order created')
   }
 
-  // secondMarketCancelSellOrder = async () => {
-  //   await this.toSecondaryMarket()
-  //   await click(invest.listBox.PAIR_NAME, this.page)
-  //   await click(invest.listBox.IXPS_SGD_PAIR, this.page)
-  //   await click(invest.buttons.CANCEL_ORDER, this.page)
-  //   const exist = await waitForText(this.page, 'Order Cancelled')
-  //   return exist
-  // }
+  secondMarketCancelSellOrder = async () => {
+    await this.toSecondaryMarket()
+    await click(invest.listBox.PAIR_NAME, this.page)
+    await click(invest.listBox.IXPS_SGD_PAIR, this.page)
+    await click(invest.buttons.CANCEL_ORDER, this.page)
+    const exist = await waitForText(this.page, 'Order Cancelled')
+    return exist
+  }
   secondMarketCancelOrder = async () => {
     await this.toSecondaryMarket()
     await click(invest.buttons.CANCEL_ORDER, this.page)

@@ -96,9 +96,7 @@ class Authorizer {
     await locator.type(word)
     await click(issuance.listings.buttons.SUBMIT, this.page)
     await waitForRequestInclude(this.page, baseCreds.BASE_API + api, 'POST')
-    const table = await this.page.locator(invest.TABLE)
-    // await navigate(baseCreds.URL + text.requests.bankAccount, this.page)
-
+    const table = await this.page.locator('tbody')
     return table
   }
   approve = async () => {

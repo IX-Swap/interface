@@ -1,7 +1,7 @@
 import { PlaywrightTestConfig, devices } from '@playwright/test'
 
 const config: PlaywrightTestConfig = {
-  workers: 6,
+  workers: 1,
   timeout: 180000,
   updateSnapshots: 'missing',
   reporter: [['allure-playwright'], ['list']],
@@ -9,7 +9,7 @@ const config: PlaywrightTestConfig = {
   projects: [
     {
       name: 'Chrome',
-      // retries: 1,
+      retries: 2,
       timeout: 180000,
       use: {
         headless: true,
