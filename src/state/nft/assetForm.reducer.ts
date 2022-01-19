@@ -7,6 +7,7 @@ import {
   setFreeze,
   setLevels,
   setLink,
+  setMaxSupply,
   setName,
   setNewCollectionName,
   setNSFW,
@@ -32,6 +33,7 @@ const initialState: AssetForm = {
   isNSFW: false,
   newCollectionName: '',
   selectedContractAddress: '',
+  maxSupply: 1000,
 }
 
 export default createReducer<AssetForm>(initialState, (builder) =>
@@ -77,5 +79,8 @@ export default createReducer<AssetForm>(initialState, (builder) =>
     })
     .addCase(setSelectedContractAddress, (state, { payload: { address } }) => {
       state.selectedContractAddress = address
+    })
+    .addCase(setMaxSupply, (state, { payload: { supply } }) => {
+      state.maxSupply = supply
     })
 )

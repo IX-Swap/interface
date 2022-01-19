@@ -24,4 +24,5 @@ export const setStats = createAction<{ stats: Array<NumericTrait> }>('nft/setSta
 export const setNSFW = createAction<{ isNSFW: boolean }>('nft/setNSFW')
 export const setNewCollectionName = createAction<{ name: string }>('nft/setNewCollectionName')
 export const setSelectedContractAddress = createAction<{ address: string }>('nft/setSelectedContractAddress')
+export const setMaxSupply = createAction<{ supply: number }>('nft/setMaxSupply')
 // end form actions

@@ -28,6 +28,7 @@ import {
   setFreeze,
   setLevels,
   setLink,
+  setMaxSupply,
   setName,
   setNewCollectionName,
   setNSFW,
@@ -117,7 +118,7 @@ export const useDeployCollection = () => {
   const addTransaction = useTransactionAdder()
   const showError = useShowError()
   return useCallback(
-    async ({ name }: { name: string }) => {
+    async ({ name, maxSupply }: { name: string; maxSupply: number }) => {
       try {
         if (!account || !library) {
           return
@@ -128,7 +129,7 @@ export const useDeployCollection = () => {
         const myContract = contract
           .deploy({
             data: NFT_BYTE_CODE['byteCode'],
-            arguments: [1000, `IXS-${name}`, 'IXSNFT'],
+            arguments: [maxSupply, `IXS-${name}`, 'IXSNFT'],
           })
           .encodeABI()
 
@@ -330,6 +331,7 @@ export function useCreateAssetActionHandlers(): {
   onSetCollection: (collection: NFTCollection | null) => void
   onSetNewCollectionName: (name: string) => void
   onSetActiveContractAddress: (address: string) => void
+  onSetMaxSupply: (supply: number) => void
 } {
   const dispatch = useDispatch<AppDispatch>()
 
@@ -417,6 +419,12 @@ export function useCreateAssetActionHandlers(): {
     },
     [dispatch]
   )
+  const onSetMaxSupply = useCallback(
+    (supply: number) => {
+      dispatch(setMaxSupply({ supply }))
+    },
+    [dispatch]
+  )
   return {
     onSelectFile,
     onSelectPreview,
@@ -432,6 +440,7 @@ export function useCreateAssetActionHandlers(): {
     onSetCollection,
     onSetNewCollectionName,
     onSetActiveContractAddress,
+    onSetMaxSupply,
   }
 }
 
@@ -504,7 +513,7 @@ export const useCreateNftAssetForm = (history: H.History) => {
   const createNFTAsset = useCreateNft()
   const form = useAssetFormState()
   const showError = useShowError()
-  const { collection, newCollectionName } = form
+  const { collection, newCollectionName, maxSupply } = form
   const { library, account, chainId } = useActiveWeb3React()
   const { onSetActiveContractAddress } = useCreateAssetActionHandlers()
   return useCallback(async () => {
@@ -532,7 +541,7 @@ export const useCreateNftAssetForm = (history: H.History) => {
         contractAddress = collection.address
       } else {
         if (newCollectionName) {
-          const newContractAddress = await deployCollection({ name: newCollectionName })
+          const newContractAddress = await deployCollection({ name: newCollectionName, maxSupply })
           contractAddress = newContractAddress
           if (contractAddress) {
             contractInstance = getNftContract({ addressOrAddressMap: contractAddress, library, account, chainId })

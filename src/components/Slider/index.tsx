@@ -94,6 +94,7 @@ interface InputSliderProps {
   min?: number
   max?: number
   size?: number
+  id?: string
 }
 
 export default function Slider({
