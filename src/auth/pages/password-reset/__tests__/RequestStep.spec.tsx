@@ -49,7 +49,7 @@ describe('RequestStep', () => {
       <RequestStep />,
       { setEmail }
     )
-    const email = getByLabelText(/email address/i)
+    const email = getByLabelText(/email/i)
     const submitButton = getByText(/reset/i)
 
     fireEvent.change(email, {
@@ -66,7 +66,7 @@ describe('RequestStep', () => {
 
   it('handles click on "Back To Login"', async () => {
     const { getByText } = renderWithPasswordResetStore(<RequestStep />)
-    const backToLogin = getByText(/back to login/i)
+    const backToLogin = getByText(/back to sign in/i)
 
     fireEvent.click(backToLogin)
     expect(history.location.pathname).toBe(AuthRoute.login)

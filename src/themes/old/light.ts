@@ -1,5 +1,5 @@
 import { ThemeOptions } from '@material-ui/core'
-import { themeColors } from 'themes/colors'
+import { themeColors } from 'themes/old/colors'
 import tinycolor from 'tinycolor2'
 
 export const lightTheme: ThemeOptions = {

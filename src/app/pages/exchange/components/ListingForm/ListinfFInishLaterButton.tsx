@@ -44,7 +44,7 @@ export const ListingFinishLaterButton = (
       onClick={handleClick}
       disabled={isCreating || isUpdating}
     >
-      {listing === undefined || isDataFromDSO ? 'Finish Later' : 'Save'}
+      {listing === undefined || isDataFromDSO ? 'Save Draft' : 'Save'}
     </Button>
   )
 }

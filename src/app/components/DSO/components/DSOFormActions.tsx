@@ -15,23 +15,24 @@ export const DSOFormActions = (props: DSOFormActionsProps) => {
 
   return (
     <>
-      <Button
-        data-testid='preview'
-        variant={'contained'}
-        color='primary'
-        disableElevation
-        onClick={() =>
-          push(
-            generatePath(IssuanceRoute.preview, {
-              dsoId: dso?._id,
-              issuerId: dso?.user
-            })
-          )
-        }
-        disabled={dso === undefined}
-      >
-        Preview
-      </Button>
+      {dso !== undefined && (
+        <Button
+          data-testid='preview'
+          variant={'contained'}
+          color='primary'
+          disableElevation
+          onClick={() =>
+            push(
+              generatePath(IssuanceRoute.preview, {
+                dsoId: dso?._id,
+                issuerId: dso?.user
+              })
+            )
+          }
+        >
+          Preview
+        </Button>
+      )}
 
       <Box mx={1} component='span' />
 

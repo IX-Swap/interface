@@ -57,6 +57,14 @@ module.exports = {
             }
           }
         ]
+      },
+      {
+        test: /\.(woff|woff2|ttf|otf)(\?.*)?$/,
+        exclude: /(node_modules)/,
+        loader: 'file-loader',
+        options: {
+          name: '[path][name].[ext]'
+        }
       }
     ]
   },

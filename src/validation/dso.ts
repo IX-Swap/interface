@@ -92,17 +92,23 @@ export const dsoFormBaseValidationSchema = {
       is: 'Debt',
       then: number().transform(numberTransformer).required('Required')
     }),
-  minimumInvestment: number().nullable().required('Required'),
-  pricePerUnit: number().nullable().required('Required'),
+  minimumInvestment: number()
+    .typeError('Minimum investment must be a number')
+    .nullable()
+    .required('Required'),
+  pricePerUnit: number()
+    .typeError('Price per unit must be a number')
+    .nullable()
+    .required('Required'),
   subscriptionDocument: object<DataroomFile>(),
   tokenName: string()
     .required('Required')
-    .matches(
-      /(?<=\s+|^)[a-zA-Z]+(?=\s+|$)/g,
-      'Token name must not have special characters'
-    ),
+    .matches(/^[a-zA-Z\s]*$/g, 'Token name must not have special characters'),
   tokenSymbol: string().required('Required'),
-  totalFundraisingAmount: number().nullable().required('Required'),
+  totalFundraisingAmount: number()
+    .typeError('Total fundraising amount must be a number')
+    .nullable()
+    .required('Required'),
   useOfProceeds: string().required('Required'),
   logo: string().required('Required'),
   policyBuilder: object(),

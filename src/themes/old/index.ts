@@ -1,8 +1,8 @@
 import { createTheme, Theme } from '@material-ui/core/styles'
-import { darkTheme } from 'themes/dark'
-import { lightTheme } from 'themes/light'
-import { getThemeOverrides } from 'themes/overrides'
-import { typography } from 'themes/typography'
+import { darkTheme } from 'themes/old/dark'
+import { lightTheme } from 'themes/old/light'
+import { getThemeOverrides } from 'themes/old/overrides'
+import { typography } from 'themes/old/typography'
 
 export enum AppTheme {
   Light = 'Light',

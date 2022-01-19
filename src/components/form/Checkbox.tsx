@@ -6,6 +6,7 @@ import {
 } from '@material-ui/core'
 import React from 'react'
 import { TypedFieldRenderComponentProps } from 'components/form/types'
+import { ReactComponent as SuccessIcon } from 'assets/icons/success_icon.svg'
 
 export interface CheckboxProps extends Omit<FormControlLabelProps, 'control'> {
   reverse?: boolean
@@ -31,7 +32,7 @@ export const Checkbox = (
         alignItems: 'flex-start'
       }}
       checked={reverse ? !value : value}
-      control={<MUICheckbox name={name} />}
+      control={<MUICheckbox name={name} checkedIcon={<SuccessIcon />} />}
       label={
         <Typography
           variant='body1'

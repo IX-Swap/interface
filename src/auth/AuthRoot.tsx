@@ -1,63 +1,40 @@
 import React from 'react'
-import { Grid, Box } from '@material-ui/core'
-import { Copyright } from 'auth/components/Copyright'
-import { AuthWrapper } from 'ui/AuthWrapper'
-import { InfoPanel } from 'auth/components/InfoPanel'
-import { AppLogo } from 'app/components/AppLogo/AppLogo'
+import { ReactComponent as AppLogo } from 'assets/icons/new_app_logo.svg'
 import { useStyles } from 'auth/pages/AuthRootStyles.styles'
 import { AuthRouter } from 'auth/router/AuthRouter'
+import { Box, Grid } from '@material-ui/core'
 
 export const AuthRoot: React.FC = () => {
-  const { container, formContainer } = useStyles()
+  const {
+    container,
+    wrapper,
+    formContainer,
+    background,
+    backgroundImage,
+    formWrapper,
+    logo
+  } = useStyles()
 
   return (
-    <Grid
-      className={container}
-      container
-      justifyContent='center'
-      alignItems='center'
-      alignContent='center'
-    >
-      <Grid item xs={12}>
-        <AuthWrapper
+    <Grid className={container} container>
+      <Grid item className={wrapper}>
+        <Grid
+          className={formWrapper}
           container
-          direction='column'
-          justifyContent='center'
-          wrap='nowrap'
-          spacing={0}
+          direction={'column'}
+          alignItems={'stretch'}
         >
-          <Grid item>
-            <Grid container spacing={0} style={{ height: '100%' }}>
-              <Grid item xs={12} md={7}>
-                <Box className={formContainer}>
-                  <Grid container direction='column' spacing={4}>
-                    <Grid item>
-                      <Grid
-                        container
-                        justifyContent='center'
-                        alignItems='center'
-                      >
-                        <Grid item>
-                          <AppLogo color />
-                        </Grid>
-                      </Grid>
-                    </Grid>
-                    <Grid item>
-                      <AuthRouter />
-                    </Grid>
-                  </Grid>
-                </Box>
-              </Grid>
-              <Grid item xs={12} md={5}>
-                <InfoPanel />
-              </Grid>
-            </Grid>
+          <Box className={logo}>
+            <AppLogo />
+          </Box>
+          <Grid item className={formContainer}>
+            <AuthRouter />
           </Grid>
-        </AuthWrapper>
+        </Grid>
       </Grid>
-      <Grid item xs={12}>
-        <Copyright />
-      </Grid>
+      <Box className={background}>
+        <Box className={backgroundImage} />
+      </Box>
     </Grid>
   )
 }

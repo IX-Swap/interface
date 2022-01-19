@@ -19,27 +19,27 @@ export const ListingFormActions = (props: ListingFormActionsProps) => {
 
   return (
     <>
-      <Button
-        variant={'contained'}
-        color='primary'
-        disableElevation
-        onClick={() =>
-          push(
-            generatePath(OTCMarketRoute.previewListing, {
-              listingId: listing?._id,
-              issuerId:
-                typeof listing?.user === 'string'
-                  ? listing?.user
-                  : getIdFromObj(listing?.user)
-            })
-          )
-        }
-        disabled={listing === undefined || isDataFromDSO}
-      >
-        Preview
-      </Button>
+      {!(listing === undefined || isDataFromDSO) && (
+        <Button
+          variant={'contained'}
+          color='primary'
+          disableElevation
+          onClick={() =>
+            push(
+              generatePath(OTCMarketRoute.previewListing, {
+                listingId: listing?._id,
+                issuerId:
+                  typeof listing?.user === 'string'
+                    ? listing?.user
+                    : getIdFromObj(listing?.user)
+              })
+            )
+          }
+        >
+          Preview
+        </Button>
+      )}
       <Box mx={1} component='span' />
-
       <ListingFinishLaterButton
         isDataFromDSO={isDataFromDSO}
         listing={listing}

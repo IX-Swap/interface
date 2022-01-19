@@ -8,7 +8,7 @@ import { DropdownContent } from 'app/components/Dropdown/DropdownContent'
 import { ThemeProvider } from '@material-ui/styles'
 import { PopperPlacementType } from '@material-ui/core'
 import { useAppTheme } from 'hooks/useAppTheme'
-import { AppTheme, getAppTheme } from 'themes'
+import { AppTheme, getAppTheme } from 'themes/old'
 
 export interface DropdownTriggerProps {
   triggerProps: ReturnType<typeof bindTrigger>

@@ -29,7 +29,7 @@ const columns: Array<TableColumn<CashWithdrawal>> = [
     label: 'Amount',
     secret: true,
     render: (val: number, row: CashWithdrawal) =>
-      formatMoney(val, row.asset?.symbol)
+      formatMoney(val, row?.currency ?? row.asset?.symbol)
   },
   {
     key: 'status',

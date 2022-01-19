@@ -2,7 +2,7 @@ import { Grid, Typography } from '@material-ui/core'
 import { hasValue } from 'helpers/forms'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
-import { PasswordValidationItem } from 'components/form/PasswordValidationItem'
+import { PasswordValidationItem } from 'components/form/PasswordValidationItem/PasswordValidationItem'
 
 export const PasswordValidation = () => {
   const { watch, errors } = useFormContext()
@@ -27,7 +27,7 @@ export const PasswordValidation = () => {
     return null
   }
 
-  const paswordErrorsList = [
+  const passwordErrorsList = [
     {
       type: 'min',
       label: 'At least 12 characters'
@@ -52,7 +52,7 @@ export const PasswordValidation = () => {
 
   return (
     <Grid container direction='column' spacing={1}>
-      {paswordErrorsList.map(error => (
+      {passwordErrorsList.map(error => (
         <Grid item>
           <PasswordValidationItem
             label={error.label}
