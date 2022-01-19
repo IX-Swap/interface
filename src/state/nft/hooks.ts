@@ -143,7 +143,6 @@ export const useDeployCollection = () => {
         const result = await library.getSigner().sendTransaction(params)
         addTransaction(result, { summary: t`Created your ${name} collection successfully` })
         const resp = await result.wait()
-        console.log({ result, resp })
         return resp?.contractAddress
       } catch (e) {
         showError(t`Could not create collection ${(e as Error)?.message}`)
@@ -175,15 +174,11 @@ export const useNftCollection = (address: string) => {
 
   useEffect(() => {
     async function fetchCollectionInfo() {
-      console.log(contract)
       const name = await contract.methods.name().call()
-      console.log('Name: ', name)
       const supply = await contract.methods.totalSupply().call()
-      console.log('Supply: ', supply)
 
       // const [name, supply] = await Promise.all([contract.methods.name().call(), contract.methods.totalSupply().call()])
 
-      console.log(name, supply)
       setInfo({ name, supply })
 
       if (supply === 0) {
@@ -199,9 +194,9 @@ export const useNftCollection = (address: string) => {
       return
     }
 
-    console.log(info.supply)
+    /*console.log(info.supply)
     console.log((page + 1) & pageSize)
-    console.log(info.supply - page * pageSize)
+    console.log(info.supply - page * pageSize)*/
 
     const size = (page + 1) * pageSize > info.supply ? info.supply - page * pageSize : pageSize
 
@@ -213,18 +208,12 @@ export const useNftCollection = (address: string) => {
       .fill(null)
       .map((item, idx) => idx)
 
-    console.log('Indexes: ', tokenIndexes)
-
     const tokenURIs: string[] = await Promise.all(
       tokenIndexes.map((item) => contract.methods.tokenURI(BigNumber.from(item)).call())
     )
 
     setHasMore((page + 1) * pageSize <= info.supply)
     setPage(page + 1)
-
-    console.log('Info: ', info)
-    console.log('URIs: ', tokenURIs)
-    console.log('Page: ', page)
 
     return tokenURIs
   }, [contract.methods, hasMore, info, loading, page])
@@ -247,27 +236,22 @@ export const useNftColelctionImport = (history: H.History) => {
         const web3 = new Web3(library?.provider)
         const contract = new web3.eth.Contract(NFT_CREATE_ABI, address)
 
-        console.log('Contract: ', contract)
-        console.log('Address: ', address)
-        console.log('Account: ', account)
-
         const [result, balance] = await Promise.all([
           contract.methods.owner().call(),
           contract.methods.balanceOf(account).call(),
         ])
 
-        console.log(result)
-
         if (result !== account || balance === 0) {
-          showError('Cannot import collection, you are not the owner')
+          //showError('Cannot import collection, you are not the owner')
+          history.push(`/nft/collections/${address}`)
           return
         }
 
         const name = await contract.methods.name().call()
-
         await apiService.post(nft.createCollection, { name, address })
 
         dispatch(importNftCollection({ id: address }))
+
         history.push(`/nft/collections/${address}`)
       } catch (e) {
         showError(`Error when importing NFT collection: ${(e as Error).message}`)
@@ -450,7 +434,6 @@ export const useCreateNft = () => {
     try {
       dispatch(setCreateNftLoading({ loading: true }))
       const data = await createNftAsset(nftDto)
-      console.log({ data })
       const assetURI = data?.metaUrl
       dispatch(setCreateNftLoading({ loading: false }))
       return assetURI
@@ -471,14 +454,12 @@ export const useFetchMyCollections = () => {
     try {
       dispatch(setCollectionsLoading({ loading: true }))
       const response = await getCollections(account)
-      console.log({ response })
       const collections = response.data
-      console.log({ collections })
       dispatch(setCollections({ collections }))
       dispatch(setCollectionsLoading({ loading: true }))
     } catch (e) {
       dispatch(setCollectionsLoading({ loading: true }))
-      console.log({ e })
+      console.log(e)
     }
   }, [account])
 }
@@ -553,7 +534,6 @@ export const useCreateNftAssetForm = (history: H.History) => {
       if (contractInstance) {
         await mintNFT({ nft: contractInstance, account, assetURI })
         const supply = await contractInstance?.totalSupply()
-        console.log({ supply })
         // supply shows how many. index starts at 0
         history.push(`/nft/collections/${contractAddress}/${supply - 1}`)
         //redirect to individual asset page
