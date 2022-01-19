@@ -1,13 +1,14 @@
 import { Description } from '@ethersproject/properties'
 import { t } from '@lingui/macro'
 import NFT_CREATE_ABI from 'abis/nft-contract-create.json'
+import NFT_ABI from 'abis/nft-contract.json'
 import axios from 'axios'
 import NFT_BYTE_CODE from 'byte-code/nft-contract-byte-code.json'
 import { SupportedChainId } from 'constants/chains'
-import { Contract } from 'ethers'
+import { BigNumber, Contract } from 'ethers'
 import { getNftContract, useNftContract } from 'hooks/useContract'
 import { useActiveWeb3React } from 'hooks/web3'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { FileWithPath } from 'react-dropzone'
 import { useDispatch, useSelector } from 'react-redux'
 import apiService from 'services/apiService'
@@ -16,6 +17,7 @@ import { AppDispatch, AppState } from 'state'
 import { useShowError } from 'state/application/hooks'
 import { useAppDispatch } from 'state/hooks'
 import {
+  importNftCollection,
   setActiveTraitType,
   setCollection,
   setCollections,
@@ -123,7 +125,7 @@ export const useDeployCollection = () => {
         }
         //Deploy contract
         const web3 = new Web3(library.provider)
-        const contract = new web3.eth.Contract(NFT_CREATE_ABI)
+        const contract = new web3.eth.Contract(NFT_ABI)
         const myContract = contract
           .deploy({
             data: NFT_BYTE_CODE['byteCode'],
@@ -133,7 +135,7 @@ export const useDeployCollection = () => {
 
         const params = {
           from: account,
-          gasLimit: Web3.utils.toHex('2650000 '),
+          gasLimit: Web3.utils.toHex('4500000 '),
           gasPrice: Web3.utils.toHex(Web3.utils.toWei('30', 'gwei')),
           data: myContract,
         }
@@ -141,13 +143,121 @@ export const useDeployCollection = () => {
         const result = await library.getSigner().sendTransaction(params)
         addTransaction(result, { summary: t`Created your ${name} collection successfully` })
         const resp = await result.wait()
-        console.log({ result, resp })
         return resp?.contractAddress
       } catch (e) {
-        showError(t`Could not create collection ${e?.message}`)
+        showError(t`Could not create collection ${(e as Error)?.message}`)
       }
     },
     [account, addTransaction, library, showError]
+  )
+}
+
+interface NftCollectionInfo {
+  name: string
+  supply: number
+}
+
+export const useNftCollection = (address: string) => {
+  const { account, library } = useActiveWeb3React()
+
+  const contract = useMemo(() => {
+    const web3 = new Web3(library?.provider)
+    return new web3.eth.Contract(NFT_ABI, address)
+  }, [library, address])
+
+  const [info, setInfo] = useState<NftCollectionInfo | undefined>(undefined)
+  const [page, setPage] = useState(0)
+  const [hasMore, setHasMore] = useState(false)
+  const loading = useMemo(() => info === null, [info])
+
+  const pageSize = 20
+
+  useEffect(() => {
+    async function fetchCollectionInfo() {
+      const name = await contract.methods.name().call()
+      const supply = await contract.methods.totalSupply().call()
+
+      // const [name, supply] = await Promise.all([contract.methods.name().call(), contract.methods.totalSupply().call()])
+
+      setInfo({ name, supply })
+
+      if (supply === 0) {
+        setHasMore(false)
+      }
+    }
+
+    fetchCollectionInfo()
+  }, [contract, setInfo, setHasMore])
+
+  const fetchTokens = useCallback(async () => {
+    if (loading || !info) {
+      return
+    }
+
+    /*console.log(info.supply)
+    console.log((page + 1) & pageSize)
+    console.log(info.supply - page * pageSize)*/
+
+    const size = (page + 1) * pageSize > info.supply ? info.supply - page * pageSize : pageSize
+
+    if (size < 0) {
+      return
+    }
+
+    const tokenIndexes = Array(size)
+      .fill(null)
+      .map((item, idx) => idx)
+
+    const tokenURIs: string[] = await Promise.all(
+      tokenIndexes.map((item) => contract.methods.tokenURI(BigNumber.from(item)).call())
+    )
+
+    setHasMore((page + 1) * pageSize <= info.supply)
+    setPage(page + 1)
+
+    return tokenURIs
+  }, [contract.methods, hasMore, info, loading, page])
+
+  return useMemo(() => ({ loading, info, hasMore, fetchTokens }), [fetchTokens, hasMore, info, loading])
+}
+
+export const useNftColelctionImport = (history: H.History) => {
+  const { account, library } = useActiveWeb3React()
+  const showError = useShowError()
+  const dispatch = useDispatch()
+
+  return useCallback(
+    async ({ address }: { address: string }) => {
+      if (!account || !library) {
+        return
+      }
+
+      try {
+        const web3 = new Web3(library?.provider)
+        const contract = new web3.eth.Contract(NFT_CREATE_ABI, address)
+
+        const [result, balance] = await Promise.all([
+          contract.methods.owner().call(),
+          contract.methods.balanceOf(account).call(),
+        ])
+
+        if (result !== account || balance === 0) {
+          //showError('Cannot import collection, you are not the owner')
+          history.push(`/nft/collections/${address}`)
+          return
+        }
+
+        const name = await contract.methods.name().call()
+        await apiService.post(nft.createCollection, { name, address })
+
+        dispatch(importNftCollection({ id: address }))
+
+        history.push(`/nft/collections/${address}`)
+      } catch (e) {
+        showError(`Error when importing NFT collection: ${(e as Error).message}`)
+      }
+    },
+    [account, dispatch, history, library, showError]
   )
 }
 
@@ -324,7 +434,6 @@ export const useCreateNft = () => {
     try {
       dispatch(setCreateNftLoading({ loading: true }))
       const data = await createNftAsset(nftDto)
-      console.log({ data })
       const assetURI = data?.metaUrl
       dispatch(setCreateNftLoading({ loading: false }))
       return assetURI
@@ -345,14 +454,12 @@ export const useFetchMyCollections = () => {
     try {
       dispatch(setCollectionsLoading({ loading: true }))
       const response = await getCollections(account)
-      console.log({ response })
       const collections = response.data
-      console.log({ collections })
       dispatch(setCollections({ collections }))
       dispatch(setCollectionsLoading({ loading: true }))
     } catch (e) {
       dispatch(setCollectionsLoading({ loading: true }))
-      console.log({ e })
+      console.log(e)
     }
   }, [account])
 }
@@ -386,6 +493,7 @@ export const useCreateNftAssetForm = (history: H.History) => {
   const deployCollection = useDeployCollection()
   const createNFTAsset = useCreateNft()
   const form = useAssetFormState()
+  const showError = useShowError()
   const { collection, newCollectionName, maxSupply } = form
   const { library, account, chainId } = useActiveWeb3React()
   const { onSetActiveContractAddress } = useCreateAssetActionHandlers()
@@ -425,15 +533,27 @@ export const useCreateNftAssetForm = (history: H.History) => {
       // end getting contract instance
       if (contractInstance) {
         await mintNFT({ nft: contractInstance, account, assetURI })
-        const supply = await contractInstance?.getTokenId()
-        console.log({ supply })
+        const supply = await contractInstance?.totalSupply()
         // supply shows how many. index starts at 0
         history.push(`/nft/collections/${contractAddress}/${supply - 1}`)
         //redirect to individual asset page
       }
     } catch (e) {
-      console.log({ e })
-      throw new Error('An error occured when creating NFT')
+      const message = `An error occured when creating NFT: ${(e as Error).message}`
+
+      showError(message)
+      throw new Error(message)
     }
-  }, [account, chainId, collection, createNFTAsset, deployCollection, form, library, , history, newCollectionName])
+  }, [
+    form,
+    createNFTAsset,
+    collection,
+    library,
+    account,
+    chainId,
+    newCollectionName,
+    deployCollection,
+    history,
+    showError,
+  ])
 }
