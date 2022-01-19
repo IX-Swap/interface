@@ -3,29 +3,13 @@ import { BaseProviders, waitFor } from 'test-utils'
 import useMarketListFilters from '../useMarketListFilters'
 import * as useQueryFilter from 'hooks/filters/useQueryFilter'
 import { PairFilter } from 'hooks/types'
+import {
+  filterValuesOnAll,
+  filterValuesOnSearch,
+  initialFilterValues
+} from '__fixtures__/exchange'
 
 describe('useMarketListFilters', () => {
-  const initialFilterValues = {
-    listingKeyword: undefined,
-    isFavorite: undefined,
-    currency: undefined,
-    sortBy: undefined,
-    orderBy: undefined
-  }
-  const filterValuesOnAll = {
-    listingKeyword: '',
-    isFavorite: false,
-    currency: PairFilter.ALL,
-    sortBy: '',
-    orderBy: ''
-  }
-  const filterValuesOnSearch = {
-    listingKeyword: 'US',
-    isFavorite: false,
-    currency: '',
-    sortBy: '',
-    orderBy: ''
-  }
   afterEach(async () => {
     jest.clearAllMocks()
   })

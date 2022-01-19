@@ -8,26 +8,23 @@ const useMarketListFilters = (showFilter: boolean | undefined = false) => {
   const search = getFilterValue('search')
   const sortBy = getFilterValue('sortBy')
   const orderBy = getFilterValue('orderBy')
-  const getSearchQuery = useCallback(() => {
-    const isAll = pairFilter === PairFilter.ALL
-    if (isAll) {
-      return ''
-    }
-    const isCurrency =
-      pairFilter === PairFilter.SGD || pairFilter === PairFilter.USD
-    return isCurrency ? pairFilter : search
-  }, [pairFilter, search])
+  const getSearchQuery = useCallback(
+    () => (pairFilter === PairFilter.ALL ? '' : search),
+
+    [search, pairFilter]
+  )
 
   return useMemo(() => {
-    const pairFilterIsFavorite = pairFilter === 'favorite'
-    const isFavorite = pairFilterIsFavorite
-    const currency = pairFilterIsFavorite ? 'all' : pairFilter
-
+    const pairFilterIsFavorite = pairFilter === PairFilter.FAVORITE
+    const currency =
+      pairFilter === PairFilter.USD || pairFilter === PairFilter.SGD
+        ? pairFilter
+        : ''
     const searchFilter = getSearchQuery()
     if (showFilter) {
       return {
         listingKeyword: searchFilter,
-        isFavorite,
+        isFavorite: pairFilterIsFavorite,
         currency,
         sortBy,
         orderBy

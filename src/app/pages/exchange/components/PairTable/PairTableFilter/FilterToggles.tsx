@@ -22,7 +22,7 @@ export const FilterToggles = () => {
           <ToggleButton
             disableRipple
             className={classNames([filterButton, favoriteButton])}
-            value='favorite'
+            value={PairFilter.FAVORITE}
           >
             <Star fontSize='small' />
           </ToggleButton>

@@ -8,5 +8,6 @@ export interface QueryOrMutationCallbacks<TResponse, TError = any> {
 export enum PairFilter {
   ALL = 'all',
   SGD = 'SGD',
-  USD = 'USD'
+  USD = 'USD',
+  FAVORITE = 'favorite'
 }

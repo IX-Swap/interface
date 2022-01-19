@@ -74,3 +74,25 @@ export const marketTradesData = [
     transaction: 'sell'
   }
 ]
+
+export const initialFilterValues = {
+  listingKeyword: undefined,
+  isFavorite: undefined,
+  currency: undefined,
+  sortBy: undefined,
+  orderBy: undefined
+}
+export const filterValuesOnAll = {
+  listingKeyword: '',
+  isFavorite: false,
+  currency: '',
+  sortBy: '',
+  orderBy: ''
+}
+export const filterValuesOnSearch = {
+  listingKeyword: 'US',
+  isFavorite: false,
+  currency: '',
+  sortBy: '',
+  orderBy: ''
+}

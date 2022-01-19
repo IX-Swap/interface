@@ -26,11 +26,12 @@ export const useMarketList = (showFilter: boolean | undefined = false) => {
     usedFilters?: any,
     cursor: number | undefined = 0
   ) => {
-    const { listingKeyword } = usedFilters
+    const { listingKeyword, currency } = usedFilters
     return await apiService.post<PaginatedData<Pair>>(exchangeURL.marketList, {
       skip: cursor,
       limit: 25,
-      listingKeyword
+      listingKeyword,
+      currency
     })
   }
 
