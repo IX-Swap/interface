@@ -2,9 +2,9 @@ import { ButtonPlus } from 'components/Button'
 import Column from 'components/Column'
 import { RowBetween, RowStart } from 'components/Row'
 import React, { useCallback } from 'react'
+import { traitsSubtitle, traitsTitle, TraitType } from 'state/nft/types'
 import { TYPE } from 'theme'
 import { StyledBarChart, StyledListIcon, StyledStarIcon } from './styleds'
-import { traitsSubtitle, traitsTitle, TraitType } from './types'
 
 export const TraitsPanel = ({ type }: { type: TraitType }) => {
   const getIcon = useCallback(() => {

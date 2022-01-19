@@ -227,6 +227,7 @@ export const ButtonGradient = styled(Base)`
   line-height: 21px;
   text-align: center;
   padding: 7px 0;
+  cursor: pointer;
 `
 
 export const ButtonOutlined = styled(Base)`

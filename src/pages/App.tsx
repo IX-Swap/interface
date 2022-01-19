@@ -29,6 +29,7 @@ import { VestingTab } from './Farming/VestingTab'
 import Faucet from './Faucet'
 import PoolFinder from './PoolFinder'
 import { RedirectPathToStaking, RedirectPathToSwapOnly, RedirectToSwap } from './Swap/redirects'
+
 const AdminKyc = lazy(() => import('./AdminKyc'))
 const Custodian = lazy(() => import('./Custodian'))
 const CreateNFT = lazy(() => import('./CreateNFT'))
@@ -37,6 +38,11 @@ const RemoveLiquidity = lazy(() => import('./RemoveLiquidity'))
 const SecTokenDetails = lazy(() => import('./SecTokenDetails'))
 const Swap = lazy(() => import('./Swap'))
 const PoolV2 = lazy(() => import('./Pool/v2'))
+const NftImport = lazy(() => import('./NftImport'))
+const NFTCollections = lazy(() => import('./NFTCollections'))
+const NFTCollection = lazy(() => import('./NFTCollection'))
+const UpdateNFT = lazy(() => import('./UpdateNFT'))
+const NftAssetPage = lazy(() => import('./NFTAsset'))
 
 const AppWrapper = styled.div`
   display: flex;
@@ -104,6 +110,8 @@ export default function App() {
                 <Route exact strict path="/admin" component={AdminKyc} />
                 <Route exact strict path={routes.nftCreate} component={CreateNFT} />
                 <Route exact strict path={routes.nftList} component={ListNFT} />
+                <Route exact strict path={routes.nftCollections} component={NFTCollections} />
+                <Route exact strict path="/nft/:id/edit" component={UpdateNFT} />
 
                 {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
                   <Route exact strict path="/send" component={RedirectPathToSwapOnly} />
@@ -133,6 +141,10 @@ export default function App() {
 
                 <Route exact strict path="/security-tokens/:currencyId" component={SecTokenDetails} />
                 <Route exact strict path={routes.securityTokens()} component={Custodian} />
+
+                <Route exact strict path="/nft/collections/import" component={NftImport} />
+                <Route exact strict path="/nft/collections/:collectionAddress" component={NFTCollection} />
+                <Route exact strict path="/nft/collections/:collectionAddress/:itemId" component={NftAssetPage} />
 
                 {chainId && TGE_CHAINS_WITH_STAKING.includes(chainId) && (
                   <Route exact strict path={routes.staking} component={StakingTab} />

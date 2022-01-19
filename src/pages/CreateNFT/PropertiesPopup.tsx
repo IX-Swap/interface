@@ -10,31 +10,32 @@ import React, { useState } from 'react'
 import { Box, Flex } from 'rebass'
 import { ApplicationModal } from 'state/application/actions'
 import { useModalOpen, useToggleModal } from 'state/application/hooks'
+import { Trait } from 'state/nft/types'
 import { CloseIcon, ModalBlurWrapper, ModalContentWrapper, ModalPadding, TYPE } from 'theme'
 
 export const PropertiesPopup = ({
   properties,
   setProperties,
 }: {
-  properties: Array<{ name: string; value: string }>
-  setProperties: (properties: Array<{ name: string; value: string }>) => void
+  properties: Array<Trait>
+  setProperties: (properties: Array<Trait>) => void
 }) => {
   const isOpen = useModalOpen(ApplicationModal.PROPERTIES)
   const toggle = useToggleModal(ApplicationModal.PROPERTIES)
-  const [localProperties, setLocalProperties] = useState([...properties, { name: '', value: '' }])
+  const [localProperties, setLocalProperties] = useState([...properties, { trait_type: '', value: '' }])
   const theme = useTheme()
   const onClose = () => {
     toggle()
   }
   const saveFinalProperties = () => {
-    const copy = [...localProperties].filter((record) => record.name && record.value)
+    const copy = [...localProperties].filter((record) => record.trait_type && record.value)
     setProperties(copy)
     setLocalProperties(copy)
     onClose()
   }
   const deleteProperty = ({ index }: { index: number }) => {
     if (localProperties.length === 1) {
-      setLocalProperties([{ name: '', value: '' }])
+      setLocalProperties([{ trait_type: '', value: '' }])
       return
     }
     const copy = [...localProperties]
@@ -43,15 +44,26 @@ export const PropertiesPopup = ({
   }
 
   const addProperty = () => {
-    const updated = [...localProperties, { name: '', value: '' }]
+    const updated = [...localProperties, { trait_type: '', value: '' }]
     setLocalProperties(updated)
   }
 
-  const updateLocalProperties = ({ index, name, value }: { index: number; name?: string; value?: string }) => {
+  const updateLocalProperties = ({
+    index,
+    trait_type,
+    value,
+  }: {
+    index: number
+    trait_type?: string
+    value?: string
+  }) => {
     const copy = [...localProperties]
     const updated = copy.map((record, i) => {
       if (i === index) {
-        return { name: name === undefined ? record.name : name, value: value === undefined ? record.value : value }
+        return {
+          trait_type: trait_type === undefined ? record.trait_type : trait_type,
+          value: value === undefined ? record.value : value,
+        }
       }
       return record
     })
@@ -107,7 +119,7 @@ export const PropertiesPopup = ({
                           <ContainerRow>
                             <InputContainer>
                               <Input
-                                onChange={(e) => updateLocalProperties({ index, name: e?.target?.value })}
+                                onChange={(e) => updateLocalProperties({ index, trait_type: e?.target?.value })}
                                 placeholder={t`Character`}
                                 className={`type-input`}
                                 type="text"
@@ -117,7 +129,7 @@ export const PropertiesPopup = ({
                                 spellCheck="false"
                                 error={false}
                                 pattern=".*$"
-                                value={property.name}
+                                value={property.trait_type}
                                 disabled={false}
                               />
                             </InputContainer>
