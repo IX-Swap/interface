@@ -16,7 +16,7 @@ export default makeStyles(theme => ({
     justifyContent: 'center',
 
     '& .carousel__dot': {
-      display: 'block',
+      display: 'none',
       width: '10px',
       height: '10px',
       borderRadius: '10px',
@@ -30,7 +30,12 @@ export default makeStyles(theme => ({
       },
 
       [theme.breakpoints.up('md')]: {
-        '&:nth-child(2n)': { display: 'none' }
+        '&:nth-child(2)': { display: 'block' },
+        '&:nth-child(5)': { display: 'block' },
+        '&:nth-child(8)': { display: 'block' },
+        '&:nth-child(11)': { display: 'block' },
+        '&:nth-child(14)': { display: 'block' },
+        '&:nth-child(17)': { display: 'block' }
       }
     }
   },
