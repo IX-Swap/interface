@@ -4,19 +4,24 @@ export default makeStyles(theme => ({
   root: {
     position: 'relative',
     maxWidth: '95vw',
-    margin: '0 -12px'
+    margin: '0 -12px',
+
+    '& .carousel__slider': {
+      paddingBottom: theme.spacing(2)
+    }
   },
   sliderWrapper: {
     position: 'relative',
-    marginBottom: 65
+    marginBottom: theme.spacing(4)
   },
   dotGroup: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    marginBottom: theme.spacing(6),
 
     '& .carousel__dot': {
-      display: 'none',
+      display: 'block',
       width: '10px',
       height: '10px',
       borderRadius: '10px',
@@ -24,18 +29,25 @@ export default makeStyles(theme => ({
       padding: '0',
       border: 'none',
       margin: '0 10px',
+      pointerEvents: 'none',
 
       '&--selected': {
         background: theme.palette.grey[500]
       },
 
+      [theme.breakpoints.up('sm')]: {
+        pointerEvents: 'initial',
+        '&:nth-child(2n)': { display: 'none' }
+      },
+
       [theme.breakpoints.up('md')]: {
-        '&:nth-child(2)': { display: 'block' },
-        '&:nth-child(5)': { display: 'block' },
-        '&:nth-child(8)': { display: 'block' },
-        '&:nth-child(11)': { display: 'block' },
-        '&:nth-child(14)': { display: 'block' },
-        '&:nth-child(17)': { display: 'block' }
+        '&:nth-child(2n)': { display: 'block' },
+        '&:nth-child(1)': { display: 'none' },
+        '&:nth-child(3)': { display: 'none' },
+        '&:nth-child(4)': { display: 'none' },
+        '&:nth-child(6)': { display: 'none' },
+        '&:nth-child(7)': { display: 'none' },
+        '&:nth-child(9)': { display: 'none' }
       }
     }
   },
@@ -62,6 +74,18 @@ export default makeStyles(theme => ({
       display: 'none'
     }
   },
-  backButton: { left: '-15px' },
-  nextButton: { right: '-15px' }
+  backButton: {
+    left: '-15px',
+    display: 'none',
+    [theme.breakpoints.up('sm')]: {
+      display: 'initial'
+    }
+  },
+  nextButton: {
+    right: '-15px',
+    display: 'none',
+    [theme.breakpoints.up('sm')]: {
+      display: 'initial'
+    }
+  }
 }))

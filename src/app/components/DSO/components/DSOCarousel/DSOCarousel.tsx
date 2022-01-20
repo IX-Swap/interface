@@ -7,30 +7,33 @@ import {
   DotGroup
 } from 'pure-react-carousel'
 import Box from '@material-ui/core/Box'
-import { useTheme } from '@material-ui/core/styles'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
-import useMediaQuery from '@material-ui/core/useMediaQuery'
 import classNames from 'classnames'
 import useStyles from './DSOCarousel.styles'
 import { CurrentSlideWatcher } from 'app/components/DSO/components/DSOCarousel/CurrentSlideWatcher'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import 'pure-react-carousel/dist/react-carousel.es.css'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 export interface DSOCarouselProps {
   totalSlides: number
 }
 
 export const DSOCarousel = (props: any) => {
   const classes = useStyles()
-  const theme = useTheme()
   const { getFilterValue } = useQueryFilter()
+  const { isMobile, isTablet } = useAppBreakpoints()
   const [currentSlide] = useState(
     parseInt(getFilterValue('currentSlide') ?? '0')
   )
 
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'))
-  const slidesCount = isMobile ? 1 : 3
+  const getSlidesCount = () => {
+    if (isMobile) return 1
+    if (isTablet) return 2
+    return 3
+  }
 
+  const slidesCount = getSlidesCount()
   const { children, totalSlides, ...rest } = props
 
   const nextButton = classNames(classes.navButton, classes.nextButton)
