@@ -30,19 +30,18 @@ import { NFTCollection } from 'state/nft/types'
 import { RowCenter } from 'components/Row'
 
 const NFTCollections: FC = () => {
-  const [selectedTabId, setSelectedTabId] = useState(1)
+  // const [selectedTabId, setSelectedTabId] = useState(1)
   const { account } = useActiveWeb3React()
   const fetchMyCollections = useFetchMyCollections()
-  // const { myCollections, collectionsLoading } = useNFTState()
-  const collectionsLoading = false
-  const myCollections: NFTCollection[] = []
+  const { myCollections, collectionsLoading } = useNFTState()
+
   useEffect(() => {
     fetchMyCollections()
   }, [fetchMyCollections])
 
-  const handleTabChange = (id: number) => {
-    setSelectedTabId(id)
-  }
+  // const handleTabChange = (id: number) => {
+  //   setSelectedTabId(id)
+  // }
 
   if (!account) return <NFTConnectWallet />
   return (
@@ -95,7 +94,7 @@ const NFTCollections: FC = () => {
               </CollectionCard>
             ))}
         </CollectionsGrid>
-        {!collectionsLoading && !myCollections.length && (
+        {!collectionsLoading && myCollections.length === 0 && (
           <RowCenter>
             <TYPE.titleBig>You have no collections</TYPE.titleBig>
           </RowCenter>
