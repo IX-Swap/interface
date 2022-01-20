@@ -23,7 +23,7 @@ export interface NFTImage {
 export interface NFTImageShow {
   name: string
   description: string
-  image: string
+  file: string
   date?: number
   attributes: (NFTAttribute | NFTAttributeDisplay)[]
   isNSFW: string
