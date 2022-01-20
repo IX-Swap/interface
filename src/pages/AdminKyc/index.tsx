@@ -6,12 +6,12 @@ import { Trans } from '@lingui/macro'
 import { useAdminState, useGetMe } from 'state/admin/hooks'
 import { AdminKycTable } from 'components/AdminKycTable'
 import { AdminTransactionsTable } from 'components/AdminTransactionsTable'
+import { AdminSecurityCatalog } from 'components/AdminSecurityCatalog'
 import { Navbar } from './Navbar'
 import { Search } from './Search'
 import { AutoColumn, ColumnCenter } from 'components/Column'
 import { CustodianToggleWrapper } from 'pages/Custodian/styleds'
 import { Border, ToggleOption } from 'components/Tabs'
-
 interface Tab {
   label: string
   value: 'kyc' | 'transactions' | 'security-catalog'
@@ -24,7 +24,7 @@ const tabs: Tab[] = [
 ]
 
 const AdminKyc = () => {
-  const [selectedTab, setSelectedTab] = useState<'kyc' | 'transactions' | 'security-catalog'>('kyc')
+  const [selectedTab, setSelectedTab] = useState<'kyc' | 'transactions' | 'security-catalog'>('security-catalog')
   const history = useHistory()
   const { adminData, adminError, adminLoading } = useAdminState()
   const getMe = useGetMe()
@@ -65,7 +65,7 @@ const AdminKyc = () => {
       case 'transactions':
         return <AdminTransactionsTable />
       case 'security-catalog':
-        return <div>Sec catalog</div>
+        return <AdminSecurityCatalog />
     }
   }
 

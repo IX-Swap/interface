@@ -158,7 +158,7 @@ const Wallet = styled.div`
   -webkit-text-fill-color: transparent;
 `
 
-const Container = styled.div`
+export const Container = styled.div`
   display: grid;
   grid-template-columns: 100%;
   grid-gap: 50px;
