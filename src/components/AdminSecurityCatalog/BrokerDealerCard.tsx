@@ -19,9 +19,14 @@ export interface BrokerDealerFakeProps {
     isTradable: boolean
     isFeatured: boolean
   }[]
+  handleEditClick: (editIssuer: any) => void
 }
 
-export const BrokerDealerCard: FC<BrokerDealerFakeProps> = ({ info, tokens }: BrokerDealerFakeProps) => {
+export const BrokerDealerCard: FC<BrokerDealerFakeProps> = ({
+  info,
+  tokens,
+  handleEditClick,
+}: BrokerDealerFakeProps) => {
   const { website, logo, name } = info
 
   return (
@@ -30,7 +35,14 @@ export const BrokerDealerCard: FC<BrokerDealerFakeProps> = ({ info, tokens }: Br
         <TYPE.title6>{logo}</TYPE.title6>
         <TYPE.title6>{name}</TYPE.title6>
         <TYPE.descriptionThin>{website}</TYPE.descriptionThin>
-        <EditButton color="white">Edit</EditButton>
+        <EditButton
+          onClick={() => handleEditClick({ name, website, logo, tokens })}
+          marginLeft="auto"
+          marginRight="19px"
+          color="white"
+        >
+          Edit
+        </EditButton>
       </CardHeader>
 
       <TokensList>

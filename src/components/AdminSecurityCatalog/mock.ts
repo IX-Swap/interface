@@ -1,6 +1,6 @@
 import { BrokerDealerFakeProps } from './BrokerDealerCard'
 
-export const mockBrokerDealers: ReadonlyArray<BrokerDealerFakeProps> = [
+export const mockBrokerDealers: ReadonlyArray<Omit<BrokerDealerFakeProps, 'handleEditClick'>> = [
   {
     info: {
       logo: 'InvestaX',

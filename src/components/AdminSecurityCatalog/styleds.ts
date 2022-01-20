@@ -25,8 +25,6 @@ export const CardHeader = styled(BodyRow)`
 `
 
 export const EditButton = styled(ApproveButton)`
-  margin-left: auto;
-  margin-right: 19px;
   width: 109px;
   padding: 0px;
   color: white;
@@ -47,6 +45,35 @@ export const TokensListItem = styled.div`
   > div {
     padding: 0px 40px;
     display: flex;
+    align-items: center;
+  }
+`
+
+export const FormGrid = styled.div`
+  display: grid;
+  grid-template-columns: 4fr 4fr 60px;
+  grid-gap: 25px;
+`
+
+export const Logo = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 36px;
+  background: #372e5e;
+`
+
+export const TokenCard = styled(BodyRow)`
+  display: grid;
+  grid-template-columns: 1fr 2fr 3fr 2fr 2fr 2fr 2fr 1fr;
+  height: 80px;
+
+  > div {
+    display: flex;
+    justify-content: start;
+    padding-left: 15px;
     align-items: center;
   }
 `
