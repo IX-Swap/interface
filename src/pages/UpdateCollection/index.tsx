@@ -15,7 +15,7 @@ const Update = () => {
     <Container width={['100%']} maxWidth={'900px'}>
       <StyledTab>
         <TYPE.title4>
-          <Trans>Update NFT</Trans>
+          <Trans>Update Collection</Trans>
         </TYPE.title4>
       </StyledTab>
       <UpdateForm />

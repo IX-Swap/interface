@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { Flex, Text } from 'rebass'
 import { Link } from 'react-router-dom'
 
@@ -23,25 +23,36 @@ import { ReactComponent as Edit } from '../../assets/images/edit-circle-white.sv
 import { ButtonEmpty } from 'components/Button'
 import { useActiveWeb3React } from 'hooks/web3'
 import { NFTConnectWallet } from 'components/NFTConnectWallet'
+import { useFetchMyCollections, useNFTState } from 'state/nft/hooks'
+import { LoaderThin } from 'components/Loader/LoaderThin'
+import { Type } from 'react-feather'
+import { NFTCollection } from 'state/nft/types'
+import { RowCenter } from 'components/Row'
 
 const NFTCollections: FC = () => {
   const [selectedTabId, setSelectedTabId] = useState(1)
   const { account } = useActiveWeb3React()
+  const fetchMyCollections = useFetchMyCollections()
+  // const { myCollections, collectionsLoading } = useNFTState()
+  const collectionsLoading = false
+  const myCollections: NFTCollection[] = []
+  useEffect(() => {
+    fetchMyCollections()
+  }, [fetchMyCollections])
 
   const handleTabChange = (id: number) => {
     setSelectedTabId(id)
   }
 
   if (!account) return <NFTConnectWallet />
-
   return (
     <Container>
       <Body>
         <TYPE.titleBig marginBottom={64} textAlign="center" fontWeight={600}>
           Explore Collections
         </TYPE.titleBig>
-
-        <Flex justifyContent="center" alignItems="center">
+        {/* We don't have categories for collections for now. May be present in the future */}
+        {/* <Flex justifyContent="center" alignItems="center">
           {tabs.map(({ id, label }) => (
             <ButtonEmpty
               width="auto"
@@ -61,27 +72,34 @@ const NFTCollections: FC = () => {
             </ButtonEmpty>
           ))}
         </Flex>
-        <Divider marginBottom={40} />
-
+        <Divider marginBottom={40} /> */}
+        {collectionsLoading && <LoaderThin size={64} />}
         <CollectionsGrid>
-          {collections.map(({ id, banner, logo, name }) => (
-            <CollectionCard key={`collection-card-${id}`}>
-              <CollectionImageWrapper>
-                <CollectionImage height="100%" width="100%" src={banner || LogoWhite} />
-                <CollectionLogo src={logo || LogoWhite} style={!logo ? { objectFit: 'contain' } : {}} />
-              </CollectionImageWrapper>
+          {!collectionsLoading &&
+            myCollections.length !== 0 &&
+            myCollections.map(({ id, banner, logo, name }) => (
+              <CollectionCard key={`collection-card-${id}`}>
+                <CollectionImageWrapper>
+                  <CollectionImage height="100%" width="100%" src={banner || LogoWhite} />
+                  <CollectionLogo src={logo || LogoWhite} style={!logo ? { objectFit: 'contain' } : {}} />
+                </CollectionImageWrapper>
 
-              <Flex flexDirection="column" alignItems="center" padding="0px 32px 24px 32px">
-                <TYPE.body5 marginBottom="8px" textAlign="center">
-                  {name}
-                </TYPE.body5>
-                <Link style={{ marginLeft: 'auto ' }} to={`/nft/${id}/edit`}>
-                  <Edit />
-                </Link>
-              </Flex>
-            </CollectionCard>
-          ))}
+                <Flex flexDirection="column" alignItems="center" padding="0px 32px 24px 32px">
+                  <TYPE.body5 marginBottom="8px" textAlign="center">
+                    {name}
+                  </TYPE.body5>
+                  <Link style={{ marginLeft: 'auto ' }} to={`/nft/${id}/edit`}>
+                    <Edit />
+                  </Link>
+                </Flex>
+              </CollectionCard>
+            ))}
         </CollectionsGrid>
+        {!collectionsLoading && !myCollections.length && (
+          <RowCenter>
+            <TYPE.titleBig>You have no collections</TYPE.titleBig>
+          </RowCenter>
+        )}
       </Body>
     </Container>
   )

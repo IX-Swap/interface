@@ -141,8 +141,8 @@ const NFTPopover = () => {
       onClick={(e) => (e ? e.stopPropagation() : null)}
       onMouseDown={(e) => (e ? e.stopPropagation() : null)}
     >
-      <SubMenuLink id={`nft-list-nav-link`} to={routes.nftList}>
-        <Trans>My NFTs</Trans>
+      <SubMenuLink id={`nft-collections-nav-link`} to={routes.nftCollections}>
+        <Trans>My Collections</Trans>
       </SubMenuLink>
       <SubMenuLink id={`nft-create-nav-link`} to={routes.nftCreate}>
         <Trans>Create NFT</Trans>

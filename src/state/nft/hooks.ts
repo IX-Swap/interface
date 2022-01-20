@@ -456,9 +456,9 @@ export const useFetchMyCollections = () => {
       const response = await getCollections(account)
       const collections = response.data
       dispatch(setCollections({ collections }))
-      dispatch(setCollectionsLoading({ loading: true }))
+      dispatch(setCollectionsLoading({ loading: false }))
     } catch (e) {
-      dispatch(setCollectionsLoading({ loading: true }))
+      dispatch(setCollectionsLoading({ loading: false }))
       console.log(e)
     }
   }, [account])

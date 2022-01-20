@@ -65,7 +65,7 @@ export const UpdateForm: FC = () => {
             </Box>
             <TYPE.descriptionThin fontSize={13}>
               (optional) This image will be used for featuring your collection on the homepage, category pages, or other
-              promotional areas of OpenSea. 600x400 recommended.
+              promotional areas. 600x400 recommended.
             </TYPE.descriptionThin>
             <Upload width="600px" height="400px" onDrop={onCoverDrop} file={cover} />
           </Label>

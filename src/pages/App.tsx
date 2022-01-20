@@ -41,7 +41,7 @@ const PoolV2 = lazy(() => import('./Pool/v2'))
 const NftImport = lazy(() => import('./NftImport'))
 const NFTCollections = lazy(() => import('./NFTCollections'))
 const NFTCollection = lazy(() => import('./NFTCollection'))
-const UpdateNFT = lazy(() => import('./UpdateNFT'))
+const UpdateNFT = lazy(() => import('./UpdateCollection'))
 const NftAssetPage = lazy(() => import('./NFTAsset'))
 
 const AppWrapper = styled.div`
