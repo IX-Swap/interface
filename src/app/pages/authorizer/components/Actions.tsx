@@ -73,29 +73,27 @@ export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
         <Box px={1} />
       </Grid>
       {isCommitment && (item as any).fundStatus !== 'Funds on hold' ? (
-        <></>
+        <Grid item style={{ minWidth: 26 }} />
       ) : (
-        <>
-          <Grid item style={{ minWidth: 26 }}>
-            {(isUnauthorized || isCommitment) && (
-              <Dropdown
-                arrow
-                contentTheme='dark'
-                trigger={props => (
-                  <ActionsDropdownTrigger {...props} isLoading={isLoading} />
-                )}
-                content={props => (
-                  <ActionsDropdownContent
-                    {...props}
-                    approve={approve}
-                    reject={reject}
-                    view={view}
-                  />
-                )}
-              />
-            )}
-          </Grid>
-        </>
+        <Grid item style={{ minWidth: 26 }}>
+          {(isUnauthorized || isCommitment) && (
+            <Dropdown
+              arrow
+              contentTheme='dark'
+              trigger={props => (
+                <ActionsDropdownTrigger {...props} isLoading={isLoading} />
+              )}
+              content={props => (
+                <ActionsDropdownContent
+                  {...props}
+                  approve={approve}
+                  reject={reject}
+                  view={view}
+                />
+              )}
+            />
+          )}
+        </Grid>
       )}
     </Grid>
   )
