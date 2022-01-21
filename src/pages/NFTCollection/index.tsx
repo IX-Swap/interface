@@ -30,7 +30,7 @@ const NftCollectionItems = styled.div`
 `
 
 const NftPreviewLink = styled(Link)`
-  max-width: fit-content;
+  width: 350px;
   transition: transform 0.3s;
 
   text-decoration: none;
@@ -43,6 +43,14 @@ const NftPreviewLink = styled(Link)`
     text-decoration: none;
     color: inherit;
   }
+`
+
+const NoNftContainer = styled.div`
+  text-align: center;
+
+  padding: 2.5rem;
+
+  width: 100%;
 `
 
 interface NFTCollectionPageParams {
@@ -76,12 +84,19 @@ const NFTCollection = () => {
             <TYPE.titleBig>{collection.info.name}</TYPE.titleBig>
           </NftCollectionInfo>
 
+          {collection.info.supply === 0 && (
+            <NoNftContainer>
+              <TYPE.title8>No any NFTs</TYPE.title8>
+            </NoNftContainer>
+          )}
+
           <NftCollectionItems>
-            {tokens.map((token, idx) => (
-              <NftPreviewLink key={`token-uri-${idx}`} to={baseLink + idx}>
-                <NFTPreview uri={token} />
-              </NftPreviewLink>
-            ))}
+            {tokens.length > 0 &&
+              tokens.map((token, idx) => (
+                <NftPreviewLink key={`token-uri-${idx}`} to={baseLink + idx}>
+                  <NFTPreview uri={token} />
+                </NftPreviewLink>
+              ))}
           </NftCollectionItems>
 
           {collection.hasMore && <ButtonPrimary onClick={collection.fetchTokens}>More</ButtonPrimary>}

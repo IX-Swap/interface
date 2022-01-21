@@ -1,40 +1,27 @@
-import React, { FC, useEffect, useState } from 'react'
-import { Flex, Text } from 'rebass'
-import { Link } from 'react-router-dom'
-
-import {
-  CollectionsGrid,
-  CollectionCard,
-  CollectionImage,
-  CollectionLogo,
-  CollectionImageWrapper,
-  SortText,
-  ActiveSortItemBottom,
-  Divider,
-} from './styleds'
-import { collections } from 'pages/CreateNFT/mocks'
-import { Container, Body } from 'pages/AdminKyc'
-import { StyledInternalLink, TYPE } from 'theme'
-import Column from 'components/Column'
-
-import { tabs } from './mocks'
-import LogoWhite from '../../assets/svg/logo-white.svg'
-import { ReactComponent as Edit } from '../../assets/images/edit-circle-white.svg'
-import { ButtonEmpty } from 'components/Button'
-import { useActiveWeb3React } from 'hooks/web3'
-import { NFTConnectWallet } from 'components/NFTConnectWallet'
-import { useFetchMyCollections, useNFTState } from 'state/nft/hooks'
+import { ButtonGradientBorder } from 'components/Button'
 import { LoaderThin } from 'components/Loader/LoaderThin'
-import { Type } from 'react-feather'
-import { NFTCollection } from 'state/nft/types'
-import { RowCenter } from 'components/Row'
+import { NFTConnectWallet } from 'components/NFTConnectWallet'
+import { RowBetween, RowCenter } from 'components/Row'
+import { useActiveWeb3React } from 'hooks/web3'
+import { Body, Container } from 'pages/AdminKyc'
+import React, { FC, useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import { Flex } from 'rebass'
+import { useFetchMyCollections, useNFTState } from 'state/nft/hooks'
+import { Edit2 } from 'react-feather'
+import { StyledInternalLink, TYPE } from 'theme'
+import { routes } from 'utils/routes'
+import { ReactComponent as Edit } from '../../assets/images/edit-circle-white.svg'
+import LogoWhite from '../../assets/svg/logo-white.svg'
+import { CollectionCard, CollectionImage, CollectionImageWrapper, CollectionLogo, CollectionsGrid } from './styleds'
+import useTheme from 'hooks/useTheme'
 
 const NFTCollections: FC = () => {
   // const [selectedTabId, setSelectedTabId] = useState(1)
   const { account } = useActiveWeb3React()
   const fetchMyCollections = useFetchMyCollections()
   const { myCollections, collectionsLoading } = useNFTState()
-
+  const theme = useTheme()
   useEffect(() => {
     fetchMyCollections()
   }, [fetchMyCollections])
@@ -72,13 +59,21 @@ const NFTCollections: FC = () => {
           ))}
         </Flex>
         <Divider marginBottom={40} /> */}
+        <RowBetween style={{ marginBottom: '15px', flexWrap: 'wrap' }}>
+          <ButtonGradientBorder as={StyledInternalLink} to={routes.nftCollectionImport}>
+            Import a collection
+          </ButtonGradientBorder>
+          <ButtonGradientBorder as={StyledInternalLink} to={routes.nftCollectionCreate}>
+            Create a collection
+          </ButtonGradientBorder>
+        </RowBetween>
         {collectionsLoading && <LoaderThin size={64} />}
         <CollectionsGrid>
           {!collectionsLoading &&
             myCollections.length !== 0 &&
             myCollections.map(({ id, banner, logo, name, address }) => (
               <CollectionCard key={`collection-card-${id}`} as={StyledInternalLink} to={`/nft/collections/${address}`}>
-                <CollectionImageWrapper>
+                <CollectionImageWrapper style={{ paddingTop: banner ? '10px' : '0' }}>
                   <CollectionImage height="100%" width="100%" src={banner || LogoWhite} />
                   <CollectionLogo src={logo || LogoWhite} style={!logo ? { objectFit: 'contain' } : {}} />
                 </CollectionImageWrapper>
@@ -87,8 +82,11 @@ const NFTCollections: FC = () => {
                   <TYPE.body5 marginBottom="8px" textAlign="center">
                     {name}
                   </TYPE.body5>
-                  <Link style={{ marginLeft: 'auto ' }} to={`/nft/${id}/edit`}>
-                    <Edit />
+                  <Link
+                    style={{ marginLeft: 'auto ', padding: '5px' }}
+                    to={id !== undefined ? routes.nftEditCollection(id) : routes.nftCollectionCreate}
+                  >
+                    <Edit2 size={24} color={theme.text1} />
                   </Link>
                 </Flex>
               </CollectionCard>

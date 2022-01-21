@@ -12,7 +12,7 @@ import { ReactComponent as NsfwIconSvg } from '../../assets/images/nft-nsfw.svg'
 import { ReactComponent as StatIconSvg } from '../../assets/images/nft-stat.svg'
 import { RouteComponentProps } from 'react-router-dom'
 import { useGetNFTDetails } from 'state/nft/hooks'
-import { NFTImage, NFTImageShow } from 'state/nft/types'
+import { NFTAttributeDisplay, NFTImage, NFTImageShow } from 'state/nft/types'
 import { NFTConnectWallet } from 'components/NFTConnectWallet'
 import { useActiveWeb3React } from 'hooks/web3'
 
@@ -232,11 +232,11 @@ const NftAttributeSection: React.FC<NftAttributeSectionProps> = (
   }, [hide, setHide])
 
   return (
-    <div>
+    <div onClick={toggleSection}>
       <Row>
         <NftSectionIconWrapper>{props.icon}</NftSectionIconWrapper>
 
-        <NftTitleSection onClick={toggleSection}>
+        <NftTitleSection>
           <TYPE.subHeader1>{props.title}</TYPE.subHeader1>
           <TYPE.description2>{props.description}</TYPE.description2>
         </NftTitleSection>
@@ -307,7 +307,7 @@ const NftIsNsfw = (props: NftNsfwProps) => {
       <SwitchContainer>
         <div>{enabled ? 'On' : 'Off'}</div>
 
-        <SwitchWrapper enabled={enabled} onClick={toggle}>
+        <SwitchWrapper enabled={enabled} disabled={true}>
           <SwitchBall />
         </SwitchWrapper>
       </SwitchContainer>
@@ -343,10 +343,10 @@ const NftAssetPage = ({
   // const date = React.useMemo(() => new Date(item.date), [])
   const isNSFW = item?.isNSFW === 'true'
   const { account } = useActiveWeb3React()
-
-  // const stats = item.attributes.filter((attr) => attr.display_type === 'stat') as NftStat[]
-  // const levels = item.attributes.filter((attr) => attr.display_type === 'level') as NftLevel[]
-  // const rectangles = item.attributes.filter((attr) => attr.display_type === 'rectangle') as NftProperty[]
+  console.log({ item })
+  const stats = item?.attributes.filter((attr) => attr?.display_type === 'stat') as NftStat[]
+  const levels = item?.attributes.filter((attr) => attr?.display_type === 'level') as NftLevel[]
+  const rectangles = item?.attributes.filter((attr) => attr?.display_type === 'rectangle') as NftProperty[]
 
   useEffect(() => {
     async function getDetails() {
@@ -380,41 +380,50 @@ const NftAssetPage = ({
         </div>
 
         <NftAttributesContainer>
-          {/* <NftAttributeSection
-            title="Properties"
-            description="Textual traits that show up as rectangles"
-            icon={<PropertiesIconSvg stroke="2px" scale={0.7} fill="#ead1f9" />}
-          >
-            {rectangles.map((rectangle, idx) => (
-              <NftProperty key={`prop-${idx}`} property={rectangle} />
-            ))}
-          </NftAttributeSection> */}
+          {rectangles?.length > 0 && (
+            <NftAttributeSection
+              title="Properties"
+              description="Textual traits that show up as rectangles"
+              icon={<PropertiesIconSvg stroke="2px" scale={0.7} fill="#ead1f9" />}
+            >
+              {rectangles.map((rectangle, idx) => (
+                <NftProperty key={`prop-${idx}`} property={rectangle} />
+              ))}
+            </NftAttributeSection>
+          )}
 
-          <Divider />
+          {levels?.length > 0 && (
+            <>
+              <Divider />
 
-          {/* <NftAttributeSection
-            title="Levels"
-            description="Numerical traits that just show as numbers"
-            icon={<LevelsIconSvg stroke="2px" scale={0.7} fill="#ead1f9" />}
-          >
-            {levels.map((level, idx) => (
-              <NftLevel key={`level-${idx}`} level={level} />
-            ))}
-          </NftAttributeSection> */}
+              <NftAttributeSection
+                title="Levels"
+                description="Numerical traits that just show as numbers"
+                icon={<LevelsIconSvg stroke="2px" scale={0.7} fill="#ead1f9" />}
+              >
+                {levels.map((level, idx) => (
+                  <NftLevel key={`level-${idx}`} level={level} />
+                ))}
+              </NftAttributeSection>
+            </>
+          )}
 
-          <Divider />
-
-          {/* <NftAttributeSection
-            title="Stats"
-            description="Numerical traits that show as a progress bar"
-            icon={<StatIconSvg stroke="2px" scale={0.7} fill="#ead1f9" />}
-          >
-            {stats.map((stat, idx) => (
-              <NftStat key={`stat-${idx}`} stat={stat} />
-            ))}
-          </NftAttributeSection> */}
-
-          <Divider />
+          {stats.length > 0 && (
+            <>
+              {' '}
+              <Divider />
+              <NftAttributeSection
+                title="Stats"
+                description="Numerical traits that show as a progress bar"
+                icon={<StatIconSvg stroke="2px" scale={0.7} fill="#ead1f9" />}
+              >
+                {stats.map((stat, idx) => (
+                  <NftStat key={`stat-${idx}`} stat={stat} />
+                ))}
+              </NftAttributeSection>
+              <Divider />
+            </>
+          )}
 
           <NftIsNsfw isNsfw={isNSFW as boolean} />
         </NftAttributesContainer>
