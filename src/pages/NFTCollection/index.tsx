@@ -30,7 +30,7 @@ const NftCollectionItems = styled.div`
 `
 
 const NftPreviewLink = styled(Link)`
-  max-width: fit-content;
+  width: 350px;
   transition: transform 0.3s;
 
   text-decoration: none;
