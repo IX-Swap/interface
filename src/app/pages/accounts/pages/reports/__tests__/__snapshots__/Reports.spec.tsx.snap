@@ -46,7 +46,7 @@ exports[`Reports should match snapshot 1`] = `
       <h4
         class="MuiTypography-root MuiTypography-h4"
       >
-        Default Statements
+        Statements
       </h4>
       <div
         class="MuiBox-root MuiBox-root-6"
