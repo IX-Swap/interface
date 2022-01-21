@@ -99,11 +99,15 @@ export interface CollectionCreateProps {
   address: string
 }
 
-export interface CollectionUpdateProps {
-  name: string
-  description: string
-  logo: FileWithPath
-  cover: FileWithPath
+export interface CollectionFullCreateProps extends CollectionCreateProps {
+  description?: string
+  logo: FileWithPath | null
+  cover: FileWithPath | null
+  banner: FileWithPath | null
+}
+
+export interface CollectionUpdateProps extends Omit<CollectionFullCreateProps, 'name' | 'address'> {
+  name?: string
 }
 
 export interface AssetForm {
@@ -122,4 +126,12 @@ export interface AssetForm {
   newCollectionName: string
   selectedContractAddress: string
   maxSupply: number
+}
+
+export interface CollectionForm {
+  logo: FileWithPath | null
+  cover: FileWithPath | null
+  banner: FileWithPath | null
+  name: string
+  description: string
 }

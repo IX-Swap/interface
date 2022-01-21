@@ -1,11 +1,10 @@
-import { Description } from '@ethersproject/properties'
 import { t } from '@lingui/macro'
 import NFT_CREATE_ABI from 'abis/nft-contract-create.json'
 import NFT_ABI from 'abis/nft-contract.json'
 import axios from 'axios'
 import NFT_BYTE_CODE from 'byte-code/nft-contract-byte-code.json'
-import { SupportedChainId } from 'constants/chains'
 import { BigNumber, Contract } from 'ethers'
+import * as H from 'history'
 import { getNftContract, useNftContract } from 'hooks/useContract'
 import { useActiveWeb3React } from 'hooks/web3'
 import { useCallback, useEffect, useMemo, useState } from 'react'
@@ -16,13 +15,10 @@ import { nft } from 'services/apiUrls'
 import { AppDispatch, AppState } from 'state'
 import { useShowError } from 'state/application/hooks'
 import { useAppDispatch } from 'state/hooks'
+import { importNftCollection, setCollections, setCollectionsLoading, setCreateNftLoading } from 'state/nft/actions'
 import {
-  importNftCollection,
   setActiveTraitType,
   setCollection,
-  setCollections,
-  setCollectionsLoading,
-  setCreateNftLoading,
   setDescription,
   setFile,
   setFreeze,
@@ -36,15 +32,28 @@ import {
   setProperties,
   setSelectedContractAddress,
   setStats,
-} from 'state/nft/actions'
-import { AssetForm, NFTCollection, NftCreateProps, NumericTrait, Trait, TraitType } from 'state/nft/types'
+} from 'state/nft/assetForm.actions'
+import {
+  setBanner,
+  setCover,
+  setDescription as setCollectionDescrition,
+  setLogo,
+  setName as setCollectionName,
+} from './collectionForm.actions'
+
+import {
+  AssetForm,
+  CollectionFullCreateProps,
+  CollectionUpdateProps,
+  NFTCollection,
+  NftCreateProps,
+  NumericTrait,
+  Trait,
+  TraitType,
+} from 'state/nft/types'
 import { useTransactionAdder } from 'state/transactions/hooks'
-import { wait } from 'utils/retry'
-import { saveImages } from './actions'
 import { CollectionCreateProps } from './types'
 import { groupKeyValues } from './utils'
-import * as H from 'history'
-import { exception } from 'react-ga'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const Web3 = require('web3') // for some reason import Web3 from web3 didn't see eth module
@@ -56,6 +65,44 @@ export const createNftCollection = async (collectionDto: CollectionCreateProps) 
   formData.append('name', name)
   formData.append('address', address)
 
+  const result = await apiService.post(nft.createCollection, formData)
+  return result.data
+}
+
+function buildCollectionFormData(dto: CollectionUpdateProps | CollectionFullCreateProps) {
+  const { name, description, cover, logo, banner } = dto
+  const formData = new FormData()
+  if (name) {
+    formData.append('name', name)
+  }
+  if (description) {
+    formData.append('description', description)
+  }
+  if (cover) {
+    formData.append('cover', cover, cover.name)
+  }
+  if (logo) {
+    formData.append('logo', logo, logo.name)
+  }
+  if (banner) {
+    formData.append('banner', banner, banner.name)
+  }
+  return formData
+}
+
+export const updateNftCollection = async (collectionDto: CollectionUpdateProps, id: number) => {
+  const formData = buildCollectionFormData(collectionDto)
+  try {
+    const result = await apiService.put(nft.updateCollection(id), formData)
+    return result.data
+  } catch (e) {
+    console.error((e as Error).message)
+  }
+}
+
+export const createFullNftCollection = async (collectionDto: CollectionFullCreateProps) => {
+  const formData = buildCollectionFormData(collectionDto)
+  formData.append('address', collectionDto.address)
   const result = await apiService.post(nft.createCollection, formData)
   return result.data
 }
@@ -74,6 +121,32 @@ export const createNftAsset = async (nftDto: NftCreateProps) => {
 export const getCollections = async (address: string) => {
   const collections = await apiService.get(nft.getCollections(address))
   return collections
+}
+export const getCollection = async (id?: number) => {
+  if (id === undefined || isNaN(id)) {
+    return null
+  }
+  const collection = await apiService.get(nft.getCollection(id))
+  return collection.data
+}
+
+export function useCollection(id?: number) {
+  const dispatch = useDispatch()
+  const [collection, setCollection] = useState(null)
+  useEffect(() => {
+    async function fetchCollection() {
+      try {
+        dispatch(setCollectionsLoading({ loading: true }))
+        const result = await getCollection(id)
+        setCollection(result)
+        dispatch(setCollectionsLoading({ loading: false }))
+      } catch (e) {
+        dispatch(setCollectionsLoading({ loading: false }))
+      }
+    }
+    fetchCollection()
+  }, [id])
+  return collection
 }
 
 export function useNFTState(): AppState['nft'] {
@@ -299,7 +372,9 @@ export const useGetNFTDetails = (contractAddress?: string, itemId?: number) => {
 export function useAssetFormState(): AppState['assetForm'] {
   return useSelector<AppState, AppState['assetForm']>((state) => state.assetForm)
 }
-
+export function useCollectionFormState(): AppState['collectionForm'] {
+  return useSelector<AppState, AppState['collectionForm']>((state) => state.collectionForm)
+}
 export function useCreateAssetActionHandlers(): {
   onSelectFile: (file: FileWithPath | null) => void
   onSelectPreview: (file: FileWithPath | null) => void
@@ -427,7 +502,56 @@ export function useCreateAssetActionHandlers(): {
     onSetMaxSupply,
   }
 }
+export function useCollectionActionHandlers(): {
+  onSetName: (name: string) => void
+  onSelectCover: (file: FileWithPath | null) => void
+  onSelectBanner: (file: FileWithPath | null) => void
+  onSelectLogo: (file: FileWithPath | null) => void
+  onSetDescription: (description: string) => void
+} {
+  const dispatch = useDispatch<AppDispatch>()
 
+  const onSelectCover = useCallback(
+    (file: FileWithPath | null) => {
+      dispatch(setCover({ file }))
+    },
+    [dispatch]
+  )
+  const onSelectBanner = useCallback(
+    (file: FileWithPath | null) => {
+      dispatch(setBanner({ file }))
+    },
+    [dispatch]
+  )
+  const onSelectLogo = useCallback(
+    (file: FileWithPath | null) => {
+      dispatch(setLogo({ file }))
+    },
+    [dispatch]
+  )
+
+  const onSetName = useCallback(
+    (name: string) => {
+      dispatch(setCollectionName({ name }))
+    },
+    [dispatch]
+  )
+
+  const onSetDescription = useCallback(
+    (description: string) => {
+      dispatch(setCollectionDescrition({ description }))
+    },
+    [dispatch]
+  )
+
+  return {
+    onSelectBanner,
+    onSelectCover,
+    onSelectLogo,
+    onSetName,
+    onSetDescription,
+  }
+}
 export const useCreateNft = () => {
   const dispatch = useAppDispatch()
   return useCallback(async (nftDto: NftCreateProps) => {
@@ -555,5 +679,6 @@ export const useCreateNftAssetForm = (history: H.History) => {
     deployCollection,
     history,
     showError,
+    maxSupply,
   ])
 }

@@ -38,6 +38,8 @@ export const broker = {
 export const nft = {
   create: `nft`,
   createCollection: `/nft/collection`,
+  getCollection: (id: number) => `/nft/collection/${id}`,
+  updateCollection: (id: number) => `/nft/collection/${id}`,
   getCollections: (address: string) => `/nft/collection/user/${address}`,
 }
 export const tokens = {
