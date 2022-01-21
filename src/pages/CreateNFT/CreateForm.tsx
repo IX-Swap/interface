@@ -80,7 +80,7 @@ export const CreateForm = () => {
   const createAsset = useCreateNftAssetForm(history)
   const toggle = useToggleModal(ApplicationModal.PROPERTIES)
   const toggleNumeric = useToggleModal(ApplicationModal.LEVELS)
-  const fetchMyCollection = useFetchMyCollections()
+  const fetchMyCollections = useFetchMyCollections()
 
   const checkAuthorization = useCallback(async () => {
     setPending(true)
@@ -149,8 +149,8 @@ export const CreateForm = () => {
   }, [checkFileSize])
 
   useEffect(() => {
-    fetchMyCollection()
-  }, [fetchMyCollection])
+    fetchMyCollections()
+  }, [fetchMyCollections])
 
   const onSubmit = async (e: any) => {
     setPending(true)
@@ -311,8 +311,8 @@ export const CreateForm = () => {
                   </TYPE.body>
                 </Box>
                 <TYPE.descriptionThin fontSize={13}>
-                  Create a new collection to keep up to 1000 items. The name can be changed later on our platform, but
-                  it cannot be changed on blockchain
+                  Create a new collection to keep up to {maxSupply} items. The name can be changed later on our
+                  platform, but it cannot be changed on blockchain
                 </TYPE.descriptionThin>
               </Label>
               <InputPanel id={'collection-name'}>

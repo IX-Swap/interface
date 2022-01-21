@@ -25,6 +25,7 @@ import user from './user/reducer'
 import vesting from './vesting/reducer'
 import withdraw from './withdraw/reducer'
 import assetForm from './nft/assetForm.reducer'
+import collectionForm from './nft/collectionForm.reducer'
 
 const PERSISTED_KEYS: string[] = ['user', 'transactions', 'lists', 'auth', 'swap', 'swapHelper']
 
@@ -54,6 +55,7 @@ const store = configureStore({
     nft,
     faucet,
     assetForm,
+    collectionForm,
   },
   middleware: [...getDefaultMiddleware({ thunk: true }), save({ states: PERSISTED_KEYS, debounce: 1000 })],
   preloadedState: load({ states: PERSISTED_KEYS }),

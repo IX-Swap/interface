@@ -15,7 +15,7 @@ import {
   setProperties,
   setSelectedContractAddress,
   setStats,
-} from './actions'
+} from './assetForm.actions'
 import { AssetForm, TraitType } from './types'
 
 const initialState: AssetForm = {

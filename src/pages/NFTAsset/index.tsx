@@ -366,7 +366,7 @@ const NftAssetPage = ({
 
   return (
     <NftAssetPageWrapper>
-      <NftImage src={item.image} />
+      <NftImage src={item.file} />
 
       <NftInfoContainer>
         <div>

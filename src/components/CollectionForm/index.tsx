@@ -9,18 +9,31 @@ import { ContainerRow, Input, InputContainer, InputPanel, Textarea } from 'compo
 import Upload from 'components/Upload'
 import { ExternalLink, TYPE } from 'theme'
 import { ButtonGradient } from 'components/Button'
+import { updateNftCollection, useCollectionActionHandlers, useCollectionFormState } from 'state/nft/hooks'
+import { NFTCollection } from 'state/nft/types'
 
-export const UpdateForm: FC = () => {
-  const [logo, setLogo] = useState<FileWithPath | null>(null)
-  const [cover, setCover] = useState<FileWithPath | null>(null)
-  const [banner, setBanner] = useState<FileWithPath | null>(null)
-  const [name, setName] = useState('')
-  const [description, setDescription] = useState('')
-  const { id }: { id: string } = useParams()
+interface UpdateFormProps {
+  collection?: any | null
+  onSubmit: () => Promise<any>
+  actionName?: string
+}
+
+export const CollectionForm = ({ collection, onSubmit, actionName = 'Update' }: UpdateFormProps) => {
+  const {
+    onSelectLogo: setLogo,
+    onSelectBanner: setBanner,
+    onSelectCover: setCover,
+    onSetDescription: setDescription,
+    onSetName: setName,
+  } = useCollectionActionHandlers()
+  const { cover, logo, banner, name, description } = useCollectionFormState()
 
   useEffect(() => {
-    console.log(id)
-  }, [id])
+    if (collection) {
+      setName(collection?.name)
+      setDescription(collection?.description)
+    }
+  }, [collection, setName, setDescription])
 
   const onLogoDrop = (newLogo: any) => {
     setLogo(newLogo)
@@ -34,8 +47,9 @@ export const UpdateForm: FC = () => {
     setBanner(newBanner)
   }
 
-  const onSubmit = async (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault()
+    onSubmit()
     return
   }
 
@@ -46,7 +60,6 @@ export const UpdateForm: FC = () => {
           <Label htmlFor="file" flexDirection="column" mb={3}>
             <Box display="flex">
               <TYPE.body fontWeight={600}>Logo image</TYPE.body>
-              <TYPE.error error>*</TYPE.error>
             </Box>
             <TYPE.descriptionThin fontSize={13}>
               This image will also be used for navigation, 350 x 350 recommended
@@ -61,11 +74,10 @@ export const UpdateForm: FC = () => {
           <Label htmlFor="file" flexDirection="column" mb={3}>
             <Box display="flex">
               <TYPE.body fontWeight={600}>Cover image</TYPE.body>
-              <TYPE.error error>*</TYPE.error>
             </Box>
             <TYPE.descriptionThin fontSize={13}>
               (optional) This image will be used for featuring your collection on the homepage, category pages, or other
-              promotional areas of OpenSea. 600x400 recommended.
+              promotional areas. 600x400 recommended.
             </TYPE.descriptionThin>
             <Upload width="600px" height="400px" onDrop={onCoverDrop} file={cover} />
           </Label>
@@ -77,7 +89,6 @@ export const UpdateForm: FC = () => {
           <Label htmlFor="file" flexDirection="column" mb={3}>
             <Box display="flex">
               <TYPE.body fontWeight={600}>Banner image</TYPE.body>
-              <TYPE.error error>*</TYPE.error>
             </Box>
             <TYPE.descriptionThin fontSize={13}>
               (optional) This image will appear at the top of your collection page. Avoid including too much text in
@@ -149,8 +160,8 @@ export const UpdateForm: FC = () => {
       </Flex>
 
       <Flex mx={-2} flexWrap="wrap">
-        <Box px={1} mr="auto" onClick={(e) => onSubmit(e)}>
-          <ButtonGradient width="140px">Update</ButtonGradient>
+        <Box px={1} mr="auto" onClick={(e) => handleSubmit(e)}>
+          <ButtonGradient width="140px">{actionName}</ButtonGradient>
         </Box>
       </Flex>
     </Box>

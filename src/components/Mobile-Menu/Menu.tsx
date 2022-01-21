@@ -89,8 +89,13 @@ export const Menu = ({ close }: Props) => {
             </MenuListItem>
           )}
           {false && (
-            <MenuListItem activeClassName="active-item" id={`nft-list-nav-link`} to={routes.nftList} onClick={close}>
-              <Trans>My NFTs</Trans>
+            <MenuListItem
+              activeClassName="active-item"
+              id={`nft-collections-nav-link`}
+              to={routes.nftCollections}
+              onClick={close}
+            >
+              <Trans>My Collections</Trans>
             </MenuListItem>
           )}
           {chainId && TGE_CHAINS_WITH_STAKING.includes(chainId) && (
