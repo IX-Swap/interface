@@ -13,4 +13,5 @@ export const routes = {
   nftList: '/nft',
   nftCreate: '/nft-create',
   nftCollections: '/nft/collections',
+  nftCollectionCreate: '/nft/collections/create',
 }

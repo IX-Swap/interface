@@ -13,10 +13,12 @@ import { updateNftCollection, useCollectionActionHandlers, useCollectionFormStat
 import { NFTCollection } from 'state/nft/types'
 
 interface UpdateFormProps {
-  collection: any | null
+  collection?: any | null
+  onSubmit: () => Promise<any>
+  actionName?: string
 }
 
-export const UpdateForm = ({ collection }: UpdateFormProps) => {
+export const CollectionForm = ({ collection, onSubmit, actionName = 'Update' }: UpdateFormProps) => {
   const {
     onSelectLogo: setLogo,
     onSelectBanner: setBanner,
@@ -45,11 +47,9 @@ export const UpdateForm = ({ collection }: UpdateFormProps) => {
     setBanner(newBanner)
   }
 
-  const onSubmit = async (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault()
-    if (collection?.id) {
-      updateNftCollection({ cover, logo, banner, name, description }, collection.id)
-    }
+    onSubmit()
     return
   }
 
@@ -160,8 +160,8 @@ export const UpdateForm = ({ collection }: UpdateFormProps) => {
       </Flex>
 
       <Flex mx={-2} flexWrap="wrap">
-        <Box px={1} mr="auto" onClick={(e) => onSubmit(e)}>
-          <ButtonGradient width="140px">Update</ButtonGradient>
+        <Box px={1} mr="auto" onClick={(e) => handleSubmit(e)}>
+          <ButtonGradient width="140px">{actionName}</ButtonGradient>
         </Box>
       </Flex>
     </Box>

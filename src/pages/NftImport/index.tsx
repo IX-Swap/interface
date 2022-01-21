@@ -20,7 +20,7 @@ import { ButtonConfirmed, ButtonPrimary } from 'components/Button'
 import styled from 'styled-components'
 import { CHAIN_INFO } from 'constants/chains'
 import { useDispatch } from 'react-redux'
-import { useNftColelctionImport } from 'state/nft/hooks'
+import { useNftCollectionImport } from 'state/nft/hooks'
 import { useHistory } from 'react-router-dom'
 
 const NftLinkInput = styled(Input)`
@@ -59,7 +59,7 @@ export default function Faucet() {
   const [error, setError] = useState<string | null>(null)
 
   const history = useHistory()
-  const importNft = useNftColelctionImport(history)
+  const importNft = useNftCollectionImport(history)
 
   useEffect(() => {
     try {

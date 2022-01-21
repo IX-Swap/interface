@@ -14,7 +14,7 @@ import {
 } from './styleds'
 import { collections } from 'pages/CreateNFT/mocks'
 import { Container, Body } from 'pages/AdminKyc'
-import { TYPE } from 'theme'
+import { StyledInternalLink, TYPE } from 'theme'
 import Column from 'components/Column'
 
 import { tabs } from './mocks'
@@ -76,8 +76,8 @@ const NFTCollections: FC = () => {
         <CollectionsGrid>
           {!collectionsLoading &&
             myCollections.length !== 0 &&
-            myCollections.map(({ id, banner, logo, name }) => (
-              <CollectionCard key={`collection-card-${id}`}>
+            myCollections.map(({ id, banner, logo, name, address }) => (
+              <CollectionCard key={`collection-card-${id}`} as={StyledInternalLink} to={`/nft/collections/${address}`}>
                 <CollectionImageWrapper>
                   <CollectionImage height="100%" width="100%" src={banner || LogoWhite} />
                   <CollectionLogo src={logo || LogoWhite} style={!logo ? { objectFit: 'contain' } : {}} />

@@ -147,6 +147,9 @@ const NFTPopover = () => {
       <SubMenuLink id={`nft-create-nav-link`} to={routes.nftCreate}>
         <Trans>Create NFT</Trans>
       </SubMenuLink>
+      <SubMenuLink id={`nft-create-collection-nav-link`} to={routes.nftCollectionCreate}>
+        <Trans>Create Collection</Trans>
+      </SubMenuLink>
     </PopOverContent>
   )
 }

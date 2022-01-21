@@ -54,6 +54,7 @@ import {
 import { useTransactionAdder } from 'state/transactions/hooks'
 import { CollectionCreateProps } from './types'
 import { groupKeyValues } from './utils'
+import { routes } from 'utils/routes'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const Web3 = require('web3') // for some reason import Web3 from web3 didn't see eth module
@@ -132,7 +133,7 @@ export const getCollection = async (id?: number) => {
 
 export function useCollection(id?: number) {
   const dispatch = useDispatch()
-  const [collection, setCollection] = useState(null)
+  const [collection, setCollection] = useState<any | null>(null)
   useEffect(() => {
     async function fetchCollection() {
       try {
@@ -185,7 +186,19 @@ export function useNFTState(): AppState['nft'] {
 //     getUserTokens()
 //   }, [getUserTokens])
 // }
-
+export const useCreateFullCollection = (history: H.History) => {
+  const deployCollection = useDeployCollection()
+  return useCallback(
+    async (args: any) => {
+      const newContractAddress = await deployCollection({ name: args.name, maxSupply: 1000 })
+      if (newContractAddress) {
+        await createFullNftCollection({ ...args, address: newContractAddress })
+        history.push(routes.nftCollections)
+      }
+    },
+    [deployCollection, history]
+  )
+}
 export const useDeployCollection = () => {
   const { account, library } = useActiveWeb3React()
   const addTransaction = useTransactionAdder()
@@ -267,10 +280,6 @@ export const useNftCollection = (address: string) => {
       return
     }
 
-    /*console.log(info.supply)
-    console.log((page + 1) & pageSize)
-    console.log(info.supply - page * pageSize)*/
-
     const size = (page + 1) * pageSize > info.supply ? info.supply - page * pageSize : pageSize
 
     if (size < 0) {
@@ -294,7 +303,7 @@ export const useNftCollection = (address: string) => {
   return useMemo(() => ({ loading, info, hasMore, fetchTokens }), [fetchTokens, hasMore, info, loading])
 }
 
-export const useNftColelctionImport = (history: H.History) => {
+export const useNftCollectionImport = (history: H.History) => {
   const { account, library } = useActiveWeb3React()
   const showError = useShowError()
   const dispatch = useDispatch()

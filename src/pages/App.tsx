@@ -41,7 +41,8 @@ const PoolV2 = lazy(() => import('./Pool/v2'))
 const NftImport = lazy(() => import('./NftImport'))
 const NFTCollections = lazy(() => import('./NFTCollections'))
 const NFTCollection = lazy(() => import('./NFTCollection'))
-const UpdateNFT = lazy(() => import('./UpdateCollection'))
+const UpdateCollection = lazy(() => import('./UpdateCollection'))
+const CreateCollection = lazy(() => import('./CreateCollection'))
 const NftAssetPage = lazy(() => import('./NFTAsset'))
 
 const AppWrapper = styled.div`
@@ -111,7 +112,8 @@ export default function App() {
                 <Route exact strict path={routes.nftCreate} component={CreateNFT} />
                 <Route exact strict path={routes.nftList} component={ListNFT} />
                 <Route exact strict path={routes.nftCollections} component={NFTCollections} />
-                <Route exact strict path="/nft/:id/edit" component={UpdateNFT} />
+                <Route exact strict path={routes.nftCollectionCreate} component={CreateCollection} />
+                <Route exact strict path="/nft/:id/edit" component={UpdateCollection} />
 
                 {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
                   <Route exact strict path="/send" component={RedirectPathToSwapOnly} />
