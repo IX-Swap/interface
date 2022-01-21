@@ -3,15 +3,7 @@ import { baseCreds } from '../helpers/creds'
 import { userRegistration } from '../helpers/api'
 import { text } from '../helpers/text'
 
-// import { userRegistration } from "../helpers/api-helpers";
-
-import {
-  click,
-  typeText,
-  getMessage,
-  navigate,
-  waitForText
-} from '../helpers/helpers'
+import { click, typeText, getMessage, navigate, waitForText, shouldExist } from '../helpers/helpers'
 
 class Authentication {
   page: any
@@ -29,6 +21,7 @@ class Authentication {
     await typeText(authForms.fields.EMAIL, email, this.page)
     await typeText(authForms.fields.PASSWORD, password, this.page)
     await click(authForms.buttons.LOGIN, this.page)
+    await shouldExist(authForms.buttons.PROFILE_VIEW, this.page)
   }
 
   login = async (email, password) => {
@@ -60,9 +53,10 @@ class Authentication {
   }
 
   submitRegistrationFormByAPI = async email => {
-    await userRegistration(email)
+    const resp = await userRegistration(email)
     await this.confirmation(email)
     await this.login(email, baseCreds.PASSWORD)
+    return resp
   }
 
   resetPassword = async email => {
@@ -71,11 +65,7 @@ class Authentication {
     await click(authForms.buttons.SUBMIT, this.page)
     await this.confirmation(email)
     await typeText(authForms.fields.EMAIL, email, this.page)
-    await typeText(
-      authForms.fields.NEW_PASSWORD,
-      baseCreds.PASSWORD_RESET,
-      this.page
-    )
+    await typeText(authForms.fields.NEW_PASSWORD, baseCreds.PASSWORD_RESET, this.page)
     await click(authForms.buttons.SUBMIT, this.page)
     await waitForText(this.page, text.notification.resetPassword)
   }

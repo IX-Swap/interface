@@ -2,13 +2,13 @@ export const issuance = {
   BASE_FORM: '//form',
   LISTING_FORM: '[data-testid="listing-form"]',
   LOADER: 'text="loading..."',
-  ISSUANCE_TAB: '[href="/app/issuance/offerings"]',
+  ISSUANCE_TAB: '[href="/app/issuance/dashboard"]',
   FUNDS_MANAGEMENT_TAB:
     '[href="/app/issuance/offerings/:issuerId/:dsoId/overview"]',
 
   sections: {
     CREATE_DSO: '[href="/app/issuance/offerings/create"]',
-    VIEW_DSO_LISTENING: '[href="/app/issuance/offerings"]',
+    VIEW_DSO_LISTENING: '[href="/app/issuance/dashboard"]',
     VIEW_EXCHANGE_LISTINGS: '[href="/app/otc-market/my-listings"]',
     CREATE_EXCHANGE_LISTINGS: '[href="/app/otc-market/my-listings/create"]'
   },

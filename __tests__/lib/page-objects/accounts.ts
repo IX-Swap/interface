@@ -18,11 +18,6 @@ class BankAccounts {
     this.page = page
   }
 
-  toBankAccounts = async () => {
-    await click(bankAccounts.ACCOUNTS_SECTION, this.page)
-    await click(bankAccounts.BANK_ACCOUNTS, this.page)
-  }
-
   fillAccountInfoForm = async () => {
     await click(bankAccounts.buttons.ADD_BANK_ACCOUNT, this.page)
     await typeText(bankAccounts.fields.BANK_NAME, 'BANK_NAME', this.page)

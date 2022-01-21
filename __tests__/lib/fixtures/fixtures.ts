@@ -1,7 +1,7 @@
 import { test as base } from '@playwright/test'
 import { Authentication } from '../page-objects/authentication'
 import { BankAccounts } from '../page-objects/accounts'
-
+import { Authorizer } from '../page-objects/authorizer'
 import { UserForms } from '../page-objects/identity-forms'
 import { Dso, Listing } from '../page-objects/issuance'
 import { kyc } from '../selectors/kyc-form'
@@ -21,7 +21,13 @@ export const test = base.extend<{
   issuance: any
   invest: any
   bankAccount: BankAccounts
+  authorizer: Authorizer
 }>({
+  authorizer: async ({ page }, use) => {
+    const authorizer = new Authorizer(page)
+    await use(authorizer)
+  },
+
   bankAccount: async ({ page }, use) => {
     const bankAccount = new BankAccounts(page)
     await use(bankAccount)

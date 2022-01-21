@@ -1,13 +1,8 @@
 import { baseCreds } from '../lib/helpers/creds'
-import {
-  navigate,
-  click,
-  shouldNotExist,
-  shouldExist
-} from '../lib/helpers/helpers'
+import { navigate, click, shouldNotExist, shouldExist } from '../lib/helpers/helpers'
 import { test } from '../lib/fixtures/fixtures'
 import { expect } from '@playwright/test'
-import { bankAccounts, commitments } from '../lib/selectors/accounts'
+import { bankAccounts, commitments, cashWithdrawals } from '../lib/selectors/accounts'
 
 test.beforeEach(async ({ auth, page }) => {
   await navigate(baseCreds.URL, page)
@@ -54,3 +49,19 @@ test.describe('Commitments', () => {
     await shouldExist(invest.TABLE, page)
   })
 })
+// test.describe('Cash withdrawals', () => {
+//   test.beforeEach(async ({ page }) => {
+//     await click(cashWithdrawals.CASHWITHDRAWALS_SECTION, page)
+//   })
+//   test('The withdrawal request should be created(USD)', async ({
+//     bankAccount
+//   }) => {
+//     await bankAccount.removeBankAccount()
+//   })
+
+//   test('The withdrawal request should be created(SGD)', async ({
+//     bankAccount
+//   }) => {
+//     await bankAccount.removeBankAccount()
+//   })
+// })

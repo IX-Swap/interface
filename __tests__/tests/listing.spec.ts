@@ -12,10 +12,7 @@ test.afterEach(async ({ page }) => {
 })
 
 test.describe('Listing', () => {
-  test('Should be created and appears in the list', async ({
-    listing,
-    dso
-  }) => {
+  test('Should be created and appears in the list', async ({ listing, dso }) => {
     const token = (await listing.fillListingGeneralInformationForm()).tokenName
     await listing.fillDocumentsForm()
     await listing.addAndFillTeamMemberForm()
@@ -25,15 +22,14 @@ test.describe('Listing', () => {
     expect(appears).toBe(true)
   })
 
-  test('Check the form view', async ({ issuance, page }, testInfo) => {
-    const form = await page.waitForSelector(issuance.LISTING_FORM)
-    await screenshotMatching(testInfo.title, form, page)
-  })
+  // test('Check the form view', async ({ issuance, page }, testInfo) => {
+  //   const form = await page.waitForSelector(issuance.LISTING_FORM)
+  //   await screenshotMatching(testInfo.title, form, page)
+  // })
 })
-let importedForm
 test.describe('Listing with imported dso', () => {
   test.beforeEach(async ({ listing }) => {
-    importedForm = await listing.importDso()
+    await listing.importDso()
   })
 
   test('Team member should be deleted', async ({ listing }) => {
@@ -51,9 +47,5 @@ test.describe('Listing with imported dso', () => {
     await listing.fillListeningOfferingTermsForm()
     const error = await listing.checkError(textHelper.errors.tokenSymbol)
     expect(error).toBe(true)
-  })
-
-  test('Should be imported', async ({ page }, testInfo) => {
-    await screenshotMatching(testInfo.title, importedForm, page)
   })
 })
