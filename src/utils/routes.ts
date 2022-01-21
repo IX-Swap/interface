@@ -14,4 +14,11 @@ export const routes = {
   nftCreate: '/nft-create',
   nftCollections: '/nft/collections',
   nftCollectionCreate: '/nft/collections/create',
+  nftEditCollection: (id: number) => `/nft/${id}/edit`,
+  nftEditCollectionPath: `/nft/:id/edit`,
+  nftCollectionImport: `/nft/collections/import`,
+  nftViewCollectionPath: `/nft/collections/:collectionAddress`,
+  nftViewCollection: (address: string) => `/nft/collection/${address}`,
+  nftItemPath: `/nft/collections/:collectionAddress/:itemId`,
+  nftItem: (address: string, id: number) => `/nft/collections/${address}/${id}`,
 }

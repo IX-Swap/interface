@@ -1,5 +1,6 @@
 import { PreviewParent, StyledLogo } from 'components/Upload/styleds'
 import { FileTypes } from 'components/Upload/types'
+import { Dots } from 'pages/Pool/styleds'
 import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { TYPE } from 'theme'
@@ -28,7 +29,7 @@ const NFTPreviewContainer = styled.div`
   max-width: fit-content;
   background-color: #1b1b1b;
 
-  width: 250px;
+  width: 350px;
   height: 450px;
 `
 
@@ -107,7 +108,6 @@ type PreviewProps = {
 const Preview = ({ type, path }: PreviewProps) => {
   const getPreviewElement = useCallback(() => {
     const fileType = getFileType(type)
-
     switch (fileType) {
       case FileTypes.AUDIO:
         return <NFTPreviewAudio src={path} controls />
@@ -161,7 +161,7 @@ const NFTPreview = (props: NFTPreviewProps) => {
         </>
       )}
 
-      {!info && <div>Loading...</div>}
+      {!info && <Dots>Loading</Dots>}
     </NFTPreviewContainer>
   )
 }

@@ -109,11 +109,15 @@ export default function App() {
             <Suspense fallback={<></>}>
               <Switch>
                 <Route exact strict path="/admin" component={AdminKyc} />
+
                 <Route exact strict path={routes.nftCreate} component={CreateNFT} />
                 <Route exact strict path={routes.nftList} component={ListNFT} />
                 <Route exact strict path={routes.nftCollections} component={NFTCollections} />
                 <Route exact strict path={routes.nftCollectionCreate} component={CreateCollection} />
-                <Route exact strict path="/nft/:id/edit" component={UpdateCollection} />
+                <Route exact strict path={routes.nftEditCollectionPath} component={UpdateCollection} />
+                <Route exact strict path={routes.nftCollectionImport} component={NftImport} />
+                <Route exact strict path={routes.nftViewCollectionPath} component={NFTCollection} />
+                <Route exact strict path={routes.nftItemPath} component={NftAssetPage} />
 
                 {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
                   <Route exact strict path="/send" component={RedirectPathToSwapOnly} />
@@ -143,10 +147,6 @@ export default function App() {
 
                 <Route exact strict path="/security-tokens/:currencyId" component={SecTokenDetails} />
                 <Route exact strict path={routes.securityTokens()} component={Custodian} />
-
-                <Route exact strict path="/nft/collections/import" component={NftImport} />
-                <Route exact strict path="/nft/collections/:collectionAddress" component={NFTCollection} />
-                <Route exact strict path="/nft/collections/:collectionAddress/:itemId" component={NftAssetPage} />
 
                 {chainId && TGE_CHAINS_WITH_STAKING.includes(chainId) && (
                   <Route exact strict path={routes.staking} component={StakingTab} />
