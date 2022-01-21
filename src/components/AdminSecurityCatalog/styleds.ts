@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import { ButtonGradientBorder } from 'components/Button'
 import { BodyRow } from 'components/Table'
 import { ApproveButton } from 'components/AdminKycTable/SecondStepStatus'
+import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
+import { ModalBlurWrapper } from 'theme'
 
 export const StyledButtonGradientBorder = styled(ButtonGradientBorder)`
   padding: 0px 30px;
@@ -76,4 +78,28 @@ export const TokenCard = styled(BodyRow)`
     padding-left: 15px;
     align-items: center;
   }
+`
+
+export const WideModal = styled(RedesignedWideModal)`
+  min-width: 1050px;
+`
+
+export const WideModalWrapper = styled(ModalBlurWrapper)`
+  width: 1050px;
+`
+
+export const FormWrapper = styled.div`
+  padding: 24px 24px 20px 24px;
+  background: rgba(39, 32, 70, 0.4);
+  border-radius: 16px;
+
+  > div {
+    margin-bottom: 20px;
+  }
+`
+
+export const FormRow = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 20px;
 `

@@ -28,6 +28,7 @@ const StyledToggle = styled.button<{ isActive?: boolean; activeElement?: boolean
 
 const ToggleContainer = styled.span`
   display: flex;
+  align-items: center;
 `
 const MirrorImage = styled.span`
   transform: rotateY(180deg);

@@ -15,8 +15,11 @@ import { ReactComponent as LogoImage } from '../../assets/images/wallpaper.svg'
 import { ReactComponent as Delete } from '../../assets/images/delete-basket.svg'
 import { EditButton, StyledButtonGradientBorder, FormGrid, Logo, TokenCard } from './styleds'
 import { mockBrokerDealers } from './mock'
+import { useTokenPopupToggle } from 'state/application/hooks'
+import { TokenPopup } from './TokenPopup'
 
 export const AdminSecurityCatalog: FC = () => {
+  const toggle = useTokenPopupToggle()
   const [searchValue, setSearchValue] = useState('')
   const [currentIssuer, setCurrentIssuer] = useState<null | any>({
     id: 0,
@@ -28,6 +31,17 @@ export const AdminSecurityCatalog: FC = () => {
 
   const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.currentTarget.value)
+  }
+
+  const handleResetState = () => {
+    setCurrentIssuer({
+      id: 0,
+      name: '',
+      website: '',
+      logo: '',
+      tokens: [],
+    })
+    setShowMode('catalog')
   }
 
   const handleCreateClick = () => {
@@ -52,7 +66,7 @@ export const AdminSecurityCatalog: FC = () => {
         <>
           <Box>
             <Flex marginBottom="26px">
-              <ButtonText marginRight="10px" onClick={() => setShowMode('catalog')}>
+              <ButtonText marginRight="10px" onClick={handleResetState}>
                 <ArrowLeft />
               </ButtonText>
               <TYPE.title5>{showMode === 'add_issuer' ? 'Add issuer' : 'Edit issuer'}</TYPE.title5>
@@ -104,7 +118,7 @@ export const AdminSecurityCatalog: FC = () => {
           </Box>
 
           <Box>
-            <EditButton marginBottom="20px">
+            <EditButton marginBottom="20px" onClick={() => toggle()}>
               <TYPE.body3 color="white" fontWeight={600}>
                 + Add token
               </TYPE.body3>
@@ -119,7 +133,7 @@ export const AdminSecurityCatalog: FC = () => {
                   <TYPE.title6>Active</TYPE.title6>
                   <TYPE.title6>{isTradable ? 'Tradable' : 'Non Tradable'}</TYPE.title6>
                   <Box>
-                    <EditButton>
+                    <EditButton onClick={() => toggle()}>
                       <TYPE.body3 fontWeight={600}>Edit</TYPE.body3>
                     </EditButton>
                   </Box>
@@ -132,7 +146,9 @@ export const AdminSecurityCatalog: FC = () => {
               ))}
           </Box>
 
-          <ButtonIXSGradient style={{ width: 226 }}>Save</ButtonIXSGradient>
+          <ButtonIXSGradient onClick={handleResetState} style={{ width: 226 }}>
+            Save
+          </ButtonIXSGradient>
         </>
       )}
 
@@ -151,6 +167,8 @@ export const AdminSecurityCatalog: FC = () => {
           </Flex>
         </>
       )}
+
+      <TokenPopup token={null} />
     </Container>
   )
 }

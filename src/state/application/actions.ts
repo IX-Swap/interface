@@ -41,6 +41,7 @@ export enum ApplicationModal {
   STATS,
   ABOUT_WRAPPING,
   PLAYGROUND_WARNING,
+  TOKEN_POPUP,
 }
 
 export const updateBlockNumber = createAction<{ chainId: number; blockNumber: number }>('application/updateBlockNumber')
