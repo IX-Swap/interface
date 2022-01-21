@@ -29,7 +29,7 @@ export const PasswordField = ({ showErrors = false }: PasswordFieldProps) => {
           fullWidth
           InputProps={{
             endAdornment:
-              passwordErrors === true && showErrors ? (
+              passwordErrors !== undefined ? (
                 <InputAdornment position={'end'}>
                   <WarningIcon />
                 </InputAdornment>
