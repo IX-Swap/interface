@@ -35,12 +35,12 @@ export default makeStyles(theme => ({
         background: theme.palette.grey[500]
       },
 
-      [theme.breakpoints.up('sm')]: {
+      [theme.breakpoints.up('md')]: {
         pointerEvents: 'initial',
         '&:nth-child(2n)': { display: 'none' }
       },
 
-      [theme.breakpoints.up('md')]: {
+      [theme.breakpoints.up('lg')]: {
         '&:nth-child(2n)': { display: 'block' },
         '&:nth-child(1)': { display: 'none' },
         '&:nth-child(3)': { display: 'none' },

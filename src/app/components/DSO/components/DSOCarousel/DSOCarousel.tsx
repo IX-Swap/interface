@@ -22,14 +22,14 @@ export interface DSOCarouselProps {
 export const DSOCarousel = (props: any) => {
   const classes = useStyles()
   const { getFilterValue } = useQueryFilter()
-  const { isMobile, isTablet } = useAppBreakpoints()
+  const { isTablet, isMiniLaptop } = useAppBreakpoints()
   const [currentSlide] = useState(
     parseInt(getFilterValue('currentSlide') ?? '0')
   )
 
   const getSlidesCount = () => {
-    if (isMobile) return 1
-    if (isTablet) return 2
+    if (isTablet) return 1
+    if (isMiniLaptop) return 2
     return 3
   }
 
