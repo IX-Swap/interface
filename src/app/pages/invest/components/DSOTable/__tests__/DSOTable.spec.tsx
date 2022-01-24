@@ -1,5 +1,5 @@
 import React from 'react'
-import { render } from 'test-utils'
+import { cleanup, render } from 'test-utils'
 import { TableView } from 'components/TableWithPagination/TableView'
 import { DSOTable } from '../DSOTable'
 import { dsoQueryKeys } from 'config/queryKeys'
@@ -12,6 +12,11 @@ jest.mock('components/TableWithPagination/TableView', () => ({
 }))
 
 describe('DSO Table', () => {
+  afterEach(async () => {
+    await cleanup()
+    jest.clearAllMocks()
+  })
+
   it('renders without any error', () => {
     render(<DSOTable />)
   })
@@ -20,7 +25,7 @@ describe('DSO Table', () => {
     render(<DSOTable />)
 
     expect(TableView).toHaveBeenCalledWith(
-      {
+      expect.objectContaining({
         actions: Actions,
         columns: columns,
         name: dsoQueryKeys.getApprovedList,
@@ -34,7 +39,7 @@ describe('DSO Table', () => {
           network: undefined
         },
         themeVariant: 'primary'
-      },
+      }),
       {}
     )
   })

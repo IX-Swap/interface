@@ -3,9 +3,16 @@ import { InputAdornment, TextField } from '@material-ui/core'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
 import { Search as SearchIcon } from '@material-ui/icons'
 
-export const GroupedSearchFilter = () => {
+interface GroupedSearchFilterProps {
+  isCommitment?: boolean
+}
+
+export const GroupedSearchFilter = ({
+  isCommitment = false
+}: GroupedSearchFilterProps) => {
+  const name = isCommitment ? 'searchTokenName' : 'search'
   return (
-    <SearchQueryFilter groupFilter name='search'>
+    <SearchQueryFilter groupFilter name={name}>
       {({ value, onChange }) => (
         <TextField
           fullWidth

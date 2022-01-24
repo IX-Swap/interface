@@ -1,48 +1,114 @@
-import React, { ReactElement } from 'react'
+import React, { ReactElement, useEffect } from 'react'
+import { FileCopyOutlined } from '@material-ui/icons'
 import {
-  useConnectMetamaskWallet,
-  WalletConnectionStatus
-} from 'app/pages/accounts/pages/withdrawalAddresses/hooks/useConnectMetamaskWallet'
-import { useFormContext } from 'react-hook-form'
-import { WithdrawalAddressFormValues } from 'types/withdrawalAddress'
-import { DialogActions, Grid } from '@material-ui/core'
+  CircularProgress,
+  DialogActions,
+  Grid,
+  IconButton,
+  InputAdornment,
+  TextField
+} from '@material-ui/core'
+import { WalletConnectionStatus } from 'app/pages/accounts/pages/withdrawalAddresses/hooks/useConnectMetamaskWallet'
 import { WAConnectActions } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WAConnectActions'
-import { WAConnectFields } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WAConnectFields'
 import { WAInfoFields } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WAInfoFields'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
+import { TypedField } from 'components/form/TypedField'
+import { privateClassNames } from 'helpers/classnames'
+import { useCheckAddress } from '../hooks/useCheckAddress'
+import { useDebouncedCallback } from 'use-debounce'
+import { useFormContext } from 'react-hook-form'
+import { WithdrawalAddressFormValues } from 'types/withdrawalAddress'
+import { copyToClipboard } from 'helpers/clipboard'
+import { WAPair } from './WAPair'
+import { Alert } from '@material-ui/lab'
 
 export interface WAConnectProps {
   hint: ReactElement
+  status: WalletConnectionStatus
+  getAccount: (walletAddress: string) => Promise<void>
 }
 
-export const WAConnect = ({ hint }: WAConnectProps) => {
-  const { status, getAccount, signWallet } = useConnectMetamaskWallet()
-
-  const { watch } = useFormContext<WithdrawalAddressFormValues>()
-  const wallet = watch('wallet')
+export const WAConnect = ({ hint, status, getAccount }: WAConnectProps) => {
+  const { watch, control } = useFormContext<WithdrawalAddressFormValues>()
   const address = watch('address')
+  const wallet = watch('wallet')
+  const [checkAddress, { isLoading, data, isSuccess }] = useCheckAddress({
+    onSuccess: values => {
+      control.setValue('wallet', values.data?.walletApplication)
+      control.setValue('network', values.data?.networkId)
+    }
+  })
+  const { callback: debouncedCheckAddress } = useDebouncedCallback(
+    checkAddress,
+    300
+  )
+
+  useEffect(() => {
+    if (address?.trim().length > 0) {
+      void debouncedCheckAddress(address)
+    }
+  }, [address, debouncedCheckAddress])
 
   const isInitialising = status === WalletConnectionStatus.INITIALISING
-  const isVerified = status === WalletConnectionStatus.SUCCESS
+  const hasWallet =
+    status === WalletConnectionStatus.INITIALISED ||
+    status === WalletConnectionStatus.VERIFYING ||
+    status === WalletConnectionStatus.ERROR
   const isVerifying = status === WalletConnectionStatus.VERIFYING
-  const hasAddress = address !== undefined
-  const hasWallet = wallet !== undefined
+  const isVerified = status === WalletConnectionStatus.SUCCESS
+  const allowConnect = data?.data.allowConnect ?? false
 
   return (
     <>
-      <WAConnectFields />
-      {isVerified && <WAInfoFields />}
-      {hint}
+      <Grid item>
+        <TypedField
+          className={privateClassNames()}
+          component={TextField}
+          control={control}
+          name='address'
+          label='Blockchain Address'
+          variant='outlined'
+          disabled={allowConnect}
+          InputProps={{
+            endAdornment: isLoading ? (
+              <CircularProgress size={18} thickness={6} />
+            ) : (
+              allowConnect && (
+                <InputAdornment position='end'>
+                  <IconButton
+                    size='small'
+                    onClick={() => copyToClipboard(address)}
+                  >
+                    <FileCopyOutlined color='action' />
+                  </IconButton>
+                </InputAdornment>
+              )
+            )
+          }}
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <WAPair wallet={wallet} networkCode={data?.data.code} />
+      </Grid>
+      {isSuccess && !allowConnect && (
+        <Grid item xs={12}>
+          <Alert severity='error'>
+            We cannot connect your wallet at the moment. Connection of other
+            wallets to the platform is coming soon.
+          </Alert>
+        </Grid>
+      )}
+      {hasWallet && <WAInfoFields />}
+      {!hasWallet && hint}
       <DialogActions>
         <Grid item container justify='flex-end'>
           <WAConnectActions
             isVerifying={isVerifying}
             isVerified={isVerified}
-            isLoading={isInitialising}
+            isLoading={isInitialising || isVerifying}
             hasWallet={hasWallet}
-            hasAddress={hasAddress}
-            getAccount={getAccount}
-            signWallet={signWallet}
+            allowConnect={allowConnect}
+            getAccount={async () => await getAccount(address)}
           />
         </Grid>
       </DialogActions>
@@ -54,6 +120,9 @@ export const WAConnect = ({ hint }: WAConnectProps) => {
           message='By connecting a wallet, you agree to InvestaX’ Terms and Conditions and acknowledge that you have read and understand the InvestaX Privacy Policy.'
         />
       )}
+
+      <input {...control.register('wallet')} hidden />
+      <input {...control.register('network')} hidden />
     </>
   )
 }

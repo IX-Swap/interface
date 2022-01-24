@@ -1,30 +1,34 @@
-import React, { PropsWithChildren } from 'react'
-import { FormProps, Form } from 'components/form/Form'
+import React, { ReactElement } from 'react'
+import { Grid } from '@material-ui/core'
+import { Form } from 'components/form/Form'
 import { WithdrawalAddressFormValues } from 'types/withdrawalAddress'
 import { waFormValidationSchema } from 'app/pages/accounts/pages/withdrawalAddresses/validation'
-import { useMakeWithdrawalAddress } from 'app/pages/accounts/pages/withdrawalAddresses/hooks/useMakeWithdrawalAddress'
+import { useConnectMetamaskWallet } from '../hooks/useConnectMetamaskWallet'
+import { WAConnect } from './WAConnect'
 
-export const WithdrawalAddressForm = (
-  props: PropsWithChildren<FormProps<WithdrawalAddressFormValues>>
-) => {
-  const { children, ...rest } = props
-  const [makeWithdrawalAddress] = useMakeWithdrawalAddress()
+interface WithdrawalAddressFormProps {
+  hint: ReactElement
+}
+
+export const WithdrawalAddressForm = ({ hint }: WithdrawalAddressFormProps) => {
+  const { signWallet, status, getAccount } = useConnectMetamaskWallet()
   const handleSubmit = async ({
     agree,
     ...values
   }: WithdrawalAddressFormValues) => {
-    await makeWithdrawalAddress(values)
+    await signWallet(values)
   }
 
   return (
     <Form
-      {...rest}
       onSubmit={handleSubmit}
       validationSchema={waFormValidationSchema}
-      defaultValues={{ variant: 'create' }}
+      defaultValues={{ agree: false }}
       data-testid='blockchain-address-form'
     >
-      {children}
+      <Grid container direction='column' spacing={3}>
+        <WAConnect hint={hint} status={status} getAccount={getAccount} />
+      </Grid>
     </Form>
   )
 }

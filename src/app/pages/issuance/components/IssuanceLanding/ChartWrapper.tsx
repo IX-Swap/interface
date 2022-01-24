@@ -1,9 +1,9 @@
-import React from 'react'
+import React, { ReactElement } from 'react'
 import { Box } from '@material-ui/core'
 import { ChartTitle } from 'app/pages/issuance/components/IssuanceLanding/ChartTitle'
 
 export interface ChartWrapperProps {
-  title?: string
+  title?: ReactElement | string
   small?: boolean
   py?: number
   px?: number

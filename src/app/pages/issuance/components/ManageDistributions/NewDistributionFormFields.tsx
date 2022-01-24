@@ -87,6 +87,7 @@ export const NewDistributionFormFields = ({
             valueExtractor={dateTimeValueExtractor}
             defaultValue={null}
             inputVariant='outlined'
+            minDate={new Date()}
           />
         </Grid>
         <Grid item xs={12}>

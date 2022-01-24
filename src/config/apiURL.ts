@@ -73,8 +73,12 @@ export const accountsURL = {
   cashWithdrawals: {
     create: (userId: string) => `/accounts/cash/withdrawals/${userId}`
   },
+  digitalSecurities: {
+    getDepositAddress: '/custody/deposits/getDepositAddress'
+  },
   dsWithdrawals: {
-    create: (userId: string) => `/accounts/security/withdrawals/${userId}`
+    create: (userId: string) => `/accounts/security/withdrawals/${userId}`,
+    createCustodyWithdrawal: '/custody/withdrawals'
   },
   withdrawalAddresses: {
     getById: (userId: string, withdrawalAddressId: string) =>
@@ -85,7 +89,9 @@ export const accountsURL = {
   },
   assets: {
     getById: (assetId: string) => `accounts/assets/${assetId}`,
-    getAll: '/accounts/assets/list'
+    getAll: '/accounts/assets/list',
+    custody: (userId: string) => `/custody/available-tokens/${userId}`,
+    getTokenInfo: '/custody/token-info'
   },
   balance: {
     getAll: (userId: string) => `/accounts/balance/${userId}`,
@@ -108,7 +114,20 @@ export const accountsURL = {
     confirmCommitment: (commitmentId: string) =>
       `/issuance/commitments/${commitmentId}/confirmInvestment`
   },
-  getPortfolios: (userId: string) => `/accounts/portfolios/${userId}`
+  dashboard: {
+    getPortfolios: (userId: string) => `/accounts/portfolios/${userId}`
+  },
+  reports: {
+    getAccountInfo: (userId: string) => `/accounts/account-info/${userId}`,
+    getActivitySummary: (userId: string) =>
+      `/resources/financialReports/activitySummary/${userId}`,
+    getTradeConfirmation: (userId: string) =>
+      `/resources/financialReports/tradeConfirmation/${userId}`,
+    getFeeAndCharges: (userId: string) =>
+      `resources/financialReports/feeAndCharges/${userId}`,
+    getDividends: (userId: string) =>
+      `/resources/financialReports/dividends/${userId}`
+  }
 }
 
 export const issuanceURL = {
@@ -156,6 +175,11 @@ export const issuanceURL = {
     closure: (closureId: string, issuerId: string) =>
       `/issuance/closure/${closureId}/${issuerId}`,
     getDSOList: '/issuance/dso/list'
+  },
+  vcc: {
+    getDSOList: '/vcc/dsos/list',
+    getSubFundStats: 'vcc/subfund-stats',
+    getInvestmentStats: 'vcc/subfund-growth-graph'
   }
 }
 
@@ -350,5 +374,6 @@ export const blockchainNetworksURL = {
   getUpdateDecimal: (network: string, decimal: number) =>
     `/blockchain/settings/decimal/${network}/${decimal}`,
   generateWalletHash: '/blockchain/wallets/generateWalletHash',
-  verifyWalletOwnership: '/blockchain/wallets/verifyOwnership'
+  verifyWalletOwnership: '/blockchain/wallets/verifyOwnership',
+  checkAddress: `/blockchain/wallets/detectNetwork`
 }

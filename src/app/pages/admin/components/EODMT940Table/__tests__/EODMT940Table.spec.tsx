@@ -31,12 +31,13 @@ describe('EODMT940Table', () => {
         uri: virtualAccountsAudit.getMT940Files,
         name: virtualAccountsAuditQueryKeys.getMT940Files,
         actions: Actions,
+        noHeader: true,
         filter: {
           search: undefined,
           to: undefined,
           from: undefined
         },
-        themeVariant: 'no-header',
+        themeVariant: 'default',
         paperProps: { variant: 'elevation', elevation: 0 }
       }),
       {}

@@ -4,6 +4,7 @@ import formatDistance from 'date-fns/formatDistance'
 import differenceInDays from 'date-fns/differenceInDays'
 import differenceInHours from 'date-fns/differenceInHours'
 import differenceInMinutes from 'date-fns/differenceInMinutes'
+import { isValid } from 'date-fns'
 
 export const convertISOToDate = (
   date: string | null | undefined
@@ -39,6 +40,14 @@ export const formatDateToMMDDYY = (s?: string): string => {
   return s.length > 0 ? format(new Date(s), 'MM/dd/yyyy') : s
 }
 
+export const formatDate = (s?: string): string => {
+  if (s === undefined) {
+    return ''
+  }
+
+  return s.length > 0 ? format(new Date(s), `LLL d, yyyy`) : s
+}
+
 export const formatDateAndTime = (s?: string, seconds = false): string => {
   if (s === undefined) {
     return ''
@@ -47,6 +56,23 @@ export const formatDateAndTime = (s?: string, seconds = false): string => {
   return s.length > 0
     ? format(new Date(s), `LLL d, yyyy hh:mm${seconds ? ':ss' : ''} a`)
     : s
+}
+
+export const formatReportsDateAndTime = (
+  s?: string,
+  placeholder?: string
+): string => {
+  if (s === undefined) {
+    return placeholder ?? '-'
+  }
+
+  const date = new Date(s)
+
+  if (!isValid(date)) {
+    return s
+  }
+
+  return s.length > 0 ? format(date, `yyyy-MM-dd, hh:mm a`) : s
 }
 
 export const formatTime = (s?: string): string => {

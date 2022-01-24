@@ -20,6 +20,9 @@ export const formatAmount = (value: number) => {
   return value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
 }
 
+export const formatAmountValue = (value: string | number) =>
+  typeof value === 'number' ? formatAmount(value) : value
+
 export const formatDecimal = (value: number) => {
   return new Intl.NumberFormat('en-US', { style: 'decimal' }).format(value)
 }

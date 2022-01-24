@@ -38,5 +38,6 @@ export const IssuanceRoute = {
     'issuerId',
     'dsoId',
     'manageDistributions'
-  ])
+  ]),
+  dashboard: '/app/issuance/dashboard'
 }

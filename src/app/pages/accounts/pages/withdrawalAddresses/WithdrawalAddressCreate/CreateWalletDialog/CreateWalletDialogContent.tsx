@@ -12,22 +12,26 @@ export const links = [
   {
     label: 'Install Metamask',
     icon: MetamaskIcon,
-    href: 'https://metamask.io'
+    href: 'https://metamask.io',
+    disabled: false
   },
   {
     label: 'Install Hedera Wallet',
     icon: HederaIcon,
-    href: 'https://myhbarwallet.com'
+    href: 'https://myhbarwallet.com',
+    disabled: true
   },
   {
     label: 'Install Temple (Tezos) Wallet',
     icon: TezosIcon,
-    href: 'https://templewallet.com'
+    href: 'https://templewallet.com',
+    disabled: true
   },
   {
     label: 'Access MyAlgo Wallet',
     icon: AlgorandIcon,
-    href: 'https://wallet.myalgo.com/'
+    href: 'https://wallet.myalgo.com/',
+    disabled: true
   }
 ]
 
@@ -52,11 +56,7 @@ export const CreateWalletDialogContent: React.FC = () => {
       <Grid container spacing={3} direction={'column'}>
         {links.map(item => (
           <Grid item>
-            <CreateWalletLink
-              href={item.href}
-              label={item.label}
-              icon={item.icon}
-            />
+            <CreateWalletLink {...item} />
           </Grid>
         ))}
       </Grid>

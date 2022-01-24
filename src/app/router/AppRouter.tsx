@@ -2,7 +2,7 @@ import React from 'react'
 import { AppRoute as AppPath } from 'app/router/config'
 import { AppRoute } from 'components/AppRoute'
 import { Switch } from 'react-router-dom'
-import { HomeRoot } from 'app/pages/home/HomeRoot'
+import { EducationCentreRoot } from 'app/pages/educationCentre/EducationCentreRoot'
 import { IssuanceRoot } from 'app/pages/issuance/IssuanceRoot'
 import { SecurityRoot } from 'app/pages/security/SecurityRoot'
 import { NotificationsRoot } from 'app/pages/notifications/NotificationsRoot'
@@ -12,6 +12,7 @@ import { InvestRoot } from 'app/pages/invest/InvestRoot'
 import { AdminRoot } from 'app/pages/admin/AdminRoot'
 import { AuthorizerRoot } from 'app/pages/authorizer/AuthorizerRoot'
 import { OTCMarketRoot } from 'app/pages/exchange/OTCMarketRoot'
+import { FundsManagementRoot } from 'app/pages/fundsManagement/FundsManagementRoot'
 import { RedirectToDefaultPage } from 'app/RedirectToDefaultPage'
 
 export const AppRouter = () => {
@@ -21,8 +22,8 @@ export const AppRouter = () => {
         <AccountsRoot />
       </AppRoute>
 
-      <AppRoute path={AppPath.home}>
-        <HomeRoot />
+      <AppRoute path={AppPath.educationCentre}>
+        <EducationCentreRoot />
       </AppRoute>
 
       <AppRoute breadcrumb='Identity' path={AppPath.identity}>
@@ -55,6 +56,10 @@ export const AppRouter = () => {
 
       <AppRoute breadcrumb='Market' path={AppPath.OTCMarket}>
         <OTCMarketRoot />
+      </AppRoute>
+
+      <AppRoute path={AppPath.fundsManagement}>
+        <FundsManagementRoot />
       </AppRoute>
 
       <RedirectToDefaultPage />

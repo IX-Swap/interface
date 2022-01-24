@@ -46,7 +46,8 @@ export const balanceQueryKeys = {
   getAll: 'all-balances',
   getByAssetId: 'balances-by-asset-id',
   getByType: 'balances-by-type',
-  getByUserId: (id: string) => generateQueryKey('balance', id)
+  getByUserId: (id: string) => generateQueryKey('balance', id),
+  getDistribution: (dsoId: string) => generateQueryKey('distributions', dsoId)
 }
 
 export const authorizerQueryKeys = {
@@ -104,7 +105,9 @@ export const digitalSecuritiesQueryKeys = {
   getDepositByUserId: (id: string) => generateQueryKey('ds-deposits', id),
   getWithdrawalsByUserId: (id: string) =>
     generateQueryKey('ds-withdrawals', id),
-  getByUserId: (id: string) => generateQueryKey('ds', id)
+  getByUserId: (id: string) => generateQueryKey('ds', id),
+  custody: (userId: string) => generateQueryKey('custody', userId),
+  selfCustody: (userId: string) => generateQueryKey('self-custody', userId)
 }
 
 export const transactionsQueryKeys = {
@@ -146,7 +149,17 @@ export const dsoQueryKeys = {
   getApprovedList: 'dso-approved-list',
   getCommitmentsListByDSOId: (dsoId: string) =>
     generateQueryKey('commitments-list', dsoId),
-  closure: (closureId: string) => generateQueryKey('closure', closureId)
+  closure: (closureId: string) => generateQueryKey('closure', closureId),
+  vccDSOList: (corporateId: string, status: string) =>
+    generateQueryKey('vcc-dso-list', corporateId, status),
+  vccSubFundStats: (corporateId: string, status: string, dsos: string) =>
+    generateQueryKey('vcc-subfund-stats', corporateId, status, dsos),
+  vccSubFundInvestmentStats: (
+    corporateId: string,
+    status: string,
+    dsos: string
+  ) =>
+    generateQueryKey('vcc-subfund-investment-stats', corporateId, status, dsos)
 }
 
 export const otcQueryKeys = {
@@ -176,6 +189,14 @@ export const virtualAccountQueryKeys = {
   paymentMethod: 'payment-method',
   getBalances: 'get-balances',
   getPortfolios: 'get-portfolios'
+}
+
+export const reportsQueryKeys = {
+  getAccountInfo: 'get-account-info',
+  getActivitySummary: 'get-activity-summary',
+  getTradeConfirmation: 'get-trade-confirmation',
+  getFeeAndCharges: 'get-fee-and-charges',
+  getDividends: 'get-dividends'
 }
 
 export const exchange = {

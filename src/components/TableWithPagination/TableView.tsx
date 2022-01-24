@@ -44,13 +44,15 @@ export interface TableViewProps<T> {
   actions?: ActionsType<T>
   children?: (props: TableViewRendererProps<T>) => JSX.Element
   fakeItems?: T[]
+  fakeLoading?: boolean
   innerRef?: any
   selectionHelper?: UseSelectionHelperReturnType<T | unknown>
   paperProps?: PaperProps
   defaultRowsPerPage?: number
   size?: Size
-  themeVariant?: 'default' | 'primary' | 'no-header'
+  themeVariant?: 'default' | 'primary'
   noDataComponent?: JSX.Element
+  noHeader?: boolean
 }
 
 export const TableView = <T,>({
@@ -65,25 +67,34 @@ export const TableView = <T,>({
   actions,
   children,
   fakeItems,
+  fakeLoading = false,
   innerRef,
   selectionHelper,
   paperProps = {},
   defaultRowsPerPage,
   size = 'medium',
   themeVariant = 'primary',
+  noHeader = false,
   noDataComponent = <NoData title='No Data' />
 }: TableViewProps<T>): JSX.Element => {
-  const { items, status, page, setPage, setRowsPerPage, rowsPerPage, total } =
-    useTableWithPagination<T>({
-      queryKey: name,
-      uri: uri,
-      defaultFilter: filter,
-      queryEnabled: queryEnabled,
-      defaultRowsPerPage: defaultRowsPerPage
-    })
+  const {
+    items,
+    status,
+    isLoading,
+    page,
+    setPage,
+    setRowsPerPage,
+    rowsPerPage,
+    total
+  } = useTableWithPagination<T>({
+    queryKey: name,
+    uri: uri,
+    defaultFilter: filter,
+    queryEnabled: queryEnabled,
+    defaultRowsPerPage: defaultRowsPerPage
+  })
 
   const theme = useTheme()
-  const isLoading = status === 'loading'
   const classes = useStyles()
   const headColor =
     themeVariant === 'primary'
@@ -92,8 +103,7 @@ export const TableView = <T,>({
         : theme.palette.primary.main
       : 'initial'
   const headHeight = themeVariant === 'primary' ? 50 : 'initial'
-  const headDisplay =
-    themeVariant === 'no-header' ? 'none' : 'table-header-group'
+  const headDisplay = noHeader ? 'none' : 'table-header-group'
   const cacheQueryKey = [name, page, rowsPerPage, filter]
 
   const _items = Array.isArray(fakeItems) ? fakeItems : items
@@ -154,7 +164,7 @@ export const TableView = <T,>({
   return (
     <Grid container direction='column'>
       <Grid item>
-        {isLoading && <LinearProgress />}
+        {(status === 'loading' || fakeLoading) && <LinearProgress />}
         <Paper
           variant='outlined'
           style={{ backgroundColor: 'inherit' }}
@@ -214,6 +224,7 @@ export const TableView = <T,>({
                   actions={actions}
                   cacheQueryKey={cacheQueryKey}
                   themeVariant={themeVariant}
+                  noHeader={noHeader}
                   isLoading={isLoading}
                   noDataComponent={noDataComponent}
                 />

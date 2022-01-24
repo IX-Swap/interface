@@ -2,7 +2,7 @@ import Web3 from 'web3'
 
 interface Web3Service {
   web3: any
-  getAccount: () => Promise<string | never>
+  getAccount: (walletAddress: string) => Promise<void>
   signWallet: (walletHash: string, walletAddress: string) => Promise<string>
 }
 
@@ -27,10 +27,11 @@ const web3Service: Web3Service = {
     return _web3
   },
 
-  async getAccount() {
+  async getAccount(walletAddress: string) {
     try {
-      const accounts = await this.web3.eth.requestAccounts()
-      return accounts[0]
+      const accounts: string[] = await this.web3.eth.requestAccounts()
+      if (!accounts.includes(walletAddress))
+        throw new Error('Something went wrong... please try again')
     } catch (e) {
       throw new Error('Failed to connect to Metamask, please try again')
     }

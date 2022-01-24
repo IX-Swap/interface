@@ -2,6 +2,7 @@ import { useParsedData } from 'hooks/useParsedData'
 import { useServices } from 'hooks/useServices'
 import { useInfiniteQuery } from 'react-query'
 import { useParams } from 'react-router'
+import { balanceQueryKeys } from 'config/queryKeys'
 
 export const useDistribution = () => {
   const { apiService } = useServices()
@@ -17,7 +18,7 @@ export const useDistribution = () => {
   }
 
   const { data, ...rest } = useInfiniteQuery(
-    `distributions-${dsoId}`,
+    balanceQueryKeys.getDistribution(dsoId),
     fetchDistribution
   )
   return {

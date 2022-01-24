@@ -107,7 +107,7 @@ export const OverviewPageFilters = () => {
           </Select>
         </Grid>
 
-        <Grid item xs={12} md={8}>
+        <Grid data-testid='primarySearch' item xs={12} md={8}>
           <SearchFilter
             fullWidth
             placeholder='Search'

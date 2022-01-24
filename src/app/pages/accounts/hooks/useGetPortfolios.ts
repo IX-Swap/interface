@@ -12,7 +12,7 @@ export const useGetPortfolios = () => {
   const { apiService } = useServices()
 
   const getPortfolios = async () => {
-    const uri = accountsURL.getPortfolios(userId)
+    const uri = accountsURL.dashboard.getPortfolios(userId)
     return await apiService.get<AccountPortfolio>(uri)
   }
 

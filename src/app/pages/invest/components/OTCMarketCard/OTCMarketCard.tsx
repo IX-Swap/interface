@@ -33,6 +33,7 @@ export const OTCMarketCard = (props: OTCMarketCardProps) => {
 
   return (
     <Card
+      data-testid='primaryDsoCard'
       className={classes.root}
       variant='outlined'
       elevation={0}
