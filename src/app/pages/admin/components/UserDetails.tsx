@@ -1,12 +1,11 @@
 import React from 'react'
 import { Grid, Typography } from '@material-ui/core'
 import { LabelledValue } from 'components/LabelledValue'
-import { getTimeFromNow } from 'helpers/dates'
+import { getTimeFromNow, formatDateToMMDDYY } from 'helpers/dates'
 import { UserActions } from 'app/pages/admin/components/UserActions'
 import { hasValue } from 'helpers/forms'
 import { ManagedUser } from 'types/user'
 import { isResetActive } from 'helpers/isResetActive'
-import { format } from 'date-fns'
 
 export interface UserDetailsProps {
   data: ManagedUser
@@ -47,7 +46,7 @@ export const UserDetails = ({ data }: UserDetailsProps) => {
             <Grid item xs={12} lg={4}>
               <LabelledValue
                 label='Account Creation Date'
-                value={format(new Date(data.createdAt), 'MM/dd/yyyy')}
+                value={formatDateToMMDDYY(data.createdAt)}
               />
             </Grid>
           </Grid>
@@ -57,7 +56,7 @@ export const UserDetails = ({ data }: UserDetailsProps) => {
             <Grid item xs={12} lg={4}>
               <LabelledValue
                 label='Last Updated Date'
-                value={format(new Date(data.updatedAt), 'MM/dd/yyyy')}
+                value={formatDateToMMDDYY(data.updatedAt)}
               />
             </Grid>
             <Grid item xs={12} lg={4}>
