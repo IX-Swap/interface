@@ -6,7 +6,7 @@ import {
   ColorType
 } from 'app/pages/admin/components/BooleanColumn'
 import { ViewUserColumn } from 'app/pages/admin/components/ViewUserColumn'
-import { format } from 'date-fns'
+import { formatDateToMMDDYY } from 'helpers/dates'
 
 export const renderViewUser = (id: string) => <ViewUserColumn userId={id} />
 
@@ -20,7 +20,7 @@ export const columns: Array<TableColumn<User>> = [
   {
     key: 'createdAt',
     label: 'Account creation date',
-    render: (a: string) => format(new Date(a), 'MM/dd/yyyy')
+    render: (a: string) => formatDateToMMDDYY(a)
   },
   {
     key: 'email',
