@@ -27,7 +27,7 @@ describe('PrimaryInvestLink', () => {
     data: dso
   }
   const defaultPrimaryInvestProps = {
-    style: { fontSize: 16 },
+    style: { fontSize: 16, marginTop: 16 },
     variant: 'contained',
     color: 'primary',
     component: AppRouterLinkComponent

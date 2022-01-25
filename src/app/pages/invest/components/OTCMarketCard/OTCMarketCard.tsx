@@ -55,11 +55,15 @@ export const OTCMarketCard = (props: OTCMarketCardProps) => {
             >
               Learn More
             </Button>
-            <VSpacer size='small' />
           </>
         ) : null}
 
-        <Grid container item justifyContent='flex-end' alignItems={'center'}>
+        <Grid
+          container
+          item
+          justifyContent='space-between'
+          alignItems={'center'}
+        >
           {type !== 'OTC' ? (
             <Typography
               className={classNames(
