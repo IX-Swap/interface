@@ -5,6 +5,7 @@ import { managedUser } from '__fixtures__/user'
 import { LabelledValue } from 'components/LabelledValue'
 import { UserActions } from 'app/pages/admin/components/UserActions'
 import { getTimeFromNow } from 'helpers/dates'
+import { format } from 'date-fns'
 
 jest.mock('components/LabelledValue', () => ({
   LabelledValue: jest.fn(({ value }) => <>{value}</>)
@@ -37,7 +38,7 @@ describe('UserDetails', () => {
       3,
       {
         label: 'Account Creation Date',
-        value: getTimeFromNow(new Date(managedUser.createdAt))
+        value: format(new Date(managedUser.createdAt), 'MM/dd/yyyy')
       },
       {}
     )
@@ -45,7 +46,7 @@ describe('UserDetails', () => {
       4,
       {
         label: 'Last Updated Date',
-        value: getTimeFromNow(new Date(managedUser.updatedAt))
+        value: format(new Date(managedUser.updatedAt), 'MM/dd/yyyy')
       },
       {}
     )

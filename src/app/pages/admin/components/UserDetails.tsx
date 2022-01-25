@@ -6,6 +6,7 @@ import { UserActions } from 'app/pages/admin/components/UserActions'
 import { hasValue } from 'helpers/forms'
 import { ManagedUser } from 'types/user'
 import { isResetActive } from 'helpers/isResetActive'
+import { format } from 'date-fns'
 
 export interface UserDetailsProps {
   data: ManagedUser
@@ -46,7 +47,7 @@ export const UserDetails = ({ data }: UserDetailsProps) => {
             <Grid item xs={12} lg={4}>
               <LabelledValue
                 label='Account Creation Date'
-                value={getTimeFromNow(new Date(data.createdAt))}
+                value={format(new Date(data.createdAt), 'MM/dd/yyyy')}
               />
             </Grid>
           </Grid>
@@ -56,7 +57,7 @@ export const UserDetails = ({ data }: UserDetailsProps) => {
             <Grid item xs={12} lg={4}>
               <LabelledValue
                 label='Last Updated Date'
-                value={getTimeFromNow(new Date(data.updatedAt))}
+                value={format(new Date(data.updatedAt), 'MM/dd/yyyy')}
               />
             </Grid>
             <Grid item xs={12} lg={4}>
