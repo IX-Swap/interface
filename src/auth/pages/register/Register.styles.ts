@@ -11,7 +11,8 @@ export const useStyles = makeStyles(theme => ({
     color: 'rgba(255, 255, 255, 0.5)'
   },
   link: {
-    color: theme.palette.text.primary
+    color: theme.palette.text.primary,
+    textDecoration: 'none'
   },
   label: {
     display: 'block',
@@ -23,5 +24,9 @@ export const useStyles = makeStyles(theme => ({
   },
   bottomBlock: {
     paddingTop: '0!important'
+  },
+  support: {
+    color: 'rgba(255, 255, 255, 0.5)',
+    opacity: 0.6
   }
 }))
