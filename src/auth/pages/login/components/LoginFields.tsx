@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, TextField } from '@material-ui/core'
+import { Grid, InputAdornment, TextField } from '@material-ui/core'
 import { TypedField } from 'components/form/TypedField'
 import { useFormContext } from 'react-hook-form'
 import { LoginArgs } from 'types/auth'
@@ -7,10 +7,12 @@ import { PasswordField } from 'components/form/PasswordField'
 import { AuthRoute } from 'auth/router/config'
 import { AppRouterLink } from 'components/AppRouterLink'
 import { useStyles } from 'auth/pages/login/Login.styles'
+import { ReactComponent as WarningIcon } from 'assets/icons/warning.svg'
 
 export const LoginFields = () => {
   const { forgotLink } = useStyles()
-  const { control } = useFormContext<LoginArgs>()
+  const { control, errors } = useFormContext<LoginArgs>()
+  const emailErrors = errors.email
 
   return (
     <Grid container spacing={4} direction='column'>
@@ -25,6 +27,14 @@ export const LoginFields = () => {
           type='email'
           InputLabelProps={{
             shrink: true
+          }}
+          InputProps={{
+            endAdornment:
+              emailErrors !== undefined ? (
+                <InputAdornment position={'end'}>
+                  <WarningIcon />
+                </InputAdornment>
+              ) : null
           }}
         />
       </Grid>

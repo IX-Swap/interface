@@ -1,5 +1,11 @@
 import React from 'react'
-import { Grid, Link, TextField, Typography } from '@material-ui/core'
+import {
+  Grid,
+  InputAdornment,
+  Link,
+  TextField,
+  Typography
+} from '@material-ui/core'
 import { TypedField } from 'components/form/TypedField'
 import { useFormContext } from 'react-hook-form'
 import { SignupArgs } from 'types/auth'
@@ -7,6 +13,7 @@ import { PasswordField } from 'components/form/PasswordField'
 import { booleanValueExtractor } from 'helpers/forms'
 import { Checkbox } from 'components/form/Checkbox'
 import { useStyles } from 'auth/pages/register/Register.styles'
+import { ReactComponent as WarningIcon } from 'assets/icons/warning.svg'
 
 const CheckboxLabel = () => {
   const { label, link } = useStyles()
@@ -43,8 +50,10 @@ const CheckboxLabel = () => {
 }
 
 export const RegisterFields = () => {
-  const { control } = useFormContext<SignupArgs>()
+  const { control, errors } = useFormContext<SignupArgs>()
   const { bottomBlock, topBlock } = useStyles()
+  const nameErrors = errors.name
+  const emailErrors = errors.email
 
   return (
     <Grid container spacing={4} direction='column'>
@@ -59,6 +68,14 @@ export const RegisterFields = () => {
           InputLabelProps={{
             shrink: true
           }}
+          InputProps={{
+            endAdornment:
+              nameErrors !== undefined ? (
+                <InputAdornment position={'end'}>
+                  <WarningIcon />
+                </InputAdornment>
+              ) : null
+          }}
         />
       </Grid>
       <Grid item>
@@ -72,6 +89,14 @@ export const RegisterFields = () => {
           placeholder={'Email Address'}
           InputLabelProps={{
             shrink: true
+          }}
+          InputProps={{
+            endAdornment:
+              emailErrors !== undefined ? (
+                <InputAdornment position={'end'}>
+                  <WarningIcon />
+                </InputAdornment>
+              ) : null
           }}
         />
       </Grid>

@@ -36,13 +36,13 @@ export const useStyles = makeStyles(theme => ({
   },
   background: {
     width: '45%',
-    // backgroundColor: theme.palette.backgrounds.alternative,
     paddingTop: theme.spacing(12.5),
     paddingBottom: theme.spacing(7.5),
     backgroundColor: '#0E1F42',
     backgroundImage: `url(${DotsImage})`,
     backgroundPosition: 'right center',
-    // background: `radial-gradient(50.29% 51.61% at 13.59% 48.39%, rgba(0, 0, 0, 0) 46.41%, #000000 73.61%)`,
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
 
     [theme.breakpoints.down('sm')]: {
       display: 'none'

@@ -49,7 +49,16 @@ export const getThemeOverrides = (
   },
   MuiInput: {
     root: {
-      minHeight: 38
+      minHeight: 38,
+      backgroundColor: '#1a397c40',
+      borderRadius: 8,
+      '&.Mui-focused': {
+        backgroundColor: '#ffffff'
+      },
+      '&.Mui-error': {
+        paddingRight: 20,
+        border: '2px solid #FF8080'
+      }
     },
     input: {},
     underline: {
@@ -73,7 +82,6 @@ export const getThemeOverrides = (
       paddingLeft: 24,
       paddingRight: 24,
       height: '100%',
-      backgroundColor: '#1a397c40',
       boxShadow: 'none',
       borderRadius: 8,
       boxSizing: 'border-box',
@@ -121,6 +129,9 @@ export const getThemeOverrides = (
     },
     contained: {
       borderRadius: 8,
+      '&:hover': {
+        backgroundColor: '#4080ff!important'
+      },
       '&.Mui-disabled': {
         backgroundColor: '#0055FF20'
       }
@@ -139,7 +150,10 @@ export const getThemeOverrides = (
       '.Mui-checked &': {
         color: '#ffffff',
         background: '#0055FF',
-        border: '1px solid #0055FF'
+        border: '2px solid #0055FF'
+      },
+      '.Mui-error &': {
+        border: '2px solid #FF8080'
       }
     }
   },
@@ -148,6 +162,13 @@ export const getThemeOverrides = (
       fill: '#102756',
       '.Mui-checked &': {
         fill: '#0055FF'
+      }
+    }
+  },
+  MuiTypography: {
+    colorError: {
+      '& span': {
+        color: '#FF8080'
       }
     }
   }
