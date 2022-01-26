@@ -29,6 +29,7 @@ const NFTPreviewContainer = styled.div`
   max-width: fit-content;
   background-color: #1b1b1b;
 
+  min-width: 350px;
   width: 350px;
   height: 450px;
 `
@@ -76,6 +77,16 @@ const NFTPreviewNSFWBadge = styled.div`
 
   border: 2px solid #333;
   border-radius: 2rem;
+`
+
+const LoaderWrapper = styled.div`
+  height: 100%;
+
+  display: flex;
+  flex-flow: column nowrap;
+
+  justify-content: center;
+  align-items: center;
 `
 
 const NFTPreviewWrapper = styled.div`
@@ -161,7 +172,11 @@ const NFTPreview = (props: NFTPreviewProps) => {
         </>
       )}
 
-      {!info && <Dots>Loading</Dots>}
+      {!info && (
+        <LoaderWrapper>
+          <Dots>Loading</Dots>
+        </LoaderWrapper>
+      )}
     </NFTPreviewContainer>
   )
 }
