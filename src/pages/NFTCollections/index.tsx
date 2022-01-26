@@ -15,6 +15,18 @@ import { ReactComponent as Edit } from '../../assets/images/edit-circle-white.sv
 import LogoWhite from '../../assets/svg/logo-white.svg'
 import { CollectionCard, CollectionImage, CollectionImageWrapper, CollectionLogo, CollectionsGrid } from './styleds'
 import useTheme from 'hooks/useTheme'
+import styled from 'styled-components'
+
+const LoaderWrapper = styled.div`
+  display: flex;
+  flex-flow: row nowrap;
+
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  padding: 2rem;
+`
 
 const NFTCollections: FC = () => {
   // const [selectedTabId, setSelectedTabId] = useState(1)
@@ -67,7 +79,11 @@ const NFTCollections: FC = () => {
             Create a collection
           </ButtonGradientBorder>
         </RowBetween>
-        {collectionsLoading && <LoaderThin size={64} />}
+        {collectionsLoading && (
+          <LoaderWrapper>
+            <LoaderThin size={64} />
+          </LoaderWrapper>
+        )}
         <CollectionsGrid>
           {!collectionsLoading &&
             myCollections.length !== 0 &&
