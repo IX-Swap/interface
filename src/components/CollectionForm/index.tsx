@@ -31,16 +31,62 @@ export const CollectionForm = ({ collection, onSubmit, actionName = 'Update' }: 
 
   useEffect(() => {
     if (collection) {
+      console.log(collection)
       setName(collection?.name)
       setDescription(collection?.description)
+
+      updateFiles()
     }
   }, [collection, setName, setDescription])
 
+  const updateFiles = async () => {
+    const logo = await createFile(collection?.logo)
+    const cover = await createFile(collection?.cover)
+    const banner = await createFile(collection?.banner)
+
+    onLogoDrop(logo)
+    onCoverDrop(cover)
+    onBannerDrop(banner)
+  }
+
+  const createFile = async (file: any) => {
+    console.log({ file })
+    if (file) {
+      console.log(file?.public)
+      const name = file?.name
+      const response = await fetch(file?.public)
+      const blob = await response.blob()
+      const newFile = new File([blob], name, { type: blob.type, lastModified: new Date().getTime() })
+      /*const newFile = await fetch(file?.public)
+        .then((e) => {
+          //console.log(e.blob())
+          return e.blob()
+        })
+        .then((blob) => {
+          console.log({ blob })
+          //const b: any = blob
+          //b.lastModifiedDate = new Date()
+          //b.name = ''
+          return new File([blob], name, { type: blob.type, lastModified: new Date().getTime() })
+        })*/
+
+      console.log({ newFile })
+      const ss = newFile as FileWithPath
+      //const fileWithPath = toFileWithPath(newFile, file?.public)
+      //fileWithPath.path = file?.public
+      return ss
+    }
+
+    return null
+  }
+
   const onLogoDrop = (newLogo: any) => {
+    console.log({ newLogo })
     setLogo(newLogo)
   }
 
   const onCoverDrop = (newCover: any) => {
+    console.log({ newCover })
     setCover(newCover)
   }
 
