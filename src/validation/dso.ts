@@ -10,9 +10,9 @@ const numberTransformer = (cv: number, ov: any) => {
 
 export const dsoTeamMemberSchema = object().shape<DsoTeamMember>({
   about: string(),
-  name: string().required('Team member name is required'),
-  position: string().required('Team member position is required'),
-  photo: string().required('Team member photo is required')
+  name: string().required('Team Member Name is required'),
+  position: string().required('Team Member Position is required'),
+  photo: string().required('Team Member Photo is required')
 })
 
 export const dsoFAQItemSchema = object().shape<DsoFAQItem>(
@@ -36,12 +36,12 @@ export const dsoVideoLinkSchema = object().shape<DsoVideo>(
   {
     title: string().when('link', {
       is: link => Boolean(link),
-      then: string().required('Video title is required when link is provided')
+      then: string().required('Video Title is required when link is provided')
     }),
     link: string().when('title', {
       is: title => Boolean(title),
       then: string().required(
-        'Video link is required when video title is provided'
+        'Video Link is required when Video Title is provided'
       )
     })
   },
@@ -52,8 +52,8 @@ export const dsoVideoLinkSchema = object().shape<DsoVideo>(
 )
 
 export const dsoFormBaseValidationSchema = {
-  businessModel: string().required('Business model is required'),
-  capitalStructure: string().required('Capital structure is required'),
+  businessModel: string().required('Business Model is required'),
+  capitalStructure: string().required('Capital Structure is required'),
   corporate: string()
     .max(50, 'Maximum of 50 characters')
     .required('Corporate is required')
@@ -65,7 +65,7 @@ export const dsoFormBaseValidationSchema = {
   distributionFrequency: string().when('capitalStructure', {
     is: capitalStructure =>
       capitalStructure === 'Equity' || capitalStructure === 'Debt',
-    then: string().required('Distribution frequency is required')
+    then: string().required('Distribution Frequency is required')
   }),
   dividendYield: number()
     .transform(numberTransformer)
@@ -73,7 +73,7 @@ export const dsoFormBaseValidationSchema = {
       is: 'Equity',
       then: number()
         .transform(numberTransformer)
-        .required('Dividend yield is required')
+        .required('Dividend Yield is required')
     }),
   equityMultiple: number()
     .transform(numberTransformer)
@@ -81,9 +81,9 @@ export const dsoFormBaseValidationSchema = {
       is: 'Equity',
       then: number()
         .transform(numberTransformer)
-        .required('Equity multiple is required')
+        .required('Equity Multiple is required')
     }),
-  fundraisingMilestone: string().required('Fundraising milestone is required'),
+  fundraisingMilestone: string().required('Fundraising Milestone is required'),
   grossIRR: number()
     .transform(numberTransformer)
     .when('capitalStructure', {
@@ -98,7 +98,7 @@ export const dsoFormBaseValidationSchema = {
       is: 'Debt',
       then: number()
         .transform(numberTransformer)
-        .required('Interest rate is required')
+        .required('Interest Rate is required')
     }),
   introduction: string().required('Introduction is required'),
   investmentPeriod: number()
@@ -108,19 +108,19 @@ export const dsoFormBaseValidationSchema = {
         capitalStructure === 'Equity' || capitalStructure === 'Debt',
       then: number()
         .transform(numberTransformer)
-        .required('Investment period is required')
+        .required('Investment Period is required')
     }),
   investmentStructure: string().when('capitalStructure', {
     is: capitalStructure =>
       capitalStructure === 'Equity' || capitalStructure === 'Debt',
-    then: string().required('Investment structure is required')
+    then: string().required('Investment Structure is required')
   }),
-  issuerName: string().required('Issuer name is required'),
+  issuerName: string().required('Issuer Name is required'),
   launchDate: dateSchema
-    .required('Launch date is is required')
+    .required('Launch Date is is required')
     .test('pastDate', 'Launch Date must be future date', pastDateValidator),
   completionDate: dateSchema
-    .required('Completion date is required')
+    .required('Completion Date is required')
     .test('futureDate', 'Launch Date must be future date', pastDateValidator),
   leverage: number()
     .transform(numberTransformer)
@@ -131,23 +131,23 @@ export const dsoFormBaseValidationSchema = {
         .required('Leverage is required')
     }),
   minimumInvestment: number()
-    .typeError('Minimum investment must be a number')
+    .typeError('Minimum Investment must be a number')
     .nullable()
-    .required('Minimum investment is required'),
+    .required('Minimum Investment is required'),
   pricePerUnit: number()
-    .typeError('Price per unit must be a number')
+    .typeError('Unit Price must be a number')
     .nullable()
-    .required('Price per unit is required'),
+    .required('Unit Price is required'),
   subscriptionDocument: object<DataroomFile>(),
   tokenName: string()
-    .required('Token name is required')
-    .matches(/^[a-zA-Z\s]*$/g, 'Token name must not have special characters'),
-  tokenSymbol: string().required('Token symbol is required'),
+    .required('Token Name is required')
+    .matches(/^[a-zA-Z\s]*$/g, 'Token Name must not have special characters'),
+  tokenSymbol: string().required('Token Symbol is required'),
   totalFundraisingAmount: number()
-    .required('Total fundraising amount is required')
-    .typeError('Total fundraising amount must be a number')
+    .required('Total Fundraising Amount is required')
+    .typeError('Total Fundraising Amount must be a number')
     .nullable(),
-  useOfProceeds: string().required('Use of proceeds is required'),
+  useOfProceeds: string().required('Use of Proceeds is required'),
   logo: string().required('Logo is required'),
   policyBuilder: object(),
   status: string(),
@@ -155,12 +155,12 @@ export const dsoFormBaseValidationSchema = {
     .ensure()
     .required('Documents are required'),
   team: array<DsoTeamMember>()
-    .of(dsoTeamMemberSchema.required('Team member details are required'))
+    .of(dsoTeamMemberSchema.required('Team Member Details are required'))
     .ensure()
-    .required('Team member is required'),
+    .required('Team Member is required'),
   faqs: array<DsoFAQItem>()
     .of(dsoFAQItemSchema.required('Required'))
-    .required('Faqs are required'),
+    .required('FAQs are required'),
   videos: array<DsoVideo>()
     .of(dsoVideoLinkSchema.required('Videos are required'))
     .required('Required'),
