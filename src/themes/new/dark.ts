@@ -1,7 +1,7 @@
 import { ThemeOptions } from '@material-ui/core'
 import tinycolor from 'tinycolor2'
 
-//TODO Need to do some refactoring in future
+// TODO Need to do some refactoring in future
 export const darkTheme: ThemeOptions = {
   palette: {
     type: 'dark',
@@ -19,10 +19,10 @@ export const darkTheme: ThemeOptions = {
     },
     backgrounds: {
       default: '#0E1F42',
-      light: tinycolor('#132a57').lighten(10),
-      lighter: tinycolor('#132a57').lighten(20),
+      light: tinycolor('#132a57').lighten(10).toHex(),
+      lighter: tinycolor('#132a57').lighten(20).toHex(),
       alternative: '#0E1A32',
-      alternativeLight: tinycolor('#132a57').lighten(20)
+      alternativeLight: tinycolor('#132a57').lighten(20).toHex()
     },
     sidebar: {
       activeBackground: 'rgba(137, 149, 252, 0.11)',
