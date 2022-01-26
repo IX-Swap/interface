@@ -1,7 +1,9 @@
 import React from 'react'
 import { InputAdornment, TextField } from '@mui/material'
 import { DateRange as DateIcon } from '@mui/icons-material'
-import { DateTimePicker, DateTimePickerProps } from '@material-ui/pickers'
+import MUIDateTimePicker, {
+  DateTimePickerProps as MUIDateTimePickerProps
+} from '@mui/lab/DateTimePicker'
 
 const TextFieldComponent: React.FC = (props: any) => (
   <TextField
@@ -18,17 +20,13 @@ const TextFieldComponent: React.FC = (props: any) => (
   />
 )
 
-export const DateTimePickerComponent = (props: DateTimePickerProps) => {
-  const { margin = 'normal', ...rest } = props
+export const DateTimePickerComponent = (props: MUIDateTimePickerProps) => {
   return (
-    <DateTimePicker
-      {...rest}
-      autoOk
-      variant='inline'
-      inputVariant='outlined'
-      margin={margin}
-      TextFieldComponent={TextFieldComponent}
-      format='MM/dd/yyyy HH:mm'
+    <MUIDateTimePicker
+      {...props}
+      renderInput={inputProps => (
+        <TextFieldComponent label='Date' {...inputProps} />
+      )}
     />
   )
 }

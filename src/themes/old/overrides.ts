@@ -1,6 +1,6 @@
 import { Theme } from '@mui/material'
 import { green, grey } from '@mui/material/colors'
-import { Overrides } from '@mui/material/styles';
+import { ComponentsOverrides } from '@mui/material/styles'
 import { rte } from 'themes/old/rte'
 import tinycolor from 'tinycolor2'
 import { CSSProperties } from 'react'
@@ -11,7 +11,9 @@ interface LabOverrides {
   }
 }
 
-export const getThemeOverrides = (theme: Theme): Overrides & LabOverrides => ({
+export const getThemeOverrides = (
+  theme: Theme
+): ComponentsOverrides & LabOverrides => ({
   ...rte(theme),
   MuiCssBaseline: {
     '@global': {
@@ -125,18 +127,19 @@ export const getThemeOverrides = (theme: Theme): Overrides & LabOverrides => ({
     }
   },
   MuiInputLabel: {
-    formControl: {
-      transform: 'translate(0, 29px) scale(1)'
-    },
+    // formControl: {
+    //   transform: 'translate(0, 29px) scale(1)'
+    // },
     outlined: {
-      transform: 'translate(14px, 13px) scale(1)',
-      color: '#AAA'
-    },
-    shrink: {
-      paddingRight: 5,
-      paddingLeft: 5,
-      backgroundColor: theme.palette?.backgrounds.default
+      '&:not(.MuiInputLabel-shrink)': {
+        transform: 'translate(14px, 11px) scale(1)'
+      }
     }
+    // shrink: {
+    //   paddingRight: 5,
+    //   paddingLeft: 5,
+    //   backgroundColor: theme.palette?.backgrounds.default
+    // }
   },
   MuiOutlinedInput: {
     root: {
@@ -149,10 +152,10 @@ export const getThemeOverrides = (theme: Theme): Overrides & LabOverrides => ({
       paddingBottom: 0,
       height: '100%'
     },
-    inputMarginDense: {
-      paddingTop: 12,
-      paddingBottom: 12
-    },
+    // inputMarginDense: {
+    //   paddingTop: 12,
+    //   paddingBottom: 12
+    // },
     adornedEnd: {
       paddingRight: 8
     },
@@ -165,13 +168,14 @@ export const getThemeOverrides = (theme: Theme): Overrides & LabOverrides => ({
     }
   },
   MuiSelect: {
-    root: {
-      height: 38
-    },
-    selectMenu: {
-      paddingTop: 11,
-      paddingBottom: 11
-    }
+    //
+    // root: {
+    //   height: 38
+    // },
+    // selectMenu: {
+    //   paddingTop: 11,
+    //   paddingBottom: 11
+    // }
   },
   MuiStepper: {
     root: {
@@ -231,10 +235,10 @@ export const getThemeOverrides = (theme: Theme): Overrides & LabOverrides => ({
         boxShadow: 'inset 0 2px 5px 0 rgba(54, 54, 54, 0.2)',
         backgroundColor: 'transparent'
       }
-    },
-    label: {
-      textTransform: 'none'
     }
+    // label: {
+    //   textTransform: 'none'
+    // }
   },
   MuiTextField: {
     root: {
@@ -250,12 +254,12 @@ export const getThemeOverrides = (theme: Theme): Overrides & LabOverrides => ({
     root: {
       paddingTop: 18,
       paddingBottom: 18
-    },
-    wrapper: {
-      textTransform: 'none',
-      fontSize: 16,
-      fontWeight: 500
     }
+    // wrapper: {
+    //   textTransform: 'none',
+    //   fontSize: 16,
+    //   fontWeight: 500
+    // }
   },
   MuiTabs: {
     flexContainer: {

@@ -45,7 +45,6 @@ export const SearchAndDateFilter = () => {
             filters={['search', 'toDate', 'fromDate']}
             variant='contained'
             size='small'
-            color='default'
             disableElevation
           >
             Reset

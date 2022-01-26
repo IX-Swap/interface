@@ -100,5 +100,5 @@ export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
         />
       </Grid>
     </Grid>
-  );
+  )
 }

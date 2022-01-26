@@ -1,16 +1,16 @@
 import React from 'react'
-import { DateTimePickerComponent } from 'components/form/_DateTimePicker'
+import { DateTimePickerComponent } from 'components/form/DateTimePicker'
 import {
   SearchQueryFilter,
   SearchQueryFilterProps
 } from 'components/SearchQueryFilter/SearchQueryFilter'
 import { convertDateToISO } from 'helpers/dates'
-import { KeyboardDateTimePickerProps } from '@material-ui/pickers'
 
 export interface GroupedDateTimeFilterProps {
   name: SearchQueryFilterProps<'fromDate' | 'toDate'>['name']
   groupFilter: SearchQueryFilterProps<'fromDate' | 'toDate'>['groupFilter']
-  dateTimePickerProps?: Partial<KeyboardDateTimePickerProps>
+  // TODO: fix type when pickers updated
+  dateTimePickerProps?: any
 }
 
 export const GroupedDateTimeFilter = (props: GroupedDateTimeFilterProps) => {
@@ -22,11 +22,9 @@ export const GroupedDateTimeFilter = (props: GroupedDateTimeFilterProps) => {
         <DateTimePickerComponent
           {...dateTimePickerProps}
           value={value ?? null}
-          size='small'
-          inputVariant='outlined'
           onChange={date => {
             try {
-              onChange(convertDateToISO(date))
+              onChange(convertDateToISO(date as Date))
             } catch (e) {
               onChange(undefined)
             }

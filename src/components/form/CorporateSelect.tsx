@@ -14,13 +14,11 @@ export const CorporateSelect = (props: any) => {
       <MenuItem disabled value={undefined}>
         Corporate
       </MenuItem>
-      {data.list.map(({ _id, companyLegalName }) => {
-        return (
-          <MenuItem value={_id} key={_id}>
-            {companyLegalName}
-          </MenuItem>
-        )
-      })}
+      {data.list.map(({ _id, companyLegalName }) => (
+        <MenuItem value={_id} key={_id}>
+          {companyLegalName}
+        </MenuItem>
+      ))}
     </Select>
   )
 }

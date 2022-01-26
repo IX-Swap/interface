@@ -1,5 +1,5 @@
-import * as createPalette from '@material-ui/core/styles/createPalette' // eslint-disable-line
-import { CSSProperties } from '@material-ui/core/styles'
+import * as createPalette from '@mui/material' //eslint-disable-line
+import { CSSProperties } from '@mui/material'
 
 export interface AppBackgrounds {
   default: string
@@ -9,7 +9,7 @@ export interface AppBackgrounds {
   alternative: string
 }
 
-declare module '@material-ui/core/styles/createPalette' {
+declare module '@mui/material/styles' {
   export interface PaletteOptions {
     backgrounds: AppBackgrounds
     slider: {
