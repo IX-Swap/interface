@@ -11,7 +11,6 @@ import { ExternalLink, TYPE } from 'theme'
 import { ButtonGradient } from 'components/Button'
 import { updateNftCollection, useCollectionActionHandlers, useCollectionFormState } from 'state/nft/hooks'
 import { NFTCollection } from 'state/nft/types'
-import { FileWithPath } from 'react-dropzone'
 
 interface UpdateFormProps {
   collection?: any | null
@@ -41,18 +40,18 @@ export const CollectionForm = ({ collection, onSubmit, actionName = 'Update' }: 
 
   const updateFiles = async () => {
     const logo = await createFile(collection?.logo)
-    const cover = await createFile(collection?.cover)
-    const banner = await createFile(collection?.banner)
-
     onLogoDrop(logo)
+
+    const cover = await createFile(collection?.cover)
     onCoverDrop(cover)
+
+    const banner = await createFile(collection?.banner)
     onBannerDrop(banner)
   }
 
   const createFile = async (file: any) => {
     console.log({ file })
     if (file) {
-      console.log(file?.public)
       const name = file?.name
       const response = await fetch(file?.public)
       const blob = await response.blob()
@@ -71,22 +70,20 @@ export const CollectionForm = ({ collection, onSubmit, actionName = 'Update' }: 
         })*/
 
       console.log({ newFile })
-      const ss = newFile as FileWithPath
+      const fileWithPath = newFile as FileWithPath
       //const fileWithPath = toFileWithPath(newFile, file?.public)
       //fileWithPath.path = file?.public
-      return ss
+      return fileWithPath
     }
 
     return null
   }
 
   const onLogoDrop = (newLogo: any) => {
-    console.log({ newLogo })
     setLogo(newLogo)
   }
 
   const onCoverDrop = (newCover: any) => {
-    console.log({ newCover })
     setCover(newCover)
   }
 
