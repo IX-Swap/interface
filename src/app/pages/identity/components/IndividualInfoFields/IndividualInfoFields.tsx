@@ -33,11 +33,10 @@ export const IndividualInfoFields = (
   } = useIndividualDefaultInfo(rootName)
   const { isMobile } = useAppBreakpoints()
 
-  const onChangeHandler = (value: any, path: any, control: any) => {
-    control.setValue(path, capitalizeFirstLetter(value), {
-      shouldValidate: true,
-      shouldDirty: true
-    })
+  const textValueExtractor = (
+    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+  ) => {
+    return capitalizeFirstLetter(event.target.value)
   }
 
   return (
@@ -68,7 +67,7 @@ export const IndividualInfoFields = (
               label='First Name'
               defaultValue={defaultFirstName}
               variant='outlined'
-              onChange={onChangeHandler}
+              valueExtractor={textValueExtractor}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
@@ -80,7 +79,7 @@ export const IndividualInfoFields = (
               label='Middle Name'
               defaultValue={defaultMiddleName}
               variant='outlined'
-              onChange={onChangeHandler}
+              valueExtractor={textValueExtractor}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
@@ -92,7 +91,7 @@ export const IndividualInfoFields = (
               label='Last Name'
               defaultValue={defaultLastName}
               variant='outlined'
-              onChange={onChangeHandler}
+              valueExtractor={textValueExtractor}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
