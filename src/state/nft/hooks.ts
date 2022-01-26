@@ -265,7 +265,7 @@ export const useNftCollection = (address: string) => {
 
       // const [name, supply] = await Promise.all([contract.methods.name().call(), contract.methods.totalSupply().call()])
 
-      setInfo({ name, supply })
+      setInfo({ name, supply: Number(supply) })
 
       if (supply === 0) {
         setHasMore(false)
