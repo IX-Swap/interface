@@ -11,6 +11,7 @@ import { ExternalLink, TYPE } from 'theme'
 import { ButtonGradient } from 'components/Button'
 import { updateNftCollection, useCollectionActionHandlers, useCollectionFormState } from 'state/nft/hooks'
 import { NFTCollection } from 'state/nft/types'
+import { FileWithPath } from 'react-dropzone'
 
 interface UpdateFormProps {
   collection?: any | null
