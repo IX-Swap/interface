@@ -10,6 +10,7 @@ import { ReactComponent as SuccessIcon } from 'assets/icons/success_icon.svg'
 
 export interface CheckboxProps extends Omit<FormControlLabelProps, 'control'> {
   reverse?: boolean
+  withNewSuccessIcon?: boolean
 }
 
 export const Checkbox = (
@@ -22,6 +23,7 @@ export const Checkbox = (
     error = true,
     control,
     reverse = false,
+    withNewSuccessIcon = false,
     ...rest
   } = props
 
@@ -32,7 +34,12 @@ export const Checkbox = (
         alignItems: 'flex-start'
       }}
       checked={reverse ? !value : value}
-      control={<MUICheckbox name={name} checkedIcon={<SuccessIcon />} />}
+      control={
+        <MUICheckbox
+          name={name}
+          checkedIcon={withNewSuccessIcon ? <SuccessIcon /> : undefined}
+        />
+      }
       label={
         <Typography
           variant='body1'
