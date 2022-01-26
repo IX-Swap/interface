@@ -3,7 +3,11 @@ import { Grid, Box, TextField } from '@material-ui/core'
 import { useFormContext } from 'react-hook-form'
 import { TypedField } from 'components/form/TypedField'
 import { documentValueExtractor } from 'app/components/DSO/utils'
-import { dateTimeValueExtractor, plainValueExtractor } from 'helpers/forms'
+import {
+  dateTimeValueExtractor,
+  plainValueExtractor,
+  textValueExtractor
+} from 'helpers/forms'
 import { NationalitySelect } from 'components/form/NationalitySelect'
 import { useIndividualDefaultInfo } from 'hooks/auth/useIndividualDefaultInfo'
 import { DataroomFileType } from 'config/dataroom'
@@ -60,6 +64,7 @@ export const IndividualInfoFields = (
               label='First Name'
               defaultValue={defaultFirstName}
               variant='outlined'
+              valueExtractor={textValueExtractor}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
@@ -71,6 +76,7 @@ export const IndividualInfoFields = (
               label='Middle Name'
               defaultValue={defaultMiddleName}
               variant='outlined'
+              valueExtractor={textValueExtractor}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
@@ -82,6 +88,7 @@ export const IndividualInfoFields = (
               label='Last Name'
               defaultValue={defaultLastName}
               variant='outlined'
+              valueExtractor={textValueExtractor}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>

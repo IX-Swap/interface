@@ -4,6 +4,7 @@ import { AssetBalance } from 'types/balance'
 import { DSWithdrawal } from 'types/dsWithdrawal'
 import { IndividualIdentity } from 'app/pages/identity/types/forms'
 import { Order } from 'types/order'
+import { capitalize } from 'lodash'
 
 interface GetIdFromObjProps extends Record<string, any> {
   _id?: string
@@ -62,8 +63,7 @@ export const isLowerCaseLetter = (value: string) => {
   return charCode >= 97 && charCode <= 122
 }
 
-export const capitalizeFirstLetter = (value: string) =>
-  `${value[0].toUpperCase()}${value.slice(1)}`
+export const capitalizeFirstLetter = (value: string) => capitalize(value)
 
 export const formatCamelCasedWithSpaces = (value: string) => {
   let str = value
