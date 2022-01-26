@@ -17,11 +17,16 @@ const NftCollectionInfo = styled.div`
 const NftCollectionItems = styled.div`
   display: grid;
 
-  grid-template-columns: repeat(auto-fit, minmax(auto, 250px));
+  grid-template-columns: repeat(auto-fit, 350px);
+  grid-auto-rows: 450px;
 
   gap: 2rem;
 
   padding: 2rem;
+
+  @media (max-width: 1180px) {
+    place-content: center;
+  }
 
   @media (max-width: 640px) {
     padding: 0;
