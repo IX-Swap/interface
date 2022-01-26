@@ -40,7 +40,7 @@ export const PrimaryInvestLink = ({ data, type }: PrimaryInvestLinkProps) => {
       params={params}
       data-testid='otc-card-link'
       disabled={isDisabled}
-      style={{ fontSize: 16 }}
+      style={{ fontSize: 16, marginTop: 16 }}
     >
       {type !== 'OTC' ? 'Invest' : 'Trade'}
     </Button>

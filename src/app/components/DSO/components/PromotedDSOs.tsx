@@ -13,7 +13,7 @@ export const PromotedDSOs = () => {
     return null
   }
 
-  const promotedDSOs = data.list
+  const promotedDSOs = data.list.slice(0, 9)
 
   return (
     <DSOCarousel totalSlides={promotedDSOs.length}>

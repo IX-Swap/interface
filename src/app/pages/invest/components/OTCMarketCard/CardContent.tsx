@@ -104,9 +104,7 @@ export const CardContent = (props: CardContentProps) => {
             labelWeight='default'
             valueFontSize={16}
             labelFontSize={14}
-            label={
-              type !== 'OTC' ? 'Total Fundraising Amount' : 'Target Fundraise'
-            }
+            label={'Target Fundraise'}
             value={formatMoney(
               type !== 'OTC' ? data.totalFundraisingAmount : data.raisedAmount,
               type !== 'OTC' ? data.currency.symbol : 'SGD'
