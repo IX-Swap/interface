@@ -3,7 +3,11 @@ import { Grid, Box, TextField } from '@material-ui/core'
 import { useFormContext } from 'react-hook-form'
 import { TypedField } from 'components/form/TypedField'
 import { documentValueExtractor } from 'app/components/DSO/utils'
-import { dateTimeValueExtractor, plainValueExtractor } from 'helpers/forms'
+import {
+  dateTimeValueExtractor,
+  plainValueExtractor,
+  textValueExtractor
+} from 'helpers/forms'
 import { NationalitySelect } from 'components/form/NationalitySelect'
 import { useIndividualDefaultInfo } from 'hooks/auth/useIndividualDefaultInfo'
 import { DataroomFileType } from 'config/dataroom'
@@ -14,7 +18,6 @@ import { PhoneInput } from 'components/form/PhoneInput'
 import { DatePicker } from 'components/form/DatePicker'
 import { IndividualPersonalInformation } from 'app/pages/identity/types/forms'
 import { subYears } from 'date-fns'
-import { capitalizeFirstLetter } from 'helpers/strings'
 
 export interface IndividualInfoFieldsProps {
   rootName?: string
@@ -32,12 +35,6 @@ export const IndividualInfoFields = (
     middleName: defaultMiddleName
   } = useIndividualDefaultInfo(rootName)
   const { isMobile } = useAppBreakpoints()
-
-  const textValueExtractor = (
-    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-  ) => {
-    return capitalizeFirstLetter(event.target.value)
-  }
 
   return (
     <Grid container>
