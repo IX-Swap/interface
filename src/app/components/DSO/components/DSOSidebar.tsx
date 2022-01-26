@@ -1,11 +1,11 @@
-import React from 'react'
 import { Box, Grid } from '@material-ui/core'
 import { DSOScrollGuide } from 'app/components/DSO/DSOScrollGuide'
 import { AuthorizableStatus } from 'app/pages/authorizer/components/AuthorizableStatus'
-import { DigitalSecurityOffering } from 'types/dso'
-import { Maybe } from 'types/util'
 import { LabelledValue } from 'components/LabelledValue'
 import { isNonEmptyArray } from 'helpers/arrays'
+import React from 'react'
+import { DigitalSecurityOffering } from 'types/dso'
+import { Maybe } from 'types/util'
 
 export interface DSOSidebarProps {
   dso: DigitalSecurityOffering | undefined
