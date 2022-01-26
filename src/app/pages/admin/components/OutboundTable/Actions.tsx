@@ -39,9 +39,10 @@ export const Actions = ({ item, forVAFile = false }: ActionsProps) => {
         onClick={handleClick}
         disabled={isLoading}
         data-testid='button'
-        size="large">
+        size='large'
+      >
         <Launch color='disabled' style={{ width: 23, height: 23 }} />
       </IconButton>
     </Box>
-  );
+  )
 }

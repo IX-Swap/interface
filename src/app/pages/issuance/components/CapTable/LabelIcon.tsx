@@ -10,7 +10,7 @@ export const LabelIcon = ({ icon, bgColor }: LabelIconProps) => {
   return (
     <Box
       bgcolor={bgColor}
-      borderRadius="3px"
+      borderRadius='3px'
       width={25}
       height={25}
       display='flex'
@@ -19,5 +19,5 @@ export const LabelIcon = ({ icon, bgColor }: LabelIconProps) => {
     >
       {icon}
     </Box>
-  );
+  )
 }

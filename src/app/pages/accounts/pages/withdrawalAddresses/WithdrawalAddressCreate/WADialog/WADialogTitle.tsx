@@ -12,5 +12,5 @@ export const WADialogTitle = ({ label, ...rest }: TitleProps) => {
     <DialogTitle className={classes.title} {...rest}>
       {label}
     </DialogTitle>
-  );
+  )
 }

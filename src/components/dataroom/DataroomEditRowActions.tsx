@@ -12,16 +12,18 @@ export interface DataroomEditRowActionsProps {
 export const DataroomEditRowActions = (props: DataroomEditRowActionsProps) => {
   const { onDelete, onDownload, isDownloading, isDeleting } = props
 
-  return <>
-    <Tooltip title='Download File'>
-      <IconButton onClick={onDownload} disabled={isDownloading} size="large">
-        <Launch color='disabled' style={{ width: 23, height: 23 }} />
-      </IconButton>
-    </Tooltip>
-    <Tooltip title='Delete File'>
-      <IconButton onClick={onDelete} disabled={isDeleting} size="large">
-        <DeleteOutline color='disabled' style={{ width: 24, height: 24 }} />
-      </IconButton>
-    </Tooltip>
-  </>;
+  return (
+    <>
+      <Tooltip title='Download File'>
+        <IconButton onClick={onDownload} disabled={isDownloading} size='large'>
+          <Launch color='disabled' style={{ width: 23, height: 23 }} />
+        </IconButton>
+      </Tooltip>
+      <Tooltip title='Delete File'>
+        <IconButton onClick={onDelete} disabled={isDeleting} size='large'>
+          <DeleteOutline color='disabled' style={{ width: 24, height: 24 }} />
+        </IconButton>
+      </Tooltip>
+    </>
+  )
 }

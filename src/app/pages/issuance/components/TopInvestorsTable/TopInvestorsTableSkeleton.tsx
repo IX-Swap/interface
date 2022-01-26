@@ -1,7 +1,7 @@
 import React from 'react'
 import Box from '@mui/material/Box'
-import { Skeleton } from '@mui/material';
 import {
+  Skeleton,
   Table,
   TableBody,
   TableCell,

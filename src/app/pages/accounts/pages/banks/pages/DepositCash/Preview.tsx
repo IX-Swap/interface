@@ -5,7 +5,7 @@ import { INVESTAX_BANK } from 'config'
 import { useFormContext } from 'react-hook-form'
 import { DepositCashFormValues } from 'app/pages/accounts/types'
 import { useAssetsData } from 'hooks/asset/useAssetsData'
-import { Alert } from '@mui/material';
+import { Alert } from '@mui/material'
 import { VSpacer } from 'components/VSpacer'
 
 export interface DepositTransactionPreviewProps {

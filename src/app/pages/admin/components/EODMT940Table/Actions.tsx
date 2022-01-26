@@ -27,8 +27,9 @@ export const Actions = ({ item }: ActionsProps) => {
       onClick={handleClick}
       disabled={isLoading}
       data-testid='button'
-      size="large">
+      size='large'
+    >
       <Launch color='disabled' style={{ width: 23, height: 23 }} />
     </IconButton>
-  );
+  )
 }

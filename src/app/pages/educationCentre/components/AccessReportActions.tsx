@@ -23,12 +23,16 @@ export const AccessReportActions = (props: AccessReportActionsProps) => {
   return (
     <Fragment>
       <Tooltip title='Delete File'>
-        <IconButton onClick={() => void deleteFile()} disabled={isLoading} size="large">
+        <IconButton
+          onClick={() => void deleteFile()}
+          disabled={isLoading}
+          size='large'
+        >
           <DeleteOutline color='disabled' style={{ width: 24, height: 24 }} />
         </IconButton>
       </Tooltip>
 
       <DownloadAccessDocument documentId={document._id} />
     </Fragment>
-  );
+  )
 }

@@ -1,5 +1,5 @@
 import { TableHead, TableRow, TableCell, Hidden } from '@mui/material'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 import { ValidCurrency } from 'helpers/types'
 import { useAssetById } from 'hooks/asset/useAssetById'
 import React from 'react'
@@ -36,5 +36,5 @@ export const OrderBookHeader = ({
         </Hidden>
       </TableRow>
     </TableHead>
-  );
+  )
 }

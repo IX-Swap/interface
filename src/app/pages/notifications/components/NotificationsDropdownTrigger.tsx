@@ -10,7 +10,7 @@ export const NotificationsDropdownTrigger = (
   const { unreadCount } = useNotifications()
 
   return (
-    <IconButton {...props.triggerProps} style={{ color: 'white' }} size="large">
+    <IconButton {...props.triggerProps} style={{ color: 'white' }} size='large'>
       <Badge
         badgeContent={unreadCount >= 100 ? '99+' : unreadCount}
         color='error'
@@ -18,5 +18,5 @@ export const NotificationsDropdownTrigger = (
         <Notifications />
       </Badge>
     </IconButton>
-  );
+  )
 }

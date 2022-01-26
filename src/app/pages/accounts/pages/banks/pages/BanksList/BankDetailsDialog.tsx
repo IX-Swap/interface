@@ -79,10 +79,11 @@ export const BankDetailsDialog = ({
             top: 5,
             right: 10
           }}
-          size="large">
+          size='large'
+        >
           <CloseIcon style={{ color: '#FFF' }} />
         </IconButton>
       </Box>
     </Dialog>
-  );
+  )
 }

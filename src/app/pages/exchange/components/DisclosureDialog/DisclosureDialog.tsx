@@ -42,9 +42,7 @@ export const DisclosureDialog = ({
 
   return (
     <Dialog open={isOpen} maxWidth={'md'} classes={{ paper: classes.root }}>
-      <DialogTitle classes={{ root: classes.title }}>
-        Disclosures
-      </DialogTitle>
+      <DialogTitle classes={{ root: classes.title }}>Disclosures</DialogTitle>
       <DialogContentText classes={{ root: classes.content }}>
         <Box className={classes.scrollable}>{renderStringToHTML(content)}</Box>
         <VSpacer size={'medium'} />
@@ -101,5 +99,5 @@ export const DisclosureDialog = ({
         </Grid>
       </DialogActions>
     </Dialog>
-  );
+  )
 }

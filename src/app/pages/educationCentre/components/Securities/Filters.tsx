@@ -50,7 +50,7 @@ export const Filters = ({
           </Grid>
           {showViewToggle && (
             <Grid item>
-              <IconButton onClick={toggleView} size="large">
+              <IconButton onClick={toggleView} size='large'>
                 {view === 'grid' ? <AppsIcon /> : <ViewListIcon />}
               </IconButton>
             </Grid>
@@ -58,5 +58,5 @@ export const Filters = ({
         </Grid>
       </Grid>
     </Grid>
-  );
+  )
 }

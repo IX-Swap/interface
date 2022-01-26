@@ -1,10 +1,4 @@
-import {
-  Grid,
-  FormControlLabel,
-  Radio,
-  Box,
-  TextField
-} from '@mui/material'
+import { Grid, FormControlLabel, Radio, Box, TextField } from '@mui/material'
 import {
   IndividualTaxDeclarationFormValues,
   TaxResidency

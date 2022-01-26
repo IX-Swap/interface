@@ -6,9 +6,15 @@ import {
   RenderOptions,
   RenderResult
 } from '@testing-library/react'
-import { ThemeProvider, Theme, StyledEngineProvider, createTheme, adaptV4Theme } from '@mui/material/styles';
-import StylesProvider from '@mui/styles/StylesProvider';
-import createGenerateClassName from '@mui/styles/createGenerateClassName';
+import {
+  ThemeProvider,
+  Theme,
+  StyledEngineProvider,
+  createTheme,
+  adaptV4Theme
+} from '@mui/material/styles'
+import StylesProvider from '@mui/styles/StylesProvider'
+import createGenerateClassName from '@mui/styles/createGenerateClassName'
 import { history } from 'config/history'
 import { UserProvider } from 'auth/context'
 import { UserStore } from 'auth/context/store'
@@ -27,12 +33,10 @@ import { Toast } from 'components/Toast'
 import { AppThemeProvider } from 'AppThemeProvider'
 import apiService from 'services/api'
 
-
 declare module '@mui/styles/defaultTheme' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   interface DefaultTheme extends Theme {}
 }
-
 
 export const apiServiceMock = {
   put: jest.fn(),
@@ -82,7 +86,7 @@ export const BaseProviders: React.FC<{ mockAPI?: boolean }> = ({
         )}
       </AppThemeProvider>
     </StylesProvider>
-  );
+  )
 }
 
 const customRenderer = (
@@ -195,9 +199,11 @@ export const renderHookWithForm = (
 export const renderWithInitialWidth = (ui: any, initialWidth: any) => {
   const SizeWrapper = (props: any) => {
     const defaultTheme = createTheme()
-    const theme = createTheme(adaptV4Theme({
-      props: { ...defaultTheme, MuiWithWidth: { initialWidth } }
-    }))
+    const theme = createTheme(
+      adaptV4Theme({
+        props: { ...defaultTheme, MuiWithWidth: { initialWidth } }
+      })
+    )
 
     return (
       <BaseProviders>
@@ -207,7 +213,7 @@ export const renderWithInitialWidth = (ui: any, initialWidth: any) => {
           </StyledEngineProvider>
         </UserProvider>
       </BaseProviders>
-    );
+    )
   }
 
   return render(ui, { wrapper: SizeWrapper })

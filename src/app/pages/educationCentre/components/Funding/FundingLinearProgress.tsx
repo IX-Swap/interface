@@ -1,6 +1,6 @@
-import { Theme } from '@mui/material/styles';
-import createStyles from '@mui/styles/createStyles';
-import withStyles from '@mui/styles/withStyles';
+import { Theme } from '@mui/material/styles'
+import createStyles from '@mui/styles/createStyles'
+import withStyles from '@mui/styles/withStyles'
 import LinearProgress from '@mui/material/LinearProgress'
 
 export const FundingLinearProgress = withStyles((theme: Theme) =>

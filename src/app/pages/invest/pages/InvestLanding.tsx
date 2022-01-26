@@ -10,41 +10,43 @@ import { VirtualAccountBalance } from 'app/pages/invest/components/VirtualAccoun
 export const InvestLanding = () => {
   const theme = useTheme()
 
-  return <>
-    <Grid container justifyContent='space-between' spacing={4}>
-      <Grid item xs={12}>
-        <VirtualAccountBalance />
+  return (
+    <>
+      <Grid container justifyContent='space-between' spacing={4}>
+        <Grid item xs={12}>
+          <VirtualAccountBalance />
+        </Grid>
+        <Grid item>
+          <Typography variant='h4'>Top Offers</Typography>
+        </Grid>
+        <Grid item>
+          <Button
+            component={AppRouterLinkComponent}
+            to={InvestRoute.commitments}
+            color='primary'
+            variant='outlined'
+            size='large'
+            disableElevation
+            style={{ color: theme.palette.primary.main }}
+          >
+            View my commitments
+          </Button>
+        </Grid>
       </Grid>
-      <Grid item>
-        <Typography variant='h4'>Top Offers</Typography>
-      </Grid>
-      <Grid item>
-        <Button
-          component={AppRouterLinkComponent}
-          to={InvestRoute.commitments}
-          color='primary'
-          variant='outlined'
-          size='large'
-          disableElevation
-          style={{ color: theme.palette.primary.main }}
-        >
-          View my commitments
-        </Button>
-      </Grid>
-    </Grid>
-    <VSpacer size='medium' />
-    <PromotedDSOs />
-    <Hidden lgDown>
       <VSpacer size='medium' />
-    </Hidden>
+      <PromotedDSOs />
+      <Hidden lgDown>
+        <VSpacer size='medium' />
+      </Hidden>
 
-    <Grid container direction='column' spacing={4}>
-      <Grid item>
-        <Typography variant='h4'>More Offers for You</Typography>
+      <Grid container direction='column' spacing={4}>
+        <Grid item>
+          <Typography variant='h4'>More Offers for You</Typography>
+        </Grid>
+        <Grid item>
+          <DSOTable />
+        </Grid>
       </Grid>
-      <Grid item>
-        <DSOTable />
-      </Grid>
-    </Grid>
-  </>;
+    </>
+  )
 }

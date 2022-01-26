@@ -6,7 +6,8 @@ import {
   Grid,
   IconButton,
   InputAdornment,
-  TextField
+  TextField,
+  Alert
 } from '@mui/material'
 import { WalletConnectionStatus } from 'app/pages/accounts/pages/withdrawalAddresses/hooks/useConnectMetamaskWallet'
 import { WAConnectActions } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WAConnectActions'
@@ -20,7 +21,6 @@ import { useFormContext } from 'react-hook-form'
 import { WithdrawalAddressFormValues } from 'types/withdrawalAddress'
 import { copyToClipboard } from 'helpers/clipboard'
 import { WAPair } from './WAPair'
-import { Alert } from '@mui/material';
 
 export interface WAConnectProps {
   hint: ReactElement

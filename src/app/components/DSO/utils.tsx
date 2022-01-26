@@ -175,5 +175,5 @@ export const getBlockchainUrl = (
   const url =
     network?.explorer.urls[type] ?? `https://ropsten.etherscan.io/${type}/%s`
 
-  return url.replace(/%s/g, value ?? '');
+  return url.replace(/%s/g, value ?? '')
 }

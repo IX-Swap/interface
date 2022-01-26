@@ -1,5 +1,4 @@
-import { Skeleton } from '@mui/material';
-import { Box } from '@mui/material'
+import { Skeleton, Box } from '@mui/material'
 import React from 'react'
 import { InsightCard } from '../InsightCard'
 import { ChartWrapper } from '../IssuanceLanding/ChartWrapper'
@@ -9,11 +8,11 @@ export const AssetsUnderManagementSkeleton = () => {
     <InsightCard>
       <ChartWrapper title={<Skeleton width={240} />}>
         <Box mt={2.5} display='flex' justifyContent='space-around'>
-          <Skeleton variant="circular" width={180} height={180} />
+          <Skeleton variant='circular' width={180} height={180} />
           <Box>
             <Box display='flex' mb={0.5}>
               <Skeleton
-                variant="circular"
+                variant='circular'
                 width={14}
                 height={14}
                 style={{ marginRight: 4 }}
@@ -22,7 +21,7 @@ export const AssetsUnderManagementSkeleton = () => {
             </Box>
             <Box display='flex' mb={0.5}>
               <Skeleton
-                variant="circular"
+                variant='circular'
                 width={14}
                 height={14}
                 style={{ marginRight: 4 }}
@@ -31,7 +30,7 @@ export const AssetsUnderManagementSkeleton = () => {
             </Box>
             <Box display='flex' mb={0.5}>
               <Skeleton
-                variant="circular"
+                variant='circular'
                 width={14}
                 height={14}
                 style={{ marginRight: 4 }}
@@ -40,7 +39,7 @@ export const AssetsUnderManagementSkeleton = () => {
             </Box>
             <Box display='flex' mb={0.5}>
               <Skeleton
-                variant="circular"
+                variant='circular'
                 width={14}
                 height={14}
                 style={{ marginRight: 4 }}
@@ -49,7 +48,7 @@ export const AssetsUnderManagementSkeleton = () => {
             </Box>
             <Box display='flex' mb={0.5}>
               <Skeleton
-                variant="circular"
+                variant='circular'
                 width={14}
                 height={14}
                 style={{ marginRight: 4 }}
@@ -60,5 +59,5 @@ export const AssetsUnderManagementSkeleton = () => {
         </Box>
       </ChartWrapper>
     </InsightCard>
-  );
+  )
 }

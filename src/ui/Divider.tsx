@@ -1,8 +1,8 @@
 import React from 'react'
 import { Box, BoxProps } from '@mui/material'
-import { styled, Theme } from '@mui/material/styles';
+import { styled, Theme } from '@mui/material/styles'
 
-import withTheme from '@mui/styles/withTheme';
+import withTheme from '@mui/styles/withTheme'
 
 export interface DividerProps extends BoxProps {
   theme: Theme

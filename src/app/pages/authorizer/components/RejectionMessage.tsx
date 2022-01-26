@@ -1,6 +1,5 @@
 import React from 'react'
-import { Typography } from '@mui/material'
-import { Alert, AlertTitle } from '@mui/material';
+import { Typography, Alert, AlertTitle } from '@mui/material'
 import { Authorizable } from 'types/authorizer'
 import { privateClassNames } from 'helpers/classnames'
 

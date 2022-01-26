@@ -18,9 +18,10 @@ export const NavDrawerToggle = () => {
         edge='start'
         color='inherit'
         onClick={() => setNavDrawerOpened(true)}
-        size="large">
+        size='large'
+      >
         <MenuIcon />
       </IconButton>
     </Box>
-  );
+  )
 }

@@ -26,9 +26,9 @@ export const DownloadDSODocument = (props: DownloadDSODocumentProps) => {
 
   return (
     <Tooltip title='Download File'>
-      <IconButton disabled={isLoading} onClick={handleDownload} size="large">
+      <IconButton disabled={isLoading} onClick={handleDownload} size='large'>
         <Launch color='disabled' style={{ width: 23, height: 23 }} />
       </IconButton>
     </Tooltip>
-  );
+  )
 }

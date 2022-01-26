@@ -66,5 +66,5 @@ export const SetupScreenshot = ({
         </Box>
       </Grid>
     </Grid>
-  );
+  )
 }

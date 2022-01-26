@@ -18,9 +18,9 @@ export const CreateWalletDialogTitle = ({
   return (
     <CenteredDialogTitle {...rest}>
       {label}
-      <IconButton aria-label='close' onClick={onButtonCloseClick} size="large">
+      <IconButton aria-label='close' onClick={onButtonCloseClick} size='large'>
         <CloseIcon className={classes.closeIcon} />
       </IconButton>
     </CenteredDialogTitle>
-  );
+  )
 }

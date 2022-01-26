@@ -54,10 +54,10 @@ export const DocumentTableRow = ({ document, name }: DocumentTableRowProps) => {
       </TableCell>
       <TableCell component='th' scope='row' align='right'>
         <ViewUploadedDocument documentId={document._id} />
-        <IconButton onClick={removeDocument} size="large">
+        <IconButton onClick={removeDocument} size='large'>
           <DeleteOutline color='disabled' style={{ width: 24, height: 24 }} />
         </IconButton>
       </TableCell>
     </TableRow>
-  );
+  )
 }

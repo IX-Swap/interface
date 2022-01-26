@@ -1,5 +1,5 @@
 import React from 'react'
-import { ToggleButton, ToggleButtonGroup } from '@mui/material';
+import { ToggleButton, ToggleButtonGroup } from '@mui/material'
 import { useStyles } from 'app/pages/exchange/components/PairTable/PairTableFilter/PairTableFilter.styles'
 import { Star } from '@mui/icons-material'
 import classNames from 'classnames'

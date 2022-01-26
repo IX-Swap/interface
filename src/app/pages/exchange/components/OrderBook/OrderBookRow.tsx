@@ -36,5 +36,5 @@ export const OrderBookRow = ({
         </OrderBookCell>
       </Hidden>
     </TableRow>
-  );
+  )
 }

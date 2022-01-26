@@ -136,5 +136,5 @@ export const OnboardingLinks = () => {
       </Hidden>
       {renderFundraisingOnboardingLinkBlock()}
     </Box>
-  );
+  )
 }

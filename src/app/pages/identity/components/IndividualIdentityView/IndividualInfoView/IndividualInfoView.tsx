@@ -77,5 +77,5 @@ export const IndividualInfoView = (props: IndividualInfoViewProps) => {
         </Grid>
       </Box>
     </Grid>
-  );
+  )
 }

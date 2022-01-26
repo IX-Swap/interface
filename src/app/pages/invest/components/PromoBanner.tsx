@@ -1,19 +1,19 @@
 import React from 'react'
 import _escape from 'lodash/escape'
 import { Grid, Paper, Typography } from '@mui/material'
-import makeStyles from '@mui/styles/makeStyles';
+import makeStyles from '@mui/styles/makeStyles'
 import { usePromo } from '../hooks/usePromo'
 import { generateImgSrc } from 'helpers/generateImgSrc'
 
 const useStyles = makeStyles(theme => ({
   promoBanner: {
     width: '100%',
-    padding: `${theme.spacing(3)} 0 ${theme.spacing(4)}`
+    padding: theme.spacing(3, 4)
   },
   message: {
     fontFamily: theme.typography.fontFamily,
     fontWeight: 'normal',
-    fontSize: `${theme.typography.fontSize * 2}px`,
+    fontSize: theme.typography.fontSize * 2,
     marginBottom: theme.spacing(3)
   },
   bannerImage: {

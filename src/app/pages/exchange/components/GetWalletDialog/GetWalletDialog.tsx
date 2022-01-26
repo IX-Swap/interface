@@ -57,7 +57,8 @@ export const GetWalletDialog = (props: ModalProps) => {
               aria-label='close'
               onClick={() => toggleOpen(false)}
               className={classes.closeButton}
-              size="large">
+              size='large'
+            >
               <CloseIcon />
             </IconButton>
             <Typography variant='h6' component='span' align='center'>
@@ -79,5 +80,5 @@ export const GetWalletDialog = (props: ModalProps) => {
         </DialogActions>
       </Box>
     </MUIDialog>
-  );
+  )
 }

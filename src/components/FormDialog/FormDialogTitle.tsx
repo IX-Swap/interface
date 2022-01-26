@@ -14,9 +14,13 @@ export const FormDialogTitle = ({ label, onClose, ...rest }: TitleProps) => {
   return (
     <DialogTitle className={classes.title} {...rest}>
       {label}
-      <IconButton className={classes.closeButton} onClick={onClose} size="large">
+      <IconButton
+        className={classes.closeButton}
+        onClick={onClose}
+        size='large'
+      >
         <CloseIcon className={classes.closeIcon} />
       </IconButton>
     </DialogTitle>
-  );
+  )
 }

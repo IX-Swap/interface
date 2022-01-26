@@ -68,7 +68,8 @@ export const CapitalCallDialog = (props: ModalProps) => {
           aria-label='close'
           onClick={() => toggleOpen(false)}
           className={classes.closeButton}
-          size="large">
+          size='large'
+        >
           <CloseIcon />
         </IconButton>
       </DialogTitle>
@@ -146,5 +147,5 @@ export const CapitalCallDialog = (props: ModalProps) => {
         </Grid>
       </DialogActions>
     </MUIDialog>
-  );
+  )
 }

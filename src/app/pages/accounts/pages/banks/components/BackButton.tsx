@@ -14,5 +14,5 @@ export const BackButton = observer((props: ButtonProps) => {
     <Button {...props} onClick={handleClick}>
       Back
     </Button>
-  );
+  )
 })

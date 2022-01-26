@@ -23,7 +23,7 @@ export const DSOInvestorViewHeader = (props: DSOInvestorViewHeaderProps) => {
         xs: 3,
         md: 5
       }}
-      borderRadius="undefinedpx"
+      borderRadius='undefinedpx'
       color='#FFF'
     >
       <Grid
@@ -79,5 +79,5 @@ export const DSOInvestorViewHeader = (props: DSOInvestorViewHeaderProps) => {
         </Grid>
       </Grid>
     </Box>
-  );
+  )
 }

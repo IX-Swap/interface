@@ -99,10 +99,11 @@ export const BannerTableRow = ({ banner }: BannerTableRowProps) => {
           onClick={() => {
             void removeBanner()
           }}
-          size="large">
+          size='large'
+        >
           <DeleteOutline color='disabled' />
         </IconButton>
       </TableCell>
     </TableRow>
-  );
+  )
 }

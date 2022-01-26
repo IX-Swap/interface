@@ -29,8 +29,8 @@ export const ViewUploadedDocument = ({
   const handleClick = async () => await downloadDocument()
 
   return (
-    <IconButton onClick={handleClick} disabled={isLoading} size="large">
+    <IconButton onClick={handleClick} disabled={isLoading} size='large'>
       <Launch color='disabled' style={{ width: 23, height: 23 }} />
     </IconButton>
-  );
+  )
 }

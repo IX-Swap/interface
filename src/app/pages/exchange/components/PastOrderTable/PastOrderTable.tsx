@@ -30,35 +30,37 @@ export const PastOrderTable = (props: PostOrderTableProps) => {
   const { filter } = usePastOrderFilter(pairId)
   const { isMiniLaptop } = useAppBreakpoints()
 
-  return <>
-    <Hidden lgDown>
-      <PastOrderFilter />
-      <VSpacer size={'small'} />
-    </Hidden>
-    <Grid>
-      <TableView<Order>
-        size='small'
-        name={exchangeMarketQueryKeys.getOrdersList(userId, pairId)}
-        uri={exchangeMarket.getOrdersList(userId)}
-        columns={columns}
-        filter={{ ...filter, orderType: 'PAST' } as any}
-        themeVariant={'primary'}
-        noHeader={isMiniLaptop}
-        paperProps={
-          isMiniLaptop
-            ? {
-                variant: 'elevation',
-                elevation: 0
-              }
-            : undefined
-        }
-      >
-        {isMiniLaptop
-          ? (props: TableViewRendererProps<Order>) => (
-              <CompactBody {...props} columns={pastOrderCompactColumns} />
-            )
-          : undefined}
-      </TableView>
-    </Grid>
-  </>;
+  return (
+    <>
+      <Hidden lgDown>
+        <PastOrderFilter />
+        <VSpacer size={'small'} />
+      </Hidden>
+      <Grid>
+        <TableView<Order>
+          size='small'
+          name={exchangeMarketQueryKeys.getOrdersList(userId, pairId)}
+          uri={exchangeMarket.getOrdersList(userId)}
+          columns={columns}
+          filter={{ ...filter, orderType: 'PAST' } as any}
+          themeVariant={'primary'}
+          noHeader={isMiniLaptop}
+          paperProps={
+            isMiniLaptop
+              ? {
+                  variant: 'elevation',
+                  elevation: 0
+                }
+              : undefined
+          }
+        >
+          {isMiniLaptop
+            ? (props: TableViewRendererProps<Order>) => (
+                <CompactBody {...props} columns={pastOrderCompactColumns} />
+              )
+            : undefined}
+        </TableView>
+      </Grid>
+    </>
+  )
 }

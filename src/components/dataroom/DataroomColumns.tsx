@@ -94,5 +94,5 @@ export const DataroomColumns: React.FC<DataroomColumnsProps> = props => {
         <Typography>{formatDateAndTime(document.createdAt, true)}</Typography>
       </Box>
     </Fragment>
-  );
+  )
 }

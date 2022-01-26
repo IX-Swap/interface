@@ -1,10 +1,5 @@
-import {
-  FormControlLabel,
-  Switch,
-  Tooltip,
-  Typography
-} from '@mui/material'
-import withStyles from '@mui/styles/withStyles';
+import { FormControlLabel, Switch, Tooltip, Typography } from '@mui/material'
+import withStyles from '@mui/styles/withStyles'
 import { red } from '@mui/material/colors'
 import { useDisableDSO } from 'app/pages/authorizer/hooks/useDisableDSO'
 import React from 'react'

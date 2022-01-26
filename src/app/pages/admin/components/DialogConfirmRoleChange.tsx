@@ -28,7 +28,8 @@ export default function DialogConfirmRoleChange({
       disableEscapeKeyDown
       open={open}
       onClose={handleClose}
-      data-testid='dialog-wrapper'>
+      data-testid='dialog-wrapper'
+    >
       <DialogTitle>Confirm Role Change</DialogTitle>
       <DialogContent data-testid='dialog-content'>
         Are you sure you want to change {user.email}&apos;s <br /> role from{' '}
@@ -43,5 +44,5 @@ export default function DialogConfirmRoleChange({
         </Button>
       </DialogActions>
     </Dialog>
-  );
+  )
 }

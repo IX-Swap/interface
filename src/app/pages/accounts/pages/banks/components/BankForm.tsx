@@ -1,12 +1,5 @@
 import React from 'react'
-import {
-  Box,
-  Grid,
-  Typography,
-  Button,
-  Card,
-  CardContent
-} from '@mui/material'
+import { Box, Grid, Typography, Button, Card, CardContent } from '@mui/material'
 import { Bank } from 'types/bank'
 import { BankFormValues } from 'app/pages/accounts/types'
 import { bankFormValidationSchema } from 'app/pages/accounts/validation'
@@ -84,5 +77,5 @@ export const BankForm: React.FC<BankFormProps> = props => {
         </Grid>
       </Grid>
     </Form>
-  );
+  )
 }

@@ -96,5 +96,5 @@ export const InvestorLiveOrderBook = () => {
         </Box>
       </Grid>
     </Grid>
-  );
+  )
 }

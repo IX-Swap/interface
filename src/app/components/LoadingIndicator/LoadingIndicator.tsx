@@ -1,10 +1,5 @@
 import React from 'react'
-import {
-  CircularProgress,
-  Grid,
-  GridProps,
-  Typography
-} from '@mui/material'
+import { CircularProgress, Grid, GridProps, Typography } from '@mui/material'
 import { useStyles } from 'app/components/LoadingIndicator/LoadingIndicator.styles'
 import { VSpacer } from 'components/VSpacer'
 

@@ -1,5 +1,5 @@
 import MuiTableCell from '@mui/material/TableCell'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 
 export const TableCell = withStyles({
   root: {

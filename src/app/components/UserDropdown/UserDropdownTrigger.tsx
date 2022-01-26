@@ -10,8 +10,9 @@ export const UserDropdownTrigger = (props: DropdownTriggerProps) => {
       color='inherit'
       aria-haspopup='true'
       aria-controls='profile-menu'
-      size="large">
+      size='large'
+    >
       <UserIcon />
     </IconButton>
-  );
+  )
 }

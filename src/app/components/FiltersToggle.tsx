@@ -1,7 +1,6 @@
 import React from 'react'
-import { Box, Container, Grid, Typography } from '@mui/material'
+import { Box, Container, Grid, Typography, ToggleButton } from '@mui/material'
 import { FilterList } from '@mui/icons-material'
-import { ToggleButton } from '@mui/material';
 import { SidebarToggleRenderProps } from 'app/components/SidebarToggle'
 
 export interface FiltersToggleProps extends SidebarToggleRenderProps {}

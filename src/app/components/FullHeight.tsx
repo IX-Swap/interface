@@ -1,6 +1,6 @@
 import { Ref, useLayoutEffect, useRef, useState } from 'react'
 import { Maybe } from 'types/util'
-import { debounce } from '@mui/material/utils';
+import { debounce } from '@mui/material/utils'
 
 export interface FullHeightProps {
   children: (height: number, ref: Ref<any>) => Maybe<JSX.Element>

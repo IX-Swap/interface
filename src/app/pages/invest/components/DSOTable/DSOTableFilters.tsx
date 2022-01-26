@@ -118,5 +118,5 @@ export const DSOTableFilters = () => {
         </Grid>
       )}
     </Grid>
-  );
+  )
 }

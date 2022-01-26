@@ -112,7 +112,8 @@ export const TaxResidencyField = ({
                   onClick={handleRemove}
                   disabled={total === 1}
                   data-testid='remove-button'
-                  size="large">
+                  size='large'
+                >
                   <DeleteOutlined />
                 </IconButton>
               </Grid>
@@ -136,5 +137,5 @@ export const TaxResidencyField = ({
         <TinUnavailableFields index={index} defaultValue={defaultValue} />
       </Grid>
     </Grid>
-  );
+  )
 }

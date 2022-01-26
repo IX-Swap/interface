@@ -13,9 +13,9 @@ export const WithdrawalAddressTooltip = ({
 
   return (
     <Tooltip arrow placement={placement} title={title}>
-      <IconButton color='primary' className={iconButton} size="large">
+      <IconButton color='primary' className={iconButton} size='large'>
         <InfoOutlined />
       </IconButton>
     </Tooltip>
-  );
+  )
 }

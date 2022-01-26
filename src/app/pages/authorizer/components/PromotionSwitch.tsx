@@ -1,10 +1,5 @@
 import React from 'react'
-import {
-  FormControlLabel,
-  Switch,
-  Tooltip,
-  Typography
-} from '@mui/material'
+import { FormControlLabel, Switch, Tooltip, Typography } from '@mui/material'
 import { usePromoteDSO } from 'app/pages/authorizer/hooks/usePromoteDSO'
 import { DigitalSecurityOffering } from 'types/dso'
 

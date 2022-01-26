@@ -64,10 +64,14 @@ export const BannerTitle = ({ text, onChange }: BannerTitleProps) => {
         />
       </Grid>
       <Grid item>
-        <IconButton onClick={onEditButtonClick} data-testid={'button'} size="large">
+        <IconButton
+          onClick={onEditButtonClick}
+          data-testid={'button'}
+          size='large'
+        >
           <EditIcon />
         </IconButton>
       </Grid>
     </Grid>
-  );
+  )
 }

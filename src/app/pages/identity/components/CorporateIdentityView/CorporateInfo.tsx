@@ -70,5 +70,5 @@ export const CorporateInfo = ({ data }: CorporateInfoProps) => {
         </Grid>
       </Grid>
     </Box>
-  );
+  )
 }

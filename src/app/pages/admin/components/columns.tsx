@@ -4,7 +4,7 @@ import { LoginHistory } from 'types/user'
 import { Grid, Link, Typography, Tooltip } from '@mui/material'
 import { getTimeFromNow } from 'helpers/dates'
 import { Launch } from '@mui/icons-material'
-import withStyles from '@mui/styles/withStyles';
+import withStyles from '@mui/styles/withStyles'
 
 const UserAgentTooltip = withStyles(theme => ({
   tooltip: {
@@ -12,7 +12,7 @@ const UserAgentTooltip = withStyles(theme => ({
     maxWidth: 480,
     color: theme.palette.text.primary,
     fontSize: theme.typography.pxToRem(12),
-    border: `1px solid ${theme.palette.divider}`
+    border: `1px solid ${theme.palette.divider as string}`
   }
 }))(Tooltip)
 

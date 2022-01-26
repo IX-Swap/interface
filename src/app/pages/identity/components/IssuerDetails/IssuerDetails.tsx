@@ -93,5 +93,5 @@ export const IssuerDetails = (props: IssuerDetailFieldsProps) => {
         </Grid>
       </Grid>
     </Grid>
-  );
+  )
 }

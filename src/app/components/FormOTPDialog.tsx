@@ -39,60 +39,62 @@ export const FormOTPDialog = (props: FormOTPDialogProps) => {
   const isTriggerDisabled =
     !formState.isDirty || props.triggerButtonProps.disabled
 
-  return <>
-    <Button
-      onClick={openDialog}
-      children='Submit'
-      {...props.triggerButtonProps}
-      disabled={isTriggerDisabled}
-    />
-    <Dialog disablePortal open={isOpen} maxWidth='md' onClose={closeDialog}>
-      <CenteredDialogTitle>
-        Please Enter Your 2FA
-        <IconButton onClick={closeDialog} size="large">
-          <CloseIcon />
-        </IconButton>
-      </CenteredDialogTitle>
-      <DialogContent>
-        <TypedField
-          control={control}
-          customRenderer
-          component={OTPField}
-          name='otp'
-          label={
-            <Typography variant='subtitle1' component='p'>
-              Please enter your OTP from authenticator before proceeding
-            </Typography>
-          }
-          variant='outlined'
-          valueExtractor={plainValueExtractor}
-          shouldAutoFocus
-        />
-      </DialogContent>
-      <VSpacer size='small' />
-      <DialogActions>
-        <Grid container spacing={2} justifyContent='center'>
-          <Grid item>
-            <Button variant='outlined' color='primary' onClick={closeDialog}>
-              Cancel
-            </Button>
+  return (
+    <>
+      <Button
+        onClick={openDialog}
+        children='Submit'
+        {...props.triggerButtonProps}
+        disabled={isTriggerDisabled}
+      />
+      <Dialog disablePortal open={isOpen} maxWidth='md' onClose={closeDialog}>
+        <CenteredDialogTitle>
+          Please Enter Your 2FA
+          <IconButton onClick={closeDialog} size='large'>
+            <CloseIcon />
+          </IconButton>
+        </CenteredDialogTitle>
+        <DialogContent>
+          <TypedField
+            control={control}
+            customRenderer
+            component={OTPField}
+            name='otp'
+            label={
+              <Typography variant='subtitle1' component='p'>
+                Please enter your OTP from authenticator before proceeding
+              </Typography>
+            }
+            variant='outlined'
+            valueExtractor={plainValueExtractor}
+            shouldAutoFocus
+          />
+        </DialogContent>
+        <VSpacer size='small' />
+        <DialogActions>
+          <Grid container spacing={2} justifyContent='center'>
+            <Grid item>
+              <Button variant='outlined' color='primary' onClick={closeDialog}>
+                Cancel
+              </Button>
+            </Grid>
+            <Grid item>
+              <Submit
+                variant='contained'
+                color='primary'
+                disabled={isSubmitDisabled}
+                onClick={closeDialog}
+                disableElevation
+              >
+                Confirm
+              </Submit>
+            </Grid>
           </Grid>
-          <Grid item>
-            <Submit
-              variant='contained'
-              color='primary'
-              disabled={isSubmitDisabled}
-              onClick={closeDialog}
-              disableElevation
-            >
-              Confirm
-            </Submit>
-          </Grid>
-        </Grid>
-      </DialogActions>
-      <VSpacer size='medium' />
-    </Dialog>
-  </>;
+        </DialogActions>
+        <VSpacer size='medium' />
+      </Dialog>
+    </>
+  )
 }
 
 FormOTPDialog.defaultProps = {

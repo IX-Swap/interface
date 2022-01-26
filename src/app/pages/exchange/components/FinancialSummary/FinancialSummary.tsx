@@ -97,5 +97,5 @@ export const FinancialSummary = () => {
         </Grid>
       </Hidden>
     </Grid>
-  );
+  )
 }
