@@ -8,7 +8,7 @@
     "@hookform/error-message": "^0.0.4",
     "@hookform/resolvers": "^0.1.0",
     "@hookform/strictly-typed": "0.0.3",
-    "@material-ui/core": "^4.10.2",
+    "@material-ui/core": "^4.12.0",
     "@material-ui/icons": "^4.2.1",
     "@material-ui/lab": "^4.0.0-alpha.46",
     "@material-ui/pickers": "^3.2.10",

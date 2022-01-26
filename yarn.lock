@@ -1759,7 +1759,7 @@
     "@types/yargs" "^16.0.0"
     chalk "^4.0.0"
 
-"@material-ui/core@^4.10.2", "@material-ui/core@^4.11.0", "@material-ui/core@^4.11.3":
+"@material-ui/core@^4.11.0", "@material-ui/core@^4.11.3", "@material-ui/core@^4.12.0":
   version "4.12.3"
   resolved "https://registry.yarnpkg.com/@material-ui/core/-/core-4.12.3.tgz#80d665caf0f1f034e52355c5450c0e38b099d3ca"
   integrity sha512-sdpgI/PL56QVsEJldwEe4FFaFTLUqN+rd7sSZiRCdx2E/C7z5yK0y/khAWVBH24tXwto7I1hCzNWfJGZIYJKnw==
