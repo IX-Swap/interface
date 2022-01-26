@@ -1,5 +1,5 @@
-import { Theme } from '@material-ui/core'
-import { Overrides } from '@material-ui/core/styles/overrides'
+import { Theme } from '@mui/material'
+import { Overrides } from '@mui/material/styles';
 import { rte } from 'themes/new/rte'
 import { CSSProperties } from 'react'
 

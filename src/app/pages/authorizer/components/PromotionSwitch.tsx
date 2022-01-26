@@ -4,7 +4,7 @@ import {
   Switch,
   Tooltip,
   Typography
-} from '@material-ui/core'
+} from '@mui/material'
 import { usePromoteDSO } from 'app/pages/authorizer/hooks/usePromoteDSO'
 import { DigitalSecurityOffering } from 'types/dso'
 

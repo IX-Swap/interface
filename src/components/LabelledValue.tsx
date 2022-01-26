@@ -1,14 +1,12 @@
 import React from 'react'
-import { Box, Grid, GridProps, Typography } from '@material-ui/core'
-import { useTheme } from '@material-ui/core/styles'
+import { Box, Grid, GridProps, Typography } from '@mui/material'
+import { useTheme } from '@mui/material/styles'
 import { formatDateToMMDDYY } from 'helpers/dates'
 
 const isDateTime = (value: string) => {
-  return (
-    value.match(
-      /\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z)/
-    ) !== null
-  )
+  return value.match(
+    /\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d\.\d+([+-][0-2]\d:[0-5]\d|Z)/
+  ) !== null;
 }
 
 const formatValue = (value: any): string => {

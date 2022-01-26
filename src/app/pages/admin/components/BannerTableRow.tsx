@@ -1,6 +1,6 @@
 import React from 'react'
-import { Grid, Typography, TableRow, IconButton, Box } from '@material-ui/core'
-import { DeleteOutline } from '@material-ui/icons'
+import { Grid, Typography, TableRow, IconButton, Box } from '@mui/material'
+import { DeleteOutline } from '@mui/icons-material'
 import { TableCell } from 'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/TableCell'
 import { formatDateAndTime } from 'helpers/dates'
 import { DataroomBanner } from 'types/dataroomBanner'
@@ -99,10 +99,10 @@ export const BannerTableRow = ({ banner }: BannerTableRowProps) => {
           onClick={() => {
             void removeBanner()
           }}
-        >
+          size="large">
           <DeleteOutline color='disabled' />
         </IconButton>
       </TableCell>
     </TableRow>
-  )
+  );
 }

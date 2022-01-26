@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { FundSourceFields } from 'app/pages/identity/components/FinancialInformationForm/FundSourceFields'
 import { FundSourceHeader } from 'app/pages/identity/components/FinancialInformationForm/FundSourceHeader'
 import { useFormError } from 'hooks/useFormError'

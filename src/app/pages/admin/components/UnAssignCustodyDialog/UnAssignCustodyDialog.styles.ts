@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles'
+import makeStyles from '@mui/styles/makeStyles';
 
 export default makeStyles(theme => ({
   root: {
@@ -8,7 +8,7 @@ export default makeStyles(theme => ({
 
       width: 'max-content',
       padding: theme.spacing(5),
-      [theme.breakpoints.down('md')]: {
+      [theme.breakpoints.down('lg')]: {
         padding: theme.spacing(2)
       },
       paddingTop: theme.spacing(4),
@@ -30,7 +30,7 @@ export default makeStyles(theme => ({
     position: 'absolute',
     top: 0,
     right: -20,
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       right: -4
     }
   }

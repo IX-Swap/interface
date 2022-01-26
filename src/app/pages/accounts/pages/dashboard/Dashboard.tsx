@@ -1,7 +1,7 @@
 import React from 'react'
 import { TopInfoPanel } from 'app/pages/accounts/pages/dashboard/components/TopInfoPanel/TopInfoPanel'
 import { MarketPortfolio } from 'app/pages/accounts/pages/dashboard/components/MarketPortfolio/MarketPortfolio'
-import { Box, Grid } from '@material-ui/core'
+import { Box, Grid } from '@mui/material'
 import { VSpacer } from 'components/VSpacer'
 import { useGetPortfolios } from 'app/pages/accounts/hooks/useGetPortfolios'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'

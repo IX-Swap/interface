@@ -9,10 +9,10 @@ import {
   Box,
   useMediaQuery,
   useTheme
-} from '@material-ui/core'
+} from '@mui/material'
 import { Actions } from './Actions'
-import IconButton from '@material-ui/core/IconButton'
-import CloseIcon from '@material-ui/icons/Close'
+import IconButton from '@mui/material/IconButton'
+import CloseIcon from '@mui/icons-material/Close'
 import useStyles from './GetWalletDialog.styles'
 import { LoadingMessage } from './LoadingMessage'
 import { DialogText } from './DialogText'
@@ -30,7 +30,7 @@ export const GetWalletDialog = (props: ModalProps) => {
   const classes = useStyles()
   const theme = useTheme()
   const { user } = useAuth()
-  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
+  const fullScreen = useMediaQuery(theme.breakpoints.down('md'))
   const [createCustodianWallet, { isLoading }] = useCreateCustodianWallet({
     userId: getIdFromObj(user),
     onSuccess: () => toggleOpen(false),
@@ -57,7 +57,7 @@ export const GetWalletDialog = (props: ModalProps) => {
               aria-label='close'
               onClick={() => toggleOpen(false)}
               className={classes.closeButton}
-            >
+              size="large">
               <CloseIcon />
             </IconButton>
             <Typography variant='h6' component='span' align='center'>
@@ -79,5 +79,5 @@ export const GetWalletDialog = (props: ModalProps) => {
         </DialogActions>
       </Box>
     </MUIDialog>
-  )
+  );
 }

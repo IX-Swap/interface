@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles'
+import makeStyles from '@mui/styles/makeStyles';
 
 export default makeStyles(theme => ({
   closeIcon: {
@@ -23,7 +23,7 @@ export default makeStyles(theme => ({
     justifyContent: 'space-between',
     alignItems: 'center',
     background:
-      theme.palette.type === 'light'
+      theme.palette.mode === 'light'
         ? '#F6F1FF'
         : theme.palette.backgrounds.alternativeLight,
     color: theme.palette.slider.activeBackground,

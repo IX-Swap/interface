@@ -1,7 +1,7 @@
 import React from 'react'
 import { Chart } from 'react-google-charts'
 import useStyles from 'app/pages/issuance/components/IssuanceLanding/DonutChart.styles'
-import { Box, Typography } from '@material-ui/core'
+import { Box, Typography } from '@mui/material'
 import classnames from 'classnames'
 
 export interface DonutChartProps {

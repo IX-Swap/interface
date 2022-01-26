@@ -1,10 +1,10 @@
 import React from 'react'
 import { TableColumn } from 'types/util'
 import { LoginHistory } from 'types/user'
-import { Grid, Link, Typography, Tooltip } from '@material-ui/core'
+import { Grid, Link, Typography, Tooltip } from '@mui/material'
 import { getTimeFromNow } from 'helpers/dates'
-import { Launch } from '@material-ui/icons'
-import { withStyles } from '@material-ui/core/styles'
+import { Launch } from '@mui/icons-material'
+import withStyles from '@mui/styles/withStyles';
 
 const UserAgentTooltip = withStyles(theme => ({
   tooltip: {

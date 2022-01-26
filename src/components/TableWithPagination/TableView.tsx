@@ -13,14 +13,14 @@ import {
   Checkbox,
   FormControlLabel,
   Size
-} from '@material-ui/core'
+} from '@mui/material'
 import { TableColumn, BaseFilter } from 'types/util'
 import { ActionsType } from 'app/pages/authorizer/components/Actions'
 import { useTableWithPagination } from 'components/TableWithPagination/hooks/useTableWithPagination'
 import { TableRows } from 'components/TableWithPagination/TableRows'
 import { statusColumn } from 'app/pages/authorizer/hooks/useAuthorizerView'
 import { UseSelectionHelperReturnType } from 'hooks/useSelectionHelper'
-import { useTheme } from '@material-ui/core/styles'
+import { useTheme } from '@mui/material/styles'
 import useStyles from './TableView.styles'
 import { NoData } from 'app/components/NoData/NoData'
 
@@ -98,7 +98,7 @@ export const TableView = <T,>({
   const classes = useStyles()
   const headColor =
     themeVariant === 'primary'
-      ? theme.palette.type === 'light'
+      ? theme.palette.mode === 'light'
         ? '#141272'
         : theme.palette.primary.main
       : 'initial'

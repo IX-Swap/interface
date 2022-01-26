@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
 import { ListingRadioButtons } from 'app/pages/exchange/components/ListingForm/ListingRadioButtons'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'

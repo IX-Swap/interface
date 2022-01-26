@@ -1,6 +1,6 @@
 import React from 'react'
-import { IconButton, Box } from '@material-ui/core'
-import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined'
+import { IconButton, Box } from '@mui/material'
+import FileCopyOutlinedIcon from '@mui/icons-material/FileCopyOutlined'
 import { copyToClipboard } from 'helpers/clipboard'
 import { useSnackbar } from 'hooks/useSnackbar'
 import { AppRouterLink } from 'components/AppRouterLink'

@@ -1,4 +1,4 @@
-import { Grid, Tab } from '@material-ui/core'
+import { Grid, Tab } from '@mui/material'
 import { AboutTheFirm } from 'app/pages/educationCentre/components/AboutTheFirm/AboutTheFirm'
 import { ComparableSecurities } from 'app/pages/educationCentre/components/ComparableSecurities/ComparableSecurities'
 import { Funding } from 'app/pages/educationCentre/components/Funding/Funding'

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, ButtonGroup } from '@material-ui/core'
+import { Button, ButtonGroup } from '@mui/material'
 import { AssetBalance } from 'types/balance'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { DSRoute } from 'app/pages/accounts/pages/digitalSecurities/router/config'

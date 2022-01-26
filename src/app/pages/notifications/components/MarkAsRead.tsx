@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Tooltip } from '@material-ui/core'
+import { Button, Tooltip } from '@mui/material'
 import { useStyles } from 'app/pages/notifications/components/MarkAsRead.styles'
 import { Notification } from 'types/notification'
 import { useMarkAsRead } from 'app/pages/notifications/hooks/useMarkAsRead'

@@ -6,8 +6,8 @@ import {
   AccordionDetails,
   Grid,
   AccordionActions
-} from '@material-ui/core'
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+} from '@mui/material'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import useStyles from 'app/pages/identity/components/Section/Section.styles'
 
 export interface IdentitySectionProps {

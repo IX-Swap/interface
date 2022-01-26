@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { CommitmentsTable } from 'app/pages/accounts/components/Commitments/CommitmentsTable'
 import { VSpacer } from 'components/VSpacer'

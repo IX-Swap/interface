@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Button } from '@material-ui/core'
+import { Box, Button } from '@mui/material'
 import { DigitalSecurityOffering } from 'types/dso'
 import { DSOSubmitButton } from 'app/components/DSO/components/DSOSubmitButton'
 import { useHistory, generatePath } from 'react-router-dom'

@@ -8,7 +8,7 @@ import { cashWithdrawalsQueryKeys } from 'config/queryKeys'
 import { accountsURL } from 'config/apiURL'
 import { useVirtualAccount } from 'app/pages/accounts/hooks/useVirtualAccount'
 import { useFormContext } from 'react-hook-form'
-import { Typography } from '@material-ui/core'
+import { Typography } from '@mui/material'
 import { VSpacer } from 'components/VSpacer'
 
 export const RecentWithdrawals: React.FC = () => {

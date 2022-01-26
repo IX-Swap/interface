@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles'
+import makeStyles from '@mui/styles/makeStyles';
 
 export default makeStyles(theme => ({
   root: {
@@ -9,7 +9,7 @@ export default makeStyles(theme => ({
   },
   colorPrimary: {
     backgroundColor:
-      theme.palette.grey[theme.palette.type === 'light' ? 200 : 700]
+      theme.palette.grey[theme.palette.mode === 'light' ? 200 : 700]
   },
   bar: {
     borderRadius: 5

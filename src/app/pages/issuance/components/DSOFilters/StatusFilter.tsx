@@ -1,5 +1,5 @@
-import { Typography } from '@material-ui/core'
-import { ToggleButton } from '@material-ui/lab'
+import { Typography } from '@mui/material'
+import { ToggleButton } from '@mui/material';
 import { StyledToggleButtonGroup } from 'app/pages/issuance/components/DSOFilters/StyledToggleButtonGroup'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
 import React from 'react'

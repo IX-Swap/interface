@@ -1,5 +1,5 @@
 import React from 'react'
-import { MenuItem, Select } from '@material-ui/core'
+import { MenuItem, Select } from '@mui/material'
 
 export const DistributionFrequencySelect = (props: any) => {
   return (

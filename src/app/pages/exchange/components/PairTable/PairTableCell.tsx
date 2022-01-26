@@ -1,5 +1,5 @@
 import React from 'react'
-import { TableCell, TableCellProps } from '@material-ui/core'
+import { TableCell, TableCellProps } from '@mui/material'
 import { useStyles } from 'app/pages/exchange/components/PairTable/PairTable.styles'
 
 export interface PairTableCellProps extends TableCellProps {}

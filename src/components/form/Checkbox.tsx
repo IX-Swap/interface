@@ -3,7 +3,7 @@ import {
   FormControlLabel,
   FormControlLabelProps,
   Typography
-} from '@material-ui/core'
+} from '@mui/material'
 import React from 'react'
 import { TypedFieldRenderComponentProps } from 'components/form/types'
 import { ReactComponent as SuccessIcon } from 'assets/icons/success_icon.svg'

@@ -1,5 +1,5 @@
-import { IconButton } from '@material-ui/core'
-import { Launch } from '@material-ui/icons'
+import { IconButton } from '@mui/material'
+import { Launch } from '@mui/icons-material'
 import { documentsURL } from 'config/apiURL'
 import { getIdFromObj } from 'helpers/strings'
 import { useAuth } from 'hooks/auth/useAuth'
@@ -29,8 +29,8 @@ export const ViewUploadedDocument = ({
   const handleClick = async () => await downloadDocument()
 
   return (
-    <IconButton onClick={handleClick} disabled={isLoading}>
+    <IconButton onClick={handleClick} disabled={isLoading} size="large">
       <Launch color='disabled' style={{ width: 23, height: 23 }} />
     </IconButton>
-  )
+  );
 }

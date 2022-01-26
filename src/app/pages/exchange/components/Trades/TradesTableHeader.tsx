@@ -1,5 +1,5 @@
-import { TableCell, TableHead, TableRow } from '@material-ui/core'
-import { withStyles } from '@material-ui/core/styles'
+import { TableCell, TableHead, TableRow } from '@mui/material'
+import withStyles from '@mui/styles/withStyles';
 import React from 'react'
 
 export const TradesTableHeaderCell = withStyles({

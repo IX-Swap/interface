@@ -1,6 +1,6 @@
 import React from 'react'
-import { Box, Grid } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+import { Box, Grid } from '@mui/material'
+import makeStyles from '@mui/styles/makeStyles';
 import { getTimeFromNow } from 'helpers/dates'
 import { getDSOStats } from 'app/components/DSO/utils'
 import { DigitalSecurityOffering, DSOInsight } from 'types/dso'
@@ -12,7 +12,7 @@ const useStyle = makeStyles(theme => ({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'flex-start',
-    gap: `${theme.spacing(0.5)}px`
+    gap: theme.spacing(0.5)
   },
   date: {
     fontSize: `${theme.typography.fontSize}px`,

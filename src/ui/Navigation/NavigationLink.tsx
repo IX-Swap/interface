@@ -1,4 +1,4 @@
-import { styled } from '@material-ui/core/styles'
+import { styled } from '@mui/material/styles'
 import { Link } from 'react-router-dom'
 
 export interface SidebarLinkProps {

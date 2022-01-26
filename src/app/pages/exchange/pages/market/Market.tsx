@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Grid, Hidden } from '@material-ui/core'
+import { Box, Grid, Hidden } from '@mui/material'
 import { FinancialSummary } from 'app/pages/exchange/components/FinancialSummary/FinancialSummary'
 import { useStyles } from 'app/pages/exchange/pages/market/Market.styles'
 import { getDataFeed } from 'app/pages/invest/components/TVChartContainer/services/datafeed'
@@ -95,7 +95,7 @@ export const Market = () => {
         <Box my={2} />
       </Grid>
 
-      <Hidden mdDown>
+      <Hidden lgDown>
         <Grid item xs={12}>
           <MarketGridView
             symbol={symbol}
@@ -142,5 +142,5 @@ export const Market = () => {
         </Grid>
       </Hidden>
     </Box>
-  )
+  );
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Input, InputAdornment } from '@material-ui/core'
+import { Grid, Input, InputAdornment } from '@mui/material'
 import { moneyNumberFormat } from 'config/numberFormat'
 import { useFormContext } from 'react-hook-form'
 import { CommitmentFormValues } from 'types/commitment'

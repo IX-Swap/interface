@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { Grid, Typography } from '@material-ui/core'
+import { Grid, Typography } from '@mui/material'
 import { DownloadDSODocument } from 'app/components/DSO/components/DownloadDSODocument'
 import { DataroomHeader } from 'components/dataroom/DataroomHeader'
 import { DataroomViewRow } from 'components/dataroom/DataroomViewRow'

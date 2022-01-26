@@ -1,6 +1,6 @@
 import React from 'react'
 import { useAllCorporates } from 'app/pages/identity/hooks/useAllCorporates'
-import { MenuItem, Select } from '@material-ui/core'
+import { MenuItem, Select } from '@mui/material'
 import { queryStatusRenderer } from './renderUtils'
 
 export const CorporateSelect = (props: any) => {

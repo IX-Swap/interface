@@ -4,7 +4,7 @@ import {
   Radio,
   Box,
   TextField
-} from '@material-ui/core'
+} from '@mui/material'
 import {
   IndividualTaxDeclarationFormValues,
   TaxResidency

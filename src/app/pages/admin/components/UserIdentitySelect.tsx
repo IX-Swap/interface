@@ -6,7 +6,7 @@ import {
   MenuItem,
   Select,
   Typography
-} from '@material-ui/core'
+} from '@mui/material'
 import { useStyles } from 'app/pages/admin/components/UserIdentitySelect.styles'
 import { AdminRoute } from 'app/pages/admin/router/config'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'

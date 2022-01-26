@@ -5,7 +5,7 @@ import PopupState, {
   InjectedProps
 } from 'material-ui-popup-state'
 import { DropdownContent } from 'app/components/Dropdown/DropdownContent'
-import { PopperPlacementType } from '@material-ui/core'
+import { PopperPlacementType } from '@mui/material'
 
 export interface DropdownTriggerProps {
   triggerProps: ReturnType<typeof bindTrigger>

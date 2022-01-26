@@ -7,9 +7,9 @@ import {
   FieldValuesFromControl
 } from '@hookform/strictly-typed/dist/types'
 import { Control } from 'react-hook-form'
-import { OverrideProps } from '@material-ui/core/OverridableComponent'
+import { OverrideProps } from '@mui/material/OverridableComponent'
 import { getErrorFromControl, pathToString, hasValue } from 'helpers/forms'
-import { FormControl, InputLabel, FormHelperText } from '@material-ui/core'
+import { FormControl, InputLabel, FormHelperText } from '@mui/material'
 import { ErrorMessage } from '@hookform/error-message'
 
 export interface TypedFieldProps<

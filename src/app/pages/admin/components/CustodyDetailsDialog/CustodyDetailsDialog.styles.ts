@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles'
+import makeStyles from '@mui/styles/makeStyles';
 
 export default makeStyles(theme => ({
   root: {
@@ -28,13 +28,13 @@ export default makeStyles(theme => ({
   content: {
     overflowY: 'scroll',
     backgroundColor:
-      theme.palette.type === 'light'
+      theme.palette.mode === 'light'
         ? '#FAFAFA'
         : theme.palette.getContrastText('#FAFAFA'),
     paddingLeft: theme.spacing(3),
     paddingRight: theme.spacing(3),
     fontSize: 16,
-    color: theme.palette.type === 'light' ? '#666666' : '#ffffff',
+    color: theme.palette.mode === 'light' ? '#666666' : '#ffffff',
     maxHeight: 376
   },
   actions: {

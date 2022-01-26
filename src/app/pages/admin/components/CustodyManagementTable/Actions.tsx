@@ -2,8 +2,8 @@ import React from 'react'
 import {
   Launch as LaunchIcon,
   LinkOff as LinkOffIcon
-} from '@material-ui/icons'
-import { Box, IconButton } from '@material-ui/core'
+} from '@mui/icons-material'
+import { Box, IconButton } from '@mui/material'
 import { CustodyAccountsListItem } from 'types/custodyAccount'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { CustodyManagementRoute as paths } from 'app/pages/admin/router/config'

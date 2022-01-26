@@ -10,7 +10,7 @@ import {
   FormControlLabel,
   Grid,
   Typography
-} from '@material-ui/core'
+} from '@mui/material'
 import { useStyles } from './DisclosureDialog.style'
 import { renderStringToHTML } from 'app/components/DSO/utils'
 import { VSpacer } from 'components/VSpacer'
@@ -42,7 +42,7 @@ export const DisclosureDialog = ({
 
   return (
     <Dialog open={isOpen} maxWidth={'md'} classes={{ paper: classes.root }}>
-      <DialogTitle disableTypography classes={{ root: classes.title }}>
+      <DialogTitle classes={{ root: classes.title }}>
         Disclosures
       </DialogTitle>
       <DialogContentText classes={{ root: classes.content }}>
@@ -101,5 +101,5 @@ export const DisclosureDialog = ({
         </Grid>
       </DialogActions>
     </Dialog>
-  )
+  );
 }

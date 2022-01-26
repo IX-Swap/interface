@@ -1,5 +1,5 @@
 import React, { ComponentType, useMemo, useState } from 'react'
-import { Grid, Step, StepButton, StepLabel, Stepper } from '@material-ui/core'
+import { Grid, Step, StepButton, StepLabel, Stepper } from '@mui/material'
 import { MutationResultPair } from 'react-query'
 import { FormStep } from 'app/components/FormStepper/FormStep'
 

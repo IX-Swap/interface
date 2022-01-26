@@ -1,5 +1,5 @@
-import { Tooltip, IconButton } from '@material-ui/core'
-import { Launch } from '@material-ui/icons'
+import { Tooltip, IconButton } from '@mui/material'
+import { Launch } from '@mui/icons-material'
 import { documentsURL } from 'config/apiURL'
 import { useDownloadRawDocument } from 'hooks/useDownloadRawDocument'
 import { convertBlobToFile, openFileInNewTab } from 'hooks/utils'
@@ -24,9 +24,9 @@ export const DownloadAccessDocument = (props: DownloadAccessDocumentProps) => {
 
   return (
     <Tooltip title='Download File'>
-      <IconButton onClick={handleClick} disabled={isLoading}>
+      <IconButton onClick={handleClick} disabled={isLoading} size="large">
         <Launch color='disabled' style={{ width: 23, height: 23 }} />
       </IconButton>
     </Tooltip>
-  )
+  );
 }

@@ -1,5 +1,5 @@
-import { fade } from '@material-ui/core/styles/colorManipulator'
-import { makeStyles } from '@material-ui/core/styles'
+import { alpha } from '@mui/material/styles';
+import makeStyles from '@mui/styles/makeStyles';
 import { drawerWidth } from 'app/components/OnboardingPanel/OnboardingPanel.styles'
 
 export const useStyles = makeStyles(theme => ({
@@ -11,7 +11,7 @@ export const useStyles = makeStyles(theme => ({
     zIndex: 800,
     width: '100vw',
     height: '100vh',
-    backgroundColor: fade('#000', 0.5),
+    backgroundColor: alpha('#000', 0.5),
     transition: 'opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms'
   },
   scrollPaper: {

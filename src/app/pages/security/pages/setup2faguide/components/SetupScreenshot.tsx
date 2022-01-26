@@ -1,7 +1,7 @@
 import React from 'react'
-import { Box, Grid, Typography, Hidden } from '@material-ui/core'
+import { Box, Grid, Typography, Hidden } from '@mui/material'
 import authy from 'assets/icons/authy.svg'
-import { grey } from '@material-ui/core/colors'
+import { grey } from '@mui/material/colors'
 import gauth from 'assets/icons/gauth.svg'
 
 export interface SetupScreenshotProps {
@@ -42,7 +42,7 @@ export const SetupScreenshot = ({
           />
         </Box>
       </Grid>
-      <Hidden mdDown>
+      <Hidden lgDown>
         <Grid item>
           <Box width={1} height='100%' borderRight={`1px solid ${grey[300]}`} />
         </Grid>
@@ -66,5 +66,5 @@ export const SetupScreenshot = ({
         </Box>
       </Grid>
     </Grid>
-  )
+  );
 }

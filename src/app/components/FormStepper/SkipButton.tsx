@@ -5,7 +5,7 @@ import {
   DialogActions,
   Grid,
   Typography
-} from '@material-ui/core'
+} from '@mui/material'
 import { IdentityRoute } from 'app/pages/identity/router/config'
 import { VSpacer } from 'components/VSpacer'
 import { history } from 'config/history'

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, ButtonProps } from '@material-ui/core'
+import { Button, ButtonProps } from '@mui/material'
 import { useFormContext } from 'react-hook-form'
 import { useDepositStore } from 'app/pages/accounts/pages/banks/context'
 

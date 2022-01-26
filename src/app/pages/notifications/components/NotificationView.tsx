@@ -1,5 +1,5 @@
 import React from 'react'
-import { Typography, Grid, GridProps } from '@material-ui/core'
+import { Typography, Grid, GridProps } from '@mui/material'
 import classNames from 'classnames'
 import { Notification } from 'types/notification'
 import { useStyles } from 'app/pages/notifications/components/NotificationsItem.styles'

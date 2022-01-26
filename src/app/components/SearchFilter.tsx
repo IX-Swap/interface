@@ -3,8 +3,8 @@ import {
   InputAdornment,
   OutlinedInput,
   OutlinedInputProps
-} from '@material-ui/core'
-import { Search } from '@material-ui/icons'
+} from '@mui/material'
+import { Search } from '@mui/icons-material'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
 import debounce from 'lodash/debounce'
 import { QueryFilter } from 'hooks/filters/useQueryFilter'

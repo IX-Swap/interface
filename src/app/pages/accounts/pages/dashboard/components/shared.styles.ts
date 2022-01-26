@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles'
+import makeStyles from '@mui/styles/makeStyles';
 
 export const useStyles = makeStyles(theme => ({
   wrapper: {
@@ -7,7 +7,7 @@ export const useStyles = makeStyles(theme => ({
     paddingLeft: theme.spacing(1),
     display: 'initial',
     textAlign: 'center',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       paddingRight: 0,
       paddingLeft: 0,
       display: 'flex',

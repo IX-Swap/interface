@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Hidden } from '@material-ui/core'
+import { Grid, Hidden } from '@mui/material'
 import { InvestmentGrowthChart } from '../components/InvestmentGrowthChart'
 import { CommitmentStatsChart } from '../components/CommitmentStatsChart'
 import { DSOInfo } from '../components/DSOInfo'

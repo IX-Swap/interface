@@ -1,7 +1,7 @@
 import React from 'react'
-import { Box, Container, Grid, Typography } from '@material-ui/core'
-import { FilterList } from '@material-ui/icons'
-import { ToggleButton } from '@material-ui/lab'
+import { Box, Container, Grid, Typography } from '@mui/material'
+import { FilterList } from '@mui/icons-material'
+import { ToggleButton } from '@mui/material';
 import { SidebarToggleRenderProps } from 'app/components/SidebarToggle'
 
 export interface FiltersToggleProps extends SidebarToggleRenderProps {}

@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles'
+import makeStyles from '@mui/styles/makeStyles';
 
 export default makeStyles(theme => ({
   root: {
@@ -49,7 +49,7 @@ export default makeStyles(theme => ({
     position: 'relative',
     width: '100%',
     height: 156,
-    padding: `${theme.spacing(3)}px!important`,
+    padding: `${theme.spacing(3)}!important`,
     borderColor: `${theme.palette.primary.main}!important`,
     backgroundColor: `${theme.palette.background.default}!important`,
 

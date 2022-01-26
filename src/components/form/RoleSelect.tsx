@@ -5,7 +5,7 @@ import {
   MenuItem,
   Select,
   SelectProps
-} from '@material-ui/core'
+} from '@mui/material'
 import { ROLES } from 'config/roles'
 
 export interface RoleSelectProps extends SelectProps {

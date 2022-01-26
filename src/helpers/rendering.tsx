@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import React from 'react'
-import { Grid, MenuItem } from '@material-ui/core'
+import { Grid, MenuItem } from '@mui/material'
 import draftToHtml from 'draftjs-to-html'
 import pdfIcon from 'assets/icons/documents/pdf2.svg'
 import docxIcon from 'assets/icons/documents/docx.svg'

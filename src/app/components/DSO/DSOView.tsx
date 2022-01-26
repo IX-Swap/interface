@@ -2,7 +2,7 @@ import React from 'react'
 import { DigitalSecurityOffering } from 'types/dso'
 import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
 import { DSOPreview } from 'app/components/DSO/DSOPreview/DSOPreview'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { DSOSidebar } from 'app/components/DSO/components/DSOSidebar'
 import { DSOPreviewActions } from 'app/components/DSO/components/DSOPreviewActions'
 export interface DSOViewProps {

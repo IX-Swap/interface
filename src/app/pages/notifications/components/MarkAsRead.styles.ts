@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles'
+import makeStyles from '@mui/styles/makeStyles';
 
 export const useStyles = makeStyles(theme => ({
   container: {
@@ -7,7 +7,7 @@ export const useStyles = makeStyles(theme => ({
     background: ({ isUnread }: { isUnread: boolean }) =>
       isUnread
         ? 'transparent'
-        : theme.palette.type === 'light'
+        : theme.palette.mode === 'light'
         ? 'rgba(0, 0, 0, 0.26)'
         : theme.palette.primary.main,
     minWidth: 0,

@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useEffect } from 'react'
 import { TypedField } from 'components/form/TypedField'
 import { sliderValueExtractor } from 'helpers/forms'
-import { Box, Slider, SliderProps, useTheme } from '@material-ui/core'
+import { Box, Slider, SliderProps, useTheme } from '@mui/material'
 import { useFormContext } from 'react-hook-form'
 import { SliderTooltip } from 'app/pages/identity/components/FinancialInformationForm/SliderTooltip'
 import { FundSource } from 'app/pages/identity/types/forms'

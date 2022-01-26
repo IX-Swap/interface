@@ -6,7 +6,7 @@ import {
   MenuItem,
   Select,
   SelectProps
-} from '@material-ui/core'
+} from '@mui/material'
 import { useBanksData } from 'app/pages/accounts/pages/banks/hooks/useBanksData'
 import { queryStatusRenderer } from 'components/form/renderUtils'
 import { AuthorizableStatus } from 'types/util'

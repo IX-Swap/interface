@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { CapTablePageHeader } from 'app/pages/issuance/components/CapTable/CapTablePageHeader'
 import { Investors } from 'app/pages/issuance/components/CapTable/Investors'
 import { Insights } from 'app/pages/issuance/components/CapTable/Insights'

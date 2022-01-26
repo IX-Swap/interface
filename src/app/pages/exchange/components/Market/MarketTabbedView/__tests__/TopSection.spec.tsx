@@ -34,7 +34,7 @@ describe('TopSection', () => {
     const objResponse = {
       theme: {
         palette: {
-          type: 'dark'
+          mode: 'dark'
         }
       }
     }

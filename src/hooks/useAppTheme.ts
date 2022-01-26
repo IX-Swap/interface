@@ -1,4 +1,4 @@
-import { useMediaQuery } from '@material-ui/core'
+import { useMediaQuery } from '@mui/material'
 import { useMemo, useState } from 'react'
 import storageService from 'services/storage'
 import { AppTheme, getAppTheme } from 'themes/old'

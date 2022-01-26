@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
 import { DSOPreview } from 'app/components/DSO/DSOPreview/DSOPreview'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { DSOSidebar } from 'app/components/DSO/components/DSOSidebar'
 import { DSOPreviewActions } from 'app/components/DSO/components/DSOPreviewActions'
 import { useParams } from 'react-router-dom'

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Status } from 'app/pages/admin/components/Status'
 import { useStyles } from 'app/pages/identity/components/IndividualPreview/PreviewHeader.styles'
-import { Box, Grid, Typography } from '@material-ui/core'
+import { Box, Grid, Typography } from '@mui/material'
 
 export interface PreviewHeaderProps {
   title: string

@@ -1,4 +1,4 @@
-import { createTheme, Theme } from '@material-ui/core/styles'
+import { createTheme, Theme, adaptV4Theme } from '@mui/material/styles';
 import { darkTheme } from 'themes/old/dark'
 import { lightTheme } from 'themes/old/light'
 import { getThemeOverrides } from 'themes/old/overrides'
@@ -20,9 +20,9 @@ export const getAppTheme = (themeType: AppTheme, prefersDarkMode: boolean) => {
       ? darkTheme
       : lightTheme
 
-  return createTheme({
+  return createTheme(adaptV4Theme({
     ...baseTheme,
     typography,
     overrides: getThemeOverrides(baseTheme as Theme)
-  })
+  }));
 }

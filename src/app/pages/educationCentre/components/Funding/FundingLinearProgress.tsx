@@ -1,5 +1,7 @@
-import { createStyles, withStyles, Theme } from '@material-ui/core/styles'
-import LinearProgress from '@material-ui/core/LinearProgress'
+import { Theme } from '@mui/material/styles';
+import createStyles from '@mui/styles/createStyles';
+import withStyles from '@mui/styles/withStyles';
+import LinearProgress from '@mui/material/LinearProgress'
 
 export const FundingLinearProgress = withStyles((theme: Theme) =>
   createStyles({
@@ -9,7 +11,7 @@ export const FundingLinearProgress = withStyles((theme: Theme) =>
     },
     colorPrimary: {
       backgroundColor:
-        theme.palette.grey[theme.palette.type === 'light' ? 200 : 700]
+        theme.palette.grey[theme.palette.mode === 'light' ? 200 : 700]
     },
     bar: {
       borderRadius: 5,

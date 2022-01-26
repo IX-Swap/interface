@@ -1,6 +1,6 @@
 import React from 'react'
 import { TypedField } from 'components/form/TypedField'
-import { InputAdornment, Button, Divider, Grid } from '@material-ui/core'
+import { InputAdornment, Button, Divider, Grid } from '@mui/material'
 import { useFormContext } from 'react-hook-form'
 import { useTokenInfo } from 'app/pages/accounts/hooks/useTokenInfo'
 import { Available } from 'app/pages/accounts/pages/digitalSecurities/Withdraw/Available'

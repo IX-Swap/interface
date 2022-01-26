@@ -1,5 +1,5 @@
 import React, { ReactElement, useEffect } from 'react'
-import { FileCopyOutlined } from '@material-ui/icons'
+import { FileCopyOutlined } from '@mui/icons-material'
 import {
   CircularProgress,
   DialogActions,
@@ -7,7 +7,7 @@ import {
   IconButton,
   InputAdornment,
   TextField
-} from '@material-ui/core'
+} from '@mui/material'
 import { WalletConnectionStatus } from 'app/pages/accounts/pages/withdrawalAddresses/hooks/useConnectMetamaskWallet'
 import { WAConnectActions } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WAConnectActions'
 import { WAInfoFields } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WAInfoFields'
@@ -20,7 +20,7 @@ import { useFormContext } from 'react-hook-form'
 import { WithdrawalAddressFormValues } from 'types/withdrawalAddress'
 import { copyToClipboard } from 'helpers/clipboard'
 import { WAPair } from './WAPair'
-import { Alert } from '@material-ui/lab'
+import { Alert } from '@mui/material';
 
 export interface WAConnectProps {
   hint: ReactElement

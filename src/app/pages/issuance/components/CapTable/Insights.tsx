@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { InsightCard } from 'app/pages/issuance/components/InsightCard'
 import { PricePerToken } from 'app/pages/issuance/components/CapTable/PricePerToken'
 import { TotalTokens } from 'app/pages/issuance/components/CapTable/TotalTokens'

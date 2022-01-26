@@ -1,4 +1,4 @@
-import { TableCell, TableCellProps } from '@material-ui/core'
+import { TableCell, TableCellProps } from '@mui/material'
 import { useStyles } from 'app/pages/exchange/components/Trades/TradesTablecell.styles'
 import React from 'react'
 export interface TradesTableCellProps extends TableCellProps {

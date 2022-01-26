@@ -6,7 +6,7 @@ import { columns } from 'app/pages/admin/components/UnassignedAccountTable/colum
 import { VirtualAccount } from 'types/virtualAccount'
 import { useSelectionHelperContext } from 'components/SelectionHelper'
 import { Filters } from 'app/pages/admin/components/AssignedVirtualAccountsTable/Filters'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import { useUnmountCallback } from 'hooks/useUnmountCallback'
 

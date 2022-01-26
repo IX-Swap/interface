@@ -2,7 +2,7 @@ import {
   FormControlLabel,
   FormControlLabelProps,
   Typography
-} from '@material-ui/core'
+} from '@mui/material'
 import React from 'react'
 import { TypedFieldRenderComponentProps } from 'components/form/types'
 import { BigCheckbox } from 'app/components/BigCheckbox'

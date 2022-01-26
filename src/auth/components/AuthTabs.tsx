@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Tab, Tabs } from '@material-ui/core'
+import { Tab, Tabs } from '@mui/material'
 import { useUserStore } from 'auth/context'
 import { observer } from 'mobx-react'
 import { AuthRoute } from 'auth/router/config'

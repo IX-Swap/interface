@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Grid, TextField } from '@material-ui/core'
+import { Box, Grid, TextField } from '@mui/material'
 import { TypedField } from 'components/form/TypedField'
 import { dateTimeValueExtractor } from 'helpers/forms'
 import { CorporateSelect } from 'components/form/CorporateSelect'

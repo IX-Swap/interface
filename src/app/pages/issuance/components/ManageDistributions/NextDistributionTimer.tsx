@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Grid, Typography } from '@material-ui/core'
+import { Box, Grid, Typography } from '@mui/material'
 import { VSpacer } from 'components/VSpacer'
 import { useCountdown } from 'app/pages/issuance/hooks/useCountdown'
 import { TimeDisplay } from 'app/pages/issuance/components/CountdownTimer/TimeDisplay'

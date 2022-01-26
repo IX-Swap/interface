@@ -1,9 +1,9 @@
 import React from 'react'
 import { render } from 'test-utils'
 import { PriceFilter } from 'app/pages/invest/components/DSOTable/PriceFilter'
-import { FormControlLabel } from '@material-ui/core'
+import { FormControlLabel } from '@mui/material'
 
-jest.mock('@material-ui/core/FormControlLabel', () => jest.fn(() => null))
+jest.mock('@mui/material/FormControlLabel', () => jest.fn(() => null))
 
 describe('Price Filter', () => {
   afterEach(async () => {

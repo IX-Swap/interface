@@ -1,4 +1,4 @@
-import { Box, Grid, Link, Typography } from '@material-ui/core'
+import { Box, Grid, Link, Typography } from '@mui/material'
 import { CashDepositDetails } from 'app/pages/accounts/components/VirtualAccountCashDeposit/CashDepositDetails'
 import { useStyles } from 'app/pages/accounts/components/VirtualAccountCashDeposit/Fast.styles'
 import { ValidCurrency } from 'helpers/types'

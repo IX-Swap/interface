@@ -5,7 +5,7 @@ import { authURL } from 'config/apiURL'
 import { authQueryKeys } from 'config/queryKeys'
 import { columns } from 'app/pages/admin/components/columns'
 import { LoginHistory } from 'types/user'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { SearchFilter } from 'app/components/SearchFilter'
 import { useParams } from 'react-router-dom'
 

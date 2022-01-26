@@ -1,4 +1,4 @@
-import { Button } from '@material-ui/core'
+import { Button } from '@mui/material'
 import { AddVirtualAccountsFormFields } from 'app/pages/admin/components/AddVirtualAccountsButton/AddVirtualAccountsFormFields'
 import { addVirtualAccountsValidationSchema } from 'app/pages/admin/components/AddVirtualAccountsButton/validation'
 import { useAddVirtualAccount } from 'app/pages/admin/hooks/useAddVirtualAccounts'

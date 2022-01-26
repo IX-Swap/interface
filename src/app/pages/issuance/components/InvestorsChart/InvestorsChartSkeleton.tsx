@@ -1,5 +1,5 @@
-import { Skeleton } from '@material-ui/lab'
-import { Grid } from '@material-ui/core'
+import { Skeleton } from '@mui/material';
+import { Grid } from '@mui/material'
 import React from 'react'
 import { InsightCard } from '../InsightCard'
 import { ChartWrapper } from '../IssuanceLanding/ChartWrapper'
@@ -12,18 +12,18 @@ export const InvestorsChartSkeleton = () => {
         <Grid container>
           <Grid item xs={12}>
             <VSpacer size={'medium'} />
-            <Skeleton variant={'rect'} width={'100%'} height={336} />
+            <Skeleton variant="rectangular" width={'100%'} height={336} />
             <VSpacer size={'small'} />
           </Grid>
           <Grid container spacing={2}>
             {[0, 1, 2].map(item => (
               <Grid key={item} item xs={1}>
-                <Skeleton variant={'rect'} width={'100%'} height={25} />
+                <Skeleton variant="rectangular" width={'100%'} height={25} />
               </Grid>
             ))}
           </Grid>
         </Grid>
       </ChartWrapper>
     </InsightCard>
-  )
+  );
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Card, Grid } from '@material-ui/core'
+import { Button, Card, Grid } from '@mui/material'
 import { CountdownTimer } from '../components/CountdownTimer/CountdownTimer'
 import { AmountRaised } from 'app/pages/issuance/components/CapTable/AmountRaised'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'

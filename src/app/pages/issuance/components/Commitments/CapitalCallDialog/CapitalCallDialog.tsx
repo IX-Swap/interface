@@ -11,10 +11,10 @@ import {
   Box,
   Button,
   Grid
-} from '@material-ui/core'
+} from '@mui/material'
 import useStyles from './CapitalCallDialog.styles'
-import IconButton from '@material-ui/core/IconButton'
-import CloseIcon from '@material-ui/icons/Close'
+import IconButton from '@mui/material/IconButton'
+import CloseIcon from '@mui/icons-material/Close'
 import { ReactMultiEmail, isEmail } from 'react-multi-email'
 import 'react-multi-email/style.css'
 import { useCapitalCall } from 'app/pages/issuance/hooks/useCapitalCall'
@@ -28,7 +28,7 @@ export const CapitalCallDialog = (props: ModalProps) => {
   const { open = false, toggleOpen } = props
   const classes = useStyles()
   const theme = useTheme()
-  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
+  const fullScreen = useMediaQuery(theme.breakpoints.down('md'))
   const [emails, setEmails] = useState<string[]>([])
 
   const {
@@ -68,7 +68,7 @@ export const CapitalCallDialog = (props: ModalProps) => {
           aria-label='close'
           onClick={() => toggleOpen(false)}
           className={classes.closeButton}
-        >
+          size="large">
           <CloseIcon />
         </IconButton>
       </DialogTitle>
@@ -146,5 +146,5 @@ export const CapitalCallDialog = (props: ModalProps) => {
         </Grid>
       </DialogActions>
     </MUIDialog>
-  )
+  );
 }

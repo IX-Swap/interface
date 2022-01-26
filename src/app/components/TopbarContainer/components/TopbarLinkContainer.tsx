@@ -2,7 +2,7 @@ import React from 'react'
 import { useLocation } from 'react-router-dom'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { HeaderNavigationLink } from 'app/components/TopbarContainer/components/HeaderNavigationLink'
-import { blue } from '@material-ui/core/colors'
+import { blue } from '@mui/material/colors'
 
 export interface TopbarLinkProps {
   link: string
@@ -21,7 +21,7 @@ export const TopbarLinkContainer = (props: TopbarLinkProps) => {
   const { theme } = useAppBreakpoints()
   const navColor = isActive
     ? blue[300]
-    : theme.palette.type === 'dark'
+    : theme.palette.mode === 'dark'
     ? theme.palette.getContrastText(theme.palette.background.default)
     : theme.palette.background.default
   const menuColor = isActive
@@ -50,7 +50,7 @@ export const TopbarLinkContainer = (props: TopbarLinkProps) => {
             fill={
               colorVariant === 'nav' && isActive
                 ? blue[300]
-                : theme.palette.type === 'dark'
+                : theme.palette.mode === 'dark'
                 ? theme.palette.getContrastText(
                     theme.palette.background.default
                   )

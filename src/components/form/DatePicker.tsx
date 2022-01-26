@@ -6,7 +6,7 @@ import {
 } from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns'
 import { useFormError } from 'hooks/useFormError'
-import { FormHelperText } from '@material-ui/core'
+import { FormHelperText } from '@mui/material'
 
 export interface DatePickerProps extends KeyboardDatePickerProps {}
 

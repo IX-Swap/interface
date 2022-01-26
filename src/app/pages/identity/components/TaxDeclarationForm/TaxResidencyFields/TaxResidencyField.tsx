@@ -1,7 +1,7 @@
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
-import { Grid, IconButton, TextField, Button } from '@material-ui/core'
-import DeleteOutlined from '@material-ui/icons/DeleteOutlined'
+import { Grid, IconButton, TextField, Button } from '@mui/material'
+import DeleteOutlined from '@mui/icons-material/DeleteOutlined'
 import { CountrySelect } from 'components/form/CountrySelect'
 import { TypedField } from 'components/form/TypedField'
 import { TinUnavailableFields } from 'app/pages/identity/components/TaxDeclarationForm/TinUnavailableFields/TinUnavailableFields'
@@ -112,7 +112,7 @@ export const TaxResidencyField = ({
                   onClick={handleRemove}
                   disabled={total === 1}
                   data-testid='remove-button'
-                >
+                  size="large">
                   <DeleteOutlined />
                 </IconButton>
               </Grid>
@@ -136,5 +136,5 @@ export const TaxResidencyField = ({
         <TinUnavailableFields index={index} defaultValue={defaultValue} />
       </Grid>
     </Grid>
-  )
+  );
 }

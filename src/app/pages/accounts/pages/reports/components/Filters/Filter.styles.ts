@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles'
+import makeStyles from '@mui/styles/makeStyles';
 
 export const useStyles = makeStyles(theme => ({
   wrapper: {
@@ -8,14 +8,14 @@ export const useStyles = makeStyles(theme => ({
   },
   filterText: {
     marginRight: theme.spacing(2),
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       marginBottom: theme.spacing(2)
     }
   },
   filtersWrapper: {
     display: 'flex',
     alignItems: 'center',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       flexWrap: 'wrap'
     }
   },
@@ -23,7 +23,7 @@ export const useStyles = makeStyles(theme => ({
     '&:first-of-type': {
       marginRight: theme.spacing(2)
     },
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       marginBottom: theme.spacing(2)
     }
   }

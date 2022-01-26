@@ -1,4 +1,4 @@
-import { Grid, Typography, Box, Link } from '@material-ui/core'
+import { Grid, Typography, Box, Link } from '@mui/material'
 import React from 'react'
 
 export const InstallAuthenticatorApp = () => {

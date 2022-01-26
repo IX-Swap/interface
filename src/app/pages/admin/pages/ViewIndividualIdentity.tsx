@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { AdminRoute } from 'app/pages/admin/router/config'
 import { RejectionMessage } from 'app/pages/authorizer/components/RejectionMessage'

@@ -1,4 +1,4 @@
-import { Grid, Typography } from '@material-ui/core'
+import { Grid, Typography } from '@mui/material'
 import { TextAlignment } from 'components/LabelledValue'
 import { formatAmount } from 'helpers/numbers'
 import { ValidCurrency } from 'helpers/types'

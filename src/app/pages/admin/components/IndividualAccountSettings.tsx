@@ -1,5 +1,5 @@
 import React from 'react'
-import { Tabs, Tab, Box } from '@material-ui/core'
+import { Tabs, Tab, Box } from '@mui/material'
 import { TabPanel } from 'app/pages/admin/components/TabPanel'
 import { AccountLoginHistory } from 'app/pages/admin/components/AccountLoginHistory'
 import { VSpacer } from 'components/VSpacer'

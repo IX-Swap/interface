@@ -1,8 +1,8 @@
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { VSpacer } from 'components/VSpacer'
-import { Alert } from '@material-ui/lab'
+import { Alert } from '@mui/material';
 import { useAllNetworks } from 'app/pages/accounts/pages/withdrawalAddresses/hooks/useAllNetworks'
 
 export const TOTAL_UNITS_WARNING =

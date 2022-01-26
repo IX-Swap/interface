@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles'
+import makeStyles from '@mui/styles/makeStyles';
 
 export interface StyleProps {
   rowIdx?: number
@@ -12,7 +12,7 @@ export const useStyles = makeStyles(theme => ({
     fontSize: 14,
     fontWeight: 600,
     backgroundColor:
-      theme.palette.type === 'light'
+      theme.palette.mode === 'light'
         ? '#F7F7F7'
         : theme.palette.backgrounds.light
   },
@@ -50,10 +50,10 @@ export const useStyles = makeStyles(theme => ({
   row: {
     backgroundColor: ({ rowIdx }: StyleProps) =>
       rowIdx === 0
-        ? theme.palette.type === 'light'
+        ? theme.palette.mode === 'light'
           ? '#F2F2FF'
           : theme.palette.backgrounds.alternativeLight
-        : theme.palette.type === 'light'
+        : theme.palette.mode === 'light'
         ? '#F7F7F7'
         : theme.palette.backgrounds.light,
     '& > th': {
@@ -79,7 +79,7 @@ export const useStyles = makeStyles(theme => ({
   },
   lastRow: {
     backgroundColor:
-      theme.palette.type === 'light'
+      theme.palette.mode === 'light'
         ? '#E7E7E7'
         : theme.palette.backgrounds.alternativeLight,
     '& > th': {

@@ -1,4 +1,4 @@
-import { Box, Grid, Typography } from '@material-ui/core'
+import { Box, Grid, Typography } from '@mui/material'
 import { format } from 'date-fns'
 import React from 'react'
 import { getDocumentType, isImage } from 'components/dataroom/DataroomColumns'

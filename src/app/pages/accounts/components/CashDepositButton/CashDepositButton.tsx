@@ -1,4 +1,4 @@
-import { Button } from '@material-ui/core'
+import { Button } from '@mui/material'
 import { VirtualAccountCashDeposit } from 'app/pages/accounts/components/VirtualAccountCashDeposit/VirtualAccountCashDeposit'
 import { useVirtualAccount } from 'app/pages/accounts/hooks/useVirtualAccount'
 import { FormDialog } from 'components/FormDialog/FormDialog'

@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { StatusFilter } from 'app/pages/issuance/components/DSOFilters/StatusFilter'
 import { SubFundSelect } from 'app/pages/issuance/components/DSOFilters/SubFundSelect'
 import React from 'react'

@@ -1,7 +1,7 @@
 import React from 'react'
-import { Button, Box, Grid, Typography, Link } from '@material-ui/core'
-import MailOutlineIcon from '@material-ui/icons/MailOutline'
-import { useTheme } from '@material-ui/core/styles'
+import { Button, Box, Grid, Typography, Link } from '@mui/material'
+import MailOutlineIcon from '@mui/icons-material/MailOutline'
+import { useTheme } from '@mui/material/styles'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { AppLogo } from 'app/components/AppLogo/AppLogo'
@@ -11,7 +11,7 @@ export const Page404 = () => {
   const theme = useTheme()
   const classes = useStyles()
   const { isMobile } = useAppBreakpoints()
-  const isLightThemeOn = theme.palette.type === 'light'
+  const isLightThemeOn = theme.palette.mode === 'light'
 
   return (
     <Box className={classes.container}>

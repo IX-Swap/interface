@@ -1,13 +1,13 @@
 import React from 'react'
 import { render, fireEvent, waitFor } from 'test-utils'
 import { VTDirectionFilter } from 'app/pages/admin/components/VTDirectionFilter'
-import { InputLabel } from '@material-ui/core'
+import { InputLabel } from '@mui/material'
 import { history } from 'config/history'
 import { generatePath } from 'react-router-dom'
 import { AdminRoute } from 'app/pages/admin/router/config'
 import * as useQueryFilter from 'hooks/filters/useQueryFilter'
 
-jest.mock('@material-ui/core/InputLabel', () => jest.fn(() => null))
+jest.mock('@mui/material/InputLabel', () => jest.fn(() => null))
 
 describe('VTDirectionFilter', () => {
   beforeEach(() => {

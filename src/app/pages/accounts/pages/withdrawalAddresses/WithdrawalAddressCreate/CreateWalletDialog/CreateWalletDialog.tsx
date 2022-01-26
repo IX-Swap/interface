@@ -1,5 +1,5 @@
 import React from 'react'
-import Dialog, { DialogProps } from '@material-ui/core/Dialog'
+import Dialog, { DialogProps } from '@mui/material/Dialog'
 import { WithdrawalAddressesRoute } from 'app/pages/accounts/pages/withdrawalAddresses/router/config'
 import { useHistory } from 'react-router-dom'
 

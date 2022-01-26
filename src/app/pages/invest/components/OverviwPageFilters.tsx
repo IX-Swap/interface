@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState } from 'react'
-import { Grid, Select } from '@material-ui/core'
+import { Grid, Select } from '@mui/material'
 import { SearchFilter } from 'app/components/SearchFilter'
 import { QueryFilter, useQueryFilter } from 'hooks/filters/useQueryFilter'
 import { renderMenuItems } from 'helpers/rendering'

@@ -1,6 +1,6 @@
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import React, { ChangeEvent } from 'react'
-import { MenuItem, Select } from '@material-ui/core'
+import { MenuItem, Select } from '@mui/material'
 import { privateClassNames } from 'helpers/classnames'
 import { useAllNetworks } from 'app/pages/accounts/pages/withdrawalAddresses/hooks/useAllNetworks'
 import { queryStatusRenderer } from 'components/form/renderUtils'

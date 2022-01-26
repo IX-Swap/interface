@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Grid, Tab, Tabs } from '@material-ui/core'
+import { Grid, Tab, Tabs } from '@mui/material'
 import { Form } from 'components/form/Form'
 import { formatMoney } from 'helpers/numbers'
 import { TabPanel } from 'components/TabPanel'

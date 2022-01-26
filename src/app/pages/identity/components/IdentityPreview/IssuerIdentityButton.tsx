@@ -1,7 +1,7 @@
 import { CreateIdentityCard } from 'app/pages/identity/components/NoIdentityView/CreateIdentityCard'
 import React from 'react'
-import DomainIcon from '@material-ui/icons/Domain'
-import { Button } from '@material-ui/core'
+import DomainIcon from '@mui/icons-material/Domain'
+import { Button } from '@mui/material'
 
 export interface IssuerIdentityButtonProps {
   active: boolean

@@ -27,7 +27,7 @@ describe('useAppTheme', () => {
 
       await waitFor(() => {
         expect(result.current.themeType).toBe(AppTheme.Light)
-        expect(result.current.theme.palette.type).toBe('light')
+        expect(result.current.theme.palette.mode).toBe('light')
       })
     })
   })
@@ -62,7 +62,7 @@ describe('useAppTheme', () => {
 
         expect(result.current.themeType).toBe(AppTheme.Dark)
         expect(storageService.get('app-theme')).toBe(AppTheme.Dark)
-        expect(result.current.theme.palette.type).toBe('dark')
+        expect(result.current.theme.palette.mode).toBe('dark')
       })
     })
   })

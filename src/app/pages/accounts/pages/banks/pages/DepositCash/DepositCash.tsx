@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { RecentDeposits } from 'app/pages/accounts/pages/banks/pages/DepositCash/RecentDeposits'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { CashDepositButton } from 'app/pages/accounts/components/CashDepositButton/CashDepositButton'

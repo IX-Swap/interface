@@ -6,12 +6,9 @@ import {
   RenderOptions,
   RenderResult
 } from '@testing-library/react'
-import {
-  StylesProvider,
-  ThemeProvider,
-  createTheme,
-  createGenerateClassName
-} from '@material-ui/core/styles'
+import { ThemeProvider, Theme, StyledEngineProvider, createTheme, adaptV4Theme } from '@mui/material/styles';
+import StylesProvider from '@mui/styles/StylesProvider';
+import createGenerateClassName from '@mui/styles/createGenerateClassName';
 import { history } from 'config/history'
 import { UserProvider } from 'auth/context'
 import { UserStore } from 'auth/context/store'
@@ -29,6 +26,13 @@ import { Form } from 'components/form/Form'
 import { Toast } from 'components/Toast'
 import { AppThemeProvider } from 'AppThemeProvider'
 import apiService from 'services/api'
+
+
+declare module '@mui/styles/defaultTheme' {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface DefaultTheme extends Theme {}
+}
+
 
 export const apiServiceMock = {
   put: jest.fn(),
@@ -55,28 +59,30 @@ export const BaseProviders: React.FC<{ mockAPI?: boolean }> = ({
     <StylesProvider generateClassName={generateClassName}>
       <AppThemeProvider>
         {theme => (
-          <ThemeProvider theme={theme}>
-            <AppStateProvider>
-              <ToastProvider
-                components={{ Toast: Toast, ToastContainer: () => null }}
-              >
-                <ServicesProvider
-                  value={{
-                    apiService: mockAPI ? apiServiceMock : apiService,
-                    snackbarService: snackbarServiceMock
-                  }}
+          <StyledEngineProvider injectFirst>
+            <ThemeProvider theme={theme}>
+              <AppStateProvider>
+                <ToastProvider
+                  components={{ Toast: Toast, ToastContainer: () => null }}
                 >
-                  <BreadcrumbsProvider>
-                    <Router history={history}>{children}</Router>
-                  </BreadcrumbsProvider>
-                </ServicesProvider>
-              </ToastProvider>
-            </AppStateProvider>
-          </ThemeProvider>
+                  <ServicesProvider
+                    value={{
+                      apiService: mockAPI ? apiServiceMock : apiService,
+                      snackbarService: snackbarServiceMock
+                    }}
+                  >
+                    <BreadcrumbsProvider>
+                      <Router history={history}>{children}</Router>
+                    </BreadcrumbsProvider>
+                  </ServicesProvider>
+                </ToastProvider>
+              </AppStateProvider>
+            </ThemeProvider>
+          </StyledEngineProvider>
         )}
       </AppThemeProvider>
     </StylesProvider>
-  )
+  );
 }
 
 const customRenderer = (
@@ -189,17 +195,19 @@ export const renderHookWithForm = (
 export const renderWithInitialWidth = (ui: any, initialWidth: any) => {
   const SizeWrapper = (props: any) => {
     const defaultTheme = createTheme()
-    const theme = createTheme({
+    const theme = createTheme(adaptV4Theme({
       props: { ...defaultTheme, MuiWithWidth: { initialWidth } }
-    })
+    }))
 
     return (
       <BaseProviders>
         <UserProvider value={{ ...fakeUserStore }}>
-          <ThemeProvider theme={theme}>{props.children}</ThemeProvider>
+          <StyledEngineProvider injectFirst>
+            <ThemeProvider theme={theme}>{props.children}</ThemeProvider>
+          </StyledEngineProvider>
         </UserProvider>
       </BaseProviders>
-    )
+    );
   }
 
   return render(ui, { wrapper: SizeWrapper })

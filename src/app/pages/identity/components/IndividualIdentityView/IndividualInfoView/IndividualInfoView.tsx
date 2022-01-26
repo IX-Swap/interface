@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Box, Hidden, Link } from '@material-ui/core'
+import { Grid, Box, Hidden, Link } from '@mui/material'
 import { Avatar } from 'components/Avatar'
 import { LabelledValue } from 'components/LabelledValue'
 import { formatDateToMMDDYY } from 'helpers/dates'
@@ -27,7 +27,7 @@ export const IndividualInfoView = (props: IndividualInfoViewProps) => {
             size={128}
           />
         </Box>
-        <Hidden xsDown>
+        <Hidden smDown>
           <Box width={62} />
         </Hidden>
         <Grid container spacing={5}>
@@ -77,5 +77,5 @@ export const IndividualInfoView = (props: IndividualInfoViewProps) => {
         </Grid>
       </Box>
     </Grid>
-  )
+  );
 }

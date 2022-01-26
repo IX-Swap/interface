@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Card, CardContent, CardActions } from '@material-ui/core'
+import { Box, Card, CardContent, CardActions } from '@mui/material'
 import { EditButton } from 'app/pages/identity/components/EditButton/EditButton'
 import { IdentityRoute } from 'app/pages/identity/router/config'
 import { ViewButton } from 'app/pages/identity/components/ViewButton/ViewButton'

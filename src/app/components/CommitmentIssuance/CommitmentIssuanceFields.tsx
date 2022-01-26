@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Typography, Box, OutlinedInput } from '@material-ui/core'
+import { Grid, Typography, Box, OutlinedInput } from '@mui/material'
 import { useFormContext } from 'react-hook-form'
 import { LabelledValue } from 'components/LabelledValue'
 import DateFnsUtils from '@date-io/date-fns'

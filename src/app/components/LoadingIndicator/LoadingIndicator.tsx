@@ -4,7 +4,7 @@ import {
   Grid,
   GridProps,
   Typography
-} from '@material-ui/core'
+} from '@mui/material'
 import { useStyles } from 'app/components/LoadingIndicator/LoadingIndicator.styles'
 import { VSpacer } from 'components/VSpacer'
 

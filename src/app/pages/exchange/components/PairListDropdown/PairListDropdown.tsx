@@ -4,7 +4,7 @@ import {
   Paper,
   Popper,
   Typography
-} from '@material-ui/core'
+} from '@mui/material'
 import { PairList } from 'app/pages/exchange/components/PairList/PairList'
 import { PairTableFilter } from 'app/pages/exchange/components/PairTable/PairTableFilter/PairTableFilter'
 import { useMarket } from 'app/pages/exchange/hooks/useMarket'

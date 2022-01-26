@@ -13,7 +13,7 @@ import { TargetFundraise } from 'app/pages/issuance/components/IssuanceLanding/T
 import { CountdownTimer } from 'app/pages/issuance/components/CountdownTimer/CountdownTimer'
 import { InvestorCommitmentTable } from 'app/pages/issuance/components/Commitments/InvestorCommitmentTable'
 import { CloseDealDialog } from 'app/pages/issuance/components/Commitments/CloseDealDialog/CloseDealDialog'
-import Button from '@material-ui/core/Button'
+import Button from '@mui/material/Button'
 import { VSpacer } from 'components/VSpacer'
 import { AmountRaised } from 'app/pages/issuance/components/CapTable/AmountRaised'
 
@@ -78,7 +78,7 @@ jest.mock('components/VSpacer', () => ({
   VSpacer: jest.fn(() => null)
 }))
 
-jest.mock('@material-ui/core/Button', () => jest.fn(() => null))
+jest.mock('@mui/material/Button', () => jest.fn(() => null))
 
 describe('Commitments', () => {
   afterEach(async () => {

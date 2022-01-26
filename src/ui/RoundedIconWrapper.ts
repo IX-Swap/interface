@@ -1,5 +1,7 @@
-import { Box, BoxProps } from '@material-ui/core'
-import { styled, Theme, withTheme } from '@material-ui/core/styles'
+import { Box, BoxProps } from '@mui/material'
+import { styled, Theme } from '@mui/material/styles';
+
+import withTheme from '@mui/styles/withTheme';
 
 export interface RoundedIconProps extends BoxProps {
   size?: number

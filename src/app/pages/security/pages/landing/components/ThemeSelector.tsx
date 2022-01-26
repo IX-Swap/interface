@@ -1,4 +1,4 @@
-import { MenuItem, Select } from '@material-ui/core'
+import { MenuItem, Select } from '@mui/material'
 import { AppThemeContext } from 'AppThemeProvider'
 import React, { ChangeEvent, useContext } from 'react'
 import { AppTheme } from 'themes/old'

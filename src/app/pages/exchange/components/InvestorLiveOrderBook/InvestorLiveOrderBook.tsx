@@ -1,4 +1,4 @@
-import { Box, Grid, Typography, Table, Hidden } from '@material-ui/core'
+import { Box, Grid, Typography, Table, Hidden } from '@mui/material'
 import { LiveTrackingPrice } from 'app/pages/exchange/components/LiveTrackingPrice/LiveTrackingPrice'
 import { OrderBook } from 'app/pages/exchange/components/OrderBook/OrderBook'
 import React from 'react'
@@ -35,7 +35,7 @@ export const InvestorLiveOrderBook = () => {
         </Box>
       </Grid>
 
-      <Hidden mdDown>
+      <Hidden lgDown>
         <Grid item>
           <Table>
             <OrderBookHeader
@@ -71,7 +71,7 @@ export const InvestorLiveOrderBook = () => {
             />
           </Box>
 
-          <Hidden mdDown>
+          <Hidden lgDown>
             <Box py={2}>
               <LiveTrackingPrice />
             </Box>
@@ -96,5 +96,5 @@ export const InvestorLiveOrderBook = () => {
         </Box>
       </Grid>
     </Grid>
-  )
+  );
 }

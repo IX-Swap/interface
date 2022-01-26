@@ -1,6 +1,6 @@
 import React from 'react'
-import Box from '@material-ui/core/Box'
-import { Skeleton } from '@material-ui/lab'
+import Box from '@mui/material/Box'
+import { Skeleton } from '@mui/material';
 import {
   Table,
   TableBody,
@@ -8,7 +8,7 @@ import {
   TableContainer,
   TableHead,
   TableRow
-} from '@material-ui/core'
+} from '@mui/material'
 import { ChartTitle } from '../IssuanceLanding/ChartTitle'
 import { InsightCard } from '../InsightCard'
 import { headCells } from './data'

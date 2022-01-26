@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles'
+import makeStyles from '@mui/styles/makeStyles';
 import TopographyImage from 'assets/images/topography-pattern.png'
 
 export const useStyles = makeStyles(theme => ({
@@ -17,7 +17,7 @@ export const useStyles = makeStyles(theme => ({
     fontSize: 18,
     lineHeight: '40px',
     color: '#fff',
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       fontSize: 14,
       lineHeight: '16px'
     }

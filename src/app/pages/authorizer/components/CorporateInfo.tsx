@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Typography } from '@material-ui/core'
+import { Grid, Typography } from '@mui/material'
 import { convertAddressToString } from './utils'
 import { LabelledValue } from 'components/LabelledValue'
 import { Avatar } from 'components/Avatar'

@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react'
-import { FormControl } from '@material-ui/core'
+import { FormControl } from '@mui/material'
 import useStyles from './Actions.styles'
 import DialogConfirmRoleChange from 'app/pages/admin/components/DialogConfirmRoleChange'
 import User from 'types/user'

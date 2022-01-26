@@ -4,13 +4,13 @@ import { DSOFavorite } from 'app/components/DSOFavorite'
 import * as useToggleDSOFavorite from 'app/pages/invest/hooks/useToggleDSOFavorite'
 import { dso } from '__fixtures__/authorizer'
 import { generateQueryResult } from '__fixtures__/useQuery'
-import StarIcon from '@material-ui/icons/Star'
-import StarBorderOutlinedIcon from '@material-ui/icons/StarBorderOutlined'
-import CircularProgress from '@material-ui/core/CircularProgress'
+import StarIcon from '@mui/icons-material/Star'
+import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined'
+import CircularProgress from '@mui/material/CircularProgress'
 
-jest.mock('@material-ui/core/CircularProgress', () => jest.fn(() => null))
-jest.mock('@material-ui/icons/Star', () => jest.fn(() => null))
-jest.mock('@material-ui/icons/StarBorderOutlined', () => jest.fn(() => null))
+jest.mock('@mui/material/CircularProgress', () => jest.fn(() => null))
+jest.mock('@mui/icons-material/Star', () => jest.fn(() => null))
+jest.mock('@mui/icons-material/StarBorderOutlined', () => jest.fn(() => null))
 
 const useToggleDSOFavoriteResponse = generateQueryResult({
   isLoading: false

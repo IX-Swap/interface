@@ -1,5 +1,5 @@
 import React from 'react'
-import { Typography } from '@material-ui/core'
+import { Typography } from '@mui/material'
 import { VSpacer } from 'components/VSpacer'
 import { Reset2FAOTPField } from 'app/pages/admin/components/Reset2FAOTPField'
 import { useReset2FA } from 'app/pages/admin/hooks/useReset2FA'

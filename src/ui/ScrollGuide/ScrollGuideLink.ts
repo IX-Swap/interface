@@ -1,4 +1,4 @@
-import { styled } from '@material-ui/core/styles'
+import { styled } from '@mui/material/styles'
 import { Link } from 'react-scroll'
 
 export const ScrollGuideLink = styled(Link)(({ theme }) => ({

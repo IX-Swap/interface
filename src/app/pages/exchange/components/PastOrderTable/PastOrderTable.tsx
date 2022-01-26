@@ -16,7 +16,7 @@ import { PastOrderFilter } from 'app/pages/exchange/components/PastOrderFilter/P
 import { exchangeMarketQueryKeys } from 'config/queryKeys'
 import { exchangeMarket } from 'config/apiURL'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
-import { Grid, Hidden } from '@material-ui/core'
+import { Grid, Hidden } from '@mui/material'
 import { CompactBody } from 'components/TableWithPagination/CompactBody'
 
 export interface PostOrderTableProps {
@@ -30,37 +30,35 @@ export const PastOrderTable = (props: PostOrderTableProps) => {
   const { filter } = usePastOrderFilter(pairId)
   const { isMiniLaptop } = useAppBreakpoints()
 
-  return (
-    <>
-      <Hidden mdDown>
-        <PastOrderFilter />
-        <VSpacer size={'small'} />
-      </Hidden>
-      <Grid>
-        <TableView<Order>
-          size='small'
-          name={exchangeMarketQueryKeys.getOrdersList(userId, pairId)}
-          uri={exchangeMarket.getOrdersList(userId)}
-          columns={columns}
-          filter={{ ...filter, orderType: 'PAST' } as any}
-          themeVariant={'primary'}
-          noHeader={isMiniLaptop}
-          paperProps={
-            isMiniLaptop
-              ? {
-                  variant: 'elevation',
-                  elevation: 0
-                }
-              : undefined
-          }
-        >
-          {isMiniLaptop
-            ? (props: TableViewRendererProps<Order>) => (
-                <CompactBody {...props} columns={pastOrderCompactColumns} />
-              )
-            : undefined}
-        </TableView>
-      </Grid>
-    </>
-  )
+  return <>
+    <Hidden lgDown>
+      <PastOrderFilter />
+      <VSpacer size={'small'} />
+    </Hidden>
+    <Grid>
+      <TableView<Order>
+        size='small'
+        name={exchangeMarketQueryKeys.getOrdersList(userId, pairId)}
+        uri={exchangeMarket.getOrdersList(userId)}
+        columns={columns}
+        filter={{ ...filter, orderType: 'PAST' } as any}
+        themeVariant={'primary'}
+        noHeader={isMiniLaptop}
+        paperProps={
+          isMiniLaptop
+            ? {
+                variant: 'elevation',
+                elevation: 0
+              }
+            : undefined
+        }
+      >
+        {isMiniLaptop
+          ? (props: TableViewRendererProps<Order>) => (
+              <CompactBody {...props} columns={pastOrderCompactColumns} />
+            )
+          : undefined}
+      </TableView>
+    </Grid>
+  </>;
 }

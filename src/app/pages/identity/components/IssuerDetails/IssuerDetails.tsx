@@ -1,4 +1,4 @@
-import { Grid, TextField, Typography } from '@material-ui/core'
+import { Grid, TextField, Typography } from '@mui/material'
 import { NumericInput } from 'components/form/NumericInput'
 import { TypedField } from 'components/form/TypedField'
 import { moneyNumberFormat } from 'config/numberFormat'
@@ -93,5 +93,5 @@ export const IssuerDetails = (props: IssuerDetailFieldsProps) => {
         </Grid>
       </Grid>
     </Grid>
-  )
+  );
 }

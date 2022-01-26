@@ -1,5 +1,6 @@
 import React from 'react'
-import { ToggleButton, ToggleButtonProps } from '@material-ui/lab'
+import { ToggleButton } from '@mui/material';
+import { ToggleButtonProps } from '@mui/lab';
 
 export interface ColumnsEditorToggleProps extends ToggleButtonProps {}
 

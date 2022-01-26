@@ -1,5 +1,5 @@
 import React from 'react'
-import { Input, InputProps, OutlinedInput } from '@material-ui/core'
+import { Input, InputProps, OutlinedInput } from '@mui/material'
 import NumberFormat, { NumberFormatProps } from 'react-number-format'
 
 const InputComponent: React.FC = (props: NumberFormatProps<any>) => {

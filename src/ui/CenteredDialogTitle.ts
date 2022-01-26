@@ -1,5 +1,5 @@
-import { DialogTitle } from '@material-ui/core'
-import { styled } from '@material-ui/core/styles'
+import { DialogTitle } from '@mui/material'
+import { styled } from '@mui/material/styles'
 
 export const CenteredDialogTitle = styled(DialogTitle)(({ theme }) => ({
   textAlign: 'center',

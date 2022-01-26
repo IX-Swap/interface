@@ -1,7 +1,7 @@
 import React from 'react'
-import { useTheme } from '@material-ui/core/styles'
-import BackupOutlinedIcon from '@material-ui/icons/BackupOutlined'
-import { Box, Typography } from '@material-ui/core'
+import { useTheme } from '@mui/material/styles'
+import BackupOutlinedIcon from '@mui/icons-material/BackupOutlined'
+import { Box, Typography } from '@mui/material'
 import { useStyles } from './Dropzone.styles'
 import classNames from 'classnames'
 

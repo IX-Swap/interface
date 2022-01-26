@@ -1,5 +1,5 @@
-import { Typography } from '@material-ui/core'
-import { Alert } from '@material-ui/lab'
+import { Typography } from '@mui/material'
+import { Alert } from '@mui/material';
 import { useTokenInfo } from 'app/pages/accounts/hooks/useTokenInfo'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'

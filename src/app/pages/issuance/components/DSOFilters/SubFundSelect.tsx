@@ -6,7 +6,7 @@ import {
   ListItemText,
   MenuItem,
   Select
-} from '@material-ui/core'
+} from '@mui/material'
 import React, { useEffect } from 'react'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
 import { hasValue } from 'helpers/forms'

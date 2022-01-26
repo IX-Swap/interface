@@ -72,7 +72,7 @@ export const formatCamelCasedWithSpaces = (value: string) => {
     str = capitalizeFirstLetter(value)
   }
 
-  return str.replace(/([A-Z])/g, ' $1')
+  return str.replace(/([A-Z])/g, ' $1');
 }
 
 export const getTextWithOrWithoutColon = (text: string, hasColon: boolean) =>

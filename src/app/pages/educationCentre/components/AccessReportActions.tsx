@@ -1,5 +1,5 @@
-import { Tooltip, IconButton } from '@material-ui/core'
-import { DeleteOutline } from '@material-ui/icons'
+import { Tooltip, IconButton } from '@mui/material'
+import { DeleteOutline } from '@mui/icons-material'
 import { DownloadAccessDocument } from 'app/pages/educationCentre/components/DownloadAccessDocument'
 import { homeQueryKeys } from 'config/queryKeys'
 import { useDeleteFile } from 'hooks/useDeleteFile'
@@ -23,12 +23,12 @@ export const AccessReportActions = (props: AccessReportActionsProps) => {
   return (
     <Fragment>
       <Tooltip title='Delete File'>
-        <IconButton onClick={() => void deleteFile()} disabled={isLoading}>
+        <IconButton onClick={() => void deleteFile()} disabled={isLoading} size="large">
           <DeleteOutline color='disabled' style={{ width: 24, height: 24 }} />
         </IconButton>
       </Tooltip>
 
       <DownloadAccessDocument documentId={document._id} />
     </Fragment>
-  )
+  );
 }

@@ -3,9 +3,9 @@ import {
   Switch,
   Tooltip,
   Typography
-} from '@material-ui/core'
-import { withStyles } from '@material-ui/core/styles'
-import { red } from '@material-ui/core/colors'
+} from '@mui/material'
+import withStyles from '@mui/styles/withStyles';
+import { red } from '@mui/material/colors'
 import { useDisableDSO } from 'app/pages/authorizer/hooks/useDisableDSO'
 import React from 'react'
 import { DigitalSecurityOffering } from 'types/dso'

@@ -1,6 +1,6 @@
 import React from 'react'
-import { Box, IconButton } from '@material-ui/core'
-import { Menu as MenuIcon } from '@material-ui/icons'
+import { Box, IconButton } from '@mui/material'
+import { Menu as MenuIcon } from '@mui/icons-material'
 import { useAppActions } from 'app/hooks/useAppState'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 
@@ -18,9 +18,9 @@ export const NavDrawerToggle = () => {
         edge='start'
         color='inherit'
         onClick={() => setNavDrawerOpened(true)}
-      >
+        size="large">
         <MenuIcon />
       </IconButton>
     </Box>
-  )
+  );
 }

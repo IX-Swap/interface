@@ -1,7 +1,7 @@
 import React from 'react'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
 import { UploadDocumentField } from 'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/UploadDocumentField'
-import { Box, Grid, Typography } from '@material-ui/core'
+import { Box, Grid, Typography } from '@mui/material'
 import { DirectorsInformationFieldsProps } from 'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/DirectorsInformationFields'
 
 export const DocumentFields = ({

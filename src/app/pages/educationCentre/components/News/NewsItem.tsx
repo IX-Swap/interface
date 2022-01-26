@@ -4,7 +4,7 @@ import {
   CardMedia,
   Link,
   Typography
-} from '@material-ui/core'
+} from '@mui/material'
 import { ReactComponent as Arrow } from 'assets/icons/arrow.svg'
 import React, { useState } from 'react'
 import { useStyles } from './NewsItem.style'

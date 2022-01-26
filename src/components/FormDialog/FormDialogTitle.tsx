@@ -1,8 +1,8 @@
 import React from 'react'
 import useStyles from './FormDialog.styles'
-import DialogTitle from '@material-ui/core/DialogTitle'
-import { IconButton } from '@material-ui/core'
-import CloseIcon from '@material-ui/icons/Close'
+import DialogTitle from '@mui/material/DialogTitle'
+import { IconButton } from '@mui/material'
+import CloseIcon from '@mui/icons-material/Close'
 
 export interface TitleProps {
   label: string
@@ -12,11 +12,11 @@ export const FormDialogTitle = ({ label, onClose, ...rest }: TitleProps) => {
   const classes = useStyles()
 
   return (
-    <DialogTitle disableTypography className={classes.title} {...rest}>
+    <DialogTitle className={classes.title} {...rest}>
       {label}
-      <IconButton className={classes.closeButton} onClick={onClose}>
+      <IconButton className={classes.closeButton} onClick={onClose} size="large">
         <CloseIcon className={classes.closeIcon} />
       </IconButton>
     </DialogTitle>
-  )
+  );
 }

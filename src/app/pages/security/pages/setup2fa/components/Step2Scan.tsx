@@ -1,5 +1,5 @@
 import React from 'react'
-import { Typography, Box, Grid, Link } from '@material-ui/core'
+import { Typography, Box, Grid, Link } from '@mui/material'
 import useStyles from './Step2Scan.styles'
 import { useSetup2fa } from '../hooks/useSetup2fa'
 import { useSetup2faStore } from '../context'

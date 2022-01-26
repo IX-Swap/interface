@@ -1,7 +1,7 @@
 import React from 'react'
 import { formatCamelCasedWithSpaces } from 'helpers/strings'
 import { DSOTableColumn } from 'types/dso'
-import { Box, Chip } from '@material-ui/core'
+import { Box, Chip } from '@mui/material'
 
 export interface ColumnsEditorItemProps {
   value: DSOTableColumn

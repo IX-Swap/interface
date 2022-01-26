@@ -1,4 +1,4 @@
-import { Hidden, TableRow } from '@material-ui/core'
+import { Hidden, TableRow } from '@mui/material'
 import { OrderBookCell } from 'app/pages/exchange/components/OrderBook/OrderBookCell'
 import { useStyles } from 'app/pages/exchange/components/OrderBook/OrderBookRow.styles'
 import React from 'react'
@@ -30,11 +30,11 @@ export const OrderBookRow = ({
       <OrderBookCell align='right' transaction={transaction}>
         {amount}
       </OrderBookCell>
-      <Hidden mdDown>
+      <Hidden lgDown>
         <OrderBookCell align='right' transaction={transaction}>
           {total}
         </OrderBookCell>
       </Hidden>
     </TableRow>
-  )
+  );
 }

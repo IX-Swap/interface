@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 import { useGetIdentities } from 'app/components/OnboardingPanel/hooks/useGetIdentities'

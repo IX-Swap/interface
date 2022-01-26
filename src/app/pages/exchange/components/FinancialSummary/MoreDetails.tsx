@@ -6,8 +6,8 @@ import {
   Paper,
   Popper,
   Typography
-} from '@material-ui/core'
-import { ArrowDropDown } from '@material-ui/icons'
+} from '@mui/material'
+import { ArrowDropDown } from '@mui/icons-material'
 import { DetailsItem } from 'app/pages/exchange/components/FinancialSummary/DetailsItem'
 import { useFinancialMetrics } from 'app/pages/exchange/hooks/useFinancialMetrics'
 import React from 'react'

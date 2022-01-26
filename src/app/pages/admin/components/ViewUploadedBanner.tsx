@@ -1,5 +1,5 @@
-import { IconButton } from '@material-ui/core'
-import { Launch } from '@material-ui/icons'
+import { IconButton } from '@mui/material'
+import { Launch } from '@mui/icons-material'
 import { convertBlobToFile, openFileInNewTab } from 'hooks/utils'
 import React from 'react'
 import { useDownloadRawBanner } from 'app/pages/admin/hooks/useDownloadRawBanner'
@@ -22,8 +22,8 @@ export const ViewUploadedBanner = ({ bannerId }: ViewUploadedBannerProps) => {
   const handleClick = async () => await downloadBanner()
 
   return (
-    <IconButton onClick={handleClick} disabled={isLoading}>
+    <IconButton onClick={handleClick} disabled={isLoading} size="large">
       <Launch color='disabled' style={{ width: 23, height: 23 }} />
     </IconButton>
-  )
+  );
 }

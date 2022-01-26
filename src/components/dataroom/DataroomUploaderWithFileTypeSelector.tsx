@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Box } from '@material-ui/core'
+import { Box } from '@mui/material'
 import { DataroomFileTypeSelect } from 'components/dataroom/DataroomFileTypeSelect'
 import { DataroomFile } from 'types/dataroomFile'
 import { UploadDocumentInfo } from 'hooks/useUploadFile'

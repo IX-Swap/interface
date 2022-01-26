@@ -1,4 +1,4 @@
-import { Box, Grid, Hidden } from '@material-ui/core'
+import { Box, Grid, Hidden } from '@mui/material'
 import { ChangeSummaryValue } from 'app/pages/exchange/components/FinancialSummary/ChangeSummaryValue'
 import { MoreDetails } from 'app/pages/exchange/components/FinancialSummary/MoreDetails'
 import { NumberSummaryValue } from 'app/pages/exchange/components/FinancialSummary/NumberSummaryValue'
@@ -50,7 +50,7 @@ export const FinancialSummary = () => {
           display={{ xs: 'grid', md: 'flex' }}
           justifyContent='space-between'
           gridTemplateColumns='1fr 1fr 1fr'
-          gridGap={8}
+          gap={8}
         >
           <SummaryItem
             label='Last Trade Price'
@@ -84,7 +84,7 @@ export const FinancialSummary = () => {
           />
         </Box>
       </Grid>
-      <Hidden smDown>
+      <Hidden mdDown>
         <Grid
           item
           container
@@ -97,5 +97,5 @@ export const FinancialSummary = () => {
         </Grid>
       </Hidden>
     </Grid>
-  )
+  );
 }

@@ -1,5 +1,5 @@
-import { TableHead, TableRow, TableCell, Hidden } from '@material-ui/core'
-import { withStyles } from '@material-ui/core/styles'
+import { TableHead, TableRow, TableCell, Hidden } from '@mui/material'
+import withStyles from '@mui/styles/withStyles';
 import { ValidCurrency } from 'helpers/types'
 import { useAssetById } from 'hooks/asset/useAssetById'
 import React from 'react'
@@ -29,12 +29,12 @@ export const OrderBookHeader = ({
         <OrderBookHeaderCell align='right'>
           Amount ({tokenSymbol})
         </OrderBookHeaderCell>
-        <Hidden mdDown>
+        <Hidden lgDown>
           <OrderBookHeaderCell align='right'>
             Total ({data?.symbol})
           </OrderBookHeaderCell>
         </Hidden>
       </TableRow>
     </TableHead>
-  )
+  );
 }

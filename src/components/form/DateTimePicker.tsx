@@ -1,6 +1,6 @@
 import React from 'react'
-import { InputAdornment, TextField } from '@material-ui/core'
-import { DateRange as DateIcon } from '@material-ui/icons'
+import { InputAdornment, TextField } from '@mui/material'
+import { DateRange as DateIcon } from '@mui/icons-material'
 import { DateTimePicker, DateTimePickerProps } from '@material-ui/pickers'
 
 const TextFieldComponent: React.FC = (props: any) => (

@@ -1,9 +1,9 @@
 import * as React from 'react'
 import { render } from 'test-utils'
 import { MasDisclosurePreviewCard } from 'app/pages/admin/components/MasDisclosurePreviewCard'
-import Typography from '@material-ui/core/Typography'
+import Typography from '@mui/material/Typography'
 
-jest.mock('@material-ui/core/Typography', () => jest.fn(() => null))
+jest.mock('@mui/material/Typography', () => jest.fn(() => null))
 
 describe('MasDisclosurePreviewCard', () => {
   afterEach(async () => {

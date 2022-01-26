@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { Actions } from 'app/pages/admin/components/AssignedVirtualAccountsTable/Actions'
 import { columns } from 'app/pages/admin/components/AssignedVirtualAccountsTable/columns'
 import { Filters } from 'app/pages/admin/components/AssignedVirtualAccountsTable/Filters'

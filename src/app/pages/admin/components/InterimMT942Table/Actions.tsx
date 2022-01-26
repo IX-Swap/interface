@@ -1,5 +1,5 @@
-import { IconButton } from '@material-ui/core'
-import { Launch } from '@material-ui/icons'
+import { IconButton } from '@mui/material'
+import { Launch } from '@mui/icons-material'
 import { openFileInNewTab } from 'hooks/utils'
 import React from 'react'
 import { VirtualAccountAuditItem } from 'types/virtualAccount'
@@ -23,8 +23,8 @@ export const Actions = ({ item }: ActionsProps) => {
   const handleClick = async () => await downloadFile()
 
   return (
-    <IconButton onClick={handleClick} disabled={isLoading}>
+    <IconButton onClick={handleClick} disabled={isLoading} size="large">
       <Launch color='disabled' style={{ width: 23, height: 23 }} />
     </IconButton>
-  )
+  );
 }

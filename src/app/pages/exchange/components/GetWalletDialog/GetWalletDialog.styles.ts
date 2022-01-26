@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles'
+import makeStyles from '@mui/styles/makeStyles';
 
 export default makeStyles(theme => ({
   root: {
@@ -21,11 +21,11 @@ export default makeStyles(theme => ({
       fontWeight: 600,
       lineHeight: 1.875,
       fontSize: '1.125rem',
-      [theme.breakpoints.down('sm')]: {
+      [theme.breakpoints.down('md')]: {
         lineHeight: 1.25,
         fontSize: '0.95rem'
       },
-      [theme.breakpoints.down('xs')]: {
+      [theme.breakpoints.down('sm')]: {
         fontSize: '0.7rem',
         lineHeight: 1
       }

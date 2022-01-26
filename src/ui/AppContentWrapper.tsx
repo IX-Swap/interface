@@ -1,6 +1,8 @@
 import React from 'react'
-import { Grid, GridProps } from '@material-ui/core'
-import { styled, Theme, withTheme } from '@material-ui/core/styles'
+import { Grid, GridProps } from '@mui/material'
+import { styled, Theme } from '@mui/material/styles';
+
+import withTheme from '@mui/styles/withTheme';
 
 export interface AppContentWrapperProps extends GridProps {
   theme: Theme

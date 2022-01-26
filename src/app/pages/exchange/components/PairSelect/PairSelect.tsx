@@ -4,7 +4,7 @@ import {
   MenuItem,
   Select,
   SelectProps
-} from '@material-ui/core'
+} from '@mui/material'
 import { Pair, useMarketList } from 'app/pages/exchange/hooks/useMarketList'
 import React from 'react'
 

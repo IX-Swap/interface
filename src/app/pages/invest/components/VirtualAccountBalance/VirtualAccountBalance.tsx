@@ -8,7 +8,7 @@ import {
   MenuItem,
   Select,
   Typography
-} from '@material-ui/core'
+} from '@mui/material'
 import { useVirtualAccount } from 'app/pages/accounts/hooks/useVirtualAccount'
 import { AccountsRoute } from 'app/pages/accounts/router/config'
 import { useStyles } from 'app/pages/invest/components/VirtualAccountBalance/VirtualAccountBalance.styles'

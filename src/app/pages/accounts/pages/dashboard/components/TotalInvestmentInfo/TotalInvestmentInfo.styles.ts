@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles'
+import makeStyles from '@mui/styles/makeStyles';
 
 export const useStyles = makeStyles(theme => ({
   wrapper: {
@@ -7,7 +7,7 @@ export const useStyles = makeStyles(theme => ({
     alignItems: 'center',
     width: 'initial',
     marginTop: 0,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       width: '100%',
       display: 'flex',
       marginTop: theme.spacing(5)
@@ -19,7 +19,7 @@ export const useStyles = makeStyles(theme => ({
     textTransform: 'uppercase',
     textDecoration: 'none',
     marginTop: theme.spacing(1.5),
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       marginTop: 0
     },
     '&:hover': {

@@ -1,6 +1,6 @@
-import { Theme } from '@material-ui/core'
-import { green, grey } from '@material-ui/core/colors'
-import { Overrides } from '@material-ui/core/styles/overrides'
+import { Theme } from '@mui/material'
+import { green, grey } from '@mui/material/colors'
+import { Overrides } from '@mui/material/styles';
 import { rte } from 'themes/old/rte'
 import tinycolor from 'tinycolor2'
 import { CSSProperties } from 'react'
@@ -196,7 +196,7 @@ export const getThemeOverrides = (theme: Theme): Overrides & LabOverrides => ({
     root: {
       borderLeftStyle: 'dashed',
       color:
-        theme.palette.type === 'dark' ? 'rgba(255, 255, 255, 0.6)' : grey[600]
+        theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.6)' : grey[600]
     }
   },
   MuiStepIcon: {
