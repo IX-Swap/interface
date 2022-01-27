@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useState, useEffect } from 'react'
 import { useDropzone, FileWithPath } from 'react-dropzone'
 import { ImageContainer, PreviewParent, StyledClose, StyledLogo } from './styleds'
 import { SvgIconWrapper } from 'theme'
@@ -8,6 +8,7 @@ import { AcceptFiles, FileTypes } from './types'
 interface Props {
   onDrop: (file: any) => void
   file: FileWithPath | null
+  newFileWithPath?: string
   accept?: AcceptFiles
   isLogo?: boolean
   isBanner?: boolean
@@ -56,6 +57,7 @@ const Preview = ({
 export default function Upload({
   onDrop,
   file,
+  newFileWithPath,
   isLogo = false,
   isBanner = false,
   width = '100%',
@@ -83,6 +85,12 @@ export default function Upload({
     },
     [onDrop, setFilePath]
   )
+
+  useEffect(() => {
+    if (newFileWithPath) {
+      setFilePath(newFileWithPath)
+    }
+  }, [setFilePath, newFileWithPath])
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: onDropInput,
