@@ -344,9 +344,9 @@ const NftAssetPage = ({
   const isNSFW = item?.isNSFW === 'true'
   const { account } = useActiveWeb3React()
   console.log({ item })
-  const stats = item?.attributes.filter((attr) => attr?.display_type === 'stat') as NftStat[]
-  const levels = item?.attributes.filter((attr) => attr?.display_type === 'level') as NftLevel[]
-  const rectangles = item?.attributes.filter((attr) => attr?.display_type === 'rectangle') as NftProperty[]
+  const stats = (item?.attributes?.filter((attr) => attr?.display_type === 'stat') ?? []) as NftStat[]
+  const levels = (item?.attributes?.filter((attr) => attr?.display_type === 'level') ?? []) as NftLevel[]
+  const rectangles = (item?.attributes?.filter((attr) => attr?.display_type === 'rectangle') ?? []) as NftProperty[]
 
   useEffect(() => {
     async function getDetails() {

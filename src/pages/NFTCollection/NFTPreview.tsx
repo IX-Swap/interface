@@ -26,9 +26,9 @@ const NFTPreviewContainer = styled.div`
 
   border-radius: 1rem;
 
-  max-width: fit-content;
   background-color: #1b1b1b;
 
+  min-width: 350px;
   width: 350px;
   height: 450px;
 `
@@ -37,27 +37,30 @@ const NFTPreviewImage = styled.img`
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
 
-  max-width: 250px;
+  min-width: 350px;
+  max-width: 350px;
   max-height: 380px;
-  object-fit: contain;
+
+  object-fit: cover;
 `
 
 const NFTPreviewAudio = styled.audio`
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
 
-  max-width: 250px;
+  min-width: 350px;
+  max-width: 350px;
   max-height: 380px;
-  object-fit: contain;
 `
 
 const NFTPreviewVideo = styled.video`
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
 
-  max-width: 250px;
+  min-width: 350px;
+  max-width: 350px;
   max-height: 380px;
-  object-fit: contain;
+  object-fit: cover;
 `
 
 const NFTPreviewNameContainer = styled.div`
@@ -78,8 +81,28 @@ const NFTPreviewNSFWBadge = styled.div`
   border-radius: 2rem;
 `
 
+const LoaderWrapper = styled.div`
+  height: 100%;
+
+  display: flex;
+  flex-flow: column nowrap;
+
+  justify-content: center;
+  align-items: center;
+`
+
 const NFTPreviewWrapper = styled.div`
   display: flex;
+
+  flex-flow: column;
+  align-items: stretch;
+
+  flex-grow: 1;
+`
+
+const NFTPreviewWrapperCentered = styled(NFTPreviewWrapper)`
+  display: flex;
+
   justify-content: center;
   align-items: center;
 `
@@ -110,11 +133,24 @@ const Preview = ({ type, path }: PreviewProps) => {
     const fileType = getFileType(type)
     switch (fileType) {
       case FileTypes.AUDIO:
-        return <NFTPreviewAudio src={path} controls />
+        return (
+          <NFTPreviewWrapperCentered>
+            <NFTPreviewAudio src={path} controls />
+          </NFTPreviewWrapperCentered>
+        )
+
       case FileTypes.VIDEO:
-        return <NFTPreviewVideo src={path} controls loop />
+        return (
+          <NFTPreviewWrapper>
+            <NFTPreviewVideo src={path} controls loop />
+          </NFTPreviewWrapper>
+        )
       case FileTypes.IMAGE:
-        return <NFTPreviewImage src={path} />
+        return (
+          <NFTPreviewWrapper>
+            <NFTPreviewImage src={path} />
+          </NFTPreviewWrapper>
+        )
       default:
         if (!path && !type) {
           return <StyledLogo />
@@ -123,7 +159,7 @@ const Preview = ({ type, path }: PreviewProps) => {
     }
   }, [type, path])
 
-  return <NFTPreviewWrapper>{getPreviewElement()}</NFTPreviewWrapper>
+  return getPreviewElement()
 }
 
 const NFTPreview = (props: NFTPreviewProps) => {
@@ -161,7 +197,11 @@ const NFTPreview = (props: NFTPreviewProps) => {
         </>
       )}
 
-      {!info && <Dots>Loading</Dots>}
+      {!info && (
+        <LoaderWrapper>
+          <Dots>Loading</Dots>
+        </LoaderWrapper>
+      )}
     </NFTPreviewContainer>
   )
 }

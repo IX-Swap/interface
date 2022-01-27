@@ -25,15 +25,53 @@ export const CollectionForm = ({ collection, onSubmit, actionName = 'Update' }: 
     onSelectCover: setCover,
     onSetDescription: setDescription,
     onSetName: setName,
+    onClearCollectionState,
   } = useCollectionActionHandlers()
   const { cover, logo, banner, name, description } = useCollectionFormState()
+  const [newLogo, setNewLogo] = useState('')
+  const [newBanner, setNewBanner] = useState('')
+  const [newCover, setNewCover] = useState('')
+
+  useEffect(() => {
+    onClearCollectionState()
+  }, [])
 
   useEffect(() => {
     if (collection) {
       setName(collection?.name)
       setDescription(collection?.description)
+
+      updateFiles()
     }
   }, [collection, setName, setDescription])
+
+  const updateFiles = async () => {
+    const logo = await createFile(collection?.logo)
+    onLogoDrop(logo?.file)
+    setNewLogo(logo?.link)
+
+    const cover = await createFile(collection?.cover)
+    onCoverDrop(cover?.file)
+    setNewCover(cover?.link)
+
+    const banner = await createFile(collection?.banner)
+    onBannerDrop(banner?.file)
+    setNewBanner(banner?.link)
+  }
+
+  const createFile = async (file: any) => {
+    if (file) {
+      const name = file?.name
+      const response = await fetch(file?.public)
+      const blob = await response.blob()
+      const newFile = new File([blob], name, { type: blob.type, lastModified: new Date().getTime() })
+
+      const fileWithPath = newFile as FileWithPath
+      return { link: file?.public, file: fileWithPath }
+    }
+
+    return null
+  }
 
   const onLogoDrop = (newLogo: any) => {
     setLogo(newLogo)
@@ -64,7 +102,7 @@ export const CollectionForm = ({ collection, onSubmit, actionName = 'Update' }: 
             <TYPE.descriptionThin fontSize={13}>
               This image will also be used for navigation, 350 x 350 recommended
             </TYPE.descriptionThin>
-            <Upload width="350px" height="350px" isLogo onDrop={onLogoDrop} file={logo} />
+            <Upload width="350px" height="350px" isLogo onDrop={onLogoDrop} file={logo} newFileWithPath={newLogo} />
           </Label>
         </Box>
       </Flex>
@@ -79,7 +117,7 @@ export const CollectionForm = ({ collection, onSubmit, actionName = 'Update' }: 
               (optional) This image will be used for featuring your collection on the homepage, category pages, or other
               promotional areas. 600x400 recommended.
             </TYPE.descriptionThin>
-            <Upload width="600px" height="400px" onDrop={onCoverDrop} file={cover} />
+            <Upload width="600px" height="400px" onDrop={onCoverDrop} file={cover} newFileWithPath={newCover} />
           </Label>
         </Box>
       </Flex>
@@ -94,7 +132,14 @@ export const CollectionForm = ({ collection, onSubmit, actionName = 'Update' }: 
               (optional) This image will appear at the top of your collection page. Avoid including too much text in
               this banner image, as the dimensions change on different devices. 1400x400 recommended
             </TYPE.descriptionThin>
-            <Upload isBanner width="100%" height="400px" onDrop={onBannerDrop} file={banner} />
+            <Upload
+              isBanner
+              width="100%"
+              height="400px"
+              onDrop={onBannerDrop}
+              file={banner}
+              newFileWithPath={newBanner}
+            />
           </Label>
         </Box>
       </Flex>

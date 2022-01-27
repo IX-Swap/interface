@@ -66,6 +66,7 @@ export const CreateForm = () => {
     onSetCollection,
     onSetNewCollectionName,
     onSetMaxSupply,
+    onClearState,
   } = useCreateAssetActionHandlers()
   const [showCreateNewCollection, setShowCreateNewCollection] = useState(false)
   const [isNotValid, setValidationStatus] = useState(true)
@@ -130,6 +131,10 @@ export const CreateForm = () => {
 
     setValidationStatus(true)
   }, [beyondLimit, file, name, collection, newCollectionName, preview])
+
+  useEffect(() => {
+    onClearState()
+  }, [])
 
   useEffect(() => {
     if (!isLogged && !pending) {

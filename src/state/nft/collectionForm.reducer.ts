@@ -1,5 +1,12 @@
 import { createReducer } from '@reduxjs/toolkit'
-import { setBanner, setCover, setDescription, setLogo, setName } from './collectionForm.actions'
+import {
+  setBanner,
+  setCover,
+  setDescription,
+  setLogo,
+  setName,
+  setClearCollectionState,
+} from './collectionForm.actions'
 import { CollectionForm } from './types'
 
 const initialState: CollectionForm = {
@@ -26,5 +33,12 @@ export default createReducer<CollectionForm>(initialState, (builder) =>
     })
     .addCase(setName, (state, { payload: { name } }) => {
       state.name = name
+    })
+    .addCase(setClearCollectionState, (state) => {
+      state.logo = null
+      state.banner = null
+      state.cover = null
+      state.name = ''
+      state.description = ''
     })
 )

@@ -78,7 +78,17 @@ export const Menu = ({ close }: Props) => {
           <ExternalListItem href={`https://ixswap.defiterm.io/`}>
             <Trans>DeFi Terminal</Trans>
           </ExternalListItem>
-          {false && (
+          {chainId && TGE_CHAINS_WITH_STAKING.includes(chainId) && (
+            <MenuListItem
+              activeClassName="active-item"
+              id={`nft-collections-nav-link`}
+              to={routes.nftCollections}
+              onClick={close}
+            >
+              <Trans>My NFT Collections</Trans>
+            </MenuListItem>
+          )}
+          {chainId && TGE_CHAINS_WITH_STAKING.includes(chainId) && (
             <MenuListItem
               activeClassName="active-item"
               id={`create-nft-nav-link`}
@@ -88,14 +98,14 @@ export const Menu = ({ close }: Props) => {
               <Trans>Create NFT</Trans>
             </MenuListItem>
           )}
-          {false && (
+          {chainId && TGE_CHAINS_WITH_STAKING.includes(chainId) && (
             <MenuListItem
               activeClassName="active-item"
-              id={`nft-collections-nav-link`}
-              to={routes.nftCollections}
+              id={`nft-create-collection-nav-link`}
+              to={routes.nftCollectionCreate}
               onClick={close}
             >
-              <Trans>My Collections</Trans>
+              <Trans>Create NFT Collection</Trans>
             </MenuListItem>
           )}
           {chainId && TGE_CHAINS_WITH_STAKING.includes(chainId) && (
