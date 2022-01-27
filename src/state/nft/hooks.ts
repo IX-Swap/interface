@@ -202,6 +202,27 @@ export const useCreateFullCollection = (history: H.History) => {
     [deployCollection, history]
   )
 }
+
+export const useUpdateFullCollection = (history: H.History) => {
+  return useCallback(
+    async (args: any) => {
+      await updateNftCollection(
+        {
+          cover: args.cover,
+          logo: args.logo,
+          banner: args.banner,
+          name: args.name,
+          description: args.description,
+        },
+        args.collectionId
+      )
+
+      history.push(routes.nftCollections)
+    },
+    [history]
+  )
+}
+
 export const useDeployCollection = () => {
   const { account, library } = useActiveWeb3React()
   const addTransaction = useTransactionAdder()
