@@ -6,3 +6,4 @@ export const setCover = createAction<{ file: FileWithPath | null }>('nft-collect
 export const setBanner = createAction<{ file: FileWithPath | null }>('nft-collection/setBanner')
 export const setName = createAction<{ name: string }>('nft-collection/setName')
 export const setDescription = createAction<{ description: string }>('nft-collection/setDescription')
+export const setClearCollectionState = createAction('nft-collection/setClearCollectionState')

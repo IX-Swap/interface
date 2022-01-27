@@ -32,6 +32,7 @@ import {
   setProperties,
   setSelectedContractAddress,
   setStats,
+  setClearState,
 } from 'state/nft/assetForm.actions'
 import {
   setBanner,
@@ -39,6 +40,7 @@ import {
   setDescription as setCollectionDescrition,
   setLogo,
   setName as setCollectionName,
+  setClearCollectionState,
 } from './collectionForm.actions'
 
 import {
@@ -55,6 +57,7 @@ import { useTransactionAdder } from 'state/transactions/hooks'
 import { CollectionCreateProps } from './types'
 import { groupKeyValues } from './utils'
 import { routes } from 'utils/routes'
+import { Description } from '@ethersproject/properties'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const Web3 = require('web3') // for some reason import Web3 from web3 didn't see eth module
@@ -400,6 +403,7 @@ export function useCreateAssetActionHandlers(): {
   onSetNewCollectionName: (name: string) => void
   onSetActiveContractAddress: (address: string) => void
   onSetMaxSupply: (supply: number) => void
+  onClearState: () => void
 } {
   const dispatch = useDispatch<AppDispatch>()
 
@@ -493,6 +497,9 @@ export function useCreateAssetActionHandlers(): {
     },
     [dispatch]
   )
+  const onClearState = useCallback(() => {
+    dispatch(setClearState())
+  }, [dispatch])
   return {
     onSelectFile,
     onSelectPreview,
@@ -509,6 +516,7 @@ export function useCreateAssetActionHandlers(): {
     onSetNewCollectionName,
     onSetActiveContractAddress,
     onSetMaxSupply,
+    onClearState,
   }
 }
 export function useCollectionActionHandlers(): {
@@ -517,6 +525,7 @@ export function useCollectionActionHandlers(): {
   onSelectBanner: (file: FileWithPath | null) => void
   onSelectLogo: (file: FileWithPath | null) => void
   onSetDescription: (description: string) => void
+  onClearCollectionState: () => void
 } {
   const dispatch = useDispatch<AppDispatch>()
 
@@ -553,12 +562,17 @@ export function useCollectionActionHandlers(): {
     [dispatch]
   )
 
+  const onClearCollectionState = useCallback(() => {
+    dispatch(setClearCollectionState())
+  }, [dispatch])
+
   return {
     onSelectBanner,
     onSelectCover,
     onSelectLogo,
     onSetName,
     onSetDescription,
+    onClearCollectionState,
   }
 }
 export const useCreateNft = () => {

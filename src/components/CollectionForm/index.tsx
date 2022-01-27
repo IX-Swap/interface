@@ -25,11 +25,16 @@ export const CollectionForm = ({ collection, onSubmit, actionName = 'Update' }: 
     onSelectCover: setCover,
     onSetDescription: setDescription,
     onSetName: setName,
+    onClearCollectionState,
   } = useCollectionActionHandlers()
   const { cover, logo, banner, name, description } = useCollectionFormState()
   const [newLogo, setNewLogo] = useState('')
   const [newBanner, setNewBanner] = useState('')
   const [newCover, setNewCover] = useState('')
+
+  useEffect(() => {
+    onClearCollectionState()
+  }, [])
 
   useEffect(() => {
     if (collection) {

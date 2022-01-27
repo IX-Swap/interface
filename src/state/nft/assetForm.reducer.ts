@@ -1,6 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit'
 import {
   setActiveTraitType,
+  setClearState,
   setCollection,
   setDescription,
   setFile,
@@ -82,5 +83,12 @@ export default createReducer<AssetForm>(initialState, (builder) =>
     })
     .addCase(setMaxSupply, (state, { payload: { supply } }) => {
       state.maxSupply = supply
+    })
+    .addCase(setClearState, (state) => {
+      state.file = null
+      state.preview = null
+      state.collection = null
+      state.name = ''
+      state.description = ''
     })
 )
