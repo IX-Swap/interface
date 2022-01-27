@@ -44,11 +44,13 @@ export const CollectionForm = ({ collection, onSubmit, actionName = 'Update' }: 
   }, [name, description])
 
   const checkNameLimit = useCallback(() => {
-    setNameError(name.length > NameSizeLimit ? `Max length is 100 chars` : null)
+    setNameError(name.length > NameSizeLimit ? `Max length is ${NameSizeLimit} chars` : null)
   }, [name])
 
   const checkDescriptionLimit = useCallback(() => {
-    setDescriptionError(description.length > DescriptionSizeLimit ? `Max length is 1000 chars` : null)
+    setDescriptionError(
+      description.length > DescriptionSizeLimit ? `Max length is ${DescriptionSizeLimit} chars` : null
+    )
   }, [description])
 
   const updateFiles = async () => {
