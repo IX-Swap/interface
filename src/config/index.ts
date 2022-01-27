@@ -1,10 +1,5 @@
 import { Bank } from 'types/bank'
-import {
-  getAPIUrl,
-  getEnvironment,
-  getHsbcURL,
-  getSocketTransports
-} from './utils'
+import { getAPIUrl, getEnvironment, getSocketTransports } from './utils'
 
 export const API_URL = getAPIUrl(process.env.REACT_APP_API_URL)
 export const SOCKET_TRANSPORTS = getSocketTransports(
@@ -15,7 +10,6 @@ export const GOOGLE_ANALYTICS = process.env.REACT_APP_GOOGLE_ANALYTICS
 export const FULLSTORY = process.env.REACT_APP_FULLSTORY
 
 export const isDevEnv = ENVIRONMENT === 'dev'
-export const HSBC_API = getHsbcURL(ENVIRONMENT)
 
 export const DATE_FORMAT = 'MM/DD/YYYY'
 export const TIME_FORMAT = 'HH:MM:SS'

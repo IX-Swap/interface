@@ -11,11 +11,7 @@ export const getAPIUrl = (value: string | undefined) => {
 
   return value
 }
-export const getHsbcURL = (environment: string) => {
-  return environment === 'dev' || environment === 'staging'
-    ? DEV_HSBC_URL
-    : PROD_HSBC_URL
-}
+
 export const getPercentageValue = (value: number) => {
   return value * 100
 }
@@ -29,6 +25,3 @@ export const stringTruncate = (
     ellipsis && value.length > length ? '...' : ''
   }`
 }
-
-export const DEV_HSBC_URL = 'https://hsbcdev.mozork.com'
-export const PROD_HSBC_URL = 'https://hsbc.mozork.com'

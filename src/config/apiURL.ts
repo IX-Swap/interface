@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
-import { HSBC_API } from 'config'
 import { AppFeature } from 'types/app'
 
 export const apiURL = {
@@ -355,21 +354,22 @@ export const custodyAccounts = {
 }
 
 export const virtualAccountsAudit = {
-  getMT940Files: `${HSBC_API}/audit/virtual-account/mt940/files`,
-  getMT942Files: `${HSBC_API}/audit/virtual-account/mt942/files`,
-  getOutboundFiles: `${HSBC_API}/audit/virtual-account/outbound/files`,
+  getMT940Files: 'https://hsbc.mozork.com/audit/virtual-account/mt940/files',
+  getMT942Files: 'https://hsbc.mozork.com/audit/virtual-account/mt942/files',
+  getOutboundFiles:
+    'https://hsbc.mozork.com/audit/virtual-account/outbound/files',
   getRawMT940File: (fileId?: string) =>
-    `${HSBC_API}/audit/virtual-account/mt940/files/raw/${fileId}`,
+    `https://hsbc.mozork.com/audit/virtual-account/mt940/files/raw/${fileId}`,
   getRawMT942File: (fileId?: string) =>
-    `${HSBC_API}/audit/virtual-account/mt942/files/raw/${fileId}`,
+    `https://hsbc.mozork.com/audit/virtual-account/mt942/files/raw/${fileId}`,
   getRawOutboundACKFile: (fileId?: string) =>
-    `${HSBC_API}/audit/virtual-account/outbound/files/raw/${fileId}`,
+    `https://hsbc.mozork.com/audit/virtual-account/outbound/files/raw/${fileId}`,
   getRawOutboundVAFile: (fileId?: string) =>
-    `${HSBC_API}/audit/virtual-account/outbound/files/raw/va/${fileId}`
+    `https://hsbc.mozork.com/audit/virtual-account/outbound/files/raw/va/${fileId}`
 }
 
 export const virtualTransactions = {
-  getTransactions: `${HSBC_API}/payments/transactions`
+  getTransactions: 'https://hsbc.mozork.com/payments/transactions'
 }
 
 export const blockchainNetworksURL = {
