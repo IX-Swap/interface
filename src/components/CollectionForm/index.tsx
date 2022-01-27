@@ -1,16 +1,15 @@
-import React, { FC, useState, useEffect } from 'react'
+import React, { FC, useState, useEffect, useCallback } from 'react'
 import { Box, Flex } from 'rebass'
 import { t, Trans } from '@lingui/macro'
 import { FileWithPath } from 'file-selector'
 import { Label } from '@rebass/forms'
-import { useParams } from 'react-router-dom'
 
 import { ContainerRow, Input, InputContainer, InputPanel, Textarea } from 'components/Input'
 import Upload from 'components/Upload'
 import { ExternalLink, TYPE } from 'theme'
 import { ButtonGradient } from 'components/Button'
-import { updateNftCollection, useCollectionActionHandlers, useCollectionFormState } from 'state/nft/hooks'
-import { NFTCollection } from 'state/nft/types'
+import { useCollectionActionHandlers, useCollectionFormState } from 'state/nft/hooks'
+import { NameSizeLimit, DescriptionSizeLimit } from 'constants/misc'
 
 interface UpdateFormProps {
   collection?: any | null
@@ -31,19 +30,26 @@ export const CollectionForm = ({ collection, onSubmit, actionName = 'Update' }: 
   const [newLogo, setNewLogo] = useState('')
   const [newBanner, setNewBanner] = useState('')
   const [newCover, setNewCover] = useState('')
+  const [isValid, setValidation] = useState(false)
+  const [descriptionError, setDescriptionError] = useState<string | null>(null)
+  const [nameError, setNameError] = useState<string | null>(null)
 
-  useEffect(() => {
-    onClearCollectionState()
-  }, [])
-
-  useEffect(() => {
-    if (collection) {
-      setName(collection?.name)
-      setDescription(collection?.description)
-
-      updateFiles()
+  const checkValidation = useCallback(() => {
+    if (name && description) {
+      setValidation(name.length <= NameSizeLimit && description.length <= DescriptionSizeLimit)
+      return
     }
-  }, [collection, setName, setDescription])
+
+    setValidation(false)
+  }, [name, description])
+
+  const checkNameLimit = useCallback(() => {
+    setNameError(name.length > NameSizeLimit ? `Max length is 100 chars` : null)
+  }, [name])
+
+  const checkDescriptionLimit = useCallback(() => {
+    setDescriptionError(description.length > DescriptionSizeLimit ? `Max length is 1000 chars` : null)
+  }, [description])
 
   const updateFiles = async () => {
     const logo = await createFile(collection?.logo)
@@ -84,6 +90,31 @@ export const CollectionForm = ({ collection, onSubmit, actionName = 'Update' }: 
   const onBannerDrop = (newBanner: any) => {
     setBanner(newBanner)
   }
+
+  useEffect(() => {
+    onClearCollectionState()
+  }, [])
+
+  useEffect(() => {
+    if (collection) {
+      setName(collection?.name)
+      setDescription(collection?.description)
+
+      updateFiles()
+    }
+  }, [collection, setName, setDescription])
+
+  useEffect(() => {
+    checkValidation()
+  }, [checkValidation])
+
+  useEffect(() => {
+    checkDescriptionLimit()
+  }, [checkDescriptionLimit])
+
+  useEffect(() => {
+    checkNameLimit()
+  }, [checkNameLimit])
 
   const handleSubmit = async (e: any) => {
     e.preventDefault()
@@ -176,6 +207,8 @@ export const CollectionForm = ({ collection, onSubmit, actionName = 'Update' }: 
               </InputContainer>
             </ContainerRow>
           </InputPanel>
+
+          {nameError && <TYPE.error error>{nameError}</TYPE.error>}
         </Box>
       </Flex>
 
@@ -201,13 +234,17 @@ export const CollectionForm = ({ collection, onSubmit, actionName = 'Update' }: 
             placeholder={t`Provide a detailed description of your item`}
             value={description}
           />
+
+          {descriptionError && <TYPE.error error>{descriptionError}</TYPE.error>}
         </Box>
       </Flex>
 
       <Flex mx={-2} flexWrap="wrap">
-        <Box px={1} mr="auto" onClick={(e) => handleSubmit(e)}>
-          <ButtonGradient width="140px">{actionName}</ButtonGradient>
-        </Box>
+        {isValid && (
+          <Box px={1} mr="auto" onClick={(e) => handleSubmit(e)}>
+            <ButtonGradient width="140px">{actionName}</ButtonGradient>
+          </Box>
+        )}
       </Flex>
     </Box>
   )

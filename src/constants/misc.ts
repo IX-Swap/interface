@@ -7,6 +7,9 @@ export const NetworkContextName = 'NETWORK'
 
 export const NftSizeLimit = 104857600
 
+export const NameSizeLimit = 100
+export const DescriptionSizeLimit = 1000
+
 // 30 minutes, denominated in seconds
 export const DEFAULT_DEADLINE_FROM_NOW = 60 * 30
 
