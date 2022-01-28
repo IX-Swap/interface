@@ -16,7 +16,7 @@ import { getfileType } from 'components/Upload/utils'
 
 import { LOGIN_STATUS, useLogin } from 'state/auth/hooks'
 import { ApplicationModal } from 'state/application/actions'
-import { useToggleModal, useShowError } from 'state/application/hooks'
+import { useToggleModal, useShowError, useAddPopup } from 'state/application/hooks'
 import { NFTCollection, TraitType } from 'state/nft/types'
 import {
   useAssetFormState,
@@ -82,6 +82,8 @@ export const CreateForm = () => {
   const toggle = useToggleModal(ApplicationModal.PROPERTIES)
   const toggleNumeric = useToggleModal(ApplicationModal.LEVELS)
   const fetchMyCollections = useFetchMyCollections()
+
+  const addPopup = useAddPopup()
 
   const checkAuthorization = useCallback(async () => {
     setPending(true)
@@ -163,6 +165,13 @@ export const CreateForm = () => {
     try {
       e.preventDefault()
       await createAsset()
+
+      addPopup({
+        info: {
+          success: true,
+          summary: `Created your ${name} NFT successfully`,
+        },
+      })
     } catch (error: any) {
       setError(error.message)
       setPending(false)
