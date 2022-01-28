@@ -16,6 +16,7 @@ import LogoWhite from '../../assets/svg/logo-white.svg'
 import { CollectionCard, CollectionImage, CollectionImageWrapper, CollectionLogo, CollectionsGrid } from './styleds'
 import useTheme from 'hooks/useTheme'
 import styled from 'styled-components'
+import { NFTCollectionImage } from 'state/nft/types'
 
 const LoaderWrapper = styled.div`
   display: flex;
@@ -27,6 +28,18 @@ const LoaderWrapper = styled.div`
   width: 100%;
   padding: 2rem;
 `
+
+const getImage = (item: NFTCollectionImage | string | undefined): string | null => {
+  if (!item) {
+    return null
+  }
+
+  if (typeof item === 'string') {
+    return item
+  }
+
+  return item.public
+}
 
 const NFTCollections: FC = () => {
   // const [selectedTabId, setSelectedTabId] = useState(1)
@@ -89,9 +102,11 @@ const NFTCollections: FC = () => {
             myCollections.length !== 0 &&
             myCollections.map(({ id, banner, logo, name, address }) => (
               <CollectionCard key={`collection-card-${id}`} as={StyledInternalLink} to={`/nft/collections/${address}`}>
-                <CollectionImageWrapper style={{ paddingTop: banner ? '10px' : '0' }}>
-                  <CollectionImage height="100%" width="100%" src={banner || LogoWhite} />
-                  <CollectionLogo src={logo || LogoWhite} style={!logo ? { objectFit: 'contain' } : {}} />
+                <CollectionImageWrapper
+                  style={{ paddingTop: !banner ? '10px' : '0', objectFit: banner ? 'cover' : 'contain' }}
+                >
+                  <CollectionImage height="100%" width="100%" src={getImage(banner) ?? LogoWhite} />
+                  <CollectionLogo src={getImage(logo) ?? LogoWhite} style={!logo ? { objectFit: 'contain' } : {}} />
                 </CollectionImageWrapper>
 
                 <Flex flexDirection="column" alignItems="center" padding="0px 32px 24px 32px">

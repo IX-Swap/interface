@@ -29,14 +29,18 @@ export interface NFTImageShow {
   isNSFW: string
 }
 
+export interface NFTCollectionImage {
+  public: string
+}
+
 export interface NFTCollection {
   id?: number
   name: string
   address: string
   description?: string
   // featured: string
-  logo?: string
-  banner?: string
+  logo?: NFTCollectionImage
+  banner?: NFTCollectionImage
 }
 
 export enum TraitType {
