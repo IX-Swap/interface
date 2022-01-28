@@ -7,59 +7,62 @@ import { RowBetween } from 'components/Row'
 import { ButtonText, CloseIcon, ModalContentWrapper, ModalPadding, TYPE } from 'theme'
 import { useModalOpen, useTokenPopupToggle } from 'state/application/hooks'
 import { ApplicationModal } from 'state/application/actions'
-import { WideModal, WideModalWrapper, FormWrapper, FormGrid, Logo, FormRow } from './styleds'
 import { ContainerRow, Input, InputContainer, InputPanel, Textarea } from 'components/Input'
-import { ReactComponent as LogoImage } from '../../assets/images/wallpaper.svg'
 import { Radio } from './Radio'
 import { ButtonIXSGradient } from 'components/Button'
+import { addToken, updateToken, useFetchIssuers } from 'state/secCatalog/hooks'
 
-interface FakeTokenProps {
-  address: string
-  symbol: string
-  logo: string
-  companyName: string
-  url: string
-  industry: string
-  country: string
-  atlasID: string
-  description: string
-  isActive: boolean
-  isFeatured: boolean
-  isSwapable: boolean
-}
+import { ReactComponent as LogoImage } from '../../assets/images/wallpaper.svg'
+import { WideModal, WideModalWrapper, FormWrapper, FormGrid, Logo, FormRow } from './styleds'
 
 interface Props {
-  token: FakeTokenProps | null
+  token: any | null
+  currentIssuer: any
 }
 
-export const TokenPopup: FC<Props> = ({ token: propToken }: Props) => {
+export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer }: Props) => {
   const isOpen = useModalOpen(ApplicationModal.TOKEN_POPUP)
   const toggle = useTokenPopupToggle()
-  const [token, setToken] = useState<FakeTokenProps>()
+  const getIssuers = useFetchIssuers()
+  const [token, setToken] = useState<any>(null)
 
   useEffect(() => {
-    setToken(
-      propToken || {
-        address: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
-        symbol: 'TSLA',
+    if (propToken) setToken(propToken)
+    else
+      setToken({
+        id: null,
+        address: '',
+        ticker: '',
         logo: '',
-        companyName: 'Tesla',
-        url: 'https://tesla.com/token',
-        industry: 'Automotive',
-        country: 'USA',
-        atlasID: '235',
-        description:
-          'Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. Mauris blandit aliquet elit, eget tincidunt nibh pulvinar a. Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Cras ultricies ligula sed magna dictum porta. Pellentesque in ipsum id orci porta dapibus. Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui. ',
-        isActive: true,
-        isFeatured: true,
-        isSwapable: false,
-      }
-    )
+        companyName: '',
+        url: '',
+        industry: '',
+        country: '',
+        atlasOneId: '',
+        description: '',
+        active: null,
+        feautured: null,
+        tradable: null,
+        chainId: 42,
+      })
   }, [propToken])
 
   const onClose = () => {
     toggle()
   }
+
+  const handleCreateClick = async () => {
+    if (token.id) {
+      await updateToken(token)
+    } else {
+      await addToken(currentIssuer.id, token)
+    }
+
+    getIssuers()
+    toggle()
+  }
+
+  console.log(token)
 
   return (
     <WideModal isLarge isOpen={isOpen} onDismiss={onClose} minHeight={false} maxHeight={'fit-content'} scrollable>
@@ -103,8 +106,8 @@ export const TokenPopup: FC<Props> = ({ token: propToken }: Props) => {
                           <InputContainer>
                             <Input
                               id="issuer-website"
-                              value={token.symbol}
-                              onChange={(e) => setToken({ ...token, symbol: e.currentTarget.value })}
+                              value={token.ticker}
+                              onChange={(e) => setToken({ ...token, ticker: e.currentTarget.value })}
                             />
                           </InputContainer>
                         </ContainerRow>
@@ -196,8 +199,8 @@ export const TokenPopup: FC<Props> = ({ token: propToken }: Props) => {
                           <InputContainer>
                             <Input
                               id="issuer-website"
-                              value={token.atlasID}
-                              onChange={(e) => setToken({ ...token, atlasID: e.currentTarget.value })}
+                              value={token.atlasOneId}
+                              onChange={(e) => setToken({ ...token, atlasOneId: e.currentTarget.value })}
                             />
                           </InputContainer>
                         </ContainerRow>
@@ -230,23 +233,20 @@ export const TokenPopup: FC<Props> = ({ token: propToken }: Props) => {
                     </Box>
 
                     <Box>
+                      <Radio isActive={token.active} onToggle={() => setToken({ ...token, active: !token.active })} />
                       <Radio
-                        isActive={token.isActive}
-                        onToggle={() => setToken({ ...token, isActive: !token.isActive })}
+                        isActive={token.feautured}
+                        onToggle={() => setToken({ ...token, feautured: !token.feautured })}
                       />
                       <Radio
-                        isActive={token.isFeatured}
-                        onToggle={() => setToken({ ...token, isFeatured: !token.isFeatured })}
-                      />
-                      <Radio
-                        isActive={token.isSwapable}
-                        onToggle={() => setToken({ ...token, isSwapable: !token.isSwapable })}
+                        isActive={token.tradable}
+                        onToggle={() => setToken({ ...token, tradable: !token.tradable })}
                       />
                     </Box>
                   </Box>
                 </FormWrapper>
 
-                <ButtonIXSGradient margin="35px 0px 30px 0px" style={{ width: 475 }}>
+                <ButtonIXSGradient onClick={handleCreateClick} margin="35px 0px 30px 0px" style={{ width: 475 }}>
                   Save
                 </ButtonIXSGradient>
               </>

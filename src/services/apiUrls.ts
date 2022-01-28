@@ -49,6 +49,15 @@ export const tokens = {
   all: `/token/list/all`,
   accreditation: (tokenId: number) => `token/accreditation/${tokenId}`,
 }
+
+export const secCatalog = {
+  createIssuer: `/catalog/issuer`,
+  allIssuers: `/catalog/issuer/all`,
+  allIssuerTokens: `/catalog/token/all`,
+  issuer: (issuerId: number) => `/catalog/issuer/${issuerId}`,
+  createIssuerToken: (issuerId: number) => `/catalog/token/issuer/${issuerId}`,
+  issuerToken: (tokenId: number) => `/catalog/token/${tokenId}`,
+}
 export interface PaginateWithFilter {
   tokenId?: number | null
   page?: number

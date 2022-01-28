@@ -2,74 +2,58 @@ import React, { FC } from 'react'
 import { Box } from 'rebass'
 
 import { TYPE } from 'theme'
-import { CardHeader, EditButton, TokensList, TokensListItem } from './styleds'
-import { StatusIcons } from 'components/Vault/styleds'
 import { ActionHistoryStatus } from 'components/Vault/enum'
 
+import { CardHeader, EditButton, TokensList, TokensListItem } from './styleds'
+import { StatusIcons } from 'components/Vault/styleds'
+
 export interface BrokerDealerFakeProps {
-  info: {
-    logo: string
-    name: string
-    website: string
-  }
-  tokens: {
-    symbol: string
-    logo: string
-    website: string
-    isTradable: boolean
-    isFeatured: boolean
-  }[]
+  issuer: any
   handleEditClick: (editIssuer: any) => void
 }
 
-export const BrokerDealerCard: FC<BrokerDealerFakeProps> = ({
-  info,
-  tokens,
-  handleEditClick,
-}: BrokerDealerFakeProps) => {
-  const { website, logo, name } = info
+export const BrokerDealerCard: FC<BrokerDealerFakeProps> = ({ issuer, handleEditClick }: BrokerDealerFakeProps) => {
+  const { url, logo, name, tokens } = issuer
 
   return (
     <Box marginBottom="30px">
       <CardHeader>
-        <TYPE.title6>{logo}</TYPE.title6>
+        <Box>
+          <img style={{ objectFit: 'cover' }} width="75px" height="20px" src={logo.public} />
+        </Box>
         <TYPE.title6>{name}</TYPE.title6>
-        <TYPE.descriptionThin>{website}</TYPE.descriptionThin>
-        <EditButton
-          onClick={() => handleEditClick({ name, website, logo, tokens })}
-          marginLeft="auto"
-          marginRight="19px"
-          color="white"
-        >
+        <TYPE.descriptionThin style={{ overflow: 'visible' }}>{url}</TYPE.descriptionThin>
+        <EditButton onClick={() => handleEditClick(issuer)} marginLeft="auto" marginRight="19px" color="white">
           Edit
         </EditButton>
       </CardHeader>
 
       <TokensList>
-        {tokens.map(({ symbol, website, isTradable, isFeatured }, index) => (
-          <TokensListItem key={`token-list-${index}`}>
-            <TYPE.body3 color="white">{symbol}</TYPE.body3>
-            <TYPE.body3 color="white">{website}</TYPE.body3>
-            <div>
-              {isTradable ? (
-                <>
-                  {StatusIcons[ActionHistoryStatus.SETTLED]()}
-                  <TYPE.title6 marginLeft="10px" fontWeight={400} color="#9DF9B1">
-                    Tradable
-                  </TYPE.title6>
-                </>
-              ) : (
-                <>
-                  {StatusIcons[ActionHistoryStatus.NON_TRADABLE]()}
-                  <TYPE.title6 marginLeft="10px" fontWeight={400} color="#EDCEFF">
-                    Non Tradable
-                  </TYPE.title6>
-                </>
-              )}
-            </div>
-            <TYPE.title6 fontWeight={400}>{isFeatured ? 'Featured' : '-'}</TYPE.title6>
-          </TokensListItem>
-        ))}
+        {tokens?.length > 0 &&
+          tokens.map(({ ticker, url, tradable, feautured }: any, index: number) => (
+            <TokensListItem key={`token-list-${index}`}>
+              <TYPE.body3 color="white">{ticker}</TYPE.body3>
+              <TYPE.body3 color="white">{url}</TYPE.body3>
+              <div>
+                {tradable ? (
+                  <>
+                    {StatusIcons[ActionHistoryStatus.SETTLED]()}
+                    <TYPE.title6 marginLeft="10px" fontWeight={400} color="#9DF9B1">
+                      Tradable
+                    </TYPE.title6>
+                  </>
+                ) : (
+                  <>
+                    {StatusIcons[ActionHistoryStatus.NON_TRADABLE]()}
+                    <TYPE.title6 marginLeft="10px" fontWeight={400} color="#EDCEFF">
+                      Non Tradable
+                    </TYPE.title6>
+                  </>
+                )}
+              </div>
+              <TYPE.title6 fontWeight={400}>{feautured ? 'Featured' : '-'}</TYPE.title6>
+            </TokensListItem>
+          ))}
       </TokensList>
     </Box>
   )

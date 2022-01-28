@@ -12,7 +12,8 @@ export const StyledButtonGradientBorder = styled(ButtonGradientBorder)`
 `
 
 export const CardHeader = styled(BodyRow)`
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 3fr;
   align-items: center;
   height: 80px;
   margin-bottom: 0px;
@@ -21,9 +22,9 @@ export const CardHeader = styled(BodyRow)`
     padding-left: 55px;
   }
 
-  > div {
-    padding: 20px 80px;
-  }
+  // > div {
+  //   padding: 20px 0px 20px 80px;
+  // }
 `
 
 export const EditButton = styled(ApproveButton)`
@@ -69,14 +70,19 @@ export const Logo = styled.div`
 
 export const TokenCard = styled(BodyRow)`
   display: grid;
-  grid-template-columns: 1fr 2fr 3fr 2fr 2fr 2fr 2fr 1fr;
+  grid-template-columns: 2fr 2fr 3fr 2fr 2fr 2fr 2fr 1fr;
   height: 80px;
 
   > div {
     display: flex;
-    justify-content: start;
+    justify-content: center;
     padding-left: 15px;
     align-items: center;
+  }
+
+  > div:first-child {
+    justify-content: start;
+    padding-left: 55px;
   }
 `
 
