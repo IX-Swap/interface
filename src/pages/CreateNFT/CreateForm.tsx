@@ -5,7 +5,7 @@ import { t, Trans } from '@lingui/macro'
 import { Label } from '@rebass/forms'
 import styled from 'styled-components'
 import { ExternalLink, TYPE } from 'theme'
-import { NftSizeLimit } from 'constants/misc'
+import { NftSizeLimit, NameSizeLimit, DescriptionSizeLimit } from 'constants/misc'
 
 import { ButtonGradient } from 'components/Button'
 import { LoaderThin } from 'components/Loader/LoaderThin'
@@ -74,6 +74,8 @@ export const CreateForm = () => {
   const [error, setError] = useState<string | null>(null)
   const [beyondLimit, setLimit] = useState<string | null>(null)
   const [isLogged, setAuthState] = useState(false)
+  const [descriptionError, setDescriptionError] = useState<string | null>(null)
+  const [nameError, setNameError] = useState<string | null>(null)
 
   const login = useLogin({ mustHavePreviousLogin: false })
   const showError = useShowError()
@@ -126,13 +128,23 @@ export const CreateForm = () => {
   }, [file])
 
   const checkValidation = useCallback(() => {
-    if (!beyondLimit && file && name && (collection || newCollectionName)) {
+    if (!beyondLimit && file && name && !nameError && !descriptionError && (collection || newCollectionName)) {
       setValidationStatus(getfileType(file) !== FileTypes.IMAGE ? !preview : false)
       return
     }
 
     setValidationStatus(true)
-  }, [beyondLimit, file, name, collection, newCollectionName, preview])
+  }, [beyondLimit, file, name, collection, newCollectionName, preview, nameError, descriptionError])
+
+  const checkNameLimit = useCallback(() => {
+    setNameError(name.length > NameSizeLimit ? `Max length is ${NameSizeLimit} chars` : null)
+  }, [name])
+
+  const checkDescriptionLimit = useCallback(() => {
+    setDescriptionError(
+      description.length > DescriptionSizeLimit ? `Max length is ${DescriptionSizeLimit} chars` : null
+    )
+  }, [description])
 
   useEffect(() => {
     onClearState()
@@ -150,6 +162,14 @@ export const CreateForm = () => {
     setError(null)
     checkValidation()
   }, [checkValidation])
+
+  useEffect(() => {
+    checkNameLimit()
+  }, [checkNameLimit])
+
+  useEffect(() => {
+    checkDescriptionLimit()
+  }, [checkDescriptionLimit])
 
   useEffect(() => {
     checkFileSize()
@@ -293,6 +313,8 @@ export const CreateForm = () => {
                 </InputContainer>
               </ContainerRow>
             </InputPanel>
+
+            {nameError && <TYPE.error error>{nameError}</TYPE.error>}
           </Box>
         </Flex>
         <Flex mx={-2} mb={4} flexDirection={'column'}>
@@ -427,6 +449,8 @@ export const CreateForm = () => {
               onChange={(e) => onSetDescription(e?.target?.value)}
               placeholder={t`Provide a detailed description of your item`}
             />
+
+            {descriptionError && <TYPE.error error>{descriptionError}</TYPE.error>}
           </Box>
         </Flex>
         <Flex mx={-2} mb={4} onClick={toggle}>
