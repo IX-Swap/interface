@@ -10,11 +10,14 @@ import { ReactComponent as PropertiesIconSvg } from '../../assets/images/nft-pro
 import { ReactComponent as LevelsIconSvg } from '../../assets/images/nft-levels.svg'
 import { ReactComponent as NsfwIconSvg } from '../../assets/images/nft-nsfw.svg'
 import { ReactComponent as StatIconSvg } from '../../assets/images/nft-stat.svg'
-import { RouteComponentProps } from 'react-router-dom'
+import { RouteComponentProps, useHistory } from 'react-router-dom'
 import { useGetNFTDetails } from 'state/nft/hooks'
 import { NFTAttributeDisplay, NFTImage, NFTImageShow } from 'state/nft/types'
 import { NFTConnectWallet } from 'components/NFTConnectWallet'
 import { useActiveWeb3React } from 'hooks/web3'
+
+import { ButtonGradientBorder, ButtonIXSGradient, ButtonPrimary } from 'components/Button'
+import { routes } from 'utils/routes'
 
 const item = {
   name: 'Mushroom Rock',
@@ -316,6 +319,8 @@ const NftIsNsfw = (props: NftNsfwProps) => {
 }
 
 const NftAssetPageWrapper = styled(Row)`
+  position: relateive;
+
   justify-content: center;
   align-items: flex-start;
 
@@ -326,6 +331,13 @@ const NftAssetPageWrapper = styled(Row)`
     align-items: center;
     margin-left: unset;
   }
+`
+
+const NftCollectionBackButtonWrapper = styled.div`
+  position: absolute;
+  left: 4rem;
+
+  margin: 0 2rem;
 `
 
 const NftAttributesContainer = styled.div`
@@ -348,6 +360,14 @@ const NftAssetPage = ({
   const levels = (item?.attributes?.filter((attr) => attr?.display_type === 'level') ?? []) as NftLevel[]
   const rectangles = (item?.attributes?.filter((attr) => attr?.display_type === 'rectangle') ?? []) as NftProperty[]
 
+  const h = useHistory()
+
+  const goToCollection = useCallback(() => {
+    if (collectionAddress) {
+      h.push(routes.nftViewCollection(collectionAddress))
+    }
+  }, [collectionAddress, h])
+
   useEffect(() => {
     async function getDetails() {
       if (collectionAddress && itemId !== undefined) {
@@ -366,6 +386,12 @@ const NftAssetPage = ({
 
   return (
     <NftAssetPageWrapper>
+      <NftCollectionBackButtonWrapper>
+        <ButtonGradientBorder onClick={goToCollection}>
+          <TYPE.title3>Back</TYPE.title3>
+        </ButtonGradientBorder>
+      </NftCollectionBackButtonWrapper>
+
       <NftImage src={item.file} />
 
       <NftInfoContainer>
