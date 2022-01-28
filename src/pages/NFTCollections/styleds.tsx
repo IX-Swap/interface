@@ -19,6 +19,12 @@ export const CollectionCard = styled.div`
     rgba(44, 37, 74, 0.5);
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
+
+  transition: transform 0.3s;
+
+  :hover {
+    transform: scale(1.05);
+  }
 `
 
 export const CollectionImageWrapper = styled.div`
