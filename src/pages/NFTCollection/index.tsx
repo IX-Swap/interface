@@ -6,6 +6,7 @@ import { useNftCollection } from 'state/nft/hooks'
 import NFTPreview from './NFTPreview'
 import { TYPE } from 'theme'
 import { ButtonGradientBorder, ButtonIXSGradient, ButtonPrimary } from 'components/Button'
+import { routes } from 'utils/routes'
 
 const NftCollectionWrapper = styled.div`
   position: relative;
@@ -110,7 +111,7 @@ const NFTCollection = () => {
           </NftCollectionInfo>
 
           <NftCollectionBackButtonWrapper>
-            <ButtonGradientBorder onClick={() => history.goBack()}>
+            <ButtonGradientBorder onClick={() => history.push(routes.nftCollections)}>
               <TYPE.title3>Back</TYPE.title3>
             </ButtonGradientBorder>
           </NftCollectionBackButtonWrapper>
