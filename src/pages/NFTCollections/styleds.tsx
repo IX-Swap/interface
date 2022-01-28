@@ -29,7 +29,6 @@ export const CollectionImageWrapper = styled.div`
 `
 
 export const CollectionImage = styled.img`
-  object-fit: contain;
   border-radius: 30px 30px 0px 0px;
 `
 
