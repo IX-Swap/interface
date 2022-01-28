@@ -171,10 +171,11 @@ const NFTPreview = (props: NFTPreviewProps) => {
       .then((res) => ({
         file: res.file,
         name: res.name,
+        preview: res.previewUrl,
         isNSFW: res.isNSFW === 'true',
       }))
       .then(async (res) => {
-        const response = await fetch(res.file)
+        const response = await fetch(res.preview ?? res.file)
         const type = response.headers.get('content-type') ?? 'image'
 
         setInfo({ type, ...res })
