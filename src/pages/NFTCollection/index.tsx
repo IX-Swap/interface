@@ -1,15 +1,25 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 
-import { Link, useParams } from 'react-router-dom'
+import { Link, useHistory, useParams } from 'react-router-dom'
 import { useNftCollection } from 'state/nft/hooks'
 import NFTPreview from './NFTPreview'
 import { TYPE } from 'theme'
-import { ButtonPrimary } from 'components/Button'
+import { ButtonGradientBorder, ButtonIXSGradient, ButtonPrimary } from 'components/Button'
 
 const NftCollectionWrapper = styled.div`
+  position: relative;
   width: 100%;
 `
+const NftCollectionBackButtonWrapper = styled.div`
+  position: absolute;
+
+  left: 0;
+  top: 2rem;
+
+  margin: 0 2rem;
+`
+
 const NftCollectionInfo = styled.div`
   padding: 2rem;
 `
@@ -23,10 +33,6 @@ const NftCollectionItems = styled.div`
   gap: 2rem;
 
   padding: 2rem;
-
-  @media (max-width: 1180px) {
-    place-content: center;
-  }
 
   @media (max-width: 640px) {
     padding: 0;
@@ -81,6 +87,8 @@ const NFTCollection = () => {
     }
   }, [collection, fetchedInitial])
 
+  const history = useHistory()
+
   return (
     <NftCollectionWrapper>
       {!collection.loading && collection.info && (
@@ -88,6 +96,12 @@ const NFTCollection = () => {
           <NftCollectionInfo>
             <TYPE.titleBig>{collection.info.name}</TYPE.titleBig>
           </NftCollectionInfo>
+
+          <NftCollectionBackButtonWrapper>
+            <ButtonGradientBorder onClick={() => history.goBack()}>
+              <TYPE.title3>Back</TYPE.title3>
+            </ButtonGradientBorder>
+          </NftCollectionBackButtonWrapper>
 
           {collection.info.supply === 0 && (
             <NoNftContainer>
