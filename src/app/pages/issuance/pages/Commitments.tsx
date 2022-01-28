@@ -14,7 +14,11 @@ import { getEndDate } from 'helpers/countdownTimer'
 import { CloseDealDialog } from 'app/pages/issuance/components/Commitments/CloseDealDialog/CloseDealDialog'
 import { DSOFilter } from 'app/pages/issuance/components/Commitments/DSOFilter'
 
-export const Commitments = () => {
+export interface ComminmentProps {
+  isNewThemeOn?: boolean
+}
+
+export const Commitments = ({ isNewThemeOn = false }: ComminmentProps) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
   const { data, isLoading } = useDSOById(dsoId, issuerId)
@@ -34,46 +38,48 @@ export const Commitments = () => {
 
   return (
     <>
-      <Grid
-        item
-        container
-        justifyContent={'space-between'}
-        alignItems={'center'}
-        style={{
-          marginTop: theme.spacing(3.5),
-          marginBottom: theme.spacing(5)
-        }}
-        xs={12}
-      >
-        <Grid item xs={12} lg={9}>
-          <PageHeader title={data?.tokenName} />
-          {isMiniLaptop && <VSpacer size={'small'} />}
-        </Grid>
-        <Grid item container xs={12} lg={3} justifyContent={'space-between'}>
-          <Grid item xs={12} sm={6} md={4} lg={7}>
-            <DSOFilter />
-            {isMobile && <VSpacer size={'small'} />}
+      {!isNewThemeOn && (
+        <Grid
+          item
+          container
+          justifyContent={'space-between'}
+          alignItems={'center'}
+          style={{
+            marginTop: theme.spacing(3.5),
+            marginBottom: theme.spacing(5)
+          }}
+          xs={12}
+        >
+          <Grid item xs={12} lg={9}>
+            <PageHeader title={data?.tokenName} />
+            {isMiniLaptop && <VSpacer size={'small'} />}
           </Grid>
-          <Grid
-            item
-            container
-            justifyContent={'flex-end'}
-            xs={12}
-            sm={6}
-            md={6}
-            lg={5}
-          >
-            <Button
-              variant={'outlined'}
-              color={'primary'}
-              disabled={!isCloseDealTimerCompleted || isDealClosed}
-              onClick={() => setIsModalOpen(true)}
+          <Grid item container xs={12} lg={3} justifyContent={'space-between'}>
+            <Grid item xs={12} sm={6} md={4} lg={7}>
+              <DSOFilter />
+              {isMobile && <VSpacer size={'small'} />}
+            </Grid>
+            <Grid
+              item
+              container
+              justifyContent={'flex-end'}
+              xs={12}
+              sm={6}
+              md={6}
+              lg={5}
             >
-              {isDealClosed ? 'Closed' : 'Close deal'}
-            </Button>
+              <Button
+                variant={'outlined'}
+                color={'primary'}
+                disabled={!isCloseDealTimerCompleted || isDealClosed}
+                onClick={() => setIsModalOpen(true)}
+              >
+                {isDealClosed ? 'Closed' : 'Close deal'}
+              </Button>
+            </Grid>
           </Grid>
         </Grid>
-      </Grid>
+      )}
 
       <Grid
         container
@@ -88,7 +94,14 @@ export const Commitments = () => {
           xs={12}
           justifyContent={'space-between'}
         >
-          <Grid item container xs={12} md={8} lg={5} spacing={isTablet ? 0 : 3}>
+          <Grid
+            item
+            container
+            xs={12}
+            md={8}
+            lg={isNewThemeOn ? 8 : 5}
+            spacing={isTablet ? 0 : 1}
+          >
             <Grid item xs={12} md={6}>
               <Card
                 variant='outlined'

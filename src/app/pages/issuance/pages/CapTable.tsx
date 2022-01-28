@@ -5,12 +5,18 @@ import { Insights } from 'app/pages/issuance/components/CapTable/Insights'
 import { TopInsights } from 'app/pages/issuance/components/CapTable/TopInsights'
 import React from 'react'
 
-export const CapTable = () => {
+export interface CapTableProps {
+  isNewThemeOn?: boolean
+}
+
+export const CapTable = ({ isNewThemeOn = false }: CapTableProps) => {
   return (
     <Grid container spacing={3}>
-      <Grid item xs={12}>
-        <CapTablePageHeader />
-      </Grid>
+      {!isNewThemeOn && (
+        <Grid item xs={12}>
+          <CapTablePageHeader />
+        </Grid>
+      )}
       <Grid item xs={12}>
         <Insights />
       </Grid>
