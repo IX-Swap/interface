@@ -12,6 +12,16 @@ const NftCollectionWrapper = styled.div`
 `
 const NftCollectionInfo = styled.div`
   padding: 2rem;
+
+  width: 100%;
+
+  display: flex;
+  flex-flow: row;
+
+  justify-content: center;
+  align-items: center;
+
+  text-align: center;
 `
 
 const NftCollectionItems = styled.div`
@@ -19,6 +29,8 @@ const NftCollectionItems = styled.div`
 
   grid-template-columns: repeat(auto-fit, 350px);
   grid-auto-rows: 450px;
+
+  place-content: center;
 
   gap: 2rem;
 
