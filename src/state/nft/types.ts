@@ -93,6 +93,7 @@ export interface GroupKeyValuesInput {
 }
 export interface NftCreateProps {
   file: FileWithPath
+  preview: FileWithPath | null
   name: string
   keyValues: KeyValues
   freeze?: boolean
