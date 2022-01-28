@@ -47,7 +47,7 @@ const NFTCollections: FC = () => {
     <Container>
       <Body>
         <TYPE.titleBig marginBottom={64} textAlign="center" fontWeight={600}>
-          Explore Collections
+          My Collections
         </TYPE.titleBig>
         {/* We don't have categories for collections for now. May be present in the future */}
         {/* <Flex justifyContent="center" alignItems="center">
