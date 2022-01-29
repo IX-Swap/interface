@@ -86,11 +86,11 @@ export const DSOPreview = (props: DSOPreviewProps) => {
       </TabPanel>
 
       <TabPanel value={selectedIdx} index={1}>
-        <Commitments isNewThemeOn />
+        <Commitments />
       </TabPanel>
 
       <TabPanel value={selectedIdx} index={2}>
-        <CapTable isNewThemeOn />
+        <CapTable />
       </TabPanel>
 
       <Element name={DSOFormSection.Information}>

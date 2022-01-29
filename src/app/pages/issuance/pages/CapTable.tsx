@@ -1,22 +1,12 @@
 import { Grid } from '@material-ui/core'
-import { CapTablePageHeader } from 'app/pages/issuance/components/CapTable/CapTablePageHeader'
 import { Investors } from 'app/pages/issuance/components/CapTable/Investors'
 import { Insights } from 'app/pages/issuance/components/CapTable/Insights'
 import { TopInsights } from 'app/pages/issuance/components/CapTable/TopInsights'
 import React from 'react'
 
-export interface CapTableProps {
-  isNewThemeOn?: boolean
-}
-
-export const CapTable = ({ isNewThemeOn = false }: CapTableProps) => {
+export const CapTable = () => {
   return (
     <Grid container spacing={3}>
-      {!isNewThemeOn && (
-        <Grid item xs={12}>
-          <CapTablePageHeader />
-        </Grid>
-      )}
       <Grid item xs={12}>
         <Insights />
       </Grid>
