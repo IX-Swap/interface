@@ -24,6 +24,7 @@ export interface NFTImageShow {
   name: string
   description: string
   file: string
+  previewUrl: string
   date?: number
   attributes: NFTAttributeDisplay[]
   isNSFW: string
