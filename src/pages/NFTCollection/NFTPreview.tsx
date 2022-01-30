@@ -169,7 +169,7 @@ const NFTPreview = (props: NFTPreviewProps) => {
     fetch(props.uri)
       .then((res) => res.json())
       .then((res) => ({
-        file: res.file,
+        file: res.previewUrl ?? res.file,
         name: res.name,
         isNSFW: res.isNSFW === 'true',
       }))

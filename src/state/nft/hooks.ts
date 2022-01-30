@@ -112,12 +112,17 @@ export const createFullNftCollection = async (collectionDto: CollectionFullCreat
 }
 
 export const createNftAsset = async (nftDto: NftCreateProps) => {
-  const { file, name, freeze, keyValues } = nftDto
+  const { file, name, preview, freeze, keyValues } = nftDto
   const formData = new FormData()
   formData.append('file', file, file.name)
   formData.append('name', name)
   formData.append('freeze', JSON.stringify(freeze))
   formData.append('keyValues', JSON.stringify(keyValues))
+
+  if (preview) {
+    formData.append('preview', preview, preview.name)
+  }
+
   const result = await apiService.post(nft.create, formData)
   return result.data
 }
@@ -635,6 +640,7 @@ export const useFetchMyCollections = () => {
 const getCreateNftDto = ({
   name,
   file,
+  preview,
   freeze,
   description,
   link,
@@ -648,6 +654,7 @@ const getCreateNftDto = ({
   }
   const dto: NftCreateProps = {
     file,
+    preview,
     name,
     keyValues: groupKeyValues({ description, link, properties, stats, levels, isNSFW }),
   }
