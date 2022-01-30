@@ -392,7 +392,7 @@ const NftAssetPage = ({
         </ButtonGradientBorder>
       </NftCollectionBackButtonWrapper>
 
-      <NftImage src={item.file} />
+      <NftImage src={item.previewUrl ?? item.file} />
 
       <NftInfoContainer>
         <div>
