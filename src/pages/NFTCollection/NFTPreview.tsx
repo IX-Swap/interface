@@ -128,7 +128,7 @@ type PreviewProps = {
   path: string
 }
 
-const Preview = ({ type, path }: PreviewProps) => {
+export const NftFilePreview = ({ type, path }: PreviewProps) => {
   const getPreviewElement = useCallback(() => {
     const fileType = getFileType(type)
     switch (fileType) {
@@ -185,7 +185,7 @@ const NFTPreview = (props: NFTPreviewProps) => {
     <NFTPreviewContainer>
       {info && (
         <>
-          <Preview type={info.type} path={info.file} />
+          <NftFilePreview type={info.type} path={info.file} />
           <NFTPreviewNameContainer>
             <TYPE.title5>{info?.name}</TYPE.title5>
             {info.isNSFW && (
