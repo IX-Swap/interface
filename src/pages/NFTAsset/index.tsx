@@ -19,6 +19,8 @@ import { useActiveWeb3React } from 'hooks/web3'
 import { ButtonGradientBorder, ButtonIXSGradient, ButtonPrimary } from 'components/Button'
 import { routes } from 'utils/routes'
 
+import { NftFilePreview } from '../NFTCollection/NFTPreview'
+
 const item = {
   name: 'Mushroom Rock',
   description: 'Pretty rocks',
@@ -70,7 +72,7 @@ interface NftStatProps {
   stat: NftStat
 }
 
-const NftImage = styled.img`
+const ImageContainer = styled.div`
   border-radius: 0.5rem;
   object-fit: contain;
 
@@ -352,6 +354,7 @@ const NftAssetPage = ({
 }: RouteComponentProps<{ collectionAddress?: string; itemId?: string }>) => {
   const getNFTDetails = useGetNFTDetails(collectionAddress, Number(itemId))
   const [item, setItem] = useState<NFTImageShow | null>(null)
+  const [type, setType] = useState('image')
   // const date = React.useMemo(() => new Date(item.date), [])
   const isNSFW = item?.isNSFW === 'true'
   const { account } = useActiveWeb3React()
@@ -372,6 +375,17 @@ const NftAssetPage = ({
     async function getDetails() {
       if (collectionAddress && itemId !== undefined) {
         const data = await getNFTDetails()
+
+        const response = await fetch(data.file)
+        const itemType = response.headers.get('content-type') ?? 'image'
+
+        setType(itemType)
+
+        if (itemType === 'application/octet-stream') {
+          data.file = data.previewUrl
+          setType('image')
+        }
+
         setItem(data)
       }
     }
@@ -392,7 +406,10 @@ const NftAssetPage = ({
         </ButtonGradientBorder>
       </NftCollectionBackButtonWrapper>
 
-      <NftImage src={item.previewUrl ?? item.file} />
+      {/*<NftImage src={item.file} />*/}
+      <ImageContainer>
+        <NftFilePreview type={type} path={item.file} />
+      </ImageContainer>
 
       <NftInfoContainer>
         <div>
