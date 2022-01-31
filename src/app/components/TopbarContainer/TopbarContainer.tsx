@@ -139,6 +139,11 @@ export const TopbarContainer = () => {
       label: 'Cap Table',
       path: IssuanceRoute.capTable
     })
+
+    newIssuanceLandingLinks.push({
+      label: 'Financial Reports',
+      path: IssuanceRoute.financialReports
+    })
   }
 
   const dropdownLinksItems = (name: string) => {

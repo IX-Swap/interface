@@ -12,6 +12,7 @@ import { AppRoute } from 'components/AppRoute'
 import { Commitments } from 'app/pages/issuance/pages/Commitments'
 import { useIsIssuer } from 'helpers/acl'
 import { CapTableRouter } from 'app/pages/issuance/router/CapTableRouter'
+import { FinancialReportsRouter } from 'app/pages/issuance/router/FinancialReportsRouter'
 
 export const IssuanceRouter = () => {
   const isIssuer = useIsIssuer()
@@ -89,6 +90,15 @@ export const IssuanceRouter = () => {
           path={IssuanceRoute.capTable}
         >
           <CapTableRouter />
+        </AppRoute>
+      ) : null}
+
+      {isIssuer ? (
+        <AppRoute
+          breadcrumb='Financial Reports'
+          path={IssuanceRoute.financialReports}
+        >
+          <FinancialReportsRouter />
         </AppRoute>
       ) : null}
     </Switch>
