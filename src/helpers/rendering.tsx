@@ -13,7 +13,7 @@ import { DigitalSecurityOffering } from 'types/dso'
 import { formatMoney } from './numbers'
 import { DSOLogo } from 'app/components/DSO/components/DSOLogo'
 import { Commitment } from 'types/commitment'
-import { Order } from 'types/order'
+import { Order, OrderSide } from 'types/order'
 import { OrderStatus } from 'app/pages/exchange/components/PastOrderTable/OrderStatus'
 import { Side } from 'app/pages/exchange/components/TradeHistoryTable/Side'
 import { dsoQueryKeys } from 'config/queryKeys'
@@ -85,7 +85,7 @@ export const documentIcons = {
   unknown: unknownIcon
 }
 
-export const renderSide = (side: 'BID' | 'ASK') => <Side side={side} />
+export const renderSide = (side: OrderSide) => <Side side={side} />
 
 export const renderDateAndTimeField = (date: any) => {
   return (

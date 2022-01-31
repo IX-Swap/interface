@@ -1,3 +1,4 @@
+import { OrderSide } from 'types/order'
 import { getIdFromObj, getOrderSideName } from '../strings'
 
 describe('getIDString', () => {
@@ -19,11 +20,11 @@ describe('getIDString', () => {
 })
 
 describe('getOrderSideName', () => {
-  it('returns correct value when argument is ASK', () => {
-    expect(getOrderSideName('BID')).toEqual('Buy')
+  it('returns correct value when argument is BID', () => {
+    expect(getOrderSideName(OrderSide.BID)).toEqual('Buy')
   })
 
-  it('returns correct value when argument is BID', () => {
-    expect(getOrderSideName('ASK')).toEqual('Sell')
+  it('returns correct value when argument is ASK', () => {
+    expect(getOrderSideName(OrderSide.ASK)).toEqual('Sell')
   })
 })
