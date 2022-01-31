@@ -36,6 +36,10 @@ config.plugins.push(
       {
         from: 'public/charting_library',
         to: 'charting_library'
+      },
+      {
+        from: 'public/fonts',
+        to: 'fonts'
       }
     ]
   })
