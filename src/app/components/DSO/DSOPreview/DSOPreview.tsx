@@ -1,7 +1,6 @@
 import React, { Fragment, useState } from 'react'
 import { DigitalSecurityOffering } from 'types/dso'
 import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
-import { DSOBaseFieldsView } from 'app/components/DSO/DSOPreview/DSOBaseFieldsView'
 import { VSpacer } from 'components/VSpacer'
 import { DSOPricingViewCompact } from 'app/components/DSO/components/DSOPricingViewCompact'
 import { DSOTermsViewCompact } from 'app/components/DSO/DSOPreview/DSOTermsViewCompact'
@@ -54,10 +53,6 @@ export const DSOPreview = (props: DSOPreviewProps) => {
 
   return (
     <Fragment>
-      <Element name={DSOFormSection['DSO Information']}>
-        <DSOBaseFieldsView dso={data} />
-      </Element>
-
       <Tabs
         value={selectedIdx}
         onChange={(_, index) => setSelectedIdx(index)}
@@ -95,17 +90,17 @@ export const DSOPreview = (props: DSOPreviewProps) => {
 
       <Element name={DSOFormSection.Information}>
         <VSpacer size='large' />
-        <DSOInformationView dso={data} />
+        <DSOInformationView dso={data} isNewThemeOn />
       </Element>
 
       <Element name={DSOFormSection['Team Members']}>
         <VSpacer size='large' />
-        <DSOTeamView dso={data} />
+        <DSOTeamView dso={data} isNewThemeOn />
       </Element>
 
       <Element name={DSOFormSection.Documents}>
         <VSpacer size='large' />
-        <DSODataroomView dso={data} />
+        <DSODataroomView dso={data} isNewThemeOn />
       </Element>
 
       {renderVideosFormSection()}

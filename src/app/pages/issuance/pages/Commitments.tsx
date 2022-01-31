@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Card, Grid } from '@material-ui/core'
 import { CountdownTimer } from '../components/CountdownTimer/CountdownTimer'
 import { AmountRaised } from 'app/pages/issuance/components/CapTable/AmountRaised'
@@ -9,10 +9,8 @@ import { TargetFundraise } from 'app/pages/issuance/components/IssuanceLanding/T
 import { InvestorCommitmentTable } from 'app/pages/issuance/components/Commitments/InvestorCommitmentTable'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
-import { CloseDealDialog } from 'app/pages/issuance/components/Commitments/CloseDealDialog/CloseDealDialog'
 
 export const Commitments = () => {
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()
   const { isLoading } = useDSOById(dsoId, issuerId)
   const { theme, isTablet } = useAppBreakpoints()
@@ -79,10 +77,6 @@ export const Commitments = () => {
           <InvestorCommitmentTable />
         </Grid>
       </Grid>
-      <CloseDealDialog
-        open={isModalOpen}
-        toggleOpen={() => setIsModalOpen(!isModalOpen)}
-      />
     </>
   )
 }
