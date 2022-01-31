@@ -4,33 +4,33 @@ import useStyles from './SettingsRow.styles'
 
 export interface SettingsRowProps {
   name: string
-  image?: string
   action: JSX.Element
 }
 
-export const SettingsRow = ({ name, action, image }: SettingsRowProps) => {
+export const SettingsRow = ({ name, action }: SettingsRowProps) => {
   const classes = useStyles()
 
   return (
-    <Box mt={5} mb={3}>
-      <Grid container alignItems='center' justifyContent='space-between'>
+    <Box className={classes.wrapper}>
+      <Grid
+        container
+        alignItems='center'
+        justifyContent='space-between'
+        className={classes.content}
+      >
         <Grid
           container
           item
           alignItems='center'
           justifyContent='flex-start'
-          xs={8}
+          xs={12}
+          sm={8}
         >
-          {image !== undefined && (
-            <Grid item>
-              <img src={image} className={classes.logoImg} alt={name} />
-            </Grid>
-          )}
           <Grid item>
             <Typography variant='subtitle1'>{name}</Typography>
           </Grid>
         </Grid>
-        <Grid item container justifyContent='flex-end' xs={4}>
+        <Grid item container justifyContent='flex-end' xs={12} sm={4}>
           {action}
         </Grid>
       </Grid>

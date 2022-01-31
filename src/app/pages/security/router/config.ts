@@ -1,8 +1,7 @@
-import { makeURL } from 'config/appURL'
-
 export const SecurityRoute = {
-  landing: makeURL(['app', 'settings']),
-  changePassword: makeURL(['app', 'settings', 'changePassword']),
-  setup2fa: makeURL(['app', 'settings', 'setup2fa']),
-  guide: makeURL(['app', 'settings', 'guide2fa'])
+  landing: '/app/settings',
+  changePassword: '/app/settings/change2fa/changePassword',
+  setup2fa: '/app/settings/setup2fa',
+  change2fa: '/app/settings/change2fa',
+  guide: '/app/settings/guide2fa'
 }
