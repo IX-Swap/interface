@@ -69,7 +69,7 @@ describe('LiveTrackingPrice', () => {
       marketTrades: [
         {
           price: 1000,
-          side: 'ASK'
+          side: OrderSide.ASK
         },
         {
           price: 1200
