@@ -5,7 +5,7 @@ import { BaseFilters } from 'app/components/BaseFilters/BaseFilters'
 
 export const Filters = () => {
   return (
-    <BaseFilters>
+    <BaseFilters searchLabel='Search by Virtual Account'>
       <>
         <Grid item>
           <CurrencyFilter currency='SGD' />
