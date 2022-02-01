@@ -17,7 +17,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, AppState } from 'state'
 import { PERIOD, StakingStatus } from 'state/stake/reducer'
 import { useTransactionAdder } from 'state/transactions/hooks'
-import { useIXSBalance } from 'state/user/hooks'
+import { useIXSBalance, useIXSGovBalance } from 'state/user/hooks'
 import { useCurrencyBalance } from 'state/wallet/hooks'
 import { calculateGasMargin } from 'utils/calculateGasMargin'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
@@ -299,9 +299,13 @@ export function useStakingStatus() {
   const { status, stakings, rewards, payouts } = useStakingState()
   const { account } = useActiveWeb3React()
   const IXSBalance = useIXSBalance()
-  const hasBalance = JSBI.greaterThan(IXSBalance?.amount?.quotient ?? BIG_INT_ZERO, BIG_INT_ZERO)
+  const IXSGovBalance = useIXSGovBalance()
+  const hasIXSBalance = JSBI.greaterThan(IXSBalance?.amount?.quotient ?? BIG_INT_ZERO, BIG_INT_ZERO)
+  const hasIXSGovBalance = JSBI.greaterThan(IXSGovBalance?.amount?.quotient ?? BIG_INT_ZERO, BIG_INT_ZERO)
   const saveStatus = useSaveStakingStatus()
   const hasStaking = stakings.length || rewards.length || payouts.length
+  const hasBalance = hasIXSBalance || hasIXSGovBalance
+
   useEffect(() => {
     if (!account && status !== StakingStatus.CONNECT_WALLET) {
       saveStatus(StakingStatus.CONNECT_WALLET)
