@@ -87,8 +87,9 @@ export default function Faucet() {
   }, [nftId, setError])
 
   const chain = (chainId && CHAIN_INFO[chainId]) || null
-  const blurred = chainId !== undefined && !TGE_CHAINS_WITH_SWAP.includes(chainId)
+  //const blurred = chainId !== undefined && !TGE_CHAINS_WITH_SWAP.includes(chainId)
   const showExtraInput = chainId === SUPPORTED_TGE_CHAINS.MAIN || SUPPORTED_TGE_CHAINS.MATIC
+  const blurred = chainId !== SUPPORTED_TGE_CHAINS.KOVAN
 
   if (!account) return <NFTConnectWallet />
 
