@@ -53,6 +53,7 @@ export interface TableViewProps<T> {
   themeVariant?: 'default' | 'primary'
   noDataComponent?: JSX.Element
   noHeader?: boolean
+  actionHeader?: string
 }
 
 export const TableView = <T,>({
@@ -75,7 +76,8 @@ export const TableView = <T,>({
   size = 'medium',
   themeVariant = 'primary',
   noHeader = false,
-  noDataComponent = <NoData title='No Data' />
+  noDataComponent = <NoData title='No Data' />,
+  actionHeader = ''
 }: TableViewProps<T>): JSX.Element => {
   const {
     items,
@@ -200,7 +202,21 @@ export const TableView = <T,>({
                       </TableCell>
                     ))}
                     {hasActions && (
-                      <TableCell style={{ borderBottom: 'none' }} />
+                      <TableCell
+                        style={{ borderBottom: 'none' }}
+                        align={'left'}
+                      >
+                        <b
+                          style={{
+                            color:
+                              themeVariant === 'primary'
+                                ? theme.palette.slider.activeColor
+                                : 'initial'
+                          }}
+                        >
+                          {actionHeader}
+                        </b>
+                      </TableCell>
                     )}
                   </TableRow>
                 </TableHead>
