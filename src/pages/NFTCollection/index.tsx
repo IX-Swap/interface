@@ -24,6 +24,7 @@ const NftCollectionBackButtonWrapper = styled.div`
   @media (max-width: 540px) {
     position: relative;
     gap: 1rem;
+    margin: 0.25rem 0;
   }
 `
 
