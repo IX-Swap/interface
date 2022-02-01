@@ -6,6 +6,7 @@ import { useNftCollection } from 'state/nft/hooks'
 import NFTPreview from './NFTPreview'
 import { TYPE } from 'theme'
 import { ButtonGradientBorder, ButtonIXSGradient, ButtonPrimary } from 'components/Button'
+import { RowBetween } from 'components/Row'
 import { routes } from 'utils/routes'
 
 const NftCollectionWrapper = styled.div`
@@ -19,6 +20,11 @@ const NftCollectionBackButtonWrapper = styled.div`
   top: 2rem;
 
   margin: 0 2rem;
+
+  @media (max-width: 540px) {
+    position: relative;
+    gap: 1rem;
+  }
 `
 
 const NftCollectionInfo = styled.div`
@@ -106,15 +112,17 @@ const NFTCollection = () => {
     <NftCollectionWrapper>
       {!collection.loading && collection.info && (
         <>
-          <NftCollectionInfo>
-            <TYPE.titleBig>{collection.info.name}</TYPE.titleBig>
-          </NftCollectionInfo>
+          <RowBetween style={{ marginBottom: '15px', flexWrap: 'wrap' }}>
+            <NftCollectionBackButtonWrapper>
+              <ButtonGradientBorder onClick={() => history.push(routes.nftCollections)}>
+                <TYPE.title3>Back</TYPE.title3>
+              </ButtonGradientBorder>
+            </NftCollectionBackButtonWrapper>
 
-          <NftCollectionBackButtonWrapper>
-            <ButtonGradientBorder onClick={() => history.push(routes.nftCollections)}>
-              <TYPE.title3>Back</TYPE.title3>
-            </ButtonGradientBorder>
-          </NftCollectionBackButtonWrapper>
+            <NftCollectionInfo>
+              <TYPE.titleBig>{collection.info.name}</TYPE.titleBig>
+            </NftCollectionInfo>
+          </RowBetween>
 
           {collection.info.supply === 0 && (
             <NoNftContainer>
