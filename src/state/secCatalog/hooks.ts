@@ -19,30 +19,53 @@ export const addIssuer = async (issuer: Issuer) => {
   formData.append('name', name)
   formData.append('url', url)
   formData.append('description', '123')
-  const result = await apiService.post(secCatalog.createIssuer, formData)
-  return result.data
+
+  try {
+    const result = await apiService.post(secCatalog.createIssuer, formData)
+    return result.data
+  } catch (e) {
+    console.log(e)
+  }
 }
 
 export const updateToken = async (token: any) => {
   const formData = new FormData()
   for (const key in token) {
-    if (key !== 'logo' && key !== 'id') {
+    if (key === 'logo' && token.file) {
+      formData.append('logo', token.file, token.file.name)
+    }
+    if (key !== 'id' && key !== 'file' && key !== 'filePath') {
       formData.append(key, token[key])
     }
   }
-  const result = await apiService.put(secCatalog.issuerToken(token.id), formData)
-  return result.data
+
+  try {
+    const result = await apiService.put(secCatalog.issuerToken(token.id), formData)
+    return result.data
+  } catch (e) {
+    console.log(e)
+    return null
+  }
 }
 
 export const addToken = async (issuerId: number, token: any) => {
   const formData = new FormData()
   for (const key in token) {
-    if (key !== 'logo' && key !== 'id') {
+    if (key === 'logo' && token.file) {
+      formData.append('logo', token.file, token.file.name)
+    }
+    if (key !== 'id' && key !== 'file' && key !== 'filePath') {
       formData.append(key, token[key])
     }
   }
-  const result = await apiService.post(secCatalog.createIssuerToken(issuerId), formData)
-  return result.data
+
+  try {
+    const result = await apiService.post(secCatalog.createIssuerToken(issuerId), formData)
+    return result.data
+  } catch (e) {
+    console.log(e)
+    return null
+  }
 }
 
 export const editIssuer = async (issuerId: number, issuer: Issuer) => {
@@ -51,8 +74,13 @@ export const editIssuer = async (issuerId: number, issuer: Issuer) => {
   // formData.append('logo', logo, logo.name)
   formData.append('name', name)
   formData.append('url', url)
-  const result = await apiService.put(secCatalog.issuer(issuerId), formData)
-  return result.data
+
+  try {
+    const result = await apiService.put(secCatalog.issuer(issuerId), formData)
+    return result.data
+  } catch (e) {
+    console.log(e)
+  }
 }
 
 export const getIssuers = async () => {
@@ -63,6 +91,25 @@ export const getIssuers = async () => {
 export const deleteToken = async (tokenId: number) => {
   const result = await apiService.delete(secCatalog.issuerToken(tokenId), null)
   return result.data
+}
+
+export const getAllTokens = async () => {
+  const result = await apiService.get(secCatalog.allIssuerTokens)
+  return result.data
+}
+
+export const getToken = async (id: number) => {
+  const result = await apiService.get(secCatalog.issuerToken(id))
+  return result.data
+}
+
+export const checkWrappedAddress = async (address: string) => {
+  try {
+    const result = await apiService.get(secCatalog.checkWrappedAddress(address))
+    return result.data
+  } catch (e) {
+    console.log(e)
+  }
 }
 
 export function useAddIssuer() {

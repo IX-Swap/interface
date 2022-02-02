@@ -1,33 +1,27 @@
-import React, { useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Box } from 'rebass'
 import { FixedSizeList } from 'react-window'
 
 import { RowBetween } from 'components/Row'
 import { TYPE } from 'theme'
 import { StyledButtonGradientBorder } from 'components/AdminSecurityCatalog/styleds'
-import { MySecToken } from './MySecToken'
 import { FeaturedToken } from './FeaturedToken'
 import { SecTokensTable } from './SecTokensTable'
 import { useAuthState } from 'state/auth/hooks'
 import { useActiveWeb3React } from 'hooks/web3'
 import AppBody from 'pages/AppBody'
 import { ListType, useCurrencySearch } from 'components/SearchModal/useCurrencySearch'
-
 import { TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
-import {
-  MySecTokensTab,
-  StyledBodyWrapper,
-  GradientText,
-  MySecTokensGrid,
-  Divider,
-  FeaturedTokensGrid,
-} from './styleds'
+import { getAllTokens } from 'state/secCatalog/hooks'
+
+import { StyledBodyWrapper, FeaturedTokensGrid } from './styleds'
 
 export default function CustodianV2() {
   const { token } = useAuthState()
   const { account, chainId } = useActiveWeb3React()
   const isLoggedIn = !!token && !!account
   const listRef = useRef<FixedSizeList>()
+  const [tokens, setTokens] = useState([])
   const { filteredSortedTokens } = useCurrencySearch({
     listRef,
     list: ListType.USER_TOKENS,
@@ -40,6 +34,18 @@ export default function CustodianV2() {
       tokenInfo.accreditationRequest.status !== 'undefined' && tokenInfo.accreditationRequest.status !== 'approved'
   )
 
+  useEffect(() => {
+    const getTokens = async () => {
+      const result = await getAllTokens()
+      setTokens(result)
+    }
+
+    getTokens()
+  }, [])
+
+  const featuredTokens = tokens.filter(({ feautured, active }) => active && feautured)
+  const activeTokens = tokens.filter(({ active }) => active)
+
   return chainId !== undefined && !TGE_CHAINS_WITH_SWAP.includes(chainId) ? (
     <AppBody blurred>Security Tokens</AppBody>
   ) : (
@@ -51,7 +57,7 @@ export default function CustodianV2() {
 
       {isLoggedIn && (approvedSecTokens?.length > 0 || pendingSecTokens?.length > 0) && (
         <>
-          <MySecTokensTab marginBottom="72px">
+          {/* <MySecTokensTab marginBottom="72px">
             <GradientText>
               <TYPE.title5 marginBottom="32px" color="inherit">
                 My security tokens
@@ -82,17 +88,18 @@ export default function CustodianV2() {
                 </MySecTokensGrid>
               </>
             )}
-          </MySecTokensTab>
-          <Box marginBottom="72px">
-            <TYPE.title5 marginBottom="32px">Featured</TYPE.title5>
-            <FeaturedTokensGrid>
-              {[1, 2, 3, 4].map((num) => (
-                <FeaturedToken num={num} key={`featured-${num}`} />
-              ))}
-            </FeaturedTokensGrid>
-          </Box>
-
-          <SecTokensTable />
+          </MySecTokensTab> */}
+          {featuredTokens?.length > 0 && (
+            <Box marginBottom="72px">
+              <TYPE.title5 marginBottom="32px">Featured</TYPE.title5>
+              <FeaturedTokensGrid>
+                {featuredTokens.map((token: any) => (
+                  <FeaturedToken token={token} key={`featured-${token.id}`} />
+                ))}
+              </FeaturedTokensGrid>
+            </Box>
+          )}
+          <SecTokensTable tokens={activeTokens} />
         </>
       )}
     </StyledBodyWrapper>

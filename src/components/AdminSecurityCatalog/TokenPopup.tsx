@@ -4,16 +4,26 @@ import { Box } from 'rebass'
 import { Label } from '@rebass/forms'
 
 import { RowBetween } from 'components/Row'
+import { isAddress, isValidAddress, shortAddress } from 'utils'
 import { ButtonText, CloseIcon, ModalContentWrapper, ModalPadding, TYPE } from 'theme'
-import { useModalOpen, useTokenPopupToggle } from 'state/application/hooks'
+import { useAddPopup, useModalOpen, useTokenPopupToggle } from 'state/application/hooks'
 import { ApplicationModal } from 'state/application/actions'
 import { ContainerRow, Input, InputContainer, InputPanel, Textarea } from 'components/Input'
 import { Radio } from './Radio'
 import { ButtonIXSGradient } from 'components/Button'
-import { addToken, updateToken, useFetchIssuers } from 'state/secCatalog/hooks'
+import { addToken, checkWrappedAddress, updateToken, useFetchIssuers } from 'state/secCatalog/hooks'
+import { Dropdown } from './Dropdown'
+import Upload from 'components/Upload'
+import { AddressInput } from 'components/AddressInputPanel/AddressInput'
 
 import { ReactComponent as LogoImage } from '../../assets/images/wallpaper.svg'
 import { WideModal, WideModalWrapper, FormWrapper, FormGrid, Logo, FormRow } from './styleds'
+import { initialTokenState } from './mock'
+
+const chains = [
+  { id: 1, name: 'Main' },
+  { id: 42, name: 'Kovan' },
+]
 
 interface Props {
   token: any | null
@@ -24,45 +34,59 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer }: Props
   const isOpen = useModalOpen(ApplicationModal.TOKEN_POPUP)
   const toggle = useTokenPopupToggle()
   const getIssuers = useFetchIssuers()
+  const addPopup = useAddPopup()
   const [token, setToken] = useState<any>(null)
 
   useEffect(() => {
     if (propToken) setToken(propToken)
-    else
-      setToken({
-        id: null,
-        address: '',
-        ticker: '',
-        logo: '',
-        companyName: '',
-        url: '',
-        industry: '',
-        country: '',
-        atlasOneId: '',
-        description: '',
-        active: null,
-        feautured: null,
-        tradable: null,
-        chainId: 42,
-      })
+    else setToken(initialTokenState)
   }, [propToken])
 
   const onClose = () => {
     toggle()
   }
 
-  const handleCreateClick = async () => {
-    if (token.id) {
-      await updateToken(token)
-    } else {
-      await addToken(currentIssuer.id, token)
+  const handleDropImage = (acceptedFile: any) => {
+    const file = acceptedFile
+    if (token.filePath) {
+      URL.revokeObjectURL(token.filePath)
     }
-
-    getIssuers()
-    toggle()
+    const preview = URL.createObjectURL(file)
+    setToken({ ...token, file, filePath: preview })
   }
 
-  console.log(token)
+  const handleCreateClick = async () => {
+    let data = null
+
+    if (token.id) {
+      data = await updateToken(token)
+    } else {
+      data = await addToken(currentIssuer.id, token)
+    }
+
+    if (data) {
+      getIssuers()
+      toggle()
+    } else {
+      addPopup({
+        info: {
+          success: false,
+          summary: 'All fields should not be empty',
+        },
+      })
+    }
+  }
+
+  const handleWrappedTokenChange = async (e: string) => {
+    let newToken = { ...token, wrappedTokenAddress: e }
+
+    if (isValidAddress(e)) {
+      const data = await checkWrappedAddress(e)
+      if (data) newToken = { ...newToken, token: data.id }
+    }
+
+    setToken(newToken)
+  }
 
   return (
     <WideModal isLarge isOpen={isOpen} onDismiss={onClose} minHeight={false} maxHeight={'fit-content'} scrollable>
@@ -71,7 +95,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer }: Props
           <ModalPadding>
             <RowBetween marginBottom="27px">
               <TYPE.description5>
-                <Trans>Add token</Trans>
+                <Trans>{token?.id ? 'Edit token' : 'Add token'}</Trans>
               </TYPE.description5>
 
               <CloseIcon data-testid="cross" onClick={onClose} />
@@ -82,10 +106,10 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer }: Props
                 <FormWrapper>
                   <FormGrid>
                     <Box>
-                      <Label marginBottom="11px" htmlFor="issuer-name">
+                      <Label marginBottom="11px" htmlFor="token-address">
                         <TYPE.title11 color="text2">Contract Address</TYPE.title11>
                       </Label>
-                      <InputPanel id={'item-name'}>
+                      {/* <InputPanel id={'item-name'}>
                         <ContainerRow>
                           <InputContainer>
                             <Input
@@ -95,7 +119,16 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer }: Props
                             />
                           </InputContainer>
                         </ContainerRow>
-                      </InputPanel>
+                      </InputPanel> */}
+                      <AddressInput
+                        {...{
+                          id: 'token-address',
+                          value: isAddress(token.address) ? shortAddress(token.address || '') : token.address,
+                          error: !Boolean(isValidAddress(token?.address || '')),
+                          onChange: (e) => setToken({ ...token, address: e }),
+                          placeholder: ' ',
+                        }}
+                      />
                     </Box>
                     <Box>
                       <Label marginBottom="11px" htmlFor="issuer-website">
@@ -118,12 +151,54 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer }: Props
                         <TYPE.title11 color="text2">Logo:</TYPE.title11>
                       </Label>
                       <ButtonText>
-                        <Logo>
-                          <LogoImage />
-                        </Logo>
+                        <Upload file={token.file} onDrop={(file) => handleDropImage(file)}>
+                          <Logo>
+                            {token.filePath || token.logo?.public ? (
+                              <img
+                                style={{ borderRadius: '36px' }}
+                                width="100%"
+                                height="100%"
+                                src={token.filePath || token.logo?.public}
+                              />
+                            ) : (
+                              <LogoImage />
+                            )}
+                          </Logo>
+                        </Upload>
                       </ButtonText>
                     </Box>
                   </FormGrid>
+                  <FormRow>
+                    <Box>
+                      <Label marginBottom="11px" htmlFor="token-chain">
+                        <TYPE.title11 color="text2">Select Chain</TYPE.title11>
+                      </Label>
+                      <Dropdown
+                        onSelect={(item) => {
+                          setToken({ ...token, chainId: item.id })
+                        }}
+                        selectedItem={chains.find(({ id }) => id === token.chainId)}
+                        items={chains}
+                      />
+                    </Box>
+                    <Box>
+                      <Label marginBottom="11px" htmlFor="token-wrapped-input">
+                        <TYPE.title11 color="text2">Wrapped token address</TYPE.title11>
+                      </Label>
+                      <AddressInput
+                        {...{
+                          disabled: token?.id ? true : false,
+                          id: 'token-wrapped-input',
+                          value: isAddress(token.wrappedTokenAddress)
+                            ? shortAddress(token.wrappedTokenAddress || '')
+                            : token.wrappedTokenAddress,
+                          error: !Boolean(isValidAddress(token?.wrappedTokenAddress || '')),
+                          onChange: handleWrappedTokenChange,
+                          placeholder: ' ',
+                        }}
+                      />
+                    </Box>
+                  </FormRow>
                   <FormRow>
                     <Box>
                       <Label marginBottom="11px" htmlFor="issuer-website">
@@ -164,34 +239,31 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer }: Props
                       <Label marginBottom="11px" htmlFor="issuer-website">
                         <TYPE.title11 color="text2">Industry:</TYPE.title11>
                       </Label>
-                      <InputPanel id={'item-website'} style={{ marginBottom: 20 }}>
-                        <ContainerRow>
-                          <InputContainer>
-                            <Input
-                              id="issuer-website"
-                              value={token.industry}
-                              onChange={(e) => setToken({ ...token, industry: e.currentTarget.value })}
-                            />
-                          </InputContainer>
-                        </ContainerRow>
-                      </InputPanel>
-
-                      <Label marginBottom="11px" htmlFor="issuer-website">
+                      <Dropdown
+                        onSelect={() => {
+                          console.log('seelct')
+                        }}
+                        selectedItem={{ id: 1, name: 'IT' }}
+                        items={[
+                          { id: 1, name: 'IT' },
+                          { id: 2, name: 'Oil' },
+                        ]}
+                      />
+                      <Label marginTop="20px" marginBottom="11px" htmlFor="issuer-website">
                         <TYPE.title11 color="text2">Country:</TYPE.title11>
                       </Label>
-                      <InputPanel id={'item-website'} style={{ marginBottom: 20 }}>
-                        <ContainerRow>
-                          <InputContainer>
-                            <Input
-                              id="issuer-website"
-                              value={token.country}
-                              onChange={(e) => setToken({ ...token, country: e.currentTarget.value })}
-                            />
-                          </InputContainer>
-                        </ContainerRow>
-                      </InputPanel>
+                      <Dropdown
+                        onSelect={() => {
+                          console.log('seelct')
+                        }}
+                        selectedItem={{ id: 1, name: 'Kazakhstan' }}
+                        items={[
+                          { id: 1, name: 'Russia' },
+                          { id: 2, name: 'USA' },
+                        ]}
+                      />
 
-                      <Label marginBottom="11px" htmlFor="issuer-website">
+                      <Label marginTop="20px" marginBottom="11px" htmlFor="issuer-website">
                         <TYPE.title11 color="text2">AtlasOne ID:</TYPE.title11>
                       </Label>
                       <InputPanel id={'item-website'} style={{ marginBottom: 20 }}>

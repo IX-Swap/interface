@@ -7,14 +7,20 @@ import { NoVault } from './NoVault'
 interface Props {
   currency?: Currency
   currencyId: string
+  token: any
 }
-export const Vault = ({ currency, currencyId }: Props) => {
+export const Vault = ({ currency, currencyId, token }: Props) => {
   const { status, isApproved: vaultExists, accreditationRequest, platform } = useAccreditationStatus(currencyId)
 
   return (
     <>
-      {!vaultExists && (
-        <NoVault currency={currency} status={status} accreditationRequest={accreditationRequest} platform={platform} />
+      {!vaultExists && token?.token && (
+        <NoVault
+          currency={token.token}
+          status={status}
+          accreditationRequest={accreditationRequest}
+          platform={platform}
+        />
       )}
       {vaultExists && <ExistingVault currency={currency} custodian={accreditationRequest?.custodian} />}
     </>

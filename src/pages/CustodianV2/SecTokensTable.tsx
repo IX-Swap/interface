@@ -33,57 +33,58 @@ const Header = () => {
 const Body: FC<BodyProps> = ({ tokens }: BodyProps) => {
   return (
     <>
-      {tokens.map((token, index) => {
-        const tokenInfo = (token as any)?.tokenInfo
-        return (
-          <NavLink
-            style={{ textDecoration: 'none' }}
-            key={`sec-tokens-${index}`}
-            to={`/security-tokens/${tokenInfo.address}`}
-          >
-            <StyledBodyRow>
-              <div>
-                <Flex alignItems="center">
-                  <CurrencyLogo currency={token} size={'30px'} style={{ marginRight: 10 }} />
-                  <TYPE.title5>{tokenInfo.symbol}</TYPE.title5>
-                </Flex>
-              </div>
-              <div>
-                <TYPE.main1 fontWeight={400}>{tokenInfo.platform.name}</TYPE.main1>
-              </div>
-              <div>
-                <TYPE.main1 fontWeight={400}>USA</TYPE.main1>
-              </div>
-              <div>
-                <TYPE.main1 fontWeight={400}>Finance</TYPE.main1>
-              </div>
-              <div>
-                {index % 3 !== 0 ? <NonTradable width={22} height={22} /> : <Tradable width={22} height={22} />}
-              </div>
-            </StyledBodyRow>
-          </NavLink>
-        )
-      })}
+      {tokens.map((token: any, index) => (
+        <NavLink style={{ textDecoration: 'none' }} key={`sec-tokens-${index}`} to={`/security-tokens/${token.id}`}>
+          <StyledBodyRow>
+            <div>
+              <Flex alignItems="center">
+                {token.logo ? (
+                  <img
+                    style={{ marginRight: 10, borderRadius: 24 }}
+                    width="30px"
+                    height="30px"
+                    src={token.logo.public}
+                  />
+                ) : (
+                  <CurrencyLogo currency={undefined} size={'30px'} style={{ marginRight: 16 }} />
+                )}
+                {/* <CurrencyLogo currency={token} size={'30px'} style={{ marginRight: 10 }} /> */}
+                <TYPE.title5>{token.ticker}</TYPE.title5>
+              </Flex>
+            </div>
+            <div>
+              <TYPE.main1 fontWeight={400}>{token.issuer.name}</TYPE.main1>
+            </div>
+            <div>
+              <TYPE.main1 fontWeight={400}>{token.country}</TYPE.main1>
+            </div>
+            <div>
+              <TYPE.main1 fontWeight={400}>{token.industry}</TYPE.main1>
+            </div>
+            <div>{token.tradable ? <NonTradable width={22} height={22} /> : <Tradable width={22} height={22} />}</div>
+          </StyledBodyRow>
+        </NavLink>
+      ))}
     </>
   )
 }
 
-export const SecTokensTable: FC = () => {
-  const listRef = useRef<FixedSizeList>()
-  const { filteredSortedTokens } = useCurrencySearch({
-    listRef,
-    list: ListType.OTHER,
-  })
+export const SecTokensTable: FC<BodyProps> = ({ tokens }: BodyProps) => {
+  // const listRef = useRef<FixedSizeList>()
+  // const { filteredSortedTokens } = useCurrencySearch({
+  //   listRef,
+  //   list: ListType.OTHER,
+  // })
 
-  return filteredSortedTokens?.length > 0 ? (
+  return tokens.length > 0 ? (
     <>
       <Flex marginBottom="40px">
         <TYPE.title5>{`Other security tokens`}</TYPE.title5>
         <TYPE.title5 marginLeft="4px" color="text2">
-          {`(${filteredSortedTokens?.length || '0'})`}
+          {`(${tokens?.length || '0'})`}
         </TYPE.title5>
       </Flex>
-      <Table style={{ marginBottom: 32 }} header={<Header />} body={<Body tokens={filteredSortedTokens} />} />
+      <Table style={{ marginBottom: 32 }} header={<Header />} body={<Body tokens={tokens} />} />
       <Pagination page={1} totalPages={1} onPageChange={() => console.log('change')} />{' '}
     </>
   ) : null

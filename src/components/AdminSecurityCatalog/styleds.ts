@@ -21,10 +21,6 @@ export const CardHeader = styled(BodyRow)`
   > div:first-child {
     padding-left: 55px;
   }
-
-  // > div {
-  //   padding: 20px 0px 20px 80px;
-  // }
 `
 
 export const EditButton = styled(ApproveButton)`

@@ -3,10 +3,9 @@ import { Box } from 'rebass'
 
 import { TYPE } from 'theme'
 import { ActionHistoryStatus } from 'components/Vault/enum'
-
-import { CardHeader, EditButton, TokensList, TokensListItem } from './styleds'
 import { StatusIcons } from 'components/Vault/styleds'
 
+import { CardHeader, EditButton, TokensList, TokensListItem } from './styleds'
 export interface BrokerDealerFakeProps {
   issuer: any
   handleEditClick: (editIssuer: any) => void
@@ -19,7 +18,7 @@ export const BrokerDealerCard: FC<BrokerDealerFakeProps> = ({ issuer, handleEdit
     <Box marginBottom="30px">
       <CardHeader>
         <Box>
-          <img style={{ objectFit: 'cover' }} width="75px" height="20px" src={logo.public} />
+          <img width="100%" height="20px" src={logo.public} />
         </Box>
         <TYPE.title6>{name}</TYPE.title6>
         <TYPE.descriptionThin style={{ overflow: 'visible' }}>{url}</TYPE.descriptionThin>
