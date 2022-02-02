@@ -99,3 +99,12 @@ export const renderDateAndTimeField = (date: any) => {
     </Grid>
   )
 }
+
+export const renderPartOfEmail = (email: string) => {
+  if (email === undefined || email.length < 1) {
+    return ''
+  }
+  const firstPart = email.split('@')[0]
+  const secondPart = email.split('@')[1]
+  return firstPart.slice(0, 3) + '***@' + secondPart
+}

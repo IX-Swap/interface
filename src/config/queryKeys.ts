@@ -137,6 +137,7 @@ export const investQueryKeys = {
 
 export const authQueryKeys = {
   get2fa: 'get-2fa',
+  getEmailCode: 'get-email-code',
   getLoginHistory: (userId?: string) =>
     generateQueryKey('login-history', userId)
 }

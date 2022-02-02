@@ -5,6 +5,7 @@ import { Landing } from 'app/pages/security/pages/landing/Landing'
 import { ChangePassword } from 'app/pages/security/pages/changePassword/ChangePassword'
 import { Setup2fa } from 'app/pages/security/pages/setup2fa/Setup2fa'
 import { Setup2FAGuide } from 'app/pages/security/pages/setup2faguide/Setup2FAGuide'
+import { Update2fa } from 'app/pages/security/pages/update2fa/Update2fa'
 
 export const SecurityRouter = () => {
   return (
@@ -19,6 +20,10 @@ export const SecurityRouter = () => {
 
       <Route path={SecurityRoute.changePassword}>
         <ChangePassword />
+      </Route>
+
+      <Route path={SecurityRoute.change2fa}>
+        <Update2fa />
       </Route>
 
       <Route path={SecurityRoute.landing}>
