@@ -63,18 +63,19 @@ import { Description } from '@ethersproject/properties'
 const Web3 = require('web3') // for some reason import Web3 from web3 didn't see eth module
 
 export const createNftCollection = async (collectionDto: CollectionCreateProps) => {
-  const { name, address } = collectionDto
+  const { name, address, chainId } = collectionDto
 
   const formData = new FormData()
   formData.append('name', name)
   formData.append('address', address)
+  formData.append('chainId', chainId as any)
 
   const result = await apiService.post(nft.createCollection, formData)
   return result.data
 }
 
 function buildCollectionFormData(dto: CollectionUpdateProps | CollectionFullCreateProps) {
-  const { name, description, cover, logo, banner } = dto
+  const { name, description, cover, logo, banner, chainId } = dto
   const formData = new FormData()
   if (name) {
     formData.append('name', name)
@@ -90,6 +91,9 @@ function buildCollectionFormData(dto: CollectionUpdateProps | CollectionFullCrea
   }
   if (banner) {
     formData.append('banner', banner, banner.name)
+  }
+  if (chainId) {
+    formData.append('chainId', chainId as any)
   }
   return formData
 }
@@ -107,7 +111,9 @@ export const updateNftCollection = async (collectionDto: CollectionUpdateProps, 
 export const createFullNftCollection = async (collectionDto: CollectionFullCreateProps) => {
   const formData = buildCollectionFormData(collectionDto)
   formData.append('address', collectionDto.address)
+
   const result = await apiService.post(nft.createCollection, formData)
+
   return result.data
 }
 
@@ -196,19 +202,23 @@ export function useNFTState(): AppState['nft'] {
 // }
 export const useCreateFullCollection = (history: H.History) => {
   const deployCollection = useDeployCollection()
+  const { chainId } = useActiveWeb3React()
+
   return useCallback(
     async (args: any) => {
       const newContractAddress = await deployCollection({ name: args.name, maxSupply: 1000 })
       if (newContractAddress) {
-        await createFullNftCollection({ ...args, address: newContractAddress })
+        await createFullNftCollection({ ...args, address: newContractAddress, chainId: chainId })
         history.push(routes.nftCollections)
       }
     },
-    [deployCollection, history]
+    [deployCollection, history, chainId]
   )
 }
 
 export const useUpdateFullCollection = (history: H.History) => {
+  const { chainId } = useActiveWeb3React()
+
   return useCallback(
     async (args: any) => {
       await updateNftCollection(
@@ -218,13 +228,14 @@ export const useUpdateFullCollection = (history: H.History) => {
           banner: args.banner,
           name: args.name,
           description: args.description,
+          chainId: chainId,
         },
         args.collectionId
       )
 
       history.push(routes.nftCollections)
     },
-    [history]
+    [history, chainId]
   )
 }
 
@@ -333,7 +344,7 @@ export const useNftCollection = (address: string) => {
 }
 
 export const useNftCollectionImport = (history: H.History) => {
-  const { account, library } = useActiveWeb3React()
+  const { account, library, chainId } = useActiveWeb3React()
   const showError = useShowError()
   const dispatch = useDispatch()
 
@@ -359,7 +370,8 @@ export const useNftCollectionImport = (history: H.History) => {
         }
 
         const name = await contract.methods.name().call()
-        await apiService.post(nft.createCollection, { name, address })
+        await createNftCollection({ name: name, address: address, chainId: chainId })
+        //await apiService.post(nft.createCollection, { name, address, chainId })
 
         dispatch(importNftCollection({ id: address }))
 
@@ -701,7 +713,7 @@ export const useCreateNftAssetForm = (history: H.History) => {
           contractAddress = newContractAddress
           if (contractAddress) {
             contractInstance = getNftContract({ addressOrAddressMap: contractAddress, library, account, chainId })
-            await createNftCollection({ name: newCollectionName, address: contractAddress })
+            await createNftCollection({ name: newCollectionName, address: contractAddress, chainId: chainId })
           }
         }
       }

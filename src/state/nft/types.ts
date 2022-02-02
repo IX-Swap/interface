@@ -103,6 +103,7 @@ export interface NftCreateProps {
 export interface CollectionCreateProps {
   name: string
   address: string
+  chainId: number | undefined
 }
 
 export interface CollectionFullCreateProps extends CollectionCreateProps {
@@ -110,6 +111,7 @@ export interface CollectionFullCreateProps extends CollectionCreateProps {
   logo: FileWithPath | null
   cover: FileWithPath | null
   banner: FileWithPath | null
+  chainId: number | undefined
 }
 
 export interface CollectionUpdateProps extends Omit<CollectionFullCreateProps, 'name' | 'address'> {
