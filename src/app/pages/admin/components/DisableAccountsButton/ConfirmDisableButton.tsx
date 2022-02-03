@@ -16,9 +16,7 @@ export const ConfirmDisableButton = ({
   const [disableAccounts, { isLoading }] = useDisableVirtualAccounts()
 
   const handleConfirmDisable = async () => {
-    const selectedAccountNumbers = selected.map(
-      account => account.accountNumber
-    )
+    const selectedAccountNumbers = selected.map(account => account._id)
     await disableAccounts(selectedAccountNumbers)
     successCallback?.()
     resetSelection()

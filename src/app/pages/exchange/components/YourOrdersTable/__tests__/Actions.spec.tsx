@@ -2,12 +2,13 @@ import { Actions } from 'app/pages/exchange/components/YourOrdersTable/Actions'
 import { Order } from 'app/pages/exchange/components/YourOrdersTable/YourOrderstable'
 import React from 'react'
 import { render } from 'test-utils'
+import { OrderSide } from 'types/order'
 
 describe('Actions', () => {
   const order: Order = {
     _id: '60a61141488ee046bbfe7824',
     type: 'LIMIT',
-    side: 'BID',
+    side: OrderSide.BID,
     price: 200,
     amount: 15,
     date: '2021-05-20T07:35:29.110Z',
