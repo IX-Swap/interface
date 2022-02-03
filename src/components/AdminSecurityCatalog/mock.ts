@@ -8,8 +8,8 @@ export const initialTokenState = {
   companyName: '',
   url: '',
   file: null,
-  industry: 'IT',
-  country: 'KZ',
+  industry: '',
+  country: '',
   atlasOneId: '',
   wrappedTokenAddress: '',
   description: '',
@@ -37,4 +37,13 @@ export const validateSecTokenFields = [
   'url',
   'ticker',
   'description',
+]
+
+export const industries = [
+  { id: 1, name: 'All Industries' },
+  { id: 2, name: 'Diverse Industries' },
+  { id: 3, name: 'Real Estate' },
+  { id: 4, name: 'Finance' },
+  { id: 5, name: 'Technology' },
+  { id: 6, name: 'Energy & Mining' },
 ]

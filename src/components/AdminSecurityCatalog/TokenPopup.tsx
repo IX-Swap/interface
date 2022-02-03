@@ -1,7 +1,8 @@
-import React, { FC, useEffect, useState } from 'react'
+import React, { FC, useEffect, useMemo, useState } from 'react'
 import { Trans } from '@lingui/macro'
 import { Box } from 'rebass'
 import { Label } from '@rebass/forms'
+import { getNames } from 'country-list'
 
 import { RowBetween } from 'components/Row'
 import { isAddress, isValidAddress, shortAddress } from 'utils'
@@ -18,7 +19,7 @@ import { AddressInput } from 'components/AddressInputPanel/AddressInput'
 
 import { ReactComponent as LogoImage } from '../../assets/images/wallpaper.svg'
 import { WideModal, WideModalWrapper, FormWrapper, FormGrid, Logo, FormRow } from './styleds'
-import { initialTokenState } from './mock'
+import { industries, initialTokenState } from './mock'
 import { CREATE_TOKEN_CHAINS } from 'constants/addresses'
 import { isMobile } from 'react-device-detect'
 
@@ -92,6 +93,10 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer }: Props
 
     setToken(newToken)
   }
+
+  const countries = useMemo(() => {
+    return getNames().map((name, index) => ({ id: ++index, name }))
+  }, [])
 
   return (
     <WideModal isLarge isOpen={isOpen} onDismiss={onClose} minHeight={false} maxHeight={'fit-content'} scrollable>
@@ -250,14 +255,9 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer }: Props
                         </TYPE.title11>
                       </Label>
                       <Dropdown
-                        onSelect={() => {
-                          console.log('seelct')
-                        }}
-                        selectedItem={{ id: 1, name: 'IT' }}
-                        items={[
-                          { id: 1, name: 'IT' },
-                          { id: 2, name: 'Oil' },
-                        ]}
+                        onSelect={(item) => setToken({ ...token, industry: item.name })}
+                        selectedItem={industries.find(({ name }) => name === token.industry)}
+                        items={industries}
                       />
                       <Label marginTop="20px" marginBottom="11px">
                         <TYPE.title11 color="text2">
@@ -265,14 +265,10 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer }: Props
                         </TYPE.title11>
                       </Label>
                       <Dropdown
-                        onSelect={() => {
-                          console.log('seelct')
-                        }}
-                        selectedItem={{ id: 1, name: 'Kazakhstan' }}
-                        items={[
-                          { id: 1, name: 'Russia' },
-                          { id: 2, name: 'USA' },
-                        ]}
+                        withScroll
+                        onSelect={(item) => setToken({ ...token, country: item.name })}
+                        selectedItem={countries.find(({ name }) => name === token.country)}
+                        items={countries}
                       />
 
                       <Label marginTop="20px" marginBottom="11px" htmlFor="token-atlas-id">

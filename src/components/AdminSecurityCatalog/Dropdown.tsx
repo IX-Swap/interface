@@ -19,10 +19,12 @@ export const Dropdown = ({
   onSelect,
   selectedItem,
   items,
+  withScroll = false,
 }: {
   onSelect: (item: any) => void
   selectedItem: any
   items: any[]
+  withScroll?: boolean
 }) => {
   const [isOpen, setIsOpen] = useState(false)
   const close = () => setIsOpen(false)
@@ -62,7 +64,13 @@ export const Dropdown = ({
             <TYPE.body2>{selectedItem?.name || 'Choose'}</TYPE.body2>
           </RowStart>
         </RowBetween>
-        <Popover show={isOpen} content={popOverContent()} placement="bottom-end" close={close}>
+        <Popover
+          style={withScroll ? { maxHeight: 300, overflow: 'scroll' } : {}}
+          show={isOpen}
+          content={popOverContent()}
+          placement="bottom-end"
+          close={close}
+        >
           <ChevronElement showMore={isOpen} />
         </Popover>
       </RowBetween>

@@ -20,6 +20,7 @@ import { ReactComponent as ArrowDown } from '../../assets/images/arrow-sec-token
 import { StyledBodyWrapper, FeaturedTokensGrid, StyledArrowWrapper } from './styleds'
 
 export default function CustodianV2() {
+  const docLink = 'https://docs.google.com/forms/d/e/1FAIpQLSenV66JwRp7MeHMm31EYLw-8VCHWfsyj8ji98l5Cqchpr2IyQ/viewform'
   const { token } = useAuthState()
   const { account, chainId } = useActiveWeb3React()
   const isLoggedIn = !!token && !!account
@@ -64,10 +65,7 @@ export default function CustodianV2() {
         <TYPE.title4 marginBottom="16px">
           <Trans>Security tokens</Trans>
         </TYPE.title4>
-        <ExternalLink
-          style={{ textDecoration: 'none' }}
-          href="https://docs.google.com/forms/d/e/1FAIpQLSenV66JwRp7MeHMm31EYLw-8VCHWfsyj8ji98l5Cqchpr2IyQ/viewform"
-        >
+        <ExternalLink style={{ textDecoration: 'none' }} href={docLink}>
           <StyledButtonGradientBorder>
             <Flex alignItems="center" justifyContent="center">
               <TYPE.body4 marginRight="8px" lineHeight="20px">
