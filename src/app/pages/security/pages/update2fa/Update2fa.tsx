@@ -8,12 +8,8 @@ import {
   Button,
   Grid
 } from '@material-ui/core'
-import { RemoveCurrentAuthenticator } from 'app/pages/security/pages/update2fa/components/RemoveCurrentAuthenticator'
-import { Step2Scan } from './components/Step2Scan'
-import { Step3Backup } from './components/Step3Backup'
-import { Step4Enable } from './components/Step4Enable'
-import { Enabled } from 'app/pages/security/pages/setup2fa/components/Enabled'
-import { TwoFaData } from 'app/pages/security/pages/update2fa/types'
+import { TwoFaData } from 'app/pages/security/types'
+import { ActiveStep } from 'app/pages/security/pages/update2fa/components/ActiveStep'
 
 const steps = [
   'Remove Current Authenticator',
@@ -22,33 +18,9 @@ const steps = [
   'Enable New Authenticator'
 ]
 
-const getComponent = (
-  index: number,
-  twoFaData: TwoFaData | null,
-  nextStep: () => void,
-  handleSuccessfulRemoveAuthenticator: (twoFaData: TwoFaData) => void
-) => {
-  switch (index) {
-    case 0:
-      return (
-        <RemoveCurrentAuthenticator
-          onSuccessRemoveAuthenticator={handleSuccessfulRemoveAuthenticator}
-        />
-      )
-    case 1:
-      return <Step2Scan twoFaData={twoFaData} />
-    case 2:
-      return <Step3Backup twoFaData={twoFaData} />
-    case 3:
-      return <Step4Enable nextStep={nextStep} />
-    default:
-      return <Enabled />
-  }
-}
-
 export const Update2fa = () => {
   const [activeStep, setActiveStep] = useState<number>(0)
-  const [twoFaData, setTwoFaData] = useState<TwoFaData | null>(null)
+  const [twoFaData, setTwoFaData] = useState<TwoFaData | undefined>(undefined)
   const nextStep = () => {
     setActiveStep(activeStep + 1)
   }
@@ -81,12 +53,14 @@ export const Update2fa = () => {
             >
               <Grid item>
                 <Box mt={4} mb={6} width='100%'>
-                  {getComponent(
-                    activeStep,
-                    twoFaData,
-                    nextStep,
-                    handleSuccessfulFirstStep
-                  )}
+                  <ActiveStep
+                    twoFaData={twoFaData}
+                    handleSuccessfulRemoveAuthenticator={
+                      handleSuccessfulFirstStep
+                    }
+                    index={activeStep}
+                    nextStep={nextStep}
+                  />
                 </Box>
               </Grid>
               <Grid item>

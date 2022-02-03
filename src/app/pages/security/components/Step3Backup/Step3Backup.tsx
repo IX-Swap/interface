@@ -1,15 +1,21 @@
 import React from 'react'
-import { Typography, Grid } from '@material-ui/core'
 import useStyles from './Step3Backup.styles'
-import { useSetup2faStore } from '../context'
-import { useObserver } from 'mobx-react'
-import { StepWrapper } from 'app/pages/security/pages/setup2fa/components/StepWrapper'
+import { Typography, Grid } from '@material-ui/core'
+import { TwoFaData } from 'app/pages/security/types'
+import { StepWrapper } from 'app/pages/security/components/StepWrapper'
 
-export const Step3Backup = () => {
+export interface Step3BackupProps {
+  twoFaData: TwoFaData | undefined
+}
+
+export const Step3Backup = ({ twoFaData }: Step3BackupProps) => {
   const classes = useStyles()
-  const store = useSetup2faStore()
 
-  return useObserver(() => (
+  if (twoFaData === undefined) {
+    return null
+  }
+
+  return (
     <StepWrapper title='Save This Backup Key'>
       <Grid container direction='column' spacing={3} alignItems='center'>
         <Grid item xs={12} md={8} lg={6}>
@@ -20,15 +26,15 @@ export const Step3Backup = () => {
         </Grid>
         <Grid item>
           <Typography variant='h4' align='center' className={classes.key}>
-            {store.key}
+            {twoFaData.key}
           </Typography>
         </Grid>
         <Grid item xs={12} md={8} lg={6}>
           <Typography align='center' variant='body1'>
-            Please click “Next” if you have sucessfully stored this key.
+            Please click “Next” if you have successfully stored this key.
           </Typography>
         </Grid>
       </Grid>
     </StepWrapper>
-  ))
+  )
 }

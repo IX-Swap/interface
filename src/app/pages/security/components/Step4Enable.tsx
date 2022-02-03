@@ -1,10 +1,10 @@
 import React from 'react'
 import { Typography, Grid } from '@material-ui/core'
-import { Enable2faFormValues } from '../types'
+import { Enable2faFormValues } from 'app/pages/security/types'
 import { Form } from 'components/form/Form'
-import { StepWrapper } from 'app/pages/security/pages/setup2fa/components/StepWrapper'
-import { EnableFormFields } from 'app/pages/security/pages/update2fa/components/EnableFormFields'
-import { useEnable2fa } from 'app/pages/security/pages/update2fa/hooks/useEnable2fa'
+import { StepWrapper } from 'app/pages/security/components/StepWrapper'
+import { EnableFormFields } from 'app/pages/security/components/EnableFormFields'
+import { useEnable2fa } from 'app/pages/security/hooks/useEnable2fa'
 
 const defaultValues = {
   otp: ''

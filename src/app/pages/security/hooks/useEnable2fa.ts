@@ -1,17 +1,15 @@
 import { useServices } from 'hooks/useServices'
 import { useMutation } from 'react-query'
 import { useAuth } from 'hooks/auth/useAuth'
-import { Enable2faFormValues } from '../types'
+import { Enable2faFormValues } from 'app/pages/security/types'
 import { getIdFromObj } from 'helpers/strings'
 import { authURL } from 'config/apiURL'
-import { useSetup2faStore } from 'app/pages/security/pages/setup2fa/context'
 import { useHistory } from 'react-router-dom'
 import User from 'types/user'
 
-export const useEnable2fa = () => {
+export const useEnable2fa = (nextStep: () => void) => {
   const { snackbarService, apiService, storageService } = useServices()
   const { user } = useAuth()
-  const { nextPage } = useSetup2faStore()
   const history = useHistory()
 
   const enable2fa = async ({ otp }: Enable2faFormValues) => {
@@ -34,7 +32,7 @@ export const useEnable2fa = () => {
         })
       }
 
-      nextPage()
+      nextStep()
       setTimeout(() => history.push('/'), 2500)
     },
     onError: (error: string) => {

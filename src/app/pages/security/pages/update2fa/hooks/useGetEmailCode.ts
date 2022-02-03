@@ -4,7 +4,7 @@ import { useAuth } from 'hooks/auth/useAuth'
 import { getIdFromObj } from 'helpers/strings'
 import { authQueryKeys } from 'config/queryKeys'
 import { authURL } from 'config/apiURL'
-import { GetEmailCodeResponse } from 'app/pages/security/pages/update2fa/types'
+import { GetEmailCodeResponse } from 'app/pages/security/types'
 
 export const useGetEmailCode = () => {
   const { apiService, snackbarService } = useServices()

@@ -1,30 +1,29 @@
+import { EnableFormFields } from 'app/pages/security/components/EnableFormFields'
+import { Form } from 'components/form/Form'
 import React from 'react'
 import { render } from 'test-utils'
 import { TypedField } from 'components/form/TypedField'
-import { Form } from 'components/form/Form'
-import { OTPField } from 'app/pages/security/pages/setup2fa/components/OTPField'
 
 jest.mock('components/form/TypedField', () => ({
   TypedField: jest.fn(() => null)
 }))
 
-describe('RequestFields', () => {
+describe('EnableFormFields', () => {
   afterEach(async () => {
     jest.clearAllMocks()
   })
 
-  it('renders email field', () => {
+  it('renders otp field correctly', () => {
     render(
-      <Form>
-        <OTPField />
+      <Form defaultValues={{ opt: '123456' }}>
+        <EnableFormFields />
       </Form>
     )
 
-    expect(TypedField).toHaveBeenNthCalledWith(
-      1,
+    expect(TypedField).toHaveBeenCalledWith(
       expect.objectContaining({
         name: 'otp',
-        label: 'OTP'
+        label: ''
       }),
       {}
     )

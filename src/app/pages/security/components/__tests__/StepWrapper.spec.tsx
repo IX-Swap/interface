@@ -3,7 +3,7 @@ import { render } from 'test-utils'
 import {
   StepWrapper,
   StepWrapperProps
-} from 'app/pages/security/pages/setup2fa/components/StepWrapper'
+} from 'app/pages/security/components/StepWrapper'
 
 describe('StepWrapper', () => {
   const mockChild = jest.fn(() => <div />)

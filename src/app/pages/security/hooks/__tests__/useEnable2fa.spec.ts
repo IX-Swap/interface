@@ -1,43 +1,37 @@
 import { act } from '@testing-library/react-hooks'
 import { waitFor, renderHookWithServiceProvider } from 'test-utils'
-import { useEnable2fa } from 'app/pages/security/pages/setup2fa/hooks/useEnable2fa'
+import { useEnable2fa } from 'app/pages/security/hooks/useEnable2fa'
 import { unsuccessfulResponse, successfulResponse } from '__fixtures__/api'
 import { enable2faArgs } from '__fixtures__/security'
-import * as useSetup2faStore from 'app/pages/security/pages/setup2fa/context'
 
 describe('useEnable2fa', () => {
-  const nextPage = jest.fn()
-
-  beforeEach(() => {
-    const objResponse = { nextPage }
-
-    jest
-      .spyOn(useSetup2faStore, 'useSetup2faStore')
-      .mockImplementation(() => objResponse as any)
-  })
+  const nextStep = jest.fn()
 
   afterEach(async () => {
     jest.clearAllMocks()
   })
 
-  it('it calls nextPage when enable 2FA is successful', async () => {
+  it('it calls nextStep when enable 2FA is successful', async () => {
     await act(async () => {
       const post = jest.fn().mockResolvedValueOnce(successfulResponse)
       const showSnackbar = jest.fn()
 
       const apiObj = { post }
       const snackbarObj = { showSnackbar }
-      const { result } = renderHookWithServiceProvider(() => useEnable2fa(), {
-        apiService: apiObj,
-        snackbarService: snackbarObj
-      })
+      const { result } = renderHookWithServiceProvider(
+        () => useEnable2fa(nextStep),
+        {
+          apiService: apiObj,
+          snackbarService: snackbarObj
+        }
+      )
 
       await waitFor(
         () => {
           const [mutate] = result.current
           void mutate(enable2faArgs)
 
-          expect(nextPage).toHaveBeenCalled()
+          expect(nextStep).toHaveBeenCalled()
         },
         { timeout: 1000 }
       )
@@ -51,10 +45,13 @@ describe('useEnable2fa', () => {
 
       const apiObj = { post }
       const snackbarObj = { showSnackbar }
-      const { result } = renderHookWithServiceProvider(() => useEnable2fa(), {
-        apiService: apiObj,
-        snackbarService: snackbarObj
-      })
+      const { result } = renderHookWithServiceProvider(
+        () => useEnable2fa(nextStep),
+        {
+          apiService: apiObj,
+          snackbarService: snackbarObj
+        }
+      )
 
       await waitFor(
         () => {

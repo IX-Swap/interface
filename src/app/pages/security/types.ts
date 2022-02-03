@@ -2,7 +2,7 @@ export interface Enable2faFormValues {
   otp: string
 }
 
-export interface Update2faFormValues {
+export interface Remove2faFormValues {
   otp: string
   emailCode: string
 }

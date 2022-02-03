@@ -1,6 +1,6 @@
 import React from 'react'
 import { Form } from 'components/form/Form'
-import { Update2faFormValues } from 'app/pages/security/pages/update2fa/types'
+import { Remove2faFormValues } from 'app/pages/security/types'
 import { RemoveAuthenticatorFields } from 'app/pages/security/pages/update2fa/components/RemoveAuthenticatorFields'
 
 export const initialValues = {
@@ -11,7 +11,7 @@ export const initialValues = {
 export interface RemoveAuthenticatorFormProps {
   email: string
   isLoading: boolean
-  onSubmit: (values: Update2faFormValues) => void
+  onSubmit: (values: Remove2faFormValues) => void
 }
 
 export const RemoveAuthenticatorForm = ({

@@ -1,7 +1,7 @@
 import { useServices } from 'hooks/useServices'
 import { useMutation } from 'react-query'
 import { useAuth } from 'hooks/auth/useAuth'
-import { TwoFaData, Update2faFormValues } from '../types'
+import { TwoFaData, Remove2faFormValues } from 'app/pages/security/types'
 import { getIdFromObj } from 'helpers/strings'
 import { authURL } from 'config/apiURL'
 import User from 'types/user'
@@ -12,7 +12,7 @@ export const useUpdate2fa = (
   const { snackbarService, apiService, storageService } = useServices()
   const { user } = useAuth()
 
-  const update2fa = async ({ otp, emailCode }: Update2faFormValues) => {
+  const update2fa = async ({ otp, emailCode }: Remove2faFormValues) => {
     const uri = authURL.remove2fa(getIdFromObj(user))
     return await apiService.post(uri, { otp, emailCode })
   }
