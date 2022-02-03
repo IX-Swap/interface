@@ -100,6 +100,7 @@ export const DSOTableFilters = () => {
           <Hidden lgDown>
             <Grid item xs={6} md={2}>
               <ColumnsEditorToggle
+                value='columns'
                 onClick={toggleColumns}
                 selected={showColumns}
               />

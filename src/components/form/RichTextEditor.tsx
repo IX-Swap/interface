@@ -19,7 +19,7 @@ export const RichTextEditor = memo(
     const content = JSON.stringify(convertToRaw(state))
 
     return (
-      <Box>
+      <Box pb={4}>
         <MUIRichTextEditor
           ref={ref}
           label='Start typing...'

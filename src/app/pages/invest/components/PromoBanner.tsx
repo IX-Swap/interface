@@ -8,7 +8,7 @@ import { generateImgSrc } from 'helpers/generateImgSrc'
 const useStyles = makeStyles(theme => ({
   promoBanner: {
     width: '100%',
-    padding: theme.spacing(3, 4)
+    padding: theme.spacing(3, 0)
   },
   message: {
     fontFamily: theme.typography.fontFamily,

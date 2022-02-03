@@ -1,4 +1,4 @@
-import makeStyles from '@mui/styles/makeStyles';
+import makeStyles from '@mui/styles/makeStyles'
 import EarthImage from '../../images/digital_earth.png'
 import DotsImage from '../../images/background_dots.png'
 

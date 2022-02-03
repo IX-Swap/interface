@@ -1,5 +1,5 @@
 import React from 'react'
-import { DateTimePickerComponent } from 'components/form/DateTimePicker'
+import { DatePickerComponent } from 'components/form/DatePicker'
 import {
   SearchQueryFilter,
   SearchQueryFilterProps
@@ -19,7 +19,7 @@ export const GroupedDateTimeFilter = (props: GroupedDateTimeFilterProps) => {
   return (
     <SearchQueryFilter {...filterProps}>
       {({ value, onChange }) => (
-        <DateTimePickerComponent
+        <DatePickerComponent
           {...dateTimePickerProps}
           value={value ?? null}
           onChange={date => {

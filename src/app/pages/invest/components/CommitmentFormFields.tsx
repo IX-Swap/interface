@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Input, InputAdornment } from '@mui/material'
+import { Grid, OutlinedInput, InputAdornment } from '@mui/material'
 import { moneyNumberFormat } from 'config/numberFormat'
 import { useFormContext } from 'react-hook-form'
 import { CommitmentFormValues } from 'types/commitment'
@@ -107,7 +107,7 @@ export const CommitmentFormFields = (props: CommitmentFormFieldsProps) => {
       <Grid item>
         <TypedField
           className={privateClassNames()}
-          component={Input}
+          component={OutlinedInput}
           control={control}
           name='otp'
           label='OTP'

@@ -32,7 +32,7 @@ export const TopbarLinkDropdown = ({
       </div>
 
       <Menu
-        style={{ top: 72, paddingTop: 0, paddingBottom: 0 }}
+        style={{ top: 10, paddingTop: 0, paddingBottom: 0 }}
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}

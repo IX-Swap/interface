@@ -18,7 +18,7 @@ export const IdentitiesList: React.FC = () => {
 
   return (
     <AppContentWrapper container background='light'>
-      <RootContainer>
+      <RootContainer background='light'>
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <PageHeader

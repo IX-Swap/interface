@@ -1,7 +1,5 @@
-import { Box, BoxProps } from '@mui/material'
-import { styled, Theme } from '@mui/material/styles';
-
-import withTheme from '@mui/styles/withTheme';
+import { Box, BoxProps, Theme } from '@mui/material'
+import { styled } from '@mui/styles'
 
 export interface RoundedIconProps extends BoxProps {
   size?: number
@@ -9,7 +7,7 @@ export interface RoundedIconProps extends BoxProps {
   theme: Theme
 }
 
-export const Component = styled(Box)({
+export const RoundedIconWrapper = styled(Box)({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -19,5 +17,3 @@ export const Component = styled(Box)({
   color: props => props.theme.palette.common.white,
   borderRadius: 9
 })
-
-export const RoundedIconWrapper = withTheme(Component)

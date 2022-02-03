@@ -5,8 +5,26 @@ import MUIDatePicker, {
 import { FormHelperText, TextField } from '@mui/material'
 import { useFormError } from 'hooks/useFormError'
 
-export interface DatePickerProps extends MUIDatePickerProps {
+export interface DatePickerProps
+  extends Omit<MUIDatePickerProps, 'renderInput'> {
   name: string
+}
+
+export const DatePickerComponent = (props: DatePickerProps) => {
+  return (
+    <MUIDatePicker
+      {...props}
+      renderInput={inputProps => (
+        <TextField
+          fullWidth
+          margin='none'
+          variant='outlined'
+          label='Date'
+          {...inputProps}
+        />
+      )}
+    />
+  )
 }
 
 export const DatePicker = (props: DatePickerProps) => {

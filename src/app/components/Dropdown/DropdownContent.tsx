@@ -27,12 +27,15 @@ export const DropdownContent = (props: DropdownContentProps) => {
       {...bindPopper(popupState)}
       placement={placement}
       className={classes.popper}
-      modifiers={{
-        arrow: {
-          enabled: arrow,
-          element: arrowRef
+      modifiers={[
+        {
+          name: 'arrow',
+          enabled: true,
+          options: {
+            element: arrowRef
+          }
         }
-      }}
+      ]}
     >
       <ClickAwayListener onClickAway={handleClickAway}>
         <Paper>

@@ -23,7 +23,7 @@ export const DSOInvestorViewHeader = (props: DSOInvestorViewHeaderProps) => {
         xs: 3,
         md: 5
       }}
-      borderRadius='undefinedpx'
+      borderRadius={6}
       color='#FFF'
     >
       <Grid
@@ -51,7 +51,7 @@ export const DSOInvestorViewHeader = (props: DSOInvestorViewHeaderProps) => {
               <DSOLogo
                 dsoId={dso._id}
                 size={isMiniLaptop ? 48 : 124}
-                variant='circle'
+                variant='circular'
               />
             </Grid>
 

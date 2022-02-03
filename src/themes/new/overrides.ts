@@ -1,5 +1,5 @@
 import { Theme } from '@mui/material'
-import { Overrides } from '@mui/material/styles';
+import { ComponentsOverrides } from '@mui/material/styles'
 import { rte } from 'themes/new/rte'
 import { CSSProperties } from 'react'
 
@@ -22,7 +22,7 @@ interface LabOverrides {
 
 export const getThemeOverrides = (
   theme: Theme
-): Partial<Overrides> & Partial<LabOverrides> => ({
+): Partial<ComponentsOverrides> & Partial<LabOverrides> => ({
   ...rte(theme),
   MuiFormHelperText: {
     root: {
@@ -103,10 +103,10 @@ export const getThemeOverrides = (
         border: 'none'
       }
     },
-    inputMarginDense: {
-      paddingTop: 12,
-      paddingBottom: 12
-    },
+    // inputMarginDense: {
+    //   paddingTop: 12,
+    //   paddingBottom: 12
+    // },
     adornedEnd: {
       paddingRight: 8
     },
@@ -124,9 +124,9 @@ export const getThemeOverrides = (
     }
   },
   MuiButton: {
-    label: {
-      fontSize: 12
-    },
+    // label: {
+    //   fontSize: 12
+    // },
     contained: {
       borderRadius: 8,
       '&:hover': {
@@ -138,24 +138,24 @@ export const getThemeOverrides = (
     }
   },
   MuiIconButton: {
-    label: {
-      width: 20,
-      height: 20,
-      color: '#0055FF',
-      background: '#102756',
-      borderRadius: 4,
-      zIndex: 3,
-      border: '1px solid #102756',
-
-      '.Mui-checked &': {
-        color: '#ffffff',
-        background: '#0055FF',
-        border: '2px solid #0055FF'
-      },
-      '.Mui-error &': {
-        border: '2px solid #FF8080'
-      }
-    }
+    // label: {
+    //   width: 20,
+    //   height: 20,
+    //   color: '#0055FF',
+    //   background: '#102756',
+    //   borderRadius: 4,
+    //   zIndex: 3,
+    //   border: '1px solid #102756',
+    //
+    //   '.Mui-checked &': {
+    //     color: '#ffffff',
+    //     background: '#0055FF',
+    //     border: '2px solid #0055FF'
+    //   },
+    //   '.Mui-error &': {
+    //     border: '2px solid #FF8080'
+    //   }
+    // }
   },
   MuiSvgIcon: {
     root: {
@@ -166,10 +166,10 @@ export const getThemeOverrides = (
     }
   },
   MuiTypography: {
-    colorError: {
-      '& span': {
-        color: '#FF8080'
-      }
-    }
+    // colorError: {
+    //   '& span': {
+    //     color: '#FF8080'
+    //   }
+    // }
   }
 })
