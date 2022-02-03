@@ -25,5 +25,11 @@ export const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down('md')]: {
       fontSize: 14
     }
+  },
+  boxContainer: {
+    backgroundColor: '#020071',
+    color: '#FFF',
+    padding: theme.spacing(5, 5, 5, 5),
+    borderRadius: theme.spacing(6)
   }
 }))

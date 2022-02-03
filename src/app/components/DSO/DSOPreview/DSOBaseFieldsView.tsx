@@ -12,17 +12,10 @@ export interface DSOBaseFieldsViewProps {
 
 export const DSOBaseFieldsView = ({ dso }: DSOBaseFieldsViewProps) => {
   const { isMiniLaptop } = useAppBreakpoints()
-  const { container, logoContainer, tokenName, corporateName } = useStyles()
+  const { container, logoContainer, tokenName, corporateName, boxContainer } =
+    useStyles()
   return (
-    <Box
-      bgcolor='#020071'
-      p={{
-        xs: 3,
-        md: 5
-      }}
-      borderRadius={{ xs: 6, md: 24 }}
-      color='#FFF'
-    >
+    <Box className={boxContainer}>
       <Grid
         container
         className={container}

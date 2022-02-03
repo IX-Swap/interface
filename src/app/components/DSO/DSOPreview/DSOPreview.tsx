@@ -78,6 +78,23 @@ export const DSOPreview = (props: DSOPreviewProps) => {
             </Element>
           </Grid>
         </Grid>
+        <Element name={DSOFormSection.Information}>
+          <VSpacer size='large' />
+          <DSOInformationView dso={data} isNewThemeOn />
+        </Element>
+
+        <Element name={DSOFormSection['Team Members']}>
+          <VSpacer size='large' />
+          <DSOTeamView dso={data} isNewThemeOn />
+        </Element>
+
+        <Element name={DSOFormSection.Documents}>
+          <VSpacer size='large' />
+          <DSODataroomView dso={data} isNewThemeOn />
+        </Element>
+
+        {renderVideosFormSection()}
+        {renderFAQsFormSection()}
       </TabPanel>
 
       <TabPanel value={selectedIdx} index={1}>
@@ -87,24 +104,6 @@ export const DSOPreview = (props: DSOPreviewProps) => {
       <TabPanel value={selectedIdx} index={2}>
         <CapTable />
       </TabPanel>
-
-      <Element name={DSOFormSection.Information}>
-        <VSpacer size='large' />
-        <DSOInformationView dso={data} isNewThemeOn />
-      </Element>
-
-      <Element name={DSOFormSection['Team Members']}>
-        <VSpacer size='large' />
-        <DSOTeamView dso={data} isNewThemeOn />
-      </Element>
-
-      <Element name={DSOFormSection.Documents}>
-        <VSpacer size='large' />
-        <DSODataroomView dso={data} isNewThemeOn />
-      </Element>
-
-      {renderVideosFormSection()}
-      {renderFAQsFormSection()}
     </Fragment>
   )
 }

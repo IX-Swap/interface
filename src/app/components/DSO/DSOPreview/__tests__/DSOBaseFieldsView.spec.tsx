@@ -4,7 +4,6 @@ import { render } from 'test-utils'
 import { dso } from '__fixtures__/authorizer'
 import { DSOLogo } from 'app/components/DSO/components/DSOLogo'
 import { LabelledValue } from 'components/LabelledValue'
-import * as useAppBreakpoints from 'hooks/useAppBreakpoints'
 
 window.URL.revokeObjectURL = jest.fn()
 
@@ -26,21 +25,6 @@ describe('DSOBaseFieldsView', () => {
 
     expect(DSOLogo).toHaveBeenCalledWith(
       { dsoId: dso._id, size: 124, variant: 'circle' },
-      {}
-    )
-  })
-
-  it('renders DSLogo correctly on miniLaptop', () => {
-    jest.spyOn(useAppBreakpoints, 'useAppBreakpoints').mockReturnValueOnce({
-      isMobile: false,
-      isTablet: false,
-      isMiniLaptop: true,
-      theme: { spacing: jest.fn(), palette: { backgrounds: { default: '' } } }
-    } as any)
-    render(<DSOBaseFieldsView dso={dso} />)
-
-    expect(DSOLogo).toHaveBeenCalledWith(
-      { dsoId: dso._id, size: 48, variant: 'circle' },
       {}
     )
   })
