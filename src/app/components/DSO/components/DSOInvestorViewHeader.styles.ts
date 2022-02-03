@@ -29,7 +29,7 @@ export const useStyles = makeStyles(theme => ({
   boxContainer: {
     backgroundColor: '#020071',
     color: '#FFF',
-    padding: theme.spacing(5, 5, 5, 5),
+    padding: theme.spacing(5),
     borderRadius: theme.spacing(6)
   }
 }))
