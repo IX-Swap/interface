@@ -5,6 +5,7 @@ import apiService from 'services/apiService'
 import { secCatalog } from 'services/apiUrls'
 import { AppDispatch, AppState } from 'state'
 import { BROKER_DEALERS_STATUS } from 'state/brokerDealer/hooks'
+import { validateSecTokenFields } from 'components/AdminSecurityCatalog/mock'
 import { fetchAddIssuer, fetchEditIssuer, fetchIssuers } from './actions'
 import { Issuer } from './reducer'
 
@@ -43,7 +44,6 @@ export const updateToken = async (token: any) => {
     const result = await apiService.put(secCatalog.issuerToken(token.id), formData)
     return result.data
   } catch (e) {
-    console.log(e)
     return null
   }
 }
@@ -63,7 +63,6 @@ export const addToken = async (issuerId: number, token: any) => {
     const result = await apiService.post(secCatalog.createIssuerToken(issuerId), formData)
     return result.data
   } catch (e) {
-    console.log(e)
     return null
   }
 }
@@ -162,4 +161,12 @@ export function useFetchIssuers() {
     }
   }, [dispatch])
   return callback
+}
+
+export const validate = (token: any) => {
+  for (const key in token) {
+    if (validateSecTokenFields.includes(key)) if (!token[key]) return false
+  }
+
+  return true
 }

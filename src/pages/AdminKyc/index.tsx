@@ -24,7 +24,7 @@ const tabs: Tab[] = [
 ]
 
 const AdminKyc = () => {
-  const [selectedTab, setSelectedTab] = useState<'kyc' | 'transactions' | 'security-catalog'>('security-catalog')
+  const [selectedTab, setSelectedTab] = useState<Tab['value']>('security-catalog')
   const history = useHistory()
   const { adminData, adminError, adminLoading } = useAdminState()
   const getMe = useGetMe()

@@ -2,6 +2,7 @@ import styled, { css } from 'styled-components'
 import { Box } from 'rebass'
 
 import { BodyWrapper } from 'pages/AppBody'
+import { ArrowWrapper } from 'components/swap/styleds'
 
 const cardCommonStyles = css`
   border-radius: 30px;
@@ -16,12 +17,7 @@ export const StyledBodyWrapper = styled(BodyWrapper)`
 
 export const MySecTokensTab = styled(Box)`
   padding: 32px;
-  background: radial-gradient(
-      53.24% 225.7% at 49.91% 82.11%,
-      rgba(123, 66, 169, 0.028) 0%,
-      rgba(237, 3, 118, 0.014) 100%
-    ),
-    rgba(15, 5, 24, 0.7);
+  background: ${({ theme }) => theme.bgG17};
   border-radius: 30px;
   border: 2px solid rgb(123, 66, 169);
 `
@@ -35,15 +31,12 @@ export const MySecTokensGrid = styled(Box)`
 export const MySecTokenCard = styled(Box)<{ isPending: boolean }>`
   padding: 24px;
   border-radius: 30px;
-  background: ${({ isPending }) =>
-    isPending
-      ? 'radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.033) 0%, rgba(26, 18, 58, 0) 100%), rgba(44, 37, 74, 0.5)'
-      : 'radial-gradient(83.59% 55.66% at 2.38% 3.84%, rgba(123, 66, 169, 0.39) 0%, rgba(26, 18, 58, 0) 100%), radial-gradient(50.28% 108.33% at 73.7% 9%, rgba(102, 20, 206, 0.165) 1.94%, rgba(26, 18, 58, 0) 100%), radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.33) 0%, rgba(26, 18, 58, 0) 100%), rgba(44, 37, 74, 0.3)'};
+  background: ${({ isPending, theme }) => (isPending ? theme.bgG14 : theme.bgG18)};
   ${cardCommonStyles};
 `
 
 export const GradientText = styled.div`
-  background: linear-gradient(116.36deg, rgb(123, 66, 169) 33.43%, rgb(237, 3, 118) 95.41%), rgb(12, 70, 156);
+  background: ${({ theme }) => theme.borderG2};
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -52,13 +45,7 @@ export const GradientText = styled.div`
 export const Divider = styled.div`
   margin: 30px 0px;
   height: 2px;
-  background: linear-gradient(
-    90deg,
-    rgba(237, 206, 255, 0) 0%,
-    #edceff 4.92%,
-    #edceff 94.53%,
-    rgba(237, 206, 255, 0) 98.88%
-  );
+  background: ${({ theme }) => theme.borderG3};
   opacity: 0.2;
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
@@ -70,11 +57,27 @@ export const FeaturedTokensGrid = styled(Box)`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 28px;
+
+  ${({ theme }) => theme.mediaWidth.upToMedium`
+    grid-template-columns: repeat(2, 1fr);
+  `};
+
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    grid-template-columns: 1fr;
+  `};
 `
 
 export const FeaturedTokenCard = styled.div`
-  background: radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.033) 0%, rgba(26, 18, 58, 0) 100%),
-    rgba(44, 37, 74, 0.5);
+  background: ${({ theme }) => theme.bgG14};
   padding: 26px 24px;
   ${cardCommonStyles};
+`
+
+export const StyledArrowWrapper = styled(ArrowWrapper)`
+  width: 25px;
+  height: 25px;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `

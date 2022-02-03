@@ -11,7 +11,7 @@ import { ApplicationModal } from 'state/application/actions'
 import { ContainerRow, Input, InputContainer, InputPanel, Textarea } from 'components/Input'
 import { Radio } from './Radio'
 import { ButtonIXSGradient } from 'components/Button'
-import { addToken, checkWrappedAddress, updateToken, useFetchIssuers } from 'state/secCatalog/hooks'
+import { addToken, checkWrappedAddress, updateToken, useFetchIssuers, validate } from 'state/secCatalog/hooks'
 import { Dropdown } from './Dropdown'
 import Upload from 'components/Upload'
 import { AddressInput } from 'components/AddressInputPanel/AddressInput'
@@ -19,11 +19,8 @@ import { AddressInput } from 'components/AddressInputPanel/AddressInput'
 import { ReactComponent as LogoImage } from '../../assets/images/wallpaper.svg'
 import { WideModal, WideModalWrapper, FormWrapper, FormGrid, Logo, FormRow } from './styleds'
 import { initialTokenState } from './mock'
-
-const chains = [
-  { id: 1, name: 'Main' },
-  { id: 42, name: 'Kovan' },
-]
+import { CREATE_TOKEN_CHAINS } from 'constants/addresses'
+import { isMobile } from 'react-device-detect'
 
 interface Props {
   token: any | null
@@ -56,24 +53,32 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer }: Props
   }
 
   const handleCreateClick = async () => {
-    let data = null
-
-    if (token.id) {
-      data = await updateToken(token)
-    } else {
-      data = await addToken(currentIssuer.id, token)
-    }
-
-    if (data) {
-      getIssuers()
-      toggle()
-    } else {
+    if (!validate(token)) {
       addPopup({
         info: {
           success: false,
-          summary: 'All fields should not be empty',
+          summary: 'All fields are required',
         },
       })
+    } else {
+      let data = null
+      if (token.id) {
+        data = await updateToken(token)
+      } else {
+        data = await addToken(currentIssuer.id, token)
+      }
+
+      if (data) {
+        getIssuers()
+        toggle()
+      } else {
+        addPopup({
+          info: {
+            success: false,
+            summary: 'Something went wrong',
+          },
+        })
+      }
     }
   }
 
@@ -107,19 +112,10 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer }: Props
                   <FormGrid>
                     <Box>
                       <Label marginBottom="11px" htmlFor="token-address">
-                        <TYPE.title11 color="text2">Contract Address</TYPE.title11>
+                        <TYPE.title11 color="text2">
+                          <Trans>Contract Address</Trans>
+                        </TYPE.title11>
                       </Label>
-                      {/* <InputPanel id={'item-name'}>
-                        <ContainerRow>
-                          <InputContainer>
-                            <Input
-                              id="issuer-name"
-                              value={token.address}
-                              onChange={(e) => setToken({ ...token, address: e.currentTarget.value })}
-                            />
-                          </InputContainer>
-                        </ContainerRow>
-                      </InputPanel> */}
                       <AddressInput
                         {...{
                           id: 'token-address',
@@ -131,14 +127,16 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer }: Props
                       />
                     </Box>
                     <Box>
-                      <Label marginBottom="11px" htmlFor="issuer-website">
-                        <TYPE.title11 color="text2">Ticker</TYPE.title11>
+                      <Label marginBottom="11px" htmlFor="token-ticker">
+                        <TYPE.title11 color="text2">
+                          <Trans>Ticker</Trans>
+                        </TYPE.title11>
                       </Label>
                       <InputPanel id={'item-website'}>
                         <ContainerRow>
                           <InputContainer>
                             <Input
-                              id="issuer-website"
+                              id="token-ticker"
                               value={token.ticker}
                               onChange={(e) => setToken({ ...token, ticker: e.currentTarget.value })}
                             />
@@ -148,7 +146,9 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer }: Props
                     </Box>
                     <Box>
                       <Label marginBottom="11px">
-                        <TYPE.title11 color="text2">Logo:</TYPE.title11>
+                        <TYPE.title11 color="text2">
+                          <Trans>Logo:</Trans>
+                        </TYPE.title11>
                       </Label>
                       <ButtonText>
                         <Upload file={token.file} onDrop={(file) => handleDropImage(file)}>
@@ -171,19 +171,23 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer }: Props
                   <FormRow>
                     <Box>
                       <Label marginBottom="11px" htmlFor="token-chain">
-                        <TYPE.title11 color="text2">Select Chain</TYPE.title11>
+                        <TYPE.title11 color="text2">
+                          <Trans>Select Chain</Trans>
+                        </TYPE.title11>
                       </Label>
                       <Dropdown
                         onSelect={(item) => {
                           setToken({ ...token, chainId: item.id })
                         }}
-                        selectedItem={chains.find(({ id }) => id === token.chainId)}
-                        items={chains}
+                        selectedItem={CREATE_TOKEN_CHAINS.find(({ id }) => id === token.chainId)}
+                        items={CREATE_TOKEN_CHAINS}
                       />
                     </Box>
                     <Box>
                       <Label marginBottom="11px" htmlFor="token-wrapped-input">
-                        <TYPE.title11 color="text2">Wrapped token address</TYPE.title11>
+                        <TYPE.title11 color="text2">
+                          <Trans>Wrapped token address</Trans>
+                        </TYPE.title11>
                       </Label>
                       <AddressInput
                         {...{
@@ -201,14 +205,16 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer }: Props
                   </FormRow>
                   <FormRow>
                     <Box>
-                      <Label marginBottom="11px" htmlFor="issuer-website">
-                        <TYPE.title11 color="text2">Company name:</TYPE.title11>
+                      <Label marginBottom="11px" htmlFor="token-company-name">
+                        <TYPE.title11 color="text2">
+                          <Trans>Company name:</Trans>
+                        </TYPE.title11>
                       </Label>
-                      <InputPanel id={'item-website'}>
+                      <InputPanel id={'token-company-name'}>
                         <ContainerRow>
                           <InputContainer>
                             <Input
-                              id="issuer-website"
+                              id="token-company-name"
                               value={token.companyName}
                               onChange={(e) => setToken({ ...token, companyName: e.currentTarget.value })}
                             />
@@ -217,14 +223,16 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer }: Props
                       </InputPanel>
                     </Box>
                     <Box>
-                      <Label marginBottom="11px" htmlFor="issuer-website">
-                        <TYPE.title11 color="text2">URL:</TYPE.title11>
+                      <Label marginBottom="11px" htmlFor="token-website">
+                        <TYPE.title11 color="text2">
+                          <Trans>URL:</Trans>
+                        </TYPE.title11>
                       </Label>
-                      <InputPanel id={'item-website'}>
+                      <InputPanel id={'token-website'}>
                         <ContainerRow>
                           <InputContainer>
                             <Input
-                              id="issuer-website"
+                              id="token-website"
                               value={token.url}
                               onChange={(e) => setToken({ ...token, url: e.currentTarget.value })}
                             />
@@ -236,8 +244,10 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer }: Props
 
                   <FormRow>
                     <Box>
-                      <Label marginBottom="11px" htmlFor="issuer-website">
-                        <TYPE.title11 color="text2">Industry:</TYPE.title11>
+                      <Label marginBottom="11px">
+                        <TYPE.title11 color="text2">
+                          <Trans>Industry:</Trans>
+                        </TYPE.title11>
                       </Label>
                       <Dropdown
                         onSelect={() => {
@@ -249,8 +259,10 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer }: Props
                           { id: 2, name: 'Oil' },
                         ]}
                       />
-                      <Label marginTop="20px" marginBottom="11px" htmlFor="issuer-website">
-                        <TYPE.title11 color="text2">Country:</TYPE.title11>
+                      <Label marginTop="20px" marginBottom="11px">
+                        <TYPE.title11 color="text2">
+                          <Trans>Country:</Trans>
+                        </TYPE.title11>
                       </Label>
                       <Dropdown
                         onSelect={() => {
@@ -263,14 +275,16 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer }: Props
                         ]}
                       />
 
-                      <Label marginTop="20px" marginBottom="11px" htmlFor="issuer-website">
-                        <TYPE.title11 color="text2">AtlasOne ID:</TYPE.title11>
+                      <Label marginTop="20px" marginBottom="11px" htmlFor="token-atlas-id">
+                        <TYPE.title11 color="text2">
+                          <Trans>AtlasOne ID:</Trans>
+                        </TYPE.title11>
                       </Label>
-                      <InputPanel id={'item-website'} style={{ marginBottom: 20 }}>
+                      <InputPanel id={'token-atlas-id'} style={{ marginBottom: 20 }}>
                         <ContainerRow>
                           <InputContainer>
                             <Input
-                              id="issuer-website"
+                              id="token-atlas-id"
                               value={token.atlasOneId}
                               onChange={(e) => setToken({ ...token, atlasOneId: e.currentTarget.value })}
                             />
@@ -280,8 +294,10 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer }: Props
                     </Box>
 
                     <Box>
-                      <Label marginBottom="11px" htmlFor="issuer-website">
-                        <TYPE.title11 color="text2">Description:</TYPE.title11>
+                      <Label marginBottom="11px">
+                        <TYPE.title11 color="text2">
+                          <Trans>Description:</Trans>
+                        </TYPE.title11>
                       </Label>
                       <Textarea
                         value={token.description}
@@ -292,23 +308,23 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer }: Props
                   </FormRow>
 
                   <Box display="flex">
-                    <Box marginRight="178px">
+                    <Box marginRight={isMobile ? '0px' : '178px'}>
                       <TYPE.title11 marginBottom="26px" color="text2">
-                        Active
+                        <Trans>Active</Trans>
                       </TYPE.title11>
                       <TYPE.title11 marginBottom="26px" color="text2">
-                        Featured
+                        <Trans>Featured</Trans>
                       </TYPE.title11>
                       <TYPE.title11 marginBottom="26px" color="text2">
-                        Available for swap
+                        <Trans>Available for swap</Trans>
                       </TYPE.title11>
                     </Box>
 
-                    <Box>
+                    <Box marginLeft={isMobile ? 'auto' : '0px'}>
                       <Radio isActive={token.active} onToggle={() => setToken({ ...token, active: !token.active })} />
                       <Radio
-                        isActive={token.feautured}
-                        onToggle={() => setToken({ ...token, feautured: !token.feautured })}
+                        isActive={token.featured}
+                        onToggle={() => setToken({ ...token, featured: !token.featured })}
                       />
                       <Radio
                         isActive={token.tradable}
@@ -318,8 +334,12 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer }: Props
                   </Box>
                 </FormWrapper>
 
-                <ButtonIXSGradient onClick={handleCreateClick} margin="35px 0px 30px 0px" style={{ width: 475 }}>
-                  Save
+                <ButtonIXSGradient
+                  onClick={handleCreateClick}
+                  margin="35px 0px 30px 0px"
+                  style={{ width: isMobile ? '100%' : 475 }}
+                >
+                  <Trans>Save</Trans>
                 </ButtonIXSGradient>
               </>
             )}

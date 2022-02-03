@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Box } from 'rebass'
+import { Box, Flex } from 'rebass'
 import { FixedSizeList } from 'react-window'
+import { isMobile } from 'react-device-detect'
+import { Trans } from '@lingui/macro'
 
-import { RowBetween } from 'components/Row'
-import { TYPE } from 'theme'
+import { ExternalLink, TYPE } from 'theme'
 import { StyledButtonGradientBorder } from 'components/AdminSecurityCatalog/styleds'
 import { FeaturedToken } from './FeaturedToken'
 import { SecTokensTable } from './SecTokensTable'
@@ -12,9 +13,11 @@ import { useActiveWeb3React } from 'hooks/web3'
 import AppBody from 'pages/AppBody'
 import { ListType, useCurrencySearch } from 'components/SearchModal/useCurrencySearch'
 import { TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
+import useTheme from 'hooks/useTheme'
 import { getAllTokens } from 'state/secCatalog/hooks'
 
-import { StyledBodyWrapper, FeaturedTokensGrid } from './styleds'
+import { ReactComponent as ArrowDown } from '../../assets/images/arrow-sec-tokens.svg'
+import { StyledBodyWrapper, FeaturedTokensGrid, StyledArrowWrapper } from './styleds'
 
 export default function CustodianV2() {
   const { token } = useAuthState()
@@ -43,30 +46,53 @@ export default function CustodianV2() {
     getTokens()
   }, [])
 
-  const featuredTokens = tokens.filter(({ feautured, active }) => active && feautured)
+  const featuredTokens = tokens.filter(({ featured, active }) => active && featured)
   const activeTokens = tokens.filter(({ active }) => active)
 
   return chainId !== undefined && !TGE_CHAINS_WITH_SWAP.includes(chainId) ? (
-    <AppBody blurred>Security Tokens</AppBody>
+    <AppBody blurred>
+      <Trans>Security Tokens</Trans>
+    </AppBody>
   ) : (
     <StyledBodyWrapper>
-      <RowBetween marginBottom="76px">
-        <TYPE.title4>Security tokens</TYPE.title4>
-        <StyledButtonGradientBorder>List my token</StyledButtonGradientBorder>
-      </RowBetween>
+      <Flex
+        flexDirection={isMobile ? 'column' : 'row'}
+        alignItems={isMobile ? 'flex-start' : 'center'}
+        justifyContent="space-between"
+        marginBottom="76px"
+      >
+        <TYPE.title4 marginBottom="16px">
+          <Trans>Security tokens</Trans>
+        </TYPE.title4>
+        <ExternalLink
+          style={{ textDecoration: 'none' }}
+          href="https://docs.google.com/forms/d/e/1FAIpQLSenV66JwRp7MeHMm31EYLw-8VCHWfsyj8ji98l5Cqchpr2IyQ/viewform"
+        >
+          <StyledButtonGradientBorder>
+            <Flex alignItems="center" justifyContent="center">
+              <TYPE.body4 marginRight="8px" lineHeight="20px">
+                <Trans>List my token</Trans>
+              </TYPE.body4>
+              <StyledArrowWrapper data-testid="listMyToken" clickable>
+                <ArrowDown />
+              </StyledArrowWrapper>
+            </Flex>
+          </StyledButtonGradientBorder>
+        </ExternalLink>
+      </Flex>
 
       {isLoggedIn && (approvedSecTokens?.length > 0 || pendingSecTokens?.length > 0) && (
         <>
           {/* <MySecTokensTab marginBottom="72px">
             <GradientText>
               <TYPE.title5 marginBottom="32px" color="inherit">
-                My security tokens
+                <Trans>My security tokens</Trans>
               </TYPE.title5>
             </GradientText>
             {approvedSecTokens?.length > 0 && (
               <>
                 <TYPE.title6 marginBottom="32px" color="rgba(237, 206, 255, 0.5)">
-                  ACCREDITED
+                  <Trans>ACCREDITED</Trans>
                 </TYPE.title6>
                 <MySecTokensGrid>
                   {approvedSecTokens.map((token) => (
@@ -79,7 +105,7 @@ export default function CustodianV2() {
               <>
                 <Divider />
                 <TYPE.title6 marginBottom="32px" color="rgba(237, 206, 255, 0.5)">
-                  PENDING ACCREDITATION
+                  <Trans>PENDING ACCREDITATION</Trans>
                 </TYPE.title6>
                 <MySecTokensGrid>
                   {pendingSecTokens.map((token) => (
@@ -91,7 +117,9 @@ export default function CustodianV2() {
           </MySecTokensTab> */}
           {featuredTokens?.length > 0 && (
             <Box marginBottom="72px">
-              <TYPE.title5 marginBottom="32px">Featured</TYPE.title5>
+              <TYPE.title5 marginBottom="32px">
+                <Trans>Featured</Trans>
+              </TYPE.title5>
               <FeaturedTokensGrid>
                 {featuredTokens.map((token: any) => (
                   <FeaturedToken token={token} key={`featured-${token.id}`} />

@@ -1,6 +1,5 @@
-import React, { FC, useRef } from 'react'
+import React, { FC } from 'react'
 import styled from 'styled-components'
-import { FixedSizeList } from 'react-window'
 import { Token } from '@ixswap1/sdk-core'
 import { NavLink } from 'react-router-dom'
 import { Flex } from 'rebass'
@@ -8,7 +7,6 @@ import { Flex } from 'rebass'
 import { Table, HeaderRow, BodyRow } from 'components/Table'
 import { TYPE } from 'theme'
 import { Pagination } from 'components/AdminKycTable/Pagination'
-import { ListType, useCurrencySearch } from 'components/SearchModal/useCurrencySearch'
 import CurrencyLogo from 'components/CurrencyLogo'
 
 import { ReactComponent as Tradable } from '../../assets/images/tradable.svg'
@@ -48,7 +46,6 @@ const Body: FC<BodyProps> = ({ tokens }: BodyProps) => {
                 ) : (
                   <CurrencyLogo currency={undefined} size={'30px'} style={{ marginRight: 16 }} />
                 )}
-                {/* <CurrencyLogo currency={token} size={'30px'} style={{ marginRight: 10 }} /> */}
                 <TYPE.title5>{token.ticker}</TYPE.title5>
               </Flex>
             </div>
@@ -70,20 +67,14 @@ const Body: FC<BodyProps> = ({ tokens }: BodyProps) => {
 }
 
 export const SecTokensTable: FC<BodyProps> = ({ tokens }: BodyProps) => {
-  // const listRef = useRef<FixedSizeList>()
-  // const { filteredSortedTokens } = useCurrencySearch({
-  //   listRef,
-  //   list: ListType.OTHER,
-  // })
-
   return tokens.length > 0 ? (
     <>
-      <Flex marginBottom="40px">
-        <TYPE.title5>{`Other security tokens`}</TYPE.title5>
+      <TYPE.title5 marginBottom="40px" display="flex">
+        {`Other security tokens`}
         <TYPE.title5 marginLeft="4px" color="text2">
           {`(${tokens?.length || '0'})`}
         </TYPE.title5>
-      </Flex>
+      </TYPE.title5>
       <Table style={{ marginBottom: 32 }} header={<Header />} body={<Body tokens={tokens} />} />
       <Pagination page={1} totalPages={1} onPageChange={() => console.log('change')} />{' '}
     </>
@@ -92,6 +83,7 @@ export const SecTokensTable: FC<BodyProps> = ({ tokens }: BodyProps) => {
 
 export const StyledHeaderRow = styled(HeaderRow)`
   grid-template-columns: 3fr 3fr 2fr 2fr 1fr;
+  min-width: 1000px;
 `
 
 const StyledBodyRow = styled(BodyRow)`
@@ -100,6 +92,7 @@ const StyledBodyRow = styled(BodyRow)`
   margin-bottom: 8px;
   border: none;
   background: rgba(39, 31, 74, 0.3);
+  min-width: 1000px;
 
   > div {
     display: flex;

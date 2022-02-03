@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { darken } from 'polished'
 
 import { ButtonGradientBorder } from 'components/Button'
 import { BodyRow } from 'components/Table'
@@ -21,19 +22,40 @@ export const CardHeader = styled(BodyRow)`
   > div:first-child {
     padding-left: 55px;
   }
+
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+
+    > div:first-child {
+      padding-left: 10px;
+    }
+  `};
 `
 
 export const EditButton = styled(ApproveButton)`
   width: 109px;
   padding: 0px;
-  color: white;
+  color: ${({ theme }) => theme.text1};
+
+  &:focus {
+    background-color: ${({ theme, disabled }) => !disabled && darken(0.05, theme.bg7)};
+  }
+  &:hover {
+    background-color: ${({ theme, disabled }) => !disabled && darken(0.05, theme.bg7)};
+  }
+  &:active {
+    background-color: ${({ theme, disabled }) => !disabled && darken(0.1, theme.bg7)};
+  }
 `
 
 export const TokensList = styled.div`
   margin: 0px 12px;
   border-radius: 0px 0px 20px 20px;
-  background: radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.033) 0%, rgba(26, 18, 58, 0) 100%),
-    rgba(44, 37, 74, 0.5);
+  background: ${({ theme }) => theme.bgG14};
+
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    overflow: scroll;
+  `};
 `
 
 export const TokensListItem = styled.div`
@@ -46,12 +68,24 @@ export const TokensListItem = styled.div`
     display: flex;
     align-items: center;
   }
+
+  ${({ theme }) => theme.mediaWidth.upToSmall`  
+    > div:last-child {
+      padding-right: 100px;
+    }
+
+    grid-template-columns: 1fr 300px 3fr 3fr;
+  `};
 `
 
 export const FormGrid = styled.div`
   display: grid;
   grid-template-columns: 4fr 4fr 60px;
   grid-gap: 25px;
+
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    grid-template-columns: 1fr;
+  `};
 `
 
 export const Logo = styled.div`
@@ -61,20 +95,14 @@ export const Logo = styled.div`
   width: 60px;
   height: 60px;
   border-radius: 36px;
-  background: #372e5e;
+  background: ${({ theme }) => theme.bg7};
 `
 
 export const TokenCard = styled(BodyRow)`
   display: grid;
   grid-template-columns: 2fr 2fr 3fr 2fr 2fr 2fr 2fr 1fr;
   height: 80px;
-
-  > div {
-    display: flex;
-    justify-content: center;
-    padding-left: 15px;
-    align-items: center;
-  }
+  min-width: 1024px;
 
   > div:first-child {
     justify-content: start;
@@ -92,7 +120,7 @@ export const WideModalWrapper = styled(ModalBlurWrapper)`
 
 export const FormWrapper = styled.div`
   padding: 24px 24px 20px 24px;
-  background: rgba(39, 32, 70, 0.4);
+  background: ${({ theme }) => theme.bg18};
   border-radius: 16px;
 
   > div {
@@ -104,4 +132,8 @@ export const FormRow = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 20px;
+
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    grid-template-columns: 1fr;
+  `};
 `

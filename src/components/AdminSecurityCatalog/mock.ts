@@ -1,3 +1,5 @@
+import { CREATE_TOKEN_CHAINS } from 'constants/addresses'
+
 export const initialTokenState = {
   id: null,
   address: '',
@@ -12,9 +14,9 @@ export const initialTokenState = {
   wrappedTokenAddress: '',
   description: '',
   active: null,
-  feautured: null,
+  featured: null,
   tradable: null,
-  chainId: 1,
+  chainId: CREATE_TOKEN_CHAINS[0].id,
 }
 
 export const initialIssuerState = {
@@ -24,3 +26,15 @@ export const initialIssuerState = {
   filePath: '',
   file: null,
 }
+
+export const validateSecTokenFields = [
+  'address',
+  'atlasOneId',
+  'chainId',
+  'companyName',
+  'country',
+  'industry',
+  'url',
+  'ticker',
+  'description',
+]
