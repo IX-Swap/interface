@@ -7,13 +7,6 @@ describe('Setup2FA', () => {
     jest.clearAllMocks()
   })
 
-  it('renders Next button if step is not last', () => {
-    const { queryByRole } = render(<Setup2FA />)
-
-    const nextButton = queryByRole('button')
-    expect(nextButton).not.toBeNull()
-  })
-
   it('does not render Next button if step is last', () => {
     const { queryByText } = render(<Setup2FA />)
 
