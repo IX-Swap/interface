@@ -26,7 +26,6 @@ jest.mock('app/pages/security/components/Enabled', () => ({
 
 describe('ActiveStep', () => {
   const nextStep = jest.fn()
-  const handleSuccessfulRemoveAuthenticator = jest.fn()
 
   afterEach(async () => {
     jest.clearAllMocks()
@@ -34,14 +33,7 @@ describe('ActiveStep', () => {
 
   it('renders Step1Download if activeStep is 0', () => {
     render(
-      <ActiveStep
-        index={0}
-        nextStep={nextStep}
-        twoFaData={fakeTwoFaData}
-        handleSuccessfulRemoveAuthenticator={
-          handleSuccessfulRemoveAuthenticator
-        }
-      />
+      <ActiveStep index={0} nextStep={nextStep} twoFaData={fakeTwoFaData} />
     )
 
     expect(Step1Download).toHaveBeenCalledTimes(1)
@@ -49,14 +41,7 @@ describe('ActiveStep', () => {
 
   it('renders Step2Scan if activeStep is 1', () => {
     render(
-      <ActiveStep
-        index={1}
-        nextStep={nextStep}
-        twoFaData={fakeTwoFaData}
-        handleSuccessfulRemoveAuthenticator={
-          handleSuccessfulRemoveAuthenticator
-        }
-      />
+      <ActiveStep index={1} nextStep={nextStep} twoFaData={fakeTwoFaData} />
     )
 
     expect(Step2Scan).toHaveBeenCalledTimes(1)
@@ -64,14 +49,7 @@ describe('ActiveStep', () => {
 
   it('renders Step3Backup if activeStep is 2', () => {
     render(
-      <ActiveStep
-        index={2}
-        nextStep={nextStep}
-        twoFaData={fakeTwoFaData}
-        handleSuccessfulRemoveAuthenticator={
-          handleSuccessfulRemoveAuthenticator
-        }
-      />
+      <ActiveStep index={2} nextStep={nextStep} twoFaData={fakeTwoFaData} />
     )
 
     expect(Step3Backup).toHaveBeenCalledTimes(1)
@@ -79,14 +57,7 @@ describe('ActiveStep', () => {
 
   it('renders Step4Enable if activeStep is 3', () => {
     render(
-      <ActiveStep
-        index={3}
-        nextStep={nextStep}
-        twoFaData={fakeTwoFaData}
-        handleSuccessfulRemoveAuthenticator={
-          handleSuccessfulRemoveAuthenticator
-        }
-      />
+      <ActiveStep index={3} nextStep={nextStep} twoFaData={fakeTwoFaData} />
     )
 
     expect(Step4Enable).toHaveBeenCalledTimes(1)
@@ -94,14 +65,7 @@ describe('ActiveStep', () => {
 
   it("renders Enabled if activeStep doesn't match", () => {
     render(
-      <ActiveStep
-        index={4}
-        nextStep={nextStep}
-        twoFaData={fakeTwoFaData}
-        handleSuccessfulRemoveAuthenticator={
-          handleSuccessfulRemoveAuthenticator
-        }
-      />
+      <ActiveStep index={4} nextStep={nextStep} twoFaData={fakeTwoFaData} />
     )
 
     expect(Enabled).toHaveBeenCalledTimes(1)
