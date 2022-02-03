@@ -9,6 +9,10 @@ jest.mock(
   })
 )
 
+jest.mock('app/pages/issuance/components/UploadReportForm/FormPrompt', () => ({
+  FormPrompt: jest.fn(() => null)
+}))
+
 describe('UploadReportForm', () => {
   afterEach(async () => {
     await cleanup()
