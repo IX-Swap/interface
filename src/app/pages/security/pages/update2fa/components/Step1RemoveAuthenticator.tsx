@@ -21,6 +21,9 @@ export const Step1RemoveAuthenticator = ({
   const [update2fa, { isLoading: isUpdate2faLoading }] = useUpdate2fa(
     onSuccessRemoveAuthenticator
   )
+  const getEmailCode = async () => {
+    await refetch()
+  }
 
   useEffect(() => {
     if (data !== undefined) {
@@ -41,7 +44,7 @@ export const Step1RemoveAuthenticator = ({
           variant={'contained'}
           color={'primary'}
           disabled={isGetEmailLoading}
-          onClick={async () => await refetch()}
+          onClick={getEmailCode}
         >
           Send code
         </Button>
@@ -53,7 +56,7 @@ export const Step1RemoveAuthenticator = ({
     return (
       <Grid container direction={'column'} spacing={6}>
         <Grid item>
-          <ResendCode action={refetch} data={data} />
+          <ResendCode action={getEmailCode} data={data} />
         </Grid>
         <Grid item>
           <RemoveAuthenticatorForm

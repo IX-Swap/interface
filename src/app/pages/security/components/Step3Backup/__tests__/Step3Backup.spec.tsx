@@ -8,6 +8,11 @@ describe('Step3Backup', () => {
     jest.clearAllMocks()
   })
 
+  it('renders empty container if twoFaData is undefined', () => {
+    const { container } = render(<Step3Backup twoFaData={undefined} />)
+    expect(container).toBeEmpty()
+  })
+
   it('renders 2fa key', () => {
     const { container } = render(<Step3Backup twoFaData={fakeTwoFaData} />)
     expect(container.querySelector('h4')).toHaveTextContent(fakeTwoFaData.key)
