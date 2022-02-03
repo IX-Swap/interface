@@ -152,7 +152,7 @@ export const AdminTransactionsTable = () => {
   )
 }
 
-const Loader = styled.div`
+export const Loader = styled.div`
   position: fixed;
   top: 0;
   left: 0;

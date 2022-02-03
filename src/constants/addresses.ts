@@ -31,6 +31,11 @@ export const TGE_CHAINS_WITH_STAKING = [
 export const ETHEREUM_TGE_CHAINS = [SUPPORTED_TGE_CHAINS.KOVAN, SUPPORTED_TGE_CHAINS.MAIN]
 export const MATIC_TGE_CHAINS = [SUPPORTED_TGE_CHAINS.MATIC, SUPPORTED_TGE_CHAINS.MUMBAI]
 export const MAIN_TGE_CHAINS = [SUPPORTED_TGE_CHAINS.MAIN, SUPPORTED_TGE_CHAINS.MATIC]
+export const CREATE_TOKEN_CHAINS = [
+  { id: SUPPORTED_TGE_CHAINS.MAIN, name: 'Mainnet' },
+  { id: SUPPORTED_TGE_CHAINS.KOVAN, name: 'Kovan' },
+  { id: SUPPORTED_TGE_CHAINS.MATIC, name: 'Matic' },
+]
 // the rest are same as kovan for now
 export const IXS_ADDRESS: { [key: number]: string } = {
   [1]: '0x73d7c860998CA3c01Ce8c808F5577d94d545d1b4',

@@ -1,5 +1,6 @@
 import { ReactComponent as Attention } from 'assets/images/attention.svg'
 import { ReactComponent as Passed } from 'assets/images/check-success.svg'
+import { ReactComponent as NonTradable } from 'assets/images/reject.svg'
 import Column from 'components/Column'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import { RowBetween } from 'components/Row'
@@ -112,6 +113,7 @@ export const StatusIcons = {
   [ActionHistoryStatus.REQUESTED]: () => <LoaderThin size={20} />,
   [ActionHistoryStatus.CANCELLED]: () => <Attention />,
   [ActionHistoryStatus.PROCESSING]: () => <LoaderThin size={20} />,
+  [ActionHistoryStatus.NON_TRADABLE]: () => <NonTradable />,
 }
 
 export const getStatusIcon = (action = ActionTypes.DEPOSIT, status: ActionHistoryStatus) => {

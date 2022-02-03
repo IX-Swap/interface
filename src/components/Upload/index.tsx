@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from 'react'
+import React, { ReactNode, useCallback, useState, useEffect } from 'react'
 import { useDropzone, FileWithPath } from 'react-dropzone'
 import { ImageContainer, PreviewParent, StyledClose, StyledLogo } from './styleds'
 import { SvgIconWrapper } from 'theme'
@@ -14,6 +14,7 @@ interface Props {
   isBanner?: boolean
   width?: string
   height?: string
+  children?: ReactNode
 }
 const Preview = ({
   file,
@@ -63,6 +64,7 @@ export default function Upload({
   width = '100%',
   height = '100%',
   accept = AcceptFiles.ALL,
+  children,
 }: Props) {
   const [filePath, setFilePath] = useState<string>('')
   const onDropInput = useCallback(
@@ -99,10 +101,25 @@ export default function Upload({
   return (
     <div {...getRootProps()}>
       <input {...getInputProps()} multiple={false} />
-      {isDragActive ? <p>Drop the files here ...</p> : <p>Drag and drop some files here, or click to select files</p>}
-      <ImageContainer isBanner={isBanner}>
-        <Preview width={width} height={height} isLogo={isLogo} filePath={filePath} file={file} onDelete={onDelete} />
-      </ImageContainer>
+      {children || (
+        <>
+          {isDragActive ? (
+            <p>Drop the files here ...</p>
+          ) : (
+            <p>Drag and drop some files here, or click to select files</p>
+          )}
+          <ImageContainer isBanner={isBanner}>
+            <Preview
+              width={width}
+              height={height}
+              isLogo={isLogo}
+              filePath={filePath}
+              file={file}
+              onDelete={onDelete}
+            />
+          </ImageContainer>
+        </>
+      )}
     </div>
   )
 }

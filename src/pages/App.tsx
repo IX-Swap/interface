@@ -31,7 +31,8 @@ import PoolFinder from './PoolFinder'
 import { RedirectPathToStaking, RedirectPathToSwapOnly, RedirectToSwap } from './Swap/redirects'
 
 const AdminKyc = lazy(() => import('./AdminKyc'))
-const Custodian = lazy(() => import('./Custodian'))
+// const Custodian = lazy(() => import('./Custodian'))
+const CustodianV2 = lazy(() => import('./CustodianV2'))
 const CreateNFT = lazy(() => import('./CreateNFT'))
 const ListNFT = lazy(() => import('./ListNFT'))
 const RemoveLiquidity = lazy(() => import('./RemoveLiquidity'))
@@ -146,7 +147,7 @@ export default function App() {
                 )}
 
                 <Route exact strict path="/security-tokens/:currencyId" component={SecTokenDetails} />
-                <Route exact strict path={routes.securityTokens()} component={Custodian} />
+                <Route exact strict path={routes.securityTokens()} component={CustodianV2} />
 
                 {chainId && TGE_CHAINS_WITH_STAKING.includes(chainId) && (
                   <Route exact strict path={routes.staking} component={StakingTab} />

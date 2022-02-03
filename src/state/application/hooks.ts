@@ -81,6 +81,10 @@ export function useChooseBrokerDealerModalToggle(): () => void {
   return useToggleModal(ApplicationModal.CHOOSE_BROKER_DEALER)
 }
 
+export function useTokenPopupToggle(): () => void {
+  return useToggleModal(ApplicationModal.TOKEN_POPUP)
+}
+
 // returns a function that allows adding a popup
 export function useAddPopup(): (content: PopupContent, key?: string) => void {
   const dispatch = useDispatch()

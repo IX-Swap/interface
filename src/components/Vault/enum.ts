@@ -9,6 +9,7 @@ export enum ActionHistoryStatus {
   REQUESTED = 'requested',
   CANCELLED = 'cancelled',
   PROCESSING = 'processing',
+  NON_TRADABLE = 'non_tradable',
 }
 export enum ActionTypes {
   WITHDRAW = 'withdraw',
@@ -42,6 +43,7 @@ const TransactionHistoryStatusText = {
   [ActionHistoryStatus.REQUESTED]: t`Requested`,
   [ActionHistoryStatus.CANCELLED]: t`Cancelled`,
   [ActionHistoryStatus.PROCESSING]: t`Processing`,
+  [ActionHistoryStatus.NON_TRADABLE]: t`Processing`,
 }
 
 const StatusColors = {
@@ -53,6 +55,7 @@ const StatusColors = {
   [ActionHistoryStatus.REQUESTED]: t`text2`,
   [ActionHistoryStatus.CANCELLED]: t`error`,
   [ActionHistoryStatus.PROCESSING]: t`text2`,
+  [ActionHistoryStatus.NON_TRADABLE]: t`text2`,
 }
 
 export const ActionTypeText = {

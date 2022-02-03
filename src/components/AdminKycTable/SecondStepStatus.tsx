@@ -152,7 +152,7 @@ const defaultBtnStyles = css`
   font-size: 14px;
 `
 
-const ApproveButton = styled(ButtonGray)`
+export const ApproveButton = styled(ButtonGray)`
   ${defaultBtnStyles};
   color: ${({ theme: { green1 } }) => green1};
   background-color: rgba(55, 46, 94, 0.42);
