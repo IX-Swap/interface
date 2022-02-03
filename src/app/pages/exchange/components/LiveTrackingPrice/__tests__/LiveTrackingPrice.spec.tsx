@@ -4,6 +4,7 @@ import React from 'react'
 import { render } from 'test-utils'
 import { TrackingPrice } from 'app/pages/exchange/components/LiveTrackingPrice/TrackingPrice'
 import * as useLastPrice from 'app/pages/exchange/hooks/useLastPrice'
+import { OrderSide } from 'types/order'
 
 jest.mock(
   'app/pages/exchange/components/LiveTrackingPrice/TrackingPrice',
@@ -41,7 +42,7 @@ describe('LiveTrackingPrice', () => {
       marketTrades: [
         {
           price: 1000,
-          side: 'BID'
+          side: OrderSide.BID
         },
         {
           price: 900
@@ -68,7 +69,7 @@ describe('LiveTrackingPrice', () => {
       marketTrades: [
         {
           price: 1000,
-          side: 'ASK'
+          side: OrderSide.ASK
         },
         {
           price: 1200
