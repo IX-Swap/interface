@@ -18,10 +18,4 @@ describe('Setup2fa', () => {
     const nextButton = queryByRole('button')
     expect(nextButton).not.toBeNull()
   })
-
-  it('does not render Next button if step is last', () => {
-    const { queryByText } = render(<Setup2fa />)
-
-    expect(queryByText('Next')).not.toBeTruthy()
-  })
 })
