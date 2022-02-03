@@ -54,7 +54,7 @@ export const TokenDeploymentView = ({ data }: TokenDeploymentViewProps) => {
           value={
             walletData !== undefined
               ? `${data.network?.nativeCurrency.symbol ?? ''} ${
-                  walletData.balance ?? ''
+                  walletData.balance ?? walletData?.ownerBalance ?? ''
                 }`
               : undefined
           }

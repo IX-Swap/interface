@@ -29,3 +29,6 @@ export interface CompletePasswordResetArgs {
 export interface GetUserArgs extends BaseArgs {
   userId: string
 }
+
+export const MAX_LOGIN_ATTEMPTS = 3
+export const LOCK_LOGIN_ERROR_CODES = ['RECO-RLE291', 'RWC0-70531O']
