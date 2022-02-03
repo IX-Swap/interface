@@ -3,7 +3,8 @@ import { render } from 'test-utils'
 import {
   wysiwygToHtml,
   renderAddressColumn,
-  renderDateAndTimeField
+  renderDateAndTimeField,
+  renderPartOfEmail
 } from 'helpers/rendering'
 import { WalletAddress } from 'app/components/WalletAddress'
 import { withdrawalAddress } from '__fixtures__/withdrawalAddress'
@@ -47,5 +48,26 @@ describe('renderDateAndTimeField', () => {
     const time = getByTestId('time')
     expect(date).toHaveTextContent(formatDateToMMDDYY(testDate))
     expect(time).toHaveTextContent(formatTime(testDate))
+  })
+})
+
+describe('renderPartOfEmail', () => {
+  afterEach(async () => {
+    jest.clearAllMocks()
+  })
+
+  it('returns empty string when email is undefined', () => {
+    const testEmail = undefined
+    expect(renderPartOfEmail(testEmail)).toEqual('')
+  })
+
+  it('returns empty string when email is empty string', () => {
+    const testEmail = ''
+    expect(renderPartOfEmail(testEmail)).toEqual('')
+  })
+
+  it('returns correct part of email address', () => {
+    const testEmail = 'test@gmail.com'
+    expect(renderPartOfEmail(testEmail)).toEqual('tes***@gmail.com')
   })
 })

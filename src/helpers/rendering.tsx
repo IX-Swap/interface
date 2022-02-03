@@ -6,7 +6,6 @@ import pdfIcon from 'assets/icons/documents/pdf2.svg'
 import docxIcon from 'assets/icons/documents/docx.svg'
 import txtIcon from 'assets/icons/documents/txt.svg'
 import unknownIcon from 'assets/icons/documents/unknown.svg'
-import { Maybe } from 'types/util'
 import { WalletAddress } from 'app/components/WalletAddress'
 import { DSOFavorite } from 'app/components/DSOFavorite'
 import { DigitalSecurityOffering } from 'types/dso'
@@ -62,18 +61,6 @@ export const renderOrderStatus = (status: Order['status']) => {
   return <OrderStatus status={status} />
 }
 
-export const renderPercentage = (value?: Maybe<Number>) => {
-  // TODO: remove when backend is fixed
-  if (value === null || value === undefined || value === 0) {
-    return undefined
-  }
-
-  return <span>{Number.parseFloat(`${value}`) * 100} %</span>
-}
-
-export const renderMonths = (value: string | number | undefined | null) =>
-  value !== undefined ? `${value} months` : undefined
-
 export const renderMarketType = (marketType: string) => {
   return marketType === '' ? 'Both' : marketType
 }
@@ -100,7 +87,7 @@ export const renderDateAndTimeField = (date: any) => {
   )
 }
 
-export const renderPartOfEmail = (email: string) => {
+export const renderPartOfEmail = (email: string | undefined) => {
   if (email === undefined || email.length < 1) {
     return ''
   }

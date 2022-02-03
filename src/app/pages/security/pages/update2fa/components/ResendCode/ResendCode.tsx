@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Box, Button, Typography } from '@material-ui/core'
 import { ReactComponent as InfoIcon } from 'assets/icons/info.svg'
-import { useStyles } from './ResendCode.style'
+import { useStyles } from 'app/pages/security/pages/update2fa/components/ResendCode/ResendCode.styles'
 import { GetEmailCodeResponse } from 'app/pages/security/types'
 
 export interface ResendCodeProps {

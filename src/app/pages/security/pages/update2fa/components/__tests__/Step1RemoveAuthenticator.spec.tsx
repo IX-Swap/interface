@@ -4,6 +4,7 @@ import { Step1RemoveAuthenticator } from 'app/pages/security/pages/update2fa/com
 import * as useGetEmailCode from 'app/pages/security/pages/update2fa/hooks/useGetEmailCode'
 import { ResendCode } from 'app/pages/security/pages/update2fa/components/ResendCode/ResendCode'
 import { RemoveAuthenticatorForm } from 'app/pages/security/pages/update2fa/components/RemoveAuthenticatorForm'
+import { fireEvent, waitFor } from '@testing-library/dom'
 
 jest.mock(
   'app/pages/security/pages/update2fa/components/ResendCode/ResendCode',
@@ -22,18 +23,20 @@ describe('Step1RemoveAuthenticator', () => {
   const handleSuccessfulRemoveAuthenticator = jest.fn()
 
   const getEmailCodeSuccessfulResponse = {
-    data: { email: 'test' }
+    data: { email: 'test' },
+    refetch: jest.fn()
   }
 
   const getEmailCodeUnsuccessfulResponse = {
-    data: undefined
+    data: undefined,
+    refetch: jest.fn()
   }
 
   afterEach(async () => {
     jest.clearAllMocks()
   })
 
-  it('renders send code button when data is undefined', () => {
+  it('renders send code button when data is undefined, revoke refetch on click', async () => {
     jest
       .spyOn(useGetEmailCode, 'useGetEmailCode')
       .mockImplementation(() => getEmailCodeUnsuccessfulResponse as any)
@@ -45,6 +48,11 @@ describe('Step1RemoveAuthenticator', () => {
     )
 
     expect(getByText('Send code')).toBeInTheDocument()
+    fireEvent.click(getByText('Send code'))
+
+    await waitFor(() => {
+      expect(getEmailCodeUnsuccessfulResponse.refetch).toHaveBeenCalled()
+    })
   })
 
   it('renders components when data is not undefined', () => {
