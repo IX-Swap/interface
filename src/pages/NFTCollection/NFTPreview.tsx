@@ -4,6 +4,8 @@ import { Dots } from 'pages/Pool/styleds'
 import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { TYPE } from 'theme'
+import LogoWhite from '../../assets/svg/logo-white.svg'
+import { CollectionImage } from 'pages/NFTCollections/styleds'
 
 interface NFTPreviewProps {
   uri: string
@@ -82,13 +84,15 @@ const NFTPreviewNSFWBadge = styled.div`
 `
 
 const LoaderWrapper = styled.div`
-  height: 100%;
+  height: 70%;
 
   display: flex;
   flex-flow: column nowrap;
 
   justify-content: center;
   align-items: center;
+
+  padding: 2rem;
 `
 
 const NFTPreviewWrapper = styled.div`
@@ -185,7 +189,7 @@ const NFTPreview = (props: NFTPreviewProps) => {
     <NFTPreviewContainer>
       {info && (
         <>
-          <NftFilePreview type={info.type} path={info.file} />
+          <NftFilePreview type={info.type} path={info.file ?? LogoWhite} />
           <NFTPreviewNameContainer>
             <TYPE.title5>{info?.name}</TYPE.title5>
             {info.isNSFW && (
@@ -199,7 +203,8 @@ const NFTPreview = (props: NFTPreviewProps) => {
 
       {!info && (
         <LoaderWrapper>
-          <Dots>Loading</Dots>
+          <CollectionImage height="100%" width="100%" src={LogoWhite} />
+          {/*<Dots>Loading</Dots>*/}
         </LoaderWrapper>
       )}
     </NFTPreviewContainer>
