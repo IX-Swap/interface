@@ -67,11 +67,10 @@ export const FormStepper = (props: FormStepperProps) => {
       <Grid item>
         <Stepper activeStep={activeStep} alternativeLabel nonLinear={nonLinear}>
           {steps.map((step, index) => (
-            <Step key={`step-${index}`}>
+            <Step key={`step-${index}`} completed={completed.includes(index)}>
               {nonLinear ? (
                 <StepButton
                   onClick={handleStepButtonClick(index)}
-                  completed={completed.includes(index)}
                   disableRipple
                   disabled={
                     !completed.includes(index) &&

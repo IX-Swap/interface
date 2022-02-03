@@ -33,11 +33,12 @@ export const MoreDetails = () => {
         open={anchorEl !== null}
         anchorEl={anchorEl}
         placement='bottom'
-        modifiers={{
-          flip: {
+        modifiers={[
+          {
+            name: 'flip',
             enabled: false
           }
-        }}
+        ]}
         style={{ zIndex: 10 }}
       >
         <Paper

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { TypedField } from 'components/form/TypedField'
 import { sliderValueExtractor } from 'helpers/forms'
 import { Box, Slider, SliderProps, useTheme } from '@mui/material'
@@ -22,10 +22,7 @@ export const CustomSlider = (
     }
 ) => {
   const { getValues, setValue } = props.control
-  const handleChange = (
-    event: ChangeEvent<{}>,
-    newValue: number | number[]
-  ) => {
+  const handleChange = (event: Event, newValue: number | number[]) => {
     const oldValue = getValues(`sourceOfFund[${props.index}].value`)
     const sum = Number(newValue) + Number(props.fundSourceSum) - oldValue
     if (sum <= 100) {
@@ -77,6 +74,7 @@ export const FundSourceSlider = ({
         index={index}
         fundSourceSum={fundSourceSum}
         valueLabelDisplay='auto'
+        // @ts-expect-error
         ValueLabelComponent={SliderTooltip}
         disabled={!isChecked}
       />

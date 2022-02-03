@@ -1,16 +1,15 @@
 import React from 'react'
 import { Grid, Typography } from '@mui/material'
 import { Breadcrumbs } from 'app/components/Breadcrumbs/Breadcrumbs'
-import { GridJustification } from '@mui/material/Grid/Grid'
 import { useBreadcrumbs } from 'hooks/useBreadcrumbs'
 import { useStyles } from './PageHeader.styles'
 import { BackButton } from 'components/BackButton'
-import { Variant } from '@mui/material/styles'
 import classnames from 'classnames'
+import { Variant } from '@mui/material/styles/createTypography'
 
 export interface PageHeaderProps {
   title?: string
-  alignment?: GridJustification
+  alignment?: string
   showBreadcrumbs?: boolean
   hasBackButton?: boolean
   variant?: Variant | 'inherit'

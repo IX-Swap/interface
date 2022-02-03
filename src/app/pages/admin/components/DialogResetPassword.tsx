@@ -19,7 +19,6 @@ export const DialogResetPassword = ({
   return (
     <UserActionsDialog
       open={open}
-      disableBackdropClick
       disableEscapeKeyDown
       closeDialog={closeDialog}
       action={resetPassword}

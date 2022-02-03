@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, Typography } from '@mui/material'
 import { useStyles } from 'app/components/DSO/components/FormSectionHeader.styles'
-import { Variant } from '@mui/material/styles'
+import { Variant } from '@mui/material/styles/createTypography'
 
 export interface FormSectionHeaderProps {
   title: string

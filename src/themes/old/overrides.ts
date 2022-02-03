@@ -51,7 +51,7 @@ export const getThemeOverrides = (
   MuiListItem: {
     styleOverrides: {
       root: {
-        '&$selected': {
+        '&.Mui-selected': {
           color: theme.palette?.sidebar.activeColor,
           backgroundColor: theme.palette?.sidebar.activeBackground
         }
@@ -251,10 +251,10 @@ export const getThemeOverrides = (
     styleOverrides: {
       root: {
         color: '#DDDDDD',
-        '&$completed': {
+        '&.Mui-completed': {
           color: green[400]
         },
-        '&$active': {
+        '&.Mui-active': {
           color: tinycolor(theme.palette.primary.main).toHex8String(),
           '& .MuiStepIcon-text': {
             fill: '#ffffff'

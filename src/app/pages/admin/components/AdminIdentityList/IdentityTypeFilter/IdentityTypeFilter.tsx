@@ -1,7 +1,12 @@
-import { FormControl, InputLabel, MenuItem, Select } from '@mui/material'
-
-import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
 import React from 'react'
+import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent
+} from '@mui/material'
 
 export const IdentityTypeFilter = () => {
   return (
@@ -12,7 +17,7 @@ export const IdentityTypeFilter = () => {
           <Select
             displayEmpty
             value={value ?? ''}
-            onChange={(event: React.ChangeEvent<{ value: unknown }>) => {
+            onChange={(event: SelectChangeEvent<unknown>) => {
               onChange(event.target.value as string)
             }}
             label='Identity Type'

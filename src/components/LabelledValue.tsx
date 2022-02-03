@@ -87,6 +87,7 @@ export const LabelledValue = (props: LabelledValueProps & GridProps) => {
 
   const labelColorMap = {
     default: theme.palette.text.primary,
+    // @ts-expect-error
     light: theme.palette.text.hint,
     dark: 'rgba(255,255,255,.7)'
   }

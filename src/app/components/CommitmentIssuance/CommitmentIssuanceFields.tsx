@@ -64,7 +64,6 @@ export const CommitmentIssuanceFields = (
           disablePast
           valueExtractor={convertDateToISO}
           defaultValue={null}
-          margin='none'
           style={{ maxWidth: 200 }}
         />
       </Grid>

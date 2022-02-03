@@ -200,9 +200,8 @@ export const renderWithInitialWidth = (ui: any, initialWidth: any) => {
   const SizeWrapper = (props: any) => {
     const defaultTheme = createTheme()
     const theme = createTheme(
-      adaptV4Theme({
-        props: { ...defaultTheme, MuiWithWidth: { initialWidth } }
-      })
+      // adaptV4Theme({ ...defaultTheme, MuiWithWidth: { initialWidth } })
+      adaptV4Theme({ ...defaultTheme })
     )
 
     return (

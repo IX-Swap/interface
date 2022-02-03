@@ -5,6 +5,7 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  SelectChangeEvent,
   Typography
 } from '@mui/material'
 import { useStyles } from 'app/pages/admin/components/UserIdentitySelect.styles'
@@ -32,7 +33,7 @@ export const UserIdentitySelect = ({
     !hasIdentity ? 'no identity' : 'individual'
   )
 
-  const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+  const handleChange = (event: SelectChangeEvent<unknown>) => {
     setIdentity(event.target.value as string)
   }
 

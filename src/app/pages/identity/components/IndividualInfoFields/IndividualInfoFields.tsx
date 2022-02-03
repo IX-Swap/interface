@@ -96,7 +96,6 @@ export const IndividualInfoFields = (
               customRenderer
               defaultValue={null as any}
               valueExtractor={dateTimeValueExtractor}
-              inputVariant='outlined'
               maxDate={subYears(new Date(), 18)}
             />
           </Grid>

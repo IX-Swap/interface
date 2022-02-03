@@ -1,6 +1,6 @@
-import { MenuItem, Select } from '@mui/material'
+import { MenuItem, Select, SelectChangeEvent } from '@mui/material'
 import { AppThemeContext } from 'AppThemeProvider'
-import React, { ChangeEvent, useContext } from 'react'
+import React, { useContext } from 'react'
 import { AppTheme } from 'themes/old'
 
 export const ThemeSelector = () => {
@@ -12,7 +12,7 @@ export const ThemeSelector = () => {
 
   const { onChange, themeType } = appThemeContext
 
-  const handleChange = (event: ChangeEvent<{ value: unknown }>) => {
+  const handleChange = (event: SelectChangeEvent<unknown>) => {
     onChange(event.target.value as AppTheme)
   }
 

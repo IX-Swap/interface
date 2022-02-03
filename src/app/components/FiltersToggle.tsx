@@ -12,7 +12,7 @@ export const FiltersToggle = (props: FiltersToggleProps) => {
     <Container>
       <Grid container justifyContent='flex-end'>
         <Grid item>
-          <ToggleButton onClick={toggle} selected={isOpened}>
+          <ToggleButton onClick={toggle} selected={isOpened} value=''>
             <FilterList />
             <Box px={0.5} />
             <Typography>{isOpened ? 'Hide' : 'Show'} Filters</Typography>

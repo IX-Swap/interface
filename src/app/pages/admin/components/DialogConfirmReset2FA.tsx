@@ -28,7 +28,6 @@ export const DialogConfirmReset2FA = ({
   return (
     <UserActionsDialog
       open={open}
-      disableBackdropClick
       disableEscapeKeyDown
       closeDialog={closeDialog}
       action={handleReset}

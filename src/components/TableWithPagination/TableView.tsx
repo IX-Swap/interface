@@ -11,8 +11,7 @@ import {
   Grid,
   PaperProps,
   Checkbox,
-  FormControlLabel,
-  Size
+  FormControlLabel
 } from '@mui/material'
 import { TableColumn, BaseFilter } from 'types/util'
 import { ActionsType } from 'app/pages/authorizer/components/Actions'
@@ -49,7 +48,7 @@ export interface TableViewProps<T> {
   selectionHelper?: UseSelectionHelperReturnType<T | unknown>
   paperProps?: PaperProps
   defaultRowsPerPage?: number
-  size?: Size
+  size?: 'small' | 'medium'
   themeVariant?: 'default' | 'primary'
   noDataComponent?: JSX.Element
   noHeader?: boolean

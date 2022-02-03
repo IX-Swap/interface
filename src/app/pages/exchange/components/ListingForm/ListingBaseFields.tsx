@@ -147,7 +147,6 @@ export const ListingBaseFields = (props: ListingBaseFieldsProps) => {
                 valueExtractor={dateTimeValueExtractor}
                 defaultValue={null}
                 helperText='Offering launch date'
-                inputVariant='outlined'
               />
             </Grid>
             <Grid item xs={12} md={6}>
@@ -160,7 +159,6 @@ export const ListingBaseFields = (props: ListingBaseFieldsProps) => {
                 valueExtractor={dateTimeValueExtractor}
                 defaultValue={null}
                 helperText='Offering completion date'
-                inputVariant='outlined'
                 disabled={isDataFromDSO && watch('completionDate') !== null}
               />
             </Grid>

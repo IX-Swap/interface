@@ -1,7 +1,7 @@
 import React from 'react'
 import { DataroomUploaderRenderProps } from 'components/dataroom/DataroomUploader'
 import { ViewDocument } from 'app/components/DSO/components/ViewDocument'
-import { Avatar, Box } from '@mui/material'
+import { Avatar, AvatarProps, Box } from '@mui/material'
 import { useAuth } from 'hooks/auth/useAuth'
 import { getDataroomFileId } from 'helpers/dataroom'
 import { Image, Person, PhotoCamera } from '@mui/icons-material'
@@ -12,7 +12,7 @@ import { themeColors } from 'themes/old/colors'
 export interface DataroomAvatarUploaderProps
   extends DataroomUploaderRenderProps {
   size?: number
-  variant?: 'circle' | 'rounded' | 'square'
+  variant?: AvatarProps['variant']
   type?: 'person' | 'image'
 }
 
@@ -22,7 +22,7 @@ export const DataroomAvatarUploader = (props: DataroomAvatarUploaderProps) => {
     value,
     name,
     size = 60,
-    variant = 'circle',
+    variant = 'circular',
     type = 'person'
   } = props
   const { user } = useAuth()

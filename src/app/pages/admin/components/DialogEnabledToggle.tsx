@@ -19,7 +19,6 @@ export const DialogEnabledToggle = ({
   return (
     <UserActionsDialog
       open={open}
-      disableBackdropClick
       disableEscapeKeyDown
       closeDialog={closeDialog}
       action={toggleEnabled}

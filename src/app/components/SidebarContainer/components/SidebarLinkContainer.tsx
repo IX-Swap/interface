@@ -30,7 +30,7 @@ export const SidebarLinkContainer = (props: SidebarLinkProps) => {
   }
 
   return (
-    <NavigationItem button selected={isActive}>
+    <NavigationItem selected={isActive}>
       <NavigationLink onClick={closeDrawer} to={link} style={{ color }}>
         <Box>{React.createElement(icon)}</Box>
         <span>{label}</span>

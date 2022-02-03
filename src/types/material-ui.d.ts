@@ -48,6 +48,7 @@ declare module '@mui/material/styles' {
     spacing: Spacing
     transitions: Transitions
     typography: Typography
-    zIndex: ZIndex
+    // TODO fix any
+    zIndex: any
   }
 }
