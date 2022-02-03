@@ -1,3 +1,4 @@
+import { OrderSide } from 'types/order'
 import {
   AccountInfo,
   ActivitySummary,
@@ -22,7 +23,7 @@ export const fakeAccountInfo: AccountInfo = {
 export const fakeOpenPositionItem: OpenPositionItem = {
   _id: '617f85f33558188dbcd50723',
   type: 'BUY',
-  side: 'BID',
+  side: OrderSide.BID,
   price: 2000,
   amount: 3,
   date: '2021-11-01T06:15:15.824Z',
