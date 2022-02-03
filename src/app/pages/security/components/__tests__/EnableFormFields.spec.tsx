@@ -15,7 +15,7 @@ describe('EnableFormFields', () => {
 
   it('renders otp field correctly', () => {
     render(
-      <Form defaultValues={{ opt: '123456' }}>
+      <Form defaultValues={{ otp: '123456' }}>
         <EnableFormFields />
       </Form>
     )

@@ -1,7 +1,6 @@
 import React from 'react'
 import { render } from 'test-utils'
-import { waitFor, fireEvent } from '@testing-library/react'
-import { ActiveStep } from 'app/pages/security/pages/update2fa/components/ActiveStep'
+import { ActiveStep } from 'app/pages/security/pages/setup2fa/components/ActiveStep'
 import { Step1Download } from 'app/pages/security/pages/setup2fa/components/Step1Download'
 import { Step2Scan } from 'app/pages/security/components/Step2Scan/Step2Scan'
 import { Step3Backup } from 'app/pages/security/components/Step3Backup/Step3Backup'
@@ -106,55 +105,5 @@ describe('ActiveStep', () => {
     )
 
     expect(Enabled).toHaveBeenCalledTimes(1)
-  })
-
-  it('renders Next button if step is not last', () => {
-    const { queryByRole } = render(
-      <ActiveStep
-        index={0}
-        nextStep={nextStep}
-        twoFaData={fakeTwoFaData}
-        handleSuccessfulRemoveAuthenticator={
-          handleSuccessfulRemoveAuthenticator
-        }
-      />
-    )
-
-    const nextButton = queryByRole('button')
-    expect(nextButton).not.toBeNull()
-  })
-
-  it('does not render Next button if step is last', () => {
-    const { queryByText } = render(
-      <ActiveStep
-        index={4}
-        nextStep={nextStep}
-        twoFaData={fakeTwoFaData}
-        handleSuccessfulRemoveAuthenticator={
-          handleSuccessfulRemoveAuthenticator
-        }
-      />
-    )
-
-    expect(queryByText('Next')).not.toBeTruthy()
-  })
-
-  it('invokes nextStep when Next button is clicked', async () => {
-    const { getByRole } = render(
-      <ActiveStep
-        index={0}
-        nextStep={nextStep}
-        twoFaData={fakeTwoFaData}
-        handleSuccessfulRemoveAuthenticator={
-          handleSuccessfulRemoveAuthenticator
-        }
-      />
-    )
-
-    const nextButton = getByRole('button')
-    fireEvent.click(nextButton)
-    await waitFor(() => {
-      expect(nextStep).toHaveBeenCalledTimes(1)
-    })
   })
 })
