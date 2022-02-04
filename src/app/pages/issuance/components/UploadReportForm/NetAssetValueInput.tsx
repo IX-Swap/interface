@@ -22,7 +22,7 @@ export const NetAssetValueInput = () => {
         <TypedField
           component={TextField}
           label=''
-          name='netAssetValue'
+          name='nav'
           control={control}
           variant='outlined'
         />

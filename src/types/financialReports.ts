@@ -1,8 +1,8 @@
-import { DataroomFile, FormArray } from 'types/dataroomFile'
+import { DataroomFile } from 'types/dataroomFile'
 
 export interface UploadReportFormValues {
-  netAssetValue: number
-  from: string
-  to: string
-  documents: FormArray<DataroomFile>
+  nav: number
+  dateFrom: string
+  dateTo: string
+  reportDocuments: DataroomFile[]
 }

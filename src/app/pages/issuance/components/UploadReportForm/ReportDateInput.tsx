@@ -7,7 +7,7 @@ import { useFormContext } from 'react-hook-form'
 
 export const ReportDateInput = () => {
   const { control, watch } = useFormContext()
-  const fromValue = watch('from')
+  const fromValue = watch('dateFrom')
   return (
     <Grid container spacing={2} wrap='nowrap' alignItems='center'>
       <Grid item>
@@ -20,7 +20,7 @@ export const ReportDateInput = () => {
           component={DateTimePicker}
           customRenderer
           label='From'
-          name='from'
+          name='dateFrom'
           control={control}
           valueExtractor={dateTimeValueExtractor}
           defaultValue={null}
@@ -32,7 +32,7 @@ export const ReportDateInput = () => {
           component={DateTimePicker}
           customRenderer
           label='To'
-          name='to'
+          name='dateTo'
           control={control}
           valueExtractor={dateTimeValueExtractor}
           defaultValue={null}
