@@ -1,6 +1,9 @@
 import { ChangePasswordFormValues } from 'app/pages/security/pages/changePassword/types'
 import { user } from './user'
-import { Enable2faFormValues } from 'app/pages/security/types'
+import {
+  Enable2faFormValues,
+  Remove2faFormValues
+} from 'app/pages/security/types'
 
 export const changePasswordArgs: ChangePasswordFormValues = {
   oldPassword: 'abc',
@@ -10,6 +13,11 @@ export const changePasswordArgs: ChangePasswordFormValues = {
 
 export const enable2faArgs: Enable2faFormValues = {
   otp: '543210'
+}
+
+export const remove2faArgs: Remove2faFormValues = {
+  otp: '543210',
+  emailCode: '543210'
 }
 
 export const securityURLs = {

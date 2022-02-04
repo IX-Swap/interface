@@ -3,7 +3,7 @@ import { Typography, Grid, Button } from '@material-ui/core'
 import { StepWrapper } from 'app/pages/security/components/StepWrapper'
 import { useGetEmailCode } from 'app/pages/security/pages/update2fa/hooks/useGetEmailCode'
 import { RemoveAuthenticatorForm } from 'app/pages/security/pages/update2fa/components/RemoveAuthenticatorForm'
-import { useUpdate2fa } from 'app/pages/security/pages/update2fa/hooks/useUpdate2fa'
+import { useRemove2fa } from 'app/pages/security/pages/update2fa/hooks/useRemove2fa'
 import { TwoFaData } from 'app/pages/security/types'
 import { ResendCode } from 'app/pages/security/pages/update2fa/components/ResendCode/ResendCode'
 
@@ -18,7 +18,7 @@ export const Step1RemoveAuthenticator = ({
 }: RemoveCurrentAuthenticatorProps) => {
   const [screenState, setScreenState] = useState<ScreenState>('Send code')
   const { refetch, data, isLoading: isGetEmailLoading } = useGetEmailCode()
-  const [update2fa, { isLoading: isUpdate2faLoading }] = useUpdate2fa(
+  const [update2fa, { isLoading: isUpdate2faLoading }] = useRemove2fa(
     onSuccessRemoveAuthenticator
   )
   const getEmailCode = async () => {

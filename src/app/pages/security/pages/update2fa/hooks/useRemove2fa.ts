@@ -6,18 +6,18 @@ import { getIdFromObj } from 'helpers/strings'
 import { authURL } from 'config/apiURL'
 import User from 'types/user'
 
-export const useUpdate2fa = (
+export const useRemove2fa = (
   handleSuccessRequest: (twoFaData: TwoFaData) => void
 ) => {
   const { snackbarService, apiService, storageService } = useServices()
   const { user } = useAuth()
 
-  const update2fa = async ({ otp, emailCode }: Remove2faFormValues) => {
+  const remove2fa = async ({ otp, emailCode }: Remove2faFormValues) => {
     const uri = authURL.remove2fa(getIdFromObj(user))
     return await apiService.post(uri, { otp, emailCode })
   }
 
-  return useMutation(update2fa, {
+  return useMutation(remove2fa, {
     onSuccess: data => {
       void snackbarService.showSnackbar(
         'Authenticator has been successfully removed!',
