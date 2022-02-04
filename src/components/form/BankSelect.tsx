@@ -8,19 +8,19 @@ import {
   SelectProps
 } from '@mui/material'
 import { useBanksData } from 'app/pages/accounts/pages/banks/hooks/useBanksData'
-import { queryStatusRenderer } from 'components/form/renderUtils'
 import { AuthorizableStatus } from 'types/util'
 import { privateClassNames } from 'helpers/classnames'
 import { useFormError } from 'hooks/useFormError'
 import { ValidCurrency } from 'helpers/types'
 
-export const BankSelect = (
-  props: Partial<SelectProps> & { status?: AuthorizableStatus } & {
-    helperText?: string
-    currency?: ValidCurrency
-  }
-): JSX.Element => {
-  const { data, status } = useBanksData()
+interface BankSelectProps extends Partial<SelectProps> {
+  helperText?: string
+  currency?: ValidCurrency
+  status?: AuthorizableStatus
+}
+
+export const BankSelect = (props: BankSelectProps) => {
+  const { data, isLoading } = useBanksData()
   const { hasError, error } = useFormError(props.name ?? '')
   const {
     status: bankStatus = 'Approved',
@@ -30,8 +30,7 @@ export const BankSelect = (
     ...rest
   } = props
 
-  const queryStatus = queryStatusRenderer(status)
-  if (queryStatus !== undefined) return queryStatus
+  if (isLoading || data === undefined) return null
 
   const filteredBanks = data.list.filter(
     ({ status, currency }) =>

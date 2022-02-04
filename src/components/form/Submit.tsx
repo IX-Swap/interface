@@ -31,9 +31,7 @@ export const Submit: React.FC<SubmitProps> = props => {
       disableElevation
       variant={variant}
       color={color}
-      disabled={
-        Boolean(disabled) || (watchIsDirty ? !isDirty : false || isSubmitting)
-      }
+      disabled={Boolean(disabled) || (watchIsDirty ? !isDirty : isSubmitting)}
       type='submit'
       {...rest}
     >

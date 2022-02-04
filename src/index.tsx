@@ -1,10 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {
-  ThemeProvider,
-  Theme,
-  StyledEngineProvider
-} from '@mui/material/styles'
+import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles'
 import createGenerateClassName from '@mui/styles/createGenerateClassName'
 import StylesProvider from '@mui/styles/StylesProvider'
 import { CssBaseline } from '@mui/material'
@@ -23,11 +19,6 @@ import { setupGoogleAnalytics } from 'setupGoogleAnalytics'
 import { AppStateProvider } from 'app/hooks/useAppState'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
-
-declare module '@mui/styles/defaultTheme' {
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  interface DefaultTheme extends Theme {}
-}
 
 const queryCache = new QueryCache({
   defaultConfig: {

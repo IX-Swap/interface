@@ -9,7 +9,6 @@ import {
 } from '@testing-library/react'
 import {
   ThemeProvider,
-  Theme,
   StyledEngineProvider,
   createTheme,
   adaptV4Theme
@@ -34,11 +33,6 @@ import { Toast } from 'components/Toast'
 import { AppThemeProvider } from 'AppThemeProvider'
 import apiService from 'services/api'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
-
-declare module '@mui/styles/defaultTheme' {
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  interface DefaultTheme extends Theme {}
-}
 
 export const apiServiceMock = {
   put: jest.fn(),
@@ -224,8 +218,7 @@ export const renderWithInitialWidth = (ui: any, initialWidth: any) => {
 
 export const invokeMutationFn = async (result: any, payload: any) => {
   await waitFor(() => result.current)
-  const response = await result.current[0](payload)
-  return response
+  return result.current[0](payload)
 }
 
 // eslint-disable-next-line import/export

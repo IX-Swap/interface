@@ -35,19 +35,7 @@ export const DatePicker = (props: DatePickerProps) => {
 
   return (
     <>
-      <MUIDatePicker
-        {...props}
-        value={value}
-        renderInput={inputProps => (
-          <TextField
-            fullWidth
-            margin='none'
-            variant='outlined'
-            label='Date'
-            {...inputProps}
-          />
-        )}
-      />
+      <DatePickerComponent {...props} name={name} value={value} />
       {hasError && <FormHelperText error>{error?.message}</FormHelperText>}
     </>
   )

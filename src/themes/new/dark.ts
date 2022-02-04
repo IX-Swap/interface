@@ -1,7 +1,6 @@
 import { DeprecatedThemeOptions } from '@mui/material'
 import tinycolor from 'tinycolor2'
 
-// TODO Need to do some refactoring in future
 export const darkTheme: DeprecatedThemeOptions = {
   palette: {
     mode: 'dark',

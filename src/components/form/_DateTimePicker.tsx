@@ -9,8 +9,8 @@ export const DateTimePickerComponent = (props: MUIDateTimePickerProps) => {
   return (
     <MUIDateTimePicker
       {...props}
-      renderInput={props => (
-        <TextField variant='outlined' fullWidth label='Date' {...props} />
+      renderInput={inputProps => (
+        <TextField variant='outlined' fullWidth label='Date' {...inputProps} />
       )}
     />
   )

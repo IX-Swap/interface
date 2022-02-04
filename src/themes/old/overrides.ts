@@ -4,12 +4,6 @@ import { ThemeOptions } from '@mui/material/styles'
 import { rte } from 'themes/old/rte'
 import tinycolor from 'tinycolor2'
 
-// interface LabOverrides {
-//   MuiSkeleton: {
-//     root: CSSProperties
-//   }
-// }
-
 export const getThemeOverrides = (
   theme: Theme
 ): ThemeOptions['components'] => ({
