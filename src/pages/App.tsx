@@ -31,6 +31,7 @@ import PoolFinder from './PoolFinder'
 import { RedirectPathToStaking, RedirectPathToSwapOnly, RedirectToSwap } from './Swap/redirects'
 
 const AdminKyc = lazy(() => import('./AdminKyc'))
+const KYC = lazy(() => import('./KYC'))
 // const Custodian = lazy(() => import('./Custodian'))
 const CustodianV2 = lazy(() => import('./CustodianV2'))
 const CreateNFT = lazy(() => import('./CreateNFT'))
@@ -119,6 +120,7 @@ export default function App() {
                 <Route exact strict path={routes.nftCollectionImport} component={NftImport} />
                 <Route exact strict path={routes.nftViewCollectionPath} component={NFTCollection} />
                 <Route exact strict path={routes.nftItemPath} component={NftAssetPage} />
+                <Route exact strict path={routes.kyc} component={KYC} />
 
                 {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
                   <Route exact strict path="/send" component={RedirectPathToSwapOnly} />
