@@ -1,52 +1,106 @@
 import React from 'react'
-import { Grid } from '@mui/material'
+import { Grid, Typography } from '@mui/material'
 import { DigitalSecurityOffering } from 'types/dso'
-import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
 import { renderStringToHTML } from 'app/components/DSO/utils'
 import { LabelledValue } from 'components/LabelledValue'
+import useStyles from 'app/components/DSO/components/styles'
+import { VSpacer } from 'components/VSpacer'
 
 export interface DSOInformationViewProps {
   dso: DigitalSecurityOffering
+  isNewThemeOn?: boolean
 }
 
-export const DSOInformationView = ({ dso }: DSOInformationViewProps) => {
+export const DSOInformationView = ({
+  dso,
+  isNewThemeOn = false
+}: DSOInformationViewProps) => {
+  const classes = useStyles()
   return (
-    <Grid container spacing={2} direction='column'>
-      <Grid item>
-        <FormSectionHeader title='Information Profile' />
-      </Grid>
+    <Grid
+      container
+      spacing={2}
+      direction='column'
+      className={isNewThemeOn ? classes.newDSOViewItemStyles : ''}
+    >
+      {isNewThemeOn ? (
+        <>
+          <Grid item>
+            <Typography
+              variant={'h4'}
+              color={'primary'}
+              style={{ fontWeight: 700 }}
+            >
+              Information Profile
+            </Typography>
+            <VSpacer size={'small'} />
+          </Grid>
 
-      <Grid item>
-        <LabelledValue
-          label='Company Information'
-          value={renderStringToHTML(dso.introduction)}
-          align='justify'
-        />
-      </Grid>
+          <Grid container item>
+            <Grid item xs={12} md={4}>
+              <LabelledValue
+                label='Company Information'
+                value={renderStringToHTML(dso.introduction)}
+              />
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <LabelledValue
+                label='Business Model'
+                value={renderStringToHTML(dso.businessModel)}
+              />
+            </Grid>
+          </Grid>
 
-      <Grid item>
-        <LabelledValue
-          label='Business Model'
-          value={renderStringToHTML(dso.businessModel)}
-          align='justify'
-        />
-      </Grid>
+          <Grid container item>
+            <Grid item xs={12} md={4}>
+              <LabelledValue
+                label='Use of Proceeds'
+                value={renderStringToHTML(dso.useOfProceeds)}
+              />
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <LabelledValue
+                label='Fundraising Milestones'
+                value={renderStringToHTML(dso.fundraisingMilestone)}
+              />
+            </Grid>
+          </Grid>
+        </>
+      ) : (
+        <>
+          <Grid item>
+            <LabelledValue
+              label='Company Information'
+              value={renderStringToHTML(dso.introduction)}
+              align='justify'
+            />
+          </Grid>
 
-      <Grid item>
-        <LabelledValue
-          label='Use of Proceeds'
-          value={renderStringToHTML(dso.useOfProceeds)}
-          align='justify'
-        />
-      </Grid>
+          <Grid item>
+            <LabelledValue
+              label='Business Model'
+              value={renderStringToHTML(dso.businessModel)}
+              align='justify'
+            />
+          </Grid>
 
-      <Grid item>
-        <LabelledValue
-          label='Fundraising Milestones'
-          value={renderStringToHTML(dso.fundraisingMilestone)}
-          align='justify'
-        />
-      </Grid>
+          <Grid item>
+            <LabelledValue
+              label='Use of Proceeds'
+              value={renderStringToHTML(dso.useOfProceeds)}
+              align='justify'
+            />
+          </Grid>
+
+          <Grid item>
+            <LabelledValue
+              label='Fundraising Milestones'
+              value={renderStringToHTML(dso.fundraisingMilestone)}
+              align='justify'
+            />
+          </Grid>
+        </>
+      )}
     </Grid>
   )
 }

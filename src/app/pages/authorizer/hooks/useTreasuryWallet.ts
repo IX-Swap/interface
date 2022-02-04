@@ -3,6 +3,7 @@ import { useQuery } from 'react-query'
 
 export interface TreasuryWallet {
   balance: string
+  ownerBalance?: string
 }
 
 export const useTreasuryWallet = (networkCode?: string, dsoId?: string) => {

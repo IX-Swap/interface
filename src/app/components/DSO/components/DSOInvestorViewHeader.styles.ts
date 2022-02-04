@@ -1,4 +1,4 @@
-import makeStyles from '@mui/styles/makeStyles';
+import makeStyles from '@mui/styles/makeStyles'
 
 export const useStyles = makeStyles(theme => ({
   container: {
@@ -25,5 +25,11 @@ export const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down('lg')]: {
       fontSize: 14
     }
+  },
+  boxContainer: {
+    backgroundColor: theme.palette.primary.dark,
+    color: theme.palette.getContrastText(theme.palette.primary.dark),
+    padding: theme.spacing(5),
+    borderRadius: theme.spacing(6)
   }
 }))

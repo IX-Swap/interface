@@ -108,6 +108,7 @@ export const RegisterFields = () => {
           customRenderer
           valueExtractor={booleanValueExtractor}
           component={Checkbox}
+          withNewSuccessIcon
           control={control}
           label={(<CheckboxLabel />) as any}
           name='agree'

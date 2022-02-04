@@ -6,14 +6,10 @@ import * as useAppBreakpoints from 'hooks/useAppBreakpoints'
 import { dso } from '__fixtures__/authorizer'
 import { Commitments } from 'app/pages/issuance/pages/Commitments'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
-import { PageHeader } from 'app/pages/issuance/components/Commitments/PageHeader'
 import { QueryStatus } from 'react-query'
-import { DSOFilter } from 'app/pages/issuance/components/Commitments/DSOFilter'
 import { TargetFundraise } from 'app/pages/issuance/components/IssuanceLanding/TargetFundraise'
 import { CountdownTimer } from 'app/pages/issuance/components/CountdownTimer/CountdownTimer'
 import { InvestorCommitmentTable } from 'app/pages/issuance/components/Commitments/InvestorCommitmentTable'
-import { CloseDealDialog } from 'app/pages/issuance/components/Commitments/CloseDealDialog/CloseDealDialog'
-import Button from '@mui/material/Button'
 import { VSpacer } from 'components/VSpacer'
 import { AmountRaised } from 'app/pages/issuance/components/CapTable/AmountRaised'
 
@@ -95,40 +91,6 @@ describe('Commitments', () => {
     expect(LoadingIndicator).toHaveBeenCalledTimes(1)
   })
 
-  it('renders PageHeader with correct props', () => {
-    jest
-      .spyOn(useDSOByIdHook, 'useDSOById')
-      .mockReturnValue({ isLoading: false, data: dso } as any)
-
-    jest
-      .spyOn(useTableWithPaginationHook, 'useTableWithPagination')
-      .mockReturnValueOnce(useTableWithPaginationMockReturnValue)
-
-    render(<Commitments />)
-
-    expect(PageHeader).toHaveBeenCalledTimes(1)
-    expect(PageHeader).toHaveBeenCalledWith(
-      expect.objectContaining({
-        title: dso.tokenName
-      }),
-      {}
-    )
-  })
-
-  it('renders DSOFilter', () => {
-    jest
-      .spyOn(useDSOByIdHook, 'useDSOById')
-      .mockReturnValue({ isLoading: false, data: dso } as any)
-
-    jest
-      .spyOn(useTableWithPaginationHook, 'useTableWithPagination')
-      .mockReturnValueOnce(useTableWithPaginationMockReturnValue)
-
-    render(<Commitments />)
-
-    expect(DSOFilter).toHaveBeenCalledTimes(1)
-  })
-
   it('renders AmountRaised', () => {
     jest
       .spyOn(useDSOByIdHook, 'useDSOById')
@@ -193,24 +155,6 @@ describe('Commitments', () => {
     expect(InvestorCommitmentTable).toHaveBeenCalledTimes(1)
   })
 
-  it('renders CloseDealDialog with correct props', () => {
-    jest
-      .spyOn(useDSOByIdHook, 'useDSOById')
-      .mockReturnValue({ isLoading: false, data: dso } as any)
-
-    jest
-      .spyOn(useTableWithPaginationHook, 'useTableWithPagination')
-      .mockReturnValueOnce(useTableWithPaginationMockReturnValue)
-
-    render(<Commitments />)
-
-    expect(CloseDealDialog).toHaveBeenCalledTimes(1)
-    expect(CloseDealDialog).toHaveBeenCalledWith(
-      expect.objectContaining({ open: false }),
-      {}
-    )
-  })
-
   it('renders VSpacer when isDesktop is true', () => {
     jest.spyOn(useAppBreakpoints, 'useAppBreakpoints').mockReturnValueOnce({
       isMobile: false,
@@ -234,10 +178,10 @@ describe('Commitments', () => {
     )
   })
 
-  it('renders VSpacer when isMobile is true', () => {
+  it('renders VSpacer when isTablet is true', () => {
     jest.spyOn(useAppBreakpoints, 'useAppBreakpoints').mockReturnValueOnce({
       isMobile: true,
-      isTablet: false,
+      isTablet: true,
       isMiniLaptop: false,
       theme: { spacing: jest.fn(), palette: { backgrounds: { default: '' } } }
     } as any)
@@ -256,46 +200,9 @@ describe('Commitments', () => {
       }),
       {}
     )
+
     expect(VSpacer).toHaveBeenNthCalledWith(
       2,
-      expect.objectContaining({
-        size: 'extraMedium'
-      }),
-      {}
-    )
-  })
-
-  it('renders VSpacer when isTablet is true', () => {
-    jest.spyOn(useAppBreakpoints, 'useAppBreakpoints').mockReturnValueOnce({
-      isMobile: true,
-      isTablet: true,
-      isMiniLaptop: false,
-      theme: { spacing: jest.fn(), palette: { backgrounds: { default: '' } } }
-    } as any)
-
-    render(
-      <BaseProviders>
-        <Commitments />
-      </BaseProviders>
-    )
-
-    expect(VSpacer).toHaveBeenCalledTimes(3)
-    expect(VSpacer).toHaveBeenNthCalledWith(
-      1,
-      expect.objectContaining({
-        size: 'small'
-      }),
-      {}
-    )
-    expect(VSpacer).toHaveBeenNthCalledWith(
-      2,
-      expect.objectContaining({
-        size: 'small'
-      }),
-      {}
-    )
-    expect(VSpacer).toHaveBeenNthCalledWith(
-      3,
       expect.objectContaining({
         size: 'extraMedium'
       }),
@@ -317,7 +224,7 @@ describe('Commitments', () => {
       </BaseProviders>
     )
 
-    expect(VSpacer).toHaveBeenCalledTimes(4)
+    expect(VSpacer).toHaveBeenCalledTimes(2)
     expect(VSpacer).toHaveBeenNthCalledWith(
       1,
       expect.objectContaining({
@@ -328,67 +235,7 @@ describe('Commitments', () => {
     expect(VSpacer).toHaveBeenNthCalledWith(
       2,
       expect.objectContaining({
-        size: 'small'
-      }),
-      {}
-    )
-    expect(VSpacer).toHaveBeenNthCalledWith(
-      3,
-      expect.objectContaining({
-        size: 'small'
-      }),
-      {}
-    )
-
-    expect(VSpacer).toHaveBeenNthCalledWith(
-      4,
-      expect.objectContaining({
         size: 'extraMedium'
-      }),
-      {}
-    )
-  })
-
-  it('renders CloseDeal button with correct props', () => {
-    jest
-      .spyOn(useDSOByIdHook, 'useDSOById')
-      .mockReturnValue({ isLoading: false, data: dso } as any)
-
-    jest
-      .spyOn(useTableWithPaginationHook, 'useTableWithPagination')
-      .mockReturnValueOnce(useTableWithPaginationMockReturnValue)
-
-    render(<Commitments />)
-    expect(Button).toHaveBeenCalledTimes(1)
-    expect(Button).toHaveBeenCalledWith(
-      expect.objectContaining({
-        variant: 'outlined',
-        color: 'primary',
-        disabled: true,
-        children: 'Close deal'
-      }),
-      {}
-    )
-  })
-
-  it('renders closed button with correct props', () => {
-    const closedDealDSO = { ...dso, dealStatus: 'Closed' }
-    jest
-      .spyOn(useDSOByIdHook, 'useDSOById')
-      .mockReturnValue({ isLoading: false, data: closedDealDSO } as any)
-
-    jest
-      .spyOn(useTableWithPaginationHook, 'useTableWithPagination')
-      .mockReturnValueOnce(useTableWithPaginationMockReturnValue)
-
-    render(<Commitments />)
-    expect(Button).toHaveBeenCalledTimes(1)
-    expect(Button).toHaveBeenCalledWith(
-      expect.objectContaining({
-        variant: 'outlined',
-        color: 'primary',
-        disabled: true,
-        children: 'Closed'
       }),
       {}
     )

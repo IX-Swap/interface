@@ -8,7 +8,7 @@ import React from 'react'
 
 export const Insights = () => {
   return (
-    <Grid container spacing={3}>
+    <Grid container spacing={1}>
       <Grid item xs={12} md={3}>
         <InsightCard>
           <TotalInvestors isNewThemeOn showIcon />

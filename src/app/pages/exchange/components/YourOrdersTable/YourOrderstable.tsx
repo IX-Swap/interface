@@ -9,11 +9,12 @@ import { getIdFromObj } from 'helpers/strings'
 import { exchange as exchangeUrl } from 'config/apiURL'
 import { exchange as exchangeQueryKeys } from 'config/queryKeys'
 import { Actions } from 'app/pages/exchange/components/YourOrdersTable/Actions'
+import { OrderSide } from 'types/order'
 
 export interface Order {
   _id: string
   type: string
-  side: 'BID' | 'ASK'
+  side: OrderSide
   price: number
   amount: number
   date: string

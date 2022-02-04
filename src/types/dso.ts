@@ -46,6 +46,12 @@ export interface DeploymentInfo {
   __v: number
 }
 
+export const capitalStructureWithFunds = [
+  'Fund - Feeder/Sub-Fund',
+  'Fund',
+  'Fund - Standalone'
+]
+
 export interface BaseDigitalSecurityOffering extends AuthorizableWithIdentity {
   _id: string
   minimumInvestment: number | null

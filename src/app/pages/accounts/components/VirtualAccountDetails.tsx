@@ -29,7 +29,7 @@ export const VirtualAccountDetails = ({
             <VirtualAccountNumberInfo
               accountNumber={data.accountNumber}
               currency={data.currency}
-              availableBalance={data.balance.available}
+              availableBalance={data.balance.outstanding}
               onHold={data.balance.onHold}
             />
           }
