@@ -34,7 +34,7 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
   const ixsCurrency = useIXSCurrency()
   const [leftToFill, setLeftToFill] = useState(0)
   const [isPoolLimitationLoading, setIsPoolLimitationLoading] = useState(false)
-  const [isLimitReached, setIsLimitReached] = useState(false)
+  const [isLimitReached, setIsLimitReached] = useState(true)
   const stringLimit = useMemo(
     () => POOL_SIZE_LIMITS[(chainId ?? 1) as SupportedChainId][tier?.period || PERIOD.ONE_WEEK],
     [chainId, tier?.period]
