@@ -1,5 +1,6 @@
 import React from 'react'
 import { Route, Router } from 'react-router-dom'
+import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import {
   render,
   waitFor,
@@ -32,6 +33,7 @@ import { Form } from 'components/form/Form'
 import { Toast } from 'components/Toast'
 import { AppThemeProvider } from 'AppThemeProvider'
 import apiService from 'services/api'
+import LocalizationProvider from '@mui/lab/LocalizationProvider'
 
 declare module '@mui/styles/defaultTheme' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -60,32 +62,34 @@ export const BaseProviders: React.FC<{ mockAPI?: boolean }> = ({
   mockAPI = false
 }) => {
   return (
-    <StylesProvider generateClassName={generateClassName}>
-      <AppThemeProvider>
-        {theme => (
-          <StyledEngineProvider injectFirst>
-            <ThemeProvider theme={theme}>
-              <AppStateProvider>
-                <ToastProvider
-                  components={{ Toast: Toast, ToastContainer: () => null }}
-                >
-                  <ServicesProvider
-                    value={{
-                      apiService: mockAPI ? apiServiceMock : apiService,
-                      snackbarService: snackbarServiceMock
-                    }}
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
+      <StylesProvider generateClassName={generateClassName}>
+        <AppThemeProvider>
+          {theme => (
+            <StyledEngineProvider injectFirst>
+              <ThemeProvider theme={theme}>
+                <AppStateProvider>
+                  <ToastProvider
+                    components={{ Toast: Toast, ToastContainer: () => null }}
                   >
-                    <BreadcrumbsProvider>
-                      <Router history={history}>{children}</Router>
-                    </BreadcrumbsProvider>
-                  </ServicesProvider>
-                </ToastProvider>
-              </AppStateProvider>
-            </ThemeProvider>
-          </StyledEngineProvider>
-        )}
-      </AppThemeProvider>
-    </StylesProvider>
+                    <ServicesProvider
+                      value={{
+                        apiService: mockAPI ? apiServiceMock : apiService,
+                        snackbarService: snackbarServiceMock
+                      }}
+                    >
+                      <BreadcrumbsProvider>
+                        <Router history={history}>{children}</Router>
+                      </BreadcrumbsProvider>
+                    </ServicesProvider>
+                  </ToastProvider>
+                </AppStateProvider>
+              </ThemeProvider>
+            </StyledEngineProvider>
+          )}
+        </AppThemeProvider>
+      </StylesProvider>
+    </LocalizationProvider>
   )
 }
 

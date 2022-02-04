@@ -44,7 +44,6 @@ describe('DialogEnabledToggle', () => {
     expect(UserActionsDialog).toHaveBeenCalledWith(
       expect.objectContaining({
         open: true,
-        disableBackdropClick: true,
         disableEscapeKeyDown: true,
         closeDialog: mockClose,
         action: toggleEnabled,
@@ -68,7 +67,6 @@ describe('DialogEnabledToggle', () => {
     expect(UserActionsDialog).toHaveBeenCalledWith(
       expect.objectContaining({
         open: true,
-        disableBackdropClick: true,
         disableEscapeKeyDown: true,
         closeDialog: mockClose,
         action: toggleEnabled,

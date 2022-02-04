@@ -60,7 +60,7 @@ describe('BannersCarousel', () => {
     expect(Typography).toHaveBeenCalledWith(
       expect.objectContaining({
         variant: 'h4',
-        style: { marginBottom: 20, textAlign: 'left' },
+        style: { marginBottom: '20px', textAlign: 'left' },
         children: emptyBanner.title
       }),
       {}

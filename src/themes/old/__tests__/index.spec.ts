@@ -1,13 +1,15 @@
-import { createTheme, Theme } from '@mui/material/styles'
+import { createTheme } from '@mui/material/styles'
 import { lightTheme } from 'themes/old/light'
 import { typography } from 'themes/old/typography'
-import { getThemeOverrides } from 'themes/old/overrides'
+import * as overrides from 'themes/old/overrides'
 import { AppTheme, getAppTheme } from 'themes/old/index'
 import { darkTheme } from 'themes/old/dark'
 
 jest.mock('@mui/material/styles', () => ({
-  createTheme: jest.fn()
+  createTheme: jest.fn(() => ({}))
 }))
+
+jest.spyOn(overrides, 'getThemeOverrides').mockImplementation(jest.fn())
 
 describe('getAppTheme', () => {
   afterEach(() => {
@@ -19,8 +21,7 @@ describe('getAppTheme', () => {
 
     expect(createTheme).toHaveBeenCalledWith({
       ...lightTheme,
-      typography,
-      overrides: getThemeOverrides(lightTheme as Theme)
+      typography
     })
   })
 
@@ -29,8 +30,7 @@ describe('getAppTheme', () => {
 
     expect(createTheme).toHaveBeenCalledWith({
       ...darkTheme,
-      typography,
-      overrides: getThemeOverrides(darkTheme as Theme)
+      typography
     })
   })
 
@@ -39,8 +39,7 @@ describe('getAppTheme', () => {
 
     expect(createTheme).toHaveBeenCalledWith({
       ...darkTheme,
-      typography,
-      overrides: getThemeOverrides(darkTheme as Theme)
+      typography
     })
   })
 
@@ -49,8 +48,7 @@ describe('getAppTheme', () => {
 
     expect(createTheme).toHaveBeenCalledWith({
       ...lightTheme,
-      typography,
-      overrides: getThemeOverrides(lightTheme as Theme)
+      typography
     })
   })
 })

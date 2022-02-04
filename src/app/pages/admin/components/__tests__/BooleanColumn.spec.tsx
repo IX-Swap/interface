@@ -15,11 +15,11 @@ describe('BooleanColumn', () => {
       <BooleanColumn value={true} />
     )
     expect(getByText(/true/i)).toBeInTheDocument()
-    expect(container?.firstChild).toHaveClass('MuiTypography-colorTextPrimary')
+    expect(container.firstChild).toHaveStyle('color:rgb(68,68,68);')
 
     rerender(<BooleanColumn value={false} />)
     expect(getByText(/false/i)).toBeInTheDocument()
-    expect(container?.firstChild).toHaveClass('MuiTypography-colorError')
+    expect(container.firstChild).toHaveStyle('color:rgb(211,47,47);')
   })
 
   it('renders correct labels and colors provided', () => {
@@ -33,11 +33,11 @@ describe('BooleanColumn', () => {
       <BooleanColumn {...sampleProps} />
     )
     expect(getByText(/enabled/i)).toBeInTheDocument()
-    expect(container?.firstChild).toHaveClass('MuiTypography-colorError')
+    expect(container.firstChild).toHaveStyle('color:rgb(211,47,47);')
 
     sampleProps.value = false
     rerender(<BooleanColumn {...sampleProps} />)
     expect(getByText(/disabled/i)).toBeInTheDocument()
-    expect(container?.firstChild).toHaveClass('MuiTypography-colorTextPrimary')
+    expect(container.firstChild).toHaveStyle('color:rgb(68,68,68);')
   })
 })

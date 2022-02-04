@@ -45,7 +45,6 @@ describe('DialogResetPassword', () => {
     expect(UserActionsDialog).toHaveBeenCalledWith(
       expect.objectContaining({
         open: true,
-        disableBackdropClick: true,
         disableEscapeKeyDown: true,
         closeDialog: mockClose,
         action: resetPasswordMock,

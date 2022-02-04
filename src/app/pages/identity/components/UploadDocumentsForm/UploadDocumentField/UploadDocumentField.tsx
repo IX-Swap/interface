@@ -35,7 +35,10 @@ export const UploadDocumentField = ({
             <Typography variant='subtitle1'>{label}</Typography>
             <Box pr={1}></Box>
             {tooltipContent !== undefined ? (
-              <Tooltip title={tooltipContent} />
+              <Tooltip
+                data-testid='upload-document-field-tooltip'
+                title={tooltipContent}
+              />
             ) : null}
           </Grid>
         </Box>

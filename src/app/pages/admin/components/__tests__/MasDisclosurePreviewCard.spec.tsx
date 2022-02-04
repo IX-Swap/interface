@@ -19,9 +19,9 @@ describe('MasDisclosurePreviewCard', () => {
       expect.objectContaining({
         variant: 'subtitle1',
         style: {
-          paddingLeft: 20,
-          paddingTop: 16,
-          paddingBottom: 8
+          paddingLeft: '20px',
+          paddingTop: '16px',
+          paddingBottom: '8px'
         }
       }),
       {}
@@ -31,8 +31,8 @@ describe('MasDisclosurePreviewCard', () => {
       expect.objectContaining({
         variant: 'subtitle2',
         style: {
-          paddingLeft: 20,
-          paddingRight: 24
+          paddingLeft: '20px',
+          paddingRight: '24px'
         }
       }),
       {}
