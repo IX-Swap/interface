@@ -1,0 +1,164 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Step4Enable should match snapshot 1`] = `
+<div>
+  <div
+    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+    >
+      <h5
+        class="MuiTypography-root MuiTypography-h5 MuiTypography-alignCenter"
+      >
+        Enable Authenticator App
+      </h5>
+      <div
+        class="MuiBox-root MuiBox-root-1"
+      />
+    </div>
+    <div
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column MuiGrid-align-items-xs-center"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-8 MuiGrid-grid-lg-6"
+        >
+          <p
+            class="MuiTypography-root MuiTypography-body1 MuiTypography-alignCenter"
+          >
+            Please enter the 6 digit code from your authenticator app
+          </p>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item"
+        >
+          <form
+            data-testid="form"
+            style="width: 100%;"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-direction-xs-column"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-item"
+              >
+                <div
+                  class="makeStyles-container-2 makeStyles-fullwidth-3"
+                  style="display: flex;"
+                >
+                  <div
+                    style="display: flex; align-items: center;"
+                  >
+                    <input
+                      aria-label="Please enter verification code. Character 1"
+                      autocomplete="off"
+                      class="makeStyles-base-4 makeStyles-standard-5 "
+                      maxlength="1"
+                      style="width: 1em; text-align: center;"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                  <div
+                    style="display: flex; align-items: center;"
+                  >
+                    <input
+                      aria-label="Character 2"
+                      autocomplete="off"
+                      class="makeStyles-base-4 makeStyles-standard-5"
+                      maxlength="1"
+                      style="width: 1em; text-align: center;"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                  <div
+                    style="display: flex; align-items: center;"
+                  >
+                    <input
+                      aria-label="Character 3"
+                      autocomplete="off"
+                      class="makeStyles-base-4 makeStyles-standard-5"
+                      maxlength="1"
+                      style="width: 1em; text-align: center;"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                  <div
+                    style="display: flex; align-items: center;"
+                  >
+                    <input
+                      aria-label="Character 4"
+                      autocomplete="off"
+                      class="makeStyles-base-4 makeStyles-standard-5"
+                      maxlength="1"
+                      style="width: 1em; text-align: center;"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                  <div
+                    style="display: flex; align-items: center;"
+                  >
+                    <input
+                      aria-label="Character 5"
+                      autocomplete="off"
+                      class="makeStyles-base-4 makeStyles-standard-5"
+                      maxlength="1"
+                      style="width: 1em; text-align: center;"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                  <div
+                    style="display: flex; align-items: center;"
+                  >
+                    <input
+                      aria-label="Character 6"
+                      autocomplete="off"
+                      class="makeStyles-base-4 makeStyles-standard-5"
+                      maxlength="1"
+                      style="width: 1em; text-align: center;"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="MuiBox-root MuiBox-root-8"
+            >
+              <button
+                class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-disableElevation Mui-disabled Mui-disabled"
+                disabled=""
+                tabindex="-1"
+                type="submit"
+              >
+                <span
+                  class="MuiButton-label"
+                >
+                  Enable
+                </span>
+              </button>
+            </div>
+          </form>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-8 MuiGrid-grid-lg-6"
+        >
+          <p
+            class="MuiTypography-root MuiTypography-body1 MuiTypography-alignCenter"
+          >
+            Once enabled your authenticator you will be logged out and re-enter the OTP in order to access the platform
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
