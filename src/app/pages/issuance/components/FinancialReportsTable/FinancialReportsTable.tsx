@@ -15,6 +15,7 @@ export const FinancialReportsTable = () => {
       actions={Actions}
       fakeItems={[
         {
+          _id: '1',
           creationDate: '12/29/2021',
           reportInterval: '12/29/2021 - 02/28/2022',
           type: 'PDF',
