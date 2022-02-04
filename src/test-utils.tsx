@@ -33,6 +33,7 @@ import { Toast } from 'components/Toast'
 import { AppThemeProvider } from 'AppThemeProvider'
 import apiService from 'services/api'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
+import { QueryCache, ReactQueryCacheProvider } from 'react-query'
 
 export const apiServiceMock = {
   put: jest.fn(),
@@ -51,6 +52,14 @@ const generateClassName = createGenerateClassName({
   productionPrefix: 'ix'
 })
 
+const queryCache = new QueryCache({
+  defaultConfig: {
+    queries: {
+      retry: false
+    }
+  }
+})
+
 export const BaseProviders: React.FC<{ mockAPI?: boolean }> = ({
   children,
   mockAPI = false
@@ -61,24 +70,26 @@ export const BaseProviders: React.FC<{ mockAPI?: boolean }> = ({
         <AppThemeProvider>
           {theme => (
             <StyledEngineProvider injectFirst>
-              <ThemeProvider theme={theme}>
-                <AppStateProvider>
-                  <ToastProvider
-                    components={{ Toast: Toast, ToastContainer: () => null }}
-                  >
-                    <ServicesProvider
-                      value={{
-                        apiService: mockAPI ? apiServiceMock : apiService,
-                        snackbarService: snackbarServiceMock
-                      }}
+              <ReactQueryCacheProvider queryCache={queryCache}>
+                <ThemeProvider theme={theme}>
+                  <AppStateProvider>
+                    <ToastProvider
+                      components={{ Toast: Toast, ToastContainer: () => null }}
                     >
-                      <BreadcrumbsProvider>
-                        <Router history={history}>{children}</Router>
-                      </BreadcrumbsProvider>
-                    </ServicesProvider>
-                  </ToastProvider>
-                </AppStateProvider>
-              </ThemeProvider>
+                      <ServicesProvider
+                        value={{
+                          apiService: mockAPI ? apiServiceMock : apiService,
+                          snackbarService: snackbarServiceMock
+                        }}
+                      >
+                        <BreadcrumbsProvider>
+                          <Router history={history}>{children}</Router>
+                        </BreadcrumbsProvider>
+                      </ServicesProvider>
+                    </ToastProvider>
+                  </AppStateProvider>
+                </ThemeProvider>
+              </ReactQueryCacheProvider>
             </StyledEngineProvider>
           )}
         </AppThemeProvider>
