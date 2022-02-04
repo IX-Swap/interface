@@ -118,6 +118,9 @@ export const Menu = ({ close }: Props) => {
               <Trans>Charts</Trans>
             </ExternalListItem>
           )}
+          <MenuListItem activeClassName="active-item" id={`kyc-nav-link`} to={routes.kyc} onClick={close}>
+            <Trans>KYC</Trans>
+          </MenuListItem>
         </MenuList>
       </Container>
     </ModalContainer>

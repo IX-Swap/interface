@@ -336,6 +336,9 @@ export const TYPE = {
   small(props: TextProps) {
     return <TextWrapper fontWeight={500} fontSize={11} {...props} />
   },
+  smallError(props: TextProps) {
+    return <TextWrapper fontWeight={600} fontSize={10} lineHeight={'15px'} color={'error'} {...props} />
+  },
   blue(props: TextProps) {
     return <TextWrapper fontWeight={500} color={'blue1'} {...props} />
   },

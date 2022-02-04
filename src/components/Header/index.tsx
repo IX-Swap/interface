@@ -3,7 +3,8 @@ import useScrollPosition from '@react-hook/window-scroll'
 import useLightBackground from 'components/AppBackground/useLightBackground'
 import { useNativeCurrency } from 'hooks/useNativeCurrencyName'
 import React from 'react'
-import { Text } from 'rebass'
+import { Flex, Text } from 'rebass'
+import { NavLink } from 'react-router-dom'
 import styled from 'styled-components'
 import LogoDark from '../../assets/svg/logo-white.svg'
 import { useActiveWeb3React } from '../../hooks/web3'
@@ -14,6 +15,9 @@ import Web3Status from '../Web3Status'
 import { HeaderLinks } from './HeaderLinks'
 import { IXSBalance } from './IXSBalance'
 import { NetworkCard } from './NetworkCard'
+import { TYPE } from 'theme'
+
+import { ReactComponent as KYC } from '../../assets/images/kyc.svg'
 
 const HeaderFrame = styled.div<{ showBackground: boolean; lightBackground: boolean }>`
   display: grid;
@@ -136,6 +140,17 @@ const Title = styled.a`
 
 const IXSIcon = styled.div``
 
+const KYCWrapper = styled(Flex)`
+  width: 50px;
+  height: 45px;
+  background: ${({ theme }) => theme.bgG13};
+  border-radius: 12px;
+
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    display: none !important;
+  `};
+`
+
 export const StyledMenuButton = styled.button`
   position: relative;
   width: 100%;
@@ -192,11 +207,17 @@ export default function Header() {
           </HeaderRow>
           <HeaderLinks />
           <HeaderControls>
-            <HeaderElement>
+            <NavLink style={{ textDecoration: 'none', color: 'inherit' }} to="/kyc">
+              <KYCWrapper flexDirection="column" marginRight="16px" alignItems="center" justifyContent="center">
+                <KYC />
+                <TYPE.smallError>KYC</TYPE.smallError>
+              </KYCWrapper>
+            </NavLink>
+            {/* <HeaderElement>
               <IXSBalance />
-            </HeaderElement>
+            </HeaderElement> */}
             <HeaderElement>
-              <NetworkCard />
+              {/* <NetworkCard /> */}
               <AccountElement active={!!account} style={{ pointerEvents: 'auto' }}>
                 {account && userEthBalance ? (
                   <BalanceText style={{ flexShrink: 0 }} pl="0.75rem" pr="0.5rem" fontWeight={600}>
