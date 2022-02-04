@@ -7,6 +7,7 @@ export const routes = {
   find: '/find',
   pool: '/pool',
   swap: '/swap',
+  kyc: '/kyc',
   securityTokens: (currency?: Currency) => `/security-tokens${currency ? `/${currencyId(currency)}` : ''}`,
   staking: '/staking',
   vesting: '/vesting',
