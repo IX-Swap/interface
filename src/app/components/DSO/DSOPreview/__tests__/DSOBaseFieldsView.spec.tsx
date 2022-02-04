@@ -24,7 +24,7 @@ describe('DSOBaseFieldsView', () => {
     render(<DSOBaseFieldsView dso={dso} />)
 
     expect(DSOLogo).toHaveBeenCalledWith(
-      { dsoId: dso._id, size: 124, variant: 'circle' },
+      { dsoId: dso._id, size: 124, variant: 'circular' },
       {}
     )
   })
