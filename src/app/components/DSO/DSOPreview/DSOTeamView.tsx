@@ -4,6 +4,7 @@ import { DigitalSecurityOffering } from 'types/dso'
 import { DSOTeamMemberView } from 'app/components/DSO/components/DSOTeamMemberView'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
 import { VSpacer } from 'components/VSpacer'
+import useStyles from 'app/components/DSO/components/styles'
 
 export interface DSOTeamViewProps {
   dso: DigitalSecurityOffering
@@ -15,9 +16,15 @@ export const DSOTeamView = ({
   isNewThemeOn = false
 }: DSOTeamViewProps) => {
   const team = dso.team
+  const classes = useStyles()
 
   return (
-    <Grid container direction='column' spacing={3}>
+    <Grid
+      container
+      direction='column'
+      spacing={3}
+      className={isNewThemeOn ? classes.newDSOViewItemStyles : ''}
+    >
       <Grid item>
         {isNewThemeOn ? (
           <>
