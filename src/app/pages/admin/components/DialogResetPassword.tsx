@@ -24,10 +24,10 @@ export const DialogResetPassword = ({
       closeDialog={closeDialog}
       action={resetPassword}
       actionLabel='RESET'
-      title='Are you sure you want to start the account reset?'
+      title='Are you sure you want to start the password reset?'
     >
       <Typography align='center'>
-        We will email the user the instructions and link to reset the account.
+        We will email the user the instructions and link to reset the password.
       </Typography>
     </UserActionsDialog>
   )
