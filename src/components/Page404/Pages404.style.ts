@@ -1,4 +1,4 @@
-import makeStyles from '@mui/styles/makeStyles';
+import makeStyles from '@mui/styles/makeStyles'
 import BackgroundTopImage from 'assets/images/404-background-top.svg'
 import BackgroundBottomImage from 'assets/images/404-background-bottom.svg'
 import DotBlock from 'assets/icons/dot-block.svg'

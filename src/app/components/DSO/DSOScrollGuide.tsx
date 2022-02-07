@@ -5,6 +5,7 @@ import { ScrollGuide } from 'ui/ScrollGuide/ScrollGuide'
 import { VSpacer } from 'components/VSpacer'
 
 export enum DSOFormSection {
+  'DSO Information' = 'dso-information',
   Pricing = 'dso-pricing',
   'Offering Terms' = 'dso-terms',
   'Information' = 'dso-profile',

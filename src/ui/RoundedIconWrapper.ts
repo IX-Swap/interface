@@ -2,9 +2,9 @@ import { Box, BoxProps, Theme } from '@mui/material'
 import { styled } from '@mui/material/styles'
 
 export interface RoundedIconProps extends BoxProps {
-  size?: number
   color: string
-  theme: Theme
+  size?: number
+  theme?: Theme
 }
 
 export const RoundedIconWrapper = styled(Box)<RoundedIconProps>(
