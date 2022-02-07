@@ -181,7 +181,8 @@ export const issuanceQueryKeys = {
   getApprovedList: 'approved-list',
   getCapitalStructureList: 'capital-structures-list',
   getActivitiesList: (dsoId?: string) =>
-    generateQueryKey('activities-list', dsoId)
+    generateQueryKey('activities-list', dsoId),
+  reportTemplate: 'report-template'
 }
 
 export const virtualAccountQueryKeys = {

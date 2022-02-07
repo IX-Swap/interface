@@ -49,35 +49,43 @@ export const FormPrompt = () => {
     <>
       <Prompt when={formState.isDirty} message={showCustomPrompt} />
       <Dialog open={open}>
-        <DialogContent>
-          <Box pt={3} pb={2}>
-            <Typography variant='h6' align='center'>
-              Are you sure you want to leave this page?
-            </Typography>
-            <Typography align='center'>
-              Entered information will not be saved
-            </Typography>
-          </Box>
-        </DialogContent>
-        <DialogActions>
-          <Grid container spacing={2} justifyContent='center'>
-            <Grid item>
-              <Button
-                variant='contained'
-                color='primary'
-                disableElevation
-                onClick={handleLeave}
-              >
-                Leave this page
-              </Button>
-            </Grid>
-            <Grid item>
-              <Button variant='outlined' color='primary' onClick={handleStay}>
-                Stay on this page
-              </Button>
-            </Grid>
-          </Grid>
-        </DialogActions>
+        <Box width='100%' py={4} px={5}>
+          <DialogContent>
+            <Box pb={2}>
+              <Typography variant='h6' align='center'>
+                Are you sure you want to leave this page?
+              </Typography>
+              <Typography align='center'>
+                Entered information will not be saved
+              </Typography>
+            </Box>
+          </DialogContent>
+          <DialogActions>
+            <Box pb={3} width='100%'>
+              <Grid container spacing={2} justifyContent='center'>
+                <Grid item>
+                  <Button
+                    variant='contained'
+                    color='primary'
+                    disableElevation
+                    onClick={handleLeave}
+                  >
+                    Leave this page
+                  </Button>
+                </Grid>
+                <Grid item>
+                  <Button
+                    variant='outlined'
+                    color='primary'
+                    onClick={handleStay}
+                  >
+                    Stay on this page
+                  </Button>
+                </Grid>
+              </Grid>
+            </Box>
+          </DialogActions>
+        </Box>
       </Dialog>
     </>
   )

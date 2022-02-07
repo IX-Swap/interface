@@ -184,7 +184,8 @@ export const issuanceURL = {
     getInvestmentStats: 'vcc/subfund-growth-graph'
   },
   financialReports: {
-    uploadFile: '/issuance/financial-report-file/create'
+    uploadFile: '/issuance/financial-report-file/create',
+    reportTemplate: '/issuance/financial-report-file/template/recent'
   }
 }
 

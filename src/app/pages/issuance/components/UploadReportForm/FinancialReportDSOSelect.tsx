@@ -1,7 +1,13 @@
 import { useDSOsByUserId } from 'app/pages/issuance/hooks/useDSOsByUserId'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
 import React from 'react'
-import { MenuItem, Select, Typography, Grid } from '@material-ui/core'
+import {
+  MenuItem,
+  Select,
+  Typography,
+  Grid,
+  FormControl
+} from '@material-ui/core'
 
 export const FinancialReportDSOSelect = () => {
   const { data, isLoading } = useDSOsByUserId('Approved', true)
@@ -22,23 +28,27 @@ export const FinancialReportDSOSelect = () => {
                 </Typography>
               </Grid>
               <Grid item xs={12}>
-                <Select
-                  fullWidth
-                  variant='outlined'
-                  onChange={(event: React.ChangeEvent<{ value: unknown }>) => {
-                    onChange(event.target.value as string)
-                  }}
-                  value={value}
-                  defaultValue={value}
-                >
-                  {data.list.map(({ _id, tokenName }) => {
-                    return (
-                      <MenuItem value={_id} key={_id}>
-                        {tokenName}
-                      </MenuItem>
-                    )
-                  })}
-                </Select>
+                <FormControl size='small' fullWidth>
+                  <Select
+                    fullWidth
+                    variant='outlined'
+                    onChange={(
+                      event: React.ChangeEvent<{ value: unknown }>
+                    ) => {
+                      onChange(event.target.value as string)
+                    }}
+                    value={value}
+                    defaultValue={value}
+                  >
+                    {data.list.map(({ _id, tokenName }) => {
+                      return (
+                        <MenuItem value={_id} key={_id}>
+                          {tokenName}
+                        </MenuItem>
+                      )
+                    })}
+                  </Select>
+                </FormControl>
               </Grid>
             </Grid>
           )}
