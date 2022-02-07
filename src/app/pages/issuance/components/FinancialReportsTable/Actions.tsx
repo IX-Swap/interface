@@ -14,7 +14,7 @@ export const Actions = ({ item }: ActionsProps) => {
     <IconButton
       component={AppRouterLinkComponent}
       to={IssuanceRoute.viewReport}
-      params={{ id: item._id }}
+      params={{ reportId: item._id }}
       size='small'
     >
       <Launch color='disabled' style={{ width: 23, height: 23 }} />

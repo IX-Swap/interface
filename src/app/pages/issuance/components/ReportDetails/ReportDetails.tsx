@@ -1,46 +1,30 @@
 import React from 'react'
-import {
-  TableBody,
-  TableContainer,
-  Typography,
-  TableCell
-} from '@material-ui/core'
-import { TableRow } from 'app/pages/issuance/components/ReportDetails/TableRow'
-import { Table } from 'app/pages/issuance/components/ReportDetails/Table'
+import { Grid } from '@material-ui/core'
+import { ReportDocuments } from 'app/pages/issuance/components/ReportDetails/ReportDocuments'
+import { useReport } from 'app/pages/issuance/hooks/useReport'
+import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
+import { useParams } from 'react-router-dom'
+import { ReportInfo } from 'app/pages/issuance/components/ReportDetails/ReportInfo'
 
 export const ReportDetails = () => {
+  const params = useParams<{ reportId: string }>()
+  const { data, isLoading } = useReport(params.reportId)
+
+  if (data === undefined || isLoading) {
+    return null
+  }
+
   return (
-    <TableContainer>
-      <Table>
-        <TableBody>
-          <TableRow>
-            <TableCell>
-              <Typography variant='body1'>Launch Date:</Typography>
-            </TableCell>
-            <TableCell>
-              <Typography variant='subtitle1'>01/02/2021</Typography>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>
-              <Typography variant='body1'>Net Asset Value(NAV):</Typography>
-            </TableCell>
-            <TableCell>
-              <Typography variant='subtitle1'>65$</Typography>
-            </TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell>
-              <Typography variant='body1'>Reporting Date:</Typography>
-            </TableCell>
-            <TableCell>
-              <Typography variant='subtitle1'>
-                12/29/2021 - 02/28/2022
-              </Typography>
-            </TableCell>
-          </TableRow>
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <Grid container spacing={2}>
+      <Grid item xs={12}>
+        <FormSectionHeader title={data.dso.tokenName} />
+      </Grid>
+      <Grid item xs={12} md={5}>
+        <ReportInfo report={data} />
+      </Grid>
+      <Grid item xs={12} md={7}>
+        <ReportDocuments report={data} />
+      </Grid>
+    </Grid>
   )
 }
