@@ -1,7 +1,7 @@
 import React from 'react'
 import { loginFormValidationSchema } from 'validation/auth'
 import { Form } from 'components/form/Form'
-import { LoginArgs } from 'types/auth'
+import { LoginArgs, MAX_LOGIN_ATTEMPTS } from 'types/auth'
 import { useLogin } from 'auth/hooks/useLogin'
 import { Login } from 'auth/pages/login/Login'
 import { OTPFields } from 'auth/pages/login/components/OTPFields'
@@ -42,7 +42,7 @@ export const LoginContainer = () => {
       validationSchema={loginFormValidationSchema}
       onSubmit={handleSubmit}
     >
-      {attempts === 3 && RECAPTCHA_KEY !== undefined ? (
+      {attempts === MAX_LOGIN_ATTEMPTS && RECAPTCHA_KEY !== undefined ? (
         <Recaptcha onVerify={resetAttempts} />
       ) : (
         <>

@@ -119,30 +119,14 @@ export const TopbarContainer = () => {
     { label: 'Create New DSO', path: IssuanceRoute.create },
     { label: 'View DSO Listings', path: IssuanceRoute.list },
     { label: 'Create Exchange Listings', path: OTCMarketRoute.createListing },
-    { label: 'View Exchange Listings', path: OTCMarketRoute.myListings }
+    { label: 'View Exchange Listings', path: OTCMarketRoute.myListings },
+    { label: 'Financial Reports', path: IssuanceRoute.financialReports }
   ]
 
   if (isFundManager) {
     newIssuanceLandingLinks.unshift({
       label: 'Overview',
       path: IssuanceRoute.insight
-    })
-  }
-
-  if (isIssuer) {
-    newIssuanceLandingLinks.push({
-      label: 'Commitments',
-      path: IssuanceRoute.commitments
-    })
-
-    newIssuanceLandingLinks.push({
-      label: 'Cap Table',
-      path: IssuanceRoute.capTable
-    })
-
-    newIssuanceLandingLinks.push({
-      label: 'Financial Reports',
-      path: IssuanceRoute.financialReports
     })
   }
 

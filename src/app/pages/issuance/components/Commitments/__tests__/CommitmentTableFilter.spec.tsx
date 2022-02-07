@@ -58,7 +58,7 @@ describe('CommitmentTableFilter', () => {
         variant: 'contained',
         color: 'primary',
         style: {
-          fontSize: 14,
+          fontSize: 12,
           fontWeight: 400,
           marginTop: 0
         }
@@ -82,7 +82,7 @@ describe('CommitmentTableFilter', () => {
         variant: 'contained',
         color: 'primary',
         style: {
-          fontSize: 14,
+          fontSize: 12,
           fontWeight: 400,
           marginTop: 16
         }

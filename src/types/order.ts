@@ -1,7 +1,11 @@
+export enum OrderSide {
+  ASK = 'ASK',
+  BID = 'BID'
+}
 export interface Order {
   _id: string
   type: 'LIMIT'
-  side: 'ASK' | 'BID'
+  side: OrderSide
   price: number
   amount: number
   date: string

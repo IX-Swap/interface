@@ -18,6 +18,7 @@ import { PhoneInput } from 'components/form/PhoneInput'
 import { DatePicker } from 'components/form/DatePicker'
 import { IndividualPersonalInformation } from 'app/pages/identity/types/forms'
 import { subYears } from 'date-fns'
+import { capitalizeFirstLetter } from 'helpers/strings'
 
 export interface IndividualInfoFieldsProps {
   rootName?: string
@@ -62,7 +63,11 @@ export const IndividualInfoFields = (
               control={control}
               name='firstName'
               label='First Name'
-              defaultValue={defaultFirstName}
+              defaultValue={
+                defaultFirstName !== undefined
+                  ? capitalizeFirstLetter(defaultFirstName)
+                  : ''
+              }
               variant='outlined'
               valueExtractor={textValueExtractor}
             />
@@ -74,7 +79,11 @@ export const IndividualInfoFields = (
               control={control}
               name='middleName'
               label='Middle Name'
-              defaultValue={defaultMiddleName}
+              defaultValue={
+                defaultMiddleName !== undefined
+                  ? capitalizeFirstLetter(defaultMiddleName)
+                  : ''
+              }
               variant='outlined'
               valueExtractor={textValueExtractor}
             />
@@ -86,7 +95,11 @@ export const IndividualInfoFields = (
               control={control}
               name='lastName'
               label='Last Name'
-              defaultValue={defaultLastName}
+              defaultValue={
+                defaultLastName !== undefined
+                  ? capitalizeFirstLetter(defaultLastName)
+                  : ''
+              }
               variant='outlined'
               valueExtractor={textValueExtractor}
             />
