@@ -1,5 +1,5 @@
 import React from 'react'
-import { MenuItem, Select } from '@material-ui/core'
+import { MenuItem, Select } from '@mui/material'
 import { renderMenuItems } from 'helpers/rendering'
 import { MARITAL_STATUSES_OPTS } from 'app/pages/identity/const'
 

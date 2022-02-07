@@ -1,5 +1,5 @@
 import React from 'react'
-import { Dialog, Box, Typography, Grid, Button } from '@material-ui/core'
+import { Dialog, Box, Typography, Grid, Button } from '@mui/material'
 import gAuthImg from '../assets/googleauth.png'
 import useStyles from './TwoFaDialog.styles'
 

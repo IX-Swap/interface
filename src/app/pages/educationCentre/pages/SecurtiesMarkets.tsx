@@ -1,5 +1,5 @@
-import { Grid, Typography } from '@material-ui/core'
-import { useTheme } from '@material-ui/core/styles'
+import { Grid, Typography } from '@mui/material'
+import { useTheme } from '@mui/material/styles'
 import { SecuritiesMarketsTabs } from 'app/pages/educationCentre/components/SecuritiesMarketsTabs/SecuritiesMarketsTabs'
 import React from 'react'
 import { RootContainer } from 'ui/RootContainer'
@@ -31,7 +31,7 @@ export const SecuritiesMarkets = () => {
               width={106}
               height={34}
               src={
-                theme.palette.type === 'light' ? AtlasLogoDark : AtlasLogoLight
+                theme.palette.mode === 'light' ? AtlasLogoDark : AtlasLogoLight
               }
               alt={'Atlas One Logo'}
             />

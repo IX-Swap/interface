@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 import { useGetIdentities } from 'app/components/OnboardingPanel/hooks/useGetIdentities'
 import { CorporatesPreview } from 'app/pages/identity/components/CorporatesPreview/CorporatesPreview'

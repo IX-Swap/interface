@@ -1,9 +1,9 @@
-import { ThemeOptions } from '@material-ui/core'
+import { DeprecatedThemeOptions } from '@mui/material'
 import tinycolor from 'tinycolor2'
 
-export const darkTheme: ThemeOptions = {
+export const darkTheme: DeprecatedThemeOptions = {
   palette: {
-    type: 'dark',
+    mode: 'dark',
     primary: {
       main: '#7F89E5',
       light: tinycolor('#7F89E5').lighten(25).toHexString(),

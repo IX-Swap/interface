@@ -6,7 +6,7 @@ import {
   DialogProps,
   DialogActions,
   Box
-} from '@material-ui/core'
+} from '@mui/material'
 
 export interface ModalProps extends Partial<DialogProps> {
   button: JSX.Element

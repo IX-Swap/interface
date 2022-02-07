@@ -5,7 +5,7 @@ import {
   StepLabel,
   Stepper,
   Typography
-} from '@material-ui/core'
+} from '@mui/material'
 
 export interface OnboardingStepsProps {
   steps: Array<{ title: string; content: string[] }>

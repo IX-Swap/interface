@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { Button, Grid } from '@material-ui/core'
+import { Button, Grid } from '@mui/material'
 import { SearchFilter } from 'app/components/SearchFilter'
-import { useTheme } from '@material-ui/core/styles'
+import { useTheme } from '@mui/material/styles'
 import { FundStatusFilter } from 'app/pages/issuance/components/Commitments/FundStatusFilter'
 import { CapitalCallDialog } from 'app/pages/issuance/components/Commitments/CapitalCallDialog/CapitalCallDialog'
 import { VSpacer } from 'components/VSpacer'
@@ -43,7 +43,7 @@ export const CommitmentTableFilter = () => {
               variant={'contained'}
               color={'primary'}
               style={{
-                fontSize: 14,
+                fontSize: 12,
                 fontWeight: 400,
                 marginTop: isTablet ? theme.spacing(2) : 0
               }}

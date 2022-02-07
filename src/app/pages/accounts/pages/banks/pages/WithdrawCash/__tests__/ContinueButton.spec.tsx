@@ -39,7 +39,7 @@ describe('ContinueButton', () => {
     )
     const continueButton = getByText(/confirm withdrawal/i)
 
-    expect(continueButton.parentElement).toBeDisabled()
+    expect(continueButton).toBeDisabled()
   })
 
   it('will enable Button if error is undefined', () => {
@@ -55,6 +55,6 @@ describe('ContinueButton', () => {
     )
     const continueButton = getByText(/confirm withdrawal/i)
 
-    expect(continueButton.parentElement).not.toBeDisabled()
+    expect(continueButton).not.toBeDisabled()
   })
 })

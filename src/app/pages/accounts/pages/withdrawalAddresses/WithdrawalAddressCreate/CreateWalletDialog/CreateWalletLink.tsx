@@ -1,6 +1,6 @@
 import React from 'react'
 import useStyles from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/CreateWalletDialog/CreateWalletDialog.styles'
-import { Box, Link, Tooltip, Typography } from '@material-ui/core'
+import { Box, Link, Tooltip, Typography } from '@mui/material'
 
 export interface CreateWalletLinkProps {
   label: string

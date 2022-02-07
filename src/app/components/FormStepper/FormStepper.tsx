@@ -1,5 +1,5 @@
 import React, { ComponentType, useMemo, useState } from 'react'
-import { Grid, Step, StepButton, StepLabel, Stepper } from '@material-ui/core'
+import { Grid, Step, StepButton, StepLabel, Stepper } from '@mui/material'
 import { MutationResultPair } from 'react-query'
 import { FormStep } from 'app/components/FormStepper/FormStep'
 
@@ -67,11 +67,10 @@ export const FormStepper = (props: FormStepperProps) => {
       <Grid item>
         <Stepper activeStep={activeStep} alternativeLabel nonLinear={nonLinear}>
           {steps.map((step, index) => (
-            <Step key={`step-${index}`}>
+            <Step key={`step-${index}`} completed={completed.includes(index)}>
               {nonLinear ? (
                 <StepButton
                   onClick={handleStepButtonClick(index)}
-                  completed={completed.includes(index)}
                   disableRipple
                   disabled={
                     !completed.includes(index) &&

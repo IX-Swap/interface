@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react'
-import { Box, Tab, Tabs } from '@material-ui/core'
+import { Box, Tab, Tabs } from '@mui/material'
 import { TabPanel } from 'components/TabPanel'
 import useStyles from './VirtualAccountsAuditTabView.styles'
 import { EODMT940Table } from 'app/pages/admin/components/EODMT940Table/EODMT940Table'

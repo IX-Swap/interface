@@ -1,6 +1,6 @@
 import React from 'react'
 import { InvestRoute } from 'app/pages/invest/router/config'
-import { Grid, TablePagination } from '@material-ui/core'
+import { Grid, TablePagination } from '@mui/material'
 import { OTCMarketCard } from 'app/pages/invest/components/OTCMarketCard/OTCMarketCard'
 import useStyles from 'app/pages/invest/components/styles/OTCMarket.style'
 import { useTableWithPagination } from 'components/TableWithPagination/hooks/useTableWithPagination'

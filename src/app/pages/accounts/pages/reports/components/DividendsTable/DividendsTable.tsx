@@ -6,7 +6,7 @@ import {
   TableContainer,
   TableHead,
   TableRow
-} from '@material-ui/core'
+} from '@mui/material'
 import { useStyles } from '../shared.styles'
 import { Dividend } from 'types/reports'
 import { DividendsRow } from 'app/pages/accounts/pages/reports/components/DividendsTable/DividendsRow'

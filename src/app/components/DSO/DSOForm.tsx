@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import { DigitalSecurityOffering } from 'types/dso'
 import { isDSOLive, transformDSOToFormValues } from 'app/components/DSO/utils'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { Form } from 'components/form/Form'
 import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
 import { getOfferingName } from 'helpers/strings'

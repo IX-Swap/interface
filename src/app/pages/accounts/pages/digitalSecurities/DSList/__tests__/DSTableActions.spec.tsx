@@ -10,8 +10,8 @@ describe('DSTableActions', () => {
   it('renders view, deposit & withdraw links', async () => {
     const { getByText } = render(<DSTableActions {...props} />)
 
-    const withdrawLink = getByText('Withdraw').parentElement
-    const depositLink = getByText('Deposit').parentElement
+    const withdrawLink = getByText('Withdraw')
+    const depositLink = getByText('Deposit')
 
     expect(withdrawLink).toBeInstanceOf(HTMLAnchorElement)
     expect(withdrawLink).toHaveProperty(

@@ -2,7 +2,7 @@ import React, { memo, useRef } from 'react'
 import MUIRichTextEditor from 'mui-rte'
 import { convertToRaw, convertFromHTML, ContentState } from 'draft-js'
 import { TypedFieldRenderComponentProps } from './types'
-import { Box } from '@material-ui/core'
+import { Box } from '@mui/material'
 
 export interface RichTextEditorProps extends TypedFieldRenderComponentProps {}
 
@@ -19,7 +19,7 @@ export const RichTextEditor = memo(
     const content = JSON.stringify(convertToRaw(state))
 
     return (
-      <Box>
+      <Box pb={4}>
         <MUIRichTextEditor
           ref={ref}
           label='Start typing...'

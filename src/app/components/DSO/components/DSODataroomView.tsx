@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { Grid, Typography } from '@material-ui/core'
+import { Grid, Typography } from '@mui/material'
 import { DownloadDSODocument } from 'app/components/DSO/components/DownloadDSODocument'
 import { DataroomHeader } from 'components/dataroom/DataroomHeader'
 import { DataroomViewRow } from 'components/dataroom/DataroomViewRow'
@@ -11,11 +11,12 @@ import useStyles from 'app/components/DSO/components/styles'
 export interface DSODataroomViewProps {
   dso: DigitalSecurityOffering
   showTitle?: boolean
+  isNewThemeOn?: boolean
 }
 
 export const DSODataroomView = (props: DSODataroomViewProps) => {
   const classes = useStyles()
-  const { dso, showTitle = true } = props
+  const { dso, showTitle = true, isNewThemeOn = false } = props
 
   const renderSubscriptionDocumentTitle = () => {
     return (
@@ -89,7 +90,12 @@ export const DSODataroomView = (props: DSODataroomViewProps) => {
   }
 
   return (
-    <Grid container direction='column' spacing={3}>
+    <Grid
+      container
+      direction='column'
+      spacing={3}
+      className={isNewThemeOn ? classes.newDSOViewItemStyles : ''}
+    >
       {showTitle && (
         <Grid item>
           <FormSectionHeader title='Documents' />

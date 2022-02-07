@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { DSOTeamMemberPhoto } from 'app/components/DSO/components/DSOTeamMemberPhoto'
 import { renderStringToHTML } from 'app/components/DSO/utils'
 import { LabelledValue } from 'components/LabelledValue'

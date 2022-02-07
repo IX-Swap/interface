@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Grid } from '@material-ui/core'
+import { Button, Grid } from '@mui/material'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { DSTabs } from 'app/pages/accounts/pages/digitalSecurities/DSList/DSTabs'
 import { DSRoute } from 'app/pages/accounts/pages/digitalSecurities/router/config'

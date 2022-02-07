@@ -2,7 +2,7 @@ import React from 'react'
 import { formatMoney } from 'helpers/numbers'
 import { DigitalSecurityOffering } from 'types/dso'
 import { LabelledValue } from 'components/LabelledValue'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 
 export interface DSODetailsProps {
   dso: DigitalSecurityOffering

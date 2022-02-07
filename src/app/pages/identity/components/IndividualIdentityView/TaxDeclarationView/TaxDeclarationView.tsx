@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { Grid, Typography } from '@material-ui/core'
+import { Grid, Typography } from '@mui/material'
 import { LabelledValue } from 'components/LabelledValue'
 import { DeclarationsListItem } from '../../DeclarationsListItem/DeclarationsListItem'
 import { VSpacer } from 'components/VSpacer'

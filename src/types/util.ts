@@ -1,8 +1,9 @@
-import { Theme, TypeBackground } from '@material-ui/core/styles/createPalette'
+import { Theme } from '@mui/material/styles'
+import { SelectProps } from '@mui/material'
+import { TypeBackground } from '@mui/material/styles/createPalette'
 import { ReactNode, ComponentType, ChangeEvent } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 import { AppRole } from 'helpers/acl'
-import { SelectProps } from '@material-ui/core'
 
 export interface LightTypeBackground extends TypeBackground {
   light: string

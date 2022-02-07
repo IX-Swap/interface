@@ -1,4 +1,4 @@
-import { Grid, Tab, Tabs } from '@material-ui/core'
+import { Grid, Tab, Tabs } from '@mui/material'
 import { OpenOrders } from 'app/pages/exchange/components/OpenOrders/OpenOrders'
 import { PastOrderTable } from 'app/pages/exchange/components/PastOrderTable/PastOrderTable'
 import { MyTrades } from 'app/pages/exchange/components/Trades/MyTrades'

@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { DetailsTab } from 'app/pages/exchange/components/ListingDetails/DetailsTab'
 import { ListingHeader } from 'app/pages/exchange/components/ListingDetails/ListingHeader'

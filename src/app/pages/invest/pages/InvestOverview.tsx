@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Button, Typography, useTheme } from '@material-ui/core'
+import { Grid, Button, Typography, useTheme, Box } from '@mui/material'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { InvestRoute } from 'app/pages/invest/router/config'
 import { VSpacer } from 'components/VSpacer'
@@ -16,21 +16,23 @@ export const InvestOverview = () => {
     <>
       <Grid container justifyContent='space-between'>
         <Grid item container justifyContent={'flex-end'}>
-          <Grid item xs={4}>
+          <Grid item>
             <OverviewPageFilters />
           </Grid>
           <Grid item>
-            <Button
-              component={AppRouterLinkComponent}
-              to={InvestRoute.commitments}
-              color='primary'
-              variant='outlined'
-              size='large'
-              disableElevation
-              style={{ color: theme.palette.primary.main }}
-            >
-              My commitments
-            </Button>
+            <Box pl={2}>
+              <Button
+                component={AppRouterLinkComponent}
+                to={InvestRoute.commitments}
+                color='primary'
+                variant='outlined'
+                size='large'
+                disableElevation
+                style={{ color: theme.palette.primary.main }}
+              >
+                My commitments
+              </Button>
+            </Box>
           </Grid>
         </Grid>
         <PromoBanner />

@@ -1,7 +1,7 @@
 import * as React from 'react'
-import Button, { ButtonProps } from '@material-ui/core/Button'
-import { Theme } from '@material-ui/core'
-import { withStyles } from '@material-ui/styles'
+import Button, { ButtonProps } from '@mui/material/Button'
+import { Theme } from '@mui/material'
+import { withStyles } from '@mui/styles'
 
 const styles: (theme: Theme) => any = theme => {
   return {

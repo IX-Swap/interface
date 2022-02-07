@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Box, Typography } from '@material-ui/core'
+import { Grid, Box, Typography } from '@mui/material'
 import useStyles from './SettingsRow.styles'
 
 export interface SettingsRowProps {

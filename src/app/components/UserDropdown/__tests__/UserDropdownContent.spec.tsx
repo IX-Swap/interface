@@ -9,7 +9,7 @@ import {
   AccountCircleOutlined,
   PowerSettingsNewOutlined,
   SettingsOutlined
-} from '@material-ui/icons'
+} from '@mui/icons-material'
 
 jest.mock('app/components/UserDropdown/UserDropdownItem', () => ({
   UserDropdownItem: jest.fn(() => null)

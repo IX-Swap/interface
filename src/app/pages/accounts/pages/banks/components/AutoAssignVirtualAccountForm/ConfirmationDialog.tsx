@@ -1,4 +1,4 @@
-import { Box, Button, Dialog, Grid, Typography } from '@material-ui/core'
+import { Box, Button, Dialog, Grid, Typography } from '@mui/material'
 import { VSpacer } from 'components/VSpacer'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'

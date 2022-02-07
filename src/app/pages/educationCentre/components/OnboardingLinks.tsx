@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Hidden, Typography } from '@material-ui/core'
+import { Box, Hidden, Typography } from '@mui/material'
 import { OnboardingLink } from 'app/pages/educationCentre/components/OnboardingLink'
 import { ReactComponent as IndividualIcon } from 'assets/icons/navigation/individual.svg'
 import { ReactComponent as CorporateIcon } from 'assets/icons/navigation/corporate.svg'
@@ -131,7 +131,7 @@ export const OnboardingLinks = () => {
         </Box>
       </Box>
       <Box mx={1.5} />
-      <Hidden mdDown>
+      <Hidden lgDown>
         <Box mx={16} />
       </Hidden>
       {renderFundraisingOnboardingLinkBlock()}

@@ -1,11 +1,11 @@
 import React from 'react'
 import { render } from 'test-utils'
 import { transferDirections } from 'config/defaults'
-import { MenuItem, Select } from '@material-ui/core'
+import { MenuItem, Select } from '@mui/material'
 import { renderMenuItems } from 'helpers/rendering'
 import { VTDirectionSelect } from 'app/pages/admin/components/VTDirectionSelect'
 
-jest.mock('@material-ui/core', () => ({
+jest.mock('@mui/material', () => ({
   Select: jest.fn(({ children }) => <select>{children}</select>),
   MenuItem: jest.fn(({ value }) => <option value={value}>{value}</option>),
   useMediaQuery: jest.fn()

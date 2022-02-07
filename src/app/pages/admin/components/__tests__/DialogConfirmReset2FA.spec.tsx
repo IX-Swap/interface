@@ -54,7 +54,6 @@ describe('DialogConfirmReset2FA', () => {
     expect(UserActionsDialog).toHaveBeenCalledWith(
       expect.objectContaining({
         open: true,
-        disableBackdropClick: true,
         disableEscapeKeyDown: true,
         closeDialog: mockClose,
         actionLabel: 'RESET',

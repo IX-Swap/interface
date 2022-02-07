@@ -1,5 +1,5 @@
 import React from 'react'
-import { AppBar, Box, Toolbar } from '@material-ui/core'
+import { AppBar, Box, Toolbar } from '@mui/material'
 import useStyles from './Header.styles'
 import { UserDropdown } from 'app/components/UserDropdown/UserDropdown'
 import { NotificationsDropdown } from 'app/pages/notifications/components/NotificationsDropdown'

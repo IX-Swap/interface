@@ -1,4 +1,4 @@
-import { Button } from '@material-ui/core'
+import { Button } from '@mui/material'
 import { useStyles } from 'app/pages/accounts/pages/banks/pages/WithdrawCash/MaxButton/MaxButton.styles'
 import React from 'react'
 

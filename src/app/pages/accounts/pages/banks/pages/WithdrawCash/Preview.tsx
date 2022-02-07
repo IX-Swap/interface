@@ -5,7 +5,7 @@ import { formatMoney } from 'helpers/numbers'
 import { GenericPreview } from 'app/components/GenericPreview/GenericPreview'
 import { useBanksData } from 'app/pages/accounts/pages/banks/hooks/useBanksData'
 import { WithdrawCashFormValues } from 'app/pages/accounts/types'
-import { Alert } from '@material-ui/lab'
+import { Alert } from '@mui/material'
 import { VSpacer } from 'components/VSpacer'
 
 export const Preview: React.FC = () => {

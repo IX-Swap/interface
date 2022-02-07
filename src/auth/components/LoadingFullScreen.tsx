@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, CircularProgress } from '@material-ui/core'
+import { Grid, CircularProgress } from '@mui/material'
 import { useStlyes } from 'auth/components/LoadingFullScreen.styles'
 
 export const LoadingFullScreen: React.FC = () => {

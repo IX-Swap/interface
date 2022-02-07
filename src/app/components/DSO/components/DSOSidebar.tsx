@@ -1,4 +1,4 @@
-import { Box, Grid } from '@material-ui/core'
+import { Box, Grid } from '@mui/material'
 import { DSOScrollGuide } from 'app/components/DSO/DSOScrollGuide'
 import { AuthorizableStatus } from 'app/pages/authorizer/components/AuthorizableStatus'
 import { LabelledValue } from 'components/LabelledValue'
@@ -17,7 +17,7 @@ export const DSOSidebar = (props: DSOSidebarProps) => {
   const { dso, footer, isNew = false } = props
 
   return (
-    <Box position='sticky' top={90} marginLeft={8}>
+    <Box position='sticky' top={90} marginLeft={8} marginTop={12}>
       <Grid container direction='column' alignItems='flex-start' spacing={3}>
         <Grid item>
           <LabelledValue

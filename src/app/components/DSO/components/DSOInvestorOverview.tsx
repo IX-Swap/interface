@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Hidden, Typography } from '@material-ui/core'
+import { Grid, Hidden, Typography } from '@mui/material'
 import { LabelledValue } from 'components/LabelledValue'
 import { DigitalSecurityOffering } from 'types/dso'
 import { DSOInvestButton } from 'app/components/DSO/components/DSOInvestButton'

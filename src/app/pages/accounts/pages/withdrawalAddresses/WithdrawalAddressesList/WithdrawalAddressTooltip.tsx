@@ -1,5 +1,5 @@
-import { IconButton, Tooltip, TooltipProps } from '@material-ui/core'
-import { InfoOutlined } from '@material-ui/icons'
+import { IconButton, Tooltip, TooltipProps } from '@mui/material'
+import { InfoOutlined } from '@mui/icons-material'
 import { useStyles } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressesList/WithdrawalAddressTooltip.styles'
 import React from 'react'
 
@@ -13,7 +13,7 @@ export const WithdrawalAddressTooltip = ({
 
   return (
     <Tooltip arrow placement={placement} title={title}>
-      <IconButton color='primary' className={iconButton}>
+      <IconButton color='primary' className={iconButton} size='large'>
         <InfoOutlined />
       </IconButton>
     </Tooltip>

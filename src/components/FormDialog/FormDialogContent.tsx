@@ -1,6 +1,6 @@
 import React from 'react'
 import useStyles from './FormDialog.styles'
-import DialogContent from '@material-ui/core/DialogContent'
+import DialogContent from '@mui/material/DialogContent'
 
 export interface FormDialogContentProps {
   noPadding?: boolean

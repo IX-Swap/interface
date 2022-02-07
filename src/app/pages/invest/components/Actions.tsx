@@ -1,7 +1,7 @@
 import React from 'react'
 import { Commitment } from 'types/commitment'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
-import { Button } from '@material-ui/core'
+import { Button } from '@mui/material'
 import { CommitmentRoute } from 'app/pages/invest/router/config'
 
 export interface ActionsProps {

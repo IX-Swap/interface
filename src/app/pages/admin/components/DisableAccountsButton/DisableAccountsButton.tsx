@@ -1,4 +1,4 @@
-import { Button } from '@material-ui/core'
+import { Button } from '@mui/material'
 import { ConfirmDisableDialogBox } from 'app/pages/admin/components/DisableAccountsButton/ConfirmDisableDialogBox'
 import { useSelectionHelperContext } from 'components/SelectionHelper'
 import React, { useState } from 'react'

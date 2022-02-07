@@ -54,7 +54,7 @@ describe('MarketGridView', () => {
     const objResponse = {
       theme: {
         palette: {
-          type: 'dark'
+          mode: 'dark'
         }
       }
     }
@@ -84,7 +84,7 @@ describe('MarketGridView', () => {
     const objResponse = {
       theme: {
         palette: {
-          type: 'light'
+          mode: 'light'
         }
       }
     }

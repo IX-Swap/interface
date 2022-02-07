@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Typography } from '@material-ui/core'
+import { Grid, Typography } from '@mui/material'
 import { EmploymentField } from 'app/pages/identity/components/FinancialInformationForm/EmploymentFields'
 import { FundSource } from 'app/pages/identity/components/FinancialInformationForm/FundSource'
 

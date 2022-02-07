@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 import { useGetIdentities } from 'app/components/OnboardingPanel/hooks/useGetIdentities'
@@ -18,7 +18,7 @@ export const IdentitiesList: React.FC = () => {
 
   return (
     <AppContentWrapper container background='light'>
-      <RootContainer>
+      <RootContainer background='light'>
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <PageHeader

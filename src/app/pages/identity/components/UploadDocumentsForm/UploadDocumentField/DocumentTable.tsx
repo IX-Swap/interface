@@ -6,7 +6,7 @@ import {
   TableRow,
   TableHead,
   TableBody
-} from '@material-ui/core'
+} from '@mui/material'
 
 import { DocumentTableRow } from 'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/DocumentTableRow'
 import { TableCell } from 'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/TableCell'

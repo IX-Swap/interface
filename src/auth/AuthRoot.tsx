@@ -2,7 +2,7 @@ import React from 'react'
 import { ReactComponent as AppLogo } from 'assets/icons/new_app_logo.svg'
 import { useStyles } from 'auth/pages/AuthRootStyles.styles'
 import { AuthRouter } from 'auth/router/AuthRouter'
-import { Box, Grid } from '@material-ui/core'
+import { Box, Grid } from '@mui/material'
 
 export const AuthRoot: React.FC = () => {
   const {

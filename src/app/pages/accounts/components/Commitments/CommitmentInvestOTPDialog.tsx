@@ -1,4 +1,4 @@
-import { Dialog, DialogTitle, Typography, Box } from '@material-ui/core'
+import { Dialog, DialogTitle, Typography, Box } from '@mui/material'
 import { OTPDialogContent } from 'app/pages/accounts/pages/banks/pages/WithdrawCash/OTPDialog'
 import React from 'react'
 

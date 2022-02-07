@@ -1,7 +1,7 @@
 import React from 'react'
-import { Grid, Typography } from '@material-ui/core'
-import CheckIcon from '@material-ui/icons/Check'
-import { green } from '@material-ui/core/colors'
+import { Grid, Typography } from '@mui/material'
+import CheckIcon from '@mui/icons-material/Check'
+import { green } from '@mui/material/colors'
 
 export interface InfoProps {
   title: string

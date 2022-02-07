@@ -1,4 +1,4 @@
-import { Box, Card, Grid, Collapse, Typography, Link } from '@material-ui/core'
+import { Box, Card, Grid, Collapse, Typography, Link } from '@mui/material'
 import { VSpacer } from 'components/VSpacer'
 import React, { useState } from 'react'
 

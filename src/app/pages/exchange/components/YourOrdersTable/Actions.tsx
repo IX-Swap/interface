@@ -1,4 +1,4 @@
-import { Button, Typography } from '@material-ui/core'
+import { Button, Typography } from '@mui/material'
 import { Order } from 'app/pages/exchange/components/YourOrdersTable/YourOrderstable'
 import { useCancelOrder } from 'app/pages/exchange/hooks/useCancelOrder'
 import React from 'react'

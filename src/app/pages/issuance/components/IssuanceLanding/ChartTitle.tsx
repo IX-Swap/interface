@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react'
-import { Grid, Typography } from '@material-ui/core'
+import { Grid, Typography } from '@mui/material'
 
 export interface ChartTitleProps {
   title: ReactElement | string

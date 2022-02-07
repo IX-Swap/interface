@@ -1,10 +1,10 @@
-import { Box, Grid } from '@material-ui/core'
+import React from 'react'
+import { Box, Grid } from '@mui/material'
 import { GroupedDateTimeFilter } from 'app/pages/authorizer/components/GroupedFromDateFilter'
 import { AppRouterLink } from 'components/AppRouterLink'
 import { SearchQueryFilterGroup } from 'components/SearchQueryFilter/SearchQueryFilterGroup/SearchQueryFilterGroup'
 import { SearchQueryFilterGroupApply } from 'components/SearchQueryFilter/SearchQueryFilterGroupApply'
 import { SearchQueryFilterGroupReset } from 'components/SearchQueryFilter/SearchQueryFilterGroupReset'
-import React from 'react'
 import { OTCMarketRoute } from 'app/pages/exchange/router/config'
 
 export const PastOrderFilter = () => {
@@ -34,7 +34,7 @@ export const PastOrderFilter = () => {
             filters={['toDate', 'fromDate']}
             variant='contained'
             size='small'
-            color='default'
+            color='primary'
             disableElevation
           >
             Reset

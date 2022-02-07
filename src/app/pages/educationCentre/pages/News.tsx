@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { Box, Grid, Typography } from '@material-ui/core'
+import { Box, Grid, Typography } from '@mui/material'
 import { TopIssuers } from 'app/pages/educationCentre/components/TopIssuers'
 import { TopCorporates } from 'app/pages/educationCentre/components/TopCorporates'
 import { Divider } from 'ui/Divider'

@@ -10,7 +10,7 @@ import {
   DialogActions,
   useTheme,
   useMediaQuery
-} from '@material-ui/core'
+} from '@mui/material'
 import { useHistory, useParams } from 'react-router-dom'
 import { CustodyManagementRoute } from 'app/pages/admin/router/config'
 import { VSpacer } from 'components/VSpacer'
@@ -31,7 +31,7 @@ export const CustodyDetailsDialog = () => {
   const classes = useStyles()
   const params = useParams<{ accountId: string }>()
 
-  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
+  const fullScreen = useMediaQuery(theme.breakpoints.down('md'))
   const { data, isLoading } = useGetCustodianDetails(params.accountId)
 
   if (data === undefined) {

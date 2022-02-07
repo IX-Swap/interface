@@ -153,7 +153,7 @@ export const renderAmount = (
     } else if (typeof row.currency === 'string') {
       symbol = row.currency
     } else {
-      symbol = row.currency.numberFormat.currency
+      symbol = row.currency?.numberFormat.currency
     }
   } else if ('onHold' in row) {
     symbol = ''

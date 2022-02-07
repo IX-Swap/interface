@@ -10,7 +10,7 @@ import { useRemoveBank } from 'app/pages/accounts/pages/banks/hooks/useRemoveBan
 import { BankDetailsDialog } from 'app/pages/accounts/pages/banks/pages/BanksList/BankDetailsDialog'
 import { OTPDialog } from 'app/pages/accounts/pages/banks/pages/WithdrawCash/OTPDialog'
 import { Form } from 'components/form/Form'
-import { Typography } from '@material-ui/core'
+import { Typography } from '@mui/material'
 
 export interface ActionsProps {
   item: Bank

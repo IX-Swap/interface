@@ -1,4 +1,6 @@
-export const typography = {
+import { ThemeOptions } from '@mui/material/styles'
+
+export const typography: ThemeOptions['typography'] = {
   fontFamily: '"Poppins", "Helvetica Neue", sans-serif !important',
   fontSize: 12,
   h1: {

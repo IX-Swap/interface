@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Button, ButtonProps } from '@material-ui/core'
+import { Box, Button, ButtonProps } from '@mui/material'
 import { useCancelOrder } from 'app/pages/exchange/hooks/useCancelOrder'
 import { Order } from 'types/order'
 

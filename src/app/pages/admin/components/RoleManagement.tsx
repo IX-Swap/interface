@@ -6,7 +6,7 @@ import {
   FormControlLabel,
   Button,
   Typography
-} from '@material-ui/core'
+} from '@mui/material'
 import { useRoleManagement } from 'app/pages/admin/hooks/useRoleManagement'
 import isEqual from 'lodash/isEqual'
 import sortBy from 'lodash/sortBy'

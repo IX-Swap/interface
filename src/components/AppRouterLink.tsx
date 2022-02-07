@@ -3,7 +3,7 @@ import {
   LinkProps as MUILinkProps,
   Typography,
   Link as MUILink
-} from '@material-ui/core'
+} from '@mui/material'
 import { Link, LinkProps } from 'react-router-dom'
 import { safeGeneratePath } from 'helpers/router'
 

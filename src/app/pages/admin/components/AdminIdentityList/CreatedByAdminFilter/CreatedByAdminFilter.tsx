@@ -1,4 +1,4 @@
-import { Checkbox, FormControlLabel } from '@material-ui/core'
+import { Checkbox, FormControlLabel } from '@mui/material'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
 import React from 'react'
 
