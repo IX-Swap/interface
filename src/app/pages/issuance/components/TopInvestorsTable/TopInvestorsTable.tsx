@@ -6,10 +6,10 @@ import {
   TableContainer,
   TableHead,
   TableRow
-} from '@material-ui/core'
+} from '@mui/material'
 import { TopInvestorsRow } from 'app/pages/issuance/components/TopInvestorsTable/TopInvestorsRow'
 import { ChartTitle } from 'app/pages/issuance/components/IssuanceLanding/ChartTitle'
-import Box from '@material-ui/core/Box'
+import Box from '@mui/material/Box'
 import { useStyles } from './shared.styles'
 import { InsightCard } from 'app/pages/issuance/components/InsightCard'
 import { TopInvestor } from 'types/vccDashboard'

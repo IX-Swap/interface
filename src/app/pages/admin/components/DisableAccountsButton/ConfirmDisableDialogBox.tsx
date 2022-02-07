@@ -6,7 +6,7 @@ import {
   Grid,
   Button,
   Box
-} from '@material-ui/core'
+} from '@mui/material'
 import { VSpacer } from 'components/VSpacer'
 import React from 'react'
 import { ConfirmDisableButton } from 'app/pages/admin/components/DisableAccountsButton/ConfirmDisableButton'

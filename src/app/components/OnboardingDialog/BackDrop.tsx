@@ -1,6 +1,6 @@
 import React from 'react'
 import { useStyles } from 'app/components/OnboardingDialog/OnboardingDialog.styles'
-import { Portal, Fade, Box } from '@material-ui/core'
+import { Portal, Fade, Box } from '@mui/material'
 
 export interface BackDropProps {
   opened: boolean

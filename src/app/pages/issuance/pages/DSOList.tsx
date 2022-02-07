@@ -1,6 +1,6 @@
 import React from 'react'
 import { MyDSOsTable } from 'app/pages/issuance/components/MyDSOsTable'
-import { Button, Grid } from '@material-ui/core'
+import { Button, Grid } from '@mui/material'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'

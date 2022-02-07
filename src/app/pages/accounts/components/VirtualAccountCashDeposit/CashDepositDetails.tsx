@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { LabelledValue, LabelledValueProps } from 'components/LabelledValue'
 import React from 'react'
 

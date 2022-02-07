@@ -16,7 +16,7 @@ import { PastOrderFilter } from 'app/pages/exchange/components/PastOrderFilter/P
 import { exchangeMarketQueryKeys } from 'config/queryKeys'
 import { exchangeMarket } from 'config/apiURL'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
-import { Grid, Hidden } from '@material-ui/core'
+import { Grid, Hidden } from '@mui/material'
 import { CompactBody } from 'components/TableWithPagination/CompactBody'
 
 export interface PostOrderTableProps {
@@ -32,7 +32,7 @@ export const PastOrderTable = (props: PostOrderTableProps) => {
 
   return (
     <>
-      <Hidden mdDown>
+      <Hidden lgDown>
         <PastOrderFilter />
         <VSpacer size={'small'} />
       </Hidden>

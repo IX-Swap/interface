@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDownloadRawFile } from 'hooks/useDownloadRawFile'
-import { Button, ButtonProps } from '@material-ui/core'
+import { Button, ButtonProps } from '@mui/material'
 import { convertBlobToFile, openFileInNewTab } from 'hooks/utils'
 
 export interface DownloadDSOSubscriptionDocumentProps extends ButtonProps {

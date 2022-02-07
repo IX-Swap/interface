@@ -1,7 +1,7 @@
 import React from 'react'
 import { CorporateIssuerView } from 'app/pages/identity/components/CorporateIssuerView/CorporateIssuerView'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { CorporateIdentityContainer } from 'app/pages/identity/containers/CorporateIdentityContainer'
 import { EditButton } from 'app/pages/identity/components/EditButton/EditButton'
 import { IdentityRoute } from 'app/pages/identity/router/config'

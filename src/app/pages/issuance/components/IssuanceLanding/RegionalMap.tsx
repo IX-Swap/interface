@@ -3,7 +3,7 @@ import { Chart } from 'react-google-charts'
 import { VSpacer } from 'components/VSpacer'
 import { ChartWrapper } from 'app/pages/issuance/components/IssuanceLanding/ChartWrapper'
 import { useInvestorsByCountry } from 'app/pages/issuance/hooks/useInvestorsByCountry'
-import { useTheme } from '@material-ui/core/styles'
+import { useTheme } from '@mui/material/styles'
 
 export const RegionalMap = () => {
   const { data, isLoading } = useInvestorsByCountry()

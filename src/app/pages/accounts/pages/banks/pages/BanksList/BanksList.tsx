@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { Header } from 'app/pages/accounts/pages/banks/pages/BanksList/Header'
 import { Table } from 'app/pages/accounts/pages/banks/pages/BanksList/Table'
 import { VSpacer } from 'components/VSpacer'

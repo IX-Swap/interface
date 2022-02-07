@@ -3,13 +3,13 @@ import { render } from 'test-utils'
 import * as useUserActionsDialog from 'app/pages/admin/hooks/useUserActionsDialog'
 import { DialogConfirmReset2FA } from 'app/pages/admin/components/DialogConfirmReset2FA'
 import { ActionReset2FA } from 'app/pages/admin/components/ActionReset2FA'
-import * as Button from '@material-ui/core/Button'
+import * as Button from '@mui/material/Button'
 
 jest.mock('app/pages/admin/components/DialogConfirmReset2FA', () => ({
   DialogConfirmReset2FA: jest.fn(() => null)
 }))
 
-jest.mock('@material-ui/core/Button', () =>
+jest.mock('@mui/material/Button', () =>
   jest.fn(({ children }) => <>{children}</>)
 )
 

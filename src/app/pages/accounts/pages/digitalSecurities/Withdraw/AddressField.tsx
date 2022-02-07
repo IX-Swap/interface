@@ -1,4 +1,4 @@
-import { TextField } from '@material-ui/core'
+import { TextField } from '@mui/material'
 import { WalletAddressSelect } from 'app/pages/accounts/components/WalletAddressSelect'
 import { TypedField } from 'components/form/TypedField'
 import React from 'react'

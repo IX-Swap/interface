@@ -10,11 +10,11 @@ import {
   useMediaQuery,
   useTheme,
   IconButton
-} from '@material-ui/core'
+} from '@mui/material'
 import useStyles from 'app/pages/admin/components/UnAssignCustodyDialog/UnAssignCustodyDialog.styles'
 import { OTPForm } from 'app/pages/issuance/components/Commitments/CloseDealDialog/OTPForm'
 import { VSpacer } from 'components/VSpacer'
-import { Close as CloseIcon } from '@material-ui/icons'
+import { Close as CloseIcon } from '@mui/icons-material'
 import { useUnAssignCustody } from 'app/pages/admin/hooks/useUnAssignCustody'
 import { CloseDealArgs } from 'types/dso'
 
@@ -28,7 +28,7 @@ export const UnAssignCustodyDialog = (props: UnAssignCustodyDialogProps) => {
   const theme = useTheme()
   const classes = useStyles()
   const { open = false, custodyAccountId, onClose } = props
-  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
+  const fullScreen = useMediaQuery(theme.breakpoints.down('md'))
 
   const handleSubmit = async (values: CloseDealArgs) => {
     await unAssign({

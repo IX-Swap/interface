@@ -5,8 +5,7 @@ import PopupState, {
   InjectedProps
 } from 'material-ui-popup-state'
 import { DropdownContent } from 'app/components/Dropdown/DropdownContent'
-import { ThemeProvider } from '@material-ui/styles'
-import { PopperPlacementType } from '@material-ui/core'
+import { ThemeProvider, PopperPlacementType } from '@mui/material'
 import { useAppTheme } from 'hooks/useAppTheme'
 import { AppTheme, getAppTheme } from 'themes/old'
 

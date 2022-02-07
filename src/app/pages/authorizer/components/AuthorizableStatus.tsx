@@ -1,6 +1,6 @@
 import React from 'react'
 import { useStyles } from 'app/pages/authorizer/components/styles'
-import { Typography } from '@material-ui/core'
+import { Typography } from '@mui/material'
 import classNames from 'classnames'
 
 interface AuthorizableStatusProps {

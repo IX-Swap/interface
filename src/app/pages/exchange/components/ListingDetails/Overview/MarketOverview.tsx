@@ -1,4 +1,4 @@
-import { Grid, Typography } from '@material-ui/core'
+import { Grid, Typography } from '@mui/material'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
 import { LabelledValue } from 'components/LabelledValue'
 import { useAssetById } from 'hooks/asset/useAssetById'

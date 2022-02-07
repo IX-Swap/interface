@@ -1,7 +1,7 @@
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
 import { booleanValueExtractor } from 'helpers/forms'
-import { Grid, Link, Typography } from '@material-ui/core'
+import { Grid, Link, Typography } from '@mui/material'
 import { Checkbox } from 'components/form/Checkbox'
 import { TypedField } from 'components/form/TypedField'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'

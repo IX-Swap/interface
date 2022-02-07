@@ -1,10 +1,10 @@
-import { makeStyles } from '@material-ui/core/styles'
+import makeStyles from '@mui/styles/makeStyles'
 
 export const useStyles = makeStyles(theme => ({
   firstBlock: {
     width: 'initial',
     paddingRight: 0,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       width: '50%',
       paddingRight: theme.spacing(2)
     }
@@ -12,10 +12,10 @@ export const useStyles = makeStyles(theme => ({
   secondBlock: {
     width: 'initial',
     flexDirection: 'row',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       width: '50%'
     },
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       flexDirection: 'column',
       alignItems: 'flex-start'
     }

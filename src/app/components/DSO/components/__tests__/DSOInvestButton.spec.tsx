@@ -17,11 +17,11 @@ describe('DSOInvestButton', () => {
     }
 
     jest.spyOn(useAuth, 'useAuth').mockImplementation(() => objResponse as any)
-    const { getByRole } = render(<DSOInvestButton dso={dso} />)
-    const investButton = getByRole('button', {
-      name: 'Invest'
-    }) as HTMLButtonElement
+    const { container } = render(<DSOInvestButton dso={dso} />)
 
-    expect(investButton).toHaveAttribute('aria-disabled', 'true')
+    expect(container?.firstElementChild).toHaveAttribute(
+      'aria-disabled',
+      'true'
+    )
   })
 })

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Meta, Story } from '@storybook/react/types-6-0'
 import { OrderBook } from 'app/pages/exchange/components/OrderBook/OrderBook'
-import { Box, Grid } from '@material-ui/core'
+import { Box, Grid } from '@mui/material'
 import { orderBookData } from '__fixtures__/exchange'
 
 const meta: Meta = {

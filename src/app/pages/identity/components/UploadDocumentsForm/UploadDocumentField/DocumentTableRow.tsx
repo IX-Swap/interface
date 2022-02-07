@@ -1,8 +1,8 @@
 import React from 'react'
-import { Grid, Typography, TableRow, IconButton } from '@material-ui/core'
+import { Grid, Typography, TableRow, IconButton } from '@mui/material'
 import { DataroomFile } from 'types/dataroomFile'
 
-import { DeleteOutline } from '@material-ui/icons'
+import { DeleteOutline } from '@mui/icons-material'
 import { useFormContext } from 'react-hook-form'
 import { ViewUploadedDocument } from 'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/ViewUploadedDocument'
 import { FileTypeIcon } from 'app/pages/identity/components/UploadDocumentsForm/FileTypeIcon/FileTypeIcon'
@@ -54,7 +54,7 @@ export const DocumentTableRow = ({ document, name }: DocumentTableRowProps) => {
       </TableCell>
       <TableCell component='th' scope='row' align='right'>
         <ViewUploadedDocument documentId={document._id} />
-        <IconButton onClick={removeDocument}>
+        <IconButton onClick={removeDocument} size='large'>
           <DeleteOutline color='disabled' style={{ width: 24, height: 24 }} />
         </IconButton>
       </TableCell>

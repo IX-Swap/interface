@@ -1,7 +1,7 @@
-import { Button } from '@material-ui/core'
+import { Button } from '@mui/material'
 import React from 'react'
 import { MutationResultPair } from 'react-query'
-import { ButtonProps } from '@material-ui/core/Button'
+import { ButtonProps } from '@mui/material/Button'
 
 export interface SubmitButtonProps extends ButtonProps {
   mutation: MutationResultPair<any, any, any, any>

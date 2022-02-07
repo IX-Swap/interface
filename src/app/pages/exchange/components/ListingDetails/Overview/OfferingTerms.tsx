@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
 import { PercentageNumber } from 'app/components/DSO/DSOPreview/PercentageNumber'
 import { LabelledValue } from 'components/LabelledValue'

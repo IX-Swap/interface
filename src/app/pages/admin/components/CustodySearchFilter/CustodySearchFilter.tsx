@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { SearchFilter } from 'app/components/SearchFilter'
 import { useStyles } from './CustodySearchFilter.styles'
 

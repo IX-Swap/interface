@@ -1,8 +1,8 @@
 import React from 'react'
 import { DigitalSecurityOffering } from 'types/dso'
-import { IconButton, CircularProgress, Grid, Box } from '@material-ui/core'
-import StarIcon from '@material-ui/icons/Star'
-import StarBorderOutlinedIcon from '@material-ui/icons/StarBorderOutlined'
+import { IconButton, CircularProgress, Grid, Box } from '@mui/material'
+import StarIcon from '@mui/icons-material/Star'
+import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined'
 import { useToggleDSOFavorite } from 'app/pages/invest/hooks/useToggleDSOFavorite'
 
 export interface DSOFavoriteProps {

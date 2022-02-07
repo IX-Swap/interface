@@ -1,7 +1,7 @@
 import React from 'react'
 import { moneyNumberFormat } from 'config/numberFormat'
 import { numericValueExtractor } from 'helpers/forms'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { TypedField } from 'components/form/TypedField'
 import { NumericInput } from 'components/form/NumericInput'
 import { useFormContext } from 'react-hook-form'

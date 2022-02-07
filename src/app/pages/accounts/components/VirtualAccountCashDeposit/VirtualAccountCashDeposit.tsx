@@ -1,4 +1,4 @@
-import { Box, Grid, Typography } from '@material-ui/core'
+import { Box, Grid, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import { RadioTabButton } from 'app/pages/accounts/components/VirtualAccountCashDeposit/RadioTabButton'
 import { VirtualAccountTabs } from 'app/pages/accounts/components/VirtualAccountCashDeposit/VirtualAccountTabs'

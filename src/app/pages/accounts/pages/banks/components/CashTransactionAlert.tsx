@@ -3,7 +3,7 @@ import { TransactionBase } from 'app/pages/accounts/types'
 import { useFormContext } from 'react-hook-form'
 import { useAssetsData } from 'hooks/asset/useAssetsData'
 import { formatMoney } from 'helpers/numbers'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 
 export interface CashTransactionAlertProps {
   assetId: string

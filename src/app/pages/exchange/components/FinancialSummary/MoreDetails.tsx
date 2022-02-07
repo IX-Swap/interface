@@ -6,8 +6,8 @@ import {
   Paper,
   Popper,
   Typography
-} from '@material-ui/core'
-import { ArrowDropDown } from '@material-ui/icons'
+} from '@mui/material'
+import { ArrowDropDown } from '@mui/icons-material'
 import { DetailsItem } from 'app/pages/exchange/components/FinancialSummary/DetailsItem'
 import { useFinancialMetrics } from 'app/pages/exchange/hooks/useFinancialMetrics'
 import React from 'react'
@@ -33,11 +33,12 @@ export const MoreDetails = () => {
         open={anchorEl !== null}
         anchorEl={anchorEl}
         placement='bottom'
-        modifiers={{
-          flip: {
+        modifiers={[
+          {
+            name: 'flip',
             enabled: false
           }
-        }}
+        ]}
         style={{ zIndex: 10 }}
       >
         <Paper

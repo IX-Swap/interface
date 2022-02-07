@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Button, Grid, Hidden } from '@material-ui/core'
+import { Button, Grid, Hidden } from '@mui/material'
 import { CapitalStructureFilter } from 'app/pages/invest/components/DSOTable/CapitalStructureFilter'
 import { useDSOTableColumns } from 'app/pages/invest/hooks/useDSOTableColumns'
 import { SearchFilter } from 'app/components/SearchFilter'
@@ -9,9 +9,9 @@ import { LabelledValue } from 'components/LabelledValue'
 import { PriceFilter } from 'app/pages/invest/components/DSOTable/PriceFilter'
 import { NetworkFilter } from 'app/pages/invest/components/DSOTable/NetworkFilter'
 import { CurrencyFilter } from 'app/pages/admin/components/AssignedVirtualAccountsTable/CurrencyFilter'
-import { useTheme } from '@material-ui/core/styles'
+import { useTheme } from '@mui/material/styles'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
-import FilterListIcon from '@material-ui/icons/FilterList'
+import FilterListIcon from '@mui/icons-material/FilterList'
 
 export const DSOTableFilters = () => {
   const { deselectColumn, selectColumn, columns } = useDSOTableColumns()
@@ -97,9 +97,10 @@ export const DSOTableFilters = () => {
           <Grid item xs={6} md={2}>
             <NetworkFilter />
           </Grid>
-          <Hidden mdDown>
+          <Hidden lgDown>
             <Grid item xs={6} md={2}>
               <ColumnsEditorToggle
+                value='columns'
                 onClick={toggleColumns}
                 selected={showColumns}
               />

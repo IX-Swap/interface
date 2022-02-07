@@ -1,4 +1,4 @@
-import { useTheme } from '@material-ui/core'
+import { useTheme } from '@mui/material'
 import React from 'react'
 import AtlasLogoLight from 'assets/icons/atlas_logo_white.png'
 import AtlasLogoDark from 'assets/icons/atlas_logo.png'
@@ -15,7 +15,7 @@ export const ReportLogo = ({ isAtlasOne }: ReportLogoProps) => {
     <img
       width={70}
       height='auto'
-      src={theme.palette.type === 'light' ? AtlasLogoDark : AtlasLogoLight}
+      src={theme.palette.mode === 'light' ? AtlasLogoDark : AtlasLogoLight}
       alt={'Atlas One'}
     />
   ) : (

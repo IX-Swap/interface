@@ -6,10 +6,10 @@ import {
   Box,
   ListItemText,
   Typography
-} from '@material-ui/core'
+} from '@mui/material'
 import { IndividualAvatar } from 'components/IndividualAvatar'
 import { CorporateAvatar } from 'components/CorporateAvatar'
-import { useTheme } from '@material-ui/core/styles'
+import { useTheme } from '@mui/material/styles'
 
 export interface TopListProps {
   items: Array<{
@@ -23,7 +23,7 @@ export interface TopListProps {
 export const TopList = (props: TopListProps) => {
   const { items } = props
   const theme = useTheme()
-  const isLightThemeOn = theme.palette.type === 'light'
+  const isLightThemeOn = theme.palette.mode === 'light'
 
   return (
     <List>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Hidden } from '@material-ui/core'
+import { Grid, Hidden } from '@mui/material'
 import { InvestmentGrowthChart } from '../components/InvestmentGrowthChart'
 import { CommitmentStatsChart } from '../components/CommitmentStatsChart'
 import { DSOInfo } from '../components/DSOInfo'
@@ -38,6 +38,7 @@ export const IssuanceLanding = () => {
       <PageHeader title={data?.tokenName} showBreadcrumbs={false} />
       <Grid
         container
+        spacing={3}
         justifyContent='space-between'
         wrap={!isTablet ? 'wrap' : 'wrap-reverse'}
       >
@@ -46,7 +47,6 @@ export const IssuanceLanding = () => {
           container
           direction='row'
           spacing={isTablet ? 0 : 3}
-          style={{ marginBottom: theme.spacing(1.5) }}
           xs={12}
           md={8}
         >
@@ -107,13 +107,7 @@ export const IssuanceLanding = () => {
 
         {divider}
 
-        <Grid
-          container
-          item
-          xs={12}
-          md={4}
-          style={{ marginBottom: isTablet ? 0 : theme.spacing(3) }}
-        >
+        <Grid container item xs={12} md={4}>
           <Grid
             component={IssuanceLandingCard}
             container
@@ -133,10 +127,8 @@ export const IssuanceLanding = () => {
       </Grid>
 
       <Grid container>
-        <Grid item xs={12} style={{ paddingTop: 0, paddingLeft: 0 }}>
-          <IssuanceLandingCard variant='outlined'>
-            <Activities />
-          </IssuanceLandingCard>
+        <Grid item xs={12}>
+          <Activities />
         </Grid>
       </Grid>
     </>

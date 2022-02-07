@@ -1,5 +1,5 @@
-import { Box, Typography } from '@material-ui/core'
-import { useTheme } from '@material-ui/core/styles'
+import { Box, Typography } from '@mui/material'
+import { useTheme } from '@mui/material/styles'
 import { Avatar } from 'components/Avatar'
 import { useAuth } from 'hooks/auth/useAuth'
 import { useIndividualIdentity } from 'hooks/identity/useIndividualIdentity'
@@ -22,7 +22,7 @@ export const UserDropdownInfo = () => {
       display='flex'
       alignItems='center'
       bgcolor={
-        theme.palette.type === 'light'
+        theme.palette.mode === 'light'
           ? theme.palette.backgrounds.light
           : theme.palette.backgrounds.lighter
       }

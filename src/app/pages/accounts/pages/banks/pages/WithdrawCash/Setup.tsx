@@ -7,7 +7,7 @@ import {
   Typography,
   useMediaQuery,
   useTheme
-} from '@material-ui/core'
+} from '@mui/material'
 import { useFormContext } from 'react-hook-form'
 import { useBanksData } from 'app/pages/accounts/pages/banks/hooks/useBanksData'
 import { TypedField } from 'components/form/TypedField'
@@ -38,7 +38,7 @@ export const Setup: React.FC = () => {
   const bank = bankData.map[bankId ?? '']
   const theme = useTheme()
 
-  const isTablet = useMediaQuery(theme.breakpoints.down('md'))
+  const isTablet = useMediaQuery(theme.breakpoints.down('lg'))
 
   const [open, setOpen] = useState(false)
 

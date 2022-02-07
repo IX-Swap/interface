@@ -4,9 +4,9 @@ import {
   AccordionDetails,
   AccordionSummary,
   Typography
-} from '@material-ui/core'
+} from '@mui/material'
 import { useStyles } from './ReportsAccordion.styles'
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown'
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 
 export interface ReportsAccordionProps {

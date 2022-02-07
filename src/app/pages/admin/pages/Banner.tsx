@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Typography } from '@material-ui/core'
+import { Grid, Typography } from '@mui/material'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { BannerForm } from 'app/pages/admin/components/BannerForm'
 

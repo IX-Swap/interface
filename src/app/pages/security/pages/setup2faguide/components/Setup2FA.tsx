@@ -1,6 +1,6 @@
 import React from 'react'
 import screenshot2fa from 'assets/screenshots/twofa-screenshot.svg'
-import { Box, Grid, Typography } from '@material-ui/core'
+import { Box, Grid, Typography } from '@mui/material'
 import gauthScreenshot from 'assets/screenshots/gauth-screenshot.svg'
 import authyScreenshot from 'assets/screenshots/authy-screenshot.svg'
 import gauthCodeScreenshot from 'assets/screenshots/gauth-screenshot-2.svg'

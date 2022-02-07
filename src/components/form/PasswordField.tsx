@@ -1,6 +1,6 @@
 import React from 'react'
 import { TypedField } from 'components/form/TypedField'
-import { Grid, InputAdornment, TextField } from '@material-ui/core'
+import { Grid, InputAdornment, TextField } from '@mui/material'
 import { PasswordValidation } from 'components/form/PasswordValidation'
 import { useFormContext } from 'react-hook-form'
 import { ReactComponent as WarningIcon } from 'assets/icons/warning.svg'

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Grid } from '@material-ui/core'
+import { Button, Grid } from '@mui/material'
 import { useSnackbar } from 'hooks/useSnackbar'
 import { LabelledValue } from 'components/LabelledValue'
 import { TokensField } from 'app/pages/accounts/pages/digitalSecurities/Withdraw/TokensField'

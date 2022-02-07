@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Typography, Box, Hidden } from '@material-ui/core'
+import { Grid, Typography, Box, Hidden } from '@mui/material'
 import { DSOLogo } from 'app/components/DSO/components/DSOLogo'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { DigitalSecurityOffering } from 'types/dso'
@@ -23,7 +23,7 @@ export const DSOInvestorViewHeader = (props: DSOInvestorViewHeaderProps) => {
         xs: 3,
         md: 5
       }}
-      borderRadius={{ xs: 6, md: 24 }}
+      borderRadius={6}
       color='#FFF'
     >
       <Grid
@@ -51,7 +51,7 @@ export const DSOInvestorViewHeader = (props: DSOInvestorViewHeaderProps) => {
               <DSOLogo
                 dsoId={dso._id}
                 size={isMiniLaptop ? 48 : 124}
-                variant='circle'
+                variant='circular'
               />
             </Grid>
 
@@ -68,7 +68,7 @@ export const DSOInvestorViewHeader = (props: DSOInvestorViewHeaderProps) => {
               </Grid>
             </Grid>
           </Grid>
-          <Hidden mdDown>
+          <Hidden lgDown>
             <Grid item>
               <DSOInvestButton dso={dso} />
             </Grid>

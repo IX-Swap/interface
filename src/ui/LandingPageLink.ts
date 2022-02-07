@@ -1,5 +1,5 @@
-import { Box } from '@material-ui/core'
-import { styled } from '@material-ui/core/styles'
+import { Box } from '@mui/material'
+import { styled } from '@mui/material/styles'
 
 export const LandingPageLink = styled(Box)(({ theme }) => ({
   display: 'flex',
@@ -12,7 +12,7 @@ export const LandingPageLink = styled(Box)(({ theme }) => ({
     backgroundColor: theme.palette.action.hover
   },
 
-  [theme.breakpoints.down('sm')]: {
+  [theme.breakpoints.down('md')]: {
     maxWidth: 120,
     maxHeight: 120
   }

@@ -1,6 +1,6 @@
 import React from 'react'
-import { Card, Box, Grid, Typography, Button } from '@material-ui/core'
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline'
+import { Card, Box, Grid, Typography, Button } from '@mui/material'
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 import { Link } from 'react-router-dom'
 
 export interface CreateIdentityCardProps {

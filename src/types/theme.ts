@@ -1,6 +1,6 @@
-import { ToggleButtonClassKey } from '@material-ui/lab/ToggleButton'
+import { ToggleButtonClassKey } from '@mui/material/ToggleButton'
 
-declare module '@material-ui/core/styles/overrides' {
+declare module '@mui/material/styles/overrides' {
   export interface ComponentNameToClassKey {
     MuiToggleButton: ToggleButtonClassKey
   }

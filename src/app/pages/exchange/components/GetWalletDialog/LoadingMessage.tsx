@@ -1,4 +1,4 @@
-import { Box, CircularProgress, Typography } from '@material-ui/core'
+import { Box, CircularProgress, Typography } from '@mui/material'
 import React from 'react'
 
 export interface LoadingMessageProps {

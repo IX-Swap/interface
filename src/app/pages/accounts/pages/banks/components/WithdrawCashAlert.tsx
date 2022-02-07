@@ -1,5 +1,5 @@
 import React from 'react'
-import { Typography } from '@material-ui/core'
+import { Typography } from '@mui/material'
 import { CashTransactionAlert } from 'app/pages/accounts/pages/banks/components/CashTransactionAlert'
 import { useFormContext } from 'react-hook-form'
 import { WithdrawCashFormValues } from 'app/pages/accounts/types'

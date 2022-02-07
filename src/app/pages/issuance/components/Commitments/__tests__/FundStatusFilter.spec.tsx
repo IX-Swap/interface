@@ -1,14 +1,14 @@
 import React from 'react'
 import { render } from 'test-utils'
 import { FundStatusFilter } from 'app/pages/issuance/components/Commitments/FundStatusFilter'
-import InputLabel from '@material-ui/core/InputLabel'
+import InputLabel from '@mui/material/InputLabel'
 import { FundStatusSelect } from 'app/pages/issuance/components/Commitments/FundStatusSelect'
 
 jest.mock('app/pages/issuance/components/Commitments/FundStatusSelect', () => ({
   FundStatusSelect: jest.fn(() => null)
 }))
 
-jest.mock('@material-ui/core/InputLabel', () => jest.fn(() => null))
+jest.mock('@mui/material/InputLabel', () => jest.fn(() => null))
 
 describe('FundStatusFilter', () => {
   afterEach(async () => {

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, CardContent, Grid } from '@material-ui/core'
+import { Card, CardContent, Grid } from '@mui/material'
 import { useStyles } from 'app/pages/accounts/pages/dashboard/components/TopInfoPanel/TopInfoPanel.styles'
 import { AvailableCash } from 'app/pages/accounts/pages/dashboard/components/AvailableCash/AvailableCash'
 import { Investments } from 'app/pages/accounts/pages/dashboard/components/Investments/Investments'

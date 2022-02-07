@@ -1,4 +1,4 @@
-import { Table, TableBody } from '@material-ui/core'
+import { Table, TableBody } from '@mui/material'
 import React from 'react'
 import {
   TradesTableRow,

@@ -1,6 +1,6 @@
 import React from 'react'
-import { Box, Grid, Typography } from '@material-ui/core'
-import { useTheme } from '@material-ui/core/styles'
+import { Box, Grid, Typography } from '@mui/material'
+import { useTheme } from '@mui/material/styles'
 import { useBannersList } from 'app/pages/admin/hooks/useBannersList'
 import { Avatar } from 'components/Avatar'
 import { Carousel } from 'react-responsive-carousel'

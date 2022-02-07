@@ -1,10 +1,10 @@
 import { PairListDropdown } from 'app/pages/exchange/components/PairListDropdown/PairListDropdown'
 import React from 'react'
 import { render } from 'test-utils'
-import { ClickAwayListener } from '@material-ui/core'
+import { ClickAwayListener } from '@mui/material'
 import { fireEvent, waitFor } from '@testing-library/dom'
 
-jest.mock('@material-ui/core/ClickAwayListener', () => jest.fn(() => null))
+jest.mock('@mui/material/ClickAwayListener', () => jest.fn(() => null))
 
 describe('PairListDropdown', () => {
   const setAnchorEl = jest.fn()

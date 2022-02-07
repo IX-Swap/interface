@@ -1,4 +1,4 @@
-import { Button } from '@material-ui/core'
+import { Button } from '@mui/material'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import React from 'react'
 

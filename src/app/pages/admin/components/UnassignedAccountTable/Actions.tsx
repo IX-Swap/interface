@@ -1,6 +1,6 @@
 import React from 'react'
-import { Launch as LaunchIcon } from '@material-ui/icons'
-import { IconButton } from '@material-ui/core'
+import { Launch as LaunchIcon } from '@mui/icons-material'
+import { IconButton } from '@mui/material'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { VirtualAccount } from 'types/virtualAccount'
 import { AdminRoute } from 'app/pages/admin/router/config'

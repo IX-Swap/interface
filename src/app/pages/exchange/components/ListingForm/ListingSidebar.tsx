@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Grid } from '@material-ui/core'
+import { Box, Grid } from '@mui/material'
 import { AuthorizableStatus } from 'app/pages/authorizer/components/AuthorizableStatus'
 import { DigitalSecurityOffering } from 'types/dso'
 import { Maybe } from 'types/util'

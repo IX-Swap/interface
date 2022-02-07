@@ -1,4 +1,4 @@
-import { Button } from '@material-ui/core'
+import { Button } from '@mui/material'
 import { Report } from 'app/pages/educationCentre/components/AccessReports/ReportRow'
 import { getDocumentType, isImage } from 'components/dataroom/DataroomColumns'
 import { useDownloadRawDocument } from 'hooks/useDownloadRawDocument'

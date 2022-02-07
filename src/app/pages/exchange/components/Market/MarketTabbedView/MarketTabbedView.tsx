@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { MyOrders } from 'app/pages/exchange/components/MyOrders/MyOrders'
 import { MarketViewProps } from 'app/pages/exchange/components/Market/MarketGridView'
 import { TopSection } from 'app/pages/exchange/components/Market/MarketTabbedView/TopSection'

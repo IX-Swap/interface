@@ -1,7 +1,7 @@
 import React from 'react'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
-import { Button } from '@material-ui/core'
+import { Button } from '@mui/material'
 import { useParams } from 'react-router-dom'
 
 export const DSOFormBackButton = () => {

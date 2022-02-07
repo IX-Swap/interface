@@ -1,6 +1,6 @@
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
-import { Grid, TextField, Typography } from '@material-ui/core'
+import { Grid, TextField, Typography } from '@mui/material'
 import { VSpacer } from 'components/VSpacer'
 import { TypedField } from 'components/form/TypedField'
 import { AnnualIncomeSelect } from 'components/form/AnnualIncomeSelect'

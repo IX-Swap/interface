@@ -4,9 +4,9 @@ import {
   TableRows,
   TableRowsProps
 } from 'components/TableWithPagination/TableRows'
-import { TableRow } from '@material-ui/core'
+import { TableRow } from '@mui/material'
 
-jest.mock('@material-ui/core/TableRow', () => jest.fn(() => null))
+jest.mock('@mui/material/TableRow', () => jest.fn(() => null))
 
 describe('TableRows', () => {
   const props: TableRowsProps<any> = {

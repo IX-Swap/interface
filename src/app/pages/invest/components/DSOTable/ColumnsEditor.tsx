@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Typography } from '@material-ui/core'
+import { Box, Typography } from '@mui/material'
 import { TableColumn } from 'types/util'
 import { columns } from 'app/pages/invest/components/DSOTable/columns'
 import { DigitalSecurityOffering, DSOTableColumn } from 'types/dso'

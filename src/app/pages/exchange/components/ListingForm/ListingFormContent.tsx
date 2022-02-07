@@ -1,7 +1,7 @@
 import React from 'react'
 import { DigitalSecurityOffering } from 'types/dso'
 import { isDSOLive } from 'app/components/DSO/utils'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { Form } from 'components/form/Form'
 import { ListingFormFields } from 'app/pages/exchange/components/ListingForm/ListingFormFields'
 import { ListingSidebar } from 'app/pages/exchange/components/ListingForm/ListingSidebar'

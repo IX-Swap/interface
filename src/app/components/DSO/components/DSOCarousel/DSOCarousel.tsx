@@ -6,9 +6,9 @@ import {
   ButtonNext,
   DotGroup
 } from 'pure-react-carousel'
-import Box from '@material-ui/core/Box'
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft'
-import ChevronRightIcon from '@material-ui/icons/ChevronRight'
+import Box from '@mui/material/Box'
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
+import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import classNames from 'classnames'
 import useStyles from './DSOCarousel.styles'
 import { CurrentSlideWatcher } from 'app/components/DSO/components/DSOCarousel/CurrentSlideWatcher'

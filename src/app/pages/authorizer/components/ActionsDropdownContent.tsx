@@ -1,12 +1,12 @@
 import React from 'react'
 import { DropdownContentProps } from 'app/components/Dropdown/Dropdown'
-import { List } from '@material-ui/core'
+import { List } from '@mui/material'
 import { Action } from 'app/pages/authorizer/components/Action'
 import {
   AssignmentTurnedIn as ApproveIcon,
   Gavel as RejectIcon,
   Launch as LaunchIcon
-} from '@material-ui/icons'
+} from '@mui/icons-material'
 
 export interface ActionsDropdownContentProps extends DropdownContentProps {
   approve: () => void

@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { PairFilter } from 'app/pages/exchange/components/TradeHistoryTable/PairFilter'
 import React from 'react'
 import { BaseFilters } from 'app/components/BaseFilters/BaseFilters'

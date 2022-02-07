@@ -1,6 +1,6 @@
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import React, { ChangeEvent } from 'react'
-import { FormControl, Grid, InputLabel } from '@material-ui/core'
+import { FormControl, Grid, InputLabel } from '@mui/material'
 import { VTDirectionSelect } from 'app/pages/admin/components/VTDirectionSelect'
 
 export const VTDirectionFilter = () => {

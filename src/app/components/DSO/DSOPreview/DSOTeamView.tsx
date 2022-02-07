@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Typography } from '@material-ui/core'
+import { Grid, Typography } from '@mui/material'
 import { DigitalSecurityOffering } from 'types/dso'
 import { DSOTeamMemberView } from 'app/components/DSO/components/DSOTeamMemberView'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'

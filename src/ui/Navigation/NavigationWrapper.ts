@@ -1,12 +1,12 @@
-import { styled } from '@material-ui/core/styles'
-import { List } from '@material-ui/core'
+import { styled } from '@mui/material/styles'
+import { List } from '@mui/material'
 
 export const NavigationWrapper = styled(List)(({ theme }) => {
   return {
     marginTop: 0,
     width: 250,
     backgroundColor:
-      theme.palette.type === 'light'
+      theme.palette.mode === 'light'
         ? theme.palette.backgrounds.default
         : theme.palette.backgrounds.light,
 
