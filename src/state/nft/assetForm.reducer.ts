@@ -90,5 +90,15 @@ export default createReducer<AssetForm>(initialState, (builder) =>
       state.collection = null
       state.name = ''
       state.description = ''
+      state.link = ''
+      state.freeze = false
+      state.activeTraitType = TraitType.RECTANGLE
+      state.properties = []
+      state.levels = []
+      state.stats = []
+      state.isNSFW = false
+      state.newCollectionName = ''
+      state.selectedContractAddress = ''
+      state.maxSupply = 1000
     })
 )

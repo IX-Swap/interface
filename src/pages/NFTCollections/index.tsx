@@ -113,10 +113,14 @@ const NFTCollections: FC = () => {
             myCollections.length !== 0 &&
             myCollections.map(({ id, banner, logo, name, address }) => (
               <CollectionCard key={`collection-card-${id}`} as={StyledInternalLink} to={`/nft/collections/${address}`}>
-                <CollectionImageWrapper
-                  style={{ paddingTop: !banner ? '10px' : '0', objectFit: banner ? 'cover' : 'contain' }}
-                >
-                  <CollectionImage height="100%" width="100%" src={getImage(banner) ?? LogoWhite} />
+                <CollectionImageWrapper style={{ paddingTop: !banner ? '10px' : '0' }}>
+                  <CollectionImage
+                    height="100%"
+                    width="100%"
+                    src={getImage(banner) ?? LogoWhite}
+                    style={{ objectFit: banner ? 'cover' : 'contain' }}
+                  />
+
                   <CollectionLogo src={getImage(logo) ?? LogoWhite} style={!logo ? { objectFit: 'contain' } : {}} />
                 </CollectionImageWrapper>
 
