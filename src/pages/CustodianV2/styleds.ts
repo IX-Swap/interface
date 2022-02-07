@@ -6,7 +6,7 @@ import { ArrowWrapper } from 'components/swap/styleds'
 import { SearchInput } from 'components/SearchModal/styleds'
 import { DarkBlueCard } from 'components/Card'
 
-const cardCommonStyles = css`
+export const cardCommonStyles = css`
   border-radius: 30px;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
