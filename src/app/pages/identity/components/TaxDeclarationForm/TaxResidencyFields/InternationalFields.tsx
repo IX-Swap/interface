@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, FormControlLabel, Radio } from '@material-ui/core'
+import { Grid, FormControlLabel, Radio } from '@mui/material'
 import { TaxResidencyFieldArray } from 'app/pages/identity/components/TaxDeclarationForm/TaxResidencyFields/TaxRecidencyFieldArray'
 import { useFormContext } from 'react-hook-form'
 

@@ -1,4 +1,4 @@
-import { Box, Divider, Typography } from '@material-ui/core'
+import { Box, Divider, Typography } from '@mui/material'
 import { VSpacer } from 'components/VSpacer'
 import React from 'react'
 

@@ -1,9 +1,9 @@
 import * as React from 'react'
 import { render } from 'test-utils'
 import { MasDisclosurePreviewCard } from 'app/pages/admin/components/MasDisclosurePreviewCard'
-import Typography from '@material-ui/core/Typography'
+import Typography from '@mui/material/Typography'
 
-jest.mock('@material-ui/core/Typography', () => jest.fn(() => null))
+jest.mock('@mui/material/Typography', () => jest.fn(() => null))
 
 describe('MasDisclosurePreviewCard', () => {
   afterEach(async () => {
@@ -19,9 +19,9 @@ describe('MasDisclosurePreviewCard', () => {
       expect.objectContaining({
         variant: 'subtitle1',
         style: {
-          paddingLeft: 20,
-          paddingTop: 16,
-          paddingBottom: 8
+          paddingLeft: '20px',
+          paddingTop: '16px',
+          paddingBottom: '8px'
         }
       }),
       {}
@@ -31,8 +31,8 @@ describe('MasDisclosurePreviewCard', () => {
       expect.objectContaining({
         variant: 'subtitle2',
         style: {
-          paddingLeft: 20,
-          paddingRight: 24
+          paddingLeft: '20px',
+          paddingRight: '24px'
         }
       }),
       {}

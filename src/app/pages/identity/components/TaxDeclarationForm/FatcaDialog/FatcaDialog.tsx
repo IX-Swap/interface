@@ -1,6 +1,6 @@
 import React from 'react'
 import { Dialog } from 'app/pages/identity/components/Dialog'
-import { Typography } from '@material-ui/core'
+import { Typography } from '@mui/material'
 import { TaxDeclarationInfoAction } from 'app/pages/identity/components/TaxDeclarationForm/TaxDeclarationInfoDialog/TaxDeclarationInfoActions'
 import { FatcaContent } from 'app/pages/identity/components/TaxDeclarationForm/FatcaDialog/FatcaContent'
 

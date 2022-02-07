@@ -5,7 +5,7 @@ import {
   Link,
   TextField,
   Typography
-} from '@material-ui/core'
+} from '@mui/material'
 import { TypedField } from 'components/form/TypedField'
 import { useFormContext } from 'react-hook-form'
 import { SignupArgs } from 'types/auth'

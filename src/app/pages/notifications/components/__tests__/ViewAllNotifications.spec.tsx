@@ -27,9 +27,10 @@ describe('ViewAllNotifications', () => {
   })
 
   it('renders ViewAll button', () => {
-    const { getByRole } = render(<ViewAllNotifications />)
+    const { container } = render(<ViewAllNotifications />)
+    const button = container?.firstElementChild
 
-    expect(getByRole('button')).toBeTruthy()
-    expect(getByRole('button')).toHaveTextContent('View All')
+    expect(button).toBeTruthy()
+    expect(button).toHaveTextContent('View All')
   })
 })

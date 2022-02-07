@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Typography } from '@material-ui/core'
+import { Box, Typography } from '@mui/material'
 import { AppRouterLink } from 'components/AppRouterLink'
 import { VSpacer } from 'components/VSpacer'
 import { useStyles } from 'app/pages/security/pages/setup2fa/Setup2fa.styles'

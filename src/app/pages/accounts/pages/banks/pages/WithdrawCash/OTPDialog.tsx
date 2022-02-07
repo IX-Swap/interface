@@ -7,7 +7,7 @@ import {
   Grid,
   Typography,
   Box
-} from '@material-ui/core'
+} from '@mui/material'
 import { WithdrawCashFormValues } from 'app/pages/accounts/types'
 import { OTPField } from 'components/form/OTPField'
 import { TypedField } from 'components/form/TypedField'

@@ -2,7 +2,7 @@ import React from 'react'
 import { DigitalSecurityOffering } from 'types/dso'
 import { TableColumn } from 'types/util'
 import { DSOLogo } from 'app/components/DSO/components/DSOLogo'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { renderPriceWithCurrency } from 'app/pages/invest/components/DSOTable/columns'
 
 export const renderDSOLogo = (dsoId: string) => (

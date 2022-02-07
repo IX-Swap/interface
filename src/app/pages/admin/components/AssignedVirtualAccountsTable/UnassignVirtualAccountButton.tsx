@@ -1,7 +1,7 @@
-import { IconButton } from '@material-ui/core'
+import { IconButton } from '@mui/material'
 import React, { useState } from 'react'
 import { VirtualAccount } from 'types/virtualAccount'
-import { LinkOff } from '@material-ui/icons'
+import { LinkOff } from '@mui/icons-material'
 import { ConfirmUnassignDialog } from 'app/pages/admin/components/AssignedVirtualAccountsTable/ConfirmUnassignDialog'
 
 export interface UnassignVirtualAccountProps {

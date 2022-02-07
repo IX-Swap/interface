@@ -1,5 +1,5 @@
 import React from 'react'
-import { Typography, Box, Grid } from '@material-ui/core'
+import { Typography, Box, Grid } from '@mui/material'
 import { useEnable2fa } from '../hooks/useEnable2fa'
 import { Enable2faFormValues } from '../types'
 import { enable2faFormValuesSchema } from '../validation'

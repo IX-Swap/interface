@@ -1,10 +1,13 @@
-import { Box, Grid, Typography } from '@material-ui/core'
+import { Box, Grid, Typography } from '@mui/material'
 import { SearchFilter } from 'app/components/SearchFilter'
 import { DateFilter } from 'app/pages/admin/components/AssignedVirtualAccountsTable/DateFilter'
 import React, { PropsWithChildren } from 'react'
 import { useStyles } from './BaseFilters.styles'
 
-export const BaseFilters = ({ children }: PropsWithChildren<{}>) => {
+export const BaseFilters = ({
+  children,
+  searchLabel = 'Search'
+}: PropsWithChildren<{ searchLabel?: string }>) => {
   const classes = useStyles()
   return (
     <Grid container justifyContent='space-between' className={classes.wrapper}>
@@ -12,7 +15,7 @@ export const BaseFilters = ({ children }: PropsWithChildren<{}>) => {
         <Box className={classes.searchWrapper}>
           <SearchFilter
             fullWidth
-            placeholder='Search'
+            placeholder={searchLabel}
             inputAdornmentPosition='end'
           />
         </Box>

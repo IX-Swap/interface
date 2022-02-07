@@ -1,7 +1,7 @@
 import React from 'react'
 import { BackButton } from 'components/BackButton'
 import { VSpacer } from 'components/VSpacer'
-import { Grid, Typography } from '@material-ui/core'
+import { Grid, Typography } from '@mui/material'
 import { Overview } from 'app/pages/security/pages/setup2faguide/components/Overview'
 import { InstallAuthenticatorApp } from 'app/pages/security/pages/setup2faguide/components/InstallAuthenticatorApp'
 import { SetupAuthenticatorApp } from 'app/pages/security/pages/setup2faguide/components/SetupAuthenticatorApp'

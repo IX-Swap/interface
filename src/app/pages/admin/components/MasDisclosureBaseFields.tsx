@@ -1,4 +1,4 @@
-import { Button, Card, CardContent, Grid } from '@material-ui/core'
+import { Button, Card, CardContent, Grid } from '@mui/material'
 import React, { useState } from 'react'
 import { TypedField } from 'components/form/TypedField'
 import { RichTextEditor } from 'components/form/RichTextEditor'

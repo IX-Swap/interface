@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, List } from '@material-ui/core'
+import { Grid, List } from '@mui/material'
 import { useNotifications } from 'app/pages/notifications/hooks/useNotifications'
 import { NoData } from 'app/components/NoData/NoData'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'

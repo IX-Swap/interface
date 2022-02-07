@@ -1,11 +1,11 @@
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { CurrencyFilter } from 'app/pages/admin/components/AssignedVirtualAccountsTable/CurrencyFilter'
 import React from 'react'
 import { BaseFilters } from 'app/components/BaseFilters/BaseFilters'
 
 export const Filters = () => {
   return (
-    <BaseFilters>
+    <BaseFilters searchLabel='Search by Virtual Account'>
       <>
         <Grid item>
           <CurrencyFilter currency='SGD' />

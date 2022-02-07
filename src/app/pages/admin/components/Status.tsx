@@ -1,5 +1,5 @@
 import React from 'react'
-import { Typography } from '@material-ui/core'
+import { Typography } from '@mui/material'
 import classNames from 'classnames'
 import { useStyles } from 'app/pages/admin/components/Status.styles'
 

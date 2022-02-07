@@ -6,7 +6,7 @@ import {
   TableContainer,
   TableHead,
   TableRow
-} from '@material-ui/core'
+} from '@mui/material'
 import { useStyles } from '../shared.styles'
 import { Account } from 'types/reports'
 import { FeesRow } from 'app/pages/accounts/pages/reports/components/FeesTable/FeesRow'

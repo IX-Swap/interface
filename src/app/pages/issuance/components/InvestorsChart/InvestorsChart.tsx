@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Paper, Typography } from '@material-ui/core'
+import { Grid, Paper, Typography } from '@mui/material'
 import { LineChart } from 'app/pages/issuance/components/LineChart/LineChart'
 import { format } from 'date-fns'
 import { InvestorsChartSkeleton } from 'app/pages/issuance/components/InvestorsChart/InvestorsChartSkeleton'

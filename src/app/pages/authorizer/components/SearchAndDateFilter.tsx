@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Box } from '@material-ui/core'
+import { Grid, Box } from '@mui/material'
 import { SearchQueryFilterGroup } from 'components/SearchQueryFilter/SearchQueryFilterGroup/SearchQueryFilterGroup'
 import { GroupedSearchFilter } from 'app/pages/authorizer/components/GroupedSearchFilter'
 import { GroupedDateTimeFilter } from 'app/pages/authorizer/components/GroupedFromDateFilter'
@@ -45,7 +45,6 @@ export const SearchAndDateFilter = () => {
             filters={['search', 'toDate', 'fromDate']}
             variant='contained'
             size='small'
-            color='default'
             disableElevation
           >
             Reset

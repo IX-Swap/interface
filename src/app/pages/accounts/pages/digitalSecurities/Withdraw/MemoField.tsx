@@ -1,4 +1,4 @@
-import { TextField } from '@material-ui/core'
+import { TextField } from '@mui/material'
 import { TypedField } from 'components/form/TypedField'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'

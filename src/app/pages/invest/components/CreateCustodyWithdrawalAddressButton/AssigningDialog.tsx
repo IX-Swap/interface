@@ -1,5 +1,5 @@
 import React from 'react'
-import { Dialog, Box, Typography, DialogContent } from '@material-ui/core'
+import { Dialog, Box, Typography, DialogContent } from '@mui/material'
 import { LoadingMessage } from 'app/pages/exchange/components/GetWalletDialog/LoadingMessage'
 
 export interface AssigningDialogProps {

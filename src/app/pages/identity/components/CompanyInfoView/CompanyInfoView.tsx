@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { LabelledValue } from 'components/LabelledValue'
 import { Avatar } from 'components/Avatar'
 import { privateClassNames } from 'helpers/classnames'

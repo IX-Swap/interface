@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Typography } from '@material-ui/core'
+import { Grid, Typography } from '@mui/material'
 import { DeclarationsListItem } from 'app/pages/identity/components/DeclarationsListItem/DeclarationsListItem'
 
 export interface DeclarationsListProps {

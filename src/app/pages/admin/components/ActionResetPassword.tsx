@@ -3,7 +3,7 @@ import { DialogResetPassword } from 'app/pages/admin/components/DialogResetPassw
 import { useUserActionsDialog } from 'app/pages/admin/hooks/useUserActionsDialog'
 import { ManagedUser } from 'types/user'
 import { isResetActive } from 'helpers/isResetActive'
-import { Button } from '@material-ui/core'
+import { Button } from '@mui/material'
 
 export interface ActionResetPasswordProps {
   data: ManagedUser
@@ -29,7 +29,7 @@ export const ActionResetPassword = ({ data }: ActionResetPasswordProps) => {
         color='primary'
         disableElevation
       >
-        START ACCOUNT RESET
+        START PASSWORD RESET
       </Button>
       <DialogResetPassword
         email={data.email}

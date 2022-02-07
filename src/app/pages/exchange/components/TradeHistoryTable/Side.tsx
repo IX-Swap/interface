@@ -1,16 +1,14 @@
-import { Typography } from '@material-ui/core'
+import { Typography } from '@mui/material'
 import { useStyles } from 'app/pages/exchange/components/TradeHistoryTable/Side.styles'
+import { getOrderSideName } from 'helpers/strings'
 import React from 'react'
+import { OrderSide } from 'types/order'
 
 export interface SideProps {
-  side: 'BID' | 'ASK'
+  side: OrderSide
 }
 
 export const Side = ({ side }: SideProps) => {
   const { sideColor } = useStyles({ side })
-  return (
-    <Typography className={sideColor}>
-      {side === 'BID' ? 'SELL' : 'BUY'}
-    </Typography>
-  )
+  return <Typography className={sideColor}>{getOrderSideName(side)}</Typography>
 }

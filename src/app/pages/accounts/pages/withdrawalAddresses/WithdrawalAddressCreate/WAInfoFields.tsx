@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, TextField } from '@material-ui/core'
+import { Grid, TextField } from '@mui/material'
 import { BigCheckboxWithLabel } from 'components/form/BigCheckboxWithLabel/BigCheckboxWithLabel'
 import { TypedField } from 'components/form/TypedField'
 import { privateClassNames } from 'helpers/classnames'

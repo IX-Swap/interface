@@ -1,5 +1,5 @@
 import React from 'react'
-import { useTheme } from '@material-ui/core/styles'
+import { useTheme } from '@mui/material/styles'
 import { format } from 'date-fns'
 import { timeRange } from 'app/pages/educationCentre/utils'
 import Chart from 'kaktana-react-lightweight-charts'

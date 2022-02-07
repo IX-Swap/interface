@@ -1,5 +1,5 @@
 import React from 'react'
-import { Divider, Grid, Typography } from '@material-ui/core'
+import { Divider, Grid, Typography } from '@mui/material'
 import { useFormContext } from 'react-hook-form'
 import { DocumentTable } from 'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/DocumentTable'
 import { pathToString } from 'helpers/forms'

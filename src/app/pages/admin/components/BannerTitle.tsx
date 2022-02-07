@@ -1,8 +1,8 @@
 import React, { useRef, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { TypedField } from 'components/form/TypedField'
-import EditIcon from '@material-ui/icons/Edit'
-import { Grid, IconButton, Input, Typography } from '@material-ui/core'
+import EditIcon from '@mui/icons-material/Edit'
+import { Grid, IconButton, Input, Typography } from '@mui/material'
 
 export interface BannerTitleProps {
   text: string
@@ -64,7 +64,11 @@ export const BannerTitle = ({ text, onChange }: BannerTitleProps) => {
         />
       </Grid>
       <Grid item>
-        <IconButton onClick={onEditButtonClick} data-testid={'button'}>
+        <IconButton
+          onClick={onEditButtonClick}
+          data-testid={'button'}
+          size='large'
+        >
           <EditIcon />
         </IconButton>
       </Grid>

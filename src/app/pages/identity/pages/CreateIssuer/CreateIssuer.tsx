@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { CorporateIssuerForm } from 'app/pages/identity/components/CorporateIssuerForm/CorporateIssuerForm'
 import { VSpacer } from 'components/VSpacer'

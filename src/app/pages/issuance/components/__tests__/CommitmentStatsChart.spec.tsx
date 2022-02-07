@@ -27,7 +27,7 @@ describe('CommitmentStatsChart', () => {
       })
     )
     render(<CommitmentStatsChart />)
-    expect(Chart).toHaveBeenNthCalledWith(1, { ...commitmentChartOption }, {})
+    expect(Chart).toHaveBeenNthCalledWith(1, commitmentChartOption, {})
   })
 
   it('renders Chart with correct props when there is no data', () => {
@@ -38,10 +38,6 @@ describe('CommitmentStatsChart', () => {
       })
     )
     render(<CommitmentStatsChart />)
-    expect(Chart).toHaveBeenNthCalledWith(
-      1,
-      { ...commitmentChartNoDataOption },
-      {}
-    )
+    expect(Chart).toHaveBeenNthCalledWith(1, commitmentChartNoDataOption, {})
   })
 })

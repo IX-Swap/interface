@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Typography } from '@material-ui/core'
+import { Box, Typography } from '@mui/material'
 import { DateFilter } from 'app/pages/admin/components/AssignedVirtualAccountsTable/DateFilter'
 import { useStyles } from 'app/pages/accounts/pages/reports/components/Filters/Filter.styles'
 

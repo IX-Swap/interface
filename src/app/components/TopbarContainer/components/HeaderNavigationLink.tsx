@@ -1,6 +1,6 @@
-import { styled } from '@material-ui/core/styles'
+import { styled } from '@mui/material/styles'
 import { Link } from 'react-router-dom'
-import { blue } from '@material-ui/core/colors'
+import { blue } from '@mui/material/colors'
 
 export const HeaderNavigationLink = styled(Link)(({ theme }) => ({
   textDecoration: 'none',

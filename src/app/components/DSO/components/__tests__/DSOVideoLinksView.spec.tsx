@@ -2,11 +2,11 @@ import React from 'react'
 import { render } from 'test-utils'
 import { videoLink } from '__fixtures__/issuance'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
-import * as Typography from '@material-ui/core'
+import * as Typography from '@mui/material'
 import { DSOVideoLinksView } from 'app/components/DSO/components/DSOVideoLinksView'
 import * as ReactPlayer from 'react-player/lazy'
 
-jest.mock('@material-ui/core/Typography', () => jest.fn(() => null))
+jest.mock('@mui/material/Typography', () => jest.fn(() => null))
 jest.mock('react-player/lazy', () => jest.fn(() => null))
 
 jest.mock('app/components/DSO/components/FormSectionHeader', () => ({

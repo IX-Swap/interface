@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
 import { Insights } from 'app/pages/issuance/components/ManageDistributions/Insights'

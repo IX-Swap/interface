@@ -1,6 +1,6 @@
 import React from 'react'
 import { DigitalSecurityOffering } from 'types/dso'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { DSOTitle } from 'app/components/DSO/components/DSOTitle'
 import { EstimatedValue } from 'app/pages/invest/components/EstimatedValue'
 import { AssetBalance } from 'app/pages/invest/components/AssetBalance'

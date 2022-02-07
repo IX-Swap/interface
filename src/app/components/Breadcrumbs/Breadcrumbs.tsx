@@ -1,4 +1,4 @@
-import { Breadcrumbs as MuiBreadcrumbs, Typography } from '@material-ui/core'
+import { Breadcrumbs as MuiBreadcrumbs, Typography } from '@mui/material'
 import { AppRouterLink } from 'components/AppRouterLink'
 import { useBreadcrumbs } from 'hooks/useBreadcrumbs'
 import React from 'react'

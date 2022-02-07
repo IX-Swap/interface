@@ -1,6 +1,6 @@
 import React from 'react'
 import { MutationResultPair, useMutation } from 'react-query'
-import { Button, ButtonProps } from '@material-ui/core'
+import { Button, ButtonProps } from '@mui/material'
 import { useFormContext } from 'react-hook-form'
 export interface SaveButtonProps extends ButtonProps {
   step: number

@@ -4,7 +4,7 @@ import { useUpdateBank } from 'app/pages/accounts/pages/banks/hooks/useUpdateBan
 import { useBanksData } from 'app/pages/accounts/pages/banks/hooks/useBanksData'
 import { BankFormValues } from 'app/pages/accounts/types'
 import { useParams } from 'react-router-dom'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 
 export const EditBank: React.FC = () => {

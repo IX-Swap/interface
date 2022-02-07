@@ -1,5 +1,5 @@
 import React from 'react'
-import { Typography } from '@material-ui/core'
+import { Typography } from '@mui/material'
 import useStyles from 'app/pages/issuance/components/IssuanceLanding/InsightValue.styles'
 
 export interface InsightValueProps {

@@ -1,6 +1,6 @@
 import React from 'react'
 import clsx from 'clsx'
-import Checkbox, { CheckboxProps } from '@material-ui/core/Checkbox'
+import Checkbox, { CheckboxProps } from '@mui/material/Checkbox'
 import useStyles from './BigCheckbox.styles'
 
 export const BigCheckbox = (props: CheckboxProps) => {

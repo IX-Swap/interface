@@ -1,4 +1,4 @@
-import { Box, Grid, Typography } from '@material-ui/core'
+import { Box, Grid, Typography } from '@mui/material'
 import { useTreasuryWallet } from 'app/pages/authorizer/hooks/useTreasuryWallet'
 import { CustodyForm } from 'app/pages/authorizer/pages/TokenDeployment/CustodyForm'
 import { DeployTokenButton } from 'app/pages/issuance/components/DeployTokenButton'
@@ -54,7 +54,7 @@ export const TokenDeploymentView = ({ data }: TokenDeploymentViewProps) => {
           value={
             walletData !== undefined
               ? `${data.network?.nativeCurrency.symbol ?? ''} ${
-                  walletData.balance ?? ''
+                  walletData.balance ?? walletData?.ownerBalance ?? ''
                 }`
               : undefined
           }

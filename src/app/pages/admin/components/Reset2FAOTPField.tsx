@@ -1,5 +1,5 @@
 import React from 'react'
-import { Typography, Grid, FormHelperText } from '@material-ui/core'
+import { Typography, Grid, FormHelperText } from '@mui/material'
 import { OTPInputField } from 'components/form/OTPInputField'
 
 export interface Reset2FAOTPFieldProps {

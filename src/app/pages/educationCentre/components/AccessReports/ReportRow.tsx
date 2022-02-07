@@ -1,4 +1,4 @@
-import { Box, Grid, Typography } from '@material-ui/core'
+import { Box, Grid, Typography } from '@mui/material'
 import { format } from 'date-fns'
 import React from 'react'
 import { getDocumentType, isImage } from 'components/dataroom/DataroomColumns'
@@ -94,12 +94,12 @@ export const ReportRow = ({ item }: ReportRowProps) => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid item xs={12} md={5}>
+      <Grid item xs={12} md={4}>
         <Grid
           container
           spacing={2}
           alignItems='center'
-          justifyContent='flex-end'
+          justifyContent='flex-start'
           wrap='nowrap'
         >
           <Grid item>
@@ -114,7 +114,7 @@ export const ReportRow = ({ item }: ReportRowProps) => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid item xs={12} md={3}>
+      <Grid item xs={12} md={4}>
         <Grid
           container
           spacing={2}

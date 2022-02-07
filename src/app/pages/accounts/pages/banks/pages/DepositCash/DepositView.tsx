@@ -1,6 +1,6 @@
 import React from 'react'
 import { INVESTAX_BANK, isDevEnv } from 'config'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { DepositForm } from 'app/pages/accounts/pages/banks/pages/DepositCash/DepositForm'
 import { BankDetails } from 'app/components/BankDetails'
 import { observer } from 'mobx-react'

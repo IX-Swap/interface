@@ -1,5 +1,5 @@
 import React from 'react'
-import { ListItem, Typography } from '@material-ui/core'
+import { ListItem, Typography } from '@mui/material'
 import { formatDateAndTime } from 'helpers/dates'
 import { ListChildComponentProps } from 'react-window'
 import { DeployTokenMessage } from 'app/pages/issuance/hooks/useDeployToken'

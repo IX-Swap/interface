@@ -1,11 +1,10 @@
-import { DigitalSecurityOffering } from 'types/dso'
-import { Commitment } from 'types/commitment'
-import { AssetBalance } from 'types/balance'
-import { DSWithdrawal } from 'types/dsWithdrawal'
 import { IndividualIdentity } from 'app/pages/identity/types/forms'
-import { Order } from 'types/order'
 import { capitalize } from 'lodash'
-
+import { AssetBalance } from 'types/balance'
+import { Commitment } from 'types/commitment'
+import { DigitalSecurityOffering } from 'types/dso'
+import { DSWithdrawal } from 'types/dsWithdrawal'
+import { OrderSide } from 'types/order'
 interface GetIdFromObjProps extends Record<string, any> {
   _id?: string
 }
@@ -45,8 +44,8 @@ export const getOfferingName = (
   }
 }
 
-export const getOrderSideName = (value: Order['side']) => {
-  return value === 'ASK' ? 'Sell' : 'Buy'
+export const getOrderSideName = (value: OrderSide) => {
+  return value === OrderSide.ASK ? 'Sell' : 'Buy'
 }
 
 export const getPersonName = (data: IndividualIdentity | null | undefined) => {

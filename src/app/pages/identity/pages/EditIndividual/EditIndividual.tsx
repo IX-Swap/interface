@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { VSpacer } from 'components/VSpacer'
 import { getPersonName } from 'helpers/strings'
 import { IndividualInvestorForm } from 'app/pages/identity/components/IndividualInvestorForm/IndividualInvestorForm'

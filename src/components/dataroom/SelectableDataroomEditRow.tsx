@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Checkbox, Grid } from '@material-ui/core'
+import { Box, Checkbox, Grid } from '@mui/material'
 import {
   DataroomRowUploader,
   DataroomRowUploaderProps

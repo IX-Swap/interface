@@ -1,4 +1,4 @@
-import { useTheme } from '@material-ui/core'
+import { useTheme } from '@mui/material'
 import { CancelOrderButton } from 'app/pages/exchange/components/OpenOrders/CancelOrderButton'
 import React from 'react'
 import { Order } from 'types/order'

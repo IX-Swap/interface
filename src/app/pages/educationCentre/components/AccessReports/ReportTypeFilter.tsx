@@ -6,7 +6,7 @@ import {
   Grid,
   Radio,
   RadioGroup
-} from '@material-ui/core'
+} from '@mui/material'
 
 export const ReportTypeFilter = () => {
   return (

@@ -1,11 +1,12 @@
 import React from 'react'
-import { Grid, Typography, Box, Divider } from '@material-ui/core'
+import { Grid, Typography, Box, Divider } from '@mui/material'
 import { Submit } from 'components/form/Submit'
 import { LoginFields } from 'auth/pages/login/components/LoginFields'
 import { AppRouterLink } from 'components/AppRouterLink'
 import { AuthRoute } from 'auth/router/config'
 import { useStyles } from './Login.styles'
 import { VSpacer } from 'components/VSpacer'
+import { MAX_LOGIN_ATTEMPTS } from 'types/auth'
 
 export interface LoginProps {
   hidden: boolean
@@ -28,11 +29,11 @@ export const Login = ({ hidden, isLoading, attempts = 0 }: LoginProps) => {
         <Grid item>
           <LoginFields />
         </Grid>
-        {attempts >= 3 && (
+        {attempts >= MAX_LOGIN_ATTEMPTS && (
           <Grid item>
             <Typography variant='body2' color='error'>
-              You have {5 - attempts} attempts left. Your account will be
-              temporarily locked.
+              You have {attempts <= 5 ? 5 - attempts : 0} attempts left. Your
+              account will be temporarily locked.
             </Typography>
           </Grid>
         )}

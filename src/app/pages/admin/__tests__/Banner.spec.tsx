@@ -5,9 +5,9 @@ import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import * as useBannersList from 'app/pages/admin/hooks/useBannersList'
 import { emptyBanner } from '__fixtures__/banner'
 import { BannerForm } from 'app/pages/admin/components/BannerForm'
-import { Typography } from '@material-ui/core'
+import { Typography } from '@mui/material'
 
-jest.mock('@material-ui/core/Typography', () => jest.fn(() => null))
+jest.mock('@mui/material/Typography', () => jest.fn(() => null))
 
 jest.mock('app/components/PageHeader/PageHeader', () => ({
   PageHeader: jest.fn(() => null)

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Grid, Tab, Tabs } from '@material-ui/core'
+import { Grid, Tab, Tabs } from '@mui/material'
 import { Form } from 'components/form/Form'
 import { formatMoney } from 'helpers/numbers'
 import { TabPanel } from 'components/TabPanel'
@@ -14,6 +14,7 @@ import { Submit } from 'components/form/Submit'
 import { transformPlaceOrderFormValuesToArgs } from 'app/pages/exchange/utils/order'
 import { useParams } from 'react-router-dom'
 import { isEmptyString } from 'helpers/strings'
+import { OrderSide } from 'types/order'
 
 export type ActiveTabName = 'BUY' | 'SELL'
 
@@ -50,7 +51,7 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
     await onSubmit(
       transformPlaceOrderFormValuesToArgs(
         values,
-        activeTabNameIdx === 0 ? 'BID' : 'ASK',
+        activeTabNameIdx === 0 ? OrderSide.BID : OrderSide.ASK,
         pairId
       )
     )

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { DSO } from 'app/pages/issuance/components/DSO'
 import { useParams } from 'react-router-dom'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'

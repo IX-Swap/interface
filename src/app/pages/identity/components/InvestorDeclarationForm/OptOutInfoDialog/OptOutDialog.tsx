@@ -1,6 +1,6 @@
 import React from 'react'
 import { Dialog } from 'app/pages/identity/components/Dialog'
-import { Typography } from '@material-ui/core'
+import { Typography } from '@mui/material'
 import { OptOutInfoContent } from 'app/pages/identity/components/InvestorDeclarationForm/OptOutInfoDialog/OptOutInfoContent/OptOutInfoContent'
 import { OptOutInfoAction } from 'app/pages/identity/components/InvestorDeclarationForm/OptOutInfoDialog/OptOutInfoAction/OptOutInfoAction'
 

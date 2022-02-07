@@ -1,6 +1,6 @@
 import React from 'react'
-import MuiTooltip, { TooltipProps } from '@material-ui/core/Tooltip'
-import InfoIcon from '@material-ui/icons/InfoOutlined'
+import MuiTooltip, { TooltipProps } from '@mui/material/Tooltip'
+import InfoIcon from '@mui/icons-material/InfoOutlined'
 import { useStyles } from 'app/pages/identity/components/UploadDocumentsForm/Tooltip/Tooltip.styles'
 
 export const Tooltip = ({

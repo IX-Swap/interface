@@ -4,9 +4,9 @@ import * as createCustody from 'app/pages/exchange/hooks/useCreateCustodianWalle
 import * as snackbar from 'hooks/useSnackbar'
 import { GetWalletDialog, ModalProps } from '../GetWalletDialog'
 import { fireEvent, waitFor } from '@testing-library/dom'
-import IconButton from '@material-ui/core/IconButton'
+import IconButton from '@mui/material/IconButton'
 
-jest.mock('@material-ui/core/IconButton', () => jest.fn(() => null))
+jest.mock('@mui/material/IconButton', () => jest.fn(() => null))
 
 describe('GetWalletDialog', () => {
   const showSnackbar = jest.fn()

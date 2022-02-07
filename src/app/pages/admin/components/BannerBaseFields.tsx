@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Grid } from '@material-ui/core'
+import { Button, Grid } from '@mui/material'
 import { VSpacer } from 'components/VSpacer'
 import { BannerTitle } from 'app/pages/admin/components/BannerTitle'
 import { TypedField } from 'components/form/TypedField'
@@ -9,7 +9,7 @@ import { DataroomFileType } from 'config/dataroom'
 import { useFormContext } from 'react-hook-form'
 import { useUpdateBanner } from 'app/pages/admin/hooks/useUpdateBanner'
 import { useBannersList } from 'app/pages/admin/hooks/useBannersList'
-import Typography from '@material-ui/core/Typography'
+import Typography from '@mui/material/Typography'
 
 export const BannerBaseFields = () => {
   const { control, setValue, watch } = useFormContext()

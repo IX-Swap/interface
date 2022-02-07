@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { TypedField } from 'components/form/TypedField'
 import { Dropzone } from 'components/dataroom/Dropzone'
-import { Grid, TextField } from '@material-ui/core'
+import { Grid, TextField } from '@mui/material'
 import { useFormContext } from 'react-hook-form'
 import { documentValueExtractor } from 'app/components/DSO/utils'
 import { LegalEntityStatusSelect } from 'components/form/LegalEntityStatusSelect'
@@ -11,13 +11,14 @@ import { privateClassNames } from 'helpers/classnames'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 
 export const InformationFields = () => {
-  const { control, watch } = useFormContext()
+  const { control, watch, clearErrors } = useFormContext()
   const legalEntityStatus = watch('legalEntityStatus')
   const { isMobile, isTablet } = useAppBreakpoints()
 
   useEffect(() => {
     if (legalEntityStatus !== 'others') {
-      control.setValue('otherLegalEntityStatus', undefined)
+      control.setValue('otherLegalEntityStatus', '')
+      clearErrors('otherLegalEntityStatus')
     }
   }, [legalEntityStatus]) // eslint-disable-line
 

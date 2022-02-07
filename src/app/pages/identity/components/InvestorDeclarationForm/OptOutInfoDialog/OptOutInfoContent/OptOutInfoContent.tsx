@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Typography } from '@material-ui/core'
+import { Grid, Typography } from '@mui/material'
 import { DeclarationsListFields } from 'app/pages/identity/components/InvestorDeclarationForm/DeclarationsList/DeclartionsListFields'
 
 export const optOutRequirements = [

@@ -6,7 +6,7 @@ import {
   ListItemText,
   MenuItem,
   Select
-} from '@material-ui/core'
+} from '@mui/material'
 import React, { useEffect } from 'react'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
 import { hasValue } from 'helpers/forms'
@@ -65,7 +65,7 @@ export const SubFundSelect = () => {
         }
 
         return (
-          <FormControl variant='outlined' fullWidth style={{ width: 300 }}>
+          <FormControl fullWidth variant='outlined' style={{ width: 300 }}>
             <InputLabel id='SubFundSelect-label'>
               Select Multiple Sub-funds
             </InputLabel>
@@ -83,7 +83,6 @@ export const SubFundSelect = () => {
                     width: 300
                   }
                 },
-                getContentAnchorEl: null,
                 anchorOrigin: {
                   vertical: 'bottom',
                   horizontal: 'center'

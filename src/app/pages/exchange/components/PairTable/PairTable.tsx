@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { Pair } from 'app/pages/exchange/hooks/useMarketList'
-import { Table, TableBody, TableHead, TableRow } from '@material-ui/core'
+import { Table, TableBody, TableHead, TableRow } from '@mui/material'
 import { PairTableCell } from 'app/pages/exchange/components/PairTable/PairTableCell'
 import { PairTableRow } from 'app/pages/exchange/components/PairTable/PairTableRow'
 import { SortByFilter } from 'app/pages/exchange/components/PairTable/PairTableFilter/SortByFilter'

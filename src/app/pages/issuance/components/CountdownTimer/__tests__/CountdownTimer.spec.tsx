@@ -4,11 +4,11 @@ import { CountdownTimer } from '../CountdownTimer'
 import * as useDSOByIdHook from 'app/pages/invest/hooks/useDSOById'
 import * as useCountdown from 'app/pages/issuance/hooks/useCountdown'
 import { dso } from '__fixtures__/authorizer'
-import Typography from '@material-ui/core/Typography'
+import Typography from '@mui/material/Typography'
 import { TimeDisplay } from 'app/pages/issuance/components/CountdownTimer/TimeDisplay'
 import { getTimeUnitsToDisplay } from 'helpers/countdownTimer'
 
-jest.mock('@material-ui/core/Typography', () => jest.fn(() => null))
+jest.mock('@mui/material/Typography', () => jest.fn(() => null))
 jest.mock('app/pages/issuance/components/CountdownTimer/TimeDisplay', () => ({
   TimeDisplay: jest.fn(() => null)
 }))

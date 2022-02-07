@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
-import { Card, CardContent, Grid } from '@material-ui/core'
+import { Card, CardContent, Grid } from '@mui/material'
 import { CommitmentFormFields } from 'app/pages/invest/components/CommitmentFormFields'
 import { CommitmentHeader } from 'app/pages/invest/components/CommitmentHeader'
 import { CommitmentForm } from 'app/pages/invest/components/CommitmentForm'
@@ -12,6 +12,7 @@ import { DownloadDSOSubscriptionDocument } from 'app/components/DSO/components/D
 import { useParams } from 'react-router-dom'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { CommitmentFormCommitButton } from 'app/pages/invest/components/CommitFormCommitButton'
+import { capitalStructureWithFunds } from 'types/dso'
 
 export const CommitmentFormWrapper = () => {
   const params = useParams<{ dsoId: string; issuerId: string }>()
@@ -59,7 +60,7 @@ export const CommitmentFormWrapper = () => {
                 <Grid item xs={4}>
                   <CommitmentFormCancelButton />
                 </Grid>
-                {data.capitalStructure === 'Fund' && (
+                {capitalStructureWithFunds.includes(data.capitalStructure) && (
                   <Grid item xs={4}>
                     <CommitmentFormCommitButton
                       assetId={data.currency._id}
