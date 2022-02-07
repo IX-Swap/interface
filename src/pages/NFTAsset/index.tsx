@@ -21,6 +21,7 @@ import { RowBetween, RowStart } from 'components/Row'
 import { routes } from 'utils/routes'
 
 import { NftFilePreview } from '../NFTCollection/NFTPreview'
+import LogoWhite from '../../assets/svg/logo-white.svg'
 
 const item = {
   name: 'Mushroom Rock',
@@ -416,9 +417,12 @@ const NftAssetPage = ({
         </NftCollectionBackButtonWrapper>
 
         {/*<NftImage src={item.file} />*/}
-        <ImageContainer>
-          <NftFilePreview type={type} path={item.file} />
-        </ImageContainer>
+
+        {item && (
+          <ImageContainer>
+            <NftFilePreview type={type} path={item.file ?? LogoWhite} />
+          </ImageContainer>
+        )}
 
         <NftInfoContainer>
           <div>

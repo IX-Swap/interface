@@ -133,26 +133,27 @@ export const createNftAsset = async (nftDto: NftCreateProps) => {
   return result.data
 }
 
-export const getCollections = async (address: string) => {
-  const collections = await apiService.get(nft.getCollections(address))
+export const getCollections = async (address: string, chainId?: number) => {
+  const collections = await apiService.get(nft.getCollections(address, chainId))
   return collections
 }
-export const getCollection = async (id?: number) => {
+export const getCollection = async (id?: number, chainId?: number) => {
   if (id === undefined || isNaN(id)) {
     return null
   }
-  const collection = await apiService.get(nft.getCollection(id))
+  const collection = await apiService.get(nft.getCollection(id, chainId))
   return collection.data
 }
 
 export function useCollection(id?: number) {
   const dispatch = useDispatch()
+  const { chainId } = useActiveWeb3React()
   const [collection, setCollection] = useState<any | null>(null)
   useEffect(() => {
     async function fetchCollection() {
       try {
         dispatch(setCollectionsLoading({ loading: true }))
-        const result = await getCollection(id)
+        const result = await getCollection(id, chainId)
         setCollection(result)
         dispatch(setCollectionsLoading({ loading: false }))
       } catch (e) {
@@ -631,14 +632,14 @@ export const useCreateNft = () => {
 
 export const useFetchMyCollections = () => {
   const dispatch = useAppDispatch()
-  const { account } = useActiveWeb3React()
+  const { account, chainId } = useActiveWeb3React()
   return useCallback(async () => {
     if (!account) {
       return
     }
     try {
       dispatch(setCollectionsLoading({ loading: true }))
-      const response = await getCollections(account)
+      const response = await getCollections(account, chainId)
       const collections = response.data
       dispatch(setCollections({ collections }))
       dispatch(setCollectionsLoading({ loading: false }))
