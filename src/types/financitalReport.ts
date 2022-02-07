@@ -7,4 +7,5 @@ export interface FinancialReport {
   dateTo: string
   reportDocuments: DataroomFile[]
   dso: DigitalSecurityOffering
+  nav: number
 }
