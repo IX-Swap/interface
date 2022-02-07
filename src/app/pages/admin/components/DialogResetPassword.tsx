@@ -1,5 +1,5 @@
 import React from 'react'
-import { Typography } from '@material-ui/core'
+import { Typography } from '@mui/material'
 import { useResetPassword } from 'app/pages/admin/hooks/useResetPassword'
 import { UserActionsDialog } from 'app/pages/admin/components/UserActionsDialog'
 
@@ -19,7 +19,6 @@ export const DialogResetPassword = ({
   return (
     <UserActionsDialog
       open={open}
-      disableBackdropClick
       disableEscapeKeyDown
       closeDialog={closeDialog}
       action={resetPassword}

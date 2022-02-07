@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
 import { LabelledValue } from 'components/LabelledValue'
 import { formatAmount } from 'helpers/numbers'

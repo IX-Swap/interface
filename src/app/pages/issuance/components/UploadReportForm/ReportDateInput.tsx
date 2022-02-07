@@ -24,7 +24,9 @@ export const ReportDateInput = () => {
           control={control}
           valueExtractor={dateTimeValueExtractor}
           defaultValue={null}
+          // @ts-expect-error-next-line
           inputVariant='outlined'
+          inputFormat='MM/dd/yyyy'
         />
       </Grid>
       <Grid item>
@@ -36,7 +38,9 @@ export const ReportDateInput = () => {
           control={control}
           valueExtractor={dateTimeValueExtractor}
           defaultValue={null}
+          // @ts-expect-error-next-line
           inputVariant='outlined'
+          inputFormat='MM/dd/yyyy'
           minDate={fromValue}
         />
       </Grid>

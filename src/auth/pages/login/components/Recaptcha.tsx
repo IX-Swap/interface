@@ -1,4 +1,4 @@
-import { Grid, Typography, Box } from '@material-ui/core'
+import { Grid, Typography, Box } from '@mui/material'
 import { useVerifyCaptcha } from 'auth/hooks/useVerifyCaptcha'
 import { RECAPTCHA_KEY } from 'config'
 import React, { useRef } from 'react'

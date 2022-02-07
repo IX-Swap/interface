@@ -1,7 +1,6 @@
 import React from 'react'
-import { Box, Container, Grid, Typography } from '@material-ui/core'
-import { FilterList } from '@material-ui/icons'
-import { ToggleButton } from '@material-ui/lab'
+import { Box, Container, Grid, Typography, ToggleButton } from '@mui/material'
+import { FilterList } from '@mui/icons-material'
 import { SidebarToggleRenderProps } from 'app/components/SidebarToggle'
 
 export interface FiltersToggleProps extends SidebarToggleRenderProps {}
@@ -13,7 +12,7 @@ export const FiltersToggle = (props: FiltersToggleProps) => {
     <Container>
       <Grid container justifyContent='flex-end'>
         <Grid item>
-          <ToggleButton onClick={toggle} selected={isOpened}>
+          <ToggleButton onClick={toggle} selected={isOpened} value=''>
             <FilterList />
             <Box px={0.5} />
             <Typography>{isOpened ? 'Hide' : 'Show'} Filters</Typography>

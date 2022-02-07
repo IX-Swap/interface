@@ -1,6 +1,6 @@
 import React from 'react'
 import { Meta, Story } from '@storybook/react/types-6-0'
-import { Box } from '@material-ui/core'
+import { Box } from '@mui/material'
 import { PairTable } from 'app/pages/exchange/components/PairTable/PairTable'
 import { Pair } from 'app/pages/exchange/hooks/useMarketList'
 

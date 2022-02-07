@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { ActionReset2FA } from 'app/pages/admin/components/ActionReset2FA'
 import { ActionEnableToggle } from 'app/pages/admin/components/ActionEnableToggle'
 import { ActionResetPassword } from 'app/pages/admin/components/ActionResetPassword'

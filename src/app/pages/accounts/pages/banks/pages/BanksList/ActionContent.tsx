@@ -1,5 +1,5 @@
 import React from 'react'
-import { List } from '@material-ui/core'
+import { List } from '@mui/material'
 import { Action } from 'app/pages/authorizer/components/Action'
 import { DropdownContentProps } from 'app/components/Dropdown/Dropdown'
 
@@ -7,7 +7,7 @@ import {
   Launch as LaunchIcon,
   Edit as EditIcon,
   Delete as RemoveIcon
-} from '@material-ui/icons'
+} from '@mui/icons-material'
 
 export interface ActionContentProps extends DropdownContentProps {
   edit: () => void

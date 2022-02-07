@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { ChartTitle } from 'app/pages/issuance/components/IssuanceLanding/ChartTitle'
 import { ChartWrapper } from 'app/pages/issuance/components/IssuanceLanding/ChartWrapper'
 import { InsightValue } from 'app/pages/issuance/components/IssuanceLanding/InsightValue'

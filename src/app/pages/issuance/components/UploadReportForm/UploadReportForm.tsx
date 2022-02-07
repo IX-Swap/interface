@@ -13,7 +13,6 @@ export const UploadReportForm = () => {
   const [uploadReportFile] = useUploadReportFile()
 
   const handleSubmit = async (values: UploadReportFormValues) => {
-    console.log(values.reportDocuments)
     await uploadReportFile({
       ...values,
       dso: getFilterValue('dso'),

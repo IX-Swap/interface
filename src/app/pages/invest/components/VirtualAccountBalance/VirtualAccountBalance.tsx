@@ -7,8 +7,9 @@ import {
   Grid,
   MenuItem,
   Select,
+  SelectChangeEvent,
   Typography
-} from '@material-ui/core'
+} from '@mui/material'
 import { useVirtualAccount } from 'app/pages/accounts/hooks/useVirtualAccount'
 import { AccountsRoute } from 'app/pages/accounts/router/config'
 import { useStyles } from 'app/pages/invest/components/VirtualAccountBalance/VirtualAccountBalance.styles'
@@ -23,7 +24,7 @@ export const VirtualAccountBalance = () => {
   const classes = useStyles()
   const { isMiniLaptop } = useAppBreakpoints()
 
-  const handleSelect = (event: React.ChangeEvent<{ value: unknown }>) => {
+  const handleSelect = (event: SelectChangeEvent<unknown>) => {
     setSelected(event.target.value as 'SGD' | 'USD')
   }
 

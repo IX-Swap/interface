@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Grid, TextField } from '@material-ui/core'
+import { Box, Grid, TextField } from '@mui/material'
 import { documentValueExtractor } from 'app/components/DSO/utils'
 import { DSOTeamRemoveButton } from 'app/components/DSO/components/DSOTeamRemoveButton'
 import { TypedField } from 'components/form/TypedField'

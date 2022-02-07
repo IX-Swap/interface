@@ -1,4 +1,10 @@
-import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core'
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent
+} from '@mui/material'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
 import React from 'react'
 
@@ -19,7 +25,7 @@ export const SecurityTypeFilter = () => {
           <Select
             displayEmpty
             value={value ?? ''}
-            onChange={(event: React.ChangeEvent<{ value: unknown }>) => {
+            onChange={(event: SelectChangeEvent<unknown>) => {
               onChange(event.target.value as string)
             }}
             label='Security Type'

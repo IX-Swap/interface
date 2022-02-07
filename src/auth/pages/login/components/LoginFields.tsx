@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, InputAdornment, TextField } from '@material-ui/core'
+import { Grid, InputAdornment, TextField } from '@mui/material'
 import { TypedField } from 'components/form/TypedField'
 import { useFormContext } from 'react-hook-form'
 import { LoginArgs } from 'types/auth'

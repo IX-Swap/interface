@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Grid } from '@material-ui/core'
+import { Box, Grid } from '@mui/material'
 import { DSONameAndStructure } from 'app/pages/invest/components/DSOTable/DSONameAndStructure'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
 import { AuthorizableStatus } from 'app/pages/authorizer/components/AuthorizableStatus'

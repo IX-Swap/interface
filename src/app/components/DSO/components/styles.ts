@@ -1,5 +1,5 @@
-import { makeStyles } from '@material-ui/core/styles'
-import { grey } from '@material-ui/core/colors'
+import makeStyles from '@mui/styles/makeStyles'
+import { grey } from '@mui/material/colors'
 
 export default makeStyles(theme => ({
   largeInputLabel: {
@@ -53,13 +53,17 @@ export default makeStyles(theme => ({
   newDSOViewItemStyles: {
     borderRadius: 24,
     boxShadow: `0px 8px 32px ${
-      theme.palette.type === 'light'
+      theme.palette.mode === 'light'
         ? 'rgba(0, 0, 0, 0.08)'
         : 'rgba(255, 255, 255, 0.08)'
     }`,
-    paddingTop: `${theme.spacing(3)}px!important`,
-    paddingLeft: `${theme.spacing(5.25)}px!important`,
-    paddingRight: `${theme.spacing(5.25)}px!important`,
-    paddingBottom: `${theme.spacing(4.25)}px!important`
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    paddingTop: `${theme.spacing(3)}!important`,
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    paddingLeft: `${theme.spacing(5.25)}!important`,
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    paddingRight: `${theme.spacing(5.25)}!important`,
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    paddingBottom: `${theme.spacing(4.25)}!important`
   }
 }))

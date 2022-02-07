@@ -1,6 +1,6 @@
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
-import React, { ChangeEvent } from 'react'
-import { MenuItem, Select } from '@material-ui/core'
+import React from 'react'
+import { MenuItem, Select, SelectChangeEvent } from '@mui/material'
 import { privateClassNames } from 'helpers/classnames'
 import { useAllNetworks } from 'app/pages/accounts/pages/withdrawalAddresses/hooks/useAllNetworks'
 import { queryStatusRenderer } from 'components/form/renderUtils'
@@ -10,7 +10,7 @@ export const NetworkFilter = () => {
   const { getFilterValue, updateFilter, removeFilter } = useQueryFilter()
   const value = getFilterValue('network')
 
-  const handleChange = (event: ChangeEvent<{ value: any }>) => {
+  const handleChange = (event: SelectChangeEvent<any>) => {
     const {
       target: { value }
     } = event

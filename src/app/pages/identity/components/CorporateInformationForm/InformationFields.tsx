@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { TypedField } from 'components/form/TypedField'
 import { Dropzone } from 'components/dataroom/Dropzone'
-import { Grid, TextField } from '@material-ui/core'
+import { Grid, TextField } from '@mui/material'
 import { useFormContext } from 'react-hook-form'
 import { documentValueExtractor } from 'app/components/DSO/utils'
 import { LegalEntityStatusSelect } from 'components/form/LegalEntityStatusSelect'

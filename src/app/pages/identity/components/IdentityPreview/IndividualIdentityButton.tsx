@@ -1,7 +1,7 @@
 import { CreateIdentityCard } from 'app/pages/identity/components/NoIdentityView/CreateIdentityCard'
 import React from 'react'
-import PermIdentityIcon from '@material-ui/icons/PermIdentity'
-import { Button } from '@material-ui/core'
+import PermIdentityIcon from '@mui/icons-material/PermIdentity'
+import { Button } from '@mui/material'
 
 export interface IndividualIdentityButtonProps {
   active: boolean

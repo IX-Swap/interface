@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Grid, Input } from '@material-ui/core'
+import { Box, Grid, Input } from '@mui/material'
 import { TypedField } from 'components/form/TypedField'
 import { useFormContext } from 'react-hook-form'
 import { ChangePasswordFormValues } from 'app/pages/security/pages/changePassword/types'

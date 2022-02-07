@@ -5,8 +5,8 @@ import {
   DialogContent,
   DialogTitle,
   Typography
-} from '@material-ui/core'
-import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt'
+} from '@mui/material'
+import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt'
 import { useStyles } from 'app/components/OnboardingDialog/OnboardingDialog.styles'
 import { BackDrop } from 'app/components/OnboardingDialog/BackDrop'
 import React, { useState } from 'react'

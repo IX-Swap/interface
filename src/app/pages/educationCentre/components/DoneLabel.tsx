@@ -1,6 +1,6 @@
-import { Box, Typography } from '@material-ui/core'
-import CheckCircleIcon from '@material-ui/icons/CheckCircle'
-import { green } from '@material-ui/core/colors'
+import { Box, Typography } from '@mui/material'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+import { green } from '@mui/material/colors'
 
 import React from 'react'
 

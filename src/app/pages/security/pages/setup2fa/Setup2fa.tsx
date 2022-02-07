@@ -7,7 +7,7 @@ import {
   StepLabel,
   Button,
   Grid
-} from '@material-ui/core'
+} from '@mui/material'
 import { useObserver } from 'mobx-react'
 import { useSetup2faStore } from './context'
 import { Step1Download } from './components/Step1Download'

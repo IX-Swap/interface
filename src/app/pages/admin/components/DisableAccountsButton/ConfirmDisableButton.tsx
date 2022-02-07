@@ -1,4 +1,4 @@
-import { Button } from '@material-ui/core'
+import { Button } from '@mui/material'
 import { useDisableVirtualAccounts } from 'app/pages/admin/hooks/useDisableVirtualAccounts'
 import { useSelectionHelperContext } from 'components/SelectionHelper'
 import React from 'react'

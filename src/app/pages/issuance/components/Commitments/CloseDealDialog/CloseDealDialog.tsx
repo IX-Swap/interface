@@ -9,7 +9,7 @@ import {
   Box,
   useMediaQuery,
   useTheme
-} from '@material-ui/core'
+} from '@mui/material'
 import useStyles from './CloseDealDialog.styles'
 import { OTPForm } from 'app/pages/issuance/components/Commitments/CloseDealDialog/OTPForm'
 import { VSpacer } from 'components/VSpacer'
@@ -26,7 +26,7 @@ export const CloseDealDialog = (props: ModalProps) => {
   const { open = false, toggleOpen } = props
   const classes = useStyles()
   const theme = useTheme()
-  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
+  const fullScreen = useMediaQuery(theme.breakpoints.down('md'))
   const {
     mutation: [closeDeal, { isLoading }]
   } = useCloseDeal()

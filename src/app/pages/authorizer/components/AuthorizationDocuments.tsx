@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { DataroomFile, FormArray } from 'types/dataroomFile'
 import { DataroomFeature } from 'types/authorizer'
 import { useFormContext } from 'react-hook-form'

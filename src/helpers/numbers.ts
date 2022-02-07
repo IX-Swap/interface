@@ -17,7 +17,7 @@ export const addSymbol = (
 export const formatAmount = (value: number) => {
   if (value === undefined || value === null) return ''
 
-  return value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')
+  return value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
 }
 
 export const formatAmountValue = (value: string | number) =>

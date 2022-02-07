@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { DSOIntroduction } from 'app/components/DSO/components/DSOIntroduction'
 import { DSOBusinessModel } from 'app/components/DSO/components/DSOBusinessModel'
 import { DSOUseOfProceeds } from 'app/components/DSO/components/DSOUseOfProceeds'

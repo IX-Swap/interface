@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Box, TextField } from '@material-ui/core'
+import { Grid, Box, TextField } from '@mui/material'
 import { useFormContext } from 'react-hook-form'
 import { TypedField } from 'components/form/TypedField'
 import { documentValueExtractor } from 'app/components/DSO/utils'
@@ -116,7 +116,6 @@ export const IndividualInfoFields = (
               customRenderer
               defaultValue={null as any}
               valueExtractor={dateTimeValueExtractor}
-              inputVariant='outlined'
               maxDate={subYears(new Date(), 18)}
             />
           </Grid>

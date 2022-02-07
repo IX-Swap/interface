@@ -5,7 +5,7 @@ import {
   createGenerateClassName,
   StylesProvider,
   ThemeProvider
-} from '@material-ui/core/styles'
+} from '@mui/material'
 import { ServicesProvider } from '../src/hooks/useServices'
 import { BreadcrumbsProvider } from '../src/hooks/useBreadcrumbs'
 import { ToastProvider } from 'react-toast-notifications'

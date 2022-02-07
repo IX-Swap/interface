@@ -10,7 +10,6 @@ import { QueryStatus } from 'react-query'
 import { TargetFundraise } from 'app/pages/issuance/components/IssuanceLanding/TargetFundraise'
 import { CountdownTimer } from 'app/pages/issuance/components/CountdownTimer/CountdownTimer'
 import { InvestorCommitmentTable } from 'app/pages/issuance/components/Commitments/InvestorCommitmentTable'
-
 import { VSpacer } from 'components/VSpacer'
 import { AmountRaised } from 'app/pages/issuance/components/CapTable/AmountRaised'
 
@@ -75,7 +74,7 @@ jest.mock('components/VSpacer', () => ({
   VSpacer: jest.fn(() => null)
 }))
 
-jest.mock('@material-ui/core/Button', () => jest.fn(() => null))
+jest.mock('@mui/material/Button', () => jest.fn(() => null))
 
 describe('Commitments', () => {
   afterEach(async () => {

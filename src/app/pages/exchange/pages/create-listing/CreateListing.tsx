@@ -1,7 +1,7 @@
 import React from 'react'
 import { RootContainer } from 'ui/RootContainer'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { ListingForm } from 'app/pages/exchange/components/ListingForm/ListingForm'
 
 export const CreateListing = () => {

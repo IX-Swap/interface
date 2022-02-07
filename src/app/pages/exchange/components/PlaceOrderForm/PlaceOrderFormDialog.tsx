@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Drawer, useTheme } from '@material-ui/core'
+import { Box, Button, Grid, Drawer, useTheme } from '@mui/material'
 import { MarketViewProps } from 'app/pages/exchange/components/Market/MarketGridView'
 import { PlaceOrderForm } from 'app/pages/exchange/components/PlaceOrderForm/PlaceOrderForm'
 import React, { useState, useEffect } from 'react'

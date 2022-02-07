@@ -3,9 +3,9 @@ import {
   TableBody,
   TableContainer,
   Typography,
-  TableCell
+  TableRow
 } from '@material-ui/core'
-import { TableRow } from 'app/pages/issuance/components/ReportDetails/TableRow'
+import { TableCell } from 'app/pages/issuance/components/ReportDetails/TableCell'
 import { Table } from 'app/pages/issuance/components/ReportDetails/Table'
 import { FinancialReport } from 'types/financitalReport'
 import { formatDateToMMDDYY } from 'helpers/dates'

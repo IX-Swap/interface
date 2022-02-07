@@ -1,9 +1,9 @@
 import React from 'react'
 import { TableViewProps } from 'components/TableWithPagination/TableView'
-import { TableBody, TableCell, TableRow } from '@material-ui/core'
+import { TableBody, TableCell, TableRow } from '@mui/material'
 import { ActionTableCell } from './ActionTableCell'
 import { TableCellWrapper } from './TableCellWrapper'
-import { useTheme } from '@material-ui/core/styles'
+import { useTheme } from '@mui/material/styles'
 
 export interface TableRowsProps<T> extends TableViewProps<T> {
   items: T[]
@@ -34,7 +34,7 @@ export const TableRows = <T,>(props: TableRowsProps<T>): JSX.Element => {
     return themeVariant !== 'default'
       ? count % 2 === 0 && themeVariant === 'primary'
         ? theme.palette.backgrounds.default
-        : theme.palette.type === 'light'
+        : theme.palette.mode === 'light'
         ? '#F8F8FD'
         : theme.palette.grey[900]
       : 'initial'

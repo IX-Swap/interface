@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from '@material-ui/core'
+import { Link } from '@mui/material'
 import { useGetExchangeRules } from 'app/pages/admin/hooks/useGetExchangeRules'
 import { DownloadDocument } from 'components/dataroom/DownloadDocument'
 

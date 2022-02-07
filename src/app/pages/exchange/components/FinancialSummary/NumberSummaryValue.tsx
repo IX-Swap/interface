@@ -1,4 +1,4 @@
-import { Box, Typography } from '@material-ui/core'
+import { Box, Typography } from '@mui/material'
 import { useStyles } from 'app/pages/exchange/components/FinancialSummary/FinancialSummary.styles'
 import classNames from 'classnames'
 import { formatAmount } from 'helpers/numbers'

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { AmountRaisedCard } from 'app/pages/issuance/components/AmountRaisedCard'
 import { TotalInvestorsCard } from 'app/pages/issuance/components/TotalInvestorsCard'
 import { DSOCard } from 'app/pages/issuance/components/DSOCard'

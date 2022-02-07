@@ -1,4 +1,4 @@
-import { Button, Grid, Link, Typography } from '@material-ui/core'
+import { Button, Grid, Link, Typography } from '@mui/material'
 import { useRequestPasswordReset } from 'auth/hooks/useRequestPasswordReset'
 import React, { useState, useEffect } from 'react'
 

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Typography } from '@material-ui/core'
+import { Grid, Typography } from '@mui/material'
 import { DataroomFile } from 'types/dataroomFile'
 import { DataroomViewRow } from 'components/dataroom/DataroomViewRow'
 import { DownloadDocument } from 'components/dataroom/DownloadDocument'

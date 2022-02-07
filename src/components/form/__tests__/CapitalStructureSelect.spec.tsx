@@ -2,10 +2,10 @@ import React from 'react'
 import { render } from 'test-utils'
 import { CapitalStructureSelect } from 'components/form/CapitalStructureSelect'
 import { capitalStructures } from 'config/defaults'
-import { MenuItem, Select } from '@material-ui/core'
+import { MenuItem, Select } from '@mui/material'
 import { renderMenuItems } from 'helpers/rendering'
 
-jest.mock('@material-ui/core', () => ({
+jest.mock('@mui/material', () => ({
   Select: jest.fn(({ children }) => <select>{children}</select>),
   MenuItem: jest.fn(({ value }) => <option value={value}>{value}</option>),
   useMediaQuery: jest.fn()

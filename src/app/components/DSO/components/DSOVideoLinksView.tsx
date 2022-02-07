@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Typography } from '@material-ui/core'
+import { Grid, Typography } from '@mui/material'
 import { DigitalSecurityOffering } from 'types/dso'
 import ReactPlayer from 'react-player/lazy'
 import { VSpacer } from 'components/VSpacer'

@@ -1,6 +1,6 @@
 import React from 'react'
 import useStyles from './FormDialog.styles'
-import DialogActions from '@material-ui/core/DialogActions'
+import DialogActions from '@mui/material/DialogActions'
 
 export const FormDialogActions: React.FC = ({ children, ...rest }) => {
   const classes = useStyles()

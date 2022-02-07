@@ -4,7 +4,7 @@ import { virtualAccountQueryKeys } from 'config/queryKeys'
 import { columns } from 'app/pages/admin/components/UnassignedAccountTable/columns'
 import { VirtualAccount } from 'types/virtualAccount'
 import { Filters } from 'app/pages/admin/components/AssignedVirtualAccountsTable/Filters'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 
 export const UnassignedAccountsTable: React.FC = () => {

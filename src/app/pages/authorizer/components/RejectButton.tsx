@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button } from '@material-ui/core'
+import { Button } from '@mui/material'
 import { useStyles } from 'app/pages/authorizer/components/styles'
 import classNames from 'classnames'
 

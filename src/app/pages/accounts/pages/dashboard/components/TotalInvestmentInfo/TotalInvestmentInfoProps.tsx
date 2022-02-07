@@ -1,8 +1,8 @@
 import React from 'react'
-import { Box, Typography } from '@material-ui/core'
+import { Box, Typography } from '@mui/material'
 import { AppRouterLink } from 'components/AppRouterLink'
 import { InvestRoute } from 'app/pages/invest/router/config'
-import { Launch } from '@material-ui/icons'
+import { Launch } from '@mui/icons-material'
 import { useStyles } from './TotalInvestmentInfo.styles'
 import { formatMoney } from 'helpers/numbers'
 

@@ -1,4 +1,4 @@
-import { Box, Typography } from '@material-ui/core'
+import { Box, Typography } from '@mui/material'
 import { DoneLabel } from 'app/pages/educationCentre/components/DoneLabel'
 import { AppRouterLink, AppRouterLinkProps } from 'components/AppRouterLink'
 import React, { createElement } from 'react'

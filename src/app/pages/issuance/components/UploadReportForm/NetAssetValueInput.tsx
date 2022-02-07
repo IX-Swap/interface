@@ -25,6 +25,7 @@ export const NetAssetValueInput = () => {
           name='nav'
           control={control}
           variant='outlined'
+          size='small'
         />
       </Grid>
     </Grid>

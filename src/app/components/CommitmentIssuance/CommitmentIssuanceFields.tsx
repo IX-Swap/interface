@@ -1,9 +1,7 @@
 import React from 'react'
-import { Grid, Typography, Box, OutlinedInput } from '@material-ui/core'
+import { Grid, Typography, Box, OutlinedInput } from '@mui/material'
 import { useFormContext } from 'react-hook-form'
 import { LabelledValue } from 'components/LabelledValue'
-import DateFnsUtils from '@date-io/date-fns'
-import { MuiPickersUtilsProvider } from '@material-ui/pickers'
 import { TypedField } from 'components/form/TypedField'
 import { DateTimePickerComponent } from 'components/form/DateTimePicker'
 import { CommitmentIssuanceFormValues } from 'types/commitment'
@@ -55,23 +53,20 @@ export const CommitmentIssuanceFields = (
         <LabelledValue label='Amount to Issue' value={props.amount} />
       </Grid>
 
-      <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        <Grid item md={4}>
-          <Typography variant='subtitle1'>Release Date</Typography>
-          <Box py={0.4} />
-          <TypedField
-            name='releaseDate'
-            label=''
-            control={control}
-            component={DateTimePickerComponent}
-            disablePast
-            valueExtractor={convertDateToISO}
-            defaultValue={null}
-            margin='none'
-            style={{ maxWidth: 200 }}
-          />
-        </Grid>
-      </MuiPickersUtilsProvider>
+      <Grid item md={4}>
+        <Typography variant='subtitle1'>Release Date</Typography>
+        <Box py={0.4} />
+        <TypedField
+          name='releaseDate'
+          label=''
+          control={control}
+          component={DateTimePickerComponent}
+          disablePast
+          valueExtractor={convertDateToISO}
+          defaultValue={null}
+          style={{ maxWidth: 200 }}
+        />
+      </Grid>
 
       <Grid item className={classes.spacedBottom}>
         <Box py={0.4} />

@@ -1,7 +1,7 @@
 import React from 'react'
 import { VSpacer } from 'components/VSpacer'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
-import { FormControlLabel, Grid, Radio, Typography } from '@material-ui/core'
+import { FormControlLabel, Grid, Radio, Typography } from '@mui/material'
 import { TypedField } from 'components/form/TypedField'
 import { RadioGroup } from 'components/form/RadioGroup'
 import { useFormContext } from 'react-hook-form'

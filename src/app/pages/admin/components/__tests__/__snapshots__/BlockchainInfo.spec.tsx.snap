@@ -3,14 +3,14 @@
 exports[`BlockchainInfo should match snapshot 1`] = `
 <div>
   <div
-    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2"
+    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-1gmd8t8-MuiGrid-root"
     data-testid="network.info-container"
   >
     <div
-      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1sr5n48-MuiGrid-root"
     >
       <h5
-        class="MuiTypography-root MuiTypography-h5"
+        class="MuiTypography-root MuiTypography-h5 css-y0xkyh-MuiTypography-root"
         data-testid="blockchain-network-info-name"
       >
         Test MainNet
@@ -20,23 +20,23 @@ exports[`BlockchainInfo should match snapshot 1`] = `
       </h5>
     </div>
     <div
-      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1sr5n48-MuiGrid-root"
       data-testid="blockchain-info-owner-wallet-address"
     >
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column"
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-brqso2-MuiGrid-root"
       >
         <p
-          class="MuiTypography-root MuiTypography-body1"
+          class="MuiTypography-root MuiTypography-body1 css-3a17l8-MuiTypography-root"
           style="font-weight: 500; width: 100%; color: rgb(68, 68, 68);"
         >
           Owner Wallet Address
         </p>
         <div
-          class="MuiBox-root MuiBox-root-1"
+          class="MuiBox-root css-1gbh5gc"
         />
         <p
-          class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft"
+          class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-n6iewn-MuiTypography-root"
           style="font-weight: 400; opacity: 1; width: 100%; word-break: break-word;"
         >
           32134413213
@@ -44,23 +44,23 @@ exports[`BlockchainInfo should match snapshot 1`] = `
       </div>
     </div>
     <div
-      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1sr5n48-MuiGrid-root"
       data-testid="blockchain-info-owner-wallet-balance"
     >
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column"
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-brqso2-MuiGrid-root"
       >
         <p
-          class="MuiTypography-root MuiTypography-body1"
+          class="MuiTypography-root MuiTypography-body1 css-3a17l8-MuiTypography-root"
           style="font-weight: 500; width: 100%; color: rgb(68, 68, 68);"
         >
           Owner Wallet Balance
         </p>
         <div
-          class="MuiBox-root MuiBox-root-2"
+          class="MuiBox-root css-1gbh5gc"
         />
         <p
-          class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft"
+          class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-n6iewn-MuiTypography-root"
           style="font-weight: 400; opacity: 1; width: 100%; word-break: break-word;"
         >
           100.3451
@@ -68,23 +68,23 @@ exports[`BlockchainInfo should match snapshot 1`] = `
       </div>
     </div>
     <div
-      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1sr5n48-MuiGrid-root"
       data-testid="blockchain-info-reserve-wallet-address"
     >
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column"
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-brqso2-MuiGrid-root"
       >
         <p
-          class="MuiTypography-root MuiTypography-body1"
+          class="MuiTypography-root MuiTypography-body1 css-3a17l8-MuiTypography-root"
           style="font-weight: 500; width: 100%; color: rgb(68, 68, 68);"
         >
           Reserve Wallet Address
         </p>
         <div
-          class="MuiBox-root MuiBox-root-3"
+          class="MuiBox-root css-1gbh5gc"
         />
         <p
-          class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft"
+          class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-n6iewn-MuiTypography-root"
           style="font-weight: 400; opacity: 1; width: 100%; word-break: break-word;"
         >
           99832671623
@@ -92,23 +92,23 @@ exports[`BlockchainInfo should match snapshot 1`] = `
       </div>
     </div>
     <div
-      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1sr5n48-MuiGrid-root"
       data-testid="blockchain-info-reserve-wallet-balance"
     >
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column"
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-brqso2-MuiGrid-root"
       >
         <p
-          class="MuiTypography-root MuiTypography-body1"
+          class="MuiTypography-root MuiTypography-body1 css-3a17l8-MuiTypography-root"
           style="font-weight: 500; width: 100%; color: rgb(68, 68, 68);"
         >
           Reserve Wallet Balance
         </p>
         <div
-          class="MuiBox-root MuiBox-root-4"
+          class="MuiBox-root css-1gbh5gc"
         />
         <p
-          class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft"
+          class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-n6iewn-MuiTypography-root"
           style="font-weight: 400; opacity: 1; width: 100%; word-break: break-word;"
         >
           14.1233
@@ -116,23 +116,23 @@ exports[`BlockchainInfo should match snapshot 1`] = `
       </div>
     </div>
     <div
-      class="MuiGrid-root MuiGrid-item"
+      class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
       data-testid="blockchain-network-rpc-url"
     >
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column"
+        class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-brqso2-MuiGrid-root"
       >
         <p
-          class="MuiTypography-root MuiTypography-body1"
+          class="MuiTypography-root MuiTypography-body1 css-3a17l8-MuiTypography-root"
           style="font-weight: 500; width: 100%; color: rgb(68, 68, 68);"
         >
           RPC URL
         </p>
         <div
-          class="MuiBox-root MuiBox-root-5"
+          class="MuiBox-root css-1gbh5gc"
         />
         <p
-          class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft"
+          class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-n6iewn-MuiTypography-root"
           style="font-weight: 400; opacity: 1; width: 100%; word-break: break-word;"
         >
           https://rpc-url-2.com

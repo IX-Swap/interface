@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { IssuerDetailsView } from 'app/pages/identity/components/DetailsOfIssuanceView/IssuerDetailsView'
 import { IdentityDocumentsView } from 'app/pages/identity/components/IdentityDocumentsView/IdentityDocumentsView'
 import { useDetailsOfIssuance } from 'app/pages/identity/hooks/useDetailsOfIssuance'

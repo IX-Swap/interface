@@ -1,5 +1,5 @@
 import React from 'react'
-import { Typography, Grid, CardContent, Card } from '@material-ui/core'
+import { Typography, Grid, CardContent, Card } from '@mui/material'
 import { Bank } from 'types/bank'
 import { LabelledValue } from 'components/LabelledValue'
 import { convertAddressToString } from 'app/pages/authorizer/components/utils'

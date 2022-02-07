@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 
 export interface LayoutWrapperProps {
   children: ReactElement

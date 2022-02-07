@@ -1,6 +1,6 @@
-import { SvgIconComponent } from '@material-ui/icons'
+import { SvgIconComponent } from '@mui/icons-material'
 import React from 'react'
-import { ListItem, ListItemIcon, ListItemText } from '@material-ui/core'
+import { ListItem, ListItemIcon, ListItemText } from '@mui/material'
 
 interface ActionProps {
   label: string

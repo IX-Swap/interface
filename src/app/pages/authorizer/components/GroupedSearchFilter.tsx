@@ -1,7 +1,7 @@
 import React from 'react'
-import { InputAdornment, TextField } from '@material-ui/core'
+import { InputAdornment, TextField } from '@mui/material'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
-import { Search as SearchIcon } from '@material-ui/icons'
+import { Search as SearchIcon } from '@mui/icons-material'
 
 interface GroupedSearchFilterProps {
   isCommitment?: boolean

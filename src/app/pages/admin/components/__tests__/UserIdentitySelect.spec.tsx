@@ -42,45 +42,39 @@ describe('UserIdentitySelect', () => {
   })
 
   it('renders correct path for button when selected identity is issuer', () => {
-    const { getByRole } = render(<UserIdentitySelect {...props} />)
+    const { getByRole, getByText } = render(<UserIdentitySelect {...props} />)
 
-    fireEvent.mouseDown(
-      getByRole('button', { name: 'No Identity Created Yet' })
-    )
+    fireEvent.mouseDown(getByText('No Identity Created Yet'))
     const options = within(getByRole('listbox'))
     fireEvent.click(options.getByText('Issuer (Raise Capital)'))
 
-    expect(getByRole('button', { name: 'Create Identity' })).toHaveAttribute(
+    expect(getByRole('link', { name: 'Create Identity' })).toHaveAttribute(
       'href',
       `/app/admin/users/${managedUser._id}/createIssuer`
     )
   })
 
   it('renders correct path for button when selected identity is investor', () => {
-    const { getByRole } = render(<UserIdentitySelect {...props} />)
+    const { getByRole, getByText } = render(<UserIdentitySelect {...props} />)
 
-    fireEvent.mouseDown(
-      getByRole('button', { name: 'No Identity Created Yet' })
-    )
+    fireEvent.mouseDown(getByText('No Identity Created Yet'))
     const options = within(getByRole('listbox'))
     fireEvent.click(options.getByText('Corporate Investor'))
 
-    expect(getByRole('button', { name: 'Create Identity' })).toHaveAttribute(
+    expect(getByRole('link', { name: 'Create Identity' })).toHaveAttribute(
       'href',
       `/app/admin/users/${managedUser._id}/createCorporate`
     )
   })
 
   it('renders correct path for button when selected identity is individual', () => {
-    const { getByRole } = render(<UserIdentitySelect {...props} />)
+    const { getByRole, getByText } = render(<UserIdentitySelect {...props} />)
 
-    fireEvent.mouseDown(
-      getByRole('button', { name: 'No Identity Created Yet' })
-    )
+    fireEvent.mouseDown(getByText('No Identity Created Yet'))
     const options = within(getByRole('listbox'))
     fireEvent.click(options.getByText('Individual Investor'))
 
-    expect(getByRole('button', { name: 'Create Identity' })).toHaveAttribute(
+    expect(getByRole('link', { name: 'Create Identity' })).toHaveAttribute(
       'href',
       `/app/admin/users/${managedUser._id}/createIndividual`
     )
@@ -95,13 +89,15 @@ describe('UserIdentitySelect', () => {
       },
       userId: managedUser._id
     }
-    const { getByRole } = render(<UserIdentitySelect {...propsWithInvestor} />)
+    const { getByRole, getByText } = render(
+      <UserIdentitySelect {...propsWithInvestor} />
+    )
 
-    fireEvent.mouseDown(getByRole('button', { name: 'Individual Investor' }))
+    fireEvent.mouseDown(getByText('Individual Investor'))
     const options = within(getByRole('listbox'))
     fireEvent.click(options.getByText('Issuer (Raise Capital)'))
 
-    expect(getByRole('button', { name: 'Create Identity' })).toHaveAttribute(
+    expect(getByText('Create Identity')).toHaveAttribute(
       'aria-disabled',
       'true'
     )
@@ -116,13 +112,15 @@ describe('UserIdentitySelect', () => {
       },
       userId: managedUser._id
     }
-    const { getByRole } = render(<UserIdentitySelect {...propsWithIssuer} />)
+    const { getByRole, getByText } = render(
+      <UserIdentitySelect {...propsWithIssuer} />
+    )
 
-    fireEvent.mouseDown(getByRole('button', { name: 'Individual Investor' }))
+    fireEvent.mouseDown(getByText('Individual Investor'))
     const options = within(getByRole('listbox'))
     fireEvent.click(options.getByText('Corporate Investor'))
 
-    expect(getByRole('button', { name: 'Create Identity' })).toHaveAttribute(
+    expect(getByText('Create Identity')).toHaveAttribute(
       'aria-disabled',
       'true'
     )

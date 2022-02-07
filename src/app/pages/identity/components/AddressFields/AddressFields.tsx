@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Hidden, TextField } from '@material-ui/core'
+import { Grid, Hidden, TextField } from '@mui/material'
 import { TypedField } from 'components/form/TypedField'
 import { CountrySelect } from 'components/form/CountrySelect'
 import { useFormContext } from 'react-hook-form'
@@ -43,7 +43,7 @@ export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
           defaultValue={defaultValue?.line2 ?? ''}
         />
       </Grid>
-      <Hidden smDown>
+      <Hidden mdDown>
         <Grid item xs={12} sm={6} md={4} />
       </Hidden>
       <Grid item xs={12} sm={6} md={4}>
@@ -72,7 +72,7 @@ export const AddressFields = (props: AddressFieldsProps): JSX.Element => {
           defaultValue={defaultValue?.state ?? ''}
         />
       </Grid>
-      <Hidden smDown>
+      <Hidden mdDown>
         <Grid item xs={12} sm={6} md={4} />
       </Hidden>
       <Grid item xs={12} sm={6} md={4}>

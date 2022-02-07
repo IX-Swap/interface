@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import React from 'react'
 import { DepositCashFormValues } from 'app/pages/accounts/types'
 import { useFormContext } from 'react-hook-form'

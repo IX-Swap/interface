@@ -1,7 +1,7 @@
 import React from 'react'
 import { TableColumn } from 'types/util'
 import format from 'date-fns/format'
-import { Grid, Typography } from '@material-ui/core'
+import { Grid, Typography } from '@mui/material'
 import { DSOActivity } from 'types/dso'
 import { Avatar } from 'components/Avatar'
 import { getActivityUserInfo } from 'app/pages/issuance/utils'

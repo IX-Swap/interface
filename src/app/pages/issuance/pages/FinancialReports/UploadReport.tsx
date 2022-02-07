@@ -5,7 +5,7 @@ import { UploadReportForm } from 'app/pages/issuance/components/UploadReportForm
 
 export const UploadReport = () => {
   return (
-    <Grid container>
+    <Grid container spacing={3}>
       <Grid item xs={12}>
         <PageHeader title='Financial Reports' showBreadcrumbs />
       </Grid>

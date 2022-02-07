@@ -1,6 +1,6 @@
 import React from 'react'
 import { Dialog } from 'app/pages/identity/components/Dialog'
-import { Typography } from '@material-ui/core'
+import { Typography } from '@mui/material'
 import { SafeguardInfoAction } from 'app/pages/identity/components/InvestorDeclarationForm/SafeguardInfoDialog/SafeguardInfoAction/SafeguardInfoAction'
 import { SafeguardInfoContent } from 'app/pages/identity/components/InvestorDeclarationForm/SafeguardInfoDialog/SafeguardInfoContent/SafeguardInfoContent'
 

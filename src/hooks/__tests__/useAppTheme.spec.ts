@@ -27,7 +27,7 @@ describe('useAppTheme', () => {
 
       await waitFor(() => {
         expect(result.current.themeType).toBe(AppTheme.Light)
-        expect(result.current.theme.palette.type).toBe('light')
+        expect(result.current.theme.palette.mode).toBe('light')
       })
     })
   })
@@ -41,9 +41,8 @@ describe('useAppTheme', () => {
         expect(result.current.theme).toHaveProperty('breakpoints')
         expect(result.current.theme).toHaveProperty('direction')
         expect(result.current.theme).toHaveProperty('mixins')
-        expect(result.current.theme).toHaveProperty('overrides')
+        expect(result.current.theme).toHaveProperty('components')
         expect(result.current.theme).toHaveProperty('palette')
-        expect(result.current.theme).toHaveProperty('props')
         expect(result.current.theme).toHaveProperty('shadows')
         expect(result.current.theme).toHaveProperty('spacing')
         expect(result.current.theme).toHaveProperty('transitions')
@@ -62,7 +61,7 @@ describe('useAppTheme', () => {
 
         expect(result.current.themeType).toBe(AppTheme.Dark)
         expect(storageService.get('app-theme')).toBe(AppTheme.Dark)
-        expect(result.current.theme.palette.type).toBe('dark')
+        expect(result.current.theme.palette.mode).toBe('dark')
       })
     })
   })

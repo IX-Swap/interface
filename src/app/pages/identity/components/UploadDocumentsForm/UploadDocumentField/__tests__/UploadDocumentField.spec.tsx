@@ -1,5 +1,5 @@
 import React from 'react'
-import { render } from 'test-utils'
+import { fireEvent, render, waitFor } from 'test-utils'
 import {
   UploadDocumentField,
   UploadDocumentFieldProps
@@ -18,8 +18,8 @@ describe('UploadDocumentField', () => {
     jest.clearAllMocks()
   })
 
-  it('renders props correctly', () => {
-    const { container, getByText, getByTitle } = render(
+  it('renders props correctly', async () => {
+    const { container, getByText, getByTestId } = render(
       <Form>
         <UploadDocumentField {...props} />
       </Form>
@@ -29,6 +29,11 @@ describe('UploadDocumentField', () => {
     expect(inputField.name).toEqual('proofOfIdentity')
     expect(getByText('Proof Of Identity')).toBeTruthy()
     expect(getByText('This is the proof.')).toBeTruthy()
-    expect(getByTitle('This is a tooltip content')).toBeTruthy()
+
+    fireEvent.mouseEnter(getByTestId('upload-document-field-tooltip'))
+
+    await waitFor(() => {
+      expect(getByText('This is a tooltip content'))
+    })
   })
 })
