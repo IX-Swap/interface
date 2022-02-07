@@ -50,14 +50,14 @@ describe('DialogResetPassword', () => {
         closeDialog: mockClose,
         action: resetPasswordMock,
         actionLabel: 'RESET',
-        title: 'Are you sure you want to start the account reset?'
+        title: 'Are you sure you want to start the password reset?'
       }),
       {}
     )
 
     expect(
       getByText(
-        'We will email the user the instructions and link to reset the account.'
+        'We will email the user the instructions and link to reset the password.'
       )
     ).toBeTruthy()
   })
