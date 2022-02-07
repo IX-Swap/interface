@@ -11,13 +11,14 @@ import { privateClassNames } from 'helpers/classnames'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 
 export const InformationFields = () => {
-  const { control, watch } = useFormContext()
+  const { control, watch, clearErrors } = useFormContext()
   const legalEntityStatus = watch('legalEntityStatus')
   const { isMobile, isTablet } = useAppBreakpoints()
 
   useEffect(() => {
     if (legalEntityStatus !== 'others') {
-      control.setValue('otherLegalEntityStatus', undefined)
+      control.setValue('otherLegalEntityStatus', '')
+      clearErrors('otherLegalEntityStatus')
     }
   }, [legalEntityStatus]) // eslint-disable-line
 
