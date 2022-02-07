@@ -152,7 +152,7 @@ export const TableView = <T,>({
                 onClick={() => toggle(item)}
               />
             }
-            label={firstColumnRender?.(val, item) ?? val}
+            label={firstColumnRender?.(val, item) ?? val ?? ''}
             labelPlacement={'end'}
           />
         )
