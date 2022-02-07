@@ -632,22 +632,25 @@ export const useCreateNft = () => {
 
 export const useFetchMyCollections = () => {
   const dispatch = useAppDispatch()
-  const { account, chainId } = useActiveWeb3React()
-  return useCallback(async () => {
-    if (!account) {
-      return
-    }
-    try {
-      dispatch(setCollectionsLoading({ loading: true }))
-      const response = await getCollections(account, chainId)
-      const collections = response.data
-      dispatch(setCollections({ collections }))
-      dispatch(setCollectionsLoading({ loading: false }))
-    } catch (e) {
-      dispatch(setCollectionsLoading({ loading: false }))
-      console.log(e)
-    }
-  }, [account])
+  const { account } = useActiveWeb3React()
+  return useCallback(
+    async (chainId?: number) => {
+      if (!account) {
+        return
+      }
+      try {
+        dispatch(setCollectionsLoading({ loading: true }))
+        const response = await getCollections(account, chainId)
+        const collections = response.data
+        dispatch(setCollections({ collections }))
+        dispatch(setCollectionsLoading({ loading: false }))
+      } catch (e) {
+        dispatch(setCollectionsLoading({ loading: false }))
+        console.log(e)
+      }
+    },
+    [account]
+  )
 }
 
 const getCreateNftDto = ({
