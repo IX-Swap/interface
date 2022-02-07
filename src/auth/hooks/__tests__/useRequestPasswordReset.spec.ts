@@ -35,10 +35,7 @@ describe('useRequestPasswordReset', () => {
             authURL.resetPassword,
             requestPasswordResetArgs
           )
-          expect(showSnackbar).toHaveBeenNthCalledWith(
-            1,
-            `Email has been sent to a@investax.io`
-          )
+          expect(showSnackbar).toHaveBeenNthCalledWith(1, `success`)
         },
         { timeout: 1000 }
       )
