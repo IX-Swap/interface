@@ -6,6 +6,7 @@ import { Label } from '@rebass/forms'
 
 import { ContainerRow, Input, InputContainer, InputPanel, Textarea } from 'components/Input'
 import Upload from 'components/Upload'
+import { AcceptFiles } from 'components/Upload/types' //accept={AcceptFiles.IMAGE}
 import { ExternalLink, TYPE } from 'theme'
 import { ButtonGradient } from 'components/Button'
 import { useCollectionActionHandlers, useCollectionFormState } from 'state/nft/hooks'
@@ -217,10 +218,11 @@ export const CollectionForm = ({ collection, onSubmit, actionName = 'Update' }: 
       <Flex mx={-2} mb={2}>
         <Box width={1} px={2}>
           <Label htmlFor="description" flexDirection="column" mb={3}>
-            <Box mb={1}>
+            <Box display="flex">
               <TYPE.body fontWeight={600}>
                 <Trans>Description</Trans>
               </TYPE.body>
+              <TYPE.error error>*</TYPE.error>
             </Box>
             <TYPE.descriptionThin fontSize={13}>
               The description will be included on the item&apos;s detail page underneath its image.{' '}
