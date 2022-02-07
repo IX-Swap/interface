@@ -41,6 +41,6 @@ describe('MarkAllAsRead', () => {
     const { getByText } = render(<MarkAllAsRead />)
 
     const button = getByText(/Mark All As Read/i)
-    expect(button.parentElement).toBeDisabled()
+    expect(button).toBeDisabled()
   })
 })

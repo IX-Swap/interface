@@ -5,7 +5,7 @@ import {
   CardActionArea,
   Grid,
   Typography
-} from '@material-ui/core'
+} from '@mui/material'
 import { EducationCentreRoute } from 'app/pages/educationCentre/router/config'
 import { AppRouterLink } from 'components/AppRouterLink'
 import { LabelledValue } from 'components/LabelledValue'

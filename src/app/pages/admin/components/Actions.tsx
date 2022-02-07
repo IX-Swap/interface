@@ -1,5 +1,5 @@
 import React, { forwardRef } from 'react'
-import { FormControl } from '@material-ui/core'
+import { FormControl, SelectChangeEvent } from '@mui/material'
 import useStyles from './Actions.styles'
 import DialogConfirmRoleChange from 'app/pages/admin/components/DialogConfirmRoleChange'
 import User from 'types/user'
@@ -39,7 +39,7 @@ export const Actions = forwardRef(({ user }: ActionsProps, ref: any) => {
         <RoleSelect
           value={roles}
           onClose={onClose}
-          onChange={(ev: React.ChangeEvent<{ value: unknown }>) =>
+          onChange={(ev: SelectChangeEvent<unknown>) =>
             handleRoleChange(ev.target.value as string[])
           }
           variant='outlined'

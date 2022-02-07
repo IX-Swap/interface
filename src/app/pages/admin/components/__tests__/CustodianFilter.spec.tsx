@@ -1,9 +1,9 @@
 import React from 'react'
 import { render } from 'test-utils'
-import { FormControlLabel } from '@material-ui/core'
+import { FormControlLabel } from '@mui/material'
 import { CustodianFilter } from 'app/pages/admin/components/CustodianFilter'
 
-jest.mock('@material-ui/core/FormControlLabel', () => jest.fn(() => null))
+jest.mock('@mui/material/FormControlLabel', () => jest.fn(() => null))
 
 describe('CustodianFilter', () => {
   afterEach(async () => {

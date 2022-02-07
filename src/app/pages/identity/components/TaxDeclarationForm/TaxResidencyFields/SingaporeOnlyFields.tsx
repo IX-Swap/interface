@@ -6,7 +6,7 @@ import {
   Radio,
   FormControlLabel,
   TextField
-} from '@material-ui/core'
+} from '@mui/material'
 import { TypedField } from 'components/form/TypedField'
 import { useFormContext } from 'react-hook-form'
 import { VSpacer } from 'components/VSpacer'

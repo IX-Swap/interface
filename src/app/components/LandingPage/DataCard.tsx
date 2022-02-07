@@ -1,4 +1,4 @@
-import { Box, Paper, Typography } from '@material-ui/core'
+import { Box, Paper, Typography } from '@mui/material'
 import { LandingPageItemProps } from 'app/components/LandingPage/LandingPageItem'
 import React from 'react'
 import OrangeEllipse from 'assets/ellipse-314.svg'

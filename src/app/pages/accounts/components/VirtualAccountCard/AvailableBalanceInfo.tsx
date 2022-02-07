@@ -1,4 +1,4 @@
-import { Typography, Box } from '@material-ui/core'
+import { Typography, Box } from '@mui/material'
 import { formatMoney } from 'helpers/numbers'
 import { ValidCurrency } from 'helpers/types'
 import React from 'react'

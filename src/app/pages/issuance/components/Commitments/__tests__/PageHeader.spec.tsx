@@ -3,7 +3,7 @@ import { render } from 'test-utils'
 import { PageHeader } from 'app/pages/issuance/components/Commitments/PageHeader'
 import { AppRouterLink } from 'components/AppRouterLink'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
-import { Typography } from '@material-ui/core'
+import { Typography } from '@mui/material'
 
 jest.mock('components/AppRouterLink', () => ({
   AppRouterLink: jest.fn(() => null)

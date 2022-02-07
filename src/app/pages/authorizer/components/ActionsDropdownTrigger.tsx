@@ -1,7 +1,7 @@
 import React from 'react'
 import { DropdownTriggerProps } from 'app/components/Dropdown/Dropdown'
-import { Box, CircularProgress, IconButton } from '@material-ui/core'
-import { MoreHoriz as MoreHorizIcon } from '@material-ui/icons'
+import { Box, CircularProgress, IconButton } from '@mui/material'
+import { MoreHoriz as MoreHorizIcon } from '@mui/icons-material'
 
 export interface ActionsDropdownTriggerProps extends DropdownTriggerProps {
   isLoading: boolean

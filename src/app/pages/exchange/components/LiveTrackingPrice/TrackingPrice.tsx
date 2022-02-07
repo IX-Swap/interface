@@ -1,5 +1,5 @@
-import { Grid, Typography } from '@material-ui/core'
-import { ArrowDownward, ArrowUpward } from '@material-ui/icons'
+import { Grid, Typography } from '@mui/material'
+import { ArrowDownward, ArrowUpward } from '@mui/icons-material'
 import { useStyles } from 'app/pages/exchange/components/LiveTrackingPrice/TrackingPrice.styles'
 import classNames from 'classnames'
 import { formatAmount } from 'helpers/numbers'

@@ -6,7 +6,7 @@ import { BannerBaseFields } from 'app/pages/admin/components/BannerBaseFields'
 import { Dropzone } from 'components/dataroom/Dropzone'
 import { documentValueExtractor } from 'app/components/DSO/utils'
 import { DataroomFileType } from 'config/dataroom'
-import { Input } from '@material-ui/core'
+import { Input } from '@mui/material'
 
 jest.mock('components/form/TypedField', () => ({
   TypedField: jest.fn(() => <input />)

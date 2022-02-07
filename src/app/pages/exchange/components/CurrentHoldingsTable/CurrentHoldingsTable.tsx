@@ -1,6 +1,6 @@
 import React from 'react'
 import { TableView } from 'components/TableWithPagination/TableView'
-import { Box, Grid } from '@material-ui/core'
+import { Box, Grid } from '@mui/material'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import { useAuth } from 'hooks/auth/useAuth'
 import { getIdFromObj } from 'helpers/strings'

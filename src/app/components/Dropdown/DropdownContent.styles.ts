@@ -1,10 +1,9 @@
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
-import { makeStyles } from '@material-ui/core/styles'
+import makeStyles from '@mui/styles/makeStyles'
 
-export const useStyles = makeStyles((theme: any) => ({
+export const useStyles = makeStyles(theme => ({
   popper: {
     zIndex: 1500,
-    '&[x-placement*="bottom"] $arrow': {
+    '&[data-popper-placement*="bottom"] $arrow': {
       top: 0,
       left: 0,
       marginTop: '-0.9em',
@@ -15,7 +14,7 @@ export const useStyles = makeStyles((theme: any) => ({
         borderColor: `transparent transparent ${theme.palette.background.paper} transparent`
       }
     },
-    '&[x-placement*="top"] $arrow': {
+    '&[data-popper-placement*="top"] $arrow': {
       bottom: 0,
       left: 0,
       marginBottom: '-0.9em',
@@ -26,7 +25,7 @@ export const useStyles = makeStyles((theme: any) => ({
         borderColor: `${theme.palette.background.paper} transparent transparent transparent`
       }
     },
-    '&[x-placement*="right"] $arrow': {
+    '&[data-popper-placement*="right"] $arrow': {
       left: 0,
       marginLeft: '-0.9em',
       height: '3em',
@@ -36,7 +35,7 @@ export const useStyles = makeStyles((theme: any) => ({
         borderColor: `transparent ${theme.palette.background.paper} transparent transparent`
       }
     },
-    '&[x-placement*="left"] $arrow': {
+    '&[data-popper-placement*="left"] $arrow': {
       right: 0,
       marginRight: '-0.9em',
       height: '3em',

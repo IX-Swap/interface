@@ -1,4 +1,4 @@
-import { Button } from '@material-ui/core'
+import { Button } from '@mui/material'
 import { getIdFromObj } from 'helpers/strings'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'

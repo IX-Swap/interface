@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Grid, Typography } from '@material-ui/core'
+import { Box, Grid, Typography } from '@mui/material'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { CurrencyFilter } from 'app/pages/admin/components/AssignedVirtualAccountsTable/CurrencyFilter'
 

@@ -4,7 +4,7 @@ import {
   Grid,
   Radio,
   Typography
-} from '@material-ui/core'
+} from '@mui/material'
 import { useVirtualAccount } from 'app/pages/accounts/hooks/useVirtualAccount'
 import { RadioGroup } from 'components/form/RadioGroup'
 import { TypedField } from 'components/form/TypedField'

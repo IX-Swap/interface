@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Button, DialogActions } from '@material-ui/core'
+import { Grid, Button, DialogActions } from '@mui/material'
 import { WADialog } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WADialog/WADialog'
 import { WADialogTitle } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WADialog/WADialogTitle'
 import { WADialogContent } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WADialog/WADialogContent'

@@ -20,7 +20,7 @@ describe('InvestLanding', () => {
   it('has a link to Commitments Page', () => {
     const { getByRole } = render(<InvestLanding />)
     expect(
-      getByRole('button', { name: /view my commitments/i })
+      getByRole('link', { name: /view my commitments/i })
     ).toBeInTheDocument()
   })
 

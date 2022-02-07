@@ -1,11 +1,11 @@
 import React from 'react'
 import { render } from 'test-utils'
-import Box from '@material-ui/core/Box'
+import Box from '@mui/material/Box'
 import * as useAppBreakpoints from 'hooks/useAppBreakpoints'
 import { TransferTypesFilter } from 'app/pages/admin/components/TransferTypesFilter'
 import { VTTransferTypesFilter } from 'app/pages/admin/components/VTTransferTypesFilter'
 
-jest.mock('@material-ui/core/Box', () => jest.fn(() => null))
+jest.mock('@mui/material/Box', () => jest.fn(() => null))
 
 jest.mock('app/pages/admin/components/TransferTypesFilter', () => ({
   TransferTypesFilter: jest.fn(() => null)

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, ButtonProps } from '@material-ui/core'
+import { Button, ButtonProps } from '@mui/material'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 
 export const ViewAllNotifications = (props: ButtonProps) => {

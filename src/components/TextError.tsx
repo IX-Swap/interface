@@ -1,7 +1,7 @@
 import React from 'react'
 import { FormErrorRendererProps } from 'components/form/FormError'
-import { Typography } from '@material-ui/core'
-import { useTheme } from '@material-ui/core/styles'
+import { Typography } from '@mui/material'
+import { useTheme } from '@mui/material/styles'
 
 export interface TextErrorProps extends FormErrorRendererProps {}
 

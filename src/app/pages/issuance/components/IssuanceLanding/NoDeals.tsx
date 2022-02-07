@@ -1,6 +1,6 @@
 import React from 'react'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
-import { Typography, Button } from '@material-ui/core'
+import { Typography, Button } from '@mui/material'
 import { VSpacer } from 'components/VSpacer'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
 

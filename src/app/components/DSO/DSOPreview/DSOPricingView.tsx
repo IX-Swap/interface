@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
 import { DigitalSecurityOffering } from 'types/dso'
 import { addSymbol, formatMoney } from 'helpers/numbers'

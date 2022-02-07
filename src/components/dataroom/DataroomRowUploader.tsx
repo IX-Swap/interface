@@ -4,7 +4,7 @@ import { DataroomFileRow } from 'components/dataroom/DataroomFileRow'
 import { TypedFieldRenderComponentProps } from 'components/form/types'
 import { DataroomFile } from 'types/dataroomFile'
 import { UploadDocumentInfo } from 'hooks/useUploadFile'
-import { Box, Grid } from '@material-ui/core'
+import { Box, Grid } from '@mui/material'
 
 export interface DataroomRowUploaderProps
   extends TypedFieldRenderComponentProps<DataroomFile> {

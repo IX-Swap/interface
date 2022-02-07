@@ -5,7 +5,7 @@ import { SearchFilter } from 'app/components/SearchFilter'
 import { FundStatusFilter } from 'app/pages/issuance/components/Commitments/FundStatusFilter'
 import { VSpacer } from 'components/VSpacer'
 import * as useAppBreakpoints from 'hooks/useAppBreakpoints'
-import Button from '@material-ui/core/Button'
+import Button from '@mui/material/Button'
 
 jest.mock('app/components/SearchFilter', () => ({
   SearchFilter: jest.fn(() => null)
@@ -19,7 +19,7 @@ jest.mock('components/VSpacer', () => ({
   VSpacer: jest.fn(() => null)
 }))
 
-jest.mock('@material-ui/core/Button', () => jest.fn(() => null))
+jest.mock('@mui/material/Button', () => jest.fn(() => null))
 
 describe('CommitmentTableFilter', () => {
   afterEach(async () => {
@@ -84,7 +84,7 @@ describe('CommitmentTableFilter', () => {
         style: {
           fontSize: 12,
           fontWeight: 400,
-          marginTop: 16
+          marginTop: '16px'
         }
       }),
       {}

@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useState } from 'react'
-import { Grid, Select } from '@material-ui/core'
+import { Grid, Select } from '@mui/material'
 import { SearchFilter } from 'app/components/SearchFilter'
 import { QueryFilter, useQueryFilter } from 'hooks/filters/useQueryFilter'
 import { renderMenuItems } from 'helpers/rendering'
@@ -89,7 +89,7 @@ export const OverviewPageFilters = () => {
   }
 
   return (
-    <Grid container direction='column'>
+    <Grid container spacing={2} direction='column'>
       <Grid item container spacing={2}>
         <Grid item xs={6} md={4}>
           <Select

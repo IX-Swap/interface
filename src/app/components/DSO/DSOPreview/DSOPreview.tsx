@@ -13,7 +13,7 @@ import { DSOFAQsView } from 'app/components/DSO/components/DSOFAQsView'
 import { DSOVideoLinksView } from 'app/components/DSO/components/DSOVideoLinksView'
 import { Commitments } from 'app/pages/issuance/pages/Commitments'
 import { CapTable } from 'app/pages/issuance/pages/CapTable'
-import { Tabs, Tab, Grid } from '@material-ui/core'
+import { Tabs, Tab, Grid } from '@mui/material'
 import { TabPanel } from 'components/TabPanel'
 
 export interface DSOPreviewProps {
@@ -52,7 +52,7 @@ export const DSOPreview = (props: DSOPreviewProps) => {
   }
 
   return (
-    <Fragment>
+    <>
       <Tabs
         value={selectedIdx}
         onChange={(_, index) => setSelectedIdx(index)}
@@ -78,6 +78,7 @@ export const DSOPreview = (props: DSOPreviewProps) => {
             </Element>
           </Grid>
         </Grid>
+
         <Element name={DSOFormSection.Information}>
           <VSpacer size='large' />
           <DSOInformationView dso={data} isNewThemeOn />
@@ -104,6 +105,6 @@ export const DSOPreview = (props: DSOPreviewProps) => {
       <TabPanel value={selectedIdx} index={2}>
         <CapTable />
       </TabPanel>
-    </Fragment>
+    </>
   )
 }

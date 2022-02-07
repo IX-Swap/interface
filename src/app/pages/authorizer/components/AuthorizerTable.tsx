@@ -9,7 +9,7 @@ import { useAuthorizerFilter } from '../hooks/useAuthorizerFilter'
 import { useAuthorizerCategory } from 'hooks/location/useAuthorizerCategory'
 import { useSelectionHelperContext } from 'components/SelectionHelper'
 import { useUnmountCallback } from 'hooks/useUnmountCallback'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import {
   AuthorizerSelectionActions,
   SelectionActions

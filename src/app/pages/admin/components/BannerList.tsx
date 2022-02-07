@@ -1,5 +1,5 @@
 import React from 'react'
-import { Divider, Grid } from '@material-ui/core'
+import { Divider, Grid } from '@mui/material'
 import { useBannersList } from 'app/pages/admin/hooks/useBannersList'
 import { BannerTable } from 'app/pages/admin/components/BannerTable'
 

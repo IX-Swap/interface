@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box } from '@material-ui/core'
+import { Box } from '@mui/material'
 import { useLocation } from 'react-router-dom'
 import { NavigationLink } from 'ui/Navigation/NavigationLink'
 import { useAppActions } from 'app/hooks/useAppState'
@@ -30,7 +30,7 @@ export const SidebarLinkContainer = (props: SidebarLinkProps) => {
   }
 
   return (
-    <NavigationItem button selected={isActive}>
+    <NavigationItem selected={isActive}>
       <NavigationLink onClick={closeDrawer} to={link} style={{ color }}>
         <Box>{React.createElement(icon)}</Box>
         <span>{label}</span>

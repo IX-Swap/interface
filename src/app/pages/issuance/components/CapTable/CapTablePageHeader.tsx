@@ -1,4 +1,4 @@
-import { Grid, Typography } from '@material-ui/core'
+import { Grid, Typography } from '@mui/material'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
 import { CapTableDSOFilter } from 'app/pages/issuance/components/CapTable/CapTableDSOFilter'
 import React from 'react'

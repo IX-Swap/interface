@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Box } from '@material-ui/core'
+import { Grid, Box } from '@mui/material'
 import { FieldsArray } from 'components/form/FieldsArray'
 import { useFormContext } from 'react-hook-form'
 import { DSOFormValues } from 'types/dso'

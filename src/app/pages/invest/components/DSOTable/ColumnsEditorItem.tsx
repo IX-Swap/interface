@@ -1,7 +1,7 @@
 import React from 'react'
 import { formatCamelCasedWithSpaces } from 'helpers/strings'
 import { DSOTableColumn } from 'types/dso'
-import { Box, Chip } from '@material-ui/core'
+import { Box, Chip } from '@mui/material'
 
 export interface ColumnsEditorItemProps {
   value: DSOTableColumn
@@ -41,7 +41,7 @@ export const ColumnsEditorItem = (props: ColumnsEditorItemProps) => {
     <Box mr={2.5} mb={1.5}>
       <Chip
         label={label()}
-        variant={isSelected ? 'default' : 'outlined'}
+        variant={isSelected ? 'filled' : 'outlined'}
         onClick={isSelected ? undefined : () => onSelect(value)}
         disabled={disabled}
         onDelete={isSelected ? () => onDeselect(value) : undefined}

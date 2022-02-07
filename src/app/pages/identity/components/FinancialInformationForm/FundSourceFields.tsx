@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { FieldsArray } from 'components/form/FieldsArray'
 import { useFormContext } from 'react-hook-form'
 import { FundSourceItem } from 'app/pages/identity/components/FinancialInformationForm/FundSourceItem'

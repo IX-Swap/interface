@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react'
-import { Box, Tab, Tabs } from '@material-ui/core'
+import { Box, Tab, Tabs } from '@mui/material'
 import { TabPanel } from 'components/TabPanel'
 import useStyles from './VirtualAccountsTabView.styles'
 import { AssignedVirtualAccountsTable } from 'app/pages/admin/components/AssignedVirtualAccountsTable/AssignedVirtualAccountsTable'

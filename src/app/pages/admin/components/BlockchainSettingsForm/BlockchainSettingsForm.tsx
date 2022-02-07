@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box } from '@material-ui/core'
+import { Box } from '@mui/material'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import { useUpdateDecimal } from 'app/pages/admin/hooks/useUpdateDecimal'
 import { Form } from 'components/form/Form'

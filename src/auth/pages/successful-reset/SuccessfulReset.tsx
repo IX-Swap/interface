@@ -1,5 +1,5 @@
 import React from 'react'
-import { Divider, Grid, Typography } from '@material-ui/core'
+import { Divider, Grid, Typography } from '@mui/material'
 import { VSpacer } from 'components/VSpacer'
 import { useStyles } from './SuccessfulReset.styles'
 import { AppRouterLink } from 'components/AppRouterLink'

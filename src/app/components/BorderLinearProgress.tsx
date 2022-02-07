@@ -1,5 +1,5 @@
 import React from 'react'
-import { LinearProgress, LinearProgressProps } from '@material-ui/core'
+import { LinearProgress, LinearProgressProps } from '@mui/material'
 import useStyles from './BorderLinearProgress.styles'
 
 export interface ColoredLinearProgressProps extends LinearProgressProps {

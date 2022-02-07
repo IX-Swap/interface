@@ -3,7 +3,7 @@ import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
 import { useParams } from 'react-router-dom'
 import { DSOInvestorView } from 'app/components/DSO/components/DSOInvestorView'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 
 export const ViewDSO = () => {
   const { dsoId, issuerId } = useParams<{ dsoId: string; issuerId: string }>()

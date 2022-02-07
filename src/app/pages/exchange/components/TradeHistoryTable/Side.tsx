@@ -1,4 +1,4 @@
-import { Typography } from '@material-ui/core'
+import { Typography } from '@mui/material'
 import { useStyles } from 'app/pages/exchange/components/TradeHistoryTable/Side.styles'
 import { getOrderSideName } from 'helpers/strings'
 import React from 'react'

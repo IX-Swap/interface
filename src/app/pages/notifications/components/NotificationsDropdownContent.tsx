@@ -1,6 +1,6 @@
 import React from 'react'
 import { DropdownContentProps } from 'app/components/Dropdown/Dropdown'
-import { Grid, Typography } from '@material-ui/core'
+import { Grid, Typography } from '@mui/material'
 import { MarkAllAsRead } from 'app/pages/notifications/components/MarkAllAsRead'
 import { ViewAllNotifications } from 'app/pages/notifications/components/ViewAllNotifications'
 import { useStyles } from 'app/pages/notifications/components/NotificationsDropdownContent.styles'

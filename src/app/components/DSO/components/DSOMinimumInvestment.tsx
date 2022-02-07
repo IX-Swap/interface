@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Typography } from '@material-ui/core'
+import { Grid, Typography } from '@mui/material'
 import { useFormContext } from 'react-hook-form'
 import { useAssetsData } from 'hooks/asset/useAssetsData'
 import { addSymbol } from 'helpers/numbers'

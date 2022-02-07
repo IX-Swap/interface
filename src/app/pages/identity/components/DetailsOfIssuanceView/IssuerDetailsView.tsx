@@ -1,4 +1,4 @@
-import { Grid, Typography } from '@material-ui/core'
+import { Grid, Typography } from '@mui/material'
 import { LabelledValue } from 'components/LabelledValue'
 import React from 'react'
 import { DetailsOfIssuance } from 'types/detailsOfIssuance'

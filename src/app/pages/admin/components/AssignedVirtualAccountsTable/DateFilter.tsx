@@ -1,5 +1,5 @@
 import React from 'react'
-import { DateTimePickerComponent } from 'components/form/_DateTimePicker'
+import { DatePickerComponent } from 'components/form/DatePicker'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
 import { convertDateToISO } from 'helpers/dates'
 import { QueryFilter } from 'hooks/filters/useQueryFilter'
@@ -14,20 +14,24 @@ export const DateFilter = ({ name, label, width = 150 }: DateFilterProps) => {
   return (
     <SearchQueryFilter name={name}>
       {({ value, onChange, onClear }) => (
-        <DateTimePickerComponent
+        <DatePickerComponent
+          name={name}
           value={value ?? null}
           className='denseAdornments'
-          size='small'
-          inputVariant='outlined'
           label={label}
           clearable
-          style={{ width: width }}
+          InputProps={{
+            fullWidth: false,
+            style: {
+              width
+            }
+          }}
           onChange={date => {
             if (date === null) {
               onClear()
             } else {
               try {
-                onChange(convertDateToISO(date))
+                onChange(convertDateToISO(date as Date))
               } catch (e) {
                 onChange(undefined)
               }

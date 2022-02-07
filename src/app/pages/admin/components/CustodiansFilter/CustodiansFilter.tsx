@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Typography } from '@material-ui/core'
+import { Grid, Typography } from '@mui/material'
 import { CustodianFilter } from 'app/pages/admin/components/CustodianFilter'
 import { useStyles } from 'app/pages/admin/components/CustodiansFilter/CustodiansFilter.styles'
 

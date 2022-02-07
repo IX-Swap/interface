@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Grid, Typography } from '@material-ui/core'
+import { Box, Grid, Typography } from '@mui/material'
 import { AddressType } from 'app/pages/accounts/pages/digitalSecurities/Withdraw/AddressType'
 import { Network } from 'app/pages/accounts/pages/digitalSecurities/Withdraw/Network'
 import { AddressField } from 'app/pages/accounts/pages/digitalSecurities/Withdraw/AddressField'

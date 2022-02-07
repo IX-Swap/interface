@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button } from '@material-ui/core'
+import { Button } from '@mui/material'
 import { getIdFromObj } from 'helpers/strings'
 import { ListingView } from 'types/listing'
 import { useSubmitListing } from 'app/pages/exchange/hooks/useSubmitListing'

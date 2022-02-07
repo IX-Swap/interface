@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import { Button, Input } from '@material-ui/core'
+import { Button, Input } from '@mui/material'
 import { useUploadVirtualAccountCSV } from 'app/pages/admin/hooks/useUploadVirtualAccountCSV'
 
 export const UploadCSVButton = () => {

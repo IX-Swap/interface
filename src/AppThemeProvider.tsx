@@ -1,6 +1,6 @@
 import React, { createContext } from 'react'
 import { useAppTheme } from 'hooks/useAppTheme'
-import { Theme } from '@material-ui/core/styles'
+import { Theme } from '@mui/material/styles'
 
 export const AppThemeContext = createContext<ReturnType<
   typeof useAppTheme

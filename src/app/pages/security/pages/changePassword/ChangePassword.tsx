@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Paper, Grid, Box } from '@material-ui/core'
+import { Container, Paper, Grid, Box } from '@mui/material'
 import { ChangePasswordFormValues } from './types'
 import { changePasswordFormValuesSchema } from './validation'
 import { useChangePassword } from './hooks/useChangePassword'

@@ -1,6 +1,6 @@
 import React from 'react'
 import { DigitalSecurityOffering } from 'types/dso'
-import { Grid, Hidden, Tooltip } from '@material-ui/core'
+import { Grid, Hidden, Tooltip } from '@mui/material'
 import { LabelledValue } from 'components/LabelledValue'
 import { DSOInvestLink } from 'app/components/DSO/components/DSOInvestLink'
 import { DSOProgressBar } from 'app/components/DSO/components/DSOProgressBar'

@@ -1,5 +1,5 @@
 import { useStyles } from './InfoItem.styles'
-import { Box, Grid, Typography } from '@material-ui/core'
+import { Box, Grid, Typography } from '@mui/material'
 import React from 'react'
 
 export interface InfoItemProps {

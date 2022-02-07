@@ -1,4 +1,4 @@
-import { RadioGroup as MUIRadioGroup, RadioGroupProps } from '@material-ui/core'
+import { RadioGroup as MUIRadioGroup, RadioGroupProps } from '@mui/material'
 import React from 'react'
 import { TypedFieldRenderComponentProps } from 'components/form/types'
 

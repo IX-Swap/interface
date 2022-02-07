@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles'
+import makeStyles from '@mui/styles/makeStyles'
 
 export const useStyles = makeStyles(theme => ({
   rail: {
@@ -9,8 +9,10 @@ export const useStyles = makeStyles(theme => ({
     height: theme.spacing(0.25)
   },
   thumb: {
-    width: `${theme.spacing(1.25)}px!important`,
-    height: `${theme.spacing(1.25)}px!important`,
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    width: `${theme.spacing(1.25)}!important`,
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    height: `${theme.spacing(1.25)}!important`,
     marginTop: `${-theme.spacing(0.5)}px!important`,
     marginLeft: `${-theme.spacing(0.625)}px!important`,
     border: `2px solid ${theme.palette.primary.main}`,

@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles'
+import makeStyles from '@mui/styles/makeStyles'
 
 export const useStyles = makeStyles(theme => ({
   container: {
@@ -15,14 +15,14 @@ export const useStyles = makeStyles(theme => ({
     color: theme.palette.getContrastText(theme.palette.primary.main),
     backgroundColor: theme.palette.primary.main,
     padding: theme.spacing(4, 5),
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       width: '100%'
     }
   },
   secondaryContent: {
     backgroundColor: '#DADADA',
     color:
-      theme.palette.type === 'light'
+      theme.palette.mode === 'light'
         ? theme.palette.text.primary
         : theme.palette.getContrastText(theme.palette.text.primary)
   },
@@ -30,7 +30,7 @@ export const useStyles = makeStyles(theme => ({
     height: 352,
     width: '50%',
     backgroundSize: 'cover',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       width: '100%'
     }
   },
@@ -57,11 +57,11 @@ export const useStyles = makeStyles(theme => ({
     marginTop: 'auto',
     textDecoration: 'underline',
     color:
-      theme.palette.type === 'light' ? '#8DC2FF' : theme.palette.text.primary,
+      theme.palette.mode === 'light' ? '#8DC2FF' : theme.palette.text.primary,
     stroke:
-      theme.palette.type === 'light' ? '#8DC2FF' : theme.palette.text.primary,
+      theme.palette.mode === 'light' ? '#8DC2FF' : theme.palette.text.primary,
     textDecorationColor:
-      theme.palette.type === 'light'
+      theme.palette.mode === 'light'
         ? '#8DC2FF'
         : `${theme.palette.text.primary}!important`,
     '&:hover': {
@@ -70,15 +70,15 @@ export const useStyles = makeStyles(theme => ({
   },
   secondaryLink: {
     color:
-      theme.palette.type === 'light'
+      theme.palette.mode === 'light'
         ? '#282730'
         : theme.palette.getContrastText(theme.palette.text.primary),
     stroke:
-      theme.palette.type === 'light'
+      theme.palette.mode === 'light'
         ? '#282730'
         : theme.palette.getContrastText(theme.palette.text.primary),
     textDecorationColor:
-      theme.palette.type === 'light'
+      theme.palette.mode === 'light'
         ? '#282730'
         : `${theme.palette.getContrastText(
             theme.palette.text.primary

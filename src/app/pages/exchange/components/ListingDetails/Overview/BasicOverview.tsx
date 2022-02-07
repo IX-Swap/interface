@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { WalletAddress } from 'app/components/WalletAddress'
 import { LabelledValue } from 'components/LabelledValue'
 import { formatDateToMMDDYY } from 'helpers/dates'
