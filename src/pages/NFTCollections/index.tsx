@@ -4,7 +4,7 @@ import { NFTConnectWallet } from 'components/NFTConnectWallet'
 import { RowBetween, RowCenter } from 'components/Row'
 import { useActiveWeb3React } from 'hooks/web3'
 import { Body, Container } from 'pages/AdminKyc'
-import React, { FC, useEffect } from 'react'
+import React, { FC, useEffect, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import { Flex } from 'rebass'
 import { useFetchMyCollections, useNFTState } from 'state/nft/hooks'
@@ -17,6 +17,7 @@ import { CollectionCard, CollectionImage, CollectionImageWrapper, CollectionLogo
 import useTheme from 'hooks/useTheme'
 import styled from 'styled-components'
 import { NFTCollectionImage } from 'state/nft/types'
+import { useUserisLoggedIn } from 'state/auth/hooks'
 
 const LoaderWrapper = styled.div`
   display: flex;
@@ -44,16 +45,26 @@ const getImage = (item: NFTCollectionImage | string | undefined): string | null 
 const NFTCollections: FC = () => {
   // const [selectedTabId, setSelectedTabId] = useState(1)
   const { account } = useActiveWeb3React()
+  const isLoggedIn = useUserisLoggedIn()
   const fetchMyCollections = useFetchMyCollections()
   const { myCollections, collectionsLoading } = useNFTState()
   const theme = useTheme()
-  useEffect(() => {
-    fetchMyCollections()
-  }, [fetchMyCollections])
 
-  // const handleTabChange = (id: number) => {
-  //   setSelectedTabId(id)
-  // }
+  const onSetCollectionState = useCallback(() => {
+    if (!account) {
+      return
+    }
+
+    fetchMyCollections()
+  }, [account, fetchMyCollections])
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      return
+    }
+
+    onSetCollectionState()
+  }, [isLoggedIn])
 
   if (!account) return <NFTConnectWallet />
   return (
