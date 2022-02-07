@@ -8,29 +8,11 @@ import {
 describe('SettingsRow', () => {
   const props: SettingsRowProps = {
     name: 'setting-row',
-    action: <div data-testid='action' />,
-    image:
-      'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
+    action: <div data-testid='action' />
   }
 
   afterEach(async () => {
     jest.clearAllMocks()
-  })
-
-  it('does not renders image if image prop is undefined', () => {
-    const { queryByAltText } = render(
-      <SettingsRow {...props} image={undefined} />
-    )
-
-    expect(queryByAltText(props.name)).toBeNull()
-  })
-
-  it('renders image as expected if the image prop was provided', () => {
-    const { getByAltText } = render(<SettingsRow {...props} />)
-    const image = getByAltText(props.name)
-
-    expect(image).toBeInstanceOf(HTMLImageElement)
-    expect(image).toHaveAttribute('src', props.image)
   })
 
   it('renders name correctly', () => {

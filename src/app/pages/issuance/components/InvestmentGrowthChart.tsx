@@ -17,9 +17,7 @@ export const InvestmentGrowthChart = () => {
   const dateTicks = hasData ? getWeekDays(data.slice(1)) : undefined
 
   const textStyle = {
-    color: theme.palette.getContrastText(
-      theme.palette.backgrounds.default as string
-    )
+    color: theme.palette.getContrastText(theme.palette.backgrounds.default)
   }
   const options = {
     chart: {

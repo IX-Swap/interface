@@ -45,9 +45,7 @@ export const CommitmentStatsChart = () => {
         color: gridColor
       },
       textStyle: {
-        color: theme.palette.getContrastText(
-          theme.palette.backgrounds.default as string
-        )
+        color: theme.palette.getContrastText(theme.palette.backgrounds.default)
       }
     },
     vAxis: {
