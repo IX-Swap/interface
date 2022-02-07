@@ -19,6 +19,9 @@ import styled from 'styled-components'
 import { NFTCollectionImage } from 'state/nft/types'
 import { useUserisLoggedIn } from 'state/auth/hooks'
 
+import AppBody from 'pages/AppBody'
+import { SUPPORTED_TGE_CHAINS } from 'constants/addresses'
+
 const LoaderWrapper = styled.div`
   display: flex;
   flex-flow: row nowrap;
@@ -44,27 +47,29 @@ const getImage = (item: NFTCollectionImage | string | undefined): string | null 
 
 const NFTCollections: FC = () => {
   // const [selectedTabId, setSelectedTabId] = useState(1)
-  const { account } = useActiveWeb3React()
+  const { account, chainId } = useActiveWeb3React()
   const isLoggedIn = useUserisLoggedIn()
   const fetchMyCollections = useFetchMyCollections()
   const { myCollections, collectionsLoading } = useNFTState()
   const theme = useTheme()
 
+  //const blurred = chainId !== SUPPORTED_TGE_CHAINS.KOVAN
+
   const onSetCollectionState = useCallback(() => {
-    if (!account) {
+    if (!account || !chainId) {
       return
     }
 
-    fetchMyCollections()
-  }, [account, fetchMyCollections])
+    fetchMyCollections(chainId)
+  }, [account, chainId, fetchMyCollections])
 
   useEffect(() => {
-    if (!isLoggedIn) {
+    if (!isLoggedIn || !chainId) {
       return
     }
 
     onSetCollectionState()
-  }, [isLoggedIn])
+  }, [isLoggedIn, chainId])
 
   if (!account) return <NFTConnectWallet />
   return (
@@ -75,26 +80,26 @@ const NFTCollections: FC = () => {
         </TYPE.titleBig>
         {/* We don't have categories for collections for now. May be present in the future */}
         {/* <Flex justifyContent="center" alignItems="center">
-          {tabs.map(({ id, label }) => (
-            <ButtonEmpty
-              width="auto"
-              padding="0"
-              marginRight={2}
-              key={`sort-tab-${id}`}
-              onClick={() => handleTabChange(id)}
-            >
-              <Column>
-                <SortText active={id === selectedTabId}>
-                  <Text marginBottom="10px" fontSize={20}>
-                    {label}
-                  </Text>
-                </SortText>
-                {id === selectedTabId && <ActiveSortItemBottom />}
-              </Column>
-            </ButtonEmpty>
-          ))}
-        </Flex>
-        <Divider marginBottom={40} /> */}
+            {tabs.map(({ id, label }) => (
+              <ButtonEmpty
+                width="auto"
+                padding="0"
+                marginRight={2}
+                key={`sort-tab-${id}`}
+                onClick={() => handleTabChange(id)}
+              >
+                <Column>
+                  <SortText active={id === selectedTabId}>
+                    <Text marginBottom="10px" fontSize={20}>
+                      {label}
+                    </Text>
+                  </SortText>
+                  {id === selectedTabId && <ActiveSortItemBottom />}
+                </Column>
+              </ButtonEmpty>
+            ))}
+          </Flex>
+          <Divider marginBottom={40} /> */}
         <RowBetween style={{ marginBottom: '15px', flexWrap: 'wrap' }}>
           <ButtonGradientBorder as={StyledInternalLink} to={routes.nftCollectionImport}>
             Import a collection
