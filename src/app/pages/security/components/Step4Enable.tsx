@@ -1,5 +1,5 @@
 import React from 'react'
-import { Typography, Grid } from '@material-ui/core'
+import { Typography, Grid } from '@mui/material'
 import { Enable2faFormValues } from 'app/pages/security/types'
 import { Form } from 'components/form/Form'
 import { StepWrapper } from 'app/pages/security/components/StepWrapper'

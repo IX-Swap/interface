@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, TextField, Typography } from '@material-ui/core'
+import { Grid, TextField, Typography } from '@mui/material'
 import { TypedField } from 'components/form/TypedField'
 import { useFormContext } from 'react-hook-form'
 import { Submit } from 'components/form/Submit'

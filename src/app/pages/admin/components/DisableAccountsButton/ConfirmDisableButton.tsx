@@ -1,4 +1,4 @@
-import { Button } from '@material-ui/core'
+import { Button } from '@mui/material'
 import { useDisableVirtualAccounts } from 'app/pages/admin/hooks/useDisableVirtualAccounts'
 import { useSelectionHelperContext } from 'components/SelectionHelper'
 import React from 'react'
@@ -16,9 +16,7 @@ export const ConfirmDisableButton = ({
   const [disableAccounts, { isLoading }] = useDisableVirtualAccounts()
 
   const handleConfirmDisable = async () => {
-    const selectedAccountNumbers = selected.map(
-      account => account.accountNumber
-    )
+    const selectedAccountNumbers = selected.map(account => account._id)
     await disableAccounts(selectedAccountNumbers)
     successCallback?.()
     resetSelection()

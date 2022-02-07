@@ -1,5 +1,5 @@
 import React from 'react'
-import { MenuItem, Select, SelectProps } from '@material-ui/core'
+import { MenuItem, Select, SelectProps } from '@mui/material'
 import { privateClassNames } from 'helpers/classnames'
 import { useAllNetworks } from 'app/pages/accounts/pages/withdrawalAddresses/hooks/useAllNetworks'
 

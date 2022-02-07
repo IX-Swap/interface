@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { Box, Grid, Typography, useTheme } from '@material-ui/core'
+import { Box, Grid, Typography, useTheme } from '@mui/material'
 import { RootContainer } from 'ui/RootContainer'
 import { Reports as ReportsComponent } from 'app/pages/educationCentre/components/AccessReports/Reports'
 import AtlasLogoLight from 'assets/icons/atlas_logo_white.png'
@@ -31,7 +31,7 @@ export const Reports = () => {
                 width={106}
                 height={34}
                 src={
-                  theme.palette.type === 'light'
+                  theme.palette.mode === 'light'
                     ? AtlasLogoDark
                     : AtlasLogoLight
                 }

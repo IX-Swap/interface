@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, ButtonProps } from '@material-ui/core'
+import { Button, ButtonProps } from '@mui/material'
 import { useMarkAllAsRead } from 'app/pages/notifications/hooks/useMarkAllAsRead'
 import { useNotifications } from 'app/pages/notifications/hooks/useNotifications'
 

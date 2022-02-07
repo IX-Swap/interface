@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react'
 import { DSOInvestorViewHeader } from 'app/components/DSO/components/DSOInvestorViewHeader'
 import { DigitalSecurityOffering } from 'types/dso'
-import { Tabs, Tab, Grid } from '@material-ui/core'
+import { Tabs, Tab, Grid } from '@mui/material'
 import { DSOPricingViewCompact } from 'app/components/DSO/components/DSOPricingViewCompact'
 import { DSOTermsViewCompact } from 'app/components/DSO/DSOPreview/DSOTermsViewCompact'
 import { TabPanel } from 'components/TabPanel'

@@ -39,10 +39,10 @@ describe('ActionResetPassword', () => {
         }}
       />
     )
-    expect(getByText('START ACCOUNT RESET')).toBeTruthy()
+    expect(getByText('START PASSWORD RESET')).toBeTruthy()
 
     fireEvent(
-      getByText('START ACCOUNT RESET'),
+      getByText('START PASSWORD RESET'),
       new MouseEvent('click', { bubbles: true, cancelable: true })
     )
     expect(openResetPasswordMock).toHaveBeenCalled()

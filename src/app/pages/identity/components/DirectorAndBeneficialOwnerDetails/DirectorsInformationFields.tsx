@@ -1,4 +1,4 @@
-import { Grid, TextField } from '@material-ui/core'
+import { Grid, TextField } from '@mui/material'
 import { AddressFields } from 'app/pages/identity/components/AddressFields/AddressFields'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
 import { PhoneInput } from 'components/form/PhoneInput'

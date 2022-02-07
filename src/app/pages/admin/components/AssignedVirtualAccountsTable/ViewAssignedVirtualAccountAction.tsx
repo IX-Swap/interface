@@ -1,5 +1,5 @@
-import { IconButton } from '@material-ui/core'
-import { Launch } from '@material-ui/icons'
+import { IconButton } from '@mui/material'
+import { Launch } from '@mui/icons-material'
 import { AdminRoute } from 'app/pages/admin/router/config'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import React from 'react'

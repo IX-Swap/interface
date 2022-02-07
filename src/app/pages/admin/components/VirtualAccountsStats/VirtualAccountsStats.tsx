@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { StatCard } from 'app/pages/admin/components/StatCard/StatCard'
 import { useServices } from 'hooks/useServices'
 import React from 'react'

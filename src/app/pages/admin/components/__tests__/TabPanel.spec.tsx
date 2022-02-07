@@ -1,9 +1,9 @@
 import React from 'react'
 import { render } from 'test-utils'
 import { TabPanel, TabPanelProps } from 'app/pages/admin/components/TabPanel'
-import Box from '@material-ui/core/Box'
+import Box from '@mui/material/Box'
 
-jest.mock('@material-ui/core/Box', () =>
+jest.mock('@mui/material/Box', () =>
   jest.fn(({ children }) => <div>{children}</div>)
 )
 

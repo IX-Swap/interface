@@ -3,7 +3,7 @@ import { ViewDocument } from 'app/components/DSO/components/ViewDocument'
 import {
   Avatar as MUIAvatar,
   AvatarProps as MUIAvatarProps
-} from '@material-ui/core'
+} from '@mui/material'
 import { useRawBanner } from 'app/pages/admin/hooks/useRawBanner'
 
 export interface AvatarProps extends MUIAvatarProps {

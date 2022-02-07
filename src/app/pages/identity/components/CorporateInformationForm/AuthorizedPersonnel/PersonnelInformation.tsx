@@ -1,6 +1,6 @@
 import React from 'react'
 import { TypedField } from 'components/form/TypedField'
-import { Grid, TextField } from '@material-ui/core'
+import { Grid, TextField } from '@mui/material'
 import { useFormContext } from 'react-hook-form'
 import { PhoneInput } from 'components/form/PhoneInput'
 import { plainValueExtractor } from 'helpers/forms'

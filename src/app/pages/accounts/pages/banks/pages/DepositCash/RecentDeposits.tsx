@@ -7,7 +7,7 @@ import { getIdFromObj } from 'helpers/strings'
 import { cashDepositsQueryKeys } from 'config/queryKeys'
 import { accountsURL } from 'config/apiURL'
 import { useVirtualAccount } from 'app/pages/accounts/hooks/useVirtualAccount'
-import { Typography } from '@material-ui/core'
+import { Typography } from '@mui/material'
 import { VSpacer } from 'components/VSpacer'
 
 export interface RecentDepositsProps {

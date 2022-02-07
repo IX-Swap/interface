@@ -7,6 +7,7 @@ import { AuthRoute } from 'auth/router/config'
 import * as useLoginHook from 'auth/hooks/useLogin'
 import { generateMutationResult } from '__fixtures__/useQuery'
 import { user } from '__fixtures__/user'
+import { MAX_LOGIN_ATTEMPTS } from 'types/auth'
 
 jest.mock('config', () => ({
   RECAPTCHA_KEY: '123'
@@ -105,7 +106,7 @@ describe('LoginContainer', () => {
     jest.spyOn(useLoginHook, 'useLogin').mockReturnValue({
       mutation: [login, generateMutationResult({ data: user })],
       step: 'login',
-      attempts: 3,
+      attempts: MAX_LOGIN_ATTEMPTS,
       resetAttempts: resetAttempts,
       locked: false,
       email: ''

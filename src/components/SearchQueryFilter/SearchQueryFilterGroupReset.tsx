@@ -1,4 +1,4 @@
-import { Button, ButtonProps } from '@material-ui/core'
+import { Button, ButtonProps } from '@mui/material'
 import { SearchQueryFilterGroupDispatchContext } from 'components/SearchQueryFilter/SearchQueryFilterGroup/context'
 import { QueryFilter, useQueryFilter } from 'hooks/filters/useQueryFilter'
 import React, { useContext } from 'react'

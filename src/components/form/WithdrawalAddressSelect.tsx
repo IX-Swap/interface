@@ -1,5 +1,5 @@
 import React from 'react'
-import { MenuItem, Select, SelectProps } from '@material-ui/core'
+import { MenuItem, Select, SelectProps } from '@mui/material'
 import { queryStatusRenderer } from 'components/form/renderUtils'
 import { privateClassNames } from 'helpers/classnames'
 import { useWithdrawalAddresses } from 'app/pages/accounts/pages/withdrawalAddresses/hooks/useWithdrawalAddresses'

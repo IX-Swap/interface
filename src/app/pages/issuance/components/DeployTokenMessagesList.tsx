@@ -1,5 +1,5 @@
 import React from 'react'
-import { LinearProgress, List, Paper } from '@material-ui/core'
+import { LinearProgress, List, Paper } from '@mui/material'
 import { useDeploymentMessages } from 'app/pages/issuance/hooks/useDeploymentMessages'
 import { FullHeight } from 'app/components/FullHeight'
 import { VariableSizeList } from 'react-window'

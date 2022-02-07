@@ -1,4 +1,4 @@
-import { MenuItem, Select, SelectProps } from '@material-ui/core'
+import { MenuItem, Select, SelectProps } from '@mui/material'
 import { useWalletAddresses } from 'app/pages/accounts/hooks/useWalletAddresses'
 import React from 'react'
 import { WithdrawalAddress } from 'types/withdrawalAddress'

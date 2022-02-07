@@ -8,13 +8,13 @@ import * as useTableWithPaginationHook from 'components/TableWithPagination/hook
 import { QueryStatus } from 'react-query'
 import { useSelectionHelperContext } from 'components/SelectionHelper'
 import { fakeVirtualAccount } from '__fixtures__/unassignedVirtualAccounts'
-import { TablePagination } from '@material-ui/core'
+import { TablePagination } from '@mui/material'
 
 jest.mock('components/SelectionHelper', () => ({
   useSelectionHelperContext: jest.fn(() => {})
 }))
 
-jest.mock('@material-ui/core/TablePagination', () => jest.fn(() => null))
+jest.mock('@mui/material/TablePagination', () => jest.fn(() => null))
 
 const useTableWithPaginationMockReturnValue: useTableWithPaginationHook.UseTableWithPaginationReturnType<any> =
   {

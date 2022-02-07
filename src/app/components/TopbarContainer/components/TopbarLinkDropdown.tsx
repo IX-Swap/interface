@@ -1,5 +1,5 @@
 import React from 'react'
-import { Menu } from '@material-ui/core'
+import { Menu } from '@mui/material'
 import { TopbarLinkContainer } from 'app/components/TopbarContainer/components/TopbarLinkContainer'
 import { InternalRouteProps } from 'types/util'
 import { TopNavMenuItem } from 'app/components/TopbarContainer/components/TopNavMenuItem'
@@ -32,7 +32,7 @@ export const TopbarLinkDropdown = ({
       </div>
 
       <Menu
-        style={{ top: 72, paddingTop: 0, paddingBottom: 0 }}
+        style={{ top: 10, paddingTop: 0, paddingBottom: 0 }}
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}

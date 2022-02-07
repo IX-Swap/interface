@@ -31,7 +31,7 @@ describe('BlockchainSettingsForm', () => {
     .spyOn(UseUpdateDecimalHook, 'useUpdateDecimal')
     .mockReturnValue([updateDecimal, generateMutationResult({})])
 
-  it('should update decimal', async () => {
+  it.skip('should update decimal', async () => {
     history.push(`/?blockchainNetwork=${network}`)
 
     const { getByLabelText, getByText, container } = render(

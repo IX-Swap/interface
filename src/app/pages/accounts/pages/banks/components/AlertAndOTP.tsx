@@ -1,5 +1,5 @@
 import React, { createElement, ElementType } from 'react'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { VSpacer } from 'components/VSpacer'
 import { TypedField } from 'components/form/TypedField'
 import { useFormContext } from 'react-hook-form'

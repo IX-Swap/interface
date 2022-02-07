@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Box } from '@material-ui/core'
+import { Grid, Box } from '@mui/material'
 import {
   TableView,
   TableViewRendererProps
@@ -11,7 +11,7 @@ import { useDSOTableColumns } from 'app/pages/invest/hooks/useDSOTableColumns'
 import { Actions } from 'app/pages/invest/components/DSOTable/Actions'
 import { DSOTableFilters } from 'app/pages/invest/components/DSOTable/DSOTableFilters'
 import { issuanceURL } from 'config/apiURL'
-import { useTheme } from '@material-ui/core/styles'
+import { useTheme } from '@mui/material/styles'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { compactColumns } from 'app/pages/invest/components/DSOTable/columns'
 import { CompactBody } from 'components/TableWithPagination/CompactBody'

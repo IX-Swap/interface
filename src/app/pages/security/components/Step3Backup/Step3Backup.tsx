@@ -1,6 +1,6 @@
 import React from 'react'
 import useStyles from './Step3Backup.styles'
-import { Typography, Grid } from '@material-ui/core'
+import { Typography, Grid } from '@mui/material'
 import { TwoFaData } from 'app/pages/security/types'
 import { StepWrapper } from 'app/pages/security/components/StepWrapper'
 

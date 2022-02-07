@@ -1,5 +1,5 @@
 import React from 'react'
-import { TableCell } from '@material-ui/core'
+import { TableCell } from '@mui/material'
 import get from 'lodash/get'
 import { privateClassNames } from 'helpers/classnames'
 import { TableColumn } from 'types/util'

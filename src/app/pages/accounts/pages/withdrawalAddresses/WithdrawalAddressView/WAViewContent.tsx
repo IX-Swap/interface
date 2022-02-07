@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, LinearProgress } from '@material-ui/core'
+import { Grid, LinearProgress } from '@mui/material'
 import { LabelledValue } from 'components/LabelledValue'
 import { useWithdrawalAddressById } from 'app/pages/accounts/pages/withdrawalAddresses/hooks/useWithdrawalAddressById'
 import { useParams } from 'react-router-dom'

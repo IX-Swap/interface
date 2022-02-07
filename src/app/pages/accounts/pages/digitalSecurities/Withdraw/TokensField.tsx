@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Grid, Typography } from '@material-ui/core'
+import { Box, Grid, Typography } from '@mui/material'
 import { TypedField } from 'components/form/TypedField'
 import { useFormContext } from 'react-hook-form'
 import { TokenSelect } from 'app/pages/accounts/components/TokenSelect'

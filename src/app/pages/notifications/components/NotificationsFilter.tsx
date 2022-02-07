@@ -1,5 +1,5 @@
 import React from 'react'
-import { FormControlLabel, Grid, Typography } from '@material-ui/core'
+import { FormControlLabel, Grid, Typography } from '@mui/material'
 import { useNotificationsFilter } from 'app/pages/notifications/hooks/useNotificationsFilter'
 import { NotificationFilterFeatures } from 'types/app'
 import { BigCheckbox } from 'app/components/BigCheckbox'

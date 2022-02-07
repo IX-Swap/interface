@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { AvailableBalance } from 'app/pages/issuance/components/ManageDistributions/AvailableBalance'
 import { InsightCard } from 'app/pages/issuance/components/InsightCard'
 import { TotalTokens } from 'app/pages/issuance/components/CapTable/TotalTokens'

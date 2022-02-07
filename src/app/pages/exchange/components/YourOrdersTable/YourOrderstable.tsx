@@ -1,6 +1,6 @@
 import React from 'react'
 import { TableView } from 'components/TableWithPagination/TableView'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import { columns } from 'app/pages/exchange/components/YourOrdersTable/columns'
 import { Filters } from 'app/pages/exchange/components/TradeHistoryTable/Filter'
@@ -9,11 +9,12 @@ import { getIdFromObj } from 'helpers/strings'
 import { exchange as exchangeUrl } from 'config/apiURL'
 import { exchange as exchangeQueryKeys } from 'config/queryKeys'
 import { Actions } from 'app/pages/exchange/components/YourOrdersTable/Actions'
+import { OrderSide } from 'types/order'
 
 export interface Order {
   _id: string
   type: string
-  side: 'BID' | 'ASK'
+  side: OrderSide
   price: number
   amount: number
   date: string

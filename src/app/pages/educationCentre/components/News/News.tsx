@@ -1,9 +1,9 @@
 import React from 'react'
-import { Box, Grid, Typography } from '@material-ui/core'
+import { Box, Grid, Typography } from '@mui/material'
 import { SearchFilter } from 'app/components/SearchFilter'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import { useStyles } from './News.style'
-import { useTheme } from '@material-ui/core/styles'
+import { useTheme } from '@mui/material/styles'
 import { NewsList } from 'app/pages/educationCentre/components/News/NewsList'
 import { homeURL } from 'config/apiURL'
 import { homeQueryKeys } from 'config/queryKeys'
@@ -30,7 +30,7 @@ export const News = () => {
         <img
           width={106}
           height={34}
-          src={theme.palette.type === 'light' ? AtlasLogoDark : AtlasLogoLight}
+          src={theme.palette.mode === 'light' ? AtlasLogoDark : AtlasLogoLight}
           alt={'Atlas One Logo'}
         />
         <Grid item xs={12} md={6} lg={3} className={classes.input}>

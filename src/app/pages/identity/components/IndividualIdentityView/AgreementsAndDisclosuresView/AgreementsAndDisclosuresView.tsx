@@ -1,7 +1,7 @@
 import React from 'react'
-import DoneIcon from '@material-ui/icons/Done'
-import CloseIcon from '@material-ui/icons/Close'
-import { Grid, Link, Box } from '@material-ui/core'
+import DoneIcon from '@mui/icons-material/Done'
+import CloseIcon from '@mui/icons-material/Close'
+import { Grid, Link, Box } from '@mui/material'
 import {
   CorporateIdentity,
   IndividualIdentity

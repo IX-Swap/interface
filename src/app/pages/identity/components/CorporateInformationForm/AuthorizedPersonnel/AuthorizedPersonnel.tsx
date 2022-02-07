@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Button } from '@material-ui/core'
+import { Grid, Button } from '@mui/material'
 import { PersonnelInformation } from 'app/pages/identity/components/CorporateInformationForm/AuthorizedPersonnel/PersonnelInformation'
 import { AuthorizationDocuments } from 'app/pages/identity/components/CorporateInformationForm/AuthorizedPersonnel/AuthorizationDocuments'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'

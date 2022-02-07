@@ -5,7 +5,7 @@ import {
   TableContainer,
   TableHead,
   TableRow
-} from '@material-ui/core'
+} from '@mui/material'
 import { TradesRow } from 'app/pages/accounts/pages/reports/components/TradesTable/TradesRow'
 import React from 'react'
 import { TradeItem } from 'types/reports'

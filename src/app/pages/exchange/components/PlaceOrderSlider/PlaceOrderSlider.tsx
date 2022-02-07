@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
-import { Slider } from '@material-ui/core'
+import { Slider } from '@mui/material'
 import { useStyles } from 'app/pages/exchange/components/PlaceOrderSlider/PlaceOrderSlider.style'
 
 export interface PlaceOrderFieldsProps {

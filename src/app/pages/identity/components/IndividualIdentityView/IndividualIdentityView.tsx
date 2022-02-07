@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { IdentityDocumentsView } from 'app/pages/identity/components/IdentityDocumentsView/IdentityDocumentsView'
 import { privateClassNames } from 'helpers/classnames'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'

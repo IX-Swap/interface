@@ -5,7 +5,7 @@ import {
   TableCell,
   TableRow,
   Typography
-} from '@material-ui/core'
+} from '@mui/material'
 import { Security } from 'app/pages/educationCentre/components/Securities/SecurityCard'
 import { hasValue } from 'helpers/forms'
 import { formatMoney } from 'helpers/numbers'

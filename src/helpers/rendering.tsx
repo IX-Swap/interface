@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import React from 'react'
-import { Grid, MenuItem } from '@material-ui/core'
+import { Grid, MenuItem } from '@mui/material'
 import draftToHtml from 'draftjs-to-html'
 import pdfIcon from 'assets/icons/documents/pdf2.svg'
 import docxIcon from 'assets/icons/documents/docx.svg'
@@ -12,7 +12,7 @@ import { DigitalSecurityOffering } from 'types/dso'
 import { formatMoney } from './numbers'
 import { DSOLogo } from 'app/components/DSO/components/DSOLogo'
 import { Commitment } from 'types/commitment'
-import { Order } from 'types/order'
+import { Order, OrderSide } from 'types/order'
 import { OrderStatus } from 'app/pages/exchange/components/PastOrderTable/OrderStatus'
 import { Side } from 'app/pages/exchange/components/TradeHistoryTable/Side'
 import { dsoQueryKeys } from 'config/queryKeys'
@@ -72,7 +72,7 @@ export const documentIcons = {
   unknown: unknownIcon
 }
 
-export const renderSide = (side: 'BID' | 'ASK') => <Side side={side} />
+export const renderSide = (side: OrderSide) => <Side side={side} />
 
 export const renderDateAndTimeField = (date: any) => {
   return (
@@ -91,7 +91,6 @@ export const renderPartOfEmail = (email: string | undefined) => {
   if (email === undefined || email.length < 1) {
     return ''
   }
-  const firstPart = email.split('@')[0]
-  const secondPart = email.split('@')[1]
+  const [firstPart, secondPart] = email.split('@')
   return firstPart.slice(0, 3) + '***@' + secondPart
 }

@@ -10,7 +10,7 @@ import {
   useTheme,
   Button,
   Grid
-} from '@material-ui/core'
+} from '@mui/material'
 import useStyles from 'app/pages/admin/components/ListedTokensDialog/ListedTokensDialog.styles'
 import { VSpacer } from 'components/VSpacer'
 import { SearchFilter } from 'app/components/SearchFilter'
@@ -25,7 +25,7 @@ export const ListedTokensDialog = (props: ModalProps) => {
   const { open = false, onClose, currentCustodian } = props
   const classes = useStyles()
   const theme = useTheme()
-  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'))
+  const fullScreen = useMediaQuery(theme.breakpoints.down('md'))
   const handleClose = () => onClose()
 
   // TODO added get tokens list function after complete backend api endpoint

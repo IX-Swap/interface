@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Typography, Grid, Button } from '@material-ui/core'
+import { Typography, Grid, Button } from '@mui/material'
 import { StepWrapper } from 'app/pages/security/components/StepWrapper'
 import { useGetEmailCode } from 'app/pages/security/pages/update2fa/hooks/useGetEmailCode'
 import { RemoveAuthenticatorForm } from 'app/pages/security/pages/update2fa/components/RemoveAuthenticatorForm'

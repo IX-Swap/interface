@@ -1,9 +1,9 @@
-import { makeStyles } from '@material-ui/core/styles'
+import makeStyles from '@mui/styles/makeStyles'
 
 export const useStyles = makeStyles(theme => ({
   container: {
     backgroundColor:
-      theme.palette.type === 'light'
+      theme.palette.mode === 'light'
         ? 'rgb(250, 250, 250)'
         : theme.palette.background.paper,
     width: '100%',
@@ -11,14 +11,14 @@ export const useStyles = makeStyles(theme => ({
     paddingRight: theme.spacing(2),
     paddingLeft: theme.spacing(3),
     paddingBottom: theme.spacing(5),
-    [theme.breakpoints.down('md')]: {
+    [theme.breakpoints.down('lg')]: {
       paddingRight: theme.spacing(1),
       paddingLeft: theme.spacing(1)
     }
   },
   colorGrid: {
     backgroundColor:
-      theme.palette.type === 'light'
+      theme.palette.mode === 'light'
         ? theme.palette.background.paper
         : '#292929'
   },

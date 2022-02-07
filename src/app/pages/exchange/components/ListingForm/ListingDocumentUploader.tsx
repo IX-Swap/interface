@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import { FieldsArray } from 'components/form/FieldsArray'
-import { Grid, Typography } from '@material-ui/core'
+import { Grid, Typography } from '@mui/material'
 import { TypedField } from 'components/form/TypedField'
 import { plainValueExtractor } from 'helpers/forms'
 import { useFormContext } from 'react-hook-form'

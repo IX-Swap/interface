@@ -1,5 +1,5 @@
 import React, { createElement, useState } from 'react'
-import { ClickAwayListener, Paper, Popper } from '@material-ui/core'
+import { ClickAwayListener, Paper, Popper } from '@mui/material'
 import { bindPopper, InjectedProps } from 'material-ui-popup-state'
 import { useStyles } from 'app/components/Dropdown/DropdownContent.styles'
 import { DropdownProps } from 'app/components/Dropdown/Dropdown'
@@ -27,12 +27,15 @@ export const DropdownContent = (props: DropdownContentProps) => {
       {...bindPopper(popupState)}
       placement={placement}
       className={classes.popper}
-      modifiers={{
-        arrow: {
-          enabled: arrow,
-          element: arrowRef
+      modifiers={[
+        {
+          name: 'arrow',
+          enabled: true,
+          options: {
+            element: arrowRef
+          }
         }
-      }}
+      ]}
     >
       <ClickAwayListener onClickAway={handleClickAway}>
         <Paper>

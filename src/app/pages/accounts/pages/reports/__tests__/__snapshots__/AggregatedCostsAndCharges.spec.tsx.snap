@@ -3,134 +3,126 @@
 exports[`AggregatedCostsAndCharges should match snapshot when all data is loaded successfully 1`] = `
 <div>
   <div
-    class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column"
+    class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column css-3buk32-MuiGrid-root"
   >
     <div
-      class="MuiGrid-root MuiGrid-item"
+      class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
     >
       <div
-        class="MuiGrid-root makeStyles-container-22 MuiGrid-container MuiGrid-direction-xs-column"
+        class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-container-14 css-3buk32-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root makeStyles-header-21 MuiGrid-container"
+          class="MuiGrid-root MuiGrid-container makeStyles-header-13 css-1kca4ek-MuiGrid-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center"
+            class="MuiGrid-root MuiGrid-container MuiGrid-item css-19l8j7t-MuiGrid-root"
           >
             <h2
-              class="MuiTypography-root MuiTypography-h2"
+              class="MuiTypography-root MuiTypography-h2 css-1ybxgbh-MuiTypography-root"
             >
               Aggregated Costs and Charges
             </h2>
           </div>
         </div>
         <div
-          class="MuiGrid-root"
+          class="MuiGrid-root css-186c2wj-MuiGrid-root"
         >
           <nav
-            class="MuiTypography-root MuiBreadcrumbs-root MuiTypography-body1 MuiTypography-colorTextSecondary"
+            class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-1f69azb-MuiTypography-root-MuiBreadcrumbs-root"
           >
             <ol
-              class="MuiBreadcrumbs-ol"
+              class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
             />
           </nav>
         </div>
       </div>
       <div
-        class="MuiBox-root MuiBox-root-24"
+        class="MuiBox-root css-12aw9rk"
       />
     </div>
     <div
-      class="MuiGrid-root MuiGrid-item"
+      class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
     >
       <div
-        class="MuiBox-root MuiBox-root-28"
+        class="MuiBox-root css-12aw9rk"
       />
       <div
-        class="MuiPaper-root MuiAccordion-root makeStyles-root-29 MuiAccordion-rounded MuiPaper-elevation1 MuiPaper-rounded"
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 makeStyles-root-19 MuiAccordion-root MuiAccordion-rounded MuiAccordion-gutters css-171eb6r-MuiPaper-root-MuiAccordion-root"
       >
         <div
-          aria-disabled="false"
           aria-expanded="false"
-          class="MuiButtonBase-root MuiAccordionSummary-root makeStyles-summaryWrapper-30"
+          class="MuiButtonBase-root makeStyles-summaryWrapper-20 MuiAccordionSummary-root MuiAccordionSummary-gutters css-sh22l5-MuiButtonBase-root-MuiAccordionSummary-root"
           role="button"
           tabindex="0"
         >
           <div
-            class="MuiAccordionSummary-content makeStyles-summaryContent-31"
+            class="makeStyles-summaryContent-21 MuiAccordionSummary-content MuiAccordionSummary-contentGutters css-o4b71y-MuiAccordionSummary-content"
           >
             <p
-              class="MuiTypography-root makeStyles-summary-32 MuiTypography-body1 MuiTypography-colorPrimary"
+              class="MuiTypography-root MuiTypography-body1 makeStyles-summary-22 css-tqmfip-MuiTypography-root"
             >
               Fees (SGD)
             </p>
           </div>
           <div
-            aria-disabled="false"
-            aria-hidden="true"
-            class="MuiButtonBase-root MuiIconButton-root MuiAccordionSummary-expandIcon MuiIconButton-edgeEnd"
+            class="MuiAccordionSummary-expandIconWrapper css-yw020d-MuiAccordionSummary-expandIconWrapper"
           >
-            <span
-              class="MuiIconButton-label"
+            <svg
+              aria-hidden="true"
+              class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium css-xet6u8-MuiSvgIcon-root"
+              data-testid="KeyboardArrowDownIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
             >
-              <svg
-                aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-colorPrimary"
-                focusable="false"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"
-                />
-              </svg>
-            </span>
-            <span
-              class="MuiTouchRipple-root"
-            />
+              <path
+                d="M7.41 8.59 12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"
+              />
+            </svg>
           </div>
         </div>
         <div
-          class="MuiCollapse-root MuiCollapse-hidden"
+          class="MuiCollapse-root MuiCollapse-vertical MuiCollapse-hidden css-bz4dnt-MuiCollapse-root"
           style="min-height: 0px;"
         >
           <div
-            class="MuiCollapse-wrapper"
+            class="MuiCollapse-wrapper MuiCollapse-vertical css-smkl36-MuiCollapse-wrapper"
           >
             <div
-              class="MuiCollapse-wrapperInner"
+              class="MuiCollapse-wrapperInner MuiCollapse-vertical css-9l5vo-MuiCollapse-wrapperInner"
             >
               <div
+                class="MuiAccordion-region"
                 role="region"
               >
                 <div
-                  class="MuiAccordionDetails-root makeStyles-detailsWrapper-33"
+                  class="makeStyles-detailsWrapper-23 MuiAccordionDetails-root css-15v22id-MuiAccordionDetails-root"
                 >
                   <div
-                    class="MuiTableContainer-root"
+                    class="MuiTableContainer-root css-rorn0c-MuiTableContainer-root"
                   >
                     <table
-                      class="MuiTable-root"
+                      class="MuiTable-root css-me9vuo-MuiTable-root"
                     >
                       <thead
-                        class="MuiTableHead-root"
+                        class="MuiTableHead-root css-15wwp11-MuiTableHead-root"
                       >
                         <tr
-                          class="MuiTableRow-root MuiTableRow-head"
+                          class="MuiTableRow-root MuiTableRow-head css-17ivmep-MuiTableRow-root"
                         >
                           <th
-                            class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-34 MuiTableCell-alignLeft"
+                            class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-headColumn-24 css-hr8dup-MuiTableCell-root"
                             scope="col"
                           >
                             Date
                           </th>
                           <th
-                            class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-34 MuiTableCell-alignCenter"
+                            class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignCenter MuiTableCell-sizeMedium makeStyles-headColumn-24 css-1w483vt-MuiTableCell-root"
                             scope="col"
                           >
                             Description
                           </th>
                           <th
-                            class="MuiTableCell-root MuiTableCell-head makeStyles-headColumn-34 MuiTableCell-alignLeft"
+                            class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-headColumn-24 css-hr8dup-MuiTableCell-root"
                             scope="col"
                           >
                             Amount
@@ -138,61 +130,58 @@ exports[`AggregatedCostsAndCharges should match snapshot when all data is loaded
                         </tr>
                       </thead>
                       <tbody
-                        class="MuiTableBody-root"
+                        class="MuiTableBody-root css-apqrd9-MuiTableBody-root"
                       >
                         <tr
-                          class="MuiTableRow-root makeStyles-row-39 makeStyles-row-44"
+                          class="MuiTableRow-root makeStyles-row-29 makeStyles-row-34 css-17ivmep-MuiTableRow-root"
                         >
                           <th
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36"
-                            role="cell"
+                            class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium makeStyles-column-26 css-19zhwm2-MuiTableCell-root"
                             scope="row"
                           />
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignLeft"
+                            class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-column-26 css-19zhwm2-MuiTableCell-root"
                           >
                             Other Fees
                           </td>
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-26 css-1kshyuf-MuiTableCell-root"
                           />
                         </tr>
                         <tr
-                          class="MuiTableRow-root makeStyles-row-39 makeStyles-row-46"
+                          class="MuiTableRow-root makeStyles-row-29 makeStyles-row-36 css-17ivmep-MuiTableRow-root"
                         >
                           <th
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36"
-                            role="cell"
+                            class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium makeStyles-column-26 css-19zhwm2-MuiTableCell-root"
                             scope="row"
                           >
                             2021-11-29, 01:26 AM
                           </th>
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignLeft"
+                            class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-column-26 css-19zhwm2-MuiTableCell-root"
                           >
                             Primary issuance fee
                           </td>
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-26 css-1kshyuf-MuiTableCell-root"
                           >
                             10.00
                           </td>
                         </tr>
                         <tr
-                          class="MuiTableRow-root makeStyles-row-39 makeStyles-row-48"
+                          class="MuiTableRow-root makeStyles-row-29 makeStyles-row-38 css-17ivmep-MuiTableRow-root"
                         >
                           <th
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36"
-                            role="cell"
+                            class="MuiTableCell-root MuiTableCell-body MuiTableCell-sizeMedium makeStyles-column-26 css-19zhwm2-MuiTableCell-root"
                             scope="row"
                           >
                             Total
                           </th>
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignLeft"
+                            class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-column-26 css-19zhwm2-MuiTableCell-root"
                           />
                           <td
-                            class="MuiTableCell-root MuiTableCell-body makeStyles-column-36 MuiTableCell-alignRight"
+                            class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-26 css-1kshyuf-MuiTableCell-root"
                           >
                             10.00
                           </td>
@@ -214,80 +203,80 @@ exports[`AggregatedCostsAndCharges should match snapshot when all data is loaded
 exports[`AggregatedCostsAndCharges should match snapshot when data is loaded successfully and sgd field is empty array 1`] = `
 <div>
   <div
-    class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column"
+    class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column css-3buk32-MuiGrid-root"
   >
     <div
-      class="MuiGrid-root MuiGrid-item"
+      class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
     >
       <div
-        class="MuiGrid-root makeStyles-container-54 MuiGrid-container MuiGrid-direction-xs-column"
+        class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-container-42 css-3buk32-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root makeStyles-header-53 MuiGrid-container"
+          class="MuiGrid-root MuiGrid-container makeStyles-header-41 css-1kca4ek-MuiGrid-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center"
+            class="MuiGrid-root MuiGrid-container MuiGrid-item css-19l8j7t-MuiGrid-root"
           >
             <h2
-              class="MuiTypography-root MuiTypography-h2"
+              class="MuiTypography-root MuiTypography-h2 css-1ybxgbh-MuiTypography-root"
             >
               Aggregated Costs and Charges
             </h2>
           </div>
         </div>
         <div
-          class="MuiGrid-root"
+          class="MuiGrid-root css-186c2wj-MuiGrid-root"
         >
           <nav
-            class="MuiTypography-root MuiBreadcrumbs-root MuiTypography-body1 MuiTypography-colorTextSecondary"
+            class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-1f69azb-MuiTypography-root-MuiBreadcrumbs-root"
           >
             <ol
-              class="MuiBreadcrumbs-ol"
+              class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
             />
           </nav>
         </div>
       </div>
       <div
-        class="MuiBox-root MuiBox-root-56"
+        class="MuiBox-root css-12aw9rk"
       />
     </div>
     <div
-      class="MuiGrid-root MuiGrid-item"
+      class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
     >
       <div
-        class="MuiBox-root MuiBox-root-60"
+        class="MuiBox-root css-12aw9rk"
       />
       <div
-        class="MuiGrid-root makeStyles-wrapper-61 MuiGrid-container MuiGrid-direction-xs-column MuiGrid-align-items-xs-center"
+        class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-wrapper-47 css-30jy6e-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root MuiGrid-item"
+          class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
         >
           <div
-            class="MuiBox-root MuiBox-root-64"
+            class="MuiBox-root css-1kgakwq"
           />
         </div>
         <div
-          class="MuiGrid-root MuiGrid-item"
+          class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
         >
           <div
-            class="MuiBox-root MuiBox-root-65"
+            class="MuiBox-root css-12aw9rk"
           />
           <p
-            class="MuiTypography-root makeStyles-subtitle-62 MuiTypography-body1"
+            class="MuiTypography-root MuiTypography-body1 makeStyles-subtitle-48 css-3a17l8-MuiTypography-root"
           >
             This page is empty.
           </p>
           <div
-            class="MuiBox-root MuiBox-root-66"
+            class="MuiBox-root css-7ieh0i"
           />
           <p
-            class="MuiTypography-root makeStyles-content-63 MuiTypography-body1"
+            class="MuiTypography-root MuiTypography-body1 makeStyles-content-49 css-3a17l8-MuiTypography-root"
           >
             There are no records to display for the selected report.
           </p>
           <div
-            class="MuiBox-root MuiBox-root-67"
+            class="MuiBox-root css-12aw9rk"
           />
         </div>
       </div>
@@ -299,80 +288,80 @@ exports[`AggregatedCostsAndCharges should match snapshot when data is loaded suc
 exports[`AggregatedCostsAndCharges should match snapshot when data is loaded successfully and usd field is empty array 1`] = `
 <div>
   <div
-    class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column"
+    class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column css-3buk32-MuiGrid-root"
   >
     <div
-      class="MuiGrid-root MuiGrid-item"
+      class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
     >
       <div
-        class="MuiGrid-root makeStyles-container-73 MuiGrid-container MuiGrid-direction-xs-column"
+        class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-container-53 css-3buk32-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root makeStyles-header-72 MuiGrid-container"
+          class="MuiGrid-root MuiGrid-container makeStyles-header-52 css-1kca4ek-MuiGrid-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center"
+            class="MuiGrid-root MuiGrid-container MuiGrid-item css-19l8j7t-MuiGrid-root"
           >
             <h2
-              class="MuiTypography-root MuiTypography-h2"
+              class="MuiTypography-root MuiTypography-h2 css-1ybxgbh-MuiTypography-root"
             >
               Aggregated Costs and Charges
             </h2>
           </div>
         </div>
         <div
-          class="MuiGrid-root"
+          class="MuiGrid-root css-186c2wj-MuiGrid-root"
         >
           <nav
-            class="MuiTypography-root MuiBreadcrumbs-root MuiTypography-body1 MuiTypography-colorTextSecondary"
+            class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-1f69azb-MuiTypography-root-MuiBreadcrumbs-root"
           >
             <ol
-              class="MuiBreadcrumbs-ol"
+              class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
             />
           </nav>
         </div>
       </div>
       <div
-        class="MuiBox-root MuiBox-root-75"
+        class="MuiBox-root css-12aw9rk"
       />
     </div>
     <div
-      class="MuiGrid-root MuiGrid-item"
+      class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
     >
       <div
-        class="MuiBox-root MuiBox-root-79"
+        class="MuiBox-root css-12aw9rk"
       />
       <div
-        class="MuiGrid-root makeStyles-wrapper-80 MuiGrid-container MuiGrid-direction-xs-column MuiGrid-align-items-xs-center"
+        class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-wrapper-58 css-30jy6e-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root MuiGrid-item"
+          class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
         >
           <div
-            class="MuiBox-root MuiBox-root-83"
+            class="MuiBox-root css-1kgakwq"
           />
         </div>
         <div
-          class="MuiGrid-root MuiGrid-item"
+          class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
         >
           <div
-            class="MuiBox-root MuiBox-root-84"
+            class="MuiBox-root css-12aw9rk"
           />
           <p
-            class="MuiTypography-root makeStyles-subtitle-81 MuiTypography-body1"
+            class="MuiTypography-root MuiTypography-body1 makeStyles-subtitle-59 css-3a17l8-MuiTypography-root"
           >
             This page is empty.
           </p>
           <div
-            class="MuiBox-root MuiBox-root-85"
+            class="MuiBox-root css-7ieh0i"
           />
           <p
-            class="MuiTypography-root makeStyles-content-82 MuiTypography-body1"
+            class="MuiTypography-root MuiTypography-body1 makeStyles-content-60 css-3a17l8-MuiTypography-root"
           >
             There are no records to display for the selected report.
           </p>
           <div
-            class="MuiBox-root MuiBox-root-86"
+            class="MuiBox-root css-12aw9rk"
           />
         </div>
       </div>
@@ -384,64 +373,64 @@ exports[`AggregatedCostsAndCharges should match snapshot when data is loaded suc
 exports[`AggregatedCostsAndCharges should match snapshot when data is undefined 1`] = `
 <div>
   <div
-    class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column"
+    class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column css-3buk32-MuiGrid-root"
   >
     <div
-      class="MuiGrid-root MuiGrid-item"
+      class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
     >
       <div
-        class="MuiGrid-root makeStyles-container-3 MuiGrid-container MuiGrid-direction-xs-column"
+        class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-container-3 css-3buk32-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root makeStyles-header-2 MuiGrid-container"
+          class="MuiGrid-root MuiGrid-container makeStyles-header-2 css-1kca4ek-MuiGrid-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center"
+            class="MuiGrid-root MuiGrid-container MuiGrid-item css-19l8j7t-MuiGrid-root"
           >
             <h2
-              class="MuiTypography-root MuiTypography-h2"
+              class="MuiTypography-root MuiTypography-h2 css-1ybxgbh-MuiTypography-root"
             >
               Aggregated Costs and Charges
             </h2>
           </div>
         </div>
         <div
-          class="MuiGrid-root"
+          class="MuiGrid-root css-186c2wj-MuiGrid-root"
         >
           <nav
-            class="MuiTypography-root MuiBreadcrumbs-root MuiTypography-body1 MuiTypography-colorTextSecondary"
+            class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-1f69azb-MuiTypography-root-MuiBreadcrumbs-root"
           >
             <ol
-              class="MuiBreadcrumbs-ol"
+              class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
             />
           </nav>
         </div>
       </div>
       <div
-        class="MuiBox-root MuiBox-root-5"
+        class="MuiBox-root css-12aw9rk"
       />
     </div>
     <div
-      class="MuiGrid-root makeStyles-wrapper-9 MuiGrid-container MuiGrid-direction-xs-column MuiGrid-align-items-xs-center MuiGrid-justify-content-xs-center"
+      class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-wrapper-8 css-1uqyjmb-MuiGrid-root"
       style="opacity: 0.75;"
     >
       <div
-        class="MuiBox-root MuiBox-root-10"
+        class="MuiBox-root css-1jpm9pd"
       />
       <div
-        class="MuiBox-root MuiBox-root-11"
+        class="MuiBox-root css-12aw9rk"
       />
-      <div
-        class="MuiCircularProgress-root MuiCircularProgress-colorPrimary MuiCircularProgress-indeterminate"
+      <span
+        class="MuiCircularProgress-root MuiCircularProgress-indeterminate MuiCircularProgress-colorPrimary css-1hvks1n-MuiCircularProgress-root"
         role="progressbar"
         style="width: 40px; height: 40px;"
       >
         <svg
-          class="MuiCircularProgress-svg"
+          class="MuiCircularProgress-svg css-1idz92c-MuiCircularProgress-svg"
           viewBox="22 22 44 44"
         >
           <circle
-            class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate"
+            class="MuiCircularProgress-circle MuiCircularProgress-circleIndeterminate css-176wh8e-MuiCircularProgress-circle"
             cx="44"
             cy="44"
             fill="none"
@@ -449,45 +438,45 @@ exports[`AggregatedCostsAndCharges should match snapshot when data is undefined 
             stroke-width="3.6"
           />
         </svg>
-      </div>
+      </span>
     </div>
     <div
-      class="MuiGrid-root MuiGrid-item"
+      class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
     >
       <div
-        class="MuiBox-root MuiBox-root-12"
+        class="MuiBox-root css-12aw9rk"
       />
       <div
-        class="MuiGrid-root makeStyles-wrapper-13 MuiGrid-container MuiGrid-direction-xs-column MuiGrid-align-items-xs-center"
+        class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-wrapper-9 css-30jy6e-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root MuiGrid-item"
+          class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
         >
           <div
-            class="MuiBox-root MuiBox-root-16"
+            class="MuiBox-root css-1kgakwq"
           />
         </div>
         <div
-          class="MuiGrid-root MuiGrid-item"
+          class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
         >
           <div
-            class="MuiBox-root MuiBox-root-17"
+            class="MuiBox-root css-12aw9rk"
           />
           <p
-            class="MuiTypography-root makeStyles-subtitle-14 MuiTypography-body1"
+            class="MuiTypography-root MuiTypography-body1 makeStyles-subtitle-10 css-3a17l8-MuiTypography-root"
           >
             This page is empty.
           </p>
           <div
-            class="MuiBox-root MuiBox-root-18"
+            class="MuiBox-root css-7ieh0i"
           />
           <p
-            class="MuiTypography-root makeStyles-content-15 MuiTypography-body1"
+            class="MuiTypography-root MuiTypography-body1 makeStyles-content-11 css-3a17l8-MuiTypography-root"
           >
             There are no records to display for the selected report.
           </p>
           <div
-            class="MuiBox-root MuiBox-root-19"
+            class="MuiBox-root css-12aw9rk"
           />
         </div>
       </div>

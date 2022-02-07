@@ -7,7 +7,7 @@ import {
   StepLabel,
   Button,
   Grid
-} from '@material-ui/core'
+} from '@mui/material'
 import { TwoFaData } from 'app/pages/security/types'
 import { ActiveStep } from 'app/pages/security/pages/update2fa/components/ActiveStep'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
@@ -41,6 +41,7 @@ export const Update2fa = () => {
       <PageHeader title='Change Authenticator' />
       <Grid item xs={12} className={classes.wrapper}>
         <Container>
+          <PageHeader title='Change Authenticator' variant={'h6'} />
           <Box>
             <Stepper activeStep={activeStep} alternativeLabel>
               {steps.map(label => (

@@ -1,7 +1,7 @@
 import React from 'react'
 import { DigitalSecurityOffering } from 'types/dso'
-import { Launch } from '@material-ui/icons'
-import { IconButton } from '@material-ui/core'
+import { Launch } from '@mui/icons-material'
+import { IconButton } from '@mui/material'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
 

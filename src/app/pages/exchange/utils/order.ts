@@ -1,9 +1,10 @@
 import { PlaceOrderFormValues } from 'app/pages/exchange/types/form'
+import { OrderSide } from 'types/order'
 import { Pair } from '../hooks/useMarketList'
 
 export const transformPlaceOrderFormValuesToArgs = (
   values: PlaceOrderFormValues,
-  side: 'BID' | 'ASK',
+  side: OrderSide,
   pairId: string
 ) => {
   return {

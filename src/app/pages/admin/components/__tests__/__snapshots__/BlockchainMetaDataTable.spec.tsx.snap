@@ -3,32 +3,32 @@
 exports[`BlockchainMetaDataTable should match snapshot 1`] = `
 <div>
   <div
-    class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column"
+    class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column css-3buk32-MuiGrid-root"
   >
     <div
-      class="MuiGrid-root MuiGrid-item"
+      class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
     >
       <div
-        class="MuiPaper-root MuiPaper-outlined MuiPaper-rounded"
+        class="MuiPaper-root MuiPaper-outlined MuiPaper-rounded css-4a93ov-MuiPaper-root"
         style="background-color: inherit;"
       >
         <div
-          class="MuiTableContainer-root"
+          class="MuiTableContainer-root css-rorn0c-MuiTableContainer-root"
         >
           <table
             aria-label="table"
-            class="MuiTable-root"
+            class="MuiTable-root css-me9vuo-MuiTable-root"
             data-testid="table"
           >
             <thead
-              class="MuiTableHead-root"
+              class="MuiTableHead-root css-15wwp11-MuiTableHead-root"
               style="background-color: rgb(20, 18, 114); height: 50px; display: table-header-group;"
             >
               <tr
-                class="MuiTableRow-root MuiTableRow-head"
+                class="MuiTableRow-root MuiTableRow-head css-17ivmep-MuiTableRow-root"
               >
                 <th
-                  class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft"
+                  class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-hr8dup-MuiTableCell-root"
                   scope="col"
                 >
                   <b
@@ -38,7 +38,7 @@ exports[`BlockchainMetaDataTable should match snapshot 1`] = `
                   </b>
                 </th>
                 <th
-                  class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft"
+                  class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-hr8dup-MuiTableCell-root"
                   scope="col"
                 >
                   <b
@@ -48,7 +48,7 @@ exports[`BlockchainMetaDataTable should match snapshot 1`] = `
                   </b>
                 </th>
                 <th
-                  class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft"
+                  class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-hr8dup-MuiTableCell-root"
                   scope="col"
                 >
                   <b
@@ -60,44 +60,44 @@ exports[`BlockchainMetaDataTable should match snapshot 1`] = `
               </tr>
             </thead>
             <tbody
-              class="MuiTableBody-root"
+              class="MuiTableBody-root css-apqrd9-MuiTableBody-root"
             >
               <tr
-                class="MuiTableRow-root"
+                class="MuiTableRow-root css-17ivmep-MuiTableRow-root"
                 style="background-color: rgb(255, 255, 255);"
               >
                 <td
-                  class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"
+                  class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-19zhwm2-MuiTableCell-root"
                 >
                   Name 1
                 </td>
                 <td
-                  class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"
+                  class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-19zhwm2-MuiTableCell-root"
                 >
                   Description 1
                 </td>
                 <td
-                  class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"
+                  class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-19zhwm2-MuiTableCell-root"
                 >
                   Value 1
                 </td>
               </tr>
               <tr
-                class="MuiTableRow-root"
+                class="MuiTableRow-root css-17ivmep-MuiTableRow-root"
                 style="background-color: rgb(248, 248, 253);"
               >
                 <td
-                  class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"
+                  class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-19zhwm2-MuiTableCell-root"
                 >
                   Name 2
                 </td>
                 <td
-                  class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"
+                  class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-19zhwm2-MuiTableCell-root"
                 >
                   Description 2
                 </td>
                 <td
-                  class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft"
+                  class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium css-19zhwm2-MuiTableCell-root"
                 >
                   Value 2
                 </td>

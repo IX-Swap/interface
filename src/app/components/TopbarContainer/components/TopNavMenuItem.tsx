@@ -1,5 +1,5 @@
-import { styled } from '@material-ui/core/styles'
-import { MenuItem } from '@material-ui/core'
+import { styled } from '@mui/material/styles'
+import { MenuItem } from '@mui/material'
 
 export const TopNavMenuItem = styled(MenuItem)(({ theme }) => ({
   paddingTop: 0,
@@ -11,7 +11,7 @@ export const TopNavMenuItem = styled(MenuItem)(({ theme }) => ({
     backgroundColor: theme.palette.slider.activeBackground,
     '& span': {
       color: `${
-        theme.palette.type === 'dark'
+        theme.palette.mode === 'dark'
           ? theme.palette.getContrastText(theme.palette.background.default)
           : theme.palette.background.default
       }!important`
@@ -19,7 +19,7 @@ export const TopNavMenuItem = styled(MenuItem)(({ theme }) => ({
   },
   '& span': {
     color: `${
-      theme.palette.type === 'dark'
+      theme.palette.mode === 'dark'
         ? theme.palette.getContrastText(theme.palette.primary.main)
         : theme.palette.primary.main
     }!important`

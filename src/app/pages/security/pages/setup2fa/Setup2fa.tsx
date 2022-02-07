@@ -7,10 +7,11 @@ import {
   StepLabel,
   Button,
   Grid
-} from '@material-ui/core'
+} from '@mui/material'
 import { Aside } from 'app/pages/security/pages/setup2fa/components/Aside'
 import { useSetup2fa } from 'app/pages/security/pages/setup2fa/hooks/useSetup2fa'
 import { ActiveStep } from 'app/pages/security/pages/setup2fa/components/ActiveStep'
+import { useStyles } from './Setup2fa.styles'
 
 const steps = [
   'Download app',
@@ -20,6 +21,7 @@ const steps = [
 ]
 
 export const Setup2fa = () => {
+  const classes = useStyles()
   const { data } = useSetup2fa()
   const [activeStep, setActiveStep] = useState<number>(0)
   const nextStep = () => {
@@ -35,7 +37,7 @@ export const Setup2fa = () => {
         <Aside />
       </Grid>
       <Grid item xs={12} md={12} lg={10}>
-        <Container>
+        <Container className={classes.wrapper}>
           <Box>
             <Stepper activeStep={activeStep} alternativeLabel>
               {steps.map(label => (

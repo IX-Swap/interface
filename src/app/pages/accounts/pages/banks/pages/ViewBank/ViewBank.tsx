@@ -3,7 +3,7 @@ import { BankPreview } from 'app/components/BankPreview/BankPreview'
 import { useBanksData } from 'app/pages/accounts/pages/banks/hooks/useBanksData'
 import { RejectionMessage } from 'app/pages/authorizer/components/RejectionMessage'
 import { useParams } from 'react-router-dom'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 
 const ViewBank = () => {

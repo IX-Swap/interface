@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Button, Typography } from '@material-ui/core'
+import { Box, Button, Typography } from '@mui/material'
 import { ReactComponent as InfoIcon } from 'assets/icons/info.svg'
 import { useStyles } from 'app/pages/security/pages/update2fa/components/ResendCode/ResendCode.styles'
 import { GetEmailCodeResponse } from 'app/pages/security/types'

@@ -1,4 +1,4 @@
-import { Avatar, Box, Grid, Typography } from '@material-ui/core'
+import { Avatar, Box, Grid, Typography } from '@mui/material'
 import { Security } from 'app/pages/educationCentre/components/Securities/SecurityCard'
 import { LabelledValue } from 'components/LabelledValue'
 import { hasValue } from 'helpers/forms'

@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { BaseFilter } from 'types/util'
-import { MaterialUiPickersDate } from '@material-ui/pickers/typings/date'
 
 export const initialTransactionFilter: BaseFilter = {
   status: '',
@@ -19,10 +18,7 @@ export const useTransactionsLogic = () => {
     })
   }
 
-  const handleDateChange = (
-    name: 'to' | 'from',
-    date: MaterialUiPickersDate
-  ) => {
+  const handleDateChange = (name: 'to' | 'from', date: Date | null) => {
     const mFilter = { ...filter }
     mFilter[name] = date?.toISOString() ?? ''
     setFilter(mFilter)

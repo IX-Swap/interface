@@ -1,5 +1,5 @@
 import React from 'react'
-import { Typography, Grid, Divider } from '@material-ui/core'
+import { Typography, Grid, Divider } from '@mui/material'
 import { RequestPasswordResetArgs } from 'types/auth'
 import { requestPasswordResetValidationSchema } from 'validation/auth'
 import { useRequestPasswordReset } from 'auth/hooks/useRequestPasswordReset'

@@ -1,5 +1,5 @@
-import { Box, IconButton } from '@material-ui/core'
-import { Launch } from '@material-ui/icons'
+import { Box, IconButton } from '@mui/material'
+import { Launch } from '@mui/icons-material'
 import { openFileInNewTab } from 'hooks/utils'
 import React from 'react'
 import { VAAuditOutboundItem } from 'types/virtualAccount'
@@ -39,6 +39,7 @@ export const Actions = ({ item, forVAFile = false }: ActionsProps) => {
         onClick={handleClick}
         disabled={isLoading}
         data-testid='button'
+        size='large'
       >
         <Launch color='disabled' style={{ width: 23, height: 23 }} />
       </IconButton>

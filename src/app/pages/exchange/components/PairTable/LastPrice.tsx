@@ -1,4 +1,4 @@
-import { Box } from '@material-ui/core'
+import { Box } from '@mui/material'
 import { useStyles } from 'app/pages/exchange/components/PairTable/PairTable.styles'
 import React from 'react'
 import { formatAmount } from 'helpers/numbers'

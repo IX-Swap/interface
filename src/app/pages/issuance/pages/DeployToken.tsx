@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { useDeployToken } from 'app/pages/issuance/hooks/useDeployToken'
 import { useParams } from 'react-router-dom'
 import { DeployTokenMessagesList } from 'app/pages/issuance/components/DeployTokenMessagesList'

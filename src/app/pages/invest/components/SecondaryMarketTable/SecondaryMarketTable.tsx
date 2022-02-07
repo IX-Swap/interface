@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Grid } from '@material-ui/core'
+import { Button, Grid } from '@mui/material'
 import { TableView } from 'components/TableWithPagination/TableView'
 import { exchange as exchangeQueryKeys } from 'config/queryKeys'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
@@ -8,7 +8,7 @@ import { exchange as exchangeURL } from 'config/apiURL'
 import { columns } from 'app/pages/invest/components/SecondaryMarketTable/columns'
 import { SearchFilter } from 'app/components/SearchFilter'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
-import { useTheme } from '@material-ui/core/styles'
+import { useTheme } from '@mui/material/styles'
 import { OTCMarketRoute } from 'app/pages/exchange/router/config'
 
 export const SecondaryMarketTable = () => {

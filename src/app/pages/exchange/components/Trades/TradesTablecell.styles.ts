@@ -1,12 +1,13 @@
-import { makeStyles } from '@material-ui/core/styles'
+import makeStyles from '@mui/styles/makeStyles'
 import { TradesTableCellProps } from 'app/pages/exchange/components/Trades/TradesTablecell'
+import { OrderSide } from 'types/order'
 
 export const useStyles = makeStyles(theme => {
   const getPriceColor = (transaction?: string) => {
     if (transaction === undefined) {
       return undefined
     }
-    if (transaction === 'ASK') {
+    if (transaction === OrderSide.ASK) {
       return theme.palette.error.main
     }
     return theme.palette.success.main

@@ -1,4 +1,4 @@
-import { Box, Button, Grid, Paper, Typography } from '@material-ui/core'
+import { Box, Button, Grid, Paper, Typography } from '@mui/material'
 import { DateTimePicker } from 'components/form/_DateTimePicker'
 import { NumericFieldCapsule } from 'components/form/NumericFieldCapsule'
 import { TypedField } from 'components/form/TypedField'
@@ -86,7 +86,6 @@ export const NewDistributionFormFields = ({
             control={control}
             valueExtractor={dateTimeValueExtractor}
             defaultValue={null}
-            inputVariant='outlined'
             minDate={new Date()}
           />
         </Grid>

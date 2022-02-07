@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Button } from '@material-ui/core'
+import { Grid, Button } from '@mui/material'
 import { VSpacer } from 'components/VSpacer'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { WithdrawalAddressesTable } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressesList/WithdrawalAddressesTable/WithdrawalAddressesTable'

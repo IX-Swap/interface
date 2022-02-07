@@ -1,4 +1,4 @@
-import { TableRow, TableCell, TableBody, useTheme } from '@material-ui/core'
+import { TableRow, TableCell, TableBody, useTheme } from '@mui/material'
 import React from 'react'
 import {
   CompactRow,
@@ -20,7 +20,7 @@ export const CompactBody = <T,>(props: CompactBodyProps<T>) => {
           key={i}
           style={{
             backgroundColor:
-              theme.palette.type === 'light'
+              theme.palette.mode === 'light'
                 ? theme.palette.backgrounds.default
                 : theme.palette.backgrounds.light
           }}

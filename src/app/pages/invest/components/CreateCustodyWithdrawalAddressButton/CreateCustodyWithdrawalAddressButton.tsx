@@ -1,4 +1,4 @@
-import { Typography, Link } from '@material-ui/core'
+import { Typography, Link } from '@mui/material'
 import { useCreateCustodianWallet } from 'app/pages/exchange/hooks/useCreateCustodianWallet'
 import { AssigningDialog } from 'app/pages/invest/components/CreateCustodyWithdrawalAddressButton/AssigningDialog'
 import { getIdFromObj } from 'helpers/strings'

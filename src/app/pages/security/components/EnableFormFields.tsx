@@ -3,7 +3,7 @@ import { TypedField } from 'components/form/TypedField'
 import { OTPField } from 'components/form/OTPField'
 import { useFormContext } from 'react-hook-form'
 import { plainValueExtractor } from 'helpers/forms'
-import { Box } from '@material-ui/core'
+import { Box } from '@mui/material'
 import { Submit } from 'components/form/Submit'
 
 export const EnableFormFields = () => {

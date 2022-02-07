@@ -4,9 +4,9 @@ import {
   ListItemIcon,
   ListItemText,
   SvgIconTypeMap
-} from '@material-ui/core'
-import { useTheme } from '@material-ui/core/styles'
-import { OverridableComponent } from '@material-ui/core/OverridableComponent'
+} from '@mui/material'
+import { useTheme } from '@mui/material/styles'
+import { OverridableComponent } from '@mui/material/OverridableComponent'
 
 export interface StatusFilterItemProps {
   isSelected: boolean
