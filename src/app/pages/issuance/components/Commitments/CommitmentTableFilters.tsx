@@ -43,7 +43,7 @@ export const CommitmentTableFilter = () => {
               variant={'contained'}
               color={'primary'}
               style={{
-                fontSize: 14,
+                fontSize: 12,
                 fontWeight: 400,
                 marginTop: isTablet ? theme.spacing(2) : 0
               }}

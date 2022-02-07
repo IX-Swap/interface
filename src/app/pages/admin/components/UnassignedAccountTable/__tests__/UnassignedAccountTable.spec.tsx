@@ -34,7 +34,6 @@ describe('UnassignedAccountTable', () => {
 
     expect(TableView).toHaveBeenCalledWith(
       expect.objectContaining({
-        hasActions: true,
         columns
       }),
       {}
