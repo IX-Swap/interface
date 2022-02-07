@@ -1,5 +1,6 @@
 import { Currency, Percent, TradeType } from '@ixswap1/sdk-core'
 import { Pair, Trade as V2Trade } from '@ixswap1/v2-sdk'
+import { BigNumber, utils } from 'ethers'
 import * as H from 'history'
 import { useCurrency } from 'hooks/Tokens'
 import useParsedQueryString from 'hooks/useParsedQueryString'
@@ -11,8 +12,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import apiService from 'services/apiService'
 import { broker, tokens } from 'services/apiUrls'
 import { useAddPopup } from 'state/application/hooks'
+import { useDerivedSwapInfo } from 'state/swap/hooks'
 import { getStringAmount } from 'utils/getStringAmount'
 import { hexTimeToTokenExpirationTime, shouldRenewToken } from 'utils/time'
+import { verifySwap } from 'utils/verifySwap'
 import { AppDispatch, AppState } from '../index'
 import {
   clearAuthorization,
@@ -211,7 +214,7 @@ export function useSwapConfirmDataFromURL(
   const parsedQs = useParsedQueryString()
   // maybe later avoid the request if there already is an authorization but maybe not
   const { authorizationInProgress } = useSwapHelpersState()
-  const { chainId } = useActiveWeb3React()
+  const { account, chainId } = useActiveWeb3React()
   const address = authorizationInProgress?.pairAddress
   const brokerDealerId = authorizationInProgress?.brokerDealerId
   const platform = authorizationInProgress?.platform
@@ -291,6 +294,38 @@ export function useSwapConfirmDataFromURL(
     confirm()
     async function confirm() {
       if (hash && result && !receivedAuthorization) {
+        console.log(trade)
+
+        if (!account || !trade) {
+          return
+        }
+
+        const pair = trade.route.pairs[0]
+
+        await verifySwap({
+          tokenFrom: pair.token0.address,
+          tokenTo: pair.token1.address,
+
+          pair: address as string,
+
+          kLast: utils.parseUnits(pair.reserve0.multiply(pair.reserve1).toExact()),
+
+          priceToleranceThreshold: utils.parseUnits(trade.priceImpact.toFixed()),
+          systemFeeRate: utils.parseUnits(trade.executionPrice.toFixed()),
+
+          id: `swap-${Math.floor(1 + Math.random() * 100000000)}`,
+
+          amountInFrom: utils.parseUnits(trade.inputAmount.toExact()),
+          amountInTo: utils.parseUnits(trade.maximumAmountIn(allowedSlippage).toExact()),
+
+          amountOutFrom: utils.parseUnits(trade.minimumAmountOut(allowedSlippage).toExact()),
+          amountOutTo: utils.parseUnits(trade.outputAmount.toExact()),
+
+          sender: account,
+          receiver: pair.liquidityToken.address,
+          slope: 0.05,
+        })
+
         await fetchAuthorization({ hash: (hash as string) || '', result: (result as string) || '' })
         return
       }
