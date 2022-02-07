@@ -63,6 +63,7 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
     } else {
       setIsLimitReached(false)
     }
+    console.log({ leftToFill })
   }, [leftToFill])
 
   const selectPeriod = () => {
