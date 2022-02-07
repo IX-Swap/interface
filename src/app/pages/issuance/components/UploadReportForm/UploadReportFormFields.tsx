@@ -22,7 +22,7 @@ export const UploadReportFormFields = () => {
         <ReportDetails />
       </Grid>
       <Grid item xs={12}>
-        <UploadDocumentField name='documents' label='Documents ' />
+        <UploadDocumentField name='reportDocuments' label='Documents ' />
       </Grid>
     </Grid>
   )

@@ -1,4 +1,4 @@
-import { Order } from 'types/order'
+import { Order, OrderSide } from 'types/order'
 import { PlaceOrderArgs } from 'app/pages/exchange/types/form'
 
 export const orders: Order[] = [
@@ -8,7 +8,7 @@ export const orders: Order[] = [
     date: '2020-09-29T12:45:07.411Z',
     pair: 'BTC/ETH',
     type: 'LIMIT',
-    side: 'BID',
+    side: OrderSide.BID,
     price: 8500,
     amount: 50,
     total: 46500,
@@ -21,7 +21,7 @@ export const orders: Order[] = [
     date: '2020-08-29T12:45:07.411Z',
     pair: 'USD/SGD',
     type: 'LIMIT',
-    side: 'ASK',
+    side: OrderSide.ASK,
     price: 9500,
     amount: 40,
     total: 47500,
@@ -32,7 +32,7 @@ export const orders: Order[] = [
 
 export const createOrderArgument: PlaceOrderArgs = {
   pair: '12',
-  side: 'ASK',
+  side: OrderSide.ASK,
   type: 'LIMIT',
   price: 33,
   amount: 230
