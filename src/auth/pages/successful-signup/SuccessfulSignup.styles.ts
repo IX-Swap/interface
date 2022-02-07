@@ -1,5 +1,4 @@
-import makeStyles from '@mui/styles/makeStyles';
-import EarthImage from '../../images/digital_earth.png'
+import makeStyles from '@mui/styles/makeStyles'
 
 export const useStyles = makeStyles(theme => ({
   wrapper: {

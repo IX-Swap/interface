@@ -1,5 +1,5 @@
 import { grey } from '@mui/material/colors'
-import makeStyles from '@mui/styles/makeStyles';
+import makeStyles from '@mui/styles/makeStyles'
 
 export default makeStyles(() => ({
   image: {

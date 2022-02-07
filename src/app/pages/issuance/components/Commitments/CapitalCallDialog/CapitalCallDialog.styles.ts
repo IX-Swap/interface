@@ -1,4 +1,4 @@
-import makeStyles from '@mui/styles/makeStyles';
+import makeStyles from '@mui/styles/makeStyles'
 
 export default makeStyles(theme => ({
   root: {
@@ -49,6 +49,7 @@ export default makeStyles(theme => ({
     position: 'relative',
     width: '100%',
     height: 156,
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
     padding: `${theme.spacing(3)}!important`,
     borderColor: `${theme.palette.primary.main}!important`,
     backgroundColor: `${theme.palette.background.default}!important`,

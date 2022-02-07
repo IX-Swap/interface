@@ -1,4 +1,4 @@
-import makeStyles from '@mui/styles/makeStyles';
+import makeStyles from '@mui/styles/makeStyles'
 import TopographyImage from 'assets/images/topography-pattern.png'
 
 export const useStyles = makeStyles(theme => ({

@@ -1,5 +1,5 @@
 import { themeColors } from 'themes/old/colors'
-import makeStyles from '@mui/styles/makeStyles';
+import makeStyles from '@mui/styles/makeStyles'
 
 export const useStyles = makeStyles((theme: any) => ({
   authStatus: {

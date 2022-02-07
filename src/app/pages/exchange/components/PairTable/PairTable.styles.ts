@@ -1,4 +1,4 @@
-import makeStyles from '@mui/styles/makeStyles';
+import makeStyles from '@mui/styles/makeStyles'
 
 export interface Props {
   isPositive?: boolean
@@ -9,7 +9,7 @@ export const useStyles = makeStyles(theme => ({
     paddingTop: 1,
     paddingBottom: 1,
     paddingLeft: 0,
-    borderBottom: `5px solid ${theme.palette.backgrounds.default as string}`,
+    borderBottom: `5px solid ${theme.palette.backgrounds.default}`,
     '&:last-child': {
       paddingRight: 0
     }

@@ -1,5 +1,5 @@
-import { alpha } from '@mui/material/styles';
-import makeStyles from '@mui/styles/makeStyles';
+import { alpha } from '@mui/material/styles'
+import makeStyles from '@mui/styles/makeStyles'
 import { drawerWidth } from 'app/components/OnboardingPanel/OnboardingPanel.styles'
 
 export const useStyles = makeStyles(theme => ({

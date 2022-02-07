@@ -1,6 +1,6 @@
-import { alpha } from '@mui/material/styles';
+import { alpha } from '@mui/material/styles'
 
-import makeStyles from '@mui/styles/makeStyles';
+import makeStyles from '@mui/styles/makeStyles'
 
 export interface Props {
   value: number
