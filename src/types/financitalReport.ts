@@ -1,7 +1,10 @@
+import { DataroomFile } from 'types/dataroomFile'
+import { DigitalSecurityOffering } from 'types/dso'
 export interface FinancialReport {
-  creationDate: string
-  reportInterval: string
-  type: string
-  reportOf: string
-  documentId: string
+  _id: string
+  createdAt: string
+  dateFrom: string
+  dateTo: string
+  reportDocuments: DataroomFile[]
+  dso: DigitalSecurityOffering
 }
