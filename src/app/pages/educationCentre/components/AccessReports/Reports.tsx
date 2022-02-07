@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { columns } from 'app/pages/educationCentre/components/AccessReports/columns'
 import { ReportTypeFilter } from 'app/pages/educationCentre/components/AccessReports/ReportTypeFilter'
 import { TableView } from 'components/TableWithPagination/TableView'

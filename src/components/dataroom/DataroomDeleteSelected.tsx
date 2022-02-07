@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelectionHelperContext } from 'components/SelectionHelper'
-import { Button, ButtonProps } from '@material-ui/core'
+import { Button, ButtonProps } from '@mui/material'
 import { themeColors } from 'themes/old/colors'
 import { useDeleteFilesArray } from 'hooks/useDeleteFilesArray'
 import { SelectedDocument } from 'helpers/dataroom'

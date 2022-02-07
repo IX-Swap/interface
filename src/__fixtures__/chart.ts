@@ -66,7 +66,7 @@ export const commitmentChartOption = {
       baselineColor: 'transparent',
       format: 'E',
       gridlines: {
-        color: 'rgba(0, 0, 0, 0.54)'
+        color: 'rgba(0, 0, 0, 0.6)'
       },
       ticks: commitmentTicks,
       textStyle: {
@@ -77,9 +77,9 @@ export const commitmentChartOption = {
       position: 'none'
     },
     vAxis: {
-      baselineColor: 'rgba(0, 0, 0, 0.54)',
+      baselineColor: 'rgba(0, 0, 0, 0.6)',
       gridlines: {
-        color: 'rgba(0, 0, 0, 0.54)',
+        color: 'rgba(0, 0, 0, 0.6)',
         count: 3
       },
       textPosition: 'none',

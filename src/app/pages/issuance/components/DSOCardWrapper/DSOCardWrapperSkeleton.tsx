@@ -1,5 +1,4 @@
-import { Box } from '@material-ui/core'
-import { Skeleton } from '@material-ui/lab'
+import { Box, Skeleton } from '@mui/material'
 import React from 'react'
 
 export const DSOCardWrapperSkeleton = () => (
@@ -7,7 +6,7 @@ export const DSOCardWrapperSkeleton = () => (
     <Box display='flex' mb={1}>
       <Skeleton
         style={{ marginRight: 10 }}
-        variant='rect'
+        variant='rectangular'
         height={25}
         width={25}
       />

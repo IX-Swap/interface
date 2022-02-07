@@ -1,6 +1,6 @@
 import React from 'react'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
-import { FormControl, MenuItem, Select } from '@material-ui/core'
+import { FormControl, MenuItem, Select } from '@mui/material'
 
 export const PeriodicalFilter = () => {
   return (

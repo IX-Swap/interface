@@ -1,4 +1,4 @@
-import { Grid, Box } from '@material-ui/core'
+import { Grid, Box } from '@mui/material'
 import { FormStepperStep } from 'app/components/FormStepper/FormStepper'
 import { BackButton } from 'app/components/FormStepper/BackButton'
 import { SaveButton } from 'app/components/FormStepper/SaveButton'

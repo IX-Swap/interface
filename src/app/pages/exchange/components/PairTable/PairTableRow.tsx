@@ -1,4 +1,4 @@
-import { TableRow } from '@material-ui/core'
+import { TableRow } from '@mui/material'
 import { Change } from 'app/pages/exchange/components/PairTable/Change'
 import { LastPrice } from 'app/pages/exchange/components/PairTable/LastPrice'
 import { PairName } from 'app/pages/exchange/components/PairTable/PairName'

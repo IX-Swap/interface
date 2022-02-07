@@ -1,6 +1,6 @@
 import React from 'react'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
-import { Button } from '@material-ui/core'
+import { Button } from '@mui/material'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
 import { useParams } from 'react-router-dom'
 

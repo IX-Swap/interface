@@ -1,4 +1,4 @@
-import { Box, Typography } from '@material-ui/core'
+import { Box, Typography } from '@mui/material'
 import React from 'react'
 import { ReactComponent as EmptyBox } from 'assets/icons/empty-box.svg'
 import { VSpacer } from 'components/VSpacer'

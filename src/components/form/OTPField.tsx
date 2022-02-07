@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react'
-import { Typography, Grid, FormHelperText } from '@material-ui/core'
+import { Typography, Grid, FormHelperText } from '@mui/material'
 import { OTPInputField } from 'components/form/OTPInputField'
 import { ErrorMessage } from '@hookform/error-message'
 import { hasValue } from 'helpers/forms'

@@ -1,9 +1,9 @@
-import { Grid, Typography, Button } from '@material-ui/core'
+import { Grid, Typography, Button } from '@mui/material'
 import React from 'react'
 import { useStyles } from './BlockchainSelector.styles'
 import { BlockchainNetworks } from 'types/blockchain'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
-import { useTheme } from '@material-ui/core/styles'
+import { useTheme } from '@mui/material/styles'
 import { networkIconMap } from 'config/blockchain'
 
 export const BlockchainSelector = () => {

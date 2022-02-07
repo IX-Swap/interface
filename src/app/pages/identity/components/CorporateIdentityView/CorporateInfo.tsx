@@ -1,4 +1,4 @@
-import { Grid, Box, Hidden } from '@material-ui/core'
+import { Grid, Box, Hidden } from '@mui/material'
 import { Avatar } from 'components/Avatar'
 import { LabelledValue } from 'components/LabelledValue'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
@@ -30,7 +30,7 @@ export const CorporateInfo = ({ data }: CorporateInfoProps) => {
           size={128}
         />
       </Box>
-      <Hidden xsDown>
+      <Hidden smDown>
         <Box width={62} />
       </Hidden>
       <Grid container spacing={3} direction='column'>

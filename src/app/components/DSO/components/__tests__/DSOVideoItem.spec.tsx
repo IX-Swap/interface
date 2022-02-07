@@ -5,7 +5,7 @@ import { videoLink } from '__fixtures__/issuance'
 import { DSOVideoItem } from 'app/components/DSO/components/DSOVideoItem'
 import { DSOTeamRemoveButton } from 'app/components/DSO/components/DSOTeamRemoveButton'
 import { TypedField } from 'components/form/TypedField'
-import { TextField } from '@material-ui/core'
+import { TextField } from '@mui/material'
 
 jest.mock('components/form/TypedField', () => ({
   TypedField: jest.fn(() => null)

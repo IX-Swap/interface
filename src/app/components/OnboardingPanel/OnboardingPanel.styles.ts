@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles'
+import makeStyles from '@mui/styles/makeStyles'
 import tinycolor from 'tinycolor2'
 
 export const drawerWidth = 250
@@ -67,12 +67,12 @@ export const useStyles = makeStyles(
       border: `1px solid ${theme.palette.divider}`,
       borderRadius: 20,
       backgroundColor:
-        theme.palette.type === 'light'
+        theme.palette.mode === 'light'
           ? theme.palette.backgrounds.default
           : theme.palette.sidebar.activeColor,
       '&:hover': {
         backgroundColor:
-          theme.palette.type === 'light'
+          theme.palette.mode === 'light'
             ? tinycolor(theme.palette.backgrounds.default).darken(10)
             : tinycolor(theme.palette.sidebar.activeColor).lighten(10)
       }

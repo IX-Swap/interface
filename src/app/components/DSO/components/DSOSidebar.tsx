@@ -1,4 +1,4 @@
-import { Box, Grid } from '@material-ui/core'
+import { Box, Grid } from '@mui/material'
 import { DSOScrollGuide } from 'app/components/DSO/DSOScrollGuide'
 import { AuthorizableStatus } from 'app/pages/authorizer/components/AuthorizableStatus'
 import { LabelledValue } from 'components/LabelledValue'

@@ -4,7 +4,7 @@ import {
   RadioGroup,
   RadioGroupProps,
   Radio
-} from '@material-ui/core'
+} from '@mui/material'
 
 interface RadiosProps extends RadioGroupProps {
   items: Array<{ label: string; value: string | number }>

@@ -1,6 +1,6 @@
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
-import { Box, FormControl, Typography } from '@material-ui/core'
+import { Box, FormControl, Typography } from '@mui/material'
 import { NumericInput, NumericInputProps } from 'components/form/NumericInput'
 import { useStyles } from 'components/form/MinimumInvestmentField.styles'
 

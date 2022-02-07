@@ -1,4 +1,4 @@
-import { Box, Grid } from '@material-ui/core'
+import { Box, Grid } from '@mui/material'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 import { NoData } from 'app/components/NoData/NoData'
 import {

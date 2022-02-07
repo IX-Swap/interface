@@ -1,6 +1,6 @@
 import React from 'react'
-import { Launch as LaunchIcon } from '@material-ui/icons'
-import { IconButton } from '@material-ui/core'
+import { Launch as LaunchIcon } from '@mui/icons-material'
+import { IconButton } from '@mui/material'
 import { WithdrawalAddressesRoute as paths } from 'app/pages/accounts/pages/withdrawalAddresses/router/config'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { WithdrawalAddress } from 'types/withdrawalAddress'

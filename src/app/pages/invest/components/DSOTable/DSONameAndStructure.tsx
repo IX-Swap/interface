@@ -1,7 +1,7 @@
 import React from 'react'
 import { DigitalSecurityOffering } from 'types/dso'
 import { DSOLogo } from 'app/components/DSO/components/DSOLogo'
-import { Grid, Typography } from '@material-ui/core'
+import { Grid, Typography } from '@mui/material'
 import { useStyles } from './DSONameAndStucture.styles'
 
 export interface DSONameAndStructureProps {

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, TextField } from '@material-ui/core'
+import { Grid, TextField } from '@mui/material'
 import { useFormContext } from 'react-hook-form'
 import { CompletePasswordResetFormValues } from 'auth/pages/password-reset/ResetStep'
 import { TypedField } from 'components/form/TypedField'

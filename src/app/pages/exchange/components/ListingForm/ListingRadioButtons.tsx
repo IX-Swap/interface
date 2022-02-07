@@ -6,7 +6,7 @@ import {
   Radio,
   RadioGroup,
   Typography
-} from '@material-ui/core'
+} from '@mui/material'
 import React, { useState } from 'react'
 import { DSOSelect } from 'app/pages/issuance/components/IssuanceLanding/DSOSelect'
 import { useDSOsByUserId } from 'app/pages/issuance/hooks/useDSOsByUserId'

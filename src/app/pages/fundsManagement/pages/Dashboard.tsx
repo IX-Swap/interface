@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Typography } from '@material-ui/core'
+import { Grid, Typography } from '@mui/material'
 import { DSOFilters } from 'app/pages/issuance/components/DSOFilters/DSOFilters'
 import { DSOCards } from 'app/pages/issuance/components/DSOCards'
 import { AssetsUnderManagement } from 'app/pages/issuance/components/AssetsUnderManagement/AssetsUnderManagement'

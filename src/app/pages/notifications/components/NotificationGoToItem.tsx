@@ -1,6 +1,6 @@
 import React from 'react'
-import { IconButton } from '@material-ui/core'
-import { ArrowForward } from '@material-ui/icons'
+import { IconButton } from '@mui/material'
+import { ArrowForward } from '@mui/icons-material'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { AppFeature } from 'types/app'
 import { Notification } from 'types/notification'

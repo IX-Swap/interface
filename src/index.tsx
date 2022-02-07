@@ -1,11 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import {
-  createGenerateClassName,
-  StylesProvider,
-  ThemeProvider
-} from '@material-ui/core/styles'
-import { CssBaseline } from '@material-ui/core'
+import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles'
+import createGenerateClassName from '@mui/styles/createGenerateClassName'
+import StylesProvider from '@mui/styles/StylesProvider'
+import { CssBaseline } from '@mui/material'
 import { UserProvider } from 'auth/context'
 import { EntryPoint } from 'EntryPoint'
 import { ToastProvider } from 'react-toast-notifications'
@@ -19,6 +17,8 @@ import { setupFullStory } from 'setupFullStory'
 import { AppThemeProvider } from 'AppThemeProvider'
 import { setupGoogleAnalytics } from 'setupGoogleAnalytics'
 import { AppStateProvider } from 'app/hooks/useAppState'
+import LocalizationProvider from '@mui/lab/LocalizationProvider'
+import AdapterDateFns from '@mui/lab/AdapterDateFns'
 
 const queryCache = new QueryCache({
   defaultConfig: {
@@ -38,32 +38,36 @@ setupGoogleAnalytics()
 
 const IXApp = () => {
   return (
-    <StylesProvider generateClassName={generateClassName}>
-      <AppThemeProvider>
-        {theme => (
-          <ThemeProvider theme={theme}>
-            <ReactQueryCacheProvider queryCache={queryCache}>
-              <CssBaseline />
-              <UserProvider>
-                <Router history={history}>
-                  <AppStateProvider>
-                    <Switch>
-                      <ToastProvider
-                        components={{ Toast, ToastContainer }}
-                        autoDismiss={false}
-                        placement='bottom-right'
-                      >
-                        <EntryPoint />
-                      </ToastProvider>
-                    </Switch>
-                  </AppStateProvider>
-                </Router>
-              </UserProvider>
-            </ReactQueryCacheProvider>
-          </ThemeProvider>
-        )}
-      </AppThemeProvider>
-    </StylesProvider>
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
+      <StylesProvider generateClassName={generateClassName}>
+        <AppThemeProvider>
+          {theme => (
+            <StyledEngineProvider injectFirst>
+              <ThemeProvider theme={theme}>
+                <ReactQueryCacheProvider queryCache={queryCache}>
+                  <CssBaseline />
+                  <UserProvider>
+                    <Router history={history}>
+                      <AppStateProvider>
+                        <Switch>
+                          <ToastProvider
+                            components={{ Toast, ToastContainer }}
+                            autoDismiss={false}
+                            placement='bottom-right'
+                          >
+                            <EntryPoint />
+                          </ToastProvider>
+                        </Switch>
+                      </AppStateProvider>
+                    </Router>
+                  </UserProvider>
+                </ReactQueryCacheProvider>
+              </ThemeProvider>
+            </StyledEngineProvider>
+          )}
+        </AppThemeProvider>
+      </StylesProvider>
+    </LocalizationProvider>
   )
 }
 

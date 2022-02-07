@@ -5,8 +5,9 @@ import {
   InputLabel,
   MenuItem,
   Select,
+  SelectChangeEvent,
   Typography
-} from '@material-ui/core'
+} from '@mui/material'
 import { useStyles } from 'app/pages/admin/components/UserIdentitySelect.styles'
 import { AdminRoute } from 'app/pages/admin/router/config'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
@@ -32,7 +33,7 @@ export const UserIdentitySelect = ({
     !hasIdentity ? 'no identity' : 'individual'
   )
 
-  const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+  const handleChange = (event: SelectChangeEvent<unknown>) => {
     setIdentity(event.target.value as string)
   }
 

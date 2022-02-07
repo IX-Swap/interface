@@ -1,6 +1,6 @@
 import React from 'react'
-import { IconButton, Tooltip } from '@material-ui/core'
-import { DeleteOutline, Launch } from '@material-ui/icons'
+import { IconButton, Tooltip } from '@mui/material'
+import { DeleteOutline, Launch } from '@mui/icons-material'
 
 export interface DataroomEditRowActionsProps {
   onDownload: () => any
@@ -15,12 +15,12 @@ export const DataroomEditRowActions = (props: DataroomEditRowActionsProps) => {
   return (
     <>
       <Tooltip title='Download File'>
-        <IconButton onClick={onDownload} disabled={isDownloading}>
+        <IconButton onClick={onDownload} disabled={isDownloading} size='large'>
           <Launch color='disabled' style={{ width: 23, height: 23 }} />
         </IconButton>
       </Tooltip>
       <Tooltip title='Delete File'>
-        <IconButton onClick={onDelete} disabled={isDeleting}>
+        <IconButton onClick={onDelete} disabled={isDeleting} size='large'>
           <DeleteOutline color='disabled' style={{ width: 24, height: 24 }} />
         </IconButton>
       </Tooltip>

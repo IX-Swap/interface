@@ -1,4 +1,4 @@
-import { TableCellProps } from '@material-ui/core'
+import { TableCellProps } from '@mui/material'
 
 export interface TableCellItem {
   label: string

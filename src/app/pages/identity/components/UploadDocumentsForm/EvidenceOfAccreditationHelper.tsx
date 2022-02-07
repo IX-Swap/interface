@@ -1,4 +1,4 @@
-import { Box, Grid, Typography } from '@material-ui/core'
+import { Box, Grid, Typography } from '@mui/material'
 import { EvidenceOfAccreditationList } from 'app/pages/identity/components/UploadDocumentsForm/EvidenceOfAccreditationList'
 import { VSpacer } from 'components/VSpacer'
 import React from 'react'

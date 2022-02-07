@@ -2,9 +2,9 @@ import React from 'react'
 import { render } from 'test-utils'
 import * as useAppBreakpoints from 'hooks/useAppBreakpoints'
 import { Trades } from 'app/pages/exchange/components/Trades/Trades'
-import Grid from '@material-ui/core/Grid'
+import Grid from '@mui/material/Grid'
 
-jest.mock('@material-ui/core/Grid', () => jest.fn(() => null))
+jest.mock('@mui/material/Grid', () => jest.fn(() => null))
 
 describe('Trades', () => {
   afterEach(async () => {
@@ -14,7 +14,7 @@ describe('Trades', () => {
   it('renders correct styles if theme type is dark', () => {
     jest.spyOn(useAppBreakpoints, 'useAppBreakpoints').mockReturnValueOnce({
       theme: {
-        palette: { type: 'dark' }
+        palette: { mode: 'dark' }
       }
     } as any)
     render(<Trades />)
@@ -33,7 +33,7 @@ describe('Trades', () => {
   it('renders correct styles if theme type is light', () => {
     jest.spyOn(useAppBreakpoints, 'useAppBreakpoints').mockReturnValueOnce({
       theme: {
-        palette: { type: 'light' }
+        palette: { mode: 'light' }
       }
     } as any)
 

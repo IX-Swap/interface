@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Grid, Paper, Typography } from '@material-ui/core'
+import { Box, Grid, Paper, Typography } from '@mui/material'
 import { LabelledValue } from 'components/LabelledValue'
 import { AssetBalance } from 'types/balance'
 import { useSetPageTitle } from 'app/hooks/useSetPageTitle'

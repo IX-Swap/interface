@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react'
-import { Grid, Typography } from '@material-ui/core'
+import React from 'react'
+import { Grid, Typography } from '@mui/material'
 import { DigitalSecurityOffering } from 'types/dso'
 import { renderStringToHTML } from 'app/components/DSO/utils'
 import { LabelledValue } from 'components/LabelledValue'
@@ -24,7 +24,7 @@ export const DSOInformationView = ({
       className={isNewThemeOn ? classes.newDSOViewItemStyles : ''}
     >
       {isNewThemeOn ? (
-        <Fragment>
+        <>
           <Grid item>
             <Typography
               variant={'h4'}
@@ -65,9 +65,9 @@ export const DSOInformationView = ({
               />
             </Grid>
           </Grid>
-        </Fragment>
+        </>
       ) : (
-        <Fragment>
+        <>
           <Grid item>
             <LabelledValue
               label='Company Information'
@@ -99,7 +99,7 @@ export const DSOInformationView = ({
               align='justify'
             />
           </Grid>
-        </Fragment>
+        </>
       )}
     </Grid>
   )

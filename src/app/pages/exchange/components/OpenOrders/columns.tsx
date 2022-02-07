@@ -4,7 +4,7 @@ import { formatMoney, formatPercent } from 'helpers/numbers'
 import { TableColumn } from 'types/util'
 import { getOrderSideName } from 'helpers/strings'
 import { Order } from 'types/order'
-import { Typography } from '@material-ui/core'
+import { Typography } from '@mui/material'
 
 export const renderTicker = (value: string, row: any) => {
   return <Typography variant='subtitle1'>{value}</Typography>

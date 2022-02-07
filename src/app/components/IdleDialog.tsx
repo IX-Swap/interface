@@ -6,7 +6,7 @@ import {
   Box,
   Typography,
   Grid
-} from '@material-ui/core'
+} from '@mui/material'
 import { VSpacer } from 'components/VSpacer'
 import React from 'react'
 

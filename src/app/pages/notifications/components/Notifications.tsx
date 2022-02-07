@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { MarkAllAsRead } from 'app/pages/notifications/components/MarkAllAsRead'
 import { VSpacer } from 'components/VSpacer'
 import { NotificationsList } from 'app/pages/notifications/components/NotificationsList'

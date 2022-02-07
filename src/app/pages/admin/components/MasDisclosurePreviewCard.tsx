@@ -1,7 +1,7 @@
-import { Card, CardContent, Typography } from '@material-ui/core'
+import { Card, CardContent, Typography } from '@mui/material'
 import React from 'react'
 import { VSpacer } from 'components/VSpacer'
-import { useTheme } from '@material-ui/core/styles'
+import { useTheme } from '@mui/material/styles'
 import ExchangePreview from 'assets/images/exchange-preview.png'
 
 export const MasDisclosurePreviewCard = () => {

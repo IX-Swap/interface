@@ -1,8 +1,8 @@
 import React from 'react'
-import { Box, Typography } from '@material-ui/core'
+import { Box, Typography } from '@mui/material'
 import { VSpacer } from 'components/VSpacer'
 import { addLeadingZeros } from 'helpers/numbers'
-import { useTheme } from '@material-ui/core/styles'
+import { useTheme } from '@mui/material/styles'
 
 export interface TimeUnitProps {
   time: number
@@ -34,7 +34,7 @@ export const TimeUnit: React.FC<TimeUnitProps> = ({
           width: isNewThemeOn ? 40 : 'initial',
           height: isNewThemeOn ? 40 : 'initial',
           color:
-            isNewThemeOn && theme.palette.type === 'dark'
+            isNewThemeOn && theme.palette.mode === 'dark'
               ? theme.palette.getContrastText(theme.palette.grey[200])
               : theme.palette.text.primary
         }}

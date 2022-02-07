@@ -3,7 +3,7 @@
 exports[`CustodySearchFilter should match snapshot 1`] = `
 <div>
   <div
-    class="MuiGrid-root makeStyles-wrapper-1 MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5"
+    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-5 makeStyles-wrapper-1 css-14i9b6g-MuiGrid-root"
   />
 </div>
 `;

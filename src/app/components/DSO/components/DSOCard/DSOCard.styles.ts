@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles'
+import makeStyles from '@mui/styles/makeStyles'
 
 export default makeStyles(theme => ({
   root: {
@@ -28,13 +28,13 @@ export default makeStyles(theme => ({
     fontWeight: 500,
     letterSpacing: 0,
     backgroundColor:
-      theme.palette.type === 'light'
+      theme.palette.mode === 'light'
         ? theme.palette.backgrounds.default
         : 'initial',
 
     [theme.breakpoints.up('md')]: {
       backgroundColor:
-        theme.palette.type === 'light'
+        theme.palette.mode === 'light'
           ? theme.palette.backgrounds.light
           : 'initial'
     }
@@ -45,7 +45,7 @@ export default makeStyles(theme => ({
     flex: '1 0 auto',
     padding: theme.spacing(4),
     backgroundColor:
-      theme.palette.type === 'light'
+      theme.palette.mode === 'light'
         ? 'initial'
         : theme.palette.backgrounds.lighter
   }

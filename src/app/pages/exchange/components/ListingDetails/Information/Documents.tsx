@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { DataroomFile } from 'types/dataroomFile'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
 import { DocumentsView } from 'app/pages/exchange/components/ListingDetails/Information/DocumentsView'

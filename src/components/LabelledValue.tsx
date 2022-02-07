@@ -1,6 +1,6 @@
 import React from 'react'
-import { Box, Grid, GridProps, Typography } from '@material-ui/core'
-import { useTheme } from '@material-ui/core/styles'
+import { Box, Grid, GridProps, Typography } from '@mui/material'
+import { useTheme } from '@mui/material/styles'
 import { formatDateToMMDDYY } from 'helpers/dates'
 
 const isDateTime = (value: string) => {
@@ -87,6 +87,7 @@ export const LabelledValue = (props: LabelledValueProps & GridProps) => {
 
   const labelColorMap = {
     default: theme.palette.text.primary,
+    // @ts-expect-error
     light: theme.palette.text.hint,
     dark: 'rgba(255,255,255,.7)'
   }

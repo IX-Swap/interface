@@ -4,7 +4,7 @@ import {
   ListItemText,
   MenuItem,
   Typography
-} from '@material-ui/core'
+} from '@mui/material'
 import { AppRouterLink } from 'components/AppRouterLink'
 import React, { createElement } from 'react'
 import { useStyles } from 'app/components/UserDropdown/UserDropdownItem.styles'

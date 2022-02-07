@@ -1,6 +1,6 @@
 import React from 'react'
 import { TypedField } from 'components/form/TypedField'
-import { TextField, Grid, Typography } from '@material-ui/core'
+import { TextField, Grid, Typography } from '@mui/material'
 import { useFormContext } from 'react-hook-form'
 import { RevokeAccessInputs } from 'app/pages/admin/components/RevokeAccess'
 

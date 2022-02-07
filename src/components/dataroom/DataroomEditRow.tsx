@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { Box } from '@material-ui/core'
+import { Box } from '@mui/material'
 import { DataroomColumns } from 'components/dataroom/DataroomColumns'
 import { Maybe } from 'types/util'
 import { DataroomFile } from 'types/dataroomFile'

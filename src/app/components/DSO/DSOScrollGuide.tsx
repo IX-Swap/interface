@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
-import { Typography } from '@material-ui/core'
+import { Typography } from '@mui/material'
 import { ScrollGuideLink } from 'ui/ScrollGuide/ScrollGuideLink'
 import { ScrollGuide } from 'ui/ScrollGuide/ScrollGuide'
 import { VSpacer } from 'components/VSpacer'
 
 export enum DSOFormSection {
+  'DSO Information' = 'dso-information',
   Pricing = 'dso-pricing',
   'Offering Terms' = 'dso-terms',
   'Information' = 'dso-profile',

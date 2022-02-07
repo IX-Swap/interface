@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { Documents } from 'app/pages/exchange/components/ListingDetails/Information/Documents'
 import { Profile } from 'app/pages/exchange/components/ListingDetails/Information/Profile'
 import { TeamMembers } from 'app/pages/exchange/components/ListingDetails/Information/TeamMembers'

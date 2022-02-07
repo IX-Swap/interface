@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles'
+import makeStyles from '@mui/styles/makeStyles'
 import BackgroundTopImage from 'assets/images/404-background-top.svg'
 import BackgroundBottomImage from 'assets/images/404-background-bottom.svg'
 import DotBlock from 'assets/icons/dot-block.svg'
@@ -28,7 +28,7 @@ export default makeStyles(theme => ({
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'calc(100% - 64px) 40px',
     backgroundImage: `url("${DotBlock}")`,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       backgroundImage: 'none'
     }
   },
@@ -38,7 +38,7 @@ export default makeStyles(theme => ({
   },
   title: {
     fontSize: 48,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       fontSize: 32
     }
   },
@@ -46,7 +46,7 @@ export default makeStyles(theme => ({
     maxWidth: 658,
     padding: theme.spacing(2, 0, 0),
     fontSize: 24,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       fontSize: 18
     }
   },
@@ -55,7 +55,7 @@ export default makeStyles(theme => ({
     padding: theme.spacing(1, 6),
     margin: theme.spacing(9, 0),
     color: '#ffffff',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       fontSize: 14,
       padding: theme.spacing(1, 3)
     }

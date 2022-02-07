@@ -1,4 +1,4 @@
-import { MenuItem, Select, SelectProps } from '@material-ui/core'
+import { MenuItem, Select, SelectProps } from '@mui/material'
 import { useGetCustody } from 'app/pages/accounts/hooks/useGetCustody'
 import React from 'react'
 import { AssetBalance } from 'types/balance'

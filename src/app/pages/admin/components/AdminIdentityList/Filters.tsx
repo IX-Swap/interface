@@ -1,4 +1,4 @@
-import { Grid, Box } from '@material-ui/core'
+import { Grid, Box } from '@mui/material'
 import { SearchFilter } from 'app/components/SearchFilter'
 import { CreatedByAdminFilter } from 'app/pages/admin/components/AdminIdentityList/CreatedByAdminFilter/CreatedByAdminFilter'
 import { IdentityTypeFilter } from 'app/pages/admin/components/AdminIdentityList/IdentityTypeFilter/IdentityTypeFilter'

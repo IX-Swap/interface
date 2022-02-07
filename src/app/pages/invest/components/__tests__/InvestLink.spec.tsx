@@ -84,7 +84,7 @@ describe('InvestLink', () => {
 
     const { getByText } = render(<InvestLink />)
 
-    expect(getByText(/invest/i)).toBeInstanceOf(HTMLSpanElement)
+    expect(getByText(/invest/i)).toBeInstanceOf(HTMLDivElement)
   })
 
   it('renders AppRouterLink disabled if dso does not have subscriptionDocument', () => {
@@ -100,6 +100,6 @@ describe('InvestLink', () => {
 
     const { getByText } = render(<InvestLink />)
 
-    expect(getByText(/invest/i)).toBeInstanceOf(HTMLSpanElement)
+    expect(getByText(/invest/i)).toBeInstanceOf(HTMLDivElement)
   })
 })

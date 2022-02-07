@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles'
+import makeStyles from '@mui/styles/makeStyles'
 
 export const useStyles = makeStyles(theme => ({
   root: {
@@ -12,7 +12,7 @@ export const useStyles = makeStyles(theme => ({
     flexDirection: 'row-reverse',
     justifyContent: 'flex-end',
     background:
-      theme.palette.type === 'light'
+      theme.palette.mode === 'light'
         ? '#F6F8FA'
         : theme.palette.backgrounds.light,
     border: '1px solid #BFD9FF'

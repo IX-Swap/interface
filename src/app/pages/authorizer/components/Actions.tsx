@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react'
-import { Launch as LaunchIcon } from '@material-ui/icons'
-import { Grid, IconButton, Box } from '@material-ui/core'
+import { Launch as LaunchIcon } from '@mui/icons-material'
+import { Grid, IconButton, Box } from '@mui/material'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { useApproveOrReject } from 'app/pages/authorizer/hooks/useApproveOrReject'
 import { getIdFromObj } from 'helpers/strings'

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Box, Typography } from '@material-ui/core'
+import { Grid, Box, Typography } from '@mui/material'
 import { DigitalSecurityOffering } from 'types/dso'
 import { DSOLogo } from 'app/components/DSO/components/DSOLogo'
 import { LabelledValue } from 'components/LabelledValue'
@@ -41,7 +41,7 @@ export const DSOBaseFieldsView = ({ dso }: DSOBaseFieldsViewProps) => {
               <DSOLogo
                 dsoId={dso._id}
                 size={isMiniLaptop ? 48 : 124}
-                variant='circle'
+                variant='circular'
               />
             </Grid>
 

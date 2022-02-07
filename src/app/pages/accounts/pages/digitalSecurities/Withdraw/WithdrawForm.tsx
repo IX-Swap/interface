@@ -1,4 +1,4 @@
-import { Box, Grid } from '@material-ui/core'
+import { Box, Grid } from '@mui/material'
 import { withdrawValidationSchema } from 'app/pages/accounts/validation'
 import { Form } from 'components/form/Form'
 import React from 'react'

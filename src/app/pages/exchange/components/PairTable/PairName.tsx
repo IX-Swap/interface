@@ -1,5 +1,5 @@
-import { Grid, IconButton } from '@material-ui/core'
-import { Star, StarBorder } from '@material-ui/icons'
+import { Grid, IconButton } from '@mui/material'
+import { Star, StarBorder } from '@mui/icons-material'
 import { useFavoritePairs } from 'app/pages/exchange/hooks/useFavoritePairs'
 import { Pair } from 'app/pages/exchange/hooks/useMarketList'
 import { useMarkPairAsFavorite } from 'app/pages/exchange/hooks/useMarkPairAsFavorite'

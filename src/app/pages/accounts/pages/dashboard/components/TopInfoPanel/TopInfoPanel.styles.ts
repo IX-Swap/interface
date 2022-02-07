@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles'
+import makeStyles from '@mui/styles/makeStyles'
 import TopographyImage from 'assets/images/topography-pattern.png'
 
 export const useStyles = makeStyles(theme => ({
@@ -15,7 +15,7 @@ export const useStyles = makeStyles(theme => ({
   },
   wrapper: {
     flexDirection: 'row',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       flexDirection: 'column'
     }
   },
@@ -26,7 +26,7 @@ export const useStyles = makeStyles(theme => ({
     marginTop: 0,
     marginBottom: 0,
 
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       height: 1,
       width: '100%',
       marginTop: theme.spacing(2),

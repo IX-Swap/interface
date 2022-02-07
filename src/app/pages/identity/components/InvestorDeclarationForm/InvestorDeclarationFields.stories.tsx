@@ -1,7 +1,7 @@
 import React from 'react'
 import { Meta, Story } from '@storybook/react/types-6-0'
 import { InvestorDeclarationForm } from 'app/pages/identity/components/InvestorDeclarationForm/InvestorDeclarationForm'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { Form } from 'components/form/Form'
 
 const meta: Meta = {

@@ -3,10 +3,10 @@ import { BaseFilter } from 'types/util'
 import { NewsItemType } from 'types/news'
 import { useStyles } from './NewsList.style'
 import { NewsItem } from 'app/pages/educationCentre/components/News/NewsItem'
-import { LinearProgress, TablePagination, Grid } from '@material-ui/core'
+import { LinearProgress, TablePagination, Grid } from '@mui/material'
 import { useTableWithPagination } from 'components/TableWithPagination/hooks/useTableWithPagination'
-import { useTheme } from '@material-ui/core/styles'
-import useMediaQuery from '@material-ui/core/useMediaQuery'
+import { useTheme } from '@mui/material/styles'
+import useMediaQuery from '@mui/material/useMediaQuery'
 
 export interface NewsListProps {
   name: string
@@ -23,7 +23,7 @@ export const NewsList = ({
 }: NewsListProps): JSX.Element => {
   const theme = useTheme()
   const classes = useStyles()
-  const isTablet = useMediaQuery(theme.breakpoints.down('md'))
+  const isTablet = useMediaQuery(theme.breakpoints.down('lg'))
   const { items, status, page, setPage, rowsPerPage, total } =
     useTableWithPagination<NewsItemType>({
       queryKey: name,

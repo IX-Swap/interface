@@ -1,7 +1,7 @@
 import React from 'react'
 import { ErrorBoundary } from '@sentry/react'
 import { Header } from 'app/components/Header/Header'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { AppError } from 'app/components/AppError'
 import { useDataFromURL } from 'hooks/location/useDataFromURL'
 import { SidebarContainer } from 'app/components/SidebarContainer/SidebarContainer'

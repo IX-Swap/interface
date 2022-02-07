@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect } from 'react'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { FieldsArray } from 'components/form/FieldsArray'
 import { useFormContext } from 'react-hook-form'
 import { TaxResidencyField } from 'app/pages/identity/components/TaxDeclarationForm/TaxResidencyFields/TaxResidencyField'

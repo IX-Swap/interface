@@ -5,7 +5,7 @@ import {
   ListItem as MuiListItem,
   ListItemIcon,
   Typography
-} from '@material-ui/core'
+} from '@mui/material'
 import { UploadDocumentField } from 'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/UploadDocumentField'
 
 export interface ListItemProps {

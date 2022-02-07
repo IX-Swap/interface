@@ -1,6 +1,6 @@
 import React from 'react'
 import { TypedField } from 'components/form/TypedField'
-import { Box, Grid, TextField } from '@material-ui/core'
+import { Box, Grid, TextField } from '@mui/material'
 import { VSpacer } from 'components/VSpacer'
 import { booleanValueExtractor } from 'helpers/forms'
 import { Checkbox } from 'components/form/Checkbox'
