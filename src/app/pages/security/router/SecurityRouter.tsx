@@ -6,29 +6,30 @@ import { ChangePassword } from 'app/pages/security/pages/changePassword/ChangePa
 import { Setup2fa } from 'app/pages/security/pages/setup2fa/Setup2fa'
 import { Setup2FAGuide } from 'app/pages/security/pages/setup2faguide/Setup2FAGuide'
 import { Update2fa } from 'app/pages/security/pages/update2fa/Update2fa'
+import { AppRoute } from 'components/AppRoute'
 
 export const SecurityRouter = () => {
   return (
     <Switch>
-      <Route path={SecurityRoute.setup2fa}>
+      <AppRoute path={SecurityRoute.setup2fa}>
         <Setup2fa />
-      </Route>
+      </AppRoute>
 
-      <Route path={SecurityRoute.guide}>
+      <AppRoute path={SecurityRoute.guide}>
         <Setup2FAGuide />
-      </Route>
+      </AppRoute>
 
       <Route path={SecurityRoute.changePassword}>
         <ChangePassword />
       </Route>
 
-      <Route path={SecurityRoute.change2fa}>
+      <AppRoute path={SecurityRoute.change2fa}>
         <Update2fa />
-      </Route>
+      </AppRoute>
 
-      <Route path={SecurityRoute.landing}>
+      <AppRoute path={SecurityRoute.landing}>
         <Landing />
-      </Route>
+      </AppRoute>
     </Switch>
   )
 }

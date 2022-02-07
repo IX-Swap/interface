@@ -6,13 +6,41 @@ exports[`Update2fa should match snapshot 1`] = `
     class="MuiGrid-root MuiGrid-container"
   >
     <div
-      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+      class="MuiGrid-root makeStyles-container-4 MuiGrid-container MuiGrid-direction-xs-column"
+    >
+      <div
+        class="MuiGrid-root makeStyles-header-3 MuiGrid-container"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-align-items-xs-center"
+        >
+          <h2
+            class="MuiTypography-root MuiTypography-h2"
+          >
+            Change Authenticator
+          </h2>
+        </div>
+      </div>
+      <div
+        class="MuiGrid-root"
+      >
+        <nav
+          class="MuiTypography-root MuiBreadcrumbs-root MuiTypography-body1 MuiTypography-colorTextSecondary"
+        >
+          <ol
+            class="MuiBreadcrumbs-ol"
+          />
+        </nav>
+      </div>
+    </div>
+    <div
+      class="MuiGrid-root makeStyles-wrapper-1 MuiGrid-item MuiGrid-grid-xs-12"
     >
       <div
         class="MuiContainer-root MuiContainer-maxWidthLg"
       >
         <div
-          class="MuiBox-root MuiBox-root-1"
+          class="MuiBox-root MuiBox-root-6"
         >
           <div
             class="MuiPaper-root MuiStepper-root MuiStepper-horizontal MuiStepper-alternativeLabel MuiPaper-elevation0"
@@ -210,7 +238,7 @@ exports[`Update2fa should match snapshot 1`] = `
               class="MuiGrid-root MuiGrid-item"
             >
               <div
-                class="MuiBox-root MuiBox-root-2"
+                class="MuiBox-root MuiBox-root-7"
               >
                 <div
                   class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column"
@@ -224,7 +252,7 @@ exports[`Update2fa should match snapshot 1`] = `
                       Remove Authenticator by Verifying your Identity
                     </h5>
                     <div
-                      class="MuiBox-root MuiBox-root-3"
+                      class="MuiBox-root MuiBox-root-8"
                     />
                   </div>
                   <div

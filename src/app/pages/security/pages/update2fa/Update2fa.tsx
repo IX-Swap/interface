@@ -10,6 +10,8 @@ import {
 } from '@material-ui/core'
 import { TwoFaData } from 'app/pages/security/types'
 import { ActiveStep } from 'app/pages/security/pages/update2fa/components/ActiveStep'
+import { PageHeader } from 'app/components/PageHeader/PageHeader'
+import { useStyles } from './Update2fa.styles'
 
 const steps = [
   'Remove Current Authenticator',
@@ -19,6 +21,7 @@ const steps = [
 ]
 
 export const Update2fa = () => {
+  const classes = useStyles()
   const [activeStep, setActiveStep] = useState<number>(0)
   const [twoFaData, setTwoFaData] = useState<TwoFaData | undefined>(undefined)
   const nextStep = () => {
@@ -35,7 +38,8 @@ export const Update2fa = () => {
 
   return (
     <Grid container spacing={0}>
-      <Grid item xs={12}>
+      <PageHeader title='Change Authenticator' />
+      <Grid item xs={12} className={classes.wrapper}>
         <Container>
           <Box>
             <Stepper activeStep={activeStep} alternativeLabel>
