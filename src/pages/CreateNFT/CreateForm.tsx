@@ -24,6 +24,7 @@ import {
   useCreateNftAssetForm,
   useFetchMyCollections,
 } from 'state/nft/hooks'
+import { useActiveWeb3React } from 'hooks/web3'
 
 import { CollectionDropdown } from './CollectionDropdown'
 import { FreezeRadio } from './FreezeRadio'
@@ -68,6 +69,7 @@ export const CreateForm = () => {
     onSetMaxSupply,
     onClearState,
   } = useCreateAssetActionHandlers()
+  const { chainId } = useActiveWeb3React()
   const [showCreateNewCollection, setShowCreateNewCollection] = useState(false)
   const [isNotValid, setValidationStatus] = useState(true)
   const [pending, setPending] = useState(false)
@@ -176,8 +178,8 @@ export const CreateForm = () => {
   }, [checkFileSize])
 
   useEffect(() => {
-    fetchMyCollections()
-  }, [fetchMyCollections])
+    fetchMyCollections(chainId)
+  }, [fetchMyCollections, chainId])
 
   const onSubmit = async (e: any) => {
     setPending(true)
