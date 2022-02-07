@@ -6,7 +6,7 @@ import { Label } from '@rebass/forms'
 
 import { ContainerRow, Input, InputContainer, InputPanel, Textarea } from 'components/Input'
 import Upload from 'components/Upload'
-import { AcceptFiles } from 'components/Upload/types' //accept={AcceptFiles.IMAGE}
+import { AcceptFiles } from 'components/Upload/types'
 import { ExternalLink, TYPE } from 'theme'
 import { ButtonGradient } from 'components/Button'
 import { useCollectionActionHandlers, useCollectionFormState } from 'state/nft/hooks'
@@ -136,7 +136,15 @@ export const CollectionForm = ({ collection, onSubmit, actionName = 'Update' }: 
             <TYPE.descriptionThin fontSize={13}>
               This image will also be used for navigation, 350 x 350 recommended
             </TYPE.descriptionThin>
-            <Upload width="350px" height="350px" isLogo onDrop={onLogoDrop} file={logo} newFileWithPath={newLogo} />
+            <Upload
+              width="350px"
+              height="350px"
+              isLogo
+              onDrop={onLogoDrop}
+              file={logo}
+              newFileWithPath={newLogo}
+              accept={AcceptFiles.IMAGE}
+            />
           </Label>
         </Box>
       </Flex>
@@ -151,7 +159,14 @@ export const CollectionForm = ({ collection, onSubmit, actionName = 'Update' }: 
               (optional) This image will be used for featuring your collection on the homepage, category pages, or other
               promotional areas. 600x400 recommended.
             </TYPE.descriptionThin>
-            <Upload width="600px" height="400px" onDrop={onCoverDrop} file={cover} newFileWithPath={newCover} />
+            <Upload
+              width="600px"
+              height="400px"
+              onDrop={onCoverDrop}
+              file={cover}
+              newFileWithPath={newCover}
+              accept={AcceptFiles.IMAGE}
+            />
           </Label>
         </Box>
       </Flex>
@@ -173,6 +188,7 @@ export const CollectionForm = ({ collection, onSubmit, actionName = 'Update' }: 
               onDrop={onBannerDrop}
               file={banner}
               newFileWithPath={newBanner}
+              accept={AcceptFiles.IMAGE}
             />
           </Label>
         </Box>
