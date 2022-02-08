@@ -74,8 +74,8 @@ const NFTCollections: FC = () => {
   if (!account) return <NFTConnectWallet />
   return (
     <AppBody blurred={!chainId || !TGE_CHAINS_WITH_SWAP.includes(chainId)} maxWidth="100%" transparent>
-      <Container>
-        <Body>
+      <Container style={{ width: '95vw' }}>
+        <Body style={{ padding: '0 10px' }}>
           <TYPE.titleBig marginBottom={64} textAlign="center" fontWeight={600}>
             My Collections
           </TYPE.titleBig>
