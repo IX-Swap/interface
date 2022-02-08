@@ -56,7 +56,7 @@ export const RegisterFields = () => {
   const emailErrors = errors.email
 
   return (
-    <Grid container spacing={4} direction='column'>
+    <Grid container spacing={6} direction='column'>
       <Grid item>
         <TypedField
           control={control}
@@ -105,7 +105,6 @@ export const RegisterFields = () => {
       </Grid>
       <Grid item className={bottomBlock}>
         <TypedField
-          customRenderer
           valueExtractor={booleanValueExtractor}
           component={Checkbox}
           withNewSuccessIcon

@@ -4,6 +4,7 @@ import tinycolor from 'tinycolor2'
 
 export const lightTheme: DeprecatedThemeOptions = {
   palette: {
+    mode: 'light',
     primary: {
       main: themeColors.primary
     },

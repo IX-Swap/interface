@@ -29,7 +29,8 @@ export const getThemeOverrides = (
         '&.Mui-error': {
           color: '#FF8080',
           textAlign: 'right',
-          paddingTop: 6
+          paddingTop: 6,
+          marginRight: 0
         }
       }
     }
@@ -37,9 +38,10 @@ export const getThemeOverrides = (
   MuiInputLabel: {
     styleOverrides: {
       root: {
-        transform: 'translate(0, -11px) !important',
+        transform: 'translate(0, -30px) !important',
         transformOrigin: 'top left',
         fontSize: 16,
+        color: '#ffffff',
 
         '&.Mui-focused': {
           color: '#ffffff'
@@ -75,6 +77,27 @@ export const getThemeOverrides = (
       }
     }
   },
+  MuiOutlinedInput: {
+    styleOverrides: {
+      notchedOutline: {
+        borderColor: 'transparent',
+        '& span': {
+          display: 'none!important'
+        },
+        '.Mui-error &': {
+          paddingRight: 20,
+          border: '2px solid #FF8080!important',
+          WebkitBoxShadow: 'none'
+        }
+      },
+      input: {
+        paddingTop: 18,
+        paddingBottom: 18,
+        paddingLeft: 24,
+        paddingRight: 24
+      }
+    }
+  },
   MuiInputBase: {
     styleOverrides: {
       root: {
@@ -93,8 +116,9 @@ export const getThemeOverrides = (
         boxSizing: 'border-box',
         color: '#ffffff',
         fontSize: 16,
+        WebkitBoxShadow: '0 0 0 100px #1a397c40 inset!important',
         '&:-webkit-autofill': {
-          WebkitBoxShadow: '0 0 0 100px #1a397c inset',
+          WebkitBoxShadow: '0 0 0 100px #1a397c40 inset!important',
           WebkitTextFillColor: '#ffffff',
           transition: 'background-color 5000s ease-in-out 0s'
         },
@@ -103,10 +127,19 @@ export const getThemeOverrides = (
           WebkitTextFillColor: '#334466',
           transition: 'none'
         },
+        '&:-internal-autofill-selected': {
+          WebkitBoxShadow: '0 0 0 100px #1a397c40 inset!important',
+          backgroundColor: '#1a397c40!important'
+        },
         '.Mui-focused &': {
           backgroundColor: '#ffffff',
+          WebkitBoxShadow: 'none!important',
           color: '#000000',
-          border: 'none'
+          border: 'none',
+          transition: 'none!important'
+        },
+        '.Mui-error &': {
+          WebkitBoxShadow: 'none!important'
         }
       },
       // inputMarginDense: {
@@ -114,7 +147,14 @@ export const getThemeOverrides = (
       //   paddingBottom: 12
       // },
       adornedEnd: {
-        paddingRight: 8
+        paddingRight: 8,
+        '&.Mui-error': {
+          backgroundColor: '#1a397c40'
+        },
+        '&.Mui-focused': {
+          backgroundColor: '#ffffff',
+          WebkitBoxShadow: 'none!important'
+        }
       },
       multiline: {
         height: 'auto',
@@ -134,10 +174,8 @@ export const getThemeOverrides = (
   },
   MuiButton: {
     styleOverrides: {
-      // label: {
-      //   fontSize: 12
-      // },
       contained: {
+        fontSize: 14,
         borderRadius: 8,
         '&:hover': {
           backgroundColor: '#4080ff!important'
@@ -171,7 +209,11 @@ export const getThemeOverrides = (
   MuiSvgIcon: {
     styleOverrides: {
       root: {
+        width: 20,
+        height: 20,
         fill: '#102756',
+        borderRadius: 4,
+        backgroundColor: '#102756',
         '.Mui-checked &': {
           fill: '#0055FF'
         }
@@ -180,6 +222,9 @@ export const getThemeOverrides = (
   },
   MuiTypography: {
     styleOverrides: {
+      root: {
+        color: '#ffffff'
+      }
       // colorError: {
       //   '& span': {
       //     color: '#FF8080'
