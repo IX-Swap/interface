@@ -54,7 +54,7 @@ const NftCollectionItems = styled.div`
 
   padding: 2rem;
 
-  @media (max-width: 640px) {
+  @media (max-width: 770px) {
     padding: 0;
     gap: 1rem;
   }

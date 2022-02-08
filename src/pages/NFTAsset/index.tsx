@@ -338,12 +338,13 @@ const NftAssetPageWrapper = styled(Row)`
 `
 
 const NftCollectionBackButtonWrapper = styled.div`
-  position: absolute;
+  position: inherit;
   left: 4rem;
 
   margin: 0 2rem;
+  top: 7.5rem;
 
-  @media (max-width: 540px) {
+  @media (max-width: 1080px) {
     position: inherit;
     gap: 1rem;
     margin: 2rem 0;
