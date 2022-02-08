@@ -22,7 +22,7 @@ describe('RemoveAuthenticatorFields', () => {
     )
 
     expect(getByText('Remove and continue')).toBeInTheDocument()
-    expect(getByText('Remove and continue').parentElement).toBeDisabled()
+    expect(getByText('Remove and continue')).toBeDisabled()
   })
 
   it('disables submit button when isLoading is true', async () => {
@@ -47,7 +47,7 @@ describe('RemoveAuthenticatorFields', () => {
     })
 
     await waitFor(() => {
-      expect(getByText('Remove and continue').parentElement).toBeDisabled()
+      expect(getByText('Remove and continue')).toBeDisabled()
     })
   })
 
@@ -68,7 +68,7 @@ describe('RemoveAuthenticatorFields', () => {
     })
 
     await waitFor(() => {
-      expect(getByText('Remove and continue').parentElement).toBeDisabled()
+      expect(getByText('Remove and continue')).toBeDisabled()
     })
 
     fireEvent.change(emailCodeField as HTMLInputElement, {
@@ -78,7 +78,7 @@ describe('RemoveAuthenticatorFields', () => {
     })
 
     await waitFor(() => {
-      expect(getByText('Remove and continue').parentElement).toBeEnabled()
+      expect(getByText('Remove and continue')).toBeEnabled()
     })
   })
 })

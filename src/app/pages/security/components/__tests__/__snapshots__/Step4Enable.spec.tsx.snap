@@ -3,50 +3,50 @@
 exports[`Step4Enable should match snapshot 1`] = `
 <div>
   <div
-    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column"
+    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column css-bjcb1i-MuiGrid-root"
   >
     <div
-      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1sr5n48-MuiGrid-root"
     >
       <h5
-        class="MuiTypography-root MuiTypography-h5 MuiTypography-alignCenter"
+        class="MuiTypography-root MuiTypography-h5 MuiTypography-alignCenter css-1f4u6as-MuiTypography-root"
       >
         Enable Authenticator App
       </h5>
       <div
-        class="MuiBox-root MuiBox-root-1"
+        class="MuiBox-root css-1jpm9pd"
       />
     </div>
     <div
-      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1sr5n48-MuiGrid-root"
     >
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column MuiGrid-align-items-xs-center"
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column css-11ypfzm-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-8 MuiGrid-grid-lg-6"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-8 MuiGrid-grid-lg-6 css-1er4735-MuiGrid-root"
         >
           <p
-            class="MuiTypography-root MuiTypography-body1 MuiTypography-alignCenter"
+            class="MuiTypography-root MuiTypography-body1 MuiTypography-alignCenter css-6bx0l6-MuiTypography-root"
           >
             Please enter the 6 digit code from your authenticator app
           </p>
         </div>
         <div
-          class="MuiGrid-root MuiGrid-item"
+          class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
         >
           <form
             data-testid="form"
             style="width: 100%;"
           >
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-direction-xs-column"
+              class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-direction-xs-column css-13do5pu-MuiGrid-root"
             >
               <div
-                class="MuiGrid-root MuiGrid-item"
+                class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
               >
                 <div
-                  class="makeStyles-container-2 makeStyles-fullwidth-3"
+                  class="makeStyles-container-1 makeStyles-fullwidth-2"
                   style="display: flex;"
                 >
                   <div
@@ -55,7 +55,7 @@ exports[`Step4Enable should match snapshot 1`] = `
                     <input
                       aria-label="Please enter verification code. Character 1"
                       autocomplete="off"
-                      class="makeStyles-base-4 makeStyles-standard-5 "
+                      class="makeStyles-base-3 makeStyles-standard-4 "
                       maxlength="1"
                       style="width: 1em; text-align: center;"
                       type="text"
@@ -68,7 +68,7 @@ exports[`Step4Enable should match snapshot 1`] = `
                     <input
                       aria-label="Character 2"
                       autocomplete="off"
-                      class="makeStyles-base-4 makeStyles-standard-5"
+                      class="makeStyles-base-3 makeStyles-standard-4"
                       maxlength="1"
                       style="width: 1em; text-align: center;"
                       type="text"
@@ -81,7 +81,7 @@ exports[`Step4Enable should match snapshot 1`] = `
                     <input
                       aria-label="Character 3"
                       autocomplete="off"
-                      class="makeStyles-base-4 makeStyles-standard-5"
+                      class="makeStyles-base-3 makeStyles-standard-4"
                       maxlength="1"
                       style="width: 1em; text-align: center;"
                       type="text"
@@ -94,7 +94,7 @@ exports[`Step4Enable should match snapshot 1`] = `
                     <input
                       aria-label="Character 4"
                       autocomplete="off"
-                      class="makeStyles-base-4 makeStyles-standard-5"
+                      class="makeStyles-base-3 makeStyles-standard-4"
                       maxlength="1"
                       style="width: 1em; text-align: center;"
                       type="text"
@@ -107,7 +107,7 @@ exports[`Step4Enable should match snapshot 1`] = `
                     <input
                       aria-label="Character 5"
                       autocomplete="off"
-                      class="makeStyles-base-4 makeStyles-standard-5"
+                      class="makeStyles-base-3 makeStyles-standard-4"
                       maxlength="1"
                       style="width: 1em; text-align: center;"
                       type="text"
@@ -120,7 +120,7 @@ exports[`Step4Enable should match snapshot 1`] = `
                     <input
                       aria-label="Character 6"
                       autocomplete="off"
-                      class="makeStyles-base-4 makeStyles-standard-5"
+                      class="makeStyles-base-3 makeStyles-standard-4"
                       maxlength="1"
                       style="width: 1em; text-align: center;"
                       type="text"
@@ -131,28 +131,24 @@ exports[`Step4Enable should match snapshot 1`] = `
               </div>
             </div>
             <div
-              class="MuiBox-root MuiBox-root-8"
+              class="MuiBox-root css-17w1y3n"
             >
               <button
-                class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-disableElevation Mui-disabled Mui-disabled"
+                class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-disableElevation MuiButtonBase-root Mui-disabled  css-7u5lsg-MuiButtonBase-root-MuiButton-root"
                 disabled=""
                 tabindex="-1"
                 type="submit"
               >
-                <span
-                  class="MuiButton-label"
-                >
-                  Enable
-                </span>
+                Enable
               </button>
             </div>
           </form>
         </div>
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-8 MuiGrid-grid-lg-6"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-8 MuiGrid-grid-lg-6 css-1er4735-MuiGrid-root"
         >
           <p
-            class="MuiTypography-root MuiTypography-body1 MuiTypography-alignCenter"
+            class="MuiTypography-root MuiTypography-body1 MuiTypography-alignCenter css-6bx0l6-MuiTypography-root"
           >
             Once enabled your authenticator you will be logged out and re-enter the OTP in order to access the platform
           </p>
