@@ -10,10 +10,6 @@ jest.mock('app/pages/issuance/components/ReportDetails/ReportDetails', () => ({
   ReportDetails: jest.fn(() => null)
 }))
 
-jest.mock('app/pages/issuance/components/ReportDocuments', () => ({
-  ReportDocuments: jest.fn(() => null)
-}))
-
 describe('ViewReport', () => {
   afterEach(async () => {
     await cleanup()
