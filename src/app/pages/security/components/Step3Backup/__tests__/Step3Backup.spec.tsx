@@ -14,7 +14,7 @@ describe('Step3Backup', () => {
   })
 
   it('renders 2fa key', () => {
-    const { container } = render(<Step3Backup twoFaData={fakeTwoFaData} />)
-    expect(container.querySelector('h4')).toHaveTextContent(fakeTwoFaData.key)
+    const { getByTestId } = render(<Step3Backup twoFaData={fakeTwoFaData} />)
+    expect(getByTestId('key')).toHaveTextContent(fakeTwoFaData.key)
   })
 })

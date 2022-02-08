@@ -16,8 +16,8 @@ export const useGetEmailCode = () => {
 
   const { data, ...rest } = useQuery(authQueryKeys.getEmailCode, getEmailCode, {
     enabled: false,
-    onError: (error: string) => {
-      void snackbarService.showSnackbar(error.toString(), 'error')
+    onError: (error: any) => {
+      void snackbarService.showSnackbar(error.message, 'error')
     }
   })
 

@@ -8,14 +8,12 @@ describe('Step2Scan', () => {
     jest.clearAllMocks()
   })
 
-  it('renders 2fa key', () => {
-    const { getByText } = render(<Step2Scan twoFaData={fakeTwoFaData} />)
+  it('renders 2fa key and image', () => {
+    const { getByText, getByTestId } = render(
+      <Step2Scan twoFaData={fakeTwoFaData} />
+    )
+    const image = getByTestId('store-image')
     expect(getByText(fakeTwoFaData.key)).toBeTruthy()
-  })
-
-  it('renders 2fa image', () => {
-    const { getByTestId } = render(<Step2Scan twoFaData={fakeTwoFaData} />)
-    const el = getByTestId('store-image')
-    expect(el.style.backgroundImage).toEqual(`url(${fakeTwoFaData.image})`)
+    expect(image.style.backgroundImage).toEqual(`url(${fakeTwoFaData.image})`)
   })
 })

@@ -34,8 +34,8 @@ export const useRemove2fa = (
 
       handleSuccessRequest(data.data)
     },
-    onError: (error: string) => {
-      void snackbarService.showSnackbar(error.toString(), 'error')
+    onError: (error: any) => {
+      void snackbarService.showSnackbar(error.message, 'error')
     }
   })
 }

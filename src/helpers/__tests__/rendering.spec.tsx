@@ -52,18 +52,11 @@ describe('renderDateAndTimeField', () => {
 })
 
 describe('renderPartOfEmail', () => {
-  afterEach(async () => {
-    jest.clearAllMocks()
-  })
-
-  it('returns empty string when email is undefined', () => {
-    const testEmail = undefined
-    expect(renderPartOfEmail(testEmail)).toEqual('')
-  })
-
-  it('returns empty string when email is empty string', () => {
-    const testEmail = ''
-    expect(renderPartOfEmail(testEmail)).toEqual('')
+  it('returns empty string when email is undefined or empty string', () => {
+    const undefinedEmail = undefined
+    expect(renderPartOfEmail(undefinedEmail)).toEqual('')
+    const emptyEmail = ''
+    expect(renderPartOfEmail(emptyEmail)).toEqual('')
   })
 
   it('returns correct part of email address', () => {

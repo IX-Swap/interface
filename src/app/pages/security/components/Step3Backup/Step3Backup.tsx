@@ -25,7 +25,12 @@ export const Step3Backup = ({ twoFaData }: Step3BackupProps) => {
           </Typography>
         </Grid>
         <Grid item>
-          <Typography variant='h4' align='center' className={classes.key}>
+          <Typography
+            variant='h4'
+            align='center'
+            className={classes.key}
+            data-testid={'key'}
+          >
             {twoFaData.key}
           </Typography>
         </Grid>

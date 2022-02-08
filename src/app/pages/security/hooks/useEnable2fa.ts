@@ -35,8 +35,8 @@ export const useEnable2fa = (nextStep: () => void) => {
       nextStep()
       setTimeout(() => history.push('/'), 2500)
     },
-    onError: (error: string) => {
-      void snackbarService.showSnackbar(error.toString(), 'error')
+    onError: (error: any) => {
+      void snackbarService.showSnackbar(error.message, 'error')
     }
   })
 }
