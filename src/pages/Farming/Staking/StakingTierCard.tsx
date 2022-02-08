@@ -58,12 +58,11 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
   }, [poolSizeState, tier.period, chainId])
 
   useEffect(() => {
-    if (leftToFill <= 1) {
+    if (leftToFill <= 1 && !isPoolLimitationLoading) {
       setIsLimitReached(true)
     } else {
       setIsLimitReached(false)
     }
-    console.log({ leftToFill })
   }, [leftToFill])
 
   const selectPeriod = () => {
@@ -89,6 +88,8 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
     if (isPaused) {
       return 'Paused'
     } else if (isLimitReached) {
+      return 'Limit reached'
+    } else if (isPoolLimitationLoading) {
       return 'Limit reached'
     } else {
       return 'Stake'
@@ -201,7 +202,7 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
           </MouseoverTooltip>
         </div>
       </RowWithMarginTopAndBottom>
-      <ButtonIXSWide onClick={selectPeriod} disabled={isPaused || isLimitReached}>
+      <ButtonIXSWide onClick={selectPeriod} disabled={isPaused || isLimitReached || isPoolLimitationLoading}>
         <Trans>{getStakeButtonText()}</Trans>
       </ButtonIXSWide>
       <DesktopAndTablet>{renderPoolSize()}</DesktopAndTablet>
