@@ -8,6 +8,9 @@ import { TYPE } from 'theme'
 import { ButtonGradientBorder, ButtonIXSGradient, ButtonPrimary } from 'components/Button'
 import { RowBetween } from 'components/Row'
 import { routes } from 'utils/routes'
+import AppBody from 'pages/AppBody'
+import { useWeb3React } from '@web3-react/core'
+import { TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
 
 const NftCollectionWrapper = styled.div`
   position: relative;
@@ -90,6 +93,7 @@ interface NFTCollectionPageParams {
 
 const NFTCollection = () => {
   const { collectionAddress } = useParams<NFTCollectionPageParams>()
+  const { chainId } = useWeb3React()
   const collection = useNftCollection(collectionAddress)
   const baseLink = useMemo(() => `/nft/collections/${collectionAddress}/`, [collectionAddress])
 
@@ -110,40 +114,42 @@ const NFTCollection = () => {
   const history = useHistory()
 
   return (
-    <NftCollectionWrapper>
-      {!collection.loading && collection.info && (
-        <>
-          <RowBetween style={{ marginBottom: '15px', flexWrap: 'wrap' }}>
-            <NftCollectionBackButtonWrapper>
-              <ButtonGradientBorder onClick={() => history.push(routes.nftCollections)}>
-                <TYPE.title3>Back</TYPE.title3>
-              </ButtonGradientBorder>
-            </NftCollectionBackButtonWrapper>
+    <AppBody blurred={!chainId || !TGE_CHAINS_WITH_SWAP.includes(chainId)} maxWidth="100%" transparent>
+      <NftCollectionWrapper>
+        {!collection.loading && collection.info && (
+          <>
+            <RowBetween style={{ marginBottom: '15px', flexWrap: 'wrap' }}>
+              <NftCollectionBackButtonWrapper>
+                <ButtonGradientBorder onClick={() => history.push(routes.nftCollections)}>
+                  <TYPE.title3>Back</TYPE.title3>
+                </ButtonGradientBorder>
+              </NftCollectionBackButtonWrapper>
 
-            <NftCollectionInfo>
-              <TYPE.titleBig>{collection.info.name}</TYPE.titleBig>
-            </NftCollectionInfo>
-          </RowBetween>
+              <NftCollectionInfo>
+                <TYPE.titleBig>{collection.info.name}</TYPE.titleBig>
+              </NftCollectionInfo>
+            </RowBetween>
 
-          {collection.info.supply === 0 && (
-            <NoNftContainer>
-              <TYPE.title8>No any NFTs</TYPE.title8>
-            </NoNftContainer>
-          )}
+            {collection.info.supply === 0 && (
+              <NoNftContainer>
+                <TYPE.title8>No any NFTs</TYPE.title8>
+              </NoNftContainer>
+            )}
 
-          <NftCollectionItems>
-            {tokens.length > 0 &&
-              tokens.map((token, idx) => (
-                <NftPreviewLink key={`token-uri-${idx}`} to={baseLink + idx}>
-                  <NFTPreview uri={token} />
-                </NftPreviewLink>
-              ))}
-          </NftCollectionItems>
+            <NftCollectionItems>
+              {tokens.length > 0 &&
+                tokens.map((token, idx) => (
+                  <NftPreviewLink key={`token-uri-${idx}`} to={baseLink + idx}>
+                    <NFTPreview uri={token} />
+                  </NftPreviewLink>
+                ))}
+            </NftCollectionItems>
 
-          {collection.hasMore && <ButtonPrimary onClick={collection.fetchTokens}>More</ButtonPrimary>}
-        </>
-      )}
-    </NftCollectionWrapper>
+            {collection.hasMore && <ButtonPrimary onClick={collection.fetchTokens}>More</ButtonPrimary>}
+          </>
+        )}
+      </NftCollectionWrapper>
+    </AppBody>
   )
 }
 
