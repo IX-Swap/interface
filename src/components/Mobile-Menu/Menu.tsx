@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro'
-import { MATIC_TGE_CHAINS, TGE_CHAINS_WITH_STAKING } from 'constants/addresses'
+import { MATIC_TGE_CHAINS, TGE_CHAINS_WITH_STAKING, TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
 import { SupportedChainId } from 'constants/chains'
 import { useActiveWeb3React } from 'hooks/web3'
 import React, { useEffect } from 'react'
@@ -78,7 +78,7 @@ export const Menu = ({ close }: Props) => {
           <ExternalListItem href={`https://ixswap.defiterm.io/`}>
             <Trans>DeFi Terminal</Trans>
           </ExternalListItem>
-          {chainId && TGE_CHAINS_WITH_STAKING.includes(chainId) && (
+          {chainId && TGE_CHAINS_WITH_SWAP.includes(chainId) && (
             <MenuListItem
               activeClassName="active-item"
               id={`nft-collections-nav-link`}
@@ -88,7 +88,7 @@ export const Menu = ({ close }: Props) => {
               <Trans>My NFT Collections</Trans>
             </MenuListItem>
           )}
-          {chainId && TGE_CHAINS_WITH_STAKING.includes(chainId) && (
+          {chainId && TGE_CHAINS_WITH_SWAP.includes(chainId) && (
             <MenuListItem
               activeClassName="active-item"
               id={`create-nft-nav-link`}
@@ -98,7 +98,7 @@ export const Menu = ({ close }: Props) => {
               <Trans>Create NFT</Trans>
             </MenuListItem>
           )}
-          {chainId && TGE_CHAINS_WITH_STAKING.includes(chainId) && (
+          {chainId && TGE_CHAINS_WITH_SWAP.includes(chainId) && (
             <MenuListItem
               activeClassName="active-item"
               id={`nft-create-collection-nav-link`}
