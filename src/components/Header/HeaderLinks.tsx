@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { ChevronElement } from 'components/ChevronElement'
 import Popover from 'components/Popover'
-import { MATIC_TGE_CHAINS, TGE_CHAINS_WITH_STAKING } from 'constants/addresses'
+import { MATIC_TGE_CHAINS, TGE_CHAINS_WITH_STAKING, TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
 import { SupportedChainId } from 'constants/chains'
 import { useOnClickOutside } from 'hooks/useOnClickOutside'
 import useToggle from 'hooks/useToggle'
@@ -201,19 +201,23 @@ export const HeaderLinks = () => {
           </RowFixed>
         </Popover>
       </StyledNavLink>
-      <StyledNavLink
-        ref={nftNode as any}
-        id={`nft-nav-link`}
-        to={'#'}
-        isActive={(match, { pathname }) => pathname.startsWith('/nft')}
-      >
-        <Popover hideArrow show={openNFT} content={<NFTPopover />} placement={'bottom'}>
-          <RowFixed onClick={toggleNFT}>
-            <Trans>NFT</Trans>
-            <ChevronElement showMore={openNFT} />
-          </RowFixed>
-        </Popover>
-      </StyledNavLink>
+
+      {chainId && TGE_CHAINS_WITH_SWAP.includes(chainId) && (
+        <StyledNavLink
+          ref={nftNode as any}
+          id={`nft-nav-link`}
+          to={'#'}
+          isActive={(match, { pathname }) => pathname.startsWith('/nft')}
+        >
+          <Popover hideArrow show={openNFT} content={<NFTPopover />} placement={'bottom'}>
+            <RowFixed onClick={toggleNFT}>
+              <Trans>NFT</Trans>
+              <ChevronElement showMore={openNFT} />
+            </RowFixed>
+          </Popover>
+        </StyledNavLink>
+      )}
+
       {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
         <StyledNavLink id={`faucet-nav-link`} to={'/faucet'}>
           <Trans>Faucet</Trans>

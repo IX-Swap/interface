@@ -78,6 +78,7 @@ export const CreateForm = () => {
   const [isLogged, setAuthState] = useState(false)
   const [descriptionError, setDescriptionError] = useState<string | null>(null)
   const [nameError, setNameError] = useState<string | null>(null)
+  const [cleared, setClearState] = useState(false)
 
   const login = useLogin({ mustHavePreviousLogin: false })
   const showError = useShowError()
@@ -150,6 +151,7 @@ export const CreateForm = () => {
 
   useEffect(() => {
     onClearState()
+    setClearState(true)
   }, [])
 
   useEffect(() => {
@@ -240,7 +242,7 @@ export const CreateForm = () => {
         setLevels={activeTraitType === TraitType.PROGRESS ? onSetLevels : onSetStats}
         traitType={activeTraitType}
       />
-      <PropertiesPopup properties={properties} setProperties={onSetProperties} />
+      {cleared && <PropertiesPopup properties={properties} setProperties={onSetProperties} />}
       <Box py={3}>
         <Flex mx={-2} mb={4}>
           <Box width={1} px={2}>
