@@ -174,7 +174,7 @@ class Pool {
    * @param contract
    * @param isSecurity check if a
    */
-  async verifySwap(transaction: Swap, contract: Contract, isSecurity: boolean) {
+  async verifySwap(transaction: Swap, isSecurity: boolean) {
     //  request last known reserves, check if Oracle can be consulted
     await this.updateReserves()
     await this.canConsultOracle(FACTORY_CONTRACT)
@@ -508,6 +508,8 @@ interface VerifyOptions {
   receiver: string
 
   slope: number
+
+  isSecurity: boolean
 }
 
 export async function verifySwap(options: VerifyOptions) {
@@ -524,11 +526,6 @@ export async function verifySwap(options: VerifyOptions) {
     options.systemFeeRate
   )
 
-  await pool.canConsultOracle(FACTORY_CONTRACT)
-
-  await pool.checkIfToken0Sec()
-  await pool.checkIfToken1Sec()
-
   const transaction = new Swap(
     options.id,
     options.amountInFrom,
@@ -540,7 +537,7 @@ export async function verifySwap(options: VerifyOptions) {
     0.05
   )
 
-  await pool.consultOracle(FACTORY_CONTRACT, transaction)
+  await pool.verifySwap(transaction, options.isSecurity)
 }
 
 // const pool: Pool = new Pool(

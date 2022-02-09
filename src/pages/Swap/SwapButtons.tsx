@@ -2,6 +2,7 @@ import { Trans } from '@lingui/macro'
 import { SwapErrorCard } from 'components/Card'
 import { ConfirmSwapInfo } from 'components/swap/ConfirmSwapInfo'
 import { OutputInfo } from 'components/swap/OutputInfo'
+import { utils } from 'ethers'
 import { ApprovalState } from 'hooks/useApproveCallback'
 import { UseERC20PermitState } from 'hooks/useERC20Permit'
 import useIsArgentWallet from 'hooks/useIsArgentWallet'
@@ -9,13 +10,14 @@ import { useIsSwapUnsupported } from 'hooks/useIsSwapUnsupported'
 import { useSwapCallbackError } from 'hooks/useSwapCallback'
 import { useActiveWeb3React } from 'hooks/web3'
 import JSBI from 'jsbi'
-import React from 'react'
+import React, { useCallback } from 'react'
 import { Text } from 'rebass'
-import { useWalletModalToggle } from 'state/application/hooks'
+import { useShowError, useWalletModalToggle } from 'state/application/hooks'
 import { useDerivedSwapInfo, useSwapState } from 'state/swap/hooks'
 import { ParsedAmounts } from 'state/swap/typings'
-import { useSetSwapState } from 'state/swapHelper/hooks'
+import { useSetSwapState, useSwapHelpersState } from 'state/swapHelper/hooks'
 import { useExpertModeManager, useUserSingleHopOnly } from 'state/user/hooks'
+import { verifySwap } from 'utils/verifySwap'
 import { ButtonIXSWide } from '../../components/Button'
 import { BottomGrouping, SwapCallbackError } from '../../components/swap/styleds'
 import useWrapCallback, { WrapType } from '../../hooks/useWrapCallback'
@@ -52,14 +54,69 @@ export const SwapButtons = ({
   const { approvalState, signatureState } = useSwapApproval()
 
   const { showConfirm, swapErrorMessage, setSwapState } = useSetSwapState()
+  const { authorizationInProgress } = useSwapHelpersState()
+
   // for expert mode
   const { expertMode } = useExpertModeManager()
   const { priceImpactTooHigh, priceImpactSeverity, priceImpact } = usePriceImpact({ parsedAmounts })
   const handleSwap = useHandleSwap({ priceImpact })
+
   // toggle wallet when disconnected
   const toggleWalletModal = useWalletModalToggle()
   const { error: swapCallbackError } = useSwapCallbackError(trade, allowedSlippage, recipient)
   const [singleHopOnly] = useUserSingleHopOnly()
+
+  const showError = useShowError()
+
+  const onClick = useCallback(async () => {
+    if (trade && account) {
+      const pair = trade.route.pairs[0]
+
+      try {
+        await verifySwap({
+          tokenFrom: pair.token0.address,
+          tokenTo: pair.token1.address,
+
+          pair: authorizationInProgress?.pairAddress as string,
+
+          kLast: utils.parseUnits(pair.reserve0.multiply(pair.reserve1).toExact()),
+
+          priceToleranceThreshold: utils.parseUnits(trade.priceImpact.toFixed()),
+          systemFeeRate: utils.parseUnits(trade.executionPrice.toFixed()),
+
+          id: `swap-${Math.floor(1 + Math.random() * 100000000)}`,
+
+          amountInFrom: utils.parseUnits(trade.inputAmount.toExact()),
+          amountInTo: utils.parseUnits(trade.maximumAmountIn(allowedSlippage).toExact()),
+
+          amountOutFrom: utils.parseUnits(trade.minimumAmountOut(allowedSlippage).toExact()),
+          amountOutTo: utils.parseUnits(trade.outputAmount.toExact()),
+
+          sender: account,
+          receiver: pair.liquidityToken.address,
+          slope: 0.05,
+
+          isSecurity: pair.isSecurity,
+        })
+      } catch (err) {
+        showError((err as Error).message)
+        return
+      }
+    }
+
+    if (expertMode) {
+      handleSwap()
+    } else {
+      setSwapState({
+        tradeToConfirm: trade,
+        attemptingTxn: false,
+        swapErrorMessage: undefined,
+        showConfirm: true,
+        txHash: undefined,
+      })
+    }
+  }, [account, allowedSlippage, authorizationInProgress?.pairAddress, expertMode, handleSwap, setSwapState, trade])
+
   const showWrap: boolean = wrapType !== WrapType.NOT_APPLICABLE
 
   const routeNotFound = !trade?.route
@@ -133,19 +190,7 @@ export const SwapButtons = ({
 
           {showSwapButton && (
             <ButtonIXSWide
-              onClick={() => {
-                if (expertMode) {
-                  handleSwap()
-                } else {
-                  setSwapState({
-                    tradeToConfirm: trade,
-                    attemptingTxn: false,
-                    swapErrorMessage: undefined,
-                    showConfirm: true,
-                    txHash: undefined,
-                  })
-                }
-              }}
+              onClick={onClick}
               data-testid="swap-button"
               id="swap-button"
               disabled={

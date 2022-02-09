@@ -1,5 +1,6 @@
 import { Currency, Percent, TradeType } from '@ixswap1/sdk-core'
 import { Pair, Trade as V2Trade } from '@ixswap1/v2-sdk'
+import { useWeb3React } from '@web3-react/core'
 import { BigNumber, utils } from 'ethers'
 import * as H from 'history'
 import { useCurrency } from 'hooks/Tokens'
@@ -324,6 +325,8 @@ export function useSwapConfirmDataFromURL(
           sender: account,
           receiver: pair.liquidityToken.address,
           slope: 0.05,
+
+          isSecurity: pair.isSecurity,
         })
 
         await fetchAuthorization({ hash: (hash as string) || '', result: (result as string) || '' })
