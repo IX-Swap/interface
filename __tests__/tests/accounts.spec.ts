@@ -115,15 +115,8 @@ test.describe('The Digital Securities page', () => {
     await click(bankAccounts.DIGITAL_SECURITIES, page)
   })
 
-  test.only('Deposit', async ({ page }) => {
+  test('Deposit', async ({ page }) => {
     await click(bankAccounts.buttons.DEPOSIT, page)
-    await click(bankAccounts.listBox.TOKEN, page)
-    await click(bankAccounts.listBox.TOKEN_VALUE, page)
-    await waitForText(page, '0xfF53032a62b1c2d7EbC22c1124F27CAc14647ED0')
-  })
-
-  test('Withdraw', async ({ bankAccount, page }) => {
-    await click(bankAccounts.buttons.WITHDRAW, page)
     await click(bankAccounts.listBox.TOKEN, page)
     await click(bankAccounts.listBox.TOKEN_VALUE, page)
     await waitForText(page, '0xfF53032a62b1c2d7EbC22c1124F27CAc14647ED0')
