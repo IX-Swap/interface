@@ -1,7 +1,7 @@
 import React from 'react'
 import { FinancialReport } from 'types/financitalReport'
-import { IconButton } from '@material-ui/core'
-import { Launch } from '@material-ui/icons'
+import { IconButton } from '@mui/material'
+import { Launch } from '@mui/icons-material'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
 
