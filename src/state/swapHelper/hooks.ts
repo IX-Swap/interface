@@ -297,7 +297,7 @@ export function useSwapConfirmDataFromURL(
       if (hash && result && !receivedAuthorization) {
         console.log(trade)
 
-        if (!account || !trade) {
+        /*if (!account || !trade) {
           return
         }
 
@@ -327,7 +327,7 @@ export function useSwapConfirmDataFromURL(
           slope: 0.05,
 
           isSecurity: pair.isSecurity,
-        })
+        })*/
 
         await fetchAuthorization({ hash: (hash as string) || '', result: (result as string) || '' })
         return

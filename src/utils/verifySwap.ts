@@ -42,7 +42,8 @@ ERC20_FAUCET_ABI = ERC20_FAUCET_ABI.abi
 //  addresses
 export const LIQUIDITY_ROUTER_ADDRESS = web3.utils.toChecksumAddress('0xCc49B6B3De85ff809B1837E3aD9A029dF91e295C')
 export const SWAP_ROUTER_ADDRESS = web3.utils.toChecksumAddress('0xa345dCB1d06b20490c1c01D5bB76AAC37f9212D3')
-export const WETH_IDAI_PAIR_ADDRESS = web3.utils.toChecksumAddress('0xf60D483d820c063BC9AfcA8558aAfd5b3051A9d9')
+//export const WETH_IDAI_PAIR_ADDRESS = web3.utils.toChecksumAddress('0xf60D483d820c063BC9AfcA8558aAfd5b3051A9d9')
+export const WETH_IDAI_PAIR_ADDRESS = web3.utils.toChecksumAddress('0x00f461B7C0984B5Aa70eCf41557ff3cC4DFf727e')
 
 //  contracts
 export const LIQUIDITY_ROUTER_CONTRACT = new web3.eth.Contract(PERIPHERY_LP_ABI, LIQUIDITY_ROUTER_ADDRESS)
@@ -52,6 +53,7 @@ export const USDT_CONTRACT = new web3.eth.Contract(ERC20_FAUCET_ABI, IDAI)
 export const SWAP_ROUTER_CONTRACT = new web3.eth.Contract(SWAP_ROUTER_ABI, SWAP_ROUTER_ADDRESS)
 export const FACTORY_CONTRACT = new web3.eth.Contract(FACTORY_ABI, FACTORY) //  contract to consult oracle
 export const WETH_IDAI_CONTRACT = new web3.eth.Contract(PAIR_ABI, WETH_IDAI_PAIR_ADDRESS)
+//export const WETH_IDAI_CONTRACT = new web3.eth.Contract(PAIR_ABI, WETH)
 
 class Swap {
   /*
