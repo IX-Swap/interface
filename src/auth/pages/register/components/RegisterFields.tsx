@@ -15,8 +15,12 @@ import { Checkbox } from 'components/form/Checkbox'
 import { useStyles } from 'auth/pages/register/Register.styles'
 import { ReactComponent as WarningIcon } from 'assets/icons/warning.svg'
 
-const CheckboxLabel = () => {
-  const { label, link } = useStyles()
+export interface CheckboxLabelProps {
+  isError: boolean
+}
+
+const CheckboxLabel = ({ isError }: CheckboxLabelProps) => {
+  const { label, link } = useStyles({ isError })
 
   return (
     <Typography component='span' variant='body2' className={label}>
@@ -51,9 +55,10 @@ const CheckboxLabel = () => {
 
 export const RegisterFields = () => {
   const { control, errors } = useFormContext<SignupArgs>()
-  const { bottomBlock, topBlock } = useStyles()
+  const { bottomBlock, topBlock } = useStyles({})
   const nameErrors = errors.name
   const emailErrors = errors.email
+  const agreeErrors = errors.agree
 
   return (
     <Grid container spacing={6} direction='column'>
@@ -105,11 +110,12 @@ export const RegisterFields = () => {
       </Grid>
       <Grid item className={bottomBlock}>
         <TypedField
+          customRenderer
           valueExtractor={booleanValueExtractor}
           component={Checkbox}
           withNewSuccessIcon
           control={control}
-          label={(<CheckboxLabel />) as any}
+          label={(<CheckboxLabel isError={agreeErrors} />) as any}
           name='agree'
           data-testid='agree-to-terms'
         />
