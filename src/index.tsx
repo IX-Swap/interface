@@ -7,6 +7,9 @@ import ReactDOM from 'react-dom'
 import ReactGA from 'react-ga'
 import { Provider } from 'react-redux'
 import { HashRouter } from 'react-router-dom'
+import { MuiPickersUtilsProvider } from '@material-ui/pickers'
+import DayJsUtils from '@date-io/dayjs'
+
 import Blocklist from './components/Blocklist'
 import { NetworkContextName } from './constants/misc'
 import { LanguageProvider } from './i18n'
@@ -82,7 +85,9 @@ ReactDOM.render(
                 <Updaters />
                 <ThemeProvider>
                   <ThemedGlobalStyle />
-                  <App />
+                  <MuiPickersUtilsProvider utils={DayJsUtils}>
+                    <App />
+                  </MuiPickersUtilsProvider>
                 </ThemeProvider>
               </Blocklist>
             </Web3ProviderNetwork>
