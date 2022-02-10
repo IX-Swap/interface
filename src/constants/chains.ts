@@ -15,7 +15,7 @@ export const NETWORK_LABELS: { [chainId: number]: string } = {
   [5]: 'Görli',
   [42]: 'Kovan',
   [80001]: 'Polygon Mumbai',
-  [137]: 'Polygon Mainnet',
+  [137]: 'Polygon',
 }
 
 export const ALL_SUPPORTED_CHAIN_IDS: SupportedChainId[] = [
