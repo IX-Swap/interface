@@ -13,7 +13,7 @@ export const TransactionsFilter = () => {
         <TypedField
           control={control}
           component={AssetSelect}
-          limit={100}
+          limit={200}
           name='asset'
           label='Asset'
         />
