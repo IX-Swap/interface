@@ -6,8 +6,9 @@ import {
   Select,
   Typography,
   Grid,
-  FormControl
-} from '@material-ui/core'
+  FormControl,
+  SelectChangeEvent
+} from '@mui/material'
 
 export const FinancialReportDSOSelect = () => {
   const { data, isLoading } = useDSOsByUserId('Approved', true)
@@ -20,7 +21,7 @@ export const FinancialReportDSOSelect = () => {
     <SearchQueryFilter<'dso'> name='dso' defaultValue={data.list[0]._id}>
       {({ value, onChange }) => (
         <>
-          {value !== undefined && (
+          {value !== undefined && value !== '' && (
             <Grid container spacing={1}>
               <Grid item xs={12}>
                 <Typography>
@@ -32,12 +33,12 @@ export const FinancialReportDSOSelect = () => {
                   <Select
                     fullWidth
                     variant='outlined'
-                    onChange={(
-                      event: React.ChangeEvent<{ value: unknown }>
-                    ) => {
+                    onChange={(event: SelectChangeEvent<{ value: string }>) => {
                       onChange(event.target.value as string)
                     }}
+                    // @ts-expect-error
                     value={value}
+                    // @ts-expect-error
                     defaultValue={value}
                   >
                     {data.list.map(({ _id, tokenName }) => {

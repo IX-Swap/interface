@@ -1,12 +1,11 @@
-import { Box, Button, Grid, Typography } from '@material-ui/core'
-import { grey } from '@material-ui/core/colors'
+import { Box, Button, Grid, Typography } from '@mui/material'
 import { useReportTemplate } from 'app/pages/issuance/hooks/useReportTemplate'
 import React from 'react'
 
 export const DownloadTemplate = () => {
   const { templateUrl, isLoading } = useReportTemplate()
   return (
-    <Box px={4} py={3} bgcolor={grey[100]} borderRadius={6}>
+    <Box px={4} py={3} bgcolor='divider' borderRadius={1}>
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <Typography variant='subtitle1'>Download Template</Typography>

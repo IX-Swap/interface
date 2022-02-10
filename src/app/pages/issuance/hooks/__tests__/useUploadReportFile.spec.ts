@@ -1,7 +1,12 @@
 import { act } from '@testing-library/react-hooks'
 import { useUploadReportFile } from 'app/pages/issuance/hooks/useUploadReportFile'
 import { issuanceURL } from 'config/apiURL'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import {
+  renderHookWithServiceProvider,
+  apiServiceMock,
+  snackbarServiceMock,
+  invokeMutationFn
+} from 'test-utils'
 import { successfulResponse } from '__fixtures__/api'
 
 describe('useUploadReportFile', () => {
@@ -13,38 +18,27 @@ describe('useUploadReportFile', () => {
     reportDocuments: ['61fcb42023f48709b125fabf', '61fcb42023f48709b125fac1']
   }
 
+  apiServiceMock.post.mockResolvedValue(successfulResponse)
+
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
   it('calls correct api endpoint', async () => {
     await act(async () => {
-      const apiFn = jest.fn().mockResolvedValueOnce(successfulResponse)
-      const showSnackbar = jest.fn()
-
-      const apiObj = { post: apiFn }
-
-      const { result } = renderHookWithServiceProvider(
-        () => useUploadReportFile(),
-        {
-          apiService: apiObj,
-          snackbarService: { showSnackbar }
-        }
+      const { result } = renderHookWithServiceProvider(() =>
+        useUploadReportFile()
       )
 
-      await waitFor(
-        () => {
-          const [mutate] = result.current
-          void mutate(sampleReport)
+      await invokeMutationFn(result, sampleReport)
+      expect(apiServiceMock.post).toBeCalledWith(
+        issuanceURL.financialReports.uploadFile,
+        sampleReport
+      )
 
-          expect(apiFn).toHaveBeenCalledWith(
-            issuanceURL.financialReports.uploadFile,
-            sampleReport
-          )
-          expect(showSnackbar).toHaveBeenCalledWith('Success', 'success')
-        },
-        { timeout: 1000 }
+      expect(snackbarServiceMock.showSnackbar).toHaveBeenCalledWith(
+        'Success',
+        'success'
       )
     })
   })
