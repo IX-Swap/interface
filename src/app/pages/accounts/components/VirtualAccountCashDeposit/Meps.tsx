@@ -24,10 +24,6 @@ export const Meps = ({ accountId, currency }: DepositInfoProps) => {
     {
       label: 'SWIFT Code:',
       value: 'HSBCSGSG'
-    },
-    {
-      label: 'Message to receiver/beneficiary/Ref/Bill ref:',
-      value: 'InvestaX to recommend'
     }
   ]
 
