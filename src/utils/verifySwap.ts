@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-import { BigNumber } from 'ethers'
+import { BigNumber, utils } from 'ethers'
 import { Contract } from 'web3-eth-contract'
 
 // import Web3 from 'web3'
@@ -183,7 +183,7 @@ class Pool {
 
     //  perform initial tranasaction values verification and slippage check
     this.verifyOutValues(transaction)
-    this.verifySlippage(transaction) //need disc
+    // this.verifySlippage(transaction) //need disc
 
     //  add incoming values to reserves and extract all outcoming values
     const balance0 = this.reserve0?.add(transaction.amount0In)?.sub(transaction.amount0Out)
@@ -345,11 +345,11 @@ class Pool {
     }
 
     const amount0OutMin: BigNumber = amount1InWithFee
-      .mul(this.reserve0.mul(BigNumber.from(1000).sub(transaction.slope)))
+      .mul(this.reserve0.mul(BigNumber.from(1000).sub(utils.parseUnits(`${transaction.slope}`))))
       .div(this.reserve1.mul(1000).mul(1000).add(amount0InWithFee))
 
     const amount1OutMin: BigNumber = amount0InWithFee
-      .mul(this.reserve1.mul(BigNumber.from(1000).sub(transaction.slope)))
+      .mul(this.reserve1.mul(BigNumber.from(1000).sub(utils.parseUnits(`${transaction.slope}`))))
       .div(this.reserve0.mul(1000).mul(1000).add(amount1InWithFee))
 
     if (!(transaction.amount0Out.lt(amount0OutMin) || transaction.amount0Out.eq(amount0OutMin))) {
