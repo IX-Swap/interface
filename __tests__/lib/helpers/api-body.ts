@@ -15,9 +15,21 @@ export const bankAccount = {
   }
 }
 
-export const sellOrder = { pair: '61e51b1421b1911c3f5ed1c6', side: 'ASK', type: 'LIMIT', price: 10, amount: 5 }
+export const sellOrder = {
+  pair: '61e51b1421b1911c3f5ed1c6',
+  side: 'ASK',
+  type: 'LIMIT',
+  price: 10,
+  amount: 5
+}
 
-export const buyOrder = { pair: '61e51b1421b1911c3f5ed1c6', side: 'BID', type: 'LIMIT', price: 10, amount: 5 }
+export const buyOrder = {
+  pair: '61e51b1421b1911c3f5ed1c6',
+  side: 'BID',
+  type: 'LIMIT',
+  price: 10,
+  amount: 5
+}
 
 export const cashWithdrawal = {
   bankAccountId: '6184e40e3899410e58bbe152',
@@ -55,8 +67,8 @@ export const dso = {
   corporate: '61b8afc070e8d60e612d90c0',
   issuerName: 'Cnameqwe',
   currency: '5fa95e07231c63088311b178',
-  launchDate: '2025-07-18T21:00:00.000Z',
-  completionDate: '2021-12-31T10:11:00.000Z',
+  launchDate: '2022-07-18T21:00:00.000Z',
+  completionDate: '2025-12-31T10:11:00.000Z',
   pricePerUnit: 111,
   totalFundraisingAmount: 1111111,
   minimumInvestment: 10,

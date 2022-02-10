@@ -4,7 +4,8 @@ import {
   click,
   shouldNotExist,
   shouldExist,
-  waitForText
+  waitForText,
+  typeText
 } from '../lib/helpers/helpers'
 import { test } from '../lib/fixtures/fixtures'
 import { expect } from '@playwright/test'
@@ -115,10 +116,11 @@ test.describe('The Digital Securities page', () => {
     await click(bankAccounts.DIGITAL_SECURITIES, page)
   })
 
-  test('Deposit', async ({ page }) => {
-    await click(bankAccounts.buttons.DEPOSIT, page)
-    await click(bankAccounts.listBox.TOKEN, page)
-    await click(bankAccounts.listBox.TOKEN_VALUE, page)
-    await waitForText(page, '0xfF53032a62b1c2d7EbC22c1124F27CAc14647ED0')
+  test('Deposit', async ({ bankAccount }) => {
+    await bankAccount.tokenDepositRequest()
+  })
+
+  test('Withdrawal', async ({ bankAccount }) => {
+    await bankAccount.tokenWithdrawalRequest()
   })
 })
