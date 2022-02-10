@@ -4,6 +4,7 @@ import { videoLink } from '__fixtures__/issuance'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
 import * as Typography from '@mui/material'
 import { DSOVideoLinksView } from 'app/components/DSO/components/DSOVideoLinksView'
+import ReactPlayer from 'react-player/lazy'
 
 jest.mock('@mui/material/Typography', () => jest.fn(() => null))
 jest.mock('react-player/lazy', () => jest.fn(() => null))
