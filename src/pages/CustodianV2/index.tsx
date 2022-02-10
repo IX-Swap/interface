@@ -51,7 +51,7 @@ export default function CustodianV2() {
 
   useEffect(() => {
     if (noFilteredTokens.length === 0 && tokens) {
-      setNoFilteredTokens(tokens.items)
+      setNoFilteredTokens(tokens.items.filter(({ active }: any) => active))
     }
   }, [tokens])
 
@@ -59,6 +59,7 @@ export default function CustodianV2() {
     fetchTokens({ page, offset })
   }
 
+  const mySecTokensIds = mySecTokens.map(({ id }: any) => id)
   const activeTokens = tokens ? tokens.items.filter(({ active }: any) => active) : []
   const featuredTokens = noFilteredTokens.filter(({ featured }: any) => featured)
   const approvedSecTokens = mySecTokens.filter(
@@ -67,6 +68,7 @@ export default function CustodianV2() {
   const pendingSecTokens = mySecTokens.filter(
     ({ token }: any) => token.accreditationRequest && token.accreditationRequest.status !== 'approved'
   )
+  const otherSecTokens = activeTokens.filter(({ id }: any) => !mySecTokensIds.includes(id))
 
   return chainId !== undefined && !TGE_CHAINS_WITH_SWAP.includes(chainId) ? (
     <AppBody blurred>
@@ -147,7 +149,7 @@ export default function CustodianV2() {
             page={tokens.page}
             totalPages={tokens.totalPages}
             onPageChange={onPageChange}
-            tokens={activeTokens}
+            tokens={otherSecTokens}
             offset={offset}
           />
         </>

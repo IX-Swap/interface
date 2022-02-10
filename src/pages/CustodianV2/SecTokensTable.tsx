@@ -12,6 +12,7 @@ import CurrencyLogo from 'components/CurrencyLogo'
 import { useFetchTokens } from 'state/secCatalog/hooks'
 import { FilterDropdown } from './FilterDropdown'
 import { industries } from 'components/AdminSecurityCatalog/mock'
+import { ButtonGradientBorder } from 'components/Button'
 
 import { ReactComponent as Tradable } from '../../assets/images/tradable.svg'
 import { ReactComponent as NonTradable } from '../../assets/images/non-tradable.svg'
@@ -113,6 +114,15 @@ export const SecTokensTable: FC<Props> = ({ tokens, page, offset, totalPages, on
     }
   }, [filters, searchValue]) // Filter tokens on filter/search change
 
+  const handleResetFilters = () => {
+    setFilters({
+      industry: null,
+      country: null,
+      issuer: null,
+    })
+    setSearchValue('')
+  }
+
   const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.currentTarget.value)
   }
@@ -196,6 +206,13 @@ export const SecTokensTable: FC<Props> = ({ tokens, page, offset, totalPages, on
             style={{ borderRadius: '0px 30px 30px 0px' }}
           />
         </Flex>
+
+        <ButtonGradientBorder
+          onClick={handleResetFilters}
+          style={isMobile ? { width: '100%' } : { width: 200, marginLeft: 16 }}
+        >
+          <TYPE.body2>Reset filters</TYPE.body2>
+        </ButtonGradientBorder>
       </Flex>
 
       {tokens.length > 0 && (

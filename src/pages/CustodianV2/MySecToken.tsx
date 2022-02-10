@@ -9,10 +9,8 @@ import { Status } from './Status'
 import { useCurrencyBalance } from 'state/wallet/hooks'
 import { useActiveWeb3React } from 'hooks/web3'
 import CurrencyLogo from 'components/CurrencyLogo'
-import { AccreditationStatusEnum } from 'components/Vault/enum'
 
 import { MySecTokenCard } from './styleds'
-import { useAccreditationStatus } from 'state/secTokens/hooks'
 
 interface Props {
   token: any
@@ -21,8 +19,6 @@ interface Props {
 export const MySecToken: FC<Props> = ({ token }: Props) => {
   const wrappedToken = token?.token
   const { account } = useActiveWeb3React()
-  // const { status, accreditationRequest } = useAccreditationStatus(wrappedToken.id)
-  // console.log(wrappedToken.name, status, accreditationRequest)
   const balance = useCurrencyBalance(account ?? undefined, token.token ?? undefined)
 
   return (
