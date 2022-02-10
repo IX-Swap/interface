@@ -15,7 +15,6 @@ export const initialTokenState = {
   description: '',
   active: null,
   featured: null,
-  tradable: null,
   chainId: CREATE_TOKEN_CHAINS[0].id,
 }
 
@@ -40,10 +39,10 @@ export const validateSecTokenFields = [
 ]
 
 export const industries = [
-  { id: 1, name: 'All Industries' },
-  { id: 2, name: 'Diverse Industries' },
-  { id: 3, name: 'Real Estate' },
-  { id: 4, name: 'Finance' },
-  { id: 5, name: 'Technology' },
-  { id: 6, name: 'Energy & Mining' },
+  { id: 1, name: 'Diverse Industries' },
+  { id: 2, name: 'Real Estate' },
+  { id: 3, name: 'Finance' },
+  { id: 4, name: 'Technology' },
+  { id: 5, name: 'Energy & Mining' },
+  { id: 6, name: 'Other' },
 ]

@@ -10,9 +10,9 @@ import { SearchInput } from 'components/SearchModal/styleds'
 import { BrokerDealerCard } from './BrokerDealerCard'
 import { ButtonIXSGradient, ButtonText } from 'components/Button'
 import { ContainerRow, Input, InputContainer, InputPanel } from 'components/Input'
-import { useTokenPopupToggle } from 'state/application/hooks'
+import { useAddPopup, useTokenPopupToggle, useDeleteTokenPopupToggle } from 'state/application/hooks'
 import { TokenPopup } from './TokenPopup'
-import { useAddIssuer, useEditIssuer, useFetchIssuers, useSecCatalogState, deleteToken } from 'state/secCatalog/hooks'
+import { useAddIssuer, useEditIssuer, useFetchIssuers, useSecCatalogState } from 'state/secCatalog/hooks'
 import Upload from 'components/Upload'
 import { Loader } from '../AdminTransactionsTable'
 import { LoaderThin } from 'components/Loader/LoaderThin'
@@ -23,6 +23,7 @@ import { initialIssuerState } from './mock'
 import { ReactComponent as ArrowLeft } from '../../assets/images/arrow-back.svg'
 import { ReactComponent as LogoImage } from '../../assets/images/wallpaper.svg'
 import { ReactComponent as Delete } from '../../assets/images/delete-basket.svg'
+import { DeleteTokenConfirmationPopup } from './DeleteConfirmation'
 
 interface Tab {
   value: 'catalog' | 'add_issuer' | 'edit_issuer'
@@ -32,11 +33,14 @@ export const AdminSecurityCatalog: FC = () => {
   const addIssuer = useAddIssuer()
   const editIssuer = useEditIssuer()
   const getIssuers = useFetchIssuers()
+  const addPopup = useAddPopup()
   const { issuers, loadingRequest } = useSecCatalogState()
   const toggle = useTokenPopupToggle()
+  const toggleDeleteTokenPopup = useDeleteTokenPopupToggle()
   const [searchValue, setSearchValue] = useState('')
   const [currentIssuer, setCurrentIssuer] = useState<null | any>(initialIssuerState)
   const [currentToken, setCurrentToken] = useState<any | null>(null)
+  const [deleteTokenId, setDeleteTokenId] = useState(0)
   const [showMode, setShowMode] = useState<Tab['value']>('catalog')
 
   useEffect(() => {
@@ -67,22 +71,36 @@ export const AdminSecurityCatalog: FC = () => {
 
   const handleSaveClick = async () => {
     const { name, url, file } = currentIssuer
-    let data = null
 
     if (showMode === 'add_issuer') {
-      data = await addIssuer({ name, url, description: 'desciption', logo: file })
+      const data = await addIssuer({ name, url, description: 'desciption', logo: file })
+      if (data === BROKER_DEALERS_STATUS.SUCCESS) {
+        addPopup({
+          info: {
+            success: true,
+            summary: 'Issuer was successfully created.',
+          },
+        })
+        handleResetState()
+      }
     }
     if (showMode === 'edit_issuer') {
-      data = await editIssuer(currentIssuer.id, { name, url, description: 'desciption' })
-    }
-    if (data === BROKER_DEALERS_STATUS.SUCCESS) {
-      handleResetState()
+      const data = await editIssuer(currentIssuer.id, { name, url, description: 'desciption' })
+      if (data === BROKER_DEALERS_STATUS.SUCCESS) {
+        addPopup({
+          info: {
+            success: true,
+            summary: 'Issuer was successfully edited.',
+          },
+        })
+        handleResetState()
+      }
     }
   }
 
   const handleDeleteToken = async (tokenId: number) => {
-    await deleteToken(tokenId)
-    getIssuers()
+    toggleDeleteTokenPopup()
+    setDeleteTokenId(tokenId)
   }
 
   const handleCreateClick = () => {
@@ -199,7 +217,7 @@ export const AdminSecurityCatalog: FC = () => {
               <Box overflow={isMobile ? 'scroll' : 'visible'}>
                 {currentIssuer?.tokens?.length > 0 &&
                   currentIssuer.tokens.map((token: any) => {
-                    const { id, address, ticker, logo, url, featured, active, tradable } = token
+                    const { id, address, ticker, logo, url, featured, active, token: wrappedToken } = token
 
                     return (
                       <TokenCard style={{ marginBottom: 20 }} key={`token-${id}`}>
@@ -210,14 +228,17 @@ export const AdminSecurityCatalog: FC = () => {
                           </TYPE.body3>
                         </Box>
                         <TYPE.body3 color="text1">{address}</TYPE.body3>
-                        <TYPE.body3 overflow="hidden" color="text1">
-                          <ExternalLink style={{ color: 'white' }} href={url}>
+                        <TYPE.body3 color="text1">
+                          <ExternalLink
+                            style={{ color: 'white', overflow: 'hidden', textOverflow: 'ellipsis' }}
+                            href={url}
+                          >
                             {url}
                           </ExternalLink>
                         </TYPE.body3>
                         <TYPE.body3 color="text1">{featured ? 'Featured' : 'Not Featured'}</TYPE.body3>
                         <TYPE.body3 color="text1">{active ? 'Active' : 'Not Active'}</TYPE.body3>
-                        <TYPE.body3 color="text1">{tradable ? 'Tradable' : 'Non Tradable'}</TYPE.body3>
+                        <TYPE.body3 color="text1">{wrappedToken ? 'Tradable' : 'Non Tradable'}</TYPE.body3>
                         <Box>
                           <EditButton onClick={() => handleEditTokenClick(token)}>
                             <TYPE.body3 fontWeight={600}>
@@ -264,7 +285,8 @@ export const AdminSecurityCatalog: FC = () => {
           </>
         )}
 
-        <TokenPopup token={currentToken} currentIssuer={currentIssuer} />
+        <TokenPopup setCurrentToken={setCurrentToken} token={currentToken} currentIssuer={currentIssuer} />
+        <DeleteTokenConfirmationPopup tokenId={deleteTokenId} />
       </Container>
     </>
   )

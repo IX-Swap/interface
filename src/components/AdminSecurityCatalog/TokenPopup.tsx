@@ -5,7 +5,7 @@ import { Label } from '@rebass/forms'
 import { getNames } from 'country-list'
 
 import { RowBetween } from 'components/Row'
-import { isAddress, isValidAddress, shortAddress } from 'utils'
+import { isValidAddress } from 'utils'
 import { ButtonText, CloseIcon, ModalContentWrapper, ModalPadding, TYPE } from 'theme'
 import { useAddPopup, useModalOpen, useTokenPopupToggle } from 'state/application/hooks'
 import { ApplicationModal } from 'state/application/actions'
@@ -26,9 +26,10 @@ import { isMobile } from 'react-device-detect'
 interface Props {
   token: any | null
   currentIssuer: any
+  setCurrentToken: (value: any | null) => void
 }
 
-export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer }: Props) => {
+export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurrentToken }: Props) => {
   const isOpen = useModalOpen(ApplicationModal.TOKEN_POPUP)
   const toggle = useTokenPopupToggle()
   const getIssuers = useFetchIssuers()
@@ -65,13 +66,30 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer }: Props
       let data = null
       if (token.id) {
         data = await updateToken(token)
+        if (data) {
+          addPopup({
+            info: {
+              success: true,
+              summary: 'Token was successfully updated.',
+            },
+          })
+        }
       } else {
         data = await addToken(currentIssuer.id, token)
+        if (data) {
+          addPopup({
+            info: {
+              success: true,
+              summary: 'Token was successfully created.',
+            },
+          })
+        }
       }
 
       if (data) {
         getIssuers()
         toggle()
+        setCurrentToken(null)
       } else {
         addPopup({
           info: {
@@ -88,15 +106,19 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer }: Props
 
     if (isValidAddress(e)) {
       const data = await checkWrappedAddress(e)
-      if (data) newToken = { ...newToken, token: data.id }
+      if (data) newToken = { ...newToken, tokenId: data.id }
     }
 
     setToken(newToken)
   }
 
   const countries = useMemo(() => {
-    return getNames().map((name, index) => ({ id: ++index, name }))
+    return getNames()
+      .map((name, index) => ({ id: ++index, name }))
+      .sort((a, b) => a.name.localeCompare(b.name))
   }, [])
+
+  console.log(countries)
 
   return (
     <WideModal isLarge isOpen={isOpen} onDismiss={onClose} minHeight={false} maxHeight={'fit-content'} scrollable>
@@ -124,7 +146,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer }: Props
                       <AddressInput
                         {...{
                           id: 'token-address',
-                          value: isAddress(token.address) ? shortAddress(token.address || '') : token.address,
+                          value: token.address,
                           error: !Boolean(isValidAddress(token?.address || '')),
                           onChange: (e) => setToken({ ...token, address: e }),
                           placeholder: ' ',
@@ -198,9 +220,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer }: Props
                         {...{
                           disabled: token?.id ? true : false,
                           id: 'token-wrapped-input',
-                          value: isAddress(token.wrappedTokenAddress)
-                            ? shortAddress(token.wrappedTokenAddress || '')
-                            : token.wrappedTokenAddress,
+                          value: token.wrappedTokenAddress,
                           error: !Boolean(isValidAddress(token?.wrappedTokenAddress || '')),
                           onChange: handleWrappedTokenChange,
                           placeholder: ' ',
@@ -311,9 +331,6 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer }: Props
                       <TYPE.title11 marginBottom="26px" color="text2">
                         <Trans>Featured</Trans>
                       </TYPE.title11>
-                      <TYPE.title11 marginBottom="26px" color="text2">
-                        <Trans>Available for swap</Trans>
-                      </TYPE.title11>
                     </Box>
 
                     <Box marginLeft={isMobile ? 'auto' : '0px'}>
@@ -321,10 +338,6 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer }: Props
                       <Radio
                         isActive={token.featured}
                         onToggle={() => setToken({ ...token, featured: !token.featured })}
-                      />
-                      <Radio
-                        isActive={token.tradable}
-                        onToggle={() => setToken({ ...token, tradable: !token.tradable })}
                       />
                     </Box>
                   </Box>

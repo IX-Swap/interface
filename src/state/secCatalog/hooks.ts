@@ -6,7 +6,7 @@ import { secCatalog } from 'services/apiUrls'
 import { AppDispatch, AppState } from 'state'
 import { BROKER_DEALERS_STATUS } from 'state/brokerDealer/hooks'
 import { validateSecTokenFields } from 'components/AdminSecurityCatalog/mock'
-import { fetchAddIssuer, fetchEditIssuer, fetchIssuers } from './actions'
+import { fetchAddIssuer, fetchEditIssuer, fetchIssuers, fetchIssuersTokens } from './actions'
 import { Issuer } from './reducer'
 
 export function useSecCatalogState() {
@@ -92,8 +92,8 @@ export const deleteToken = async (tokenId: number) => {
   return result.data
 }
 
-export const getAllTokens = async () => {
-  const result = await apiService.get(secCatalog.allIssuerTokens)
+export const getAllTokens = async (params?: Record<string, string | number>) => {
+  const result = await apiService.get(secCatalog.allIssuerTokens, undefined, params)
   return result.data
 }
 
@@ -160,6 +160,23 @@ export function useFetchIssuers() {
       dispatch(fetchIssuers.rejected({ errorMessage: 'Could not create issuer' }))
     }
   }, [dispatch])
+  return callback
+}
+
+export function useFetchTokens() {
+  const dispatch = useDispatch<AppDispatch>()
+  const callback = useCallback(
+    async (params?: Record<string, string | number>) => {
+      try {
+        dispatch(fetchIssuersTokens.pending())
+        const data = await getAllTokens(params)
+        dispatch(fetchIssuersTokens.fulfilled({ data }))
+      } catch (error: any) {
+        dispatch(fetchIssuersTokens.rejected({ errorMessage: 'Could not fetch tokens' }))
+      }
+    },
+    [dispatch]
+  )
   return callback
 }
 

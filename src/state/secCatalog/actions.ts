@@ -29,3 +29,13 @@ export const fetchIssuers: Readonly<{
   fulfilled: createAction('secCatalog/getIssuers/fulfilled'),
   rejected: createAction('secCatalog/getIssuers/rejected'),
 }
+
+export const fetchIssuersTokens: Readonly<{
+  pending: ActionCreatorWithoutPayload
+  fulfilled: ActionCreatorWithPayload<any>
+  rejected: ActionCreatorWithPayload<{ errorMessage: string }>
+}> = {
+  pending: createAction('secCatalog/getIssuersTokens/pending'),
+  fulfilled: createAction('secCatalog/getIssuersTokens/fulfilled'),
+  rejected: createAction('secCatalog/getIssuersTokens/rejected'),
+}

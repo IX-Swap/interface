@@ -55,6 +55,10 @@ export const TokensList = styled.div`
 
   ${({ theme }) => theme.mediaWidth.upToSmall`
     overflow: scroll;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   `};
 `
 
@@ -72,6 +76,10 @@ export const TokensListItem = styled.div`
   ${({ theme }) => theme.mediaWidth.upToSmall`  
     > div:last-child {
       padding-right: 100px;
+    }
+
+    > div {
+      padding: 0px 60px;
     }
 
     grid-template-columns: 1fr 300px 3fr 3fr;
@@ -116,6 +124,15 @@ export const WideModal = styled(RedesignedWideModal)`
 
 export const WideModalWrapper = styled(ModalBlurWrapper)`
   width: 1050px;
+`
+
+export const SmallModal = styled(RedesignedWideModal)`
+  max-width: 450px !important;
+  width: 450px;
+`
+
+export const SmallModalWrapper = styled(ModalBlurWrapper)`
+  min-width: 450px;
 `
 
 export const FormWrapper = styled.div`

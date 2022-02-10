@@ -1,22 +1,36 @@
-import React, { FC } from 'react'
+import React, { ChangeEvent, FC, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
-import { Token } from '@ixswap1/sdk-core'
 import { NavLink } from 'react-router-dom'
 import { Flex } from 'rebass'
+import { t } from '@lingui/macro'
+import { isMobile } from 'react-device-detect'
 
 import { Table, HeaderRow, BodyRow } from 'components/Table'
 import { TYPE } from 'theme'
 import { Pagination } from 'components/AdminKycTable/Pagination'
 import CurrencyLogo from 'components/CurrencyLogo'
+import { SearchInput } from 'components/SearchModal/styleds'
+import { useFetchTokens } from 'state/secCatalog/hooks'
+import { FilterDropdown } from './FilterDropdown'
+import { industries } from 'components/AdminSecurityCatalog/mock'
 
 import { ReactComponent as Tradable } from '../../assets/images/tradable.svg'
 import { ReactComponent as NonTradable } from '../../assets/images/non-tradable.svg'
+interface Props {
+  tokens: any[]
+  page: number
+  totalPages: number
+  offset: number
+  onPageChange: (page: number) => void
+}
 
 interface BodyProps {
-  tokens: Token[]
+  tokens: any[]
 }
 
 const headerCells = ['Name', 'Issuer', 'Country', 'Industry', '']
+
+let timer = null as any
 
 const Header = () => {
   return (
@@ -44,7 +58,7 @@ const Body: FC<BodyProps> = ({ tokens }: BodyProps) => {
                     src={token.logo.public}
                   />
                 ) : (
-                  <CurrencyLogo currency={undefined} size={'30px'} style={{ marginRight: 16 }} />
+                  <CurrencyLogo currency={undefined} size={'30px'} style={{ marginRight: 10 }} />
                 )}
                 <TYPE.title5>{token.ticker}</TYPE.title5>
               </Flex>
@@ -53,12 +67,14 @@ const Body: FC<BodyProps> = ({ tokens }: BodyProps) => {
               <TYPE.main1 fontWeight={400}>{token.issuer.name}</TYPE.main1>
             </div>
             <div>
-              <TYPE.main1 fontWeight={400}>{token.country}</TYPE.main1>
+              <TYPE.main1 style={{ overflow: 'hidden', textOverflow: 'ellipsis' }} fontWeight={400}>
+                {token.country}
+              </TYPE.main1>
             </div>
             <div>
               <TYPE.main1 fontWeight={400}>{token.industry}</TYPE.main1>
             </div>
-            <div>{token.tradable ? <NonTradable width={22} height={22} /> : <Tradable width={22} height={22} />}</div>
+            <div>{token.token ? <Tradable width={22} height={22} /> : <NonTradable width={22} height={22} />}</div>
           </StyledBodyRow>
         </NavLink>
       ))}
@@ -66,8 +82,82 @@ const Body: FC<BodyProps> = ({ tokens }: BodyProps) => {
   )
 }
 
-export const SecTokensTable: FC<BodyProps> = ({ tokens }: BodyProps) => {
-  return tokens.length > 0 ? (
+export const SecTokensTable: FC<Props> = ({ tokens, page, offset, totalPages, onPageChange }: Props) => {
+  const [searchValue, setSearchValue] = useState('')
+  const [filters, setFilters] = useState<any>({
+    industry: null,
+    country: null,
+    issuer: null,
+  })
+  const fetchTokens = useFetchTokens()
+
+  useEffect(() => {
+    const { industry, country, issuer } = filters
+
+    clearTimeout(timer)
+    timer = setTimeout(
+      () =>
+        fetchTokens({
+          page: 1,
+          offset,
+          search: searchValue,
+          industry: industry?.name ? industry.name : '',
+          country: country?.name ? country.name : '',
+          issuerId: issuer?.id ? issuer.id : '',
+        }),
+      250
+    )
+
+    return () => {
+      clearTimeout(timer)
+    }
+  }, [filters, searchValue]) // Filter tokens on filter/search change
+
+  const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(e.currentTarget.value)
+  }
+
+  const onFilterChange = (filterName: string, filter: any) => {
+    if (filterName === 'country') {
+      setFilters({ ...filters, country: filter })
+    }
+    if (filterName === 'industry') {
+      setFilters({ ...filters, industry: filter })
+    }
+    if (filterName === 'issuer') {
+      setFilters({ ...filters, issuer: filter })
+    }
+  }
+
+  const countries = useMemo(() => {
+    const result = []
+    const set = new Set()
+    tokens.forEach(({ country }: { country: string }) => {
+      set.add(country)
+    })
+    for (const item of set) {
+      result.push(item)
+    }
+
+    return result.map((name, index) => ({ id: ++index, name })).sort((a: any, b: any) => a.name.localeCompare(b.name))
+  }, [])
+
+  const issuers = useMemo(() => {
+    const map = new Map()
+    const result = []
+
+    tokens.forEach(({ issuer }: any) => {
+      map.set(issuer.id, issuer.name)
+    })
+    for (const [key, value] of map) {
+      result.push({ id: key, name: value })
+    }
+    return result
+  }, []) // get issuers with tokens.length > 0
+
+  console.log(page, totalPages)
+
+  return (
     <>
       <TYPE.title5 marginBottom="40px" display="flex">
         {`Other security tokens`}
@@ -75,10 +165,49 @@ export const SecTokensTable: FC<BodyProps> = ({ tokens }: BodyProps) => {
           {`(${tokens?.length || '0'})`}
         </TYPE.title5>
       </TYPE.title5>
-      <Table style={{ marginBottom: 32 }} header={<Header />} body={<Body tokens={tokens} />} />
-      <Pagination page={1} totalPages={1} onPageChange={() => console.log('change')} />{' '}
+
+      <Flex marginBottom="40px" flexDirection={isMobile ? 'column' : 'row'}>
+        <SearchInput
+          style={isMobile ? { marginBottom: 16, padding: '16px 22px' } : { marginRight: 16 }}
+          value={searchValue}
+          placeholder={t`Search`}
+          onChange={onSearchChange}
+        />
+
+        <Flex>
+          <FilterDropdown
+            placeholder="Issuers"
+            selectedItem={filters.issuer}
+            onSelect={(item) => onFilterChange('issuer', item)}
+            items={issuers}
+            style={{ borderRadius: '30px 0px 0px 30px', marginRight: 1 }}
+          />
+          <FilterDropdown
+            selectedItem={filters.country}
+            placeholder="Country"
+            onSelect={(item) => onFilterChange('country', item)}
+            items={countries}
+            style={{ borderRadius: '0px', marginRight: 1 }}
+            withScroll
+          />
+          <FilterDropdown
+            selectedItem={filters.industry}
+            placeholder="Industry"
+            onSelect={(item) => onFilterChange('industry', item)}
+            items={industries}
+            style={{ borderRadius: '0px 30px 30px 0px' }}
+          />
+        </Flex>
+      </Flex>
+
+      {tokens.length > 0 && (
+        <>
+          <Table style={{ marginBottom: 32 }} header={<Header />} body={<Body tokens={tokens} />} />
+          <Pagination page={page} totalPages={totalPages} onPageChange={onPageChange} />
+        </>
+      )}
     </>
-  ) : null
+  )
 }
 
 export const StyledHeaderRow = styled(HeaderRow)`

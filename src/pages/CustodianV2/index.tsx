@@ -1,6 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box, Flex } from 'rebass'
-import { FixedSizeList } from 'react-window'
 import { isMobile } from 'react-device-detect'
 import { Trans } from '@lingui/macro'
 
@@ -11,44 +10,61 @@ import { SecTokensTable } from './SecTokensTable'
 import { useAuthState } from 'state/auth/hooks'
 import { useActiveWeb3React } from 'hooks/web3'
 import AppBody from 'pages/AppBody'
-import { ListType, useCurrencySearch } from 'components/SearchModal/useCurrencySearch'
 import { TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
-import useTheme from 'hooks/useTheme'
-import { getAllTokens } from 'state/secCatalog/hooks'
+import { useFetchTokens, useSecCatalogState } from 'state/secCatalog/hooks'
+import { MySecToken } from './MySecToken'
 
 import { ReactComponent as ArrowDown } from '../../assets/images/arrow-sec-tokens.svg'
-import { StyledBodyWrapper, FeaturedTokensGrid, StyledArrowWrapper } from './styleds'
+import {
+  StyledBodyWrapper,
+  FeaturedTokensGrid,
+  StyledArrowWrapper,
+  MySecTokensTab,
+  GradientText,
+  MySecTokensGrid,
+  Divider,
+} from './styleds'
 
 export default function CustodianV2() {
+  const offset = 10
   const docLink = 'https://docs.google.com/forms/d/e/1FAIpQLSenV66JwRp7MeHMm31EYLw-8VCHWfsyj8ji98l5Cqchpr2IyQ/viewform'
   const { token } = useAuthState()
+  const fetchTokens = useFetchTokens()
+  const [noFilteredTokens, setNoFilteredTokens] = useState([])
+  const { tokens } = useSecCatalogState()
   const { account, chainId } = useActiveWeb3React()
   const isLoggedIn = !!token && !!account
-  const listRef = useRef<FixedSizeList>()
-  const [tokens, setTokens] = useState([])
-  const { filteredSortedTokens } = useCurrencySearch({
-    listRef,
-    list: ListType.USER_TOKENS,
-  })
-  const approvedSecTokens = filteredSortedTokens.filter(
-    ({ tokenInfo }: any) => tokenInfo.accreditationRequest.status === 'approved'
-  )
-  const pendingSecTokens = filteredSortedTokens.filter(
-    ({ tokenInfo }: any) =>
-      tokenInfo.accreditationRequest.status !== 'undefined' && tokenInfo.accreditationRequest.status !== 'approved'
-  )
 
   useEffect(() => {
-    const getTokens = async () => {
-      const result = await getAllTokens()
-      setTokens(result.items || result)
+    const fetchMyTokens = async () => {
+      const data = await getMyTokens()
+      setMySecTokens(data)
     }
 
-    getTokens()
+    fetchMyTokens()
   }, [])
 
-  const featuredTokens = tokens.filter(({ featured, active }) => active && featured)
-  const activeTokens = tokens.filter(({ active }) => active)
+  useEffect(() => {
+    fetchTokens({ page: 1, offset, search: '' })
+  }, [fetchTokens])
+
+  useEffect(() => {
+    if (noFilteredTokens.length === 0 && tokens) {
+      setNoFilteredTokens(tokens.items)
+    }
+  }, [tokens])
+
+  const onPageChange = (page: number) => {
+    fetchTokens({ page, offset })
+  }
+
+  const activeTokens = tokens ? tokens.items.filter(({ active }: any) => active) : []
+  const featuredTokens = noFilteredTokens.filter(({ featured }: any) => featured)
+  const approvedSecTokens = noFilteredTokens.filter(({ token }: any) => token && token.status === 'approved')
+  const pendingSecTokens = noFilteredTokens.filter(
+    ({ token }: any) => token && (token.status === 'pending-kyc' || token.status === 'pending-custodian')
+  )
+  // const otherSecTokens = activeTokens.filter(({ token }: any) => token === null || token.status !== 'approved')
 
   return chainId !== undefined && !TGE_CHAINS_WITH_SWAP.includes(chainId) ? (
     <AppBody blurred>
@@ -79,40 +95,40 @@ export default function CustodianV2() {
         </ExternalLink>
       </Flex>
 
-      {isLoggedIn && (approvedSecTokens?.length > 0 || pendingSecTokens?.length > 0) && (
+      {isLoggedIn && tokens && (
         <>
-          {/* <MySecTokensTab marginBottom="72px">
+          <MySecTokensTab marginBottom="72px">
             <GradientText>
               <TYPE.title5 marginBottom="32px" color="inherit">
                 <Trans>My security tokens</Trans>
               </TYPE.title5>
             </GradientText>
-            {approvedSecTokens?.length > 0 && (
+            {approvedSecTokens.length > 0 && (
               <>
                 <TYPE.title6 marginBottom="32px" color="rgba(237, 206, 255, 0.5)">
                   <Trans>ACCREDITED</Trans>
                 </TYPE.title6>
                 <MySecTokensGrid>
-                  {approvedSecTokens.map((token) => (
-                    <MySecToken key={`my-sec-${(token as any).tokenInfo.id}`} token={token} />
+                  {approvedSecTokens.map((token: any) => (
+                    <MySecToken key={`my-sec-${token.id}`} token={token} />
                   ))}
                 </MySecTokensGrid>
               </>
             )}
-            {pendingSecTokens?.length > 0 && (
+            {pendingSecTokens.length > 0 && (
               <>
                 <Divider />
                 <TYPE.title6 marginBottom="32px" color="rgba(237, 206, 255, 0.5)">
                   <Trans>PENDING ACCREDITATION</Trans>
                 </TYPE.title6>
                 <MySecTokensGrid>
-                  {pendingSecTokens.map((token) => (
-                    <MySecToken key={`pending-${(token as any)?.tokenInfo.id}`} token={token} />
+                  {pendingSecTokens.map((token: any) => (
+                    <MySecToken key={`pending-${token.id}`} token={token} />
                   ))}
                 </MySecTokensGrid>
               </>
             )}
-          </MySecTokensTab> */}
+          </MySecTokensTab>
           {featuredTokens?.length > 0 && (
             <Box marginBottom="72px">
               <TYPE.title5 marginBottom="32px">
@@ -125,7 +141,13 @@ export default function CustodianV2() {
               </FeaturedTokensGrid>
             </Box>
           )}
-          <SecTokensTable tokens={activeTokens} />
+          <SecTokensTable
+            page={tokens.page}
+            totalPages={tokens.totalPages}
+            onPageChange={onPageChange}
+            tokens={activeTokens}
+            offset={offset}
+          />
         </>
       )}
     </StyledBodyWrapper>

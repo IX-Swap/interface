@@ -26,6 +26,10 @@ export const MySecTokensGrid = styled(Box)`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 30px;
+
+  ${({ theme }) => theme.mediaWidth.upToMedium`
+    grid-template-columns: 1fr;
+  `};
 `
 
 export const MySecTokenCard = styled(Box)<{ isPending: boolean }>`
@@ -69,7 +73,7 @@ export const FeaturedTokensGrid = styled(Box)`
 
 export const FeaturedTokenCard = styled.div`
   background: ${({ theme }) => theme.bgG14};
-  padding: 26px 24px;
+  padding: 15px 24px 26px 24px;
   ${cardCommonStyles};
 `
 

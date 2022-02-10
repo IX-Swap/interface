@@ -19,12 +19,15 @@ export const BrokerDealerCard: FC<BrokerDealerFakeProps> = ({ issuer, handleEdit
   return (
     <Box marginBottom="30px">
       <CardHeader>
-        <Box>
-          <img width="100%" height="20px" src={logo.public} />
+        <Box height="100%">
+          <img style={{ width: 'fit-content', height: '100%' }} src={logo.public} />
         </Box>
-        <TYPE.title6>{name}</TYPE.title6>
+        <TYPE.title6 style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}>{name}</TYPE.title6>
         <TYPE.descriptionThin overflow="hidden">
-          <ExternalLink style={{ color: 'rgba(237, 206, 255, 0.5)' }} href={url}>
+          <ExternalLink
+            style={{ color: 'rgba(237, 206, 255, 0.5)', overflow: 'hidden', textOverflow: 'ellipsis' }}
+            href={url}
+          >
             {url}
           </ExternalLink>
         </TYPE.descriptionThin>
@@ -40,16 +43,22 @@ export const BrokerDealerCard: FC<BrokerDealerFakeProps> = ({ issuer, handleEdit
 
       {tokens?.length > 0 && (
         <TokensList>
-          {tokens.map(({ ticker, url, tradable, featured }: any, index: number) => (
+          {tokens.map(({ ticker, url, token: wrappedToken, featured, logo }: any, index: number) => (
             <TokensListItem key={`token-list-${index}`}>
-              <TYPE.body3 color="white">{ticker}</TYPE.body3>
+              <Box>
+                <img style={{ borderRadius: '24px' }} width="30px" height="31px" src={logo?.public} />
+                <TYPE.body3 style={{ whiteSpace: 'nowrap' }} marginLeft="12px" color="white">
+                  {ticker}
+                </TYPE.body3>
+              </Box>
+
               <TYPE.body3 overflow="hidden" color="white">
                 <ExternalLink style={{ color: 'white' }} href={url}>
                   {url}
                 </ExternalLink>
               </TYPE.body3>
               <div>
-                {tradable ? (
+                {wrappedToken ? (
                   <>
                     {StatusIcons[ActionHistoryStatus.SETTLED]()}
                     <TYPE.title6 marginLeft="10px" fontWeight={400} color="#9DF9B1">
