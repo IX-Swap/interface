@@ -12,7 +12,14 @@ import { ApplicationModal } from 'state/application/actions'
 import { ContainerRow, Input, InputContainer, InputPanel, Textarea } from 'components/Input'
 import { Radio } from './Radio'
 import { ButtonIXSGradient } from 'components/Button'
-import { addToken, checkWrappedAddress, updateToken, useFetchIssuers, validate } from 'state/secCatalog/hooks'
+import {
+  addToken,
+  checkWrappedAddress,
+  updateToken,
+  useFetchIssuers,
+  validate,
+  validateToken,
+} from 'state/secCatalog/hooks'
 import { Dropdown } from './Dropdown'
 import Upload from 'components/Upload'
 import { AddressInput } from 'components/AddressInputPanel/AddressInput'
@@ -32,13 +39,27 @@ interface Props {
 export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurrentToken }: Props) => {
   const isOpen = useModalOpen(ApplicationModal.TOKEN_POPUP)
   const toggle = useTokenPopupToggle()
+  const [errors, setErrors] = useState<any>()
+
   const getIssuers = useFetchIssuers()
   const addPopup = useAddPopup()
   const [token, setToken] = useState<any>(null)
 
+  const resetErrors = () => {
+    setErrors({
+      address: null,
+      ticker: null,
+      logo: null,
+      companyName: null,
+      description: null,
+      wrappedTokenAddress: null,
+    })
+  }
+
   useEffect(() => {
     if (propToken) setToken(propToken)
     else setToken(initialTokenState)
+    resetErrors()
   }, [propToken])
 
   const onClose = () => {
@@ -55,13 +76,11 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
   }
 
   const handleCreateClick = async () => {
-    if (!validate(token)) {
-      addPopup({
-        info: {
-          success: false,
-          summary: 'All fields are required',
-        },
-      })
+    const validationErrors = validateToken(token)
+    const hasError = Object.values(validationErrors).some((value) => Boolean(value) === true)
+
+    if (hasError) {
+      setErrors(validationErrors)
     } else {
       let data = null
       if (token.id) {
@@ -98,6 +117,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
           },
         })
       }
+      resetErrors()
     }
   }
 
@@ -117,8 +137,6 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
       .map((name, index) => ({ id: ++index, name }))
       .sort((a, b) => a.name.localeCompare(b.name))
   }, [])
-
-  console.log(countries)
 
   return (
     <WideModal isLarge isOpen={isOpen} onDismiss={onClose} minHeight={false} maxHeight={'fit-content'} scrollable>
@@ -152,6 +170,11 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                           placeholder: ' ',
                         }}
                       />
+                      {errors.address && (
+                        <TYPE.small marginTop="4px" color={'red1'}>
+                          {errors.address}
+                        </TYPE.small>
+                      )}
                     </Box>
                     <Box>
                       <Label marginBottom="11px" htmlFor="token-ticker">
@@ -170,6 +193,11 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                           </InputContainer>
                         </ContainerRow>
                       </InputPanel>
+                      {errors.ticker && (
+                        <TYPE.small marginTop="4px" color={'red1'}>
+                          {errors.ticker}
+                        </TYPE.small>
+                      )}
                     </Box>
                     <Box>
                       <Label marginBottom="11px">
@@ -193,6 +221,11 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                           </Logo>
                         </Upload>
                       </ButtonText>
+                      {errors.logo && (
+                        <TYPE.small textAlign="center" marginTop="4px" color={'red1'}>
+                          {errors.logo}
+                        </TYPE.small>
+                      )}
                     </Box>
                   </FormGrid>
                   <FormRow>
@@ -226,6 +259,11 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                           placeholder: ' ',
                         }}
                       />
+                      {errors.wrappedTokenAddress && (
+                        <TYPE.small marginTop="4px" color={'red1'}>
+                          {errors.wrappedTokenAddress}
+                        </TYPE.small>
+                      )}
                     </Box>
                   </FormRow>
                   <FormRow>
@@ -246,6 +284,11 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                           </InputContainer>
                         </ContainerRow>
                       </InputPanel>
+                      {errors.companyName && (
+                        <TYPE.small marginTop="4px" color={'red1'}>
+                          {errors.companyName}
+                        </TYPE.small>
+                      )}
                     </Box>
                     <Box>
                       <Label marginBottom="11px" htmlFor="token-website">
@@ -264,6 +307,11 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                           </InputContainer>
                         </ContainerRow>
                       </InputPanel>
+                      {errors.url && (
+                        <TYPE.small marginTop="4px" color={'red1'}>
+                          {errors.url}
+                        </TYPE.small>
+                      )}
                     </Box>
                   </FormRow>
 
@@ -320,6 +368,11 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                         style={{ height: '290px', background: '#372E5E' }}
                         onChange={(e) => setToken({ ...token, description: e.currentTarget.value })}
                       />
+                      {errors.description && (
+                        <TYPE.small marginTop="4px" color={'red1'}>
+                          {errors.description}
+                        </TYPE.small>
+                      )}
                     </Box>
                   </FormRow>
 

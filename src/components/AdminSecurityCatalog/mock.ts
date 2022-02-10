@@ -8,8 +8,8 @@ export const initialTokenState = {
   companyName: '',
   url: '',
   file: null,
-  industry: '',
-  country: '',
+  industry: 'Other',
+  country: 'United States of America',
   atlasOneId: '',
   wrappedTokenAddress: '',
   description: '',
@@ -28,7 +28,6 @@ export const initialIssuerState = {
 
 export const validateSecTokenFields = [
   'address',
-  'atlasOneId',
   'chainId',
   'companyName',
   'country',
@@ -45,4 +44,4 @@ export const industries = [
   { id: 4, name: 'Technology' },
   { id: 5, name: 'Energy & Mining' },
   { id: 6, name: 'Other' },
-]
+].sort((a, b) => a.name.localeCompare(b.name))

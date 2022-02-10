@@ -8,6 +8,7 @@ import { BROKER_DEALERS_STATUS } from 'state/brokerDealer/hooks'
 import { validateSecTokenFields } from 'components/AdminSecurityCatalog/mock'
 import { fetchAddIssuer, fetchEditIssuer, fetchIssuers, fetchIssuersTokens } from './actions'
 import { Issuer } from './reducer'
+import { isValidAddress } from 'utils'
 
 export function useSecCatalogState() {
   return useSelector<AppState, AppState['secCatalog']>((state) => state.secCatalog)
@@ -82,8 +83,8 @@ export const editIssuer = async (issuerId: number, issuer: Issuer) => {
   }
 }
 
-export const getIssuers = async () => {
-  const result = await apiService.get(secCatalog.allIssuers)
+export const getIssuers = async (params?: Record<string, string | number>) => {
+  const result = await apiService.get(secCatalog.allIssuers, undefined, params)
   return result.data
 }
 
@@ -99,6 +100,11 @@ export const getAllTokens = async (params?: Record<string, string | number>) => 
 
 export const getToken = async (id: number) => {
   const result = await apiService.get(secCatalog.issuerToken(id))
+  return result.data
+}
+
+export const getMyTokens = async () => {
+  const result = await apiService.get(secCatalog.myTokens)
   return result.data
 }
 
@@ -151,15 +157,18 @@ export function useEditIssuer() {
 
 export function useFetchIssuers() {
   const dispatch = useDispatch<AppDispatch>()
-  const callback = useCallback(async () => {
-    try {
-      dispatch(fetchIssuers.pending())
-      const data = await getIssuers()
-      dispatch(fetchIssuers.fulfilled({ data }))
-    } catch (error: any) {
-      dispatch(fetchIssuers.rejected({ errorMessage: 'Could not create issuer' }))
-    }
-  }, [dispatch])
+  const callback = useCallback(
+    async (params?: Record<string, string | number>) => {
+      try {
+        dispatch(fetchIssuers.pending())
+        const data = await getIssuers(params)
+        dispatch(fetchIssuers.fulfilled({ data }))
+      } catch (error: any) {
+        dispatch(fetchIssuers.rejected({ errorMessage: 'Could not create issuer' }))
+      }
+    },
+    [dispatch]
+  )
   return callback
 }
 
@@ -186,4 +195,69 @@ export const validate = (token: any) => {
   }
 
   return true
+}
+
+const stringLengthValidator = (key: string, value: string, maxLength = 100) => {
+  if (value.length > maxLength) return { [key]: `Max length is ${maxLength} chars` }
+  return null
+}
+
+const emptyValidator = (key: string, value: any) => {
+  if (value === '' || value === null) return { [key]: 'This field is required' }
+  return null
+}
+
+const urlValidator = (url: string) => {
+  if (
+    url.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g) ===
+    null
+  )
+    return { url: 'Must be a valid URL' }
+  else return null
+}
+
+const logoValidator = (logo: any) => {
+  if (logo?.size > 10 ** 7) return { logo: 'Max size of 10Mb' }
+  else return null
+}
+
+export const validateIssuer = (issuer: any) => {
+  const { url, name, file } = issuer
+
+  return {
+    url: null,
+    name: null,
+    logo: null,
+    ...urlValidator(url),
+    ...stringLengthValidator('name', name),
+    ...logoValidator(file),
+    ...emptyValidator('name', name),
+    ...emptyValidator('url', url),
+    ...emptyValidator('logo', file),
+  }
+}
+
+export const validateToken = (token: any) => {
+  const { address, ticker, file, companyName, url, wrappedTokenAddress, description } = token
+
+  return {
+    address: !Boolean(isValidAddress(address || '')) ? 'Invalid address' : null,
+    ticker: null,
+    logo: null,
+    companyName: null,
+    description: null,
+    wrappedTokenAddress: !Boolean(isValidAddress(wrappedTokenAddress || '')) ? 'Invalid address' : null,
+    ...urlValidator(url),
+    ...stringLengthValidator('companyName', companyName, 100),
+    ...stringLengthValidator('description', description, 1000),
+    ...stringLengthValidator('ticker', ticker, 5),
+    ...logoValidator(file),
+    ...emptyValidator('companyName', companyName),
+    ...emptyValidator('url', url),
+    ...emptyValidator('logo', file),
+    ...emptyValidator('address', address),
+    ...emptyValidator('ticker', ticker),
+    ...emptyValidator('description', description),
+    ...emptyValidator('wrappedTokenAddress', wrappedTokenAddress),
+  }
 }

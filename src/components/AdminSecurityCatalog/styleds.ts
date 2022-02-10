@@ -96,7 +96,7 @@ export const FormGrid = styled.div`
   `};
 `
 
-export const Logo = styled.div`
+export const Logo = styled.div<{ error?: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -104,6 +104,7 @@ export const Logo = styled.div`
   height: 60px;
   border-radius: 36px;
   background: ${({ theme }) => theme.bg7};
+  border: ${({ error, theme }) => (error ? `1px solid ${theme.error}` : 'none')};
 `
 
 export const TokenCard = styled(BodyRow)`

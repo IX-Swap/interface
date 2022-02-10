@@ -11,7 +11,7 @@ import { useAuthState } from 'state/auth/hooks'
 import { useActiveWeb3React } from 'hooks/web3'
 import AppBody from 'pages/AppBody'
 import { TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
-import { useFetchTokens, useSecCatalogState } from 'state/secCatalog/hooks'
+import { getMyTokens, useFetchTokens, useSecCatalogState } from 'state/secCatalog/hooks'
 import { MySecToken } from './MySecToken'
 
 import { ReactComponent as ArrowDown } from '../../assets/images/arrow-sec-tokens.svg'
@@ -29,6 +29,7 @@ export default function CustodianV2() {
   const offset = 10
   const docLink = 'https://docs.google.com/forms/d/e/1FAIpQLSenV66JwRp7MeHMm31EYLw-8VCHWfsyj8ji98l5Cqchpr2IyQ/viewform'
   const { token } = useAuthState()
+  const [mySecTokens, setMySecTokens] = useState([])
   const fetchTokens = useFetchTokens()
   const [noFilteredTokens, setNoFilteredTokens] = useState([])
   const { tokens } = useSecCatalogState()
@@ -60,9 +61,13 @@ export default function CustodianV2() {
 
   const activeTokens = tokens ? tokens.items.filter(({ active }: any) => active) : []
   const featuredTokens = noFilteredTokens.filter(({ featured }: any) => featured)
-  const approvedSecTokens = noFilteredTokens.filter(({ token }: any) => token && token.status === 'approved')
-  const pendingSecTokens = noFilteredTokens.filter(
-    ({ token }: any) => token && (token.status === 'pending-kyc' || token.status === 'pending-custodian')
+  const approvedSecTokens = mySecTokens.filter(
+    ({ token }: any) => token.accreditationRequest && token.accreditationRequest.status === 'approved'
+  )
+  const pendingSecTokens = mySecTokens.filter(
+    ({ token }: any) =>
+      token.accreditationRequest &&
+      (token.accreditationRequest.status === 'pending-kyc' || token.accreditationRequest.status === 'pending-custodian')
   )
   // const otherSecTokens = activeTokens.filter(({ token }: any) => token === null || token.status !== 'approved')
 

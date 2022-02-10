@@ -11,7 +11,7 @@ export interface Issuer {
 }
 
 export interface SecCatalogState {
-  readonly issuers: Issuer[] | null
+  readonly issuers: any | null
   loadingRequest: boolean
   error: string | null
   tokens: any
