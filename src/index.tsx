@@ -9,6 +9,7 @@ import { Provider } from 'react-redux'
 import { HashRouter } from 'react-router-dom'
 import { MuiPickersUtilsProvider } from '@material-ui/pickers'
 import DayJsUtils from '@date-io/dayjs'
+import 'react-phone-input-2/lib/bootstrap.css'
 
 import Blocklist from './components/Blocklist'
 import { NetworkContextName } from './constants/misc'

@@ -7031,6 +7031,11 @@ class-utils@^0.3.5:
     isobject "^3.0.0"
     static-extend "^0.1.1"
 
+classnames@^2.2.6:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/classnames/-/classnames-2.3.1.tgz#dfcfa3891e306ec1dad105d0e88f4417b8535e8e"
+  integrity sha512-OlQdbZ7gLfGarSqxesMesDa5uz7KFbID8Kpq/SxIoNGDqY8lSYs0D+hhtBXhcdB3rcbXArFr7vlHheLk1voeNA==
+
 clean-css@^4.1.6:
   version "4.2.4"
   resolved "https://registry.npmjs.org/clean-css/-/clean-css-4.2.4.tgz"
@@ -12959,6 +12964,16 @@ lodash.once@^4.1.1:
   resolved "https://registry.npmjs.org/lodash.once/-/lodash.once-4.1.1.tgz"
   integrity sha1-DdOXEhPHxW34gJd9UEyI+0cal6w=
 
+lodash.reduce@^4.6.0:
+  version "4.6.0"
+  resolved "https://registry.yarnpkg.com/lodash.reduce/-/lodash.reduce-4.6.0.tgz#f1ab6b839299ad48f784abbf476596f03b914d3b"
+  integrity sha1-8atrg5KZrUj3hKu/R2WW8DuRTTs=
+
+lodash.startswith@^4.2.1:
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/lodash.startswith/-/lodash.startswith-4.2.1.tgz#c598c4adce188a27e53145731cdc6c0e7177600c"
+  integrity sha1-xZjErc4YiiflMUVzHNxsDnF3YAw=
+
 lodash.template@^4.5.0:
   version "4.5.0"
   resolved "https://registry.npmjs.org/lodash.template/-/lodash.template-4.5.0.tgz"
@@ -15981,6 +15996,18 @@ react-paginate@^7.1.3:
   integrity sha512-cHTXXE90Z3DlKSJiIQFzAcWoIFs9mq6r1/+rQF099NPvdJpbR8f6E/ES32tlUw4qe1R6qWLOrPZYhvAy4UgHLA==
   dependencies:
     prop-types "^15.6.1"
+
+react-phone-input-2@^2.15.0:
+  version "2.15.0"
+  resolved "https://registry.yarnpkg.com/react-phone-input-2/-/react-phone-input-2-2.15.0.tgz#fc5a047831bfb830eddc2dd0922519b26f522b35"
+  integrity sha512-60EOJSgmRFl9Ar89/JznaDsdB9FNf5T6nvQf0sN1t3X7exrKHbUT3ij7HZn2Y7jigcPv9EkdyzVr0MiOk1FKmw==
+  dependencies:
+    classnames "^2.2.6"
+    lodash.debounce "^4.0.8"
+    lodash.memoize "^4.1.2"
+    lodash.reduce "^4.6.0"
+    lodash.startswith "^4.2.1"
+    prop-types "^15.7.2"
 
 react-popper@^2.2.3:
   version "2.2.5"

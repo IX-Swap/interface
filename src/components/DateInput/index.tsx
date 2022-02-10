@@ -1,7 +1,7 @@
 import React from 'react'
 import { DatePicker } from '@material-ui/pickers'
 import styled from 'styled-components'
-import { Trans, t } from '@lingui/macro'
+import { t } from '@lingui/macro'
 
 import { Input } from 'components/Input'
 import calendarIcon from 'assets/images/calendar.svg'
@@ -15,9 +15,7 @@ interface Props {
 export const DateInput = ({ value, onChange, label, ...props }: Props) => {
   return (
     <Container>
-      <Label>
-        <Trans>{t`${label || 'Date of Birth'}`}</Trans>
-      </Label>
+      <Label>{t`${label || 'Date of Birth'}`}</Label>
       <DatePicker
         value={value || null}
         onChange={onChange}
