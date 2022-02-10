@@ -36,7 +36,6 @@ import { AuthorizationButtons } from './AuthorizationButtons'
 import { BrokerDealerForm } from './BrokerDealerForm'
 import { SwapButtons } from './SwapButtons'
 import { useWatchApprovalSubmitted } from './useWatchApprovalSubmitted'
-import { DateInput } from '../../components/DateInput'
 
 export default function Swap({ history }: RouteComponentProps) {
   const { chainId } = useActiveWeb3React()
@@ -111,11 +110,6 @@ export default function Swap({ history }: RouteComponentProps) {
       !currencyBalances.OUTPUT)
   return (
     <>
-      <DateInput
-        onChange={(value) => {
-          console.log('log => value', value)
-        }}
-      />
       <TokenWarningModal history={history} />
       <GeneralModal />
       <BrokerDealerForm ref={formRef} />
