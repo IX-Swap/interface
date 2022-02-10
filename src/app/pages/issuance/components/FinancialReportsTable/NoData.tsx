@@ -1,5 +1,5 @@
 import React from 'react'
-import { ReactComponent as NoDataImage } from 'assets/empty-box.svg'
+import { ReactComponent as NoDataImage } from 'assets/icons/empty-box.svg'
 import { Box, Button, Grid, Typography } from '@mui/material'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
