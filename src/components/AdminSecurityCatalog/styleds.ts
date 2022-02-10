@@ -55,6 +55,10 @@ export const TokensList = styled.div`
 
   ${({ theme }) => theme.mediaWidth.upToSmall`
     overflow: scroll;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   `};
 `
 
@@ -74,6 +78,10 @@ export const TokensListItem = styled.div`
       padding-right: 100px;
     }
 
+    > div {
+      padding: 0px 60px;
+    }
+
     grid-template-columns: 1fr 300px 3fr 3fr;
   `};
 `
@@ -88,7 +96,7 @@ export const FormGrid = styled.div`
   `};
 `
 
-export const Logo = styled.div`
+export const Logo = styled.div<{ error?: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -96,6 +104,7 @@ export const Logo = styled.div`
   height: 60px;
   border-radius: 36px;
   background: ${({ theme }) => theme.bg7};
+  border: ${({ error, theme }) => (error ? `1px solid ${theme.error}` : 'none')};
 `
 
 export const TokenCard = styled(BodyRow)`
@@ -116,6 +125,15 @@ export const WideModal = styled(RedesignedWideModal)`
 
 export const WideModalWrapper = styled(ModalBlurWrapper)`
   width: 1050px;
+`
+
+export const SmallModal = styled(RedesignedWideModal)`
+  max-width: 450px !important;
+  width: 450px;
+`
+
+export const SmallModalWrapper = styled(ModalBlurWrapper)`
+  min-width: 450px;
 `
 
 export const FormWrapper = styled.div`

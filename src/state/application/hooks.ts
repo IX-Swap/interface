@@ -85,6 +85,10 @@ export function useTokenPopupToggle(): () => void {
   return useToggleModal(ApplicationModal.TOKEN_POPUP)
 }
 
+export function useDeleteTokenPopupToggle(): () => void {
+  return useToggleModal(ApplicationModal.TOKEN_DELETE_CLAIM)
+}
+
 // returns a function that allows adding a popup
 export function useAddPopup(): (content: PopupContent, key?: string) => void {
   const dispatch = useDispatch()

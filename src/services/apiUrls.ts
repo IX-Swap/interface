@@ -54,7 +54,8 @@ export const tokens = {
 export const secCatalog = {
   createIssuer: `/catalog/issuer`,
   allIssuers: `/catalog/issuer/all`,
-  allIssuerTokens: `/catalog/token/all`,
+  myTokens: `/catalog/token/list`,
+  allIssuerTokens: `/catalog/token/list/all`,
   issuer: (issuerId: number) => `/catalog/issuer/${issuerId}`,
   createIssuerToken: (issuerId: number) => `/catalog/token/issuer/${issuerId}`,
   issuerToken: (tokenId: number) => `/catalog/token/${tokenId}`,

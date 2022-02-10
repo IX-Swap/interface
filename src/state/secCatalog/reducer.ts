@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit'
 
-import { fetchIssuers } from './actions'
+import { fetchIssuers, fetchIssuersTokens } from './actions'
 
 export interface Issuer {
   name: string
@@ -11,15 +11,17 @@ export interface Issuer {
 }
 
 export interface SecCatalogState {
-  readonly issuers: Issuer[] | null
+  readonly issuers: any | null
   loadingRequest: boolean
   error: string | null
+  tokens: any
 }
 
 const initialState: SecCatalogState = {
   issuers: null,
   loadingRequest: false,
   error: null,
+  tokens: null,
 }
 
 export default createReducer<SecCatalogState>(initialState, (builder) =>
@@ -34,6 +36,19 @@ export default createReducer<SecCatalogState>(initialState, (builder) =>
       state.issuers = data
     })
     .addCase(fetchIssuers.rejected, (state, { payload: { errorMessage } }) => {
+      state.loadingRequest = false
+      state.error = errorMessage
+    })
+    .addCase(fetchIssuersTokens.pending, (state) => {
+      state.loadingRequest = true
+      state.error = null
+    })
+    .addCase(fetchIssuersTokens.fulfilled, (state, { payload: { data } }) => {
+      state.loadingRequest = false
+      state.error = null
+      state.tokens = data
+    })
+    .addCase(fetchIssuersTokens.rejected, (state, { payload: { errorMessage } }) => {
       state.loadingRequest = false
       state.error = errorMessage
     })

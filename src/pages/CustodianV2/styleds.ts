@@ -3,6 +3,8 @@ import { Box } from 'rebass'
 
 import { BodyWrapper } from 'pages/AppBody'
 import { ArrowWrapper } from 'components/swap/styleds'
+import { SearchInput } from 'components/SearchModal/styleds'
+import { DarkBlueCard } from 'components/Card'
 
 const cardCommonStyles = css`
   border-radius: 30px;
@@ -26,6 +28,10 @@ export const MySecTokensGrid = styled(Box)`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 30px;
+
+  ${({ theme }) => theme.mediaWidth.upToMedium`
+    grid-template-columns: 1fr;
+  `};
 `
 
 export const MySecTokenCard = styled(Box)<{ isPending: boolean }>`
@@ -69,7 +75,7 @@ export const FeaturedTokensGrid = styled(Box)`
 
 export const FeaturedTokenCard = styled.div`
   background: ${({ theme }) => theme.bgG14};
-  padding: 26px 24px;
+  padding: 15px 24px 26px 24px;
   ${cardCommonStyles};
 `
 
@@ -80,4 +86,14 @@ export const StyledArrowWrapper = styled(ArrowWrapper)`
   display: flex;
   justify-content: center;
   align-items: center;
+`
+
+export const StyledSearchInput = styled(SearchInput)`
+  background: ${({ theme }) => theme.bg19};
+  color: ${({ theme }) => theme.text2};
+`
+
+export const StyledDarkBlueCard = styled(DarkBlueCard)<{ isOpen: boolean }>`
+  background-color: ${({ theme, isOpen }) => (isOpen ? theme.bg7 : theme.bg19)};
+  color: ${({ theme, isOpen }) => (isOpen ? theme.text2 : theme.text9)};
 `

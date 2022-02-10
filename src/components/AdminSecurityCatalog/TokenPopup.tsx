@@ -5,14 +5,21 @@ import { Label } from '@rebass/forms'
 import { getNames } from 'country-list'
 
 import { RowBetween } from 'components/Row'
-import { isAddress, isValidAddress, shortAddress } from 'utils'
+import { isValidAddress } from 'utils'
 import { ButtonText, CloseIcon, ModalContentWrapper, ModalPadding, TYPE } from 'theme'
 import { useAddPopup, useModalOpen, useTokenPopupToggle } from 'state/application/hooks'
 import { ApplicationModal } from 'state/application/actions'
 import { ContainerRow, Input, InputContainer, InputPanel, Textarea } from 'components/Input'
 import { Radio } from './Radio'
 import { ButtonIXSGradient } from 'components/Button'
-import { addToken, checkWrappedAddress, updateToken, useFetchIssuers, validate } from 'state/secCatalog/hooks'
+import {
+  addToken,
+  checkWrappedAddress,
+  updateToken,
+  useFetchIssuers,
+  validate,
+  validateToken,
+} from 'state/secCatalog/hooks'
 import { Dropdown } from './Dropdown'
 import Upload from 'components/Upload'
 import { AddressInput } from 'components/AddressInputPanel/AddressInput'
@@ -26,18 +33,33 @@ import { isMobile } from 'react-device-detect'
 interface Props {
   token: any | null
   currentIssuer: any
+  setCurrentToken: (value: any | null) => void
 }
 
-export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer }: Props) => {
+export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurrentToken }: Props) => {
   const isOpen = useModalOpen(ApplicationModal.TOKEN_POPUP)
   const toggle = useTokenPopupToggle()
+  const [errors, setErrors] = useState<any>()
+
   const getIssuers = useFetchIssuers()
   const addPopup = useAddPopup()
   const [token, setToken] = useState<any>(null)
 
+  const resetErrors = () => {
+    setErrors({
+      address: null,
+      ticker: null,
+      logo: null,
+      companyName: null,
+      description: null,
+      wrappedTokenAddress: null,
+    })
+  }
+
   useEffect(() => {
     if (propToken) setToken(propToken)
     else setToken(initialTokenState)
+    resetErrors()
   }, [propToken])
 
   const onClose = () => {
@@ -54,24 +76,39 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer }: Props
   }
 
   const handleCreateClick = async () => {
-    if (!validate(token)) {
-      addPopup({
-        info: {
-          success: false,
-          summary: 'All fields are required',
-        },
-      })
+    const validationErrors = validateToken(token)
+    const hasError = Object.values(validationErrors).some((value) => Boolean(value) === true)
+
+    if (hasError) {
+      setErrors(validationErrors)
     } else {
       let data = null
       if (token.id) {
         data = await updateToken(token)
+        if (data) {
+          addPopup({
+            info: {
+              success: true,
+              summary: 'Token was successfully updated.',
+            },
+          })
+        }
       } else {
         data = await addToken(currentIssuer.id, token)
+        if (data) {
+          addPopup({
+            info: {
+              success: true,
+              summary: 'Token was successfully created.',
+            },
+          })
+        }
       }
 
       if (data) {
         getIssuers()
         toggle()
+        setCurrentToken(null)
       } else {
         addPopup({
           info: {
@@ -80,6 +117,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer }: Props
           },
         })
       }
+      resetErrors()
     }
   }
 
@@ -88,14 +126,16 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer }: Props
 
     if (isValidAddress(e)) {
       const data = await checkWrappedAddress(e)
-      if (data) newToken = { ...newToken, token: data.id }
+      if (data) newToken = { ...newToken, tokenId: data.id }
     }
 
     setToken(newToken)
   }
 
   const countries = useMemo(() => {
-    return getNames().map((name, index) => ({ id: ++index, name }))
+    return getNames()
+      .map((name, index) => ({ id: ++index, name }))
+      .sort((a, b) => a.name.localeCompare(b.name))
   }, [])
 
   return (
@@ -124,12 +164,17 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer }: Props
                       <AddressInput
                         {...{
                           id: 'token-address',
-                          value: isAddress(token.address) ? shortAddress(token.address || '') : token.address,
+                          value: token.address,
                           error: !Boolean(isValidAddress(token?.address || '')),
                           onChange: (e) => setToken({ ...token, address: e }),
                           placeholder: ' ',
                         }}
                       />
+                      {errors.address && (
+                        <TYPE.small marginTop="4px" color={'red1'}>
+                          {errors.address}
+                        </TYPE.small>
+                      )}
                     </Box>
                     <Box>
                       <Label marginBottom="11px" htmlFor="token-ticker">
@@ -148,6 +193,11 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer }: Props
                           </InputContainer>
                         </ContainerRow>
                       </InputPanel>
+                      {errors.ticker && (
+                        <TYPE.small marginTop="4px" color={'red1'}>
+                          {errors.ticker}
+                        </TYPE.small>
+                      )}
                     </Box>
                     <Box>
                       <Label marginBottom="11px">
@@ -157,7 +207,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer }: Props
                       </Label>
                       <ButtonText>
                         <Upload file={token.file} onDrop={(file) => handleDropImage(file)}>
-                          <Logo>
+                          <Logo error={errors.logo}>
                             {token.filePath || token.logo?.public ? (
                               <img
                                 style={{ borderRadius: '36px' }}
@@ -171,6 +221,11 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer }: Props
                           </Logo>
                         </Upload>
                       </ButtonText>
+                      {errors.logo && (
+                        <TYPE.small textAlign="center" marginTop="4px" color={'red1'}>
+                          {errors.logo}
+                        </TYPE.small>
+                      )}
                     </Box>
                   </FormGrid>
                   <FormRow>
@@ -198,14 +253,17 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer }: Props
                         {...{
                           disabled: token?.id ? true : false,
                           id: 'token-wrapped-input',
-                          value: isAddress(token.wrappedTokenAddress)
-                            ? shortAddress(token.wrappedTokenAddress || '')
-                            : token.wrappedTokenAddress,
+                          value: token.wrappedTokenAddress,
                           error: !Boolean(isValidAddress(token?.wrappedTokenAddress || '')),
                           onChange: handleWrappedTokenChange,
                           placeholder: ' ',
                         }}
                       />
+                      {errors.wrappedTokenAddress && (
+                        <TYPE.small marginTop="4px" color={'red1'}>
+                          {errors.wrappedTokenAddress}
+                        </TYPE.small>
+                      )}
                     </Box>
                   </FormRow>
                   <FormRow>
@@ -226,6 +284,11 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer }: Props
                           </InputContainer>
                         </ContainerRow>
                       </InputPanel>
+                      {errors.companyName && (
+                        <TYPE.small marginTop="4px" color={'red1'}>
+                          {errors.companyName}
+                        </TYPE.small>
+                      )}
                     </Box>
                     <Box>
                       <Label marginBottom="11px" htmlFor="token-website">
@@ -244,6 +307,11 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer }: Props
                           </InputContainer>
                         </ContainerRow>
                       </InputPanel>
+                      {errors.url && (
+                        <TYPE.small marginTop="4px" color={'red1'}>
+                          {errors.url}
+                        </TYPE.small>
+                      )}
                     </Box>
                   </FormRow>
 
@@ -300,6 +368,11 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer }: Props
                         style={{ height: '290px', background: '#372E5E' }}
                         onChange={(e) => setToken({ ...token, description: e.currentTarget.value })}
                       />
+                      {errors.description && (
+                        <TYPE.small marginTop="4px" color={'red1'}>
+                          {errors.description}
+                        </TYPE.small>
+                      )}
                     </Box>
                   </FormRow>
 
@@ -311,9 +384,6 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer }: Props
                       <TYPE.title11 marginBottom="26px" color="text2">
                         <Trans>Featured</Trans>
                       </TYPE.title11>
-                      <TYPE.title11 marginBottom="26px" color="text2">
-                        <Trans>Available for swap</Trans>
-                      </TYPE.title11>
                     </Box>
 
                     <Box marginLeft={isMobile ? 'auto' : '0px'}>
@@ -321,10 +391,6 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer }: Props
                       <Radio
                         isActive={token.featured}
                         onToggle={() => setToken({ ...token, featured: !token.featured })}
-                      />
-                      <Radio
-                        isActive={token.tradable}
-                        onToggle={() => setToken({ ...token, tradable: !token.tradable })}
                       />
                     </Box>
                   </Box>
