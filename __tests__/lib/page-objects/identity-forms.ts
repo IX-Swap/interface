@@ -216,8 +216,6 @@ class UserForms {
     await click(kyc.buttons.SUBMIT, this.page)
   }
   fillPersonalInformationForm = async () => {
-    await click(kyc.buttons.OKAY, this.page)
-
     await uploadFiles(this.page, kyc.field.PHOTO, text.docs.pathToFile)
     await typeText(kyc.field.MIDDLENAME, 'Middle', this.page)
     await typeText(kyc.field.DATA, '12/11/1990', this.page)

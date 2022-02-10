@@ -2,9 +2,19 @@ import { test } from '../lib/fixtures/fixtures'
 import { expect } from '@playwright/test'
 import { invest } from '../lib/selectors/invest'
 import { baseCreds } from '../lib/helpers/creds'
-import { bankAccount, rejectedApi, approvedApi, rejectedFunds } from '../lib/helpers/api-body'
+import {
+  bankAccount,
+  rejectedApi,
+  approvedApi,
+  rejectedFunds
+} from '../lib/helpers/api-body'
 
-import { navigate, click, getCount, waitForRequestInclude } from '../lib/helpers/helpers'
+import {
+  navigate,
+  click,
+  getCount,
+  waitForRequestInclude
+} from '../lib/helpers/helpers'
 import { authorizerEl } from '../lib/selectors/authorizer'
 import { text } from '../lib/helpers/text'
 
@@ -40,26 +50,41 @@ test.describe('Check The Bank Accounts page', () => {
   test.afterEach(async ({ authorizer }) => {
     await authorizer.deleteBankAccount()
   })
-  test('Bank account should be approved from bank account landing page', async ({ authorizer, page }) => {
+  test('Bank account should be approved from bank account landing page', async ({
+    authorizer,
+    page
+  }) => {
     await click(invest.buttons.VIEW_INVEST, page)
     await authorizer.approveBankAccount()
   })
 
-  test('Bank account should be rejected from bank account landing page', async ({ authorizer, page }) => {
+  test('Bank account should be rejected from bank account landing page', async ({
+    authorizer,
+    page
+  }) => {
     await click(invest.buttons.VIEW_INVEST, page)
     await authorizer.rejectBankAccount()
   })
 
-  test('Bank account should be rejected from the table', async ({ authorizer, page }) => {
+  test('Bank account should be rejected from the table', async ({
+    authorizer,
+    page
+  }) => {
     await click(authorizerEl.buttons.MORE, page)
     await authorizer.rejectBankAccount()
   })
 
-  test('Bank account should be approved from the table', async ({ authorizer, page }) => {
+  test('Bank account should be approved from the table', async ({
+    authorizer,
+    page
+  }) => {
     await click(authorizerEl.buttons.MORE, page)
     await authorizer.approveBankAccount()
   })
-  test('Check view bank account from the dropdown list', async ({ page, authorizer }) => {
+  test('Check view bank account from the dropdown list', async ({
+    page,
+    authorizer
+  }) => {
     await click(authorizerEl.buttons.MORE, page)
     await click(authorizerEl.buttons.VIEW, page)
     await expect(page).toHaveURL(/app\/authorizer\/bank-accounts\/\S+\/view/g)
@@ -67,7 +92,10 @@ test.describe('Check The Bank Accounts page', () => {
   })
 
   test('Search should work', async ({ authorizer, textHelper, page }) => {
-    const table = await authorizer.checkAuthorizePagesSearch(bankAccount.accountHolderName, 'accounts/banks/list')
+    const table = await authorizer.checkAuthorizePagesSearch(
+      bankAccount.accountHolderName,
+      'accounts/banks/list'
+    )
     await expect(table).toContainText(bankAccount.accountHolderName)
     await navigate(baseCreds.URL + textHelper.requests.bankAccount, page)
   })
@@ -78,17 +106,28 @@ test.describe('Check Cash Withdraw page', () => {
     await authorizer.createCashWithdrawalRequestByApi()
     await click(authorizerEl.pages.CASH_WITHDRAWALS, page)
   })
-  test.skip('(the functional has a bug)Search should work', async ({ authorizer }) => {
-    const table = await authorizer.checkAuthorizePagesSearch('Stevens', 'accounts/cash/withdrawals')
+  test.skip('(the functional has a bug)Search should work', async ({
+    authorizer
+  }) => {
+    const table = await authorizer.checkAuthorizePagesSearch(
+      'Stevens',
+      'accounts/cash/withdrawals'
+    )
     await expect(table).toContainText('Stevens')
   })
 
-  test('Should be approved from the CW landing page', async ({ authorizer, page }) => {
+  test('Should be approved from the CW landing page', async ({
+    authorizer,
+    page
+  }) => {
     await click(invest.buttons.VIEW_INVEST, page)
     await authorizer.approveCashWithdraw()
   })
 
-  test('Should be rejected from the CW landing page', async ({ authorizer, page }) => {
+  test('Should be rejected from the CW landing page', async ({
+    authorizer,
+    page
+  }) => {
     await click(invest.buttons.VIEW_INVEST, page)
     const message = await authorizer.rejectCashWithdraw()
     expect(message).toContain('Was Rejected')
@@ -108,7 +147,9 @@ test.describe('Check Cash Withdraw page', () => {
   test('Check view from the dropdown list', async ({ page }) => {
     await click(authorizerEl.buttons.MORE, page)
     await click(authorizerEl.buttons.VIEW, page)
-    await expect(page).toHaveURL(/app\/authorizer\/cash-withdrawals\/\S+\/view/g)
+    await expect(page).toHaveURL(
+      /app\/authorizer\/cash-withdrawals\/\S+\/view/g
+    )
   })
 })
 
@@ -127,17 +168,26 @@ test.describe('Check Individual Identities page', () => {
 
   test('Search should work', async ({ authorizer, page }) => {
     await navigate(baseCreds.URL + text.requests.individualsRejectedList, page)
-    const table = await authorizer.checkAuthorizePagesSearch('Fredericka', text.requests.identityIndividualsList)
+    const table = await authorizer.checkAuthorizePagesSearch(
+      'Fredericka',
+      text.requests.identityIndividualsList
+    )
     await expect(table).toContainText('Fredericka')
   })
 
-  test('Should be rejected from the view page', async ({ authorizer, page }) => {
+  test('Should be rejected from the view page', async ({
+    authorizer,
+    page
+  }) => {
     await click(invest.buttons.VIEW_INVEST, page)
     await authorizer.reject()
     const allRejected = await authorizer.getDataForIdentityTable(rejectedApi)
     expect(rejected + 1).toEqual(allRejected)
   })
-  test('Should be approved from the view page', async ({ authorizer, page }) => {
+  test('Should be approved from the view page', async ({
+    authorizer,
+    page
+  }) => {
     await navigate(baseCreds.URL + text.requests.individualsRejectedList, page)
     await click(invest.buttons.VIEW_INVEST, page)
     await authorizer.approve()
@@ -170,34 +220,55 @@ test.describe('Check Corporate Identities page', () => {
   })
 
   test('Search should work', async ({ authorizer }) => {
-    const table = await authorizer.checkAuthorizePagesSearch('middle', corporate)
+    const table = await authorizer.checkAuthorizePagesSearch(
+      'middle',
+      corporate
+    )
     await expect(table).toContainText('middle')
   })
 
-  test('Should be rejected from the view page', async ({ authorizer, page }) => {
+  test('Should be rejected from the view page', async ({
+    authorizer,
+    page
+  }) => {
     await click(invest.buttons.VIEW_INVEST, page)
     await authorizer.reject()
-    const allRejected = await authorizer.getDataForIdentityTable(rejectedApi, corporate)
+    const allRejected = await authorizer.getDataForIdentityTable(
+      rejectedApi,
+      corporate
+    )
     expect(rejected + 1).toEqual(allRejected)
   })
-  test('Should be approved from the view page', async ({ authorizer, page }) => {
+  test('Should be approved from the view page', async ({
+    authorizer,
+    page
+  }) => {
     await click(invest.buttons.VIEW_INVEST, page)
     await authorizer.approve()
-    const allApproved = await authorizer.getDataForIdentityTable(approvedApi, corporate)
+    const allApproved = await authorizer.getDataForIdentityTable(
+      approvedApi,
+      corporate
+    )
     expect(approved + 1).toEqual(allApproved)
   })
 
   test('Should be rejected from the table', async ({ authorizer, page }) => {
     await click(authorizerEl.buttons.MORE, page)
     await authorizer.reject()
-    const allRejected = await authorizer.getDataForIdentityTable(rejectedApi, corporate)
+    const allRejected = await authorizer.getDataForIdentityTable(
+      rejectedApi,
+      corporate
+    )
     expect(rejected + 1).toEqual(allRejected)
   })
 
   test('Should be approved from the table', async ({ authorizer, page }) => {
     await click(authorizerEl.buttons.MORE, page)
     await authorizer.approve()
-    const allApproved = await authorizer.getDataForIdentityTable(approvedApi, corporate)
+    const allApproved = await authorizer.getDataForIdentityTable(
+      approvedApi,
+      corporate
+    )
     expect(approved + 1).toEqual(allApproved)
   })
 
@@ -218,36 +289,57 @@ test.describe('Check Issuance Offerings page', () => {
     await click(authorizerEl.pages.ISSUANCE_OFFERINGS, page)
   })
 
-  test('Search should work', async ({ authorizer }) => {
-    const table = await authorizer.checkAuthorizePagesSearch('Cucumber', corporate)
+  test('Search should work', async ({ authorizer, page }) => {
+    const table = await authorizer.checkAuthorizePagesSearch(
+      'Cucumber',
+      corporate
+    )
     await expect(table).toContainText('Cucumber')
   })
 
-  test('Should be rejected from the view page', async ({ authorizer, page }) => {
+  test('Should be rejected from the view page', async ({
+    authorizer,
+    page
+  }) => {
     await click(invest.buttons.VIEW_INVEST, page)
     await authorizer.reject()
-    const allRejected = await authorizer.getDataForIdentityTable(rejectedApi, corporate)
+    const allRejected = await authorizer.getDataForIdentityTable(
+      rejectedApi,
+      corporate
+    )
     expect(rejected + 1).toEqual(allRejected)
   })
 
-  test('Should be approved from the view page', async ({ authorizer, page }) => {
+  test('Should be approved from the view page', async ({
+    authorizer,
+    page
+  }) => {
     await click(invest.buttons.VIEW_INVEST, page)
     await authorizer.approve()
-    const allApproved = await authorizer.getDataForIdentityTable(approvedApi, corporate)
+    const allApproved = await authorizer.getDataForIdentityTable(
+      approvedApi,
+      corporate
+    )
     expect(approved + 1).toEqual(allApproved)
   })
 
   test('Should be rejected from the table', async ({ authorizer, page }) => {
     await click(authorizerEl.buttons.MORE, page)
     await authorizer.reject()
-    const allRejected = await authorizer.getDataForIdentityTable(rejectedApi, corporate)
+    const allRejected = await authorizer.getDataForIdentityTable(
+      rejectedApi,
+      corporate
+    )
     expect(rejected + 1).toEqual(allRejected)
   })
 
   test('Should be approved from the table', async ({ authorizer, page }) => {
     await click(authorizerEl.buttons.MORE, page)
     await authorizer.approve()
-    const allApproved = await authorizer.getDataForIdentityTable(approvedApi, corporate)
+    const allApproved = await authorizer.getDataForIdentityTable(
+      approvedApi,
+      corporate
+    )
     expect(approved + 1).toEqual(allApproved)
   })
 
@@ -260,10 +352,16 @@ test.describe('Check Issuance Offerings page', () => {
 
 test.describe('Check Deal Closure page', () => {
   test.beforeEach(async ({ page }) => {
-    await navigate(baseCreds.URL + 'app/authorizer/closure?authorizationStatus=', page)
+    await navigate(
+      baseCreds.URL + 'app/authorizer/closure?authorizationStatus=',
+      page
+    )
   })
   test.skip('(bug)Search should work', async ({ authorizer }) => {
-    const table = await authorizer.checkAuthorizePagesSearch('Fund test', 'issuance/closure/list')
+    const table = await authorizer.checkAuthorizePagesSearch(
+      'Fund test',
+      'issuance/closure/list'
+    )
     await expect(table).toContainText('Fund test')
   })
 
@@ -278,43 +376,74 @@ test.describe('Check Commitments page', () => {
   let approved, rejected
   test.beforeEach(async ({ page, authorizer }) => {
     await authorizer.createCommitmentsByApi()
-    rejected = await authorizer.getDataForIdentityTable(rejectedFunds, corporate)
+    rejected = await authorizer.getDataForIdentityTable(
+      rejectedFunds,
+      corporate
+    )
     approved = await authorizer.getDataForIdentityTable(approvedApi, corporate)
     await click(authorizerEl.pages.COMMITMENTS, page)
   })
 
-  test.skip('(It needs to be fixed)Search should work', async ({ authorizer }) => {
-    const table = await authorizer.checkAuthorizePagesSearch('secondDSO', corporate)
+  test.skip('(It needs to be fixed)Search should work', async ({
+    authorizer
+  }) => {
+    const table = await authorizer.checkAuthorizePagesSearch(
+      'secondDSO',
+      corporate
+    )
     await expect(table).toContainText('secondDSO')
   })
 
-  test('Should be rejected from the view page', async ({ authorizer, page }) => {
-    await page.pause()
+  test('Should be rejected from the view page', async ({
+    authorizer,
+    page
+  }) => {
     await click(invest.buttons.VIEW_INVEST, page)
     await authorizer.reject()
-    const allRejected = await authorizer.getDataForIdentityTable(rejectedFunds, corporate)
+    const allRejected = await authorizer.getDataForIdentityTable(
+      rejectedFunds,
+      corporate
+    )
     expect(rejected + 1).toEqual(allRejected)
   })
 
-  test.skip('Should be approved from the view page', async ({ authorizer, page }) => {
+  test.skip('Should be approved from the view page', async ({
+    authorizer,
+    page
+  }) => {
     await click(invest.buttons.VIEW_INVEST, page)
     await authorizer.approve()
-    const allApproved = await authorizer.getDataForIdentityTable(approvedApi, corporate)
+    const allApproved = await authorizer.getDataForIdentityTable(
+      approvedApi,
+      corporate
+    )
     expect(approved + 1).toEqual(allApproved)
   })
 
   test('Should be rejected from the table', async ({ authorizer, page }) => {
     await click(authorizerEl.buttons.MORE, page)
-    await click(`${authorizerEl.DROP_DOWN}>> ${authorizerEl.buttons.REJECT}`, page)
+    await click(
+      `${authorizerEl.DROP_DOWN}>> ${authorizerEl.buttons.REJECT}`,
+      page
+    )
     await waitForRequestInclude(page, '/reject', 'PUT')
-    const allRejected = await authorizer.getDataForIdentityTable(rejectedFunds, corporate)
+    const allRejected = await authorizer.getDataForIdentityTable(
+      rejectedFunds,
+      corporate
+    )
     expect(rejected + 1).toEqual(allRejected)
   })
 
-  test.skip('Should be approved from the table', async ({ authorizer, page }) => {
+  test.skip('Should be approved from the table', async ({
+    authorizer,
+    page
+  }) => {
     await click(authorizerEl.buttons.MORE, page)
     await authorizer.approve()
-    const allApproved = await authorizer.getDataForIdentityTable(approvedApi, corporate)
+    const allApproved = await authorizer.getDataForIdentityTable(
+      approvedApi,
+      corporate
+    )
     expect(approved + 1).toEqual(allApproved)
   })
 
@@ -336,42 +465,65 @@ test.describe('Check Blockchain Addresses page', () => {
   })
 
   test.skip('Search should work', async ({ authorizer }) => {
-    const table = await authorizer.checkAuthorizePagesSearch('Cucumber', corporate)
+    const table = await authorizer.checkAuthorizePagesSearch(
+      'Cucumber',
+      corporate
+    )
     await expect(table).toContainText('Cucumber')
   })
 
-  test('Should be rejected from the view page', async ({ authorizer, page }) => {
+  test('Should be rejected from the view page', async ({
+    authorizer,
+    page
+  }) => {
     await click(invest.buttons.VIEW_INVEST, page)
     await authorizer.reject()
-    const allRejected = await authorizer.getDataForIdentityTable(rejectedApi, corporate)
+    const allRejected = await authorizer.getDataForIdentityTable(
+      rejectedApi,
+      corporate
+    )
     expect(rejected + 1).toEqual(allRejected)
   })
 
-  test('Should be approved from the view page', async ({ authorizer, page }) => {
+  test('Should be approved from the view page', async ({
+    authorizer,
+    page
+  }) => {
     await click(invest.buttons.VIEW_INVEST, page)
     await authorizer.approve()
-    const allApproved = await authorizer.getDataForIdentityTable(approvedApi, corporate)
+    const allApproved = await authorizer.getDataForIdentityTable(
+      approvedApi,
+      corporate
+    )
     expect(approved + 1).toEqual(allApproved)
   })
 
   test('Should be rejected from the table', async ({ authorizer, page }) => {
     await click(authorizerEl.buttons.MORE, page)
     await authorizer.reject()
-    const allRejected = await authorizer.getDataForIdentityTable(rejectedApi, corporate)
+    const allRejected = await authorizer.getDataForIdentityTable(
+      rejectedApi,
+      corporate
+    )
     expect(rejected + 1).toEqual(allRejected)
   })
 
   test('Should be approved from the table', async ({ authorizer, page }) => {
     await click(authorizerEl.buttons.MORE, page)
     await authorizer.approve()
-    const allApproved = await authorizer.getDataForIdentityTable(approvedApi, corporate)
+    const allApproved = await authorizer.getDataForIdentityTable(
+      approvedApi,
+      corporate
+    )
     expect(approved + 1).toEqual(allApproved)
   })
 
   test('Check profile view from the dropdown list', async ({ page }) => {
     await click(authorizerEl.buttons.MORE, page)
     await click(authorizerEl.buttons.VIEW, page)
-    await expect(page).toHaveURL(/app\/authorizer\/withdrawal-addresses\/\S+\/view/g)
+    await expect(page).toHaveURL(
+      /app\/authorizer\/withdrawal-addresses\/\S+\/view/g
+    )
   })
 })
 
@@ -385,42 +537,65 @@ test.describe('Check Proposed Fundraising Details page', () => {
   })
 
   test('Search should work', async ({ authorizer }) => {
-    const table = await authorizer.checkAuthorizePagesSearch('Issuer FULL NAME', corporate)
+    const table = await authorizer.checkAuthorizePagesSearch(
+      'Issuer FULL NAME',
+      corporate
+    )
     await expect(table).toContainText('Issuer FULL NAME')
   })
 
-  test('Should be rejected from the view page', async ({ authorizer, page }) => {
+  test('Should be rejected from the view page', async ({
+    authorizer,
+    page
+  }) => {
     await click(invest.buttons.VIEW_INVEST, page)
     await authorizer.reject()
-    const allRejected = await authorizer.getDataForIdentityTable(rejectedApi, corporate)
+    const allRejected = await authorizer.getDataForIdentityTable(
+      rejectedApi,
+      corporate
+    )
     expect(rejected + 1).toEqual(allRejected)
   })
 
-  test('Should be approved from the view page', async ({ authorizer, page }) => {
+  test('Should be approved from the view page', async ({
+    authorizer,
+    page
+  }) => {
     await click(invest.buttons.VIEW_INVEST, page)
     await authorizer.approve()
-    const allApproved = await authorizer.getDataForIdentityTable(approvedApi, corporate)
+    const allApproved = await authorizer.getDataForIdentityTable(
+      approvedApi,
+      corporate
+    )
     expect(approved + 1).toEqual(allApproved)
   })
 
   test('Should be rejected from the table', async ({ authorizer, page }) => {
     await click(authorizerEl.buttons.MORE, page)
     await authorizer.reject()
-    const allRejected = await authorizer.getDataForIdentityTable(rejectedApi, corporate)
+    const allRejected = await authorizer.getDataForIdentityTable(
+      rejectedApi,
+      corporate
+    )
     expect(rejected + 1).toEqual(allRejected)
   })
 
   test('Should be approved from the table', async ({ authorizer, page }) => {
     await click(authorizerEl.buttons.MORE, page)
     await authorizer.approve()
-    const allApproved = await authorizer.getDataForIdentityTable(approvedApi, corporate)
+    const allApproved = await authorizer.getDataForIdentityTable(
+      approvedApi,
+      corporate
+    )
     expect(approved + 1).toEqual(allApproved)
   })
 
   test('Check profile view from the dropdown list', async ({ page }) => {
     await click(authorizerEl.buttons.MORE, page)
     await click(authorizerEl.buttons.VIEW, page)
-    await expect(page).toHaveURL(/app\/authorizer\/issuance-details\/\S+\/view/g)
+    await expect(page).toHaveURL(
+      /app\/authorizer\/issuance-details\/\S+\/view/g
+    )
   })
 })
 
@@ -434,35 +609,56 @@ test.describe('Check Listings page', () => {
   })
 
   test.skip('Search should work', async ({ authorizer }) => {
-    const table = await authorizer.checkAuthorizePagesSearch('TokenName', corporate)
+    const table = await authorizer.checkAuthorizePagesSearch(
+      'TokenName',
+      corporate
+    )
     await expect(table).toContainText('TokenName')
   })
 
-  test('Should be rejected from the view page', async ({ authorizer, page }) => {
+  test('Should be rejected from the view page', async ({
+    authorizer,
+    page
+  }) => {
     await click(invest.buttons.VIEW_INVEST, page)
     await authorizer.reject()
-    const allRejected = await authorizer.getDataForIdentityTable(rejectedApi, corporate)
+    const allRejected = await authorizer.getDataForIdentityTable(
+      rejectedApi,
+      corporate
+    )
     expect(rejected + 1).toEqual(allRejected)
   })
 
-  test('Should be approved from the view page', async ({ authorizer, page }) => {
+  test('Should be approved from the view page', async ({
+    authorizer,
+    page
+  }) => {
     await click(invest.buttons.VIEW_INVEST, page)
     await authorizer.approve()
-    const allApproved = await authorizer.getDataForIdentityTable(approvedApi, corporate)
+    const allApproved = await authorizer.getDataForIdentityTable(
+      approvedApi,
+      corporate
+    )
     expect(approved + 1).toEqual(allApproved)
   })
 
   test('Should be rejected from the table', async ({ authorizer, page }) => {
     await click(authorizerEl.buttons.MORE, page)
     await authorizer.reject()
-    const allRejected = await authorizer.getDataForIdentityTable(rejectedApi, corporate)
+    const allRejected = await authorizer.getDataForIdentityTable(
+      rejectedApi,
+      corporate
+    )
     expect(rejected + 1).toEqual(allRejected)
   })
 
   test('Should be approved from the table', async ({ authorizer, page }) => {
     await click(authorizerEl.buttons.MORE, page)
     await authorizer.approve()
-    const allApproved = await authorizer.getDataForIdentityTable(approvedApi, corporate)
+    const allApproved = await authorizer.getDataForIdentityTable(
+      approvedApi,
+      corporate
+    )
     expect(approved + 1).toEqual(allApproved)
   })
 
@@ -487,27 +683,44 @@ test.skip('Check Virtual Accounts page', () => {
   test('Check profile view from the dropdown list', async ({ page }) => {
     await click(authorizerEl.buttons.MORE, page)
     await click(authorizerEl.buttons.VIEW, page)
-    await expect(page).toHaveURL(/app\/authorizer\/virtual-accounts\/\S+\/view/g)
+    await expect(page).toHaveURL(
+      /app\/authorizer\/virtual-accounts\/\S+\/view/g
+    )
   })
 
-  test('Should be rejected from the view page', async ({ authorizer, page }) => {
+  test('Should be rejected from the view page', async ({
+    authorizer,
+    page
+  }) => {
     await click(invest.buttons.VIEW_INVEST, page)
     await authorizer.reject()
-    const allRejected = await authorizer.getDataForIdentityTable(rejectedApi, corporate)
+    const allRejected = await authorizer.getDataForIdentityTable(
+      rejectedApi,
+      corporate
+    )
     expect(allRejected).toEqual(rejected + 1)
   })
 
   test('Should be rejected from the table', async ({ authorizer, page }) => {
     await click(authorizerEl.buttons.MORE, page)
     await authorizer.reject()
-    const allRejected = await authorizer.getDataForIdentityTable(rejectedApi, corporate)
+    const allRejected = await authorizer.getDataForIdentityTable(
+      rejectedApi,
+      corporate
+    )
     expect(rejected + 1).toEqual(allRejected)
   })
 
-  test('Should be approved from the view page', async ({ authorizer, page }) => {
+  test('Should be approved from the view page', async ({
+    authorizer,
+    page
+  }) => {
     await click(invest.buttons.VIEW_INVEST, page)
     await authorizer.approve()
-    const allApproved = await authorizer.getDataForIdentityTable(approvedApi, corporate)
+    const allApproved = await authorizer.getDataForIdentityTable(
+      approvedApi,
+      corporate
+    )
     expect(approved + 1).toEqual(allApproved)
   })
 })
@@ -518,7 +731,9 @@ test.describe('Check Token Deployment page', () => {
   })
   test('The Token view page should be available', async ({ page }) => {
     await click(invest.buttons.VIEW_INVEST, page)
-    await expect(page).toHaveURL(/app\/authorizer\/token-deployment\/\S+\/view/g)
+    await expect(page).toHaveURL(
+      /app\/authorizer\/token-deployment\/\S+\/view/g
+    )
   })
 
   test('Check that tokens only with pending status ', async ({ page }) => {
@@ -536,7 +751,10 @@ test.describe('Check Token Deployment page', () => {
   })
 
   test('Search should work', async ({ authorizer }) => {
-    const table = await authorizer.checkAuthorizePagesSearch('Cucumber', 'issuance/dso/deployments/list')
+    const table = await authorizer.checkAuthorizePagesSearch(
+      'Cucumber',
+      'issuance/dso/deployments/list'
+    )
     await expect(table).toContainText('Cucumber')
   })
 })
