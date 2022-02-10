@@ -13,6 +13,7 @@ export const FreezeRadio = ({ active, setActive }: { active: boolean; setActive:
       <Column style={{ width: '100%' }}>
         <RowBetween>
           <RowStart>
+            <StyledTriangle />
             <Column>
               <TYPE.body>
                 <Trans>Freeze metadata</Trans>
