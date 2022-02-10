@@ -145,7 +145,8 @@ class Pool {
     isMitigationEnabled: boolean,
     priceToleranceThreshold: BigNumber,
     poolContract: Contract,
-    systemFeeRate: BigNumber
+    systemFeeRate: BigNumber,
+    isSecurityPool: boolean
   ) {
     //  attach all addresses
     this.token0 = token0
@@ -154,7 +155,11 @@ class Pool {
 
     //  attach contract, request if pool is security one, get latest known reserves
     this.poolContract = poolContract
-    this.checkIfSecurity()
+    this.isSecurityPool = isSecurityPool
+    if (!isSecurityPool) {
+      this.checkIfSecurity()
+    }
+
     this.updateReserves()
 
     //  get latest k-coefficient value, mitigation status, tolerance threshold
@@ -191,8 +196,8 @@ class Pool {
 
     //  multiply balances by given factor, if security then sub 1%, otherwise sub 0.3%
     const balance0Adjusted = balance0?.mul(1000).sub(transaction.amount0In.mul(isSecurity ? 10 : 3))
-    const balance1Adjusted = balance1?.mul(1000).sub(transaction.amount0In.mul(isSecurity ? 10 : 3))
-
+    const balance1Adjusted = balance1?.mul(1000).sub(transaction.amount1In.mul(isSecurity ? 10 : 3))
+    //const balance1Adjusted = balance1?.mul(1000).sub(transaction.amount0In.mul(isSecurity ? 10 : 3))
     //  check values not to break k-coefficient rule
     if (
       !(
@@ -512,6 +517,9 @@ interface VerifyOptions {
   slope: number
 
   isSecurity: boolean
+
+  //isToken0Sec: boolean
+  //isToken1Sec: boolean
 }
 
 export async function verifySwap(options: VerifyOptions) {
@@ -525,7 +533,8 @@ export async function verifySwap(options: VerifyOptions) {
 
     options.priceToleranceThreshold,
     WETH_IDAI_CONTRACT,
-    options.systemFeeRate
+    options.systemFeeRate,
+    options.isSecurity
   )
 
   const transaction = new Swap(

@@ -27,6 +27,7 @@ import { useHandleSwap } from './handleSwap'
 import { WrapText } from './typings'
 import { usePriceImpact } from './usePriceImpact'
 import { useSwapApproval } from './useSwapApproval'
+import { useSecTokens } from 'state/secTokens/hooks'
 
 export const SwapButtons = ({
   parsedAmounts,
@@ -66,6 +67,9 @@ export const SwapButtons = ({
   const { error: swapCallbackError } = useSwapCallbackError(trade, allowedSlippage, recipient)
   const [singleHopOnly] = useUserSingleHopOnly()
 
+  const { secTokens } = useSecTokens()
+  //const isSecToken = Boolean(secTokens[token.address])
+
   const showError = useShowError()
 
   const onClick = useCallback(async () => {
@@ -87,9 +91,9 @@ export const SwapButtons = ({
           id: `swap-${Math.floor(1 + Math.random() * 100000000)}`,
 
           amountInFrom: utils.parseUnits(trade.inputAmount.toExact()),
-          amountInTo: utils.parseUnits(trade.maximumAmountIn(allowedSlippage).toExact()),
+          amountInTo: utils.parseUnits('0'), //utils.parseUnits(trade.maximumAmountIn(allowedSlippage).toExact()),
 
-          amountOutFrom: utils.parseUnits(trade.minimumAmountOut(allowedSlippage).toExact()),
+          amountOutFrom: utils.parseUnits('0'), //utils.parseUnits(trade.minimumAmountOut(allowedSlippage).toExact()),
           amountOutTo: utils.parseUnits(trade.outputAmount.toExact()),
 
           sender: account,
