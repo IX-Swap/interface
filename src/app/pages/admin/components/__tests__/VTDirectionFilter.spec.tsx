@@ -25,7 +25,7 @@ describe('VTDirectionFilter', () => {
     expect(InputLabel).toHaveBeenCalledWith(
       expect.objectContaining({
         htmlFor: 'sortBy',
-        children: 'Sort By'
+        children: 'Direction'
       }),
       {}
     )
