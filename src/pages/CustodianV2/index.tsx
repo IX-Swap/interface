@@ -41,7 +41,7 @@ export default function CustodianV2() {
   useEffect(() => {
     const getTokens = async () => {
       const result = await getAllTokens()
-      setTokens(result)
+      setTokens(result.items || result)
     }
 
     getTokens()
