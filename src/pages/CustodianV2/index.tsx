@@ -65,11 +65,8 @@ export default function CustodianV2() {
     ({ token }: any) => token.accreditationRequest && token.accreditationRequest.status === 'approved'
   )
   const pendingSecTokens = mySecTokens.filter(
-    ({ token }: any) =>
-      token.accreditationRequest &&
-      (token.accreditationRequest.status === 'pending-kyc' || token.accreditationRequest.status === 'pending-custodian')
+    ({ token }: any) => token.accreditationRequest && token.accreditationRequest.status !== 'approved'
   )
-  // const otherSecTokens = activeTokens.filter(({ token }: any) => token === null || token.status !== 'approved')
 
   return chainId !== undefined && !TGE_CHAINS_WITH_SWAP.includes(chainId) ? (
     <AppBody blurred>

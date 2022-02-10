@@ -43,7 +43,11 @@ export const MySecToken: FC<Props> = ({ token }: Props) => {
             </Column>
           </Flex>
           <Box>
-            <Status status={wrappedToken.status} amount={balance} decimals={token.token.decimals ?? 18} />
+            <Status
+              status={wrappedToken.accreditationRequest.status}
+              amount={balance}
+              decimals={token.token.decimals ?? 18}
+            />
           </Box>
         </RowBetween>
       </MySecTokenCard>

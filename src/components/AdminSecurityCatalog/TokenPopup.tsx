@@ -207,7 +207,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                       </Label>
                       <ButtonText>
                         <Upload file={token.file} onDrop={(file) => handleDropImage(file)}>
-                          <Logo>
+                          <Logo error={errors.logo}>
                             {token.filePath || token.logo?.public ? (
                               <img
                                 style={{ borderRadius: '36px' }}
