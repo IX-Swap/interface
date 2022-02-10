@@ -9,13 +9,13 @@ import { Table, HeaderRow, BodyRow } from 'components/Table'
 import { TYPE } from 'theme'
 import { Pagination } from 'components/AdminKycTable/Pagination'
 import CurrencyLogo from 'components/CurrencyLogo'
-import { SearchInput } from 'components/SearchModal/styleds'
 import { useFetchTokens } from 'state/secCatalog/hooks'
 import { FilterDropdown } from './FilterDropdown'
 import { industries } from 'components/AdminSecurityCatalog/mock'
 
 import { ReactComponent as Tradable } from '../../assets/images/tradable.svg'
 import { ReactComponent as NonTradable } from '../../assets/images/non-tradable.svg'
+import { StyledSearchInput } from './styleds'
 interface Props {
   tokens: any[]
   page: number
@@ -155,8 +155,6 @@ export const SecTokensTable: FC<Props> = ({ tokens, page, offset, totalPages, on
     return result
   }, []) // get issuers with tokens.length > 0
 
-  console.log(page, totalPages)
-
   return (
     <>
       <TYPE.title5 marginBottom="40px" display="flex">
@@ -167,7 +165,7 @@ export const SecTokensTable: FC<Props> = ({ tokens, page, offset, totalPages, on
       </TYPE.title5>
 
       <Flex marginBottom="40px" flexDirection={isMobile ? 'column' : 'row'}>
-        <SearchInput
+        <StyledSearchInput
           style={isMobile ? { marginBottom: 16, padding: '16px 22px' } : { marginRight: 16 }}
           value={searchValue}
           placeholder={t`Search`}

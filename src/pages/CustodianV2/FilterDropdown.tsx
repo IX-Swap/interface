@@ -5,7 +5,8 @@ import styled from 'styled-components'
 import Popover from 'components/Popover'
 import { RowBetween, RowStart } from 'components/Row'
 import { TYPE } from 'theme'
-import { DarkBlueCard } from 'components/Card'
+
+import { StyledDarkBlueCard } from './styleds'
 
 export const PopOverContent = styled.div`
   display: flex;
@@ -54,7 +55,7 @@ export const FilterDropdown = ({
   }, [items, selectItem])
 
   return (
-    <DarkBlueCard
+    <StyledDarkBlueCard
       display="flex"
       alignItems="center"
       justifyContent="center"
@@ -62,8 +63,14 @@ export const FilterDropdown = ({
       width="132px"
       onClick={() => setIsOpen(!isOpen)}
       style={{ cursor: 'pointer', padding: 10, ...style }}
+      isOpen={isOpen || (selectedItem ? true : false)}
     >
-      <TYPE.body2 fontWeight={300} overflow="hidden" style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+      <TYPE.body2
+        color="inherit"
+        fontWeight={300}
+        overflow="hidden"
+        style={{ textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
+      >
         {selectedItem?.name || placeholder}
       </TYPE.body2>
       <Popover
@@ -75,6 +82,6 @@ export const FilterDropdown = ({
       >
         {null}
       </Popover>
-    </DarkBlueCard>
+    </StyledDarkBlueCard>
   )
 }

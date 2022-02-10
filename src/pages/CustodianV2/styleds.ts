@@ -3,6 +3,8 @@ import { Box } from 'rebass'
 
 import { BodyWrapper } from 'pages/AppBody'
 import { ArrowWrapper } from 'components/swap/styleds'
+import { SearchInput } from 'components/SearchModal/styleds'
+import { DarkBlueCard } from 'components/Card'
 
 const cardCommonStyles = css`
   border-radius: 30px;
@@ -84,4 +86,14 @@ export const StyledArrowWrapper = styled(ArrowWrapper)`
   display: flex;
   justify-content: center;
   align-items: center;
+`
+
+export const StyledSearchInput = styled(SearchInput)`
+  background: ${({ theme }) => theme.bg19};
+  color: ${({ theme }) => theme.text2};
+`
+
+export const StyledDarkBlueCard = styled(DarkBlueCard)<{ isOpen: boolean }>`
+  background-color: ${({ theme, isOpen }) => (isOpen ? theme.bg7 : theme.bg19)};
+  color: ${({ theme, isOpen }) => (isOpen ? theme.text2 : theme.text9)};
 `
