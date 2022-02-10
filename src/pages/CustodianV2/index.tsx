@@ -43,7 +43,7 @@ export default function CustodianV2() {
     }
 
     fetchMyTokens()
-  }, [])
+  }, [account, isLoggedIn])
 
   useEffect(() => {
     fetchTokens({ page: 1, offset, search: '' })
@@ -59,16 +59,22 @@ export default function CustodianV2() {
     fetchTokens({ page, offset })
   }
 
-  const mySecTokensIds = mySecTokens.map(({ id }: any) => id)
+  const mySecTokensIds = mySecTokens ? mySecTokens.map(({ id }: any) => id) : []
   const activeTokens = tokens ? tokens.items.filter(({ active }: any) => active) : []
   const featuredTokens = noFilteredTokens.filter(({ featured }: any) => featured)
-  const approvedSecTokens = mySecTokens.filter(
-    ({ token }: any) => token.accreditationRequest && token.accreditationRequest.status === 'approved'
-  )
-  const pendingSecTokens = mySecTokens.filter(
-    ({ token }: any) => token.accreditationRequest && token.accreditationRequest.status !== 'approved'
-  )
-  const otherSecTokens = activeTokens.filter(({ id }: any) => !mySecTokensIds.includes(id))
+  const approvedSecTokens = mySecTokens
+    ? mySecTokens.filter(
+        ({ token }: any) => token.accreditationRequest && token.accreditationRequest.status === 'approved'
+      )
+    : []
+  const pendingSecTokens = mySecTokens
+    ? mySecTokens.filter(
+        ({ token }: any) => token.accreditationRequest && token.accreditationRequest.status !== 'approved'
+      )
+    : []
+  const otherSecTokens =
+    mySecTokensIds.length > 0 ? activeTokens.filter(({ id }: any) => !mySecTokensIds.includes(id)) : activeTokens
+  const showMySecTokens = approvedSecTokens.length > 0 || pendingSecTokens.length > 0
 
   return chainId !== undefined && !TGE_CHAINS_WITH_SWAP.includes(chainId) ? (
     <AppBody blurred>
@@ -99,40 +105,42 @@ export default function CustodianV2() {
         </ExternalLink>
       </Flex>
 
-      {isLoggedIn && tokens && (
+      {tokens && (
         <>
-          <MySecTokensTab marginBottom="72px">
-            <GradientText>
-              <TYPE.title5 marginBottom="32px" color="inherit">
-                <Trans>My security tokens</Trans>
-              </TYPE.title5>
-            </GradientText>
-            {approvedSecTokens.length > 0 && (
-              <>
-                <TYPE.title6 marginBottom="32px" color="rgba(237, 206, 255, 0.5)">
-                  <Trans>ACCREDITED</Trans>
-                </TYPE.title6>
-                <MySecTokensGrid>
-                  {approvedSecTokens.map((token: any) => (
-                    <MySecToken key={`my-sec-${token.id}`} token={token} />
-                  ))}
-                </MySecTokensGrid>
-              </>
-            )}
-            {pendingSecTokens.length > 0 && (
-              <>
-                <Divider />
-                <TYPE.title6 marginBottom="32px" color="rgba(237, 206, 255, 0.5)">
-                  <Trans>PENDING ACCREDITATION</Trans>
-                </TYPE.title6>
-                <MySecTokensGrid>
-                  {pendingSecTokens.map((token: any) => (
-                    <MySecToken key={`pending-${token.id}`} token={token} />
-                  ))}
-                </MySecTokensGrid>
-              </>
-            )}
-          </MySecTokensTab>
+          {showMySecTokens && (
+            <MySecTokensTab marginBottom="72px">
+              <GradientText>
+                <TYPE.title5 marginBottom="32px" color="inherit">
+                  <Trans>My security tokens</Trans>
+                </TYPE.title5>
+              </GradientText>
+              {approvedSecTokens.length > 0 && (
+                <>
+                  <TYPE.title6 marginBottom="32px" color="rgba(237, 206, 255, 0.5)">
+                    <Trans>ACCREDITED</Trans>
+                  </TYPE.title6>
+                  <MySecTokensGrid>
+                    {approvedSecTokens.map((token: any) => (
+                      <MySecToken key={`my-sec-${token.id}`} token={token} />
+                    ))}
+                  </MySecTokensGrid>
+                </>
+              )}
+              {pendingSecTokens.length > 0 && (
+                <>
+                  <Divider />
+                  <TYPE.title6 marginBottom="32px" color="rgba(237, 206, 255, 0.5)">
+                    <Trans>PENDING ACCREDITATION</Trans>
+                  </TYPE.title6>
+                  <MySecTokensGrid>
+                    {pendingSecTokens.map((token: any) => (
+                      <MySecToken key={`pending-${token.id}`} token={token} />
+                    ))}
+                  </MySecTokensGrid>
+                </>
+              )}
+            </MySecTokensTab>
+          )}
           {featuredTokens?.length > 0 && (
             <Box marginBottom="72px">
               <TYPE.title5 marginBottom="32px">

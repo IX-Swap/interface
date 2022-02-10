@@ -104,8 +104,12 @@ export const getToken = async (id: number) => {
 }
 
 export const getMyTokens = async () => {
-  const result = await apiService.get(secCatalog.myTokens)
-  return result.data
+  try {
+    const result = await apiService.get(secCatalog.myTokens)
+    return result.data
+  } catch (e) {
+    console.log(e)
+  }
 }
 
 export const checkWrappedAddress = async (address: string) => {
