@@ -41,6 +41,7 @@ export const Users = () => {
           hasActions
           actions={({ item }) => renderActions(item, ref)}
           filter={filter}
+          actionHeader='Roles'
         />
       </Grid>
     </Grid>
