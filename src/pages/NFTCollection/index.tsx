@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { Link, useHistory, useParams } from 'react-router-dom'
 import { useNftCollection } from 'state/nft/hooks'
 import NFTPreview from './NFTPreview'
-import { TYPE, StyledInternalLink } from 'theme'
+import { TYPE } from 'theme'
 import { ButtonGradientBorder, ButtonIXSGradient, ButtonPrimary } from 'components/Button'
 import { RowBetween } from 'components/Row'
 import { routes } from 'utils/routes'
@@ -24,13 +24,6 @@ const NftCollectionBackButtonWrapper = styled.div`
 
   margin: 0 2rem;
 `
-/*
-@media (max-width: 725px) {
-    position: relative;
-    gap: 1rem;
-    margin: 0.25rem 0;
-  }
-*/
 
 const NftCreateButtonWrapper = styled.div`
   position: absolute;
@@ -40,15 +33,6 @@ const NftCreateButtonWrapper = styled.div`
 
   margin: 0 0 2rem 2rem;
 `
-
-/*
-@media (max-width: 725px) {
-    position: relative;
-    gap: 1rem;
-    margin: 0 0 2rem 0;
-    top: 0;
-  }
-*/
 
 const NftCollectionInfo = styled.div`
   padding: 1rem;
