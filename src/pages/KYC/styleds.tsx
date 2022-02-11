@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Flex } from 'rebass'
+import { Box, Flex } from 'rebass'
 import React from 'react'
 import { t } from '@lingui/macro'
 
@@ -43,6 +43,48 @@ export const KYCStatusCard = styled(Card)`
     flex-direction: column;
   `};
 `
+
+export const Grid = styled(Box)`
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  grid-gap: 35px;
+`
+
+export const FormCard = styled.div`
+  background: ${({ theme }) => theme.bg18};
+  padding: 24px 24px 32px 24px;
+  border-radius: 16px;
+`
+
+export const Ul = styled.ul`
+  list-style: none;
+`
+
+export const Li = styled.li`
+  display: flex;
+  align-items: center;
+
+  &:before {
+    content: '•';
+    color: ${({ theme }) => theme.text2};
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+  }
+`
+
+export const PageLink = styled.div<{ active?: boolean }>`
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 4px 0px;
+  padding: 8px 16px 8px 24px;
+  color: ${({ theme, active }) => (active ? theme.text1 : theme.text9)};
+  border-left: ${({ theme, active }) => (active ? `1px solid ${theme.bg14}` : 'none')};
+  text-decoration: none;
+`
+
 /* eslint-disable react/display-name */
 export const KYCStatusIcons = {
   [KYCStatuses.PENDING]: () => <LoaderThin size={20} />,

@@ -16,6 +16,7 @@ export const StyledBodyWrapper = styled(BodyWrapper)`
   background: transparent;
   max-width: 1400px;
   width: 100%;
+  padding-top: 0px;
 `
 
 export const MySecTokensTab = styled(Box)`
