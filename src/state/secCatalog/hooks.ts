@@ -103,9 +103,9 @@ export const getToken = async (id: number) => {
   return result.data
 }
 
-export const getMyTokens = async () => {
+export const getMyTokens = async (params: any) => {
   try {
-    const result = await apiService.get(secCatalog.myTokens)
+    const result = await apiService.get(secCatalog.myTokens, undefined, params)
     return result.data
   } catch (e) {
     console.log(e)
@@ -182,7 +182,7 @@ export function useFetchTokens() {
     async (params?: Record<string, string | number>) => {
       try {
         dispatch(fetchIssuersTokens.pending())
-        const data = await getAllTokens(params)
+        const data = await getMyTokens({ ...params, my: false, active: true })
         dispatch(fetchIssuersTokens.fulfilled({ data }))
       } catch (error: any) {
         dispatch(fetchIssuersTokens.rejected({ errorMessage: 'Could not fetch tokens' }))

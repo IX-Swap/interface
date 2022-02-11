@@ -79,7 +79,7 @@ export const AdminSecurityCatalog: FC = () => {
     setSearchValue(value)
 
     clearTimeout(timer)
-    timer = setTimeout(() => getIssuers({ search: value }), 250)
+    timer = setTimeout(() => getIssuers({ search: value, page: 1, offset: 10 }), 250)
   }
 
   const handleResetState = async () => {

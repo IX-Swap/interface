@@ -36,12 +36,10 @@ export default function CustodianV2() {
   const { account, chainId } = useActiveWeb3React()
   const isLoggedIn = !!token && !!account
 
-  console.log(mySecTokens)
-
   useEffect(() => {
     const fetchMyTokens = async () => {
-      const data = await getMyTokens()
-      setMySecTokens(data)
+      const data = await getMyTokens({ active: true, my: true, offset: 100000 })
+      setMySecTokens(data?.items.length > 0 ? data.items : [])
     }
 
     fetchMyTokens()
