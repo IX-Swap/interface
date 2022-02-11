@@ -210,7 +210,7 @@ export const useCreateFullCollection = (history: H.History) => {
       const newContractAddress = await deployCollection({ name: args.name, maxSupply: 1000 })
       if (newContractAddress) {
         await createFullNftCollection({ ...args, address: newContractAddress, chainId: chainId })
-        history.push(routes.nftCollections)
+        history.push(`/nft/collections/${newContractAddress}`)
       }
     },
     [deployCollection, history, chainId]
@@ -234,7 +234,7 @@ export const useUpdateFullCollection = (history: H.History) => {
         args.collectionId
       )
 
-      history.push(routes.nftCollections)
+      history.push(`/nft/collections/${args.collectionAddress}`)
     },
     [history, chainId]
   )

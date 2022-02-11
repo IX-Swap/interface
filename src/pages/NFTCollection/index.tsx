@@ -23,16 +23,19 @@ const NftCollectionBackButtonWrapper = styled.div`
   top: 2rem;
 
   margin: 0 2rem;
+`
 
-  @media (max-width: 540px) {
-    position: relative;
-    gap: 1rem;
-    margin: 0.25rem 0;
-  }
+const NftCreateButtonWrapper = styled.div`
+  position: absolute;
+
+  right: 0;
+  top: 2rem;
+
+  margin: 0 0 2rem 2rem;
 `
 
 const NftCollectionInfo = styled.div`
-  padding: 2rem;
+  padding: 1rem;
 
   width: 100%;
 
@@ -43,6 +46,10 @@ const NftCollectionInfo = styled.div`
   align-items: center;
 
   text-align: center;
+
+  @media (max-width: 730px) {
+    margin-top: 5rem;
+  }
 `
 
 const NftCollectionItems = styled.div`
@@ -125,10 +132,16 @@ const NFTCollection = () => {
                 </ButtonGradientBorder>
               </NftCollectionBackButtonWrapper>
 
-              <NftCollectionInfo>
-                <TYPE.titleBig>{collection.info.name}</TYPE.titleBig>
-              </NftCollectionInfo>
+              <NftCreateButtonWrapper>
+                <ButtonGradientBorder onClick={() => history.push(routes.nftCreate)}>
+                  <TYPE.title3>Create NFT</TYPE.title3>
+                </ButtonGradientBorder>
+              </NftCreateButtonWrapper>
             </RowBetween>
+
+            <NftCollectionInfo>
+              <TYPE.titleBig>{collection.info.name}</TYPE.titleBig>
+            </NftCollectionInfo>
 
             {collection.info.supply === 0 && (
               <NoNftContainer>
