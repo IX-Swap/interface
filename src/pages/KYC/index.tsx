@@ -13,6 +13,7 @@ import { Content, getStatusDescription, StatusCard } from './styleds'
 import { ReactComponent as IndividualKYC } from '../../assets/images/individual-kyc.svg'
 import { ReactComponent as CorporateKYC } from '../../assets/images/corporate-kyc.svg'
 import { ReactComponent as ApprovedKYC } from '../../assets/images/approved-kyc.svg'
+import { KYCForm } from './KYCForm'
 
 interface DescriptionProps {
   description: string | null
@@ -120,6 +121,8 @@ export default function KYC() {
           <Status status={status} />
 
           {getKYCDescription()}
+
+          <KYCForm />
         </Content>
       </StatusCard>
     </StyledBodyWrapper>
