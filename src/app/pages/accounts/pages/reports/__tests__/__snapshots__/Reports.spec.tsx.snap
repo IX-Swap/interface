@@ -220,9 +220,13 @@ exports[`Reports should match snapshot 1`] = `
                       />
                     </th>
                     <th
-                      class="MuiTableCell-root MuiTableCell-head MuiTableCell-sizeMedium css-hr8dup-MuiTableCell-root"
+                      class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium css-hr8dup-MuiTableCell-root"
                       scope="col"
-                    />
+                    >
+                      <b
+                        style="color: rgb(255, 255, 255);"
+                      />
+                    </th>
                   </tr>
                 </thead>
                 <tbody

@@ -14,7 +14,7 @@ export const VTDirectionFilter = () => {
   return (
     <Grid item xs={12} md={4} lg={true}>
       <FormControl variant='outlined' fullWidth>
-        <InputLabel htmlFor='sortBy'>Sort By</InputLabel>
+        <InputLabel htmlFor='sortBy'>Direction</InputLabel>
         <VTDirectionSelect
           includeAll
           valueBetweenAll={''}
