@@ -1,4 +1,4 @@
-import React, { useCallback, FC } from 'react'
+import React, { useCallback, FC, useState } from 'react'
 import { Trans } from '@lingui/macro'
 import { isMobile } from 'react-device-detect'
 import { Flex } from 'rebass'
@@ -7,13 +7,13 @@ import { StyledBodyWrapper } from 'pages/CustodianV2/styleds'
 import { TYPE } from 'theme'
 import { Status } from './Status'
 import { ButtonGradientBorder, ButtonIXSGradient } from 'components/Button'
+import { KYCForm } from './KYCForm'
 
 import { KYCStatuses } from './enum'
 import { Content, getStatusDescription, StatusCard } from './styleds'
 import { ReactComponent as IndividualKYC } from '../../assets/images/individual-kyc.svg'
 import { ReactComponent as CorporateKYC } from '../../assets/images/corporate-kyc.svg'
 import { ReactComponent as ApprovedKYC } from '../../assets/images/approved-kyc.svg'
-import { KYCForm } from './KYCForm'
 
 interface DescriptionProps {
   description: string | null
@@ -46,8 +46,17 @@ const Description: FC<DescriptionProps> = ({ description }: DescriptionProps) =>
 )
 
 export default function KYC() {
-  const status = KYCStatuses.PENDING as KYCStatuses
+  const status = KYCStatuses.NOT_SUBMITTED as KYCStatuses
   const description = getStatusDescription(status)
+  const [showForm, setShowForm] = useState(false)
+
+  const handlePassFormClick = () => {
+    setShowForm(true)
+  }
+
+  const goBack = () => {
+    setShowForm(false)
+  }
 
   const getKYCDescription = useCallback(() => {
     switch (status) {
@@ -63,13 +72,13 @@ export default function KYC() {
             >
               <Flex marginBottom={isMobile ? '32px' : '0px'} flexDirection="column" alignItems="center">
                 <IndividualKYC />
-                <ButtonIXSGradient style={{ padding: '16px 24px' }} marginTop="32px">
+                <ButtonIXSGradient onClick={handlePassFormClick} style={{ padding: '16px 24px' }} marginTop="32px">
                   <Trans>Pass KYC as Individual</Trans>
                 </ButtonIXSGradient>
               </Flex>
               <Flex flexDirection="column" alignItems="center">
                 <CorporateKYC />
-                <ButtonGradientBorder style={{ padding: '16px 24px' }} marginTop="32px">
+                <ButtonGradientBorder onClick={handlePassFormClick} style={{ padding: '16px 24px' }} marginTop="32px">
                   <Trans>Pass KYC as Individual</Trans>
                 </ButtonGradientBorder>
               </Flex>
@@ -112,19 +121,21 @@ export default function KYC() {
 
   return (
     <StyledBodyWrapper>
-      <StatusCard>
-        <Content flexDirection="column" marginTop="40px" alignItems="center">
-          <TYPE.title4 marginBottom="40px">
-            <Trans>IXSwap KYC</Trans>
-          </TYPE.title4>
+      {!showForm ? (
+        <StatusCard>
+          <Content flexDirection="column" marginTop="40px" alignItems="center">
+            <TYPE.title4 marginBottom="40px">
+              <Trans>IXSwap KYC</Trans>
+            </TYPE.title4>
 
-          <Status status={status} />
+            <Status status={status} />
 
-          {getKYCDescription()}
-
-          <KYCForm />
-        </Content>
-      </StatusCard>
+            {getKYCDescription()}
+          </Content>
+        </StatusCard>
+      ) : (
+        <KYCForm goBack={goBack} />
+      )}
     </StyledBodyWrapper>
   )
 }
