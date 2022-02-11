@@ -1,12 +1,5 @@
 import { baseCreds } from '../lib/helpers/creds'
-import {
-  navigate,
-  click,
-  shouldNotExist,
-  shouldExist,
-  waitForText,
-  typeText
-} from '../lib/helpers/helpers'
+import { navigate, click, shouldExist } from '../lib/helpers/helpers'
 import { test } from '../lib/fixtures/fixtures'
 import { expect } from '@playwright/test'
 import { bankAccounts } from '../lib/selectors/accounts'
@@ -111,16 +104,39 @@ test('The Asset Balances page should be available', async ({ page }) => {
   await click(bankAccounts.ASSET_BALANCES_PAGE, page)
   await shouldExist('table tbody', page)
 })
+
 test.describe('The Digital Securities page', () => {
   test.beforeEach(async ({ page }) => {
     await click(bankAccounts.DIGITAL_SECURITIES, page)
   })
 
-  test('Deposit', async ({ bankAccount }) => {
+  test('The wallet address should displayed (deposit page)', async ({
+    bankAccount
+  }) => {
     await bankAccount.tokenDepositRequest()
   })
 
-  test('Withdrawal', async ({ bankAccount }) => {
+  test('Withdrawal request should be created', async ({ bankAccount }) => {
     await bankAccount.tokenWithdrawalRequest()
+  })
+})
+
+test.describe('The Transactions page', () => {
+  test.beforeEach(async ({ page }) => {
+    await click(bankAccounts.TRANSACTIONS, page)
+  })
+  test.afterEach(async ({ page, invest }) => {
+    await shouldExist(`${invest.TABLE} >> text="Deposit"`, page)
+  })
+  test('Check that the data displayed in the table', async ({
+    invest,
+    page
+  }) => {
+    await shouldExist(invest.TABLE, page)
+  })
+
+  test('Check that the currency can be changed', async ({ page }) => {
+    await click(bankAccounts.listBox.CURRENCY, page)
+    await click(bankAccounts.listBox.CURRENCY_VALUE_USD, page)
   })
 })

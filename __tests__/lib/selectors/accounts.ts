@@ -7,6 +7,7 @@ export const bankAccounts = {
   CASH_DEPOSITS_PAGE: '[href="/app/accounts/cash-deposits"]',
   ASSET_BALANCES_PAGE: '[href="/app/accounts/balances"]',
   DIGITAL_SECURITIES: '[href="/app/accounts/digital-security"]',
+  TRANSACTIONS: '[href="/app/accounts/transactions"]',
 
   buttons: {
     SGD: "//*[contains(text(),'(SGD)')]",
@@ -41,6 +42,7 @@ export const bankAccounts = {
   listBox: {
     CURRENCY: '[id="asset"]',
     CURRENCY_VALUE_SGD: '[data-value="5fa95e07231c63088311b178"]',
+    CURRENCY_VALUE_USD: '[data-value="5fc25b1f4f97ed7f3444cac3"]',
 
     COUNTRY: '[id="address.country"]',
     COUNTRY_VALUE: '[data-value="Ukraine"]',
