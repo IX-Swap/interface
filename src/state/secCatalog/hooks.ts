@@ -193,21 +193,13 @@ export function useFetchTokens() {
   return callback
 }
 
-export const validate = (token: any) => {
-  for (const key in token) {
-    if (validateSecTokenFields.includes(key)) if (!token[key]) return false
-  }
-
-  return true
-}
-
 const stringLengthValidator = (key: string, value: string, maxLength = 100) => {
   if (value.length > maxLength) return { [key]: `Max length is ${maxLength} chars` }
   return null
 }
 
-const emptyValidator = (key: string, value: any) => {
-  if (value === '' || value === null) return { [key]: 'This field is required' }
+const isEmpty = (value: any) => {
+  if (value === '' || value === null) return 'This field is required'
   return null
 }
 
@@ -229,39 +221,31 @@ export const validateIssuer = (issuer: any) => {
   const { url, name, file } = issuer
 
   return {
-    url: null,
-    name: null,
-    logo: null,
+    url: isEmpty(url),
+    name: isEmpty(name),
+    logo: isEmpty(file),
     ...urlValidator(url),
     ...stringLengthValidator('name', name),
     ...logoValidator(file),
-    ...emptyValidator('name', name),
-    ...emptyValidator('url', url),
-    ...emptyValidator('logo', file),
   }
 }
 
 export const validateToken = (token: any) => {
-  const { address, ticker, file, companyName, url, wrappedTokenAddress, description } = token
+  const { address, ticker, file, companyName, url, description, industry, country, chainId } = token
 
   return {
     address: !Boolean(isValidAddress(address || '')) ? 'Invalid address' : null,
-    ticker: null,
-    logo: null,
-    companyName: null,
-    description: null,
-    wrappedTokenAddress: !Boolean(isValidAddress(wrappedTokenAddress || '')) ? 'Invalid address' : null,
+    ticker: isEmpty(ticker),
+    logo: isEmpty(file),
+    companyName: isEmpty(companyName),
+    description: isEmpty(description),
+    industry: isEmpty(industry),
+    country: isEmpty(country),
+    chainId: isEmpty(chainId),
     ...urlValidator(url),
     ...stringLengthValidator('companyName', companyName, 100),
     ...stringLengthValidator('description', description, 1000),
     ...stringLengthValidator('ticker', ticker, 5),
     ...logoValidator(file),
-    ...emptyValidator('companyName', companyName),
-    ...emptyValidator('url', url),
-    ...emptyValidator('logo', file),
-    ...emptyValidator('address', address),
-    ...emptyValidator('ticker', ticker),
-    ...emptyValidator('description', description),
-    ...emptyValidator('wrappedTokenAddress', wrappedTokenAddress),
   }
 }

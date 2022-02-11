@@ -12,14 +12,7 @@ import { ApplicationModal } from 'state/application/actions'
 import { ContainerRow, Input, InputContainer, InputPanel, Textarea } from 'components/Input'
 import { Radio } from './Radio'
 import { ButtonIXSGradient } from 'components/Button'
-import {
-  addToken,
-  checkWrappedAddress,
-  updateToken,
-  useFetchIssuers,
-  validate,
-  validateToken,
-} from 'state/secCatalog/hooks'
+import { addToken, checkWrappedAddress, updateToken, useFetchIssuers, validateToken } from 'state/secCatalog/hooks'
 import { Dropdown } from './Dropdown'
 import Upload from 'components/Upload'
 import { AddressInput } from 'components/AddressInputPanel/AddressInput'
@@ -38,12 +31,15 @@ interface Props {
 
 export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurrentToken }: Props) => {
   const isOpen = useModalOpen(ApplicationModal.TOKEN_POPUP)
+  const [isLoading, setIsLoading] = useState(false)
   const toggle = useTokenPopupToggle()
   const [errors, setErrors] = useState<any>()
 
   const getIssuers = useFetchIssuers()
   const addPopup = useAddPopup()
   const [token, setToken] = useState<any>(null)
+
+  console.log(token)
 
   const resetErrors = () => {
     setErrors({
@@ -63,7 +59,9 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
   }, [propToken])
 
   const onClose = () => {
+    resetErrors()
     toggle()
+    setCurrentToken(null)
   }
 
   const handleDropImage = (acceptedFile: any) => {
@@ -76,6 +74,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
   }
 
   const handleCreateClick = async () => {
+    setIsLoading(true)
     const validationErrors = validateToken(token)
     const hasError = Object.values(validationErrors).some((value) => Boolean(value) === true)
 
@@ -106,8 +105,8 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
       }
 
       if (data) {
-        getIssuers()
         toggle()
+        getIssuers()
         setCurrentToken(null)
       } else {
         addPopup({
@@ -119,6 +118,8 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
       }
       resetErrors()
     }
+
+    setIsLoading(false)
   }
 
   const handleWrappedTokenChange = async (e: string) => {
@@ -170,7 +171,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                           placeholder: ' ',
                         }}
                       />
-                      {errors.address && (
+                      {errors?.address && (
                         <TYPE.small marginTop="4px" color={'red1'}>
                           {errors.address}
                         </TYPE.small>
@@ -193,7 +194,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                           </InputContainer>
                         </ContainerRow>
                       </InputPanel>
-                      {errors.ticker && (
+                      {errors?.ticker && (
                         <TYPE.small marginTop="4px" color={'red1'}>
                           {errors.ticker}
                         </TYPE.small>
@@ -207,7 +208,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                       </Label>
                       <ButtonText>
                         <Upload file={token.file} onDrop={(file) => handleDropImage(file)}>
-                          <Logo error={errors.logo}>
+                          <Logo error={errors?.logo}>
                             {token.filePath || token.logo?.public ? (
                               <img
                                 style={{ borderRadius: '36px' }}
@@ -221,7 +222,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                           </Logo>
                         </Upload>
                       </ButtonText>
-                      {errors.logo && (
+                      {errors?.logo && (
                         <TYPE.small textAlign="center" marginTop="4px" color={'red1'}>
                           {errors.logo}
                         </TYPE.small>
@@ -242,6 +243,11 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                         selectedItem={CREATE_TOKEN_CHAINS.find(({ id }) => id === token.chainId)}
                         items={CREATE_TOKEN_CHAINS}
                       />
+                      {errors?.chainId && (
+                        <TYPE.small marginTop="4px" color={'red1'}>
+                          {errors.chainId}
+                        </TYPE.small>
+                      )}
                     </Box>
                     <Box>
                       <Label marginBottom="11px" htmlFor="token-wrapped-input">
@@ -251,7 +257,6 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                       </Label>
                       <AddressInput
                         {...{
-                          disabled: token?.id ? true : false,
                           id: 'token-wrapped-input',
                           value: token.wrappedTokenAddress,
                           error: !Boolean(isValidAddress(token?.wrappedTokenAddress || '')),
@@ -259,11 +264,6 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                           placeholder: ' ',
                         }}
                       />
-                      {errors.wrappedTokenAddress && (
-                        <TYPE.small marginTop="4px" color={'red1'}>
-                          {errors.wrappedTokenAddress}
-                        </TYPE.small>
-                      )}
                     </Box>
                   </FormRow>
                   <FormRow>
@@ -284,7 +284,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                           </InputContainer>
                         </ContainerRow>
                       </InputPanel>
-                      {errors.companyName && (
+                      {errors?.companyName && (
                         <TYPE.small marginTop="4px" color={'red1'}>
                           {errors.companyName}
                         </TYPE.small>
@@ -307,7 +307,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                           </InputContainer>
                         </ContainerRow>
                       </InputPanel>
-                      {errors.url && (
+                      {errors?.url && (
                         <TYPE.small marginTop="4px" color={'red1'}>
                           {errors.url}
                         </TYPE.small>
@@ -327,6 +327,11 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                         selectedItem={industries.find(({ name }) => name === token.industry)}
                         items={industries}
                       />
+                      {errors?.industry && (
+                        <TYPE.small marginTop="4px" color={'red1'}>
+                          {errors.industry}
+                        </TYPE.small>
+                      )}
                       <Label marginTop="20px" marginBottom="11px">
                         <TYPE.title11 color="text2">
                           <Trans>Country:</Trans>
@@ -338,6 +343,11 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                         selectedItem={countries.find(({ name }) => name === token.country)}
                         items={countries}
                       />
+                      {errors?.country && (
+                        <TYPE.small marginTop="4px" color={'red1'}>
+                          {errors.country}
+                        </TYPE.small>
+                      )}
 
                       <Label marginTop="20px" marginBottom="11px" htmlFor="token-atlas-id">
                         <TYPE.title11 color="text2">
@@ -365,10 +375,10 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                       </Label>
                       <Textarea
                         value={token.description}
-                        style={{ height: '290px', background: '#372E5E' }}
+                        style={{ height: '290px', background: '#372E5E', marginBottom: 0 }}
                         onChange={(e) => setToken({ ...token, description: e.currentTarget.value })}
                       />
-                      {errors.description && (
+                      {errors?.description && (
                         <TYPE.small marginTop="4px" color={'red1'}>
                           {errors.description}
                         </TYPE.small>
@@ -400,6 +410,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                   onClick={handleCreateClick}
                   margin="35px 0px 30px 0px"
                   style={{ width: isMobile ? '100%' : 475 }}
+                  disabled={isLoading}
                 >
                   <Trans>Save</Trans>
                 </ButtonIXSGradient>

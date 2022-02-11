@@ -30,6 +30,7 @@ import { initialIssuerState } from './mock'
 import { ReactComponent as ArrowLeft } from '../../assets/images/arrow-back.svg'
 import { ReactComponent as LogoImage } from '../../assets/images/wallpaper.svg'
 import { ReactComponent as Delete } from '../../assets/images/delete-basket.svg'
+import { Pagination } from 'components/AdminKycTable/Pagination'
 
 interface Tab {
   value: 'catalog' | 'add_issuer' | 'edit_issuer'
@@ -38,6 +39,7 @@ interface Tab {
 let timer = null as any
 
 export const AdminSecurityCatalog: FC = () => {
+  const offset = 10
   const addIssuer = useAddIssuer()
   const editIssuer = useEditIssuer()
   const getIssuers = useFetchIssuers()
@@ -58,9 +60,13 @@ export const AdminSecurityCatalog: FC = () => {
 
   useEffect(() => {
     if (showMode === 'catalog') {
-      getIssuers({ search: '', offset: 100, page: 1 })
+      getIssuers({ search: '', offset, page: 1 })
     }
   }, [getIssuers, showMode])
+
+  const onPageChange = (page: number) => {
+    getIssuers({ search: searchValue, page, offset })
+  }
 
   useEffect(() => {
     if (currentIssuer) {
@@ -87,7 +93,8 @@ export const AdminSecurityCatalog: FC = () => {
   }
 
   const handleEditTokenClick = (token: any) => {
-    setCurrentToken(token)
+    const editToken = token?.token ? { ...token, wrappedTokenAddress: token.token.address } : token
+    setCurrentToken(editToken)
     toggle()
   }
 
@@ -188,7 +195,7 @@ export const AdminSecurityCatalog: FC = () => {
                       </InputContainer>
                     </ContainerRow>
                   </InputPanel>
-                  {issuerErrors.name && (
+                  {issuerErrors?.name && (
                     <TYPE.small marginTop="4px" color={'red1'}>
                       {issuerErrors.name}
                     </TYPE.small>
@@ -211,7 +218,7 @@ export const AdminSecurityCatalog: FC = () => {
                       </InputContainer>
                     </ContainerRow>
                   </InputPanel>
-                  {issuerErrors.url && (
+                  {issuerErrors?.url && (
                     <TYPE.small marginTop="4px" color={'red1'}>
                       {issuerErrors.url}
                     </TYPE.small>
@@ -225,13 +232,13 @@ export const AdminSecurityCatalog: FC = () => {
                   </Label>
                   <ButtonText>
                     <Upload file={currentIssuer?.file} onDrop={(file) => handleDropImage(file)}>
-                      <Logo error={issuerErrors.logo}>
-                        {currentIssuer?.filePath || currentIssuer.logo?.public ? (
+                      <Logo>
+                        {currentIssuer?.filePath || currentIssuer?.logo?.public ? (
                           <img
                             style={{ borderRadius: '36px' }}
                             width="100%"
                             height="100%"
-                            src={currentIssuer?.filePath || currentIssuer.logo?.public}
+                            src={currentIssuer?.filePath || currentIssuer?.logo?.public}
                           />
                         ) : (
                           <LogoImage />
@@ -239,7 +246,7 @@ export const AdminSecurityCatalog: FC = () => {
                       </Logo>
                     </Upload>
                   </ButtonText>
-                  {issuerErrors?.logo !== 'This field is required' && (
+                  {issuerErrors?.logo && (
                     <TYPE.small textAlign="center" marginTop="4px" color={'red1'}>
                       {issuerErrors.logo}
                     </TYPE.small>
@@ -318,11 +325,16 @@ export const AdminSecurityCatalog: FC = () => {
               </StyledButtonGradientBorder>
             </Flex>
             <Flex flexDirection="column">
-              {issuers &&
-                issuers?.items.length > 0 &&
-                issuers.items.map((issuer: any, index: number) => (
-                  <BrokerDealerCard key={`bd-${index}`} issuer={issuer} handleEditClick={handleEditClick} />
-                ))}
+              {issuers?.items.length > 0 ? (
+                <>
+                  {issuers.items.map((issuer: any, index: number) => (
+                    <BrokerDealerCard key={`bd-${index}`} issuer={issuer} handleEditClick={handleEditClick} />
+                  ))}
+                  <Pagination page={issuers.page} totalPages={issuers.totalPages} onPageChange={onPageChange} />
+                </>
+              ) : (
+                <TYPE.body2 textAlign="center">No results</TYPE.body2>
+              )}
             </Flex>
           </>
         )}

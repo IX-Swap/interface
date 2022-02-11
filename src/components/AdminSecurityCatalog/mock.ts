@@ -8,14 +8,14 @@ export const initialTokenState = {
   companyName: '',
   url: '',
   file: null,
-  industry: 'Other',
-  country: 'United States of America',
+  industry: null,
+  country: null,
   atlasOneId: '',
   wrappedTokenAddress: '',
   description: '',
   active: null,
   featured: null,
-  chainId: CREATE_TOKEN_CHAINS[0].id,
+  chainId: null,
 }
 
 export const initialIssuerState = {
