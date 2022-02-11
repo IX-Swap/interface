@@ -3,7 +3,7 @@ import React, { CSSProperties, useCallback, useState } from 'react'
 import styled from 'styled-components'
 
 import Popover from 'components/Popover'
-import { RowBetween, RowStart } from 'components/Row'
+import { RowStart } from 'components/Row'
 import { TYPE } from 'theme'
 
 import { StyledDarkBlueCard } from './styleds'
