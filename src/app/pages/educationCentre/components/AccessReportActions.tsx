@@ -6,6 +6,7 @@ import { useDeleteFile } from 'hooks/useDeleteFile'
 import React, { Fragment } from 'react'
 import { useQueryCache } from 'react-query'
 import { DataroomFile } from 'types/dataroomFile'
+import { useServices } from 'hooks/useServices'
 
 export interface AccessReportActionsProps {
   document: DataroomFile
@@ -14,9 +15,12 @@ export interface AccessReportActionsProps {
 export const AccessReportActions = (props: AccessReportActionsProps) => {
   const { document } = props
   const queryCache = useQueryCache()
+  const { snackbarService } = useServices()
+
   const [deleteFile, { isLoading }] = useDeleteFile(document._id, {
     onSuccess: () => {
       void queryCache.invalidateQueries(homeQueryKeys.getAccessReports)
+      snackbarService.showSnackbar('Success', 'success')
     }
   })
 

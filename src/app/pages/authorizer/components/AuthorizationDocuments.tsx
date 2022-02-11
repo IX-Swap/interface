@@ -1,6 +1,5 @@
 import React from 'react'
 import { Grid } from '@mui/material'
-import { DataroomFile, FormArray } from 'types/dataroomFile'
 import { DataroomFeature } from 'types/authorizer'
 import { useFormContext } from 'react-hook-form'
 import { FieldsArray } from 'components/form/FieldsArray'
@@ -12,11 +11,6 @@ import { SelectableDataroomUploader } from 'components/dataroom/SelectableDataro
 import { DataroomDeleteSelected } from 'components/dataroom/DataroomDeleteSelected'
 import { SelectableDataroomHeader } from 'components/dataroom/SelectableDataroomHeader'
 import { itemComparator, SelectedDocument } from 'helpers/dataroom'
-import { useQueryCache } from 'react-query'
-import { identityQueryKeys } from 'config/queryKeys'
-import { getIdFromObj } from 'helpers/strings'
-import { useAuth } from 'hooks/auth/useAuth'
-import { useParams } from 'react-router-dom'
 
 export interface AuthorizationDocumentsProps {
   resourceId: string
@@ -24,17 +18,8 @@ export interface AuthorizationDocumentsProps {
 }
 
 export const AuthorizationDocuments = (props: AuthorizationDocumentsProps) => {
-  const { user } = useAuth()
-  const { userId } = useParams<{ userId: string; identityId: string }>()
   const { resourceId, feature } = props
-  const { control } = useFormContext<{ documents: FormArray<DataroomFile> }>()
-  const queryCache = useQueryCache()
-  const refetchGetIndividualIdentities = () => {
-    void queryCache.invalidateQueries([
-      identityQueryKeys.getIndividual,
-      userId ?? getIdFromObj(user)
-    ])
-  }
+  const { control } = useFormContext()
 
   return (
     <SelectionHelper<SelectedDocument> itemComparator={itemComparator}>
@@ -52,11 +37,10 @@ export const AuthorizationDocuments = (props: AuthorizationDocumentsProps) => {
                   label='Document'
                   name={['documents', index, 'value']}
                   index={index}
-                  defaultValue={fields[index].value}
+                  defaultValue={field.value}
                   valueExtractor={plainValueExtractor}
                   onDelete={() => {
                     remove(index)
-                    refetchGetIndividualIdentities()
                   }}
                 />
               ))}
@@ -64,19 +48,13 @@ export const AuthorizationDocuments = (props: AuthorizationDocumentsProps) => {
 
             <Grid item container justifyContent='space-between'>
               <DataroomUploaderWithFileTypeSelector
-                append={item => {
-                  append(item.value)
-                  refetchGetIndividualIdentities()
-                }}
+                append={append}
                 documentInfo={{ feature, resourceId }}
               />
             </Grid>
 
             <Grid item>
-              <DataroomDeleteSelected
-                name='documents'
-                action={refetchGetIndividualIdentities}
-              />
+              <DataroomDeleteSelected name='documents' />
             </Grid>
           </Grid>
         )}
