@@ -142,4 +142,5 @@ export interface CollectionForm {
   banner: FileWithPath | null
   name: string
   description: string
+  maxSupply: number
 }
