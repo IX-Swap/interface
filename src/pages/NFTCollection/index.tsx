@@ -140,7 +140,16 @@ const NFTCollection = () => {
             </RowBetween>
 
             <NftCollectionInfo>
-              <TYPE.titleBig>{collection.info.name}</TYPE.titleBig>
+              <TYPE.titleBig
+                style={{
+                  lineHeight: '1.3',
+                  overflow: 'hidden',
+                  display: 'block',
+                  maxWidth: '53%',
+                }}
+              >
+                {collection.info.name}
+              </TYPE.titleBig>
             </NftCollectionInfo>
 
             {collection.info.supply === 0 && (

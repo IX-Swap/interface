@@ -135,7 +135,16 @@ const NFTCollections: FC = () => {
                   </CollectionImageWrapper>
 
                   <Flex flexDirection="column" alignItems="center" padding="0px 32px 24px 32px">
-                    <TYPE.body5 marginBottom="8px" textAlign="center">
+                    <TYPE.body5
+                      style={{
+                        marginBottom: '8px',
+                        textAlign: 'center',
+                        height: '1.25em',
+                        lineHeight: '1.3',
+                        overflow: 'hidden',
+                        display: 'block',
+                      }}
+                    >
                       {name}
                     </TYPE.body5>
                     <Link
