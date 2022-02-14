@@ -59,7 +59,7 @@ export default function SecTokenDetails({
           </DescriptionText>
         </Description>
         <TokenDetails token={token} accreditationRequest={accreditationRequest} currency={null} platform={platform} />
-        <Vault token={token} currency={currency} currencyId={currencyId} />
+        {token?.token && <Vault token={token} currency={token.token} />}
       </Container>
     </>
   )

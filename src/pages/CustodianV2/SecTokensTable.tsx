@@ -2,7 +2,7 @@ import React, { ChangeEvent, FC, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { NavLink } from 'react-router-dom'
 import { Flex } from 'rebass'
-import { t } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { isMobile } from 'react-device-detect'
 
 import { Table, HeaderRow, BodyRow } from 'components/Table'
@@ -22,7 +22,7 @@ interface Props {
   page: number
   totalPages: number
   offset: number
-  onPageChange: (page: number) => void
+  totalItems: number
 }
 
 interface BodyProps {
@@ -83,13 +83,14 @@ const Body: FC<BodyProps> = ({ tokens }: BodyProps) => {
   )
 }
 
-export const SecTokensTable: FC<Props> = ({ tokens, page, offset, totalPages, onPageChange }: Props) => {
+export const SecTokensTable: FC<Props> = ({ tokens, page, offset, totalPages, totalItems }: Props) => {
   const [searchValue, setSearchValue] = useState('')
   const [filters, setFilters] = useState<any>({
     industry: null,
     country: null,
     issuer: null,
   })
+  const [currentPage, setCurrentPage] = useState(1)
   const fetchTokens = useFetchTokens()
 
   useEffect(() => {
@@ -99,7 +100,7 @@ export const SecTokensTable: FC<Props> = ({ tokens, page, offset, totalPages, on
     timer = setTimeout(
       () =>
         fetchTokens({
-          page: 1,
+          page: currentPage,
           offset,
           search: searchValue,
           industry: industry?.name ? industry.name : '',
@@ -112,7 +113,11 @@ export const SecTokensTable: FC<Props> = ({ tokens, page, offset, totalPages, on
     return () => {
       clearTimeout(timer)
     }
-  }, [filters, searchValue]) // Filter tokens on filter/search change
+  }, [filters, searchValue, currentPage]) // Filter tokens on filter/search change
+
+  const onPageChange = (page: number) => {
+    setCurrentPage(page)
+  }
 
   const handleResetFilters = () => {
     setFilters({
@@ -170,7 +175,7 @@ export const SecTokensTable: FC<Props> = ({ tokens, page, offset, totalPages, on
       <TYPE.title5 marginBottom="40px" display="flex">
         {`Other security tokens`}
         <TYPE.title5 marginLeft="4px" color="text2">
-          {`(${tokens?.length || '0'})`}
+          {`(${totalItems})`}
         </TYPE.title5>
       </TYPE.title5>
 
@@ -209,17 +214,21 @@ export const SecTokensTable: FC<Props> = ({ tokens, page, offset, totalPages, on
 
         <ButtonGradientBorder
           onClick={handleResetFilters}
-          style={isMobile ? { width: '100%' } : { width: 200, marginLeft: 16 }}
+          style={isMobile ? { width: '100%', marginTop: 16 } : { width: 200, marginLeft: 16 }}
         >
           <TYPE.body2>Reset filters</TYPE.body2>
         </ButtonGradientBorder>
       </Flex>
 
-      {tokens.length > 0 && (
+      {tokens.length > 0 ? (
         <>
           <Table style={{ marginBottom: 32 }} header={<Header />} body={<Body tokens={tokens} />} />
           <Pagination page={page} totalPages={totalPages} onPageChange={onPageChange} />
         </>
+      ) : (
+        <TYPE.body2 textAlign="center">
+          <Trans>No results</Trans>
+        </TYPE.body2>
       )}
     </>
   )

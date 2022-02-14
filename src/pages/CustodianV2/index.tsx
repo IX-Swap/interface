@@ -38,8 +38,8 @@ export default function CustodianV2() {
 
   useEffect(() => {
     const fetchMyTokens = async () => {
-      const data = await getMyTokens()
-      setMySecTokens(data)
+      const data = await getMyTokens({ active: true, my: true, offset: 100000 })
+      setMySecTokens(data?.items.length > 0 ? data.items : [])
     }
 
     fetchMyTokens()
@@ -55,11 +55,7 @@ export default function CustodianV2() {
     }
   }, [tokens])
 
-  const onPageChange = (page: number) => {
-    fetchTokens({ page, offset })
-  }
-
-  const mySecTokensIds = mySecTokens ? mySecTokens.map(({ id }: any) => id) : []
+  // const mySecTokensIds = mySecTokens ? mySecTokens.map(({ id }: any) => id) : []
   const activeTokens = tokens ? tokens.items.filter(({ active }: any) => active) : []
   const featuredTokens = noFilteredTokens.filter(({ featured }: any) => featured)
   const approvedSecTokens = mySecTokens
@@ -72,9 +68,8 @@ export default function CustodianV2() {
         ({ token }: any) => token.accreditationRequest && token.accreditationRequest.status !== 'approved'
       )
     : []
-  const otherSecTokens =
-    mySecTokensIds.length > 0 ? activeTokens.filter(({ id }: any) => !mySecTokensIds.includes(id)) : activeTokens
-  const showMySecTokens = approvedSecTokens.length > 0 || pendingSecTokens.length > 0
+  // const otherSecTokens =
+  //   mySecTokensIds.length > 0 ? activeTokens.filter(({ id }: any) => !mySecTokensIds.includes(id)) : activeTokens
 
   return chainId !== undefined && !TGE_CHAINS_WITH_SWAP.includes(chainId) ? (
     <AppBody blurred>
@@ -107,7 +102,7 @@ export default function CustodianV2() {
 
       {tokens && (
         <>
-          {showMySecTokens && (
+          {mySecTokens?.length > 0 && (
             <MySecTokensTab marginBottom="72px">
               <GradientText>
                 <TYPE.title5 marginBottom="32px" color="inherit">
@@ -156,8 +151,8 @@ export default function CustodianV2() {
           <SecTokensTable
             page={tokens.page}
             totalPages={tokens.totalPages}
-            onPageChange={onPageChange}
-            tokens={otherSecTokens}
+            totalItems={tokens.totalItems}
+            tokens={activeTokens}
             offset={offset}
           />
         </>

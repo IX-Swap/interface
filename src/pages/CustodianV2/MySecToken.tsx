@@ -19,7 +19,7 @@ interface Props {
 export const MySecToken: FC<Props> = ({ token }: Props) => {
   const wrappedToken = token?.token
   const { account } = useActiveWeb3React()
-  const balance = useCurrencyBalance(account ?? undefined, token.token ?? undefined)
+  const balance = useCurrencyBalance(account ?? undefined, { isToken: true, ...wrappedToken } ?? undefined)
 
   return (
     <NavLink style={{ textDecoration: 'none' }} to={`/security-tokens/${token.id}`}>
