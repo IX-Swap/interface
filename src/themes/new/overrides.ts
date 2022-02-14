@@ -2,23 +2,6 @@ import { Theme } from '@mui/material'
 import { ThemeOptions } from '@mui/material/styles'
 import { rte } from 'themes/new/rte'
 
-// interface LabOverrides {
-//   MuiSkeleton: {
-//     root: CSSProperties
-//   }
-//   MUIRichTextEditor: {
-//     root: any
-//     container: any
-//     editor: any
-//     toolbar: any
-//     placeHolder: any
-//   }
-//   PrivateSwitchBase: {
-//     root: any
-//     checked: any
-//   }
-// }
-
 export const getThemeOverrides = (
   theme: Theme
 ): ThemeOptions['components'] => ({
@@ -142,10 +125,6 @@ export const getThemeOverrides = (
           WebkitBoxShadow: 'none!important'
         }
       },
-      // inputMarginDense: {
-      //   paddingTop: 12,
-      //   paddingBottom: 12
-      // },
       adornedEnd: {
         paddingRight: 8,
         '&.Mui-error': {
@@ -177,6 +156,8 @@ export const getThemeOverrides = (
       contained: {
         fontSize: 14,
         borderRadius: 8,
+        backgroundColor: '#0055FF',
+        color: '#ffffff',
         '&:hover': {
           backgroundColor: '#4080ff!important'
         },
@@ -186,26 +167,7 @@ export const getThemeOverrides = (
       }
     }
   },
-  MuiIconButton: {
-    // label: {
-    //   width: 20,
-    //   height: 20,
-    //   color: '#0055FF',
-    //   background: '#102756',
-    //   borderRadius: 4,
-    //   zIndex: 3,
-    //   border: '1px solid #102756',
-    //
-    //   '.Mui-checked &': {
-    //     color: '#ffffff',
-    //     background: '#0055FF',
-    //     border: '2px solid #0055FF'
-    //   },
-    //   '.Mui-error &': {
-    //     border: '2px solid #FF8080'
-    //   }
-    // }
-  },
+  MuiIconButton: {},
   MuiSvgIcon: {
     styleOverrides: {
       root: {
@@ -225,11 +187,6 @@ export const getThemeOverrides = (
       root: {
         color: '#ffffff'
       }
-      // colorError: {
-      //   '& span': {
-      //     color: '#FF8080'
-      //   }
-      // }
     }
   }
 })
