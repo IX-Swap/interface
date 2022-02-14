@@ -1,10 +1,10 @@
 import React from 'react'
 
-import { kycData } from './kyc-data'
+import { kycData } from './utils/kyc-data'
 
 import { Block } from './molecules/Block'
 import { GridContainer, GridItem } from 'components/Grid'
-import { addressKeys } from './constants'
+import { addressKeys } from './utils/constants'
 import { Field } from './molecules/Field'
 
 export const Address = () => {

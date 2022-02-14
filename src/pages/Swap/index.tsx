@@ -36,7 +36,6 @@ import { AuthorizationButtons } from './AuthorizationButtons'
 import { BrokerDealerForm } from './BrokerDealerForm'
 import { SwapButtons } from './SwapButtons'
 import { useWatchApprovalSubmitted } from './useWatchApprovalSubmitted'
-import { KycReviewModal } from '../../components/KycReviewModal'
 
 export default function Swap({ history }: RouteComponentProps) {
   const { chainId } = useActiveWeb3React()
@@ -111,12 +110,6 @@ export default function Swap({ history }: RouteComponentProps) {
       !currencyBalances.OUTPUT)
   return (
     <>
-      <KycReviewModal
-        isOpen
-        onClose={() => {
-          console.log('log => close ')
-        }}
-      />
       <TokenWarningModal history={history} />
       <GeneralModal />
       <BrokerDealerForm ref={formRef} />

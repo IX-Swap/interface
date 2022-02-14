@@ -1,11 +1,11 @@
 import React from 'react'
 
-import { kycData } from './kyc-data'
+import { kycData } from './utils/kyc-data'
 
 import { Block } from './molecules/Block'
 import { RowWithCheck } from './molecules/RowWithCheck'
 import { GridContainer, GridItem } from 'components/Grid'
-import { corporateInfoKeys } from './constants'
+import { corporateInfoKeys } from './utils/constants'
 import { Field } from './molecules/Field'
 
 export const CorporateInformation = () => {

@@ -1,11 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { kycData } from './kyc-data'
+import { kycData } from './utils/kyc-data'
 
 import { Block } from './molecules/Block'
 import { RowWithCheck } from './molecules/RowWithCheck'
-import { investorStatusDeclarationKeys } from './constants'
+import { investorStatusDeclarationKeys } from './utils/constants'
 
 export const InvestorStatusDeclaration = () => {
   return (

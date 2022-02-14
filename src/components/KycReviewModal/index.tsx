@@ -1,10 +1,11 @@
-import React, { useState, useEffect, ChangeEvent, useCallback } from 'react'
-import { t, Trans } from '@lingui/macro'
+import React, { useState } from 'react'
+import { Trans } from '@lingui/macro'
 import styled from 'styled-components'
 
 import { ModalBlurWrapper, ModalContentWrapper, MEDIA_WIDTHS, CloseIcon } from 'theme'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import { ButtonIXSWide, ButtonPinkBorder, ButtonGradientBorder } from 'components/Button'
+import { ReasonModal } from 'components/ReasonModal'
 
 import { Cynopsis } from './Cynopsis'
 import { CorporateInformation } from './CorporateInformation'
@@ -25,65 +26,85 @@ interface Props {
 }
 
 export const KycReviewModal = ({ isOpen, onClose }: Props) => {
+  const [openReasonModal, handleOpenReasonModal] = useState('')
+
   const approve = () => {
+    // TO DO - change with approve request
     onClose()
   }
+
+  const closeModal = () => handleOpenReasonModal('')
+
   const reject = () => {
-    onClose()
+    handleOpenReasonModal('reject')
   }
 
   const changeRequest = () => {
-    onClose()
+    handleOpenReasonModal('changeRequest')
+  }
+
+  const onReasonAction = (reason?: string) => {
+    // TO DO - handle action
   }
 
   return (
-    <RedesignedWideModal
-      isOpen={isOpen}
-      onDismiss={onClose}
-      minHeight={false}
-      maxHeight={'fit-content'}
-      scrollable
-      isLarge
-    >
-      <ModalBlurWrapper data-testid="kyc-review">
-        <ModalContent>
-          <TitleContainer>
-            <Title>
-              <div>
-                <Trans>KYC</Trans>&nbsp;-&nbsp;
-              </div>
-              0xC0...6Cc2 (Corporate)
-            </Title>
-            <CloseIcon data-testid="cross" onClick={onClose} />
-          </TitleContainer>
-          <Body>
-            <Cynopsis />
-            <CorporateInformation />
-            <CompanyAuthorizedPersonnel />
-            <Address />
-            <ResidentialAddress />
-            <SourceOfFunds />
-            <InvestorStatusDeclaration />
-            <Fatca />
-            <OptInRequirement />
-            <TaxDeclaration />
-            <BeneficialOwners />
-            <UploadDocuments />
-          </Body>
-          <ActionsContainer>
-            <ButtonIXSWide onClick={approve}>
-              <Trans>Approve</Trans>
-            </ButtonIXSWide>
-            <ButtonPinkBorder onClick={reject}>
-              <Trans>Reject</Trans>
-            </ButtonPinkBorder>
-            <ButtonGradientBorder onClick={changeRequest}>
-              <Trans>Request a change</Trans>
-            </ButtonGradientBorder>
-          </ActionsContainer>
-        </ModalContent>
-      </ModalBlurWrapper>
-    </RedesignedWideModal>
+    <>
+      <ReasonModal
+        isOpen={Boolean(openReasonModal)}
+        onAction={onReasonAction}
+        onClose={closeModal}
+        actionBtnText="Submit"
+        inputLabel="Accompanying text"
+        title={openReasonModal === 'reject' ? 'Reject annotation' : 'Change request'}
+      />
+      <RedesignedWideModal
+        isOpen={isOpen}
+        onDismiss={onClose}
+        minHeight={false}
+        maxHeight={'fit-content'}
+        scrollable
+        isLarge
+      >
+        <ModalBlurWrapper data-testid="kyc-review">
+          <ModalContent>
+            <TitleContainer>
+              <Title>
+                <div>
+                  <Trans>KYC</Trans>&nbsp;-&nbsp;
+                </div>
+                0xC0...6Cc2 (Corporate)
+              </Title>
+              <CloseIcon data-testid="cross" onClick={onClose} />
+            </TitleContainer>
+            <Body>
+              <Cynopsis />
+              <CorporateInformation />
+              <CompanyAuthorizedPersonnel />
+              <Address />
+              <ResidentialAddress />
+              <SourceOfFunds />
+              <InvestorStatusDeclaration />
+              <Fatca />
+              <OptInRequirement />
+              <TaxDeclaration />
+              <BeneficialOwners />
+              <UploadDocuments />
+            </Body>
+            <ActionsContainer>
+              <ButtonIXSWide onClick={approve}>
+                <Trans>Approve</Trans>
+              </ButtonIXSWide>
+              <ButtonPinkBorder onClick={reject}>
+                <Trans>Reject</Trans>
+              </ButtonPinkBorder>
+              <ButtonGradientBorder onClick={changeRequest}>
+                <Trans>Request a change</Trans>
+              </ButtonGradientBorder>
+            </ActionsContainer>
+          </ModalContent>
+        </ModalBlurWrapper>
+      </RedesignedWideModal>
+    </>
   )
 }
 

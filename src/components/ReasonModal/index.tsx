@@ -11,7 +11,7 @@ import clipboardTextIcon from '../../assets/images/clipboard-text .svg'
 interface Props {
   isOpen: boolean
   onClose: () => void
-  onAction: (reason: string) => void
+  onAction: (reason?: string) => void
   actionBtnText: string
   title?: string
   inputLabel: string
