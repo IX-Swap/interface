@@ -121,6 +121,9 @@ const ModalContent = styled(ModalContentWrapper)`
   border-radius: 20px;
   min-width: 80vw;
   max-width: 90vw;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    padding: 16px;
+  }
 `
 
 const Title = styled.div`

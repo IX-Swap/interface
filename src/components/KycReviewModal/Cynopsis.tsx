@@ -3,8 +3,8 @@ import styled from 'styled-components'
 
 import { kycData } from './kyc-data'
 
-import { Block } from './Block'
-import { RowWithCheck } from './RowWithCheck'
+import { Block } from './molecules/Block'
+import { RowWithCheck } from './molecules/RowWithCheck'
 import { cynopsisKeys } from './constants'
 
 export const Cynopsis = () => {

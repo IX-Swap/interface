@@ -1,9 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 
-import { Block } from './Block'
+import { Block } from './molecules/Block'
 
-import { Documents } from './Documents'
+import { Documents } from './molecules/Documents'
 
 export const UploadDocuments = () => {
   return (

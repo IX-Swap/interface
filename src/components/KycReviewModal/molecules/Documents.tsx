@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import dayjs from 'dayjs'
 
 import pdfIcon from 'assets/images/pdf.svg'
+import { MEDIA_WIDTHS } from 'theme'
 
 const headerCells = [t`File`, t`Type`, t`Uploaded At`]
 
@@ -92,8 +93,13 @@ const BodyRow = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   column-gap: 121px;
-  min-width: 1000px;
+  overflow: auto;
   > div {
     display: grid;
+    white-space: nowrap;
+  }
+
+  @media (max-width: ${MEDIA_WIDTHS.upToMedium}px) {
+    column-gap: 32px;
   }
 `

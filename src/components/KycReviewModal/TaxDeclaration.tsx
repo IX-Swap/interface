@@ -2,10 +2,10 @@ import React from 'react'
 
 import { kycData } from './kyc-data'
 
-import { Block } from './Block'
+import { Block } from './molecules/Block'
 import { GridContainer, GridItem } from 'components/Grid'
 import { taxDeclarationKeys } from './constants'
-import { Field } from './Field'
+import { Field } from './molecules/Field'
 
 export const TaxDeclaration = () => {
   return (
