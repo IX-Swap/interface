@@ -9,6 +9,7 @@ import { DataroomFileType } from 'config/dataroom'
 import { MutationResult } from 'react-query'
 import { AxiosResponse } from 'axios'
 import { documentsURL } from 'config/apiURL'
+import { useServices } from 'hooks/useServices'
 
 export interface DataroomUploaderRenderProps<TValue = Maybe<DataroomFile>> {
   name: string
@@ -49,13 +50,18 @@ export const DataroomUploader = (props: DataroomUploaderProps) => {
     feature
   } = props
   const inputRef = useRef<HTMLInputElement | null>(null)
+  const { snackbarService } = useServices()
   const { watch } = useFormContext()
   const value = watch(name, defaultValue) as DataroomUploaderProps['value']
   const document = value === undefined ? defaultValue : value
   const [deleteFile, deleteState] = useDeleteFile(getIdFromObj(value))
   const [uploadFile, uploadState] = useUploadFile(
     {
-      onSuccess: response => onChange(response.data[0])
+      onSuccess: response => {
+        onChange(response.data[0])
+        const message = `Successfully uploaded ${response?.data?.length} files`
+        snackbarService.showSnackbar(message, 'success')
+      }
     },
     uri
   )

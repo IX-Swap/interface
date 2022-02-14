@@ -24,12 +24,11 @@ export const useDeleteFile = (
 
   return useMutation(deleteFile, {
     onSuccess: data => {
-      void snackbarService.showSnackbar('Success', 'success')
-      void callbacks?.onSuccess?.(data)
+      callbacks?.onSuccess?.(data)
     },
     onError: error => {
-      void snackbarService.showSnackbar('Error', 'error')
-      void callbacks?.onError?.(error)
+      snackbarService.showSnackbar('Error', 'error')
+      callbacks?.onError?.(error)
     }
   })
 }
