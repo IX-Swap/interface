@@ -23,6 +23,7 @@ export enum AppFeature {
   Corporates = 'corporates',
   Holdings = 'holdings',
   Individuals = 'individuals',
+  IndividualsAuthorization = 'authorization/identity/individuals',
   IssuanceDetails = 'issuance-details',
   Commitments = 'commitments',
   Market = 'market',

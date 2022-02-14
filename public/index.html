@@ -33,6 +33,10 @@
       html, body, #root {
         min-height: 100%;
       }
+      body {
+          overflow: auto !important;
+          padding-right: 0 !important;
+      }
       
       #mui-rte-media-control-button {
         display: none;
@@ -261,6 +265,20 @@
       @font-face {
           font-family: 'Monument Grotesk';
           src: url("/fonts/monument-grotesk/MonumentGrotesk-Regular.woff");
+          font-style: normal;
+          font-weight: 500;
+      }
+
+      @font-face {
+          font-family: 'Inter';
+          src: url("/fonts/inter/Inter-SemiBold.ttf");
+          font-style: normal;
+          font-weight: 600;
+      }
+
+      @font-face {
+          font-family: 'Inter';
+          src: url("/fonts/inter/Inter-Medium.ttf");
           font-style: normal;
           font-weight: 500;
       }

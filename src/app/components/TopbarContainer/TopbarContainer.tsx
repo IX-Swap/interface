@@ -119,7 +119,8 @@ export const TopbarContainer = () => {
     { label: 'Create New DSO', path: IssuanceRoute.create },
     { label: 'View DSO Listings', path: IssuanceRoute.list },
     { label: 'Create Exchange Listings', path: OTCMarketRoute.createListing },
-    { label: 'View Exchange Listings', path: OTCMarketRoute.myListings }
+    { label: 'View Exchange Listings', path: OTCMarketRoute.myListings },
+    { label: 'Financial Reports', path: IssuanceRoute.financialReports }
   ]
 
   if (isFundManager) {

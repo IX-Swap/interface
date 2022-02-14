@@ -33,10 +33,6 @@ export const Tt = ({ accountId, currency }: DepositInfoProps) => {
       value: '48-01 10 MARINA BLVD, MARINA BAY FIN S(018983)'
     },
     {
-      label: 'Message to receiver/beneficiary/Ref/Bill ref:',
-      value: 'InvestaX to recommend'
-    },
-    {
       label: 'Time Estimation for Deposit:',
       value: '2-5 Business Days'
     }
