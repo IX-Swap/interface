@@ -106,6 +106,7 @@ export const CollectionForm = ({ collection, onSubmit, actionName = 'Update' }: 
     if (collection) {
       setName(collection?.name)
       setDescription(collection?.description)
+      setMaxSupply(collection?.maxSupply)
 
       updateFiles()
     }
@@ -261,25 +262,29 @@ export const CollectionForm = ({ collection, onSubmit, actionName = 'Update' }: 
           {descriptionError && <TYPE.error error>{descriptionError}</TYPE.error>}
         </Box>
       </Flex>
-      <Flex flexDirection="column" mt={4}>
-        <Label htmlFor="supply-value" mb={2}>
-          <TYPE.body fontWeight={600}>
-            <Trans>Select max number of items in collection</Trans>
-          </TYPE.body>
-        </Label>
-        <Slider
-          id="supply-value"
-          min={1}
-          step={1}
-          max={MAX_SUPPLY_RANGE}
-          value={maxSupply}
-          onChange={(e) => setMaxSupply(e)}
-        />
-      </Flex>
-      <Flex justifyContent="space-between">
-        <TYPE.body>{maxSupply}</TYPE.body>
-        <TYPE.body>{MAX_SUPPLY_RANGE}</TYPE.body>
-      </Flex>
+
+      <Box style={{ paddingBottom: '2.5rem' }}>
+        <Flex flexDirection="column" mt={4}>
+          <Label htmlFor="supply-value" mb={2}>
+            <TYPE.body fontWeight={600}>
+              <Trans>Select max number of items in collection</Trans>
+            </TYPE.body>
+          </Label>
+          <Slider
+            id="supply-value"
+            min={1}
+            step={1}
+            disabled={collection}
+            max={MAX_SUPPLY_RANGE}
+            value={maxSupply}
+            onChange={(e) => setMaxSupply(e)}
+          />
+        </Flex>
+        <Flex justifyContent="space-between">
+          <TYPE.body>{maxSupply}</TYPE.body>
+          <TYPE.body>{MAX_SUPPLY_RANGE}</TYPE.body>
+        </Flex>
+      </Box>
 
       <Flex mx={-2} flexWrap="wrap">
         {isValid && (

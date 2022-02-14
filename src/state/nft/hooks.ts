@@ -59,6 +59,7 @@ import { CollectionCreateProps } from './types'
 import { groupKeyValues } from './utils'
 import { routes } from 'utils/routes'
 import { Description } from '@ethersproject/properties'
+import { Web3Provider } from '@ethersproject/providers'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const Web3 = require('web3') // for some reason import Web3 from web3 didn't see eth module
@@ -138,23 +139,33 @@ export const getCollections = async (address: string, chainId?: number) => {
   const collections = await apiService.get(nft.getCollections(address, chainId))
   return collections
 }
-export const getCollection = async (id?: number, chainId?: number) => {
+export const getCollection = async (id?: number, chainId?: number, library?: Web3Provider) => {
   if (id === undefined || isNaN(id)) {
     return null
   }
+
   const collection = await apiService.get(nft.getCollection(id, chainId))
+
+  if (collection.data) {
+    const web3 = new Web3(library?.provider)
+    const contract = new web3.eth.Contract(NFT_ABI, collection.data.address)
+
+    const supply = await contract.methods.maxSupply().call()
+    collection.data.maxSupply = supply
+  }
+
   return collection.data
 }
 
 export function useCollection(id?: number) {
   const dispatch = useDispatch()
-  const { chainId } = useActiveWeb3React()
+  const { chainId, library } = useActiveWeb3React()
   const [collection, setCollection] = useState<any | null>(null)
   useEffect(() => {
     async function fetchCollection() {
       try {
         dispatch(setCollectionsLoading({ loading: true }))
-        const result = await getCollection(id, chainId)
+        const result = await getCollection(id, chainId, library)
         setCollection(result)
         dispatch(setCollectionsLoading({ loading: false }))
       } catch (e) {
@@ -208,7 +219,7 @@ export const useCreateFullCollection = (history: H.History) => {
 
   return useCallback(
     async (args: any) => {
-      const newContractAddress = await deployCollection({ name: args.name, maxSupply: 1000 })
+      const newContractAddress = await deployCollection({ name: args.name, maxSupply: args.maxSupply })
       if (newContractAddress) {
         await createFullNftCollection({ ...args, address: newContractAddress, chainId: chainId })
         history.push(`/nft/collections/${newContractAddress}`)
