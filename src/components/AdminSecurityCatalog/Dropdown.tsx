@@ -19,11 +19,13 @@ export const Dropdown = ({
   onSelect,
   selectedItem,
   items,
+  placeholder = '',
   withScroll = false,
 }: {
   onSelect: (item: any) => void
   selectedItem: any
   items: any[]
+  placeholder?: string
   withScroll?: boolean
 }) => {
   const [isOpen, setIsOpen] = useState(false)
@@ -61,7 +63,7 @@ export const Dropdown = ({
       <RowBetween>
         <RowBetween>
           <RowStart>
-            <TYPE.body2>{selectedItem?.name || 'Choose'}</TYPE.body2>
+            <TYPE.body2>{selectedItem?.name || `${placeholder || 'Choose'}`}</TYPE.body2>
           </RowStart>
         </RowBetween>
         <Popover

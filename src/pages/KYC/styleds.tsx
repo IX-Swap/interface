@@ -6,6 +6,7 @@ import { t } from '@lingui/macro'
 import Card from 'components/Card'
 import { cardCommonStyles } from 'pages/CustodianV2/styleds'
 import { LoaderThin } from 'components/Loader/LoaderThin'
+import { Input } from 'components/Input'
 
 import { KYCStatuses } from './enum'
 import { ReactComponent as Attention } from 'assets/images/attention.svg'
@@ -83,6 +84,35 @@ export const PageLink = styled.div<{ active?: boolean }>`
   color: ${({ theme, active }) => (active ? theme.text1 : theme.text9)};
   border-left: ${({ theme, active }) => (active ? `1px solid ${theme.bg14}` : 'none')};
   text-decoration: none;
+`
+
+export const FormGrid = styled.div<{ columns?: number }>`
+  display: grid;
+  grid-template-columns: ${({ columns }) => `repeat(${columns || 2}, 1fr)`};
+  grid-gap: 20px;
+`
+
+export const ExtraInfoCard = styled.div`
+  padding: 12px 8px 12px 27px;
+  border-radius: 45px;
+  background: ${({ theme }) => theme.bgG12};
+`
+
+export const StyledInput = styled(Input)`
+  background: ${({ theme }) => theme.bg19};
+  color: ${({ theme }) => theme.text2};
+`
+
+export const UploaderCard = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 120px;
+  width: 100%;
+  background: ${({ theme }) => theme.bgG17};
+  border: 1px dashed ${({ theme }) => theme.bg7};
+  border-radius: 16px;
+  cursor: pointer;
 `
 
 /* eslint-disable react/display-name */

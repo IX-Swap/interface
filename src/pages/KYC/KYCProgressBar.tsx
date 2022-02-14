@@ -15,7 +15,7 @@ interface Props {
   description: string
 }
 
-export const ProgressBar: FC<Props> = ({ reasons, description, topics }: Props) => {
+export const KYCProgressBar: FC<Props> = ({ reasons, description, topics }: Props) => {
   const handleScrollToDiv = (href: string) => {
     document.getElementById(href)?.scrollIntoView({
       behavior: 'smooth',
@@ -48,9 +48,9 @@ export const ProgressBar: FC<Props> = ({ reasons, description, topics }: Props) 
         </TYPE.title6>
 
         <Column>
-          {topics.map(({ id, name, href, passed }) => (
-            <PageLink onClick={() => handleScrollToDiv(href)} active={id === 1} key={`page-nav-${id}`}>
-              {name}
+          {topics.map(({ title, href, passed }, index) => (
+            <PageLink onClick={() => handleScrollToDiv(href)} active={index === 1} key={`page-nav-${index}`}>
+              {title}
               {passed && StatusIcons[ActionHistoryStatus.SETTLED]()}
             </PageLink>
           ))}
