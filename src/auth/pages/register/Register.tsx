@@ -20,7 +20,7 @@ export const registerFormInitialValues = {
 }
 
 export const Register: React.FC = observer(() => {
-  const { title, question, link, support } = useStyles()
+  const { title, question, link, support } = useStyles({})
   const [signup, { isLoading }] = useSignup()
   const handleSubmit = async (values: SignupArgs) => {
     await signup({

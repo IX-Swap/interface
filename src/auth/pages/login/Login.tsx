@@ -24,7 +24,7 @@ export const Login = ({ hidden, isLoading, attempts = 0 }: LoginProps) => {
           <Typography className={title} variant={'h3'} align='center'>
             Sign In
           </Typography>
-          <VSpacer size={'medium'} />
+          <VSpacer size={'extraMedium'} />
         </Grid>
         <Grid item>
           <LoginFields />

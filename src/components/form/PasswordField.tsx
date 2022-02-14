@@ -6,10 +6,14 @@ import { useFormContext } from 'react-hook-form'
 import { ReactComponent as WarningIcon } from 'assets/icons/warning.svg'
 
 export interface PasswordFieldProps {
-  showErrors?: boolean
+  withPasswordValidation?: boolean
+  showErrorMessages?: boolean
 }
 
-export const PasswordField = ({ showErrors = false }: PasswordFieldProps) => {
+export const PasswordField = ({
+  withPasswordValidation = false,
+  showErrorMessages = true
+}: PasswordFieldProps) => {
   const { control, errors } = useFormContext()
   const passwordErrors = errors.password
 
@@ -23,6 +27,7 @@ export const PasswordField = ({ showErrors = false }: PasswordFieldProps) => {
           label='Password'
           type={'password'}
           placeholder={'Password'}
+          isErrorMessageEnabled={showErrorMessages}
           InputLabelProps={{
             shrink: true
           }}
@@ -37,7 +42,7 @@ export const PasswordField = ({ showErrors = false }: PasswordFieldProps) => {
           }}
         />
       </Grid>
-      {showErrors ? (
+      {withPasswordValidation ? (
         <Grid item>
           <PasswordValidation />
         </Grid>
