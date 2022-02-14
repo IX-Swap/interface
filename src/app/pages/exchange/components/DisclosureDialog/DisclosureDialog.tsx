@@ -8,8 +8,7 @@ import {
   DialogContentText,
   DialogTitle,
   FormControlLabel,
-  Grid,
-  Typography
+  Grid
 } from '@mui/material'
 import { useStyles } from './DisclosureDialog.style'
 import { renderStringToHTML } from 'app/components/DSO/utils'
@@ -59,14 +58,14 @@ export const DisclosureDialog = ({
                     onClick={() => setIsChecked(!isChecked)}
                   />
                 }
-                label={'I agree, accept and understand all the disclosures'}
+                label={
+                  <>
+                    I agree, accept and understand all the disclosures and{' '}
+                    <ExchangeRulesLink />
+                  </>
+                }
               />
             </Box>
-          </Grid>
-          <Grid item>
-            <Typography>
-              Learn about our <ExchangeRulesLink />
-            </Typography>
           </Grid>
         </Grid>
 
