@@ -16,7 +16,7 @@ const CreateCollection = () => {
   const history = useHistory()
   const [pending, setPending] = useState(false)
 
-  const { cover, logo, banner, name, description } = useCollectionFormState()
+  const { cover, logo, banner, name, description, maxSupply } = useCollectionFormState()
   const createCollection = useCreateFullCollection(history)
 
   const blurred = !chainId || !TGE_CHAINS_WITH_SWAP.includes(chainId)
@@ -27,7 +27,7 @@ const CreateCollection = () => {
     setPending(true)
 
     try {
-      await createCollection({ cover, logo, banner, name, description })
+      await createCollection({ cover, logo, banner, name, description, maxSupply })
     } catch (error: any) {
       console.log({ error })
       setPending(false)

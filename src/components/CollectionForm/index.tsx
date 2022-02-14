@@ -7,10 +7,13 @@ import { Label } from '@rebass/forms'
 import { ContainerRow, Input, InputContainer, InputPanel, Textarea } from 'components/Input'
 import Upload from 'components/Upload'
 import { AcceptFiles } from 'components/Upload/types'
+import Slider from 'components/Slider'
+
 import { ExternalLink, TYPE } from 'theme'
 import { ButtonGradient } from 'components/Button'
 import { useCollectionActionHandlers, useCollectionFormState } from 'state/nft/hooks'
 import { NameSizeLimit, DescriptionSizeLimit } from 'constants/misc'
+import { MAX_SUPPLY_RANGE } from 'state/nft/constants'
 
 interface UpdateFormProps {
   collection?: any | null
@@ -25,9 +28,10 @@ export const CollectionForm = ({ collection, onSubmit, actionName = 'Update' }: 
     onSelectCover: setCover,
     onSetDescription: setDescription,
     onSetName: setName,
+    onSetMaxSupply: setMaxSupply,
     onClearCollectionState,
   } = useCollectionActionHandlers()
-  const { cover, logo, banner, name, description } = useCollectionFormState()
+  const { cover, logo, banner, name, description, maxSupply } = useCollectionFormState()
   const [newLogo, setNewLogo] = useState('')
   const [newBanner, setNewBanner] = useState('')
   const [newCover, setNewCover] = useState('')
@@ -36,7 +40,7 @@ export const CollectionForm = ({ collection, onSubmit, actionName = 'Update' }: 
   const [nameError, setNameError] = useState<string | null>(null)
 
   const checkValidation = useCallback(() => {
-    if (name && description) {
+    if (name) {
       setValidation(name.length <= NameSizeLimit && description.length <= DescriptionSizeLimit)
       return
     }
@@ -102,6 +106,7 @@ export const CollectionForm = ({ collection, onSubmit, actionName = 'Update' }: 
     if (collection) {
       setName(collection?.name)
       setDescription(collection?.description)
+      setMaxSupply(collection?.maxSupply)
 
       updateFiles()
     }
@@ -238,7 +243,6 @@ export const CollectionForm = ({ collection, onSubmit, actionName = 'Update' }: 
               <TYPE.body fontWeight={600}>
                 <Trans>Description</Trans>
               </TYPE.body>
-              <TYPE.error error>*</TYPE.error>
             </Box>
             <TYPE.descriptionThin fontSize={13}>
               The description will be included on the item&apos;s detail page underneath its image.{' '}
@@ -258,6 +262,29 @@ export const CollectionForm = ({ collection, onSubmit, actionName = 'Update' }: 
           {descriptionError && <TYPE.error error>{descriptionError}</TYPE.error>}
         </Box>
       </Flex>
+
+      <Box style={{ paddingBottom: '2.5rem' }}>
+        <Flex flexDirection="column" mt={4}>
+          <Label htmlFor="supply-value" mb={2}>
+            <TYPE.body fontWeight={600}>
+              <Trans>Select max number of items in collection</Trans>
+            </TYPE.body>
+          </Label>
+          <Slider
+            id="supply-value"
+            min={1}
+            step={1}
+            disabled={collection}
+            max={MAX_SUPPLY_RANGE}
+            value={maxSupply}
+            onChange={(e) => setMaxSupply(e)}
+          />
+        </Flex>
+        <Flex justifyContent="space-between">
+          <TYPE.body>{maxSupply}</TYPE.body>
+          <TYPE.body>{MAX_SUPPLY_RANGE}</TYPE.body>
+        </Flex>
+      </Box>
 
       <Flex mx={-2} flexWrap="wrap">
         {isValid && (
