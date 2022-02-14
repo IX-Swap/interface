@@ -103,8 +103,7 @@ exports[`Step1RemoveAuthenticator should match snapshot when useGetEmailCode has
                   class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
                 >
                   <p
-                    class="MuiTypography-root MuiTypography-body1 css-3a17l8-MuiTypography-root"
-                    style="color: rgb(102, 102, 102); margin-top: 6px; margin-left: 8px;"
+                    class="MuiTypography-root MuiTypography-body1 makeStyles-label-1 css-3a17l8-MuiTypography-root"
                   >
                     Enter the 6-digit code sent to 
                     tes***@undefined
@@ -156,8 +155,7 @@ exports[`Step1RemoveAuthenticator should match snapshot when useGetEmailCode has
                   class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
                 >
                   <p
-                    class="MuiTypography-root MuiTypography-body1 css-3a17l8-MuiTypography-root"
-                    style="color: rgb(102, 102, 102); margin-top: 6px; margin-left: 8px;"
+                    class="MuiTypography-root MuiTypography-body1 makeStyles-label-1 css-3a17l8-MuiTypography-root"
                   >
                     Enter the 6-digit code from your authenticator app
                   </p>

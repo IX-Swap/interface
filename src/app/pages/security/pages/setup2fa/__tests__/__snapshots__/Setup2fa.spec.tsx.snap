@@ -227,7 +227,7 @@ exports[`Setup2fa should match snapshot 1`] = `
                   <span
                     class="MuiStepLabel-label Mui-disabled MuiStepLabel-alternativeLabel css-h2q6ot-MuiStepLabel-label"
                   >
-                    Enable Google Authenticator
+                    Enable Authenticator
                   </span>
                 </span>
               </span>
