@@ -201,15 +201,15 @@ export const SecTokensTable: FC<Props> = ({ tokens, page, offset, totalPages, to
             placeholder="Issuers"
             selectedItem={filters.issuer}
             onSelect={(item) => onFilterChange('issuer', item)}
-            items={issuersWithTokens}
-            style={{ borderRadius: '30px 0px 0px 30px', marginRight: 1 }}
+            items={issuers}
+            style={{ borderRadius: '30px 0px 0px 30px', marginRight: 1, padding: 8, width: 132 }}
           />
           <FilterDropdown
             selectedItem={filters.country}
             placeholder="Country"
             onSelect={(item) => onFilterChange('country', item)}
             items={countries}
-            style={{ borderRadius: '0px', marginRight: 1 }}
+            style={{ borderRadius: '0px', marginRight: 1, padding: 8, width: 132 }}
             withScroll
           />
           <FilterDropdown
@@ -217,7 +217,7 @@ export const SecTokensTable: FC<Props> = ({ tokens, page, offset, totalPages, to
             placeholder="Industry"
             onSelect={(item) => onFilterChange('industry', item)}
             items={industries}
-            style={{ borderRadius: '0px 30px 30px 0px' }}
+            style={{ borderRadius: '0px 30px 30px 0px', padding: 8, width: 132 }}
           />
         </Flex>
 
