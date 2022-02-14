@@ -54,6 +54,7 @@
     "react-window": "^1.8.5",
     "reaptcha": "^1.7.2",
     "socket.io-client": "^4.1.1",
+    "svg-sprite": "^1.5.4",
     "tinycolor2": "^1.4.1",
     "typescript": "^4.1.2",
     "uno-material-ui": "^2.0.4",
