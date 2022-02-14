@@ -1,5 +1,5 @@
 import { act } from '@testing-library/react-hooks'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { useMakeCommitment } from 'app/pages/invest/hooks/useMakeCommitment'
 import { unsuccessfulResponse, successfulResponse } from '__fixtures__/api'
 import { MakeInvestmentArgs } from 'types/commitment'
@@ -25,7 +25,6 @@ describe('useMakeCommitment', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

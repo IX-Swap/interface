@@ -1,6 +1,6 @@
 import { DataCard } from 'app/components/LandingPage/DataCard'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { InternalRouteProps } from 'types/util'
 import * as useAuthorizerPendingItems from 'app/pages/authorizer/hooks/useAuthorizerPendingItems'
 
@@ -22,12 +22,7 @@ describe('DataCard', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<DataCard link={link} variant={0} />)
   })
 
   it('does not render render number when status is loading', () => {

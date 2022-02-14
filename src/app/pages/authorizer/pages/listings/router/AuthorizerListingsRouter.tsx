@@ -1,6 +1,6 @@
 import React from 'react'
 import { AppRoute } from 'components/AppRoute'
-import { Switch } from 'react-router'
+import { Switch } from 'react-router-dom'
 import { ListingAuthorization } from '../ListingAuthorization'
 import { Listings } from '../Listings'
 
@@ -14,7 +14,7 @@ export const AuthorizerListingsRouter = () => {
       >
         <ListingAuthorization />
       </AppRoute>
-      <AppRoute exact path='/app/authorizer/listings'>
+      <AppRoute path='/app/authorizer/listings'>
         <Listings />
       </AppRoute>
     </Switch>

@@ -8,11 +8,12 @@ export const TransactionsFilter = () => {
   const { control } = useFormContext()
 
   return (
-    <Grid container justify='flex-end' style={{ marginBottom: 20 }}>
-      <Grid item xs={3} justify='flex-end' container>
+    <Grid container justifyContent='flex-end' style={{ marginBottom: 20 }}>
+      <Grid item xs={3} justifyContent='flex-end' container>
         <TypedField
           control={control}
           component={AssetSelect}
+          limit={100}
           name='asset'
           label='Asset'
         />

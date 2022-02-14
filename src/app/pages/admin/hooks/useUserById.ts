@@ -6,7 +6,7 @@ import { useServices } from 'hooks/useServices'
 import { useQuery } from 'react-query'
 import { ManagedUser } from 'types/user'
 
-export const useUserById = (userId: string): UseQueryData<ManagedUser> => {
+export const useUserById = (userId?: string): UseQueryData<ManagedUser> => {
   const { apiService } = useServices()
   const getUserData = async () =>
     await apiService.get<ManagedUser>(userURL.getUserById(userId))

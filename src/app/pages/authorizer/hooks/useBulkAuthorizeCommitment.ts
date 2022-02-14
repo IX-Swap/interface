@@ -4,7 +4,7 @@ import { authorizerQueryKeys } from 'config/queryKeys'
 import { useAuthorizerCategory } from 'hooks/location/useAuthorizerCategory'
 import { useServices } from 'hooks/useServices'
 import { useMutation, useQueryCache } from 'react-query'
-import { useHistory, useLocation } from 'react-router'
+import { useHistory, useLocation } from 'react-router-dom'
 
 export const useBulkAuthorizeCommitments = (action: 'approve' | 'reject') => {
   const { apiService, snackbarService } = useServices()

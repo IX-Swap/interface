@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { DownloadDocument } from 'components/dataroom/DownloadDocument'
 import {
   DataroomViewRow,
@@ -23,12 +23,7 @@ describe('DataroomViewRow', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<DataroomViewRow {...props} />)
   })
 
   it('renders DataroomColumns correctly', () => {

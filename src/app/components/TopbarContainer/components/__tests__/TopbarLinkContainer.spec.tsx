@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import {
   TopbarLinkContainer,
   TopbarLinkProps
@@ -12,12 +12,7 @@ describe('TopbarLink', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<TopbarLinkContainer {...props} />)
   })
 
   it('renders label correctly', () => {

@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { history } from 'config/history'
 import { EditDSO } from 'app/pages/issuance/pages/EditDSO'
 import { dso } from '__fixtures__/authorizer'
@@ -20,12 +20,7 @@ describe('EditDSO', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<EditDSO />)
   })
 
   it('renders DSO with correct props', () => {

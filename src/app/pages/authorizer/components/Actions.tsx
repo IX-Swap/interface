@@ -8,7 +8,7 @@ import { history } from 'config/history'
 import { Dropdown } from 'app/components/Dropdown/Dropdown'
 import { ActionsDropdownTrigger } from 'app/pages/authorizer/components/ActionsDropdownTrigger'
 import { ActionsDropdownContent } from 'app/pages/authorizer/components/ActionsDropdownContent'
-import { useLocation } from 'react-router'
+import { useLocation } from 'react-router-dom'
 
 export interface ActionsProps<T> {
   item: T
@@ -50,7 +50,7 @@ export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
   const isCommitment = category === 'commitments'
 
   return (
-    <Grid container wrap='nowrap' justify='flex-end'>
+    <Grid container wrap='nowrap' justifyContent='flex-end'>
       <Grid item>
         <IconButton
           component={AppRouterLinkComponent}
@@ -73,29 +73,27 @@ export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
         <Box px={1} />
       </Grid>
       {isCommitment && (item as any).fundStatus !== 'Funds on hold' ? (
-        <></>
+        <Grid item style={{ minWidth: 26 }} />
       ) : (
-        <>
-          <Grid item style={{ minWidth: 26 }}>
-            {(isUnauthorized || isCommitment) && (
-              <Dropdown
-                arrow
-                contentTheme='dark'
-                trigger={props => (
-                  <ActionsDropdownTrigger {...props} isLoading={isLoading} />
-                )}
-                content={props => (
-                  <ActionsDropdownContent
-                    {...props}
-                    approve={approve}
-                    reject={reject}
-                    view={view}
-                  />
-                )}
-              />
-            )}
-          </Grid>
-        </>
+        <Grid item style={{ minWidth: 26 }}>
+          {(isUnauthorized || isCommitment) && (
+            <Dropdown
+              arrow
+              contentTheme='dark'
+              trigger={props => (
+                <ActionsDropdownTrigger {...props} isLoading={isLoading} />
+              )}
+              content={props => (
+                <ActionsDropdownContent
+                  {...props}
+                  approve={approve}
+                  reject={reject}
+                  view={view}
+                />
+              )}
+            />
+          )}
+        </Grid>
       )}
     </Grid>
   )

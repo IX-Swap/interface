@@ -152,7 +152,7 @@ export const TableView = <T,>({
                 onClick={() => toggle(item)}
               />
             }
-            label={firstColumnRender?.(val, item) ?? val}
+            label={firstColumnRender?.(val, item) ?? val ?? ''}
             labelPlacement={'end'}
           />
         )
@@ -244,7 +244,7 @@ export const TableView = <T,>({
             rowsPerPage={rowsPerPage}
             page={page}
             classes={{ toolbar: classes.toolbar }}
-            onChangeRowsPerPage={evt => {
+            onRowsPerPageChange={evt => {
               setPage(0)
               setRowsPerPage(parseInt(evt.target.value))
             }}

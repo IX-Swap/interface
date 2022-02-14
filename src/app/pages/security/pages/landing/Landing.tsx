@@ -6,7 +6,7 @@ import { TwoFaDialog } from './components/TwoFaDialog'
 import keyImg from './assets/key.png'
 import gAuthImg from './assets/googleauth.png'
 import { ThemeSelector } from 'app/pages/security/pages/landing/components/ThemeSelector'
-import { useHistory } from 'react-router'
+import { useHistory } from 'react-router-dom'
 import { SecurityRoute } from 'app/pages/security/router/config'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 

@@ -3,7 +3,7 @@ import {
   Report
 } from 'app/pages/educationCentre/components/AccessReports/ReportRow'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 
 jest.mock(
   'app/pages/educationCentre/components/AccessReports/ReportLogo',
@@ -37,12 +37,7 @@ describe('ReportsRow', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<ReportRow item={report} />)
   })
 
   it('renders correct title when report is atlas-one', () => {

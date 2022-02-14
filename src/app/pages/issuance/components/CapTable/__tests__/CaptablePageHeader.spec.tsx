@@ -4,7 +4,7 @@ import { IssuanceRoute } from 'app/pages/issuance/router/config'
 import { history } from 'config/history'
 import React from 'react'
 import { generatePath } from 'react-router-dom'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { dso } from '__fixtures__/authorizer'
 import { generateQueryResult } from '__fixtures__/useQuery'
 import { user } from '__fixtures__/user'
@@ -25,12 +25,7 @@ describe('CapTablePageHeader', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<CapTablePageHeader />)
   })
 
   it('renders correct token name', () => {

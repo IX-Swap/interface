@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import {
   IndividualInfo,
   IndividualInfoProps
@@ -22,12 +22,7 @@ describe('IndividualInfo', () => {
   const props: IndividualInfoProps = { data: individual }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<IndividualInfo {...props} />)
   })
 
   // it('renders ViewDocument with correct props', () => {

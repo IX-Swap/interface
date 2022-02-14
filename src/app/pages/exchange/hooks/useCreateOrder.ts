@@ -8,7 +8,7 @@ import {
 } from 'config/queryKeys'
 import { useAuth } from 'hooks/auth/useAuth'
 import { getIdFromObj } from 'helpers/strings'
-import { useParams } from 'react-router'
+import { useParams } from 'react-router-dom'
 
 export const useCreateOrder = () => {
   const { apiService, snackbarService } = useServices()

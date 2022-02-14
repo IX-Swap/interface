@@ -10,6 +10,7 @@ import { UserProvider } from 'auth/context'
 import { EntryPoint } from 'EntryPoint'
 import { ToastProvider } from 'react-toast-notifications'
 import { Toast } from 'components/Toast'
+import { ToastContainer } from 'components/ToastContainer/ToastContainer'
 import { Router, Switch } from 'react-router-dom'
 import { history } from 'config/history'
 import { ReactQueryCacheProvider, QueryCache } from 'react-query'
@@ -48,7 +49,7 @@ const IXApp = () => {
                   <AppStateProvider>
                     <Switch>
                       <ToastProvider
-                        components={{ Toast }}
+                        components={{ Toast, ToastContainer }}
                         autoDismiss={false}
                         placement='bottom-right'
                       >

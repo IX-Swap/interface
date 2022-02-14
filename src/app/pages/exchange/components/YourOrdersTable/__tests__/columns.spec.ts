@@ -1,9 +1,7 @@
 import { columns } from 'app/pages/exchange/components/YourOrdersTable/columns'
-import { cleanup } from 'test-utils'
 
 describe('columns', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

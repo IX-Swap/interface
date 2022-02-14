@@ -1,6 +1,6 @@
 import React from 'react'
 import { RoleManagement } from 'app/pages/admin/components/RoleManagement'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { managedUser } from '__fixtures__/user'
 import * as useRoleManagement from 'app/pages/admin/hooks/useRoleManagement'
 import { fireEvent } from '@testing-library/react'
@@ -23,12 +23,7 @@ describe('RoleManagement', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<RoleManagement activeRoles={roles} />)
   })
 
   it('renders components correctly', () => {

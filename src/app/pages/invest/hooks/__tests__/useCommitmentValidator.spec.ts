@@ -1,4 +1,4 @@
-import { act, waitFor, cleanup, renderHookWithForm } from 'test-utils'
+import { act, waitFor, renderHookWithForm } from 'test-utils'
 import { useCommitmentValidator } from 'app/pages/invest/hooks/useCommitmentValidator'
 import * as balancesHook from 'hooks/balance/useBalancesByAssetId'
 import { asset } from '__fixtures__/authorizer'
@@ -8,7 +8,6 @@ import { QueryStatus } from 'react-query'
 
 describe('useCommitmentValidator', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

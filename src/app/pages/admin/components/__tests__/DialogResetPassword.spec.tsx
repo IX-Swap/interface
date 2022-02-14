@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import {
   DialogResetPassword,
   DialogResetPasswordProps
@@ -27,12 +27,7 @@ describe('DialogResetPassword', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<DialogResetPassword {...props} />)
   })
 
   it('calls useResetPassword hook with correct ars', () => {
@@ -55,14 +50,14 @@ describe('DialogResetPassword', () => {
         closeDialog: mockClose,
         action: resetPasswordMock,
         actionLabel: 'RESET',
-        title: 'Are you sure you want to start the account reset?'
+        title: 'Are you sure you want to start the password reset?'
       }),
       {}
     )
 
     expect(
       getByText(
-        'We will email the user the instructions and link to reset the account.'
+        'We will email the user the instructions and link to reset the password.'
       )
     ).toBeTruthy()
   })

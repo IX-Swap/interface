@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { DSOList } from 'app/pages/issuance/pages/DSOList'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
@@ -15,12 +15,7 @@ jest.mock('components/AppRouterLink', () => ({
 
 describe('DSOList', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<DSOList />)
   })
 
   it('renders AppRouterLink with correct props', () => {

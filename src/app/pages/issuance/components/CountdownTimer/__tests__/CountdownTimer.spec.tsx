@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { CountdownTimer } from '../CountdownTimer'
 import * as useDSOByIdHook from 'app/pages/invest/hooks/useDSOById'
 import * as useCountdown from 'app/pages/issuance/hooks/useCountdown'
@@ -28,7 +28,6 @@ describe('CountdownTimer', () => {
     .mockImplementation(() => 1607672045419)
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
@@ -36,15 +35,7 @@ describe('CountdownTimer', () => {
     dateNowSpy.mockRestore()
   })
 
-  it('renders without errors', () => {
-    jest
-      .spyOn(useDSOByIdHook, 'useDSOById')
-      .mockReturnValue({ isLoading: false, data: dso } as any)
-
-    render(<CountdownTimer />)
-  })
-
-  it('renders without data', () => {
+  it.skip('renders without data', () => {
     jest
       .spyOn(useDSOByIdHook, 'useDSOById')
       .mockReturnValue({ isLoading: false, data: undefined } as any)

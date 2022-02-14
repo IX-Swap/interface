@@ -2,7 +2,7 @@ import { Breadcrumbs as MuiBreadcrumbs, Typography } from '@material-ui/core'
 import { AppRouterLink } from 'components/AppRouterLink'
 import { useBreadcrumbs } from 'hooks/useBreadcrumbs'
 import React from 'react'
-import { useParams } from 'react-router'
+import { useParams } from 'react-router-dom'
 
 export const Breadcrumbs = () => {
   const params = useParams()

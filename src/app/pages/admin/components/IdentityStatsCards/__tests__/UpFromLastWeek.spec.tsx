@@ -1,15 +1,10 @@
 import { UpFromLastWeek } from 'app/pages/admin/components/IdentityStatsCards/UpFromLastWeek'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 
 describe('UpFromLastWeek', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<UpFromLastWeek value={'5'} />)
   })
 
   it('renders props correctly', () => {

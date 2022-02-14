@@ -7,7 +7,8 @@ import {
   DSOActivity,
   DsoFAQItem,
   DsoVideo,
-  DepositAddress
+  DepositAddress,
+  DigitalSecurityOffering
 } from 'types/dso'
 import { corporate, asset } from './authorizer'
 import { emptyFile } from '__fixtures__/file'
@@ -76,6 +77,52 @@ export const createDSOArgs: DSORequestArgs = {
   useOfProceeds: 'use of proceeds',
   policyBuilder: undefined,
   status: 'Approved'
+}
+
+export const dso: DigitalSecurityOffering = {
+  businessModel: 'business model',
+  capitalStructure: 'capital structure',
+  distributionFrequency: 'distribution frequency',
+  dividendYield: 1,
+  documents: [],
+  equityMultiple: 1,
+  fundraisingMilestone: 'fundraising milestone',
+  grossIRR: 0,
+  interestRate: 1,
+  introduction: 'introduction',
+  investmentPeriod: 1,
+  investmentStructure: 'investment structure',
+  issuerName: 'issuer name',
+  launchDate: '01-01-2000',
+  completionDate: '12-12-2220',
+  leverage: 1,
+  logo: '5f4f7d87f3e2c40bbab8a3f1',
+  minimumInvestment: 100,
+  pricePerUnit: 1,
+  team: [],
+  tokenName: 'token name',
+  tokenSymbol: 'token symbol',
+  totalFundraisingAmount: 100000,
+  useOfProceeds: 'use of proceeds',
+  policyBuilder: undefined,
+  status: 'Approved',
+  _id: '435346',
+  insight: dsoInsight,
+  deleted: false,
+  createdAt: '01-01-2022',
+  updatedAt: '01-01-2022',
+  createdBy: 'fdsfsd788',
+  asset: 'fdsfs',
+  user: 'fsgdfte343',
+  authorizations: [],
+  currency: asset,
+  network: network,
+  corporate,
+  promoted: true,
+  disabled: false,
+  faqs: [],
+  isStarred: false,
+  videos: []
 }
 
 export const teamMember: DsoTeamMember = {

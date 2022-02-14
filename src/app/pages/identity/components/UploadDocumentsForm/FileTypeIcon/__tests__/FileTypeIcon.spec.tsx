@@ -1,15 +1,10 @@
 import { FileTypeIcon } from 'app/pages/identity/components/UploadDocumentsForm/FileTypeIcon/FileTypeIcon'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 
 describe('FileTypeIcon', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<FileTypeIcon fileType='png' />)
   })
 
   it('renders props correctly', () => {

@@ -1,7 +1,7 @@
 import { CapTableDSOFilter } from 'app/pages/issuance/components/CapTable/CapTableDSOFilter'
 import * as useDSOFilter from 'app/pages/issuance/hooks/useDSOFilter'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 
 describe('CapTableDSOFilter', () => {
   beforeEach(() => {
@@ -12,12 +12,7 @@ describe('CapTableDSOFilter', () => {
       .mockImplementation(() => objResponse as any)
   })
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<CapTableDSOFilter />)
   })
 
   it('renders nul when isLoading', () => {

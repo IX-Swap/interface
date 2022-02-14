@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import {
   IndividualInfoFields,
   IndividualInfoFieldsProps
@@ -17,16 +17,7 @@ describe('IndividualInfoFields', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(
-      <Form>
-        <IndividualInfoFields {...props} />
-      </Form>
-    )
   })
 
   it('renders EditableField correctly', () => {

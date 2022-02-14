@@ -1,10 +1,9 @@
 import { act } from '@testing-library/react-hooks'
 import { useDeployToken } from 'app/pages/issuance/hooks/useDeployToken'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 
 describe('useDeployToken', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

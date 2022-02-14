@@ -3,7 +3,7 @@ import {
   DeclarationsListProps
 } from 'app/pages/identity/components/DeclarationsList/DeclarationsList'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 
 describe('DeclarationList', () => {
   const props: DeclarationsListProps = {
@@ -19,12 +19,7 @@ describe('DeclarationList', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<DeclarationsList {...props} />)
   })
 
   it('renders props correctly', () => {

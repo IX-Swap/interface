@@ -5,7 +5,7 @@ import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import React, { useState } from 'react'
 import { InvestorLiveOrderBook } from 'app/pages/exchange/components/InvestorLiveOrderBook/InvestorLiveOrderBook'
 import { MarketTrades } from 'app/pages/exchange/components/Trades/MarketTrades'
-import { IBasicDataFeed } from 'types/charting_library/charting_library'
+import { IBasicDataFeed } from 'charting_library'
 
 export interface TopSectionProps {
   symbol: string

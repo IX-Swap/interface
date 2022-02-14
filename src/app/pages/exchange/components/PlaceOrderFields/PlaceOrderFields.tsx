@@ -35,7 +35,7 @@ export const PlaceOrderFields: React.FC<PlaceOrderFieldsProps> = ({
           variant='outlined'
           numberFormat={moneyNumberFormat}
           valueExtractor={numericValueExtractor}
-          defaultValue={null}
+          defaultValue={''}
           onChange={value => {
             setValue('price', value)
             // TODO Uncomment after testing
@@ -52,11 +52,11 @@ export const PlaceOrderFields: React.FC<PlaceOrderFieldsProps> = ({
         <TypedField
           component={NumericInput}
           name={'amount'}
-          label={'Amount'}
+          label={'Quantity'}
           control={control}
           variant='outlined'
           numberFormat={numberFormat}
-          defaultValue={null}
+          defaultValue={''}
           valueExtractor={numericValueExtractor}
           onChange={value => {
             setValue('amount', value)

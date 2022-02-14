@@ -24,7 +24,7 @@ export const LoadingIndicator = (props: LoadingIndicatorProps) => {
       {...rest}
       container
       alignItems='center'
-      justify='center'
+      justifyContent='center'
       direction='column'
       className={classes.wrapper}
       style={{

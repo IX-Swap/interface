@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { UserDropdownContent } from 'app/components/UserDropdown/UserDropdownContent'
 import { DropdownContentProps } from 'app/components/Dropdown/Dropdown'
 import { UserDropdownItem } from 'app/components/UserDropdown/UserDropdownItem'
@@ -22,12 +22,7 @@ describe('UserDropdownContent', () => {
   } as any
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<UserDropdownContent {...props} />)
   })
 
   it('renders UserDropdownItem with correct props', () => {

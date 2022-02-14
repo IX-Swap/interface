@@ -1,7 +1,7 @@
 import { DocumentFields } from 'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/DocumentsFields'
 import { Form } from 'components/form/Form'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 
 describe('DocumentsFields', () => {
   const props = {
@@ -22,16 +22,7 @@ describe('DocumentsFields', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(
-      <Form defaultValues={defaultValues}>
-        <DocumentFields {...props} />
-      </Form>
-    )
   })
 
   it('renders labels and components correctly', () => {

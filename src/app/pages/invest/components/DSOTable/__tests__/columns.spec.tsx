@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { DSONameAndStructure } from 'app/pages/invest/components/DSOTable/DSONameAndStructure'
 import { PriceWithCurrency } from 'app/pages/invest/components/DSOTable/PriceWithCurrency'
 import { DSORaised } from 'app/pages/invest/components/DSOTable/DSORaised'
@@ -30,12 +30,7 @@ describe('render DSO Name', () => {
   const tokenName = 'CoinX'
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<>{renderDSONameAndStructure(tokenName, dso)}</>)
   })
 
   it('renders DSOName with correct props', () => {
@@ -53,15 +48,10 @@ describe('render DSO Name', () => {
 
 describe('render Price With Currency', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
   const price = 890000
-
-  it('renders without error', () => {
-    render(<>{renderPriceWithCurrency(price, dso)}</>)
-  })
 
   it('renders PriceWithCurrency with correct props', () => {
     render(<>{renderPriceWithCurrency(price, dso)}</>)
@@ -78,12 +68,7 @@ describe('render Price With Currency', () => {
 
 describe('render DSO Raised', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<>{renderDSOStatus(dsoInsight, dso)}</>)
   })
 
   it('renders DSORaised with correct props', () => {
@@ -101,15 +86,10 @@ describe('render DSO Raised', () => {
 
 describe('render DSO Total Fundraising Amount', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
   const raising = 25000
-
-  it('renders without error', () => {
-    render(<>{renderTotalFundraisingAmount(raising, dso)}</>)
-  })
 
   it('renders correct', () => {
     const { container } = render(
@@ -122,15 +102,10 @@ describe('render DSO Total Fundraising Amount', () => {
 
 describe('render DSO Minimum Investment', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
   const minimumInvestment = 1000
-
-  it('renders without error', () => {
-    render(<>{renderMinimumInvestment(minimumInvestment, dso)}</>)
-  })
 
   it('renders correct', () => {
     const { container } = render(
@@ -143,7 +118,6 @@ describe('render DSO Minimum Investment', () => {
 
 describe('render DSO Expected Return', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
@@ -152,10 +126,6 @@ describe('render DSO Expected Return', () => {
   const dsoDebt = { ...dso, capitalStructure: 'Debt' }
   const dsoHybrid = { ...dso, capitalStructure: 'Hybrid' }
   const dsoEquity = { ...dso, capitalStructure: 'Equity' }
-
-  it('renders without error', () => {
-    render(<>{renderExpectedReturn(expectedReturn, dso)}</>)
-  })
 
   it('renders correct when capitalStructure is Debt', () => {
     const { container } = render(

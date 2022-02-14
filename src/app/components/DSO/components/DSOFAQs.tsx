@@ -41,7 +41,7 @@ export const DSOFAQs = ({ isNew = false }: DSOFAQsProps) => {
               })}
             </Grid>
             <VSpacer size={'small'} />
-            <Grid item container justify='flex-end' alignItems='center'>
+            <Grid item container justifyContent='flex-end' alignItems='center'>
               <FormError name={fieldSectionName} render={TextError} />
               <DSOChapterAddButton append={append} text={'ADD NEW FAQ'} />
             </Grid>

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Switch } from 'react-router'
+import { Switch } from 'react-router-dom'
 import { LandingPage } from 'app/components/LandingPage/LandingPage'
 import { AccessReports } from 'app/pages/admin/pages/AccessReports'
 import { adminLandingLinks, AdminRoute } from 'app/pages/admin/router/config'
@@ -81,7 +81,7 @@ export const AdminRouter = () => {
         </RootContainer>
       </AppRoute>
 
-      <AppRoute exact path={AdminRoute.banner} breadcrumb='Banner'>
+      <AppRoute path={AdminRoute.banner} breadcrumb='Banner'>
         <RootContainer className={privateClassNames()}>
           <Banner />
         </RootContainer>
@@ -124,7 +124,7 @@ export const AdminRouter = () => {
         </RootContainer>
       </AppRoute>
 
-      <AppRoute exact path={AdminRoute.landing}>
+      <AppRoute path={AdminRoute.landing}>
         <RootContainer className={privateClassNames()}>
           <LandingPage links={adminLandingLinks} title='Admin' />
         </RootContainer>

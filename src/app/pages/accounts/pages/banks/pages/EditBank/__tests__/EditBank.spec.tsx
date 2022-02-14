@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { bank } from '__fixtures__/authorizer'
 import { useBanksData } from 'app/pages/accounts/pages/banks/hooks/useBanksData'
 import { BankForm } from 'app/pages/accounts/pages/banks/components/BankForm'
@@ -27,19 +27,7 @@ describe('EditBank', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    useBanksDataMock.mockReturnValue(
-      generateInfiniteQueryResult({
-        map: { [bank._id]: bank },
-        queryStatus: QueryStatus.Loading
-      })
-    )
-
-    render(<EditBank />)
   })
 
   it('renders nothing if loading', () => {

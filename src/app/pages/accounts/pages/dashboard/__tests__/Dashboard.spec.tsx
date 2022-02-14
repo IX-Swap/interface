@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { Dashboard } from 'app/pages/accounts/pages/dashboard/Dashboard'
 import * as useGetPortfolios from 'app/pages/accounts/hooks/useGetPortfolios'
 import * as useAuthHook from 'hooks/auth/useAuth'
@@ -35,7 +35,6 @@ describe('Dashboard', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

@@ -1,24 +1,20 @@
 import { Side } from 'app/pages/exchange/components/TradeHistoryTable/Side'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
+import { OrderSide } from 'types/order'
 
 describe('Side', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders without errors', () => {
-    render(<Side side='ASK' />)
+  it('renders Buy when side is BID', () => {
+    const { getByText } = render(<Side side={OrderSide.BID} />)
+    expect(getByText('Buy')).toBeTruthy()
   })
 
-  it('renders SELL when side is BID', () => {
-    const { getByText } = render(<Side side='BID' />)
-    expect(getByText('SELL')).toBeTruthy()
-  })
-
-  it('renders BUY when side is ASK', () => {
-    const { getByText } = render(<Side side='ASK' />)
-    expect(getByText('BUY')).toBeTruthy()
+  it('renders Sell when side is ASK', () => {
+    const { getByText } = render(<Side side={OrderSide.ASK} />)
+    expect(getByText('Sell')).toBeTruthy()
   })
 })

@@ -1,11 +1,10 @@
 import { act } from '@testing-library/react-hooks'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { useIndividualDefaultInfo } from 'hooks/auth/useIndividualDefaultInfo'
 import { user } from '__fixtures__/user'
 
 describe('useIndividualDefaultInfo', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

@@ -14,22 +14,36 @@ export const CommitmentTableFilter = () => {
 
   return (
     <Grid container direction='column' spacing={3}>
-      <Grid item container justify={'space-between'}>
+      <Grid item container justifyContent={'space-between'}>
         <Grid item xs={12} md={4}>
           <SearchFilter fullWidth placeholder='Search Name' />
         </Grid>
 
-        <Grid item container xs={12} md={3} lg={3} justify={'space-between'}>
+        <Grid
+          item
+          container
+          xs={12}
+          md={3}
+          lg={3}
+          justifyContent={'space-between'}
+        >
           <Grid item xs={12} md={5} lg={6}>
             {isTablet && <VSpacer size={'small'} />}
             <FundStatusFilter />
           </Grid>
-          <Grid item xs={12} md={7} lg={6} container justify={'flex-end'}>
+          <Grid
+            item
+            xs={12}
+            md={7}
+            lg={6}
+            container
+            justifyContent={'flex-end'}
+          >
             <Button
               variant={'contained'}
               color={'primary'}
               style={{
-                fontSize: 14,
+                fontSize: 12,
                 fontWeight: 400,
                 marginTop: isTablet ? theme.spacing(2) : 0
               }}

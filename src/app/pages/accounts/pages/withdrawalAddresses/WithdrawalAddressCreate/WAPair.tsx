@@ -1,4 +1,4 @@
-import { CSSProperties } from 'react'
+import React, { CSSProperties } from 'react'
 import { Box, Typography } from '@material-ui/core'
 import UnknownWalletIcon from 'assets/images/unknown-wallet.png'
 import UnknownNetworkIcon from 'assets/images/unknown-network.png'

@@ -1,5 +1,5 @@
 import React from 'react'
-import { cleanup, render } from 'test-utils'
+import { render } from 'test-utils'
 import { Preview } from 'app/pages/accounts/pages/banks/pages/WithdrawCash/Preview'
 import { bank, cashDeposit } from '__fixtures__/authorizer'
 import { useBanksData } from 'app/pages/accounts/pages/banks/hooks/useBanksData'
@@ -26,22 +26,7 @@ describe('Preview', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    useBanksDataMock.mockReturnValue(
-      generateInfiniteQueryResult({
-        map: { [bank._id]: bank }
-      })
-    )
-
-    render(
-      <Form defaultValues={formValues}>
-        <Preview />
-      </Form>
-    )
   })
 
   it('renders nothing if status is loading', () => {

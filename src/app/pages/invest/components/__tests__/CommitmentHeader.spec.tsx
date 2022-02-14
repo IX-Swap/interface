@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import {
   CommitmentHeader,
   CommitmentHeaderProps
@@ -24,16 +24,7 @@ describe('CommitmentHeader', () => {
   const props: CommitmentHeaderProps = { dso }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(
-      <Form>
-        <CommitmentHeader {...props} />
-      </Form>
-    )
   })
 
   it('renders DSOTitle with correct props', () => {

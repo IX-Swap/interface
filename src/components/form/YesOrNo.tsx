@@ -1,7 +1,7 @@
 import React from 'react'
 import { Grid, Radio, Typography } from '@material-ui/core'
 import { useFormError } from 'hooks/useFormError'
-import { themeColors } from 'themes/colors'
+import { themeColors } from 'themes/old/colors'
 
 export interface YesOrNoProps {
   name: string
@@ -25,7 +25,7 @@ export const YesOrNo = (props: Partial<YesOrNoProps>): JSX.Element => {
         container
         item
         xs={6}
-        justify='center'
+        justifyContent='center'
         direction='column'
         alignItems='center'
       >
@@ -45,7 +45,7 @@ export const YesOrNo = (props: Partial<YesOrNoProps>): JSX.Element => {
         container
         item
         xs={6}
-        justify='center'
+        justifyContent='center'
         direction='column'
         alignItems='center'
       >

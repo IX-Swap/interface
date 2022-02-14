@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { PasswordField } from 'components/form/PasswordField'
 import { Form } from 'components/form/Form'
 import { PasswordValidation } from 'components/form/PasswordValidation'
@@ -10,16 +10,7 @@ jest.mock('components/form/PasswordValidation', () => ({
 
 describe('PasswordField', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(
-      <Form>
-        <PasswordField />
-      </Form>
-    )
   })
 
   it('renders components correctly', () => {

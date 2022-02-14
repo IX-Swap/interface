@@ -1,6 +1,6 @@
 import React from 'react'
 import { AppRoute } from 'components/AppRoute'
-import { Switch } from 'react-router'
+import { Switch } from 'react-router-dom'
 import { IdentityRoute } from 'app/pages/identity/router/config'
 import { ViewInvestor } from 'app/pages/identity/pages/ViewInvestor/ViewInvestor'
 import { CreateInvestor } from 'app/pages/identity/pages/CreateInvestor/CreateInvestor'

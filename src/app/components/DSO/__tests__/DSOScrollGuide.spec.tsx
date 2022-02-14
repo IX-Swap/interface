@@ -3,14 +3,13 @@ import {
   DSOScrollGuide,
   isSectionVisible
 } from 'app/components/DSO/DSOScrollGuide'
-import { cleanup, render } from 'test-utils'
+import { render } from 'test-utils'
 import React from 'react'
 
 describe('DSOScrollGuide', () => {
   const actualDSOFormSection = Object.keys(DSOFormSection)
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

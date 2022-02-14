@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import {
   UploadDocumentField,
   UploadDocumentFieldProps
@@ -15,16 +15,7 @@ describe('UploadDocumentField', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(
-      <Form>
-        <UploadDocumentField {...props} />
-      </Form>
-    )
   })
 
   it('renders props correctly', () => {

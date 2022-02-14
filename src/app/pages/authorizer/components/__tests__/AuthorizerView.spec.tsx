@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import {
   AuthorizerView,
   AuthorizerViewProps
@@ -38,18 +38,7 @@ describe('AuthorizerView', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    const { _id, authorizations, createdAt, status, updatedAt } = bank
-    render(
-      <AuthorizerView
-        {...props}
-        data={{ _id, authorizations, createdAt, status, updatedAt }}
-      />
-    )
   })
 
   it('renders AuthorizableLevel with correct props', () => {

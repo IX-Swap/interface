@@ -1,11 +1,10 @@
 import { act } from '@testing-library/react-hooks'
 import { useTreasuryWallet } from 'app/pages/authorizer/hooks/useTreasuryWallet'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { generateQueryResult } from '__fixtures__/useQuery'
 
 describe('useTreasuryWallet', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

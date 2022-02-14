@@ -4,7 +4,7 @@ import { useAuth } from 'hooks/auth/useAuth'
 import apiService from 'services/api'
 import { getIdFromObj } from 'helpers/strings'
 import { identityURL } from 'config/apiURL'
-import { generatePath, useHistory } from 'react-router'
+import { generatePath, useHistory } from 'react-router-dom'
 import { IdentityRoute } from 'app/pages/identity/router/config'
 import {
   CreateOrUpdateIndividualIdentityArgs,

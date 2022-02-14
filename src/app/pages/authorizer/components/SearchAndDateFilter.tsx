@@ -40,7 +40,7 @@ export const SearchAndDateFilter = () => {
             }}
           />
         </Grid>
-        <Grid container item xs={12} justify='flex-end'>
+        <Grid container item xs={12} justifyContent='flex-end'>
           <SearchQueryFilterGroupReset
             filters={['search', 'toDate', 'fromDate']}
             variant='contained'

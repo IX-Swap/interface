@@ -1,7 +1,7 @@
 import { Report } from 'app/pages/educationCentre/components/AccessReports/ReportRow'
 import { ReportViewButton } from 'app/pages/educationCentre/components/AccessReports/ReportViewButton'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 
 describe('ReportViewButton', () => {
   const report: Report = {
@@ -21,12 +21,7 @@ describe('ReportViewButton', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<ReportViewButton isAtlasOne={true} item={report} />)
   })
 
   it('renders correct view button label when report type is atlas one', () => {

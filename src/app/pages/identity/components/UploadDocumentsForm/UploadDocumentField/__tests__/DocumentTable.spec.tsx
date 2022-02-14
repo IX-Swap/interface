@@ -4,7 +4,7 @@ import {
 } from 'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/DocumentTable'
 import { Form } from 'components/form/Form'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { document } from '__fixtures__/identity'
 import { DocumentTableRow } from 'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/DocumentTableRow'
 
@@ -24,16 +24,7 @@ describe('DocumentTable', () => {
     ]
   }
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(
-      <Form>
-        <DocumentTable {...props} />
-      </Form>
-    )
   })
 
   it('renders document lists correctly', () => {

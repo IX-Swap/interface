@@ -1,4 +1,7 @@
-import Web3 from 'web3'
+// there is a problem with webpack loading & transpiling wev3 library
+// so, for now we're just importing the ready to use version already
+// @ts-expect-error
+import Web3 from 'web3/dist/web3.min'
 
 interface Web3Service {
   web3: any

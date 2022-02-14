@@ -11,6 +11,7 @@ import { hasValue } from 'helpers/forms'
 import { DataroomFile, FormArray } from 'types/dataroomFile'
 import { ListingFormValues } from 'app/pages/exchange/types/listings'
 import * as yup from 'yup'
+import { AssetUnderManagement, TopInvestor } from 'types/vccDashboard'
 
 export const numberToPercentage = (value: any) => {
   if (value === null || value === undefined || value === '') {
@@ -147,3 +148,44 @@ export const newDistributionValidationSchema = yup.object().shape({
   dateOfDistribution: yup.string().required('This is a required field'),
   otp: yup.string().required('This is a required field')
 })
+
+export interface SortAmountAndAlphaArgs {
+  amountA: number
+  amountB: number
+  stringA: string
+  stringB: string
+}
+
+export const sortByAmountAndAlpha = ({
+  amountA,
+  amountB,
+  stringA,
+  stringB
+}: SortAmountAndAlphaArgs) => {
+  if (amountA === amountB) {
+    return stringA.toLowerCase() > stringB.toLowerCase() ? 1 : -1
+  }
+  return amountB - amountA
+}
+
+export const sortInvestors = (investors?: TopInvestor[]) => {
+  return investors?.sort((first, second) => {
+    return sortByAmountAndAlpha({
+      amountA: first.amount,
+      amountB: second.amount,
+      stringA: first.investorName,
+      stringB: second.investorName
+    })
+  })
+}
+
+export const sortAssets = (assets?: AssetUnderManagement[]) => {
+  return assets?.sort((first, second) => {
+    return sortByAmountAndAlpha({
+      amountA: first.amount,
+      amountB: second.amount,
+      stringA: first.dsoName,
+      stringB: second.dsoName
+    })
+  })
+}

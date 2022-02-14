@@ -8,7 +8,7 @@ export interface DetailsItemProps {
 
 export const DetailsItem = ({ label, value }: DetailsItemProps) => {
   return (
-    <Grid container justify='space-between'>
+    <Grid container justifyContent='space-between'>
       <Grid item>
         <Typography style={{ fontWeight: 500 }}>{label}</Typography>
       </Grid>

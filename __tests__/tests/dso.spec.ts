@@ -7,7 +7,7 @@ test.afterEach(async ({ page }) => {
   await page.close()
 })
 test.describe('Check functionality', () => {
-  test.beforeEach(async ({ page, dso, auth, issuance }, testInfo) => {
+  test.beforeEach(async ({ page, dso, auth, issuance }) => {
     await dso.followToIssuanceTab(auth)
     await click(issuance.sections.CREATE_DSO, page)
   })
@@ -41,11 +41,7 @@ test.describe('Check functionality', () => {
     expect(inputs).toStrictEqual(8)
   })
 
-  test.skip('(need to implement)The "Preview" should be available', async ({
-    dso,
-    issuance,
-    page
-  }) => {
+  test.skip('(need to implement)The "Preview" should be available', async ({ dso, issuance, page }) => {
     await dso.fillDsoInformationForm()
     await dso.fillDsoPricingForm()
     await dso.fillDsoOfferingTermsForm()
@@ -61,10 +57,7 @@ test('DSO creation is available', async ({ dso, auth, page, issuance }) => {
   await click(issuance.dso.buttons.CREATE_DSO, page)
   await shouldExist(issuance.dso.FORM, page)
 })
-test('The fields should be editable if the DSO has not started.', async ({
-  dso,
-  auth
-}) => {
+test('The fields should be editable if the DSO has not started.', async ({ dso, auth }) => {
   await dso.followToFundsManagement(auth, baseCreds.DSO_EDIT)
   const formsIsEdited = await dso.editDsoInformationForm()
   expect(formsIsEdited).toStrictEqual([true, true])
@@ -98,41 +91,17 @@ test.describe('Funds Management More Option section', () => {
       await click(issuance.dso.buttons.EDIT_DSO, page)
     })
 
-    test('The Fields should be disabled if DSO started', async ({
-      page,
-      issuance
-    }) => {
+    test('The Fields should be disabled if DSO started', async ({ page, issuance }) => {
       const result = await isDisabledList(
-        [
-          issuance.dso.fields.TOKEN_NAME,
-          issuance.dso.fields.IDENTIFIER_CODE,
-          issuance.dso.fields.LAUNCH_DATE,
-          issuance.dso.fields.TOKEN_SYMBOL
-        ],
+        [issuance.dso.fields.TOKEN_NAME, issuance.dso.fields.IDENTIFIER_CODE, issuance.dso.fields.LAUNCH_DATE, issuance.dso.fields.TOKEN_SYMBOL],
         page
       )
-      const network = await page.getAttribute(
-        issuance.dso.listBox.NETWORK,
-        'aria-disabled'
-      )
-      expect([result, network]).toStrictEqual([
-        [true, true, true, true],
-        'true'
-      ])
+      const network = await page.getAttribute(issuance.dso.listBox.NETWORK, 'aria-disabled')
+      expect([result, network]).toStrictEqual([[true, true, true, true], 'true'])
     })
 
-    test('The fields should be disabled if Capital Structure = Debt', async ({
-      page,
-      issuance
-    }) => {
-      const result = await isDisabledList(
-        [
-          issuance.dso.fields.DIVIDEND_YIELD,
-          issuance.dso.fields.GROSS_IRR,
-          issuance.dso.fields.EQUITY_MULTIPLE
-        ],
-        page
-      )
+    test('The fields should be disabled if Capital Structure = Debt', async ({ page, issuance }) => {
+      const result = await isDisabledList([issuance.dso.fields.DIVIDEND_YIELD, issuance.dso.fields.GROSS_IRR, issuance.dso.fields.EQUITY_MULTIPLE], page)
       expect(result).toStrictEqual([true, true, true])
     })
   })
@@ -148,9 +117,7 @@ test.describe('Commitments', () => {
     await shouldExist(invest.TABLE, page)
   })
 
-  test('Investor should received the "Capital call" message', async ({
-    dso
-  }) => {
+  test('Investor should received the "Capital call" message', async ({ dso }) => {
     const messageTitle = await dso.capitalCall()
     expect(messageTitle.subject).toBe('Capital call')
   })

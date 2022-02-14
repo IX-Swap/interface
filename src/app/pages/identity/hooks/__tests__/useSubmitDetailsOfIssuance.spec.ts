@@ -1,7 +1,7 @@
 import { act } from '@testing-library/react-hooks'
 import { useSubmitDetailsOfIssuance } from 'app/pages/identity/hooks/useSubmitDetailsOfIssuance'
 import { identityURL } from 'config/apiURL'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import * as useOnboardingDialog from 'app/components/OnboardingDialog/hooks/useOnboardingDialog'
 import { successfulResponse } from '__fixtures__/api'
 
@@ -18,7 +18,6 @@ describe('useSubmitDetailsOfIssuance', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

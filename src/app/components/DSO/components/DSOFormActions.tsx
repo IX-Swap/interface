@@ -1,42 +1,44 @@
-import React from 'react'
 import { Box, Button } from '@material-ui/core'
-import { DigitalSecurityOffering } from 'types/dso'
 import { DSOFinishLaterButton } from 'app/components/DSO/components/DSOFinishLaterButton'
-import { useHistory } from 'react-router'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
-import { generatePath } from 'react-router-dom'
+import { useSaveDSO } from 'app/pages/issuance/hooks/useSaveDSO'
 
-export interface DSOFormActionsProps {
-  dso: DigitalSecurityOffering | undefined
-}
+import React from 'react'
+import { generatePath, useHistory } from 'react-router-dom'
+import { DSOFormActionsProps } from 'types/dso'
 
 export const DSOFormActions = (props: DSOFormActionsProps) => {
-  const { dso } = props
+  const { dso, schema } = props
   const { push } = useHistory()
-
+  const { onSubmit, isLoading } = useSaveDSO({ dso, schema })
   return (
     <>
-      <Button
-        data-testid='preview'
-        variant={'contained'}
-        color='primary'
-        disableElevation
-        onClick={() =>
-          push(
-            generatePath(IssuanceRoute.preview, {
-              dsoId: dso?._id,
-              issuerId: dso?.user
-            })
-          )
-        }
-        disabled={dso === undefined}
-      >
-        Preview
-      </Button>
+      {dso !== undefined && (
+        <Button
+          data-testid='preview'
+          variant={'contained'}
+          color='primary'
+          disableElevation
+          onClick={() =>
+            push(
+              generatePath(IssuanceRoute.preview, {
+                dsoId: dso?._id,
+                issuerId: dso?.user
+              })
+            )
+          }
+        >
+          Preview
+        </Button>
+      )}
 
       <Box mx={1} component='span' />
 
-      <DSOFinishLaterButton dso={dso} />
+      <DSOFinishLaterButton
+        dso={dso}
+        isLoading={isLoading}
+        onSubmit={onSubmit}
+      />
     </>
   )
 }

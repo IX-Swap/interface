@@ -1,13 +1,12 @@
 import { useIssuanceQuery } from 'app/pages/issuance/hooks/useIssuanceQuery'
 import { act } from '@testing-library/react-hooks'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { history } from 'config/history'
 import { generatePath } from 'react-router-dom'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
 
 describe('useIssuanceQuery', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

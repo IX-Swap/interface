@@ -55,7 +55,7 @@ export const VirtualAccountNumberInfo = ({
     <Grid
       container
       direction='column'
-      justify='space-between'
+      justifyContent='space-between'
       style={{ height: '100%' }}
     >
       <Grid item>
@@ -65,7 +65,7 @@ export const VirtualAccountNumberInfo = ({
         <Label label='Account Number' />
         <ValueDisplay value={accountNumber} />
       </Grid>
-      <Grid item container justify='space-between'>
+      <Grid item container justifyContent='space-between'>
         <Grid item xs={6}>
           <Label label='Available Balance' />
           <ValueDisplay value={formatAmount(availableBalance)} />

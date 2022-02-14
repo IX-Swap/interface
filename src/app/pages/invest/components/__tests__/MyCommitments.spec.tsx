@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { MyCommitments } from 'app/pages/invest/components/MyCommitments'
 import { TableView } from 'components/TableWithPagination/TableView'
 import { user } from '__fixtures__/user'
@@ -20,12 +20,7 @@ describe('MyCommitments', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<MyCommitments />)
   })
 
   it('renders TableView with correct props', () => {

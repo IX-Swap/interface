@@ -7,7 +7,7 @@ import { columns } from 'app/pages/admin/components/columns'
 import { LoginHistory } from 'types/user'
 import { Grid } from '@material-ui/core'
 import { SearchFilter } from 'app/components/SearchFilter'
-import { useParams } from 'react-router'
+import { useParams } from 'react-router-dom'
 
 export const AccountLoginHistory = () => {
   const { userId } = useParams<{ userId: string }>()

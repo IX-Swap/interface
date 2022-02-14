@@ -27,7 +27,7 @@ export const DeployToken = () => {
         <Grid
           item
           container
-          justify='flex-end'
+          justifyContent='flex-end'
           alignItems='flex-start'
           xs={12}
           sm={3}

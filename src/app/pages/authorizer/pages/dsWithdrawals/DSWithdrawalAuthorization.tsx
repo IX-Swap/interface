@@ -4,11 +4,12 @@ import { paginationArgs } from 'config/defaults'
 import { useParsedData } from 'hooks/useParsedData'
 import { useServices } from 'hooks/useServices'
 import { useInfiniteQuery } from 'react-query'
-import { useParams } from 'react-router'
+import { useParams } from 'react-router-dom'
 import { PaginatedData } from 'services/api/types'
 import { AppFeature } from 'types/app'
 import { DSWithdrawal } from 'types/dsWithdrawal'
 import { DSWithdrawalPreview } from 'app/components/DSWithdrawalPreview/DSWithdrawalPreview'
+import { isEmptyString } from 'helpers/strings'
 
 export const DSWithdrawalAuthorization = () => {
   const { apiService } = useServices()
@@ -32,7 +33,14 @@ export const DSWithdrawalAuthorization = () => {
     return null
   }
 
-  const dsWithdrawal = map[dsWithdrawalId]
+  const dsWithdrawal = !isEmptyString(dsWithdrawalId)
+    ? map[dsWithdrawalId]
+    : undefined
+
+  if (dsWithdrawal == null) {
+    // TODO handle not found case
+    return null
+  }
 
   return (
     <AuthorizerView

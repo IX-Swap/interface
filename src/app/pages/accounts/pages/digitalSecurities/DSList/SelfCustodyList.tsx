@@ -3,7 +3,7 @@ import { TableView } from 'components/TableWithPagination/TableView'
 import { accountsURL } from 'config/apiURL'
 import { digitalSecuritiesQueryKeys } from 'config/queryKeys'
 import { getIdFromObj } from 'helpers/strings'
-import useAuth from 'hooks/auth/useAuth'
+import { useAuth } from 'hooks/auth/useAuth'
 import React from 'react'
 
 export const SelfCustodyList = () => {

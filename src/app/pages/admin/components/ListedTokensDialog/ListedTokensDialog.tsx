@@ -38,7 +38,6 @@ export const ListedTokensDialog = (props: ModalProps) => {
       fullScreen={fullScreen}
       className={classes.root}
       onClose={handleClose}
-      onBackdropClick={handleClose}
       aria-labelledby='close-deal-modal-title'
       aria-describedby='close-deal-modal-description'
     >

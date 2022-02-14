@@ -3,6 +3,7 @@ import { Control, FieldError } from 'react-hook-form'
 import get from 'lodash/get'
 import { wysiwygToHtml } from 'helpers/rendering'
 import { sanitize } from 'dompurify'
+import { capitalizeFirstLetter } from 'helpers/strings'
 
 export const booleanValueExtractor = (
   _: React.ChangeEvent<{}>,
@@ -60,4 +61,10 @@ export const getErrorFromControl = (path: string, control: Control) => {
   return get(control?.formStateRef.current.errors, path) as
     | FieldError
     | undefined
+}
+
+export const textValueExtractor = (
+  event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
+) => {
+  return capitalizeFirstLetter(event.target.value)
 }

@@ -1,5 +1,5 @@
 import React from 'react'
-import { cleanup, render } from 'test-utils'
+import { render } from 'test-utils'
 import { Form } from 'components/form/Form'
 import { TypedField } from 'components/form/TypedField'
 import { AgreementsAndDisclosuresFields } from './AgreementsAndDisclosuresFields'
@@ -10,16 +10,7 @@ jest.mock('components/form/TypedField', () => ({
 
 describe('AgreementsAndDisclosuresFields', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(
-      <Form>
-        <AgreementsAndDisclosuresFields />
-      </Form>
-    )
   })
 
   it('renders fields correctly', () => {

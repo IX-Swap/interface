@@ -11,12 +11,14 @@ export const RequestFields = () => {
     <Grid item>
       <TypedField
         control={control}
-        customRenderer
         component={TextField}
-        variant='outlined'
         fullWidth
         name='email'
-        label='Email Address'
+        label='Email'
+        placeholder={'Email'}
+        InputLabelProps={{
+          shrink: true
+        }}
       />
     </Grid>
   )

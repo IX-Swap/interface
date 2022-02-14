@@ -7,7 +7,7 @@ import { getDataroomFileId } from 'helpers/dataroom'
 import { Image, Person, PhotoCamera } from '@material-ui/icons'
 import { useStyles } from 'components/dataroom/DataroomAvatarUploader.styles'
 import { useFormError } from 'hooks/useFormError'
-import { themeColors } from 'themes/colors'
+import { themeColors } from 'themes/old/colors'
 
 export interface DataroomAvatarUploaderProps
   extends DataroomUploaderRenderProps {

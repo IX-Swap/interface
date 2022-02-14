@@ -8,14 +8,20 @@ import { assetsQueryKeys } from 'config/queryKeys'
 import { accountsURL } from 'config/apiURL'
 
 export const useAssetsData = (
-  type?: AssetType
+  type?: AssetType,
+  customLimit?: number
 ): UsePaginatedQueryData<Asset> => {
-  const payload = { ...paginationArgs, type }
+  let payloadPaginationArgs = paginationArgs
+  if (customLimit !== undefined) {
+    payloadPaginationArgs = { ...paginationArgs, limit: customLimit }
+  }
+
+  const payload = { ...payloadPaginationArgs, type }
   const getAssets = async (queryKey: string, args: GetAssetsArgs) => {
     const uri = accountsURL.assets.getAll
 
     return await apiService.post<PaginatedData<Asset>>(uri, {
-      ...paginationArgs,
+      ...payloadPaginationArgs,
       ...args
     })
   }

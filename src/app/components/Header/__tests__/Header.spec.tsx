@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { Header } from 'app/components/Header/Header'
 import { UserDropdown } from 'app/components/UserDropdown/UserDropdown'
 import { NotificationsDropdown } from 'app/pages/notifications/components/NotificationsDropdown'
@@ -13,12 +13,7 @@ jest.mock('app/pages/notifications/components/NotificationsDropdown', () => ({
 
 describe('Header', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<Header />)
   })
 
   it('renders UserDropdown with correct props', () => {

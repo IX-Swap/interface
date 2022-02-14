@@ -1,9 +1,13 @@
 import fetch from 'node-fetch'
 import { baseCreds } from './creds'
+
 const defaultHeaders = {
+  Connection: 'keep-alive',
   'Content-Type': 'application/json',
-  Accept: 'application/json',
-  Origin: baseCreds.URL
+  'Accept-Encoding': 'gzip, deflate, br',
+  'Content-Length': '352',
+  Accept: '*/*',
+  host: baseCreds.HOST
 }
 export async function userRegistration(email) {
   try {
@@ -24,6 +28,7 @@ export async function userRegistration(email) {
     throw new Error(`Company registration by API failed`)
   }
 }
+
 export async function getCookies(email) {
   try {
     // Registration company
@@ -31,14 +36,70 @@ export async function getCookies(email) {
       email: email,
       password: baseCreds.PASSWORD
     }
-    const cookies = await fetch(`${baseCreds.BASE_API}auth/sign-in`, {
+    const request = await fetch(`${baseCreds.BASE_API}auth/sign-in`, {
       method: 'POST',
       headers: defaultHeaders,
       body: JSON.stringify(user)
-    }).then(res => res.headers.raw()['set-cookie'])
-    return cookies
+    })
+    const cookies = request.headers.raw()['set-cookie']
+    return { cookies, request }
   } catch (error) {
     console.log(error)
     throw new Error(`Get cookies by API failed`)
   }
+}
+
+export async function postRequest(body, cookies, link, method = 'POST') {
+  try {
+    // Registration company
+    const request = await fetch(baseCreds.BASE_API + link, {
+      method: method,
+      body: JSON.stringify(body),
+      headers: {
+        Connection: 'keep-alive',
+        'Content-Type': 'application/json',
+        'Accept-Encoding': 'gzip, deflate, br',
+        Accept: '*/*',
+        host: baseCreds.HOST,
+        Cookie: cookies
+      }
+    })
+    if (request.status !== 200) {
+      console.log(request)
+      throw new Error(`Post request by API failed: ${request.statusText}`)
+    }
+    return request.json()
+  } catch (error) {
+    console.log(error)
+    throw new Error(`Post request by API failed`)
+  }
+}
+export async function getRequest(cookies, link) {
+  try {
+    // Registration company
+    const request = await fetch(baseCreds.BASE_API + link, {
+      method: 'GET',
+      headers: {
+        Connection: 'keep-alive',
+        'Content-Type': 'application/json',
+        'Accept-Encoding': 'gzip, deflate, br',
+        Accept: '*/*',
+        host: baseCreds.HOST,
+        Cookie: cookies
+      }
+    }).then(request => request.json())
+    return request
+  } catch (error) {
+    console.log(error)
+    throw new Error(`GET request by API failed`)
+  }
+}
+
+export async function getCookiesForAllAccounts(list = [baseCreds.firstExchange, baseCreds.secondExchange, baseCreds.thirdExchange]) {
+  let result = new Array()
+  for (const item of list) {
+    const cookie = await (await getCookies(item)).cookies
+    result.push(cookie)
+  }
+  return result
 }

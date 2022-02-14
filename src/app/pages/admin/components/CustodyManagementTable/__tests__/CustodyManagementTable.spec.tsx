@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { CustodyManagementTable } from 'app/pages/admin/components/CustodyManagementTable/CustodyManagementTable'
 import { TableView } from 'components/TableWithPagination/TableView'
 import { custodyAccounts } from 'config/apiURL'
@@ -15,12 +15,7 @@ jest.mock('components/TableWithPagination/TableView', () => ({
 
 describe('CustodyManagementTable', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<CustodyManagementTable />)
   })
 
   it('renders table with correct props', () => {

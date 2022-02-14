@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [16.x]
+        node-version: [14.x]
     steps:
       - uses: actions/checkout@v2
         with:
@@ -21,8 +21,8 @@ jobs:
       - name: Install packages
         run: yarn
 
-      - name: Build
-        run: yarn build --if-present
+      - name: Run Build
+        run: yarn build
 
       - name: Run Tests
         run: yarn test:ci

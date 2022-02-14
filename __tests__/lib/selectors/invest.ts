@@ -1,5 +1,7 @@
 export const invest = {
+  PRIMARY_CARD: '[data-testid="icon-button"]',
   TABLE: '[data-testid="table"]',
+  ROW: 'tbody tr',
   TOAST_NOTIFICATIONS: '[data-testid="notification-inner"]',
   INVEST_TAB: '[href="/app/invest"]',
   PRIMARY_SECTION: '[href="/app/invest"] >> text="Primary"',
@@ -25,10 +27,8 @@ export const invest = {
     I_AGREE: 'button >> text="I Agree"',
     DECLINE: 'button >> text="Decline"',
     SELL: 'button >> text="SELL"',
-    VIEW_SECOND_DSO:
-      '[href="/app/invest/commitments/618e3111cc078c0e59014af5/view"]',
-    INVEST_ACCOUNT:
-      '[href="/app/invest/offerings/617699e04f2dcc0e7d304e4d/6185361bf251660e58fd5ed0/view/make-investment"]'
+    VIEW_SECOND_DSO: '[href="/app/invest/commitments/618e3111cc078c0e59014af5/view"]',
+    INVEST_ACCOUNT: '[href="/app/invest/offerings/61c1ca2956e67e0e60c340f5/61c1e3e356e67e0e60c35854/view/make-investment"]'
   },
   fields: {
     SEARCH: '[placeholder="Search"]',
@@ -42,7 +42,7 @@ export const invest = {
   listBox: {
     DESTINATION_WALLET_ADDRESS: '[id="withdrawalAddress"]',
     WALLET_ADDRESS_AQA_VALUE: '[data-value="6184dfe93899410e58bbe013"]',
-    AFHT_SGD_PAIR: '[href="/app/otc-market/market/6142b268cc94760d9b527184"]',
+    IXPS_SGD_PAIR: '[href="/app/otc-market/market/61a71463ad10390e378804e3"]',
     PAIR_NAME: '[data-testid="pairName"]',
     PAIR_NAME_VALUE: 'a >> text="AQA##/SGD"'
   }

@@ -1,5 +1,5 @@
 import { act } from '@testing-library/react-hooks'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { useCreateBank } from 'app/pages/accounts/pages/banks/hooks/useCreateBank'
 import { unsuccessfulResponse, successfulResponse } from '__fixtures__/api'
 import * as useAuthHook from 'hooks/auth/useAuth'
@@ -14,7 +14,6 @@ describe('useCreateBank', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

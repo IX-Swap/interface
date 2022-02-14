@@ -1,10 +1,9 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { NotificationsList } from 'app/pages/notifications/components/NotificationsList'
 import { NoData } from 'app/components/NoData/NoData'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 import * as notificationsHook from 'app/pages/notifications/hooks/useNotifications'
-import { notification } from '__fixtures__/notification'
 
 jest.mock('app/components/NoData/NoData', () => ({
   NoData: jest.fn(() => null)
@@ -15,16 +14,7 @@ jest.mock('app/components/LoadingIndicator/LoadingIndicator', () => ({
 
 describe('NotificationsList', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    jest
-      .spyOn(notificationsHook, 'useNotifications')
-      .mockReturnValue({ data: [notification], isLoading: false } as any)
-
-    render(<NotificationsList />)
   })
 
   it('renders NoData if data is empty', () => {

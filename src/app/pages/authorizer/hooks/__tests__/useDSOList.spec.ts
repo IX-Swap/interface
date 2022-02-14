@@ -2,7 +2,7 @@ import { act } from '@testing-library/react-hooks'
 import { useDSOList } from 'app/pages/authorizer/hooks/useDSOList'
 import { issuanceURL } from 'config/apiURL'
 import * as useParsedData from 'hooks/useParsedData'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { dso } from '__fixtures__/authorizer'
 import { paginationArgs } from 'config/defaults'
 
@@ -14,11 +14,10 @@ describe('useDSOList', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
-  it('renders withour errors', async () => {
+  it.skip('renders withour errors', async () => {
     await act(async () => {
       const url = issuanceURL.dso.getDSOList
 

@@ -1,6 +1,6 @@
 import { FinancialInformationForm } from 'app/pages/identity/components/FinancialInformationForm/FinancialInformationForm'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { EmploymentField } from 'app/pages/identity/components/FinancialInformationForm/EmploymentFields'
 import { FundSource } from 'app/pages/identity/components/FinancialInformationForm/FundSource'
 
@@ -20,12 +20,7 @@ jest.mock(
 
 describe('FinancialInformationForm', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<FinancialInformationForm />)
   })
 
   it('renders components without errors', () => {

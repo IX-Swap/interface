@@ -19,7 +19,7 @@ export const SafeguardInfoAction: React.FC<SafeguardInfoActionProps> = ({
 
   return (
     <>
-      <Grid container justify='center'>
+      <Grid container justifyContent='center'>
         <Grid item>
           <StyledButton color='primary' onClick={close} variant='contained'>
             Ok

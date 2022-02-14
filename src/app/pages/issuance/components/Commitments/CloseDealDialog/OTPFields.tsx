@@ -30,7 +30,7 @@ export const OTPFields = ({ isLoading, onClose }: OTPFieldsProps) => {
           shouldAutoFocus
         />
       </Grid>
-      <Grid item container justify='center' spacing={2}>
+      <Grid item container justifyContent='center' spacing={2}>
         <Grid item>
           <Button
             size='large'

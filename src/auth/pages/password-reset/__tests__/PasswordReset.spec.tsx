@@ -1,7 +1,7 @@
 import React from 'react'
 import { PasswordReset } from 'auth/pages/password-reset/PasswordReset'
 import { renderWithPasswordResetStore } from 'test-utils'
-import { cleanup } from '@testing-library/react'
+import {} from '@testing-library/react'
 import { PasswordResetStep } from 'auth/context/password-reset/types'
 import { RequestStep } from 'auth/pages/password-reset/RequestStep'
 import { ResetStep } from 'auth/pages/password-reset/ResetStep'
@@ -12,7 +12,6 @@ jest.mock('../ResetStep.tsx', () => ({ ResetStep: jest.fn(() => null) }))
 describe('PasswordReset', () => {
   afterEach(async () => {
     jest.clearAllMocks()
-    await cleanup()
   })
 
   it('renders RequestStep if currentStep is PasswordResetStep.Request', () => {

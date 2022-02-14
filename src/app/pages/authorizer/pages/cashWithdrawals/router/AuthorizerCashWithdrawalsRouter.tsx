@@ -1,5 +1,5 @@
 import React from 'react'
-import { Switch } from 'react-router'
+import { Switch } from 'react-router-dom'
 import { AppRoute } from 'components/AppRoute'
 import { AuthorizerRoute } from 'app/pages/authorizer/router/config'
 import { CashWithdrawalAuthorization } from 'app/pages/authorizer/pages/cashWithdrawals/CashWithdrawalAuthorization'
@@ -16,7 +16,7 @@ export const AuthorizerCashWithdrawalsRouter = () => {
         <CashWithdrawalAuthorization />
       </AppRoute>
 
-      <AppRoute exact path={AuthorizerRoute.cashWithdrawals}>
+      <AppRoute path={AuthorizerRoute.cashWithdrawals}>
         <CashWithdrawals />
       </AppRoute>
     </Switch>

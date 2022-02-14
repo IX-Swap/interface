@@ -1,6 +1,6 @@
 import { AppFeature } from 'types/app'
 
-const generateQueryKey = (prefix: string, ...params: any[]) => {
+const generateQueryKey = (prefix?: string, ...params: any[]) => {
   return [prefix, ...params].join('-')
 }
 
@@ -28,15 +28,15 @@ export const assetsQueryKeys = {
 
 export const identityQueryKeys = {
   getIndividual: 'individual-identity',
-  getCorporate: (userId: string, identityId: string) => [
+  getCorporate: (userId?: string, identityId?: string) => [
     'corporate-identity',
     userId,
     identityId
   ],
   getAllCorporate: 'all-corporate-identities',
-  getAllCorporateByUserId: (id: string) =>
+  getAllCorporateByUserId: (id?: string) =>
     generateQueryKey('all-corporate-identities', id),
-  getDetailsOfIssuance: (userId: string) =>
+  getDetailsOfIssuance: (userId?: string) =>
     generateQueryKey('details-of-issuance', userId),
   getStats: 'admin-identity-stats',
   getAdminIdentityList: 'admin-identity-list'
@@ -46,8 +46,8 @@ export const balanceQueryKeys = {
   getAll: 'all-balances',
   getByAssetId: 'balances-by-asset-id',
   getByType: 'balances-by-type',
-  getByUserId: (id: string) => generateQueryKey('balance', id),
-  getDistribution: (dsoId: string) => generateQueryKey('distributions', dsoId)
+  getByUserId: (id?: string) => generateQueryKey('balance', id),
+  getDistribution: (dsoId?: string) => generateQueryKey('distributions', dsoId)
 }
 
 export const authorizerQueryKeys = {
@@ -71,7 +71,7 @@ export const authorizerQueryKeys = {
   getClosureList: 'authorizer-closure-list',
   getWithdrawalAddresses: 'authorizer-withdrawal-addresses-list',
   getVirtualAccounts: 'authorizer-virtual-accounts',
-  getVirtualAccountById: (id: string) =>
+  getVirtualAccountById: (id?: string) =>
     generateQueryKey('authorizer-virtual-account', id)
 }
 
@@ -86,78 +86,79 @@ export const homeQueryKeys = {
 export const banksQueryKeys = {
   getById: 'bank-by-id',
   getData: 'banks',
-  getListByUserId: (id: string) => generateQueryKey('banks', id)
+  getListByUserId: (id?: string) => generateQueryKey('banks', id)
 }
 
 export const cashDepositsQueryKeys = {
-  getByUserId: (id: string) => generateQueryKey('cash-deposit', id),
-  getByVirtualAccount: (virtualAccountNumber: string) =>
+  getByUserId: (id?: string) => generateQueryKey('cash-deposit', id),
+  getByVirtualAccount: (virtualAccountNumber?: string) =>
     generateQueryKey('cash-deposit', virtualAccountNumber)
 }
 
 export const cashWithdrawalsQueryKeys = {
-  getByUserId: (id: string) => generateQueryKey('cash-withdrawal', id),
-  getByVirtualAccount: (virtualAccountNumber: string) =>
+  getByUserId: (id?: string) => generateQueryKey('cash-withdrawal', id),
+  getByVirtualAccount: (virtualAccountNumber?: string) =>
     generateQueryKey('cash-withdrawal', virtualAccountNumber)
 }
 
 export const digitalSecuritiesQueryKeys = {
-  getDepositByUserId: (id: string) => generateQueryKey('ds-deposits', id),
-  getWithdrawalsByUserId: (id: string) =>
+  getDepositByUserId: (id?: string) => generateQueryKey('ds-deposits', id),
+  getWithdrawalsByUserId: (id?: string) =>
     generateQueryKey('ds-withdrawals', id),
-  getByUserId: (id: string) => generateQueryKey('ds', id),
-  custody: (userId: string) => generateQueryKey('custody', userId),
-  selfCustody: (userId: string) => generateQueryKey('self-custody', userId)
+  getByUserId: (id?: string) => generateQueryKey('ds', id),
+  custody: (userId?: string) => generateQueryKey('custody', userId),
+  selfCustody: (userId?: string) => generateQueryKey('self-custody', userId)
 }
 
 export const transactionsQueryKeys = {
-  getByUserId: (id: string) => generateQueryKey('transactions', id)
+  getByUserId: (id?: string) => generateQueryKey('transactions', id)
 }
 
 export const withdrawalAddressQueryKeys = {
   getAddressById: 'withdrawal-address',
   getAllNetworks: 'all-networks',
   getAddresses: 'withdrawal-addresses',
-  getByUserId: (id: string) => generateQueryKey('withdrawal-addresses', id)
+  getByUserId: (id?: string) => generateQueryKey('withdrawal-addresses', id)
 }
 
 export const usersQueryKeys = {
   getList: 'user-list',
-  getUserById: (id: string) => generateQueryKey('user', id),
-  getCustomFields: (service: string, feature: string) =>
+  getUserById: (id?: string) => generateQueryKey('user', id),
+  getCustomFields: (service?: string, feature?: string) =>
     generateQueryKey('customf-fields', service, feature)
 }
 
 export const investQueryKeys = {
   getCommitmentById: 'commitment-by-id',
-  getDSOById: (dsoId: string, issuerId: string) =>
+  getDSOById: (dsoId?: string, issuerId?: string) =>
     generateQueryKey('dso', dsoId, issuerId),
-  getCommitmentsByUserId: (id: string) => generateQueryKey('commitments', id)
+  getCommitmentsByUserId: (id?: string) => generateQueryKey('commitments', id)
 }
 
 export const authQueryKeys = {
   get2fa: 'get-2fa',
-  getLoginHistory: (userId: string) => generateQueryKey('login-history', userId)
+  getLoginHistory: (userId?: string) =>
+    generateQueryKey('login-history', userId)
 }
 
 export const dsoQueryKeys = {
   getList: 'dso-list',
-  getDSOsByUserId: (userId: string) => generateQueryKey('dso-list', userId),
-  getDSOsById: (id: string) => generateQueryKey('dso-list', id),
+  getDSOsByUserId: (userId?: string) => generateQueryKey('dso-list', userId),
+  getDSOsById: (id?: string) => generateQueryKey('dso-list', id),
   getCapitalStructureList: 'capital-structures-list',
   getPromoted: 'promoted-dsos',
   getApprovedList: 'dso-approved-list',
-  getCommitmentsListByDSOId: (dsoId: string) =>
+  getCommitmentsListByDSOId: (dsoId?: string) =>
     generateQueryKey('commitments-list', dsoId),
-  closure: (closureId: string) => generateQueryKey('closure', closureId),
-  vccDSOList: (corporateId: string, status: string) =>
+  closure: (closureId?: string) => generateQueryKey('closure', closureId),
+  vccDSOList: (corporateId?: string, status?: string) =>
     generateQueryKey('vcc-dso-list', corporateId, status),
-  vccSubFundStats: (corporateId: string, status: string, dsos: string) =>
+  vccSubFundStats: (corporateId?: string, status?: string, dsos?: string) =>
     generateQueryKey('vcc-subfund-stats', corporateId, status, dsos),
   vccSubFundInvestmentStats: (
-    corporateId: string,
-    status: string,
-    dsos: string
+    corporateId?: string,
+    status?: string,
+    dsos?: string
   ) =>
     generateQueryKey('vcc-subfund-investment-stats', corporateId, status, dsos)
 }
@@ -167,18 +168,19 @@ export const otcQueryKeys = {
 }
 
 export const issuanceQueryKeys = {
-  commitmentsStats: (dsoId: string) =>
+  commitmentsStats: (dsoId?: string) =>
     generateQueryKey('commitment-stats', dsoId),
-  investmentGrowth: (dsoId: string) =>
+  investmentGrowth: (dsoId?: string) =>
     generateQueryKey('investment-growth', dsoId),
-  investorsByCountry: (dsoId: string) =>
+  investorsByCountry: (dsoId?: string) =>
     generateQueryKey('investors-by-country', dsoId),
-  totalInvestors: (dsoId: string) => generateQueryKey('total-investors', dsoId),
-  topInvestors: (dsoId: string) => generateQueryKey('top-investors', dsoId),
+  totalInvestors: (dsoId?: string) =>
+    generateQueryKey('total-investors', dsoId),
+  topInvestors: (dsoId?: string) => generateQueryKey('top-investors', dsoId),
   getPromoted: 'promoted-dsos',
   getApprovedList: 'approved-list',
   getCapitalStructureList: 'capital-structures-list',
-  getActivitiesList: (dsoId: string) =>
+  getActivitiesList: (dsoId?: string) =>
     generateQueryKey('activities-list', dsoId)
 }
 
@@ -207,16 +209,16 @@ export const exchange = {
   orderBook: 'order-book',
   lastPrice: 'last-price',
   summary: 'summary',
-  getMetrics: (tokenId: string) => generateQueryKey('metrics', tokenId),
-  userTrades: (userId: string) => generateQueryKey('user-trades', userId),
-  userOrders: (userId: string) => generateQueryKey('user-orders', userId),
-  userHoldings: (userId: string) => generateQueryKey('user-holdings', userId),
-  listing: (listingId: string) => generateQueryKey('listing', listingId),
-  market: (pairId: string) => generateQueryKey('market', pairId)
+  getMetrics: (tokenId?: string) => generateQueryKey('metrics', tokenId),
+  userTrades: (userId?: string) => generateQueryKey('user-trades', userId),
+  userOrders: (userId?: string) => generateQueryKey('user-orders', userId),
+  userHoldings: (userId?: string) => generateQueryKey('user-holdings', userId),
+  listing: (listingId?: string) => generateQueryKey('listing', listingId),
+  market: (pairId?: string) => generateQueryKey('market', pairId)
 }
 
 export const exchangeMarketQueryKeys = {
-  getOrdersList: (userId: string, pairId: string) =>
+  getOrdersList: (userId?: string, pairId?: string) =>
     generateQueryKey('orders-list', userId, pairId)
 }
 
@@ -225,7 +227,7 @@ export const listingsQueryKeys = {
 }
 
 export const exchangeListingsQueryKeys = {
-  getListingById: (listingId: string, issuerId: string) =>
+  getListingById: (listingId?: string, issuerId?: string) =>
     generateQueryKey('listing', listingId, issuerId)
 }
 

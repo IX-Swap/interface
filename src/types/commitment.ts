@@ -53,7 +53,7 @@ export interface CommitmentIssuanceArgs {
 }
 
 export interface MakeInvestmentArgs {
-  dso: string
+  dso?: string
   signedSubscriptionDocument: string
   currency: string
   withdrawalAddress?: string

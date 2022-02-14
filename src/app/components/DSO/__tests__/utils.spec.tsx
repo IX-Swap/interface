@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import {
   documentValueExtractor,
   transformDSOToFormValues,
@@ -9,7 +9,6 @@ import { document } from '__fixtures__/identity'
 
 describe('documentValueExtractor', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
@@ -42,7 +41,7 @@ describe('transformDSOToFormValues', () => {
       tokenName: '',
       network: '',
       corporate: '',
-      logo: null,
+      logo: '',
       equityMultiple: '',
       leverage: '',
       distributionFrequency: '',

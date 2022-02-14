@@ -4,7 +4,7 @@ import { useServices } from 'hooks/useServices'
 import { useEffect, useMemo } from 'react'
 import { useQuery, useQueryCache } from 'react-query'
 
-export const useTradeHistory = (id: string) => {
+export const useTradeHistory = (id?: string) => {
   const { socketService } = useServices()
   const socket = useMemo(() => socketService.socket, [socketService.socket])
   const queryCache = useQueryCache()
@@ -24,6 +24,8 @@ export const useTradeHistory = (id: string) => {
   }
 
   useEffect(() => {
+    if (id === undefined) return
+
     const onUrl = exchange.tradeHistory.on(id)
     const onMyFills = exchange.tradeHistory.onMyFills(id)
     socket?.on(onUrl, onDataReceived)

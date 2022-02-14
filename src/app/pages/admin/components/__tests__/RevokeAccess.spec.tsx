@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup, waitFor } from 'test-utils'
+import { render, waitFor } from 'test-utils'
 import { RevokeAccess } from 'app/pages/admin/components/RevokeAccess'
 import * as useRevokeAccess from 'app/pages/admin/hooks/useRevokeAccess'
 import { fireEvent, act } from '@testing-library/react'
@@ -20,12 +20,7 @@ describe('RevokeAccess', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<RevokeAccess />)
   })
 
   it('calls revokeAccess fn when form is submitted', async () => {

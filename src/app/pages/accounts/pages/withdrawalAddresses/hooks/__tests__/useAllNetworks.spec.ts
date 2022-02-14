@@ -1,11 +1,10 @@
 import { act } from '@testing-library/react-hooks'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { useAllNetworks } from 'app/pages/accounts/pages/withdrawalAddresses/hooks/useAllNetworks'
 import { networks } from '__fixtures__/network'
 
 describe('useAllNetworks', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

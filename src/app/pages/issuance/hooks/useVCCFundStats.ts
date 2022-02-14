@@ -1,13 +1,14 @@
 import { issuanceURL } from 'config/apiURL'
 import { dsoQueryKeys } from 'config/queryKeys'
 import { getIdFromObj } from 'helpers/strings'
-import useAuth from 'hooks/auth/useAuth'
+import { useAuth } from 'hooks/auth/useAuth'
 import { useServices } from 'hooks/useServices'
 import { useQuery } from 'react-query'
 import { useAllCorporates } from 'app/pages/identity/hooks/useAllCorporates'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import { InvestmentStats, SubFundStats } from 'types/vccDashboard'
 import { subMonths } from 'date-fns'
+import { sortAssets, sortInvestors } from '../utils'
 
 export const useVCCFundStats = () => {
   const { user } = useAuth()
@@ -34,6 +35,7 @@ export const useVCCFundStats = () => {
     subFunds ?? ''
   ]
   const queryOptions = {
+    retry: 0,
     enabled:
       !corporateIdentitiesIsLoading &&
       corporateId !== undefined &&
@@ -47,7 +49,9 @@ export const useVCCFundStats = () => {
 
     return await apiService.post<InvestmentStats[]>(uri, {
       ...filters,
-      start: subMonths(now, 12),
+      // number of month should be desired number of month to display - 1
+      // e.g. right now we display only 12 month, therefore we should sub 11
+      start: subMonths(now, 11),
       end: new Date(now)
     })
   }
@@ -68,12 +72,18 @@ export const useVCCFundStats = () => {
     getSubFundInvestmentStats,
     queryOptions
   )
-
+  const data = {
+    ...subFundStatsQuery.data?.data?.[0],
+    assetsUnderManagement: sortAssets(
+      subFundStatsQuery.data?.data?.[0].assetsUnderManagement
+    ),
+    topInvestors: sortInvestors(subFundStatsQuery.data?.data?.[0].topInvestors)
+  }
   return {
     subFundStats: {
       ...subFundStatsQuery,
       isLoading: corporateIdentitiesIsLoading || subFundStatsQuery.isLoading,
-      data: subFundStatsQuery.data?.data?.[0]
+      data
     },
     subFundInvestmentStats: {
       ...subFundInvestmentStatsQuery,

@@ -1,5 +1,5 @@
 import { act, renderHook } from '@testing-library/react-hooks'
-import { waitFor, cleanup } from 'test-utils'
+import { waitFor } from 'test-utils'
 import * as useCachedUserHook from 'hooks/auth/useCachedUser'
 import {
   getUserRoles,
@@ -54,7 +54,6 @@ describe('hasRole', () => {
 
 describe('useIsAdmin', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
@@ -85,7 +84,6 @@ describe('useIsAdmin', () => {
 
 describe('useIsAuthorizer', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
@@ -116,7 +114,6 @@ describe('useIsAuthorizer', () => {
 
 describe('useIsIssuer', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
@@ -147,7 +144,6 @@ describe('useIsIssuer', () => {
 
 describe('useIsAccredited', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
@@ -178,7 +174,6 @@ describe('useIsAccredited', () => {
 
 describe('useHasSpecialRole', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 
@@ -197,7 +192,6 @@ describe('useHasSpecialRole', () => {
 
 describe('useIsFundManager', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

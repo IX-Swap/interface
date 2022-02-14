@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { ContinueButton } from 'app/pages/accounts/pages/banks/pages/WithdrawCash/ContinueButton'
 import { bank, cashDeposit } from '__fixtures__/authorizer'
 import { DepositStoreProvider } from 'app/pages/accounts/pages/banks/context'
@@ -8,7 +8,6 @@ import * as validateWithdrawHook from 'app/pages/accounts/pages/banks/hooks/useV
 
 describe('ContinueButton', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

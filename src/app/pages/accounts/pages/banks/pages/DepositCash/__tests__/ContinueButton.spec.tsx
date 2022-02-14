@@ -1,5 +1,5 @@
 import React from 'react'
-import { renderWithDepositStore, cleanup } from 'test-utils'
+import { renderWithDepositStore } from 'test-utils'
 import { Form } from 'components/form/Form'
 import { asset, cashDeposit } from '__fixtures__/authorizer'
 import { ContinueButton } from 'app/pages/accounts/pages/banks/pages/DepositCash/ContinueButton'
@@ -8,7 +8,6 @@ describe('ContinueButton', () => {
   // const fakeDepositStore = { setCurrentStep: jest.fn() }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

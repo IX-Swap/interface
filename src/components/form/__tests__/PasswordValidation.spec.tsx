@@ -1,21 +1,12 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { PasswordValidation } from 'components/form/PasswordValidation'
 import { Form } from 'components/form/Form'
 import * as useFormContext from 'react-hook-form'
 
 describe('PasswordValidationDisplay', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(
-      <Form>
-        <PasswordValidation />
-      </Form>
-    )
   })
 
   it('renders correct component when password has no value', () => {

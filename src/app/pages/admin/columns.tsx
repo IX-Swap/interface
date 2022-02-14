@@ -6,6 +6,7 @@ import {
   ColorType
 } from 'app/pages/admin/components/BooleanColumn'
 import { ViewUserColumn } from 'app/pages/admin/components/ViewUserColumn'
+import { formatDateToMMDDYY } from 'helpers/dates'
 
 export const renderViewUser = (id: string) => <ViewUserColumn userId={id} />
 
@@ -16,6 +17,11 @@ export const renderBoolean = (
 ) => <BooleanColumn value={a} labels={labels} colors={colors} />
 
 export const columns: Array<TableColumn<User>> = [
+  {
+    key: 'createdAt',
+    label: 'Account creation date',
+    render: (a: string) => formatDateToMMDDYY(a)
+  },
   {
     key: 'email',
     label: 'Email'

@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import * as useUserActionsDialog from 'app/pages/admin/hooks/useUserActionsDialog'
 import { DialogConfirmReset2FA } from 'app/pages/admin/components/DialogConfirmReset2FA'
 import { ActionReset2FA } from 'app/pages/admin/components/ActionReset2FA'
@@ -28,12 +28,7 @@ describe('ActionReset2FA', () => {
   )
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<ActionReset2FA />)
   })
 
   it('renders components with correct props', () => {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { Slider } from '@material-ui/core'
 import { useStyles } from 'app/pages/exchange/components/PlaceOrderSlider/PlaceOrderSlider.style'
@@ -21,6 +21,15 @@ export const PlaceOrderSlider: React.FC<PlaceOrderFieldsProps> = ({
   const amount = watch('amount')
   const [slider, setSlider] = useState(sliderRange.from)
 
+  const marks = useMemo(() => {
+    return Array.from({ length: sliderRange.to + 1 }, (x, i) => i).map(
+      element => ({
+        label: '',
+        value: element
+      })
+    )
+  }, [sliderRange.to])
+
   useEffect(() => {
     if (price !== undefined && amount !== undefined) {
       const totalValue = price * amount
@@ -41,7 +50,8 @@ export const PlaceOrderSlider: React.FC<PlaceOrderFieldsProps> = ({
       value={slider}
       min={sliderRange.from}
       max={sliderRange.to}
-      marks
+      marks={marks}
+      step={0.05}
       classes={{
         rail: classes.rail,
         track: classes.track,

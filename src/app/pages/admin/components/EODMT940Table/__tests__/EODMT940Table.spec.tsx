@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { TableView } from 'components/TableWithPagination/TableView'
 import { columns } from '../columns'
 import { EODMT940Table } from 'app/pages/admin/components/EODMT940Table/EODMT940Table'
@@ -13,12 +13,7 @@ jest.mock('components/TableWithPagination/TableView', () => ({
 
 describe('EODMT940Table', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<EODMT940Table />)
   })
 
   it('renders TableView with correct props', () => {

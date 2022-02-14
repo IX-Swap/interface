@@ -30,7 +30,7 @@ export const InvestorsChart = ({
       return [
         date,
         ...Object.values(investmentStats).reduce(
-          (acc, cur) => [...acc, cur.data[index].count] as any,
+          (acc, cur) => [...acc, cur.data[index]?.count] as any,
           []
         )
       ]

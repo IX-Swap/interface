@@ -1,9 +1,12 @@
 import React, { Fragment, ReactNode } from 'react'
 import { ViewDocument } from 'app/components/DSO/components/ViewDocument'
-import { Avatar as MUIAvatar } from '@material-ui/core'
+import {
+  Avatar as MUIAvatar,
+  AvatarProps as MUIAvatarProps
+} from '@material-ui/core'
 import { useRawBanner } from 'app/pages/admin/hooks/useRawBanner'
 
-export interface AvatarProps {
+export interface AvatarProps extends MUIAvatarProps {
   documentId?: string
   ownerId?: string
   type?: 'banner' | 'document'
@@ -11,7 +14,6 @@ export interface AvatarProps {
   border?: string | number
   borderRadius?: string | number
   maxWidth?: number | string
-  variant?: 'circle' | 'rounded' | 'square'
   fallback?: Element | JSX.Element
   children?: ReactNode
 }
@@ -24,7 +26,7 @@ export const Avatar = (props: AvatarProps) => {
     size = 80,
     borderRadius = 'initial',
     border = 'initial',
-    variant = 'circle',
+    variant = 'circular',
     fallback,
     children,
     maxWidth = 'initial'

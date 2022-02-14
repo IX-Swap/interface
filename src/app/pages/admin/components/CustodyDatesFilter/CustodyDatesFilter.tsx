@@ -12,7 +12,7 @@ export const CustodyDatesFilter = () => {
       container
       xs={12}
       md={4}
-      justify={'flex-start'}
+      justifyContent={'flex-start'}
       alignItems={'center'}
       wrap={'wrap'}
     >

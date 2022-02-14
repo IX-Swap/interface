@@ -1,7 +1,7 @@
 import { Charts } from 'app/pages/educationCentre/components/Charts/Charts'
 import { sampleSecurity } from 'app/pages/educationCentre/components/Securities/__tests__/SecurityCard.spec'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 
 jest.mock('app/components/LoadingIndicator/LoadingIndicator', () => ({
@@ -10,12 +10,7 @@ jest.mock('app/components/LoadingIndicator/LoadingIndicator', () => ({
 
 describe('Charts', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<Charts data={[sampleSecurity]} isLoading={false} />)
   })
 
   it('renders loading indicator when isLoading', () => {

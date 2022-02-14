@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { CustodyForm } from 'app/pages/authorizer/pages/TokenDeployment/CustodyForm'
 import { CustodyFormFields } from 'app/pages/authorizer/pages/TokenDeployment/CustodyFormFields'
 import * as useTokenListing from 'app/pages/authorizer/hooks/useTokenListing'
@@ -16,15 +16,7 @@ describe('CustodyForm', () => {
   const objResponse = [mutate, { isLoading: true }]
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    jest
-      .spyOn(useTokenListing, 'useTokenListing')
-      .mockImplementation(() => objResponse as any)
-    render(<CustodyForm />)
   })
 
   it('renders CustodyFormFields with correct props', () => {

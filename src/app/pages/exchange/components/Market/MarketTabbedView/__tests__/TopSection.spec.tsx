@@ -1,6 +1,6 @@
 import { TopSection } from 'app/pages/exchange/components/Market/MarketTabbedView/TopSection'
 import React from 'react'
-import { render, cleanup, fireEvent } from 'test-utils'
+import { render, fireEvent } from 'test-utils'
 import { MarketTrades } from 'app/pages/exchange/components/Trades/MarketTrades'
 import { InvestorLiveOrderBook } from 'app/pages/exchange/components/InvestorLiveOrderBook/InvestorLiveOrderBook'
 import { TVChartContainer } from 'app/pages/invest/components/TVChartContainer/TVChartContainer'
@@ -45,12 +45,7 @@ describe('TopSection', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<TopSection {...props} />)
   })
 
   it('renders correct tab', () => {

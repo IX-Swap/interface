@@ -6,6 +6,7 @@ import {
   CorporateIdentity,
   IndividualIdentity
 } from 'app/pages/identity/types/forms'
+import { ObjectSchema, Shape } from 'yup'
 
 export interface DsoTeamMember {
   _id?: string
@@ -17,14 +18,14 @@ export interface DsoTeamMember {
 
 export interface DsoFAQItem {
   _id?: string
-  question: string
-  answer: string
+  question?: string
+  answer?: string
 }
 
 export interface DsoVideo {
   _id?: string
-  title: string
-  link: string
+  title?: string
+  link?: string
 }
 
 export interface DeploymentInfo {
@@ -44,6 +45,12 @@ export interface DeploymentInfo {
   updatedAt: string
   __v: number
 }
+
+export const capitalStructureWithFunds = [
+  'Fund - Feeder/Sub-Fund',
+  'Fund',
+  'Fund - Standalone'
+]
 
 export interface BaseDigitalSecurityOffering extends AuthorizableWithIdentity {
   _id: string
@@ -196,4 +203,9 @@ export interface DepositAddress {
   deposit_address: string
   hd_path: string
   depositQRCodeUrl: string
+}
+
+export interface DSOFormActionsProps {
+  dso: DigitalSecurityOffering | undefined
+  schema: ObjectSchema<Shape<object | undefined, DSOFormValues>, object>
 }

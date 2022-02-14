@@ -1,5 +1,5 @@
 import { act } from '@testing-library/react-hooks'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { useLogin } from 'auth/hooks/useLogin'
 import { unsuccessfulResponse } from '__fixtures__/api'
 import { loginArgs } from '__fixtures__/auth'
@@ -8,7 +8,6 @@ import { authURL } from 'config/apiURL'
 
 describe('useLogin', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

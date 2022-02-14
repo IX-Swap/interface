@@ -1,6 +1,6 @@
 import React from 'react'
 import { DSOTeamView } from 'app/components/DSO/DSOPreview/DSOTeamView'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { dso } from '__fixtures__/authorizer'
 import { DSOTeamMemberView } from 'app/components/DSO/components/DSOTeamMemberView'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
@@ -18,12 +18,7 @@ jest.mock('app/components/DSO/components/FormSectionHeader', () => ({
 
 describe('DSOTeamView', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<DSOTeamView dso={dso} />)
   })
 
   it('renders title', () => {

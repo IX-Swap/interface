@@ -1,5 +1,5 @@
 import { act } from '@testing-library/react-hooks'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { useWithdrawCash } from 'app/pages/accounts/pages/banks/hooks/useWithdrawCash'
 import { successfulResponse, unsuccessfulResponse } from '__fixtures__/api'
 import * as useAuthHook from 'hooks/auth/useAuth'
@@ -25,7 +25,6 @@ describe('useWithdrawCash', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

@@ -1,5 +1,5 @@
-import { Route, Switch } from 'react-router-dom'
 import React from 'react'
+import { Route, Switch } from 'react-router-dom'
 import { SecurityRoute } from 'app/pages/security/router/config'
 import { Landing } from 'app/pages/security/pages/landing/Landing'
 import { ChangePassword } from 'app/pages/security/pages/changePassword/ChangePassword'
@@ -9,19 +9,19 @@ import { Setup2FAGuide } from 'app/pages/security/pages/setup2faguide/Setup2FAGu
 export const SecurityRouter = () => {
   return (
     <Switch>
-      <Route exact path={SecurityRoute.setup2fa}>
+      <Route path={SecurityRoute.setup2fa}>
         <Setup2fa />
       </Route>
 
-      <Route exact path={SecurityRoute.guide}>
+      <Route path={SecurityRoute.guide}>
         <Setup2FAGuide />
       </Route>
 
-      <Route exact path={SecurityRoute.changePassword}>
+      <Route path={SecurityRoute.changePassword}>
         <ChangePassword />
       </Route>
 
-      <Route exact path={SecurityRoute.landing}>
+      <Route path={SecurityRoute.landing}>
         <Landing />
       </Route>
     </Switch>

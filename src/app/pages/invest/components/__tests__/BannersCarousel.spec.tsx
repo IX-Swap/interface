@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { BannersCarousel } from 'app/pages/invest/components/BannersCarousel'
 import * as useBannersList from 'app/pages/admin/hooks/useBannersList'
 
@@ -17,12 +17,7 @@ const bannerWithEmptyTitle = { ...emptyBanner, title: '' }
 
 describe('BannersCarousel', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<BannersCarousel />)
   })
 
   it('renders if data is undefined', () => {

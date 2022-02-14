@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { DSOForm, DSOFormProps } from 'app/components/DSO/DSOForm'
 import { DSOBaseFields } from 'app/components/DSO/components/DSOBaseFields'
 import { DSOPricing } from 'app/components/DSO/components/DSOPricing'
@@ -43,12 +43,7 @@ describe('DSOForm', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<DSOForm {...props} />)
   })
 
   it('renders form field components', () => {

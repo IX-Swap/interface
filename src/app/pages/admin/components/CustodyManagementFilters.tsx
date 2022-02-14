@@ -11,7 +11,7 @@ export const CustodyManagementFilters = () => {
       container
       wrap={'wrap'}
       alignItems={'center'}
-      justify={'space-between'}
+      justifyContent={'space-between'}
     >
       <CustodySearchFilter />
       <CustodiansFilter />

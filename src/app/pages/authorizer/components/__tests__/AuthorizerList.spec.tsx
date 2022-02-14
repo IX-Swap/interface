@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { AuthorizerTable } from '../AuthorizerTable'
 import {
   AuthorizerList,
@@ -25,7 +25,6 @@ describe('AuthorizerList', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

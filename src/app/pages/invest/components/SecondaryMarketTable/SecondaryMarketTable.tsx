@@ -19,7 +19,7 @@ export const SecondaryMarketTable = () => {
 
   return (
     <Grid container direction='column' spacing={3}>
-      <Grid item container justify={'space-between'}>
+      <Grid item container justifyContent={'space-between'}>
         <Grid item xs={3}>
           <SearchFilter
             data-testid='secondaryMarketSearch'

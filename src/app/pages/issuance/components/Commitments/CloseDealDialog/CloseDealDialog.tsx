@@ -39,7 +39,6 @@ export const CloseDealDialog = (props: ModalProps) => {
       open={open}
       className={classes.root}
       onClose={() => toggleOpen(false)}
-      onBackdropClick={() => toggleOpen(false)}
       aria-labelledby='close-deal-modal-title'
       aria-describedby='close-deal-modal-description'
     >
@@ -74,8 +73,10 @@ export const CloseDealDialog = (props: ModalProps) => {
             isLoading={isLoading}
             onClose={() => toggleOpen()}
             onSubmit={async values => {
-              await closeDeal({ dso: dsoId, ...values })
-              toggleOpen()
+              if (dsoId !== undefined) {
+                await closeDeal({ dso: dsoId, ...values })
+                toggleOpen()
+              }
             }}
           />
         </DialogActions>

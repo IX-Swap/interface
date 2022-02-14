@@ -1,7 +1,7 @@
 import { act } from '@testing-library/react-hooks'
 import { useAssignVirtualAccount } from 'app/pages/accounts/pages/banks/hooks/useAssignVirtualAccount'
 import { QueryStatus } from 'react-query'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { generateMutationResult } from '__fixtures__/useQuery'
 import { virtualAccounts } from 'config/apiURL'
 import * as useAuth from 'hooks/auth/useAuth'
@@ -9,7 +9,6 @@ import { user } from '__fixtures__/user'
 
 describe('useAssignVirtualAccount', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

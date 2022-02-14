@@ -29,7 +29,7 @@ export const ActionResetPassword = ({ data }: ActionResetPasswordProps) => {
         color='primary'
         disableElevation
       >
-        START ACCOUNT RESET
+        START PASSWORD RESET
       </Button>
       <DialogResetPassword
         email={data.email}

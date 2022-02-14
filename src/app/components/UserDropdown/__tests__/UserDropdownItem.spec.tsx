@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import {
   UserDropdownItem,
   UserDropdownItemProps
@@ -28,12 +28,7 @@ describe('UserDropdownItem', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<UserDropdownItem {...props} />)
   })
 
   it('calls onClick when clicked', async () => {

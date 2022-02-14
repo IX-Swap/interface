@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { dso } from '__fixtures__/authorizer'
 import {
   CardContent,
@@ -25,12 +25,7 @@ describe('CardContent', () => {
   const primaryProps: CardContentProps = { data: dso, type: 'Primary' }
   const OTCProps: CardContentProps = { data: otc, type: 'OTC' }
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<CardContent {...primaryProps} />)
   })
 
   it('renders Closing Date with correct props when type is Primary', () => {
@@ -131,7 +126,7 @@ describe('CardContent', () => {
       {
         ...defaultLabeledValueProps,
         reverse: true,
-        label: 'Total Fundraising Amount',
+        label: 'Target Fundraise',
         value: 'SGD 100,000.00'
       },
       {}

@@ -2,7 +2,7 @@ import { useServices } from 'hooks/useServices'
 import { useMutation, useQueryCache } from 'react-query'
 import { identityURL } from 'config/apiURL'
 import { identityQueryKeys } from 'config/queryKeys'
-import { useParams } from 'react-router'
+import { useParams } from 'react-router-dom'
 import { CorporateIdentity } from 'app/pages/identity/types/forms'
 
 export const useSubmitCorporate = (callback?: () => void) => {

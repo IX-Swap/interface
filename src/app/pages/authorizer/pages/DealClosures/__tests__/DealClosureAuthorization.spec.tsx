@@ -1,8 +1,7 @@
 import { DealClosureAuthorization } from 'app/pages/authorizer/pages/DealClosures/DealClosureAuthorization'
 import * as useDSOById from 'app/pages/invest/hooks/useDSOById'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
-import { dso } from '__fixtures__/authorizer'
+import { render } from 'test-utils'
 import { generateQueryResult } from '__fixtures__/useQuery'
 
 jest.mock('app/pages/authorizer/components/AuthorizerView', () => ({
@@ -15,20 +14,7 @@ jest.mock('app/components/DSO/DSOView', () => ({
 
 describe('DealClosureAuthorization', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    const objResponse = generateQueryResult({
-      data: dso,
-      isLoading: false
-    })
-    jest
-      .spyOn(useDSOById, 'useDSOById')
-      .mockImplementation(() => objResponse as any)
-
-    render(<DealClosureAuthorization />)
   })
 
   it('renders null when data is undefined', () => {

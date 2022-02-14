@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { Form } from 'components/form/Form'
 import { FormError, FormErrorProps } from 'components/form/FormError'
 import * as useFormErrorHook from 'hooks/useFormError'
@@ -11,16 +11,7 @@ describe('FormError', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(
-      <Form>
-        <FormError {...props} />
-      </Form>
-    )
   })
 
   it('does not calls render function if there is no error', () => {

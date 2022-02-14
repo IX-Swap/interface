@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import {
   DSOProgressBar,
   DSOProgressBarProps
@@ -14,12 +14,7 @@ jest.mock('app/components/BorderLinearProgress', () => ({
 describe('DSOProgressBar', () => {
   const props: DSOProgressBarProps = { dso: dso }
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<DSOProgressBar {...props} />)
   })
 
   it('renders BorderLinearProgress with correct props', () => {

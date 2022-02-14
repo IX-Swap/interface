@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { CreateBank } from 'app/pages/accounts/pages/banks/pages/CreateBank/CreateBank'
 import { useCreateBank } from 'app/pages/accounts/pages/banks/hooks/useCreateBank'
 import { BankForm } from 'app/pages/accounts/pages/banks/components/BankForm'
@@ -22,7 +22,6 @@ describe('CreateBank', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

@@ -1,13 +1,13 @@
 import { useQuery } from 'react-query'
 import { useAuth } from 'hooks/auth/useAuth'
 import { useServices } from 'hooks/useServices'
-import { getIdFromObj } from 'helpers/strings'
+import { getIdFromObj, isEmptyString } from 'helpers/strings'
 import { exchangeListingsQueryKeys } from 'config/queryKeys'
 import { listingsURL } from 'config/apiURL'
 import { isValidDSOId } from 'helpers/isValidDSOId'
 import { Listing } from 'app/pages/exchange/types/listings'
 
-export const useListingById = (listingId: string, issuerId?: string) => {
+export const useListingById = (listingId?: string, issuerId?: string) => {
   const { user } = useAuth()
   const { apiService } = useServices()
   const url = listingsURL.getById(issuerId ?? getIdFromObj(user), listingId)
@@ -18,7 +18,7 @@ export const useListingById = (listingId: string, issuerId?: string) => {
       issuerId ?? getIdFromObj(user)
     ),
     fetchListing,
-    { enabled: isValidDSOId(listingId) }
+    { enabled: !isEmptyString(listingId) && isValidDSOId(listingId) }
   )
 
   return {

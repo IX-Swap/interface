@@ -1,5 +1,5 @@
 import React from 'react'
-import { Switch } from 'react-router'
+import { Switch } from 'react-router-dom'
 import { AppRoute } from 'components/AppRoute'
 import { AuthorizerRoute } from 'app/pages/authorizer/router/config'
 import { DSWithdrawalAuthorization } from 'app/pages/authorizer/pages/dsWithdrawals/DSWithdrawalAuthorization'
@@ -16,7 +16,7 @@ export const AuthorizerDSWithdrwalsRouter = () => {
         <DSWithdrawalAuthorization />
       </AppRoute>
 
-      <AppRoute exact path={AuthorizerRoute.dsWithdrawals}>
+      <AppRoute path={AuthorizerRoute.dsWithdrawals}>
         <DSWithdrawals />
       </AppRoute>
     </Switch>

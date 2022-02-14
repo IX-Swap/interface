@@ -4,7 +4,7 @@ import { useQuery, useQueryCache } from 'react-query'
 import { exchange as exchangeQueryKeys } from 'config/queryKeys'
 import { exchange } from 'config/apiURL'
 
-export const useLastPrice = (id: string) => {
+export const useLastPrice = (id?: string) => {
   const { socketService } = useServices()
   const socket = useMemo(() => socketService.socket, [socketService.socket])
   const queryCache = useQueryCache()
@@ -17,6 +17,8 @@ export const useLastPrice = (id: string) => {
   }
 
   useEffect(() => {
+    if (id === undefined) return
+
     const onUrl = exchange.lastPrice.on(id)
     socket?.on(onUrl, onDataReceived)
     socket?.emit(exchange.lastPrice.emit, id)

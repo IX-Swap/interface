@@ -1,5 +1,5 @@
 import React from 'react'
-import { cleanup, render } from 'test-utils'
+import { render } from 'test-utils'
 import { TypedField } from 'components/form/TypedField'
 import { Form } from 'components/form/Form'
 import { RequestFields } from 'auth/pages/password-reset/components/RequestFields'
@@ -11,15 +11,6 @@ jest.mock('components/form/TypedField', () => ({
 describe('RequestFields', () => {
   afterEach(async () => {
     jest.clearAllMocks()
-    await cleanup()
-  })
-
-  it('renders without error', () => {
-    render(
-      <Form>
-        <RequestFields />
-      </Form>
-    )
   })
 
   it('renders email field', () => {
@@ -33,7 +24,7 @@ describe('RequestFields', () => {
       1,
       expect.objectContaining({
         name: 'email',
-        label: 'Email Address'
+        label: 'Email'
       }),
       {}
     )

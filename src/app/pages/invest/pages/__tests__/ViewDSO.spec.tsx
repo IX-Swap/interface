@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { ViewDSO } from 'app/pages/invest/pages/ViewDSO'
 import { history } from 'config/history'
 import { dso } from '__fixtures__/authorizer'
@@ -25,16 +25,7 @@ describe('ViewDSO', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    jest
-      .spyOn(useDSOByIdHook, 'useDSOById')
-      .mockReturnValue({ isLoading: false, data: dso } as any)
-
-    render(<ViewDSO />)
   })
 
   it('renders nothing if loading', () => {

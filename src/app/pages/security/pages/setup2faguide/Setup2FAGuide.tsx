@@ -41,7 +41,7 @@ export const Setup2FAGuide = () => {
         </Grid>
       </Grid>
       <VSpacer size='medium' />
-      <Grid container spacing={1} alignItems='center' justify='flex-end'>
+      <Grid container spacing={1} alignItems='center' justifyContent='flex-end'>
         <Grid item>
           <BackButton color='primary' size='small' />
         </Grid>

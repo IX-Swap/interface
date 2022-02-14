@@ -1,11 +1,11 @@
 import { useServices } from 'hooks/useServices'
 import { useMutation } from 'react-query'
 import User from 'types/user'
-import { LoginArgs } from 'types/auth'
+import { LOCK_LOGIN_ERROR_CODES, LoginArgs } from 'types/auth'
 import apiService from 'services/api'
 import { authURL } from 'config/apiURL'
 import { useState } from 'react'
-import { useLocation } from 'react-router'
+import { useLocation } from 'react-router-dom'
 
 export const useLogin = (referrer?: string) => {
   const [step, setStep] = useState<'login' | 'otp'>('login')
@@ -13,7 +13,7 @@ export const useLogin = (referrer?: string) => {
   const [email, setEmail] = useState('')
   const [attempts, setAttempts] = useState(0)
   const resetAttempts = () => {
-    // setAttempts(0)
+    setAttempts(0)
   }
   const { storageService, snackbarService } = useServices()
   const url = authURL.login
@@ -22,7 +22,7 @@ export const useLogin = (referrer?: string) => {
     return await apiService.post<User>(url, args)
   }
 
-  const location = useLocation<any>()
+  const location: any = useLocation()
 
   return {
     mutation: useMutation(mutateFn, {
@@ -41,7 +41,7 @@ export const useLogin = (referrer?: string) => {
       onError: (error: any) => {
         setAttempts(attempts + 1)
         setLocked(false)
-        if (error?.code === 'RECO-RLE291' || error?.code === 'RWC0-70531O') {
+        if (LOCK_LOGIN_ERROR_CODES.includes(error?.code ?? '')) {
           setLocked(true)
         }
 

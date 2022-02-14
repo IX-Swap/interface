@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import {
   StepWrapper,
   StepWrapperProps
@@ -13,12 +13,7 @@ describe('StepWrapper', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<StepWrapper {...props} />)
   })
 
   it('renders props correctly', () => {

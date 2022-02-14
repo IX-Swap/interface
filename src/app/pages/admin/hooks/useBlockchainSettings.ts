@@ -12,7 +12,7 @@ export const useBlockchainSettings = () => {
   const getBlockchainSettings = async () => {
     return await apiService.get<BlockchainSettings>(
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      blockchainNetworksURL.getSettings(network!)
+      blockchainNetworksURL.getSettings(network)
     )
   }
 

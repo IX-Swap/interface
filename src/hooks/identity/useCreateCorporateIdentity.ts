@@ -4,7 +4,7 @@ import { useMutation } from 'react-query'
 import apiService from 'services/api'
 import { getIdFromObj } from 'helpers/strings'
 import { identityURL } from 'config/apiURL'
-import { useHistory } from 'react-router'
+import { useHistory } from 'react-router-dom'
 import { IdentityRoute } from 'app/pages/identity/router/config'
 import {
   CorporateIdentity,

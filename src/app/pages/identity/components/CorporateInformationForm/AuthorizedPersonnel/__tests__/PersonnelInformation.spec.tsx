@@ -1,7 +1,7 @@
 import { PersonnelInformation } from 'app/pages/identity/components/CorporateInformationForm/AuthorizedPersonnel/PersonnelInformation'
 import { Form } from 'components/form/Form'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 
 describe('PersonnelInformation', () => {
   const props = {
@@ -12,16 +12,7 @@ describe('PersonnelInformation', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(
-      <Form>
-        <PersonnelInformation {...props} />
-      </Form>
-    )
   })
 
   it('renders input fields with default values correctly', () => {

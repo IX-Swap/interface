@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, fireEvent, cleanup } from 'test-utils'
+import { render, fireEvent } from 'test-utils'
 import { PlaceOrderForm } from 'app/pages/exchange/components/PlaceOrderForm/PlaceOrderForm'
 import { Form } from 'components/form/Form'
 import { PlaceOrderFields } from 'app/pages/exchange/components/PlaceOrderFields/PlaceOrderFields'
@@ -13,22 +13,7 @@ jest.mock(
 
 describe('PlaceOrderForm', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(
-      <Form>
-        <PlaceOrderForm
-          tokenLabel={'IXPS'}
-          currencyLabel={'SGD'}
-          tokenBalance={300}
-          currencyBalance={15000}
-          onSubmit={async () => {}}
-        />
-      </Form>
-    )
   })
 
   it('renders PlaceOrderFields with correct props if BUY tab active', () => {

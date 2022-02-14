@@ -82,7 +82,7 @@ export const DSOCardContent = ({ dso }: DSOCardContentProps) => {
             aria-label={`${percentRaised}% raised`}
           >
             <div style={{ color: color }}>
-              <Grid container justify='flex-end'>
+              <Grid container justifyContent='flex-end'>
                 <Grid item>{status === 'live' ? 'Live' : <>&nbsp;</>}</Grid>
               </Grid>
               <DSOProgressBar dso={dso} />
@@ -91,7 +91,7 @@ export const DSOCardContent = ({ dso }: DSOCardContentProps) => {
         </Grid>
       </Hidden>
 
-      <Grid container item justify='flex-end'>
+      <Grid container item justifyContent='flex-end'>
         <DSOInvestLink dso={dso} />
       </Grid>
     </Grid>

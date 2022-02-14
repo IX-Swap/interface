@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import {
   renderCommitmentMoney,
   renderCommitmentAvatar
@@ -26,12 +26,7 @@ describe('renderCommitmentMoney', () => {
 
 describe('renderCommitmentAvatar', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<>{renderCommitmentAvatar('', commitment)}</>)
   })
 
   it('renders DSOLogo with correct props', () => {

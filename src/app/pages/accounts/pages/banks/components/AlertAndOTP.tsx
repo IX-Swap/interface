@@ -17,7 +17,12 @@ export const AlertAndOTP = (props: AlertAndOTPProps) => {
   const { control } = useFormContext<DepositCashFormValues>()
 
   return (
-    <Grid item container justify='center' className={privateClassNames()}>
+    <Grid
+      item
+      container
+      justifyContent='center'
+      className={privateClassNames()}
+    >
       {createElement(alert)}
       <Grid item container direction='column' xs={12}>
         <VSpacer size='small' />

@@ -32,7 +32,7 @@ export const CurrentHoldingsTable = () => {
       <Grid item style={{ maxHeight: 70 }}>
         <Grid
           container
-          justify='space-between'
+          justifyContent='space-between'
           style={{ paddingLeft: 24, paddingRight: 24 }}
         >
           <Grid item xs={12} md={6}>

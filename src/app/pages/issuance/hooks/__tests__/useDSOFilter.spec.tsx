@@ -1,5 +1,5 @@
 import { act, renderHook } from '@testing-library/react-hooks'
-import { waitFor, cleanup, BaseProviders } from 'test-utils'
+import { waitFor, BaseProviders } from 'test-utils'
 import * as useDSOsByUserIdHook from 'app/pages/issuance/hooks/useDSOsByUserId'
 import { generateInfiniteQueryResult } from '__fixtures__/useQuery'
 import { dso } from '__fixtures__/authorizer'
@@ -20,7 +20,6 @@ describe('useDSOFilter', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

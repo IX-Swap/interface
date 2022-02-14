@@ -65,7 +65,7 @@ export const DSOFAQItem = (props: DSOFAQItemProps) => {
         <Grid
           item
           container
-          justify='flex-end'
+          justifyContent='flex-end'
           alignItems='flex-end'
           direction='column'
         >

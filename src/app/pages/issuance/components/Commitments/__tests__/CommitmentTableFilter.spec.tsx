@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { CommitmentTableFilter } from 'app/pages/issuance/components/Commitments/CommitmentTableFilters'
 import { SearchFilter } from 'app/components/SearchFilter'
 import { FundStatusFilter } from 'app/pages/issuance/components/Commitments/FundStatusFilter'
@@ -23,12 +23,7 @@ jest.mock('@material-ui/core/Button', () => jest.fn(() => null))
 
 describe('CommitmentTableFilter', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<CommitmentTableFilter />)
   })
 
   it('renders SearchFilter with correct props', () => {
@@ -63,7 +58,7 @@ describe('CommitmentTableFilter', () => {
         variant: 'contained',
         color: 'primary',
         style: {
-          fontSize: 14,
+          fontSize: 12,
           fontWeight: 400,
           marginTop: 0
         }
@@ -87,7 +82,7 @@ describe('CommitmentTableFilter', () => {
         variant: 'contained',
         color: 'primary',
         style: {
-          fontSize: 14,
+          fontSize: 12,
           fontWeight: 400,
           marginTop: 16
         }

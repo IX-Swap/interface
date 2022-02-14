@@ -1,7 +1,7 @@
 import { fireEvent } from '@testing-library/react'
 import { IdleDialog } from 'app/components/IdleDialog'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 
 describe('IdleDialog', () => {
   const mockClose = jest.fn(() => null)
@@ -10,21 +10,7 @@ describe('IdleDialog', () => {
   const mockResetLogoutTimer = jest.fn(() => null)
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(
-      <IdleDialog
-        open
-        closeDialog={mockClose}
-        reset={mockReset}
-        logout={mockLogout}
-        logoutTimer={10}
-        resetLogoutTimer={mockResetLogoutTimer}
-      />
-    )
   })
 
   it('calls keep logged in button correctly', () => {

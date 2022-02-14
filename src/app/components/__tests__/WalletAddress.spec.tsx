@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup, fireEvent, waitFor } from 'test-utils'
+import { render, fireEvent, waitFor } from 'test-utils'
 import { WalletAddress, WalletAddressProps } from 'app/components/WalletAddress'
 import { copyToClipboard } from 'helpers/clipboard'
 import { AppRouterLink } from 'components/AppRouterLink'
@@ -15,12 +15,7 @@ describe('WalletAddress', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<WalletAddress {...props} />)
   })
 
   it('renders AppRouterLink if link is true', () => {

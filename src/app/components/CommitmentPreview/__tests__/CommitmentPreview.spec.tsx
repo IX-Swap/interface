@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import {
   CommitmentPreview,
   CommitmentPreviewProps
@@ -8,7 +8,6 @@ import { commitment } from '__fixtures__/authorizer'
 import { LabelledValue } from 'components/LabelledValue'
 import { formatDateAndTime } from 'helpers/dates'
 import { formatMoney } from 'helpers/numbers'
-import { Commitment } from 'types/commitment'
 
 jest.mock('components/LabelledValue', () => ({
   LabelledValue: jest.fn(() => null)
@@ -25,19 +24,7 @@ describe('CommitmentPreview', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(
-      <CommitmentPreview
-        data={{
-          ...(props.data as Commitment),
-          withdrawalAddress: undefined
-        }}
-      />
-    )
   })
 
   it('renders nothing if data is null', () => {

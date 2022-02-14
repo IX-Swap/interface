@@ -5,7 +5,7 @@ import { BanksRoute } from '../../router/config'
 
 export const Header = () => {
   return (
-    <Grid item container xs={12} justify='flex-end'>
+    <Grid item container xs={12} justifyContent='flex-end'>
       <Button
         component={AppRouterLinkComponent}
         variant='contained'

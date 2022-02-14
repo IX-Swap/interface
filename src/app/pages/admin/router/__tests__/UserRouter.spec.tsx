@@ -1,6 +1,6 @@
 import { UserRouter } from 'app/pages/admin/router/UserRouter'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { AppRoute } from 'components/AppRoute'
 import { AdminRoute } from 'app/pages/admin/router/config'
 import { history } from 'config/history'
@@ -11,12 +11,7 @@ jest.mock('components/AppRoute', () => ({
 
 describe('UserRouter', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<UserRouter />)
   })
 
   it('renders Approute with userId breadcrumb when userId is defined', () => {

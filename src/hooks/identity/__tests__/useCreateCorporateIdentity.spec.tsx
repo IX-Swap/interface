@@ -1,5 +1,5 @@
 import { act } from '@testing-library/react-hooks'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { useCreateCorporateIdentity } from 'hooks/identity/useCreateCorporateIdentity'
 import { unsuccessfulResponse, successfulResponse } from '__fixtures__/api'
 import { createIndividualArgs } from '__fixtures__/identity'
@@ -27,7 +27,6 @@ describe('useCreateCorporateIdentity', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

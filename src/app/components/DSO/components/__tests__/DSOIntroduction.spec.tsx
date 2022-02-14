@@ -1,5 +1,5 @@
 import React from 'react'
-import { cleanup, render } from 'test-utils'
+import { render } from 'test-utils'
 import { DSOIntroduction } from 'app/components/DSO/components/DSOIntroduction'
 import { TypedField } from 'components/form/TypedField'
 import { wysiwygValueExtractor } from 'helpers/forms'
@@ -11,16 +11,7 @@ jest.mock('components/form/TypedField', () => ({
 
 describe('DSOIntroduction', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(
-      <Form>
-        <DSOIntroduction />
-      </Form>
-    )
   })
 
   it('renders EditableField with correct props', () => {

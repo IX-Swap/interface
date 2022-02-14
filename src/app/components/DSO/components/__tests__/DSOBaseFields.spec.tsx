@@ -1,5 +1,5 @@
 import React from 'react'
-import { cleanup, render } from 'test-utils'
+import { render } from 'test-utils'
 import {
   DSOBaseFields,
   DSOBaseFieldsProps
@@ -18,16 +18,7 @@ describe('DSOBaseFields', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(
-      <Form>
-        <DSOBaseFields {...props} />
-      </Form>
-    )
   })
 
   it('renders EditableField with correct props', () => {

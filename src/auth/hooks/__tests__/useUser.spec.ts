@@ -1,5 +1,5 @@
 import { act } from '@testing-library/react-hooks'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { successfulResponse, unsuccessfulResponse } from '__fixtures__/api'
 import { useUser } from 'auth/hooks/useUser'
 import * as useCachedUserHook from 'hooks/auth/useCachedUser'
@@ -11,7 +11,6 @@ describe('useUser', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

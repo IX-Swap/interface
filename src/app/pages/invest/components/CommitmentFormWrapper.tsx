@@ -12,6 +12,7 @@ import { DownloadDSOSubscriptionDocument } from 'app/components/DSO/components/D
 import { useParams } from 'react-router-dom'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { CommitmentFormCommitButton } from 'app/pages/invest/components/CommitFormCommitButton'
+import { capitalStructureWithFunds } from 'types/dso'
 
 export const CommitmentFormWrapper = () => {
   const params = useParams<{ dsoId: string; issuerId: string }>()
@@ -36,7 +37,7 @@ export const CommitmentFormWrapper = () => {
         <Grid item>
           <CommitmentHeader dso={data} />
         </Grid>
-        <Grid item container justify='center'>
+        <Grid item container justifyContent='center'>
           <Card style={{ width: 450 }} elevation={0}>
             <CardContent>
               <DownloadDSOSubscriptionDocument
@@ -55,11 +56,11 @@ export const CommitmentFormWrapper = () => {
                 network={data.network?._id}
               />
               <VSpacer size='medium' />
-              <Grid container spacing={2} justify='center'>
+              <Grid container spacing={2} justifyContent='center'>
                 <Grid item xs={4}>
                   <CommitmentFormCancelButton />
                 </Grid>
-                {data.capitalStructure === 'Fund' && (
+                {capitalStructureWithFunds.includes(data.capitalStructure) && (
                   <Grid item xs={4}>
                     <CommitmentFormCommitButton
                       assetId={data.currency._id}

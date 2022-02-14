@@ -1,6 +1,6 @@
 import { DSOTermsView } from 'app/components/DSO/DSOPreview/DSOTermsView'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { LabelledValue } from 'components/LabelledValue'
 import { dso } from '__fixtures__/authorizer'
 
@@ -10,12 +10,7 @@ jest.mock('components/LabelledValue', () => ({
 
 describe('DSOTermsView', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<DSOTermsView dso={dso} />)
   })
 
   it('render data correctly', () => {

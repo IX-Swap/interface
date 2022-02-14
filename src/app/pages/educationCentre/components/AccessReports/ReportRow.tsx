@@ -47,7 +47,12 @@ export const ReportRow = ({ item }: ReportRowProps) => {
   }
 
   return (
-    <Grid container justify='space-between' spacing={3} alignItems='center'>
+    <Grid
+      container
+      justifyContent='space-between'
+      spacing={3}
+      alignItems='center'
+    >
       <Grid item xs={12} md={4}>
         <Grid container spacing={1} alignItems='center' wrap='nowrap'>
           <Grid item>
@@ -89,12 +94,12 @@ export const ReportRow = ({ item }: ReportRowProps) => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid item xs={12} md={5}>
+      <Grid item xs={12} md={4}>
         <Grid
           container
           spacing={2}
           alignItems='center'
-          justify='flex-end'
+          justifyContent='flex-start'
           wrap='nowrap'
         >
           <Grid item>
@@ -109,12 +114,12 @@ export const ReportRow = ({ item }: ReportRowProps) => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid item xs={12} md={3}>
+      <Grid item xs={12} md={4}>
         <Grid
           container
           spacing={2}
           alignItems='center'
-          justify={isTablet ? 'center' : 'flex-end'}
+          justifyContent={isTablet ? 'center' : 'flex-end'}
           direction={isTablet ? 'column' : 'row'}
           wrap='nowrap'
         >

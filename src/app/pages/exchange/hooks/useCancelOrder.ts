@@ -4,11 +4,12 @@ import { getIdFromObj } from 'helpers/strings'
 import { useAuth } from 'hooks/auth/useAuth'
 import { useServices } from 'hooks/useServices'
 import { useMutation, useQueryCache } from 'react-query'
-import { useParams } from 'react-router'
+import { useParams } from 'react-router-dom'
+import { OrderSide } from 'types/order'
 
 export interface CancelOrderArgs {
   pair: string
-  side: 'BID' | 'ASK'
+  side: OrderSide
   type: string
   price: number
   amount: number

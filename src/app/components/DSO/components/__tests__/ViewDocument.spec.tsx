@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import {
   ViewDocument,
   ViewDocumentProps
@@ -27,12 +27,7 @@ describe('ViewDocument', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<ViewDocument {...props}>{props.children}</ViewDocument>)
   })
 
   it('invokes convertBlobToFile if data is defined', () => {

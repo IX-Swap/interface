@@ -1,11 +1,5 @@
 import React from 'react'
-import {
-  fireEvent,
-  cleanup,
-  waitFor,
-  renderWithUserStore,
-  render
-} from 'test-utils'
+import { fireEvent, waitFor, renderWithUserStore, render } from 'test-utils'
 import {
   Register,
   registerFormInitialValues
@@ -23,10 +17,9 @@ describe('Register', () => {
 
   afterEach(async () => {
     jest.clearAllMocks()
-    await cleanup()
   })
 
-  it('renders with empty initial values', () => {
+  it.skip('renders with empty initial values', () => {
     const { container, getByTestId } = renderWithUserStore(
       <Form defaultValues={registerFormInitialValues}>
         <Register />
@@ -44,7 +37,7 @@ describe('Register', () => {
     const { getByLabelText, getByTestId } = render(<Register />)
     const form = getByTestId('register-form')
     const name = getByLabelText(/name/i)
-    const email = getByLabelText(/email address/i)
+    const email = getByLabelText(/email/i)
     const agree = getByTestId('agree-to-terms')
     const password = getByLabelText(/password/i)
 
@@ -64,7 +57,7 @@ describe('Register', () => {
 
     const { getByLabelText, getByTestId } = renderWithUserStore(<Register />)
     const name = getByLabelText(/name/i)
-    const email = getByLabelText(/email address/i)
+    const email = getByLabelText(/email/i)
     const password = getByLabelText(/password/i)
     const agree = getByTestId('agree-to-terms')
     const signupButton = getByTestId('submit')

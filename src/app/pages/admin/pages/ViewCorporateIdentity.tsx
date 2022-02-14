@@ -27,7 +27,13 @@ export const CorporateIdentityDisplay = ({ data }: CorporateIdentityProps) => {
       <Grid item xs={12}>
         <RejectionMessage data={data} />
       </Grid>
-      <Grid xs={12} container item justify='flex-end' alignItems='center'>
+      <Grid
+        xs={12}
+        container
+        item
+        justifyContent='flex-end'
+        alignItems='center'
+      >
         {adminId === data.createdBy ? (
           <EditButton
             link={AdminRoute.createCorporateIdentity}

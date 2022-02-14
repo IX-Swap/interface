@@ -1,11 +1,11 @@
-import React from 'react'
-import { Grid, Box } from '@material-ui/core'
+import { Box, Grid } from '@material-ui/core'
+import { GroupedDateTimeFilter } from 'app/pages/authorizer/components/GroupedFromDateFilter'
+import { AppRouterLink } from 'components/AppRouterLink'
 import { SearchQueryFilterGroup } from 'components/SearchQueryFilter/SearchQueryFilterGroup/SearchQueryFilterGroup'
 import { SearchQueryFilterGroupApply } from 'components/SearchQueryFilter/SearchQueryFilterGroupApply'
 import { SearchQueryFilterGroupReset } from 'components/SearchQueryFilter/SearchQueryFilterGroupReset'
-import { GroupedDateTimeFilter } from 'app/pages/authorizer/components/GroupedFromDateFilter'
-import { IssuanceRoute } from 'app/pages/issuance/router/config'
-import { AppRouterLink } from 'components/AppRouterLink'
+import React from 'react'
+import { OTCMarketRoute } from 'app/pages/exchange/router/config'
 
 export const PastOrderFilter = () => {
   return (
@@ -51,8 +51,7 @@ export const PastOrderFilter = () => {
         <Grid item>
           <AppRouterLink
             style={{ whiteSpace: 'nowrap' }}
-            // TODO Correct after added new routes
-            to={IssuanceRoute.view}
+            to={`${OTCMarketRoute.holdings}?tab=1`}
             color='primary'
             underline='always'
             className={'link'}

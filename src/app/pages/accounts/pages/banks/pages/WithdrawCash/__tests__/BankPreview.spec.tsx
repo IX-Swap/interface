@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { bank } from '__fixtures__/authorizer'
 import { useBanksData } from 'app/pages/accounts/pages/banks/hooks/useBanksData'
 import { BankDetails } from 'app/components/BankDetails'
@@ -19,7 +19,6 @@ jest.mock('app/components/BankDetails', () => ({
 
 describe('BankPreview', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

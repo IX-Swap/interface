@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { Banner } from 'app/pages/admin/pages/Banner'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import * as useBannersList from 'app/pages/admin/hooks/useBannersList'
@@ -19,12 +19,7 @@ jest.mock('app/pages/admin/components/BannerForm', () => ({
 
 describe('Banner', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<Banner />)
   })
 
   it('renders PageHeader with correct props', () => {

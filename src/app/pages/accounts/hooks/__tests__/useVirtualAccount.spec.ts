@@ -2,7 +2,7 @@ import { act } from '@testing-library/react-hooks'
 import { useVirtualAccount } from 'app/pages/accounts/hooks/useVirtualAccount'
 import { virtualAccounts } from 'config/apiURL'
 import * as useAuth from 'hooks/auth/useAuth'
-import { waitFor, cleanup, renderHookWithServiceProvider } from 'test-utils'
+import { waitFor, renderHookWithServiceProvider } from 'test-utils'
 import { generateQueryResult } from '__fixtures__/useQuery'
 import { user } from '__fixtures__/user'
 import { virtualAccountsSample } from '__fixtures__/virtualAccounts'
@@ -20,7 +20,6 @@ describe('useVirtualAccount', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
   })
 

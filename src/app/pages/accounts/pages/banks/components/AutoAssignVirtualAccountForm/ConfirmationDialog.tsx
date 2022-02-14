@@ -30,7 +30,7 @@ export const ConfirmationDialog = ({
   const confirmLabel = isAdditional ? 'Send request' : 'Yes'
 
   return (
-    <Dialog open={open} disablePortal>
+    <Dialog open={open} disablePortal onClose={onClose}>
       <Box py='40px' px='60px' textAlign='center'>
         <Grid container direction='column' spacing={2}>
           <Grid item>
@@ -41,7 +41,7 @@ export const ConfirmationDialog = ({
           </Grid>
           <Grid item>
             <VSpacer size='small' />
-            <Grid container spacing={1} justify='center'>
+            <Grid container spacing={1} justifyContent='center'>
               <Grid item>
                 <Button
                   onClick={onClose}

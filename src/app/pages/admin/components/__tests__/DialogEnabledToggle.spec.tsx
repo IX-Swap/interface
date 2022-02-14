@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import {
   DialogEnabledToggle,
   DialogEnabledToggleProps
@@ -26,12 +26,7 @@ describe('DialogEnabledToggle', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<DialogEnabledToggle {...props} />)
   })
 
   it('calls useEnabledToggle hook with correct ars', () => {

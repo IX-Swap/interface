@@ -5,7 +5,7 @@ import {
 } from 'app/pages/identity/components/CorporateInformationForm/AuthorizedPersonnel/AuthorizedPersonnel'
 import { Form } from 'components/form/Form'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 
 describe('AuthorizedPersonnel', () => {
   const appendMock = jest.fn()
@@ -24,16 +24,7 @@ describe('AuthorizedPersonnel', () => {
   }
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(
-      <Form>
-        <AuthorizedPersonnel {...props} />
-      </Form>
-    )
   })
 
   it('handles append buttons correctly', () => {

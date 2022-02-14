@@ -1,10 +1,10 @@
-import { DigitalSecurityOffering } from 'types/dso'
-import { Commitment } from 'types/commitment'
-import { AssetBalance } from 'types/balance'
-import { DSWithdrawal } from 'types/dsWithdrawal'
 import { IndividualIdentity } from 'app/pages/identity/types/forms'
-import { Order } from 'types/order'
-
+import { capitalize } from 'lodash'
+import { AssetBalance } from 'types/balance'
+import { Commitment } from 'types/commitment'
+import { DigitalSecurityOffering } from 'types/dso'
+import { DSWithdrawal } from 'types/dsWithdrawal'
+import { OrderSide } from 'types/order'
 interface GetIdFromObjProps extends Record<string, any> {
   _id?: string
 }
@@ -12,8 +12,9 @@ interface GetIdFromObjProps extends Record<string, any> {
 export const getIdFromObj = (value?: GetIdFromObjProps | null): string =>
   value?._id ?? ''
 
-export const isEmptyString = (value: string | null | undefined) =>
-  value?.length === 0
+export const isEmptyString = (value: string | null | undefined) => {
+  return value === undefined || value === null || value.trim().length === 0
+}
 
 export const compareStrings = (a: string, b: string) => a === b
 
@@ -43,8 +44,8 @@ export const getOfferingName = (
   }
 }
 
-export const getOrderSideName = (value: Order['side']) => {
-  return value === 'ASK' ? 'Sell' : 'Buy'
+export const getOrderSideName = (value: OrderSide) => {
+  return value === OrderSide.ASK ? 'Sell' : 'Buy'
 }
 
 export const getPersonName = (data: IndividualIdentity | null | undefined) => {
@@ -61,8 +62,7 @@ export const isLowerCaseLetter = (value: string) => {
   return charCode >= 97 && charCode <= 122
 }
 
-export const capitalizeFirstLetter = (value: string) =>
-  `${value[0].toUpperCase()}${value.slice(1)}`
+export const capitalizeFirstLetter = (value: string) => capitalize(value)
 
 export const formatCamelCasedWithSpaces = (value: string) => {
   let str = value

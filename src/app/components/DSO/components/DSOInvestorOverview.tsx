@@ -55,8 +55,8 @@ export const DSOInvestorOverview = (props: DSOInvestorOverviewProps) => {
           isNewThemeOn
         />
       </Grid>
-      <Hidden mdUp>
-        <Grid item xs={12} container justify='flex-end'>
+      <Hidden lgUp>
+        <Grid item xs={12} container justifyContent='flex-end'>
           <Grid item>
             <Grid item>
               <DSOInvestButton dso={dso} />

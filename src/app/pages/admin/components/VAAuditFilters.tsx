@@ -14,7 +14,7 @@ export const VAAuditFilters = () => {
       container
       wrap={'wrap'}
       alignItems={'center'}
-      justify={'space-between'}
+      justifyContent={'space-between'}
     >
       <Grid item md={7} xs={12}>
         <SearchFilter
@@ -30,7 +30,7 @@ export const VAAuditFilters = () => {
         container
         xs={12}
         md={5}
-        justify={isMobile ? 'space-between' : 'flex-end'}
+        justifyContent={isMobile ? 'space-between' : 'flex-end'}
         alignItems={'center'}
         wrap={'wrap'}
       >

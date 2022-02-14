@@ -1,8 +1,8 @@
 import React from 'react'
 import { Box, Button } from '@material-ui/core'
 import { DigitalSecurityOffering } from 'types/dso'
-import { useHistory } from 'react-router'
-import { generatePath } from 'react-router-dom'
+import { useHistory, generatePath } from 'react-router-dom'
+
 import { OTCMarketRoute } from 'app/pages/exchange/router/config'
 import { ListingFinishLaterButton } from 'app/pages/exchange/components/ListingForm/ListinfFInishLaterButton'
 import { getIdFromObj } from 'helpers/strings'
@@ -19,27 +19,27 @@ export const ListingFormActions = (props: ListingFormActionsProps) => {
 
   return (
     <>
-      <Button
-        variant={'contained'}
-        color='primary'
-        disableElevation
-        onClick={() =>
-          push(
-            generatePath(OTCMarketRoute.previewListing, {
-              listingId: listing?._id,
-              issuerId:
-                typeof listing?.user === 'string'
-                  ? listing?.user
-                  : getIdFromObj(listing?.user)
-            })
-          )
-        }
-        disabled={listing === undefined || isDataFromDSO}
-      >
-        Preview
-      </Button>
+      {!(listing === undefined || isDataFromDSO) && (
+        <Button
+          variant={'contained'}
+          color='primary'
+          disableElevation
+          onClick={() =>
+            push(
+              generatePath(OTCMarketRoute.previewListing, {
+                listingId: listing?._id,
+                issuerId:
+                  typeof listing?.user === 'string'
+                    ? listing?.user
+                    : getIdFromObj(listing?.user)
+              })
+            )
+          }
+        >
+          Preview
+        </Button>
+      )}
       <Box mx={1} component='span' />
-
       <ListingFinishLaterButton
         isDataFromDSO={isDataFromDSO}
         listing={listing}

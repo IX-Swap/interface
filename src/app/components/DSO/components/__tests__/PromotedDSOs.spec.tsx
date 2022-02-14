@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { PromotedDSOs } from 'app/components/DSO/components/PromotedDSOs'
 import * as usePromotedDSOsHook from 'app/pages/invest/hooks/usePromotedDSOs'
 import { generateInfiniteQueryResult } from '__fixtures__/useQuery'
@@ -14,18 +14,7 @@ jest.mock('app/pages/invest/components/OTCMarketCard/OTCMarketCard', () => ({
 
 describe('PromotedDSOs', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    jest.spyOn(usePromotedDSOsHook, 'usePromotedDSOs').mockReturnValue(
-      generateInfiniteQueryResult({
-        queryStatus: QueryStatus.Success
-      })
-    )
-
-    render(<PromotedDSOs />)
   })
 
   it('renders nothing if loading', () => {

@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { Actions, ActionsProps } from 'app/pages/admin/components/Actions'
 import { user } from '__fixtures__/user'
 import * as adminViewHook from '../../hooks/useAdminView'
@@ -32,12 +32,7 @@ describe('Actions', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without error', () => {
-    render(<Actions {...props} ref={ref} />)
   })
 
   it('renders DialogConfirmRoleChange with correct props', () => {

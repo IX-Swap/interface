@@ -47,12 +47,7 @@ export const FormOTPDialog = (props: FormOTPDialogProps) => {
         {...props.triggerButtonProps}
         disabled={isTriggerDisabled}
       />
-      <Dialog
-        disablePortal
-        open={isOpen}
-        maxWidth='md'
-        onBackdropClick={closeDialog}
-      >
+      <Dialog disablePortal open={isOpen} maxWidth='md' onClose={closeDialog}>
         <CenteredDialogTitle>
           Please Enter Your 2FA
           <IconButton onClick={closeDialog}>
@@ -77,7 +72,7 @@ export const FormOTPDialog = (props: FormOTPDialogProps) => {
         </DialogContent>
         <VSpacer size='small' />
         <DialogActions>
-          <Grid container spacing={2} justify='center'>
+          <Grid container spacing={2} justifyContent='center'>
             <Grid item>
               <Button variant='outlined' color='primary' onClick={closeDialog}>
                 Cancel

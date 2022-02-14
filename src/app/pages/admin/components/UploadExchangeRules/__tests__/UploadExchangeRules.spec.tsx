@@ -1,6 +1,6 @@
 import { UploadExchangeRules } from 'app/pages/admin/components/UploadExchangeRules/UploadExchangeRules'
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { DataroomUploader } from 'components/dataroom/DataroomUploader'
 import { generateQueryResult } from '__fixtures__/useQuery'
 import * as useGetExchangeRules from 'app/pages/admin/hooks/useGetExchangeRules'
@@ -23,12 +23,7 @@ describe('UploadExchangeRules', () => {
   })
 
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<UploadExchangeRules />)
   })
 
   it('returns LOADING_TEXT when isLoading', () => {

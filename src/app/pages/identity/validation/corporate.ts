@@ -112,7 +112,10 @@ export const directorsAndBeneficialOwnersSchema = yup
         yup
           .object<BeneficialOwnerFormValues>({
             fullName: yup.string().required('Required'),
-            percentageShareholding: yup.number().required('Required'),
+            percentageShareholding: yup
+              .number()
+              .typeError('Percentage shareholding must be a number')
+              .required('Required'),
             documents: yup
               .object({
                 proofOfIdentity: yup.array<DataroomFile>().required('Required'),

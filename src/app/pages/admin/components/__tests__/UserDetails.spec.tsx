@@ -1,10 +1,10 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { UserDetails } from 'app/pages/admin/components/UserDetails'
 import { managedUser } from '__fixtures__/user'
 import { LabelledValue } from 'components/LabelledValue'
 import { UserActions } from 'app/pages/admin/components/UserActions'
-import { getTimeFromNow } from 'helpers/dates'
+import { getTimeFromNow, formatDateToMMDDYY } from 'helpers/dates'
 
 jest.mock('components/LabelledValue', () => ({
   LabelledValue: jest.fn(({ value }) => <>{value}</>)
@@ -16,12 +16,7 @@ jest.mock('app/pages/admin/components/UserActions', () => ({
 
 describe('UserDetails', () => {
   afterEach(async () => {
-    await cleanup()
     jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<UserDetails data={managedUser} />)
   })
 
   it('renders components with correct props', () => {
@@ -42,7 +37,7 @@ describe('UserDetails', () => {
       3,
       {
         label: 'Account Creation Date',
-        value: getTimeFromNow(new Date(managedUser.createdAt))
+        value: formatDateToMMDDYY(managedUser.createdAt)
       },
       {}
     )
@@ -50,7 +45,7 @@ describe('UserDetails', () => {
       4,
       {
         label: 'Last Updated Date',
-        value: getTimeFromNow(new Date(managedUser.updatedAt))
+        value: formatDateToMMDDYY(managedUser.updatedAt)
       },
       {}
     )
