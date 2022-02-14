@@ -36,7 +36,7 @@ export const CollectionForm = ({ collection, onSubmit, actionName = 'Update' }: 
   const [nameError, setNameError] = useState<string | null>(null)
 
   const checkValidation = useCallback(() => {
-    if (name && description) {
+    if (name) {
       setValidation(name.length <= NameSizeLimit && description.length <= DescriptionSizeLimit)
       return
     }
@@ -238,7 +238,6 @@ export const CollectionForm = ({ collection, onSubmit, actionName = 'Update' }: 
               <TYPE.body fontWeight={600}>
                 <Trans>Description</Trans>
               </TYPE.body>
-              <TYPE.error error>*</TYPE.error>
             </Box>
             <TYPE.descriptionThin fontSize={13}>
               The description will be included on the item&apos;s detail page underneath its image.{' '}
