@@ -14,7 +14,8 @@ export const cardCommonStyles = css`
 
 export const StyledBodyWrapper = styled(BodyWrapper)`
   background: transparent;
-  max-width: 100%;
+  width: 100%;
+  max-width: 1270px;
   padding-top: 0px;
 `
 

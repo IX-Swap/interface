@@ -4,15 +4,15 @@ import { Flex } from 'rebass'
 import { useActiveWeb3React } from 'hooks/web3'
 import { shortAddress } from 'utils'
 import { TYPE } from 'theme'
-import { KYCStatuses } from './enum'
 
+import { KYCStatuses } from './enum'
 import { KYCStatusCard, getStatusInfo } from './styleds'
 
 interface Props {
   status: KYCStatuses
 }
 
-export const Status: FC<Props> = ({ status }: Props) => {
+export const KYCStatus: FC<Props> = ({ status }: Props) => {
   const { account } = useActiveWeb3React()
   const { icon, text, color } = getStatusInfo(status)
 

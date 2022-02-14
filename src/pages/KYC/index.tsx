@@ -5,9 +5,9 @@ import { Flex } from 'rebass'
 
 import { StyledBodyWrapper } from 'pages/CustodianV2/styleds'
 import { TYPE } from 'theme'
-import { Status } from './Status'
+import { KYCStatus } from './KYCStatus'
 import { ButtonGradientBorder, ButtonIXSGradient } from 'components/Button'
-import { KYCForm } from './KYCForm'
+import { IndividualKycForm } from './IndividualKycForm'
 
 import { KYCStatuses } from './enum'
 import { Content, getStatusDescription, StatusCard } from './styleds'
@@ -128,13 +128,13 @@ export default function KYC() {
               <Trans>IXSwap KYC</Trans>
             </TYPE.title4>
 
-            <Status status={status} />
+            <KYCStatus status={status} />
 
             {getKYCDescription()}
           </Content>
         </StatusCard>
       ) : (
-        <KYCForm goBack={goBack} />
+        <IndividualKycForm goBack={goBack} />
       )}
     </StyledBodyWrapper>
   )
