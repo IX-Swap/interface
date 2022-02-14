@@ -16,100 +16,6 @@ import { routes } from 'utils/routes'
 import Row, { RowFixed } from '../Row'
 const activeClassName = 'ACTIVE'
 
-const HeaderLinksWrap = styled(Row)<{ links: number }>`
-  justify-self: center;
-  background-color: 'transparent';
-  width: fit-content;
-  display: grid;
-  flex-wrap: wrap;
-  overflow: visible;
-  grid-gap: 32px;
-  grid-template-columns: ${({ links }) => `repeat(${links},auto)`};
-  ${({ theme }) => theme.mediaWidth.upToMedium`
-    justify-self: flex-end;
-  `};
-  @media (max-width: 1600px) {
-    grid-gap: 18px;
-  }
-  @media (max-width: 1400px) {
-    display: none;
-  }
-`
-const navLinkStyles = css`
-  ${({ theme }) => theme.flexRowNoWrap}
-  align-items: left;
-  border-radius: 3rem;
-  outline: none;
-  cursor: pointer;
-  text-transform: uppercase;
-  text-decoration: none;
-  color: ${({ theme }) => theme.text2};
-  font-size: 20px;
-  line-height: 30px;
-  width: fit-content;
-  word-break: break-word;
-  opacity: 0.3;
-  border-radius: 45px;
-  font-weight: 600;
-  &.${activeClassName} {
-    opacity: 1;
-  }
-
-  :hover,
-  :focus {
-    color: ${({ theme }) => darken(0.05, theme.text2)};
-  }
-  @media (max-width: 1500px) {
-    font-size: 18px;
-  }
-  @media (max-width: 1300px) {
-    font-size: 16px;
-  }
-  @media (max-width: 1250px) {
-    font-size: 15px;
-  }
-`
-const StyledNavLink = styled(NavLink).attrs({
-  activeClassName,
-})`
-  ${navLinkStyles}
-`
-const subMenuLinkStyle = css`
-  font-size: 16px;
-  line-height: 24px;
-  text-transform: none;
-  padding: 0 66px 0 0;
-  :hover {
-    color: ${({ theme }) => theme.text1};
-    opacity: 1;
-  }
-`
-const SubMenuLink = styled(StyledNavLink)`
-  ${subMenuLinkStyle}
-  &.${activeClassName} {
-    color: ${({ theme }) => theme.text1};
-  }
-`
-const SubMenuExternalLink = styled(ExternalLink)`
-  ${navLinkStyles};
-  ${subMenuLinkStyle};
-  :hover,
-  :active,
-  :focus {
-    text-decoration: none;
-  }
-`
-const MenuExternalLink = styled(ExternalLink)`
-  ${navLinkStyles};
-`
-const PopOverContent = styled.div`
-  display: flex;
-  gap: 6px;
-  flex-direction: column;
-  align-items: flex-start;
-  padding: 15px 22px;
-`
-
 const HeaderPopover = () => {
   const { chainId } = useActiveWeb3React()
   return (
@@ -168,7 +74,7 @@ export const HeaderLinks = () => {
     <HeaderLinksWrap links={7}>
       {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
         <StyledNavLink id={`swap-nav-link`} to={'/swap'}>
-          <Trans>Secondary Market</Trans>
+          <Trans>Swap</Trans>
         </StyledNavLink>
       )}
       {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
@@ -182,26 +88,12 @@ export const HeaderLinks = () => {
             pathname.startsWith('/find')
           }
         >
-          <Trans>Liquidity Pool</Trans>
+          <Trans>Pools</Trans>
         </StyledNavLink>
       )}
 
       <StyledNavLink id={`stake-nav-link`} to={routes.securityTokens()}>
-        <Trans>Security tokens</Trans>
-      </StyledNavLink>
-
-      <StyledNavLink
-        ref={farmNode as any}
-        id={`farming-nav-link`}
-        to={'#'}
-        isActive={(match, { pathname }) => pathname.startsWith('/vesting') || pathname.startsWith('/staking')}
-      >
-        <Popover hideArrow show={open} content={<HeaderPopover />} placement={'bottom'}>
-          <RowFixed onClick={toggle}>
-            <Trans>IXS Farms</Trans>
-            <ChevronElement showMore={open} />
-          </RowFixed>
-        </Popover>
+        <Trans>Securities</Trans>
       </StyledNavLink>
 
       {chainId && TGE_CHAINS_WITH_SWAP.includes(chainId) && (
@@ -220,16 +112,126 @@ export const HeaderLinks = () => {
         </StyledNavLink>
       )}
 
-      {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
-        <StyledNavLink id={`faucet-nav-link`} to={'/faucet'}>
-          <Trans>Faucet</Trans>
-        </StyledNavLink>
-      )}
+      <StyledNavLink
+        ref={farmNode as any}
+        id={`farming-nav-link`}
+        to={'#'}
+        isActive={(match, { pathname }) => pathname.startsWith('/vesting') || pathname.startsWith('/staking')}
+      >
+        <Popover hideArrow show={open} content={<HeaderPopover />} placement={'bottom'}>
+          <RowFixed onClick={toggle}>
+            <Trans>Farming</Trans>
+            <ChevronElement showMore={open} />
+          </RowFixed>
+        </Popover>
+      </StyledNavLink>
+
       {chainId && chainId === SupportedChainId.KOVAN && (
         <MenuExternalLink href={'https://info.ixswap.io/home'}>
           <Trans>Charts</Trans>
         </MenuExternalLink>
       )}
+
+      {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
+        <StyledNavLink id={`faucet-nav-link`} to={'/faucet'}>
+          <Trans>Faucet</Trans>
+        </StyledNavLink>
+      )}
     </HeaderLinksWrap>
   )
 }
+
+const HeaderLinksWrap = styled(Row)<{ links: number }>`
+  justify-self: center;
+  background-color: 'transparent';
+  width: fit-content;
+  display: grid;
+  flex-wrap: wrap;
+  overflow: visible;
+  grid-gap: 32px;
+  grid-template-columns: ${({ links }) => `repeat(${links},auto)`};
+  ${({ theme }) => theme.mediaWidth.upToMedium`
+    justify-self: flex-end;
+  `};
+  @media (max-width: 1600px) {
+    grid-gap: 18px;
+  }
+  @media (max-width: 1400px) {
+    display: none;
+  }
+`
+const navLinkStyles = css`
+  ${({ theme }) => theme.flexRowNoWrap}
+  align-items: left;
+  border-radius: 3rem;
+  outline: none;
+  cursor: pointer;
+  text-decoration: none;
+  color: ${({ theme }) => theme.text2};
+  width: fit-content;
+  word-break: break-word;
+  opacity: 0.4;
+  border-radius: 45px;
+  font-weight: 600;
+  &.${activeClassName} {
+    opacity: 1;
+    color: ${({ theme }) => theme.white};
+  }
+
+  :hover,
+  :focus {
+    color: ${({ theme }) => darken(0.05, theme.text2)};
+    &.${activeClassName} {
+      color: ${({ theme }) => theme.white};
+    }
+  }
+  @media (max-width: 1500px) {
+    font-size: 18px;
+  }
+  @media (max-width: 1300px) {
+    font-size: 16px;
+  }
+  @media (max-width: 1250px) {
+    font-size: 15px;
+  }
+`
+const StyledNavLink = styled(NavLink).attrs({
+  activeClassName,
+})`
+  ${navLinkStyles}
+`
+const subMenuLinkStyle = css`
+  font-size: 16px;
+  line-height: 24px;
+  text-transform: none;
+  padding: 0 66px 0 0;
+  :hover {
+    color: ${({ theme }) => theme.text1};
+    opacity: 1;
+  }
+`
+const SubMenuLink = styled(StyledNavLink)`
+  ${subMenuLinkStyle}
+  &.${activeClassName} {
+    color: ${({ theme }) => theme.text1};
+  }
+`
+const SubMenuExternalLink = styled(ExternalLink)`
+  ${navLinkStyles};
+  ${subMenuLinkStyle};
+  :hover,
+  :active,
+  :focus {
+    text-decoration: none;
+  }
+`
+const MenuExternalLink = styled(ExternalLink)`
+  ${navLinkStyles};
+`
+const PopOverContent = styled.div`
+  display: flex;
+  gap: 6px;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 15px 22px;
+`
