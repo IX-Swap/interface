@@ -24,7 +24,7 @@ describe('PasswordField', () => {
 
     rerender(
       <Form>
-        <PasswordField showErrors />
+        <PasswordField withPasswordValidation />
       </Form>
     )
     expect(PasswordValidation).toHaveBeenCalled()

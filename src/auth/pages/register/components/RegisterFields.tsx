@@ -106,7 +106,7 @@ export const RegisterFields = () => {
         />
       </Grid>
       <Grid item className={topBlock}>
-        <PasswordField showErrors />
+        <PasswordField withPasswordValidation showErrorMessages={false} />
       </Grid>
       <Grid item className={bottomBlock}>
         <TypedField
