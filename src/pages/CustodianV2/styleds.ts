@@ -14,7 +14,8 @@ const cardCommonStyles = css`
 
 export const StyledBodyWrapper = styled(BodyWrapper)`
   background: transparent;
-  max-width: 100%;
+  max-width: 1400px;
+  width: 100%;
 `
 
 export const MySecTokensTab = styled(Box)`
@@ -30,8 +31,12 @@ export const MySecTokensGrid = styled(Box)`
   grid-gap: 30px;
 
   ${({ theme }) => theme.mediaWidth.upToMedium`
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);;
   `};
+
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+  grid-template-columns: 1fr;
+`};
 `
 
 export const MySecTokenCard = styled(Box)<{ isPending: boolean }>`

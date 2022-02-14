@@ -9,7 +9,6 @@ interface Props {
   token: any
 }
 export const Vault = ({ currency, token }: Props) => {
-  console.log(currency)
   const {
     status,
     isApproved: vaultExists,

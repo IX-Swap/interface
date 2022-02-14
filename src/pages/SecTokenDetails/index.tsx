@@ -20,11 +20,7 @@ export default function SecTokenDetails({
 }: RouteComponentProps<{ currencyId: string }>) {
   const currency = (useCurrency(currencyId) as any) ?? undefined
   const [token, setToken] = useState<any>(null)
-  const description = useMemo(() => {
-    return (currency as any)?.tokenInfo?.description
-  }, [currency])
-
-  const { accreditationRequest, platform } = useAccreditationStatus(currencyId)
+  const { accreditationRequest } = useAccreditationStatus(currencyId)
 
   useEffect(() => {
     const fetchToken = async () => {
@@ -36,8 +32,8 @@ export default function SecTokenDetails({
 
   return (
     <>
-      <DepositPopup currency={currency} />
-      <WithdrawPopup currency={currency} />
+      <DepositPopup currency={token?.token} />
+      <WithdrawPopup currency={token?.token} />
       <LightBackground />
       <Container width={['100%', '90%', '65%']} maxWidth={'920px'}>
         <InfoTitle>
@@ -58,7 +54,7 @@ export default function SecTokenDetails({
             </ReadMore>
           </DescriptionText>
         </Description>
-        <TokenDetails token={token} accreditationRequest={accreditationRequest} currency={null} platform={platform} />
+        <TokenDetails token={token} accreditationRequest={accreditationRequest} />
         {token?.token && <Vault token={token} currency={token.token} />}
       </Container>
     </>

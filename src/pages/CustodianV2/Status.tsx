@@ -12,20 +12,32 @@ interface Props {
   decimals: number
 }
 
-export const Status: FC<Props> = ({ status, amount, decimals }: Props) => {
+export const Status: FC<Props> = ({ status, amount: propAmount, decimals }: Props) => {
+  const amount = formatCurrencyAmount(propAmount, decimals ?? 18)
+
   const getStatus = () => {
     switch (status) {
       case 'approved':
-        return <TYPE.description7 color="text1">{formatCurrencyAmount(amount, decimals ?? 18)}</TYPE.description7>
+        return (
+          <TYPE.description7 style={{ maxWidth: 100, overflow: 'hidden', textOverflow: 'ellipsis' }} color="text1">
+            {amount}
+          </TYPE.description7>
+        )
       case 'pending-custodian':
         return (
-          <TYPE.buttonMuted>
+          <TYPE.buttonMuted color={'text1'}>
+            <Trans>Pending...</Trans>
+          </TYPE.buttonMuted>
+        )
+      case 'new':
+        return (
+          <TYPE.buttonMuted color={'text1'}>
             <Trans>Pending...</Trans>
           </TYPE.buttonMuted>
         )
       case 'pending-kyc':
         return (
-          <TYPE.buttonMuted>
+          <TYPE.buttonMuted color={'text1'}>
             <Trans>Pending KYC...</Trans>
           </TYPE.buttonMuted>
         )
@@ -46,5 +58,5 @@ export const Status: FC<Props> = ({ status, amount, decimals }: Props) => {
     }
   }
 
-  return getStatus()
+  return <div>{getStatus()}</div>
 }

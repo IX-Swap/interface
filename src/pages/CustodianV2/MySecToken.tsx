@@ -25,7 +25,7 @@ export const MySecToken: FC<Props> = ({ token }: Props) => {
     <NavLink style={{ textDecoration: 'none' }} to={`/security-tokens/${token.id}`}>
       <MySecTokenCard isPending={wrappedToken.status !== 'approved'}>
         <RowBetween>
-          <Flex alignItems="center">
+          <Flex marginRight="8px" alignItems="center">
             {token.logo ? (
               <img style={{ marginRight: 16, borderRadius: 24 }} width="46px" height="46px" src={token.logo.public} />
             ) : (
