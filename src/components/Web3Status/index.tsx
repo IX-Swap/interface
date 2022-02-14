@@ -76,7 +76,7 @@ const Web3StatusConnect = styled(Web3StatusGeneric)<{ faded?: boolean }>`
   color: ${({ theme }) => theme.text1};
   font-weight: 600;
   border-radius: 40px;
-  padding: 1px 7px;
+  padding: 0px 18px;
 
   ${({ faded }) =>
     faded &&
@@ -89,9 +89,10 @@ const Web3StatusConnect = styled(Web3StatusGeneric)<{ faded?: boolean }>`
 const Web3StatusConnected = styled(Web3StatusGeneric)<{ pending?: boolean }>`
   background: ${({ theme }) => theme.bgG1};
   opacity: ${({ pending }) => (pending ? '0.7' : '1')};
-  padding-right: 10px;
-  color: ${({ pending, theme }) => (pending ? theme.white : theme.text1)};
-  font-weight: 500;
+  padding: 0 18px;
+  color: ${({ theme }) => theme.white};
+  font-weight: 600;
+  font-size: 12px;
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
     padding-right: 0;
   `};
@@ -102,11 +103,10 @@ const Text = styled.p`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  margin: 3px 0.5rem;
-  font-size: 14px;
+  font-size: 12px;
   width: fit-content;
-  font-weight: 500;
-  line-height: 17px;
+  font-weight: 600;
+  line-height: 18px;
 `
 
 const NetworkIcon = styled(Activity)`
@@ -191,15 +191,13 @@ function Web3StatusInner() {
       <Web3StatusConnected id="web3-status-connected" onClick={toggleWalletModal} pending={hasPendingTransactions}>
         {hasPendingTransactions ? (
           <RowBetween>
-            <Text>
+            <Text style={{ margin: '4px 13px 4px 0' }}>
               <Trans>{pending?.length} Pending</Trans>
             </Text>{' '}
             <Loader stroke="white" />
           </RowBetween>
         ) : (
-          <>
-            <Text>{ENSName || shortenAddress(account)}</Text>
-          </>
+          <Text style={{ margin: '4px 13px 4px 0' }}>{ENSName || shortenAddress(account)}</Text>
         )}
         {!hasPendingTransactions && connector && <StatusIcon connector={connector} />}
       </Web3StatusConnected>
@@ -208,13 +206,15 @@ function Web3StatusInner() {
     return (
       <Web3StatusError onClick={toggleWalletModal}>
         <NetworkIcon />
-        <Text>{error instanceof UnsupportedChainIdError ? <Trans>Wrong Network</Trans> : <Trans>Error</Trans>}</Text>
+        <Text style={{ margin: '4px 0px 4px 13px' }}>
+          {error instanceof UnsupportedChainIdError ? <Trans>Wrong Network</Trans> : <Trans>Error</Trans>}
+        </Text>
       </Web3StatusError>
     )
   } else {
     return (
       <Web3StatusConnect id="connect-wallet" onClick={connectWallet} faded={!account}>
-        <Text style={{ fontWeight: 600 }}>
+        <Text style={{ fontWeight: 600, margin: '4px 0px' }}>
           <Trans>Connect Wallet</Trans>
         </Text>
       </Web3StatusConnect>
