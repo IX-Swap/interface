@@ -17,22 +17,20 @@ import { shortenAddress } from 'utils'
 import { DetailsElement } from './DetailsElement'
 import { Details, Logo } from './styleds'
 interface Props {
-  currency?: Token | null
   token: any
   accreditationRequest: AccreditationRequest | null
-  platform: SecTokenPlatform
 }
-export const TokenDetails = ({ token, currency, platform }: Props) => {
+export const TokenDetails = ({ token }: Props) => {
   const originalAddress = useMemo(() => {
-    return (currency as any)?.tokenInfo?.originalAddress
-  }, [currency])
+    return token?.token?.originalAddress
+  }, [token])
   const originalSymbol = useMemo(() => {
-    return (currency as any)?.tokenInfo?.originalSymbol
-  }, [currency])
-  const originalCurrency = useCurrency(originalAddress)
+    return token?.token?.originalSymbol
+  }, [token])
+  const originalCurrency = useCurrency(originalAddress ?? null)
   const { library } = useActiveWeb3React()
   const toggleAbout = useToggleModal(ApplicationModal.ABOUT_WRAPPING)
-  const addCurrency = useAddTokenToMetamask(currency ?? undefined)
+  const addCurrency = useAddTokenToMetamask({ ...token?.token, wrapped: token?.token } ?? undefined)
   const addOriginalCurrency = useAddTokenToMetamask(originalCurrency ?? undefined)
 
   const [isCopied, setCopied] = useCopyClipboard()
@@ -40,30 +38,17 @@ export const TokenDetails = ({ token, currency, platform }: Props) => {
   return (
     <Details>
       <AboutWrapping />
-      {false && (
+      {token && (
         <div>
-          {platform && (
-            <DetailsElement
-              title={<Trans>Issuer:</Trans>}
-              content={
-                <>
-                  <Logo style={{ marginRight: '6px' }} currency={currency || undefined} size="27px" />
-                  <ExternalLink href={platform.website} style={{ textDecorationLine: 'underline' }}>
-                    {platform.name}
-                  </ExternalLink>
-                </>
-              }
-            />
-          )}
-          {currency?.address && (
+          {token.token?.address && (
             <RowStart style={{ gap: '5px', flexWrap: 'wrap' }}>
-              <div onClick={() => setCopied(currency?.address ?? '')}>
+              <div onClick={() => setCopied(token.token?.address ?? '')}>
                 <DetailsElement
-                  title={<Trans>Wrapped {currency?.symbol}:</Trans>}
-                  content={isCopied ? <Trans>Copied!</Trans> : shortenAddress(currency?.address ?? '')}
+                  title={<Trans>Wrapped {token.symbol}:</Trans>}
+                  content={isCopied ? <Trans>Copied!</Trans> : shortenAddress(token.token?.address ?? '')}
                 />
               </div>
-              {currency && library?.provider?.isMetaMask && (
+              {library?.provider?.isMetaMask && (
                 <TextGradient
                   style={{ cursor: 'pointer', marginBottom: '0.75rem', fontSize: '18px', lineHeight: '27px' }}
                   onClick={() => !addCurrency.success && addCurrency.addToken()}
@@ -72,19 +57,21 @@ export const TokenDetails = ({ token, currency, platform }: Props) => {
                 </TextGradient>
               )}
               <ButtonGradient
-                style={{ width: '146px', alignSelf: 'flex-start', marginBottom: '13px' }}
+                style={{ width: '146px', alignSelf: 'flex-start', marginBottom: '0.75rem' }}
                 onClick={toggleAbout}
               >
                 <Trans>About Wrapping</Trans>
               </ButtonGradient>
             </RowStart>
           )}
-          {originalAddress && (
+          {token?.token.originalAddress && (
             <RowStart style={{ gap: '5px', flexWrap: 'wrap' }}>
-              <div onClick={() => setOriginAddCopied(originalAddress ?? '')}>
+              <div onClick={() => setOriginAddCopied(token?.token?.originalAddress ?? '')}>
                 <DetailsElement
                   title={<Trans>{originalSymbol || 'Original token'}:</Trans>}
-                  content={originAddIsCopied ? <Trans>Copied!</Trans> : shortenAddress(originalAddress ?? '')}
+                  content={
+                    originAddIsCopied ? <Trans>Copied!</Trans> : shortenAddress(token?.token?.originalAddress ?? '')
+                  }
                 />
               </div>
               {originalCurrency && library?.provider?.isMetaMask && (
@@ -97,19 +84,25 @@ export const TokenDetails = ({ token, currency, platform }: Props) => {
               )}
             </RowStart>
           )}
-        </div>
-      )}
-      {false && <DetailsElement title={<Trans>Initial Price:</Trans>} content="17$" />}
-      {false && <DetailsElement title={<Trans>Total Issued:</Trans>} content="100000000" />}
-      {false && <DetailsElement title={<Trans>Initial offering price:</Trans>} content="$25" />}
-      {false && <DetailsElement title={<Trans>STO Med. price:</Trans>} content="$30" />}
-      {token && (
-        <>
           <DetailsElement title={<Trans>Country:</Trans>} content={token.country} />
           <DetailsElement title={<Trans>Industry:</Trans>} content={token.industry} />
-          <DetailsElement title={<Trans>Issuer:</Trans>} content={token.issuer.name} />
-          <DetailsElement title={<Trans>Website:</Trans>} content={token.url} />
-        </>
+          <DetailsElement
+            title={<Trans>Issuer:</Trans>}
+            content={
+              <ExternalLink href={token.issuer.url} style={{ textDecorationLine: 'underline' }}>
+                {token.issuer.name}
+              </ExternalLink>
+            }
+          />
+          <DetailsElement
+            title={<Trans>Website:</Trans>}
+            content={
+              <ExternalLink href={token.url} style={{ textDecorationLine: 'underline' }}>
+                {token.url}
+              </ExternalLink>
+            }
+          />
+        </div>
       )}
     </Details>
   )

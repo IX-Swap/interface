@@ -29,7 +29,6 @@ export const Details = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 15px;
-  justify-content: space-between;
 `
 export const GridElement = styled.div`
   width: fit-content;

@@ -39,8 +39,6 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
   const addPopup = useAddPopup()
   const [token, setToken] = useState<any>(null)
 
-  console.log(token)
-
   const resetErrors = () => {
     setErrors({
       address: null,
@@ -123,6 +121,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
   }
 
   const handleWrappedTokenChange = async (e: string) => {
+    setIsLoading(true)
     let newToken = { ...token, wrappedTokenAddress: e }
 
     if (isValidAddress(e)) {
@@ -131,6 +130,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
     }
 
     setToken(newToken)
+    setIsLoading(false)
   }
 
   const countries = useMemo(() => {

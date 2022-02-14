@@ -327,8 +327,8 @@ export const AdminSecurityCatalog: FC = () => {
             <Flex flexDirection="column">
               {issuers?.items.length > 0 ? (
                 <>
-                  {issuers.items.map((issuer: any, index: number) => (
-                    <BrokerDealerCard key={`bd-${index}`} issuer={issuer} handleEditClick={handleEditClick} />
+                  {issuers.items.map((issuer: any) => (
+                    <BrokerDealerCard key={`bd-${issuer.id}`} issuer={issuer} handleEditClick={handleEditClick} />
                   ))}
                   <Pagination page={issuers.page} totalPages={issuers.totalPages} onPageChange={onPageChange} />
                 </>
