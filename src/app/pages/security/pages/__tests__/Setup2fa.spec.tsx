@@ -3,10 +3,6 @@ import { render } from 'test-utils'
 import { Setup2FA } from 'app/pages/security/pages/setup2faguide/components/Setup2FA'
 
 describe('Setup2FA', () => {
-  afterEach(async () => {
-    jest.clearAllMocks()
-  })
-
   it('does not render Next button if step is last', () => {
     const { queryByText } = render(<Setup2FA />)
 

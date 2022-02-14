@@ -22,7 +22,7 @@ const steps = [
 
 export const Update2fa = () => {
   const classes = useStyles()
-  const [activeStep, setActiveStep] = useState<number>(0)
+  const [activeStep, setActiveStep] = useState(0)
   const [twoFaData, setTwoFaData] = useState<TwoFaData | undefined>(undefined)
   const nextStep = () => {
     setActiveStep(activeStep + 1)
@@ -35,6 +35,9 @@ export const Update2fa = () => {
     setTwoFaData(twoFaData)
     nextStep()
   }
+
+  const isBackButtonVisible = activeStep > 0 && activeStep < steps.length
+  const isNextButtonVisible = activeStep < steps.length - 1 && activeStep > 0
 
   return (
     <Grid container spacing={0}>
@@ -75,7 +78,7 @@ export const Update2fa = () => {
                   justifyContent='center'
                   alignItems='center'
                 >
-                  {activeStep > 0 && activeStep < steps.length && (
+                  {isBackButtonVisible && (
                     <Grid item>
                       <Button
                         variant='outlined'
@@ -88,7 +91,7 @@ export const Update2fa = () => {
                     </Grid>
                   )}
 
-                  {activeStep < steps.length - 1 && activeStep > 0 && (
+                  {isNextButtonVisible && (
                     <Grid item>
                       <Button
                         variant='contained'

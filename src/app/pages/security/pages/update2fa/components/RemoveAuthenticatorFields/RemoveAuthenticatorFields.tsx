@@ -4,6 +4,7 @@ import { TypedField } from 'components/form/TypedField'
 import { useFormContext } from 'react-hook-form'
 import { Submit } from 'components/form/Submit'
 import { renderPartOfEmail } from 'helpers/rendering'
+import { useStyles } from './RemoveAuthenticatorFields.styles'
 
 export interface OTPFieldsProps {
   isLoading: boolean
@@ -14,10 +15,10 @@ export const RemoveAuthenticatorFields = ({
   isLoading,
   email
 }: OTPFieldsProps) => {
+  const classes = useStyles()
   const { control, watch } = useFormContext()
   const isOTPFull = watch('otp').length === 6
   const isEmailCodeFull = watch('emailCode').length === 6
-  const labelStyles = { color: '#666666', marginTop: 6, marginLeft: 8 }
 
   return (
     <Grid container direction='column' spacing={4}>
@@ -35,7 +36,7 @@ export const RemoveAuthenticatorFields = ({
           />
         </Grid>
         <Grid item>
-          <Typography variant={'body1'} style={labelStyles}>
+          <Typography variant={'body1'} className={classes.label}>
             Enter the 6-digit code sent to {renderPartOfEmail(email)}
           </Typography>
         </Grid>
@@ -54,7 +55,7 @@ export const RemoveAuthenticatorFields = ({
           />
         </Grid>
         <Grid item>
-          <Typography variant={'body1'} style={labelStyles}>
+          <Typography variant={'body1'} className={classes.label}>
             Enter the 6-digit code from your authenticator app
           </Typography>
         </Grid>

@@ -1,112 +1,50 @@
 import React from 'react'
 import { render } from 'test-utils'
 import { ActiveStep } from 'app/pages/security/pages/update2fa/components/ActiveStep'
-import { Step1RemoveAuthenticator } from 'app/pages/security/pages/update2fa/components/Step1RemoveAuthenticator'
-import { Step2Scan } from 'app/pages/security/components/Step2Scan/Step2Scan'
-import { Step3Backup } from 'app/pages/security/components/Step3Backup/Step3Backup'
-import { Step4Enable } from 'app/pages/security/components/Step4Enable'
-import { Enabled } from 'app/pages/security/components/Enabled'
 import { fakeTwoFaData } from '__fixtures__/security'
 
 jest.mock(
   'app/pages/security/pages/update2fa/components/Step1RemoveAuthenticator',
   () => ({
-    Step1RemoveAuthenticator: jest.fn(() => null)
+    Step1RemoveAuthenticator: jest.fn(() => <div data-testid='step-1' />)
   })
 )
 jest.mock('app/pages/security/components/Step2Scan/Step2Scan', () => ({
-  Step2Scan: jest.fn(() => null)
+  Step2Scan: jest.fn(() => <div data-testid='step-2' />)
 }))
 jest.mock('app/pages/security/components/Step3Backup/Step3Backup', () => ({
-  Step3Backup: jest.fn(() => null)
+  Step3Backup: jest.fn(() => <div data-testid='step-3' />)
 }))
 jest.mock('app/pages/security/components/Step4Enable', () => ({
-  Step4Enable: jest.fn(() => null)
+  Step4Enable: jest.fn(() => <div data-testid='step-4' />)
 }))
 jest.mock('app/pages/security/components/Enabled', () => ({
-  Enabled: jest.fn(() => null)
+  Enabled: jest.fn(() => <div data-testid='step-5' />)
 }))
 
 describe('ActiveStep', () => {
-  const nextStep = jest.fn()
-  const handleSuccessfulRemoveAuthenticator = jest.fn()
+  const props = {
+    index: 0,
+    nextStep: jest.fn(),
+    twoFaData: fakeTwoFaData,
+    handleSuccessfulRemoveAuthenticator: jest.fn()
+  }
 
-  afterEach(async () => {
-    jest.clearAllMocks()
-  })
+  it('renders all steps correctly', () => {
+    const { rerender, getByTestId } = render(<ActiveStep {...props} />)
 
-  it('renders Step1RemoveAuthenticator if activeStep is 0', () => {
-    render(
-      <ActiveStep
-        index={0}
-        nextStep={nextStep}
-        twoFaData={fakeTwoFaData}
-        handleSuccessfulRemoveAuthenticator={
-          handleSuccessfulRemoveAuthenticator
-        }
-      />
-    )
+    expect(getByTestId('step-1')).toBeInTheDocument()
 
-    expect(Step1RemoveAuthenticator).toHaveBeenCalledTimes(1)
-  })
+    rerender(<ActiveStep {...{ ...props, index: 1 }} />)
+    expect(getByTestId('step-2')).toBeInTheDocument()
 
-  it('renders Step2Scan if activeStep is 1', () => {
-    render(
-      <ActiveStep
-        index={1}
-        nextStep={nextStep}
-        twoFaData={fakeTwoFaData}
-        handleSuccessfulRemoveAuthenticator={
-          handleSuccessfulRemoveAuthenticator
-        }
-      />
-    )
+    rerender(<ActiveStep {...{ ...props, index: 2 }} />)
+    expect(getByTestId('step-3')).toBeInTheDocument()
 
-    expect(Step2Scan).toHaveBeenCalledTimes(1)
-  })
+    rerender(<ActiveStep {...{ ...props, index: 3 }} />)
+    expect(getByTestId('step-4')).toBeInTheDocument()
 
-  it('renders Step3Backup if activeStep is 2', () => {
-    render(
-      <ActiveStep
-        index={2}
-        nextStep={nextStep}
-        twoFaData={fakeTwoFaData}
-        handleSuccessfulRemoveAuthenticator={
-          handleSuccessfulRemoveAuthenticator
-        }
-      />
-    )
-
-    expect(Step3Backup).toHaveBeenCalledTimes(1)
-  })
-
-  it('renders Step4Enable if activeStep is 3', () => {
-    render(
-      <ActiveStep
-        index={3}
-        nextStep={nextStep}
-        twoFaData={fakeTwoFaData}
-        handleSuccessfulRemoveAuthenticator={
-          handleSuccessfulRemoveAuthenticator
-        }
-      />
-    )
-
-    expect(Step4Enable).toHaveBeenCalledTimes(1)
-  })
-
-  it("renders Enabled if activeStep doesn't match", () => {
-    render(
-      <ActiveStep
-        index={4}
-        nextStep={nextStep}
-        twoFaData={fakeTwoFaData}
-        handleSuccessfulRemoveAuthenticator={
-          handleSuccessfulRemoveAuthenticator
-        }
-      />
-    )
-
-    expect(Enabled).toHaveBeenCalledTimes(1)
+    rerender(<ActiveStep {...{ ...props, index: 4 }} />)
+    expect(getByTestId('step-5')).toBeInTheDocument()
   })
 })

@@ -1,7 +1,7 @@
 import React from 'react'
 import { render } from 'test-utils'
 import { fireEvent, waitFor } from '@testing-library/dom'
-import { RemoveAuthenticatorFields } from 'app/pages/security/pages/update2fa/components/RemoveAuthenticatorFields'
+import { RemoveAuthenticatorFields } from 'app/pages/security/pages/update2fa/components/RemoveAuthenticatorFields/RemoveAuthenticatorFields'
 import { Form } from 'components/form/Form'
 
 describe('RemoveAuthenticatorFields', () => {
@@ -32,15 +32,19 @@ describe('RemoveAuthenticatorFields', () => {
       </Form>
     )
 
-    const otpField = container.querySelector('input[name="otp"]')
-    const emailCodeField = container.querySelector('input[name="emailCode"]')
+    const otpField = container.querySelector(
+      'input[name="otp"]'
+    ) as HTMLInputElement
+    const emailCodeField = container.querySelector(
+      'input[name="emailCode"]'
+    ) as HTMLInputElement
 
-    fireEvent.change(otpField as HTMLInputElement, {
+    fireEvent.change(otpField, {
       target: {
         value: '123456'
       }
     })
-    fireEvent.change(emailCodeField as HTMLInputElement, {
+    fireEvent.change(emailCodeField, {
       target: {
         value: '123456'
       }

@@ -7,7 +7,10 @@ import { useRemove2fa } from 'app/pages/security/pages/update2fa/hooks/useRemove
 import { TwoFaData } from 'app/pages/security/types'
 import { ResendCode } from 'app/pages/security/pages/update2fa/components/ResendCode/ResendCode'
 
-export type ScreenState = 'Send code' | 'Remove and continue'
+export enum ScreenState {
+  FirstScreen = 'Send code',
+  SecondScreen = 'Remove and continue'
+}
 
 export interface RemoveCurrentAuthenticatorProps {
   onSuccessRemoveAuthenticator: (twoFaData: TwoFaData) => void
@@ -16,7 +19,9 @@ export interface RemoveCurrentAuthenticatorProps {
 export const Step1RemoveAuthenticator = ({
   onSuccessRemoveAuthenticator
 }: RemoveCurrentAuthenticatorProps) => {
-  const [screenState, setScreenState] = useState<ScreenState>('Send code')
+  const [screenState, setScreenState] = useState<ScreenState>(
+    ScreenState.FirstScreen
+  )
   const { refetch, data, isLoading: isGetEmailLoading } = useGetEmailCode()
   const [update2fa, { isLoading: isUpdate2faLoading }] = useRemove2fa(
     onSuccessRemoveAuthenticator
@@ -27,7 +32,7 @@ export const Step1RemoveAuthenticator = ({
 
   useEffect(() => {
     if (data !== undefined) {
-      setScreenState('Remove and continue')
+      setScreenState(ScreenState.SecondScreen)
     }
   }, [data])
 
@@ -71,7 +76,7 @@ export const Step1RemoveAuthenticator = ({
 
   return (
     <StepWrapper title='Remove Authenticator by Verifying your Identity'>
-      {screenState === 'Send code'
+      {screenState === ScreenState.FirstScreen
         ? renderSendCodeScreen()
         : renderRemoveAndContinueScreen()}
     </StepWrapper>

@@ -21,7 +21,7 @@ describe('Step1RemoveAuthenticator', () => {
     jest.clearAllMocks()
   })
 
-  it('renders send code button when data is undefined, revoke refetch on click', async () => {
+  it('renders send code button when data is undefined, invoke refetch on click', async () => {
     jest
       .spyOn(useGetEmailCode, 'useGetEmailCode')
       .mockImplementation(() => getEmailCodeUnsuccessfulResponse as any)

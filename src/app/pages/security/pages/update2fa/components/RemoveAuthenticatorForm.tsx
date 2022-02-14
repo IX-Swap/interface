@@ -1,7 +1,7 @@
 import React from 'react'
 import { Form } from 'components/form/Form'
 import { Remove2faFormValues } from 'app/pages/security/types'
-import { RemoveAuthenticatorFields } from 'app/pages/security/pages/update2fa/components/RemoveAuthenticatorFields'
+import { RemoveAuthenticatorFields } from 'app/pages/security/pages/update2fa/components/RemoveAuthenticatorFields/RemoveAuthenticatorFields'
 
 export const initialValues = {
   otp: '',

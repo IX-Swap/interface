@@ -11,7 +11,7 @@ export interface ResendCodeProps {
 
 export const ResendCode = ({ action, data }: ResendCodeProps) => {
   const classes = useStyles()
-  const [isDisabled, setIsDisabled] = useState<boolean>(true)
+  const [isDisabled, setIsDisabled] = useState(true)
 
   useEffect(() => {
     let timeout: NodeJS.Timeout | undefined
