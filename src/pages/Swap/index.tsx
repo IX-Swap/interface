@@ -1,4 +1,5 @@
 import { Currency, CurrencyAmount } from '@ixswap1/sdk-core'
+import styled from 'styled-components'
 import { Trade as V2Trade } from '@ixswap1/v2-sdk'
 import { FakeBrokerDealerApproval } from 'components/FakeBrokerDealerApproval/index'
 import { GeneralModal } from 'components/GeneralModal/GeneralModal'
@@ -137,7 +138,11 @@ export default function Swap({ history }: RouteComponentProps) {
                 <SwapButtons parsedAmounts={parsedAmounts} showAcceptChanges={showAcceptChanges} />
               </>
             )}
-            {showLoading && <LoaderThin size={48}></LoaderThin>}
+            {showLoading && (
+              <LoaderContainer>
+                <LoaderThin size={48} />
+              </LoaderContainer>
+            )}
           </AutoColumn>
           {showFakeApproval && <FakeBrokerDealerApproval formRef={formRef} />}
         </Wrapper>
@@ -148,3 +153,8 @@ export default function Swap({ history }: RouteComponentProps) {
     </>
   )
 }
+
+const LoaderContainer = styled.div`
+  display: flex;
+  justify-content: center;
+`
