@@ -40,6 +40,7 @@ import {
   setDescription as setCollectionDescrition,
   setLogo,
   setName as setCollectionName,
+  setMaxSupply as setCollectionMaxSupply,
   setClearCollectionState,
 } from './collectionForm.actions'
 
@@ -564,6 +565,7 @@ export function useCollectionActionHandlers(): {
   onSelectBanner: (file: FileWithPath | null) => void
   onSelectLogo: (file: FileWithPath | null) => void
   onSetDescription: (description: string) => void
+  onSetMaxSupply: (maxSupply: number) => void
   onClearCollectionState: () => void
 } {
   const dispatch = useDispatch<AppDispatch>()
@@ -601,6 +603,13 @@ export function useCollectionActionHandlers(): {
     [dispatch]
   )
 
+  const onSetMaxSupply = useCallback(
+    (maxSupply: number) => {
+      dispatch(setCollectionMaxSupply({ maxSupply }))
+    },
+    [dispatch]
+  )
+
   const onClearCollectionState = useCallback(() => {
     dispatch(setClearCollectionState())
   }, [dispatch])
@@ -611,6 +620,7 @@ export function useCollectionActionHandlers(): {
     onSelectLogo,
     onSetName,
     onSetDescription,
+    onSetMaxSupply,
     onClearCollectionState,
   }
 }

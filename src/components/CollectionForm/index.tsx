@@ -7,10 +7,13 @@ import { Label } from '@rebass/forms'
 import { ContainerRow, Input, InputContainer, InputPanel, Textarea } from 'components/Input'
 import Upload from 'components/Upload'
 import { AcceptFiles } from 'components/Upload/types'
+import Slider from 'components/Slider'
+
 import { ExternalLink, TYPE } from 'theme'
 import { ButtonGradient } from 'components/Button'
 import { useCollectionActionHandlers, useCollectionFormState } from 'state/nft/hooks'
 import { NameSizeLimit, DescriptionSizeLimit } from 'constants/misc'
+import { MAX_SUPPLY_RANGE } from 'state/nft/constants'
 
 interface UpdateFormProps {
   collection?: any | null
@@ -25,9 +28,10 @@ export const CollectionForm = ({ collection, onSubmit, actionName = 'Update' }: 
     onSelectCover: setCover,
     onSetDescription: setDescription,
     onSetName: setName,
+    onSetMaxSupply: setMaxSupply,
     onClearCollectionState,
   } = useCollectionActionHandlers()
-  const { cover, logo, banner, name, description } = useCollectionFormState()
+  const { cover, logo, banner, name, description, maxSupply } = useCollectionFormState()
   const [newLogo, setNewLogo] = useState('')
   const [newBanner, setNewBanner] = useState('')
   const [newCover, setNewCover] = useState('')
@@ -256,6 +260,25 @@ export const CollectionForm = ({ collection, onSubmit, actionName = 'Update' }: 
 
           {descriptionError && <TYPE.error error>{descriptionError}</TYPE.error>}
         </Box>
+      </Flex>
+      <Flex flexDirection="column" mt={4}>
+        <Label htmlFor="supply-value" mb={2}>
+          <TYPE.body fontWeight={600}>
+            <Trans>Select max number of items in collection</Trans>
+          </TYPE.body>
+        </Label>
+        <Slider
+          id="supply-value"
+          min={1}
+          step={1}
+          max={MAX_SUPPLY_RANGE}
+          value={maxSupply}
+          onChange={(e) => setMaxSupply(e)}
+        />
+      </Flex>
+      <Flex justifyContent="space-between">
+        <TYPE.body>{maxSupply}</TYPE.body>
+        <TYPE.body>{MAX_SUPPLY_RANGE}</TYPE.body>
       </Flex>
 
       <Flex mx={-2} flexWrap="wrap">
