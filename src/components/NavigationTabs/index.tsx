@@ -9,7 +9,7 @@ import { resetMintState } from 'state/mint/actions'
 import styled from 'styled-components/macro'
 import { CloseIcon, StyledPageHeader } from 'theme'
 import { ReactComponent as ArrowLeft } from '../../assets/images/arrow-back.svg'
-import { RowBetween, RowStart } from '../Row'
+import { RowBetween, RowStart, RowEnd } from '../Row'
 import MitigationBadge from 'components/MitigationBadge'
 
 const Tabs = styled.div`
@@ -122,12 +122,24 @@ export function ImportListTabs({ onClick, onDismiss }: { onClick: () => void; on
   )
 }
 export function CustodianTabs() {
+  const listMyTokenLink =
+    'https://docs.google.com/forms/d/e/1FAIpQLSenV66JwRp7MeHMm31EYLw-8VCHWfsyj8ji98l5Cqchpr2IyQ/viewform'
+
   return (
     <Tabs style={{ width: '100%' }}>
       <StyledPageHeader>
-        <RowStart style={{ padding: '0' }}>
-          <Trans>Security Tokens</Trans>
-        </RowStart>
+        <RowBetween>
+          <RowStart style={{ padding: '0' }}>
+            <Trans>Security Tokens</Trans>
+          </RowStart>
+          <RowEnd style={{ padding: '0' }}>
+            <Trans>
+              <a style={{ color: '#FFFFFF', textDecoration: 'none' }} href={listMyTokenLink} target="blank">
+                List my token
+              </a>
+            </Trans>
+          </RowEnd>
+        </RowBetween>
       </StyledPageHeader>
     </Tabs>
   )
