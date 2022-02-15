@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Grid, Tab, Tabs } from '@mui/material'
 import { Form } from 'components/form/Form'
-import { addSymbol, formatMoney } from 'helpers/numbers'
+import { formatMoney, formatTokenBalance } from 'helpers/numbers'
 import { TabPanel } from 'components/TabPanel'
 import { LabelledValue } from 'components/LabelledValue'
 import {
@@ -56,8 +56,6 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
       )
     )
   }
-  const formattedTokenBalance =
-    tokenBalance === 0 || tokenBalance === undefined ? '0.00' : tokenBalance
 
   return (
     <Form onSubmit={handleSubmit} resetAfterSubmit>
@@ -101,7 +99,7 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
 
           <Grid item>
             <LabelledValue
-              value={addSymbol(formattedTokenBalance, tokenLabel)}
+              value={formatTokenBalance(tokenBalance, tokenLabel)}
               label=''
             />
           </Grid>
