@@ -56,6 +56,8 @@ export const secCatalog = {
   allIssuers: `/catalog/issuer/all`,
   myTokens: `/catalog/token/list`,
   allIssuerTokens: `/catalog/token/list/all`,
+  getAtlasAll: `/catalog/atlas/all`,
+  getAtlasInfo: (atlasOneId: string) => `/catalog/atlas/${atlasOneId}`,
   issuer: (issuerId: number) => `/catalog/issuer/${issuerId}`,
   createIssuerToken: (issuerId: number) => `/catalog/token/issuer/${issuerId}`,
   issuerToken: (tokenId: number) => `/catalog/token/${tokenId}`,

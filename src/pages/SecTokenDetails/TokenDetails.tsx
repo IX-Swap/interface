@@ -1,4 +1,3 @@
-import { Token } from '@ixswap1/sdk-core'
 import { Trans } from '@lingui/macro'
 import { ButtonGradient } from 'components/Button'
 import { RowStart } from 'components/Row'
@@ -12,17 +11,16 @@ import React, { useMemo } from 'react'
 import { ApplicationModal } from 'state/application/actions'
 import { useToggleModal } from 'state/application/hooks'
 import { ExternalLink, TextGradient } from 'theme'
-import { SecTokenPlatform } from 'types/secToken'
 import { shortenAddress } from 'utils'
 import { DetailsElement } from './DetailsElement'
-import { Details, Logo } from './styleds'
+import { Details } from './styleds'
 interface Props {
   token: any
   accreditationRequest: AccreditationRequest | null
 }
 export const TokenDetails = ({ token }: Props) => {
   const originalAddress = useMemo(() => {
-    return token?.token?.originalAddress
+    return token?.address
   }, [token])
   const originalSymbol = useMemo(() => {
     return token?.token?.originalSymbol
@@ -32,9 +30,9 @@ export const TokenDetails = ({ token }: Props) => {
   const toggleAbout = useToggleModal(ApplicationModal.ABOUT_WRAPPING)
   const addCurrency = useAddTokenToMetamask({ ...token?.token, wrapped: token?.token } ?? undefined)
   const addOriginalCurrency = useAddTokenToMetamask(originalCurrency ?? undefined)
-
   const [isCopied, setCopied] = useCopyClipboard()
   const [originAddIsCopied, setOriginAddCopied] = useCopyClipboard()
+
   return (
     <Details>
       <AboutWrapping />
@@ -64,7 +62,7 @@ export const TokenDetails = ({ token }: Props) => {
               </ButtonGradient>
             </RowStart>
           )}
-          {token?.token.originalAddress && (
+          {token.token?.originalAddress && (
             <RowStart style={{ gap: '5px', flexWrap: 'wrap' }}>
               <div onClick={() => setOriginAddCopied(token?.token?.originalAddress ?? '')}>
                 <DetailsElement
