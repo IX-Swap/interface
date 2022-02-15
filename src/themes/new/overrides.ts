@@ -219,9 +219,11 @@ export const getThemeOverrides = (
     styleOverrides: {
       root: {
         backgroundColor: '#FFFFFF',
-        border: '1px solid #EDF2FA',
         boxSizing: 'border-box',
-        boxShadow: 'rgba(162, 172, 191, 0.16)'
+        '&.MuiPaper-outlined': {
+          boxShadow: '0px 80px 80px rgba(162, 172, 191, 0.16)',
+          border: '1px solid #EDF2FA'
+        }
       }
     }
   }

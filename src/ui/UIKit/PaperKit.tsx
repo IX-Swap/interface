@@ -21,7 +21,7 @@ export const PaperKit = () => {
         }}
       >
         <Paper elevation={0} />
-        <Paper />
+        <Paper variant={'outlined'} />
       </Box>
     </ThemeProvider>
   )
