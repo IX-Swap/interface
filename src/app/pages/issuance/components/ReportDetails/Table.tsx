@@ -1,5 +1,5 @@
-import { withStyles } from '@material-ui/core/styles'
-import MuiTable from '@material-ui/core/Table'
+import { withStyles } from '@mui/styles'
+import { Table as MuiTable } from '@mui/material'
 
 export const Table = withStyles({
   root: {
