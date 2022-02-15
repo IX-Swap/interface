@@ -214,5 +214,15 @@ export const getThemeOverrides = (
         borderRadius: 2
       }
     }
+  },
+  MuiPaper: {
+    styleOverrides: {
+      root: {
+        backgroundColor: '#FFFFFF',
+        border: '1px solid #EDF2FA',
+        boxSizing: 'border-box',
+        boxShadow: 'rgba(162, 172, 191, 0.16)'
+      }
+    }
   }
 })
