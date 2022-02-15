@@ -12,6 +12,7 @@ import { privateClassNames } from 'helpers/classnames'
 import { WithdrawalAddressSelect } from 'components/form/WithdrawalAddressSelect'
 import { ETHEREUM_DECIMAL_PLACES } from 'config'
 import { CreateCustodyWithdrawalAddressButton } from 'app/pages/invest/components/CreateCustodyWithdrawalAddressButton/CreateCustodyWithdrawalAddressButton'
+import { useWithdrawalAddresses } from 'app/pages/accounts/pages/withdrawalAddresses/hooks/useWithdrawalAddresses'
 
 export interface CommitmentFormFieldsProps {
   symbol: string
@@ -30,6 +31,12 @@ export const CommitmentFormFields = (props: CommitmentFormFieldsProps) => {
   }
 
   const decimalScale = props.decimalScale ?? ETHEREUM_DECIMAL_PLACES
+
+  const { data, status } = useWithdrawalAddresses({ network: props.network })
+  const filteredAddresses = data.list.filter(
+    ({ status }) => status === 'Approved'
+  )
+  const hasFilteredAddresses = filteredAddresses.length > 0
 
   return (
     <Grid container direction='column' spacing={2}>
@@ -94,9 +101,15 @@ export const CommitmentFormFields = (props: CommitmentFormFieldsProps) => {
           component={WithdrawalAddressSelect}
           control={control}
           name='withdrawalAddress'
-          label='Destination Wallet Address'
+          label={
+            !hasFilteredAddresses && status !== 'loading'
+              ? 'You do not have wallet addresses'
+              : 'Destination Wallet Address'
+          }
+          disabled={!hasFilteredAddresses}
           displayEmpty
-          network={props.network}
+          list={filteredAddresses}
+          status={status}
         />
       </Grid>
 
