@@ -70,32 +70,21 @@ let SGD: { outstanding: any }
 test.describe('Cash withdrawals', () => {
   test.beforeEach(async ({ page, bankAccount }) => {
     await click(bankAccounts.CASH_WITHDRAWALS_PAGE, page)
-    const { availableUSD, availableSGD } = await bankAccount.getBalances(
-      baseCreds.thirdExchange
-    )
+    const { availableUSD, availableSGD } = await bankAccount.getBalances(baseCreds.thirdExchange)
     USD = availableUSD
     SGD = availableSGD
   })
 
-  test('The withdrawal request should be created(USD)', async ({
-    bankAccount
-  }) => {
+  test('The withdrawal request should be created(USD)', async ({ bankAccount }) => {
     await bankAccount.createWithdrawalsRequest()
-    const { availableUSD } = await bankAccount.getBalances(
-      baseCreds.thirdExchange
-    )
+    const { availableUSD } = await bankAccount.getBalances(baseCreds.thirdExchange)
     expect(USD.outstanding).toEqual(availableUSD.outstanding + 10000)
   })
 
-  test('The withdrawal request should be created(SGD)', async ({
-    bankAccount,
-    page
-  }) => {
+  test('The withdrawal request should be created(SGD)', async ({ bankAccount, page }) => {
     await click(bankAccounts.buttons.SGD, page)
     await bankAccount.createWithdrawalsRequest()
-    const { availableSGD } = await bankAccount.getBalances(
-      baseCreds.thirdExchange
-    )
+    const { availableSGD } = await bankAccount.getBalances(baseCreds.thirdExchange)
     expect(SGD.outstanding).toEqual(availableSGD.outstanding + 10000)
   })
 })
@@ -110,9 +99,7 @@ test.describe('The Digital Securities page', () => {
     await click(bankAccounts.DIGITAL_SECURITIES, page)
   })
 
-  test('The wallet address should displayed (deposit page)', async ({
-    bankAccount
-  }) => {
+  test('The wallet address should displayed (deposit page)', async ({ bankAccount }) => {
     await bankAccount.tokenDepositRequest()
   })
 
@@ -128,10 +115,7 @@ test.describe('The Transactions page', () => {
   test.afterEach(async ({ page, invest }) => {
     await shouldExist(`${invest.TABLE} >> text="Deposit"`, page)
   })
-  test('Check that the data displayed in the table', async ({
-    invest,
-    page
-  }) => {
+  test('Check that the data displayed in the table', async ({ invest, page }) => {
     await shouldExist(invest.TABLE, page)
   })
 
@@ -139,4 +123,12 @@ test.describe('The Transactions page', () => {
     await click(bankAccounts.listBox.CURRENCY, page)
     await click(bankAccounts.listBox.CURRENCY_VALUE_USD, page)
   })
+})
+
+test.describe('The Blockchain addresses page', () => {
+  test.beforeEach(async ({ page }) => {
+    await click(bankAccounts.TRANSACTIONS, page)
+  })
+
+  test('Check that the currency can be changed', async ({ page }) => {})
 })
