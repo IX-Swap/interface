@@ -206,9 +206,7 @@ class Pool {
         this.kLast.mul(1000).mul(1000).lt(balance0Adjusted.mul(balance1Adjusted))
       )
     ) {
-      throw new Error(
-        `Error ${transaction.id}: K_COEFFICIENT_ERROR, k ${this.kLast}, balance0 ${balance0Adjusted}, balance1 ${balance1Adjusted}`
-      )
+      throw new Error(`Invalid pool price`)
     }
 
     // //  find current out values with system fees
@@ -227,11 +225,11 @@ class Pool {
 
     //  ensure that reserves are bigger than out values
     if (!this.reserve0?.gt(amount0OutWithSystemFee)) {
-      throw new Error('Error: INSUFFICIENT_LIQUIDITY')
+      throw new Error('Reserve has insufficient liquidity')
     }
 
     if (!this.reserve1?.gt(amount1OutWithSystemFee)) {
-      throw new Error('Error: INSUFFICIENT_LIQUIDITY')
+      throw new Error('Reserve has insufficient liquidity')
     }
 
     //  set final reserves value by extracting out value with fees
@@ -317,7 +315,7 @@ class Pool {
    */
   verifyOutValues(transaction: Swap) {
     if (!(transaction.amount0Out.gt(0) || transaction.amount1Out.gt(0))) {
-      throw new Error(`Error ${transaction.id}: INSUFFICIENT_OUTPUT_AMOUNT`)
+      throw new Error(`Transaction has insufficient output amount`)
     }
 
     if (
@@ -328,11 +326,11 @@ class Pool {
         transaction.amount1Out.lt(this.reserve1)
       )
     ) {
-      throw new Error(`Error ${transaction.id}: INSUFFICIENT_LIQUIDITY`)
+      throw new Error(`Reserve has insufficient liquidity`)
     }
 
     if (!(transaction.to != this.token0 && transaction.to != this.token1)) {
-      throw new Error(`Error ${transaction.id}: INVALID_TO`)
+      throw new Error(`Invalid sender address`)
     }
   }
 
@@ -358,15 +356,11 @@ class Pool {
       .div(this.reserve0.mul(1000).mul(1000).add(amount1InWithFee))
 
     if (!(transaction.amount0Out.lt(amount0OutMin) || transaction.amount0Out.eq(amount0OutMin))) {
-      throw new Error(
-        `Error ${transaction.id}: MAX_SLIPPAGE_EXCEEDED0, min value ${amount0OutMin} and original one ${transaction.amount0Out}`
-      )
+      throw new Error(`Max slippage exceeded`)
     }
 
     if (!(transaction.amount1Out.lt(amount1OutMin) || transaction.amount1Out.eq(amount1OutMin))) {
-      throw new Error(
-        `Error ${transaction.id}: MAX_SLIPPAGE_EXCEEDED1, min value ${amount1OutMin} and original one ${transaction.amount1Out}`
-      )
+      throw new Error(`Max slippage exceeded`)
     }
   }
 
@@ -395,11 +389,11 @@ class Pool {
       transaction.amount1Out
     )
     if (!(out0AmountDiff.gt(0) || transaction.amount1In.eq(0))) {
-      throw new Error(`Mitigation0 ${transaction.id}: OUT_VALUE_SMALLER_OR_EQUAL_ZERO`)
+      throw new Error(`Out value is smaller or equal to zero`)
     }
 
     if (!(out1AmountDiff.gt(0) || transaction.amount0In.eq(0))) {
-      throw new Error(`Mitigation1 ${transaction.id}: OUT_VALUE_SMALLER_OR_EQUAL_ZERO`)
+      throw new Error(`Out value is smaller or equal to zero`)
     }
 
     //  find slice factor curve for each token
@@ -415,11 +409,13 @@ class Pool {
     /*  transaction is valid if transaction out value has acceptable difference from Oracle estimation
     or other side incoming value is 0 (therefore, out value will be 0)  */
     if (!(out0AmountDiff.gt(BigNumber.from(100).sub(sliceFactor0Curve)) || transaction.amount1In.eq(0))) {
-      throw new Error(`Mitigation0 ${transaction.id}: OUT_VALUE_TOO_FAR_FROM_ORACLE`)
+      // throw new Error(`Mitigation0 ${transaction.id}: OUT_VALUE_TOO_FAR_FROM_ORACLE`)
+      throw new Error(`Out value too far from Oracle`)
     }
 
     if (!(out1AmountDiff.gt(BigNumber.from(100).sub(sliceFactor1Curve)) || transaction.amount0In.eq(0))) {
-      throw new Error(`Mitigation1 ${transaction.id}: OUT_VALUE_TOO_FAR_FROM_ORACLE`)
+      // throw new Error(`Mitigation1 ${transaction.id}: OUT_VALUE_TOO_FAR_FROM_ORACLE`)
+      throw new Error(`Out value too far from Oracle`)
     }
   }
 
