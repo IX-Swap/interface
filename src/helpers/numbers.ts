@@ -72,7 +72,7 @@ export const formatMoney = (
 }
 
 export const formatTokenBalance = (value: number | undefined, symbol: string) =>
-  value === 0 || value === undefined ? '0.00' : addSymbol(value, symbol)
+  addSymbol(value === 0 || value === undefined ? '0.00' : value, symbol)
 
 export const calculatePercent = (value: number, total: number): number =>
   Math.min(100, (100 * value) / total)
