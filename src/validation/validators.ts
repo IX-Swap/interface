@@ -1,10 +1,12 @@
-import isPast from 'date-fns/isPast'
 import {
   CorporateDeclarations,
   DeclarationValue,
   IndividualDeclarations
 } from 'app/pages/identity/const/declarations'
+import isBefore from 'date-fns/isBefore'
+import isPast from 'date-fns/isPast'
 import { hasValue } from 'helpers/forms'
+import { isEmptyString } from 'helpers/strings'
 import { ValidationError } from 'yup'
 
 const passwordPatterns = [/[A-Z]/, /[a-z]/, /[0-9]/, /[^A-Za-z0-9]/]
@@ -93,6 +95,16 @@ export const pastDateValidator = (value: string | null | undefined) => {
   }
 
   return !isPast(new Date(value))
+}
+
+export const isBeforeDate = (
+  first: string | null | undefined,
+  second: string | null | undefined
+) => {
+  if (isEmptyString(first) || isEmptyString(second)) {
+    return true
+  }
+  return isBefore(new Date(first as string), new Date(second as string))
 }
 
 export const validateUEN = (uen: any) => {
