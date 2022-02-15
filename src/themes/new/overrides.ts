@@ -188,5 +188,31 @@ export const getThemeOverrides = (
         color: '#ffffff'
       }
     }
+  },
+  MuiBreadcrumbs: {
+    defaultProps: {
+      separator: ''
+    },
+    styleOverrides: {
+      root: {},
+      li: {
+        '> a': {
+          color: '#3B4251',
+          fontWeight: 500,
+          textDecoration: 'none'
+        },
+        '> p': {
+          color: '#778194',
+          fontWeight: 500
+        }
+      },
+      separator: {
+        color: 'transparent',
+        width: 4,
+        height: 4,
+        backgroundColor: '#778194',
+        borderRadius: 2
+      }
+    }
   }
 })
