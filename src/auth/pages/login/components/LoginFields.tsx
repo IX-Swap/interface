@@ -15,32 +15,34 @@ export const LoginFields = () => {
   const emailErrors = errors.email
 
   return (
-    <Grid container spacing={4} direction='column'>
-      <Grid item>
-        <TypedField
-          control={control}
-          fullWidth
-          component={TextField}
-          placeholder={'Email Address'}
-          name='email'
-          label='Email'
-          type='email'
-          InputLabelProps={{
-            shrink: true
-          }}
-          InputProps={{
-            endAdornment:
-              emailErrors !== undefined ? (
-                <InputAdornment position={'end'}>
-                  <WarningIcon />
-                </InputAdornment>
-              ) : null
-          }}
-        />
-      </Grid>
+    <Grid container direction='column'>
+      <Grid item container spacing={6} direction='column'>
+        <Grid item>
+          <TypedField
+            control={control}
+            fullWidth
+            component={TextField}
+            placeholder={'Email Address'}
+            name='email'
+            label='Email'
+            type='email'
+            InputLabelProps={{
+              shrink: true
+            }}
+            InputProps={{
+              endAdornment:
+                emailErrors !== undefined ? (
+                  <InputAdornment position={'end'}>
+                    <WarningIcon />
+                  </InputAdornment>
+                ) : null
+            }}
+          />
+        </Grid>
 
-      <Grid item>
-        <PasswordField />
+        <Grid item>
+          <PasswordField />
+        </Grid>
       </Grid>
 
       <Grid item container justifyContent={'flex-end'}>

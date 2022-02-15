@@ -25,6 +25,7 @@ export interface TypedFieldProps<
   valueExtractor?: (...args: any[]) => any
   customRenderer?: boolean
   helperText?: string
+  isErrorMessageEnabled?: boolean
   onChange?: (
     value: DeepPathValue<TFieldValues, TFieldName>,
     path: string,
@@ -62,6 +63,7 @@ export const TypedField = <
     component,
     valueExtractor,
     customRenderer = false,
+    isErrorMessageEnabled = true,
     rootName,
     helperText,
     onChange,
@@ -162,7 +164,7 @@ export const TypedField = <
               <FormHelperText>{helperText}</FormHelperText>
             )}
 
-            {hasError && (
+            {hasError && isErrorMessageEnabled && (
               <ErrorMessage
                 errors={control.formStateRef.current.errors}
                 name={path}

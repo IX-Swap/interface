@@ -182,6 +182,12 @@ export const issuanceURL = {
     getDSOList: '/vcc/dsos/list',
     getSubFundStats: 'vcc/subfund-stats',
     getInvestmentStats: 'vcc/subfund-growth-graph'
+  },
+  financialReports: {
+    uploadFile: '/issuance/financial-report-file/create',
+    getReport: (reportId?: string) =>
+      `/issuance/financial-report-file/${reportId}`,
+    reportTemplate: '/issuance/financial-report-file/template/recent'
   }
 }
 

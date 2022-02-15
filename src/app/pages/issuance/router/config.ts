@@ -43,5 +43,5 @@ export const IssuanceRoute = {
   dashboard: '/app/issuance/dashboard',
   financialReports: '/app/issuance/financial-reports',
   uploadReport: '/app/issuance/financial-reports/upload',
-  viewReport: '/app/issuance/financial-reports/:id'
+  viewReport: '/app/issuance/financial-reports/:reportId'
 }

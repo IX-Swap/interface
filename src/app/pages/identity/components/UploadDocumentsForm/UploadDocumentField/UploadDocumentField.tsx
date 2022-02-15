@@ -55,7 +55,7 @@ export const UploadDocumentField = ({
           valueExtractor={documentValueExtractor}
           multiple
           fullWidth
-          accept={DataroomFileType.document}
+          accept={DataroomFileType.report}
           documentInfo={{
             title: label,
             type: label

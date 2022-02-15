@@ -36,7 +36,7 @@ export const AmountField = () => {
     <Grid container spacing={1}>
       <Grid item xs={12}>
         <Available
-          tokenCurrencySymbol={tokenInfo?.network.nativeCurrency.symbol}
+          tokenCurrencySymbol={tokenInfo?.asset.symbol}
           available={available}
         />
       </Grid>
@@ -63,7 +63,7 @@ export const AmountField = () => {
                     disableRipple
                     style={{ background: 'transparent', cursor: 'default' }}
                   >
-                    {tokenInfo.network.nativeCurrency.symbol}
+                    {tokenInfo.asset.symbol}
                   </Button>
                 </>
               ) : (
