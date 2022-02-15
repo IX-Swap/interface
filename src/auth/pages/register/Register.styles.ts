@@ -1,5 +1,9 @@
 import makeStyles from '@mui/styles/makeStyles'
 
+export interface StyleProps {
+  isError?: boolean
+}
+
 export const useStyles = makeStyles(theme => ({
   title: {
     fontWeight: 700,
@@ -17,7 +21,8 @@ export const useStyles = makeStyles(theme => ({
   label: {
     display: 'block',
     maxWidth: 286,
-    color: 'rgba(255, 255, 255, 0.5)'
+    color: ({ isError }: StyleProps) =>
+      isError !== undefined && isError ? '#FF8080' : 'rgba(255, 255, 255, 0.5)'
   },
   topBlock: {
     paddingBottom: '0!important'

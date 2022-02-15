@@ -2,23 +2,6 @@ import { Theme } from '@mui/material'
 import { ThemeOptions } from '@mui/material/styles'
 import { rte } from 'themes/new/rte'
 
-// interface LabOverrides {
-//   MuiSkeleton: {
-//     root: CSSProperties
-//   }
-//   MUIRichTextEditor: {
-//     root: any
-//     container: any
-//     editor: any
-//     toolbar: any
-//     placeHolder: any
-//   }
-//   PrivateSwitchBase: {
-//     root: any
-//     checked: any
-//   }
-// }
-
 export const getThemeOverrides = (
   theme: Theme
 ): ThemeOptions['components'] => ({
@@ -29,7 +12,8 @@ export const getThemeOverrides = (
         '&.Mui-error': {
           color: '#FF8080',
           textAlign: 'right',
-          paddingTop: 6
+          paddingTop: 6,
+          marginRight: 0
         }
       }
     }
@@ -37,9 +21,10 @@ export const getThemeOverrides = (
   MuiInputLabel: {
     styleOverrides: {
       root: {
-        transform: 'translate(0, -11px) !important',
+        transform: 'translate(0, -30px) !important',
         transformOrigin: 'top left',
         fontSize: 16,
+        color: '#ffffff',
 
         '&.Mui-focused': {
           color: '#ffffff'
@@ -75,6 +60,27 @@ export const getThemeOverrides = (
       }
     }
   },
+  MuiOutlinedInput: {
+    styleOverrides: {
+      notchedOutline: {
+        borderColor: 'transparent',
+        '& span': {
+          display: 'none!important'
+        },
+        '.Mui-error &': {
+          paddingRight: 20,
+          border: '2px solid #FF8080!important',
+          WebkitBoxShadow: 'none'
+        }
+      },
+      input: {
+        paddingTop: 18,
+        paddingBottom: 18,
+        paddingLeft: 24,
+        paddingRight: 24
+      }
+    }
+  },
   MuiInputBase: {
     styleOverrides: {
       root: {
@@ -93,8 +99,9 @@ export const getThemeOverrides = (
         boxSizing: 'border-box',
         color: '#ffffff',
         fontSize: 16,
+        WebkitBoxShadow: '0 0 0 100px #1a397c40 inset!important',
         '&:-webkit-autofill': {
-          WebkitBoxShadow: '0 0 0 100px #1a397c inset',
+          WebkitBoxShadow: '0 0 0 100px #1a397c40 inset!important',
           WebkitTextFillColor: '#ffffff',
           transition: 'background-color 5000s ease-in-out 0s'
         },
@@ -103,18 +110,30 @@ export const getThemeOverrides = (
           WebkitTextFillColor: '#334466',
           transition: 'none'
         },
+        '&:-internal-autofill-selected': {
+          WebkitBoxShadow: '0 0 0 100px #1a397c40 inset!important',
+          backgroundColor: '#1a397c40!important'
+        },
         '.Mui-focused &': {
           backgroundColor: '#ffffff',
+          WebkitBoxShadow: 'none!important',
           color: '#000000',
-          border: 'none'
+          border: 'none',
+          transition: 'none!important'
+        },
+        '.Mui-error &': {
+          WebkitBoxShadow: 'none!important'
         }
       },
-      // inputMarginDense: {
-      //   paddingTop: 12,
-      //   paddingBottom: 12
-      // },
       adornedEnd: {
-        paddingRight: 8
+        paddingRight: 8,
+        '&.Mui-error': {
+          backgroundColor: '#1a397c40'
+        },
+        '&.Mui-focused': {
+          backgroundColor: '#ffffff',
+          WebkitBoxShadow: 'none!important'
+        }
       },
       multiline: {
         height: 'auto',
@@ -134,11 +153,11 @@ export const getThemeOverrides = (
   },
   MuiButton: {
     styleOverrides: {
-      // label: {
-      //   fontSize: 12
-      // },
       contained: {
+        fontSize: 14,
         borderRadius: 8,
+        backgroundColor: '#0055FF',
+        color: '#ffffff',
         '&:hover': {
           backgroundColor: '#4080ff!important'
         },
@@ -148,30 +167,15 @@ export const getThemeOverrides = (
       }
     }
   },
-  MuiIconButton: {
-    // label: {
-    //   width: 20,
-    //   height: 20,
-    //   color: '#0055FF',
-    //   background: '#102756',
-    //   borderRadius: 4,
-    //   zIndex: 3,
-    //   border: '1px solid #102756',
-    //
-    //   '.Mui-checked &': {
-    //     color: '#ffffff',
-    //     background: '#0055FF',
-    //     border: '2px solid #0055FF'
-    //   },
-    //   '.Mui-error &': {
-    //     border: '2px solid #FF8080'
-    //   }
-    // }
-  },
+  MuiIconButton: {},
   MuiSvgIcon: {
     styleOverrides: {
       root: {
+        width: 20,
+        height: 20,
         fill: '#102756',
+        borderRadius: 4,
+        backgroundColor: '#102756',
         '.Mui-checked &': {
           fill: '#0055FF'
         }
@@ -180,11 +184,44 @@ export const getThemeOverrides = (
   },
   MuiTypography: {
     styleOverrides: {
-      // colorError: {
-      //   '& span': {
-      //     color: '#FF8080'
-      //   }
-      // }
+      root: {
+        color: '#ffffff'
+      }
+    }
+  },
+  MuiBreadcrumbs: {
+    defaultProps: {
+      separator: ''
+    },
+    styleOverrides: {
+      root: {},
+      li: {
+        '> a': {
+          color: '#3B4251',
+          fontWeight: 500,
+          textDecoration: 'none'
+        },
+        '> p': {
+          color: '#778194',
+          fontWeight: 500
+        }
+      },
+      separator: {
+        color: 'transparent',
+        width: 4,
+        height: 4,
+        backgroundColor: '#778194',
+        borderRadius: 2
+      }
+    }
+  },
+  MuiAvatar: {
+    styleOverrides: {
+      colorDefault: {
+        backgroundColor: 'rgba(76, 136, 255, 0.1);',
+        color: '#4C88FF',
+        border: '1px solid #4C88FF'
+      }
     }
   }
 })

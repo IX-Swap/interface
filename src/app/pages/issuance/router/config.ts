@@ -40,5 +40,8 @@ export const IssuanceRoute = {
     'dsoId',
     'manageDistributions'
   ]),
-  dashboard: '/app/issuance/dashboard'
+  dashboard: '/app/issuance/dashboard',
+  financialReports: '/app/issuance/financial-reports',
+  uploadReport: '/app/issuance/financial-reports/upload',
+  viewReport: '/app/issuance/financial-reports/:reportId'
 }

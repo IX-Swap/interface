@@ -12,6 +12,7 @@ import { hasValue } from 'helpers/forms'
 import { DropzoneDisplay } from 'components/dataroom/DropzoneDisplay'
 import { DropzoneAcceptableFiles } from 'components/dataroom/DropzoneAcceptableFiles'
 import { useUploadBanner } from 'app/pages/admin/hooks/useUploadBanner'
+import { useServices } from 'hooks/useServices'
 
 export interface DropzoneProps {
   name: string
@@ -47,6 +48,7 @@ export const Dropzone = (props: DropzoneProps) => {
   } = props
   const { watch } = useFormContext()
   const value = watch(name, defaultValue) as DropzoneProps['value']
+  const { snackbarService } = useServices()
   const { hasError, error } = useFormError(name)
   const { container } = useStyles()
 
@@ -61,6 +63,9 @@ export const Dropzone = (props: DropzoneProps) => {
           ? response.data
           : response.data[0]
       )
+
+      const message = `Successfully uploaded ${response?.data?.length} files`
+      snackbarService.showSnackbar(message, 'success')
     }
   })
 

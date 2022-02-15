@@ -24,10 +24,6 @@ export const AchCredits = ({ accountId, currency }: DepositInfoProps) => {
     {
       label: 'SWIFT Code:',
       value: 'HSBCSGSGXXX'
-    },
-    {
-      label: 'Message to receiver/beneficiary/Ref/Bill ref:',
-      value: 'InvestaX to recommend'
     }
   ]
 

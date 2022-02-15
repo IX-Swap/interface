@@ -23,7 +23,10 @@ export const MasDisclosureBaseFields = () => {
   return (
     <Grid item container alignItems={'flex-end'} direction={'column'}>
       <Grid item xs={12} style={{ width: '100%' }}>
-        <Card variant='outlined' style={{ height: 487, width: '100%' }}>
+        <Card
+          variant='outlined'
+          style={{ height: 487, width: '100%', overflowY: 'scroll' }}
+        >
           <CardContent style={{ width: '100%' }}>
             {/* @ts-expect-error */}
             <TypedField

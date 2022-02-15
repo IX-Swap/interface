@@ -182,6 +182,12 @@ export const issuanceURL = {
     getDSOList: '/vcc/dsos/list',
     getSubFundStats: 'vcc/subfund-stats',
     getInvestmentStats: 'vcc/subfund-growth-graph'
+  },
+  financialReports: {
+    uploadFile: '/issuance/financial-report-file/create',
+    getReport: (reportId?: string) =>
+      `/issuance/financial-report-file/${reportId}`,
+    reportTemplate: '/issuance/financial-report-file/template/recent'
   }
 }
 
@@ -193,6 +199,8 @@ export const authURL = {
   enable2fa: (userId?: string, otp?: string) =>
     `/auth/2fa/setup/${userId}/confirm/${otp}`,
   setup2fa: (userId?: string) => `/auth/2fa/setup/${userId}`,
+  remove2fa: (userId?: string) => `/auth/2fa/change/${userId}`,
+  getEmailCode: (userId?: string) => `/auth/email-code/${userId}`,
   register: '/auth/registrations',
   registerConfirm: '/auth/registrations/confirm',
   reset2fa: (userId?: string) => `/auth/2fa/reset/${userId}`,

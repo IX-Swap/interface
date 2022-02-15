@@ -41,6 +41,7 @@ export interface QueryFilters {
   subfunds: string | undefined
   periodical: string | undefined
   tab: string | undefined
+  reportId: string | undefined
 }
 
 export type QueryFilter = keyof QueryFilters

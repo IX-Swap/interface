@@ -7,11 +7,12 @@ import { SelectedDocument } from 'helpers/dataroom'
 
 export interface DataroomDeleteSelectedProps extends ButtonProps {
   name: string
+  action?: () => void
 }
 
 export const DataroomDeleteSelected = (props: DataroomDeleteSelectedProps) => {
-  const { name, ...rest } = props
-  const { isLoading, deleteMultiple } = useDeleteFilesArray(name)
+  const { name, action, ...rest } = props
+  const { isLoading, deleteMultiple } = useDeleteFilesArray(name, action)
   const { hasSelected, selectedCount } =
     useSelectionHelperContext<SelectedDocument>()
 
