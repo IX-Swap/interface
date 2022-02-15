@@ -214,5 +214,14 @@ export const getThemeOverrides = (
         borderRadius: 2
       }
     }
+  },
+  MuiAvatar: {
+    styleOverrides: {
+      colorDefault: {
+        backgroundColor: 'rgba(76, 136, 255, 0.1);',
+        color: '#4C88FF',
+        border: '1px solid #4C88FF'
+      }
+    }
   }
 })
