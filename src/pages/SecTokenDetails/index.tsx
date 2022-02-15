@@ -20,6 +20,7 @@ export default function SecTokenDetails({
 }: RouteComponentProps<{ currencyId: string }>) {
   const currency = (useCurrency(currencyId) as any) ?? undefined
   const [token, setToken] = useState<any>(null)
+  const [atlasInfo, setAtlasInfo] = useState<any | null>(null)
   const { accreditationRequest } = useAccreditationStatus(currencyId)
 
   useEffect(() => {
@@ -27,10 +28,11 @@ export default function SecTokenDetails({
       const data = await getToken(+currencyId)
       setToken(data)
 
-      // if (data?.atlasOneId) {
-      //   console.log(await getAtlasInfo(data?.atlasOneId))
-      //   console.log(await getAtlasAll())
-      // }
+      if (data?.atlasOneId) {
+        const atlasData: any = await getAtlasInfo(data?.atlasOneId)
+        if (atlasData?.allIssuers) setAtlasInfo(atlasData.allIssuers[0])
+        console.log(await getAtlasAll())
+      }
     }
 
     fetchToken()
@@ -60,7 +62,7 @@ export default function SecTokenDetails({
             </ReadMore>
           </DescriptionText>
         </Description>
-        <TokenDetails token={token} accreditationRequest={accreditationRequest} />
+        <TokenDetails atlasInfo={atlasInfo} token={token} accreditationRequest={accreditationRequest} />
         {token?.token && <Vault token={token} currency={token.token} />}
       </Container>
     </>

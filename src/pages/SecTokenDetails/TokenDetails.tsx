@@ -8,6 +8,7 @@ import useAddTokenToMetamask from 'hooks/useAddTokenToMetamask'
 import useCopyClipboard from 'hooks/useCopyClipboard'
 import { useActiveWeb3React } from 'hooks/web3'
 import React, { useMemo } from 'react'
+import { Flex } from 'rebass'
 import { ApplicationModal } from 'state/application/actions'
 import { useToggleModal } from 'state/application/hooks'
 import { ExternalLink, TextGradient } from 'theme'
@@ -15,10 +16,11 @@ import { shortenAddress } from 'utils'
 import { DetailsElement } from './DetailsElement'
 import { Details } from './styleds'
 interface Props {
+  atlasInfo: any
   token: any
   accreditationRequest: AccreditationRequest | null
 }
-export const TokenDetails = ({ token }: Props) => {
+export const TokenDetails = ({ token, atlasInfo }: Props) => {
   const originalAddress = useMemo(() => {
     return token?.address
   }, [token])
@@ -82,24 +84,44 @@ export const TokenDetails = ({ token }: Props) => {
               )}
             </RowStart>
           )}
-          <DetailsElement title={<Trans>Country:</Trans>} content={token.country} />
-          <DetailsElement title={<Trans>Industry:</Trans>} content={token.industry} />
-          <DetailsElement
-            title={<Trans>Issuer:</Trans>}
-            content={
-              <ExternalLink href={token.issuer.url} style={{ textDecorationLine: 'underline' }}>
-                {token.issuer.name}
-              </ExternalLink>
-            }
-          />
-          <DetailsElement
-            title={<Trans>Website:</Trans>}
-            content={
-              <ExternalLink href={token.url} style={{ textDecorationLine: 'underline' }}>
-                {token.url}
-              </ExternalLink>
-            }
-          />
+          <Flex marginTop="2rem" justifyContent="space-between">
+            <div style={{ marginRight: '2rem' }}>
+              <DetailsElement title={<Trans>Country:</Trans>} content={token.country} />
+              <DetailsElement title={<Trans>Industry:</Trans>} content={token.industry} />
+              <DetailsElement
+                title={<Trans>Issuer:</Trans>}
+                content={
+                  <ExternalLink href={token.issuer.url} style={{ textDecorationLine: 'underline' }}>
+                    {token.issuer.name}
+                  </ExternalLink>
+                }
+              />
+              <DetailsElement
+                title={<Trans>Website:</Trans>}
+                content={
+                  <ExternalLink href={token.url} style={{ textDecorationLine: 'underline' }}>
+                    {token.url}
+                  </ExternalLink>
+                }
+              />
+            </div>
+            {atlasInfo && (
+              <>
+                <div style={{ marginRight: '2rem' }}>
+                  <DetailsElement
+                    title={<Trans>Market Capitalization:</Trans>}
+                    content={`$${Number(atlasInfo.marketCapitalization)?.toFixed(3) || '$0'}`}
+                  />
+                  <DetailsElement title={<Trans>Protocol:</Trans>} content={atlasInfo.protocol || 'No data'} />
+                  <DetailsElement title={<Trans>Exchange:</Trans>} content={atlasInfo.exchange || 'No data'} />
+                </div>
+                <div>
+                  <DetailsElement title={<Trans>Token Supply:</Trans>} content={atlasInfo.tokenSupply || 0} />
+                  <DetailsElement title={<Trans>Issuing price:</Trans>} content={atlasInfo.issuePrice || '$0'} />
+                </div>
+              </>
+            )}
+          </Flex>
         </div>
       )}
     </Details>
