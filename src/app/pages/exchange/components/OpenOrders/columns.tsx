@@ -11,6 +11,8 @@ export const renderTicker = (value: string, row: any) => {
 }
 
 export const renderMoney = (value: any, row: any) => formatMoney(value, '')
+export const renderAmount = (value: any, row: any) =>
+  Number.isInteger(value) ? formatMoney(value, '') : value
 
 export const columns: Array<TableColumn<Order>> = [
   {
@@ -35,7 +37,7 @@ export const columns: Array<TableColumn<Order>> = [
   {
     key: 'amount',
     label: 'Amount',
-    render: renderMoney
+    render: renderAmount
   },
   {
     key: 'total',
