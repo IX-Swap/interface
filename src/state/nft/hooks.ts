@@ -297,7 +297,7 @@ interface NftCollectionInfo {
 }
 
 export const useNftCollection = (address: string) => {
-  const { account, library } = useActiveWeb3React()
+  const { account, library, chainId } = useActiveWeb3React()
 
   const contract = useMemo(() => {
     const web3 = new Web3(library?.provider)
@@ -313,10 +313,12 @@ export const useNftCollection = (address: string) => {
 
   useEffect(() => {
     async function fetchCollectionInfo() {
-      const name = await contract.methods.name().call()
-      const supply = await contract.methods.totalSupply().call()
+      const collection = await apiService.get(nft.getCollectionByAddress(address, chainId))
 
-      // const [name, supply] = await Promise.all([contract.methods.name().call(), contract.methods.totalSupply().call()])
+      const name = collection.data.name
+      //const name = await contract.methods.name().call() //get collection name from blockchain
+
+      const supply = await contract.methods.totalSupply().call()
 
       setInfo({ name, supply: Number(supply) })
 
