@@ -121,6 +121,24 @@ export const checkWrappedAddress = async (address: string) => {
   }
 }
 
+export const getAtlasInfo = async (tokenId: string) => {
+  try {
+    const result = await apiService.get(secCatalog.getAtlasInfo(tokenId))
+    return result.data
+  } catch (e) {
+    console.log(e)
+  }
+}
+
+export const getAtlasAll = async () => {
+  try {
+    const result = await apiService.get(secCatalog.getAtlasAll)
+    return result.data
+  } catch (e) {
+    console.log(e)
+  }
+}
+
 export function useAddIssuer() {
   const dispatch = useDispatch<AppDispatch>()
   const callback = useCallback(

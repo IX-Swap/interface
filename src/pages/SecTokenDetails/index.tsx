@@ -7,7 +7,7 @@ import { useCurrency } from 'hooks/Tokens'
 import React, { useEffect, useMemo, useState } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 import { Box } from 'rebass'
-import { getToken } from 'state/secCatalog/hooks'
+import { getAtlasAll, getAtlasInfo, getToken } from 'state/secCatalog/hooks'
 import { useAccreditationStatus } from 'state/secTokens/hooks'
 import { LightBackground } from 'theme/Background'
 import { Container, Description, DescriptionText, InfoTitle, Logo, StyledTitleBig } from './styleds'
@@ -24,7 +24,13 @@ export default function SecTokenDetails({
 
   useEffect(() => {
     const fetchToken = async () => {
-      setToken(await getToken(+currencyId))
+      const data = await getToken(+currencyId)
+      setToken(data)
+
+      // if (data?.atlasOneId) {
+      //   console.log(await getAtlasInfo(data?.atlasOneId))
+      //   console.log(await getAtlasAll())
+      // }
     }
 
     fetchToken()
