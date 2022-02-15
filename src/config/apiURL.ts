@@ -185,6 +185,8 @@ export const issuanceURL = {
   },
   financialReports: {
     uploadFile: '/issuance/financial-report-file/create',
+    getReport: (reportId?: string) =>
+      `/issuance/financial-report-file/${reportId}`,
     reportTemplate: '/issuance/financial-report-file/template/recent'
   }
 }

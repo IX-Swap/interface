@@ -182,6 +182,7 @@ export const issuanceQueryKeys = {
   getCapitalStructureList: 'capital-structures-list',
   getActivitiesList: (dsoId?: string) =>
     generateQueryKey('activities-list', dsoId),
+  getReport: (reportId?: string) => generateQueryKey('report', reportId),
   reportTemplate: 'report-template'
 }
 
