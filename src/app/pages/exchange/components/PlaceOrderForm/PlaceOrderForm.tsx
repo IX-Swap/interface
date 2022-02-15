@@ -46,7 +46,9 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
   const totalCurrencyLabel = currencyLabel
   const { pairId } = useParams<{ pairId: string }>()
   const handleSubmit = async (values: PlaceOrderFormValues) => {
-    if (isEmptyString(pairId)) return
+    if (isEmptyString(pairId)) {
+      return
+    }
 
     await onSubmit(
       transformPlaceOrderFormValuesToArgs(
