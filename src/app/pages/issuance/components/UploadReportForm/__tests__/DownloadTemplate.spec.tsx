@@ -8,7 +8,8 @@ describe('DownloadTemplate', () => {
     jest.clearAllMocks()
   })
 
-  it('renders without errors', () => {
-    render(<DownloadTemplate />)
+  it('renders button as disabled when template url is undefined', () => {
+    const { getByRole } = render(<DownloadTemplate />)
+    expect(getByRole('button')).toBeDisabled()
   })
 })

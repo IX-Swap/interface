@@ -3,9 +3,9 @@ import { render } from 'test-utils'
 import { faqItem } from '__fixtures__/issuance'
 import { DSOFAQsView } from 'app/components/DSO/components/DSOFAQsView'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
-// import * as Typography from '@material-ui/core'
+// import * as Typography from '@mui/material'
 
-jest.mock('@material-ui/core/Typography', () => jest.fn(() => null))
+jest.mock('@mui/material/Typography', () => jest.fn(() => null))
 
 jest.mock('app/components/DSO/components/FormSectionHeader', () => ({
   FormSectionHeader: jest.fn(() => null)

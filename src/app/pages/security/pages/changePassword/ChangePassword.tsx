@@ -21,7 +21,7 @@ export const ChangePassword = () => {
   }
 
   return (
-    <Container>
+    <Container style={{ backgroundColor: 'transparent' }}>
       <PageHeader title='Change Password' />
       <Grid container alignItems='center' justifyContent='center'>
         <Grid container lg={4} item>

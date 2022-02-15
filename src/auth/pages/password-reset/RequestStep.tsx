@@ -40,7 +40,7 @@ export const RequestStep: React.FC = () => {
           <Typography className={title} variant={'h3'} align='center'>
             Forgot <br /> Password?
           </Typography>
-          <VSpacer size={'small'} />
+          <VSpacer size={'medium'} />
         </Grid>
         <RequestFields />
         <Grid item container justifyContent='center'>

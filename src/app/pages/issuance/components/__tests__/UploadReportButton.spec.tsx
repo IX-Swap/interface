@@ -2,28 +2,26 @@ import { UploadReportButton } from 'app/pages/issuance/components/UploadReportBu
 import * as useDSOsByUserId from 'app/pages/issuance/hooks/useDSOsByUserId'
 import React from 'react'
 import { render, cleanup } from 'test-utils'
-import { dso } from '__fixtures__/authorizer'
 import { generateQueryResult } from '__fixtures__/useQuery'
 
 describe('UploadReportButton', () => {
-  beforeEach(() => {
+  afterEach(async () => {
+    await cleanup()
+    jest.clearAllMocks()
+  })
+
+  it('renders the button as disabled when there is no dso', () => {
     const objResponse = generateQueryResult({
       data: {
-        list: [dso]
+        list: []
       }
     })
 
     jest
       .spyOn(useDSOsByUserId, 'useDSOsByUserId')
       .mockImplementation(() => objResponse as any)
-  })
 
-  afterEach(async () => {
-    await cleanup()
-    jest.clearAllMocks()
-  })
-
-  it('renders without errors', () => {
-    render(<UploadReportButton />)
+    const { getByRole } = render(<UploadReportButton />)
+    expect(getByRole('button')).toHaveAttribute('aria-disabled', 'true')
   })
 })

@@ -51,6 +51,7 @@ export const DataroomUploadAndAppend = (props: UploadAndAppendProps) => {
         ...documentInfo,
         documents: Array.from(inputRef.current.files)
       })
+      inputRef.current.value = ''
     }
   }
 

@@ -23,7 +23,6 @@ export const WithdrawalAddressSelect: React.FC<
 
   return (
     <Select {...rest}>
-      <MenuItem value=''>I don't want to specify a wallet</MenuItem>
       {filteredAddresses.map(({ label, _id }) => (
         <MenuItem key={_id} value={_id} className={privateClassNames()}>
           {label}

@@ -9,7 +9,7 @@ jest.mock('app/components/DSO/components/DSOTeamMemberView', () => ({
   DSOTeamMemberView: jest.fn(() => null)
 }))
 
-jest.mock('@material-ui/core/Typography', () => jest.fn(() => null))
+jest.mock('@mui/material/Typography', () => jest.fn(() => null))
 
 jest.mock('app/components/DSO/components/FormSectionHeader', () => ({
   FormSectionHeader: jest.fn(() => null)

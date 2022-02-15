@@ -1,5 +1,5 @@
 import React from 'react'
-import { render, cleanup } from 'test-utils'
+import { render } from 'test-utils'
 import { FinancialReports } from 'app/pages/issuance/pages/FinancialReports/FinancialReports'
 
 jest.mock(
@@ -14,11 +14,6 @@ jest.mock('app/pages/issuance/components/UploadReportButton', () => ({
 }))
 
 describe('FinancialReports', () => {
-  afterEach(async () => {
-    await cleanup()
-    jest.clearAllMocks()
-  })
-
   it('renders without errors', () => {
     render(<FinancialReports />)
   })

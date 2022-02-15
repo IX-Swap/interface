@@ -6,7 +6,7 @@ import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHead
 import { DataroomHeader } from 'components/dataroom/DataroomHeader'
 import { DataroomViewRow } from 'components/dataroom/DataroomViewRow'
 
-jest.mock('@material-ui/core/Typography', () => jest.fn(() => null))
+jest.mock('@mui/material/Typography', () => jest.fn(() => null))
 
 jest.mock('app/components/DSO/components/FormSectionHeader', () => ({
   FormSectionHeader: jest.fn(() => null)

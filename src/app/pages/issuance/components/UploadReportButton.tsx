@@ -9,21 +9,14 @@ export const UploadReportButton = () => {
   const { data } = useDSOsByUserId('Approved', true)
 
   const disabled = data.list.length < 1
+  const tooltipMessage = (
+    <>
+      To create a report it is <br /> necessary to have a DSO
+    </>
+  )
 
   return (
-    <Tooltip
-      title={
-        disabled ? (
-          <>
-            To create a report it is <br /> necessary to have a DSO
-          </>
-        ) : (
-          ''
-        )
-      }
-      placement='top'
-      arrow
-    >
+    <Tooltip title={disabled ? tooltipMessage : ''} placement='top' arrow>
       <span>
         <Button
           component={AppRouterLinkComponent}

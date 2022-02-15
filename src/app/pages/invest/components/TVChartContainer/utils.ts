@@ -5,7 +5,7 @@ export function getLanguageFromURL(): LanguageCode | null {
   const results = regex.exec(window.location.search)
   return results === null
     ? null
-    : (decodeURIComponent(results[1].replace(/\+/g, ' ')) as LanguageCode);
+    : (decodeURIComponent(results[1].replace(/\+/g, ' ')) as LanguageCode)
 }
 
 export const getMovingAverageParams = (periods: number, color: string) => {

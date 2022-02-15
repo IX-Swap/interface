@@ -1,5 +1,6 @@
 import { DataroomFile } from 'types/dataroomFile'
 import { DigitalSecurityOffering } from 'types/dso'
+
 export interface FinancialReport {
   _id: string
   createdAt: string

@@ -1,27 +1,22 @@
-import { Typography } from '@material-ui/core'
 import { formatDateToMMDDYY } from 'helpers/dates'
 import { FinancialReport } from 'types/financitalReport'
 import { TableColumn } from 'types/util'
-import React from 'react'
 
 export const renderInterval = (val: any, row: FinancialReport) => {
-  return (
-    <Typography>
-      {formatDateToMMDDYY(row.dateFrom)} - {formatDateToMMDDYY(row.dateTo)}
-    </Typography>
-  )
+  return `${formatDateToMMDDYY(row.dateFrom)} - ${formatDateToMMDDYY(
+    row.dateTo
+  )}`
 }
 
 export const renderType = (val: any, row: FinancialReport) => {
   return (
-    <Typography style={{ textTransform: 'uppercase' }}>
-      {row.reportDocuments[0]?.originalFileName.split('.').pop() ?? ''}
-    </Typography>
+    row.reportDocuments[0]?.originalFileName.split('.').pop()?.toUpperCase() ??
+    ''
   )
 }
 
 export const renderReportOf = (val: any, row: FinancialReport) => {
-  return <Typography>{row.dso.tokenName}</Typography>
+  return row.dso.tokenName
 }
 
 export const columns: Array<TableColumn<FinancialReport>> = [

@@ -30,7 +30,10 @@ export interface TableViewRendererProps<T> {
   actions?: ActionsType<T>
   cacheQueryKey: any
 }
-
+export interface RenderHeadCellArgs<T> {
+  item?: TableColumn<T>
+  content?: string
+}
 export interface TableViewProps<T> {
   name?: string
   uri?: string
@@ -52,6 +55,7 @@ export interface TableViewProps<T> {
   themeVariant?: 'default' | 'primary'
   noDataComponent?: JSX.Element
   noHeader?: boolean
+  actionHeader?: string
 }
 
 export const TableView = <T,>({
@@ -74,7 +78,8 @@ export const TableView = <T,>({
   size = 'medium',
   themeVariant = 'primary',
   noHeader = false,
-  noDataComponent = <NoData title='No Data' />
+  noDataComponent = <NoData title='No Data' />,
+  actionHeader = ''
 }: TableViewProps<T>): JSX.Element => {
   const {
     items,
@@ -160,6 +165,25 @@ export const TableView = <T,>({
     ]
   }
 
+  const renderHeadCell = ({ item, content }: RenderHeadCellArgs<T>) => (
+    <TableCell
+      key={item?.key}
+      style={{ borderBottom: 'none' }}
+      align={item?.headAlign ?? 'left'}
+    >
+      <b
+        style={{
+          color:
+            themeVariant === 'primary'
+              ? theme.palette.slider.activeColor
+              : 'initial'
+        }}
+      >
+        {item?.label ?? content}
+      </b>
+    </TableCell>
+  )
+
   return (
     <Grid container direction='column'>
       <Grid item>
@@ -180,27 +204,8 @@ export const TableView = <T,>({
                   }}
                 >
                   <TableRow>
-                    {columns.map(e => (
-                      <TableCell
-                        key={e.key}
-                        align={e.headAlign ?? 'left'}
-                        style={{ borderBottom: 'none' }}
-                      >
-                        <b
-                          style={{
-                            color:
-                              themeVariant === 'primary'
-                                ? theme.palette.slider.activeColor
-                                : 'initial'
-                          }}
-                        >
-                          {e.label}
-                        </b>
-                      </TableCell>
-                    ))}
-                    {hasActions && (
-                      <TableCell style={{ borderBottom: 'none' }} />
-                    )}
+                    {columns.map(e => renderHeadCell({ item: e }))}
+                    {hasActions && renderHeadCell({ content: actionHeader })}
                   </TableRow>
                 </TableHead>
               ) : null}
