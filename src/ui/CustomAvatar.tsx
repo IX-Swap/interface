@@ -13,7 +13,7 @@ export interface CustomAvatarProps extends AvatarProps {
 
 export const CustomAvatar = (props: CustomAvatarProps) => {
   const {
-    size = 80,
+    size = 32,
     children,
     maxWidth = 'initial',
     hasBadge = false,
