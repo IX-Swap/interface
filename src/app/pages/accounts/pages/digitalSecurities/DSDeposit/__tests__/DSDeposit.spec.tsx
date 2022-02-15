@@ -8,7 +8,7 @@ jest.mock(
   () => ({ DepositForm: jest.fn(() => null) })
 )
 
-describe('DepositView', () => {
+describe('DSDeposit', () => {
   afterEach(async () => {
     jest.clearAllMocks()
   })
