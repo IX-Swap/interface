@@ -29,7 +29,7 @@ export const InvestLanding = () => {
             disableElevation
             style={{ color: theme.palette.primary.main }}
           >
-            View my commitments
+            View my investments
           </Button>
         </Grid>
       </Grid>

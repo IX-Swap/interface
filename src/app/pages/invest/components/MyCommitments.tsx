@@ -17,7 +17,7 @@ export const MyCommitments = () => {
   return (
     <Grid container direction='column'>
       <Grid item>
-        <PageHeader title='My Commitments' />
+        <PageHeader title='My Investments' />
       </Grid>
 
       <Grid item className={privateClassNames()}>

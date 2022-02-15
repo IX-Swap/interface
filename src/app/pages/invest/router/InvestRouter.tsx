@@ -11,7 +11,7 @@ import { InvestOverview } from 'app/pages/invest/pages/InvestOverview'
 export const InvestRouter = () => {
   return (
     <Switch>
-      <AppRoute breadcrumb='My Commitments' path={InvestRoute.commitments}>
+      <AppRoute breadcrumb='My Investments' path={InvestRoute.commitments}>
         <CommitmentsRouter />
       </AppRoute>
 

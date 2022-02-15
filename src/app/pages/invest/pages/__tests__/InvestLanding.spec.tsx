@@ -17,10 +17,10 @@ describe('InvestLanding', () => {
     jest.clearAllMocks()
   })
 
-  it('has a link to Commitments Page', () => {
+  it('has a link to Investments Page', () => {
     const { getByRole } = render(<InvestLanding />)
     expect(
-      getByRole('link', { name: /view my commitments/i })
+      getByRole('link', { name: /view my investments/i })
     ).toBeInTheDocument()
   })
 
