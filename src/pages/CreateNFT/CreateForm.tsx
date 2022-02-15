@@ -78,6 +78,7 @@ export const CreateForm = () => {
   const [isLogged, setAuthState] = useState(false)
   const [descriptionError, setDescriptionError] = useState<string | null>(null)
   const [nameError, setNameError] = useState<string | null>(null)
+  const [maxSupplyError, setMaxSupplyError] = useState<string | null>(null)
   const [cleared, setClearState] = useState(false)
 
   const login = useLogin({ mustHavePreviousLogin: false })
@@ -131,13 +132,21 @@ export const CreateForm = () => {
   }, [file])
 
   const checkValidation = useCallback(() => {
-    if (!beyondLimit && file && name && !nameError && !descriptionError && (collection || newCollectionName)) {
+    if (
+      !beyondLimit &&
+      file &&
+      name &&
+      !nameError &&
+      !descriptionError &&
+      !maxSupplyError &&
+      (collection || newCollectionName)
+    ) {
       setValidationStatus(getfileType(file) !== FileTypes.IMAGE ? !preview : false)
       return
     }
 
     setValidationStatus(true)
-  }, [beyondLimit, file, name, collection, newCollectionName, preview, nameError, descriptionError])
+  }, [beyondLimit, file, name, collection, newCollectionName, preview, nameError, descriptionError, maxSupplyError])
 
   const checkNameLimit = useCallback(() => {
     setNameError(name.length > NameSizeLimit ? `Max length is ${NameSizeLimit} chars` : null)
@@ -148,6 +157,10 @@ export const CreateForm = () => {
       description.length > DescriptionSizeLimit ? `Max length is ${DescriptionSizeLimit} chars` : null
     )
   }, [description])
+
+  const checkMaxSupplyLimit = useCallback(() => {
+    setMaxSupplyError(!maxSupply || maxSupply <= 0 ? `Max number of items in collection must be greater than 0` : null)
+  }, [maxSupply])
 
   useEffect(() => {
     onClearState()
@@ -174,6 +187,10 @@ export const CreateForm = () => {
   useEffect(() => {
     checkDescriptionLimit()
   }, [checkDescriptionLimit])
+
+  useEffect(() => {
+    checkMaxSupplyLimit()
+  }, [checkMaxSupplyLimit])
 
   useEffect(() => {
     checkFileSize()
@@ -351,8 +368,8 @@ export const CreateForm = () => {
                   </TYPE.body>
                 </Box>
                 <TYPE.descriptionThin fontSize={13}>
-                  Create a new collection to keep up to {maxSupply} items. The name can be changed later on our
-                  platform, but it cannot be changed on blockchain
+                  Create a new collection to keep up all items. The name can be changed later on our platform, but it
+                  cannot be changed on blockchain
                 </TYPE.descriptionThin>
               </Label>
               <InputPanel id={'collection-name'}>
@@ -375,28 +392,44 @@ export const CreateForm = () => {
                   </InputContainer>
                 </ContainerRow>
               </InputPanel>
-              <Flex flexDirection="column" mt={4}>
-                <Label htmlFor="supply-value" mb={2}>
-                  <TYPE.body fontWeight={600}>
-                    <Trans>Select max number of items in collection</Trans>
-                  </TYPE.body>
-                </Label>
-                <Slider
-                  id="supply-value"
-                  min={1}
-                  step={1}
-                  max={MAX_SUPPLY_RANGE}
-                  value={maxSupply}
-                  onChange={(e) => onSetMaxSupply(e)}
-                />
-              </Flex>
-              <Flex justifyContent="space-between">
-                <TYPE.body>{maxSupply}</TYPE.body>
-                <TYPE.body>{MAX_SUPPLY_RANGE}</TYPE.body>
+              <Flex mx={-2} mb={4}>
+                <Box width={1} px={2}>
+                  <Label htmlFor="supply" flexDirection="column" mb={3}>
+                    <Box mb={1}>
+                      <Box display="flex">
+                        <TYPE.body fontWeight={600}>
+                          <Trans>Select max number of items in collection</Trans>
+                        </TYPE.body>
+                      </Box>
+                    </Box>
+                  </Label>
+                  <InputPanel id={'item-supply'}>
+                    <ContainerRow>
+                      <InputContainer>
+                        <Input
+                          onChange={(e) => onSetMaxSupply(e?.target?.valueAsNumber)}
+                          placeholder={t`1000`}
+                          type="number"
+                          autoComplete="off"
+                          autoCorrect="off"
+                          autoCapitalize="off"
+                          spellCheck="false"
+                          error={false}
+                          pattern=".*$"
+                          value={maxSupply}
+                          disabled={false}
+                        />
+                      </InputContainer>
+                    </ContainerRow>
+                  </InputPanel>
+
+                  {maxSupplyError && <TYPE.error error>{maxSupplyError}</TYPE.error>}
+                </Box>
               </Flex>
             </Box>
           </Flex>
         )}
+
         <Flex mx={-2} mb={4}>
           <Box width={1} px={2}>
             <Label htmlFor="link" flexDirection="column" mb={3}>
