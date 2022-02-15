@@ -1,17 +1,10 @@
 import React, { useState } from 'react'
-import {
-  Container,
-  Box,
-  Stepper,
-  Step,
-  StepLabel,
-  Button,
-  Grid
-} from '@mui/material'
+import { Container, Box, Stepper, Step, StepLabel, Grid } from '@mui/material'
 import { Aside } from 'app/pages/security/pages/setup2fa/components/Aside'
 import { useSetup2fa } from 'app/pages/security/pages/setup2fa/hooks/useSetup2fa'
 import { ActiveStep } from 'app/pages/security/pages/setup2fa/components/ActiveStep'
 import { useStyles } from './Setup2fa.styles'
+import { ChangeStepButtons } from 'app/pages/security/components/ChangeStepButtons'
 
 const steps = [
   'Download app',
@@ -64,38 +57,12 @@ export const Setup2fa = () => {
                 </Box>
               </Grid>
               <Grid item>
-                <Grid
-                  container
-                  spacing={3}
-                  justifyContent='center'
-                  alignItems='center'
-                >
-                  {isBackButtonVisible && (
-                    <Grid item>
-                      <Button
-                        variant='outlined'
-                        color='primary'
-                        disableElevation
-                        onClick={() => prevStep()}
-                      >
-                        Back
-                      </Button>
-                    </Grid>
-                  )}
-
-                  {isNextButtonVisible && (
-                    <Grid item>
-                      <Button
-                        variant='contained'
-                        color='primary'
-                        disableElevation
-                        onClick={() => nextStep()}
-                      >
-                        Next
-                      </Button>
-                    </Grid>
-                  )}
-                </Grid>
+                <ChangeStepButtons
+                  isBackButtonVisible={isBackButtonVisible}
+                  isNextButtonVisible={isNextButtonVisible}
+                  onBackButtonClick={prevStep}
+                  onNextButtonClick={nextStep}
+                />
               </Grid>
             </Grid>
           </Box>

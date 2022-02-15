@@ -1,17 +1,10 @@
 import React, { useState } from 'react'
-import {
-  Container,
-  Box,
-  Stepper,
-  Step,
-  StepLabel,
-  Button,
-  Grid
-} from '@mui/material'
+import { Container, Box, Stepper, Step, StepLabel, Grid } from '@mui/material'
 import { TwoFaData } from 'app/pages/security/types'
 import { ActiveStep } from 'app/pages/security/pages/update2fa/components/ActiveStep'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { useStyles } from './Update2fa.styles'
+import { ChangeStepButtons } from 'app/pages/security/components/ChangeStepButtons'
 
 const steps = [
   'Remove Current Authenticator',
@@ -72,38 +65,12 @@ export const Update2fa = () => {
                 </Box>
               </Grid>
               <Grid item>
-                <Grid
-                  container
-                  spacing={3}
-                  justifyContent='center'
-                  alignItems='center'
-                >
-                  {isBackButtonVisible && (
-                    <Grid item>
-                      <Button
-                        variant='outlined'
-                        color='primary'
-                        disableElevation
-                        onClick={() => prevStep()}
-                      >
-                        Back
-                      </Button>
-                    </Grid>
-                  )}
-
-                  {isNextButtonVisible && (
-                    <Grid item>
-                      <Button
-                        variant='contained'
-                        color='primary'
-                        disableElevation
-                        onClick={() => nextStep()}
-                      >
-                        Next
-                      </Button>
-                    </Grid>
-                  )}
-                </Grid>
+                <ChangeStepButtons
+                  isBackButtonVisible={isBackButtonVisible}
+                  isNextButtonVisible={isNextButtonVisible}
+                  onBackButtonClick={prevStep}
+                  onNextButtonClick={nextStep}
+                />
               </Grid>
             </Grid>
           </Box>

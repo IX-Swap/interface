@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Update2fa should match snapshot 1`] = `
+exports[`Update2fa does not render Next and Back button if step is 0, should match snapshot 1`] = `
 <div>
   <div
     class="MuiGrid-root MuiGrid-container css-1kca4ek-MuiGrid-root"
