@@ -8,6 +8,7 @@ interface IFormData {
     fin?: string
     taxResidency?: string
     taxId?: string
+    exceedsOneMillion?: boolean
   }
 }
 
@@ -37,8 +38,6 @@ export const initialIndividualKycFormData: IFormData = {
       line2: '',
       country: '',
       city: '',
-      state: '',
-      postalCode: '',
     },
   },
   funds: {
@@ -52,25 +51,14 @@ export const initialIndividualKycFormData: IFormData = {
     href: 'investor',
     passed: false,
     value: true,
+    exceedsOneMillion: true,
   },
   fatca: {
     title: 'FATCA',
     href: 'fatca',
     passed: false,
-    fields: [],
-  },
-  optInRequirement: {
-    title: 'Opt-in Requirement',
-    href: 'optInRequirement',
-    passed: false,
-    fields: [],
-  },
-  tax: {
-    title: 'Tax Declaration',
-    href: 'tax',
-    passed: false,
     value: true,
-    fin: '',
+    taxId: '',
   },
   upload: {
     title: 'Upload Documents',
@@ -83,21 +71,19 @@ export const initialIndividualKycFormData: IFormData = {
 export const genders = [
   { id: 1, name: 'Male' },
   { id: 2, name: 'Female' },
+  { id: 1, name: 'Other' },
 ]
 
 export const sourceOfFunds = [
   'Inheritance/Gifts',
   'Investments',
   'Interest/Dividends',
-  'Inheritance/Gifts',
-  'Investments',
-  'Interest/Dividends',
-  'Inheritance/Gifts',
-  'Investments',
-  'Interest/Dividends',
-  'Inheritance/Gifts',
-  'Investments',
-  'Interest/Dividends',
+  'Property',
+  'Allowances/Spouses',
+  'Employment',
+  'Pension',
+  'Retirement Benefits',
+  'Others',
 ].map((name, index) => ({ id: ++index, name }))
 
 export const fatcaOptions = [
