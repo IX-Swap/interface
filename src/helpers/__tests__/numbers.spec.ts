@@ -3,7 +3,8 @@ import {
   toPercentage,
   generateRandom,
   formatAmount,
-  addSymbol
+  addSymbol,
+  formatTokenBalance
 } from 'helpers/numbers'
 
 describe('addSymbol', () => {
@@ -64,5 +65,14 @@ describe('generateRandom', () => {
     expect(generateRandom(1, 'aA#!')).toEqual(expect.any(String))
     expect(generateRandom(2, 'a#').length).toEqual(2)
     expect(generateRandom(5, 'A!').length).toEqual(5)
+  })
+})
+
+describe('formatTokenBalance', () => {
+  it('returns correct formatted tokenBalance', () => {
+    expect(formatTokenBalance(0, 'SGD')).toEqual('SGD 0.00')
+    expect(formatTokenBalance(10, 'SGD')).toEqual('SGD 10.00')
+    expect(formatTokenBalance(0.999, 'SGD')).toEqual('SGD 0.999')
+    expect(formatTokenBalance(undefined, 'SGD')).toEqual('SGD 0.00')
   })
 })
