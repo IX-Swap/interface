@@ -101,7 +101,7 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
 
           <Grid item>
             <LabelledValue
-              value={formatTokenBalance(10, tokenLabel)}
+              value={formatTokenBalance(tokenBalance, tokenLabel)}
               label=''
             />
           </Grid>
