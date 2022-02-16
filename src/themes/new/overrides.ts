@@ -215,6 +215,18 @@ export const getThemeOverrides = (
       }
     }
   },
+  MuiPaper: {
+    styleOverrides: {
+      root: {
+        backgroundColor: '#FFFFFF',
+        boxSizing: 'border-box',
+        '&.MuiPaper-outlined': {
+          boxShadow: '0px 80px 80px rgba(162, 172, 191, 0.16)',
+          border: '1px solid #EDF2FA'
+        }
+      }
+    }
+  },
   MuiAvatar: {
     styleOverrides: {
       colorDefault: {
