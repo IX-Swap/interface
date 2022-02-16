@@ -36,69 +36,69 @@ export const depositCashFormValidationSchema = yup
   .shape<DepositCashFormValues>({
     amount: yup
       .number()
-      .required('Required')
+      .required('This field is required')
       .min(MIN_INVESTMENT_AMOUNT, `Minimum amount is ${MIN_INVESTMENT_AMOUNT}`),
-    asset: yup.string().required('Required'),
-    otp: yup.string().required('Required')
+    asset: yup.string().required('This field is required'),
+    otp: yup.string().required('This field is required')
   })
 
 export const withdrawCashFormValidationSchema = yup
   .object()
   .shape<WithdrawCashFormValues>({
-    amount: yup.number().nullable().required('Required'),
-    bankAccountId: yup.string().nullable().required('Required'),
-    otp: yup.string().nullable().required('Required'),
+    amount: yup.number().nullable().required('This field is required'),
+    bankAccountId: yup.string().nullable().required('This field is required'),
+    otp: yup.string().nullable().required('This field is required'),
     memo: yup.string(),
-    virtualAccount: yup.string().required('Required'),
+    virtualAccount: yup.string().required('This field is required'),
     paymentMethodName: yup.string()
   })
 
 export const depositDSFormValidationSchema = yup
   .object()
   .shape<DepositDSFormValues>({
-    balanceId: yup.string().required('Required')
+    balanceId: yup.string().required('This field is required')
   })
 
 export const withdrawDSFormValidationSchema = yup
   .object()
   .shape<WithdrawDSFormValues>({
-    amount: yup.number().required('Required'),
-    otp: yup.string().required('Required'),
-    recipientWallet: yup.string().required('Required'),
+    amount: yup.number().required('This field is required'),
+    otp: yup.string().required('This field is required'),
+    recipientWallet: yup.string().required('This field is required'),
     memo: yup.string()
   })
 
 export const addressValidationSchema = yup.object().shape<AddressValues>({
-  city: yup.string().required('Required'),
-  country: yup.string().required('Required'),
-  line1: yup.string().required('Required'),
+  city: yup.string().required('This field is required'),
+  country: yup.string().required('This field is required'),
+  line1: yup.string().required('This field is required'),
   line2: yup.string(),
-  postalCode: yup.string().required('Required'),
+  postalCode: yup.string().required('This field is required'),
   state: yup.string()
 })
 
 export const bankFormValidationSchema = yup.object().shape<BankFormValues>({
-  bankName: yup.string().required('Required'),
-  accountHolderName: yup.string().required('Required'),
-  asset: yup.string().required('Required'),
-  bankAccountNumber: yup.string().required('Required'),
-  swiftCode: yup.string().required('Required'),
-  address: addressValidationSchema.required('Required')
+  bankName: yup.string().required('This field is required'),
+  accountHolderName: yup.string().required('This field is required'),
+  asset: yup.string().required('This field is required'),
+  bankAccountNumber: yup.string().required('This field is required'),
+  swiftCode: yup.string().required('This field is required'),
+  address: addressValidationSchema.required('This field is required')
 })
 
 export const withdrawValidationSchema = yup.object().shape({
-  token: yup.string().required('Required'),
+  token: yup.string().required('This field is required'),
   addressType: yup.string(),
   existingAddress: yup.string().when('addressType', {
     is: (val: string) => val === 'existing',
-    then: yup.string().required('Required'),
+    then: yup.string().required('This field is required'),
     otherwise: yup.string()
   }),
   newAddress: yup.string().when('addressType', {
     is: (val: string) => val === 'new',
-    then: yup.string().required('Required'),
+    then: yup.string().required('This field is required'),
     otherwise: yup.string()
   }),
-  amount: yup.number().required('Required'),
+  amount: yup.number().required('This field is required'),
   memo: yup.string()
 })

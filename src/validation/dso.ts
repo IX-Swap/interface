@@ -171,11 +171,11 @@ export const dsoFormBaseValidationSchema = {
     .ensure()
     .required('Team Member is required'),
   faqs: array<DsoFAQItem>()
-    .of(dsoFAQItemSchema.required('Required'))
+    .of(dsoFAQItemSchema.required('This field is required'))
     .required('FAQs are required'),
   videos: array<DsoVideo>()
     .of(dsoVideoLinkSchema.required('Videos are required'))
-    .required('Required'),
+    .required('This field is required'),
   uniqueIdentifierCode: string().test(
     'length',
     'Unique identifier code is required',

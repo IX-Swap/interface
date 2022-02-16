@@ -25,11 +25,11 @@ export const personalInfoSchema = yup
     firstName: nameSchema.required('This field is required'),
     middleName: nameSchema,
     lastName: nameSchema.required('This field is required'),
-    nationality: yup.string().required('Required'),
+    nationality: yup.string().required('This field is required'),
     dob: birthdaySchema.required('This field is required'),
     contactNumber: yup.string().phone().required('This field is required'),
     email: emailSchema.required('This field is required'),
-    address: addressSchema.required('Required')
+    address: addressSchema.required('This field is required')
   })
 
 export const financialInfoSchema = yup
@@ -44,8 +44,8 @@ export const financialInfoSchema = yup
       .string()
       .max(50, 'Maximum of 50 characters')
       .required('This field is required'),
-    employmentStatus: yup.string().required('Required'),
-    annualIncome: yup.string().required('Required'),
+    employmentStatus: yup.string().required('This field is required'),
+    annualIncome: yup.string().required('This field is required'),
     sourceOfFund: yup
       .array<FundSource>()
       .of(
@@ -57,10 +57,14 @@ export const financialInfoSchema = yup
               .number()
               .when('checked', {
                 is: true,
-                then: yup.number().min(1).max(100).required('Required'),
+                then: yup
+                  .number()
+                  .min(1)
+                  .max(100)
+                  .required('This field is required'),
                 otherwise: yup.number()
               })
-              .required('Required')
+              .required('This field is required')
           })
           .required()
       )
@@ -74,14 +78,17 @@ export const financialInfoSchema = yup
             : 0
         return sumOfFundSourcesValues === 100
       })
-      .required('Required')
+      .required('This field is required')
   })
 
 export const taxDeclarationSchema = yup
   .object()
   .shape<IndividualTaxDeclarationFormValues>({
-    singaporeOnly: yup.string().oneOf(['yes', 'no']).required('Required'),
-    fatca: yup.string().oneOf(['yes', 'no']).required('Required'),
+    singaporeOnly: yup
+      .string()
+      .oneOf(['yes', 'no'])
+      .required('This field is required'),
+    fatca: yup.string().oneOf(['yes', 'no']).required('This field is required'),
     taxResidencies: yup
       .array<TaxResidency>()
       .when('singaporeOnly', {
@@ -108,7 +115,9 @@ export const taxDeclarationSchema = yup
           yup
             .object({
               taxIdAvailable: yup.boolean(),
-              countryOfResidence: yup.string().required('Required'),
+              countryOfResidence: yup
+                .string()
+                .required('This field is required'),
               taxIdentificationNumber: taxIdentificationNumberSchema.when(
                 'taxIdAvailable',
                 {
@@ -121,12 +130,15 @@ export const taxDeclarationSchema = yup
               ),
               reason: yup.string().when('taxIdAvailable', {
                 is: false,
-                then: yup.string().oneOf(['A', 'B', 'C']).required('Required'),
+                then: yup
+                  .string()
+                  .oneOf(['A', 'B', 'C'])
+                  .required('This field is required'),
                 otherwise: yup.string()
               }),
               customReason: yup.string().when('reason', {
                 is: 'B',
-                then: yup.string().required('Required'),
+                then: yup.string().required('This field is required'),
                 otherwise: yup.string()
               })
             })
@@ -139,15 +151,15 @@ export const taxDeclarationSchema = yup
 export const individualInvestorStatusDeclarationSchema = yup
   .object()
   .shape<any>({
-    financialAsset: yup.bool().required('Required'),
-    income: yup.bool().required('Required'),
-    personalAssets: yup.bool().required('Required'),
-    jointlyHeldAccount: yup.bool().required('Required'),
+    financialAsset: yup.bool().required('This field is required'),
+    income: yup.bool().required('This field is required'),
+    personalAssets: yup.bool().required('This field is required'),
+    jointlyHeldAccount: yup.bool().required('This field is required'),
 
     optInAgreements: yup
       .bool()
       .oneOf([true], 'Opt-In Requirement is required')
-      .required('Required'),
+      .required('This field is required'),
 
     primaryOfferingServices: yup.bool(),
     digitalSecurities: yup.bool(),
@@ -185,15 +197,21 @@ export const individualInvestorDocumentsSchema = yup
     evidenceOfAccreditation: yup
       .array<DataroomFile>()
       .min(1)
-      .required('Required'),
-    proofOfAddress: yup.array<DataroomFile>().min(1).required('Required'),
-    proofOfIdentity: yup.array<DataroomFile>().min(1).required('Required')
+      .required('This field is required'),
+    proofOfAddress: yup
+      .array<DataroomFile>()
+      .min(1)
+      .required('This field is required'),
+    proofOfIdentity: yup
+      .array<DataroomFile>()
+      .min(1)
+      .required('This field is required')
   })
 
 export const individualInvestorAgreementsSchema = yup
   .object()
   .shape<IndividualAgreementsFormValues>({
-    custody: yup.bool().oneOf([true]).required('Required'),
-    investor: yup.bool().oneOf([true]).required('Required'),
-    disclosure: yup.bool().oneOf([true]).required('Required')
+    custody: yup.bool().oneOf([true]).required('This field is required'),
+    investor: yup.bool().oneOf([true]).required('This field is required'),
+    disclosure: yup.bool().oneOf([true]).required('This field is required')
   })

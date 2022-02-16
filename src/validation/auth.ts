@@ -9,14 +9,14 @@ import { emailSchema, passwordSchema } from 'validation/shared'
 
 export const loginFormValidationSchema = yup.object<LoginArgs>({
   email: emailSchema.required('This field is required'),
-  password: yup.string().required('Required'),
+  password: yup.string().required('This field is required'),
   otp: yup.string()
 })
 
 export const registerFormValidationSchema = yup.object<SignupArgs>({
-  name: yup.string().required('Required'),
+  name: yup.string().required('This field is required'),
   email: emailSchema.required('This field is required'),
-  password: passwordSchema.required('Required'),
+  password: passwordSchema.required('This field is required'),
   agree: yup
     .boolean()
     .test('consent', 'You must agree to these terms', value => value === true)
@@ -32,5 +32,5 @@ export const completePasswordResetValidationSchema = yup.object<
   Omit<CompletePasswordResetArgs, 'resetToken'>
 >({
   email: emailSchema.required('This field is required'),
-  newPassword: passwordSchema.required('Required')
+  newPassword: passwordSchema.required('This field is required')
 })

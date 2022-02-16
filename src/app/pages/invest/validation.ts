@@ -8,17 +8,19 @@ import {
 export const commitmentFormValidationSchema = yup
   .object()
   .shape<CommitmentFormValues>({
-    pricePerUnit: yup.number().required('Required'),
-    totalAmount: yup.number().required('Required'),
-    numberOfUnits: yup.number().required('Required'),
-    otp: yup.string().required('Required'),
-    signedSubscriptionDocument: yup.object<DataroomFile>().required('Required'),
+    pricePerUnit: yup.number().required('This field is required'),
+    totalAmount: yup.number().required('This field is required'),
+    numberOfUnits: yup.number().required('This field is required'),
+    otp: yup.string().required('This field is required'),
+    signedSubscriptionDocument: yup
+      .object<DataroomFile>()
+      .required('This field is required'),
     withdrawalAddress: yup.string()
   })
 
 export const commitmentIssuanceValidationSchema = yup
   .object()
   .shape<CommitmentIssuanceFormValues>({
-    withdrawalAddress: yup.string().required('Required'),
+    withdrawalAddress: yup.string().required('This field is required'),
     releaseDate: yup.date().nullable()
   })

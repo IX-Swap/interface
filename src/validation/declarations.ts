@@ -9,12 +9,15 @@ import {
   individualAccreditedInvestorValidator
 } from 'validation/validators'
 
-const required = yup.mixed().oneOf([DeclarationValue.Yes]).required('Required')
+const required = yup
+  .mixed()
+  .oneOf([DeclarationValue.Yes])
+  .required('This field is required')
 
 const optional = yup
   .mixed()
   .oneOf([DeclarationValue.Yes, DeclarationValue.No])
-  .required('Required')
+  .required('This field is required')
 
 export const individualDeclarationsSchema = yup
   .object()
