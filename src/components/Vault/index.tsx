@@ -3,6 +3,7 @@ import React from 'react'
 import { useAccreditationStatus } from 'state/secTokens/hooks'
 import { ExistingVault } from './ExistingVault'
 import { NoVault } from './NoVault'
+import { AccreditationStatusEnum } from './enum'
 
 interface Props {
   currency?: Currency
@@ -20,9 +21,17 @@ export const Vault = ({ currency, token }: Props) => {
   return (
     <>
       {!vaultExists && token?.token && (
-        <NoVault currency={currency} status={status} accreditationRequest={accreditationRequest} platform={platform} />
+        <NoVault
+          currency={currency}
+          token={token}
+          status={status}
+          accreditationRequest={accreditationRequest}
+          platform={platform}
+        />
       )}
-      {vaultExists && <ExistingVault currency={newToken as any} custodian={accreditationRequest?.custodian} />}
+      {vaultExists && (
+        <ExistingVault token={token} currency={newToken as any} custodian={accreditationRequest?.custodian} />
+      )}
     </>
   )
 }
