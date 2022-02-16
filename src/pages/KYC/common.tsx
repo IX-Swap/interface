@@ -33,9 +33,11 @@ interface SelectProps {
 }
 
 interface TextInputProps {
-  label: string
+  placeholder?: string
+  label?: string
   value: string
   onChange?: ChangeEventHandler<HTMLInputElement>
+  style?: CSSProperties
 }
 
 export const Select: FC<SelectProps> = ({ label, onSelect, selectedItem, withScroll, items }: SelectProps) => {
@@ -51,18 +53,20 @@ export const Select: FC<SelectProps> = ({ label, onSelect, selectedItem, withScr
   )
 }
 
-export const TextInput: FC<TextInputProps> = ({ label, value, onChange }: TextInputProps) => {
+export const TextInput: FC<TextInputProps> = ({ label, value, onChange, placeholder, style }: TextInputProps) => {
   return (
     <Box>
-      <Label marginBottom="11px" htmlFor="issuer-name">
-        <TYPE.title11 color="text2">
-          <Trans>{label}</Trans>
-        </TYPE.title11>
-      </Label>
-      <InputPanel>
+      {label && (
+        <Label marginBottom="11px" htmlFor="issuer-name">
+          <TYPE.title11 color="text2">
+            <Trans>{label}</Trans>
+          </TYPE.title11>
+        </Label>
+      )}
+      <InputPanel style={style}>
         <ContainerRow>
           <InputContainer>
-            <Input value={value} onChange={onChange} />
+            <Input placeholder={placeholder} value={value} onChange={onChange} />
           </InputContainer>
         </ContainerRow>
       </InputPanel>

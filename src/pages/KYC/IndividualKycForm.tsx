@@ -1,5 +1,6 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useMemo, useState } from 'react'
 import { Trans } from '@lingui/macro'
+import { getNames } from 'country-list'
 
 import Column from 'components/Column'
 import { KYCProgressBar } from './KYCProgressBar'
@@ -10,11 +11,11 @@ import { RowBetween } from 'components/Row'
 import { Select, TextInput, Uploader } from './common'
 import { PhoneInput } from 'components/PhoneInput'
 import { DateInput } from 'components/DateInput'
-import { RadioButton } from 'components/RadioButton'
+import { Checkbox } from 'components/Checkbox'
 
-import { fatcaOptions, genders, initialIndividualKycFormData, optInOptions, sourceOfFunds } from './mock'
+import { genders, initialIndividualKycFormData, sourceOfFunds } from './mock'
 import { Grid, FormCard, FormGrid, ExtraInfoCard } from './styleds'
-import { ReactComponent as ArrowLeft } from '../../assets/images/arrow-back.svg'
+import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
 import { ReactComponent as BigPassed } from 'assets/images/check-success-big.svg'
 
 interface Props {
@@ -24,7 +25,7 @@ interface Props {
 export const IndividualKycForm: FC<Props> = ({ goBack }: Props) => {
   const [formData, setFormData] = useState(initialIndividualKycFormData)
 
-  const { info, address, funds, investor, fatca, optInRequirement, tax, upload } = formData
+  const { info, address, funds, investor, fatca, upload } = formData
 
   const onChangeInfoHandler = (fieldName: string, value: string) => {
     setFormData({
@@ -39,6 +40,30 @@ export const IndividualKycForm: FC<Props> = ({ goBack }: Props) => {
       address: { ...address, fields: { ...address.fields, [fieldName]: value } },
     })
   }
+
+  const onSourceOfFundsChange = (source: string) => {
+    const { fields } = funds
+    const newSources = [...fields]
+    const indexOfSource = fields.indexOf(source)
+
+    // check for existence
+    if (indexOfSource > -1) {
+      newSources.splice(indexOfSource, 1)
+    } else {
+      newSources.push(source)
+    }
+
+    setFormData({
+      ...formData,
+      funds: { ...funds, fields: newSources },
+    })
+  }
+
+  const countries = useMemo(() => {
+    return getNames()
+      .map((name, index) => ({ id: ++index, name }))
+      .sort((a, b) => a.name.localeCompare(b.name))
+  }, [])
 
   return (
     <>
@@ -94,15 +119,17 @@ export const IndividualKycForm: FC<Props> = ({ goBack }: Props) => {
 
                 <FormGrid>
                   <Select
+                    withScroll
                     label="Nationality"
                     selectedItem={info.fields.nationality}
-                    items={[]}
+                    items={countries}
                     onSelect={(nationality) => onChangeInfoHandler('nationality', nationality)}
                   />
                   <Select
+                    withScroll
                     label="Citizenship"
                     selectedItem={info.fields.citizenship}
-                    items={[]}
+                    items={countries}
                     onSelect={(citizenship) => onChangeInfoHandler('citizenship', citizenship)}
                   />
                 </FormGrid>
@@ -142,30 +169,16 @@ export const IndividualKycForm: FC<Props> = ({ goBack }: Props) => {
 
                 <FormGrid>
                   <Select
+                    withScroll
                     label="Country"
                     selectedItem={address.fields.country}
-                    items={[]}
+                    items={countries}
                     onSelect={(country) => onChangeAddressHandler('country', country)}
                   />
-                  <Select
-                    label="City"
-                    selectedItem={address.fields.city}
-                    items={[]}
-                    onSelect={(city) => onChangeAddressHandler('city', city)}
-                  />
-                </FormGrid>
-
-                <FormGrid>
-                  <Select
-                    label="State"
-                    selectedItem={address.fields.state}
-                    items={[]}
-                    onSelect={(state) => onChangeAddressHandler('state', state)}
-                  />
                   <TextInput
-                    onChange={(e) => onChangeAddressHandler('postalCode', e.currentTarget.value)}
-                    value={address.fields.postalCode}
-                    label="Postal code"
+                    onChange={(e) => onChangeAddressHandler('city', e.currentTarget.value)}
+                    value={address.fields.city}
+                    label="City"
                   />
                 </FormGrid>
               </Column>
@@ -176,16 +189,11 @@ export const IndividualKycForm: FC<Props> = ({ goBack }: Props) => {
                 <TYPE.title6 style={{ textTransform: 'uppercase' }}>{funds.title}</TYPE.title6>
                 {funds.passed && <BigPassed />}
               </RowBetween>
-              <FormGrid columns={4}>
-                {sourceOfFunds.map(({ id, name }) => (
-                  <RadioButton
+              <FormGrid columns={3}>
+                {sourceOfFunds.map(({ id, name }: any) => (
+                  <Checkbox
                     checked={funds.fields.includes(name)}
-                    onClick={() =>
-                      setFormData({
-                        ...formData,
-                        funds: { ...funds, fields: [...funds.fields, name] },
-                      })
-                    }
+                    onClick={() => onSourceOfFundsChange(name)}
                     key={`funds-${id}`}
                     label={name}
                   />
@@ -199,27 +207,60 @@ export const IndividualKycForm: FC<Props> = ({ goBack }: Props) => {
                 {investor.passed && <BigPassed />}
               </RowBetween>
 
-              <Column style={{ gap: '20px' }}>
-                <RadioButton
-                  checked={investor.value === true}
-                  onClick={() =>
-                    setFormData({
-                      ...formData,
-                      investor: { ...investor, value: true },
-                    })
-                  }
-                  label={`I declare that i am “individual accredited Investor"`}
-                />
-                <RadioButton
-                  checked={investor.value === false}
-                  onClick={() =>
-                    setFormData({
-                      ...formData,
-                      investor: { ...investor, value: false },
-                    })
-                  }
-                  label="I am not an accredited investor"
-                />
+              <Column style={{ gap: '34px' }}>
+                <Column style={{ gap: '16px' }}>
+                  <Checkbox
+                    scaleSize={1.4}
+                    isRadio
+                    checked={investor.value === true}
+                    onClick={() =>
+                      setFormData({
+                        ...formData,
+                        investor: { ...investor, value: true },
+                      })
+                    }
+                    label={`I declare that i am “individual accredited Investor"`}
+                  />
+                  <Checkbox
+                    scaleSize={1.4}
+                    isRadio
+                    checked={investor.value === false}
+                    onClick={() =>
+                      setFormData({
+                        ...formData,
+                        investor: { ...investor, value: false },
+                      })
+                    }
+                    label="I am not an accredited investor"
+                  />
+                </Column>
+                <Column style={{ gap: '24px' }}>
+                  <Checkbox
+                    isRadio
+                    checked={investor.exceedsOneMillion === true}
+                    onClick={() =>
+                      setFormData({
+                        ...formData,
+                        investor: { ...investor, exceedsOneMillion: true },
+                      })
+                    }
+                    label={`I am a person whose individual net worth or joint net worth with my spouse at the time of purchase 
+                    exceeds US $1 million`}
+                  />
+                  <Checkbox
+                    isRadio
+                    checked={investor.exceedsOneMillion === false}
+                    onClick={() =>
+                      setFormData({
+                        ...formData,
+                        investor: { ...investor, exceedsOneMillion: false },
+                      })
+                    }
+                    label="I am person who had an individual income in excess of US$200,000 in each of the two most recent years 
+                    or joint income with my spouse in excess of US$300 000 in each of those years and has a reasonable expectation 
+                    of reaching the same income level in the current year"
+                  />
+                </Column>
               </Column>
             </FormCard>
 
@@ -230,131 +271,50 @@ export const IndividualKycForm: FC<Props> = ({ goBack }: Props) => {
               </RowBetween>
 
               <ExtraInfoCard>
-                <TYPE.buttonMuted>
-                  Praesent sapien massa, convallis a pellentesque nec, egestas non FATCA
-                </TYPE.buttonMuted>
+                <TYPE.buttonMuted>Declaration of US Citizenship or US residence for FATCA</TYPE.buttonMuted>
               </ExtraInfoCard>
 
               <Column style={{ gap: '20px', marginTop: 20 }}>
-                {fatcaOptions.map(({ id, name }) => (
-                  <RadioButton
-                    checked={fatca.fields.includes(name)}
+                <Column style={{ gap: '8px' }}>
+                  <Checkbox
+                    isRadio
+                    checked={fatca.value === true}
                     onClick={() =>
                       setFormData({
                         ...formData,
-                        fatca: { ...fatca, fields: [...fatca.fields, name] },
+                        fatca: { ...fatca, value: true },
                       })
                     }
-                    key={`fatca-${id}`}
-                    label={name}
+                    label={`I confirm that I am a US citizen and/or resident in the US for tax purposes and my US federal taxpayer ID number (US TIN) is as follows: `}
                   />
-                ))}
-              </Column>
-            </FormCard>
-
-            <FormCard id="optInRequirement">
-              <RowBetween marginBottom="32px">
-                <TYPE.title6 style={{ textTransform: 'uppercase' }}>{optInRequirement.title}</TYPE.title6>
-                {optInRequirement.passed && <BigPassed />}
-              </RowBetween>
-
-              <ExtraInfoCard>
-                <TYPE.buttonMuted>
-                  <Trans>I confirm to be treated as an “Accredited Investor” by IXSwap</Trans>
-                </TYPE.buttonMuted>
-              </ExtraInfoCard>
-
-              <Column style={{ gap: '20px', marginTop: 20 }}>
-                {optInOptions.map(({ id, name }) => (
-                  <RadioButton
-                    checked={optInRequirement.fields.includes(name)}
-                    onClick={() =>
-                      setFormData({
-                        ...formData,
-                        optInRequirement: { ...optInRequirement, fields: [...optInRequirement.fields, name] },
-                      })
-                    }
-                    key={`optInRequirement-${id}`}
-                    label={name}
-                  />
-                ))}
-              </Column>
-            </FormCard>
-
-            <FormCard id="tax">
-              <RowBetween marginBottom="32px">
-                <TYPE.title6 style={{ textTransform: 'uppercase' }}>{`${tax.title} {${
-                  tax.value ? 'YES' : 'NO'
-                }}`}</TYPE.title6>
-                {tax.passed && <BigPassed />}
-              </RowBetween>
-              <ExtraInfoCard>
-                <TYPE.buttonMuted>
-                  <Trans>Click here to know why we need tax information</Trans>
-                </TYPE.buttonMuted>
-              </ExtraInfoCard>
-              <TYPE.title6 margin="20px 0px">
-                <Trans>Are you currently solely a tax resident of Singapoore?</Trans>
-              </TYPE.title6>
-              <Column style={{ gap: '20px' }}>
-                <RadioButton
-                  label="Yes"
-                  checked={tax.value === true}
-                  onClick={() =>
-                    setFormData({
-                      ...formData,
-                      tax: { ...tax, value: true },
-                    })
-                  }
-                />
-                {tax.value && (
-                  <TextInput
-                    label="My Singapoore NRIC/FIN is:"
-                    value={tax.fin || ''}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        tax: { ...tax, fin: e.currentTarget.value },
-                      })
-                    }
-                  />
-                )}
-                <RadioButton
-                  label="No"
-                  checked={tax.value === false}
-                  onClick={() =>
-                    setFormData({
-                      ...formData,
-                      tax: { ...tax, value: false },
-                    })
-                  }
-                />
-                {!tax.value && (
-                  <FormGrid>
+                  {fatca.value && (
                     <TextInput
-                      label="Country of tax residency"
-                      value={tax.taxResidency || ''}
+                      style={{ width: 284 }}
+                      placeholder="ID Number.."
+                      value={fatca.taxId || ''}
                       onChange={(e) =>
                         setFormData({
                           ...formData,
-                          tax: { ...tax, taxResidency: e.currentTarget.value },
+                          fatca: { ...fatca, taxId: e.currentTarget.value },
                         })
                       }
                     />
-                    <TextInput
-                      label="Tax identification number"
-                      value={tax.taxId || ''}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          tax: { ...tax, taxId: e.currentTarget.value },
-                        })
-                      }
-                    />
-                  </FormGrid>
-                )}
+                  )}
+                </Column>
+                <Checkbox
+                  isRadio
+                  checked={fatca.value === false}
+                  onClick={() =>
+                    setFormData({
+                      ...formData,
+                      fatca: { ...fatca, value: false },
+                    })
+                  }
+                  label="I confirm that I am not a US citizen or resident in the US for tax purposes. "
+                />
               </Column>
             </FormCard>
+
             <FormCard>
               <Column style={{ gap: '20px' }}>
                 <TextInput value={''} label="Occupation" />
@@ -371,8 +331,6 @@ export const IndividualKycForm: FC<Props> = ({ goBack }: Props) => {
                   items={[]}
                   onSelect={(gender) => onChangeInfoHandler('gender', gender)}
                 />
-                <TextInput value={''} label="Bank Accounts" />
-                <TextInput value={''} label="Investor Status Declaration" />
               </Column>
             </FormCard>
 
