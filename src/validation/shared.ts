@@ -55,7 +55,7 @@ export const birthdaySchema = dateSchema.test(
 
 export const taxIdentificationNumberSchema = yup
   .string()
-  .max(20, 'Maximum of 20 chracters')
+  .max(20, 'Maximum of 20 characters')
   .matches(/^[a-zA-Z0-9]*$/, 'Must include only letters and numbers only')
 
 export const documentsArraySchema =
