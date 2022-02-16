@@ -103,6 +103,9 @@ export const personnelProfileSchema = yup.object().shape<Personnel>({
   address: addressSchema.required(validationMessages.required),
   percentageShareholding: yup
     .number()
+    .transform((value, originalValue) => {
+      return originalValue === '' ? undefined : value
+    })
     .typeError('Percentage shareholding must be a number')
     .required(validationMessages.required)
 })
