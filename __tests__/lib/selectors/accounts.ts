@@ -7,6 +7,7 @@ export const bankAccounts = {
   CASH_DEPOSITS_PAGE: '[href="/app/accounts/cash-deposits"]',
   ASSET_BALANCES_PAGE: '[href="/app/accounts/balances"]',
   DIGITAL_SECURITIES: '[href="/app/accounts/digital-security"]',
+  TRANSACTIONS: '[href="/app/accounts/transactions"]',
 
   buttons: {
     SGD: "//*[contains(text(),'(SGD)')]",
@@ -22,7 +23,8 @@ export const bankAccounts = {
     CANCEL: 'a >> text="Cancel"',
     CONFIRMATION_WITHDRAWAL: 'BUTTON >> text="Confirm Withdrawal"',
     WITHDRAW: 'button >> text="Withdraw"',
-    DEPOSIT: '[href="/app/accounts/digital-security/deposit"]'
+    DEPOSIT: '[href="/app/accounts/digital-security/deposit"]',
+    WITHDRAW_SECTON: '[href="/app/accounts/digital-security/withdraw"]'
   },
   fields: {
     BANK_NAME: "[id='bankName']",
@@ -34,11 +36,13 @@ export const bankAccounts = {
     AMOUNT: '[id="amount"]',
     CITY: '[id="address.city"]',
     STATE: '[id="address.state"]',
-    POSTAL_CODE: '[id="address.postalCode"]'
+    POSTAL_CODE: '[id="address.postalCode"]',
+    WALLET: '[id="newAddress"]'
   },
   listBox: {
     CURRENCY: '[id="asset"]',
     CURRENCY_VALUE_SGD: '[data-value="5fa95e07231c63088311b178"]',
+    CURRENCY_VALUE_USD: '[data-value="5fc25b1f4f97ed7f3444cac3"]',
 
     COUNTRY: '[id="address.country"]',
     COUNTRY_VALUE: '[data-value="Ukraine"]',
@@ -47,6 +51,6 @@ export const bankAccounts = {
     BANK: '[role="option"]',
 
     TOKEN: '[id="token"]',
-    TOKEN_VALUE: '[data-value="ETH"]'
+    TOKEN_VALUE: '[data-value="IX-IXPS HHT"]'
   }
 }

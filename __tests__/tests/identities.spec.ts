@@ -3,13 +3,7 @@ import { text } from '../lib/helpers/text'
 import { test } from '../lib/fixtures/fixtures'
 import { baseCreds } from '../lib/helpers/creds'
 
-import {
-  emailCreate,
-  click,
-  screenshotMatching,
-  waitForText,
-  navigate
-} from '../lib/helpers/helpers'
+import { emailCreate, click, screenshotMatching, waitForText, navigate } from '../lib/helpers/helpers'
 
 test.describe('Check identities form', () => {
   test.beforeEach(async ({ auth }) => {
@@ -64,10 +58,7 @@ test.describe('Check identities form', () => {
     })
 
     await test.step('Upload Documents', async () => {
-      await kycForms.uploadDocument([
-        kyc.field.EVIDENCE_ACCREDITATION,
-        ...kyc.field.corporate.DOCS_ISSUER
-      ])
+      await kycForms.uploadDocument([kyc.field.EVIDENCE_ACCREDITATION, ...kyc.field.corporate.DOCS_ISSUER])
       await click(kyc.buttons.SUBMIT, page)
     })
 
