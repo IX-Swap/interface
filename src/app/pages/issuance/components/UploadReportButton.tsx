@@ -2,7 +2,7 @@ import React from 'react'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { generatePath } from 'react-router'
-import { Button, Tooltip } from '@material-ui/core'
+import { Button, Tooltip } from '@mui/material'
 import { useDSOsByUserId } from 'app/pages/issuance/hooks/useDSOsByUserId'
 
 export const UploadReportButton = () => {
