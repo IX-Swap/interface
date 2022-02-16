@@ -11,6 +11,9 @@ export const IssuerDetailsView = ({ data }: IssuerDetailsViewProps) => {
   return (
     <Grid container spacing={3}>
       <Grid item xs={12}>
+        <Typography variant='h5'>Overview</Typography>
+      </Grid>
+      <Grid item xs={12}>
         <Typography>Please review the summary details.</Typography>
       </Grid>
       <Grid item xs={12} sm={6}>

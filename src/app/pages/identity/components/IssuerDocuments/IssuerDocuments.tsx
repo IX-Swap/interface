@@ -6,6 +6,9 @@ export const IssuerDocuments = () => {
   return (
     <Grid container spacing={6} direction='column'>
       <Grid item>
+        <Grid item xs={12}>
+          <Typography variant='h5'>Upload Documents</Typography>
+        </Grid>
         <UploadDocumentField
           name='companyRelated'
           label='Company-Related Documents'
