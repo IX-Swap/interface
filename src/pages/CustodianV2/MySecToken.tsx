@@ -11,6 +11,7 @@ import { useActiveWeb3React } from 'hooks/web3'
 import CurrencyLogo from 'components/CurrencyLogo'
 
 import { MySecTokenCard } from './styleds'
+import { isMobile } from 'react-device-detect'
 
 interface Props {
   token: any
@@ -22,10 +23,15 @@ export const MySecToken: FC<Props> = ({ token }: Props) => {
   const balance = useCurrencyBalance(account ?? undefined, { isToken: true, ...wrappedToken } ?? undefined)
 
   return (
-    <NavLink style={{ textDecoration: 'none' }} to={`/security-tokens/${token.id}`}>
+    <NavLink style={{ textDecoration: 'none', overflow: 'hidden' }} to={`/security-tokens/${token.id}`}>
       <MySecTokenCard isPending={wrappedToken.status !== 'approved'}>
-        <RowBetween>
-          <Flex marginRight="8px" alignItems="center">
+        <Flex flexDirection={isMobile ? 'column' : 'row'} justifyContent="space-between">
+          <Flex
+            width="-webkit-fill-available"
+            marginRight="8px"
+            marginBottom={isMobile ? '16px' : '0px'}
+            alignItems="center"
+          >
             {token.logo ? (
               <img style={{ marginRight: 16, borderRadius: 24 }} width="46px" height="46px" src={token.logo.public} />
             ) : (
@@ -38,14 +44,14 @@ export const MySecToken: FC<Props> = ({ token }: Props) => {
               </TYPE.small>
             </Column>
           </Flex>
-          <Box>
+          <Box width="-webkit-fill-available">
             <Status
-              status={wrappedToken.accreditationRequest.status}
+              status={wrappedToken.accreditationRequest?.status || 'approved'}
               amount={balance}
               decimals={token.token.decimals ?? 18}
             />
           </Box>
-        </RowBetween>
+        </Flex>
       </MySecTokenCard>
     </NavLink>
   )
