@@ -12,7 +12,7 @@ export const IssuerDocuments = () => {
           helperElement={
             <Typography variant='body1'>
               company registry profile, certificate of incorporation, memorandum
-              and articles of association, company organisation chart, register
+              and articles of association, company organization chart, register
               of shareholders and directors, partnership deed and trust deed
             </Typography>
           }
