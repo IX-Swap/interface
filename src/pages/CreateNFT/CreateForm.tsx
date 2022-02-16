@@ -359,78 +359,75 @@ export const CreateForm = () => {
           </Box>
         </Flex>
         {showCreateNewCollection && (
-          <Box>
-            <Flex mx={-2} mb={4}>
-              <Box width={1} px={2}>
-                <Label htmlFor="link" flexDirection="column" mb={3}>
-                  <Box mb={1}>
-                    <TYPE.body fontWeight={600}>
-                      <Trans>New Collection Name</Trans>
-                    </TYPE.body>
-                  </Box>
-                  <TYPE.descriptionThin fontSize={13}>
-                    Create a new collection to keep up all items. The name can be changed later on our platform, but it
-                    cannot be changed on blockchain
-                  </TYPE.descriptionThin>
-                </Label>
-                <InputPanel id={'collection-name'}>
-                  <ContainerRow>
-                    <InputContainer>
-                      <Input
-                        className="collection-name-input"
-                        type="text"
-                        autoComplete="off"
-                        autoCorrect="off"
-                        autoCapitalize="off"
-                        spellCheck="false"
-                        error={false}
-                        pattern=".*$"
-                        value={newCollectionName}
-                        disabled={false}
-                        onChange={(e) => onSetNewCollectionName(e?.target?.value)}
-                        placeholder={`my-cool-collection`}
-                      />
-                    </InputContainer>
-                  </ContainerRow>
-                </InputPanel>
-              </Box>
-            </Flex>
-
-            <Flex mx={-2} mb={4}>
-              <Box width={1} px={2}>
-                <Label htmlFor="supply" flexDirection="column" mb={3}>
-                  <Box mb={1}>
-                    <Box display="flex">
-                      <TYPE.body fontWeight={600}>
-                        <Trans>Set the max number of items in collection</Trans>
-                      </TYPE.body>
+          <Flex mx={-2} mb={4}>
+            <Box width={1} px={2}>
+              <Label htmlFor="link" flexDirection="column" mb={3}>
+                <Box mb={1}>
+                  <TYPE.body fontWeight={600}>
+                    <Trans>New Collection Name</Trans>
+                  </TYPE.body>
+                </Box>
+                <TYPE.descriptionThin fontSize={13}>
+                  Create a new collection to keep up all items. The name can be changed later on our platform, but it
+                  cannot be changed on blockchain
+                </TYPE.descriptionThin>
+              </Label>
+              <InputPanel id={'collection-name'}>
+                <ContainerRow>
+                  <InputContainer>
+                    <Input
+                      className="collection-name-input"
+                      type="text"
+                      autoComplete="off"
+                      autoCorrect="off"
+                      autoCapitalize="off"
+                      spellCheck="false"
+                      error={false}
+                      pattern=".*$"
+                      value={newCollectionName}
+                      disabled={false}
+                      onChange={(e) => onSetNewCollectionName(e?.target?.value)}
+                      placeholder={`my-cool-collection`}
+                    />
+                  </InputContainer>
+                </ContainerRow>
+              </InputPanel>
+              <Flex mx={-2} mb={4}>
+                <Box width={1} px={2}>
+                  <Label htmlFor="supply" flexDirection="column" mb={3}>
+                    <Box mb={1}>
+                      <Box display="flex">
+                        <TYPE.body fontWeight={600}>
+                          <Trans>Select max number of items in collection</Trans>
+                        </TYPE.body>
+                      </Box>
                     </Box>
-                  </Box>
-                </Label>
-                <InputPanel id={'item-supply'}>
-                  <ContainerRow>
-                    <InputContainer>
-                      <Input
-                        onChange={(e) => onSetMaxSupply(e?.target?.valueAsNumber)}
-                        placeholder={t`1000`}
-                        type="number"
-                        autoComplete="off"
-                        autoCorrect="off"
-                        autoCapitalize="off"
-                        spellCheck="false"
-                        error={false}
-                        pattern=".*$"
-                        value={maxSupply}
-                        disabled={false}
-                      />
-                    </InputContainer>
-                  </ContainerRow>
-                </InputPanel>
+                  </Label>
+                  <InputPanel id={'item-supply'}>
+                    <ContainerRow>
+                      <InputContainer>
+                        <Input
+                          onChange={(e) => onSetMaxSupply(e?.target?.valueAsNumber)}
+                          placeholder={t`1000`}
+                          type="number"
+                          autoComplete="off"
+                          autoCorrect="off"
+                          autoCapitalize="off"
+                          spellCheck="false"
+                          error={false}
+                          pattern=".*$"
+                          value={maxSupply}
+                          disabled={false}
+                        />
+                      </InputContainer>
+                    </ContainerRow>
+                  </InputPanel>
 
-                {maxSupplyError && <TYPE.error error>{maxSupplyError}</TYPE.error>}
-              </Box>
-            </Flex>
-          </Box>
+                  {maxSupplyError && <TYPE.error error>{maxSupplyError}</TYPE.error>}
+                </Box>
+              </Flex>
+            </Box>
+          </Flex>
         )}
 
         <Flex mx={-2} mb={4}>

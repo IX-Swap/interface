@@ -312,7 +312,7 @@ export const CollectionForm = ({ collection, onSubmit, actionName = 'Update' }: 
               <Box mb={1}>
                 <Box display="flex">
                   <TYPE.body fontWeight={600}>
-                    <Trans>Set the max number of items in collection</Trans>
+                    <Trans>Select max number of items in collection</Trans>
                   </TYPE.body>
                 </Box>
               </Box>
