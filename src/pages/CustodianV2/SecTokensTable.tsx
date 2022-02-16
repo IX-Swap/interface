@@ -103,9 +103,9 @@ export const SecTokensTable: FC<Props> = ({ tokens, page, offset, totalPages, to
           page: currentPage,
           offset,
           search: searchValue,
-          industry: industry?.name ? industry.name : '',
-          country: country?.name ? country.name : '',
-          issuerId: issuer?.id ? issuer.id : '',
+          industry: industry?.name || '',
+          country: country?.name || '',
+          issuerId: issuer?.id || '',
         }),
       250
     )
@@ -133,15 +133,7 @@ export const SecTokensTable: FC<Props> = ({ tokens, page, offset, totalPages, to
   }
 
   const onFilterChange = (filterName: string, filter: any) => {
-    if (filterName === 'country') {
-      setFilters({ ...filters, country: filter })
-    }
-    if (filterName === 'industry') {
-      setFilters({ ...filters, industry: filter })
-    }
-    if (filterName === 'issuer') {
-      setFilters({ ...filters, issuer: filter })
-    }
+    setFilters({ ...filters, [filterName]: filter })
   }
 
   const countries = useMemo(() => {

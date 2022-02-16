@@ -55,7 +55,6 @@ export default function CustodianV2() {
     }
   }, [tokens])
 
-  // const mySecTokensIds = mySecTokens ? mySecTokens.map(({ id }: any) => id) : []
   const activeTokens = tokens ? tokens.items.filter(({ active }: any) => active) : []
   const featuredTokens = noFilteredTokens.filter(({ featured }: any) => featured)
   const approvedSecTokens = mySecTokens
@@ -68,8 +67,6 @@ export default function CustodianV2() {
         ({ token }: any) => token.accreditationRequest && token.accreditationRequest.status !== 'approved'
       )
     : []
-  // const otherSecTokens =
-  //   mySecTokensIds.length > 0 ? activeTokens.filter(({ id }: any) => !mySecTokensIds.includes(id)) : activeTokens
 
   return chainId !== undefined && !TGE_CHAINS_WITH_SWAP.includes(chainId) ? (
     <AppBody blurred>
