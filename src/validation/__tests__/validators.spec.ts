@@ -1,6 +1,7 @@
 import {
   corporateAccreditedInvestorValidator,
   individualAccreditedInvestorValidator,
+  isBeforeDate,
   pastDateValidator,
   uniqueIdentifierCodeValidator
 } from 'validation/validators'
@@ -131,6 +132,24 @@ describe('pastDateValidator', () => {
 
   it('returns true if date is future date', () => {
     expect(pastDateValidator('2100-11-10T15:59:00.000Z')).toBe(true)
+  })
+})
+describe('isBeforeDate', () => {
+  it('returns true if either date is null, undefined, or empty string', () => {
+    expect(isBeforeDate(null, null)).toBe(true)
+    expect(isBeforeDate(undefined, '')).toBe(true)
+  })
+
+  it('returns false if first date is after the second date', () => {
+    expect(
+      isBeforeDate('2020-11-10T15:59:00.000Z', '2020-10-10T15:59:00.000Z')
+    ).toBe(false)
+  })
+
+  it('returns true if first date is before the second date', () => {
+    expect(
+      isBeforeDate('2020-11-10T15:59:00.000Z', '2100-11-10T15:59:00.000Z')
+    ).toBe(true)
   })
 })
 

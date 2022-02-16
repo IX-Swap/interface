@@ -30,7 +30,7 @@ export const InvestOverview = () => {
                 disableElevation
                 style={{ color: theme.palette.primary.main }}
               >
-                My commitments
+                My investments
               </Button>
             </Box>
           </Grid>

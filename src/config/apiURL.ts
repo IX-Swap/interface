@@ -199,6 +199,8 @@ export const authURL = {
   enable2fa: (userId?: string, otp?: string) =>
     `/auth/2fa/setup/${userId}/confirm/${otp}`,
   setup2fa: (userId?: string) => `/auth/2fa/setup/${userId}`,
+  remove2fa: (userId?: string) => `/auth/2fa/change/${userId}`,
+  getEmailCode: (userId?: string) => `/auth/email-code/${userId}`,
   register: '/auth/registrations',
   registerConfirm: '/auth/registrations/confirm',
   reset2fa: (userId?: string) => `/auth/2fa/reset/${userId}`,
