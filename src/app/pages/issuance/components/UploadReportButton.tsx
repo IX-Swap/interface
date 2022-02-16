@@ -23,6 +23,7 @@ export const UploadReportButton = () => {
           to={generatePath(IssuanceRoute.uploadReport)}
           variant='contained'
           color='primary'
+          data-testid='upload-report-button'
           style={{ height: 40 }}
           disableElevation
           disabled={disabled}
