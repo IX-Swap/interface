@@ -12,8 +12,10 @@ import { ActionHistoryStatus, ActionTypes, isDeposit } from './enum'
 export const NoVaultWrapper = styled.div`
   background: ${({ theme }) => theme.bgG10};
   border-radius: 45px;
-  padding: 2rem 14px 3rem;
+  padding: 3rem 12px;
   position: relative;
+  display: flex;
+  flex-direction: column;
   ${gradientBorder}
 `
 export const ExistingWrapper = styled.div`
@@ -27,6 +29,9 @@ export const ExistingWrapper = styled.div`
 export const NoVaultTitle = styled.span`
   text-transform: uppercase;
   text-align: center;
+  > div {
+    line-height: 28px;
+  }
 `
 export const ExistingTitle = styled.span`
   text-align: left;
@@ -41,7 +46,10 @@ export const ExistingTitle = styled.span`
 `
 export const VaultStatusDescription = styled.div`
   text-align: center;
-  margin-top: 25px;
+  margin-top: 20px;
+  > {
+    white-space: pre;
+  }
 `
 
 export const TitleStatusRow = styled(RowBetween)`
@@ -50,6 +58,7 @@ export const TitleStatusRow = styled(RowBetween)`
 `
 export const StatusTitle = styled(TYPE.titleSmall)`
   text-transform: uppercase;
+  font-weight: 600 !important;
 `
 
 export const HistoryWrapper = styled.div``
