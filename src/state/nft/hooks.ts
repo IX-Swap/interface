@@ -714,7 +714,14 @@ export const useCreateNftAssetForm = (history: H.History) => {
       }
       // end getting contract instance
       if (contractInstance) {
-        await mintNFT({ nft: contractInstance, account, assetURI })
+        const mintStatus = await mintNFT({ nft: contractInstance, account, assetURI })
+
+        if (!mintStatus) {
+          const message = `Failed transaction. Please, try again or check your collection max supply settings`
+          throw new Error(message)
+          return
+        }
+
         const supply = await contractInstance?.totalSupply()
         // supply shows how many. index starts at 0
         history.push(`/nft/collections/${contractAddress}/${supply - 1}`)
