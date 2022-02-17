@@ -3,15 +3,15 @@ import { MEDIA_WIDTHS } from 'theme'
 
 export const Container = styled.div`
   width: 100vw;
-  padding: 40px 16px 18px;
   display: flex;
   justify-content: center;
   background-color: ${({ theme }) => theme.bg16};
-  margin-top: 48px;
+  z-index: 11;
 `
 
 export const Content = styled.div`
-  max-width: 1272px;
+  padding: 40px 16px 18px;
+  max-width: 1300px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -94,7 +94,7 @@ export const CopyrightBlockContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   font-size: 10px;
-  > div:last-child {
+  > div:first-child {
     color: ${({ theme }) => theme.text2};
     display: flex;
     column-gap: 32px;

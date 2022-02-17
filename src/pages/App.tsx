@@ -1,3 +1,7 @@
+import React, { lazy, Suspense, useMemo } from 'react'
+import { Route, Switch, useLocation } from 'react-router-dom'
+import styled from 'styled-components/macro'
+
 import { AppBackground } from 'components/AppBackground'
 import { IXSBalanceModal } from 'components/Header/IXSBalanceModal'
 import PlaygroundModal from 'components/PlaygroundModal'
@@ -9,12 +13,10 @@ import {
 } from 'constants/addresses'
 import ApeModeQueryParamReader from 'hooks/useApeModeQueryParamReader'
 import { useActiveWeb3React } from 'hooks/web3'
-import React, { lazy, Suspense, useMemo } from 'react'
-import { Route, Switch, useLocation } from 'react-router-dom'
 import { useAccount } from 'state/user/hooks'
-import styled from 'styled-components/macro'
 import { ConnectToAppropriateNetwork } from 'theme'
 import { routes } from 'utils/routes'
+
 import GoogleAnalyticsReporter from '../components/analytics/GoogleAnalyticsReporter'
 import ErrorBoundary from '../components/ErrorBoundary'
 import Header from '../components/Header'
@@ -29,6 +31,7 @@ import { VestingTab } from './Farming/VestingTab'
 import Faucet from './Faucet'
 import PoolFinder from './PoolFinder'
 import { RedirectPathToStaking, RedirectPathToSwapOnly, RedirectToSwap } from './Swap/redirects'
+import { Footer } from '../components/Footer'
 
 const AdminKyc = lazy(() => import('./AdminKyc'))
 // const Custodian = lazy(() => import('./Custodian'))
@@ -69,10 +72,11 @@ const BodyWrapper = styled.div`
 
 const ToggleableBody = styled(BodyWrapper)<{ isVisible?: boolean }>`
   visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
-`
-
-const Marginer = styled.div`
-  margin-top: 5rem;
+  min-height: calc(100vh - 120px);
+  padding-bottom: 48px;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    min-height: calc(100vh - 64px);
+  `}
 `
 
 export default function App() {
@@ -162,8 +166,8 @@ export default function App() {
               </Switch>
             </Suspense>
           </Web3ReactManager>
-          <Marginer />
         </ToggleableBody>
+        <Footer />
       </AppWrapper>
     </ErrorBoundary>
   )
