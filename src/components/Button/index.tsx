@@ -177,7 +177,6 @@ export const ButtonIXSGradient = styled(ButtonPrimary)<{ confirmed?: boolean; di
   position: relative;
   cursor: pointer;
   border: none;
-  white-space: nowrap;
 
   :hover {
     @media (min-width: 1000px) {
