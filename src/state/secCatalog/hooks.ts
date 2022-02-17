@@ -88,6 +88,15 @@ export const getIssuers = async (params?: Record<string, string | number>) => {
   return result.data
 }
 
+export const getIssuer = async (issuerId: number) => {
+  try {
+    const result = await apiService.get(secCatalog.issuer(issuerId))
+    return result.data
+  } catch (e) {
+    console.log(e)
+  }
+}
+
 export const deleteToken = async (tokenId: number) => {
   const result = await apiService.delete(secCatalog.issuerToken(tokenId), null)
   return result.data

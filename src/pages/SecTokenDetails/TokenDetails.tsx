@@ -110,7 +110,7 @@ export const TokenDetails = ({ token, atlasInfo }: Props) => {
                 <div style={{ marginRight: '2rem' }}>
                   <DetailsElement
                     title={<Trans>Market Capitalization:</Trans>}
-                    content={`$${Number(atlasInfo.marketCapitalization)?.toFixed(3) || '$0'}`}
+                    content={`$${Number(atlasInfo.marketCapitalization)?.toFixed(2) || '$0'}`}
                   />
                   <DetailsElement title={<Trans>Protocol:</Trans>} content={atlasInfo.protocol || 'No data'} />
                   <DetailsElement title={<Trans>Exchange:</Trans>} content={atlasInfo.exchange || 'No data'} />

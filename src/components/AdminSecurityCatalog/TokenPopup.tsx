@@ -104,7 +104,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
 
       if (data) {
         toggle()
-        getIssuers()
+        getIssuers({ search: '', offset: 10, page: 1 })
         setCurrentToken(null)
       } else {
         addPopup({
