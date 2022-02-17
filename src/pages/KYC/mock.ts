@@ -9,6 +9,7 @@ interface IFormData {
     taxResidency?: string
     taxId?: string
     exceedsOneMillion?: boolean
+    otherFunds?: string
   }
 }
 
@@ -45,6 +46,7 @@ export const initialIndividualKycFormData: IFormData = {
     href: 'funds',
     passed: false,
     fields: [],
+    otherFunds: '',
   },
   investor: {
     title: 'Investor Status Declaration',
@@ -95,4 +97,16 @@ export const optInOptions = [
   'I give my consent to IC SG Pte Ltd dba InvestaX to treat me as an “Accredited Investor”',
   'I have been informed of and understand the consequences of my qualification as an Accredited Investor, in particular the reduced regulatory investor safeguards for Accredited Investors.',
   'I have been informed of and understand my right to opt out of the Accredited Investors status with InvestaX at any point in time.',
+].map((name, index) => ({ id: ++index, name }))
+
+export const empleymentStatuses = [
+  'Legal Entity Status',
+  'Public Company',
+  'Private Company',
+  'Limited Liability Company',
+  'Partnership',
+  'Limited Liability Partnership',
+  'Society',
+  'Trust',
+  'Others (Please specify)',
 ].map((name, index) => ({ id: ++index, name }))
