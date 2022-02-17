@@ -3,7 +3,8 @@ import { render } from 'test-utils'
 import {
   wysiwygToHtml,
   renderAddressColumn,
-  renderDateAndTimeField
+  renderDateAndTimeField,
+  renderPartOfEmail
 } from 'helpers/rendering'
 import { WalletAddress } from 'app/components/WalletAddress'
 import { withdrawalAddress } from '__fixtures__/withdrawalAddress'
@@ -47,5 +48,19 @@ describe('renderDateAndTimeField', () => {
     const time = getByTestId('time')
     expect(date).toHaveTextContent(formatDateToMMDDYY(testDate))
     expect(time).toHaveTextContent(formatTime(testDate))
+  })
+})
+
+describe('renderPartOfEmail', () => {
+  it('returns empty string when email is undefined or empty string', () => {
+    const undefinedEmail = undefined
+    expect(renderPartOfEmail(undefinedEmail)).toEqual('')
+    const emptyEmail = ''
+    expect(renderPartOfEmail(emptyEmail)).toEqual('')
+  })
+
+  it('returns correct part of email address', () => {
+    const testEmail = 'test@gmail.com'
+    expect(renderPartOfEmail(testEmail)).toEqual('tes***@gmail.com')
   })
 })

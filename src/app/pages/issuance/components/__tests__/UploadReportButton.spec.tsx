@@ -21,7 +21,10 @@ describe('UploadReportButton', () => {
       .spyOn(useDSOsByUserId, 'useDSOsByUserId')
       .mockImplementation(() => objResponse as any)
 
-    const { getByRole } = render(<UploadReportButton />)
-    expect(getByRole('button')).toHaveAttribute('aria-disabled', 'true')
+    const { getAllByTestId } = render(<UploadReportButton />)
+    expect(getAllByTestId('upload-report-button')[0]).toHaveAttribute(
+      'aria-disabled',
+      'true'
+    )
   })
 })

@@ -46,20 +46,20 @@ test.describe('', () => {
       await investment.createNewInvestment()
     })
   })
-  test.describe('My Commitments', () => {
+  test.describe('My Investments', () => {
     test.beforeEach(async ({ investment }) => {
       await investment.checkCommitmentsPage()
     })
-    test('The Commitments table should exist', async ({ page }) => {
+    test('The Investments table should exist', async ({ page }) => {
       await expect(page).toHaveURL(`${baseCreds.URL}app/invest/commitments`)
     })
 
-    test('The Commitment view should contain', async ({ investment, page }) => {
+    test('The Investment view should contain', async ({ investment, page }) => {
       await page.pause()
       const locator = await investment.checkRedirectionToCommitment()
       await expect(locator).toContainText(text.commitmentsView)
     })
-    test('The Commitment view should redirect to the DSO view page', async ({
+    test('The Investment view should redirect to the DSO view page', async ({
       investment,
       page
     }) => {
@@ -166,7 +166,7 @@ test.describe('Overview page', () => {
     await expect(page).toHaveURL(/app\/otc-market\/holdings$/g)
   })
 
-  test('The "My Commitments" button should redirect to the "My Commitments" page', async ({
+  test('The "My Investments" button should redirect to the "My Investments" page', async ({
     page
   }) => {
     await click(invest.ACCOUNTS_COMMITMENTS, page)

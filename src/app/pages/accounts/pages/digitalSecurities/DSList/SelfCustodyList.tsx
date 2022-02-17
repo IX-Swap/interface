@@ -15,6 +15,7 @@ export const SelfCustodyList = () => {
       uri={accountsURL.balance.getAll(userId)}
       name={digitalSecuritiesQueryKeys.selfCustody(userId)}
       columns={columns}
+      filter={{ type: 'Security' }}
       paperProps={{
         style: {
           borderTop: 'none'

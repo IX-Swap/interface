@@ -1,8 +1,12 @@
-import { DsoFAQItem, DSOFormValues, DsoTeamMember, DsoVideo } from 'types/dso'
 import { DataroomFile, FormArrayElement } from 'types/dataroomFile'
-import { string, number, array, object } from 'yup'
+import { DsoFAQItem, DSOFormValues, DsoTeamMember, DsoVideo } from 'types/dso'
+import { array, number, object, string } from 'yup'
 import { dateSchema } from './shared'
-import { pastDateValidator, uniqueIdentifierCodeValidator } from './validators'
+import {
+  isBeforeDate,
+  pastDateValidator,
+  uniqueIdentifierCodeValidator
+} from './validators'
 
 const numberTransformer = (cv: number, ov: any) => {
   return ov === '' ? undefined : cv
@@ -118,6 +122,14 @@ export const dsoFormBaseValidationSchema = {
   issuerName: string().required('Issuer Name is required'),
   launchDate: dateSchema
     .required('Launch Date is is required')
+    .test(
+      'before-completionDate',
+      'Launch date cannot be later than completion date',
+      function (launch) {
+        const { completionDate } = this.parent
+        return isBeforeDate(launch, completionDate)
+      }
+    )
     .test('pastDate', 'Launch Date must be future date', pastDateValidator),
   completionDate: dateSchema
     .required('Completion Date is required')

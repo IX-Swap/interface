@@ -4,6 +4,7 @@ const config: PlaywrightTestConfig = {
   workers: 1,
   timeout: 180000,
   updateSnapshots: 'missing',
+  maxFailures: process.env.CI ? 20 : undefined,
   reporter: [['allure-playwright'], ['list']],
   outputDir: 'reports',
   projects: [

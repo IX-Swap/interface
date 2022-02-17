@@ -262,7 +262,7 @@ export const getThemeOverrides = (
         height: 20,
         fill: '#102756',
         borderRadius: 4,
-        backgroundColor: '#102756',
+        backgroundColor: 'transparent',
         '.Mui-checked &': {
           fill: '#0055FF'
         }
@@ -295,6 +295,74 @@ export const getThemeOverrides = (
         height: 4,
         backgroundColor: '#778194',
         borderRadius: 2
+      }
+    }
+  },
+  MuiPaper: {
+    styleOverrides: {
+      root: {
+        backgroundColor: '#FFFFFF',
+        boxSizing: 'border-box',
+        '&.MuiPaper-outlined': {
+          boxShadow: '0px 80px 80px rgba(162, 172, 191, 0.16)',
+          border: '1px solid #EDF2FA'
+        }
+      }
+    }
+  },
+  MuiAvatar: {
+    styleOverrides: {
+      colorDefault: {
+        backgroundColor: 'rgba(76, 136, 255, 0.1);',
+        color: '#4C88FF',
+        border: '1px solid #4C88FF'
+      }
+    }
+  },
+  MuiSlider: {
+    styleOverrides: {
+      root: {
+        '& .MuiSlider-rail': {
+          background: '#DBE2EC',
+          opacity: 1,
+          height: '2px'
+        },
+        '& .MuiSlider-track': {
+          height: '2px',
+          border: 'none'
+        },
+        '& .MuiSlider-thumb': {
+          border: '2px solid #FFFFFF',
+          '&:before': {
+            boxShadow: 'none'
+          },
+          '&.Mui-focusVisible, &:hover': {
+            boxShadow: '0px 16px 16px rgba(76, 136, 255, 0.2)'
+          },
+          '&.Mui-disabled': {
+            background: '#DBE2EC'
+          }
+        },
+        '&.Mui-disabled .MuiSlider-markLabel': {
+          color: '#DBE2EC'
+        },
+        '& .MuiSlider-thumbSizeMedium': {
+          width: '24px',
+          height: '24px'
+        },
+        '& .MuiSlider-thumbSizeSmall': {
+          width: '16px',
+          height: '16px'
+        },
+        '& .MuiSlider-mark': {
+          width: '5px',
+          height: '5px',
+          borderRadius: '100%',
+          background: '#DBE2EC',
+          '&.MuiSlider-markActive': {
+            background: '#4C88FF'
+          }
+        }
       }
     }
   }

@@ -2,7 +2,7 @@ import React from 'react'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { generatePath } from 'react-router'
-import { Button, Tooltip } from '@material-ui/core'
+import { Button, Tooltip } from '@mui/material'
 import { useDSOsByUserId } from 'app/pages/issuance/hooks/useDSOsByUserId'
 
 export const UploadReportButton = () => {
@@ -23,6 +23,7 @@ export const UploadReportButton = () => {
           to={generatePath(IssuanceRoute.uploadReport)}
           variant='contained'
           color='primary'
+          data-testid='upload-report-button'
           style={{ height: 40 }}
           disableElevation
           disabled={disabled}

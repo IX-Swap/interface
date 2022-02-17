@@ -1,6 +1,8 @@
 import { issuanceURL } from 'config/apiURL'
 import { useServices } from 'hooks/useServices'
 import { useMutation } from 'react-query'
+import { history } from 'config/history'
+import { IssuanceRoute } from 'app/pages/issuance/router/config'
 
 interface ReportFile {
   nav: number
@@ -21,6 +23,7 @@ export const useUploadReportFile = () => {
   return useMutation(uploadFile, {
     onSuccess: () => {
       void snackbarService.showSnackbar('Success', 'success')
+      history.push(IssuanceRoute.financialReports)
     },
     onError: (error: any) => {
       void snackbarService.showSnackbar(error.message, 'error')

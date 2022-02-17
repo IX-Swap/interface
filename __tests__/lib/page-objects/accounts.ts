@@ -18,6 +18,22 @@ class BankAccounts {
   constructor(page) {
     this.page = page
   }
+  tokenDepositRequest = async () => {
+    await click(bankAccounts.buttons.DEPOSIT, this.page)
+    await click(bankAccounts.listBox.TOKEN, this.page)
+    await click(bankAccounts.listBox.TOKEN_VALUE, this.page)
+    await waitForText(this.page, '0.0.609610')
+  }
+  tokenWithdrawalRequest = async () => {
+    await click(bankAccounts.buttons.WITHDRAW_SECTON, this.page)
+    await click(bankAccounts.listBox.TOKEN, this.page)
+    await click(bankAccounts.listBox.TOKEN_VALUE, this.page)
+    await typeText(bankAccounts.fields.WALLET, '0.0.609610', this.page)
+    await click(bankAccounts.fields.AMOUNT, this.page)
+    await typeText(bankAccounts.fields.AMOUNT, '1', this.page)
+    await click(bankAccounts.buttons.CONFIRM, this.page)
+    await waitForText(this.page, 'Success')
+  }
 
   fillAccountInfoForm = async () => {
     await click(bankAccounts.buttons.ADD_BANK_ACCOUNT, this.page)

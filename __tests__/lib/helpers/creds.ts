@@ -8,10 +8,6 @@ let baseCreds
 
 if (setENV === 'staging') {
   baseCreds = stagingCreds
-  if (process.env.GH_REP?.includes('staging')) {
-    baseCreds['URL'] = 'http://localhost:3000/'
-    global.console.log(process.env.REACT_APP_API_URL)
-  }
 } else {
   baseCreds = devCreds
 }

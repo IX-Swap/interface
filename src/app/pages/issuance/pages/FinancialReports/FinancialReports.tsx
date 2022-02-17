@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { UploadReportButton } from 'app/pages/issuance/components/UploadReportButton'
 import { FinancialReportsTable } from 'app/pages/issuance/components/FinancialReportsTable/FinancialReportsTable'

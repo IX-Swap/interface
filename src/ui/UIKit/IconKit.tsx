@@ -1,7 +1,5 @@
 import { Grid, Typography } from '@mui/material'
 import React from 'react'
-import { ThemeProvider } from '@mui/material/styles'
-import { AppTheme, getAppTheme } from 'themes/new'
 import { Icon } from 'ui/Icons/Icon'
 import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined'
 import ChevronLeftOutlinedIcon from '@mui/icons-material/ChevronLeftOutlined'
@@ -17,10 +15,17 @@ import MenuIcon from '@mui/icons-material/Menu'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined'
+import { ThemeProvider, createTheme } from '@mui/material/styles'
+import { lightTheme } from 'themes/new/light'
+import { getThemeOverrides } from 'themes/new/overrides'
+import { typography } from 'themes/new/typography'
+
+const theme = createTheme({ ...lightTheme, typography })
+theme.components = getThemeOverrides(theme)
 
 export const IconKit = () => {
   return (
-    <ThemeProvider theme={getAppTheme(AppTheme.Light, false)}>
+    <ThemeProvider theme={theme}>
       <Grid container spacing={2}>
         <Grid item xs={12}>
           <Typography variant='h5'>Navigation</Typography>

@@ -1,11 +1,5 @@
 import { baseCreds } from '../lib/helpers/creds'
-import {
-  navigate,
-  click,
-  shouldNotExist,
-  shouldExist,
-  waitForText
-} from '../lib/helpers/helpers'
+import { navigate, click, shouldExist } from '../lib/helpers/helpers'
 import { test } from '../lib/fixtures/fixtures'
 import { expect } from '@playwright/test'
 import { bankAccounts } from '../lib/selectors/accounts'
@@ -76,32 +70,21 @@ let SGD: { outstanding: any }
 test.describe('Cash withdrawals', () => {
   test.beforeEach(async ({ page, bankAccount }) => {
     await click(bankAccounts.CASH_WITHDRAWALS_PAGE, page)
-    const { availableUSD, availableSGD } = await bankAccount.getBalances(
-      baseCreds.thirdExchange
-    )
+    const { availableUSD, availableSGD } = await bankAccount.getBalances(baseCreds.thirdExchange)
     USD = availableUSD
     SGD = availableSGD
   })
 
-  test('The withdrawal request should be created(USD)', async ({
-    bankAccount
-  }) => {
+  test('The withdrawal request should be created(USD)', async ({ bankAccount }) => {
     await bankAccount.createWithdrawalsRequest()
-    const { availableUSD } = await bankAccount.getBalances(
-      baseCreds.thirdExchange
-    )
+    const { availableUSD } = await bankAccount.getBalances(baseCreds.thirdExchange)
     expect(USD.outstanding).toEqual(availableUSD.outstanding + 10000)
   })
 
-  test('The withdrawal request should be created(SGD)', async ({
-    bankAccount,
-    page
-  }) => {
+  test('The withdrawal request should be created(SGD)', async ({ bankAccount, page }) => {
     await click(bankAccounts.buttons.SGD, page)
     await bankAccount.createWithdrawalsRequest()
-    const { availableSGD } = await bankAccount.getBalances(
-      baseCreds.thirdExchange
-    )
+    const { availableSGD } = await bankAccount.getBalances(baseCreds.thirdExchange)
     expect(SGD.outstanding).toEqual(availableSGD.outstanding + 10000)
   })
 })
@@ -110,15 +93,42 @@ test('The Asset Balances page should be available', async ({ page }) => {
   await click(bankAccounts.ASSET_BALANCES_PAGE, page)
   await shouldExist('table tbody', page)
 })
+
 test.describe('The Digital Securities page', () => {
   test.beforeEach(async ({ page }) => {
     await click(bankAccounts.DIGITAL_SECURITIES, page)
   })
 
-  test('Deposit', async ({ page }) => {
-    await click(bankAccounts.buttons.DEPOSIT, page)
-    await click(bankAccounts.listBox.TOKEN, page)
-    await click(bankAccounts.listBox.TOKEN_VALUE, page)
-    await waitForText(page, '0xfF53032a62b1c2d7EbC22c1124F27CAc14647ED0')
+  test('The wallet address should displayed (deposit page)', async ({ bankAccount }) => {
+    await bankAccount.tokenDepositRequest()
   })
+
+  test('Withdrawal request should be created', async ({ bankAccount }) => {
+    await bankAccount.tokenWithdrawalRequest()
+  })
+})
+
+test.describe('The Transactions page', () => {
+  test.beforeEach(async ({ page }) => {
+    await click(bankAccounts.TRANSACTIONS, page)
+  })
+  test.afterEach(async ({ page, invest }) => {
+    await shouldExist(`${invest.TABLE} >> text="Deposit"`, page)
+  })
+  test('Check that the data displayed in the table', async ({ invest, page }) => {
+    await shouldExist(invest.TABLE, page)
+  })
+
+  test('Check that the currency can be changed', async ({ page }) => {
+    await click(bankAccounts.listBox.CURRENCY, page)
+    await click(bankAccounts.listBox.CURRENCY_VALUE_USD, page)
+  })
+})
+
+test.describe('The Blockchain addresses page', () => {
+  test.beforeEach(async ({ page }) => {
+    await click(bankAccounts.TRANSACTIONS, page)
+  })
+
+  test('Check that the currency can be changed', async ({ page }) => {})
 })
