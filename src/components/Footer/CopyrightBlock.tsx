@@ -9,7 +9,6 @@ export const CopyrightBlock = () => {
 
   return (
     <CopyrightBlockContainer>
-      <div>&quot;{t`Copyright © IX Swap ${year}`}&quot;</div>
       <div>
         <div>
           <Trans>Terms & Conditions</Trans>
@@ -18,6 +17,7 @@ export const CopyrightBlock = () => {
           <Trans>Privacy Policy</Trans>
         </div>
       </div>
+      <div>&quot;{t`Copyright © IX Swap ${year}`}&quot;</div>
     </CopyrightBlockContainer>
   )
 }
