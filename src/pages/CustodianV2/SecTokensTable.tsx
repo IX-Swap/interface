@@ -125,6 +125,12 @@ export const SecTokensTable: FC<Props> = ({ tokens, page, offset, totalPages, to
   }, [filters, searchValue, currentPage]) // Filter tokens on filter/search change
 
   const onPageChange = (page: number) => {
+    const yOffset = -120
+    const element = document.getElementById('other-security-tokens-title')
+    if (element) {
+      const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset
+      window.scrollTo({ top: y, behavior: 'smooth' })
+    }
     setCurrentPage(page)
   }
 
@@ -173,7 +179,7 @@ export const SecTokensTable: FC<Props> = ({ tokens, page, offset, totalPages, to
 
   return (
     <>
-      <TYPE.title5 marginBottom="40px" display="flex">
+      <TYPE.title5 marginBottom="40px" display="flex" id="other-security-tokens-title">
         {`Other security tokens`}
         <TYPE.title5 marginLeft="4px" color="text2">
           {`(${totalItems})`}
