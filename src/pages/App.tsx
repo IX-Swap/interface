@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useMemo } from 'react'
+import React, { lazy, Suspense, useEffect, useMemo } from 'react'
 import { Route, Switch, useLocation } from 'react-router-dom'
 import styled from 'styled-components/macro'
 
@@ -84,6 +84,10 @@ export default function App() {
   const { pathname } = useLocation()
   useAccount()
   const { chainId, account } = useActiveWeb3React()
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pathname])
 
   const isAdminKyc = pathname.includes('admin')
   const validChainId = useMemo(() => {
