@@ -254,7 +254,35 @@ export const getThemeOverrides = (
       }
     }
   },
-  MuiIconButton: {},
+  MuiIconButton: {
+    styleOverrides: {
+      root: {
+        height: 'auto',
+        svg: { fill: '#4C88FF', width: 14, height: 14 },
+        ':hover': {
+          backgroundColor: '#4C88FF',
+          svg: { fill: '#FFFFFF' }
+        },
+        ':disabled': {
+          svg: {
+            fill: '#DBE2EC'
+          }
+        },
+        '&.MuiIconButton-sizeLarge': {
+          svg: {
+            width: 18,
+            height: 18
+          }
+        },
+        '&.MuiIconButton-sizeSmall': {
+          svg: {
+            width: 12,
+            height: 12
+          }
+        }
+      }
+    }
+  },
   MuiSvgIcon: {
     styleOverrides: {
       root: {
