@@ -175,7 +175,7 @@ export const getThemeOverrides = (
         height: 20,
         fill: '#102756',
         borderRadius: 4,
-        backgroundColor: '#102756',
+        backgroundColor: 'transparent',
         '.Mui-checked &': {
           fill: '#0055FF'
         }
@@ -183,11 +183,7 @@ export const getThemeOverrides = (
     }
   },
   MuiTypography: {
-    styleOverrides: {
-      root: {
-        color: '#ffffff'
-      }
-    }
+    styleOverrides: {}
   },
   MuiBreadcrumbs: {
     defaultProps: {
