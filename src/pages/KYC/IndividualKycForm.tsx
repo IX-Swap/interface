@@ -13,7 +13,7 @@ import { PhoneInput } from 'components/PhoneInput'
 import { DateInput } from 'components/DateInput'
 import { Checkbox } from 'components/Checkbox'
 
-import { genders, initialIndividualKycFormData, sourceOfFunds } from './mock'
+import { empleymentStatuses, genders, initialIndividualKycFormData, sourceOfFunds } from './mock'
 import { Grid, FormCard, FormGrid, ExtraInfoCard } from './styleds'
 import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
 import { ReactComponent as BigPassed } from 'assets/images/check-success-big.svg'
@@ -199,6 +199,19 @@ export const IndividualKycForm: FC<Props> = ({ goBack }: Props) => {
                   />
                 ))}
               </FormGrid>
+              {funds.fields.includes('Others') && (
+                <TextInput
+                  style={{ marginTop: 20 }}
+                  placeholder="Other Source of Funds...."
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      funds: { ...funds, otherFunds: e.currentTarget.value },
+                    })
+                  }
+                  value={funds.otherFunds || ''}
+                />
+              )}
             </FormCard>
 
             <FormCard id="investor">
@@ -234,33 +247,35 @@ export const IndividualKycForm: FC<Props> = ({ goBack }: Props) => {
                     label="I am not an accredited investor"
                   />
                 </Column>
-                <Column style={{ gap: '24px' }}>
-                  <Checkbox
-                    isRadio
-                    checked={investor.exceedsOneMillion === true}
-                    onClick={() =>
-                      setFormData({
-                        ...formData,
-                        investor: { ...investor, exceedsOneMillion: true },
-                      })
-                    }
-                    label={`I am a person whose individual net worth or joint net worth with my spouse at the time of purchase 
+                {investor.value === false && (
+                  <Column style={{ gap: '24px' }}>
+                    <Checkbox
+                      isRadio
+                      checked={investor.exceedsOneMillion === true}
+                      onClick={() =>
+                        setFormData({
+                          ...formData,
+                          investor: { ...investor, exceedsOneMillion: true },
+                        })
+                      }
+                      label={`I am a person whose individual net worth or joint net worth with my spouse at the time of purchase 
                     exceeds US $1 million`}
-                  />
-                  <Checkbox
-                    isRadio
-                    checked={investor.exceedsOneMillion === false}
-                    onClick={() =>
-                      setFormData({
-                        ...formData,
-                        investor: { ...investor, exceedsOneMillion: false },
-                      })
-                    }
-                    label="I am person who had an individual income in excess of US$200,000 in each of the two most recent years 
+                    />
+                    <Checkbox
+                      isRadio
+                      checked={investor.exceedsOneMillion === false}
+                      onClick={() =>
+                        setFormData({
+                          ...formData,
+                          investor: { ...investor, exceedsOneMillion: false },
+                        })
+                      }
+                      label="I am person who had an individual income in excess of US$200,000 in each of the two most recent years 
                     or joint income with my spouse in excess of US$300 000 in each of those years and has a reasonable expectation 
                     of reaching the same income level in the current year"
-                  />
-                </Column>
+                    />
+                  </Column>
+                )}
               </Column>
             </FormCard>
 
@@ -321,12 +336,12 @@ export const IndividualKycForm: FC<Props> = ({ goBack }: Props) => {
                 <Select
                   label="Employment Status"
                   selectedItem={null}
-                  items={[]}
+                  items={empleymentStatuses}
                   onSelect={(gender) => onChangeInfoHandler('gender', gender)}
                 />
                 <TextInput value={''} label="Employer" />
                 <Select
-                  label="Income in SGD"
+                  label="Income in USD in preceding 12 months"
                   selectedItem={null}
                   items={[]}
                   onSelect={(gender) => onChangeInfoHandler('gender', gender)}
@@ -369,6 +384,13 @@ export const IndividualKycForm: FC<Props> = ({ goBack }: Props) => {
                   optional={!investor.value}
                 />
               </Column>
+            </FormCard>
+            <FormCard>
+              <TYPE.title6 marginBottom="12px">
+                <Trans>ACCOUNT ON INVESTAX</Trans>
+              </TYPE.title6>
+
+              <Checkbox checked={true} onClick={() => null} label="Create account for me on InvestaX" />
             </FormCard>
           </Column>
         </div>
