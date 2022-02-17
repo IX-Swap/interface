@@ -59,12 +59,14 @@ export default function CustodianV2() {
   const featuredTokens = noFilteredTokens.filter(({ featured }: any) => featured)
   const approvedSecTokens = mySecTokens
     ? mySecTokens.filter(
-        ({ token }: any) => token.accreditationRequest && token.accreditationRequest.status === 'approved'
+        ({ token }: any) =>
+          token.accreditationRequests?.length > 0 && token.accreditationRequests[0]?.status === 'approved'
       )
     : []
   const pendingSecTokens = mySecTokens
     ? mySecTokens.filter(
-        ({ token }: any) => token.accreditationRequest && token.accreditationRequest.status !== 'approved'
+        ({ token }: any) =>
+          token.accreditationRequests?.length > 0 && token.accreditationRequests[0].status !== 'approved'
       )
     : []
 

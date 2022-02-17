@@ -6,7 +6,15 @@ import { Vault } from 'components/Vault'
 import { DepositPopup } from 'components/Vault/DepositPopup'
 import { WithdrawPopup } from 'components/Vault/WithdrawPopup'
 import { useCurrency } from 'hooks/Tokens'
+<<<<<<< HEAD
 import { getAtlasAll, getAtlasInfo, getToken } from 'state/secCatalog/hooks'
+=======
+import React, { useEffect, useState } from 'react'
+import { RouteComponentProps } from 'react-router-dom'
+import { Box } from 'rebass'
+import { getAtlasInfo, getToken } from 'state/secCatalog/hooks'
+import { useAccreditationStatus } from 'state/secTokens/hooks'
+>>>>>>> 13bc742f (fix sec catalog v4)
 import { LightBackground } from 'theme/Background'
 import { BackArrowButton } from 'components/BackArrowButton'
 
@@ -33,7 +41,6 @@ export default function SecTokenDetails({
       if (data?.atlasOneId) {
         const atlasData: any = await getAtlasInfo(data?.atlasOneId)
         if (atlasData?.allIssuers) setAtlasInfo(atlasData.allIssuers[0])
-        console.log(await getAtlasAll())
       }
     }
 

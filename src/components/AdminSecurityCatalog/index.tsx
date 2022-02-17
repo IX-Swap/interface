@@ -12,6 +12,7 @@ import { ContainerRow, Input, InputContainer, InputPanel } from 'components/Inpu
 import { useAddPopup, useTokenPopupToggle, useDeleteTokenPopupToggle } from 'state/application/hooks'
 import { TokenPopup } from './TokenPopup'
 import {
+  getIssuer,
   useAddIssuer,
   useEditIssuer,
   useFetchIssuers,
@@ -68,9 +69,14 @@ export const AdminSecurityCatalog: FC = () => {
     getIssuers({ search: searchValue, page, offset })
   }
 
+  const fetchIssuer = async () => {
+    const data = await getIssuer(currentIssuer.id)
+    if (data) setCurrentIssuer(data)
+  }
+
   useEffect(() => {
-    if (currentIssuer) {
-      setCurrentIssuer(issuers?.items.find(({ id }: any) => id === currentIssuer.id))
+    if (currentIssuer?.id) {
+      fetchIssuer()
     }
   }, [issuers])
 
@@ -79,7 +85,7 @@ export const AdminSecurityCatalog: FC = () => {
     setSearchValue(value)
 
     clearTimeout(timer)
-    timer = setTimeout(() => getIssuers({ search: value, page: 1, offset: 10 }), 250)
+    timer = setTimeout(() => getIssuers({ search: value, page: 1, offset }), 250)
   }
 
   const handleResetState = async () => {

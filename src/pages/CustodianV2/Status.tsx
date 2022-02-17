@@ -21,13 +21,8 @@ export const Status: FC<Props> = ({ status, amount: propAmount, decimals }: Prop
     switch (status) {
       case 'approved':
         return (
-          <TYPE.description7
-            textAlign={isMobile ? 'left' : 'right'}
-            color="text1"
-            overflow="hidden"
-            style={{ textOverflow: 'ellipsis' }}
-          >
-            {amount === '-' ? amount : (+amount.replace(',', '.') as number).toFixed(!isFloatNumber ? 0 : 3)}
+          <TYPE.description7 color="text1" overflow="hidden" style={{ textOverflow: 'ellipsis' }}>
+            {amount === '-' ? amount : (+amount.replace(',', '.') as number).toFixed(!isFloatNumber ? 0 : 2)}
           </TYPE.description7>
         )
       case 'pending-custodian':
