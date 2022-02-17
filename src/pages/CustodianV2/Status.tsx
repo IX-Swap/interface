@@ -5,7 +5,6 @@ import { AccreditationStatusEnum } from 'components/Vault/enum'
 import { TYPE } from 'theme'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { Trans } from '@lingui/macro'
-import { isMobile } from 'react-device-detect'
 
 interface Props {
   status: AccreditationStatusEnum
@@ -15,6 +14,7 @@ interface Props {
 
 export const Status: FC<Props> = ({ status, amount: propAmount, decimals }: Props) => {
   const amount = formatCurrencyAmount(propAmount, decimals ?? 18)
+  const showWithoutFormatting = amount.includes('<') || amount === '-'
   const isFloatNumber = amount.includes(',') || amount.includes('.')
 
   const getStatus = () => {
@@ -22,7 +22,7 @@ export const Status: FC<Props> = ({ status, amount: propAmount, decimals }: Prop
       case 'approved':
         return (
           <TYPE.description7 color="text1" overflow="hidden" style={{ textOverflow: 'ellipsis' }}>
-            {amount === '-' ? amount : (+amount.replace(',', '.') as number).toFixed(!isFloatNumber ? 0 : 2)}
+            {showWithoutFormatting ? amount : (+amount.replace(',', '.') as number).toFixed(!isFloatNumber ? 0 : 2)}
           </TYPE.description7>
         )
       case 'pending-custodian':

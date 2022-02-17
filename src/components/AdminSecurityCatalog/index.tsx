@@ -59,6 +59,8 @@ export const AdminSecurityCatalog: FC = () => {
   const [deleteTokenId, setDeleteTokenId] = useState(0)
   const [showMode, setShowMode] = useState<Tab['value']>('catalog')
 
+  console.log(currentToken)
+
   useEffect(() => {
     if (showMode === 'catalog') {
       getIssuers({ search: '', offset, page: 1 })
@@ -71,7 +73,7 @@ export const AdminSecurityCatalog: FC = () => {
 
   const fetchIssuer = async () => {
     const data = await getIssuer(currentIssuer.id)
-    if (data) setCurrentIssuer(data)
+    if (data) setCurrentIssuer({ ...currentIssuer, ...data })
   }
 
   useEffect(() => {
@@ -124,7 +126,7 @@ export const AdminSecurityCatalog: FC = () => {
         }
       }
       if (showMode === 'edit_issuer') {
-        const data = await editIssuer(currentIssuer.id, { name, url, description: 'desciption' })
+        const data = await editIssuer(currentIssuer.id, { name, url, description: 'desciption', logo: file })
         if (data === BROKER_DEALERS_STATUS.SUCCESS) {
           addPopup({
             info: {

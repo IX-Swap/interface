@@ -69,9 +69,10 @@ export const addToken = async (issuerId: number, token: any) => {
 }
 
 export const editIssuer = async (issuerId: number, issuer: Issuer) => {
-  const { name, url } = issuer
+  const { name, url, logo } = issuer
   const formData = new FormData()
-  // formData.append('logo', logo, logo.name)
+
+  if (logo) formData.append('logo', logo, logo.name)
   formData.append('name', name)
   formData.append('url', url)
 
@@ -177,7 +178,7 @@ export function useEditIssuer() {
         dispatch(fetchEditIssuer.fulfilled({ data }))
         return BROKER_DEALERS_STATUS.SUCCESS
       } catch (error: any) {
-        dispatch(fetchEditIssuer.rejected({ errorMessage: 'Could not create issuer' }))
+        dispatch(fetchEditIssuer.rejected({ errorMessage: 'Could not edit issuer' }))
         return BROKER_DEALERS_STATUS.FAILED
       }
     },
