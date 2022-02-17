@@ -13,6 +13,7 @@ import { useFetchTokens } from 'state/secCatalog/hooks'
 import { FilterDropdown } from './FilterDropdown'
 import { industries } from 'components/AdminSecurityCatalog/mock'
 import { ButtonGradientBorder } from 'components/Button'
+import { MouseoverTooltip } from 'components/Tooltip'
 
 import { ReactComponent as Tradable } from '../../assets/images/tradable.svg'
 import { ReactComponent as NonTradable } from '../../assets/images/non-tradable.svg'
@@ -75,7 +76,15 @@ const Body: FC<BodyProps> = ({ tokens }: BodyProps) => {
             <div>
               <TYPE.main1 fontWeight={400}>{token.industry}</TYPE.main1>
             </div>
-            <div>{token.token ? <Tradable width={22} height={22} /> : <NonTradable width={22} height={22} />}</div>
+            <div>
+              <MouseoverTooltip
+                style={{ padding: 8 }}
+                placement="top"
+                text={`${token?.token ? 'Ready' : 'Not ready'} for trading on IXSwap`}
+              >
+                {token.token ? <Tradable width={22} height={22} /> : <NonTradable width={22} height={22} />}
+              </MouseoverTooltip>
+            </div>
           </StyledBodyRow>
         </NavLink>
       ))}

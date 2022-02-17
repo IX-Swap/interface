@@ -59,7 +59,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
   const onClose = () => {
     resetErrors()
     toggle()
-    setCurrentToken(null)
+    setCurrentToken(initialTokenState)
   }
 
   const handleDropImage = (acceptedFile: any) => {
@@ -106,6 +106,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
         toggle()
         getIssuers({ search: '', offset: 10, page: 1 })
         setCurrentToken(null)
+        setToken(initialTokenState)
       } else {
         addPopup({
           info: {
@@ -127,6 +128,14 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
     if (isValidAddress(e)) {
       const data = await checkWrappedAddress(e)
       if (data) newToken = { ...newToken, tokenId: data.id }
+      else {
+        addPopup({
+          info: {
+            success: false,
+            summary: 'Something went wrong',
+          },
+        })
+      }
     }
 
     setToken(newToken)
