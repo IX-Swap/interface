@@ -8,6 +8,7 @@ import { BasicButtons } from 'ui/UIKit/ButtonKit/BasicButtons'
 import { ButtonGroupKit } from 'ui/UIKit/ButtonKit/ButtonGroup'
 import { IconButtonKit } from 'ui/UIKit/ButtonKit/IconButtonKit'
 import { FABKit } from 'ui/UIKit/ButtonKit/FABKit'
+import { DropdownKit } from 'ui/UIKit/ButtonKit/DropdownKit'
 
 const theme = createTheme({ ...lightTheme, typography })
 theme.components = getThemeOverrides(theme)
@@ -28,6 +29,9 @@ export const ButtonKit = () => {
           </Grid>
           <Grid item xs={6}>
             <FABKit />
+          </Grid>
+          <Grid item xs={12}>
+            <DropdownKit />
           </Grid>
         </Grid>
       </Paper>

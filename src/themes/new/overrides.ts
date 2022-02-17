@@ -195,6 +195,10 @@ export const getThemeOverrides = (
         backgroundColor: '#4C88FF',
         ':disabled': {
           backgroundColor: '#EDF2FA'
+        },
+        svg: {
+          backgroundColor: 'transparent',
+          fill: '#FFFFFF'
         }
       },
       outlined: {
@@ -414,6 +418,20 @@ export const getThemeOverrides = (
             fill: '#DBE2EC'
           }
         }
+      }
+    }
+  },
+  MuiMenu: {
+    styleOverrides: {
+      root: {
+        '.MuiMenu-paper': {
+          marginTop: 8,
+          padding: 20,
+          border: '1px solid #DBE2EC',
+          boxShadow: '0px 80px 80px rgba(162, 172, 191, 0.16)',
+          borderRadius: 8
+        },
+        ul: {}
       }
     }
   }
