@@ -8,7 +8,7 @@ export const darkTheme: DeprecatedThemeOptions = {
       main: '#4C88FF',
       dark: '#3E70D2',
       light: '#78A5FF',
-      contrastText: '#89A1CE'
+      contrastText: '#FFFFFF'
     },
     secondary: {
       main: '#DBE2EC',
