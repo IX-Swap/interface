@@ -26,21 +26,11 @@ export const Status: FC<Props> = ({ status, amount: propAmount, decimals }: Prop
           </TYPE.description7>
         )
       case 'pending-custodian':
-        return (
-          <TYPE.buttonMuted color={'text1'}>
-            <Trans>Pending...</Trans>
-          </TYPE.buttonMuted>
-        )
       case 'new':
-        return (
-          <TYPE.buttonMuted color={'text1'}>
-            <Trans>Pending...</Trans>
-          </TYPE.buttonMuted>
-        )
       case 'pending-kyc':
         return (
           <TYPE.buttonMuted color={'text1'}>
-            <Trans>Pending KYC...</Trans>
+            <Trans>Pending...</Trans>
           </TYPE.buttonMuted>
         )
       case 'failed':
@@ -52,7 +42,7 @@ export const Status: FC<Props> = ({ status, amount: propAmount, decimals }: Prop
       case 'declined':
         return (
           <TYPE.buttonMuted color="rgba(237, 3, 118, 1)">
-            <Trans>Declined</Trans>
+            <Trans>Rejected</Trans>
           </TYPE.buttonMuted>
         )
       default:
