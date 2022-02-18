@@ -4,16 +4,19 @@ import { NavLink } from 'react-router-dom'
 import { Flex } from 'rebass'
 import { t, Trans } from '@lingui/macro'
 import { isMobile } from 'react-device-detect'
+import { getNames } from 'country-list'
 
 import { Table, HeaderRow, BodyRow } from 'components/Table'
 import { TYPE } from 'theme'
 import { Pagination } from 'components/AdminKycTable/Pagination'
 import CurrencyLogo from 'components/CurrencyLogo'
-import { useFetchTokens } from 'state/secCatalog/hooks'
+import { useFetchIssuers, useFetchTokens, useSecCatalogState } from 'state/secCatalog/hooks'
 import { FilterDropdown } from './FilterDropdown'
 import { industries } from 'components/AdminSecurityCatalog/mock'
 import { ButtonGradientBorder } from 'components/Button'
 import { MouseoverTooltip } from 'components/Tooltip'
+import { RowCenter } from 'components/Row'
+import { LoaderThin } from 'components/Loader/LoaderThin'
 
 import { ReactComponent as Tradable } from '../../assets/images/tradable.svg'
 import { ReactComponent as NonTradable } from '../../assets/images/non-tradable.svg'
@@ -99,8 +102,14 @@ export const SecTokensTable: FC<Props> = ({ tokens, page, offset, totalPages, to
     country: null,
     issuer: null,
   })
+  const getIssuers = useFetchIssuers()
+  const { issuers, loadingRequest } = useSecCatalogState()
   const [currentPage, setCurrentPage] = useState(1)
   const fetchTokens = useFetchTokens()
+
+  useEffect(() => {
+    getIssuers({ page: 1, offset: 100000 })
+  }, [])
 
   useEffect(() => {
     const { industry, country, issuer } = filters
@@ -145,37 +154,30 @@ export const SecTokensTable: FC<Props> = ({ tokens, page, offset, totalPages, to
 
   const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.currentTarget.value)
+    setCurrentPage(1)
   }
 
   const onFilterChange = (filterName: string, filter: any) => {
     setFilters({ ...filters, [filterName]: filter })
+    setCurrentPage(1)
   }
 
   const countries = useMemo(() => {
-    const result = []
-    const set = new Set()
-    tokens.forEach(({ country }: { country: string }) => {
-      set.add(country)
-    })
-    for (const item of set) {
-      result.push(item)
-    }
-
-    return result.map((name, index) => ({ id: ++index, name })).sort((a: any, b: any) => a.name.localeCompare(b.name))
+    return getNames()
+      .map((name, index) => ({ id: ++index, name }))
+      .sort((a, b) => a.name.localeCompare(b.name))
   }, [])
 
-  const issuers = useMemo(() => {
-    const map = new Map()
-    const result = []
-
-    tokens.forEach(({ issuer }: any) => {
-      map.set(issuer.id, issuer.name)
-    })
-    for (const [key, value] of map) {
-      result.push({ id: key, name: value })
-    }
-    return result
-  }, []) // get issuers with tokens.length > 0
+  const issuersWithTokens = useMemo(() => {
+    return issuers
+      ? issuers.items
+          .filter(({ tokens }: any) => tokens.length > 0)
+          .map(({ id, name }: any) => ({
+            id,
+            name,
+          }))
+      : []
+  }, [issuers]) // get issuers with tokens.length > 0
 
   return (
     <>
@@ -199,7 +201,7 @@ export const SecTokensTable: FC<Props> = ({ tokens, page, offset, totalPages, to
             placeholder="Issuers"
             selectedItem={filters.issuer}
             onSelect={(item) => onFilterChange('issuer', item)}
-            items={issuers}
+            items={issuersWithTokens}
             style={{ borderRadius: '30px 0px 0px 30px', marginRight: 1 }}
           />
           <FilterDropdown
@@ -227,7 +229,11 @@ export const SecTokensTable: FC<Props> = ({ tokens, page, offset, totalPages, to
         </ButtonGradientBorder>
       </Flex>
 
-      {tokens.length > 0 ? (
+      {loadingRequest ? (
+        <RowCenter>
+          <LoaderThin size={64} />
+        </RowCenter>
+      ) : tokens.length > 0 ? (
         <>
           <Table style={{ marginBottom: 32 }} header={<Header />} body={<Body tokens={tokens} />} />
           <Pagination page={page} totalPages={totalPages} onPageChange={onPageChange} />
