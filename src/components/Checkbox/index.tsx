@@ -10,7 +10,7 @@ import { ReactComponent as RadioChecked } from 'assets/images/radio-checked.svg'
 import { ReactComponent as RadioNotChecked } from 'assets/images/radio-not-checked.svg'
 
 interface Props {
-  label: string
+  label: string | JSX.Element
   checked: boolean
   onClick: () => void
   isRadio?: boolean
