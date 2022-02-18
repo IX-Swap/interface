@@ -30,7 +30,6 @@ export const RemoveAuthenticatorFields = ({
             component={TextField}
             name='emailCode'
             fullWidth
-            label=''
             placeholder={'E-mail verification code'}
             variant='outlined'
           />
@@ -49,14 +48,13 @@ export const RemoveAuthenticatorFields = ({
             component={TextField}
             name='otp'
             fullWidth
-            label=''
             placeholder={'Authenticator Code'}
             variant='outlined'
           />
         </Grid>
         <Grid item>
           <Typography variant={'body1'} className={classes.label}>
-            Enter the 6-digit code from your authenticator app
+            Enter the 6-digit code from your existing authenticator app
           </Typography>
         </Grid>
       </Grid>

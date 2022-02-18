@@ -18,7 +18,7 @@ export interface TypedFieldProps<
   TControl extends Control
 > {
   name: TFieldName
-  label: string | JSX.Element
+  label?: string | JSX.Element
   control: TControl
   rootName?: string
   defaultValue?: DeepPathValue<TFieldValues, TFieldName>
@@ -135,7 +135,7 @@ export const TypedField = <
 
         return (
           <FormControl fullWidth variant={rest?.variant}>
-            {!isTextField && (
+            {!isTextField && label !== undefined && (
               <InputLabel
                 htmlFor={path}
                 variant={rest?.variant}

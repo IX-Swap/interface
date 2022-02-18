@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@mui/styles'
 
 export const useStyles = makeStyles(theme => ({
   container: {
@@ -7,7 +7,7 @@ export const useStyles = makeStyles(theme => ({
     justifyContent: 'space-between',
     padding: theme.spacing(1.5, 2),
     backgroundColor:
-      theme.palette.type === 'light' ? '#F6F4FD' : theme.palette.primary.dark,
+      theme.palette.mode === 'light' ? '#F6F4FD' : theme.palette.primary.dark,
     borderRadius: 4
   },
   wrapper: {

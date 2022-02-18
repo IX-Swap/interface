@@ -1,6 +1,6 @@
 import React from 'react'
 import { Typography, Box, Grid, Link } from '@mui/material'
-import useStyles from 'app/pages/security/components/Step2Scan/Step2Scan.styles'
+import useStyles from './Step2Scan.styles'
 import { StepWrapper } from 'app/pages/security/components/StepWrapper'
 import { TwoFaData } from 'app/pages/security/types'
 
