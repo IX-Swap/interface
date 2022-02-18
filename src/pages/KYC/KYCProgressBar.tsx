@@ -48,12 +48,15 @@ export const KYCProgressBar: FC<Props> = ({ reasons, description, topics }: Prop
         </TYPE.title6>
 
         <Column>
-          {topics.map(({ title, href, passed }, index) => (
-            <PageLink onClick={() => handleScrollToDiv(href)} active={index === 1} key={`page-nav-${index}`}>
-              {title}
-              {passed && StatusIcons[ActionHistoryStatus.SETTLED]()}
-            </PageLink>
-          ))}
+          {topics.map(
+            ({ title, href, passed }, index) =>
+              title && (
+                <PageLink onClick={() => handleScrollToDiv(href)} active={index === 1} key={`page-nav-${index}`}>
+                  {title}
+                  {passed && StatusIcons[ActionHistoryStatus.SETTLED]()}
+                </PageLink>
+              )
+          )}
         </Column>
       </FormCard>
 
