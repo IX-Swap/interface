@@ -10,6 +10,7 @@ interface IFormData {
     taxId?: string
     exceedsOneMillion?: boolean
     otherFunds?: string
+    represent?: number
   }
 }
 
@@ -70,6 +71,96 @@ export const initialIndividualKycFormData: IFormData = {
   },
 }
 
+export const initialCorporateKycFormData: IFormData = {
+  info: {
+    title: 'Corporate Information',
+    href: 'info',
+    passed: true,
+    fields: {
+      corporateName: '',
+      legalEntityType: '',
+      registrationNumber: '',
+      country: '',
+      otherLegalEntityType: '',
+      businessActivity: '',
+      entityType: '',
+      isIncorporated: false,
+    },
+  },
+  authorizedPersonnel: {
+    title: 'Company Authorized Personnel',
+    href: 'authorizedPersonnel',
+    passed: false,
+    fields: {
+      fullName: '',
+      designation: '',
+      email: '',
+      phone: '',
+    },
+  },
+  address: {
+    title: 'Address',
+    href: 'address',
+    passed: false,
+    fields: {
+      line1: '',
+      line2: '',
+      country: '',
+      city: '',
+    },
+  },
+  residentialAddress: {
+    title: 'Residential Address',
+    href: 'residentialAddress',
+    passed: false,
+    fields: {
+      line1: '',
+      line2: '',
+      country: '',
+      city: '',
+    },
+  },
+  funds: {
+    title: 'Source of Funds',
+    href: 'funds',
+    passed: false,
+    fields: [],
+    otherFunds: '',
+  },
+  corporate: {
+    title: '',
+    href: 'corporate',
+    passed: false,
+    value: true,
+    represent: 0,
+  },
+  fatca: {
+    title: 'FATCA',
+    href: 'fatca',
+    passed: false,
+    value: true,
+    taxId: '',
+  },
+  taxDeclaration: {
+    title: 'Tax Declaration',
+    href: 'tax-declaration',
+    passed: false,
+    fields: { taxCountry: '', identificationNumber: '' },
+  },
+  beneficialOwners: {
+    title: 'Beneficial Owners Information',
+    href: 'beneficial-owners',
+    passed: false,
+    fields: [{ fullName: '', shareholding: '', proofOfAddress: null, proofOfIdentity: null }],
+  },
+  upload: {
+    title: 'Corporate Documents',
+    href: 'upload',
+    passed: false,
+    fields: {},
+  },
+}
+
 export const genders = [
   { id: 1, name: 'Male' },
   { id: 2, name: 'Female' },
@@ -110,3 +201,50 @@ export const empleymentStatuses = [
   'Trust',
   'Others (Please specify)',
 ].map((name, index) => ({ id: ++index, name }))
+
+export const legalEntityTypes = [
+  'Exempt Private Company Limited By Shares',
+  'Limited (LTD)',
+  'Limited Liability Compnay (LLC)',
+  'Limited Liability Partnership (LLP)',
+  'Limited Partnership (LPT)',
+  'Private Company Limited My Shares (LTD)',
+  'Proprietary Limited (PTY LTD)',
+  'Public Company Limited By Guarantee',
+  'Public Company Limited By Shares',
+  'Public Limited Company (PLC)',
+  'Others (Please specify)',
+].map((name, index) => ({ id: ++index, name }))
+
+export const entityTypes = [
+  'Exempt Private Company Limited By Shares',
+  'Limited (LTD)',
+  'Limited Liability Compnay (LLC)',
+  'Limited Liability Partnership (LLP)',
+  'Limited Partnership (LPT)',
+  'Private Company Limited My Shares (LTD)',
+  'Proprietary Limited (PTY LTD)',
+  'Public Company Limited By Guarantee',
+  'Public Company Limited By Shares',
+  'Public Limited Company (PLC)',
+  'Others (Please specify)',
+].map((name, index) => ({ id: ++index, name }))
+
+export const corporateSourceOfFunds = [
+  'Salary',
+  'Loan',
+  'Property',
+  'Investments',
+  'Interest/Dividends',
+  'Business revenue',
+  'Others',
+].map((name, index) => ({ id: ++index, name }))
+
+export const representOptions = [
+  'I represent a bank licensed in The Bahamas, whether acting in its individual or fiduciary capacity',
+  'I represent a broker-dealer or securities investment advisor licensed in The Bahamas and acting for its own account',
+  'I represent an insurance company licensed in The Bahamas',
+  'I represent a fund licensed in The Bahamas',
+  'I am a person, other than an individual with total assets in excess of US $5 million  not formed for the specific purpose of acquiring the securities offered',
+  'I represent an entity in which all of the equity owners are accredited investors',
+]

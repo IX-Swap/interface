@@ -2,23 +2,26 @@ import React, { ChangeEventHandler, CSSProperties, FC } from 'react'
 import { Box, Flex } from 'rebass'
 import { Trans } from '@lingui/macro'
 import { Label } from '@rebass/forms'
+import styled from 'styled-components'
 import { FileWithPath } from 'react-dropzone'
 
-import { ContainerRow, Input, InputContainer, InputPanel } from 'components/Input'
-import { TYPE } from 'theme'
+import { Input } from 'components/Input'
+import { ButtonGradient } from 'components/Button'
+import { TYPE, EllipsisText } from 'theme'
 import Upload from 'components/Upload'
 import { Dropdown } from 'components/AdminSecurityCatalog/Dropdown'
 import { GradientText } from 'pages/CustodianV2/styleds'
 
 import { ReactComponent as UploadLogo } from 'assets/images/upload.svg'
 import { ReactComponent as InfoLogo } from 'assets/images/info-filled.svg'
-import { UploaderCard } from './styleds'
+import { ReactComponent as CrossIcon } from 'assets/images/cross.svg'
+import { UploaderCard, FormGrid } from './styleds'
 
 export interface UploaderProps {
   file: FileWithPath | null
   onDrop: (file: any) => void
   title: string
-  subtitle: string
+  subtitle: string | JSX.Element
   optional?: boolean
 }
 
@@ -38,6 +41,7 @@ interface TextInputProps {
   value: string
   onChange?: ChangeEventHandler<HTMLInputElement>
   style?: CSSProperties
+  type?: string
 }
 
 export const Select: FC<SelectProps> = ({ label, onSelect, selectedItem, withScroll, items }: SelectProps) => {
@@ -48,12 +52,20 @@ export const Select: FC<SelectProps> = ({ label, onSelect, selectedItem, withScr
           <Trans>{label}</Trans>
         </TYPE.title11>
       </Label>
-      <Dropdown placeholder=" " withScroll={withScroll} onSelect={onSelect} selectedItem={selectedItem} items={items} />
+      <DropdownContainer>
+        <Dropdown
+          placeholder=" "
+          withScroll={withScroll}
+          onSelect={onSelect}
+          selectedItem={selectedItem}
+          items={items}
+        />
+      </DropdownContainer>
     </Box>
   )
 }
 
-export const TextInput: FC<TextInputProps> = ({ label, value, onChange, placeholder, style }: TextInputProps) => {
+export const TextInput: FC<TextInputProps> = ({ label, value, onChange, placeholder, style, type }: TextInputProps) => {
   return (
     <Box>
       {label && (
@@ -63,13 +75,9 @@ export const TextInput: FC<TextInputProps> = ({ label, value, onChange, placehol
           </TYPE.title11>
         </Label>
       )}
-      <InputPanel style={style}>
-        <ContainerRow>
-          <InputContainer>
-            <Input placeholder={placeholder} value={value} onChange={onChange} />
-          </InputContainer>
-        </ContainerRow>
-      </InputPanel>
+
+      <StyledInput placeholder={placeholder} value={value} onChange={onChange} style={style} type={type} />
+
       {/* {issuerErrors.name && (
           <TYPE.small marginTop="4px" color={'red1'}>
             {issuerErrors.name}
@@ -93,7 +101,7 @@ export const Uploader: FC<UploaderProps> = ({ title, subtitle, file, onDrop, opt
           </>
         )}
       </Flex>
-      <TYPE.description3 marginBottom="10px">{subtitle}</TYPE.description3>
+      <StyledDescription marginBottom="10px">{subtitle}</StyledDescription>
       <Upload file={file} onDrop={onDrop}>
         <UploaderCard>
           <Flex flexDirection="column" justifyContent="center" alignItems="center" style={{ maxWidth: 100 }}>
@@ -110,3 +118,137 @@ export const Uploader: FC<UploaderProps> = ({ title, subtitle, file, onDrop, opt
     </Box>
   )
 }
+
+interface ChooseFileTypes {
+  label?: string | JSX.Element
+  file: FileWithPath | null
+  onDrop: (file: FileWithPath) => void
+}
+
+export const ChooseFile = ({ label, file, onDrop }: ChooseFileTypes) => {
+  return (
+    <Box>
+      {label && (
+        <Label marginBottom="11px">
+          <TYPE.title11 color="text2">
+            <Trans>{label}</Trans>
+          </TYPE.title11>
+        </Label>
+      )}
+      <Upload file={file} onDrop={onDrop}>
+        <ButtonGradient style={{ height: 52, padding: '7px 16px' }}>
+          <EllipsisText>{file?.name || <Trans>Choose File</Trans>}</EllipsisText>
+        </ButtonGradient>
+      </Upload>
+    </Box>
+  )
+}
+
+interface BeneficialOwnersTableTypes {
+  data: Array<{
+    fullName: string
+    shareholding: string
+    proofOfAddress: FileWithPath | null
+    proofOfIdentity: FileWithPath | null
+  }>
+}
+
+export const BeneficialOwnersTable = ({}: BeneficialOwnersTableTypes) => {
+  return (
+    <FormGrid columns={4} style={{ marginTop: 20 }}>
+      <Label marginBottom="11px">
+        <TYPE.title11 color="text2">
+          <Trans>Full Name</Trans>
+        </TYPE.title11>
+      </Label>
+      <Label marginBottom="11px">
+        <TYPE.title11 color="text2">
+          <Trans>% Shareholding</Trans>
+        </TYPE.title11>
+      </Label>
+      <Label marginBottom="11px">
+        <TYPE.title11 color="text2">
+          <Trans>Proof of Address</Trans>
+        </TYPE.title11>
+      </Label>
+      <Label marginBottom="11px">
+        <TYPE.title11 color="text2">
+          <Trans>Proof of Identity</Trans>
+        </TYPE.title11>
+      </Label>
+    </FormGrid>
+  )
+}
+
+interface DeleteRowTypes {
+  children: JSX.Element
+  onClick: () => void
+}
+
+export const DeleteRow = ({ children, onClick }: DeleteRowTypes) => {
+  return (
+    <DeleteRowContainer>
+      <DeleteIcon onClick={onClick}>
+        <CrossIcon />
+      </DeleteIcon>
+      <DeleteRowChildren>{children}</DeleteRowChildren>
+    </DeleteRowContainer>
+  )
+}
+
+const DropdownContainer = styled.div`
+  > div {
+    background-color: ${({ theme: { bg12 } }) => `${bg12}40`};
+  }
+`
+
+const StyledDescription = styled(TYPE.description3)`
+  color: ${({ theme: { text2 } }) => `${text2}50`};
+  ul {
+    margin: 0;
+    padding-left: 20px;
+    font-size: 12px;
+    > li:not(:last-child) {
+      margin-bottom: 8px;
+    }
+  }
+  li {
+    line-height: 18px;
+  }
+`
+
+const StyledInput = styled(Input)`
+  padding: 10px 21px;
+  border-radius: 36px;
+  font-weight: normal;
+  font-size: 16px;
+  background-color: ${({ theme: { bg12 } }) => `${bg12}40`};
+  :focus {
+    background-color: ${({ theme: { bg7 } }) => bg7};
+  }
+`
+
+const DeleteRowContainer = styled.div`
+  position: relative;
+`
+
+const DeleteRowChildren = styled.div`
+  input {
+    padding-left: 52px;
+  }
+`
+
+const DeleteIcon = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: ${({ theme: { bg7 } }) => bg7};
+  width: 40px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  border-radius: 36px 0 0 36px;
+  cursor: pointer;
+`

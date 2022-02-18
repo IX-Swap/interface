@@ -159,3 +159,10 @@ export const getStatusInfo = (status: KYCStatuses) => {
 export const getStatusDescription = (status: KYCStatuses) => {
   return KYCStatusDescription[status]
 }
+
+export const Divider = styled.div`
+  height: 1px;
+  background-color: ${({ theme: { text2 } }) => `${text2}50`};
+  width: 100%;
+  opacity: 0.2;
+`

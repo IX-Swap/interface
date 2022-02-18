@@ -32,21 +32,22 @@ const Container = styled.div`
     position: relative;
   }
   .react-tel-input {
-    background-color: ${({ theme }) => theme.bg7};
+    background-color: transparent;
     border-radius: 36px;
-    border: ${({ theme: { bg7 } }) => `1px solid ${bg7}`};
+    border: ${({ theme: { bg12 } }) => `1px solid ${bg12}40`};
   }
 
   .form-control {
     position: relative;
     padding: 18px 20px 18px 52px;
     border-radius: 36px;
-    background-color: transparent;
+    background-color: ${({ theme: { bg12 } }) => `${bg12}40`};
     color: white;
     border: none;
+    width: 100%;
   }
   .form-control:focus {
-    background-color: transparent;
+    background-color: ${({ theme }) => theme.bg7};
     .react-tel-input {
       border-color: ${({ theme: { bg10 } }) => `${bg10}50`};
     }

@@ -7,8 +7,9 @@ import { StyledBodyWrapper } from 'pages/CustodianV2/styleds'
 import { TYPE } from 'theme'
 import { KYCStatus } from './KYCStatus'
 import { ButtonGradientBorder, ButtonIXSGradient } from 'components/Button'
-import { IndividualKycForm } from './IndividualKycForm'
 
+import { IndividualKycForm } from './IndividualKycForm'
+import { CorporateKycForm } from './CorporateKycForm'
 import { KYCStatuses } from './enum'
 import { Content, getStatusDescription, StatusCard } from './styleds'
 import { ReactComponent as IndividualKYC } from '../../assets/images/individual-kyc.svg'
@@ -48,14 +49,17 @@ const Description: FC<DescriptionProps> = ({ description }: DescriptionProps) =>
 export default function KYC() {
   const status = KYCStatuses.NOT_SUBMITTED as KYCStatuses
   const description = getStatusDescription(status)
-  const [showForm, setShowForm] = useState(false)
+  const [selectedForm, handleSelectedForm] = useState('')
 
-  const handlePassFormClick = () => {
-    setShowForm(true)
+  const setIndividualForm = () => {
+    handleSelectedForm('individual')
+  }
+  const setCorporateForm = () => {
+    handleSelectedForm('corporate')
   }
 
   const goBack = () => {
-    setShowForm(false)
+    handleSelectedForm('')
   }
 
   const getKYCDescription = useCallback(() => {
@@ -72,14 +76,14 @@ export default function KYC() {
             >
               <Flex marginBottom={isMobile ? '32px' : '0px'} flexDirection="column" alignItems="center">
                 <IndividualKYC />
-                <ButtonIXSGradient onClick={handlePassFormClick} style={{ padding: '16px 24px' }} marginTop="32px">
+                <ButtonIXSGradient onClick={setIndividualForm} style={{ padding: '16px 24px' }} marginTop="32px">
                   <Trans>Pass KYC as Individual</Trans>
                 </ButtonIXSGradient>
               </Flex>
               <Flex flexDirection="column" alignItems="center">
                 <CorporateKYC />
-                <ButtonGradientBorder onClick={handlePassFormClick} style={{ padding: '16px 24px' }} marginTop="32px">
-                  <Trans>Pass KYC as Individual</Trans>
+                <ButtonGradientBorder onClick={setCorporateForm} style={{ padding: '16px 24px' }} marginTop="32px">
+                  <Trans>Pass KYC as Corporate</Trans>
                 </ButtonGradientBorder>
               </Flex>
             </Flex>
@@ -121,7 +125,7 @@ export default function KYC() {
 
   return (
     <StyledBodyWrapper>
-      {!showForm ? (
+      {!selectedForm ? (
         <StatusCard>
           <Content flexDirection="column" marginTop="40px" alignItems="center">
             <TYPE.title4 marginBottom="40px">
@@ -134,7 +138,9 @@ export default function KYC() {
           </Content>
         </StatusCard>
       ) : (
-        <IndividualKycForm goBack={goBack} />
+        <>
+          {selectedForm === 'individual' ? <IndividualKycForm goBack={goBack} /> : <CorporateKycForm goBack={goBack} />}
+        </>
       )}
     </StyledBodyWrapper>
   )
