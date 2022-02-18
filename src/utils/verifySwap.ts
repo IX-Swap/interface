@@ -513,12 +513,15 @@ interface VerifyOptions {
   slope: number
 
   isSecurity: boolean
+  pairAddress: string
 
   //isToken0Sec: boolean
   //isToken1Sec: boolean
 }
 
 export async function verifySwap(options: VerifyOptions) {
+  const WETH_IDAI_CONTRACT2 = new web3.eth.Contract(PAIR_ABI, options.pairAddress)
+
   const pool = new Pool(
     options.tokenFrom,
     options.tokenTo,
@@ -528,7 +531,7 @@ export async function verifySwap(options: VerifyOptions) {
     true,
 
     options.priceToleranceThreshold,
-    WETH_IDAI_CONTRACT,
+    WETH_IDAI_CONTRACT2,
     options.systemFeeRate,
     options.isSecurity
   )

@@ -101,6 +101,7 @@ export const SwapButtons = ({
           slope: 0.05,
 
           isSecurity: pair.isSecurity,
+          pairAddress: pair.liquidityToken.address,
         })
       } catch (err) {
         showError((err as Error).message)
