@@ -267,6 +267,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                       <AddressInput
                         {...{
                           id: 'token-wrapped-input',
+                          disabled: token?.token ? true : false,
                           value: token.wrappedTokenAddress,
                           error: !Boolean(isValidAddress(token?.wrappedTokenAddress || '')),
                           onChange: handleWrappedTokenChange,
