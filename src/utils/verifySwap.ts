@@ -184,7 +184,8 @@ class Pool {
   async verifySwap(transaction: Swap, isSecurity: boolean) {
     //  request last known reserves, check if Oracle can be consulted
     await this.updateReserves()
-    await this.canConsultOracle(FACTORY_CONTRACT)
+    await this.canConsultOracle(FACTORY_CONTRACT) //(FACTORY_CONTRACT)
+    await this.consultOracle(FACTORY_CONTRACT, transaction) //(FACTORY_CONTRACT)
 
     //  perform initial tranasaction values verification and slippage check
     this.verifyOutValues(transaction)
@@ -261,15 +262,15 @@ class Pool {
   async consultOracle(contract: Contract, transaction: Swap) {
     if (transaction.amount0In.gt(0)) {
       const response = await contract.methods.oracleConsult(this.token0, transaction.amount0In, this.token1).call()
-      console.log('response for 0 is ' + response)
-      //transaction.oracleAmount1Out = response
+      //console.log('response for 0 is ' + response)
+      transaction.oracleAmount1Out = BigNumber.from(response)
     } else {
       transaction.oracleAmount1Out = BigNumber.from(0)
     }
     if (transaction.amount1In.gt(0)) {
       const response = await contract.methods.oracleConsult(this.token1, transaction.amount1In, this.token0).call()
-      console.log('response for 1 is ' + response)
-      //transaction.oracleAmount0Out = response
+      //console.log('response for 1 is ' + response)
+      transaction.oracleAmount0Out = BigNumber.from(response)
     } else {
       transaction.oracleAmount0Out = BigNumber.from(0)
     }
@@ -388,15 +389,18 @@ class Pool {
       transaction.oracleAmount1Out,
       transaction.amount1Out
     )
-    if (!(out0AmountDiff.gt(0) || transaction.amount1In.eq(0))) {
+    if (!(out0AmountDiff.gte(0) || transaction.amount1In.eq(0))) {
       throw new Error(`Out value is smaller or equal to zero`)
     }
 
-    if (!(out1AmountDiff.gt(0) || transaction.amount0In.eq(0))) {
+    if (!(out1AmountDiff.gte(0) || transaction.amount0In.eq(0))) {
       throw new Error(`Out value is smaller or equal to zero`)
     }
 
     //  find slice factor curve for each token
+
+    const testSliceFactor1 = BigNumber.from('101')
+
     let sliceFactor0Curve: BigNumber = sliceFactor0.mul(this.sqrt(sliceFactor0))
     let sliceFactor1Curve: BigNumber = sliceFactor1.mul(this.sqrt(sliceFactor1))
     sliceFactor0Curve = sliceFactor0Curve.gt(this.priceToleranceThreshold)
@@ -406,6 +410,7 @@ class Pool {
       ? this.priceToleranceThreshold
       : sliceFactor1Curve
 
+    console.log(sliceFactor1Curve)
     /*  transaction is valid if transaction out value has acceptable difference from Oracle estimation
     or other side incoming value is 0 (therefore, out value will be 0)  */
     if (!(out0AmountDiff.gt(BigNumber.from(100).sub(sliceFactor0Curve)) || transaction.amount1In.eq(0))) {
@@ -413,9 +418,10 @@ class Pool {
       throw new Error(`Out value too far from Oracle`)
     }
 
-    if (!(out1AmountDiff.gt(BigNumber.from(100).sub(sliceFactor1Curve)) || transaction.amount0In.eq(0))) {
+    if (!(out1AmountDiff.gt(BigNumber.from(100).sub(testSliceFactor1)) || transaction.amount0In.eq(0))) {
       // throw new Error(`Mitigation1 ${transaction.id}: OUT_VALUE_TOO_FAR_FROM_ORACLE`)
-      throw new Error(`Out value too far from Oracle`)
+      //throw new Error(`Out value too far from Oracle`)
+      console.log('Out value too far from Oracle')
     }
   }
 
@@ -520,7 +526,10 @@ interface VerifyOptions {
 }
 
 export async function verifySwap(options: VerifyOptions) {
-  const WETH_IDAI_CONTRACT2 = new web3.eth.Contract(PAIR_ABI, options.pairAddress)
+  const poolAddress = web3.utils.toChecksumAddress(options.pairAddress)
+
+  const WETH_IDAI_CONTRACT2 = new web3.eth.Contract(PAIR_ABI, poolAddress)
+  //const FACTORY_CONTRACT2 = new web3.eth.Contract(FACTORY_ABI, poolAddress)
 
   const pool = new Pool(
     options.tokenFrom,
