@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { DigitalSecurityOffering } from 'types/dso'
 import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
 import { VSpacer } from 'components/VSpacer'
@@ -15,15 +15,23 @@ import { Commitments } from 'app/pages/issuance/pages/Commitments'
 import { CapTable } from 'app/pages/issuance/pages/CapTable'
 import { Tabs, Tab, Grid } from '@mui/material'
 import { TabPanel } from 'components/TabPanel'
+import { DSOSidebar } from 'app/components/DSO/components/DSOSidebar'
+import { DSOPreviewActions } from 'app/components/DSO/components/DSOPreviewActions'
 
 export interface DSOPreviewProps {
   data: DigitalSecurityOffering
-  showAuthorizations?: boolean
+  showSidebar?: boolean
 }
 
 export const DSOPreview = (props: DSOPreviewProps) => {
-  const { data } = props
+  const { data, showSidebar = false } = props
   const [selectedIdx, setSelectedIdx] = useState(0)
+  const [showStatusBar, setShowStatusBar] = useState(showSidebar)
+
+  useEffect(() => {
+    selectedIdx !== 0 && setShowStatusBar(false)
+    selectedIdx === 0 && setShowStatusBar(true)
+  }, [selectedIdx])
 
   useSetPageTitle(data.tokenName)
 
@@ -53,58 +61,68 @@ export const DSOPreview = (props: DSOPreviewProps) => {
 
   return (
     <>
-      <Tabs
-        value={selectedIdx}
-        onChange={(_, index) => setSelectedIdx(index)}
-        indicatorColor='primary'
-        textColor='primary'
-      >
-        <Tab label='Overview' />
-        <Tab label='Commitments' />
-        <Tab label='CapTable' />
-      </Tabs>
+      <Grid container>
+        <Grid item lg={showStatusBar ? 9 : 12} container direction='column'>
+          <Tabs
+            value={selectedIdx}
+            onChange={(_, index) => setSelectedIdx(index)}
+            indicatorColor='primary'
+            textColor='primary'
+          >
+            <Tab label='Overview' />
+            <Tab label='Commitments' />
+            <Tab label='CapTable' />
+          </Tabs>
 
-      <TabPanel value={selectedIdx} index={0}>
-        <Grid container spacing={9}>
-          <Grid item xs={12}>
-            <Element name={DSOFormSection.Pricing}>
-              <DSOPricingViewCompact dso={data} />
-            </Element>
-          </Grid>
+          <TabPanel value={selectedIdx} index={0}>
+            <Grid container spacing={9}>
+              <Grid item xs={12}>
+                <Element name={DSOFormSection.Pricing}>
+                  <DSOPricingViewCompact dso={data} />
+                </Element>
+              </Grid>
 
-          <Grid item xs={12}>
-            <Element name={DSOFormSection['Offering Terms']}>
-              <DSOTermsViewCompact dso={data} />
+              <Grid item xs={12}>
+                <Element name={DSOFormSection['Offering Terms']}>
+                  <DSOTermsViewCompact dso={data} />
+                </Element>
+              </Grid>
+            </Grid>
+
+            <Element name={DSOFormSection.Information}>
+              <VSpacer size='large' />
+              <DSOInformationView dso={data} isNewThemeOn />
             </Element>
-          </Grid>
+
+            <Element name={DSOFormSection['Team Members']}>
+              <VSpacer size='large' />
+              <DSOTeamView dso={data} isNewThemeOn />
+            </Element>
+
+            <Element name={DSOFormSection.Documents}>
+              <VSpacer size='large' />
+              <DSODataroomView dso={data} isNewThemeOn />
+            </Element>
+
+            {renderVideosFormSection()}
+            {renderFAQsFormSection()}
+          </TabPanel>
+
+          <TabPanel value={selectedIdx} index={1}>
+            <Commitments />
+          </TabPanel>
+
+          <TabPanel value={selectedIdx} index={2}>
+            <CapTable />
+          </TabPanel>
         </Grid>
 
-        <Element name={DSOFormSection.Information}>
-          <VSpacer size='large' />
-          <DSOInformationView dso={data} isNewThemeOn />
-        </Element>
-
-        <Element name={DSOFormSection['Team Members']}>
-          <VSpacer size='large' />
-          <DSOTeamView dso={data} isNewThemeOn />
-        </Element>
-
-        <Element name={DSOFormSection.Documents}>
-          <VSpacer size='large' />
-          <DSODataroomView dso={data} isNewThemeOn />
-        </Element>
-
-        {renderVideosFormSection()}
-        {renderFAQsFormSection()}
-      </TabPanel>
-
-      <TabPanel value={selectedIdx} index={1}>
-        <Commitments />
-      </TabPanel>
-
-      <TabPanel value={selectedIdx} index={2}>
-        <CapTable />
-      </TabPanel>
+        {showStatusBar && (
+          <Grid item lg={3}>
+            <DSOSidebar dso={data} footer={<DSOPreviewActions dso={data} />} />
+          </Grid>
+        )}
+      </Grid>
     </>
   )
 }
