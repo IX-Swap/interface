@@ -1,8 +1,8 @@
 import React from 'react'
-import { Step2Scan } from 'app/pages/security/components/Step2Scan/Step2Scan'
-import { Step3Backup } from 'app/pages/security/components/Step3Backup/Step3Backup'
+import { Step2Scan } from 'app/pages/security/pages/setup2fa/components/Step2Scan/Step2Scan'
+import { Step3Backup } from 'app/pages/security/pages/setup2fa/components/Step3Backup/Step3Backup'
 import { Step4Enable } from 'app/pages/security/components/Step4Enable'
-import { Enabled } from 'app/pages/security/components/Enabled'
+import { Enabled } from 'app/pages/security/pages/setup2fa/components/Enabled'
 import { TwoFaData } from 'app/pages/security/types'
 import { Step1Download } from 'app/pages/security/pages/setup2fa/components/Step1Download'
 

@@ -27,7 +27,8 @@ export const Update2fa = () => {
     if (user !== undefined && !user.totpConfirmed) {
       history.push(SecurityRoute.setup2fa)
     }
-  })
+    // eslint-disable-next-line
+  }, [])
   const nextStep = () => {
     setActiveStep(activeStep + 1)
   }

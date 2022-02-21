@@ -1,5 +1,5 @@
 import React from 'react'
-import useStyles from './Step3Backup.styles'
+import useStyles from 'app/pages/security/pages/setup2fa/components/Step3Backup/Step3Backup.styles'
 import { Typography, Grid } from '@mui/material'
 import { TwoFaData } from 'app/pages/security/types'
 import { StepWrapper } from 'app/pages/security/components/StepWrapper'
