@@ -14,6 +14,6 @@ describe('Step2Scan', () => {
     )
     const image = getByTestId('store-image')
     expect(getByText(fakeTwoFaData.key)).toBeTruthy()
-    expect(image.style.backgroundImage).toEqual(`url(${fakeTwoFaData.image})`)
+    expect(image).toBeInTheDocument()
   })
 })
