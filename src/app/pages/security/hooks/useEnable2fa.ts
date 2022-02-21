@@ -22,7 +22,7 @@ export const useEnable2fa = (
 
   return useMutation(enable2fa, {
     onSuccess: () => {
-      void snackbarService.showSnackbar(
+      snackbarService.showSnackbar(
         'Google Authenticator Setup Success!',
         'success'
       )
@@ -41,7 +41,7 @@ export const useEnable2fa = (
       }
     },
     onError: (error: any) => {
-      void snackbarService.showSnackbar(error.message, 'error')
+      snackbarService.showSnackbar(error.message, 'error')
     }
   })
 }

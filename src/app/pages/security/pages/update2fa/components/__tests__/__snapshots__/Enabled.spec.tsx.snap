@@ -1,0 +1,97 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Enabled renders 2fa key and image 1`] = `
+<div>
+  <div
+    class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column css-30jy6e-MuiGrid-root"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-container MuiGrid-item css-1o62c1b-MuiGrid-root"
+    >
+      <div
+        class="MuiGrid-root css-186c2wj-MuiGrid-root"
+      >
+        <h4
+          class="MuiTypography-root MuiTypography-h4 MuiTypography-alignCenter css-118amwv-MuiTypography-root"
+        >
+          2-FA Has Been Updated Successfully.
+        </h4>
+      </div>
+      <div
+        class="MuiGrid-root css-186c2wj-MuiGrid-root"
+      />
+    </div>
+    <div
+      class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+    >
+      <p
+        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignCenter makeStyles-text-1 css-6bx0l6-MuiTypography-root"
+      >
+        Your account is now protected by Two-Factor Authentication (2-FA).
+      </p>
+    </div>
+    <div
+      class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+    >
+      <button
+        class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root  css-1i8ofwk-MuiButtonBase-root-MuiButton-root"
+        tabindex="0"
+        type="button"
+      >
+        Ok
+        <span
+          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+        />
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`Enabled should match snapshot, invokes history push on button click 1`] = `
+<div>
+  <div
+    class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column css-30jy6e-MuiGrid-root"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-container MuiGrid-item css-1o62c1b-MuiGrid-root"
+    >
+      <div
+        class="MuiGrid-root css-186c2wj-MuiGrid-root"
+      >
+        <h4
+          class="MuiTypography-root MuiTypography-h4 MuiTypography-alignCenter css-118amwv-MuiTypography-root"
+        >
+          2-FA Has Been Updated Successfully.
+        </h4>
+      </div>
+      <div
+        class="MuiGrid-root css-186c2wj-MuiGrid-root"
+      />
+    </div>
+    <div
+      class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+    >
+      <p
+        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignCenter makeStyles-text-1 css-6bx0l6-MuiTypography-root"
+      >
+        Your account is now protected by Two-Factor Authentication (2-FA).
+      </p>
+    </div>
+    <div
+      class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+    >
+      <button
+        class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root  css-1i8ofwk-MuiButtonBase-root-MuiButton-root"
+        tabindex="0"
+        type="button"
+      >
+        Ok
+        <span
+          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+        />
+      </button>
+    </div>
+  </div>
+</div>
+`;

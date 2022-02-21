@@ -36,8 +36,8 @@ export const Update2fa = () => {
     setActiveStep(activeStep - 1)
   }
 
-  const handleSuccessfulFirstStep = (twoFaData: TwoFaData) => {
-    setTwoFaData(twoFaData)
+  const handleSuccessfulFirstStep = (newTwoFaData: TwoFaData) => {
+    setTwoFaData(newTwoFaData)
     nextStep()
   }
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from 'test-utils'
-import { Step2Scan } from 'app/pages/security/pages/setup2fa/components/Step2Scan/Step2Scan'
+import { Step2Scan } from 'app/pages/security/pages/update2fa/components/Step2Scan/Step2Scan'
 import { fakeTwoFaData } from '__fixtures__/security'
 
 describe('Step2Scan', () => {

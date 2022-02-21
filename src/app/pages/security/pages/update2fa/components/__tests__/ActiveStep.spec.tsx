@@ -50,8 +50,8 @@ describe('ActiveStep', () => {
     rerender(<ActiveStep {...{ ...props, index: 2 }} />)
     expect(getByTestId('step-3')).toBeInTheDocument()
 
-    // rerender(<ActiveStep {...{ ...props, index: 3 }} />)
-    // expect(getByTestId('step-4')).toBeInTheDocument()
+    rerender(<ActiveStep {...{ ...props, index: 3 }} />)
+    expect(getByTestId('step-4')).toBeInTheDocument()
 
     rerender(<ActiveStep {...{ ...props, index: 4 }} />)
     expect(getByTestId('step-5')).toBeInTheDocument()

@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from 'test-utils'
-import { Step3Backup } from 'app/pages/security/pages/setup2fa/components/Step3Backup/Step3Backup'
+import { Step3Backup } from 'app/pages/security/pages/update2fa/components/Step3Backup/Step3Backup'
 import { fakeTwoFaData } from '__fixtures__/security'
 
 describe('Step3Backup', () => {
