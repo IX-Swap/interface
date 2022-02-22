@@ -3,7 +3,7 @@ import { AppRoute } from 'components/AppRoute'
 import { Switch } from 'react-router-dom'
 import { IdentityRoute } from 'app/pages/identity/router/config'
 import { ViewInvestor } from 'app/pages/identity/pages/ViewInvestor/ViewInvestor'
-import { CreateInvestor } from 'app/pages/identity/pages/CreateInvestor/CreateInvestor'
+import { CreateCorporateIdentity } from 'app/pages/identity/pages/CreateInvestor/CreateInvestor'
 import { EditInvestor } from 'app/pages/identity/pages/EditInvestor/EditInvestor'
 import { CreateIssuer } from 'app/pages/identity/pages/CreateIssuer/CreateIssuer'
 import { EditIssuer } from 'app/pages/identity/pages/EditIssuer/EditIssuer'
@@ -25,7 +25,7 @@ export const CorporateRouter = () => {
         exact
         path={IdentityRoute.createCorporate}
       >
-        <CreateInvestor />
+        <CreateCorporateIdentity title='Create Corporate Investor Identity' />
       </AppRoute>
 
       <AppRoute
@@ -58,6 +58,39 @@ export const CorporateRouter = () => {
         path={IdentityRoute.editIssuer}
       >
         <EditIssuer />
+      </AppRoute>
+
+      <AppRoute
+        breadcrumb='Create Fund Manager'
+        exact
+        path={IdentityRoute.createFundManager}
+      >
+        <CreateCorporateIdentity
+          type='fundManager'
+          title='Create Fund Manager Identity'
+        />
+      </AppRoute>
+
+      <AppRoute
+        breadcrumb='Create Fund Admin'
+        exact
+        path={IdentityRoute.createFundAdmin}
+      >
+        <CreateCorporateIdentity
+          type='fundAdmin'
+          title='Create Fund Admin Identity'
+        />
+      </AppRoute>
+
+      <AppRoute
+        breadcrumb='Create Portfolio Manager'
+        exact
+        path={IdentityRoute.createPortfolioManager}
+      >
+        <CreateCorporateIdentity
+          type='portfolioManager'
+          title='Create Portfolio Manager Identity'
+        />
       </AppRoute>
     </Switch>
   )
