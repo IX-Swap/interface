@@ -526,37 +526,31 @@ interface VerifyOptions {
 }
 
 export async function verifySwap(options: VerifyOptions) {
-  const poolAddress = web3.utils.toChecksumAddress(options.pairAddress)
-
-  const WETH_IDAI_CONTRACT2 = new web3.eth.Contract(PAIR_ABI, poolAddress)
-  //const FACTORY_CONTRACT2 = new web3.eth.Contract(FACTORY_ABI, poolAddress)
-
-  const pool = new Pool(
-    options.tokenFrom,
-    options.tokenTo,
-    options.pair,
-
-    typeof options.kLast === 'string' ? BigNumber.from(options.kLast) : options.kLast,
-    true,
-
-    options.priceToleranceThreshold,
-    WETH_IDAI_CONTRACT2,
-    options.systemFeeRate,
-    options.isSecurity
-  )
-
-  const transaction = new Swap(
-    options.id,
-    options.amountInFrom,
-    options.amountInTo,
-    options.amountOutFrom,
-    options.amountOutTo,
-    options.sender,
-    options.receiver,
-    0.05
-  )
-
-  await pool.verifySwap(transaction, options.isSecurity)
+  // const poolAddress = web3.utils.toChecksumAddress(options.pairAddress)
+  // const WETH_IDAI_CONTRACT2 = new web3.eth.Contract(PAIR_ABI, poolAddress)
+  // //const FACTORY_CONTRACT2 = new web3.eth.Contract(FACTORY_ABI, poolAddress)
+  // const pool = new Pool(
+  //   options.tokenFrom,
+  //   options.tokenTo,
+  //   options.pair,
+  //   typeof options.kLast === 'string' ? BigNumber.from(options.kLast) : options.kLast,
+  //   true,
+  //   options.priceToleranceThreshold,
+  //   WETH_IDAI_CONTRACT2,
+  //   options.systemFeeRate,
+  //   options.isSecurity
+  // )
+  // const transaction = new Swap(
+  //   options.id,
+  //   options.amountInFrom,
+  //   options.amountInTo,
+  //   options.amountOutFrom,
+  //   options.amountOutTo,
+  //   options.sender,
+  //   options.receiver,
+  //   0.05
+  // )
+  // await pool.verifySwap(transaction, options.isSecurity)
 }
 
 // const pool: Pool = new Pool(
