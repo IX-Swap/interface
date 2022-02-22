@@ -38,9 +38,6 @@ export const IndividualInfoFields = (
   } = useIndividualDefaultInfo(rootName)
   const { isMobile } = useAppBreakpoints()
 
-  console.log('roooot', useIndividualDefaultInfo(rootName))
-  console.log('control', control)
-
   return (
     <Grid container>
       <Box>
