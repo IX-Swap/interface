@@ -1,10 +1,19 @@
 name: Release - build & deploy
 
+
+env:
+  CI: "true"
+  AWS_REGION: "ap-southeast-1"
+  AWS_APP_NAME: "ix-swap-web"
+  AWS_ACCESS_KEY_ID: "${{ secrets.AWS_ACCESS_KEY_ID }}"
+  AWS_SECRET_ACCESS_KEY: "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+  NPM_REG_ATUH_TOKEN: "${{ secrets.NPM_REG_ATUH_TOKEN }}"
+  GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+
 on:
   push:
     branches:
       - main
-      - ci-dev
 
 jobs:
   bump_version:
@@ -21,7 +30,7 @@ jobs:
         id: github_tag_action
         uses: mathieudutour/github-tag-action@331898d5052eedac9b15fec867b5ba66ebf9b692
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ env.GITHUB_TOKEN }}
           release_branches: .*
 
   create_release:
@@ -29,39 +38,27 @@ jobs:
     runs-on: ubuntu-latest
     needs: bump_version
     if: ${{ needs.bump_version.outputs.new_tag != null }}
+    env:
+      ENVIRONMENT: "production"
     steps:
-      - name: Diplay environments
-        run: env
 
-      #      - name: Config terraform
-      #        run: |
-      #          mkdir $HOME/terraform/  && \
-      #          curl  -v -k -L https://releases.hashicorp.com/terraform/0.12.26/terraform_0.12.26_linux_amd64.zip -o  $HOME/terraform/terraform_0.12.26_linux_amd64.zip  && \
-      #          unzip  $HOME/terraform/terraform_0.12.26_linux_amd64.zip -d  $HOME/terraform/  && \
-      #          cp -fv $HOME/terraform/terraform /usr/local/bin/  && \
-      #          terraform --version
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-southeast-1
+      - name: Config terraform
+        run: |
+          mkdir $HOME/terraform/  && \
+          curl  -v -k -L https://releases.hashicorp.com/terraform/0.12.26/terraform_0.12.26_linux_amd64.zip -o  $HOME/terraform/terraform_0.12.26_linux_amd64.zip  && \
+          unzip  $HOME/terraform/terraform_0.12.26_linux_amd64.zip -d  $HOME/terraform/  && \
+          cp -fv $HOME/terraform/terraform /usr/local/bin/  && \
+          terraform --version
 
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Add .env infrastructure variables # ${{ secrets.ENVPRODUCTION }} must be without spaces
-        run: |
-          echo''; echo " === echo secrets.ENVPRODUCTION === "
-          echo "${{ secrets.ENVPRODUCTION }}"
-          echo''; echo " === create .env === "
-          echo '' > .env
-          for (( n=0; n < ${#strarr[*]}; n++)); do echo "${strarr[n]}" >> .env; done
-          echo '' >> .env
-          source .env
-          echo''; echo " === cat .env === "
-          cat .env
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ env.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ env.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
 
       - name: Set up node
         uses: actions/setup-node@v2
@@ -72,6 +69,14 @@ jobs:
       - name: create .npmrc file
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
 
+      - name: Create .env using AWS SSM Paramter Store
+        run: |
+          export CI=${{ env.CI }} AWS_REGION=${{ env.AWS_REGION }}  AWS_APP_NAME=${{ env.AWS_APP_NAME }} ENVIRONMENT=${{ env.ENVIRONMENT }}
+          rm -fv .env*          && \
+          chmod +x bin/*.sh     && \
+          bin/tf-ssm-env-file.sh
+          cp -v .env .env.$ENVIRONMENT
+
       - name: Install dep's & build
         run: |
           export CI=false   && \
@@ -79,21 +84,9 @@ jobs:
           npm ls babel-loader
           yarn run build
 
-      #      - name: Init terraform
-      #        run: ./bin/tf-init.sh
-
       - name: Sync AWS S3 Bucket
-        #        run: ./bin/s3-web-sync.sh
         run: |
-          aws s3 sync build/ s3://${{ secrets.AWS_BUCKET_NAME }}/ --acl public-read --delete
-          aws s3api put-bucket-versioning --bucket ${{ secrets.AWS_BUCKET_NAME }} --versioning-configuration Status=Enabled
-          aws s3 website s3://${{ secrets.AWS_BUCKET_NAME }}/ --index-document index.html
-          aws cloudfront create-invalidation --distribution-id E325RKPWP0VQSX --paths "/*"
-
-#      - name: Sync AWS S3 Bucket
-#        uses: shallwefootball/s3-upload-action@master
-#        with:
-#          aws_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#          aws_bucket: "s3-${var.ENVIRONMENT}-${var.AWS_APP_NAME}"
-#          source_dir: 'build'
+          export CI=${{ env.CI }}
+          chmod +x bin/*.sh
+          bin/tf-init.sh
+          bin/s3-web-sync.sh

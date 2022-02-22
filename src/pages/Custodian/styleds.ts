@@ -23,6 +23,6 @@ export const MenuRow = styled(Row)`
 
 export const CustodianToggleWrapper = styled(ToggleWrapper)`
   ${({ theme }) => theme.mediaWidth.upToSmall`
-   flex-direction: row;
+   flex-direction: column;
   `};
 `

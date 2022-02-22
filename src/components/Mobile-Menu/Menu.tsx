@@ -89,6 +89,16 @@ export const Menu = ({ close }: Props) => {
           {chainId && TGE_CHAINS_WITH_SWAP.includes(chainId) && (
             <MenuListItem
               activeClassName="active-item"
+              id={`nft-collections-nav-link`}
+              to={routes.nftCollections}
+              onClick={close}
+            >
+              <Trans>My NFT Collections</Trans>
+            </MenuListItem>
+          )}
+          {chainId && TGE_CHAINS_WITH_SWAP.includes(chainId) && (
+            <MenuListItem
+              activeClassName="active-item"
               id={`create-nft-nav-link`}
               to={routes.nftCreate}
               onClick={close}
@@ -96,9 +106,14 @@ export const Menu = ({ close }: Props) => {
               <Trans>Create NFT</Trans>
             </MenuListItem>
           )}
-          {false && (
-            <MenuListItem activeClassName="active-item" id={`nft-list-nav-link`} to={routes.nftList} onClick={close}>
-              <Trans>My NFTs</Trans>
+          {chainId && TGE_CHAINS_WITH_SWAP.includes(chainId) && (
+            <MenuListItem
+              activeClassName="active-item"
+              id={`nft-create-collection-nav-link`}
+              to={routes.nftCollectionCreate}
+              onClick={close}
+            >
+              <Trans>Create NFT Collection</Trans>
             </MenuListItem>
           )}
           {chainId && TGE_CHAINS_WITH_STAKING.includes(chainId) && (

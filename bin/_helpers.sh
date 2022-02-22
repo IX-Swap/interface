@@ -57,3 +57,16 @@ function _yes_no_prompt() {
     esac
   done
 }
+
+function _create_ssm_env_vars() {
+  if [[ -f "$PROJECT_ROOT/.env.$ENVIRONMENT2" ]]; then
+    file="$PROJECT_ROOT/.env.$ENVIRONMENT"
+  else
+    file="$PROJECT_ROOT/.env"
+  fi
+  aws ssm get-parameters --name "/node-env/$ENVIRONMENT/$AWS_APP_NAME" \
+                        --with-decryption | jq -r ".Parameters[]" | jq -r ".Name" | grep "node-env/$ENVIRONMENT/$AWS_APP_NAME" ||
+  aws ssm put-parameter --name "/node-env/$ENVIRONMENT/$AWS_APP_NAME" \
+                        --type "SecureString" \
+                        --value "$(cat $file)"
+}

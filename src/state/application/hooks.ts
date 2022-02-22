@@ -81,6 +81,14 @@ export function useChooseBrokerDealerModalToggle(): () => void {
   return useToggleModal(ApplicationModal.CHOOSE_BROKER_DEALER)
 }
 
+export function useTokenPopupToggle(): () => void {
+  return useToggleModal(ApplicationModal.TOKEN_POPUP)
+}
+
+export function useDeleteTokenPopupToggle(): () => void {
+  return useToggleModal(ApplicationModal.TOKEN_DELETE_CLAIM)
+}
+
 // returns a function that allows adding a popup
 export function useAddPopup(): (content: PopupContent, key?: string) => void {
   const dispatch = useDispatch()
@@ -114,4 +122,19 @@ export function useGeneralModalState() {
   const applicationState = useSelector((state: AppState) => state.application)
   const { modalType, modalTitle, modalMessage } = applicationState
   return { modalType, modalTitle, modalMessage }
+}
+
+export function useShowError() {
+  const addPopup = useAddPopup()
+  return useCallback(
+    async (message: string) => {
+      addPopup({
+        info: {
+          success: false,
+          summary: message,
+        },
+      })
+    },
+    [addPopup]
+  )
 }

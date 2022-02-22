@@ -7,36 +7,43 @@ import { RowCenter, RowStart } from 'components/Row'
 import React, { useEffect } from 'react'
 import { useEventState, useGetEventCallback } from 'state/eventLog/hooks'
 import { useSecTokenId } from 'state/secTokens/hooks'
+import { useCurrencyBalance } from 'state/wallet/hooks'
 import { TYPE } from 'theme'
+import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { HistoryTable } from './HistoryTable'
 import { Pagination } from './Pagination'
 import { HistoryWrapper } from './styleds'
 import { TransactionDetails } from './TransactionDetails'
 interface Props {
   currency?: Currency
+  account?: string | null
 }
 
-export const HistoryBlock = ({ currency }: Props) => {
+export const HistoryBlock = ({ currency, account }: Props) => {
   const { eventLogLoading } = useEventState()
   const tokenId = useSecTokenId({ currencyId: (currency as any)?.address })
   const getEvents = useGetEventCallback()
+  const currencyBalance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
+  const balance = formatCurrencyAmount(currencyBalance, currency?.decimals ?? 18)
+
   useEffect(() => {
-    if (tokenId) {
+    if (tokenId && balance !== '-') {
       getEvents({ tokenId, filter: 'all' })
     }
-  }, [getEvents, tokenId])
+  }, [getEvents, tokenId, balance])
+
   return (
     <>
       <TransactionDetails currency={currency} />
       <HistoryWrapper>
         <Line />
-        <RowStart marginTop="36px" marginBottom="25px">
+        <RowStart marginTop="32px">
           <TYPE.title5>
             <Trans>History</Trans>
           </TYPE.title5>
         </RowStart>
 
-        {!eventLogLoading && (
+        {!eventLogLoading && balance !== '-' && (
           <Column>
             <HistoryTable currency={currency} />
             <Pagination />

@@ -1,3 +1,7 @@
+import React, { lazy, Suspense, useEffect, useMemo } from 'react'
+import { Route, Switch, useLocation } from 'react-router-dom'
+import styled from 'styled-components/macro'
+
 import { AppBackground } from 'components/AppBackground'
 import { IXSBalanceModal } from 'components/Header/IXSBalanceModal'
 import PlaygroundModal from 'components/PlaygroundModal'
@@ -9,12 +13,10 @@ import {
 } from 'constants/addresses'
 import ApeModeQueryParamReader from 'hooks/useApeModeQueryParamReader'
 import { useActiveWeb3React } from 'hooks/web3'
-import React, { lazy, Suspense, useMemo } from 'react'
-import { Route, Switch, useLocation } from 'react-router-dom'
 import { useAccount } from 'state/user/hooks'
-import styled from 'styled-components/macro'
 import { ConnectToAppropriateNetwork } from 'theme'
 import { routes } from 'utils/routes'
+
 import GoogleAnalyticsReporter from '../components/analytics/GoogleAnalyticsReporter'
 import ErrorBoundary from '../components/ErrorBoundary'
 import Header from '../components/Header'
@@ -29,14 +31,23 @@ import { VestingTab } from './Farming/VestingTab'
 import Faucet from './Faucet'
 import PoolFinder from './PoolFinder'
 import { RedirectPathToStaking, RedirectPathToSwapOnly, RedirectToSwap } from './Swap/redirects'
+import { Footer } from '../components/Footer'
+
 const AdminKyc = lazy(() => import('./AdminKyc'))
-const Custodian = lazy(() => import('./Custodian'))
+// const Custodian = lazy(() => import('./Custodian'))
+const CustodianV2 = lazy(() => import('./CustodianV2'))
 const CreateNFT = lazy(() => import('./CreateNFT'))
 const ListNFT = lazy(() => import('./ListNFT'))
 const RemoveLiquidity = lazy(() => import('./RemoveLiquidity'))
 const SecTokenDetails = lazy(() => import('./SecTokenDetails'))
 const Swap = lazy(() => import('./Swap'))
 const PoolV2 = lazy(() => import('./Pool/v2'))
+const NftImport = lazy(() => import('./NftImport'))
+const NFTCollections = lazy(() => import('./NFTCollections'))
+const NFTCollection = lazy(() => import('./NFTCollection'))
+const UpdateCollection = lazy(() => import('./UpdateCollection'))
+const CreateCollection = lazy(() => import('./CreateCollection'))
+const NftAssetPage = lazy(() => import('./NFTAsset'))
 
 const AppWrapper = styled.div`
   display: flex;
@@ -61,10 +72,11 @@ const BodyWrapper = styled.div`
 
 const ToggleableBody = styled(BodyWrapper)<{ isVisible?: boolean }>`
   visibility: ${({ isVisible }) => (isVisible ? 'visible' : 'hidden')};
-`
-
-const Marginer = styled.div`
-  margin-top: 5rem;
+  min-height: calc(100vh - 120px);
+  padding-bottom: 48px;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    min-height: calc(100vh - 64px);
+  `}
 `
 
 export default function App() {
@@ -72,6 +84,10 @@ export default function App() {
   const { pathname } = useLocation()
   useAccount()
   const { chainId, account } = useActiveWeb3React()
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [pathname])
 
   const isAdminKyc = pathname.includes('admin')
   const validChainId = useMemo(() => {
@@ -102,8 +118,15 @@ export default function App() {
             <Suspense fallback={<></>}>
               <Switch>
                 <Route exact strict path="/admin" component={AdminKyc} />
+
                 <Route exact strict path={routes.nftCreate} component={CreateNFT} />
                 <Route exact strict path={routes.nftList} component={ListNFT} />
+                <Route exact strict path={routes.nftCollections} component={NFTCollections} />
+                <Route exact strict path={routes.nftCollectionCreate} component={CreateCollection} />
+                <Route exact strict path={routes.nftEditCollectionPath} component={UpdateCollection} />
+                <Route exact strict path={routes.nftCollectionImport} component={NftImport} />
+                <Route exact strict path={routes.nftViewCollectionPath} component={NFTCollection} />
+                <Route exact strict path={routes.nftItemPath} component={NftAssetPage} />
 
                 {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
                   <Route exact strict path="/send" component={RedirectPathToSwapOnly} />
@@ -132,7 +155,7 @@ export default function App() {
                 )}
 
                 <Route exact strict path="/security-tokens/:currencyId" component={SecTokenDetails} />
-                <Route exact strict path={routes.securityTokens()} component={Custodian} />
+                <Route exact strict path={routes.securityTokens()} component={CustodianV2} />
 
                 {chainId && TGE_CHAINS_WITH_STAKING.includes(chainId) && (
                   <Route exact strict path={routes.staking} component={StakingTab} />
@@ -147,8 +170,8 @@ export default function App() {
               </Switch>
             </Suspense>
           </Web3ReactManager>
-          <Marginer />
         </ToggleableBody>
+        <Footer />
       </AppWrapper>
     </ErrorBoundary>
   )

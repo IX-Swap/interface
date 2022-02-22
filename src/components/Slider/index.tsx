@@ -94,6 +94,8 @@ interface InputSliderProps {
   min?: number
   max?: number
   size?: number
+  id?: string
+  disabled?: boolean
 }
 
 export default function Slider({
@@ -103,6 +105,7 @@ export default function Slider({
   step = 1,
   max = 100,
   size = 28,
+  disabled = false,
   ...rest
 }: InputSliderProps) {
   const changeCallback = useCallback(
@@ -118,6 +121,7 @@ export default function Slider({
       {...rest}
       type="range"
       value={value}
+      disabled={disabled}
       style={{ padding: '15px 0' }}
       onChange={changeCallback}
       aria-labelledby="input slider"

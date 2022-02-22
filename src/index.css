@@ -2,71 +2,71 @@
 @import '~@reach/dialog/styles.css';
 @import url('https://fonts.googleapis.com/css?family=Poppins:regular,bold,italic&subset=latin,latin-ext');
 * {
-    font-family: 'Poppins', sans-serif;
-    box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+  box-sizing: border-box;
 }
 
 @supports (font-variation-settings: normal) {
-    * {
-        font-family: 'Poppins', sans-serif;
-    }
+  * {
+    font-family: 'Poppins', sans-serif;
+  }
 }
 
 html,
 body {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 button {
-    user-select: none;
+  user-select: none;
 }
 
 html {
-    font-size: 16px;
-    font-variant: none;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-    font-feature-settings: 'ss01' on, 'ss02' on, 'cv01' on, 'cv03' on;
+  font-size: 16px;
+  font-variant: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  font-feature-settings: 'ss01' on, 'ss02' on, 'cv01' on, 'cv03' on;
 }
 
 html {
-    min-height: 100%;
+  min-height: 100%;
 }
 
 @media (prefers-color-scheme: dark) {
-    html {
-        background-color: #0D0415;
-    }
+  html {
+    background-color: #0d0415;
+  }
 }
 @media (prefers-color-scheme: light) {
-    html {
-        background-color: #F7F8FA;
-    }
+  html {
+    background-color: #f7f8fa;
+  }
 }
 
 body {
-    scrollbar-color: rgba(237, 206, 255, 0.1) transparent;
-  }
+  scrollbar-color: rgba(237, 206, 255, 0.1) transparent;
+}
 
 /* Adjust native scrollbars */
 ::-webkit-scrollbar {
-    background: transparent;
+  background: transparent;
+  width: 8px;
 }
 ::-webkit-scrollbar-thumb {
-    background: rgba(237, 206, 255, 0.1);
-    border-radius: 40px;
-    background-clip: padding-box;
-    width: 12px;
-    min-height: 40px;
+  border-radius: 40px;
+  background-clip: content-box;
+  border: 4px solid rgba(237, 206, 255, 0.1);
+  min-height: 40px;
 }
 ::-moz-scrollbar {
-    background: transparent; 
+  background: transparent;
 }
 
 ::-o-scrollbar {
-    background: transparent;
+  background: transparent;
 }
 
 @media only screen and (max-width: 400px) {

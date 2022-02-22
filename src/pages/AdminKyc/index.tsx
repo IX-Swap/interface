@@ -6,14 +6,25 @@ import { Trans } from '@lingui/macro'
 import { useAdminState, useGetMe } from 'state/admin/hooks'
 import { AdminKycTable } from 'components/AdminKycTable'
 import { AdminTransactionsTable } from 'components/AdminTransactionsTable'
+import { AdminSecurityCatalog } from 'components/AdminSecurityCatalog'
 import { Navbar } from './Navbar'
 import { Search } from './Search'
 import { AutoColumn, ColumnCenter } from 'components/Column'
 import { CustodianToggleWrapper } from 'pages/Custodian/styleds'
 import { Border, ToggleOption } from 'components/Tabs'
+interface Tab {
+  label: string
+  value: 'kyc' | 'transactions' | 'security-catalog'
+}
+
+const tabs: Tab[] = [
+  { label: 'KYC', value: 'kyc' },
+  { label: 'Broker-dealer Transactions', value: 'transactions' },
+  { label: 'Security catalog', value: 'security-catalog' },
+]
 
 const AdminKyc = () => {
-  const [showKYC, setShowKYC] = useState(true)
+  const [selectedTab, setSelectedTab] = useState<Tab['value']>('security-catalog')
   const history = useHistory()
   const { adminData, adminError, adminLoading } = useAdminState()
   const getMe = useGetMe()
@@ -42,6 +53,22 @@ const AdminKyc = () => {
     history.push('/')
   }, [getMe, adminData, history, fetchMe])
 
+  const renderTab = () => {
+    switch (selectedTab) {
+      case 'kyc':
+        return (
+          <>
+            <Search />
+            <AdminKycTable />
+          </>
+        )
+      case 'transactions':
+        return <AdminTransactionsTable />
+      case 'security-catalog':
+        return <AdminSecurityCatalog />
+    }
+  }
+
   return (
     <Container>
       <Navbar />
@@ -50,41 +77,36 @@ const AdminKyc = () => {
           <ColumnCenter style={{ marginBottom: '24px' }}>
             <AutoColumn style={{ paddingBottom: 0 }}>
               <CustodianToggleWrapper>
-                <ToggleOption onClick={() => setShowKYC(!showKYC)} active={showKYC}>
-                  <Trans>KYC</Trans>
-                  <Border active={showKYC} />
-                </ToggleOption>
-                <ToggleOption onClick={() => setShowKYC(!showKYC)} active={!showKYC}>
-                  <Trans>Broker-dealer Transactions</Trans>
-                  <Border active={!showKYC} />
-                </ToggleOption>
+                {tabs.map(({ value, label }, index) => (
+                  <>
+                    <ToggleOption
+                      key={`tabs-${index}`}
+                      onClick={() => setSelectedTab(value)}
+                      active={selectedTab === value}
+                    >
+                      <Trans>{label}</Trans>
+                      <Border active={selectedTab === value} />
+                    </ToggleOption>
+                  </>
+                ))}
               </CustodianToggleWrapper>
             </AutoColumn>
           </ColumnCenter>
 
-          {showKYC ? (
-            <>
-              <Search />
-              <AdminKycTable />
-            </>
-          ) : (
-            <>
-              <AdminTransactionsTable />
-            </>
-          )}
+          {renderTab()}
         </Body>
       )}
     </Container>
   )
 }
 
-const Container = styled.div`
+export const Container = styled.div`
   width: 100vw;
   display: flex;
   flex-direction: column;
 `
 
-const Body = styled.div`
+export const Body = styled.div`
   padding: 0 30px;
   max-width: 1610px;
   margin: 0 auto;

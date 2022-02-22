@@ -35,13 +35,37 @@ export const broker = {
   pairs: (tokenId: number) => `broker-dealer/${tokenId}/pairs`,
   storeTx: () => `/broker-dealer/swaps/add-hash`,
 }
+export const nft = {
+  create: `nft`,
+  createCollection: `/nft/collection`,
+  updateCollection: (id: number) => `/nft/collection/${id}`,
+  getCollection: (id: number, chainId: number | undefined) => `/nft/collection/${id}?chainId=${chainId}`,
 
+  getCollectionByAddress: (address: string, chainId: number | undefined) =>
+    `/nft/collection/address/${address}?chainId=${chainId}`,
+
+  getCollections: (address: string, chainId: number | undefined) =>
+    `/nft/collection/user/${address}?chainId=${chainId}`,
+}
 export const tokens = {
   fromUser: `/token/list`,
   authorize: (tokenId: number) => `/token/swap-authorize/${tokenId}`,
   swapConfirm: (brokerDealerId: number) => `/token/swap-confirm/${brokerDealerId}`,
   all: `/token/list/all`,
   accreditation: (tokenId: number) => `token/accreditation/${tokenId}`,
+}
+
+export const secCatalog = {
+  createIssuer: `/catalog/issuer`,
+  allIssuers: `/catalog/issuer/all`,
+  myTokens: `/catalog/token/list`,
+  allIssuerTokens: `/catalog/token/list/all`,
+  getAtlasAll: `/catalog/atlas/all`,
+  getAtlasInfo: (atlasOneId: string) => `/catalog/atlas/${atlasOneId}`,
+  issuer: (issuerId: number) => `/catalog/issuer/${issuerId}`,
+  createIssuerToken: (issuerId: number) => `/catalog/token/issuer/${issuerId}`,
+  issuerToken: (tokenId: number) => `/catalog/token/${tokenId}`,
+  checkWrappedAddress: (address: string) => `/token/address/${address}`,
 }
 export interface PaginateWithFilter {
   tokenId?: number | null

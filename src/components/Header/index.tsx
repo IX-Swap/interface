@@ -101,9 +101,8 @@ const HeaderRow = styled(RowFixed)`
 
 const AccountElement = styled.div<{ active: boolean }>`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
-  background: ${({ theme }) => theme.bgG2};
   border-radius: 12px;
   white-space: nowrap;
   width: fit-content;
@@ -114,7 +113,13 @@ const AccountElement = styled.div<{ active: boolean }>`
 `
 
 const BalanceText = styled(Text)`
+  background: ${({ theme }) => theme.bgG2};
   color: ${({ theme }) => theme.text2};
+  font-weight: 600;
+  font-size: 12px;
+  opacity: 0.5;
+  border-radius: 0 0 40px 40px;
+  padding: 0 18px;
   ${({ theme }) => theme.mediaWidth.upToExtraSmall`
     display: none;
   `};
@@ -198,14 +203,14 @@ export default function Header() {
             <HeaderElement>
               <NetworkCard />
               <AccountElement active={!!account} style={{ pointerEvents: 'auto' }}>
+                <Web3Status />
                 {account && userEthBalance ? (
-                  <BalanceText style={{ flexShrink: 0 }} pl="0.75rem" pr="0.5rem" fontWeight={600}>
+                  <BalanceText style={{ flexShrink: 0 }} fontWeight={600}>
                     <Trans>
                       {userEthBalance?.toSignificant(4)} {nativeCurrency}
                     </Trans>
                   </BalanceText>
                 ) : null}
-                <Web3Status />
               </AccountElement>
             </HeaderElement>
           </HeaderControls>

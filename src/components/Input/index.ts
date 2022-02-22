@@ -9,7 +9,8 @@ export const InputPanel = styled.div<{ hideInput?: boolean }>`
   width: ${({ hideInput }) => (hideInput ? '100%' : 'initial')};
 `
 
-export const ContainerRow = styled.div`
+export const ContainerRow = styled.div<{ error?: boolean }>`
+  outline: ${({ theme, error }) => (error ? `1px solid ${theme.error}` : 'none')};
   border-radius: 36px;
   background-color: ${({ theme }) => theme.bg7};
   width: 'initial';

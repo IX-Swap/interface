@@ -1,13 +1,12 @@
-import { useCallback } from 'react'
-
-import { useFaucetContract, useIXSFaucetContract, useStableFaucetContract } from 'hooks/useContract'
-import { ixSwapToken, testStableCoinsTokens } from 'constants/addresses'
-import { useAddPopup } from 'state/application/hooks'
-import { useTransactionAdder } from 'state/transactions/hooks'
 import { t } from '@lingui/macro'
-import { AppState } from 'state'
+import { ixSwapToken, testStableCoinsTokens } from 'constants/addresses'
+import { useFaucetContract, useIXSFaucetContract, useStableFaucetContract } from 'hooks/useContract'
+import { useCallback } from 'react'
 import { useSelector } from 'react-redux'
+import { AppState } from 'state'
+import { useAddPopup, useShowError } from 'state/application/hooks'
 import { useAppDispatch } from 'state/hooks'
+import { useTransactionAdder } from 'state/transactions/hooks'
 import { setFaucetLoading } from './actions'
 
 export const useDistributeToken = ({
@@ -25,17 +24,10 @@ export const useDistributeToken = ({
   const stableFaucetContract = useStableFaucetContract(usedAddress)
   const IXSFaucetContract = useIXSFaucetContract(usedAddress)
   const addPopup = useAddPopup()
+  const showError = useShowError()
   const addTransaction = useTransactionAdder()
   const dispatch = useAppDispatch()
   return useCallback(async () => {
-    const showError = (message: string) => {
-      addPopup({
-        info: {
-          success: false,
-          summary: message,
-        },
-      })
-    }
     try {
       const isStableCoin = testStableCoinsTokens.filter((token) => token.address === address).length > 0
       const isIXS = ixSwapToken[0].address === address
@@ -68,7 +60,7 @@ export const useDistributeToken = ({
       dispatch(setFaucetLoading({ loading: false }))
       showError(t`Could not use the faucet. Please try again later`)
     }
-  }, [faucetContract, stableFaucetContract, IXSFaucetContract, address, symbol, addTransaction, addPopup])
+  }, [faucetContract, stableFaucetContract, IXSFaucetContract, address, symbol, addTransaction, addPopup, showError])
 }
 
 export function useFaucetState(): AppState['faucet'] {

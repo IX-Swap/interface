@@ -27,6 +27,7 @@
     "@sentry/tracing": "^6.12.0",
     "@styled-system/css": "^5.1.5",
     "@typechain/ethers-v5": "^7.0.0",
+    "@types/country-list": "^2.1.0",
     "@types/jest": "^25.2.1",
     "@types/lingui__core": "^2.7.1",
     "@types/lingui__macro": "^2.7.4",
@@ -70,6 +71,7 @@
     "cids": "^1.0.0",
     "concurrently": "^6.2.0",
     "copy-to-clipboard": "^3.2.0",
+    "country-list": "^2.2.0",
     "cross-env": "^7.0.2",
     "dayjs": "^1.10.5",
     "eslint": "^7.11.0",
@@ -163,10 +165,14 @@
   },
   "license": "GPL-3.0-or-later",
   "dependencies": {
+    "@date-io/dayjs": "1.x",
+    "@material-ui/core": "^4.12.3",
+    "@material-ui/pickers": "^3.3.10",
     "async-wait-until": "^2.0.7",
     "concurrently": "^6.2.0",
     "eth-provider": "^0.7.0",
     "playwright": "^1.13.0",
+    "react-phone-input-2": "^2.15.0",
     "truffle-privatekey-provider": "^1.2.0",
     "web3": "^1.4.0"
   }

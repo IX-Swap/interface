@@ -14,6 +14,7 @@ const rotate = keyframes`
 
 const StyledRotate = styled.div`
   animation: 2s ${rotate} linear infinite;
+  width: fit-content;
 `
 
 /**

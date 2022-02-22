@@ -53,7 +53,7 @@ const FlyoutMenu = styled.div`
   padding: 16px;
   position: absolute;
   top: 70px;
-  width: 272px;
+  width: 200px;
   z-index: 99;
   & > *:not(:last-child) {
     margin-bottom: 12px;
