@@ -399,7 +399,7 @@ class Pool {
 
     //  find slice factor curve for each token
 
-    const testSliceFactor1 = BigNumber.from('101')
+    //const testSliceFactor1 = BigNumber.from('101')
 
     let sliceFactor0Curve: BigNumber = sliceFactor0.mul(this.sqrt(sliceFactor0))
     let sliceFactor1Curve: BigNumber = sliceFactor1.mul(this.sqrt(sliceFactor1))
@@ -418,10 +418,10 @@ class Pool {
       throw new Error(`Out value too far from Oracle`)
     }
 
-    if (!(out1AmountDiff.gt(BigNumber.from(100).sub(testSliceFactor1)) || transaction.amount0In.eq(0))) {
+    if (!(out1AmountDiff.gt(BigNumber.from(100).sub(sliceFactor1Curve)) || transaction.amount0In.eq(0))) {
       // throw new Error(`Mitigation1 ${transaction.id}: OUT_VALUE_TOO_FAR_FROM_ORACLE`)
-      //throw new Error(`Out value too far from Oracle`)
-      console.log('Out value too far from Oracle')
+      throw new Error(`Out value too far from Oracle`)
+      //console.log('Out value too far from Oracle')
     }
   }
 
