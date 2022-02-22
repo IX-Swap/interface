@@ -20,6 +20,8 @@ export const Dropdown = ({
   selectedItem,
   items,
   placeholder = '',
+  onBlur,
+  name,
   withScroll = false,
 }: {
   onSelect: (item: any) => void
@@ -27,6 +29,8 @@ export const Dropdown = ({
   items: any[]
   placeholder?: string
   withScroll?: boolean
+  onBlur?: (e: any) => void
+  name?: string
 }) => {
   const [isOpen, setIsOpen] = useState(false)
   const close = () => setIsOpen(false)
@@ -54,11 +58,14 @@ export const Dropdown = ({
 
   return (
     <DarkBlueCard
+      tabIndex={0}
       display="flex"
       alignItems="center"
       height="60px"
       onClick={() => setIsOpen(!isOpen)}
       style={{ cursor: 'pointer' }}
+      onBlur={onBlur}
+      name={name}
     >
       <RowBetween>
         <RowBetween>
