@@ -167,7 +167,15 @@ export const getThemeOverrides = (
       }
     }
   },
-  MuiIconButton: {},
+  MuiIconButton: {
+    styleOverrides: {
+      root: {
+        '&:hover': {
+          background: 'initial'
+        }
+      }
+    }
+  },
   MuiSvgIcon: {
     styleOverrides: {
       root: {
@@ -276,6 +284,17 @@ export const getThemeOverrides = (
             background: '#4C88FF'
           }
         }
+      }
+    }
+  },
+  MuiPopover: {
+    styleOverrides: {
+      paper: {
+        borderRadius: '0!important',
+        borderBottomLeftRadius: '8px!important',
+        borderBottomRightRadius: '8px!important',
+        border: '1px solid #EDF2FA',
+        boxShadow: '0px 80px 80px rgba(162, 172, 191, 0.16)!important'
       }
     }
   }
