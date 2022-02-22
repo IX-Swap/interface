@@ -1,4 +1,4 @@
-import React, { FC, FormEvent, useMemo, useState } from 'react'
+import React, { FC, useMemo, useState } from 'react'
 import { Trans } from '@lingui/macro'
 import { getNames } from 'country-list'
 import { Formik } from 'formik'
@@ -13,6 +13,7 @@ import { Select, TextInput, Uploader } from './common'
 import { PhoneInput } from 'components/PhoneInput'
 import { DateInput } from 'components/DateInput'
 import { Checkbox } from 'components/Checkbox'
+import { useCreateIndividualKYC } from 'state/kyc/hooks'
 
 import { empleymentStatuses, formInitialValues, genders, incomes, individualKycFormData, sourceOfFunds } from './mock'
 import { Grid, FormCard, FormGrid, ExtraInfoCard } from './styleds'
@@ -26,6 +27,7 @@ interface Props {
 
 export const IndividualKycForm: FC<Props> = ({ goBack }: Props) => {
   const [formData] = useState(individualKycFormData)
+  const createIndividualKYC = useCreateIndividualKYC()
 
   const { info, address, funds, investor, fatca, upload } = formData
 
@@ -40,7 +42,16 @@ export const IndividualKycForm: FC<Props> = ({ goBack }: Props) => {
       newSources.push(source)
     }
 
-    setFieldValue('funds', newSources)
+    setFieldValue('sourceOfFunds', newSources)
+  }
+
+  const handleDropImage = (acceptedFile: any, lastValue: any, key: string, setFieldValue: any) => {
+    const file = acceptedFile
+    if (lastValue?.filePath) {
+      URL.revokeObjectURL(lastValue.filePath)
+    }
+    const preview = URL.createObjectURL(file)
+    setFieldValue(key, file)
   }
 
   const countries = useMemo(() => {
@@ -64,8 +75,29 @@ export const IndividualKycForm: FC<Props> = ({ goBack }: Props) => {
         initialValues={formInitialValues}
         validationSchema={errorsSchema}
         validateOnBlur
-        onSubmit={(values) => {
-          console.log('submit', values)
+        onSubmit={async (values) => {
+          const {
+            dateOfBirth,
+            sourceOfFunds,
+            otherFunds,
+            citizenship,
+            nationality,
+            country,
+            employmentStatus,
+            gender,
+            income,
+          } = values
+          await createIndividualKYC({
+            ...values,
+            dateOfBirth: dateOfBirth.format(),
+            sourceOfFunds: [...sourceOfFunds, otherFunds].join(', '),
+            citizenship: citizenship.name,
+            nationality: nationality.name,
+            country: country.name,
+            employmentStatus: employmentStatus.name,
+            gender: gender.name,
+            income: income.name,
+          })
         }}
       >
         {({ values, handleChange, errors, handleBlur, handleSubmit, setFieldValue, isValid, touched }) => (
@@ -106,11 +138,11 @@ export const IndividualKycForm: FC<Props> = ({ goBack }: Props) => {
                     <FormGrid>
                       <DateInput
                         maxHeight={60}
-                        name="birthDate"
+                        name="dateOfBirth"
                         onBlur={handleBlur}
-                        error={touched.birthDate && errors.birthDate && errors.birthDate}
-                        value={values.birthDate}
-                        onChange={(value) => setFieldValue('birthDate', value)}
+                        error={touched.dateOfBirth && errors.dateOfBirth && errors.dateOfBirth}
+                        value={values.dateOfBirth}
+                        onChange={(value) => setFieldValue('dateOfBirth', value)}
                       />
                       <Select
                         name="gender"
@@ -221,14 +253,14 @@ export const IndividualKycForm: FC<Props> = ({ goBack }: Props) => {
                   <FormGrid columns={3}>
                     {sourceOfFunds.map(({ id, name }: any) => (
                       <Checkbox
-                        checked={values.funds.includes(name)}
-                        onClick={() => onSourceOfFundsChange(name, values.funds, setFieldValue)}
+                        checked={values.sourceOfFunds.includes(name)}
+                        onClick={() => onSourceOfFundsChange(name, values.sourceOfFunds, setFieldValue)}
                         key={`funds-${id}`}
                         label={name}
                       />
                     ))}
                   </FormGrid>
-                  {values.funds.includes('Others') && (
+                  {values.sourceOfFunds.includes('Others') && (
                     <TextInput
                       name="otherFunds"
                       style={{ marginTop: 20 }}
@@ -252,37 +284,40 @@ export const IndividualKycForm: FC<Props> = ({ goBack }: Props) => {
                       <Checkbox
                         scaleSize={1.4}
                         isRadio
-                        checked={values.isAccreditedInvestor}
-                        onClick={() => setFieldValue('isAccreditedInvestor', true)}
+                        checked={values.accredited === 1}
+                        onClick={() => setFieldValue('accredited', 1)}
                         label={`I declare that i am “individual accredited Investor"`}
                       />
                       <Checkbox
                         scaleSize={1.4}
                         isRadio
-                        checked={!values.isAccreditedInvestor}
-                        onClick={() => setFieldValue('isAccreditedInvestor', false)}
+                        checked={values.accredited !== 1}
+                        onClick={() => setFieldValue('accredited', 0)}
                         label="I am not an accredited investor"
                       />
                     </Column>
-                    {values.isAccreditedInvestor === false && (
-                      <Column style={{ gap: '24px' }}>
-                        <Checkbox
-                          isRadio
-                          checked={values.exceedsOneMillion}
-                          onClick={() => setFieldValue('exceedsOneMillion', true)}
-                          label={`I am a person whose individual net worth or joint net worth with my spouse at the time of purchase 
+
+                    <Column
+                      style={
+                        values.accredited === 1 ? { gap: '24px', pointerEvents: 'none', opacity: 0.4 } : { gap: '24px' }
+                      }
+                    >
+                      <Checkbox
+                        isRadio
+                        checked={values.accredited === 2}
+                        onClick={() => setFieldValue('accredited', 2)}
+                        label={`I am a person whose individual net worth or joint net worth with my spouse at the time of purchase 
                   exceeds US $1 million`}
-                        />
-                        <Checkbox
-                          isRadio
-                          checked={!values.exceedsOneMillion}
-                          onClick={() => setFieldValue('exceedsOneMillion', false)}
-                          label="I am person who had an individual income in excess of US$200,000 in each of the two most recent years 
+                      />
+                      <Checkbox
+                        isRadio
+                        checked={values.accredited === 3}
+                        onClick={() => setFieldValue('accredited', 3)}
+                        label="I am person who had an individual income in excess of US$200,000 in each of the two most recent years 
                   or joint income with my spouse in excess of US$300 000 in each of those years and has a reasonable expectation 
                   of reaching the same income level in the current year"
-                        />
-                      </Column>
-                    )}
+                      />
+                    </Column>
                   </Column>
                 </FormCard>
 
@@ -306,13 +341,13 @@ export const IndividualKycForm: FC<Props> = ({ goBack }: Props) => {
                       />
                       {values.isUSTaxPayer && (
                         <TextInput
-                          name="taxId"
+                          name="usTin"
                           style={{ width: 284 }}
                           placeholder="ID Number.."
-                          value={values.taxId}
+                          value={values.usTin}
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          error={touched.taxId && errors.taxId && errors.taxId}
+                          error={touched.usTin && errors.usTin && errors.usTin}
                         />
                       )}
                     </Column>
@@ -354,11 +389,11 @@ export const IndividualKycForm: FC<Props> = ({ goBack }: Props) => {
                     />
                     <Select
                       label="Income in USD in preceding 12 months"
-                      selectedItem={values.income12Month}
+                      selectedItem={values.income}
                       items={incomes}
-                      onSelect={(income) => setFieldValue('income12Month', income)}
-                      name="income12Month"
-                      error={errors.income12Month && errors.income12Month}
+                      onSelect={(income) => setFieldValue('income', income)}
+                      name="income"
+                      error={errors.income && errors.income}
                       onBlur={handleBlur}
                     />
                   </Column>
@@ -374,29 +409,29 @@ export const IndividualKycForm: FC<Props> = ({ goBack }: Props) => {
                     <Uploader
                       title="Proof of Identity"
                       subtitle="Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Proin eget tortor risus."
-                      file={values.proofIdentityFile}
+                      file={values.proofOfIdentity}
                       onDrop={(file) => {
-                        setFieldValue('proofIdentityFile', file)
+                        handleDropImage(file, values.proofOfIdentity, 'proofOfIdentity', setFieldValue)
                       }}
                     />
 
                     <Uploader
                       title="Proof of Address"
                       subtitle="Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Proin eget tortor risus."
-                      file={values.proofAddressFile}
+                      file={values.proofOfAddress}
                       onDrop={(file) => {
-                        setFieldValue('proofAddressFile', file)
+                        handleDropImage(file, values.proofOfAddress, 'proofOfAddress', setFieldValue)
                       }}
                     />
 
                     <Uploader
                       title="Evidence of accreditation"
                       subtitle="Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Proin eget tortor risus."
-                      file={values.proofAccreditationFile}
+                      file={values.evidenceOfAccreditation}
                       onDrop={(file) => {
-                        setFieldValue('proofAccreditationFile', file)
+                        handleDropImage(file, values.evidenceOfAccreditation, 'evidenceOfAccreditation', setFieldValue)
                       }}
-                      optional={!values.isAccreditedInvestor}
+                      optional={values.accredited === 0}
                     />
                   </Column>
                 </FormCard>

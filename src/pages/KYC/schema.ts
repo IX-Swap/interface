@@ -4,7 +4,7 @@ export const errorsSchema = yup.object().shape({
   firstName: yup.string().min(1, 'Too short').max(50, 'Too Long!').required('Required'),
   middleName: yup.string().max(50, 'Too Long!'),
   lastName: yup.string().min(1, 'Too short').max(50, 'Too Long!').required('Required'),
-  birthDate: yup.object().required('Required'),
+  dateOfBirth: yup.object().required('Required'),
   gender: yup.object().nullable().required('Required'),
   nationality: yup.object().nullable().required('Required'),
   citizenship: yup.object().nullable().required('Required'),
@@ -18,16 +18,15 @@ export const errorsSchema = yup.object().shape({
   line2: yup.string().required('Required'),
   country: yup.object().nullable().required('Required'),
   city: yup.string().required('Required'),
-  funds: yup.array().min(1, 'Choose one').required('Required'),
-  otherFunds: yup.string().when('funds', {
-    is: (funds: string[]) => funds.includes('Others'),
+  sourceOfFunds: yup.array().min(1, 'Choose one').required('Required'),
+  otherFunds: yup.string().when('sourceOfFunds', {
+    is: (sourceOfFunds: string[]) => sourceOfFunds.includes('Others'),
     then: yup.string().required('Required'),
     otherwise: yup.string(),
   }),
-  isAccreditedInvestor: yup.boolean(),
-  exceedsOneMillion: yup.boolean(),
+  accredited: yup.number(),
   isUSTaxPayer: yup.boolean(),
-  taxId: yup.string().when('isUSTaxPayer', {
+  usTin: yup.string().when('isUSTaxPayer', {
     is: true,
     then: yup.string().required('Required'),
     otherwise: yup.string(),
@@ -35,10 +34,10 @@ export const errorsSchema = yup.object().shape({
   occupation: yup.string().required('Required'),
   employmentStatus: yup.object().nullable().required('Required'),
   employer: yup.string().required('Required'),
-  income12Month: yup.object().nullable().required('Required'),
-  // proofIdentityFile: yup.object().nullable().required(),
-  // proofAddressFile: yup.object().nullable().required(),
-  // proofAccreditationFile: yup.object().nullable().when('isAccreditedInvestor', {
+  income: yup.object().nullable().required('Required'),
+  // proofOfIdentity: yup.object().nullable().required(),
+  // proofOfAddress: yup.object().nullable().required(),
+  // evidenceOfAccreditation: yup.object().nullable().when('accredited', {
   //   is: true,
   //   then: yup.object().nullable().required(),
   //   otherwise: yup.object().nullable(),
