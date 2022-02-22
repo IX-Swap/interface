@@ -1,4 +1,4 @@
-import React, { useCallback, FC, useState } from 'react'
+import React, { useCallback, FC, useState, useEffect } from 'react'
 import { Trans } from '@lingui/macro'
 import { isMobile } from 'react-device-detect'
 import { Flex } from 'rebass'
@@ -7,15 +7,17 @@ import { StyledBodyWrapper } from 'pages/CustodianV2/styleds'
 import { TYPE } from 'theme'
 import { KYCStatus } from './KYCStatus'
 import { ButtonGradientBorder, ButtonIXSGradient } from 'components/Button'
-
+import { useGetMyKyc, useKYCState } from 'state/kyc/hooks'
+import { LoaderThin } from 'components/Loader/LoaderThin'
+import { RowCenter } from 'components/Row'
 import { IndividualKycForm } from './IndividualKycForm'
 import { CorporateKycForm } from './CorporateKycForm'
+
 import { KYCStatuses } from './enum'
 import { Content, getStatusDescription, StatusCard } from './styleds'
 import { ReactComponent as IndividualKYC } from '../../assets/images/individual-kyc.svg'
 import { ReactComponent as CorporateKYC } from '../../assets/images/corporate-kyc.svg'
 import { ReactComponent as ApprovedKYC } from '../../assets/images/approved-kyc.svg'
-
 interface DescriptionProps {
   description: string | null
 }
@@ -47,9 +49,13 @@ const Description: FC<DescriptionProps> = ({ description }: DescriptionProps) =>
 )
 
 export default function KYC() {
-  const status = KYCStatuses.NOT_SUBMITTED as KYCStatuses
-  const description = getStatusDescription(status)
   const [selectedForm, handleSelectedForm] = useState('')
+  const { kyc, loadingRequest } = useKYCState()
+  const getMyKyc = useGetMyKyc()
+
+  useEffect(() => {
+    getMyKyc()
+  }, [getMyKyc])
 
   const setIndividualForm = () => {
     handleSelectedForm('individual')
@@ -61,6 +67,9 @@ export default function KYC() {
   const goBack = () => {
     handleSelectedForm('')
   }
+
+  const status = kyc?.data.status || KYCStatuses.NOT_SUBMITTED
+  const description = getStatusDescription(status)
 
   const getKYCDescription = useCallback(() => {
     switch (status) {
@@ -127,15 +136,21 @@ export default function KYC() {
     <StyledBodyWrapper>
       {!selectedForm ? (
         <StatusCard>
-          <Content flexDirection="column" marginTop="40px" alignItems="center">
-            <TYPE.title4 marginBottom="40px">
-              <Trans>IXSwap KYC</Trans>
-            </TYPE.title4>
+          {loadingRequest ? (
+            <RowCenter>
+              <LoaderThin size={96} />
+            </RowCenter>
+          ) : (
+            <Content flexDirection="column" marginTop="40px" alignItems="center">
+              <TYPE.title4 marginBottom="40px">
+                <Trans>IXSwap KYC</Trans>
+              </TYPE.title4>
 
-            <KYCStatus status={status} />
+              <KYCStatus status={kyc?.data.status || KYCStatuses.NOT_SUBMITTED} />
 
-            {getKYCDescription()}
-          </Content>
+              {getKYCDescription()}
+            </Content>
+          )}
         </StatusCard>
       ) : (
         <>
