@@ -28,6 +28,7 @@ export interface IndividualPersonalInfoFormValues {
   email?: string
   contactNumber: string
   address: Address
+  gender: string
 }
 
 export interface TaxResidency {
@@ -63,6 +64,7 @@ export interface PersonalProfile {
   countryOfResidence: string
   contactNumber: string
   email?: string
+  gender: string
 }
 
 export type IndividualPersonalInformation = Omit<
@@ -89,11 +91,12 @@ export interface Personnel {
 }
 
 export interface IndividualFinancialInfoFormValues {
-  sourceOfFund: FundSource[]
+  sourceOfFund: string
   occupation: string
   employer: string
   employmentStatus: string
   annualIncome: string
+  otherSourceOfFund?: string
 }
 
 export interface IndividualTaxDeclarationFormValues {

@@ -9,6 +9,7 @@ import {
   textValueExtractor
 } from 'helpers/forms'
 import { NationalitySelect } from 'components/form/NationalitySelect'
+import { GenderSelect } from 'components/form/GenderSelect'
 import { useIndividualDefaultInfo } from 'hooks/auth/useIndividualDefaultInfo'
 import { DataroomFileType } from 'config/dataroom'
 import { privateClassNames } from 'helpers/classnames'
@@ -36,6 +37,9 @@ export const IndividualInfoFields = (
     middleName: defaultMiddleName
   } = useIndividualDefaultInfo(rootName)
   const { isMobile } = useAppBreakpoints()
+
+  console.log('roooot', useIndividualDefaultInfo(rootName))
+  console.log('control', control)
 
   return (
     <Grid container>
@@ -150,7 +154,17 @@ export const IndividualInfoFields = (
               component={NationalitySelect}
               control={control}
               name='nationality'
-              label='Citizenship'
+              label='Nationality'
+              variant='outlined'
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} md={4}>
+            <TypedField
+              rootName={rootName}
+              component={GenderSelect}
+              control={control}
+              name='gender'
+              label='Gender'
               variant='outlined'
             />
           </Grid>

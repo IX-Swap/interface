@@ -1,39 +1,42 @@
-import React from 'react'
-import { Grid } from '@mui/material'
-import { FieldsArray } from 'components/form/FieldsArray'
+import React, { useEffect } from 'react'
+import { Grid, TextField } from '@mui/material'
 import { useFormContext } from 'react-hook-form'
-import { FundSourceItem } from 'app/pages/identity/components/FinancialInformationForm/FundSourceItem'
-import { FundSource } from 'app/pages/identity/types/forms'
+import { TypedField } from 'components/form/TypedField'
+import { FundSourceSelect } from 'components/form/FundSourceSelect'
 
 export const FundSourceFields = () => {
-  const { control, getValues } = useFormContext()
+  const { control, watch, clearErrors } = useFormContext()
+  const sourceOfFund = watch('sourceOfFund')
 
-  const fundSources: FundSource[] = getValues().sourceOfFund
-  const fundSourceSum =
-    fundSources !== null && fundSources !== undefined
-      ? fundSources.reduce((acc, curr) => acc + curr.value, 0)
-      : 0
+  useEffect(() => {
+    if (sourceOfFund !== 'OTHERS') {
+      control.setValue('otherSourceOfFund', '')
+      clearErrors('otherSourceOfFund')
+    }
+  }, [sourceOfFund]) // eslint-disable-line
 
   return (
-    <Grid container direction='column' spacing={3}>
-      <Grid item>
-        <Grid container direction='column' spacing={2}>
-          <FieldsArray name='sourceOfFund' control={control}>
-            {({ fields }) => (
-              <>
-                {fields.map((field, index) => (
-                  <Grid item xs={12} key={field.name}>
-                    <FundSourceItem
-                      field={field}
-                      index={index}
-                      fundSourceSum={fundSourceSum}
-                    />
-                  </Grid>
-                ))}
-              </>
-            )}
-          </FieldsArray>
-        </Grid>
+    <Grid container spacing={3}>
+      <Grid item xs={12} sm={6} md={4}>
+        <TypedField
+          component={FundSourceSelect}
+          control={control}
+          variant='outlined'
+          name='sourceOfFund'
+          label='Source of Fund'
+        />
+      </Grid>
+      <Grid item xs={12} sm={6} md={4}>
+        <TypedField
+          customRenderer
+          fullWidth
+          component={TextField}
+          control={control}
+          variant='outlined'
+          name='otherSourceOfFund'
+          label='Others (Please specify)'
+          disabled={sourceOfFund !== 'OTHERS'}
+        />
       </Grid>
     </Grid>
   )

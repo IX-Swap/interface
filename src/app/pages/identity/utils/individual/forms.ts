@@ -20,6 +20,7 @@ export const getPersonalInfoFormValues = (
     email: data?.email,
     contactNumber: data?.contactNumber,
     nationality: data?.nationality,
+    gender: data?.gender,
     address: {
       line1: data?.address?.line1,
       line2: data?.address?.line2,

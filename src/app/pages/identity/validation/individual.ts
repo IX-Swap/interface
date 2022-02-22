@@ -8,7 +8,6 @@ import {
   taxIdentificationNumberSchema
 } from 'validation/shared'
 import {
-  FundSource,
   IndividualAgreementsFormValues,
   IndividualDocumentsFormValues,
   IndividualFinancialInfoFormValues,
@@ -29,7 +28,8 @@ export const personalInfoSchema = yup
     dob: birthdaySchema.required('This field is required'),
     contactNumber: yup.string().phone().required('This field is required'),
     email: emailSchema.required('This field is required'),
-    address: addressSchema.required('Required')
+    address: addressSchema.required('Required'),
+    gender: yup.string().required('Required')
   })
 
 export const financialInfoSchema = yup
@@ -46,35 +46,12 @@ export const financialInfoSchema = yup
       .required('This field is required'),
     employmentStatus: yup.string().required('Required'),
     annualIncome: yup.string().required('Required'),
-    sourceOfFund: yup
-      .array<FundSource>()
-      .of(
-        yup
-          .object<FundSource>({
-            name: yup.string(),
-            checked: yup.boolean(),
-            value: yup
-              .number()
-              .when('checked', {
-                is: true,
-                then: yup.number().min(1).max(100).required('Required'),
-                otherwise: yup.number()
-              })
-              .required('Required')
-          })
-          .required()
-      )
-      .test('noFundSourceSelected', 'Error', function (value) {
-        return Boolean(value?.some(fundSource => fundSource.checked))
-      })
-      .test('incorrectSumOfFundSourcesValues', 'Error', fundSources => {
-        const sumOfFundSourcesValues =
-          fundSources !== undefined && fundSources !== null
-            ? fundSources.reduce((acc, cur) => acc + cur.value, 0)
-            : 0
-        return sumOfFundSourcesValues === 100
-      })
-      .required('Required')
+    sourceOfFund: yup.string().required('Required'),
+    otherSourceOfFund: yup.string().when('sourceOfFund', {
+      is: 'OTHERS',
+      then: yup.string().required('Required'),
+      otherwise: yup.string()
+    })
   })
 
 export const taxDeclarationSchema = yup

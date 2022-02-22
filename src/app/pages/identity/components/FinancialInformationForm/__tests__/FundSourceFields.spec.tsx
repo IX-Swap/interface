@@ -14,76 +14,33 @@ describe('FundSourceFields', () => {
   })
 
   it('renders fundSource labels correctly', () => {
-    const { getByLabelText } = render(
-      <Form defaultValues={defaultValue}>
+    const { container } = render(
+      <Form>
         <FundSourceFields />
       </Form>
     )
 
-    expect(getByLabelText('Inheritance/Gifts')).toBeInTheDocument()
-    expect(getByLabelText('Investments')).toBeInTheDocument()
-    expect(getByLabelText('Interest/Dividends')).toBeInTheDocument()
-    expect(getByLabelText('Property')).toBeInTheDocument()
-    expect(getByLabelText('Allowances/Spouse')).toBeInTheDocument()
-    expect(getByLabelText('Employment')).toBeInTheDocument()
-    expect(getByLabelText('Pension')).toBeInTheDocument()
-    expect(getByLabelText('Retirement Benefits')).toBeInTheDocument()
-    expect(getByLabelText('Others')).toBeInTheDocument()
+    const sourceOfFundInput = container.querySelector(
+      'input[name="sourceOfFund"]'
+    ) as HTMLInputElement
+    const otherSourceOfFundInput = container.querySelector(
+      'input[name="otherSourceOfFund"]'
+    ) as HTMLInputElement
+
+    expect(sourceOfFundInput).toBeInTheDocument()
+    expect(otherSourceOfFundInput).toBeInTheDocument()
   })
 
-  it('renders fundSource sliders correctly', () => {
+  it('renders Others field disabled if source of fund is not equal to Others', () => {
     const { container } = render(
-      <Form defaultValues={defaultValue}>
+      <Form defaultValues={{ sourceOfFund: 'Not Others' }}>
         <FundSourceFields />
       </Form>
     )
 
-    const inheritanceSlider = container.querySelector(
-      'input[name="sourceOfFund[0].value"]'
-    )
-    expect(inheritanceSlider).toBeInTheDocument()
-    expect(inheritanceSlider).toHaveValue('0')
-
-    const interestSlider = container.querySelector(
-      'input[name="sourceOfFund[1].value"]'
-    )
-    expect(interestSlider).toBeInTheDocument()
-    expect(interestSlider).toHaveValue('0')
-
-    const propertySlider = container.querySelector(
-      'input[name="sourceOfFund[2].value"]'
-    )
-    expect(propertySlider).toBeInTheDocument()
-    expect(propertySlider).toHaveValue('0')
-
-    const allowanceSlider = container.querySelector(
-      'input[name="sourceOfFund[3].value"]'
-    )
-    expect(allowanceSlider).toBeInTheDocument()
-    expect(allowanceSlider).toHaveValue('0')
-
-    const employmentSlider = container.querySelector(
-      'input[name="sourceOfFund[4].value"]'
-    )
-    expect(employmentSlider).toBeInTheDocument()
-    expect(employmentSlider).toHaveValue('0')
-
-    const pensionSlider = container.querySelector(
-      'input[name="sourceOfFund[5].value"]'
-    )
-    expect(pensionSlider).toBeInTheDocument()
-    expect(pensionSlider).toHaveValue('0')
-
-    const retirementSlider = container.querySelector(
-      'input[name="sourceOfFund[6].value"]'
-    )
-    expect(retirementSlider).toBeInTheDocument()
-    expect(retirementSlider).toHaveValue('0')
-
-    const othersSlider = container.querySelector(
-      'input[name="sourceOfFund[7].value"]'
-    )
-    expect(othersSlider).toBeInTheDocument()
-    expect(othersSlider).toHaveValue('0')
+    const otherSourceOfFundInput = container.querySelector(
+      'input[name="otherSourceOfFund"]'
+    ) as HTMLInputElement
+    expect(otherSourceOfFundInput).toBeDisabled()
   })
 })
