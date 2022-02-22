@@ -215,7 +215,8 @@ export interface IdentityFinancials {
   employmentStatus: string
   occupation: string
   sourceOfWealth: string
-  sourceOfFund?: FundSource[]
+  sourceOfFund?: string
+  otherSourceOfFund?: string
 }
 
 export interface CorporateFields {

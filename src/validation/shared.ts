@@ -85,7 +85,8 @@ export const personalProfileSchema = yup.object().shape<PersonalProfile>({
   dob: birthdaySchema.required(validationMessages.required),
   countryOfResidence: yup.string().required(validationMessages.required),
   contactNumber: yup.string().phone().required(validationMessages.required),
-  email: emailSchema.required(validationMessages.required)
+  email: emailSchema.required(validationMessages.required),
+  gender: yup.string().required(validationMessages.required)
 })
 
 export const personalProfileArraySchema = yup
