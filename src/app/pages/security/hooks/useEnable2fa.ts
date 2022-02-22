@@ -22,10 +22,7 @@ export const useEnable2fa = (
 
   return useMutation(enable2fa, {
     onSuccess: () => {
-      snackbarService.showSnackbar(
-        'Google Authenticator Setup Success!',
-        'success'
-      )
+      snackbarService.showSnackbar('Authenticator Setup Success!', 'success')
 
       const userData = storageService.get<User>('user')
       if (userData !== undefined) {
