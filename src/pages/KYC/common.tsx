@@ -16,6 +16,7 @@ import { ReactComponent as UploadLogo } from 'assets/images/upload.svg'
 import { ReactComponent as InfoLogo } from 'assets/images/info-filled.svg'
 import { ReactComponent as CrossIcon } from 'assets/images/cross.svg'
 import { UploaderCard, FormGrid } from './styleds'
+import { AcceptFiles } from 'components/Upload/types'
 
 export interface UploaderProps {
   file: FileWithPath | null
@@ -134,17 +135,21 @@ export const Uploader: FC<UploaderProps> = ({ title, subtitle, file, onDrop, opt
         )}
       </Flex>
       <StyledDescription marginBottom="10px">{subtitle}</StyledDescription>
-      <Upload file={file} onDrop={onDrop}>
+      <Upload accept={AcceptFiles.DOCUMENTS} file={file} onDrop={onDrop}>
         <UploaderCard>
-          <Flex flexDirection="column" justifyContent="center" alignItems="center" style={{ maxWidth: 100 }}>
-            <UploadLogo />
-            <TYPE.small textAlign="center" marginTop="8px" color={'text9'}>
-              Drag and Drop
-            </TYPE.small>
-            <TYPE.small display="flex" textAlign="center" color={'text9'}>
-              or <GradientText style={{ marginLeft: 2 }}>Upload</GradientText>
-            </TYPE.small>
-          </Flex>
+          {file ? (
+            <TYPE.body1>{file.name}</TYPE.body1>
+          ) : (
+            <Flex flexDirection="column" justifyContent="center" alignItems="center" style={{ maxWidth: 100 }}>
+              <UploadLogo />
+              <TYPE.small textAlign="center" marginTop="8px" color={'text9'}>
+                Drag and Drop
+              </TYPE.small>
+              <TYPE.small display="flex" textAlign="center" color={'text9'}>
+                or <GradientText style={{ marginLeft: 2 }}>Upload</GradientText>
+              </TYPE.small>
+            </Flex>
+          )}
         </UploaderCard>
       </Upload>
     </Box>
