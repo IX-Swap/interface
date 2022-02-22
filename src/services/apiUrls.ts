@@ -29,6 +29,7 @@ export const kyc = {
   getAccreditation: (tokenId: number) => `kyc/getAccreditation/${tokenId}`,
   restartAccreditation: (accreditationRequestId: number) => `kyc/my/restart/${accreditationRequestId}`,
   createIndividual: `/newkyc/individual`,
+  getMyKyc: `newkyc/me`,
 }
 
 export const broker = {
