@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler, CSSProperties, FC } from 'react'
+import React, { CSSProperties, FC, HTMLProps, ReactChildren } from 'react'
 import { Box, Flex } from 'rebass'
 import { Trans } from '@lingui/macro'
 import { Label } from '@rebass/forms'
@@ -33,18 +33,25 @@ interface SelectProps {
   withScroll?: boolean
   placeholder?: string
   style?: CSSProperties
+  error?: any | ReactChildren
+  onBlur?: (e: any) => void
+  name?: string
 }
 
-interface TextInputProps {
-  placeholder?: string
-  label?: string
-  value: string
-  onChange?: ChangeEventHandler<HTMLInputElement>
-  style?: CSSProperties
-  type?: string
+type TextInputProps = HTMLProps<HTMLInputElement> & {
+  error?: any | ReactChildren
 }
 
-export const Select: FC<SelectProps> = ({ label, onSelect, selectedItem, withScroll, items }: SelectProps) => {
+export const Select: FC<SelectProps> = ({
+  label,
+  onSelect,
+  selectedItem,
+  withScroll,
+  items,
+  onBlur,
+  error,
+  name,
+}: SelectProps) => {
   return (
     <Box>
       <Label marginBottom="11px">
@@ -54,6 +61,8 @@ export const Select: FC<SelectProps> = ({ label, onSelect, selectedItem, withScr
       </Label>
       <DropdownContainer>
         <Dropdown
+          name={name}
+          onBlur={onBlur}
           placeholder=" "
           withScroll={withScroll}
           onSelect={onSelect}
@@ -61,28 +70,51 @@ export const Select: FC<SelectProps> = ({ label, onSelect, selectedItem, withScr
           items={items}
         />
       </DropdownContainer>
+      {error && (
+        <TYPE.small marginTop="4px" color={'red1'}>
+          {error}
+        </TYPE.small>
+      )}
     </Box>
   )
 }
 
-export const TextInput: FC<TextInputProps> = ({ label, value, onChange, placeholder, style, type }: TextInputProps) => {
+export const TextInput: FC<TextInputProps> = ({
+  label,
+  value,
+  onChange,
+  placeholder,
+  style,
+  name,
+  type,
+  onBlur,
+  error = false,
+}: TextInputProps) => {
   return (
     <Box>
       {label && (
-        <Label marginBottom="11px" htmlFor="issuer-name">
+        <Label marginBottom="11px" htmlFor={name || ''}>
           <TYPE.title11 color="text2">
             <Trans>{label}</Trans>
           </TYPE.title11>
         </Label>
       )}
 
-      <StyledInput placeholder={placeholder} value={value} onChange={onChange} style={style} type={type} />
+      <StyledInput
+        onBlur={onBlur}
+        name={name}
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+        style={style}
+        type={type}
+      />
 
-      {/* {issuerErrors.name && (
-          <TYPE.small marginTop="4px" color={'red1'}>
-            {issuerErrors.name}
-          </TYPE.small>
-        )} */}
+      {error && (
+        <TYPE.small marginTop="4px" color={'red1'}>
+          {error}
+        </TYPE.small>
+      )}
     </Box>
   )
 }
