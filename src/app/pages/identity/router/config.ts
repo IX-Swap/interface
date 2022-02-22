@@ -50,5 +50,10 @@ export const IdentityRoute = {
   createDetailsOfIssuance: '/app/identity/issuance/create-details-of-issuance',
   createFundManager: '/app/identity/corporates/fund-manager',
   createFundAdmin: '/app/identity/corporates/fund-admin',
-  createPortfolioManager: '/app/identity/corporates/portfolio-manager'
+  createPortfolioManager: '/app/identity/corporates/portfolio-manager',
+  editFundManager:
+    '/app/identity/corporates/:userId/:identityId/edit-fund-manager',
+  editFundAdmin: '/app/identity/corporates/:userId/:identityId/edit-fund-admin',
+  editPortfolioManager:
+    '/app/identity/corporates/:userId/:identityId/edit-portfolio-manager'
 }

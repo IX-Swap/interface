@@ -92,6 +92,30 @@ export const CorporateRouter = () => {
           title='Create Portfolio Manager Identity'
         />
       </AppRoute>
+
+      <AppRoute
+        breadcrumb='Edit Fund Manager'
+        exact
+        path={IdentityRoute.editFundManager}
+      >
+        <EditInvestor type='fundManager' />
+      </AppRoute>
+
+      <AppRoute
+        breadcrumb='Edit Fund Admin'
+        exact
+        path={IdentityRoute.editFundAdmin}
+      >
+        <EditInvestor type='fundAdmin' />
+      </AppRoute>
+
+      <AppRoute
+        breadcrumb='Edit Portfolio Manager'
+        exact
+        path={IdentityRoute.editFundAdmin}
+      >
+        <EditInvestor type='portfolioManager' />
+      </AppRoute>
     </Switch>
   )
 }

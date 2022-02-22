@@ -8,6 +8,14 @@ import { generatePath, useHistory } from 'react-router-dom'
 import { IdentityRoute } from 'app/pages/identity/router/config'
 import { CorporateIdentity } from 'app/pages/identity/types/forms'
 
+const corporateTypeRouteMap: { [key: string]: string } = {
+  investor: IdentityRoute.editCorporate,
+  fundManager: IdentityRoute.editFundManager,
+  fundAdmin: IdentityRoute.editFundAdmin,
+  portfolioManager: IdentityRoute.editPortfolioManager,
+  issuer: IdentityRoute.editIssuer
+}
+
 export const useCreateCorporate = (corporateType: string) => {
   const { snackbarService, apiService } = useServices()
   const queryCache = useQueryCache()
@@ -29,15 +37,10 @@ export const useCreateCorporate = (corporateType: string) => {
       await queryCache.invalidateQueries(identityQueryKeys.getAllCorporate)
 
       replace(
-        generatePath(
-          corporateType === 'issuer'
-            ? IdentityRoute.editIssuer
-            : IdentityRoute.editCorporate,
-          {
-            identityId: data.data._id,
-            userId: data.data.user._id
-          }
-        )
+        generatePath(corporateTypeRouteMap[corporateType], {
+          identityId: data.data._id,
+          userId: data.data.user._id
+        })
       )
     },
     onError: (error: any) => {
