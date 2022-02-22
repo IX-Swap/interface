@@ -13,9 +13,11 @@ interface Props {
   topics: any[]
   reasons: string[]
   description: string
+  disabled?: boolean
+  handleSubmit?: (e: any) => void
 }
 
-export const KYCProgressBar: FC<Props> = ({ reasons, description, topics }: Props) => {
+export const KYCProgressBar: FC<Props> = ({ reasons, description, topics, disabled, handleSubmit }: Props) => {
   const handleScrollToDiv = (href: string) => {
     document.getElementById(href)?.scrollIntoView({
       behavior: 'smooth',
@@ -60,7 +62,13 @@ export const KYCProgressBar: FC<Props> = ({ reasons, description, topics }: Prop
         </Column>
       </FormCard>
 
-      <ButtonIXSGradient style={{ width: '100%' }} marginY="24px" disabled={true}>
+      <ButtonIXSGradient
+        onClick={handleSubmit}
+        disabled={disabled}
+        type="submit"
+        style={{ width: '100%' }}
+        marginY="24px"
+      >
         Submit form
       </ButtonIXSGradient>
       <ButtonGradientBorder style={{ width: '100%' }}>Submit Progress</ButtonGradientBorder>
