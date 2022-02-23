@@ -29,8 +29,7 @@ export const DSOPreview = (props: DSOPreviewProps) => {
   const [showStatusBar, setShowStatusBar] = useState(showSidebar)
 
   useEffect(() => {
-    selectedIdx !== 0 && setShowStatusBar(false)
-    selectedIdx === 0 && setShowStatusBar(true)
+    setShowStatusBar(selectedIdx === 0)
   }, [selectedIdx])
 
   useSetPageTitle(data.tokenName)
