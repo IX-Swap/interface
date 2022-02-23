@@ -67,7 +67,7 @@ export const Dropdown = ({
           </RowStart>
         </RowBetween>
         <Popover
-          style={withScroll ? { maxHeight: 300, overflow: 'scroll' } : {}}
+          style={withScroll ? { maxHeight: 300, overflowY: 'scroll', overflowX: 'hidden' } : {}}
           show={isOpen}
           content={popOverContent()}
           placement="bottom-end"

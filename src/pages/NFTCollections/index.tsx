@@ -3,7 +3,7 @@ import { LoaderThin } from 'components/Loader/LoaderThin'
 import { NFTConnectWallet } from 'components/NFTConnectWallet'
 import { RowBetween, RowCenter } from 'components/Row'
 import { useActiveWeb3React } from 'hooks/web3'
-import { Body, Container } from 'pages/AdminKyc'
+import { Body, Container } from 'pages/Admin'
 import React, { FC, useEffect, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 import { Flex } from 'rebass'
@@ -135,7 +135,16 @@ const NFTCollections: FC = () => {
                   </CollectionImageWrapper>
 
                   <Flex flexDirection="column" alignItems="center" padding="0px 32px 24px 32px">
-                    <TYPE.body5 marginBottom="8px" textAlign="center">
+                    <TYPE.body5
+                      style={{
+                        marginBottom: '8px',
+                        textAlign: 'center',
+                        height: '1.25em',
+                        lineHeight: '1.3',
+                        overflow: 'hidden',
+                        display: 'block',
+                      }}
+                    >
                       {name}
                     </TYPE.body5>
                     <Link

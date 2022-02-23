@@ -69,9 +69,10 @@ export const addToken = async (issuerId: number, token: any) => {
 }
 
 export const editIssuer = async (issuerId: number, issuer: Issuer) => {
-  const { name, url } = issuer
+  const { name, url, logo } = issuer
   const formData = new FormData()
-  // formData.append('logo', logo, logo.name)
+
+  if (logo) formData.append('logo', logo, logo.name)
   formData.append('name', name)
   formData.append('url', url)
 
@@ -86,6 +87,15 @@ export const editIssuer = async (issuerId: number, issuer: Issuer) => {
 export const getIssuers = async (params?: Record<string, string | number>) => {
   const result = await apiService.get(secCatalog.allIssuers, undefined, params)
   return result.data
+}
+
+export const getIssuer = async (issuerId: number) => {
+  try {
+    const result = await apiService.get(secCatalog.issuer(issuerId))
+    return result.data
+  } catch (e) {
+    console.log(e)
+  }
 }
 
 export const deleteToken = async (tokenId: number) => {
@@ -103,9 +113,9 @@ export const getToken = async (id: number) => {
   return result.data
 }
 
-export const getMyTokens = async () => {
+export const getMyTokens = async (params: any) => {
   try {
-    const result = await apiService.get(secCatalog.myTokens)
+    const result = await apiService.get(secCatalog.myTokens, undefined, params)
     return result.data
   } catch (e) {
     console.log(e)
@@ -115,6 +125,24 @@ export const getMyTokens = async () => {
 export const checkWrappedAddress = async (address: string) => {
   try {
     const result = await apiService.get(secCatalog.checkWrappedAddress(address))
+    return result.data
+  } catch (e) {
+    console.log(e)
+  }
+}
+
+export const getAtlasInfo = async (tokenId: string) => {
+  try {
+    const result = await apiService.get(secCatalog.getAtlasInfo(tokenId))
+    return result.data
+  } catch (e) {
+    console.log(e)
+  }
+}
+
+export const getAtlasAll = async () => {
+  try {
+    const result = await apiService.get(secCatalog.getAtlasAll)
     return result.data
   } catch (e) {
     console.log(e)
@@ -150,7 +178,7 @@ export function useEditIssuer() {
         dispatch(fetchEditIssuer.fulfilled({ data }))
         return BROKER_DEALERS_STATUS.SUCCESS
       } catch (error: any) {
-        dispatch(fetchEditIssuer.rejected({ errorMessage: 'Could not create issuer' }))
+        dispatch(fetchEditIssuer.rejected({ errorMessage: 'Could not edit issuer' }))
         return BROKER_DEALERS_STATUS.FAILED
       }
     },
@@ -182,7 +210,7 @@ export function useFetchTokens() {
     async (params?: Record<string, string | number>) => {
       try {
         dispatch(fetchIssuersTokens.pending())
-        const data = await getAllTokens(params)
+        const data = await getMyTokens({ ...params, my: false, active: true })
         dispatch(fetchIssuersTokens.fulfilled({ data }))
       } catch (error: any) {
         dispatch(fetchIssuersTokens.rejected({ errorMessage: 'Could not fetch tokens' }))
@@ -193,21 +221,13 @@ export function useFetchTokens() {
   return callback
 }
 
-export const validate = (token: any) => {
-  for (const key in token) {
-    if (validateSecTokenFields.includes(key)) if (!token[key]) return false
-  }
-
-  return true
-}
-
 const stringLengthValidator = (key: string, value: string, maxLength = 100) => {
   if (value.length > maxLength) return { [key]: `Max length is ${maxLength} chars` }
   return null
 }
 
-const emptyValidator = (key: string, value: any) => {
-  if (value === '' || value === null) return { [key]: 'This field is required' }
+const isEmpty = (value: any) => {
+  if (value === '' || value === null) return 'This field is required'
   return null
 }
 
@@ -229,39 +249,31 @@ export const validateIssuer = (issuer: any) => {
   const { url, name, file } = issuer
 
   return {
-    url: null,
-    name: null,
-    logo: null,
+    url: isEmpty(url),
+    name: isEmpty(name),
+    logo: isEmpty(file),
     ...urlValidator(url),
     ...stringLengthValidator('name', name),
     ...logoValidator(file),
-    ...emptyValidator('name', name),
-    ...emptyValidator('url', url),
-    ...emptyValidator('logo', file),
   }
 }
 
 export const validateToken = (token: any) => {
-  const { address, ticker, file, companyName, url, wrappedTokenAddress, description } = token
+  const { address, ticker, file, companyName, url, description, industry, country, chainId } = token
 
   return {
     address: !Boolean(isValidAddress(address || '')) ? 'Invalid address' : null,
-    ticker: null,
-    logo: null,
-    companyName: null,
-    description: null,
-    wrappedTokenAddress: !Boolean(isValidAddress(wrappedTokenAddress || '')) ? 'Invalid address' : null,
+    ticker: isEmpty(ticker),
+    logo: isEmpty(file),
+    companyName: isEmpty(companyName),
+    description: isEmpty(description),
+    industry: isEmpty(industry),
+    country: isEmpty(country),
+    chainId: isEmpty(chainId),
     ...urlValidator(url),
     ...stringLengthValidator('companyName', companyName, 100),
     ...stringLengthValidator('description', description, 1000),
     ...stringLengthValidator('ticker', ticker, 5),
     ...logoValidator(file),
-    ...emptyValidator('companyName', companyName),
-    ...emptyValidator('url', url),
-    ...emptyValidator('logo', file),
-    ...emptyValidator('address', address),
-    ...emptyValidator('ticker', ticker),
-    ...emptyValidator('description', description),
-    ...emptyValidator('wrappedTokenAddress', wrappedTokenAddress),
   }
 }

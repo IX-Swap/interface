@@ -1,9 +1,9 @@
 import React, { FC } from 'react'
-import { Box, Flex } from 'rebass'
+import { Flex } from 'rebass'
 import { NavLink } from 'react-router-dom'
+import { isMobileOnly } from 'react-device-detect'
 
 import Column from 'components/Column'
-import { RowBetween } from 'components/Row'
 import { TYPE } from 'theme'
 import { Status } from './Status'
 import { useCurrencyBalance } from 'state/wallet/hooks'
@@ -19,17 +19,22 @@ interface Props {
 export const MySecToken: FC<Props> = ({ token }: Props) => {
   const wrappedToken = token?.token
   const { account } = useActiveWeb3React()
-  const balance = useCurrencyBalance(account ?? undefined, token.token ?? undefined)
+  const balance = useCurrencyBalance(account ?? undefined, { isToken: true, ...wrappedToken } ?? undefined)
 
   return (
-    <NavLink style={{ textDecoration: 'none' }} to={`/security-tokens/${token.id}`}>
+    <NavLink style={{ textDecoration: 'none', overflow: 'hidden' }} to={`/security-tokens/${token.id}`}>
       <MySecTokenCard isPending={wrappedToken.status !== 'approved'}>
-        <RowBetween>
-          <Flex alignItems="center">
+        <Flex flexDirection={isMobileOnly ? 'column' : 'row'} justifyContent="space-between">
+          <Flex
+            width="-webkit-fill-available"
+            marginRight="8px"
+            marginBottom={isMobileOnly ? '16px' : '0px'}
+            alignItems="center"
+          >
             {token.logo ? (
               <img style={{ marginRight: 16, borderRadius: 24 }} width="46px" height="46px" src={token.logo.public} />
             ) : (
-              <CurrencyLogo currency={undefined} size={'46px'} style={{ marginRight: 16 }} />
+              <CurrencyLogo currency={undefined} size={'46px'} style={{ marginRight: 16, minWidth: 46 }} />
             )}
             <Column>
               <TYPE.title5>{token.ticker}</TYPE.title5>
@@ -38,14 +43,18 @@ export const MySecToken: FC<Props> = ({ token }: Props) => {
               </TYPE.small>
             </Column>
           </Flex>
-          <Box>
+          <Flex
+            alignItems="center"
+            justifyContent={isMobileOnly ? 'flex-start' : 'flex-end'}
+            width="-webkit-fill-available"
+          >
             <Status
-              status={wrappedToken.accreditationRequest.status}
+              status={wrappedToken.accreditationRequests[0]?.status}
               amount={balance}
               decimals={token.token.decimals ?? 18}
             />
-          </Box>
-        </RowBetween>
+          </Flex>
+        </Flex>
       </MySecTokenCard>
     </NavLink>
   )

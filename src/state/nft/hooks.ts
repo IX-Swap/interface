@@ -40,6 +40,7 @@ import {
   setDescription as setCollectionDescrition,
   setLogo,
   setName as setCollectionName,
+  setMaxSupply as setCollectionMaxSupply,
   setClearCollectionState,
 } from './collectionForm.actions'
 
@@ -58,6 +59,7 @@ import { CollectionCreateProps } from './types'
 import { groupKeyValues } from './utils'
 import { routes } from 'utils/routes'
 import { Description } from '@ethersproject/properties'
+import { Web3Provider } from '@ethersproject/providers'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const Web3 = require('web3') // for some reason import Web3 from web3 didn't see eth module
@@ -137,23 +139,33 @@ export const getCollections = async (address: string, chainId?: number) => {
   const collections = await apiService.get(nft.getCollections(address, chainId))
   return collections
 }
-export const getCollection = async (id?: number, chainId?: number) => {
+export const getCollection = async (id?: number, chainId?: number, library?: Web3Provider) => {
   if (id === undefined || isNaN(id)) {
     return null
   }
+
   const collection = await apiService.get(nft.getCollection(id, chainId))
+
+  if (collection.data) {
+    const web3 = new Web3(library?.provider)
+    const contract = new web3.eth.Contract(NFT_ABI, collection.data.address)
+
+    const supply = await contract.methods.maxSupply().call()
+    collection.data.maxSupply = supply
+  }
+
   return collection.data
 }
 
 export function useCollection(id?: number) {
   const dispatch = useDispatch()
-  const { chainId } = useActiveWeb3React()
+  const { chainId, library } = useActiveWeb3React()
   const [collection, setCollection] = useState<any | null>(null)
   useEffect(() => {
     async function fetchCollection() {
       try {
         dispatch(setCollectionsLoading({ loading: true }))
-        const result = await getCollection(id, chainId)
+        const result = await getCollection(id, chainId, library)
         setCollection(result)
         dispatch(setCollectionsLoading({ loading: false }))
       } catch (e) {
@@ -169,48 +181,16 @@ export function useNFTState(): AppState['nft'] {
   return useSelector<AppState, AppState['nft']>((state) => state.nft)
 }
 
-// export const useGetUserTokens = () => {
-//   // make api call to my-tokens
-//   const dispatch = useDispatch<AppDispatch>()
-//   const nft = useNftContract()
-
-//   return useCallback(async () => {
-//     const tokenIds = [2, 3]
-//     //
-//     console.log('gettting metadata')
-//     const promises = tokenIds.map(async (id: number) => {
-//       const uri = await nft?.tokenURI(Number(id))
-//       return uri
-//     })
-//     const uris = await Promise.all(promises)
-//     const metadataPromises = uris.map(async (uri: string) => {
-//       console.log({ uri })
-//       const json = await axios.get(uri)
-//       await wait(4000)
-//       return json.data
-//     })
-//     const jsons = await Promise.all(metadataPromises)
-//     dispatch(saveImages({ images: jsons, ids: tokenIds }))
-//     console.log({ jsons })
-//   }, [nft, dispatch])
-// }
-
-// export const useGetNftData = () => {
-//   const getUserTokens = useGetUserTokens()
-//   useEffect(() => {
-//     getUserTokens()
-//   }, [getUserTokens])
-// }
 export const useCreateFullCollection = (history: H.History) => {
   const deployCollection = useDeployCollection()
   const { chainId } = useActiveWeb3React()
 
   return useCallback(
     async (args: any) => {
-      const newContractAddress = await deployCollection({ name: args.name, maxSupply: 1000 })
+      const newContractAddress = await deployCollection({ name: args.name, maxSupply: args.maxSupply })
       if (newContractAddress) {
         await createFullNftCollection({ ...args, address: newContractAddress, chainId: chainId })
-        history.push(routes.nftCollections)
+        history.push(`/nft/collections/${newContractAddress}`)
       }
     },
     [deployCollection, history, chainId]
@@ -234,7 +214,7 @@ export const useUpdateFullCollection = (history: H.History) => {
         args.collectionId
       )
 
-      history.push(routes.nftCollections)
+      history.push(`/nft/collections/${args.collectionAddress}`)
     },
     [history, chainId]
   )
@@ -285,7 +265,7 @@ interface NftCollectionInfo {
 }
 
 export const useNftCollection = (address: string) => {
-  const { account, library } = useActiveWeb3React()
+  const { account, library, chainId } = useActiveWeb3React()
 
   const contract = useMemo(() => {
     const web3 = new Web3(library?.provider)
@@ -301,10 +281,12 @@ export const useNftCollection = (address: string) => {
 
   useEffect(() => {
     async function fetchCollectionInfo() {
-      const name = await contract.methods.name().call()
-      const supply = await contract.methods.totalSupply().call()
+      const collection = await apiService.get(nft.getCollectionByAddress(address, chainId))
 
-      // const [name, supply] = await Promise.all([contract.methods.name().call(), contract.methods.totalSupply().call()])
+      const name = collection.data.name
+      //const name = await contract.methods.name().call() //get collection name from blockchain
+
+      const supply = await contract.methods.totalSupply().call()
 
       setInfo({ name, supply: Number(supply) })
 
@@ -564,6 +546,7 @@ export function useCollectionActionHandlers(): {
   onSelectBanner: (file: FileWithPath | null) => void
   onSelectLogo: (file: FileWithPath | null) => void
   onSetDescription: (description: string) => void
+  onSetMaxSupply: (maxSupply: number) => void
   onClearCollectionState: () => void
 } {
   const dispatch = useDispatch<AppDispatch>()
@@ -601,6 +584,13 @@ export function useCollectionActionHandlers(): {
     [dispatch]
   )
 
+  const onSetMaxSupply = useCallback(
+    (maxSupply: number) => {
+      dispatch(setCollectionMaxSupply({ maxSupply }))
+    },
+    [dispatch]
+  )
+
   const onClearCollectionState = useCallback(() => {
     dispatch(setClearCollectionState())
   }, [dispatch])
@@ -611,6 +601,7 @@ export function useCollectionActionHandlers(): {
     onSelectLogo,
     onSetName,
     onSetDescription,
+    onSetMaxSupply,
     onClearCollectionState,
   }
 }
@@ -723,7 +714,14 @@ export const useCreateNftAssetForm = (history: H.History) => {
       }
       // end getting contract instance
       if (contractInstance) {
-        await mintNFT({ nft: contractInstance, account, assetURI })
+        const mintStatus = await mintNFT({ nft: contractInstance, account, assetURI })
+
+        if (!mintStatus) {
+          const message = `Failed transaction. Please, try again or check your collection max supply settings`
+          throw new Error(message)
+          return
+        }
+
         const supply = await contractInstance?.totalSupply()
         // supply shows how many. index starts at 0
         history.push(`/nft/collections/${contractAddress}/${supply - 1}`)

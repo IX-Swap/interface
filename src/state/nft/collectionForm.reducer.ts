@@ -5,6 +5,7 @@ import {
   setDescription,
   setLogo,
   setName,
+  setMaxSupply,
   setClearCollectionState,
 } from './collectionForm.actions'
 import { CollectionForm } from './types'
@@ -15,6 +16,7 @@ const initialState: CollectionForm = {
   banner: null,
   name: '',
   description: '',
+  maxSupply: 1000,
 }
 
 export default createReducer<CollectionForm>(initialState, (builder) =>
@@ -34,11 +36,15 @@ export default createReducer<CollectionForm>(initialState, (builder) =>
     .addCase(setName, (state, { payload: { name } }) => {
       state.name = name
     })
+    .addCase(setMaxSupply, (state, { payload: { maxSupply } }) => {
+      state.maxSupply = maxSupply
+    })
     .addCase(setClearCollectionState, (state) => {
       state.logo = null
       state.banner = null
       state.cover = null
       state.name = ''
       state.description = ''
+      state.maxSupply = 1000
     })
 )

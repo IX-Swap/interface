@@ -4,20 +4,23 @@ import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
 
 import { useAdminState, useGetMe } from 'state/admin/hooks'
-import { AdminKycTable } from 'components/AdminKycTable'
+import { AdminAccreditationTable } from 'components/AdminAccreditationTable'
 import { AdminTransactionsTable } from 'components/AdminTransactionsTable'
 import { AdminSecurityCatalog } from 'components/AdminSecurityCatalog'
-import { Navbar } from './Navbar'
-import { Search } from './Search'
 import { AutoColumn, ColumnCenter } from 'components/Column'
 import { CustodianToggleWrapper } from 'pages/Custodian/styleds'
 import { Border, ToggleOption } from 'components/Tabs'
+import { AdminKycTable } from 'components/AdminKyc'
+
+import { Navbar } from './Navbar'
+
 interface Tab {
   label: string
-  value: 'kyc' | 'transactions' | 'security-catalog'
+  value: 'accreditation' | 'kyc' | 'transactions' | 'security-catalog'
 }
 
 const tabs: Tab[] = [
+  { label: 'Accreditation', value: 'accreditation' },
   { label: 'KYC', value: 'kyc' },
   { label: 'Broker-dealer Transactions', value: 'transactions' },
   { label: 'Security catalog', value: 'security-catalog' },
@@ -26,7 +29,7 @@ const tabs: Tab[] = [
 const AdminKyc = () => {
   const [selectedTab, setSelectedTab] = useState<Tab['value']>('security-catalog')
   const history = useHistory()
-  const { adminData, adminError, adminLoading } = useAdminState()
+  const { adminData } = useAdminState()
   const getMe = useGetMe()
 
   const fetchMe = useCallback(async () => {
@@ -56,12 +59,9 @@ const AdminKyc = () => {
   const renderTab = () => {
     switch (selectedTab) {
       case 'kyc':
-        return (
-          <>
-            <Search />
-            <AdminKycTable />
-          </>
-        )
+        return <AdminKycTable />
+      case 'accreditation':
+        return <AdminAccreditationTable />
       case 'transactions':
         return <AdminTransactionsTable />
       case 'security-catalog':

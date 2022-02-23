@@ -27,7 +27,15 @@ const Update = () => {
 
     try {
       if (collection?.id) {
-        updateCollection({ cover, logo, banner, name, description, collectionId: collection.id })
+        updateCollection({
+          cover,
+          logo,
+          banner,
+          name,
+          description,
+          collectionId: collection.id,
+          collectionAddress: collection.address,
+        })
       }
     } catch (error: any) {
       console.log({ error })

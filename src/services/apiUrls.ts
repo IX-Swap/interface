@@ -3,12 +3,16 @@ import { ActionFilterTabs } from 'components/Vault/enum'
 export const admin = {
   login: 'auth/login',
   me: 'auth/me',
-  kycList: '/kyc/list',
   brokerDealerList: '/broker-dealer/list',
   getSwaps: 'broker-dealer/swaps/all',
-  kycReset: (accreditationId: number) => `/kyc/restart/${accreditationId}`,
-  approveKyc: (id: number) => `/kyc/approve/${id}`,
-  declineKyc: (id: number) => `/kyc/decline/${id}`,
+  accreditationList: '/kyc/list',
+  accreditationReset: (accreditationId: number) => `/kyc/restart/${accreditationId}`,
+  approveAccreditation: (id: number) => `/kyc/approve/${id}`,
+  declineAccreditation: (id: number) => `/kyc/decline/${id}`,
+  kycList: '/newkyc/list',
+  resetKyc: (kycId: number) => `/newkyc/change/${kycId}`,
+  approveKyc: (id: number) => `/newkyc/approve/${id}`,
+  rejectKyc: (id: number) => `/newkyc/reject/${id}`,
 }
 
 export const vesting = {
@@ -38,8 +42,12 @@ export const broker = {
 export const nft = {
   create: `nft`,
   createCollection: `/nft/collection`,
-  getCollection: (id: number, chainId: number | undefined) => `/nft/collection/${id}?chainId=${chainId}`,
   updateCollection: (id: number) => `/nft/collection/${id}`,
+  getCollection: (id: number, chainId: number | undefined) => `/nft/collection/${id}?chainId=${chainId}`,
+
+  getCollectionByAddress: (address: string, chainId: number | undefined) =>
+    `/nft/collection/address/${address}?chainId=${chainId}`,
+
   getCollections: (address: string, chainId: number | undefined) =>
     `/nft/collection/user/${address}?chainId=${chainId}`,
 }
@@ -56,6 +64,8 @@ export const secCatalog = {
   allIssuers: `/catalog/issuer/all`,
   myTokens: `/catalog/token/list`,
   allIssuerTokens: `/catalog/token/list/all`,
+  getAtlasAll: `/catalog/atlas/all`,
+  getAtlasInfo: (atlasOneId: string) => `/catalog/atlas/${atlasOneId}`,
   issuer: (issuerId: number) => `/catalog/issuer/${issuerId}`,
   createIssuerToken: (issuerId: number) => `/catalog/token/issuer/${issuerId}`,
   issuerToken: (tokenId: number) => `/catalog/token/${tokenId}`,

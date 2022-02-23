@@ -1,19 +1,22 @@
+import React, { FC, useEffect } from 'react'
 import { t, Trans } from '@lingui/macro'
+import dayjs from 'dayjs'
+import styled from 'styled-components'
+
 import { StyledCopy } from 'components/AdminTransactionsTable'
 import { LoaderThin } from 'components/Loader/LoaderThin'
-import dayjs from 'dayjs'
 import useCopyClipboard from 'hooks/useCopyClipboard'
-import React, { FC, useEffect } from 'react'
-import { useAdminState, useGetKycList } from 'state/admin/hooks'
-import styled from 'styled-components'
+import { useAdminState, useGetAccreditationList } from 'state/admin/hooks'
 import { shortenAddress } from 'utils'
+import { AccreditationItem } from 'state/admin/actions'
+
+import { SecondStepStatus } from './SecondStepStatus'
 import { BodyRow, HeaderRow, Table } from '../Table'
 import { FirstStepStatus } from './FirstStepStatus'
 import { MoreActions } from './MoreActions'
 import { IconWrapper } from 'components/AccountDetails/styleds'
 import { Pagination } from './Pagination'
-import { SecondStepStatus } from './SecondStepStatus'
-import { KycItem } from 'state/admin/actions'
+import { Search } from './Search'
 
 const headerCells = [
   t`Wallet address`,
@@ -25,7 +28,7 @@ const headerCells = [
 ]
 
 interface RowProps {
-  item: KycItem
+  item: AccreditationItem
 }
 
 const Header = () => {
@@ -85,7 +88,7 @@ const Row: FC<RowProps> = ({ item }: RowProps) => {
 
 const Body = () => {
   const {
-    kycList: { items },
+    accreditationList: { items },
   } = useAdminState()
   return (
     <>
@@ -96,23 +99,24 @@ const Body = () => {
   )
 }
 
-export const AdminKycTable = () => {
+export const AdminAccreditationTable = () => {
   const {
-    kycList: { totalPages, page, items },
+    accreditationList: { totalPages, page, items },
     adminLoading,
   } = useAdminState()
-  const getKycList = useGetKycList()
+  const getAccreditationList = useGetAccreditationList()
 
   const onPageChange = (page: number) => {
-    getKycList({ page, offset: 10 })
+    getAccreditationList({ page, offset: 10 })
   }
 
   useEffect(() => {
-    getKycList({ page: 1, offset: 10 })
-  }, [getKycList])
+    getAccreditationList({ page: 1, offset: 10 })
+  }, [getAccreditationList])
 
   return (
     <>
+      <Search />
       {adminLoading && (
         <Loader>
           <LoaderThin size={96} />
