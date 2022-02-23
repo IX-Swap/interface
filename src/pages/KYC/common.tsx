@@ -1,4 +1,4 @@
-import React, { ChangeEventHandler, CSSProperties, FC } from 'react'
+import React, { CSSProperties, FC, HTMLProps, ReactChildren } from 'react'
 import { Box, Flex } from 'rebass'
 import { Trans } from '@lingui/macro'
 import { Label } from '@rebass/forms'
@@ -16,6 +16,7 @@ import { ReactComponent as UploadLogo } from 'assets/images/upload.svg'
 import { ReactComponent as InfoLogo } from 'assets/images/info-filled.svg'
 import { ReactComponent as CrossIcon } from 'assets/images/cross.svg'
 import { UploaderCard, FormGrid } from './styleds'
+import { AcceptFiles } from 'components/Upload/types'
 
 export interface UploaderProps {
   file: FileWithPath | null
@@ -33,18 +34,25 @@ interface SelectProps {
   withScroll?: boolean
   placeholder?: string
   style?: CSSProperties
+  error?: any | ReactChildren
+  onBlur?: (e: any) => void
+  name?: string
 }
 
-interface TextInputProps {
-  placeholder?: string
-  label?: string
-  value: string
-  onChange?: ChangeEventHandler<HTMLInputElement>
-  style?: CSSProperties
-  type?: string
+type TextInputProps = HTMLProps<HTMLInputElement> & {
+  error?: any | ReactChildren
 }
 
-export const Select: FC<SelectProps> = ({ label, onSelect, selectedItem, withScroll, items }: SelectProps) => {
+export const Select: FC<SelectProps> = ({
+  label,
+  onSelect,
+  selectedItem,
+  withScroll,
+  items,
+  onBlur,
+  error,
+  name,
+}: SelectProps) => {
   return (
     <Box>
       <Label marginBottom="11px">
@@ -54,6 +62,8 @@ export const Select: FC<SelectProps> = ({ label, onSelect, selectedItem, withScr
       </Label>
       <DropdownContainer>
         <Dropdown
+          name={name}
+          onBlur={onBlur}
           placeholder=" "
           withScroll={withScroll}
           onSelect={onSelect}
@@ -61,28 +71,51 @@ export const Select: FC<SelectProps> = ({ label, onSelect, selectedItem, withScr
           items={items}
         />
       </DropdownContainer>
+      {error && (
+        <TYPE.small marginTop="4px" color={'red1'}>
+          {error}
+        </TYPE.small>
+      )}
     </Box>
   )
 }
 
-export const TextInput: FC<TextInputProps> = ({ label, value, onChange, placeholder, style, type }: TextInputProps) => {
+export const TextInput: FC<TextInputProps> = ({
+  label,
+  value,
+  onChange,
+  placeholder,
+  style,
+  name,
+  type,
+  onBlur,
+  error = false,
+}: TextInputProps) => {
   return (
     <Box>
       {label && (
-        <Label marginBottom="11px" htmlFor="issuer-name">
+        <Label marginBottom="11px" htmlFor={name || ''}>
           <TYPE.title11 color="text2">
             <Trans>{label}</Trans>
           </TYPE.title11>
         </Label>
       )}
 
-      <StyledInput placeholder={placeholder} value={value} onChange={onChange} style={style} type={type} />
+      <StyledInput
+        onBlur={onBlur}
+        name={name}
+        placeholder={placeholder}
+        value={value}
+        onChange={onChange}
+        style={style}
+        type={type}
+      />
 
-      {/* {issuerErrors.name && (
-          <TYPE.small marginTop="4px" color={'red1'}>
-            {issuerErrors.name}
-          </TYPE.small>
-        )} */}
+      {error && (
+        <TYPE.small marginTop="4px" color={'red1'}>
+          {error}
+        </TYPE.small>
+      )}
     </Box>
   )
 }
@@ -102,17 +135,21 @@ export const Uploader: FC<UploaderProps> = ({ title, subtitle, file, onDrop, opt
         )}
       </Flex>
       <StyledDescription marginBottom="10px">{subtitle}</StyledDescription>
-      <Upload file={file} onDrop={onDrop}>
+      <Upload accept={AcceptFiles.DOCUMENTS} file={file} onDrop={onDrop}>
         <UploaderCard>
-          <Flex flexDirection="column" justifyContent="center" alignItems="center" style={{ maxWidth: 100 }}>
-            <UploadLogo />
-            <TYPE.small textAlign="center" marginTop="8px" color={'text9'}>
-              Drag and Drop
-            </TYPE.small>
-            <TYPE.small display="flex" textAlign="center" color={'text9'}>
-              or <GradientText style={{ marginLeft: 2 }}>Upload</GradientText>
-            </TYPE.small>
-          </Flex>
+          {file ? (
+            <TYPE.body1>{file.name}</TYPE.body1>
+          ) : (
+            <Flex flexDirection="column" justifyContent="center" alignItems="center" style={{ maxWidth: 100 }}>
+              <UploadLogo />
+              <TYPE.small textAlign="center" marginTop="8px" color={'text9'}>
+                Drag and Drop
+              </TYPE.small>
+              <TYPE.small display="flex" textAlign="center" color={'text9'}>
+                or <GradientText style={{ marginLeft: 2 }}>Upload</GradientText>
+              </TYPE.small>
+            </Flex>
+          )}
         </UploaderCard>
       </Upload>
     </Box>

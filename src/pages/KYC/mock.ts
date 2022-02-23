@@ -14,60 +14,36 @@ interface IFormData {
   }
 }
 
-export const initialIndividualKycFormData: IFormData = {
+export const individualKycFormData: IFormData = {
   info: {
     title: 'Personal Information',
     href: 'personal',
     passed: true,
-    fields: {
-      firstName: '',
-      middleName: '',
-      lastName: '',
-      gender: '',
-      birthDate: '',
-      nationality: null,
-      citizenship: null,
-      phoneNumber: '',
-      email: '',
-    },
   },
   address: {
     title: 'Address',
     href: 'address',
     passed: false,
-    fields: {
-      line1: '',
-      line2: '',
-      country: '',
-      city: '',
-    },
   },
   funds: {
     title: 'Source of Funds',
     href: 'funds',
     passed: false,
-    fields: [],
-    otherFunds: '',
   },
   investor: {
     title: 'Investor Status Declaration',
     href: 'investor',
     passed: false,
-    value: true,
-    exceedsOneMillion: true,
   },
   fatca: {
     title: 'FATCA',
     href: 'fatca',
     passed: false,
-    value: true,
-    taxId: '',
   },
   upload: {
     title: 'Upload Documents',
     href: 'upload',
     passed: false,
-    fields: {},
   },
 }
 
@@ -161,6 +137,11 @@ export const initialCorporateKycFormData: IFormData = {
   },
 }
 
+export const incomes = ['< 50,000', '50,000-100,000', '100,000-300,000', '> 300,000'].map((name, index) => ({
+  id: ++index,
+  name,
+}))
+
 export const genders = [
   { id: 1, name: 'Male' },
   { id: 2, name: 'Female' },
@@ -253,3 +234,35 @@ export const corporateRepresentOptions = [
   'I am a person, other than an individual with total assets in excess of US $5 million  not formed for the specific purpose of acquiring the securities offered',
   'I represent an entity in which all of the equity owners are accredited investors',
 ]
+
+interface IFormInitial {
+  [key: string]: any
+}
+
+export const formInitialValues: IFormInitial = {
+  firstName: '',
+  middleName: '',
+  lastName: '',
+  dateOfBirth: '',
+  gender: null,
+  nationality: null,
+  citizenship: null,
+  email: '',
+  phoneNumber: '',
+  line1: '',
+  line2: '',
+  country: null,
+  city: '',
+  sourceOfFunds: [],
+  otherFunds: '',
+  accredited: 1,
+  isUSTaxPayer: true,
+  usTin: '',
+  occupation: '',
+  employmentStatus: null,
+  employer: '',
+  income: null,
+  proofOfIdentity: null,
+  proofOfAddress: null,
+  evidenceOfAccreditation: null,
+}
