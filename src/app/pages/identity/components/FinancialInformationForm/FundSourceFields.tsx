@@ -9,7 +9,7 @@ export const FundSourceFields = () => {
   const sourceOfFund = watch('sourceOfFund')
 
   useEffect(() => {
-    if (sourceOfFund !== 'OTHERS') {
+    if (sourceOfFund !== '' && sourceOfFund !== 'OTHERS') {
       control.setValue('otherSourceOfFund', '')
       clearErrors('otherSourceOfFund')
     }
@@ -23,7 +23,7 @@ export const FundSourceFields = () => {
           control={control}
           variant='outlined'
           name='sourceOfFund'
-          label='Source of Fund'
+          label='Source of funds'
         />
       </Grid>
       <Grid item xs={12} sm={6} md={4}>

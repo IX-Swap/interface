@@ -7,7 +7,7 @@ export const FundSourceSelect = (props: any): JSX.Element => {
   return (
     <Select {...props}>
       <MenuItem disabled value={undefined}>
-        Source of fund
+        Source of funds
       </MenuItem>
       {renderMenuItems(FUNDSOURCES_OPTS)}
     </Select>
