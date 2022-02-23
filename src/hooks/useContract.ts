@@ -29,13 +29,14 @@ import {
   IXS_VESTING_ADDRESS,
   LIQUIDITY_ROUTER_ADDRESS,
   MULTICALL2_ADDRESSES,
-  NFT_ADDRESS,
   SWAP_ROUTER_ADDRESS,
 } from 'constants/addresses'
 import { useMemo } from 'react'
 import { getContract } from 'utils'
 import { ArgentWalletDetector, EnsPublicResolver, EnsRegistrar, Erc20, Multicall2, Weth } from '../abis/types'
 import { useActiveWeb3React } from './web3'
+import NFT_CREATE_ABI from 'abis/nft-contract-create.json'
+import { Web3Provider } from '@ethersproject/providers'
 
 // returns null on errors
 export function useContract<T extends Contract = Contract>(
@@ -45,32 +46,63 @@ export function useContract<T extends Contract = Contract>(
 ): T | null {
   const { library, account, chainId } = useActiveWeb3React()
 
-  return useMemo(() => {
-    if (!addressOrAddressMap || !ABI || !library || !chainId) return null
-    let address: string | undefined
-    if (typeof addressOrAddressMap === 'string') {
-      address = addressOrAddressMap
-    } else {
-      address = addressOrAddressMap[chainId]
-    }
-    if (!address) return null
-    try {
-      return getContract(address, ABI, library, withSignerIfPossible && account ? account : undefined)
-    } catch (error) {
-      console.error('Failed to get contract', error)
-      return null
-    }
-  }, [addressOrAddressMap, ABI, library, chainId, withSignerIfPossible, account]) as T
+  return useMemo(
+    () => getContractInstance({ addressOrAddressMap, ABI, withSignerIfPossible, library, chainId, account }),
+    [addressOrAddressMap, ABI, library, chainId, withSignerIfPossible, account]
+  ) as T
+}
+
+interface ContractInstanceProps {
+  addressOrAddressMap: string | { [chainId: number]: string } | undefined
+  ABI: any
+  withSignerIfPossible?: boolean
+  library?: Web3Provider
+  chainId?: number
+  account?: string | null
+}
+
+export function getContractInstance({
+  addressOrAddressMap,
+  ABI,
+  withSignerIfPossible = true,
+  library,
+  chainId,
+  account,
+}: ContractInstanceProps) {
+  if (!addressOrAddressMap || !ABI || !library || !chainId) return null
+  let address: string | undefined
+  if (typeof addressOrAddressMap === 'string') {
+    address = addressOrAddressMap
+  } else {
+    address = addressOrAddressMap[chainId]
+  }
+  if (!address) return null
+  try {
+    return getContract(address, ABI, library, withSignerIfPossible && account ? account : undefined)
+  } catch (error) {
+    console.error('Failed to get contract', error)
+    return null
+  }
 }
 
 export function useTokenContract(tokenAddress?: string, withSignerIfPossible?: boolean) {
   return useContract<Erc20>(tokenAddress, ERC20_ABI, withSignerIfPossible)
 }
 
-export function useNftContract() {
-  return useContract(NFT_ADDRESS, NFT_ABI)
+export function useNftContract(contractAddress?: string) {
+  // sample deployed contract '0xadc2e42d74f57028d7be2da41ba9643bdb70d99b'
+  return useContract(contractAddress, NFT_CREATE_ABI)
 }
 
+// for using the contract immediately after creating it
+export function getNftContract({
+  addressOrAddressMap,
+  library,
+  chainId,
+  account,
+}: Omit<ContractInstanceProps, 'ABI' | 'withSignerIfPossible'>) {
+  return getContractInstance({ addressOrAddressMap, library, chainId, account, ABI: NFT_ABI })
+}
 export function useVestingContract() {
   return useContract(IXS_VESTING_ADDRESS, IIxsVestedDistribution, true)
 }

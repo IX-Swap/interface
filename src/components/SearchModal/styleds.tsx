@@ -122,6 +122,10 @@ export const SearchInput = styled.input`
   :focus {
     outline: none;
   }
+
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    padding: 0px 22px;
+  `};
 `
 export const Separator = styled.div`
   width: 100%;

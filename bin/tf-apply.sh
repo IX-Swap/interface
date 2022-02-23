@@ -25,11 +25,15 @@ done
 _info "Accessing terraform working directory"
 cd "$PROJECT_ROOT/terraform" || _fail
 
-_info "Provision infrastructure"
+_info "Create SSM Parameter Store node-env/$ENVIRONMENT/$AWS_APP_NAME to keep env vars. Update variables manually!!!"
+_create_ssm_env_vars  || _fail
 
-if [ "$AWS_APPLY_CONFIRM" == "true" ]; then
-  terraform apply || _fail
+_info "Provision infrastructure"
+if [[ $1 == "plan" ]]; then
+  _info "terraform $1"
+  terraform $1 || _fail
 else
-  terraform apply -auto-approve || _fail
+  _info "terraform apply"
+#   terraform apply -auto-approve || _fail
 fi
 

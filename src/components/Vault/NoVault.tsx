@@ -24,6 +24,7 @@ interface Props {
   status?: AccreditationStatusEnum
   accreditationRequest: AccreditationRequest | null
   platform: SecTokenPlatform | null
+  token: any
 }
 
 function getStatusMessage(
@@ -34,8 +35,8 @@ function getStatusMessage(
   const status = accreditationRequest?.status
   switch (status) {
     case AccreditationStatusEnum.PENDING:
-    case AccreditationStatusEnum.PENDING_KYC:
-      return t`Checking your KYC on ${platform?.name || 'primary issuer'}`
+    // case AccreditationStatusEnum.PENDING_KYC:
+    //   return t`Checking your KYC on ${platform?.name || 'primary issuer'}`
     case AccreditationStatusEnum.PENDING_CUSTODIAN:
       return t`KYC approved on ${platform?.name || 'primary issuer'}. Waiting for KYC approval on Custodian...`
     case AccreditationStatusEnum.FAILED:
@@ -45,37 +46,47 @@ function getStatusMessage(
           platform?.website || 'primary issuer website'
         )}. Retry passing accreditation once your KYC is approved by ${platform?.name || 'primary issuer'}. [retry]`
       )
-    case AccreditationStatusEnum.REJECTED:
+    case AccreditationStatusEnum.REJECTED: {
       return accreditationRequest?.message || t`Accreditation rejected`
+    }
     case undefined:
     default:
-      return t`You need to pass accreditation and KYC to start trading with the ${symbolText} token.`
+      return (
+        <>
+          <div>
+            {t`Create your own safe custodian vault for ${symbolText} tokens to deposit and get wrapped tokens to start trading.`}
+          </div>
+          <div>{t`You need to pass accreditation and KYC to create a vault.`}</div>
+        </>
+      )
   }
 }
-export const NoVault = ({ currency, status, accreditationRequest, platform }: Props) => {
-  const symbolText = useMemo(() => currency?.symbol ?? currency?.name ?? '', [currency])
+export const NoVault = ({ currency, status, accreditationRequest, platform, token }: Props) => {
+  const symbolText = useMemo(() => token?.ticker ?? currency?.name ?? '', [currency, token])
   const { account } = useActiveWeb3React()
   const toggleWalletModal = useWalletModalToggle()
   const toggleChooseBrokerDealerModal = useChooseBrokerDealerModalToggle()
   const currencyId: string | undefined = (currency as any)?.address
   const tokenId = useSecTokenId({ currencyId })
+
   return (
     <NoVaultWrapper>
-      <NoVaultTitle>
+      <NoVaultTitle style={{ order: 1 }}>
         <TYPE.title3>
           <Trans>Create {symbolText} Vault</Trans>
         </TYPE.title3>
       </NoVaultTitle>
-      {status && <AccreditationStatus status={status} />}
 
-      <VaultStatusDescription>
+      <VaultStatusDescription style={{ order: status === AccreditationStatusEnum.REJECTED ? 3 : 2 }}>
         <TYPE.descriptionThin>{getStatusMessage(accreditationRequest, symbolText, platform)}</TYPE.descriptionThin>
       </VaultStatusDescription>
 
-      <RowCenter>
+      {status && <AccreditationStatus status={status} />}
+
+      <RowCenter style={{ order: 4 }}>
         {!account && (
           <ButtonIXSGradient
-            style={{ marginTop: '25px' }}
+            style={{ marginTop: '28px', padding: '16px 24px' }}
             onClick={toggleWalletModal}
             disabled={!!account}
             data-testid="connect-wallet-in-vault"
@@ -86,7 +97,7 @@ export const NoVault = ({ currency, status, accreditationRequest, platform }: Pr
 
         {Boolean(account && !(PENDING_ACCREDITATION_STATUSES as any).includes(status)) && (
           <ButtonIXSGradient
-            style={{ marginTop: '25px' }}
+            style={{ marginTop: '28px', padding: '16px 24px' }}
             data-testid="pass-kyc-and-accreditation"
             onClick={toggleChooseBrokerDealerModal}
           >

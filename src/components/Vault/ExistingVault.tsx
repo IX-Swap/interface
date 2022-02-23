@@ -13,9 +13,10 @@ import { CustodianInfo } from 'components/Vault/enum'
 interface Props {
   currency?: Currency
   custodian?: CustodianInfo
+  token: any
 }
-export const ExistingVault = ({ currency, custodian }: Props) => {
-  const symbolText = useMemo(() => currency?.symbol ?? '', [currency?.symbol])
+export const ExistingVault = ({ currency, custodian, token }: Props) => {
+  const symbolText = useMemo(() => token?.ticker ?? currency?.symbol, [currency?.symbol, token?.ticker])
   const { account } = useActiveWeb3React()
   const toggle = useDepositModalToggle()
 
@@ -34,8 +35,8 @@ export const ExistingVault = ({ currency, custodian }: Props) => {
           <Trans>Deposit</Trans>
         </ButtonIXSGradient>
       </TitleStatusRow>
-      <BalanceRow currency={currency} account={account} />
-      <HistoryBlock currency={currency} />
+      <BalanceRow currency={currency} account={account} token={token} />
+      <HistoryBlock currency={currency} account={account} />
     </ExistingWrapper>
   )
 }

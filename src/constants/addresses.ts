@@ -16,7 +16,7 @@ export const NFT_ADDRESS = {
   [4]: '0x6ECc7A1dCe9DD04A18a03bf0a537E9F77cd194fA',
   [3]: '',
   [5]: '',
-  [42]: '0x0725dE8514802C9Ca1cd7AA317351B2035939c29',
+  [42]: '0x4DB7dc4bDc3848F4E948A8a8bB31a9d2021D05a6',
   [80001]: '',
   [137]: '',
 }
@@ -31,6 +31,11 @@ export const TGE_CHAINS_WITH_STAKING = [
 export const ETHEREUM_TGE_CHAINS = [SUPPORTED_TGE_CHAINS.KOVAN, SUPPORTED_TGE_CHAINS.MAIN]
 export const MATIC_TGE_CHAINS = [SUPPORTED_TGE_CHAINS.MATIC, SUPPORTED_TGE_CHAINS.MUMBAI]
 export const MAIN_TGE_CHAINS = [SUPPORTED_TGE_CHAINS.MAIN, SUPPORTED_TGE_CHAINS.MATIC]
+export const CREATE_TOKEN_CHAINS = [
+  { id: SUPPORTED_TGE_CHAINS.MAIN, name: 'Mainnet' },
+  { id: SUPPORTED_TGE_CHAINS.KOVAN, name: 'Kovan' },
+  { id: SUPPORTED_TGE_CHAINS.MATIC, name: 'Matic' },
+]
 // the rest are same as kovan for now
 export const IXS_ADDRESS: { [key: number]: string } = {
   [1]: '0x73d7c860998CA3c01Ce8c808F5577d94d545d1b4',

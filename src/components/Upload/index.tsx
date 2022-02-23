@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react'
+import React, { ReactNode, useCallback, useState, useEffect } from 'react'
 import { useDropzone, FileWithPath } from 'react-dropzone'
 import { ImageContainer, PreviewParent, StyledClose, StyledLogo } from './styleds'
 import { SvgIconWrapper } from 'theme'
@@ -8,16 +8,28 @@ import { AcceptFiles, FileTypes } from './types'
 interface Props {
   onDrop: (file: any) => void
   file: FileWithPath | null
+  newFileWithPath?: string
   accept?: AcceptFiles
+  isLogo?: boolean
+  isBanner?: boolean
+  width?: string
+  height?: string
+  children?: ReactNode
 }
 const Preview = ({
   file,
   filePath,
   onDelete,
+  isLogo,
+  width,
+  height,
 }: {
   file: FileWithPath | null
   filePath: string
   onDelete: (e: any) => void
+  isLogo: boolean
+  width: string
+  height: string
 }) => {
   const getPreviewElement = useCallback(() => {
     const fileType = getfileType(file)
@@ -36,14 +48,24 @@ const Preview = ({
     }
   }, [file, filePath])
   return (
-    <PreviewParent>
+    <PreviewParent width={width} height={height} isLogo={isLogo}>
       {getPreviewElement()}
       {file && <StyledClose onClick={(e) => onDelete(e)} />}
     </PreviewParent>
   )
 }
 
-export default function Upload({ onDrop, file, accept = AcceptFiles.ALL }: Props) {
+export default function Upload({
+  onDrop,
+  file,
+  newFileWithPath,
+  isLogo = false,
+  isBanner = false,
+  width = '100%',
+  height = '100%',
+  accept = AcceptFiles.ALL,
+  children,
+}: Props) {
   const [filePath, setFilePath] = useState<string>('')
   const onDropInput = useCallback(
     (acceptedFiles) => {
@@ -66,6 +88,12 @@ export default function Upload({ onDrop, file, accept = AcceptFiles.ALL }: Props
     [onDrop, setFilePath]
   )
 
+  useEffect(() => {
+    if (newFileWithPath) {
+      setFilePath(newFileWithPath)
+    }
+  }, [setFilePath, newFileWithPath])
+
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop: onDropInput,
     accept,
@@ -73,10 +101,25 @@ export default function Upload({ onDrop, file, accept = AcceptFiles.ALL }: Props
   return (
     <div {...getRootProps()}>
       <input {...getInputProps()} multiple={false} />
-      {isDragActive ? <p>Drop the files here ...</p> : <p>Drag and drop some files here, or click to select files</p>}
-      <ImageContainer>
-        <Preview filePath={filePath} file={file} onDelete={onDelete} />
-      </ImageContainer>
+      {children || (
+        <>
+          {isDragActive ? (
+            <p>Drop the files here ...</p>
+          ) : (
+            <p>Drag and drop some files here, or click to select files</p>
+          )}
+          <ImageContainer isBanner={isBanner}>
+            <Preview
+              width={width}
+              height={height}
+              isLogo={isLogo}
+              filePath={filePath}
+              file={file}
+              onDelete={onDelete}
+            />
+          </ImageContainer>
+        </>
+      )}
     </div>
   )
 }
