@@ -29,9 +29,9 @@ describe('Landing', () => {
       isAuthenticated: true,
       user: { ...user, totpConfirmed: false }
     }))
-    const { getAllByText } = render(<Landing />)
-    const updateButton = getAllByText(/update/i)[0]
-    fireEvent.click(updateButton)
+    const { getByText } = render(<Landing />)
+    const connectButton = getByText(/connect/i)
+    fireEvent.click(connectButton)
 
     expect(history.location.pathname).toEqual(SecurityRoute.setup2fa)
   })
@@ -42,7 +42,7 @@ describe('Landing', () => {
       user: { ...user, totpConfirmed: false }
     }))
     const { getAllByText } = render(<Landing />)
-    const updateButton = getAllByText(/update/i)[1]
+    const updateButton = getAllByText(/update/i)[0]
     fireEvent.click(updateButton)
 
     expect(history.location.pathname).toEqual(SecurityRoute.changePassword)

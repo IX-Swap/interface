@@ -11,7 +11,7 @@ exports[`Step1RemoveAuthenticator should match snapshot when useGetEmailCode has
       <h5
         class="MuiTypography-root MuiTypography-h5 MuiTypography-alignCenter css-1f4u6as-MuiTypography-root"
       >
-        Remove Authenticator by Verifying your Identity
+        Remove Authenticator by Verifying Your Identity
       </h5>
       <div
         class="MuiBox-root css-1jpm9pd"
@@ -69,7 +69,6 @@ exports[`Step1RemoveAuthenticator should match snapshot when useGetEmailCode has
                     control="[object Object]"
                     path="emailCode"
                   >
-                    
                     <div
                       class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-ppeiam-MuiInputBase-root-MuiOutlinedInput-root"
                     >
@@ -87,7 +86,7 @@ exports[`Step1RemoveAuthenticator should match snapshot when useGetEmailCode has
                         class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
                       >
                         <legend
-                          class="css-173wfxe"
+                          class="css-nnbavb"
                         >
                           <span
                             class="notranslate"
@@ -103,7 +102,7 @@ exports[`Step1RemoveAuthenticator should match snapshot when useGetEmailCode has
                   class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
                 >
                   <p
-                    class="MuiTypography-root MuiTypography-body1 makeStyles-label-1 css-3a17l8-MuiTypography-root"
+                    class="MuiTypography-root MuiTypography-body1 makeStyles-label-4 css-3a17l8-MuiTypography-root"
                   >
                     Enter the 6-digit code sent to 
                     tes***@undefined
@@ -121,7 +120,6 @@ exports[`Step1RemoveAuthenticator should match snapshot when useGetEmailCode has
                     control="[object Object]"
                     path="otp"
                   >
-                    
                     <div
                       class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-ppeiam-MuiInputBase-root-MuiOutlinedInput-root"
                     >
@@ -139,7 +137,7 @@ exports[`Step1RemoveAuthenticator should match snapshot when useGetEmailCode has
                         class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
                       >
                         <legend
-                          class="css-173wfxe"
+                          class="css-nnbavb"
                         >
                           <span
                             class="notranslate"
@@ -155,9 +153,9 @@ exports[`Step1RemoveAuthenticator should match snapshot when useGetEmailCode has
                   class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
                 >
                   <p
-                    class="MuiTypography-root MuiTypography-body1 makeStyles-label-1 css-3a17l8-MuiTypography-root"
+                    class="MuiTypography-root MuiTypography-body1 makeStyles-label-4 css-3a17l8-MuiTypography-root"
                   >
-                    Enter the 6-digit code from your authenticator app
+                    Enter the 6-digit code from your existing authenticator app
                   </p>
                 </div>
               </div>

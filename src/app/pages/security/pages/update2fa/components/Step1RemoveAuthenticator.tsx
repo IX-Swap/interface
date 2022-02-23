@@ -39,7 +39,7 @@ export const Step1RemoveAuthenticator = ({
   const renderSendCodeScreen = () => (
     <Grid container direction='column' spacing={3} alignItems='center'>
       <Grid item xs={12} md={8} lg={7}>
-        <Typography align='center' variant='body1'>
+        <Typography align='center' variant='body1' style={{ maxWidth: 380 }}>
           To remove the Authenticator, we have to send a code to your email. The
           code will be valid for 30 minutes.
         </Typography>
@@ -75,7 +75,7 @@ export const Step1RemoveAuthenticator = ({
   }
 
   return (
-    <StepWrapper title='Remove Authenticator by Verifying your Identity'>
+    <StepWrapper title='Remove Authenticator by Verifying Your Identity'>
       {screenState === ScreenState.FirstScreen
         ? renderSendCodeScreen()
         : renderRemoveAndContinueScreen()}

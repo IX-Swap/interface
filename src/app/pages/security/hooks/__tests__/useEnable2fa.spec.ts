@@ -26,7 +26,7 @@ describe('useEnable2fa', () => {
       await invokeMutationFn(result, enable2faArgs)
       expect(nextStep).toHaveBeenCalled()
       expect(snackbarServiceMock.showSnackbar).toHaveBeenCalledWith(
-        'Google Authenticator Setup Success!',
+        'Authenticator Setup Success!',
         'success'
       )
     })
