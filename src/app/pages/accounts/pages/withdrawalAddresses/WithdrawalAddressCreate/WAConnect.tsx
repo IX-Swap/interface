@@ -60,7 +60,7 @@ export const WAConnect = ({ hint, status, getAccount }: WAConnectProps) => {
 
   return (
     <>
-      <Grid item>
+      <Grid item mt={3}>
         <TypedField
           className={privateClassNames()}
           component={TextField}
