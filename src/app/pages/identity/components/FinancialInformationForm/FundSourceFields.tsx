@@ -9,7 +9,7 @@ export const FundSourceFields = () => {
   const sourceOfFund = watch('sourceOfFund')
 
   useEffect(() => {
-    if (sourceOfFund !== '' && sourceOfFund !== 'OTHERS') {
+    if (sourceOfFund !== 'OTHERS') {
       control.setValue('otherSourceOfFund', '')
       clearErrors('otherSourceOfFund')
     }
