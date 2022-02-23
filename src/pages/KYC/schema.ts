@@ -35,11 +35,14 @@ export const errorsSchema = yup.object().shape({
   employmentStatus: yup.object().nullable().required('Required'),
   employer: yup.string().required('Required'),
   income: yup.object().nullable().required('Required'),
-  // proofOfIdentity: yup.object().nullable().required(),
-  // proofOfAddress: yup.object().nullable().required(),
-  // evidenceOfAccreditation: yup.object().nullable().when('accredited', {
-  //   is: true,
-  //   then: yup.object().nullable().required(),
-  //   otherwise: yup.object().nullable(),
-  // }),
+  proofOfIdentity: yup.mixed().nullable().required('Required'),
+  proofOfAddress: yup.mixed().nullable().required('Required'),
+  evidenceOfAccreditation: yup
+    .mixed()
+    .nullable()
+    .when('accredited', {
+      is: 1,
+      then: yup.mixed().nullable().required('Required'),
+      otherwise: yup.mixed().nullable(),
+    }),
 })

@@ -24,6 +24,7 @@ export interface UploaderProps {
   title: string
   subtitle: string | JSX.Element
   optional?: boolean
+  error?: any | ReactChildren
 }
 
 interface SelectProps {
@@ -120,7 +121,14 @@ export const TextInput: FC<TextInputProps> = ({
   )
 }
 
-export const Uploader: FC<UploaderProps> = ({ title, subtitle, file, onDrop, optional = false }: UploaderProps) => {
+export const Uploader: FC<UploaderProps> = ({
+  title,
+  subtitle,
+  file,
+  onDrop,
+  error,
+  optional = false,
+}: UploaderProps) => {
   return (
     <Box>
       <Flex marginBottom="10px">
@@ -152,6 +160,11 @@ export const Uploader: FC<UploaderProps> = ({ title, subtitle, file, onDrop, opt
           )}
         </UploaderCard>
       </Upload>
+      {error && (
+        <TYPE.small marginTop="4px" color={'red1'}>
+          {error}
+        </TYPE.small>
+      )}
     </Box>
   )
 }

@@ -26,7 +26,7 @@ export const KYCProgressBar: FC<Props> = ({ reasons, description, topics, disabl
 
   return (
     <>
-      <FormCard style={{ padding: 24 }}>
+      {/* <FormCard style={{ padding: 24, marginBottom: 24 }}>
         <TYPE.title6 marginBottom="16px" style={{ textTransform: 'uppercase' }} color={'bg14'}>
           <Trans>Reason of reject</Trans>
         </TYPE.title6>
@@ -42,9 +42,9 @@ export const KYCProgressBar: FC<Props> = ({ reasons, description, topics, disabl
             </Li>
           ))}
         </Ul>
-      </FormCard>
+      </FormCard> */}
 
-      <FormCard style={{ marginTop: 24, padding: '24px 0px' }}>
+      <FormCard style={{ padding: '24px 0px' }}>
         <TYPE.title6 marginBottom="16px" paddingX="24px" style={{ textTransform: 'uppercase' }}>
           Progress
         </TYPE.title6>

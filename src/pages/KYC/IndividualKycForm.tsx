@@ -100,14 +100,22 @@ export const IndividualKycForm: FC<Props> = ({ goBack }: Props) => {
           })
         }}
       >
-        {({ values, handleChange, errors, handleBlur, handleSubmit, setFieldValue, isValid, touched }) => (
+        {({ values, handleChange, errors, handleBlur, handleSubmit, setFieldValue, isValid, dirty }) => (
           <Grid>
-            <form onSubmit={handleSubmit} style={{ maxHeight: '1000px', overflowY: 'scroll', gap: '35px' }}>
+            <form onSubmit={handleSubmit} style={{ maxHeight: '750px', overflowY: 'scroll', gap: '35px' }}>
               <Column style={{ gap: '35px' }}>
                 <FormCard id="personal">
                   <RowBetween marginBottom="32px">
                     <TYPE.title6 style={{ textTransform: 'uppercase' }}>{info.title}</TYPE.title6>
-                    {info.passed && <BigPassed />}
+                    {dirty &&
+                      !errors.firstName &&
+                      !errors.lastName &&
+                      !errors.dateOfBirth &&
+                      !errors.gender &&
+                      !errors.nationality &&
+                      !errors.citizenship &&
+                      !errors.phoneNumber &&
+                      !errors.email && <BigPassed />}
                   </RowBetween>
                   <Column style={{ gap: '20px' }}>
                     <FormGrid columns={3}>
@@ -117,7 +125,7 @@ export const IndividualKycForm: FC<Props> = ({ goBack }: Props) => {
                         onChange={handleChange}
                         value={values.firstName}
                         label="First Name:"
-                        error={touched.firstName && errors.firstName && errors.firstName}
+                        error={errors.firstName && errors.firstName}
                       />
                       <TextInput
                         name="middleName"
@@ -131,7 +139,7 @@ export const IndividualKycForm: FC<Props> = ({ goBack }: Props) => {
                         onChange={handleChange}
                         value={values.lastName}
                         label="Last Name:"
-                        error={touched.lastName && errors.lastName && errors.lastName}
+                        error={errors.lastName && errors.lastName}
                       />
                     </FormGrid>
 
@@ -140,7 +148,7 @@ export const IndividualKycForm: FC<Props> = ({ goBack }: Props) => {
                         maxHeight={60}
                         name="dateOfBirth"
                         onBlur={handleBlur}
-                        error={touched.dateOfBirth && errors.dateOfBirth && errors.dateOfBirth}
+                        error={errors.dateOfBirth && errors.dateOfBirth}
                         value={values.dateOfBirth}
                         onChange={(value) => setFieldValue('dateOfBirth', value)}
                       />
@@ -190,7 +198,7 @@ export const IndividualKycForm: FC<Props> = ({ goBack }: Props) => {
                         onChange={handleChange}
                         value={values.email}
                         label="Email address:"
-                        error={touched.email ? errors.email : false}
+                        error={errors.email && errors.email}
                       />
                     </FormGrid>
                   </Column>
@@ -199,7 +207,7 @@ export const IndividualKycForm: FC<Props> = ({ goBack }: Props) => {
                 <FormCard id="address">
                   <RowBetween marginBottom="32px">
                     <TYPE.title6 style={{ textTransform: 'uppercase' }}>{address.title}</TYPE.title6>
-                    {address.passed && <BigPassed />}
+                    {dirty && !errors.line1 && !errors.line2 && !errors.country && !errors.city && <BigPassed />}
                   </RowBetween>
 
                   <Column style={{ gap: '20px' }}>
@@ -210,7 +218,7 @@ export const IndividualKycForm: FC<Props> = ({ goBack }: Props) => {
                         value={values.line1}
                         label="Line 1"
                         onBlur={handleBlur}
-                        error={touched.line1 && errors.line1 && errors.line1}
+                        error={errors.line1 && errors.line1}
                       />
                       <TextInput
                         name="line2"
@@ -218,7 +226,7 @@ export const IndividualKycForm: FC<Props> = ({ goBack }: Props) => {
                         value={values.line2}
                         label="Line 2"
                         onBlur={handleBlur}
-                        error={touched.line2 && errors.line2 && errors.line2}
+                        error={errors.line2 && errors.line2}
                       />
                     </FormGrid>
 
@@ -239,7 +247,7 @@ export const IndividualKycForm: FC<Props> = ({ goBack }: Props) => {
                         value={values.city}
                         label="City"
                         onBlur={handleBlur}
-                        error={touched.city && errors.city && errors.city}
+                        error={errors.city && errors.city}
                       />
                     </FormGrid>
                   </Column>
@@ -248,7 +256,7 @@ export const IndividualKycForm: FC<Props> = ({ goBack }: Props) => {
                 <FormCard id="funds">
                   <RowBetween marginBottom="32px">
                     <TYPE.title6 style={{ textTransform: 'uppercase' }}>{funds.title}</TYPE.title6>
-                    {funds.passed && <BigPassed />}
+                    {dirty && !errors.sourceOfFunds && <BigPassed />}
                   </RowBetween>
                   <FormGrid columns={3}>
                     {sourceOfFunds.map(({ id, name }: any) => (
@@ -268,18 +276,23 @@ export const IndividualKycForm: FC<Props> = ({ goBack }: Props) => {
                       onChange={handleChange}
                       value={values.otherFunds}
                       onBlur={handleBlur}
-                      error={touched.otherFunds && errors.otherFunds && errors.otherFunds}
+                      error={errors.otherFunds && errors.otherFunds}
                     />
+                  )}
+                  {errors.sourceOfFunds && (
+                    <TYPE.small marginTop="8px" color={'red1'}>
+                      {errors.sourceOfFunds}
+                    </TYPE.small>
                   )}
                 </FormCard>
 
                 <FormCard id="investor">
                   <RowBetween marginBottom="32px">
                     <TYPE.title6 style={{ textTransform: 'uppercase' }}>{investor.title}</TYPE.title6>
-                    {investor.passed && <BigPassed />}
+                    <BigPassed />
                   </RowBetween>
 
-                  <Column style={{ gap: '34px' }}>
+                  <Column style={{ gap: '16px' }}>
                     <Column style={{ gap: '16px' }}>
                       <Checkbox
                         scaleSize={1.4}
@@ -299,7 +312,7 @@ export const IndividualKycForm: FC<Props> = ({ goBack }: Props) => {
 
                     <Column
                       style={
-                        values.accredited === 1 ? { gap: '24px', pointerEvents: 'none', opacity: 0.4 } : { gap: '24px' }
+                        values.accredited === 1 ? { gap: '12px', pointerEvents: 'none', opacity: 0.4 } : { gap: '12px' }
                       }
                     >
                       <Checkbox
@@ -324,7 +337,7 @@ export const IndividualKycForm: FC<Props> = ({ goBack }: Props) => {
                 <FormCard id="fatca">
                   <RowBetween marginBottom="32px">
                     <TYPE.title6 style={{ textTransform: 'uppercase' }}>{fatca.title}</TYPE.title6>
-                    {fatca.passed && <BigPassed />}
+                    {dirty && !errors.usTin && <BigPassed />}
                   </RowBetween>
 
                   <ExtraInfoCard>
@@ -347,7 +360,7 @@ export const IndividualKycForm: FC<Props> = ({ goBack }: Props) => {
                           value={values.usTin}
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          error={touched.usTin && errors.usTin && errors.usTin}
+                          error={errors.usTin && errors.usTin}
                         />
                       )}
                     </Column>
@@ -361,6 +374,11 @@ export const IndividualKycForm: FC<Props> = ({ goBack }: Props) => {
                 </FormCard>
 
                 <FormCard>
+                  <RowBetween flexDirection="row-reverse" height="28px" marginBottom="32px">
+                    {dirty && !errors.occupation && !errors.employmentStatus && !errors.employer && !errors.income && (
+                      <BigPassed />
+                    )}
+                  </RowBetween>
                   <Column style={{ gap: '20px' }}>
                     <TextInput
                       name="occupation"
@@ -368,7 +386,7 @@ export const IndividualKycForm: FC<Props> = ({ goBack }: Props) => {
                       value={values.occupation}
                       label="Occupation"
                       onBlur={handleBlur}
-                      error={touched.occupation && errors.occupation && errors.occupation}
+                      error={errors.occupation && errors.occupation}
                     />
                     <Select
                       label="Employment Status"
@@ -385,7 +403,7 @@ export const IndividualKycForm: FC<Props> = ({ goBack }: Props) => {
                       value={values.employer}
                       label="Employer"
                       onBlur={handleBlur}
-                      error={touched.employer && errors.employer && errors.employer}
+                      error={errors.employer && errors.employer}
                     />
                     <Select
                       label="Income in USD in preceding 12 months"
@@ -402,11 +420,14 @@ export const IndividualKycForm: FC<Props> = ({ goBack }: Props) => {
                 <FormCard id="upload">
                   <RowBetween marginBottom="32px">
                     <TYPE.title6 style={{ textTransform: 'uppercase' }}>{upload.title}</TYPE.title6>
-                    {upload.passed && <BigPassed />}
+                    {dirty && !errors.proofOfIdentity && !errors.proofOfAddress && !errors.evidenceOfAccreditation && (
+                      <BigPassed />
+                    )}
                   </RowBetween>
 
                   <Column style={{ gap: '40px' }}>
                     <Uploader
+                      error={errors.proofOfIdentity && errors.proofOfIdentity}
                       title="Proof of Identity"
                       subtitle="Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Proin eget tortor risus."
                       file={values.proofOfIdentity}
@@ -416,6 +437,7 @@ export const IndividualKycForm: FC<Props> = ({ goBack }: Props) => {
                     />
 
                     <Uploader
+                      error={errors.proofOfAddress && errors.proofOfAddress}
                       title="Proof of Address"
                       subtitle="Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Proin eget tortor risus."
                       file={values.proofOfAddress}
@@ -425,6 +447,7 @@ export const IndividualKycForm: FC<Props> = ({ goBack }: Props) => {
                     />
 
                     <Uploader
+                      error={errors.evidenceOfAccreditation && errors.evidenceOfAccreditation}
                       title="Evidence of accreditation"
                       subtitle="Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Proin eget tortor risus."
                       file={values.evidenceOfAccreditation}
