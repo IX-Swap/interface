@@ -33,6 +33,6 @@ else
   _info 'Set index.html main document file'
   aws s3 website s3://${bucket_name}/ --index-document index.html || _fail
   _info 'invalidate cloudfront cache'
-  aws cl`oudfront create-invalidation --distribution-id  ${cloudfront_id} --paths "/*"  || _fail
+  aws cloudfront create-invalidation --distribution-id  ${cloudfront_id} --paths "/*"  || _fail
 fi
 
