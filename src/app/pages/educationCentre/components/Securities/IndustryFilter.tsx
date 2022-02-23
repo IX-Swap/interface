@@ -1,10 +1,5 @@
-import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  SelectChangeEvent
-} from '@mui/material'
+import { FormControl, InputLabel, MenuItem } from '@mui/material'
+import { TextFieldSelect } from 'components/form/TextFieldSelect'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
 import React from 'react'
 
@@ -22,13 +17,12 @@ export const IndustryFilter = () => {
       {({ value, onChange }) => (
         <FormControl variant='outlined' style={{ width: 140 }}>
           <InputLabel shrink>Industry</InputLabel>
-          <Select
-            displayEmpty
-            value={value ?? ''}
-            onChange={(event: SelectChangeEvent<unknown>) => {
-              onChange(event.target.value as string)
-            }}
+          <TextFieldSelect
             label='Industry'
+            onChange={event => {
+              onChange(event.target?.value)
+            }}
+            value={value}
           >
             <MenuItem value=''>All Industries</MenuItem>
             {industries.map(industry => (
@@ -36,7 +30,7 @@ export const IndustryFilter = () => {
                 {industry}
               </MenuItem>
             ))}
-          </Select>
+          </TextFieldSelect>
         </FormControl>
       )}
     </SearchQueryFilter>
