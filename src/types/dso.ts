@@ -147,7 +147,6 @@ export type DSOFormValues = Omit<
   | 'subscriptionDocument'
   | 'insight'
   | 'disabled'
-  | 'decimalPlaces'
 > & {
   subscriptionDocument?: DataroomFile
   status?: string
