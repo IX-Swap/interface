@@ -172,15 +172,13 @@ export const optInOptions = [
 ].map((name, index) => ({ id: ++index, name }))
 
 export const empleymentStatuses = [
-  'Legal Entity Status',
-  'Public Company',
-  'Private Company',
-  'Limited Liability Company',
-  'Partnership',
-  'Limited Liability Partnership',
-  'Society',
-  'Trust',
-  'Others (Please specify)',
+  'Full-Time Employee',
+  'Part-Time Employee',
+  'Own Business',
+  'Government Employee',
+  'Freelancers',
+  'Consultants',
+  'Self-Employed',
 ].map((name, index) => ({ id: ++index, name }))
 
 export const legalEntityTypes = [
