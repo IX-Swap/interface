@@ -19,7 +19,6 @@ import { setupGoogleAnalytics } from 'setupGoogleAnalytics'
 import { AppStateProvider } from 'app/hooks/useAppState'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
-import { setupGtagManager } from 'setupGtagManager'
 
 const queryCache = new QueryCache({
   defaultConfig: {
@@ -35,7 +34,6 @@ const generateClassName = createGenerateClassName({
 
 setupSentry()
 setupFullStory()
-setupGtagManager()
 setupGoogleAnalytics()
 
 const IXApp = () => {
