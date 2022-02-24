@@ -16,8 +16,8 @@ import { ReactQueryCacheProvider, QueryCache } from 'react-query'
 import { setupSentry } from 'setupSentry'
 import { setupFullStory } from 'setupFullStory'
 import { AppThemeProvider } from 'AppThemeProvider'
-import { setupGoogleAnalytics } from 'setupGoogleAnalytics'
 import { AppStateProvider } from 'app/hooks/useAppState'
+import { setupGtagManager } from 'setupGtagManager'
 
 const queryCache = new QueryCache({
   defaultConfig: {
@@ -33,7 +33,7 @@ const generateClassName = createGenerateClassName({
 
 setupSentry()
 setupFullStory()
-setupGoogleAnalytics()
+setupGtagManager()
 
 const IXApp = () => {
   return (
