@@ -13,7 +13,6 @@ export const useStyles = makeStyles(theme => ({
     paddingRight: theme.spacing(2.5),
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
-    width: '100%',
     color: (props: Props) =>
       props.isActive
         ? theme.palette.text.primary

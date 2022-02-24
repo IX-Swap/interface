@@ -33,7 +33,10 @@ export const TopbarLinkDropdown = ({
       </div>
 
       <Menu
-        classes={{ root: classes.menu, list: classes.list }}
+        classes={{
+          paper: classes.paper,
+          list: classes.list
+        }}
         anchorEl={anchorEl}
         keepMounted
         open={Boolean(anchorEl)}

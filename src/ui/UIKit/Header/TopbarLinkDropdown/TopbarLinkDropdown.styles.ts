@@ -4,8 +4,11 @@ export const useStyles = makeStyles(theme => ({
   wrapper: {
     display: 'flex'
   },
-  menu: {
-    top: 0
+  paper: {
+    marginTop: '0!important',
+    padding: '0!important',
+    borderTopRightRadius: '0!important',
+    borderTopLeftRadius: '0!important'
   },
   list: { padding: 0 },
   navItem: {
