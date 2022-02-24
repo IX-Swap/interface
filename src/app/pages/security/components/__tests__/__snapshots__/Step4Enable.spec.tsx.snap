@@ -29,7 +29,10 @@ exports[`Step4Enable should match snapshot 1`] = `
           <p
             class="MuiTypography-root MuiTypography-body1 MuiTypography-alignCenter css-6bx0l6-MuiTypography-root"
           >
-            Please enter the 6 digit code from your authenticator app
+            Please enter the 6-digit code from your 
+            
+             
+            authenticator app
           </p>
         </div>
         <div
@@ -143,15 +146,6 @@ exports[`Step4Enable should match snapshot 1`] = `
               </button>
             </div>
           </form>
-        </div>
-        <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-8 MuiGrid-grid-lg-6 css-1er4735-MuiGrid-root"
-        >
-          <p
-            class="MuiTypography-root MuiTypography-body1 MuiTypography-alignCenter css-6bx0l6-MuiTypography-root"
-          >
-            Once enabled your authenticator you will be logged out and re-enter the OTP in order to access the platform
-          </p>
         </div>
       </div>
     </div>

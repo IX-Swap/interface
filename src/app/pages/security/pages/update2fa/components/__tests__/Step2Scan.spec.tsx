@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from 'test-utils'
-import { Step2Scan } from 'app/pages/security/components/Step2Scan/Step2Scan'
+import { Step2Scan } from 'app/pages/security/pages/update2fa/components/Step2Scan/Step2Scan'
 import { fakeTwoFaData } from '__fixtures__/security'
 
 describe('Step2Scan', () => {
@@ -14,6 +14,6 @@ describe('Step2Scan', () => {
     )
     const image = getByTestId('store-image')
     expect(getByText(fakeTwoFaData.key)).toBeTruthy()
-    expect(image.style.backgroundImage).toEqual(`url(${fakeTwoFaData.image})`)
+    expect(image).toBeInTheDocument()
   })
 })

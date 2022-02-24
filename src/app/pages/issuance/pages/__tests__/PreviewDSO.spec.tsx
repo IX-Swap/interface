@@ -29,10 +29,7 @@ describe('PreviewDSO', () => {
   it('renders DSOPreview with correct props', () => {
     render(<PreviewDSO />)
 
-    expect(DSOPreview).toHaveBeenCalledWith(
-      { data: dso, showAuthorizations: true },
-      {}
-    )
+    expect(DSOPreview).toHaveBeenCalledWith({ data: dso }, {})
   })
 
   it('renders nothing if it is loading', () => {

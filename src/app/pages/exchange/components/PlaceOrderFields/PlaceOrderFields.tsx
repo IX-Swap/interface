@@ -75,7 +75,6 @@ export const PlaceOrderFields: React.FC<PlaceOrderFieldsProps> = ({
       </Grid>
 
       <Grid item className={classes.inputGrid}>
-        {/* @ts-expect-error */}
         <TypedField
           fullWidth
           customRenderer

@@ -9,18 +9,27 @@ jest.mock(
     Step1RemoveAuthenticator: jest.fn(() => <div data-testid='step-1' />)
   })
 )
-jest.mock('app/pages/security/components/Step2Scan/Step2Scan', () => ({
-  Step2Scan: jest.fn(() => <div data-testid='step-2' />)
-}))
-jest.mock('app/pages/security/components/Step3Backup/Step3Backup', () => ({
-  Step3Backup: jest.fn(() => <div data-testid='step-3' />)
-}))
+jest.mock(
+  'app/pages/security/pages/update2fa/components/Step2Scan/Step2Scan',
+  () => ({
+    Step2Scan: jest.fn(() => <div data-testid='step-2' />)
+  })
+)
+jest.mock(
+  'app/pages/security/pages/update2fa/components/Step3Backup/Step3Backup',
+  () => ({
+    Step3Backup: jest.fn(() => <div data-testid='step-3' />)
+  })
+)
 jest.mock('app/pages/security/components/Step4Enable', () => ({
   Step4Enable: jest.fn(() => <div data-testid='step-4' />)
 }))
-jest.mock('app/pages/security/components/Enabled', () => ({
-  Enabled: jest.fn(() => <div data-testid='step-5' />)
-}))
+jest.mock(
+  'app/pages/security/pages/update2fa/components/Enabled/Enabled',
+  () => ({
+    Enabled: jest.fn(() => <div data-testid='step-5' />)
+  })
+)
 
 describe('ActiveStep', () => {
   const props = {

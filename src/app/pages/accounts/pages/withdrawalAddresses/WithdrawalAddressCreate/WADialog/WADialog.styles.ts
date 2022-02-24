@@ -14,7 +14,8 @@ export default makeStyles(theme => ({
     textAlign: 'center'
   },
   content: {
-    padding: theme.spacing(5, 8)
+    padding: theme.spacing(5, 8),
+    marginTop: theme.spacing(5)
   },
   dialog: {
     display: (props: DialogVisibilityProps) =>
