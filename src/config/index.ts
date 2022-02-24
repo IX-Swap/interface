@@ -6,7 +6,6 @@ export const SOCKET_TRANSPORTS = getSocketTransports(
   process.env.REACT_APP_SOCKET_TRANSPORTS
 )
 export const ENVIRONMENT = getEnvironment(API_URL)
-export const GOOGLE_ANALYTICS = process.env.REACT_APP_GOOGLE_ANALYTICS
 export const FULLSTORY = process.env.REACT_APP_FULLSTORY
 
 export const isDevEnv = ENVIRONMENT === 'dev'
