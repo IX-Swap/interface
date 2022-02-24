@@ -182,10 +182,15 @@ class Pool {
    * @param isSecurity check if a
    */
   async verifySwap(transaction: Swap, isSecurity: boolean) {
+    transaction.oracleAmount0Out = BigNumber.from(0)
+    transaction.oracleAmount1Out = BigNumber.from(0)
+
     //  request last known reserves, check if Oracle can be consulted
     await this.updateReserves()
-    await this.canConsultOracle(FACTORY_CONTRACT) //(FACTORY_CONTRACT)
-    await this.consultOracle(FACTORY_CONTRACT, transaction) //(FACTORY_CONTRACT)
+    const canConsult = await this.canConsultOracle(FACTORY_CONTRACT) //(FACTORY_CONTRACT)
+    if (canConsult) {
+      await this.consultOracle(FACTORY_CONTRACT, transaction) //(FACTORY_CONTRACT)
+    }
 
     //  perform initial tranasaction values verification and slippage check
     this.verifyOutValues(transaction)
@@ -283,6 +288,7 @@ class Pool {
   async canConsultOracle(contract: Contract) {
     const response = await contract.methods.oracleCanConsult(this.token0, this.token1).call()
     this.isConsultable = response
+    return response
   }
 
   /**
@@ -526,31 +532,31 @@ interface VerifyOptions {
 }
 
 export async function verifySwap(options: VerifyOptions) {
-  // const poolAddress = web3.utils.toChecksumAddress(options.pairAddress)
-  // const WETH_IDAI_CONTRACT2 = new web3.eth.Contract(PAIR_ABI, poolAddress)
-  // //const FACTORY_CONTRACT2 = new web3.eth.Contract(FACTORY_ABI, poolAddress)
-  // const pool = new Pool(
-  //   options.tokenFrom,
-  //   options.tokenTo,
-  //   options.pair,
-  //   typeof options.kLast === 'string' ? BigNumber.from(options.kLast) : options.kLast,
-  //   true,
-  //   options.priceToleranceThreshold,
-  //   WETH_IDAI_CONTRACT2,
-  //   options.systemFeeRate,
-  //   options.isSecurity
-  // )
-  // const transaction = new Swap(
-  //   options.id,
-  //   options.amountInFrom,
-  //   options.amountInTo,
-  //   options.amountOutFrom,
-  //   options.amountOutTo,
-  //   options.sender,
-  //   options.receiver,
-  //   0.05
-  // )
-  // await pool.verifySwap(transaction, options.isSecurity)
+  const poolAddress = web3.utils.toChecksumAddress(options.pairAddress)
+  const WETH_IDAI_CONTRACT2 = new web3.eth.Contract(PAIR_ABI, poolAddress)
+  //const FACTORY_CONTRACT2 = new web3.eth.Contract(FACTORY_ABI, poolAddress)
+  const pool = new Pool(
+    options.tokenFrom,
+    options.tokenTo,
+    options.pair,
+    typeof options.kLast === 'string' ? BigNumber.from(options.kLast) : options.kLast,
+    true,
+    options.priceToleranceThreshold,
+    WETH_IDAI_CONTRACT2,
+    options.systemFeeRate,
+    options.isSecurity
+  )
+  const transaction = new Swap(
+    options.id,
+    options.amountInFrom,
+    options.amountInTo,
+    options.amountOutFrom,
+    options.amountOutTo,
+    options.sender,
+    options.receiver,
+    0.05
+  )
+  await pool.verifySwap(transaction, options.isSecurity)
 }
 
 // const pool: Pool = new Pool(
