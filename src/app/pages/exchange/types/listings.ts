@@ -16,7 +16,7 @@ export interface ListingFormValues {
   network: string
   tokenName: string
   tokenSymbol: string
-  decimalPlaces?: number | null
+  decimals?: number | null
   minimumTradeUnits: number | null
   maximumTradeUnits: number | null
   raisedAmount: number | null
@@ -57,7 +57,7 @@ export interface Listing {
   banner: DataroomFile
   tokenName: string
   tokenSymbol: string
-  decimalPlaces: number
+  decimals: number
   launchDate: Date
   completionDate: Date
   network: Network
@@ -106,7 +106,7 @@ export interface ListingFormValuesForSubmit {
   banner: DataroomFile
   tokenName: string
   tokenSymbol: string
-  decimalPlaces: string
+  decimals: string
   launchDate: Date
   completionDate: Date
   network: Network

@@ -23,8 +23,7 @@ export interface DSOBaseFieldsProps {
 
 export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
   const { isNew, isLive } = props
-  const { control, watch } = useFormContext<DSOFormValues>()
-  const capitalStructure = watch('capitalStructure')
+  const { control } = useFormContext<DSOFormValues>()
 
   return (
     <Grid item>
@@ -102,8 +101,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 customRenderer
                 numberFormat={positiveNumberFormat}
                 label='Decimal Places'
-                name='decimalPlaces'
-                disabled={capitalStructure?.toLowerCase() === 'equity'}
+                name='decimals'
                 control={control}
                 helperText='Decimal Places'
                 variant='outlined'

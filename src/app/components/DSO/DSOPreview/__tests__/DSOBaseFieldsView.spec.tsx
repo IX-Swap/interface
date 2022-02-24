@@ -65,7 +65,7 @@ describe('DSOBaseFieldsView', () => {
       {}
     )
     expect(LabelledValue).toHaveBeenCalledWith(
-      { label: 'Decimal', value: dso.decimalPlaces, isNewThemeOn: true },
+      { label: 'Decimal', value: dso.decimals, isNewThemeOn: true },
       {}
     )
     expect(LabelledValue).toHaveBeenCalledWith(
