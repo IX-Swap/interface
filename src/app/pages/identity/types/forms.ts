@@ -96,7 +96,6 @@ export interface IndividualFinancialInfoFormValues {
   employer: string
   employmentStatus: string
   annualIncome: string
-  otherSourceOfFund?: string
 }
 
 export interface IndividualTaxDeclarationFormValues {
@@ -216,7 +215,6 @@ export interface IdentityFinancials {
   occupation: string
   sourceOfWealth: string
   sourceOfFund?: string
-  otherSourceOfFund?: string
 }
 
 export interface CorporateFields {

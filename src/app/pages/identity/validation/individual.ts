@@ -46,12 +46,7 @@ export const financialInfoSchema = yup
       .required('This field is required'),
     employmentStatus: yup.string().required('Required'),
     annualIncome: yup.string().required('Required'),
-    sourceOfFund: yup.string().required('Required'),
-    otherSourceOfFund: yup.string().when('sourceOfFund', {
-      is: 'OTHERS',
-      then: yup.string().required('Required'),
-      otherwise: yup.string()
-    })
+    sourceOfFund: yup.string().required('Required')
   })
 
 export const taxDeclarationSchema = yup

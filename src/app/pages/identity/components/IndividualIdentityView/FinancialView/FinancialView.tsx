@@ -37,12 +37,6 @@ export const FinancialView = (props: FinancialViewProps) => {
         <Grid item xs={12} sm={6} md={4}>
           <LabelledValue value={data.sourceOfFund} label='Source of fund' />
         </Grid>
-        <Grid item xs={12} sm={6} md={4}>
-          <LabelledValue
-            value={data?.otherSourceOfFund}
-            label='Other source of fund'
-          />
-        </Grid>
       </Grid>
     </Grid>
   )
