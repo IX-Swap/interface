@@ -1,4 +1,5 @@
 import { useGetIdentities } from 'app/components/OnboardingPanel/hooks/useGetIdentities'
+import { CorporateType } from 'app/pages/identity/components/CorporateInvestorForm/CorporateInvestorForm'
 import { IdentityType } from 'app/pages/identity/utils/shared'
 
 export const useOnboardingJourneys = () => {
@@ -16,6 +17,18 @@ export const useOnboardingJourneys = () => {
     identity => identity.type === 'issuer'
   )
 
+  const fundManagerIdentities = corporateIdentities.list.filter(
+    identity => identity.type === 'Fund Manager'
+  )
+
+  const fundAdminIdentities = corporateIdentities.list.filter(
+    identity => identity.type === 'Fund Administrator'
+  )
+
+  const portfolioManagerIdentities = corporateIdentities.list.filter(
+    identity => identity.type === 'Portfolio Manager'
+  )
+
   const isIndividualJourneyStarted =
     individualIdentity !== undefined &&
     individualIdentity.authorizations.length === 0
@@ -25,11 +38,23 @@ export const useOnboardingJourneys = () => {
   const isIssuerJourneyStarted =
     issuerIdentities.length > 0 &&
     issuerIdentities[0].authorizations.length === 0
+  const isFundManagerJourneyStarted =
+    fundManagerIdentities.length > 0 &&
+    fundManagerIdentities[0].authorizations.length === 0
+  const isFundAdminJourneyStarted =
+    fundAdminIdentities.length > 0 &&
+    fundAdminIdentities[0].authorizations.length === 0
+  const isPortfolioManagerJourneyStarted =
+    portfolioManagerIdentities.length > 0 &&
+    portfolioManagerIdentities[0].authorizations.length === 0
 
   const startedJourneys = {
     isIndividualJourneyStarted,
     isInvestorJourneyStarted,
-    isIssuerJourneyStarted
+    isIssuerJourneyStarted,
+    isFundManagerJourneyStarted,
+    isFundAdminJourneyStarted,
+    isPortfolioManagerJourneyStarted
   }
 
   const isIndividualJourneyCompleted =
@@ -46,11 +71,29 @@ export const useOnboardingJourneys = () => {
     issuerIdentities[0].authorizations?.some(
       authorization => authorization.status === 'Approved'
     )
+  const isFundManagerJourneyCompleted =
+    fundManagerIdentities.length > 0 &&
+    fundManagerIdentities[0].authorizations?.some(
+      authorization => authorization.status === 'Approved'
+    )
+  const isFundAdminJourneyCompleted =
+    fundAdminIdentities.length > 0 &&
+    fundAdminIdentities[0].authorizations?.some(
+      authorization => authorization.status === 'Approved'
+    )
+  const isPortoflioManagerJourneyCompleted =
+    portfolioManagerIdentities.length > 0 &&
+    portfolioManagerIdentities[0].authorizations?.some(
+      authorization => authorization.status === 'Approved'
+    )
 
   const completedJourneys = {
     isIndividualJourneyCompleted,
     isInvestorJourneyCompleted,
-    isIssuerJourneyCompleted
+    isIssuerJourneyCompleted,
+    isFundManagerJourneyCompleted,
+    isFundAdminJourneyCompleted,
+    isPortoflioManagerJourneyCompleted
   }
   const isMultipleJourneysActive =
     Object.values(startedJourneys).filter(journeStatus => journeStatus).length >
@@ -61,13 +104,22 @@ export const useOnboardingJourneys = () => {
 
   const getIsJourneyCompleted = (
     identityType: IdentityType,
-    corporateType?: 'issuer' | 'investor'
+    corporateType?: CorporateType
   ) => {
     if (identityType === 'individual') return isIndividualJourneyCompleted
 
-    return corporateType === 'investor'
-      ? isInvestorJourneyCompleted
-      : isIssuerJourneyCompleted
+    switch (corporateType) {
+      case 'issuer':
+        return isIssuerJourneyCompleted
+      case 'Fund Manager':
+        return isFundManagerJourneyCompleted
+      case 'Fund Administrator':
+        return isFundAdminJourneyCompleted
+      case 'Portfolio Manager':
+        return isPortoflioManagerJourneyCompleted
+      default:
+        return isInvestorJourneyCompleted
+    }
   }
 
   return {
@@ -77,6 +129,9 @@ export const useOnboardingJourneys = () => {
     hasActiveIdentityJourney,
     investorIdentities,
     issuerIdentities,
+    fundManagerIdentities,
+    fundAdminIdentities,
+    portfolioManagerIdentities,
     individualIdentity,
     getIsJourneyCompleted,
     isIdentitiesLoaded,

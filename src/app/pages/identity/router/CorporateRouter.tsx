@@ -66,7 +66,7 @@ export const CorporateRouter = () => {
         path={IdentityRoute.createFundManager}
       >
         <CreateCorporateIdentity
-          type='fundManager'
+          type='Fund Manager'
           title='Create Fund Manager Identity'
         />
       </AppRoute>
@@ -77,7 +77,7 @@ export const CorporateRouter = () => {
         path={IdentityRoute.createFundAdmin}
       >
         <CreateCorporateIdentity
-          type='fundAdmin'
+          type='Fund Administrator'
           title='Create Fund Admin Identity'
         />
       </AppRoute>
@@ -88,7 +88,7 @@ export const CorporateRouter = () => {
         path={IdentityRoute.createPortfolioManager}
       >
         <CreateCorporateIdentity
-          type='portfolioManager'
+          type='Portfolio Manager'
           title='Create Portfolio Manager Identity'
         />
       </AppRoute>
@@ -98,7 +98,7 @@ export const CorporateRouter = () => {
         exact
         path={IdentityRoute.editFundManager}
       >
-        <EditInvestor type='fundManager' />
+        <EditInvestor type='Fund Manager' />
       </AppRoute>
 
       <AppRoute
@@ -106,7 +106,7 @@ export const CorporateRouter = () => {
         exact
         path={IdentityRoute.editFundAdmin}
       >
-        <EditInvestor type='fundAdmin' />
+        <EditInvestor type='Fund Administrator' />
       </AppRoute>
 
       <AppRoute
@@ -114,7 +114,31 @@ export const CorporateRouter = () => {
         exact
         path={IdentityRoute.editFundAdmin}
       >
-        <EditInvestor type='portfolioManager' />
+        <EditInvestor type='Portfolio Manager' />
+      </AppRoute>
+
+      <AppRoute
+        breadcrumb='View Fund Manager'
+        exact
+        path={IdentityRoute.viewFundManager}
+      >
+        <ViewInvestor />
+      </AppRoute>
+
+      <AppRoute
+        breadcrumb='View Fund Administrator'
+        exact
+        path={IdentityRoute.viewFundAdmin}
+      >
+        <ViewInvestor />
+      </AppRoute>
+
+      <AppRoute
+        breadcrumb='View Portofolio Manager'
+        exact
+        path={IdentityRoute.viewPortfolioManager}
+      >
+        <ViewInvestor />
       </AppRoute>
     </Switch>
   )

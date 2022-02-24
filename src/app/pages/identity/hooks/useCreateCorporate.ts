@@ -10,9 +10,9 @@ import { CorporateIdentity } from 'app/pages/identity/types/forms'
 
 const corporateTypeRouteMap: { [key: string]: string } = {
   investor: IdentityRoute.editCorporate,
-  fundManager: IdentityRoute.editFundManager,
-  fundAdmin: IdentityRoute.editFundAdmin,
-  portfolioManager: IdentityRoute.editPortfolioManager,
+  'Fund Manager': IdentityRoute.editFundManager,
+  'Fund Administrator': IdentityRoute.editFundAdmin,
+  'Portfolio Manager': IdentityRoute.editPortfolioManager,
   issuer: IdentityRoute.editIssuer
 }
 

@@ -16,9 +16,9 @@ import { useConfirmSubmitDialog } from 'app/pages/identity/hooks/useConfirmSubmi
 export type CorporateType =
   | 'investor'
   | 'issuer'
-  | 'fundManager'
-  | 'fundAdmin'
-  | 'portfolioManager'
+  | 'Fund Manager'
+  | 'Fund Administrator'
+  | 'Portfolio Manager'
 
 export interface CorporateInvestorFormProps {
   data?: CorporateIdentity

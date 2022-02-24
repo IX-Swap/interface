@@ -55,5 +55,10 @@ export const IdentityRoute = {
     '/app/identity/corporates/:userId/:identityId/edit-fund-manager',
   editFundAdmin: '/app/identity/corporates/:userId/:identityId/edit-fund-admin',
   editPortfolioManager:
-    '/app/identity/corporates/:userId/:identityId/edit-portfolio-manager'
+    '/app/identity/corporates/:userId/:identityId/edit-portfolio-manager',
+  viewFundManager:
+    '/app/identity/corporates/:userId/:identityId/view-fund-manager',
+  viewFundAdmin: '/app/identity/corporates/:userId/:identityId/view-fund-admin',
+  viewPortfolioManager:
+    '/app/identity/corporates/:userId/:identityId/view-portfolio-manager'
 }
