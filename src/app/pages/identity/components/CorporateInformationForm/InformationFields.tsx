@@ -31,9 +31,9 @@ export const InformationFields = ({
 
   const corporateInformationLabelMap = {
     investor: 'Corporate Information',
-    fundManager: 'Fund Manager Company Information',
-    fundAdmin: 'Fund Admin Company Information',
-    portfolioManager: 'Portfolio Manager Company Information',
+    'Fund Manager': 'Fund Manager Company Information',
+    'Fund Administrator': 'Fund Admin Company Information',
+    'Portfolio Manager': 'Portfolio Manager Company Information',
     issuer: 'Corporate Information'
   }
 
