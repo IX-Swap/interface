@@ -1,12 +1,12 @@
 import React from 'react'
 import { ThemeProvider } from '@mui/material/styles'
-import { AppTheme, getAppTheme } from 'themes/new'
+import { getAppTheme } from 'themes/auth'
 import { AuthRoot } from 'auth/AuthRoot'
 
-// TODO Remove this component after redesign will be completed, it needs only for use new theme context in Auth module
+// TODO It here because we have auth module design in corporate website style. Needs to do smth with it in future.
 export const AuthRootWrapper: React.FC = () => {
   return (
-    <ThemeProvider theme={getAppTheme(AppTheme.Dark, true)}>
+    <ThemeProvider theme={getAppTheme()}>
       <AuthRoot />
     </ThemeProvider>
   )

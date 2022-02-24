@@ -17,6 +17,6 @@ export const useStyles = makeStyles(theme => ({
     textTransform: 'uppercase'
   },
   text: {
-    color: '#ffffff20'
+    color: '#ffffff50'
   }
 }))
