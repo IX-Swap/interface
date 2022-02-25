@@ -29,7 +29,7 @@ jest.mock('app/components/DSO/DSOPreview/DSOTeamView', () => ({
 }))
 
 describe('DSOPreview', () => {
-  const props: DSOPreviewProps = { data: dso, showAuthorizations: false }
+  const props: DSOPreviewProps = { data: dso }
 
   afterEach(async () => {
     jest.clearAllMocks()

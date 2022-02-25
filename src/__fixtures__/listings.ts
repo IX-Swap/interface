@@ -7,7 +7,7 @@ export const listing: ListingView = {
   exchange: {
     markets: []
   },
-  decimalPlaces: '0',
+  decimals: '0',
   minimumTradeUnits: 0,
   maximumTradeUnits: 100,
   raisedAmount: 641,

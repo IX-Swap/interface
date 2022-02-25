@@ -1,12 +1,7 @@
-import React from 'react'
+import { FormControl, InputLabel, MenuItem } from '@mui/material'
+import { TextFieldSelect } from 'components/form/TextFieldSelect'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
-import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  SelectChangeEvent
-} from '@mui/material'
+import React from 'react'
 
 export const IdentityTypeFilter = () => {
   return (
@@ -14,20 +9,19 @@ export const IdentityTypeFilter = () => {
       {({ value, onChange }) => (
         <FormControl variant='outlined' style={{ width: 207 }}>
           <InputLabel shrink>Identity Type</InputLabel>
-          <Select
-            displayEmpty
-            value={value ?? ''}
-            onChange={(event: SelectChangeEvent<unknown>) => {
-              onChange(event.target.value as string)
-            }}
+          <TextFieldSelect
             label='Identity Type'
+            onChange={event => {
+              onChange(event.target.value)
+            }}
+            value={value}
           >
             <MenuItem value=''>All</MenuItem>
             <MenuItem value='individual'>Individual Identity</MenuItem>
             <MenuItem value='issuer'>Issuer Identity</MenuItem>
             <MenuItem value='corporate'>Corporate Identity</MenuItem>
             <MenuItem value='issuer_corporate'>Issuer and Corporate</MenuItem>
-          </Select>
+          </TextFieldSelect>
         </FormControl>
       )}
     </SearchQueryFilter>

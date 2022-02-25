@@ -17,7 +17,7 @@ export const DSOInvestorOverview = (props: DSOInvestorOverviewProps) => {
         <LabelledValue label='Network' value={dso.network?.name} isNewThemeOn />
       </Grid>
       <Grid item xs={6} md={3}>
-        <LabelledValue label='Decimal' value={dso.decimalPlaces} isNewThemeOn />
+        <LabelledValue label='Decimal' value={dso.decimals} isNewThemeOn />
       </Grid>
       <Grid item xs={6} md={3}>
         <LabelledValue

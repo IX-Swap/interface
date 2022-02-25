@@ -22,7 +22,7 @@ export const PreviewDSO = () => {
       </Grid>
 
       <Grid item lg={9} container direction='column'>
-        <DSOPreview data={data} showAuthorizations />
+        <DSOPreview data={data} />
       </Grid>
 
       <Grid item lg={3}>

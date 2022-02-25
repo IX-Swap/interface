@@ -71,7 +71,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
         </Grid>
         <Grid item>
           <Grid container spacing={3}>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12} md={4}>
               <TypedField
                 component={TextField}
                 label='Token Name'
@@ -82,7 +82,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 variant='outlined'
               />
             </Grid>
-            <Grid item xs={12} md={2}>
+            <Grid item xs={12} md={4}>
               <TypedField
                 component={TextField}
                 label='Symbol'

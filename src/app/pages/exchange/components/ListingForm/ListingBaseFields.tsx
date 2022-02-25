@@ -1,7 +1,7 @@
 import React from 'react'
 import { Box, Grid, TextField } from '@mui/material'
 import { TypedField } from 'components/form/TypedField'
-import { dateTimeValueExtractor } from 'helpers/forms'
+import { dateTimeValueExtractor, numericValueExtractor } from 'helpers/forms'
 import { CorporateSelect } from 'components/form/CorporateSelect'
 import { NetworkSelect } from 'components/form/NetworkSelect'
 import { useFormContext } from 'react-hook-form'
@@ -13,6 +13,8 @@ import { CapitalStructureSelect } from 'components/form/CapitalStructureSelect'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
 import { initialListingFormValues } from 'app/pages/exchange/consts/listing'
 import { ListingHiddenFields } from 'app/pages/exchange/components/ListingForm/ListingHiddenFields'
+import { NumericInput } from 'components/form/NumericInput'
+import { positiveNumberFormat } from 'config/numberFormat'
 
 export interface ListingBaseFieldsProps {
   isNew: boolean
@@ -81,7 +83,7 @@ export const ListingBaseFields = (props: ListingBaseFieldsProps) => {
         </Grid>
         <Grid item>
           <Grid container spacing={3}>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12} md={4}>
               <TypedField
                 component={TextField}
                 label='Token Name'
@@ -96,7 +98,7 @@ export const ListingBaseFields = (props: ListingBaseFieldsProps) => {
                 variant='outlined'
               />
             </Grid>
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12} md={4}>
               <TypedField
                 component={TextField}
                 label='Symbol'
@@ -110,6 +112,20 @@ export const ListingBaseFields = (props: ListingBaseFieldsProps) => {
                 control={control}
                 helperText='Token symbol'
                 variant='outlined'
+              />
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <TypedField
+                component={NumericInput}
+                customRenderer
+                numberFormat={positiveNumberFormat}
+                label='Decimal Places'
+                name='decimals'
+                control={control}
+                helperText='Decimal Places'
+                variant='outlined'
+                valueExtractor={numericValueExtractor}
+                fullWidth
               />
             </Grid>
           </Grid>

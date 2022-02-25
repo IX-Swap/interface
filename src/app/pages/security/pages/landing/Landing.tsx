@@ -40,7 +40,7 @@ export const Landing = () => {
                     onClick={handleUpdate2FA}
                     size='large'
                   >
-                    Update
+                    {user.totpConfirmed ? 'Update' : 'Connect'}
                   </Button>
                 }
               />

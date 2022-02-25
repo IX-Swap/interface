@@ -7,7 +7,10 @@ import { authURL } from 'config/apiURL'
 import { useHistory } from 'react-router-dom'
 import User from 'types/user'
 
-export const useEnable2fa = (nextStep: () => void) => {
+export const useEnable2fa = (
+  nextStep: () => void,
+  autoComplete2FA?: boolean
+) => {
   const { snackbarService, apiService, storageService } = useServices()
   const { user } = useAuth()
   const history = useHistory()
@@ -19,10 +22,7 @@ export const useEnable2fa = (nextStep: () => void) => {
 
   return useMutation(enable2fa, {
     onSuccess: () => {
-      void snackbarService.showSnackbar(
-        'Google Authenticator Setup Success!',
-        'success'
-      )
+      snackbarService.showSnackbar('Authenticator Setup Success!', 'success')
 
       const userData = storageService.get<User>('user')
       if (userData !== undefined) {
@@ -33,10 +33,12 @@ export const useEnable2fa = (nextStep: () => void) => {
       }
 
       nextStep()
-      setTimeout(() => history.push('/'), 2500)
+      if (autoComplete2FA !== undefined && autoComplete2FA) {
+        setTimeout(() => history.push('/'), 2500)
+      }
     },
     onError: (error: any) => {
-      void snackbarService.showSnackbar(error.message, 'error')
+      snackbarService.showSnackbar(error.message, 'error')
     }
   })
 }
