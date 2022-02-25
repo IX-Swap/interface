@@ -21,7 +21,7 @@ import {
   corporateSourceOfFunds,
   legalEntityTypes,
   entityTypes,
-  representOptions,
+  corporateRepresentOptions,
 } from './mock'
 import { Grid, FormCard, FormGrid, ExtraInfoCard, Divider } from './styleds'
 import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
@@ -424,7 +424,7 @@ export const CorporateKycForm: FC<Props> = ({ goBack }: Props) => {
                 </Column>
                 {corporate.value && (
                   <Column style={{ gap: '24px' }}>
-                    {representOptions.map((option, index) => (
+                    {corporateRepresentOptions.map((option, index) => (
                       <Checkbox
                         key={option}
                         isRadio

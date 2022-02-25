@@ -43,7 +43,7 @@ export function useCreateIndividualKYC() {
         dispatch(fetchCreateIndividualKYC.pending())
         const data = await createIndividualKYC(newKYC)
         dispatch(fetchCreateIndividualKYC.fulfilled({ data }))
-        return BROKER_DEALERS_STATUS.SUCCESS
+        return data
       } catch (error: any) {
         dispatch(fetchCreateIndividualKYC.rejected({ errorMessage: 'Could not create individual kyc' }))
         return BROKER_DEALERS_STATUS.FAILED

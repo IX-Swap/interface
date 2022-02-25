@@ -3,12 +3,16 @@ import { ActionFilterTabs } from 'components/Vault/enum'
 export const admin = {
   login: 'auth/login',
   me: 'auth/me',
-  kycList: '/kyc/list',
   brokerDealerList: '/broker-dealer/list',
   getSwaps: 'broker-dealer/swaps/all',
-  kycReset: (accreditationId: number) => `/kyc/restart/${accreditationId}`,
-  approveKyc: (id: number) => `/kyc/approve/${id}`,
-  declineKyc: (id: number) => `/kyc/decline/${id}`,
+  accreditationList: '/kyc/list',
+  accreditationReset: (accreditationId: number) => `/kyc/restart/${accreditationId}`,
+  approveAccreditation: (id: number) => `/kyc/approve/${id}`,
+  declineAccreditation: (id: number) => `/kyc/decline/${id}`,
+  kycList: '/newkyc/list',
+  resetKyc: (kycId: number) => `/newkyc/change/${kycId}`,
+  approveKyc: (id: number) => `/newkyc/approve/${id}`,
+  rejectKyc: (id: number) => `/newkyc/reject/${id}`,
 }
 
 export const vesting = {

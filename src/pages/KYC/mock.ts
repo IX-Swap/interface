@@ -219,7 +219,12 @@ export const corporateSourceOfFunds = [
   'Others',
 ].map((name, index) => ({ id: ++index, name }))
 
-export const representOptions = [
+export const individualRepresentOptions = [
+  'I am a person whose individual net worth or joint net worth with my spouse at the time of purchase exceeds US $1 million',
+  'I am person who had an individual income in excess of US$200,000 in each of the two most recent years or joint income with my spouse in excess of US$300 000 in each of those years and has a reasonable expectation of reaching the same income level in the current year',
+]
+
+export const corporateRepresentOptions = [
   'I represent a bank licensed in The Bahamas, whether acting in its individual or fiduciary capacity',
   'I represent a broker-dealer or securities investment advisor licensed in The Bahamas and acting for its own account',
   'I represent an insurance company licensed in The Bahamas',

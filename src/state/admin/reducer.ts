@@ -5,15 +5,20 @@ import {
   getMe,
   logout,
   RawGetMePayload,
-  KycList,
+  AccreditationList,
   getBrokerDealerList,
   getBrokerDealerSwaps,
   BrokerDealerList,
-  getKycList,
+  KycList,
+  getAccreditationList,
+  postApproveAccreditation,
+  postDeclineAccreditation,
+  postResetAccreditation,
   postApproveKyc,
-  postDeclineKyc,
-  postKycReset,
+  postRejectKyc,
+  postResetKyc,
   BrokerDealerSwaps,
+  getKycList,
 } from './actions'
 
 export interface AdminState {
@@ -23,6 +28,7 @@ export interface AdminState {
   adminIsAuthenticated: boolean
   adminError: string | null
   adminData: RawGetMePayload | null
+  accreditationList: AccreditationList
   kycList: KycList
   brokerDealerList: BrokerDealerList
   brokerDealerSwaps: BrokerDealerSwaps
@@ -35,6 +41,16 @@ const initialState: AdminState = {
   adminError: null,
   adminData: null,
   adminIsAuthenticated: Boolean(localStorage.getItem('adminAccessToken')),
+  accreditationList: {
+    page: 0,
+    offset: 0,
+    totalItems: 0,
+    totalPages: 0,
+    itemCount: 0,
+    items: [],
+    nextPage: 0,
+    prevPage: 0,
+  },
   kycList: {
     page: 0,
     offset: 0,
@@ -94,67 +110,67 @@ export default createReducer<AdminState>(initialState, (builder) =>
       state.adminError = null
       state.adminData = null
     })
-    .addCase(getKycList.pending, (state) => {
+    .addCase(getAccreditationList.pending, (state) => {
       state.adminLoading = true
       state.adminError = null
     })
-    .addCase(getKycList.fulfilled, (state, { payload: { data } }) => {
+    .addCase(getAccreditationList.fulfilled, (state, { payload: { data } }) => {
       state.adminLoading = false
       state.adminError = null
-      state.kycList = data
+      state.accreditationList = data
     })
-    .addCase(getKycList.rejected, (state, { payload: { errorMessage } }) => {
+    .addCase(getAccreditationList.rejected, (state, { payload: { errorMessage } }) => {
       state.adminLoading = false
       state.adminError = errorMessage
     })
-    .addCase(postApproveKyc.pending, (state) => {
+    .addCase(postApproveAccreditation.pending, (state) => {
       state.adminLoading = true
       state.adminError = null
     })
-    .addCase(postApproveKyc.fulfilled, (state, { payload: { data } }) => {
-      const list = [...state.kycList.items]
+    .addCase(postApproveAccreditation.fulfilled, (state, { payload: { data } }) => {
+      const list = [...state.accreditationList.items]
       state.adminLoading = false
       state.adminError = null
-      state.kycList = {
-        ...state.kycList,
+      state.accreditationList = {
+        ...state.accreditationList,
         items: list.map((el) => ({ ...el, status: el.id === data.id ? data.status : el.status })),
       }
     })
-    .addCase(postApproveKyc.rejected, (state, { payload: { errorMessage } }) => {
+    .addCase(postApproveAccreditation.rejected, (state, { payload: { errorMessage } }) => {
       state.adminLoading = false
       state.adminError = errorMessage
     })
-    .addCase(postDeclineKyc.pending, (state) => {
+    .addCase(postDeclineAccreditation.pending, (state) => {
       state.adminLoading = true
       state.adminError = null
     })
-    .addCase(postDeclineKyc.fulfilled, (state, { payload: { data } }) => {
-      const list = [...state.kycList.items]
+    .addCase(postDeclineAccreditation.fulfilled, (state, { payload: { data } }) => {
+      const list = [...state.accreditationList.items]
       state.adminLoading = false
       state.adminError = null
-      state.kycList = {
-        ...state.kycList,
+      state.accreditationList = {
+        ...state.accreditationList,
         items: list.map((el) => ({ ...el, status: el.id === data.id ? data.status : el.status })),
       }
     })
-    .addCase(postDeclineKyc.rejected, (state, { payload: { errorMessage } }) => {
+    .addCase(postDeclineAccreditation.rejected, (state, { payload: { errorMessage } }) => {
       state.adminLoading = false
       state.adminError = errorMessage
     })
-    .addCase(postKycReset.pending, (state) => {
+    .addCase(postResetAccreditation.pending, (state) => {
       state.adminLoading = true
       state.adminError = null
     })
-    .addCase(postKycReset.fulfilled, (state, { payload: { data } }) => {
-      const list = [...state.kycList.items]
+    .addCase(postResetAccreditation.fulfilled, (state, { payload: { data } }) => {
+      const list = [...state.accreditationList.items]
       state.adminLoading = false
       state.adminError = null
-      state.kycList = {
-        ...state.kycList,
+      state.accreditationList = {
+        ...state.accreditationList,
         items: list.filter((el) => el.id !== data.id),
       }
     })
-    .addCase(postKycReset.rejected, (state, { payload: { errorMessage } }) => {
+    .addCase(postResetAccreditation.rejected, (state, { payload: { errorMessage } }) => {
       state.adminLoading = false
       state.adminError = errorMessage
     })
@@ -179,5 +195,54 @@ export default createReducer<AdminState>(initialState, (builder) =>
     .addCase(getBrokerDealerSwaps.pending, (state) => {
       state.adminLoading = true
       state.adminError = null
+    })
+    .addCase(getKycList.pending, (state) => {
+      state.adminLoading = true
+      state.adminError = null
+    })
+    .addCase(getKycList.fulfilled, (state, { payload: { data } }) => {
+      state.adminLoading = false
+      state.adminError = null
+      state.kycList = data
+    })
+    .addCase(getKycList.rejected, (state, { payload: { errorMessage } }) => {
+      state.adminLoading = false
+      state.adminError = errorMessage
+    })
+    .addCase(postApproveKyc.pending, (state) => {
+      state.adminLoading = true
+      state.adminError = null
+    })
+    .addCase(postApproveKyc.fulfilled, (state) => {
+      state.adminLoading = false
+      state.adminError = null
+    })
+    .addCase(postApproveKyc.rejected, (state, { payload: { errorMessage } }) => {
+      state.adminLoading = false
+      state.adminError = errorMessage
+    })
+    .addCase(postRejectKyc.pending, (state) => {
+      state.adminLoading = true
+      state.adminError = null
+    })
+    .addCase(postRejectKyc.fulfilled, (state) => {
+      state.adminLoading = false
+      state.adminError = null
+    })
+    .addCase(postRejectKyc.rejected, (state, { payload: { errorMessage } }) => {
+      state.adminLoading = false
+      state.adminError = errorMessage
+    })
+    .addCase(postResetKyc.pending, (state) => {
+      state.adminLoading = true
+      state.adminError = null
+    })
+    .addCase(postResetKyc.fulfilled, (state) => {
+      state.adminLoading = false
+      state.adminError = null
+    })
+    .addCase(postResetKyc.rejected, (state, { payload: { errorMessage } }) => {
+      state.adminLoading = false
+      state.adminError = errorMessage
     })
 )

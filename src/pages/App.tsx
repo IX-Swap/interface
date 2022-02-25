@@ -33,7 +33,7 @@ import PoolFinder from './PoolFinder'
 import { RedirectPathToStaking, RedirectPathToSwapOnly, RedirectToSwap } from './Swap/redirects'
 import { Footer } from '../components/Footer'
 
-const AdminKyc = lazy(() => import('./AdminKyc'))
+const AdminKyc = lazy(() => import('./Admin'))
 const KYC = lazy(() => import('./KYC'))
 // const Custodian = lazy(() => import('./Custodian'))
 const CustodianV2 = lazy(() => import('./CustodianV2'))

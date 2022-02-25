@@ -3,7 +3,7 @@ import { darken } from 'polished'
 
 import { ButtonGradientBorder } from 'components/Button'
 import { BodyRow } from 'components/Table'
-import { ApproveButton } from 'components/AdminKycTable/SecondStepStatus'
+import { ApproveButton } from 'components/AdminAccreditationTable/SecondStepStatus'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import { ModalBlurWrapper } from 'theme'
 

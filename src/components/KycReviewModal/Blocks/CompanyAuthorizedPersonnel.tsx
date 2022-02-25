@@ -1,12 +1,12 @@
 import React from 'react'
 
-import { kycData } from './utils/kyc-data'
+import { kycData } from '../utils/kyc-data'
 
-import { Block } from './molecules/Block'
+import { Block } from '../molecules/Block'
 import { GridContainer, GridItem } from 'components/Grid'
-import { companyAuthorizedPersonnelKeys } from './utils/constants'
-import { Field } from './molecules/Field'
-import { Documents } from './molecules/Documents'
+import { companyAuthorizedPersonnelKeys } from '../utils/constants'
+import { Field } from '../molecules/Field'
+import { Documents } from '../molecules/Documents'
 
 export const CompanyAuthorizedPersonnel = () => {
   return (
@@ -17,12 +17,7 @@ export const CompanyAuthorizedPersonnel = () => {
             <Field label={label} value={kycData[key]} />
           </GridItem>
         ))}
-        <Documents
-          documents={[
-            { fileName: 'Identification. pdf', type: 'Proof of Identity', createdAt: new Date().toISOString() },
-          ]}
-          title="Proof of Identity"
-        />
+        <Documents documents={[]} title="Proof of Identity" />
       </GridContainer>
     </Block>
   )

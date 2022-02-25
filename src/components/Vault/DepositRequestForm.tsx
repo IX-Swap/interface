@@ -26,7 +26,7 @@ import { HideSmall, SmallOnly } from 'theme'
 import useTheme from 'hooks/useTheme'
 import info from '../../assets/images/info-filled.svg'
 import { chainIdToNetworkName, getNetworkFromToken } from 'components/CurrencyLogo'
-import { capitalizeFirstLetter } from 'components/AdminKycTable/utils'
+import { capitalizeFirstLetter } from 'components/AdminAccreditationTable/utils'
 import { SupportedChainId } from 'constants/chains'
 
 export const ArrowWrapper = styled.div`

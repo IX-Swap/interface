@@ -8,10 +8,11 @@ import rejectedIcon from '../../assets/images/attention.svg'
 import approvedIcon from '../../assets/images/check-success.svg'
 import pendingIcon from '../../assets/images/loader_thin.svg'
 import { convert } from './utils'
+
 interface Props {
   status: string
-  kyc: any
-  broker: string
+  kyc?: any
+  broker?: string
 }
 const styles = StyleSheet.create({
   section: { textAlign: 'left', margin: 30 },
@@ -31,7 +32,7 @@ const usePdfDoc = ({ kyc, broker }: { kyc: any; broker: string }) => {
     )
   }, [kyc, broker])
 }
-export const FirstStepStatus = ({ status, kyc, broker }: Props) => {
+export const FirstStepStatus = ({ status, kyc = {}, broker = '' }: Props) => {
   const theme = useContext(ThemeContext)
   const pdfDoc = usePdfDoc({ kyc, broker })
   const [instance] = usePDF({ document: pdfDoc })
