@@ -98,7 +98,11 @@ export const corporate: CorporateIdentity = {
   authorization: authorizationInfo,
   authorizations: [],
   mailingAddress: address,
-  createdBy: '12345'
+  createdBy: '12345',
+  numberOfBusinessOwners: '1',
+  businessActivity: '12',
+  isIncorporated: true,
+  identityStatus: 'corporate'
 }
 
 export const individual: IndividualIdentity = {

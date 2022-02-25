@@ -9,11 +9,15 @@ import { CountrySelect } from 'components/form/CountrySelect'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
 import { privateClassNames } from 'helpers/classnames'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+import { IdentityTypeSelect } from 'components/form/IdentityTypeSelect'
+import { booleanValueExtractor } from 'helpers/forms'
+import { Checkbox } from 'components/form/Checkbox'
 
 export const InformationFields = () => {
   const { control, watch, clearErrors } = useFormContext()
   const legalEntityStatus = watch('legalEntityStatus')
   const { isMobile, isTablet } = useAppBreakpoints()
+  const isIncorporated: boolean = watch('isIncorporated', true)
 
   useEffect(() => {
     if (legalEntityStatus !== 'others') {
@@ -98,6 +102,27 @@ export const InformationFields = () => {
               name='otherLegalEntityStatus'
               label='Others (Please specify)'
               disabled={legalEntityStatus !== 'others'}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} md={6}>
+            <TypedField
+              component={IdentityTypeSelect}
+              control={control}
+              variant='outlined'
+              name='identityStatus'
+              label='Identity Status'
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} md={6} />
+          <Grid item xs={12} sm={6} md={6}>
+            <TypedField
+              customRenderer
+              component={Checkbox}
+              defaultValue={isIncorporated ?? true}
+              control={control}
+              valueExtractor={booleanValueExtractor}
+              name='isIncorporated'
+              label='Is incorporated?'
             />
           </Grid>
         </Grid>

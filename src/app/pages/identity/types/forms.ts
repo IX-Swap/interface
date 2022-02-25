@@ -231,6 +231,10 @@ export interface CorporateFields {
   mailingAddress: Address
   isMailingAddressSame: boolean
   type: 'investor' | 'issuer'
+  identityStatus: string
+  isIncorporated: boolean
+  numberOfBusinessOwners: string
+  businessActivity: string
 }
 
 export interface Declaration {
