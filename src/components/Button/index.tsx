@@ -173,7 +173,6 @@ export const ButtonIXSGradient = styled(ButtonPrimary)<{ confirmed?: boolean; di
   color: white;
   height: 54px;
   opacity: ${({ confirmed }) => (confirmed ? 0.5 : 1)};
-  border: ${({ disabled }) => (disabled ? 'none !important' : 'none !important')};
   width: fit-content;
   position: relative;
   cursor: pointer;

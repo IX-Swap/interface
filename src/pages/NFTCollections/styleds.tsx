@@ -1,29 +1,50 @@
 import { Box } from 'rebass'
 import styled from 'styled-components'
 
+import { ellipsisText, gradientBorder, MEDIA_WIDTHS } from 'theme'
+
 export const CollectionsGrid = styled.div`
   display: grid;
-  grid-gap: 30px;
-  grid-template-columns: repeat(4, 1fr);
-
-  @media (max-width: 540px) {
-    grid-template-columns: 1fr;
+  grid-gap: 28px;
+  padding: 32px 42px;
+  grid-template-columns: ${`repeat(4, calc((100% - ${28 * 3}px) / 4))`};
+  position: relative;
+  ${gradientBorder};
+  @media (max-width: ${MEDIA_WIDTHS.upToLarge}px) {
+    grid-template-columns: ${`repeat(3, calc((100% - ${28 * 2}px) / 3))`};
+  }
+  @media (max-width: ${MEDIA_WIDTHS.upToMedium}px) {
+    grid-template-columns: ${`repeat(2, calc((100% - 28px) / 2))`};
+    padding: 16px 21px;
+  }
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    grid-template-columns: 100%;
   }
 `
 
 export const CollectionCard = styled.div`
+  position: relative;
   width: 100%;
   max-height: 468px;
-  border-radius: 30px;
-  background: radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.033) 0%, rgba(26, 18, 58, 0) 100%),
-    rgba(44, 37, 74, 0.5);
+  border-radius: 18px;
+  background: radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.33) 0%, rgba(26, 18, 58, 0) 100%),
+    rgba(44, 37, 74, 0.68);
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
 
   transition: transform 0.3s;
-
+  .more-actions {
+    display: none;
+  }
   :hover {
-    transform: scale(1.05);
+    ${gradientBorder}
+    ::before {
+      border-radius: 18px;
+      z-index: 1;
+    }
+    .more-actions {
+      display: block;
+    }
   }
 `
 
@@ -31,23 +52,22 @@ export const CollectionImageWrapper = styled.div`
   position: relative;
   height: 200px;
   width: 100%;
-  margin-bottom: 48px;
 `
 
 export const CollectionImage = styled.img`
-  border-radius: 30px 30px 0px 0px;
+  border-radius: 18px 18px 0px 0px;
 `
 
 export const CollectionLogo = styled.img`
-  width: 45px;
-  height: 45px;
+  width: 60px;
+  height: 60px;
   position: absolute;
   left: 50%;
   bottom: -25px;
   transform: translateX(-50%);
   border-radius: 50%;
   object-fit: cover;
-  outline: 4px solid #fff;
+  outline: 2px solid #fff;
   z-index: 2;
 `
 export const ActiveSortItemBottom = styled.div`
@@ -79,4 +99,60 @@ export const SortText = styled.button`
 export const Divider = styled(Box)`
   height: 1px;
   background-color: ${({ theme }) => theme.divider};
+`
+
+export const ButtonsContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 32px 0;
+  flex-wrap: wrap;
+  row-gap: 32px;
+  a {
+    height: 40px;
+    font-weight: 600;
+    font-size: 16px;
+    :hover {
+      text-decoration: none;
+    }
+  }
+`
+
+export const TextInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+  text-align: center;
+  color: rgba(237, 206, 255, 0.5);
+  font-weight: 500;
+  font-size: 12px;
+  > div {
+    ${ellipsisText};
+  }
+  > div:first-child {
+    font-weight: 600;
+    font-size: 18px;
+    color: white;
+  }
+  padding: 42px 12px 18px;
+`
+export const MoreActions = styled.div`
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 25px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 4;
+  border-radius: 8px;
+  background: ${({ theme }) => theme.bgG1};
+  box-shadow: 2px 2px 4px rgba(90, 84, 111, 0.25);
+  svg {
+    transform: rotate(90deg);
+    path {
+      stroke: white;
+    }
+  }
 `

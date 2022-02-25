@@ -37,13 +37,11 @@ const CreateCollection = () => {
   return (
     <AppBody blurred={blurred} maxWidth="100%" transparent>
       <Loadable loading={pending}>
-        <Container width={['100%']} maxWidth={'900px'} margin="auto">
-          <StyledTab>
-            <TYPE.title4>
-              <Trans>Create Collection</Trans>
-            </TYPE.title4>
-          </StyledTab>
-          {!blurred && <CollectionForm onSubmit={onSubmit} actionName="Create" />}
+        <Container width={['100%']} maxWidth={'672px'} margin="auto">
+          <TYPE.title4 style={{ textAlign: 'center', marginBottom: 32 }}>
+            <Trans>Create Collection</Trans>
+          </TYPE.title4>
+          {!blurred && <CollectionForm onSubmit={onSubmit} actionName="Create Collection" />}
         </Container>
       </Loadable>
     </AppBody>

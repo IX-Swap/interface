@@ -42,6 +42,7 @@ export interface NFTCollection {
   // featured: string
   logo?: NFTCollectionImage
   banner?: NFTCollectionImage
+  cover?: NFTCollectionImage
 }
 
 export enum TraitType {

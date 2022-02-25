@@ -259,7 +259,7 @@ export const useDeployCollection = () => {
   )
 }
 
-interface NftCollectionInfo {
+interface NftCollectionInfo extends NFTCollection {
   name: string
   supply: number
 }
@@ -288,7 +288,7 @@ export const useNftCollection = (address: string) => {
 
       const supply = await contract.methods.totalSupply().call()
 
-      setInfo({ name, supply: Number(supply) })
+      setInfo({ name, supply: Number(supply), ...collection.data })
 
       if (supply === 0) {
         setHasMore(false)
