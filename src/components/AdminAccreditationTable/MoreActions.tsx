@@ -6,14 +6,14 @@ import Popover from 'components/Popover'
 
 import { ReactComponent as MenuIcon } from '../../assets/images/menu.svg'
 import { Trans } from '@lingui/macro'
-import { useKycReset } from 'state/admin/hooks'
+import { useResetAccreditation } from 'state/admin/hooks'
 
 interface Props {
   id: number
 }
 
 export const MoreActions = ({ id }: Props) => {
-  const kycReset = useKycReset()
+  const accreditationReset = useResetAccreditation()
   const [isOpen, handleIsOpen] = useState(false)
 
   const toggle = () => handleIsOpen((state) => !state)
@@ -21,7 +21,7 @@ export const MoreActions = ({ id }: Props) => {
 
   const startAgain = async () => {
     try {
-      await kycReset(id)
+      await accreditationReset(id)
       close()
     } catch (e) {}
   }

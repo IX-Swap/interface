@@ -1,3 +1,5 @@
+import dayjs from 'dayjs'
+
 export const cynopsisKeys = [
   { key: 'cynopsis1', label: 'Cynopsis 1' },
   { key: 'cynopsis2', label: 'Cynopsis 2' },
@@ -21,7 +23,24 @@ export const corporateInfoKeys = [
   { key: 'businessActivity', label: 'Business Activity' },
   { key: 'ownership', label: 'Ownership Structure Layers' },
   { key: 'entityType', label: 'Entity Type' },
-]
+] as Array<{ key: string; label: string; width?: Record<string, number>; format?: (values: string) => string }>
+
+export const personalInfoKeys = [
+  { key: 'firstName', label: 'First Name', width: { xs: 12, sm: 6, md: 4 } },
+  { key: 'middleName', label: 'Middle Name', width: { xs: 12, sm: 6, md: 4 } },
+  { key: 'lastName', label: 'Last Name', width: { xs: 12, sm: 6, md: 4 } },
+  { key: 'gender', label: 'Gender', width: { xs: 12, sm: 6 } },
+  {
+    key: 'dateOfBirth',
+    label: 'Date of Birth',
+    width: { xs: 12, sm: 6 },
+    format: (value: string) => dayjs(value).format('DD/MM/YYYY'),
+  },
+  { key: 'nationality', label: 'Nationality', width: { xs: 12, sm: 6 } },
+  { key: 'citizenship', label: 'Citizenship', width: { xs: 12, sm: 6 } },
+  { key: 'phoneNumber', label: 'Phone Number', width: { xs: 12, sm: 6 } },
+  { key: 'email', label: 'Email address: ', width: { xs: 12, sm: 6 } },
+] as Array<{ key: string; label: string; width?: Record<string, number>; format?: (values: string) => string }>
 
 export const companyAuthorizedPersonnelKeys = [
   { key: 'fullName', label: 'Full Name', width: { xs: 12, sm: 6 } },
@@ -31,12 +50,10 @@ export const companyAuthorizedPersonnelKeys = [
 ]
 
 export const addressKeys = [
-  { key: 'line1', label: 'Line 1' },
-  { key: 'line2', label: 'Line 2' },
-  { key: 'city', label: 'City' },
-  { key: 'state', label: 'State', width: { xs: 12, sm: 6, md: 4 } },
-  { key: 'zip', label: 'Postal code', width: { xs: 12, sm: 6, md: 4 } },
-  { key: 'country', label: 'Country', width: { xs: 12, sm: 6, md: 4 } },
+  { key: 'line1', label: 'Line 1', width: { xs: 12, sm: 6 } },
+  { key: 'line2', label: 'Line 2', width: { xs: 12, sm: 6 } },
+  { key: 'city', label: 'City', width: { xs: 12, sm: 6 } },
+  { key: 'country', label: 'Country', width: { xs: 12, sm: 6 } },
 ]
 
 export const residentialAddressKeys = [
@@ -88,12 +105,20 @@ export const investorStatusDeclarationKeys = [
 export const fatcaKeys = [
   {
     key: 'fatca1',
-    label: 'Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Proin eget tortor risus.',
+    label:
+      'I confirm that I am a US citizen and/or resident in the US for tax purposes and my US federal taxpayer ID number (US TIN) is as follows: ',
   },
   {
     key: 'fatca2',
-    label: 'Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.',
+    label: 'I confirm that I am not a US citizen or resident in the US for tax purposes.  ',
   },
+]
+
+export const ocupationKeys = [
+  { key: 'occupation', label: 'Occupation', width: { xs: 12, sm: 6 } },
+  { key: 'employmentStatus', label: 'Employment Status', width: { xs: 12, sm: 6 } },
+  { key: 'employer', label: 'Employer', width: { xs: 12, sm: 6 } },
+  { key: 'income', label: 'Income in USD in preceding 12 months', width: { xs: 12, sm: 6 } },
 ]
 
 export const optInRequirementKeys = [

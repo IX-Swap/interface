@@ -1,12 +1,17 @@
 import React, { ChangeEvent } from 'react'
 import { t } from '@lingui/macro'
 import styled from 'styled-components'
-import { useGetKycList } from 'state/admin/hooks'
+
+import { useGetAccreditationList } from 'state/admin/hooks'
 
 let timer = null as any
 
-export const Search = () => {
-  const getKysList = useGetKycList()
+interface Props {
+  placeholder?: string
+}
+
+export const Search = ({ placeholder }: Props) => {
+  const getKysList = useGetAccreditationList()
 
   const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
@@ -14,7 +19,7 @@ export const Search = () => {
     timer = setTimeout(() => getKysList({ page: 1, offset: 10, search: value }), 250)
   }
 
-  return <Input placeholder={t`Search for Wallet or Token`} onChange={onSearchChange} />
+  return <Input placeholder={t`${placeholder || 'Search for Wallet or Token'}`} onChange={onSearchChange} />
 }
 
 export const Input = styled.input`

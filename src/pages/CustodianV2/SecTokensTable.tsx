@@ -8,7 +8,7 @@ import { getNames } from 'country-list'
 
 import { Table, HeaderRow, BodyRow } from 'components/Table'
 import { TYPE } from 'theme'
-import { Pagination } from 'components/AdminKycTable/Pagination'
+import { Pagination } from 'components/AdminAccreditationTable/Pagination'
 import CurrencyLogo from 'components/CurrencyLogo'
 import { useFetchIssuers, useFetchTokens, useSecCatalogState } from 'state/secCatalog/hooks'
 import { FilterDropdown } from './FilterDropdown'

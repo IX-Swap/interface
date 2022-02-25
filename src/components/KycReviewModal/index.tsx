@@ -1,36 +1,35 @@
-import React, { useState } from 'react'
-import { Trans } from '@lingui/macro'
+import React, { useEffect, useState } from 'react'
+import { Trans, t } from '@lingui/macro'
 import styled from 'styled-components'
 
 import { ModalBlurWrapper, ModalContentWrapper, MEDIA_WIDTHS, CloseIcon } from 'theme'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import { ButtonIXSWide, ButtonPinkBorder, ButtonGradientBorder } from 'components/Button'
 import { ReasonModal } from 'components/ReasonModal'
+import { CorporateKyc, IndividualKyc, KycItem } from 'state/admin/actions'
+import { shortenAddress } from 'utils'
+import { useApproveKyc, useRejectKyc, useResetKyc } from 'state/admin/hooks'
 
-import { Cynopsis } from './Cynopsis'
-import { CorporateInformation } from './CorporateInformation'
-import { CompanyAuthorizedPersonnel } from './CompanyAuthorizedPersonnel'
-import { Address } from './Address'
-import { ResidentialAddress } from './ResidentialAddress'
-import { SourceOfFunds } from './SourceOfFunds'
-import { InvestorStatusDeclaration } from './InvestorStatusDeclaration'
-import { Fatca } from './Fatca'
-import { OptInRequirement } from './OptInRequirement'
-import { TaxDeclaration } from './TaxDeclaration'
-import { BeneficialOwners } from './BeneficialOwners'
-import { UploadDocuments } from './UploadDocuments'
+import { CorporateForm } from './CorporateForm'
+import { IndividualForm } from './IndividualForm'
 
 interface Props {
   isOpen: boolean
   onClose: () => void
+  data: KycItem
 }
 
-export const KycReviewModal = ({ isOpen, onClose }: Props) => {
+export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
   const [openReasonModal, handleOpenReasonModal] = useState('')
+  const approveKyc = useApproveKyc()
+  const rejectKyc = useRejectKyc()
+  const resetKyc = useResetKyc()
 
-  const approve = () => {
-    // TO DO - change with approve request
+  const kyc = (data.individualKycId ? data.individual : data.corporate) || ({} as IndividualKyc | CorporateKyc)
+
+  const approve = async () => {
     onClose()
+    await approveKyc(data.id)
   }
 
   const closeModal = () => handleOpenReasonModal('')
@@ -44,6 +43,14 @@ export const KycReviewModal = ({ isOpen, onClose }: Props) => {
   }
 
   const onReasonAction = (reason?: string) => {
+    if (openReasonModal === 'reject') {
+      console.log('log => reject')
+      rejectKyc({ id: data.id, message: reason })
+    } else {
+      resetKyc({ id: data.id, message: reason })
+    }
+    closeModal()
+    onClose()
     // TO DO - handle action
   }
 
@@ -72,24 +79,11 @@ export const KycReviewModal = ({ isOpen, onClose }: Props) => {
                 <div>
                   <Trans>KYC</Trans>&nbsp;-&nbsp;
                 </div>
-                0xC0...6Cc2 (Corporate)
+                {shortenAddress(data.user.ethAddress)} ({t`${data.individualKycId ? 'Individual' : 'Corporate'}`})
               </Title>
               <CloseIcon data-testid="cross" onClick={onClose} />
             </TitleContainer>
-            <Body>
-              <Cynopsis />
-              <CorporateInformation />
-              <CompanyAuthorizedPersonnel />
-              <Address />
-              <ResidentialAddress />
-              <SourceOfFunds />
-              <InvestorStatusDeclaration />
-              <Fatca />
-              <OptInRequirement />
-              <TaxDeclaration />
-              <BeneficialOwners />
-              <UploadDocuments />
-            </Body>
+            <Body>{data.individualKycId ? <IndividualForm data={kyc} /> : <CorporateForm data={kyc} />}</Body>
             <ActionsContainer>
               <ButtonIXSWide onClick={approve}>
                 <Trans>Approve</Trans>

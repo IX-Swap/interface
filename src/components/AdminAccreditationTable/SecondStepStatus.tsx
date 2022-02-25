@@ -3,7 +3,7 @@ import { ButtonEmpty, ButtonGray } from 'components/Button'
 import Popover from 'components/Popover'
 import { AccreditationStatusEnum } from 'components/Vault/enum'
 import React, { useContext, useState } from 'react'
-import { useApproveKyc } from 'state/admin/hooks'
+import { useApproveAccreditation } from 'state/admin/hooks'
 import styled, { css, ThemeContext } from 'styled-components'
 import rejectedIcon from '../../assets/images/attention.svg'
 import approvedIcon from '../../assets/images/check-success.svg'
@@ -18,7 +18,7 @@ interface Props {
 
 export const SecondStepStatus = ({ status, id }: Props) => {
   const theme = useContext(ThemeContext)
-  const approveKyc = useApproveKyc()
+  const approveAccreditation = useApproveAccreditation()
 
   const [isOpen, handleIsOpen] = useState(false)
   const [isModalOpen, handleIsModalOpen] = useState(false)
@@ -34,7 +34,7 @@ export const SecondStepStatus = ({ status, id }: Props) => {
 
   const approve = async () => {
     try {
-      await approveKyc(id)
+      await approveAccreditation(id)
       close()
     } catch (e) {}
   }

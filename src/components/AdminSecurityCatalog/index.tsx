@@ -5,7 +5,7 @@ import { Label } from '@rebass/forms'
 import { isMobile } from 'react-device-detect'
 
 import { ExternalLink, TYPE } from 'theme'
-import { Container } from 'components/AdminKycTable'
+import { Container } from 'components/AdminAccreditationTable'
 import { BrokerDealerCard } from './BrokerDealerCard'
 import { ButtonIXSGradient, ButtonText } from 'components/Button'
 import { ContainerRow, Input, InputContainer, InputPanel } from 'components/Input'
@@ -31,7 +31,7 @@ import { initialIssuerState } from './mock'
 import { ReactComponent as ArrowLeft } from '../../assets/images/arrow-back.svg'
 import { ReactComponent as LogoImage } from '../../assets/images/wallpaper.svg'
 import { ReactComponent as Delete } from '../../assets/images/delete-basket.svg'
-import { Pagination } from 'components/AdminKycTable/Pagination'
+import { Pagination } from 'components/Pagination'
 
 interface Tab {
   value: 'catalog' | 'add_issuer' | 'edit_issuer'
