@@ -26,7 +26,7 @@ export const KYCProgressBar: FC<Props> = ({ reasons, description, topics, disabl
 
   return (
     <>
-      <FormCard style={{ padding: 24 }}>
+      {/* <FormCard style={{ padding: 24, marginBottom: 24 }}>
         <TYPE.title6 marginBottom="16px" style={{ textTransform: 'uppercase' }} color={'bg14'}>
           <Trans>Reason of reject</Trans>
         </TYPE.title6>
@@ -42,20 +42,20 @@ export const KYCProgressBar: FC<Props> = ({ reasons, description, topics, disabl
             </Li>
           ))}
         </Ul>
-      </FormCard>
+      </FormCard> */}
 
-      <FormCard style={{ marginTop: 24, padding: '24px 0px' }}>
+      <FormCard style={{ padding: '24px 0px' }}>
         <TYPE.title6 marginBottom="16px" paddingX="24px" style={{ textTransform: 'uppercase' }}>
           Progress
         </TYPE.title6>
 
         <Column>
           {topics.map(
-            ({ title, href, passed }, index) =>
+            ({ title, href }, index) =>
               title && (
-                <PageLink onClick={() => handleScrollToDiv(href)} active={index === 1} key={`page-nav-${index}`}>
+                <PageLink onClick={() => handleScrollToDiv(href)} active={index === 0} key={`page-nav-${index}`}>
                   {title}
-                  {passed && StatusIcons[ActionHistoryStatus.SETTLED]()}
+                  {/* {passed && StatusIcons[ActionHistoryStatus.SETTLED]()} */}
                 </PageLink>
               )
           )}
@@ -71,7 +71,9 @@ export const KYCProgressBar: FC<Props> = ({ reasons, description, topics, disabl
       >
         Submit form
       </ButtonIXSGradient>
-      <ButtonGradientBorder style={{ width: '100%' }}>Submit Progress</ButtonGradientBorder>
+      {/* <ButtonGradientBorder disabled style={{ width: '100%' }}>
+        Save Progress
+      </ButtonGradientBorder> */}
     </>
   )
 }

@@ -14,8 +14,9 @@ export const cardCommonStyles = css`
 
 export const StyledBodyWrapper = styled(BodyWrapper)`
   background: transparent;
-  max-width: 1400px;
   width: 100%;
+  max-width: 1270px;
+  padding-top: 0px;
 `
 
 export const MySecTokensTab = styled(Box)`

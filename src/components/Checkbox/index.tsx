@@ -12,27 +12,27 @@ import { ReactComponent as RadioNotChecked } from 'assets/images/radio-not-check
 interface Props {
   label: string | JSX.Element
   checked: boolean
-  onClick?: () => void
+  onClick: () => void
   isRadio?: boolean
   scaleSize?: number
-  disabled?: boolean
 }
 
-export const Checkbox: FC<Props> = ({ label, checked, onClick, isRadio, scaleSize = 1, disabled = false }: Props) => {
+export const Checkbox: FC<Props> = ({ label, checked, onClick, isRadio, scaleSize = 1 }: Props) => {
   const style = { transform: `scale(${scaleSize})` }
   const checkedImage = isRadio ? <RadioChecked style={style} /> : <Checked style={style} />
   const notCheckedImage = isRadio ? <RadioNotChecked style={style} /> : <NotChecked style={style} />
 
   return (
-    <ButtonText
-      type="button"
-      style={{ textDecoration: 'none', textAlign: 'inherit' }}
-      onClick={onClick}
-      disabled={disabled}
-    >
+    <ButtonText type="button" style={{ textDecoration: 'none', textAlign: 'inherit' }} onClick={onClick}>
       <Flex>
         <div>{checked ? checkedImage : notCheckedImage}</div>
-        <TYPE.body3 marginLeft={scaleSize > 1 ? '12px' : '8px'}>{label}</TYPE.body3>
+        {scaleSize !== 1 ? (
+          <TYPE.title6 style={{ textTransform: 'uppercase' }} marginLeft="12px">
+            {label}
+          </TYPE.title6>
+        ) : (
+          <TYPE.body3 marginLeft="8px">{label}</TYPE.body3>
+        )}
       </Flex>
     </ButtonText>
   )
