@@ -1,7 +1,7 @@
 import React from 'react'
 import { Grid, TextField } from '@mui/material'
 import { TypedField } from 'components/form/TypedField'
-import { dateTimeValueExtractor, numericValueExtractor } from 'helpers/forms'
+import { dateTimeValueExtractor } from 'helpers/forms'
 import { CorporateSelect } from 'components/form/CorporateSelect'
 import { NetworkSelect } from 'components/form/NetworkSelect'
 import { AssetSelect } from 'components/form/AssetSelect/AssetSelect'
@@ -13,8 +13,6 @@ import { DateTimePicker } from 'components/form/_DateTimePicker'
 import { Dropzone } from 'components/dataroom/Dropzone'
 import { CapitalStructureSelect } from 'components/form/CapitalStructureSelect'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
-import { NumericInput } from 'components/form/NumericInput'
-import { positiveNumberFormat } from 'config/numberFormat'
 
 export interface DSOBaseFieldsProps {
   isNew: boolean
@@ -23,8 +21,7 @@ export interface DSOBaseFieldsProps {
 
 export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
   const { isNew, isLive } = props
-  const { control, watch } = useFormContext<DSOFormValues>()
-  const capitalStructure = watch('capitalStructure')
+  const { control } = useFormContext<DSOFormValues>()
 
   return (
     <Grid item>
@@ -98,32 +95,15 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
             </Grid>
             <Grid item xs={12} md={4}>
               <TypedField
-                component={NumericInput}
-                customRenderer
-                numberFormat={positiveNumberFormat}
-                label='Decimal Places'
-                name='decimalPlaces'
-                disabled={capitalStructure?.toLowerCase() === 'equity'}
+                component={TextField}
+                label='Unique Identifier Code'
+                name='uniqueIdentifierCode'
+                disabled={isLive}
                 control={control}
-                helperText='Decimal Places'
+                helperText='ISIN or CUSIP Number'
                 variant='outlined'
-                valueExtractor={numericValueExtractor}
-                fullWidth
               />
             </Grid>
-          </Grid>
-        </Grid>
-        <Grid item container>
-          <Grid item xs={12} md={6}>
-            <TypedField
-              component={TextField}
-              label='Unique Identifier Code'
-              name='uniqueIdentifierCode'
-              disabled={isLive}
-              control={control}
-              helperText='ISIN or CUSIP Number'
-              variant='outlined'
-            />
           </Grid>
         </Grid>
         <Grid item>
