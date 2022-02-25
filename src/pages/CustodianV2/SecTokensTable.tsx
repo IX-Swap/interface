@@ -201,7 +201,7 @@ export const SecTokensTable: FC<Props> = ({ tokens, page, offset, totalPages, to
             placeholder="Issuers"
             selectedItem={filters.issuer}
             onSelect={(item) => onFilterChange('issuer', item)}
-            items={issuers}
+            items={issuersWithTokens}
             style={{ borderRadius: '30px 0px 0px 30px', marginRight: 1, padding: 8, width: 132 }}
           />
           <FilterDropdown
