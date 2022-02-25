@@ -16,6 +16,7 @@ import styled from 'styled-components'
 import { ModalBlurWrapper, ModalContentWrapper, ModalPadding } from 'theme'
 import { CloseIcon, TYPE } from '../../theme'
 import { darken } from 'polished'
+import { getMyKyc } from '../../state/kyc/hooks'
 
 const KycSourceContainer = styled.div`
   width: 100%;
@@ -110,6 +111,16 @@ interface KycSourceSelectorProps {
 
 const KycSourceSelector = (props: KycSourceSelectorProps) => {
   const [selected, setSelected] = useState<KycSource | undefined>(undefined)
+  const [kyc, setKyc] = useState<any | undefined>(undefined)
+  const [loading, setLoading] = useState<boolean>(true)
+
+  useEffect(() => {
+    getMyKyc().then((res) => {
+      setSelected(res ? KycSource.IXSwap : KycSource.InvestaX)
+      setKyc(res)
+      setLoading(false)
+    })
+  }, [])
 
   useEffect(() => {
     props.onChange(selected)
@@ -117,9 +128,11 @@ const KycSourceSelector = (props: KycSourceSelectorProps) => {
 
   const onChange = useCallback(
     (value: KycSource) => {
-      setSelected(value !== selected ? value : undefined)
+      if (kyc || value !== KycSource.IXSwap) {
+        setSelected(value !== selected ? value : undefined)
+      }
     },
-    [selected]
+    [kyc, selected]
   )
 
   return (
@@ -129,9 +142,11 @@ const KycSourceSelector = (props: KycSourceSelectorProps) => {
 
         <KycSourceTooltip text="Recommended" />
 
-        <Button onClick={(e) => e.stopPropagation()}>
-          <TYPE.small>Pass KYC on IXSwap</TYPE.small>
-        </Button>
+        {!loading && !kyc && (
+          <Button onClick={(e) => e.stopPropagation()}>
+            <TYPE.small>Pass KYC on IXSwap</TYPE.small>
+          </Button>
+        )}
 
         <Spacer />
 
