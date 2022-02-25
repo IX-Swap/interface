@@ -223,7 +223,7 @@ export default function Header() {
             <HeaderElement>
               <NavLink style={{ textDecoration: 'none', color: 'inherit', marginRight: 16 }} to="/kyc">
                 <KYCWrapper flexDirection="column" alignItems="center" justifyContent="center">
-                  {kyc?.data.status !== 'approved' ? (
+                  {kyc?.data.status === 'approved' ? (
                     <KYCApproved style={{ width: 30, height: 30 }} />
                   ) : (
                     <KYC style={{ marginTop: 5 }} />
