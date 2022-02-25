@@ -6,7 +6,7 @@ export const initialListingFormValues: ListingFormValues = {
   network: '',
   tokenName: '',
   tokenSymbol: '',
-  decimalPlaces: null,
+  decimals: null,
   minimumTradeUnits: null,
   maximumTradeUnits: null,
   raisedAmount: null,

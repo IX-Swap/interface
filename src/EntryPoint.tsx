@@ -6,7 +6,6 @@ import { useAppInit } from 'hooks/useAppInit'
 import { ReactQueryDevtools } from 'react-query-devtools'
 import { Redirect, Switch, useLocation } from 'react-router-dom'
 import { Page404 } from 'components/Page404/Page404'
-import { useGoogleAnalytics } from './hooks/useGoogleAnalytics'
 
 const AuthRoot = React.lazy(
   async () =>
@@ -22,7 +21,6 @@ const AppRoot = React.lazy(
 export const EntryPoint = () => {
   const { isSuccess, isFinished } = useAppInit()
 
-  useGoogleAnalytics()
   const location = useLocation()
 
   if (!isFinished) {
