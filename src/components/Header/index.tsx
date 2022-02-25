@@ -228,7 +228,7 @@ export default function Header() {
                   ) : (
                     <KYC style={{ marginTop: 5 }} />
                   )}
-                  <TYPE.smallError>KYC</TYPE.smallError>
+                  <TYPE.smallError color={kyc?.data.status !== 'approved' ? 'error' : 'green1'}>KYC</TYPE.smallError>
                 </KYCWrapper>
               </NavLink>
             </HeaderElement>

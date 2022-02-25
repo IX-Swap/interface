@@ -87,7 +87,7 @@ export const IndividualKycForm: FC<Props> = ({ goBack }: Props) => {
             gender,
             income,
           } = values
-          const data = await createIndividualKYC({
+          const data: any = await createIndividualKYC({
             ...values,
             dateOfBirth: dateOfBirth.format(),
             sourceOfFunds: [...sourceOfFunds, otherFunds].join(', '),
@@ -98,7 +98,7 @@ export const IndividualKycForm: FC<Props> = ({ goBack }: Props) => {
             gender: gender.name,
             income: income.name,
           })
-          if (data) goBack()
+          if (data?.id) goBack()
         }}
       >
         {({ values, handleChange, errors, handleBlur, handleSubmit, setFieldValue, isValid, dirty }) => (
