@@ -2,8 +2,9 @@ import { Trans } from '@lingui/macro'
 import useScrollPosition from '@react-hook/window-scroll'
 import useLightBackground from 'components/AppBackground/useLightBackground'
 import { useNativeCurrency } from 'hooks/useNativeCurrencyName'
-import React from 'react'
-import { Text } from 'rebass'
+import React, { useEffect } from 'react'
+import { NavLink } from 'react-router-dom'
+import { Flex, Text } from 'rebass'
 import styled from 'styled-components'
 import LogoDark from '../../assets/svg/logo-white.svg'
 import { useActiveWeb3React } from '../../hooks/web3'
@@ -14,6 +15,11 @@ import Web3Status from '../Web3Status'
 import { HeaderLinks } from './HeaderLinks'
 import { IXSBalance } from './IXSBalance'
 import { NetworkCard } from './NetworkCard'
+import { TYPE } from 'theme'
+import { useGetMyKyc, useKYCState } from 'state/kyc/hooks'
+
+import { ReactComponent as KYC } from 'assets/images/kyc.svg'
+import { ReactComponent as KYCApproved } from 'assets/images/kyc-approved.svg'
 
 const HeaderFrame = styled.div<{ showBackground: boolean; lightBackground: boolean }>`
   display: grid;
@@ -178,12 +184,29 @@ const HeaderWrapper = styled.div`
   top: 0;
   z-index: 2;
 `
+
+const KYCWrapper = styled(Flex)`
+  padding: 0px 7px 3px 7px;
+  background: ${({ theme }) => theme.bgG13};
+  border-radius: 4px;
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    display: none !important;
+  `};
+`
+
 export default function Header() {
   const { account } = useActiveWeb3React()
   const { hasLightBackground } = useLightBackground()
   const userEthBalance = useETHBalances(account ? [account] : [])?.[account ?? '']
   const nativeCurrency = useNativeCurrency()
   const scrollY = useScrollPosition()
+  const { kyc } = useKYCState()
+  const getMyKyc = useGetMyKyc()
+
+  useEffect(() => {
+    getMyKyc()
+  }, [getMyKyc])
+
   return (
     <>
       <HeaderWrapper>
@@ -197,6 +220,18 @@ export default function Header() {
           </HeaderRow>
           <HeaderLinks />
           <HeaderControls>
+            <HeaderElement>
+              <NavLink style={{ textDecoration: 'none', color: 'inherit', marginRight: 16 }} to="/kyc">
+                <KYCWrapper flexDirection="column" alignItems="center" justifyContent="center">
+                  {kyc?.data.status !== 'approved' ? (
+                    <KYCApproved style={{ width: 30, height: 30 }} />
+                  ) : (
+                    <KYC style={{ marginTop: 5 }} />
+                  )}
+                  <TYPE.smallError>KYC</TYPE.smallError>
+                </KYCWrapper>
+              </NavLink>
+            </HeaderElement>
             <HeaderElement>
               <IXSBalance />
             </HeaderElement>
