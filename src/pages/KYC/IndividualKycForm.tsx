@@ -74,7 +74,7 @@ export const IndividualKycForm: FC<Props> = ({ goBack }: Props) => {
       <Formik
         initialValues={formInitialValues}
         validationSchema={errorsSchema}
-        validateOnBlur
+        validateOnMount
         onSubmit={async (values) => {
           const {
             dateOfBirth,
@@ -87,7 +87,7 @@ export const IndividualKycForm: FC<Props> = ({ goBack }: Props) => {
             gender,
             income,
           } = values
-          await createIndividualKYC({
+          const data = await createIndividualKYC({
             ...values,
             dateOfBirth: dateOfBirth.format(),
             sourceOfFunds: [...sourceOfFunds, otherFunds].join(', '),
@@ -98,6 +98,7 @@ export const IndividualKycForm: FC<Props> = ({ goBack }: Props) => {
             gender: gender.name,
             income: income.name,
           })
+          if (data) goBack()
         }}
       >
         {({ values, handleChange, errors, handleBlur, handleSubmit, setFieldValue, isValid, dirty }) => (
@@ -256,7 +257,7 @@ export const IndividualKycForm: FC<Props> = ({ goBack }: Props) => {
                 <FormCard id="funds">
                   <RowBetween marginBottom="32px">
                     <TYPE.title6 style={{ textTransform: 'uppercase' }}>{funds.title}</TYPE.title6>
-                    {dirty && !errors.sourceOfFunds && <BigPassed />}
+                    {dirty && !errors.sourceOfFunds && !errors.otherFunds && <BigPassed />}
                   </RowBetween>
                   <FormGrid columns={3}>
                     {sourceOfFunds.map(({ id, name }: any) => (
@@ -292,21 +293,21 @@ export const IndividualKycForm: FC<Props> = ({ goBack }: Props) => {
                     <BigPassed />
                   </RowBetween>
 
-                  <Column style={{ gap: '16px' }}>
-                    <Column style={{ gap: '16px' }}>
-                      <Checkbox
-                        scaleSize={1.4}
-                        isRadio
-                        checked={values.accredited === 1}
-                        onClick={() => setFieldValue('accredited', 1)}
-                        label={`I declare that i am “individual accredited Investor"`}
-                      />
+                  <Column style={{ gap: '34px' }}>
+                    <Column style={{ gap: '12px' }}>
                       <Checkbox
                         scaleSize={1.4}
                         isRadio
                         checked={values.accredited !== 1}
                         onClick={() => setFieldValue('accredited', 0)}
                         label="I am not an accredited investor"
+                      />
+                      <Checkbox
+                        scaleSize={1.4}
+                        isRadio
+                        checked={values.accredited === 1}
+                        onClick={() => setFieldValue('accredited', 1)}
+                        label={`I declare that i am “individual accredited Investor"`}
                       />
                     </Column>
 

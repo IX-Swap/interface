@@ -143,7 +143,7 @@ export const Uploader: FC<UploaderProps> = ({
         )}
       </Flex>
       <StyledDescription marginBottom="10px">{subtitle}</StyledDescription>
-      <Upload accept={AcceptFiles.DOCUMENTS} file={file} onDrop={onDrop}>
+      <Upload accept={AcceptFiles.ALL} file={file} onDrop={onDrop}>
         <UploaderCard>
           {file ? (
             <TYPE.body1>{file.name}</TYPE.body1>

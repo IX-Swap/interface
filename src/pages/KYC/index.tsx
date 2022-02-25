@@ -54,8 +54,8 @@ export default function KYC() {
   const getMyKyc = useGetMyKyc()
 
   useEffect(() => {
-    getMyKyc()
-  }, [getMyKyc])
+    if (selectedForm === '') getMyKyc()
+  }, [getMyKyc, selectedForm])
 
   const setIndividualForm = () => {
     handleSelectedForm('individual')
