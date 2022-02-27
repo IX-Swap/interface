@@ -76,6 +76,15 @@ describe('DSOBaseFields', () => {
     expect(TypedField).toHaveBeenNthCalledWith(
       6,
       expect.objectContaining({
+        label: 'Decimal Places',
+        name: 'decimals'
+      }),
+      {}
+    )
+
+    expect(TypedField).toHaveBeenNthCalledWith(
+      7,
+      expect.objectContaining({
         label: 'Unique Identifier Code',
         name: 'uniqueIdentifierCode'
       }),
@@ -83,7 +92,7 @@ describe('DSOBaseFields', () => {
     )
 
     expect(TypedField).toHaveBeenNthCalledWith(
-      7,
+      8,
       expect.objectContaining({
         label: 'Corporate',
         name: 'corporate'
@@ -92,7 +101,7 @@ describe('DSOBaseFields', () => {
     )
 
     expect(TypedField).toHaveBeenNthCalledWith(
-      8,
+      9,
       expect.objectContaining({
         label: 'Issuer Name',
         name: 'issuerName'
@@ -101,7 +110,7 @@ describe('DSOBaseFields', () => {
     )
 
     expect(TypedField).toHaveBeenNthCalledWith(
-      9,
+      10,
       expect.objectContaining({
         label: 'Currency',
         assetType: 'Currency',
@@ -111,7 +120,7 @@ describe('DSOBaseFields', () => {
     )
 
     expect(TypedField).toHaveBeenNthCalledWith(
-      10,
+      11,
       expect.objectContaining({
         label: 'Launch Date',
         name: 'launchDate'
@@ -120,7 +129,7 @@ describe('DSOBaseFields', () => {
     )
 
     expect(TypedField).toHaveBeenNthCalledWith(
-      11,
+      12,
       expect.objectContaining({
         label: 'Completion Date',
         name: 'completionDate'

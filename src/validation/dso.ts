@@ -155,6 +155,10 @@ export const dsoFormBaseValidationSchema = {
     .required('Token Name is required')
     .matches(/^[a-zA-Z\s]*$/g, 'Token Name must not have special characters'),
   tokenSymbol: string().required('Token Symbol is required'),
+  decimals: number()
+    .required('Decimals are required')
+    .min(0, 'Please enter a positive number')
+    .max(18, 'Decimals must be below 19'),
   totalFundraisingAmount: number()
     .required('Total Fundraising Amount is required')
     .typeError('Total Fundraising Amount must be a number')
