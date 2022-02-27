@@ -1,29 +1,18 @@
-import {
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  MenuItem,
-  Typography
-} from '@mui/material'
+import { ListItemIcon, ListItemText, MenuItem, Typography } from '@mui/material'
 import { AppRouterLink } from 'components/AppRouterLink'
 import React, { createElement } from 'react'
-import { useStyles } from 'app/components/UserDropdown/UserDropdownItem.styles'
+import { useStyles } from './UserDropdownItem.styles'
 import { useLocation } from 'react-router-dom'
 import { AdminRoute } from 'app/pages/admin/router/config'
 import { AppRoute } from 'app/router/config'
-import { LIST_HORIZONTAL_PADDING } from 'ui/UIKit/Header/UserDropdown/UserDropdownContent'
 
 export interface UserDropdownItemProps {
   icon: any
   label: string
   onClose: () => any
-  link?: string | (() => any)
+  link?: string
   onClick?: () => any
-  placeholder?: boolean
-  level?: number
 }
-
-export const LEVEL_INSET = 20
 
 export const getIsLinkActive = (link: string, pathname: string) => {
   if (pathname.startsWith(AppRoute.admin)) {
@@ -36,17 +25,9 @@ export const getIsLinkActive = (link: string, pathname: string) => {
 }
 
 export const UserDropdownItem = (props: UserDropdownItemProps) => {
-  const {
-    icon,
-    label,
-    link,
-    onClick,
-    onClose,
-    placeholder = false,
-    level = 0
-  } = props
+  const { icon, label, link, onClick, onClose } = props
   const { pathname } = useLocation()
-  const isActive = typeof link === 'string' && getIsLinkActive(link, pathname)
+  const isActive = typeof link !== undefined && getIsLinkActive(link, pathname)
   const classes = useStyles()
   const handleClick = () => {
     onClick?.()
@@ -56,22 +37,14 @@ export const UserDropdownItem = (props: UserDropdownItemProps) => {
   const LinkElement = (linkProps: any) => (
     <AppRouterLink {...linkProps} role='menuitem' />
   )
-  const Wrapper: any = placeholder ? ListItem : MenuItem
 
   return (
-    <Wrapper
+    <MenuItem
       component={typeof link === 'string' ? LinkElement : 'li'}
       selected={isActive}
       onClick={handleClick}
+      className={classes.wrapper}
       to={link}
-      style={{
-        marginLeft: -LIST_HORIZONTAL_PADDING,
-        marginRight: -LIST_HORIZONTAL_PADDING,
-        paddingLeft: LIST_HORIZONTAL_PADDING + level * LEVEL_INSET,
-        paddingRight: LIST_HORIZONTAL_PADDING,
-        paddingTop: LIST_HORIZONTAL_PADDING,
-        paddingBottom: LIST_HORIZONTAL_PADDING
-      }}
     >
       <ListItemIcon className={classes.iconWrapper}>{iconElement}</ListItemIcon>
       <ListItemText>
@@ -83,6 +56,6 @@ export const UserDropdownItem = (props: UserDropdownItemProps) => {
           {label}
         </Typography>
       </ListItemText>
-    </Wrapper>
+    </MenuItem>
   )
 }

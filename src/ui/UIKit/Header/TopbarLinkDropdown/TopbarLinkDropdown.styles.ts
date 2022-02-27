@@ -8,14 +8,22 @@ export const useStyles = makeStyles(theme => ({
     marginTop: '0!important',
     padding: '0!important',
     borderTopRightRadius: '0!important',
-    borderTopLeftRadius: '0!important'
+    borderTopLeftRadius: '0!important',
+    boxShadow:
+      theme.palette.mode === 'light'
+        ? '0px 80px 80px rgba(162, 172, 191, 0.16)!important'
+        : 'none!important'
   },
   list: { padding: 0 },
   navItem: {
     position: 'relative',
     minWidth: 266,
     height: 'max-content',
-    padding: theme.spacing(0)
+    padding: theme.spacing(0),
+
+    '&:hover': {
+      background: 'initial'
+    }
   },
 
   line: {

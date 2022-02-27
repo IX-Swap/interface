@@ -1,7 +1,7 @@
 import React from 'react'
-import { Dropdown } from 'app/components/Dropdown/Dropdown'
-import { UserDropdownTrigger } from 'ui/UIKit/Header/UserDropdown/UserDropdownTrigger'
-import { UserDropdownContent } from 'ui/UIKit/Header/UserDropdown/UserDropdownContent'
+import { Dropdown } from 'ui/UIKit/Header/Dropdown/Dropdown'
+import { UserDropdownTrigger } from 'ui/UIKit/Header/UserDropdown/UserDropdownTrigger/UserDropdownTrigger'
+import { UserDropdownContent } from 'ui/UIKit/Header/UserDropdown/UserDropdownContent/UserDropdownContent'
 
 export const UserDropdown = () => {
   return (

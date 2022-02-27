@@ -2,6 +2,7 @@ import makeStyles from '@mui/styles/makeStyles'
 
 export interface Props {
   isActive: boolean
+  disabled: boolean
 }
 
 export const useStyles = makeStyles(theme => ({
@@ -13,6 +14,8 @@ export const useStyles = makeStyles(theme => ({
     paddingRight: theme.spacing(2.5),
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(4),
+    width: (props: Props) => (props.disabled ? 'auto' : '100%'),
+    whiteSpace: 'nowrap',
     color: (props: Props) =>
       props.isActive
         ? theme.palette.text.primary

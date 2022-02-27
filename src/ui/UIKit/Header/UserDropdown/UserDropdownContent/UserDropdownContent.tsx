@@ -2,7 +2,6 @@ import React, { Fragment } from 'react'
 import { IdentityRoute } from 'app/pages/identity/router/config'
 import { SecurityRoute } from 'app/pages/security/router/config'
 import { AdminRoute } from 'app/pages/admin/router/config'
-import { DropdownContentProps } from 'app/components/Dropdown/Dropdown'
 import { useLogout } from 'auth/hooks/useLogout'
 import { useIsAdmin } from 'helpers/acl'
 import {
@@ -11,54 +10,30 @@ import {
   SettingsOutlined
 } from '@mui/icons-material'
 import { Box, List } from '@mui/material'
-import { UserDropdownInfo } from 'app/components/UserDropdown/UserDropdownInfo'
-import { useTheme } from '@mui/material/styles'
-import { UserDropdownItem } from 'ui/UIKit/Header/UserDropdown/UserDropdownItem'
-
-export const LIST_HORIZONTAL_PADDING = 24
+import { UserDropdownItem } from 'ui/UIKit/Header/UserDropdown/UserDropdownItem/UserDropdownItem'
+import { UserDropdownInfo } from 'ui/UIKit/Header/UserDropdown/UserDropdownInfo/UserDropdownInfo'
+import { DropdownContentProps } from 'ui/UIKit/Header/Dropdown/Dropdown'
+import { useStyles } from './UserDropdownContent.styles'
 
 export const UserDropdownContent = (props: DropdownContentProps) => {
+  const classes = useStyles()
   const logout = useLogout()
   const isAdmin = useIsAdmin()
-  const theme = useTheme()
   const handleClose = props.injectedProps.close
-
-  const Border = () => {
-    return (
-      <Box
-        style={{
-          height: 1,
-          backgroundColor: theme.palette.secondary.light
-        }}
-      />
-    )
-  }
 
   return (
     <Fragment>
-      <Box
-        bgcolor={
-          theme.palette.mode === 'light'
-            ? theme.palette.backgrounds.default
-            : theme.palette.backgrounds.light
-        }
-      >
+      <Box className={classes.wrapper}>
         <UserDropdownInfo />
-        <List
-          style={{
-            minWidth: 260,
-            paddingLeft: LIST_HORIZONTAL_PADDING,
-            paddingRight: LIST_HORIZONTAL_PADDING
-          }}
-        >
-          <Border />
+        <List className={classes.list}>
+          <Box className={classes.border} />
           <UserDropdownItem
             icon={AccountCircleOutlined}
             label='Identity'
             link={IdentityRoute.list}
             onClose={handleClose}
           />
-          <Border />
+          <Box className={classes.border} />
           {isAdmin && (
             <>
               <UserDropdownItem
@@ -67,7 +42,7 @@ export const UserDropdownContent = (props: DropdownContentProps) => {
                 link={AdminRoute.landing}
                 onClose={handleClose}
               />
-              <Border />
+              <Box className={classes.border} />
             </>
           )}
           <UserDropdownItem
@@ -76,7 +51,7 @@ export const UserDropdownContent = (props: DropdownContentProps) => {
             link={SecurityRoute.landing}
             onClose={handleClose}
           />
-          <Border />
+          <Box className={classes.border} />
           <UserDropdownItem
             icon={PowerSettingsNewOutlined}
             label='Sign Out'

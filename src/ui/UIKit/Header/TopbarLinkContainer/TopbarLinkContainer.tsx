@@ -16,7 +16,7 @@ export const TopbarLinkContainer = (props: TopbarLinkProps) => {
 
   const baseLink = link.split('/').slice(0, 3).join('/')
   const isActive = pathname.startsWith(baseLink)
-  const classes = useStyles({ isActive })
+  const classes = useStyles({ isActive, disabled })
 
   return (
     <Link

@@ -333,7 +333,8 @@ export const getThemeOverrides = (
   MuiPaper: {
     styleOverrides: {
       root: {
-        backgroundColor: '#FFFFFF',
+        backgroundColor: theme.palette.background.paper,
+        backgroundImage: 'none',
         boxSizing: 'border-box',
         '&.MuiPaper-outlined': {
           boxShadow: '0px 80px 80px rgba(162, 172, 191, 0.16)',
@@ -439,6 +440,22 @@ export const getThemeOverrides = (
           borderRadius: 8
         },
         ul: {}
+      }
+    }
+  },
+  MuiMenuItem: {
+    styleOverrides: {
+      // TODO Needs to update after discussion with designer
+      root: {
+        '&.Mui-selected': {
+          background: 'initial',
+          '&:hover': {
+            backgroundColor: 'initial'
+          }
+        },
+        '&:hover': {
+          background: 'initial'
+        }
       }
     }
   }

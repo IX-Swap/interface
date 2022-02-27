@@ -2,7 +2,7 @@ import React from 'react'
 import { Badge, IconButton } from '@mui/material'
 import { DropdownTriggerProps } from 'app/components/Dropdown/Dropdown'
 import { useNotifications } from 'app/pages/notifications/hooks/useNotifications'
-import { Icon } from 'ui/Icons/Icon'
+import { ReactComponent as BellIcon } from 'assets/icons/bell.svg'
 import { useStyles } from './NotificationsDropdownTrigger.styles'
 
 export const NotificationsDropdownTrigger = (
@@ -17,11 +17,8 @@ export const NotificationsDropdownTrigger = (
       className={classes.wrapper}
       size='large'
     >
-      <Badge
-        badgeContent={unreadCount >= 100 ? '99+' : unreadCount}
-        color='error'
-      >
-        <Icon name='bell' />
+      <Badge variant={unreadCount > 0 ? 'dot' : 'standard'} color='error'>
+        <BellIcon />
       </Badge>
     </IconButton>
   )
