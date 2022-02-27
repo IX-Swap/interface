@@ -86,7 +86,7 @@ export const individualInvestorFormSteps = [
     )
   },
   {
-    label: 'Documents Upload',
+    label: 'Upload Documents',
     getFormValues: getDocumentsFormValues,
     getRequestPayload: getDocumentsRequestPayload,
     validationSchema: individualInvestorDocumentsSchema,

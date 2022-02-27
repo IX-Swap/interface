@@ -8,13 +8,17 @@ import {
   corporateAccreditedInvestorValidator,
   individualAccreditedInvestorValidator
 } from 'validation/validators'
+import { validationMessages } from './shared'
 
-const required = yup.mixed().oneOf([DeclarationValue.Yes]).required('Required')
+const required = yup
+  .mixed()
+  .oneOf([DeclarationValue.Yes])
+  .required(validationMessages.required)
 
 const optional = yup
   .mixed()
   .oneOf([DeclarationValue.Yes, DeclarationValue.No])
-  .required('Required')
+  .required(validationMessages.required)
 
 export const individualDeclarationsSchema = yup
   .object()

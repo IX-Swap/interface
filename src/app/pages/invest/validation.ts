@@ -4,21 +4,24 @@ import {
   CommitmentFormValues,
   CommitmentIssuanceFormValues
 } from 'types/commitment'
+import { validationMessages } from 'validation/shared'
 
 export const commitmentFormValidationSchema = yup
   .object()
   .shape<CommitmentFormValues>({
-    pricePerUnit: yup.number().required('Required'),
-    totalAmount: yup.number().required('Required'),
-    numberOfUnits: yup.number().required('Required'),
-    otp: yup.string().required('Required'),
-    signedSubscriptionDocument: yup.object<DataroomFile>().required('Required'),
+    pricePerUnit: yup.number().required(validationMessages.required),
+    totalAmount: yup.number().required(validationMessages.required),
+    numberOfUnits: yup.number().required(validationMessages.required),
+    otp: yup.string().required(validationMessages.required),
+    signedSubscriptionDocument: yup
+      .object<DataroomFile>()
+      .required(validationMessages.required),
     withdrawalAddress: yup.string()
   })
 
 export const commitmentIssuanceValidationSchema = yup
   .object()
   .shape<CommitmentIssuanceFormValues>({
-    withdrawalAddress: yup.string().required('Required'),
+    withdrawalAddress: yup.string().required(validationMessages.required),
     releaseDate: yup.date().nullable()
   })
