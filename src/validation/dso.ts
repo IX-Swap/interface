@@ -1,7 +1,7 @@
 import { DataroomFile, FormArrayElement } from 'types/dataroomFile'
 import { DsoFAQItem, DSOFormValues, DsoTeamMember, DsoVideo } from 'types/dso'
 import { array, number, object, string } from 'yup'
-import { dateSchema } from './shared'
+import { dateSchema, validationMessages } from './shared'
 import {
   isBeforeDate,
   pastDateValidator,
@@ -155,7 +155,10 @@ export const dsoFormBaseValidationSchema = {
     .required('Token Name is required')
     .matches(/^[a-zA-Z\s]*$/g, 'Token Name must not have special characters'),
   tokenSymbol: string().required('Token Symbol is required'),
-  decimalPlaces: number().required('Required'),
+  decimals: number()
+    .required('Decimals are required')
+    .min(0, 'Please enter a positive number')
+    .max(18, 'Decimals must be below 19'),
   totalFundraisingAmount: number()
     .required('Total Fundraising Amount is required')
     .typeError('Total Fundraising Amount must be a number')
@@ -172,11 +175,11 @@ export const dsoFormBaseValidationSchema = {
     .ensure()
     .required('Team Member is required'),
   faqs: array<DsoFAQItem>()
-    .of(dsoFAQItemSchema.required('Required'))
+    .of(dsoFAQItemSchema.required(validationMessages.required))
     .required('FAQs are required'),
   videos: array<DsoVideo>()
     .of(dsoVideoLinkSchema.required('Videos are required'))
-    .required('Required'),
+    .required(validationMessages.required),
   uniqueIdentifierCode: string().test(
     'length',
     'Unique identifier code is required',
@@ -202,8 +205,8 @@ export const editLiveDSOValidationSchema = object()
   .shape<DSOFormValues>({
     ...dsoFormBaseValidationSchema,
     network: string(),
-    launchDate: string().required(),
-    completionDate: string().required()
+    launchDate: string().required(validationMessages.required),
+    completionDate: string().required(validationMessages.required)
   })
   .notRequired()
 

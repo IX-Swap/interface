@@ -92,8 +92,8 @@ export const ReasonFields = ({
                     Reason C
                   </Box>{' '}
                   - No TIN is required. (Note. Only select this reason if the
-                  domestic law of the relevant jurisdication does not require
-                  the collection of the TIN issued by such jurisdication)
+                  domestic law of the relevant jurisdiction does not require the
+                  collection of the TIN issued by such jurisdiction)
                 </>
               }
               value='C'

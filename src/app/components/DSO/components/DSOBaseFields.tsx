@@ -23,8 +23,7 @@ export interface DSOBaseFieldsProps {
 
 export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
   const { isNew, isLive } = props
-  const { control, watch } = useFormContext<DSOFormValues>()
-  const capitalStructure = watch('capitalStructure')
+  const { control } = useFormContext<DSOFormValues>()
 
   return (
     <Grid item>
@@ -102,33 +101,30 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 customRenderer
                 numberFormat={positiveNumberFormat}
                 label='Decimal Places'
-                name='decimalPlaces'
-                disabled={capitalStructure?.toLowerCase() === 'equity'}
+                name='decimals'
                 control={control}
                 helperText='Decimal Places'
-                variant='outlined'
                 valueExtractor={numericValueExtractor}
+                variant='outlined'
                 fullWidth
               />
             </Grid>
           </Grid>
         </Grid>
-        <Grid item container>
-          <Grid item xs={12} md={6}>
-            <TypedField
-              component={TextField}
-              label='Unique Identifier Code'
-              name='uniqueIdentifierCode'
-              disabled={isLive}
-              control={control}
-              helperText='ISIN or CUSIP Number'
-              variant='outlined'
-            />
-          </Grid>
-        </Grid>
         <Grid item>
           <Grid container spacing={3}>
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} md={6}>
+              <TypedField
+                component={TextField}
+                label='Unique Identifier Code'
+                name='uniqueIdentifierCode'
+                disabled={isLive}
+                control={control}
+                helperText='ISIN or CUSIP Number'
+                variant='outlined'
+              />
+            </Grid>
+            <Grid item xs={12} md={6}>
               <TypedField
                 component={CorporateSelect}
                 label='Corporate'
@@ -138,7 +134,11 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 variant='outlined'
               />
             </Grid>
-            <Grid item xs={12} md={4}>
+          </Grid>
+        </Grid>
+        <Grid item>
+          <Grid container spacing={3}>
+            <Grid item xs={12} md={6}>
               <TypedField
                 component={TextField}
                 label='Issuer Name'
@@ -148,7 +148,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 variant='outlined'
               />
             </Grid>
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} md={6}>
               <TypedField
                 assetType='Currency'
                 component={AssetSelect}

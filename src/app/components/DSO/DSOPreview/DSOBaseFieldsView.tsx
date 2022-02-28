@@ -105,7 +105,7 @@ export const DSOBaseFieldsView = ({ dso }: DSOBaseFieldsViewProps) => {
               <Grid item xs={12} md={4}>
                 <LabelledValue
                   label='Decimal'
-                  value={dso?.decimalPlaces}
+                  value={dso?.decimals}
                   isNewThemeOn
                 />
               </Grid>

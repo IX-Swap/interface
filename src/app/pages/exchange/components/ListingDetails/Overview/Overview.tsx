@@ -19,7 +19,7 @@ export const Overview = ({ data }: OverviewProps) => {
           capitalStructure={data.capitalStructure}
           launchDate={data.launchDate}
           completionDate={data.completionDate}
-          decimalPlaces={data.decimalPlaces}
+          decimals={data.decimals}
           tokenAddress={data.dso?.deploymentInfo?.token ?? ''}
         />
       </Grid>
