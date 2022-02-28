@@ -35,6 +35,8 @@ import { Footer } from '../components/Footer'
 
 const AdminKyc = lazy(() => import('./Admin'))
 const KYC = lazy(() => import('./KYC'))
+const IndividualKYC = lazy(() => import('./KYC/IndividualKycForm'))
+const CorporateKYC = lazy(() => import('./KYC/CorporateKycForm'))
 // const Custodian = lazy(() => import('./Custodian'))
 const CustodianV2 = lazy(() => import('./CustodianV2'))
 const CreateNFT = lazy(() => import('./CreateNFT'))
@@ -129,6 +131,8 @@ export default function App() {
                 <Route exact strict path={routes.nftViewCollectionPath} component={NFTCollection} />
                 <Route exact strict path={routes.nftItemPath} component={NftAssetPage} />
                 <Route exact strict path={routes.kyc} component={KYC} />
+                <Route exact strict path={routes.kycIndividual} component={IndividualKYC} />
+                <Route exact strict path={routes.kycCorporate} component={CorporateKYC} />
 
                 {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
                   <Route exact strict path="/send" component={RedirectPathToSwapOnly} />

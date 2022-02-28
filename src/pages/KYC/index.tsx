@@ -1,7 +1,8 @@
-import React, { useCallback, FC, useState, useEffect } from 'react'
+import React, { useCallback, FC, useEffect } from 'react'
 import { Trans } from '@lingui/macro'
 import { isMobile } from 'react-device-detect'
 import { Flex } from 'rebass'
+import { Link } from 'react-router-dom'
 
 import { StyledBodyWrapper } from 'pages/CustodianV2/styleds'
 import { TYPE } from 'theme'
@@ -10,8 +11,6 @@ import { ButtonGradientBorder, ButtonIXSGradient } from 'components/Button'
 import { useGetMyKyc, useKYCState } from 'state/kyc/hooks'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import { RowCenter } from 'components/Row'
-import { IndividualKycForm } from './IndividualKycForm'
-import { CorporateKycForm } from './CorporateKycForm'
 
 import { KYCStatuses } from './enum'
 import { Content, getStatusDescription, StatusCard } from './styleds'
@@ -49,24 +48,12 @@ const Description: FC<DescriptionProps> = ({ description }: DescriptionProps) =>
 )
 
 export default function KYC() {
-  const [selectedForm, handleSelectedForm] = useState('')
   const { kyc, loadingRequest } = useKYCState()
   const getMyKyc = useGetMyKyc()
 
   useEffect(() => {
-    if (selectedForm === '') getMyKyc()
-  }, [getMyKyc, selectedForm])
-
-  const setIndividualForm = () => {
-    handleSelectedForm('individual')
-  }
-  const setCorporateForm = () => {
-    handleSelectedForm('corporate')
-  }
-
-  const goBack = () => {
-    handleSelectedForm('')
-  }
+    getMyKyc()
+  }, [getMyKyc])
 
   const status = kyc?.data.status || KYCStatuses.NOT_SUBMITTED
   const description = getStatusDescription(status)
@@ -85,15 +72,19 @@ export default function KYC() {
             >
               <Flex marginBottom={isMobile ? '32px' : '0px'} flexDirection="column" alignItems="center">
                 <IndividualKYC />
-                <ButtonIXSGradient onClick={setIndividualForm} style={{ padding: '16px 24px' }} marginTop="32px">
-                  <Trans>Pass KYC as Individual</Trans>
-                </ButtonIXSGradient>
+                <Link style={{ textDecoration: 'none ' }} to="/kyc/individual">
+                  <ButtonIXSGradient style={{ padding: '16px 24px' }} marginTop="32px">
+                    <Trans>Pass KYC as Individual</Trans>
+                  </ButtonIXSGradient>
+                </Link>
               </Flex>
               <Flex flexDirection="column" alignItems="center">
                 <CorporateKYC />
-                <ButtonGradientBorder onClick={setCorporateForm} style={{ padding: '16px 24px' }} marginTop="32px">
-                  <Trans>Pass KYC as Corporate</Trans>
-                </ButtonGradientBorder>
+                <Link style={{ textDecoration: 'none ' }} to="/kyc/corporate">
+                  <ButtonGradientBorder style={{ padding: '16px 24px' }} marginTop="32px">
+                    <Trans>Pass KYC as Corporate</Trans>
+                  </ButtonGradientBorder>
+                </Link>
               </Flex>
             </Flex>
           </>
@@ -134,29 +125,23 @@ export default function KYC() {
 
   return (
     <StyledBodyWrapper>
-      {!selectedForm ? (
-        <StatusCard>
-          {loadingRequest ? (
-            <RowCenter>
-              <LoaderThin size={96} />
-            </RowCenter>
-          ) : (
-            <Content flexDirection="column" marginTop="40px" alignItems="center">
-              <TYPE.title4 marginBottom="40px">
-                <Trans>IXSwap KYC</Trans>
-              </TYPE.title4>
+      <StatusCard>
+        {loadingRequest ? (
+          <RowCenter>
+            <LoaderThin size={96} />
+          </RowCenter>
+        ) : (
+          <Content flexDirection="column" marginTop="40px" alignItems="center">
+            <TYPE.title4 marginBottom="40px">
+              <Trans>IXSwap KYC</Trans>
+            </TYPE.title4>
 
-              <KYCStatus status={kyc?.data.status || KYCStatuses.NOT_SUBMITTED} />
+            <KYCStatus status={kyc?.data.status || KYCStatuses.NOT_SUBMITTED} />
 
-              {getKYCDescription()}
-            </Content>
-          )}
-        </StatusCard>
-      ) : (
-        <>
-          {selectedForm === 'individual' ? <IndividualKycForm goBack={goBack} /> : <CorporateKycForm goBack={goBack} />}
-        </>
-      )}
+            {getKYCDescription()}
+          </Content>
+        )}
+      </StatusCard>
     </StyledBodyWrapper>
   )
 }

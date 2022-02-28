@@ -16,15 +16,28 @@ interface Props {
   isRadio?: boolean
   scaleSize?: number
   disabled?: boolean
+  onBlur?: (e: any) => void
+  name?: string
 }
 
-export const Checkbox: FC<Props> = ({ label, checked, onClick, isRadio, scaleSize = 1, disabled = false }: Props) => {
+export const Checkbox: FC<Props> = ({
+  label,
+  checked,
+  onClick,
+  isRadio,
+  onBlur,
+  name,
+  scaleSize = 1,
+  disabled = false,
+}: Props) => {
   const style = { transform: `scale(${scaleSize})` }
   const checkedImage = isRadio ? <RadioChecked style={style} /> : <Checked style={style} />
   const notCheckedImage = isRadio ? <RadioNotChecked style={style} /> : <NotChecked style={style} />
 
   return (
     <ButtonText
+      name={name}
+      onBlur={onBlur}
       type="button"
       style={{ textDecoration: 'none', textAlign: 'inherit' }}
       onClick={onClick}

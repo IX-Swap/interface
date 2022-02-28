@@ -2,12 +2,13 @@ import React, { FC, useMemo, useState } from 'react'
 import { Trans } from '@lingui/macro'
 import { getNames } from 'country-list'
 import { FileWithPath } from 'react-dropzone'
+import { useHistory } from 'react-router-dom'
 
 import Column from 'components/Column'
 import { KYCProgressBar } from './KYCProgressBar'
 import { ButtonText, ButtonIXSGradient } from 'components/Button'
 import { TYPE } from 'theme'
-import { GradientText } from 'pages/CustodianV2/styleds'
+import { GradientText, StyledBodyWrapper } from 'pages/CustodianV2/styleds'
 import { RowBetween } from 'components/Row'
 import { Select, TextInput, Uploader } from './common'
 import { PhoneInput } from 'components/PhoneInput'
@@ -29,12 +30,9 @@ import { ReactComponent as BigPassed } from 'assets/images/check-success-big.svg
 
 import { ChooseFile, BeneficialOwnersTable, DeleteRow } from './common'
 
-interface Props {
-  goBack: () => void
-}
-
-export const CorporateKycForm: FC<Props> = ({ goBack }: Props) => {
+export default function CorporateKycForm() {
   const [formData, setFormData] = useState(initialCorporateKycFormData)
+  const history = useHistory()
 
   const {
     info,
@@ -48,6 +46,10 @@ export const CorporateKycForm: FC<Props> = ({ goBack }: Props) => {
     beneficialOwners,
     upload,
   } = formData
+
+  const goBack = () => {
+    history.push('/kyc')
+  }
 
   const onChangeInfoHandler = (fieldName: string, value: string | boolean) => {
     setFormData({
@@ -153,7 +155,7 @@ export const CorporateKycForm: FC<Props> = ({ goBack }: Props) => {
   }, [])
 
   return (
-    <>
+    <StyledBodyWrapper>
       <ButtonText style={{ textDecoration: 'none' }} display="flex" marginBottom="64px" onClick={goBack}>
         <ArrowLeft />
         <TYPE.title4 display="flex" marginLeft="10px">
@@ -630,6 +632,6 @@ export const CorporateKycForm: FC<Props> = ({ goBack }: Props) => {
           />
         </Column>
       </Grid>
-    </>
+    </StyledBodyWrapper>
   )
 }
