@@ -9,7 +9,6 @@ import {
   validationMessages
 } from 'validation/shared'
 import {
-  FundSource,
   IndividualAgreementsFormValues,
   IndividualDocumentsFormValues,
   IndividualFinancialInfoFormValues,
@@ -30,7 +29,8 @@ export const personalInfoSchema = yup
     dob: birthdaySchema.required(validationMessages.required),
     contactNumber: yup.string().phone().required(validationMessages.required),
     email: emailSchema.required(validationMessages.required),
-    address: addressSchema.required(validationMessages.required)
+    address: addressSchema.required(validationMessages.required),
+    gender: yup.string().required(validationMessages.required)
   })
 
 export const financialInfoSchema = yup
@@ -44,42 +44,10 @@ export const financialInfoSchema = yup
     employer: yup
       .string()
       .max(50, 'Maximum of 50 characters')
-      .required(validationMessages.required),
+      .required('This field is required'),
     employmentStatus: yup.string().required(validationMessages.required),
     annualIncome: yup.string().required(validationMessages.required),
-    sourceOfFund: yup
-      .array<FundSource>()
-      .of(
-        yup
-          .object<FundSource>({
-            name: yup.string(),
-            checked: yup.boolean(),
-            value: yup
-              .number()
-              .when('checked', {
-                is: true,
-                then: yup
-                  .number()
-                  .min(1)
-                  .max(100)
-                  .required(validationMessages.required),
-                otherwise: yup.number()
-              })
-              .required(validationMessages.required)
-          })
-          .required(validationMessages.required)
-      )
-      .test('noFundSourceSelected', 'Error', function (value) {
-        return Boolean(value?.some(fundSource => fundSource.checked))
-      })
-      .test('incorrectSumOfFundSourcesValues', 'Error', fundSources => {
-        const sumOfFundSourcesValues =
-          fundSources !== undefined && fundSources !== null
-            ? fundSources.reduce((acc, cur) => acc + cur.value, 0)
-            : 0
-        return sumOfFundSourcesValues === 100
-      })
-      .required(validationMessages.required)
+    sourceOfFund: yup.string().required(validationMessages.required)
   })
 
 export const taxDeclarationSchema = yup
