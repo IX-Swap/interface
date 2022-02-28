@@ -9,8 +9,8 @@ export const columns: Array<TableColumn<AssetBalance>> = [
     render: renderAssetBalance
   },
   {
-    key: 'balance',
-    label: 'Balance',
+    key: 'available',
+    label: 'Total',
     headAlign: 'right',
     align: 'right',
     secret: true,
@@ -25,7 +25,7 @@ export const columns: Array<TableColumn<AssetBalance>> = [
     render: renderAmount
   },
   {
-    key: 'available',
+    key: 'balance',
     label: 'Available',
     headAlign: 'right',
     align: 'right',
