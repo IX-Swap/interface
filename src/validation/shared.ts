@@ -55,7 +55,7 @@ export const birthdaySchema = dateSchema.test(
 
 export const taxIdentificationNumberSchema = yup
   .string()
-  .max(20, 'Maximum of 20 chracters')
+  .max(20, 'Maximum of 20 characters')
   .matches(/^[a-zA-Z0-9]*$/, 'Must include only letters and numbers only')
 
 export const documentsArraySchema =
@@ -104,6 +104,9 @@ export const personnelProfileSchema = yup.object().shape<Personnel>({
   address: addressSchema.required(validationMessages.required),
   percentageShareholding: yup
     .number()
+    .transform((value, originalValue) => {
+      return originalValue === '' ? undefined : value
+    })
     .typeError('Percentage shareholding must be a number')
     .required(validationMessages.required)
 })

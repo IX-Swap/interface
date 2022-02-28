@@ -11,7 +11,8 @@ import { DataroomFile } from 'types/dataroomFile'
 import {
   addressSchema,
   emailSchema,
-  taxIdentificationNumberSchema
+  taxIdentificationNumberSchema,
+  validationMessages
 } from 'validation/shared'
 import * as yup from 'yup'
 import 'yup-phone-lite'
@@ -23,7 +24,7 @@ export const corporateInvestorInfoSchema = yup.object().shape<any>({
   companyLegalName: yup
     .string()
     .max(50, 'Maximum of 50 characters')
-    .required('This field is required')
+    .required(validationMessages.required)
     .matches(
       /^[a-zA-Z0-9.,-;]+([a-zA-Z0-9.,-; ]+)*$/,
       'Must include only letters, numbers and this special characters . , -'
@@ -42,20 +43,22 @@ export const corporateInvestorInfoSchema = yup.object().shape<any>({
         return true
       }
     ),
-    otherwise: taxIdentificationNumberSchema.required('This field is required')
+    otherwise: taxIdentificationNumberSchema.required(
+      validationMessages.required
+    )
   }),
-  legalEntityStatus: yup.string().required('Required'),
+  legalEntityStatus: yup.string().required(validationMessages.required),
   otherLegalEntityStatus: yup.string().when('legalEntityStatus', {
     is: 'others',
-    then: yup.string().required('Required'),
+    then: yup.string().required(validationMessages.required),
     otherwise: yup.string()
   }),
-  countryOfFormation: yup.string().required('Required'),
-  companyAddress: addressSchema.required('Required'),
-  isMailingAddressSame: yup.bool().required('Required'),
+  countryOfFormation: yup.string().required(validationMessages.required),
+  companyAddress: addressSchema.required(validationMessages.required),
+  isMailingAddressSame: yup.bool().required(validationMessages.required),
   mailingAddress: yup.object<Address>().when('isMailingAddressSame', {
     is: false,
-    then: addressSchema.required('Required'),
+    then: addressSchema.required(validationMessages.required),
     otherwise: yup.object().notRequired()
   }),
   representatives: yup
@@ -65,22 +68,24 @@ export const corporateInvestorInfoSchema = yup.object().shape<any>({
         .object<RepresentativeFormValues>({
           fullName: yup
             .string()
-            .required('Required')
+            .required(validationMessages.required)
             .matches(/^[a-zA-Z\s]+$/g, 'Must include letters only'),
           designation: yup
             .string()
-            .required('Required')
+            .required(validationMessages.required)
             .matches(/^[a-zA-Z\s]+$/g, 'Must include letters only'),
-          email: emailSchema.required('This field is required'),
+          email: emailSchema.required(validationMessages.required),
           contactNumber: yup
             .string()
             .phone()
-            .required('This field is required'),
-          documents: yup.array<DataroomFile>().required('Required')
+            .required(validationMessages.required),
+          documents: yup
+            .array<DataroomFile>()
+            .required(validationMessages.required)
         })
-        .required('Required')
+        .required(validationMessages.required)
     )
-    .required('Required')
+    .required(validationMessages.required)
 })
 
 export const directorsAndBeneficialOwnersSchema = yup
@@ -91,41 +96,55 @@ export const directorsAndBeneficialOwnersSchema = yup
       .of(
         yup
           .object<DirectorFormValues>({
-            fullName: yup.string().required('Required'),
-            designation: yup.string().required('Required'),
-            email: emailSchema.required('This field is required'),
-            contactNumber: yup.string().phone().required(),
-            address: addressSchema.required('Required'),
+            fullName: yup.string().required(validationMessages.required),
+            designation: yup.string().required(validationMessages.required),
+            email: emailSchema.required(validationMessages.required),
+            contactNumber: yup
+              .string()
+              .phone()
+              .required(validationMessages.required),
+            address: addressSchema.required(validationMessages.required),
             documents: yup
               .object({
-                proofOfIdentity: yup.array<DataroomFile>().required('Required'),
-                proofOfAddress: yup.array<DataroomFile>().required('Required')
+                proofOfIdentity: yup
+                  .array<DataroomFile>()
+                  .required(validationMessages.required),
+                proofOfAddress: yup
+                  .array<DataroomFile>()
+                  .required(validationMessages.required)
               })
-              .required('Required')
+              .required(validationMessages.required)
           })
-          .required('Required')
+          .required(validationMessages.required)
       )
-      .required('Required'),
+      .required(validationMessages.required),
     beneficialOwners: yup
       .array<BeneficialOwnerFormValues>()
       .of(
         yup
           .object<BeneficialOwnerFormValues>({
-            fullName: yup.string().required('Required'),
+            fullName: yup.string().required(validationMessages.required),
             percentageShareholding: yup
               .number()
+              .transform((value, originalValue) => {
+                return originalValue === '' ? undefined : value
+              })
               .typeError('Percentage shareholding must be a number')
-              .required('Required'),
+              .required(validationMessages.required),
             documents: yup
               .object({
-                proofOfIdentity: yup.array<DataroomFile>().required('Required'),
-                proofOfAddress: yup.array<DataroomFile>().required('Required')
+                proofOfIdentity: yup
+                  .array<DataroomFile>()
+                  .required(validationMessages.required),
+                proofOfAddress: yup
+                  .array<DataroomFile>()
+                  .required(validationMessages.required)
               })
-              .required('Required')
+              .required(validationMessages.required)
           })
-          .required('Required')
+          .required(validationMessages.required)
       )
-      .required('Required')
+      .required(validationMessages.required)
   })
 
 export const corporateTaxDeclarationSchema = yup.object().shape({
@@ -133,52 +152,67 @@ export const corporateTaxDeclarationSchema = yup.object().shape({
     yup
       .object({
         taxIdAvailable: yup.boolean(),
-        countryOfResidence: yup.string().required('Required'),
+        countryOfResidence: yup.string().required(validationMessages.required),
         taxIdentificationNumber: taxIdentificationNumberSchema.when(
           'taxIdAvailable',
           {
             is: true,
             then: taxIdentificationNumberSchema.required(
-              'This field is required'
+              validationMessages.required
             ),
             otherwise: taxIdentificationNumberSchema
           }
         ),
         reason: yup.string().when('taxIdAvailable', {
           is: false,
-          then: yup.string().oneOf(['A', 'B', 'C']).required('Required'),
+          then: yup
+            .string()
+            .oneOf(['A', 'B', 'C'])
+            .required(validationMessages.required),
           otherwise: yup.string()
         }),
         customReason: yup.string().when('reason', {
           is: 'B',
-          then: yup.string().required('Required'),
+          then: yup.string().required(validationMessages.required),
           otherwise: yup.string()
         })
       })
-      .required()
+      .required(validationMessages.required)
   )
 })
 
 export const corporateInvestorStatusDeclarationSchema = yup
   .object()
   .shape<any>({
-    assets: yup.bool().oneOf([true, false]).required('Required'),
-    trustee: yup.bool().oneOf([true, false]).required('Required'),
+    assets: yup
+      .bool()
+      .oneOf([true, false])
+      .required(validationMessages.required),
+    trustee: yup
+      .bool()
+      .oneOf([true, false])
+      .required(validationMessages.required),
     accreditedBeneficiaries: yup
       .bool()
       .oneOf([true, false])
-      .required('Required'),
-    accreditedSettlors: yup.bool().oneOf([true, false]).required('Required'),
+      .required(validationMessages.required),
+    accreditedSettlors: yup
+      .bool()
+      .oneOf([true, false])
+      .required(validationMessages.required),
     accreditedShareholders: yup
       .bool()
       .oneOf([true, false])
-      .required('Required'),
-    partnership: yup.bool().oneOf([true, false]).required('Required'),
+      .required(validationMessages.required),
+    partnership: yup
+      .bool()
+      .oneOf([true, false])
+      .required(validationMessages.required),
 
     optInAgreements: yup
       .bool()
       .oneOf([true], 'Opt-In Requirement is required')
-      .required('Required'),
+      .required(validationMessages.required),
 
     primaryOfferingServices: yup.bool(),
     digitalSecurities: yup.bool(),
@@ -218,20 +252,32 @@ export const corporateInvestorDocumentsSchema = yup
     evidenceOfAccreditation: yup
       .array<DataroomFile>()
       .min(1)
-      .required('Required'),
-    corporateDocuments: yup.array<DataroomFile>().min(1).required('Required'),
-    financialDocuments: yup.array<DataroomFile>().min(1).required('Required')
+      .required(validationMessages.required),
+    corporateDocuments: yup
+      .array<DataroomFile>()
+      .min(1)
+      .required(validationMessages.required),
+    financialDocuments: yup
+      .array<DataroomFile>()
+      .min(1)
+      .required(validationMessages.required)
   })
 
 export const corporateIssuerDocumentsSchema = yup.object().shape({
-  corporateDocuments: yup.array<DataroomFile>().min(1).required('Required'),
-  financialDocuments: yup.array<DataroomFile>().min(1).required('Required')
+  corporateDocuments: yup
+    .array<DataroomFile>()
+    .min(1)
+    .required(validationMessages.required),
+  financialDocuments: yup
+    .array<DataroomFile>()
+    .min(1)
+    .required(validationMessages.required)
 })
 
 export const corporateInvestorAgreementsSchema = yup
   .object()
   .shape<CorporateInvestorAgreementsFormValues>({
-    custody: yup.bool().oneOf([true]).required('Required'),
-    investor: yup.bool().oneOf([true]).required('Required'),
-    disclosure: yup.bool().oneOf([true]).required('Required')
+    custody: yup.bool().oneOf([true]).required(validationMessages.required),
+    investor: yup.bool().oneOf([true]).required(validationMessages.required),
+    disclosure: yup.bool().oneOf([true]).required(validationMessages.required)
   })

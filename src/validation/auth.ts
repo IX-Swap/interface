@@ -5,18 +5,22 @@ import {
   RequestPasswordResetArgs,
   SignupArgs
 } from 'types/auth'
-import { emailSchema, passwordSchema } from 'validation/shared'
+import {
+  emailSchema,
+  passwordSchema,
+  validationMessages
+} from 'validation/shared'
 
 export const loginFormValidationSchema = yup.object<LoginArgs>({
-  email: emailSchema.required('This field is required'),
-  password: yup.string().required('Required'),
+  email: emailSchema.required(validationMessages.required),
+  password: yup.string().required(validationMessages.required),
   otp: yup.string()
 })
 
 export const registerFormValidationSchema = yup.object<SignupArgs>({
-  name: yup.string().required('Required'),
-  email: emailSchema.required('This field is required'),
-  password: passwordSchema.required('Required'),
+  name: yup.string().required(validationMessages.required),
+  email: emailSchema.required(validationMessages.required),
+  password: passwordSchema.required(validationMessages.required),
   agree: yup
     .boolean()
     .test('consent', 'You must agree to these terms', value => value === true)
@@ -25,12 +29,12 @@ export const registerFormValidationSchema = yup.object<SignupArgs>({
 
 export const requestPasswordResetValidationSchema =
   yup.object<RequestPasswordResetArgs>({
-    email: emailSchema.required('This field is required')
+    email: emailSchema.required(validationMessages.required)
   })
 
 export const completePasswordResetValidationSchema = yup.object<
   Omit<CompletePasswordResetArgs, 'resetToken'>
 >({
-  email: emailSchema.required('This field is required'),
-  newPassword: passwordSchema.required('Required')
+  email: emailSchema.required(validationMessages.required),
+  newPassword: passwordSchema.required(validationMessages.required)
 })

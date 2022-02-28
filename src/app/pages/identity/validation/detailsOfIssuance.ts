@@ -1,13 +1,17 @@
 import { DataroomFile } from 'types/dataroomFile'
-import { emailSchema, taxIdentificationNumberSchema } from 'validation/shared'
+import {
+  emailSchema,
+  taxIdentificationNumberSchema,
+  validationMessages
+} from 'validation/shared'
 import * as yup from 'yup'
 import 'yup-phone-lite'
 
 export const issuerDetailsSchema = yup.object().shape<any>({
-  fullName: yup.string().required('Required'),
-  companyName: yup.string().required('Required'),
+  fullName: yup.string().required(validationMessages.required),
+  companyName: yup.string().required(validationMessages.required),
   companyRegistrationNumber: taxIdentificationNumberSchema.required(
-    'This field is required'
+    validationMessages.required
   ),
   contactNumber: yup
     .string()
@@ -17,14 +21,18 @@ export const issuerDetailsSchema = yup.object().shape<any>({
       }
       return true
     }),
-  email: emailSchema.required('This field is required'),
-  industry: yup.string().required('Required'),
-  fundRaisingAmount: yup.number().required('Required'),
-  detail: yup.string().required('Required')
+  email: emailSchema.required(validationMessages.required),
+  industry: yup.string().required(validationMessages.required),
+  fundRaisingAmount: yup.number().required(validationMessages.required),
+  detail: yup.string().required(validationMessages.required)
 })
 
 export const issuerDocumentsSchema = yup.object().shape<any>({
-  companyRelated: yup.array<DataroomFile>().required('Required'),
-  issuanceRelated: yup.array<DataroomFile>().required('Required'),
-  financial: yup.array<DataroomFile>().required('Required')
+  companyRelated: yup
+    .array<DataroomFile>()
+    .required(validationMessages.required),
+  issuanceRelated: yup
+    .array<DataroomFile>()
+    .required(validationMessages.required),
+  financial: yup.array<DataroomFile>().required(validationMessages.required)
 })
