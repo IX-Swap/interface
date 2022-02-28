@@ -40,6 +40,11 @@ export const individualKycFormData: IFormData = {
     href: 'fatca',
     passed: false,
   },
+  employmentInformation: {
+    title: 'Employment Information',
+    href: 'employment-info',
+    passed: false,
+  },
   upload: {
     title: 'Upload Documents',
     href: 'upload',

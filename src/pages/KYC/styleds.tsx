@@ -51,8 +51,19 @@ export const Grid = styled(Box)`
   grid-gap: 35px;
 `
 
-export const FormCard = styled.div`
+export const FormWrapper = styled.form`
+  max-height: 750px;
+  overflow-y: scroll;
+  gap: 35px;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`
+
+export const FormCard = styled.div<{ filled?: boolean }>`
   background: ${({ theme }) => theme.bg18};
+  border: ${({ filled, theme }) => `1px solid ${filled ? theme.success : 'transparent'}`};
   padding: 24px 24px 32px 24px;
   border-radius: 16px;
 `
