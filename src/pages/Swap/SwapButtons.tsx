@@ -2,7 +2,7 @@ import { Trans } from '@lingui/macro'
 import { SwapErrorCard } from 'components/Card'
 import { ConfirmSwapInfo } from 'components/swap/ConfirmSwapInfo'
 import { OutputInfo } from 'components/swap/OutputInfo'
-import { utils } from 'ethers'
+import { BigNumber, utils } from 'ethers'
 import { ApprovalState } from 'hooks/useApproveCallback'
 import { UseERC20PermitState } from 'hooks/useERC20Permit'
 import useIsArgentWallet from 'hooks/useIsArgentWallet'
@@ -86,7 +86,7 @@ export const SwapButtons = ({
           kLast: utils.parseUnits(pair.reserve0.multiply(pair.reserve1).toExact()),
 
           priceToleranceThreshold: utils.parseUnits(trade.priceImpact.toFixed()),
-          systemFeeRate: utils.parseUnits(trade.executionPrice.toFixed()),
+          systemFeeRate: BigNumber.from(pair.isSecurity ? 10 : 3), // utils.parseUnits(trade.executionPrice.toFixed()),
 
           id: `swap-${Math.floor(1 + Math.random() * 100000000)}`,
 
