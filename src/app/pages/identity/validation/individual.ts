@@ -24,13 +24,13 @@ export const personalInfoSchema = yup
     photo: yup.string(),
     firstName: nameSchema.required(validationMessages.required),
     middleName: nameSchema,
-    lastName: nameSchema.required('This field is required'),
-    nationality: yup.string().required('Required'),
-    dob: birthdaySchema.required('This field is required'),
-    contactNumber: yup.string().phone().required('This field is required'),
-    email: emailSchema.required('This field is required'),
-    address: addressSchema.required('Required'),
-    gender: yup.string().required('Required')
+    lastName: nameSchema.required(validationMessages.required),
+    nationality: yup.string().required(validationMessages.required),
+    dob: birthdaySchema.required(validationMessages.required),
+    contactNumber: yup.string().phone().required(validationMessages.required),
+    email: emailSchema.required(validationMessages.required),
+    address: addressSchema.required(validationMessages.required),
+    gender: yup.string().required(validationMessages.required)
   })
 
 export const financialInfoSchema = yup
@@ -45,9 +45,9 @@ export const financialInfoSchema = yup
       .string()
       .max(50, 'Maximum of 50 characters')
       .required('This field is required'),
-    employmentStatus: yup.string().required('Required'),
-    annualIncome: yup.string().required('Required'),
-    sourceOfFund: yup.string().required('Required')
+    employmentStatus: yup.string().required(validationMessages.required),
+    annualIncome: yup.string().required(validationMessages.required),
+    sourceOfFund: yup.string().required(validationMessages.required)
   })
 
 export const taxDeclarationSchema = yup
