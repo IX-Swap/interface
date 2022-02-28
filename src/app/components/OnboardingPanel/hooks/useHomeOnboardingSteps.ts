@@ -9,17 +9,10 @@ export const useHomeOnboardingSteps = () => {
   const {
     isMultipleJourneysActive,
     isIndividualJourneyStarted,
-    isIssuerJourneyStarted,
-    isFundManagerJourneyStarted,
-    isFundAdminJourneyStarted,
-    isPortfolioManagerJourneyStarted,
+    isCorporateJourneyStarted,
     hasActiveIdentityJourney,
     individualIdentity,
-    investorIdentities,
-    issuerIdentities,
-    fundManagerIdentities,
-    fundAdminIdentities,
-    portfolioManagerIdentities,
+    corporateIdentities,
     detailsOfIssuance
   } = useOnboardingJourneys()
 
@@ -61,31 +54,16 @@ export const useHomeOnboardingSteps = () => {
   }
 
   if (hasActiveIdentityJourney) {
-    const coporateIdenty = () => {
-      if (isIssuerJourneyStarted) {
-        return issuerIdentities[0].status
-      }
-      if (isFundManagerJourneyStarted) {
-        return fundManagerIdentities[0].status
-      }
-      if (isFundAdminJourneyStarted) {
-        return fundAdminIdentities[0].status
-      }
-      if (isPortfolioManagerJourneyStarted) {
-        return portfolioManagerIdentities[0].status
-      }
-      return investorIdentities[0].status
-    }
-
     const activeJourneyIdentityStatus = isIndividualJourneyStarted
       ? individualIdentity?.status
-      : coporateIdenty()
+      : corporateIdentities[0].status
 
     return {
       steps: getIdentityOnboardingSteps({
         identityType: isIndividualJourneyStarted ? 'individual' : 'corporate',
         identityStatus: activeJourneyIdentityStatus,
-        asIssuer: isIssuerJourneyStarted
+        asIssuer:
+          isCorporateJourneyStarted && corporateIdentities[0].type === 'issuer'
       }),
       activeStep: getActiveStep(activeJourneyIdentityStatus)
     }

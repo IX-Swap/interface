@@ -37,7 +37,7 @@ export const CorporateInvestorForm = ({
   const updateMutation = useUpdateCorporate(type)
   const submitMutation = useSubmitCorporate(openDialog)
   const { showPreIdentityCreateDialog } = useOnboardingDialog()
-  const { isInvestorJourneyCompleted, investorIdentities } =
+  const { isCorporateJourneyCompleted, corporateIdentities } =
     useOnboardingJourneys()
   const { location, replace } = useHistory()
 
@@ -49,13 +49,13 @@ export const CorporateInvestorForm = ({
 
   useEffect(() => {
     if (
-      investorIdentities.length > 0 &&
+      corporateIdentities.length > 0 &&
       location.pathname === IdentityRoute.createCorporate
     ) {
       const {
         _id: identityId,
         user: { _id: userId }
-      } = investorIdentities[0]
+      } = corporateIdentities[0]
 
       replace(
         generatePath(IdentityRoute.editCorporate, {
@@ -64,12 +64,12 @@ export const CorporateInvestorForm = ({
         })
       )
     }
-  }, [location, replace, investorIdentities])
+  }, [location, replace, corporateIdentities])
 
   const defaultActiveStep = getIdentityDefaultActiveStep({
     isSubmitted: data?.status === 'Submitted',
     lastStepIndex: corporateInvestorFormSteps.length - 1,
-    isJourneyCompleted: isInvestorJourneyCompleted
+    isJourneyCompleted: isCorporateJourneyCompleted
   })
 
   return (
@@ -82,7 +82,7 @@ export const CorporateInvestorForm = ({
         submitMutation={submitMutation}
         steps={corporateInvestorFormSteps}
         defaultActiveStep={defaultActiveStep}
-        shouldSaveOnMove={!isInvestorJourneyCompleted}
+        shouldSaveOnMove={!isCorporateJourneyCompleted}
         nonLinear
       />
     </>
