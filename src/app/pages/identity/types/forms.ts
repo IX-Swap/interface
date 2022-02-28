@@ -91,7 +91,7 @@ export interface Personnel {
 }
 
 export interface IndividualFinancialInfoFormValues {
-  sourceOfFund: string
+  sourceOfFund: string | FundSource[]
   occupation: string
   employer: string
   employmentStatus: string
@@ -214,7 +214,7 @@ export interface IdentityFinancials {
   employmentStatus: string
   occupation: string
   sourceOfWealth: string
-  sourceOfFund?: string
+  sourceOfFund?: string | FundSource[]
 }
 
 export interface CorporateFields {
