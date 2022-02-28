@@ -8,6 +8,8 @@ export const routes = {
   pool: '/pool',
   swap: '/swap',
   kyc: '/kyc',
+  kycIndividual: '/kyc/individual',
+  kycCorporate: '/kyc/corporate',
   securityTokens: (currency?: Currency) => `/security-tokens${currency ? `/${currencyId(currency)}` : ''}`,
   staking: '/staking',
   vesting: '/vesting',
