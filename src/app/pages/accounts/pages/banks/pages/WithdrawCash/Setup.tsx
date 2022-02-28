@@ -133,7 +133,6 @@ export const Setup: React.FC = () => {
       virtualAccountId !== undefined ? (
         <>
           <Grid item>
-            <FormSectionHeader title='Withdrawal Method' variant='subsection' />
             <Typography variant='body1'>{paymentMethodData?.name}</Typography>
             <VSpacer size='small' />
           </Grid>
