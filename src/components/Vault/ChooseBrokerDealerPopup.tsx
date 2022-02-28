@@ -135,10 +135,10 @@ const KycSourceSelector = (props: KycSourceSelectorProps) => {
   const onChange = useCallback(
     (value: KycSource) => {
       if (kyc || value !== KycSource.IXSwap) {
-        setSelected(value !== selected ? value : undefined)
+        setSelected(value)
       }
     },
-    [kyc, selected]
+    [kyc]
   )
 
   const requestKyc = () => {
