@@ -4,6 +4,9 @@ export const useStyles = makeStyles(theme => ({
   wrapper: {
     background: `linear-gradient(180deg, rgba(237, 242, 250, 0) 98.71%, ${theme.palette.secondary.light} 98.71%), ${theme.palette.backgrounds.light}`
   },
+  toolbar: {
+    height: 80
+  },
   emptySpace: {
     flexGrow: 1
   }
