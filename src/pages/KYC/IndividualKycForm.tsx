@@ -116,7 +116,7 @@ export default function IndividualKycForm() {
             gender: gender.name,
             income: income.name,
           })
-          if (data?.id) goBack()
+          if (data?.id) history.push('/kyc')
         }}
       >
         {({ values, touched, errors, handleBlur, handleSubmit, setFieldValue, dirty }) => {
@@ -154,7 +154,7 @@ export default function IndividualKycForm() {
                           onChange={(e) => setFieldValue('firstName', e.currentTarget.value)}
                           value={values.firstName}
                           label="First Name:"
-                          error={errors.firstName && errors.firstName}
+                          // error={errors.firstName && errors.firstName}
                         />
                         <TextInput
                           onChange={(e) => setFieldValue('middleName', e.currentTarget.value)}
@@ -165,19 +165,19 @@ export default function IndividualKycForm() {
                           onChange={(e) => setFieldValue('lastName', e.currentTarget.value)}
                           value={values.lastName}
                           label="Last Name:"
-                          error={errors.lastName && errors.lastName}
+                          // error={errors.lastName && errors.lastName}
                         />
                       </FormGrid>
 
                       <FormGrid>
                         <DateInput
                           maxHeight={60}
-                          error={errors.dateOfBirth && errors.dateOfBirth}
+                          // error={errors.dateOfBirth && errors.dateOfBirth}
                           value={values.dateOfBirth}
                           onChange={(value) => setFieldValue('dateOfBirth', value)}
                         />
                         <Select
-                          error={errors.gender && errors.gender}
+                          // error={errors.gender && errors.gender}
                           label="Gender"
                           selectedItem={values.gender}
                           items={genders}
@@ -187,7 +187,7 @@ export default function IndividualKycForm() {
 
                       <FormGrid>
                         <Select
-                          error={errors.nationality && errors.nationality}
+                          // error={errors.nationality && errors.nationality}
                           withScroll
                           label="Nationality"
                           selectedItem={values.nationality}
@@ -195,7 +195,7 @@ export default function IndividualKycForm() {
                           onSelect={(nationality) => setFieldValue('nationality', nationality)}
                         />
                         <Select
-                          error={errors.citizenship && errors.citizenship}
+                          // error={errors.citizenship && errors.citizenship}
                           withScroll
                           label="Citizenship"
                           selectedItem={values.citizenship}
@@ -205,7 +205,7 @@ export default function IndividualKycForm() {
                       </FormGrid>
                       <FormGrid>
                         <PhoneInput
-                          error={errors.phoneNumber && errors.phoneNumber}
+                          // error={errors.phoneNumber && errors.phoneNumber}
                           value={values.phoneNumber}
                           onChange={(value) => setFieldValue('phoneNumber', value)}
                         />
@@ -213,7 +213,7 @@ export default function IndividualKycForm() {
                           onChange={(e) => setFieldValue('email', e.currentTarget.value)}
                           value={values.email}
                           label="Email address:"
-                          error={errors.email && errors.email}
+                          // error={errors.email && errors.email}
                         />
                       </FormGrid>
                     </Column>
@@ -231,13 +231,13 @@ export default function IndividualKycForm() {
                           onChange={(e) => setFieldValue('line1', e.currentTarget.value)}
                           value={values.line1}
                           label="Line 1"
-                          error={errors.line1 && errors.line1}
+                          // error={errors.line1 && errors.line1}
                         />
                         <TextInput
                           onChange={(e) => setFieldValue('line2', e.currentTarget.value)}
                           value={values.line2}
                           label="Line 2"
-                          error={errors.line2 && errors.line2}
+                          // error={errors.line2 && errors.line2}
                         />
                       </FormGrid>
 
@@ -248,13 +248,13 @@ export default function IndividualKycForm() {
                           selectedItem={values.country}
                           items={countries}
                           onSelect={(country) => setFieldValue('country', country)}
-                          error={errors.country && errors.country}
+                          // error={errors.country && errors.country}
                         />
                         <TextInput
                           onChange={(e) => setFieldValue('city', e.currentTarget.value)}
                           value={values.city}
                           label="City"
-                          error={errors.city && errors.city}
+                          // error={errors.city && errors.city}
                         />
                       </FormGrid>
                     </Column>
@@ -281,14 +281,14 @@ export default function IndividualKycForm() {
                         placeholder="Other Source of Funds...."
                         onChange={(e) => setFieldValue('otherFunds', e.currentTarget.value)}
                         value={values.otherFunds}
-                        error={errors.otherFunds && errors.otherFunds}
+                        // error={errors.otherFunds && errors.otherFunds}
                       />
                     )}
-                    {errors.sourceOfFunds && (
+                    {/* {errors.sourceOfFunds && (
                       <TYPE.small marginTop="8px" color={'red1'}>
                         {errors.sourceOfFunds}
                       </TYPE.small>
-                    )}
+                    )} */}
                   </FormCard>
 
                   <FormCard id="investor" filled={investorFilled}>
@@ -345,7 +345,7 @@ export default function IndividualKycForm() {
                             placeholder="ID Number.."
                             value={values.usTin}
                             onChange={(e) => setFieldValue('usTin', e.currentTarget.value)}
-                            error={errors.usTin && errors.usTin}
+                            // error={errors.usTin && errors.usTin}
                           />
                         )}
                       </Column>
@@ -368,27 +368,27 @@ export default function IndividualKycForm() {
                         onChange={(e) => setFieldValue('occupation', e.currentTarget.value)}
                         value={values.occupation}
                         label="Occupation"
-                        error={errors.occupation && errors.occupation}
+                        // error={errors.occupation && errors.occupation}
                       />
                       <Select
                         label="Employment Status"
                         selectedItem={values.employmentStatus}
                         items={empleymentStatuses}
                         onSelect={(status) => setFieldValue('employmentStatus', status)}
-                        error={errors.employmentStatus && errors.employmentStatus}
+                        // error={errors.employmentStatus && errors.employmentStatus}
                       />
                       <TextInput
                         onChange={(e) => setFieldValue('employer', e.currentTarget.value)}
                         value={values.employer}
                         label="Employer"
-                        error={errors.employer && errors.employer}
+                        // error={errors.employer && errors.employer}
                       />
                       <Select
                         label="Income in USD in preceding 12 months"
                         selectedItem={values.income}
                         items={incomes}
                         onSelect={(income) => setFieldValue('income', income)}
-                        error={errors.income && errors.income}
+                        // error={errors.income && errors.income}
                       />
                     </Column>
                   </FormCard>
@@ -401,7 +401,7 @@ export default function IndividualKycForm() {
 
                     <Column style={{ gap: '40px' }}>
                       <Uploader
-                        error={errors.proofOfIdentity && errors.proofOfIdentity}
+                        // error={errors.proofOfIdentity && errors.proofOfIdentity}
                         title="Proof of Identity"
                         subtitle="Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Proin eget tortor risus."
                         file={values.proofOfIdentity}
@@ -411,7 +411,7 @@ export default function IndividualKycForm() {
                       />
 
                       <Uploader
-                        error={errors.proofOfAddress && errors.proofOfAddress}
+                        // error={errors.proofOfAddress && errors.proofOfAddress}
                         title="Proof of Address"
                         subtitle="Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Proin eget tortor risus."
                         file={values.proofOfAddress}
@@ -421,7 +421,7 @@ export default function IndividualKycForm() {
                       />
 
                       <Uploader
-                        error={errors.evidenceOfAccreditation && errors.evidenceOfAccreditation}
+                        // error={errors.evidenceOfAccreditation && errors.evidenceOfAccreditation}
                         title="Evidence of accreditation"
                         subtitle="Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Proin eget tortor risus."
                         file={values.evidenceOfAccreditation}
