@@ -122,7 +122,7 @@ const KycSourceSelector = (props: KycSourceSelectorProps) => {
   }, [getMyKyc])
 
   useEffect(() => {
-    const status = kyc?.data.status ? KycSource.IXSwap : KycSource.InvestaX //|| KYCStatuses.NOT_SUBMITTED
+    const status = kyc?.data.status == 'approved' ? KycSource.IXSwap : KycSource.InvestaX //|| KYCStatuses.NOT_SUBMITTED
 
     setSelected(status)
     setLoading(false)
@@ -134,7 +134,7 @@ const KycSourceSelector = (props: KycSourceSelectorProps) => {
 
   const onChange = useCallback(
     (value: KycSource) => {
-      if (kyc || value !== KycSource.IXSwap) {
+      if (kyc?.data.status == 'approved' || value !== KycSource.IXSwap) {
         setSelected(value)
       }
     },
