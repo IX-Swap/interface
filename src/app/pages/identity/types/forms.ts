@@ -237,6 +237,7 @@ export interface CorporateFields {
   isIncorporated: boolean
   numberOfBusinessOwners: string
   businessActivity: string
+  sourceOfFund: string
 }
 
 export interface Declaration {

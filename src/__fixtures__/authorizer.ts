@@ -102,7 +102,8 @@ export const corporate: CorporateIdentity = {
   numberOfBusinessOwners: '1',
   businessActivity: '12',
   isIncorporated: true,
-  identityStatus: 'corporate'
+  identityStatus: 'corporate',
+  sourceOfFund: 'LOAN'
 }
 
 export const individual: IndividualIdentity = {
