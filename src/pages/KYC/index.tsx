@@ -56,7 +56,7 @@ export default function KYC() {
   }, [getMyKyc])
 
   const status = kyc?.data.status || KYCStatuses.NOT_SUBMITTED
-  const description = getStatusDescription(status)
+  const description = kyc?.data.message || getStatusDescription(status)
 
   const getKYCDescription = useCallback(() => {
     switch (status) {
@@ -108,9 +108,11 @@ export default function KYC() {
           <>
             <Description description={description} />
             <DateInfo submittedDate="yes" rejectedDate="yes" />
-            <ButtonIXSGradient style={{ padding: '16px 24px' }} marginTop="32px">
-              <Trans>Make changes and resend KYC</Trans>
-            </ButtonIXSGradient>
+            <Link style={{ textDecoration: 'none ' }} to="/kyc/individual">
+              <ButtonIXSGradient style={{ padding: '16px 24px' }} marginTop="32px">
+                <Trans>Make changes and resend KYC</Trans>
+              </ButtonIXSGradient>
+            </Link>
           </>
         )
       case KYCStatuses.APPROVED:
