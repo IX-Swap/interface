@@ -75,11 +75,12 @@ export const SwapButtons = ({
   const onClick = useCallback(async () => {
     if (trade && account) {
       const pair = trade.route.pairs[0]
+      console.log({ trade })
 
       try {
         await verifySwap({
-          tokenFrom: pair.token0.address,
-          tokenTo: pair.token1.address,
+          tokenFrom: trade.inputAmount.currency.wrapped.address, //pair.token0.address,
+          tokenTo: trade.outputAmount.currency.wrapped.address, //pair.token1.address,
 
           pair: authorizationInProgress?.pairAddress as string,
 
