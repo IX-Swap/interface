@@ -151,8 +151,8 @@ describe('useHomeOnboardingSteps', () => {
   it('returns correct values when corporate identity journey started', async () => {
     const getOnboardingJourneysResponse = {
       hasActiveIdentityJourney: true,
-      isInvestorJourneyStarted: true,
-      investorIdentities: [
+      isCorporateJourneyStarted: true,
+      corporateIdentities: [
         {
           status: ''
         }
@@ -183,10 +183,11 @@ describe('useHomeOnboardingSteps', () => {
   it('returns correct values when issuer identity journey started', async () => {
     const getOnboardingJourneysResponse = {
       hasActiveIdentityJourney: true,
-      isIssuerJourneyStarted: true,
-      issuerIdentities: [
+      isCorporateJourneyStarted: true,
+      corporateIdentities: [
         {
-          status: ''
+          status: '',
+          type: 'issuer'
         }
       ]
     }
