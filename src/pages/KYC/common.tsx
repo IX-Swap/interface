@@ -110,6 +110,7 @@ export const TextInput: FC<TextInputProps> = ({
         onChange={onChange}
         style={style}
         type={type}
+        autoComplete="off"
       />
 
       {error && (

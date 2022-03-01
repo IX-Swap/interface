@@ -21,9 +21,14 @@ import { Grid, FormCard, FormGrid, ExtraInfoCard, FormWrapper } from './styleds'
 import { errorsSchema } from './schema'
 import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
 import { ReactComponent as BigPassed } from 'assets/images/check-success-big.svg'
+import { useAddPopup } from 'state/application/hooks'
 
 export default function IndividualKycForm() {
   const [formData] = useState(individualKycFormData)
+  const [canSubmit, setCanSubmit] = useState(true)
+  const [isSubmittedOnce, setIsSubmittedOnce] = useState(false)
+  const [errors, setErrors] = useState<any>({})
+  const addPopup = useAddPopup()
   const createIndividualKYC = useCreateIndividualKYC()
   const history = useHistory()
   const promptValue = 'Data will be lost if you leave the page, are you sure?'
@@ -36,12 +41,39 @@ export default function IndividualKycForm() {
     }
   }, [])
 
+  const { info, address, funds, investor, fatca, upload, employmentInformation } = formData
+
   const alertUser = (e: any) => {
     e.preventDefault()
     e.returnValue = ''
   }
 
-  const { info, address, funds, investor, fatca, upload, employmentInformation } = formData
+  const validationSeen = (key: string) => {
+    if (errors[key]) {
+      const newErrors = { ...errors }
+      delete newErrors[key]
+      setErrors(newErrors)
+      setCanSubmit(true)
+    }
+  }
+
+  const onChangeInput = (key: string, value: string, values: any, setFieldValue: any) => {
+    if (values[key] !== value) {
+      setFieldValue(key, value, false)
+    }
+
+    validationSeen(key)
+  }
+
+  const onSelectChange = (key: string, value: any, setFieldValue: any) => {
+    setFieldValue(key, value, false)
+    validationSeen(key)
+  }
+
+  const onRadioChange = (key: string, value: number, setFieldValue: any) => {
+    setFieldValue(key, value, false)
+    validationSeen(key)
+  }
 
   const onSourceOfFundsChange = (source: string, fields: any[], setFieldValue: any) => {
     const newSources = [...fields]
@@ -54,7 +86,8 @@ export default function IndividualKycForm() {
       newSources.push(source)
     }
 
-    setFieldValue('sourceOfFunds', newSources)
+    setFieldValue('sourceOfFunds', newSources, false)
+    validationSeen('sourceOfFunds')
   }
 
   const goBack = (e?: any) => {
@@ -70,7 +103,8 @@ export default function IndividualKycForm() {
       URL.revokeObjectURL(lastValue.filePath)
     }
     // const preview = URL.createObjectURL(file)
-    setFieldValue(key, file)
+    setFieldValue(key, file, false)
+    validationSeen(key)
   }
 
   const countries = useMemo(() => {
@@ -92,38 +126,82 @@ export default function IndividualKycForm() {
 
       <Formik
         initialValues={formInitialValues}
-        validationSchema={errorsSchema}
+        validateOnBlur={false}
+        validateOnChange={false}
+        validateOnMount={false}
+        isInitialValid={false}
         onSubmit={async (values) => {
-          const {
-            dateOfBirth,
-            sourceOfFunds,
-            otherFunds,
-            citizenship,
-            nationality,
-            country,
-            employmentStatus,
-            gender,
-            income,
-          } = values
-          const data: any = await createIndividualKYC({
-            ...values,
-            dateOfBirth: dateOfBirth.format(),
-            sourceOfFunds: [...sourceOfFunds, otherFunds].join(', '),
-            citizenship: citizenship.name,
-            nationality: nationality.name,
-            country: country.name,
-            employmentStatus: employmentStatus.name,
-            gender: gender.name,
-            income: income.name,
-          })
-          if (data?.id) history.push('/kyc')
+          errorsSchema
+            .validate(values, { abortEarly: false })
+            .then(async () => {
+              setCanSubmit(false)
+              const {
+                dateOfBirth,
+                sourceOfFunds,
+                otherFunds,
+                citizenship,
+                nationality,
+                country,
+                employmentStatus,
+                gender,
+                income,
+                isUSTaxPayer,
+              } = values
+
+              const data: any = await createIndividualKYC({
+                ...values,
+                dateOfBirth: dateOfBirth.format(),
+                sourceOfFunds: [...sourceOfFunds, otherFunds].join(', '),
+                citizenship: citizenship.name,
+                nationality: nationality.name,
+                country: country.name,
+                employmentStatus: employmentStatus.name,
+                gender: gender.name,
+                income: income.name,
+                isUSTaxPayer: isUSTaxPayer ? true : false,
+              })
+
+              if (data?.id) {
+                history.push('/kyc')
+                addPopup({
+                  info: {
+                    success: true,
+                    summary: 'KYC was successfully created',
+                  },
+                })
+              } else {
+                setCanSubmit(true)
+                addPopup({
+                  info: {
+                    success: false,
+                    summary: 'Something went wrong',
+                  },
+                })
+              }
+            })
+            .catch((error) => {
+              const newErrors: any = {}
+              error.inner.forEach((e: any) => {
+                newErrors[e.path] = e.message
+              })
+              addPopup({
+                info: {
+                  success: false,
+                  summary: 'Please, fill the valid data',
+                },
+              })
+              setIsSubmittedOnce(true)
+              setErrors(newErrors)
+              setCanSubmit(false)
+            })
         }}
       >
-        {({ values, touched, errors, handleBlur, handleSubmit, setFieldValue, dirty }) => {
+        {({ values, handleSubmit, setFieldValue, dirty }) => {
+          const shouldValidate = dirty && isSubmittedOnce
           const employmentInfoFilled =
-            dirty && !errors.occupation && !errors.employmentStatus && !errors.employer && !errors.income
+            shouldValidate && !errors.occupation && !errors.employmentStatus && !errors.employer && !errors.income
           const personalFilled =
-            dirty &&
+            shouldValidate &&
             !errors.firstName &&
             !errors.lastName &&
             !errors.dateOfBirth &&
@@ -132,18 +210,18 @@ export default function IndividualKycForm() {
             !errors.citizenship &&
             !errors.phoneNumber &&
             !errors.email
-          const investorFilled = touched.accredited && !errors.accredited
-          const addressFilled = dirty && !errors.line1 && !errors.line2 && !errors.country && !errors.city
-          const fundsFilled = dirty && !errors.sourceOfFunds && !errors.otherFunds
-          const fatcaFilled = dirty && !errors.usTin
+          const investorFilled = shouldValidate && !errors.accredited
+          const addressFilled = shouldValidate && !errors.line1 && !errors.line2 && !errors.country && !errors.city
+          const fundsFilled = shouldValidate && !errors.sourceOfFunds && !errors.otherFunds
+          const fatcaFilled = shouldValidate && !errors.usTin && !errors.isUSTaxPayer
           const filesFilled =
-            dirty && !errors.proofOfIdentity && !errors.proofOfAddress && !errors.evidenceOfAccreditation
+            shouldValidate && !errors.proofOfIdentity && !errors.proofOfAddress && !errors.evidenceOfAccreditation
 
           return (
             <Grid>
               <FormWrapper onSubmit={handleSubmit} style={{ maxHeight: '750px', overflowY: 'scroll', gap: '35px' }}>
                 <Column style={{ gap: '35px' }}>
-                  <FormCard filled={personalFilled} id="personal">
+                  <FormCard id="personal">
                     <RowBetween marginBottom="32px">
                       <TYPE.title6 style={{ textTransform: 'uppercase' }}>{info.title}</TYPE.title6>
                       {personalFilled && <BigPassed />}
@@ -151,75 +229,81 @@ export default function IndividualKycForm() {
                     <Column style={{ gap: '20px' }}>
                       <FormGrid columns={3}>
                         <TextInput
-                          onChange={(e) => setFieldValue('firstName', e.currentTarget.value)}
+                          onChange={(e) => onChangeInput('firstName', e.currentTarget.value, values, setFieldValue)}
                           value={values.firstName}
                           label="First Name:"
-                          // error={errors.firstName && errors.firstName}
+                          error={errors.firstName && errors.firstName}
                         />
                         <TextInput
-                          onChange={(e) => setFieldValue('middleName', e.currentTarget.value)}
+                          onChange={(e) => onChangeInput('middleName', e.currentTarget.value, values, setFieldValue)}
                           value={values.middleName}
                           label="Middle Name:"
                         />
                         <TextInput
-                          onChange={(e) => setFieldValue('lastName', e.currentTarget.value)}
+                          onChange={(e) => onChangeInput('lastName', e.currentTarget.value, values, setFieldValue)}
                           value={values.lastName}
                           label="Last Name:"
-                          // error={errors.lastName && errors.lastName}
+                          error={errors.lastName && errors.lastName}
                         />
                       </FormGrid>
 
                       <FormGrid>
                         <DateInput
                           maxHeight={60}
-                          // error={errors.dateOfBirth && errors.dateOfBirth}
+                          error={errors.dateOfBirth && errors.dateOfBirth}
                           value={values.dateOfBirth}
-                          onChange={(value) => setFieldValue('dateOfBirth', value)}
+                          onChange={(value) => {
+                            setFieldValue('dateOfBirth', value, false)
+                            validationSeen('dateOfBirth')
+                          }}
                         />
                         <Select
-                          // error={errors.gender && errors.gender}
+                          error={errors.gender && errors.gender}
                           label="Gender"
                           selectedItem={values.gender}
                           items={genders}
-                          onSelect={(gender) => setFieldValue('gender', gender)}
+                          onSelect={(gender) => onSelectChange('gender', gender, setFieldValue)}
                         />
                       </FormGrid>
 
                       <FormGrid>
                         <Select
-                          // error={errors.nationality && errors.nationality}
+                          error={errors.nationality && errors.nationality}
                           withScroll
                           label="Nationality"
                           selectedItem={values.nationality}
                           items={countries}
-                          onSelect={(nationality) => setFieldValue('nationality', nationality)}
+                          onSelect={(nationality) => onSelectChange('nationality', nationality, setFieldValue)}
                         />
                         <Select
-                          // error={errors.citizenship && errors.citizenship}
+                          error={errors.citizenship && errors.citizenship}
                           withScroll
                           label="Citizenship"
                           selectedItem={values.citizenship}
                           items={countries}
-                          onSelect={(citizenship) => setFieldValue('citizenship', citizenship)}
+                          onSelect={(citizenship) => onSelectChange('citizenship', citizenship, setFieldValue)}
                         />
                       </FormGrid>
                       <FormGrid>
                         <PhoneInput
-                          // error={errors.phoneNumber && errors.phoneNumber}
+                          error={errors.phoneNumber && errors.phoneNumber}
                           value={values.phoneNumber}
-                          onChange={(value) => setFieldValue('phoneNumber', value)}
+                          onChange={(value) => {
+                            setFieldValue('phoneNumber', value, false)
+                            validationSeen('phoneNumber')
+                          }}
                         />
                         <TextInput
-                          onChange={(e) => setFieldValue('email', e.currentTarget.value)}
+                          onChange={(e) => onChangeInput('email', e.currentTarget.value, values, setFieldValue)}
                           value={values.email}
                           label="Email address:"
-                          // error={errors.email && errors.email}
+                          error={errors.email && errors.email}
                         />
                       </FormGrid>
                     </Column>
                   </FormCard>
 
-                  <FormCard id="address" filled={addressFilled}>
+                  <FormCard id="address">
                     <RowBetween marginBottom="32px">
                       <TYPE.title6 style={{ textTransform: 'uppercase' }}>{address.title}</TYPE.title6>
                       {addressFilled && <BigPassed />}
@@ -228,16 +312,16 @@ export default function IndividualKycForm() {
                     <Column style={{ gap: '20px' }}>
                       <FormGrid>
                         <TextInput
-                          onChange={(e) => setFieldValue('line1', e.currentTarget.value)}
+                          onChange={(e) => onChangeInput('line1', e.currentTarget.value, values, setFieldValue)}
                           value={values.line1}
                           label="Line 1"
-                          // error={errors.line1 && errors.line1}
+                          error={errors.line1 && errors.line1}
                         />
                         <TextInput
-                          onChange={(e) => setFieldValue('line2', e.currentTarget.value)}
+                          onChange={(e) => onChangeInput('line2', e.currentTarget.value, values, setFieldValue)}
                           value={values.line2}
                           label="Line 2"
-                          // error={errors.line2 && errors.line2}
+                          error={errors.line2 && errors.line2}
                         />
                       </FormGrid>
 
@@ -247,20 +331,20 @@ export default function IndividualKycForm() {
                           label="Country"
                           selectedItem={values.country}
                           items={countries}
-                          onSelect={(country) => setFieldValue('country', country)}
-                          // error={errors.country && errors.country}
+                          onSelect={(country) => onSelectChange('country', country, setFieldValue)}
+                          error={errors.country && errors.country}
                         />
                         <TextInput
-                          onChange={(e) => setFieldValue('city', e.currentTarget.value)}
+                          onChange={(e) => onChangeInput('city', e.currentTarget.value, values, setFieldValue)}
                           value={values.city}
                           label="City"
-                          // error={errors.city && errors.city}
+                          error={errors.city && errors.city}
                         />
                       </FormGrid>
                     </Column>
                   </FormCard>
 
-                  <FormCard id="funds" filled={fundsFilled}>
+                  <FormCard id="funds">
                     <RowBetween marginBottom="32px">
                       <TYPE.title6 style={{ textTransform: 'uppercase' }}>{funds.title}</TYPE.title6>
                       {fundsFilled && <BigPassed />}
@@ -279,19 +363,19 @@ export default function IndividualKycForm() {
                       <TextInput
                         style={{ marginTop: 20 }}
                         placeholder="Other Source of Funds...."
-                        onChange={(e) => setFieldValue('otherFunds', e.currentTarget.value)}
+                        onChange={(e) => onChangeInput('otherFunds', e.currentTarget.value, values, setFieldValue)}
                         value={values.otherFunds}
-                        // error={errors.otherFunds && errors.otherFunds}
+                        error={errors.otherFunds && errors.otherFunds}
                       />
                     )}
-                    {/* {errors.sourceOfFunds && (
+                    {errors.sourceOfFunds && (
                       <TYPE.small marginTop="8px" color={'red1'}>
                         {errors.sourceOfFunds}
                       </TYPE.small>
-                    )} */}
+                    )}
                   </FormCard>
 
-                  <FormCard id="investor" filled={investorFilled}>
+                  <FormCard id="investor">
                     <RowBetween marginBottom="32px">
                       <TYPE.title6 style={{ textTransform: 'uppercase' }}>{investor.title}</TYPE.title6>
                       {investorFilled && <BigPassed />}
@@ -301,27 +385,28 @@ export default function IndividualKycForm() {
                       <Column style={{ gap: '12px' }}>
                         <Checkbox
                           name="accredited"
-                          onBlur={handleBlur}
-                          scaleSize={1.4}
                           isRadio
-                          checked={values.accredited !== 1}
-                          onClick={() => setFieldValue('accredited', 0)}
+                          checked={values.accredited === 0}
+                          onClick={() => onRadioChange('accredited', 0, setFieldValue)}
                           label="I am not an accredited investor"
                         />
                         <Checkbox
                           name="accredited"
-                          onBlur={handleBlur}
-                          scaleSize={1.4}
                           isRadio
                           checked={values.accredited === 1}
-                          onClick={() => setFieldValue('accredited', 1)}
+                          onClick={() => onRadioChange('accredited', 1, setFieldValue)}
                           label={`I declare that i am “individual accredited Investor"`}
                         />
+                        {errors.accredited && (
+                          <TYPE.small marginTop="-4px" color={'red1'}>
+                            <Trans>Choose one</Trans>
+                          </TYPE.small>
+                        )}
                       </Column>
                     </Column>
                   </FormCard>
 
-                  <FormCard id="fatca" filled={fatcaFilled}>
+                  <FormCard id="fatca">
                     <RowBetween marginBottom="32px">
                       <TYPE.title6 style={{ textTransform: 'uppercase' }}>{fatca.title}</TYPE.title6>
                       {fatcaFilled && <BigPassed />}
@@ -335,65 +420,70 @@ export default function IndividualKycForm() {
                       <Column style={{ gap: '8px' }}>
                         <Checkbox
                           isRadio
-                          checked={values.isUSTaxPayer}
-                          onClick={() => setFieldValue('isUSTaxPayer', true)}
+                          checked={values.isUSTaxPayer === 1}
+                          onClick={() => onRadioChange('isUSTaxPayer', 1, setFieldValue)}
                           label={`I confirm that I am a US citizen and/or resident in the US for tax purposes and my US federal taxpayer ID number (US TIN) is as follows: `}
                         />
-                        {values.isUSTaxPayer && (
+                        {values.isUSTaxPayer === 1 && (
                           <TextInput
                             style={{ width: 284 }}
                             placeholder="ID Number.."
                             value={values.usTin}
-                            onChange={(e) => setFieldValue('usTin', e.currentTarget.value)}
-                            // error={errors.usTin && errors.usTin}
+                            onChange={(e) => onChangeInput('usTin', e.currentTarget.value, values, setFieldValue)}
+                            error={errors.usTin && errors.usTin}
                           />
                         )}
                       </Column>
                       <Checkbox
                         isRadio
-                        checked={!values.isUSTaxPayer}
-                        onClick={() => setFieldValue('isUSTaxPayer', false)}
+                        checked={values.isUSTaxPayer === 0}
+                        onClick={() => onRadioChange('isUSTaxPayer', 0, setFieldValue)}
                         label="I confirm that I am not a US citizen or resident in the US for tax purposes. "
                       />
+                      {errors.isUSTaxPayer && (
+                        <TYPE.small marginTop="-4px" color={'red1'}>
+                          <Trans>Choose one</Trans>
+                        </TYPE.small>
+                      )}
                     </Column>
                   </FormCard>
 
-                  <FormCard id="employment-info" filled={employmentInfoFilled}>
+                  <FormCard id="employment-info">
                     <RowBetween marginBottom="32px">
                       <TYPE.title6 style={{ textTransform: 'uppercase' }}>{employmentInformation.title}</TYPE.title6>
                       {employmentInfoFilled && <BigPassed />}
                     </RowBetween>
                     <Column style={{ gap: '20px' }}>
                       <TextInput
-                        onChange={(e) => setFieldValue('occupation', e.currentTarget.value)}
+                        onChange={(e) => onChangeInput('occupation', e.currentTarget.value, values, setFieldValue)}
                         value={values.occupation}
                         label="Occupation"
-                        // error={errors.occupation && errors.occupation}
+                        error={errors.occupation && errors.occupation}
                       />
                       <Select
                         label="Employment Status"
                         selectedItem={values.employmentStatus}
                         items={empleymentStatuses}
-                        onSelect={(status) => setFieldValue('employmentStatus', status)}
-                        // error={errors.employmentStatus && errors.employmentStatus}
+                        onSelect={(status) => onSelectChange('employmentStatus', status, setFieldValue)}
+                        error={errors.employmentStatus && errors.employmentStatus}
                       />
                       <TextInput
-                        onChange={(e) => setFieldValue('employer', e.currentTarget.value)}
+                        onChange={(e) => onChangeInput('employer', e.currentTarget.value, values, setFieldValue)}
                         value={values.employer}
                         label="Employer"
-                        // error={errors.employer && errors.employer}
+                        error={errors.employer && errors.employer}
                       />
                       <Select
                         label="Income in USD in preceding 12 months"
                         selectedItem={values.income}
                         items={incomes}
-                        onSelect={(income) => setFieldValue('income', income)}
-                        // error={errors.income && errors.income}
+                        onSelect={(income) => onSelectChange('income', income, setFieldValue)}
+                        error={errors.income && errors.income}
                       />
                     </Column>
                   </FormCard>
 
-                  <FormCard id="upload" filled={filesFilled}>
+                  <FormCard id="upload">
                     <RowBetween marginBottom="32px">
                       <TYPE.title6 style={{ textTransform: 'uppercase' }}>{upload.title}</TYPE.title6>
                       {filesFilled && <BigPassed />}
@@ -401,7 +491,7 @@ export default function IndividualKycForm() {
 
                     <Column style={{ gap: '40px' }}>
                       <Uploader
-                        // error={errors.proofOfIdentity && errors.proofOfIdentity}
+                        error={errors.proofOfIdentity && errors.proofOfIdentity}
                         title="Proof of Identity"
                         subtitle="Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Proin eget tortor risus."
                         file={values.proofOfIdentity}
@@ -411,7 +501,7 @@ export default function IndividualKycForm() {
                       />
 
                       <Uploader
-                        // error={errors.proofOfAddress && errors.proofOfAddress}
+                        error={errors.proofOfAddress && errors.proofOfAddress}
                         title="Proof of Address"
                         subtitle="Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Proin eget tortor risus."
                         file={values.proofOfAddress}
@@ -421,7 +511,7 @@ export default function IndividualKycForm() {
                       />
 
                       <Uploader
-                        // error={errors.evidenceOfAccreditation && errors.evidenceOfAccreditation}
+                        error={errors.evidenceOfAccreditation && errors.evidenceOfAccreditation}
                         title="Evidence of accreditation"
                         subtitle="Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Proin eget tortor risus."
                         file={values.evidenceOfAccreditation}
@@ -433,7 +523,7 @@ export default function IndividualKycForm() {
                             setFieldValue
                           )
                         }}
-                        optional={values.accredited === 0}
+                        optional={values.accredited !== 1}
                       />
                     </Column>
                   </FormCard>
@@ -450,7 +540,8 @@ export default function IndividualKycForm() {
               <Column>
                 <KYCProgressBar
                   handleSubmit={handleSubmit}
-                  disabled={!(dirty && Object.keys(errors).length === 0)}
+                  // disabled={!(dirty && Object.keys(errors).length === 0)}
+                  disabled={!dirty || !canSubmit || Object.keys(errors).length !== 0}
                   topics={Object.values({
                     info: {
                       title: 'Personal Information',
