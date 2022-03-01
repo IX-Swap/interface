@@ -9,8 +9,6 @@ export interface CustomAvatarProps extends AvatarProps {
   ownerId?: string
   type?: 'banner' | 'document'
   size?: number | [number, number] | [string, string]
-  border?: string | number
-  borderRadius?: string | number
   maxWidth?: number | string
   fallback?: Element | JSX.Element
   children?: ReactNode
