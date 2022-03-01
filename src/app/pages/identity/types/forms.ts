@@ -132,6 +132,11 @@ export interface InvestorCorporateInfoFormValues {
   isMailingAddressSame: boolean
   representatives: RepresentativeFormValues[]
   otherLegalEntityStatus?: string
+  identityStatus: string
+  isIncorporated: boolean
+  numberOfBusinessOwners: string
+  businessActivity: string
+  sourceOfFund: string
 }
 
 export interface InvestorDirectorsAndBeneficialOwnersFormValues {
