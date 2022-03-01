@@ -1,23 +1,39 @@
-import React, { ReactNode, Fragment } from 'react'
-import { Avatar, AvatarProps, Badge, BadgeProps } from '@mui/material'
-
+import React, { Fragment, ReactNode } from 'react'
+import { ViewDocument } from 'app/components/DSO/components/ViewDocument'
+import {
+  Avatar as MUIAvatar,
+  AvatarProps as MUIAvatarProps,
+  Badge,
+  BadgeProps
+} from '@mui/material'
+import { useRawBanner } from 'app/pages/admin/hooks/useRawBanner'
 import { useTheme } from '@mui/styles'
 
-export interface CustomAvatarProps extends AvatarProps {
+export interface AvatarProps extends MUIAvatarProps {
+  documentId?: string
+  ownerId?: string
+  type?: 'banner' | 'document'
   size?: number | [number, number] | [string, string]
+  border?: string | number
+  borderRadius?: string | number
   maxWidth?: number | string
   fallback?: Element | JSX.Element
   children?: ReactNode
   hasBadge?: boolean
 }
 
-export const CustomAvatar = (props: CustomAvatarProps) => {
+export const CustomAvatar = (props: AvatarProps) => {
   const {
-    size = 32,
+    documentId,
+    ownerId = '',
+    type = 'document',
+    size = 80,
+    variant = 'circular',
+    fallback,
     children,
     maxWidth = 'initial',
     hasBadge = false,
-    ...other
+    src
   } = props
   const width = Array.isArray(size) ? size[0] : size
   const height = Array.isArray(size) ? size[1] : size
@@ -50,15 +66,46 @@ export const CustomAvatar = (props: CustomAvatarProps) => {
 
   const Wrapper = hasBadge ? StyledBadge : Fragment
 
-  return (
+  const fallbackElement = (
     <Wrapper
       overlap='circular'
       anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
       variant='dot'
     >
-      <Avatar style={style} {...other}>
-        {children}
-      </Avatar>
+      {fallback ?? (
+        <MUIAvatar src={src} style={style} variant={variant}>
+          {children}
+        </MUIAvatar>
+      )}
     </Wrapper>
+  )
+
+  if (documentId === undefined || ownerId === undefined || documentId === '') {
+    return fallbackElement
+  }
+
+  return (
+    <ViewDocument
+      documentId={documentId}
+      ownerId={ownerId}
+      type={type}
+      getDataFunction={type === 'banner' ? useRawBanner : undefined}
+    >
+      {url =>
+        url !== '' ? (
+          <Wrapper
+            overlap='circular'
+            anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+            variant='dot'
+          >
+            <MUIAvatar src={url} style={style} variant={variant}>
+              {children}
+            </MUIAvatar>
+          </Wrapper>
+        ) : (
+          fallbackElement
+        )
+      }
+    </ViewDocument>
   )
 }
