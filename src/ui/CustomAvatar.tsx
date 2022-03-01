@@ -1,15 +1,10 @@
 import React, { Fragment, ReactNode } from 'react'
 import { ViewDocument } from 'app/components/DSO/components/ViewDocument'
-import {
-  Avatar as MUIAvatar,
-  AvatarProps as MUIAvatarProps,
-  Badge,
-  BadgeProps
-} from '@mui/material'
+import { Avatar, AvatarProps, Badge, BadgeProps } from '@mui/material'
 import { useRawBanner } from 'app/pages/admin/hooks/useRawBanner'
 import { useTheme } from '@mui/styles'
 
-export interface AvatarProps extends MUIAvatarProps {
+export interface CustomAvatarProps extends AvatarProps {
   documentId?: string
   ownerId?: string
   type?: 'banner' | 'document'
@@ -22,7 +17,7 @@ export interface AvatarProps extends MUIAvatarProps {
   hasBadge?: boolean
 }
 
-export const CustomAvatar = (props: AvatarProps) => {
+export const CustomAvatar = (props: CustomAvatarProps) => {
   const {
     documentId,
     ownerId = '',
@@ -73,9 +68,9 @@ export const CustomAvatar = (props: AvatarProps) => {
       variant='dot'
     >
       {fallback ?? (
-        <MUIAvatar src={src} style={style} variant={variant}>
+        <Avatar src={src} style={style} variant={variant}>
           {children}
-        </MUIAvatar>
+        </Avatar>
       )}
     </Wrapper>
   )
@@ -98,9 +93,9 @@ export const CustomAvatar = (props: AvatarProps) => {
             anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
             variant='dot'
           >
-            <MUIAvatar src={url} style={style} variant={variant}>
+            <Avatar src={url} style={style} variant={variant}>
               {children}
-            </MUIAvatar>
+            </Avatar>
           </Wrapper>
         ) : (
           fallbackElement
