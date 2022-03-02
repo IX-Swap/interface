@@ -1,10 +1,12 @@
 import { Box, Typography } from '@mui/material'
-import { useAuth } from 'hooks/auth/useAuth'
 import { useIndividualIdentity } from 'hooks/identity/useIndividualIdentity'
 import React from 'react'
 import { useStyles } from 'ui/UIKit/Header/components/UserDropdown/UserDropdownInfo/UserDropdownInfo.styles'
 import { CustomAvatar } from 'ui/CustomAvatar'
 import { UserRoleStatus } from 'ui/UIKit/Header/components/UserDropdown/UserRoleStatus/UserRoleStatus'
+// TODO Remove mocked hook after demo
+import { useAuth } from 'ui/UIKit/Header/hooks/mock/useAuth'
+// import { useAuth } from 'hooks/auth/useAuth'
 // import { Avatar } from 'components/Avatar'
 
 export const UserDropdownInfo = () => {
@@ -20,7 +22,7 @@ export const UserDropdownInfo = () => {
 
   return (
     <Box className={classes.wrapper}>
-      {/* TODO Needs to fix functionality for showing photo */}
+      {/* TODO Needs to add functionality for showing photo, as in old component below */}
       <CustomAvatar size={64} src={data?.photo}>
         {name[0]}
       </CustomAvatar>

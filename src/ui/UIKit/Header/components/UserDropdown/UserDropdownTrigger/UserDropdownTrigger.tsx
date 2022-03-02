@@ -3,7 +3,10 @@ import { IconButton } from '@mui/material'
 import { DropdownTriggerProps } from 'app/components/Dropdown/Dropdown'
 import { CustomAvatar } from 'ui/CustomAvatar'
 import { useStyles } from 'ui/UIKit/Header/components/UserDropdown/UserDropdownTrigger/UserDropdownTrigger.styles'
-import { useAuth } from 'hooks/auth/useAuth'
+import classnames from 'classnames'
+// TODO Remove mocked hook after demo
+import { useAuth } from 'ui/UIKit/Header/hooks/mock/useAuth'
+// import { useAuth } from 'hooks/auth/useAuth'
 
 export const UserDropdownTrigger = (props: DropdownTriggerProps) => {
   const classes = useStyles({ isOpen: props.injectedProps.isOpen })
@@ -20,8 +23,12 @@ export const UserDropdownTrigger = (props: DropdownTriggerProps) => {
       aria-haspopup='true'
       aria-controls='profile-menu'
       size='large'
-      className={classes.button}
+      disableTouchRipple
+      className={classnames(classes.wrapper, {
+        [classes.opened]: props.injectedProps.isOpen
+      })}
     >
+      {/* TODO Needs to add view photo functionality, as in old Avatar component */}
       <CustomAvatar>{user.name[0]}</CustomAvatar>
     </IconButton>
   )

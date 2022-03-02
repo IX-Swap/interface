@@ -3,7 +3,9 @@ import { Box } from '@mui/material'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { TopbarLinkDropdown } from 'ui/UIKit/Header/components/TopbarLinkDropdown/TopbarLinkDropdown'
 import { TopbarLinkContainer } from 'ui/UIKit/Header/components/TopbarLinkContainer/TopbarLinkContainer'
-import { useAppNavigationLinks } from 'ui/UIKit/Header/hooks/useAppNavigationLinks'
+// TODO Delete mocked hook after demo
+import { useAppNavigationLinks } from 'ui/UIKit/Header/hooks/mock/useAppNavigationLinks'
+// import { useAppNavigationLinks } from 'ui/UIKit/Header/hooks/useAppNavigationLinks'
 
 export const Navigation = () => {
   const { isDesktop } = useAppBreakpoints()
@@ -14,7 +16,7 @@ export const Navigation = () => {
   }
 
   return (
-    <Box display={'flex'}>
+    <Box display={'flex'} alignItems={'center'}>
       {links.map(link => {
         if (isDropdownLink(link.label)) {
           return (

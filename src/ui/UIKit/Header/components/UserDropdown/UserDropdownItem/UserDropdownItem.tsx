@@ -42,6 +42,7 @@ export const UserDropdownItem = (props: UserDropdownItemProps) => {
     <MenuItem
       component={typeof link === 'string' ? LinkElement : 'li'}
       selected={isActive}
+      disableTouchRipple
       onClick={handleClick}
       className={classes.wrapper}
       to={link}

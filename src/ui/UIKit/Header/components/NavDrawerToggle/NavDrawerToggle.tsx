@@ -24,6 +24,7 @@ export const NavDrawerToggle = () => {
           edge='start'
           color='inherit'
           size='large'
+          disableTouchRipple
           className={classes.button}
         >
           {props.injectedProps.isOpen ? <CloseIcon /> : <MenuIcon />}

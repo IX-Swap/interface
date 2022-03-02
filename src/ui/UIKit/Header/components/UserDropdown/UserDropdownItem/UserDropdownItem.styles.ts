@@ -16,8 +16,11 @@ export const useStyles = makeStyles(theme => ({
       borderBottomRightRadius: 8
     },
     '&:hover': {
+      '& p': {
+        color: theme.palette.primary.main
+      },
       '& svg': {
-        fill: theme.palette.text.primary
+        fill: `${theme.palette.primary.main}!important`
       }
     }
   },
@@ -29,7 +32,7 @@ export const useStyles = makeStyles(theme => ({
     height: 25,
     fill:
       theme.palette.mode === 'light'
-        ? '#D3D9E5'
-        : theme.palette.primary.contrastText
+        ? '#D3D9E5!important'
+        : `${theme.palette.text.secondary}!important`
   }
 }))

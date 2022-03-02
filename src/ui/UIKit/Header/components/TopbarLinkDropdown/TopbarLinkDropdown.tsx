@@ -54,6 +54,7 @@ export const TopbarLinkDropdown = ({
               onClick={handleClose}
               key={accountLink.label}
               className={classes.navItem}
+              disableTouchRipple
             >
               <TopbarLinkContainer
                 label={accountLink.label}

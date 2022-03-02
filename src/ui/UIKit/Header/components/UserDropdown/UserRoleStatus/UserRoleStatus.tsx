@@ -1,16 +1,21 @@
 import React from 'react'
 import { Typography } from '@mui/material'
-import { useOnboardingJourneys } from 'app/components/OnboardingPanel/hooks/useOnboardingJourneys'
+// import { useOnboardingJourneys } from 'app/components/OnboardingPanel/hooks/useOnboardingJourneys'
 import { useStyles } from './UserRoleStatus.styles'
 
 export const UserRoleStatus = () => {
   const classes = useStyles()
 
-  const {
-    isIndividualJourneyCompleted,
-    isInvestorJourneyCompleted,
-    isIssuerJourneyCompleted
-  } = useOnboardingJourneys()
+  // TODO Remove mocked values and uncomment this after demo
+  // const {
+  //   isIndividualJourneyCompleted,
+  //   isInvestorJourneyCompleted,
+  //   isIssuerJourneyCompleted
+  // } = useOnboardingJourneys()
+
+  const isIndividualJourneyCompleted = true
+  const isInvestorJourneyCompleted = false
+  const isIssuerJourneyCompleted = false
 
   const getUserRoleStatus = () => {
     if (isInvestorJourneyCompleted && isIssuerJourneyCompleted) {

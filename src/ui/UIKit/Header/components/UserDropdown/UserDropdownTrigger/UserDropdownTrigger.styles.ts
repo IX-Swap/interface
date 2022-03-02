@@ -1,21 +1,21 @@
 import makeStyles from '@mui/styles/makeStyles'
 
-export interface Props {
-  isOpen: boolean
-}
-
 export const useStyles = makeStyles(theme => ({
-  button: {
-    height: '100%',
+  wrapper: {
+    height: '100%!important',
     '&:hover': {
-      background: 'initial',
+      background: 'initial!important',
       '& > div': {
         backgroundColor: theme.palette.primary.main,
         color: theme.palette.primary.contrastText
       }
     },
-    borderRadius: 0,
-    borderBottom: (props: Props) =>
-      props.isOpen ? `1px solid ${theme.palette.primary.main}` : 'none'
+    boxSizing: 'border-box',
+    borderRadius: '0!important',
+    borderTop: '1px solid transparent',
+    borderBottom: '1px solid transparent'
+  },
+  opened: {
+    borderBottom: `1px solid ${theme.palette.primary.main}`
   }
 }))

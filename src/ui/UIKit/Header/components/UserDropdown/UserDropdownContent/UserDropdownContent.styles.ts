@@ -7,6 +7,8 @@ export const useStyles = makeStyles(theme => ({
       theme.palette.mode === 'light'
         ? '0px 80px 80px rgba(162, 172, 191, 0.16)'
         : 'none',
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
     borderBottomLeftRadius: 8,
     borderBottomRightRadius: 8
   },
@@ -19,6 +21,7 @@ export const useStyles = makeStyles(theme => ({
   border: {
     height: 1,
     padding: theme.spacing(0, 3),
-    backgroundColor: theme.palette.secondary.light
+    backgroundColor:
+      theme.palette.mode === 'light' ? theme.palette.secondary.light : '#1D3667'
   }
 }))

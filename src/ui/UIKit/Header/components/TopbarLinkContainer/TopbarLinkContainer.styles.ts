@@ -19,14 +19,21 @@ export const useStyles = makeStyles(theme => ({
     whiteSpace: 'nowrap',
     color: (props: Props) =>
       props.isActive
-        ? theme.palette.text.primary
-        : theme.palette.text.secondary,
+        ? theme.palette.mode === 'light'
+          ? theme.palette.text.primary
+          : theme.palette.primary.main
+        : theme.palette.mode === 'light'
+        ? theme.palette.text.secondary
+        : theme.palette.text.primary,
     height: (props: Props) => (props.placement === 'topbar' ? 80 : 'initial'),
+    boxSizing: 'border-box',
+    borderTop: '1px solid transparent',
     borderBottom: (props: Props) =>
-      props.isActive && props.placement === 'topbar'
-        ? `1px solid ${theme.palette.primary.main}`
-        : 'none',
-
+      `1px solid ${
+        props.isActive && props.placement === 'topbar'
+          ? theme.palette.primary.main
+          : 'transparent'
+      }`,
     [theme.breakpoints.down('lg')]: {
       paddingLeft: theme.spacing(4),
       borderBottom: (props: Props) =>
@@ -34,14 +41,19 @@ export const useStyles = makeStyles(theme => ({
           ? `1px solid ${theme.palette.primary.main}`
           : 'none'
     },
-
     '&:hover': {
       '& p': {
-        color: theme.palette.text.primary
+        color:
+          theme.palette.mode === 'light'
+            ? theme.palette.text.primary
+            : theme.palette.primary.main
       },
       '& svg': {
         '& path': {
-          fill: theme.palette.text.primary
+          fill:
+            theme.palette.mode === 'light'
+              ? theme.palette.text.primary
+              : theme.palette.primary.main
         }
       }
     },
@@ -49,8 +61,12 @@ export const useStyles = makeStyles(theme => ({
       '& path': {
         fill: (props: Props) =>
           props.isActive
-            ? theme.palette.text.primary
-            : theme.palette.text.secondary
+            ? theme.palette.mode === 'light'
+              ? theme.palette.text.primary
+              : theme.palette.primary.main
+            : theme.palette.mode === 'light'
+            ? theme.palette.text.secondary
+            : theme.palette.text.primary
       }
     }
   }
