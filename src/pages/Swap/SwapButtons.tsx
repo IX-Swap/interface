@@ -28,6 +28,7 @@ import { WrapText } from './typings'
 import { usePriceImpact } from './usePriceImpact'
 import { useSwapApproval } from './useSwapApproval'
 import { useSecTokens } from 'state/secTokens/hooks'
+import { parseBytes32String } from 'ethers/lib/utils'
 
 export const SwapButtons = ({
   parsedAmounts,
@@ -82,11 +83,11 @@ export const SwapButtons = ({
           tokenFrom: trade.inputAmount.currency.wrapped.address, //pair.token0.address,
           tokenTo: trade.outputAmount.currency.wrapped.address, //pair.token1.address,
 
-          pair: authorizationInProgress?.pairAddress as string,
+          pair: pair.liquidityToken.address,
 
-          kLast: utils.parseUnits(pair.reserve0.multiply(pair.reserve1).toExact()),
+          kLast: '0', //BigInt(parseFloat(pair.reserve1.multiply(pair.reserve0).toExact()) * 10 ** 18).toString(),
 
-          priceToleranceThreshold: utils.parseUnits(trade.priceImpact.toFixed()),
+          priceToleranceThreshold: BigNumber.from(parseInt(trade.priceImpact.toFixed())),
           systemFeeRate: BigNumber.from(pair.isSecurity ? 10 : 3), // utils.parseUnits(trade.executionPrice.toFixed()),
 
           id: `swap-${Math.floor(1 + Math.random() * 100000000)}`,

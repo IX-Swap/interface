@@ -197,24 +197,18 @@ class Pool {
     this.verifyOutValues(transaction)
     // this.verifySlippage(transaction) //need disc
 
-    //  add incoming values to reserves and extract all outcoming values
-    const balance0 = this.reserve0?.add(transaction.amount0In)?.sub(transaction.amount0Out)
-    const balance1 = this.reserve1?.add(transaction.amount1In)?.sub(transaction.amount1Out)
+    // //  add incoming values to reserves and extract all outcoming values
+    // const balance0 = this.reserve0?.add(transaction.amount0In)?.sub(transaction.amount0Out)
+    // const balance1 = this.reserve1?.add(transaction.amount1In)?.sub(transaction.amount1Out)
 
     //  multiply balances by given factor, if security then sub 1%, otherwise sub 0.3%
-    const balance0Adjusted = balance0?.mul(1000).sub(transaction.amount0In.mul(isSecurity ? 10 : 3))
-    const balance1Adjusted = balance1?.mul(1000).sub(transaction.amount1In.mul(isSecurity ? 10 : 3))
+    // const balance0Adjusted = balance0?.sub(transaction.amount0In.mul(isSecurity ? 10 : 3))
+    // const balance1Adjusted = balance1?.sub(transaction.amount1In.mul(isSecurity ? 10 : 3))
     //const balance1Adjusted = balance1?.mul(1000).sub(transaction.amount0In.mul(isSecurity ? 10 : 3))
     //  check values not to break k-coefficient rule
-    if (
-      !(
-        balance0Adjusted &&
-        balance1Adjusted &&
-        this.kLast.mul(1000).mul(1000).lt(balance0Adjusted.mul(balance1Adjusted))
-      )
-    ) {
-      throw new Error(`Invalid pool price`)
-    }
+    // if (!(balance0Adjusted && balance1Adjusted && this.kLast.lt(balance0Adjusted.mul(balance1Adjusted)))) {
+    //   throw new Error(`Invalid pool price`)
+    // }
 
     // //  find current out values with system fees
     // var amount0OutWithSystemFee: BigNumber = transaction.amount0Out.add(transaction.amount0Out.mul(this.systemFeeRate).
