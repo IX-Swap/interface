@@ -44,7 +44,7 @@ export default function IndividualKycForm() {
     const status = await login()
 
     if (status !== LOGIN_STATUS.SUCCESS) {
-      showError(t`To create NFT you need to login. Please try again`)
+      showError(t`To pass KYC you need to login. Please try again`)
       history.push('/swap')
     }
 
