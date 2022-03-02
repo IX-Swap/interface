@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro'
-import React, { FC } from 'react'
+import React, { FC, useState, useCallback } from 'react'
 
 import { ButtonGradientBorder, ButtonIXSGradient } from 'components/Button'
 import Column from 'components/Column'
@@ -18,11 +18,16 @@ interface Props {
 }
 
 export const KYCProgressBar: FC<Props> = ({ reasons, description, topics, disabled, handleSubmit }: Props) => {
-  const handleScrollToDiv = (href: string) => {
-    document.getElementById(href)?.scrollIntoView({
-      behavior: 'smooth',
-    })
-  }
+  const [activeTopic, setActiveTopic] = useState<number>(0)
+
+  const handleScrollToDiv = useCallback(
+    (href: string, index: number) => {
+      setActiveTopic(index)
+
+      document.getElementById(href)?.scrollIntoView({ behavior: 'smooth' })
+    },
+    [setActiveTopic]
+  )
 
   return (
     <>
@@ -53,7 +58,11 @@ export const KYCProgressBar: FC<Props> = ({ reasons, description, topics, disabl
           {topics.map(
             ({ title, href, passed }, index) =>
               title && (
-                <PageLink onClick={() => handleScrollToDiv(href)} active={index === 0} key={`page-nav-${index}`}>
+                <PageLink
+                  onClick={() => handleScrollToDiv(href, index)}
+                  active={index === activeTopic}
+                  key={`page-nav-${index}`}
+                >
                   {title}
                   {passed && StatusIcons[ActionHistoryStatus.SETTLED]()}
                 </PageLink>
