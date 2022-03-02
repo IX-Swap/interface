@@ -52,8 +52,6 @@ export const Grid = styled(Box)`
 `
 
 export const FormWrapper = styled.form`
-  max-height: 750px;
-  overflow-y: scroll;
   gap: 35px;
 
   &::-webkit-scrollbar {
