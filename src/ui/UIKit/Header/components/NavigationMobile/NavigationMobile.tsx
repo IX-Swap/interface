@@ -13,7 +13,7 @@ export const NavigationMobile = (props: DropdownContentProps) => {
   const { links, dropdownLinksItems, isDropdownLink } = useAppNavigationLinks()
 
   return (
-    <Grid className={classes.wrapper}>
+    <Grid className={classes.wrapper} flexDirection={'column'}>
       {links.map(link => {
         if (isDropdownLink(link.label)) {
           const dropdownLinks = dropdownLinksItems(link.label).map(item => {
