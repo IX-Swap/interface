@@ -11,6 +11,13 @@ export interface NotificationToastProps {
 
 export const NotificationToast = (props: NotificationToastProps) => {
   const { onDismiss } = props as NotificationToastProps & ToastProps
+  let showGoTo = true
+  if (
+    props?.data?.service === 'exchange' &&
+    props?.data?.subject === 'Order created'
+  ) {
+    showGoTo = false
+  }
 
   return (
     <div>
@@ -20,7 +27,9 @@ export const NotificationToast = (props: NotificationToastProps) => {
         action={
           <>
             <NotificationToastClose onClick={() => onDismiss()} />
-            <NotificationGoToItem data={props.data} dismiss={onDismiss} />
+            {showGoTo && (
+              <NotificationGoToItem data={props.data} dismiss={onDismiss} />
+            )}
           </>
         }
       />
