@@ -51,13 +51,14 @@ export const IdentityPreview = () => {
         )}
         {hasCorporate ? (
           <Grid item xs={12} md={4}>
-            {corporateIdentities.list[0].type === 'investor' ? (
-              <CorporateIdentityButton
+            {corporateIdentities.list[0].type === 'issuer' ? (
+              <IssuerIdentityButton
                 active={selectedIdentity === 'corporate'}
                 onClick={() => setSelectedIdentity('corporate')}
               />
             ) : (
-              <IssuerIdentityButton
+              <CorporateIdentityButton
+                identity={corporateIdentities.list[0]}
                 active={selectedIdentity === 'corporate'}
                 onClick={() => setSelectedIdentity('corporate')}
               />

@@ -4,19 +4,22 @@ import { CorporateIdentityView } from 'app/pages/identity/components/CorporateId
 import { CorporateIssuerView } from 'app/pages/identity/components/CorporateIssuerView/CorporateIssuerView'
 import { useParams } from 'react-router-dom'
 import { CorporateIdentity } from '../types/forms'
+import { CorporateType } from 'app/pages/identity/components/CorporateInvestorForm/CorporateInvestorForm'
 
 export interface CorporateIdentityContainerProps {
-  component?: ComponentType<{ data: CorporateIdentity }>
+  component?: ComponentType<{ data: CorporateIdentity; type?: CorporateType }>
   loadingComponent?: ComponentType
   errorComponent?: ComponentType
   fallbackComponent?: ComponentType
+  type?: CorporateType
 }
 
 export const CorporateIdentityContainer = ({
   component,
   loadingComponent,
   errorComponent,
-  fallbackComponent
+  fallbackComponent,
+  type
 }: CorporateIdentityContainerProps) => {
   const { userId, identityId } = useParams<{
     userId: string
@@ -41,7 +44,7 @@ export const CorporateIdentityContainer = ({
   }
 
   if (component !== undefined) {
-    return createElement(component, { data })
+    return createElement(component, { data, type })
   }
 
   const isIssuer = data.type === 'issuer'

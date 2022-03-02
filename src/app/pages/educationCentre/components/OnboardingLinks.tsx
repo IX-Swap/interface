@@ -10,12 +10,10 @@ import { useOnboardingJourneys } from 'app/components/OnboardingPanel/hooks/useO
 export const OnboardingLinks = () => {
   const {
     isIndividualJourneyCompleted,
-    isInvestorJourneyCompleted,
-    isIssuerJourneyCompleted,
+    isCorporateJourneyCompleted,
     individualIdentity,
-    investorIdentities,
+    corporateIdentities,
     isIdentitiesLoaded,
-    issuerIdentities,
     detailsOfIssuance
   } = useOnboardingJourneys()
 
@@ -29,29 +27,33 @@ export const OnboardingLinks = () => {
           }
         }
       : { to: IdentityRoute.createIndividual }
+  const isInvestor = corporateIdentities[0].type === 'investor'
 
   const investorLink =
     isIdentitiesLoaded &&
-    investorIdentities !== undefined &&
-    investorIdentities.length > 0
+    corporateIdentities !== undefined &&
+    corporateIdentities.length > 0 &&
+    isInvestor
       ? {
           to: IdentityRoute.editCorporate,
           params: {
-            identityId: investorIdentities[0]._id,
-            userId: investorIdentities[0].user._id
+            identityId: corporateIdentities[0]._id,
+            userId: corporateIdentities[0].user._id
           }
         }
       : { to: IdentityRoute.createCorporate }
 
+  const isIssuer = corporateIdentities[0].type === 'issuer'
   const issuerLink =
     isIdentitiesLoaded &&
-    issuerIdentities !== undefined &&
-    issuerIdentities.length > 0
+    corporateIdentities !== undefined &&
+    corporateIdentities.length > 0 &&
+    isIssuer
       ? {
           to: IdentityRoute.editIssuer,
           params: {
-            identityId: issuerIdentities[0]._id,
-            userId: issuerIdentities[0].user._id
+            identityId: corporateIdentities[0]._id,
+            userId: corporateIdentities[0].user._id
           }
         }
       : { to: IdentityRoute.createIssuer }
@@ -66,7 +68,7 @@ export const OnboardingLinks = () => {
       : detailsOfIssuanceLink
 
   const renderIndividualOnboardingLink = () => {
-    if (isInvestorJourneyCompleted || isIssuerJourneyCompleted) {
+    if (isCorporateJourneyCompleted) {
       return null
     }
 
@@ -95,7 +97,7 @@ export const OnboardingLinks = () => {
         label='Corporate'
         color='#E65133'
         icon={CorporateIcon}
-        done={isInvestorJourneyCompleted}
+        done={isCorporateJourneyCompleted && isInvestor}
       />
     )
   }
@@ -114,7 +116,7 @@ export const OnboardingLinks = () => {
           label='Fundraise'
           icon={FundraiseIcon}
           color='#2b78fd'
-          done={isIssuerJourneyCompleted}
+          done={isCorporateJourneyCompleted && isIssuer}
         />
       </Box>
     )

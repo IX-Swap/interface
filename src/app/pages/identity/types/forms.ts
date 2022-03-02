@@ -232,7 +232,12 @@ export interface CorporateFields {
   taxResidencies: TaxResidencies
   mailingAddress: Address
   isMailingAddressSame: boolean
-  type: 'investor' | 'issuer'
+  type:
+    | 'investor'
+    | 'issuer'
+    | 'Fund Manager'
+    | 'Fund Administrator'
+    | 'Portfolio Manager'
 }
 
 export interface Declaration {

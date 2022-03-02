@@ -35,15 +35,53 @@ export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
     }
   ]
 
-  const isIssuer = data.type === 'issuer'
+  const getDetails = () => {
+    let details = {
+      editLink: IdentityRoute.editCorporate,
+      viewLink: IdentityRoute.viewCorporate,
+      title: 'Corporate Investor'
+    }
+    switch (data.type) {
+      case 'issuer':
+        details = {
+          editLink: IdentityRoute.editIssuer,
+          viewLink: IdentityRoute.viewIssuer,
+          title: 'Corporate Issuer'
+        }
+        break
+      case 'Fund Manager':
+        details = {
+          editLink: IdentityRoute.editFundManager,
+          viewLink: IdentityRoute.viewFundManager,
+          title: 'Fund Manager'
+        }
+        break
+      case 'Fund Administrator':
+        details = {
+          editLink: IdentityRoute.editFundAdmin,
+          viewLink: IdentityRoute.viewFundAdmin,
+          title: 'Fund Administrator'
+        }
+        break
+      case 'Portfolio Manager':
+        details = {
+          editLink: IdentityRoute.editPortfolioManager,
+          viewLink: IdentityRoute.viewPortfolioManager,
+          title: 'Portfolio Manager'
+        }
+        break
+      default:
+        break
+    }
+    return details
+  }
+
+  const details = getDetails()
   return (
     <Card elevation={0}>
       <CardContent>
         <Box pt={2} pb={2}>
-          <PreviewHeader
-            title={`Corporate ${isIssuer ? 'Issuer' : 'Investor'}`}
-            status={data.status}
-          />
+          <PreviewHeader title={details.title} status={data.status} />
           <DataPreview
             avatar={data.logo}
             userId={data.user._id}
@@ -54,9 +92,7 @@ export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
       <CardActions>
         <Box display='flex' justifyContent='flex-end' width='100%'>
           <EditButton
-            link={
-              isIssuer ? IdentityRoute.editIssuer : IdentityRoute.editCorporate
-            }
+            link={details.editLink}
             params={{
               identityId: data._id,
               userId: data.user._id,
@@ -65,9 +101,7 @@ export const CorporatesPreview = ({ data }: CorporatesPreviewProps) => {
           />
           <Box mx={1} component='span' />
           <ViewButton
-            link={
-              isIssuer ? IdentityRoute.viewIssuer : IdentityRoute.viewCorporate
-            }
+            link={details.viewLink}
             params={{
               identityId: data._id,
               userId: data.user._id,

@@ -50,8 +50,8 @@ describe('CorporateInvestorForm', () => {
   }
 
   const useOnboardingJourneysResponse = {
-    isInvestorJourneyCompleted: true,
-    investorIdentities: [corporate]
+    isCorporateJourneyCompleted: true,
+    corporateIdentities: [corporate]
   }
 
   const closeDialog = jest.fn()

@@ -9,48 +9,32 @@ export const useOnboardingJourneys = () => {
     detailsOfIssuance
   } = useGetIdentities()
 
-  const investorIdentities = corporateIdentities.list.filter(
-    identity => identity.type === 'investor'
-  )
-  const issuerIdentities = corporateIdentities.list.filter(
-    identity => identity.type === 'issuer'
-  )
-
   const isIndividualJourneyStarted =
     individualIdentity !== undefined &&
     individualIdentity.authorizations.length === 0
-  const isInvestorJourneyStarted =
-    investorIdentities.length > 0 &&
-    investorIdentities[0].authorizations.length === 0
-  const isIssuerJourneyStarted =
-    issuerIdentities.length > 0 &&
-    issuerIdentities[0].authorizations.length === 0
+  const isCorporateJourneyStarted =
+    corporateIdentities.list.length > 0 &&
+    corporateIdentities.list[0].authorizations.length === 0
 
   const startedJourneys = {
     isIndividualJourneyStarted,
-    isInvestorJourneyStarted,
-    isIssuerJourneyStarted
+    isCorporateJourneyStarted
   }
 
   const isIndividualJourneyCompleted =
     individualIdentity?.authorizations.some(
       authorization => authorization.status === 'Approved'
     ) ?? false
-  const isInvestorJourneyCompleted =
-    investorIdentities.length > 0 &&
-    investorIdentities[0].authorizations.some(
-      authorization => authorization.status === 'Approved'
-    )
-  const isIssuerJourneyCompleted =
-    issuerIdentities.length > 0 &&
-    issuerIdentities[0].authorizations?.some(
+
+  const isCorporateJourneyCompleted =
+    corporateIdentities.list.length > 0 &&
+    corporateIdentities.list[0].authorizations.some(
       authorization => authorization.status === 'Approved'
     )
 
   const completedJourneys = {
     isIndividualJourneyCompleted,
-    isInvestorJourneyCompleted,
-    isIssuerJourneyCompleted
+    isCorporateJourneyCompleted
   }
   const isMultipleJourneysActive =
     Object.values(startedJourneys).filter(journeStatus => journeStatus).length >
@@ -59,15 +43,10 @@ export const useOnboardingJourneys = () => {
     journey => journey
   )
 
-  const getIsJourneyCompleted = (
-    identityType: IdentityType,
-    corporateType?: 'issuer' | 'investor'
-  ) => {
+  const getIsJourneyCompleted = (identityType: IdentityType) => {
     if (identityType === 'individual') return isIndividualJourneyCompleted
 
-    return corporateType === 'investor'
-      ? isInvestorJourneyCompleted
-      : isIssuerJourneyCompleted
+    return isCorporateJourneyCompleted
   }
 
   return {
@@ -75,8 +54,7 @@ export const useOnboardingJourneys = () => {
     ...startedJourneys,
     isMultipleJourneysActive,
     hasActiveIdentityJourney,
-    investorIdentities,
-    issuerIdentities,
+    corporateIdentities: corporateIdentities.list,
     individualIdentity,
     getIsJourneyCompleted,
     isIdentitiesLoaded,
