@@ -1,18 +1,22 @@
-import React, { useCallback, FC, useEffect } from 'react'
+import React, { useCallback, FC, useEffect, useState } from 'react'
 import { Trans } from '@lingui/macro'
 import { isMobile } from 'react-device-detect'
 import { Flex } from 'rebass'
 import { Link } from 'react-router-dom'
-
-import { StyledBodyWrapper } from 'pages/CustodianV2/styleds'
 import { TYPE } from 'theme'
-import { KYCStatus } from './KYCStatus'
+
+import { useActiveWeb3React } from 'hooks/web3'
+
 import { ButtonGradientBorder, ButtonIXSGradient } from 'components/Button'
-import { useGetMyKyc, useKYCState } from 'state/kyc/hooks'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import { RowCenter } from 'components/Row'
 
+import { StyledBodyWrapper } from 'pages/CustodianV2/styleds'
+import { useGetMyKyc, useKYCState } from 'state/kyc/hooks'
+import { useUserisLoggedIn } from 'state/auth/hooks'
+
 import { KYCStatuses } from './enum'
+import { KYCStatus } from './KYCStatus'
 import { Content, getStatusDescription, StatusCard } from './styleds'
 import { ReactComponent as IndividualKYC } from '../../assets/images/individual-kyc.svg'
 import { ReactComponent as CorporateKYC } from '../../assets/images/corporate-kyc.svg'
@@ -48,15 +52,41 @@ const Description: FC<DescriptionProps> = ({ description }: DescriptionProps) =>
 )
 
 export default function KYC() {
+  const { account } = useActiveWeb3React()
+  const isLoggedIn = useUserisLoggedIn()
+
   const { kyc, loadingRequest } = useKYCState()
   const getMyKyc = useGetMyKyc()
 
-  useEffect(() => {
-    getMyKyc()
-  }, [getMyKyc])
+  const [status, setStatus] = useState<KYCStatuses | undefined>(undefined)
+  const [description, setDescription] = useState('')
 
-  const status = kyc?.data.status || KYCStatuses.NOT_SUBMITTED
-  const description = kyc?.data.message || getStatusDescription(status)
+  const onKycState = useCallback(() => {
+    if (!account) {
+      return
+    }
+
+    getMyKyc()
+  }, [account, getMyKyc])
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      return
+    }
+
+    onKycState()
+  }, [isLoggedIn])
+
+  useEffect(() => {
+    console.log({ isLoggedIn })
+    console.log({ loadingRequest })
+
+    const status = kyc?.data.status || KYCStatuses.NOT_SUBMITTED
+    const description = kyc?.data.message || getStatusDescription(status)
+
+    setStatus(status)
+    setDescription(description)
+  }, [isLoggedIn, loadingRequest, kyc])
 
   const getKYCDescription = useCallback(() => {
     switch (status) {
