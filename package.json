@@ -175,6 +175,7 @@
     "eth-provider": "^0.7.0",
     "playwright": "^1.13.0",
     "react-phone-input-2": "^2.15.0",
+    "react-sticky-box": "^0.9.3",
     "truffle-privatekey-provider": "^1.2.0",
     "web3": "^1.4.0"
   }
