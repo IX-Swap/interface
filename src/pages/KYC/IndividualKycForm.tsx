@@ -1,4 +1,6 @@
 import React, { useMemo, useState, useEffect } from 'react'
+import StickyBox from 'react-sticky-box'
+import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
 import { getNames } from 'country-list'
 import { Formik } from 'formik'
@@ -9,7 +11,7 @@ import { KYCProgressBar } from './KYCProgressBar'
 import { ButtonText } from 'components/Button'
 import { TYPE } from 'theme'
 import { GradientText, StyledBodyWrapper } from 'pages/CustodianV2/styleds'
-import { RowBetween } from 'components/Row'
+import Row, { RowBetween } from 'components/Row'
 import { Select, TextInput, Uploader } from './common'
 import { PhoneInput } from 'components/PhoneInput'
 import { DateInput } from 'components/DateInput'
@@ -22,6 +24,16 @@ import { errorsSchema } from './schema'
 import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
 import { ReactComponent as BigPassed } from 'assets/images/check-success-big.svg'
 import { useAddPopup } from 'state/application/hooks'
+
+const FormRow = styled(Row)`
+  align-items: flex-start;
+
+  gap: 35px;
+`
+
+const FormContainer = styled(FormWrapper)`
+  flex-grow: 1;
+`
 
 export default function IndividualKycForm() {
   const [formData] = useState(individualKycFormData)
@@ -218,8 +230,8 @@ export default function IndividualKycForm() {
             shouldValidate && !errors.proofOfIdentity && !errors.proofOfAddress && !errors.evidenceOfAccreditation
 
           return (
-            <Grid>
-              <FormWrapper onSubmit={handleSubmit} style={{ maxHeight: '750px', overflowY: 'scroll', gap: '35px' }}>
+            <FormRow>
+              <FormContainer onSubmit={handleSubmit} style={{ gap: '35px' }}>
                 <Column style={{ gap: '35px' }}>
                   <FormCard id="personal">
                     <RowBetween marginBottom="32px">
@@ -535,9 +547,9 @@ export default function IndividualKycForm() {
                     <Checkbox checked={true} onClick={() => null} label="Create account for me on InvestaX" />
                   </FormCard> */}
                 </Column>
-              </FormWrapper>
+              </FormContainer>
 
-              <Column>
+              <StickyBox offsetTop={100}>
                 <KYCProgressBar
                   handleSubmit={handleSubmit}
                   // disabled={!(dirty && Object.keys(errors).length === 0)}
@@ -582,8 +594,8 @@ export default function IndividualKycForm() {
                   description="Sed porttitor lectus nibh. Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem."
                   reasons={['Last name', 'Gender', 'Middle name']}
                 />
-              </Column>
-            </Grid>
+              </StickyBox>
+            </FormRow>
           )
         }}
       </Formik>
