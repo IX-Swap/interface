@@ -119,3 +119,11 @@ export const PENDING_ACCREDITATION_STATUSES = [
 ]
 
 export const ERROR_ACCREDITATION_STATUSES = [AccreditationStatusEnum.FAILED, AccreditationStatusEnum.REJECTED]
+
+export enum KYCStatuses {
+  PENDING = 'pending',
+  APPROVED = 'approved',
+  REJECTED = 'rejected',
+  CHANGES_REQUESTED = 'changes requested',
+  NOT_SUBMITTED = 'not submitted',
+}

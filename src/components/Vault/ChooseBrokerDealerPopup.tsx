@@ -1,4 +1,4 @@
-import { Trans } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import { ReactComponent as Checkmark } from 'assets/images/checked-solid-bg.svg'
 import { ButtonIXSGradient, ButtonIXSWide, ButtonPrimary } from 'components/Button'
 import { LoaderThin } from 'components/Loader/LoaderThin'
@@ -18,6 +18,7 @@ import { CloseIcon, TYPE } from '../../theme'
 import { darken } from 'polished'
 import { useHistory } from 'react-router-dom'
 import { useGetMyKyc, useKYCState } from 'state/kyc/hooks'
+import { KYCStatuses } from './enum'
 
 const KycSourceContainer = styled.div`
   width: 100%;
@@ -112,18 +113,38 @@ interface KycSourceSelectorProps {
 
 const KycSourceSelector = (props: KycSourceSelectorProps) => {
   const history = useHistory()
-  const [selected, setSelected] = useState<KycSource | undefined>(undefined)
   const { kyc } = useKYCState()
-  const [loading, setLoading] = useState<boolean>(true)
   const getMyKyc = useGetMyKyc()
+
+  const [selected, setSelected] = useState<KycSource | undefined>(undefined)
+  const [loading, setLoading] = useState<boolean>(true)
+  const [statusDesc, setStatusDesc] = useState('')
+
+  const getText = (status: string | undefined) => {
+    switch (status) {
+      case KYCStatuses.APPROVED:
+        return t`KYC status: APPROVED`
+      case KYCStatuses.REJECTED:
+        return t`KYC status: REJECTED`
+      case KYCStatuses.PENDING:
+        return t`KYC status: PENDING`
+      case KYCStatuses.CHANGES_REQUESTED:
+        return t`KYC status: REQUESTED`
+      case KYCStatuses.NOT_SUBMITTED:
+        return t`KYC status: NOT_SUBMITTED`
+      default:
+        return t`Pass KYC on IXSwap`
+    }
+  }
 
   useEffect(() => {
     getMyKyc()
   }, [getMyKyc])
 
   useEffect(() => {
-    const status = kyc?.data.status == 'approved' ? KycSource.IXSwap : KycSource.InvestaX //|| KYCStatuses.NOT_SUBMITTED
+    const status = kyc?.data.status === KYCStatuses.APPROVED ? KycSource.IXSwap : KycSource.InvestaX //|| KYCStatuses.NOT_SUBMITTED
 
+    setStatusDesc(getText(kyc?.data.status))
     setSelected(status)
     setLoading(false)
   }, [kyc])
@@ -134,7 +155,7 @@ const KycSourceSelector = (props: KycSourceSelectorProps) => {
 
   const onChange = useCallback(
     (value: KycSource) => {
-      if (kyc?.data.status == 'approved' || value !== KycSource.IXSwap) {
+      if (kyc?.data.status === KYCStatuses.APPROVED || value !== KycSource.IXSwap) {
         setSelected(value)
       }
     },
@@ -152,11 +173,9 @@ const KycSourceSelector = (props: KycSourceSelectorProps) => {
 
         <KycSourceTooltip text="Recommended" />
 
-        {!loading && !kyc && (
-          <Button onClick={requestKyc}>
-            <TYPE.small>Pass KYC on IXSwap</TYPE.small>
-          </Button>
-        )}
+        <Button onClick={requestKyc} disabled={kyc}>
+          <TYPE.small>{statusDesc}</TYPE.small>
+        </Button>
 
         <Spacer />
 
