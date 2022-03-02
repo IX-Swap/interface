@@ -37,8 +37,8 @@ export const CountryTaxDeclaration = ({
         reasonDescription = (
           <>
             <strong>Reason C</strong> - No TIN is required. (Note. Only select
-            this reason if the domestic law of the relevant jurisdication does
-            not require the collection of the TIN issued by such jurisdication)
+            this reason if the domestic law of the relevant jurisdiction does
+            not require the collection of the TIN issued by such jurisdiction)
           </>
         )
         break

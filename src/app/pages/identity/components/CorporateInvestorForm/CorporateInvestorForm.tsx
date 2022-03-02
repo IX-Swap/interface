@@ -4,7 +4,7 @@ import { useCreateCorporate } from 'app/pages/identity/hooks/useCreateCorporate'
 import { useUpdateCorporate } from 'app/pages/identity/hooks/useUpdateCorporate'
 import { useOnboardingDialog } from 'app/components/OnboardingDialog/hooks/useOnboardingDialog'
 import { useSubmitCorporate } from 'app/pages/identity/hooks/useSubmitCorporate'
-import { corporateInvestorFormSteps } from './steps'
+import { getCorporateInvestorFormSteps } from './steps'
 import { useOnboardingJourneys } from 'app/components/OnboardingPanel/hooks/useOnboardingJourneys'
 import { getIdentityDefaultActiveStep } from 'app/pages/identity/utils/shared'
 import { generatePath, useHistory } from 'react-router-dom'
@@ -13,18 +13,31 @@ import { CorporateIdentity } from '../../types/forms'
 import { IdentitySubmitConfirmationDialog } from 'app/pages/identity/components/IdentitySubmitConfirmationDialog/IdentitySubmitConfirmationDialog'
 import { useConfirmSubmitDialog } from 'app/pages/identity/hooks/useConfirmSubmitDialog'
 
+export type CorporateType =
+  | 'investor'
+  | 'issuer'
+  | 'Fund Manager'
+  | 'Fund Administrator'
+  | 'Portfolio Manager'
+
 export interface CorporateInvestorFormProps {
   data?: CorporateIdentity
+  type?: CorporateType
 }
 
-export const CorporateInvestorForm = ({ data }: CorporateInvestorFormProps) => {
+export const CorporateInvestorForm = ({
+  data,
+  type = 'investor'
+}: CorporateInvestorFormProps) => {
+  const corporateInvestorFormSteps = getCorporateInvestorFormSteps(type)
+
   const { open, openDialog, closeDialog } = useConfirmSubmitDialog()
 
-  const createMutation = useCreateCorporate('investor')
-  const updateMutation = useUpdateCorporate('investor')
+  const createMutation = useCreateCorporate(type)
+  const updateMutation = useUpdateCorporate(type)
   const submitMutation = useSubmitCorporate(openDialog)
   const { showPreIdentityCreateDialog } = useOnboardingDialog()
-  const { isInvestorJourneyCompleted, investorIdentities } =
+  const { isCorporateJourneyCompleted, corporateIdentities } =
     useOnboardingJourneys()
   const { location, replace } = useHistory()
 
@@ -36,13 +49,13 @@ export const CorporateInvestorForm = ({ data }: CorporateInvestorFormProps) => {
 
   useEffect(() => {
     if (
-      investorIdentities.length > 0 &&
+      corporateIdentities.length > 0 &&
       location.pathname === IdentityRoute.createCorporate
     ) {
       const {
         _id: identityId,
         user: { _id: userId }
-      } = investorIdentities[0]
+      } = corporateIdentities[0]
 
       replace(
         generatePath(IdentityRoute.editCorporate, {
@@ -51,12 +64,12 @@ export const CorporateInvestorForm = ({ data }: CorporateInvestorFormProps) => {
         })
       )
     }
-  }, [location, replace, investorIdentities])
+  }, [location, replace, corporateIdentities])
 
   const defaultActiveStep = getIdentityDefaultActiveStep({
     isSubmitted: data?.status === 'Submitted',
     lastStepIndex: corporateInvestorFormSteps.length - 1,
-    isJourneyCompleted: isInvestorJourneyCompleted
+    isJourneyCompleted: isCorporateJourneyCompleted
   })
 
   return (
@@ -69,7 +82,7 @@ export const CorporateInvestorForm = ({ data }: CorporateInvestorFormProps) => {
         submitMutation={submitMutation}
         steps={corporateInvestorFormSteps}
         defaultActiveStep={defaultActiveStep}
-        shouldSaveOnMove={!isInvestorJourneyCompleted}
+        shouldSaveOnMove={!isCorporateJourneyCompleted}
         nonLinear
       />
     </>

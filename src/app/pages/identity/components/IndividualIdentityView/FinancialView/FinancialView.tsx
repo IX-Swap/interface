@@ -11,7 +11,6 @@ export interface FinancialViewProps {
 export const FinancialView = (props: FinancialViewProps) => {
   const { data } = props
   const fundSource = getFundSource(data)
-
   return (
     <Grid container spacing={6}>
       <Grid item container spacing={6}>
@@ -34,30 +33,39 @@ export const FinancialView = (props: FinancialViewProps) => {
           />
         </Grid>
       </Grid>
+      {typeof fundSource === 'string' && (
+        <Grid item container spacing={6}>
+          <Grid item xs={12} sm={6} md={4}>
+            <LabelledValue value={data.sourceOfFund} label='Source of fund' />
+          </Grid>
+        </Grid>
+      )}
 
-      <Grid item container alignItems={'flex-end'} spacing={6}>
-        {fundSource.map((it, i) => {
-          if (it.checked) {
-            return (
-              <Grid
-                item
-                xs={12}
-                sm={6}
-                md={4}
-                key={it.name}
-                style={{ paddingTop: i !== 0 ? 0 : 24 }}
-              >
-                <LabelledValue
-                  value={`${it.name} (${it.value}%)`}
-                  label={i === 0 ? 'Source(s) of Fund' : ''}
-                />
-              </Grid>
-            )
-          }
+      {Array.isArray(fundSource) && (
+        <Grid item container alignItems={'flex-end'} spacing={6}>
+          {fundSource.map((it, i) => {
+            if (it.checked) {
+              return (
+                <Grid
+                  item
+                  xs={12}
+                  sm={6}
+                  md={4}
+                  key={it.name}
+                  style={{ paddingTop: i !== 0 ? 0 : 24 }}
+                >
+                  <LabelledValue
+                    value={`${it.name} (${it.value}%)`}
+                    label={i === 0 ? 'Source(s) of Fund' : ''}
+                  />
+                </Grid>
+              )
+            }
 
-          return null
-        })}
-      </Grid>
+            return null
+          })}
+        </Grid>
+      )}
     </Grid>
   )
 }

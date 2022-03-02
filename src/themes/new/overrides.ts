@@ -221,8 +221,7 @@ export const getThemeOverrides = (
         ':disabled': {
           color: '#89A1CE',
           svg: {
-            fill: '#89A1CE',
-            stroke: '#89A1CE'
+            fill: '#89A1CE'
           }
         }
       }
@@ -262,10 +261,10 @@ export const getThemeOverrides = (
     styleOverrides: {
       root: {
         height: 'auto',
-        svg: { fill: '#4C88FF', width: 14, height: 14 },
+        svg: { fill: '#778194', width: 14, height: 14 },
         ':hover': {
-          backgroundColor: '#4C88FF',
-          svg: { fill: '#FFFFFF' }
+          backgroundColor: '#EDF2FA',
+          svg: { fill: '#4C88FF' }
         },
         ':disabled': {
           svg: {

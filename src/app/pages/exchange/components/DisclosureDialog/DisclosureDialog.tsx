@@ -60,8 +60,8 @@ export const DisclosureDialog = ({
                 }
                 label={
                   <>
-                    I agree, accept and understand all the disclosures and{' '}
-                    <ExchangeRulesLink />
+                    I agree, accept, acknowledge, and understand all the
+                    disclosures and the <ExchangeRulesLink />
                   </>
                 }
               />

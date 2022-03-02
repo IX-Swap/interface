@@ -11,6 +11,9 @@ export const IssuerDetailsView = ({ data }: IssuerDetailsViewProps) => {
   return (
     <Grid container spacing={3}>
       <Grid item xs={12}>
+        <Typography variant='h5'>Overview</Typography>
+      </Grid>
+      <Grid item xs={12}>
         <Typography>Please review the summary details.</Typography>
       </Grid>
       <Grid item xs={12} sm={6}>
@@ -23,10 +26,7 @@ export const IssuerDetailsView = ({ data }: IssuerDetailsViewProps) => {
         <LabelledValue value={data.email} label='Email Address' />
       </Grid>
       <Grid item xs={12} sm={6}>
-        <LabelledValue
-          value={data.contactNumber}
-          label='Contact Number - (optional)'
-        />
+        <LabelledValue value={data.contactNumber} label='Contact Number' />
       </Grid>
       <Grid item xs={12} sm={6}>
         <LabelledValue value={data.industry} label='Industry' />

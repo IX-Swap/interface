@@ -14,7 +14,7 @@ export const basicInformationFields = [
   },
   { name: 'companyName', label: 'Company Name' },
   { name: 'companyRegistrationNumber', label: 'Registration Number / UEN' },
-  { name: 'contactNumber', label: 'Contact Number - (optional)' },
+  { name: 'contactNumber', label: 'Contact Number' },
   { name: 'email', label: 'Email Address' },
   { name: 'industry', label: 'Industry' }
 ]

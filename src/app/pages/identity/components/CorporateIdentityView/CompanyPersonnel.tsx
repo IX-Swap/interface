@@ -22,7 +22,7 @@ export const CompanyPersonnel = ({
       <Grid item>
         <Grid container>
           <Grid item xs={12} md={4}>
-            <LabelledValue value={personnel.fullName} label='Fullname' />
+            <LabelledValue value={personnel.fullName} label='Full Name' />
           </Grid>
           <Grid item xs={12} md={4}>
             <LabelledValue value={personnel.designation} label='Designation' />

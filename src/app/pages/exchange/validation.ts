@@ -1,3 +1,4 @@
+import { validationMessages } from 'validation/shared'
 import * as yup from 'yup'
 
 export const placeOrderFormValidationSchema = (balance: number) => {
@@ -7,7 +8,7 @@ export const placeOrderFormValidationSchema = (balance: number) => {
       .when('total', (total: number, schema: yup.NumberSchema) =>
         total > balance ? schema.max(0, 'Insufficient balance') : schema
       )
-      .required(),
+      .required(validationMessages.required),
     amount: yup
       .number()
       .when(
@@ -17,7 +18,7 @@ export const placeOrderFormValidationSchema = (balance: number) => {
             ? schema.max(balance / price, 'Insufficient balance')
             : schema
       )
-      .required(),
-    total: yup.number().required()
+      .required(validationMessages.required),
+    total: yup.number().required(validationMessages.required)
   })
 }

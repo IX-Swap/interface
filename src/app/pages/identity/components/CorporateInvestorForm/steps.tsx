@@ -26,14 +26,16 @@ import {
   directorsAndBeneficialOwnersSchema
 } from 'app/pages/identity/validation/corporate'
 import { CorporateIdentityContainer } from 'app/pages/identity/containers/CorporateIdentityContainer'
+import { CorporateType } from 'app/pages/identity/components/CorporateInvestorForm/CorporateInvestorForm'
 
-export const corporateInvestorFormSteps = [
+export const getCorporateInvestorFormSteps = (type: CorporateType) => [
   {
-    label: 'Corporate Information',
+    label:
+      type === 'investor' ? 'Corporate Information' : 'Company Information',
     getFormValues: getCorporateInfoFormValues,
     getRequestPayload: getCorporateInfoRequestPayload,
     validationSchema: corporateInvestorInfoSchema,
-    component: () => <CorporateInformationForm />
+    component: () => <CorporateInformationForm type={type} />
   },
   {
     label: 'Directors and Beneficial Owner Details',

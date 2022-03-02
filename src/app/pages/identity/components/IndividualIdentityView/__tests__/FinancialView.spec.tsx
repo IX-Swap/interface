@@ -9,12 +9,10 @@ describe('FinancialView', () => {
   })
 
   it('renders fundsource correctly when it is checked', () => {
-    const fundSource = individual?.sourceOfFund?.[0]
+    const fundSource = individual?.sourceOfFund
     const { getByText } = render(<FinancialView data={individual} />)
 
-    expect(
-      getByText(`${fundSource?.name ?? ''} (${fundSource?.value ?? ''}%)`)
-    ).toBeTruthy()
+    expect(getByText(`${fundSource}`)).toBeTruthy()
   })
 
   it('does not render fundsource not checked', () => {
@@ -22,17 +20,11 @@ describe('FinancialView', () => {
       <FinancialView
         data={{
           ...individual,
-          sourceOfFund: [
-            {
-              name: 'Inheritance/Gifts',
-              checked: false,
-              value: 20
-            }
-          ]
+          sourceOfFund: 'LOAN'
         }}
       />
     )
 
-    expect(queryByText('Inheritance/Gifts 20%')).toBeFalsy()
+    expect(queryByText('LOAN 20%')).toBeFalsy()
   })
 })

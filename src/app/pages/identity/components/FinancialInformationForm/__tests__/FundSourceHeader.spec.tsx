@@ -11,9 +11,5 @@ describe('FundSourceHeader', () => {
     const { getByText } = render(<FundSourceHeader />)
 
     expect(getByText('Source of Funds')).toBeTruthy()
-    expect(getByText('Select all that apply')).toBeTruthy()
-    expect(
-      getByText('How much of this source will be used to fund your account?')
-    ).toBeTruthy()
   })
 })

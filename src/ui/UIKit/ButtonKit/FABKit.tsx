@@ -1,6 +1,6 @@
 import { Fab, Grid, Typography } from '@mui/material'
 import React from 'react'
-import AddIcon from '@mui/icons-material/Add'
+import { Icon } from 'ui/Icons/Icon'
 
 export const FABKit = () => {
   return (
@@ -11,33 +11,33 @@ export const FABKit = () => {
       <Grid item xs={12} container alignItems='flex-start' spacing={2}>
         <Grid item>
           <Fab size='large'>
-            <AddIcon />
+            <Icon name='plus' />
           </Fab>
         </Grid>
         <Grid item>
           <Fab size='medium'>
-            <AddIcon />
+            <Icon name='plus' />
           </Fab>
         </Grid>
         <Grid item>
           <Fab size='small'>
-            <AddIcon />
+            <Icon name='plus' />
           </Fab>
         </Grid>
         <Grid item xs={12} container alignItems='flex-start' spacing={2}>
           <Grid item>
             <Fab disabled size='large'>
-              <AddIcon />
+              <Icon name='plus' />
             </Fab>
           </Grid>
           <Grid item>
             <Fab disabled size='medium'>
-              <AddIcon />
+              <Icon name='plus' />
             </Fab>
           </Grid>
           <Grid item>
             <Fab disabled size='small'>
-              <AddIcon />
+              <Icon name='plus' />
             </Fab>
           </Grid>
         </Grid>

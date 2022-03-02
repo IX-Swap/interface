@@ -18,7 +18,8 @@ export interface CorporateIssuerFormProps {
 export const CorporateIssuerForm = ({ data }: CorporateIssuerFormProps) => {
   const { open, openDialog, closeDialog } = useConfirmSubmitDialog()
 
-  const { isIssuerJourneyCompleted } = useOnboardingJourneys()
+  const { isCorporateJourneyCompleted, corporateIdentities } =
+    useOnboardingJourneys()
 
   const createMutation = useCreateCorporate('issuer')
   const updateMutation = useUpdateCorporate('issuer')
@@ -31,10 +32,11 @@ export const CorporateIssuerForm = ({ data }: CorporateIssuerFormProps) => {
     }
   }, [data]) //eslint-disable-line
 
+  const isIssuer = corporateIdentities[0].type === 'issuer'
   const defaultActiveStep = getIdentityDefaultActiveStep({
     isSubmitted: data?.status === 'Submitted',
     lastStepIndex: corporateIssuerFormSteps.length - 1,
-    isJourneyCompleted: isIssuerJourneyCompleted
+    isJourneyCompleted: isCorporateJourneyCompleted && isIssuer
   })
 
   return (
@@ -42,7 +44,7 @@ export const CorporateIssuerForm = ({ data }: CorporateIssuerFormProps) => {
       <IdentitySubmitConfirmationDialog open={open} closeDialog={closeDialog} />
       <FormStepper
         data={data}
-        shouldSaveOnMove={!isIssuerJourneyCompleted}
+        shouldSaveOnMove={!isCorporateJourneyCompleted}
         createMutation={createMutation}
         editMutation={updateMutation}
         submitMutation={submitMutation}

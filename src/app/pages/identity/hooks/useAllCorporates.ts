@@ -10,11 +10,12 @@ import { identityQueryKeys } from 'config/queryKeys'
 import { identityURL } from 'config/apiURL'
 import { AuthorizableStatus } from 'types/util'
 import { CorporateIdentity } from 'app/pages/identity/types/forms'
+import { CorporateType } from 'app/pages/identity/components/CorporateInvestorForm/CorporateInvestorForm'
 
 export interface UseAllCorporatesArgs {
   all?: boolean
   status?: AuthorizableStatus
-  type?: 'investor' | 'issuer'
+  type?: CorporateType
   userId?: string
 }
 

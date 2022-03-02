@@ -47,5 +47,18 @@ export const IdentityRoute = {
   viewIssuer: '/app/identity/corporates/:userId/:identityId/view-issuer',
   editIssuer: '/app/identity/corporates/:userId/:identityId/edit-issuer',
   issuance: '/app/identity/issuance',
-  createDetailsOfIssuance: '/app/identity/issuance/create-details-of-issuance'
+  createDetailsOfIssuance: '/app/identity/issuance/create-details-of-issuance',
+  createFundManager: '/app/identity/corporates/fund-manager',
+  createFundAdmin: '/app/identity/corporates/fund-admin',
+  createPortfolioManager: '/app/identity/corporates/portfolio-manager',
+  editFundManager:
+    '/app/identity/corporates/:userId/:identityId/edit-fund-manager',
+  editFundAdmin: '/app/identity/corporates/:userId/:identityId/edit-fund-admin',
+  editPortfolioManager:
+    '/app/identity/corporates/:userId/:identityId/edit-portfolio-manager',
+  viewFundManager:
+    '/app/identity/corporates/:userId/:identityId/view-fund-manager',
+  viewFundAdmin: '/app/identity/corporates/:userId/:identityId/view-fund-admin',
+  viewPortfolioManager:
+    '/app/identity/corporates/:userId/:identityId/view-portfolio-manager'
 }

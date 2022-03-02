@@ -1,20 +1,6 @@
 import { Grid, Typography } from '@mui/material'
 import React from 'react'
 import { Icon } from 'ui/Icons/Icon'
-import ChevronRightOutlinedIcon from '@mui/icons-material/ChevronRightOutlined'
-import ChevronLeftOutlinedIcon from '@mui/icons-material/ChevronLeftOutlined'
-import ExpandMoreOutlinedIcon from '@mui/icons-material/ExpandMoreOutlined'
-import ExpandLessOutlinedIcon from '@mui/icons-material/ExpandLessOutlined'
-import ArrowLeftIcon from '@mui/icons-material/ArrowLeft'
-import ArrowRightIcon from '@mui/icons-material/ArrowRight'
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
-import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp'
-import CheckIcon from '@mui/icons-material/Check'
-import CloseIcon from '@mui/icons-material/Close'
-import MenuIcon from '@mui/icons-material/Menu'
-import MoreVertIcon from '@mui/icons-material/MoreVert'
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
-import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined'
 import { ThemeProvider, createTheme } from '@mui/material/styles'
 import { lightTheme } from 'themes/new/light'
 import { getThemeOverrides } from 'themes/new/overrides'
@@ -35,21 +21,21 @@ export const IconKit = () => {
           <Icon name='arrow-right' />
           <Icon name='arrow-down' />
           <Icon name='arrow-up' />
-          <ChevronLeftOutlinedIcon sx={{ fill: '#778194' }} />
-          <ChevronRightOutlinedIcon sx={{ fill: '#778194' }} />
-          <ExpandMoreOutlinedIcon sx={{ fill: '#778194' }} />
-          <ExpandLessOutlinedIcon sx={{ fill: '#778194' }} />
+          <Icon name='chevron-left' />
+          <Icon name='chevron-right' />
+          <Icon name='chevron-down' />
+          <Icon name='chevron-up' />
           <Icon name='plus' />
           <Icon name='minus' />
-          <ArrowLeftIcon sx={{ fill: '#778194' }} />
-          <ArrowRightIcon sx={{ fill: '#778194' }} />
-          <ArrowDropDownIcon sx={{ fill: '#778194' }} />
-          <ArrowDropUpIcon sx={{ fill: '#778194' }} />
-          <CheckIcon sx={{ fill: '#778194' }} />
-          <CloseIcon sx={{ fill: '#778194' }} />
-          <MenuIcon sx={{ fill: '#778194' }} />
-          <MoreVertIcon sx={{ fill: '#778194' }} />
-          <MoreHorizIcon sx={{ fill: '#778194' }} />
+          <Icon name='switch-left' />
+          <Icon name='switch-right' />
+          <Icon name='switch-down' />
+          <Icon name='switch-up' />
+          <Icon name='check' />
+          <Icon name='close' />
+          <Icon name='menu' />
+          <Icon name='more-vertical' />
+          <Icon name='more-horizontal' />
         </Grid>
         <Grid item xs={12}>
           <Typography variant='h5'>Other</Typography>
@@ -58,7 +44,7 @@ export const IconKit = () => {
           <Icon name='bell' />
           <Icon name='alert-triangle' />
           <Icon name='alert-circle' />
-          <AccountCircleOutlinedIcon sx={{ fill: '#778194' }} />
+          <Icon name='account' />
           <Icon name='user' />
           <Icon name='users' />
           <Icon name='edit' />
@@ -83,6 +69,8 @@ export const IconKit = () => {
           <Icon name='trash' />
           <Icon name='eye' />
           <Icon name='eye-off' />
+          <Icon name='locked' />
+          <Icon name='unlocked' />
         </Grid>
       </Grid>
     </ThemeProvider>
