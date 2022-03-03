@@ -21,19 +21,26 @@ import { useCreateIndividualKYC } from 'state/kyc/hooks'
 import { LOGIN_STATUS, useLogin } from 'state/auth/hooks'
 import { Loadable } from 'components/LoaderHover'
 
-import { empleymentStatuses, formInitialValues, genders, incomes, individualKycFormData, sourceOfFunds } from './mock'
-import { Grid, FormCard, FormGrid, ExtraInfoCard, FormWrapper } from './styleds'
-import { errorsSchema } from './schema'
+import {
+  empleymentStatuses,
+  individualFormInitialValues,
+  genders,
+  incomes,
+  individualKycFormData,
+  sourceOfFunds,
+} from './mock'
+import { FormCard, FormGrid, ExtraInfoCard, FormWrapper } from './styleds'
+import { individualErrorsSchema } from './schema'
 import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
 import { ReactComponent as BigPassed } from 'assets/images/check-success-big.svg'
 import { useAddPopup, useShowError } from 'state/application/hooks'
 
-const FormRow = styled(Row)`
+export const FormRow = styled(Row)`
   align-items: flex-start;
   gap: 35px;
 `
 
-const FormContainer = styled(FormWrapper)`
+export const FormContainer = styled(FormWrapper)`
   flex-grow: 1;
 `
 
@@ -167,13 +174,13 @@ export default function IndividualKycForm() {
         </ButtonText>
 
         <Formik
-          initialValues={formInitialValues}
+          initialValues={individualFormInitialValues}
           validateOnBlur={false}
           validateOnChange={false}
           validateOnMount={false}
           isInitialValid={false}
           onSubmit={async (values) => {
-            errorsSchema
+            individualErrorsSchema
               .validate(values, { abortEarly: false })
               .then(async () => {
                 setCanSubmit(false)
@@ -208,7 +215,7 @@ export default function IndividualKycForm() {
                   addPopup({
                     info: {
                       success: true,
-                      summary: 'KYC was successfully created',
+                      summary: 'KYC was successfully submitted',
                     },
                   })
                 } else {

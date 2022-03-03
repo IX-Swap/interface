@@ -56,89 +56,58 @@ export const initialCorporateKycFormData: IFormData = {
   info: {
     title: 'Corporate Information',
     href: 'info',
-    passed: true,
-    fields: {
-      corporateName: '',
-      legalEntityType: '',
-      registrationNumber: '',
-      country: '',
-      otherLegalEntityType: '',
-      businessActivity: '',
-      entityType: '',
-      isIncorporated: false,
-    },
+    passed: false,
   },
   authorizedPersonnel: {
     title: 'Company Authorized Personnel',
     href: 'authorizedPersonnel',
     passed: false,
-    fields: {
-      fullName: '',
-      designation: '',
-      email: '',
-      phone: '',
-    },
   },
   address: {
     title: 'Address',
     href: 'address',
     passed: false,
-    fields: {
-      line1: '',
-      line2: '',
-      country: '',
-      city: '',
-    },
   },
   residentialAddress: {
     title: 'Residential Address',
     href: 'residentialAddress',
     passed: false,
-    fields: {
-      line1: '',
-      line2: '',
-      country: '',
-      city: '',
-    },
   },
   funds: {
     title: 'Source of Funds',
     href: 'funds',
     passed: false,
-    fields: [],
-    otherFunds: '',
   },
   corporate: {
     title: '',
     href: 'corporate',
     passed: false,
-    value: true,
-    represent: 0,
+  },
+  investor: {
+    title: 'Investor Status Declaration',
+    href: 'investor',
+    passed: false,
   },
   fatca: {
     title: 'FATCA',
     href: 'fatca',
     passed: false,
     value: true,
-    taxId: '',
   },
   taxDeclaration: {
     title: 'Tax Declaration',
     href: 'tax-declaration',
     passed: false,
-    fields: { taxCountry: '', identificationNumber: '' },
   },
   beneficialOwners: {
     title: 'Beneficial Owners Information',
     href: 'beneficial-owners',
     passed: false,
-    fields: [{ fullName: '', shareholding: '', proofOfAddress: null, proofOfIdentity: null }],
   },
   upload: {
     title: 'Corporate Documents',
     href: 'upload',
     passed: false,
-    fields: {},
   },
 }
 
@@ -242,7 +211,7 @@ interface IFormInitial {
   [key: string]: any
 }
 
-export const formInitialValues: IFormInitial = {
+export const individualFormInitialValues: IFormInitial = {
   firstName: '',
   middleName: '',
   lastName: '',
@@ -267,5 +236,40 @@ export const formInitialValues: IFormInitial = {
   income: null,
   proofOfIdentity: null,
   proofOfAddress: null,
+  evidenceOfAccreditation: null,
+}
+
+export const corporateFormInitialValues: IFormInitial = {
+  corporateName: '',
+  typeOfLegalEntity: null,
+  registrationNumber: '',
+  countryOfIncorporation: null,
+  otherEntity: '',
+  businessActivity: '',
+  entityType: null,
+  incorporated: false,
+  personnelName: '',
+  designation: '',
+  email: '',
+  phoneNumber: '',
+  authorizationDocument: null,
+  line1: '',
+  line2: '',
+  country: null,
+  city: '',
+  residintialAddressLine1: '',
+  residintialAddressLine2: '',
+  residintialAddressCountry: null,
+  residintialAddressCity: '',
+  sourceOfFunds: [],
+  otherFunds: '',
+  accredited: -1,
+  isUSTaxPayer: -1,
+  usTin: '',
+  taxCountry: null,
+  taxNumber: '',
+  beneficialOwners: [{ fullName: '', shareholding: '', proofOfAddress: null, proofOfIdentity: null }],
+  corporateDocuments: null,
+  financialDocuments: null,
   evidenceOfAccreditation: null,
 }

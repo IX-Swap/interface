@@ -174,9 +174,10 @@ interface ChooseFileTypes {
   label?: string | JSX.Element
   file: FileWithPath | null
   onDrop: (file: FileWithPath) => void
+  error?: any
 }
 
-export const ChooseFile = ({ label, file, onDrop }: ChooseFileTypes) => {
+export const ChooseFile = ({ label, file, onDrop, error }: ChooseFileTypes) => {
   return (
     <Box>
       {label && (
@@ -187,10 +188,15 @@ export const ChooseFile = ({ label, file, onDrop }: ChooseFileTypes) => {
         </Label>
       )}
       <Upload file={file} onDrop={onDrop}>
-        <ButtonGradient style={{ height: 52, padding: '7px 16px' }}>
+        <ButtonGradient type="button" style={{ height: 52, padding: '7px 16px' }}>
           <EllipsisText>{file?.name || <Trans>Choose File</Trans>}</EllipsisText>
         </ButtonGradient>
       </Upload>
+      {error && (
+        <TYPE.small marginTop="4px" color={'red1'}>
+          {error}
+        </TYPE.small>
+      )}
     </Box>
   )
 }
@@ -281,6 +287,7 @@ const StyledInput = styled(Input)`
 
 const DeleteRowContainer = styled.div`
   position: relative;
+  height: 60px;
 `
 
 const DeleteRowChildren = styled.div`
