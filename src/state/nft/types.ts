@@ -42,6 +42,7 @@ export interface NFTCollection {
   // featured: string
   logo?: NFTCollectionImage
   banner?: NFTCollectionImage
+  cover?: NFTCollectionImage
 }
 
 export enum TraitType {
@@ -134,6 +135,8 @@ export interface AssetForm {
   newCollectionName: string
   selectedContractAddress: string
   maxSupply: number
+  collectionLogo: FileWithPath | null
+  collectionDescription: string
 }
 
 export interface CollectionForm {

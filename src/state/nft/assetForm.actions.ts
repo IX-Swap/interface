@@ -18,3 +18,6 @@ export const setNewCollectionName = createAction<{ name: string }>('nft/setNewCo
 export const setSelectedContractAddress = createAction<{ address: string }>('nft/setSelectedContractAddress')
 export const setMaxSupply = createAction<{ supply: number }>('nft/setMaxSupply')
 export const setClearState = createAction('nft/setClearState')
+
+export const setCollectionLogo = createAction<{ file: FileWithPath | null }>('nft-collection/setLogo')
+export const setCollectionDescription = createAction<{ description: string }>('nft-collection/setDescription')

@@ -1,10 +1,12 @@
-import { ButtonPlus } from 'components/Button'
+import React, { useCallback } from 'react'
+
 import Column from 'components/Column'
 import { RowBetween, RowStart } from 'components/Row'
-import React, { useCallback } from 'react'
 import { traitsSubtitle, traitsTitle, TraitType } from 'state/nft/types'
 import { TYPE } from 'theme'
-import { StyledBarChart, StyledListIcon, StyledStarIcon } from './styleds'
+import { ReactComponent as AddIcon } from 'assets/images/add.svg'
+
+import { StyledBarChart, StyledListIcon, StyledStarIcon, PlusButton } from './styleds'
 
 export const TraitsPanel = ({ type }: { type: TraitType }) => {
   const getIcon = useCallback(() => {
@@ -24,16 +26,16 @@ export const TraitsPanel = ({ type }: { type: TraitType }) => {
         <RowStart>
           {getIcon()}
           <Column>
-            <TYPE.body>{traitsTitle[type]}</TYPE.body>
-            <TYPE.descriptionThin>{traitsSubtitle[type]}</TYPE.descriptionThin>
+            <TYPE.body fontWeight={600}>{traitsTitle[type]}</TYPE.body>
           </Column>
         </RowStart>
-        <ButtonPlus
-          width="60px"
+        <PlusButton
           onClick={() => {
             console.log('test')
           }}
-        />
+        >
+          <AddIcon />
+        </PlusButton>
       </RowBetween>
     </Column>
   )

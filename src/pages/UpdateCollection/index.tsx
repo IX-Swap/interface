@@ -45,13 +45,13 @@ const Update = () => {
   return (
     <>
       <Loadable loading={pending}>
-        <Container width={['100%']} maxWidth={'900px'}>
+        <Container width={['100%']} maxWidth={'672px'}>
           <StyledTab>
-            <TYPE.title4>
+            <TYPE.title4 style={{ textAlign: 'center', marginBottom: 32 }}>
               <Trans>Update Collection</Trans>
             </TYPE.title4>
           </StyledTab>
-          <CollectionForm onSubmit={onSubmit} collection={collection} actionName="Update" />
+          <CollectionForm onSubmit={onSubmit} collection={collection} actionName="Update Collection" />
         </Container>
       </Loadable>
     </>
