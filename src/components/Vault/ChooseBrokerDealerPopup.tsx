@@ -117,7 +117,6 @@ const KycSourceSelector = (props: KycSourceSelectorProps) => {
   const getMyKyc = useGetMyKyc()
 
   const [selected, setSelected] = useState<KycSource | undefined>(undefined)
-  const [loading, setLoading] = useState<boolean>(true)
   const [statusDesc, setStatusDesc] = useState('')
 
   const getText = (status: string | undefined) => {
@@ -146,7 +145,6 @@ const KycSourceSelector = (props: KycSourceSelectorProps) => {
 
     setStatusDesc(getText(kyc?.data.status))
     setSelected(status)
-    setLoading(false)
   }, [kyc])
 
   useEffect(() => {
