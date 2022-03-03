@@ -52,7 +52,7 @@ const NFTCollection = () => {
   }, [collection, fetchedInitial])
 
   const history = useHistory()
-  console.log('log => collection', collection)
+
   return (
     <AppBody blurred={!chainId || !TGE_CHAINS_WITH_SWAP.includes(chainId)} maxWidth="100%" transparent>
       <NftCollectionWrapper>

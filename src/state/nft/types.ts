@@ -135,6 +135,8 @@ export interface AssetForm {
   newCollectionName: string
   selectedContractAddress: string
   maxSupply: number
+  collectionLogo: FileWithPath | null
+  collectionDescription: string
 }
 
 export interface CollectionForm {

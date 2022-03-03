@@ -10,6 +10,7 @@ import { useHistory, useParams } from 'react-router-dom'
 import { useCollectionFormState, useCreateFullCollection } from 'state/nft/hooks'
 import { TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
 import AppBody from 'pages/AppBody'
+import { Box } from 'rebass'
 
 const CreateCollection = () => {
   const { account, chainId } = useActiveWeb3React()
@@ -37,12 +38,12 @@ const CreateCollection = () => {
   return (
     <AppBody blurred={blurred} maxWidth="100%" transparent>
       <Loadable loading={pending}>
-        <Container width={['100%']} maxWidth={'672px'} margin="auto">
+        <Box width={['100%']} maxWidth={'672px'} margin="auto">
           <TYPE.title4 style={{ textAlign: 'center', marginBottom: 32 }}>
             <Trans>Create Collection</Trans>
           </TYPE.title4>
           {!blurred && <CollectionForm onSubmit={onSubmit} actionName="Create Collection" />}
-        </Container>
+        </Box>
       </Loadable>
     </AppBody>
   )

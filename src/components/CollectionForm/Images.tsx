@@ -21,7 +21,7 @@ export const Images = ({ collection }: Props) => {
 
   const { onSelectLogo: setLogo, onSelectCover: setCover } = useCollectionActionHandlers()
   const { cover, logo } = useCollectionFormState()
-  console.log('log => collection ', { collection })
+
   const updateFiles = async () => {
     const logo = await createFile(collection?.logo)
     onLogoDrop(logo?.file)

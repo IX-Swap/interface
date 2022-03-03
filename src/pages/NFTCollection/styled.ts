@@ -71,6 +71,7 @@ export const NoNftContainer = styled.div`
 
 export const ImagesContainer = styled.div`
   position: relative;
+  min-height: 50px;
 `
 
 export const CoverImage = styled.img`
