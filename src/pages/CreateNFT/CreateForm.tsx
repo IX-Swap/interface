@@ -372,19 +372,7 @@ export const CreateForm = () => {
       <Flex mb={4}>
         <FreezeRadio active={freeze} setActive={onSetFreeze} />
       </Flex>
-      {/* For the moment we will deploy on the chain the user is on */}
-      {/* <Flex my={4}>
-          <Box width={1}>
-            <Label htmlFor="chainId" flexDirection="column" mb={3}>
-              <Box mb={1}>
-                <TYPE.body fontWeight={600}>
-                  <Trans> Blockchain</Trans>
-                </TYPE.body>
-              </Box>
-            </Label>
-            <ChainDropdown onSelect={setSelectedChain} selectedChain={selectedChain} />
-          </Box>
-        </Flex> */}
+
       <FileUploader title="Image, Video, Audio, or 3D Model" onDrop={onSelectFile} file={file} />
       {file && getfileType(file) !== FileTypes.IMAGE && (
         <Box width={1} marginTop="12px">

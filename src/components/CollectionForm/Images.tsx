@@ -4,7 +4,7 @@ import { FileWithPath } from 'react-dropzone'
 
 import { useCollectionFormState, useCollectionActionHandlers } from 'state/nft/hooks'
 import uploadImg from 'assets/images/upload.svg'
-import crossImg from 'assets/images/cross.svg'
+import deleteImg from 'assets/images/delete-basket.svg'
 import Upload from 'components/Upload'
 import { AcceptFiles } from 'components/Upload/types'
 import Column from 'components/Column'
@@ -86,7 +86,7 @@ export const Images = ({ collection }: Props) => {
           </UploadText>
           {cover && (
             <DeleteImage onClick={clearCover}>
-              <img src={crossImg} alt="crossImg" />
+              <img src={deleteImg} alt="deleteImg" />
             </DeleteImage>
           )}
         </CoverUploader>
@@ -107,7 +107,7 @@ export const Images = ({ collection }: Props) => {
           </UploadText>
           {logo && (
             <DeleteImage isLogo onClick={clearLogo}>
-              <img src={crossImg} alt="crossImg" />
+              <img src={deleteImg} alt="deleteImg" />
             </DeleteImage>
           )}
         </LogoUploader>

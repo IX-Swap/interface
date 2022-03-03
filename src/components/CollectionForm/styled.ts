@@ -178,8 +178,8 @@ export const DeleteImage = styled.div<{ isLogo?: boolean }>`
     isLogo
       ? css`
           left: 50%;
-          top: 13px;
-          transform: translateX(-50%);
+          top: 50%;
+          transform: translate(-50%, -50%);
         `
       : css`
           right: 23px;
