@@ -29,11 +29,7 @@ export const TraitsPanel = ({ type }: { type: TraitType }) => {
             <TYPE.body fontWeight={600}>{traitsTitle[type]}</TYPE.body>
           </Column>
         </RowStart>
-        <PlusButton
-          onClick={() => {
-            console.log('test')
-          }}
-        >
+        <PlusButton>
           <AddIcon />
         </PlusButton>
       </RowBetween>

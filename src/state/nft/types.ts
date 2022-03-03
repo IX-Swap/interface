@@ -28,6 +28,7 @@ export interface NFTImageShow {
   date?: number
   attributes: NFTAttributeDisplay[]
   isNSFW: string
+  freeze: string
 }
 
 export interface NFTCollectionImage {

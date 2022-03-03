@@ -210,11 +210,11 @@ export const CollectionForm = ({ collection, onSubmit, actionName = 'Update Coll
           <Images collection={collection} />
           <ActionsContainer>
             <ButtonIXSGradient onClick={(e) => handleSubmit(e)}>{actionName}</ButtonIXSGradient>
-            {actionName.includes('Update') && (
+            {/* {actionName.includes('Update') && (
               <ButtonPinkBorder>
                 <Trans>Delete Collection</Trans>
               </ButtonPinkBorder>
-            )}
+            )} */}
           </ActionsContainer>
         </form>
       </Container>

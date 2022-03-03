@@ -11,7 +11,6 @@ import { ReactComponent as Star } from 'assets/images/star.svg'
 import { ReactComponent as Poll } from 'assets/images/poll.svg'
 import { ReactComponent as Warning } from 'assets/images/warning.svg'
 import { Input as NumericalInput } from 'components/NumericalInput'
-import { Preview } from 'components/Upload'
 
 export const Container = styled(Box)`
   height: fit-content;
@@ -230,7 +229,7 @@ export const PropertyCard = styled.div`
   text-align: center;
   padding: 8px;
   font-weight: 600;
-  width: 128px;
+  width: 121px;
   > div {
     ${ellipsisText};
   }
