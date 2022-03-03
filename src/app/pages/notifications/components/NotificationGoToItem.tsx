@@ -27,7 +27,8 @@ export const NotificationGoToItem = (props: NotificationGoToItemProps) => {
     data.feature === AppFeature.Deposits ||
     data.feature === AppFeature.Withdrawals ||
     data.feature === AppFeature.DigitalSecurityWithdrawals ||
-    data.feature === AppFeature.Authentication
+    data.feature === AppFeature.Authentication ||
+    (data?.service === 'exchange' && data?.subject === 'Order Created')
   ) {
     return null
   }
