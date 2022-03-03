@@ -4,8 +4,7 @@ import { StyledSVG } from 'ui/Icons/Icon.styles'
 
 export interface IconProps {
   name: string
-  width?: number
-  height?: number
+  size?: number
   color?: string
   hoverColor?: string
 }
@@ -14,13 +13,12 @@ export const Icon = ({
   name,
   color = '#778194',
   hoverColor = '#4C88FF',
-  width = 24,
-  height = 24
+  size = 24
 }: IconProps) => {
   return (
     <StyledSVG
-      width={`${width}px`}
-      height={`${height}px`}
+      width={`${size}px`}
+      height={`${size}px`}
       fill={color}
       hoverColor={hoverColor}
     >
