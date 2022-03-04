@@ -3,14 +3,6 @@ interface IFormData {
     title: string
     href: string
     passed: boolean
-    fields?: any
-    value?: any
-    fin?: string
-    taxResidency?: string
-    taxId?: string
-    exceedsOneMillion?: boolean
-    otherFunds?: string
-    represent?: number
   }
 }
 
@@ -92,7 +84,6 @@ export const initialCorporateKycFormData: IFormData = {
     title: 'FATCA',
     href: 'fatca',
     passed: false,
-    value: true,
   },
   taxDeclaration: {
     title: 'Tax Declaration',
@@ -252,15 +243,15 @@ export const corporateFormInitialValues: IFormInitial = {
   designation: '',
   email: '',
   phoneNumber: '',
-  authorizationDocument: null,
+  authorizationDocuments: null,
   line1: '',
   line2: '',
   country: null,
   city: '',
-  residintialAddressLine1: '',
-  residintialAddressLine2: '',
-  residintialAddressCountry: null,
-  residintialAddressCity: '',
+  residentialAddressLine1: '',
+  residentialAddressLine2: '',
+  residentialAddressCountry: null,
+  residentialAddressCity: '',
   sourceOfFunds: [],
   otherFunds: '',
   accredited: -1,

@@ -219,12 +219,13 @@ export default function CorporateKycForm() {
                   countryOfIncorporation,
                   entityType,
                   country,
-                  residintialAddressCountry,
+                  residentialAddressCountry,
                   sourceOfFunds,
                   otherFunds,
                   isUSTaxPayer,
                   taxCountry,
                   beneficialOwners,
+                  authorizationDocuments,
                 } = values
 
                 const data: any = await createCorporateKYC({
@@ -234,7 +235,7 @@ export default function CorporateKycForm() {
                   countryOfIncorporation: countryOfIncorporation.name,
                   entityType: entityType.name,
                   country: country.name,
-                  residintialAddressCountry: residintialAddressCountry.name,
+                  residentialAddressCountry: residentialAddressCountry.name,
                   taxCountry: taxCountry.name,
                   isUSTaxPayer: isUSTaxPayer ? true : false,
                   beneficialOwners: JSON.stringify(
@@ -245,6 +246,7 @@ export default function CorporateKycForm() {
                   ),
                   beneficialOwnersIdentity: beneficialOwners.map(({ proofOfIdentity }: any) => proofOfIdentity),
                   beneficialOwnersAddress: beneficialOwners.map(({ proofOfAddress }: any) => proofOfAddress),
+                  authorizationDocuments: [1].map((_item) => authorizationDocuments),
                 })
                 if (data?.id) {
                   history.push('/kyc')
@@ -298,14 +300,14 @@ export default function CorporateKycForm() {
               !errors.designation &&
               !errors.email &&
               !errors.phoneNumber &&
-              !errors.authorizationDocument
+              !errors.authorizationDocuments
             const addressFilled = shouldValidate && !errors.line1 && !errors.line2 && !errors.city && !errors.country
             const residentialAddressFilled =
               shouldValidate &&
-              !errors.residintialAddressLine1 &&
-              !errors.residintialAddressLine2 &&
-              !errors.residintialAddressCountry &&
-              !errors.residintialAddressCity
+              !errors.residentialAddressLine1 &&
+              !errors.residentialAddressLine2 &&
+              !errors.residentialAddressCountry &&
+              !errors.residentialAddressCity
             const fundsFilled = shouldValidate && !errors.sourceOfFunds && !errors.otherFunds
             const fatcaFilled = shouldValidate && !errors.usTin && !errors.isUSTaxPayer
             const investorFilled = shouldValidate && !errors.accredited
@@ -447,16 +449,16 @@ export default function CorporateKycForm() {
                           <Uploader
                             title="Authorization Document"
                             subtitle="Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Proin eget tortor risus."
-                            file={values.authorizationDocument}
+                            file={values.authorizationDocuments}
                             onDrop={(file) => {
                               handleDropImage(
                                 file,
-                                values.authorizationDocument,
-                                'authorizationDocument',
+                                values.authorizationDocuments,
+                                'authorizationDocuments',
                                 setFieldValue
                               )
                             }}
-                            error={errors.authorizationDocument && errors.authorizationDocument}
+                            error={errors.authorizationDocuments && errors.authorizationDocuments}
                           />
                         </FormGrid>
                       </Column>
@@ -513,19 +515,19 @@ export default function CorporateKycForm() {
                         <FormGrid>
                           <TextInput
                             onChange={(e) =>
-                              onChangeInput('residintialAddressLine1', e.currentTarget.value, values, setFieldValue)
+                              onChangeInput('residentialAddressLine1', e.currentTarget.value, values, setFieldValue)
                             }
-                            value={values.residintialAddressLine1}
+                            value={values.residentialAddressLine1}
                             label="Line 1"
-                            error={errors.residintialAddressLine1 && errors.residintialAddressLine1}
+                            error={errors.residentialAddressLine1 && errors.residentialAddressLine1}
                           />
                           <TextInput
                             onChange={(e) =>
-                              onChangeInput('residintialAddressLine2', e.currentTarget.value, values, setFieldValue)
+                              onChangeInput('residentialAddressLine2', e.currentTarget.value, values, setFieldValue)
                             }
-                            value={values.residintialAddressLine2}
+                            value={values.residentialAddressLine2}
                             label="Line 2"
-                            error={errors.residintialAddressLine2 && errors.residintialAddressLine2}
+                            error={errors.residentialAddressLine2 && errors.residentialAddressLine2}
                           />
                         </FormGrid>
 
@@ -533,18 +535,18 @@ export default function CorporateKycForm() {
                           <Select
                             withScroll
                             label="Country"
-                            selectedItem={values.residintialAddressCountry}
+                            selectedItem={values.residentialAddressCountry}
                             items={countries}
-                            onSelect={(country) => onSelectChange('residintialAddressCountry', country, setFieldValue)}
-                            error={errors.residintialAddressCountry && errors.residintialAddressCountry}
+                            onSelect={(country) => onSelectChange('residentialAddressCountry', country, setFieldValue)}
+                            error={errors.residentialAddressCountry && errors.residentialAddressCountry}
                           />
                           <TextInput
                             onChange={(e) =>
-                              onChangeInput('residintialAddressCity', e.currentTarget.value, values, setFieldValue)
+                              onChangeInput('residentialAddressCity', e.currentTarget.value, values, setFieldValue)
                             }
-                            value={values.residintialAddressCity}
+                            value={values.residentialAddressCity}
                             label="City"
-                            error={errors.residintialAddressCity && errors.residintialAddressCity}
+                            error={errors.residentialAddressCity && errors.residentialAddressCity}
                           />
                         </FormGrid>
                       </Column>

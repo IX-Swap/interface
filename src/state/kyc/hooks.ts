@@ -37,13 +37,12 @@ export const createIndividualKYC = async (newKYC: any) => {
 
 export const createCorporateKYC = async (newKYC: any) => {
   const formData = new FormData()
-  console.log('before', newKYC)
+  console.log(newKYC)
 
   for (const key in newKYC) {
     formData.append(key, newKYC[key])
   }
 
-  console.log('after', formData)
   try {
     const result = await apiService.post(kyc.createCorporate, formData)
     return result.data
