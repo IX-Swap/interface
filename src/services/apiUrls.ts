@@ -30,7 +30,7 @@ export const auth = {
 }
 
 export const kyc = {
-  getAccreditation: (tokenId: number) => `kyc/getAccreditation/${tokenId}`,
+  getAccreditation: (tokenId: number, isKyc: boolean) => `kyc/getAccreditation/${tokenId}?isKyc=${isKyc}`,
   restartAccreditation: (accreditationRequestId: number) => `kyc/my/restart/${accreditationRequestId}`,
   createIndividual: `/newkyc/individual`,
   createCorporate: `/newkyc/corporate`,
