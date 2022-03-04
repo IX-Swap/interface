@@ -230,10 +230,10 @@ export default function CorporateKycForm() {
 
                 const data: any = await createCorporateKYC({
                   ...values,
-                  typeOfLegalEntity: typeOfLegalEntity.name,
+                  typeOfLegalEntity: typeOfLegalEntity.id,
                   sourceOfFunds: [...sourceOfFunds, otherFunds].join(', '),
                   countryOfIncorporation: countryOfIncorporation.name,
-                  entityType: entityType.name,
+                  entityType: entityType.id,
                   country: country.name,
                   residentialAddressCountry: residentialAddressCountry.name,
                   taxCountry: taxCountry.name,
@@ -246,7 +246,7 @@ export default function CorporateKycForm() {
                   ),
                   beneficialOwnersIdentity: beneficialOwners.map(({ proofOfIdentity }: any) => proofOfIdentity),
                   beneficialOwnersAddress: beneficialOwners.map(({ proofOfAddress }: any) => proofOfAddress),
-                  authorizationDocuments: [1].map((_item) => authorizationDocuments),
+                  authorizationDocuments: [authorizationDocuments],
                 })
                 if (data?.id) {
                   history.push('/kyc')
