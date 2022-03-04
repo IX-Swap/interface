@@ -1,10 +1,10 @@
 import React from 'react'
-import { DatePickerComponent } from 'components/form/DatePicker'
 import {
   SearchQueryFilter,
   SearchQueryFilterProps
 } from 'components/SearchQueryFilter/SearchQueryFilter'
 import { convertDateToISO } from 'helpers/dates'
+import { DateTimePickerComponent } from 'components/form/_DateTimePicker'
 
 export interface GroupedDateTimeFilterProps {
   name: SearchQueryFilterProps<'fromDate' | 'toDate'>['name']
@@ -19,9 +19,9 @@ export const GroupedDateTimeFilter = (props: GroupedDateTimeFilterProps) => {
   return (
     <SearchQueryFilter {...filterProps}>
       {({ value, onChange }) => (
-        <DatePickerComponent
+        <DateTimePickerComponent
           {...dateTimePickerProps}
-          value={value ?? null}
+          value={value ?? new Date()}
           onChange={date => {
             try {
               onChange(convertDateToISO(date as Date))

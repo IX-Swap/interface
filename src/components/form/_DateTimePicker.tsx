@@ -1,13 +1,14 @@
 import React from 'react'
-import MUIDateTimePicker, {
-  DateTimePickerProps as MUIDateTimePickerProps
-} from '@mui/lab/DateTimePicker'
+import MobileDateTimePicker, {
+  MobileDateTimePickerProps
+} from '@mui/lab/MobileDateTimePicker'
 import { FormHelperText, TextField } from '@mui/material'
 import { useFormError } from 'hooks/useFormError'
 
-export const DateTimePickerComponent = (props: MUIDateTimePickerProps) => {
+export const DateTimePickerComponent = (props: MobileDateTimePickerProps) => {
   return (
-    <MUIDateTimePicker
+    <MobileDateTimePicker
+      inputFormat='MM/dd/yy'
       {...props}
       renderInput={inputProps => (
         <TextField variant='outlined' fullWidth label='Date' {...inputProps} />
@@ -16,7 +17,7 @@ export const DateTimePickerComponent = (props: MUIDateTimePickerProps) => {
   )
 }
 
-export interface DateTimePickerProps extends MUIDateTimePickerProps {
+export interface DateTimePickerProps extends MobileDateTimePickerProps {
   name: string
 }
 
