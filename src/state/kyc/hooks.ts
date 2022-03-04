@@ -40,11 +40,7 @@ export const createCorporateKYC = async (newKYC: any) => {
   console.log(newKYC)
 
   for (const key in newKYC) {
-    if (key === 'beneficialOwners') {
-      formData.append(key, JSON.stringify(newKYC[key]))
-    } else {
-      formData.append(key, newKYC[key])
-    }
+    formData.append(key, newKYC[key])
   }
 
   try {
