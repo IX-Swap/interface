@@ -416,8 +416,8 @@ export function useFetchUserSecTokenListCallback(): (sendDispatch?: boolean) => 
   )
 }
 
-export const postPassAccreditation = async ({ tokenId }: { tokenId: number }) => {
-  const result = await apiService.post(kyc.getAccreditation(tokenId), {})
+export const postPassAccreditation = async ({ tokenId, isKyc }: { tokenId: number; isKyc: boolean }) => {
+  const result = await apiService.post(kyc.getAccreditation(tokenId, isKyc), {})
   return result.data
 }
 
@@ -434,7 +434,7 @@ export const chooseBrokerDealer = async ({ pairId }: { pairId: number }) => {
 export function usePassAccreditation(
   currencyId?: string,
   onSuccess?: () => void
-): (tokenId: number, brokerDealerPairId: number) => Promise<void> {
+): (tokenId: number, brokerDealerPairId: number, isKyc: boolean) => Promise<void> {
   const dispatch = useDispatch<AppDispatch>()
   const login = useLogin({ mustHavePreviousLogin: false })
   const fetchTokens = useFetchUserSecTokenListCallback()
@@ -443,7 +443,7 @@ export function usePassAccreditation(
   const { status: accreditationStatus, accreditationRequest } = useAccreditationStatus(currencyId)
   // note: prevent dispatch if using for list search or unsupported list
   return useCallback(
-    async (tokenId: number, brokerDealerPairId: number) => {
+    async (tokenId: number, brokerDealerPairId: number, isKyc: boolean) => {
       dispatch(passAccreditation.pending())
       try {
         const status = await login()
@@ -456,7 +456,7 @@ export function usePassAccreditation(
           ) {
             await restartAccreditation({ accreditationId: accreditationRequest.id })
           }
-          await postPassAccreditation({ tokenId })
+          await postPassAccreditation({ tokenId, isKyc })
         } else {
           showError(t`Could not get accredited because of login. Please try again`)
           dispatch(passAccreditation.rejected({ errorMessage: 'Could not get accredited because of login.' }))

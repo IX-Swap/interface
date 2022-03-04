@@ -331,7 +331,7 @@ export const ChooseBrokerDealerPopup = ({ tokenId, currencyId }: { tokenId: any;
                   disabled={loadingAccreditation}
                   style={{ textTransform: 'unset' }}
                   onClick={() => {
-                    passAccreditation(tokenId, selectedBrokerPair)
+                    passAccreditation(tokenId, selectedBrokerPair, source === KycSource.IXSwap)
                   }}
                 >
                   <Trans>Start accreditation</Trans>
