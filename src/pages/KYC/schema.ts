@@ -69,15 +69,15 @@ export const corporateErrorsSchema = yup.object().shape({
     .min(11, 'Must be valid phone number')
     .max(11, 'Must be valid phone number')
     .required('Required'),
-  authorizationDocument: yup.mixed().nullable().required('Required'),
+  authorizationDocuments: yup.mixed().nullable().required('Required'),
   line1: yup.string().required('Required'),
   line2: yup.string().required('Required'),
   country: yup.object().nullable().required('Required'),
   city: yup.string().required('Required'),
-  residintialAddressLine1: yup.string().required('Required'),
-  residintialAddressLine2: yup.string().required('Required'),
-  residintialAddressCountry: yup.object().nullable().required('Required'),
-  residintialAddressCity: yup.string().required('Required'),
+  residentialAddressLine1: yup.string().required('Required'),
+  residentialAddressLine2: yup.string().required('Required'),
+  residentialAddressCountry: yup.object().nullable().required('Required'),
+  residentialAddressCity: yup.string().required('Required'),
   sourceOfFunds: yup.array().min(1, 'Choose one').required('Required'),
   otherFunds: yup.string().when('sourceOfFunds', {
     is: (sourceOfFunds: string[]) => sourceOfFunds.includes('Others'),
