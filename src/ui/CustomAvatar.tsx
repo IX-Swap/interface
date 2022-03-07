@@ -1,9 +1,8 @@
-import React, { Fragment, ReactNode } from 'react'
+import { Avatar, AvatarProps } from '@mui/material'
 import { ViewDocument } from 'app/components/DSO/components/ViewDocument'
-import { Avatar, AvatarProps, Badge, BadgeProps } from '@mui/material'
 import { useRawBanner } from 'app/pages/admin/hooks/useRawBanner'
-import { useTheme } from '@mui/styles'
-
+import React, { Fragment, ReactNode } from 'react'
+import { StyledBadge } from 'ui/StyledBadge'
 export interface CustomAvatarProps extends AvatarProps {
   documentId?: string
   ownerId?: string
@@ -20,7 +19,7 @@ export const CustomAvatar = (props: CustomAvatarProps) => {
     documentId,
     ownerId = '',
     type = 'document',
-    size = 80,
+    size = 32,
     variant = 'circular',
     fallback,
     children,
@@ -32,30 +31,6 @@ export const CustomAvatar = (props: CustomAvatarProps) => {
   const height = Array.isArray(size) ? size[1] : size
 
   const style = { width, height, maxWidth }
-
-  const StyledBadge = (props: BadgeProps) => {
-    const { palette } = useTheme()
-    return (
-      <Badge
-        {...props}
-        sx={{
-          '& .MuiBadge-badge': {
-            backgroundColor: palette.success.main,
-            color: palette.success.main,
-            '&::after': {
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              borderRadius: '50%',
-              content: '""'
-            }
-          }
-        }}
-      />
-    )
-  }
 
   const Wrapper = hasBadge ? StyledBadge : Fragment
 
