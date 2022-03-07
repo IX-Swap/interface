@@ -5,13 +5,7 @@ import { TYPE } from 'theme'
 import { Checkbox } from 'components/Checkbox'
 import Column from 'components/Column'
 import { CorporateKyc, IndividualKyc } from 'state/admin/actions'
-import { corporateRepresentOptions, individualRepresentOptions } from 'pages/KYC/mock'
-
-import { kycData } from '../utils/kyc-data'
-
 import { Block } from '../molecules/Block'
-import { RowWithCheck } from '../molecules/RowWithCheck'
-import { investorStatusDeclarationKeys } from '../utils/constants'
 
 interface Props {
   data: IndividualKyc | CorporateKyc
@@ -19,8 +13,6 @@ interface Props {
 }
 
 export const InvestorStatusDeclaration = ({ data, kycKey }: Props) => {
-  const keys = kycKey === 'individual' ? individualRepresentOptions : corporateRepresentOptions
-
   return (
     <Block title="Investor Status Declaration">
       <>
@@ -28,14 +20,14 @@ export const InvestorStatusDeclaration = ({ data, kycKey }: Props) => {
           <Checkbox
             scaleSize={1.4}
             isRadio
-            checked={!data.accredited}
+            checked={data.accredited === 0}
             disabled
             label={<TYPE.title6 style={{ textTransform: 'uppercase' }}>I am not an accredited investor</TYPE.title6>}
           />
           <Checkbox
             scaleSize={1.4}
             isRadio
-            checked={!!data.accredited}
+            checked={data.accredited === 1}
             disabled
             label={
               <TYPE.title6 style={{ textTransform: 'uppercase' }}>{`I declare that i am “${
@@ -44,12 +36,6 @@ export const InvestorStatusDeclaration = ({ data, kycKey }: Props) => {
             }
           />
         </Column>
-        <Content>
-          {!!data.accredited &&
-            keys.map((option, index) => (
-              <RowWithCheck key={index} text={option} isDone={index + 1 === data.accredited} />
-            ))}
-        </Content>
       </>
     </Block>
   )

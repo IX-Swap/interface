@@ -1,23 +1,39 @@
-import React from 'react'
-
-import { kycData } from '../utils/kyc-data'
+import React, { FC } from 'react'
 
 import { Block } from '../molecules/Block'
 import { GridContainer, GridItem } from 'components/Grid'
-import { companyAuthorizedPersonnelKeys } from '../utils/constants'
 import { Field } from '../molecules/Field'
 import { Documents } from '../molecules/Documents'
 
-export const BeneficialOwners = () => {
+interface Props {
+  owners: any[]
+}
+
+export const BeneficialOwners: FC<Props> = ({ owners }: Props) => {
   return (
     <Block title="Beneficial Owners Information">
       <GridContainer spacing={30}>
-        {companyAuthorizedPersonnelKeys.map(({ key, label, width = {} }) => (
-          <GridItem key={key} {...width}>
-            <Field label={label} value={kycData[key]} />
-          </GridItem>
+        {owners.map(({ fullName, shareholding, proofOfIdentity, proofOfAddress }, index) => (
+          <React.Fragment key={`owner-${index}`}>
+            <GridItem xs={12} sm={6}>
+              <Field label="Full Name" value={fullName} />
+            </GridItem>
+
+            <GridItem xs={12} sm={6}>
+              <Field label="Shareholding" value={shareholding} />
+            </GridItem>
+
+            <GridItem style={{ marginBottom: index !== owners.length - 1 ? 32 : 0 }}>
+              <Documents
+                documents={[
+                  { id: 0, type: 'Proof of Identity', asset: proofOfIdentity } as any,
+                  { id: 1, type: 'Proof of Address', asset: proofOfAddress } as any,
+                ]}
+                title="Documents"
+              />
+            </GridItem>
+          </React.Fragment>
         ))}
-        <Documents documents={[]} title="Proof of Identity" />
       </GridContainer>
     </Block>
   )

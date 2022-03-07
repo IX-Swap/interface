@@ -1,19 +1,22 @@
-import React from 'react'
-
-import { kycData } from '../utils/kyc-data'
+import React, { FC } from 'react'
 
 import { Block } from '../molecules/Block'
 import { GridContainer, GridItem } from 'components/Grid'
 import { taxDeclarationKeys } from '../utils/constants'
 import { Field } from '../molecules/Field'
+import { CorporateKyc } from 'state/admin/actions'
 
-export const TaxDeclaration = () => {
+interface Props {
+  data: CorporateKyc
+}
+
+export const TaxDeclaration: FC<Props> = ({ data }: Props) => {
   return (
     <Block title="Tax Declaration">
       <GridContainer spacing={30}>
         {taxDeclarationKeys.map(({ key, label }) => (
           <GridItem key={key}>
-            <Field label={label} value={kycData[key]} />
+            <Field label={label} value={data[key]} />
           </GridItem>
         ))}
       </GridContainer>

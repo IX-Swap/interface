@@ -1,4 +1,5 @@
 import dayjs from 'dayjs'
+import { entityTypes, legalEntityTypes } from 'pages/KYC/mock'
 
 export const cynopsisKeys = [
   { key: 'cynopsis1', label: 'Cynopsis 1' },
@@ -16,13 +17,17 @@ export const cynopsisKeys = [
 export const corporateInfoKeys = [
   { key: 'corporateName', label: 'Corporate Name', width: { xs: 12, sm: 6 } },
   { key: 'registrationNumber', label: 'Registration Number', width: { xs: 12, sm: 6 } },
-  { key: 'legalentityStatus', label: 'Legal Entity Status', width: { xs: 12, sm: 6 } },
+  {
+    key: 'typeOfLegalEntity',
+    label: 'Type Of Legal Entity',
+    width: { xs: 12, sm: 6 },
+    format: (key: string) => legalEntityTypes[+key].name,
+  },
   { key: 'countryOfIncorporation', label: 'Country of Incorporation', width: { xs: 12, sm: 6 } },
-  { key: 'others', label: 'Others' },
-  { key: 'sourceOfFounds', label: 'Source of Founds' },
+  { key: 'otherEntity', label: 'Other Entity' },
+  { key: 'sourceOfFunds', label: 'Source of Funds' },
   { key: 'businessActivity', label: 'Business Activity' },
-  { key: 'ownership', label: 'Ownership Structure Layers' },
-  { key: 'entityType', label: 'Entity Type' },
+  { key: 'entityType', label: 'Entity Type', format: (key: string) => entityTypes[+key].name },
 ] as Array<{ key: string; label: string; width?: Record<string, number>; format?: (values: string) => string }>
 
 export const personalInfoKeys = [
@@ -43,7 +48,7 @@ export const personalInfoKeys = [
 ] as Array<{ key: string; label: string; width?: Record<string, number>; format?: (values: string) => string }>
 
 export const companyAuthorizedPersonnelKeys = [
-  { key: 'fullName', label: 'Full Name', width: { xs: 12, sm: 6 } },
+  { key: 'personnelName', label: 'Full Name', width: { xs: 12, sm: 6 } },
   { key: 'designation', label: 'Designation', width: { xs: 12, sm: 6 } },
   { key: 'email', label: 'Email address' },
   { key: 'phoneNumber', label: 'Phone Number' },
@@ -57,12 +62,10 @@ export const addressKeys = [
 ]
 
 export const residentialAddressKeys = [
-  { key: 'line1Residential', label: 'Line 1' },
-  { key: 'line2Residential', label: 'Line 2' },
-  { key: 'cityResidential', label: 'City' },
-  { key: 'stateResidential', label: 'State', width: { xs: 12, sm: 6, md: 4 } },
-  { key: 'zipResidential', label: 'Postal code', width: { xs: 12, sm: 6, md: 4 } },
-  { key: 'countryResidential', label: 'Country', width: { xs: 12, sm: 6, md: 4 } },
+  { key: 'line1Residential', label: 'Line 1', width: { xs: 12, sm: 6 } },
+  { key: 'line2Residential', label: 'Line 2', width: { xs: 12, sm: 6 } },
+  { key: 'cityResidential', label: 'City', width: { xs: 12, sm: 6 } },
+  { key: 'countryResidential', label: 'Country', width: { xs: 12, sm: 6 } },
 ]
 
 export const sourceOfFundsKeys = [
@@ -140,23 +143,23 @@ export const optInRequirementKeys = [
 
 export const taxDeclarationKeys = [
   {
-    key: 'countryOfTaxresidency',
+    key: 'taxCountry',
     label: 'Country of TAX Residency',
   },
   {
-    key: 'taxIdentification',
+    key: 'taxNumber',
     label: 'Tax Indentification Number',
   },
 ]
 
 export const beneficialOwnersKeys = [
   {
-    key: 'beneficialFullName',
+    key: 'fullName',
     label: 'Full Name',
     width: { xs: 12, sm: 6 },
   },
   {
-    key: 'percentageShareholding',
+    key: 'shareholding',
     label: 'Percentage Shareholding',
     width: { xs: 12, sm: 6 },
   },

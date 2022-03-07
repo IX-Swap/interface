@@ -24,15 +24,15 @@ export const CorporateForm = ({ data }: Props) => {
     <>
       <Cynopsis />
       <Information data={data} kycKey="corporate" />
-      <CompanyAuthorizedPersonnel />
+      <CompanyAuthorizedPersonnel data={data} />
       <Address data={data} />
       <ResidentialAddress />
       <SourceOfFunds data={data} kycKey="corporate" />
       <InvestorStatusDeclaration data={data} kycKey="corporate" />
       <Fatca data={data} />
       <OptInRequirement />
-      <TaxDeclaration />
-      <BeneficialOwners />
+      <TaxDeclaration data={data} />
+      <BeneficialOwners owners={data.beneficialOwners} />
       <UploadDocuments data={data.documents} />
     </>
   )
