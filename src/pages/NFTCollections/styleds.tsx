@@ -2,6 +2,7 @@ import { Box } from 'rebass'
 import styled from 'styled-components'
 
 import { ellipsisText, gradientBorder, MEDIA_WIDTHS } from 'theme'
+import { ImageLoader } from 'components/ImageLoader'
 
 export const CollectionsGrid = styled.div`
   display: grid;
@@ -54,11 +55,16 @@ export const CollectionImageWrapper = styled.div`
   width: 100%;
 `
 
-export const CollectionImage = styled.img`
+export const CollectionImage = styled(ImageLoader)`
   border-radius: 18px 18px 0px 0px;
+  > img {
+    border-radius: 18px 18px 0px 0px;
+    width: 100%;
+    height: 100%;
+  }
 `
 
-export const CollectionLogo = styled.img`
+export const CollectionLogo = styled(ImageLoader)`
   width: 60px;
   height: 60px;
   position: absolute;
@@ -69,6 +75,12 @@ export const CollectionLogo = styled.img`
   object-fit: cover;
   outline: 2px solid #fff;
   z-index: 2;
+  > img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+  }
 `
 export const ActiveSortItemBottom = styled.div`
   height: 4px;

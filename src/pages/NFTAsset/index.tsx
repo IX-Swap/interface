@@ -8,6 +8,7 @@ import { useGetNFTDetails, useNftCollection } from 'state/nft/hooks'
 import { NFTImageShow } from 'state/nft/types'
 import { NFTConnectWallet } from 'components/NFTConnectWallet'
 import { useActiveWeb3React } from 'hooks/web3'
+import { LoadingIndicator } from 'components/LoadingIndicator'
 
 import { routes } from 'utils/routes'
 
@@ -86,6 +87,7 @@ const NftAssetPage = ({
   const getNFTDetails = useGetNFTDetails(collectionAddress, Number(itemId))
   const [item, setItem] = useState<NFTImageShow | null>(null)
   const [type, setType] = useState('image')
+  const [isLoading, handleIsLoading] = useState(false)
   const collection = useNftCollection(collectionAddress)
 
   const isNSFW = item?.isNSFW === 'true'
@@ -107,6 +109,7 @@ const NftAssetPage = ({
   useEffect(() => {
     async function getDetails() {
       if (collectionAddress && itemId !== undefined) {
+        handleIsLoading(true)
         const data = await getNFTDetails()
         await collection.fetchTokens()
 
@@ -123,6 +126,7 @@ const NftAssetPage = ({
         }
 
         setItem(data)
+        handleIsLoading(false)
       }
     }
     getDetails()
@@ -130,8 +134,8 @@ const NftAssetPage = ({
 
   if (!account) return <NFTConnectWallet />
 
-  if (!item) {
-    return null
+  if (!item || isLoading) {
+    return <LoadingIndicator isLoading />
   }
 
   return (

@@ -13,9 +13,10 @@ import { ImagesContainer, LogoUploader, CoverUploader, UploadText, DeleteImage, 
 
 interface Props {
   collection?: any | null
+  setPending: (pending: boolean) => void
 }
 
-export const Images = ({ collection }: Props) => {
+export const Images = ({ collection, setPending }: Props) => {
   const [newLogo, setNewLogo] = useState('')
   const [newCover, setNewCover] = useState('')
 
@@ -23,6 +24,7 @@ export const Images = ({ collection }: Props) => {
   const { cover, logo } = useCollectionFormState()
 
   const updateFiles = async () => {
+    setPending(true)
     const logo = await createFile(collection?.logo)
     onLogoDrop(logo?.file)
     setNewLogo(logo?.link)
@@ -30,6 +32,7 @@ export const Images = ({ collection }: Props) => {
     const cover = await createFile(collection?.cover)
     onCoverDrop(cover?.file)
     setNewCover(cover?.link)
+    setPending(false)
   }
 
   useEffect(() => {

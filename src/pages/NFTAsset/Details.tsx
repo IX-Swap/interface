@@ -74,8 +74,8 @@ export const Details = ({ stats, levels, rectangles, isNSFW, isFreeze }: Props) 
       )}
 
       <SwitchRow data={isNSFW} title="Explict & Sensitive Content" />
-      <Divider />
-      <SwitchRow data={isFreeze} title="Freeze Matadata" />
+      {/* <Divider />
+      <SwitchRow data={isFreeze} title="Freeze Matadata" /> */}
     </NftAttributesContainer>
   )
 }
