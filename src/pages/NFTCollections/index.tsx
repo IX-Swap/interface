@@ -31,6 +31,7 @@ import {
   MoreActions,
 } from './styleds'
 import { NoCollections } from './NoCollections'
+import { ImageLoader } from 'components/ImageLoader'
 
 const LoaderWrapper = styled.div`
   display: flex;

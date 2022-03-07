@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import { ellipsisText, gradientBorder, TYPE } from 'theme'
 import LogoWhite from '../../assets/svg/logo-white.svg'
 import { CollectionImage } from 'pages/NFTCollections/styleds'
+import { ImageLoader } from 'components/ImageLoader'
 
 interface NFTPreviewProps {
   uri: string
@@ -38,13 +39,17 @@ const NFTPreviewContainer = styled.div`
   }
 `
 
-const NFTPreviewImage = styled.img`
+const NFTPreviewImage = styled(ImageLoader)`
   border-radius: 16px;
-
   width: 100%;
   height: auto;
 
-  object-fit: cover;
+  img {
+    border-radius: 16px;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
 `
 
 const NFTPreviewAudio = styled.audio`

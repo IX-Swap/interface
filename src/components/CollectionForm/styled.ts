@@ -96,6 +96,10 @@ export const ImagesContainer = styled.div`
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     flex-direction: column;
     align-items: center;
+    > div {
+      width: 100%;
+      align-items: center;
+    }
   }
 `
 

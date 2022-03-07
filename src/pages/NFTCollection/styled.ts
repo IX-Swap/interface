@@ -1,6 +1,8 @@
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+
 import { ellipsisText, gradientBorder, MEDIA_WIDTHS } from 'theme'
+import { ImageLoader } from 'components/ImageLoader'
 
 export const NftCollectionWrapper = styled.div`
   position: relative;
@@ -74,14 +76,19 @@ export const ImagesContainer = styled.div`
   min-height: 50px;
 `
 
-export const CoverImage = styled.img`
+export const CoverImage = styled(ImageLoader)`
   border-radius: 0px 0px 32px 32px;
   height: 200px;
   width: 100%;
-  object-fit: cover;
+  img {
+    border-radius: 0px 0px 32px 32px;
+    height: 200px;
+    width: 100%;
+    object-fit: cover;
+  }
 `
 
-export const CollectionLogo = styled.div`
+export const CollectionLogo = styled(ImageLoader)`
   width: 120px;
   height: 120px;
   position: absolute;

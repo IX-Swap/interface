@@ -10,7 +10,7 @@ import { useCollectionActionHandlers, useCollectionFormState } from 'state/nft/h
 import { LOGIN_STATUS, useLogin } from 'state/auth/hooks'
 import { useShowError } from 'state/application/hooks'
 
-import { ButtonIXSGradient, ButtonPinkBorder } from 'components/Button'
+import { ButtonIXSGradient } from 'components/Button'
 import { Loadable } from 'components/LoaderHover'
 
 import { NameSizeLimit, DescriptionSizeLimit } from 'constants/misc'
@@ -207,14 +207,9 @@ export const CollectionForm = ({ collection, onSubmit, actionName = 'Update Coll
             />
             {errors.description && touched.description && <TYPE.error error>{errors.description}</TYPE.error>}
           </Box>
-          <Images collection={collection} />
+          <Images collection={collection} setPending={setPending} />
           <ActionsContainer>
             <ButtonIXSGradient onClick={(e) => handleSubmit(e)}>{actionName}</ButtonIXSGradient>
-            {/* {actionName.includes('Update') && (
-              <ButtonPinkBorder>
-                <Trans>Delete Collection</Trans>
-              </ButtonPinkBorder>
-            )} */}
           </ActionsContainer>
         </form>
       </Container>
