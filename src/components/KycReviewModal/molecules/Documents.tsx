@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import dayjs from 'dayjs'
 
 import pdfIcon from 'assets/images/pdf.svg'
-import { ellipsisText, EllipsisText, MEDIA_WIDTHS } from 'theme'
+import { EllipsisText, MEDIA_WIDTHS } from 'theme'
 import { Document } from 'state/admin/actions'
 
 const headerCells = [t`File`, t`Type`, t`Uploaded At`]
