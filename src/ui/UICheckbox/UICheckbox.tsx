@@ -3,7 +3,7 @@ import React from 'react'
 import { CheckboxProps } from '@mui/material/Checkbox/Checkbox'
 import { ReactComponent as EnabledSuccessIcon } from 'assets/icons/checkbox/success_icon.svg'
 import { ReactComponent as DisabledLightSuccessIcon } from 'assets/icons/checkbox/light_disabled_success_icon.svg'
-import { ReactComponent as DisabledDarkSuccessIcon } from 'assets/icons/checkbox/dark_disavled_success_icon.svg'
+import { ReactComponent as DisabledDarkSuccessIcon } from 'assets/icons/checkbox/dark_disabled_success_icon.svg'
 import { useTheme } from '@mui/material/styles'
 
 export const UICheckbox = (props: CheckboxProps) => {
