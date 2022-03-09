@@ -25,7 +25,7 @@ export const lightTheme: DeprecatedThemeOptions = {
     },
     backgrounds: {
       default: '#F7F9FA',
-      light: '#fafafa',
+      light: '#ffffff',
       lighter: '#e3e3e3',
       alternative: '#56AA82',
       alternativeLight: 'rgba(86, 170, 130, 0.06)'

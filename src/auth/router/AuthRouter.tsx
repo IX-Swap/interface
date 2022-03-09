@@ -8,6 +8,7 @@ import { AuthRoute } from 'auth/router/config'
 import { AppRoute } from 'components/AppRoute'
 import { SuccessfulSignup } from 'auth/pages/successful-signup/SuccessfulSignup'
 import { SuccessfulReset } from 'auth/pages/successful-reset/SuccessfulReset'
+import { InvitationDeclie } from 'auth/pages/invitation/InvitationDecline'
 
 export const AuthRouter = () => {
   return (
@@ -34,6 +35,10 @@ export const AuthRouter = () => {
 
       <AppRoute exact path={AuthRoute.confirm}>
         <Confirmation />
+      </AppRoute>
+
+      <AppRoute exact path={AuthRoute.declineInvitation}>
+        <InvitationDeclie />
       </AppRoute>
 
       <Redirect to={AuthRoute.login} />

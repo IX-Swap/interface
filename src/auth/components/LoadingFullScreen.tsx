@@ -1,9 +1,9 @@
 import React from 'react'
 import { Grid, CircularProgress } from '@mui/material'
-import { useStlyes } from 'auth/components/LoadingFullScreen.styles'
+import { useStyles } from 'auth/components/LoadingFullScreen.styles'
 
 export const LoadingFullScreen: React.FC = () => {
-  const { container } = useStlyes()
+  const { container } = useStyles()
 
   return (
     <Grid
