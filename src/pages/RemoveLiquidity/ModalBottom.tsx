@@ -3,6 +3,7 @@ import { Trans } from '@lingui/macro'
 import { TextRow } from 'components/TextRow/TextRow'
 import { TextRowDoubleCurrency } from 'components/TextRow/TextRowDoubleCurrency'
 import React, { useMemo } from 'react'
+import { formatAmount } from 'utils/formatCurrencyAmount'
 import { ButtonIXSWide } from '../../components/Button'
 import { AutoColumn } from '../../components/Column'
 import { ApprovalState } from '../../hooks/useApproveCallback'
@@ -32,7 +33,7 @@ export const ModalBottom = ({ currencyA, currencyB, approval, signatureData, onR
           }
           currencyA={currencyA}
           currencyB={currencyB}
-          textRight={<>{parsedAmounts[Field.LIQUIDITY]?.toSignificant(6)}</>}
+          textRight={<>{formatAmount(+(parsedAmounts[Field.LIQUIDITY]?.toSignificant(6) || 0))}</>}
         />
         {pair && (
           <>
@@ -40,7 +41,8 @@ export const ModalBottom = ({ currencyA, currencyB, approval, signatureData, onR
               textLeft={<Trans>Price</Trans>}
               textRight={
                 <>
-                  1 {currencyA?.symbol} = {tokenA ? pair.priceOf(tokenA).toSignificant(6) : '-'} {currencyB?.symbol}
+                  1 {currencyA?.symbol} = {tokenA ? formatAmount(+pair.priceOf(tokenA).toSignificant(6)) : '-'}{' '}
+                  {currencyB?.symbol}
                 </>
               }
             />
@@ -48,7 +50,8 @@ export const ModalBottom = ({ currencyA, currencyB, approval, signatureData, onR
               textLeft={''}
               textRight={
                 <>
-                  1 {currencyB?.symbol} = {tokenB ? pair.priceOf(tokenB).toSignificant(6) : '-'} {currencyA?.symbol}
+                  1 {currencyB?.symbol} = {tokenB ? formatAmount(+pair.priceOf(tokenB).toSignificant(6)) : '-'}{' '}
+                  {currencyA?.symbol}
                 </>
               }
             />

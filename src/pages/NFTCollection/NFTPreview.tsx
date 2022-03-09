@@ -43,6 +43,8 @@ const NFTPreviewImage = styled(ImageLoader)`
   border-radius: 16px;
   width: 100%;
   height: auto;
+  min-height: 64px;
+  min-width: 64px;
 
   img {
     border-radius: 16px;

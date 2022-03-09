@@ -24,6 +24,11 @@ import {
 } from './styled'
 import { NoNFTs } from './NoNFTs'
 
+const bodyProps = {
+  padding: '0px 32px',
+  paddingXS: '0px 16px',
+}
+
 interface NFTCollectionPageParams {
   collectionAddress: string
 }
@@ -59,7 +64,7 @@ const NFTCollection = () => {
   const history = useHistory()
 
   return (
-    <AppBody blurred={!chainId || !TGE_CHAINS_WITH_SWAP.includes(chainId)} maxWidth="100%" transparent>
+    <AppBody {...bodyProps} blurred={!chainId || !TGE_CHAINS_WITH_SWAP.includes(chainId)} maxWidth="100%" transparent>
       <NftCollectionWrapper>
         <LoadingIndicator isLoading={isLoading} />
         {!collection.loading && collection.info && (

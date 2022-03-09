@@ -13,5 +13,5 @@ interface Props {
 }
 
 export const ImageLoader = ({ className, ...props }: Props) => {
-  return <LazyLoadImage wrapperClassName={className} loading="lazy" {...props} placeholderSrc={LoadingThin} />
+  return <LazyLoadImage wrapperClassName={className} {...props} placeholderSrc={LoadingThin} />
 }

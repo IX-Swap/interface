@@ -26,10 +26,10 @@ export const Images = ({ collection, setPending }: Props) => {
   const updateFiles = async () => {
     setPending(true)
     const logo = await createFile(collection?.logo)
+    const cover = await createFile(collection?.cover)
     onLogoDrop(logo?.file)
     setNewLogo(logo?.link)
 
-    const cover = await createFile(collection?.cover)
     onCoverDrop(cover?.file)
     setNewCover(cover?.link)
     setPending(false)

@@ -4,6 +4,15 @@ import { escapeRegExp } from '../../utils'
 
 const inputRegex = RegExp(`^\\d*(?:\\\\[.])?\\d*$`) // match escaped "." characters via in a non-capturing group
 
+export const formatNumberValue = (value: string | number) => {
+  const stringValue = value ? `${value}` : ''
+  const [numberPart] = stringValue.split('.')
+  const thousands = /\B(?=(\d{3})+(?!\d))/g
+  const formatedNumberPart = numberPart.replaceAll(thousands, ',')
+
+  return stringValue.replace(/^(.*?)(?=\.|$)/g, formatedNumberPart)
+}
+
 export const Input = React.memo(function InnerInput({
   value,
   onUserInput,
@@ -29,7 +38,7 @@ export const Input = React.memo(function InnerInput({
   return (
     <StyledNumberInput
       {...rest}
-      value={prependSymbol && value ? prependSymbol + value : value}
+      value={prependSymbol && value ? prependSymbol + value : formatNumberValue(value)}
       onChange={(event) => {
         if (prependSymbol) {
           const value = event.target.value
@@ -40,9 +49,9 @@ export const Input = React.memo(function InnerInput({
             : value
 
           // replace commas with periods, because ixswap exclusively uses period as the decimal separator
-          enforcer(formattedValue.replace(/,/g, '.'))
+          enforcer(formattedValue.replace(/,/g, ''))
         } else {
-          enforcer(event.target.value.replace(/,/g, '.'))
+          enforcer(event.target.value.replace(/,/g, ''))
         }
       }}
       // universal input options
