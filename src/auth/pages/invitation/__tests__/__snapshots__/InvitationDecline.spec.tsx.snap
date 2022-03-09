@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`InvitationDecline should match snapshot 1`] = `
+<div>
+  <div
+    class="MuiGrid-root MuiGrid-container makeStyles-wrapper-1 css-1kca4ek-MuiGrid-root"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+    >
+      <img
+        alt="logo"
+        src="image-mock"
+      />
+      <div
+        class="MuiBox-root css-12aw9rk"
+      />
+    </div>
+    <div
+      class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+    >
+      <p
+        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignCenter makeStyles-description-3 css-6bx0l6-MuiTypography-root"
+      >
+        Are you sure you want to decline the invitation?
+      </p>
+      <div
+        class="MuiBox-root css-12aw9rk"
+      />
+    </div>
+    <div
+      class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+    >
+      <hr
+        class="MuiDivider-root MuiDivider-fullWidth css-1dme0vl-MuiDivider-root"
+      />
+      <div
+        class="MuiBox-root css-1jpm9pd"
+      />
+    </div>
+    <div
+      class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+    >
+      <button
+        class="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeLarge MuiButton-textSizeLarge MuiButtonBase-root makeStyles-customButton-6 css-1vk2y0j-MuiButtonBase-root-MuiButton-root"
+        tabindex="0"
+        type="button"
+      >
+        Yes, Decline
+        <span
+          class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+        />
+      </button>
+    </div>
+  </div>
+</div>
+`;
