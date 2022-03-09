@@ -205,7 +205,8 @@ export const authURL = {
   registerConfirm: '/auth/registrations/confirm',
   reset2fa: (userId?: string) => `/auth/2fa/reset/${userId}`,
   getLoginHistory: (userId?: string) => `auth/users/${userId}/logins`,
-  revokeAccess: '/auth/users/revoke'
+  revokeAccess: '/auth/users/revoke',
+  declineInvitation: (roleId: string) => `vcc/roles/${roleId}/decline`
 }
 
 export const userURL = {
