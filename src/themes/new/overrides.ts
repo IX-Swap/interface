@@ -440,5 +440,179 @@ export const getThemeOverrides = (
         ul: {}
       }
     }
+  },
+  MuiSwitch: {
+    styleOverrides: {
+      root: {
+        '& .MuiSwitch-switchBase': {
+          '&.MuiButtonBase-root': {
+            padding: 2,
+            width: '24px',
+            height: '16px',
+            '&:hover': {
+              backgroundColor: 'inherit',
+              content: '""'
+            },
+
+            '& + .MuiSwitch-track': {
+              background: '#778194',
+              width: '24px',
+              height: '16px',
+              borderRadius: '100px',
+              opacity: 1,
+              position: 'absolute',
+              top: 0,
+              left: 0
+            },
+            '& + .MuiTouchRipple-root': {
+              width: '24px',
+              height: '16px',
+              borderRadius: '100px',
+              opacity: 1,
+              position: 'absolute',
+              top: 0,
+              left: 0
+            },
+
+            '&.Mui-checked': {
+              transform: 'translateX(16px)',
+              color: '#fff',
+              '& + .MuiSwitch-track': {
+                backgroundColor: '#4C88FF',
+                opacity: 1,
+                border: 0
+              },
+              '&.Mui-disabled + .MuiSwitch-track': {
+                opacity: 0.5,
+                backgroundColor: '#D3D9E5'
+              }
+            },
+
+            '& .MuiSwitch-thumb': {
+              width: '12px',
+              height: '12px',
+              background: '#FFFFFF',
+              position: 'absolute',
+              top: '12%',
+              left: '10%'
+            },
+            '&.Mui-focusVisible .MuiSwitch-thumb': {
+              color: '#33cf4d',
+              border: '6px solid #fff'
+            },
+            '&.Mui-disabled .MuiSwitch-thumb': {
+              color:
+                theme.palette.mode === 'light'
+                  ? theme.palette.grey[100]
+                  : theme.palette.grey[600]
+            },
+            '&.Mui-checked .MuiSwitch-thumb': {
+              color: 'red',
+              position: 'absolute',
+              top: '12%',
+              left: '-30%'
+            },
+            '&.Mui-disabled + .MuiSwitch-track': {
+              opacity: theme.palette.mode === 'light' ? 0.7 : 0.3
+            }
+          }
+        }
+      }
+    }
+  },
+  MuiRadio: {
+    styleOverrides: {
+      root: {
+        '&.MuiButtonBase-root': {
+          background: 'inherit',
+          '&:hover': {
+            backgroundColor: 'inherit'
+          },
+
+          '& .MuiSvgIcon-root': {
+            background: '#FFFFFF',
+            fill: '#FFFFFF',
+            border: '1px solid #78A5FF',
+            boxSizing: 'border-box',
+            boxShadow: '0px 4px 4px rgba(162, 172, 191, 0.08)',
+            borderRadius: '10px'
+          },
+
+          '&.Mui-checked .MuiSvgIcon-root': {
+            background: '#4C88FF',
+            borderRadius: '10px',
+            border: 'none'
+          },
+          '&.Mui-disabled .MuiSvgIcon-root': {
+            border: '1px solid',
+            boxSizing: 'border-box',
+            borderRadius: '10px'
+          },
+          '&.Mui-checked': {
+            '& .MuiSvgIcon-root': {
+              background: '#4C88FF',
+              borderRadius: '10px'
+            },
+            '&.Mui-disabled .MuiSvgIcon-root': {
+              background: '#DBE2EC',
+              border: 'none'
+            }
+          }
+        }
+      }
+    }
+  },
+  MuiCheckbox: {
+    styleOverrides: {
+      root: {
+        '&.MuiButtonBase-root': {
+          background: 'inherit',
+          '&:hover': {
+            backgroundColor: 'inherit'
+          },
+
+          '& .MuiSvgIcon-root': {
+            fill: '#FFFFFF',
+            background: '#FFFFFF',
+            border: '1px solid #78A5FF',
+            boxSizing: 'border-box',
+            boxShadow: '0px 4px 4px rgba(162, 172, 191, 0.08)',
+            borderRadius: '2px'
+          },
+
+          '&.Mui-checked .MuiSvgIcon-root': {
+            fill: '#4C88FF',
+            background: '#4C88FF',
+            borderRadius: '2px',
+            border: 'none',
+            backgroundImage:
+              "url(\"data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath" +
+              " fill-rule='evenodd' clip-rule='evenodd' d='M12 5c-.28 0-.53.11-.71.29L7 9.59l-2.29-2.3a1.003 " +
+              "1.003 0 00-1.42 1.42l3 3c.18.18.43.29.71.29s.53-.11.71-.29l5-5A1.003 1.003 0 0012 5z' fill='%23fff'/%3E%3C/svg%3E\")",
+            content: '""'
+          },
+          '&.Mui-disabled .MuiSvgIcon-root': {
+            border: '1px solid',
+            boxSizing: 'border-box',
+            borderRadius: '2px'
+          },
+          '&.Mui-checked': {
+            '& .MuiSvgIcon-root': {},
+            '&.Mui-disabled .MuiSvgIcon-root': {
+              background: '#EDF2FA',
+              fill: '#EDF2FA',
+              fillOpacity: 2,
+              border: '1px solid rgba(76, 136, 255, 0.3)',
+              boxSizing: 'border-box',
+              backgroundImage:
+                "url(\"data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath" +
+                " fill-rule='evenodd' clip-rule='evenodd' d='M12 5c-.28 0-.53.11-.71.29L7 9.59l-2.29-2.3a1.003 " +
+                "1.003 0 00-1.42 1.42l3 3c.18.18.43.29.71.29s.53-.11.71-.29l5-5A1.003 1.003 0 0012 5z' fill='%23778194'/%3E%3C/svg%3E\")",
+              content: '""'
+            }
+          }
+        }
+      }
+    }
   }
 })
