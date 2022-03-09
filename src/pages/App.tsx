@@ -130,7 +130,6 @@ export default function App() {
                 <Route exact strict path={routes.nftCollectionImport} component={NftImport} />
                 <Route exact strict path={routes.nftViewCollectionPath} component={NFTCollection} />
                 <Route exact strict path={routes.nftItemPath} component={NftAssetPage} />
-                <Route exact strict path={routes.kyc} component={KYC} />
                 <Route exact strict path={routes.kycIndividual} component={IndividualKYC} />
                 <Route exact strict path={routes.kycCorporate} component={CorporateKYC} />
 
@@ -158,6 +157,10 @@ export default function App() {
 
                 {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
                   <Route exact strict path="/faucet" component={Faucet} />
+                )}
+
+                {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
+                  <Route exact strict path={routes.kyc} component={KYC} />
                 )}
 
                 <Route exact strict path="/security-tokens/:currencyId" component={SecTokenDetails} />

@@ -36,16 +36,13 @@ export const individualErrorsSchema = yup.object().shape({
   employmentStatus: yup.object().nullable().required('Required'),
   employer: yup.string().required('Required'),
   income: yup.object().nullable().required('Required'),
-  proofOfIdentity: yup.mixed().nullable().required('Required'),
-  proofOfAddress: yup.mixed().nullable().required('Required'),
-  evidenceOfAccreditation: yup
-    .mixed()
-    .nullable()
-    .when('accredited', {
-      is: 1,
-      then: yup.mixed().nullable().required('Required'),
-      otherwise: yup.mixed().nullable(),
-    }),
+  proofOfIdentity: yup.array().min(1, 'Required').nullable(),
+  proofOfAddress: yup.array().min(1, 'Required').nullable(),
+  evidenceOfAccreditation: yup.array().when('accredited', {
+    is: 1,
+    then: yup.array().min(1, 'Required').nullable(),
+    otherwise: yup.array().nullable(),
+  }),
 })
 
 export const corporateErrorsSchema = yup.object().shape({
@@ -69,7 +66,7 @@ export const corporateErrorsSchema = yup.object().shape({
     .min(11, 'Must be valid phone number')
     .max(11, 'Must be valid phone number')
     .required('Required'),
-  authorizationDocuments: yup.mixed().nullable().required('Required'),
+  authorizationDocuments: yup.array().min(1, 'Required').nullable(),
   line1: yup.string().required('Required'),
   line2: yup.string().required('Required'),
   country: yup.object().nullable().required('Required'),
@@ -105,14 +102,14 @@ export const corporateErrorsSchema = yup.object().shape({
     )
     .min(1, 'At least one beneficial owner')
     .required('Required'),
-  corporateDocuments: yup.mixed().nullable().required('Required'),
-  financialDocuments: yup.mixed().nullable().required('Required'),
+  corporateDocuments: yup.array().min(1, 'Required').nullable(),
+  financialDocuments: yup.array().min(1, 'Required').nullable(),
   evidenceOfAccreditation: yup
     .mixed()
     .nullable()
     .when('accredited', {
       is: 1,
-      then: yup.mixed().nullable().required('Required'),
-      otherwise: yup.mixed().nullable(),
+      then: yup.array().min(1, 'Required').nullable(),
+      otherwise: yup.array().nullable(),
     }),
 })

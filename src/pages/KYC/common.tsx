@@ -10,6 +10,7 @@ import { ButtonGradient } from 'components/Button'
 import { TYPE, EllipsisText } from 'theme'
 import Upload from 'components/Upload'
 import { Dropdown } from 'components/AdminSecurityCatalog/Dropdown'
+import { FilePreview } from 'components/FilePreview'
 import { GradientText } from 'pages/CustodianV2/styleds'
 
 import { ReactComponent as UploadLogo } from 'assets/images/upload.svg'
@@ -19,12 +20,13 @@ import { UploaderCard, FormGrid } from './styleds'
 import { AcceptFiles } from 'components/Upload/types'
 
 export interface UploaderProps {
-  file: FileWithPath | null
+  files: FileWithPath[]
   onDrop: (file: any) => void
   title: string
   subtitle: string | JSX.Element
   optional?: boolean
   error?: any | ReactChildren
+  handleDeleteClick: (index: number) => void
 }
 
 interface SelectProps {
@@ -125,10 +127,11 @@ export const TextInput: FC<TextInputProps> = ({
 export const Uploader: FC<UploaderProps> = ({
   title,
   subtitle,
-  file,
+  files,
   onDrop,
   error,
   optional = false,
+  handleDeleteClick,
 }: UploaderProps) => {
   return (
     <Box>
@@ -144,21 +147,32 @@ export const Uploader: FC<UploaderProps> = ({
         )}
       </Flex>
       <StyledDescription marginBottom="10px">{subtitle}</StyledDescription>
-      <Upload accept={AcceptFiles.ALL} file={file} onDrop={onDrop}>
+      {files.length > 0 && (
+        <Flex flexWrap="wrap">
+          {files.map((file, index) => (
+            <FilePreview
+              key={`file-${index}-${file.name}`}
+              file={file}
+              index={1}
+              handleDeleteClick={() => {
+                handleDeleteClick(index)
+              }}
+              style={{ marginRight: index !== files.length - 1 ? 16 : 0 }}
+            />
+          ))}
+        </Flex>
+      )}
+      <Upload accept={AcceptFiles.ALL} file={null} onDrop={onDrop}>
         <UploaderCard>
-          {file ? (
-            <TYPE.body1>{file.name}</TYPE.body1>
-          ) : (
-            <Flex flexDirection="column" justifyContent="center" alignItems="center" style={{ maxWidth: 100 }}>
-              <UploadLogo />
-              <TYPE.small textAlign="center" marginTop="8px" color={'text9'}>
-                Drag and Drop
-              </TYPE.small>
-              <TYPE.small display="flex" textAlign="center" color={'text9'}>
-                or <GradientText style={{ marginLeft: 2 }}>Upload</GradientText>
-              </TYPE.small>
-            </Flex>
-          )}
+          <Flex flexDirection="column" justifyContent="center" alignItems="center" style={{ maxWidth: 100 }}>
+            <UploadLogo />
+            <TYPE.small textAlign="center" marginTop="8px" color={'text9'}>
+              Drag and Drop
+            </TYPE.small>
+            <TYPE.small display="flex" textAlign="center" color={'text9'}>
+              or <GradientText style={{ marginLeft: 2 }}>Upload</GradientText>
+            </TYPE.small>
+          </Flex>
         </UploaderCard>
       </Upload>
       {error && (
@@ -175,9 +189,10 @@ interface ChooseFileTypes {
   file: FileWithPath | null
   onDrop: (file: FileWithPath) => void
   error?: any
+  handleDeleteClick: () => void
 }
 
-export const ChooseFile = ({ label, file, onDrop, error }: ChooseFileTypes) => {
+export const ChooseFile = ({ label, file, onDrop, error, handleDeleteClick }: ChooseFileTypes) => {
   return (
     <Box>
       {label && (
@@ -187,11 +202,15 @@ export const ChooseFile = ({ label, file, onDrop, error }: ChooseFileTypes) => {
           </TYPE.title11>
         </Label>
       )}
-      <Upload file={file} onDrop={onDrop}>
-        <ButtonGradient type="button" style={{ height: 52, padding: '7px 16px' }}>
-          <EllipsisText>{file?.name || <Trans>Choose File</Trans>}</EllipsisText>
-        </ButtonGradient>
-      </Upload>
+      {file ? (
+        <FilePreview file={file} index={1} handleDeleteClick={handleDeleteClick} withBackground={false} />
+      ) : (
+        <Upload file={file} onDrop={onDrop}>
+          <ButtonGradient type="button" style={{ height: 52, padding: '7px 16px' }}>
+            <EllipsisText>{(file as any)?.name || <Trans>Choose File</Trans>}</EllipsisText>
+          </ButtonGradient>
+        </Upload>
+      )}
       {error && (
         <TYPE.small marginTop="4px" color={'red1'}>
           {error}

@@ -46,8 +46,9 @@ const Row: FC<RowProps> = ({ item, openModal }: RowProps) => {
   } = item
 
   const kyc = individualKycId ? item.individual : item.corporate
-
-  const fullName = [kyc?.firstName, kyc?.lastName].filter((el) => Boolean(el)).join(' ')
+  const fullName = individualKycId
+    ? [kyc?.firstName, kyc?.lastName].filter((el) => Boolean(el)).join(' ')
+    : kyc?.personnelName
 
   return (
     <StyledBodyRow key={id}>
