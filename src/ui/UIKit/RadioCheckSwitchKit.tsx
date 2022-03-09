@@ -2,10 +2,14 @@ import { Grid, Radio, Switch, Checkbox, Typography } from '@mui/material'
 import React from 'react'
 import { getThemeOverrides } from 'themes/new/overrides'
 import { lightTheme } from 'themes/new/light'
+// import { darkTheme } from 'themes/new/dark'
 import { typography } from 'themes/new/typography'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 
-const theme = createTheme({ ...lightTheme, typography })
+const theme = createTheme({
+  ...lightTheme,
+  typography
+})
 theme.components = getThemeOverrides(theme)
 
 export const RadioCheckSwitchKit = () => {

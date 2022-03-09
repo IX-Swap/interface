@@ -12,7 +12,7 @@ export const lightTheme: DeprecatedThemeOptions = {
       contrastText: '#FFFFFF'
     },
     secondary: {
-      main: '#DBE2EC',
+      main: '#78A5FF',
       dark: '#F0F2F7',
       light: '#EDF2FA'
     },

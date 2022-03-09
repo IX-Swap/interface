@@ -530,21 +530,33 @@ export const getThemeOverrides = (
           },
 
           '& .MuiSvgIcon-root': {
-            background: '#FFFFFF',
-            fill: '#FFFFFF',
-            border: '1px solid #78A5FF',
+            background: theme.palette.background.paper,
+            fill: theme.palette.background.paper,
+            border: `1px solid ${
+              theme.palette.mode === 'light'
+                ? theme.palette.secondary.main
+                : theme.palette.primary.main
+            }`,
             boxSizing: 'border-box',
-            boxShadow: '0px 4px 4px rgba(162, 172, 191, 0.08)',
+            boxShadow:
+              theme.palette.mode === 'light'
+                ? '0px 4px 4px rgba(162, 172, 191, 0.08)'
+                : 'none',
             borderRadius: '10px'
           },
 
           '&.Mui-checked .MuiSvgIcon-root': {
             background: '#4C88FF',
             borderRadius: '10px',
-            border: 'none'
+            border: 'none',
+            fill: '#ffffff'
           },
           '&.Mui-disabled .MuiSvgIcon-root': {
-            border: '1px solid',
+            border: `1px solid ${
+              theme.palette.mode === 'light'
+                ? theme.palette.secondary.main
+                : '#89A1CE'
+            }`,
             boxSizing: 'border-box',
             borderRadius: '10px'
           },
@@ -554,7 +566,11 @@ export const getThemeOverrides = (
               borderRadius: '10px'
             },
             '&.Mui-disabled .MuiSvgIcon-root': {
-              background: '#DBE2EC',
+              background:
+                theme.palette.mode === 'light'
+                  ? theme.palette.divider
+                  : '#1D3667',
+              fill: theme.palette.background.default,
               border: 'none'
             }
           }
