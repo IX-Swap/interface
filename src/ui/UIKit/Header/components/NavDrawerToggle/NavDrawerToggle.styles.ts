@@ -9,10 +9,7 @@ export default makeStyles(theme => ({
       }
     },
     '& svg': {
-      fill:
-        theme.palette.mode === 'light'
-          ? theme.palette.text.secondary
-          : '#496396'
+      fill: theme.palette.text.secondary
     }
   }
 }))
