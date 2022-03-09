@@ -225,9 +225,9 @@ export const individualFormInitialValues: IFormInitial = {
   employmentStatus: null,
   employer: '',
   income: null,
-  proofOfIdentity: null,
-  proofOfAddress: null,
-  evidenceOfAccreditation: null,
+  proofOfIdentity: [],
+  proofOfAddress: [],
+  evidenceOfAccreditation: [],
 }
 
 export const corporateFormInitialValues: IFormInitial = {
@@ -243,7 +243,7 @@ export const corporateFormInitialValues: IFormInitial = {
   designation: '',
   email: '',
   phoneNumber: '',
-  authorizationDocuments: null,
+  authorizationDocuments: [],
   line1: '',
   line2: '',
   country: null,
@@ -260,7 +260,7 @@ export const corporateFormInitialValues: IFormInitial = {
   taxCountry: null,
   taxNumber: '',
   beneficialOwners: [{ fullName: '', shareholding: '', proofOfAddress: null, proofOfIdentity: null }],
-  corporateDocuments: null,
-  financialDocuments: null,
-  evidenceOfAccreditation: null,
+  corporateDocuments: [],
+  financialDocuments: [],
+  evidenceOfAccreditation: [],
 }

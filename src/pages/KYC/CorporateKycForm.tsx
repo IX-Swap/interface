@@ -105,7 +105,7 @@ export default function CorporateKycForm() {
 
   const changeBeneficiar = (
     fieldName: string,
-    value: string | FileWithPath,
+    value: string | FileWithPath | null,
     index: number,
     owners: any,
     setFieldValue: any,
@@ -155,6 +155,7 @@ export default function CorporateKycForm() {
 
   const countries = useMemo(() => {
     return getNames()
+      .filter((name) => name !== 'United States of America')
       .map((name, index) => ({ id: ++index, name }))
       .sort((a, b) => a.name.localeCompare(b.name))
   }, [])
@@ -181,13 +182,20 @@ export default function CorporateKycForm() {
     validationSeen(key)
   }
 
-  const handleDropImage = (acceptedFile: any, lastValue: any, key: string, setFieldValue: any) => {
+  const handleDropImage = (acceptedFile: any, values: any, key: string, setFieldValue: any) => {
     const file = acceptedFile
-    if (lastValue?.filePath) {
-      URL.revokeObjectURL(lastValue.filePath)
-    }
-    // const preview = URL.createObjectURL(file)
-    setFieldValue(key, file, false)
+    const arrayOfFiles = [...values[key]]
+    arrayOfFiles.push(file)
+
+    setFieldValue(key, arrayOfFiles, false)
+    validationSeen(key)
+  }
+
+  const handleImageDelete = (values: any, key: string, setFieldValue: any) => (index: number) => {
+    const arrayOfFiles = [...values[key]]
+    arrayOfFiles.splice(index, 1)
+
+    setFieldValue(key, arrayOfFiles, false)
     validationSeen(key)
   }
 
@@ -225,7 +233,6 @@ export default function CorporateKycForm() {
                   isUSTaxPayer,
                   taxCountry,
                   beneficialOwners,
-                  authorizationDocuments,
                 } = values
 
                 const data: any = await createCorporateKYC({
@@ -246,7 +253,6 @@ export default function CorporateKycForm() {
                   ),
                   beneficialOwnersIdentity: beneficialOwners.map(({ proofOfIdentity }: any) => proofOfIdentity),
                   beneficialOwnersAddress: beneficialOwners.map(({ proofOfAddress }: any) => proofOfAddress),
-                  authorizationDocuments: [authorizationDocuments],
                 })
                 if (data?.id) {
                   history.push('/kyc')
@@ -449,16 +455,12 @@ export default function CorporateKycForm() {
                           <Uploader
                             title="Authorization Document"
                             subtitle="Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Proin eget tortor risus."
-                            file={values.authorizationDocuments}
+                            files={values.authorizationDocuments}
                             onDrop={(file) => {
-                              handleDropImage(
-                                file,
-                                values.authorizationDocuments,
-                                'authorizationDocuments',
-                                setFieldValue
-                              )
+                              handleDropImage(file, values, 'authorizationDocuments', setFieldValue)
                             }}
                             error={errors.authorizationDocuments && errors.authorizationDocuments}
+                            handleDeleteClick={handleImageDelete(values, 'authorizationDocuments', setFieldValue)}
                           />
                         </FormGrid>
                       </Column>
@@ -743,7 +745,7 @@ export default function CorporateKycForm() {
                                 error={errors[`beneficialOwners[${index}].shareholding`] && 'Required'}
                               />
                               <ChooseFile
-                                file={beneficiar.profOfAddress}
+                                file={beneficiar.proofOfAddress}
                                 onDrop={(file) =>
                                   changeBeneficiar(
                                     'proofOfAddress',
@@ -758,9 +760,19 @@ export default function CorporateKycForm() {
                                   errors[`beneficialOwners[${index}].proofOfAddress`] &&
                                   errors[`beneficialOwners[${index}].proofOfAddress`]
                                 }
+                                handleDeleteClick={() =>
+                                  changeBeneficiar(
+                                    'proofOfAddress',
+                                    null,
+                                    index,
+                                    values.beneficialOwners,
+                                    setFieldValue,
+                                    `beneficialOwners[${index}].proofOfAddress`
+                                  )
+                                }
                               />
                               <ChooseFile
-                                file={beneficiar.profOfIdentity}
+                                file={beneficiar.proofOfIdentity}
                                 onDrop={(file) =>
                                   changeBeneficiar(
                                     'proofOfIdentity',
@@ -774,6 +786,16 @@ export default function CorporateKycForm() {
                                 error={
                                   errors[`beneficialOwners[${index}].proofOfIdentity`] &&
                                   errors[`beneficialOwners[${index}].proofOfIdentity`]
+                                }
+                                handleDeleteClick={() =>
+                                  changeBeneficiar(
+                                    'proofOfIdentity',
+                                    null,
+                                    index,
+                                    values.beneficialOwners,
+                                    setFieldValue,
+                                    `beneficialOwners[${index}].proofOfIdentity`
+                                  )
                                 }
                               />
                             </FormGrid>
@@ -800,21 +822,23 @@ export default function CorporateKycForm() {
                         <Uploader
                           title="Corporate documents"
                           subtitle="Company Registry Profile, Certificate of Incorporation, Memorandum and article association, Corporate registry profile, Company Organization Chart, Register of shareholders and directors and Partnership Deed, Trust Deed."
-                          file={values.corporateDocuments}
+                          files={values.corporateDocuments}
                           onDrop={(file) => {
-                            handleDropImage(file, values.corporateDocuments, 'corporateDocuments', setFieldValue)
+                            handleDropImage(file, values, 'corporateDocuments', setFieldValue)
                           }}
                           error={errors.corporateDocuments && errors.corporateDocuments}
+                          handleDeleteClick={handleImageDelete(values, 'corporateDocuments', setFieldValue)}
                         />
 
                         <Uploader
                           title="Financial Documents"
                           subtitle="Please upload your balance sheet , P&L statement or Annual Returns"
-                          file={values.financialDocuments}
+                          files={values.financialDocuments}
                           onDrop={(file) => {
-                            handleDropImage(file, values.financialDocuments, 'financialDocuments', setFieldValue)
+                            handleDropImage(file, values, 'financialDocuments', setFieldValue)
                           }}
                           error={errors.financialDocuments && errors.financialDocuments}
+                          handleDeleteClick={handleImageDelete(values, 'financialDocuments', setFieldValue)}
                         />
 
                         <Uploader
@@ -834,17 +858,13 @@ export default function CorporateKycForm() {
                               </li>
                             </ul>
                           }
-                          file={values.evidenceOfAccreditation}
+                          files={values.evidenceOfAccreditation}
                           onDrop={(file) => {
-                            handleDropImage(
-                              file,
-                              values.evidenceOfAccreditation,
-                              'evidenceOfAccreditation',
-                              setFieldValue
-                            )
+                            handleDropImage(file, values, 'evidenceOfAccreditation', setFieldValue)
                           }}
                           optional={values.accredited !== 1}
                           error={errors.evidenceOfAccreditation && errors.evidenceOfAccreditation}
+                          handleDeleteClick={handleImageDelete(values, 'evidenceOfAccreditation', setFieldValue)}
                         />
                       </Column>
                     </FormCard>

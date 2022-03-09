@@ -15,9 +15,10 @@ interface Props {
   name?: string
   error?: any | ReactChildren
   maxHeight?: number
+  maxDate?: any
 }
 
-export const DateInput = ({ value, onChange, label, name, onBlur, error, ...props }: Props) => {
+export const DateInput = ({ value, onChange, label, name, onBlur, error, maxDate, ...props }: Props) => {
   return (
     <Container>
       <Label>{t`${label || 'Date of Birth'}`}</Label>
@@ -30,6 +31,7 @@ export const DateInput = ({ value, onChange, label, name, onBlur, error, ...prop
         views={['year', 'month', 'date']}
         format="DD/MM/YYYY"
         TextFieldComponent={(props: Record<string, any>) => <TextField {...props} />}
+        maxDate={maxDate}
         {...props}
       />
       {error && (
