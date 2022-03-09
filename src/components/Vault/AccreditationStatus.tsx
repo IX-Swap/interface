@@ -1,10 +1,12 @@
-import { t, Trans } from '@lingui/macro'
-import { ReactComponent as Clock } from 'assets/images/clock.svg'
-import { RowCenter } from 'components/Row'
-import { IconWrapper } from 'pages/SecTokenDetails/styleds'
 import React, { useMemo } from 'react'
 import { Box } from 'rebass'
+import { t, Trans } from '@lingui/macro'
+
+import { LoaderThin } from 'components/Loader/LoaderThin'
+import { RowCenter } from 'components/Row'
+import { IconWrapper } from 'pages/SecTokenDetails/styleds'
 import { TYPE } from 'theme'
+
 import { AccreditationStatusEnum } from './enum'
 import { StatusTitle } from './styleds'
 
@@ -41,7 +43,7 @@ const useAccreditationDetails = (status?: AccreditationStatusEnum): Details => {
           color: 'text1',
           text: t`Passing accreditation`,
           // eslint-disable-next-line react/display-name
-          icon: () => <Clock />,
+          icon: () => <LoaderThin size={20} />,
         }
     }
   }, [status])
@@ -51,7 +53,10 @@ const useAccreditationDetails = (status?: AccreditationStatusEnum): Details => {
 export const AccreditationStatus = ({ status }: Props) => {
   const info = useAccreditationDetails(status)
   return (
-    <RowCenter flexWrap="wrap" style={{ marginTop: '10px' }}>
+    <RowCenter
+      flexWrap="wrap"
+      style={{ marginTop: '28px', order: status === AccreditationStatusEnum.REJECTED ? 2 : 3 }}
+    >
       <StatusTitle>
         <Trans>Status:</Trans>
       </StatusTitle>

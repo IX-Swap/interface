@@ -64,19 +64,27 @@ export const Menu = ({ close }: Props) => {
             <Trans>Security tokens</Trans>
           </MenuListItem>
 
+          <ExternalListItem href={`https://ixswap.defiterm.io/`}>
+            <Trans>Staking - New</Trans>
+          </ExternalListItem>
+
           {chainId && TGE_CHAINS_WITH_STAKING.includes(chainId) && (
             <MenuListItem activeClassName="active-item" id={`stake-nav-link`} to={routes.staking} onClick={close}>
-              <Trans>Staking IXS</Trans>
+              <Trans>Staking - Old</Trans>
             </MenuListItem>
           )}
+
           <MenuListItem activeClassName="active-item" id={`vesting-nav-link`} to={routes.vesting} onClick={close}>
             <Trans>Vesting IXS</Trans>
           </MenuListItem>
-          <ExternalListItem href={`https://lm.ixswap.io/`}>
-            <Trans>Liquidity Mining - Uniswap</Trans>
-          </ExternalListItem>
+
           <ExternalListItem href={`https://ixswap.defiterm.io/`}>
-            <Trans>DeFi Terminal</Trans>
+            <Trans>Liquidity Mining - Polygon</Trans>
+          </ExternalListItem>
+          <ExternalListItem
+            href={`https://app.uniswap.org/#/add/v2/ETH/0x73d7c860998CA3c01Ce8c808F5577d94d545d1b4?chain=mainnet)`}
+          >
+            <Trans>Liquidity Mining - Ethereum</Trans>
           </ExternalListItem>
           {chainId && TGE_CHAINS_WITH_SWAP.includes(chainId) && (
             <MenuListItem
@@ -117,6 +125,11 @@ export const Menu = ({ close }: Props) => {
             <ExternalListItem href={`https://info.ixswap.io/home`}>
               <Trans>Charts</Trans>
             </ExternalListItem>
+          )}
+          {chainId && TGE_CHAINS_WITH_STAKING.includes(chainId) && (
+            <MenuListItem activeClassName="active-item" id={`kyc-nav-link`} to={'/kyc'} onClick={close}>
+              <Trans>KYC</Trans>
+            </MenuListItem>
           )}
         </MenuList>
       </Container>

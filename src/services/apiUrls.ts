@@ -3,12 +3,16 @@ import { ActionFilterTabs } from 'components/Vault/enum'
 export const admin = {
   login: 'auth/login',
   me: 'auth/me',
-  kycList: '/kyc/list',
   brokerDealerList: '/broker-dealer/list',
   getSwaps: 'broker-dealer/swaps/all',
-  kycReset: (accreditationId: number) => `/kyc/restart/${accreditationId}`,
-  approveKyc: (id: number) => `/kyc/approve/${id}`,
-  declineKyc: (id: number) => `/kyc/decline/${id}`,
+  accreditationList: '/kyc/list',
+  accreditationReset: (accreditationId: number) => `/kyc/restart/${accreditationId}`,
+  approveAccreditation: (id: number) => `/kyc/approve/${id}`,
+  declineAccreditation: (id: number) => `/kyc/decline/${id}`,
+  kycList: '/newkyc/list',
+  resetKyc: (kycId: number) => `/newkyc/change/${kycId}`,
+  approveKyc: (id: number) => `/newkyc/approve/${id}`,
+  rejectKyc: (id: number) => `/newkyc/reject/${id}`,
 }
 
 export const vesting = {
@@ -26,8 +30,11 @@ export const auth = {
 }
 
 export const kyc = {
-  getAccreditation: (tokenId: number) => `kyc/getAccreditation/${tokenId}`,
+  getAccreditation: (tokenId: number, isKyc: boolean) => `kyc/getAccreditation/${tokenId}?isKyc=${isKyc}`,
   restartAccreditation: (accreditationRequestId: number) => `kyc/my/restart/${accreditationRequestId}`,
+  createIndividual: `/newkyc/individual`,
+  createCorporate: `/newkyc/corporate`,
+  getMyKyc: `newkyc/me`,
 }
 
 export const broker = {
@@ -53,6 +60,19 @@ export const tokens = {
   swapConfirm: (brokerDealerId: number) => `/token/swap-confirm/${brokerDealerId}`,
   all: `/token/list/all`,
   accreditation: (tokenId: number) => `token/accreditation/${tokenId}`,
+}
+
+export const secCatalog = {
+  createIssuer: `/catalog/issuer`,
+  allIssuers: `/catalog/issuer/all`,
+  myTokens: `/catalog/token/list`,
+  allIssuerTokens: `/catalog/token/list/all`,
+  getAtlasAll: `/catalog/atlas/all`,
+  getAtlasInfo: (atlasOneId: string) => `/catalog/atlas/${atlasOneId}`,
+  issuer: (issuerId: number) => `/catalog/issuer/${issuerId}`,
+  createIssuerToken: (issuerId: number) => `/catalog/token/issuer/${issuerId}`,
+  issuerToken: (tokenId: number) => `/catalog/token/${tokenId}`,
+  checkWrappedAddress: (address: string) => `/token/address/${address}`,
 }
 export interface PaginateWithFilter {
   tokenId?: number | null

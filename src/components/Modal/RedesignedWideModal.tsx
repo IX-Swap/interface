@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled, { css } from 'styled-components'
 import { useTransition, useSpring } from 'react-spring'
 import { isMobile } from 'react-device-detect'
@@ -10,7 +10,7 @@ import { AnimatedDialogContent, StyledDialogOverlay } from './styleds'
 // destructure to not pass custom props to Dialog DOM element
 const StyledDialogContent = styled(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  ({ minHeight, maxHeight, mobile, isOpen, isright, mobileMaxHeight, scrollable, tip, ...rest }) => (
+  ({ minHeight, maxHeight, mobile, isOpen, isright, mobileMaxHeight, scrollable, tip, isLarge, ...rest }) => (
     <AnimatedDialogContent {...rest} />
   )
 ).attrs({
@@ -70,7 +70,7 @@ const StyledDialogContent = styled(
     background-color: ${({ theme }) => theme.bg0};
     box-shadow: 0 4px 8px 0 ${({ theme }) => transparentize(0.95, theme.shadow1)};
     padding: 0px;
-    width: 622px;
+    width: ${({ isLarge }) => (isLarge ? '100%' : '622px')};
     max-width: fit-content;
     overflow-y: ${({ mobile }) => (mobile ? 'auto' : 'hidden')};
     overflow-x: hidden;
@@ -133,7 +133,20 @@ export default function RedesignedWideModal({
   scrollable = false,
   tip,
   topContent,
+  isLarge,
 }: ModalProps) {
+  const handleLoad = () => {
+    const modal = document.getElementById('dialog-content')
+    if (modal) {
+      modal.scrollIntoView()
+    }
+  }
+  useEffect(() => {
+    if (isOpen && scrollable) {
+      setTimeout(() => handleLoad(), 100)
+    }
+  }, [isOpen])
+
   const fadeTransition = useTransition(isOpen, null, {
     config: { duration: 200 },
     from: { opacity: 0 },
@@ -185,6 +198,8 @@ export default function RedesignedWideModal({
                 mobileMaxHeight={mobileMaxHeight}
                 scrollable={scrollable}
                 tip={tip}
+                isLarge={isLarge}
+                id="dialog-content"
               >
                 {/* prevents the automatic focusing of inputs on mobile by the reach dialog */}
                 {!initialFocusRef && isMobile ? <div tabIndex={1} /> : null}

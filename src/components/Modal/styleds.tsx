@@ -11,7 +11,7 @@ export const StyledDialogOverlay = styled(AnimatedDialogOverlay)<{
   flexColumn?: boolean
 }>`
   &[data-reach-dialog-overlay] {
-    z-index: 2;
+    z-index: 12;
     background-color: transparent;
     overflow: hidden;
     overflow-y: hidden;

@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect, ReactNode } from 'react'
+import React, { ReactNode, useCallback, useState, useEffect } from 'react'
 import { useDropzone, FileWithPath } from 'react-dropzone'
 
 import { ImageContainer, PreviewParent, StyledClose, StyledLogo } from './styleds'

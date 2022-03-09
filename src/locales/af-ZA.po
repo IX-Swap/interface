@@ -1469,7 +1469,7 @@ msgstr ""
 msgid "Search for Wallet"
 msgstr ""
 
-#: src/pages/AdminKyc/Search.tsx
+#: src/components/AdminKycTable/Search.tsx
 msgid "Search for Wallet or Token"
 msgstr ""
 

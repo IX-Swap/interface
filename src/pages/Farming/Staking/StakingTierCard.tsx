@@ -34,7 +34,7 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
   const ixsCurrency = useIXSCurrency()
   const [leftToFill, setLeftToFill] = useState(0)
   const [isPoolLimitationLoading, setIsPoolLimitationLoading] = useState(false)
-  const [isLimitReached, setIsLimitReached] = useState(false)
+  const [isLimitReached, setIsLimitReached] = useState(true)
   const stringLimit = useMemo(
     () => POOL_SIZE_LIMITS[(chainId ?? 1) as SupportedChainId][tier?.period || PERIOD.ONE_WEEK],
     [chainId, tier?.period]
@@ -58,7 +58,7 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
   }, [poolSizeState, tier.period, chainId])
 
   useEffect(() => {
-    if (leftToFill <= 1) {
+    if (leftToFill <= 1 && !isPoolLimitationLoading) {
       setIsLimitReached(true)
     } else {
       setIsLimitReached(false)
@@ -88,6 +88,8 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
     if (isPaused) {
       return 'Paused'
     } else if (isLimitReached) {
+      return 'Limit reached'
+    } else if (isPoolLimitationLoading) {
       return 'Limit reached'
     } else {
       return 'Stake'
@@ -200,7 +202,7 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
           </MouseoverTooltip>
         </div>
       </RowWithMarginTopAndBottom>
-      <ButtonIXSWide onClick={selectPeriod} disabled={isPaused || isLimitReached}>
+      <ButtonIXSWide onClick={selectPeriod} disabled={isPaused || isLimitReached || isPoolLimitationLoading}>
         <Trans>{getStakeButtonText()}</Trans>
       </ButtonIXSWide>
       <DesktopAndTablet>{renderPoolSize()}</DesktopAndTablet>

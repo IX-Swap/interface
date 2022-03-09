@@ -50,6 +50,7 @@ export function colors(darkMode: boolean): Colors {
     text6: darkMode ? '#8275BC' : '#8275BC',
     text7: darkMode ? '#9184C4' : '#9184C4',
     text8: darkMode ? '#9184C3' : '#9184C3',
+    text9: darkMode ? '#EDCEFF80' : '#EDCEFF80',
     // backgrounds / greys
     bg0: darkMode ? '#0D0415' : '#FFF',
     bg1: darkMode ? '#1A123A' : '#F7F8FA',
@@ -69,6 +70,8 @@ export function colors(darkMode: boolean): Colors {
     bg15: darkMode ? '#2C254A' : '#2C254A',
     bg16: darkMode ? '#170626' : '#170626',
     bg17: darkMode ? '#1C112D' : '#1C112D',
+    bg18: darkMode ? '#27204666' : '#27204666',
+    bg19: darkMode ? '#271F4A66' : '#271F4A66',
     bgG1: darkMode
       ? 'radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.33) 0%, rgba(26, 18, 58, 0) 100%), #2C254A;'
       : 'radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.33) 0%, rgba(26, 18, 58, 0) 100%), #2C254A;',
@@ -117,10 +120,22 @@ export function colors(darkMode: boolean): Colors {
     bgG16: darkMode
       ? 'linear-gradient(0deg, rgba(13, 4, 21, 0.7), rgba(13, 4, 21, 0.7)), radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.099) 0%, rgba(26, 18, 58, 0) 100%), rgba(44, 37, 74, 0.2);'
       : 'linear-gradient(0deg, rgba(13, 4, 21, 0.7), rgba(13, 4, 21, 0.7)), radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.099) 0%, rgba(26, 18, 58, 0) 100%), rgba(44, 37, 74, 0.2);',
+    bgG17: darkMode
+      ? 'radial-gradient(53.24% 225.7% at 49.91% 82.11%, rgba(123, 66, 169, 0.028) 0%, rgba(237, 3, 118, 0.014) 100%), rgba(15, 5, 24, 0.7);'
+      : 'radial-gradient(53.24% 225.7% at 49.91% 82.11%, rgba(123, 66, 169, 0.028) 0%, rgba(237, 3, 118, 0.014) 100%), rgba(15, 5, 24, 0.7);',
+    bgG18: darkMode
+      ? 'radial-gradient(83.59% 55.66% at 2.38% 3.84%, rgba(123, 66, 169, 0.39) 0%, rgba(26, 18, 58, 0) 100%), radial-gradient(50.28% 108.33% at 73.7% 9%, rgba(102, 20, 206, 0.165) 1.94%, rgba(26, 18, 58, 0) 100%), radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.33) 0%, rgba(26, 18, 58, 0) 100%), rgba(44, 37, 74, 0.3);'
+      : 'radial-gradient(83.59% 55.66% at 2.38% 3.84%, rgba(123, 66, 169, 0.39) 0%, rgba(26, 18, 58, 0) 100%), radial-gradient(50.28% 108.33% at 73.7% 9%, rgba(102, 20, 206, 0.165) 1.94%, rgba(26, 18, 58, 0) 100%), radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.33) 0%, rgba(26, 18, 58, 0) 100%), rgba(44, 37, 74, 0.3);',
     //specialty colors
     borderG1: darkMode
       ? 'linear-gradient(116.36deg, #7b42a9 33.43%, #ed0376 95.41%);'
       : 'linear-gradient(116.36deg, #7b42a9 33.43%, #ed0376 95.41%);',
+    borderG2: darkMode
+      ? 'linear-gradient(116.36deg, rgb(123, 66, 169) 33.43%, rgb(237, 3, 118) 95.41%), rgb(12, 70, 156);'
+      : 'linear-gradient(116.36deg, rgb(123, 66, 169) 33.43%, rgb(237, 3, 118) 95.41%), rgb(12, 70, 156);',
+    borderG3: darkMode
+      ? 'linear-gradient(90deg, rgba(237, 206, 255, 0) 0%, #edceff 4.92%, #edceff 94.53%, rgba(237, 206, 255, 0) 98.88%);'
+      : 'linear-gradient(90deg, rgba(237, 206, 255, 0) 0%, #edceff 4.92%, #edceff 94.53%, rgba(237, 206, 255, 0) 98.88%);',
     modalBG: darkMode ? 'rgba(0,0,0,0.9)' : 'rgba(0,0,0,0.3)',
     advancedBG: darkMode ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.6)',
     divider: darkMode ? 'rgba(43, 43, 43, 0.435)' : 'rgba(43, 43, 43, 0.035)',
@@ -322,6 +337,9 @@ export const TYPE = {
   },
   small(props: TextProps) {
     return <TextWrapper fontWeight={500} fontSize={11} {...props} />
+  },
+  smallError(props: TextProps) {
+    return <TextWrapper fontWeight={600} fontSize={10} lineHeight={'15px'} color={'error'} {...props} />
   },
   blue(props: TextProps) {
     return <TextWrapper fontWeight={500} color={'blue1'} {...props} />
