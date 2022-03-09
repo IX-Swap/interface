@@ -1,7 +1,8 @@
-import React, { ComponentType, useMemo, useState } from 'react'
+import React, { ComponentType, useEffect, useMemo, useState } from 'react'
 import { Grid, Step, StepButton, StepLabel, Stepper } from '@mui/material'
 import { MutationResultPair } from 'react-query'
 import { FormStep } from 'app/components/FormStepper/FormStep'
+import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 
 export interface FormStepperStep {
   label: string
@@ -35,9 +36,7 @@ export const FormStepper = (props: FormStepperProps) => {
     nonLinear = false,
     skippable = false
   } = props
-  const [activeStep, setActiveStep] = useState<number>(
-    defaultActiveStep ?? data?.step ?? 0
-  )
+
   const stepsMemo = useMemo(() => steps, []) // eslint-disable-line
   const [completed, setCompleted] = React.useState<number[]>(
     Array.from(
@@ -48,6 +47,23 @@ export const FormStepper = (props: FormStepperProps) => {
       },
       (x, i) => i
     )
+  )
+
+  const { getFilterValue, updateFilter } = useQueryFilter()
+  const stepFilter = getFilterValue('step')
+
+  const getStepFilterValue = () => {
+    const stepByFilterIndex = steps.findIndex(
+      (step: FormStepperStep) => step.label === stepFilter
+    )
+
+    return stepByFilterIndex > -1 && completed.includes(stepByFilterIndex)
+      ? stepByFilterIndex
+      : undefined
+  }
+
+  const [activeStep, setActiveStep] = useState<number>(
+    getStepFilterValue() ?? defaultActiveStep ?? data?.step ?? 0
   )
 
   const handleStepButtonClick = (step: number) => () => {
@@ -61,6 +77,11 @@ export const FormStepper = (props: FormStepperProps) => {
       setCompleted([...completed, activeStep])
     }
   }
+
+  useEffect(() => {
+    updateFilter('step', steps[activeStep]?.label)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeStep])
 
   return (
     <Grid container direction='column' spacing={2}>
