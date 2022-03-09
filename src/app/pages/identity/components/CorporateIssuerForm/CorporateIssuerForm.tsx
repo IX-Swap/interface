@@ -32,7 +32,7 @@ export const CorporateIssuerForm = ({ data }: CorporateIssuerFormProps) => {
     }
   }, [data]) //eslint-disable-line
 
-  const isIssuer = corporateIdentities[0].type === 'issuer'
+  const isIssuer = corporateIdentities[0]?.type === 'issuer'
   const defaultActiveStep = getIdentityDefaultActiveStep({
     isSubmitted: data?.status === 'Submitted',
     lastStepIndex: corporateIssuerFormSteps.length - 1,
