@@ -16,6 +16,8 @@ import {
   setProperties,
   setSelectedContractAddress,
   setStats,
+  setCollectionLogo,
+  setCollectionDescription,
 } from './assetForm.actions'
 import { AssetForm, TraitType } from './types'
 
@@ -35,6 +37,8 @@ const initialState: AssetForm = {
   newCollectionName: '',
   selectedContractAddress: '',
   maxSupply: 1000,
+  collectionLogo: null,
+  collectionDescription: '',
 }
 
 export default createReducer<AssetForm>(initialState, (builder) =>
@@ -83,6 +87,12 @@ export default createReducer<AssetForm>(initialState, (builder) =>
     })
     .addCase(setMaxSupply, (state, { payload: { supply } }) => {
       state.maxSupply = supply
+    })
+    .addCase(setCollectionDescription, (state, { payload: { description } }) => {
+      state.collectionDescription = description
+    })
+    .addCase(setCollectionLogo, (state, { payload: { file } }) => {
+      state.collectionLogo = file
     })
     .addCase(setClearState, (state) => {
       state.file = null

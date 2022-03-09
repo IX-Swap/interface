@@ -8,6 +8,7 @@ import { Field } from '../../state/mint/actions'
 import { SemiTransparent, TYPE } from '../../theme'
 import { Trans } from '@lingui/macro'
 import { ModalHeaderWrapper } from './styleds'
+import { formatAmount } from 'utils/formatCurrencyAmount'
 
 interface Props {
   noLiquidity?: boolean
@@ -19,7 +20,7 @@ interface Props {
 export const ModalHeader = ({ noLiquidity, currencies, liquidityMinted, allowedSlippage }: Props) => {
   const text = noLiquidity
     ? currencies[Field.CURRENCY_A]?.symbol + '/' + currencies[Field.CURRENCY_B]?.symbol
-    : liquidityMinted?.toSignificant(10)
+    : formatAmount(+(liquidityMinted?.toSignificant(10) || 0))
   return (
     <ModalHeaderWrapper>
       <AutoColumn gap="12px">
@@ -43,8 +44,8 @@ export const ModalHeader = ({ noLiquidity, currencies, liquidityMinted, allowedS
             <SemiTransparent>
               <TYPE.italic fontSize={12} textAlign="left" fontWeight={300} lineHeight={'18px'}>
                 <Trans>
-                  Output is estimated. If the price changes by more than {allowedSlippage.toSignificant(4)}% your
-                  transaction will revert.
+                  Output is estimated. If the price changes by more than{' '}
+                  {formatAmount(+allowedSlippage.toSignificant(4))}% your transaction will revert.
                 </Trans>
               </TYPE.italic>
             </SemiTransparent>

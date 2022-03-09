@@ -3,9 +3,10 @@ import { FileTypes } from 'components/Upload/types'
 import { Dots } from 'pages/Pool/styleds'
 import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { TYPE } from 'theme'
+import { ellipsisText, gradientBorder, TYPE } from 'theme'
 import LogoWhite from '../../assets/svg/logo-white.svg'
 import { CollectionImage } from 'pages/NFTCollections/styleds'
+import { ImageLoader } from 'components/ImageLoader'
 
 interface NFTPreviewProps {
   uri: string
@@ -14,41 +15,47 @@ interface NFTPreviewProps {
 interface NFTPreviewData {
   file: string
   name: string
-
+  description?: string
   isNSFW: boolean
   type: string
 }
 
 const NFTPreviewContainer = styled.div`
+  height: 100%;
+  background: ${({ theme }) => theme.bgG1};
+  padding: 18px;
+  position: relative;
   display: flex;
-  flex-flow: column nowrap;
-
+  flex-direction: column;
   justify-content: space-between;
-  align-items: stretch;
-
-  border-radius: 1rem;
-
-  background-color: #1b1b1b;
-
-  min-width: 350px;
-  width: 350px;
-  height: 450px;
+  align-items: center;
+  border-radius: 18px;
+  :hover {
+    ${gradientBorder}
+    ::before {
+      border-radius: 18px;
+      z-index: 1;
+    }
+  }
 `
 
-const NFTPreviewImage = styled.img`
-  border-top-left-radius: 1rem;
-  border-top-right-radius: 1rem;
+const NFTPreviewImage = styled(ImageLoader)`
+  border-radius: 16px;
+  width: 100%;
+  height: auto;
+  min-height: 64px;
+  min-width: 64px;
 
-  min-width: 350px;
-  max-width: 350px;
-  max-height: 380px;
-
-  object-fit: cover;
+  img {
+    border-radius: 16px;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
 `
 
 const NFTPreviewAudio = styled.audio`
-  border-top-left-radius: 1rem;
-  border-top-right-radius: 1rem;
+  border-radius: 16px;
 
   min-width: 350px;
   max-width: 350px;
@@ -56,8 +63,7 @@ const NFTPreviewAudio = styled.audio`
 `
 
 const NFTPreviewVideo = styled.video`
-  border-top-left-radius: 1rem;
-  border-top-right-radius: 1rem;
+  border-radius: 16px;
 
   min-width: 350px;
   max-width: 350px;
@@ -66,15 +72,13 @@ const NFTPreviewVideo = styled.video`
 `
 
 const NFTPreviewNameContainer = styled.div`
+  width: 100%;
   display: flex;
-
-  flex-flow: row wrap;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-
-  gap: 1rem;
-
-  padding: 1rem;
+  margin-top: 12px;
+  row-gap: 8px;
+  text-align: center;
 `
 const NFTPreviewNSFWBadge = styled.div`
   padding: 0.25rem 1.25rem;
@@ -97,18 +101,33 @@ const LoaderWrapper = styled.div`
 
 const NFTPreviewWrapper = styled.div`
   display: flex;
-
+  width: 100%;
   flex-flow: column;
   align-items: stretch;
-
+  border-radius: 12px;
   flex-grow: 1;
 `
 
 const NFTPreviewWrapperCentered = styled(NFTPreviewWrapper)`
   display: flex;
-
   justify-content: center;
   align-items: center;
+`
+
+const Name = styled.div`
+  font-weight: 600;
+  font-size: 18px;
+`
+
+const Description = styled.div`
+  font-weight: 500;
+  font-size: 12px;
+  color: rgba(237, 206, 255, 0.5);
+  ${ellipsisText}
+`
+
+const CollectionName = styled.div`
+  ${ellipsisText}
 `
 
 const getFileType = (type: string) => {
@@ -175,6 +194,7 @@ const NFTPreview = (props: NFTPreviewProps) => {
       .then((res) => ({
         file: res.previewUrl ?? res.file,
         name: res.name,
+        description: res.description,
         isNSFW: res.isNSFW === 'true',
       }))
       .then(async (res) => {
@@ -191,7 +211,8 @@ const NFTPreview = (props: NFTPreviewProps) => {
         <>
           <NftFilePreview type={info.type} path={info.file ?? LogoWhite} />
           <NFTPreviewNameContainer>
-            <TYPE.title5>{info?.name}</TYPE.title5>
+            <Name>{info?.name}</Name>
+            {info.description && <Description>{info.description}</Description>}
             {info.isNSFW && (
               <NFTPreviewNSFWBadge>
                 <TYPE.small>NSFW</TYPE.small>

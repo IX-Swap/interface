@@ -77,3 +77,9 @@ body {
     display: none;
   }
 }
+
+.lazy-load-image-background {
+  background-size: 48px 48px !important;
+  background-position: center;
+  background-repeat: no-repeat;
+}

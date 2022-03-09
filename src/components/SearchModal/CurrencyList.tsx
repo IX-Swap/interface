@@ -31,13 +31,14 @@ import ImportRow from './ImportRow'
 import { isMobile } from 'react-device-detect'
 
 import { MenuItem, UnapprovedMenuItem, UnapprovedTokenWrapper } from './styleds'
+import { formatAmount } from 'utils/formatCurrencyAmount'
 function currencyKey(currency: Currency): string {
   return currency.isToken ? currency.address : 'ETHER'
 }
 const StyledBalanceText = styled(Text)`
   white-space: nowrap;
   overflow: hidden;
-  max-width: 5rem;
+  max-width: 100%;
   text-overflow: ellipsis;
 `
 
@@ -67,7 +68,7 @@ const UNAPPROVED_ROW = isMobile ? 78 : 76
 const NORMAL_ROW = isMobile ? 68 : 66
 const BREAK_HEIGHT = 36
 function Balance({ balance }: { balance: CurrencyAmount<Currency> }) {
-  return <StyledBalanceText title={balance.toExact()}>{balance.toSignificant(4)}</StyledBalanceText>
+  return <StyledBalanceText title={balance.toExact()}>{formatAmount(+balance.toSignificant(4))}</StyledBalanceText>
 }
 
 const TagContainer = styled.div`
@@ -191,7 +192,7 @@ function CurrencyRow({
           </TYPE.darkGray>
         </Column>
         <TokenTags currency={currency} />
-        <RowFixed style={{ justifySelf: 'flex-end' }}>
+        <RowFixed style={{ justifySelf: 'flex-end', width: '100%' }}>
           {balance ? <Balance balance={balance} /> : account ? <Loader /> : null}
         </RowFixed>
       </>

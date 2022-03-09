@@ -75,14 +75,14 @@ export function FullUnstake({ onDismiss, stake, onUnstake, onApprove }: Unstakin
         </RowBetween>
         <Row marginTop={20} marginBottom={10}>
           <IXSAmountToUnstake>
-            {stakeAmount} {IXSCurrency?.symbol}
+            {formatAmount(+stakeAmount)} {IXSCurrency?.symbol}
           </IXSAmountToUnstake>
         </Row>
         {IXSGovBalance && !isEnoughIXSGov() && (
           <TYPE.description2 color={'bg14'}>
             <Trans>
-              You don’t have enough IXSGov for unstake all available {IXSCurrency?.symbol} ({stakeAmount} is available)
-              1 {IXSCurrency?.symbol} = 1 IXGov
+              You don’t have enough IXSGov for unstake all available {IXSCurrency?.symbol} ({formatAmount(+stakeAmount)}{' '}
+              is available) 1 {IXSCurrency?.symbol} = 1 IXGov
             </Trans>
           </TYPE.description2>
         )}
@@ -94,19 +94,20 @@ export function FullUnstake({ onDismiss, stake, onUnstake, onApprove }: Unstakin
             textRight={
               <EllipsedText>
                 <div>
-                  {stakeAmount}&nbsp;IXSGov ({IXSGovBalance?.toSignificant(8)} <Trans>available</Trans>)
+                  {formatAmount(+stakeAmount)}&nbsp;IXSGov ({formatAmount(+(IXSGovBalance?.toSignificant(8) || 0))}{' '}
+                  <Trans>available</Trans>)
                 </div>
               </EllipsedText>
             }
           />
           <TextRow textLeft={t`APY`} textRight={`${stake.apy}%`} />
-          <TextRow textLeft={t`Total rewards `} textRight={`${stake.reward} ${IXSCurrency?.symbol}`} />
+          <TextRow textLeft={t`Total rewards `} textRight={`${formatAmount(+stake.reward)} ${IXSCurrency?.symbol}`} />
           <TextRow
             textLeft={t`Instant reward payout today`}
             textRight={
               <EllipsedText>
                 <div>
-                  {floorTo4Decimals(stake.reward * 0.1)}&nbsp; {IXSCurrency?.symbol}
+                  {formatAmount(+floorTo4Decimals(stake.reward * 0.1))}&nbsp; {IXSCurrency?.symbol}
                 </div>
               </EllipsedText>
             }
@@ -116,7 +117,7 @@ export function FullUnstake({ onDismiss, stake, onUnstake, onApprove }: Unstakin
             textRight={
               <EllipsedText>
                 <div>
-                  {floorTo4Decimals(stake.reward * 0.9)}&nbsp; {IXSCurrency?.symbol}
+                  {formatAmount(+floorTo4Decimals(stake.reward * 0.9))}&nbsp; {IXSCurrency?.symbol}
                 </div>
               </EllipsedText>
             }

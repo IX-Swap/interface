@@ -1,9 +1,10 @@
 import React, { ReactNode, useCallback, useState, useEffect } from 'react'
 import { useDropzone, FileWithPath } from 'react-dropzone'
+
 import { ImageContainer, PreviewParent, StyledClose, StyledLogo } from './styleds'
-import { SvgIconWrapper } from 'theme'
 import { getfileType } from './utils'
 import { AcceptFiles, FileTypes } from './types'
+import { ImageLoader } from '../ImageLoader'
 
 interface Props {
   onDrop: (file: any) => void
@@ -16,7 +17,7 @@ interface Props {
   height?: string
   children?: ReactNode
 }
-const Preview = ({
+export const Preview = ({
   file,
   filePath,
   onDelete,
