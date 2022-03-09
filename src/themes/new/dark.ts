@@ -37,7 +37,7 @@ export const darkTheme: DeprecatedThemeOptions = {
     },
     text: {
       primary: '#FFFFFF',
-      secondary: '#5F83BD'
+      secondary: '#496396'
     },
     success: {
       main: '#7DD320'
