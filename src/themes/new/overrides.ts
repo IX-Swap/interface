@@ -605,44 +605,23 @@ export const getThemeOverrides = (
           },
 
           '& .MuiSvgIcon-root': {
-            fill: '#FFFFFF',
-            background: '#FFFFFF',
+            fill: theme.palette.background.paper,
+            background: theme.palette.background.paper,
             border: '1px solid #78A5FF',
             boxSizing: 'border-box',
             boxShadow: '0px 4px 4px rgba(162, 172, 191, 0.08)',
-            borderRadius: '2px'
+            borderRadius: 2
           },
 
           '&.Mui-checked .MuiSvgIcon-root': {
-            fill: '#4C88FF',
-            background: '#4C88FF',
-            borderRadius: '2px',
-            border: 'none',
-            backgroundImage:
-              "url(\"data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath" +
-              " fill-rule='evenodd' clip-rule='evenodd' d='M12 5c-.28 0-.53.11-.71.29L7 9.59l-2.29-2.3a1.003 " +
-              "1.003 0 00-1.42 1.42l3 3c.18.18.43.29.71.29s.53-.11.71-.29l5-5A1.003 1.003 0 0012 5z' fill='%23fff'/%3E%3C/svg%3E\")",
-            content: '""'
+            border: 'none'
           },
           '&.Mui-disabled .MuiSvgIcon-root': {
-            border: '1px solid',
-            boxSizing: 'border-box',
-            borderRadius: '2px'
-          },
-          '&.Mui-checked': {
-            '& .MuiSvgIcon-root': {},
-            '&.Mui-disabled .MuiSvgIcon-root': {
-              background: '#EDF2FA',
-              fill: '#EDF2FA',
-              fillOpacity: 2,
-              border: '1px solid rgba(76, 136, 255, 0.3)',
-              boxSizing: 'border-box',
-              backgroundImage:
-                "url(\"data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath" +
-                " fill-rule='evenodd' clip-rule='evenodd' d='M12 5c-.28 0-.53.11-.71.29L7 9.59l-2.29-2.3a1.003 " +
-                "1.003 0 00-1.42 1.42l3 3c.18.18.43.29.71.29s.53-.11.71-.29l5-5A1.003 1.003 0 0012 5z' fill='%23778194'/%3E%3C/svg%3E\")",
-              content: '""'
-            }
+            border: `1px solid ${
+              theme.palette.mode === 'light' ? theme.palette.divider : '#89A1CE'
+            }`,
+            background: theme.palette.background.paper,
+            fill: theme.palette.background.paper
           }
         }
       }

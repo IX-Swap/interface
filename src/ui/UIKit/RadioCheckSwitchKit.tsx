@@ -1,10 +1,11 @@
-import { Grid, Radio, Switch, Checkbox, Typography } from '@mui/material'
+import { Grid, Radio, Switch, Typography } from '@mui/material'
 import React from 'react'
 import { getThemeOverrides } from 'themes/new/overrides'
 import { lightTheme } from 'themes/new/light'
 // import { darkTheme } from 'themes/new/dark'
 import { typography } from 'themes/new/typography'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { UICheckbox } from 'ui/UICheckbox/UICheckbox'
 
 const theme = createTheme({
   ...lightTheme,
@@ -42,16 +43,16 @@ export const RadioCheckSwitchKit = () => {
       </Grid>
       <Grid item container md={3} spacing={2}>
         <Grid item>
-          <Checkbox disabled />
+          <UICheckbox disabled />
         </Grid>
         <Grid item>
-          <Checkbox />
+          <UICheckbox />
         </Grid>
         <Grid item>
-          <Checkbox defaultChecked />
+          <UICheckbox defaultChecked />
         </Grid>
         <Grid item>
-          <Checkbox checked disabled />
+          <UICheckbox checked disabled />
         </Grid>
       </Grid>
 
