@@ -444,7 +444,6 @@ export const getThemeOverrides = (
   },
   MuiMenuItem: {
     styleOverrides: {
-      // TODO Needs to update after discussion with designer
       root: {
         '&.Mui-selected': {
           background: 'initial',
@@ -461,76 +460,60 @@ export const getThemeOverrides = (
   MuiSwitch: {
     styleOverrides: {
       root: {
+        width: 40,
+        height: 32,
+        padding: 0,
         '& .MuiSwitch-switchBase': {
           '&.MuiButtonBase-root': {
-            padding: 2,
-            width: '24px',
-            height: '16px',
+            width: 40,
+            height: 32,
             '&:hover': {
               backgroundColor: 'inherit',
               content: '""'
             },
 
             '& + .MuiSwitch-track': {
-              background: '#778194',
-              width: '24px',
-              height: '16px',
-              borderRadius: '100px',
+              background:
+                theme.palette.mode === 'light'
+                  ? theme.palette.text.secondary
+                  : '#89A1CE',
+              width: 24,
+              height: 16,
+              borderRadius: 100,
               opacity: 1,
               position: 'absolute',
-              top: 0,
-              left: 0
-            },
-            '& + .MuiTouchRipple-root': {
-              width: '24px',
-              height: '16px',
-              borderRadius: '100px',
-              opacity: 1,
-              position: 'absolute',
-              top: 0,
-              left: 0
+              top: 8,
+              left: 10
             },
 
             '&.Mui-checked': {
-              transform: 'translateX(16px)',
-              color: '#fff',
+              transform: 'translateX(8px)',
+              color:
+                theme.palette.mode === 'light'
+                  ? theme.palette.background.paper
+                  : theme.palette.background.default,
               '& + .MuiSwitch-track': {
-                backgroundColor: '#4C88FF',
+                backgroundColor: theme.palette.primary.main,
                 opacity: 1,
                 border: 0
               },
               '&.Mui-disabled + .MuiSwitch-track': {
-                opacity: 0.5,
-                backgroundColor: '#D3D9E5'
+                opacity: 1,
+                backgroundColor:
+                  theme.palette.mode === 'light' ? '#D3D9E5' : '#1D3667'
               }
             },
-
             '& .MuiSwitch-thumb': {
-              width: '12px',
-              height: '12px',
-              background: '#FFFFFF',
+              width: 12,
+              height: 12,
+              background: '#ffffff',
               position: 'absolute',
-              top: '12%',
-              left: '10%'
-            },
-            '&.Mui-focusVisible .MuiSwitch-thumb': {
-              color: '#33cf4d',
-              border: '6px solid #fff'
+              top: 10,
+              left: 12,
+              boxShadow: 'none'
             },
             '&.Mui-disabled .MuiSwitch-thumb': {
-              color:
-                theme.palette.mode === 'light'
-                  ? theme.palette.grey[100]
-                  : theme.palette.grey[600]
-            },
-            '&.Mui-checked .MuiSwitch-thumb': {
-              color: 'red',
-              position: 'absolute',
-              top: '12%',
-              left: '-30%'
-            },
-            '&.Mui-disabled + .MuiSwitch-track': {
-              opacity: theme.palette.mode === 'light' ? 0.7 : 0.3
+              background: theme.palette.background.default
             }
           }
         }
@@ -541,6 +524,7 @@ export const getThemeOverrides = (
     styleOverrides: {
       root: {
         '&.MuiButtonBase-root': {
+          height: 'auto',
           background: 'inherit',
           '&:hover': {
             backgroundColor: 'inherit'
@@ -559,12 +543,12 @@ export const getThemeOverrides = (
               theme.palette.mode === 'light'
                 ? '0px 4px 4px rgba(162, 172, 191, 0.08)'
                 : 'none',
-            borderRadius: '10px'
+            borderRadius: 10
           },
 
           '&.Mui-checked .MuiSvgIcon-root': {
             background: '#4C88FF',
-            borderRadius: '10px',
+            borderRadius: 10,
             border: 'none',
             fill: '#ffffff'
           },
@@ -575,12 +559,12 @@ export const getThemeOverrides = (
                 : '#89A1CE'
             }`,
             boxSizing: 'border-box',
-            borderRadius: '10px'
+            borderRadius: 10
           },
           '&.Mui-checked': {
             '& .MuiSvgIcon-root': {
               background: '#4C88FF',
-              borderRadius: '10px'
+              borderRadius: 10
             },
             '&.Mui-disabled .MuiSvgIcon-root': {
               background:
@@ -599,6 +583,7 @@ export const getThemeOverrides = (
     styleOverrides: {
       root: {
         '&.MuiButtonBase-root': {
+          height: 'auto',
           background: 'inherit',
           '&:hover': {
             backgroundColor: 'inherit'
