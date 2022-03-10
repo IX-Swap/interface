@@ -91,11 +91,7 @@ const Body = ({ openModal }: { openModal: (kyc: KycItem) => void }) => {
   )
 }
 
-interface AdminKycTableProps {
-  openKyc: number | undefined
-}
-
-export const AdminKycTable = (props: AdminKycTableProps) => {
+export const AdminKycTable = () => {
   const [kyc, handleKyc] = useState({} as KycItem)
   const {
     kycList: { totalPages, page, items },
@@ -109,16 +105,6 @@ export const AdminKycTable = (props: AdminKycTableProps) => {
 
   const closeModal = () => handleKyc({} as KycItem)
   const openModal = (kyc: KycItem) => handleKyc(kyc)
-
-  useEffect(() => {
-    if (props.openKyc && items.length > 0) {
-      const kyc = items.find((i) => i.userId === props.openKyc)
-
-      if (kyc) {
-        openModal(kyc)
-      }
-    }
-  }, [items, props.openKyc])
 
   useEffect(() => {
     getKycList({ page: 1, offset: 10 })

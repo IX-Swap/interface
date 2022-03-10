@@ -28,10 +28,10 @@ const tabs: Tab[] = [
   { label: 'Security catalog', value: 'security-catalog' },
 ]
 
-const renderTab = (selectedTab: AdminTab | string, openKyc?: number) => {
+const renderTab = (selectedTab: AdminTab | string) => {
   switch (selectedTab) {
     case 'kyc':
-      return <AdminKycTable openKyc={openKyc} />
+      return <AdminKycTable />
     case 'accreditation':
       return <AdminAccreditationTable />
     case 'transactions':
@@ -46,7 +46,6 @@ const renderTab = (selectedTab: AdminTab | string, openKyc?: number) => {
 
 const AdminKyc = () => {
   const [selectedTab, setSelectedTab] = useState<AdminTab>('kyc')
-  const [openKyc, setOpenKyc] = useState<number | undefined>(undefined)
 
   const history = useHistory()
   const location = useLocation()
@@ -80,13 +79,7 @@ const AdminKyc = () => {
     const params = new URLSearchParams(location.search.slice(1))
     const tab = (params.get('tab') ?? 'kyc') as AdminTab
 
-    const userId = params.get('kycUserId')
-
     setSelectedTab(tab)
-
-    if (tab === 'kyc' && userId) {
-      setOpenKyc(Number(userId))
-    }
   }, [location])
 
   useEffect(() => {
@@ -123,7 +116,7 @@ const AdminKyc = () => {
             </AutoColumn>
           </ColumnCenter>
 
-          {renderTab(selectedTab, openKyc)}
+          {renderTab(selectedTab)}
         </Body>
       )}
     </Container>

@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react'
+import React, { FC, useCallback, useState, useEffect } from 'react'
 import { t, Trans } from '@lingui/macro'
 import dayjs from 'dayjs'
 import styled from 'styled-components'
@@ -6,9 +6,9 @@ import styled from 'styled-components'
 import { StyledCopy } from 'components/AdminTransactionsTable'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import useCopyClipboard from 'hooks/useCopyClipboard'
-import { useAdminState, useGetAccreditationList } from 'state/admin/hooks'
+import { getKyc, useAdminState, useGetAccreditationList } from 'state/admin/hooks'
 import { shortenAddress } from 'utils'
-import { AccreditationItem } from 'state/admin/actions'
+import { AccreditationItem, KycItem } from 'state/admin/actions'
 
 import { SecondStepStatus } from './SecondStepStatus'
 import { BodyRow, HeaderRow, Table } from '../Table'
@@ -17,6 +17,7 @@ import { MoreActions } from './MoreActions'
 import { IconWrapper } from 'components/AccountDetails/styleds'
 import { Pagination } from './Pagination'
 import { Search } from './Search'
+import { KycReviewModal } from 'components/KycReviewModal'
 
 const headerCells = [
   t`Wallet address`,
@@ -29,6 +30,7 @@ const headerCells = [
 
 interface RowProps {
   item: AccreditationItem
+  onOpen: (userId: number) => void
 }
 
 const Header = () => {
@@ -41,7 +43,7 @@ const Header = () => {
   )
 }
 
-const Row: FC<RowProps> = ({ item }: RowProps) => {
+const Row: FC<RowProps> = ({ item, onOpen }: RowProps) => {
   const [copied, setCopied] = useCopyClipboard()
   const {
     id,
@@ -51,7 +53,6 @@ const Row: FC<RowProps> = ({ item }: RowProps) => {
     status,
     token,
     createdAt,
-    userId,
     kyc,
     userKyc,
   } = item
@@ -76,7 +77,7 @@ const Row: FC<RowProps> = ({ item }: RowProps) => {
         {broker} - {custodian}
       </div>
       <div>
-        <FirstStepStatus status={status} kyc={kyc} userKyc={userKyc} broker={broker} userId={userId} />
+        <FirstStepStatus status={status} kyc={kyc} userKyc={userKyc} broker={broker} onOpen={onOpen} />
       </div>
       <div>
         <SecondStepStatus status={status} id={id} />
@@ -89,13 +90,47 @@ const Row: FC<RowProps> = ({ item }: RowProps) => {
 }
 
 const Body = () => {
+  const [kyc, setKyc] = useState<KycItem | undefined>()
+  const [loading, setLoading] = useState(false)
   const {
     accreditationList: { items },
+    kycList: { totalPages },
   } = useAdminState()
+
+  const onOpen = useCallback(
+    async (userId: number) => {
+      let item
+
+      setLoading(true)
+
+      for (let page = 0; page < totalPages; page++) {
+        const list = await getKyc({ page, offset: 10 })
+
+        item = list.items.find((i: any) => i.userId === userId)
+
+        if (item) {
+          break
+        }
+      }
+
+      setKyc(item)
+      setLoading(false)
+    },
+    [totalPages]
+  )
+
+  const closeModal = () => setKyc(undefined)
+
   return (
     <>
+      {kyc && <KycReviewModal isOpen onClose={closeModal} data={kyc} />}
+      {loading && (
+        <Loader>
+          <LoaderThin size={96} />
+        </Loader>
+      )}
       {items?.map((item) => {
-        return <Row key={`kyc-table-${item.id}`} item={item} />
+        return <Row key={`kyc-table-${item.id}`} item={item} onOpen={onOpen} />
       })}
     </>
   )
