@@ -51,7 +51,9 @@ const Row: FC<RowProps> = ({ item }: RowProps) => {
     status,
     token,
     createdAt,
+    userId,
     kyc,
+    userKyc,
   } = item
 
   return (
@@ -74,7 +76,7 @@ const Row: FC<RowProps> = ({ item }: RowProps) => {
         {broker} - {custodian}
       </div>
       <div>
-        <FirstStepStatus status={status} kyc={kyc} broker={broker} />
+        <FirstStepStatus status={status} kyc={kyc} userKyc={userKyc} broker={broker} userId={userId} />
       </div>
       <div>
         <SecondStepStatus status={status} id={id} />
@@ -135,6 +137,8 @@ export const AdminAccreditationTable = () => {
     </>
   )
 }
+
+export default AdminAccreditationTable
 
 const Loader = styled.div`
   position: fixed;

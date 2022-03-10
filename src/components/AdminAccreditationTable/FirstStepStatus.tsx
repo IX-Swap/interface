@@ -3,6 +3,7 @@ import { Document, Page, StyleSheet, Text, usePDF, View } from '@react-pdf/rende
 import { ButtonGradient } from 'components/Button'
 import { AccreditationStatusEnum } from 'components/Vault/enum'
 import React, { useContext, useMemo } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import styled, { ThemeContext } from 'styled-components'
 import rejectedIcon from '../../assets/images/attention.svg'
 import approvedIcon from '../../assets/images/check-success.svg'
@@ -13,6 +14,11 @@ interface Props {
   status: string
   kyc?: any
   broker?: string
+  userId?: number
+  userKyc?: {
+    id: number
+    userId: number
+  }
 }
 const styles = StyleSheet.create({
   section: { textAlign: 'left', margin: 30 },
@@ -32,7 +38,8 @@ const usePdfDoc = ({ kyc, broker }: { kyc: any; broker: string }) => {
     )
   }, [kyc, broker])
 }
-export const FirstStepStatus = ({ status, kyc = {}, broker = '' }: Props) => {
+export const FirstStepStatus = ({ status, kyc = {}, broker = '', userId, userKyc }: Props) => {
+  const location = useLocation()
   const theme = useContext(ThemeContext)
   const pdfDoc = usePdfDoc({ kyc, broker })
   const [instance] = usePDF({ document: pdfDoc })
@@ -89,6 +96,14 @@ export const FirstStepStatus = ({ status, kyc = {}, broker = '' }: Props) => {
             </ButtonGradient>
           </a>
         </ButtonContainer>
+      )}
+
+      {userKyc && (
+        <Link to={`${location.pathname}?tab=kyc&kycUserId=${userKyc.userId}`}>
+          <ButtonGradient>
+            <Trans>Open</Trans>
+          </ButtonGradient>
+        </Link>
       )}
     </Container>
   )

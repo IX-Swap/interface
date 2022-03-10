@@ -82,6 +82,10 @@ export interface AccreditationItem {
   kyc: {
     url: string
   }
+  userKyc?: {
+    id: number
+    userId: number
+  }
   message?: string
   status: string
   custodian: {

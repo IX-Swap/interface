@@ -90,7 +90,11 @@ const Body = ({ openModal }: { openModal: (kyc: KycItem) => void }) => {
   )
 }
 
-export const AdminKycTable = () => {
+interface AdminKycTableProps {
+  openKyc: number | undefined
+}
+
+export const AdminKycTable = (props: AdminKycTableProps) => {
   const [kyc, handleKyc] = useState({} as KycItem)
   const {
     kycList: { totalPages, page, items },
@@ -102,12 +106,22 @@ export const AdminKycTable = () => {
     getKycList({ page, offset: 10 })
   }
 
+  const closeModal = () => handleKyc({} as KycItem)
+  const openModal = (kyc: KycItem) => handleKyc(kyc)
+
+  useEffect(() => {
+    if (props.openKyc && items.length > 0) {
+      const kyc = items.find((i) => i.userId === props.openKyc)
+
+      if (kyc) {
+        openModal(kyc)
+      }
+    }
+  }, [items, props.openKyc])
+
   useEffect(() => {
     getKycList({ page: 1, offset: 10 })
   }, [getKycList])
-
-  const closeModal = () => handleKyc({} as KycItem)
-  const openModal = (kyc: KycItem) => handleKyc(kyc)
 
   return (
     <>
@@ -131,6 +145,8 @@ export const AdminKycTable = () => {
     </>
   )
 }
+
+export default AdminKycTable
 
 const Loader = styled.div`
   position: fixed;
