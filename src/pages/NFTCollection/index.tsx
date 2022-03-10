@@ -37,7 +37,6 @@ const NFTCollection = () => {
   const [isLoading, handleIsLoading] = useState(false)
   const [fetchedInitial, setFetchedInitial] = useState(false)
   const [tokens, setTokens] = useState<string[]>([])
-
   useEffect(() => {
     if (!fetchedInitial) {
       handleIsLoading(true)

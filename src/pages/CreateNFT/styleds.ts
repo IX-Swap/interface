@@ -311,12 +311,17 @@ export const StyledToggle = styled.div`
   }
 `
 
-export const UploaderCard = styled.div<{ isLogo?: boolean }>`
+export const UploaderCard = styled.div<{ isLogo?: boolean; isAudio?: boolean }>`
   margin-top: 8px;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 192px;
+  height: ${({ isAudio }) => (isAudio ? '125px' : '192px')};
+  ${({ isAudio }) =>
+    isAudio &&
+    css`
+      padding: 0 16px 16px;
+    `};
   width: 100%;
   background: rgba(15, 5, 24, 0.7);
   border: 1px dashed rgba(237, 206, 255, 0.5);

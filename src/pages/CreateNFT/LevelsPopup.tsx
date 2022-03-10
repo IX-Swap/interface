@@ -44,7 +44,7 @@ export const LevelsPopup = ({
 
   useEffect(() => {
     if (isOpen) {
-      setLocalLevels([...levels, { trait_type: '', value: 3, max_value: 5 }])
+      setLocalLevels(levels)
     }
   }, [isOpen, levels])
 
@@ -157,93 +157,6 @@ export const LevelsPopup = ({
                       />
                     </div>
                   </LevelInputsContainer>
-
-                  // <Flex
-                  //   flexDirection="column"
-                  //   key={index}
-                  //   my={2}
-                  //   style={{ backgroundColor: theme.bg1, padding: '10px', borderRadius: '20px' }}
-                  // >
-                  //   <CloseIcon
-                  //     data-testid={`delete-${index}`}
-                  //     style={{ alignSelf: 'flex-end' }}
-                  //     onClick={() => deleteLevel({ index })}
-                  //   />
-                  //   <Flex mx={-2} mb={4} px={2} flexDirection="column" style={{ gap: '10px' }}>
-                  //     <Box width={1}>
-                  //       <Label htmlFor={`name-${index}`} flexDirection="column" mb={3}>
-                  //         <Box mb={1}>
-                  //           <Box display="flex">
-                  //             <TYPE.body fontWeight={600}>
-                  //               <Trans>Name</Trans>
-                  //             </TYPE.body>
-                  //           </Box>
-                  //         </Box>
-                  //       </Label>
-                  //       <InputPanel id={`name-${index}`}>
-                  //         <ContainerRow>
-                  //           <InputContainer>
-                  //             <Input
-                  //               onChange={(e) => updateLocalLevels({ index, trait_type: e?.target?.value })}
-                  //               placeholder={t`Speed`}
-                  //               className={`name-input`}
-                  //               type="text"
-                  //               autoComplete="off"
-                  //               autoCorrect="off"
-                  //               autoCapitalize="off"
-                  //               spellCheck="false"
-                  //               error={false}
-                  //               pattern=".*$"
-                  //               value={level.trait_type}
-                  //               disabled={false}
-                  //             />
-                  //           </InputContainer>
-                  //         </ContainerRow>
-                  //       </InputPanel>
-                  //     </Box>
-                  //     <Box width={1}>
-                  //       <Label htmlFor={`value-${index}`} flexDirection="column" mb={3}>
-                  //         <Box mb={1}>
-                  //           <Box display="flex">
-                  //             <TYPE.body fontWeight={600}>
-                  //               <Trans>Value</Trans>
-                  //             </TYPE.body>
-                  //           </Box>
-                  //         </Box>
-                  //       </Label>
-                  //       <Row>
-                  //         <InputPanel id={`value-${index}`} style={{ width: '48%' }}>
-                  //           <ContainerRow>
-                  //             <InputContainer>
-                  //               <NumericalInput
-                  //                 className="value-input"
-                  //                 value={level.value}
-                  //                 maxLength={6}
-                  //                 onUserInput={(e) => updateLocalLevels({ index, value: Number(e) })}
-                  //               />
-                  //             </InputContainer>
-                  //           </ContainerRow>
-                  //         </InputPanel>
-                  //         <Box mx={1}>
-                  //           <Trans>of</Trans>
-                  //         </Box>
-                  //         <InputPanel id={`max-${index}`} style={{ width: '48%' }}>
-                  //           <ContainerRow>
-                  //             <InputContainer>
-                  //               <NumericalInput
-                  //                 className="max-input"
-                  //                 maxLength={6}
-                  //                 value={level.max_value}
-                  //                 placeholder={'5'}
-                  //                 onUserInput={(e) => updateLocalLevels({ index, max_value: Number(e) })}
-                  //               />
-                  //             </InputContainer>
-                  //           </ContainerRow>
-                  //         </InputPanel>
-                  //       </Row>
-                  //     </Box>
-                  //   </Flex>
-                  // </Flex>
                 )
               })}
               <AddNewItemButton onClick={() => addLevel()}>Add more</AddNewItemButton>
