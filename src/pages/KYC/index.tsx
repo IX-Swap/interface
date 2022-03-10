@@ -138,7 +138,10 @@ export default function KYC() {
           <>
             <Description description={description} />
             <DateInfo submittedDate="yes" rejectedDate="yes" />
-            <Link style={{ textDecoration: 'none ' }} to="/kyc/individual">
+            <Link
+              style={{ textDecoration: 'none ' }}
+              to={`/kyc/${kyc?.data.corporateKycId ? 'corporate' : 'individual'}`}
+            >
               <ButtonIXSGradient style={{ padding: '16px 24px' }} marginTop="32px">
                 <Trans>Make changes and resend KYC</Trans>
               </ButtonIXSGradient>

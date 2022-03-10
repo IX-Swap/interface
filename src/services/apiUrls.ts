@@ -35,6 +35,8 @@ export const kyc = {
   createIndividual: `/newkyc/individual`,
   createCorporate: `/newkyc/corporate`,
   getMyKyc: `newkyc/me`,
+  individualProgress: `newkyc/individual/progress`,
+  corporateProgress: `newkyc/corporate/progress`,
 }
 
 export const broker = {

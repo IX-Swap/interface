@@ -149,10 +149,10 @@ export const Uploader: FC<UploaderProps> = ({
       <StyledDescription marginBottom="10px">{subtitle}</StyledDescription>
       {files.length > 0 && (
         <Flex flexWrap="wrap">
-          {files.map((file, index) => (
+          {files.map((file: any, index) => (
             <FilePreview
               key={`file-${index}-${file.name}`}
-              file={file}
+              file={file?.asset ? file.asset : file}
               index={1}
               handleDeleteClick={() => {
                 handleDeleteClick(index)

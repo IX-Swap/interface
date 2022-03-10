@@ -17,7 +17,7 @@ interface Props {
   handleSubmit?: (e: any) => void
 }
 
-export const KYCProgressBar: FC<Props> = ({ reasons, description, topics, disabled, handleSubmit }: Props) => {
+export const KYCProgressBar: FC<Props> = ({ description, topics, disabled, handleSubmit }: Props) => {
   const [activeTopic, setActiveTopic] = useState<number>(0)
 
   const handleScrollToDiv = useCallback(
@@ -31,23 +31,25 @@ export const KYCProgressBar: FC<Props> = ({ reasons, description, topics, disabl
 
   return (
     <div style={{ width: 296, maxWidth: 296 }}>
-      {/* <FormCard style={{ padding: 24, marginBottom: 24 }}>
-        <TYPE.title6 marginBottom="16px" style={{ textTransform: 'uppercase' }} color={'bg14'}>
-          <Trans>Reason of reject</Trans>
-        </TYPE.title6>
+      {description && (
+        <FormCard style={{ padding: 24, marginBottom: 24 }}>
+          <TYPE.title6 marginBottom="16px" style={{ textTransform: 'uppercase' }} color={'bg14'}>
+            <Trans>Reason of reject</Trans>
+          </TYPE.title6>
 
-        <TYPE.body3 marginBottom="16px" opacity="0.5">
-          {description}
-        </TYPE.body3>
+          <TYPE.body3 marginBottom="16px" opacity="0.5">
+            {description}
+          </TYPE.body3>
 
-        <Ul style={{ paddingLeft: 32 }}>
+          {/* <Ul style={{ paddingLeft: 32 }}>
           {reasons.map((reason) => (
             <Li key={`reason-${reason}`}>
               <TYPE.body1 lineHeight="16px">{reason}</TYPE.body1>
             </Li>
           ))}
-        </Ul>
-      </FormCard> */}
+        </Ul> */}
+        </FormCard>
+      )}
 
       <FormCard style={{ padding: '24px 0px' }}>
         <TYPE.title6 marginBottom="16px" paddingX="24px" style={{ textTransform: 'uppercase' }}>

@@ -31,6 +31,15 @@ export const getMyKyc = async () => {
   }
 }
 
+export const getCorporateProgress = async () => {
+  try {
+    const result = await apiService.get(kyc.corporateProgress)
+    return result.data
+  } catch (e) {
+    console.log(e)
+  }
+}
+
 export const createIndividualKYC = async (newKYC: any) => {
   const formData = new FormData()
 
