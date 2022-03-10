@@ -85,5 +85,8 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env': JSON.stringify(process.env)
     })
-  ]
+  ],
+  watchOptions: {
+    ignored: path.resolve('./src/assets/icons/sprite')
+  }
 }
