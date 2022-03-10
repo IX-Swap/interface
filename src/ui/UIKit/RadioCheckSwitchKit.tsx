@@ -1,4 +1,12 @@
-import { Box, Button, Grid, Radio, Switch, Typography } from '@mui/material'
+import {
+  Box,
+  Button,
+  Grid,
+  Radio,
+  RadioGroup,
+  Switch,
+  Typography
+} from '@mui/material'
 import React, { useState } from 'react'
 import { getThemeOverrides } from 'themes/new/overrides'
 import { lightTheme } from 'themes/new/light'
@@ -25,6 +33,18 @@ export const RadioCheckSwitchKit = () => {
       defaultProps: {
         disableTouchRipple: true
       }
+    },
+    MuiRadio: {
+      ...getThemeOverrides(theme)?.MuiRadio,
+      defaultProps: {
+        disableTouchRipple: true
+      }
+    },
+    MuiCheckbox: {
+      ...getThemeOverrides(theme)?.MuiCheckbox,
+      defaultProps: {
+        disableTouchRipple: true
+      }
     }
   }
 
@@ -41,20 +61,22 @@ export const RadioCheckSwitchKit = () => {
             <Typography color='text.primary'>Radio:</Typography>
           </Grid>
         </Grid>
-        <Grid item container md={6} spacing={6}>
-          <Grid item>
-            <Radio disabled />
+        <RadioGroup defaultValue={3}>
+          <Grid item container md={6} spacing={6}>
+            <Grid item>
+              <Radio disabled value={1} />
+            </Grid>
+            <Grid item>
+              <Radio value={2} />
+            </Grid>
+            <Grid item>
+              <Radio value={3} />
+            </Grid>
+            <Grid item>
+              <Radio checked disabled value={4} />
+            </Grid>
           </Grid>
-          <Grid item>
-            <Radio />
-          </Grid>
-          <Grid item>
-            <Radio defaultChecked />
-          </Grid>
-          <Grid item>
-            <Radio checked disabled />
-          </Grid>
-        </Grid>
+        </RadioGroup>
 
         <VSpacer size={'small'} />
 
@@ -71,7 +93,7 @@ export const RadioCheckSwitchKit = () => {
             <UICheckbox />
           </Grid>
           <Grid item>
-            <UICheckbox defaultChecked />
+            <UICheckbox checked />
           </Grid>
           <Grid item>
             <UICheckbox checked disabled />
@@ -88,10 +110,13 @@ export const RadioCheckSwitchKit = () => {
         <VSpacer size={'extraSmall'} />
         <Grid item container md={6} spacing={6}>
           <Grid item>
-            <Switch defaultChecked />
+            <Switch disabled />
           </Grid>
           <Grid item>
             <Switch />
+          </Grid>
+          <Grid item>
+            <Switch checked />
           </Grid>
           <Grid item>
             <Switch checked disabled />

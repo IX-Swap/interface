@@ -1,6 +1,9 @@
 import { Theme } from '@mui/material'
 import { ThemeOptions } from '@mui/material/styles'
 import { rte } from 'themes/new/rte'
+import { checkbox } from 'themes/new/overrides/checkbox'
+import { radio } from 'themes/new/overrides/radio'
+import { switcher } from 'themes/new/overrides/switcher'
 
 declare module '@mui/material/Button' {
   interface ButtonPropsVariantOverrides {
@@ -289,10 +292,10 @@ export const getThemeOverrides = (
   MuiSvgIcon: {
     styleOverrides: {
       root: {
-        width: 20,
-        height: 20,
-        fill: '#102756',
-        borderRadius: 4,
+        // width: 20,
+        // height: 20,
+        // fill: '#102756',
+        // borderRadius: 4,
         backgroundColor: 'transparent',
         '.Mui-checked &': {
           fill: '#0055FF'
@@ -457,159 +460,7 @@ export const getThemeOverrides = (
       }
     }
   },
-  MuiSwitch: {
-    styleOverrides: {
-      root: {
-        width: 40,
-        height: 32,
-        padding: 0,
-        '& .MuiSwitch-switchBase': {
-          '&.MuiButtonBase-root': {
-            width: 40,
-            height: 32,
-            '&:hover': {
-              backgroundColor: 'inherit',
-              content: '""'
-            },
-
-            '& + .MuiSwitch-track': {
-              background:
-                theme.palette.mode === 'light'
-                  ? theme.palette.text.secondary
-                  : '#89A1CE',
-              width: 24,
-              height: 16,
-              borderRadius: 100,
-              opacity: 1,
-              position: 'absolute',
-              top: 8,
-              left: 10
-            },
-
-            '&.Mui-checked': {
-              transform: 'translateX(8px)',
-              color:
-                theme.palette.mode === 'light'
-                  ? theme.palette.background.paper
-                  : theme.palette.background.default,
-              '& + .MuiSwitch-track': {
-                backgroundColor: theme.palette.primary.main,
-                opacity: 1,
-                border: 0
-              },
-              '&.Mui-disabled + .MuiSwitch-track': {
-                opacity: 1,
-                backgroundColor:
-                  theme.palette.mode === 'light' ? '#D3D9E5' : '#1D3667'
-              }
-            },
-            '& .MuiSwitch-thumb': {
-              width: 12,
-              height: 12,
-              background: '#ffffff',
-              position: 'absolute',
-              top: 10,
-              left: 12,
-              boxShadow: 'none'
-            },
-            '&.Mui-disabled .MuiSwitch-thumb': {
-              background: theme.palette.background.default
-            }
-          }
-        }
-      }
-    }
-  },
-  MuiRadio: {
-    styleOverrides: {
-      root: {
-        '&.MuiButtonBase-root': {
-          height: 'auto',
-          background: 'inherit',
-          '&:hover': {
-            backgroundColor: 'inherit'
-          },
-
-          '& .MuiSvgIcon-root': {
-            background: theme.palette.background.paper,
-            fill: theme.palette.background.paper,
-            border: `1px solid ${
-              theme.palette.mode === 'light'
-                ? theme.palette.secondary.main
-                : theme.palette.primary.main
-            }`,
-            boxSizing: 'border-box',
-            boxShadow:
-              theme.palette.mode === 'light'
-                ? '0px 4px 4px rgba(162, 172, 191, 0.08)'
-                : 'none',
-            borderRadius: 10
-          },
-
-          '&.Mui-checked .MuiSvgIcon-root': {
-            background: '#4C88FF',
-            borderRadius: 10,
-            border: 'none',
-            fill: '#ffffff'
-          },
-          '&.Mui-disabled .MuiSvgIcon-root': {
-            border: `1px solid ${
-              theme.palette.mode === 'light'
-                ? theme.palette.secondary.main
-                : '#89A1CE'
-            }`,
-            boxSizing: 'border-box',
-            borderRadius: 10
-          },
-          '&.Mui-checked': {
-            '& .MuiSvgIcon-root': {
-              background: '#4C88FF',
-              borderRadius: 10
-            },
-            '&.Mui-disabled .MuiSvgIcon-root': {
-              background:
-                theme.palette.mode === 'light'
-                  ? theme.palette.divider
-                  : '#1D3667',
-              fill: theme.palette.background.default,
-              border: 'none'
-            }
-          }
-        }
-      }
-    }
-  },
-  MuiCheckbox: {
-    styleOverrides: {
-      root: {
-        '&.MuiButtonBase-root': {
-          height: 'auto',
-          background: 'inherit',
-          '&:hover': {
-            backgroundColor: 'inherit'
-          },
-
-          '& .MuiSvgIcon-root': {
-            fill: theme.palette.background.paper,
-            background: theme.palette.background.paper,
-            border: '1px solid #78A5FF',
-            boxSizing: 'border-box',
-            boxShadow: '0px 4px 4px rgba(162, 172, 191, 0.08)',
-            borderRadius: 2
-          },
-
-          '&.Mui-checked .MuiSvgIcon-root': {
-            border: 'none'
-          },
-          '&.Mui-disabled .MuiSvgIcon-root': {
-            border: `1px solid ${
-              theme.palette.mode === 'light' ? theme.palette.divider : '#89A1CE'
-            }`,
-            background: theme.palette.background.paper,
-            fill: theme.palette.background.paper
-          }
-        }
-      }
-    }
-  }
+  MuiSwitch: switcher(theme),
+  MuiRadio: radio(theme),
+  MuiCheckbox: checkbox(theme)
 })

@@ -9,6 +9,22 @@ export interface AppBackgrounds {
   alternativeLight: string
   alternative: string
 }
+
+export interface InputColorOptions {
+  fill?: string
+  fillChecked?: string
+  fillDisabled?: string
+  fillCheckedDisabled?: string
+  bg?: string
+  bgChecked?: string
+  bgDisabled?: string
+  bgCheckedDisabled?: string
+  border?: string
+  borderChecked?: string
+  borderDisabled?: string
+  borderCheckedDisabled?: string
+  boxShadow?: string
+}
 // it could be your App.tsx file or theme file that is included in your tsconfig.json
 
 declare module '@mui/styles/defaultTheme' {
@@ -18,6 +34,8 @@ declare module '@mui/styles/defaultTheme' {
 declare module '@mui/material/styles' {
   export interface PaletteOptions {
     backgrounds: AppBackgrounds
+    checkbox: InputColorOptions
+    radio: InputColorOptions
     slider: {
       activeColor: CSSProperties['color']
       background: CSSProperties['color']
@@ -31,6 +49,8 @@ declare module '@mui/material/styles' {
 
   export interface Palette {
     backgrounds: AppBackgrounds
+    checkbox: InputColorOptions
+    radio: InputColorOptions
     sidebar: {
       activeColor: CSSProperties['color']
       activeBackground: CSSProperties['color']

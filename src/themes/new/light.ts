@@ -16,6 +16,27 @@ export const lightTheme: DeprecatedThemeOptions = {
       dark: '#F0F2F7',
       light: '#EDF2FA'
     },
+    checkbox: {
+      fill: '#FFFFFF',
+      bg: '#FFFFFF',
+      border: '1px solid #78A5FF',
+      borderDisabled: '1px solid #DBE2EC',
+      borderChecked: '1px solid transparent',
+      boxShadow: '0px 4px 4px rgba(162, 172, 191, 0.08)'
+    },
+    radio: {
+      fill: '#FFFFFF',
+      fillCheckedDisabled: '#F7F9FA',
+      bg: '#FFFFFF',
+      bgChecked: '#4C88FF',
+      bgDisabled: '#DBE2EC',
+      bgCheckedDisabled: '#DBE2EC',
+      border: '1px solid #78A5FF',
+      borderChecked: '1px solid transparent',
+      borderDisabled: '1px solid #DBE2EC',
+      borderCheckedDisabled: '1px solid transparent',
+      boxShadow: '0px 4px 4px rgba(162, 172, 191, 0.08)'
+    },
     action: {
       selected: tinycolor(themeColors.primary).lighten(64).toHexString()
     },

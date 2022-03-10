@@ -6,12 +6,20 @@ import { ReactComponent as DisabledLightSuccessIcon } from 'assets/icons/checkbo
 import { ReactComponent as DisabledDarkSuccessIcon } from 'assets/icons/checkbox/dark_disabled_success_icon.svg'
 import { useTheme } from '@mui/material/styles'
 
-export const UICheckbox = (props: CheckboxProps) => {
+export interface UICheckboxProps extends CheckboxProps {
+  width?: number
+  height?: number
+}
+
+export const UICheckbox = ({
+  width = 18,
+  height = 18,
+  ...props
+}: UICheckboxProps) => {
   const theme = useTheme()
+  const styles = { width, height }
 
   const getCheckedIcon = () => {
-    const styles = { width: 20, height: 20 }
-
     if (
       theme.palette.mode === 'light' &&
       props.disabled !== undefined &&
@@ -27,7 +35,5 @@ export const UICheckbox = (props: CheckboxProps) => {
     return <EnabledSuccessIcon style={styles} />
   }
 
-  return (
-    <Checkbox {...props} disableTouchRipple checkedIcon={getCheckedIcon()} />
-  )
+  return <Checkbox {...props} checkedIcon={getCheckedIcon()} />
 }

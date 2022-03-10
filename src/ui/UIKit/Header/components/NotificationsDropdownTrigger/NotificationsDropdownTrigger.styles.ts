@@ -7,9 +7,14 @@ export const useStyles = makeStyles(theme => ({
     borderTop: '1px solid transparent',
     borderRadius: '0!important',
     borderBottom: `1px solid transparent`,
+    '& svg': {
+      width: '24px',
+      height: '24px'
+    },
 
     '&:hover': {
       backgroundColor: 'initial!important',
+
       '& svg': {
         '& path': {
           fill:

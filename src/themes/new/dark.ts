@@ -15,6 +15,28 @@ export const darkTheme: DeprecatedThemeOptions = {
       dark: '#F0F2F7',
       light: '#EDF2FA'
     },
+    checkbox: {
+      fill: '#132A57',
+      bg: '#132A57',
+      border: '1px solid #78A5FF',
+      borderChecked: '1px solid transparent',
+      borderDisabled: '1px solid #89A1CE',
+      boxShadow: 'none'
+    },
+
+    radio: {
+      fill: '#132A57',
+      fillCheckedDisabled: '#11254C',
+      bg: '#132A57',
+      bgChecked: '#4C88FF',
+      bgDisabled: '#132A57',
+      bgCheckedDisabled: '#3D5689',
+      border: '1px solid #4C88FF',
+      borderChecked: '1px solid transparent',
+      borderDisabled: '1px solid #89A1CE',
+      borderCheckedDisabled: '1px solid transparent',
+      boxShadow: '0px 4px 4px transparent'
+    },
     background: {
       default: '#11254C',
       paper: '#132A57'
