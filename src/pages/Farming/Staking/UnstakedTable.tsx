@@ -9,7 +9,7 @@ import JSBI from 'jsbi'
 import React, { useCallback } from 'react'
 import { Box } from 'rebass'
 import { useClaimRewards, useStakingState } from 'state/stake/hooks'
-import { formatAmount, formatCurrencyAmount } from 'utils/formatCurrencyAmount'
+import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { getNextPayoutTime, unixTimeToFormat } from 'utils/time'
 import { ClaimButton, Container, NoData, RewardsBodyRow, RewardsHeaderRow } from './style'
 
@@ -83,16 +83,16 @@ const Body = () => {
             </div>
             <div>{nextPayoutTime ? unixTimeToFormat({ time: nextPayoutTime[0], format: longDate }) : '-'}</div>
             <div>
-              {formatAmount(+amount)}&nbsp;{currency?.symbol}
+              {formatCurrency(amount, 5)}&nbsp;{currency?.symbol}
             </div>
             <div>
-              {formatAmount(+vestingSum)}&nbsp;{currency?.symbol}
+              {formatCurrency(vestingSum, 5)}&nbsp;{currency?.symbol}
             </div>
             <div>
-              {formatAmount(+claimed)}&nbsp;{currency?.symbol}
+              {formatCurrency(claimed)}&nbsp;{currency?.symbol}
             </div>
             <div className={claimPositive ? 'rewards' : ''}>
-              {formatAmount(+claims[index])}&nbsp;{currency?.symbol}
+              {formatCurrency(claims[index])}&nbsp;{currency?.symbol}
             </div>
             <div>
               {claimPositive && (
