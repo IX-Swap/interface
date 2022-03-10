@@ -44,7 +44,6 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
 
   const onReasonAction = (reason?: string) => {
     if (openReasonModal === 'reject') {
-      console.log('log => reject')
       rejectKyc({ id: data.id, message: reason })
     } else {
       resetKyc({ id: data.id, message: reason })

@@ -21,13 +21,13 @@ export const corporateInfoKeys = [
     key: 'typeOfLegalEntity',
     label: 'Type Of Legal Entity',
     width: { xs: 12, sm: 6 },
-    format: (key: string) => legalEntityTypes[+key].name,
+    format: (key: string) => legalEntityTypes[+key - 1].name,
   },
   { key: 'countryOfIncorporation', label: 'Country of Incorporation', width: { xs: 12, sm: 6 } },
   { key: 'otherEntity', label: 'Other Entity' },
   { key: 'sourceOfFunds', label: 'Source of Funds' },
   { key: 'businessActivity', label: 'Business Activity' },
-  { key: 'entityType', label: 'Entity Type', format: (key: string) => entityTypes[+key].name },
+  { key: 'entityType', label: 'Entity Type', format: (key: string) => entityTypes[+key - 1].name },
 ] as Array<{ key: string; label: string; width?: Record<string, number>; format?: (values: string) => string }>
 
 export const personalInfoKeys = [

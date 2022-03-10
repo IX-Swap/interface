@@ -5,6 +5,7 @@ import { Trans, t } from '@lingui/macro'
 import { getNames } from 'country-list'
 import { Formik } from 'formik'
 import { useHistory } from 'react-router-dom'
+import moment from 'moment'
 
 import Column from 'components/Column'
 import { KYCProgressBar } from './KYCProgressBar'
@@ -145,13 +146,20 @@ export default function IndividualKycForm() {
     }
   }
 
-  const handleDropImage = (acceptedFile: any, lastValue: any, key: string, setFieldValue: any) => {
+  const handleDropImage = (acceptedFile: any, values: any, key: string, setFieldValue: any) => {
     const file = acceptedFile
-    if (lastValue?.filePath) {
-      URL.revokeObjectURL(lastValue.filePath)
-    }
-    // const preview = URL.createObjectURL(file)
-    setFieldValue(key, file, false)
+    const arrayOfFiles = [...values[key]]
+    arrayOfFiles.push(file)
+
+    setFieldValue(key, arrayOfFiles, false)
+    validationSeen(key)
+  }
+
+  const handleImageDelete = (values: any, key: string, setFieldValue: any) => (index: number) => {
+    const arrayOfFiles = [...values[key]]
+    arrayOfFiles.splice(index, 1)
+
+    setFieldValue(key, arrayOfFiles, false)
     validationSeen(key)
   }
 
@@ -305,6 +313,7 @@ export default function IndividualKycForm() {
                               setFieldValue('dateOfBirth', value, false)
                               validationSeen('dateOfBirth')
                             }}
+                            maxDate={moment().subtract(18, 'years')}
                           />
                           <Select
                             error={errors.gender && errors.gender}
@@ -379,7 +388,7 @@ export default function IndividualKycForm() {
                             withScroll
                             label="Country"
                             selectedItem={values.country}
-                            items={countries}
+                            items={countries.filter(({ name }) => name !== 'United States of America')}
                             onSelect={(country) => onSelectChange('country', country, setFieldValue)}
                             error={errors.country && errors.country}
                           />
@@ -543,36 +552,34 @@ export default function IndividualKycForm() {
                           error={errors.proofOfIdentity && errors.proofOfIdentity}
                           title="Proof of Identity"
                           subtitle="Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Proin eget tortor risus."
-                          file={values.proofOfIdentity}
+                          files={values.proofOfIdentity}
                           onDrop={(file) => {
-                            handleDropImage(file, values.proofOfIdentity, 'proofOfIdentity', setFieldValue)
+                            handleDropImage(file, values, 'proofOfIdentity', setFieldValue)
                           }}
+                          handleDeleteClick={handleImageDelete(values, 'proofOfIdentity', setFieldValue)}
                         />
 
                         <Uploader
                           error={errors.proofOfAddress && errors.proofOfAddress}
                           title="Proof of Address"
                           subtitle="Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Proin eget tortor risus."
-                          file={values.proofOfAddress}
+                          files={values.proofOfAddress}
                           onDrop={(file) => {
-                            handleDropImage(file, values.proofOfAddress, 'proofOfAddress', setFieldValue)
+                            handleDropImage(file, values, 'proofOfAddress', setFieldValue)
                           }}
+                          handleDeleteClick={handleImageDelete(values, 'proofOfAddress', setFieldValue)}
                         />
 
                         <Uploader
                           error={errors.evidenceOfAccreditation && errors.evidenceOfAccreditation}
                           title="Evidence of accreditation"
                           subtitle="Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Proin eget tortor risus."
-                          file={values.evidenceOfAccreditation}
+                          files={values.evidenceOfAccreditation}
                           onDrop={(file) => {
-                            handleDropImage(
-                              file,
-                              values.evidenceOfAccreditation,
-                              'evidenceOfAccreditation',
-                              setFieldValue
-                            )
+                            handleDropImage(file, values, 'evidenceOfAccreditation', setFieldValue)
                           }}
                           optional={values.accredited !== 1}
+                          handleDeleteClick={handleImageDelete(values, 'evidenceOfAccreditation', setFieldValue)}
                         />
                       </Column>
                     </FormCard>

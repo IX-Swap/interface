@@ -173,6 +173,7 @@
     "async-wait-until": "^2.0.7",
     "concurrently": "^6.2.0",
     "eth-provider": "^0.7.0",
+    "moment": "^2.29.1",
     "playwright": "^1.13.0",
     "react-lazy-load-image-component": "^1.5.1",
     "react-phone-input-2": "^2.15.0",

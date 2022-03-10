@@ -7,6 +7,17 @@ import { AppDispatch, AppState } from 'state'
 import { BROKER_DEALERS_STATUS } from 'state/brokerDealer/hooks'
 import { fetchCreateIndividualKYC, fetchGetMyKyc } from './actions'
 
+const individualKYCFiles = ['proofOfAddress', 'proofOfIdentity', 'evidenceOfAccreditation']
+const corporateKYCFiles = [
+  'beneficialOwnersAddress',
+  'beneficialOwnersIdentity',
+  'authorizationDocuments',
+  'evidenceOfAccreditation',
+  'corporateDocuments',
+  'financialDocuments',
+  'authorizationDocuments',
+]
+
 export function useKYCState() {
   return useSelector<AppState, AppState['kyc']>((state) => state.kyc)
 }
@@ -20,11 +31,26 @@ export const getMyKyc = async () => {
   }
 }
 
+export const getCorporateProgress = async () => {
+  try {
+    const result = await apiService.get(kyc.corporateProgress)
+    return result.data
+  } catch (e) {
+    console.log(e)
+  }
+}
+
 export const createIndividualKYC = async (newKYC: any) => {
   const formData = new FormData()
 
   for (const key in newKYC) {
-    formData.append(key, newKYC[key])
+    if (individualKYCFiles.includes(key)) {
+      newKYC[key].forEach((item: any) => {
+        formData.append(`${key}`, item)
+      })
+    } else {
+      formData.append(key, newKYC[key])
+    }
   }
 
   try {
@@ -37,10 +63,9 @@ export const createIndividualKYC = async (newKYC: any) => {
 
 export const createCorporateKYC = async (newKYC: any) => {
   const formData = new FormData()
-  console.log(newKYC)
 
   for (const key in newKYC) {
-    if (key === 'beneficialOwnersAddress' || key === 'beneficialOwnersIdentity' || key === 'authorizationDocuments') {
+    if (corporateKYCFiles.includes(key)) {
       newKYC[key].forEach((item: any) => {
         formData.append(`${key}`, item)
       })
