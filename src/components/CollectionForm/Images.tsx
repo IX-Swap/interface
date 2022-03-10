@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Trans } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import { FileWithPath } from 'react-dropzone'
 
 import { useCollectionFormState, useCollectionActionHandlers } from 'state/nft/hooks'
@@ -8,6 +8,8 @@ import deleteImg from 'assets/images/delete-basket.svg'
 import Upload from 'components/Upload'
 import { AcceptFiles } from 'components/Upload/types'
 import Column from 'components/Column'
+import { TYPE } from 'theme'
+import { FileSizeLimit } from 'constants/misc'
 
 import { ImagesContainer, LogoUploader, CoverUploader, UploadText, DeleteImage, ImageTitle } from './styled'
 
@@ -19,6 +21,7 @@ interface Props {
 export const Images = ({ collection, setPending }: Props) => {
   const [newLogo, setNewLogo] = useState('')
   const [newCover, setNewCover] = useState('')
+  const [errors, handleErros] = useState({ logo: '', cover: '' })
 
   const { onSelectLogo: setLogo, onSelectCover: setCover } = useCollectionActionHandlers()
   const { cover, logo } = useCollectionFormState()
@@ -56,11 +59,21 @@ export const Images = ({ collection, setPending }: Props) => {
   }
 
   const onLogoDrop = (newLogo: any) => {
-    setLogo(newLogo)
+    if (newLogo.size > FileSizeLimit) {
+      handleErros((state) => ({ ...state, logo: 'Max size is 10MB' }))
+    } else {
+      handleErros((state) => ({ ...state, logo: '' }))
+      setLogo(newLogo)
+    }
   }
 
   const onCoverDrop = (newCover: any) => {
-    setCover(newCover)
+    if (newCover.size > FileSizeLimit) {
+      handleErros((state) => ({ ...state, cover: 'Max size is 10MB' }))
+    } else {
+      handleErros((state) => ({ ...state, cover: '' }))
+      setCover(newCover)
+    }
   }
 
   const clearLogo = () => {
@@ -86,6 +99,7 @@ export const Images = ({ collection, setPending }: Props) => {
               Drag and Drop
               <br /> or <span>Upload</span>
             </Trans>
+            {errors.cover && <TYPE.error error>{t`${errors.cover}`}</TYPE.error>}
           </UploadText>
           {cover && (
             <DeleteImage onClick={clearCover}>
@@ -107,6 +121,7 @@ export const Images = ({ collection, setPending }: Props) => {
               Drag and Drop
               <br /> or <span>Upload</span>
             </Trans>
+            {errors.logo && <TYPE.error error>{t`${errors.logo}`}</TYPE.error>}
           </UploadText>
           {logo && (
             <DeleteImage isLogo onClick={clearLogo}>

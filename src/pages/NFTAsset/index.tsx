@@ -18,6 +18,8 @@ import AppBody from 'pages/AppBody'
 import { TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
 import { Info } from './Info'
 import { Details } from './Details'
+import { ButtonGradientBorder } from 'components/Button'
+import { Box } from 'rebass'
 
 interface NftLevel {
   display_type: 'level'
@@ -47,8 +49,6 @@ const ImageContainer = styled.div`
   width: 100%;
   height: auto;
   border-radius: 12px;
-  max-width: 600px;
-  margin-left: auto;
   @media (max-width: ${MEDIA_WIDTHS.upToMedium}px) {
     margin: 0 auto;
   }
@@ -58,6 +58,7 @@ const ImageContainer = styled.div`
     min-width: 100%;
     max-width: 100%;
     max-height: 100%;
+    min-height: 50px;
   }
 `
 
@@ -76,6 +77,23 @@ const NftAssetPageWrapper = styled.div`
   gap: 39px;
   @media (max-width: ${MEDIA_WIDTHS.upToMedium}px) {
     grid-template-columns: 1fr;
+  }
+`
+
+const ImageWitButton = styled.div`
+  display: grid;
+  grid-template-columns: 90px 1fr;
+  gap: 24px;
+  max-width: 600px;
+  margin-left: auto;
+  width: 100%;
+  @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
+    grid-template-columns: 1fr;
+  }
+
+  > button {
+    height: 32px;
+    font-size: 16px;
   }
 `
 
@@ -141,11 +159,12 @@ const NftAssetPage = ({
   return (
     <AppBody blurred={!chainId || !TGE_CHAINS_WITH_SWAP.includes(chainId)} maxWidth="100%" transparent>
       <NftAssetPageWrapper>
-        {item && (
+        <ImageWitButton>
+          <ButtonGradientBorder onClick={goToCollection}>Back</ButtonGradientBorder>
           <ImageContainer>
-            <NftFilePreview type={type} path={item.file ?? LogoWhite} />
+            <NftFilePreview type={type} path={item?.file ?? LogoWhite} />
           </ImageContainer>
-        )}
+        </ImageWitButton>
 
         <NftInfoContainer>
           <Info

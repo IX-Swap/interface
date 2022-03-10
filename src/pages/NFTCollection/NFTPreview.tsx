@@ -42,12 +42,12 @@ const NFTPreviewContainer = styled.div`
 const NFTPreviewImage = styled(ImageLoader)`
   border-radius: 16px;
   width: 100%;
-  height: auto;
-
+  height: 100%;
+  max-height: 232px;
   img {
     border-radius: 16px;
     width: 100%;
-    height: auto;
+    height: 100%;
     object-fit: cover;
   }
 `
