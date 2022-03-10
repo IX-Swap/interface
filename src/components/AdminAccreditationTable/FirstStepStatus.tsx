@@ -14,12 +14,14 @@ interface Props {
   status: string
   kyc?: any
   broker?: string
-  userId?: number
   userKyc?: {
     id: number
     userId: number
   }
+
+  onOpen: (userId: number) => void
 }
+
 const styles = StyleSheet.create({
   section: { textAlign: 'left', margin: 30 },
 })
@@ -38,7 +40,7 @@ const usePdfDoc = ({ kyc, broker }: { kyc: any; broker: string }) => {
     )
   }, [kyc, broker])
 }
-export const FirstStepStatus = ({ status, kyc = {}, broker = '', userId, userKyc }: Props) => {
+export const FirstStepStatus = ({ status, kyc = {}, broker = '', userKyc, onOpen }: Props) => {
   const location = useLocation()
   const theme = useContext(ThemeContext)
   const pdfDoc = usePdfDoc({ kyc, broker })
@@ -99,11 +101,9 @@ export const FirstStepStatus = ({ status, kyc = {}, broker = '', userId, userKyc
       )}
 
       {userKyc && (
-        <Link to={`${location.pathname}?tab=kyc&kycUserId=${userKyc.userId}`}>
-          <ButtonGradient>
-            <Trans>Open</Trans>
-          </ButtonGradient>
-        </Link>
+        <ButtonGradient onClick={() => onOpen(userKyc.userId)}>
+          <Trans>Open</Trans>
+        </ButtonGradient>
       )}
     </Container>
   )
