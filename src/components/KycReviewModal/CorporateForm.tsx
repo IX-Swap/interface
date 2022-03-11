@@ -26,7 +26,7 @@ export const CorporateForm = ({ data }: Props) => {
       <Information data={data} kycKey="corporate" />
       <CompanyAuthorizedPersonnel data={data} />
       <Address data={data} />
-      <ResidentialAddress />
+      <ResidentialAddress data={data.residentialAddress} />
       <SourceOfFunds data={data} kycKey="corporate" />
       <InvestorStatusDeclaration data={data} kycKey="corporate" />
       <Fatca data={data} />

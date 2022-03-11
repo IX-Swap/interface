@@ -12,7 +12,7 @@ import { Wrapper } from './styleds'
 interface Props {
   index: number
   file: FileWithPath
-  handleDeleteClick: (index?: number) => void
+  handleDeleteClick: ((index?: number) => void) | null
   style?: CSSProperties
   withBackground?: boolean
 }
@@ -31,7 +31,11 @@ export const FilePreview: FC<Props> = ({ file, index, style, handleDeleteClick, 
       >
         {file.name}
       </TYPE.subHeader>
-      <ButtonText style={{ minWidth: 24, minHeight: 24 }} onClick={() => handleDeleteClick(index)} type="button">
+      <ButtonText
+        style={{ minWidth: 24, minHeight: 24 }}
+        onClick={() => handleDeleteClick && handleDeleteClick(index)}
+        type="button"
+      >
         {deleteIcon()}
       </ButtonText>
     </Wrapper>
