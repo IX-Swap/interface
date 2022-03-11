@@ -15,18 +15,17 @@ export const cynopsisKeys = [
 ]
 
 export const corporateInfoKeys = [
-  { key: 'corporateName', label: 'Corporate Name', width: { xs: 12, sm: 6 } },
-  { key: 'registrationNumber', label: 'Registration Number', width: { xs: 12, sm: 6 } },
+  { key: 'corporateName', label: 'Corporate Name', width: { xs: 12, sm: 6, md: 4 } },
+  { key: 'registrationNumber', label: 'Registration Number', width: { xs: 12, sm: 6, md: 4 } },
+  { key: 'countryOfIncorporation', label: 'Country of Incorporation', width: { xs: 12, sm: 6, md: 4 } },
   {
     key: 'typeOfLegalEntity',
     label: 'Type Of Legal Entity',
     width: { xs: 12, sm: 6 },
     format: (key: string) => legalEntityTypes[+key - 1].name,
   },
-  { key: 'countryOfIncorporation', label: 'Country of Incorporation', width: { xs: 12, sm: 6 } },
-  { key: 'otherEntity', label: 'Other Entity' },
-  { key: 'sourceOfFunds', label: 'Source of Funds' },
-  { key: 'businessActivity', label: 'Business Activity' },
+  { key: 'businessActivity', label: 'Business Activity', width: { xs: 12, sm: 6 } },
+  { key: 'otherEntity', label: 'Other Entity', width: { xs: 12, sm: 6 } },
 ] as Array<{ key: string; label: string; width?: Record<string, number>; format?: (values: string) => string }>
 
 export const personalInfoKeys = [
@@ -42,7 +41,12 @@ export const personalInfoKeys = [
   },
   { key: 'nationality', label: 'Nationality', width: { xs: 12, sm: 6 } },
   { key: 'citizenship', label: 'Citizenship', width: { xs: 12, sm: 6 } },
-  { key: 'phoneNumber', label: 'Phone Number', width: { xs: 12, sm: 6 } },
+  {
+    key: 'phoneNumber',
+    label: 'Phone Number',
+    format: (value: string): string => `+${value}`,
+    width: { xs: 12, sm: 6 },
+  },
   { key: 'email', label: 'Email address: ', width: { xs: 12, sm: 6 } },
 ] as Array<{ key: string; label: string; width?: Record<string, number>; format?: (values: string) => string }>
 
@@ -50,7 +54,7 @@ export const companyAuthorizedPersonnelKeys = [
   { key: 'personnelName', label: 'Full Name', width: { xs: 12, sm: 6 } },
   { key: 'designation', label: 'Designation', width: { xs: 12, sm: 6 } },
   { key: 'email', label: 'Email address' },
-  { key: 'phoneNumber', label: 'Phone Number' },
+  { key: 'phoneNumber', label: 'Phone Number', format: (value: string): string => `+${value}` },
 ]
 
 export const addressKeys = [

@@ -10,9 +10,9 @@ interface Props {
   data: Array<Document>
 }
 
-export const UploadDocuments = ({ data }: Props) => {
+export const UploadedDocuments = ({ data }: Props) => {
   return (
-    <Block title="Upload Documents">
+    <Block title="Uploaded documents">
       <Content>
         <Documents documents={data} />
       </Content>

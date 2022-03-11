@@ -23,7 +23,7 @@ export const BeneficialOwners: FC<Props> = ({ owners }: Props) => {
               <Field label="Shareholding" value={shareholding} />
             </GridItem>
 
-            <GridItem style={{ marginBottom: index !== owners.length - 1 ? 32 : 0 }}>
+            <GridItem style={{ marginBottom: index !== owners.length - 1 ? 32 : 0, display: 'flex' }}>
               <Documents
                 documents={[
                   { id: 0, type: 'Proof of Identity', asset: proofOfIdentity } as any,

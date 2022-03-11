@@ -19,11 +19,14 @@ export const Information = ({ data, kycKey }: Props) => {
   return (
     <Block title={`${kycKey === 'individual' ? 'Personal' : 'Corporate'} Information`}>
       <GridContainer spacing={30}>
-        {keys.map(({ key, label, width = {}, format }) => (
-          <GridItem key={key} {...width}>
-            <Field label={label} value={format ? format(data?.[key]) : data?.[key]} />
-          </GridItem>
-        ))}
+        {keys.map(
+          ({ key, label, width = {}, format }) =>
+            (key === 'otherEntity' ? Boolean(data?.[key]) : true) && (
+              <GridItem key={key} {...width}>
+                <Field label={label} value={format ? format(data?.[key]) : data?.[key]} />
+              </GridItem>
+            )
+        )}
         {kycKey === 'corporate' && (
           <GridItem xs={12}>
             <RowWithCheck text="Is Incorporated" isDone={data?.corporate?.isIncorporated} />
