@@ -1,7 +1,5 @@
 import React, { FC } from 'react'
 
-import { kycData } from '../utils/kyc-data'
-
 import { Block } from '../molecules/Block'
 import { GridContainer, GridItem } from 'components/Grid'
 import { addressKeys } from '../utils/constants'
@@ -17,7 +15,7 @@ export const ResidentialAddress: FC<Props> = ({ data }: Props) => {
       <GridContainer spacing={30}>
         {addressKeys.map(({ key, label, width = {} }) => (
           <GridItem key={key} {...width}>
-            <Field label={label} value={(data && data[key]) || 'Lorem Ipsum'} />
+            <Field label={label} value={(data && data[key]) || '-'} />
           </GridItem>
         ))}
       </GridContainer>

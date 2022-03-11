@@ -9,6 +9,15 @@ import { Document } from 'state/admin/actions'
 
 const headerCells = [t`File`, t`Type`, t`Uploaded At`]
 
+const formattedTypes = {
+  identity: t`Proof of Identity`,
+  address: t`Proof of Address`,
+  accreditation: t`Evidence of accreditation`,
+  financial: t`Financial Documents`,
+  authorization: t`Evidence of Accreditation`,
+  corporate: t`Corporate documents`,
+} as Record<string, string>
+
 interface Props {
   documents: Array<Document>
   title?: string
@@ -60,7 +69,7 @@ const Row = ({
       <div>
         {isFirstRow && <ColumnHeader>{headerCells[1]}</ColumnHeader>}
 
-        {type}
+        {formattedTypes[type] || type}
       </div>
       <div>
         {isFirstRow && <ColumnHeader>{headerCells[2]}</ColumnHeader>}
