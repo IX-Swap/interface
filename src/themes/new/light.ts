@@ -41,6 +41,12 @@ export const lightTheme: DeprecatedThemeOptions = {
         .toHexString(),
       activeColor: themeColors.primary
     },
+    tab: {
+      contained: {
+        border: '#EDF2FA',
+        color: '#A2ACBF'
+      }
+    },
     divider: '#DBE2EC',
     text: {
       primary: '#3B4251',

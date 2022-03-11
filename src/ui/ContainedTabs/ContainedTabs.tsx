@@ -6,14 +6,8 @@ import Tab from '@mui/material/Tab'
 
 const CTab = styled(Tab)`
   margin-left: -1px;
-  border: 1px solid
-    ${(props: any) => {
-      return props.theme.palette.mode === 'light'
-        ? props.theme.palette.secondary.light
-        : 'rgba(76, 136, 255, 0.3)'
-    }};
-  color: ${(props: any) =>
-    props.theme.palette.mode === 'light' ? '#A2ACBF' : undefined};
+  border: 1px solid ${(props: any) => props.theme.palette?.tab.contained.border};
+  color: ${(props: any) => props.theme.palette?.tab.contained.color};
   :first-child {
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
