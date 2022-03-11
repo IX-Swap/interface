@@ -2,7 +2,6 @@ import {
   FormControl,
   FormControlLabel,
   Grid,
-  InputLabel,
   Radio,
   RadioGroup,
   Typography
@@ -44,9 +43,10 @@ export const ListingRadioButtons = ({
           />
         </Grid>
         <Grid item>
-          <FormControl variant='outlined' style={{ width: 294 }}>
-            <InputLabel htmlFor='my-dso'>My DSO</InputLabel>
+          <FormControl fullWidth variant='outlined' style={{ width: 294 }}>
             <DSOSelect
+              label='My DSO'
+              value={selectedDSOValue}
               disabled={isLoading || isNewListing}
               options={data.list}
               onChange={value =>
