@@ -15,9 +15,9 @@ export const CompanyAuthorizedPersonnel: FC<Props> = ({ data }: Props) => {
   return (
     <Block title="Company Authorized Personnel">
       <GridContainer spacing={30}>
-        {companyAuthorizedPersonnelKeys.map(({ key, label, width = {} }) => (
+        {companyAuthorizedPersonnelKeys.map(({ key, label, width = {}, format }) => (
           <GridItem key={key} {...width}>
-            <Field label={label} value={data[key]} />
+            <Field label={label} value={format ? format(data[key]) : data[key]} />
           </GridItem>
         ))}
         <Documents
