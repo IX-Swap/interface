@@ -237,7 +237,6 @@ export const corporateFormInitialValues: IFormInitial = {
   countryOfIncorporation: null,
   otherEntity: '',
   businessActivity: '',
-  entityType: null,
   incorporated: false,
   personnelName: '',
   designation: '',

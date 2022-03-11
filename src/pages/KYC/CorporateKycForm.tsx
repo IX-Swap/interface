@@ -32,12 +32,13 @@ import { ReactComponent as BigPassed } from 'assets/images/check-success-big.svg
 import { ChooseFile, BeneficialOwnersTable, DeleteRow } from './common'
 import { FormContainer, FormRow } from './IndividualKycForm'
 import { corporateErrorsSchema } from './schema'
-import { getCorporateProgress, useCreateCorporateKYC, useKYCState } from 'state/kyc/hooks'
+import { getCorporateProgress, useCreateCorporateKYC, useKYCState, useUpdateCorporateKYC } from 'state/kyc/hooks'
 import { KYCStatuses } from './enum'
-import { transformApiData } from './utils'
+import { transformApiData, transformKycDto } from './utils'
 
 export default function CorporateKycForm() {
   const [waitingForInitialValues, setWaitingForInitialValues] = useState(true)
+  const [updateKycId, setUpdateKycId] = useState<any>(null)
   const [isLogged, setAuthState] = useState(false)
   const [formData, setFormData] = useState<any>(null)
   const [canSubmit, setCanSubmit] = useState(true)
@@ -48,10 +49,13 @@ export default function CorporateKycForm() {
 
   const { kyc, loadingRequest } = useKYCState()
 
+  console.log('error', formData)
+
   const login = useLogin({ mustHavePreviousLogin: false })
   const showError = useShowError()
   const addPopup = useAddPopup()
   const createCorporateKYC = useCreateCorporateKYC()
+  const updateCorporateKYC = useUpdateCorporateKYC()
   const promptValue = 'Data will be lost if you leave the page, are you sure?'
 
   useEffect(() => {
@@ -67,6 +71,7 @@ export default function CorporateKycForm() {
 
     if (kyc?.data.status === KYCStatuses.CHANGES_REQUESTED) {
       getProgress()
+      setUpdateKycId(kyc.data.id)
     } else {
       setFormData(corporateFormInitialValues)
     }
@@ -249,44 +254,22 @@ export default function CorporateKycForm() {
                 .validate(values, { abortEarly: false })
                 .then(async () => {
                   setCanSubmit(false)
-                  const {
-                    typeOfLegalEntity,
-                    countryOfIncorporation,
-                    entityType,
-                    country,
-                    residentialAddressCountry,
-                    sourceOfFunds,
-                    otherFunds,
-                    isUSTaxPayer,
-                    taxCountry,
-                    beneficialOwners,
-                  } = values
+                  const body = transformKycDto(values)
+                  let data: any = null
+                  console.log('body', body)
 
-                  const data: any = await createCorporateKYC({
-                    ...values,
-                    typeOfLegalEntity: typeOfLegalEntity.id,
-                    sourceOfFunds: [...sourceOfFunds, otherFunds].join(', '),
-                    countryOfIncorporation: countryOfIncorporation.name,
-                    entityType: entityType.id,
-                    country: country.name,
-                    residentialAddressCountry: residentialAddressCountry.name,
-                    taxCountry: taxCountry.name,
-                    isUSTaxPayer: isUSTaxPayer ? true : false,
-                    beneficialOwners: JSON.stringify(
-                      beneficialOwners.map(({ fullName, shareholding }: any) => ({
-                        fullName,
-                        shareholding,
-                      }))
-                    ),
-                    beneficialOwnersIdentity: beneficialOwners.map(({ proofOfIdentity }: any) => proofOfIdentity),
-                    beneficialOwnersAddress: beneficialOwners.map(({ proofOfAddress }: any) => proofOfAddress),
-                  })
+                  if (updateKycId) {
+                    data = await updateCorporateKYC(updateKycId, body)
+                  } else {
+                    data = await createCorporateKYC(body)
+                  }
+
                   if (data?.id) {
                     history.push('/kyc')
                     addPopup({
                       info: {
                         success: true,
-                        summary: 'KYC was successfully submitted',
+                        summary: `KYC was successfully ${updateKycId ? 'updated' : 'submitted'}`,
                       },
                     })
                   } else {
@@ -325,8 +308,7 @@ export default function CorporateKycForm() {
                 !errors.registrationNumber &&
                 !errors.countryOfIncorporation &&
                 !errors.otherEntity &&
-                !errors.businessActivity &&
-                !errors.entityType
+                !errors.businessActivity
               const authorizedPersonnelFilled =
                 shouldValidate &&
                 !errors.personnelName &&
@@ -364,7 +346,7 @@ export default function CorporateKycForm() {
                         </RowBetween>
 
                         <Column style={{ gap: '20px' }}>
-                          <FormGrid columns={2}>
+                          <FormGrid columns={3}>
                             <TextInput
                               onChange={(e) =>
                                 onChangeInput('corporateName', e.currentTarget.value, values, setFieldValue)
@@ -373,17 +355,6 @@ export default function CorporateKycForm() {
                               label="Corporate Name"
                               error={errors.corporateName && errors.corporateName}
                             />
-                            <Select
-                              withScroll
-                              label="Type of legal entity"
-                              selectedItem={values.typeOfLegalEntity}
-                              items={legalEntityTypes}
-                              onSelect={(entityType) => onSelectChange('typeOfLegalEntity', entityType, setFieldValue)}
-                              error={errors.typeOfLegalEntity && errors.typeOfLegalEntity}
-                            />
-                          </FormGrid>
-
-                          <FormGrid columns={values.typeOfLegalEntity?.id === legalEntityTypes.length ? 3 : 2}>
                             <TextInput
                               onChange={(e) =>
                                 onChangeInput('registrationNumber', e.currentTarget.value, values, setFieldValue)
@@ -400,19 +371,9 @@ export default function CorporateKycForm() {
                               onSelect={(country) => onSelectChange('countryOfIncorporation', country, setFieldValue)}
                               error={errors.countryOfIncorporation && errors.countryOfIncorporation}
                             />
-                            {values.typeOfLegalEntity?.id === legalEntityTypes.length && (
-                              <TextInput
-                                label="Other Entity"
-                                onChange={(e) =>
-                                  onChangeInput('otherEntity', e.currentTarget.value, values, setFieldValue)
-                                }
-                                value={values.otherEntity}
-                                error={errors.otherEntity && errors.otherEntity}
-                              />
-                            )}
                           </FormGrid>
 
-                          <FormGrid>
+                          <FormGrid columns={2}>
                             <TextInput
                               label="Business Activity"
                               value={values.businessActivity}
@@ -423,12 +384,24 @@ export default function CorporateKycForm() {
                             />
                             <Select
                               withScroll
-                              label="Entity Type"
-                              selectedItem={values.entityType}
-                              items={entityTypes}
-                              onSelect={(entityType) => onSelectChange('entityType', entityType, setFieldValue)}
-                              error={errors.entityType && errors.entityType}
+                              label="Type of legal entity"
+                              selectedItem={values.typeOfLegalEntity}
+                              items={legalEntityTypes}
+                              onSelect={(entityType) => onSelectChange('typeOfLegalEntity', entityType, setFieldValue)}
+                              error={errors.typeOfLegalEntity && errors.typeOfLegalEntity}
                             />
+                          </FormGrid>
+                          <FormGrid columns={1}>
+                            {values.typeOfLegalEntity?.id === legalEntityTypes.length && (
+                              <TextInput
+                                label="Other Entity"
+                                onChange={(e) =>
+                                  onChangeInput('otherEntity', e.currentTarget.value, values, setFieldValue)
+                                }
+                                value={values.otherEntity}
+                                error={errors.otherEntity && errors.otherEntity}
+                              />
+                            )}
                           </FormGrid>
                           <FormGrid columns={1}>
                             <Checkbox

@@ -4,7 +4,6 @@ export const transformApiData = (data: any) => {
   const {
     typeOfLegalEntity,
     countryOfIncorporation,
-    entityType,
     documents,
     address,
     residentialAddress,
@@ -15,13 +14,11 @@ export const transformApiData = (data: any) => {
   } = data
   const splittedFunds = sourceOfFunds.split(',').map((name: string) => name.trim())
   const funds = splittedFunds.includes('Others') ? splittedFunds.slice(0, -1) : splittedFunds
-  console.log('data', data)
 
   return {
     ...data,
     typeOfLegalEntity: legalEntityTypes[typeOfLegalEntity - 1],
     countryOfIncorporation: { id: 0, name: countryOfIncorporation },
-    entityType: entityTypes[entityType - 1],
     authorizationDocuments: documents.filter(({ type }: any) => type === 'authorization'),
     line1: address.line1,
     line2: address.line2,
@@ -31,18 +28,54 @@ export const transformApiData = (data: any) => {
     residentialAddressLine2: residentialAddress.line2,
     residentialAddressCountry: { id: 0, name: residentialAddress.country },
     residentialAddressCity: residentialAddress.city,
-    sourceOfFunds: funds,
+    sourceOfFunds: funds.filter((fund: string) => fund !== ''),
     isUSTaxPayer: usTin ? 1 : 0,
     otherFunds: splittedFunds.includes('Others') ? splittedFunds[splittedFunds.length - 1] : '',
     taxCountry: { id: 0, name: taxCountry },
-    beneficialOwners: beneficialOwners.map(({ fullName, shareholding, proofOfAddress, proofOfIdentity }: any) => ({
-      fullName,
-      shareholding,
-      proofOfAddress,
-      proofOfIdentity,
-    })),
+    beneficialOwners:
+      beneficialOwners.length > 0
+        ? beneficialOwners.map(({ fullName, shareholding, proofOfAddress, proofOfIdentity }: any) => ({
+            fullName,
+            shareholding,
+            proofOfAddress,
+            proofOfIdentity,
+          }))
+        : [{ fullName: '', shareholding: '', proofOfAddress: null, proofOfIdentity: null }],
     corporateDocuments: documents.filter(({ type }: any) => type === 'corporate'),
     financialDocuments: documents.filter(({ type }: any) => type === 'financial'),
     evidenceOfAccreditation: documents.filter(({ type }: any) => type === 'accreditation'),
+  }
+}
+
+export const transformKycDto = (values: any) => {
+  const {
+    typeOfLegalEntity,
+    countryOfIncorporation,
+    country,
+    residentialAddressCountry,
+    sourceOfFunds,
+    otherFunds,
+    isUSTaxPayer,
+    taxCountry,
+    beneficialOwners,
+  } = values
+
+  return {
+    ...values,
+    typeOfLegalEntity: typeOfLegalEntity.id,
+    sourceOfFunds: [...sourceOfFunds, otherFunds].join(', '),
+    countryOfIncorporation: countryOfIncorporation.name,
+    country: country.name,
+    residentialAddressCountry: residentialAddressCountry.name,
+    taxCountry: taxCountry.name,
+    isUSTaxPayer: isUSTaxPayer ? true : false,
+    beneficialOwners: JSON.stringify(
+      beneficialOwners.map(({ fullName, shareholding }: any) => ({
+        fullName,
+        shareholding,
+      }))
+    ),
+    beneficialOwnersIdentity: beneficialOwners.map(({ proofOfIdentity }: any) => proofOfIdentity),
+    beneficialOwnersAddress: beneficialOwners.map(({ proofOfAddress }: any) => proofOfAddress),
   }
 }

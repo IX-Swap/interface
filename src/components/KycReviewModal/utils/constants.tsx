@@ -27,7 +27,6 @@ export const corporateInfoKeys = [
   { key: 'otherEntity', label: 'Other Entity' },
   { key: 'sourceOfFunds', label: 'Source of Funds' },
   { key: 'businessActivity', label: 'Business Activity' },
-  { key: 'entityType', label: 'Entity Type', format: (key: string) => entityTypes[+key - 1].name },
 ] as Array<{ key: string; label: string; width?: Record<string, number>; format?: (values: string) => string }>
 
 export const personalInfoKeys = [
@@ -59,13 +58,6 @@ export const addressKeys = [
   { key: 'line2', label: 'Line 2', width: { xs: 12, sm: 6 } },
   { key: 'city', label: 'City', width: { xs: 12, sm: 6 } },
   { key: 'country', label: 'Country', width: { xs: 12, sm: 6 } },
-]
-
-export const residentialAddressKeys = [
-  { key: 'line1Residential', label: 'Line 1', width: { xs: 12, sm: 6 } },
-  { key: 'line2Residential', label: 'Line 2', width: { xs: 12, sm: 6 } },
-  { key: 'cityResidential', label: 'City', width: { xs: 12, sm: 6 } },
-  { key: 'countryResidential', label: 'Country', width: { xs: 12, sm: 6 } },
 ]
 
 export const sourceOfFundsKeys = [
