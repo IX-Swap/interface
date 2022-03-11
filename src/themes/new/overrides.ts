@@ -631,5 +631,22 @@ export const getThemeOverrides = (
         }
       }
     }
+  },
+  MuiTabs: {
+    styleOverrides: {
+      indicator: {
+        height: 1
+      }
+    }
+  },
+  MuiTab: {
+    styleOverrides: {
+      root: {
+        textTransform: 'none',
+        '&.Mui-selected': {
+          color: theme.palette.text.primary
+        }
+      }
+    }
   }
 })
