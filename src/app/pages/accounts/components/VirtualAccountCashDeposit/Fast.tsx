@@ -1,4 +1,4 @@
-import { Box, Grid, Link, Typography } from '@material-ui/core'
+import { Box, Grid, Link, Typography } from '@mui/material'
 import { CashDepositDetails } from 'app/pages/accounts/components/VirtualAccountCashDeposit/CashDepositDetails'
 import { useStyles } from 'app/pages/accounts/components/VirtualAccountCashDeposit/Fast.styles'
 import { ValidCurrency } from 'helpers/types'
@@ -31,10 +31,6 @@ export const Fast = ({ accountId, currency }: DepositInfoProps) => {
     {
       label: 'SWIFT Code:',
       value: 'HSBCSGSGXXX'
-    },
-    {
-      label: 'Message to receiver/beneficiary/Ref/Bill ref:',
-      value: 'InvestaX to recommend'
     }
   ]
 

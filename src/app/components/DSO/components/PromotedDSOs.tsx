@@ -4,7 +4,7 @@ import { DSOCarousel } from 'app/components/DSO/components/DSOCarousel/DSOCarous
 import { usePromotedDSOs } from 'app/pages/invest/hooks/usePromotedDSOs'
 import { InvestRoute } from 'app/pages/invest/router/config'
 import { OTCMarketCard } from 'app/pages/invest/components/OTCMarketCard/OTCMarketCard'
-import Box from '@material-ui/core/Box'
+import Box from '@mui/material/Box'
 
 export const PromotedDSOs = () => {
   const { data, status } = usePromotedDSOs()
@@ -13,7 +13,7 @@ export const PromotedDSOs = () => {
     return null
   }
 
-  const promotedDSOs = data.list
+  const promotedDSOs = data.list.slice(0, 9)
 
   return (
     <DSOCarousel totalSlides={promotedDSOs.length}>

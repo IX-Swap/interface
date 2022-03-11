@@ -1,17 +1,18 @@
 import React from 'react'
 import { useSelectionHelperContext } from 'components/SelectionHelper'
-import { Button, ButtonProps } from '@material-ui/core'
+import { Button, ButtonProps } from '@mui/material'
 import { themeColors } from 'themes/old/colors'
 import { useDeleteFilesArray } from 'hooks/useDeleteFilesArray'
 import { SelectedDocument } from 'helpers/dataroom'
 
 export interface DataroomDeleteSelectedProps extends ButtonProps {
   name: string
+  action?: () => void
 }
 
 export const DataroomDeleteSelected = (props: DataroomDeleteSelectedProps) => {
-  const { name, ...rest } = props
-  const { isLoading, deleteMultiple } = useDeleteFilesArray(name)
+  const { name, action, ...rest } = props
+  const { isLoading, deleteMultiple } = useDeleteFilesArray(name, action)
   const { hasSelected, selectedCount } =
     useSelectionHelperContext<SelectedDocument>()
 

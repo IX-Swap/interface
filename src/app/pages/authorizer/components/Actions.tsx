@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react'
-import { Launch as LaunchIcon } from '@material-ui/icons'
-import { Grid, IconButton, Box } from '@material-ui/core'
+import { Launch as LaunchIcon } from '@mui/icons-material'
+import { Grid, IconButton, Box } from '@mui/material'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { useApproveOrReject } from 'app/pages/authorizer/hooks/useApproveOrReject'
 import { getIdFromObj } from 'helpers/strings'
@@ -73,29 +73,27 @@ export const Actions = <T,>(props: ActionsProps<T>): JSX.Element => {
         <Box px={1} />
       </Grid>
       {isCommitment && (item as any).fundStatus !== 'Funds on hold' ? (
-        <></>
+        <Grid item style={{ minWidth: 26 }} />
       ) : (
-        <>
-          <Grid item style={{ minWidth: 26 }}>
-            {(isUnauthorized || isCommitment) && (
-              <Dropdown
-                arrow
-                contentTheme='dark'
-                trigger={props => (
-                  <ActionsDropdownTrigger {...props} isLoading={isLoading} />
-                )}
-                content={props => (
-                  <ActionsDropdownContent
-                    {...props}
-                    approve={approve}
-                    reject={reject}
-                    view={view}
-                  />
-                )}
-              />
-            )}
-          </Grid>
-        </>
+        <Grid item style={{ minWidth: 26 }}>
+          {(isUnauthorized || isCommitment) && (
+            <Dropdown
+              arrow
+              contentTheme='dark'
+              trigger={props => (
+                <ActionsDropdownTrigger {...props} isLoading={isLoading} />
+              )}
+              content={props => (
+                <ActionsDropdownContent
+                  {...props}
+                  approve={approve}
+                  reject={reject}
+                  view={view}
+                />
+              )}
+            />
+          )}
+        </Grid>
       )}
     </Grid>
   )

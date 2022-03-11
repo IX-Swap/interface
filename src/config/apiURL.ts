@@ -182,6 +182,12 @@ export const issuanceURL = {
     getDSOList: '/vcc/dsos/list',
     getSubFundStats: 'vcc/subfund-stats',
     getInvestmentStats: 'vcc/subfund-growth-graph'
+  },
+  financialReports: {
+    uploadFile: '/issuance/financial-report-file/create',
+    getReport: (reportId?: string) =>
+      `/issuance/financial-report-file/${reportId}`,
+    reportTemplate: '/issuance/financial-report-file/template/recent'
   }
 }
 
@@ -193,11 +199,14 @@ export const authURL = {
   enable2fa: (userId?: string, otp?: string) =>
     `/auth/2fa/setup/${userId}/confirm/${otp}`,
   setup2fa: (userId?: string) => `/auth/2fa/setup/${userId}`,
+  remove2fa: (userId?: string) => `/auth/2fa/change/${userId}`,
+  getEmailCode: (userId?: string) => `/auth/email-code/${userId}`,
   register: '/auth/registrations',
   registerConfirm: '/auth/registrations/confirm',
   reset2fa: (userId?: string) => `/auth/2fa/reset/${userId}`,
   getLoginHistory: (userId?: string) => `auth/users/${userId}/logins`,
-  revokeAccess: '/auth/users/revoke'
+  revokeAccess: '/auth/users/revoke',
+  declineInvitation: (roleId: string) => `vcc/roles/${roleId}/decline`
 }
 
 export const userURL = {
@@ -354,22 +363,21 @@ export const custodyAccounts = {
 }
 
 export const virtualAccountsAudit = {
-  getMT940Files: 'https://hsbc.mozork.com/audit/virtual-account/mt940/files',
-  getMT942Files: 'https://hsbc.mozork.com/audit/virtual-account/mt942/files',
-  getOutboundFiles:
-    'https://hsbc.mozork.com/audit/virtual-account/outbound/files',
+  getMT940Files: '/virtual-accounts/audit/mt940/files',
+  getMT942Files: '/virtual-accounts/audit/mt942/files',
+  getOutboundFiles: '/virtual-accounts/audit/outbound/files',
   getRawMT940File: (fileId?: string) =>
-    `https://hsbc.mozork.com/audit/virtual-account/mt940/files/raw/${fileId}`,
+    `/virtual-accounts/audit/mt940/files/${fileId}`,
   getRawMT942File: (fileId?: string) =>
-    `https://hsbc.mozork.com/audit/virtual-account/mt942/files/raw/${fileId}`,
+    `/virtual-accounts/audit/mt942/files/${fileId}`,
   getRawOutboundACKFile: (fileId?: string) =>
-    `https://hsbc.mozork.com/audit/virtual-account/outbound/files/raw/${fileId}`,
+    `/virtual-accounts/audit/outbound/files/ack/${fileId}`,
   getRawOutboundVAFile: (fileId?: string) =>
-    `https://hsbc.mozork.com/audit/virtual-account/outbound/files/raw/va/${fileId}`
+    `/virtual-accounts/audit/outbound/files/va/${fileId}`
 }
 
 export const virtualTransactions = {
-  getTransactions: 'https://hsbc.mozork.com/payments/transactions'
+  getTransactions: '/virtual-accounts/audit/transactions'
 }
 
 export const blockchainNetworksURL = {

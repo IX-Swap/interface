@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Paper, Typography } from '@material-ui/core'
+import { Grid, Paper, Typography } from '@mui/material'
 import { PeriodicalFilter } from 'app/pages/issuance/components/NetAssetValueChart/PeriodicalFilter'
 import { LineChart } from 'app/pages/issuance/components/LineChart/LineChart'
 

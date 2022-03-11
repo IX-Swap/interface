@@ -3,7 +3,7 @@ import { useCommitmentById } from 'app/pages/invest/hooks/useCommitmentById'
 import { CommitmentPreview } from 'app/components/CommitmentPreview/CommitmentPreview'
 import { RejectionMessage } from 'app/pages/authorizer/components/RejectionMessage'
 import { useParams } from 'react-router-dom'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 
 export const InvestCommitmentView = () => {

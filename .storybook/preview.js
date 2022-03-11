@@ -1,11 +1,9 @@
 import React from 'react'
 import { Router } from 'react-router-dom'
 import { history } from '../src/config/history'
-import {
-  createGenerateClassName,
-  StylesProvider,
-  ThemeProvider
-} from '@material-ui/core/styles'
+import { ThemeProvider } from '@mui/material/styles'
+import StylesProvider from '@mui/styles/StylesProvider'
+import { createGenerateClassName } from '@mui/styles'
 import { ServicesProvider } from '../src/hooks/useServices'
 import { BreadcrumbsProvider } from '../src/hooks/useBreadcrumbs'
 import { ToastProvider } from 'react-toast-notifications'

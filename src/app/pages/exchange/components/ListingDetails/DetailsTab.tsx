@@ -1,4 +1,4 @@
-import { Grid, Tab, Tabs } from '@material-ui/core'
+import { Grid, Tab, Tabs } from '@mui/material'
 import { Information } from 'app/pages/exchange/components/ListingDetails/Information/Information'
 import { Overview } from 'app/pages/exchange/components/ListingDetails/Overview/Overview'
 import { TabPanel } from 'components/TabPanel'

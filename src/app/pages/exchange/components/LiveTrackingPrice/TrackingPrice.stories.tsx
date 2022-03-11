@@ -1,7 +1,7 @@
 import React from 'react'
 import { Meta, Story } from '@storybook/react/types-6-0'
 import { TrackingPrice } from 'app/pages/exchange/components/LiveTrackingPrice/TrackingPrice'
-import { Box, Grid } from '@material-ui/core'
+import { Box, Grid } from '@mui/material'
 
 const meta: Meta = {
   title: 'Pages/Invest/TrackingPrice',

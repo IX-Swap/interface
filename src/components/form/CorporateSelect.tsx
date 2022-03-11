@@ -1,6 +1,6 @@
 import React from 'react'
 import { useAllCorporates } from 'app/pages/identity/hooks/useAllCorporates'
-import { MenuItem, Select } from '@material-ui/core'
+import { MenuItem, Select } from '@mui/material'
 import { queryStatusRenderer } from './renderUtils'
 
 export const CorporateSelect = (props: any) => {
@@ -14,13 +14,11 @@ export const CorporateSelect = (props: any) => {
       <MenuItem disabled value={undefined}>
         Corporate
       </MenuItem>
-      {data.list.map(({ _id, companyLegalName }) => {
-        return (
-          <MenuItem value={_id} key={_id}>
-            {companyLegalName}
-          </MenuItem>
-        )
-      })}
+      {data.list.map(({ _id, companyLegalName }) => (
+        <MenuItem value={_id} key={_id}>
+          {companyLegalName}
+        </MenuItem>
+      ))}
     </Select>
   )
 }

@@ -1,11 +1,11 @@
 import React, { Fragment } from 'react'
-import { Box, Hidden, Typography } from '@material-ui/core'
+import { Box, Hidden, Typography } from '@mui/material'
 import { formatDateAndTime } from 'helpers/dates'
 import { DataroomFile } from 'types/dataroomFile'
 import { Maybe } from 'types/util'
 import { documentIcons } from 'helpers/rendering'
 import { ViewDocument } from 'app/components/DSO/components/ViewDocument'
-import { useTheme } from '@material-ui/core/styles'
+import { useTheme } from '@mui/material/styles'
 
 export interface DataroomColumnsProps {
   title: string
@@ -59,7 +59,7 @@ export const DataroomColumns: React.FC<DataroomColumnsProps> = props => {
   return (
     <Fragment>
       <Box flex='1 0 40%' display='flex' alignItems='center'>
-        <Hidden smDown>
+        <Hidden mdDown>
           <ViewDocument documentId={document._id} ownerId={document.user}>
             {url =>
               isImage(document.originalFileName) ? (
@@ -81,7 +81,7 @@ export const DataroomColumns: React.FC<DataroomColumnsProps> = props => {
         <Typography
           style={{
             color: theme.palette.text.primary,
-            opacity: theme.palette.type === 'light' ? 1 : 0.6
+            opacity: theme.palette.mode === 'light' ? 1 : 0.6
           }}
         >
           {document.originalFileName}

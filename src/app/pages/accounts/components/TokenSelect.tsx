@@ -1,7 +1,8 @@
-import { MenuItem, Select, SelectProps } from '@material-ui/core'
+import { MenuItem, Select, SelectProps } from '@mui/material'
 import { useGetCustody } from 'app/pages/accounts/hooks/useGetCustody'
 import React from 'react'
 import { AssetBalance } from 'types/balance'
+import { isEmptyString } from 'helpers/strings'
 
 export const TokenSelect = React.forwardRef((props: SelectProps, ref) => {
   const { data, isLoading } = useGetCustody()
@@ -14,7 +15,7 @@ export const TokenSelect = React.forwardRef((props: SelectProps, ref) => {
       </MenuItem>
       {data?.map((token: AssetBalance) => (
         <MenuItem key={token.symbol} value={token.symbol}>
-          {token.name}
+          {token.symbol} {!isEmptyString(token.name) && `(${token.name})`}
         </MenuItem>
       ))}
     </Select>

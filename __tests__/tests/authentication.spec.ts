@@ -2,13 +2,7 @@ import { kyc } from '../lib/selectors/kyc-form'
 import { authForms } from '../lib/selectors/auth'
 import { baseCreds } from '../lib/helpers/creds'
 import { test } from '../lib/fixtures/fixtures'
-import {
-  click,
-  navigate,
-  emailCreate,
-  shouldExist,
-  screenshotMatching
-} from '../lib/helpers/helpers'
+import { click, navigate, emailCreate, shouldExist, screenshotMatching } from '../lib/helpers/helpers'
 let forEachEmail = emailCreate()
 test.beforeEach(async ({ page }) => {
   await navigate(baseCreds.URL, page)
@@ -30,10 +24,7 @@ test.describe('Functional test ', () => {
 
   test('Account access restored(forgot password)', async ({ page, auth }) => {
     await auth.resetPassword(baseCreds.EMAIL_FOR_RESET)
-    await auth.loginWithout2fa(
-      baseCreds.EMAIL_FOR_RESET,
-      baseCreds.PASSWORD_RESET
-    )
+    await auth.loginWithout2fa(baseCreds.EMAIL_FOR_RESET, baseCreds.PASSWORD_RESET)
     await shouldExist(kyc.MY_PROFILE, page)
   })
 

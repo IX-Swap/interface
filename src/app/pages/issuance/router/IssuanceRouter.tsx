@@ -1,5 +1,5 @@
 import React from 'react'
-import { Switch } from 'react-router-dom'
+import { Redirect, Switch } from 'react-router-dom'
 import { CreateDSO } from 'app/pages/issuance/pages/CreateDSO'
 import { DeployToken } from 'app/pages/issuance/pages/DeployToken'
 import { DSOList } from 'app/pages/issuance/pages/DSOList'
@@ -12,12 +12,16 @@ import { AppRoute } from 'components/AppRoute'
 import { Commitments } from 'app/pages/issuance/pages/Commitments'
 import { useIsIssuer } from 'helpers/acl'
 import { CapTableRouter } from 'app/pages/issuance/router/CapTableRouter'
+import { FinancialReportsRouter } from 'app/pages/issuance/router/FinancialReportsRouter'
 
 export const IssuanceRouter = () => {
   const isIssuer = useIsIssuer()
 
   return (
     <Switch>
+      <AppRoute exact path={IssuanceRoute.root}>
+        <Redirect to={IssuanceRoute.insight} />
+      </AppRoute>
       <AppRoute
         breadcrumb='Create Digital Security Offering'
         exact
@@ -86,6 +90,15 @@ export const IssuanceRouter = () => {
           path={IssuanceRoute.capTable}
         >
           <CapTableRouter />
+        </AppRoute>
+      ) : null}
+
+      {isIssuer ? (
+        <AppRoute
+          breadcrumb='Financial Reports'
+          path={IssuanceRoute.financialReports}
+        >
+          <FinancialReportsRouter />
         </AppRoute>
       ) : null}
     </Switch>

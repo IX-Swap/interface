@@ -1,4 +1,4 @@
-import { Grid, Typography } from '@material-ui/core'
+import { Grid, Typography } from '@mui/material'
 import { renderStatusColumn } from 'app/pages/authorizer/hooks/useAuthorizerView'
 import { TableView } from 'components/TableWithPagination/TableView'
 import { formatDateToMMDDYY } from 'helpers/dates'

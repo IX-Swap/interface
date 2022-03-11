@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles'
+import makeStyles from '@mui/styles/makeStyles'
 
 export const useStyles = makeStyles(theme => ({
   title: {
@@ -7,7 +7,7 @@ export const useStyles = makeStyles(theme => ({
   listedTokensBlock: {
     width: 'max-content',
     marginTop: 0,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       marginTop: theme.spacing(2.5)
     }
   },

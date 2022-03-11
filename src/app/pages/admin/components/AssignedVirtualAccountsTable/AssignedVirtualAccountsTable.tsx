@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { Actions } from 'app/pages/admin/components/AssignedVirtualAccountsTable/Actions'
 import { columns } from 'app/pages/admin/components/AssignedVirtualAccountsTable/columns'
 import { Filters } from 'app/pages/admin/components/AssignedVirtualAccountsTable/Filters'
@@ -49,11 +49,11 @@ export const AssignedVirtualAccountsTable = ({
           uri={virtualAccounts.getAll}
           name={virtualAccountQueryKeys.listAssigned}
           columns={columns}
-          hasActions
-          actions={Actions}
           filter={filter}
           paperProps={{ variant: 'elevation', elevation: 0 }}
           selectionHelper={selectionHelperContext}
+          hasActions
+          actions={Actions}
         />
       </Grid>
     </Grid>

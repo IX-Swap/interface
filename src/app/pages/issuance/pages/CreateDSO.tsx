@@ -1,7 +1,7 @@
 import React from 'react'
 import { DSOForm } from 'app/components/DSO/DSOForm'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 
 export const CreateDSO = () => {
   return (

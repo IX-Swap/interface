@@ -18,7 +18,7 @@ describe('IssuerDetails', () => {
     expect(getByLabelText('Full Name')).toBeTruthy()
     expect(getByLabelText('Company Name')).toBeTruthy()
     expect(getByLabelText('Registration Number / UEN')).toBeTruthy()
-    expect(getByLabelText('Contact Number - (optional)')).toBeTruthy()
+    expect(getByLabelText('Contact Number')).toBeTruthy()
     expect(getByLabelText('Email Address')).toBeTruthy()
     expect(getByLabelText('Industry')).toBeTruthy()
     expect(getByLabelText('Fundraising Amount')).toBeTruthy()

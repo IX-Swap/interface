@@ -5,7 +5,7 @@ import {
   Grid,
   Radio,
   RadioGroup
-} from '@material-ui/core'
+} from '@mui/material'
 import { VSpacer } from 'components/VSpacer'
 
 export interface ViewListedTokensProps {

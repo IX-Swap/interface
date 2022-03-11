@@ -1,5 +1,5 @@
-import { makeStyles } from '@material-ui/core/styles'
-import { alpha } from '@material-ui/core/styles/colorManipulator'
+import { alpha } from '@mui/material/styles'
+import makeStyles from '@mui/styles/makeStyles'
 
 export default makeStyles(theme => ({
   logotype: {
@@ -9,17 +9,18 @@ export default makeStyles(theme => ({
     fontWeight: 500,
     fontSize: 18,
     whiteSpace: 'nowrap',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       display: 'none'
     }
   },
   appBar: {
-    zIndex: theme.zIndex.drawer + 1,
+    zIndex: 1201,
     transition: theme.transitions.create(['margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen
     }),
-    backgroundColor: '#141272'
+    backgroundColor: '#141272',
+    paddingRight: '0 !important'
   },
   toolbar: {
     paddingLeft: theme.spacing(3.25),
@@ -73,12 +74,6 @@ export default makeStyles(theme => ({
     color: 'inherit',
     width: '100%'
   },
-  inputInput: {
-    height: 36,
-    padding: 0,
-    paddingRight: 36 + theme.spacing(1.25),
-    width: '100%'
-  },
   messageContent: {
     display: 'flex',
     flexDirection: 'column'
@@ -117,13 +112,6 @@ export default makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     padding: theme.spacing(2)
-  },
-  profileMenuItem: {
-    color: theme.palette.text.hint
-  },
-  profileMenuIcon: {
-    marginRight: theme.spacing(2),
-    color: theme.palette.text.hint
   },
   profileMenuLink: {
     fontSize: 16,

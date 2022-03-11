@@ -2,7 +2,7 @@ import React from 'react'
 import { render } from 'test-utils'
 import { VAAuditFilters } from 'app/pages/admin/components/VAAuditFilters'
 import { SearchFilter } from 'app/components/SearchFilter'
-import Typography from '@material-ui/core/Typography'
+import Typography from '@mui/material/Typography'
 import { DateFilter } from 'app/pages/admin/components/AssignedVirtualAccountsTable/DateFilter'
 import * as useAppBreakpoints from 'hooks/useAppBreakpoints'
 import { VSpacer } from 'components/VSpacer'
@@ -26,7 +26,7 @@ jest.mock('components/VSpacer', () => ({
   VSpacer: jest.fn(() => null)
 }))
 
-jest.mock('@material-ui/core/Typography', () => jest.fn(() => null))
+jest.mock('@mui/material/Typography', () => jest.fn(() => null))
 
 describe('VAAuditFilters', () => {
   afterEach(async () => {

@@ -1,11 +1,11 @@
-import { Grid, IconButton } from '@material-ui/core'
+import { Grid, IconButton } from '@mui/material'
 import { SearchFilter } from 'app/components/SearchFilter'
 import { CountryFilter } from 'app/pages/educationCentre/components/Securities/CountryFilter'
 import { IndustryFilter } from 'app/pages/educationCentre/components/Securities/IndustryFilter'
 import { ProtocolFilter } from 'app/pages/educationCentre/components/Securities/ProtocolFilter'
 import { SecurityTypeFilter } from 'app/pages/educationCentre/components/Securities/SecurityTypeFilter'
-import AppsIcon from '@material-ui/icons/Apps'
-import ViewListIcon from '@material-ui/icons/ViewList'
+import AppsIcon from '@mui/icons-material/Apps'
+import ViewListIcon from '@mui/icons-material/ViewList'
 import React from 'react'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 
@@ -50,7 +50,7 @@ export const Filters = ({
           </Grid>
           {showViewToggle && (
             <Grid item>
-              <IconButton onClick={toggleView}>
+              <IconButton onClick={toggleView} size='large'>
                 {view === 'grid' ? <AppsIcon /> : <ViewListIcon />}
               </IconButton>
             </Grid>

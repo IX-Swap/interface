@@ -50,7 +50,7 @@ describe('useCreateDistribution', () => {
           void mutate(createDistArgs)
 
           expect(showSnackbar).toHaveBeenCalledWith(
-            'Distribution added sucessfully.',
+            'Distribution added successfully.',
             'success'
           )
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { DigitalSecurityOffering } from 'types/dso'
-import { Grid, Typography } from '@material-ui/core'
+import { Grid, Typography } from '@mui/material'
 import { DSOLogo } from './DSOLogo'
 
 export interface DsoTitleProps {

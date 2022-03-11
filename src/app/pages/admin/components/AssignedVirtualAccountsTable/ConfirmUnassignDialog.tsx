@@ -6,7 +6,7 @@ import {
   DialogContent,
   Grid,
   Typography
-} from '@material-ui/core'
+} from '@mui/material'
 import { useUnassignVirtualAccount } from 'app/pages/admin/hooks/useUnassignVirtualAccount'
 import { VSpacer } from 'components/VSpacer'
 import React from 'react'

@@ -1,13 +1,13 @@
 import React from 'react'
 import { DigitalSecurityOffering } from 'types/dso'
-import Box from '@material-ui/core/Box'
-import Card from '@material-ui/core/Card'
+import Box from '@mui/material/Box'
+import Card from '@mui/material/Card'
 import useStyles from 'app/pages/invest/components/OTCMarketCard/OTCMarketCard.styles'
 import { CardCover } from 'app/pages/invest/components/OTCMarketCard/CardCover'
 import { CardContent } from 'app/pages/invest/components/OTCMarketCard/CardContent'
-import { Button, Grid } from '@material-ui/core'
+import { Button, Grid } from '@mui/material'
 import { PrimaryInvestLink } from 'app/pages/invest/components/OTCMarketCard/PrimaryInvestLink'
-import Typography from '@material-ui/core/Typography'
+import Typography from '@mui/material/Typography'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { VSpacer } from 'components/VSpacer'
 import classNames from 'classnames'
@@ -55,11 +55,15 @@ export const OTCMarketCard = (props: OTCMarketCardProps) => {
             >
               Learn More
             </Button>
-            <VSpacer size='small' />
           </>
         ) : null}
 
-        <Grid container item justifyContent='flex-end' alignItems={'center'}>
+        <Grid
+          container
+          item
+          justifyContent='space-between'
+          alignItems={'center'}
+        >
           {type !== 'OTC' ? (
             <Typography
               className={classNames(

@@ -34,7 +34,7 @@ export const transformDSOToFormValues = (
       tokenName: '',
       network: '',
       corporate: '',
-      logo: null,
+      logo: '',
       equityMultiple: '',
       leverage: '',
       distributionFrequency: '',
@@ -80,11 +80,11 @@ export const transformDSOToFormValues = (
     faqs:
       dso.faqs !== undefined && dso.faqs.length > 0
         ? dso.faqs.map(({ _id, ...faqItem }) => faqItem)
-        : [],
+        : [{}],
     videos:
       dso.videos !== undefined && dso.videos.length > 0
         ? dso.videos.map(({ _id, ...video }) => video)
-        : [],
+        : [{}],
     uniqueIdentifierCode: dso.uniqueIdentifierCode
   }
 }

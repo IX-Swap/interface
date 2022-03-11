@@ -22,7 +22,7 @@ export interface Listing {
   banner: DataroomFile
   tokenName: string
   tokenSymbol: string
-  decimalPlaces: string
+  decimals: string
   launchDate: Date
   completionDate: Date
   network: Network
@@ -70,7 +70,7 @@ export interface ListingView extends AuthorizableWithIdentity {
   banner: string
   tokenName: string
   tokenSymbol: string
-  decimalPlaces: string
+  decimals: string
   launchDate: string
   completionDate: string
   network: Network

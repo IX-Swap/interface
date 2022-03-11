@@ -1,6 +1,7 @@
 import { makeURL } from 'config/appURL'
 
 export const IssuanceRoute = {
+  root: makeURL(['app', 'issuance']),
   list: makeURL(['app', 'issuance', 'offerings']),
   view: makeURL(['app', 'issuance', 'offerings', 'issuerId', 'dsoId', 'view']),
   preview: makeURL([
@@ -39,5 +40,8 @@ export const IssuanceRoute = {
     'dsoId',
     'manageDistributions'
   ]),
-  dashboard: '/app/issuance/dashboard'
+  dashboard: '/app/issuance/dashboard',
+  financialReports: '/app/issuance/financial-reports',
+  uploadReport: '/app/issuance/financial-reports/upload',
+  viewReport: '/app/issuance/financial-reports/:reportId'
 }

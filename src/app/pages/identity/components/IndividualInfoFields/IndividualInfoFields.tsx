@@ -1,10 +1,15 @@
 import React from 'react'
-import { Grid, Box, TextField } from '@material-ui/core'
+import { Grid, Box, TextField } from '@mui/material'
 import { useFormContext } from 'react-hook-form'
 import { TypedField } from 'components/form/TypedField'
 import { documentValueExtractor } from 'app/components/DSO/utils'
-import { dateTimeValueExtractor, plainValueExtractor } from 'helpers/forms'
+import {
+  dateTimeValueExtractor,
+  plainValueExtractor,
+  textValueExtractor
+} from 'helpers/forms'
 import { NationalitySelect } from 'components/form/NationalitySelect'
+import { GenderSelect } from 'components/form/GenderSelect'
 import { useIndividualDefaultInfo } from 'hooks/auth/useIndividualDefaultInfo'
 import { DataroomFileType } from 'config/dataroom'
 import { privateClassNames } from 'helpers/classnames'
@@ -14,6 +19,7 @@ import { PhoneInput } from 'components/form/PhoneInput'
 import { DatePicker } from 'components/form/DatePicker'
 import { IndividualPersonalInformation } from 'app/pages/identity/types/forms'
 import { subYears } from 'date-fns'
+import { capitalizeFirstLetter } from 'helpers/strings'
 
 export interface IndividualInfoFieldsProps {
   rootName?: string
@@ -58,8 +64,13 @@ export const IndividualInfoFields = (
               control={control}
               name='firstName'
               label='First Name'
-              defaultValue={defaultFirstName}
+              defaultValue={
+                defaultFirstName !== undefined
+                  ? capitalizeFirstLetter(defaultFirstName)
+                  : ''
+              }
               variant='outlined'
+              valueExtractor={textValueExtractor}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
@@ -69,8 +80,13 @@ export const IndividualInfoFields = (
               control={control}
               name='middleName'
               label='Middle Name'
-              defaultValue={defaultMiddleName}
+              defaultValue={
+                defaultMiddleName !== undefined
+                  ? capitalizeFirstLetter(defaultMiddleName)
+                  : ''
+              }
               variant='outlined'
+              valueExtractor={textValueExtractor}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
@@ -80,8 +96,13 @@ export const IndividualInfoFields = (
               control={control}
               name='lastName'
               label='Last Name'
-              defaultValue={defaultLastName}
+              defaultValue={
+                defaultLastName !== undefined
+                  ? capitalizeFirstLetter(defaultLastName)
+                  : ''
+              }
               variant='outlined'
+              valueExtractor={textValueExtractor}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={4}>
@@ -96,7 +117,6 @@ export const IndividualInfoFields = (
               customRenderer
               defaultValue={null as any}
               valueExtractor={dateTimeValueExtractor}
-              inputVariant='outlined'
               maxDate={subYears(new Date(), 18)}
             />
           </Grid>
@@ -131,7 +151,17 @@ export const IndividualInfoFields = (
               component={NationalitySelect}
               control={control}
               name='nationality'
-              label='Citizenship'
+              label='Nationality'
+              variant='outlined'
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} md={4}>
+            <TypedField
+              rootName={rootName}
+              component={GenderSelect}
+              control={control}
+              name='gender'
+              label='Gender'
               variant='outlined'
             />
           </Grid>

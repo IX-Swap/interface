@@ -18,6 +18,7 @@ module.exports = {
     '!src/**/*.styles.ts',
     '!src/**/styles.ts'
   ],
+  transformIgnorePatterns: ['node_modules/(?!mui-rte)'],
   coverageThreshold: {
     global: {
       branches: 50,

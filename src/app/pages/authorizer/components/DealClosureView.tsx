@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { Closure } from 'app/pages/authorizer/pages/DealClosures/DealClosures'
 import { LabelledValue } from 'components/LabelledValue'
 import { formatDateToMMDDYY } from 'helpers/dates'

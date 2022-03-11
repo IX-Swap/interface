@@ -1,4 +1,4 @@
-import { Grid, Typography, Box, Container } from '@material-ui/core'
+import { Grid, Typography, Box, Container } from '@mui/material'
 import React, { PropsWithChildren } from 'react'
 import { VSpacer } from 'components/VSpacer'
 import { formatDateAndTime } from 'helpers/dates'

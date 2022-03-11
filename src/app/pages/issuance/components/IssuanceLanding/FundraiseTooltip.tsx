@@ -1,4 +1,4 @@
-import { Box, Grid, Tooltip, Typography } from '@material-ui/core'
+import { Box, Grid, Tooltip, Typography } from '@mui/material'
 import React from 'react'
 
 export interface FundraiseTooltipProps {

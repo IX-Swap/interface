@@ -10,10 +10,10 @@ import {
   AccountCircleOutlined,
   PowerSettingsNewOutlined,
   SettingsOutlined
-} from '@material-ui/icons'
-import { Box, List } from '@material-ui/core'
+} from '@mui/icons-material'
+import { Box, List } from '@mui/material'
 import { UserDropdownInfo } from 'app/components/UserDropdown/UserDropdownInfo'
-import { useTheme } from '@material-ui/core/styles'
+import { useTheme } from '@mui/material/styles'
 
 export const LIST_HORIZONTAL_PADDING = 32
 
@@ -27,7 +27,7 @@ export const UserDropdownContent = (props: DropdownContentProps) => {
     <Fragment>
       <Box
         bgcolor={
-          theme.palette.type === 'light'
+          theme.palette.mode === 'light'
             ? theme.palette.backgrounds.default
             : theme.palette.backgrounds.light
         }

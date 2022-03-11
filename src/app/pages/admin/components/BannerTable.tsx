@@ -1,5 +1,5 @@
 import React from 'react'
-import { Table, TableContainer, TableBody } from '@material-ui/core'
+import { Table, TableContainer, TableBody } from '@mui/material'
 import { DataroomBanner } from 'types/dataroomBanner'
 import { BannerTableRow } from 'app/pages/admin/components/BannerTableRow'
 

@@ -1,6 +1,6 @@
-import { makeStyles } from '@material-ui/core/styles'
-import EarthImage from '../../images/digital_earth.png'
-import DotsImage from '../../images/background_dots.png'
+import makeStyles from '@mui/styles/makeStyles'
+import EarthImage from 'assets/images/digital_earth.png'
+import DotsImage from 'assets/images/background_dots.png'
 
 export const useStyles = makeStyles(theme => ({
   container: {
@@ -12,7 +12,7 @@ export const useStyles = makeStyles(theme => ({
     position: 'relative',
     paddingTop: 0,
     paddingBottom: 0,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       padding: theme.spacing(3, 2),
       height: 'auto',
       marginLeft: 0
@@ -26,7 +26,7 @@ export const useStyles = makeStyles(theme => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       width: '100%'
     }
   },
@@ -36,15 +36,15 @@ export const useStyles = makeStyles(theme => ({
   },
   background: {
     width: '45%',
-    // backgroundColor: theme.palette.backgrounds.alternative,
     paddingTop: theme.spacing(12.5),
     paddingBottom: theme.spacing(7.5),
     backgroundColor: '#0E1F42',
     backgroundImage: `url(${DotsImage})`,
     backgroundPosition: 'right center',
-    // background: `radial-gradient(50.29% 51.61% at 13.59% 48.39%, rgba(0, 0, 0, 0) 46.41%, #000000 73.61%)`,
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
 
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       display: 'none'
     }
   },

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Button } from '@material-ui/core'
+import { Grid, Button } from '@mui/material'
 import { DocumentFields } from 'app/pages/identity/components/DirectorAndBeneficialOwnerDetails/DocumentsFields'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
 import { VSpacer } from 'components/VSpacer'

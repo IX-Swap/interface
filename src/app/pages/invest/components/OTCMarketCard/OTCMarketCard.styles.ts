@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles'
+import makeStyles from '@mui/styles/makeStyles'
 
 export default makeStyles(theme => ({
   root: {
@@ -23,7 +23,8 @@ export default makeStyles(theme => ({
     }
   },
   capitalStructure: {
-    marginRight: 'auto',
+    marginTop: theme.spacing(2),
+    marginRight: theme.spacing(2),
     paddingTop: 5,
     paddingBottom: 5,
     paddingLeft: 8,

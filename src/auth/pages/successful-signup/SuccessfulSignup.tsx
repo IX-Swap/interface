@@ -1,5 +1,5 @@
 import React from 'react'
-import { Divider, Grid, Typography } from '@material-ui/core'
+import { Divider, Grid, Typography } from '@mui/material'
 import { VSpacer } from 'components/VSpacer'
 import { useStyles } from './SuccessfulSignup.styles'
 import { ReactComponent as SuccessIcon } from 'assets/icons/white_success.svg'
@@ -23,8 +23,9 @@ export const SuccessfulSignup = () => {
       </Grid>
       <Grid item>
         <Typography className={description} variant={'body1'} align='center'>
-          Your account have been successfully created. Use your data for Sign
-          in.
+          Your account have been successfully created. A letter was sent to your
+          email address. In order to Sign In, you must complete the registration
+          process.
         </Typography>
         <VSpacer size={'medium'} />
       </Grid>

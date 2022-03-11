@@ -1,4 +1,4 @@
-import { Box, Grid, Typography } from '@material-ui/core'
+import { Box, Grid, Typography } from '@mui/material'
 import { AmountField } from 'app/pages/accounts/pages/digitalSecurities/Withdraw/AmountField'
 import { MemoField } from 'app/pages/accounts/pages/digitalSecurities/Withdraw/MemoField'
 import { Warning } from 'app/pages/accounts/pages/digitalSecurities/Withdraw/Warning'

@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { DigitalSecurityOffering } from 'types/dso'
 import { isDSOLive, transformDSOToFormValues } from 'app/components/DSO/utils'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { Form } from 'components/form/Form'
 import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
 import { getOfferingName } from 'helpers/strings'
@@ -18,12 +18,14 @@ export interface DSOFormProps {
 export const DSOForm = (props: DSOFormProps) => {
   const { data, isNew = false } = props
   const isLive = isDSOLive(data)
-
+  const validationSchema = useMemo(() => {
+    return getDSOValidationSchema(isNew, isLive)
+  }, [isNew, isLive])
   useSetPageTitle(getOfferingName(data))
 
   return (
     <Form
-      validationSchema={getDSOValidationSchema(isNew, isLive)}
+      validationSchema={validationSchema}
       defaultValues={transformDSOToFormValues(data)}
       data-testid='dso-form'
     >
@@ -33,7 +35,11 @@ export const DSOForm = (props: DSOFormProps) => {
         </Grid>
 
         <Grid item lg={3}>
-          <DSOSidebar isNew dso={data} footer={<DSOFormActions dso={data} />} />
+          <DSOSidebar
+            isNew
+            dso={data}
+            footer={<DSOFormActions dso={data} schema={validationSchema} />}
+          />
         </Grid>
       </Grid>
     </Form>

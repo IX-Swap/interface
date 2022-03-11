@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { Bank } from 'types/bank'
 import { convertAddressToString } from 'app/pages/authorizer/components/utils'
 import { LabelledValue } from 'components/LabelledValue'

@@ -1,4 +1,4 @@
-import { Grid, Typography, Box } from '@material-ui/core'
+import { Grid, Typography, Box } from '@mui/material'
 import { Dropzone } from 'components/dataroom/Dropzone'
 import { TypedField } from 'components/form/TypedField'
 import { documentValueExtractor } from 'app/components/DSO/utils'
@@ -35,7 +35,10 @@ export const UploadDocumentField = ({
             <Typography variant='subtitle1'>{label}</Typography>
             <Box pr={1}></Box>
             {tooltipContent !== undefined ? (
-              <Tooltip title={tooltipContent} />
+              <Tooltip
+                data-testid='upload-document-field-tooltip'
+                title={tooltipContent}
+              />
             ) : null}
           </Grid>
         </Box>
@@ -52,7 +55,7 @@ export const UploadDocumentField = ({
           valueExtractor={documentValueExtractor}
           multiple
           fullWidth
-          accept={DataroomFileType.document}
+          accept={DataroomFileType.report}
           documentInfo={{
             title: label,
             type: label

@@ -1,5 +1,6 @@
-import * as createPalette from '@material-ui/core/styles/createPalette' // eslint-disable-line
-import { CSSProperties } from '@material-ui/core/styles'
+import * as createPalette from '@mui/material' //eslint-disable-line
+import { Theme } from '@mui/material/styles' //eslint-disable-line
+import { CSSProperties } from '@mui/material'
 
 export interface AppBackgrounds {
   default: string
@@ -8,8 +9,13 @@ export interface AppBackgrounds {
   alternativeLight: string
   alternative: string
 }
+// it could be your App.tsx file or theme file that is included in your tsconfig.json
 
-declare module '@material-ui/core/styles/createPalette' {
+declare module '@mui/styles/defaultTheme' {
+  interface DefaultTheme extends Theme {}
+}
+
+declare module '@mui/material/styles' {
   export interface PaletteOptions {
     backgrounds: AppBackgrounds
     slider: {
@@ -20,6 +26,12 @@ declare module '@material-ui/core/styles/createPalette' {
     sidebar: {
       activeColor: CSSProperties['color']
       activeBackground: CSSProperties['color']
+    }
+    tab?: {
+      contained: {
+        border: CSSProperties['color']
+        color?: CSSProperties['color']
+      }
     }
   }
 
@@ -33,6 +45,12 @@ declare module '@material-ui/core/styles/createPalette' {
       activeColor: CSSProperties['color']
       background: CSSProperties['color']
       activeBackground: CSSProperties['color']
+    }
+    tab?: {
+      contained: {
+        border: CSSProperties['color']
+        color?: CSSProperties['color']
+      }
     }
   }
 
@@ -48,6 +66,7 @@ declare module '@material-ui/core/styles/createPalette' {
     spacing: Spacing
     transitions: Transitions
     typography: Typography
-    zIndex: ZIndex
+    // TODO fix any
+    zIndex: any
   }
 }

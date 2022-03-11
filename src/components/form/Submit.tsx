@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Button, ButtonProps } from '@material-ui/core'
+import { Button, ButtonProps } from '@mui/material'
 import { useFormContext } from 'react-hook-form'
 
 export interface SubmitProps extends ButtonProps {
@@ -31,9 +31,7 @@ export const Submit: React.FC<SubmitProps> = props => {
       disableElevation
       variant={variant}
       color={color}
-      disabled={
-        Boolean(disabled) || (watchIsDirty ? !isDirty : false || isSubmitting)
-      }
+      disabled={Boolean(disabled) || (watchIsDirty ? !isDirty : isSubmitting)}
       type='submit'
       {...rest}
     >

@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles'
+import makeStyles from '@mui/styles/makeStyles'
 
 export const useStyles = makeStyles(theme => {
   const activeColor = (active: any) =>
@@ -9,7 +9,7 @@ export const useStyles = makeStyles(theme => {
   return {
     container: {
       backgroundColor:
-        theme.palette.type === 'light'
+        theme.palette.mode === 'light'
           ? theme.palette.backgrounds.alternativeLight
           : '#292929',
       paddingBottom: theme.spacing(3)

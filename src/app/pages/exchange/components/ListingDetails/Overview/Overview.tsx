@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { BasicOverview } from 'app/pages/exchange/components/ListingDetails/Overview/BasicOverview'
 import { MarketOverview } from 'app/pages/exchange/components/ListingDetails/Overview/MarketOverview'
 import { OfferingTerms } from 'app/pages/exchange/components/ListingDetails/Overview/OfferingTerms'
@@ -19,7 +19,7 @@ export const Overview = ({ data }: OverviewProps) => {
           capitalStructure={data.capitalStructure}
           launchDate={data.launchDate}
           completionDate={data.completionDate}
-          decimalPlaces={data.decimalPlaces}
+          decimals={data.decimals}
           tokenAddress={data.dso?.deploymentInfo?.token ?? ''}
         />
       </Grid>

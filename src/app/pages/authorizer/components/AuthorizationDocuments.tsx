@@ -1,6 +1,5 @@
 import React from 'react'
-import { Grid } from '@material-ui/core'
-import { DataroomFile, FormArray } from 'types/dataroomFile'
+import { Grid } from '@mui/material'
 import { DataroomFeature } from 'types/authorizer'
 import { useFormContext } from 'react-hook-form'
 import { FieldsArray } from 'components/form/FieldsArray'
@@ -20,7 +19,7 @@ export interface AuthorizationDocumentsProps {
 
 export const AuthorizationDocuments = (props: AuthorizationDocumentsProps) => {
   const { resourceId, feature } = props
-  const { control } = useFormContext<{ documents: FormArray<DataroomFile> }>()
+  const { control } = useFormContext()
 
   return (
     <SelectionHelper<SelectedDocument> itemComparator={itemComparator}>
@@ -38,9 +37,11 @@ export const AuthorizationDocuments = (props: AuthorizationDocumentsProps) => {
                   label='Document'
                   name={['documents', index, 'value']}
                   index={index}
-                  defaultValue={fields[index].value}
+                  defaultValue={field.value}
                   valueExtractor={plainValueExtractor}
-                  onDelete={() => remove(index)}
+                  onDelete={() => {
+                    remove(index)
+                  }}
                 />
               ))}
             </Grid>

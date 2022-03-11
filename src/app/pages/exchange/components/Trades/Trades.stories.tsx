@@ -1,6 +1,6 @@
 import React from 'react'
 import { Meta, Story } from '@storybook/react/types-6-0'
-import { Box } from '@material-ui/core'
+import { Box } from '@mui/material'
 import { Trades } from 'app/pages/exchange/components/Trades/Trades'
 
 const meta: Meta = {

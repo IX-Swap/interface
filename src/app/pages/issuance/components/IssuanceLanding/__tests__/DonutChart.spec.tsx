@@ -2,13 +2,13 @@ import React from 'react'
 import { render } from 'test-utils'
 import { DonutChart } from 'app/pages/issuance/components/IssuanceLanding/DonutChart'
 import { Chart } from 'react-google-charts'
-import Typography from '@material-ui/core/Typography'
+import Typography from '@mui/material/Typography'
 
 jest.mock('react-google-charts', () => ({
   Chart: jest.fn(() => null)
 }))
 
-jest.mock('@material-ui/core/Typography', () => jest.fn(() => null))
+jest.mock('@mui/material/Typography', () => jest.fn(() => null))
 
 const defaultDonatChartProps = {
   isNewThemeOn: false,

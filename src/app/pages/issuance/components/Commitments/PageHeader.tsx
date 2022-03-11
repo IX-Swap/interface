@@ -1,9 +1,9 @@
 import React from 'react'
-import { Typography } from '@material-ui/core'
+import { Typography } from '@mui/material'
 import { AppRouterLink } from 'components/AppRouterLink'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
 import { useParams } from 'react-router-dom'
-import { useTheme } from '@material-ui/core/styles'
+import { useTheme } from '@mui/material/styles'
 
 export interface PageHeaderProps {
   title?: string

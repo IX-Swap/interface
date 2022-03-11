@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { SearchFilter } from 'app/components/SearchFilter'
 import { FilterToggles } from 'app/pages/exchange/components/PairTable/PairTableFilter/FilterToggles'
 import { useStyles } from 'app/pages/exchange/components/PairTable/PairTableFilter/PairTableFilter.styles'

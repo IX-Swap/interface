@@ -17,6 +17,9 @@ export const getFundSourceDefaults = () => {
 }
 
 export const getFundSource = (identity: IndividualIdentity) => {
+  if (typeof identity.sourceOfFund === 'string') {
+    return identity.sourceOfFund
+  }
   if (
     identity === undefined ||
     identity.sourceOfFund === undefined ||

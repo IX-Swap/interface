@@ -1,17 +1,10 @@
-import {
-  Button,
-  FormControl,
-  Grid,
-  InputLabel,
-  MenuItem,
-  Select,
-  Typography
-} from '@material-ui/core'
+import { Button, FormControl, Grid, MenuItem, Typography } from '@mui/material'
 import { useStyles } from 'app/pages/admin/components/UserIdentitySelect.styles'
 import { AdminRoute } from 'app/pages/admin/router/config'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import React, { useState } from 'react'
 import { UserIdentityCreatedStatus } from 'types/user'
+import { TextFieldSelect } from 'components/form/TextFieldSelect'
 
 export interface UserIdentitySelectProps {
   userIdentities: UserIdentityCreatedStatus
@@ -31,10 +24,6 @@ export const UserIdentitySelect = ({
   const [identity, setIdentity] = useState(
     !hasIdentity ? 'no identity' : 'individual'
   )
-
-  const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    setIdentity(event.target.value as string)
-  }
 
   const getPath = () => {
     if (identity === 'issuers') {
@@ -69,10 +58,10 @@ export const UserIdentitySelect = ({
     <Grid container spacing={1} justifyContent='flex-start' alignItems='center'>
       <Grid item xs={6}>
         <FormControl fullWidth>
-          <InputLabel variant='outlined'>Identity Status</InputLabel>
-          <Select
+          <TextFieldSelect
+            label='Identity Status'
             value={identity}
-            onChange={handleChange}
+            onChange={value => setIdentity(value?.target.value)}
             variant='outlined'
             fullWidth
           >
@@ -98,7 +87,7 @@ export const UserIdentitySelect = ({
                 Issuer (Raise Capital)
               </Typography>
             </MenuItem>
-          </Select>
+          </TextFieldSelect>
         </FormControl>
       </Grid>
       <Grid item xs={6}>

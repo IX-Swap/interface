@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Grid, Typography } from '@material-ui/core'
+import { Button, Grid, Typography } from '@mui/material'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { InvestRoute } from 'app/pages/invest/router/config'
 import { VSpacer } from 'components/VSpacer'

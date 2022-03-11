@@ -2,7 +2,7 @@ import React from 'react'
 import { Chart } from 'react-google-charts'
 import { ChartWrapper } from 'app/pages/issuance/components/IssuanceLanding/ChartWrapper'
 import { useTopInvestors } from 'app/pages/issuance/hooks/useTopInvestors'
-import { useTheme } from '@material-ui/core/styles'
+import { useTheme } from '@mui/material/styles'
 
 export type LegendPosition = 'right' | 'left' | 'bottom' | 'top'
 export interface TopInvestorsProps {

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Grid } from '@material-ui/core'
+import { Button, Grid } from '@mui/material'
 import { TypedField } from 'components/form/TypedField'
 import { OTPField } from 'components/form/OTPField'
 import { useFormContext } from 'react-hook-form'

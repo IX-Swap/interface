@@ -31,7 +31,7 @@ export const columns: Array<TableColumn<VirtualTransaction>> = [
   },
   {
     key: 'detail.paymentMethod',
-    label: 'Types Of Transfer'
+    label: 'Type Of Transfer'
   },
   {
     key: 'amount',

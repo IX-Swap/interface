@@ -1,6 +1,6 @@
 import React from 'react'
 import { DSOSelect } from 'app/pages/issuance/components/IssuanceLanding/DSOSelect'
-import { Box } from '@material-ui/core'
+import { Box } from '@mui/material'
 import { NoDeals } from 'app/pages/issuance/components/IssuanceLanding/NoDeals'
 import { useDSOFilter } from 'app/pages/issuance/hooks/useDSOFilter'
 

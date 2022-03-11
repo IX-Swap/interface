@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button } from '@material-ui/core'
+import { Button } from '@mui/material'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { useAuth } from 'hooks/auth/useAuth'
 import { DigitalSecurityOffering } from 'types/dso'
@@ -40,7 +40,7 @@ export const PrimaryInvestLink = ({ data, type }: PrimaryInvestLinkProps) => {
       params={params}
       data-testid='otc-card-link'
       disabled={isDisabled}
-      style={{ fontSize: 16 }}
+      style={{ fontSize: 16, marginTop: 16 }}
     >
       {type !== 'OTC' ? 'Invest' : 'Trade'}
     </Button>

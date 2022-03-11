@@ -1,5 +1,5 @@
 import React from 'react'
-import { TableCell, TableRow } from '@material-ui/core'
+import { TableCell, TableRow } from '@mui/material'
 import { useStyles } from '../shared.styles'
 import { Dividend } from 'types/reports'
 import { formatReportsDateAndTime } from 'helpers/dates'

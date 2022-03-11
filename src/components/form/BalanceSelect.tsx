@@ -1,5 +1,5 @@
 import React from 'react'
-import { MenuItem, Select } from '@material-ui/core'
+import { MenuItem, Select } from '@mui/material'
 import { useAllBalances } from 'hooks/balance/useAllBalances'
 import { queryStatusRenderer } from 'components/form/renderUtils'
 

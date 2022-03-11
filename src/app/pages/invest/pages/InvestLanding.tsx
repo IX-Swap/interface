@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Button, Typography, useTheme, Hidden } from '@material-ui/core'
+import { Grid, Button, Typography, useTheme, Hidden } from '@mui/material'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { InvestRoute } from 'app/pages/invest/router/config'
 import { VSpacer } from 'components/VSpacer'
@@ -29,13 +29,13 @@ export const InvestLanding = () => {
             disableElevation
             style={{ color: theme.palette.primary.main }}
           >
-            View my commitments
+            View my investments
           </Button>
         </Grid>
       </Grid>
       <VSpacer size='medium' />
       <PromotedDSOs />
-      <Hidden mdDown>
+      <Hidden lgDown>
         <VSpacer size='medium' />
       </Hidden>
 

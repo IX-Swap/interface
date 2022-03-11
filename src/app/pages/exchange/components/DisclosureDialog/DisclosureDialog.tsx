@@ -8,9 +8,8 @@ import {
   DialogContentText,
   DialogTitle,
   FormControlLabel,
-  Grid,
-  Typography
-} from '@material-ui/core'
+  Grid
+} from '@mui/material'
 import { useStyles } from './DisclosureDialog.style'
 import { renderStringToHTML } from 'app/components/DSO/utils'
 import { VSpacer } from 'components/VSpacer'
@@ -42,9 +41,7 @@ export const DisclosureDialog = ({
 
   return (
     <Dialog open={isOpen} maxWidth={'md'} classes={{ paper: classes.root }}>
-      <DialogTitle disableTypography classes={{ root: classes.title }}>
-        Disclosures
-      </DialogTitle>
+      <DialogTitle classes={{ root: classes.title }}>Disclosures</DialogTitle>
       <DialogContentText classes={{ root: classes.content }}>
         <Box className={classes.scrollable}>{renderStringToHTML(content)}</Box>
         <VSpacer size={'medium'} />
@@ -61,14 +58,14 @@ export const DisclosureDialog = ({
                     onClick={() => setIsChecked(!isChecked)}
                   />
                 }
-                label={'I agree, accept and understand all the disclosures'}
+                label={
+                  <>
+                    I agree, accept, acknowledge, and understand all the
+                    disclosures and the <ExchangeRulesLink />
+                  </>
+                }
               />
             </Box>
-          </Grid>
-          <Grid item>
-            <Typography>
-              Learn about our <ExchangeRulesLink />
-            </Typography>
           </Grid>
         </Grid>
 

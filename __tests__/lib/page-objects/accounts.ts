@@ -11,16 +11,28 @@ import {
   clearAndTypeText,
   waitForResponseInclude
 } from '../helpers/helpers'
+import { getCookies, getRequest } from '../helpers/api'
 
 class BankAccounts {
   page: any
   constructor(page) {
     this.page = page
   }
-
-  toBankAccounts = async () => {
-    await click(bankAccounts.ACCOUNTS_SECTION, this.page)
-    await click(bankAccounts.BANK_ACCOUNTS, this.page)
+  tokenDepositRequest = async () => {
+    await click(bankAccounts.buttons.DEPOSIT, this.page)
+    await click(bankAccounts.listBox.TOKEN, this.page)
+    await click(bankAccounts.listBox.TOKEN_VALUE, this.page)
+    await waitForText(this.page, '0.0.609610')
+  }
+  tokenWithdrawalRequest = async () => {
+    await click(bankAccounts.buttons.WITHDRAW_SECTON, this.page)
+    await click(bankAccounts.listBox.TOKEN, this.page)
+    await click(bankAccounts.listBox.TOKEN_VALUE, this.page)
+    await typeText(bankAccounts.fields.WALLET, '0.0.609610', this.page)
+    await click(bankAccounts.fields.AMOUNT, this.page)
+    await typeText(bankAccounts.fields.AMOUNT, '1', this.page)
+    await click(bankAccounts.buttons.CONFIRM, this.page)
+    await waitForText(this.page, 'Success')
   }
 
   fillAccountInfoForm = async () => {
@@ -85,6 +97,28 @@ class BankAccounts {
     await click(bankAccounts.buttons.CONFIRM, this.page)
     await waitForResponseInclude(this.page, '/remove')
     await shouldNotExist(bankAccounts.buttons.MORE, this.page)
+  }
+
+  createWithdrawalsRequest = async () => {
+    await click(bankAccounts.listBox.TO_BANK_ACCOUNT, this.page)
+    const locator = await this.page.locator(bankAccounts.listBox.BANK)
+    await locator.last().click()
+    await typeText(bankAccounts.fields.AMOUNT, '10000', this.page)
+    await click(bankAccounts.buttons.CONFIRMATION_WITHDRAWAL, this.page)
+    const code = await this.page.$$('[role="dialog"] input')
+    for (const digit of code) {
+      await digit.fill('1')
+    }
+    await click(bankAccounts.buttons.WITHDRAW, this.page)
+  }
+
+  getBalances = async email => {
+    const { cookies, request } = await getCookies(email)
+    const id = (await request.json()).data._id
+    const resp = await getRequest(cookies, `virtual-accounts/` + id)
+    const availableUSD = resp.data[0].documents[0].balance
+    const availableSGD = resp.data[0].documents[1].balance
+    return { availableSGD, availableUSD }
   }
 }
 

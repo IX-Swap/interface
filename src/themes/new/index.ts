@@ -1,4 +1,4 @@
-import { createTheme, Theme } from '@material-ui/core/styles'
+import { createTheme } from '@mui/material/styles'
 import { darkTheme } from 'themes/new/dark'
 import { getThemeOverrides } from 'themes/new/overrides'
 import { typography } from 'themes/new/typography'
@@ -19,9 +19,9 @@ export const getAppTheme = (themeType: AppTheme, prefersDarkMode: boolean) => {
   //     ? darkTheme
   //     : lightTheme
 
-  return createTheme({
-    ...darkTheme,
-    typography,
-    overrides: getThemeOverrides(darkTheme as Theme)
-  })
+  const theme = createTheme({ ...darkTheme, typography })
+
+  theme.components = getThemeOverrides(theme)
+
+  return theme
 }

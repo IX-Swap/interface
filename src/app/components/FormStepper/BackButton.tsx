@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { Button, ButtonProps } from '@material-ui/core'
+import { Button, ButtonProps } from '@mui/material'
 import { useFormContext } from 'react-hook-form'
 import { MutationResultPair } from 'react-query'
 

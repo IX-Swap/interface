@@ -11,16 +11,15 @@ import {
   Grid,
   PaperProps,
   Checkbox,
-  FormControlLabel,
-  Size
-} from '@material-ui/core'
+  FormControlLabel
+} from '@mui/material'
 import { TableColumn, BaseFilter } from 'types/util'
 import { ActionsType } from 'app/pages/authorizer/components/Actions'
 import { useTableWithPagination } from 'components/TableWithPagination/hooks/useTableWithPagination'
 import { TableRows } from 'components/TableWithPagination/TableRows'
 import { statusColumn } from 'app/pages/authorizer/hooks/useAuthorizerView'
 import { UseSelectionHelperReturnType } from 'hooks/useSelectionHelper'
-import { useTheme } from '@material-ui/core/styles'
+import { useTheme } from '@mui/material/styles'
 import useStyles from './TableView.styles'
 import { NoData } from 'app/components/NoData/NoData'
 
@@ -31,7 +30,10 @@ export interface TableViewRendererProps<T> {
   actions?: ActionsType<T>
   cacheQueryKey: any
 }
-
+export interface RenderHeadCellArgs<T> {
+  item?: TableColumn<T>
+  content?: string
+}
 export interface TableViewProps<T> {
   name?: string
   uri?: string
@@ -49,10 +51,11 @@ export interface TableViewProps<T> {
   selectionHelper?: UseSelectionHelperReturnType<T | unknown>
   paperProps?: PaperProps
   defaultRowsPerPage?: number
-  size?: Size
+  size?: 'small' | 'medium'
   themeVariant?: 'default' | 'primary'
   noDataComponent?: JSX.Element
   noHeader?: boolean
+  actionHeader?: string
 }
 
 export const TableView = <T,>({
@@ -75,7 +78,8 @@ export const TableView = <T,>({
   size = 'medium',
   themeVariant = 'primary',
   noHeader = false,
-  noDataComponent = <NoData title='No Data' />
+  noDataComponent = <NoData title='No Data' />,
+  actionHeader = ''
 }: TableViewProps<T>): JSX.Element => {
   const {
     items,
@@ -98,7 +102,7 @@ export const TableView = <T,>({
   const classes = useStyles()
   const headColor =
     themeVariant === 'primary'
-      ? theme.palette.type === 'light'
+      ? theme.palette.mode === 'light'
         ? '#141272'
         : theme.palette.primary.main
       : 'initial'
@@ -152,7 +156,7 @@ export const TableView = <T,>({
                 onClick={() => toggle(item)}
               />
             }
-            label={firstColumnRender?.(val, item) ?? val}
+            label={firstColumnRender?.(val, item) ?? val ?? ''}
             labelPlacement={'end'}
           />
         )
@@ -160,6 +164,25 @@ export const TableView = <T,>({
       ...columns.filter(col => col.label !== columns[0].label)
     ]
   }
+
+  const renderHeadCell = ({ item, content }: RenderHeadCellArgs<T>) => (
+    <TableCell
+      key={item?.key}
+      style={{ borderBottom: 'none' }}
+      align={item?.headAlign ?? 'left'}
+    >
+      <b
+        style={{
+          color:
+            themeVariant === 'primary'
+              ? theme.palette.slider.activeColor
+              : 'initial'
+        }}
+      >
+        {item?.label ?? content}
+      </b>
+    </TableCell>
+  )
 
   return (
     <Grid container direction='column'>
@@ -181,27 +204,8 @@ export const TableView = <T,>({
                   }}
                 >
                   <TableRow>
-                    {columns.map(e => (
-                      <TableCell
-                        key={e.key}
-                        align={e.headAlign ?? 'left'}
-                        style={{ borderBottom: 'none' }}
-                      >
-                        <b
-                          style={{
-                            color:
-                              themeVariant === 'primary'
-                                ? theme.palette.slider.activeColor
-                                : 'initial'
-                          }}
-                        >
-                          {e.label}
-                        </b>
-                      </TableCell>
-                    ))}
-                    {hasActions && (
-                      <TableCell style={{ borderBottom: 'none' }} />
-                    )}
+                    {columns.map(e => renderHeadCell({ item: e }))}
+                    {hasActions && renderHeadCell({ content: actionHeader })}
                   </TableRow>
                 </TableHead>
               ) : null}

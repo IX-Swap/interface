@@ -1,8 +1,8 @@
-import { ThemeOptions } from '@material-ui/core'
+import { DeprecatedThemeOptions } from '@mui/material'
 import { themeColors } from 'themes/old/colors'
 import tinycolor from 'tinycolor2'
 
-export const lightTheme: ThemeOptions = {
+export const lightTheme: DeprecatedThemeOptions = {
   palette: {
     primary: {
       main: themeColors.primary

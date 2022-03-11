@@ -1,7 +1,7 @@
 import React from 'react'
 import { BlockchainSettings } from 'types/blockchain'
 import { BlockchainInfo } from 'app/pages/admin/components/BlockchainInfo/BlockchainInfo'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 
 interface BlockchainInfoListProps {
   networks: BlockchainSettings['networks']

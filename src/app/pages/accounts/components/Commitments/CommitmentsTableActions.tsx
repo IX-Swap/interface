@@ -1,4 +1,4 @@
-import { Button, Grid } from '@material-ui/core'
+import { Button, Grid } from '@mui/material'
 import { CommitmentInvestForm } from 'app/pages/accounts/components/Commitments/CommitmentInvestForm'
 import { useConfirmCommitment } from 'app/pages/accounts/hooks/useConfirmCommitment'
 import React, { useState } from 'react'

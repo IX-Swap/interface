@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { VSpacer } from 'components/VSpacer'
 import { RejectionMessage } from 'app/pages/authorizer/components/RejectionMessage'
 import { CorporateIdentityView } from 'app/pages/identity/components/CorporateIdentityView/CorporateIdentityView'
@@ -9,6 +9,14 @@ import { CorporateIdentityContainer } from 'app/pages/identity/containers/Corpor
 import { EditButton } from 'app/pages/identity/components/EditButton/EditButton'
 
 export const ViewInvestor = () => {
+  const editLinkMap = {
+    investor: IdentityRoute.editCorporate,
+    'Fund Manager': IdentityRoute.editFundManager,
+    'Fund Administrator': IdentityRoute.editFundAdmin,
+    'Portfolio Manager': IdentityRoute.editPortfolioManager,
+    issuer: IdentityRoute.editIssuer
+  }
+
   return (
     <CorporateIdentityContainer
       component={({ data }) => (
@@ -27,7 +35,7 @@ export const ViewInvestor = () => {
             alignItems='center'
           >
             <EditButton
-              link={IdentityRoute.editCorporate}
+              link={editLinkMap[data.type]}
               params={{ identityId: data._id, userId: data.user._id }}
             />
           </Grid>

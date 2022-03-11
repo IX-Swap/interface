@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Grid, Typography } from '@material-ui/core'
+import { Box, Grid, Typography } from '@mui/material'
 import { DataroomHeader } from 'components/dataroom/DataroomHeader'
 import { DataroomViewRow } from 'components/dataroom/DataroomViewRow'
 import { LabelledValue } from 'components/LabelledValue'
@@ -20,7 +20,7 @@ export const BeneficialOwner = ({
     <Grid container direction={'column'} spacing={6}>
       <Grid item container>
         <Grid item xs={12} md={4}>
-          <LabelledValue value={personnel.fullName} label='Fullname' />
+          <LabelledValue value={personnel.fullName} label='Full Name' />
         </Grid>
         <Grid item xs={12} md={4}>
           <LabelledValue

@@ -8,11 +8,11 @@ import { AppRoute } from 'components/AppRoute'
 export const CommitmentsRouter = () => {
   return (
     <Switch>
-      <AppRoute breadcrumb='View Commitment' path={CommitmentRoute.view}>
+      <AppRoute breadcrumb='View Investment' path={CommitmentRoute.view}>
         <InvestCommitmentView />
       </AppRoute>
 
-      <AppRoute breadcrumb='My Commitments' path={CommitmentRoute.list}>
+      <AppRoute breadcrumb='My Investments' path={CommitmentRoute.list}>
         <MyCommitments />
       </AppRoute>
     </Switch>

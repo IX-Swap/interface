@@ -7,9 +7,9 @@ import {
   FieldValuesFromControl
 } from '@hookform/strictly-typed/dist/types'
 import { Control } from 'react-hook-form'
-import { OverrideProps } from '@material-ui/core/OverridableComponent'
+import { OverrideProps } from '@mui/material/OverridableComponent'
 import { getErrorFromControl, pathToString, hasValue } from 'helpers/forms'
-import { FormControl, InputLabel, FormHelperText } from '@material-ui/core'
+import { FormControl, InputLabel, FormHelperText } from '@mui/material'
 import { ErrorMessage } from '@hookform/error-message'
 
 export interface TypedFieldProps<
@@ -18,13 +18,14 @@ export interface TypedFieldProps<
   TControl extends Control
 > {
   name: TFieldName
-  label: string | JSX.Element
+  label?: string | JSX.Element
   control: TControl
   rootName?: string
   defaultValue?: DeepPathValue<TFieldValues, TFieldName>
   valueExtractor?: (...args: any[]) => any
   customRenderer?: boolean
   helperText?: string
+  isErrorMessageEnabled?: boolean
   onChange?: (
     value: DeepPathValue<TFieldValues, TFieldName>,
     path: string,
@@ -40,6 +41,7 @@ type FieldsToOverride =
   | 'onFocus'
   | 'error'
   | 'defaultValue'
+  | 'renderInput'
 
 export const TypedField = <
   TFieldValues extends UnpackNestedValue<FieldValuesFromControl<TControl>>,
@@ -61,6 +63,7 @@ export const TypedField = <
     component,
     valueExtractor,
     customRenderer = false,
+    isErrorMessageEnabled = true,
     rootName,
     helperText,
     onChange,
@@ -127,22 +130,26 @@ export const TypedField = <
           })
         }
 
+        // temporarily fix to prevent input label
+        const isTextField = (component as any)?.render?.name === 'TextField'
+
         return (
           <FormControl fullWidth variant={rest?.variant}>
-            <InputLabel
-              htmlFor={path}
-              variant={rest?.variant}
-              error={hasError}
-              shrink={
-                hasStartAdornment ||
-                isFocused ||
-                hasValue(controllerProps.value) ||
-                (props.displayEmpty === true && controllerProps.value === '') ||
-                rest?.variant !== 'standard'
-              }
-            >
-              {label}
-            </InputLabel>
+            {!isTextField && label !== undefined && (
+              <InputLabel
+                htmlFor={path}
+                variant={rest?.variant}
+                error={hasError}
+                shrink={
+                  hasStartAdornment ||
+                  isFocused ||
+                  hasValue(controllerProps.value) ||
+                  (props.displayEmpty === true && controllerProps.value === '')
+                }
+              >
+                {label}
+              </InputLabel>
+            )}
 
             {createElement(component, {
               ...rest,
@@ -157,7 +164,7 @@ export const TypedField = <
               <FormHelperText>{helperText}</FormHelperText>
             )}
 
-            {hasError && (
+            {hasError && isErrorMessageEnabled && (
               <ErrorMessage
                 errors={control.formStateRef.current.errors}
                 name={path}

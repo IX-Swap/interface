@@ -1,8 +1,8 @@
 import React from 'react'
-import { Typography, Grid, Link, Box } from '@material-ui/core'
+import { Typography, Grid, Link, Box } from '@mui/material'
 import appStoreLogo from '../assets/appstore.png'
 import googlePlayLogo from '../assets/googleplay.png'
-import { StepWrapper } from 'app/pages/security/pages/setup2fa/components/StepWrapper'
+import { StepWrapper } from 'app/pages/security/components/StepWrapper'
 
 export const Step1Download = () => (
   <StepWrapper title='Install Authenticator App in Your Smartphone Device'>

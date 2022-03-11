@@ -5,7 +5,7 @@ import {
   MenuItem,
   Select,
   SelectProps
-} from '@material-ui/core'
+} from '@mui/material'
 import { ROLES } from 'config/roles'
 
 export interface RoleSelectProps extends SelectProps {
@@ -29,7 +29,7 @@ export const RoleSelect = (props: RoleSelectProps) => {
       renderValue={selected => (selected as string[]).join(', ')}
     >
       {ROLES.map(name => (
-        <MenuItem key={name} value={name}>
+        <MenuItem key={name} value={name} disabled={name === 'user'}>
           <Checkbox checked={props.value.includes(name)} />
           <ListItemText primary={getName(name)} />
         </MenuItem>

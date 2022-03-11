@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card } from '@material-ui/core'
+import { Card } from '@mui/material'
 import { DataroomViewRow } from 'components/dataroom/DataroomViewRow'
 import { DataroomFile } from 'types/dataroomFile'
 import { TableColumn } from 'types/util'

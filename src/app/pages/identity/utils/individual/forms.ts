@@ -6,7 +6,6 @@ import {
   IndividualPersonalInfoFormValues,
   IndividualTaxDeclarationFormValues
 } from 'app/pages/identity/types/forms'
-import { getFundSource } from 'app/pages/identity/utils/individual/view'
 
 export const getPersonalInfoFormValues = (
   data: IndividualIdentity
@@ -20,6 +19,7 @@ export const getPersonalInfoFormValues = (
     email: data?.email,
     contactNumber: data?.contactNumber,
     nationality: data?.nationality,
+    gender: data?.gender,
     address: {
       line1: data?.address?.line1,
       line2: data?.address?.line2,
@@ -39,7 +39,7 @@ export const getFinancialInfoFormValues = (
     employer: data?.employer,
     employmentStatus: data?.employmentStatus,
     annualIncome: data?.annualIncome,
-    sourceOfFund: getFundSource(data)
+    sourceOfFund: data?.sourceOfFund
   }
 }
 

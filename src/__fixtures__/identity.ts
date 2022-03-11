@@ -103,6 +103,7 @@ export const individual: IndividualIdentity = {
   lastName: 'Doe',
   middleName: '',
   nationality: 'Russian',
+  gender: 'Male',
   occupation: 'Occupied',
   // politicallyExposed: false,
   sourceOfWealth: '___',
@@ -138,13 +139,7 @@ export const individual: IndividualIdentity = {
   documents: [],
   address,
   user,
-  sourceOfFund: [
-    {
-      name: 'Inheritance/Gifts',
-      checked: true,
-      value: 20
-    }
-  ],
+  sourceOfFund: 'LOAN',
   createdBy: '12345'
 }
 

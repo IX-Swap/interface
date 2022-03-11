@@ -1,6 +1,6 @@
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import React, { ChangeEvent } from 'react'
-import { FormControlLabel, Grid, Radio, RadioGroup } from '@material-ui/core'
+import { FormControlLabel, Grid, Radio, RadioGroup } from '@mui/material'
 
 export const PriceFilter = () => {
   const { getFilterValue, updateFilter } = useQueryFilter()

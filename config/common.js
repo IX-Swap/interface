@@ -2,6 +2,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const path = require('path')
 const webpack = require('webpack')
 const dotenv = require('dotenv')
+const { generateSprite } = require('./generateSprite')
 
 dotenv.config()
 
@@ -69,6 +70,11 @@ module.exports = {
     ]
   },
   plugins: [
+    {
+      apply: compiler => {
+        compiler.hooks.compile.tap('Generate SVG Sprite', generateSprite)
+      }
+    },
     new HtmlWebpackPlugin({
       inject: 'head',
       scriptLoading: 'defer',
@@ -79,5 +85,8 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env': JSON.stringify(process.env)
     })
-  ]
+  ],
+  watchOptions: {
+    ignored: path.resolve('./src/assets/icons/sprite')
+  }
 }

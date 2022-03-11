@@ -1,8 +1,9 @@
-import { TableCell, TableCellProps } from '@material-ui/core'
+import { TableCell, TableCellProps } from '@mui/material'
 import { useStyles } from 'app/pages/exchange/components/Trades/TradesTablecell.styles'
 import React from 'react'
+import { OrderSide } from 'types/order'
 export interface TradesTableCellProps extends TableCellProps {
-  transaction?: 'BID' | 'ASK'
+  transaction?: OrderSide
 }
 
 export const TradesTableCell = ({

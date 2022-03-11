@@ -1,4 +1,4 @@
-import { Box, Grid } from '@material-ui/core'
+import { Box, Grid } from '@mui/material'
 import { CashDepositDetails } from 'app/pages/accounts/components/VirtualAccountCashDeposit/CashDepositDetails'
 import { DepositInfoProps } from 'app/pages/accounts/components/VirtualAccountCashDeposit/Fast'
 import React from 'react'
@@ -31,10 +31,6 @@ export const Tt = ({ accountId, currency }: DepositInfoProps) => {
     {
       label: 'Beneficiary’s Bank Address:',
       value: '48-01 10 MARINA BLVD, MARINA BAY FIN S(018983)'
-    },
-    {
-      label: 'Message to receiver/beneficiary/Ref/Bill ref:',
-      value: 'InvestaX to recommend'
     },
     {
       label: 'Time Estimation for Deposit:',

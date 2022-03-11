@@ -1,6 +1,6 @@
 import React from 'react'
 import { TypedField } from 'components/form/TypedField'
-import { Grid, TextField } from '@material-ui/core'
+import { Grid, TextField } from '@mui/material'
 import { useFormContext } from 'react-hook-form'
 import { RequestPasswordResetArgs } from 'types/auth'
 
@@ -15,7 +15,7 @@ export const RequestFields = () => {
         fullWidth
         name='email'
         label='Email'
-        placeholder={'Email'}
+        placeholder={'Email Address'}
         InputLabelProps={{
           shrink: true
         }}

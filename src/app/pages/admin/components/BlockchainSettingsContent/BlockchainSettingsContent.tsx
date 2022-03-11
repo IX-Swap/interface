@@ -1,4 +1,4 @@
-import { Box, Card, CardContent, LinearProgress } from '@material-ui/core'
+import { Box, Card, CardContent, LinearProgress } from '@mui/material'
 import React from 'react'
 import { BlockchainSettingsForm } from 'app/pages/admin/components/BlockchainSettingsForm/BlockchainSettingsForm'
 import { BlockchainMetaDataTable } from 'app/pages/admin/components/BlockchainMetaDataTable/BlockchainMetaDataTable'

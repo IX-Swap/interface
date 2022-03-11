@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { Grid, Tab, Tabs } from '@material-ui/core'
+import { Grid, Tab, Tabs } from '@mui/material'
 import { Form } from 'components/form/Form'
-import { formatMoney } from 'helpers/numbers'
+import { formatMoney, formatTokenBalance } from 'helpers/numbers'
 import { TabPanel } from 'components/TabPanel'
 import { LabelledValue } from 'components/LabelledValue'
 import {
@@ -14,6 +14,7 @@ import { Submit } from 'components/form/Submit'
 import { transformPlaceOrderFormValuesToArgs } from 'app/pages/exchange/utils/order'
 import { useParams } from 'react-router-dom'
 import { isEmptyString } from 'helpers/strings'
+import { OrderSide } from 'types/order'
 
 export type ActiveTabName = 'BUY' | 'SELL'
 
@@ -45,19 +46,21 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
   const totalCurrencyLabel = currencyLabel
   const { pairId } = useParams<{ pairId: string }>()
   const handleSubmit = async (values: PlaceOrderFormValues) => {
-    if (isEmptyString(pairId)) return
+    if (isEmptyString(pairId)) {
+      return
+    }
 
     await onSubmit(
       transformPlaceOrderFormValuesToArgs(
         values,
-        activeTabNameIdx === 0 ? 'BID' : 'ASK',
+        activeTabNameIdx === 0 ? OrderSide.BID : OrderSide.ASK,
         pairId
       )
     )
   }
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit} resetAfterSubmit>
       <Grid container direction={'column'} className={classes.container}>
         <Grid item>
           <Tabs
@@ -98,7 +101,7 @@ export const PlaceOrderForm: React.FC<PlaceOrderFormProps> = ({
 
           <Grid item>
             <LabelledValue
-              value={formatMoney(tokenBalance, tokenLabel)}
+              value={formatTokenBalance(tokenBalance, tokenLabel)}
               label=''
             />
           </Grid>

@@ -1,12 +1,5 @@
 import React from 'react'
-import {
-  Box,
-  Grid,
-  Typography,
-  Button,
-  Card,
-  CardContent
-} from '@material-ui/core'
+import { Box, Grid, Typography, Button, Card, CardContent } from '@mui/material'
 import { Bank } from 'types/bank'
 import { BankFormValues } from 'app/pages/accounts/types'
 import { bankFormValidationSchema } from 'app/pages/accounts/validation'
@@ -76,11 +69,7 @@ export const BankForm: React.FC<BankFormProps> = props => {
         </Grid>
 
         <Grid container item xs={12} justifyContent='center'>
-          <Button
-            component={AppRouterLinkComponent}
-            to={BanksRoute.list}
-            color='default'
-          >
+          <Button component={AppRouterLinkComponent} to={BanksRoute.list}>
             Cancel
           </Button>
           <Box marginX={1} />

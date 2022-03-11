@@ -4,14 +4,14 @@ import { BannersCarousel } from 'app/pages/invest/components/BannersCarousel'
 import * as useBannersList from 'app/pages/admin/hooks/useBannersList'
 
 import { Avatar } from 'components/Avatar'
-import { Typography } from '@material-ui/core'
+import { Typography } from '@mui/material'
 import { emptyBanner } from '__fixtures__/banner'
 
 jest.mock('components/Avatar', () => ({
   Avatar: jest.fn(() => null)
 }))
 
-jest.mock('@material-ui/core/Typography', () => jest.fn(() => null))
+jest.mock('@mui/material/Typography', () => jest.fn(() => null))
 
 const bannerWithEmptyTitle = { ...emptyBanner, title: '' }
 
@@ -60,7 +60,7 @@ describe('BannersCarousel', () => {
     expect(Typography).toHaveBeenCalledWith(
       expect.objectContaining({
         variant: 'h4',
-        style: { marginBottom: 20, textAlign: 'left' },
+        style: { marginBottom: '20px', textAlign: 'left' },
         children: emptyBanner.title
       }),
       {}

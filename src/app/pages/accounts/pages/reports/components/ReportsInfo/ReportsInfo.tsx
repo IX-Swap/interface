@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { useStyles } from './ReportsInfo.styles'
 import { useGetAccountInfo } from 'app/pages/accounts/hooks/useGetAccountInfo'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'

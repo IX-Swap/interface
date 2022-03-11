@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid } from '@material-ui/core'
+import { Grid, Typography } from '@mui/material'
 import { DSOFilters } from 'app/pages/issuance/components/DSOFilters/DSOFilters'
 import { DSOCards } from 'app/pages/issuance/components/DSOCards'
 import { AssetsUnderManagement } from 'app/pages/issuance/components/AssetsUnderManagement/AssetsUnderManagement'
@@ -37,7 +37,7 @@ export const Dashboard = () => {
         <VSpacer size={'medium'} />
       </Grid>
 
-      {hasSubfunds ? (
+      {hasSubfunds && !isSubFundStatsLoading && (
         <>
           <Grid item container>
             <DSOCards />
@@ -82,8 +82,11 @@ export const Dashboard = () => {
             </Grid>
           )}
         </>
-      ) : (
-        <LoadingIndicator />
+      )}
+
+      {isSubFundStatsLoading && <LoadingIndicator />}
+      {!hasSubfunds && !isSubFundStatsLoading && (
+        <Typography variant='subtitle1'>You have no subfunds</Typography>
       )}
     </Grid>
   )

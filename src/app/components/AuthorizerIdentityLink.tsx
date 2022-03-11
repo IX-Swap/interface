@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react'
 import { AppRouterLink } from 'components/AppRouterLink'
-import { useTheme } from '@material-ui/core/styles'
+import { useTheme } from '@mui/material/styles'
 
 export interface IdentityLinkProps {
   type: 'individual' | 'corporate'

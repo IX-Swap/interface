@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { VirtualAccountDetails } from 'app/pages/accounts/components/VirtualAccountDetails'
 import { VirtualAccountSelect } from 'app/pages/accounts/components/VirtualAccountSelect'
 import React from 'react'

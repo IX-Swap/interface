@@ -3,14 +3,13 @@ import { baseCreds } from '../helpers/creds'
 import { userRegistration } from '../helpers/api'
 import { text } from '../helpers/text'
 
-// import { userRegistration } from "../helpers/api-helpers";
-
 import {
   click,
   typeText,
   getMessage,
   navigate,
-  waitForText
+  waitForText,
+  shouldExist
 } from '../helpers/helpers'
 
 class Authentication {
@@ -25,10 +24,11 @@ class Authentication {
     await navigate(confirmLink, this.page)
   }
 
-  loginWithout2fa = async (email, password) => {
-    await typeText(authForms.fields.EMAIL, email, this.page)
-    await typeText(authForms.fields.PASSWORD, password, this.page)
-    await click(authForms.buttons.LOGIN, this.page)
+  loginWithout2fa = async (email, password, page = this.page) => {
+    await typeText(authForms.fields.EMAIL, email, page)
+    await typeText(authForms.fields.PASSWORD, password, page)
+    await click(authForms.buttons.LOGIN, page)
+    await shouldExist(authForms.buttons.PROFILE_VIEW, page)
   }
 
   login = async (email, password) => {
@@ -60,9 +60,10 @@ class Authentication {
   }
 
   submitRegistrationFormByAPI = async email => {
-    await userRegistration(email)
+    const resp = await userRegistration(email)
     await this.confirmation(email)
     await this.login(email, baseCreds.PASSWORD)
+    return resp
   }
 
   resetPassword = async email => {

@@ -6,7 +6,7 @@ import {
   GridProps,
   Typography,
   Box
-} from '@material-ui/core'
+} from '@mui/material'
 import { VSpacer } from 'components/VSpacer'
 import { useStyles } from 'app/components/DSO/components/DSOContainer.styles'
 

@@ -4,13 +4,15 @@ import { formatMoney, formatPercent } from 'helpers/numbers'
 import { TableColumn } from 'types/util'
 import { getOrderSideName } from 'helpers/strings'
 import { Order } from 'types/order'
-import { Typography } from '@material-ui/core'
+import { Typography } from '@mui/material'
 
 export const renderTicker = (value: string, row: any) => {
   return <Typography variant='subtitle1'>{value}</Typography>
 }
 
 export const renderMoney = (value: any, row: any) => formatMoney(value, '')
+export const renderAmount = (value: any, row: any) =>
+  Number.isInteger(value) ? formatMoney(value, '') : value
 
 export const columns: Array<TableColumn<Order>> = [
   {
@@ -35,7 +37,7 @@ export const columns: Array<TableColumn<Order>> = [
   {
     key: 'amount',
     label: 'Amount',
-    render: renderMoney
+    render: renderAmount
   },
   {
     key: 'total',

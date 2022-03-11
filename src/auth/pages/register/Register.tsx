@@ -3,7 +3,7 @@ import { registerFormValidationSchema } from 'validation/auth'
 import { SignupArgs } from 'types/auth'
 import { observer } from 'mobx-react'
 import { useSignup } from 'auth/hooks/useSignup'
-import { Divider, Grid, Typography } from '@material-ui/core'
+import { Divider, Grid, Typography } from '@mui/material'
 import { Form } from 'components/form/Form'
 import { RegisterFields } from 'auth/pages/register/components/RegisterFields'
 import { Submit } from 'components/form/Submit'
@@ -20,7 +20,7 @@ export const registerFormInitialValues = {
 }
 
 export const Register: React.FC = observer(() => {
-  const { title, question, link } = useStyles()
+  const { title, question, link, support } = useStyles({})
   const [signup, { isLoading }] = useSignup()
   const handleSubmit = async (values: SignupArgs) => {
     await signup({
@@ -70,6 +70,15 @@ export const Register: React.FC = observer(() => {
             <AppRouterLink to={AuthRoute.login} className={link}>
               Sign In.
             </AppRouterLink>
+          </Typography>
+        </Grid>
+        <Grid item>
+          <VSpacer size={'large'} />
+          <Typography align='center' className={support} variant={'body2'}>
+            If you have any issues, please contact us{' '}
+            <a href={'mailto:support@investax.io'} className={link}>
+              support@investax.io
+            </a>
           </Typography>
         </Grid>
       </Grid>

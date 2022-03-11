@@ -41,7 +41,7 @@ describe('transformDSOToFormValues', () => {
       tokenName: '',
       network: '',
       corporate: '',
-      logo: null,
+      logo: '',
       equityMultiple: '',
       leverage: '',
       distributionFrequency: '',

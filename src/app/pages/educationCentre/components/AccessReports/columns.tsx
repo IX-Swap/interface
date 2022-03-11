@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Card } from '@material-ui/core'
+import { Box, Card } from '@mui/material'
 import { TableColumn } from 'types/util'
 import {
   ReportRow,

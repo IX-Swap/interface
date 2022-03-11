@@ -8,7 +8,7 @@ export const AppRoute = {
   invest: makeURL(['app', 'invest']),
   admin: makeURL(['app', 'admin']),
   OTCMarket: makeURL(['app', 'OTCMarket']),
-  security: makeURL(['app', 'settings']),
+  security: '/app/settings',
   notifications: makeURL(['app', 'notifications']),
   educationCentre: '/app/education-centre',
   fundsManagement: '/app/funds-management'

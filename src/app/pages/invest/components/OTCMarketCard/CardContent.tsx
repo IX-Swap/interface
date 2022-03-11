@@ -1,8 +1,8 @@
 import React from 'react'
 import { DigitalSecurityOffering } from 'types/dso'
-import Box from '@material-ui/core/Box'
-import Grid from '@material-ui/core/Grid'
-import Typography from '@material-ui/core/Typography'
+import Box from '@mui/material/Box'
+import Grid from '@mui/material/Grid'
+import Typography from '@mui/material/Typography'
 import { renderStringToHTML } from 'app/components/DSO/utils'
 import useStyles from 'app/pages/invest/components/OTCMarketCard/CardContent.style'
 import { LabelledValue } from 'components/LabelledValue'
@@ -104,9 +104,7 @@ export const CardContent = (props: CardContentProps) => {
             labelWeight='default'
             valueFontSize={16}
             labelFontSize={14}
-            label={
-              type !== 'OTC' ? 'Total Fundraising Amount' : 'Target Fundraise'
-            }
+            label={'Target Fundraise'}
             value={formatMoney(
               type !== 'OTC' ? data.totalFundraisingAmount : data.raisedAmount,
               type !== 'OTC' ? data.currency.symbol : 'SGD'

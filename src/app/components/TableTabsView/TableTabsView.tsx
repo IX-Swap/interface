@@ -1,4 +1,4 @@
-import { Box, Tab, Tabs } from '@material-ui/core'
+import { Box, Tab, Tabs } from '@mui/material'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
 import { TabPanel } from 'components/TabPanel'
 import React, { Fragment } from 'react'

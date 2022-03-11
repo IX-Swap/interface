@@ -5,12 +5,12 @@ import {
   PrimaryInvestLink,
   PrimaryInvestLinkProps
 } from 'app/pages/invest/components/OTCMarketCard/PrimaryInvestLink'
-import * as Button from '@material-ui/core/Button'
+import * as Button from '@mui/material/Button'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { OTCMarketRoute } from 'app/pages/exchange/router/config'
 import { InvestRoute } from 'app/pages/invest/router/config'
 
-jest.mock('@material-ui/core/Button', () => jest.fn(() => null))
+jest.mock('@mui/material/Button', () => jest.fn(() => null))
 
 describe('PrimaryInvestLink', () => {
   const primaryProps: PrimaryInvestLinkProps = {
@@ -27,7 +27,7 @@ describe('PrimaryInvestLink', () => {
     data: dso
   }
   const defaultPrimaryInvestProps = {
-    style: { fontSize: 16 },
+    style: { fontSize: 16, marginTop: 16 },
     variant: 'contained',
     color: 'primary',
     component: AppRouterLinkComponent

@@ -119,6 +119,7 @@ export const individual: IndividualIdentity = {
   middleName: '',
   nationality: 'Russian',
   occupation: 'Occupied',
+  gender: 'Male',
   // politicallyExposed: false,
   sourceOfWealth: '___',
   status: 'Submitted',

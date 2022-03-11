@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Input } from '@material-ui/core'
+import { Grid, Input } from '@mui/material'
 import { useFormContext } from 'react-hook-form'
 import { TypedField } from 'components/form/TypedField'
 import { AssetSelect } from 'components/form/AssetSelect/AssetSelect'

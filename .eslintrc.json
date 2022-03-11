@@ -4,7 +4,7 @@
         "browser": true,
         "es6": true
     },
-    "ignorePatterns": ["node_modules", "coverage", "reports", "public", ".github", ".scannerwork", "charting_library"],
+    "ignorePatterns": ["node_modules", "coverage", "reports", "public", ".github", ".scannerwork", "charting_library","__tests__"],
     "plugins": ["prettier"],
     "extends": [
         "standard-with-typescript",

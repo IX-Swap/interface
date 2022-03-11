@@ -1,10 +1,9 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { DigitalSecurityOffering } from 'types/dso'
 import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
 import { DSOPreview } from 'app/components/DSO/DSOPreview/DSOPreview'
-import { Grid } from '@material-ui/core'
-import { DSOSidebar } from 'app/components/DSO/components/DSOSidebar'
-import { DSOPreviewActions } from 'app/components/DSO/components/DSOPreviewActions'
+import { DSOBaseFieldsView } from 'app/components/DSO/DSOPreview/DSOBaseFieldsView'
+
 export interface DSOViewProps {
   data: DigitalSecurityOffering
   showAuthorizations?: boolean
@@ -12,21 +11,14 @@ export interface DSOViewProps {
 }
 
 export const DSOView = (props: DSOViewProps) => {
-  const { data, showAuthorizations = false, showSidebar = false } = props
+  const { data, showSidebar = false } = props
 
   useSetPageTitle(data.tokenName)
 
   return (
-    <Grid container>
-      <Grid item lg={showSidebar ? 9 : 12} container direction='column'>
-        <DSOPreview data={data} showAuthorizations={showAuthorizations} />
-      </Grid>
-
-      {showSidebar && (
-        <Grid item lg={3}>
-          <DSOSidebar dso={data} footer={<DSOPreviewActions dso={data} />} />
-        </Grid>
-      )}
-    </Grid>
+    <Fragment>
+      <DSOBaseFieldsView dso={data} />
+      <DSOPreview data={data} showSidebar={showSidebar} />
+    </Fragment>
   )
 }

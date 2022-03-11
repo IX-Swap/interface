@@ -1,32 +1,25 @@
 import React from 'react'
-import {
-  KeyboardDateTimePicker,
-  KeyboardDateTimePickerProps,
-  MuiPickersUtilsProvider
-} from '@material-ui/pickers'
-import DateFnsUtils from '@date-io/date-fns'
+import MobileDateTimePicker, {
+  MobileDateTimePickerProps
+} from '@mui/lab/MobileDateTimePicker'
+import { FormHelperText, TextField } from '@mui/material'
 import { useFormError } from 'hooks/useFormError'
-import { FormHelperText } from '@material-ui/core'
 
-export const DateTimePickerComponent = (props: KeyboardDateTimePickerProps) => {
+export const DateTimePickerComponent = (props: MobileDateTimePickerProps) => {
   return (
-    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <KeyboardDateTimePicker
-        {...props}
-        variant='dialog'
-        format='MM/dd/yyyy'
-        placeholder='mm/dd/yy'
-        margin='none'
-        fullWidth
-        KeyboardButtonProps={{
-          'aria-label': 'change date'
-        }}
-      />
-    </MuiPickersUtilsProvider>
+    <MobileDateTimePicker
+      inputFormat='MM/dd/yy'
+      {...props}
+      renderInput={inputProps => (
+        <TextField variant='outlined' fullWidth label='Date' {...inputProps} />
+      )}
+    />
   )
 }
 
-export interface DateTimePickerProps extends KeyboardDateTimePickerProps {}
+export interface DateTimePickerProps extends MobileDateTimePickerProps {
+  name: string
+}
 
 export const DateTimePicker = (props: DateTimePickerProps) => {
   const { name } = props

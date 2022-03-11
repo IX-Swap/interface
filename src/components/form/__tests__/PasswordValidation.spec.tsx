@@ -9,20 +9,6 @@ describe('PasswordValidationDisplay', () => {
     jest.clearAllMocks()
   })
 
-  it('renders correct component when password has no value', () => {
-    const { getByText } = render(
-      <Form>
-        <PasswordValidation />
-      </Form>
-    )
-
-    expect(
-      getByText(
-        'Must have 12 characters, an uppercase, a special character, and a number.'
-      )
-    ).toBeTruthy()
-  })
-
   it('renders null when password has value but no errors', () => {
     const { container } = render(
       <Form defaultValues={{ password: 'password' }}>

@@ -1,6 +1,6 @@
-import { makeStyles } from '@material-ui/core/styles'
+import makeStyles from '@mui/styles/makeStyles'
 
-export const useStlyes = makeStyles(theme => ({
+export const useStyles = makeStyles(theme => ({
   container: {
     height: '100vh',
     width: '100vw',

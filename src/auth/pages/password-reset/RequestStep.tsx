@@ -1,5 +1,5 @@
 import React from 'react'
-import { Typography, Grid, Divider } from '@material-ui/core'
+import { Typography, Grid, Divider } from '@mui/material'
 import { RequestPasswordResetArgs } from 'types/auth'
 import { requestPasswordResetValidationSchema } from 'validation/auth'
 import { useRequestPasswordReset } from 'auth/hooks/useRequestPasswordReset'
@@ -40,7 +40,7 @@ export const RequestStep: React.FC = () => {
           <Typography className={title} variant={'h3'} align='center'>
             Forgot <br /> Password?
           </Typography>
-          <VSpacer size={'small'} />
+          <VSpacer size={'medium'} />
         </Grid>
         <RequestFields />
         <Grid item container justifyContent='center'>

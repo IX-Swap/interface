@@ -12,6 +12,7 @@ const detachedState = {
   state: 'detached',
   timeout: DEFAULT_SELECTOR_TIMEOUT
 }
+
 async function waitNewPage(context, page, element) {
   const [secondPage] = await Promise.all([
     context.waitForEvent('page'),
@@ -42,9 +43,6 @@ async function uploadFiles(page, element, file, resp = 'yes') {
   const inputsFile = await page.$$(element)
   for (const element of inputsFile) {
     await element.setInputFiles(file)
-    await element.evaluate(upload =>
-      upload.dispatchEvent(new Event('change', { bubbles: true }))
-    )
     if (resp === 'yes') {
       await waitForResponseInclude(page, '/dataroom')
     }
@@ -54,8 +52,8 @@ async function uploadFiles(page, element, file, resp = 'yes') {
 
 async function click(selector, page) {
   await page.waitForSelector(LOADER, detachedState)
-  await page.waitForSelector(selector, attachedState)
   try {
+    await page.waitForSelector(selector, attachedState)
     await page.click(selector)
   } catch {
     throw new Error(`Could NOT find SELECTOR for click: ${selector}`)
@@ -66,7 +64,6 @@ async function typeText(selector, words, page) {
   await page.waitForSelector(LOADER, detachedState)
   try {
     await page.waitForSelector(selector, attachedState)
-
     await page.type(selector, words)
   } catch {
     throw new Error(`Could NOT find SELECTOR for type: ${selector}`)
@@ -78,9 +75,7 @@ async function clearAndTypeText(selector, words, page) {
   await page.waitForSelector(LOADER, detachedState)
   try {
     const field = await page.waitForSelector(selector, attachedState)
-    await field.click()
-    await page.keyboard.press('Control+A')
-    await page.keyboard.press('Backspace')
+    await field.fill('')
     await field.type(words)
     return words
   } catch (error) {
@@ -163,6 +158,7 @@ async function getMessage(email, page, messageTitle = 'Invitation') {
     throw new Error(`"Get message" by API doesn't work `)
   }
 }
+
 async function waitForResponseInclude(page, responseText) {
   try {
     await page.waitForResponse(
@@ -174,12 +170,14 @@ async function waitForResponseInclude(page, responseText) {
     throw new Error(`Response url does NOT include: ${responseText} `)
   }
 }
+
 async function waitForRequestInclude(page, requestText, method = 'GET') {
   try {
-    await page.waitForRequest(
+    const request = await page.waitForRequest(
       request =>
         request.url().includes(requestText) && request.method() === method
     )
+    return request
   } catch {
     throw new Error(
       `Request url does NOT include: ${requestText} or the method is not ${method} `
@@ -207,6 +205,13 @@ async function screenshotMatching(name: string, element, page, range = 0.9) {
   })
 }
 
+async function getCount(page, element) {
+  await page.waitForSelector(element, attachedState)
+  // Do not add wait for element
+  const sum = await page.$$eval(element, elements => elements.length)
+  return sum
+}
+
 export {
   shouldNotExist,
   screenshotMatching,
@@ -223,5 +228,7 @@ export {
   waitForText,
   randomString,
   waitNewPage,
-  isDisabledList
+  isDisabledList,
+  getCount,
+  LOADER
 }

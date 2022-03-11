@@ -5,28 +5,23 @@ import {
   DSOPreviewProps
 } from 'app/components/DSO/DSOPreview/DSOPreview'
 import { dso } from '__fixtures__/authorizer'
-import { DSOBaseFieldsView } from 'app/components/DSO/DSOPreview/DSOBaseFieldsView'
 import { DSOInformationView } from 'app/components/DSO/DSOPreview/DSOInformationView'
-import { DSOPricingView } from 'app/components/DSO/DSOPreview/DSOPricingView'
+import { DSOPricingViewCompact } from 'app/components/DSO/components/DSOPricingViewCompact'
 import { DSOTeamView } from 'app/components/DSO/DSOPreview/DSOTeamView'
-import { DSOTermsView } from 'app/components/DSO/DSOPreview/DSOTermsView'
+import { DSOTermsViewCompact } from 'app/components/DSO/DSOPreview/DSOTermsViewCompact'
 
 window.URL.revokeObjectURL = jest.fn()
 
-jest.mock('app/components/DSO/DSOPreview/DSOBaseFieldsView', () => ({
-  DSOBaseFieldsView: jest.fn(() => null)
-}))
-
-jest.mock('app/components/DSO/DSOPreview/DSOPricingView', () => ({
-  DSOPricingView: jest.fn(() => null)
+jest.mock('app/components/DSO/components/DSOPricingViewCompact', () => ({
+  DSOPricingViewCompact: jest.fn(() => null)
 }))
 
 jest.mock('app/components/DSO/DSOPreview/DSOInformationView', () => ({
   DSOInformationView: jest.fn(() => null)
 }))
 
-jest.mock('app/components/DSO/DSOPreview/DSOTermsView', () => ({
-  DSOTermsView: jest.fn(() => null)
+jest.mock('app/components/DSO/DSOPreview/DSOTermsViewCompact', () => ({
+  DSOTermsViewCompact: jest.fn(() => null)
 }))
 
 jest.mock('app/components/DSO/DSOPreview/DSOTeamView', () => ({
@@ -34,7 +29,7 @@ jest.mock('app/components/DSO/DSOPreview/DSOTeamView', () => ({
 }))
 
 describe('DSOPreview', () => {
-  const props: DSOPreviewProps = { data: dso, showAuthorizations: false }
+  const props: DSOPreviewProps = { data: dso }
 
   afterEach(async () => {
     jest.clearAllMocks()
@@ -43,9 +38,8 @@ describe('DSOPreview', () => {
   it('renders DSOToken', () => {
     render(<DSOPreview {...props} />)
 
-    expect(DSOBaseFieldsView).toHaveBeenCalled()
-    expect(DSOPricingView).toHaveBeenCalled()
-    expect(DSOTermsView).toHaveBeenCalled()
+    expect(DSOPricingViewCompact).toHaveBeenCalled()
+    expect(DSOTermsViewCompact).toHaveBeenCalled()
     expect(DSOInformationView).toHaveBeenCalled()
     expect(DSOTeamView).toHaveBeenCalled()
   })

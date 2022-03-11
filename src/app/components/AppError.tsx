@@ -1,6 +1,5 @@
 import React from 'react'
-import { Container, Grid, Typography } from '@material-ui/core'
-import { Alert, AlertTitle } from '@material-ui/lab'
+import { Container, Grid, Typography, Alert, AlertTitle } from '@mui/material'
 import { FallbackProps } from 'react-error-boundary'
 
 export const AppError = (_props: FallbackProps) => {

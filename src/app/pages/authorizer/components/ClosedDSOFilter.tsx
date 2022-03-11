@@ -1,5 +1,5 @@
 import React, { ChangeEvent } from 'react'
-import { FormControl, InputLabel } from '@material-ui/core'
+import { FormControl, InputLabel } from '@mui/material'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import { ClosedDSOSelect } from 'app/pages/authorizer/components/ClosedDSOSelect'
 

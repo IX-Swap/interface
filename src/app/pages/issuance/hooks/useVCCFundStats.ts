@@ -49,7 +49,9 @@ export const useVCCFundStats = () => {
 
     return await apiService.post<InvestmentStats[]>(uri, {
       ...filters,
-      start: subMonths(now, 12),
+      // number of month should be desired number of month to display - 1
+      // e.g. right now we display only 12 month, therefore we should sub 11
+      start: subMonths(now, 11),
       end: new Date(now)
     })
   }

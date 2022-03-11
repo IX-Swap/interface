@@ -47,14 +47,11 @@ export const useUploadFile = (
 
   return useMutation(uploadFile, {
     onSuccess: data => {
-      const message = `Successfully uploaded ${data.data.length} files`
-
-      void snackbarService.showSnackbar(message, 'success')
       callbacks?.onSuccess?.(data)
     },
     onError: (error: any) => {
-      void snackbarService.showSnackbar(error.message, 'error')
       callbacks?.onError?.(error)
+      snackbarService.showSnackbar(error.message, 'error')
     }
   })
 }

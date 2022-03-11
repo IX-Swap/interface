@@ -2,7 +2,7 @@ import React from 'react'
 import { RadioGroup } from 'components/form/RadioGroup'
 import { TypedField } from 'components/form/TypedField'
 import { useFormContext } from 'react-hook-form'
-import { FormControlLabel, Grid, Radio, TextField } from '@material-ui/core'
+import { FormControlLabel, Grid, Radio, TextField } from '@mui/material'
 
 export const UsCitizenshipConfirmationFields = () => {
   const { control, watch } = useFormContext()

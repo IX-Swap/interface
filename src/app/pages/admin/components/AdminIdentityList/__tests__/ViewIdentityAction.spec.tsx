@@ -15,23 +15,17 @@ describe('ViewIdentityAction', () => {
     identityType: 'individual'
   }
 
-  beforeEach(() => {
-    const objResponse = {
-      user: {
-        _id: '12345'
-      }
+  const objResponse = {
+    user: {
+      _id: '12345'
     }
+  }
 
-    jest.spyOn(useAuth, 'useAuth').mockImplementation(() => objResponse as any)
-  })
-
-  afterEach(async () => {
-    jest.clearAllMocks()
-  })
+  jest.spyOn(useAuth, 'useAuth').mockImplementation(() => objResponse as any)
 
   it('renders view link correctly', () => {
-    const { getByRole, rerender } = render(<ViewIdentityAction {...props} />)
-    const viewButton = getByRole('button')
+    const { rerender, container } = render(<ViewIdentityAction {...props} />)
+    const viewButton = container.firstElementChild
     expect(viewButton).toHaveAttribute(
       'href',
       generatePath(AdminRoute.viewIndividualIdentity, {

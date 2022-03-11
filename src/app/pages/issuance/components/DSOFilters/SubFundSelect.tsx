@@ -5,13 +5,13 @@ import {
   ListItemIcon,
   ListItemText,
   MenuItem,
-  Select
-} from '@material-ui/core'
-import React, { useEffect } from 'react'
+  TextField
+} from '@mui/material'
+import { useVCCDSO } from 'app/pages/issuance/hooks/useVCCDSO'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
 import { hasValue } from 'helpers/forms'
-import { useVCCDSO } from 'app/pages/issuance/hooks/useVCCDSO'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
+import React, { useEffect } from 'react'
 
 export const SubFundSelect = () => {
   const { data, isLoading } = useVCCDSO()
@@ -65,34 +65,38 @@ export const SubFundSelect = () => {
         }
 
         return (
-          <FormControl variant='outlined' fullWidth style={{ width: 300 }}>
+          <FormControl fullWidth variant='outlined' style={{ width: 300 }}>
             <InputLabel id='SubFundSelect-label'>
               Select Multiple Sub-funds
             </InputLabel>
-            <Select
-              labelId='SubFundSelect-label'
-              multiple
-              value={selected}
-              onChange={handleChange}
-              renderValue={getStringValue}
-              disabled={isLoading}
-              MenuProps={{
-                PaperProps: {
-                  style: {
-                    maxHeight: 300,
-                    width: 300
+            <TextField
+              select
+              SelectProps={{
+                displayEmpty: true,
+                labelId: 'SubFundSelect-label',
+                multiple: true,
+                renderValue: values => getStringValue(values),
+                MenuProps: {
+                  PaperProps: {
+                    style: {
+                      maxHeight: 300,
+                      width: 300
+                    }
+                  },
+                  anchorOrigin: {
+                    vertical: 'bottom',
+                    horizontal: 'center'
+                  },
+                  transformOrigin: {
+                    vertical: 'top',
+                    horizontal: 'center'
                   }
-                },
-                getContentAnchorEl: null,
-                anchorOrigin: {
-                  vertical: 'bottom',
-                  horizontal: 'center'
-                },
-                transformOrigin: {
-                  vertical: 'top',
-                  horizontal: 'center'
                 }
               }}
+              InputLabelProps={{ shrink: true }}
+              value={selected}
+              onChange={handleChange}
+              disabled={isLoading}
             >
               {options?.length > 0 ? (
                 <MenuItem value='all'>
@@ -119,7 +123,7 @@ export const SubFundSelect = () => {
                   <ListItemText primary={option.name} />
                 </MenuItem>
               ))}
-            </Select>
+            </TextField>
           </FormControl>
         )
       }}
