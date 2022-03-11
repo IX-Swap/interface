@@ -1,6 +1,7 @@
 import { DeprecatedThemeOptions } from '@mui/material'
 import { themeColors } from 'themes/new/colors'
 import tinycolor from 'tinycolor2'
+import { alpha } from '@mui/material/styles'
 
 export const lightTheme: DeprecatedThemeOptions = {
   palette: {
@@ -19,10 +20,10 @@ export const lightTheme: DeprecatedThemeOptions = {
     checkbox: {
       fill: '#FFFFFF',
       bg: '#FFFFFF',
-      border: '1px solid #78A5FF',
-      borderDisabled: '1px solid #DBE2EC',
-      borderChecked: '1px solid transparent',
-      boxShadow: '0px 4px 4px rgba(162, 172, 191, 0.08)'
+      border: '1px solid #DBE2EC',
+      borderHover: '1px solid #78A5FF',
+      boxShadow: `0px 4px 4px ${alpha('#a2acbf', 0.08)}`,
+      opacity: 0.6
     },
     radio: {
       fill: '#FFFFFF',

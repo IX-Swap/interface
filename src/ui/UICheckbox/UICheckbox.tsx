@@ -12,8 +12,8 @@ export interface UICheckboxProps extends CheckboxProps {
 }
 
 export const UICheckbox = ({
-  width = 18,
-  height = 18,
+  width = 16,
+  height = 16,
   ...props
 }: UICheckboxProps) => {
   const theme = useTheme()

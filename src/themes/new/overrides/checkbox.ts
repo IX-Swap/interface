@@ -10,23 +10,35 @@ export const checkbox = (theme: Theme) => {
           height: 'auto',
           background: 'inherit',
 
+          '&:hover': {
+            '& .MuiSvgIcon-root': {
+              border: checkboxPalette.borderHover,
+              boxShadow: checkboxPalette.boxShadow
+            }
+          },
+
           '& .MuiSvgIcon-root': {
-            width: 18,
-            height: 18,
+            width: 16,
+            height: 16,
             borderRadius: 2,
             boxSizing: 'border-box',
             fill: checkboxPalette.fill,
             background: checkboxPalette.bg,
-            border: checkboxPalette.border,
-            boxShadow: checkboxPalette.boxShadow
+            border: checkboxPalette.border
           },
 
-          '&.Mui-checked .MuiSvgIcon-root': {
-            border: checkboxPalette.borderChecked
+          '&.Mui-checked': {
+            '&:hover': {
+              '& svg': {
+                opacity: 0.8,
+                boxShadow: checkboxPalette.boxShadow
+              }
+            }
           },
-
-          '&.Mui-disabled .MuiSvgIcon-root': {
-            border: checkboxPalette.borderDisabled
+          '&.Mui-disabled': {
+            '& .MuiSvgIcon-root': {
+              opacity: checkboxPalette.opacity
+            }
           }
         }
       }

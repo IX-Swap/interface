@@ -22,8 +22,10 @@ export interface InputColorOptions {
   border?: string
   borderChecked?: string
   borderDisabled?: string
+  borderHover?: string
   borderCheckedDisabled?: string
   boxShadow?: string
+  opacity?: number
 }
 // it could be your App.tsx file or theme file that is included in your tsconfig.json
 

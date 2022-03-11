@@ -18,10 +18,10 @@ export const darkTheme: DeprecatedThemeOptions = {
     checkbox: {
       fill: '#132A57',
       bg: '#132A57',
-      border: '1px solid #78A5FF',
-      borderChecked: '1px solid transparent',
-      borderDisabled: '1px solid #89A1CE',
-      boxShadow: 'none'
+      border: '1px solid #89A1CE',
+      borderHover: '1px solid #78A5FF',
+      boxShadow: 'none',
+      opacity: 0.3
     },
 
     radio: {
