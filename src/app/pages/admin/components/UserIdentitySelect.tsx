@@ -59,6 +59,7 @@ export const UserIdentitySelect = ({
       <Grid item xs={6}>
         <FormControl fullWidth>
           <TextFieldSelect
+            label='Identity Status'
             value={identity}
             onChange={value => setIdentity(value?.target.value)}
             variant='outlined'
