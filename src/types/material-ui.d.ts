@@ -25,6 +25,10 @@ declare module '@mui/material/styles' {
       disabledLabel: CSSProperties['color']
       border: string
       boxShadow: string
+
+      // TODO Remove this after delete old theme
+      background: CSSProperties['color']
+      activeBackground: CSSProperties['color']
     }
     sidebar: {
       activeColor: CSSProperties['color']
@@ -51,6 +55,10 @@ declare module '@mui/material/styles' {
       disabledLabel: CSSProperties['color']
       border: string
       boxShadow: string
+
+      // TODO Remove this after delete old theme
+      background: CSSProperties['color']
+      activeBackground: CSSProperties['color']
     }
     tab?: {
       contained: {
