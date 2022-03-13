@@ -1,7 +1,7 @@
 import { Theme } from '@mui/material'
 
 export const radio = (theme: Theme) => {
-  const radioPalette = theme.palette.radio
+  const radioPalette = theme.palette.toggledInputs
 
   return {
     styleOverrides: {
@@ -10,34 +10,34 @@ export const radio = (theme: Theme) => {
           height: 'auto',
           background: 'inherit',
 
+          '&:hover': {
+            '& .MuiSvgIcon-root': {
+              border: radioPalette.borderHover,
+              boxShadow: radioPalette.boxShadow
+            }
+          },
+
           '& .MuiSvgIcon-root': {
             width: 16,
             height: 16,
             background: radioPalette.bg,
             fill: radioPalette.fill,
             border: radioPalette.border,
-            boxShadow: radioPalette.boxShadow,
             boxSizing: 'border-box',
             borderRadius: 10
           },
 
           '&.Mui-checked': {
-            '& .MuiSvgIcon-root': {
-              background: radioPalette.bgChecked,
-              border: radioPalette.borderChecked
-            },
-
-            '&.Mui-disabled .MuiSvgIcon-root': {
-              background: radioPalette.bgCheckedDisabled,
-              fill: radioPalette.fillCheckedDisabled,
-              border: radioPalette.borderCheckedDisabled
+            '&:hover': {
+              '& svg': {
+                opacity: 0.8,
+                boxShadow: radioPalette.boxShadow
+              }
             }
           },
-
           '&.Mui-disabled': {
             '& .MuiSvgIcon-root': {
-              border: radioPalette.borderDisabled,
-              boxSizing: 'border-box'
+              opacity: radioPalette.opacity
             }
           }
         }

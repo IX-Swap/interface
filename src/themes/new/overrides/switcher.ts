@@ -1,6 +1,8 @@
 import { Theme } from '@mui/material'
 
 export const switcher = (theme: Theme) => {
+  const switchPalette = theme.palette.switch
+
   return {
     styleOverrides: {
       root: {
@@ -14,17 +16,13 @@ export const switcher = (theme: Theme) => {
             height: 32,
             '&:hover': {
               backgroundColor: 'inherit',
-              // opacity: 0.8,
               '& + .MuiSwitch-track': {
                 opacity: 0.8
               }
             },
 
             '& + .MuiSwitch-track': {
-              background:
-                theme.palette.mode === 'light'
-                  ? theme.palette.text.secondary
-                  : '#89A1CE',
+              background: switchPalette.bg,
               width: 24,
               height: 16,
               borderRadius: 100,
@@ -36,14 +34,13 @@ export const switcher = (theme: Theme) => {
 
             '&.Mui-disabled + .MuiSwitch-track': {
               opacity: 1,
-              backgroundColor:
-                theme.palette.mode === 'light' ? '#D3D9E5' : '#1D3667'
+              backgroundColor: switchPalette.bgDisabled
             },
 
             '& .MuiSwitch-thumb': {
               width: 12,
               height: 12,
-              background: '#ffffff',
+              background: switchPalette.color,
               position: 'absolute',
               top: 10,
               left: 12,
@@ -57,25 +54,20 @@ export const switcher = (theme: Theme) => {
                 }
               },
               transform: 'translateX(8px)',
-              color:
-                theme.palette.mode === 'light'
-                  ? theme.palette.background.paper
-                  : theme.palette.background.default,
 
               '& + .MuiSwitch-track': {
-                backgroundColor: theme.palette.primary.main,
+                backgroundColor: switchPalette.bgChecked,
                 opacity: 1,
                 border: 0
               },
 
               '&.Mui-disabled + .MuiSwitch-track': {
                 opacity: 1,
-                backgroundColor:
-                  theme.palette.mode === 'light' ? '#D3D9E5' : '#1D3667'
+                backgroundColor: switchPalette.bgCheckedDisabled
               }
             },
             '&.Mui-disabled .MuiSwitch-thumb': {
-              background: theme.palette.background.default
+              background: switchPalette.colorDisabled
             }
           }
         }

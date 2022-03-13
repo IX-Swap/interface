@@ -1,7 +1,7 @@
 import { Theme } from '@mui/material'
 
 export const checkbox = (theme: Theme) => {
-  const checkboxPalette = theme.palette.checkbox
+  const checkboxPalette = theme.palette.toggledInputs
 
   return {
     styleOverrides: {
@@ -18,8 +18,8 @@ export const checkbox = (theme: Theme) => {
           },
 
           '& .MuiSvgIcon-root': {
-            width: 16,
-            height: 16,
+            width: 18,
+            height: 18,
             borderRadius: 2,
             boxSizing: 'border-box',
             fill: checkboxPalette.fill,

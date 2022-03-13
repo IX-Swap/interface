@@ -17,7 +17,7 @@ export const lightTheme: DeprecatedThemeOptions = {
       dark: '#F0F2F7',
       light: '#EDF2FA'
     },
-    checkbox: {
+    toggledInputs: {
       fill: '#FFFFFF',
       bg: '#FFFFFF',
       border: '1px solid #DBE2EC',
@@ -25,18 +25,13 @@ export const lightTheme: DeprecatedThemeOptions = {
       boxShadow: `0px 4px 4px ${alpha('#a2acbf', 0.08)}`,
       opacity: 0.6
     },
-    radio: {
-      fill: '#FFFFFF',
-      fillCheckedDisabled: '#F7F9FA',
-      bg: '#FFFFFF',
+    switch: {
+      bg: '#778194',
+      bgDisabled: '#D3D9E5',
       bgChecked: '#4C88FF',
-      bgDisabled: '#DBE2EC',
-      bgCheckedDisabled: '#DBE2EC',
-      border: '1px solid #78A5FF',
-      borderChecked: '1px solid transparent',
-      borderDisabled: '1px solid #DBE2EC',
-      borderCheckedDisabled: '1px solid transparent',
-      boxShadow: '0px 4px 4px rgba(162, 172, 191, 0.08)'
+      bgCheckedDisabled: '#D3D9E5',
+      color: '#ffffff',
+      colorDisabled: '#ffffff'
     },
     action: {
       selected: tinycolor(themeColors.primary).lighten(64).toHexString()

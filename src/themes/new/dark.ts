@@ -15,7 +15,7 @@ export const darkTheme: DeprecatedThemeOptions = {
       dark: '#F0F2F7',
       light: '#EDF2FA'
     },
-    checkbox: {
+    toggledInputs: {
       fill: '#132A57',
       bg: '#132A57',
       border: '1px solid #89A1CE',
@@ -23,19 +23,13 @@ export const darkTheme: DeprecatedThemeOptions = {
       boxShadow: 'none',
       opacity: 0.3
     },
-
-    radio: {
-      fill: '#132A57',
-      fillCheckedDisabled: '#11254C',
-      bg: '#132A57',
+    switch: {
+      bg: '#89A1CE',
+      bgDisabled: '#1D3667',
       bgChecked: '#4C88FF',
-      bgDisabled: '#132A57',
-      bgCheckedDisabled: '#3D5689',
-      border: '1px solid #4C88FF',
-      borderChecked: '1px solid transparent',
-      borderDisabled: '1px solid #89A1CE',
-      borderCheckedDisabled: '1px solid transparent',
-      boxShadow: '0px 4px 4px transparent'
+      bgCheckedDisabled: '#1D3667',
+      color: '#ffffff',
+      colorDisabled: '#11254C'
     },
     background: {
       default: '#11254C',

@@ -2,7 +2,6 @@ import {
   Box,
   Button,
   Grid,
-  Radio,
   RadioGroup,
   Switch,
   Typography
@@ -15,6 +14,7 @@ import { typography } from 'themes/new/typography'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { UICheckbox } from 'ui/UICheckbox/UICheckbox'
 import { VSpacer } from 'components/VSpacer'
+import { UIRadio } from 'ui/UIRadio/UIRadio'
 
 export const RadioCheckSwitchKit = () => {
   const [isDarkThemeOn, setIsDarkThemeOn] = useState(false)
@@ -64,16 +64,16 @@ export const RadioCheckSwitchKit = () => {
         <RadioGroup defaultValue={3}>
           <Grid item container md={6} spacing={6}>
             <Grid item>
-              <Radio disabled value={1} />
+              <UIRadio disabled value={1} />
             </Grid>
             <Grid item>
-              <Radio value={2} />
+              <UIRadio value={2} />
             </Grid>
             <Grid item>
-              <Radio value={3} />
+              <UIRadio value={3} />
             </Grid>
             <Grid item>
-              <Radio checked disabled value={4} />
+              <UIRadio checked disabled value={4} />
             </Grid>
           </Grid>
         </RadioGroup>
