@@ -1,4 +1,4 @@
-import { DeprecatedThemeOptions } from '@mui/material'
+import { alpha, DeprecatedThemeOptions } from '@mui/material'
 import { themeColors } from 'themes/new/colors'
 import tinycolor from 'tinycolor2'
 
@@ -31,9 +31,12 @@ export const lightTheme: DeprecatedThemeOptions = {
       alternativeLight: 'rgba(86, 170, 130, 0.06)'
     },
     slider: {
-      background: '#C6D9FF',
-      activeColor: '#ffffff',
-      activeBackground: '#0C469C'
+      activeColor: '#4C88FF',
+      color: '#DBE2EC',
+      label: '#778194',
+      disabledLabel: '#DBE2EC',
+      border: '2px solid #ffffff',
+      boxShadow: `0px 16px 16px ${alpha('#4c88ff', 0.2)}`
     },
     sidebar: {
       activeBackground: tinycolor(themeColors.primary)

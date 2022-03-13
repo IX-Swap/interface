@@ -20,8 +20,11 @@ declare module '@mui/material/styles' {
     backgrounds: AppBackgrounds
     slider: {
       activeColor: CSSProperties['color']
-      background: CSSProperties['color']
-      activeBackground: CSSProperties['color']
+      color: CSSProperties['color']
+      label: CSSProperties['color']
+      disabledLabel: CSSProperties['color']
+      border: string
+      boxShadow: string
     }
     sidebar: {
       activeColor: CSSProperties['color']
@@ -43,8 +46,11 @@ declare module '@mui/material/styles' {
     }
     slider: {
       activeColor: CSSProperties['color']
-      background: CSSProperties['color']
-      activeBackground: CSSProperties['color']
+      color: CSSProperties['color']
+      label: CSSProperties['color']
+      disabledLabel: CSSProperties['color']
+      border: string
+      boxShadow: string
     }
     tab?: {
       contained: {

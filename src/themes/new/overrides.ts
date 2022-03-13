@@ -1,6 +1,7 @@
 import { Theme } from '@mui/material'
 import { ThemeOptions } from '@mui/material/styles'
 import { rte } from 'themes/new/rte'
+import { slider } from 'themes/new/overrides/slider'
 
 declare module '@mui/material/Button' {
   interface ButtonPropsVariantOverrides {
@@ -358,53 +359,7 @@ export const getThemeOverrides = (
       }
     }
   },
-  MuiSlider: {
-    styleOverrides: {
-      root: {
-        '& .MuiSlider-rail': {
-          background: '#DBE2EC',
-          opacity: 1,
-          height: '2px'
-        },
-        '& .MuiSlider-track': {
-          height: '2px',
-          border: 'none'
-        },
-        '& .MuiSlider-thumb': {
-          border: '2px solid #FFFFFF',
-          '&:before': {
-            boxShadow: 'none'
-          },
-          '&.Mui-focusVisible, &:hover': {
-            boxShadow: '0px 16px 16px rgba(76, 136, 255, 0.2)'
-          },
-          '&.Mui-disabled': {
-            background: '#DBE2EC'
-          }
-        },
-        '&.Mui-disabled .MuiSlider-markLabel': {
-          color: '#DBE2EC'
-        },
-        '& .MuiSlider-thumbSizeMedium': {
-          width: '24px',
-          height: '24px'
-        },
-        '& .MuiSlider-thumbSizeSmall': {
-          width: '16px',
-          height: '16px'
-        },
-        '& .MuiSlider-mark': {
-          width: '5px',
-          height: '5px',
-          borderRadius: '100%',
-          background: '#DBE2EC',
-          '&.MuiSlider-markActive': {
-            background: '#4C88FF'
-          }
-        }
-      }
-    }
-  },
+  MuiSlider: slider(theme),
   MuiFab: {
     styleOverrides: {
       root: {
