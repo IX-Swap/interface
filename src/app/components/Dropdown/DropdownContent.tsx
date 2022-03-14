@@ -9,10 +9,11 @@ export interface DropdownContentProps {
   arrow: boolean
   placement: DropdownProps['placement']
   children: DropdownProps['content']
+  anchorEl: any
 }
 
 export const DropdownContent = (props: DropdownContentProps) => {
-  const { popupState, arrow, placement, children } = props
+  const { popupState, arrow, placement, children, anchorEl } = props
   const [arrowRef, setArrowRef] = useState<any>(null)
   const classes = useStyles()
   const popperProps = bindPopper(popupState)
@@ -27,6 +28,8 @@ export const DropdownContent = (props: DropdownContentProps) => {
       {...bindPopper(popupState)}
       placement={placement}
       className={classes.popper}
+      disablePortal
+      anchorEl={anchorEl.current}
       modifiers={[
         {
           name: 'arrow',
