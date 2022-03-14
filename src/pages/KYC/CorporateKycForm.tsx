@@ -443,13 +443,13 @@ export default function CorporateKycForm() {
                             <TextInput
                               onChange={(e) => onChangeInput('email', e.currentTarget.value, values, setFieldValue)}
                               value={values.email}
-                              label="Email"
+                              label="Email address"
                               error={errors.email && errors.email}
                             />
                             <PhoneInput
                               onChange={(value) => onChangeInput('phoneNumber', value, values, setFieldValue)}
                               value={values.phoneNumber}
-                              label="Phone"
+                              label="Phone Number"
                               error={errors.phoneNumber && errors.phoneNumber}
                             />
                           </FormGrid>
