@@ -100,7 +100,14 @@ export const corporateErrorsSchema = yup.object().shape({
       })
     )
     .min(1, 'At least one beneficial owner')
-    .required('Required'),
+    .required('Required')
+    .test('isShareholdingAmountValid', 'Total sum of shareholding must be max 100', (value = []) => {
+      const sum = value.reduce((acc, next) => acc + Number(next.shareholding || 0), 0)
+      if (sum > 100) {
+        return false
+      }
+      return true
+    }),
   corporateDocuments: yup.array().min(1, 'Required').nullable(),
   financialDocuments: yup.array().min(1, 'Required').nullable(),
   evidenceOfAccreditation: yup
