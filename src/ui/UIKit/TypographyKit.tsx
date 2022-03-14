@@ -5,7 +5,7 @@ import { UIKitThemeWrapper } from 'ui/UIKitThemeWrapper'
 export const TypographyKit = () => {
   return (
     <UIKitThemeWrapper>
-      <Paper>
+      <Paper sx={{ padding: 2 }} elevation={0}>
         <Grid
           container
           spacing={2}

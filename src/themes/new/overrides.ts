@@ -2,6 +2,7 @@ import { Theme } from '@mui/material'
 import { ThemeOptions } from '@mui/material/styles'
 import { rte } from 'themes/new/rte'
 import { breadcrumbs } from 'themes/new/overrides/breadcrumbs'
+import { avatar } from 'themes/new/overrides/avatar'
 
 declare module '@mui/material/Button' {
   interface ButtonPropsVariantOverrides {
@@ -322,22 +323,7 @@ export const getThemeOverrides = (
       }
     }
   },
-  MuiAvatar: {
-    styleOverrides: {
-      colorDefault: {
-        backgroundColor: 'rgba(76, 136, 255, 0.1);',
-        color: '#4C88FF',
-        border: '1px solid #4C88FF'
-      },
-      root: {
-        ':hover': {
-          backgroundColor: '#4C88FF',
-          color: '#FFFFFF',
-          cursor: 'pointer'
-        }
-      }
-    }
-  },
+  MuiAvatar: avatar(theme),
   MuiSlider: {
     styleOverrides: {
       root: {
