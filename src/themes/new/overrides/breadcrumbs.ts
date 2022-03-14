@@ -19,6 +19,12 @@ export const breadcrumbs = (theme: Theme) => {
         '> p': {
           color: breadcrumbsPalette.color,
           fontWeight: 500
+        },
+        '&:hover': {
+          '> a': {
+            color: '#4C88FF',
+            textDecoration: 'underline'
+          }
         }
       },
       separator: {
