@@ -12,11 +12,11 @@ export interface AppBackgrounds {
 // it could be your App.tsx file or theme file that is included in your tsconfig.json
 
 export interface SliderPaletteOptions {
-  color: CSSProperties['color']
-  disabledColor: CSSProperties['color']
-  activeColor: CSSProperties['color']
-  label: CSSProperties['color']
-  disabledLabel: CSSProperties['color']
+  color: string
+  disabledColor: string
+  activeColor: string
+  label: string
+  disabledLabel: string
   border: string
   boxShadow: string
 }
