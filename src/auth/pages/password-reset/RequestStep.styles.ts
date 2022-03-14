@@ -6,5 +6,11 @@ export const useStyles = makeStyles(theme => ({
     fontSize: 40,
     color: theme.palette.text.primary,
     textTransform: 'uppercase'
+  },
+  subtitle: {
+    color: '#ffffff',
+    fontSize: '16px',
+    lineHeight: '24px',
+    textAlign: 'center'
   }
 }))

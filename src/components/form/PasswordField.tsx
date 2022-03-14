@@ -9,11 +9,15 @@ import { EyePassword } from 'components/form/EyePassword'
 export interface PasswordFieldProps {
   withPasswordValidation?: boolean
   showErrorMessages?: boolean
+  name?: string
+  label?: string
 }
 
 export const PasswordField = ({
   withPasswordValidation = false,
-  showErrorMessages = true
+  showErrorMessages = true,
+  name = 'password',
+  label = 'Password'
 }: PasswordFieldProps) => {
   const { control } = useFormContext()
   const { passwordField } = useStyles()
@@ -25,8 +29,8 @@ export const PasswordField = ({
         <TypedField
           control={control}
           component={TextField}
-          name='password'
-          label='Password'
+          name={name}
+          label={label}
           type={inputType}
           className={passwordField}
           placeholder={'Password'}
