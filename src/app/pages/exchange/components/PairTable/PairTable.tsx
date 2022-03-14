@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react'
-import { Pair } from 'app/pages/exchange/hooks/useMarketList'
 import { Table, TableBody, TableHead, TableRow } from '@mui/material'
 import { PairTableCell } from 'app/pages/exchange/components/PairTable/PairTableCell'
-import { PairTableRow } from 'app/pages/exchange/components/PairTable/PairTableRow'
 import { SortByFilter } from 'app/pages/exchange/components/PairTable/PairTableFilter/SortByFilter'
+import { PairTableRow } from 'app/pages/exchange/components/PairTable/PairTableRow'
+import { Pair } from 'app/pages/exchange/hooks/useMarketList'
+import { isEmptyString } from 'helpers/strings'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
+import React, { useEffect } from 'react'
 import { Waypoint } from 'react-waypoint'
 
 export interface PairTableProps {
@@ -13,9 +14,12 @@ export interface PairTableProps {
 }
 
 export const PairTable = ({ data, loadMore }: PairTableProps) => {
-  const { updateFilters } = useQueryFilter()
+  const { updateFilters, getFilterValue } = useQueryFilter()
   useEffect(() => {
-    updateFilters({ sortBy: 'pair', orderBy: 'ASC' })
+    const sortByValue = getFilterValue('sortBy')
+    if (isEmptyString(sortByValue)) {
+      updateFilters({ sortBy: 'pair', orderBy: 'ASC' })
+    }
     // eslint-disable-next-line
   }, [])
 
