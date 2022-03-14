@@ -1,6 +1,7 @@
 import { Theme } from '@mui/material'
 import { ThemeOptions } from '@mui/material/styles'
 import { rte } from 'themes/new/rte'
+import { breadcrumbs } from 'themes/new/overrides/breadcrumbs'
 
 declare module '@mui/material/Button' {
   interface ButtonPropsVariantOverrides {
@@ -307,32 +308,7 @@ export const getThemeOverrides = (
       }
     }
   },
-  MuiBreadcrumbs: {
-    defaultProps: {
-      separator: ''
-    },
-    styleOverrides: {
-      root: {},
-      li: {
-        '> a': {
-          color: '#3B4251',
-          fontWeight: 500,
-          textDecoration: 'none'
-        },
-        '> p': {
-          color: '#778194',
-          fontWeight: 500
-        }
-      },
-      separator: {
-        color: 'transparent',
-        width: 4,
-        height: 4,
-        backgroundColor: '#778194',
-        borderRadius: 2
-      }
-    }
-  },
+  MuiBreadcrumbs: breadcrumbs(theme),
   MuiPaper: {
     styleOverrides: {
       root: {

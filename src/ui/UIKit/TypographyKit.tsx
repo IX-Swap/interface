@@ -1,19 +1,10 @@
-import { Box, Button, Grid, Paper, Typography } from '@mui/material'
-import React, { useState } from 'react'
-import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { darkTheme } from 'themes/new/dark'
-import { lightTheme } from 'themes/new/light'
-import { typography } from 'themes/new/typography'
-import { getThemeOverrides } from 'themes/new/overrides'
+import { Grid, Paper, Typography } from '@mui/material'
+import React from 'react'
+import { UIKitThemeWrapper } from 'ui/UIKitThemeWrapper'
 
 export const TypographyKit = () => {
-  const [isDarkThemeOn, setIsDarkThemeOn] = useState(false)
-  const currentNewTheme = isDarkThemeOn ? darkTheme : lightTheme
-  const theme = createTheme({ ...currentNewTheme, typography })
-  theme.components = getThemeOverrides(theme)
-
   return (
-    <ThemeProvider theme={theme}>
+    <UIKitThemeWrapper>
       <Paper>
         <Grid
           container
@@ -64,14 +55,6 @@ export const TypographyKit = () => {
           </Grid>
         </Grid>
       </Paper>
-      <Box marginTop={10}>
-        <Button
-          variant={'contained'}
-          onClick={() => setIsDarkThemeOn(!isDarkThemeOn)}
-        >
-          {isDarkThemeOn ? 'Switch to Light theme' : 'Switch to Dark theme'}
-        </Button>
-      </Box>
-    </ThemeProvider>
+    </UIKitThemeWrapper>
   )
 }
