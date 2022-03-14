@@ -26,16 +26,16 @@ const useMarketListFilters = (showFilter: boolean | undefined = false) => {
         listingKeyword: searchFilter,
         isFavorite: pairFilterIsFavorite,
         currency,
-        sortBy,
-        orderBy
+        sortField: sortBy,
+        sortBy: orderBy
       }
     }
     return {
       listingKeyword: undefined,
       isFavorite: undefined,
       currency: undefined,
-      sortBy: undefined,
-      orderBy: undefined
+      orderBy: undefined,
+      sortField: undefined
     }
   }, [showFilter, pairFilter, orderBy, sortBy, getSearchQuery])
 }

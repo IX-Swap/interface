@@ -87,12 +87,12 @@ export const filterValuesOnAll = {
   isFavorite: false,
   currency: '',
   sortBy: '',
-  orderBy: ''
+  sortField: ''
 }
 export const filterValuesOnSearch = {
   listingKeyword: 'US',
   isFavorite: false,
   currency: '',
   sortBy: '',
-  orderBy: ''
+  sortField: ''
 }

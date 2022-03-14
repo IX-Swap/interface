@@ -26,12 +26,14 @@ export const useMarketList = (showFilter: boolean | undefined = false) => {
     usedFilters?: any,
     cursor: number | undefined = 0
   ) => {
-    const { listingKeyword, currency } = usedFilters
+    const { listingKeyword, currency, sortBy, sortField } = usedFilters
     return await apiService.post<PaginatedData<Pair>>(exchangeURL.marketList, {
       skip: cursor,
       limit: 25,
       listingKeyword,
-      currency
+      currency,
+      sortBy,
+      sortField
     })
   }
 
@@ -51,15 +53,19 @@ export const useMarketList = (showFilter: boolean | undefined = false) => {
     return list
   }
 
+  const getFinalList = (list: Pair[]) => {
+    if (filters.isFavorite ?? false) {
+      return filterByFavorite(list)
+    }
+    return list
+  }
+
   const parsedData = useParsedData<Pair>(data, '_id')
   return {
     data: {
       raw: parsedData.raw,
       map: parsedData.map,
-      list:
-        filters.isFavorite ?? false
-          ? filterByFavorite(parsedData.list)
-          : parsedData.list
+      list: getFinalList(parsedData.list)
     },
     ...rest
   }
