@@ -11,17 +11,17 @@ export interface AppBackgrounds {
 }
 
 export interface SwitchColorOptions {
-  color: string
-  colorDisabled: string
-  bg: string
-  bgChecked: string
-  bgDisabled: string
-  bgCheckedDisabled: string
+  color: CSSProperties['color']
+  colorDisabled: CSSProperties['color']
+  bg: CSSProperties['color']
+  bgChecked: CSSProperties['color']
+  bgDisabled: CSSProperties['color']
+  bgCheckedDisabled: CSSProperties['color']
 }
 
 export interface ToggledInputsColorOptions {
-  fill: string
-  bg: string
+  fill: CSSProperties['color']
+  bg: CSSProperties['color']
   border: string
   borderHover: string
   boxShadow: string
@@ -36,8 +36,8 @@ declare module '@mui/styles/defaultTheme' {
 declare module '@mui/material/styles' {
   export interface PaletteOptions {
     backgrounds: AppBackgrounds
-    toggledInputs: ToggledInputsColorOptions
-    switch: SwitchColorOptions
+    toggledInputs?: ToggledInputsColorOptions
+    switch?: SwitchColorOptions
     slider: {
       activeColor: CSSProperties['color']
       background: CSSProperties['color']
@@ -57,8 +57,8 @@ declare module '@mui/material/styles' {
 
   export interface Palette {
     backgrounds: AppBackgrounds
-    toggledInputs: ToggledInputsColorOptions
-    switch: SwitchColorOptions
+    toggledInputs?: ToggledInputsColorOptions
+    switch?: SwitchColorOptions
     sidebar: {
       activeColor: CSSProperties['color']
       activeBackground: CSSProperties['color']

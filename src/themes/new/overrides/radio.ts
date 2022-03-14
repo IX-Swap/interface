@@ -1,7 +1,8 @@
 import { Theme } from '@mui/material'
 
 export const radio = (theme: Theme) => {
-  const radioPalette = theme.palette.toggledInputs
+  // eslint-disable-next-line
+  const radioPalette = theme.palette.toggledInputs!
 
   return {
     styleOverrides: {
