@@ -149,7 +149,7 @@ export default function CorporateKycForm() {
     validationSeen(specificErrorField)
   }
 
-  const addBeneficiar = (owners: any, setFieldValue: any) => {
+  const addBeneficiary = (owners: any, setFieldValue: any) => {
     setFieldValue(
       'beneficialOwners',
       [...owners, { fullName: '', shareholding: '', proofOfAddress: null, proofOfIdentity: null }],
@@ -810,9 +810,9 @@ export default function CorporateKycForm() {
                         <ButtonIXSGradient
                           type="button"
                           style={{ marginTop: 32, height: 40, fontSize: 16 }}
-                          onClick={() => addBeneficiar(values.beneficialOwners, setFieldValue)}
+                          onClick={() => addBeneficiary(values.beneficialOwners, setFieldValue)}
                         >
-                          <Trans> Add Beneficiar</Trans>
+                          <Trans> Add Beneficiary</Trans>
                         </ButtonIXSGradient>
                       </FormCard>
 
