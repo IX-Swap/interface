@@ -1,7 +1,7 @@
 import { Theme } from '@mui/material'
 
 export const slider = (theme: Theme) => {
-  const sliderPalette = theme.palette.slider
+  const sliderPalette = theme.palette.newSlider
 
   return {
     styleOverrides: {
@@ -16,16 +16,16 @@ export const slider = (theme: Theme) => {
           border: 'none'
         },
         '& .MuiSlider-thumb': {
-          border: theme.palette.slider.border,
+          border: sliderPalette.border,
 
           '&:before': {
             boxShadow: 'none'
           },
           '&.Mui-focusVisible, &:hover': {
-            boxShadow: theme.palette.slider.boxShadow
+            boxShadow: sliderPalette.boxShadow
           },
           '&.Mui-disabled': {
-            background: sliderPalette.color
+            background: sliderPalette.disabledColor
           }
         },
         '& .MuiSlider-markLabel': {

@@ -11,6 +11,16 @@ export interface AppBackgrounds {
 }
 // it could be your App.tsx file or theme file that is included in your tsconfig.json
 
+export interface SliderPaletteOptions {
+  color: CSSProperties['color']
+  disabledColor: CSSProperties['color']
+  activeColor: CSSProperties['color']
+  label: CSSProperties['color']
+  disabledLabel: CSSProperties['color']
+  border: string
+  boxShadow: string
+}
+
 declare module '@mui/styles/defaultTheme' {
   interface DefaultTheme extends Theme {}
 }
@@ -18,18 +28,13 @@ declare module '@mui/styles/defaultTheme' {
 declare module '@mui/material/styles' {
   export interface PaletteOptions {
     backgrounds: AppBackgrounds
+    // TODO Remove old slider after delete old theme
     slider: {
       activeColor: CSSProperties['color']
-      color: CSSProperties['color']
-      label: CSSProperties['color']
-      disabledLabel: CSSProperties['color']
-      border: string
-      boxShadow: string
-
-      // TODO Remove this after delete old theme
       background: CSSProperties['color']
       activeBackground: CSSProperties['color']
     }
+    newSlider: SliderPaletteOptions
     sidebar: {
       activeColor: CSSProperties['color']
       activeBackground: CSSProperties['color']
@@ -48,18 +53,13 @@ declare module '@mui/material/styles' {
       activeColor: CSSProperties['color']
       activeBackground: CSSProperties['color']
     }
+    // TODO Remove old slider after delete old theme
     slider: {
       activeColor: CSSProperties['color']
-      color: CSSProperties['color']
-      label: CSSProperties['color']
-      disabledLabel: CSSProperties['color']
-      border: string
-      boxShadow: string
-
-      // TODO Remove this after delete old theme
       background: CSSProperties['color']
       activeBackground: CSSProperties['color']
     }
+    newSlider: SliderPaletteOptions
     tab?: {
       contained: {
         border: CSSProperties['color']

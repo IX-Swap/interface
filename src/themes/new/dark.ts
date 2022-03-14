@@ -30,8 +30,15 @@ export const darkTheme: DeprecatedThemeOptions = {
       activeBackground: 'rgba(137, 149, 252, 0.11)',
       activeColor: '#8995FC'
     },
+    // TODO Remove old slider after delete old theme
     slider: {
+      background: '#C6D9FF',
+      activeColor: '#132a57',
+      activeBackground: '#0c469c'
+    },
+    newSlider: {
       activeColor: '#4C88FF',
+      disabledColor: '#DBE2EC',
       color: '#89A1CE',
       label: '#496396',
       disabledLabel: '#496396',
