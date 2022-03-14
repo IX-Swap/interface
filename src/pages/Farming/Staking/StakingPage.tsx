@@ -7,14 +7,16 @@ import { MyStakingsTable } from './MyStakingsTable'
 import { StakingTableTabs } from './StakingTableTabs'
 import { StakingTiers } from './StakingTiers'
 import { UnstakedTable } from './UnstakedTable'
+import { StakingPlaceholder } from './StakingPlaceholder'
 
 export const StakingPage = () => {
   const [tab, setTab] = useState(STAKING_TABS.ONGOING)
   return (
     <>
-      <Column style={{ gap: '20px' }}>
+      <Column style={{ gap: '20px', position: 'relative' }}>
         <GasWarning />
         <StakingTiers />
+        <StakingPlaceholder />
       </Column>
       <Box style={{ width: '100%' }}>
         <Column>
