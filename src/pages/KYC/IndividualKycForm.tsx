@@ -453,7 +453,7 @@ export default function IndividualKycForm() {
                             isRadio
                             checked={values.accredited === 1}
                             onClick={() => onRadioChange('accredited', 1, setFieldValue)}
-                            label={`I declare that i am “individual accredited Investor"`}
+                            label={`I declare that I am “individual accredited Investor"`}
                           />
                           {errors.accredited && (
                             <TYPE.small marginTop="-4px" color={'red1'}>
