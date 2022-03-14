@@ -1,4 +1,5 @@
 import { Theme } from '@mui/material'
+import { alpha } from '@mui/material/styles'
 
 export const checkbox = (theme: Theme) => {
   // eslint-disable-next-line
@@ -13,8 +14,8 @@ export const checkbox = (theme: Theme) => {
 
           '&:hover': {
             '& .MuiSvgIcon-root': {
-              border: checkboxPalette.borderHover,
-              boxShadow: checkboxPalette.boxShadow
+              border: `1px solid ${checkboxPalette.borderHover}`,
+              boxShadow: `0px 4px 4px ${alpha(checkboxPalette.boxShadow, 0.08)}`
             }
           },
 
@@ -25,14 +26,13 @@ export const checkbox = (theme: Theme) => {
             boxSizing: 'border-box',
             fill: checkboxPalette.fill,
             background: checkboxPalette.bg,
-            border: checkboxPalette.border
+            border: `1px solid ${checkboxPalette.border}`
           },
 
           '&.Mui-checked': {
             '&:hover': {
               '& svg': {
-                opacity: 0.8,
-                boxShadow: checkboxPalette.boxShadow
+                opacity: 0.8
               }
             }
           },

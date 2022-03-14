@@ -1,4 +1,5 @@
 import { Theme } from '@mui/material'
+import { alpha } from '@mui/material/styles'
 
 export const radio = (theme: Theme) => {
   // eslint-disable-next-line
@@ -13,8 +14,12 @@ export const radio = (theme: Theme) => {
 
           '&:hover': {
             '& .MuiSvgIcon-root': {
-              border: radioPalette.borderHover,
-              boxShadow: radioPalette.boxShadow
+              border: `1px solid ${radioPalette.borderHover}`,
+              boxShadow: `0px 4px 4px ${
+                theme.palette.mode === 'light'
+                  ? alpha(radioPalette.boxShadow, 0.08)
+                  : 'transparent'
+              }`
             }
           },
 
@@ -23,7 +28,7 @@ export const radio = (theme: Theme) => {
             height: 16,
             background: radioPalette.bg,
             fill: radioPalette.fill,
-            border: radioPalette.border,
+            border: `1px solid ${radioPalette.border}`,
             boxSizing: 'border-box',
             borderRadius: 10
           },
@@ -31,8 +36,7 @@ export const radio = (theme: Theme) => {
           '&.Mui-checked': {
             '&:hover': {
               '& svg': {
-                opacity: 0.8,
-                boxShadow: radioPalette.boxShadow
+                opacity: 0.8
               }
             }
           },

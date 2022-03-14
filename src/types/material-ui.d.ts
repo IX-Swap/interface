@@ -20,8 +20,8 @@ export interface SwitchColorOptions {
 }
 
 export interface ToggledInputsColorOptions {
-  fill: CSSProperties['color']
-  bg: CSSProperties['color']
+  fill: string
+  bg: string
   border: string
   borderHover: string
   boxShadow: string

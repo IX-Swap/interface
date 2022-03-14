@@ -18,9 +18,9 @@ export const darkTheme: DeprecatedThemeOptions = {
     toggledInputs: {
       fill: '#132A57',
       bg: '#132A57',
-      border: '1px solid #89A1CE',
-      borderHover: '1px solid #78A5FF',
-      boxShadow: 'none',
+      border: '#89A1CE',
+      borderHover: '#78A5FF',
+      boxShadow: '#a2acbf',
       opacity: 0.3
     },
     switch: {
