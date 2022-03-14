@@ -47,6 +47,12 @@ declare module '@mui/material/styles' {
       activeColor: CSSProperties['color']
       activeBackground: CSSProperties['color']
     }
+    tab?: {
+      contained: {
+        border: CSSProperties['color']
+        color?: CSSProperties['color']
+      }
+    }
   }
 
   export interface Palette {
@@ -61,6 +67,12 @@ declare module '@mui/material/styles' {
       activeColor: CSSProperties['color']
       background: CSSProperties['color']
       activeBackground: CSSProperties['color']
+    }
+    tab?: {
+      contained: {
+        border: CSSProperties['color']
+        color?: CSSProperties['color']
+      }
     }
   }
 

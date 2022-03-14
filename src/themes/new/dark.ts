@@ -1,4 +1,4 @@
-import { DeprecatedThemeOptions } from '@mui/material'
+import { alpha, DeprecatedThemeOptions } from '@mui/material'
 import tinycolor from 'tinycolor2'
 
 export const darkTheme: DeprecatedThemeOptions = {
@@ -50,6 +50,12 @@ export const darkTheme: DeprecatedThemeOptions = {
       background: '#C6D9FF',
       activeColor: '#132a57',
       activeBackground: '#0c469c'
+    },
+    tab: {
+      contained: {
+        border: alpha('#4C88FF', 0.3),
+        color: undefined
+      }
     },
     text: {
       primary: '#FFFFFF',
