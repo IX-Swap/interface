@@ -29,6 +29,11 @@ export interface ToggledInputsColorOptions {
 }
 // it could be your App.tsx file or theme file that is included in your tsconfig.json
 
+export interface BreadCrumbsPaletteOptions {
+  link: CSSProperties['color']
+  color: CSSProperties['color']
+}
+
 declare module '@mui/styles/defaultTheme' {
   interface DefaultTheme extends Theme {}
 }
@@ -47,6 +52,7 @@ declare module '@mui/material/styles' {
       activeColor: CSSProperties['color']
       activeBackground: CSSProperties['color']
     }
+    breadcrumbs?: BreadCrumbsPaletteOptions
     tab?: {
       contained: {
         border: CSSProperties['color']
@@ -68,6 +74,7 @@ declare module '@mui/material/styles' {
       background: CSSProperties['color']
       activeBackground: CSSProperties['color']
     }
+    breadcrumbs?: BreadCrumbsPaletteOptions
     tab?: {
       contained: {
         border: CSSProperties['color']

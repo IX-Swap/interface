@@ -46,6 +46,10 @@ export const darkTheme: DeprecatedThemeOptions = {
       activeBackground: 'rgba(137, 149, 252, 0.11)',
       activeColor: '#8995FC'
     },
+    breadcrumbs: {
+      link: '#89A1CE',
+      color: '#FFFFFF'
+    },
     slider: {
       background: '#C6D9FF',
       activeColor: '#132a57',

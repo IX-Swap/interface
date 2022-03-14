@@ -4,6 +4,9 @@ import { rte } from 'themes/new/rte'
 import { checkbox } from 'themes/new/overrides/checkbox'
 import { radio } from 'themes/new/overrides/radio'
 import { switcher } from 'themes/new/overrides/switcher'
+import { breadcrumbs } from 'themes/new/overrides/breadcrumbs'
+import { avatar } from 'themes/new/overrides/avatar'
+import { paper } from 'themes/new/overrides/paper'
 
 declare module '@mui/material/Button' {
   interface ButtonPropsVariantOverrides {
@@ -155,63 +158,15 @@ export const getThemeOverrides = (
     }
   },
   MuiTypography: {
-    styleOverrides: {}
-  },
-  MuiBreadcrumbs: {
-    defaultProps: {
-      separator: ''
-    },
-    styleOverrides: {
-      root: {},
-      li: {
-        '> a': {
-          color: '#3B4251',
-          fontWeight: 500,
-          textDecoration: 'none'
-        },
-        '> p': {
-          color: '#778194',
-          fontWeight: 500
-        }
-      },
-      separator: {
-        color: 'transparent',
-        width: 4,
-        height: 4,
-        backgroundColor: '#778194',
-        borderRadius: 2
-      }
-    }
-  },
-  MuiPaper: {
     styleOverrides: {
       root: {
-        backgroundColor: theme.palette.background.paper,
-        backgroundImage: 'none',
-        boxSizing: 'border-box',
-        '&.MuiPaper-outlined': {
-          boxShadow: '0px 80px 80px rgba(162, 172, 191, 0.16)',
-          border: '1px solid #EDF2FA'
-        }
+        color: theme.palette.text.primary
       }
     }
   },
-  MuiAvatar: {
-    styleOverrides: {
-      colorDefault: {
-        backgroundColor: 'rgba(76, 136, 255, 0.1);',
-        color: '#4C88FF',
-        border: '1px solid #4C88FF'
-      },
-      root: {
-        ':hover': {
-          backgroundColor: '#4C88FF',
-          color: '#FFFFFF',
-          cursor: 'pointer'
-        }
-      }
-    }
-  },
+  MuiBreadcrumbs: breadcrumbs(theme),
+  MuiPaper: paper(theme),
+  MuiAvatar: avatar(theme),
   MuiSlider: {
     styleOverrides: {
       root: {
