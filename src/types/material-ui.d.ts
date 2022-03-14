@@ -11,12 +11,12 @@ export interface AppBackgrounds {
 }
 
 export interface SwitchColorOptions {
-  color: CSSProperties['color']
-  colorDisabled: CSSProperties['color']
-  bg: CSSProperties['color']
-  bgChecked: CSSProperties['color']
-  bgDisabled: CSSProperties['color']
-  bgCheckedDisabled: CSSProperties['color']
+  color: string
+  colorDisabled: string
+  bg: string
+  bgChecked: string
+  bgDisabled: string
+  bgCheckedDisabled: string
 }
 
 export interface ToggledInputsColorOptions {
