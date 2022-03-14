@@ -12,11 +12,11 @@ export interface AppBackgrounds {
 // it could be your App.tsx file or theme file that is included in your tsconfig.json
 
 export interface SliderPaletteOptions {
-  color: string
-  disabledColor: string
-  activeColor: string
-  label: string
-  disabledLabel: string
+  color: CSSProperties['color']
+  disabledColor: CSSProperties['color']
+  activeColor: CSSProperties['color']
+  label: CSSProperties['color']
+  disabledLabel: CSSProperties['color']
   border: string
   boxShadow: string
 }
@@ -34,7 +34,7 @@ declare module '@mui/material/styles' {
       background: CSSProperties['color']
       activeBackground: CSSProperties['color']
     }
-    newSlider: SliderPaletteOptions
+    newSlider?: SliderPaletteOptions
     sidebar: {
       activeColor: CSSProperties['color']
       activeBackground: CSSProperties['color']
@@ -59,7 +59,7 @@ declare module '@mui/material/styles' {
       background: CSSProperties['color']
       activeBackground: CSSProperties['color']
     }
-    newSlider: SliderPaletteOptions
+    newSlider?: SliderPaletteOptions
     tab?: {
       contained: {
         border: CSSProperties['color']
