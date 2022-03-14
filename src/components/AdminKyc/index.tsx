@@ -17,6 +17,7 @@ import { Search } from '../AdminAccreditationTable/Search'
 import { StatusCell } from './StatusCell'
 import { MoreMenu } from './MoreMenu'
 import { KycReviewModal } from 'components/KycReviewModal'
+import { ButtonGradientBorder } from 'components/Button'
 
 const headerCells = [t`Wallet address`, t`Name`, t`Identity`, t`Date of request`, t`KYC Status`, t`Risk level`]
 
@@ -72,7 +73,7 @@ const Row: FC<RowProps> = ({ item, openModal }: RowProps) => {
       </div>
       <div>risk level</div>
       <div>
-        <MoreMenu openModal={openModal} />
+        <StyledReviewButton onClick={openModal}>Review</StyledReviewButton>
       </div>
     </StyledBodyRow>
   )
@@ -166,11 +167,17 @@ export const Container = styled.div`
 `
 
 const StyledHeaderRow = styled(HeaderRow)`
-  grid-template-columns: 175px 175px 175px repeat(3, calc((100% - 575px) / 3)) 50px;
+  grid-template-columns: 175px 175px 175px repeat(3, calc((100% - 625px) / 3)) 100px;
   min-width: 1270px;
 `
 
 const StyledBodyRow = styled(BodyRow)`
-  grid-template-columns: 175px 175px 175px repeat(3, calc((100% - 575px) / 3)) 50px;
+  grid-template-columns: 175px 175px 175px repeat(3, calc((100% - 625px) / 3)) 100px;
   min-width: 1270px;
+`
+
+const StyledReviewButton = styled(ButtonGradientBorder)`
+  min-height: 32px;
+  padding: 4px 8px;
+  font-size: 14px;
 `
