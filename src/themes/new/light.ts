@@ -41,6 +41,10 @@ export const lightTheme: DeprecatedThemeOptions = {
         .toHexString(),
       activeColor: themeColors.primary
     },
+    breadcrumbs: {
+      link: '#3B4251',
+      color: '#778194'
+    },
     tab: {
       contained: {
         border: '#EDF2FA',
