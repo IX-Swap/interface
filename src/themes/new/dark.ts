@@ -35,6 +35,12 @@ export const darkTheme: DeprecatedThemeOptions = {
       activeColor: '#132a57',
       activeBackground: '#0c469c'
     },
+    tab: {
+      contained: {
+        border: tinycolor('#4C88FF').setAlpha(0.3).toRgbString(),
+        color: undefined
+      }
+    },
     text: {
       primary: '#FFFFFF',
       secondary: '#496396'

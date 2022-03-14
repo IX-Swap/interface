@@ -1,11 +1,11 @@
 import { useFavoritePairs } from 'app/pages/exchange/hooks/useFavoritePairs'
 import { exchange as exchangeURL } from 'config/apiURL'
 import { exchange as exchangeQueryKeys } from 'config/queryKeys'
-import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import { useParsedData } from 'hooks/useParsedData'
 import { useServices } from 'hooks/useServices'
 import { useInfiniteQuery } from 'react-query'
 import { PaginatedData } from 'services/api/types'
+import useMarketListFilters from './useMarketListFilters'
 
 export interface Pair {
   _id: string
@@ -17,42 +17,28 @@ export interface Pair {
 
 export const useMarketList = (showFilter: boolean | undefined = false) => {
   const { apiService } = useServices()
-  const { getFilterValue } = useQueryFilter()
   const { data: favorites } = useFavoritePairs()
-
-  const getMarketListFilter = () => {
-    const pairFilter = getFilterValue('pairFilter')
-    const pairFilterIsFavorite = pairFilter === 'favorite'
-    const isFavorite = pairFilterIsFavorite ? true : undefined
-    const currency = pairFilterIsFavorite ? 'all' : pairFilter
-    const search = getFilterValue('search')
-    const sortBy = getFilterValue('sortBy')
-    const orderBy = getFilterValue('orderBy')
-
-    const filters = {
-      search: showFilter ? search : undefined,
-      isFavorite: showFilter ? isFavorite : undefined,
-      currency: showFilter ? currency : undefined,
-      sortBy: showFilter ? sortBy : undefined,
-      orderBy: showFilter ? orderBy : undefined
-    }
-
-    return filters
-  }
+  const context = showFilter ? 'withFilter' : ''
+  const filters = useMarketListFilters(showFilter)
 
   const fetchMarketList = async (
     queryKey: string,
+    usedFilters?: any,
     cursor: number | undefined = 0
   ) => {
+    const { listingKeyword, currency, sortBy, sortField } = usedFilters
     return await apiService.post<PaginatedData<Pair>>(exchangeURL.marketList, {
       skip: cursor,
       limit: 25,
-      ...getMarketListFilter()
+      listingKeyword,
+      currency,
+      sortBy,
+      sortField
     })
   }
 
   const { data, ...rest } = useInfiniteQuery(
-    exchangeQueryKeys.marketList,
+    [`${exchangeQueryKeys.marketList}-${context}`, filters],
     fetchMarketList,
     {
       getFetchMore: (lastGroup, allGroups) =>
@@ -60,36 +46,26 @@ export const useMarketList = (showFilter: boolean | undefined = false) => {
     }
   )
 
-  const sortByFavorite = (list: Pair[]) => {
-    const pairFilter = getFilterValue('pairFilter')
-    if (
-      pairFilter === 'favorite' &&
-      favorites !== undefined &&
-      favorites.length > 0
-    ) {
-      return list.sort((a: Pair, b: Pair) => {
-        if (
-          (favorites.includes(b._id) && favorites.includes(a._id)) ||
-          (!favorites.includes(b._id) && !favorites.includes(a._id))
-        ) {
-          return 0
-        }
-        if (favorites.includes(b._id) && !favorites.includes(a._id)) {
-          return 1
-        }
-        return -1
-      })
+  const filterByFavorite = (list: Pair[]) => {
+    if (favorites !== undefined && favorites.length > 0) {
+      return list.filter((pair: Pair) => favorites.includes(pair._id))
+    }
+    return list
+  }
+
+  const getFinalList = (list: Pair[]) => {
+    if (filters.isFavorite ?? false) {
+      return filterByFavorite(list)
     }
     return list
   }
 
   const parsedData = useParsedData<Pair>(data, '_id')
-
   return {
     data: {
       raw: parsedData.raw,
       map: parsedData.map,
-      list: sortByFavorite(parsedData.list)
+      list: getFinalList(parsedData.list)
     },
     ...rest
   }
