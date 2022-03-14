@@ -301,7 +301,11 @@ export const getThemeOverrides = (
     }
   },
   MuiTypography: {
-    styleOverrides: {}
+    styleOverrides: {
+      root: {
+        color: theme.palette.text.primary
+      }
+    }
   },
   MuiBreadcrumbs: {
     defaultProps: {
