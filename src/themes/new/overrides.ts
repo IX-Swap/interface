@@ -1,8 +1,9 @@
 import { Theme } from '@mui/material'
-import { alpha, ThemeOptions } from '@mui/material/styles'
+import { ThemeOptions } from '@mui/material/styles'
 import { rte } from 'themes/new/rte'
 import { breadcrumbs } from 'themes/new/overrides/breadcrumbs'
 import { avatar } from 'themes/new/overrides/avatar'
+import { paper } from 'themes/new/overrides/paper'
 
 declare module '@mui/material/Button' {
   interface ButtonPropsVariantOverrides {
@@ -310,19 +311,7 @@ export const getThemeOverrides = (
     }
   },
   MuiBreadcrumbs: breadcrumbs(theme),
-  MuiPaper: {
-    styleOverrides: {
-      root: {
-        backgroundColor: theme.palette.background.paper,
-        backgroundImage: 'none',
-        boxSizing: 'border-box'
-      },
-      outlined: {
-        boxShadow: `0px 80px 80px ${alpha('#a2acbf', 0.16)}`,
-        border: '1px solid #EDF2FA'
-      }
-    }
-  },
+  MuiPaper: paper(theme),
   MuiAvatar: avatar(theme),
   MuiSlider: {
     styleOverrides: {
