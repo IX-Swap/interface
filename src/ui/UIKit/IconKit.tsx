@@ -1,7 +1,7 @@
 import { Grid, Paper, Typography } from '@mui/material'
 import React from 'react'
 import { Icon } from 'ui/Icons/Icon'
-import { UIKitThemeWrapper } from 'ui/UIKitThemeWrapper'
+import { UIKitThemeWrapper } from 'ui/UIKit/UIKitThemeWrapper'
 
 export const IconKit = () => {
   return (

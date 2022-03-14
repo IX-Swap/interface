@@ -2,7 +2,7 @@ import { Grid, Paper } from '@mui/material'
 import React from 'react'
 import TestIcon from './test.svg'
 import { CustomAvatar } from '../CustomAvatar'
-import { UIKitThemeWrapper } from 'ui/UIKitThemeWrapper'
+import { UIKitThemeWrapper } from 'ui/UIKit/UIKitThemeWrapper'
 
 export const AvatarKit = () => {
   return (

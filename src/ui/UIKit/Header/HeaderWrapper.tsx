@@ -1,6 +1,6 @@
 import React from 'react'
 import { Header } from 'ui/UIKit/Header/Header'
-import { UIKitThemeWrapper } from 'ui/UIKitThemeWrapper'
+import { UIKitThemeWrapper } from 'ui/UIKit/UIKitThemeWrapper'
 
 export const HeaderWrapper = () => {
   return (

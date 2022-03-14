@@ -1,6 +1,6 @@
 import { Grid, Paper, Typography } from '@mui/material'
 import React from 'react'
-import { UIKitThemeWrapper } from 'ui/UIKitThemeWrapper'
+import { UIKitThemeWrapper } from 'ui/UIKit/UIKitThemeWrapper'
 
 export const TypographyKit = () => {
   return (

@@ -1,11 +1,10 @@
 import { Box, Paper } from '@mui/material'
 import React from 'react'
-import { ThemeProvider } from '@mui/material/styles'
-import { AppTheme, getAppTheme } from 'themes/new'
+import { UIKitThemeWrapper } from 'ui/UIKit/UIKitThemeWrapper'
 
 export const PaperKit = () => {
   return (
-    <ThemeProvider theme={getAppTheme(AppTheme.Light, true)}>
+    <UIKitThemeWrapper>
       <Box
         sx={{
           p: 10,
@@ -23,6 +22,6 @@ export const PaperKit = () => {
         <Paper elevation={0} />
         <Paper variant={'outlined'} />
       </Box>
-    </ThemeProvider>
+    </UIKitThemeWrapper>
   )
 }
