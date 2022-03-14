@@ -80,7 +80,7 @@ export const initialFilterValues = {
   isFavorite: undefined,
   currency: undefined,
   sortBy: undefined,
-  orderBy: undefined
+  sortField: undefined
 }
 export const filterValuesOnAll = {
   listingKeyword: '',
