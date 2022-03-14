@@ -6,7 +6,7 @@ import { KYCStatusIcons } from 'pages/KYC/styleds'
 import { KYCStatuses } from 'components/Vault/enum'
 import { ButtonText } from 'components/Button'
 
-import { ReactComponent as PdfImage } from 'assets/images/pdf-file.svg'
+import { ReactComponent as PdfImage } from 'assets/images/pdf.svg'
 import { Wrapper } from './styleds'
 
 interface Props {
