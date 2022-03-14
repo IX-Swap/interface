@@ -17,13 +17,13 @@ export const slider = (theme: Theme) => {
           border: 'none'
         },
         '& .MuiSlider-thumb': {
-          border: sliderPalette.border,
+          border: `2px solid ${sliderPalette.border}`,
 
           '&:before': {
             boxShadow: 'none'
           },
           '&.Mui-focusVisible, &:hover': {
-            boxShadow: sliderPalette.boxShadow
+            boxShadow: `0px 16px 16px ${sliderPalette.boxShadow}`
           },
           '&.Mui-disabled': {
             background: sliderPalette.disabledColor
