@@ -1,4 +1,4 @@
-import { DeprecatedThemeOptions } from '@mui/material'
+import { alpha, DeprecatedThemeOptions } from '@mui/material'
 import tinycolor from 'tinycolor2'
 
 export const darkTheme: DeprecatedThemeOptions = {
