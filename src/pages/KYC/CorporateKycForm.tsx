@@ -807,6 +807,9 @@ export default function CorporateKycForm() {
                             </>
                           ))}
                         </Column>
+                        {errors.beneficialOwners && (
+                          <TYPE.small marginTop="4px" color={'red1'}>{t`${errors.beneficialOwners}`}</TYPE.small>
+                        )}
                         <ButtonIXSGradient
                           type="button"
                           style={{ marginTop: 32, height: 40, fontSize: 16 }}
