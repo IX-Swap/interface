@@ -388,7 +388,10 @@ export default function IndividualKycForm() {
                             withScroll
                             label="Country"
                             selectedItem={values.country}
-                            items={countries.filter(({ name }) => name !== 'United States of America')}
+                            items={countries.filter(
+                              ({ name }) =>
+                                !['United States of America', 'United States Minor Outlying Islands'].includes(name)
+                            )}
                             onSelect={(country) => onSelectChange('country', country, setFieldValue)}
                             error={errors.country && errors.country}
                           />
