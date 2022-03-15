@@ -19,9 +19,9 @@ export const PasswordField = ({
   name = 'password',
   label = 'Password'
 }: PasswordFieldProps) => {
-  const { control } = useFormContext()
+  const { control, errors } = useFormContext()
   const { passwordField } = useStyles()
-
+  const passwordErrors = errors[name]
   const [inputType, setInputType] = useState<'password' | 'text'>('password')
   return (
     <Grid container direction='column' spacing={2}>
@@ -41,7 +41,11 @@ export const PasswordField = ({
           fullWidth
           InputProps={{
             endAdornment: (
-              <EyePassword inputType={inputType} setType={setInputType} />
+              <EyePassword
+                inputType={inputType}
+                setType={setInputType}
+                hasErrors={passwordErrors !== undefined}
+              />
             )
           }}
         />
