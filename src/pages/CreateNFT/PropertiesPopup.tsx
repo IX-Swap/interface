@@ -33,7 +33,7 @@ export const PropertiesPopup = ({
 }) => {
   const isOpen = useModalOpen(ApplicationModal.PROPERTIES)
   const toggle = useToggleModal(ApplicationModal.PROPERTIES)
-  const [localProperties, setLocalProperties] = useState([...properties, { trait_type: '', value: '' }])
+  const [localProperties, setLocalProperties] = useState(properties)
   const theme = useTheme()
   const onClose = () => {
     const copy = [...localProperties].filter((record) => record.trait_type && record.value)
@@ -104,14 +104,16 @@ export const PropertiesPopup = ({
           </Column>
           <Column>
             <AddItemContainer>
-              <PropertyInputsNames>
-                <div>
-                  <Trans>Type</Trans>
-                </div>
-                <div>
-                  <Trans>Name</Trans>
-                </div>
-              </PropertyInputsNames>
+              {Boolean(localProperties.length) && (
+                <PropertyInputsNames>
+                  <div>
+                    <Trans>Type</Trans>
+                  </div>
+                  <div>
+                    <Trans>Name</Trans>
+                  </div>
+                </PropertyInputsNames>
+              )}
               {localProperties.map((property, index) => {
                 return (
                   <PropertyInputsContainer key={index} haveDelete={Boolean(property.trait_type)}>

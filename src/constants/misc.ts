@@ -6,6 +6,7 @@ export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 export const NetworkContextName = 'NETWORK'
 
 export const NftSizeLimit = 104857600
+export const FileSizeLimit = 10485760
 
 export const NameSizeLimit = 100
 export const DescriptionSizeLimit = 1000
