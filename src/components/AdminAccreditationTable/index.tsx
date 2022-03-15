@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { t, Trans } from '@lingui/macro'
 import dayjs from 'dayjs'
 import styled from 'styled-components'
@@ -8,27 +8,30 @@ import { LoaderThin } from 'components/Loader/LoaderThin'
 import useCopyClipboard from 'hooks/useCopyClipboard'
 import { useAdminState, useGetAccreditationList } from 'state/admin/hooks'
 import { shortenAddress } from 'utils'
-import { AccreditationItem } from 'state/admin/actions'
+import { AccreditationItem, KycItem } from 'state/admin/actions'
 
-import { SecondStepStatus } from './SecondStepStatus'
+import { CustodianStatus } from './CustodianStatus'
 import { BodyRow, HeaderRow, Table } from '../Table'
-import { FirstStepStatus } from './FirstStepStatus'
+import { BrokerDealerStatus } from './BrokerDealerStatus'
 import { MoreActions } from './MoreActions'
 import { IconWrapper } from 'components/AccountDetails/styleds'
 import { Pagination } from './Pagination'
 import { Search } from './Search'
+import { KycSource } from './KycSource'
+import { KycReviewModal } from 'components/KycReviewModal'
 
 const headerCells = [
   t`Wallet address`,
   t`Token`,
   t`Date of request`,
-  t`Accreditation pair`,
-  t`Step 1 - Primary issuer`,
-  t`Step 2 - Custodian`,
+  t`KYC source`,
+  t`Broker-Dealer status`,
+  t`Custodian status`,
 ]
 
 interface RowProps {
   item: AccreditationItem
+  openReviewModal: (kyc: KycItem) => void
 }
 
 const Header = () => {
@@ -41,18 +44,24 @@ const Header = () => {
   )
 }
 
-const Row: FC<RowProps> = ({ item }: RowProps) => {
+const Row: FC<RowProps> = ({ item, openReviewModal }: RowProps) => {
   const [copied, setCopied] = useCopyClipboard()
   const {
     id,
-    user: { ethAddress },
+    user,
     custodian: { name: custodian },
     brokerDealer: { name: broker },
     status,
     token,
     createdAt,
     kyc,
+    userKyc,
   } = item
+  const { ethAddress } = user
+
+  const onKycClick = () => {
+    openReviewModal({ ...((userKyc || {}) as KycItem), user })
+  }
 
   return (
     <StyledBodyRow key={id}>
@@ -71,35 +80,37 @@ const Row: FC<RowProps> = ({ item }: RowProps) => {
       <div>{token?.symbol || '-'}</div>
       <div>{dayjs(createdAt).format('MMM D, YYYY HH:mm')}</div>
       <div>
-        {broker} - {custodian}
+        <KycSource onKycClick={onKycClick} kyc={kyc} userKyc={userKyc} status={status} />
       </div>
       <div>
-        <FirstStepStatus status={status} kyc={kyc} broker={broker} />
+        <BrokerDealerStatus status={status} kyc={kyc} broker={broker} />
       </div>
       <div>
-        <SecondStepStatus status={status} id={id} />
-      </div>
-      <div>
-        <MoreActions id={id} />
+        <CustodianStatus status={status} id={id} custodian={custodian} />
       </div>
     </StyledBodyRow>
   )
 }
 
-const Body = () => {
+interface BodyProps {
+  openReviewModal: (kyc: KycItem) => void
+}
+
+const Body = ({ openReviewModal }: BodyProps) => {
   const {
     accreditationList: { items },
   } = useAdminState()
   return (
     <>
       {items?.map((item) => {
-        return <Row key={`kyc-table-${item.id}`} item={item} />
+        return <Row key={`kyc-table-${item.id}`} item={item} openReviewModal={openReviewModal} />
       })}
     </>
   )
 }
 
 export const AdminAccreditationTable = () => {
+  const [kyc, handleKyc] = useState({} as KycItem)
   const {
     accreditationList: { totalPages, page, items },
     adminLoading,
@@ -107,6 +118,11 @@ export const AdminAccreditationTable = () => {
   const getAccreditationList = useGetAccreditationList()
 
   const onPageChange = (page: number) => {
+    const element = document.getElementById('accreditation-container')
+    if (element) {
+      const y = element.getBoundingClientRect().top + window.pageYOffset
+      window.scrollTo({ top: y, behavior: 'smooth' })
+    }
     getAccreditationList({ page, offset: 10 })
   }
 
@@ -114,8 +130,12 @@ export const AdminAccreditationTable = () => {
     getAccreditationList({ page: 1, offset: 10 })
   }, [getAccreditationList])
 
+  const closeModal = () => handleKyc({} as KycItem)
+  const openModal = (kyc: KycItem) => handleKyc(kyc)
+
   return (
-    <>
+    <div id="accreditation-container">
+      {Boolean(kyc.id) && <KycReviewModal isOpen onClose={closeModal} data={kyc} />}
       <Search />
       {adminLoading && (
         <Loader>
@@ -128,11 +148,11 @@ export const AdminAccreditationTable = () => {
         </NoData>
       ) : (
         <Container>
-          <Table body={<Body />} header={<Header />} />
+          <Table body={<Body openReviewModal={openModal} />} header={<Header />} />
           <Pagination page={page} totalPages={totalPages} onPageChange={onPageChange} />
         </Container>
       )}
-    </>
+    </div>
   )
 }
 
@@ -169,11 +189,11 @@ export const Container = styled.div`
 `
 
 const StyledHeaderRow = styled(HeaderRow)`
-  grid-template-columns: 175px 75px 175px 200px calc((100% - 675px) / 2) calc((100% - 675px) / 2) 50px;
+  grid-template-columns: 1fr 100px repeat(3, 1fr) minmax(250px, 1fr);
   min-width: 1270px;
 `
 
 const StyledBodyRow = styled(BodyRow)`
-  grid-template-columns: 175px 75px 175px 200px calc((100% - 675px) / 2) calc((100% - 675px) / 2) 50px;
+  grid-template-columns: 1fr 100px repeat(3, 1fr) minmax(250px, 1fr);
   min-width: 1270px;
 `

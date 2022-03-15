@@ -27,7 +27,7 @@ const tabs: Tab[] = [
 ]
 
 const AdminKyc = () => {
-  const [selectedTab, setSelectedTab] = useState<Tab['value']>('kyc')
+  const [selectedTab, setSelectedTab] = useState<Tab['value']>('accreditation')
   const history = useHistory()
   const { adminData } = useAdminState()
   const getMe = useGetMe()
@@ -74,24 +74,20 @@ const AdminKyc = () => {
       <Navbar />
       {adminData?.role === 'admin' && (
         <Body>
-          <ColumnCenter style={{ marginBottom: '24px' }}>
-            <AutoColumn style={{ paddingBottom: 0 }}>
-              <CustodianToggleWrapper>
-                {tabs.map(({ value, label }, index) => (
-                  <>
-                    <ToggleOption
-                      key={`tabs-${index}`}
-                      onClick={() => setSelectedTab(value)}
-                      active={selectedTab === value}
-                    >
-                      <Trans>{label}</Trans>
-                      <Border active={selectedTab === value} />
-                    </ToggleOption>
-                  </>
-                ))}
-              </CustodianToggleWrapper>
-            </AutoColumn>
-          </ColumnCenter>
+          <TabsContainer>
+            {tabs.map(({ value, label }, index) => (
+              <>
+                <ToggleOption
+                  key={`tabs-${index}`}
+                  onClick={() => setSelectedTab(value)}
+                  active={selectedTab === value}
+                >
+                  <Trans>{label}</Trans>
+                  <Border active={selectedTab === value} />
+                </ToggleOption>
+              </>
+            ))}
+          </TabsContainer>
 
           {renderTab()}
         </Body>
@@ -108,9 +104,15 @@ export const Container = styled.div`
 
 export const Body = styled.div`
   padding: 0 30px;
-  max-width: 1610px;
+  max-width: 1330px;
   margin: 0 auto;
   width: 100%;
+`
+
+const TabsContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 60px;
 `
 
 export default AdminKyc

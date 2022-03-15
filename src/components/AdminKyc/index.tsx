@@ -101,6 +101,11 @@ export const AdminKycTable = () => {
   const getKycList = useGetKycList()
 
   const onPageChange = (page: number) => {
+    const element = document.getElementById('kyc-container')
+    if (element) {
+      const y = element.getBoundingClientRect().top + window.pageYOffset
+      window.scrollTo({ top: y, behavior: 'smooth' })
+    }
     getKycList({ page, offset: 10 })
   }
 
@@ -112,7 +117,7 @@ export const AdminKycTable = () => {
   const openModal = (kyc: KycItem) => handleKyc(kyc)
 
   return (
-    <>
+    <div id="kyc-container">
       {Boolean(kyc.id) && <KycReviewModal isOpen onClose={closeModal} data={kyc} />}
       <Search placeholder="Search for Wallet" />
       {adminLoading && (
@@ -130,7 +135,7 @@ export const AdminKycTable = () => {
           <Pagination page={page} totalPages={totalPages} onPageChange={onPageChange} />
         </Container>
       )}
-    </>
+    </div>
   )
 }
 

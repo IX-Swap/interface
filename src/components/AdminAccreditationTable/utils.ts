@@ -1,3 +1,8 @@
+import { AccreditationStatusEnum } from 'components/Vault/enum'
+import rejectedIcon from 'assets/images/reject.svg'
+import approvedIcon from 'assets/images/check-success.svg'
+import pendingIcon from 'assets/images/loader_thin.svg'
+
 export function capitalizeFirstLetter(word: string) {
   return word.charAt(0).toUpperCase() + word.slice(1)
 }
@@ -14,3 +19,15 @@ export const convert = (obj: any): string =>
         : `\n\t${key}: \n${convert(value)}\n`
     )
     .join('')
+
+export const getStatusIcon = (status: string) => {
+  switch (status) {
+    case AccreditationStatusEnum.REJECTED:
+    case AccreditationStatusEnum.FAILED:
+      return rejectedIcon
+    case AccreditationStatusEnum.APPROVED:
+      return approvedIcon
+    default:
+      return pendingIcon
+  }
+}

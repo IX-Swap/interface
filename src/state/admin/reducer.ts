@@ -128,13 +128,8 @@ export default createReducer<AdminState>(initialState, (builder) =>
       state.adminError = null
     })
     .addCase(postApproveAccreditation.fulfilled, (state, { payload: { data } }) => {
-      const list = [...state.accreditationList.items]
       state.adminLoading = false
       state.adminError = null
-      state.accreditationList = {
-        ...state.accreditationList,
-        items: list.map((el) => ({ ...el, status: el.id === data.id ? data.status : el.status })),
-      }
     })
     .addCase(postApproveAccreditation.rejected, (state, { payload: { errorMessage } }) => {
       state.adminLoading = false
@@ -145,13 +140,8 @@ export default createReducer<AdminState>(initialState, (builder) =>
       state.adminError = null
     })
     .addCase(postDeclineAccreditation.fulfilled, (state, { payload: { data } }) => {
-      const list = [...state.accreditationList.items]
       state.adminLoading = false
       state.adminError = null
-      state.accreditationList = {
-        ...state.accreditationList,
-        items: list.map((el) => ({ ...el, status: el.id === data.id ? data.status : el.status })),
-      }
     })
     .addCase(postDeclineAccreditation.rejected, (state, { payload: { errorMessage } }) => {
       state.adminLoading = false
@@ -162,13 +152,8 @@ export default createReducer<AdminState>(initialState, (builder) =>
       state.adminError = null
     })
     .addCase(postResetAccreditation.fulfilled, (state, { payload: { data } }) => {
-      const list = [...state.accreditationList.items]
       state.adminLoading = false
       state.adminError = null
-      state.accreditationList = {
-        ...state.accreditationList,
-        items: list.filter((el) => el.id !== data.id),
-      }
     })
     .addCase(postResetAccreditation.rejected, (state, { payload: { errorMessage } }) => {
       state.adminLoading = false
