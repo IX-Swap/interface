@@ -46,10 +46,20 @@ export const lightTheme: DeprecatedThemeOptions = {
       alternative: '#56AA82',
       alternativeLight: 'rgba(86, 170, 130, 0.06)'
     },
+    // TODO Remove old slider after delete old theme
     slider: {
       background: '#C6D9FF',
       activeColor: '#ffffff',
       activeBackground: '#0C469C'
+    },
+    newSlider: {
+      activeColor: '#4C88FF',
+      disabledColor: '#DBE2EC',
+      color: '#DBE2EC',
+      label: '#778194',
+      disabledLabel: '#DBE2EC',
+      border: '#ffffff',
+      boxShadow: `${tinycolor('#4c88ff').setAlpha(0.2).toRgbString()}`
     },
     sidebar: {
       activeBackground: tinycolor(themeColors.primary)

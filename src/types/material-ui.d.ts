@@ -9,6 +9,17 @@ export interface AppBackgrounds {
   alternativeLight: string
   alternative: string
 }
+// it could be your App.tsx file or theme file that is included in your tsconfig.json
+
+export interface SliderPaletteOptions {
+  color: CSSProperties['color']
+  disabledColor: CSSProperties['color']
+  activeColor: CSSProperties['color']
+  label: CSSProperties['color']
+  disabledLabel: CSSProperties['color']
+  border: string
+  boxShadow: string
+}
 
 export interface SwitchColorOptions {
   color: string
@@ -27,7 +38,6 @@ export interface ToggledInputsColorOptions {
   boxShadow: string
   opacity: number
 }
-// it could be your App.tsx file or theme file that is included in your tsconfig.json
 
 export interface BreadCrumbsPaletteOptions {
   link: CSSProperties['color']
@@ -48,6 +58,7 @@ declare module '@mui/material/styles' {
       background: CSSProperties['color']
       activeBackground: CSSProperties['color']
     }
+    newSlider?: SliderPaletteOptions
     sidebar: {
       activeColor: CSSProperties['color']
       activeBackground: CSSProperties['color']
@@ -74,6 +85,7 @@ declare module '@mui/material/styles' {
       background: CSSProperties['color']
       activeBackground: CSSProperties['color']
     }
+    newSlider?: SliderPaletteOptions
     breadcrumbs?: BreadCrumbsPaletteOptions
     tab?: {
       contained: {

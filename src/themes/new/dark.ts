@@ -55,6 +55,15 @@ export const darkTheme: DeprecatedThemeOptions = {
       activeColor: '#132a57',
       activeBackground: '#0c469c'
     },
+    newSlider: {
+      activeColor: '#4C88FF',
+      disabledColor: '#DBE2EC',
+      color: '#89A1CE',
+      label: '#496396',
+      disabledLabel: '#496396',
+      border: '#ffffff',
+      boxShadow: `${tinycolor('#4c88ff').setAlpha(0.2).toRgbString()}`
+    },
     tab: {
       contained: {
         border: tinycolor('#4C88FF').setAlpha(0.3).toRgbString(),
