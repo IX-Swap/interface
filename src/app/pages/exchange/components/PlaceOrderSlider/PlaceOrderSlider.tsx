@@ -40,7 +40,7 @@ export const PlaceOrderSlider: React.FC<PlaceOrderFieldsProps> = ({
         (sliderRange.to / sliderRange.maxPercentageValue)
       setSlider(newSliderValue)
     } else {
-      setValue('total', null)
+      setValue('total', '')
       setSlider(sliderRange.from)
     }
   }, [amount, price, balance]) // eslint-disable-line
