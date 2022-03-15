@@ -1,10 +1,6 @@
-import { createTheme, ThemeProvider } from '@mui/material/styles'
-import React, { useState } from 'react'
-import { lightTheme } from 'themes/new/light'
-import { getThemeOverrides } from 'themes/new/overrides'
-import { typography } from 'themes/new/typography'
-import { Slider, Paper, Grid, Typography, Box, Button } from '@mui/material'
-import { darkTheme } from 'themes/new/dark'
+import React from 'react'
+import { Slider, Paper, Grid, Typography, Box } from '@mui/material'
+import { UIKitThemeWrapper } from 'ui/UIKit/UIKitThemeWrapper'
 
 const marks = Array.from(Array(11).keys()).map(number => ({
   value: number * 10,
@@ -12,14 +8,8 @@ const marks = Array.from(Array(11).keys()).map(number => ({
 }))
 
 export const SliderKit = () => {
-  const [isDarkThemeOn, setIsDarkThemeOn] = useState(false)
-
-  const currentNewTheme = isDarkThemeOn ? darkTheme : lightTheme
-  const theme = createTheme({ ...currentNewTheme, typography })
-  theme.components = getThemeOverrides(theme)
-
   return (
-    <ThemeProvider theme={theme}>
+    <UIKitThemeWrapper>
       <Grid direction='row' container spacing={1}>
         <Grid item md={6}>
           <Paper sx={{ padding: 2 }} elevation={0}>
@@ -71,14 +61,6 @@ export const SliderKit = () => {
           </Paper>
         </Grid>
       </Grid>
-      <Box marginTop={10}>
-        <Button
-          variant={'contained'}
-          onClick={() => setIsDarkThemeOn(!isDarkThemeOn)}
-        >
-          {isDarkThemeOn ? 'Switch to Light theme' : 'Switch to Dark theme'}
-        </Button>
-      </Box>
-    </ThemeProvider>
+    </UIKitThemeWrapper>
   )
 }

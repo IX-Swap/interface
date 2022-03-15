@@ -13,7 +13,28 @@ export interface UIKitThemeWrapperProps {
 export const UIKitThemeWrapper = ({ children }: UIKitThemeWrapperProps) => {
   const currentNewTheme = useDarkMode() ? darkTheme : lightTheme
   const newTheme = createTheme({ ...currentNewTheme, typography })
-  newTheme.components = getThemeOverrides(newTheme)
+
+  newTheme.components = {
+    ...getThemeOverrides(newTheme),
+    MuiSwitch: {
+      ...getThemeOverrides(newTheme)?.MuiSwitch,
+      defaultProps: {
+        disableTouchRipple: true
+      }
+    },
+    MuiRadio: {
+      ...getThemeOverrides(newTheme)?.MuiRadio,
+      defaultProps: {
+        disableTouchRipple: true
+      }
+    },
+    MuiCheckbox: {
+      ...getThemeOverrides(newTheme)?.MuiCheckbox,
+      defaultProps: {
+        disableTouchRipple: true
+      }
+    }
+  }
 
   return <ThemeProvider theme={newTheme}>{children}</ThemeProvider>
 }
