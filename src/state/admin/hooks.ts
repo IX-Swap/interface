@@ -173,12 +173,14 @@ export const approveAccreditation = async (id: number) => {
 
 export function useApproveAccreditation() {
   const dispatch = useDispatch<AppDispatch>()
+  const getAccretitations = useGetAccreditationList()
   const callback = useCallback(
     async (id: number) => {
       try {
         dispatch(postApproveAccreditation.pending())
         const data = await approveAccreditation(id)
         dispatch(postApproveAccreditation.fulfilled({ data }))
+        await getAccretitations({ page: 1, offset: 10 })
         return STATUS.SUCCESS
       } catch (error: any) {
         dispatch(postApproveAccreditation.rejected({ errorMessage: 'Could not approve accreditation' }))
@@ -197,12 +199,14 @@ export const declineAccreditation = async ({ id, ...data }: { id: number; messag
 
 export function useDeclineAccreditation() {
   const dispatch = useDispatch<AppDispatch>()
+  const getAccretitations = useGetAccreditationList()
   const callback = useCallback(
     async (data: { id: number; message: string }) => {
       try {
         dispatch(postDeclineAccreditation.pending())
         const res = await declineAccreditation(data)
         dispatch(postDeclineAccreditation.fulfilled({ data: res }))
+        await getAccretitations({ page: 1, offset: 10 })
         return STATUS.SUCCESS
       } catch (error: any) {
         dispatch(postDeclineAccreditation.rejected({ errorMessage: 'Could not decline accreditation' }))
@@ -221,12 +225,14 @@ export const accreditationReset = async (tokenId: number) => {
 
 export function useResetAccreditation() {
   const dispatch = useDispatch<AppDispatch>()
+  const getAccretitations = useGetAccreditationList()
   const callback = useCallback(
     async (tokenId: number) => {
       try {
         dispatch(postResetAccreditation.pending())
         const data = await accreditationReset(tokenId)
         dispatch(postResetAccreditation.fulfilled({ data }))
+        await getAccretitations({ page: 1, offset: 10 })
         return STATUS.SUCCESS
       } catch (error: any) {
         dispatch(postResetAccreditation.rejected({ errorMessage: 'Could not reset accreditation' }))

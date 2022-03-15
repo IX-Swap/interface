@@ -131,9 +131,15 @@ export const Container = styled.div`
 
 export const Body = styled.div`
   padding: 0 30px;
-  max-width: 1610px;
+  max-width: 1330px;
   margin: 0 auto;
   width: 100%;
+`
+
+const TabsContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-bottom: 60px;
 `
 
 export default AdminKyc
