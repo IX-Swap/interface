@@ -1,5 +1,5 @@
 import * as createPalette from '@mui/material' //eslint-disable-line
-import { Theme } from '@mui/material/styles' //eslint-disable-line
+import { alpha, Theme } from '@mui/material/styles' //eslint-disable-line
 import { CSSProperties } from '@mui/material'
 
 export interface AppBackgrounds {
@@ -10,6 +10,34 @@ export interface AppBackgrounds {
   alternative: string
 }
 // it could be your App.tsx file or theme file that is included in your tsconfig.json
+
+export interface SliderPaletteOptions {
+  color: CSSProperties['color']
+  disabledColor: CSSProperties['color']
+  activeColor: CSSProperties['color']
+  label: CSSProperties['color']
+  disabledLabel: CSSProperties['color']
+  border: string
+  boxShadow: string
+}
+
+export interface SwitchColorOptions {
+  color: string
+  colorDisabled: string
+  bg: string
+  bgChecked: string
+  bgDisabled: string
+  bgCheckedDisabled: string
+}
+
+export interface ToggledInputsColorOptions {
+  fill: string
+  bg: string
+  border: string
+  borderHover: string
+  boxShadow: string
+  opacity: number
+}
 
 export interface BreadCrumbsPaletteOptions {
   link: CSSProperties['color']
@@ -23,11 +51,14 @@ declare module '@mui/styles/defaultTheme' {
 declare module '@mui/material/styles' {
   export interface PaletteOptions {
     backgrounds: AppBackgrounds
+    toggledInputs?: ToggledInputsColorOptions
+    switch?: SwitchColorOptions
     slider: {
       activeColor: CSSProperties['color']
       background: CSSProperties['color']
       activeBackground: CSSProperties['color']
     }
+    newSlider?: SliderPaletteOptions
     sidebar: {
       activeColor: CSSProperties['color']
       activeBackground: CSSProperties['color']
@@ -43,6 +74,8 @@ declare module '@mui/material/styles' {
 
   export interface Palette {
     backgrounds: AppBackgrounds
+    toggledInputs?: ToggledInputsColorOptions
+    switch?: SwitchColorOptions
     sidebar: {
       activeColor: CSSProperties['color']
       activeBackground: CSSProperties['color']
@@ -52,6 +85,7 @@ declare module '@mui/material/styles' {
       background: CSSProperties['color']
       activeBackground: CSSProperties['color']
     }
+    newSlider?: SliderPaletteOptions
     breadcrumbs?: BreadCrumbsPaletteOptions
     tab?: {
       contained: {
