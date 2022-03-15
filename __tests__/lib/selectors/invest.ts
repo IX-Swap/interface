@@ -27,8 +27,10 @@ export const invest = {
     I_AGREE: 'button >> text="I Agree"',
     DECLINE: 'button >> text="Decline"',
     SELL: 'button >> text="SELL"',
-    VIEW_SECOND_DSO: '[href="/app/invest/commitments/618e3111cc078c0e59014af5/view"]',
-    INVEST_ACCOUNT: '[href="/app/invest/offerings/61c1ca2956e67e0e60c340f5/61c1e3e356e67e0e60c35854/view/make-investment"]'
+    VIEW_SECOND_DSO:
+      '[href="/app/invest/commitments/618e3111cc078c0e59014af5/view"]',
+    INVEST_ACCOUNT:
+      '[href="/app/invest/offerings/61c1ca2956e67e0e60c340f5/61c1e3e356e67e0e60c35854/view/make-investment"]'
   },
   fields: {
     SEARCH: '[placeholder="Search"]',

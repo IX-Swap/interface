@@ -1,5 +1,5 @@
 import * as createPalette from '@mui/material' //eslint-disable-line
-import { Theme } from '@mui/material/styles' //eslint-disable-line
+import { alpha, Theme } from '@mui/material/styles' //eslint-disable-line
 import { CSSProperties } from '@mui/material'
 
 export interface AppBackgrounds {
@@ -21,6 +21,29 @@ export interface SliderPaletteOptions {
   boxShadow: string
 }
 
+export interface SwitchColorOptions {
+  color: string
+  colorDisabled: string
+  bg: string
+  bgChecked: string
+  bgDisabled: string
+  bgCheckedDisabled: string
+}
+
+export interface ToggledInputsColorOptions {
+  fill: string
+  bg: string
+  border: string
+  borderHover: string
+  boxShadow: string
+  opacity: number
+}
+
+export interface BreadCrumbsPaletteOptions {
+  link: CSSProperties['color']
+  color: CSSProperties['color']
+}
+
 declare module '@mui/styles/defaultTheme' {
   interface DefaultTheme extends Theme {}
 }
@@ -28,7 +51,8 @@ declare module '@mui/styles/defaultTheme' {
 declare module '@mui/material/styles' {
   export interface PaletteOptions {
     backgrounds: AppBackgrounds
-    // TODO Remove old slider after delete old theme
+    toggledInputs?: ToggledInputsColorOptions
+    switch?: SwitchColorOptions
     slider: {
       activeColor: CSSProperties['color']
       background: CSSProperties['color']
@@ -39,6 +63,7 @@ declare module '@mui/material/styles' {
       activeColor: CSSProperties['color']
       activeBackground: CSSProperties['color']
     }
+    breadcrumbs?: BreadCrumbsPaletteOptions
     tab?: {
       contained: {
         border: CSSProperties['color']
@@ -49,17 +74,19 @@ declare module '@mui/material/styles' {
 
   export interface Palette {
     backgrounds: AppBackgrounds
+    toggledInputs?: ToggledInputsColorOptions
+    switch?: SwitchColorOptions
     sidebar: {
       activeColor: CSSProperties['color']
       activeBackground: CSSProperties['color']
     }
-    // TODO Remove old slider after delete old theme
     slider: {
       activeColor: CSSProperties['color']
       background: CSSProperties['color']
       activeBackground: CSSProperties['color']
     }
     newSlider?: SliderPaletteOptions
+    breadcrumbs?: BreadCrumbsPaletteOptions
     tab?: {
       contained: {
         border: CSSProperties['color']

@@ -12,9 +12,25 @@ export const lightTheme: DeprecatedThemeOptions = {
       contrastText: '#FFFFFF'
     },
     secondary: {
-      main: '#DBE2EC',
+      main: '#78A5FF',
       dark: '#F0F2F7',
       light: '#EDF2FA'
+    },
+    toggledInputs: {
+      fill: '#FFFFFF',
+      bg: '#FFFFFF',
+      border: '#DBE2EC',
+      borderHover: '#78A5FF',
+      boxShadow: '#a2acbf',
+      opacity: 0.6
+    },
+    switch: {
+      bg: '#778194',
+      bgDisabled: '#D3D9E5',
+      bgChecked: '#4C88FF',
+      bgCheckedDisabled: '#D3D9E5',
+      color: '#ffffff',
+      colorDisabled: '#ffffff'
     },
     action: {
       selected: tinycolor(themeColors.primary).lighten(64).toHexString()
@@ -50,6 +66,10 @@ export const lightTheme: DeprecatedThemeOptions = {
         .lighten(64)
         .toHexString(),
       activeColor: themeColors.primary
+    },
+    breadcrumbs: {
+      link: '#3B4251',
+      color: '#778194'
     },
     tab: {
       contained: {

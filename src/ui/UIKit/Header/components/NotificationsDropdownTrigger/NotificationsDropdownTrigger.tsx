@@ -18,7 +18,6 @@ export const NotificationsDropdownTrigger = (props: DropdownTriggerProps) => {
       className={classnames(classes.wrapper, {
         [classes.opened]: props.injectedProps.isOpen
       })}
-      size='large'
       color='inherit'
       disableTouchRipple
       {...props?.triggerProps}
