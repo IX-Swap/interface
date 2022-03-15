@@ -1,5 +1,5 @@
 import * as createPalette from '@mui/material' //eslint-disable-line
-import { Theme } from '@mui/material/styles' //eslint-disable-line
+import { alpha, Theme } from '@mui/material/styles' //eslint-disable-line
 import { CSSProperties } from '@mui/material'
 
 export interface AppBackgrounds {
@@ -8,6 +8,24 @@ export interface AppBackgrounds {
   lighter: string
   alternativeLight: string
   alternative: string
+}
+
+export interface SwitchColorOptions {
+  color: string
+  colorDisabled: string
+  bg: string
+  bgChecked: string
+  bgDisabled: string
+  bgCheckedDisabled: string
+}
+
+export interface ToggledInputsColorOptions {
+  fill: string
+  bg: string
+  border: string
+  borderHover: string
+  boxShadow: string
+  opacity: number
 }
 // it could be your App.tsx file or theme file that is included in your tsconfig.json
 
@@ -23,6 +41,8 @@ declare module '@mui/styles/defaultTheme' {
 declare module '@mui/material/styles' {
   export interface PaletteOptions {
     backgrounds: AppBackgrounds
+    toggledInputs?: ToggledInputsColorOptions
+    switch?: SwitchColorOptions
     slider: {
       activeColor: CSSProperties['color']
       background: CSSProperties['color']
@@ -43,6 +63,8 @@ declare module '@mui/material/styles' {
 
   export interface Palette {
     backgrounds: AppBackgrounds
+    toggledInputs?: ToggledInputsColorOptions
+    switch?: SwitchColorOptions
     sidebar: {
       activeColor: CSSProperties['color']
       activeBackground: CSSProperties['color']
