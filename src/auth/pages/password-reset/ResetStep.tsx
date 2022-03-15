@@ -1,14 +1,17 @@
-import React from 'react'
-import { CompletePasswordResetArgs } from 'types/auth'
-import { completePasswordResetValidationSchema } from 'validation/auth'
+import { Button, Grid, Typography } from '@mui/material'
 import { usePasswordResetStore } from 'auth/context/password-reset'
-import { PasswordResetStep } from 'auth/context/password-reset/types'
 import { useCompletePasswordReset } from 'auth/hooks/useCompletePasswordReset'
-import { Button, Grid } from '@mui/material'
-import { useUnmountCallback } from 'hooks/useUnmountCallback'
 import { ResetFields } from 'auth/pages/password-reset/components/ResetFields'
+import { AuthRoute } from 'auth/router/config'
 import { Form } from 'components/form/Form'
 import { Submit } from 'components/form/Submit'
+import { VSpacer } from 'components/VSpacer'
+import { useUnmountCallback } from 'hooks/useUnmountCallback'
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { CompletePasswordResetArgs } from 'types/auth'
+import { completePasswordResetValidationSchema } from 'validation/auth'
+import { useStyles } from './RequestStep.styles'
 
 export type CompletePasswordResetFormValues = Omit<
   CompletePasswordResetArgs,
@@ -22,8 +25,8 @@ export const completePasswordResetInitialValues = {
 
 export const ResetStep: React.FC = () => {
   const [completeReset] = useCompletePasswordReset()
-  const { setCurrentStep, email, token, reset } = usePasswordResetStore()
-
+  const { email, token, reset } = usePasswordResetStore()
+  const { title } = useStyles()
   const handleSubmit = async (
     values: CompletePasswordResetFormValues
   ): Promise<void> => {
@@ -31,10 +34,6 @@ export const ResetStep: React.FC = () => {
       ...values,
       resetToken: token as string
     })
-  }
-
-  const goBack = (): void => {
-    setCurrentStep(PasswordResetStep.Request)
   }
 
   useUnmountCallback(reset)
@@ -47,14 +46,32 @@ export const ResetStep: React.FC = () => {
       onSubmit={handleSubmit}
     >
       <Grid container direction='column' spacing={2}>
+        <Grid item>
+          <Typography className={title} variant={'h3'} align='center'>
+            Password recovery
+          </Typography>
+          <VSpacer size={'small'} />
+        </Grid>
         <ResetFields />
         <Grid item container justifyContent='center'>
-          <Submit variant='contained' color='primary' size='large'>
+          <Submit
+            variant='contained'
+            color='primary'
+            size='large'
+            sx={{ width: '100%' }}
+          >
             Complete
           </Submit>
         </Grid>
         <Grid item container justifyContent='center'>
-          <Button color='primary' size='large' onClick={goBack}>
+          <Button
+            color='secondary'
+            variant='outlined'
+            size='large'
+            component={Link}
+            to={AuthRoute.login}
+            sx={{ width: '100%' }}
+          >
             Back
           </Button>
         </Grid>

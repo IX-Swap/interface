@@ -5,7 +5,8 @@ export const useStyles = makeStyles(theme => ({
     fontWeight: 700,
     fontSize: 40,
     color: theme.palette.text.primary,
-    textTransform: 'uppercase'
+    textTransform: 'uppercase',
+    fontFamily: 'Monument Extended, sans-serif'
   },
   link: {
     color: theme.palette.text.primary
