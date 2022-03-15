@@ -46,11 +46,7 @@ export default function CorporateKycForm() {
   const [errors, setErrors] = useState<any>({})
   const [pending, setPending] = useState(false)
   const history = useHistory()
-
-  const { kyc, loadingRequest } = useKYCState()
-
-  console.log('error', formData)
-
+  const { kyc } = useKYCState()
   const login = useLogin({ mustHavePreviousLogin: false })
   const showError = useShowError()
   const addPopup = useAddPopup()
@@ -185,7 +181,7 @@ export default function CorporateKycForm() {
 
   const countries = useMemo(() => {
     return getNames()
-      .filter((name) => name !== 'United States of America')
+      .filter((name) => !['United States of America', 'United States Minor Outlying Islands'].includes(name))
       .map((name, index) => ({ id: ++index, name }))
       .sort((a, b) => a.name.localeCompare(b.name))
   }, [])
@@ -214,11 +210,15 @@ export default function CorporateKycForm() {
 
   const handleDropImage = (acceptedFile: any, values: any, key: string, setFieldValue: any) => {
     const file = acceptedFile
-    const arrayOfFiles = [...values[key]]
-    arrayOfFiles.push(file)
+    if (file?.size > 10 ** 7) {
+      showError(t`Max size of 10Mb`)
+    } else {
+      const arrayOfFiles = [...values[key]]
+      arrayOfFiles.push(file)
 
-    setFieldValue(key, arrayOfFiles, false)
-    validationSeen(key)
+      setFieldValue(key, arrayOfFiles, false)
+      validationSeen(key)
+    }
   }
 
   const handleImageDelete = (values: any, key: string, setFieldValue: any) => (index: number) => {

@@ -35,6 +35,7 @@ export const kyc = {
   createIndividual: `/newkyc/individual`,
   createCorporate: `/newkyc/corporate`,
   updateCorporate: (kycId: number) => `/newkyc/corporate/${kycId}`,
+  cynopsisRisks: (address: string) => `/newkyc/cynopsis/${address}`,
   getMyKyc: `newkyc/me`,
   individualProgress: `newkyc/individual/progress`,
   corporateProgress: `newkyc/corporate/progress`,

@@ -20,6 +20,7 @@ import { useGetMyKyc, useKYCState } from 'state/kyc/hooks'
 
 import { ReactComponent as KYC } from 'assets/images/kyc.svg'
 import { ReactComponent as KYCApproved } from 'assets/images/kyc-approved.svg'
+import { useAuthState } from 'state/auth/hooks'
 
 const HeaderFrame = styled.div<{ showBackground: boolean; lightBackground: boolean }>`
   display: grid;
@@ -196,6 +197,7 @@ const KYCWrapper = styled(Flex)`
 
 export default function Header() {
   const { account } = useActiveWeb3React()
+  const { token } = useAuthState()
   const { hasLightBackground } = useLightBackground()
   const userEthBalance = useETHBalances(account ? [account] : [])?.[account ?? '']
   const nativeCurrency = useNativeCurrency()
@@ -205,7 +207,7 @@ export default function Header() {
 
   useEffect(() => {
     getMyKyc()
-  }, [getMyKyc])
+  }, [getMyKyc, account, token])
 
   return (
     <>

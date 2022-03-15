@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Trans, t } from '@lingui/macro'
 import styled from 'styled-components'
 
@@ -12,6 +12,7 @@ import { useApproveKyc, useRejectKyc, useResetKyc } from 'state/admin/hooks'
 
 import { CorporateForm } from './CorporateForm'
 import { IndividualForm } from './IndividualForm'
+import { getCynopsisRisks } from 'state/kyc/hooks'
 
 interface Props {
   isOpen: boolean
@@ -24,6 +25,15 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
   const approveKyc = useApproveKyc()
   const rejectKyc = useRejectKyc()
   const resetKyc = useResetKyc()
+
+  useEffect(() => {
+    const fetchCynopsisRisks = async () => {
+      const result = await getCynopsisRisks(data?.user.ethAddress)
+      console.log(result)
+    }
+
+    fetchCynopsisRisks()
+  }, [])
 
   const kyc = (data.individualKycId ? data.individual : data.corporate) || ({} as IndividualKyc | CorporateKyc)
 
