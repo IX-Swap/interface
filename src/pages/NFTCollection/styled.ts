@@ -15,6 +15,7 @@ export const ActionButtons = styled.div`
   flex-wrap: wrap;
   gap: 32px;
   > button {
+    min-height: 40px;
     height: 40px;
     font-weight: 600;
     font-size: 16px;

@@ -104,6 +104,7 @@ export const StyledNumericalInput = styled(NumericalInput)`
 `
 
 export const StyledCreateCollectionBtn = styled(ButtonGradientBorder)`
+  min-height: 32px;
   height: 32px;
   font-size: 16px;
   line-height: 16px;
@@ -117,6 +118,7 @@ export const StyledTextarea = styled(Textarea)`
 export const PlusButton = styled(ButtonGradientBorder)`
   width: 32px;
   height: 32px;
+  min-height: 32px;
   svg {
     min-width: 13px;
     min-height: 13px;
@@ -133,6 +135,7 @@ export const StyledModalContentWrapper = styled(ModalContentWrapper)`
   padding: 20px 32px;
   > button:last-child {
     height: 40px;
+    min-height: 40px;
     font-size: 16px;
   }
   @media (max-width: ${MEDIA_WIDTHS.upToMedium}px) {
@@ -158,6 +161,7 @@ export const AddItemContainer = styled.div`
 
 export const AddNewItemButton = styled(ButtonGradientBorder)`
   height: 32px;
+  min-height: 32px;
   margin: 0 auto;
   margin-top: 12px;
   font-size: 16px;

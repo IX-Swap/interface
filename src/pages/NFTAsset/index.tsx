@@ -44,6 +44,11 @@ interface NftStat {
   max_value: number
 }
 
+const StyledBackButton = styled(ButtonGradientBorder)`
+  min-height: 32px;
+  height: 32px;
+`
+
 const ImageContainer = styled.div`
   object-fit: cover;
   width: 100%;
@@ -160,7 +165,7 @@ const NftAssetPage = ({
     <AppBody blurred={!chainId || !TGE_CHAINS_WITH_SWAP.includes(chainId)} maxWidth="100%" transparent>
       <NftAssetPageWrapper>
         <ImageWitButton>
-          <ButtonGradientBorder onClick={goToCollection}>Back</ButtonGradientBorder>
+          <StyledBackButton onClick={goToCollection}>Back</StyledBackButton>
           <ImageContainer>
             <NftFilePreview type={type} path={item?.file ?? LogoWhite} />
           </ImageContainer>

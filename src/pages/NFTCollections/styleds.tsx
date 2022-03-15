@@ -117,10 +117,11 @@ export const ButtonsContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 32px 0;
+  margin-bottom: 32px;
   flex-wrap: wrap;
   row-gap: 32px;
   a {
+    min-height: 40px;
     height: 40px;
     font-weight: 600;
     font-size: 16px;

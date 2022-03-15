@@ -205,6 +205,7 @@ export const ActionsContainer = styled.div`
   row-gap: 32px;
   button {
     height: 40px;
+    min-height: 40px;
     font-weight: 600;
     font-size: 16px;
   }
