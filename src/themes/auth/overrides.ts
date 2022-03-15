@@ -80,8 +80,13 @@ export const getThemeOverrides = (
         paddingRight: 24,
         '&:-webkit-autofill, &:-webkit-autofill:focus': {
           WebkitBoxShadow: '0 0 0 100px #1a397c inset !important',
-          borderRadius: 0,
+          borderRadius: 4,
+          backgroundClip: 'padding-box',
           WebkitTextFillColor: `#ffffff`
+        },
+        '& ~ fieldset.MuiOutlinedInput-notchedOutline': {
+          borderRadius: 3,
+          borderColor: '#1a397c'
         }
       }
     }
