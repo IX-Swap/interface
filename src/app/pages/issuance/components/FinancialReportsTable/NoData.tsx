@@ -6,8 +6,8 @@ import { IssuanceRoute } from 'app/pages/issuance/router/config'
 import { useDSOsByUserId } from 'app/pages/issuance/hooks/useDSOsByUserId'
 
 export const NoData = () => {
-  const { data, isLoading } = useDSOsByUserId()
-  const noDSO = data === undefined
+  const { data, isLoading } = useDSOsByUserId('Approved', true)
+  const noDSO = data === undefined || data.list.length < 1
 
   if (isLoading) {
     return null
