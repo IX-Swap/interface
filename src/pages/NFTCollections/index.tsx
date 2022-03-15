@@ -86,14 +86,14 @@ const NFTCollections: FC = () => {
     <AppBody blurred={!chainId || !TGE_CHAINS_WITH_SWAP.includes(chainId)} maxWidth="100%" transparent>
       <Container style={{ width: '100%' }}>
         <Body style={{ padding: '0 10px' }}>
-          <TYPE.titleBig marginBottom={32} textAlign="center" fontWeight={600}>
-            My Collections
-          </TYPE.titleBig>
           {!collectionsLoading && myCollections.length !== 0 && (
             <ButtonsContainer>
               <ButtonGradientBorder as={StyledInternalLink} to={routes.nftCollectionImport}>
                 Import a collection
               </ButtonGradientBorder>
+              <TYPE.titleBig textAlign="center" fontWeight={600}>
+                My Collections
+              </TYPE.titleBig>
               <ButtonIXSGradient as={StyledInternalLink} to={routes.nftCollectionCreate}>
                 Create a collection
               </ButtonIXSGradient>

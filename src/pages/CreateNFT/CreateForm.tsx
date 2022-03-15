@@ -5,12 +5,10 @@ import { t, Trans } from '@lingui/macro'
 import { Label } from '@rebass/forms'
 import styled from 'styled-components'
 
-import { ExternalLink, TYPE } from 'theme'
+import { TYPE } from 'theme'
 import { NftSizeLimit, NameSizeLimit, DescriptionSizeLimit } from 'constants/misc'
 import { ButtonIXSGradient } from 'components/Button'
 import { LoaderThin } from 'components/Loader/LoaderThin'
-import { ContainerRow, Input, InputContainer, InputPanel, Textarea } from 'components/Input'
-import Upload from 'components/Upload'
 import { AcceptFiles, FileTypes } from 'components/Upload/types'
 import { getfileType } from 'components/Upload/utils'
 
@@ -33,7 +31,6 @@ import { NSFWRadio } from './NSFWRadio'
 import { PropertiesPopup } from './PropertiesPopup'
 import { Traits } from './Traits'
 import { FileUploader } from './FileUploader'
-import { NewCollectionPopup } from './NewCollectionPopup'
 import { StyledInput, StyledCreateCollectionBtn, StyledTextarea } from './styleds'
 import { routes } from 'utils/routes'
 
@@ -54,6 +51,7 @@ export const CreateForm = () => {
     newCollectionName,
     activeTraitType,
   } = useAssetFormState()
+
   const {
     onSelectFile,
     onSelectPreview,
@@ -241,6 +239,8 @@ export const CreateForm = () => {
     box-sizing: inherit;
   `
 
+  const isNotImage = file && getfileType(file) !== FileTypes.IMAGE
+
   return (
     <>
       {pending && (
@@ -311,10 +311,6 @@ export const CreateForm = () => {
             <TYPE.body>
               <Trans>External Link</Trans>
             </TYPE.body>
-            {/* <TYPE.descriptionThin fontSize={13}>
-              We will include a link to this URL on this item&apos;s detail page, so that users can click to learn more
-              about it. You are welcome to link to your own webpage with more details.
-            </TYPE.descriptionThin> */}
           </Label>
 
           <StyledInput
@@ -341,13 +337,6 @@ export const CreateForm = () => {
             <TYPE.body>
               <Trans>Description</Trans>
             </TYPE.body>
-            {/* <TYPE.descriptionThin fontSize={13}>
-              The description will be included on the item&apos;s detail page underneath its image.{' '}
-              <ExternalLink href={'https://www.markdownguide.org/cheat-sheet/'} style={{ fontWeight: 600 }}>
-                Markdown
-              </ExternalLink>{' '}
-              syntax is supported
-            </TYPE.descriptionThin> */}
           </Label>
           <StyledTextarea
             onChange={(e) => onSetDescription(e?.target?.value)}
@@ -373,8 +362,8 @@ export const CreateForm = () => {
         <FreezeRadio active={freeze} setActive={onSetFreeze} />
       </Flex>
 
-      <FileUploader title="Image, Video, Audio, or 3D Model" onDrop={onSelectFile} file={file} />
-      {file && getfileType(file) !== FileTypes.IMAGE && (
+      <FileUploader title="Image, Video or Audio" onDrop={onSelectFile} file={file} accept={AcceptFiles.FILLES} />
+      {isNotImage && (
         <Box width={1} marginTop="12px">
           <Label htmlFor="preview" flexDirection="column" mb={3}>
             <TYPE.descriptionThin fontSize={13}>
@@ -390,15 +379,21 @@ export const CreateForm = () => {
           />
         </Box>
       )}
-      <Flex flexWrap="wrap">
-        <Box margin="40px auto 0">
-          {error && <TYPE.error error>{error}</TYPE.error>}
-
-          <ButtonIXSGradient width="140px" disabled={Boolean(isNotValid)} onClick={(e) => onSubmit(e)}>
-            Create NFT
-          </ButtonIXSGradient>
-        </Box>
-      </Flex>
+      <Box margin="40px auto 0">
+        {error && (
+          <TYPE.error error marginBottom="16px">
+            {error}
+          </TYPE.error>
+        )}
+        <ButtonIXSGradient
+          style={{ margin: '0 auto' }}
+          width="140px"
+          disabled={Boolean(isNotValid)}
+          onClick={(e) => onSubmit(e)}
+        >
+          Create NFT
+        </ButtonIXSGradient>
+      </Box>
     </>
   )
 }
