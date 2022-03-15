@@ -1,9 +1,8 @@
 import styled from 'styled-components'
 import { darken } from 'polished'
 
-import { ButtonGradientBorder } from 'components/Button'
+import { ButtonGradientBorder, ButtonGray } from 'components/Button'
 import { BodyRow } from 'components/Table'
-import { ApproveButton } from 'components/AdminAccreditationTable/SecondStepStatus'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import { ModalBlurWrapper } from 'theme'
 
@@ -32,7 +31,12 @@ export const CardHeader = styled(BodyRow)`
   `};
 `
 
-export const EditButton = styled(ApproveButton)`
+export const EditButton = styled(ButtonGray)`
+  height: 32px;
+  border-radius: 40px;
+  max-width: 162px;
+  font-size: 14px;
+  background-color: rgba(55, 46, 94, 0.42);
   width: 109px;
   padding: 0px;
   color: ${({ theme }) => theme.text1};
