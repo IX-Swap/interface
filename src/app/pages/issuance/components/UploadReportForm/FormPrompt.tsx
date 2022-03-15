@@ -10,10 +10,10 @@ import {
   DialogContent,
   Grid,
   Typography
-} from '@material-ui/core'
+} from '@mui/material'
 
 export const FormPrompt = () => {
-  const { formState } = useFormContext()
+  const { formState, reset } = useFormContext()
   const history = useHistory()
 
   const [open, setOpen] = useState(false)
@@ -25,7 +25,7 @@ export const FormPrompt = () => {
   const showCustomPrompt = (location: Location<unknown>, action: Action) => {
     setNextLocation(location)
 
-    if (action === 'PUSH' && !confirmed) {
+    if ((action === 'PUSH' || action === 'REPLACE') && !confirmed) {
       setConfirmed(true)
       setOpen(true)
       return false
@@ -41,7 +41,10 @@ export const FormPrompt = () => {
 
   const handleLeave = () => {
     if (nextLocation !== undefined) {
-      history.push(nextLocation.pathname)
+      reset()
+      setConfirmed(false)
+      setOpen(false)
+      history.push(nextLocation)
     }
   }
 
