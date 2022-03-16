@@ -93,6 +93,10 @@ export const darkTheme: DeprecatedThemeOptions = {
       fillDisabled: '#1D3667',
       bgDisabled: 'transparent'
     },
+    menu: {
+      border: '#1D3667',
+      boxShadow: tinycolor('#0e1f3f').setAlpha(0.3).toRgbString()
+    },
     tab: {
       contained: {
         border: tinycolor('#4C88FF').setAlpha(0.3).toRgbString(),

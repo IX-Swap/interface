@@ -77,6 +77,11 @@ export interface FABPalette {
   fillDisabled: CSSProperties['color']
 }
 
+export interface MenuPalette {
+  border: string
+  boxShadow: string
+}
+
 declare module '@mui/styles/defaultTheme' {
   interface DefaultTheme extends Theme {}
 }
@@ -100,6 +105,7 @@ declare module '@mui/material/styles' {
     buttonGroup: ButtonGroupPalette
     iconButton: IconButtonPalette
     fab: FABPalette
+    menu: MenuPalette
     breadcrumbs?: BreadCrumbsPaletteOptions
     tab?: {
       contained: {
@@ -127,6 +133,7 @@ declare module '@mui/material/styles' {
     buttonGroup: ButtonGroupPalette
     iconButton: IconButtonPalette
     fab: FABPalette
+    menu: MenuPalette
     breadcrumbs?: BreadCrumbsPaletteOptions
     tab?: {
       contained: {

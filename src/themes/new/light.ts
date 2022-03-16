@@ -90,6 +90,10 @@ export const lightTheme: DeprecatedThemeOptions = {
       fillDisabled: '#DBE2EC',
       bgDisabled: '#EDF2FA'
     },
+    menu: {
+      border: '#DBE2EC',
+      boxShadow: tinycolor('#a2acbf').setAlpha(0.16).toRgbString()
+    },
     sidebar: {
       activeBackground: tinycolor(themeColors.primary)
         .lighten(64)
