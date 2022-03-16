@@ -6,6 +6,7 @@ import { formatDateToMMDDYY } from 'helpers/dates'
 import { privateClassNames } from 'helpers/classnames'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { ExtendedIdentityProfile } from 'app/pages/identity/types/forms'
+import { AuthorizableStatus } from 'app/pages/authorizer/components/AuthorizableStatus'
 
 export interface IndividualInfoViewProps {
   data: ExtendedIdentityProfile
@@ -51,8 +52,13 @@ export const IndividualInfoView = (props: IndividualInfoViewProps) => {
             />
           </Grid>
 
-          <Grid item xs={12} sm={6} md={8}>
+          <Grid item xs={12} sm={6} md={4}>
             <LabelledValue value={data.nationality} label='Citizenship' />
+          </Grid>
+
+          <Grid item xs={12} sm={6} md={4}>
+            <LabelledValue value=' ' label='Status of Risk Report' />
+            <AuthorizableStatus status='HIGH' compact={false} isNewTheme />
           </Grid>
 
           <Grid item xs={12} sm={6} md={4}>
