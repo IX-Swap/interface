@@ -77,6 +77,11 @@ export const darkTheme: DeprecatedThemeOptions = {
       colorAlternateHover: '#4C88FF',
       borderAlternateHover: '#4C88FF'
     },
+    buttonGroup: {
+      bg: '#132A57',
+      bgHover: '#78A5FF',
+      colorHover: '#EDF2FA'
+    },
     tab: {
       contained: {
         border: tinycolor('#4C88FF').setAlpha(0.3).toRgbString(),

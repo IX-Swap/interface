@@ -58,6 +58,12 @@ export interface ButtonPaletteOptions {
   borderAlternateHover: string
 }
 
+export interface ButtonGroupPalette {
+  bg: CSSProperties['color']
+  bgHover: CSSProperties['color']
+  colorHover: CSSProperties['color']
+}
+
 declare module '@mui/styles/defaultTheme' {
   interface DefaultTheme extends Theme {}
 }
@@ -78,6 +84,7 @@ declare module '@mui/material/styles' {
       activeBackground: CSSProperties['color']
     }
     button: ButtonPaletteOptions
+    buttonGroup: ButtonGroupPalette
     breadcrumbs?: BreadCrumbsPaletteOptions
     tab?: {
       contained: {
@@ -102,6 +109,7 @@ declare module '@mui/material/styles' {
     }
     newSlider?: SliderPaletteOptions
     button: ButtonPaletteOptions
+    buttonGroup: ButtonGroupPalette
     breadcrumbs?: BreadCrumbsPaletteOptions
     tab?: {
       contained: {

@@ -76,6 +76,11 @@ export const lightTheme: DeprecatedThemeOptions = {
         .setAlpha(0.3)
         .toRgbString()}`
     },
+    buttonGroup: {
+      bg: '#FFFFFF',
+      bgHover: '#EDF2FA',
+      colorHover: '#4C88FF'
+    },
     sidebar: {
       activeBackground: tinycolor(themeColors.primary)
         .lighten(64)
