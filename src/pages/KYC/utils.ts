@@ -46,7 +46,7 @@ export const transformApiData = (data: any) => {
     financialDocuments: documents.filter(({ type }: any) => type === 'financial'),
     evidenceOfAccreditation: documents.filter(({ type }: any) => type === 'accreditation'),
     removedDocuments: [],
-    removedBeneficalOwners: [],
+    removedBeneficialOwners: [],
   }
 }
 
@@ -73,9 +73,12 @@ export const transformKycDto = (values: any) => {
     taxCountry: taxCountry.name,
     isUSTaxPayer: isUSTaxPayer ? true : false,
     beneficialOwners: JSON.stringify(
-      beneficialOwners.map(({ fullName, shareholding }: any) => ({
+      beneficialOwners.map(({ id, fullName, shareholding, proofOfAddress, proofOfIdentity }: any) => ({
+        id: id || null,
         fullName,
-        shareholding,
+        shareholding: +shareholding,
+        proofOfAddress: proofOfAddress?.id || null,
+        proofOfIdentity: proofOfIdentity?.id || null,
       }))
     ),
     beneficialOwnersIdentity: beneficialOwners.map(({ proofOfIdentity }: any) => proofOfIdentity),
