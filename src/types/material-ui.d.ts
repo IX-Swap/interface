@@ -101,11 +101,11 @@ declare module '@mui/material/styles' {
       activeColor: CSSProperties['color']
       activeBackground: CSSProperties['color']
     }
-    button: ButtonPaletteOptions
-    buttonGroup: ButtonGroupPalette
-    iconButton: IconButtonPalette
-    fab: FABPalette
-    menu: MenuPalette
+    button?: ButtonPaletteOptions
+    buttonGroup?: ButtonGroupPalette
+    iconButton?: IconButtonPalette
+    fab?: FABPalette
+    menu?: MenuPalette
     breadcrumbs?: BreadCrumbsPaletteOptions
     tab?: {
       contained: {
