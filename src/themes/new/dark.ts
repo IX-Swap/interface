@@ -62,7 +62,7 @@ export const darkTheme: DeprecatedThemeOptions = {
       label: '#496396',
       disabledLabel: '#496396',
       border: '#ffffff',
-      boxShadow: `${tinycolor('#4c88ff').setAlpha(0.2).toRgbString()}`
+      boxShadow: tinycolor('#4c88ff').setAlpha(0.2).toRgbString()
     },
     button: {
       bgContainedDisabled: '#132A57',

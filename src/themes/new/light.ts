@@ -59,22 +59,20 @@ export const lightTheme: DeprecatedThemeOptions = {
       label: '#778194',
       disabledLabel: '#DBE2EC',
       border: '#ffffff',
-      boxShadow: `${tinycolor('#4c88ff').setAlpha(0.2).toRgbString()}`
+      boxShadow: tinycolor('#4c88ff').setAlpha(0.2).toRgbString()
     },
     button: {
       bgContainedDisabled: '#EDF2FA',
       colorContainedDisabled: '#778194',
       bgOutlined: '#FFFFFF',
-      borderOutlined: `${tinycolor('#4c88ff').setAlpha(0.3).toRgbString()}`,
+      borderOutlined: tinycolor('#4c88ff').setAlpha(0.3).toRgbString(),
       bgTextHover: '#EDF2FA',
       colorTextDisabled: '#89A1CE',
       bgAlternate: '#FFFFFF',
       bgAlternateHover: '#78A5FF',
       colorAlternate: '#778194',
       colorAlternateHover: '#FFFFFF',
-      borderAlternateHover: `${tinycolor('#4c88ff')
-        .setAlpha(0.3)
-        .toRgbString()}`
+      borderAlternateHover: tinycolor('#4c88ff').setAlpha(0.3).toRgbString()
     },
     buttonGroup: {
       bg: '#FFFFFF',
