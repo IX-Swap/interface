@@ -2,6 +2,9 @@ import { Theme } from '@mui/material'
 import { alpha } from '@mui/material/styles'
 
 export const button = (theme: Theme) => {
+  // eslint-disable-next-line
+  const buttonPalette = theme.palette.button!
+
   return {
     styleOverrides: {
       root: {
@@ -23,10 +26,10 @@ export const button = (theme: Theme) => {
           fontSize: 12
         },
         ':disabled': {
-          backgroundColor: theme.palette.button.bgContainedDisabled,
-          color: theme.palette.button.colorContainedDisabled,
+          backgroundColor: buttonPalette.bgContainedDisabled,
+          color: buttonPalette.colorContainedDisabled,
           svg: {
-            fill: theme.palette.button.colorContainedDisabled
+            fill: buttonPalette.colorContainedDisabled
           },
           border: '1px solid transparent'
         },
@@ -46,8 +49,8 @@ export const button = (theme: Theme) => {
         }
       },
       outlined: {
-        backgroundColor: theme.palette.button.bgOutlined,
-        border: `1px solid ${theme.palette.button.borderOutlined}`,
+        backgroundColor: buttonPalette.bgOutlined,
+        border: `1px solid ${buttonPalette.borderOutlined}`,
         color: '#4C88FF',
         '&:hover': {
           border: `1px solid ${alpha('#4c88ff', 0.3)}`
@@ -55,16 +58,16 @@ export const button = (theme: Theme) => {
       },
       text: {
         ':hover': {
-          backgroundColor: theme.palette.button.bgTextHover,
+          backgroundColor: buttonPalette.bgTextHover,
           color: '#4C88FF',
           svg: {
             fill: '#4C88FF'
           }
         },
         ':disabled': {
-          color: theme.palette.button.colorTextDisabled,
+          color: buttonPalette.colorTextDisabled,
           svg: {
-            fill: theme.palette.button.colorTextDisabled
+            fill: buttonPalette.colorTextDisabled
           }
         }
       }
@@ -81,16 +84,16 @@ export const button = (theme: Theme) => {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          backgroundColor: theme.palette.button.bgAlternate,
-          color: theme.palette.button.colorAlternate,
+          backgroundColor: buttonPalette.bgAlternate,
+          color: buttonPalette.colorAlternate,
 
           ':hover': {
-            backgroundColor: theme.palette.button.bgAlternateHover,
-            color: theme.palette.button.colorAlternateHover,
+            backgroundColor: buttonPalette.bgAlternateHover,
+            color: buttonPalette.colorAlternateHover,
             svg: {
-              fill: theme.palette.button.colorAlternateHover
+              fill: buttonPalette.colorAlternateHover
             },
-            border: `1px solid ${theme.palette.button.borderAlternateHover}`
+            border: `1px solid ${buttonPalette.borderAlternateHover}`
           }
         }
       }

@@ -2,12 +2,15 @@ import { Theme } from '@mui/material'
 import { alpha } from '@mui/material/styles'
 
 export const fab = (theme: Theme) => {
+  // eslint-disable-next-line
+  const fabPalette = theme.palette.fab!
+
   return {
     styleOverrides: {
       root: {
-        backgroundColor: theme.palette.fab.bg,
+        backgroundColor: fabPalette.bg,
         svg: {
-          fill: theme.palette.fab.fill
+          fill: fabPalette.fill
         },
         boxShadow: `0px 2px 10px ${alpha('#3b4251', 0.15)}`,
         ':hover': {
@@ -18,9 +21,9 @@ export const fab = (theme: Theme) => {
           boxShadow: 'none'
         },
         ':disabled': {
-          backgroundColor: theme.palette.fab.bgDisabled,
+          backgroundColor: fabPalette.bgDisabled,
           svg: {
-            fill: theme.palette.fab.fillDisabled
+            fill: fabPalette.fillDisabled
           }
         }
       }

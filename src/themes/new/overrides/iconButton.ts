@@ -1,18 +1,21 @@
 import { Theme } from '@mui/material'
 
 export const iconButton = (theme: Theme) => {
+  // eslint-disable-next-line
+  const iconButtonPalette = theme.palette.iconButton!
+
   return {
     styleOverrides: {
       root: {
         height: 'auto',
-        svg: { fill: theme.palette.iconButton.fill, width: 14, height: 14 },
+        svg: { fill: iconButtonPalette.fill, width: 14, height: 14 },
         ':hover': {
-          backgroundColor: theme.palette.iconButton.bgHover,
+          backgroundColor: iconButtonPalette.bgHover,
           svg: { fill: '#4C88FF' }
         },
         ':disabled': {
           svg: {
-            fill: theme.palette.iconButton.fillDisabled
+            fill: iconButtonPalette.fillDisabled
           }
         },
         '&.MuiIconButton-sizeLarge': {
