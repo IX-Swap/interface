@@ -1,4 +1,5 @@
 import { Theme } from '@mui/material'
+import { alpha } from '@mui/material/styles'
 
 export const button = (theme: Theme) => {
   return {
@@ -22,10 +23,12 @@ export const button = (theme: Theme) => {
           fontSize: 12
         },
         ':disabled': {
-          color: '#778194',
+          backgroundColor: theme.palette.button.bgContainedDisabled,
+          color: theme.palette.button.colorContainedDisabled,
           svg: {
-            fill: '#778194'
-          }
+            fill: theme.palette.button.colorContainedDisabled
+          },
+          border: '1px solid transparent'
         },
         ':hover': {
           backgroundColor: '#78A5FF',
@@ -37,35 +40,31 @@ export const button = (theme: Theme) => {
       },
       contained: {
         backgroundColor: '#4C88FF',
-        ':disabled': {
-          backgroundColor: '#EDF2FA'
-        },
         svg: {
           backgroundColor: 'transparent',
           fill: '#FFFFFF'
         }
       },
       outlined: {
-        backgroundColor: '#FFFFFF',
-        border: '1px solid rgba(76, 136, 255, 0.3)',
+        backgroundColor: theme.palette.button.bgOutlined,
+        border: `1px solid ${theme.palette.button.borderOutlined}`,
         color: '#4C88FF',
-        ':disabled': {
-          backgroundColor: '#F0F2F7',
-          border: '1px solid #F0F2F7'
+        '&:hover': {
+          border: `1px solid ${alpha('#4c88ff', 0.3)}`
         }
       },
       text: {
         ':hover': {
-          backgroundColor: '#EDF2FA',
+          backgroundColor: theme.palette.button.bgTextHover,
           color: '#4C88FF',
           svg: {
             fill: '#4C88FF'
           }
         },
         ':disabled': {
-          color: '#89A1CE',
+          color: theme.palette.button.colorTextDisabled,
           svg: {
-            fill: '#89A1CE'
+            fill: theme.palette.button.colorTextDisabled
           }
         }
       }
@@ -74,14 +73,24 @@ export const button = (theme: Theme) => {
       {
         props: { variant: 'alternate' } as any,
         style: {
-          border: '1px solid rgba(76, 136, 255, 0.1)',
+          border: `1px solid ${
+            theme.palette.mode === 'light'
+              ? alpha('#4c88ff', 0.1)
+              : 'transparent'
+          }`,
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          color: '#778194',
-          ':disabled': {
-            backgroundColor: '#EDF2FA',
-            border: '1px solid #EDF2FA'
+          backgroundColor: theme.palette.button.bgAlternate,
+          color: theme.palette.button.colorAlternate,
+
+          ':hover': {
+            backgroundColor: theme.palette.button.bgAlternateHover,
+            color: theme.palette.button.colorAlternateHover,
+            svg: {
+              fill: theme.palette.button.colorAlternateHover
+            },
+            border: `1px solid ${theme.palette.button.borderAlternateHover}`
           }
         }
       }

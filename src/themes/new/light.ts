@@ -61,6 +61,21 @@ export const lightTheme: DeprecatedThemeOptions = {
       border: '#ffffff',
       boxShadow: `${tinycolor('#4c88ff').setAlpha(0.2).toRgbString()}`
     },
+    button: {
+      bgContainedDisabled: '#EDF2FA',
+      colorContainedDisabled: '#778194',
+      bgOutlined: '#FFFFFF',
+      borderOutlined: `${tinycolor('#4c88ff').setAlpha(0.3).toRgbString()}`,
+      bgTextHover: '#EDF2FA',
+      colorTextDisabled: '#89A1CE',
+      bgAlternate: '#FFFFFF',
+      bgAlternateHover: '#78A5FF',
+      colorAlternate: '#778194',
+      colorAlternateHover: '#FFFFFF',
+      borderAlternateHover: `${tinycolor('#4c88ff')
+        .setAlpha(0.3)
+        .toRgbString()}`
+    },
     sidebar: {
       activeBackground: tinycolor(themeColors.primary)
         .lighten(64)

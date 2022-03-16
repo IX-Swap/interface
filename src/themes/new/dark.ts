@@ -64,6 +64,19 @@ export const darkTheme: DeprecatedThemeOptions = {
       border: '#ffffff',
       boxShadow: `${tinycolor('#4c88ff').setAlpha(0.2).toRgbString()}`
     },
+    button: {
+      bgContainedDisabled: '#132A57',
+      colorContainedDisabled: '#496396',
+      bgOutlined: '#132A57',
+      borderOutlined: '#78A5FF',
+      bgTextHover: '#1D3667',
+      colorTextDisabled: '#496396',
+      bgAlternate: '#132A57',
+      bgAlternateHover: '#132A57',
+      colorAlternate: '#FFFFFF',
+      colorAlternateHover: '#4C88FF',
+      borderAlternateHover: '#4C88FF'
+    },
     tab: {
       contained: {
         border: tinycolor('#4C88FF').setAlpha(0.3).toRgbString(),

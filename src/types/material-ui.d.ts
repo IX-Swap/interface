@@ -44,6 +44,20 @@ export interface BreadCrumbsPaletteOptions {
   color: CSSProperties['color']
 }
 
+export interface ButtonPaletteOptions {
+  bgContainedDisabled: CSSProperties['color']
+  colorContainedDisabled: CSSProperties['color']
+  bgOutlined: CSSProperties['color']
+  borderOutlined: string
+  bgTextHover: CSSProperties['color']
+  colorTextDisabled: CSSProperties['color']
+  bgAlternate: CSSProperties['color']
+  bgAlternateHover: CSSProperties['color']
+  colorAlternate: CSSProperties['color']
+  colorAlternateHover: CSSProperties['color']
+  borderAlternateHover: string
+}
+
 declare module '@mui/styles/defaultTheme' {
   interface DefaultTheme extends Theme {}
 }
@@ -63,6 +77,7 @@ declare module '@mui/material/styles' {
       activeColor: CSSProperties['color']
       activeBackground: CSSProperties['color']
     }
+    button: ButtonPaletteOptions
     breadcrumbs?: BreadCrumbsPaletteOptions
     tab?: {
       contained: {
@@ -86,6 +101,7 @@ declare module '@mui/material/styles' {
       activeBackground: CSSProperties['color']
     }
     newSlider?: SliderPaletteOptions
+    button: ButtonPaletteOptions
     breadcrumbs?: BreadCrumbsPaletteOptions
     tab?: {
       contained: {
