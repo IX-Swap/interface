@@ -20,7 +20,7 @@ export const PlaceOrderSlider: React.FC<PlaceOrderFieldsProps> = ({
   const price = watch('price')
   const amount = watch('amount')
   const [slider, setSlider] = useState(sliderRange.from)
-  const computeAmount = (evt, value) => {
+  const computeAmount = (evt: Event, value: number | number[]) => {
     const newAmount =
       value !== 0 ? ((balance / sliderRange.to) * (value as number)) / price : 0
     setSlider(value as number)
