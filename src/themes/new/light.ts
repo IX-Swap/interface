@@ -81,6 +81,11 @@ export const lightTheme: DeprecatedThemeOptions = {
       bgHover: '#EDF2FA',
       colorHover: '#4C88FF'
     },
+    iconButton: {
+      fill: '#778194',
+      fillDisabled: '#DBE2EC',
+      bgHover: '#EDF2FA'
+    },
     sidebar: {
       activeBackground: tinycolor(themeColors.primary)
         .lighten(64)

@@ -82,6 +82,11 @@ export const darkTheme: DeprecatedThemeOptions = {
       bgHover: '#78A5FF',
       colorHover: '#EDF2FA'
     },
+    iconButton: {
+      fill: '#496396',
+      fillDisabled: '#1D3667',
+      bgHover: '#1D3667'
+    },
     tab: {
       contained: {
         border: tinycolor('#4C88FF').setAlpha(0.3).toRgbString(),

@@ -64,6 +64,12 @@ export interface ButtonGroupPalette {
   colorHover: CSSProperties['color']
 }
 
+export interface IconButtonPalette {
+  fill: CSSProperties['color']
+  fillDisabled: CSSProperties['color']
+  bgHover: CSSProperties['color']
+}
+
 declare module '@mui/styles/defaultTheme' {
   interface DefaultTheme extends Theme {}
 }
@@ -85,6 +91,7 @@ declare module '@mui/material/styles' {
     }
     button: ButtonPaletteOptions
     buttonGroup: ButtonGroupPalette
+    iconButton: IconButtonPalette
     breadcrumbs?: BreadCrumbsPaletteOptions
     tab?: {
       contained: {
@@ -110,6 +117,7 @@ declare module '@mui/material/styles' {
     newSlider?: SliderPaletteOptions
     button: ButtonPaletteOptions
     buttonGroup: ButtonGroupPalette
+    iconButton: IconButtonPalette
     breadcrumbs?: BreadCrumbsPaletteOptions
     tab?: {
       contained: {

@@ -5,14 +5,14 @@ export const iconButton = (theme: Theme) => {
     styleOverrides: {
       root: {
         height: 'auto',
-        svg: { fill: '#778194', width: 14, height: 14 },
+        svg: { fill: theme.palette.iconButton.fill, width: 14, height: 14 },
         ':hover': {
-          backgroundColor: '#EDF2FA',
+          backgroundColor: theme.palette.iconButton.bgHover,
           svg: { fill: '#4C88FF' }
         },
         ':disabled': {
           svg: {
-            fill: '#DBE2EC'
+            fill: theme.palette.iconButton.fillDisabled
           }
         },
         '&.MuiIconButton-sizeLarge': {
