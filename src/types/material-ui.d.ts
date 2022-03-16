@@ -129,11 +129,11 @@ declare module '@mui/material/styles' {
       activeBackground: CSSProperties['color']
     }
     newSlider?: SliderPaletteOptions
-    button: ButtonPaletteOptions
-    buttonGroup: ButtonGroupPalette
-    iconButton: IconButtonPalette
-    fab: FABPalette
-    menu: MenuPalette
+    button?: ButtonPaletteOptions
+    buttonGroup?: ButtonGroupPalette
+    iconButton?: IconButtonPalette
+    fab?: FABPalette
+    menu?: MenuPalette
     breadcrumbs?: BreadCrumbsPaletteOptions
     tab?: {
       contained: {
