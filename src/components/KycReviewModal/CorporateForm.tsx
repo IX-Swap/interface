@@ -17,12 +17,13 @@ import { UploadedDocuments } from './Blocks/UploadedDocuments'
 
 interface Props {
   data: CorporateKyc
+  riskJSON: any
 }
 
-export const CorporateForm = ({ data }: Props) => {
+export const CorporateForm = ({ data, riskJSON }: Props) => {
   return (
     <>
-      <Cynopsis />
+      <Cynopsis riskJSON={riskJSON} />
       <Information data={data} kycKey="corporate" />
       <CompanyAuthorizedPersonnel data={data} />
       <Address data={data} />

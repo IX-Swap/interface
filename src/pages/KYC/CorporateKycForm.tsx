@@ -146,6 +146,7 @@ export default function CorporateKycForm() {
 
     setFieldValue('beneficialOwners', newData, false)
     validationSeen(specificErrorField)
+    validationSeen('beneficialOwners')
   }
 
   const addBeneficiary = (owners: any, setFieldValue: any) => {
@@ -156,10 +157,10 @@ export default function CorporateKycForm() {
     )
   }
 
-  const deleteBeneficiar = (index: number, owners: any, removedBeneficalOwners: any[], setFieldValue: any) => {
+  const deleteBeneficiar = (index: number, owners: any, removedBeneficialOwners: any[], setFieldValue: any) => {
     const newData = [...owners]
     if (newData[index]?.id) {
-      setFieldValue('removedBeneficalOwners', [...removedBeneficalOwners, newData[index].id])
+      setFieldValue('removedBeneficialOwners', [...removedBeneficialOwners, newData[index].id])
     }
     newData.splice(index, 1)
 
@@ -733,7 +734,7 @@ export default function CorporateKycForm() {
                                     deleteBeneficiar(
                                       index,
                                       values.beneficialOwners,
-                                      values.removedBeneficalOwners,
+                                      values.removedBeneficialOwners,
                                       setFieldValue
                                     )
                                   }

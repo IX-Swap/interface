@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FC } from 'react'
 import styled from 'styled-components'
 
 import { kycData } from '../utils/kyc-data'
@@ -7,24 +7,32 @@ import { Block } from '../molecules/Block'
 import { RowWithCheck } from '../molecules/RowWithCheck'
 import { cynopsisKeys } from '../utils/constants'
 
-export const Cynopsis = () => {
-  return (
+interface Props {
+  riskJSON?: any
+}
+
+export const Cynopsis: FC<Props> = ({ riskJSON }: Props) => {
+  return riskJSON?.riskScore ? (
     <Block
       title="Cynopsis"
       additionalTitleInfo={
         <Percent>
           <span>&nbsp;-&nbsp;</span>
-          <span>70%</span>
+          <span>{`${riskJSON.riskScore}% (${riskJSON.riskRating})`}</span>
         </Percent>
       }
     >
       <Content>
-        {cynopsisKeys.map(({ key, label }) => (
-          <RowWithCheck key={key} text={label} isDone={kycData[key]} />
+        {Object.keys(riskJSON.componentScore).map((key) => (
+          <RowWithCheck
+            key={key}
+            text={`${key.toLocaleUpperCase()} - ${riskJSON.componentScore[key].toFixed(2)}`}
+            isDone={true}
+          />
         ))}
       </Content>
     </Block>
-  )
+  ) : null
 }
 
 const Percent = styled.div`
