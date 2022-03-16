@@ -3,10 +3,14 @@ import makeStyles from '@mui/styles/makeStyles'
 export const useStyles = makeStyles(theme => ({
   wrapper: {
     backgroundColor: theme.palette.background.paper,
-    boxShadow:
+    boxShadow: `0px 80px 80px ${
       theme.palette.mode === 'light'
-        ? '0px 80px 80px rgba(162, 172, 191, 0.16)'
-        : 'none',
+        ? 'rgba(162, 172, 191, 0.16)'
+        : 'rgba(14, 31, 63, 0.3)'
+    }`,
+    border: `1px solid ${
+      theme.palette.mode === 'light' ? '#EDF2FA' : '#1D3667'
+    }`,
     borderTopLeftRadius: 0,
     borderTopRightRadius: 0,
     borderBottomLeftRadius: 8,
