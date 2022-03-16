@@ -104,7 +104,11 @@ export const updateCorporateKYC = async (kycId: number, newKYC: any) => {
         }
       })
     } else {
-      formData.append(key, newKYC[key])
+      if (key === 'removedDocuments' || key === 'removedBeneficalOwners') {
+        formData.append(key, JSON.stringify(newKYC[key]))
+      } else {
+        formData.append(key, newKYC[key])
+      }
     }
   }
 

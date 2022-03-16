@@ -155,7 +155,7 @@ export const Uploader: FC<UploaderProps> = ({
               file={file?.asset ? file.asset : file}
               index={1}
               handleDeleteClick={() => {
-                file?.asset ? null : handleDeleteClick(index)
+                handleDeleteClick(index)
               }}
               style={{ marginRight: index !== files.length - 1 ? 16 : 0 }}
             />
@@ -203,12 +203,7 @@ export const ChooseFile = ({ label, file, onDrop, error, handleDeleteClick }: Ch
         </Label>
       )}
       {file ? (
-        <FilePreview
-          file={file}
-          index={1}
-          handleDeleteClick={(file as any).uuid ? null : handleDeleteClick}
-          withBackground={false}
-        />
+        <FilePreview file={file} index={1} handleDeleteClick={handleDeleteClick} withBackground={false} />
       ) : (
         <Upload file={file} onDrop={onDrop}>
           <ButtonGradient type="button" style={{ height: 52, padding: '7px 16px' }}>
