@@ -12,12 +12,12 @@ import { Wrapper } from './styleds'
 interface Props {
   index: number
   file: FileWithPath
-  handleDeleteClick: ((index?: number) => void) | null
+  handleDeleteClick: any
   style?: CSSProperties
   withBackground?: boolean
 }
 
-export const FilePreview: FC<Props> = ({ file, index, style, handleDeleteClick, withBackground = true }: Props) => {
+export const FilePreview: FC<Props> = ({ file, style, handleDeleteClick, withBackground = true }: Props) => {
   const deleteIcon = KYCStatusIcons[KYCStatuses.REJECTED]
 
   return (
@@ -31,11 +31,7 @@ export const FilePreview: FC<Props> = ({ file, index, style, handleDeleteClick, 
       >
         {file.name}
       </TYPE.subHeader>
-      <ButtonText
-        style={{ minWidth: 24, minHeight: 24 }}
-        onClick={() => handleDeleteClick && handleDeleteClick(index)}
-        type="button"
-      >
+      <ButtonText style={{ minWidth: 24, minHeight: 24 }} onClick={handleDeleteClick} type="button">
         {deleteIcon()}
       </ButtonText>
     </Wrapper>
