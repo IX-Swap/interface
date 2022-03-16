@@ -20,7 +20,12 @@ export const PlaceOrderSlider: React.FC<PlaceOrderFieldsProps> = ({
   const price = watch('price')
   const amount = watch('amount')
   const [slider, setSlider] = useState(sliderRange.from)
-
+  const computeAmount = (evt, value) => {
+    const newAmount =
+      value !== 0 ? ((balance / sliderRange.to) * (value as number)) / price : 0
+    setSlider(value as number)
+    setValue('amount', price === 0 || price === '' ? 0 : newAmount)
+  }
   const marks = useMemo(() => {
     return Array.from({ length: sliderRange.to + 1 }, (x, i) => i).map(
       element => ({
@@ -61,14 +66,7 @@ export const PlaceOrderSlider: React.FC<PlaceOrderFieldsProps> = ({
       }}
       disabled={price === null || price === undefined}
       data-testid='slider'
-      onChange={(evt, value) => {
-        const newAmount =
-          value !== 0
-            ? ((balance / sliderRange.to) * (value as number)) / price
-            : null
-        setSlider(value as number)
-        setValue('amount', newAmount)
-      }}
+      onChange={computeAmount}
     />
   )
 }
