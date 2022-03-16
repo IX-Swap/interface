@@ -4,5 +4,6 @@ export const AuthRoute = {
   confirm: '/auth/confirm',
   passwordReset: '/auth/reset',
   successfulSignup: '/auth/successful-signup',
-  successfulPasswordReset: '/auth/successful-reset'
+  successfulPasswordReset: '/auth/successful-reset',
+  declineInvitation: '/auth/invitations/decline/:roleId'
 }

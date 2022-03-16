@@ -1,13 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { WithdrawCashFormValues } from 'app/pages/accounts/types'
-import {
-  Box,
-  Grid,
-  InputAdornment,
-  Typography,
-  useMediaQuery,
-  useTheme
-} from '@mui/material'
+import { Grid, InputAdornment, Typography } from '@mui/material'
 import { useFormContext } from 'react-hook-form'
 import { useBanksData } from 'app/pages/accounts/pages/banks/hooks/useBanksData'
 import { TypedField } from 'components/form/TypedField'
@@ -36,9 +29,6 @@ export const Setup: React.FC = () => {
   const { data: bankData, isLoading: bankLoading } = useBanksData()
 
   const bank = bankData.map[bankId ?? '']
-  const theme = useTheme()
-
-  const isTablet = useMediaQuery(theme.breakpoints.down('lg'))
 
   const [open, setOpen] = useState(false)
 
@@ -93,78 +83,78 @@ export const Setup: React.FC = () => {
   }
 
   return (
-    <Grid container direction='column' spacing={3}>
-      <Grid item>
-        <TypedField
-          customRenderer
-          control={control}
-          component={VirtualAccountSelect}
-          name='virtualAccount'
-          label=''
-          customLabel='Choose Your Account'
-        />
-      </Grid>
-
-      {virtualAccountId !== undefined ? (
+    <>
+      <Grid container direction='column' spacing={3}>
         <Grid item>
-          <VirtualAccountDetails virtualAccountId={virtualAccountId} />
+          <TypedField
+            customRenderer
+            control={control}
+            component={VirtualAccountSelect}
+            name='virtualAccount'
+            label=''
+            customLabel='Choose Your Account'
+          />
         </Grid>
-      ) : null}
 
-      <Grid item>
-        <FormSectionHeader
-          title='Withdraw Cash From Your Account'
-          variant='subsection'
-        />
-        <TypedField
-          style={{ width: isTablet ? '100%' : '40%' }}
-          control={control}
-          variant='outlined'
-          customRenderer
-          component={BankSelect}
-          currency={virtualAccountData?.currency}
-          name='bankAccountId'
-          label='To Bank Account'
-          helperText='Please select your bank account in which you want to transfer your fund'
-        />
-      </Grid>
-      {bankId !== null &&
-      bankId !== undefined &&
-      virtualAccountId !== undefined ? (
-        <>
+        {virtualAccountId !== undefined ? (
           <Grid item>
-            <FormSectionHeader title='Withdrawal Method' variant='subsection' />
-            <Typography variant='body1'>{paymentMethodData?.name}</Typography>
-            <VSpacer size='small' />
+            <VirtualAccountDetails virtualAccountId={virtualAccountId} />
           </Grid>
-          <Grid item>
-            <TypedField
-              style={{ width: isTablet ? '100%' : '40%' }}
-              control={control}
-              variant='outlined'
-              component={NumericInput}
-              name='amount'
-              label='Amount'
-              valueExtractor={numericValueExtractor}
-              numberFormat={moneyNumberFormat}
-              startAdornment={
-                <InputAdornment position='start'>
-                  <Box mt='2px'>{bank?.currency.numberFormat.currency}</Box>
-                </InputAdornment>
-              }
-              endAdornment={
-                <InputAdornment position='end'>
-                  <MaxButton onClick={setMaxValue} />
-                </InputAdornment>
-              }
-            />
-          </Grid>
-        </>
-      ) : null}
-      <Grid item>
-        <ContinueButton onClick={handleContinue} />
+        ) : null}
       </Grid>
-      <OTPDialog open={open} close={close} />
-    </Grid>
+
+      <Grid container direction='row' spacing={3}>
+        <Grid item xs={6}>
+          <FormSectionHeader
+            title='Withdraw Cash From Your Account'
+            variant='subsection'
+          />
+          <TypedField
+            control={control}
+            variant='outlined'
+            component={BankSelect}
+            currency={virtualAccountData?.currency}
+            name='bankAccountId'
+            label='To Bank Account'
+            helperText='Please select your bank account in which you want to transfer your fund'
+            endAdornment={
+              <InputAdornment position='end'>
+                <MaxButton onClick={setMaxValue} />
+              </InputAdornment>
+            }
+          />
+        </Grid>
+      </Grid>
+      <Grid>
+        {bankId !== null &&
+        bankId !== undefined &&
+        virtualAccountId !== undefined ? (
+          <>
+            <Grid item>
+              <Typography variant='body1'>{paymentMethodData?.name}</Typography>
+              <VSpacer size='small' />
+            </Grid>
+            <Grid container direction='row' spacing={3}>
+              <Grid item xs={6}>
+                <TypedField
+                  control={control}
+                  variant='outlined'
+                  component={NumericInput}
+                  name='amount'
+                  label='Amount'
+                  valueExtractor={numericValueExtractor}
+                  numberFormat={moneyNumberFormat}
+                />
+              </Grid>
+            </Grid>
+          </>
+        ) : null}
+        <br />
+        <Grid item>
+          <ContinueButton onClick={handleContinue} />
+        </Grid>
+        <OTPDialog open={open} close={close} />
+      </Grid>
+    </>
   )
 }

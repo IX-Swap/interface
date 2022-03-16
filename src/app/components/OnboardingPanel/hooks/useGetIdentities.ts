@@ -2,9 +2,10 @@ import { IdentityType } from 'app/pages/identity/utils/shared'
 import { useAllCorporates } from 'app/pages/identity/hooks/useAllCorporates'
 import { useDetailsOfIssuance } from 'app/pages/identity/hooks/useDetailsOfIssuance'
 import { useIndividualIdentity } from 'hooks/identity/useIndividualIdentity'
+import { CorporateType } from 'app/pages/identity/components/CorporateInvestorForm/CorporateInvestorForm'
 
 export const useGetIdentities = (
-  corporateType?: 'issuer' | 'investor',
+  corporateType?: CorporateType,
   userId?: string
 ) => {
   const { data: individualIdentity, isLoading: individualIdentityIsLoading } =

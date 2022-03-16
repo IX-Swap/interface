@@ -1,6 +1,6 @@
 import React from 'react'
-import AddIcon from '@mui/icons-material/Add'
 import { Grid, Button, Typography } from '@mui/material'
+import { Icon } from 'ui/Icons/Icon'
 
 export const BasicButtons = () => {
   return (
@@ -134,21 +134,25 @@ export const BasicButtons = () => {
             <Button
               variant='text'
               size='large'
-              startIcon={<AddIcon />}
+              startIcon={<Icon name='plus' />}
               disableElevation
             >
               Large
             </Button>
           </Grid>
           <Grid item>
-            <Button variant='text' startIcon={<AddIcon />} disableElevation>
+            <Button
+              variant='text'
+              startIcon={<Icon name='plus' />}
+              disableElevation
+            >
               Medium
             </Button>
           </Grid>
           <Grid item>
             <Button
               variant='text'
-              startIcon={<AddIcon />}
+              startIcon={<Icon name='plus' />}
               size='small'
               disableElevation
             >
@@ -160,7 +164,7 @@ export const BasicButtons = () => {
           <Grid item>
             <Button
               variant='text'
-              startIcon={<AddIcon />}
+              startIcon={<Icon name='plus' />}
               size='large'
               disableElevation
               disabled
@@ -171,7 +175,7 @@ export const BasicButtons = () => {
           <Grid item>
             <Button
               variant='text'
-              startIcon={<AddIcon />}
+              startIcon={<Icon name='plus' />}
               disableElevation
               disabled
             >
@@ -182,7 +186,7 @@ export const BasicButtons = () => {
             <Button
               variant='text'
               size='small'
-              startIcon={<AddIcon />}
+              startIcon={<Icon name='plus' />}
               disableElevation
               disabled
             >

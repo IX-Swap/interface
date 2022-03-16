@@ -1,6 +1,6 @@
 import makeStyles from '@mui/styles/makeStyles'
-import EarthImage from '../../images/digital_earth.png'
-import DotsImage from '../../images/background_dots.png'
+import EarthImage from 'assets/images/digital_earth.png'
+import DotsImage from 'assets/images/background_dots.png'
 
 export const useStyles = makeStyles(theme => ({
   container: {

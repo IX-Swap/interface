@@ -91,7 +91,7 @@ export interface Personnel {
 }
 
 export interface IndividualFinancialInfoFormValues {
-  sourceOfFund: string
+  sourceOfFund: string | FundSource[]
   occupation: string
   employer: string
   employmentStatus: string
@@ -219,7 +219,7 @@ export interface IdentityFinancials {
   employmentStatus: string
   occupation: string
   sourceOfWealth: string
-  sourceOfFund?: string
+  sourceOfFund?: string | FundSource[]
 }
 
 export interface CorporateFields {
@@ -237,12 +237,17 @@ export interface CorporateFields {
   taxResidencies: TaxResidencies
   mailingAddress: Address
   isMailingAddressSame: boolean
-  type: 'investor' | 'issuer'
   identityStatus: string
   isIncorporated: boolean
   numberOfBusinessOwners: string
   businessActivity: string
   sourceOfFund: string
+  type:
+    | 'investor'
+    | 'issuer'
+    | 'Fund Manager'
+    | 'Fund Administrator'
+    | 'Portfolio Manager'
 }
 
 export interface Declaration {

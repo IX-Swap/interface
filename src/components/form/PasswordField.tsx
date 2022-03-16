@@ -1,31 +1,38 @@
-import React from 'react'
-import { TypedField } from 'components/form/TypedField'
-import { Grid, InputAdornment, TextField } from '@mui/material'
+import { Grid, TextField } from '@mui/material'
+import { useStyles } from 'components/form/PasswordField.styles'
 import { PasswordValidation } from 'components/form/PasswordValidation'
+import { TypedField } from 'components/form/TypedField'
+import React, { useState } from 'react'
 import { useFormContext } from 'react-hook-form'
-import { ReactComponent as WarningIcon } from 'assets/icons/warning.svg'
+import { EyePassword } from 'components/form/EyePassword'
 
 export interface PasswordFieldProps {
   withPasswordValidation?: boolean
   showErrorMessages?: boolean
+  name?: string
+  label?: string
 }
 
 export const PasswordField = ({
   withPasswordValidation = false,
-  showErrorMessages = true
+  showErrorMessages = true,
+  name = 'password',
+  label = 'Password'
 }: PasswordFieldProps) => {
   const { control, errors } = useFormContext()
-  const passwordErrors = errors.password
-
+  const { passwordField } = useStyles()
+  const passwordErrors = errors[name]
+  const [inputType, setInputType] = useState<'password' | 'text'>('password')
   return (
     <Grid container direction='column' spacing={2}>
       <Grid item>
         <TypedField
           control={control}
           component={TextField}
-          name='password'
-          label='Password'
-          type={'password'}
+          name={name}
+          label={label}
+          type={inputType}
+          className={passwordField}
           placeholder={'Password'}
           isErrorMessageEnabled={showErrorMessages}
           InputLabelProps={{
@@ -33,12 +40,13 @@ export const PasswordField = ({
           }}
           fullWidth
           InputProps={{
-            endAdornment:
-              passwordErrors !== undefined ? (
-                <InputAdornment position={'end'}>
-                  <WarningIcon />
-                </InputAdornment>
-              ) : null
+            endAdornment: (
+              <EyePassword
+                inputType={inputType}
+                setType={setInputType}
+                hasErrors={passwordErrors !== undefined}
+              />
+            )
           }}
         />
       </Grid>

@@ -42,6 +42,7 @@ export interface QueryFilters {
   periodical: string | undefined
   tab: string | undefined
   reportId: string | undefined
+  step: string | undefined
 }
 
 export type QueryFilter = keyof QueryFilters

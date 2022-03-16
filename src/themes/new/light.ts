@@ -12,9 +12,25 @@ export const lightTheme: DeprecatedThemeOptions = {
       contrastText: '#FFFFFF'
     },
     secondary: {
-      main: '#DBE2EC',
+      main: '#78A5FF',
       dark: '#F0F2F7',
       light: '#EDF2FA'
+    },
+    toggledInputs: {
+      fill: '#FFFFFF',
+      bg: '#FFFFFF',
+      border: '#DBE2EC',
+      borderHover: '#78A5FF',
+      boxShadow: '#a2acbf',
+      opacity: 0.6
+    },
+    switch: {
+      bg: '#778194',
+      bgDisabled: '#D3D9E5',
+      bgChecked: '#4C88FF',
+      bgCheckedDisabled: '#D3D9E5',
+      color: '#ffffff',
+      colorDisabled: '#ffffff'
     },
     action: {
       selected: tinycolor(themeColors.primary).lighten(64).toHexString()
@@ -25,21 +41,41 @@ export const lightTheme: DeprecatedThemeOptions = {
     },
     backgrounds: {
       default: '#F7F9FA',
-      light: '#fafafa',
+      light: '#ffffff',
       lighter: '#e3e3e3',
       alternative: '#56AA82',
       alternativeLight: 'rgba(86, 170, 130, 0.06)'
     },
+    // TODO Remove old slider after delete old theme
     slider: {
       background: '#C6D9FF',
       activeColor: '#ffffff',
       activeBackground: '#0C469C'
+    },
+    newSlider: {
+      activeColor: '#4C88FF',
+      disabledColor: '#DBE2EC',
+      color: '#DBE2EC',
+      label: '#778194',
+      disabledLabel: '#DBE2EC',
+      border: '#ffffff',
+      boxShadow: `${tinycolor('#4c88ff').setAlpha(0.2).toRgbString()}`
     },
     sidebar: {
       activeBackground: tinycolor(themeColors.primary)
         .lighten(64)
         .toHexString(),
       activeColor: themeColors.primary
+    },
+    breadcrumbs: {
+      link: '#3B4251',
+      color: '#778194'
+    },
+    tab: {
+      contained: {
+        border: '#EDF2FA',
+        color: '#A2ACBF'
+      }
     },
     divider: '#DBE2EC',
     text: {

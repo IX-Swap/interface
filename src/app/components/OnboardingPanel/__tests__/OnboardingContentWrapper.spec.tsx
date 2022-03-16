@@ -68,9 +68,9 @@ describe('ContentWrapper', () => {
   it('does not render wrapper if user completed corporate investor onboarding journey and not started issuer onboarding journey', () => {
     const objResponse = {
       isIssuerJourneyCompleted: false,
-      isInvestorJourneyCompleted: true,
+      isCorporateJourneyCompleted: true,
       isIndividualJourneyCompleted: false,
-      isIssuerJourneyStarted: false,
+      isCorporateJourneyStarted: false,
       isIdentitiesLoaded: true
     }
     jest
@@ -84,71 +84,6 @@ describe('ContentWrapper', () => {
     )
 
     expect(container.firstElementChild).toBeEmptyDOMElement()
-  })
-
-  it('does not render wrapper if user completed issuer onboarding journey and not started corporate investor onboarding journey', () => {
-    const objResponse = {
-      isIssuerJourneyCompleted: true,
-      isInvestorJourneyCompleted: false,
-      isIndividualJourneyCompleted: false,
-      isInvestorJourneyStarted: false,
-      isIdentitiesLoaded: true
-    }
-    jest
-      .spyOn(useOnboardingJourneys, 'useOnboardingJourneys')
-      .mockImplementation(() => objResponse as any)
-
-    const { container } = render(
-      <OnboardingContentWrapper>
-        <div />
-      </OnboardingContentWrapper>
-    )
-
-    expect(container.firstElementChild).toBeEmptyDOMElement()
-  })
-
-  it('renders wrapper if user completed issuer onboarding journey and started corporate investor onboarding journey', () => {
-    const objResponse = {
-      isIssuerJourneyCompleted: true,
-      isInvestorJourneyCompleted: false,
-      isIndividualJourneyCompleted: false,
-      isInvestorJourneyStarted: true,
-      isIdentitiesLoaded: true
-    }
-    jest
-      .spyOn(useOnboardingJourneys, 'useOnboardingJourneys')
-      .mockImplementation(() => objResponse as any)
-
-    const { container } = render(
-      <OnboardingContentWrapper>
-        <div />
-      </OnboardingContentWrapper>
-    )
-
-    expect(container.firstElementChild).toBeEmptyDOMElement()
-    expect(OnboardingPanel).not.toHaveBeenCalled()
-  })
-
-  it('renders wrapper if user completed corporate investor onboarding journey and started issuer onboarding journey', () => {
-    const objResponse = {
-      isIssuerJourneyCompleted: false,
-      isInvestorJourneyCompleted: true,
-      isIndividualJourneyCompleted: false,
-      isIssuerJourneyStarted: true,
-      isIdentitiesLoaded: true
-    }
-    jest
-      .spyOn(useOnboardingJourneys, 'useOnboardingJourneys')
-      .mockImplementation(() => objResponse as any)
-
-    const { container } = render(
-      <OnboardingContentWrapper>
-        <div />
-      </OnboardingContentWrapper>
-    )
-
-    expect(container.firstElementChild).toBeEmptyDOMElement()
-    expect(OnboardingPanel).not.toHaveBeenCalled()
   })
 
   it('renders wrapper if user started individual investor onboarding journey', () => {

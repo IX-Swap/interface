@@ -34,11 +34,8 @@ export const useOnboardingDialog = () => {
       })
   }
 
-  const showPreIdentityCreateDialog = (
-    identityType: IdentityType,
-    corporateType?: 'issuer' | 'investor'
-  ) => {
-    if (!getIsJourneyCompleted(identityType, corporateType)) {
+  const showPreIdentityCreateDialog = (identityType: IdentityType) => {
+    if (!getIsJourneyCompleted(identityType)) {
       !isAdmin &&
         showOnboardingDialog({
           title: `Create ${identityType} Identity`,
@@ -51,11 +48,8 @@ export const useOnboardingDialog = () => {
     }
   }
 
-  const showPostIdentityCreateDialog = (
-    identityType: IdentityType,
-    corporateType?: 'issuer' | 'investor'
-  ) => {
-    if (!getIsJourneyCompleted(identityType, corporateType)) {
+  const showPostIdentityCreateDialog = (identityType: IdentityType) => {
+    if (!getIsJourneyCompleted(identityType)) {
       !isAdmin &&
         showOnboardingDialog({
           title: 'Identity Created!',

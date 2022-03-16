@@ -13,8 +13,15 @@ import { IdentityTypeSelect } from 'components/form/IdentityTypeSelect'
 import { booleanValueExtractor } from 'helpers/forms'
 import { Checkbox } from 'components/form/Checkbox'
 import { FundSourceSelect } from 'components/form/FundSourceSelect'
+import { CorporateType } from 'app/pages/identity/components/CorporateInvestorForm/CorporateInvestorForm'
 
-export const InformationFields = () => {
+export interface InformationFieldsProps {
+  type?: CorporateType
+}
+
+export const InformationFields = ({
+  type = 'investor'
+}: InformationFieldsProps) => {
   const { control, watch, clearErrors } = useFormContext()
   const legalEntityStatus = watch('legalEntityStatus')
   const { isMobile, isTablet } = useAppBreakpoints()
@@ -27,9 +34,17 @@ export const InformationFields = () => {
     }
   }, [legalEntityStatus]) // eslint-disable-line
 
+  const corporateInformationLabelMap = {
+    investor: 'Corporate Information',
+    'Fund Manager': 'Fund Manager Company Information',
+    'Fund Administrator': 'Fund Admin Company Information',
+    'Portfolio Manager': 'Portfolio Manager Company Information',
+    issuer: 'Corporate Information'
+  }
+
   return (
     <>
-      <FormSectionHeader title='Corporate Information' />
+      <FormSectionHeader title={corporateInformationLabelMap[type]} />
       <Grid container direction={'row'} alignItems={'flex-start'}>
         <Grid item style={{ paddingRight: 24 }}>
           <TypedField
@@ -61,7 +76,7 @@ export const InformationFields = () => {
               control={control}
               variant='outlined'
               name='companyLegalName'
-              label='Corporate Name'
+              label={type === 'investor' ? 'Corporate Name' : 'Company Name'}
             />
           </Grid>
           <Grid item xs={12} sm={6} md={6} />

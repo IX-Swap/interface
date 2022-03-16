@@ -1,4 +1,5 @@
 import { Grid } from '@mui/material'
+import { Actions } from 'app/pages/admin/components/AssignedVirtualAccountsTable/Actions'
 import { columns } from 'app/pages/admin/components/AssignedVirtualAccountsTable/columns'
 import { Filters } from 'app/pages/admin/components/AssignedVirtualAccountsTable/Filters'
 import { useSelectionHelperContext } from 'components/SelectionHelper'
@@ -51,6 +52,8 @@ export const AssignedVirtualAccountsTable = ({
           filter={filter}
           paperProps={{ variant: 'elevation', elevation: 0 }}
           selectionHelper={selectionHelperContext}
+          hasActions
+          actions={Actions}
         />
       </Grid>
     </Grid>

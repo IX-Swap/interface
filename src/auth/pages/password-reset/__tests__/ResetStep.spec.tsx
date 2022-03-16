@@ -82,16 +82,4 @@ describe('ResetStep', () => {
       expect(completeReset).toHaveBeenCalledWith(completePasswordResetArgs)
     })
   })
-
-  it('handles click on "Back"', async () => {
-    const { getByText } = renderWithPasswordResetStore(<ResetStep />)
-    const backButton = getByText(/back/i)
-
-    fireEvent.click(backButton)
-
-    expect(fakePasswordResetStore.setCurrentStep).toBeCalledTimes(1)
-    expect(fakePasswordResetStore.setCurrentStep).toBeCalledWith(
-      PasswordResetStep.Request
-    )
-  })
 })

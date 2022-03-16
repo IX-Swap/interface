@@ -1,6 +1,6 @@
 import { Grid, IconButton, Typography } from '@mui/material'
 import React from 'react'
-import AddIcon from '@mui/icons-material/Add'
+import { Icon } from 'ui/Icons/Icon'
 
 export const IconButtonKit = () => {
   return (
@@ -11,34 +11,34 @@ export const IconButtonKit = () => {
       <Grid item xs={12} container alignItems='flex-start' spacing={2}>
         <Grid item>
           <IconButton size='large'>
-            <AddIcon />
+            <Icon name='plus' />
           </IconButton>
         </Grid>
         <Grid item>
           <IconButton size='medium'>
-            <AddIcon />
+            <Icon name='plus' />
           </IconButton>
         </Grid>
         <Grid item>
           <IconButton size='small'>
-            <AddIcon />
+            <Icon name='plus' />
           </IconButton>
         </Grid>
       </Grid>
       <Grid item xs={12} container alignItems='flex-start' spacing={2}>
         <Grid item>
           <IconButton size='large' disabled>
-            <AddIcon />
+            <Icon name='plus' />
           </IconButton>
         </Grid>
         <Grid item>
           <IconButton size='medium' disabled>
-            <AddIcon />
+            <Icon name='plus' />
           </IconButton>
         </Grid>
         <Grid item>
           <IconButton size='small' disabled>
-            <AddIcon />
+            <Icon name='plus' />
           </IconButton>
         </Grid>
       </Grid>

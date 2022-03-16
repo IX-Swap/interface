@@ -21,7 +21,27 @@ export const getAppTheme = (themeType: AppTheme, prefersDarkMode: boolean) => {
 
   const theme = createTheme({ ...darkTheme, typography })
 
-  theme.components = getThemeOverrides(theme)
+  theme.components = {
+    ...getThemeOverrides(theme),
+    MuiSwitch: {
+      ...getThemeOverrides(theme)?.MuiSwitch,
+      defaultProps: {
+        disableTouchRipple: true
+      }
+    },
+    MuiRadio: {
+      ...getThemeOverrides(theme)?.MuiRadio,
+      defaultProps: {
+        disableTouchRipple: true
+      }
+    },
+    MuiCheckbox: {
+      ...getThemeOverrides(theme)?.MuiCheckbox,
+      defaultProps: {
+        disableTouchRipple: true
+      }
+    }
+  }
 
   return theme
 }

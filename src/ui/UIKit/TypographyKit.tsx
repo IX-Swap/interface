@@ -1,59 +1,60 @@
-import { Grid, Typography } from '@mui/material'
+import { Grid, Paper, Typography } from '@mui/material'
 import React from 'react'
-import { ThemeProvider } from '@mui/material/styles'
-import { AppTheme, getAppTheme } from 'themes/new'
+import { UIKitThemeWrapper } from 'ui/UIKit/UIKitThemeWrapper'
 
 export const TypographyKit = () => {
   return (
-    <ThemeProvider theme={getAppTheme(AppTheme.Dark, true)}>
-      <Grid
-        container
-        spacing={2}
-        alignItems='flex-start'
-        sx={{
-          padding: 4
-        }}
-      >
-        <Grid item container xs={12} md={6} spacing={2}>
-          <Grid item xs={12}>
-            <Typography variant='h1'>IXPrime Title</Typography>
+    <UIKitThemeWrapper>
+      <Paper sx={{ padding: 2 }} elevation={0}>
+        <Grid
+          container
+          spacing={2}
+          alignItems='flex-start'
+          sx={{
+            padding: 4
+          }}
+        >
+          <Grid item container xs={12} md={6} spacing={2}>
+            <Grid item xs={12}>
+              <Typography variant='h1'>IXPrime Title</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant='h2'>IXPrime Title</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant='h3'>IXPrime Title</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant='h4'>IXPrime Title</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant='h5'>IXPrime Title</Typography>
+            </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <Typography variant='h2'>IXPrime Title</Typography>
+          <Grid item container xs={12} md={3} spacing={2}>
+            <Grid item xs={12}>
+              <Typography variant='subtitle1'>subtitle1</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant='subtitle2'>subtitle2</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant='body1'>body1</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant='body2'>body2</Typography>
+            </Grid>
           </Grid>
-          <Grid item xs={12}>
-            <Typography variant='h3'>IXPrime Title</Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Typography variant='h4'>IXPrime Title</Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Typography variant='h5'>IXPrime Title</Typography>
+          <Grid item container xs={12} md={3} spacing={2}>
+            <Grid item xs={12}>
+              <Typography variant='caption'>caption</Typography>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography variant='overline'>overline</Typography>
+            </Grid>
           </Grid>
         </Grid>
-        <Grid item container xs={12} md={3} spacing={2}>
-          <Grid item xs={12}>
-            <Typography variant='subtitle1'>subtitle1</Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Typography variant='subtitle2'>subtitle2</Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Typography variant='body1'>body1</Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Typography variant='body2'>body2</Typography>
-          </Grid>
-        </Grid>
-        <Grid item container xs={12} md={3} spacing={2}>
-          <Grid item xs={12}>
-            <Typography variant='caption'>caption</Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Typography variant='overline'>overline</Typography>
-          </Grid>
-        </Grid>
-      </Grid>
-    </ThemeProvider>
+      </Paper>
+    </UIKitThemeWrapper>
   )
 }
