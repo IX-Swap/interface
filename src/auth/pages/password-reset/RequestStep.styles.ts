@@ -8,11 +8,5 @@ export const useStyles = makeStyles(theme => ({
     color: theme.palette.text.primary,
     textTransform: 'uppercase',
     fontFamily: 'Monument Extended, sans-serif'
-  },
-  subtitle: {
-    color: '#ffffff',
-    fontSize: '16px',
-    lineHeight: '24px',
-    textAlign: 'center'
   }
 }))
