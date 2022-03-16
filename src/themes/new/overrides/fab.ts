@@ -1,13 +1,15 @@
 import { Theme } from '@mui/material'
+import { alpha } from '@mui/material/styles'
 
 export const fab = (theme: Theme) => {
   return {
     styleOverrides: {
       root: {
-        backgroundColor: '#FFFFFF',
+        backgroundColor: theme.palette.fab.bg,
         svg: {
-          fill: '#778194'
+          fill: theme.palette.fab.fill
         },
+        boxShadow: `0px 2px 10px ${alpha('#3b4251', 0.15)}`,
         ':hover': {
           backgroundColor: '#78A5FF',
           svg: {
@@ -16,9 +18,9 @@ export const fab = (theme: Theme) => {
           boxShadow: 'none'
         },
         ':disabled': {
-          backgroundColor: '#EDF2FA',
+          backgroundColor: theme.palette.fab.bgDisabled,
           svg: {
-            fill: '#DBE2EC'
+            fill: theme.palette.fab.fillDisabled
           }
         }
       }

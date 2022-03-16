@@ -70,6 +70,13 @@ export interface IconButtonPalette {
   bgHover: CSSProperties['color']
 }
 
+export interface FABPalette {
+  fill: CSSProperties['color']
+  bg: CSSProperties['color']
+  bgDisabled: string
+  fillDisabled: CSSProperties['color']
+}
+
 declare module '@mui/styles/defaultTheme' {
   interface DefaultTheme extends Theme {}
 }
@@ -92,6 +99,7 @@ declare module '@mui/material/styles' {
     button: ButtonPaletteOptions
     buttonGroup: ButtonGroupPalette
     iconButton: IconButtonPalette
+    fab: FABPalette
     breadcrumbs?: BreadCrumbsPaletteOptions
     tab?: {
       contained: {
@@ -118,6 +126,7 @@ declare module '@mui/material/styles' {
     button: ButtonPaletteOptions
     buttonGroup: ButtonGroupPalette
     iconButton: IconButtonPalette
+    fab: FABPalette
     breadcrumbs?: BreadCrumbsPaletteOptions
     tab?: {
       contained: {

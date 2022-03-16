@@ -33,7 +33,7 @@ export const darkTheme: DeprecatedThemeOptions = {
     },
     background: {
       default: '#11254C',
-      paper: '#132A57'
+      paper: '#152D5F'
     },
     backgrounds: {
       default: '#0E1F42',
@@ -86,6 +86,12 @@ export const darkTheme: DeprecatedThemeOptions = {
       fill: '#496396',
       fillDisabled: '#1D3667',
       bgHover: '#1D3667'
+    },
+    fab: {
+      fill: '#496396',
+      bg: '#132A57',
+      fillDisabled: '#1D3667',
+      bgDisabled: 'transparent'
     },
     tab: {
       contained: {

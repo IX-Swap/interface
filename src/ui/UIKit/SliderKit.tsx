@@ -1,5 +1,5 @@
 import React from 'react'
-import { Slider, Paper, Grid, Typography, Box } from '@mui/material'
+import { Slider, Grid, Typography, Box } from '@mui/material'
 import { UIKitThemeWrapper } from 'ui/UIKit/UIKitThemeWrapper'
 
 const marks = Array.from(Array(11).keys()).map(number => ({
@@ -12,7 +12,7 @@ export const SliderKit = () => {
     <UIKitThemeWrapper>
       <Grid direction='row' container spacing={1}>
         <Grid item md={6}>
-          <Paper sx={{ padding: 2 }} elevation={0}>
+          <Box sx={{ padding: 2 }}>
             <Typography>Continuous</Typography>
             <Box mb={6}>
               <Slider size='small' defaultValue={50} />
@@ -23,10 +23,10 @@ export const SliderKit = () => {
             <Box mb={0}>
               <Slider size='small' disabled defaultValue={0} />
             </Box>
-          </Paper>
+          </Box>
         </Grid>
         <Grid item md={6}>
-          <Paper sx={{ padding: 2 }} elevation={0}>
+          <Box sx={{ padding: 2 }}>
             <Typography>Discrete</Typography>
             <Box mb={3}>
               <Slider
@@ -58,7 +58,7 @@ export const SliderKit = () => {
                 max={100}
               />
             </Box>
-          </Paper>
+          </Box>
         </Grid>
       </Grid>
     </UIKitThemeWrapper>

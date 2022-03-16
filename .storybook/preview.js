@@ -21,7 +21,7 @@ export const parameters = {
   darkMode: {
     dark: {
       ...themes.normal,
-      appContentBg: '#132A57'
+      appContentBg: '#183061'
     },
     light: { ...themes.normal }
   }

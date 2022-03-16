@@ -84,6 +84,12 @@ export const lightTheme: DeprecatedThemeOptions = {
       fillDisabled: '#DBE2EC',
       bgHover: '#EDF2FA'
     },
+    fab: {
+      fill: '#778194',
+      bg: '#FFFFFF',
+      fillDisabled: '#DBE2EC',
+      bgDisabled: '#EDF2FA'
+    },
     sidebar: {
       activeBackground: tinycolor(themeColors.primary)
         .lighten(64)
