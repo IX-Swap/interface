@@ -10,12 +10,12 @@ export const CopyrightBlock = () => {
   return (
     <CopyrightBlockContainer>
       <div>
-        <div>
+        <a href="https://ixswap.io/terms-and-conditions/" target="_blank" rel="noreferrer">
           <Trans>Terms & Conditions</Trans>
-        </div>
-        <div>
+        </a>
+        <a href="https://ixswap.io/privacy-policy/" target="_blank" rel="noreferrer">
           <Trans>Privacy Policy</Trans>
-        </div>
+        </a>
       </div>
       <div>&quot;{t`Copyright © IX Swap ${year}`}&quot;</div>
     </CopyrightBlockContainer>
