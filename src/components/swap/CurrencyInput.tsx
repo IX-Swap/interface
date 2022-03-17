@@ -1,14 +1,16 @@
 import React, { useCallback } from 'react'
 import { Trans } from '@lingui/macro'
+import { Currency, CurrencyAmount } from '@ixswap1/sdk-core'
+
 import { useUSDCValue } from 'hooks/useUSDCPrice'
 import { useSubmitApproval, useSwapActionHandlers, useSwapState } from 'state/swap/hooks'
 import { computeFiatValuePriceImpact } from 'utils/computeFiatValuePriceImpact'
+import useTheme from 'hooks/useTheme'
+
 import { ReactComponent as ArrowDown } from '../../assets/images/arrow.svg'
 import CurrencyInputPanel from '../../components/CurrencyInputPanel'
 import { ArrowWrapper } from '../../components/swap/styleds'
 import { Field } from '../../state/swap/actions'
-import { Currency, CurrencyAmount } from '@ixswap1/sdk-core'
-import useTheme from 'hooks/useTheme'
 
 interface ParsedAmounts {
   INPUT: CurrencyAmount<Currency> | undefined

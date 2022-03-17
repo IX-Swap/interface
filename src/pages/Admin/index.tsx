@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
 import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
 
@@ -7,16 +7,16 @@ import { useAdminState, useGetMe } from 'state/admin/hooks'
 import { AdminAccreditationTable } from 'components/AdminAccreditationTable'
 import { AdminTransactionsTable } from 'components/AdminTransactionsTable'
 import { AdminSecurityCatalog } from 'components/AdminSecurityCatalog'
-import { AutoColumn, ColumnCenter } from 'components/Column'
-import { CustodianToggleWrapper } from 'pages/Custodian/styleds'
 import { Border, ToggleOption } from 'components/Tabs'
 import { AdminKycTable } from 'components/AdminKyc'
 
 import { Navbar } from './Navbar'
 
+type AdminTab = 'accreditation' | 'kyc' | 'transactions' | 'security-catalog'
+
 interface Tab {
   label: string
-  value: 'accreditation' | 'kyc' | 'transactions' | 'security-catalog'
+  value: AdminTab
 }
 
 const tabs: Tab[] = [
@@ -26,9 +26,28 @@ const tabs: Tab[] = [
   { label: 'Security catalog', value: 'security-catalog' },
 ]
 
+const renderTab = (selectedTab: AdminTab | string) => {
+  switch (selectedTab) {
+    case 'kyc':
+      return <AdminKycTable />
+    case 'accreditation':
+      return <AdminAccreditationTable />
+    case 'transactions':
+      return <AdminTransactionsTable />
+    case 'security-catalog':
+      return <AdminSecurityCatalog />
+
+    default:
+      return null
+  }
+}
+
 const AdminKyc = () => {
-  const [selectedTab, setSelectedTab] = useState<Tab['value']>('accreditation')
+  const [selectedTab, setSelectedTab] = useState<AdminTab>('kyc')
+
   const history = useHistory()
+  const location = useLocation()
+
   const { adminData } = useAdminState()
   const getMe = useGetMe()
 
@@ -36,11 +55,30 @@ const AdminKyc = () => {
     const result = await getMe()
 
     if (result && result?.role === 'admin') {
-      history.push('/admin')
+      // history.push('/admin')
     } else {
       history.push('/')
     }
   }, [getMe, history])
+
+  const changeTab = useCallback(
+    (tab: AdminTab) => {
+      const params = new URLSearchParams(location.search.slice(1))
+
+      params.set('tab', tab)
+
+      history.push({ search: params.toString() })
+      setSelectedTab(tab)
+    },
+    [history, location]
+  )
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search.slice(1))
+    const tab = (params.get('tab') ?? 'kyc') as AdminTab
+
+    setSelectedTab(tab)
+  }, [location])
 
   useEffect(() => {
     if (!adminData) {
@@ -49,25 +87,12 @@ const AdminKyc = () => {
     }
 
     if (adminData && adminData?.role === 'admin') {
-      history.push('/admin')
+      // history.push('/admin')
       return
     }
 
     history.push('/')
   }, [getMe, adminData, history, fetchMe])
-
-  const renderTab = () => {
-    switch (selectedTab) {
-      case 'kyc':
-        return <AdminKycTable />
-      case 'accreditation':
-        return <AdminAccreditationTable />
-      case 'transactions':
-        return <AdminTransactionsTable />
-      case 'security-catalog':
-        return <AdminSecurityCatalog />
-    }
-  }
 
   return (
     <Container>
@@ -77,11 +102,7 @@ const AdminKyc = () => {
           <TabsContainer>
             {tabs.map(({ value, label }, index) => (
               <>
-                <ToggleOption
-                  key={`tabs-${index}`}
-                  onClick={() => setSelectedTab(value)}
-                  active={selectedTab === value}
-                >
+                <ToggleOption key={`tabs-${index}`} onClick={() => changeTab(value)} active={selectedTab === value}>
                   <Trans>{label}</Trans>
                   <Border active={selectedTab === value} />
                 </ToggleOption>
@@ -89,7 +110,7 @@ const AdminKyc = () => {
             ))}
           </TabsContainer>
 
-          {renderTab()}
+          {renderTab(selectedTab)}
         </Body>
       )}
     </Container>

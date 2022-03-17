@@ -1,11 +1,8 @@
 import React, { FC } from 'react'
 import styled from 'styled-components'
 
-import { kycData } from '../utils/kyc-data'
-
 import { Block } from '../molecules/Block'
 import { RowWithCheck } from '../molecules/RowWithCheck'
-import { cynopsisKeys } from '../utils/constants'
 
 interface Props {
   riskJSON?: any
@@ -18,7 +15,7 @@ export const Cynopsis: FC<Props> = ({ riskJSON }: Props) => {
       additionalTitleInfo={
         <Percent>
           <span>&nbsp;-&nbsp;</span>
-          <span>{`${riskJSON.riskScore}% (${riskJSON.riskRating})`}</span>
+          <span>{`${riskJSON.riskScore.toFixed(2)}% (${riskJSON.riskRating})`}</span>
         </Percent>
       }
     >

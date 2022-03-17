@@ -2,6 +2,7 @@ import { Currency, Percent } from '@ixswap1/sdk-core'
 import { Trans } from '@lingui/macro'
 import React from 'react'
 import { Text } from 'rebass'
+import { formatAmount } from 'utils/formatCurrencyAmount'
 import { AutoColumn } from '../../components/Column'
 import CurrencyLogo from '../../components/CurrencyLogo'
 import { RowBetween, RowFixed } from '../../components/Row'
@@ -22,7 +23,7 @@ export const ModalHeader = ({ parsedAmounts, currencyA, currencyB, allowedSlippa
       <AutoColumn gap="12px">
         <RowBetween align="flex-end">
           <Text fontSize="40px" fontWeight={600} lineHeight="60px">
-            {parsedAmounts[Field.CURRENCY_A]?.toSignificant(6)}
+            {formatAmount(+(parsedAmounts[Field.CURRENCY_A]?.toSignificant(6) || 0))}
           </Text>
           <RowFixed gap="4px">
             <CurrencyLogo currency={currencyA} size={'33px'} />
@@ -33,7 +34,7 @@ export const ModalHeader = ({ parsedAmounts, currencyA, currencyB, allowedSlippa
         </RowBetween>
         <RowBetween align="flex-end">
           <Text fontSize="40px" fontWeight={600} lineHeight="60px">
-            {parsedAmounts[Field.CURRENCY_B]?.toSignificant(6)}
+            {formatAmount(+(parsedAmounts[Field.CURRENCY_B]?.toSignificant(6) || 0))}
           </Text>
           <RowFixed gap="4px">
             <CurrencyLogo currency={currencyB} size={'33px'} />
@@ -45,8 +46,8 @@ export const ModalHeader = ({ parsedAmounts, currencyA, currencyB, allowedSlippa
         <SemiTransparent>
           <TYPE.italic fontSize={12} textAlign="left" fontWeight={300} lineHeight={'18px'}>
             <Trans>
-              Output is estimated. If the price changes by more than {allowedSlippage.toSignificant(4)}% your
-              transaction will revert.
+              Output is estimated. If the price changes by more than {formatAmount(+allowedSlippage.toSignificant(4))}%
+              your transaction will revert.
             </Trans>
           </TYPE.italic>
         </SemiTransparent>

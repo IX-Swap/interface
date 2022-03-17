@@ -24,10 +24,6 @@ import { NoPairs } from './NoPairs'
 import { LiquidityInnerTitle, MarginerTitle } from './styleds'
 import { useTokens } from './useTokens'
 
-const bodyProps = {
-  padding: '0',
-  paddingXS: '0',
-}
 const LinkTitle = styled(TYPE.body1)`
   color: ${({ theme }) => theme.text1};
   font-weight: 600;
@@ -61,7 +57,7 @@ export default function Pool() {
           </RowCenter>
         </TipCard>
       )}
-      <AppBody {...bodyProps} blurred={isBlurred}>
+      <AppBody blurred={isBlurred}>
         <SwapPoolTabs active={'pool'} />
         <AutoColumn gap="1.5rem" justify="center">
           <AutoColumn gap="md" style={{ width: '100%' }}>

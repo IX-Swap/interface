@@ -6,6 +6,7 @@ import { Trans } from '@lingui/macro'
 import { ModalBottomWrapper } from './styleds'
 import { TextRow } from 'components/TextRow/TextRow'
 import { AutoColumn } from 'components/Column'
+import { formatAmount } from 'utils/formatCurrencyAmount'
 
 export function ModalBottom({
   noLiquidity,
@@ -27,12 +28,12 @@ export function ModalBottom({
       <AutoColumn gap="8px">
         <TextRow
           textLeft={<Trans>{currencies[Field.CURRENCY_A]?.symbol} Deposited</Trans>}
-          textRight={<>{parsedAmounts[Field.CURRENCY_A]?.toSignificant(6)}</>}
+          textRight={<>{formatAmount(+(parsedAmounts[Field.CURRENCY_A]?.toSignificant(6) || 0))}</>}
           currency={currencies[Field.CURRENCY_A]}
         />
         <TextRow
           textLeft={<Trans>{currencies[Field.CURRENCY_B]?.symbol} Deposited</Trans>}
-          textRight={<>{parsedAmounts[Field.CURRENCY_B]?.toSignificant(6)}</>}
+          textRight={<>{formatAmount(+(parsedAmounts[Field.CURRENCY_B]?.toSignificant(6) || 0))}</>}
           currency={currencies[Field.CURRENCY_B]}
         />
         <TextRow
@@ -40,7 +41,7 @@ export function ModalBottom({
           textRight={
             <>
               {' '}
-              {`1 ${currencies[Field.CURRENCY_A]?.symbol} = ${price?.toSignificant(4)} ${
+              {`1 ${currencies[Field.CURRENCY_A]?.symbol} = ${formatAmount(+(price?.toSignificant(4) || 0))} ${
                 currencies[Field.CURRENCY_B]?.symbol
               }`}
             </>
@@ -51,7 +52,7 @@ export function ModalBottom({
           textLeft={<></>}
           textRight={
             <>
-              {`1 ${currencies[Field.CURRENCY_B]?.symbol} = ${price?.invert().toSignificant(4)} ${
+              {`1 ${currencies[Field.CURRENCY_B]?.symbol} = ${formatAmount(+(price?.invert().toSignificant(4) || 0))} ${
                 currencies[Field.CURRENCY_A]?.symbol
               }`}
             </>
@@ -60,7 +61,9 @@ export function ModalBottom({
         />
         <TextRow
           textLeft={<Trans>Share of Pool</Trans>}
-          textRight={<Trans>{noLiquidity ? '100' : poolTokenPercentage?.toSignificant(4)}%</Trans>}
+          textRight={
+            <Trans>{noLiquidity ? '100' : formatAmount(+(poolTokenPercentage?.toSignificant(4) || 0))}%</Trans>
+          }
         />
       </AutoColumn>
       <ButtonIXSWide style={{ margin: '30px 0 0 0' }} onClick={onAdd} data-testid="create-or-supply">

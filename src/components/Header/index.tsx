@@ -20,6 +20,7 @@ import { useGetMyKyc, useKYCState } from 'state/kyc/hooks'
 
 import { ReactComponent as KYC } from 'assets/images/kyc.svg'
 import { ReactComponent as KYCApproved } from 'assets/images/kyc-approved.svg'
+import { formatAmount } from 'utils/formatCurrencyAmount'
 import { useAuthState } from 'state/auth/hooks'
 import { TGE_CHAINS_WITH_KYC } from 'constants/addresses'
 
@@ -247,7 +248,7 @@ export default function Header() {
                 {account && userEthBalance ? (
                   <BalanceText style={{ flexShrink: 0 }} fontWeight={600}>
                     <Trans>
-                      {userEthBalance?.toSignificant(4)} {nativeCurrency}
+                      {formatAmount(+(userEthBalance?.toSignificant(4) || 0))} {nativeCurrency}
                     </Trans>
                   </BalanceText>
                 ) : null}

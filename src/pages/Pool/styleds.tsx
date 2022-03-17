@@ -105,11 +105,11 @@ export const EmptyProposals = styled.div`
   align-items: center;
 `
 export const MarginerTitle = styled.div`
-  margin: 26px 36px 36px 36px;
+  margin-bottom: 36px;
 `
 
 export const MarginerCard = styled.div`
-  margin: 0px 36px 8px 36px;
+  margin-bottom: 8px;
 `
 
 export const LiquidityInnerTitle = styled.span`

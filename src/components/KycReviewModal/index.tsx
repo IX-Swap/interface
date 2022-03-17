@@ -30,7 +30,7 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
   useEffect(() => {
     const fetchCynopsisRisks = async () => {
       const result = await getCynopsisRisks(data?.user.ethAddress)
-      setRiskJSON(result?.riskReport?.riskJson || null)
+      setRiskJSON(result?.riskReport?.riskJson?.riskScore ? result.riskReport.riskJson : null)
     }
 
     fetchCynopsisRisks()
@@ -94,7 +94,11 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
               <CloseIcon data-testid="cross" onClick={onClose} />
             </TitleContainer>
             <Body>
-              {data.individualKycId ? <IndividualForm data={kyc} /> : <CorporateForm riskJSON={riskJSON} data={kyc} />}
+              {data.individualKycId ? (
+                <IndividualForm riskJSON={riskJSON} data={kyc} />
+              ) : (
+                <CorporateForm riskJSON={riskJSON} data={kyc} />
+              )}
             </Body>
             <ActionsContainer>
               <ButtonIXSWide onClick={approve}>

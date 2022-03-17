@@ -1,16 +1,14 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { useHistory } from 'react-router-dom'
+import { useHistory, NavLink } from 'react-router-dom'
 import { Box, Flex } from 'rebass'
 import { t, Trans } from '@lingui/macro'
 import { Label } from '@rebass/forms'
 import styled from 'styled-components'
-import { ExternalLink, TYPE } from 'theme'
-import { NftSizeLimit, NameSizeLimit, DescriptionSizeLimit } from 'constants/misc'
 
-import { ButtonGradient } from 'components/Button'
+import { TYPE } from 'theme'
+import { NftSizeLimit, NameSizeLimit, DescriptionSizeLimit } from 'constants/misc'
+import { ButtonIXSGradient } from 'components/Button'
 import { LoaderThin } from 'components/Loader/LoaderThin'
-import { ContainerRow, Input, InputContainer, InputPanel, Textarea } from 'components/Input'
-import Upload from 'components/Upload'
 import { AcceptFiles, FileTypes } from 'components/Upload/types'
 import { getfileType } from 'components/Upload/utils'
 
@@ -32,8 +30,9 @@ import { LevelsPopup } from './LevelsPopup'
 import { NSFWRadio } from './NSFWRadio'
 import { PropertiesPopup } from './PropertiesPopup'
 import { Traits } from './Traits'
-import Slider from 'components/Slider'
-import { MAX_SUPPLY_RANGE } from 'state/nft/constants'
+import { FileUploader } from './FileUploader'
+import { StyledInput, StyledCreateCollectionBtn, StyledTextarea } from './styleds'
+import { routes } from 'utils/routes'
 
 export const CreateForm = () => {
   const {
@@ -52,6 +51,7 @@ export const CreateForm = () => {
     newCollectionName,
     activeTraitType,
   } = useAssetFormState()
+
   const {
     onSelectFile,
     onSelectPreview,
@@ -65,12 +65,9 @@ export const CreateForm = () => {
     onSetStats,
     onSetIsNSFW,
     onSetCollection,
-    onSetNewCollectionName,
-    onSetMaxSupply,
     onClearState,
   } = useCreateAssetActionHandlers()
   const { chainId } = useActiveWeb3React()
-  const [showCreateNewCollection, setShowCreateNewCollection] = useState(false)
   const [isNotValid, setValidationStatus] = useState(true)
   const [pending, setPending] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -108,14 +105,10 @@ export const CreateForm = () => {
     onSetActiveTraitType(traitType)
     toggleNumeric()
   }
-  const onSelectCreateCollection = useCallback(() => {
-    onSetCollection(null)
-    setShowCreateNewCollection(true)
-  }, [onSetCollection])
+  // const onSelectCreateCollection = useCallback(() => {}, [onSetCollection])
 
   const onSelectCollection = useCallback(
     (collection: NFTCollection) => {
-      setShowCreateNewCollection(false)
       onSetCollection(collection)
     },
     [onSetCollection]
@@ -246,6 +239,8 @@ export const CreateForm = () => {
     box-sizing: inherit;
   `
 
+  const isNotImage = file && getfileType(file) !== FileTypes.IMAGE
+
   return (
     <>
       {pending && (
@@ -260,279 +255,144 @@ export const CreateForm = () => {
         traitType={activeTraitType}
       />
       {cleared && <PropertiesPopup properties={properties} setProperties={onSetProperties} />}
-      <Box py={3}>
-        <Flex mx={-2} mb={4}>
-          <Box width={1} px={2}>
-            <Label htmlFor="file" flexDirection="column" mb={3}>
-              <Box display="flex">
-                <TYPE.body fontWeight={600}>Image, Video, Audio, or 3D Model.</TYPE.body>
-                <TYPE.error error>*</TYPE.error>
-              </Box>
-              <TYPE.descriptionThin fontSize={13}>
-                File types supported: JPG, PNG, GIF, SVG, MP4, WEBM, MP3, WAV, OGG, GLB, GLTF. Max size: 100 MB
-              </TYPE.descriptionThin>
-            </Label>
-            <Upload onDrop={onSelectFile} file={file} />
-
-            {beyondLimit && (
-              <TYPE.error fontWeight={500} fontSize={16} error>
-                {beyondLimit}
-              </TYPE.error>
-            )}
+      <Flex mb={4} flexDirection={'column'}>
+        <Label htmlFor="collection" alignItems="center" justifyContent="space-between" mb={2}>
+          <Box display="flex">
+            <TYPE.body>
+              <Trans>Collection</Trans>
+            </TYPE.body>
+            <TYPE.error error>*</TYPE.error>
           </Box>
-        </Flex>
-        {file && getfileType(file) !== FileTypes.IMAGE && (
-          <Flex mx={-2} mb={4}>
-            <Box width={1} px={2}>
-              <Label htmlFor="preview" flexDirection="column" mb={3}>
-                <Box display="flex">
-                  <TYPE.body fontWeight={600}>Preview Image</TYPE.body>
-                  <TYPE.error error>*</TYPE.error>
-                </Box>
-                <TYPE.descriptionThin fontSize={13}>
-                  Because you’ve included multimedia, you’ll need to provide an image (PNG, JPG, or GIF) for the card
-                  display of your item.
-                </TYPE.descriptionThin>
-              </Label>
-              <Upload
-                onDrop={(previewFile) => onSelectPreview(previewFile)}
-                file={preview}
-                accept={AcceptFiles.IMAGE}
-              />
-            </Box>
-          </Flex>
-        )}
-        <Flex mx={-2} mb={4}>
-          <Box width={1} px={2}>
-            <Label htmlFor="name" flexDirection="column" mb={3}>
-              <Box mb={1}>
-                <Box display="flex">
-                  <TYPE.body fontWeight={600}>
-                    <Trans>Name</Trans>
-                  </TYPE.body>
-                  <TYPE.error error>*</TYPE.error>
-                </Box>
-              </Box>
-            </Label>
-            <InputPanel id={'item-name'}>
-              <ContainerRow>
-                <InputContainer>
-                  <Input
-                    onChange={(e) => onSetName(e?.target?.value)}
-                    placeholder={t`Item name`}
-                    className="item-name-input"
-                    type="text"
-                    autoComplete="off"
-                    autoCorrect="off"
-                    autoCapitalize="off"
-                    spellCheck="false"
-                    error={false}
-                    pattern=".*$"
-                    value={name}
-                    disabled={false}
-                  />
-                </InputContainer>
-              </ContainerRow>
-            </InputPanel>
-
-            {nameError && <TYPE.error error>{nameError}</TYPE.error>}
-          </Box>
-        </Flex>
-        <Flex mx={-2} mb={4} flexDirection={'column'}>
-          <Label htmlFor="collection" flexDirection="column" mb={3}>
-            <Box mb={1}>
-              <Box display="flex">
-                <TYPE.body fontWeight={600}>
-                  <Trans>Collection</Trans>
-                </TYPE.body>
-                <TYPE.error error>*</TYPE.error>
-              </Box>
+          <StyledCreateCollectionBtn as={NavLink} to={routes.nftCollectionCreate} target="_blank">
+            + Collection
+          </StyledCreateCollectionBtn>
+        </Label>
+        <Box width={1}>
+          <CollectionDropdown
+            onSelect={onSelectCollection}
+            selectedCollection={collection}
+            newCollectionName={newCollectionName}
+          />
+        </Box>
+      </Flex>
+      <Flex mb={4}>
+        <Box width={1}>
+          <Label htmlFor="name" flexDirection="column" mb={2}>
+            <Box display="flex">
+              <TYPE.body>
+                <Trans>Name</Trans>
+              </TYPE.body>
+              <TYPE.error error>*</TYPE.error>
             </Box>
           </Label>
-          <Box width={1} px={2}>
-            <CollectionDropdown
-              onSelectCreateCollection={onSelectCreateCollection}
-              onSelect={onSelectCollection}
-              selectedCollection={collection}
-              newCollectionName={newCollectionName}
-            />
-          </Box>
-        </Flex>
-        {showCreateNewCollection && (
-          <Box>
-            <Flex mx={-2} mb={4}>
-              <Box width={1} px={2}>
-                <Label htmlFor="link" flexDirection="column" mb={3}>
-                  <Box mb={1}>
-                    <TYPE.body fontWeight={600}>
-                      <Trans>New Collection Name</Trans>
-                    </TYPE.body>
-                  </Box>
-                  <TYPE.descriptionThin fontSize={13}>
-                    Create a new collection to keep up all items. The name can be changed later on our platform, but it
-                    cannot be changed on blockchain
-                  </TYPE.descriptionThin>
-                </Label>
-                <InputPanel id={'collection-name'}>
-                  <ContainerRow>
-                    <InputContainer>
-                      <Input
-                        className="collection-name-input"
-                        type="text"
-                        autoComplete="off"
-                        autoCorrect="off"
-                        autoCapitalize="off"
-                        spellCheck="false"
-                        error={false}
-                        pattern=".*$"
-                        value={newCollectionName}
-                        disabled={false}
-                        onChange={(e) => onSetNewCollectionName(e?.target?.value)}
-                        placeholder={`my-cool-collection`}
-                      />
-                    </InputContainer>
-                  </ContainerRow>
-                </InputPanel>
-              </Box>
-            </Flex>
+          <StyledInput
+            id={'item-name'}
+            onChange={(e) => onSetName(e?.target?.value)}
+            placeholder={t`Item name`}
+            className="item-name-input"
+            type="text"
+            autoComplete="off"
+            autoCorrect="off"
+            autoCapitalize="off"
+            spellCheck="false"
+            error={false}
+            pattern=".*$"
+            value={name}
+            disabled={false}
+          />
 
-            <Flex mx={-2} mb={4}>
-              <Box width={1} px={2}>
-                <Label htmlFor="supply" flexDirection="column" mb={3}>
-                  <Box mb={1}>
-                    <Box display="flex">
-                      <TYPE.body fontWeight={600}>
-                        <Trans>Set the max number of items in collection</Trans>
-                      </TYPE.body>
-                    </Box>
-                  </Box>
-                </Label>
-                <InputPanel id={'item-supply'}>
-                  <ContainerRow>
-                    <InputContainer>
-                      <Input
-                        onChange={(e) => onSetMaxSupply(e?.target?.valueAsNumber)}
-                        placeholder={t`1000`}
-                        type="number"
-                        autoComplete="off"
-                        autoCorrect="off"
-                        autoCapitalize="off"
-                        spellCheck="false"
-                        error={false}
-                        pattern=".*$"
-                        value={maxSupply}
-                        disabled={false}
-                      />
-                    </InputContainer>
-                  </ContainerRow>
-                </InputPanel>
+          {nameError && <TYPE.error error>{nameError}</TYPE.error>}
+        </Box>
+      </Flex>
 
-                {maxSupplyError && <TYPE.error error>{maxSupplyError}</TYPE.error>}
-              </Box>
-            </Flex>
-          </Box>
+      <Flex mb={4}>
+        <Box width={1}>
+          <Label htmlFor="link" flexDirection="column" mb={2}>
+            <TYPE.body>
+              <Trans>External Link</Trans>
+            </TYPE.body>
+          </Label>
+
+          <StyledInput
+            className="item-link-input"
+            id={'item-link'}
+            type="text"
+            autoComplete="off"
+            autoCorrect="off"
+            autoCapitalize="off"
+            spellCheck="false"
+            error={false}
+            pattern=".*$"
+            value={link}
+            disabled={false}
+            onChange={(e) => onSetLink(e?.target?.value)}
+            placeholder={`https://yoursite.io/item/123`}
+          />
+        </Box>
+      </Flex>
+
+      <Flex mb={4}>
+        <Box width={1}>
+          <Label htmlFor="description" flexDirection="column" mb={3}>
+            <TYPE.body>
+              <Trans>Description</Trans>
+            </TYPE.body>
+          </Label>
+          <StyledTextarea
+            onChange={(e) => onSetDescription(e?.target?.value)}
+            placeholder={t`Provide a detailed description of your item`}
+          />
+
+          {descriptionError && <TYPE.error error>{descriptionError}</TYPE.error>}
+        </Box>
+      </Flex>
+      <Flex mb={4} onClick={toggle}>
+        <Traits type={TraitType.RECTANGLE} traitList={properties} />
+      </Flex>
+      <Flex mb={4} onClick={() => toggleLevelsStats(TraitType.PROGRESS)}>
+        <Traits type={TraitType.PROGRESS} traitList={levels} />
+      </Flex>
+      <Flex mb={4} onClick={() => toggleLevelsStats(TraitType.NUMBER)}>
+        <Traits type={TraitType.NUMBER} traitList={stats} />
+      </Flex>
+      <Flex mb={4}>
+        <NSFWRadio active={isNSFW} setActive={onSetIsNSFW} />
+      </Flex>
+      <Flex mb={4}>
+        <FreezeRadio active={freeze} setActive={onSetFreeze} />
+      </Flex>
+
+      <FileUploader title="Image, Video or Audio" onDrop={onSelectFile} file={file} accept={AcceptFiles.FILLES} />
+      {isNotImage && (
+        <Box width={1} marginTop="12px">
+          <Label htmlFor="preview" flexDirection="column" mb={3}>
+            <TYPE.descriptionThin fontSize={13}>
+              Because you’ve included multimedia, you’ll need to provide an image (PNG, JPG, or GIF) for the card
+              display of your item.
+            </TYPE.descriptionThin>
+          </Label>
+          <FileUploader
+            title=""
+            onDrop={(previewFile) => onSelectPreview(previewFile)}
+            file={preview}
+            accept={AcceptFiles.IMAGE}
+          />
+        </Box>
+      )}
+      <Box margin="40px auto 0">
+        {error && (
+          <TYPE.error error marginBottom="16px">
+            {error}
+          </TYPE.error>
         )}
-
-        <Flex mx={-2} mb={4}>
-          <Box width={1} px={2}>
-            <Label htmlFor="link" flexDirection="column" mb={3}>
-              <Box mb={1}>
-                <TYPE.body fontWeight={600}>
-                  <Trans>External Link</Trans>
-                </TYPE.body>
-              </Box>
-              <TYPE.descriptionThin fontSize={13}>
-                We will include a link to this URL on this item&apos;s detail page, so that users can click to learn
-                more about it. You are welcome to link to your own webpage with more details.
-              </TYPE.descriptionThin>
-            </Label>
-            <InputPanel id={'item-name'}>
-              <ContainerRow>
-                <InputContainer>
-                  <Input
-                    className="item-link-input"
-                    type="text"
-                    autoComplete="off"
-                    autoCorrect="off"
-                    autoCapitalize="off"
-                    spellCheck="false"
-                    error={false}
-                    pattern=".*$"
-                    value={link}
-                    disabled={false}
-                    onChange={(e) => onSetLink(e?.target?.value)}
-                    placeholder={`https://yoursite.io/item/123`}
-                  />
-                </InputContainer>
-              </ContainerRow>
-            </InputPanel>
-          </Box>
-        </Flex>
-        <Flex mx={-2} mb={4}>
-          <Box width={1} px={2}>
-            <Label htmlFor="description" flexDirection="column" mb={3}>
-              <Box mb={1}>
-                <TYPE.body fontWeight={600}>
-                  <Trans>Description</Trans>
-                </TYPE.body>
-              </Box>
-              <TYPE.descriptionThin fontSize={13}>
-                The description will be included on the item&apos;s detail page underneath its image.{' '}
-                <ExternalLink href={'https://www.markdownguide.org/cheat-sheet/'} style={{ fontWeight: 600 }}>
-                  Markdown
-                </ExternalLink>{' '}
-                syntax is supported
-              </TYPE.descriptionThin>
-            </Label>
-            <Textarea
-              style={{ height: '150px' }}
-              onChange={(e) => onSetDescription(e?.target?.value)}
-              placeholder={t`Provide a detailed description of your item`}
-            />
-
-            {descriptionError && <TYPE.error error>{descriptionError}</TYPE.error>}
-          </Box>
-        </Flex>
-        <Flex mx={-2} mb={4} onClick={toggle}>
-          <Traits type={TraitType.RECTANGLE} traitList={properties} />
-        </Flex>
-        <Flex mx={-2} mb={4} onClick={() => toggleLevelsStats(TraitType.PROGRESS)}>
-          <Traits type={TraitType.PROGRESS} traitList={levels} />
-        </Flex>
-        <Flex mx={-2} mb={4} onClick={() => toggleLevelsStats(TraitType.NUMBER)}>
-          <Traits type={TraitType.NUMBER} traitList={stats} />
-        </Flex>
-        <Flex mx={-2} mb={4}>
-          <NSFWRadio active={isNSFW} setActive={onSetIsNSFW} />
-        </Flex>
-        <Flex mx={-2} mb={4}>
-          <FreezeRadio active={freeze} setActive={onSetFreeze} />
-        </Flex>
-        {/* For the moment we will deploy on the chain the user is on */}
-        {/* <Flex my={4}>
-          <Box width={1}>
-            <Label htmlFor="chainId" flexDirection="column" mb={3}>
-              <Box mb={1}>
-                <TYPE.body fontWeight={600}>
-                  <Trans> Blockchain</Trans>
-                </TYPE.body>
-              </Box>
-            </Label>
-            <ChainDropdown onSelect={setSelectedChain} selectedChain={selectedChain} />
-          </Box>
-        </Flex> */}
-
-        <Flex mx={-2} flexWrap="wrap">
-          <Box px={2} mr="auto" onClick={(e) => onSubmit(e)}>
-            {error && <TYPE.error error>{error}</TYPE.error>}
-
-            {!isNotValid && (
-              <ButtonGradient width="140px" disabled={Boolean(isNotValid)}>
-                Create
-              </ButtonGradient>
-            )}
-          </Box>
-        </Flex>
+        <ButtonIXSGradient
+          style={{ margin: '0 auto' }}
+          width="140px"
+          disabled={Boolean(isNotValid)}
+          onClick={(e) => onSubmit(e)}
+        >
+          Create NFT
+        </ButtonIXSGradient>
       </Box>
     </>
   )
