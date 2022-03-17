@@ -165,8 +165,8 @@ export default function IndividualKycForm() {
 
   const countries = useMemo(() => {
     return getNames()
-      .map((name, index) => ({ id: ++index, name }))
-      .sort((a, b) => a.name.localeCompare(b.name))
+      .map((name, index) => ({ value: ++index, label: name }))
+      .sort((a, b) => a.label.localeCompare(b.label))
   }, [])
 
   return (
@@ -389,8 +389,8 @@ export default function IndividualKycForm() {
                             label="Country"
                             selectedItem={values.country}
                             items={countries.filter(
-                              ({ name }) =>
-                                !['United States of America', 'United States Minor Outlying Islands'].includes(name)
+                              ({ label }) =>
+                                !['United States of America', 'United States Minor Outlying Islands'].includes(label)
                             )}
                             onSelect={(country) => onSelectChange('country', country, setFieldValue)}
                             error={errors.country && errors.country}
@@ -411,12 +411,12 @@ export default function IndividualKycForm() {
                         {fundsFilled && <BigPassed />}
                       </RowBetween>
                       <FormGrid columns={3}>
-                        {sourceOfFunds.map(({ id, name }: any) => (
+                        {sourceOfFunds.map(({ value, label }: any) => (
                           <Checkbox
-                            checked={values.sourceOfFunds.includes(name)}
-                            onClick={() => onSourceOfFundsChange(name, values.sourceOfFunds, setFieldValue)}
-                            key={`funds-${id}`}
-                            label={name}
+                            checked={values.sourceOfFunds.includes(label)}
+                            onClick={() => onSourceOfFundsChange(label, values.sourceOfFunds, setFieldValue)}
+                            key={`funds-${value}`}
+                            label={label}
                           />
                         ))}
                       </FormGrid>
