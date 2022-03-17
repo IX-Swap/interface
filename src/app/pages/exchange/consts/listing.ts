@@ -25,8 +25,6 @@ export const initialListingFormValues: ListingFormValues = {
   incomeStatement: [],
   cashFlow: [],
   balanceSheet: [],
-  launchDate: '',
-  completionDate: '',
   introduction: '',
   asset: '',
   dso: ''
