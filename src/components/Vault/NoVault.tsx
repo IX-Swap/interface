@@ -18,6 +18,8 @@ import { RowCenter } from 'components/Row'
 import { AccreditationStatus } from './AccreditationStatus'
 import { SecTokenPlatform } from 'types/secToken'
 import { removeProtocolFromUrl } from 'utils'
+import { useUserAccountState } from 'state/user/hooks'
+import { useKYCState } from 'state/kyc/hooks'
 
 interface Props {
   currency?: Currency
@@ -68,45 +70,75 @@ export const NoVault = ({ currency, status, accreditationRequest, platform, toke
   const toggleChooseBrokerDealerModal = useChooseBrokerDealerModalToggle()
   const currencyId: string | undefined = (currency as any)?.address
   const tokenId = useSecTokenId({ currencyId })
+  const { kyc } = useKYCState()
+
+  const getUserKycType = () => {
+    if (kyc) {
+      if (kyc.data.status === 'approved') {
+        if (kyc.data.corporateKycId) return 'corporateAccredited'
+        if (kyc.data.individualKycId) return 'individualAccredited'
+      }
+      return 'NotAccredited'
+    }
+    return 'NotAccredited'
+  }
+
+  const userHaveValidKyc = useMemo(() => {
+    const { kycTypes } = token
+    const userKycType = getUserKycType()
+    if (!kycTypes) return true
+    return kycTypes.includes(userKycType)
+  }, [kyc, token])
 
   return (
     <NoVaultWrapper>
       <NoVaultTitle style={{ order: 1 }}>
         <TYPE.title3>
-          <Trans>Create {symbolText} Vault</Trans>
+          {userHaveValidKyc ? <Trans>Create {symbolText} Vault</Trans> : <Trans>NOT AVAILABLE</Trans>}
         </TYPE.title3>
       </NoVaultTitle>
 
-      <VaultStatusDescription style={{ order: status === AccreditationStatusEnum.REJECTED ? 3 : 2 }}>
-        <TYPE.descriptionThin>{getStatusMessage(accreditationRequest, symbolText, platform)}</TYPE.descriptionThin>
-      </VaultStatusDescription>
+      {userHaveValidKyc && (
+        <>
+          <VaultStatusDescription style={{ order: status === AccreditationStatusEnum.REJECTED ? 3 : 2 }}>
+            <TYPE.descriptionThin>{getStatusMessage(accreditationRequest, symbolText, platform)}</TYPE.descriptionThin>
+          </VaultStatusDescription>
 
-      {status && <AccreditationStatus status={status} />}
+          {status && <AccreditationStatus status={status} />}
+        </>
+      )}
+      {userHaveValidKyc ? (
+        <RowCenter style={{ order: 4 }}>
+          {!account && (
+            <ButtonIXSGradient
+              style={{ marginTop: '28px', padding: '16px 24px' }}
+              onClick={toggleWalletModal}
+              disabled={!!account}
+              data-testid="connect-wallet-in-vault"
+            >
+              <Trans>Connect Wallet</Trans>
+            </ButtonIXSGradient>
+          )}
 
-      <RowCenter style={{ order: 4 }}>
-        {!account && (
-          <ButtonIXSGradient
-            style={{ marginTop: '28px', padding: '16px 24px' }}
-            onClick={toggleWalletModal}
-            disabled={!!account}
-            data-testid="connect-wallet-in-vault"
-          >
-            <Trans>Connect Wallet</Trans>
-          </ButtonIXSGradient>
-        )}
-
-        {Boolean(account && !(PENDING_ACCREDITATION_STATUSES as any).includes(status)) && (
-          <ButtonIXSGradient
-            style={{ marginTop: '28px', padding: '16px 24px' }}
-            data-testid="pass-kyc-and-accreditation"
-            onClick={toggleChooseBrokerDealerModal}
-          >
-            {status === undefined && <Trans>Pass KYC and Accreditation</Trans>}
-            {status && ERROR_ACCREDITATION_STATUSES.includes(status) && <Trans>Retry pass accreditation</Trans>}
-          </ButtonIXSGradient>
-        )}
-        <ChooseBrokerDealerPopup tokenId={tokenId} currencyId={currencyId} />
-      </RowCenter>
+          {Boolean(account && !(PENDING_ACCREDITATION_STATUSES as any).includes(status)) && (
+            <ButtonIXSGradient
+              style={{ marginTop: '28px', padding: '16px 24px' }}
+              data-testid="pass-kyc-and-accreditation"
+              onClick={toggleChooseBrokerDealerModal}
+            >
+              {status === undefined && <Trans>Pass KYC and Accreditation</Trans>}
+              {status && ERROR_ACCREDITATION_STATUSES.includes(status) && <Trans>Retry pass accreditation</Trans>}
+            </ButtonIXSGradient>
+          )}
+          <ChooseBrokerDealerPopup tokenId={tokenId} currencyId={currencyId} />
+        </RowCenter>
+      ) : (
+        <VaultStatusDescription style={{ order: 2 }}>
+          <TYPE.descriptionThin>
+            <Trans>This Security Token is not available for your KYC type</Trans>
+          </TYPE.descriptionThin>
+        </VaultStatusDescription>
+      )}
     </NoVaultWrapper>
   )
 }
