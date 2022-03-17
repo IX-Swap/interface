@@ -36,7 +36,6 @@ export const getCorporateInfoFormValues = (
     representatives: data?.representatives,
     mailingAddress: data?.mailingAddress,
     isMailingAddressSame: data?.isMailingAddressSame,
-    identityStatus: data?.identityStatus,
     isIncorporated: data?.isIncorporated,
     numberOfBusinessOwners: data?.numberOfBusinessOwners,
     businessActivity: data?.businessActivity,

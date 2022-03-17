@@ -9,7 +9,6 @@ import { CountrySelect } from 'components/form/CountrySelect'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
 import { privateClassNames } from 'helpers/classnames'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
-import { IdentityTypeSelect } from 'components/form/IdentityTypeSelect'
 import { booleanValueExtractor } from 'helpers/forms'
 import { Checkbox } from 'components/form/Checkbox'
 import { FundSourceSelect } from 'components/form/FundSourceSelect'
@@ -105,7 +104,7 @@ export const InformationFields = ({
               control={control}
               variant='outlined'
               name='legalEntityStatus'
-              label='Legal Entity Status'
+              label='Legal Entity'
             />
           </Grid>
           <Grid item xs={12} sm={6} md={6}>
@@ -122,15 +121,6 @@ export const InformationFields = ({
           </Grid>
           <Grid item xs={12} sm={6} md={6}>
             <TypedField
-              component={IdentityTypeSelect}
-              control={control}
-              variant='outlined'
-              name='identityStatus'
-              label='Identity Status'
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} md={6}>
-            <TypedField
               component={FundSourceSelect}
               control={control}
               variant='outlined'
@@ -138,6 +128,7 @@ export const InformationFields = ({
               label='Source of funds'
             />
           </Grid>
+          <Grid item xs={12} sm={6} md={6} />
           <Grid item xs={12} sm={6} md={6}>
             <TypedField
               customRenderer

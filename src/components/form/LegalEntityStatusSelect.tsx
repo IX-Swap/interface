@@ -12,6 +12,27 @@ export const LEGAL_ENTITY_STATUS_LIST = [
   },
   { name: 'Society', value: 'society' },
   { name: 'Trust', value: 'trust' },
+
+  {
+    name: 'Exempt Private Company Limited by Shares',
+    value: 'exemptPrivateCompanyLimitedByShares'
+  },
+  { name: 'Limited (LTD)', value: 'limitedLTD' },
+  {
+    name: 'Private Company Limited by Shares (LTD)',
+    value: 'privateCompanyLimitedBySharesLTD'
+  },
+  { name: 'Proprietary Limited (PTY LTD)', value: 'proprietaryLimitedPTYLTD' },
+  {
+    name: 'Public Company Limited by Guarantee',
+    value: 'publicCompanyLimitedByGuarantee'
+  },
+  {
+    name: 'Public Company Limited by Shares',
+    value: 'publicCompanyLimitedByShares'
+  },
+  { name: 'Public Limited Company (PLC)', value: 'publicLimitedCompanyPLC' },
+
   { name: 'Others (Please specify)', value: 'others' }
 ]
 
