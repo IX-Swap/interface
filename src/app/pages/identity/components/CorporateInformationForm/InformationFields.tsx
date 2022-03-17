@@ -9,6 +9,9 @@ import { CountrySelect } from 'components/form/CountrySelect'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
 import { privateClassNames } from 'helpers/classnames'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+import { booleanValueExtractor } from 'helpers/forms'
+import { Checkbox } from 'components/form/Checkbox'
+import { FundSourceSelect } from 'components/form/FundSourceSelect'
 import { CorporateType } from 'app/pages/identity/components/CorporateInvestorForm/CorporateInvestorForm'
 
 export interface InformationFieldsProps {
@@ -21,6 +24,7 @@ export const InformationFields = ({
   const { control, watch, clearErrors } = useFormContext()
   const legalEntityStatus = watch('legalEntityStatus')
   const { isMobile, isTablet } = useAppBreakpoints()
+  const isIncorporated: boolean = watch('isIncorporated', true)
 
   useEffect(() => {
     if (legalEntityStatus !== 'others') {
@@ -100,7 +104,7 @@ export const InformationFields = ({
               control={control}
               variant='outlined'
               name='legalEntityStatus'
-              label='Legal Entity Status'
+              label='Legal Entity'
             />
           </Grid>
           <Grid item xs={12} sm={6} md={6}>
@@ -113,6 +117,27 @@ export const InformationFields = ({
               name='otherLegalEntityStatus'
               label='Others (Please specify)'
               disabled={legalEntityStatus !== 'others'}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} md={6}>
+            <TypedField
+              component={FundSourceSelect}
+              control={control}
+              variant='outlined'
+              name='sourceOfFund'
+              label='Source of funds'
+            />
+          </Grid>
+          <Grid item xs={12} sm={6} md={6} />
+          <Grid item xs={12} sm={6} md={6}>
+            <TypedField
+              customRenderer
+              component={Checkbox}
+              defaultValue={isIncorporated ?? true}
+              control={control}
+              valueExtractor={booleanValueExtractor}
+              name='isIncorporated'
+              label='Is incorporated?'
             />
           </Grid>
         </Grid>

@@ -1,7 +1,7 @@
-import { FormControl, InputLabel, MenuItem } from '@mui/material'
-import { TextFieldSelect } from 'components/form/TextFieldSelect'
-import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
 import React from 'react'
+import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
+import { FormControl, InputLabel, SelectChangeEvent } from '@mui/material'
+import { IdentityTypeSelect } from 'components/form/IdentityTypeSelect'
 
 export const IdentityTypeFilter = () => {
   return (
@@ -9,19 +9,15 @@ export const IdentityTypeFilter = () => {
       {({ value, onChange }) => (
         <FormControl variant='outlined' style={{ width: 207 }}>
           <InputLabel shrink>Identity Type</InputLabel>
-          <TextFieldSelect
-            label='Identity Type'
-            onChange={event => {
-              onChange(event.target.value)
+          <IdentityTypeSelect
+            withAll
+            displayEmpty
+            value={value ?? ''}
+            onChange={(event: SelectChangeEvent<unknown>) => {
+              onChange(event.target.value as string)
             }}
-            value={value}
-          >
-            <MenuItem value=''>All</MenuItem>
-            <MenuItem value='individual'>Individual Identity</MenuItem>
-            <MenuItem value='issuer'>Issuer Identity</MenuItem>
-            <MenuItem value='corporate'>Corporate Identity</MenuItem>
-            <MenuItem value='issuer_corporate'>Issuer and Corporate</MenuItem>
-          </TextFieldSelect>
+            label='Identity Type'
+          />
         </FormControl>
       )}
     </SearchQueryFilter>
