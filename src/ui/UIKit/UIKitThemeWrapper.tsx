@@ -33,6 +33,24 @@ export const UIKitThemeWrapper = ({ children }: UIKitThemeWrapperProps) => {
       defaultProps: {
         disableTouchRipple: true
       }
+    },
+    MuiButton: {
+      ...getThemeOverrides(newTheme)?.MuiButton,
+      defaultProps: {
+        disableTouchRipple: true
+      }
+    },
+    MuiIconButton: {
+      ...getThemeOverrides(newTheme)?.MuiIconButton,
+      defaultProps: {
+        disableTouchRipple: true
+      }
+    },
+    MuiFab: {
+      ...getThemeOverrides(newTheme)?.MuiFab,
+      defaultProps: {
+        disableTouchRipple: true
+      }
     }
   }
 
