@@ -1,4 +1,4 @@
-import { Grid, TextField, Typography } from '@material-ui/core'
+import { Grid, TextField, Typography } from '@mui/material'
 import { TypedField } from 'components/form/TypedField'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
@@ -21,7 +21,6 @@ export const NetAssetValueInput = () => {
       <Grid item xs>
         <TypedField
           component={TextField}
-          label=''
           name='nav'
           control={control}
           variant='outlined'

@@ -22,36 +22,46 @@ export const FinancialReportDSOSelect = () => {
       {({ value, onChange }) => (
         <>
           {value !== undefined && value !== '' && (
-            <Grid container spacing={1}>
-              <Grid item xs={12}>
-                <Typography>
-                  Select the DSO you want to add the report for
+            <>
+              {data.list.length > 1 ? (
+                <Grid container spacing={1}>
+                  <Grid item xs={12}>
+                    <Typography>
+                      Select the DSO you want to add the report for
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FormControl size='small' fullWidth>
+                      <Select
+                        fullWidth
+                        variant='outlined'
+                        onChange={(
+                          event: SelectChangeEvent<{ value: string }>
+                        ) => {
+                          onChange(event.target.value as string)
+                        }}
+                        // @ts-expect-error
+                        value={value}
+                        // @ts-expect-error
+                        defaultValue={value}
+                      >
+                        {data.list.map(({ _id, tokenName }) => {
+                          return (
+                            <MenuItem value={_id} key={_id}>
+                              {tokenName}
+                            </MenuItem>
+                          )
+                        })}
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                </Grid>
+              ) : (
+                <Typography variant='h2' sx={{ fontSize: '1.285rem' }}>
+                  {data.list[0].tokenName}
                 </Typography>
-              </Grid>
-              <Grid item xs={12}>
-                <FormControl size='small' fullWidth>
-                  <Select
-                    fullWidth
-                    variant='outlined'
-                    onChange={(event: SelectChangeEvent<{ value: string }>) => {
-                      onChange(event.target.value as string)
-                    }}
-                    // @ts-expect-error
-                    value={value}
-                    // @ts-expect-error
-                    defaultValue={value}
-                  >
-                    {data.list.map(({ _id, tokenName }) => {
-                      return (
-                        <MenuItem value={_id} key={_id}>
-                          {tokenName}
-                        </MenuItem>
-                      )
-                    })}
-                  </Select>
-                </FormControl>
-              </Grid>
-            </Grid>
+              )}
+            </>
           )}
         </>
       )}

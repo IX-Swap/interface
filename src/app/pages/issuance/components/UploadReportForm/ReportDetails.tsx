@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { LaunchDate } from 'app/pages/issuance/components/UploadReportForm/LaunchDate'
 import { NetAssetValueInput } from 'app/pages/issuance/components/UploadReportForm/NetAssetValueInput'
 import { ReportDateInput } from 'app/pages/issuance/components/UploadReportForm/ReportDateInput'

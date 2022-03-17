@@ -1,4 +1,4 @@
-import { Grid, Typography } from '@material-ui/core'
+import { Grid, Typography } from '@mui/material'
 import { DateTimePicker } from 'components/form/_DateTimePicker'
 import { TypedField } from 'components/form/TypedField'
 import { dateTimeValueExtractor } from 'helpers/forms'
