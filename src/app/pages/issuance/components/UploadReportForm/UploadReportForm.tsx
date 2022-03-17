@@ -27,9 +27,6 @@ export const UploadReportForm = () => {
       validationSchema={uploadReportFormValidationSchema}
       onSubmit={handleSubmit}
       defaultValues={{
-        nav: 0,
-        dateFrom: '',
-        dateTo: '',
         reportDocuments: []
       }}
     >
