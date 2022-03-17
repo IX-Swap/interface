@@ -227,7 +227,7 @@ const stringLengthValidator = (key: string, value: string, maxLength = 100) => {
 }
 
 const isEmpty = (value: any) => {
-  if (value === '' || value === null) return 'This field is required'
+  if (value === '' || value === null || value?.length === 0) return 'This field is required'
   return null
 }
 
@@ -259,7 +259,7 @@ export const validateIssuer = (issuer: any) => {
 }
 
 export const validateToken = (token: any) => {
-  const { address, ticker, file, companyName, url, description, industry, country, chainId } = token
+  const { address, ticker, file, companyName, url, description, industry, country, chainId, kycTypes } = token
 
   return {
     address: !Boolean(isValidAddress(address || '')) ? 'Invalid address' : null,
@@ -270,6 +270,7 @@ export const validateToken = (token: any) => {
     industry: isEmpty(industry),
     country: isEmpty(country),
     chainId: isEmpty(chainId),
+    kycTypes: isEmpty(kycTypes),
     ...urlValidator(url),
     ...stringLengthValidator('companyName', companyName, 100),
     ...stringLengthValidator('description', description, 1000),

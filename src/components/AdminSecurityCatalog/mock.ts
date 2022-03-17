@@ -16,6 +16,7 @@ export const initialTokenState = {
   active: null,
   featured: null,
   chainId: null,
+  kycTypes: [],
 }
 
 export const initialIssuerState = {
