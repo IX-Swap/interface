@@ -13,12 +13,13 @@ import { InvestorStatusDeclaration } from './Blocks/InvestorStatusDeclaration'
 
 interface Props {
   data: IndividualKyc
+  riskJSON: any
 }
 
-export const IndividualForm = ({ data }: Props) => {
+export const IndividualForm = ({ data, riskJSON }: Props) => {
   return (
     <>
-      <Cynopsis />
+      <Cynopsis riskJSON={riskJSON} />
       <Information data={data} kycKey="individual" />
       <Address data={data} />
       <SourceOfFunds data={data} kycKey="individual" />
