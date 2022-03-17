@@ -34,8 +34,8 @@ export interface ListingFormValues {
   incomeStatement: DataroomFile[]
   cashFlow: DataroomFile[]
   balanceSheet: DataroomFile[]
-  launchDate: Date | string
-  completionDate: Date | string
+  launchDate?: Date | string
+  completionDate?: Date | string
   introduction: string
   marketType: string
   asset: string
