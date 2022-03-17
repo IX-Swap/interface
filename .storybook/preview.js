@@ -28,29 +28,27 @@ export const parameters = {
 }
 
 export const decorators = [
-  Story => {
-    return (
-      <StylesProvider generateClassName={generateClassName}>
-        <AppThemeProvider>
-          {theme => (
-            <ThemeProvider theme={theme}>
-              <ToastProvider
-                components={{ Toast: Toast, ToastContainer: () => null }}
-              >
-                <BreadcrumbsProvider>
-                  <AppStateProvider>
-                    <ServicesProvider>
-                      <Router history={history}>
-                        <Story />
-                      </Router>
-                    </ServicesProvider>
-                  </AppStateProvider>
-                </BreadcrumbsProvider>
-              </ToastProvider>
-            </ThemeProvider>
-          )}
-        </AppThemeProvider>
-      </StylesProvider>
-    )
-  }
+  Story => (
+    <StylesProvider generateClassName={generateClassName}>
+      <AppThemeProvider>
+        {theme => (
+          <ThemeProvider theme={theme}>
+            <ToastProvider
+              components={{ Toast: Toast, ToastContainer: () => null }}
+            >
+              <BreadcrumbsProvider>
+                <AppStateProvider>
+                  <ServicesProvider>
+                    <Router history={history}>
+                      <Story />
+                    </Router>
+                  </ServicesProvider>
+                </AppStateProvider>
+              </BreadcrumbsProvider>
+            </ToastProvider>
+          </ThemeProvider>
+        )}
+      </AppThemeProvider>
+    </StylesProvider>
+  )
 ]
