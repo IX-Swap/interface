@@ -1,6 +1,6 @@
 import { legalEntityTypes } from './mock'
 
-export const transformApiData = (data: any) => {
+export const corporateTransformApiData = (data: any) => {
   const {
     typeOfLegalEntity,
     countryOfIncorporation,
@@ -50,7 +50,7 @@ export const transformApiData = (data: any) => {
   }
 }
 
-export const transformKycDto = (values: any) => {
+export const corporateTransformKycDto = (values: any) => {
   const {
     typeOfLegalEntity,
     countryOfIncorporation,
@@ -83,5 +83,59 @@ export const transformKycDto = (values: any) => {
     ),
     beneficialOwnersIdentity: beneficialOwners.map(({ proofOfIdentity }: any) => proofOfIdentity),
     beneficialOwnersAddress: beneficialOwners.map(({ proofOfAddress }: any) => proofOfAddress),
+  }
+}
+
+export const individualTransformApiData = (data: any) => {
+  const { sourceOfFunds, address, documents, usTin, citizenship, employmentStatus, gender, nationality, income } = data
+  const splittedFunds = sourceOfFunds.split(',').map((name: string) => name.trim())
+  const funds = splittedFunds.includes('Others') ? splittedFunds.slice(0, -1) : splittedFunds
+
+  return {
+    ...data,
+    sourceOfFunds: funds.filter((fund: string) => fund !== ''),
+    isUSTaxPayer: usTin ? 1 : 0,
+    otherFunds: splittedFunds.includes('Others') ? splittedFunds[splittedFunds.length - 1] : '',
+    line1: address.line1,
+    line2: address.line2,
+    country: { id: 0, name: address.country },
+    city: address.city,
+    proofOfAddress: documents.filter(({ type }: any) => type === 'address'),
+    proofOfIdentity: documents.filter(({ type }: any) => type === 'identity'),
+    evidenceOfAccreditation: documents.filter(({ type }: any) => type === 'accreditation'),
+    citizenship: { id: 0, name: citizenship },
+    employmentStatus: { id: 0, name: employmentStatus },
+    gender: { id: 0, name: gender },
+    nationality: { id: 0, name: nationality },
+    income: { id: 0, name: income },
+    removedDocuments: [],
+  }
+}
+
+export const individualTransformKycDto = (values: any) => {
+  const {
+    dateOfBirth,
+    sourceOfFunds,
+    otherFunds,
+    citizenship,
+    nationality,
+    country,
+    employmentStatus,
+    gender,
+    income,
+    isUSTaxPayer,
+  } = values
+
+  return {
+    ...values,
+    dateOfBirth: typeof dateOfBirth === 'string' ? dateOfBirth : dateOfBirth.format(),
+    sourceOfFunds: [...sourceOfFunds, otherFunds].join(', '),
+    citizenship: citizenship.name,
+    nationality: nationality.name,
+    country: country.name,
+    employmentStatus: employmentStatus.name,
+    gender: gender.name,
+    income: income.name,
+    isUSTaxPayer: isUSTaxPayer ? true : false,
   }
 }

@@ -34,6 +34,7 @@ export const kyc = {
   restartAccreditation: (accreditationRequestId: number) => `kyc/my/restart/${accreditationRequestId}`,
   createIndividual: `/newkyc/individual`,
   createCorporate: `/newkyc/corporate`,
+  updateIndividual: (kycId: number) => `/newkyc/individual/${kycId}`,
   updateCorporate: (kycId: number) => `/newkyc/corporate/${kycId}`,
   cynopsisRisks: (address: string) => `/newkyc/cynopsis/${address}`,
   getMyKyc: `newkyc/me`,

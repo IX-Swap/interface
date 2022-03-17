@@ -5,7 +5,7 @@ export const individualErrorsSchema = yup.object().shape({
   firstName: yup.string().min(1, 'Too short').max(50, 'Too Long!').required('Required'),
   middleName: yup.string().max(50, 'Too Long!'),
   lastName: yup.string().min(1, 'Too short').max(50, 'Too Long!').required('Required'),
-  dateOfBirth: yup.object().nullable().required('Required'),
+  dateOfBirth: yup.mixed().nullable().required('Required'),
   gender: yup.object().nullable().required('Required'),
   nationality: yup.object().nullable().required('Required'),
   citizenship: yup.object().nullable().required('Required'),
