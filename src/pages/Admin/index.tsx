@@ -7,8 +7,6 @@ import { useAdminState, useGetMe } from 'state/admin/hooks'
 import { AdminAccreditationTable } from 'components/AdminAccreditationTable'
 import { AdminTransactionsTable } from 'components/AdminTransactionsTable'
 import { AdminSecurityCatalog } from 'components/AdminSecurityCatalog'
-import { AutoColumn, ColumnCenter } from 'components/Column'
-import { CustodianToggleWrapper } from 'pages/Custodian/styleds'
 import { Border, ToggleOption } from 'components/Tabs'
 import { AdminKycTable } from 'components/AdminKyc'
 
@@ -101,20 +99,16 @@ const AdminKyc = () => {
       <Navbar />
       {adminData?.role === 'admin' && (
         <Body>
-          <ColumnCenter style={{ marginBottom: '24px' }}>
-            <AutoColumn style={{ paddingBottom: 0 }}>
-              <CustodianToggleWrapper>
-                {tabs.map(({ value, label }, index) => (
-                  <>
-                    <ToggleOption key={`tabs-${index}`} onClick={() => changeTab(value)} active={selectedTab === value}>
-                      <Trans>{label}</Trans>
-                      <Border active={selectedTab === value} />
-                    </ToggleOption>
-                  </>
-                ))}
-              </CustodianToggleWrapper>
-            </AutoColumn>
-          </ColumnCenter>
+          <TabsContainer>
+            {tabs.map(({ value, label }, index) => (
+              <>
+                <ToggleOption key={`tabs-${index}`} onClick={() => changeTab(value)} active={selectedTab === value}>
+                  <Trans>{label}</Trans>
+                  <Border active={selectedTab === value} />
+                </ToggleOption>
+              </>
+            ))}
+          </TabsContainer>
 
           {renderTab(selectedTab)}
         </Body>

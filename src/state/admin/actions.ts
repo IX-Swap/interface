@@ -83,10 +83,6 @@ export interface AccreditationItem {
     url: string
     [key: string]: any
   }
-  userKyc?: {
-    id: number
-    userId: number
-  }
   message?: string
   status: string
   custodian: {
