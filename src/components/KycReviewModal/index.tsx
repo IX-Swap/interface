@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Trans, t } from '@lingui/macro'
 import styled from 'styled-components'
 
@@ -12,6 +12,7 @@ import { useApproveKyc, useRejectKyc, useResetKyc } from 'state/admin/hooks'
 
 import { CorporateForm } from './CorporateForm'
 import { IndividualForm } from './IndividualForm'
+import { getCynopsisRisks } from 'state/kyc/hooks'
 
 interface Props {
   isOpen: boolean
@@ -21,9 +22,19 @@ interface Props {
 
 export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
   const [openReasonModal, handleOpenReasonModal] = useState('')
+  const [riskJSON, setRiskJSON] = useState<any>(null)
   const approveKyc = useApproveKyc()
   const rejectKyc = useRejectKyc()
   const resetKyc = useResetKyc()
+
+  useEffect(() => {
+    const fetchCynopsisRisks = async () => {
+      const result = await getCynopsisRisks(data?.user.ethAddress)
+      setRiskJSON(result?.riskReport?.riskJson?.riskScore ? result.riskReport.riskJson : null)
+    }
+
+    fetchCynopsisRisks()
+  }, [])
 
   const kyc = (data.individualKycId ? data.individual : data.corporate) || ({} as IndividualKyc | CorporateKyc)
 
@@ -82,7 +93,13 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
               </Title>
               <CloseIcon data-testid="cross" onClick={onClose} />
             </TitleContainer>
-            <Body>{data.individualKycId ? <IndividualForm data={kyc} /> : <CorporateForm data={kyc} />}</Body>
+            <Body>
+              {data.individualKycId ? (
+                <IndividualForm riskJSON={riskJSON} data={kyc} />
+              ) : (
+                <CorporateForm riskJSON={riskJSON} data={kyc} />
+              )}
+            </Body>
             <ActionsContainer>
               <ButtonIXSWide onClick={approve}>
                 <Trans>Approve</Trans>

@@ -31,6 +31,15 @@ export const getMyKyc = async () => {
   }
 }
 
+export const getCynopsisRisks = async (address: string) => {
+  try {
+    const result = await apiService.get(kyc.cynopsisRisks(address))
+    return result.data
+  } catch (e) {
+    console.log(e)
+  }
+}
+
 export const getCorporateProgress = async () => {
   try {
     const result = await apiService.get(kyc.corporateProgress)
@@ -70,7 +79,11 @@ export const createCorporateKYC = async (newKYC: any) => {
         formData.append(`${key}`, item)
       })
     } else {
-      formData.append(key, newKYC[key])
+      if (key === 'removedDocuments' || key === 'removedBeneficialOwners') {
+        formData.append(key, JSON.stringify(newKYC[key]))
+      } else {
+        formData.append(key, newKYC[key])
+      }
     }
   }
 
@@ -95,7 +108,11 @@ export const updateCorporateKYC = async (kycId: number, newKYC: any) => {
         }
       })
     } else {
-      formData.append(key, newKYC[key])
+      if (key === 'removedDocuments' || key === 'removedBeneficialOwners') {
+        formData.append(key, JSON.stringify(newKYC[key]))
+      } else {
+        formData.append(key, newKYC[key])
+      }
     }
   }
 

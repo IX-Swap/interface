@@ -388,7 +388,10 @@ export default function IndividualKycForm() {
                             withScroll
                             label="Country"
                             selectedItem={values.country}
-                            items={countries.filter(({ name }) => name !== 'United States of America')}
+                            items={countries.filter(
+                              ({ name }) =>
+                                !['United States of America', 'United States Minor Outlying Islands'].includes(name)
+                            )}
                             onSelect={(country) => onSelectChange('country', country, setFieldValue)}
                             error={errors.country && errors.country}
                           />
@@ -453,7 +456,7 @@ export default function IndividualKycForm() {
                             isRadio
                             checked={values.accredited === 1}
                             onClick={() => onRadioChange('accredited', 1, setFieldValue)}
-                            label={`I declare that i am “individual accredited Investor"`}
+                            label={`I declare that I am “individual accredited Investor"`}
                           />
                           {errors.accredited && (
                             <TYPE.small marginTop="-4px" color={'red1'}>

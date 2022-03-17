@@ -23,7 +23,6 @@ import {
   initialCorporateKycFormData,
   corporateSourceOfFunds,
   legalEntityTypes,
-  entityTypes,
   corporateFormInitialValues,
 } from './mock'
 import { FormCard, FormGrid, ExtraInfoCard, Divider } from './styleds'
@@ -46,11 +45,7 @@ export default function CorporateKycForm() {
   const [errors, setErrors] = useState<any>({})
   const [pending, setPending] = useState(false)
   const history = useHistory()
-
-  const { kyc, loadingRequest } = useKYCState()
-
-  console.log('error', formData)
-
+  const { kyc } = useKYCState()
   const login = useLogin({ mustHavePreviousLogin: false })
   const showError = useShowError()
   const addPopup = useAddPopup()
@@ -143,13 +138,18 @@ export default function CorporateKycForm() {
   ) => {
     const beneficiar = owners[index]
     const newData = [...owners]
+
+    if (beneficiar[fieldName]?.id) {
+      setFieldValue('removedDocuments', [beneficiar[fieldName].id])
+    }
     newData.splice(index, 1, { ...beneficiar, [fieldName]: value })
 
     setFieldValue('beneficialOwners', newData, false)
     validationSeen(specificErrorField)
+    validationSeen('beneficialOwners')
   }
 
-  const addBeneficiar = (owners: any, setFieldValue: any) => {
+  const addBeneficiary = (owners: any, setFieldValue: any) => {
     setFieldValue(
       'beneficialOwners',
       [...owners, { fullName: '', shareholding: '', proofOfAddress: null, proofOfIdentity: null }],
@@ -157,14 +157,16 @@ export default function CorporateKycForm() {
     )
   }
 
-  const deleteBeneficiar = (index: number, owners: any, setFieldValue: any) => {
+  const deleteBeneficiar = (index: number, owners: any, removedBeneficialOwners: any[], setFieldValue: any) => {
     const newData = [...owners]
+    if (newData[index]?.id) {
+      setFieldValue('removedBeneficialOwners', [...removedBeneficialOwners, newData[index].id])
+    }
     newData.splice(index, 1)
 
     if (!newData.length) {
-      newData.push({ fullName: '', shareholding: '' })
+      newData.push({ fullName: '', shareholding: '', proofOfAddress: null, proofOfIdentity: null })
     }
-
     setFieldValue('beneficialOwners', newData, false)
   }
 
@@ -185,7 +187,7 @@ export default function CorporateKycForm() {
 
   const countries = useMemo(() => {
     return getNames()
-      .filter((name) => name !== 'United States of America')
+      .filter((name) => !['United States of America', 'United States Minor Outlying Islands'].includes(name))
       .map((name, index) => ({ id: ++index, name }))
       .sort((a, b) => a.name.localeCompare(b.name))
   }, [])
@@ -214,20 +216,29 @@ export default function CorporateKycForm() {
 
   const handleDropImage = (acceptedFile: any, values: any, key: string, setFieldValue: any) => {
     const file = acceptedFile
-    const arrayOfFiles = [...values[key]]
-    arrayOfFiles.push(file)
+    if (file?.size > 10 ** 7) {
+      showError(t`Max size of 10Mb`)
+    } else {
+      const arrayOfFiles = [...values[key]]
+      arrayOfFiles.push(file)
 
-    setFieldValue(key, arrayOfFiles, false)
-    validationSeen(key)
+      setFieldValue(key, arrayOfFiles, false)
+      validationSeen(key)
+    }
   }
 
-  const handleImageDelete = (values: any, key: string, setFieldValue: any) => (index: number) => {
-    const arrayOfFiles = [...values[key]]
-    arrayOfFiles.splice(index, 1)
+  const handleImageDelete =
+    (values: any, key: string, removedDocuments: any[], setFieldValue: any) => (index: number) => {
+      const arrayOfFiles = [...values[key]]
 
-    setFieldValue(key, arrayOfFiles, false)
-    validationSeen(key)
-  }
+      if (arrayOfFiles[index]?.id) {
+        setFieldValue('removedDocuments', [...removedDocuments, arrayOfFiles[index].id])
+      }
+      arrayOfFiles.splice(index, 1)
+
+      setFieldValue(key, arrayOfFiles, false)
+      validationSeen(key)
+    }
 
   return (
     <Loadable loading={pending}>
@@ -334,6 +345,8 @@ export default function CorporateKycForm() {
                 !errors.evidenceOfAccreditation
               const beneficialOwnersFilled =
                 shouldValidate && !Object.keys(errors).some((errorField) => errorField.startsWith('beneficialOwners'))
+
+              console.log('values', values)
 
               return (
                 <FormRow>
@@ -443,13 +456,13 @@ export default function CorporateKycForm() {
                             <TextInput
                               onChange={(e) => onChangeInput('email', e.currentTarget.value, values, setFieldValue)}
                               value={values.email}
-                              label="Email"
+                              label="Email address"
                               error={errors.email && errors.email}
                             />
                             <PhoneInput
                               onChange={(value) => onChangeInput('phoneNumber', value, values, setFieldValue)}
                               value={values.phoneNumber}
-                              label="Phone"
+                              label="Phone Number"
                               error={errors.phoneNumber && errors.phoneNumber}
                             />
                           </FormGrid>
@@ -462,7 +475,12 @@ export default function CorporateKycForm() {
                                 handleDropImage(file, values, 'authorizationDocuments', setFieldValue)
                               }}
                               error={errors.authorizationDocuments && errors.authorizationDocuments}
-                              handleDeleteClick={handleImageDelete(values, 'authorizationDocuments', setFieldValue)}
+                              handleDeleteClick={handleImageDelete(
+                                values,
+                                'authorizationDocuments',
+                                values.removedDocuments,
+                                setFieldValue
+                              )}
                             />
                           </FormGrid>
                         </Column>
@@ -712,7 +730,14 @@ export default function CorporateKycForm() {
                             <>
                               <FormGrid columns={4} key={index}>
                                 <DeleteRow
-                                  onClick={() => deleteBeneficiar(index, values.beneficialOwners, setFieldValue)}
+                                  onClick={() =>
+                                    deleteBeneficiar(
+                                      index,
+                                      values.beneficialOwners,
+                                      values.removedBeneficialOwners,
+                                      setFieldValue
+                                    )
+                                  }
                                 >
                                   <TextInput
                                     value={beneficiar.fullName}
@@ -807,12 +832,15 @@ export default function CorporateKycForm() {
                             </>
                           ))}
                         </Column>
+                        {errors.beneficialOwners && (
+                          <TYPE.small marginTop="4px" color={'red1'}>{t`${errors.beneficialOwners}`}</TYPE.small>
+                        )}
                         <ButtonIXSGradient
                           type="button"
                           style={{ marginTop: 32, height: 40, fontSize: 16 }}
-                          onClick={() => addBeneficiar(values.beneficialOwners, setFieldValue)}
+                          onClick={() => addBeneficiary(values.beneficialOwners, setFieldValue)}
                         >
-                          <Trans> Add Beneficiar</Trans>
+                          <Trans> Add Beneficiary</Trans>
                         </ButtonIXSGradient>
                       </FormCard>
 
@@ -831,7 +859,12 @@ export default function CorporateKycForm() {
                               handleDropImage(file, values, 'corporateDocuments', setFieldValue)
                             }}
                             error={errors.corporateDocuments && errors.corporateDocuments}
-                            handleDeleteClick={handleImageDelete(values, 'corporateDocuments', setFieldValue)}
+                            handleDeleteClick={handleImageDelete(
+                              values,
+                              'corporateDocuments',
+                              values.removedDocuments,
+                              setFieldValue
+                            )}
                           />
 
                           <Uploader
@@ -842,7 +875,12 @@ export default function CorporateKycForm() {
                               handleDropImage(file, values, 'financialDocuments', setFieldValue)
                             }}
                             error={errors.financialDocuments && errors.financialDocuments}
-                            handleDeleteClick={handleImageDelete(values, 'financialDocuments', setFieldValue)}
+                            handleDeleteClick={handleImageDelete(
+                              values,
+                              'financialDocuments',
+                              values.removedDocuments,
+                              setFieldValue
+                            )}
                           />
 
                           <Uploader
@@ -868,7 +906,12 @@ export default function CorporateKycForm() {
                             }}
                             optional={values.accredited !== 1}
                             error={errors.evidenceOfAccreditation && errors.evidenceOfAccreditation}
-                            handleDeleteClick={handleImageDelete(values, 'evidenceOfAccreditation', setFieldValue)}
+                            handleDeleteClick={handleImageDelete(
+                              values,
+                              'evidenceOfAccreditation',
+                              values.removedDocuments,
+                              setFieldValue
+                            )}
                           />
                         </Column>
                       </FormCard>

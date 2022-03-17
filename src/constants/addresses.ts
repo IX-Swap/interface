@@ -36,6 +36,7 @@ export const CREATE_TOKEN_CHAINS = [
   { id: SUPPORTED_TGE_CHAINS.KOVAN, name: 'Kovan' },
   { id: SUPPORTED_TGE_CHAINS.MATIC, name: 'Matic' },
 ]
+export const TGE_CHAINS_WITH_KYC = [SUPPORTED_TGE_CHAINS.MUMBAI, SUPPORTED_TGE_CHAINS.MATIC, SUPPORTED_TGE_CHAINS.KOVAN]
 // the rest are same as kovan for now
 export const IXS_ADDRESS: { [key: number]: string } = {
   [1]: '0x73d7c860998CA3c01Ce8c808F5577d94d545d1b4',

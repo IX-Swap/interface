@@ -1,4 +1,4 @@
-import { entityTypes, legalEntityTypes } from './mock'
+import { legalEntityTypes } from './mock'
 
 export const transformApiData = (data: any) => {
   const {
@@ -34,7 +34,8 @@ export const transformApiData = (data: any) => {
     taxCountry: { id: 0, name: taxCountry },
     beneficialOwners:
       beneficialOwners.length > 0
-        ? beneficialOwners.map(({ fullName, shareholding, proofOfAddress, proofOfIdentity }: any) => ({
+        ? beneficialOwners.map(({ id, fullName, shareholding, proofOfAddress, proofOfIdentity }: any) => ({
+            id,
             fullName,
             shareholding,
             proofOfAddress,
@@ -44,6 +45,8 @@ export const transformApiData = (data: any) => {
     corporateDocuments: documents.filter(({ type }: any) => type === 'corporate'),
     financialDocuments: documents.filter(({ type }: any) => type === 'financial'),
     evidenceOfAccreditation: documents.filter(({ type }: any) => type === 'accreditation'),
+    removedDocuments: [],
+    removedBeneficialOwners: [],
   }
 }
 
@@ -70,9 +73,12 @@ export const transformKycDto = (values: any) => {
     taxCountry: taxCountry.name,
     isUSTaxPayer: isUSTaxPayer ? true : false,
     beneficialOwners: JSON.stringify(
-      beneficialOwners.map(({ fullName, shareholding }: any) => ({
+      beneficialOwners.map(({ id, fullName, shareholding, proofOfAddress, proofOfIdentity }: any) => ({
+        id: id || null,
         fullName,
-        shareholding,
+        shareholding: +shareholding,
+        proofOfAddress: proofOfAddress?.id || null,
+        proofOfIdentity: proofOfIdentity?.id || null,
       }))
     ),
     beneficialOwnersIdentity: beneficialOwners.map(({ proofOfIdentity }: any) => proofOfIdentity),

@@ -10,19 +10,20 @@ import { ResidentialAddress } from './Blocks/ResidentialAddress'
 import { SourceOfFunds } from './Blocks/SourceOfFunds'
 import { InvestorStatusDeclaration } from './Blocks/InvestorStatusDeclaration'
 import { Fatca } from './Blocks/Fatca'
-import { OptInRequirement } from './Blocks/OptInRequirement'
+// import { OptInRequirement } from './Blocks/OptInRequirement'
 import { TaxDeclaration } from './Blocks/TaxDeclaration'
 import { BeneficialOwners } from './Blocks/BeneficialOwners'
-import { UploadDocuments } from './Blocks/UploadDocuments'
+import { UploadedDocuments } from './Blocks/UploadedDocuments'
 
 interface Props {
   data: CorporateKyc
+  riskJSON: any
 }
 
-export const CorporateForm = ({ data }: Props) => {
+export const CorporateForm = ({ data, riskJSON }: Props) => {
   return (
     <>
-      <Cynopsis />
+      <Cynopsis riskJSON={riskJSON} />
       <Information data={data} kycKey="corporate" />
       <CompanyAuthorizedPersonnel data={data} />
       <Address data={data} />
@@ -30,10 +31,10 @@ export const CorporateForm = ({ data }: Props) => {
       <SourceOfFunds data={data} kycKey="corporate" />
       <InvestorStatusDeclaration data={data} kycKey="corporate" />
       <Fatca data={data} />
-      <OptInRequirement />
+      {/* <OptInRequirement /> */}
       <TaxDeclaration data={data} />
       <BeneficialOwners owners={data.beneficialOwners} />
-      <UploadDocuments data={data.documents} />
+      <UploadedDocuments data={data.documents} />
     </>
   )
 }

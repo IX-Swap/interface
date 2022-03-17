@@ -7,25 +7,26 @@ import { Information } from './Blocks/Information'
 import { Address } from './Blocks/Address'
 import { SourceOfFunds } from './Blocks/SourceOfFunds'
 import { Fatca } from './Blocks/Fatca'
-import { UploadDocuments } from './Blocks/UploadDocuments'
+import { UploadedDocuments } from './Blocks/UploadedDocuments'
 import { Occupation } from './Blocks/Occupation'
 import { InvestorStatusDeclaration } from './Blocks/InvestorStatusDeclaration'
 
 interface Props {
   data: IndividualKyc
+  riskJSON: any
 }
 
-export const IndividualForm = ({ data }: Props) => {
+export const IndividualForm = ({ data, riskJSON }: Props) => {
   return (
     <>
-      <Cynopsis />
+      <Cynopsis riskJSON={riskJSON} />
       <Information data={data} kycKey="individual" />
       <Address data={data} />
       <SourceOfFunds data={data} kycKey="individual" />
       <InvestorStatusDeclaration data={data} kycKey="individual" />
       <Fatca data={data} />
       <Occupation data={data} />
-      <UploadDocuments data={data.documents} />
+      <UploadedDocuments data={data.documents} />
     </>
   )
 }
