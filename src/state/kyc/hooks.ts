@@ -40,6 +40,15 @@ export const getCynopsisRisks = async (address: string) => {
   }
 }
 
+export const getIndividualProgress = async () => {
+  try {
+    const result = await apiService.get(kyc.individualProgress)
+    return result.data
+  } catch (e) {
+    console.log(e)
+  }
+}
+
 export const getCorporateProgress = async () => {
   try {
     const result = await apiService.get(kyc.corporateProgress)
@@ -89,6 +98,35 @@ export const createCorporateKYC = async (newKYC: any) => {
 
   try {
     const result = await apiService.post(kyc.createCorporate, formData)
+    return result.data
+  } catch (e) {
+    console.log(e)
+  }
+}
+
+export const updateIndividualKYC = async (kycId: number, newKYC: any) => {
+  const formData = new FormData()
+
+  for (const key in newKYC) {
+    if (individualKYCFiles.includes(key)) {
+      newKYC[key].forEach((item: any) => {
+        if (item.uuid || item.asset?.uuid) {
+          console.log('not binary')
+        } else {
+          formData.append(`${key}`, item)
+        }
+      })
+    } else {
+      if (key === 'removedDocuments') {
+        formData.append(key, JSON.stringify(newKYC[key]))
+      } else {
+        formData.append(key, newKYC[key])
+      }
+    }
+  }
+
+  try {
+    const result = await apiService.put(kyc.updateIndividual(kycId), formData)
     return result.data
   } catch (e) {
     console.log(e)
@@ -169,6 +207,25 @@ export function useUpdateCorporateKYC() {
       try {
         dispatch(fetchCreateIndividualKYC.pending())
         const data = await updateCorporateKYC(kycId, newKYC)
+        dispatch(fetchCreateIndividualKYC.fulfilled({ data }))
+        return data
+      } catch (error: any) {
+        dispatch(fetchCreateIndividualKYC.rejected({ errorMessage: 'Could not create individual kyc' }))
+        return BROKER_DEALERS_STATUS.FAILED
+      }
+    },
+    [dispatch]
+  )
+  return callback
+}
+
+export function useUpdateIndividualKYC() {
+  const dispatch = useDispatch<AppDispatch>()
+  const callback = useCallback(
+    async (kycId: number, newKYC: any) => {
+      try {
+        dispatch(fetchCreateIndividualKYC.pending())
+        const data = await updateIndividualKYC(kycId, newKYC)
         dispatch(fetchCreateIndividualKYC.fulfilled({ data }))
         return data
       } catch (error: any) {
