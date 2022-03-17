@@ -1,61 +1,56 @@
+import React from 'react'
+import { Flex } from 'rebass'
+import styled from 'styled-components'
+
 import { LightCard } from 'components/Card'
 import Column from 'components/Column'
 import IXSProgressBar from 'components/IXSProgressBar'
 import Row, { RowBetween } from 'components/Row'
-import React from 'react'
-import { Flex } from 'rebass'
 import { NumericTrait, Trait, TraitType } from 'state/nft/types'
-import styled from 'styled-components'
 import { ellipsisText, TYPE } from 'theme'
 
-const EllipsisBody2 = styled(TYPE.body2)`
-  ${ellipsisText}
-`
-const EllipsisBody3 = styled(TYPE.body3)`
-  ${ellipsisText}
-`
+import { PropertyCard, LevelCard, StatCard } from './styleds'
+
 export const TraitsShow = ({ type, traitList }: { type: TraitType; traitList: Array<Trait> | Array<NumericTrait> }) => {
   const getMax = (trait: any) => {
     return trait?.max_value
   }
   return (
-    <Flex flexDirection={type === TraitType.RECTANGLE ? 'row' : 'column'} style={{ gap: '10px' }} flexWrap="wrap">
+    <Flex
+      flexDirection={type !== TraitType.PROGRESS ? 'row' : 'column'}
+      style={{ columnGap: '8px', rowGap: '12px', marginTop: '12px' }}
+      flexWrap="wrap"
+    >
       {traitList.map((trait: any, index: number) => {
         if (type === TraitType.RECTANGLE) {
           return (
-            <LightCard key={index} style={{ width: '150px' }}>
-              <Column>
-                <EllipsisBody2>{trait?.trait_type}</EllipsisBody2>
-                <EllipsisBody3>{trait?.value}</EllipsisBody3>
-              </Column>
-            </LightCard>
+            <PropertyCard key={index}>
+              <div>{trait?.trait_type}</div>
+              <div>{trait?.value}</div>
+            </PropertyCard>
           )
         } else if (type === TraitType.NUMBER) {
           return (
-            <LightCard key={index} style={{ width: '100%' }}>
-              <RowBetween>
-                <EllipsisBody2 style={{ width: 'max-content' }}>{trait?.trait_type}</EllipsisBody2>
-                <EllipsisBody3 style={{ width: 'max-content' }}>
-                  {trait?.value} of {getMax(trait)}
-                </EllipsisBody3>
-              </RowBetween>
-            </LightCard>
+            <StatCard key={index}>
+              <div>
+                {trait?.value} of {getMax(trait)}
+              </div>
+              <div>{trait?.trait_type}</div>
+            </StatCard>
           )
         } else {
           return (
-            <LightCard key={index} style={{ width: '100%' }}>
-              <Column>
-                <RowBetween>
-                  <EllipsisBody2 style={{ width: 'max-content' }}>{trait?.trait_type}</EllipsisBody2>
-                  <EllipsisBody3 style={{ width: 'max-content' }}>
-                    {trait?.value} of {getMax(trait)}
-                  </EllipsisBody3>
-                </RowBetween>
-                <Row>
-                  <IXSProgressBar completed={(Number(trait.value) / Number(getMax(trait))) * 100} />
-                </Row>
-              </Column>
-            </LightCard>
+            <LevelCard key={index} style={{ width: '100%' }}>
+              <div>
+                <div style={{ width: 'max-content' }}>{trait?.trait_type}</div>
+                <div style={{ width: 'max-content' }}>
+                  {trait?.value} of {getMax(trait)}
+                </div>
+              </div>
+              <Row>
+                <IXSProgressBar completed={(Number(trait.value) / Number(getMax(trait))) * 100} />
+              </Row>
+            </LevelCard>
           )
         }
       })}

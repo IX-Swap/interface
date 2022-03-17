@@ -262,4 +262,6 @@ export const corporateFormInitialValues: IFormInitial = {
   corporateDocuments: [],
   financialDocuments: [],
   evidenceOfAccreditation: [],
+  removedDocuments: [],
+  removedBeneficialOwners: [],
 }

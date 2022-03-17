@@ -34,6 +34,7 @@ import { RedirectPathToStaking, RedirectPathToSwapOnly, RedirectToSwap } from '.
 import { Footer } from '../components/Footer'
 
 const AdminKyc = lazy(() => import('./Admin'))
+
 const KYC = lazy(() => import('./KYC'))
 const IndividualKYC = lazy(() => import('./KYC/IndividualKycForm'))
 const CorporateKYC = lazy(() => import('./KYC/CorporateKycForm'))

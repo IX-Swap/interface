@@ -7,6 +7,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useMitigationEnabled } from 'state/pool/hooks'
 import styled from 'styled-components/macro'
+import { formatAmount } from 'utils/formatCurrencyAmount'
 import { routes } from 'utils/routes'
 import { BIG_INT_ZERO } from '../../constants/misc'
 import { ButtonGradient } from '../Button'
@@ -67,16 +68,18 @@ export default function FullPositionCard({ pair, stakedBalance }: PositionCardPr
           <AutoColumn gap="8px">
             <TextRow
               textLeft={<Trans>Pooled {currency0.symbol}</Trans>}
-              textRight={token0Deposited?.toSignificant(6)}
+              textRight={formatAmount(+(token0Deposited?.toSignificant(6) || 0))}
               currency={currency0}
             />
             <TextRow
               textLeft={<Trans>Pooled {currency1.symbol}</Trans>}
-              textRight={token1Deposited?.toSignificant(6)}
+              textRight={formatAmount(+(token1Deposited?.toSignificant(6) || 0))}
               currency={currency1}
             />
-            {/* <TextRow textLeft={<Trans>IXS Rewards (on quit)</Trans>} textRight={stakedBalance?.toSignificant(4)} /> */}
-            <TextRow textLeft={<Trans>Your pool tokens</Trans>} textRight={userPoolBalance?.toSignificant(4)} />
+            <TextRow
+              textLeft={<Trans>Your pool tokens</Trans>}
+              textRight={formatAmount(+(userPoolBalance?.toSignificant(4) || 0))}
+            />
 
             <TextRow
               textLeft={<Trans>Your pool share</Trans>}

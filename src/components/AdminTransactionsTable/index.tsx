@@ -152,6 +152,8 @@ export const AdminTransactionsTable = () => {
   )
 }
 
+export default AdminTransactionsTable
+
 export const Loader = styled.div`
   position: fixed;
   top: 0;

@@ -42,6 +42,7 @@ export const StyledDialogOverlay = styled(AnimatedDialogOverlay)<{
                                       rgba(26, 18, 58, 0) 100%),
                                       rgba(44, 37, 74, 0.3);
           backdrop-filter: blur(20px);
+          width: 100vw;
       `}
   }
 `

@@ -21,7 +21,7 @@ import { tryParseAmount } from 'state/swap/helpers'
 import { useCurrencyBalance } from 'state/wallet/hooks'
 import styled from 'styled-components'
 import { CloseIcon, TYPE } from 'theme'
-import { floorToDecimals } from 'utils/formatCurrencyAmount'
+import { floorToDecimals, formatAmount } from 'utils/formatCurrencyAmount'
 import { EllipsedText, ModalBottom, StakeInfoContainer } from '../style'
 interface UnstakingModalProps {
   onDismiss: () => void
@@ -141,7 +141,8 @@ export function EarlyUnstake({ onDismiss, stake, onUnstake, onApprove }: Unstaki
             textRight={
               <EllipsedText>
                 <div>
-                  {typedValue ? typedValue : 0}&nbsp;IXSGov ({IXSGovBalance?.toSignificant(5)} <Trans>available</Trans>)
+                  {typedValue ? formatAmount(+typedValue) : 0}&nbsp;IXSGov (
+                  {formatAmount(+(IXSGovBalance?.toSignificant(5) || 0))} <Trans>available</Trans>)
                 </div>
               </EllipsedText>
             }
@@ -162,13 +163,13 @@ export function EarlyUnstake({ onDismiss, stake, onUnstake, onApprove }: Unstaki
               </TextWithTooltipWrapper>
             }
           />
-          <TextRow textLeft={t`Total rewards `} textRight={`${stake.reward} ${currency?.symbol}`} />
+          <TextRow textLeft={t`Total rewards `} textRight={`${formatAmount(+stake.reward)} ${currency?.symbol}`} />
           <TextRow
             textLeft={t`Instant reward payout today`}
             textRight={
               <EllipsedText>
                 <div>
-                  {floorToDecimals(stake.reward * 0.1, 6)}&nbsp;{currency?.symbol}
+                  {formatAmount(+floorToDecimals(stake.reward * 0.1, 6))}&nbsp;{currency?.symbol}
                 </div>
               </EllipsedText>
             }
@@ -178,7 +179,7 @@ export function EarlyUnstake({ onDismiss, stake, onUnstake, onApprove }: Unstaki
             textRight={
               <EllipsedText>
                 <div>
-                  {floorToDecimals(stake.reward * 0.9, 6)}&nbsp;{currency?.symbol}
+                  {formatAmount(+floorToDecimals(stake.reward * 0.9, 6))}&nbsp;{currency?.symbol}
                 </div>
               </EllipsedText>
             }

@@ -75,7 +75,7 @@ export const MenuItem = styled(RowBetween)`
   padding: 4px 40px;
   height: 56px;
   display: grid;
-  grid-template-columns: auto minmax(auto, 1fr) auto minmax(0, 72px);
+  grid-template-columns: auto minmax(auto, 1fr) auto auto;
   grid-gap: 8px;
   cursor: ${({ disabled }) => !disabled && 'pointer'};
   pointer-events: ${({ disabled }) => disabled && 'none'};

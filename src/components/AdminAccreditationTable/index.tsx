@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import { StyledCopy } from 'components/AdminTransactionsTable'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import useCopyClipboard from 'hooks/useCopyClipboard'
-import { useAdminState, useGetAccreditationList } from 'state/admin/hooks'
+import { getKyc, useAdminState, useGetAccreditationList } from 'state/admin/hooks'
 import { shortenAddress } from 'utils'
 import { AccreditationItem, KycItem } from 'state/admin/actions'
 
@@ -100,6 +100,7 @@ const Body = ({ openReviewModal }: BodyProps) => {
   const {
     accreditationList: { items },
   } = useAdminState()
+
   return (
     <>
       {items?.map((item) => {
@@ -155,6 +156,8 @@ export const AdminAccreditationTable = () => {
     </div>
   )
 }
+
+export default AdminAccreditationTable
 
 const Loader = styled.div`
   position: fixed;

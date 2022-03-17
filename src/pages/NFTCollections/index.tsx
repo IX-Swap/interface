@@ -1,7 +1,6 @@
-import { ButtonGradientBorder } from 'components/Button'
+import { ButtonGradientBorder, ButtonIXSGradient } from 'components/Button'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import { NFTConnectWallet } from 'components/NFTConnectWallet'
-import { RowBetween, RowCenter } from 'components/Row'
 import { useActiveWeb3React } from 'hooks/web3'
 import { Body, Container } from 'pages/Admin'
 import React, { FC, useEffect, useCallback } from 'react'
@@ -11,16 +10,27 @@ import { useFetchMyCollections, useNFTState } from 'state/nft/hooks'
 import { Edit2 } from 'react-feather'
 import { StyledInternalLink, TYPE } from 'theme'
 import { routes } from 'utils/routes'
-import { ReactComponent as Edit } from '../../assets/images/edit-circle-white.svg'
-import LogoWhite from '../../assets/svg/logo-white.svg'
-import { CollectionCard, CollectionImage, CollectionImageWrapper, CollectionLogo, CollectionsGrid } from './styleds'
 import useTheme from 'hooks/useTheme'
 import styled from 'styled-components'
 import { NFTCollectionImage } from 'state/nft/types'
 import { useUserisLoggedIn } from 'state/auth/hooks'
-
 import AppBody from 'pages/AppBody'
 import { TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
+
+import LogoWhite from '../../assets/svg/logo-white.svg'
+import { ReactComponent as MenuIcon } from '../../assets/images/menu.svg'
+import {
+  CollectionCard,
+  CollectionImage,
+  CollectionImageWrapper,
+  CollectionLogo,
+  CollectionsGrid,
+  ButtonsContainer,
+  TextInfo,
+  MoreActions,
+} from './styleds'
+import { NoCollections } from './NoCollections'
+import { ImageLoader } from 'components/ImageLoader'
 
 const LoaderWrapper = styled.div`
   display: flex;
@@ -74,94 +84,60 @@ const NFTCollections: FC = () => {
   if (!account) return <NFTConnectWallet />
   return (
     <AppBody blurred={!chainId || !TGE_CHAINS_WITH_SWAP.includes(chainId)} maxWidth="100%" transparent>
-      <Container style={{ width: '95vw' }}>
+      <Container style={{ width: '100%' }}>
         <Body style={{ padding: '0 10px' }}>
-          <TYPE.titleBig marginBottom={64} textAlign="center" fontWeight={600}>
-            My Collections
-          </TYPE.titleBig>
-          {/* We don't have categories for collections for now. May be present in the future */}
-          {/* <Flex justifyContent="center" alignItems="center">
-              {tabs.map(({ id, label }) => (
-                <ButtonEmpty
-                  width="auto"
-                  padding="0"
-                  marginRight={2}
-                  key={`sort-tab-${id}`}
-                  onClick={() => handleTabChange(id)}
-                >
-                  <Column>
-                    <SortText active={id === selectedTabId}>
-                      <Text marginBottom="10px" fontSize={20}>
-                        {label}
-                      </Text>
-                    </SortText>
-                    {id === selectedTabId && <ActiveSortItemBottom />}
-                  </Column>
-                </ButtonEmpty>
-              ))}
-            </Flex>
-            <Divider marginBottom={40} /> */}
-          <RowBetween style={{ marginBottom: '15px', flexWrap: 'wrap' }}>
-            <ButtonGradientBorder as={StyledInternalLink} to={routes.nftCollectionImport}>
-              Import a collection
-            </ButtonGradientBorder>
-            <ButtonGradientBorder as={StyledInternalLink} to={routes.nftCollectionCreate}>
-              Create a collection
-            </ButtonGradientBorder>
-          </RowBetween>
+          {!collectionsLoading && myCollections.length !== 0 && (
+            <ButtonsContainer>
+              <ButtonGradientBorder as={StyledInternalLink} to={routes.nftCollectionImport}>
+                Import a collection
+              </ButtonGradientBorder>
+              <TYPE.titleBig textAlign="center" fontWeight={600}>
+                My Collections
+              </TYPE.titleBig>
+              <ButtonIXSGradient as={StyledInternalLink} to={routes.nftCollectionCreate}>
+                Create a collection
+              </ButtonIXSGradient>
+            </ButtonsContainer>
+          )}
           {collectionsLoading && (
             <LoaderWrapper>
               <LoaderThin size={64} />
             </LoaderWrapper>
           )}
-          <CollectionsGrid>
-            {!collectionsLoading &&
-              myCollections.length !== 0 &&
-              myCollections.map(({ id, banner, logo, name, address }) => (
+          {!collectionsLoading && myCollections.length !== 0 && (
+            <CollectionsGrid>
+              {myCollections.map(({ id, cover, logo, name, address, description }) => (
                 <CollectionCard
                   key={`collection-card-${id}`}
                   as={StyledInternalLink}
                   to={`/nft/collections/${address}`}
                 >
-                  <CollectionImageWrapper style={{ paddingTop: !banner ? '10px' : '0' }}>
+                  <MoreActions
+                    className="more-actions"
+                    as={StyledInternalLink}
+                    to={id !== undefined ? routes.nftEditCollection(id) : routes.nftCollectionCreate}
+                  >
+                    <MenuIcon />
+                  </MoreActions>
+                  <CollectionImageWrapper style={{ paddingTop: !cover ? '10px' : '0' }}>
                     <CollectionImage
                       height="100%"
                       width="100%"
-                      src={getImage(banner) ?? LogoWhite}
-                      style={{ objectFit: banner ? 'cover' : 'contain' }}
+                      src={getImage(cover) ?? LogoWhite}
+                      style={{ objectFit: cover ? 'cover' : 'contain' }}
                     />
 
                     <CollectionLogo src={getImage(logo) ?? LogoWhite} style={!logo ? { objectFit: 'contain' } : {}} />
                   </CollectionImageWrapper>
-
-                  <Flex flexDirection="column" alignItems="center" padding="0px 32px 24px 32px">
-                    <TYPE.body5
-                      style={{
-                        marginBottom: '8px',
-                        textAlign: 'center',
-                        height: '1.25em',
-                        lineHeight: '1.3',
-                        overflow: 'hidden',
-                        display: 'block',
-                      }}
-                    >
-                      {name}
-                    </TYPE.body5>
-                    <Link
-                      style={{ marginLeft: 'auto ', padding: '5px' }}
-                      to={id !== undefined ? routes.nftEditCollection(id) : routes.nftCollectionCreate}
-                    >
-                      <Edit2 size={24} color={theme.text1} />
-                    </Link>
-                  </Flex>
+                  <TextInfo>
+                    <div>{name}</div>
+                    {description && <div>{description}</div>}
+                  </TextInfo>
                 </CollectionCard>
               ))}
-          </CollectionsGrid>
-          {!collectionsLoading && myCollections.length === 0 && (
-            <RowCenter>
-              <TYPE.titleBig>You have no collections</TYPE.titleBig>
-            </RowCenter>
+            </CollectionsGrid>
           )}
+          {!collectionsLoading && myCollections.length === 0 && <NoCollections />}
         </Body>
       </Container>
     </AppBody>

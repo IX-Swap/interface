@@ -6,7 +6,7 @@ export function currencyId(currency?: Currency & { tokenInfo?: { catalogId: numb
   }
   if (currency.isNative) return 'ETH'
 
-  if (currency?.tokenInfo) return `${currency.tokenInfo.catalogId}`
+  if (currency.tokenInfo?.catalogId) return `${currency.tokenInfo.catalogId}`
 
   return currency.address
 }

@@ -353,3 +353,5 @@ export const AdminSecurityCatalog: FC = () => {
     </>
   )
 }
+
+export default AdminSecurityCatalog

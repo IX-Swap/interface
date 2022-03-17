@@ -1,5 +1,6 @@
 import styled from 'styled-components'
-import { ReactComponent as Close } from '../../assets/images/x.svg'
+
+import { ReactComponent as Close } from '../../assets/images/delete-basket.svg'
 import { ReactComponent as LogoDark } from '../../assets/svg/logo-white.svg'
 
 export const PreviewParent = styled.div<{ isLogo: boolean; width: string; height: string }>`

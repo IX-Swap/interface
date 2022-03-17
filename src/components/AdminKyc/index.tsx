@@ -109,12 +109,12 @@ export const AdminKycTable = () => {
     getKycList({ page, offset: 10 })
   }
 
+  const closeModal = () => handleKyc({} as KycItem)
+  const openModal = (kyc: KycItem) => handleKyc(kyc)
+
   useEffect(() => {
     getKycList({ page: 1, offset: 10 })
   }, [getKycList])
-
-  const closeModal = () => handleKyc({} as KycItem)
-  const openModal = (kyc: KycItem) => handleKyc(kyc)
 
   return (
     <div id="kyc-container">
@@ -138,6 +138,8 @@ export const AdminKycTable = () => {
     </div>
   )
 }
+
+export default AdminKycTable
 
 const Loader = styled.div`
   position: fixed;
