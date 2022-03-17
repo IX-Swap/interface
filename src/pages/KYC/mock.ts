@@ -1,11 +1,3 @@
-interface IFormData {
-  [key: string]: {
-    title: string
-    href: string
-    passed: boolean
-  }
-}
-
 export const incomes = ['< 50,000', '50,000-100,000', '100,000-300,000', '> 300,000'].map((name, index) => ({
   id: ++index,
   name,
