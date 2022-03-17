@@ -22,14 +22,7 @@ import { useCreateIndividualKYC } from 'state/kyc/hooks'
 import { LOGIN_STATUS, useLogin } from 'state/auth/hooks'
 import { Loadable } from 'components/LoaderHover'
 
-import {
-  empleymentStatuses,
-  individualFormInitialValues,
-  genders,
-  incomes,
-  individualKycFormData,
-  sourceOfFunds,
-} from './mock'
+import { empleymentStatuses, individualFormInitialValues, genders, incomes, sourceOfFunds, promptValue } from './mock'
 import { FormCard, FormGrid, ExtraInfoCard, FormWrapper } from './styleds'
 import { individualErrorsSchema } from './schema'
 import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
@@ -53,13 +46,12 @@ export default function IndividualKycForm() {
   const [pending, setPending] = useState(false)
   const [isLogged, setAuthState] = useState(false)
 
-  const [formData] = useState(individualKycFormData)
+  const [formData, setFormData] = useState(null)
   const [canSubmit, setCanSubmit] = useState(true)
   const [isSubmittedOnce, setIsSubmittedOnce] = useState(false)
   const [errors, setErrors] = useState<any>({})
   const addPopup = useAddPopup()
   const createIndividualKYC = useCreateIndividualKYC()
-  const promptValue = 'Data will be lost if you leave the page, are you sure?'
 
   const checkAuthorization = useCallback(async () => {
     setPending(true)
@@ -89,8 +81,6 @@ export default function IndividualKycForm() {
       return () => clearTimeout(timerFunc)
     }
   }, [isLogged, checkAuthorization])
-
-  const { info, address, funds, investor, fatca, upload, employmentInformation } = formData
 
   const alertUser = (e: any) => {
     e.preventDefault()
@@ -280,7 +270,9 @@ export default function IndividualKycForm() {
                   <Column style={{ gap: '35px' }}>
                     <FormCard id="personal">
                       <RowBetween marginBottom="32px">
-                        <TYPE.title6 style={{ textTransform: 'uppercase' }}>{info.title}</TYPE.title6>
+                        <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                          <Trans>Personal Information</Trans>
+                        </TYPE.title6>
                         {personalFilled && <BigPassed />}
                       </RowBetween>
                       <Column style={{ gap: '20px' }}>
@@ -363,7 +355,9 @@ export default function IndividualKycForm() {
 
                     <FormCard id="address">
                       <RowBetween marginBottom="32px">
-                        <TYPE.title6 style={{ textTransform: 'uppercase' }}>{address.title}</TYPE.title6>
+                        <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                          <Trans>Address</Trans>
+                        </TYPE.title6>
                         {addressFilled && <BigPassed />}
                       </RowBetween>
 
@@ -407,7 +401,9 @@ export default function IndividualKycForm() {
 
                     <FormCard id="funds">
                       <RowBetween marginBottom="32px">
-                        <TYPE.title6 style={{ textTransform: 'uppercase' }}>{funds.title}</TYPE.title6>
+                        <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                          <Trans>Source of Funds</Trans>
+                        </TYPE.title6>
                         {fundsFilled && <BigPassed />}
                       </RowBetween>
                       <FormGrid columns={3}>
@@ -438,7 +434,9 @@ export default function IndividualKycForm() {
 
                     <FormCard id="investor">
                       <RowBetween marginBottom="32px">
-                        <TYPE.title6 style={{ textTransform: 'uppercase' }}>{investor.title}</TYPE.title6>
+                        <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                          <Trans>Investor Status Declaration</Trans>
+                        </TYPE.title6>
                         {investorFilled && <BigPassed />}
                       </RowBetween>
 
@@ -469,7 +467,9 @@ export default function IndividualKycForm() {
 
                     <FormCard id="fatca">
                       <RowBetween marginBottom="32px">
-                        <TYPE.title6 style={{ textTransform: 'uppercase' }}>{fatca.title}</TYPE.title6>
+                        <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                          <Trans>FATCA</Trans>
+                        </TYPE.title6>
                         {fatcaFilled && <BigPassed />}
                       </RowBetween>
 
@@ -511,7 +511,9 @@ export default function IndividualKycForm() {
 
                     <FormCard id="employment-info">
                       <RowBetween marginBottom="32px">
-                        <TYPE.title6 style={{ textTransform: 'uppercase' }}>{employmentInformation.title}</TYPE.title6>
+                        <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                          <Trans>Employment Information</Trans>
+                        </TYPE.title6>
                         {employmentInfoFilled && <BigPassed />}
                       </RowBetween>
                       <Column style={{ gap: '20px' }}>
@@ -546,7 +548,9 @@ export default function IndividualKycForm() {
 
                     <FormCard id="upload">
                       <RowBetween marginBottom="32px">
-                        <TYPE.title6 style={{ textTransform: 'uppercase' }}>{upload.title}</TYPE.title6>
+                        <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                          <Trans>Upload Documents</Trans>
+                        </TYPE.title6>
                         {filesFilled && <BigPassed />}
                       </RowBetween>
 

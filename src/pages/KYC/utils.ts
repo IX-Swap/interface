@@ -1,6 +1,6 @@
 import { legalEntityTypes } from './mock'
 
-export const transformApiData = (data: any) => {
+export const corporateTransformApiData = (data: any) => {
   const {
     typeOfLegalEntity,
     countryOfIncorporation,
@@ -50,7 +50,7 @@ export const transformApiData = (data: any) => {
   }
 }
 
-export const transformKycDto = (values: any) => {
+export const corporateTransformKycDto = (values: any) => {
   const {
     typeOfLegalEntity,
     countryOfIncorporation,

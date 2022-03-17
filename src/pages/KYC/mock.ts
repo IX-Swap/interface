@@ -6,102 +6,6 @@ interface IFormData {
   }
 }
 
-export const individualKycFormData: IFormData = {
-  info: {
-    title: 'Personal Information',
-    href: 'personal',
-    passed: true,
-  },
-  address: {
-    title: 'Address',
-    href: 'address',
-    passed: false,
-  },
-  funds: {
-    title: 'Source of Funds',
-    href: 'funds',
-    passed: false,
-  },
-  investor: {
-    title: 'Investor Status Declaration',
-    href: 'investor',
-    passed: false,
-  },
-  fatca: {
-    title: 'FATCA',
-    href: 'fatca',
-    passed: false,
-  },
-  employmentInformation: {
-    title: 'Employment Information',
-    href: 'employment-info',
-    passed: false,
-  },
-  upload: {
-    title: 'Upload Documents',
-    href: 'upload',
-    passed: false,
-  },
-}
-
-export const initialCorporateKycFormData: IFormData = {
-  info: {
-    title: 'Corporate Information',
-    href: 'info',
-    passed: false,
-  },
-  authorizedPersonnel: {
-    title: 'Company Authorized Personnel',
-    href: 'authorizedPersonnel',
-    passed: false,
-  },
-  address: {
-    title: 'Address',
-    href: 'address',
-    passed: false,
-  },
-  residentialAddress: {
-    title: 'Residential Address',
-    href: 'residentialAddress',
-    passed: false,
-  },
-  funds: {
-    title: 'Source of Funds',
-    href: 'funds',
-    passed: false,
-  },
-  corporate: {
-    title: '',
-    href: 'corporate',
-    passed: false,
-  },
-  investor: {
-    title: 'Investor Status Declaration',
-    href: 'investor',
-    passed: false,
-  },
-  fatca: {
-    title: 'FATCA',
-    href: 'fatca',
-    passed: false,
-  },
-  taxDeclaration: {
-    title: 'Tax Declaration',
-    href: 'tax-declaration',
-    passed: false,
-  },
-  beneficialOwners: {
-    title: 'Beneficial Owners Information',
-    href: 'beneficial-owners',
-    passed: false,
-  },
-  upload: {
-    title: 'Corporate Documents',
-    href: 'upload',
-    passed: false,
-  },
-}
-
 export const incomes = ['< 50,000', '50,000-100,000', '100,000-300,000', '> 300,000'].map((name, index) => ({
   id: ++index,
   name,
@@ -265,3 +169,5 @@ export const corporateFormInitialValues: IFormInitial = {
   removedDocuments: [],
   removedBeneficialOwners: [],
 }
+
+export const promptValue = 'Data will be lost if you leave the page, are you sure?'
