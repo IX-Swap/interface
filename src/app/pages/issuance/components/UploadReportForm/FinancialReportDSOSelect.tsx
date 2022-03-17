@@ -57,7 +57,9 @@ export const FinancialReportDSOSelect = () => {
                   </Grid>
                 </Grid>
               ) : (
-                <Typography variant='h5'>{data.list[0].tokenName}</Typography>
+                <Typography variant='h2' sx={{ fontSize: '1.285rem' }}>
+                  {data.list[0].tokenName}
+                </Typography>
               )}
             </>
           )}

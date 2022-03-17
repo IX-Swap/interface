@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { UploadDocumentField } from 'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/UploadDocumentField'
 import { DownloadTemplate } from 'app/pages/issuance/components/UploadReportForm/DownloadTemplate'
 import { FinancialReportDSOSelect } from 'app/pages/issuance/components/UploadReportForm/FinancialReportDSOSelect'
