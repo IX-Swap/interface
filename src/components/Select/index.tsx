@@ -44,6 +44,13 @@ const colourStyles = {
       },
     }
   },
+  menuList: (styles: Record<string, any>) => {
+    return {
+      ...styles,
+      color: 'white',
+      maxHeight: '188px',
+    }
+  },
 }
 
 export const Select = ({ onSelect, value, options, placeholder = '', name, isMulti = false, error = '' }: Props) => {
@@ -93,7 +100,6 @@ const StyledReactSelect = styled(ReactSelect)<{ error: string }>`
     z-index: 2;
   }
   *[class*='MenuList'] {
-    max-height: 188px;
     padding: 0px 8px 0 0;
     > div {
       margin-bottom: 4px;

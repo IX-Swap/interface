@@ -3,26 +3,24 @@ import { Trans } from '@lingui/macro'
 import { isMobile } from 'react-device-detect'
 import { Flex } from 'rebass'
 import { Link } from 'react-router-dom'
-import { TYPE } from 'theme'
 import dayjs from 'dayjs'
-
-import { useActiveWeb3React } from 'hooks/web3'
 
 import { ButtonGradientBorder, ButtonIXSGradient } from 'components/Button'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import { RowCenter } from 'components/Row'
-
+import { useActiveWeb3React } from 'hooks/web3'
+import { TYPE } from 'theme'
 import { StyledBodyWrapper } from 'pages/CustodianV2/styleds'
 import { useGetMyKyc, useKYCState } from 'state/kyc/hooks'
 import { useUserisLoggedIn } from 'state/auth/hooks'
+import { NFTConnectWallet } from 'components/NFTConnectWallet'
 
 import { KYCStatuses } from './enum'
 import { KYCStatus } from './KYCStatus'
 import { Content, getStatusDescription, StatusCard } from './styleds'
-import { ReactComponent as IndividualKYC } from '../../assets/images/individual-kyc.svg'
-import { ReactComponent as CorporateKYC } from '../../assets/images/corporate-kyc.svg'
-import { ReactComponent as ApprovedKYC } from '../../assets/images/approved-kyc.svg'
-import { NFTConnectWallet } from 'components/NFTConnectWallet'
+import { ReactComponent as IndividualKYC } from 'assets/images/individual-kyc.svg'
+import { ReactComponent as CorporateKYC } from 'assets/images/corporate-kyc.svg'
+import { ReactComponent as ApprovedKYC } from 'assets/images/approved-kyc.svg'
 interface DescriptionProps {
   description: string | null
 }
@@ -67,6 +65,7 @@ const Description: FC<DescriptionProps> = ({ description }: DescriptionProps) =>
 
 export default function KYC() {
   const { account } = useActiveWeb3React()
+  const [loading, setLoading] = useState(false)
   const isLoggedIn = useUserisLoggedIn()
 
   const { kyc, loadingRequest } = useKYCState()
@@ -74,6 +73,10 @@ export default function KYC() {
 
   const [status, setStatus] = useState<KYCStatuses | undefined>(undefined)
   const [description, setDescription] = useState('')
+
+  const handleAccountsChanged = () => {
+    setLoading(true)
+  }
 
   const onKycState = useCallback(() => {
     if (!account) {
@@ -84,17 +87,34 @@ export default function KYC() {
   }, [account, getMyKyc])
 
   useEffect(() => {
+    const { ethereum } = window
+
+    if (ethereum && ethereum.on) {
+      ethereum.on('accountsChanged', handleAccountsChanged)
+
+      return () => {
+        if (ethereum.removeListener) {
+          ethereum.removeListener('accountsChanged', handleAccountsChanged)
+        }
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    if (kyc?.data === undefined && loadingRequest) {
+      setLoading(false)
+    }
+  }, [kyc, loadingRequest])
+
+  useEffect(() => {
     if (!isLoggedIn) {
       return
     }
 
     onKycState()
-  }, [isLoggedIn])
+  }, [isLoggedIn, account])
 
   useEffect(() => {
-    console.log({ isLoggedIn })
-    console.log({ loadingRequest })
-
     const status = kyc?.data.status || KYCStatuses.NOT_SUBMITTED
     const description = kyc?.data.message || getStatusDescription(status)
 
@@ -183,7 +203,7 @@ export default function KYC() {
   return (
     <StyledBodyWrapper>
       <StatusCard>
-        {loadingRequest ? (
+        {loadingRequest || loading ? (
           <RowCenter>
             <LoaderThin size={96} />
           </RowCenter>
