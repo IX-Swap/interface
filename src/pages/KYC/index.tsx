@@ -123,14 +123,14 @@ export default function KYC() {
       case KYCStatuses.REJECTED:
         return (
           <>
-            <Description description={description} />
+            {/* <Description description={description} /> */}
             <DateInfo submittedDate="yes" rejectedDate="yes" />
           </>
         )
       case KYCStatuses.PENDING:
         return (
           <>
-            <Description description={description} />
+            {/* <Description description={description} /> */}
             <DateInfo submittedDate="yes" />
           </>
         )
