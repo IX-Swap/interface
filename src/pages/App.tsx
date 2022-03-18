@@ -33,7 +33,7 @@ import PoolFinder from './PoolFinder'
 import { RedirectPathToStaking, RedirectPathToSwapOnly, RedirectToSwap } from './Swap/redirects'
 import { Footer } from '../components/Footer'
 
-const AdminKyc = lazy(() => import('./Admin'))
+const Admin = lazy(() => import('./Admin'))
 
 const KYC = lazy(() => import('./KYC'))
 const IndividualKYC = lazy(() => import('./KYC/IndividualKycForm'))
@@ -121,7 +121,7 @@ export default function App() {
           <Web3ReactManager>
             <Suspense fallback={<></>}>
               <Switch>
-                <Route exact strict path="/admin" component={AdminKyc} />
+                <Route exact strict path="/admin/:tab/:id?" component={Admin} />
 
                 <Route exact strict path={routes.nftCreate} component={CreateNFT} />
                 <Route exact strict path={routes.nftList} component={ListNFT} />

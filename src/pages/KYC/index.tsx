@@ -3,6 +3,7 @@ import { Trans } from '@lingui/macro'
 import { isMobile } from 'react-device-detect'
 import { Flex } from 'rebass'
 import { Link } from 'react-router-dom'
+import dayjs from 'dayjs'
 
 import { ButtonGradientBorder, ButtonIXSGradient } from 'components/Button'
 import { LoaderThin } from 'components/Loader/LoaderThin'
@@ -38,9 +39,21 @@ const DateInfo: FC<DateInfoProps> = ({ info, submittedDate, rejectedDate, approv
         {info}
       </TYPE.description3>
     )}
-    {submittedDate && <TYPE.description3 color="inherit">{`Submitted on Jan 30, 21:48 (UTC)`}</TYPE.description3>}
-    {rejectedDate && <TYPE.description3 color="inherit">{`Rejected on Jan 30, 21:48 (UTC)`}</TYPE.description3>}
-    {approvedDate && <TYPE.description3 color="inherit">{`Approved on Jan 30, 21:48 (UTC)`}</TYPE.description3>}
+    {submittedDate && (
+      <TYPE.description3 color="inherit">{`Submitted on ${dayjs(submittedDate)
+        .utc()
+        .format('MMM DD, HH:mm')} (UTC)`}</TYPE.description3>
+    )}
+    {rejectedDate && (
+      <TYPE.description3 color="inherit">{`Rejected on ${dayjs(rejectedDate)
+        .utc()
+        .format('MMM DD, HH:mm')} (UTC)`}</TYPE.description3>
+    )}
+    {approvedDate && (
+      <TYPE.description3 color="inherit">{`Approved on ${dayjs(approvedDate)
+        .utc()
+        .format('MMM DD, HH:mm')} (UTC)`}</TYPE.description3>
+    )}
   </Flex>
 )
 
@@ -143,22 +156,22 @@ export default function KYC() {
       case KYCStatuses.REJECTED:
         return (
           <>
-            {/* <Description description={description} /> */}
-            <DateInfo submittedDate="yes" rejectedDate="yes" />
+            <Description description={description} />
+            <DateInfo submittedDate={kyc?.data.createdAt} rejectedDate={kyc?.data.updatedAt} />
           </>
         )
       case KYCStatuses.PENDING:
         return (
           <>
-            {/* <Description description={description} /> */}
-            <DateInfo submittedDate="yes" />
+            <Description description={description} />
+            <DateInfo submittedDate={kyc?.data.createdAt} />
           </>
         )
       case KYCStatuses.CHANGES_REQUESTED:
         return (
           <>
             <Description description={description} />
-            <DateInfo submittedDate="yes" rejectedDate="yes" />
+            <DateInfo submittedDate={kyc?.data.createdAt} rejectedDate={kyc?.data.updatedAt} />
             <Link
               style={{ textDecoration: 'none ' }}
               to={`/kyc/${kyc?.data.corporateKycId ? 'corporate' : 'individual'}`}
@@ -173,13 +186,19 @@ export default function KYC() {
         return (
           <Flex flexDirection="column" alignItems="center" marginTop="40px">
             <ApprovedKYC />
-            <DateInfo info="Change via info@ixswap.io" submittedDate="yes" approvedDate="yes" />
+            <DateInfo
+              info="Change via info@ixswap.io"
+              submittedDate={kyc?.data.createdAt}
+              approvedDate={kyc?.data.updatedAt}
+            />
           </Flex>
         )
     }
   }, [status])
 
   if (!account) return <NFTConnectWallet />
+
+  console.log('log => kyc', kyc?.data)
 
   return (
     <StyledBodyWrapper>

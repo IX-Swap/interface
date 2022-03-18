@@ -1,12 +1,12 @@
 export const incomes = ['< 50,000', '50,000-100,000', '100,000-300,000', '> 300,000'].map((name, index) => ({
-  id: ++index,
-  name,
+  value: ++index,
+  label: name,
 }))
 
 export const genders = [
-  { id: 1, name: 'Male' },
-  { id: 2, name: 'Female' },
-  { id: 1, name: 'Other' },
+  { value: 1, label: 'Male' },
+  { value: 2, label: 'Female' },
+  { value: 3, label: 'Other' },
 ]
 
 export const sourceOfFunds = [
@@ -19,18 +19,18 @@ export const sourceOfFunds = [
   'Pension',
   'Retirement Benefits',
   'Others',
-].map((name, index) => ({ id: ++index, name }))
+].map((name, index) => ({ value: ++index, label: name }))
 
 export const fatcaOptions = [
   'Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Proin eget tortor risus.',
   'Vestibulum ac diam sit amet quam vehicula elementum sed sit amet dui.',
-].map((name, index) => ({ id: ++index, name }))
+].map((name, index) => ({ value: ++index, label: name }))
 
 export const optInOptions = [
   'I give my consent to IC SG Pte Ltd dba InvestaX to treat me as an “Accredited Investor”',
   'I have been informed of and understand the consequences of my qualification as an Accredited Investor, in particular the reduced regulatory investor safeguards for Accredited Investors.',
   'I have been informed of and understand my right to opt out of the Accredited Investors status with InvestaX at any point in time.',
-].map((name, index) => ({ id: ++index, name }))
+].map((name, index) => ({ value: ++index, label: name }))
 
 export const empleymentStatuses = [
   'Full-Time Employee',
@@ -40,7 +40,7 @@ export const empleymentStatuses = [
   'Freelancers',
   'Consultants',
   'Self-Employed',
-].map((name, index) => ({ id: ++index, name }))
+].map((name, index) => ({ value: ++index, label: name }))
 
 export const legalEntityTypes = [
   'Exempt Private Company Limited By Shares',
@@ -54,7 +54,7 @@ export const legalEntityTypes = [
   'Public Company Limited By Shares',
   'Public Limited Company (PLC)',
   'Others (Please specify)',
-].map((name, index) => ({ id: ++index, name }))
+].map((name, index) => ({ value: ++index, label: name }))
 
 export const entityTypes = [
   'Exempt Private Company Limited By Shares',
@@ -68,7 +68,7 @@ export const entityTypes = [
   'Public Company Limited By Shares',
   'Public Limited Company (PLC)',
   'Others (Please specify)',
-].map((name, index) => ({ id: ++index, name }))
+].map((name, index) => ({ value: ++index, label: name }))
 
 export const corporateSourceOfFunds = [
   'Salary',
@@ -78,7 +78,7 @@ export const corporateSourceOfFunds = [
   'Interest/Dividends',
   'Business revenue',
   'Others',
-].map((name, index) => ({ id: ++index, name }))
+].map((name, index) => ({ value: ++index, label: name }))
 
 export const individualRepresentOptions = [
   'I am a person whose individual net worth or joint net worth with my spouse at the time of purchase exceeds US $1 million',
