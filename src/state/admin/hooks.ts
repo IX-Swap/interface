@@ -345,3 +345,8 @@ export function useResetKyc() {
   )
   return callback
 }
+
+export const getKycById = async (id: string | number) => {
+  const result = await apiService.get(admin.kycById(id))
+  return result.data
+}

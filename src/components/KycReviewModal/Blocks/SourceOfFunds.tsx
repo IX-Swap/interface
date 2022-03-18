@@ -22,8 +22,8 @@ export const SourceOfFunds = ({ data, kycKey }: Props) => {
   return (
     <Block title="Source of Funds">
       <Content>
-        {keys.map(({ name }) => (
-          <RowWithCheck key={name} text={name} isDone={Boolean(kycSourceOfFunds?.includes(name))} />
+        {keys.map(({ label }) => (
+          <RowWithCheck key={label} text={label} isDone={Boolean(kycSourceOfFunds?.includes(label))} />
         ))}
         {othersSourceOfFunds && <Field label="Others Source of Funds" value={othersSourceOfFunds} />}
       </Content>

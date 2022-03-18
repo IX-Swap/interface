@@ -168,9 +168,9 @@ export default function CorporateKycForm() {
 
   const countries = useMemo(() => {
     return getNames()
-      .filter((name) => !['United States of America', 'United States Minor Outlying Islands'].includes(name))
-      .map((name, index) => ({ id: ++index, name }))
-      .sort((a, b) => a.name.localeCompare(b.name))
+      .filter((label) => !['United States of America', 'United States Minor Outlying Islands'].includes(label))
+      .map((label, index) => ({ id: ++index, label }))
+      .sort((a, b) => a.label.localeCompare(b.label))
   }, [])
 
   const validationSeen = (key: string) => {
@@ -570,12 +570,12 @@ export default function CorporateKycForm() {
                           {fundsFilled && <BigPassed />}
                         </RowBetween>
                         <FormGrid columns={3}>
-                          {corporateSourceOfFunds.map(({ id, name }: any) => (
+                          {corporateSourceOfFunds.map(({ value, label }: any) => (
                             <Checkbox
-                              checked={values.sourceOfFunds.includes(name)}
-                              onClick={() => onSourceOfFundsChange(name, values.sourceOfFunds, setFieldValue)}
-                              key={`funds-${id}`}
-                              label={name}
+                              checked={values.sourceOfFunds.includes(label)}
+                              onClick={() => onSourceOfFundsChange(label, values.sourceOfFunds, setFieldValue)}
+                              key={`funds-${value}`}
+                              label={label}
                             />
                           ))}
                         </FormGrid>

@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import { StyledCopy } from 'components/AdminTransactionsTable'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import useCopyClipboard from 'hooks/useCopyClipboard'
-import { useAdminState, useGetKycList } from 'state/admin/hooks'
+import { getKycById, useAdminState, useGetKycList } from 'state/admin/hooks'
 import { shortenAddress } from 'utils'
 import { KycItem } from 'state/admin/actions'
 import { IconWrapper } from 'components/AccountDetails/styleds'
@@ -15,9 +15,10 @@ import { Pagination } from '../Pagination'
 import { BodyRow, HeaderRow, Table } from '../Table'
 import { Search } from '../AdminAccreditationTable/Search'
 import { StatusCell } from './StatusCell'
-import { MoreMenu } from './MoreMenu'
 import { KycReviewModal } from 'components/KycReviewModal'
 import { ButtonGradientBorder } from 'components/Button'
+import { useHistory, useParams } from 'react-router-dom'
+import { AdminParams } from 'pages/Admin'
 
 const headerCells = [t`Wallet address`, t`Name`, t`Identity`, t`Date of request`, t`KYC Status`, t`Risk level`]
 
@@ -94,11 +95,16 @@ const Body = ({ openModal }: { openModal: (kyc: KycItem) => void }) => {
 
 export const AdminKycTable = () => {
   const [kyc, handleKyc] = useState({} as KycItem)
+  const [isLoading, handleIsLoading] = useState(false)
   const {
     kycList: { totalPages, page, items },
     adminLoading,
   } = useAdminState()
   const getKycList = useGetKycList()
+
+  const history = useHistory()
+
+  const { id } = useParams<AdminParams>()
 
   const onPageChange = (page: number) => {
     const element = document.getElementById('kyc-container')
@@ -109,18 +115,37 @@ export const AdminKycTable = () => {
     getKycList({ page, offset: 10 })
   }
 
-  const closeModal = () => handleKyc({} as KycItem)
-  const openModal = (kyc: KycItem) => handleKyc(kyc)
+  const closeModal = () => {
+    history.push(`/admin/kyc`)
+    handleKyc({} as KycItem)
+  }
+  const openModal = (kyc: KycItem) => history.push(`/admin/kyc/${kyc.id}`)
 
   useEffect(() => {
     getKycList({ page: 1, offset: 10 })
   }, [getKycList])
 
+  useEffect(() => {
+    getKyc()
+  }, [id])
+
+  const getKyc = async () => {
+    if (!id) return
+    try {
+      handleIsLoading(true)
+      const data = await getKycById(id)
+      handleKyc(data)
+      handleIsLoading(false)
+    } catch (e) {
+      handleIsLoading(false)
+    }
+  }
+
   return (
     <div id="kyc-container">
       {Boolean(kyc.id) && <KycReviewModal isOpen onClose={closeModal} data={kyc} />}
       <Search placeholder="Search for Wallet" />
-      {adminLoading && (
+      {(adminLoading || isLoading) && (
         <Loader>
           <LoaderThin size={96} />
         </Loader>

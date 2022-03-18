@@ -83,10 +83,6 @@ export interface AccreditationItem {
     url: string
     [key: string]: any
   }
-  userKyc?: {
-    id: number
-    userId: number
-  }
   message?: string
   status: string
   custodian: {
@@ -149,6 +145,7 @@ export interface AccreditationItem {
     updatedAt: string
   }
   userId: number
+  userKyc: KycItem
 }
 
 export type BrokerDealerSwapItem = {
