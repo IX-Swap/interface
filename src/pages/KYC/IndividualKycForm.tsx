@@ -425,12 +425,12 @@ export default function IndividualKycForm() {
                           {fundsFilled && <BigPassed />}
                         </RowBetween>
                         <FormGrid columns={3}>
-                          {sourceOfFunds.map(({ id, name }: any) => (
+                          {sourceOfFunds.map(({ value, label }: any) => (
                             <Checkbox
-                              checked={values.sourceOfFunds.includes(name)}
-                              onClick={() => onSourceOfFundsChange(name, values.sourceOfFunds, setFieldValue)}
-                              key={`funds-${id}`}
-                              label={name}
+                              checked={values.sourceOfFunds.includes(label)}
+                              onClick={() => onSourceOfFundsChange(label, values.sourceOfFunds, setFieldValue)}
+                              key={`funds-${value}`}
+                              label={label}
                             />
                           ))}
                         </FormGrid>
