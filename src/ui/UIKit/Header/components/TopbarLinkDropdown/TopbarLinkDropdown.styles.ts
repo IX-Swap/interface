@@ -5,15 +5,19 @@ export const useStyles = makeStyles(theme => ({
     display: 'flex'
   },
   paper: {
-    border: theme.palette.mode === 'light' ? 'initial' : 'none!important',
     marginTop: '0!important',
     padding: '0!important',
     borderTopRightRadius: '0!important',
     borderTopLeftRadius: '0!important',
-    boxShadow:
+    top: '81px!important',
+    boxShadow: `0px 80px 80px ${
       theme.palette.mode === 'light'
-        ? '0px 80px 80px rgba(162, 172, 191, 0.16)!important'
-        : 'none!important'
+        ? 'rgba(162, 172, 191, 0.16)'
+        : 'rgba(14, 31, 63, 0.3)'
+    }`,
+    border: `1px solid ${
+      theme.palette.mode === 'light' ? '#EDF2FA' : '#1D3667'
+    }`
   },
   list: { padding: 0 },
   navItem: {
