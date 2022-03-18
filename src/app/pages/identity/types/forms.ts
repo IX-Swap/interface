@@ -7,6 +7,7 @@ import {
 } from 'app/pages/identity/const/declarations'
 import { AuthorizableStatus, Maybe } from 'types/util'
 import { Authorizable } from 'types/authorizer'
+import Cynopsis from 'types/cynopsis'
 
 export interface Address {
   line1: string
@@ -78,6 +79,7 @@ export interface PersonalProfileWithAddress extends PersonalProfile {
 
 export interface ExtendedIdentityProfile extends PersonalProfile {
   user: User
+  cynopsis?: Cynopsis
 }
 
 export interface Personnel {
