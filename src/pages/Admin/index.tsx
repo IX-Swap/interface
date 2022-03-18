@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { useHistory, useLocation } from 'react-router-dom'
+import { useHistory, useLocation, useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
 
@@ -17,6 +17,11 @@ type AdminTab = 'accreditation' | 'kyc' | 'transactions' | 'security-catalog'
 interface Tab {
   label: string
   value: AdminTab
+}
+
+export interface AdminParams {
+  tab: AdminTab
+  id?: string
 }
 
 const tabs: Tab[] = [
@@ -47,6 +52,7 @@ const AdminKyc = () => {
 
   const history = useHistory()
   const location = useLocation()
+  const params = useParams<AdminParams>()
 
   const { adminData } = useAdminState()
   const getMe = useGetMe()
@@ -63,22 +69,16 @@ const AdminKyc = () => {
 
   const changeTab = useCallback(
     (tab: AdminTab) => {
-      const params = new URLSearchParams(location.search.slice(1))
-
-      params.set('tab', tab)
-
-      history.push({ search: params.toString() })
-      setSelectedTab(tab)
+      history.push(`/admin/${tab}`)
     },
     [history, location]
   )
 
   useEffect(() => {
-    const params = new URLSearchParams(location.search.slice(1))
-    const tab = (params.get('tab') ?? 'kyc') as AdminTab
+    const tab = params.tab
 
     setSelectedTab(tab)
-  }, [location])
+  }, [params])
 
   useEffect(() => {
     if (!adminData) {

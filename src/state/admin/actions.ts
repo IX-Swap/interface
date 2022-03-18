@@ -145,6 +145,7 @@ export interface AccreditationItem {
     updatedAt: string
   }
   userId: number
+  userKyc: KycItem
 }
 
 export type BrokerDealerSwapItem = {
