@@ -16,8 +16,7 @@ export const IndividualInfoView = (props: IndividualInfoViewProps) => {
   const { data } = props
   const { isMobile } = useAppBreakpoints()
   const email = data.email ?? '-'
-  const riskRating =
-    data.cynopsis?.riskRating !== null ? data.cynopsis?.riskRating : 'UNKNOWN'
+  const riskRating = data.cynopsis?.riskRating ?? 'UNKNOWN'
 
   return (
     <Grid container>
