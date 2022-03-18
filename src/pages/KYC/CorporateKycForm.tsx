@@ -19,12 +19,7 @@ import { Loadable } from 'components/LoaderHover'
 import { LOGIN_STATUS, useLogin } from 'state/auth/hooks'
 import { useAddPopup, useShowError } from 'state/application/hooks'
 
-import {
-  initialCorporateKycFormData,
-  corporateSourceOfFunds,
-  legalEntityTypes,
-  corporateFormInitialValues,
-} from './mock'
+import { corporateSourceOfFunds, legalEntityTypes, corporateFormInitialValues, promptValue } from './mock'
 import { FormCard, FormGrid, ExtraInfoCard, Divider } from './styleds'
 import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
 import { ReactComponent as BigPassed } from 'assets/images/check-success-big.svg'
@@ -33,7 +28,7 @@ import { FormContainer, FormRow } from './IndividualKycForm'
 import { corporateErrorsSchema } from './schema'
 import { getCorporateProgress, useCreateCorporateKYC, useKYCState, useUpdateCorporateKYC } from 'state/kyc/hooks'
 import { KYCStatuses } from './enum'
-import { transformApiData, transformKycDto } from './utils'
+import { corporateTransformApiData, corporateTransformKycDto } from './utils'
 
 export default function CorporateKycForm() {
   const [waitingForInitialValues, setWaitingForInitialValues] = useState(true)
@@ -51,7 +46,6 @@ export default function CorporateKycForm() {
   const addPopup = useAddPopup()
   const createCorporateKYC = useCreateCorporateKYC()
   const updateCorporateKYC = useUpdateCorporateKYC()
-  const promptValue = 'Data will be lost if you leave the page, are you sure?'
 
   useEffect(() => {
     setWaitingForInitialValues(true)
@@ -59,7 +53,7 @@ export default function CorporateKycForm() {
     const getProgress = async () => {
       const data = await getCorporateProgress()
       if (data) {
-        const transformedData = transformApiData(data)
+        const transformedData = corporateTransformApiData(data)
         setFormData(transformedData)
       }
     }
@@ -73,19 +67,6 @@ export default function CorporateKycForm() {
 
     setWaitingForInitialValues(false)
   }, [kyc])
-
-  const {
-    info,
-    authorizedPersonnel,
-    address,
-    residentialAddress,
-    funds,
-    fatca,
-    taxDeclaration,
-    beneficialOwners,
-    upload,
-    investor,
-  } = initialCorporateKycFormData
 
   const checkAuthorization = useCallback(async () => {
     setPending(true)
@@ -265,9 +246,8 @@ export default function CorporateKycForm() {
                 .validate(values, { abortEarly: false })
                 .then(async () => {
                   setCanSubmit(false)
-                  const body = transformKycDto(values)
+                  const body = corporateTransformKycDto(values)
                   let data: any = null
-                  console.log('body', body)
 
                   if (updateKycId) {
                     data = await updateCorporateKYC(updateKycId, body)
@@ -346,15 +326,15 @@ export default function CorporateKycForm() {
               const beneficialOwnersFilled =
                 shouldValidate && !Object.keys(errors).some((errorField) => errorField.startsWith('beneficialOwners'))
 
-              console.log('values', values)
-
               return (
                 <FormRow>
                   <FormContainer onSubmit={handleSubmit} style={{ gap: '35px' }}>
                     <Column style={{ gap: '35px' }}>
                       <FormCard id="info">
                         <RowBetween marginBottom="32px">
-                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>{info.title}</TYPE.title6>
+                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                            <Trans>Corporate Information</Trans>
+                          </TYPE.title6>
                           {infoFilled && <BigPassed />}
                         </RowBetween>
 
@@ -428,7 +408,9 @@ export default function CorporateKycForm() {
 
                       <FormCard id="authorizedPersonnel">
                         <RowBetween marginBottom="32px">
-                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>{authorizedPersonnel.title}</TYPE.title6>
+                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                            <Trans>Company Authorized Personnel</Trans>
+                          </TYPE.title6>
                           {authorizedPersonnelFilled && <BigPassed />}
                         </RowBetween>
 
@@ -488,7 +470,9 @@ export default function CorporateKycForm() {
 
                       <FormCard id="address">
                         <RowBetween marginBottom="32px">
-                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>{address.title}</TYPE.title6>
+                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                            <Trans>Address</Trans>
+                          </TYPE.title6>
                           {addressFilled && <BigPassed />}
                         </RowBetween>
 
@@ -529,7 +513,9 @@ export default function CorporateKycForm() {
 
                       <FormCard id="residentialAddress">
                         <RowBetween marginBottom="32px">
-                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>{residentialAddress.title}</TYPE.title6>
+                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                            <Trans>Residential Address</Trans>
+                          </TYPE.title6>
                           {residentialAddressFilled && <BigPassed />}
                         </RowBetween>
 
@@ -578,7 +564,9 @@ export default function CorporateKycForm() {
 
                       <FormCard id="funds">
                         <RowBetween marginBottom="32px">
-                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>{funds.title}</TYPE.title6>
+                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                            <Trans>Source of Funds</Trans>
+                          </TYPE.title6>
                           {fundsFilled && <BigPassed />}
                         </RowBetween>
                         <FormGrid columns={3}>
@@ -609,7 +597,9 @@ export default function CorporateKycForm() {
 
                       <FormCard id="corporate">
                         <RowBetween marginBottom="32px">
-                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>{investor.title}</TYPE.title6>
+                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                            <Trans>Investor Status Declaration</Trans>
+                          </TYPE.title6>
                           {investorFilled && <BigPassed />}
                         </RowBetween>
 
@@ -640,7 +630,9 @@ export default function CorporateKycForm() {
 
                       <FormCard id="fatca">
                         <RowBetween marginBottom="32px">
-                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>{fatca.title}</TYPE.title6>
+                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                            <Trans>FATCA</Trans>
+                          </TYPE.title6>
                           {fatcaFilled && <BigPassed />}
                         </RowBetween>
 
@@ -682,7 +674,9 @@ export default function CorporateKycForm() {
 
                       <FormCard id="tax-declaration">
                         <RowBetween marginBottom="32px">
-                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>{taxDeclaration.title}</TYPE.title6>
+                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                            <Trans>Tax Declaration</Trans>
+                          </TYPE.title6>
                           {taxDeclarationFilled && <BigPassed />}
                         </RowBetween>
 
@@ -715,7 +709,9 @@ export default function CorporateKycForm() {
 
                       <FormCard id="beneficial-owners">
                         <RowBetween marginBottom="32px">
-                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>{beneficialOwners.title}</TYPE.title6>
+                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                            <Trans>Beneficial Owners Information</Trans>
+                          </TYPE.title6>
                           {beneficialOwnersFilled && <BigPassed />}
                         </RowBetween>
                         <ExtraInfoCard>
@@ -846,7 +842,9 @@ export default function CorporateKycForm() {
 
                       <FormCard id="upload">
                         <RowBetween marginBottom="32px">
-                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>{upload.title}</TYPE.title6>
+                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                            <Trans>Corporate Documents</Trans>
+                          </TYPE.title6>
                           {filesFilled && <BigPassed />}
                         </RowBetween>
 
