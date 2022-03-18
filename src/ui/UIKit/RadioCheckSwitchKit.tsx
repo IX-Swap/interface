@@ -1,61 +1,14 @@
-import {
-  Box,
-  Button,
-  Grid,
-  RadioGroup,
-  Switch,
-  Typography
-} from '@mui/material'
-import React, { useState } from 'react'
-import { getThemeOverrides } from 'themes/new/overrides'
-import { lightTheme } from 'themes/new/light'
-import { darkTheme } from 'themes/new/dark'
-import { typography } from 'themes/new/typography'
-import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { Grid, RadioGroup, Switch, Typography } from '@mui/material'
+import React from 'react'
 import { UICheckbox } from 'ui/UICheckbox/UICheckbox'
 import { VSpacer } from 'components/VSpacer'
 import { UIRadio } from 'ui/UIRadio/UIRadio'
+import { UIKitThemeWrapper } from 'ui/UIKit/UIKitThemeWrapper'
 
 export const RadioCheckSwitchKit = () => {
-  const [isDarkThemeOn, setIsDarkThemeOn] = useState(false)
-
-  const currentNewTheme = isDarkThemeOn ? darkTheme : lightTheme
-
-  const theme = createTheme({
-    ...currentNewTheme,
-    typography
-  })
-
-  theme.components = {
-    ...getThemeOverrides(theme),
-    MuiSwitch: {
-      ...getThemeOverrides(theme)?.MuiSwitch,
-      defaultProps: {
-        disableTouchRipple: true
-      }
-    },
-    MuiRadio: {
-      ...getThemeOverrides(theme)?.MuiRadio,
-      defaultProps: {
-        disableTouchRipple: true
-      }
-    },
-    MuiCheckbox: {
-      ...getThemeOverrides(theme)?.MuiCheckbox,
-      defaultProps: {
-        disableTouchRipple: true
-      }
-    }
-  }
-
   return (
-    <ThemeProvider theme={theme}>
-      <Grid
-        style={{
-          backgroundColor: isDarkThemeOn ? '#183061' : 'initial',
-          padding: 12
-        }}
-      >
+    <UIKitThemeWrapper>
+      <Grid padding={2}>
         <Grid item container md={6} spacing={6}>
           <Grid item>
             <Typography color='text.primary'>Radio:</Typography>
@@ -122,16 +75,7 @@ export const RadioCheckSwitchKit = () => {
             <Switch checked disabled />
           </Grid>
         </Grid>
-
-        <Box marginTop={10}>
-          <Button
-            variant={'contained'}
-            onClick={() => setIsDarkThemeOn(!isDarkThemeOn)}
-          >
-            {isDarkThemeOn ? 'Switch to Light theme' : 'Switch to Dark theme'}
-          </Button>
-        </Box>
       </Grid>
-    </ThemeProvider>
+    </UIKitThemeWrapper>
   )
 }

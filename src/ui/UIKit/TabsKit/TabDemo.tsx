@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Paper, Tabs, Tab } from '@mui/material'
+import { Tabs, Tab, Box } from '@mui/material'
 
 export const TabDemo = () => {
   const [active, setActive] = useState(0)
@@ -7,12 +7,12 @@ export const TabDemo = () => {
     setActive(value)
   }
   return (
-    <Paper sx={{ padding: 3, display: 'inline-block' }} elevation={0}>
+    <Box sx={{ padding: 3, display: 'inline-block' }}>
       <Tabs value={active} onChange={handleChange}>
         <Tab label='Item One' />
         <Tab label='Item Two' />
         <Tab label='Item Three' />
       </Tabs>
-    </Paper>
+    </Box>
   )
 }

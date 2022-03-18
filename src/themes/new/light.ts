@@ -59,7 +59,40 @@ export const lightTheme: DeprecatedThemeOptions = {
       label: '#778194',
       disabledLabel: '#DBE2EC',
       border: '#ffffff',
-      boxShadow: `${tinycolor('#4c88ff').setAlpha(0.2).toRgbString()}`
+      boxShadow: tinycolor('#4c88ff').setAlpha(0.2).toRgbString()
+    },
+    button: {
+      bgContainedDisabled: '#EDF2FA',
+      colorContainedDisabled: '#778194',
+      bgOutlined: '#FFFFFF',
+      borderOutlined: tinycolor('#4c88ff').setAlpha(0.3).toRgbString(),
+      bgTextHover: '#EDF2FA',
+      colorTextDisabled: '#89A1CE',
+      bgAlternate: '#FFFFFF',
+      bgAlternateHover: '#78A5FF',
+      colorAlternate: '#778194',
+      colorAlternateHover: '#FFFFFF',
+      borderAlternateHover: tinycolor('#4c88ff').setAlpha(0.3).toRgbString()
+    },
+    buttonGroup: {
+      bg: '#FFFFFF',
+      bgHover: '#EDF2FA',
+      colorHover: '#4C88FF'
+    },
+    iconButton: {
+      fill: '#778194',
+      fillDisabled: '#DBE2EC',
+      bgHover: '#EDF2FA'
+    },
+    fab: {
+      fill: '#778194',
+      bg: '#FFFFFF',
+      fillDisabled: '#DBE2EC',
+      bgDisabled: '#EDF2FA'
+    },
+    menu: {
+      border: '#DBE2EC',
+      boxShadow: tinycolor('#a2acbf').setAlpha(0.16).toRgbString()
     },
     sidebar: {
       activeBackground: tinycolor(themeColors.primary)

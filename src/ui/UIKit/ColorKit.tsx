@@ -1,9 +1,8 @@
 import React from 'react'
 import { Grid, Typography, Box, BoxProps } from '@mui/material'
-import { ThemeProvider } from '@mui/material/styles'
-import { lightTheme } from 'themes/new/light'
-import { darkTheme } from 'themes/new/dark'
 import { useTheme } from '@mui/styles'
+import { UIKitThemeWrapper } from 'ui/UIKit/UIKitThemeWrapper'
+import { useDarkMode } from 'storybook-dark-mode'
 
 export const RoundedBox = (props: BoxProps) => {
   const { palette } = useTheme()
@@ -127,30 +126,18 @@ export const ColorDisplay = () => {
 
 export const ColorKit = () => {
   return (
-    <>
+    <UIKitThemeWrapper>
       <Grid container spacing={2}>
         <Grid item xs={12}>
-          <Typography variant='h4'>Light Theme</Typography>
+          <Typography variant='h4'>
+            {useDarkMode() ? 'Dark ' : 'Light '}Theme
+          </Typography>
         </Grid>
 
         <Grid item xs={12}>
-          <ThemeProvider theme={lightTheme}>
-            <ColorDisplay />
-          </ThemeProvider>
-        </Grid>
-
-        <Grid item />
-
-        <Grid item xs={12}>
-          <Typography variant='h4'>Dark Theme</Typography>
-        </Grid>
-
-        <Grid item xs={12}>
-          <ThemeProvider theme={darkTheme}>
-            <ColorDisplay />
-          </ThemeProvider>
+          <ColorDisplay />
         </Grid>
       </Grid>
-    </>
+    </UIKitThemeWrapper>
   )
 }

@@ -33,7 +33,7 @@ export const darkTheme: DeprecatedThemeOptions = {
     },
     background: {
       default: '#11254C',
-      paper: '#132A57'
+      paper: '#152D5F'
     },
     backgrounds: {
       default: '#0E1F42',
@@ -62,7 +62,40 @@ export const darkTheme: DeprecatedThemeOptions = {
       label: '#496396',
       disabledLabel: '#496396',
       border: '#ffffff',
-      boxShadow: `${tinycolor('#4c88ff').setAlpha(0.2).toRgbString()}`
+      boxShadow: tinycolor('#4c88ff').setAlpha(0.2).toRgbString()
+    },
+    button: {
+      bgContainedDisabled: '#132A57',
+      colorContainedDisabled: '#496396',
+      bgOutlined: '#132A57',
+      borderOutlined: '#78A5FF',
+      bgTextHover: '#1D3667',
+      colorTextDisabled: '#496396',
+      bgAlternate: '#132A57',
+      bgAlternateHover: '#132A57',
+      colorAlternate: '#FFFFFF',
+      colorAlternateHover: '#4C88FF',
+      borderAlternateHover: '#4C88FF'
+    },
+    buttonGroup: {
+      bg: '#132A57',
+      bgHover: '#78A5FF',
+      colorHover: '#EDF2FA'
+    },
+    iconButton: {
+      fill: '#496396',
+      fillDisabled: '#1D3667',
+      bgHover: '#1D3667'
+    },
+    fab: {
+      fill: '#496396',
+      bg: '#132A57',
+      fillDisabled: '#1D3667',
+      bgDisabled: 'transparent'
+    },
+    menu: {
+      border: '#1D3667',
+      boxShadow: tinycolor('#0e1f3f').setAlpha(0.3).toRgbString()
     },
     tab: {
       contained: {

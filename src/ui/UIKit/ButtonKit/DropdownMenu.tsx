@@ -1,6 +1,7 @@
 import { Button, Divider, Box, Menu, MenuItem } from '@mui/material'
 import React from 'react'
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown'
+import { useTheme } from '@mui/material/styles'
 
 export interface DropdownMenuProps {
   buttonSize?: 'small' | 'medium' | 'large'
@@ -13,6 +14,7 @@ export const DropdownMenu = ({
   buttonVariant = 'outlined',
   disabled = false
 }: DropdownMenuProps) => {
+  const theme = useTheme()
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -22,15 +24,27 @@ export const DropdownMenu = ({
     setAnchorEl(null)
   }
 
+  const disabledColor =
+    disabled && theme.palette.mode === 'light' ? '#4C88FF' : ''
+
   return (
     <Box pb={30} pl={7}>
       <Button
         variant={buttonVariant}
         disableElevation
         onClick={handleClick}
-        endIcon={<KeyboardArrowDownIcon />}
+        endIcon={
+          <ArrowDropDownIcon
+            style={{
+              fill: disabledColor
+            }}
+          />
+        }
         size={buttonSize}
         disabled={disabled}
+        style={{
+          color: disabledColor
+        }}
       >
         Options
       </Button>

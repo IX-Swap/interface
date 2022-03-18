@@ -44,6 +44,44 @@ export interface BreadCrumbsPaletteOptions {
   color: CSSProperties['color']
 }
 
+export interface ButtonPaletteOptions {
+  bgContainedDisabled: CSSProperties['color']
+  colorContainedDisabled: CSSProperties['color']
+  bgOutlined: CSSProperties['color']
+  borderOutlined: string
+  bgTextHover: CSSProperties['color']
+  colorTextDisabled: CSSProperties['color']
+  bgAlternate: CSSProperties['color']
+  bgAlternateHover: CSSProperties['color']
+  colorAlternate: CSSProperties['color']
+  colorAlternateHover: CSSProperties['color']
+  borderAlternateHover: string
+}
+
+export interface ButtonGroupPalette {
+  bg: CSSProperties['color']
+  bgHover: CSSProperties['color']
+  colorHover: CSSProperties['color']
+}
+
+export interface IconButtonPalette {
+  fill: CSSProperties['color']
+  fillDisabled: CSSProperties['color']
+  bgHover: CSSProperties['color']
+}
+
+export interface FABPalette {
+  fill: CSSProperties['color']
+  bg: CSSProperties['color']
+  bgDisabled: string
+  fillDisabled: CSSProperties['color']
+}
+
+export interface MenuPalette {
+  border: string
+  boxShadow: string
+}
+
 declare module '@mui/styles/defaultTheme' {
   interface DefaultTheme extends Theme {}
 }
@@ -63,6 +101,11 @@ declare module '@mui/material/styles' {
       activeColor: CSSProperties['color']
       activeBackground: CSSProperties['color']
     }
+    button?: ButtonPaletteOptions
+    buttonGroup?: ButtonGroupPalette
+    iconButton?: IconButtonPalette
+    fab?: FABPalette
+    menu?: MenuPalette
     breadcrumbs?: BreadCrumbsPaletteOptions
     tab?: {
       contained: {
@@ -86,6 +129,11 @@ declare module '@mui/material/styles' {
       activeBackground: CSSProperties['color']
     }
     newSlider?: SliderPaletteOptions
+    button?: ButtonPaletteOptions
+    buttonGroup?: ButtonGroupPalette
+    iconButton?: IconButtonPalette
+    fab?: FABPalette
+    menu?: MenuPalette
     breadcrumbs?: BreadCrumbsPaletteOptions
     tab?: {
       contained: {

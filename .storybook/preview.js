@@ -10,13 +10,21 @@ import { ToastProvider } from 'react-toast-notifications'
 import { AppStateProvider } from '../src/app/hooks/useAppState'
 import { Toast } from '../src/components/Toast'
 import { AppThemeProvider } from '../src/AppThemeProvider'
+import { themes } from '@storybook/theming'
 
 const generateClassName = createGenerateClassName({
   productionPrefix: 'ix'
 })
 
 export const parameters = {
-  actions: { argTypesRegex: '^on[A-Z].*' }
+  actions: { argTypesRegex: '^on[A-Z].*' },
+  darkMode: {
+    dark: {
+      ...themes.normal,
+      appContentBg: '#183061'
+    },
+    light: { ...themes.normal }
+  }
 }
 
 export const decorators = [
