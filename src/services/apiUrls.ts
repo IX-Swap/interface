@@ -13,6 +13,7 @@ export const admin = {
   resetKyc: (kycId: number) => `/newkyc/change/${kycId}`,
   approveKyc: (id: number) => `/newkyc/approve/${id}`,
   rejectKyc: (id: number) => `/newkyc/reject/${id}`,
+  kycById: (id: string | number) => `/newkyc/id/${id}`,
 }
 
 export const vesting = {
