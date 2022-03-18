@@ -12,6 +12,7 @@ import Upload from 'components/Upload'
 import { Dropdown } from 'components/AdminSecurityCatalog/Dropdown'
 import { FilePreview } from 'components/FilePreview'
 import { GradientText } from 'pages/CustodianV2/styleds'
+import { Select as ReactSelect } from 'components/Select'
 
 import { ReactComponent as UploadLogo } from 'assets/images/upload.svg'
 import { ReactComponent as InfoLogo } from 'assets/images/info-filled.svg'
@@ -46,16 +47,7 @@ type TextInputProps = HTMLProps<HTMLInputElement> & {
   error?: any | ReactChildren
 }
 
-export const Select: FC<SelectProps> = ({
-  label,
-  onSelect,
-  selectedItem,
-  withScroll,
-  items,
-  onBlur,
-  error,
-  name,
-}: SelectProps) => {
+export const Select: FC<SelectProps> = ({ label, onSelect, selectedItem, items, error, name }: SelectProps) => {
   return (
     <Box>
       <Label marginBottom="11px">
@@ -63,17 +55,7 @@ export const Select: FC<SelectProps> = ({
           <Trans>{label}</Trans>
         </TYPE.title11>
       </Label>
-      <DropdownContainer>
-        <Dropdown
-          name={name}
-          onBlur={onBlur}
-          placeholder=" "
-          withScroll={withScroll}
-          onSelect={onSelect}
-          selectedItem={selectedItem}
-          items={items}
-        />
-      </DropdownContainer>
+      <ReactSelect name={name} onSelect={onSelect} value={selectedItem} options={items} error={error} />
       {error && (
         <TYPE.small marginTop="4px" color={'red1'}>
           {error}
