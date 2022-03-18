@@ -62,7 +62,7 @@ export const Select = ({ onSelect, value, options, placeholder = '', name, isMul
       options={options}
       isMulti={isMulti}
       onChange={(option: unknown) => {
-        onSelect((option as Option).value)
+        onSelect(option as Option)
       }}
       value={selectedValue}
       placeholder={placeholder}

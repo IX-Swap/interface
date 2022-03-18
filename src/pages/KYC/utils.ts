@@ -12,26 +12,26 @@ export const corporateTransformApiData = (data: any) => {
     beneficialOwners,
     usTin,
   } = data
-  const splittedFunds = sourceOfFunds.split(',').map((name: string) => name.trim())
+  const splittedFunds = sourceOfFunds.split(',').map((label: string) => label.trim())
   const funds = splittedFunds.includes('Others') ? splittedFunds.slice(0, -1) : splittedFunds
 
   return {
     ...data,
     typeOfLegalEntity: legalEntityTypes[typeOfLegalEntity - 1],
-    countryOfIncorporation: { id: 0, name: countryOfIncorporation },
+    countryOfIncorporation: { value: 0, label: countryOfIncorporation },
     authorizationDocuments: documents.filter(({ type }: any) => type === 'authorization'),
     line1: address.line1,
     line2: address.line2,
-    country: { id: 0, name: address.country },
+    country: { value: 0, label: address.country },
     city: address.city,
     residentialAddressLine1: residentialAddress.line1,
     residentialAddressLine2: residentialAddress.line2,
-    residentialAddressCountry: { id: 0, name: residentialAddress.country },
+    residentialAddressCountry: { value: 0, label: residentialAddress.country },
     residentialAddressCity: residentialAddress.city,
     sourceOfFunds: funds.filter((fund: string) => fund !== ''),
     isUSTaxPayer: usTin ? 1 : 0,
     otherFunds: splittedFunds.includes('Others') ? splittedFunds[splittedFunds.length - 1] : '',
-    taxCountry: { id: 0, name: taxCountry },
+    taxCountry: { value: 0, label: taxCountry },
     beneficialOwners:
       beneficialOwners.length > 0
         ? beneficialOwners.map(({ id, fullName, shareholding, proofOfAddress, proofOfIdentity }: any) => ({
@@ -65,12 +65,12 @@ export const corporateTransformKycDto = (values: any) => {
 
   return {
     ...values,
-    typeOfLegalEntity: typeOfLegalEntity.id,
+    typeOfLegalEntity: typeOfLegalEntity.value,
     sourceOfFunds: [...sourceOfFunds, otherFunds].join(', '),
-    countryOfIncorporation: countryOfIncorporation.name,
-    country: country.name,
-    residentialAddressCountry: residentialAddressCountry.name,
-    taxCountry: taxCountry.name,
+    countryOfIncorporation: countryOfIncorporation.label,
+    country: country.label,
+    residentialAddressCountry: residentialAddressCountry.label,
+    taxCountry: taxCountry.label,
     isUSTaxPayer: isUSTaxPayer ? true : false,
     beneficialOwners: JSON.stringify(
       beneficialOwners.map(({ id, fullName, shareholding, proofOfAddress, proofOfIdentity }: any) => ({
@@ -88,7 +88,7 @@ export const corporateTransformKycDto = (values: any) => {
 
 export const individualTransformApiData = (data: any) => {
   const { sourceOfFunds, address, documents, usTin, citizenship, employmentStatus, gender, nationality, income } = data
-  const splittedFunds = sourceOfFunds.split(',').map((name: string) => name.trim())
+  const splittedFunds = sourceOfFunds.split(',').map((label: string) => label.trim())
   const funds = splittedFunds.includes('Others') ? splittedFunds.slice(0, -1) : splittedFunds
 
   return {
@@ -98,16 +98,16 @@ export const individualTransformApiData = (data: any) => {
     otherFunds: splittedFunds.includes('Others') ? splittedFunds[splittedFunds.length - 1] : '',
     line1: address.line1,
     line2: address.line2,
-    country: { id: 0, name: address.country },
+    country: { value: 0, label: address.country },
     city: address.city,
     proofOfAddress: documents.filter(({ type }: any) => type === 'address'),
     proofOfIdentity: documents.filter(({ type }: any) => type === 'identity'),
     evidenceOfAccreditation: documents.filter(({ type }: any) => type === 'accreditation'),
-    citizenship: { id: 0, name: citizenship },
-    employmentStatus: { id: 0, name: employmentStatus },
-    gender: { id: 0, name: gender },
-    nationality: { id: 0, name: nationality },
-    income: { id: 0, name: income },
+    citizenship: { value: 0, label: citizenship },
+    employmentStatus: { value: 0, label: employmentStatus },
+    gender: { value: 0, label: gender },
+    nationality: { value: 0, label: nationality },
+    income: { value: 0, label: income },
     removedDocuments: [],
   }
 }
@@ -130,12 +130,12 @@ export const individualTransformKycDto = (values: any) => {
     ...values,
     dateOfBirth: typeof dateOfBirth === 'string' ? dateOfBirth : dateOfBirth.format(),
     sourceOfFunds: [...sourceOfFunds, otherFunds].join(', '),
-    citizenship: citizenship.name,
-    nationality: nationality.name,
-    country: country.name,
-    employmentStatus: employmentStatus.name,
-    gender: gender.name,
-    income: income.name,
+    citizenship: citizenship.label,
+    nationality: nationality.label,
+    country: country.label,
+    employmentStatus: employmentStatus.label,
+    gender: gender.label,
+    income: income.label,
     isUSTaxPayer: isUSTaxPayer ? true : false,
   }
 }
