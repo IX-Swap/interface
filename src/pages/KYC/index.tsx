@@ -65,7 +65,7 @@ const Description: FC<DescriptionProps> = ({ description }: DescriptionProps) =>
 
 export default function KYC() {
   const { account } = useActiveWeb3React()
-  const [loading, setLoading] = useState(false)
+  // const [loading, setLoading] = useState(false)
   const isLoggedIn = useUserisLoggedIn()
 
   const { kyc, loadingRequest } = useKYCState()
@@ -74,9 +74,9 @@ export default function KYC() {
   const [status, setStatus] = useState<KYCStatuses | undefined>(undefined)
   const [description, setDescription] = useState('')
 
-  const handleAccountsChanged = () => {
-    setLoading(true)
-  }
+  // const handleAccountsChanged = () => {
+  //   setLoading(true)
+  // }
 
   const onKycState = useCallback(() => {
     if (!account) {
@@ -86,25 +86,25 @@ export default function KYC() {
     getMyKyc()
   }, [account, getMyKyc])
 
-  useEffect(() => {
-    const { ethereum } = window
+  // useEffect(() => {
+  //   const { ethereum } = window
 
-    if (ethereum && ethereum.on) {
-      ethereum.on('accountsChanged', handleAccountsChanged)
+  //   if (ethereum && ethereum.on) {
+  //     ethereum.on('accountsChanged', handleAccountsChanged)
 
-      return () => {
-        if (ethereum.removeListener) {
-          ethereum.removeListener('accountsChanged', handleAccountsChanged)
-        }
-      }
-    }
-  }, [])
+  //     return () => {
+  //       if (ethereum.removeListener) {
+  //         ethereum.removeListener('accountsChanged', handleAccountsChanged)
+  //       }
+  //     }
+  //   }
+  // }, [])
 
-  useEffect(() => {
-    if (kyc?.data === undefined && loadingRequest) {
-      setLoading(false)
-    }
-  }, [kyc, loadingRequest])
+  // useEffect(() => {
+  //   if (kyc?.data === undefined && loadingRequest) {
+  //     setLoading(false)
+  //   }
+  // }, [kyc, loadingRequest])
 
   useEffect(() => {
     if (!isLoggedIn) {
@@ -203,7 +203,7 @@ export default function KYC() {
   return (
     <StyledBodyWrapper>
       <StatusCard>
-        {loadingRequest || loading ? (
+        {loadingRequest ? (
           <RowCenter>
             <LoaderThin size={96} />
           </RowCenter>
