@@ -48,6 +48,14 @@ export const useStyles = makeStyles((theme: any) => ({
     color: '#6739B6',
     backgroundColor: '#EEE4FF'
   },
+  unknown: {
+    color: '#EEE4FF',
+    borderColor: '#0BBE12'
+  },
+  unknownNewTheme: {
+    color: '#696969',
+    backgroundColor: '#F0F0F0'
+  },
   rejected: {
     color: '#D20000',
     borderColor: '#D20000'

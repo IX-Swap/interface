@@ -40,6 +40,24 @@ export const getAppTheme = (themeType: AppTheme, prefersDarkMode: boolean) => {
       defaultProps: {
         disableTouchRipple: true
       }
+    },
+    MuiButton: {
+      ...getThemeOverrides(theme)?.MuiButton,
+      defaultProps: {
+        disableTouchRipple: true
+      }
+    },
+    MuiIconButton: {
+      ...getThemeOverrides(theme)?.MuiIconButton,
+      defaultProps: {
+        disableTouchRipple: true
+      }
+    },
+    MuiFab: {
+      ...getThemeOverrides(theme)?.MuiFab,
+      defaultProps: {
+        disableTouchRipple: true
+      }
     }
   }
 
