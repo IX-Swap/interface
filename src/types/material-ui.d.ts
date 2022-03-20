@@ -44,6 +44,13 @@ export interface BreadCrumbsPaletteOptions {
   color: CSSProperties['color']
 }
 
+export interface Alerts {
+  bg: CSSProperties['color']
+  color: CSSProperties['color']
+  boxShadow: string
+  border: string
+}
+
 declare module '@mui/styles/defaultTheme' {
   interface DefaultTheme extends Theme {}
 }
@@ -64,6 +71,7 @@ declare module '@mui/material/styles' {
       activeBackground: CSSProperties['color']
     }
     breadcrumbs?: BreadCrumbsPaletteOptions
+    alerts?: Alerts
     tab?: {
       contained: {
         border: CSSProperties['color']
@@ -87,6 +95,7 @@ declare module '@mui/material/styles' {
     }
     newSlider?: SliderPaletteOptions
     breadcrumbs?: BreadCrumbsPaletteOptions
+    alerts?: Alerts
     tab?: {
       contained: {
         border: CSSProperties['color']

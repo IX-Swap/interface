@@ -71,6 +71,14 @@ export const lightTheme: DeprecatedThemeOptions = {
       link: '#3B4251',
       color: '#778194'
     },
+    alerts: {
+      bg: '#FFFFFF',
+      color: '#778194',
+      border: '#E6EBF3',
+      boxShadow: `0px 24px 24px ${tinycolor('#0a1326')
+        .setAlpha(0.08)
+        .toRgbString()}`
+    },
     tab: {
       contained: {
         border: '#EDF2FA',

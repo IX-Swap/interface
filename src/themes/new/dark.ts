@@ -70,6 +70,14 @@ export const darkTheme: DeprecatedThemeOptions = {
         color: undefined
       }
     },
+    alerts: {
+      bg: '#152D5F',
+      color: '#89A1CE',
+      border: '#1D3667',
+      boxShadow: `0px 24px 24px ${tinycolor('#0e1f3f')
+        .setAlpha(0.3)
+        .toRgbString()}`
+    },
     text: {
       primary: '#FFFFFF',
       secondary: '#496396'

@@ -7,7 +7,7 @@ import { getThemeOverrides } from 'themes/new/overrides'
 import { Box, Button } from '@mui/material'
 
 export interface UIKitThemeWrapperProps {
-  children: JSX.Element
+  children: JSX.Element | JSX.Element[]
 }
 
 export const UIKitThemeWrapper = ({ children }: UIKitThemeWrapperProps) => {
