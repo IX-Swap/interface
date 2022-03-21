@@ -5,6 +5,7 @@ import { VSpacer } from 'components/VSpacer'
 import { TypedField } from 'components/form/TypedField'
 import { AnnualIncomeSelect } from 'components/form/AnnualIncomeSelect'
 import { EmploymentStatusSelect } from 'app/pages/identity/components/FinancialInformationForm/EmploymentStatusSelect'
+import { OccupationSelect } from './OccupationSelect'
 
 export const EmploymentField = () => {
   const { control } = useFormContext()
@@ -15,7 +16,7 @@ export const EmploymentField = () => {
         <Grid container spacing={6}>
           <Grid item xs={12} md={4}>
             <TypedField
-              component={TextField}
+              component={OccupationSelect}
               control={control}
               variant='outlined'
               name='occupation'
