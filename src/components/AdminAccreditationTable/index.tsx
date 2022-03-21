@@ -119,11 +119,8 @@ export const AdminAccreditationTable = () => {
   const getAccreditationList = useGetAccreditationList()
 
   const onPageChange = (page: number) => {
-    const element = document.getElementById('accreditation-container')
-    if (element) {
-      const y = element.getBoundingClientRect().top + window.pageYOffset
-      window.scrollTo({ top: y, behavior: 'smooth' })
-    }
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+
     getAccreditationList({ page, offset: 10 })
   }
 

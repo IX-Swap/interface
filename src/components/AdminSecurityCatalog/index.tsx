@@ -68,6 +68,8 @@ export const AdminSecurityCatalog: FC = () => {
   }, [getIssuers, showMode])
 
   const onPageChange = (page: number) => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+
     getIssuers({ search: searchValue, page, offset })
   }
 
@@ -146,11 +148,14 @@ export const AdminSecurityCatalog: FC = () => {
   }
 
   const handleCreateClick = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
     setCurrentIssuer(initialIssuerState)
     setShowMode('add_issuer')
   }
 
   const handleEditClick = (editIssuer: any) => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+
     setCurrentIssuer(editIssuer)
     setShowMode('edit_issuer')
   }

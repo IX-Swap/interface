@@ -113,6 +113,8 @@ export const AdminTransactionsTable = () => {
   const getBrokerDealerSwaps = useFetchBrokerDealerSwaps()
 
   const onPageChange = (page: number) => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+
     getBrokerDealerSwaps({ page, offset, search: isAddress(searchValue) || searchValue === '' ? searchValue : '' })
   }
 
