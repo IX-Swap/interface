@@ -42,17 +42,17 @@ const DateInfo: FC<DateInfoProps> = ({ info, submittedDate, rejectedDate, approv
     {submittedDate && (
       <TYPE.description3 color="inherit">{`Submitted on ${dayjs(submittedDate)
         .utc()
-        .format('MMM DD, HH:mm')} (UTC)`}</TYPE.description3>
+        .format('MMM DD YYYY, HH:mm')} (UTC)`}</TYPE.description3>
     )}
     {rejectedDate && (
-      <TYPE.description3 color="inherit">{`Rejected on ${dayjs(rejectedDate)
+      <TYPE.description3 color="inherit">{`Change requested on ${dayjs(rejectedDate)
         .utc()
-        .format('MMM DD, HH:mm')} (UTC)`}</TYPE.description3>
+        .format('MMM DD YYYY, HH:mm')} (UTC)`}</TYPE.description3>
     )}
     {approvedDate && (
       <TYPE.description3 color="inherit">{`Approved on ${dayjs(approvedDate)
         .utc()
-        .format('MMM DD, HH:mm')} (UTC)`}</TYPE.description3>
+        .format('MMM DD YYYY, HH:mm')} (UTC)`}</TYPE.description3>
     )}
   </Flex>
 )
@@ -187,7 +187,7 @@ export default function KYC() {
           <Flex flexDirection="column" alignItems="center" marginTop="40px">
             <ApprovedKYC />
             <DateInfo
-              info="Change via info@ixswap.io"
+              info="In order to make changes to your KYC please get in touch with us via info@ixswap.io"
               submittedDate={kyc?.data.createdAt}
               approvedDate={kyc?.data.updatedAt}
             />
@@ -197,8 +197,6 @@ export default function KYC() {
   }, [status])
 
   if (!account) return <NFTConnectWallet />
-
-  console.log('log => kyc', kyc?.data)
 
   return (
     <StyledBodyWrapper>

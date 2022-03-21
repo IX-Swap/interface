@@ -107,11 +107,8 @@ export const AdminKycTable = () => {
   const { id } = useParams<AdminParams>()
 
   const onPageChange = (page: number) => {
-    const element = document.getElementById('kyc-container')
-    if (element) {
-      const y = element.getBoundingClientRect().top + window.pageYOffset
-      window.scrollTo({ top: y, behavior: 'smooth' })
-    }
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+
     getKycList({ page, offset: 10 })
   }
 

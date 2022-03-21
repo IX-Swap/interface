@@ -174,13 +174,16 @@ export const approveAccreditation = async (id: number) => {
 export function useApproveAccreditation() {
   const dispatch = useDispatch<AppDispatch>()
   const getAccretitations = useGetAccreditationList()
+  const {
+    accreditationList: { page, offset },
+  } = useAdminState()
   const callback = useCallback(
     async (id: number) => {
       try {
         dispatch(postApproveAccreditation.pending())
         const data = await approveAccreditation(id)
         dispatch(postApproveAccreditation.fulfilled({ data }))
-        await getAccretitations({ page: 1, offset: 10 })
+        await getAccretitations({ page, offset })
         return STATUS.SUCCESS
       } catch (error: any) {
         dispatch(postApproveAccreditation.rejected({ errorMessage: 'Could not approve accreditation' }))
@@ -200,13 +203,16 @@ export const declineAccreditation = async ({ id, ...data }: { id: number; messag
 export function useDeclineAccreditation() {
   const dispatch = useDispatch<AppDispatch>()
   const getAccretitations = useGetAccreditationList()
+  const {
+    accreditationList: { page, offset },
+  } = useAdminState()
   const callback = useCallback(
     async (data: { id: number; message: string }) => {
       try {
         dispatch(postDeclineAccreditation.pending())
         const res = await declineAccreditation(data)
         dispatch(postDeclineAccreditation.fulfilled({ data: res }))
-        await getAccretitations({ page: 1, offset: 10 })
+        await getAccretitations({ page, offset })
         return STATUS.SUCCESS
       } catch (error: any) {
         dispatch(postDeclineAccreditation.rejected({ errorMessage: 'Could not decline accreditation' }))
@@ -226,13 +232,16 @@ export const accreditationReset = async (tokenId: number) => {
 export function useResetAccreditation() {
   const dispatch = useDispatch<AppDispatch>()
   const getAccretitations = useGetAccreditationList()
+  const {
+    accreditationList: { page, offset },
+  } = useAdminState()
   const callback = useCallback(
     async (tokenId: number) => {
       try {
         dispatch(postResetAccreditation.pending())
         const data = await accreditationReset(tokenId)
         dispatch(postResetAccreditation.fulfilled({ data }))
-        await getAccretitations({ page: 1, offset: 10 })
+        await getAccretitations({ page, offset })
         return STATUS.SUCCESS
       } catch (error: any) {
         dispatch(postResetAccreditation.rejected({ errorMessage: 'Could not reset accreditation' }))
@@ -276,13 +285,16 @@ export const approveKyc = async (id: number) => {
 export function useApproveKyc() {
   const dispatch = useDispatch<AppDispatch>()
   const getKycList = useGetKycList()
+  const {
+    kycList: { page, offset },
+  } = useAdminState()
   const callback = useCallback(
     async (id: number) => {
       try {
         dispatch(postApproveKyc.pending())
         const data = await approveKyc(id)
         dispatch(postApproveKyc.fulfilled({ data }))
-        await getKycList()
+        await getKycList({ page, offset })
         return STATUS.SUCCESS
       } catch (error: any) {
         dispatch(postApproveKyc.rejected({ errorMessage: 'Could not approve kyc' }))
@@ -302,13 +314,16 @@ export const rejectKyc = async ({ id, ...data }: { id: number; message?: string 
 export function useRejectKyc() {
   const dispatch = useDispatch<AppDispatch>()
   const getKycList = useGetKycList()
+  const {
+    kycList: { page, offset },
+  } = useAdminState()
   const callback = useCallback(
     async (data: { id: number; message?: string }) => {
       try {
         dispatch(postRejectKyc.pending())
         const res = await rejectKyc(data)
         dispatch(postRejectKyc.fulfilled({ data: res }))
-        await getKycList()
+        await getKycList({ page, offset })
         return STATUS.SUCCESS
       } catch (error: any) {
         dispatch(postRejectKyc.rejected({ errorMessage: 'Could not reject jyc' }))
@@ -328,13 +343,16 @@ export const resetKyc = async (data: { id: number; message?: string }) => {
 export function useResetKyc() {
   const dispatch = useDispatch<AppDispatch>()
   const getKycList = useGetKycList()
+  const {
+    kycList: { page, offset },
+  } = useAdminState()
   const callback = useCallback(
     async (data: { id: number; message?: string }) => {
       try {
         dispatch(postResetKyc.pending())
         const res = await resetKyc(data)
         dispatch(postResetKyc.fulfilled({ data: res }))
-        await getKycList()
+        await getKycList({ page, offset })
         return STATUS.SUCCESS
       } catch (error: any) {
         dispatch(postResetKyc.rejected({ errorMessage: 'Could not reset kyc' }))
