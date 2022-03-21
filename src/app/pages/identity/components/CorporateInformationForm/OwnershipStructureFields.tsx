@@ -26,6 +26,7 @@ export const OwnershipStructureFields = () => {
             customRenderer
             component={TextField}
             fullWidth
+            inputProps={{ maxLength: 1024 }}
             control={control}
             name='businessActivity'
             label='Business Activity'
