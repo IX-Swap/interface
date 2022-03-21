@@ -82,6 +82,13 @@ export interface MenuPalette {
   boxShadow: string
 }
 
+export interface Alerts {
+  bg: CSSProperties['color']
+  color: CSSProperties['color']
+  boxShadow: string
+  border: string
+}
+
 declare module '@mui/styles/defaultTheme' {
   interface DefaultTheme extends Theme {}
 }
@@ -113,6 +120,7 @@ declare module '@mui/material/styles' {
         color?: CSSProperties['color']
       }
     }
+    alerts?: Alerts
   }
 
   export interface Palette {
@@ -141,6 +149,7 @@ declare module '@mui/material/styles' {
         color?: CSSProperties['color']
       }
     }
+    alerts?: Alerts
   }
 
   export interface Theme {

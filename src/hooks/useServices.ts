@@ -6,6 +6,7 @@ import { adminService } from 'app/pages/admin/service'
 import { useSnackbar, SnackbarService } from 'hooks/useSnackbar'
 import { isTestENV } from 'config/history'
 import web3Service from 'services/web3'
+import { ToastService, useToast } from 'hooks/useToast'
 
 export interface AppServices {
   apiService: typeof apiService
@@ -13,6 +14,7 @@ export interface AppServices {
   storageService: typeof storageService
   adminService: typeof adminService
   snackbarService: SnackbarService
+  toastsService: ToastService
   web3Service: typeof web3Service
 }
 
@@ -29,5 +31,6 @@ export const { useStore: useServices, Provider: ServicesProvider } =
   generateStoreHookAndProvider<AppServices>(services as any, context => {
     if (!isTestENV) {
       context.snackbarService = useSnackbar()
+      context.toastsService = useToast()
     }
   })
