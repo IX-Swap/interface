@@ -9,15 +9,15 @@ describe('EmploymentField', () => {
   })
 
   it('renders fields correctly', () => {
-    const { getByLabelText, queryAllByText } = render(
+    const { getByLabelText, queryAllByText, getByTestId } = render(
       <Form>
         <EmploymentField />
       </Form>
     )
 
-    expect(getByLabelText('Occupation')).toBeInTheDocument()
+    expect(getByTestId('Occupation-select')).toBeInTheDocument()
     // TODO: fix test
-    // expect(getByLabelText('Employment Status')).toBeInTheDocument()
+    expect(getByTestId('Employment-select')).toBeInTheDocument()
     expect(getByLabelText('Employer')).toBeInTheDocument()
     expect(queryAllByText('Annual Income')).toBeTruthy()
   })

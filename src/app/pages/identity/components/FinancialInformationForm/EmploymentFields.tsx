@@ -21,6 +21,7 @@ export const EmploymentField = () => {
               variant='outlined'
               name='occupation'
               label='Occupation'
+              data-testid='Occupation-select'
               fullWidth
             />
           </Grid>
@@ -31,6 +32,7 @@ export const EmploymentField = () => {
               variant='outlined'
               name='employmentStatus'
               label='Employment Status'
+              data-testid='Employment-select'
               fullWidth
             />
           </Grid>
