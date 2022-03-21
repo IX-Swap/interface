@@ -1,5 +1,5 @@
 import React, { lazy, Suspense, useEffect, useMemo } from 'react'
-import { Route, Switch, useLocation } from 'react-router-dom'
+import { Redirect, Route, Switch, useLocation } from 'react-router-dom'
 import styled from 'styled-components/macro'
 
 import { AppBackground } from 'components/AppBackground'
@@ -122,6 +122,7 @@ export default function App() {
           <Web3ReactManager>
             <Suspense fallback={<></>}>
               <Switch>
+                <Route exact strict path="/admin" render={() => <Redirect to="/admin/accreditation" />} />
                 <Route exact strict path="/admin/:tab/:id?" component={Admin} />
 
                 <Route exact strict path={routes.nftCreate} component={CreateNFT} />
