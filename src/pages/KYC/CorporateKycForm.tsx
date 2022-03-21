@@ -385,7 +385,7 @@ export default function CorporateKycForm() {
                             />
                           </FormGrid>
                           <FormGrid columns={1}>
-                            {values.typeOfLegalEntity?.id === legalEntityTypes.length && (
+                            {values.typeOfLegalEntity?.value === legalEntityTypes.length && (
                               <TextInput
                                 label="Other Entity"
                                 onChange={(e) =>
