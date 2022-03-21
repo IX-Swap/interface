@@ -1,18 +1,16 @@
-import React, { useEffect } from 'react'
-import { TypedField } from 'components/form/TypedField'
-import { Dropzone } from 'components/dataroom/Dropzone'
 import { Grid, TextField } from '@mui/material'
-import { useFormContext } from 'react-hook-form'
 import { documentValueExtractor } from 'app/components/DSO/utils'
-import { LegalEntityStatusSelect } from 'components/form/LegalEntityStatusSelect'
-import { CountrySelect } from 'components/form/CountrySelect'
+import { CorporateType } from 'app/pages/identity/components/CorporateInvestorForm/CorporateInvestorForm'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
+import { Dropzone } from 'components/dataroom/Dropzone'
+import { CountrySelect } from 'components/form/CountrySelect'
+import { FundSourceSelect } from 'components/form/FundSourceSelect'
+import { LegalEntityStatusSelect } from 'components/form/LegalEntityStatusSelect'
+import { TypedField } from 'components/form/TypedField'
 import { privateClassNames } from 'helpers/classnames'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
-import { booleanValueExtractor } from 'helpers/forms'
-import { Checkbox } from 'components/form/Checkbox'
-import { FundSourceSelect } from 'components/form/FundSourceSelect'
-import { CorporateType } from 'app/pages/identity/components/CorporateInvestorForm/CorporateInvestorForm'
+import React, { useEffect } from 'react'
+import { useFormContext } from 'react-hook-form'
 
 export interface InformationFieldsProps {
   type?: CorporateType
@@ -24,7 +22,6 @@ export const InformationFields = ({
   const { control, watch, clearErrors } = useFormContext()
   const legalEntityStatus = watch('legalEntityStatus')
   const { isMobile, isTablet } = useAppBreakpoints()
-  const isIncorporated: boolean = watch('isIncorporated', true)
 
   useEffect(() => {
     if (legalEntityStatus !== 'others') {
@@ -126,18 +123,6 @@ export const InformationFields = ({
               variant='outlined'
               name='sourceOfFund'
               label='Source of funds'
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} md={6} />
-          <Grid item xs={12} sm={6} md={6}>
-            <TypedField
-              customRenderer
-              component={Checkbox}
-              defaultValue={isIncorporated ?? true}
-              control={control}
-              valueExtractor={booleanValueExtractor}
-              name='isIncorporated'
-              label='Is incorporated?'
             />
           </Grid>
         </Grid>
