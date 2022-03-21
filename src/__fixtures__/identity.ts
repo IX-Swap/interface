@@ -78,7 +78,6 @@ export const corporate: CorporateIdentity = {
   createdBy: '12345',
   numberOfBusinessOwners: '1',
   businessActivity: '12',
-  isIncorporated: true,
   sourceOfFund: 'LOAN'
 }
 
