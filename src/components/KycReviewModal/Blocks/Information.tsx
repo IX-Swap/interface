@@ -29,7 +29,7 @@ export const Information = ({ data, kycKey }: Props) => {
         )}
         {kycKey === 'corporate' && (
           <GridItem xs={12}>
-            <RowWithCheck text="Is Incorporated" isDone={data?.corporate?.isIncorporated} />
+            <RowWithCheck text="Is Incorporated" isDone={data?.corporate?.incorporated} />
           </GridItem>
         )}
       </GridContainer>
