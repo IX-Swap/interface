@@ -225,6 +225,7 @@ export interface IdentityFinancials {
 export interface CorporateFields {
   logo?: string
   email: string
+  cynopsis?: Cynopsis
   contactNumber: string
   companyLegalName: string
   registrationNumber: string
