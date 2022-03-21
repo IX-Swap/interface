@@ -54,7 +54,11 @@ const colourStyles = {
 }
 
 export const Select = ({ onSelect, value, options, placeholder = '', name, isMulti = false, error = '' }: Props) => {
-  const selectedValue = useMemo(() => options.find((option) => option.value === value), [value])
+  const selectedValue = useMemo(
+    () =>
+      options.find((option) => option.label === (value?.label || value) || option.value === (value?.value || value)),
+    [value]
+  )
 
   return (
     <StyledReactSelect
