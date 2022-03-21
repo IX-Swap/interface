@@ -10,6 +10,7 @@ import {
   SUPPORTED_TGE_CHAINS,
   TGE_CHAINS_WITH_STAKING,
   TGE_CHAINS_WITH_SWAP,
+  TGE_CHAINS_WITH_KYC,
 } from 'constants/addresses'
 import ApeModeQueryParamReader from 'hooks/useApeModeQueryParamReader'
 import { useActiveWeb3React } from 'hooks/web3'
@@ -160,7 +161,7 @@ export default function App() {
                   <Route exact strict path="/faucet" component={Faucet} />
                 )}
 
-                {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
+                {chainId && TGE_CHAINS_WITH_KYC.includes(chainId) && (
                   <Route exact strict path={routes.kyc} component={KYC} />
                 )}
 
