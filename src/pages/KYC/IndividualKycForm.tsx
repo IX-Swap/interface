@@ -675,7 +675,7 @@ export default function IndividualKycForm() {
                           passed: filesFilled,
                         },
                       })}
-                      description="Sed porttitor lectus nibh. Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem."
+                      description={kyc?.data?.message || null}
                       reasons={['Last name', 'Gender', 'Middle name']}
                     />
                   </StickyBox>
