@@ -1,4 +1,4 @@
-import { Check, Close, PriorityHigh } from '@material-ui/icons'
+import { Check, Close, PriorityHigh } from '@mui/icons-material'
 import { ElementType } from 'react'
 import { themeColors } from 'themes/old/colors'
 import { NotificationType } from 'types/notification'

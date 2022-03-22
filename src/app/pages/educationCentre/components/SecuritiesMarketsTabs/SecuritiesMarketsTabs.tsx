@@ -1,4 +1,4 @@
-import { Grid, Tab } from '@material-ui/core'
+import { Grid, Tab } from '@mui/material'
 import { Charts } from 'app/pages/educationCentre/components/Charts/Charts'
 import { Filters } from 'app/pages/educationCentre/components/Securities/Filters'
 import { Securities } from 'app/pages/educationCentre/components/Securities/Securities'

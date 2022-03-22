@@ -21,39 +21,6 @@ describe('useUploadFile', () => {
     jest.clearAllMocks()
   })
 
-  it('it calls snackbarService.showSnackbar with success message', async () => {
-    jest
-      .spyOn(useAuthHook, 'useAuth')
-      .mockImplementation(() => ({ user, isAuthenticated: true }))
-
-    await act(async () => {
-      const response = { data: [file, file] }
-      const postFn = jest.fn().mockResolvedValue(response)
-      const showSnackbar = jest.fn()
-
-      const apiObj = { post: postFn }
-      const snackbarObj = { showSnackbar }
-      const { result } = renderHookWithServiceProvider(
-        () => useUploadFile(callbacks),
-        { apiService: apiObj, snackbarService: snackbarObj }
-      )
-
-      await waitFor(
-        () => {
-          const [mutate] = result.current
-          void mutate(uploadDocumentArgs)
-
-          expect(callbacks.onSuccess).toHaveBeenCalledWith(response)
-          expect(showSnackbar).toHaveBeenCalledWith(
-            `Successfully uploaded ${response.data.length} files`,
-            'success'
-          )
-        },
-        { timeout: 1000 }
-      )
-    })
-  })
-
   it('it calls snackbarService.showSnackbar with error message', async () => {
     jest
       .spyOn(useAuthHook, 'useAuth')

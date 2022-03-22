@@ -1,43 +1,11 @@
 import React from 'react'
 import { useStyles } from 'app/pages/authorizer/components/styles'
-import { Typography } from '@material-ui/core'
-import classNames from 'classnames'
+import { AuthChip } from 'app/pages/authorizer/components/AuthChip'
 
 interface AuthorizableStatusProps {
   status?: string
   compact?: boolean
   isNewTheme?: boolean
-}
-
-export interface AuthChipProps {
-  classname: string
-  newTheme: string
-  status?: string
-  compactChar: string
-  compact: boolean
-  isNewTheme: boolean
-}
-
-export const AuthChip = ({
-  classname,
-  newTheme,
-  status,
-  compactChar,
-  compact,
-  isNewTheme
-}: AuthChipProps) => {
-  const classes = useStyles()
-  return (
-    <Typography
-      className={classNames(classes.authStatus, classname, {
-        [classes.compact]: compact,
-        [classes.authStatusNewTheme]: isNewTheme,
-        [newTheme]: isNewTheme
-      })}
-    >
-      {compact ? compactChar : status}
-    </Typography>
-  )
 }
 
 export const AuthorizableStatus: React.FC<AuthorizableStatusProps> = props => {
@@ -49,6 +17,7 @@ export const AuthorizableStatus: React.FC<AuthorizableStatusProps> = props => {
     case 'Approved':
     case 'Funds transferred':
     case 'DEPLOYED':
+    case 'LOW':
       return (
         <AuthChip
           {...props}
@@ -62,6 +31,7 @@ export const AuthorizableStatus: React.FC<AuthorizableStatusProps> = props => {
     case 'Rejected':
     case 'Funds on hold':
     case 'Failed':
+    case 'HIGH':
       return (
         <AuthChip
           {...props}
@@ -77,6 +47,7 @@ export const AuthorizableStatus: React.FC<AuthorizableStatusProps> = props => {
     case 'Closed':
     case 'Settlement in Progress':
     case 'Draft':
+    case 'MEDIUM':
       return (
         <AuthChip
           {...props}
@@ -99,6 +70,18 @@ export const AuthorizableStatus: React.FC<AuthorizableStatusProps> = props => {
           compactChar={compactStatus}
           classname={classes.open}
           newTheme={classes.openNewTheme}
+        />
+      )
+
+    case 'UNKNOWN':
+      return (
+        <AuthChip
+          {...props}
+          compact={compact}
+          isNewTheme={isNewTheme}
+          compactChar={compactStatus}
+          classname={classes.unknown}
+          newTheme={classes.unknownNewTheme}
         />
       )
 

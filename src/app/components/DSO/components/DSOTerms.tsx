@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Grid, TextField } from '@material-ui/core'
+import { Grid, TextField } from '@mui/material'
 import { monthsNumberFormat, percentageNumberFormat } from 'config/numberFormat'
 import { TypedField } from 'components/form/TypedField'
 import { NumericInput } from 'components/form/NumericInput'

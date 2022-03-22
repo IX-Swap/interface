@@ -1,7 +1,7 @@
-import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core'
-
-import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
 import React from 'react'
+import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
+import { FormControl, InputLabel, SelectChangeEvent } from '@mui/material'
+import { IdentityTypeSelect } from 'components/form/IdentityTypeSelect'
 
 export const IdentityTypeFilter = () => {
   return (
@@ -9,20 +9,15 @@ export const IdentityTypeFilter = () => {
       {({ value, onChange }) => (
         <FormControl variant='outlined' style={{ width: 207 }}>
           <InputLabel shrink>Identity Type</InputLabel>
-          <Select
+          <IdentityTypeSelect
+            withAll
             displayEmpty
             value={value ?? ''}
-            onChange={(event: React.ChangeEvent<{ value: unknown }>) => {
+            onChange={(event: SelectChangeEvent<unknown>) => {
               onChange(event.target.value as string)
             }}
             label='Identity Type'
-          >
-            <MenuItem value=''>All</MenuItem>
-            <MenuItem value='individual'>Individual Identity</MenuItem>
-            <MenuItem value='issuer'>Issuer Identity</MenuItem>
-            <MenuItem value='corporate'>Corporate Identity</MenuItem>
-            <MenuItem value='issuer_corporate'>Issuer and Corporate</MenuItem>
-          </Select>
+          />
         </FormControl>
       )}
     </SearchQueryFilter>

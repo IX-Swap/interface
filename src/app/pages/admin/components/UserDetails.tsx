@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Typography } from '@material-ui/core'
+import { Grid, Typography } from '@mui/material'
 import { LabelledValue } from 'components/LabelledValue'
 import { getTimeFromNow, formatDateToMMDDYY } from 'helpers/dates'
 import { UserActions } from 'app/pages/admin/components/UserActions'

@@ -1,12 +1,23 @@
 import React from 'react'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { VSpacer } from 'components/VSpacer'
-import { CorporateInvestorForm } from 'app/pages/identity/components/CorporateInvestorForm/CorporateInvestorForm'
+import {
+  CorporateInvestorForm,
+  CorporateType
+} from 'app/pages/identity/components/CorporateInvestorForm/CorporateInvestorForm'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 import { CorporateIdentityContainer } from 'app/pages/identity/containers/CorporateIdentityContainer'
 import { CorporateIdentity } from 'app/pages/identity/types/forms'
 
-const EditInvestorForm = ({ data }: { data: CorporateIdentity }) => {
+export interface EditInvestorFormProps {
+  data: CorporateIdentity
+  type?: CorporateType
+}
+
+const EditInvestorForm = ({
+  data,
+  type = 'investor'
+}: EditInvestorFormProps) => {
   return (
     <Grid container>
       <Grid item xs={12}>
@@ -16,12 +27,18 @@ const EditInvestorForm = ({ data }: { data: CorporateIdentity }) => {
         <VSpacer size='medium' />
       </Grid>
       <Grid item xs={12}>
-        <CorporateInvestorForm data={data} />
+        <CorporateInvestorForm data={data} type={type} />
       </Grid>
     </Grid>
   )
 }
 
-export const EditInvestor: React.FC = () => {
-  return <CorporateIdentityContainer component={EditInvestorForm} />
+export interface EditInvestorProps {
+  type?: CorporateType
+}
+
+export const EditInvestor: React.FC<EditInvestorProps> = ({
+  type = 'investor'
+}) => {
+  return <CorporateIdentityContainer component={EditInvestorForm} type={type} />
 }

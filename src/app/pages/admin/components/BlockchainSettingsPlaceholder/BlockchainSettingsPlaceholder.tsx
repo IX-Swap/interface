@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Card, CardContent, Grid, Typography } from '@material-ui/core'
+import { Box, Card, CardContent, Grid, Typography } from '@mui/material'
 import BlockchainImage from 'assets/images/blockchain-image.png'
 import { useStyles } from './BlockchainSettingsPlaceholder.styles'
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { DataroomUploaderRenderProps } from 'components/dataroom/DataroomUploader'
-import { Button, Typography } from '@material-ui/core'
+import { Button, Typography } from '@mui/material'
 import { Maybe } from 'types/util'
 import { DataroomFile } from 'types/dataroomFile'
 import { themeColors } from 'themes/old/colors'

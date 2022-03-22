@@ -20,7 +20,7 @@ export const useCreateDistribution = () => {
   return useMutation(createDistribution, {
     onSuccess: () => {
       void snackbarService.showSnackbar(
-        'Distribution added sucessfully.',
+        'Distribution added successfully.',
         'success'
       )
 

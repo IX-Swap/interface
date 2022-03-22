@@ -4,7 +4,7 @@ import {
   Paper,
   Popper,
   Typography
-} from '@material-ui/core'
+} from '@mui/material'
 import { PairList } from 'app/pages/exchange/components/PairList/PairList'
 import { PairTableFilter } from 'app/pages/exchange/components/PairTable/PairTableFilter/PairTableFilter'
 import { useMarket } from 'app/pages/exchange/hooks/useMarket'
@@ -39,11 +39,7 @@ export const PairListDropdown = ({ pairName }: PairListDropdownProps) => {
         open={anchorEl !== null}
         anchorEl={anchorEl}
         placement='bottom-start'
-        modifiers={{
-          flip: {
-            enabled: false
-          }
-        }}
+        modifiers={[{ name: 'flip', enabled: false }]}
       >
         <Paper ref={popperRef} elevation={3} className={classes.paper}>
           <Grid container spacing={2} direction='column'>

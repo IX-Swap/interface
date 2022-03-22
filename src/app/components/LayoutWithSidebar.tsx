@@ -1,5 +1,5 @@
 import React, { ComponentType, createElement } from 'react'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { useStyles } from 'app/components/LayoutWithSidebar.styles'
 import { privateClassNames } from 'helpers/classnames'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'

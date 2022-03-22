@@ -9,14 +9,14 @@ import {
   Grid,
   IconButton,
   Typography
-} from '@material-ui/core'
+} from '@mui/material'
 import { TypedField } from 'components/form/TypedField'
 import { OTPField } from 'components/form/OTPField'
 import { plainValueExtractor } from 'helpers/forms'
 import { VSpacer } from 'components/VSpacer'
 import { Submit } from 'components/form/Submit'
 import { CenteredDialogTitle } from 'ui/CenteredDialogTitle'
-import CloseIcon from '@material-ui/icons/Close'
+import CloseIcon from '@mui/icons-material/Close'
 
 export interface FormOTPDialogProps {
   triggerButtonProps: ButtonProps
@@ -50,7 +50,7 @@ export const FormOTPDialog = (props: FormOTPDialogProps) => {
       <Dialog disablePortal open={isOpen} maxWidth='md' onClose={closeDialog}>
         <CenteredDialogTitle>
           Please Enter Your 2FA
-          <IconButton onClick={closeDialog}>
+          <IconButton onClick={closeDialog} size='large'>
             <CloseIcon />
           </IconButton>
         </CenteredDialogTitle>

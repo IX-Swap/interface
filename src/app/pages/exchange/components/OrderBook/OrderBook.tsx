@@ -1,4 +1,4 @@
-import { Table, TableBody } from '@material-ui/core'
+import { Table, TableBody } from '@mui/material'
 import { OrderBookHeader } from 'app/pages/exchange/components/OrderBook/OrderBookHeader'
 import { OrderBookRow } from 'app/pages/exchange/components/OrderBook/OrderBookRow'
 import { ValidCurrency } from 'helpers/types'

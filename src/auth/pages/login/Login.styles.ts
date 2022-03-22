@@ -1,23 +1,23 @@
-import { makeStyles } from '@material-ui/core/styles'
+import makeStyles from '@mui/styles/makeStyles'
 
 export const useStyles = makeStyles(theme => ({
   title: {
     fontWeight: 700,
     fontSize: 40,
     color: theme.palette.text.primary,
-    textTransform: 'uppercase'
+    textTransform: 'uppercase',
+    fontFamily: 'Monument Extended, sans-serif'
   },
   link: {
     color: theme.palette.text.primary
   },
   forgotLink: {
-    position: 'relative',
+    marginTop: theme.spacing(2),
     color: theme.palette.text.primary,
     opacity: 0.5,
-    textTransform: 'uppercase',
-    top: -8
+    textTransform: 'uppercase'
   },
   text: {
-    color: '#ffffff20'
+    color: '#ffffff50'
   }
 }))

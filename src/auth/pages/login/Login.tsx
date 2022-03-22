@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Typography, Box, Divider } from '@material-ui/core'
+import { Grid, Typography, Box, Divider } from '@mui/material'
 import { Submit } from 'components/form/Submit'
 import { LoginFields } from 'auth/pages/login/components/LoginFields'
 import { AppRouterLink } from 'components/AppRouterLink'
@@ -24,7 +24,7 @@ export const Login = ({ hidden, isLoading, attempts = 0 }: LoginProps) => {
           <Typography className={title} variant={'h3'} align='center'>
             Sign In
           </Typography>
-          <VSpacer size={'medium'} />
+          <VSpacer size={'extraMedium'} />
         </Grid>
         <Grid item>
           <LoginFields />

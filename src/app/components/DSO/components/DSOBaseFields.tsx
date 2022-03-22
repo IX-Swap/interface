@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, TextField } from '@material-ui/core'
+import { Grid, TextField } from '@mui/material'
 import { TypedField } from 'components/form/TypedField'
 import { dateTimeValueExtractor } from 'helpers/forms'
 import { CorporateSelect } from 'components/form/CorporateSelect'
@@ -82,7 +82,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 variant='outlined'
               />
             </Grid>
-            <Grid item xs={12} md={2}>
+            <Grid item xs={12} md={6}>
               <TypedField
                 component={TextField}
                 label='Symbol'
@@ -93,7 +93,11 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 variant='outlined'
               />
             </Grid>
-            <Grid item xs={12} md={4}>
+          </Grid>
+        </Grid>
+        <Grid item>
+          <Grid container spacing={3}>
+            <Grid item xs={12} md={6}>
               <TypedField
                 component={TextField}
                 label='Unique Identifier Code'
@@ -104,11 +108,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 variant='outlined'
               />
             </Grid>
-          </Grid>
-        </Grid>
-        <Grid item>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} md={6}>
               <TypedField
                 component={CorporateSelect}
                 label='Corporate'
@@ -118,7 +118,11 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 variant='outlined'
               />
             </Grid>
-            <Grid item xs={12} md={4}>
+          </Grid>
+        </Grid>
+        <Grid item>
+          <Grid container spacing={3}>
+            <Grid item xs={12} md={6}>
               <TypedField
                 component={TextField}
                 label='Issuer Name'
@@ -128,7 +132,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 variant='outlined'
               />
             </Grid>
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} md={6}>
               <TypedField
                 assetType='Currency'
                 component={AssetSelect}

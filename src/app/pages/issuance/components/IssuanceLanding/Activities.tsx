@@ -1,6 +1,6 @@
 import React from 'react'
+import { Box } from '@mui/material'
 import { VSpacer } from 'components/VSpacer'
-import { ChartWrapper } from 'app/pages/issuance/components/IssuanceLanding/ChartWrapper'
 import { TableView } from 'components/TableWithPagination/TableView'
 import columns from 'app/pages/issuance/components/IssuanceLanding/columns'
 import { useAuth } from 'hooks/auth/useAuth'
@@ -10,6 +10,7 @@ import { DSOActivity } from 'types/dso'
 import { issuanceURL } from 'config/apiURL'
 import { isValidDSOId } from 'helpers/isValidDSOId'
 import { useParams } from 'react-router-dom'
+import { ChartTitle } from './ChartTitle'
 
 export const Activities = () => {
   const { user } = useAuth()
@@ -17,7 +18,8 @@ export const Activities = () => {
   const params = useParams<{ dsoId: string }>()
 
   return (
-    <ChartWrapper title='Activities'>
+    <Box pt={3}>
+      <ChartTitle title='Activities' />
       <VSpacer size='small' />
       <TableView<DSOActivity>
         uri={issuanceURL.dso.getActivitiesList(userId, params.dsoId)}
@@ -25,6 +27,6 @@ export const Activities = () => {
         columns={columns}
         queryEnabled={isValidDSOId(params.dsoId)}
       />
-    </ChartWrapper>
+    </Box>
   )
 }

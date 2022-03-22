@@ -1,4 +1,4 @@
-import { Box, Grid, Typography } from '@material-ui/core'
+import { Box, Grid, Typography } from '@mui/material'
 import { useGetExchangeRules } from 'app/pages/admin/hooks/useGetExchangeRules'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
 import { DataroomFileRow } from 'components/dataroom/DataroomFileRow'

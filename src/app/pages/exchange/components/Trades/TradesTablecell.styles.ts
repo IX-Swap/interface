@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles'
+import makeStyles from '@mui/styles/makeStyles'
 import { TradesTableCellProps } from 'app/pages/exchange/components/Trades/TradesTablecell'
 import { OrderSide } from 'types/order'
 

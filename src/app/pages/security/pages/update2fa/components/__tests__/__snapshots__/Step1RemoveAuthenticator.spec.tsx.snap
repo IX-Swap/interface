@@ -1,0 +1,185 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Step1RemoveAuthenticator should match snapshot when useGetEmailCode has successful response 1`] = `
+<div>
+  <div
+    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column css-bjcb1i-MuiGrid-root"
+  >
+    <div
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1sr5n48-MuiGrid-root"
+    >
+      <h5
+        class="MuiTypography-root MuiTypography-h5 MuiTypography-alignCenter css-1f4u6as-MuiTypography-root"
+      >
+        Remove Authenticator by Verifying Your Identity
+      </h5>
+      <div
+        class="MuiBox-root css-1jpm9pd"
+      />
+    </div>
+    <div
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1sr5n48-MuiGrid-root"
+    >
+      <div
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-6 MuiGrid-direction-xs-column css-82hyqs-MuiGrid-root"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+        >
+          <div
+            class="makeStyles-container-1 MuiBox-root css-0"
+          >
+            <div
+              class="makeStyles-wrapper-2 MuiBox-root css-0"
+            >
+              <p
+                class="MuiTypography-root MuiTypography-body1 makeStyles-text-3 css-3a17l8-MuiTypography-root"
+              >
+                Verification code has been sent.
+              </p>
+            </div>
+            <button
+              class="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root Mui-disabled  css-1idzk2v-MuiButtonBase-root-MuiButton-root"
+              disabled=""
+              tabindex="-1"
+              type="button"
+            >
+              Resend Code
+            </button>
+          </div>
+        </div>
+        <div
+          class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+        >
+          <form
+            data-testid="remove-authenticator-form"
+            style="width: 100%;"
+          >
+            <div
+              class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-4 MuiGrid-direction-xs-column css-ela01g-MuiGrid-root"
+            >
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-brqso2-MuiGrid-root"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+                >
+                  <div
+                    class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1pdmnkq-MuiFormControl-root-MuiTextField-root"
+                    control="[object Object]"
+                    path="emailCode"
+                  >
+                    <div
+                      class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-ppeiam-MuiInputBase-root-MuiOutlinedInput-root"
+                    >
+                      <input
+                        aria-invalid="false"
+                        class="MuiOutlinedInput-input MuiInputBase-input css-1od30sg-MuiInputBase-input-MuiOutlinedInput-input"
+                        id="emailCode"
+                        name="emailCode"
+                        placeholder="E-mail verification code"
+                        type="text"
+                        value=""
+                      />
+                      <fieldset
+                        aria-hidden="true"
+                        class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                      >
+                        <legend
+                          class="css-nnbavb"
+                        >
+                          <span
+                            class="notranslate"
+                          >
+                            ​
+                          </span>
+                        </legend>
+                      </fieldset>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+                >
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 makeStyles-label-4 css-3a17l8-MuiTypography-root"
+                  >
+                    Enter the 6-digit code sent to 
+                    tes***@undefined
+                  </p>
+                </div>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-brqso2-MuiGrid-root"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+                >
+                  <div
+                    class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1pdmnkq-MuiFormControl-root-MuiTextField-root"
+                    control="[object Object]"
+                    path="otp"
+                  >
+                    <div
+                      class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-fullWidth MuiInputBase-formControl css-ppeiam-MuiInputBase-root-MuiOutlinedInput-root"
+                    >
+                      <input
+                        aria-invalid="false"
+                        class="MuiOutlinedInput-input MuiInputBase-input css-1od30sg-MuiInputBase-input-MuiOutlinedInput-input"
+                        id="otp"
+                        name="otp"
+                        placeholder="Authenticator Code"
+                        type="text"
+                        value=""
+                      />
+                      <fieldset
+                        aria-hidden="true"
+                        class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
+                      >
+                        <legend
+                          class="css-nnbavb"
+                        >
+                          <span
+                            class="notranslate"
+                          >
+                            ​
+                          </span>
+                        </legend>
+                      </fieldset>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+                >
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 makeStyles-label-4 css-3a17l8-MuiTypography-root"
+                  >
+                    Enter the 6-digit code from your existing authenticator app
+                  </p>
+                </div>
+              </div>
+              <div
+                class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-spacing-xs-2 css-swu7xy-MuiGrid-root"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+                >
+                  <button
+                    class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeLarge MuiButton-containedSizeLarge MuiButton-disableElevation MuiButtonBase-root Mui-disabled  css-f35ack-MuiButtonBase-root-MuiButton-root"
+                    disabled=""
+                    tabindex="-1"
+                    type="submit"
+                  >
+                    Remove and continue
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

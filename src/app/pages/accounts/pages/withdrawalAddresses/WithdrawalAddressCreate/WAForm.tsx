@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { Form } from 'components/form/Form'
 import { WithdrawalAddressFormValues } from 'types/withdrawalAddress'
 import { waFormValidationSchema } from 'app/pages/accounts/pages/withdrawalAddresses/validation'

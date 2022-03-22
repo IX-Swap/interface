@@ -22,7 +22,7 @@ export const closure: Closure = {
       raisedMin: null,
       raisedMax: 0
     },
-    decimalPlaces: 0,
+    decimals: 0,
     minimumInvestment: 5000,
     documents: ['60ed3aa3489aeb0849e58c12'],
     status: 'Approved',

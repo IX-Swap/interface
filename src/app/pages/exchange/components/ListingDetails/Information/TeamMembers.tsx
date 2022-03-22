@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
 import { TeamMemberView } from 'app/pages/exchange/components/ListingDetails/Information/TeamMemberView'
 import { DsoTeamMember } from 'types/dso'

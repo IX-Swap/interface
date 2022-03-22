@@ -10,6 +10,7 @@ describe('Action', () => {
       onClick: jest.fn()
     }
 
+    // @ts-expect-error
     const { getByText, getByTestId, getByRole } = render(<Action {...props} />)
     const label = getByText(props.label)
     const icon = getByTestId('icon')

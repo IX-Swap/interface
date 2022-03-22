@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { WalletAddress } from 'app/components/WalletAddress'
 import { LabelledValue } from 'components/LabelledValue'
 import { formatDateToMMDDYY } from 'helpers/dates'
@@ -9,7 +9,7 @@ export interface BasicOverviewProps {
   capitalStructure: string
   launchDate: string
   completionDate: string
-  decimalPlaces: string
+  decimals: string
   tokenAddress: string
 }
 
@@ -18,7 +18,7 @@ export const BasicOverview = ({
   capitalStructure,
   launchDate,
   completionDate,
-  decimalPlaces,
+  decimals,
   tokenAddress
 }: BasicOverviewProps) => {
   return (
@@ -42,7 +42,7 @@ export const BasicOverview = ({
         />
       </Grid>
       <Grid item xs={12} sm={6} md={4}>
-        <LabelledValue label='Decimal' value={decimalPlaces} />
+        <LabelledValue label='Decimal' value={decimals} />
       </Grid>
       <Grid item xs={12} sm={6} md={8}>
         <LabelledValue

@@ -16,7 +16,7 @@ export interface ListingFormValues {
   network: string
   tokenName: string
   tokenSymbol: string
-  decimalPlaces?: number | null
+  decimals?: number | null
   minimumTradeUnits: number | null
   maximumTradeUnits: number | null
   raisedAmount: number | null
@@ -34,8 +34,8 @@ export interface ListingFormValues {
   incomeStatement: DataroomFile[]
   cashFlow: DataroomFile[]
   balanceSheet: DataroomFile[]
-  launchDate: Date | string
-  completionDate: Date | string
+  launchDate?: Date | string
+  completionDate?: Date | string
   introduction: string
   marketType: string
   asset: string
@@ -57,7 +57,7 @@ export interface Listing {
   banner: DataroomFile
   tokenName: string
   tokenSymbol: string
-  decimalPlaces: number
+  decimals: number
   launchDate: Date
   completionDate: Date
   network: Network
@@ -106,7 +106,7 @@ export interface ListingFormValuesForSubmit {
   banner: DataroomFile
   tokenName: string
   tokenSymbol: string
-  decimalPlaces: string
+  decimals: string
   launchDate: Date
   completionDate: Date
   network: Network

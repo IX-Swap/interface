@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles'
+import makeStyles from '@mui/styles/makeStyles'
 
 export default makeStyles(theme => ({
   root: {
@@ -47,6 +47,6 @@ export default makeStyles(theme => ({
     marginRight: theme.spacing(1.5),
     marginBottom: theme.spacing(1),
     fontSize: 14,
-    color: theme.palette.type === 'light' ? '#666666' : '#ffffff'
+    color: theme.palette.mode === 'light' ? '#666666' : '#ffffff'
   }
 }))

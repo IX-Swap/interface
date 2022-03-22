@@ -137,6 +137,7 @@ export const investQueryKeys = {
 
 export const authQueryKeys = {
   get2fa: 'get-2fa',
+  getEmailCode: 'get-email-code',
   getLoginHistory: (userId?: string) =>
     generateQueryKey('login-history', userId)
 }
@@ -181,7 +182,9 @@ export const issuanceQueryKeys = {
   getApprovedList: 'approved-list',
   getCapitalStructureList: 'capital-structures-list',
   getActivitiesList: (dsoId?: string) =>
-    generateQueryKey('activities-list', dsoId)
+    generateQueryKey('activities-list', dsoId),
+  getReport: (reportId?: string) => generateQueryKey('report', reportId),
+  reportTemplate: 'report-template'
 }
 
 export const virtualAccountQueryKeys = {

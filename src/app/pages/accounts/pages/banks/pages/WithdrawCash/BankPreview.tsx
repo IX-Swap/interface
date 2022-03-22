@@ -2,7 +2,7 @@ import React from 'react'
 import { BankDetails } from 'app/components/BankDetails'
 import { useFormContext } from 'react-hook-form'
 import { useBanksData } from 'app/pages/accounts/pages/banks/hooks/useBanksData'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { WithdrawCashFormValues } from 'app/pages/accounts/types'
 import { privateClassNames } from 'helpers/classnames'
 

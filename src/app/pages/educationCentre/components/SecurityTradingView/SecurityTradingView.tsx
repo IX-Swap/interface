@@ -1,4 +1,4 @@
-import { Grid, Typography } from '@material-ui/core'
+import { Grid, Typography } from '@mui/material'
 import { TimeSeriesChart } from 'app/pages/educationCentre/components/Charts/SecurityTimeSeriesChart'
 import { Security } from 'app/pages/educationCentre/components/Securities/SecurityCard'
 import {

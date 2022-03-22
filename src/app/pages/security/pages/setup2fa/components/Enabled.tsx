@@ -1,7 +1,7 @@
 import React from 'react'
-import { Grid, Typography } from '@material-ui/core'
-import CheckCircleIcon from '@material-ui/icons/CheckCircle'
-import { green } from '@material-ui/core/colors'
+import { Grid, Typography } from '@mui/material'
+import CheckCircleIcon from '@mui/icons-material/CheckCircle'
+import { green } from '@mui/material/colors'
 import { VSpacer } from 'components/VSpacer'
 
 export const Enabled = () => {

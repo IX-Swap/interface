@@ -1,7 +1,7 @@
 import React from 'react'
-import { useTheme } from '@material-ui/core/styles'
-import BackupOutlinedIcon from '@material-ui/icons/BackupOutlined'
-import { Box, Typography } from '@material-ui/core'
+import { useTheme } from '@mui/material/styles'
+import BackupOutlinedIcon from '@mui/icons-material/BackupOutlined'
+import { Box, Typography } from '@mui/material'
 import { useStyles } from './Dropzone.styles'
 import classNames from 'classnames'
 
@@ -18,30 +18,15 @@ export const DropzoneFallback = ({
 }: DropzoneFallbackProps) => {
   const theme = useTheme()
   const { icon, bigIcon } = useStyles()
+  const isBanner = type === 'banner'
 
   const borderStyle = hasError ? 'solid' : 'dashed'
-  const borderColor = hasError
-    ? theme.palette.error.main
-    : type === 'banner'
-    ? ' #C4C4C4'
-    : theme.palette.text.secondary
+  const normalBorderColor = isBanner ? ' #C4C4C4' : theme.palette.text.secondary
+  const borderColor = hasError ? theme.palette.error.main : normalBorderColor
 
-  return (
-    <Box
-      paddingX={6}
-      display='flex'
-      flexDirection='column'
-      justifyContent='center'
-      alignItems='center'
-      width='100%'
-      height='100%'
-      style={{ backgroundColor: type === 'banner' ? '#EDEDED' : 'initial' }}
-      border={`1px ${borderStyle} ${borderColor}`}
-    >
-      <BackupOutlinedIcon
-        className={classNames(icon, { [bigIcon]: type === 'banner' })}
-      />
-      {type === 'banner' ? (
+  const getDropzoneText = () => {
+    if (isBanner) {
+      return (
         <Typography
           align='center'
           variant='body1'
@@ -58,13 +43,34 @@ export const DropzoneFallback = ({
           </b>{' '}
           to upload
         </Typography>
-      ) : (
-        <Typography align='center' variant='caption' color='textSecondary'>
-          {multiple ? 'You can drag and drop multiple files at once' : 'Drop'}{' '}
-          <br /> or <br />
-          Upload
-        </Typography>
-      )}
+      )
+    }
+
+    return (
+      <Typography align='center' variant='caption' color='textSecondary'>
+        {multiple ? 'You can drag and drop multiple files at once' : 'Drop'}{' '}
+        <br /> or <br />
+        Upload
+      </Typography>
+    )
+  }
+
+  return (
+    <Box
+      paddingX={6}
+      display='flex'
+      flexDirection='column'
+      justifyContent='center'
+      alignItems='center'
+      width='100%'
+      height='100%'
+      style={{ backgroundColor: type === 'banner' ? '#EDEDED' : 'initial' }}
+      border={`1px ${borderStyle} ${borderColor}`}
+    >
+      <BackupOutlinedIcon
+        className={classNames(icon, { [bigIcon]: type === 'banner' })}
+      />
+      {getDropzoneText()}
     </Box>
   )
 }

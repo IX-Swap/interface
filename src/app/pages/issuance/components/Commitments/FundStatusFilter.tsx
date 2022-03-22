@@ -1,7 +1,7 @@
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import React, { ChangeEvent } from 'react'
 import { FundStatusSelect } from 'app/pages/issuance/components/Commitments/FundStatusSelect'
-import { FormControl, InputLabel } from '@material-ui/core'
+import { FormControl, InputLabel } from '@mui/material'
 
 export const FundStatusFilter = () => {
   const { getFilterValue, updateFilter } = useQueryFilter()

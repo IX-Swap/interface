@@ -1,6 +1,6 @@
 import React from 'react'
 import { useDSOById } from 'app/pages/invest/hooks/useDSOById'
-import { Card, CardContent, Grid } from '@material-ui/core'
+import { Card, CardContent, Grid } from '@mui/material'
 import { CommitmentFormFields } from 'app/pages/invest/components/CommitmentFormFields'
 import { CommitmentHeader } from 'app/pages/invest/components/CommitmentHeader'
 import { CommitmentForm } from 'app/pages/invest/components/CommitmentForm'

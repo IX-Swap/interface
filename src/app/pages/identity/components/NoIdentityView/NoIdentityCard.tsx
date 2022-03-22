@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Card, Grid, Typography } from '@material-ui/core'
+import { Box, Card, Grid, Typography } from '@mui/material'
 import { ReactComponent as CreateProfile } from 'assets/images/create-profile.svg'
 
 export const NoIdentityCard = () => {

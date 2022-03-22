@@ -1,5 +1,6 @@
 import React from 'react'
 import { Route, Router } from 'react-router-dom'
+import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import {
   render,
   waitFor,
@@ -7,11 +8,13 @@ import {
   RenderResult
 } from '@testing-library/react'
 import {
-  StylesProvider,
   ThemeProvider,
+  StyledEngineProvider,
   createTheme,
-  createGenerateClassName
-} from '@material-ui/core/styles'
+  adaptV4Theme
+} from '@mui/material/styles'
+import StylesProvider from '@mui/styles/StylesProvider'
+import createGenerateClassName from '@mui/styles/createGenerateClassName'
 import { history } from 'config/history'
 import { UserProvider } from 'auth/context'
 import { UserStore } from 'auth/context/store'
@@ -29,6 +32,8 @@ import { Form } from 'components/form/Form'
 import { Toast } from 'components/Toast'
 import { AppThemeProvider } from 'AppThemeProvider'
 import apiService from 'services/api'
+import LocalizationProvider from '@mui/lab/LocalizationProvider'
+import { QueryCache, ReactQueryCacheProvider } from 'react-query'
 
 export const apiServiceMock = {
   put: jest.fn(),
@@ -47,35 +52,49 @@ const generateClassName = createGenerateClassName({
   productionPrefix: 'ix'
 })
 
+const queryCache = new QueryCache({
+  defaultConfig: {
+    queries: {
+      retry: false
+    }
+  }
+})
+
 export const BaseProviders: React.FC<{ mockAPI?: boolean }> = ({
   children,
   mockAPI = false
 }) => {
   return (
-    <StylesProvider generateClassName={generateClassName}>
-      <AppThemeProvider>
-        {theme => (
-          <ThemeProvider theme={theme}>
-            <AppStateProvider>
-              <ToastProvider
-                components={{ Toast: Toast, ToastContainer: () => null }}
-              >
-                <ServicesProvider
-                  value={{
-                    apiService: mockAPI ? apiServiceMock : apiService,
-                    snackbarService: snackbarServiceMock
-                  }}
-                >
-                  <BreadcrumbsProvider>
-                    <Router history={history}>{children}</Router>
-                  </BreadcrumbsProvider>
-                </ServicesProvider>
-              </ToastProvider>
-            </AppStateProvider>
-          </ThemeProvider>
-        )}
-      </AppThemeProvider>
-    </StylesProvider>
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
+      <StylesProvider generateClassName={generateClassName}>
+        <AppThemeProvider>
+          {theme => (
+            <StyledEngineProvider injectFirst>
+              <ReactQueryCacheProvider queryCache={queryCache}>
+                <ThemeProvider theme={theme}>
+                  <AppStateProvider>
+                    <ToastProvider
+                      components={{ Toast: Toast, ToastContainer: () => null }}
+                    >
+                      <ServicesProvider
+                        value={{
+                          apiService: mockAPI ? apiServiceMock : apiService,
+                          snackbarService: snackbarServiceMock
+                        }}
+                      >
+                        <BreadcrumbsProvider>
+                          <Router history={history}>{children}</Router>
+                        </BreadcrumbsProvider>
+                      </ServicesProvider>
+                    </ToastProvider>
+                  </AppStateProvider>
+                </ThemeProvider>
+              </ReactQueryCacheProvider>
+            </StyledEngineProvider>
+          )}
+        </AppThemeProvider>
+      </StylesProvider>
+    </LocalizationProvider>
   )
 }
 
@@ -189,14 +208,17 @@ export const renderHookWithForm = (
 export const renderWithInitialWidth = (ui: any, initialWidth: any) => {
   const SizeWrapper = (props: any) => {
     const defaultTheme = createTheme()
-    const theme = createTheme({
-      props: { ...defaultTheme, MuiWithWidth: { initialWidth } }
-    })
+    const theme = createTheme(
+      // adaptV4Theme({ ...defaultTheme, MuiWithWidth: { initialWidth } })
+      adaptV4Theme({ ...defaultTheme })
+    )
 
     return (
       <BaseProviders>
         <UserProvider value={{ ...fakeUserStore }}>
-          <ThemeProvider theme={theme}>{props.children}</ThemeProvider>
+          <StyledEngineProvider injectFirst>
+            <ThemeProvider theme={theme}>{props.children}</ThemeProvider>
+          </StyledEngineProvider>
         </UserProvider>
       </BaseProviders>
     )
@@ -207,8 +229,7 @@ export const renderWithInitialWidth = (ui: any, initialWidth: any) => {
 
 export const invokeMutationFn = async (result: any, payload: any) => {
   await waitFor(() => result.current)
-  const response = await result.current[0](payload)
-  return response
+  return result.current[0](payload)
 }
 
 // eslint-disable-next-line import/export

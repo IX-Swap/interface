@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles'
+import makeStyles from '@mui/styles/makeStyles'
 
 export const useStyles = makeStyles(theme => ({
   wrapper: {
@@ -8,7 +8,7 @@ export const useStyles = makeStyles(theme => ({
     paddingLeft: theme.spacing(1),
     display: 'initial',
     textAlign: 'center',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       position: 'relative',
       paddingRight: 0,
       paddingLeft: 0,
@@ -19,14 +19,14 @@ export const useStyles = makeStyles(theme => ({
   firstBlock: {
     width: 'initial',
     paddingRight: 0,
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       width: '50%',
       paddingRight: theme.spacing(2)
     }
   },
   secondBlock: {
     width: 'initial',
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       width: '50%'
     }
   },
@@ -44,7 +44,7 @@ export const useStyles = makeStyles(theme => ({
     fontWeight: 600,
     whiteSpace: 'pre-wrap',
     paddingRight: theme.spacing(3.75),
-    [theme.breakpoints.down('xs')]: {
+    [theme.breakpoints.down('sm')]: {
       position: 'initial'
     }
   },

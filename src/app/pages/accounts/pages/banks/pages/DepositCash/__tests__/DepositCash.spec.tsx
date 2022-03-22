@@ -6,13 +6,6 @@ import { generateQueryResult } from '__fixtures__/useQuery'
 import { virtualAccountsSample } from '__fixtures__/virtualAccounts'
 
 jest.mock(
-  'app/pages/accounts/pages/banks/pages/DepositCash/DepositView',
-  () => ({
-    DepositView: () => <div data-testid='deposit-view'></div>
-  })
-)
-
-jest.mock(
   'app/pages/accounts/pages/banks/pages/DepositCash/RecentDeposits',
   () => ({
     RecentDeposits: () => <div data-testid='recent-deposits'></div>

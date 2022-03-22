@@ -1,5 +1,5 @@
 import React from 'react'
-import { Divider, Grid, Typography } from '@material-ui/core'
+import { Divider, Grid, Typography } from '@mui/material'
 import { VSpacer } from 'components/VSpacer'
 import { useStyles } from './SuccessfulSignup.styles'
 import { ReactComponent as SuccessIcon } from 'assets/icons/white_success.svg'

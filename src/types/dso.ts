@@ -88,7 +88,7 @@ export interface BaseDigitalSecurityOffering extends AuthorizableWithIdentity {
   deploymentInfo?: DeploymentInfo
   policyBuilder?: {}
   user: string
-  decimalPlaces?: number
+  decimals?: number
   uniqueIdentifierCode?: string
   dealStatus?: string
   marketType?: string
@@ -147,7 +147,6 @@ export type DSOFormValues = Omit<
   | 'subscriptionDocument'
   | 'insight'
   | 'disabled'
-  | 'decimalPlaces'
 > & {
   subscriptionDocument?: DataroomFile
   status?: string

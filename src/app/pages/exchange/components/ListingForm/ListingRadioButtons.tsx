@@ -2,11 +2,10 @@ import {
   FormControl,
   FormControlLabel,
   Grid,
-  InputLabel,
   Radio,
   RadioGroup,
   Typography
-} from '@material-ui/core'
+} from '@mui/material'
 import React, { useState } from 'react'
 import { DSOSelect } from 'app/pages/issuance/components/IssuanceLanding/DSOSelect'
 import { useDSOsByUserId } from 'app/pages/issuance/hooks/useDSOsByUserId'
@@ -44,9 +43,10 @@ export const ListingRadioButtons = ({
           />
         </Grid>
         <Grid item>
-          <FormControl variant='outlined' style={{ width: 294 }}>
-            <InputLabel htmlFor='my-dso'>My DSO</InputLabel>
+          <FormControl fullWidth variant='outlined' style={{ width: 294 }}>
             <DSOSelect
+              label='My DSO'
+              value={selectedDSOValue}
               disabled={isLoading || isNewListing}
               options={data.list}
               onChange={value =>

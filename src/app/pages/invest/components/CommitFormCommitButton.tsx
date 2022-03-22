@@ -1,7 +1,7 @@
 import React from 'react'
 import { useCommitmentValidator } from 'app/pages/invest/hooks/useCommitmentValidator'
 import { useFormContext } from 'react-hook-form'
-import { Button } from '@material-ui/core'
+import { Button } from '@mui/material'
 import { CommitmentFormValues } from 'types/commitment'
 import { useMakeCommitment } from 'app/pages/invest/hooks/useMakeCommitment'
 

@@ -6,7 +6,7 @@ import {
   TableCell,
   TableRow,
   Typography
-} from '@material-ui/core'
+} from '@mui/material'
 import { FundingLinearProgress } from 'app/pages/educationCentre/components/Funding/FundingLinearProgress'
 import { Security } from 'app/pages/educationCentre/components/Securities/SecurityCard'
 import React from 'react'

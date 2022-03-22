@@ -1,9 +1,9 @@
 import React, { ReactNode } from 'react'
-import { Grid, Card, Typography, IconButton } from '@material-ui/core'
+import { Grid, Card, Typography, IconButton } from '@mui/material'
 import { AppearanceTypes, ToastProps } from 'react-toast-notifications'
 import { useStyles } from 'app/pages/notifications/components/NotificationsItem.styles'
 import classNames from 'classnames'
-import { Close } from '@material-ui/icons'
+import { Close } from '@mui/icons-material'
 import { NotificationIcon } from 'app/pages/notifications/components/NotificationIcon'
 
 export interface SnackbarProps {

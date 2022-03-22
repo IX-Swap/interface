@@ -1,4 +1,4 @@
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { BeneficialOwner } from 'app/pages/identity/components/CorporateIdentityView/BeneficialOwner'
 import React from 'react'
 import { Personnel } from 'app/pages/identity/types/forms'

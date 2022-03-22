@@ -5,12 +5,12 @@ import {
   Grid,
   IconButton,
   useTheme
-} from '@material-ui/core'
+} from '@mui/material'
 import { convertAddressToString } from 'app/pages/authorizer/components/utils'
 import { LabelledValue } from 'components/LabelledValue'
 import React from 'react'
 import { Bank } from 'types/bank'
-import CloseIcon from '@material-ui/icons/Close'
+import CloseIcon from '@mui/icons-material/Close'
 
 export interface BankDetailsDialogProps {
   bank: Bank
@@ -79,6 +79,7 @@ export const BankDetailsDialog = ({
             top: 5,
             right: 10
           }}
+          size='large'
         >
           <CloseIcon style={{ color: '#FFF' }} />
         </IconButton>

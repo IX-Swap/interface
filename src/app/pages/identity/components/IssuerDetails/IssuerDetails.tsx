@@ -1,4 +1,4 @@
-import { Grid, TextField, Typography } from '@material-ui/core'
+import { Grid, TextField, Typography } from '@mui/material'
 import { NumericInput } from 'components/form/NumericInput'
 import { TypedField } from 'components/form/TypedField'
 import { moneyNumberFormat } from 'config/numberFormat'
@@ -14,7 +14,7 @@ export const basicInformationFields = [
   },
   { name: 'companyName', label: 'Company Name' },
   { name: 'companyRegistrationNumber', label: 'Registration Number / UEN' },
-  { name: 'contactNumber', label: 'Contact Number - (optional)' },
+  { name: 'contactNumber', label: 'Contact Number' },
   { name: 'email', label: 'Email Address' },
   { name: 'industry', label: 'Industry' }
 ]

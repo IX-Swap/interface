@@ -6,7 +6,7 @@ import {
   TableContainer,
   TableHead,
   TableRow
-} from '@material-ui/core'
+} from '@mui/material'
 import { useStyles } from '../shared.styles'
 import { OpenPositionItem, OpenPositionsTotal } from 'types/reports'
 import { OpenPositionRow } from 'app/pages/accounts/pages/reports/components/OpenPositionTable/OpenPositionRow'

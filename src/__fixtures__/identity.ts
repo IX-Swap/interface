@@ -75,7 +75,10 @@ export const corporate: CorporateIdentity = {
   authorization: authorizationInfo,
   authorizations: [],
   mailingAddress: address,
-  createdBy: '12345'
+  createdBy: '12345',
+  numberOfBusinessOwners: '1',
+  businessActivity: '12',
+  sourceOfFund: 'LOAN'
 }
 
 export const agreementsAndDisclosures = {
@@ -103,6 +106,7 @@ export const individual: IndividualIdentity = {
   lastName: 'Doe',
   middleName: '',
   nationality: 'Russian',
+  gender: 'Male',
   occupation: 'Occupied',
   // politicallyExposed: false,
   sourceOfWealth: '___',
@@ -138,13 +142,7 @@ export const individual: IndividualIdentity = {
   documents: [],
   address,
   user,
-  sourceOfFund: [
-    {
-      name: 'Inheritance/Gifts',
-      checked: true,
-      value: 20
-    }
-  ],
+  sourceOfFund: 'LOAN',
   createdBy: '12345'
 }
 

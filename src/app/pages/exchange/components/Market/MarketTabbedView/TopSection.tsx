@@ -1,4 +1,4 @@
-import { Grid, Tab, Tabs } from '@material-ui/core'
+import { Grid, Tab, Tabs } from '@mui/material'
 import { TVChartContainer } from 'app/pages/invest/components/TVChartContainer/TVChartContainer'
 import { TabPanel } from 'components/TabPanel'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
@@ -37,8 +37,8 @@ export const TopSection = ({ symbol, datafeed }: TopSectionProps) => {
               data-testid={'tv-chart-container-data-test-id'}
               datafeed={datafeed}
               symbol={symbol}
-              theme={theme.palette.type === 'dark' ? 'Dark' : 'Light'}
-              toolbarBg={theme.palette.type === 'dark' ? '#292929' : ''}
+              theme={theme.palette.mode === 'dark' ? 'Dark' : 'Light'}
+              toolbarBg={theme.palette.mode === 'dark' ? '#292929' : ''}
               customCssUrl={'./trading-view_dark.css'}
             />
           )}

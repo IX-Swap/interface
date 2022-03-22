@@ -1,6 +1,6 @@
 import React from 'react'
 import { render } from 'test-utils'
-import Typography from '@material-ui/core/Typography'
+import Typography from '@mui/material/Typography'
 import { CapitalCallDialog } from 'app/pages/issuance/components/Commitments/CapitalCallDialog/CapitalCallDialog'
 import { fireEvent, waitFor } from '@testing-library/dom'
 import { ReactMultiEmail } from 'react-multi-email'
@@ -9,7 +9,7 @@ jest.mock('react-multi-email', () => ({
   ReactMultiEmail: jest.fn(() => null)
 }))
 
-jest.mock('@material-ui/core/Typography', () => jest.fn(() => null))
+jest.mock('@mui/material/Typography', () => jest.fn(() => null))
 
 const handleToggle = jest.fn()
 

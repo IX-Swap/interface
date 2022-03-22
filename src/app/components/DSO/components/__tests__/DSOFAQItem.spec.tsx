@@ -4,7 +4,7 @@ import { Form } from 'components/form/Form'
 import { faqItem } from '__fixtures__/issuance'
 import { DSOFAQItem } from 'app/components/DSO/components/DSOFAQItem'
 import { TypedField } from 'components/form/TypedField'
-import { TextField } from '@material-ui/core'
+import { TextField } from '@mui/material'
 import { DSOTeamRemoveButton } from 'app/components/DSO/components/DSOTeamRemoveButton'
 
 jest.mock('components/form/TypedField', () => ({

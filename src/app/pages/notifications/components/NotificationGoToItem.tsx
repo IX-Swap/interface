@@ -1,6 +1,6 @@
 import React from 'react'
-import { IconButton } from '@material-ui/core'
-import { ArrowForward } from '@material-ui/icons'
+import { IconButton } from '@mui/material'
+import { ArrowForward } from '@mui/icons-material'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { AppFeature } from 'types/app'
 import { Notification } from 'types/notification'
@@ -27,7 +27,9 @@ export const NotificationGoToItem = (props: NotificationGoToItemProps) => {
     data.feature === AppFeature.Deposits ||
     data.feature === AppFeature.Withdrawals ||
     data.feature === AppFeature.DigitalSecurityWithdrawals ||
-    data.feature === AppFeature.Authentication
+    data.feature === AppFeature.Authentication ||
+    (data?.service?.toUpperCase() === 'EXCHANGE' &&
+      data?.subject?.toUpperCase() === 'ORDER CREATED')
   ) {
     return null
   }

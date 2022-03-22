@@ -1,4 +1,4 @@
-import { Box } from '@material-ui/core'
+import { Box } from '@mui/material'
 import React from 'react'
 import classnames from 'classnames'
 import { useStyles } from 'app/components/OnboardingPanel/OnboardingPanel.styles'
@@ -22,18 +22,13 @@ export const OnboardingContentWrapper = ({
   const { open } = useOnboardingPanel()
   const { pathname } = useLocation()
   const {
-    isIssuerJourneyCompleted,
-    isInvestorJourneyCompleted,
+    isCorporateJourneyCompleted,
     isIndividualJourneyCompleted,
-    isInvestorJourneyStarted,
-    isIssuerJourneyStarted,
     isIdentitiesLoaded
   } = useOnboardingJourneys()
 
   const isOnboardingPannelHidden =
-    isIndividualJourneyCompleted ||
-    isInvestorJourneyCompleted ||
-    isIssuerJourneyCompleted
+    isIndividualJourneyCompleted || isCorporateJourneyCompleted
 
   const onboardingBasePaths = [
     SecurityRoute.landing,
@@ -41,11 +36,7 @@ export const OnboardingContentWrapper = ({
     IdentityRoute.list
   ]
 
-  if (
-    isIndividualJourneyCompleted ||
-    (isInvestorJourneyCompleted && !isIssuerJourneyStarted) ||
-    (isIssuerJourneyCompleted && !isInvestorJourneyStarted)
-  ) {
+  if (isIndividualJourneyCompleted || isCorporateJourneyCompleted) {
     return <>{children}</>
   }
   const pathnameBase = pathname.split('/').slice(0, 3).join('/')

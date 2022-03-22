@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react'
 import { VSpacer } from 'components/VSpacer'
-import { Typography } from '@material-ui/core'
+import { Typography } from '@mui/material'
 
 import {
   getDocumentsFormValues,
@@ -86,7 +86,7 @@ export const individualInvestorFormSteps = [
     )
   },
   {
-    label: 'Documents Upload',
+    label: 'Upload Documents',
     getFormValues: getDocumentsFormValues,
     getRequestPayload: getDocumentsRequestPayload,
     validationSchema: individualInvestorDocumentsSchema,

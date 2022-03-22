@@ -6,7 +6,7 @@ import { identityQueryKeys } from 'config/queryKeys'
 import { AdminIdentity } from 'types/adminIdentity'
 import { ViewIdentityAction } from 'app/pages/admin/components/AdminIdentityList/ViewIdentityAction'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { Filters } from 'app/pages/admin/components/AdminIdentityList/Filters'
 
 export const AdminIdentityList = () => {

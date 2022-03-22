@@ -1,5 +1,5 @@
 import React from 'react'
-import { Table, TableBody, TableContainer } from '@material-ui/core'
+import { Table, TableBody, TableContainer } from '@mui/material'
 import { CashReports } from 'types/reports'
 import { CashReportRow } from 'app/pages/accounts/pages/reports/components/CashReportTable/CashReportRow'
 

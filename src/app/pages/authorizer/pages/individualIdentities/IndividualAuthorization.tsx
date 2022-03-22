@@ -12,7 +12,7 @@ export const IndividualAuthorization = () => {
         <AuthorizerView
           title={getPersonName(data) as string}
           data={data}
-          feature={AppFeature.Individuals}
+          feature={AppFeature.IndividualsAuthorization}
         >
           <IndividualIdentityView data={data} />
         </AuthorizerView>

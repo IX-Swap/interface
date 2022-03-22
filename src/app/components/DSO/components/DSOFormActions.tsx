@@ -1,4 +1,4 @@
-import { Box, Button } from '@material-ui/core'
+import { Box, Button } from '@mui/material'
 import { DSOFinishLaterButton } from 'app/components/DSO/components/DSOFinishLaterButton'
 import { IssuanceRoute } from 'app/pages/issuance/router/config'
 import { useSaveDSO } from 'app/pages/issuance/hooks/useSaveDSO'

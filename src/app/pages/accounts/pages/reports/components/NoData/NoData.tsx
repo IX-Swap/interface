@@ -1,5 +1,5 @@
 import { useStyles } from './NoData.styles'
-import { Box, Grid, Typography } from '@material-ui/core'
+import { Box, Grid, Typography } from '@mui/material'
 import React from 'react'
 import { ReactComponent as NoDataImage } from 'assets/images/no_data.svg'
 import { VSpacer } from 'components/VSpacer'

@@ -17,6 +17,7 @@ test.describe('Check identities form', () => {
   test('Individual', async ({ page, kycForms }, testInfo) => {
     await test.step('Personal Information ', async () => {
       await click(kyc.type.INDIVIDUAL, page)
+      await click(kyc.buttons.OKAY, page)
       await kycForms.fillPersonalInformationForm()
       await kycForms.fillAddressForm()
       await kycForms.fillFinancialInformation()
@@ -119,6 +120,7 @@ test.describe('Check identities form', () => {
 
   test('Check FATCA information', async ({ page, kycForms }, testInfo) => {
     await click(kyc.type.INDIVIDUAL, page)
+    await click(kyc.buttons.OKAY, page)
     await kycForms.fillPersonalInformationForm()
     await kycForms.fillAddressForm()
     await kycForms.fillFinancialInformation()

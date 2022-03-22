@@ -1,6 +1,6 @@
 import React from 'react'
 import { TableView } from 'components/TableWithPagination/TableView'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import { columns } from 'app/pages/exchange/components/TradeHistoryTable/columns'
 import { Filters } from 'app/pages/exchange/components/TradeHistoryTable/Filter'
@@ -29,7 +29,8 @@ export const TradeHistoryTable = () => {
     search: getFilterValue('search'),
     to: getFilterValue('toDate'),
     from: getFilterValue('fromDate'),
-    pair: getFilterValue('pair')
+    pair: getFilterValue('pair'),
+    orderType: 'PAST'
   }
 
   return (

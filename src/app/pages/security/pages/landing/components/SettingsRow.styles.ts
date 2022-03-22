@@ -1,6 +1,14 @@
-import { makeStyles } from '@material-ui/core/styles'
+import makeStyles from '@mui/styles/makeStyles'
 
-export default makeStyles(() => ({
+export default makeStyles(theme => ({
+  wrapper: {
+    [theme.breakpoints.up('sm')]: {
+      height: 40
+    }
+  },
+  content: {
+    flexWrap: 'wrap'
+  },
   logoImg: {
     height: '4em',
     marginRight: '1em'

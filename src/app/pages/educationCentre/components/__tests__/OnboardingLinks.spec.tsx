@@ -22,9 +22,13 @@ describe('OnboardingLinks', () => {
 
   it('renders all links if user has no completed Indentity Journey', () => {
     const objResponse = {
-      isIssuerJourneyCompleted: false,
-      isInvestorJourneyCompleted: false,
-      isIndividualJourneyCompleted: false
+      isCorporateJourneyCompleted: false,
+      isIndividualJourneyCompleted: false,
+      corporateIdentities: [
+        {
+          type: 'investor'
+        }
+      ]
     }
     jest
       .spyOn(useOnboardingJourneys, 'useOnboardingJourneys')
@@ -61,9 +65,13 @@ describe('OnboardingLinks', () => {
 
   it('renders only individual investor link if user completed individual investor onboarding journey', () => {
     const objResponse = {
-      isIssuerJourneyCompleted: false,
-      isInvestorJourneyCompleted: false,
-      isIndividualJourneyCompleted: true
+      isCorporateJourneyCompleted: false,
+      isIndividualJourneyCompleted: true,
+      corporateIdentities: [
+        {
+          type: 'investor'
+        }
+      ]
     }
     jest
       .spyOn(useOnboardingJourneys, 'useOnboardingJourneys')
@@ -84,9 +92,13 @@ describe('OnboardingLinks', () => {
 
   it('renders only corporate and issuer links if user completed corporate investor journey', () => {
     const objResponse = {
-      isIssuerJourneyCompleted: false,
-      isInvestorJourneyCompleted: true,
-      isIndividualJourneyCompleted: false
+      isCorporateJourneyCompleted: true,
+      isIndividualJourneyCompleted: false,
+      corporateIdentities: [
+        {
+          type: 'issuer'
+        }
+      ]
     }
     jest
       .spyOn(useOnboardingJourneys, 'useOnboardingJourneys')
@@ -116,9 +128,13 @@ describe('OnboardingLinks', () => {
 
   it('renders only corporate links if user completed issuer journey', () => {
     const objResponse = {
-      isIssuerJourneyCompleted: true,
-      isInvestorJourneyCompleted: false,
-      isIndividualJourneyCompleted: false
+      isCorporateJourneyCompleted: true,
+      isIndividualJourneyCompleted: false,
+      corporateIdentities: [
+        {
+          type: 'issuer'
+        }
+      ]
     }
     jest
       .spyOn(useOnboardingJourneys, 'useOnboardingJourneys')
@@ -148,9 +164,13 @@ describe('OnboardingLinks', () => {
 
   it('renders only corporate links if user completed both corporate and issuer journeys', () => {
     const objResponse = {
-      isIssuerJourneyCompleted: true,
-      isInvestorJourneyCompleted: true,
-      isIndividualJourneyCompleted: false
+      isCorporateJourneyCompleted: true,
+      isIndividualJourneyCompleted: false,
+      corporateIdentities: [
+        {
+          type: 'investor'
+        }
+      ]
     }
     jest
       .spyOn(useOnboardingJourneys, 'useOnboardingJourneys')

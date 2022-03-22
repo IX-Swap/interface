@@ -1,5 +1,5 @@
 import React from 'react'
-import { MenuItem, Select, SelectProps } from '@material-ui/core'
+import { MenuItem, Select, SelectProps } from '@mui/material'
 import { renderMenuItems } from 'helpers/rendering'
 import { TypedSelectProps } from 'types/util'
 import { transferDirections } from 'config/defaults'

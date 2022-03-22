@@ -1,7 +1,7 @@
 import React from 'react'
 import { TypedField } from 'components/form/TypedField'
 import { RadioGroup } from 'components/form/RadioGroup'
-import { FormControlLabel, Grid, Radio } from '@material-ui/core'
+import { FormControlLabel, Grid, Radio } from '@mui/material'
 import { useFormContext } from 'react-hook-form'
 
 export const AddressType = () => {

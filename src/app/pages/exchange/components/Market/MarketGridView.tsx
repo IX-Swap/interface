@@ -1,6 +1,6 @@
 import React from 'react'
 import { useStyles } from 'app/pages/exchange/pages/market/Market.styles'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { InvestorLiveOrderBook } from 'app/pages/exchange/components/InvestorLiveOrderBook/InvestorLiveOrderBook'
 import { TVChartContainer } from 'app/pages/invest/components/TVChartContainer/TVChartContainer'
 import { MyOrders } from 'app/pages/exchange/components/MyOrders/MyOrders'
@@ -61,8 +61,8 @@ export const MarketGridView = ({
               data-testid={'tv-chart-container-data-test-id'}
               datafeed={datafeed}
               symbol={symbol}
-              theme={theme.palette.type === 'dark' ? 'Dark' : 'Light'}
-              toolbarBg={theme.palette.type === 'dark' ? '#292929' : ''}
+              theme={theme.palette.mode === 'dark' ? 'Dark' : 'Light'}
+              toolbarBg={theme.palette.mode === 'dark' ? '#292929' : ''}
               customCssUrl={'./trading-view_dark.css'}
             />
           )}

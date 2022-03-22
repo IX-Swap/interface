@@ -24,7 +24,7 @@ describe('DSOBaseFieldsView', () => {
     render(<DSOBaseFieldsView dso={dso} />)
 
     expect(DSOLogo).toHaveBeenCalledWith(
-      { dsoId: dso._id, size: 124, variant: 'circle' },
+      { dsoId: dso._id, size: 124, variant: 'circular' },
       {}
     )
   })
@@ -65,7 +65,7 @@ describe('DSOBaseFieldsView', () => {
       {}
     )
     expect(LabelledValue).toHaveBeenCalledWith(
-      { label: 'Decimal', value: dso.decimalPlaces, isNewThemeOn: true },
+      { label: 'Decimal', value: dso.decimals, isNewThemeOn: true },
       {}
     )
     expect(LabelledValue).toHaveBeenCalledWith(

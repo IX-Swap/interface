@@ -1,4 +1,4 @@
-import { Box, Grid } from '@material-ui/core'
+import { Box, Grid } from '@mui/material'
 import { CashDepositDetails } from 'app/pages/accounts/components/VirtualAccountCashDeposit/CashDepositDetails'
 import { DepositInfoProps } from 'app/pages/accounts/components/VirtualAccountCashDeposit/Fast'
 import React from 'react'
@@ -24,10 +24,6 @@ export const AchCredits = ({ accountId, currency }: DepositInfoProps) => {
     {
       label: 'SWIFT Code:',
       value: 'HSBCSGSGXXX'
-    },
-    {
-      label: 'Message to receiver/beneficiary/Ref/Bill ref:',
-      value: 'InvestaX to recommend'
     }
   ]
 

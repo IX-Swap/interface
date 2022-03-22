@@ -9,9 +9,9 @@ import {
   Warning as PendingApprovalIcon,
   SwapHoriz as TransferredIcon,
   SvgIconComponent
-} from '@material-ui/icons'
+} from '@mui/icons-material'
 import { AuthorizableStatus, DeploymentStatus, FundStatus } from 'types/util'
-import { Box } from '@material-ui/core'
+import { Box } from '@mui/material'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
 import { useAuthorizerCategory } from 'hooks/location/useAuthorizerCategory'
 import { BackhandIcon } from 'app/pages/authorizer/components/BackHandIcon'

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Grid, Typography } from '@material-ui/core'
+import { Button, Grid, Typography } from '@mui/material'
 import { DeploymentInfo } from 'types/dso'
 import { formatDateAndTime } from 'helpers/dates'
 

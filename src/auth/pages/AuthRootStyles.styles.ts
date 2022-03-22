@@ -1,6 +1,6 @@
-import { makeStyles } from '@material-ui/core/styles'
-import EarthImage from '../../images/digital_earth.png'
-import DotsImage from '../../images/background_dots.png'
+import makeStyles from '@mui/styles/makeStyles'
+import EarthImage from 'assets/images/digital_earth.png'
+import DotsImage from 'assets/images/background_dots.png'
 
 export const useStyles = makeStyles(theme => ({
   container: {
@@ -12,7 +12,7 @@ export const useStyles = makeStyles(theme => ({
     position: 'relative',
     paddingTop: 0,
     paddingBottom: 0,
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       padding: theme.spacing(3, 2),
       height: 'auto',
       marginLeft: 0
@@ -26,13 +26,16 @@ export const useStyles = makeStyles(theme => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       width: '100%'
     }
   },
   formContainer: {
     marginTop: 'auto',
-    marginBottom: 'auto'
+    marginBottom: 'auto',
+    [theme.breakpoints.down('md')]: {
+      marginTop: 0
+    }
   },
   background: {
     width: '45%',
@@ -44,7 +47,7 @@ export const useStyles = makeStyles(theme => ({
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
 
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       display: 'none'
     }
   },
@@ -64,6 +67,11 @@ export const useStyles = makeStyles(theme => ({
   logo: {
     position: 'absolute',
     left: 0,
-    top: 33
+    top: 33,
+    [theme.breakpoints.down('md')]: {
+      position: 'static',
+      marginBottom: 30,
+      marginTop: 9
+    }
   }
 }))

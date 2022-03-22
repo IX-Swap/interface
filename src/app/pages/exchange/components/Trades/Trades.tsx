@@ -1,4 +1,4 @@
-import { Grid, Tab, Tabs } from '@material-ui/core'
+import { Grid, Tab, Tabs } from '@mui/material'
 import { MarketTrades } from 'app/pages/exchange/components/Trades/MarketTrades'
 import { MyTrades } from 'app/pages/exchange/components/Trades/MyTrades'
 import { useStyles } from 'app/pages/exchange/components/Trades/Trades.styles'
@@ -19,7 +19,7 @@ export const Trades = () => {
       spacing={0}
       direction='column'
       style={{
-        backgroundColor: theme.palette.type === 'light' ? '#ffffff' : '#292929',
+        backgroundColor: theme.palette.mode === 'light' ? '#ffffff' : '#292929',
         marginTop: 10
       }}
     >

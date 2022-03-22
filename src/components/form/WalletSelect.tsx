@@ -1,5 +1,5 @@
 import React from 'react'
-import { MenuItem, Select, SelectProps } from '@material-ui/core'
+import { MenuItem, Select, SelectProps } from '@mui/material'
 import { BlockchainWalletView } from 'app/components/BlockchainWalletView'
 import { BlockchainWallet } from 'config/blockchain'
 

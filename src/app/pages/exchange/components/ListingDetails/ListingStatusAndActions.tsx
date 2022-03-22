@@ -1,4 +1,4 @@
-import { Button, Grid, Typography } from '@material-ui/core'
+import { Button, Grid, Typography } from '@mui/material'
 import { AuthorizableStatus } from 'app/pages/authorizer/components/AuthorizableStatus'
 import { SubmitListingButton } from 'app/pages/exchange/components/ListingDetails/SubmitListingButton'
 import { OTCMarketRoute } from 'app/pages/exchange/router/config'

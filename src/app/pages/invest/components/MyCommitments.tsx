@@ -7,7 +7,7 @@ import { useAuth } from 'hooks/auth/useAuth'
 import { getIdFromObj } from 'helpers/strings'
 import { privateClassNames } from 'helpers/classnames'
 import { investQueryKeys } from 'config/queryKeys'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
 
 export const MyCommitments = () => {
@@ -17,7 +17,7 @@ export const MyCommitments = () => {
   return (
     <Grid container direction='column'>
       <Grid item>
-        <PageHeader title='My Commitments' />
+        <PageHeader title='My Investments' />
       </Grid>
 
       <Grid item className={privateClassNames()}>

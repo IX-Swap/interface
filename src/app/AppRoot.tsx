@@ -1,7 +1,6 @@
 import React from 'react'
 import { ErrorBoundary } from '@sentry/react'
-import { Header } from 'app/components/Header/Header'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { AppError } from 'app/components/AppError'
 import { useDataFromURL } from 'hooks/location/useDataFromURL'
 import { SidebarContainer } from 'app/components/SidebarContainer/SidebarContainer'
@@ -10,6 +9,7 @@ import { OnboardingContentWrapper } from 'app/components/OnboardingPanel/Onboard
 import { AppRouter } from 'app/router/AppRouter'
 import { IdleDialog } from 'app/components/IdleDialog'
 import { useIdleTimers } from 'app/hooks/useIdleTimers'
+import { Header } from 'app/components/Header/Header'
 
 export const AppRoot = () => {
   const { open, logoutTimer, resetLogoutTimer, closeDialog, reset, logout } =

@@ -1,12 +1,12 @@
 import React from 'react'
 import { render } from 'test-utils'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'
-import { Typography } from '@material-ui/core'
+import { Typography } from '@mui/material'
 import { MasDisclosure } from 'app/pages/admin/pages/MasDisclosure'
 import { MasDisclosureForm } from 'app/pages/admin/components/MasDisclosureForm'
 import { MasDisclosurePreviewCard } from 'app/pages/admin/components/MasDisclosurePreviewCard'
 
-jest.mock('@material-ui/core/Typography', () => jest.fn(() => null))
+jest.mock('@mui/material/Typography', () => jest.fn(() => null))
 
 jest.mock('app/components/PageHeader/PageHeader', () => ({
   PageHeader: jest.fn(() => null)

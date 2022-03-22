@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { formatMoney } from 'helpers/numbers'
 import { CashWithdrawal } from 'types/cashWithdrawal'
 import { LabelledValue } from 'components/LabelledValue'

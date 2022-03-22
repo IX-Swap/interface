@@ -1,6 +1,6 @@
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
-import { Grid, InputAdornment } from '@material-ui/core'
+import { Grid, InputAdornment } from '@mui/material'
 import { numericValueExtractor } from 'helpers/forms'
 import { TypedField } from 'components/form/TypedField'
 import { useStyles } from 'app/pages/exchange/components/PlaceOrderFields/PlaceOrderFields.style'
@@ -75,7 +75,6 @@ export const PlaceOrderFields: React.FC<PlaceOrderFieldsProps> = ({
       </Grid>
 
       <Grid item className={classes.inputGrid}>
-        {/* @ts-expect-error */}
         <TypedField
           fullWidth
           customRenderer

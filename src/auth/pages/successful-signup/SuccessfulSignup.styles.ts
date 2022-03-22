@@ -1,5 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles'
-import EarthImage from '../../images/digital_earth.png'
+import makeStyles from '@mui/styles/makeStyles'
 
 export const useStyles = makeStyles(theme => ({
   wrapper: {
@@ -10,7 +9,8 @@ export const useStyles = makeStyles(theme => ({
     fontWeight: 700,
     fontSize: 40,
     color: theme.palette.text.primary,
-    textTransform: 'uppercase'
+    textTransform: 'uppercase',
+    fontFamily: 'Monument Extended, sans-serif'
   },
   description: {
     display: 'block',

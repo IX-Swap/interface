@@ -9,7 +9,7 @@ import { isSuperUser } from 'helpers/acl'
 import { documentsURL } from 'config/apiURL'
 import { SelectedDocument } from 'helpers/dataroom'
 
-export const useDeleteFilesArray = (name: string) => {
+export const useDeleteFilesArray = (name: string, action?: () => void) => {
   const { selected, resetSelection } =
     useSelectionHelperContext<SelectedDocument>()
   const { reset, getValues } = useFormContext()
@@ -46,6 +46,9 @@ export const useDeleteFilesArray = (name: string) => {
           `Successfully deleted ${successfullyDeletedIds.length} files`,
           'success'
         )
+        if (action !== undefined) {
+          action()
+        }
       })
       .catch(error => {
         snackbarService.showSnackbar(error.message, 'error')

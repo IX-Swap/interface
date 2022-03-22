@@ -7,6 +7,7 @@ import {
 } from 'app/pages/identity/const/declarations'
 import { AuthorizableStatus, Maybe } from 'types/util'
 import { Authorizable } from 'types/authorizer'
+import Cynopsis from 'types/cynopsis'
 
 export interface Address {
   line1: string
@@ -28,6 +29,7 @@ export interface IndividualPersonalInfoFormValues {
   email?: string
   contactNumber: string
   address: Address
+  gender: string
 }
 
 export interface TaxResidency {
@@ -63,6 +65,7 @@ export interface PersonalProfile {
   countryOfResidence: string
   contactNumber: string
   email?: string
+  gender: string
 }
 
 export type IndividualPersonalInformation = Omit<
@@ -76,6 +79,7 @@ export interface PersonalProfileWithAddress extends PersonalProfile {
 
 export interface ExtendedIdentityProfile extends PersonalProfile {
   user: User
+  cynopsis?: Cynopsis
 }
 
 export interface Personnel {
@@ -89,7 +93,7 @@ export interface Personnel {
 }
 
 export interface IndividualFinancialInfoFormValues {
-  sourceOfFund: FundSource[]
+  sourceOfFund: string | FundSource[]
   occupation: string
   employer: string
   employmentStatus: string
@@ -130,6 +134,9 @@ export interface InvestorCorporateInfoFormValues {
   isMailingAddressSame: boolean
   representatives: RepresentativeFormValues[]
   otherLegalEntityStatus?: string
+  numberOfBusinessOwners: string
+  businessActivity: string
+  sourceOfFund: string
 }
 
 export interface InvestorDirectorsAndBeneficialOwnersFormValues {
@@ -212,12 +219,13 @@ export interface IdentityFinancials {
   employmentStatus: string
   occupation: string
   sourceOfWealth: string
-  sourceOfFund?: FundSource[]
+  sourceOfFund?: string | FundSource[]
 }
 
 export interface CorporateFields {
   logo?: string
   email: string
+  cynopsis?: Cynopsis
   contactNumber: string
   companyLegalName: string
   registrationNumber: string
@@ -230,7 +238,15 @@ export interface CorporateFields {
   taxResidencies: TaxResidencies
   mailingAddress: Address
   isMailingAddressSame: boolean
-  type: 'investor' | 'issuer'
+  numberOfBusinessOwners: string
+  businessActivity: string
+  sourceOfFund: string
+  type:
+    | 'investor'
+    | 'issuer'
+    | 'Fund Manager'
+    | 'Fund Administrator'
+    | 'Portfolio Manager'
 }
 
 export interface Declaration {

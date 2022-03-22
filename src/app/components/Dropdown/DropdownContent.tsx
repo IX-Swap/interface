@@ -1,5 +1,5 @@
 import React, { createElement, useState } from 'react'
-import { ClickAwayListener, Paper, Popper } from '@material-ui/core'
+import { ClickAwayListener, Paper, Popper } from '@mui/material'
 import { bindPopper, InjectedProps } from 'material-ui-popup-state'
 import { useStyles } from 'app/components/Dropdown/DropdownContent.styles'
 import { DropdownProps } from 'app/components/Dropdown/Dropdown'
@@ -9,10 +9,11 @@ export interface DropdownContentProps {
   arrow: boolean
   placement: DropdownProps['placement']
   children: DropdownProps['content']
+  anchorEl: any
 }
 
 export const DropdownContent = (props: DropdownContentProps) => {
-  const { popupState, arrow, placement, children } = props
+  const { popupState, arrow, placement, children, anchorEl } = props
   const [arrowRef, setArrowRef] = useState<any>(null)
   const classes = useStyles()
   const popperProps = bindPopper(popupState)
@@ -27,12 +28,17 @@ export const DropdownContent = (props: DropdownContentProps) => {
       {...bindPopper(popupState)}
       placement={placement}
       className={classes.popper}
-      modifiers={{
-        arrow: {
-          enabled: arrow,
-          element: arrowRef
+      disablePortal
+      anchorEl={anchorEl.current}
+      modifiers={[
+        {
+          name: 'arrow',
+          enabled: true,
+          options: {
+            element: arrowRef
+          }
         }
-      }}
+      ]}
     >
       <ClickAwayListener onClickAway={handleClickAway}>
         <Paper>

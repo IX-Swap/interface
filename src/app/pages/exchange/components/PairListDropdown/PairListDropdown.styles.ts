@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core/styles'
+import makeStyles from '@mui/styles/makeStyles'
 
 export default makeStyles(theme => ({
   pairName: {
@@ -19,6 +19,7 @@ export default makeStyles(theme => ({
     padding: 16,
     maxWidth: 400,
     height: '"calc(100vh - 155px)"',
-    overflow: 'scroll'
+    overflow: 'scroll',
+    maxHeight: 700
   }
 }))

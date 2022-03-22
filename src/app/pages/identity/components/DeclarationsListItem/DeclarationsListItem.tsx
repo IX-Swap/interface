@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react'
-import DoneIcon from '@material-ui/icons/Done'
-import CloseIcon from '@material-ui/icons/Close'
-import { Box, Grid, Typography } from '@material-ui/core'
+import DoneIcon from '@mui/icons-material/Done'
+import CloseIcon from '@mui/icons-material/Close'
+import { Box, Grid, Typography } from '@mui/material'
 
 export interface DeclarationsListItemProps {
   label: ReactNode

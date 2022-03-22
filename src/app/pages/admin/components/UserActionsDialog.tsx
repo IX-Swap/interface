@@ -9,9 +9,9 @@ import {
   Typography,
   DialogContent,
   Box
-} from '@material-ui/core'
+} from '@mui/material'
 import { ButtonTransparent } from 'app/components/ButtonTransparent'
-import { withStyles } from '@material-ui/styles'
+import { withStyles } from '@mui/styles'
 
 const styles: (theme: Theme) => any = theme => {
   return {

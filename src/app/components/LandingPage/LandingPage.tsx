@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 import { LandingPageItem } from './LandingPageItem'
 import { InternalRouteProps } from 'types/util'
 import { PageHeader } from 'app/components/PageHeader/PageHeader'

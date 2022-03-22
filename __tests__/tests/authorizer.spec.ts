@@ -218,7 +218,7 @@ test.describe('Check Issuance Offerings page', () => {
     await click(authorizerEl.pages.ISSUANCE_OFFERINGS, page)
   })
 
-  test('Search should work', async ({ authorizer }) => {
+  test('Search should work', async ({ authorizer, page }) => {
     const table = await authorizer.checkAuthorizePagesSearch('Cucumber', corporate)
     await expect(table).toContainText('Cucumber')
   })
@@ -289,7 +289,6 @@ test.describe('Check Commitments page', () => {
   })
 
   test('Should be rejected from the view page', async ({ authorizer, page }) => {
-    await page.pause()
     await click(invest.buttons.VIEW_INVEST, page)
     await authorizer.reject()
     const allRejected = await authorizer.getDataForIdentityTable(rejectedFunds, corporate)

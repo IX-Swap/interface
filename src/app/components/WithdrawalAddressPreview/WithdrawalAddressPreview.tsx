@@ -1,9 +1,9 @@
 import React from 'react'
-import { Grid, Box, Typography } from '@material-ui/core'
+import { Grid, Box, Typography } from '@mui/material'
 import { LabelledValue } from 'components/LabelledValue'
 import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
 import { WithdrawalAddress } from 'types/withdrawalAddress'
-import CheckIcon from '@material-ui/icons/Check'
+import CheckIcon from '@mui/icons-material/Check'
 import { BlockchainWalletView } from 'app/components/BlockchainWalletView'
 
 export interface WithdrawalAddressViewProps {

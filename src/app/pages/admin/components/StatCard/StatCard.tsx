@@ -1,4 +1,4 @@
-import { Card, Grid, Typography, CardContent } from '@material-ui/core'
+import { Card, Grid, Typography, CardContent } from '@mui/material'
 import { useStyles } from 'app/pages/admin/components/StatCard/StatCard.styles'
 import React from 'react'
 

@@ -5,8 +5,7 @@ import PopupState, {
   InjectedProps
 } from 'material-ui-popup-state'
 import { DropdownContent } from 'app/components/Dropdown/DropdownContent'
-import { ThemeProvider } from '@material-ui/styles'
-import { PopperPlacementType } from '@material-ui/core'
+import { ThemeProvider, PopperPlacementType } from '@mui/material'
 import { useAppTheme } from 'hooks/useAppTheme'
 import { AppTheme, getAppTheme } from 'themes/old'
 
@@ -39,27 +38,31 @@ export const Dropdown = (props: DropdownProps) => {
   const { theme: defaultTheme } = useAppTheme()
   const theme =
     contentTheme === undefined ? defaultTheme : getAppTheme(AppTheme.Dark, true)
+  const refDropdown = React.useRef<any>()
 
   return (
-    <PopupState variant='popper'>
-      {popupState => (
-        <>
-          {createElement(trigger, {
-            triggerProps: bindTrigger(popupState),
-            injectedProps: popupState
-          })}
+    <div ref={refDropdown}>
+      <PopupState variant='popper'>
+        {popupState => (
+          <>
+            {createElement(trigger, {
+              triggerProps: bindTrigger(popupState),
+              injectedProps: popupState
+            })}
 
-          <ThemeProvider theme={theme}>
-            <DropdownContent
-              popupState={popupState}
-              placement={placement}
-              arrow={arrow}
-            >
-              {content}
-            </DropdownContent>
-          </ThemeProvider>
-        </>
-      )}
-    </PopupState>
+            <ThemeProvider theme={theme}>
+              <DropdownContent
+                popupState={popupState}
+                placement={placement}
+                arrow={arrow}
+                anchorEl={refDropdown}
+              >
+                {content}
+              </DropdownContent>
+            </ThemeProvider>
+          </>
+        )}
+      </PopupState>
+    </div>
   )
 }

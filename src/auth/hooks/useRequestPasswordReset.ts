@@ -17,7 +17,7 @@ export const useRequestPasswordReset = () => {
   return useMutation(mutateFn, {
     onSuccess: data => {
       replace(AuthRoute.login)
-      void snackbarService.showSnackbar(data.message)
+      snackbarService.showSnackbar(data.message)
       history.push(AuthRoute.successfulPasswordReset)
     }
   })

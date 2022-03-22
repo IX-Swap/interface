@@ -1,5 +1,5 @@
-import { Tab } from '@material-ui/core'
-import { withStyles } from '@material-ui/core/styles'
+import { Tab } from '@mui/material'
+import withStyles from '@mui/styles/withStyles'
 
 export const RadioTabButton = withStyles(theme => ({
   root: {
@@ -22,7 +22,7 @@ export const RadioTabButton = withStyles(theme => ({
       borderColor: theme.palette.backgrounds.default,
       backgroundColor: theme.palette.backgrounds.default,
       marginRight: 10,
-      boxShadow: `0 0 0 2px ${theme.palette.primary.main}`
+      boxShadow: `0 0 0 2px ${theme.palette.primary.main as string}`
     }
   },
   selected: {

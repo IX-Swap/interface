@@ -5,7 +5,7 @@ import {
   RadioGroup,
   RadioGroupProps,
   Typography
-} from '@material-ui/core'
+} from '@mui/material'
 import { useVirtualAccount } from 'app/pages/accounts/hooks/useVirtualAccount'
 import React from 'react'
 import { VirtualAccount } from 'types/virtualAccount'

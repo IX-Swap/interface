@@ -1,6 +1,6 @@
 import React from 'react'
 import { LabelledValue } from 'components/LabelledValue'
-import { Grid } from '@material-ui/core'
+import { Grid } from '@mui/material'
 
 export interface FieldsDisplayProps {
   fields?: Array<{ key: string; value?: string }>

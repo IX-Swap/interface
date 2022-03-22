@@ -2,12 +2,12 @@ import { AgreementsAndDisclosuresView } from 'app/pages/identity/components/Indi
 import React from 'react'
 import { render } from 'test-utils'
 import { individual } from '__fixtures__/identity'
-import DoneIcon from '@material-ui/icons/Done'
-import CloseIcon from '@material-ui/icons/Close'
+import DoneIcon from '@mui/icons-material/Done'
+import CloseIcon from '@mui/icons-material/Close'
 
-jest.mock('@material-ui/icons/Done', () => jest.fn(() => null))
+jest.mock('@mui/icons-material/Done', () => jest.fn(() => null))
 
-jest.mock('@material-ui/icons/Close', () => jest.fn(() => null))
+jest.mock('@mui/icons-material/Close', () => jest.fn(() => null))
 
 describe('AgreementsAndDisclosuresView', () => {
   afterEach(async () => {

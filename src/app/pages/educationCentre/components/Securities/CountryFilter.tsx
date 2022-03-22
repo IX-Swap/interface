@@ -1,4 +1,5 @@
-import { FormControl, InputLabel, MenuItem, Select } from '@material-ui/core'
+import { FormControl, InputLabel, MenuItem } from '@mui/material'
+import { TextFieldSelect } from 'components/form/TextFieldSelect'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
 import React from 'react'
 
@@ -28,13 +29,12 @@ export const CountryFilter = () => {
       {({ value, onChange }) => (
         <FormControl variant='outlined' style={{ width: 140 }}>
           <InputLabel shrink>Country</InputLabel>
-          <Select
-            displayEmpty
-            value={value ?? ''}
-            onChange={(event: React.ChangeEvent<{ value: unknown }>) => {
-              onChange(event.target.value as string)
-            }}
+          <TextFieldSelect
             label='Country'
+            onChange={event => {
+              onChange(event.target.value)
+            }}
+            value={value}
           >
             <MenuItem value=''>All Countries</MenuItem>
             {countries.map(country => (
@@ -42,7 +42,7 @@ export const CountryFilter = () => {
                 {country}
               </MenuItem>
             ))}
-          </Select>
+          </TextFieldSelect>
         </FormControl>
       )}
     </SearchQueryFilter>
