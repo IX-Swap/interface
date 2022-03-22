@@ -5,7 +5,7 @@ import apiService from 'services/apiService'
 import { kyc } from 'services/apiUrls'
 import { AppDispatch, AppState } from 'state'
 import { BROKER_DEALERS_STATUS } from 'state/brokerDealer/hooks'
-import { fetchCreateIndividualKYC, fetchGetMyKyc } from './actions'
+import { createKYC, fetchGetMyKyc, updateKYC } from './actions'
 
 const individualKYCFiles = ['proofOfAddress', 'proofOfIdentity', 'evidenceOfAccreditation']
 const corporateKYCFiles = [
@@ -167,12 +167,12 @@ export function useCreateIndividualKYC() {
   const callback = useCallback(
     async (newKYC: any) => {
       try {
-        dispatch(fetchCreateIndividualKYC.pending())
+        dispatch(createKYC.pending())
         const data = await createIndividualKYC(newKYC)
-        dispatch(fetchCreateIndividualKYC.fulfilled({ data }))
+        dispatch(createKYC.fulfilled({ data }))
         return data
       } catch (error: any) {
-        dispatch(fetchCreateIndividualKYC.rejected({ errorMessage: 'Could not create individual kyc' }))
+        dispatch(createKYC.rejected({ errorMessage: 'Could not create individual kyc' }))
         return BROKER_DEALERS_STATUS.FAILED
       }
     },
@@ -186,12 +186,12 @@ export function useCreateCorporateKYC() {
   const callback = useCallback(
     async (newKYC: any) => {
       try {
-        dispatch(fetchCreateIndividualKYC.pending())
+        dispatch(createKYC.pending())
         const data = await createCorporateKYC(newKYC)
-        dispatch(fetchCreateIndividualKYC.fulfilled({ data }))
+        dispatch(createKYC.fulfilled({ data }))
         return data
       } catch (error: any) {
-        dispatch(fetchCreateIndividualKYC.rejected({ errorMessage: 'Could not create individual kyc' }))
+        dispatch(createKYC.rejected({ errorMessage: 'Could not create individual kyc' }))
         return BROKER_DEALERS_STATUS.FAILED
       }
     },
@@ -205,12 +205,12 @@ export function useUpdateCorporateKYC() {
   const callback = useCallback(
     async (kycId: number, newKYC: any) => {
       try {
-        dispatch(fetchCreateIndividualKYC.pending())
+        dispatch(updateKYC.pending())
         const data = await updateCorporateKYC(kycId, newKYC)
-        dispatch(fetchCreateIndividualKYC.fulfilled({ data }))
+        dispatch(updateKYC.fulfilled({ data }))
         return data
       } catch (error: any) {
-        dispatch(fetchCreateIndividualKYC.rejected({ errorMessage: 'Could not create individual kyc' }))
+        dispatch(updateKYC.rejected({ errorMessage: 'Could not create individual kyc' }))
         return BROKER_DEALERS_STATUS.FAILED
       }
     },
@@ -224,12 +224,12 @@ export function useUpdateIndividualKYC() {
   const callback = useCallback(
     async (kycId: number, newKYC: any) => {
       try {
-        dispatch(fetchCreateIndividualKYC.pending())
+        dispatch(updateKYC.pending())
         const data = await updateIndividualKYC(kycId, newKYC)
-        dispatch(fetchCreateIndividualKYC.fulfilled({ data }))
+        dispatch(updateKYC.fulfilled({ data }))
         return data
       } catch (error: any) {
-        dispatch(fetchCreateIndividualKYC.rejected({ errorMessage: 'Could not create individual kyc' }))
+        dispatch(updateKYC.rejected({ errorMessage: 'Could not create individual kyc' }))
         return BROKER_DEALERS_STATUS.FAILED
       }
     },

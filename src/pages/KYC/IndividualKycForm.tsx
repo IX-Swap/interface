@@ -21,6 +21,7 @@ import { getIndividualProgress, useCreateIndividualKYC, useKYCState, useUpdateIn
 
 import { LOGIN_STATUS, useLogin } from 'state/auth/hooks'
 import { Loadable } from 'components/LoaderHover'
+import { LoadingIndicator } from 'components/LoadingIndicator'
 
 import { empleymentStatuses, individualFormInitialValues, genders, incomes, sourceOfFunds, promptValue } from './mock'
 import { FormCard, FormGrid, ExtraInfoCard, FormWrapper } from './styleds'
@@ -55,7 +56,7 @@ export default function IndividualKycForm() {
   const createIndividualKYC = useCreateIndividualKYC()
   const updateIndividualKYC = useUpdateIndividualKYC()
   const login = useLogin({ mustHavePreviousLogin: false })
-  const { kyc } = useKYCState()
+  const { kyc, loadingRequest } = useKYCState()
 
   useEffect(() => {
     setWaitingForInitialValues(true)
@@ -192,6 +193,7 @@ export default function IndividualKycForm() {
 
   return (
     <Loadable loading={pending}>
+      <LoadingIndicator isLoading={loadingRequest} />
       <StyledBodyWrapper>
         <ButtonText style={{ textDecoration: 'none' }} display="flex" marginBottom="64px" onClick={goBack}>
           <ArrowLeft />
@@ -604,23 +606,24 @@ export default function IndividualKycForm() {
                               setFieldValue
                             )}
                           />
-
-                          <Uploader
-                            error={errors.evidenceOfAccreditation && errors.evidenceOfAccreditation}
-                            title="Evidence of accreditation"
-                            subtitle="Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Proin eget tortor risus."
-                            files={values.evidenceOfAccreditation}
-                            onDrop={(file) => {
-                              handleDropImage(file, values, 'evidenceOfAccreditation', setFieldValue)
-                            }}
-                            optional={values.accredited !== 1}
-                            handleDeleteClick={handleImageDelete(
-                              values,
-                              'evidenceOfAccreditation',
-                              values.removedDocuments,
-                              setFieldValue
-                            )}
-                          />
+                          {Boolean(values.accredited) && (
+                            <Uploader
+                              error={errors.evidenceOfAccreditation && errors.evidenceOfAccreditation}
+                              title="Evidence of accreditation"
+                              subtitle="Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Proin eget tortor risus."
+                              files={values.evidenceOfAccreditation}
+                              onDrop={(file) => {
+                                handleDropImage(file, values, 'evidenceOfAccreditation', setFieldValue)
+                              }}
+                              optional={values.accredited !== 1}
+                              handleDeleteClick={handleImageDelete(
+                                values,
+                                'evidenceOfAccreditation',
+                                values.removedDocuments,
+                                setFieldValue
+                              )}
+                            />
+                          )}
                         </Column>
                       </FormCard>
                       {/* <FormCard>
@@ -675,7 +678,7 @@ export default function IndividualKycForm() {
                           passed: filesFilled,
                         },
                       })}
-                      description="Sed porttitor lectus nibh. Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem."
+                      description={kyc?.data?.message || null}
                       reasons={['Last name', 'Gender', 'Middle name']}
                     />
                   </StickyBox>

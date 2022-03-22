@@ -29,6 +29,7 @@ import { corporateErrorsSchema } from './schema'
 import { getCorporateProgress, useCreateCorporateKYC, useKYCState, useUpdateCorporateKYC } from 'state/kyc/hooks'
 import { KYCStatuses } from './enum'
 import { corporateTransformApiData, corporateTransformKycDto } from './utils'
+import { LoadingIndicator } from 'components/LoadingIndicator'
 
 export default function CorporateKycForm() {
   const [waitingForInitialValues, setWaitingForInitialValues] = useState(true)
@@ -40,7 +41,7 @@ export default function CorporateKycForm() {
   const [errors, setErrors] = useState<any>({})
   const [pending, setPending] = useState(false)
   const history = useHistory()
-  const { kyc } = useKYCState()
+  const { kyc, loadingRequest } = useKYCState()
   const login = useLogin({ mustHavePreviousLogin: false })
   const showError = useShowError()
   const addPopup = useAddPopup()
@@ -223,6 +224,8 @@ export default function CorporateKycForm() {
 
   return (
     <Loadable loading={pending}>
+      <LoadingIndicator isLoading={loadingRequest} />
+
       <StyledBodyWrapper>
         <ButtonText style={{ textDecoration: 'none' }} display="flex" marginBottom="64px" onClick={goBack}>
           <ArrowLeft />
@@ -325,6 +328,8 @@ export default function CorporateKycForm() {
                 !errors.evidenceOfAccreditation
               const beneficialOwnersFilled =
                 shouldValidate && !Object.keys(errors).some((errorField) => errorField.startsWith('beneficialOwners'))
+
+              console.log('log => errors', errors)
 
               return (
                 <FormRow>
@@ -617,7 +622,7 @@ export default function CorporateKycForm() {
                               isRadio
                               checked={values.accredited === 1}
                               onClick={() => onSelectChange('accredited', 1, setFieldValue)}
-                              label={`I declare that i am “individual accredited Investor"`}
+                              label={`I declare that I am “individual accredited Investor"`}
                             />
                             {errors.accredited && (
                               <TYPE.small marginTop="-4px" color={'red1'}>
@@ -881,36 +886,38 @@ export default function CorporateKycForm() {
                             )}
                           />
 
-                          <Uploader
-                            title="Evidence of Accreditation"
-                            subtitle={
-                              <ul>
-                                <li>
-                                  <Trans>Copy of the most recent audited balance sheet of the corporation.</Trans>
-                                </li>
-                                <li>
-                                  <Trans>
-                                    Where the corporation is not required to prepare audited account regularly, a
-                                    balance sheet of the corporation certified by the corporation as giving a true and
-                                    fair view of the state of affairs of the corporation as of the date of the balance
-                                    sheet, of which date shall be within the preceding 12 months.
-                                  </Trans>
-                                </li>
-                              </ul>
-                            }
-                            files={values.evidenceOfAccreditation}
-                            onDrop={(file) => {
-                              handleDropImage(file, values, 'evidenceOfAccreditation', setFieldValue)
-                            }}
-                            optional={values.accredited !== 1}
-                            error={errors.evidenceOfAccreditation && errors.evidenceOfAccreditation}
-                            handleDeleteClick={handleImageDelete(
-                              values,
-                              'evidenceOfAccreditation',
-                              values.removedDocuments,
-                              setFieldValue
-                            )}
-                          />
+                          {Boolean(values.accredited) && (
+                            <Uploader
+                              title="Evidence of Accreditation"
+                              subtitle={
+                                <ul>
+                                  <li>
+                                    <Trans>Copy of the most recent audited balance sheet of the corporation.</Trans>
+                                  </li>
+                                  <li>
+                                    <Trans>
+                                      Where the corporation is not required to prepare audited account regularly, a
+                                      balance sheet of the corporation certified by the corporation as giving a true and
+                                      fair view of the state of affairs of the corporation as of the date of the balance
+                                      sheet, of which date shall be within the preceding 12 months.
+                                    </Trans>
+                                  </li>
+                                </ul>
+                              }
+                              files={values.evidenceOfAccreditation}
+                              onDrop={(file) => {
+                                handleDropImage(file, values, 'evidenceOfAccreditation', setFieldValue)
+                              }}
+                              optional={values.accredited !== 1}
+                              error={errors.evidenceOfAccreditation && errors.evidenceOfAccreditation}
+                              handleDeleteClick={handleImageDelete(
+                                values,
+                                'evidenceOfAccreditation',
+                                values.removedDocuments,
+                                setFieldValue
+                              )}
+                            />
+                          )}
                         </Column>
                       </FormCard>
                     </Column>
@@ -919,7 +926,7 @@ export default function CorporateKycForm() {
                   <StickyBox offsetTop={100}>
                     <KYCProgressBar
                       handleSubmit={handleSubmit}
-                      disabled={!dirty || !canSubmit || Object.keys(errors).length !== 0}
+                      disabled={false}
                       topics={Object.values({
                         info: {
                           title: 'Corporate Information',
@@ -967,7 +974,7 @@ export default function CorporateKycForm() {
                           passed: filesFilled,
                         },
                       })}
-                      description={kyc?.data.message || null}
+                      description={kyc?.data?.message || null}
                       reasons={['Last name', 'Gender', 'Middle name']}
                     />
                   </StickyBox>
