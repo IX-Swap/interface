@@ -71,7 +71,7 @@ export const useStyles = makeStyles(theme => ({
     [theme.breakpoints.down('md')]: {
       position: 'static',
       marginBottom: 30,
-      marginTop: 30
+      marginTop: 9
     }
   }
 }))
