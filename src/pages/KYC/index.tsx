@@ -175,8 +175,8 @@ export default function KYC() {
       case KYCStatuses.PENDING:
         return (
           <>
-            <Description description={description} />
-            <DateInfo submittedDate={kyc?.data.createdAt} />
+            <Description description={getStatusDescription(status)} />
+            <DateInfo submittedDate={kyc?.data.updatedAt || kyc?.data.createdAt} />
           </>
         )
       case KYCStatuses.CHANGES_REQUESTED:
