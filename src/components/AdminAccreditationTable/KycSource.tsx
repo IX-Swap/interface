@@ -17,12 +17,13 @@ interface Props {
 export const KycSource = ({ kyc, userKyc, onKycClick, status }: Props) => {
   if (Boolean(userKyc)) {
     const internalKyc = userKyc?.corporate || userKyc?.individual
+
+    const name = internalKyc?.corporateName || `${internalKyc?.firstName || '-'} ${internalKyc?.lastName || '-'}`
+
     return (
       <InternalKycContainer onClick={onKycClick}>
         <img src={logo} alt="logo" />
-        <div>
-          {internalKyc?.firstName || '-'} {internalKyc?.lastName || '-'}
-        </div>
+        <div>{name}</div>
       </InternalKycContainer>
     )
   }
