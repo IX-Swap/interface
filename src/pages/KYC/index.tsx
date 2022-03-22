@@ -21,6 +21,7 @@ import { Content, getStatusDescription, StatusCard } from './styleds'
 import { ReactComponent as IndividualKYC } from 'assets/images/individual-kyc.svg'
 import { ReactComponent as CorporateKYC } from 'assets/images/corporate-kyc.svg'
 import { ReactComponent as ApprovedKYC } from 'assets/images/approved-kyc.svg'
+import { useUserState } from 'state/user/hooks'
 interface DescriptionProps {
   description: string | null
 }
@@ -77,7 +78,8 @@ const Description: FC<DescriptionProps> = ({ description }: DescriptionProps) =>
 
 export default function KYC() {
   const { account } = useActiveWeb3React()
-  // const [loading, setLoading] = useState(false)
+  const { account: userAccount } = useUserState()
+  const [loading, setLoading] = useState(false)
   const isLoggedIn = useUserisLoggedIn()
 
   const { kyc, loadingRequest } = useKYCState()
@@ -89,6 +91,14 @@ export default function KYC() {
   // const handleAccountsChanged = () => {
   //   setLoading(true)
   // }
+
+  useEffect(() => {
+    if (account && account !== userAccount) {
+      setLoading(true)
+    } else {
+      setLoading(false)
+    }
+  }, [account, userAccount])
 
   const onKycState = useCallback(() => {
     if (!account) {
@@ -213,7 +223,7 @@ export default function KYC() {
   return (
     <StyledBodyWrapper>
       <StatusCard>
-        {loadingRequest ? (
+        {loadingRequest || loading ? (
           <RowCenter>
             <LoaderThin size={96} />
           </RowCenter>
