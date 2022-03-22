@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit'
 
-import { fetchCreateIndividualKYC, fetchGetMyKyc } from './actions'
+import { createKYC, fetchGetMyKyc, updateKYC } from './actions'
 
 export interface KYCState {
   loadingRequest: boolean
@@ -16,15 +16,15 @@ const initialState: KYCState = {
 
 export default createReducer<KYCState>(initialState, (builder) =>
   builder
-    .addCase(fetchCreateIndividualKYC.pending, (state) => {
+    .addCase(createKYC.pending, (state) => {
       state.loadingRequest = true
       state.error = null
     })
-    .addCase(fetchCreateIndividualKYC.fulfilled, (state, { payload: { data } }) => {
+    .addCase(createKYC.fulfilled, (state) => {
       state.loadingRequest = false
       state.error = null
     })
-    .addCase(fetchCreateIndividualKYC.rejected, (state, { payload: { errorMessage } }) => {
+    .addCase(createKYC.rejected, (state, { payload: { errorMessage } }) => {
       state.loadingRequest = false
       state.error = errorMessage
     })
@@ -38,6 +38,18 @@ export default createReducer<KYCState>(initialState, (builder) =>
       state.kyc = payload
     })
     .addCase(fetchGetMyKyc.rejected, (state, { payload: { errorMessage } }) => {
+      state.loadingRequest = false
+      state.error = errorMessage
+    })
+    .addCase(updateKYC.pending, (state) => {
+      state.loadingRequest = true
+      state.error = null
+    })
+    .addCase(updateKYC.fulfilled, (state) => {
+      state.loadingRequest = false
+      state.error = null
+    })
+    .addCase(updateKYC.rejected, (state, { payload: { errorMessage } }) => {
       state.loadingRequest = false
       state.error = errorMessage
     })
