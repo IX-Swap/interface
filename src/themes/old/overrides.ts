@@ -284,7 +284,12 @@ export const getThemeOverrides = (
   MuiTextField: {
     styleOverrides: {
       root: {
-        minHeight: 38
+        minHeight: 38,
+        '& input': {
+          '&:-webkit-autofill': {
+            WebkitBoxShadow: `0 0 0 1000px ${theme.palette.background.default} inset`
+          }
+        }
       }
     }
   },

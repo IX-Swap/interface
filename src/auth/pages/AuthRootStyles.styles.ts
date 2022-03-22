@@ -32,7 +32,10 @@ export const useStyles = makeStyles(theme => ({
   },
   formContainer: {
     marginTop: 'auto',
-    marginBottom: 'auto'
+    marginBottom: 'auto',
+    [theme.breakpoints.down('md')]: {
+      marginTop: 0
+    }
   },
   background: {
     width: '45%',
@@ -64,6 +67,11 @@ export const useStyles = makeStyles(theme => ({
   logo: {
     position: 'absolute',
     left: 0,
-    top: 33
+    top: 33,
+    [theme.breakpoints.down('md')]: {
+      position: 'static',
+      marginBottom: 30,
+      marginTop: 9
+    }
   }
 }))

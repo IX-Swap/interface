@@ -10,6 +10,8 @@ import { notificationForAlert } from '__fixtures__/notification'
 export const AlertsKit = () => {
   const { toastsService } = useServices()
   const content = 'The bank account was successfully created'
+  const errorContent = 'There was an error creating the bank account'
+
   const actions: Actions = [
     {
       buttonText: 'Accept',
@@ -39,7 +41,7 @@ export const AlertsKit = () => {
           <Grid item>
             <Button
               variant={'outlined'}
-              onClick={() => toastsService.showToast(content, 'error')}
+              onClick={() => toastsService.showToast(errorContent, 'error')}
             >
               Error
             </Button>
@@ -80,7 +82,9 @@ export const AlertsKit = () => {
           <Grid item>
             <Button
               variant={'outlined'}
-              onClick={() => toastsService.showToast(content, 'error', true)}
+              onClick={() =>
+                toastsService.showToast(errorContent, 'error', true)
+              }
             >
               Error
             </Button>
@@ -124,7 +128,7 @@ export const AlertsKit = () => {
             <Button
               variant={'outlined'}
               onClick={() =>
-                toastsService.showToast(content, 'error', false, actions)
+                toastsService.showToast(errorContent, 'error', false, actions)
               }
             >
               Error

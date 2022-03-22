@@ -6,6 +6,7 @@ import { privateClassNames } from 'helpers/classnames'
 import React from 'react'
 import { LEGAL_ENTITY_STATUS_LIST } from 'components/form/LegalEntityStatusSelect'
 import { CorporateIdentity } from 'app/pages/identity/types/forms'
+import { AuthorizableStatus } from 'app/pages/authorizer/components/AuthorizableStatus'
 
 export interface CorporateInfoProps {
   data: CorporateIdentity
@@ -19,7 +20,7 @@ export const CorporateInfo = ({ data }: CorporateInfoProps) => {
     )?.name
     return status ?? value
   }
-
+  const riskRating = data?.cynopsis?.riskRating ?? 'UNKNOWN'
   return (
     <Box display={'flex'} flexDirection={isMobile ? 'column' : 'row'}>
       <Box marginBottom={6}>
@@ -46,6 +47,14 @@ export const CorporateInfo = ({ data }: CorporateInfoProps) => {
               <LabelledValue
                 value={data.registrationNumber}
                 label='Company Registration Number/UEN'
+              />
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <LabelledValue value=' ' label='Status of Risk Report' />
+              <AuthorizableStatus
+                status={riskRating}
+                compact={false}
+                isNewTheme
               />
             </Grid>
           </Grid>

@@ -2,13 +2,13 @@ import {
   FormControl,
   InputLabel,
   MenuItem,
-  Select,
-  SelectProps
+  TextFieldProps
 } from '@mui/material'
 import { Pair, useMarketList } from 'app/pages/exchange/hooks/useMarketList'
+import { TextFieldSelect } from 'components/form/TextFieldSelect'
 import React from 'react'
 
-export const PairSelect = (props: Partial<SelectProps>) => {
+export const PairSelect = (props: Partial<TextFieldProps>) => {
   const { data } = useMarketList()
 
   if (data === undefined || data.list.length < 1) {
@@ -19,7 +19,7 @@ export const PairSelect = (props: Partial<SelectProps>) => {
     <FormControl fullWidth variant='outlined'>
       <InputLabel shrink>Pair</InputLabel>
 
-      <Select {...props}>
+      <TextFieldSelect {...props}>
         <MenuItem disabled value={undefined}>
           Pair
         </MenuItem>
@@ -28,7 +28,7 @@ export const PairSelect = (props: Partial<SelectProps>) => {
             {item.name}
           </MenuItem>
         ))}
-      </Select>
+      </TextFieldSelect>
     </FormControl>
   )
 }

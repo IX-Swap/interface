@@ -36,11 +36,7 @@ export const personalInfoSchema = yup
 export const financialInfoSchema = yup
   .object()
   .shape<IndividualFinancialInfoFormValues>({
-    occupation: yup
-      .string()
-      .max(50, 'Maximum of 50 characters')
-      .required(validationMessages.required)
-      .matches(/^[a-zA-Z\s]+$/g, 'Must include letters only'),
+    occupation: yup.string().required(validationMessages.required),
     employer: yup
       .string()
       .max(50, 'Maximum of 50 characters')
