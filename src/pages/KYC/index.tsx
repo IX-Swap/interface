@@ -29,10 +29,17 @@ interface DateInfoProps {
   submittedDate?: string
   rejectedDate?: string
   approvedDate?: string
+  changeRequestDate?: string
   info?: string
 }
 
-const DateInfo: FC<DateInfoProps> = ({ info, submittedDate, rejectedDate, approvedDate }: DateInfoProps) => (
+const DateInfo: FC<DateInfoProps> = ({
+  info,
+  submittedDate,
+  rejectedDate,
+  approvedDate,
+  changeRequestDate,
+}: DateInfoProps) => (
   <Flex textAlign="center" color="#EDCEFF80" flexDirection="column">
     {info && (
       <TYPE.description3 marginTop="40px" marginBottom="16px" color="inherit">
@@ -45,6 +52,11 @@ const DateInfo: FC<DateInfoProps> = ({ info, submittedDate, rejectedDate, approv
         .format('MMM DD YYYY, HH:mm')} (UTC)`}</TYPE.description3>
     )}
     {rejectedDate && (
+      <TYPE.description3 color="inherit">{`Rejected on ${dayjs(rejectedDate)
+        .utc()
+        .format('MMM DD YYYY, HH:mm')} (UTC)`}</TYPE.description3>
+    )}
+    {changeRequestDate && (
       <TYPE.description3 color="inherit">{`Change requested on ${dayjs(rejectedDate)
         .utc()
         .format('MMM DD YYYY, HH:mm')} (UTC)`}</TYPE.description3>
@@ -171,7 +183,7 @@ export default function KYC() {
         return (
           <>
             <Description description={description} />
-            <DateInfo submittedDate={kyc?.data.createdAt} rejectedDate={kyc?.data.updatedAt} />
+            <DateInfo submittedDate={kyc?.data.createdAt} changeRequestDate={kyc?.data.updatedAt} />
             <Link
               style={{ textDecoration: 'none ' }}
               to={`/kyc/${kyc?.data.corporateKycId ? 'corporate' : 'individual'}`}
