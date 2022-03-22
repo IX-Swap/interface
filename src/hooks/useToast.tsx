@@ -11,9 +11,12 @@ import { ReactComponent as InfoIcon } from 'assets/icons/alerts/info.svg'
 import { ReactComponent as WarningIcon } from 'assets/icons/alerts/warning.svg'
 import { Icon } from 'ui/Icons/Icon'
 import { AlertContent } from 'ui/UIKit/AlertsKit/AlertsContent'
+import { Notification as TNotification } from 'types/notification'
+import { AppFeature } from 'types/app'
+import { useHistory } from 'react-router-dom'
 
 export interface Action {
-  buttonText: string
+  buttonText: string | JSX.Element
   callback: () => void
 }
 
@@ -26,6 +29,7 @@ export interface ToastService {
     wihLoading?: boolean,
     actions?: Actions
   ) => void
+  showNotification: (notification: TNotification) => any
 }
 
 const CloseIcon = ({ closeToast }: CloseButtonProps) => (
@@ -69,6 +73,8 @@ const getToastOptions = (
 }
 
 export const useToast = (): ToastService => {
+  const { push } = useHistory()
+
   return {
     showToast: (
       message,
@@ -76,7 +82,6 @@ export const useToast = (): ToastService => {
       withLoading = false,
       actions = []
     ) => {
-      // TODO Replace to something better in future
       const currentToastId = [
         message,
         type,
@@ -87,6 +92,46 @@ export const useToast = (): ToastService => {
       return toast(
         <AlertContent message={message} actions={actions} />,
         getToastOptions(type, withLoading, currentToastId, actions)
+      )
+    },
+    showNotification: (notification: TNotification) => {
+      // TODO make sure backend and frontend have the agreement on this schema to avoid extra checks
+      let url = `/app/${notification.service}/${notification.feature}/${notification.resourceId}/view`
+
+      if (notification.feature === AppFeature.Commitments) {
+        url = `/app/invest/${notification.feature}/${notification.resourceId}/view`
+      }
+
+      if (notification.feature === AppFeature.Individuals) {
+        url = `/app/identity/${notification.feature}/view`
+      }
+
+      if (
+        notification.feature === AppFeature.Deposits ||
+        notification.feature === AppFeature.Withdrawals ||
+        notification.feature === AppFeature.DigitalSecurityWithdrawals ||
+        notification.feature === AppFeature.Authentication ||
+        (notification?.service?.toUpperCase() === 'EXCHANGE' &&
+          notification?.subject?.toUpperCase() === 'ORDER CREATED')
+      ) {
+        return null
+      }
+
+      const actions: Actions = [
+        {
+          buttonText: <Icon name={'arrow-right'} />,
+          callback: () => push(url)
+        }
+      ]
+
+      // TODO Need to check in the future what information besides the message to display
+      return toast(
+        <AlertContent
+          message={notification.message}
+          actions={actions}
+          fullWidth
+        />,
+        getToastOptions(notification.type, false, 'toastId', actions)
       )
     }
   }

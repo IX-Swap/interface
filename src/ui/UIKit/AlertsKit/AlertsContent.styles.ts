@@ -1,12 +1,18 @@
 import makeStyles from '@mui/styles/makeStyles'
 
+export interface StyleProps {
+  fullWidth: boolean
+}
+
 export const useStyles = makeStyles(theme => {
   return {
     wrapper: {
       display: 'flex'
     },
     message: {
-      width: 145
+      width: ({ fullWidth }: StyleProps) => (fullWidth ? 'auto' : 145),
+      alignSelf: ({ fullWidth }: StyleProps) =>
+        fullWidth ? 'center' : 'initial'
     },
     button: {
       marginRight: 14,

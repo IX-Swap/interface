@@ -5,6 +5,7 @@ import { AlertsContainer } from 'ui/UIKit/AlertsKit/AlertsContainer'
 import { VSpacer } from 'components/VSpacer'
 import { useServices } from 'hooks/useServices'
 import { Actions } from 'hooks/useToast'
+import { notificationForAlert } from '__fixtures__/notification'
 
 export const AlertsKit = () => {
   const { toastsService } = useServices()
@@ -147,6 +148,25 @@ export const AlertsKit = () => {
               }
             >
               Warning
+            </Button>
+          </Grid>
+        </Grid>
+      </Grid>
+
+      <Grid container spacing={1} flexDirection={'column'}>
+        <VSpacer size={'medium'} />
+        <Grid item>
+          <Typography>Notification</Typography>
+        </Grid>
+        <Grid item container spacing={1} xs={12} md={3}>
+          <Grid item>
+            <Button
+              variant={'outlined'}
+              onClick={() =>
+                toastsService.showNotification(notificationForAlert)
+              }
+            >
+              Notification
             </Button>
           </Grid>
         </Grid>

@@ -11,7 +11,7 @@ export const useStyles = makeStyles(theme => {
       '& .Toastify__toast': {
         minWidth: 320,
         marginLeft: 'auto',
-        height: 80,
+        minHeight: 80,
         display: 'flex',
         alignItems: 'center',
         padding: theme.spacing(2.5, 2.75),

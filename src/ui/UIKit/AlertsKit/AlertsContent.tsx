@@ -8,14 +8,16 @@ import { Actions } from 'hooks/useToast'
 export interface AlertsContentProps extends Partial<ToastContentProps> {
   message: ReactNode
   actions?: Actions
+  fullWidth?: boolean
 }
 
 export const AlertContent = ({
   message,
   closeToast,
-  actions = []
+  actions = [],
+  fullWidth = false
 }: AlertsContentProps) => {
-  const classes = useStyles()
+  const classes = useStyles({ fullWidth })
 
   const closeAlert = () => {
     if (closeToast !== undefined) {
