@@ -87,8 +87,9 @@ const ToggleableBody = styled(BodyWrapper)<{ isVisible?: boolean }>`
 export default function App() {
   const isSettingsOpen = useModalOpen(ApplicationModal.SETTINGS)
   const { pathname } = useLocation()
-  useAccount()
   const { chainId, account } = useActiveWeb3React()
+
+  useAccount()
 
   useEffect(() => {
     window.scrollTo(0, 0)
