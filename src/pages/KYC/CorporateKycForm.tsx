@@ -967,7 +967,7 @@ export default function CorporateKycForm() {
                           passed: filesFilled,
                         },
                       })}
-                      description={kyc?.data.message || null}
+                      description={kyc?.data?.message || null}
                       reasons={['Last name', 'Gender', 'Middle name']}
                     />
                   </StickyBox>
