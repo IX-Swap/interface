@@ -1,7 +1,7 @@
 import { Button, Grid, Typography } from '@mui/material'
 import React from 'react'
 import { UIKitThemeWrapper } from 'ui/UIKit/UIKitThemeWrapper'
-import { AlertsContainer } from 'ui/UIKit/AlertsKit/AlertsContainer'
+import { AlertsContainer } from 'ui/Alerts/AlertsContainer/AlertsContainer'
 import { VSpacer } from 'components/VSpacer'
 import { useServices } from 'hooks/useServices'
 import { Actions } from 'hooks/useToast'

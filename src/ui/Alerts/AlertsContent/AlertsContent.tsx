@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react'
 import { ToastContentProps } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { useStyles } from 'ui/UIKit/AlertsKit/AlertsContent.styles'
+import { useStyles } from 'ui/Alerts/AlertsContent/AlertsContent.styles'
 import { Box, Button } from '@mui/material'
 import { Actions } from 'hooks/useToast'
 
@@ -19,12 +19,6 @@ export const AlertContent = ({
 }: AlertsContentProps) => {
   const classes = useStyles({ fullWidth })
 
-  const closeAlert = () => {
-    if (closeToast !== undefined) {
-      closeToast()
-    }
-  }
-
   return (
     <Box className={classes.wrapper}>
       <Box className={classes.message}>{message}</Box>
@@ -38,7 +32,7 @@ export const AlertContent = ({
                 className={classes.button}
                 onClick={() => {
                   item.callback()
-                  closeAlert()
+                  closeToast?.()
                 }}
               >
                 {item.buttonText}
