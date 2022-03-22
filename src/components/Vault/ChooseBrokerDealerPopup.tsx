@@ -171,7 +171,7 @@ const KycSourceSelector = (props: KycSourceSelectorProps) => {
 
         <KycSourceTooltip text="Recommended" />
 
-        <Button onClick={requestKyc} disabled={kyc}>
+        <Button onClick={requestKyc} disabled={kyc?.data?.status === KYCStatuses.APPROVED}>
           <TYPE.small>{statusDesc}</TYPE.small>
         </Button>
 
