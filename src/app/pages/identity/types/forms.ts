@@ -134,7 +134,6 @@ export interface InvestorCorporateInfoFormValues {
   isMailingAddressSame: boolean
   representatives: RepresentativeFormValues[]
   otherLegalEntityStatus?: string
-  isIncorporated: boolean
   numberOfBusinessOwners: string
   businessActivity: string
   sourceOfFund: string
@@ -226,6 +225,7 @@ export interface IdentityFinancials {
 export interface CorporateFields {
   logo?: string
   email: string
+  cynopsis?: Cynopsis
   contactNumber: string
   companyLegalName: string
   registrationNumber: string
@@ -238,7 +238,6 @@ export interface CorporateFields {
   taxResidencies: TaxResidencies
   mailingAddress: Address
   isMailingAddressSame: boolean
-  isIncorporated: boolean
   numberOfBusinessOwners: string
   businessActivity: string
   sourceOfFund: string

@@ -109,6 +109,34 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                   </p>
                 </div>
               </div>
+              <div
+                class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-4 css-kozxwa-MuiGrid-root"
+              >
+                <div
+                  class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-direction-xs-column css-brqso2-MuiGrid-root"
+                >
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 css-3a17l8-MuiTypography-root"
+                    style="font-weight: 700; width: 100%; color: rgb(68, 68, 68);"
+                  >
+                    Status of Risk Report
+                  </p>
+                  <div
+                    class="MuiBox-root css-1gbh5gc"
+                  />
+                  <p
+                    class="MuiTypography-root MuiTypography-body1 MuiTypography-alignLeft css-n6iewn-MuiTypography-root"
+                    style="font-weight: 400; opacity: 1; width: 100%; word-break: break-word;"
+                  >
+                     
+                  </p>
+                </div>
+                <p
+                  class="MuiTypography-root MuiTypography-body1 makeStyles-authStatus-1 makeStyles-unknown-8 makeStyles-authStatusNewTheme-2 makeStyles-unknownNewTheme-9 css-3a17l8-MuiTypography-root"
+                >
+                  UNKNOWN
+                </p>
+              </div>
             </div>
           </div>
           <div
@@ -575,7 +603,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
             class="MuiBox-root css-h8m1q6"
           >
             <div
-              class="makeStyles-formHeader-1 MuiBox-root css-1xn0qx2"
+              class="makeStyles-formHeader-28 MuiBox-root css-1xn0qx2"
             >
               <h5
                 class="MuiTypography-root MuiTypography-h5 css-y0xkyh-MuiTypography-root"
