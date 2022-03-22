@@ -29,7 +29,8 @@ export const TradeHistoryTable = () => {
     search: getFilterValue('search'),
     to: getFilterValue('toDate'),
     from: getFilterValue('fromDate'),
-    pair: getFilterValue('pair')
+    pair: getFilterValue('pair'),
+    orderType: 'PAST'
   }
 
   return (
