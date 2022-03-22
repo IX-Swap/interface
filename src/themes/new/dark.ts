@@ -103,6 +103,7 @@ export const darkTheme: DeprecatedThemeOptions = {
         color: undefined
       }
     },
+    divider: '#89A1CE',
     text: {
       primary: '#FFFFFF',
       secondary: '#496396'
