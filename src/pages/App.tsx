@@ -1,5 +1,5 @@
 import React, { lazy, Suspense, useEffect, useMemo } from 'react'
-import { Route, Switch, useLocation } from 'react-router-dom'
+import { Redirect, Route, Switch, useLocation } from 'react-router-dom'
 import styled from 'styled-components/macro'
 
 import { AppBackground } from 'components/AppBackground'
@@ -10,6 +10,7 @@ import {
   SUPPORTED_TGE_CHAINS,
   TGE_CHAINS_WITH_STAKING,
   TGE_CHAINS_WITH_SWAP,
+  TGE_CHAINS_WITH_KYC,
 } from 'constants/addresses'
 import ApeModeQueryParamReader from 'hooks/useApeModeQueryParamReader'
 import { useActiveWeb3React } from 'hooks/web3'
@@ -33,7 +34,11 @@ import PoolFinder from './PoolFinder'
 import { RedirectPathToStaking, RedirectPathToSwapOnly, RedirectToSwap } from './Swap/redirects'
 import { Footer } from '../components/Footer'
 
-const AdminKyc = lazy(() => import('./AdminKyc'))
+const Admin = lazy(() => import('./Admin'))
+
+const KYC = lazy(() => import('./KYC'))
+const IndividualKYC = lazy(() => import('./KYC/IndividualKycForm'))
+const CorporateKYC = lazy(() => import('./KYC/CorporateKycForm'))
 // const Custodian = lazy(() => import('./Custodian'))
 const CustodianV2 = lazy(() => import('./CustodianV2'))
 const CreateNFT = lazy(() => import('./CreateNFT'))
@@ -82,8 +87,9 @@ const ToggleableBody = styled(BodyWrapper)<{ isVisible?: boolean }>`
 export default function App() {
   const isSettingsOpen = useModalOpen(ApplicationModal.SETTINGS)
   const { pathname } = useLocation()
-  useAccount()
   const { chainId, account } = useActiveWeb3React()
+
+  useAccount()
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -117,7 +123,8 @@ export default function App() {
           <Web3ReactManager>
             <Suspense fallback={<></>}>
               <Switch>
-                <Route exact strict path="/admin" component={AdminKyc} />
+                <Route exact strict path="/admin" render={() => <Redirect to="/admin/accreditation" />} />
+                <Route exact strict path="/admin/:tab/:id?" component={Admin} />
 
                 <Route exact strict path={routes.nftCreate} component={CreateNFT} />
                 <Route exact strict path={routes.nftList} component={ListNFT} />
@@ -127,6 +134,8 @@ export default function App() {
                 <Route exact strict path={routes.nftCollectionImport} component={NftImport} />
                 <Route exact strict path={routes.nftViewCollectionPath} component={NFTCollection} />
                 <Route exact strict path={routes.nftItemPath} component={NftAssetPage} />
+                <Route exact strict path={routes.kycIndividual} component={IndividualKYC} />
+                <Route exact strict path={routes.kycCorporate} component={CorporateKYC} />
 
                 {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
                   <Route exact strict path="/send" component={RedirectPathToSwapOnly} />
@@ -152,6 +161,10 @@ export default function App() {
 
                 {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
                   <Route exact strict path="/faucet" component={Faucet} />
+                )}
+
+                {chainId && TGE_CHAINS_WITH_KYC.includes(chainId) && (
+                  <Route exact strict path={routes.kyc} component={KYC} />
                 )}
 
                 <Route exact strict path="/security-tokens/:currencyId" component={SecTokenDetails} />

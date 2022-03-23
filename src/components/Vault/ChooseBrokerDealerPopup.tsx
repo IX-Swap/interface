@@ -1,9 +1,10 @@
-import { Trans } from '@lingui/macro'
+import { Trans, t } from '@lingui/macro'
 import { ReactComponent as Checkmark } from 'assets/images/checked-solid-bg.svg'
-import { ButtonIXSWide } from 'components/Button'
+import { ButtonIXSGradient, ButtonIXSWide, ButtonPrimary } from 'components/Button'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import Row, { RowBetween } from 'components/Row'
+import Tooltip from 'components/Tooltip'
 import { useCurrency } from 'hooks/Tokens'
 import React, { useCallback, useEffect, useState } from 'react'
 import { Flex } from 'rebass'
@@ -14,17 +15,202 @@ import { useFetchUserSecTokenListCallback, usePassAccreditation, useUserState } 
 import styled from 'styled-components'
 import { ModalBlurWrapper, ModalContentWrapper, ModalPadding } from 'theme'
 import { CloseIcon, TYPE } from '../../theme'
+import { darken } from 'polished'
+import { useHistory } from 'react-router-dom'
+import { useGetMyKyc, useKYCState } from 'state/kyc/hooks'
+import { KYCStatuses } from './enum'
+
+const KycSourceContainer = styled.div`
+  width: 100%;
+
+  padding: 0.5rem 1.5rem;
+
+  & > * {
+    margin: 0.5rem;
+  }
+`
+
+const KycRow = styled.div`
+  display: flex;
+
+  flex-flow: row nowrap;
+
+  gap: 1rem;
+
+  justify-content: flex-start;
+  align-items: center;
+`
+
+const KycTooltipIcon = () => {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+      <circle opacity="0.1" cx="10" cy="10" r="10" fill="#EDCEFF" />
+      <path
+        opacity="0.8"
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M10 4C9.44772 4 9 4.44772 9 5C9 5.55228 9.44772 6 10 6C10.5523 6 11 5.55228 11 5C11 4.44772 10.5523 4 10 4ZM9 15C9 15.5523 9.44772 16 10 16C10.5523 16 11 15.5523 11 15L11 9C11 8.44772 10.5523 8 10 8C9.44772 8 9 8.44771 9 9V15Z"
+        fill="#EDCEFF"
+      />
+    </svg>
+  )
+}
+
+const Spacer = styled.div`
+  flex-grow: 1;
+`
+
+const Separator = styled.hr`
+  background: #edceff;
+
+  width: 100%;
+  opacity: 0.2;
+`
+
+const Button = styled.button`
+  background: radial-gradient(93.65% 93.65% at 58.57% 22.42%, rgba(206, 20, 132, 0.33) 0%, rgba(26, 18, 58, 0) 100%),
+    #2c254a;
+
+  color: #edceff;
+  border-radius: 40px;
+  border: none;
+  margin: 0px 24px;
+  padding: 0.5rem 2rem;
+
+  cursor: pointer;
+
+  border: 1px solid rgba(0, 0, 0, 0.33);
+
+  &:active {
+    border: none;
+  }
+`
+
+interface KycSourceTooltipProps {
+  text: string
+}
+
+const KycSourceTooltip: React.FC<KycSourceTooltipProps> = (props: React.PropsWithChildren<KycSourceTooltipProps>) => {
+  const [show, setShow] = useState(false)
+
+  return (
+    <div onMouseEnter={() => setShow(true)} onMouseLeave={() => setShow(false)}>
+      <Tooltip text={props.text} show={show}>
+        {props.children ?? <KycTooltipIcon />}
+      </Tooltip>
+    </div>
+  )
+}
+
+enum KycSource {
+  IXSwap,
+  InvestaX,
+}
+
+interface KycSourceSelectorProps {
+  onChange: (value?: KycSource) => void
+}
+
+const KycSourceSelector = (props: KycSourceSelectorProps) => {
+  const history = useHistory()
+  const { kyc } = useKYCState()
+  const getMyKyc = useGetMyKyc()
+
+  const [selected, setSelected] = useState<KycSource | undefined>(undefined)
+  const [statusDesc, setStatusDesc] = useState('')
+
+  const getText = (status: string | undefined) => {
+    switch (status) {
+      case KYCStatuses.APPROVED:
+        return t`KYC status: APPROVED`
+      case KYCStatuses.REJECTED:
+        return t`KYC status: REJECTED`
+      case KYCStatuses.PENDING:
+        return t`KYC status: PENDING`
+      case KYCStatuses.CHANGES_REQUESTED:
+        return t`KYC status: REQUESTED`
+      case KYCStatuses.NOT_SUBMITTED:
+        return t`KYC status: NOT_SUBMITTED`
+      default:
+        return t`Pass KYC on IXSwap`
+    }
+  }
+
+  useEffect(() => {
+    getMyKyc()
+  }, [getMyKyc])
+
+  useEffect(() => {
+    const status = kyc?.data.status === KYCStatuses.APPROVED ? KycSource.IXSwap : KycSource.InvestaX //|| KYCStatuses.NOT_SUBMITTED
+
+    setStatusDesc(getText(kyc?.data.status))
+    setSelected(status)
+  }, [kyc])
+
+  useEffect(() => {
+    props.onChange(selected)
+  }, [props, selected])
+
+  const onChange = useCallback(
+    (value: KycSource) => {
+      if (kyc?.data.status === KYCStatuses.APPROVED || value !== KycSource.IXSwap) {
+        setSelected(value)
+      }
+    },
+    [kyc]
+  )
+
+  const requestKyc = () => {
+    history.push('/kyc')
+  }
+
+  return (
+    <KycSourceContainer>
+      <KycRow onClick={() => onChange(KycSource.IXSwap)}>
+        <TYPE.body1>My IXSwap KYC</TYPE.body1>
+
+        <KycSourceTooltip text="Recommended" />
+
+        <Button onClick={requestKyc} disabled={kyc?.data?.status === KYCStatuses.APPROVED}>
+          <TYPE.small>{statusDesc}</TYPE.small>
+        </Button>
+
+        <Spacer />
+
+        <KycSourceTooltip text="Pass KYC on IXSwap to enable this option">
+          <IconWrapper size={28} style={{ marginLeft: 'auto', marginRight: 0 }}>
+            {selected === KycSource.IXSwap ? <Checkmark className="selected-checkmark" /> : <CheckmarkPlaceholder />}
+          </IconWrapper>
+        </KycSourceTooltip>
+      </KycRow>
+
+      {/* <KycRow onClick={() => onChange(KycSource.InvestaX)}>
+        <TYPE.body1>Fetch from InvestaX</TYPE.body1>
+
+        <KycSourceTooltip text="Make sure you have your KYC approved on InvestaX before using this option" />
+
+        <Spacer />
+
+        <IconWrapper size={28} style={{ marginLeft: 'auto', marginRight: 0 }}>
+          {selected === KycSource.InvestaX ? <Checkmark className="selected-checkmark" /> : <CheckmarkPlaceholder />}
+        </IconWrapper>
+      </KycRow> */}
+    </KycSourceContainer>
+  )
+}
 
 export const ChooseBrokerDealerPopup = ({ tokenId, currencyId }: { tokenId: any; currencyId?: string }) => {
   const isOpen = useModalOpen(ApplicationModal.CHOOSE_BROKER_DEALER)
   const toggle = useChooseBrokerDealerModalToggle()
 
   const { brokersData: brokerDealerPairs, brokersLoading, brokersError } = useBrokerDealersState()
+  const [source, setSource] = useState<KycSource | undefined>(undefined)
   const [selectedBrokerPair, setSelectedBrokerPair] = useState(0)
   const { loadingAccreditation } = useUserState()
   const tokenName = (useCurrency(currencyId) as any)?.tokenInfo?.symbol || null
   const fetchList = useFetchUserSecTokenListCallback()
   const fetchBrokerDealerPairs = useFetchBrokerDealers()
+  const { kyc } = useKYCState()
 
   useEffect(() => {
     if (tokenId) {
@@ -64,16 +250,23 @@ export const ChooseBrokerDealerPopup = ({ tokenId, currencyId }: { tokenId: any;
             <ModalPadding>
               <ModalHeader>
                 <TYPE.title5>
-                  <Trans>Broker dealer and Custodian pair</Trans>
+                  <Trans>{tokenName} Accreditation</Trans>
                 </TYPE.title5>
                 <CloseIcon data-testid="cross" onClick={onClose} className="close-icon" />
               </ModalHeader>
-              <Row style={{ marginTop: '18px' }}>
+
+              {/* Modal description segment */}
+              <div style={{ marginTop: '18px' }}>
+                <TYPE.title10>1. Choose source of KYC for accreditation</TYPE.title10>
                 <TYPE.description2 fontWeight={400}>
-                  <Trans>{`Choose the pair of third-party services you want to use for ${tokenName} token.`}</Trans>
+                  <Trans>{`We recommend choosing IXSwap KYC. Pass it once and use for all future accreditations quick and easy.`}</Trans>
                 </TYPE.description2>
-              </Row>
-              <Row style={{ marginTop: '18px' }}>
+              </div>
+
+              <div style={{ marginTop: '18px' }}>
+                <TYPE.title10>
+                  2. Choose the pair of third-party services you want to use for {tokenName} token
+                </TYPE.title10>
                 <TYPE.description2 display="inline" style={{ whiteSpace: 'nowrap' }} fontWeight={600}>
                   <Trans>Broker-dealer</Trans>
                   &nbsp;
@@ -81,18 +274,22 @@ export const ChooseBrokerDealerPopup = ({ tokenId, currencyId }: { tokenId: any;
                 <TYPE.description2 display="inline" fontWeight={400}>
                   <Trans>{`will check and confirm every transaction with ${tokenName} token.`}</Trans>
                 </TYPE.description2>
-              </Row>
-              <Row>
-                <TYPE.description2 style={{ whiteSpace: 'nowrap' }} fontWeight={600}>
+
+                <TYPE.description2 display="inline" style={{ whiteSpace: 'nowrap' }} fontWeight={600}>
                   <Trans>Custodian</Trans>
+                  &nbsp;
                 </TYPE.description2>
-                &nbsp;
-                <TYPE.description2 fontWeight={400}>
+                <TYPE.description2 display="inline" fontWeight={400}>
                   <Trans>{`will keep your ${tokenName} in a safe place.`}</Trans>
                 </TYPE.description2>
-              </Row>
+              </div>
             </ModalPadding>
           </div>
+
+          {/* KYC source segement */}
+          <KycSourceSelector onChange={setSource} />
+
+          <Separator />
 
           <div id="broker-dealer-and-custodian-list" style={{ marginTop: '25px' }}>
             {brokersLoading && (
@@ -132,10 +329,10 @@ export const ChooseBrokerDealerPopup = ({ tokenId, currencyId }: { tokenId: any;
             <Row style={{ marginBottom: '24px' }} className="start-accreditation-button-row">
               {!loadingAccreditation && (
                 <ButtonIXSWide
-                  disabled={loadingAccreditation}
+                  disabled={loadingAccreditation || kyc?.data?.status !== KYCStatuses.APPROVED}
                   style={{ textTransform: 'unset' }}
                   onClick={() => {
-                    passAccreditation(tokenId, selectedBrokerPair)
+                    passAccreditation(tokenId, selectedBrokerPair, source === KycSource.IXSwap)
                   }}
                 >
                   <Trans>Start accreditation</Trans>

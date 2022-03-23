@@ -94,6 +94,10 @@ export const CopyrightBlockContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   font-size: 10px;
+  a {
+    text-decoration: none;
+    color: ${({ theme }) => theme.text2};
+  }
   > div:first-child {
     color: ${({ theme }) => theme.text2};
     display: flex;

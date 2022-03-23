@@ -1,13 +1,14 @@
+import React, { useState } from 'react'
 import { Trans } from '@lingui/macro'
-import React, { useEffect, useState } from 'react'
 import { TYPE } from 'theme'
 import { CollectionForm } from '../../components/CollectionForm'
-import { Container, StyledTab } from '../CreateNFT/styleds'
+import { StyledTab } from '../CreateNFT/styleds'
 import { useActiveWeb3React } from 'hooks/web3'
 import { NFTConnectWallet } from 'components/NFTConnectWallet'
 import { Loadable } from 'components/LoaderHover'
 import { useParams, useHistory } from 'react-router-dom'
 import { useCollection, useCollectionFormState, useUpdateFullCollection } from 'state/nft/hooks'
+import { Box } from 'rebass'
 
 const Update = () => {
   const { account } = useActiveWeb3React()
@@ -45,14 +46,14 @@ const Update = () => {
   return (
     <>
       <Loadable loading={pending}>
-        <Container width={['100%']} maxWidth={'900px'}>
+        <Box width={['100%']} maxWidth={'672px'}>
           <StyledTab>
-            <TYPE.title4>
+            <TYPE.title4 style={{ textAlign: 'center', marginBottom: 32 }}>
               <Trans>Update Collection</Trans>
             </TYPE.title4>
           </StyledTab>
-          <CollectionForm onSubmit={onSubmit} collection={collection} actionName="Update" />
-        </Container>
+          <CollectionForm onSubmit={onSubmit} collection={collection} actionName="Update Collection" />
+        </Box>
       </Loadable>
     </>
   )

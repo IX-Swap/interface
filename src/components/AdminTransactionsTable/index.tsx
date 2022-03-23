@@ -5,13 +5,13 @@ import { Copy } from 'react-feather'
 import styled from 'styled-components'
 import React, { FC, useEffect, useState, ChangeEvent } from 'react'
 
-import { Input as SearchInput } from 'pages/AdminKyc/Search'
+import { Input as SearchInput } from '../AdminAccreditationTable/Search'
 import { isAddress } from 'utils'
 import { IconWrapper } from 'components/AccountDetails/styleds'
 import { useAdminState, useFetchBrokerDealerSwaps } from 'state/admin/hooks'
 import { shortenAddress } from 'utils'
 import { BodyRow, HeaderRow, Table } from '../Table'
-import { Pagination } from 'components/AdminKycTable/Pagination'
+import { Pagination } from 'components/AdminAccreditationTable/Pagination'
 import useCopyClipboard from 'hooks/useCopyClipboard'
 import { BrokerDealerSwapItem } from 'state/admin/actions'
 import { useCurrency } from 'hooks/Tokens'
@@ -113,6 +113,8 @@ export const AdminTransactionsTable = () => {
   const getBrokerDealerSwaps = useFetchBrokerDealerSwaps()
 
   const onPageChange = (page: number) => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+
     getBrokerDealerSwaps({ page, offset, search: isAddress(searchValue) || searchValue === '' ? searchValue : '' })
   }
 
@@ -151,6 +153,8 @@ export const AdminTransactionsTable = () => {
     </>
   )
 }
+
+export default AdminTransactionsTable
 
 export const Loader = styled.div`
   position: fixed;

@@ -5,14 +5,15 @@ import { LoaderThin } from 'components/Loader/LoaderThin'
 
 interface Props {
   isLoading: boolean
+  size?: number
 }
 
-export const LoadingIndicator = ({ isLoading }: Props) => {
+export const LoadingIndicator = ({ isLoading, size = 48 }: Props) => {
   if (!isLoading) return null
 
   return (
     <Loader>
-      <LoaderThin size={48} />
+      <LoaderThin size={size} />
     </Loader>
   )
 }

@@ -4,6 +4,8 @@ export function currencyId(currency?: Currency): string {
   if (!currency) {
     throw new Error('invalid currency')
   }
+
   if (currency.isNative) return 'ETH'
+
   return currency.address
 }

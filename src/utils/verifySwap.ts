@@ -183,32 +183,32 @@ class Pool {
    */
   async verifySwap(transaction: Swap, isSecurity: boolean) {
     //  request last known reserves, check if Oracle can be consulted
+    transaction.oracleAmount1Out = BigNumber.from(0)
+    transaction.oracleAmount0Out = BigNumber.from(0)
+
     await this.updateReserves()
-    await this.canConsultOracle(FACTORY_CONTRACT) //(FACTORY_CONTRACT)
-    await this.consultOracle(FACTORY_CONTRACT, transaction) //(FACTORY_CONTRACT)
+
+    const canConsult = await this.canConsultOracle(FACTORY_CONTRACT) //(FACTORY_CONTRACT)
+    if (canConsult) {
+      await this.consultOracle(FACTORY_CONTRACT, transaction) //(FACTORY_CONTRACT)
+    }
 
     //  perform initial tranasaction values verification and slippage check
     this.verifyOutValues(transaction)
     // this.verifySlippage(transaction) //need disc
 
-    //  add incoming values to reserves and extract all outcoming values
-    const balance0 = this.reserve0?.add(transaction.amount0In)?.sub(transaction.amount0Out)
-    const balance1 = this.reserve1?.add(transaction.amount1In)?.sub(transaction.amount1Out)
+    // //  add incoming values to reserves and extract all outcoming values
+    // const balance0 = this.reserve0?.add(transaction.amount0In)?.sub(transaction.amount0Out)
+    // const balance1 = this.reserve1?.add(transaction.amount1In)?.sub(transaction.amount1Out)
 
     //  multiply balances by given factor, if security then sub 1%, otherwise sub 0.3%
-    const balance0Adjusted = balance0?.mul(1000).sub(transaction.amount0In.mul(isSecurity ? 10 : 3))
-    const balance1Adjusted = balance1?.mul(1000).sub(transaction.amount1In.mul(isSecurity ? 10 : 3))
+    // const balance0Adjusted = balance0?.sub(transaction.amount0In.mul(isSecurity ? 10 : 3))
+    // const balance1Adjusted = balance1?.sub(transaction.amount1In.mul(isSecurity ? 10 : 3))
     //const balance1Adjusted = balance1?.mul(1000).sub(transaction.amount0In.mul(isSecurity ? 10 : 3))
     //  check values not to break k-coefficient rule
-    if (
-      !(
-        balance0Adjusted &&
-        balance1Adjusted &&
-        this.kLast.mul(1000).mul(1000).lt(balance0Adjusted.mul(balance1Adjusted))
-      )
-    ) {
-      throw new Error(`Invalid pool price`)
-    }
+    // if (!(balance0Adjusted && balance1Adjusted && this.kLast.lt(balance0Adjusted.mul(balance1Adjusted)))) {
+    //   throw new Error(`Invalid pool price`)
+    // }
 
     // //  find current out values with system fees
     // var amount0OutWithSystemFee: BigNumber = transaction.amount0Out.add(transaction.amount0Out.mul(this.systemFeeRate).
@@ -262,14 +262,12 @@ class Pool {
   async consultOracle(contract: Contract, transaction: Swap) {
     if (transaction.amount0In.gt(0)) {
       const response = await contract.methods.oracleConsult(this.token0, transaction.amount0In, this.token1).call()
-      //console.log('response for 0 is ' + response)
       transaction.oracleAmount1Out = BigNumber.from(response)
     } else {
       transaction.oracleAmount1Out = BigNumber.from(0)
     }
     if (transaction.amount1In.gt(0)) {
       const response = await contract.methods.oracleConsult(this.token1, transaction.amount1In, this.token0).call()
-      //console.log('response for 1 is ' + response)
       transaction.oracleAmount0Out = BigNumber.from(response)
     } else {
       transaction.oracleAmount0Out = BigNumber.from(0)
@@ -283,6 +281,7 @@ class Pool {
   async canConsultOracle(contract: Contract) {
     const response = await contract.methods.oracleCanConsult(this.token0, this.token1).call()
     this.isConsultable = response
+    return response
   }
 
   /**
@@ -409,19 +408,16 @@ class Pool {
     sliceFactor1Curve = sliceFactor1Curve.gt(this.priceToleranceThreshold)
       ? this.priceToleranceThreshold
       : sliceFactor1Curve
-
-    console.log(sliceFactor1Curve)
     /*  transaction is valid if transaction out value has acceptable difference from Oracle estimation
     or other side incoming value is 0 (therefore, out value will be 0)  */
-    if (!(out0AmountDiff.gt(BigNumber.from(100).sub(sliceFactor0Curve)) || transaction.amount1In.eq(0))) {
+    if (!(out0AmountDiff.lt(BigNumber.from(100).sub(sliceFactor0Curve)) || transaction.amount1In.eq(0))) {
       // throw new Error(`Mitigation0 ${transaction.id}: OUT_VALUE_TOO_FAR_FROM_ORACLE`)
       throw new Error(`Out value too far from Oracle`)
     }
 
-    if (!(out1AmountDiff.gt(BigNumber.from(100).sub(sliceFactor1Curve)) || transaction.amount0In.eq(0))) {
+    if (!(out1AmountDiff.lt(BigNumber.from(100).sub(sliceFactor1Curve)) || transaction.amount0In.eq(0))) {
       // throw new Error(`Mitigation1 ${transaction.id}: OUT_VALUE_TOO_FAR_FROM_ORACLE`)
       throw new Error(`Out value too far from Oracle`)
-      //console.log('Out value too far from Oracle')
     }
   }
 
@@ -526,31 +522,37 @@ interface VerifyOptions {
 }
 
 export async function verifySwap(options: VerifyOptions) {
-  // const poolAddress = web3.utils.toChecksumAddress(options.pairAddress)
-  // const WETH_IDAI_CONTRACT2 = new web3.eth.Contract(PAIR_ABI, poolAddress)
-  // //const FACTORY_CONTRACT2 = new web3.eth.Contract(FACTORY_ABI, poolAddress)
-  // const pool = new Pool(
-  //   options.tokenFrom,
-  //   options.tokenTo,
-  //   options.pair,
-  //   typeof options.kLast === 'string' ? BigNumber.from(options.kLast) : options.kLast,
-  //   true,
-  //   options.priceToleranceThreshold,
-  //   WETH_IDAI_CONTRACT2,
-  //   options.systemFeeRate,
-  //   options.isSecurity
-  // )
-  // const transaction = new Swap(
-  //   options.id,
-  //   options.amountInFrom,
-  //   options.amountInTo,
-  //   options.amountOutFrom,
-  //   options.amountOutTo,
-  //   options.sender,
-  //   options.receiver,
-  //   0.05
-  // )
-  // await pool.verifySwap(transaction, options.isSecurity)
+  const poolAddress = web3.utils.toChecksumAddress(options.pairAddress)
+
+  const WETH_IDAI_CONTRACT2 = new web3.eth.Contract(PAIR_ABI, poolAddress)
+  //const FACTORY_CONTRACT2 = new web3.eth.Contract(FACTORY_ABI, poolAddress)
+
+  const pool = new Pool(
+    options.tokenFrom,
+    options.tokenTo,
+    options.pair,
+
+    typeof options.kLast === 'string' ? BigNumber.from(options.kLast) : options.kLast,
+    true,
+
+    options.priceToleranceThreshold,
+    WETH_IDAI_CONTRACT2,
+    options.systemFeeRate,
+    options.isSecurity
+  )
+
+  const transaction = new Swap(
+    options.id,
+    options.amountInFrom,
+    options.amountInTo,
+    options.amountOutFrom,
+    options.amountOutTo,
+    options.sender,
+    options.receiver,
+    0.05
+  )
+
+  await pool.verifySwap(transaction, options.isSecurity)
 }
 
 // const pool: Pool = new Pool(

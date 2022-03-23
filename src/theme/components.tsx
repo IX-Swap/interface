@@ -517,3 +517,7 @@ export const ellipsisText = css`
   overflow: hidden;
   text-overflow: ellipsis;
 `
+
+export const EllipsisText = styled.div`
+  ${ellipsisText}
+`

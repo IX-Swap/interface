@@ -20,6 +20,7 @@ export const ChevronElement = ({ showMore, setShowMore }: Props) => {
   return (
     <RowFixed gap="8px">
       <ButtonEmpty
+        type="button"
         data-testid="openTable"
         padding="6px 3px"
         borderRadius="12px"

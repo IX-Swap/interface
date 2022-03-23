@@ -3,12 +3,17 @@ import { ActionFilterTabs } from 'components/Vault/enum'
 export const admin = {
   login: 'auth/login',
   me: 'auth/me',
-  kycList: '/kyc/list',
   brokerDealerList: '/broker-dealer/list',
   getSwaps: 'broker-dealer/swaps/all',
-  kycReset: (accreditationId: number) => `/kyc/restart/${accreditationId}`,
-  approveKyc: (id: number) => `/kyc/approve/${id}`,
-  declineKyc: (id: number) => `/kyc/decline/${id}`,
+  accreditationList: '/kyc/list',
+  accreditationReset: (accreditationId: number) => `/kyc/restart/${accreditationId}`,
+  approveAccreditation: (id: number) => `/kyc/approve/${id}`,
+  declineAccreditation: (id: number) => `/kyc/decline/${id}`,
+  kycList: '/newkyc/list',
+  resetKyc: (kycId: number) => `/newkyc/change/${kycId}`,
+  approveKyc: (id: number, riskReportId: number) => `/newkyc/approve/${id}?riskReportId=${riskReportId}`,
+  rejectKyc: (id: number, riskReportId: number) => `/newkyc/reject/${id}?riskReportId=${riskReportId}`,
+  kycById: (id: string | number) => `/newkyc/id/${id}`,
 }
 
 export const vesting = {
@@ -26,8 +31,16 @@ export const auth = {
 }
 
 export const kyc = {
-  getAccreditation: (tokenId: number) => `kyc/getAccreditation/${tokenId}`,
+  getAccreditation: (tokenId: number, isKyc: boolean) => `kyc/getAccreditation/${tokenId}?isKyc=${isKyc}`,
   restartAccreditation: (accreditationRequestId: number) => `kyc/my/restart/${accreditationRequestId}`,
+  createIndividual: `/newkyc/individual`,
+  createCorporate: `/newkyc/corporate`,
+  updateIndividual: (kycId: number) => `/newkyc/individual/${kycId}`,
+  updateCorporate: (kycId: number) => `/newkyc/corporate/${kycId}`,
+  cynopsisRisks: (address: string) => `/newkyc/cynopsis/${address}`,
+  getMyKyc: `newkyc/me`,
+  individualProgress: `newkyc/individual/progress`,
+  corporateProgress: `newkyc/corporate/progress`,
 }
 
 export const broker = {
