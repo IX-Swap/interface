@@ -63,7 +63,7 @@ export const FormStepper = (props: FormStepperProps) => {
   }
 
   const [activeStep, setActiveStep] = useState<number>(
-    getStepFilterValue() ?? defaultActiveStep ?? data?.step ?? 0
+    data?.step ?? getStepFilterValue() ?? defaultActiveStep ?? 0
   )
 
   const handleStepButtonClick = (step: number) => () => {
