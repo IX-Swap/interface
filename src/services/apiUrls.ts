@@ -11,8 +11,8 @@ export const admin = {
   declineAccreditation: (id: number) => `/kyc/decline/${id}`,
   kycList: '/newkyc/list',
   resetKyc: (kycId: number) => `/newkyc/change/${kycId}`,
-  approveKyc: (id: number) => `/newkyc/approve/${id}`,
-  rejectKyc: (id: number) => `/newkyc/reject/${id}`,
+  approveKyc: (id: number, riskReportId: number) => `/newkyc/approve/${id}?riskReportId=${riskReportId}`,
+  rejectKyc: (id: number, riskReportId: number) => `/newkyc/reject/${id}?riskReportId=${riskReportId}`,
   kycById: (id: string | number) => `/newkyc/id/${id}`,
 }
 
