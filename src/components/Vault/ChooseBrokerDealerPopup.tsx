@@ -184,7 +184,7 @@ const KycSourceSelector = (props: KycSourceSelectorProps) => {
         </KycSourceTooltip>
       </KycRow>
 
-      <KycRow onClick={() => onChange(KycSource.InvestaX)}>
+      {/* <KycRow onClick={() => onChange(KycSource.InvestaX)}>
         <TYPE.body1>Fetch from InvestaX</TYPE.body1>
 
         <KycSourceTooltip text="Make sure you have your KYC approved on InvestaX before using this option" />
@@ -194,7 +194,7 @@ const KycSourceSelector = (props: KycSourceSelectorProps) => {
         <IconWrapper size={28} style={{ marginLeft: 'auto', marginRight: 0 }}>
           {selected === KycSource.InvestaX ? <Checkmark className="selected-checkmark" /> : <CheckmarkPlaceholder />}
         </IconWrapper>
-      </KycRow>
+      </KycRow> */}
     </KycSourceContainer>
   )
 }
