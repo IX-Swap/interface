@@ -61,10 +61,11 @@ const Container = styled.div`
   justify-content: center;
   background: linear-gradient(0deg, rgba(26, 9, 41, 0.8), rgba(26, 9, 41, 0.8)),
     radial-gradient(93.65% 93.65% at 79.34% -59.4%, rgba(206, 20, 132, 0.099) 0%, rgba(26, 18, 58, 0) 100%)
-      /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */,
-    rgba(44, 37, 74, 0.2);
+      rgba(44, 37, 74, 0.2);
   backdrop-filter: blur(10px);
   border-radius: 32px;
+  z-index: 10;
+  line-height: normal;
 `
 
 const Content = styled.div`
