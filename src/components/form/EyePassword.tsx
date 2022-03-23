@@ -1,7 +1,9 @@
-import { IconButton, InputAdornment, useTheme } from '@mui/material'
+import { IconButton, InputAdornment } from '@mui/material'
 import React from 'react'
-import { Icon } from 'ui/Icons/Icon'
 import { useStyles } from 'components/form/PasswordField.styles'
+import { ReactComponent as EyeIcon } from 'assets/icons/new/eye.svg'
+import { ReactComponent as EyeOffIcon } from 'assets/icons/new/eye-off.svg'
+
 interface EyePasswordProps {
   inputType?: 'text' | 'password'
   hasErrors?: boolean
@@ -12,20 +14,17 @@ export const EyePassword = ({
   hasErrors = false,
   setType
 }: EyePasswordProps) => {
-  const { showPasswordButton } = useStyles()
-  const theme = useTheme()
-  const errorColor = hasErrors ? theme.palette.error.main : undefined
+  const { showPasswordButton } = useStyles({ hasErrors })
+  const Icon = inputType === 'password' ? EyeIcon : EyeOffIcon
+
   return (
     <InputAdornment position={'end'}>
       <IconButton
+        disableTouchRipple
         className={showPasswordButton}
         onClick={() => setType(inputType === 'password' ? 'text' : 'password')}
       >
-        <Icon
-          name={inputType === 'password' ? 'eye' : 'eye-off'}
-          color={errorColor}
-          hoverColor={errorColor}
-        />
+        <Icon />
       </IconButton>
     </InputAdornment>
   )
