@@ -166,7 +166,7 @@ export default function KYC() {
               </Flex>
               <Flex flexDirection="column" alignItems="center">
                 <CorporateKYC />
-                <Link style={{ textDecoration: 'none ' }} to="/kyc/corporate">
+                <Link style={{ textDecoration: 'none ' }} to="/kyc">
                   <ButtonGradientBorder style={{ padding: '16px 24px' }} marginTop="32px">
                     <Trans>Pass KYC as Corporate</Trans>
                   </ButtonGradientBorder>
