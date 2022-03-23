@@ -103,6 +103,7 @@ export const darkTheme: DeprecatedThemeOptions = {
         color: undefined
       }
     },
+    divider: '#89A1CE',
     alerts: {
       bg: '#152D5F',
       color: '#89A1CE',

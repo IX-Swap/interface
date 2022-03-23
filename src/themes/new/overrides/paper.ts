@@ -14,7 +14,9 @@ export const paper = (theme: Theme) => {
       },
       outlined: {
         boxShadow: `0px 80px 80px ${alpha('#a2acbf', 0.16)}`,
-        border: '1px solid #EDF2FA'
+        border: `1px solid ${
+          theme.palette.mode === 'light' ? '#EDF2FA' : 'transparent'
+        }`
       }
     }
   }
