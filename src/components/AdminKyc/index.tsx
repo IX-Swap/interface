@@ -20,7 +20,7 @@ import { ButtonGradientBorder } from 'components/Button'
 import { useHistory, useParams } from 'react-router-dom'
 import { AdminParams } from 'pages/Admin'
 
-const headerCells = [t`Wallet address`, t`Name`, t`Identity`, t`Date of request`, t`KYC Status`, t`Risk level`]
+const headerCells = [t`Wallet address`, t`Name`, t`Identity`, t`Date of request`, t`KYC Status`]
 
 interface RowProps {
   item: KycItem
@@ -72,7 +72,7 @@ const Row: FC<RowProps> = ({ item, openModal }: RowProps) => {
       <div>
         <StatusCell status={status} />
       </div>
-      <div>risk level</div>
+      {/* <div>risk level</div> */}
       <div>
         <StyledReviewButton onClick={openModal}>Review</StyledReviewButton>
       </div>
@@ -196,12 +196,12 @@ export const Container = styled.div`
 `
 
 const StyledHeaderRow = styled(HeaderRow)`
-  grid-template-columns: 175px 175px 175px repeat(3, calc((100% - 625px) / 3)) 100px;
+  grid-template-columns: 175px 175px 175px 1fr 1fr 100px;
   min-width: 1270px;
 `
 
 const StyledBodyRow = styled(BodyRow)`
-  grid-template-columns: 175px 175px 175px repeat(3, calc((100% - 625px) / 3)) 100px;
+  grid-template-columns: 175px 175px 175px 1fr 1fr 100px;
   min-width: 1270px;
 `
 
