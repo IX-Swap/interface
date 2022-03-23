@@ -277,8 +277,8 @@ export function useGetKycList() {
   return callback
 }
 
-export const approveKyc = async (id: number) => {
-  const result = await apiService.post(admin.approveKyc(id), undefined)
+export const approveKyc = async (id: number, riskReportId: number) => {
+  const result = await apiService.post(admin.approveKyc(id, riskReportId), undefined)
   return result.data
 }
 
@@ -289,10 +289,10 @@ export function useApproveKyc() {
     kycList: { page, offset },
   } = useAdminState()
   const callback = useCallback(
-    async (id: number) => {
+    async (id: number, riskReportId: number) => {
       try {
         dispatch(postApproveKyc.pending())
-        const data = await approveKyc(id)
+        const data = await approveKyc(id, riskReportId)
         dispatch(postApproveKyc.fulfilled({ data }))
         await getKycList({ page, offset })
         return STATUS.SUCCESS
@@ -306,8 +306,16 @@ export function useApproveKyc() {
   return callback
 }
 
-export const rejectKyc = async ({ id, ...data }: { id: number; message?: string }) => {
-  const result = await apiService.post(admin.rejectKyc(id), data)
+export const rejectKyc = async ({
+  id,
+  riskReportId,
+  ...data
+}: {
+  id: number
+  message?: string
+  riskReportId: number
+}) => {
+  const result = await apiService.post(admin.rejectKyc(id, riskReportId), data)
   return result.data
 }
 
@@ -318,7 +326,7 @@ export function useRejectKyc() {
     kycList: { page, offset },
   } = useAdminState()
   const callback = useCallback(
-    async (data: { id: number; message?: string }) => {
+    async (data: { id: number; message?: string; riskReportId: number }) => {
       try {
         dispatch(postRejectKyc.pending())
         const res = await rejectKyc(data)
