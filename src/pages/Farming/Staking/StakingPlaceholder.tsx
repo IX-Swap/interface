@@ -60,13 +60,12 @@ const Container = styled.div`
   align-items: center;
   justify-content: center;
   background: linear-gradient(0deg, rgba(26, 9, 41, 0.8), rgba(26, 9, 41, 0.8)),
-    radial-gradient(93.65% 93.65% at 79.34% -59.4%, rgba(206, 20, 132, 0.099) 0%, rgba(26, 18, 58, 0) 100%)x
+    radial-gradient(93.65% 93.65% at 79.34% -59.4%, rgba(206, 20, 132, 0.099) 0%, rgba(26, 18, 58, 0) 100%) x
       rgba(44, 37, 74, 0.2);
   backdrop-filter: blur(10px);
   border-radius: 32px;
   z-index: 10;
   line-height: normal;
-
 `
 
 const Content = styled.div`

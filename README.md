@@ -55,4 +55,4 @@ aws configure
 aws s3 sync ./build/ s3://<s3-buket-name>/ --acl public-read
 aws s3 website s3://<s3-buket-name/ --index-document index.html
 ```
-*****end*****
+******end******
