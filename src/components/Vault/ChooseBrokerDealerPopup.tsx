@@ -179,12 +179,17 @@ const KycSourceSelector = (props: KycSourceSelectorProps) => {
         </Button>
 
         <Spacer />
-
-        <KycSourceTooltip text="Pass KYC on IXSwap to enable this option">
+        {kyc?.data?.status === KYCStatuses.APPROVED ? (
           <IconWrapper size={28} style={{ marginLeft: 'auto', marginRight: 0 }}>
             {selected === KycSource.IXSwap ? <Checkmark className="selected-checkmark" /> : <CheckmarkPlaceholder />}
           </IconWrapper>
-        </KycSourceTooltip>
+        ) : (
+          <KycSourceTooltip text="Pass KYC on IXSwap to enable this option">
+            <IconWrapper size={28} style={{ marginLeft: 'auto', marginRight: 0 }}>
+              {selected === KycSource.IXSwap ? <Checkmark className="selected-checkmark" /> : <CheckmarkPlaceholder />}
+            </IconWrapper>
+          </KycSourceTooltip>
+        )}
       </KycRow>
 
       {/* <KycRow onClick={() => onChange(KycSource.InvestaX)}>
