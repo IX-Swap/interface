@@ -6,7 +6,9 @@ import { getNames } from 'country-list'
 import { Formik } from 'formik'
 import { useHistory } from 'react-router-dom'
 import moment from 'moment'
+import { useWeb3React } from '@web3-react/core'
 
+import usePrevious from 'hooks/usePrevious'
 import Column from 'components/Column'
 import { KYCProgressBar } from './KYCProgressBar'
 import { ButtonText } from 'components/Button'
@@ -57,6 +59,16 @@ export default function IndividualKycForm() {
   const updateIndividualKYC = useUpdateIndividualKYC()
   const login = useLogin({ mustHavePreviousLogin: false })
   const { kyc, loadingRequest } = useKYCState()
+
+  const { account } = useWeb3React()
+  const prevAccount = usePrevious(account)
+
+  useEffect(() => {
+    console.log('log => data', { account, prevAccount })
+    if (account && prevAccount && account !== prevAccount) {
+      history.push('/kyc')
+    }
+  }, [account, prevAccount])
 
   useEffect(() => {
     setWaitingForInitialValues(true)
