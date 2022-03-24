@@ -13,6 +13,7 @@ import { useApproveKyc, useRejectKyc, useResetKyc } from 'state/admin/hooks'
 import { CorporateForm } from './CorporateForm'
 import { IndividualForm } from './IndividualForm'
 import { getCynopsisRisks } from 'state/kyc/hooks'
+import { LoadingIndicator } from 'components/LoadingIndicator'
 
 interface Props {
   isOpen: boolean
@@ -23,14 +24,19 @@ interface Props {
 export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
   const [openReasonModal, handleOpenReasonModal] = useState('')
   const [riskJSON, setRiskJSON] = useState<any>(null)
+  const [loadingCynopsis, handleLoadingCynopsis] = useState(false)
+  const [riskReportId, handleRiskReportId] = useState(0)
   const approveKyc = useApproveKyc()
   const rejectKyc = useRejectKyc()
   const resetKyc = useResetKyc()
 
   useEffect(() => {
     const fetchCynopsisRisks = async () => {
+      handleLoadingCynopsis(true)
       const result = await getCynopsisRisks(data?.user.ethAddress)
       setRiskJSON(result?.riskReport?.riskJson?.riskScore ? result.riskReport.riskJson : null)
+      handleRiskReportId(result?.riskReport?.id || 0)
+      handleLoadingCynopsis(false)
     }
 
     fetchCynopsisRisks()
@@ -40,7 +46,7 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
 
   const approve = async () => {
     onClose()
-    await approveKyc(data.id)
+    await approveKyc(data.id, riskReportId)
   }
 
   const closeModal = () => handleOpenReasonModal('')
@@ -55,7 +61,7 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
 
   const onReasonAction = (reason?: string) => {
     if (openReasonModal === 'reject') {
-      rejectKyc({ id: data.id, message: reason })
+      rejectKyc({ id: data.id, message: reason, riskReportId })
     } else {
       resetKyc({ id: data.id, message: reason })
     }
@@ -63,6 +69,8 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
     onClose()
     // TO DO - handle action
   }
+
+  if (loadingCynopsis) return <LoadingIndicator isLoading size={96} />
 
   return (
     <>

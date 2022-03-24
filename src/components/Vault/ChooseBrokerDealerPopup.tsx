@@ -184,7 +184,7 @@ const KycSourceSelector = (props: KycSourceSelectorProps) => {
         </KycSourceTooltip>
       </KycRow>
 
-      <KycRow onClick={() => onChange(KycSource.InvestaX)}>
+      {/* <KycRow onClick={() => onChange(KycSource.InvestaX)}>
         <TYPE.body1>Fetch from InvestaX</TYPE.body1>
 
         <KycSourceTooltip text="Make sure you have your KYC approved on InvestaX before using this option" />
@@ -194,7 +194,7 @@ const KycSourceSelector = (props: KycSourceSelectorProps) => {
         <IconWrapper size={28} style={{ marginLeft: 'auto', marginRight: 0 }}>
           {selected === KycSource.InvestaX ? <Checkmark className="selected-checkmark" /> : <CheckmarkPlaceholder />}
         </IconWrapper>
-      </KycRow>
+      </KycRow> */}
     </KycSourceContainer>
   )
 }
@@ -210,6 +210,7 @@ export const ChooseBrokerDealerPopup = ({ tokenId, currencyId }: { tokenId: any;
   const tokenName = (useCurrency(currencyId) as any)?.tokenInfo?.symbol || null
   const fetchList = useFetchUserSecTokenListCallback()
   const fetchBrokerDealerPairs = useFetchBrokerDealers()
+  const { kyc } = useKYCState()
 
   useEffect(() => {
     if (tokenId) {
@@ -328,7 +329,7 @@ export const ChooseBrokerDealerPopup = ({ tokenId, currencyId }: { tokenId: any;
             <Row style={{ marginBottom: '24px' }} className="start-accreditation-button-row">
               {!loadingAccreditation && (
                 <ButtonIXSWide
-                  disabled={loadingAccreditation}
+                  disabled={loadingAccreditation || kyc?.data?.status !== KYCStatuses.APPROVED}
                   style={{ textTransform: 'unset' }}
                   onClick={() => {
                     passAccreditation(tokenId, selectedBrokerPair, source === KycSource.IXSwap)
