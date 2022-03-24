@@ -13,7 +13,7 @@ export const Cynopsis: FC<Props> = ({ riskJSON }: Props) => {
     <Block
       title="Cynopsis"
       additionalTitleInfo={
-        <Percent>
+        <Percent risk={riskJSON.riskRating}>
           <span>&nbsp;-&nbsp;</span>
           <span>{`${riskJSON.riskScore.toFixed(2)}% (${riskJSON.riskRating})`}</span>
         </Percent>
@@ -32,11 +32,19 @@ export const Cynopsis: FC<Props> = ({ riskJSON }: Props) => {
   ) : null
 }
 
-const Percent = styled.div`
+const Percent = styled.div<{ risk: string }>`
   display: flex;
   align-items: center;
   > :last-child {
-    color: ${({ theme: { green1 } }) => green1};
+    color: ${({ theme: { green1, yellow1, red1 }, risk }) => {
+      const riskColors = {
+        LOW: green1,
+        MEDIUM: yellow1,
+        HIGH: red1,
+      } as Record<string, string>
+
+      return riskColors[risk] || 'gray'
+    }};
   }
 `
 
