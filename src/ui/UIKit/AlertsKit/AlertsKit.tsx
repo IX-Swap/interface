@@ -40,7 +40,9 @@ export const AlertsKit = () => {
   const Content = () => (
     <Box width={145}>The bank account was successfully created</Box>
   )
-
+  const ErrorContent = () => (
+    <Box width={145}>There was an error creating the bank account</Box>
+  )
   const ActionContent = ({ closeToast }: ToastContentProps) => {
     const closeAlert = () => {
       if (closeToast !== undefined) {
@@ -50,7 +52,7 @@ export const AlertsKit = () => {
 
     return (
       <Box display={'flex'}>
-        <Box width={145}>The bank account was successfully created</Box>
+        <Content />
 
         <Button
           variant={'text'}
@@ -109,7 +111,7 @@ export const AlertsKit = () => {
             <Button
               variant={'outlined'}
               onClick={() =>
-                toast(Content, getToastOptions('error', 'default'))
+                toast(ErrorContent, getToastOptions('error', 'default'))
               }
             >
               Error
@@ -127,7 +129,7 @@ export const AlertsKit = () => {
             <Button
               variant={'outlined'}
               onClick={() =>
-                toast(Content, getToastOptions('warning', 'default'))
+                toast(ErrorContent, getToastOptions('warning', 'default'))
               }
             >
               Warning
@@ -156,7 +158,7 @@ export const AlertsKit = () => {
             <Button
               variant={'outlined'}
               onClick={() =>
-                toast(Content, getToastOptions('error', 'loading'))
+                toast(ErrorContent, getToastOptions('error', 'loading'))
               }
             >
               Error
@@ -174,7 +176,7 @@ export const AlertsKit = () => {
             <Button
               variant={'outlined'}
               onClick={() =>
-                toast(Content, getToastOptions('warning', 'loading'))
+                toast(ErrorContent, getToastOptions('warning', 'loading'))
               }
             >
               Warning

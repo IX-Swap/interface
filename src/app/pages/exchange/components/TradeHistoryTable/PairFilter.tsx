@@ -9,9 +9,9 @@ export const PairFilter = () => {
         <PairSelect
           style={{ minWidth: 150 }}
           value={value}
+          label='Pair'
           onChange={event => {
-            console.log({ value, event })
-            onChange(event.target.value as string)
+            onChange(event.target.value)
           }}
         />
       )}

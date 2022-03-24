@@ -73,7 +73,7 @@ export const Register: React.FC = observer(() => {
           </Typography>
         </Grid>
         <Grid item>
-          <VSpacer size={'large'} />
+          <VSpacer size='medium' />
           <Typography align='center' className={support} variant={'body2'}>
             If you have any issues, please contact us{' '}
             <a href={'mailto:support@investax.io'} className={link}>

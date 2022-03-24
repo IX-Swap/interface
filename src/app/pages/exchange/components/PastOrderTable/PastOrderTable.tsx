@@ -33,7 +33,7 @@ export const PastOrderTable = (props: PostOrderTableProps) => {
   return (
     <>
       <Hidden lgDown>
-        <PastOrderFilter />
+        <PastOrderFilter pairId={pairId} />
         <VSpacer size={'small'} />
       </Hidden>
       <Grid>
