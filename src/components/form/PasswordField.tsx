@@ -20,8 +20,8 @@ export const PasswordField = ({
   label = 'Password'
 }: PasswordFieldProps) => {
   const { control, errors } = useFormContext()
-  const passwordErrors = errors[name]
   const { passwordField } = useStyles()
+  const passwordErrors = errors[name]
   const [inputType, setInputType] = useState<'password' | 'text'>('password')
   return (
     <Grid container direction='column' spacing={2}>
