@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import 'svgxuse'
 import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles'
 import createGenerateClassName from '@mui/styles/createGenerateClassName'
 import StylesProvider from '@mui/styles/StylesProvider'
