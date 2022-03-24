@@ -122,15 +122,15 @@ const KycSourceSelector = (props: KycSourceSelectorProps) => {
   const getText = (status: string | undefined) => {
     switch (status) {
       case KYCStatuses.APPROVED:
-        return t`KYC status: APPROVED`
+        return t`KYC: APPROVED`
       case KYCStatuses.REJECTED:
-        return t`KYC status: REJECTED`
+        return t`KYC: REJECTED`
       case KYCStatuses.PENDING:
-        return t`KYC status: PENDING`
+        return t`KYC: PENDING`
       case KYCStatuses.CHANGES_REQUESTED:
-        return t`KYC status: REQUESTED`
+        return t`KYC: CHANGE REQUESTED`
       case KYCStatuses.NOT_SUBMITTED:
-        return t`KYC status: NOT_SUBMITTED`
+        return t`KYC: NOT_SUBMITTED`
       default:
         return t`Pass KYC on IXSwap`
     }
@@ -166,6 +166,9 @@ const KycSourceSelector = (props: KycSourceSelectorProps) => {
 
   return (
     <KycSourceContainer>
+      <KycRow>
+        <TYPE.small style={{ fontSize: '12px', color: '#EDCEFF' }}>KYC source</TYPE.small>
+      </KycRow>
       <KycRow onClick={() => onChange(KycSource.IXSwap)}>
         <TYPE.body1>My IXSwap KYC</TYPE.body1>
 
