@@ -23,6 +23,7 @@ import { industries, initialTokenState } from './mock'
 import { CREATE_TOKEN_CHAINS } from 'constants/addresses'
 import { isMobile } from 'react-device-detect'
 import { AreYouSureModal } from 'components/AreYouSureModal'
+import { TokenAvailableFor } from './TokenAvailableFor'
 
 interface Props {
   token: any | null
@@ -52,6 +53,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
       companyName: null,
       description: null,
       wrappedTokenAddress: null,
+      kycTypes: null,
     })
   }
 
@@ -60,6 +62,13 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
     else setToken(initialTokenState)
     resetErrors()
   }, [propToken])
+
+  useEffect(() => {
+    if (token) {
+      const validationErrors = validateToken(token)
+      setErrors(validationErrors)
+    }
+  }, [token])
 
   const confirmClose = () => {
     closeConfirm()
@@ -90,13 +99,14 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
     setIsLoading(true)
     const validationErrors = validateToken(token)
     const hasError = Object.values(validationErrors).some((value) => Boolean(value) === true)
+    const formattedData = { ...token, kycType: JSON.stringify(token.kycType) }
 
     if (hasError) {
       setErrors(validationErrors)
     } else {
       let data = null
       if (token.id) {
-        data = await updateToken(token)
+        data = await updateToken(formattedData)
         if (data) {
           addPopup({
             info: {
@@ -106,7 +116,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
           })
         }
       } else {
-        data = await addToken(currentIssuer.id, token)
+        data = await addToken(currentIssuer.id, formattedData)
         if (data) {
           addPopup({
             info: {
@@ -412,30 +422,37 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                         )}
                       </Box>
                     </FormRow>
-
-                    <Box display="flex">
-                      <Box marginRight={isMobile ? '0px' : '178px'}>
-                        <TYPE.title11 marginBottom="26px" color="text2">
-                          <Trans>Active</Trans>
-                        </TYPE.title11>
-                        <TYPE.title11 marginBottom="26px" color="text2">
-                          <Trans>Featured</Trans>
-                        </TYPE.title11>
+                    <FormRow>
+                      <Box>
+                        <TokenAvailableFor setToken={setToken} token={token} error={errors.kycType} />
                       </Box>
+                      <Box display="flex">
+                        <Box marginRight={isMobile ? '0px' : '178px'}>
+                          <TYPE.title11 marginBottom="26px" color="text2">
+                            <Trans>Active</Trans>
+                          </TYPE.title11>
+                          <TYPE.title11 marginBottom="26px" color="text2">
+                            <Trans>Featured</Trans>
+                          </TYPE.title11>
+                        </Box>
 
-                      <Box marginLeft={isMobile ? 'auto' : '0px'}>
-                        <Radio isActive={token.active} onToggle={() => setToken({ ...token, active: !token.active })} />
-                        <Radio
-                          isActive={token.featured}
-                          onToggle={() => setToken({ ...token, featured: !token.featured })}
-                        />
+                        <Box marginLeft={isMobile ? 'auto' : '0px'}>
+                          <Radio
+                            isActive={token.active}
+                            onToggle={() => setToken({ ...token, active: !token.active })}
+                          />
+                          <Radio
+                            isActive={token.featured}
+                            onToggle={() => setToken({ ...token, featured: !token.featured })}
+                          />
+                        </Box>
                       </Box>
-                    </Box>
+                    </FormRow>
                   </FormWrapper>
 
                   <ButtonIXSGradient
                     onClick={handleCreateClick}
-                    margin="35px 0px 30px 0px"
+                    margin="35px auto 30px auto"
                     style={{ width: isMobile ? '100%' : 475 }}
                     disabled={isLoading}
                   >

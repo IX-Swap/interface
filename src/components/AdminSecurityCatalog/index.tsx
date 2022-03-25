@@ -59,8 +59,6 @@ export const AdminSecurityCatalog: FC = () => {
   const [deleteTokenId, setDeleteTokenId] = useState(0)
   const [showMode, setShowMode] = useState<Tab['value']>('catalog')
 
-  console.log(currentToken)
-
   useEffect(() => {
     if (showMode === 'catalog') {
       getIssuers({ search: '', offset, page: 1 })
