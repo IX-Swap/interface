@@ -1,5 +1,5 @@
 import React, { lazy, Suspense, useEffect, useMemo } from 'react'
-import { Route, Switch, useLocation } from 'react-router-dom'
+import { Redirect, Route, Switch, useLocation } from 'react-router-dom'
 import styled from 'styled-components/macro'
 
 import { AppBackground } from 'components/AppBackground'
@@ -10,6 +10,7 @@ import {
   SUPPORTED_TGE_CHAINS,
   TGE_CHAINS_WITH_STAKING,
   TGE_CHAINS_WITH_SWAP,
+  TGE_CHAINS_WITH_KYC,
 } from 'constants/addresses'
 import ApeModeQueryParamReader from 'hooks/useApeModeQueryParamReader'
 import { useActiveWeb3React } from 'hooks/web3'
@@ -33,7 +34,7 @@ import PoolFinder from './PoolFinder'
 import { RedirectPathToStaking, RedirectPathToSwapOnly, RedirectToSwap } from './Swap/redirects'
 import { Footer } from '../components/Footer'
 
-const AdminKyc = lazy(() => import('./Admin'))
+const Admin = lazy(() => import('./Admin'))
 
 const KYC = lazy(() => import('./KYC'))
 const IndividualKYC = lazy(() => import('./KYC/IndividualKycForm'))
@@ -121,7 +122,8 @@ export default function App() {
           <Web3ReactManager>
             <Suspense fallback={<></>}>
               <Switch>
-                <Route exact strict path="/admin" component={AdminKyc} />
+                <Route exact strict path="/admin" render={() => <Redirect to="/admin/accreditation" />} />
+                <Route exact strict path="/admin/:tab/:id?" component={Admin} />
 
                 <Route exact strict path={routes.nftCreate} component={CreateNFT} />
                 <Route exact strict path={routes.nftList} component={ListNFT} />
@@ -160,7 +162,7 @@ export default function App() {
                   <Route exact strict path="/faucet" component={Faucet} />
                 )}
 
-                {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
+                {chainId && TGE_CHAINS_WITH_KYC.includes(chainId) && (
                   <Route exact strict path={routes.kyc} component={KYC} />
                 )}
 

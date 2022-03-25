@@ -4,7 +4,6 @@ import { IndividualKyc } from 'state/admin/actions'
 import { GridContainer, GridItem } from 'components/Grid'
 
 import { Block } from '../molecules/Block'
-import { RowWithCheck } from '../molecules/RowWithCheck'
 import { corporateInfoKeys, personalInfoKeys } from '../utils/constants'
 import { Field } from '../molecules/Field'
 
@@ -26,11 +25,6 @@ export const Information = ({ data, kycKey }: Props) => {
                 <Field label={label} value={format ? format(data?.[key]) : data?.[key]} />
               </GridItem>
             )
-        )}
-        {kycKey === 'corporate' && (
-          <GridItem xs={12}>
-            <RowWithCheck text="Is Incorporated" isDone={data?.corporate?.isIncorporated} />
-          </GridItem>
         )}
       </GridContainer>
     </Block>

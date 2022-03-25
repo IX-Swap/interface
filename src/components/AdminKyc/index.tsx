@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import { StyledCopy } from 'components/AdminTransactionsTable'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import useCopyClipboard from 'hooks/useCopyClipboard'
-import { useAdminState, useGetKycList } from 'state/admin/hooks'
+import { getKycById, useAdminState, useGetKycList } from 'state/admin/hooks'
 import { shortenAddress } from 'utils'
 import { KycItem } from 'state/admin/actions'
 import { IconWrapper } from 'components/AccountDetails/styleds'
@@ -15,11 +15,12 @@ import { Pagination } from '../Pagination'
 import { BodyRow, HeaderRow, Table } from '../Table'
 import { Search } from '../AdminAccreditationTable/Search'
 import { StatusCell } from './StatusCell'
-import { MoreMenu } from './MoreMenu'
 import { KycReviewModal } from 'components/KycReviewModal'
 import { ButtonGradientBorder } from 'components/Button'
+import { useHistory, useParams } from 'react-router-dom'
+import { AdminParams } from 'pages/Admin'
 
-const headerCells = [t`Wallet address`, t`Name`, t`Identity`, t`Date of request`, t`KYC Status`, t`Risk level`]
+const headerCells = [t`Wallet address`, t`Name`, t`Identity`, t`Date of request`, t`KYC Status`]
 
 interface RowProps {
   item: KycItem
@@ -49,7 +50,7 @@ const Row: FC<RowProps> = ({ item, openModal }: RowProps) => {
   const kyc = individualKycId ? item.individual : item.corporate
   const fullName = individualKycId
     ? [kyc?.firstName, kyc?.lastName].filter((el) => Boolean(el)).join(' ')
-    : kyc?.personnelName
+    : kyc?.corporateName
 
   return (
     <StyledBodyRow key={id}>
@@ -71,7 +72,7 @@ const Row: FC<RowProps> = ({ item, openModal }: RowProps) => {
       <div>
         <StatusCell status={status} />
       </div>
-      <div>risk level</div>
+      {/* <div>risk level</div> */}
       <div>
         <StyledReviewButton onClick={openModal}>Review</StyledReviewButton>
       </div>
@@ -94,33 +95,54 @@ const Body = ({ openModal }: { openModal: (kyc: KycItem) => void }) => {
 
 export const AdminKycTable = () => {
   const [kyc, handleKyc] = useState({} as KycItem)
+  const [isLoading, handleIsLoading] = useState(false)
   const {
     kycList: { totalPages, page, items },
     adminLoading,
   } = useAdminState()
   const getKycList = useGetKycList()
 
+  const history = useHistory()
+
+  const { id } = useParams<AdminParams>()
+
   const onPageChange = (page: number) => {
-    const element = document.getElementById('kyc-container')
-    if (element) {
-      const y = element.getBoundingClientRect().top + window.pageYOffset
-      window.scrollTo({ top: y, behavior: 'smooth' })
-    }
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+
     getKycList({ page, offset: 10 })
   }
 
-  const closeModal = () => handleKyc({} as KycItem)
-  const openModal = (kyc: KycItem) => handleKyc(kyc)
+  const closeModal = () => {
+    history.push(`/admin/kyc`)
+    handleKyc({} as KycItem)
+  }
+  const openModal = (kyc: KycItem) => history.push(`/admin/kyc/${kyc.id}`)
 
   useEffect(() => {
     getKycList({ page: 1, offset: 10 })
   }, [getKycList])
 
+  useEffect(() => {
+    getKyc()
+  }, [id])
+
+  const getKyc = async () => {
+    if (!id) return
+    try {
+      handleIsLoading(true)
+      const data = await getKycById(id)
+      handleKyc(data)
+      handleIsLoading(false)
+    } catch (e) {
+      handleIsLoading(false)
+    }
+  }
+
   return (
     <div id="kyc-container">
       {Boolean(kyc.id) && <KycReviewModal isOpen onClose={closeModal} data={kyc} />}
       <Search placeholder="Search for Wallet" />
-      {adminLoading && (
+      {(adminLoading || isLoading) && (
         <Loader>
           <LoaderThin size={96} />
         </Loader>
@@ -174,12 +196,12 @@ export const Container = styled.div`
 `
 
 const StyledHeaderRow = styled(HeaderRow)`
-  grid-template-columns: 175px 175px 175px repeat(3, calc((100% - 625px) / 3)) 100px;
+  grid-template-columns: 175px 175px 175px 1fr 1fr 100px;
   min-width: 1270px;
 `
 
 const StyledBodyRow = styled(BodyRow)`
-  grid-template-columns: 175px 175px 175px repeat(3, calc((100% - 625px) / 3)) 100px;
+  grid-template-columns: 175px 175px 175px 1fr 1fr 100px;
   min-width: 1270px;
 `
 

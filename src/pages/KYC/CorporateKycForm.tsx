@@ -19,12 +19,7 @@ import { Loadable } from 'components/LoaderHover'
 import { LOGIN_STATUS, useLogin } from 'state/auth/hooks'
 import { useAddPopup, useShowError } from 'state/application/hooks'
 
-import {
-  initialCorporateKycFormData,
-  corporateSourceOfFunds,
-  legalEntityTypes,
-  corporateFormInitialValues,
-} from './mock'
+import { corporateSourceOfFunds, legalEntityTypes, corporateFormInitialValues, promptValue } from './mock'
 import { FormCard, FormGrid, ExtraInfoCard, Divider } from './styleds'
 import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
 import { ReactComponent as BigPassed } from 'assets/images/check-success-big.svg'
@@ -33,7 +28,8 @@ import { FormContainer, FormRow } from './IndividualKycForm'
 import { corporateErrorsSchema } from './schema'
 import { getCorporateProgress, useCreateCorporateKYC, useKYCState, useUpdateCorporateKYC } from 'state/kyc/hooks'
 import { KYCStatuses } from './enum'
-import { transformApiData, transformKycDto } from './utils'
+import { corporateTransformApiData, corporateTransformKycDto } from './utils'
+import { LoadingIndicator } from 'components/LoadingIndicator'
 
 export default function CorporateKycForm() {
   const [waitingForInitialValues, setWaitingForInitialValues] = useState(true)
@@ -45,13 +41,12 @@ export default function CorporateKycForm() {
   const [errors, setErrors] = useState<any>({})
   const [pending, setPending] = useState(false)
   const history = useHistory()
-  const { kyc } = useKYCState()
+  const { kyc, loadingRequest } = useKYCState()
   const login = useLogin({ mustHavePreviousLogin: false })
   const showError = useShowError()
   const addPopup = useAddPopup()
   const createCorporateKYC = useCreateCorporateKYC()
   const updateCorporateKYC = useUpdateCorporateKYC()
-  const promptValue = 'Data will be lost if you leave the page, are you sure?'
 
   useEffect(() => {
     setWaitingForInitialValues(true)
@@ -59,7 +54,7 @@ export default function CorporateKycForm() {
     const getProgress = async () => {
       const data = await getCorporateProgress()
       if (data) {
-        const transformedData = transformApiData(data)
+        const transformedData = corporateTransformApiData(data)
         setFormData(transformedData)
       }
     }
@@ -73,19 +68,6 @@ export default function CorporateKycForm() {
 
     setWaitingForInitialValues(false)
   }, [kyc])
-
-  const {
-    info,
-    authorizedPersonnel,
-    address,
-    residentialAddress,
-    funds,
-    fatca,
-    taxDeclaration,
-    beneficialOwners,
-    upload,
-    investor,
-  } = initialCorporateKycFormData
 
   const checkAuthorization = useCallback(async () => {
     setPending(true)
@@ -187,9 +169,9 @@ export default function CorporateKycForm() {
 
   const countries = useMemo(() => {
     return getNames()
-      .filter((name) => !['United States of America', 'United States Minor Outlying Islands'].includes(name))
-      .map((name, index) => ({ id: ++index, name }))
-      .sort((a, b) => a.name.localeCompare(b.name))
+      .filter((label) => !['United States of America', 'United States Minor Outlying Islands'].includes(label))
+      .map((label, index) => ({ id: ++index, label }))
+      .sort((a, b) => a.label.localeCompare(b.label))
   }, [])
 
   const validationSeen = (key: string) => {
@@ -242,6 +224,8 @@ export default function CorporateKycForm() {
 
   return (
     <Loadable loading={pending}>
+      <LoadingIndicator isLoading={loadingRequest} />
+
       <StyledBodyWrapper>
         <ButtonText style={{ textDecoration: 'none' }} display="flex" marginBottom="64px" onClick={goBack}>
           <ArrowLeft />
@@ -265,9 +249,8 @@ export default function CorporateKycForm() {
                 .validate(values, { abortEarly: false })
                 .then(async () => {
                   setCanSubmit(false)
-                  const body = transformKycDto(values)
+                  const body = corporateTransformKycDto(values)
                   let data: any = null
-                  console.log('body', body)
 
                   if (updateKycId) {
                     data = await updateCorporateKYC(updateKycId, body)
@@ -346,7 +329,7 @@ export default function CorporateKycForm() {
               const beneficialOwnersFilled =
                 shouldValidate && !Object.keys(errors).some((errorField) => errorField.startsWith('beneficialOwners'))
 
-              console.log('values', values)
+              console.log('log => errors', errors)
 
               return (
                 <FormRow>
@@ -354,7 +337,9 @@ export default function CorporateKycForm() {
                     <Column style={{ gap: '35px' }}>
                       <FormCard id="info">
                         <RowBetween marginBottom="32px">
-                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>{info.title}</TYPE.title6>
+                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                            <Trans>Corporate Information</Trans>
+                          </TYPE.title6>
                           {infoFilled && <BigPassed />}
                         </RowBetween>
 
@@ -405,7 +390,7 @@ export default function CorporateKycForm() {
                             />
                           </FormGrid>
                           <FormGrid columns={1}>
-                            {values.typeOfLegalEntity?.id === legalEntityTypes.length && (
+                            {values.typeOfLegalEntity?.value === legalEntityTypes.length && (
                               <TextInput
                                 label="Other Entity"
                                 onChange={(e) =>
@@ -416,19 +401,21 @@ export default function CorporateKycForm() {
                               />
                             )}
                           </FormGrid>
-                          <FormGrid columns={1}>
+                          {/* <FormGrid columns={1}>
                             <Checkbox
                               checked={values.incorporated}
                               onClick={() => setFieldValue('incorporated', !values.incorporated, false)}
                               label="Is Incorporated"
                             />
-                          </FormGrid>
+                          </FormGrid> */}
                         </Column>
                       </FormCard>
 
                       <FormCard id="authorizedPersonnel">
                         <RowBetween marginBottom="32px">
-                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>{authorizedPersonnel.title}</TYPE.title6>
+                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                            <Trans>Company Authorized Personnel</Trans>
+                          </TYPE.title6>
                           {authorizedPersonnelFilled && <BigPassed />}
                         </RowBetween>
 
@@ -488,7 +475,9 @@ export default function CorporateKycForm() {
 
                       <FormCard id="address">
                         <RowBetween marginBottom="32px">
-                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>{address.title}</TYPE.title6>
+                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                            <Trans>Address</Trans>
+                          </TYPE.title6>
                           {addressFilled && <BigPassed />}
                         </RowBetween>
 
@@ -529,7 +518,9 @@ export default function CorporateKycForm() {
 
                       <FormCard id="residentialAddress">
                         <RowBetween marginBottom="32px">
-                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>{residentialAddress.title}</TYPE.title6>
+                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                            <Trans>Residential Address</Trans>
+                          </TYPE.title6>
                           {residentialAddressFilled && <BigPassed />}
                         </RowBetween>
 
@@ -578,16 +569,18 @@ export default function CorporateKycForm() {
 
                       <FormCard id="funds">
                         <RowBetween marginBottom="32px">
-                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>{funds.title}</TYPE.title6>
+                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                            <Trans>Source of Funds</Trans>
+                          </TYPE.title6>
                           {fundsFilled && <BigPassed />}
                         </RowBetween>
                         <FormGrid columns={3}>
-                          {corporateSourceOfFunds.map(({ id, name }: any) => (
+                          {corporateSourceOfFunds.map(({ value, label }: any) => (
                             <Checkbox
-                              checked={values.sourceOfFunds.includes(name)}
-                              onClick={() => onSourceOfFundsChange(name, values.sourceOfFunds, setFieldValue)}
-                              key={`funds-${id}`}
-                              label={name}
+                              checked={values.sourceOfFunds.includes(label)}
+                              onClick={() => onSourceOfFundsChange(label, values.sourceOfFunds, setFieldValue)}
+                              key={`funds-${value}`}
+                              label={label}
                             />
                           ))}
                         </FormGrid>
@@ -609,7 +602,9 @@ export default function CorporateKycForm() {
 
                       <FormCard id="corporate">
                         <RowBetween marginBottom="32px">
-                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>{investor.title}</TYPE.title6>
+                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                            <Trans>Investor Status Declaration</Trans>
+                          </TYPE.title6>
                           {investorFilled && <BigPassed />}
                         </RowBetween>
 
@@ -627,7 +622,7 @@ export default function CorporateKycForm() {
                               isRadio
                               checked={values.accredited === 1}
                               onClick={() => onSelectChange('accredited', 1, setFieldValue)}
-                              label={`I declare that i am “individual accredited Investor"`}
+                              label={`I declare that I am “individual accredited Investor"`}
                             />
                             {errors.accredited && (
                               <TYPE.small marginTop="-4px" color={'red1'}>
@@ -640,7 +635,9 @@ export default function CorporateKycForm() {
 
                       <FormCard id="fatca">
                         <RowBetween marginBottom="32px">
-                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>{fatca.title}</TYPE.title6>
+                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                            <Trans>FATCA</Trans>
+                          </TYPE.title6>
                           {fatcaFilled && <BigPassed />}
                         </RowBetween>
 
@@ -682,7 +679,9 @@ export default function CorporateKycForm() {
 
                       <FormCard id="tax-declaration">
                         <RowBetween marginBottom="32px">
-                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>{taxDeclaration.title}</TYPE.title6>
+                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                            <Trans>Tax Declaration</Trans>
+                          </TYPE.title6>
                           {taxDeclarationFilled && <BigPassed />}
                         </RowBetween>
 
@@ -715,7 +714,9 @@ export default function CorporateKycForm() {
 
                       <FormCard id="beneficial-owners">
                         <RowBetween marginBottom="32px">
-                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>{beneficialOwners.title}</TYPE.title6>
+                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                            <Trans>Beneficial Owners Information</Trans>
+                          </TYPE.title6>
                           {beneficialOwnersFilled && <BigPassed />}
                         </RowBetween>
                         <ExtraInfoCard>
@@ -846,7 +847,9 @@ export default function CorporateKycForm() {
 
                       <FormCard id="upload">
                         <RowBetween marginBottom="32px">
-                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>{upload.title}</TYPE.title6>
+                          <TYPE.title6 style={{ textTransform: 'uppercase' }}>
+                            <Trans>Corporate Documents</Trans>
+                          </TYPE.title6>
                           {filesFilled && <BigPassed />}
                         </RowBetween>
 
@@ -883,36 +886,38 @@ export default function CorporateKycForm() {
                             )}
                           />
 
-                          <Uploader
-                            title="Evidence of Accreditation"
-                            subtitle={
-                              <ul>
-                                <li>
-                                  <Trans>Copy of the most recent audited balance sheet of the corporation.</Trans>
-                                </li>
-                                <li>
-                                  <Trans>
-                                    Where the corporation is not required to prepare audited account regularly, a
-                                    balance sheet of the corporation certified by the corporation as giving a true and
-                                    fair view of the state of affairs of the corporation as of the date of the balance
-                                    sheet, of which date shall be within the preceding 12 months.
-                                  </Trans>
-                                </li>
-                              </ul>
-                            }
-                            files={values.evidenceOfAccreditation}
-                            onDrop={(file) => {
-                              handleDropImage(file, values, 'evidenceOfAccreditation', setFieldValue)
-                            }}
-                            optional={values.accredited !== 1}
-                            error={errors.evidenceOfAccreditation && errors.evidenceOfAccreditation}
-                            handleDeleteClick={handleImageDelete(
-                              values,
-                              'evidenceOfAccreditation',
-                              values.removedDocuments,
-                              setFieldValue
-                            )}
-                          />
+                          {Boolean(values.accredited) && (
+                            <Uploader
+                              title="Evidence of Accreditation"
+                              subtitle={
+                                <ul>
+                                  <li>
+                                    <Trans>Copy of the most recent audited balance sheet of the corporation.</Trans>
+                                  </li>
+                                  <li>
+                                    <Trans>
+                                      Where the corporation is not required to prepare audited account regularly, a
+                                      balance sheet of the corporation certified by the corporation as giving a true and
+                                      fair view of the state of affairs of the corporation as of the date of the balance
+                                      sheet, of which date shall be within the preceding 12 months.
+                                    </Trans>
+                                  </li>
+                                </ul>
+                              }
+                              files={values.evidenceOfAccreditation}
+                              onDrop={(file) => {
+                                handleDropImage(file, values, 'evidenceOfAccreditation', setFieldValue)
+                              }}
+                              optional={values.accredited !== 1}
+                              error={errors.evidenceOfAccreditation && errors.evidenceOfAccreditation}
+                              handleDeleteClick={handleImageDelete(
+                                values,
+                                'evidenceOfAccreditation',
+                                values.removedDocuments,
+                                setFieldValue
+                              )}
+                            />
+                          )}
                         </Column>
                       </FormCard>
                     </Column>
@@ -921,7 +926,7 @@ export default function CorporateKycForm() {
                   <StickyBox offsetTop={100}>
                     <KYCProgressBar
                       handleSubmit={handleSubmit}
-                      disabled={!dirty || !canSubmit || Object.keys(errors).length !== 0}
+                      disabled={false}
                       topics={Object.values({
                         info: {
                           title: 'Corporate Information',
@@ -969,7 +974,7 @@ export default function CorporateKycForm() {
                           passed: filesFilled,
                         },
                       })}
-                      description={kyc?.data.message || null}
+                      description={kyc?.data?.message || null}
                       reasons={['Last name', 'Gender', 'Middle name']}
                     />
                   </StickyBox>

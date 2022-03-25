@@ -1,19 +1,20 @@
 import * as yup from 'yup'
+
 import { legalEntityTypes } from './mock'
 
 export const individualErrorsSchema = yup.object().shape({
   firstName: yup.string().min(1, 'Too short').max(50, 'Too Long!').required('Required'),
   middleName: yup.string().max(50, 'Too Long!'),
   lastName: yup.string().min(1, 'Too short').max(50, 'Too Long!').required('Required'),
-  dateOfBirth: yup.object().nullable().required('Required'),
+  dateOfBirth: yup.mixed().nullable().required('Required'),
   gender: yup.object().nullable().required('Required'),
   nationality: yup.object().nullable().required('Required'),
   citizenship: yup.object().nullable().required('Required'),
   phoneNumber: yup
     .string()
-    .min(11, 'Must be valid phone number')
-    .max(11, 'Must be valid phone number')
-    .required('Required'),
+    .required('Required')
+    .min(10, 'Must be valid phone number')
+    .max(12, 'Must be valid phone number'),
   email: yup.string().email('Invalid email').required('Required'),
   line1: yup.string().required('Required'),
   line2: yup.string().required('Required'),
@@ -62,8 +63,8 @@ export const corporateErrorsSchema = yup.object().shape({
   email: yup.string().email('Invalid email').required('Required'),
   phoneNumber: yup
     .string()
-    .min(11, 'Must be valid phone number')
-    .max(11, 'Must be valid phone number')
+    .min(10, 'Must be valid phone number')
+    .max(12, 'Must be valid phone number')
     .required('Required'),
   authorizationDocuments: yup.array().min(1, 'Required').nullable(),
   line1: yup.string().required('Required'),
