@@ -12,7 +12,7 @@ import { LoaderThin } from 'components/Loader/LoaderThin'
 import { AcceptFiles, FileTypes } from 'components/Upload/types'
 import { getfileType } from 'components/Upload/utils'
 
-import { LOGIN_STATUS, useLogin } from 'state/auth/hooks'
+import { LOGIN_STATUS, useAuthState, useLogin } from 'state/auth/hooks'
 import { ApplicationModal } from 'state/application/actions'
 import { useToggleModal, useShowError, useAddPopup } from 'state/application/hooks'
 import { NFTCollection, TraitType } from 'state/nft/types'
@@ -72,14 +72,14 @@ export const CreateForm = () => {
   const [pending, setPending] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [beyondLimit, setLimit] = useState<string | null>(null)
-  const [isLogged, setAuthState] = useState(false)
   const [descriptionError, setDescriptionError] = useState<string | null>(null)
   const [nameError, setNameError] = useState<string | null>(null)
   const [maxSupplyError, setMaxSupplyError] = useState<string | null>(null)
   const [cleared, setClearState] = useState(false)
+  const { account } = useActiveWeb3React()
+  const { token } = useAuthState()
 
-  const login = useLogin({ mustHavePreviousLogin: false })
-  const showError = useShowError()
+  const isLoggedIn = !!token && !!account
   const history = useHistory()
   const createAsset = useCreateNftAssetForm(history)
   const toggle = useToggleModal(ApplicationModal.PROPERTIES)
@@ -87,19 +87,6 @@ export const CreateForm = () => {
   const fetchMyCollections = useFetchMyCollections()
 
   const addPopup = useAddPopup()
-
-  const checkAuthorization = useCallback(async () => {
-    setPending(true)
-    const status = await login()
-
-    if (status !== LOGIN_STATUS.SUCCESS) {
-      showError(t`To create NFT you need to login. Please try again`)
-      history.push('/swap')
-    }
-
-    setAuthState(true)
-    setPending(false)
-  }, [login, setAuthState, history, showError])
 
   const toggleLevelsStats = (traitType: TraitType) => {
     onSetActiveTraitType(traitType)
@@ -159,14 +146,6 @@ export const CreateForm = () => {
     onClearState()
     setClearState(true)
   }, [])
-
-  useEffect(() => {
-    if (!isLogged && !pending) {
-      const timerFunc = setTimeout(checkAuthorization, 3000)
-
-      return () => clearTimeout(timerFunc)
-    }
-  }, [isLogged, checkAuthorization])
 
   useEffect(() => {
     setError(null)
@@ -243,7 +222,7 @@ export const CreateForm = () => {
 
   return (
     <>
-      {pending && (
+      {(pending || !isLoggedIn) && (
         <LoaderContainer>
           <LoaderThin size={63} />
         </LoaderContainer>
