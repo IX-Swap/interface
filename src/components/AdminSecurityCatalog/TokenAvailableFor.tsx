@@ -4,12 +4,13 @@ import styled from 'styled-components'
 
 import { Checkbox } from 'components/Checkbox'
 import { TYPE } from 'theme'
+import { defaultKycType } from './mock'
 
 const options = [
-  { label: 'Individuals - Accredited Investors', value: 'individualAccreditated' },
-  { label: 'Individuals - NOT Accredited Investors', value: 'individualNotAccreditated' },
-  { label: 'Corporate - Accredited Investors', value: 'corportateAccreditated' },
-  { label: 'Corporate - NOT Accredited Investors', value: 'corportateNotAccreditated' },
+  { label: 'Individuals - Accredited Investors', value: 'individualAccredited' },
+  { label: 'Individuals - NOT Accredited Investors', value: 'individualAccreditedNot' },
+  { label: 'Corporate - Accredited Investors', value: 'corporateAccredited' },
+  { label: 'Corporate - NOT Accredited Investors', value: 'corporateAccreditedNot' },
 ]
 
 interface Props {
@@ -19,14 +20,10 @@ interface Props {
 }
 
 export const TokenAvailableFor = ({ setToken, token, error }: Props) => {
-  const onChange = (option: any) => {
-    const kycTypes = token.kycTypes || []
-    if (kycTypes.includes(option)) {
-      const data = kycTypes.filter((el: string) => el !== option)
-      setToken({ ...token, kycTypes: data })
-    } else {
-      setToken({ ...token, kycTypes: [...kycTypes, option] })
-    }
+  const kycType = token.kycType || defaultKycType
+
+  const onChange = (option: string) => {
+    setToken({ ...token, kycType: { ...kycType, [option]: !kycType[option] } })
   }
 
   return (
@@ -37,12 +34,7 @@ export const TokenAvailableFor = ({ setToken, token, error }: Props) => {
         </div>
         <Options>
           {options.map(({ value, label }) => (
-            <Checkbox
-              key={value}
-              label={label}
-              onClick={() => onChange(value)}
-              checked={(token.kycTypes || []).includes(value)}
-            />
+            <Checkbox key={value} label={label} onClick={() => onChange(value)} checked={kycType[value]} />
           ))}
         </Options>
       </Container>

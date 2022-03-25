@@ -18,8 +18,6 @@ import { RowCenter } from 'components/Row'
 import { AccreditationStatus } from './AccreditationStatus'
 import { SecTokenPlatform } from 'types/secToken'
 import { removeProtocolFromUrl } from 'utils'
-import { useUserAccountState } from 'state/user/hooks'
-import { useKYCState } from 'state/kyc/hooks'
 
 interface Props {
   currency?: Currency
@@ -27,6 +25,7 @@ interface Props {
   accreditationRequest: AccreditationRequest | null
   platform: SecTokenPlatform | null
   token: any
+  userHaveValidKyc: boolean
 }
 
 function getStatusMessage(
@@ -63,32 +62,13 @@ function getStatusMessage(
       )
   }
 }
-export const NoVault = ({ currency, status, accreditationRequest, platform, token }: Props) => {
+export const NoVault = ({ currency, status, accreditationRequest, platform, token, userHaveValidKyc }: Props) => {
   const symbolText = useMemo(() => token?.ticker ?? currency?.name ?? '', [currency, token])
   const { account } = useActiveWeb3React()
   const toggleWalletModal = useWalletModalToggle()
   const toggleChooseBrokerDealerModal = useChooseBrokerDealerModalToggle()
   const currencyId: string | undefined = (currency as any)?.address
   const tokenId = useSecTokenId({ currencyId })
-  const { kyc } = useKYCState()
-
-  const getUserKycType = () => {
-    if (kyc) {
-      if (kyc.data.status === 'approved') {
-        if (kyc.data.corporateKycId) return 'corporateAccredited'
-        if (kyc.data.individualKycId) return 'individualAccredited'
-      }
-      return 'NotAccredited'
-    }
-    return 'NotAccredited'
-  }
-
-  const userHaveValidKyc = useMemo(() => {
-    const { kycTypes } = token
-    const userKycType = getUserKycType()
-    if (!kycTypes) return true
-    return kycTypes.includes(userKycType)
-  }, [kyc, token])
 
   return (
     <NoVaultWrapper>

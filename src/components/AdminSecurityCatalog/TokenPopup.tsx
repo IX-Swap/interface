@@ -99,13 +99,14 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
     setIsLoading(true)
     const validationErrors = validateToken(token)
     const hasError = Object.values(validationErrors).some((value) => Boolean(value) === true)
+    const formattedData = { ...token, kycType: JSON.stringify(token.kycType) }
 
     if (hasError) {
       setErrors(validationErrors)
     } else {
       let data = null
       if (token.id) {
-        data = await updateToken(token)
+        data = await updateToken(formattedData)
         if (data) {
           addPopup({
             info: {
@@ -115,7 +116,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
           })
         }
       } else {
-        data = await addToken(currentIssuer.id, token)
+        data = await addToken(currentIssuer.id, formattedData)
         if (data) {
           addPopup({
             info: {
@@ -423,7 +424,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                     </FormRow>
                     <FormRow>
                       <Box>
-                        <TokenAvailableFor setToken={setToken} token={token} error={errors.kycTypes} />
+                        <TokenAvailableFor setToken={setToken} token={token} error={errors.kycType} />
                       </Box>
                       <Box display="flex">
                         <Box marginRight={isMobile ? '0px' : '178px'}>
