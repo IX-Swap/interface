@@ -5,38 +5,39 @@ import { FileWithPath } from 'react-dropzone'
 import { useHistory } from 'react-router-dom'
 import StickyBox from 'react-sticky-box'
 import { Formik } from 'formik'
+import { useWeb3React } from '@web3-react/core'
 
+import usePrevious from 'hooks/usePrevious'
 import Column from 'components/Column'
-import { KYCProgressBar } from './KYCProgressBar'
 import { ButtonText, ButtonIXSGradient } from 'components/Button'
 import { TYPE } from 'theme'
 import { GradientText, StyledBodyWrapper } from 'pages/CustodianV2/styleds'
 import { RowBetween } from 'components/Row'
-import { Select, TextInput, Uploader } from './common'
 import { PhoneInput } from 'components/PhoneInput'
 import { Checkbox } from 'components/Checkbox'
 import { Loadable } from 'components/LoaderHover'
 import { LOGIN_STATUS, useAuthState, useLogin } from 'state/auth/hooks'
 import { useAddPopup, useShowError } from 'state/application/hooks'
-
-import { corporateSourceOfFunds, legalEntityTypes, corporateFormInitialValues, promptValue } from './mock'
-import { FormCard, FormGrid, ExtraInfoCard, Divider } from './styleds'
+import { LoadingIndicator } from 'components/LoadingIndicator'
 import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
 import { ReactComponent as BigPassed } from 'assets/images/check-success-big.svg'
+import { getCorporateProgress, useCreateCorporateKYC, useKYCState, useUpdateCorporateKYC } from 'state/kyc/hooks'
+import { useActiveWeb3React } from 'hooks/web3'
+
+import { Select, TextInput, Uploader } from './common'
+import { KYCProgressBar } from './KYCProgressBar'
+import { corporateSourceOfFunds, legalEntityTypes, corporateFormInitialValues, promptValue } from './mock'
+import { FormCard, FormGrid, ExtraInfoCard, Divider } from './styleds'
 import { ChooseFile, BeneficialOwnersTable, DeleteRow } from './common'
 import { FormContainer, FormRow } from './IndividualKycForm'
 import { corporateErrorsSchema } from './schema'
-import { getCorporateProgress, useCreateCorporateKYC, useKYCState, useUpdateCorporateKYC } from 'state/kyc/hooks'
 import { KYCStatuses } from './enum'
 import { corporateTransformApiData, corporateTransformKycDto } from './utils'
-import { LoadingIndicator } from 'components/LoadingIndicator'
-import { useActiveWeb3React } from 'hooks/web3'
 
 export default function CorporateKycForm() {
   const [waitingForInitialValues, setWaitingForInitialValues] = useState(true)
   const [updateKycId, setUpdateKycId] = useState<any>(null)
   const [formData, setFormData] = useState<any>(null)
-  const [canSubmit, setCanSubmit] = useState(true)
   const [isSubmittedOnce, setIsSubmittedOnce] = useState(false)
   const [errors, setErrors] = useState<any>({})
   const history = useHistory()
@@ -49,6 +50,14 @@ export default function CorporateKycForm() {
   const { token } = useAuthState()
 
   const isLoggedIn = !!token && !!account
+
+  const prevAccount = usePrevious(account)
+
+  useEffect(() => {
+    if (account && prevAccount && account !== prevAccount) {
+      history.push('/kyc')
+    }
+  }, [account, prevAccount])
 
   useEffect(() => {
     setWaitingForInitialValues(true)
@@ -160,7 +169,6 @@ export default function CorporateKycForm() {
       const newErrors = { ...errors }
       delete newErrors[key]
       setErrors(newErrors)
-      setCanSubmit(true)
     }
   }
 
@@ -229,7 +237,6 @@ export default function CorporateKycForm() {
               corporateErrorsSchema
                 .validate(values, { abortEarly: false })
                 .then(async () => {
-                  setCanSubmit(false)
                   const body = corporateTransformKycDto(values)
                   let data: any = null
 
@@ -248,7 +255,6 @@ export default function CorporateKycForm() {
                       },
                     })
                   } else {
-                    setCanSubmit(true)
                     addPopup({
                       info: {
                         success: false,
@@ -270,7 +276,6 @@ export default function CorporateKycForm() {
                   })
                   setIsSubmittedOnce(true)
                   setErrors(newErrors)
-                  setCanSubmit(false)
                 })
             }}
           >
