@@ -25,6 +25,7 @@ interface Props {
   accreditationRequest: AccreditationRequest | null
   platform: SecTokenPlatform | null
   token: any
+  userHaveValidKyc: boolean
 }
 
 function getStatusMessage(
@@ -61,7 +62,7 @@ function getStatusMessage(
       )
   }
 }
-export const NoVault = ({ currency, status, accreditationRequest, platform, token }: Props) => {
+export const NoVault = ({ currency, status, accreditationRequest, platform, token, userHaveValidKyc }: Props) => {
   const symbolText = useMemo(() => token?.ticker ?? currency?.name ?? '', [currency, token])
   const { account } = useActiveWeb3React()
   const toggleWalletModal = useWalletModalToggle()
@@ -73,40 +74,51 @@ export const NoVault = ({ currency, status, accreditationRequest, platform, toke
     <NoVaultWrapper>
       <NoVaultTitle style={{ order: 1 }}>
         <TYPE.title3>
-          <Trans>Create {symbolText} Vault</Trans>
+          {userHaveValidKyc ? <Trans>Create {symbolText} Vault</Trans> : <Trans>NOT AVAILABLE</Trans>}
         </TYPE.title3>
       </NoVaultTitle>
 
-      <VaultStatusDescription style={{ order: status === AccreditationStatusEnum.REJECTED ? 3 : 2 }}>
-        <TYPE.descriptionThin>{getStatusMessage(accreditationRequest, symbolText, platform)}</TYPE.descriptionThin>
-      </VaultStatusDescription>
+      {userHaveValidKyc && (
+        <>
+          <VaultStatusDescription style={{ order: status === AccreditationStatusEnum.REJECTED ? 3 : 2 }}>
+            <TYPE.descriptionThin>{getStatusMessage(accreditationRequest, symbolText, platform)}</TYPE.descriptionThin>
+          </VaultStatusDescription>
 
-      {status && <AccreditationStatus status={status} />}
+          {status && <AccreditationStatus status={status} />}
+        </>
+      )}
+      {userHaveValidKyc ? (
+        <RowCenter style={{ order: 4 }}>
+          {!account && (
+            <ButtonIXSGradient
+              style={{ marginTop: '28px', padding: '16px 24px' }}
+              onClick={toggleWalletModal}
+              disabled={!!account}
+              data-testid="connect-wallet-in-vault"
+            >
+              <Trans>Connect Wallet</Trans>
+            </ButtonIXSGradient>
+          )}
 
-      <RowCenter style={{ order: 4 }}>
-        {!account && (
-          <ButtonIXSGradient
-            style={{ marginTop: '28px', padding: '16px 24px' }}
-            onClick={toggleWalletModal}
-            disabled={!!account}
-            data-testid="connect-wallet-in-vault"
-          >
-            <Trans>Connect Wallet</Trans>
-          </ButtonIXSGradient>
-        )}
-
-        {Boolean(account && !(PENDING_ACCREDITATION_STATUSES as any).includes(status)) && (
-          <ButtonIXSGradient
-            style={{ marginTop: '28px', padding: '16px 24px' }}
-            data-testid="pass-kyc-and-accreditation"
-            onClick={toggleChooseBrokerDealerModal}
-          >
-            {status === undefined && <Trans>Pass KYC and Accreditation</Trans>}
-            {status && ERROR_ACCREDITATION_STATUSES.includes(status) && <Trans>Retry pass accreditation</Trans>}
-          </ButtonIXSGradient>
-        )}
-        <ChooseBrokerDealerPopup tokenId={tokenId} currencyId={currencyId} />
-      </RowCenter>
+          {Boolean(account && !(PENDING_ACCREDITATION_STATUSES as any).includes(status)) && (
+            <ButtonIXSGradient
+              style={{ marginTop: '28px', padding: '16px 24px' }}
+              data-testid="pass-kyc-and-accreditation"
+              onClick={toggleChooseBrokerDealerModal}
+            >
+              {status === undefined && <Trans>Pass KYC and Accreditation</Trans>}
+              {status && ERROR_ACCREDITATION_STATUSES.includes(status) && <Trans>Retry pass accreditation</Trans>}
+            </ButtonIXSGradient>
+          )}
+          <ChooseBrokerDealerPopup tokenId={tokenId} currencyId={currencyId} />
+        </RowCenter>
+      ) : (
+        <VaultStatusDescription style={{ order: 2 }}>
+          <TYPE.descriptionThin>
+            <Trans>This Security Token is not available for your KYC type</Trans>
+          </TYPE.descriptionThin>
+        </VaultStatusDescription>
+      )}
     </NoVaultWrapper>
   )
 }
