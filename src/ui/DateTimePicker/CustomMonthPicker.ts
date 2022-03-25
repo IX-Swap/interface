@@ -78,7 +78,7 @@ button.Mui-selected::after {
   display: block;
   width: 11px;
   height: 6px;
-  border: 1px solid${theme.palette.success.main};;
+  border: 1px solid${theme.palette.success.main};
   border-top-color: transparent;
   border-right-color: transparent;
   transform: rotate(-45deg);

@@ -5,6 +5,7 @@ import { dateTimeValueExtractor } from 'helpers/forms'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import { DatePicker as NewDatePicker } from 'ui/DateTimePicker/DatePicker'
+import { addDays } from 'date-fns'
 
 export const DatepickerFields = () => {
   const { control } = useFormContext()
@@ -17,7 +18,7 @@ export const DatepickerFields = () => {
         component={NewDatePicker}
         customRenderer
         valueExtractor={dateTimeValueExtractor}
-        defaultValue={new Date()}
+        defaultValue={addDays(new Date(), 8)}
         minDate={new Date()}
       />
     </LocalizationProvider>

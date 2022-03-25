@@ -21,14 +21,39 @@ export interface DatePickerProps
 export const DatePicker = ({
   minDate = defaultDates.min,
   maxDate = defaultDates.max,
-  value: date = new Date(),
+  value,
   onChange: setDate,
   name
 }: DatePickerProps) => {
   const [view, setView] = useState<'day' | 'month' | 'year'>('day')
 
-  const onChange: PickerOnChangeFn<Date> = value => {
-    setDate(value as Date)
+  const date: Date | undefined = value instanceof Date ? value : new Date()
+  const _minDate: Date | undefined =
+    minDate instanceof Date ? minDate : undefined
+  const _maxDate: Date | undefined =
+    maxDate instanceof Date ? maxDate : undefined
+
+  const getDateValue = (value: unknown) => {
+    if (!(value instanceof Date)) {
+      return undefined
+    }
+    let date = value
+    if (_minDate !== undefined && value < _minDate) {
+      date = _minDate
+    }
+    if (_maxDate !== undefined && value > _maxDate) {
+      date = _maxDate
+    }
+
+    return date
+  }
+
+  const onChange: PickerOnChangeFn<unknown> = value => {
+    setDate(getDateValue(value))
+    setView('day')
+  }
+
+  const resetViews = () => {
     setView('day')
   }
 
@@ -46,33 +71,38 @@ export const DatePicker = ({
       <Box maxWidth={320}>
         <Box display='flex' justifyContent='space-between'>
           <PickerButton
-            date={date as Date}
+            date={date}
             setDate={onChange}
             open={view === 'month'}
             onClick={setViewToMonth}
-            minDate={minDate as Date}
-            maxDate={maxDate as Date}
+            minDate={_minDate}
+            maxDate={_maxDate}
             el={CustomMonthPicker}
-            label={format(date as Date, 'MMMM')}
+            label={format(date, 'MMMM')}
+            clickAwayHandler={resetViews}
           />
           <PickerButton
-            date={date as Date}
+            date={date}
             setDate={onChange}
             open={view === 'year'}
             onClick={setViewToYear}
-            minDate={minDate as Date}
-            maxDate={maxDate as Date}
+            minDate={_minDate}
+            maxDate={_maxDate}
             el={CustomYearPicker}
-            label={format(date as Date, 'yyyy')}
+            label={format(date, 'yyyy')}
             isDateDisabled={() => false}
+            placement='bottom-end'
+            clickAwayHandler={resetViews}
           />
         </Box>
         <Box position='relative' width='100%'>
           <CustomCalendarPicker
             date={date}
-            onChange={onChange as any}
+            onChange={onChange}
             view='day'
             views={['day']}
+            minDate={_minDate}
+            maxDate={_maxDate}
           />
         </Box>
       </Box>
