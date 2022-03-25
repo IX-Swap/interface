@@ -19,7 +19,7 @@ import { DateInput } from 'components/DateInput'
 import { Checkbox } from 'components/Checkbox'
 import { getIndividualProgress, useCreateIndividualKYC, useKYCState, useUpdateIndividualKYC } from 'state/kyc/hooks'
 
-import { LOGIN_STATUS, useLogin } from 'state/auth/hooks'
+import { LOGIN_STATUS, useAuthState, useLogin } from 'state/auth/hooks'
 import { Loadable } from 'components/LoaderHover'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 
@@ -31,6 +31,7 @@ import { ReactComponent as BigPassed } from 'assets/images/check-success-big.svg
 import { useAddPopup, useShowError } from 'state/application/hooks'
 import { individualTransformApiData, individualTransformKycDto } from './utils'
 import { KYCStatuses } from './enum'
+import { useActiveWeb3React } from 'hooks/web3'
 
 export const FormRow = styled(Row)`
   align-items: flex-start;
@@ -43,20 +44,20 @@ export const FormContainer = styled(FormWrapper)`
 
 export default function IndividualKycForm() {
   const [waitingForInitialValues, setWaitingForInitialValues] = useState(true)
-  const [pending, setPending] = useState(false)
   const [updateKycId, setUpdateKycId] = useState<any>(null)
-  const [isLogged, setAuthState] = useState(false)
   const [formData, setFormData] = useState<any>(null)
   const [canSubmit, setCanSubmit] = useState(true)
   const [isSubmittedOnce, setIsSubmittedOnce] = useState(false)
   const [errors, setErrors] = useState<any>({})
   const addPopup = useAddPopup()
   const history = useHistory()
-  const showError = useShowError()
   const createIndividualKYC = useCreateIndividualKYC()
   const updateIndividualKYC = useUpdateIndividualKYC()
-  const login = useLogin({ mustHavePreviousLogin: false })
   const { kyc, loadingRequest } = useKYCState()
+  const { account } = useActiveWeb3React()
+  const { token } = useAuthState()
+
+  const isLoggedIn = !!token && !!account
 
   useEffect(() => {
     setWaitingForInitialValues(true)
@@ -79,19 +80,6 @@ export default function IndividualKycForm() {
     setWaitingForInitialValues(false)
   }, [kyc])
 
-  const checkAuthorization = useCallback(async () => {
-    setPending(true)
-    const status = await login()
-
-    if (status !== LOGIN_STATUS.SUCCESS) {
-      showError(t`To pass KYC you need to login. Please try again`)
-      history.push('/swap')
-    }
-
-    setAuthState(true)
-    setPending(false)
-  }, [login, setAuthState, history, showError])
-
   useEffect(() => {
     window.addEventListener('beforeunload', alertUser)
 
@@ -99,14 +87,6 @@ export default function IndividualKycForm() {
       window.removeEventListener('beforeunload', alertUser)
     }
   }, [])
-
-  useEffect(() => {
-    if (!isLogged && !pending) {
-      const timerFunc = setTimeout(checkAuthorization, 3000)
-
-      return () => clearTimeout(timerFunc)
-    }
-  }, [isLogged, checkAuthorization])
 
   const alertUser = (e: any) => {
     e.preventDefault()
@@ -192,7 +172,7 @@ export default function IndividualKycForm() {
   }, [])
 
   return (
-    <Loadable loading={pending}>
+    <Loadable loading={!isLoggedIn}>
       <LoadingIndicator isLoading={loadingRequest} />
       <StyledBodyWrapper>
         <ButtonText style={{ textDecoration: 'none' }} display="flex" marginBottom="64px" onClick={goBack}>

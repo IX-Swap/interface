@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom'
 import { TYPE } from 'theme'
 
 import { useCollectionActionHandlers, useCollectionFormState } from 'state/nft/hooks'
-import { LOGIN_STATUS, useLogin } from 'state/auth/hooks'
+import { LOGIN_STATUS, useAuthState, useLogin } from 'state/auth/hooks'
 import { useShowError } from 'state/application/hooks'
 
 import { ButtonIXSGradient } from 'components/Button'
@@ -17,6 +17,7 @@ import { NameSizeLimit, DescriptionSizeLimit } from 'constants/misc'
 
 import { Container, StyledInput, StyledTextarea, Row, ActionsContainer } from './styled'
 import { Images } from './Images'
+import { useActiveWeb3React } from 'hooks/web3'
 
 interface UpdateFormProps {
   collection?: any | null
@@ -31,31 +32,16 @@ export const CollectionForm = ({ collection, onSubmit, actionName = 'Update Coll
     onSetMaxSupply: setMaxSupply,
     onClearCollectionState,
   } = useCollectionActionHandlers()
+  const { account } = useActiveWeb3React()
+  const { token } = useAuthState()
 
-  const login = useLogin({ mustHavePreviousLogin: false })
-  const [isLogged, setAuthState] = useState(false)
-
-  const history = useHistory()
-  const showError = useShowError()
+  const isLoggedIn = !!token && !!account
   const [pending, setPending] = useState(false)
 
   const { name, description, maxSupply } = useCollectionFormState()
 
   const [errors, handleErrors] = useState<Record<string, string | null>>({})
   const [touched, handleTouched] = useState<Record<string, boolean>>({})
-
-  const checkAuthorization = useCallback(async () => {
-    setPending(true)
-    const status = await login()
-
-    if (status !== LOGIN_STATUS.SUCCESS) {
-      showError(t`To create NFT you need to login. Please try again`)
-      history.push('/swap')
-    }
-
-    setAuthState(true)
-    setPending(false)
-  }, [login, setAuthState, history, showError])
 
   const checkValidation = useCallback(() => {
     const tempErrors = {} as Record<string, string | null>
@@ -98,14 +84,6 @@ export const CollectionForm = ({ collection, onSubmit, actionName = 'Update Coll
   }, [])
 
   useEffect(() => {
-    if (!isLogged && !pending) {
-      const timerFunc = setTimeout(checkAuthorization, 3000)
-
-      return () => clearTimeout(timerFunc)
-    }
-  }, [isLogged, checkAuthorization])
-
-  useEffect(() => {
     if (collection) {
       setName(collection?.name)
       setDescription(collection?.description)
@@ -128,7 +106,7 @@ export const CollectionForm = ({ collection, onSubmit, actionName = 'Update Coll
   }
 
   return (
-    <Loadable loading={pending}>
+    <Loadable loading={!isLoggedIn || pending}>
       <Container>
         <form>
           <Row>
