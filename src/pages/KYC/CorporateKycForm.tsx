@@ -16,7 +16,7 @@ import { Select, TextInput, Uploader } from './common'
 import { PhoneInput } from 'components/PhoneInput'
 import { Checkbox } from 'components/Checkbox'
 import { Loadable } from 'components/LoaderHover'
-import { LOGIN_STATUS, useLogin } from 'state/auth/hooks'
+import { LOGIN_STATUS, useAuthState, useLogin } from 'state/auth/hooks'
 import { useAddPopup, useShowError } from 'state/application/hooks'
 
 import { corporateSourceOfFunds, legalEntityTypes, corporateFormInitialValues, promptValue } from './mock'
@@ -30,23 +30,25 @@ import { getCorporateProgress, useCreateCorporateKYC, useKYCState, useUpdateCorp
 import { KYCStatuses } from './enum'
 import { corporateTransformApiData, corporateTransformKycDto } from './utils'
 import { LoadingIndicator } from 'components/LoadingIndicator'
+import { useActiveWeb3React } from 'hooks/web3'
 
 export default function CorporateKycForm() {
   const [waitingForInitialValues, setWaitingForInitialValues] = useState(true)
   const [updateKycId, setUpdateKycId] = useState<any>(null)
-  const [isLogged, setAuthState] = useState(false)
   const [formData, setFormData] = useState<any>(null)
   const [canSubmit, setCanSubmit] = useState(true)
   const [isSubmittedOnce, setIsSubmittedOnce] = useState(false)
   const [errors, setErrors] = useState<any>({})
-  const [pending, setPending] = useState(false)
   const history = useHistory()
   const { kyc, loadingRequest } = useKYCState()
-  const login = useLogin({ mustHavePreviousLogin: false })
   const showError = useShowError()
   const addPopup = useAddPopup()
   const createCorporateKYC = useCreateCorporateKYC()
   const updateCorporateKYC = useUpdateCorporateKYC()
+  const { account } = useActiveWeb3React()
+  const { token } = useAuthState()
+
+  const isLoggedIn = !!token && !!account
 
   useEffect(() => {
     setWaitingForInitialValues(true)
@@ -69,19 +71,6 @@ export default function CorporateKycForm() {
     setWaitingForInitialValues(false)
   }, [kyc])
 
-  const checkAuthorization = useCallback(async () => {
-    setPending(true)
-    const status = await login()
-
-    if (status !== LOGIN_STATUS.SUCCESS) {
-      showError(t`To pass KYC you need to login. Please try again`)
-      history.push('/swap')
-    }
-
-    setAuthState(true)
-    setPending(false)
-  }, [login, setAuthState, history, showError])
-
   useEffect(() => {
     window.addEventListener('beforeunload', alertUser)
 
@@ -89,14 +78,6 @@ export default function CorporateKycForm() {
       window.removeEventListener('beforeunload', alertUser)
     }
   }, [])
-
-  useEffect(() => {
-    if (!isLogged && !pending) {
-      const timerFunc = setTimeout(checkAuthorization, 3000)
-
-      return () => clearTimeout(timerFunc)
-    }
-  }, [isLogged, checkAuthorization])
 
   const alertUser = (e: any) => {
     e.preventDefault()
@@ -223,7 +204,7 @@ export default function CorporateKycForm() {
     }
 
   return (
-    <Loadable loading={pending}>
+    <Loadable loading={!isLoggedIn}>
       <LoadingIndicator isLoading={loadingRequest} />
 
       <StyledBodyWrapper>
@@ -328,8 +309,6 @@ export default function CorporateKycForm() {
                 !errors.evidenceOfAccreditation
               const beneficialOwnersFilled =
                 shouldValidate && !Object.keys(errors).some((errorField) => errorField.startsWith('beneficialOwners'))
-
-              console.log('log => errors', errors)
 
               return (
                 <FormRow>

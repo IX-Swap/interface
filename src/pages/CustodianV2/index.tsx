@@ -37,11 +37,7 @@ export default function CustodianV2() {
   const [noFilteredTokens, setNoFilteredTokens] = useState([])
   const { tokens } = useSecCatalogState()
   const { account, chainId } = useActiveWeb3React()
-  const [pending, setPending] = useState(false)
-  const [isLogged, setAuthState] = useState(false)
-  const login = useLogin({ mustHavePreviousLogin: false })
-  const history = useHistory()
-  const showError = useShowError()
+
   const blurred = !chainId || !TGE_CHAINS_WITH_SWAP.includes(chainId)
   const isLoggedIn = !!token && !!account
 
@@ -50,40 +46,22 @@ export default function CustodianV2() {
       const data = await getMyTokens({ active: true, my: true, offset: 100000 })
       setMySecTokens(data?.items.length > 0 ? data.items : [])
     }
-
-    fetchMyTokens()
+    if (isLoggedIn) {
+      fetchMyTokens()
+    }
   }, [account, isLoggedIn])
 
   useEffect(() => {
-    fetchTokens({ page: 1, offset, search: '' })
-  }, [fetchTokens])
+    if (isLoggedIn) {
+      fetchTokens({ page: 1, offset, search: '' })
+    }
+  }, [fetchTokens, isLoggedIn])
 
   useEffect(() => {
     if (noFilteredTokens.length === 0 && tokens) {
       setNoFilteredTokens(tokens.items.filter(({ active }: any) => active))
     }
   }, [tokens])
-
-  const checkAuthorization = useCallback(async () => {
-    setPending(true)
-    const status = await login()
-
-    if (status !== LOGIN_STATUS.SUCCESS) {
-      showError(t`You need to login to see this page. Please try again`)
-      history.push('/swap')
-    }
-
-    setAuthState(true)
-    setPending(false)
-  }, [login, setAuthState, history, showError])
-
-  useEffect(() => {
-    if (!isLoggedIn && !pending) {
-      const timerFunc = setTimeout(checkAuthorization, 3000)
-
-      return () => clearTimeout(timerFunc)
-    }
-  }, [isLoggedIn, checkAuthorization])
 
   const activeTokens = tokens ? tokens.items.filter(({ active }: any) => active) : []
   const featuredTokens = noFilteredTokens.filter(({ featured }: any) => featured)
