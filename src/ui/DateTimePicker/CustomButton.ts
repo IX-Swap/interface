@@ -8,9 +8,10 @@ export const CustomButton = styled(Button)(
   padding-right: 0;
   color: ${theme.palette.text.primary};
   justify-content: space-between;
+  min-width: 48px;
   svg {
     fill: ${theme.palette.text.primary};
-    margin-left: 12px;
+    margin-left: 6px;
   }
   :hover {
     background-color: transparent;

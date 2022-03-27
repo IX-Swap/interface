@@ -6,4 +6,7 @@ export const CustomCalendarPicker = styled(CalendarPicker)`
   > div:first-child {
     display: none;
   }
+  .PrivatePickersSlideTransition-root {
+    min-height: 240px;
+  }
 `

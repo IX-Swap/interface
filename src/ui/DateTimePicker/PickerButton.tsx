@@ -100,9 +100,6 @@ export const PickerButton = ({
         onClick={handleClick}
         endIcon={<Icon name='switch-down' size={16} />}
         disableRipple
-        sx={{
-          ml: 4
-        }}
       >
         {label}
       </CustomButton>
