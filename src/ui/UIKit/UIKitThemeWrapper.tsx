@@ -1,13 +1,18 @@
-import React from 'react'
+import React, { ReactElement } from 'react'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { lightTheme } from 'themes/new/light'
 import { darkTheme } from 'themes/new/dark'
 import { typography } from 'themes/new/typography'
 import { getThemeOverrides } from 'themes/new/overrides'
 import { useDarkMode } from 'storybook-dark-mode'
+import { Theme } from '@mui/material'
+
+export interface ChildrenProps {
+  theme: Theme
+}
 
 export interface UIKitThemeWrapperProps {
-  children: JSX.Element | JSX.Element[]
+  children: ReactElement | ReactElement[] | ((theme: Theme) => ReactElement)
 }
 
 export const UIKitThemeWrapper = ({ children }: UIKitThemeWrapperProps) => {
@@ -54,5 +59,9 @@ export const UIKitThemeWrapper = ({ children }: UIKitThemeWrapperProps) => {
     }
   }
 
-  return <ThemeProvider theme={newTheme}>{children}</ThemeProvider>
+  return (
+    <ThemeProvider theme={newTheme}>
+      {typeof children === 'function' ? children(newTheme) : children}
+    </ThemeProvider>
+  )
 }

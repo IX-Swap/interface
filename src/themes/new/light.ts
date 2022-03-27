@@ -118,6 +118,14 @@ export const lightTheme: DeprecatedThemeOptions = {
         color: '#A2ACBF'
       }
     },
+    table: {
+      color: '#778194',
+      rowBg: '#FFFFFF',
+      rowColor: '#778194',
+      boxShadow: `0px 32px 64px ${tinycolor('#3b4251')
+        .setAlpha(0.08)
+        .toRgbString()}`
+    },
     divider: '#DBE2EC',
     text: {
       primary: '#3B4251',

@@ -89,6 +89,13 @@ export interface Alerts {
   border: string
 }
 
+export interface TablePalette {
+  rowBg: CSSProperties['color']
+  rowColor: CSSProperties['color']
+  color: CSSProperties['color']
+  boxShadow: string
+}
+
 declare module '@mui/styles/defaultTheme' {
   interface DefaultTheme extends Theme {}
 }
@@ -121,6 +128,7 @@ declare module '@mui/material/styles' {
       }
     }
     alerts?: Alerts
+    table?: TablePalette
   }
 
   export interface Palette {
@@ -150,6 +158,7 @@ declare module '@mui/material/styles' {
       }
     }
     alerts?: Alerts
+    table?: TablePalette
   }
 
   export interface Theme {
