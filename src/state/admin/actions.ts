@@ -277,6 +277,16 @@ export const postResetKyc: Readonly<{
   rejected: createAction('admin/postResetKyc/rejected'),
 }
 
+export const postResubmitKyc: Readonly<{
+  pending: ActionCreatorWithoutPayload
+  fulfilled: ActionCreatorWithoutPayload
+  rejected: ActionCreatorWithPayload<{ errorMessage: string }>
+}> = {
+  pending: createAction('admin/postResubmitKyc/pending'),
+  fulfilled: createAction('admin/postResubmitKyc/fulfilled'),
+  rejected: createAction('admin/postResubmitKyc/rejected'),
+}
+
 export interface Document {
   asset: {
     createdAt: string
