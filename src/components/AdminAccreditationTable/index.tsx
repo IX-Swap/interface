@@ -135,7 +135,7 @@ export const AdminAccreditationTable = () => {
   return (
     <div id="accreditation-container">
       {Boolean(kyc.id) && <KycReviewModal isOpen onClose={closeModal} data={kyc} />}
-      <Search setSearchValue={setSearchValue} page={page} />
+      <Search setSearchValue={setSearchValue} />
       {adminLoading && (
         <Loader>
           <LoaderThin size={96} />

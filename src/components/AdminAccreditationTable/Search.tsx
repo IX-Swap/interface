@@ -7,7 +7,6 @@ import { useGetAccreditationList } from 'state/admin/hooks'
 let timer = null as any
 
 interface Props {
-  page?: number
   placeholder?: string
   setSearchValue?: (newValue: string) => void
 }
