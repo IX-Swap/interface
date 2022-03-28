@@ -167,7 +167,7 @@ export const DatePicker = ({
             placement='bottom-start'
             open={open}
             anchorEl={anchorEl}
-            clickAwayHandler={closePicker}
+            clickAwayHandler={handleCancel}
             variant={variant}
             cancelAction={handleCancel}
           />
