@@ -26,7 +26,7 @@ export const CustomYearPicker = styled(YearPicker)(
       border-bottom-color: transparent;
     }
   }
-  button.Mui-selected {
+  button.Mui-selected, button.Mui-selected:hover, button:hover {
     background-color: transparent;
   }
   button.Mui-selected::after {
