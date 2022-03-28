@@ -118,6 +118,20 @@ export const lightTheme: DeprecatedThemeOptions = {
         color: '#A2ACBF'
       }
     },
+    paginationItem: {
+      color: '#778194',
+      bg: '#FFFFFF',
+      border: '#FFFFFF',
+      colorHover: '#4C88FF',
+      bgHover: '#FFFFFF',
+      borderHover: '#4C88FF20',
+      colorDisabled: '#89A1CE',
+      bgDisabled: '#EDF2FA',
+      borderDisabled: '#EDF2FA',
+      colorActive: '#FFFFFF',
+      bgActive: '#4C88FF',
+      borderActive: '#4C88FF'
+    },
     divider: '#DBE2EC',
     text: {
       primary: '#3B4251',

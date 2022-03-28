@@ -111,6 +111,21 @@ export const darkTheme: DeprecatedThemeOptions = {
         .setAlpha(0.3)
         .toRgbString()}`
     },
+    paginationItem: {
+      color: '#89A1CE',
+      bg: '#152D5F',
+      border: '#152D5F',
+      colorHover: '#4C88FF',
+      bgHover: '#152D5F',
+      borderHover: '#4C88FF',
+      colorDisabled: '#89A1CE',
+      // TODO Change disabled colors
+      bgDisabled: '#EDF2FA',
+      borderDisabled: '#EDF2FA',
+      colorActive: '#FFFFFF',
+      bgActive: '#4C88FF',
+      borderActive: '#4C88FF'
+    },
     text: {
       primary: '#FFFFFF',
       secondary: '#496396'
