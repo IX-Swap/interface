@@ -112,6 +112,7 @@ const Body = ({ openReviewModal }: BodyProps) => {
 
 export const AdminAccreditationTable = () => {
   const [kyc, handleKyc] = useState({} as KycItem)
+  const [searchValue, setSearchValue] = useState('')
   const {
     accreditationList: { totalPages, page, items },
     adminLoading,
@@ -121,7 +122,7 @@ export const AdminAccreditationTable = () => {
   const onPageChange = (page: number) => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
 
-    getAccreditationList({ page, offset: 10 })
+    getAccreditationList({ page, offset: 10, search: searchValue })
   }
 
   useEffect(() => {
@@ -134,7 +135,7 @@ export const AdminAccreditationTable = () => {
   return (
     <div id="accreditation-container">
       {Boolean(kyc.id) && <KycReviewModal isOpen onClose={closeModal} data={kyc} />}
-      <Search />
+      <Search setSearchValue={setSearchValue} />
       {adminLoading && (
         <Loader>
           <LoaderThin size={96} />

@@ -38,6 +38,7 @@ export default function CorporateKycForm() {
   const [waitingForInitialValues, setWaitingForInitialValues] = useState(true)
   const [updateKycId, setUpdateKycId] = useState<any>(null)
   const [formData, setFormData] = useState<any>(null)
+  const [canSubmit, setCanSubmit] = useState(true)
   const [isSubmittedOnce, setIsSubmittedOnce] = useState(false)
   const [errors, setErrors] = useState<any>({})
   const history = useHistory()
@@ -169,6 +170,7 @@ export default function CorporateKycForm() {
       const newErrors = { ...errors }
       delete newErrors[key]
       setErrors(newErrors)
+      setCanSubmit(true)
     }
   }
 
@@ -237,6 +239,7 @@ export default function CorporateKycForm() {
               corporateErrorsSchema
                 .validate(values, { abortEarly: false })
                 .then(async () => {
+                  setCanSubmit(false)
                   const body = corporateTransformKycDto(values)
                   let data: any = null
 
@@ -255,6 +258,7 @@ export default function CorporateKycForm() {
                       },
                     })
                   } else {
+                    setCanSubmit(true)
                     addPopup({
                       info: {
                         success: false,
@@ -276,6 +280,7 @@ export default function CorporateKycForm() {
                   })
                   setIsSubmittedOnce(true)
                   setErrors(newErrors)
+                  setCanSubmit(false)
                 })
             }}
           >
@@ -307,11 +312,7 @@ export default function CorporateKycForm() {
               const fatcaFilled = shouldValidate && !errors.usTin && !errors.isUSTaxPayer
               const investorFilled = shouldValidate && !errors.accredited
               const taxDeclarationFilled = shouldValidate && !errors.taxCountry && !errors.taxNumber
-              const filesFilled =
-                shouldValidate &&
-                !errors.financialDocuments &&
-                !errors.corporateDocuments &&
-                !errors.evidenceOfAccreditation
+              const filesFilled = shouldValidate && !errors.financialDocuments && !errors.corporateDocuments
               const beneficialOwnersFilled =
                 shouldValidate && !Object.keys(errors).some((errorField) => errorField.startsWith('beneficialOwners'))
 
@@ -869,39 +870,6 @@ export default function CorporateKycForm() {
                               setFieldValue
                             )}
                           />
-
-                          {Boolean(values.accredited) && (
-                            <Uploader
-                              title="Evidence of Accreditation"
-                              subtitle={
-                                <ul>
-                                  <li>
-                                    <Trans>Copy of the most recent audited balance sheet of the corporation.</Trans>
-                                  </li>
-                                  <li>
-                                    <Trans>
-                                      Where the corporation is not required to prepare audited account regularly, a
-                                      balance sheet of the corporation certified by the corporation as giving a true and
-                                      fair view of the state of affairs of the corporation as of the date of the balance
-                                      sheet, of which date shall be within the preceding 12 months.
-                                    </Trans>
-                                  </li>
-                                </ul>
-                              }
-                              files={values.evidenceOfAccreditation}
-                              onDrop={(file) => {
-                                handleDropImage(file, values, 'evidenceOfAccreditation', setFieldValue)
-                              }}
-                              optional={values.accredited !== 1}
-                              error={errors.evidenceOfAccreditation && errors.evidenceOfAccreditation}
-                              handleDeleteClick={handleImageDelete(
-                                values,
-                                'evidenceOfAccreditation',
-                                values.removedDocuments,
-                                setFieldValue
-                              )}
-                            />
-                          )}
                         </Column>
                       </FormCard>
                     </Column>
@@ -910,7 +878,7 @@ export default function CorporateKycForm() {
                   <StickyBox offsetTop={100}>
                     <KYCProgressBar
                       handleSubmit={handleSubmit}
-                      disabled={false}
+                      disabled={!dirty || !canSubmit || Object.keys(errors).length !== 0}
                       topics={Object.values({
                         info: {
                           title: 'Corporate Information',

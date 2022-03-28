@@ -8,15 +8,17 @@ let timer = null as any
 
 interface Props {
   placeholder?: string
+  setSearchValue?: (newValue: string) => void
 }
 
-export const Search = ({ placeholder }: Props) => {
+export const Search = ({ setSearchValue, placeholder }: Props) => {
   const getKysList = useGetAccreditationList()
 
   const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
     clearTimeout(timer)
     timer = setTimeout(() => getKysList({ page: 1, offset: 10, search: value }), 250)
+    setSearchValue && setSearchValue(value)
   }
 
   return <Input placeholder={t`${placeholder || 'Search for Wallet or Token'}`} onChange={onSearchChange} />
