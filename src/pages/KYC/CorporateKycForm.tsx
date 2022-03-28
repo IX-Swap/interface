@@ -307,11 +307,7 @@ export default function CorporateKycForm() {
               const fatcaFilled = shouldValidate && !errors.usTin && !errors.isUSTaxPayer
               const investorFilled = shouldValidate && !errors.accredited
               const taxDeclarationFilled = shouldValidate && !errors.taxCountry && !errors.taxNumber
-              const filesFilled =
-                shouldValidate &&
-                !errors.financialDocuments &&
-                !errors.corporateDocuments &&
-                !errors.evidenceOfAccreditation
+              const filesFilled = shouldValidate && !errors.financialDocuments && !errors.corporateDocuments
               const beneficialOwnersFilled =
                 shouldValidate && !Object.keys(errors).some((errorField) => errorField.startsWith('beneficialOwners'))
 
@@ -869,39 +865,6 @@ export default function CorporateKycForm() {
                               setFieldValue
                             )}
                           />
-
-                          {Boolean(values.accredited) && (
-                            <Uploader
-                              title="Evidence of Accreditation"
-                              subtitle={
-                                <ul>
-                                  <li>
-                                    <Trans>Copy of the most recent audited balance sheet of the corporation.</Trans>
-                                  </li>
-                                  <li>
-                                    <Trans>
-                                      Where the corporation is not required to prepare audited account regularly, a
-                                      balance sheet of the corporation certified by the corporation as giving a true and
-                                      fair view of the state of affairs of the corporation as of the date of the balance
-                                      sheet, of which date shall be within the preceding 12 months.
-                                    </Trans>
-                                  </li>
-                                </ul>
-                              }
-                              files={values.evidenceOfAccreditation}
-                              onDrop={(file) => {
-                                handleDropImage(file, values, 'evidenceOfAccreditation', setFieldValue)
-                              }}
-                              optional={values.accredited !== 1}
-                              error={errors.evidenceOfAccreditation && errors.evidenceOfAccreditation}
-                              handleDeleteClick={handleImageDelete(
-                                values,
-                                'evidenceOfAccreditation',
-                                values.removedDocuments,
-                                setFieldValue
-                              )}
-                            />
-                          )}
                         </Column>
                       </FormCard>
                     </Column>

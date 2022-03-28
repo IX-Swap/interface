@@ -7,12 +7,11 @@ import { AppDispatch, AppState } from 'state'
 import { BROKER_DEALERS_STATUS } from 'state/brokerDealer/hooks'
 import { createKYC, fetchGetMyKyc, updateKYC } from './actions'
 
-const individualKYCFiles = ['proofOfAddress', 'proofOfIdentity', 'evidenceOfAccreditation']
+const individualKYCFiles = ['proofOfAddress', 'proofOfIdentity']
 const corporateKYCFiles = [
   'beneficialOwnersAddress',
   'beneficialOwnersIdentity',
   'authorizationDocuments',
-  'evidenceOfAccreditation',
   'corporateDocuments',
   'financialDocuments',
   'authorizationDocuments',

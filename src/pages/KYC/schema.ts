@@ -39,11 +39,6 @@ export const individualErrorsSchema = yup.object().shape({
   income: yup.object().nullable().required('Required'),
   proofOfIdentity: yup.array().min(1, 'Required').nullable(),
   proofOfAddress: yup.array().min(1, 'Required').nullable(),
-  evidenceOfAccreditation: yup.array().when('accredited', {
-    is: 1,
-    then: yup.array().min(1, 'Required').nullable(),
-    otherwise: yup.array().nullable(),
-  }),
 })
 
 export const corporateErrorsSchema = yup.object().shape({
@@ -111,12 +106,4 @@ export const corporateErrorsSchema = yup.object().shape({
     }),
   corporateDocuments: yup.array().min(1, 'Required').nullable(),
   financialDocuments: yup.array().min(1, 'Required').nullable(),
-  evidenceOfAccreditation: yup
-    .mixed()
-    .nullable()
-    .when('accredited', {
-      is: 1,
-      then: yup.array().min(1, 'Required').nullable(),
-      otherwise: yup.array().nullable(),
-    }),
 })

@@ -269,8 +269,7 @@ export default function IndividualKycForm() {
               const addressFilled = shouldValidate && !errors.line1 && !errors.line2 && !errors.country && !errors.city
               const fundsFilled = shouldValidate && !errors.sourceOfFunds && !errors.otherFunds
               const fatcaFilled = shouldValidate && !errors.usTin && !errors.isUSTaxPayer
-              const filesFilled =
-                shouldValidate && !errors.proofOfIdentity && !errors.proofOfAddress && !errors.evidenceOfAccreditation
+              const filesFilled = shouldValidate && !errors.proofOfIdentity && !errors.proofOfAddress
 
               return (
                 <FormRow>
@@ -596,24 +595,6 @@ export default function IndividualKycForm() {
                               setFieldValue
                             )}
                           />
-                          {Boolean(values.accredited) && (
-                            <Uploader
-                              error={errors.evidenceOfAccreditation && errors.evidenceOfAccreditation}
-                              title="Evidence of accreditation"
-                              subtitle="Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Proin eget tortor risus."
-                              files={values.evidenceOfAccreditation}
-                              onDrop={(file) => {
-                                handleDropImage(file, values, 'evidenceOfAccreditation', setFieldValue)
-                              }}
-                              optional={values.accredited !== 1}
-                              handleDeleteClick={handleImageDelete(
-                                values,
-                                'evidenceOfAccreditation',
-                                values.removedDocuments,
-                                setFieldValue
-                              )}
-                            />
-                          )}
                         </Column>
                       </FormCard>
                       {/* <FormCard>
