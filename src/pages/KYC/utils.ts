@@ -44,7 +44,6 @@ export const corporateTransformApiData = (data: any) => {
         : [{ fullName: '', shareholding: '', proofOfAddress: null, proofOfIdentity: null }],
     corporateDocuments: documents.filter(({ type }: any) => type === 'corporate'),
     financialDocuments: documents.filter(({ type }: any) => type === 'financial'),
-    // evidenceOfAccreditation: documents.filter(({ type }: any) => type === 'accreditation'),
     removedDocuments: [],
     removedBeneficialOwners: [],
   }
@@ -102,7 +101,6 @@ export const individualTransformApiData = (data: any) => {
     city: address.city,
     proofOfAddress: documents.filter(({ type }: any) => type === 'address'),
     proofOfIdentity: documents.filter(({ type }: any) => type === 'identity'),
-    // evidenceOfAccreditation: documents.filter(({ type }: any) => type === 'accreditation'),
     citizenship: { value: 0, label: citizenship },
     employmentStatus: { value: 0, label: employmentStatus },
     gender: { value: 0, label: gender },

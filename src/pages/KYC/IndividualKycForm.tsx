@@ -595,24 +595,6 @@ export default function IndividualKycForm() {
                               setFieldValue
                             )}
                           />
-                          {/* {Boolean(values.accredited) && (
-                            <Uploader
-                              error={errors.evidenceOfAccreditation && errors.evidenceOfAccreditation}
-                              title="Evidence of accreditation"
-                              subtitle="Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Proin eget tortor risus."
-                              files={values.evidenceOfAccreditation}
-                              onDrop={(file) => {
-                                handleDropImage(file, values, 'evidenceOfAccreditation', setFieldValue)
-                              }}
-                              optional={values.accredited !== 1}
-                              handleDeleteClick={handleImageDelete(
-                                values,
-                                'evidenceOfAccreditation',
-                                values.removedDocuments,
-                                setFieldValue
-                              )}
-                            />
-                          )} */}
                         </Column>
                       </FormCard>
                       {/* <FormCard>
