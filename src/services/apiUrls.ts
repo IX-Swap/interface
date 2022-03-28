@@ -14,6 +14,7 @@ export const admin = {
   approveKyc: (id: number, riskReportId: number) => `/newkyc/approve/${id}?riskReportId=${riskReportId}`,
   rejectKyc: (id: number, riskReportId: number) => `/newkyc/reject/${id}?riskReportId=${riskReportId}`,
   kycById: (id: string | number) => `/newkyc/id/${id}`,
+  resubmitKyc: (id: string | number) => `/newkyc/resubmit/${id}`,
 }
 
 export const vesting = {
