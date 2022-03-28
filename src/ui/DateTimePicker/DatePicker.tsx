@@ -93,6 +93,7 @@ export const DatePicker = ({
 
   const handleFocus = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
+    resetViews()
     setOpen(!open)
   }
 
