@@ -215,6 +215,13 @@ export default function KYC() {
             />
           </Flex>
         )
+      case KYCStatuses.DRAFT:
+        return (
+          <>
+            <Description description={getStatusDescription(status)} />
+            <DateInfo submittedDate={kyc?.data.updatedAt || kyc?.data.createdAt} />
+          </>
+        )
     }
   }, [status])
 
