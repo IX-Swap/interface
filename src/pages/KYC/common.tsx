@@ -24,7 +24,7 @@ export interface UploaderProps {
   files: FileWithPath[]
   onDrop: (file: any) => void
   title: string
-  subtitle: string | JSX.Element
+  subtitle?: string | JSX.Element
   optional?: boolean
   error?: any | ReactChildren
   handleDeleteClick: (index: number) => void
@@ -128,7 +128,7 @@ export const Uploader: FC<UploaderProps> = ({
           </>
         )}
       </Flex>
-      <StyledDescription marginBottom="10px">{subtitle}</StyledDescription>
+      {subtitle && <StyledDescription marginBottom="10px">{subtitle}</StyledDescription>}
       {files.length > 0 && (
         <Flex flexWrap="wrap">
           {files.map((file: any, index) => (
