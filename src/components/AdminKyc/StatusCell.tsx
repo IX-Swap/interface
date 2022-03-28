@@ -12,7 +12,7 @@ export const KYC_STATUSES = {
   PENDING: 'pending',
   APPROVED: 'approved',
   REJECTED: 'rejected',
-  CHANGE_REQUEST: 'changes requested',
+  CHANGE_REQUEST: 'changes-requested',
   DRAFT: 'draft',
 }
 

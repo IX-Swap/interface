@@ -123,7 +123,7 @@ export const individualFormInitialValues: IFormInitial = {
   income: null,
   proofOfIdentity: [],
   proofOfAddress: [],
-  evidenceOfAccreditation: [],
+  // evidenceOfAccreditation: [],
 }
 
 export const corporateFormInitialValues: IFormInitial = {
@@ -157,7 +157,7 @@ export const corporateFormInitialValues: IFormInitial = {
   beneficialOwners: [{ fullName: '', shareholding: '', proofOfAddress: null, proofOfIdentity: null }],
   corporateDocuments: [],
   financialDocuments: [],
-  evidenceOfAccreditation: [],
+  // evidenceOfAccreditation: [],
   removedDocuments: [],
   removedBeneficialOwners: [],
 }

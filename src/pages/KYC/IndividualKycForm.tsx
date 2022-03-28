@@ -269,8 +269,7 @@ export default function IndividualKycForm() {
               const addressFilled = shouldValidate && !errors.line1 && !errors.line2 && !errors.country && !errors.city
               const fundsFilled = shouldValidate && !errors.sourceOfFunds && !errors.otherFunds
               const fatcaFilled = shouldValidate && !errors.usTin && !errors.isUSTaxPayer
-              const filesFilled =
-                shouldValidate && !errors.proofOfIdentity && !errors.proofOfAddress && !errors.evidenceOfAccreditation
+              const filesFilled = shouldValidate && !errors.proofOfIdentity && !errors.proofOfAddress
 
               return (
                 <FormRow>
@@ -596,7 +595,7 @@ export default function IndividualKycForm() {
                               setFieldValue
                             )}
                           />
-                          {Boolean(values.accredited) && (
+                          {/* {Boolean(values.accredited) && (
                             <Uploader
                               error={errors.evidenceOfAccreditation && errors.evidenceOfAccreditation}
                               title="Evidence of accreditation"
@@ -613,7 +612,7 @@ export default function IndividualKycForm() {
                                 setFieldValue
                               )}
                             />
-                          )}
+                          )} */}
                         </Column>
                       </FormCard>
                       {/* <FormCard>

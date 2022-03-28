@@ -307,11 +307,7 @@ export default function CorporateKycForm() {
               const fatcaFilled = shouldValidate && !errors.usTin && !errors.isUSTaxPayer
               const investorFilled = shouldValidate && !errors.accredited
               const taxDeclarationFilled = shouldValidate && !errors.taxCountry && !errors.taxNumber
-              const filesFilled =
-                shouldValidate &&
-                !errors.financialDocuments &&
-                !errors.corporateDocuments &&
-                !errors.evidenceOfAccreditation
+              const filesFilled = shouldValidate && !errors.financialDocuments && !errors.corporateDocuments
               const beneficialOwnersFilled =
                 shouldValidate && !Object.keys(errors).some((errorField) => errorField.startsWith('beneficialOwners'))
 
@@ -870,7 +866,7 @@ export default function CorporateKycForm() {
                             )}
                           />
 
-                          {Boolean(values.accredited) && (
+                          {/* {Boolean(values.accredited) && (
                             <Uploader
                               title="Evidence of Accreditation"
                               subtitle={
@@ -901,7 +897,7 @@ export default function CorporateKycForm() {
                                 setFieldValue
                               )}
                             />
-                          )}
+                          )} */}
                         </Column>
                       </FormCard>
                     </Column>
