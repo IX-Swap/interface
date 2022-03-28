@@ -73,12 +73,12 @@ export default function SecTokenDetails({
         {token && <DetailsInfo token={token} />}
         {token && <AddToMetamask token={token} />}
         {atlasInfo && <AtlasInfo atlasInfo={atlasInfo} />}
-        {token?.token && (
+        {token?.token?.id && (
           <ValutContainer>
             <Vault token={token} currency={token.token} />
           </ValutContainer>
         )}
-        {token && !token.token && <NotTradable ticker={token.ticker} />}
+        {token && !token.token?.id && <NotTradable ticker={token.ticker} />}
       </Container>
     </>
   )
