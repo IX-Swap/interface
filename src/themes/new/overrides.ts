@@ -16,6 +16,7 @@ import { typography } from 'themes/new/overrides/typography'
 import { fab } from 'themes/new/overrides/fab'
 import { menu } from 'themes/new/overrides/menu'
 import { menuItem } from 'themes/new/overrides/menuItem'
+import { chip } from 'themes/new/overrides/chip'
 
 declare module '@mui/material/Button' {
   interface ButtonPropsVariantOverrides {
@@ -41,5 +42,6 @@ export const getThemeOverrides = (
   MuiMenuItem: menuItem(theme),
   MuiSwitch: switcher(theme),
   MuiRadio: radio(theme),
-  MuiCheckbox: checkbox(theme)
+  MuiCheckbox: checkbox(theme),
+  MuiChip: chip(theme)
 })

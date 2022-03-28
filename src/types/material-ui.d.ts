@@ -89,6 +89,13 @@ export interface Alerts {
   border: string
 }
 
+export interface ChipPalette {
+  bg: string
+  fill: string
+  opacity: number
+  color: string
+}
+
 declare module '@mui/styles/defaultTheme' {
   interface DefaultTheme extends Theme {}
 }
@@ -125,6 +132,7 @@ declare module '@mui/material/styles' {
 
   export interface Palette {
     backgrounds: AppBackgrounds
+    chip?: ChipPalette
     toggledInputs?: ToggledInputsColorOptions
     switch?: SwitchColorOptions
     sidebar: {

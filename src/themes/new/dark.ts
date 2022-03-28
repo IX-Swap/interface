@@ -15,6 +15,12 @@ export const darkTheme: DeprecatedThemeOptions = {
       dark: '#F0F2F7',
       light: '#EDF2FA'
     },
+    chip: {
+      fill: '#496396',
+      bg: '#1D3667',
+      opacity: 1,
+      color: '#89A1CE'
+    },
     toggledInputs: {
       fill: '#132A57',
       bg: '#132A57',
