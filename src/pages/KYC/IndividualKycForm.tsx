@@ -567,7 +567,6 @@ export default function IndividualKycForm() {
                           <Uploader
                             error={errors.proofOfIdentity && errors.proofOfIdentity}
                             title="Proof of Identity"
-                            subtitle="Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Proin eget tortor risus."
                             files={values.proofOfIdentity}
                             onDrop={(file) => {
                               handleDropImage(file, values, 'proofOfIdentity', setFieldValue)
@@ -583,7 +582,6 @@ export default function IndividualKycForm() {
                           <Uploader
                             error={errors.proofOfAddress && errors.proofOfAddress}
                             title="Proof of Address"
-                            subtitle="Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Proin eget tortor risus."
                             files={values.proofOfAddress}
                             onDrop={(file) => {
                               handleDropImage(file, values, 'proofOfAddress', setFieldValue)
