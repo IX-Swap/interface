@@ -19,6 +19,7 @@ import {
   postResetKyc,
   BrokerDealerSwaps,
   getKycList,
+  postResubmitKyc,
 } from './actions'
 
 export interface AdminState {
@@ -227,6 +228,18 @@ export default createReducer<AdminState>(initialState, (builder) =>
       state.adminError = null
     })
     .addCase(postResetKyc.rejected, (state, { payload: { errorMessage } }) => {
+      state.adminLoading = false
+      state.adminError = errorMessage
+    })
+    .addCase(postResubmitKyc.pending, (state) => {
+      state.adminLoading = true
+      state.adminError = null
+    })
+    .addCase(postResubmitKyc.fulfilled, (state) => {
+      state.adminLoading = false
+      state.adminError = null
+    })
+    .addCase(postResubmitKyc.rejected, (state, { payload: { errorMessage } }) => {
       state.adminLoading = false
       state.adminError = errorMessage
     })
