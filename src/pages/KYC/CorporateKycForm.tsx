@@ -38,6 +38,7 @@ export default function CorporateKycForm() {
   const [waitingForInitialValues, setWaitingForInitialValues] = useState(true)
   const [updateKycId, setUpdateKycId] = useState<any>(null)
   const [formData, setFormData] = useState<any>(null)
+  const [canSubmit, setCanSubmit] = useState(true)
   const [isSubmittedOnce, setIsSubmittedOnce] = useState(false)
   const [errors, setErrors] = useState<any>({})
   const history = useHistory()
@@ -169,6 +170,7 @@ export default function CorporateKycForm() {
       const newErrors = { ...errors }
       delete newErrors[key]
       setErrors(newErrors)
+      setCanSubmit(true)
     }
   }
 
@@ -237,6 +239,7 @@ export default function CorporateKycForm() {
               corporateErrorsSchema
                 .validate(values, { abortEarly: false })
                 .then(async () => {
+                  setCanSubmit(false)
                   const body = corporateTransformKycDto(values)
                   let data: any = null
 
@@ -255,6 +258,7 @@ export default function CorporateKycForm() {
                       },
                     })
                   } else {
+                    setCanSubmit(true)
                     addPopup({
                       info: {
                         success: false,
@@ -276,6 +280,7 @@ export default function CorporateKycForm() {
                   })
                   setIsSubmittedOnce(true)
                   setErrors(newErrors)
+                  setCanSubmit(false)
                 })
             }}
           >
@@ -873,7 +878,7 @@ export default function CorporateKycForm() {
                   <StickyBox offsetTop={100}>
                     <KYCProgressBar
                       handleSubmit={handleSubmit}
-                      disabled={false}
+                      disabled={!dirty || !canSubmit || Object.keys(errors).length !== 0}
                       topics={Object.values({
                         info: {
                           title: 'Corporate Information',
