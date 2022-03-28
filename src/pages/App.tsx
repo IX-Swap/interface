@@ -15,7 +15,6 @@ import {
 import ApeModeQueryParamReader from 'hooks/useApeModeQueryParamReader'
 import { useActiveWeb3React } from 'hooks/web3'
 import { useAccount } from 'state/user/hooks'
-import { ConnectToAppropriateNetwork } from 'theme'
 import { routes } from 'utils/routes'
 
 import GoogleAnalyticsReporter from '../components/analytics/GoogleAnalyticsReporter'
@@ -104,8 +103,8 @@ export default function App() {
   }, [chainId])
 
   const visibleBody = useMemo(() => {
-    return (!isSettingsOpen && (validChainId || isAdminKyc)) || !account
-  }, [isAdminKyc, isSettingsOpen, validChainId, account])
+    return !isSettingsOpen || !account
+  }, [isAdminKyc, isSettingsOpen, account])
 
   return (
     <ErrorBoundary>
@@ -116,8 +115,7 @@ export default function App() {
       <Popups />
       <AppWrapper>
         <PlaygroundModal />
-        {validChainId && !isAdminKyc && <Header />}
-        {chainId && !validChainId && !isAdminKyc && account && <ConnectToAppropriateNetwork />}
+        {!isAdminKyc && <Header />}
         <ToggleableBody isVisible={visibleBody} {...(isAdminKyc && { style: { marginTop: 26 } })}>
           <IXSBalanceModal />
           <Web3ReactManager>
@@ -170,9 +168,7 @@ export default function App() {
                 <Route exact strict path="/security-tokens/:currencyId" component={SecTokenDetails} />
                 <Route exact strict path={routes.securityTokens()} component={CustodianV2} />
 
-                {chainId && TGE_CHAINS_WITH_STAKING.includes(chainId) && (
-                  <Route exact strict path={routes.staking} component={StakingTab} />
-                )}
+                <Route exact strict path={routes.staking} component={StakingTab} />
                 <Route exact strict path={routes.vesting} component={VestingTab} />
 
                 {chainId && TGE_CHAINS_WITH_SWAP.includes(chainId) && <Route component={RedirectPathToSwapOnly} />}

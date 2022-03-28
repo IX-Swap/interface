@@ -1,21 +1,18 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box, Flex } from 'rebass'
 import { isMobile } from 'react-device-detect'
-import { t, Trans } from '@lingui/macro'
-import { useHistory } from 'react-router-dom'
+import { Trans } from '@lingui/macro'
 
 import { ExternalLink, TYPE } from 'theme'
 import { StyledButtonGradientBorder } from 'components/AdminSecurityCatalog/styleds'
 import { FeaturedToken } from './FeaturedToken'
 import { SecTokensTable } from './SecTokensTable'
-import { LOGIN_STATUS, useAuthState, useLogin } from 'state/auth/hooks'
+import { useAuthState } from 'state/auth/hooks'
 import { useActiveWeb3React } from 'hooks/web3'
 import AppBody from 'pages/AppBody'
 import { TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
 import { getMyTokens, useFetchTokens, useSecCatalogState } from 'state/secCatalog/hooks'
 import { MySecToken } from './MySecToken'
-import { NFTConnectWallet } from 'components/NFTConnectWallet'
-import { useShowError } from 'state/application/hooks'
 
 import { ReactComponent as ArrowDown } from '../../assets/images/arrow-sec-tokens.svg'
 import {
@@ -27,6 +24,7 @@ import {
   MySecTokensGrid,
   Divider,
 } from './styleds'
+import { NotAvailablePage } from 'components/NotAvailablePage'
 
 export default function CustodianV2() {
   const offset = 10
@@ -78,7 +76,7 @@ export default function CustodianV2() {
       )
     : []
 
-  if (!isLoggedIn) return <NFTConnectWallet />
+  if (!isLoggedIn) return <NotAvailablePage />
 
   return blurred ? (
     <AppBody blurred>

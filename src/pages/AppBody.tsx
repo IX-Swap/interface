@@ -9,6 +9,7 @@ import { useActiveWeb3React } from 'hooks/web3'
 import { SupportedChainId } from 'constants/chains'
 import { ButtonText } from 'components/Button'
 import Row from 'components/Row'
+import { NotAvailablePage } from 'components/NotAvailablePage'
 
 export const BodyWrapper = styled.div<{
   margin?: string
@@ -16,6 +17,7 @@ export const BodyWrapper = styled.div<{
   paddingXS?: string
   maxWidth?: string
   transparent?: boolean
+  blurred?: boolean
 }>`
   position: relative;
   margin-top: ${({ margin }) => margin ?? '0px'};
@@ -24,29 +26,26 @@ export const BodyWrapper = styled.div<{
   background: ${({ theme, transparent }) => (transparent ? 'transparent' : theme.bg1)};
   box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.01), 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 16px 24px rgba(0, 0, 0, 0.04),
     0px 24px 32px rgba(0, 0, 0, 0.01);
-  border-radius: 24px;
+  border-radius: ${({ blurred }) => (blurred ? '30px' : '24px')};
   margin-top: 1rem;
-  padding: ${({ padding }) => padding ?? '26px 36px 52px 36px;'};
-  ${({ theme, paddingXS }) => theme.mediaWidth.upToExtraSmall`
+  padding: ${({ padding, blurred }) => (blurred ? '0px' : padding ?? '26px 36px 52px 36px;')};
+  ${({ theme, paddingXS, blurred }) =>
+    !blurred &&
+    theme.mediaWidth.upToExtraSmall`
       padding: ${paddingXS ?? '1rem 0.7rem'};
   `};
   z-index: 1;
 `
 export const BlurredOverlay = styled.div`
-  padding: 16px;
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
-  z-index: 3;
   display: flex;
   text-align: center;
   vertical-align: center;
   justify-content: center;
   align-items: center;
   backdrop-filter: blur(10px);
-  border-radius: 25px;
   background: ${({ theme }) => theme.bgG16};
+  border-radius: 30px;
 `
 
 /**
@@ -72,26 +71,10 @@ export default function AppBody({
 
   return (
     <React.Fragment>
-      <BodyWrapper {...rest}>
+      <BodyWrapper {...rest} blurred={blurred}>
         {blurred && (
           <BlurredOverlay>
-            <Column>
-              <TYPE.titleBig marginBottom="33px" fontWeight={600}>
-                <ColumnCenter>
-                  <Trans>Mainnet to be deployed soon.</Trans>
-                </ColumnCenter>
-              </TYPE.titleBig>
-              <TYPE.titleSmall fontWeight={600}>
-                <ColumnCenter>
-                  <Row>
-                    <Trans>To use our playground you might switch to</Trans>
-                    <ButtonText marginLeft="4px" onClick={handleCovanClick}>
-                      <Trans>Kovan Testnet.</Trans>
-                    </ButtonText>
-                  </Row>
-                </ColumnCenter>
-              </TYPE.titleSmall>
-            </Column>
+            <NotAvailablePage />
           </BlurredOverlay>
         )}
         {!blurred && children}
