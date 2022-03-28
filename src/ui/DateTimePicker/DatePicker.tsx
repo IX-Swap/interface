@@ -145,7 +145,13 @@ export const DatePicker = ({
                     }
                   }}
                 >
-                  <Icon name='calendar' />
+                  <Icon
+                    name={
+                      variant === 'date' || variant === 'datetime'
+                        ? 'date'
+                        : 'time'
+                    }
+                  />
                 </IconButton>
               </InputAdornment>
             )
