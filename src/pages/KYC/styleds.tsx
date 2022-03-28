@@ -131,6 +131,7 @@ export const KYCStatusIcons = {
   [KYCStatuses.NOT_SUBMITTED]: () => null,
   [KYCStatuses.CHANGES_REQUESTED]: () => <Attention />,
   [KYCStatuses.REJECTED]: () => <NonTradable />,
+  [KYCStatuses.DRAFT]: () => <LoaderThin size={20} />,
 }
 
 const KYCStatusText = {
@@ -139,6 +140,7 @@ const KYCStatusText = {
   [KYCStatuses.NOT_SUBMITTED]: t`Not submitted`,
   [KYCStatuses.CHANGES_REQUESTED]: t`Changes Requested`,
   [KYCStatuses.REJECTED]: t`Rejected`,
+  [KYCStatuses.DRAFT]: t`Pending approval`,
 }
 
 const KYCStatusColors = {
@@ -147,6 +149,7 @@ const KYCStatusColors = {
   [KYCStatuses.NOT_SUBMITTED]: 'error',
   [KYCStatuses.CHANGES_REQUESTED]: 'text1',
   [KYCStatuses.REJECTED]: 'error',
+  [KYCStatuses.DRAFT]: 'text2',
 }
 
 const KYCStatusDescription = {
@@ -159,6 +162,8 @@ const KYCStatusDescription = {
     'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula.',
   [KYCStatuses.REJECTED]:
     'Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Vivamus suscipit tortor eget felis porttitor volutpat. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula.',
+  [KYCStatuses.DRAFT]:
+    'Pass KYC once and use it during all accreditations for Securities tokens. Reliable and quick. Submit your KYC, get approved and forget about bureaucracy.',
 }
 
 export const getStatusInfo = (status: KYCStatuses) => {
