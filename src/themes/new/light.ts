@@ -156,10 +156,14 @@ export const lightTheme: DeprecatedThemeOptions = {
       main: '#7DD320'
     },
     warning: {
-      main: '#FFC900'
+      main: '#FFC900',
+      dark: '#D3A701',
+      light: tinycolor('#ffc900').setAlpha(0.2).toRgbString()
     },
     error: {
-      main: '#F56283'
+      main: '#F56283',
+      dark: '#FF8080',
+      light: tinycolor('#FF8080').setAlpha(0.2).toRgbString()
     },
     info: {
       main: '#4C88FF'
