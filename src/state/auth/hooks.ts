@@ -79,12 +79,10 @@ export function useLogin({ mustHavePreviousLogin = true }: { mustHavePreviousLog
         if (mustHavePreviousLogin) {
           // gets here if he needs to be previously logged in
           const hasLogin = await getHasLogin(account)
+
           if (!hasLogin) {
-            if (account) {
-              dispatch(postLogin.rejected({ errorMessage: 'User has no account' }))
-              dispatch(saveAccount({ account }))
-            }
-            return LOGIN_STATUS.NO_ACCOUNT
+            dispatch(postLogin.rejected({ errorMessage: 'User has no account' }))
+            dispatch(saveAccount({ account: '' }))
           }
         }
         // gets here if previously logged in or previous login not needed
