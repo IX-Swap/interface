@@ -1,12 +1,10 @@
-import React, { useMemo, useCallback, useState, useEffect } from 'react'
+import React, { useMemo, useState, useEffect } from 'react'
 import styled from 'styled-components'
 import StickyBox from 'react-sticky-box'
 import { Trans, t } from '@lingui/macro'
-import { getNames } from 'country-list'
 import { Formik } from 'formik'
 import { useHistory } from 'react-router-dom'
 import moment from 'moment'
-import { useWeb3React } from '@web3-react/core'
 
 import usePrevious from 'hooks/usePrevious'
 import Column from 'components/Column'
@@ -22,16 +20,17 @@ import { Checkbox } from 'components/Checkbox'
 import { getIndividualProgress, useCreateIndividualKYC, useKYCState, useUpdateIndividualKYC } from 'state/kyc/hooks'
 
 import { useActiveWeb3React } from 'hooks/web3'
-import { LOGIN_STATUS, useAuthState, useLogin } from 'state/auth/hooks'
+import { useAuthState } from 'state/auth/hooks'
 import { Loadable } from 'components/LoaderHover'
 import { LoadingIndicator } from 'components/LoadingIndicator'
+import { countriesList } from 'constants/countriesList'
 
 import { empleymentStatuses, individualFormInitialValues, genders, incomes, sourceOfFunds, promptValue } from './mock'
 import { FormCard, FormGrid, ExtraInfoCard, FormWrapper } from './styleds'
 import { individualErrorsSchema } from './schema'
 import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
 import { ReactComponent as BigPassed } from 'assets/images/check-success-big.svg'
-import { useAddPopup, useShowError } from 'state/application/hooks'
+import { useAddPopup } from 'state/application/hooks'
 import { individualTransformApiData, individualTransformKycDto } from './utils'
 import { KYCStatuses } from './enum'
 
@@ -176,7 +175,7 @@ export default function IndividualKycForm() {
     }
 
   const countries = useMemo(() => {
-    return getNames()
+    return countriesList
       .map((name, index) => ({ value: ++index, label: name }))
       .sort((a, b) => a.label.localeCompare(b.label))
   }, [])
