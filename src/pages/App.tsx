@@ -5,13 +5,7 @@ import styled from 'styled-components/macro'
 import { AppBackground } from 'components/AppBackground'
 import { IXSBalanceModal } from 'components/Header/IXSBalanceModal'
 import PlaygroundModal from 'components/PlaygroundModal'
-import {
-  MATIC_TGE_CHAINS,
-  SUPPORTED_TGE_CHAINS,
-  TGE_CHAINS_WITH_STAKING,
-  TGE_CHAINS_WITH_SWAP,
-  TGE_CHAINS_WITH_KYC,
-} from 'constants/addresses'
+import { MATIC_TGE_CHAINS, SUPPORTED_TGE_CHAINS, TGE_CHAINS_WITH_SWAP, TGE_CHAINS_WITH_KYC } from 'constants/addresses'
 import ApeModeQueryParamReader from 'hooks/useApeModeQueryParamReader'
 import { useActiveWeb3React } from 'hooks/web3'
 import { useAccount } from 'state/user/hooks'
@@ -32,6 +26,7 @@ import Faucet from './Faucet'
 import PoolFinder from './PoolFinder'
 import { RedirectPathToStaking, RedirectPathToSwapOnly, RedirectToSwap } from './Swap/redirects'
 import { Footer } from '../components/Footer'
+import { isUserWhitelisted } from 'utils/isUserWhitelisted'
 
 const Admin = lazy(() => import('./Admin'))
 
@@ -95,16 +90,12 @@ export default function App() {
   }, [pathname])
 
   const isAdminKyc = pathname.includes('admin')
-  const validChainId = useMemo(() => {
-    if (!chainId) {
-      return true
-    }
-    return chainId && Object.values(SUPPORTED_TGE_CHAINS).includes(chainId)
-  }, [chainId])
 
   const visibleBody = useMemo(() => {
     return !isSettingsOpen || !account
   }, [isAdminKyc, isSettingsOpen, account])
+
+  const isWhitelisted = isUserWhitelisted({ account, chainId })
 
   return (
     <ErrorBoundary>
@@ -122,60 +113,70 @@ export default function App() {
             <Suspense fallback={<></>}>
               <Switch>
                 <Route exact strict path="/admin" render={() => <Redirect to="/admin/accreditation" />} />
+
                 <Route exact strict path="/admin/:tab/:id?" component={Admin} />
 
-                <Route exact strict path={routes.nftCreate} component={CreateNFT} />
-                <Route exact strict path={routes.nftList} component={ListNFT} />
-                <Route exact strict path={routes.nftCollections} component={NFTCollections} />
-                <Route exact strict path={routes.nftCollectionCreate} component={CreateCollection} />
-                <Route exact strict path={routes.nftEditCollectionPath} component={UpdateCollection} />
-                <Route exact strict path={routes.nftCollectionImport} component={NftImport} />
-                <Route exact strict path={routes.nftViewCollectionPath} component={NFTCollection} />
-                <Route exact strict path={routes.nftItemPath} component={NftAssetPage} />
-                <Route exact strict path={routes.kycIndividual} component={IndividualKYC} />
-                <Route exact strict path={routes.kycCorporate} component={CorporateKYC} />
+                {isWhitelisted && <Route exact strict path={routes.nftCreate} component={CreateNFT} />}
+                {isWhitelisted && <Route exact strict path={routes.nftList} component={ListNFT} />}
+                {isWhitelisted && <Route exact strict path={routes.nftCollections} component={NFTCollections} />}
+                {isWhitelisted && <Route exact strict path={routes.nftCollectionCreate} component={CreateCollection} />}
+                {isWhitelisted && (
+                  <Route exact strict path={routes.nftEditCollectionPath} component={UpdateCollection} />
+                )}
+                {isWhitelisted && <Route exact strict path={routes.nftCollectionImport} component={NftImport} />}
+                {isWhitelisted && <Route exact strict path={routes.nftViewCollectionPath} component={NFTCollection} />}
+                {isWhitelisted && <Route exact strict path={routes.nftItemPath} component={NftAssetPage} />}
+                {isWhitelisted && <Route exact strict path={routes.kycIndividual} component={IndividualKYC} />}
+                {isWhitelisted && <Route exact strict path={routes.kycCorporate} component={CorporateKYC} />}
 
-                {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
+                {chainId && !MATIC_TGE_CHAINS.includes(chainId) && isWhitelisted && (
                   <Route exact strict path="/send" component={RedirectPathToSwapOnly} />
                 )}
-                {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
+                {chainId && !MATIC_TGE_CHAINS.includes(chainId) && isWhitelisted && (
                   <Route exact strict path="/swap/:outputCurrency" component={RedirectToSwap} />
                 )}
-                {chainId && !MATIC_TGE_CHAINS.includes(chainId) && <Route exact strict path="/swap" component={Swap} />}
-                {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
+                {chainId && !MATIC_TGE_CHAINS.includes(chainId) && isWhitelisted && (
+                  <Route exact strict path="/swap" component={Swap} />
+                )}
+                {chainId && !MATIC_TGE_CHAINS.includes(chainId) && isWhitelisted && (
                   <Route exact strict path="/find" component={PoolFinder} />
                 )}
-                {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
+                {chainId && !MATIC_TGE_CHAINS.includes(chainId) && isWhitelisted && (
                   <Route exact strict path="/pool" component={PoolV2} />
                 )}
 
-                {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
+                {chainId && !MATIC_TGE_CHAINS.includes(chainId) && isWhitelisted && (
                   <Route exact strict path="/add/:currencyIdA?/:currencyIdB?" component={RedirectDuplicateTokenIdsV2} />
                 )}
 
-                {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
+                {chainId && !MATIC_TGE_CHAINS.includes(chainId) && isWhitelisted && (
                   <Route exact strict path="/remove/:currencyIdA/:currencyIdB" component={RemoveLiquidity} />
                 )}
 
-                {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
+                {chainId && !MATIC_TGE_CHAINS.includes(chainId) && isWhitelisted && (
                   <Route exact strict path="/faucet" component={Faucet} />
                 )}
 
-                {chainId && TGE_CHAINS_WITH_KYC.includes(chainId) && (
+                {chainId && TGE_CHAINS_WITH_KYC.includes(chainId) && isWhitelisted && (
                   <Route exact strict path={routes.kyc} component={KYC} />
                 )}
 
-                <Route exact strict path="/security-tokens/:currencyId" component={SecTokenDetails} />
-                <Route exact strict path={routes.securityTokens()} component={CustodianV2} />
+                {isWhitelisted && (
+                  <Route exact strict path="/security-tokens/:currencyId" component={SecTokenDetails} />
+                )}
+                {isWhitelisted && <Route exact strict path={routes.securityTokens()} component={CustodianV2} />}
 
                 <Route exact strict path={routes.staking} component={StakingTab} />
                 <Route exact strict path={routes.vesting} component={VestingTab} />
 
-                {chainId && TGE_CHAINS_WITH_SWAP.includes(chainId) && <Route component={RedirectPathToSwapOnly} />}
-                {chainId &&
+                {chainId && TGE_CHAINS_WITH_SWAP.includes(chainId) && isWhitelisted && (
+                  <Route component={RedirectPathToSwapOnly} />
+                )}
+                {((chainId &&
                   [SUPPORTED_TGE_CHAINS.MAIN, SUPPORTED_TGE_CHAINS.MUMBAI, SUPPORTED_TGE_CHAINS.MATIC].includes(
                     chainId
-                  ) && <Route component={RedirectPathToStaking} />}
+                  )) ||
+                  !isWhitelisted) && <Route component={RedirectPathToStaking} />}
               </Switch>
             </Suspense>
           </Web3ReactManager>
