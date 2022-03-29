@@ -5,7 +5,7 @@ import { ReactComponent as DeleteIconLight } from 'assets/icons/chip/deleteLight
 import { ReactComponent as DeleteIconDark } from 'assets/icons/chip/deleteDark.svg'
 import { useTheme } from '@mui/material/styles'
 
-export const UIChip = (props: ChipProps) => {
+export const CustomChip = (props: ChipProps) => {
   const theme = useTheme()
 
   const getDeleteIcon = () => {

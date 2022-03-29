@@ -1,7 +1,7 @@
 import { Grid, Typography } from '@mui/material'
 import React from 'react'
 import { UIKitThemeWrapper } from 'ui/UIKit/UIKitThemeWrapper'
-import { UIChip } from 'ui/UICHip/UIChip'
+import { CustomChip } from 'ui/CustomChip'
 import { VSpacer } from 'components/VSpacer'
 import { UITag } from 'ui/UITag/UITag'
 
@@ -22,7 +22,7 @@ export const ChipsTagsKit = () => {
           </Grid>
           <VSpacer size={'small'} />
           <Grid>
-            <UIChip
+            <CustomChip
               label='HyperDrive'
               onClick={handleClick}
               onDelete={handleDelete}
@@ -30,7 +30,7 @@ export const ChipsTagsKit = () => {
           </Grid>
           <br />
           <Grid>
-            <UIChip
+            <CustomChip
               label='HyperDrive'
               onClick={handleClick}
               onDelete={handleDelete}
@@ -71,6 +71,9 @@ export const ChipsTagsKit = () => {
           </Grid>
           <Grid item>
             <UITag variant='warning'>Pending</UITag>
+          </Grid>
+          <Grid item>
+            <UITag variant='error'>Pending</UITag>
           </Grid>
           <Grid item>
             <UITag variant='unknown'>Funded</UITag>

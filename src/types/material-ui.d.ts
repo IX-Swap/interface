@@ -103,6 +103,7 @@ declare module '@mui/styles/defaultTheme' {
 declare module '@mui/material/styles' {
   export interface PaletteOptions {
     backgrounds: AppBackgrounds
+    chip?: ChipPalette
     toggledInputs?: ToggledInputsColorOptions
     switch?: SwitchColorOptions
     slider: {

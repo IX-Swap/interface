@@ -4,7 +4,7 @@ import { useTheme } from '@mui/material/styles'
 import { useStyles } from 'ui/UITag/UITag.styles'
 
 export interface UITagProps {
-  variant?: 'basic' | 'special' | 'success' | 'unknown' | 'warning'
+  variant?: 'basic' | 'special' | 'success' | 'unknown' | 'warning' | 'error'
   height?: number
   children: string
 }
@@ -22,7 +22,8 @@ export const UITag = ({
     warningStyle,
     unknownStyle,
     specialDarkStyle,
-    basicDarkStyle
+    basicDarkStyle,
+    errorStyle
   } = useStyles()
 
   const getBoxStyle = () => {
@@ -37,6 +38,8 @@ export const UITag = ({
         return warningStyle
       case 'unknown':
         return unknownStyle
+      case 'error':
+        return errorStyle
 
       default:
         return basicStyle
