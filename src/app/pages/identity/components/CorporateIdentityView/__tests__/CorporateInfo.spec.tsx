@@ -15,6 +15,6 @@ describe('CorporateInfo', () => {
     expect(getByText('Company Name')).toBeTruthy()
     expect(getByText('Company Registration Number/UEN')).toBeTruthy()
     expect(getByText('Country of Incorporation')).toBeTruthy()
-    expect(getByText('Legal Entity Status')).toBeTruthy()
+    expect(getByText('Legal Entity')).toBeTruthy()
   })
 })
