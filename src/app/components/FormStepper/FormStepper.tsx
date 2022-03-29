@@ -1,9 +1,8 @@
-import React, { ComponentType, useEffect, useMemo, useState } from 'react'
 import { Grid, Step, StepButton, StepLabel, Stepper } from '@mui/material'
-import { MutationResultPair } from 'react-query'
 import { FormStep } from 'app/components/FormStepper/FormStep'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
-import { useHistory } from 'react-router-dom'
+import React, { ComponentType, useEffect, useMemo, useState } from 'react'
+import { MutationResultPair } from 'react-query'
 
 export interface FormStepperStep {
   label: string
@@ -38,8 +37,6 @@ export const FormStepper = (props: FormStepperProps) => {
     skippable = false
   } = props
 
-  const { location } = useHistory()
-  const currentStep = location.pathname.includes('edit') ? 0 : data?.step
   const stepsMemo = useMemo(() => steps, []) // eslint-disable-line
   const [completed, setCompleted] = React.useState<number[]>(
     Array.from(
@@ -66,7 +63,7 @@ export const FormStepper = (props: FormStepperProps) => {
   }
 
   const [activeStep, setActiveStep] = useState<number>(
-    currentStep ?? getStepFilterValue() ?? defaultActiveStep ?? 0
+    getStepFilterValue() ?? defaultActiveStep ?? data?.step ?? 0
   )
 
   const handleStepButtonClick = (step: number) => () => {
