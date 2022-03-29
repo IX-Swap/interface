@@ -20,30 +20,35 @@ export const Vault = ({ currency, token }: Props) => {
   const newToken = { ...currency, isToken: true }
   const { kyc } = useKYCState()
 
-  const getUserKycType = () => {
+  const getUserAccountType = () => {
     const kycType = kyc?.data?.individualKycId ? 'individual' : 'corporate'
 
-    if (kyc && kyc.data.status === 'approved') {
+    if (vaultExists) {
       return `${kycType}Accredited`
     }
     return `${kycType}AccreditedNot`
   }
 
-  const userHaveValidKyc = useMemo(() => {
+  const userHaveValidAccount = useMemo(() => {
     const { kycType } = token
-    const data = kycType || {}
-    const userKycType = getUserKycType()
 
-    if (!kycType) return true
+    if (!kycType || !kyc) return true
 
-    if (!userKycType.includes('Not')) return true
+    const userAccountType = getUserAccountType()
 
-    return data[userKycType]
+    const availableTypes = Object.keys(kycType).reduce(
+      (acc: string[], key: string) => (key.includes('Accredited') && kycType[key] ? [...acc, key] : acc),
+      []
+    )
+
+    if (availableTypes.includes(userAccountType)) return true
+
+    return kycType[userAccountType]
   }, [kyc, token])
 
   return (
     <>
-      {userHaveValidKyc ? (
+      {userHaveValidAccount ? (
         <>
           {!vaultExists && token?.token && (
             <NoVault
@@ -52,7 +57,7 @@ export const Vault = ({ currency, token }: Props) => {
               status={status}
               accreditationRequest={accreditationRequest}
               platform={platform}
-              userHaveValidKyc
+              userHaveValidAccount={userHaveValidAccount}
             />
           )}
           {vaultExists && (
@@ -66,7 +71,7 @@ export const Vault = ({ currency, token }: Props) => {
           status={status}
           accreditationRequest={accreditationRequest}
           platform={platform}
-          userHaveValidKyc={false}
+          userHaveValidAccount={userHaveValidAccount}
         />
       )}
     </>
