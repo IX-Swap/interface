@@ -69,13 +69,13 @@ export const IXS_STAKING_V1_ADDRESS: { [key: number]: string } = {
 }
 export const SWAP_ROUTER_ADDRESS: { [key: number]: string } = {
   [1]: '',
-  [42]: '0xa345dCB1d06b20490c1c01D5bB76AAC37f9212D3',
+  [42]: '0xda02eAf1c33ff04ec18329E25004Ea2DED3c5Fd9',
   [80001]: '',
   [137]: '',
 }
 export const LIQUIDITY_ROUTER_ADDRESS: { [key: number]: string } = {
   [1]: '',
-  [42]: '0xCc49B6B3De85ff809B1837E3aD9A029dF91e295C',
+  [42]: '0xC4D56138b73D53Ff55313FC251053B735BA1cfA1',
   [80001]: '',
   [137]: '',
 }
@@ -98,9 +98,9 @@ export const STAKING_ALTERNATE_MAP = {
 }
 
 export const testStableCoinsTokens = [
-  { name: 'Tether USD', symbol: 'USDT', address: '0x9eacd4317b9623cb43b6afbe121e2a9a2426aa2b' },
-  { name: 'Ixswap Stable Coin', symbol: 'IUSDC', address: '0xb10c4ec295225688461ddbc6d30e8291e9934464' },
-  { name: 'Ixswap Stable Coin DAI', symbol: 'IDAI', address: '0x8234ff99e7c1bfc45f076af399fd89e034e710dc' },
+  { name: 'Tether USD', symbol: 'USDT', address: '0x296275783B369ce3DAc1F4bF7aA5165Aa0dFC6d8' },
+  { name: 'Ixswap Stable Coin', symbol: 'IUSDC', address: '0xFfF7880d81D2E2ec676209E75BBCF35D1974168a' },
+  { name: 'Ixswap Stable Coin DAI', symbol: 'IDAI', address: '0x992A460e0ef16b94118a98ADEE14C72e6A9aA34F' },
 ]
 export const ixSwapToken = [
   {
