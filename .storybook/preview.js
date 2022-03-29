@@ -23,7 +23,7 @@ export const parameters = {
       ...themes.normal,
       appContentBg: '#183061'
     },
-    light: { ...themes.normal }
+    light: { ...themes.normal, appContentBg: '#f8f8f8' }
   }
 }
 
