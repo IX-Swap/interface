@@ -12,6 +12,8 @@ import {
   isMarketDataFalsy,
   isPairIdFalsy
 } from 'app/pages/exchange/utils/order'
+import { history } from 'config/history'
+
 import { useCustodianWalletSubmit } from 'app/pages/exchange/hooks/useCustodianWalletSubmit'
 import { useSymbol } from '../../hooks/useSymbol'
 import { useVirtualAccount } from 'app/pages/accounts/hooks/useVirtualAccount'
@@ -22,9 +24,15 @@ import { ExchangeRulesLink } from 'app/pages/exchange/components/ExchangeRulesLi
 import { MarketTabbedView } from 'app/pages/exchange/components/Market/MarketTabbedView/MarketTabbedView'
 import { MarketGridView } from 'app/pages/exchange/components/Market/MarketGridView'
 import { PlaceOrderFormDialog } from 'app/pages/exchange/components/PlaceOrderForm/PlaceOrderFormDialog'
+import { ExchangeDeactivatedDialog } from 'app/pages/exchange/components/ExchangeDeactivatedDialog/ExchangeDeactivatedDialog'
+import { isProdEnv } from 'config'
 
 export const Market = () => {
   const [isDisclosureVisible, setIsDisclosureVisible] = useState<boolean>(false)
+  const isOpenDeactivatedDialog = isProdEnv
+  const toggleDeactivatedDialog = () => {
+    history.push('/app')
+  }
   const { data: config } = useGetSiteConfig()
   const hasAcceptedMasDisclosure =
     config !== undefined ? config.hasAcceptedMasDisclosure : false
@@ -81,8 +89,15 @@ export const Market = () => {
 
   return (
     <Box className={classes.container}>
-      <DisclosureDialog content={masDisclosure} isOpen={isDisclosureVisible} />
+      <DisclosureDialog
+        content={masDisclosure}
+        isOpen={isDisclosureVisible && !isProdEnv}
+      />
       <GetWalletDialog open={openDialog} toggleOpen={setOpenDialog} />
+      <ExchangeDeactivatedDialog
+        open={isOpenDeactivatedDialog}
+        toggleOpen={toggleDeactivatedDialog}
+      />
       <Grid item container xs={12} justifyContent='flex-end'>
         <ExchangeRulesLink />
       </Grid>
