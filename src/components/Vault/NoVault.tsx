@@ -25,7 +25,7 @@ interface Props {
   accreditationRequest: AccreditationRequest | null
   platform: SecTokenPlatform | null
   token: any
-  userHaveValidKyc: boolean
+  userHaveValidAccount: boolean
 }
 
 function getStatusMessage(
@@ -62,7 +62,7 @@ function getStatusMessage(
       )
   }
 }
-export const NoVault = ({ currency, status, accreditationRequest, platform, token, userHaveValidKyc }: Props) => {
+export const NoVault = ({ currency, status, accreditationRequest, platform, token, userHaveValidAccount }: Props) => {
   const symbolText = useMemo(() => token?.ticker ?? currency?.name ?? '', [currency, token])
   const { account } = useActiveWeb3React()
   const toggleWalletModal = useWalletModalToggle()
@@ -74,11 +74,11 @@ export const NoVault = ({ currency, status, accreditationRequest, platform, toke
     <NoVaultWrapper>
       <NoVaultTitle style={{ order: 1 }}>
         <TYPE.title3>
-          {userHaveValidKyc ? <Trans>Create {symbolText} Vault</Trans> : <Trans>NOT AVAILABLE</Trans>}
+          {userHaveValidAccount ? <Trans>Create {symbolText} Vault</Trans> : <Trans>NOT AVAILABLE</Trans>}
         </TYPE.title3>
       </NoVaultTitle>
 
-      {userHaveValidKyc && (
+      {userHaveValidAccount && (
         <>
           <VaultStatusDescription style={{ order: status === AccreditationStatusEnum.REJECTED ? 3 : 2 }}>
             <TYPE.descriptionThin>{getStatusMessage(accreditationRequest, symbolText, platform)}</TYPE.descriptionThin>
@@ -87,7 +87,7 @@ export const NoVault = ({ currency, status, accreditationRequest, platform, toke
           {status && <AccreditationStatus status={status} />}
         </>
       )}
-      {userHaveValidKyc ? (
+      {userHaveValidAccount ? (
         <RowCenter style={{ order: 4 }}>
           {!account && (
             <ButtonIXSGradient
