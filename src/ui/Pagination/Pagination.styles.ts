@@ -1,10 +1,79 @@
 import makeStyles from '@mui/styles/makeStyles'
+import InfoIcon from 'assets/icons/item-checked.svg'
 
 export const useStyles = makeStyles(theme => {
   // eslint-disable-next-line
   const paginationItemPalette = theme.palette.paginationItem!
+  // eslint-disable-next-line
+  const tablePaginationPalette = theme.palette.tablePagination!
 
   return {
+    wrapper: {
+      borderBottom: 'none',
+
+      '& svg': {
+        width: 16,
+        right: 5,
+        fill: paginationItemPalette.color
+      }
+    },
+    toolbar: {
+      color: tablePaginationPalette.main
+    },
+    select: {
+      color: tablePaginationPalette.selectColor,
+      borderRadius: 8,
+
+      '&:hover': {
+        backgroundColor: tablePaginationPalette.selectHoverBg
+      }
+    },
+    menuItem: {
+      paddingLeft: 0,
+      borderBottom: `1px solid ${tablePaginationPalette.menuItemBorder}`,
+      color: tablePaginationPalette.menuItemColor,
+
+      '&:first-of-type': {
+        marginTop: -16
+      },
+
+      '&:last-of-type': {
+        marginBottom: -16,
+        borderBottom: 'none'
+      },
+
+      '&.Mui-selected': {
+        position: 'relative',
+        '&::before': {
+          content: '""',
+          position: 'absolute',
+          width: 14,
+          height: '100%',
+          right: 0,
+          top: 0,
+          backgroundImage: `url(${InfoIcon})`,
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center center'
+        }
+      }
+    },
+    actions: {
+      marginLeft: theme.spacing(4),
+
+      '& button': {
+        '& svg': {
+          fill: paginationItemPalette.color,
+          width: 24,
+          height: 24
+        },
+        '&:first-of-type': {
+          marginRight: theme.spacing(0.75)
+        }
+      }
+    },
+    icon: {
+      backgroundColor: 'red'
+    },
     item: {
       display: 'flex',
       alignItems: 'center',

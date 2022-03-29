@@ -118,13 +118,19 @@ export const darkTheme: DeprecatedThemeOptions = {
       colorHover: '#4C88FF',
       bgHover: '#152D5F',
       borderHover: '#4C88FF',
-      colorDisabled: '#89A1CE',
-      // TODO Change disabled colors
-      bgDisabled: '#EDF2FA',
-      borderDisabled: '#EDF2FA',
+      colorDisabled: '#496396',
+      bgDisabled: '#132A57',
+      borderDisabled: '#132A57',
       colorActive: '#FFFFFF',
       bgActive: '#4C88FF',
       borderActive: '#4C88FF'
+    },
+    tablePagination: {
+      main: '#496396',
+      selectColor: '#FFFFFF',
+      selectHoverBg: '#496396',
+      menuItemColor: tinycolor('#FFFFFF').setAlpha(0.7).toRgbString(),
+      menuItemBorder: '#1D3667'
     },
     text: {
       primary: '#FFFFFF',

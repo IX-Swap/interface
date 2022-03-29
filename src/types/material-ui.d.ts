@@ -104,6 +104,14 @@ export interface PaginationItem {
   borderActive: string
 }
 
+export interface TablePagination {
+  main: CSSProperties['color']
+  selectColor: CSSProperties['color']
+  selectHoverBg: CSSProperties['color']
+  menuItemBorder: string
+  menuItemColor: CSSProperties['color']
+}
+
 declare module '@mui/styles/defaultTheme' {
   interface DefaultTheme extends Theme {}
 }
@@ -136,6 +144,7 @@ declare module '@mui/material/styles' {
       }
     }
     paginationItem?: PaginationItem
+    tablePagination?: TablePagination
     alerts?: Alerts
   }
 
@@ -166,6 +175,7 @@ declare module '@mui/material/styles' {
       }
     }
     paginationItem?: PaginationItem
+    tablePagination?: TablePagination
     alerts?: Alerts
   }
 

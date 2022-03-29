@@ -9,8 +9,8 @@ import { useStyles } from './Pagination.styles'
 
 export interface PaginationProps extends MuiPaginationProps {}
 
-export const PrevButton = () => <Icon name={'switch-left'} />
-export const NextButton = () => <Icon name={'switch-right'} />
+export const PrevIcon = () => <Icon name={'switch-left'} />
+export const NextIcon = () => <Icon name={'switch-right'} />
 
 export const Pagination = ({ ...props }: PaginationProps) => {
   const classes = useStyles()
@@ -22,8 +22,8 @@ export const Pagination = ({ ...props }: PaginationProps) => {
         <PaginationItem
           className={classes.item}
           components={{
-            previous: PrevButton,
-            next: NextButton
+            previous: PrevIcon,
+            next: NextIcon
           }}
           {...item}
         />

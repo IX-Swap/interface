@@ -132,6 +132,13 @@ export const lightTheme: DeprecatedThemeOptions = {
       bgActive: '#4C88FF',
       borderActive: '#4C88FF'
     },
+    tablePagination: {
+      main: '#778194',
+      selectColor: '#0A1326',
+      selectHoverBg: '#F0F2F7',
+      menuItemColor: tinycolor('#0A1326').setAlpha(0.7).toRgbString(),
+      menuItemBorder: '#EDF2FA'
+    },
     divider: '#DBE2EC',
     text: {
       primary: '#3B4251',
