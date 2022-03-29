@@ -85,7 +85,10 @@ export const corporateInvestorInfoSchema = yup.object().shape<any>({
         })
         .required(validationMessages.required)
     )
-    .required(validationMessages.required)
+    .required(validationMessages.required),
+  sourceOfFund: yup.string().required(validationMessages.required),
+  numberOfBusinessOwners: yup.string().required(validationMessages.required),
+  businessActivity: yup.string().required(validationMessages.required)
 })
 
 export const directorsAndBeneficialOwnersSchema = yup
