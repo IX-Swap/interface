@@ -1,11 +1,9 @@
-import React, { useEffect, useCallback, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { t, Trans } from '@lingui/macro'
-import { getNames } from 'country-list'
 import { FileWithPath } from 'react-dropzone'
 import { useHistory } from 'react-router-dom'
 import StickyBox from 'react-sticky-box'
 import { Formik } from 'formik'
-import { useWeb3React } from '@web3-react/core'
 
 import usePrevious from 'hooks/usePrevious'
 import Column from 'components/Column'
@@ -16,13 +14,14 @@ import { RowBetween } from 'components/Row'
 import { PhoneInput } from 'components/PhoneInput'
 import { Checkbox } from 'components/Checkbox'
 import { Loadable } from 'components/LoaderHover'
-import { LOGIN_STATUS, useAuthState, useLogin } from 'state/auth/hooks'
+import { useAuthState } from 'state/auth/hooks'
 import { useAddPopup, useShowError } from 'state/application/hooks'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
 import { ReactComponent as BigPassed } from 'assets/images/check-success-big.svg'
 import { getCorporateProgress, useCreateCorporateKYC, useKYCState, useUpdateCorporateKYC } from 'state/kyc/hooks'
 import { useActiveWeb3React } from 'hooks/web3'
+import { countriesList } from 'constants/countriesList'
 
 import { Select, TextInput, Uploader } from './common'
 import { KYCProgressBar } from './KYCProgressBar'
@@ -159,10 +158,7 @@ export default function CorporateKycForm() {
   }
 
   const countries = useMemo(() => {
-    return getNames()
-      .filter((label) => !['United States of America', 'United States Minor Outlying Islands'].includes(label))
-      .map((label, index) => ({ id: ++index, label }))
-      .sort((a, b) => a.label.localeCompare(b.label))
+    return countriesList.map((label, index) => ({ id: ++index, label })).sort((a, b) => a.label.localeCompare(b.label))
   }, [])
 
   const validationSeen = (key: string) => {
