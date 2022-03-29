@@ -70,7 +70,7 @@ export const CorporateInfo = ({ data }: CorporateInfoProps) => {
 
             <Grid item xs={12} sm={4}>
               <LabelledValue
-                label='Legal Entity Status'
+                label='Legal Entity'
                 className={privateClassNames()}
                 value={getLegalEntityStatus(data.legalEntityStatus)}
               />

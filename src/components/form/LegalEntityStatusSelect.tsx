@@ -40,7 +40,7 @@ export const LegalEntityStatusSelect = (props: any) => {
   return (
     <Select {...props} style={{ minWidth: 100 }} label={props.label}>
       <MenuItem disabled value={undefined}>
-        Legal Entity Status
+        Legal Entity
       </MenuItem>
       {LEGAL_ENTITY_STATUS_LIST.map(({ value, name }) => {
         return (
