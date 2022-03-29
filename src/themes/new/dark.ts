@@ -111,6 +111,27 @@ export const darkTheme: DeprecatedThemeOptions = {
         .setAlpha(0.3)
         .toRgbString()}`
     },
+    paginationItem: {
+      color: '#89A1CE',
+      bg: '#152D5F',
+      border: '#152D5F',
+      colorHover: '#4C88FF',
+      bgHover: '#152D5F',
+      borderHover: '#4C88FF',
+      colorDisabled: '#496396',
+      bgDisabled: '#132A57',
+      borderDisabled: '#132A57',
+      colorActive: '#FFFFFF',
+      bgActive: '#4C88FF',
+      borderActive: '#4C88FF'
+    },
+    tablePagination: {
+      main: '#496396',
+      selectColor: '#FFFFFF',
+      selectHoverBg: '#496396',
+      menuItemColor: tinycolor('#FFFFFF').setAlpha(0.7).toRgbString(),
+      menuItemBorder: '#1D3667'
+    },
     text: {
       primary: '#FFFFFF',
       secondary: '#496396'

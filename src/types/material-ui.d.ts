@@ -96,6 +96,29 @@ export interface TablePalette {
   boxShadow: string
 }
 
+export interface PaginationItem {
+  color: CSSProperties['color']
+  bg: CSSProperties['color']
+  border: string
+  colorHover: CSSProperties['color']
+  bgHover: CSSProperties['color']
+  borderHover: string
+  colorDisabled: CSSProperties['color']
+  bgDisabled: CSSProperties['color']
+  borderDisabled: string
+  colorActive: CSSProperties['color']
+  bgActive: CSSProperties['color']
+  borderActive: string
+}
+
+export interface TablePagination {
+  main: CSSProperties['color']
+  selectColor: CSSProperties['color']
+  selectHoverBg: CSSProperties['color']
+  menuItemBorder: string
+  menuItemColor: CSSProperties['color']
+}
+
 declare module '@mui/styles/defaultTheme' {
   interface DefaultTheme extends Theme {}
 }
@@ -129,6 +152,8 @@ declare module '@mui/material/styles' {
     }
     alerts?: Alerts
     table?: TablePalette
+    paginationItem?: PaginationItem
+    tablePagination?: TablePagination
   }
 
   export interface Palette {
@@ -159,6 +184,8 @@ declare module '@mui/material/styles' {
     }
     alerts?: Alerts
     table?: TablePalette
+    paginationItem?: PaginationItem
+    tablePagination?: TablePagination
   }
 
   export interface Theme {
