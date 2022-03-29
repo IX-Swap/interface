@@ -179,7 +179,7 @@ exports[`CorporateIdentityView should match snapshot 1`] = `
                     class="MuiTypography-root MuiTypography-body1 css-3a17l8-MuiTypography-root"
                     style="font-weight: 700; width: 100%; color: rgb(68, 68, 68);"
                   >
-                    Legal Entity Status
+                    Legal Entity
                   </p>
                   <div
                     class="MuiBox-root css-1gbh5gc"
