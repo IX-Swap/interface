@@ -19,11 +19,11 @@ import Upload from 'components/Upload'
 import { AddressInput } from 'components/AddressInputPanel/AddressInput'
 import { NETWORK_LABELS } from 'constants/chains'
 import { AreYouSureModal } from 'components/AreYouSureModal'
+import { SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 
 import { ReactComponent as LogoImage } from '../../assets/images/wallpaper.svg'
 import { WideModal, WideModalWrapper, FormWrapper, FormGrid, Logo, FormRow } from './styleds'
 import { industries, initialTokenState } from './mock'
-import { CREATE_TOKEN_CHAINS } from 'constants/addresses'
 import { TokenAvailableFor } from './TokenAvailableFor'
 
 interface Props {
@@ -178,14 +178,15 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
       .sort((a, b) => a.name.localeCompare(b.name))
   }, [])
 
-  const chainsOptions = useMemo(() => {
-    if (!token) return []
-    return CREATE_TOKEN_CHAINS.map((id) => ({ id, name: NETWORK_LABELS[id] }))
-  }, [token])
+  const chainsOptions = [
+    { id: SUPPORTED_TGE_CHAINS.MAIN, name: 'Mainnet' },
+    { id: SUPPORTED_TGE_CHAINS.KOVAN, name: 'Kovan' },
+    { id: SUPPORTED_TGE_CHAINS.MATIC, name: 'Matic' },
+  ]
 
   const selectedChainOption = useMemo(() => {
     if (!token) return {}
-    return { id: token.chainId, name: NETWORK_LABELS[token.chainId] }
+    return chainsOptions.find(({ id }) => id === token.chainId)
   }, [token?.chainId])
 
   return (
