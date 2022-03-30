@@ -103,6 +103,7 @@ export const darkTheme: DeprecatedThemeOptions = {
         color: undefined
       }
     },
+    divider: '#89A1CE',
     alerts: {
       bg: '#152D5F',
       color: '#89A1CE',
@@ -143,6 +144,9 @@ export const darkTheme: DeprecatedThemeOptions = {
       boxShadow: `0px 80px 80px ${tinycolor('#0e1f3f')
         .setAlpha(0.3)
         .toRgbString()}`
+    },
+    skeleton: {
+      bg: '#1D3667'
     },
     success: {
       main: '#7DD320'

@@ -16,6 +16,7 @@ import { typography } from 'themes/new/overrides/typography'
 import { fab } from 'themes/new/overrides/fab'
 import { menu } from 'themes/new/overrides/menu'
 import { menuItem } from 'themes/new/overrides/menuItem'
+import { skeleton } from 'themes/new/overrides/skeleton'
 import { inputBase } from 'themes/new/overrides/inputBase'
 
 declare module '@mui/material/Button' {
@@ -43,5 +44,6 @@ export const getThemeOverrides = (
   MuiSwitch: switcher(theme),
   MuiRadio: radio(theme),
   MuiCheckbox: checkbox(theme),
+  MuiSkeleton: skeleton(theme),
   MuiInputBase: inputBase(theme)
 })

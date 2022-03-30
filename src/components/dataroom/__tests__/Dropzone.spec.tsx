@@ -31,6 +31,6 @@ describe('Dropzone', () => {
       </Form>
     )
 
-    expect(getByText(/drop or upload/i)).toBeInTheDocument()
+    expect(getByText(/drag and drop/i)).toBeInTheDocument()
   })
 })

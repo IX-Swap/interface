@@ -1,118 +1,138 @@
-import React, { ReactNode } from 'react'
-import { AppearanceTypes, useToasts } from 'react-toast-notifications'
-import { NotificationToast } from 'app/pages/notifications/components/NotificationToast'
-import { Notification as TNotification } from 'types/notification'
-import { Snackbar } from './Snackbar'
+import React, { ReactNode, ReactText } from 'react'
 import {
-  OnboardingDialog,
-  OnboardingDialogProps
-} from 'app/components/OnboardingDialog/OnboardingDialog'
-import { useQueryCache } from 'react-query'
-import { identityQueryKeys } from 'config/queryKeys'
-import apiService from 'services/api'
-import storageService from 'services/storage'
-import User from 'types/user'
-import { userURL } from 'config/apiURL'
-import { getIdFromObj } from 'helpers/strings'
+  toast,
+  TypeOptions,
+  CloseButtonProps,
+  ToastOptions
+} from 'react-toastify'
+import { ReactComponent as SuccessIcon } from 'assets/icons/alerts/success.svg'
+import { ReactComponent as ErrorIcon } from 'assets/icons/alerts/error.svg'
+import { ReactComponent as InfoIcon } from 'assets/icons/alerts/info.svg'
+import { ReactComponent as WarningIcon } from 'assets/icons/alerts/warning.svg'
+import { Icon } from 'ui/Icons/Icon'
+import { AlertContent } from 'ui/Alerts/AlertsContent/AlertsContent'
+import { Notification as TNotification } from 'types/notification'
+import { AppFeature } from 'types/app'
+import { useHistory } from 'react-router-dom'
+
+export interface Action {
+  buttonText: string | JSX.Element
+  callback: () => void
+}
+
+export type Actions = [] | [Action] | [Action, Action]
 
 export interface ToastService {
-  showSnackbar: (message: ReactNode, variant?: AppearanceTypes) => any
+  showToast: (
+    message: ReactNode,
+    type?: TypeOptions,
+    wihLoading?: boolean,
+    actions?: Actions
+  ) => void
   showNotification: (notification: TNotification) => any
-  showOnboardingDialog: (onboardingDialog: OnboardingDialogProps) => any
+}
+
+const CloseIcon = ({ closeToast }: CloseButtonProps) => (
+  <Icon name={'close'} onClick={closeToast} size={17} />
+)
+
+const getToastIcon = (type: TypeOptions) => {
+  switch (type) {
+    case 'success':
+      return SuccessIcon
+    case 'error':
+      return ErrorIcon
+    case 'info':
+      return InfoIcon
+    case 'warning':
+      return WarningIcon
+    default:
+      return SuccessIcon
+  }
+}
+
+const getToastOptions = (
+  type: TypeOptions,
+  withLoading: boolean,
+  toastId: ReactText,
+  actions: Action[]
+) => {
+  const defaultWidth = 320
+  const hasActions = actions.length > 0
+
+  return {
+    position: 'bottom-right',
+    type: type,
+    hideProgressBar: !withLoading,
+    icon: getToastIcon(type),
+    closeButton: CloseIcon,
+    toastId: toastId,
+    autoClose: !hasActions ? 3000 : false,
+    style: { width: hasActions ? 'initial' : defaultWidth }
+  } as ToastOptions
 }
 
 export const useToast = (): ToastService => {
-  const { addToast, toastStack } = useToasts()
-  const queryCache = useQueryCache()
-
-  const showOnboardingDialog = (onboardingDialog: OnboardingDialogProps) => {
-    return addToast(<OnboardingDialog {...onboardingDialog} />, {
-      appearance: 'info',
-      autoDismiss: false
-    })
-  }
-
-  const showOnboardingCompleteDialog = (notification: TNotification) => {
-    const individualIdentityApproved =
-      notification.feature === 'individuals' &&
-      notification.subject === 'Identity Approved'
-    const corporateIdentityApproved =
-      notification.feature === 'corporates' &&
-      notification.subject === 'Corporate Identity Approved'
-
-    if (individualIdentityApproved) {
-      void queryCache.invalidateQueries(identityQueryKeys.getIndividual)
-    }
-
-    if (corporateIdentityApproved) {
-      void queryCache.invalidateQueries(identityQueryKeys.getAllCorporate)
-    }
-
-    if (individualIdentityApproved || corporateIdentityApproved) {
-      const item = JSON.parse(
-        localStorage.getItem(notification.resourceId) ?? ''
-      )
-      const waitingForIssuerApproval = item === 'issuer'
-      const waitingForInvestorApproval =
-        item === 'individual' || item === 'investor'
-
-      const completeDialog = {
-        title: 'Onboarding Complete!',
-        message: [
-          `You have completed the Onboarding journey. Our authorizer has approved your identity. ${
-            waitingForIssuerApproval ? '' : 'Happy investing!'
-          }`
-        ],
-        actionLabel: 'Okay',
-        action: waitingForIssuerApproval
-          ? '/app/educationCentre'
-          : '/app/invest'
-      }
-
-      if (waitingForInvestorApproval || waitingForIssuerApproval) {
-        const user = storageService.get<User>('user')
-
-        void apiService
-          .get(userURL.getUserProfile(getIdFromObj(user)))
-          .then(data => {
-            storageService.set('user', data.data)
-            storageService.set('visitedUrl', [])
-
-            addToast(<OnboardingDialog {...completeDialog} />, {
-              appearance: 'info',
-              autoDismiss: false
-            })
-
-            localStorage.removeItem(notification.resourceId)
-          })
-      }
-    }
-  }
+  const { push } = useHistory()
 
   return {
-    showSnackbar: (
-      message: ReactNode,
-      variant: AppearanceTypes = 'success'
+    showToast: (
+      message,
+      type = 'success',
+      withLoading = false,
+      actions = []
     ) => {
-      if (
-        toastStack.length > 0 &&
-        (toastStack[toastStack.length - 1].content as any).props.message ===
-          message
-      ) {
-        return
-      }
-      return addToast(<Snackbar message={message} variant={variant} />, {
-        appearance: variant,
-        autoDismiss: true
-      })
+      const currentToastId = [
+        message,
+        type,
+        withLoading,
+        actions.map(item => item.buttonText)
+      ].join()
+
+      return toast(
+        <AlertContent message={message} actions={actions} />,
+        getToastOptions(type, withLoading, currentToastId, actions)
+      )
     },
     showNotification: (notification: TNotification) => {
-      const showAllNotifications = () => {
-        addToast(<NotificationToast data={notification} />)
-        showOnboardingCompleteDialog(notification)
+      // TODO make sure backend and frontend have the agreement on this schema to avoid extra checks
+      let url = `/app/${notification.service}/${notification.feature}/${notification.resourceId}/view`
+
+      if (notification.feature === AppFeature.Commitments) {
+        url = `/app/invest/${notification.feature}/${notification.resourceId}/view`
       }
-      return showAllNotifications()
-    },
-    showOnboardingDialog: showOnboardingDialog
+
+      if (notification.feature === AppFeature.Individuals) {
+        url = `/app/identity/${notification.feature}/view`
+      }
+
+      if (
+        notification.feature === AppFeature.Deposits ||
+        notification.feature === AppFeature.Withdrawals ||
+        notification.feature === AppFeature.DigitalSecurityWithdrawals ||
+        notification.feature === AppFeature.Authentication ||
+        (notification?.service?.toUpperCase() === 'EXCHANGE' &&
+          notification?.subject?.toUpperCase() === 'ORDER CREATED')
+      ) {
+        return null
+      }
+
+      const actions: Actions = [
+        {
+          buttonText: <Icon name={'arrow-right'} />,
+          callback: () => push(url)
+        }
+      ]
+
+      // TODO Need to check in the future what information besides the message to display
+      return toast(
+        <AlertContent
+          message={notification.message}
+          actions={actions}
+          fullWidth
+        />,
+        getToastOptions(notification.type, false, 'toastId', actions)
+      )
+    }
   }
 }
