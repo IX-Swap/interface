@@ -406,3 +406,8 @@ export function useResubmitKyc() {
   )
   return callback
 }
+
+export const getAtlasIdByTicker = async (ticker: string) => {
+  const result = await apiService.get(admin.getAtlasIdByTicker(ticker))
+  return result.data
+}

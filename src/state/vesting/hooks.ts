@@ -208,7 +208,7 @@ export function useVestingDetails() {
         dispatch(getDetails.pending())
         const vestingDetails = await vesting?.details(address)
         dispatch(getDetails.fulfilled({ details: vestingResponseAdapter(vestingDetails) }))
-      } catch (error) {
+      } catch (error: any) {
         console.error(`Could not get vesting details`, error)
         dispatch(getDetails.rejected({ errorMessage: error.message }))
       }
