@@ -24,6 +24,7 @@ export const initialTokenState = {
   featured: null,
   chainId: null,
   kycType: defaultKycType,
+  kycTypeJson: defaultKycType,
 }
 
 export const initialIssuerState = {

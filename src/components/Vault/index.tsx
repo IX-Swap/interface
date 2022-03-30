@@ -23,7 +23,9 @@ export const Vault = ({ currency, token }: Props) => {
   const getUserAccountType = () => {
     const kycType = kyc?.data?.individualKycId ? 'individual' : 'corporate'
 
-    if (vaultExists) {
+    const userKyc = kyc?.data?.individual || kyc?.data?.corporate || {}
+
+    if (userKyc.accredited) {
       return `${kycType}Accredited`
     }
     return `${kycType}AccreditedNot`
