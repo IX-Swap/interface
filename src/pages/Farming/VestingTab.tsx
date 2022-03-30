@@ -1,17 +1,18 @@
+import React from 'react'
+import { isMobile } from 'react-device-detect'
+import styled from 'styled-components/macro'
 import { Trans } from '@lingui/macro'
+
 import { NotAvailablePage } from 'components/NotAvailablePage'
 import { RowBetween } from 'components/Row'
-import { TGE_CHAINS_WITH_STAKING } from 'constants/addresses'
+import { TGE_CHAINS_WITH_STAKING, SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 import { SupportedChainId } from 'constants/chains'
 import useIXSCurrency from 'hooks/useIXSCurrency'
 import useSwitchChain, { CHAIN_SWITCH_STRINGS } from 'hooks/useSwitchChain'
 import { useActiveWeb3React } from 'hooks/web3'
-import AppBody from 'pages/AppBody'
-import React from 'react'
-import { isMobile } from 'react-device-detect'
-import styled from 'styled-components/macro'
 import { TextGradient, TYPE } from 'theme'
 import { LightBackground } from 'theme/Background'
+
 import { Container } from './styleds'
 import { Vesting } from './Vesting/Vesting'
 
@@ -25,9 +26,14 @@ export const VestingTab = () => {
   const switchChain = useSwitchChain()
   const IXSCurrency = useIXSCurrency()
 
-  const blurred = !TGE_CHAINS_WITH_STAKING.includes(chainId || 0) || !account
+  const blurred = ![...TGE_CHAINS_WITH_STAKING, SUPPORTED_TGE_CHAINS.MAIN].includes(chainId || 0) || !account
 
-  if (blurred) return <NotAvailablePage />
+  if (blurred)
+    return (
+      <div style={{ marginTop: '1rem' }}>
+        <NotAvailablePage />
+      </div>
+    )
 
   return (
     <>

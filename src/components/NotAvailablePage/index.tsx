@@ -9,6 +9,7 @@ import { switchToNetwork } from 'hooks/switchToNetwork'
 import { SupportedChainId } from 'constants/chains'
 import { ButtonIXSGradient } from 'components/Button'
 import { useWalletModalToggle } from 'state/application/hooks'
+import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 
 import {
   Container,
@@ -18,7 +19,6 @@ import {
   NetworkCard,
   InfoRows,
   PlaygroundBadge,
-  KovanRow,
   ConnectWalletContainer,
 } from './styled'
 
@@ -28,7 +28,7 @@ export const NotAvailablePage = () => {
 
   const toggleWalletModal = useWalletModalToggle()
 
-  const onlyKovan = !['/vesting', '/staking'].includes(pathname)
+  const farming = ['/vesting', '/staking'].includes(pathname)
 
   const changeNetwork = (targetChain: number) => {
     if (chainId !== targetChain && library && library?.provider?.isMetaMask) {
@@ -47,37 +47,24 @@ export const NotAvailablePage = () => {
     )
   }
 
+  const chains = ENV_SUPPORTED_TGE_CHAINS || [42]
+
   return (
     <Container>
       <Title>
-        {onlyKovan ? (
-          t`Coming soon on Polygon`
-        ) : (
-          <>
-            {t`IXSwap is not available`}
-            <br /> {t`on this Blockchain network`}
-          </>
-        )}
+        {t`IXSwap is not available`}
+        <br /> {t`on this Blockchain network`}
       </Title>
-      <Info>{onlyKovan ? t`To use our playground you might switch to:` : t`IXSwap is available only on:`}</Info>
-      {onlyKovan ? (
-        <KovanRow>
-          <NetworkCard onClick={() => changeNetwork(SupportedChainId.KOVAN)}>
-            <PlaygroundBadge>
-              <div>
-                <Trans>Playground</Trans>
-              </div>
-            </PlaygroundBadge>
-            <img src={ethereumIcon} alt="ethereumIcon" />
-            Kovan Testnet
-          </NetworkCard>
-        </KovanRow>
-      ) : (
-        <NetworksRow>
+      <Info>{t`IXSwap is available only on:`}</Info>
+
+      <NetworksRow elements={farming ? chains.length + 1 : chains.length}>
+        {(chains.includes(SupportedChainId.MAINNET) || farming) && (
           <NetworkCard onClick={() => changeNetwork(SupportedChainId.MAINNET)}>
             <img src={ethereumIcon} alt="ethereumIcon" />
             Ethereum Mainnet
           </NetworkCard>
+        )}
+        {chains.includes(SupportedChainId.KOVAN) && (
           <NetworkCard onClick={() => changeNetwork(SupportedChainId.KOVAN)}>
             <PlaygroundBadge>
               <div>
@@ -87,14 +74,16 @@ export const NotAvailablePage = () => {
             <img src={ethereumIcon} alt="ethereumIcon" />
             Kovan Testnet
           </NetworkCard>
+        )}
+        {chains.includes(SupportedChainId.MATIC) && (
           <NetworkCard onClick={() => changeNetwork(SupportedChainId.MATIC)}>
             <img src={polygonIcon} alt="polygonIcon" />
             Polygon Mainnet
           </NetworkCard>
-        </NetworksRow>
-      )}
-      {!onlyKovan && (
-        <InfoRows>
+        )}
+      </NetworksRow>
+      <InfoRows>
+        {(chains.includes(SupportedChainId.MAINNET) || farming) && (
           <Info>
             <li>
               <Trans>
@@ -102,6 +91,8 @@ export const NotAvailablePage = () => {
               </Trans>
             </li>
           </Info>
+        )}
+        {chains.includes(SupportedChainId.KOVAN) && (
           <Info>
             <li>
               <Trans>
@@ -109,6 +100,8 @@ export const NotAvailablePage = () => {
               </Trans>
             </li>
           </Info>
+        )}
+        {chains.includes(SupportedChainId.MATIC) && (
           <Info>
             <li>
               <Trans>
@@ -116,8 +109,8 @@ export const NotAvailablePage = () => {
               </Trans>
             </li>
           </Info>
-        </InfoRows>
-      )}
+        )}
+      </InfoRows>
     </Container>
   )
 }

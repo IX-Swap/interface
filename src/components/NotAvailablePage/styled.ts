@@ -36,14 +36,14 @@ export const Info = styled.div`
   color: #ffffff;
 `
 
-export const NetworksRow = styled.div`
+export const NetworksRow = styled.div<{ elements: number }>`
   display: grid;
   gap: 34px;
-  grid-template-columns: repeat(3, minmax(auto, 105px));
-  margin: 16px 0 40px;
+  grid-template-columns: ${({ elements }) => `repeat(${elements}, minmax(auto, 105px))`};
+  margin: 16px auto 40px;
   justify-content: center;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: ${({ elements }) => `repeat(${elements}, 1fr)`};
     gap: 8px;
   }
 `
