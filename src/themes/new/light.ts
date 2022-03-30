@@ -144,6 +144,9 @@ export const lightTheme: DeprecatedThemeOptions = {
       primary: '#3B4251',
       secondary: '#778194'
     },
+    skeleton: {
+      bg: '#EDF2FA'
+    },
     success: {
       main: '#7DD320'
     },

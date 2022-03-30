@@ -82,6 +82,10 @@ export interface MenuPalette {
   boxShadow: string
 }
 
+export interface SkeletonPalette {
+  bg: string
+}
+
 export interface Alerts {
   bg: CSSProperties['color']
   color: CSSProperties['color']
@@ -119,6 +123,7 @@ declare module '@mui/styles/defaultTheme' {
 declare module '@mui/material/styles' {
   export interface PaletteOptions {
     backgrounds: AppBackgrounds
+    skeleton: SkeletonPalette
     toggledInputs?: ToggledInputsColorOptions
     switch?: SwitchColorOptions
     slider: {
@@ -150,6 +155,7 @@ declare module '@mui/material/styles' {
 
   export interface Palette {
     backgrounds: AppBackgrounds
+    skeleton: SkeletonPalette
     toggledInputs?: ToggledInputsColorOptions
     switch?: SwitchColorOptions
     sidebar: {

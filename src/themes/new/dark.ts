@@ -137,6 +137,9 @@ export const darkTheme: DeprecatedThemeOptions = {
       primary: '#FFFFFF',
       secondary: '#496396'
     },
+    skeleton: {
+      bg: '#1D3667'
+    },
     success: {
       main: '#7DD320'
     },
