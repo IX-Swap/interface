@@ -266,7 +266,7 @@ export const validateIssuer = (issuer: any) => {
 }
 
 export const validateToken = (token: any) => {
-  const { address, ticker, file, companyName, url, description, industry, country, chainId, kycType } = token
+  const { address, ticker, file, companyName, url, description, industry, country, chainId, kycTypeJson } = token
 
   return {
     address: !Boolean(isValidAddress(address || '')) ? 'Invalid address' : null,
@@ -277,7 +277,7 @@ export const validateToken = (token: any) => {
     industry: isEmpty(industry),
     country: isEmpty(country),
     chainId: isEmpty(chainId),
-    kycType: isEmptyObject(kycType || {}),
+    kycTypeJson: isEmptyObject(kycTypeJson || {}),
     ...urlValidator(url),
     ...stringLengthValidator('companyName', companyName, 100),
     ...stringLengthValidator('description', description, 1000),

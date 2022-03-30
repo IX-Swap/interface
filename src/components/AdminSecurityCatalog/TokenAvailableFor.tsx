@@ -20,10 +20,10 @@ interface Props {
 }
 
 export const TokenAvailableFor = ({ setToken, token, error }: Props) => {
-  const kycType = token.kycType || defaultKycType
+  const kycType = token.kycTypeJson || defaultKycType
 
   const onChange = (option: string) => {
-    setToken({ ...token, kycType: { ...kycType, [option]: !kycType[option] } })
+    setToken({ ...token, kycTypeJson: { ...kycType, [option]: !kycType[option] } })
   }
 
   return (
