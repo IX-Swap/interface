@@ -103,6 +103,7 @@ export const darkTheme: DeprecatedThemeOptions = {
         color: undefined
       }
     },
+    divider: '#89A1CE',
     alerts: {
       bg: '#152D5F',
       color: '#89A1CE',
@@ -110,6 +111,27 @@ export const darkTheme: DeprecatedThemeOptions = {
       boxShadow: `0px 24px 24px ${tinycolor('#0e1f3f')
         .setAlpha(0.3)
         .toRgbString()}`
+    },
+    paginationItem: {
+      color: '#89A1CE',
+      bg: '#152D5F',
+      border: '#152D5F',
+      colorHover: '#4C88FF',
+      bgHover: '#152D5F',
+      borderHover: '#4C88FF',
+      colorDisabled: '#496396',
+      bgDisabled: '#132A57',
+      borderDisabled: '#132A57',
+      colorActive: '#FFFFFF',
+      bgActive: '#4C88FF',
+      borderActive: '#4C88FF'
+    },
+    tablePagination: {
+      main: '#496396',
+      selectColor: '#FFFFFF',
+      selectHoverBg: '#496396',
+      menuItemColor: tinycolor('#FFFFFF').setAlpha(0.7).toRgbString(),
+      menuItemBorder: '#1D3667'
     },
     text: {
       primary: '#FFFFFF',
@@ -122,10 +144,14 @@ export const darkTheme: DeprecatedThemeOptions = {
       main: '#7DD320'
     },
     warning: {
-      main: '#FFC900'
+      main: '#FFC900',
+      dark: '#D3A701',
+      light: tinycolor('#FFC900').setAlpha(0.2).toRgbString()
     },
     error: {
-      main: '#F56283'
+      main: '#F56283',
+      dark: '#FF8080',
+      light: tinycolor('#FF8080').setAlpha(0.2).toRgbString()
     },
     info: {
       main: '#4C88FF'
