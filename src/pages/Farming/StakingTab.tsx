@@ -7,10 +7,10 @@ import { useActiveWeb3React } from 'hooks/web3'
 import { NotAvailablePage } from 'components/NotAvailablePage'
 import { TYPE } from 'theme'
 import { LightBackground } from 'theme/Background'
+import { SUPPORTED_TGE_CHAINS, TGE_CHAINS_WITH_STAKING } from 'constants/addresses'
 
 import { Staking } from './Staking'
 import { Container } from './styleds'
-import { TGE_CHAINS_WITH_STAKING } from 'constants/addresses'
 
 const StyledStakingTab = styled.div`
   max-width: 90vw;
@@ -26,9 +26,14 @@ export const StakingTab = () => {
   const IXSCurrency = useIXSCurrency()
   const { chainId, account } = useActiveWeb3React()
 
-  const blurred = !TGE_CHAINS_WITH_STAKING.includes(chainId || 0) || !account
+  const blurred = ![...TGE_CHAINS_WITH_STAKING, SUPPORTED_TGE_CHAINS.MAIN].includes(chainId || 0) || !account
 
-  if (blurred) return <NotAvailablePage />
+  if (blurred)
+    return (
+      <div style={{ marginTop: '1rem' }}>
+        <NotAvailablePage />
+      </div>
+    )
 
   return (
     <>

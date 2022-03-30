@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { ChevronElement } from 'components/ChevronElement'
 import Popover from 'components/Popover'
-import { MATIC_TGE_CHAINS, TGE_CHAINS_WITH_STAKING, TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
+import { MATIC_TGE_CHAINS, TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
 import { SupportedChainId } from 'constants/chains'
 import { useOnClickOutside } from 'hooks/useOnClickOutside'
 import useToggle from 'hooks/useToggle'
@@ -18,7 +18,6 @@ import Row, { RowFixed } from '../Row'
 const activeClassName = 'ACTIVE'
 
 const HeaderPopover = () => {
-  const { chainId } = useActiveWeb3React()
   return (
     <PopOverContent
       onClick={(e) => (e ? e.stopPropagation() : null)}
@@ -28,11 +27,9 @@ const HeaderPopover = () => {
         <Trans>Staking - New</Trans>
       </SubMenuExternalLink>
 
-      {chainId !== undefined && TGE_CHAINS_WITH_STAKING.includes(chainId) && (
-        <SubMenuLink id={`stake-nav-link`} to={routes.staking}>
-          <Trans>Staking - Old</Trans>
-        </SubMenuLink>
-      )}
+      <SubMenuLink id={`stake-nav-link`} to={routes.staking}>
+        <Trans>Staking - Old</Trans>
+      </SubMenuLink>
 
       <SubMenuLink id={`vesting-nav-link`} to={routes.vesting}>
         <Trans>Vesting</Trans>

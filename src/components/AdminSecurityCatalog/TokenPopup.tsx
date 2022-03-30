@@ -3,6 +3,7 @@ import { Trans } from '@lingui/macro'
 import { Box } from 'rebass'
 import { Label } from '@rebass/forms'
 import { getNames } from 'country-list'
+import { isMobile } from 'react-device-detect'
 
 import { RowBetween } from 'components/Row'
 import { isValidAddress } from 'utils'
@@ -16,13 +17,13 @@ import { addToken, checkWrappedAddress, updateToken, useFetchIssuers, validateTo
 import { Dropdown } from './Dropdown'
 import Upload from 'components/Upload'
 import { AddressInput } from 'components/AddressInputPanel/AddressInput'
+import { NETWORK_LABELS } from 'constants/chains'
+import { AreYouSureModal } from 'components/AreYouSureModal'
+import { SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 
 import { ReactComponent as LogoImage } from '../../assets/images/wallpaper.svg'
 import { WideModal, WideModalWrapper, FormWrapper, FormGrid, Logo, FormRow } from './styleds'
 import { industries, initialTokenState } from './mock'
-import { CREATE_TOKEN_CHAINS } from 'constants/addresses'
-import { isMobile } from 'react-device-detect'
-import { AreYouSureModal } from 'components/AreYouSureModal'
 import { TokenAvailableFor } from './TokenAvailableFor'
 
 interface Props {
@@ -177,6 +178,17 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
       .sort((a, b) => a.name.localeCompare(b.name))
   }, [])
 
+  const chainsOptions = [
+    { id: SUPPORTED_TGE_CHAINS.MAIN, name: 'Mainnet' },
+    { id: SUPPORTED_TGE_CHAINS.KOVAN, name: 'Kovan' },
+    { id: SUPPORTED_TGE_CHAINS.MATIC, name: 'Matic' },
+  ]
+
+  const selectedChainOption = useMemo(() => {
+    if (!token) return {}
+    return chainsOptions.find(({ id }) => id === token.chainId)
+  }, [token?.chainId])
+
   return (
     <>
       <AreYouSureModal isOpen={isConfirmOpen} onDecline={closeConfirm} onAccept={confirmClose} />
@@ -280,8 +292,8 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                           onSelect={(item) => {
                             setToken({ ...token, chainId: item.id })
                           }}
-                          selectedItem={CREATE_TOKEN_CHAINS.find(({ id }) => id === token.chainId)}
-                          items={CREATE_TOKEN_CHAINS}
+                          selectedItem={selectedChainOption}
+                          items={chainsOptions}
                         />
                         {errors?.chainId && (
                           <TYPE.small marginTop="4px" color={'red1'}>
