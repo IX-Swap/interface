@@ -53,7 +53,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
       companyName: null,
       description: null,
       wrappedTokenAddress: null,
-      kycTypes: null,
+      kycType: null,
     })
   }
 
@@ -96,10 +96,14 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
   }
 
   const handleCreateClick = async () => {
+    const kycTypeJson = Object.keys(token.kycTypeJson).reduce(
+      (acc, key) => (key.includes('Acc') ? { ...acc, [key]: token.kycTypeJson[key] } : acc),
+      {}
+    )
     setIsLoading(true)
     const validationErrors = validateToken(token)
     const hasError = Object.values(validationErrors).some((value) => Boolean(value) === true)
-    const formattedData = { ...token, kycType: JSON.stringify(token.kycType) }
+    const formattedData = { ...token, kycType: JSON.stringify(kycTypeJson) }
 
     if (hasError) {
       setErrors(validationErrors)
@@ -424,7 +428,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                     </FormRow>
                     <FormRow>
                       <Box>
-                        <TokenAvailableFor setToken={setToken} token={token} error={errors.kycType} />
+                        <TokenAvailableFor setToken={setToken} token={token} error={errors.kycTypeJson} />
                       </Box>
                       <Box display="flex">
                         <Box marginRight={isMobile ? '0px' : '178px'}>
