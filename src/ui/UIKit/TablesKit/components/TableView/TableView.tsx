@@ -5,13 +5,13 @@ import {
   TableHead,
   TableRow,
   TableCell,
-  LinearProgress,
-  TablePagination,
   Paper,
   Grid,
   Checkbox,
   FormControlLabel,
-  Typography
+  Typography,
+  Box,
+  CircularProgress
 } from '@mui/material'
 import { TableColumn, BaseFilter } from 'types/util'
 import { ActionsType } from 'app/pages/authorizer/components/Actions'
@@ -21,6 +21,7 @@ import { statusColumn } from 'app/pages/authorizer/hooks/useAuthorizerView'
 import { UseSelectionHelperReturnType } from 'hooks/useSelectionHelper'
 import { NoData } from 'app/components/NoData/NoData'
 import useStyles from 'ui/UIKit/TablesKit/components/TableView/TableView.styles'
+import { TablePagination } from 'ui/Pagination/TablePagination'
 
 export interface TableViewRendererProps<T> {
   items: T[]
@@ -158,10 +159,23 @@ export const TableView = <T,>({
     </TableCell>
   )
 
+  const renderTableLoading = () => {
+    if (status === 'loading' || fakeLoading) {
+      return (
+        <>
+          <Box className={classes.loading}>
+            <CircularProgress />
+          </Box>
+        </>
+      )
+    }
+    return null
+  }
+
   return (
     <Grid container direction='column'>
       <Grid item>
-        {(status === 'loading' || fakeLoading) && <LinearProgress />}
+        {renderTableLoading()}
         <Paper style={{ backgroundColor: 'inherit' }}>
           <TableContainer style={{ overflow: 'visible' }}>
             <Table aria-label='table' data-testid='table' size={size}>
@@ -200,24 +214,29 @@ export const TableView = <T,>({
         </Paper>
       </Grid>
       {total > 0 && (
-        <Grid item>
-          <TablePagination
-            component='div'
-            className={classes.pagination}
-            rowsPerPageOptions={[5, 10, 25, 50]}
-            colSpan={columns.length + +hasActions}
-            count={total}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            classes={{ toolbar: classes.toolbar }}
-            onRowsPerPageChange={evt => {
-              setPage(0)
-              setRowsPerPage(parseInt(evt.target.value))
-            }}
-            onPageChange={(evt, newPage: number) => {
-              setPage(newPage)
-            }}
-          />
+        <Grid
+          item
+          container
+          justifyContent={'flex-end'}
+          className={classes.paginationContainer}
+        >
+          <Grid item>
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25, 50]}
+              colSpan={columns.length + +hasActions}
+              count={total}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              classes={{ toolbar: classes.toolbar }}
+              onRowsPerPageChange={evt => {
+                setPage(0)
+                setRowsPerPage(parseInt(evt.target.value))
+              }}
+              onPageChange={(evt, newPage: number) => {
+                setPage(newPage)
+              }}
+            />
+          </Grid>
         </Grid>
       )}
     </Grid>

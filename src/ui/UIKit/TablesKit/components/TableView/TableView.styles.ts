@@ -25,9 +25,13 @@ export default makeStyles(theme => {
     checkbox: {
       color: '#ffffff'
     },
-    pagination: {
-      width: '100%',
-      borderBottom: 'none'
+    paginationContainer: {
+      marginTop: theme.spacing(1.5)
+    },
+    loading: {
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
     }
   }
 })

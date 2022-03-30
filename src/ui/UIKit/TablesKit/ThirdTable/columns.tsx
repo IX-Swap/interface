@@ -1,6 +1,6 @@
 import { TableColumn } from 'types/util'
 import { ThirdTableItem } from 'ui/UIKit/TablesKit/ThirdTable/ThirdTable'
-import { RenderBolderText } from 'ui/UIKit/TablesKit/utils/utils'
+import { RenderBolderText, renderStatus } from 'ui/UIKit/TablesKit/utils/utils'
 
 export const columns: Array<TableColumn<ThirdTableItem>> = [
   {
@@ -25,6 +25,7 @@ export const columns: Array<TableColumn<ThirdTableItem>> = [
     label: 'Status',
     key: 'status',
     headAlign: 'right',
-    align: 'right'
+    align: 'right',
+    render: renderStatus
   }
 ]

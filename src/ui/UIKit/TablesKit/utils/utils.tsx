@@ -4,6 +4,7 @@ import { ReactComponent as USDIcon } from 'ui/UIKit/TablesKit/FirstTable/icons/u
 import { ReactComponent as SGDIcon } from 'ui/UIKit/TablesKit/FirstTable/icons/sgd.svg'
 import { FirstTableItem } from 'ui/UIKit/TablesKit/FirstTable/FirstTable'
 import { useStyles } from './utils.styles'
+import { Status } from 'ui/Status/Status'
 
 export const renderBalance = (price: string, item: FirstTableItem) => {
   return (
@@ -41,4 +42,19 @@ export const renderCurrencyLabel = (currency: string) => {
 export const RenderBolderText = (text: string) => {
   const classes = useStyles()
   return <b className={classes.bolder}>{text}</b>
+}
+
+export const renderStatus = (status: string) => {
+  const getType = () => {
+    switch (status) {
+      case 'Connected':
+        return 'approved'
+      case 'In progress':
+        return 'submitted'
+      default:
+        return 'rejected'
+    }
+  }
+
+  return <Status type={getType()} label={status} />
 }
