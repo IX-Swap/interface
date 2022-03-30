@@ -227,7 +227,7 @@ export default function Header() {
           </HeaderRow>
           <HeaderLinks />
           <HeaderControls>
-            {chainId && TGE_CHAINS_WITH_KYC.includes(chainId) && isWhitelisted && (
+            {isWhitelisted && (
               <HeaderElement>
                 <NavLink style={{ textDecoration: 'none', color: 'inherit', marginRight: 16 }} to="/kyc">
                   <KYCWrapper flexDirection="column" alignItems="center" justifyContent="center">

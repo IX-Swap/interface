@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { ChevronElement } from 'components/ChevronElement'
 import Popover from 'components/Popover'
-import { MATIC_TGE_CHAINS, TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
+import { MATIC_TGE_CHAINS, ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 import { SupportedChainId } from 'constants/chains'
 import { useOnClickOutside } from 'hooks/useOnClickOutside'
 import useToggle from 'hooks/useToggle'
@@ -15,6 +15,7 @@ import { ExternalLink } from 'theme'
 import { isUserWhitelisted } from 'utils/isUserWhitelisted'
 import { routes } from 'utils/routes'
 import Row, { RowFixed } from '../Row'
+
 const activeClassName = 'ACTIVE'
 
 const HeaderPopover = () => {
@@ -78,14 +79,18 @@ export const HeaderLinks = () => {
 
   const isWhitelisted = isUserWhitelisted({ account, chainId })
 
+  const isDev = ['test development env', 'development'].includes(process.env.NODE_ENV)
+
+  const chains = ENV_SUPPORTED_TGE_CHAINS || [42]
+
   return (
     <HeaderLinksWrap links={7}>
-      {chainId && !MATIC_TGE_CHAINS.includes(chainId) && isWhitelisted && (
+      {chainId && chains.includes(chainId) && isWhitelisted && (
         <StyledNavLink id={`swap-nav-link`} to={'/swap'}>
           <Trans>Swap</Trans>
         </StyledNavLink>
       )}
-      {chainId && !MATIC_TGE_CHAINS.includes(chainId) && isWhitelisted && (
+      {chainId && chains.includes(chainId) && isWhitelisted && (
         <StyledNavLink
           id={`pool-nav-link`}
           to={'/pool'}
@@ -100,13 +105,13 @@ export const HeaderLinks = () => {
         </StyledNavLink>
       )}
 
-      {isWhitelisted && (
+      {chainId && chains.includes(chainId) && isWhitelisted && (
         <StyledNavLink id={`stake-nav-link`} to={routes.securityTokens()}>
           <Trans>Securities</Trans>
         </StyledNavLink>
       )}
 
-      {chainId && TGE_CHAINS_WITH_SWAP.includes(chainId) && isWhitelisted && (
+      {chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && isDev && (
         <StyledNavLink
           ref={nftNode as any}
           id={`nft-nav-link`}
@@ -136,13 +141,13 @@ export const HeaderLinks = () => {
         </Popover>
       </StyledNavLink>
 
-      {chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
+      {chainId && chains.includes(chainId) && isWhitelisted && (
         <MenuExternalLink href={'https://info.ixswap.io/home'}>
           <Trans>Charts</Trans>
         </MenuExternalLink>
       )}
 
-      {chainId && !MATIC_TGE_CHAINS.includes(chainId) && isWhitelisted && (
+      {chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
         <StyledNavLink id={`faucet-nav-link`} to={'/faucet'}>
           <Trans>Faucet</Trans>
         </StyledNavLink>
