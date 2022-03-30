@@ -209,7 +209,7 @@ export default function KYC() {
           <Flex flexDirection="column" alignItems="center" marginTop="40px">
             <ApprovedKYC />
             <DateInfo
-              info="In order to make changes to your KYC please get in touch with us via info@ixswap.io"
+              info="In order to make changes to your KYC please get in touch with us via kyc@ixswap.io"
               submittedDate={kyc?.data.createdAt}
               approvedDate={kyc?.data.updatedAt}
             />
