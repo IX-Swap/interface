@@ -1,7 +1,6 @@
 import { Grid, Typography } from '@mui/material'
 import React from 'react'
 import { UIKitThemeWrapper } from 'ui/UIKit/UIKitThemeWrapper'
-import { AlertsContainer } from 'ui/UIKit/AlertsKit/AlertsContainer'
 import { Pagination } from 'ui/Pagination/Pagination'
 import { TablePagination } from 'ui/Pagination/TablePagination'
 
@@ -56,8 +55,6 @@ export const PaginationKit = () => {
           </Grid>
         </Grid>
       </Grid>
-
-      <AlertsContainer />
     </UIKitThemeWrapper>
   )
 }
