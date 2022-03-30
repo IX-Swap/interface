@@ -23,6 +23,7 @@ export interface DatePickerPopperProps extends PopperProps {
   clickAwayHandler: (event: MouseEvent | TouchEvent) => void
   variant: 'date' | 'time' | 'datetime'
   cancelAction: () => void
+  setDateAction: () => void
 }
 
 export const DatePickerPopper = ({
@@ -38,6 +39,7 @@ export const DatePickerPopper = ({
   clickAwayHandler,
   variant,
   cancelAction,
+  setDateAction,
   ...rest
 }: DatePickerPopperProps) => {
   return (
@@ -99,7 +101,7 @@ export const DatePickerPopper = ({
               </>
             ) : null}
             <DatePickerActions
-              setDateAction={clickAwayHandler}
+              setDateAction={setDateAction}
               cancelAction={cancelAction}
               setDateLabel={
                 variant === 'date' || variant === 'datetime'

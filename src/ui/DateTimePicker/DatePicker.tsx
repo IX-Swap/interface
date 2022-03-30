@@ -107,6 +107,10 @@ export const DatePicker = ({
     closePicker()
   }
 
+  const handleSetDate = () => {
+    closePicker()
+  }
+
   useEffect(() => {
     if (open) {
       setPreviousValue(date)
@@ -176,6 +180,7 @@ export const DatePicker = ({
             clickAwayHandler={handleCancel}
             variant={variant}
             cancelAction={handleCancel}
+            setDateAction={handleSetDate}
           />
         )}
       </Box>
