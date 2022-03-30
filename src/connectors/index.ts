@@ -26,7 +26,7 @@ const NETWORK_URLS: {
   [137]: `https://polygon-mainnet.infura.io/v3/${INFURA_KEY}`,
 }
 
-const SUPPORTED_CHAIN_IDS = [1, 4, 3, 5, 42, 80001, 137]
+const SUPPORTED_CHAIN_IDS = [1, 4, 3, 5, 42, 80001, 137, 56]
 
 export const network = new NetworkConnector({
   urls: NETWORK_URLS,
@@ -39,11 +39,11 @@ export function getNetworkLibrary(): Web3Provider {
 }
 
 export const injected = new InjectedConnector({
-  supportedChainIds: SUPPORTED_CHAIN_IDS,
+  // supportedChainIds: SUPPORTED_CHAIN_IDS,
 })
 
 export const walletconnect = new WalletConnectConnector({
-  supportedChainIds: SUPPORTED_CHAIN_IDS,
+  // supportedChainIds: SUPPORTED_CHAIN_IDS,
   rpc: NETWORK_URLS,
   qrcode: true,
 })
