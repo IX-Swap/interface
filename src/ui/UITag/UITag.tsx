@@ -4,7 +4,7 @@ import { useStyles } from 'ui/UITag/UITag.styles'
 import clsx from 'clsx'
 
 export interface UITagProps {
-  variant?: 'basic' | 'special' | 'success' | 'unknown' | 'warning' | 'error'
+  variant?: 'basic' | 'special' | 'success' | 'warning' | 'error' | 'unknown'
   height?: number
   children: string
 }
