@@ -5,6 +5,7 @@ import { ExistingVault } from './ExistingVault'
 import { NoVault } from './NoVault'
 import { AccreditationStatusEnum } from './enum'
 import { useKYCState } from 'state/kyc/hooks'
+import { KYC_STATUSES } from 'components/AdminKyc/StatusCell'
 
 interface Props {
   currency?: Currency
@@ -33,8 +34,7 @@ export const Vault = ({ currency, token }: Props) => {
 
   const userHaveValidAccount = useMemo(() => {
     const { kycType } = token
-
-    if (!kycType || !kyc) return true
+    if (!kycType || !kyc || ![KYC_STATUSES.APPROVED, KYC_STATUSES.REJECTED].includes(kyc?.data?.status)) return true
 
     const userAccountType = getUserAccountType()
 
