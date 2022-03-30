@@ -11,9 +11,9 @@ export const web3 = new Web3('https://kovan.infura.io/v3/a9e29640d3404001a315ddc
 
 // token addresses
 export const USDT = web3.utils.toChecksumAddress('0xB2b1F86969F8D12ea5820A14E2D7eD8cfa46e912')
-export const IDAI = web3.utils.toChecksumAddress('0x8234Ff99e7C1bFc45F076af399fd89e034E710DC')
+export const IDAI = web3.utils.toChecksumAddress('0x992A460e0ef16b94118a98ADEE14C72e6A9aA34F')
 export const IUSDC = web3.utils.toChecksumAddress('0xbc55ad5733a1bb050f51bbdfb65ecc7a72aedc20')
-export const FACTORY = web3.utils.toChecksumAddress('0xE83942dC9D244418272E6b7D83271D0BcFC0DB30')
+export const FACTORY = web3.utils.toChecksumAddress('0x4983b160a8E0De9Cf6a055bd8750847DE3E14eE6')
 export const WETH = web3.utils.toChecksumAddress('0xd0a1e359811322d97991e03f863a0c30c2cf029c')
 
 // export const account = web3.eth.accounts.porivateKeyToAccunt('your private key here')
@@ -40,8 +40,8 @@ let ERC20_FAUCET_ABI = require('abis/Erc20Custom.json')
 ERC20_FAUCET_ABI = ERC20_FAUCET_ABI.abi
 
 //  addresses
-export const LIQUIDITY_ROUTER_ADDRESS = web3.utils.toChecksumAddress('0xCc49B6B3De85ff809B1837E3aD9A029dF91e295C')
-export const SWAP_ROUTER_ADDRESS = web3.utils.toChecksumAddress('0xa345dCB1d06b20490c1c01D5bB76AAC37f9212D3')
+export const LIQUIDITY_ROUTER_ADDRESS = web3.utils.toChecksumAddress('0xC4D56138b73D53Ff55313FC251053B735BA1cfA1')
+export const SWAP_ROUTER_ADDRESS = web3.utils.toChecksumAddress('0xda02eAf1c33ff04ec18329E25004Ea2DED3c5Fd9')
 //export const WETH_IDAI_PAIR_ADDRESS = web3.utils.toChecksumAddress('0xf60D483d820c063BC9AfcA8558aAfd5b3051A9d9')
 export const WETH_IDAI_PAIR_ADDRESS = web3.utils.toChecksumAddress('0x00f461B7C0984B5Aa70eCf41557ff3cC4DFf727e')
 
@@ -557,7 +557,7 @@ export async function verifySwap(options: VerifyOptions) {
 
 // const pool: Pool = new Pool(
 //   '0xd0a1e359811322d97991e03f863a0c30c2cf029c',
-//   '0x8234Ff99e7C1bFc45F076af399fd89e034E710DC',
+//   '0x992A460e0ef16b94118a98ADEE14C72e6A9aA34F',
 //   '0xf60D483d820c063BC9AfcA8558aAfd5b3051A9d9',
 //   BigNumber.from('400000000000000000'),
 //   true,
