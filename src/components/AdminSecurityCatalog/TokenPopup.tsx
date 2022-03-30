@@ -22,9 +22,12 @@ import { AreYouSureModal } from 'components/AreYouSureModal'
 import { SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 
 import { ReactComponent as LogoImage } from '../../assets/images/wallpaper.svg'
-import { WideModal, WideModalWrapper, FormWrapper, FormGrid, Logo, FormRow } from './styleds'
+import { WideModal, WideModalWrapper, FormWrapper, FormGrid, Logo, FormRow, LoaderContainer } from './styleds'
 import { industries, initialTokenState } from './mock'
 import { TokenAvailableFor } from './TokenAvailableFor'
+import { getAtlasIdByTicker } from 'state/admin/hooks'
+import { LoadingIndicator } from 'components/LoadingIndicator'
+import { LoaderThin } from 'components/Loader/LoaderThin'
 
 interface Props {
   token: any | null
@@ -42,6 +45,24 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
   const getIssuers = useFetchIssuers()
   const addPopup = useAddPopup()
   const [token, setToken] = useState<any>(null)
+
+  const getAtlasId = async () => {
+    try {
+      setIsLoading(true)
+      const res = await getAtlasIdByTicker(token.atlasOneId)
+      setToken({ ...token, atlasOneId: res.allIssuers[0]?.id || '' })
+      setIsLoading(false)
+    } catch (err) {
+      setToken({ ...token, atlasOneId: '' })
+      setIsLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    if (token?.atlasOneId && /^[a-zA-Z]{3,}/gm.test(token.atlasOneId)) {
+      getAtlasId()
+    }
+  }, [token?.atlasOneId])
 
   const openConfirm = () => handleIsConfirmOpen(true)
   const closeConfirm = () => handleIsConfirmOpen(false)
@@ -193,7 +214,12 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
     <>
       <AreYouSureModal isOpen={isConfirmOpen} onDecline={closeConfirm} onAccept={confirmClose} />
       <WideModal isLarge isOpen={isOpen} onDismiss={onClose} minHeight={false} maxHeight={'fit-content'} scrollable>
-        <WideModalWrapper data-testid="tokenPopup" style={{ width: 1000 }}>
+        <WideModalWrapper data-testid="tokenPopup" style={{ width: 1000, position: 'relative' }}>
+          {isLoading && (
+            <LoaderContainer>
+              <LoaderThin size={48} />
+            </LoaderContainer>
+          )}
           <ModalContentWrapper>
             <ModalPadding>
               <RowBetween marginBottom="27px">

@@ -15,6 +15,7 @@ export const admin = {
   rejectKyc: (id: number, riskReportId: number) => `/newkyc/reject/${id}?riskReportId=${riskReportId}`,
   kycById: (id: string | number) => `/newkyc/id/${id}`,
   resubmitKyc: (id: string | number) => `/newkyc/resubmit/${id}`,
+  getAtlasIdByTicker: (ticker: string) => `/catalog/atlas?ticker=${ticker}`,
 }
 
 export const vesting = {

@@ -164,7 +164,7 @@ export function useDepositCallback(): ({ id, amount }: DepositProps) => Promise<
 
         getEvents({ tokenId, filter: 'all' })
         dispatch(depositSecTokens.fulfilled())
-      } catch (error) {
+      } catch (error: any) {
         console.error(`Could not deposit amount`, error)
         dispatch(depositSecTokens.rejected({ errorMessage: error.message }))
         dispatch(setModalView({ view: DepositModalView.ERROR }))
@@ -189,7 +189,7 @@ export function useCancelDepositCallback(): ({ requestId, onSuccess }: CancelDep
         dispatch(setLogItem({ logItem: null }))
         dispatch(setModalView({ view: DepositModalView.CREATE_REQUEST }))
         onSuccess && onSuccess()
-      } catch (error) {
+      } catch (error: any) {
         console.error(`Could not cancel transaction ${requestId}`, error)
         dispatch(depositSecTokens.rejected({ errorMessage: error.message }))
         dispatch(setModalView({ view: DepositModalView.ERROR }))
