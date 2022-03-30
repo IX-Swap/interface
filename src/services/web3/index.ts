@@ -36,7 +36,9 @@ const web3Service: Web3Service = {
       if (!accounts.includes(walletAddress))
         throw new Error('Something went wrong... please try again')
     } catch (e) {
-      throw new Error('Failed to connect to Metamask, please try again')
+      throw new Error(
+        'Failed to connect to Metamask, please connect your Metamask account'
+      )
     }
   },
 

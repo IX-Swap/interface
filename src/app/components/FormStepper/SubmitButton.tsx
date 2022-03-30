@@ -11,8 +11,8 @@ export interface SubmitButtonProps extends ButtonProps {
 export const SubmitButton = (props: SubmitButtonProps) => {
   const { mutation, data } = props
   const [save, { isLoading }] = mutation
-  const isSubmitted = data.status === 'Submitted'
-  const isApproved = data.status === 'Approved'
+  const isSubmitted = data?.status === 'Submitted'
+  const isApproved = data?.status === 'Approved'
 
   const handleSave = async () => {
     return await save(data._id)

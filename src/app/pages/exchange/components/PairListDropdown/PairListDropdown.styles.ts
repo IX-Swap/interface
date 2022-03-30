@@ -18,8 +18,7 @@ export default makeStyles(theme => ({
     width: '100%',
     padding: 16,
     maxWidth: 400,
-    height: '"calc(100vh - 155px)"',
-    overflow: 'scroll',
-    maxHeight: 700
+    height: 700,
+    overflow: 'scroll'
   }
 }))

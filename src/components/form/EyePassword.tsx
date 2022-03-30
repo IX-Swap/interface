@@ -18,6 +18,7 @@ export const EyePassword = ({
   return (
     <InputAdornment position={'end'}>
       <IconButton
+        disableTouchRipple
         className={showPasswordButton}
         onClick={() => setType(inputType === 'password' ? 'text' : 'password')}
       >

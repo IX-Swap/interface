@@ -1,8 +1,25 @@
 import { Grid, Typography } from '@mui/material'
 import { UploadDocumentField } from 'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/UploadDocumentField'
-import React from 'react'
+import { identityQueryKeys } from 'config/queryKeys'
+import React, { useEffect } from 'react'
+import { useQueryCache } from 'react-query'
+import { useDetailsOfIssuance } from '../../hooks/useDetailsOfIssuance'
 
 export const IssuerDocuments = () => {
+  const { data, isLoading } = useDetailsOfIssuance()
+  const queryCache = useQueryCache()
+
+  useEffect(() => {
+    async function refetchIssuer() {
+      if (data === undefined && !isLoading) {
+        await queryCache.invalidateQueries(
+          identityQueryKeys.getDetailsOfIssuance
+        )
+      }
+    }
+    void refetchIssuer()
+  }, [data, queryCache, isLoading])
+
   return (
     <Grid container spacing={6} direction='column'>
       <Grid item>

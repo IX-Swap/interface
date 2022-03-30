@@ -9,7 +9,7 @@ export const ENVIRONMENT = getEnvironment(API_URL)
 export const FULLSTORY = process.env.REACT_APP_FULLSTORY
 
 export const isDevEnv = ENVIRONMENT === 'dev'
-
+export const isProdEnv = ENVIRONMENT === 'prime'
 export const DATE_FORMAT = 'MM/DD/YYYY'
 export const TIME_FORMAT = 'HH:MM:SS'
 
