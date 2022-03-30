@@ -3,7 +3,7 @@ import makeStyles from '@mui/styles/makeStyles'
 export const useStyles = makeStyles(theme => ({
   basicStyle: {
     fontFamily: 'Inter',
-    opacity: 0.5,
+    opacity: theme.palette.chip?.opacity,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
@@ -11,22 +11,9 @@ export const useStyles = makeStyles(theme => ({
     padding: '10px 16px',
     width: '101px',
     height: '36px',
-    background: '#F7F9FA',
-    borderRadius: '56px'
-  },
-  basicDarkStyle: {
-    fontFamily: 'Inter',
-    opacity: 0.5,
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: '10px 16px',
-    width: '101px',
-    height: '36px',
-    background: '#1D3667',
+    background: theme.palette.chip?.bgBasic,
     borderRadius: '56px',
-    color: '#89A1CE'
+    color: theme.palette.chip?.color
   },
   specialStyle: {
     display: 'flex',
@@ -36,7 +23,7 @@ export const useStyles = makeStyles(theme => ({
     padding: '10px 16px',
     width: '49px',
     height: '36px',
-    background: '#FFFFFF',
+    background: theme.palette.chip?.bgSpecial,
     border: '1px solid rgba(76, 136, 255, 0.2)',
     boxSizing: 'border-box',
     boxShadow: '0px 4px 4px rgba(162, 172, 191, 0.08)',
@@ -44,72 +31,31 @@ export const useStyles = makeStyles(theme => ({
     color: '#4C88FF',
     fontFamily: 'Inter'
   },
-  specialDarkStyle: {
+  infoStyle: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: '10px 16px',
-    width: '49px',
-    height: '36px',
-    background: '#152D5F',
-    border: '1px solid rgba(76, 136, 255, 0.2)',
-    boxSizing: 'border-box',
-    boxShadow: '0px 4px 4px rgba(162, 172, 191, 0.08)',
-    borderRadius: '56px',
-    color: '#4C88FF',
+    padding: '10px 24px',
+    width: '160px',
+    height: '37px',
+    borderRadius: '8px',
     fontFamily: 'Inter'
   },
   successStyle: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: '10px 24px',
-    width: '160px',
-    height: '37px',
     background: 'rgba(125, 211, 32, 0.15)',
-    borderRadius: '8px',
-    color: '#7DD320',
-    fontFamily: 'Inter'
+    color: '#7DD320'
   },
   warningStyle: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: '10px 24px',
-    width: '160px',
-    height: '37px',
     background: 'rgba(255, 201, 0, 0.1)',
-    borderRadius: '8px',
-    color: '#FFC900',
-    fontFamily: 'Inter'
+    color: '#FFC900'
   },
   errorStyle: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: '10px 24px',
-    width: '160px',
-    height: '37px',
     background: 'rgba(255, 128, 128, 0.1)',
-    borderRadius: '8px',
-    color: '#FF8080',
-    fontFamily: 'Inter'
+    color: '#FF8080'
   },
   unknownStyle: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: '10px 24px',
-    width: '160px',
-    height: '37px',
     background: 'rgba(190, 196, 207, 0.15)',
-    borderRadius: '8px',
-    color: '#778194',
-    fontFamily: 'Inter'
+    color: '#778194'
   }
 }))

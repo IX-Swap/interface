@@ -19,7 +19,9 @@ export const darkTheme: DeprecatedThemeOptions = {
       fill: '#496396',
       bg: '#1D3667',
       opacity: 1,
-      color: '#89A1CE'
+      color: '#89A1CE',
+      bgBasic: '#1D3667',
+      bgSpecial: '#152D5F'
     },
     toggledInputs: {
       fill: '#132A57',

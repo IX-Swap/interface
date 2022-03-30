@@ -94,6 +94,8 @@ export interface ChipPalette {
   fill: string
   opacity: number
   color: string
+  bgBasic: string
+  bgSpecial: string
 }
 
 declare module '@mui/styles/defaultTheme' {

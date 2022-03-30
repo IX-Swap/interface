@@ -20,7 +20,9 @@ export const lightTheme: DeprecatedThemeOptions = {
       fill: '#DBE2EC',
       bg: '#EEF1F4',
       opacity: 0.5,
-      color: '#0A1326'
+      color: '#0A1326',
+      bgBasic: '#F7F9FA',
+      bgSpecial: '#FFFFFF'
     },
     toggledInputs: {
       fill: '#FFFFFF',

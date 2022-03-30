@@ -1,7 +1,7 @@
 import { Box } from '@mui/material'
 import React from 'react'
-import { useTheme } from '@mui/material/styles'
 import { useStyles } from 'ui/UITag/UITag.styles'
+import clsx from 'clsx'
 
 export interface UITagProps {
   variant?: 'basic' | 'special' | 'success' | 'unknown' | 'warning' | 'error'
@@ -14,32 +14,30 @@ export const UITag = ({
   children,
   ...props
 }: UITagProps) => {
-  const theme = useTheme()
   const {
     basicStyle,
     specialStyle,
     successStyle,
     warningStyle,
     unknownStyle,
-    specialDarkStyle,
-    basicDarkStyle,
-    errorStyle
+    errorStyle,
+    infoStyle
   } = useStyles()
 
   const getBoxStyle = () => {
     switch (variant) {
       case 'basic':
-        return theme.palette.mode === 'dark' ? basicDarkStyle : basicStyle
+        return basicStyle
       case 'special':
-        return theme.palette.mode === 'dark' ? specialDarkStyle : specialStyle
+        return specialStyle
       case 'success':
-        return successStyle
+        return clsx(infoStyle, successStyle)
       case 'warning':
-        return warningStyle
+        return clsx(infoStyle, warningStyle)
       case 'unknown':
-        return unknownStyle
+        return clsx(infoStyle, unknownStyle)
       case 'error':
-        return errorStyle
+        return clsx(infoStyle, errorStyle)
 
       default:
         return basicStyle
