@@ -1,10 +1,12 @@
 import { Currency } from '@ixswap1/sdk-core'
 import { SupportedChainId } from 'constants/chains'
 import { useSimpleTokens } from 'hooks/Tokens'
+import { useNativeCurrency } from 'hooks/useNativeCurrency'
 import { useActiveWeb3React } from 'hooks/web3'
 import React, { useMemo } from 'react'
 import styled from 'styled-components/macro'
 import EthereumLogo from '../../assets/images/ethereum-logo.png'
+import PoligonLogo from '../../assets/images/polygon.svg'
 import useHttpLocations from '../../hooks/useHttpLocations'
 import { WrappedTokenInfo } from '../../state/lists/wrappedTokenInfo'
 import Logo from '../Logo'
@@ -57,7 +59,9 @@ export default function CurrencyLogo({
   size?: string
   style?: React.CSSProperties
 }) {
+  const native = useNativeCurrency()
   const tokens = useSimpleTokens()
+
   const uri =
     currency instanceof WrappedTokenInfo
       ? currency.logoURI || (tokens[currency.address] as any)?.tokenInfo?.logoURI
@@ -78,6 +82,9 @@ export default function CurrencyLogo({
   }, [currency, uriLocations, chainId])
 
   if (currency?.isNative) {
+    if (native.symbol === 'MATIC') {
+      return <StyledEthereumLogo src={PoligonLogo} size={size} style={style} {...rest} />
+    }
     return <StyledEthereumLogo src={EthereumLogo} size={size} style={style} {...rest} />
   }
   return <StyledLogo size={size} srcs={srcs} alt={`${currency?.symbol ?? 'token'} logo`} style={style} {...rest} />

@@ -213,7 +213,6 @@ export default function CurrencyInputPanel({
   const handleDismissSearch = useCallback(() => {
     setModalOpen(false)
   }, [setModalOpen])
-
   return (
     <InputPanel id={id} hideInput={hideInput} {...rest}>
       {locked && (
