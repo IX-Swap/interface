@@ -468,16 +468,21 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                       <Box>
                         <TokenAvailableFor setToken={setToken} token={token} error={errors.kycTypeJson} />
                       </Box>
-                      <Box display="flex">
-                        <Box marginRight={isMobile ? '0px' : '178px'}>
+                      <Box display="flex" justifyContent="space-between">
+                        <Box marginRight={isMobile ? '0px' : '16px'}>
                           <TYPE.title11 marginBottom="26px" color="text2">
                             <Trans>Active</Trans>
                           </TYPE.title11>
                           <TYPE.title11 marginBottom="26px" color="text2">
                             <Trans>Featured</Trans>
                           </TYPE.title11>
+                          <TYPE.title11 marginBottom="26px" color="text2">
+                            <Trans>Allow Deposit</Trans>
+                          </TYPE.title11>
+                          <TYPE.title11 marginBottom="26px" color="text2">
+                            <Trans>Allow Withdrawal</Trans>
+                          </TYPE.title11>
                         </Box>
-
                         <Box marginLeft={isMobile ? 'auto' : '0px'}>
                           <Radio
                             isActive={token.active}
@@ -486,6 +491,14 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                           <Radio
                             isActive={token.featured}
                             onToggle={() => setToken({ ...token, featured: !token.featured })}
+                          />
+                          <Radio
+                            isActive={token.allowDeposit}
+                            onToggle={() => setToken({ ...token, allowDeposit: !token.allowDeposit })}
+                          />
+                          <Radio
+                            isActive={token.allowWithdrawal}
+                            onToggle={() => setToken({ ...token, allowWithdrawal: !token.allowWithdrawal })}
                           />
                         </Box>
                       </Box>

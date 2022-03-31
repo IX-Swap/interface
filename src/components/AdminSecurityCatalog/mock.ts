@@ -9,6 +9,8 @@ export const defaultKycType = {
 
 export const initialTokenState = {
   id: null,
+  allowDeposit: true,
+  allowWithdrawal: true,
   address: '',
   ticker: '',
   logo: '',
