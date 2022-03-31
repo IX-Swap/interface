@@ -6,7 +6,8 @@ import { ReactComponent as Switch } from '../../assets/images/switch.svg'
 import { IconWrapper } from './styleds'
 
 interface TradePriceProps {
-  price: Price<Currency, Currency>
+  // price: Price<Currency, Currency>
+  price: any
   showInverted: boolean
   setShowInverted: (showInverted: boolean) => void
 }
