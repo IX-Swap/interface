@@ -77,13 +77,13 @@ export const SWAP_ROUTER_ADDRESS: { [key: number]: string } = {
   [1]: '',
   [42]: '0xda02eAf1c33ff04ec18329E25004Ea2DED3c5Fd9',
   [80001]: '',
-  [137]: '',
+  [137]: '0x0A2ca0C9f1B55bcEc0d9E34c6A8fFb3Fb3fbD3f9',
 }
 export const LIQUIDITY_ROUTER_ADDRESS: { [key: number]: string } = {
   [1]: '',
   [42]: '0xC4D56138b73D53Ff55313FC251053B735BA1cfA1',
   [80001]: '',
-  [137]: '',
+  [137]: '0x342172484664093B1F15Eb10B91721ba3e3DC97A',
 }
 export const V2_CORE_FACTORY_ADDRESSES = constructSameAddressMap(FACTORY_ADDRESS)
 export const ARGENT_WALLET_DETECTOR_ADDRESS: { [chainId: number]: string } = {
