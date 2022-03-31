@@ -22,7 +22,7 @@ export function formatCurrencyAmount(amount: CurrencyAmount<Currency> | undefine
   return formatAmount(+amount.toSignificant(sigFigs))
 }
 
-export function formatPrice(price: Price<Currency, Currency> | undefined, sigFigs: number) {
+export function formatPrice(price: any | undefined, sigFigs: number) {
   if (!price) {
     return '-'
   }
