@@ -411,3 +411,7 @@ export const getAtlasIdByTicker = async (ticker: string) => {
   const result = await apiService.get(admin.getAtlasIdByTicker(ticker))
   return result.data
 }
+export const addAdmin = async (address: string) => {
+  const result = await apiService.post(admin.addAdmin(), { address })
+  return result.data
+}
