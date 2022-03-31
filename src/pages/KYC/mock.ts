@@ -6,7 +6,7 @@ export const incomes = ['< 50,000', '50,000-100,000', '100,000-300,000', '> 300,
 export const genders = [
   { value: 1, label: 'Male' },
   { value: 2, label: 'Female' },
-  { value: 3, label: 'Other' },
+  { value: 3, label: 'Unknown' },
 ]
 
 export const sourceOfFunds = [

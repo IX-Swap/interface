@@ -16,6 +16,7 @@ export const admin = {
   kycById: (id: string | number) => `/newkyc/id/${id}`,
   resubmitKyc: (id: string | number) => `/newkyc/resubmit/${id}`,
   getAtlasIdByTicker: (ticker: string) => `/catalog/atlas?ticker=${ticker}`,
+  addAdmin: () => '/metamask/admin',
 }
 
 export const vesting = {
