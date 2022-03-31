@@ -1,12 +1,12 @@
-import React, { useMemo, useCallback, useState, useEffect } from 'react'
+import React, { useMemo, useState, useEffect } from 'react'
 import styled from 'styled-components'
 import StickyBox from 'react-sticky-box'
 import { Trans, t } from '@lingui/macro'
-import { getNames } from 'country-list'
 import { Formik } from 'formik'
 import { useHistory } from 'react-router-dom'
 import moment from 'moment'
 
+import usePrevious from 'hooks/usePrevious'
 import Column from 'components/Column'
 import { KYCProgressBar } from './KYCProgressBar'
 import { ButtonText } from 'components/Button'
@@ -19,16 +19,18 @@ import { DateInput } from 'components/DateInput'
 import { Checkbox } from 'components/Checkbox'
 import { getIndividualProgress, useCreateIndividualKYC, useKYCState, useUpdateIndividualKYC } from 'state/kyc/hooks'
 
-import { LOGIN_STATUS, useLogin } from 'state/auth/hooks'
+import { useActiveWeb3React } from 'hooks/web3'
+import { useAuthState } from 'state/auth/hooks'
 import { Loadable } from 'components/LoaderHover'
 import { LoadingIndicator } from 'components/LoadingIndicator'
+import { countriesList } from 'constants/countriesList'
 
 import { empleymentStatuses, individualFormInitialValues, genders, incomes, sourceOfFunds, promptValue } from './mock'
 import { FormCard, FormGrid, ExtraInfoCard, FormWrapper } from './styleds'
 import { individualErrorsSchema } from './schema'
 import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
 import { ReactComponent as BigPassed } from 'assets/images/check-success-big.svg'
-import { useAddPopup, useShowError } from 'state/application/hooks'
+import { useAddPopup } from 'state/application/hooks'
 import { individualTransformApiData, individualTransformKycDto } from './utils'
 import { KYCStatuses } from './enum'
 
@@ -43,20 +45,28 @@ export const FormContainer = styled(FormWrapper)`
 
 export default function IndividualKycForm() {
   const [waitingForInitialValues, setWaitingForInitialValues] = useState(true)
-  const [pending, setPending] = useState(false)
   const [updateKycId, setUpdateKycId] = useState<any>(null)
-  const [isLogged, setAuthState] = useState(false)
   const [formData, setFormData] = useState<any>(null)
   const [canSubmit, setCanSubmit] = useState(true)
   const [isSubmittedOnce, setIsSubmittedOnce] = useState(false)
   const [errors, setErrors] = useState<any>({})
   const addPopup = useAddPopup()
   const history = useHistory()
-  const showError = useShowError()
   const createIndividualKYC = useCreateIndividualKYC()
   const updateIndividualKYC = useUpdateIndividualKYC()
-  const login = useLogin({ mustHavePreviousLogin: false })
   const { kyc, loadingRequest } = useKYCState()
+  const { account } = useActiveWeb3React()
+  const { token } = useAuthState()
+
+  const isLoggedIn = !!token && !!account
+
+  const prevAccount = usePrevious(account)
+
+  useEffect(() => {
+    if (account && prevAccount && account !== prevAccount) {
+      history.push('/kyc')
+    }
+  }, [account, prevAccount])
 
   useEffect(() => {
     setWaitingForInitialValues(true)
@@ -79,19 +89,6 @@ export default function IndividualKycForm() {
     setWaitingForInitialValues(false)
   }, [kyc])
 
-  const checkAuthorization = useCallback(async () => {
-    setPending(true)
-    const status = await login()
-
-    if (status !== LOGIN_STATUS.SUCCESS) {
-      showError(t`To pass KYC you need to login. Please try again`)
-      history.push('/swap')
-    }
-
-    setAuthState(true)
-    setPending(false)
-  }, [login, setAuthState, history, showError])
-
   useEffect(() => {
     window.addEventListener('beforeunload', alertUser)
 
@@ -99,14 +96,6 @@ export default function IndividualKycForm() {
       window.removeEventListener('beforeunload', alertUser)
     }
   }, [])
-
-  useEffect(() => {
-    if (!isLogged && !pending) {
-      const timerFunc = setTimeout(checkAuthorization, 3000)
-
-      return () => clearTimeout(timerFunc)
-    }
-  }, [isLogged, checkAuthorization])
 
   const alertUser = (e: any) => {
     e.preventDefault()
@@ -186,13 +175,13 @@ export default function IndividualKycForm() {
     }
 
   const countries = useMemo(() => {
-    return getNames()
+    return countriesList
       .map((name, index) => ({ value: ++index, label: name }))
       .sort((a, b) => a.label.localeCompare(b.label))
   }, [])
 
   return (
-    <Loadable loading={pending}>
+    <Loadable loading={!isLoggedIn}>
       <LoadingIndicator isLoading={loadingRequest} />
       <StyledBodyWrapper>
         <ButtonText style={{ textDecoration: 'none' }} display="flex" marginBottom="64px" onClick={goBack}>
@@ -279,8 +268,7 @@ export default function IndividualKycForm() {
               const addressFilled = shouldValidate && !errors.line1 && !errors.line2 && !errors.country && !errors.city
               const fundsFilled = shouldValidate && !errors.sourceOfFunds && !errors.otherFunds
               const fatcaFilled = shouldValidate && !errors.usTin && !errors.isUSTaxPayer
-              const filesFilled =
-                shouldValidate && !errors.proofOfIdentity && !errors.proofOfAddress && !errors.evidenceOfAccreditation
+              const filesFilled = shouldValidate && !errors.proofOfIdentity && !errors.proofOfAddress
 
               return (
                 <FormRow>
@@ -578,7 +566,6 @@ export default function IndividualKycForm() {
                           <Uploader
                             error={errors.proofOfIdentity && errors.proofOfIdentity}
                             title="Proof of Identity"
-                            subtitle="Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Proin eget tortor risus."
                             files={values.proofOfIdentity}
                             onDrop={(file) => {
                               handleDropImage(file, values, 'proofOfIdentity', setFieldValue)
@@ -594,7 +581,6 @@ export default function IndividualKycForm() {
                           <Uploader
                             error={errors.proofOfAddress && errors.proofOfAddress}
                             title="Proof of Address"
-                            subtitle="Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Proin eget tortor risus."
                             files={values.proofOfAddress}
                             onDrop={(file) => {
                               handleDropImage(file, values, 'proofOfAddress', setFieldValue)
@@ -606,24 +592,6 @@ export default function IndividualKycForm() {
                               setFieldValue
                             )}
                           />
-                          {Boolean(values.accredited) && (
-                            <Uploader
-                              error={errors.evidenceOfAccreditation && errors.evidenceOfAccreditation}
-                              title="Evidence of accreditation"
-                              subtitle="Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Proin eget tortor risus."
-                              files={values.evidenceOfAccreditation}
-                              onDrop={(file) => {
-                                handleDropImage(file, values, 'evidenceOfAccreditation', setFieldValue)
-                              }}
-                              optional={values.accredited !== 1}
-                              handleDeleteClick={handleImageDelete(
-                                values,
-                                'evidenceOfAccreditation',
-                                values.removedDocuments,
-                                setFieldValue
-                              )}
-                            />
-                          )}
                         </Column>
                       </FormCard>
                       {/* <FormCard>

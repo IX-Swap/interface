@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, FC } from 'react'
 import { RouteComponentProps } from 'react-router-dom'
 import { Box } from 'rebass'
 
@@ -15,6 +15,20 @@ import { DetailsInfo } from './DetailsInfo'
 import { AddToMetamask } from './AddToMetamask'
 import { AtlasInfo } from './AtlasInfo'
 import { NotTradable } from './NotTradable'
+
+interface TokenLogoProps {
+  logo: {
+    storageUrl: string
+    uuid: string
+  }
+}
+
+const TokenLogo: FC<TokenLogoProps> = ({ logo }: TokenLogoProps) => {
+  if (!logo) return null
+
+  const { storageUrl, uuid } = logo
+  return <img width="72px" height="72px" style={{ borderRadius: '50%' }} src={`${storageUrl}${uuid}`} />
+}
 
 export default function SecTokenDetails({
   match: {
@@ -47,11 +61,7 @@ export default function SecTokenDetails({
       <Container width={['100%', '90%']} maxWidth={'920px'}>
         <InfoTitle>
           <BackArrowButton />
-          {token?.logo ? (
-            <img width="72px" height="72px" style={{ borderRadius: '50%' }} src={token.logo.public} />
-          ) : (
-            <Logo currency={currency} size="72px" />
-          )}
+          {token?.logo ? <TokenLogo logo={token.logo} /> : <Logo currency={currency} size="72px" />}
           <Box display="flex">
             <StyledTitleBig fontWeight="600">{token?.ticker}</StyledTitleBig>
             <StyledTitleBig>
@@ -63,12 +73,12 @@ export default function SecTokenDetails({
         {token && <DetailsInfo token={token} />}
         {token && <AddToMetamask token={token} />}
         {atlasInfo && <AtlasInfo atlasInfo={atlasInfo} />}
-        {token?.token && (
+        {token?.token?.id && (
           <ValutContainer>
             <Vault token={token} currency={token.token} />
           </ValutContainer>
         )}
-        {token && !token.token && <NotTradable ticker={token.ticker} />}
+        {token && !token.token?.id && <NotTradable ticker={token.ticker} />}
       </Container>
     </>
   )

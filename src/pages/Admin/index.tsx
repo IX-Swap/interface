@@ -9,6 +9,7 @@ import { AdminTransactionsTable } from 'components/AdminTransactionsTable'
 import { AdminSecurityCatalog } from 'components/AdminSecurityCatalog'
 import { Border, ToggleOption } from 'components/Tabs'
 import { AdminKycTable } from 'components/AdminKyc'
+import { AddAdmin } from 'components/AddAdmin'
 
 import { Navbar } from './Navbar'
 
@@ -108,6 +109,7 @@ const AdminKyc = () => {
                 </ToggleOption>
               </>
             ))}
+            <AddAdmin />
           </TabsContainer>
 
           {renderTab(selectedTab)}

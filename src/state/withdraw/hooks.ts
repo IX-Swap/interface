@@ -176,7 +176,7 @@ export function useWithdrawCallback(
         dispatch(setTransaction({ tx: burned.hash }))
         dispatch(withdrawCurrency.fulfilled())
         onSuccess()
-      } catch (error) {
+      } catch (error: any) {
         if (withdrawId) {
           await cancelAction({ requestId: withdrawId })
         }

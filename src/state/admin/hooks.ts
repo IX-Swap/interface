@@ -17,6 +17,7 @@ import {
   postApproveKyc,
   postRejectKyc,
   postResetKyc,
+  postResubmitKyc,
 } from './actions'
 
 export enum BROKER_DEALERS_STATUS {
@@ -374,5 +375,43 @@ export function useResetKyc() {
 
 export const getKycById = async (id: string | number) => {
   const result = await apiService.get(admin.kycById(id))
+  return result.data
+}
+
+export const resubmitKyc = async (id: number) => {
+  const result = await apiService.post(admin.resubmitKyc(id), {})
+  return result.data
+}
+
+export function useResubmitKyc() {
+  const dispatch = useDispatch<AppDispatch>()
+  const getKycList = useGetKycList()
+  const {
+    kycList: { page, offset },
+  } = useAdminState()
+  const callback = useCallback(
+    async (id: number) => {
+      try {
+        dispatch(postResubmitKyc.pending())
+        await resubmitKyc(id)
+        dispatch(postResubmitKyc.fulfilled())
+        await getKycList({ page, offset })
+        return STATUS.SUCCESS
+      } catch (error: any) {
+        dispatch(postResubmitKyc.rejected({ errorMessage: 'Could not reset kyc' }))
+        return STATUS.FAILED
+      }
+    },
+    [dispatch]
+  )
+  return callback
+}
+
+export const getAtlasIdByTicker = async (ticker: string) => {
+  const result = await apiService.get(admin.getAtlasIdByTicker(ticker))
+  return result.data
+}
+export const addAdmin = async (address: string) => {
+  const result = await apiService.post(admin.addAdmin(), { address })
   return result.data
 }

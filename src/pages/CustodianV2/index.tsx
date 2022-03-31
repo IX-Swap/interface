@@ -1,21 +1,18 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Box, Flex } from 'rebass'
 import { isMobile } from 'react-device-detect'
-import { t, Trans } from '@lingui/macro'
-import { useHistory } from 'react-router-dom'
+import { Trans } from '@lingui/macro'
 
 import { ExternalLink, TYPE } from 'theme'
 import { StyledButtonGradientBorder } from 'components/AdminSecurityCatalog/styleds'
 import { FeaturedToken } from './FeaturedToken'
 import { SecTokensTable } from './SecTokensTable'
-import { LOGIN_STATUS, useAuthState, useLogin } from 'state/auth/hooks'
+import { useAuthState } from 'state/auth/hooks'
 import { useActiveWeb3React } from 'hooks/web3'
 import AppBody from 'pages/AppBody'
 import { TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
 import { getMyTokens, useFetchTokens, useSecCatalogState } from 'state/secCatalog/hooks'
 import { MySecToken } from './MySecToken'
-import { NFTConnectWallet } from 'components/NFTConnectWallet'
-import { useShowError } from 'state/application/hooks'
 
 import { ReactComponent as ArrowDown } from '../../assets/images/arrow-sec-tokens.svg'
 import {
@@ -27,6 +24,7 @@ import {
   MySecTokensGrid,
   Divider,
 } from './styleds'
+import { NotAvailablePage } from 'components/NotAvailablePage'
 
 export default function CustodianV2() {
   const offset = 10
@@ -37,11 +35,7 @@ export default function CustodianV2() {
   const [noFilteredTokens, setNoFilteredTokens] = useState([])
   const { tokens } = useSecCatalogState()
   const { account, chainId } = useActiveWeb3React()
-  const [pending, setPending] = useState(false)
-  const [isLogged, setAuthState] = useState(false)
-  const login = useLogin({ mustHavePreviousLogin: false })
-  const history = useHistory()
-  const showError = useShowError()
+
   const blurred = !chainId || !TGE_CHAINS_WITH_SWAP.includes(chainId)
   const isLoggedIn = !!token && !!account
 
@@ -50,40 +44,22 @@ export default function CustodianV2() {
       const data = await getMyTokens({ active: true, my: true, offset: 100000 })
       setMySecTokens(data?.items.length > 0 ? data.items : [])
     }
-
-    fetchMyTokens()
+    if (isLoggedIn) {
+      fetchMyTokens()
+    }
   }, [account, isLoggedIn])
 
   useEffect(() => {
-    fetchTokens({ page: 1, offset, search: '' })
-  }, [fetchTokens])
+    if (isLoggedIn) {
+      fetchTokens({ page: 1, offset, search: '' })
+    }
+  }, [fetchTokens, isLoggedIn])
 
   useEffect(() => {
     if (noFilteredTokens.length === 0 && tokens) {
       setNoFilteredTokens(tokens.items.filter(({ active }: any) => active))
     }
   }, [tokens])
-
-  const checkAuthorization = useCallback(async () => {
-    setPending(true)
-    const status = await login()
-
-    if (status !== LOGIN_STATUS.SUCCESS) {
-      showError(t`You need to login to see this page. Please try again`)
-      history.push('/swap')
-    }
-
-    setAuthState(true)
-    setPending(false)
-  }, [login, setAuthState, history, showError])
-
-  useEffect(() => {
-    if (!isLoggedIn && !pending) {
-      const timerFunc = setTimeout(checkAuthorization, 3000)
-
-      return () => clearTimeout(timerFunc)
-    }
-  }, [isLoggedIn, checkAuthorization])
 
   const activeTokens = tokens ? tokens.items.filter(({ active }: any) => active) : []
   const featuredTokens = noFilteredTokens.filter(({ featured }: any) => featured)
@@ -100,7 +76,7 @@ export default function CustodianV2() {
       )
     : []
 
-  if (!isLoggedIn) return <NFTConnectWallet />
+  if (!isLoggedIn) return <NotAvailablePage />
 
   return blurred ? (
     <AppBody blurred>

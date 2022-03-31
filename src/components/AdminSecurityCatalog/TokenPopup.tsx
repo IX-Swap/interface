@@ -3,6 +3,7 @@ import { Trans } from '@lingui/macro'
 import { Box } from 'rebass'
 import { Label } from '@rebass/forms'
 import { getNames } from 'country-list'
+import { isMobile } from 'react-device-detect'
 
 import { RowBetween } from 'components/Row'
 import { isValidAddress } from 'utils'
@@ -16,13 +17,17 @@ import { addToken, checkWrappedAddress, updateToken, useFetchIssuers, validateTo
 import { Dropdown } from './Dropdown'
 import Upload from 'components/Upload'
 import { AddressInput } from 'components/AddressInputPanel/AddressInput'
+import { NETWORK_LABELS } from 'constants/chains'
+import { AreYouSureModal } from 'components/AreYouSureModal'
+import { SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 
 import { ReactComponent as LogoImage } from '../../assets/images/wallpaper.svg'
-import { WideModal, WideModalWrapper, FormWrapper, FormGrid, Logo, FormRow } from './styleds'
+import { WideModal, WideModalWrapper, FormWrapper, FormGrid, Logo, FormRow, LoaderContainer } from './styleds'
 import { industries, initialTokenState } from './mock'
-import { CREATE_TOKEN_CHAINS } from 'constants/addresses'
-import { isMobile } from 'react-device-detect'
-import { AreYouSureModal } from 'components/AreYouSureModal'
+import { TokenAvailableFor } from './TokenAvailableFor'
+import { getAtlasIdByTicker } from 'state/admin/hooks'
+import { LoadingIndicator } from 'components/LoadingIndicator'
+import { LoaderThin } from 'components/Loader/LoaderThin'
 
 interface Props {
   token: any | null
@@ -41,6 +46,24 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
   const addPopup = useAddPopup()
   const [token, setToken] = useState<any>(null)
 
+  const getAtlasId = async () => {
+    try {
+      setIsLoading(true)
+      const res = await getAtlasIdByTicker(token.atlasOneId)
+      setToken({ ...token, atlasOneId: res.allIssuers[0]?.id || '' })
+      setIsLoading(false)
+    } catch (err) {
+      setToken({ ...token, atlasOneId: '' })
+      setIsLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    if (token?.atlasOneId && /^[a-zA-Z]{3,}/gm.test(token.atlasOneId)) {
+      getAtlasId()
+    }
+  }, [token?.atlasOneId])
+
   const openConfirm = () => handleIsConfirmOpen(true)
   const closeConfirm = () => handleIsConfirmOpen(false)
 
@@ -52,6 +75,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
       companyName: null,
       description: null,
       wrappedTokenAddress: null,
+      kycType: null,
     })
   }
 
@@ -60,6 +84,13 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
     else setToken(initialTokenState)
     resetErrors()
   }, [propToken])
+
+  useEffect(() => {
+    if (token) {
+      const validationErrors = validateToken(token)
+      setErrors(validationErrors)
+    }
+  }, [token])
 
   const confirmClose = () => {
     closeConfirm()
@@ -87,16 +118,21 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
   }
 
   const handleCreateClick = async () => {
+    const kycTypeJson = Object.keys(token.kycTypeJson).reduce(
+      (acc, key) => (key.includes('Acc') ? { ...acc, [key]: token.kycTypeJson[key] } : acc),
+      {}
+    )
     setIsLoading(true)
     const validationErrors = validateToken(token)
     const hasError = Object.values(validationErrors).some((value) => Boolean(value) === true)
+    const formattedData = { ...token, kycType: JSON.stringify(kycTypeJson) }
 
     if (hasError) {
       setErrors(validationErrors)
     } else {
       let data = null
       if (token.id) {
-        data = await updateToken(token)
+        data = await updateToken(formattedData)
         if (data) {
           addPopup({
             info: {
@@ -106,7 +142,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
           })
         }
       } else {
-        data = await addToken(currentIssuer.id, token)
+        data = await addToken(currentIssuer.id, formattedData)
         if (data) {
           addPopup({
             info: {
@@ -163,11 +199,27 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
       .sort((a, b) => a.name.localeCompare(b.name))
   }, [])
 
+  const chainsOptions = [
+    { id: SUPPORTED_TGE_CHAINS.MAIN, name: 'Mainnet' },
+    { id: SUPPORTED_TGE_CHAINS.KOVAN, name: 'Kovan' },
+    { id: SUPPORTED_TGE_CHAINS.MATIC, name: 'Matic' },
+  ]
+
+  const selectedChainOption = useMemo(() => {
+    if (!token) return {}
+    return chainsOptions.find(({ id }) => id === token.chainId)
+  }, [token?.chainId])
+
   return (
     <>
       <AreYouSureModal isOpen={isConfirmOpen} onDecline={closeConfirm} onAccept={confirmClose} />
       <WideModal isLarge isOpen={isOpen} onDismiss={onClose} minHeight={false} maxHeight={'fit-content'} scrollable>
-        <WideModalWrapper data-testid="tokenPopup" style={{ width: 1000 }}>
+        <WideModalWrapper data-testid="tokenPopup" style={{ width: 1000, position: 'relative' }}>
+          {isLoading && (
+            <LoaderContainer>
+              <LoaderThin size={48} />
+            </LoaderContainer>
+          )}
           <ModalContentWrapper>
             <ModalPadding>
               <RowBetween marginBottom="27px">
@@ -266,8 +318,8 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                           onSelect={(item) => {
                             setToken({ ...token, chainId: item.id })
                           }}
-                          selectedItem={CREATE_TOKEN_CHAINS.find(({ id }) => id === token.chainId)}
-                          items={CREATE_TOKEN_CHAINS}
+                          selectedItem={selectedChainOption}
+                          items={chainsOptions}
                         />
                         {errors?.chainId && (
                           <TYPE.small marginTop="4px" color={'red1'}>
@@ -412,30 +464,50 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                         )}
                       </Box>
                     </FormRow>
-
-                    <Box display="flex">
-                      <Box marginRight={isMobile ? '0px' : '178px'}>
-                        <TYPE.title11 marginBottom="26px" color="text2">
-                          <Trans>Active</Trans>
-                        </TYPE.title11>
-                        <TYPE.title11 marginBottom="26px" color="text2">
-                          <Trans>Featured</Trans>
-                        </TYPE.title11>
+                    <FormRow>
+                      <Box>
+                        <TokenAvailableFor setToken={setToken} token={token} error={errors.kycTypeJson} />
                       </Box>
-
-                      <Box marginLeft={isMobile ? 'auto' : '0px'}>
-                        <Radio isActive={token.active} onToggle={() => setToken({ ...token, active: !token.active })} />
-                        <Radio
-                          isActive={token.featured}
-                          onToggle={() => setToken({ ...token, featured: !token.featured })}
-                        />
+                      <Box display="flex" justifyContent="space-between">
+                        <Box marginRight={isMobile ? '0px' : '16px'}>
+                          <TYPE.title11 marginBottom="26px" color="text2">
+                            <Trans>Active</Trans>
+                          </TYPE.title11>
+                          <TYPE.title11 marginBottom="26px" color="text2">
+                            <Trans>Featured</Trans>
+                          </TYPE.title11>
+                          <TYPE.title11 marginBottom="26px" color="text2">
+                            <Trans>Allow Deposit</Trans>
+                          </TYPE.title11>
+                          <TYPE.title11 marginBottom="26px" color="text2">
+                            <Trans>Allow Withdrawal</Trans>
+                          </TYPE.title11>
+                        </Box>
+                        <Box marginLeft={isMobile ? 'auto' : '0px'}>
+                          <Radio
+                            isActive={token.active}
+                            onToggle={() => setToken({ ...token, active: !token.active })}
+                          />
+                          <Radio
+                            isActive={token.featured}
+                            onToggle={() => setToken({ ...token, featured: !token.featured })}
+                          />
+                          <Radio
+                            isActive={token.allowDeposit}
+                            onToggle={() => setToken({ ...token, allowDeposit: !token.allowDeposit })}
+                          />
+                          <Radio
+                            isActive={token.allowWithdrawal}
+                            onToggle={() => setToken({ ...token, allowWithdrawal: !token.allowWithdrawal })}
+                          />
+                        </Box>
                       </Box>
-                    </Box>
+                    </FormRow>
                   </FormWrapper>
 
                   <ButtonIXSGradient
                     onClick={handleCreateClick}
-                    margin="35px 0px 30px 0px"
+                    margin="35px auto 30px auto"
                     style={{ width: isMobile ? '100%' : 475 }}
                     disabled={isLoading}
                   >

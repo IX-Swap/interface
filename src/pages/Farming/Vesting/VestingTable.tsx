@@ -81,7 +81,7 @@ export const VestingTable = ({ vestingStatus }: { vestingStatus: VestingStatus }
       ],
     }
   }, [points, theme, vestingStatus, getColor])
-  const chart = useMemo(() => <Line data={data} options={options} redraw={false} />, [data, options])
+  const chart = useMemo(() => <Line data={data as any} options={options as any} redraw={false} />, [data, options])
 
   return (
     <VestingTableWrapper>

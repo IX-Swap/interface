@@ -1,52 +1,63 @@
-import React, { useEffect, useCallback, useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { t, Trans } from '@lingui/macro'
-import { getNames } from 'country-list'
 import { FileWithPath } from 'react-dropzone'
 import { useHistory } from 'react-router-dom'
 import StickyBox from 'react-sticky-box'
 import { Formik } from 'formik'
 
+import usePrevious from 'hooks/usePrevious'
 import Column from 'components/Column'
-import { KYCProgressBar } from './KYCProgressBar'
 import { ButtonText, ButtonIXSGradient } from 'components/Button'
 import { TYPE } from 'theme'
 import { GradientText, StyledBodyWrapper } from 'pages/CustodianV2/styleds'
 import { RowBetween } from 'components/Row'
-import { Select, TextInput, Uploader } from './common'
 import { PhoneInput } from 'components/PhoneInput'
 import { Checkbox } from 'components/Checkbox'
 import { Loadable } from 'components/LoaderHover'
-import { LOGIN_STATUS, useLogin } from 'state/auth/hooks'
+import { useAuthState } from 'state/auth/hooks'
 import { useAddPopup, useShowError } from 'state/application/hooks'
-
-import { corporateSourceOfFunds, legalEntityTypes, corporateFormInitialValues, promptValue } from './mock'
-import { FormCard, FormGrid, ExtraInfoCard, Divider } from './styleds'
+import { LoadingIndicator } from 'components/LoadingIndicator'
 import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
 import { ReactComponent as BigPassed } from 'assets/images/check-success-big.svg'
+import { getCorporateProgress, useCreateCorporateKYC, useKYCState, useUpdateCorporateKYC } from 'state/kyc/hooks'
+import { useActiveWeb3React } from 'hooks/web3'
+import { countriesList } from 'constants/countriesList'
+
+import { Select, TextInput, Uploader } from './common'
+import { KYCProgressBar } from './KYCProgressBar'
+import { corporateSourceOfFunds, legalEntityTypes, corporateFormInitialValues, promptValue } from './mock'
+import { FormCard, FormGrid, ExtraInfoCard, Divider } from './styleds'
 import { ChooseFile, BeneficialOwnersTable, DeleteRow } from './common'
 import { FormContainer, FormRow } from './IndividualKycForm'
 import { corporateErrorsSchema } from './schema'
-import { getCorporateProgress, useCreateCorporateKYC, useKYCState, useUpdateCorporateKYC } from 'state/kyc/hooks'
 import { KYCStatuses } from './enum'
 import { corporateTransformApiData, corporateTransformKycDto } from './utils'
-import { LoadingIndicator } from 'components/LoadingIndicator'
 
 export default function CorporateKycForm() {
   const [waitingForInitialValues, setWaitingForInitialValues] = useState(true)
   const [updateKycId, setUpdateKycId] = useState<any>(null)
-  const [isLogged, setAuthState] = useState(false)
   const [formData, setFormData] = useState<any>(null)
   const [canSubmit, setCanSubmit] = useState(true)
   const [isSubmittedOnce, setIsSubmittedOnce] = useState(false)
   const [errors, setErrors] = useState<any>({})
-  const [pending, setPending] = useState(false)
   const history = useHistory()
   const { kyc, loadingRequest } = useKYCState()
-  const login = useLogin({ mustHavePreviousLogin: false })
   const showError = useShowError()
   const addPopup = useAddPopup()
   const createCorporateKYC = useCreateCorporateKYC()
   const updateCorporateKYC = useUpdateCorporateKYC()
+  const { account } = useActiveWeb3React()
+  const { token } = useAuthState()
+
+  const isLoggedIn = !!token && !!account
+
+  const prevAccount = usePrevious(account)
+
+  useEffect(() => {
+    if (account && prevAccount && account !== prevAccount) {
+      history.push('/kyc')
+    }
+  }, [account, prevAccount])
 
   useEffect(() => {
     setWaitingForInitialValues(true)
@@ -69,19 +80,6 @@ export default function CorporateKycForm() {
     setWaitingForInitialValues(false)
   }, [kyc])
 
-  const checkAuthorization = useCallback(async () => {
-    setPending(true)
-    const status = await login()
-
-    if (status !== LOGIN_STATUS.SUCCESS) {
-      showError(t`To pass KYC you need to login. Please try again`)
-      history.push('/swap')
-    }
-
-    setAuthState(true)
-    setPending(false)
-  }, [login, setAuthState, history, showError])
-
   useEffect(() => {
     window.addEventListener('beforeunload', alertUser)
 
@@ -89,14 +87,6 @@ export default function CorporateKycForm() {
       window.removeEventListener('beforeunload', alertUser)
     }
   }, [])
-
-  useEffect(() => {
-    if (!isLogged && !pending) {
-      const timerFunc = setTimeout(checkAuthorization, 3000)
-
-      return () => clearTimeout(timerFunc)
-    }
-  }, [isLogged, checkAuthorization])
 
   const alertUser = (e: any) => {
     e.preventDefault()
@@ -168,10 +158,7 @@ export default function CorporateKycForm() {
   }
 
   const countries = useMemo(() => {
-    return getNames()
-      .filter((label) => !['United States of America', 'United States Minor Outlying Islands'].includes(label))
-      .map((label, index) => ({ id: ++index, label }))
-      .sort((a, b) => a.label.localeCompare(b.label))
+    return countriesList.map((label, index) => ({ id: ++index, label })).sort((a, b) => a.label.localeCompare(b.label))
   }, [])
 
   const validationSeen = (key: string) => {
@@ -223,7 +210,7 @@ export default function CorporateKycForm() {
     }
 
   return (
-    <Loadable loading={pending}>
+    <Loadable loading={!isLoggedIn}>
       <LoadingIndicator isLoading={loadingRequest} />
 
       <StyledBodyWrapper>
@@ -321,15 +308,9 @@ export default function CorporateKycForm() {
               const fatcaFilled = shouldValidate && !errors.usTin && !errors.isUSTaxPayer
               const investorFilled = shouldValidate && !errors.accredited
               const taxDeclarationFilled = shouldValidate && !errors.taxCountry && !errors.taxNumber
-              const filesFilled =
-                shouldValidate &&
-                !errors.financialDocuments &&
-                !errors.corporateDocuments &&
-                !errors.evidenceOfAccreditation
+              const filesFilled = shouldValidate && !errors.financialDocuments && !errors.corporateDocuments
               const beneficialOwnersFilled =
                 shouldValidate && !Object.keys(errors).some((errorField) => errorField.startsWith('beneficialOwners'))
-
-              console.log('log => errors', errors)
 
               return (
                 <FormRow>
@@ -885,39 +866,6 @@ export default function CorporateKycForm() {
                               setFieldValue
                             )}
                           />
-
-                          {Boolean(values.accredited) && (
-                            <Uploader
-                              title="Evidence of Accreditation"
-                              subtitle={
-                                <ul>
-                                  <li>
-                                    <Trans>Copy of the most recent audited balance sheet of the corporation.</Trans>
-                                  </li>
-                                  <li>
-                                    <Trans>
-                                      Where the corporation is not required to prepare audited account regularly, a
-                                      balance sheet of the corporation certified by the corporation as giving a true and
-                                      fair view of the state of affairs of the corporation as of the date of the balance
-                                      sheet, of which date shall be within the preceding 12 months.
-                                    </Trans>
-                                  </li>
-                                </ul>
-                              }
-                              files={values.evidenceOfAccreditation}
-                              onDrop={(file) => {
-                                handleDropImage(file, values, 'evidenceOfAccreditation', setFieldValue)
-                              }}
-                              optional={values.accredited !== 1}
-                              error={errors.evidenceOfAccreditation && errors.evidenceOfAccreditation}
-                              handleDeleteClick={handleImageDelete(
-                                values,
-                                'evidenceOfAccreditation',
-                                values.removedDocuments,
-                                setFieldValue
-                              )}
-                            />
-                          )}
                         </Column>
                       </FormCard>
                     </Column>
@@ -926,7 +874,7 @@ export default function CorporateKycForm() {
                   <StickyBox offsetTop={100}>
                     <KYCProgressBar
                       handleSubmit={handleSubmit}
-                      disabled={false}
+                      disabled={!dirty || !canSubmit || Object.keys(errors).length !== 0}
                       topics={Object.values({
                         info: {
                           title: 'Corporate Information',

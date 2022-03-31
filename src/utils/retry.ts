@@ -47,7 +47,7 @@ export function retry<T>(
           completed = true
         }
         break
-      } catch (error) {
+      } catch (error: any) {
         if (completed) {
           break
         }

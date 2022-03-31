@@ -23,6 +23,7 @@ import { ReactComponent as KYCApproved } from 'assets/images/kyc-approved.svg'
 import { formatAmount } from 'utils/formatCurrencyAmount'
 import { useAuthState } from 'state/auth/hooks'
 import { TGE_CHAINS_WITH_KYC } from 'constants/addresses'
+import { isUserWhitelisted } from 'utils/isUserWhitelisted'
 
 const HeaderFrame = styled.div<{ showBackground: boolean; lightBackground: boolean }>`
   display: grid;
@@ -207,6 +208,8 @@ export default function Header() {
   const { kyc } = useKYCState()
   const getMyKyc = useGetMyKyc()
 
+  const isWhitelisted = isUserWhitelisted({ account, chainId })
+
   useEffect(() => {
     getMyKyc()
   }, [getMyKyc, account, token])
@@ -224,7 +227,7 @@ export default function Header() {
           </HeaderRow>
           <HeaderLinks />
           <HeaderControls>
-            {chainId && TGE_CHAINS_WITH_KYC.includes(chainId) && (
+            {isWhitelisted && (
               <HeaderElement>
                 <NavLink style={{ textDecoration: 'none', color: 'inherit', marginRight: 16 }} to="/kyc">
                   <KYCWrapper flexDirection="column" alignItems="center" justifyContent="center">

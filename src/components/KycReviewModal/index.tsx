@@ -8,7 +8,7 @@ import { ButtonIXSWide, ButtonPinkBorder, ButtonGradientBorder } from 'component
 import { ReasonModal } from 'components/ReasonModal'
 import { CorporateKyc, IndividualKyc, KycItem } from 'state/admin/actions'
 import { shortenAddress } from 'utils'
-import { useApproveKyc, useRejectKyc, useResetKyc } from 'state/admin/hooks'
+import { useApproveKyc, useRejectKyc, useResetKyc, useResubmitKyc } from 'state/admin/hooks'
 
 import { CorporateForm } from './CorporateForm'
 import { IndividualForm } from './IndividualForm'
@@ -29,6 +29,7 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
   const approveKyc = useApproveKyc()
   const rejectKyc = useRejectKyc()
   const resetKyc = useResetKyc()
+  const resubmitKyc = useResubmitKyc()
 
   useEffect(() => {
     const fetchCynopsisRisks = async () => {
@@ -47,6 +48,11 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
   const approve = async () => {
     onClose()
     await approveKyc(data.id, riskReportId)
+  }
+
+  const resubmit = async () => {
+    onClose()
+    await resubmitKyc(data.id)
   }
 
   const closeModal = () => handleOpenReasonModal('')
@@ -71,6 +77,8 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
   }
 
   if (loadingCynopsis) return <LoadingIndicator isLoading size={96} />
+
+  const isDraftStatus = data.status === 'draft'
 
   return (
     <>
@@ -108,16 +116,21 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
                 <CorporateForm riskJSON={riskJSON} data={kyc} />
               )}
             </Body>
-            <ActionsContainer>
-              <ButtonIXSWide onClick={approve}>
+            <ActionsContainer buttons={isDraftStatus ? 4 : 3}>
+              <ButtonIXSWide onClick={approve} disabled={isDraftStatus}>
                 <Trans>Approve</Trans>
               </ButtonIXSWide>
-              <ButtonPinkBorder onClick={reject}>
+              <ButtonPinkBorder onClick={reject} disabled={isDraftStatus}>
                 <Trans>Reject</Trans>
               </ButtonPinkBorder>
-              <ButtonGradientBorder onClick={changeRequest}>
+              <ButtonGradientBorder onClick={changeRequest} disabled={isDraftStatus}>
                 <Trans>Request a change</Trans>
               </ButtonGradientBorder>
+              {isDraftStatus && (
+                <ButtonIXSWide onClick={resubmit}>
+                  <Trans>Resubmit</Trans>
+                </ButtonIXSWide>
+              )}
             </ActionsContainer>
           </ModalContent>
         </ModalBlurWrapper>
@@ -131,9 +144,9 @@ const Body = styled.div`
   row-gap: 35px;
 `
 
-const ActionsContainer = styled.div`
+const ActionsContainer = styled.div<{ buttons: number }>`
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: ${({ buttons }) => `repeat(${buttons}, 1fr)`};
   column-gap: 35px;
   row-gap: 35px;
   margin-top: 35px;
@@ -145,6 +158,11 @@ const ActionsContainer = styled.div`
   }
   > button:nth-child(2) {
     color: ${({ theme: { error } }) => error};
+    background-color: transparent;
+    border: 1px solid #ed0376;
+  }
+  > button:nth-child(3) {
+    background-color: transparent;
   }
 `
 

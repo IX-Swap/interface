@@ -10,6 +10,10 @@ export function RedirectPathToSwapOnly({ location }: RouteComponentProps) {
   return <Redirect to={{ ...location, pathname: routes.swap }} />
 }
 
+export function RedirectPathToKyc({ location }: RouteComponentProps) {
+  return <Redirect to={{ ...location, pathname: routes.kyc }} />
+}
+
 export function RedirectPathToStaking({ location }: RouteComponentProps) {
   return <Redirect to={{ ...location, pathname: routes.staking }} />
 }

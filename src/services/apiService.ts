@@ -41,7 +41,7 @@ _axios.interceptors.response.use(responseSuccessInterceptor, async function resp
         } else {
           store.dispatch(saveAccount({ account: '' }))
         }
-      } catch (error) {
+      } catch (error: any) {
         console.error({ requestError: error.message })
         store.dispatch(postLogin.rejected({ errorMessage: error.message }))
       }

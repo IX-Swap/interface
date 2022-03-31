@@ -1,16 +1,19 @@
-import { t, Trans } from '@lingui/macro'
 import React, { useContext } from 'react'
+import { t } from '@lingui/macro'
 import styled, { ThemeContext } from 'styled-components'
+
 import rejectedIcon from '../../assets/images/reject.svg'
 import changeRequestIcon from '../../assets/images/attention-white.svg'
 import approvedIcon from '../../assets/images/check-success.svg'
 import pendingIcon from '../../assets/images/loader_thin.svg'
+import warningIcon from '../../assets/images/warning.svg'
 
 export const KYC_STATUSES = {
   PENDING: 'pending',
   APPROVED: 'approved',
   REJECTED: 'rejected',
-  CHANGE_REQUEST: 'changes requested',
+  CHANGE_REQUEST: 'changes-requested',
+  DRAFT: 'draft',
 }
 
 interface Props {
@@ -21,6 +24,7 @@ export const StatusCell = ({ status }: Props) => {
   const theme = useContext(ThemeContext)
   const statusColors = {
     [KYC_STATUSES.PENDING]: theme.text2,
+    [KYC_STATUSES.DRAFT]: theme.text2,
     [KYC_STATUSES.REJECTED]: theme.error,
     [KYC_STATUSES.CHANGE_REQUEST]: theme.text2,
     [KYC_STATUSES.APPROVED]: theme.green1,
@@ -36,6 +40,8 @@ export const StatusCell = ({ status }: Props) => {
         return t`Change requested`
       case KYC_STATUSES.APPROVED:
         return t`Approved`
+      case KYC_STATUSES.DRAFT:
+        return t`Draft`
       default:
         return t`Status`
     }
@@ -51,6 +57,8 @@ export const StatusCell = ({ status }: Props) => {
         return pendingIcon
       case KYC_STATUSES.CHANGE_REQUEST:
         return changeRequestIcon
+      case KYC_STATUSES.DRAFT:
+        return warningIcon
       default:
         return pendingIcon
     }
