@@ -9,6 +9,7 @@ import { useCurrencyBalance } from 'state/wallet/hooks'
 import { TYPE } from 'theme'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { AddWrappedToMetamask } from 'pages/SecTokenDetails/AddToMetamask'
+import { MouseoverTooltip } from 'components/Tooltip'
 
 import { ExistingTitle, TitleStatusRow } from './styleds'
 
@@ -46,16 +47,18 @@ export const BalanceRow = ({ currency, account, token }: Props) => {
         </TextWrap>
         <AddWrappedToMetamask token={token} />
       </ExistingTitle>
-
-      <ButtonGradientBorder
-        data-testid="withdraw"
-        style={{ width: '230px' }}
-        onClick={() => {
-          toggle()
-        }}
-      >
-        <Trans>Withdraw</Trans>
-      </ButtonGradientBorder>
+      <MouseoverTooltip text={!token.allowWithdrawal ? 'Withdrawal are not available yet for this token' : ''}>
+        <ButtonGradientBorder
+          data-testid="withdraw"
+          style={{ width: '230px' }}
+          onClick={() => {
+            toggle()
+          }}
+          disabled={!token.allowWithdrawal}
+        >
+          <Trans>Withdraw</Trans>
+        </ButtonGradientBorder>
+      </MouseoverTooltip>
     </TitleStatusRow>
   )
 }
