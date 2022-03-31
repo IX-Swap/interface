@@ -40,7 +40,7 @@ function isMatic(chainId: number) {
 
 class MaticNativeCurrency extends NativeCurrency {
   equals(other: Currency): boolean {
-    return other.isNative && other.chainId === this.chainId
+    return other?.isNative && other.chainId === this.chainId
   }
 
   get wrapped(): Token {
