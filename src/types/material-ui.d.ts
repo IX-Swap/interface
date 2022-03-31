@@ -132,8 +132,8 @@ declare module '@mui/styles/defaultTheme' {
 declare module '@mui/material/styles' {
   export interface PaletteOptions {
     backgrounds: AppBackgrounds
+    skeleton?: SkeletonPalette
     chip?: ChipPalette
-    skeleton: SkeletonPalette
     toggledInputs?: ToggledInputsColorOptions
     switch?: SwitchColorOptions
     slider: {
@@ -165,8 +165,8 @@ declare module '@mui/material/styles' {
 
   export interface Palette {
     backgrounds: AppBackgrounds
+    skeleton?: SkeletonPalette
     chip?: ChipPalette
-    skeleton: SkeletonPalette
     toggledInputs?: ToggledInputsColorOptions
     switch?: SwitchColorOptions
     sidebar: {
