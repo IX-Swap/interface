@@ -1851,10 +1851,22 @@
   resolved "https://registry.yarnpkg.com/@ixswap1/lib/-/lib-1.3.0.tgz#0a8e8bafa0ca6783c7c254338fda8b41f5b83b19"
   integrity sha512-30MpT4gc5oe6Lh2bWk0ldJND5D0YIiwUTbvpymyVx61twvQHyqYZEWcgi3GTxxKT6nkyNJIV9dwA7shLqlBKPw==
 
-"@ixswap1/sdk-core@1.x.x", "@ixswap1/sdk-core@^1.0.0":
+"@ixswap1/sdk-core@1.x.x":
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/@ixswap1/sdk-core/-/sdk-core-1.3.0.tgz#2edbb1df9fbcca33082f1218724c5e32e8ba43de"
   integrity sha512-M4u+UZq9Md37L0uoE8I3eZZxjK5SUNnBAZamVjSmcT0rF7OYOZ2dMdHVIGuCqFMgNouYGWoGRqmrHMVXDq6yRw==
+  dependencies:
+    "@ethersproject/address" "^5.0.2"
+    big.js "^5.2.2"
+    decimal.js-light "^2.5.0"
+    jsbi "^3.1.4"
+    tiny-invariant "^1.1.0"
+    toformat "^2.0.0"
+
+"@ixswap1/sdk-core@^1.0.0":
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/@ixswap1/sdk-core/-/sdk-core-1.3.1.tgz#e140d8870ae9ba73ada6372f90410ed4e8510170"
+  integrity sha512-M1Kc1BBwdOjokZ+oX619D041VJP0LBZTVKGGLxCLb5mAnsedHTX+42T5a9wnXGSxD4eMS8AsmOXc74/N1qz+ew==
   dependencies:
     "@ethersproject/address" "^5.0.2"
     big.js "^5.2.2"
