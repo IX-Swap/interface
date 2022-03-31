@@ -7,7 +7,7 @@ import { useActiveWeb3React } from 'hooks/web3'
 import { useDepositModalToggle } from 'state/application/hooks'
 import { TYPE } from 'theme'
 import { CustodianInfo } from 'components/Vault/enum'
-// import { MouseoverTooltip } from 'components/Tooltip'
+import { MouseoverTooltip } from 'components/Tooltip'
 
 import { BalanceRow } from './BalanceRow'
 import { HistoryBlock } from './HistoryBlock'
@@ -34,16 +34,16 @@ export const ExistingVault = ({ currency, custodian, token }: Props) => {
             <Trans>on {custodian?.name} custodian</Trans>
           </TYPE.description2>
         </ExistingTitle>
-        {/* <MouseoverTooltip text={!token.allowDeposit ? 'Deposit are not available yet for this token' : ''}> */}
-        <ButtonIXSGradient
-          data-testid="deposit"
-          style={{ width: '230px' }}
-          onClick={() => toggle()}
-          // disabled={!token.allowDeposit}
-        >
-          <Trans>Deposit</Trans>
-        </ButtonIXSGradient>
-        {/* </MouseoverTooltip> */}
+        <MouseoverTooltip text={!token.allowDeposit ? 'Deposit are not available yet for this token' : ''}>
+          <ButtonIXSGradient
+            data-testid="deposit"
+            style={{ width: '230px' }}
+            onClick={() => toggle()}
+            disabled={!token.allowDeposit}
+          >
+            <Trans>Deposit</Trans>
+          </ButtonIXSGradient>
+        </MouseoverTooltip>
       </TitleStatusRow>
       <BalanceRow currency={currency} account={account} token={token} />
       <HistoryBlock currency={currency} account={account} />
