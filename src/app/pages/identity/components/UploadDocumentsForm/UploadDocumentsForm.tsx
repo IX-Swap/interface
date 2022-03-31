@@ -14,7 +14,7 @@ export const UploadDocumentsForm = ({
   identityType
 }: UploadDocumentsFormProps) => {
   return (
-    <Grid container spacing={6} direction='column'>
+    <Grid container data-testid='uploadDocument' spacing={6} direction='column'>
       <Grid item>
         <Typography>
           Please upload the following documents. All account statements and

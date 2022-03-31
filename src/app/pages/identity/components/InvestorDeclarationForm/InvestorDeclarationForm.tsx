@@ -32,7 +32,7 @@ export const InvestorDeclarationForm = ({
   return (
     <>
       <FormSectionHeader title='Investor Status Declaration' />
-      <Grid container spacing={3}>
+      <Grid data-testid='investorStatusDeclaration' container spacing={3}>
         <Grid item xs={12}>
           <Typography>
             Singapore rules require you to declare your investor status before
