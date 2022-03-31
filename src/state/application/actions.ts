@@ -49,10 +49,8 @@ export const updateBlockNumber = createAction<{ chainId: number; blockNumber: nu
 export const setOpenModal = createAction<ApplicationModal | null>('application/setOpenModal')
 export const setShowFakeApproval = createAction<{ showValue: boolean }>('application/setShowFakeApproval')
 export const setBrokerDealerData = createAction<{ newData: any }>('application/setBrokerDealerData')
-export const addPopup = createAction<{ key?: string; removeAfterMs?: number | null; content: PopupContent }>(
-  'application/addPopup'
-)
+export const addPopup =
+  createAction<{ key?: string; removeAfterMs?: number | null; content: PopupContent }>('application/addPopup')
 export const removePopup = createAction<{ key: string }>('application/removePopup')
-export const setModalDetails = createAction<{ modalType: ModalType; modalTitle: string; modalMessage: string }>(
-  'application/setModalDetails'
-)
+export const setModalDetails =
+  createAction<{ modalType: ModalType; modalTitle: string; modalMessage: string }>('application/setModalDetails')

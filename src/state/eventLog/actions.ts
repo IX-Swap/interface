@@ -33,9 +33,8 @@ export const clearEventLog = createAction('eventLog/clearLog')
 export const setFilter = createAction<{ filter: ActionTypes }>('eventLog/setFilter')
 export const setPage = createAction<{ page: number }>('eventLog/setPage')
 export const setTokenId = createAction<{ tokenId: number }>('eventLog/setTokenId')
-export const setMultiFilters = createAction<{ tokenId: number; page: number; filter: ActionTypes }>(
-  'eventLog/setMultiFilters'
-)
+export const setMultiFilters =
+  createAction<{ tokenId: number; page: number; filter: ActionTypes }>('eventLog/setMultiFilters')
 export const resetPage = createAction<void>('eventLog/resetPage')
 export const setLogItem = createAction<{ logItem: LogItem | null }>('eventLog/setLogItem')
 

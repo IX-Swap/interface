@@ -209,9 +209,8 @@ export function useDefaultsFromURLSearch():
   const parsedQs = useParsedQueryString()
   const authorizations = useAuthorizationsState()
   const noAuthorizations = !authorizations || Object.keys(authorizations).length === 0
-  const [result, setResult] = useState<
-    { inputCurrencyId: string | undefined; outputCurrencyId: string | undefined } | undefined
-  >()
+  const [result, setResult] =
+    useState<{ inputCurrencyId: string | undefined; outputCurrencyId: string | undefined } | undefined>()
   const state = useSwapState()
   useEffect(() => {
     if (!chainId) return
