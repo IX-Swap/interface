@@ -44,8 +44,6 @@ describe('list reducer', () => {
             'fake-url': {
               error: null,
               loadingRequestId: 'request-id',
-              current: null,
-              pendingUpdate: null,
             },
           },
           selectedListUrl: undefined,
