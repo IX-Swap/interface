@@ -100,6 +100,15 @@ export interface TablePalette {
   boxShadow: string
 }
 
+export interface ChipPalette {
+  bg: string
+  fill: string
+  opacity: number
+  color: string
+  bgBasic: string
+  bgSpecial: string
+}
+
 export interface PaginationItem {
   color: CSSProperties['color']
   bg: CSSProperties['color']
@@ -130,6 +139,7 @@ declare module '@mui/styles/defaultTheme' {
 declare module '@mui/material/styles' {
   export interface PaletteOptions {
     backgrounds: AppBackgrounds
+    chip?: ChipPalette
     skeleton: SkeletonPalette
     toggledInputs?: ToggledInputsColorOptions
     switch?: SwitchColorOptions
@@ -163,6 +173,7 @@ declare module '@mui/material/styles' {
 
   export interface Palette {
     backgrounds: AppBackgrounds
+    chip?: ChipPalette
     skeleton: SkeletonPalette
     toggledInputs?: ToggledInputsColorOptions
     switch?: SwitchColorOptions
