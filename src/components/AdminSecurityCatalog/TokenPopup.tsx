@@ -476,12 +476,12 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                           <TYPE.title11 marginBottom="26px" color="text2">
                             <Trans>Featured</Trans>
                           </TYPE.title11>
-                          <TYPE.title11 marginBottom="26px" color="text2">
+                          {/* <TYPE.title11 marginBottom="26px" color="text2">
                             <Trans>Allow Deposit</Trans>
                           </TYPE.title11>
                           <TYPE.title11 marginBottom="26px" color="text2">
                             <Trans>Allow Withdrawal</Trans>
-                          </TYPE.title11>
+                          </TYPE.title11> */}
                         </Box>
                         <Box marginLeft={isMobile ? 'auto' : '0px'}>
                           <Radio
@@ -492,14 +492,14 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                             isActive={token.featured}
                             onToggle={() => setToken({ ...token, featured: !token.featured })}
                           />
-                          <Radio
+                          {/* <Radio
                             isActive={token.allowDeposit}
                             onToggle={() => setToken({ ...token, allowDeposit: !token.allowDeposit })}
                           />
                           <Radio
                             isActive={token.allowWithdrawal}
                             onToggle={() => setToken({ ...token, allowWithdrawal: !token.allowWithdrawal })}
-                          />
+                          /> */}
                         </Box>
                       </Box>
                     </FormRow>
