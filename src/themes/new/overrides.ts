@@ -25,12 +25,12 @@ declare module '@mui/material/Button' {
 
 declare module '@mui/material/styles' {
   interface Palette {
-    'special-red': PaletteColor
-    'special-green': PaletteColor
+    'special-red'?: PaletteColor
+    'special-green'?: PaletteColor
   }
   interface PaletteOptions {
-    'special-red': PaletteColor
-    'special-green': PaletteColor
+    'special-red'?: PaletteColor
+    'special-green'?: PaletteColor
   }
 }
 
