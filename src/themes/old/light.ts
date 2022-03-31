@@ -1,6 +1,8 @@
-import { DeprecatedThemeOptions } from '@mui/material'
+import { createTheme, DeprecatedThemeOptions } from '@mui/material'
 import { themeColors } from 'themes/old/colors'
 import tinycolor from 'tinycolor2'
+
+const { palette } = createTheme()
 
 export const lightTheme: DeprecatedThemeOptions = {
   palette: {
@@ -38,6 +40,20 @@ export const lightTheme: DeprecatedThemeOptions = {
     divider: '#dddddd',
     text: {
       primary: '#444444'
-    }
+    },
+    'special-red': palette.augmentColor({
+      color: {
+        main: '#F56283',
+        light: '#F58FA6',
+        contrastText: '#FFF'
+      }
+    }),
+    'special-green': palette.augmentColor({
+      color: {
+        main: '#7DD320',
+        light: '#AADF70',
+        contrastText: '#FFF'
+      }
+    })
   }
 }
