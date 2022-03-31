@@ -74,7 +74,9 @@ export class WrappedTokenInfo implements Token {
   }
 
   equals(other: Currency): boolean {
-    return other.chainId === this.chainId && other.isToken && other.address.toLowerCase() === this.address.toLowerCase()
+    return (
+      other?.chainId === this?.chainId && other?.isToken && other.address.toLowerCase() === this.address.toLowerCase()
+    )
   }
 
   sortsBefore(other: Token): boolean {
