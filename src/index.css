@@ -18,6 +18,10 @@ body {
   padding: 0;
 }
 
+body > iframe {
+  pointer-events: none;
+}
+
 button {
   user-select: none;
 }
