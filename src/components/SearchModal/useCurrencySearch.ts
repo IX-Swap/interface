@@ -1,5 +1,6 @@
 import { Currency, Ether, Token } from '@ixswap1/sdk-core'
 import useDebounce from 'hooks/useDebounce'
+import { useNativeCurrency } from 'hooks/useNativeCurrency'
 import { useOnClickOutside } from 'hooks/useOnClickOutside'
 import useToggle from 'hooks/useToggle'
 import { MutableRefObject, useCallback, useEffect, useMemo, useRef, useState } from 'react'
@@ -56,6 +57,8 @@ export const useCurrencySearch = ({
 
   const searchTokenIsAdded = useIsUserAddedToken(searchToken)
 
+  const native = useNativeCurrency()
+
   useEffect(() => {
     if (isAddressSearch) {
       ReactGA.event({
@@ -78,15 +81,15 @@ export const useCurrencySearch = ({
 
   const filteredSortedTokens = useSortedTokensByQuery(sortedTokens, debouncedQuery)
 
-  const ether = useMemo(() => chainId && Ether.onChain(chainId), [chainId])
-
   const filteredSortedTokensWithETH: Currency[] = useMemo(() => {
+    if (!native) return filteredSortedTokens
+
     const s = debouncedQuery.toLowerCase().trim()
-    if (s === '' || s === 'e' || s === 'et' || s === 'eth') {
-      return ether ? [ether, ...filteredSortedTokens] : filteredSortedTokens
+    if (native.symbol?.toLowerCase()?.indexOf(s) !== -1) {
+      return native ? [native, ...filteredSortedTokens] : filteredSortedTokens
     }
     return filteredSortedTokens
-  }, [debouncedQuery, ether, filteredSortedTokens])
+  }, [debouncedQuery, native, filteredSortedTokens])
 
   // manage focus on modal show
   const inputRef = useRef<HTMLInputElement>()
@@ -115,7 +118,7 @@ export const useCurrencySearch = ({
     inputRef,
     handleInput,
     debouncedQuery,
-    ether,
+    native,
     chainId,
     searchTokenIsAdded,
     searchToken,

@@ -1,5 +1,7 @@
-import { Token } from '@ixswap1/sdk-core'
+import { Currency, Ether, NativeCurrency, Token } from '@ixswap1/sdk-core'
+
 import { IXS_ADDRESS } from './addresses'
+import { SupportedChainId } from './chains'
 
 export const AMPL = new Token(1, '0xD46bA6D942050d489DBd938a2C909A5d5039A161', 9, 'AMPL', 'Ampleforth')
 export const DAI = new Token(1, '0x6B175474E89094C44Da98b954EedeAC495271d0F', 18, 'DAI', 'Dai Stablecoin')
@@ -30,4 +32,57 @@ export const IXS: { [chainId: number]: Token } = {
   [42]: new Token(42, IXS_ADDRESS[42], 18, 'IXS', 'IXS'),
   [80001]: new Token(80001, IXS_ADDRESS[80001], 18, 'IXS', 'IXS'),
   [137]: new Token(137, IXS_ADDRESS[137], 18, 'IXS', 'IXS'),
+}
+
+function isMatic(chainId: number) {
+  return chainId === SupportedChainId.MUMBAI || chainId === SupportedChainId.MATIC
+}
+
+class MaticNativeCurrency extends NativeCurrency {
+  equals(other: Currency): boolean {
+    return other.isNative && other.chainId === this.chainId
+  }
+
+  get wrapped(): Token {
+    if (!isMatic(this.chainId)) throw new Error('Not matic')
+    return IXS[this.chainId]
+  }
+
+  public constructor(chainId: number) {
+    if (!isMatic(chainId)) throw new Error('Not matic')
+    super(chainId, 18, 'MATIC', 'Polygon Matic')
+  }
+}
+
+export class ExtendedEther extends Ether {
+  public get wrapped(): Token {
+    if (this.chainId in IXS) return IXS[this.chainId]
+    throw new Error('Unsupported chain ID')
+  }
+
+  private static _cachedExtendedEther: { [chainId: number]: NativeCurrency } = {}
+
+  public static onChain(chainId: number): ExtendedEther {
+    return this._cachedExtendedEther[chainId] ?? (this._cachedExtendedEther[chainId] = new ExtendedEther(chainId))
+  }
+}
+
+const cachedNativeCurrency: { [chainId: number]: NativeCurrency } = {}
+
+export function nativeOnChain(chainId: number) {
+  return (
+    cachedNativeCurrency[chainId] ??
+    (cachedNativeCurrency[chainId] = isMatic(chainId)
+      ? new MaticNativeCurrency(chainId)
+      : ExtendedEther.onChain(chainId))
+  )
+}
+
+export const TOKEN_SHORTHANDS: { [shorthand: string]: { [chainId in SupportedChainId]?: string } } = {
+  USDC: {
+    [SupportedChainId.MAINNET]: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
+    [SupportedChainId.KOVAN]: '0x31eeb2d0f9b6fd8642914ab10f4dd473677d80df',
+    [SupportedChainId.MUMBAI]: '0xe11a86849d99f524cac3e7a0ec1241828e332c62',
+    [SupportedChainId.MATIC]: '0x2791bca1f2de4661ed88a30c99a7a9449aa84174',
+  },
 }

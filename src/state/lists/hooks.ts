@@ -47,15 +47,14 @@ export function useAllLists(): AppState['lists']['byUrl'] {
 }
 
 function combineMaps(map1: TokenAddressMap, map2: TokenAddressMap): TokenAddressMap {
-  return {
-    [1]: { ...map1[1], ...map2[1] },
-    [4]: { ...map1[4], ...map2[4] },
-    [3]: { ...map1[3], ...map2[3] },
-    [42]: { ...map1[42], ...map2[42] },
-    [137]: { ...map1[137], ...map2[137] },
-    [80001]: { ...map1[80001], ...map2[80001] },
-    [5]: { ...map1[5], ...map2[5] },
-  }
+  const chainIds = Object.keys({ ...map1, ...map2 }).map((id) => parseInt(id))
+  return chainIds.reduce(
+    (acc, chainId) => ({
+      ...acc,
+      [chainId]: { ...map2[chainId], ...map1[chainId] },
+    }),
+    {}
+  )
 }
 
 // merge tokens contained within lists from urls
