@@ -25,7 +25,8 @@ interface Props {
   noLiquidity?: boolean
   currencies: { [field in Field]?: Currency }
   poolTokenPercentage?: Percent
-  price?: Price<Currency, Currency>
+  price?: any
+  // price?: Price<Currency, Currency>
 }
 
 export const PricesAndPoolShare = ({ noLiquidity, currencies, poolTokenPercentage, price }: Props) => {

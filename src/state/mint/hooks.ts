@@ -56,7 +56,8 @@ export function useDerivedMintInfo(
   pairState: PairState
   currencyBalances: { [field in Field]?: CurrencyAmount<Currency> }
   parsedAmounts: { [field in Field]?: CurrencyAmount<Currency> }
-  price?: Price<Currency, Currency>
+  // price?: Price<Currency, Currency>
+  price?: any
   noLiquidity?: boolean
   liquidityMinted?: CurrencyAmount<Token>
   poolTokenPercentage?: Percent
