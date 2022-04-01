@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
+import { FACTORY_ROUTER_ADDRESS } from 'constants/addresses'
 import { BigNumber, utils } from 'ethers'
+import { useActiveWeb3React } from 'hooks/web3'
 import { Contract } from 'web3-eth-contract'
 
 // import Web3 from 'web3'
@@ -13,7 +15,6 @@ export const web3 = new Web3('https://kovan.infura.io/v3/a9e29640d3404001a315ddc
 export const USDT = web3.utils.toChecksumAddress('0xB2b1F86969F8D12ea5820A14E2D7eD8cfa46e912')
 export const IDAI = web3.utils.toChecksumAddress('0x992A460e0ef16b94118a98ADEE14C72e6A9aA34F')
 export const IUSDC = web3.utils.toChecksumAddress('0xbc55ad5733a1bb050f51bbdfb65ecc7a72aedc20')
-export const FACTORY = web3.utils.toChecksumAddress('0x4983b160a8E0De9Cf6a055bd8750847DE3E14eE6')
 export const WETH = web3.utils.toChecksumAddress('0xd0a1e359811322d97991e03f863a0c30c2cf029c')
 
 // export const account = web3.eth.accounts.porivateKeyToAccunt('your private key here')
@@ -51,7 +52,6 @@ export const IUSDC_CONTRACT = new web3.eth.Contract(ERC20_ABI, IUSDC)
 export const IDAI_CONTRACT = new web3.eth.Contract(ERC20_FAUCET_ABI, IDAI)
 export const USDT_CONTRACT = new web3.eth.Contract(ERC20_FAUCET_ABI, IDAI)
 export const SWAP_ROUTER_CONTRACT = new web3.eth.Contract(SWAP_ROUTER_ABI, SWAP_ROUTER_ADDRESS)
-export const FACTORY_CONTRACT = new web3.eth.Contract(FACTORY_ABI, FACTORY) //  contract to consult oracle
 export const WETH_IDAI_CONTRACT = new web3.eth.Contract(PAIR_ABI, WETH_IDAI_PAIR_ADDRESS)
 //export const WETH_IDAI_CONTRACT = new web3.eth.Contract(PAIR_ABI, WETH)
 
@@ -182,7 +182,13 @@ class Pool {
    * @param isSecurity check if a
    */
   async verifySwap(transaction: Swap, isSecurity: boolean) {
+    const { chainId } = useActiveWeb3React()
+
+    if (!chainId) return
     //  request last known reserves, check if Oracle can be consulted
+    const FACTORY = web3.utils.toChecksumAddress(FACTORY_ROUTER_ADDRESS[chainId])
+    const FACTORY_CONTRACT = new web3.eth.Contract(FACTORY_ABI, FACTORY) //  contract to consult oracle
+
     transaction.oracleAmount1Out = BigNumber.from(0)
     transaction.oracleAmount0Out = BigNumber.from(0)
 
