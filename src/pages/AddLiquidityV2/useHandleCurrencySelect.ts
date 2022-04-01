@@ -10,6 +10,7 @@ interface Props {
   history: H.History
 }
 export const useHandleCurrencySelect = ({ currencyIdA, currencyIdB, history }: Props) => {
+  const native = useNativeCurrency()
   const handleCurrencyASelect = useCallback(
     (currencyA: Currency) => {
       const newCurrencyIdA = currencyId(currencyA)
@@ -24,7 +25,6 @@ export const useHandleCurrencySelect = ({ currencyIdA, currencyIdB, history }: P
   const handleCurrencyBSelect = useCallback(
     (currencyB: Currency) => {
       const newCurrencyIdB = currencyId(currencyB)
-      const native = useNativeCurrency()
       if (currencyIdA === newCurrencyIdB) {
         if (currencyIdB) {
           history.push(`/add/${currencyIdB}/${newCurrencyIdB}`)
