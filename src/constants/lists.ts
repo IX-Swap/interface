@@ -6,7 +6,6 @@ const AAVE_LIST = 'tokenlist.aave.eth'
 const SYNTHETIX_LIST = 'synths.snx.eth'
 const WRAPPED_LIST = 'wrapped.tokensoft.eth'
 const SET_LIST = 'https://raw.githubusercontent.com/SetProtocol/uniswap-tokenlist/main/set.tokenlist.json'
-const OPYN_LIST = 'https://raw.githubusercontent.com/opynfinance/opyn-tokenlist/master/opyn-v1.tokenlist.json'
 const ROLL_LIST = 'https://app.tryroll.com/tokens.json'
 const CMC_ALL_LIST = 'defi.cmc.eth'
 const CMC_STABLECOIN = 'stablecoin.cmc.eth'
@@ -26,7 +25,6 @@ export const DEFAULT_LIST_OF_LISTS: string[] = [
   UMA_LIST,
   WRAPPED_LIST,
   SET_LIST,
-  OPYN_LIST,
   ROLL_LIST,
   CMC_ALL_LIST,
   CMC_STABLECOIN,
