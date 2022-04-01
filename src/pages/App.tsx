@@ -17,6 +17,7 @@ import { useActiveWeb3React } from 'hooks/web3'
 import { useAccount } from 'state/user/hooks'
 import { routes } from 'utils/routes'
 import { SupportedChainId } from 'constants/chains'
+import { useKYCState } from 'state/kyc/hooks'
 
 import GoogleAnalyticsReporter from '../components/analytics/GoogleAnalyticsReporter'
 import ErrorBoundary from '../components/ErrorBoundary'
@@ -34,6 +35,7 @@ import PoolFinder from './PoolFinder'
 import { RedirectPathToKyc, RedirectPathToSwapOnly, RedirectToSwap } from './Swap/redirects'
 import { Footer } from '../components/Footer'
 import { isUserWhitelisted } from 'utils/isUserWhitelisted'
+import { KYCStatuses } from 'components/Vault/enum'
 
 const Admin = lazy(() => import('./Admin'))
 
@@ -89,6 +91,21 @@ export default function App() {
   const isSettingsOpen = useModalOpen(ApplicationModal.SETTINGS)
   const { pathname } = useLocation()
   const { chainId, account } = useActiveWeb3React()
+  const { kyc } = useKYCState()
+
+  const canAccessKycForm = (kycType: string) => {
+    if (!kyc) return true
+
+    if ([KYCStatuses.REJECTED, KYCStatuses.APPROVED, KYCStatuses.PENDING].includes(kyc?.data?.status)) return false
+
+    const userKyc = kyc?.data.corporateKycId ? 'corporate' : 'individual'
+
+    if (KYCStatuses.CHANGES_REQUESTED) {
+      return kycType === userKyc
+    }
+
+    return true
+  }
 
   useAccount()
 
@@ -151,8 +168,12 @@ export default function App() {
                 )}
 
                 {isWhitelisted && <Route exact strict path={routes.kyc} component={KYC} />}
-                {isWhitelisted && <Route exact strict path={routes.kycIndividual} component={IndividualKYC} />}
-                {isWhitelisted && <Route exact strict path={routes.kycCorporate} component={CorporateKYC} />}
+                {isWhitelisted && canAccessKycForm('individual') && (
+                  <Route exact strict path={routes.kycIndividual} component={IndividualKYC} />
+                )}
+                {isWhitelisted && canAccessKycForm('corporate') && (
+                  <Route exact strict path={routes.kycCorporate} component={CorporateKYC} />
+                )}
 
                 {chainId && chains.includes(chainId) && isWhitelisted && (
                   <Route exact strict path="/send" component={RedirectPathToSwapOnly} />
