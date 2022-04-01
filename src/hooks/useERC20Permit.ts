@@ -3,7 +3,7 @@ import { Percent, CurrencyAmount, Currency, TradeType, Token } from '@ixswap1/sd
 import { Trade as V2Trade } from '@ixswap1/v2-sdk'
 import { splitSignature } from 'ethers/lib/utils'
 import { useMemo, useState } from 'react'
-import { DAI, IXS, USDC } from '../constants/tokens'
+import { IXS, USDC } from '../constants/tokens'
 import { useSingleCallResult } from '../state/multicall/hooks'
 import { useActiveWeb3React } from './web3'
 import { useEIP2612Contract } from './useContract'
@@ -32,29 +32,28 @@ const PERMITTABLE_TOKENS: {
   }
 } = {
   [1]: {
-    [USDC.address]: { type: PermitType.AMOUNT, name: 'USD Coin', version: '2' },
-    [DAI.address]: { type: PermitType.ALLOWED, name: 'Dai Stablecoin', version: '1' },
+    [USDC[1].address]: { type: PermitType.AMOUNT, name: 'USD Coin', version: '2' },
     [IXS[1].address]: { type: PermitType.AMOUNT, name: 'Ixs Token' },
   },
   [4]: {
-    ['0xc7AD46e0b8a400Bb3C915120d284AafbA8fc4735']: { type: PermitType.ALLOWED, name: 'Dai Stablecoin', version: '1' },
     [IXS[4].address]: { type: PermitType.AMOUNT, name: 'Ixs Token' },
   },
   [3]: {
     [IXS[3].address]: { type: PermitType.AMOUNT, name: 'Ixs Token' },
-    ['0x07865c6E87B9F70255377e024ace6630C1Eaa37F']: { type: PermitType.AMOUNT, name: 'USD Coin', version: '2' },
   },
   [5]: {
     [IXS[5].address]: { type: PermitType.AMOUNT, name: 'Ixs Token' },
   },
   [42]: {
     [IXS[42].address]: { type: PermitType.AMOUNT, name: 'Ixs Token' },
+    [USDC[42].address]: { type: PermitType.AMOUNT, name: 'USD Coin', version: '2' },
   },
   [80001]: {
     [IXS[80001].address]: { type: PermitType.AMOUNT, name: 'Ixs Token' },
   },
   [137]: {
     [IXS[137].address]: { type: PermitType.AMOUNT, name: 'Ixs Token' },
+    [USDC[137].address]: { type: PermitType.AMOUNT, name: 'USD Coin', version: '2' },
   },
 }
 

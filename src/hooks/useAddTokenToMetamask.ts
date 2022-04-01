@@ -21,7 +21,7 @@ export default function useAddTokenToMetamask(currencyToAdd: Currency | undefine
     if (library && library.provider.isMetaMask && library.provider.request && token) {
       let wrappedSymbol
       if (secTokens[token?.address]) {
-        wrappedSymbol = `w${token?.symbol}`
+        wrappedSymbol = `${token?.symbol}`
       }
       library.provider
         .request({

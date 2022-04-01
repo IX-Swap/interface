@@ -6,7 +6,6 @@ import { useActiveWeb3React } from './web3'
 
 // USDC amount used when calculating spot price for a given currency.
 // The amount is large enough to filter low liquidity pairs.
-const USDC_CURRENCY_AMOUNT_OUT = CurrencyAmount.fromRawAmount(USDC, 100_000e6)
 
 /**
  * Returns the price in USDC of the input currency
@@ -14,8 +13,9 @@ const USDC_CURRENCY_AMOUNT_OUT = CurrencyAmount.fromRawAmount(USDC, 100_000e6)
  */
 export default function useUSDCPrice(currency?: Currency): Price<Currency, Token> | undefined {
   const { chainId } = useActiveWeb3React()
+  const USDC_CURRENCY_AMOUNT_OUT = CurrencyAmount.fromRawAmount(USDC[chainId || 137], 10000)
 
-  const v2USDCTrade = useV2TradeExactOut(currency, chainId === 1 ? USDC_CURRENCY_AMOUNT_OUT : undefined, {
+  const v2USDCTrade = useV2TradeExactOut(currency, USDC_CURRENCY_AMOUNT_OUT, {
     maxHops: 2,
   })
 
@@ -25,7 +25,7 @@ export default function useUSDCPrice(currency?: Currency): Price<Currency, Token
     }
 
     // return some fake price data for non-mainnet
-    if (chainId !== 1) {
+    if (chainId !== 1 && chainId !== 137) {
       const fakeUSDC = new Token(chainId, '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', 6, 'fUSDC', 'Fake USDC')
       return new Price(
         currency,
@@ -36,13 +36,13 @@ export default function useUSDCPrice(currency?: Currency): Price<Currency, Token
     }
 
     // handle usdc
-    if (currency?.wrapped.equals(USDC)) {
-      return new Price(USDC, USDC, '1', '1')
+    if (currency?.wrapped.equals(USDC[chainId || 137])) {
+      return new Price(USDC[chainId || 137], USDC[chainId || 137], '1', '1')
     }
 
     if (v2USDCTrade) {
       const { numerator, denominator } = v2USDCTrade.route.midPrice
-      return new Price(currency, USDC, denominator, numerator)
+      return new Price(currency, USDC[chainId || 137], denominator, numerator)
     }
 
     return undefined

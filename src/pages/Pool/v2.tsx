@@ -37,8 +37,6 @@ export default function Pool() {
     showEmptyLiquidity,
     pairsPresent,
     v2PairsWithoutStakedAmount,
-    stakingPairs,
-    stakingInfosWithBalance,
   } = useTokens()
   const { chainId } = useActiveWeb3React()
   const currentHashTransaction = getPoolTransactionHash()
@@ -81,7 +79,7 @@ export default function Pool() {
                     {v2PairsWithoutStakedAmount.map((v2Pair) => (
                       <FullPositionCard key={v2Pair.liquidityToken.address} pair={v2Pair} />
                     ))}
-                    {stakingPairs.map(
+                    {/* {stakingPairs.map(
                       (stakingPair, i) =>
                         stakingPair[1] && ( // skip pairs that arent loaded
                           <FullPositionCard
@@ -90,7 +88,7 @@ export default function Pool() {
                             stakedBalance={stakingInfosWithBalance[i].stakedAmount}
                           />
                         )
-                    )}
+                    )} */}
                   </>
                 ) : (
                   <RowCenter style={{ margin: '68px 0px' }}>

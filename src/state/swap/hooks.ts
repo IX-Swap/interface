@@ -29,6 +29,8 @@ import {
 import { BAD_RECIPIENT_ADDRESSES } from './constants'
 import { involvesAddress, queryParametersToSwapState, tryParseAmount } from './helpers'
 
+type CurrencyWithSec = Currency & { isSecToken?: boolean }
+
 export function useSwapState(): AppState['swap'] {
   return useSelector<AppState, AppState['swap']>((state) => state.swap)
 }
@@ -114,8 +116,8 @@ export function useDerivedSwapInfo(): {
     recipient,
   } = useSwapState()
   const { swapErrorMessage } = useSetSwapState()
-  const inputCurrency = useCurrency(inputCurrencyId)
-  const outputCurrency = useCurrency(outputCurrencyId)
+  const inputCurrency = useCurrency(inputCurrencyId) as CurrencyWithSec
+  const outputCurrency = useCurrency(outputCurrencyId) as CurrencyWithSec
   const recipientLookup = useENS(recipient ?? undefined)
   const to: string | null = (recipient === null ? account : recipientLookup.address) ?? null
 
@@ -145,7 +147,6 @@ export function useDerivedSwapInfo(): {
     [Field.INPUT]: inputCurrency ?? undefined,
     [Field.OUTPUT]: outputCurrency ?? undefined,
   }
-
   let inputError: string | undefined
   if (!account) {
     inputError = t`Connect Wallet`
@@ -173,7 +174,11 @@ export function useDerivedSwapInfo(): {
   }
 
   const toggledTrade = v2Trade ?? undefined
+
+  const isWithSecToken = inputCurrency?.isSecToken || outputCurrency?.isSecToken
+
   const allowedSlippage = useSwapSlippageTolerance(toggledTrade)
+  // const zeroAllowedSlippage = new Percent(0, 10_000)
 
   // compare input balance to max input based on version
   const [balanceIn, amountIn] = [currencyBalances[Field.INPUT], v2Trade?.maximumAmountIn(allowedSlippage)]
