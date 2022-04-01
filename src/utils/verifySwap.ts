@@ -200,7 +200,7 @@ class Pool {
     const FACTORY = web3.utils.toChecksumAddress(FACTORY_ROUTER_ADDRESS[this.chainId])
     const FACTORY_CONTRACT = new web3.eth.Contract(FACTORY_ABI, FACTORY) //  contract to consult oracle
 
-    const isMitigationEnabledLocally = await FACTORY_CONTRACT.methods.mitigationEnabled().call()
+    const isMitigationEnabledLocally = await this.poolContract.methods.mitigationEnabled().call()
     if (!isMitigationEnabledLocally) return;
     
     transaction.oracleAmount1Out = BigNumber.from(0)
