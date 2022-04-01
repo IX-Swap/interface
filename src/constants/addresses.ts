@@ -21,9 +21,11 @@ export const NFT_ADDRESS = {
   [137]: '',
 }
 
-export const ENV_SUPPORTED_TGE_CHAINS = (
-  process.env.REACT_APP_SUPPORTED_TGE_CHAINS ? JSON.parse(process.env.REACT_APP_SUPPORTED_TGE_CHAINS) : undefined
-) as number[] | undefined
+export const ENV_SUPPORTED_TGE_CHAINS = [1, 42, 137] as number[] | undefined
+
+// export const ENV_SUPPORTED_TGE_CHAINS = (
+//   process.env.REACT_APP_SUPPORTED_TGE_CHAINS ? JSON.parse(process.env.REACT_APP_SUPPORTED_TGE_CHAINS) : undefined
+// ) as number[] | undefined
 
 export const SUPPORTED_TGE_CHAINS = { MAIN: 1, KOVAN: 42, MATIC: 137, MUMBAI: 80001, RINKEBY: 4 }
 
