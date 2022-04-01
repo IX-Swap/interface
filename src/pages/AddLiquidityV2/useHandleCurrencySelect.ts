@@ -2,6 +2,7 @@ import { useCallback } from 'react'
 import { Currency } from '@ixswap1/sdk-core'
 import { currencyId } from '../../utils/currencyId'
 import * as H from 'history'
+import { useNativeCurrency } from 'hooks/useNativeCurrency'
 
 interface Props {
   currencyIdA?: string
@@ -9,6 +10,7 @@ interface Props {
   history: H.History
 }
 export const useHandleCurrencySelect = ({ currencyIdA, currencyIdB, history }: Props) => {
+  const native = useNativeCurrency()
   const handleCurrencyASelect = useCallback(
     (currencyA: Currency) => {
       const newCurrencyIdA = currencyId(currencyA)
@@ -30,7 +32,7 @@ export const useHandleCurrencySelect = ({ currencyIdA, currencyIdB, history }: P
           history.push(`/add/${newCurrencyIdB}`)
         }
       } else {
-        history.push(`/add/${currencyIdA ? currencyIdA : 'ETH'}/${newCurrencyIdB}`)
+        history.push(`/add/${currencyIdA ? currencyIdA : native.symbol || 'ETH'}/${newCurrencyIdB}`)
       }
     },
     [currencyIdA, history, currencyIdB]

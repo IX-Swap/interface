@@ -21,6 +21,8 @@ export const NFT_ADDRESS = {
   [137]: '',
 }
 
+// export const ENV_SUPPORTED_TGE_CHAINS = [1, 42, 137] as number[] | undefined
+
 export const ENV_SUPPORTED_TGE_CHAINS = (
   process.env.REACT_APP_SUPPORTED_TGE_CHAINS ? JSON.parse(process.env.REACT_APP_SUPPORTED_TGE_CHAINS) : undefined
 ) as number[] | undefined
@@ -94,6 +96,13 @@ export const ENS_REGISTRAR_ADDRESSES = {
   [5]: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
   [4]: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
   [3]: '0x00000000000C2E074eC69A0dFb2997BA6C7d2e1e',
+}
+
+export const FACTORY_ROUTER_ADDRESS: { [key: number]: string } = {
+  [1]: '',
+  [42]: '0x4983b160a8E0De9Cf6a055bd8750847DE3E14eE6',
+  [80001]: '',
+  [137]: '0xc2D0e0bc81494adB71Ce9Aa350cC875DaE12D81D',
 }
 
 export const STAKING_ALTERNATE_MAP = {
