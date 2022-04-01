@@ -2,6 +2,7 @@ import { Currency, CurrencyAmount, Percent, Token, TradeType } from '@ixswap1/sd
 import { Trade as V2Trade } from '@ixswap1/v2-sdk'
 import { t } from '@lingui/macro'
 import * as H from 'history'
+import { useNativeCurrency } from 'hooks/useNativeCurrency'
 import { useMissingAuthorizations } from 'hooks/useSwapCallback'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -51,12 +52,14 @@ export function useSwapActionHandlers(): {
 } {
   const dispatch = useDispatch<AppDispatch>()
 
+  const native = useNativeCurrency()
+
   const onCurrencySelection = useCallback(
     (field: Field, currency: Currency) => {
       dispatch(
         selectCurrency({
           field,
-          currencyId: currency.isToken ? currency.address : currency.isNative ? 'ETH' : '',
+          currencyId: currency.isToken ? currency.address : currency.isNative ? native.symbol || 'ETH' : '',
         })
       )
     },

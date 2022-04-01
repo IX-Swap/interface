@@ -1,4 +1,5 @@
-import { Currency, Ether, NativeCurrency, Token } from '@ixswap1/sdk-core'
+import { Currency, Ether, NativeCurrency, Token, WETH9 } from '@ixswap1/sdk-core'
+import invariant from 'tiny-invariant'
 
 import { IXS_ADDRESS } from './addresses'
 import { SupportedChainId } from './chains'
@@ -34,6 +35,24 @@ export const IXS: { [chainId: number]: Token } = {
   [137]: new Token(137, IXS_ADDRESS[137], 18, 'IXS', 'IXS'),
 }
 
+export const WRAPPED_NATIVE_CURRENCY: { [chainId: number]: Token | undefined } = {
+  ...(WETH9 as Record<SupportedChainId, Token>),
+  [SupportedChainId.MATIC]: new Token(
+    SupportedChainId.MATIC,
+    '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270',
+    18,
+    'WMATIC',
+    'Wrapped MATIC'
+  ),
+  [SupportedChainId.MUMBAI]: new Token(
+    SupportedChainId.MUMBAI,
+    '0x9c3C9283D3e44854697Cd22D3Faa240Cfb032889',
+    18,
+    'WMATIC',
+    'Wrapped MATIC'
+  ),
+}
+
 function isMatic(chainId: number) {
   return chainId === SupportedChainId.MUMBAI || chainId === SupportedChainId.MATIC
 }
@@ -45,7 +64,9 @@ class MaticNativeCurrency extends NativeCurrency {
 
   get wrapped(): Token {
     if (!isMatic(this.chainId)) throw new Error('Not matic')
-    return IXS[this.chainId]
+    const wrapped = WRAPPED_NATIVE_CURRENCY[this.chainId]
+    invariant(wrapped instanceof Token)
+    return wrapped
   }
 
   public constructor(chainId: number) {
@@ -56,7 +77,8 @@ class MaticNativeCurrency extends NativeCurrency {
 
 export class ExtendedEther extends Ether {
   public get wrapped(): Token {
-    if (this.chainId in IXS) return IXS[this.chainId]
+    const wrapped = WRAPPED_NATIVE_CURRENCY[this.chainId]
+    if (wrapped) return wrapped
     throw new Error('Unsupported chain ID')
   }
 
