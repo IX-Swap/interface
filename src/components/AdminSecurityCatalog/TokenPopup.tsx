@@ -41,6 +41,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
   const toggle = useTokenPopupToggle()
   const [errors, setErrors] = useState<any>()
   const [isConfirmOpen, handleIsConfirmOpen] = useState(false)
+  const [submitted, setSubmitted] = useState(false)
 
   const getIssuers = useFetchIssuers()
   const addPopup = useAddPopup()
@@ -77,6 +78,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
       wrappedTokenAddress: null,
       kycType: null,
     })
+    setSubmitted(false)
   }
 
   useEffect(() => {
@@ -86,7 +88,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
   }, [propToken])
 
   useEffect(() => {
-    if (token) {
+    if (token && submitted) {
       const validationErrors = validateToken(token)
       setErrors(validationErrors)
     }
@@ -97,6 +99,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
     resetErrors()
     toggle()
     setCurrentToken(initialTokenState)
+    setSubmitted(false)
   }
 
   const onClose = () => {
@@ -129,6 +132,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
 
     if (hasError) {
       setErrors(validationErrors)
+      setSubmitted(true)
     } else {
       let data = null
       if (token.id) {
