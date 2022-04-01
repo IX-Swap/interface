@@ -11,6 +11,7 @@ import { AppDispatch } from 'state'
 import { useToggleTransactionModal } from 'state/application/hooks'
 import { LogItem, setLogItem } from 'state/eventLog/actions'
 import { DesktopAndTablet, DesktopOnly, MEDIA_WIDTHS, TYPE } from 'theme'
+import { formatAmount } from 'utils/formatCurrencyAmount'
 import { ActionHistoryStatus, ActionTypeText, getActionStatusText, getStatusColor } from './enum'
 import { DateBox, HistoryRowWraper, IconColumn } from './styleds'
 
@@ -45,7 +46,9 @@ export const TransactionHistoryRow = ({ row, key, currency, icon }: Props) => {
       </td>
       {amount && (
         <td>
-          <TYPE.subHeader1 color={'text2'}>{`${amount} ${(currency as any)?.originalSymbol}`}</TYPE.subHeader1>
+          <TYPE.subHeader1 color={'text2'}>{`${formatAmount(+amount)} ${
+            (currency as any)?.originalSymbol
+          }`}</TYPE.subHeader1>
         </td>
       )}
       <td>

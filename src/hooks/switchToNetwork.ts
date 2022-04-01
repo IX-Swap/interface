@@ -24,7 +24,7 @@ export async function switchToNetwork({ library, chainId }: SwitchNetworkArgumen
       method: 'wallet_switchEthereumChain',
       params: [{ chainId: formattedChainId }],
     })
-  } catch (error) {
+  } catch (error: any) {
     // 4902 is the error code for attempting to switch to an unrecognized chainId
     if (error.code === 4902 && chainId !== undefined) {
       const info = CHAIN_INFO[chainId]

@@ -69,7 +69,7 @@ export function CurrencySearch({
     debouncedQuery,
     handleInput,
     chainId,
-    ether,
+    native,
     searchTokenIsAdded,
     searchToken,
     filteredSortedTokens,
@@ -93,8 +93,8 @@ export function CurrencySearch({
     (e: KeyboardEvent<HTMLInputElement>) => {
       if (e.key === 'Enter') {
         const s = debouncedQuery.toLowerCase().trim()
-        if (s === 'eth' && ether) {
-          handleCurrencySelect(ether)
+        if (s === native?.symbol?.toLowerCase()) {
+          handleCurrencySelect(native)
         } else if (filteredSortedTokensWithETH.length > 0) {
           if (
             filteredSortedTokensWithETH[0].symbol?.toLowerCase() === debouncedQuery.trim().toLowerCase() ||
@@ -105,7 +105,7 @@ export function CurrencySearch({
         }
       }
     },
-    [debouncedQuery, ether, filteredSortedTokensWithETH, handleCurrencySelect]
+    [debouncedQuery, native, filteredSortedTokensWithETH, handleCurrencySelect]
   )
 
   return (

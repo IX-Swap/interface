@@ -20,6 +20,7 @@ import { useFetchHistoricalPoolSize, usePoolSizeState, useStakingState } from 's
 import { POOL_SIZE_LOADING } from 'state/stake/poolSizeReducer'
 import { PERIOD, Tier, TIER_LIMIT } from 'state/stake/reducer'
 import { DesktopAndTablet, MobileOnly, TYPE } from 'theme'
+import { formatAmount } from 'utils/formatCurrencyAmount'
 import { formatNumber } from 'utils/formatNumber'
 import { APYPercentage, APYWrapper, RowWithMarginTop, RowWithMarginTopAndBottom, StakingTierCardWrapper } from './style'
 
@@ -114,7 +115,7 @@ export const StakingTierCard = ({ tier }: { tier: Tier }) => {
         <RowCenter style={{ margin: 'auto', marginTop: '10px' }}>
           <TYPE.description3 fontWeight={400} opacity="0.5">
             <Trans>
-              <span style={{ fontWeight: 700 }}>{formatNumber(Math.floor(leftToFill))}</span> tokens available for
+              <span style={{ fontWeight: 700 }}>{formatAmount(Math.floor(leftToFill))}</span> tokens available for
               staking
             </Trans>
           </TYPE.description3>

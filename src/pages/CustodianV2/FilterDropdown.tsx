@@ -61,7 +61,7 @@ export const FilterDropdown = ({
       justifyContent="center"
       height="60px"
       onClick={() => setIsOpen(!isOpen)}
-      style={{ cursor: 'pointer', padding: 8, width: 132, ...style }}
+      style={{ cursor: 'pointer', ...style }}
       isOpen={isOpen || (selectedItem ? true : false)}
     >
       <TYPE.body2

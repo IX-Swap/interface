@@ -54,7 +54,7 @@ export const useGetTokenAuthorization = () => {
         const result = await fetchTokenAuthorization({ tokenId, amount, pairAddress, pairSymbol, orderType })
         dispatch(authorizeSecToken.fulfilled())
         return result
-      } catch (e) {
+      } catch (e: any) {
         dispatch(authorizeSecToken.rejected({ errorMessage: e.message }))
         return null
       }

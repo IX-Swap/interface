@@ -51,7 +51,7 @@ export function useGetEventCallback(): ({
         const params = { page, tokenId, filter }
         const response = await getTransactionLog(params)
         dispatch(getLog.fulfilled({ response: response.data, params }))
-      } catch (error) {
+      } catch (error: any) {
         console.error(`Could not fetch event list`, error)
         dispatch(getLog.rejected({ errorMessage: error?.message }))
       }

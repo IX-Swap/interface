@@ -5,7 +5,7 @@ import { Label } from '@rebass/forms'
 import { isMobile } from 'react-device-detect'
 
 import { ExternalLink, TYPE } from 'theme'
-import { Container } from 'components/AdminKycTable'
+import { Container } from 'components/AdminAccreditationTable'
 import { BrokerDealerCard } from './BrokerDealerCard'
 import { ButtonIXSGradient, ButtonText } from 'components/Button'
 import { ContainerRow, Input, InputContainer, InputPanel } from 'components/Input'
@@ -31,7 +31,7 @@ import { initialIssuerState } from './mock'
 import { ReactComponent as ArrowLeft } from '../../assets/images/arrow-back.svg'
 import { ReactComponent as LogoImage } from '../../assets/images/wallpaper.svg'
 import { ReactComponent as Delete } from '../../assets/images/delete-basket.svg'
-import { Pagination } from 'components/AdminKycTable/Pagination'
+import { Pagination } from 'components/Pagination'
 
 interface Tab {
   value: 'catalog' | 'add_issuer' | 'edit_issuer'
@@ -59,8 +59,6 @@ export const AdminSecurityCatalog: FC = () => {
   const [deleteTokenId, setDeleteTokenId] = useState(0)
   const [showMode, setShowMode] = useState<Tab['value']>('catalog')
 
-  console.log(currentToken)
-
   useEffect(() => {
     if (showMode === 'catalog') {
       getIssuers({ search: '', offset, page: 1 })
@@ -68,6 +66,8 @@ export const AdminSecurityCatalog: FC = () => {
   }, [getIssuers, showMode])
 
   const onPageChange = (page: number) => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+
     getIssuers({ search: searchValue, page, offset })
   }
 
@@ -146,11 +146,14 @@ export const AdminSecurityCatalog: FC = () => {
   }
 
   const handleCreateClick = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
     setCurrentIssuer(initialIssuerState)
     setShowMode('add_issuer')
   }
 
   const handleEditClick = (editIssuer: any) => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+
     setCurrentIssuer(editIssuer)
     setShowMode('edit_issuer')
   }
@@ -353,3 +356,5 @@ export const AdminSecurityCatalog: FC = () => {
     </>
   )
 }
+
+export default AdminSecurityCatalog

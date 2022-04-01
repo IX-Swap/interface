@@ -1,14 +1,17 @@
+import React, { useMemo } from 'react'
 import { Currency } from '@ixswap1/sdk-core'
 import { Trans } from '@lingui/macro'
+
 import { ButtonIXSGradient } from 'components/Button'
 import { useActiveWeb3React } from 'hooks/web3'
-import React, { useMemo } from 'react'
 import { useDepositModalToggle } from 'state/application/hooks'
+import { TYPE } from 'theme'
+import { CustodianInfo } from 'components/Vault/enum'
+import { MouseoverTooltip } from 'components/Tooltip'
+
 import { BalanceRow } from './BalanceRow'
 import { HistoryBlock } from './HistoryBlock'
 import { ExistingTitle, ExistingWrapper, StyledTitle, TitleStatusRow } from './styleds'
-import { TYPE } from 'theme'
-import { CustodianInfo } from 'components/Vault/enum'
 
 interface Props {
   currency?: Currency
@@ -31,9 +34,16 @@ export const ExistingVault = ({ currency, custodian, token }: Props) => {
             <Trans>on {custodian?.name} custodian</Trans>
           </TYPE.description2>
         </ExistingTitle>
-        <ButtonIXSGradient data-testid="deposit" style={{ width: '230px' }} onClick={() => toggle()}>
-          <Trans>Deposit</Trans>
-        </ButtonIXSGradient>
+        <MouseoverTooltip text={!token.allowDeposit ? 'Deposit are not available yet for this token' : ''}>
+          <ButtonIXSGradient
+            data-testid="deposit"
+            style={{ width: '230px' }}
+            onClick={() => toggle()}
+            disabled={!token.allowDeposit}
+          >
+            <Trans>Deposit</Trans>
+          </ButtonIXSGradient>
+        </MouseoverTooltip>
       </TitleStatusRow>
       <BalanceRow currency={currency} account={account} token={token} />
       <HistoryBlock currency={currency} account={account} />

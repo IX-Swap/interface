@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled, { css } from 'styled-components'
 import { useTransition, useSpring } from 'react-spring'
 import { isMobile } from 'react-device-detect'
@@ -135,6 +135,18 @@ export default function RedesignedWideModal({
   topContent,
   isLarge,
 }: ModalProps) {
+  const handleLoad = () => {
+    const modal = document.getElementById('dialog-content')
+    if (modal) {
+      modal.scrollIntoView()
+    }
+  }
+  useEffect(() => {
+    if (isOpen && scrollable) {
+      setTimeout(() => handleLoad(), 100)
+    }
+  }, [isOpen])
+
   const fadeTransition = useTransition(isOpen, null, {
     config: { duration: 200 },
     from: { opacity: 0 },
@@ -187,6 +199,7 @@ export default function RedesignedWideModal({
                 scrollable={scrollable}
                 tip={tip}
                 isLarge={isLarge}
+                id="dialog-content"
               >
                 {/* prevents the automatic focusing of inputs on mobile by the reach dialog */}
                 {!initialFocusRef && isMobile ? <div tabIndex={1} /> : null}

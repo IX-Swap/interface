@@ -33,6 +33,8 @@ import {
   setSelectedContractAddress,
   setStats,
   setClearState,
+  setCollectionDescription,
+  setCollectionLogo,
 } from 'state/nft/assetForm.actions'
 import {
   setBanner,
@@ -259,7 +261,7 @@ export const useDeployCollection = () => {
   )
 }
 
-interface NftCollectionInfo {
+interface NftCollectionInfo extends NFTCollection {
   name: string
   supply: number
 }
@@ -288,7 +290,7 @@ export const useNftCollection = (address: string) => {
 
       const supply = await contract.methods.totalSupply().call()
 
-      setInfo({ name, supply: Number(supply) })
+      setInfo({ name, supply: Number(supply), ...collection.data })
 
       if (supply === 0) {
         setHasMore(false)
@@ -425,6 +427,8 @@ export function useCreateAssetActionHandlers(): {
   onSetActiveContractAddress: (address: string) => void
   onSetMaxSupply: (supply: number) => void
   onClearState: () => void
+  onSetCollectionDescription: (name: string) => void
+  onSetCollectionLogo: (file: FileWithPath | null) => void
 } {
   const dispatch = useDispatch<AppDispatch>()
 
@@ -521,6 +525,20 @@ export function useCreateAssetActionHandlers(): {
   const onClearState = useCallback(() => {
     dispatch(setClearState())
   }, [dispatch])
+
+  const onSetCollectionDescription = useCallback(
+    (description: string) => {
+      dispatch(setCollectionDescription({ description }))
+    },
+    [dispatch]
+  )
+  const onSetCollectionLogo = useCallback(
+    (file: FileWithPath | null) => {
+      dispatch(setCollectionLogo({ file }))
+    },
+    [dispatch]
+  )
+
   return {
     onSelectFile,
     onSelectPreview,
@@ -538,6 +556,8 @@ export function useCreateAssetActionHandlers(): {
     onSetActiveContractAddress,
     onSetMaxSupply,
     onClearState,
+    onSetCollectionDescription,
+    onSetCollectionLogo,
   }
 }
 export function useCollectionActionHandlers(): {
@@ -676,7 +696,7 @@ export const useCreateNftAssetForm = (history: H.History) => {
   const createNFTAsset = useCreateNft()
   const form = useAssetFormState()
   const showError = useShowError()
-  const { collection, newCollectionName, maxSupply } = form
+  const { collection, newCollectionName, maxSupply, collectionDescription, collectionLogo } = form
   const { library, account, chainId } = useActiveWeb3React()
   const { onSetActiveContractAddress } = useCreateAssetActionHandlers()
   return useCallback(async () => {
@@ -704,11 +724,22 @@ export const useCreateNftAssetForm = (history: H.History) => {
         contractAddress = collection.address
       } else {
         if (newCollectionName) {
-          const newContractAddress = await deployCollection({ name: newCollectionName, maxSupply })
+          const newContractAddress = await deployCollection({
+            name: newCollectionName,
+            maxSupply,
+          })
           contractAddress = newContractAddress
           if (contractAddress) {
             contractInstance = getNftContract({ addressOrAddressMap: contractAddress, library, account, chainId })
-            await createNftCollection({ name: newCollectionName, address: contractAddress, chainId: chainId })
+            await createFullNftCollection({
+              name: newCollectionName,
+              address: contractAddress,
+              chainId: chainId,
+              logo: collectionLogo,
+              description: collectionDescription,
+              cover: null,
+              banner: null,
+            })
           }
         }
       }

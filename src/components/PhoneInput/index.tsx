@@ -1,19 +1,28 @@
-import React from 'react'
+import React, { ReactChildren } from 'react'
 import ReactPhoneInput from 'react-phone-input-2'
 import styled from 'styled-components'
 import { t } from '@lingui/macro'
+
+import { TYPE } from 'theme'
 
 interface Props {
   value?: string
   onChange: (value: string) => void
   label?: string
+  onBlur?: (e: any) => void
+  error?: any | ReactChildren
 }
 
-export const PhoneInput = ({ value, onChange, label }: Props) => {
+export const PhoneInput = ({ value, onChange, label, onBlur, error }: Props) => {
   return (
     <Container>
       <Label>{t`${label || 'Phone Number'}`}</Label>
-      <ReactPhoneInput country={'us'} value={value} onChange={onChange} />
+      <ReactPhoneInput onBlur={onBlur} country={'us'} value={value} onChange={onChange} />
+      {error && (
+        <TYPE.small marginTop="-8px" color={'red1'}>
+          {error}
+        </TYPE.small>
+      )}
     </Container>
   )
 }
@@ -32,21 +41,22 @@ const Container = styled.div`
     position: relative;
   }
   .react-tel-input {
-    background-color: ${({ theme }) => theme.bg7};
+    background-color: transparent;
     border-radius: 36px;
-    border: ${({ theme: { bg7 } }) => `1px solid ${bg7}`};
+    border: ${({ theme: { bg12 } }) => `1px solid ${bg12}40`};
   }
 
   .form-control {
     position: relative;
     padding: 18px 20px 18px 52px;
     border-radius: 36px;
-    background-color: transparent;
+    background-color: ${({ theme: { bg12 } }) => `${bg12}40`};
     color: white;
     border: none;
+    width: 100%;
   }
   .form-control:focus {
-    background-color: transparent;
+    background-color: ${({ theme }) => theme.bg7};
     .react-tel-input {
       border-color: ${({ theme: { bg10 } }) => `${bg10}50`};
     }

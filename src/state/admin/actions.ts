@@ -53,7 +53,7 @@ export const logout: Readonly<{
   fulfilled: createAction('admin/logOut/fulfilled'),
 }
 
-export interface KycList {
+export interface AccreditationList {
   page: number
   offset: number
   totalItems: number
@@ -74,13 +74,14 @@ export interface BrokerDealerSwaps {
   items: BrokerDealerSwapItem[]
   offset: number
 }
-export interface KycItem {
+export interface AccreditationItem {
   createdAt: string
   custodianApplicationId?: number
   deletedAt?: string
   id: number
   kyc: {
     url: string
+    [key: string]: any
   }
   message?: string
   status: string
@@ -144,6 +145,7 @@ export interface KycItem {
     updatedAt: string
   }
   userId: number
+  userKyc: KycItem
 }
 
 export type BrokerDealerSwapItem = {
@@ -175,14 +177,14 @@ export type BrokerDealerSwapItem = {
   transactionHash?: string | null
 }
 
-export const getKycList: Readonly<{
+export const getAccreditationList: Readonly<{
   pending: ActionCreatorWithoutPayload
-  fulfilled: ActionCreatorWithPayload<{ data: KycList }>
+  fulfilled: ActionCreatorWithPayload<{ data: AccreditationList }>
   rejected: ActionCreatorWithPayload<{ errorMessage: string }>
 }> = {
-  pending: createAction('admin/getKycList/pending'),
-  fulfilled: createAction('admin/getKycList/fulfilled'),
-  rejected: createAction('admin/getKycList/rejected'),
+  pending: createAction('admin/getAccreditationList/pending'),
+  fulfilled: createAction('admin/getAccreditationList/fulfilled'),
+  rejected: createAction('admin/getAccreditationList/rejected'),
 }
 
 export const getBrokerDealerList: Readonly<{
@@ -195,34 +197,34 @@ export const getBrokerDealerList: Readonly<{
   rejected: createAction('admin/getBrokerDealerList/rejected'),
 }
 
-export const postApproveKyc: Readonly<{
+export const postApproveAccreditation: Readonly<{
   pending: ActionCreatorWithoutPayload
   fulfilled: ActionCreatorWithPayload<{ data: { id: number; status: string } }>
   rejected: ActionCreatorWithPayload<{ errorMessage: string }>
 }> = {
-  pending: createAction('admin/postApproveKyc/pending'),
-  fulfilled: createAction('admin/postApproveKyc/fulfilled'),
-  rejected: createAction('admin/postApproveKyc/rejected'),
+  pending: createAction('admin/postApproveAccreditation/pending'),
+  fulfilled: createAction('admin/postApproveAccreditation/fulfilled'),
+  rejected: createAction('admin/postApproveAccreditation/rejected'),
 }
 
-export const postDeclineKyc: Readonly<{
+export const postDeclineAccreditation: Readonly<{
   pending: ActionCreatorWithoutPayload
   fulfilled: ActionCreatorWithPayload<{ data: { id: number; status: string } }>
   rejected: ActionCreatorWithPayload<{ errorMessage: string }>
 }> = {
-  pending: createAction('admin/postDeclineKyc/pending'),
-  fulfilled: createAction('admin/postDeclineKyc/fulfilled'),
-  rejected: createAction('admin/postDeclineKyc/rejected'),
+  pending: createAction('admin/postDeclineAccreditation/pending'),
+  fulfilled: createAction('admin/postDeclineAccreditation/fulfilled'),
+  rejected: createAction('admin/postDeclineAccreditation/rejected'),
 }
 
-export const postKycReset: Readonly<{
+export const postResetAccreditation: Readonly<{
   pending: ActionCreatorWithoutPayload
   fulfilled: ActionCreatorWithPayload<{ data: { id: number; status: string } }>
   rejected: ActionCreatorWithPayload<{ errorMessage: string }>
 }> = {
-  pending: createAction('admin/postKycReset/pending'),
-  fulfilled: createAction('admin/postKycReset/fulfilled'),
-  rejected: createAction('admin/postKycReset/rejected'),
+  pending: createAction('admin/postResetAccreditation/pending'),
+  fulfilled: createAction('admin/postResetAccreditation/fulfilled'),
+  rejected: createAction('admin/postResetAccreditation/rejected'),
 }
 
 export const getBrokerDealerSwaps: Readonly<{
@@ -233,4 +235,193 @@ export const getBrokerDealerSwaps: Readonly<{
   pending: createAction('broker-dealer/swaps/pending'),
   fulfilled: createAction('broker-dealer/swaps/fulfilled'),
   rejected: createAction('broker-dealer/swaps/rejected'),
+}
+
+export const getKycList: Readonly<{
+  pending: ActionCreatorWithoutPayload
+  fulfilled: ActionCreatorWithPayload<{ data: KycList }>
+  rejected: ActionCreatorWithPayload<{ errorMessage: string }>
+}> = {
+  pending: createAction('admin/getKycList/pending'),
+  fulfilled: createAction('admin/getKycList/fulfilled'),
+  rejected: createAction('admin/getKycList/rejected'),
+}
+
+export const postApproveKyc: Readonly<{
+  pending: ActionCreatorWithoutPayload
+  fulfilled: ActionCreatorWithPayload<{ data: { id: number; status: string } }>
+  rejected: ActionCreatorWithPayload<{ errorMessage: string }>
+}> = {
+  pending: createAction('admin/postApproveKyc/pending'),
+  fulfilled: createAction('admin/postApproveKyc/fulfilled'),
+  rejected: createAction('admin/postApproveKyc/rejected'),
+}
+
+export const postRejectKyc: Readonly<{
+  pending: ActionCreatorWithoutPayload
+  fulfilled: ActionCreatorWithPayload<{ data: { id: number; status: string } }>
+  rejected: ActionCreatorWithPayload<{ errorMessage: string }>
+}> = {
+  pending: createAction('admin/postRejectKyc/pending'),
+  fulfilled: createAction('admin/postRejectKyc/fulfilled'),
+  rejected: createAction('admin/postRejectKyc/rejected'),
+}
+
+export const postResetKyc: Readonly<{
+  pending: ActionCreatorWithoutPayload
+  fulfilled: ActionCreatorWithPayload<{ data: { id: number; status: string } }>
+  rejected: ActionCreatorWithPayload<{ errorMessage: string }>
+}> = {
+  pending: createAction('admin/postResetKyc/pending'),
+  fulfilled: createAction('admin/postResetKyc/fulfilled'),
+  rejected: createAction('admin/postResetKyc/rejected'),
+}
+
+export const postResubmitKyc: Readonly<{
+  pending: ActionCreatorWithoutPayload
+  fulfilled: ActionCreatorWithoutPayload
+  rejected: ActionCreatorWithPayload<{ errorMessage: string }>
+}> = {
+  pending: createAction('admin/postResubmitKyc/pending'),
+  fulfilled: createAction('admin/postResubmitKyc/fulfilled'),
+  rejected: createAction('admin/postResubmitKyc/rejected'),
+}
+
+export interface Document {
+  asset: {
+    createdAt: string
+    deletedAt: string | null
+    id: number
+    isPrivate: false
+    mimeType: string
+    name: string
+    otc: string | null
+    path: string
+    public: string
+    size: string | null
+    state: string
+    tenant: string
+    updatedAt: string
+    userId: number
+    uuid: string
+  }
+  assetId: number
+  createdAt: string
+  deletedAt: string | null
+  id: number
+  individualKycId: number
+  type: string
+  updatedAt: string
+}
+
+export interface KycList {
+  page: number
+  offset: number
+  totalItems: number
+  totalPages: number
+  itemCount: number
+  items: Array<KycItem>
+  nextPage: number
+  prevPage: number
+}
+
+export interface IndividualKyc {
+  accredited: number
+  address: {
+    city: string
+    country: string
+    createdAt: string
+    deletedAt: string | null
+    id: number
+    line1: string
+    line2: string
+    updatedAt: string
+    [key: string]: any
+  }
+  addressId: number
+  citizenship: string
+  createdAt: string
+  dateOfBirth: string
+  deletedAt: string | null
+  documents: Array<Document>
+  email: string
+  employer: string
+  employmentStatus: string
+  firstName: string
+  gender: string
+  id: number
+  income: string
+  lastName: string
+  middleName: string
+  nationality: string
+  occupation: string
+  phoneNumber: string
+  sourceOfFunds: string
+  updatedAt: string
+  usTin: string | null
+  [key: string]: any
+}
+
+export interface CorporateKyc {
+  accredited: number
+  address: {
+    city: string
+    country: string
+    createdAt: string
+    deletedAt: string | null
+    id: number
+    line1: string
+    line2: string
+    updatedAt: string
+    [key: string]: any
+  }
+  addressId: number
+  citizenship: string
+  createdAt: string
+  dateOfBirth: string
+  deletedAt: string | null
+  documents: Array<Document>
+  email: string
+  employer: string
+  employmentStatus: string
+  firstName: string
+  gender: string
+  id: number
+  income: string
+  lastName: string
+  middleName: string
+  nationality: string
+  occupation: string
+  phoneNumber: string
+  sourceOfFunds: string
+  updatedAt: string
+  usTin: string | null
+  [key: string]: any
+}
+
+export interface KycItem {
+  createdAt: string
+  deletedAt: string | null
+  id: number
+  individual?: IndividualKyc
+  corporate?: IndividualKyc
+  individualKycId: number
+  status: string
+  updatedAt: string
+  user: {
+    active: true
+    createdAt: string
+    deletedAt?: string
+    email?: string
+    ethAddress: string
+    id: number
+    language: string
+    photo?: { uuid: string }
+    photoId?: number
+    principal: string
+    role: string
+    tenant: string
+    updatedAt: string
+  }
+  userId: number
 }

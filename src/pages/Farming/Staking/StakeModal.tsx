@@ -18,6 +18,7 @@ import { useActiveWeb3React } from 'hooks/web3'
 import { Dots } from 'pages/Pool/styleds'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { Text } from 'rebass'
+import { formatNumberValue } from 'components/NumericalInput'
 import { ApplicationModal } from 'state/application/actions'
 import { useModalOpen } from 'state/application/hooks'
 import { POOL_SIZE_LIMITS } from 'state/stake/contstants'
@@ -124,11 +125,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
   const onUserInput = () => {
     if (amountOfIXStoStakeInput?.current?.value) {
       const value = amountOfIXStoStakeInput.current.value
-      const cleanedValue =
-        value
-          .replace(/\s/g, '')
-          .match(/\d{0,}\.?\d{0,4}/)
-          ?.input?.replaceAll(',', '.') || ''
+      const cleanedValue = value.replace(/\s/g, '').replaceAll(',', '') || ''
 
       setTypedValue(cleanedValue)
       if (hasBalance) {
@@ -250,7 +247,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                       {isPoolLimitationLoading ? (
                         <LoaderThin />
                       ) : (
-                        <span style={{ fontWeight: 600 }}>{poolLimitation}</span>
+                        <span style={{ fontWeight: 600 }}>{formatAmount(+poolLimitation)}</span>
                       )}
                       <StyledDropDown style={{ display: 'none' }} />
                     </RowFixed>
@@ -272,7 +269,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                   color={error ? 'red' : 'text1'}
                   ref={amountOfIXStoStakeInput}
                   onInput={onUserInput}
-                  value={typedValue}
+                  value={formatNumberValue(typedValue)}
                   disabled={isApprovingIXS || isStaking}
                 />
                 <InputHintRight>
@@ -329,7 +326,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                 textLeft={t`Distribute`}
                 textRight={
                   <EllipsedText>
-                    <div>{typedValue ? typedValue : 0}&nbsp;IXSgov</div>
+                    <div>{typedValue ? formatAmount(+typedValue) : 0}&nbsp;IXSgov</div>
                   </EllipsedText>
                 }
                 tooltipText={t`IXSgov is a tokenized asset representing your staked ${
@@ -348,7 +345,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                 textRight={
                   <EllipsedText>
                     <div>
-                      {typedValue ? typedValue : 0}&nbsp;{currency?.symbol}
+                      {typedValue ? formatAmount(+typedValue) : 0}&nbsp;{currency?.symbol}
                     </div>
                   </EllipsedText>
                 }
@@ -376,7 +373,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                 textRight={
                   <EllipsedText>
                     <div>
-                      {estimateRewards()}&nbsp;{currency?.symbol}
+                      {formatAmount(+estimateRewards())}&nbsp;{currency?.symbol}
                     </div>
                   </EllipsedText>
                 }

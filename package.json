@@ -80,6 +80,7 @@
     "eslint-plugin-react": "^7.19.0",
     "eslint-plugin-react-hooks": "^4.0.0",
     "ethers": "^5.2.0",
+    "formik": "^2.2.9",
     "inter-ui": "^3.13.1",
     "lightweight-charts": "^3.3.0",
     "lodash.flatmap": "^4.5.0",
@@ -129,7 +130,8 @@
     "workbox-expiration": "^6.1.0",
     "workbox-precaching": "^6.1.0",
     "workbox-routing": "^6.1.0",
-    "workbox-strategies": "^6.1.0"
+    "workbox-strategies": "^6.1.0",
+    "yup": "^0.32.11"
   },
   "resolutions": {
     "@walletconnect/ethereum-provider": "1.6.5"
@@ -171,8 +173,12 @@
     "async-wait-until": "^2.0.7",
     "concurrently": "^6.2.0",
     "eth-provider": "^0.7.0",
+    "moment": "^2.29.1",
     "playwright": "^1.13.0",
+    "react-lazy-load-image-component": "^1.5.1",
     "react-phone-input-2": "^2.15.0",
+    "react-select": "^5.2.2",
+    "react-sticky-box": "^0.9.3",
     "truffle-privatekey-provider": "^1.2.0",
     "web3": "^1.4.0"
   }

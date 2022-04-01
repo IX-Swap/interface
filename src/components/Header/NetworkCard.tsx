@@ -10,6 +10,7 @@ import { ChevronElement } from 'components/ChevronElement'
 import { MEDIA_WIDTHS } from 'theme'
 import { Trans } from '@lingui/macro'
 import { switchToNetwork } from 'hooks/switchToNetwork'
+import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 
 const SelectorControls = styled(VioletCard)`
   border-radius: 12px;
@@ -127,6 +128,7 @@ export const NetworkCard = () => {
   if (!chainId || !NETWORK_LABELS[chainId] || !info || !library) {
     return null
   }
+
   return (
     <>
       {account && (
@@ -140,9 +142,9 @@ export const NetworkCard = () => {
               <FlyoutHeader>
                 <Trans>Select a network</Trans>
               </FlyoutHeader>
-              <Row targetChain={SupportedChainId.KOVAN} />
-              <Row targetChain={SupportedChainId.MAINNET} />
-              <Row targetChain={SupportedChainId.MATIC} />
+              {(ENV_SUPPORTED_TGE_CHAINS || [42]).map((chainId) => (
+                <Row targetChain={chainId} key={chainId} />
+              ))}
             </FlyoutMenu>
           )}
         </Selector>

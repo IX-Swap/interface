@@ -29,8 +29,9 @@ export const addSerializedToken = createAction<{ serializedToken: SerializedToke
 export const removeSerializedToken = createAction<{ chainId: number; address: string }>('user/removeSerializedToken')
 export const addSerializedPair = createAction<{ serializedPair: SerializedPair }>('user/addSerializedPair')
 export const saveAccount = createAction<{ account: string }>('user/saveAccount')
-export const removeSerializedPair =
-  createAction<{ chainId: number; tokenAAddress: string; tokenBAddress: string }>('user/removeSerializedPair')
+export const removeSerializedPair = createAction<{ chainId: number; tokenAAddress: string; tokenBAddress: string }>(
+  'user/removeSerializedPair'
+)
 export const toggleURLWarning = createAction<void>('app/toggleURLWarning')
 export const clearUserData = createAction<void>('user/clearData')
 export const fetchUserSecTokenList: Readonly<{

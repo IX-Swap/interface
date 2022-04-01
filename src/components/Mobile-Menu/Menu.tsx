@@ -126,6 +126,11 @@ export const Menu = ({ close }: Props) => {
               <Trans>Charts</Trans>
             </ExternalListItem>
           )}
+          {chainId && TGE_CHAINS_WITH_STAKING.includes(chainId) && (
+            <MenuListItem activeClassName="active-item" id={`kyc-nav-link`} to={'/kyc'} onClick={close}>
+              <Trans>KYC</Trans>
+            </MenuListItem>
+          )}
         </MenuList>
       </Container>
     </ModalContainer>

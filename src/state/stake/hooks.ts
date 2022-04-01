@@ -409,7 +409,7 @@ export function useIncreaseAllowance() {
         addTransaction(allowanceTx, {
           summary: t`Approve ${amount} ${IXSCurrency?.symbol}`,
         })
-      } catch (error) {
+      } catch (error: any) {
         dispatch(increaseAllowance.rejected({ errorMessage: error }))
       }
     },
@@ -527,7 +527,7 @@ export function useStakeFor(period?: PERIOD) {
             break
           }
         }
-      } catch (error) {
+      } catch (error: any) {
         dispatch(stake.rejected({ errorMessage: error }))
       }
     },
@@ -714,11 +714,11 @@ export function useGetVestedRewards() {
         )
 
         dispatch(getAvailableClaim.fulfilled({ transactions: claimsAdapter(claims) }))
-      } catch (e) {
+      } catch (e: any) {
         dispatch(getAvailableClaim.rejected({ errorMessage: e?.message }))
         console.error(`error getting available claims`, e?.message)
       }
-    } catch (error) {
+    } catch (error: any) {
       dispatch(getRewards.rejected({ errorMessage: error?.message }))
       console.error(`error getting rewards`, error)
     }
@@ -738,7 +738,7 @@ export function useGetPayouts() {
       dispatch(
         getPayouts.fulfilled({ transactions: payouts.map((pay: [BigNumber, BigNumber][]) => payoutsAdapter(pay)) })
       )
-    } catch (error) {
+    } catch (error: any) {
       dispatch(getPayouts.rejected({ errorMessage: error?.message }))
       console.error(`error getting payouts`, error)
     }

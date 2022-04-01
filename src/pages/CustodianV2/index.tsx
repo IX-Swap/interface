@@ -24,6 +24,7 @@ import {
   MySecTokensGrid,
   Divider,
 } from './styleds'
+import { NotAvailablePage } from 'components/NotAvailablePage'
 
 export default function CustodianV2() {
   const offset = 10
@@ -34,6 +35,8 @@ export default function CustodianV2() {
   const [noFilteredTokens, setNoFilteredTokens] = useState([])
   const { tokens } = useSecCatalogState()
   const { account, chainId } = useActiveWeb3React()
+
+  const blurred = !chainId || !TGE_CHAINS_WITH_SWAP.includes(chainId)
   const isLoggedIn = !!token && !!account
 
   useEffect(() => {
@@ -41,13 +44,16 @@ export default function CustodianV2() {
       const data = await getMyTokens({ active: true, my: true, offset: 100000 })
       setMySecTokens(data?.items.length > 0 ? data.items : [])
     }
-
-    fetchMyTokens()
+    if (isLoggedIn) {
+      fetchMyTokens()
+    }
   }, [account, isLoggedIn])
 
   useEffect(() => {
-    fetchTokens({ page: 1, offset, search: '' })
-  }, [fetchTokens])
+    if (isLoggedIn) {
+      fetchTokens({ page: 1, offset, search: '' })
+    }
+  }, [fetchTokens, isLoggedIn])
 
   useEffect(() => {
     if (noFilteredTokens.length === 0 && tokens) {
@@ -70,7 +76,9 @@ export default function CustodianV2() {
       )
     : []
 
-  return chainId !== undefined && !TGE_CHAINS_WITH_SWAP.includes(chainId) ? (
+  if (!isLoggedIn) return <NotAvailablePage />
+
+  return blurred ? (
     <AppBody blurred>
       <Trans>Security Tokens</Trans>
     </AppBody>

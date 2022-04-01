@@ -231,6 +231,13 @@ const isEmpty = (value: any) => {
   return null
 }
 
+const isEmptyObject = (value: Record<string, any>) => {
+  const isValid = Object.values(value).some((val) => Boolean(val))
+
+  if (isValid) return null
+  return 'This field is required'
+}
+
 const urlValidator = (url: string) => {
   if (
     url.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g) ===
@@ -259,7 +266,7 @@ export const validateIssuer = (issuer: any) => {
 }
 
 export const validateToken = (token: any) => {
-  const { address, ticker, file, companyName, url, description, industry, country, chainId } = token
+  const { address, ticker, file, companyName, url, description, industry, country, chainId, kycTypeJson } = token
 
   return {
     address: !Boolean(isValidAddress(address || '')) ? 'Invalid address' : null,
@@ -270,6 +277,7 @@ export const validateToken = (token: any) => {
     industry: isEmpty(industry),
     country: isEmpty(country),
     chainId: isEmpty(chainId),
+    kycTypeJson: isEmptyObject(kycTypeJson || {}),
     ...urlValidator(url),
     ...stringLengthValidator('companyName', companyName, 100),
     ...stringLengthValidator('description', description, 1000),
