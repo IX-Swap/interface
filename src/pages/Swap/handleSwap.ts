@@ -56,6 +56,7 @@ export function useHandleSwap({ priceImpact }: { priceImpact: Percent | undefine
       })
       return
     }
+
     if (swapCallbackError || !swapCallback || shouldGetAuthorization) {
       return
     }

@@ -22,7 +22,7 @@ import { useCurrencyBalance } from 'state/wallet/hooks'
 import { calculateGasMargin } from 'utils/calculateGasMargin'
 import { formatCurrencyAmount } from 'utils/formatCurrencyAmount'
 import { maxAmountSpend } from 'utils/maxAmountSpend'
-import { DAI, IXS, USDC, USDT, WBTC } from '../../constants/tokens'
+import { IXS, USDC } from '../../constants/tokens'
 import { useActiveWeb3React } from '../../hooks/web3'
 import { NEVER_RELOAD, useMultipleContractSingleData } from '../multicall/hooks'
 import { tryParseAmount } from '../swap/helpers'
@@ -56,23 +56,13 @@ export const STAKING_REWARDS_INFO: {
   }[]
 } = {
   [1]: [
-    {
-      tokens: [WETH9[1], DAI],
-      stakingRewardAddress: '0xa1484C3aa22a66C62b77E0AE78E15258bd0cB711',
-    },
-    {
-      tokens: [WETH9[1], USDC],
-      stakingRewardAddress: '0x7FBa4B8Dc5E7616e59622806932DBea72537A56b',
-    },
-    {
-      tokens: [WETH9[1], USDT],
-      stakingRewardAddress: '0x6C3e4cb2E96B01F4b866965A91ed4437839A121a',
-    },
-    {
-      tokens: [WETH9[1], WBTC],
-      stakingRewardAddress: '0xCA35e32e7926b96A9988f61d510E038108d8068e',
-    },
+    // {
+    //   tokens: [WETH9[1], USDC[1]],
+    //   stakingRewardAddress: '0x7FBa4B8Dc5E7616e59622806932DBea72537A56b',
+    // },
   ],
+  [42]: [],
+  [137]: [],
 }
 
 export interface StakingInfo {

@@ -149,6 +149,7 @@ export const SwapButtons = ({
   const showInsufficientLiquidity =
     !swapIsUnsupported && account && !showWrap && routeNotFound && userHasSpecifiedInputOutput
   const showSwapButton = account && !showWrap && !showInsufficientLiquidity
+
   return (
     <>
       {showConfirm && (
@@ -205,7 +206,7 @@ export const SwapButtons = ({
                   approvalState !== ApprovalState.APPROVED &&
                   signatureState !== UseERC20PermitState.SIGNED) ||
                 !isValid ||
-                priceImpactTooHigh ||
+                // priceImpactTooHigh ||
                 !!swapCallbackError ||
                 shouldGetAuthorization
               }
@@ -213,10 +214,6 @@ export const SwapButtons = ({
               <Text fontSize={18} fontWeight={600}>
                 {swapInputError ? (
                   swapInputError
-                ) : priceImpactTooHigh ? (
-                  <Trans>Price impact too high</Trans>
-                ) : priceImpactSeverity > 2 ? (
-                  <Trans>Price impact is high. Swap anyway</Trans>
                 ) : shouldGetAuthorization ? (
                   <Trans>Authorization missing</Trans>
                 ) : (
@@ -232,3 +229,9 @@ export const SwapButtons = ({
     </>
   )
 }
+
+// : priceImpactTooHigh ? (
+//   <Trans>Price impact too high</Trans>
+// ) : priceImpactSeverity > 2 ? (
+//   <Trans>Price impact is high. Swap anyway</Trans>
+// )
