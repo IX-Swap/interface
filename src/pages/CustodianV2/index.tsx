@@ -51,12 +51,13 @@ export default function CustodianV2() {
 
   useEffect(() => {
     if (isLoggedIn) {
+      setNoFilteredTokens([])
       fetchTokens({ page: 1, offset, search: '' })
     }
   }, [fetchTokens, isLoggedIn])
 
   useEffect(() => {
-    if (noFilteredTokens.length === 0 && tokens) {
+    if (tokens && noFilteredTokens.length === 0) {
       setNoFilteredTokens(tokens.items.filter(({ active }: any) => active))
     }
   }, [tokens])
