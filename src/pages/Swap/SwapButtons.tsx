@@ -37,7 +37,7 @@ export const SwapButtons = ({
   showAcceptChanges: boolean
   parsedAmounts: ParsedAmounts | undefined
 }) => {
-  const { account } = useActiveWeb3React()
+  const { account, chainId } = useActiveWeb3React()
   const { recipient, typedValue, independentField, approvalSubmitted } = useSwapState()
 
   const {
@@ -76,7 +76,6 @@ export const SwapButtons = ({
   const onClick = useCallback(async () => {
     if (trade && account) {
       const pair = trade.route.pairs[0]
-      console.log({ trade })
 
       try {
         await verifySwap({
@@ -104,6 +103,7 @@ export const SwapButtons = ({
 
           isSecurity: pair.isSecurity,
           pairAddress: pair.liquidityToken.address,
+          chainId: chainId || 137,
         })
       } catch (err) {
         showError((err as Error).message)

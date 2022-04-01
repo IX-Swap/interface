@@ -1,27 +1,46 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
+import { FACTORY_ROUTER_ADDRESS } from 'constants/addresses'
 import { BigNumber, utils } from 'ethers'
+import { useActiveWeb3React } from 'hooks/web3'
 import { Contract } from 'web3-eth-contract'
 
 // import Web3 from 'web3'
 // const contract = require('truffle-contract')
-const Web3 = require('web3')
+const Web3Global = require('web3')
 
-// declare web3
-export const web3 = new Web3('https://kovan.infura.io/v3/a9e29640d3404001a315ddc6d0a83074')
+class Web3 {
+  getUrl(chainId: number): any {
+    const networkNames = {
+      '1': 'homestead',
+      '42': 'kovan',
+      '137': 'matic',
+      '80001': 'maticmum',
+    } as Record<string, string>
 
-// token addresses
-export const USDT = web3.utils.toChecksumAddress('0xB2b1F86969F8D12ea5820A14E2D7eD8cfa46e912')
-export const IDAI = web3.utils.toChecksumAddress('0x992A460e0ef16b94118a98ADEE14C72e6A9aA34F')
-export const IUSDC = web3.utils.toChecksumAddress('0xbc55ad5733a1bb050f51bbdfb65ecc7a72aedc20')
-export const FACTORY = web3.utils.toChecksumAddress('0x4983b160a8E0De9Cf6a055bd8750847DE3E14eE6')
-export const WETH = web3.utils.toChecksumAddress('0xd0a1e359811322d97991e03f863a0c30c2cf029c')
+    let host = ''
+    switch (networkNames[chainId.toString()]) {
+      case 'homestead':
+        host = 'mainnet.infura.io'
+        break
+      case 'kovan':
+        host = 'kovan.infura.io'
+        break
+      case 'matic':
+        host = 'polygon-mainnet.infura.io'
+        break
+      case 'maticmum':
+        host = 'polygon-mumbai.infura.io'
+        break
+      default:
+        break
+    }
+
+    return new Web3Global(`https://${host}/v3/${process.env.REACT_APP_INFURA_KEY}`)
+  }
+}
 
 // export const account = web3.eth.accounts.porivateKeyToAccunt('your private key here')
 // export const PRIVATE_ADDRESS = web3.eth.accounts.privateKeyToAccount('your private key here')
-
-export const ZERO_ADDRESS = web3.utils.toChecksumAddress('0x0000000000000000000000000000000000000000')
-
-const ERC20_ABI = require('abis/erc20StockABI.json')
 
 // abis
 let PERIPHERY_LP_ABI = require('abis/IxsV2LiquidityRouter.json')
@@ -39,22 +58,6 @@ PAIR_ABI = PAIR_ABI.abi
 let ERC20_FAUCET_ABI = require('abis/Erc20Custom.json')
 ERC20_FAUCET_ABI = ERC20_FAUCET_ABI.abi
 
-//  addresses
-export const LIQUIDITY_ROUTER_ADDRESS = web3.utils.toChecksumAddress('0xC4D56138b73D53Ff55313FC251053B735BA1cfA1')
-export const SWAP_ROUTER_ADDRESS = web3.utils.toChecksumAddress('0xda02eAf1c33ff04ec18329E25004Ea2DED3c5Fd9')
-//export const WETH_IDAI_PAIR_ADDRESS = web3.utils.toChecksumAddress('0xf60D483d820c063BC9AfcA8558aAfd5b3051A9d9')
-export const WETH_IDAI_PAIR_ADDRESS = web3.utils.toChecksumAddress('0x00f461B7C0984B5Aa70eCf41557ff3cC4DFf727e')
-
-//  contracts
-export const LIQUIDITY_ROUTER_CONTRACT = new web3.eth.Contract(PERIPHERY_LP_ABI, LIQUIDITY_ROUTER_ADDRESS)
-export const IUSDC_CONTRACT = new web3.eth.Contract(ERC20_ABI, IUSDC)
-export const IDAI_CONTRACT = new web3.eth.Contract(ERC20_FAUCET_ABI, IDAI)
-export const USDT_CONTRACT = new web3.eth.Contract(ERC20_FAUCET_ABI, IDAI)
-export const SWAP_ROUTER_CONTRACT = new web3.eth.Contract(SWAP_ROUTER_ABI, SWAP_ROUTER_ADDRESS)
-export const FACTORY_CONTRACT = new web3.eth.Contract(FACTORY_ABI, FACTORY) //  contract to consult oracle
-export const WETH_IDAI_CONTRACT = new web3.eth.Contract(PAIR_ABI, WETH_IDAI_PAIR_ADDRESS)
-//export const WETH_IDAI_CONTRACT = new web3.eth.Contract(PAIR_ABI, WETH)
-
 class Swap {
   /*
   For verification required token0 and token1 addresses, amount in for both tokens, amount out for both tokens, to address, slope
@@ -69,6 +72,7 @@ class Swap {
   sender: string
   to: string
   slope: number
+  chainId: number
 
   constructor(
     id: string,
@@ -78,7 +82,8 @@ class Swap {
     amount1Out: BigNumber,
     sender: string,
     to: string,
-    slope: number
+    slope: number,
+    chainId: number
   ) {
     this.id = id
     this.amount0In = amount0In
@@ -88,6 +93,7 @@ class Swap {
     this.sender = sender
     this.to = to
     this.slope = slope
+    this.chainId = chainId
   }
 }
 
@@ -108,6 +114,7 @@ class Pool {
   isSecurityPool?: boolean
   isToken0Sec?: boolean
   isToken1Sec?: boolean
+  chainId: number
 
   //  flag if pool can be consulted with Oracle
   isConsultable?: boolean
@@ -146,7 +153,8 @@ class Pool {
     priceToleranceThreshold: BigNumber,
     poolContract: Contract,
     systemFeeRate: BigNumber,
-    isSecurityPool: boolean
+    isSecurityPool: boolean,
+    chainId: number
   ) {
     //  attach all addresses
     this.token0 = token0
@@ -167,6 +175,7 @@ class Pool {
     this.isMitigationEnabled = isMitigationEnabled
     this.priceToleranceThreshold = priceToleranceThreshold
     this.systemFeeRate = systemFeeRate
+    this.chainId = chainId
 
     // ! IMPORTANT: make sure that there will be boolean value at moment, not 'promise' one
     if (this.isSecurityPool) {
@@ -181,8 +190,16 @@ class Pool {
    * @param contract
    * @param isSecurity check if a
    */
+
   async verifySwap(transaction: Swap, isSecurity: boolean) {
+    if (!this.chainId) return
     //  request last known reserves, check if Oracle can be consulted
+
+    const web3 = new Web3().getUrl(this.chainId)
+
+    const FACTORY = web3.utils.toChecksumAddress(FACTORY_ROUTER_ADDRESS[this.chainId])
+    const FACTORY_CONTRACT = new web3.eth.Contract(FACTORY_ABI, FACTORY) //  contract to consult oracle
+
     transaction.oracleAmount1Out = BigNumber.from(0)
     transaction.oracleAmount0Out = BigNumber.from(0)
 
@@ -516,12 +533,15 @@ interface VerifyOptions {
 
   isSecurity: boolean
   pairAddress: string
+  chainId: number
 
   //isToken0Sec: boolean
   //isToken1Sec: boolean
 }
 
 export async function verifySwap(options: VerifyOptions) {
+  const web3 = new Web3().getUrl(options.chainId)
+
   const poolAddress = web3.utils.toChecksumAddress(options.pairAddress)
 
   const WETH_IDAI_CONTRACT2 = new web3.eth.Contract(PAIR_ABI, poolAddress)
@@ -538,7 +558,8 @@ export async function verifySwap(options: VerifyOptions) {
     options.priceToleranceThreshold,
     WETH_IDAI_CONTRACT2,
     options.systemFeeRate,
-    options.isSecurity
+    options.isSecurity,
+    options.chainId
   )
 
   const transaction = new Swap(
@@ -549,7 +570,8 @@ export async function verifySwap(options: VerifyOptions) {
     options.amountOutTo,
     options.sender,
     options.receiver,
-    0.05
+    0.05,
+    options.chainId
   )
 
   await pool.verifySwap(transaction, options.isSecurity)
