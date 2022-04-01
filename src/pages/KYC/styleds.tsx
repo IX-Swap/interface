@@ -157,7 +157,7 @@ const KYCStatusDescription = {
     'The KYC is being processed and it may take 1-3 days. The status of the KYC will be updated accordingly.',
   [KYCStatuses.APPROVED]: null,
   [KYCStatuses.NOT_SUBMITTED]:
-    'The KYC is being processed and it may take 1-3 days. The status of the KYC will be updated accordingly.',
+    'The Pass KYC once and use it during all accreditations for Securities tokens. Reliable and quick. Submit your KYC, get approved and forget about bureaucracy.',
   [KYCStatuses.CHANGES_REQUESTED]:
     'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula.',
   [KYCStatuses.REJECTED]:
