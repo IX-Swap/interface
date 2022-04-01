@@ -7,8 +7,8 @@ import React, { memo, useEffect } from 'react'
 import { getIdentityDefaultActiveStep } from 'app/pages/identity/utils/shared'
 import { useSubmitDetailsOfIssuance } from 'app/pages/identity/hooks/useSubmitDetailsOfIssuance'
 import { useOnboardingDialog } from 'app/components/OnboardingDialog/hooks/useOnboardingDialog'
+import { Redirect } from 'react-router-dom'
 import { IdentityRoute } from 'app/pages/identity/router/config'
-import { history } from 'config/history'
 
 export const DetailsOfIssuanceForm = memo(() => {
   const { data, isLoading } = useDetailsOfIssuance()
@@ -21,20 +21,11 @@ export const DetailsOfIssuanceForm = memo(() => {
     if (!isLoading && data === undefined) {
       showCreateDetailsOfIssuanceDialog()
     }
-
-    if (
-      !isLoading &&
-      data !== undefined &&
-      data.skipped !== undefined &&
-      data.skipped
-    ) {
-      history.push(IdentityRoute.createIssuer)
-    }
     // eslint-disable-next-line
   }, [isLoading])
 
-  if (isLoading) {
-    return <div>Loading...</div>
+  if (data?.skipped === true) {
+    return <Redirect to={IdentityRoute.createIssuer} />
   }
 
   const defaultActiveStep = getIdentityDefaultActiveStep({
