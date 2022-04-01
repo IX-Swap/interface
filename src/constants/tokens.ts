@@ -21,6 +21,7 @@ export const ETH2X_FLI = new Token(
   'ETH2x-FLI',
   'ETH 2x Flexible Leverage Index'
 )
+
 // Mirror Protocol compat.
 export const UST = new Token(1, '0xa47c8bf37f92abed4a126bda807a7b7498661acd', 18, 'UST', 'Wrapped UST')
 export const MIR = new Token(1, '0x09a3ecafa817268f77be1283176b946c4ff2e608', 18, 'MIR', 'Wrapped MIR')
