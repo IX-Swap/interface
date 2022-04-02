@@ -5,13 +5,7 @@ import styled from 'styled-components/macro'
 import { AppBackground } from 'components/AppBackground'
 import { IXSBalanceModal } from 'components/Header/IXSBalanceModal'
 import PlaygroundModal from 'components/PlaygroundModal'
-import {
-  MATIC_TGE_CHAINS,
-  SUPPORTED_TGE_CHAINS,
-  TGE_CHAINS_WITH_SWAP,
-  TGE_CHAINS_WITH_KYC,
-  ENV_SUPPORTED_TGE_CHAINS,
-} from 'constants/addresses'
+import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 import ApeModeQueryParamReader from 'hooks/useApeModeQueryParamReader'
 import { useActiveWeb3React } from 'hooks/web3'
 import { useAccount } from 'state/user/hooks'
