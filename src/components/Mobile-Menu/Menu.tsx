@@ -16,17 +16,6 @@ interface Props {
 
 export const Menu = ({ close }: Props) => {
   const { chainId, account } = useActiveWeb3React()
-  useEffect(() => {
-    const body = document.getElementsByTagName('body')[0]
-    if (body) {
-      body.setAttribute('style', 'overflow:hidden')
-    }
-    return () => {
-      if (body) {
-        body.removeAttribute('style')
-      }
-    }
-  }, [])
 
   const isWhitelisted = isUserWhitelisted({ account, chainId })
 
@@ -40,7 +29,7 @@ export const Menu = ({ close }: Props) => {
         </CloseContainer>
         <MenuList>
           {chainId && chains.includes(chainId) && isWhitelisted && (
-            <MenuListItem id={`swap-nav-link`} to={'/swap'}>
+            <MenuListItem id={`swap-nav-link`} to={'/swap'} onClick={close}>
               <Trans>Swap</Trans>
             </MenuListItem>
           )}
@@ -54,13 +43,14 @@ export const Menu = ({ close }: Props) => {
                 pathname.startsWith('/remove') ||
                 pathname.startsWith('/find')
               }
+              onClick={close}
             >
               <Trans>Pools</Trans>
             </MenuListItem>
           )}
 
           {chainId && chains.includes(chainId) && isWhitelisted && (
-            <MenuListItem id={`stake-nav-link`} to={routes.securityTokens()}>
+            <MenuListItem id={`stake-nav-link`} to={routes.securityTokens()} onClick={close}>
               <Trans>Securities</Trans>
             </MenuListItem>
           )}
@@ -92,7 +82,7 @@ export const Menu = ({ close }: Props) => {
           )}
 
           {chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
-            <MenuListItem id={`faucet-nav-link`} to={'/faucet'}>
+            <MenuListItem id={`faucet-nav-link`} to={'/faucet'} onClick={close}>
               <Trans>Faucet</Trans>
             </MenuListItem>
           )}
