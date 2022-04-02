@@ -87,11 +87,11 @@ export const Menu = ({ close }: Props) => {
             <Trans>Liquidity Mining - Ethereum</Trans>
           </ExternalListItem>
 
-          {chainId && chains.includes(chainId) && isWhitelisted && (
+          {/* {chainId && chains.includes(chainId) && isWhitelisted && (
             <ExternalListItem href={'https://info.ixswap.io/home'}>
               <Trans>Charts</Trans>
             </ExternalListItem>
-          )}
+          )} */}
 
           {chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
             <MenuListItem id={`faucet-nav-link`} to={'/faucet'} onClick={close}>
