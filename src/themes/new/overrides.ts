@@ -47,5 +47,71 @@ export const getThemeOverrides = (
   MuiCheckbox: checkbox(theme),
   MuiChip: chip(theme),
   MuiSkeleton: skeleton(theme),
-  MuiInputBase: inputBase(theme)
+  MuiInputBase: inputBase(theme),
+  MuiStep: {
+    styleOverrides: {
+      root: {
+        flex: 'initial',
+        padding: 0
+      },
+      horizontal: {
+        '& .MuiStepLabel-label': {
+          paddingLeft: 22,
+          paddingRight: 22,
+          paddingBottom: 20,
+
+          '&.Mui-active': {
+            borderBottom: '1px solid #4C88FF'
+          }
+        }
+      },
+      vertical: {
+        '& .MuiStepButton-root': {
+          paddingLeft: 0,
+          paddingRight: 0
+        },
+
+        '& .MuiStepLabel-label': {
+          position: 'relative',
+          paddingLeft: 41,
+          paddingRight: 40,
+          paddingTop: 16,
+          paddingBottom: 16,
+
+          '&.Mui-active': {
+            '&::before': {
+              content: '""',
+              position: 'absolute',
+              top: 0,
+              left: 0,
+              width: 1,
+              height: '100%',
+              background: '#4C88FF'
+            }
+          }
+        }
+      }
+    }
+  },
+  MuiStepLabel: {
+    styleOverrides: {
+      label: {
+        fontSize: 14,
+
+        '&.Mui-error': {
+          color: '#F56283'
+        }
+      },
+      vertical: {
+        flexDirection: 'row-reverse',
+        padding: 0,
+        justifyContent: 'space-between',
+        width: '100%',
+        maxHeight: 48
+      },
+      iconContainer: {
+        paddingRight: 0
+      }
+    }
+  }
 })
