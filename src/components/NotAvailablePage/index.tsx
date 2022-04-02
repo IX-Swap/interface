@@ -40,9 +40,29 @@ export const NotAvailablePage = () => {
     return (
       <ConnectWalletContainer>
         <div>
-          <Trans>You have to connect wallet to use this page</Trans>
+          <Trans>Welcome to IXSwap</Trans>
         </div>
+        <div>Please connect your wallet to use the application.</div>
         <ButtonIXSGradient onClick={toggleWalletModal}>Connect Wallet</ButtonIXSGradient>
+        <span>
+          While your wallet is not connected, you can see our{' '}
+          <a href="https://ixswap.defiterm.io/" target="_blank" rel="noreferrer">
+            New Staking Program
+          </a>
+          ,&nbsp;
+          <a href="https://ixswap.defiterm.io/" target="_blank" rel="noreferrer">
+            Liquidity Mining on Polygon
+          </a>
+          &nbsp;and&nbsp;
+          <a
+            href="https://app.uniswap.org/#/add/v2/ETH/0x73d7c860998CA3c01Ce8c808F5577d94d545d1b4?chain=polygon"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Liquidity Mining on Ethereum
+          </a>
+          .
+        </span>
       </ConnectWalletContainer>
     )
   }

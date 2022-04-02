@@ -116,10 +116,18 @@ export const KovanRow = styled.div`
 `
 
 export const ConnectWalletContainer = styled(Container)`
-  > div {
-    font-weight: 500;
+  a {
+    color: white;
+  }
+  > div:first-child {
+    font-weight: 600;
     font-size: 24px;
     line-height: 160%;
+    text-align: center;
+    color: #ffffff;
+    margin-bottom: 4px;
+  }
+  > div:nth-child(2) {
     text-align: center;
     color: #ffffff;
     margin-bottom: 32px;
@@ -128,5 +136,12 @@ export const ConnectWalletContainer = styled(Container)`
     max-width: 312px;
     width: 100%;
     margin: 0 auto;
+    margin-bottom: 32px;
+  }
+  > span:last-child {
+    font-weight: 500;
+    font-size: 12px;
+    text-align: center;
+    color: #ffffff;
   }
 `

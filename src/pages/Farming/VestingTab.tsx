@@ -28,12 +28,13 @@ export const VestingTab = () => {
 
   const blurred = ![...TGE_CHAINS_WITH_STAKING, SUPPORTED_TGE_CHAINS.MAIN].includes(chainId || 0) || !account
 
-  if (blurred)
+  if (blurred || !account) {
     return (
       <div style={{ marginTop: '1rem' }}>
         <NotAvailablePage />
       </div>
     )
+  }
 
   return (
     <>
