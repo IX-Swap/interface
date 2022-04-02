@@ -88,10 +88,6 @@ export default function KYC() {
   const [status, setStatus] = useState<KYCStatuses | undefined>(undefined)
   const [description, setDescription] = useState('')
 
-  // const handleAccountsChanged = () => {
-  //   setLoading(true)
-  // }
-
   useEffect(() => {
     if (account && account !== userAccount) {
       setLoading(true)
