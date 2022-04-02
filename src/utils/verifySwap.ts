@@ -201,8 +201,8 @@ class Pool {
     const FACTORY_CONTRACT = new web3.eth.Contract(FACTORY_ABI, FACTORY) //  contract to consult oracle
 
     const isMitigationEnabledLocally = await this.poolContract.methods.mitigationEnabled().call()
-    if (!isMitigationEnabledLocally) return;
-    
+    if (!isMitigationEnabledLocally) return
+
     transaction.oracleAmount1Out = BigNumber.from(0)
     transaction.oracleAmount0Out = BigNumber.from(0)
 
