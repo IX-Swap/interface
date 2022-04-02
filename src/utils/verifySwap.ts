@@ -200,6 +200,9 @@ class Pool {
     const FACTORY = web3.utils.toChecksumAddress(FACTORY_ROUTER_ADDRESS[this.chainId])
     const FACTORY_CONTRACT = new web3.eth.Contract(FACTORY_ABI, FACTORY) //  contract to consult oracle
 
+    const isMitigationEnabledLocally = await this.poolContract.methods.mitigationEnabled().call()
+    if (!isMitigationEnabledLocally) return;
+    
     transaction.oracleAmount1Out = BigNumber.from(0)
     transaction.oracleAmount0Out = BigNumber.from(0)
 
@@ -251,14 +254,14 @@ class Pool {
     }
 
     //  set final reserves value by extracting out value with fees
-    const reserve0Final = this.reserve0?.sub(amount0OutWithSystemFee)
-    const reserve1Final = this.reserve1?.sub(amount1OutWithSystemFee)
+    // const reserve0Final = this.reserve0?.sub(amount0OutWithSystemFee)
+    // const reserve1Final = this.reserve1?.sub(amount1OutWithSystemFee)
 
     /*  perform mitigation check if such property is attached to the current pool and 
     it is possible to consult Oracle at the moment */
-    if (this.isMitigationEnabled && this.isConsultable && reserve0Final && reserve1Final) {
-      this.verifyMitigation(transaction, reserve0Final, reserve1Final)
-    }
+    // if (this.isMitigationEnabled && this.isConsultable && reserve0Final && reserve1Final) {
+    //   this.verifyMitigation(transaction, reserve0Final, reserve1Final)
+    // }
   }
 
   /**
