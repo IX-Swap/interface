@@ -23,18 +23,18 @@ export const ProductsBlock = () => {
         <NavLink to={routes.securityTokens()}>
           <Trans>Securities</Trans>
         </NavLink>
-        <NavLink to="/faucet">
+        {/* <NavLink to="/faucet">
           <Trans>Faucet </Trans>
-        </NavLink>
+        </NavLink> */}
         <NavLink to={routes.pool}>
           <Trans>Pools</Trans>
         </NavLink>
-        <ExternalLink href="https://info.ixswap.io/home">
+        {/* <ExternalLink href="https://info.ixswap.io/home">
           <Trans>Charts </Trans>
-        </ExternalLink>
-        <NavLink to={routes.nftCollections}>
+        </ExternalLink> */}
+        {/* <NavLink to={routes.nftCollections}>
           <Trans>NFT</Trans>
-        </NavLink>
+        </NavLink> */}
       </div>
     </ProductsBlockContainer>
   )
