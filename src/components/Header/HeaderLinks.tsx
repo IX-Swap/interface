@@ -143,11 +143,11 @@ export const HeaderLinks = () => {
         </StyledNavLink>
       )}
 
-      {account && chainId && chains.includes(chainId) && isWhitelisted && (
+      {/* {account && chainId && chains.includes(chainId) && isWhitelisted && (
         <MenuExternalLink href={'https://info.ixswap.io/home'}>
           <Trans>Charts</Trans>
         </MenuExternalLink>
-      )}
+      )} */}
 
       {account && chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
         <StyledNavLink id={`faucet-nav-link`} to={'/faucet'}>
