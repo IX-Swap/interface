@@ -17,9 +17,21 @@ interface Props {
 export const Menu = ({ close }: Props) => {
   const { chainId, account } = useActiveWeb3React()
 
+  useEffect(() => {
+    const body = document.getElementsByTagName('body')[0]
+    if (body) {
+      body.setAttribute('style', 'overflow:hidden')
+    }
+    return () => {
+      if (body) {
+        body.removeAttribute('style')
+      }
+    }
+  }, [])
+
   const isWhitelisted = isUserWhitelisted({ account, chainId })
 
-  const chains = ENV_SUPPORTED_TGE_CHAINS || [42]
+  const chains = ENV_SUPPORTED_TGE_CHAINS || [137]
 
   return (
     <ModalContainer>
