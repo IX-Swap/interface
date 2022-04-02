@@ -85,12 +85,12 @@ export const HeaderLinks = () => {
 
   return (
     <HeaderLinksWrap links={7}>
-      {chainId && chains.includes(chainId) && isWhitelisted && (
+      {account && chainId && chains.includes(chainId) && isWhitelisted && (
         <StyledNavLink id={`swap-nav-link`} to={'/swap'}>
           <Trans>Swap</Trans>
         </StyledNavLink>
       )}
-      {chainId && chains.includes(chainId) && isWhitelisted && (
+      {account && chainId && chains.includes(chainId) && isWhitelisted && (
         <StyledNavLink
           id={`pool-nav-link`}
           to={'/pool'}
@@ -105,13 +105,13 @@ export const HeaderLinks = () => {
         </StyledNavLink>
       )}
 
-      {chainId && chains.includes(chainId) && isWhitelisted && (
+      {account && chainId && chains.includes(chainId) && isWhitelisted && (
         <StyledNavLink id={`stake-nav-link`} to={routes.securityTokens()}>
           <Trans>Securities</Trans>
         </StyledNavLink>
       )}
 
-      {chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && isDev && (
+      {account && chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && isDev && (
         <StyledNavLink
           ref={nftNode as any}
           id={`nft-nav-link`}
@@ -127,27 +127,29 @@ export const HeaderLinks = () => {
         </StyledNavLink>
       )}
 
-      <StyledNavLink
-        ref={farmNode as any}
-        id={`farming-nav-link`}
-        to={'#'}
-        isActive={(match, { pathname }) => pathname.startsWith('/vesting') || pathname.startsWith('/staking')}
-      >
-        <Popover hideArrow show={open} content={<HeaderPopover />} placement={'bottom'}>
-          <RowFixed onClick={toggle}>
-            <Trans>Farming</Trans>
-            <ChevronElement showMore={open} />
-          </RowFixed>
-        </Popover>
-      </StyledNavLink>
+      {account && chainId && account && (
+        <StyledNavLink
+          ref={farmNode as any}
+          id={`farming-nav-link`}
+          to={'#'}
+          isActive={(match, { pathname }) => pathname.startsWith('/vesting') || pathname.startsWith('/staking')}
+        >
+          <Popover hideArrow show={open} content={<HeaderPopover />} placement={'bottom'}>
+            <RowFixed onClick={toggle}>
+              <Trans>Farming</Trans>
+              <ChevronElement showMore={open} />
+            </RowFixed>
+          </Popover>
+        </StyledNavLink>
+      )}
 
-      {chainId && chains.includes(chainId) && isWhitelisted && (
+      {account && chainId && chains.includes(chainId) && isWhitelisted && (
         <MenuExternalLink href={'https://info.ixswap.io/home'}>
           <Trans>Charts</Trans>
         </MenuExternalLink>
       )}
 
-      {chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
+      {account && chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
         <StyledNavLink id={`faucet-nav-link`} to={'/faucet'}>
           <Trans>Faucet</Trans>
         </StyledNavLink>

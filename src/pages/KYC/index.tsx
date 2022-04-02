@@ -13,7 +13,6 @@ import { TYPE } from 'theme'
 import { StyledBodyWrapper } from 'pages/CustodianV2/styleds'
 import { useGetMyKyc, useKYCState } from 'state/kyc/hooks'
 import { useUserisLoggedIn } from 'state/auth/hooks'
-import { NFTConnectWallet } from 'components/NFTConnectWallet'
 
 import { KYCStatuses } from './enum'
 import { KYCStatus } from './KYCStatus'
@@ -22,6 +21,7 @@ import { ReactComponent as IndividualKYC } from 'assets/images/individual-kyc.sv
 import { ReactComponent as CorporateKYC } from 'assets/images/corporate-kyc.svg'
 import { ReactComponent as ApprovedKYC } from 'assets/images/approved-kyc.svg'
 import { useUserState } from 'state/user/hooks'
+import { NotAvailablePage } from 'components/NotAvailablePage'
 interface DescriptionProps {
   description: string | null
 }
@@ -225,7 +225,7 @@ export default function KYC() {
     }
   }, [status])
 
-  if (!account) return <NFTConnectWallet />
+  if (!account) return <NotAvailablePage />
 
   return (
     <StyledBodyWrapper>

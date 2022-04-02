@@ -1,14 +1,30 @@
-import React, { useState } from 'react'
+import { useActiveWeb3React } from 'hooks/web3'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
 import menuIcon from '../../assets/images/burger-menu.svg'
 import { Menu } from './Menu'
 
 export const MobileMenu = () => {
+  const { account } = useActiveWeb3React()
   const [open, handleIsOpen] = useState(false)
 
   const toggle = () => handleIsOpen((state) => !state)
   const close = () => handleIsOpen(false)
+
+  useEffect(() => {
+    const body = document.getElementsByTagName('body')[0]
+    if (body) {
+      body.setAttribute('style', 'overflow:hidden')
+    }
+    return () => {
+      if (body) {
+        body.removeAttribute('style')
+      }
+    }
+  }, [])
+
+  if (!account) return null
 
   return (
     <>
