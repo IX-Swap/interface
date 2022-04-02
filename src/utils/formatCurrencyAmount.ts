@@ -19,7 +19,8 @@ export function formatCurrencyAmount(amount: CurrencyAmount<Currency> | undefine
   if (amount.divide(amount.decimalScale).lessThan(new Fraction(1, 100000))) {
     return '<0.00001'
   }
-  return formatAmount(+amount.toSignificant(sigFigs))
+
+  return formatAmount(+amount.toFixed(sigFigs))
 }
 
 export function formatPrice(price: any | undefined, sigFigs: number) {
@@ -31,7 +32,7 @@ export function formatPrice(price: any | undefined, sigFigs: number) {
     return '<0.0001'
   }
 
-  return price.toSignificant(sigFigs)
+  return price.toFixed(sigFigs)
 }
 
 export function formatAmount(amount: number) {

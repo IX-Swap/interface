@@ -33,9 +33,11 @@ import { parseBytes32String } from 'ethers/lib/utils'
 export const SwapButtons = ({
   parsedAmounts,
   showAcceptChanges,
+  allowSwap,
 }: {
   showAcceptChanges: boolean
   parsedAmounts: ParsedAmounts | undefined
+  allowSwap: boolean
 }) => {
   const { account, chainId } = useActiveWeb3React()
   const { recipient, typedValue, independentField, approvalSubmitted } = useSwapState()
@@ -196,7 +198,17 @@ export const SwapButtons = ({
             </SwapErrorCard>
           )}
 
-          {showSwapButton && (
+          {!allowSwap && (
+            <SwapErrorCard style={{ textAlign: 'center' }}>
+              <div style={{ fontWeight: 'bold' }}>Swap is currently unavailable for this security token</div>
+              <div style={{ fontSize: 12, marginTop: 8 }}>
+                Due to network or Oracle instability this security token is not tradable for the moment. Please check
+                back later.
+              </div>
+            </SwapErrorCard>
+          )}
+
+          {showSwapButton && allowSwap && (
             <ButtonIXSWide
               onClick={onClick}
               data-testid="swap-button"
