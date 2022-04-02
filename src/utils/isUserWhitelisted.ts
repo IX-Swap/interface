@@ -8,8 +8,7 @@ interface Props {
 export const isUserWhitelisted = ({ account = '', chainId = 0 }: Props) => {
   const isProd = ['test production env', 'production'].includes(process.env.NODE_ENV)
 
-  if (!isProd) return true
-  if (!account) return false
+  if (!isProd || !account) return true
 
   const whitelisted = whitelistedUsers[chainId] || []
 
