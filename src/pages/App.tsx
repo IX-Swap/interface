@@ -94,6 +94,7 @@ export default function App() {
   const { kyc } = useKYCState()
 
   const canAccessKycForm = (kycType: string) => {
+    if (!account) return false
     if (!kyc) return true
 
     if ([KYCStatuses.REJECTED, KYCStatuses.APPROVED, KYCStatuses.PENDING].includes(kyc?.data?.status)) return false
@@ -122,7 +123,7 @@ export default function App() {
   const isWhitelisted = isUserWhitelisted({ account, chainId })
 
   const chains = ENV_SUPPORTED_TGE_CHAINS || [42]
-
+  console.log('log => visibleBody', { visibleBody, account, chainId })
   return (
     <ErrorBoundary>
       <Route component={GoogleAnalyticsReporter} />
