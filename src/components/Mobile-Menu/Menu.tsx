@@ -1,5 +1,5 @@
 import { Trans } from '@lingui/macro'
-import { MATIC_TGE_CHAINS, TGE_CHAINS_WITH_STAKING, TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
+import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 import { SupportedChainId } from 'constants/chains'
 import { useActiveWeb3React } from 'hooks/web3'
 import React, { useEffect } from 'react'
@@ -7,13 +7,15 @@ import { NavLink } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 import { ExternalLink } from 'theme'
 import { routes } from 'utils/routes'
+import { isUserWhitelisted } from 'utils/isUserWhitelisted'
+
 import closeIcon from '../../assets/images/cross.svg'
 interface Props {
   close: () => void
 }
 
 export const Menu = ({ close }: Props) => {
-  const { chainId } = useActiveWeb3React()
+  const { chainId, account } = useActiveWeb3React()
   useEffect(() => {
     const body = document.getElementsByTagName('body')[0]
     if (body) {
@@ -26,6 +28,10 @@ export const Menu = ({ close }: Props) => {
     }
   }, [])
 
+  const isWhitelisted = isUserWhitelisted({ account, chainId })
+
+  const chains = ENV_SUPPORTED_TGE_CHAINS || [42]
+
   return (
     <ModalContainer>
       <Container>
@@ -33,17 +39,15 @@ export const Menu = ({ close }: Props) => {
           <CloseIcon src={closeIcon} alt={closeIcon} onClick={close} />
         </CloseContainer>
         <MenuList>
-          {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
-            <MenuListItem id={`swap-nav-link`} to={'/swap'} onClick={close} activeClassName="active-item">
-              <Trans>SECONDARY MARKET</Trans>
+          {chainId && chains.includes(chainId) && isWhitelisted && (
+            <MenuListItem id={`swap-nav-link`} to={'/swap'}>
+              <Trans>Swap</Trans>
             </MenuListItem>
           )}
-          {chainId && !MATIC_TGE_CHAINS.includes(chainId) && (
+          {chainId && chains.includes(chainId) && isWhitelisted && (
             <MenuListItem
-              onClick={close}
               id={`pool-nav-link`}
               to={'/pool'}
-              activeClassName="active-item"
               isActive={(match, { pathname }) =>
                 Boolean(match) ||
                 pathname.startsWith('/add') ||
@@ -51,28 +55,22 @@ export const Menu = ({ close }: Props) => {
                 pathname.startsWith('/find')
               }
             >
-              <Trans>LIQUIDITY POOL</Trans>
+              <Trans>Pools</Trans>
             </MenuListItem>
           )}
 
-          <MenuListItem
-            activeClassName="active-item"
-            id={`stake-nav-link`}
-            to={routes.securityTokens()}
-            onClick={close}
-          >
-            <Trans>Security tokens</Trans>
-          </MenuListItem>
-
+          {chainId && chains.includes(chainId) && isWhitelisted && (
+            <MenuListItem id={`stake-nav-link`} to={routes.securityTokens()}>
+              <Trans>Securities</Trans>
+            </MenuListItem>
+          )}
           <ExternalListItem href={`https://ixswap.defiterm.io/`}>
             <Trans>Staking - New</Trans>
           </ExternalListItem>
 
-          {chainId && TGE_CHAINS_WITH_STAKING.includes(chainId) && (
-            <MenuListItem activeClassName="active-item" id={`stake-nav-link`} to={routes.staking} onClick={close}>
-              <Trans>Staking - Old</Trans>
-            </MenuListItem>
-          )}
+          <MenuListItem activeClassName="active-item" id={`stake-nav-link`} to={routes.staking} onClick={close}>
+            <Trans>Staking - Old</Trans>
+          </MenuListItem>
 
           <MenuListItem activeClassName="active-item" id={`vesting-nav-link`} to={routes.vesting} onClick={close}>
             <Trans>Vesting IXS</Trans>
@@ -86,51 +84,21 @@ export const Menu = ({ close }: Props) => {
           >
             <Trans>Liquidity Mining - Ethereum</Trans>
           </ExternalListItem>
-          {chainId && TGE_CHAINS_WITH_SWAP.includes(chainId) && (
-            <MenuListItem
-              activeClassName="active-item"
-              id={`nft-collections-nav-link`}
-              to={routes.nftCollections}
-              onClick={close}
-            >
-              <Trans>My NFT Collections</Trans>
-            </MenuListItem>
-          )}
-          {chainId && TGE_CHAINS_WITH_SWAP.includes(chainId) && (
-            <MenuListItem
-              activeClassName="active-item"
-              id={`create-nft-nav-link`}
-              to={routes.nftCreate}
-              onClick={close}
-            >
-              <Trans>Create NFT</Trans>
-            </MenuListItem>
-          )}
-          {chainId && TGE_CHAINS_WITH_SWAP.includes(chainId) && (
-            <MenuListItem
-              activeClassName="active-item"
-              id={`nft-create-collection-nav-link`}
-              to={routes.nftCollectionCreate}
-              onClick={close}
-            >
-              <Trans>Create NFT Collection</Trans>
-            </MenuListItem>
-          )}
-          {chainId && TGE_CHAINS_WITH_STAKING.includes(chainId) && (
-            <MenuListItem activeClassName="active-item" id={`faucet-nav-link`} to={'/faucet'} onClick={close}>
-              <Trans>Faucet</Trans>
-            </MenuListItem>
-          )}
-          {chainId && chainId === SupportedChainId.KOVAN && (
-            <ExternalListItem href={`https://info.ixswap.io/home`}>
+
+          {chainId && chains.includes(chainId) && isWhitelisted && (
+            <ExternalListItem href={'https://info.ixswap.io/home'}>
               <Trans>Charts</Trans>
             </ExternalListItem>
           )}
-          {chainId && TGE_CHAINS_WITH_STAKING.includes(chainId) && (
-            <MenuListItem activeClassName="active-item" id={`kyc-nav-link`} to={'/kyc'} onClick={close}>
-              <Trans>KYC</Trans>
+
+          {chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
+            <MenuListItem id={`faucet-nav-link`} to={'/faucet'}>
+              <Trans>Faucet</Trans>
             </MenuListItem>
           )}
+          <MenuListItem activeClassName="active-item" id={`kyc-nav-link`} to={'/kyc'} onClick={close}>
+            <Trans>KYC</Trans>
+          </MenuListItem>
         </MenuList>
       </Container>
     </ModalContainer>
