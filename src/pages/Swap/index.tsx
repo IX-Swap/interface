@@ -38,6 +38,8 @@ import { BrokerDealerForm } from './BrokerDealerForm'
 import { SwapButtons } from './SwapButtons'
 import { useWatchApprovalSubmitted } from './useWatchApprovalSubmitted'
 
+type CurrencyWithSec = Currency & { isSecToken?: boolean }
+
 export default function Swap({ history }: RouteComponentProps) {
   const { chainId } = useActiveWeb3React()
   const formRef = useRef() as any
@@ -109,6 +111,12 @@ export default function Swap({ history }: RouteComponentProps) {
       typedValue &&
       !currencyBalances.INPUT &&
       !currencyBalances.OUTPUT)
+
+  // TO DO - add logic to get this logic from back
+  const allowSwapSecurity = true
+  const withSecToken =
+    (currencies.INPUT as CurrencyWithSec)?.isSecToken || (currencies.OUTPUT as CurrencyWithSec)?.isSecToken
+
   return (
     <>
       <TokenWarningModal history={history} />
@@ -134,8 +142,12 @@ export default function Swap({ history }: RouteComponentProps) {
 
                 {showWrap ? null : <CurrentRate {...{ trade, allowedSlippage }} />}
                 {showAcceptChanges ? <AcceptChanges handleAcceptChanges={handleAcceptChanges} /> : null}
-                <AuthorizationButtons formRef={formRef} />
-                <SwapButtons parsedAmounts={parsedAmounts} showAcceptChanges={showAcceptChanges} />
+                <AuthorizationButtons formRef={formRef} allowSwap={allowSwapSecurity || !withSecToken} />
+                <SwapButtons
+                  parsedAmounts={parsedAmounts}
+                  showAcceptChanges={showAcceptChanges}
+                  allowSwap={allowSwapSecurity || !withSecToken}
+                />
               </>
             )}
             {showLoading && (
