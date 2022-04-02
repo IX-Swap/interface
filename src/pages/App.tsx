@@ -123,7 +123,7 @@ export default function App() {
   const isWhitelisted = isUserWhitelisted({ account, chainId })
 
   const chains = ENV_SUPPORTED_TGE_CHAINS || [42]
-  console.log('log => visibleBody', { visibleBody, account, chainId })
+
   return (
     <ErrorBoundary>
       <Route component={GoogleAnalyticsReporter} />
