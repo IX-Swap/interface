@@ -21,6 +21,7 @@ interface Props {
   infoText?: string
   disabled?: boolean
 }
+
 const PERCENTAGES = ['25', '50', '75', '100']
 
 export const StakingInputPercentage = ({
