@@ -69,6 +69,9 @@ export function useHandleSwap({ priceImpact }: { priceImpact: Percent | undefine
       .filter((pair): pair is Pair => !!pair)
       .map((pair) => pair.liquidityToken.address)
     try {
+      if (authorizationDigest && onlySecTokens.length) {
+        clearAuthorization(onlySecTokens)
+      }
       const hash = await swapCallback()
       await saveSwapTx({ transactionHash: hash, addresses: onlySecTokens })
       setSwapState({
@@ -102,10 +105,6 @@ export function useHandleSwap({ priceImpact }: { priceImpact: Percent | undefine
         swapErrorMessage: (error as any)?.message as string,
         txHash: undefined,
       })
-    } finally {
-      if (authorizationDigest && onlySecTokens.length) {
-        clearAuthorization(onlySecTokens)
-      }
     }
   }, [
     priceImpact,
