@@ -1,7 +1,7 @@
 import { Trans } from '@lingui/macro'
 import { ChevronElement } from 'components/ChevronElement'
 import Popover from 'components/Popover'
-import { MATIC_TGE_CHAINS, ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
+import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 import { SupportedChainId } from 'constants/chains'
 import { useOnClickOutside } from 'hooks/useOnClickOutside'
 import useToggle from 'hooks/useToggle'
