@@ -9,6 +9,7 @@ import {
   setModalDetails,
   setShowFakeApproval,
   setBrokerDealerData,
+  setPendingSign,
 } from './actions'
 
 type PopupList = Array<{ key: string; show: boolean; content: PopupContent; removeAfterMs: number | null }>
@@ -26,6 +27,7 @@ export interface ApplicationState {
   readonly modalMessage: string
   readonly showFakeApproval: boolean
   readonly brokerDealerData: any
+  pendingSign: boolean
 }
 
 const initialState: ApplicationState = {
@@ -37,6 +39,7 @@ const initialState: ApplicationState = {
   modalMessage: '',
   showFakeApproval: false,
   brokerDealerData: {},
+  pendingSign: false,
 }
 
 export default createReducer(initialState, (builder) =>
@@ -80,5 +83,8 @@ export default createReducer(initialState, (builder) =>
     })
     .addCase(setBrokerDealerData, (state, { payload: { newData } }) => {
       state.brokerDealerData = newData
+    })
+    .addCase(setPendingSign, (state, { payload }) => {
+      state.pendingSign = payload
     })
 )

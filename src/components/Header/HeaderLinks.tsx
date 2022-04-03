@@ -118,7 +118,7 @@ export const HeaderLinks = () => {
           to={'#'}
           isActive={(match, { pathname }) => pathname.startsWith('/nft')}
         >
-          <Popover hideArrow show={openNFT} content={<NFTPopover />} placement={'bottom'}>
+          <Popover hideArrow show={openNFT} content={<NFTPopover />} placement={'bottom-start'}>
             <RowFixed onClick={toggleNFT}>
               <Trans>NFT</Trans>
               <ChevronElement showMore={openNFT} />
@@ -134,7 +134,7 @@ export const HeaderLinks = () => {
           to={'#'}
           isActive={(match, { pathname }) => pathname.startsWith('/vesting') || pathname.startsWith('/staking')}
         >
-          <Popover hideArrow show={open} content={<HeaderPopover />} placement={'bottom'}>
+          <Popover hideArrow show={open} content={<HeaderPopover />} placement={'bottom-start'}>
             <RowFixed onClick={toggle}>
               <Trans>Farming</Trans>
               <ChevronElement showMore={open} />
@@ -162,11 +162,11 @@ const HeaderLinksWrap = styled(Row)<{ links: number }>`
   justify-self: center;
   background-color: 'transparent';
   width: fit-content;
-  display: grid;
   flex-wrap: wrap;
   overflow: visible;
   grid-gap: 32px;
-  grid-template-columns: ${({ links }) => `repeat(${links},auto)`};
+  display: flex;
+  align-items: center;
   ${({ theme }) => theme.mediaWidth.upToMedium`
     justify-self: flex-end;
   `};
