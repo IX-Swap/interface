@@ -7,6 +7,8 @@ import { AppDispatch, AppState } from 'state'
 import { BROKER_DEALERS_STATUS } from 'state/brokerDealer/hooks'
 import { createKYC, fetchGetMyKyc, updateKYC } from './actions'
 
+import { LONG_WAIT_RESPONSE } from 'constants/misc'
+
 const individualKYCFiles = ['proofOfAddress', 'proofOfIdentity']
 const corporateKYCFiles = [
   'beneficialOwnersAddress',
@@ -73,8 +75,12 @@ export const createIndividualKYC = async (newKYC: any) => {
   try {
     const result = await apiService.post(kyc.createIndividual, formData)
     return result.data
-  } catch (e) {
-    console.log(e)
+  } catch (e: any) {
+    if (e.message === LONG_WAIT_RESPONSE) {
+      return { id: 1, status: 'pending' }
+    }
+
+    throw new Error(e.message)
   }
 }
 
@@ -98,8 +104,12 @@ export const createCorporateKYC = async (newKYC: any) => {
   try {
     const result = await apiService.post(kyc.createCorporate, formData)
     return result.data
-  } catch (e) {
-    console.log(e)
+  } catch (e: any) {
+    if (e.message === LONG_WAIT_RESPONSE) {
+      return { id: 1, status: 'pending' }
+    }
+
+    throw new Error(e.message)
   }
 }
 
@@ -171,6 +181,12 @@ export function useCreateIndividualKYC() {
         dispatch(createKYC.fulfilled({ data }))
         return data
       } catch (error: any) {
+        if (error.message === LONG_WAIT_RESPONSE) {
+          const data = { id: 1, status: 'draft' }
+          dispatch(createKYC.fulfilled({ data }))
+          return data
+        }
+
         dispatch(createKYC.rejected({ errorMessage: 'Could not create individual kyc' }))
         return BROKER_DEALERS_STATUS.FAILED
       }
@@ -190,6 +206,12 @@ export function useCreateCorporateKYC() {
         dispatch(createKYC.fulfilled({ data }))
         return data
       } catch (error: any) {
+        if (error.message === LONG_WAIT_RESPONSE) {
+          const data = { id: 1, status: 'draft' }
+          dispatch(createKYC.fulfilled({ data }))
+          return data
+        }
+
         dispatch(createKYC.rejected({ errorMessage: 'Could not create individual kyc' }))
         return BROKER_DEALERS_STATUS.FAILED
       }
