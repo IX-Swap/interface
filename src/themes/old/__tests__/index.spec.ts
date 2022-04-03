@@ -6,7 +6,9 @@ import { AppTheme, getAppTheme } from 'themes/old/index'
 import { darkTheme } from 'themes/old/dark'
 
 jest.mock('@mui/material/styles', () => ({
-  createTheme: jest.fn(() => ({}))
+  createTheme: jest.fn(() => ({
+    palette: { augmentColor: jest.fn() }
+  }))
 }))
 
 jest.spyOn(overrides, 'getThemeOverrides').mockImplementation(jest.fn())
