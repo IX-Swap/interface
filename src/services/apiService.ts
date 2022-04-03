@@ -6,6 +6,7 @@ import { saveAccount } from 'state/user/actions'
 import { auth, metamask } from './apiUrls'
 import { responseSuccessInterceptor } from './interceptors'
 import { APIServiceRequestConfig, KeyValueMap, RequestConfig } from './types'
+import { LONG_WAIT_RESPONSE, LONG_WAIT_RESPONSE_CODE } from 'constants/misc'
 
 const _axios = axios.create()
 _axios.defaults.baseURL = API_URL
@@ -49,6 +50,9 @@ _axios.interceptors.response.use(responseSuccessInterceptor, async function resp
     if (error?.response?.status === 403) {
       const message = error?.response?.data?.message
       throw new Error(message)
+    }
+    if (error?.response?.status === LONG_WAIT_RESPONSE_CODE) {
+      throw new Error(LONG_WAIT_RESPONSE)
     }
   }
 })
