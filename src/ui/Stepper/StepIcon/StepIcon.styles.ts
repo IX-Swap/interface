@@ -7,44 +7,44 @@ export interface Props {
 
 export const useStyles = makeStyles(theme => {
   // eslint-disable-next-line
-  const stepItemPalette = theme.palette.stepItem!
+  const stepIconPalette = theme.palette.stepIcon!
 
   const getBg = (type: StepIconType) => {
     switch (type) {
       case 'active':
-        return stepItemPalette.bgActive
+        return stepIconPalette.bgActive
       case 'completed':
-        return stepItemPalette.bgCompleted
+        return stepIconPalette.bgCompleted
       case 'error':
-        return stepItemPalette.bgError
+        return stepIconPalette.bgError
       default:
-        return stepItemPalette.bg
+        return stepIconPalette.bg
     }
   }
 
   const getColor = (type: StepIconType) => {
     switch (type) {
       case 'active':
-        return stepItemPalette.colorActive
+        return stepIconPalette.colorActive
       case 'completed':
-        return stepItemPalette.colorCompleted
+        return stepIconPalette.colorCompleted
       case 'error':
-        return stepItemPalette.colorError
+        return stepIconPalette.colorError
       default:
-        return stepItemPalette.color
+        return stepIconPalette.color
     }
   }
 
   const getBorderColor = (type: StepIconType) => {
     switch (type) {
       case 'active':
-        return stepItemPalette.borderActive
+        return stepIconPalette.borderActive
       case 'completed':
-        return stepItemPalette.borderCompleted
+        return stepIconPalette.borderCompleted
       case 'error':
-        return stepItemPalette.borderError
+        return stepIconPalette.borderError
       default:
-        return stepItemPalette.border
+        return stepIconPalette.border
     }
   }
 
@@ -62,7 +62,7 @@ export const useStyles = makeStyles(theme => {
     },
     label: {
       color: ({ type }: Props) =>
-        type === 'error' ? stepItemPalette.colorError : 'inherit'
+        type === 'error' ? stepIconPalette.colorError : 'inherit'
     },
     text: {
       color: ({ type }: Props) => getColor(type),

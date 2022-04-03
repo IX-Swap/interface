@@ -148,7 +148,7 @@ export const darkTheme: DeprecatedThemeOptions = {
     skeleton: {
       bg: '#1D3667'
     },
-    stepItem: {
+    stepIcon: {
       bg: tinycolor('#BEC4CF').setAlpha(0.1).toRgbString(),
       color: '#BEC4CF',
       border: tinycolor('#BEC4CF').setAlpha(0.5).toRgbString(),
