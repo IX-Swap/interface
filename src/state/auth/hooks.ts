@@ -8,6 +8,7 @@ import { metamask } from 'services/apiUrls'
 import { AppDispatch, AppState } from 'state'
 import { clearEventLog } from 'state/eventLog/actions'
 import { clearUserData, saveAccount } from 'state/user/actions'
+import { useUserState } from 'state/user/hooks'
 import { logout, postLogin } from './actions'
 
 export enum LOGIN_STATUS {
@@ -16,8 +17,16 @@ export enum LOGIN_STATUS {
   FAILED,
 }
 
-export function useAuthState(): AppState['auth'] {
-  return useSelector<AppState, AppState['auth']>((state) => state.auth)
+type AuthState = Omit<AppState['auth'], 'token' | 'refreshToken'> & {
+  token?: string
+  refreshToken?: string
+}
+
+export function useAuthState(): AuthState {
+  const data = useSelector<AppState, AppState['auth']>((state) => state.auth)
+  const { account } = useActiveWeb3React()
+
+  return { ...data, token: data.token[account ?? ''], refreshToken: data.refreshToken[account ?? ''] }
 }
 
 export function useHasLogin() {
@@ -38,6 +47,7 @@ export function useHasLogin() {
 
 export function useUserisLoggedIn() {
   const { token } = useAuthState()
+
   return useMemo(() => {
     return !!token
   }, [token])
@@ -52,7 +62,6 @@ const awaitDispatch = (dispatch: any, action: any) =>
 export function useLogout() {
   const dispatch = useDispatch<AppDispatch>()
   return useCallback(async () => {
-    awaitDispatch(dispatch, logout)
     dispatch(clearUserData())
     dispatch(clearEventLog())
   }, [])
@@ -65,6 +74,7 @@ export function useLogin({ mustHavePreviousLogin = true }: { mustHavePreviousLog
   const getHasLogin = useHasLogin()
   const isLoggedIn = useUserisLoggedIn()
   const { account } = useActiveWeb3React()
+  const { account: userAccount } = useUserState()
   const checkLogin = useCallback(
     async (expireLogin = false) => {
       if (loginLoading && !account) {
@@ -74,14 +84,14 @@ export function useLogin({ mustHavePreviousLogin = true }: { mustHavePreviousLog
         return LOGIN_STATUS.SUCCESS
       }
       try {
-        dispatch(postLogin.pending())
+        dispatch(postLogin.pending(account))
         // gets here if he has no login at all, or login is forced
         if (mustHavePreviousLogin) {
           // gets here if he needs to be previously logged in
           const hasLogin = await getHasLogin(account)
 
           if (!hasLogin) {
-            dispatch(postLogin.rejected({ errorMessage: 'User has no account' }))
+            dispatch(postLogin.rejected({ errorMessage: 'User has no account', account }))
             dispatch(saveAccount({ account: '' }))
           }
         }
@@ -90,15 +100,15 @@ export function useLogin({ mustHavePreviousLogin = true }: { mustHavePreviousLog
 
         if (!auth) {
           dispatch(saveAccount({ account: '' }))
-          dispatch(postLogin.rejected({ errorMessage: 'Could not login' }))
+          dispatch(postLogin.rejected({ errorMessage: 'Could not login', account }))
           return LOGIN_STATUS.FAILED
         } else {
           dispatch(saveAccount({ account: account ?? '' }))
-          dispatch(postLogin.fulfilled({ auth }))
+          dispatch(postLogin.fulfilled({ auth, account }))
           return LOGIN_STATUS.SUCCESS
         }
       } catch (error: any) {
-        dispatch(postLogin.rejected({ errorMessage: error.message }))
+        dispatch(postLogin.rejected({ errorMessage: error.message, account }))
         dispatch(saveAccount({ account: '' }))
         return LOGIN_STATUS.FAILED
       }

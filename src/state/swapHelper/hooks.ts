@@ -279,7 +279,7 @@ export function useSwapConfirmDataFromURL(
           swapId,
         }
         setReceivedAuthorization(true)
-        dispatch(saveAuthorization({ authorization: persistedAuthorization, chainId, address }))
+        dispatch(saveAuthorization({ authorization: persistedAuthorization, chainId, address, account: account || '' }))
         showPopup({ success: true })
         clearState()
       } catch (e) {

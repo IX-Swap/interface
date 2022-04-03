@@ -97,7 +97,7 @@ export default function Popover({
   children,
   placement = 'auto',
   style = {},
-  offset = [8, 8],
+  offset = [-22, 8],
   close,
   hideArrow = false,
   hideShadow = false, // used for tooltips

@@ -70,12 +70,15 @@ export function getTokenToPairMap(pairs: Array<Pair | null>) {
 }
 
 export function useMissingAuthorizations(trade: V2Trade<Currency, Currency, TradeType> | undefined | null) {
+  const { account } = useActiveWeb3React()
   const addresses = useSwapSecTokenAddresses(trade)
   const authorizations = useAuthorizationsState()
   const { secPairs: pairs } = useSwapSecPairs(trade)
   return useMemo(() => {
     const tokenToPairMap = getTokenToPairMap(pairs)
-    const missingAddress = addresses.filter((address) => address !== null && !authorizations?.[tokenToPairMap[address]])
+    const missingAddress = addresses.filter(
+      (address) => address !== null && (!authorizations?.[tokenToPairMap[address]] || !authorizations?.[account ?? ''])
+    )
     return missingAddress
   }, [addresses, authorizations, pairs])
 }

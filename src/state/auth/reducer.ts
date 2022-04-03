@@ -1,51 +1,46 @@
 import { createReducer } from '@reduxjs/toolkit'
-import { clearToken, logout, postLogin, saveToken } from './actions'
+import { logout, postLogin } from './actions'
 
 export interface AuthState {
-  readonly token?: string
-  readonly refreshToken?: string
+  readonly token: Record<any, string | undefined>
+  readonly refreshToken: Record<any, string | undefined>
   loginLoading: boolean
   loginError: string | null
 }
 
-const initialState: AuthState = {
-  token: undefined,
-  refreshToken: undefined,
-  loginLoading: false,
-  loginError: null,
-}
+const initialState: AuthState = localStorage.getItem('redux_localstorage_simple_auth')
+  ? JSON.parse(localStorage.getItem('redux_localstorage_simple_auth') || '{}')
+  : {
+      token: {},
+      refreshToken: {},
+      loginLoading: false,
+      loginError: null,
+    }
 
 export default createReducer<AuthState>(initialState, (builder) =>
   builder
-    .addCase(saveToken, (state, { payload: { value } }) => {
-      return {
-        ...state,
-        token: value.token,
-      }
+    .addCase(logout, (state, { payload: account }) => {
+      state.token[account] = ''
+      state.refreshToken[account] = ''
+
+      localStorage.setItem('redux_localstorage_simple_auth', JSON.stringify(state))
     })
-    .addCase(logout, (state) => {
-      state.token = ''
-      state.refreshToken = ''
-    })
-    .addCase(clearToken, (state) => {
-      state.token = ''
-    })
-    .addCase(postLogin.pending, (state) => {
+    .addCase(postLogin.pending, (state, { payload: account }) => {
       state.loginLoading = true
       state.loginError = null
-      state.token = ''
-      state.refreshToken = ''
     })
-    .addCase(postLogin.fulfilled, (state, { payload: { auth } }) => {
+    .addCase(postLogin.fulfilled, (state, { payload: { auth, account } }) => {
       state.loginLoading = false
       state.loginError = null
-      state.token = auth.accessToken
-      state.refreshToken = auth.refreshToken
+      state.token[account] = auth.accessToken
+      state.refreshToken[account] = auth.refreshToken
+      localStorage.setItem('redux_localstorage_simple_auth', JSON.stringify(state))
     })
-    .addCase(postLogin.rejected, (state, { payload: { errorMessage } }) => {
+    .addCase(postLogin.rejected, (state, { payload: { errorMessage, account } }) => {
       state.loginLoading = false
       state.loginError = errorMessage
-      state.token = ''
-      state.refreshToken = ''
+      state.token[account] = ''
+      state.refreshToken[account] = ''
+      localStorage.setItem('redux_localstorage_simple_auth', JSON.stringify(state))
     })
 )

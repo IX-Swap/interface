@@ -39,7 +39,7 @@ export const HistoryBlock = ({ currency, account }: Props) => {
         <Line />
         <RowStart marginTop="32px">
           <TYPE.title5>
-            <Trans>History</Trans>
+            <Trans>History of deposits and withdrawals</Trans>
           </TYPE.title5>
         </RowStart>
 

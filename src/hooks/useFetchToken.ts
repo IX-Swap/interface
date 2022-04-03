@@ -9,7 +9,7 @@ interface Hash {
   hash: string
 }
 export const useFetchToken = () => {
-  const { account, library } = useActiveWeb3React()
+  const { account, library, deactivate } = useActiveWeb3React()
   const fetchToken = useCallback(async () => {
     if (!account) {
       throw new Error("User didn't connect a wallet")
@@ -20,6 +20,7 @@ export const useFetchToken = () => {
     }
     const result = await sign({ hash: data.hash, account, library })
     if (!result) {
+      await deactivate()
       throw new Error('Login sign failed')
     }
     const loginData = await login({ hash: result, account })
@@ -28,5 +29,6 @@ export const useFetchToken = () => {
     }
     return loginData.data
   }, [account, library])
+
   return { fetchToken }
 }

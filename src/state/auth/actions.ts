@@ -9,11 +9,11 @@ export interface RawAuthPayload {
 }
 export const saveToken = createAction<{ value: AuthPayload }>('auth/saveToken')
 export const clearToken = createAction('auth/clearToken')
-export const logout = createAction('auth/logout')
+export const logout = createAction<string>('auth/logout')
 export const postLogin: Readonly<{
-  pending: ActionCreatorWithoutPayload
-  fulfilled: ActionCreatorWithPayload<{ auth: RawAuthPayload }>
-  rejected: ActionCreatorWithPayload<{ errorMessage: string }>
+  pending: ActionCreatorWithPayload<any>
+  fulfilled: ActionCreatorWithPayload<{ auth: RawAuthPayload; account: any }>
+  rejected: ActionCreatorWithPayload<{ errorMessage: string; account: any }>
 }> = {
   pending: createAction('auth/postLogin/pending'),
   fulfilled: createAction('auth/postLogin/fulfilled'),

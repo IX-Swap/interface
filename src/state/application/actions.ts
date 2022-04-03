@@ -56,3 +56,4 @@ export const removePopup = createAction<{ key: string }>('application/removePopu
 export const setModalDetails = createAction<{ modalType: ModalType; modalTitle: string; modalMessage: string }>(
   'application/setModalDetails'
 )
+export const setPendingSign = createAction<boolean>('application/pendingSign')

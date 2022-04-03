@@ -1,4 +1,4 @@
-import React, { useCallback, FC, useEffect, useState } from 'react'
+import React, { useCallback, FC, useEffect, useState, useMemo } from 'react'
 import { Trans } from '@lingui/macro'
 import { isMobile } from 'react-device-detect'
 import { Flex } from 'rebass'
@@ -11,7 +11,6 @@ import { RowCenter } from 'components/Row'
 import { useActiveWeb3React } from 'hooks/web3'
 import { TYPE } from 'theme'
 import { StyledBodyWrapper } from 'pages/CustodianV2/styleds'
-import { useGetMyKyc, useKYCState } from 'state/kyc/hooks'
 import { useUserisLoggedIn } from 'state/auth/hooks'
 
 import { KYCStatuses } from './enum'
@@ -22,6 +21,8 @@ import { ReactComponent as CorporateKYC } from 'assets/images/corporate-kyc.svg'
 import { ReactComponent as ApprovedKYC } from 'assets/images/approved-kyc.svg'
 import { useUserState } from 'state/user/hooks'
 import { NotAvailablePage } from 'components/NotAvailablePage'
+import { usePendingSignState } from 'state/application/hooks'
+import { useKYCState } from 'state/kyc/hooks'
 interface DescriptionProps {
   description: string | null
 }
@@ -81,28 +82,20 @@ export default function KYC() {
   const { account: userAccount } = useUserState()
   const [loading, setLoading] = useState(false)
   const isLoggedIn = useUserisLoggedIn()
+  const pendingSign = usePendingSignState()
 
   const { kyc, loadingRequest } = useKYCState()
-  const getMyKyc = useGetMyKyc()
 
-  const [status, setStatus] = useState<KYCStatuses | undefined>(undefined)
-  const [description, setDescription] = useState('')
+  const status = useMemo(() => kyc?.data?.status || KYCStatuses.NOT_SUBMITTED, [kyc])
+  const description = useMemo(() => kyc?.data.message || getStatusDescription(status), [kyc, status])
 
   useEffect(() => {
-    if (account && account !== userAccount) {
+    if (pendingSign) {
       setLoading(true)
     } else {
       setLoading(false)
     }
-  }, [account, userAccount])
-
-  const onKycState = useCallback(() => {
-    if (!account) {
-      return
-    }
-
-    getMyKyc()
-  }, [account, getMyKyc])
+  }, [pendingSign])
 
   // useEffect(() => {
   //   const { ethereum } = window
@@ -123,22 +116,6 @@ export default function KYC() {
   //     setLoading(false)
   //   }
   // }, [kyc, loadingRequest])
-
-  useEffect(() => {
-    if (!isLoggedIn) {
-      return
-    }
-
-    onKycState()
-  }, [isLoggedIn, account])
-
-  useEffect(() => {
-    const status = kyc?.data.status || KYCStatuses.NOT_SUBMITTED
-    const description = kyc?.data.message || getStatusDescription(status)
-
-    setStatus(status)
-    setDescription(description)
-  }, [isLoggedIn, loadingRequest, kyc])
 
   const getKYCDescription = useCallback(() => {
     switch (status) {

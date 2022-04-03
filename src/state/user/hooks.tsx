@@ -482,10 +482,9 @@ export function useAccount() {
   const dispatch = useDispatch<AppDispatch>()
   const login = useLogin({ mustHavePreviousLogin: true })
   const getUserSecTokens = useFetchUserSecTokenListCallback()
-  const logout = useLogout()
   const isLoggedIn = useUserisLoggedIn()
 
-  const { loginError } = useAuthState()
+  const { loginError, token } = useAuthState()
 
   //when there is an authorization error, then we clear the contents of the savedAccount
   const checkAuthError = useCallback(() => {
@@ -511,20 +510,31 @@ export function useAccount() {
   // run with an interval of 5 sec in cases when user changes fast from an account to another
   // so the user won't end up authenticated with a different account
 
-  useEffect(() => {
-    const interval = setInterval(async () => {
-      if (account && savedAccount && savedAccount !== account) {
-        dispatch(saveAccount({ account: '' }))
-      }
-    }, 5000)
-    return () => clearInterval(interval)
-  }, [account, savedAccount, dispatch, login, getUserSecTokens, authenticate])
+  // useEffect(() => {
+  //   const interval = setInterval(async () => {
+  //     if (account && savedAccount && savedAccount !== account) {
+  //       dispatch(saveAccount({ account: '' }))
+  //     }
+  //   }, 5000)
+  //   return () => clearInterval(interval)
+  // }, [account, savedAccount, dispatch, login, getUserSecTokens, authenticate])
 
   // User connects with account
   useEffect(() => {
-    if (account && !savedAccount) {
-      logout()
+    if (!token && account) {
       authenticate()
     }
+  }, [token, account])
+
+  useEffect(() => {
+    if (account && account !== savedAccount) {
+      dispatch(saveAccount({ account }))
+    }
   }, [account, savedAccount])
+
+  useEffect(() => {
+    if (token) {
+      getUserSecTokens()
+    }
+  }, [token, getUserSecTokens])
 }

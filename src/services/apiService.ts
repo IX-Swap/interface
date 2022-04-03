@@ -20,15 +20,21 @@ _axios.interceptors.response.use(responseSuccessInterceptor, async function resp
   if (shouldRetry() && error?.response) {
     if (error.response.status === 401 && !originalConfig._retry) {
       originalConfig._retry = true
+      const {
+        auth: authState,
+        user: { account },
+      } = store.getState()
       try {
-        const { auth: authState } = store.getState()
-        if (authState.refreshToken) {
-          store.dispatch(postLogin.pending())
-          const response = await _axios.post(auth.refresh, { refreshToken: authState.refreshToken })
+        const refreshToken = authState.refreshToken[account ?? '']
+
+        if (refreshToken) {
+          store.dispatch(postLogin.pending(account))
+          const response = await _axios.post(auth.refresh, { refreshToken })
           if (!response?.data) {
             store.dispatch(
               postLogin.rejected({
                 errorMessage: 'No response on refresh token',
+                account,
               })
             )
             return
@@ -36,6 +42,7 @@ _axios.interceptors.response.use(responseSuccessInterceptor, async function resp
           store.dispatch(
             postLogin.fulfilled({
               auth: response?.data,
+              account,
             })
           )
           return _axios(originalConfig)
@@ -44,7 +51,7 @@ _axios.interceptors.response.use(responseSuccessInterceptor, async function resp
         }
       } catch (error: any) {
         console.error({ requestError: error.message })
-        store.dispatch(postLogin.rejected({ errorMessage: error.message }))
+        store.dispatch(postLogin.rejected({ errorMessage: error.message, account }))
       }
     }
     if (error?.response?.status === 403) {
@@ -149,9 +156,11 @@ const apiService = {
 
   _prepareHeaders(data: any) {
     const headers: KeyValueMap = {}
-    const { auth } = store.getState()
-    if (auth.token) {
-      headers.Authorization = `Bearer ${auth.token}`
+    const { auth, user } = store.getState()
+
+    const token = auth.token[user.account ?? '']
+    if (token) {
+      headers.Authorization = `Bearer ${token}`
     }
 
     if (data !== undefined && !this._isFormData(data)) {
