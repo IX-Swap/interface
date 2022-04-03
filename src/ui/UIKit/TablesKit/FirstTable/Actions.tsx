@@ -21,9 +21,6 @@ export const Actions = ({ item }: ActionsProps) => {
       <Button style={styles} variant={'outlined'}>
         Invest Secondary
       </Button>
-      {/* <Button style={styles} variant={'outlined'}> */}
-      {/*  Withdraw */}
-      {/* </Button> */}
       <IconButton>
         <Icon name={'more-horizontal'} />
       </IconButton>
