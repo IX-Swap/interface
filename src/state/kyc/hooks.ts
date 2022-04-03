@@ -163,12 +163,14 @@ export const updateCorporateKYC = async (kycId: number, newKYC: any) => {
 
 export function useCreateIndividualKYC() {
   const dispatch = useDispatch<AppDispatch>()
+  const getMyKyc = useGetMyKyc()
   const callback = useCallback(
     async (newKYC: any) => {
       try {
         dispatch(createKYC.pending())
         const data = await createIndividualKYC(newKYC)
         dispatch(createKYC.fulfilled({ data }))
+        await getMyKyc()
         return data
       } catch (error: any) {
         dispatch(createKYC.rejected({ errorMessage: 'Could not create individual kyc' }))
@@ -182,12 +184,14 @@ export function useCreateIndividualKYC() {
 
 export function useCreateCorporateKYC() {
   const dispatch = useDispatch<AppDispatch>()
+  const getMyKyc = useGetMyKyc()
   const callback = useCallback(
     async (newKYC: any) => {
       try {
         dispatch(createKYC.pending())
         const data = await createCorporateKYC(newKYC)
         dispatch(createKYC.fulfilled({ data }))
+        await getMyKyc()
         return data
       } catch (error: any) {
         dispatch(createKYC.rejected({ errorMessage: 'Could not create individual kyc' }))
@@ -201,12 +205,14 @@ export function useCreateCorporateKYC() {
 
 export function useUpdateCorporateKYC() {
   const dispatch = useDispatch<AppDispatch>()
+  const getMyKyc = useGetMyKyc()
   const callback = useCallback(
     async (kycId: number, newKYC: any) => {
       try {
         dispatch(updateKYC.pending())
         const data = await updateCorporateKYC(kycId, newKYC)
         dispatch(updateKYC.fulfilled({ data }))
+        await getMyKyc()
         return data
       } catch (error: any) {
         dispatch(updateKYC.rejected({ errorMessage: 'Could not create individual kyc' }))
@@ -220,12 +226,14 @@ export function useUpdateCorporateKYC() {
 
 export function useUpdateIndividualKYC() {
   const dispatch = useDispatch<AppDispatch>()
+  const getMyKyc = useGetMyKyc()
   const callback = useCallback(
     async (kycId: number, newKYC: any) => {
       try {
         dispatch(updateKYC.pending())
         const data = await updateIndividualKYC(kycId, newKYC)
         dispatch(updateKYC.fulfilled({ data }))
+        await getMyKyc()
         return data
       } catch (error: any) {
         dispatch(updateKYC.rejected({ errorMessage: 'Could not create individual kyc' }))

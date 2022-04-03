@@ -2,7 +2,7 @@ import { Trans } from '@lingui/macro'
 import useScrollPosition from '@react-hook/window-scroll'
 import useLightBackground from 'components/AppBackground/useLightBackground'
 import { useNativeCurrency } from 'hooks/useNativeCurrencyName'
-import React, { useEffect } from 'react'
+import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { Flex, Text } from 'rebass'
 import styled from 'styled-components'
@@ -16,13 +16,11 @@ import { HeaderLinks } from './HeaderLinks'
 import { IXSBalance } from './IXSBalance'
 import { NetworkCard } from './NetworkCard'
 import { TYPE } from 'theme'
-import { useGetMyKyc, useKYCState } from 'state/kyc/hooks'
+import { useKYCState } from 'state/kyc/hooks'
 
 import { ReactComponent as KYC } from 'assets/images/kyc.svg'
 import { ReactComponent as KYCApproved } from 'assets/images/kyc-approved.svg'
 import { formatAmount } from 'utils/formatCurrencyAmount'
-import { useAuthState } from 'state/auth/hooks'
-import { TGE_CHAINS_WITH_KYC } from 'constants/addresses'
 import { isUserWhitelisted } from 'utils/isUserWhitelisted'
 
 const HeaderFrame = styled.div<{ showBackground: boolean; lightBackground: boolean }>`
@@ -200,19 +198,13 @@ const KYCWrapper = styled(Flex)`
 
 export default function Header() {
   const { account, chainId } = useActiveWeb3React()
-  const { token } = useAuthState()
   const { hasLightBackground } = useLightBackground()
   const userEthBalance = useETHBalances(account ? [account] : [])?.[account ?? '']
   const nativeCurrency = useNativeCurrency()
   const scrollY = useScrollPosition()
   const { kyc } = useKYCState()
-  const getMyKyc = useGetMyKyc()
 
   const isWhitelisted = isUserWhitelisted({ account, chainId })
-
-  useEffect(() => {
-    getMyKyc()
-  }, [getMyKyc, account, token])
 
   return (
     <>

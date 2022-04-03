@@ -15,9 +15,8 @@ import { useFetchUserSecTokenListCallback, usePassAccreditation, useUserState } 
 import styled from 'styled-components'
 import { ModalBlurWrapper, ModalContentWrapper, ModalPadding } from 'theme'
 import { CloseIcon, TYPE } from '../../theme'
-import { darken } from 'polished'
 import { useHistory } from 'react-router-dom'
-import { useGetMyKyc, useKYCState } from 'state/kyc/hooks'
+import { useKYCState } from 'state/kyc/hooks'
 import { KYCStatuses } from './enum'
 
 const KycSourceContainer = styled.div`
@@ -114,7 +113,6 @@ interface KycSourceSelectorProps {
 const KycSourceSelector = (props: KycSourceSelectorProps) => {
   const history = useHistory()
   const { kyc } = useKYCState()
-  const getMyKyc = useGetMyKyc()
 
   const [selected, setSelected] = useState<KycSource | undefined>(undefined)
   const [statusDesc, setStatusDesc] = useState('')
@@ -135,10 +133,6 @@ const KycSourceSelector = (props: KycSourceSelectorProps) => {
         return t`Pass KYC on IXSwap`
     }
   }
-
-  useEffect(() => {
-    getMyKyc()
-  }, [getMyKyc])
 
   useEffect(() => {
     const status = kyc?.data.status === KYCStatuses.APPROVED ? KycSource.IXSwap : KycSource.InvestaX //|| KYCStatuses.NOT_SUBMITTED

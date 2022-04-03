@@ -11,7 +11,7 @@ import { useActiveWeb3React } from 'hooks/web3'
 import { useAccount } from 'state/user/hooks'
 import { routes } from 'utils/routes'
 import { SupportedChainId } from 'constants/chains'
-import { useKYCState } from 'state/kyc/hooks'
+import { useGetMyKyc, useKYCState } from 'state/kyc/hooks'
 
 import GoogleAnalyticsReporter from '../components/analytics/GoogleAnalyticsReporter'
 import ErrorBoundary from '../components/ErrorBoundary'
@@ -30,6 +30,7 @@ import { RedirectPathToKyc, RedirectPathToSwapOnly, RedirectToSwap } from './Swa
 import { Footer } from '../components/Footer'
 import { isUserWhitelisted } from 'utils/isUserWhitelisted'
 import { KYCStatuses } from 'components/Vault/enum'
+import { useAuthState } from 'state/auth/hooks'
 
 const Admin = lazy(() => import('./Admin'))
 
@@ -85,6 +86,9 @@ export default function App() {
   const isSettingsOpen = useModalOpen(ApplicationModal.SETTINGS)
   const { pathname } = useLocation()
   const { chainId, account } = useActiveWeb3React()
+  const getMyKyc = useGetMyKyc()
+  const { token } = useAuthState()
+
   const { kyc } = useKYCState()
 
   const canAccessKycForm = (kycType: string) => {
@@ -103,6 +107,12 @@ export default function App() {
   }
 
   useAccount()
+
+  useEffect(() => {
+    if (account && token) {
+      getMyKyc()
+    }
+  }, [account, token])
 
   useEffect(() => {
     window.scrollTo(0, 0)

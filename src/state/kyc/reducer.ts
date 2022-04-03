@@ -1,4 +1,5 @@
 import { createReducer } from '@reduxjs/toolkit'
+import { postLogin } from 'state/auth/actions'
 
 import { createKYC, fetchGetMyKyc, updateKYC } from './actions'
 
@@ -52,5 +53,11 @@ export default createReducer<KYCState>(initialState, (builder) =>
     .addCase(updateKYC.rejected, (state, { payload: { errorMessage } }) => {
       state.loadingRequest = false
       state.error = errorMessage
+    })
+    .addCase(postLogin.pending, (state) => {
+      state.loadingRequest = true
+    })
+    .addCase(postLogin.rejected, (state) => {
+      state.loadingRequest = false
     })
 )

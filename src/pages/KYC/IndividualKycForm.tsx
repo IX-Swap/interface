@@ -564,6 +564,7 @@ export default function IndividualKycForm() {
 
                         <Column style={{ gap: '40px' }}>
                           <Uploader
+                            subtitle="Proof of ID, passport, driving license, National ID card."
                             error={errors.proofOfIdentity && errors.proofOfIdentity}
                             title="Proof of Identity"
                             files={values.proofOfIdentity}
@@ -579,6 +580,7 @@ export default function IndividualKycForm() {
                           />
 
                           <Uploader
+                            subtitle="Bank statement, utility bills, driving license (no expiry) within 3 month of issuance."
                             error={errors.proofOfAddress && errors.proofOfAddress}
                             title="Proof of Address"
                             files={values.proofOfAddress}

@@ -7,6 +7,7 @@ export const saveAuthorization = createAction<{
   authorization: SwapAuthorization | null
   chainId: number
   address: string
+  account: string
 }>('swapHelper/saveAuthorization')
 export const clearAuthorization = createAction<{ addresses: string[]; chainId: number }>(
   'swapHelper/clearAuthorization'
