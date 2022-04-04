@@ -32,6 +32,9 @@ import { isMobile } from 'react-device-detect'
 
 import { MenuItem, UnapprovedMenuItem, UnapprovedTokenWrapper } from './styleds'
 import { formatAmount } from 'utils/formatCurrencyAmount'
+
+type CurrencySec = Currency & { isSecToken?: boolean }
+
 function currencyKey(currency: Currency): string {
   return currency.isToken ? currency.address : 'ETHER'
 }
@@ -282,12 +285,37 @@ export default function CurrencyList({
   showImportView: () => void
   setImportToken: (token: Token) => void
 }) {
+  const sortedBySecList = useMemo(() => {
+    const sorted = [...currencies].sort((a: CurrencySec, b: CurrencySec) =>
+      `${a.isSecToken || false}` > `${b.isSecToken || false}` ? -1 : 1
+    )
+
+    const wixsItem = currencies.find(({ tokenInfo }: any) => tokenInfo?.symbol === 'WIXS')
+    const wixsIndex = sorted.findIndex(({ tokenInfo }: any) => tokenInfo?.symbol === 'WIXS')
+
+    const usdcItem = currencies.find(({ tokenInfo }: any) => tokenInfo?.symbol === 'USDC')
+    const usdcIndex = sorted.findIndex(({ tokenInfo }: any) => tokenInfo?.symbol === 'USDC')
+
+    if (wixsItem) {
+      sorted.splice(wixsIndex, 1)
+      sorted.splice(1, 0, wixsItem)
+    }
+
+    if (usdcItem) {
+      sorted.splice(usdcIndex, 1)
+      sorted.splice(2, 0, usdcItem)
+    }
+
+    return sorted
+  }, [currencies])
+
   const itemData: (Currency | BreakLine)[] = useMemo(() => {
     if (otherListTokens && otherListTokens?.length > 0) {
-      return [...currencies, BREAK_LINE, ...otherListTokens]
+      return [...sortedBySecList, BREAK_LINE, ...otherListTokens]
     }
-    return currencies
-  }, [currencies, otherListTokens])
+    return sortedBySecList
+  }, [sortedBySecList, otherListTokens])
+
   const { secTokens: userSecTokens } = useUserSecTokens()
   const { secTokens } = useSecTokens()
 

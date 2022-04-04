@@ -156,7 +156,6 @@ export default function Swap({ history }: RouteComponentProps) {
               </LoaderContainer>
             )}
           </AutoColumn>
-          {showFakeApproval && <FakeBrokerDealerApproval formRef={formRef} />}
         </Wrapper>
       </AppBody>
       {!swapIsUnsupported ? null : (
