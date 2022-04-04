@@ -61,11 +61,11 @@ export function useSaveSwapTx() {
 
 export function useClearAuthorization() {
   const dispatch = useDispatch<AppDispatch>()
-  const { chainId } = useActiveWeb3React()
+  const { chainId, account } = useActiveWeb3React()
   return useCallback(
     (addresses: string[]) => {
       if (chainId) {
-        dispatch(clearAuthorization({ addresses, chainId }))
+        dispatch(clearAuthorization({ addresses, chainId, account: account || '' }))
       }
     },
     [chainId]
