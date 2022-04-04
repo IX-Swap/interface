@@ -12,7 +12,6 @@ export const tooltip = (theme: Theme) => {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        border: `1px solid ${tooltipPalette.borderColor}`,
         boxSizing: 'border-box',
         borderRadius: '6px',
 
@@ -27,11 +26,7 @@ export const tooltip = (theme: Theme) => {
         color: tooltipPalette.color
       },
       arrow: {
-        color: tooltipPalette.bg,
-        boxSizing: 'border-box',
-        '&::before': {
-          border: `1px solid ${tooltipPalette.borderColor}`
-        }
+        color: tooltipPalette.bg
       }
     }
   }

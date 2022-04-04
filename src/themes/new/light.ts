@@ -18,8 +18,7 @@ export const lightTheme: DeprecatedThemeOptions = {
     },
     tooltip: {
       color: '#778194',
-      bg: '#F0F2F7',
-      borderColor: '#EDF2FA'
+      bg: '#EDF2FA'
     },
     toggledInputs: {
       fill: '#FFFFFF',

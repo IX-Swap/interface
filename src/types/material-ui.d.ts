@@ -85,7 +85,6 @@ export interface MenuPalette {
 export interface TooltipPalette {
   color: string
   bg: string
-  borderColor: string
 }
 
 export interface Alerts {
