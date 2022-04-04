@@ -82,6 +82,11 @@ export interface MenuPalette {
   boxShadow: string
 }
 
+export interface TooltipPalette {
+  color: string
+  bg: string
+}
+
 export interface SkeletonPalette {
   bg: string
 }
@@ -139,8 +144,9 @@ declare module '@mui/styles/defaultTheme' {
 declare module '@mui/material/styles' {
   export interface PaletteOptions {
     backgrounds: AppBackgrounds
-    chip?: ChipPalette
+    tooltip?: TooltipPalette
     skeleton?: SkeletonPalette
+    chip?: ChipPalette
     toggledInputs?: ToggledInputsColorOptions
     switch?: SwitchColorOptions
     slider: {
@@ -169,12 +175,14 @@ declare module '@mui/material/styles' {
     table?: TablePalette
     paginationItem?: PaginationItem
     tablePagination?: TablePagination
+    alerts?: Alerts
   }
 
   export interface Palette {
     backgrounds: AppBackgrounds
     chip?: ChipPalette
     skeleton?: SkeletonPalette
+    tooltip?: TooltipPalette
     toggledInputs?: ToggledInputsColorOptions
     switch?: SwitchColorOptions
     sidebar: {

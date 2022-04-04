@@ -16,6 +16,10 @@ export const lightTheme: DeprecatedThemeOptions = {
       dark: '#F0F2F7',
       light: '#EDF2FA'
     },
+    tooltip: {
+      color: '#778194',
+      bg: '#EDF2FA'
+    },
     chip: {
       fill: '#DBE2EC',
       bg: '#EEF1F4',
