@@ -44,7 +44,7 @@ export default function Pool() {
   const isBlurred = chainId !== undefined && !TGE_CHAINS_WITH_SWAP.includes(chainId)
   return (
     <>
-      {!isBlurred && (
+      {/* {!isBlurred && (
         <TipCard style={{ maxWidth: '592px' }} padding="1rem 20px" as={ExternalLink} href="https://info.ixswap.io/home">
           <RowCenter style={{ gap: '10px', marginTop: '5px' }}>
             <Flex style={{ gap: '5px' }}>
@@ -54,7 +54,7 @@ export default function Pool() {
             <TYPE.body1>Explore popular pools on IXSwap Analytics</TYPE.body1>
           </RowCenter>
         </TipCard>
-      )}
+      )} */}
       <AppBody blurred={isBlurred}>
         <SwapPoolTabs active={'pool'} />
         <AutoColumn gap="1.5rem" justify="center">
