@@ -127,9 +127,9 @@ export function CurrencySearch({
             onKeyDown={handleEnter}
           />
         </Row>
-        {/* {showCommonBases && (
+        {showCommonBases && (
           <CommonBases chainId={chainId} onSelect={handleCurrencySelect} selectedCurrency={selectedCurrency} />
-        )} */}
+        )}
       </PaddedColumn40>
       {searchToken && !searchTokenIsAdded ? (
         <Column style={{ padding: '20px 0', height: '100%' }}>
