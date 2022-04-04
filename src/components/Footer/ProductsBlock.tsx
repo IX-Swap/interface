@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom'
 import { routes } from 'utils/routes'
 import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 import { useActiveWeb3React } from 'hooks/web3'
+import { ExternalLink } from 'theme'
 
 import { ProductsBlockContainer } from './styleds'
 
@@ -43,9 +44,11 @@ export const ProductsBlock = () => {
             <Trans>Pools</Trans>
           </NavLink>
         )}
-        {/* <ExternalLink href="https://info.ixswap.io/home">
-          <Trans>Charts </Trans>
-        </ExternalLink> */}
+        {account && (
+          <ExternalLink href="https://info.ixswap.io/home">
+            <Trans>Charts </Trans>
+          </ExternalLink>
+        )}
         {/* <NavLink to={routes.nftCollections}>
           <Trans>NFT</Trans>
         </NavLink> */}
