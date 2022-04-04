@@ -13,7 +13,7 @@ export const stepLabel = (theme: Theme) => {
       vertical: {
         width: '100%',
         padding: 0,
-        flexDirection: 'row-reverse',
+        flexDirection: 'row-reverse' as const,
         justifyContent: 'space-between',
         maxHeight: 48
       },

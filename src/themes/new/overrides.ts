@@ -48,5 +48,6 @@ export const getThemeOverrides = (theme: Theme) => ({
   MuiSkeleton: skeleton(theme),
   MuiInputBase: inputBase(theme),
   MuiStep: step(theme),
-  MuiStepLabel: stepLabel(theme)
+  MuiStepLabel: stepLabel(theme),
+  MuiButtonBase: {}
 })
