@@ -10,6 +10,7 @@ import { getKycById, useAdminState, useGetKycList } from 'state/admin/hooks'
 import { shortenAddress } from 'utils'
 import { KycItem } from 'state/admin/actions'
 import { IconWrapper } from 'components/AccountDetails/styleds'
+import { adminOffset as offset } from 'state/admin/constants'
 
 import { Pagination } from '../Pagination'
 import { BodyRow, HeaderRow, Table } from '../Table'
@@ -109,7 +110,7 @@ export const AdminKycTable = () => {
   const onPageChange = (page: number) => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
 
-    getKycList({ page, offset: 10 })
+    getKycList({ page, offset })
   }
 
   const closeModal = () => {
@@ -119,7 +120,7 @@ export const AdminKycTable = () => {
   const openModal = (kyc: KycItem) => history.push(`/admin/kyc/${kyc.id}`)
 
   useEffect(() => {
-    getKycList({ page: 1, offset: 10 })
+    getKycList({ page: 1, offset })
   }, [getKycList])
 
   useEffect(() => {

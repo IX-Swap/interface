@@ -69,7 +69,6 @@ const initialState: AdminState = {
     items: [],
     totalPages: 0,
     page: 1,
-    offset: 50,
   },
 }
 

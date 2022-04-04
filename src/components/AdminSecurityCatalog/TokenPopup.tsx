@@ -19,6 +19,7 @@ import Upload from 'components/Upload'
 import { AddressInput } from 'components/AddressInputPanel/AddressInput'
 import { NETWORK_LABELS } from 'constants/chains'
 import { AreYouSureModal } from 'components/AreYouSureModal'
+import { adminOffset as offset } from 'state/admin/constants'
 import { SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 
 import { ReactComponent as LogoImage } from '../../assets/images/wallpaper.svg'
@@ -155,7 +156,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
 
       if (data) {
         toggle()
-        getIssuers({ search: '', offset: 10, page: 1 })
+        getIssuers({ search: '', offset, page: 1 })
         setCurrentToken(null)
         setToken(initialTokenState)
       } else {
