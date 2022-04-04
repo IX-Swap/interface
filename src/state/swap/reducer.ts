@@ -1,5 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit'
 import {
+  clearSwapState,
   Field,
   replaceSwapState,
   selectCurrency,
@@ -93,5 +94,17 @@ export default createReducer<SwapState>(initialState, (builder) =>
     })
     .addCase(setApprovalSubmitted, (state, { payload: { approvalSubmitted } }) => {
       state.approvalSubmitted = approvalSubmitted
+    })
+    .addCase(clearSwapState, (state) => {
+      // state.independentField = Field.INPUT
+      // state.typedValue = ''
+      // state[Field.INPUT] = {
+      //   currencyId: '',
+      // }
+      // state[Field.OUTPUT] = {
+      //   currencyId: '',
+      // }
+      // state.recipient = null
+      // state.approvalSubmitted = false
     })
 )

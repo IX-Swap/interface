@@ -79,13 +79,13 @@ export default function Faucet() {
           <StyledPageHeader>
             <RowFixed>
               <TYPE.black fontWeight={600} fontSize={22} style={{ marginRight: '8px' }}>
-                <Trans>Get IXSwap Playground Test Tokens</Trans>
+                <Trans>Get IX Swap Playground Test Tokens</Trans>
               </TYPE.black>
             </RowFixed>
           </StyledPageHeader>
           <WarningCard
             style={{ padding: '15px 10px', marginBottom: '10px' }}
-            message={t`These tokens are fake, they were made only for testing IXSwap Playground on Kovan`}
+            message={t`These tokens are fake, they were made only for testing IX Swap Playground on Kovan`}
           />
           <TYPE.body3>
             <Trans>This faucet transfers test tokens on Kovan testnet. Confirm details before submitting.</Trans>

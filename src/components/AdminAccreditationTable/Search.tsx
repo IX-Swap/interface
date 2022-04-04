@@ -2,6 +2,7 @@ import React, { ChangeEvent } from 'react'
 import { t } from '@lingui/macro'
 import styled from 'styled-components'
 
+import { adminOffset as offset } from 'state/admin/constants'
 import { useGetAccreditationList } from 'state/admin/hooks'
 
 let timer = null as any
@@ -17,7 +18,7 @@ export const Search = ({ setSearchValue, placeholder }: Props) => {
   const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
     clearTimeout(timer)
-    timer = setTimeout(() => getKysList({ page: 1, offset: 10, search: value }), 250)
+    timer = setTimeout(() => getKysList({ page: 1, offset, search: value }), 250)
     setSearchValue && setSearchValue(value)
   }
 

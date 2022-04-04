@@ -2,8 +2,8 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { t, Trans } from '@lingui/macro'
 import { FileWithPath } from 'react-dropzone'
 import { useHistory } from 'react-router-dom'
-import StickyBox from 'react-sticky-box'
 import { Formik } from 'formik'
+import { isMobile } from 'react-device-detect'
 
 import usePrevious from 'hooks/usePrevious'
 import Column from 'components/Column'
@@ -26,7 +26,7 @@ import { countriesList } from 'constants/countriesList'
 import { Select, TextInput, Uploader } from './common'
 import { KYCProgressBar } from './KYCProgressBar'
 import { corporateSourceOfFunds, legalEntityTypes, corporateFormInitialValues, promptValue } from './mock'
-import { FormCard, FormGrid, ExtraInfoCard, Divider } from './styleds'
+import { FormCard, FormGrid, ExtraInfoCard, Divider, StyledStickyBox } from './styleds'
 import { ChooseFile, BeneficialOwnersTable, DeleteRow } from './common'
 import { FormContainer, FormRow } from './IndividualKycForm'
 import { corporateErrorsSchema } from './schema'
@@ -214,12 +214,18 @@ export default function CorporateKycForm() {
       <LoadingIndicator isLoading={loadingRequest} />
 
       <StyledBodyWrapper>
-        <ButtonText style={{ textDecoration: 'none' }} display="flex" marginBottom="64px" onClick={goBack}>
-          <ArrowLeft />
-          <TYPE.title4 display="flex" marginLeft="10px">
-            <Trans>
-              KYC as <GradientText style={{ marginLeft: 8 }}>Corporate</GradientText>
-            </Trans>
+        <ButtonText
+          style={{ textDecoration: 'none' }}
+          display="flex"
+          marginBottom={isMobile ? '32px' : '64px'}
+          onClick={goBack}
+        >
+          <ArrowLeft style={{ width: isMobile ? 20 : 26 }} />
+          <TYPE.title4 fontSize={isMobile ? 24 : 36} style={{ whiteSpace: 'nowrap' }} marginLeft="10px">
+            <Trans>KYC as</Trans>
+          </TYPE.title4>
+          <TYPE.title4>
+            <GradientText style={{ marginLeft: 8, fontSize: isMobile ? 26 : 36 }}>Corporate</GradientText>
           </TYPE.title4>
         </ButtonText>
 
@@ -700,7 +706,7 @@ export default function CorporateKycForm() {
                           </TYPE.title6>
                           {beneficialOwnersFilled && <BigPassed />}
                         </RowBetween>
-                        <ExtraInfoCard>
+                        <ExtraInfoCard style={{ marginBottom: 20 }}>
                           <TYPE.buttonMuted>
                             Please upload the Proof of Identity and Proof of Address for Beneficial Owner. All account
                             statements and documents should be dated within 3 months.
@@ -723,6 +729,7 @@ export default function CorporateKycForm() {
                                 >
                                   <TextInput
                                     value={beneficiar.fullName}
+                                    placeholder={isMobile ? 'Full Name' : ''}
                                     onChange={(e) =>
                                       changeBeneficiar(
                                         'fullName',
@@ -742,6 +749,7 @@ export default function CorporateKycForm() {
                                 <TextInput
                                   type="number"
                                   style={{ textAlign: 'center', fontSize: '20px' }}
+                                  placeholder={isMobile ? '% Shareholding' : ''}
                                   value={beneficiar.shareholding}
                                   onChange={(e) =>
                                     changeBeneficiar(
@@ -757,6 +765,7 @@ export default function CorporateKycForm() {
                                 />
                                 <ChooseFile
                                   file={beneficiar.proofOfAddress}
+                                  label={isMobile ? 'Proof of Address' : null}
                                   onDrop={(file) =>
                                     changeBeneficiar(
                                       'proofOfAddress',
@@ -784,6 +793,7 @@ export default function CorporateKycForm() {
                                 />
                                 <ChooseFile
                                   file={beneficiar.proofOfIdentity}
+                                  label={isMobile ? 'Proof of Identity' : null}
                                   onDrop={(file) =>
                                     changeBeneficiar(
                                       'proofOfIdentity',
@@ -871,7 +881,10 @@ export default function CorporateKycForm() {
                     </Column>
                   </FormContainer>
 
-                  <StickyBox offsetTop={100}>
+                  <StyledStickyBox
+                    style={{ width: isMobile ? '100%' : 296, maxWidth: isMobile ? '100%' : 296 }}
+                    offsetTop={100}
+                  >
                     <KYCProgressBar
                       handleSubmit={handleSubmit}
                       disabled={!dirty || !canSubmit || Object.keys(errors).length !== 0}
@@ -925,7 +938,7 @@ export default function CorporateKycForm() {
                       description={kyc?.data?.message || null}
                       reasons={['Last name', 'Gender', 'Middle name']}
                     />
-                  </StickyBox>
+                  </StyledStickyBox>
                 </FormRow>
               )
             }}

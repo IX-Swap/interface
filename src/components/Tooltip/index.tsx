@@ -2,8 +2,8 @@ import React, { ReactNode, useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components/macro'
 import Popover, { PopoverProps } from '../Popover'
 
-const TooltipContainer = styled.div`
-  width: 256px;
+const TooltipContainer = styled.div<{ width?: number }>`
+  width: ${({ width }) => (width ? width : 256)}px;
   padding: 0.6rem 1rem;
   font-weight: 400;
   word-break: break-word;
@@ -19,14 +19,15 @@ const TooltipContainerFit = styled(TooltipContainer)`
 `
 interface TooltipProps extends Omit<PopoverProps, 'content'> {
   text: ReactNode
+  width?: number
 }
 
 interface TooltipContentProps extends Omit<PopoverProps, 'content'> {
   content: ReactNode
 }
 
-export default function Tooltip({ text, ...rest }: TooltipProps) {
-  return <Popover content={<TooltipContainer>{text}</TooltipContainer>} hideShadow {...rest} />
+export default function Tooltip({ text, width, ...rest }: TooltipProps) {
+  return <Popover content={<TooltipContainer width={width}>{text}</TooltipContainer>} hideShadow {...rest} />
 }
 
 export function TooltipLight({ text, ...rest }: TooltipProps) {

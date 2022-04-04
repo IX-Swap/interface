@@ -9,6 +9,7 @@ import useCopyClipboard from 'hooks/useCopyClipboard'
 import { getKyc, useAdminState, useGetAccreditationList } from 'state/admin/hooks'
 import { shortenAddress } from 'utils'
 import { AccreditationItem, KycItem } from 'state/admin/actions'
+import { adminOffset as offset } from 'state/admin/constants'
 
 import { CustodianStatus } from './CustodianStatus'
 import { BodyRow, HeaderRow, Table } from '../Table'
@@ -122,11 +123,11 @@ export const AdminAccreditationTable = () => {
   const onPageChange = (page: number) => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
 
-    getAccreditationList({ page, offset: 10, search: searchValue })
+    getAccreditationList({ page, offset, search: searchValue })
   }
 
   useEffect(() => {
-    getAccreditationList({ page: 1, offset: 10 })
+    getAccreditationList({ page: 1, offset })
   }, [getAccreditationList])
 
   const closeModal = () => handleKyc({} as KycItem)

@@ -72,7 +72,6 @@ export interface BrokerDealerSwaps {
   page: number
   totalPages: number
   items: BrokerDealerSwapItem[]
-  offset: number
 }
 export interface AccreditationItem {
   createdAt: string

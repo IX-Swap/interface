@@ -1,6 +1,6 @@
 ---
 name: Bug Report
-about: Describe an issue in the IXSwap Interface
+about: Describe an issue in the IX Swap Interface
 title: ''
 labels: bug
 assignees: ''
