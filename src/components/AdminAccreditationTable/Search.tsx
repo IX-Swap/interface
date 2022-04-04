@@ -10,9 +10,10 @@ let timer = null as any
 interface Props {
   placeholder?: string
   setSearchValue?: (newValue: string) => void
+  callback?: any
 }
 
-export const Search = ({ setSearchValue, placeholder }: Props) => {
+export const Search = ({ setSearchValue, placeholder, callback }: Props) => {
   const getKysList = useGetAccreditationList()
 
   const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {

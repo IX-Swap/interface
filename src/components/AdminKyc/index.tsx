@@ -97,6 +97,7 @@ const Body = ({ openModal }: { openModal: (kyc: KycItem) => void }) => {
 export const AdminKycTable = () => {
   const [kyc, handleKyc] = useState({} as KycItem)
   const [isLoading, handleIsLoading] = useState(false)
+  const [searchValue, setSearchValue] = useState('')
   const {
     kycList: { totalPages, page, items },
     adminLoading,
@@ -110,7 +111,7 @@ export const AdminKycTable = () => {
   const onPageChange = (page: number) => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
 
-    getKycList({ page, offset })
+    getKycList({ page, offset: 10, search: searchValue })
   }
 
   const closeModal = () => {
@@ -142,7 +143,7 @@ export const AdminKycTable = () => {
   return (
     <div id="kyc-container">
       {Boolean(kyc.id) && <KycReviewModal isOpen onClose={closeModal} data={kyc} />}
-      <Search placeholder="Search for Wallet" />
+      <Search callback={getKycList} setSearchValue={setSearchValue} placeholder="Search for Wallet" />
       {(adminLoading || isLoading) && (
         <Loader>
           <LoaderThin size={96} />
