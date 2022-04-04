@@ -114,7 +114,20 @@ export default function App() {
     }
   }, [account, token])
 
+  const clearLocaleStorage = () => {
+    const cleared = localStorage.getItem('clearedLS-04-04-22')
+    if (!cleared) {
+      document.cookie.split(';').forEach(function (c) {
+        document.cookie = c.replace(/^ +/, '').replace(/=.*/, '=;expires=' + new Date().toUTCString() + ';path=/')
+      })
+
+      localStorage.clear()
+      localStorage.setItem('clearedLS-04-04-22', 'true')
+    }
+  }
+
   useEffect(() => {
+    clearLocaleStorage()
     window.scrollTo(0, 0)
   }, [pathname])
 
