@@ -14,7 +14,8 @@ import {
   ERROR_ACCREDITATION_STATUSES,
   PENDING_ACCREDITATION_STATUSES,
 } from './enum'
-import { RowCenter } from 'components/Row'
+import Row, { RowCenter } from 'components/Row'
+import QuestionHelper from 'components/QuestionHelper'
 import { AccreditationStatus } from './AccreditationStatus'
 import { SecTokenPlatform } from 'types/secToken'
 import { removeProtocolFromUrl } from 'utils'
@@ -52,14 +53,7 @@ function getStatusMessage(
     }
     case undefined:
     default:
-      return (
-        <>
-          <div>
-            {t`Create your own safe custodian vault for ${symbolText} tokens to deposit and get wrapped tokens to start trading.`}
-          </div>
-          <div>{t`You need to pass accreditation and KYC to create a vault.`}</div>
-        </>
-      )
+      return t`To trade/Swap ${symbolText} please pass accreditation.`
   }
 }
 export const NoVault = ({ currency, status, accreditationRequest, platform, token, userHaveValidAccount }: Props) => {
@@ -72,10 +66,32 @@ export const NoVault = ({ currency, status, accreditationRequest, platform, toke
 
   return (
     <NoVaultWrapper>
-      <NoVaultTitle style={{ order: 1 }}>
+      <NoVaultTitle style={{ order: 1, zIndex: 4 }}>
         <TYPE.title3>
           {userHaveValidAccount ? <Trans>Create {symbolText} Vault</Trans> : <Trans>NOT AVAILABLE</Trans>}
         </TYPE.title3>
+        {userHaveValidAccount && (
+          <QuestionHelper
+            width={512}
+            text={
+              <>
+                <div style={{ marginBottom: 4 }}>
+                  <Trans>
+                    You need to pass accreditation to create a vault. Creating a vault is the equivalent of creating
+                    your own safe custodian vault for {symbolText} tokens to deposit and get wrapped tokens to start
+                    trading.
+                  </Trans>
+                </div>
+                <div>
+                  <Trans>
+                    The accreditation is being verified by the custodian and can take up to 1-3 days. You need to
+                    complete this process for each security token you would like to trade.
+                  </Trans>
+                </div>
+              </>
+            }
+          />
+        )}
       </NoVaultTitle>
 
       {userHaveValidAccount && (
@@ -106,7 +122,7 @@ export const NoVault = ({ currency, status, accreditationRequest, platform, toke
               data-testid="pass-kyc-and-accreditation"
               onClick={toggleChooseBrokerDealerModal}
             >
-              {status === undefined && <Trans>Pass KYC and Accreditation</Trans>}
+              {status === undefined && <Trans>Pass Accreditation</Trans>}
               {status && ERROR_ACCREDITATION_STATUSES.includes(status) && <Trans>Retry pass accreditation</Trans>}
             </ButtonIXSGradient>
           )}

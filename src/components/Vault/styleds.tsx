@@ -26,7 +26,9 @@ export const ExistingWrapper = styled.div`
     padding: 1rem;
   `};
 `
-export const NoVaultTitle = styled.span`
+export const NoVaultTitle = styled.div`
+  display: flex;
+  justify-content: center;
   text-transform: uppercase;
   text-align: center;
   > div {
