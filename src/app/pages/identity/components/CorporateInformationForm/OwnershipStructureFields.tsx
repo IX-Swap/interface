@@ -6,7 +6,7 @@ import { TypedField } from 'components/form/TypedField'
 import { BusinessOwnerSelect } from 'components/form/BusinessOwnerSelect'
 
 export const OwnershipStructureFields = () => {
-  const { control } = useFormContext()
+  const { control, formState } = useFormContext()
 
   return (
     <>
@@ -23,7 +23,6 @@ export const OwnershipStructureFields = () => {
         </Grid>
         <Grid item xs={12} sm={6} md={4}>
           <TypedField
-            customRenderer
             component={TextField}
             fullWidth
             inputProps={{ maxLength: 1024 }}
@@ -31,6 +30,11 @@ export const OwnershipStructureFields = () => {
             name='businessActivity'
             label='Business Activity'
             variant='outlined'
+            helperText={
+              formState.dirtyFields.businessActivity === true
+                ? 'Max 1024 symbols'
+                : undefined
+            }
           />
         </Grid>
       </Grid>
