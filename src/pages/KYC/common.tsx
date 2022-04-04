@@ -9,7 +9,6 @@ import { Input } from 'components/Input'
 import { ButtonGradient } from 'components/Button'
 import { TYPE, EllipsisText } from 'theme'
 import Upload from 'components/Upload'
-import { Dropdown } from 'components/AdminSecurityCatalog/Dropdown'
 import { FilePreview } from 'components/FilePreview'
 import { GradientText } from 'pages/CustodianV2/styleds'
 import { Select as ReactSelect } from 'components/Select'
@@ -17,7 +16,7 @@ import { Select as ReactSelect } from 'components/Select'
 import { ReactComponent as UploadLogo } from 'assets/images/upload.svg'
 import { ReactComponent as InfoLogo } from 'assets/images/info-filled.svg'
 import { ReactComponent as CrossIcon } from 'assets/images/cross.svg'
-import { UploaderCard, FormGrid } from './styleds'
+import { UploaderCard, FormGrid, BeneficialOwnersTableContainer } from './styleds'
 import { AcceptFiles } from 'components/Upload/types'
 
 export interface UploaderProps {
@@ -167,7 +166,7 @@ export const Uploader: FC<UploaderProps> = ({
 }
 
 interface ChooseFileTypes {
-  label?: string | JSX.Element
+  label?: string | JSX.Element | null
   file: FileWithPath | null
   onDrop: (file: FileWithPath) => void
   error?: any
@@ -176,7 +175,7 @@ interface ChooseFileTypes {
 
 export const ChooseFile = ({ label, file, onDrop, error, handleDeleteClick }: ChooseFileTypes) => {
   return (
-    <Box>
+    <Box style={{ maxWidth: 200 }}>
       {label && (
         <Label marginBottom="11px">
           <TYPE.title11 color="text2">
@@ -213,28 +212,30 @@ interface BeneficialOwnersTableTypes {
 
 export const BeneficialOwnersTable = ({}: BeneficialOwnersTableTypes) => {
   return (
-    <FormGrid columns={4} style={{ marginTop: 20 }}>
-      <Label marginBottom="11px">
-        <TYPE.title11 color="text2">
-          <Trans>Full Name</Trans>
-        </TYPE.title11>
-      </Label>
-      <Label marginBottom="11px">
-        <TYPE.title11 color="text2">
-          <Trans>% Shareholding</Trans>
-        </TYPE.title11>
-      </Label>
-      <Label marginBottom="11px">
-        <TYPE.title11 color="text2">
-          <Trans>Proof of Address</Trans>
-        </TYPE.title11>
-      </Label>
-      <Label marginBottom="11px">
-        <TYPE.title11 color="text2">
-          <Trans>Proof of Identity</Trans>
-        </TYPE.title11>
-      </Label>
-    </FormGrid>
+    <BeneficialOwnersTableContainer>
+      <FormGrid columns={4}>
+        <Label marginBottom="11px">
+          <TYPE.title11 color="text2">
+            <Trans>Full Name</Trans>
+          </TYPE.title11>
+        </Label>
+        <Label marginBottom="11px">
+          <TYPE.title11 color="text2">
+            <Trans>% Shareholding</Trans>
+          </TYPE.title11>
+        </Label>
+        <Label marginBottom="11px">
+          <TYPE.title11 color="text2">
+            <Trans>Proof of Address</Trans>
+          </TYPE.title11>
+        </Label>
+        <Label marginBottom="11px">
+          <TYPE.title11 color="text2">
+            <Trans>Proof of Identity</Trans>
+          </TYPE.title11>
+        </Label>
+      </FormGrid>
+    </BeneficialOwnersTableContainer>
   )
 }
 
@@ -253,12 +254,6 @@ export const DeleteRow = ({ children, onClick }: DeleteRowTypes) => {
     </DeleteRowContainer>
   )
 }
-
-const DropdownContainer = styled.div`
-  > div {
-    background-color: ${({ theme: { bg12 } }) => `${bg12}40`};
-  }
-`
 
 const StyledDescription = styled(TYPE.description3)`
   color: ${({ theme: { text2 } }) => `${text2}50`};

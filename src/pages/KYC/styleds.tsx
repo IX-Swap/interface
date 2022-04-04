@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import { Box, Flex } from 'rebass'
 import React from 'react'
 import { t } from '@lingui/macro'
+import StickyBox from 'react-sticky-box'
 
 import Card from 'components/Card'
 import { cardCommonStyles } from 'pages/CustodianV2/styleds'
@@ -64,6 +65,10 @@ export const FormCard = styled.div<{ filled?: boolean }>`
   border: ${({ filled, theme }) => `1px solid ${filled ? theme.success : 'transparent'}`};
   padding: 24px 24px 32px 24px;
   border-radius: 16px;
+
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    padding: 16px;
+  `};
 `
 
 export const Ul = styled.ul`
@@ -99,6 +104,10 @@ export const FormGrid = styled.div<{ columns?: number }>`
   display: grid;
   grid-template-columns: ${({ columns }) => `repeat(${columns || 2}, 1fr)`};
   grid-gap: 20px;
+
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    grid-template-columns: 1fr;
+  `};
 `
 
 export const ExtraInfoCard = styled.div`
@@ -122,6 +131,24 @@ export const UploaderCard = styled.div`
   border: 1px dashed ${({ theme }) => theme.bg7};
   border-radius: 16px;
   cursor: pointer;
+`
+
+export const StyledStickyBox = styled(StickyBox).attrs(() => ({ offsetTop: 100 }))`
+  width: 296px;
+  max-width: 296px;
+  min-width: 296px;
+
+  ${({ theme }) => theme.mediaWidth.upToMedium`
+    width: 100%;
+    max-width: 100%;
+    min-width: 100%;
+  `};
+`
+
+export const BeneficialOwnersTableContainer = styled.div`
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    display: none;
+  `};
 `
 
 /* eslint-disable react/display-name */
