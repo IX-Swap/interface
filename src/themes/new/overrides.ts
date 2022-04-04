@@ -20,6 +20,7 @@ import { skeleton } from 'themes/new/overrides/skeleton'
 import { inputBase } from 'themes/new/overrides/inputBase'
 import { step } from 'themes/new/overrides/step'
 import { stepLabel } from 'themes/new/overrides/stepLabel'
+import { ThemeOptions } from '@mui/material/styles'
 
 declare module '@mui/material/Button' {
   interface ButtonPropsVariantOverrides {
@@ -27,7 +28,9 @@ declare module '@mui/material/Button' {
   }
 }
 
-export const getThemeOverrides = (theme: Theme) => ({
+export const getThemeOverrides = (
+  theme: Theme
+): ThemeOptions['components'] => ({
   ...rte(theme),
   MuiButton: button(theme),
   MuiButtonGroup: buttonGroup(theme),
