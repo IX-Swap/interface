@@ -97,26 +97,6 @@ export default function KYC() {
     }
   }, [pendingSign])
 
-  // useEffect(() => {
-  //   const { ethereum } = window
-
-  //   if (ethereum && ethereum.on) {
-  //     ethereum.on('accountsChanged', handleAccountsChanged)
-
-  //     return () => {
-  //       if (ethereum.removeListener) {
-  //         ethereum.removeListener('accountsChanged', handleAccountsChanged)
-  //       }
-  //     }
-  //   }
-  // }, [])
-
-  // useEffect(() => {
-  //   if (kyc?.data === undefined && loadingRequest) {
-  //     setLoading(false)
-  //   }
-  // }, [kyc, loadingRequest])
-
   const getKYCDescription = useCallback(() => {
     switch (status) {
       case KYCStatuses.NOT_SUBMITTED:
@@ -131,7 +111,7 @@ export default function KYC() {
             >
               <Flex marginBottom={isMobile ? '32px' : '0px'} flexDirection="column" alignItems="center">
                 <IndividualKYC />
-                <Link style={{ textDecoration: 'none ' }} to="/kyc/individual">
+                <Link style={{ textDecoration: 'none' }} to="/kyc/individual">
                   <ButtonIXSGradient style={{ padding: '16px 24px' }} marginTop="32px">
                     <Trans>Pass KYC as Individual</Trans>
                   </ButtonIXSGradient>
