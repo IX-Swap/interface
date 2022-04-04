@@ -82,11 +82,47 @@ export interface MenuPalette {
   boxShadow: string
 }
 
+export interface SkeletonPalette {
+  bg: string
+}
+
 export interface Alerts {
   bg: CSSProperties['color']
   color: CSSProperties['color']
   boxShadow: string
   border: string
+}
+
+export interface ChipPalette {
+  bg: string
+  fill: string
+  opacity: number
+  color: string
+  bgBasic: string
+  bgSpecial: string
+}
+
+export interface PaginationItem {
+  color: CSSProperties['color']
+  bg: CSSProperties['color']
+  border: string
+  colorHover: CSSProperties['color']
+  bgHover: CSSProperties['color']
+  borderHover: string
+  colorDisabled: CSSProperties['color']
+  bgDisabled: CSSProperties['color']
+  borderDisabled: string
+  colorActive: CSSProperties['color']
+  bgActive: CSSProperties['color']
+  borderActive: string
+}
+
+export interface TablePagination {
+  main: CSSProperties['color']
+  selectColor: CSSProperties['color']
+  selectHoverBg: CSSProperties['color']
+  menuItemBorder: string
+  menuItemColor: CSSProperties['color']
 }
 
 declare module '@mui/styles/defaultTheme' {
@@ -96,6 +132,8 @@ declare module '@mui/styles/defaultTheme' {
 declare module '@mui/material/styles' {
   export interface PaletteOptions {
     backgrounds: AppBackgrounds
+    skeleton?: SkeletonPalette
+    chip?: ChipPalette
     toggledInputs?: ToggledInputsColorOptions
     switch?: SwitchColorOptions
     slider: {
@@ -120,11 +158,15 @@ declare module '@mui/material/styles' {
         color?: CSSProperties['color']
       }
     }
+    paginationItem?: PaginationItem
+    tablePagination?: TablePagination
     alerts?: Alerts
   }
 
   export interface Palette {
     backgrounds: AppBackgrounds
+    skeleton?: SkeletonPalette
+    chip?: ChipPalette
     toggledInputs?: ToggledInputsColorOptions
     switch?: SwitchColorOptions
     sidebar: {
@@ -149,6 +191,8 @@ declare module '@mui/material/styles' {
         color?: CSSProperties['color']
       }
     }
+    paginationItem?: PaginationItem
+    tablePagination?: TablePagination
     alerts?: Alerts
   }
 

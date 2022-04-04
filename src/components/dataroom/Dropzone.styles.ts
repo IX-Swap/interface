@@ -1,18 +1,13 @@
 import makeStyles from '@mui/styles/makeStyles'
-import tinycolor from 'tinycolor2'
 
 export const useStyles = makeStyles(theme => ({
   container: {
+    borderRadius: 16,
     outline: 'none',
     backgroundColor: theme.palette.backgrounds.light,
-    label: {
-      display: 'none'
-    },
     cursor: 'pointer',
     '&:hover': {
-      backgroundColor: tinycolor(theme.palette.backgrounds.light)
-        .darken(4)
-        .toHexString()
+      backgroundColor: theme.palette.button?.bgTextHover
     },
     '& > div': {
       padding: 0
