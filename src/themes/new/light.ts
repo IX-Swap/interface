@@ -16,6 +16,11 @@ export const lightTheme: DeprecatedThemeOptions = {
       dark: '#F0F2F7',
       light: '#EDF2FA'
     },
+    tooltip: {
+      color: '#778194',
+      bg: '#F0F2F7',
+      borderColor: '#EDF2FA'
+    },
     toggledInputs: {
       fill: '#FFFFFF',
       bg: '#FFFFFF',
