@@ -1,4 +1,4 @@
-import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
+import { combineReducers, configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
 import { load, save } from 'redux-localstorage-simple'
 import admin from './admin/reducer'
 import application from './application/reducer'
@@ -31,36 +31,45 @@ import kyc from './kyc/reducer'
 
 const PERSISTED_KEYS: string[] = ['user', 'transactions', 'lists', 'swap', 'swapHelper']
 
+const combinedReducer = combineReducers({
+  admin,
+  application,
+  user,
+  transactions,
+  swap,
+  mint,
+  burn,
+  multicall,
+  lists,
+  deposit,
+  withdraw,
+  auth,
+  secTokens,
+  eventLog,
+  vesting,
+  staking,
+  unstaking,
+  stakingPoolSize,
+  brokerDealer,
+  swapHelper,
+  pool,
+  nft,
+  faucet,
+  assetForm,
+  collectionForm,
+  secCatalog,
+  kyc,
+})
+
+const rootReducer = (state: any, action: any) => {
+  if (action.type === 'clearStore') {
+    state = undefined
+  }
+  return combinedReducer(state, action)
+}
+
 const store = configureStore({
-  reducer: {
-    admin,
-    application,
-    user,
-    transactions,
-    swap,
-    mint,
-    burn,
-    multicall,
-    lists,
-    deposit,
-    withdraw,
-    auth,
-    secTokens,
-    eventLog,
-    vesting,
-    staking,
-    unstaking,
-    stakingPoolSize,
-    brokerDealer,
-    swapHelper,
-    pool,
-    nft,
-    faucet,
-    assetForm,
-    collectionForm,
-    secCatalog,
-    kyc,
-  },
+  reducer: rootReducer,
   middleware: [...getDefaultMiddleware({ thunk: true }), save({ states: PERSISTED_KEYS, debounce: 1000 })],
   preloadedState: load({ states: PERSISTED_KEYS }),
 })

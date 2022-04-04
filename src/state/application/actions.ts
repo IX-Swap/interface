@@ -57,3 +57,4 @@ export const setModalDetails = createAction<{ modalType: ModalType; modalTitle: 
   'application/setModalDetails'
 )
 export const setPendingSign = createAction<boolean>('application/pendingSign')
+export const clearStore = createAction('clearStore')
