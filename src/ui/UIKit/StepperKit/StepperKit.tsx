@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Typography } from '@mui/material'
+import { Box, Grid, Typography } from '@mui/material'
 import { UIKitThemeWrapper } from 'ui/UIKit/UIKitThemeWrapper'
 import { StepperExample } from 'ui/UIKit/StepperKit/StepperExample'
 
@@ -22,8 +22,10 @@ export const StepperKit = () => {
           <Typography>Vertical</Typography>
         </Grid>
 
-        <Grid item xs={1.15}>
-          <StepperExample orientation={'vertical'} />
+        <Grid item xs={12}>
+          <Box width={175}>
+            <StepperExample orientation={'vertical'} />
+          </Box>
         </Grid>
       </Grid>
     </UIKitThemeWrapper>

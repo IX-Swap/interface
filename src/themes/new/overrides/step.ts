@@ -26,7 +26,7 @@ export const step = (theme: Theme) => {
 
         '& .MuiStepLabel-label': {
           position: 'relative',
-          padding: theme.spacing(2, 5),
+          padding: theme.spacing(2, 1, 2, 5),
 
           '&.Mui-active': {
             '&::before': {
