@@ -11,6 +11,7 @@ export const AuthorizationButtons = ({ formRef, allowSwap }: { formRef: any; all
   const missingAuthorizations = useMissingAuthorizations(trade)
   const { secTokens } = useUserSecTokens()
   const authorizeFirstStep = useSwapAuthorizeFirstStep(trade, allowedSlippage, formRef)
+
   if (!missingAuthorizations || missingAuthorizations?.length === 0) {
     return null
   }
