@@ -258,7 +258,7 @@ export const ChooseBrokerDealerPopup = ({ tokenId, currencyId }: { tokenId: any;
               </ModalHeader>
 
               {/* Modal description segment */}
-              <div style={{ marginTop: '18px' }}>
+              {/* <div style={{ marginTop: '18px' }}>
                 <TYPE.title10>1. Choose source of KYC for accreditation</TYPE.title10>
                 <TYPE.description2 fontWeight={400}>
                   <Trans>{`We recommend choosing IXSwap KYC. Pass it once and use for all future accreditations quick and easy.`}</Trans>
@@ -284,7 +284,7 @@ export const ChooseBrokerDealerPopup = ({ tokenId, currencyId }: { tokenId: any;
                 <TYPE.description2 display="inline" fontWeight={400}>
                   <Trans>{`will keep your ${tokenName} in a safe place.`}</Trans>
                 </TYPE.description2>
-              </div>
+              </div> */}
             </ModalPadding>
           </div>
 
@@ -337,7 +337,7 @@ export const ChooseBrokerDealerPopup = ({ tokenId, currencyId }: { tokenId: any;
                     passAccreditation(tokenId, selectedBrokerPair, source === KycSource.IXSwap)
                   }}
                 >
-                  <Trans>Start accreditation</Trans>
+                  <Trans>Submit accreditation</Trans>
                 </ButtonIXSWide>
               )}
               {loadingAccreditation && (
