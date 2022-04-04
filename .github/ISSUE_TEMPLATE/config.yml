@@ -2,4 +2,4 @@ blank_issues_enabled: true
 contact_links:
   - name: List a token
     url: https://github.com/IX-Swap/default-token-list/tree/dev#adding-a-token
-    about: Any requests to add a token to IXSwap should go here
+    about: Any requests to add a token to IX Swap should go here

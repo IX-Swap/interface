@@ -1,10 +1,10 @@
 import React, { useMemo, useState, useEffect } from 'react'
 import styled from 'styled-components'
-import StickyBox from 'react-sticky-box'
-import { Trans, t } from '@lingui/macro'
+import { Trans } from '@lingui/macro'
 import { Formik } from 'formik'
 import { useHistory } from 'react-router-dom'
 import moment from 'moment'
+import { isMobile } from 'react-device-detect'
 
 import usePrevious from 'hooks/usePrevious'
 import Column from 'components/Column'
@@ -26,7 +26,7 @@ import { LoadingIndicator } from 'components/LoadingIndicator'
 import { countriesList } from 'constants/countriesList'
 
 import { empleymentStatuses, individualFormInitialValues, genders, incomes, sourceOfFunds, promptValue } from './mock'
-import { FormCard, FormGrid, ExtraInfoCard, FormWrapper } from './styleds'
+import { FormCard, FormGrid, ExtraInfoCard, FormWrapper, StyledStickyBox } from './styleds'
 import { individualErrorsSchema } from './schema'
 import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
 import { ReactComponent as BigPassed } from 'assets/images/check-success-big.svg'
@@ -37,6 +37,10 @@ import { KYCStatuses } from './enum'
 export const FormRow = styled(Row)`
   align-items: flex-start;
   gap: 35px;
+
+  ${({ theme }) => theme.mediaWidth.upToMedium`
+    flex-direction: column;
+  `};
 `
 
 export const FormContainer = styled(FormWrapper)`
@@ -184,12 +188,18 @@ export default function IndividualKycForm() {
     <Loadable loading={!isLoggedIn}>
       <LoadingIndicator isLoading={loadingRequest} />
       <StyledBodyWrapper>
-        <ButtonText style={{ textDecoration: 'none' }} display="flex" marginBottom="64px" onClick={goBack}>
-          <ArrowLeft />
-          <TYPE.title4 display="flex" marginLeft="10px">
-            <Trans>
-              KYC as <GradientText style={{ marginLeft: 8 }}>Individual</GradientText>
-            </Trans>
+        <ButtonText
+          style={{ textDecoration: 'none' }}
+          display="flex"
+          marginBottom={isMobile ? '32px' : '64px'}
+          onClick={goBack}
+        >
+          <ArrowLeft style={{ width: isMobile ? 20 : 26 }} />
+          <TYPE.title4 fontSize={isMobile ? 24 : 36} style={{ whiteSpace: 'nowrap' }} marginLeft="10px">
+            <Trans>KYC as</Trans>
+          </TYPE.title4>
+          <TYPE.title4>
+            <GradientText style={{ marginLeft: 8, fontSize: isMobile ? 26 : 36 }}>Individual</GradientText>
           </TYPE.title4>
         </ButtonText>
 
@@ -564,6 +574,7 @@ export default function IndividualKycForm() {
 
                         <Column style={{ gap: '40px' }}>
                           <Uploader
+                            subtitle="Proof of ID, passport, driving license, National ID card."
                             error={errors.proofOfIdentity && errors.proofOfIdentity}
                             title="Proof of Identity"
                             files={values.proofOfIdentity}
@@ -579,6 +590,7 @@ export default function IndividualKycForm() {
                           />
 
                           <Uploader
+                            subtitle="Bank statement, utility bills, driving license (no expiry) within 3 month of issuance."
                             error={errors.proofOfAddress && errors.proofOfAddress}
                             title="Proof of Address"
                             files={values.proofOfAddress}
@@ -604,7 +616,7 @@ export default function IndividualKycForm() {
                     </Column>
                   </FormContainer>
 
-                  <StickyBox offsetTop={100}>
+                  <StyledStickyBox>
                     <KYCProgressBar
                       handleSubmit={handleSubmit}
                       // disabled={!(dirty && Object.keys(errors).length === 0)}
@@ -649,7 +661,7 @@ export default function IndividualKycForm() {
                       description={kyc?.data?.message || null}
                       reasons={['Last name', 'Gender', 'Middle name']}
                     />
-                  </StickyBox>
+                  </StyledStickyBox>
                 </FormRow>
               )
             }}

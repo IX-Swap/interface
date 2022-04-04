@@ -29,7 +29,7 @@ import collectionForm from './nft/collectionForm.reducer'
 import secCatalog from './secCatalog/reducer'
 import kyc from './kyc/reducer'
 
-const PERSISTED_KEYS: string[] = ['user', 'transactions', 'lists', 'auth', 'swap', 'swapHelper']
+const PERSISTED_KEYS: string[] = ['user', 'transactions', 'lists', 'swap', 'swapHelper']
 
 const store = configureStore({
   reducer: {

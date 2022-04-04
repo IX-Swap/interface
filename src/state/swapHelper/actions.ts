@@ -7,8 +7,9 @@ export const saveAuthorization = createAction<{
   authorization: SwapAuthorization | null
   chainId: number
   address: string
+  account: string
 }>('swapHelper/saveAuthorization')
-export const clearAuthorization = createAction<{ addresses: string[]; chainId: number }>(
+export const clearAuthorization = createAction<{ addresses: string[]; chainId: number; account: string }>(
   'swapHelper/clearAuthorization'
 )
 export const setSwapState = createAction<{
@@ -30,3 +31,5 @@ export const setLoadingSwap = createAction<{
 export const setAuthorizationInProgress = createAction<{
   authorizationInProgress?: AuthorizationInProgress | null
 }>('swapHelper/setAuthorizationInProgress')
+
+export const clearSwapHelperState = createAction('swapHelper/clearSwapHelperState')

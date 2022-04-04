@@ -70,12 +70,15 @@ export function getTokenToPairMap(pairs: Array<Pair | null>) {
 }
 
 export function useMissingAuthorizations(trade: V2Trade<Currency, Currency, TradeType> | undefined | null) {
+  const { account } = useActiveWeb3React()
   const addresses = useSwapSecTokenAddresses(trade)
   const authorizations = useAuthorizationsState()
   const { secPairs: pairs } = useSwapSecPairs(trade)
   return useMemo(() => {
     const tokenToPairMap = getTokenToPairMap(pairs)
-    const missingAddress = addresses.filter((address) => address !== null && !authorizations?.[tokenToPairMap[address]])
+    const missingAddress = addresses.filter(
+      (address) => address !== null && (!authorizations?.[tokenToPairMap[address]] || !authorizations?.[account ?? ''])
+    )
     return missingAddress
   }, [addresses, authorizations, pairs])
 }
@@ -84,6 +87,7 @@ export function useAuthorizationDigest(
   trade: V2Trade<Currency, Currency, TradeType> | undefined
 ): Array<TradeAuthorization> | undefined {
   const authorizations = useAuthorizationsState()
+  const { account } = useActiveWeb3React()
   const addresses = useSwapSecTokenAddresses(trade)
   const { secPairs: pairs } = useSwapSecPairs(trade)
   const authorizationDigest: Array<TradeAuthorization> | undefined = useMemo(() => {
@@ -92,7 +96,8 @@ export function useAuthorizationDigest(
     }
     const tokenToPairMap = getTokenToPairMap(pairs)
     return addresses.map((address) => {
-      const addressAuthorization = address && authorizations ? authorizations[tokenToPairMap[address]] : null
+      const addressAuthorization =
+        address && authorizations ? authorizations[account || ''] || authorizations[tokenToPairMap[address]] : null
       if (!addressAuthorization) {
         return EMPTY_AUTHORIZATION
       }

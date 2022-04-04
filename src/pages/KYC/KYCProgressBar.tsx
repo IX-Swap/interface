@@ -1,13 +1,13 @@
 import { Trans } from '@lingui/macro'
 import React, { FC, useState, useCallback } from 'react'
 
-import { ButtonGradientBorder, ButtonIXSGradient } from 'components/Button'
+import { ButtonIXSGradient } from 'components/Button'
 import Column from 'components/Column'
 import { TYPE } from 'theme'
 import { StatusIcons } from 'components/Vault/styleds'
 import { ActionHistoryStatus } from 'components/Vault/enum'
 
-import { FormCard, Ul, Li, PageLink } from './styleds'
+import { FormCard, PageLink } from './styleds'
 
 interface Props {
   topics: any[]
@@ -30,7 +30,7 @@ export const KYCProgressBar: FC<Props> = ({ description, topics, disabled, handl
   )
 
   return (
-    <div style={{ width: 296, maxWidth: 296 }}>
+    <div>
       {description && (
         <FormCard style={{ padding: 24, marginBottom: 24 }}>
           <TYPE.title6 marginBottom="16px" style={{ textTransform: 'uppercase' }} color={'bg14'}>

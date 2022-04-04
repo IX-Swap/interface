@@ -138,3 +138,7 @@ export function useShowError() {
     [addPopup]
   )
 }
+
+export const usePendingSignState = (): boolean => {
+  return useSelector<AppState, boolean>((state) => state.application.pendingSign)
+}

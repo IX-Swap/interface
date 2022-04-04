@@ -1,4 +1,4 @@
-import React, { useCallback, FC, useEffect, useState } from 'react'
+import React, { useCallback, FC, useEffect, useState, useMemo } from 'react'
 import { Trans } from '@lingui/macro'
 import { isMobile } from 'react-device-detect'
 import { Flex } from 'rebass'
@@ -11,8 +11,12 @@ import { RowCenter } from 'components/Row'
 import { useActiveWeb3React } from 'hooks/web3'
 import { TYPE } from 'theme'
 import { StyledBodyWrapper } from 'pages/CustodianV2/styleds'
-import { useGetMyKyc, useKYCState } from 'state/kyc/hooks'
 import { useUserisLoggedIn } from 'state/auth/hooks'
+import Column from 'components/Column'
+import { useUserState } from 'state/user/hooks'
+import { NotAvailablePage } from 'components/NotAvailablePage'
+import { usePendingSignState } from 'state/application/hooks'
+import { useKYCState } from 'state/kyc/hooks'
 
 import { KYCStatuses } from './enum'
 import { KYCStatus } from './KYCStatus'
@@ -20,8 +24,6 @@ import { Content, getStatusDescription, StatusCard } from './styleds'
 import { ReactComponent as IndividualKYC } from 'assets/images/individual-kyc.svg'
 import { ReactComponent as CorporateKYC } from 'assets/images/corporate-kyc.svg'
 import { ReactComponent as ApprovedKYC } from 'assets/images/approved-kyc.svg'
-import { useUserState } from 'state/user/hooks'
-import { NotAvailablePage } from 'components/NotAvailablePage'
 interface DescriptionProps {
   description: string | null
 }
@@ -81,64 +83,20 @@ export default function KYC() {
   const { account: userAccount } = useUserState()
   const [loading, setLoading] = useState(false)
   const isLoggedIn = useUserisLoggedIn()
+  const pendingSign = usePendingSignState()
 
   const { kyc, loadingRequest } = useKYCState()
-  const getMyKyc = useGetMyKyc()
 
-  const [status, setStatus] = useState<KYCStatuses | undefined>(undefined)
-  const [description, setDescription] = useState('')
+  const status = useMemo(() => kyc?.data?.status || KYCStatuses.NOT_SUBMITTED, [kyc])
+  const description = useMemo(() => kyc?.data.message || getStatusDescription(status), [kyc, status])
 
   useEffect(() => {
-    if (account && account !== userAccount) {
+    if (pendingSign) {
       setLoading(true)
     } else {
       setLoading(false)
     }
-  }, [account, userAccount])
-
-  const onKycState = useCallback(() => {
-    if (!account) {
-      return
-    }
-
-    getMyKyc()
-  }, [account, getMyKyc])
-
-  // useEffect(() => {
-  //   const { ethereum } = window
-
-  //   if (ethereum && ethereum.on) {
-  //     ethereum.on('accountsChanged', handleAccountsChanged)
-
-  //     return () => {
-  //       if (ethereum.removeListener) {
-  //         ethereum.removeListener('accountsChanged', handleAccountsChanged)
-  //       }
-  //     }
-  //   }
-  // }, [])
-
-  // useEffect(() => {
-  //   if (kyc?.data === undefined && loadingRequest) {
-  //     setLoading(false)
-  //   }
-  // }, [kyc, loadingRequest])
-
-  useEffect(() => {
-    if (!isLoggedIn) {
-      return
-    }
-
-    onKycState()
-  }, [isLoggedIn, account])
-
-  useEffect(() => {
-    const status = kyc?.data.status || KYCStatuses.NOT_SUBMITTED
-    const description = kyc?.data.message || getStatusDescription(status)
-
-    setStatus(status)
-    setDescription(description)
-  }, [isLoggedIn, loadingRequest, kyc])
+  }, [pendingSign])
 
   const getKYCDescription = useCallback(() => {
     switch (status) {
@@ -154,7 +112,7 @@ export default function KYC() {
             >
               <Flex marginBottom={isMobile ? '32px' : '0px'} flexDirection="column" alignItems="center">
                 <IndividualKYC />
-                <Link style={{ textDecoration: 'none ' }} to="/kyc/individual">
+                <Link style={{ textDecoration: 'none' }} to="/kyc/individual">
                   <ButtonIXSGradient style={{ padding: '16px 24px' }} marginTop="32px">
                     <Trans>Pass KYC as Individual</Trans>
                   </ButtonIXSGradient>
@@ -231,15 +189,26 @@ export default function KYC() {
             <LoaderThin size={96} />
           </RowCenter>
         ) : (
-          <Content flexDirection="column" marginTop="40px" alignItems="center">
-            <TYPE.title4 marginBottom="40px">
-              <Trans>IXSwap KYC</Trans>
-            </TYPE.title4>
+          <Column style={{ alignItems: 'center' }}>
+            {(status === KYCStatuses.NOT_SUBMITTED || status === null) && (
+              <TYPE.mediumHeader marginTop="24px" color="white">
+                You need to pass KYC to access the full IX Swap App and trade Security Tokens
+              </TYPE.mediumHeader>
+            )}
+            <Content
+              flexDirection="column"
+              marginTop={status === KYCStatuses.NOT_SUBMITTED || status === null ? '8px' : '40px'}
+              alignItems="center"
+            >
+              <TYPE.title4 marginBottom="40px">
+                <Trans>IX Swap KYC</Trans>
+              </TYPE.title4>
 
-            <KYCStatus status={kyc?.data.status || KYCStatuses.NOT_SUBMITTED} />
+              <KYCStatus status={kyc?.data.status || KYCStatuses.NOT_SUBMITTED} />
 
-            {getKYCDescription()}
-          </Content>
+              {getKYCDescription()}
+            </Content>
+          </Column>
         )}
       </StatusCard>
     </StyledBodyWrapper>

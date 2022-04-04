@@ -67,24 +67,19 @@ export const Menu = ({ close }: Props) => {
             </MenuListItem>
           )}
           <ExternalListItem href={`https://ixswap.defiterm.io/`}>
-            <Trans>Staking - New</Trans>
+            <Trans>Live Pools</Trans>
           </ExternalListItem>
 
           <MenuListItem activeClassName="active-item" id={`stake-nav-link`} to={routes.staking} onClick={close}>
-            <Trans>Staking - Old</Trans>
+            <Trans>Legacy Pools (Closed)</Trans>
           </MenuListItem>
 
           <MenuListItem activeClassName="active-item" id={`vesting-nav-link`} to={routes.vesting} onClick={close}>
-            <Trans>Vesting IXS</Trans>
+            <Trans>Token Sale Distribution</Trans>
           </MenuListItem>
 
           <ExternalListItem href={`https://ixswap.defiterm.io/`}>
-            <Trans>Liquidity Mining - Polygon</Trans>
-          </ExternalListItem>
-          <ExternalListItem
-            href={`https://app.uniswap.org/#/add/v2/ETH/0x73d7c860998CA3c01Ce8c808F5577d94d545d1b4?chain=mainnet)`}
-          >
-            <Trans>Liquidity Mining - Ethereum</Trans>
+            <Trans>Liquidity Mining Program (Quickswap)</Trans>
           </ExternalListItem>
 
           {/* {chainId && chains.includes(chainId) && isWhitelisted && (
@@ -152,7 +147,10 @@ const MenuList = styled.div`
   justify-content: center;
 `
 const listItemStyle = css`
-  height: 54px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-weight: 600;
   font-size: 22px;
   text-transform: uppercase;

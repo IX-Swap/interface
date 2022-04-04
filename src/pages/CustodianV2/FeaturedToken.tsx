@@ -37,7 +37,7 @@ export const FeaturedToken: FC<Props> = ({ token }: Props) => {
           <MouseoverTooltip
             style={{ padding: 8 }}
             placement="top"
-            text={`${token.token ? 'Ready' : 'Not ready'} for trading on IXSwap`}
+            text={`${token.token ? 'Ready' : 'Not ready'} for trading on IX Swap`}
           >
             {token.token ? <Tradable width={22} height={22} /> : <NonTradable width={22} height={22} />}
           </MouseoverTooltip>

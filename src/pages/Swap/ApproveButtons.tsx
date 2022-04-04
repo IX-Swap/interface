@@ -63,7 +63,7 @@ export const ApproveButtons = ({ parsedAmounts }: { parsedAmounts: ParsedAmounts
               {approvalState === ApprovalState.APPROVED || signatureState === UseERC20PermitState.SIGNED ? (
                 <Trans>You can now trade {currencies[Field.INPUT]?.symbol}</Trans>
               ) : (
-                <Trans>Allow IXSwap to use your {currencies[Field.INPUT]?.symbol}</Trans>
+                <Trans>Allow IX Swap to use your {currencies[Field.INPUT]?.symbol}</Trans>
               )}
             </span>
             {approvalState === ApprovalState.PENDING ? (

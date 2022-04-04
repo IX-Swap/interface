@@ -4,6 +4,7 @@ import dayjs from 'dayjs'
 import { Copy } from 'react-feather'
 import styled from 'styled-components'
 import React, { FC, useEffect, useState, ChangeEvent } from 'react'
+import { Currency, CurrencyAmount } from '@ixswap1/sdk-core'
 
 import { Input as SearchInput } from '../AdminAccreditationTable/Search'
 import { isAddress } from 'utils'
@@ -15,9 +16,9 @@ import { Pagination } from 'components/AdminAccreditationTable/Pagination'
 import useCopyClipboard from 'hooks/useCopyClipboard'
 import { BrokerDealerSwapItem } from 'state/admin/actions'
 import { useCurrency } from 'hooks/Tokens'
-import { Currency, CurrencyAmount } from '@ixswap1/sdk-core'
 import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
 import { ExternalLink } from 'theme'
+import { adminOffset as offset } from 'state/admin/constants'
 import { getExplorerName } from 'hooks/useExplorerName'
 
 interface RowProps {
@@ -106,7 +107,7 @@ const Body = () => {
 
 export const AdminTransactionsTable = () => {
   const {
-    brokerDealerSwaps: { items, page, totalPages, offset },
+    brokerDealerSwaps: { items, page, totalPages },
     adminLoading,
   } = useAdminState()
   const [searchValue, setSearchValue] = useState('')
@@ -120,7 +121,7 @@ export const AdminTransactionsTable = () => {
 
   useEffect(() => {
     getBrokerDealerSwaps({ page: 1, offset })
-  }, [getBrokerDealerSwaps, offset])
+  }, [getBrokerDealerSwaps])
 
   const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target

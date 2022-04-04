@@ -7,12 +7,12 @@ import { SupportedLocale } from 'constants/locales'
 import useIXSCurrency from 'hooks/useIXSCurrency'
 import JSBI from 'jsbi'
 import flatMap from 'lodash.flatmap'
-import { useCallback, useEffect, useMemo } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import apiService from 'services/apiService'
 import { broker, kyc, tokens } from 'services/apiUrls'
 import { useChooseBrokerDealerModalToggle, useShowError } from 'state/application/hooks'
-import { LOGIN_STATUS, useLogin, useLogout, useUserisLoggedIn } from 'state/auth/hooks'
+import { LOGIN_STATUS, useLogin, useUserisLoggedIn } from 'state/auth/hooks'
 import { useAuthState } from 'state/auth/hooks'
 import {
   listToSecTokenMap,
@@ -21,6 +21,8 @@ import {
   useSecToken,
   useSecTokensFromMap,
 } from 'state/secTokens/hooks'
+import { clearSwapState } from 'state/swap/actions'
+import { clearSwapHelperState } from 'state/swapHelper/actions'
 import { useSimpleTokenBalanceWithLoading } from 'state/wallet/hooks'
 import { SecToken } from 'types/secToken'
 import { BASES_TO_TRACK_LIQUIDITY_FOR, PINNED_PAIRS } from '../../constants/routing'
@@ -482,10 +484,10 @@ export function useAccount() {
   const dispatch = useDispatch<AppDispatch>()
   const login = useLogin({ mustHavePreviousLogin: true })
   const getUserSecTokens = useFetchUserSecTokenListCallback()
-  const logout = useLogout()
   const isLoggedIn = useUserisLoggedIn()
+  const [triggeredAuth, handleTriggeredAuth] = useState(false)
 
-  const { loginError } = useAuthState()
+  const { loginError, token } = useAuthState()
 
   //when there is an authorization error, then we clear the contents of the savedAccount
   const checkAuthError = useCallback(() => {
@@ -501,7 +503,9 @@ export function useAccount() {
   }, [checkAuthError])
 
   const authenticate = useCallback(async () => {
+    handleTriggeredAuth(true)
     const status = await login(true)
+    handleTriggeredAuth(false)
     if (status == LOGIN_STATUS.SUCCESS && isLoggedIn) {
       getUserSecTokens()
     }
@@ -511,20 +515,34 @@ export function useAccount() {
   // run with an interval of 5 sec in cases when user changes fast from an account to another
   // so the user won't end up authenticated with a different account
 
-  useEffect(() => {
-    const interval = setInterval(async () => {
-      if (account && savedAccount && savedAccount !== account) {
-        dispatch(saveAccount({ account: '' }))
-      }
-    }, 5000)
-    return () => clearInterval(interval)
-  }, [account, savedAccount, dispatch, login, getUserSecTokens, authenticate])
+  // useEffect(() => {
+  //   const interval = setInterval(async () => {
+  //     if (account && savedAccount && savedAccount !== account) {
+  //       dispatch(saveAccount({ account: '' }))
+  //     }
+  //   }, 5000)
+  //   return () => clearInterval(interval)
+  // }, [account, savedAccount, dispatch, login, getUserSecTokens, authenticate])
 
   // User connects with account
+
   useEffect(() => {
-    if (account && !savedAccount) {
-      logout()
+    if (!token && account && !triggeredAuth) {
       authenticate()
     }
+  }, [token, account, triggeredAuth])
+
+  useEffect(() => {
+    if (account && account !== savedAccount) {
+      dispatch(saveAccount({ account }))
+      dispatch(clearSwapState())
+      dispatch(clearSwapHelperState())
+    }
   }, [account, savedAccount])
+
+  useEffect(() => {
+    if (token) {
+      getUserSecTokens()
+    }
+  }, [token, getUserSecTokens])
 }

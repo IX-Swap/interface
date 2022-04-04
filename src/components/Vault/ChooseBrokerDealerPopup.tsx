@@ -15,9 +15,8 @@ import { useFetchUserSecTokenListCallback, usePassAccreditation, useUserState } 
 import styled from 'styled-components'
 import { ModalBlurWrapper, ModalContentWrapper, ModalPadding } from 'theme'
 import { CloseIcon, TYPE } from '../../theme'
-import { darken } from 'polished'
 import { useHistory } from 'react-router-dom'
-import { useGetMyKyc, useKYCState } from 'state/kyc/hooks'
+import { useKYCState } from 'state/kyc/hooks'
 import { KYCStatuses } from './enum'
 
 const KycSourceContainer = styled.div`
@@ -114,7 +113,6 @@ interface KycSourceSelectorProps {
 const KycSourceSelector = (props: KycSourceSelectorProps) => {
   const history = useHistory()
   const { kyc } = useKYCState()
-  const getMyKyc = useGetMyKyc()
 
   const [selected, setSelected] = useState<KycSource | undefined>(undefined)
   const [statusDesc, setStatusDesc] = useState('')
@@ -132,13 +130,9 @@ const KycSourceSelector = (props: KycSourceSelectorProps) => {
       case KYCStatuses.NOT_SUBMITTED:
         return t`KYC: NOT_SUBMITTED`
       default:
-        return t`Pass KYC on IXSwap`
+        return t`Pass KYC on IX Swap`
     }
   }
-
-  useEffect(() => {
-    getMyKyc()
-  }, [getMyKyc])
 
   useEffect(() => {
     const status = kyc?.data.status === KYCStatuses.APPROVED ? KycSource.IXSwap : KycSource.InvestaX //|| KYCStatuses.NOT_SUBMITTED
@@ -170,7 +164,7 @@ const KycSourceSelector = (props: KycSourceSelectorProps) => {
         <TYPE.small style={{ fontSize: '12px', color: '#EDCEFF' }}>KYC source</TYPE.small>
       </KycRow>
       <KycRow onClick={() => onChange(KycSource.IXSwap)}>
-        <TYPE.body1>My IXSwap KYC</TYPE.body1>
+        <TYPE.body1>My IX Swap KYC</TYPE.body1>
 
         <KycSourceTooltip text="Recommended" />
 
@@ -184,7 +178,7 @@ const KycSourceSelector = (props: KycSourceSelectorProps) => {
             {selected === KycSource.IXSwap ? <Checkmark className="selected-checkmark" /> : <CheckmarkPlaceholder />}
           </IconWrapper>
         ) : (
-          <KycSourceTooltip text="Pass KYC on IXSwap to enable this option">
+          <KycSourceTooltip text="Pass KYC on IX Swap to enable this option">
             <IconWrapper size={28} style={{ marginLeft: 'auto', marginRight: 0 }}>
               {selected === KycSource.IXSwap ? <Checkmark className="selected-checkmark" /> : <CheckmarkPlaceholder />}
             </IconWrapper>
@@ -264,10 +258,10 @@ export const ChooseBrokerDealerPopup = ({ tokenId, currencyId }: { tokenId: any;
               </ModalHeader>
 
               {/* Modal description segment */}
-              <div style={{ marginTop: '18px' }}>
+              {/* <div style={{ marginTop: '18px' }}>
                 <TYPE.title10>1. Choose source of KYC for accreditation</TYPE.title10>
                 <TYPE.description2 fontWeight={400}>
-                  <Trans>{`We recommend choosing IXSwap KYC. Pass it once and use for all future accreditations quick and easy.`}</Trans>
+                  <Trans>{`We recommend choosing IX Swap KYC. Pass it once and use for all future accreditations quick and easy.`}</Trans>
                 </TYPE.description2>
               </div>
 
@@ -290,7 +284,7 @@ export const ChooseBrokerDealerPopup = ({ tokenId, currencyId }: { tokenId: any;
                 <TYPE.description2 display="inline" fontWeight={400}>
                   <Trans>{`will keep your ${tokenName} in a safe place.`}</Trans>
                 </TYPE.description2>
-              </div>
+              </div> */}
             </ModalPadding>
           </div>
 
@@ -343,7 +337,7 @@ export const ChooseBrokerDealerPopup = ({ tokenId, currencyId }: { tokenId: any;
                     passAccreditation(tokenId, selectedBrokerPair, source === KycSource.IXSwap)
                   }}
                 >
-                  <Trans>Start accreditation</Trans>
+                  <Trans>Submit accreditation</Trans>
                 </ButtonIXSWide>
               )}
               {loadingAccreditation && (

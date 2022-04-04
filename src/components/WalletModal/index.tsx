@@ -263,10 +263,10 @@ export default function WalletModal({
             <AutoRow style={{ flexWrap: 'nowrap' }}>
               <TYPE.main fontSize={14}>
                 <Trans>
-                  By connecting a wallet, you agree to IXSwap’s{' '}
+                  By connecting a wallet, you agree to IX Swap’s{' '}
                   <ExternalLink href="https://ixswap.io/terms-and-conditions/">Terms and Conditions</ExternalLink> and
                   acknowledge that you have read and understood the{' '}
-                  <ExternalLink href="https://ixswap.io/privacy-policy/">IXSwap Privacy Policy</ExternalLink>.
+                  <ExternalLink href="https://ixswap.io/privacy-policy/">IX Swap Privacy Policy</ExternalLink>.
                 </Trans>
               </TYPE.main>
             </AutoRow>
