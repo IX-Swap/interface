@@ -58,8 +58,8 @@ export const companyAuthorizedPersonnelKeys = [
 ]
 
 export const addressKeys = [
-  { key: 'line1', label: 'Line 1', width: { xs: 12, sm: 6 } },
-  { key: 'line2', label: 'Line 2', width: { xs: 12, sm: 6 } },
+  { key: 'address', label: 'Address', width: { xs: 12, sm: 6 } },
+  { key: 'postalCode', label: 'Postal Code', width: { xs: 12, sm: 6 } },
   { key: 'city', label: 'City', width: { xs: 12, sm: 6 } },
   { key: 'country', label: 'Country', width: { xs: 12, sm: 6 } },
 ]
