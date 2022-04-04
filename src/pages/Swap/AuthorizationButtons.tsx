@@ -15,7 +15,6 @@ export const AuthorizationButtons = ({ formRef, allowSwap }: { formRef: any; all
   if (!missingAuthorizations || missingAuthorizations?.length === 0) {
     return null
   }
-
   return (
     <RowBetween style={{ flexWrap: 'wrap' }}>
       {missingAuthorizations.map((address) => (
