@@ -130,7 +130,7 @@ const KycSourceSelector = (props: KycSourceSelectorProps) => {
       case KYCStatuses.NOT_SUBMITTED:
         return t`KYC: NOT_SUBMITTED`
       default:
-        return t`Pass KYC on IXSwap`
+        return t`Pass KYC on IX Swap`
     }
   }
 
@@ -164,7 +164,7 @@ const KycSourceSelector = (props: KycSourceSelectorProps) => {
         <TYPE.small style={{ fontSize: '12px', color: '#EDCEFF' }}>KYC source</TYPE.small>
       </KycRow>
       <KycRow onClick={() => onChange(KycSource.IXSwap)}>
-        <TYPE.body1>My IXSwap KYC</TYPE.body1>
+        <TYPE.body1>My IX Swap KYC</TYPE.body1>
 
         <KycSourceTooltip text="Recommended" />
 
@@ -178,7 +178,7 @@ const KycSourceSelector = (props: KycSourceSelectorProps) => {
             {selected === KycSource.IXSwap ? <Checkmark className="selected-checkmark" /> : <CheckmarkPlaceholder />}
           </IconWrapper>
         ) : (
-          <KycSourceTooltip text="Pass KYC on IXSwap to enable this option">
+          <KycSourceTooltip text="Pass KYC on IX Swap to enable this option">
             <IconWrapper size={28} style={{ marginLeft: 'auto', marginRight: 0 }}>
               {selected === KycSource.IXSwap ? <Checkmark className="selected-checkmark" /> : <CheckmarkPlaceholder />}
             </IconWrapper>
@@ -261,7 +261,7 @@ export const ChooseBrokerDealerPopup = ({ tokenId, currencyId }: { tokenId: any;
               {/* <div style={{ marginTop: '18px' }}>
                 <TYPE.title10>1. Choose source of KYC for accreditation</TYPE.title10>
                 <TYPE.description2 fontWeight={400}>
-                  <Trans>{`We recommend choosing IXSwap KYC. Pass it once and use for all future accreditations quick and easy.`}</Trans>
+                  <Trans>{`We recommend choosing IX Swap KYC. Pass it once and use for all future accreditations quick and easy.`}</Trans>
                 </TYPE.description2>
               </div>
 

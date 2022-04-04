@@ -40,7 +40,7 @@ export const NotAvailablePage = () => {
     return (
       <ConnectWalletContainer>
         <div>
-          <Trans>Welcome to IXSwap</Trans>
+          <Trans>Welcome to IX Swap</Trans>
         </div>
         <div>Please connect your wallet to use the application.</div>
         <ButtonIXSGradient onClick={toggleWalletModal}>Connect Wallet</ButtonIXSGradient>
@@ -72,10 +72,10 @@ export const NotAvailablePage = () => {
   return (
     <Container>
       <Title>
-        {t`IXSwap is not available`}
+        {t`IX Swap is not available`}
         <br /> {t`on this Blockchain network`}
       </Title>
-      <Info>{t`IXSwap is available only on:`}</Info>
+      <Info>{t`IX Swap is available only on:`}</Info>
 
       <NetworksRow elements={farming ? chains.length + 1 : chains.length}>
         {(chains.includes(SupportedChainId.MAINNET) || farming) && (

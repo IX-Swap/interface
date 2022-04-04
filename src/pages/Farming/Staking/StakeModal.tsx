@@ -302,7 +302,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                       style={{ whiteSpace: 'pre-line' }}
                       text={t`IXSgov is a tokenized asset representing your staked ${
                         currency?.symbol
-                      } on a 1:1 basis. IXSwap distributes the IXSgov to your wallet.
+                      } on a 1:1 basis. IX Swap distributes the IXSgov to your wallet.
                               ${'' ?? ''}
                               You should swap your IXSgov back to ${currency?.symbol} during the unstaking process. 
                               ${'' ?? ''}
@@ -331,7 +331,7 @@ export function StakeModal({ onDismiss }: StakingModalProps) {
                 }
                 tooltipText={t`IXSgov is a tokenized asset representing your staked ${
                   currency?.symbol
-                } on a 1:1 basis. IXSwap distributes the IXSgov to your wallet.
+                } on a 1:1 basis. IX Swap distributes the IXSgov to your wallet.
                               ${'' ?? ''}
                               You should swap your IXSgov back to ${currency?.symbol} during the unstaking process. 
                               ${'' ?? ''}
