@@ -25,6 +25,7 @@ import { LoaderThin } from 'components/Loader/LoaderThin'
 import { BROKER_DEALERS_STATUS } from 'state/brokerDealer/hooks'
 import { StyledSearchInput } from 'pages/CustodianV2/styleds'
 import { DeleteTokenConfirmationPopup } from './DeleteConfirmation'
+import { adminOffset as offset } from 'state/admin/constants'
 
 import { EditButton, StyledButtonGradientBorder, FormGrid, Logo, TokenCard } from './styleds'
 import { initialIssuerState } from './mock'
@@ -40,7 +41,6 @@ interface Tab {
 let timer = null as any
 
 export const AdminSecurityCatalog: FC = () => {
-  const offset = 10
   const addIssuer = useAddIssuer()
   const editIssuer = useEditIssuer()
   const getIssuers = useFetchIssuers()
