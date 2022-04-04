@@ -18,7 +18,7 @@ import ErrorBoundary from '../components/ErrorBoundary'
 import Header from '../components/Header'
 import Popups from '../components/Popups'
 import Web3ReactManager from '../components/Web3ReactManager'
-import { ApplicationModal } from '../state/application/actions'
+import { ApplicationModal, clearStore } from '../state/application/actions'
 import { useModalOpen } from '../state/application/hooks'
 import DarkModeQueryParamReader from '../theme/DarkModeQueryParamReader'
 import { RedirectDuplicateTokenIdsV2 } from './AddLiquidityV2/redirects'
@@ -31,6 +31,7 @@ import { Footer } from '../components/Footer'
 import { isUserWhitelisted } from 'utils/isUserWhitelisted'
 import { KYCStatuses } from 'components/Vault/enum'
 import { useAuthState } from 'state/auth/hooks'
+import { useDispatch } from 'react-redux'
 
 const Admin = lazy(() => import('./Admin'))
 
@@ -88,6 +89,7 @@ export default function App() {
   const { chainId, account } = useActiveWeb3React()
   const getMyKyc = useGetMyKyc()
   const { token } = useAuthState()
+  const dispatch = useDispatch()
 
   const { kyc } = useKYCState()
 
@@ -117,12 +119,17 @@ export default function App() {
   const clearLocaleStorage = () => {
     const cleared = localStorage.getItem('clearedLS-04-04-22')
     if (!cleared) {
+      dispatch(clearStore())
       document.cookie.split(';').forEach(function (c) {
         document.cookie = c.replace(/^ +/, '').replace(/=.*/, '=;expires=' + new Date().toUTCString() + ';path=/')
       })
 
       localStorage.clear()
       localStorage.setItem('clearedLS-04-04-22', 'true')
+      localStorage.setItem(
+        'redux_localstorage_simple_auth',
+        `{"token":{},"refreshToken":{},"loginLoading":false,"loginError":null}`
+      )
     }
   }
 
