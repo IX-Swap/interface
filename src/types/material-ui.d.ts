@@ -82,6 +82,11 @@ export interface MenuPalette {
   boxShadow: string
 }
 
+export interface TooltipPalette {
+  color: string
+  bg: string
+}
+
 export interface SkeletonPalette {
   bg: string
 }
@@ -132,6 +137,7 @@ declare module '@mui/styles/defaultTheme' {
 declare module '@mui/material/styles' {
   export interface PaletteOptions {
     backgrounds: AppBackgrounds
+    tooltip?: TooltipPalette
     skeleton?: SkeletonPalette
     chip?: ChipPalette
     toggledInputs?: ToggledInputsColorOptions
@@ -165,6 +171,7 @@ declare module '@mui/material/styles' {
 
   export interface Palette {
     backgrounds: AppBackgrounds
+    tooltip?: TooltipPalette
     skeleton?: SkeletonPalette
     chip?: ChipPalette
     toggledInputs?: ToggledInputsColorOptions
