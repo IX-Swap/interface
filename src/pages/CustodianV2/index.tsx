@@ -13,6 +13,7 @@ import AppBody from 'pages/AppBody'
 import { TGE_CHAINS_WITH_SWAP } from 'constants/addresses'
 import { getMyTokens, useFetchTokens, useSecCatalogState } from 'state/secCatalog/hooks'
 import { MySecToken } from './MySecToken'
+import { NotAvailablePage } from 'components/NotAvailablePage'
 
 import { ReactComponent as ArrowDown } from '../../assets/images/arrow-sec-tokens.svg'
 import {
@@ -24,7 +25,7 @@ import {
   MySecTokensGrid,
   Divider,
 } from './styleds'
-import { NotAvailablePage } from 'components/NotAvailablePage'
+import { Info } from './Info'
 
 export default function CustodianV2() {
   const offset = 10
@@ -88,7 +89,6 @@ export default function CustodianV2() {
         flexDirection={isMobile ? 'column' : 'row'}
         alignItems={isMobile ? 'flex-start' : 'center'}
         justifyContent="space-between"
-        marginBottom="76px"
       >
         <TYPE.title4 marginBottom="16px">
           <Trans>Security tokens</Trans>
@@ -106,7 +106,7 @@ export default function CustodianV2() {
           </StyledButtonGradientBorder>
         </ExternalLink>
       </Flex>
-
+      <Info />
       {tokens && (
         <>
           {mySecTokens?.length > 0 && (
