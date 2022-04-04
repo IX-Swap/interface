@@ -1,5 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { ChevronElement } from 'components/ChevronElement'
+import { Line } from 'components/Line'
 import Popover from 'components/Popover'
 import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
 import { SupportedChainId } from 'constants/chains'
@@ -25,25 +26,23 @@ const HeaderPopover = () => {
       onMouseDown={(e) => (e ? e.stopPropagation() : null)}
     >
       <SubMenuExternalLink href={`https://ixswap.defiterm.io/`}>
-        <Trans>Staking - New</Trans>
+        <Trans>Live Pools</Trans>
       </SubMenuExternalLink>
 
       <SubMenuLink id={`stake-nav-link`} to={routes.staking}>
-        <Trans>Staking - Old</Trans>
+        <Trans>Legacy Pools (Closed)</Trans>
       </SubMenuLink>
 
+      <Row style={{ padding: '0', margin: '5px 0' }}>
+        <Line />
+      </Row>
+
       <SubMenuLink id={`vesting-nav-link`} to={routes.vesting}>
-        <Trans>Vesting</Trans>
+        <Trans>Token Sale Distribution</Trans>
       </SubMenuLink>
 
       <SubMenuExternalLink href={`https://ixswap.defiterm.io/`}>
-        <Trans>Liquidity Mining - Polygon</Trans>
-      </SubMenuExternalLink>
-
-      <SubMenuExternalLink
-        href={`https://app.uniswap.org/#/add/v2/ETH/0x73d7c860998CA3c01Ce8c808F5577d94d545d1b4?chain=mainnet)`}
-      >
-        <Trans>Liquidity Mining - Ethereum</Trans>
+        <Trans>Liquidity Mining Program (Quickswap)</Trans>
       </SubMenuExternalLink>
     </PopOverContent>
   )
