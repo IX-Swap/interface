@@ -28,7 +28,7 @@ export const collections: Array<NFTCollection> = [
   },
   {
     id: 3,
-    name: 'IXSwap test',
+    name: 'IX Swap test',
     // logo: '',
     // featured: '',
     // banner: '',

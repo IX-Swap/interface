@@ -14,7 +14,7 @@ export const NotTradable = ({ ticker }: Props) => {
     <ValutContainer>
       <NotTradableContainer>
         <TYPE.title3>Not tradable yet</TYPE.title3>
-        <div>{t`${ticker} token is not ready to be traded on IXSwap yet. Please check later.`}</div>
+        <div>{t`${ticker} token is not ready to be traded on IX Swap yet. Please check later.`}</div>
       </NotTradableContainer>
     </ValutContainer>
   )

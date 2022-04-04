@@ -201,7 +201,7 @@ export default function KYC() {
               alignItems="center"
             >
               <TYPE.title4 marginBottom="40px">
-                <Trans>IXSwap KYC</Trans>
+                <Trans>IX Swap KYC</Trans>
               </TYPE.title4>
 
               <KYCStatus status={kyc?.data.status || KYCStatuses.NOT_SUBMITTED} />

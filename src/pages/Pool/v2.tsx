@@ -51,7 +51,7 @@ export default function Pool() {
               <LinkTitle style={{ fontSize: '16px' }}>Top Pools</LinkTitle>
               <ExternalIcon></ExternalIcon>
             </Flex>
-            <TYPE.body1>Explore popular pools on IXSwap Analytics</TYPE.body1>
+            <TYPE.body1>Explore popular pools on IX Swap Analytics</TYPE.body1>
           </RowCenter>
         </TipCard>
       )} */}
