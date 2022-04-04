@@ -119,7 +119,7 @@ export const testStableCoinsTokens = [
 ]
 export const ixSwapToken = [
   {
-    name: 'IX Swap Token',
+    name: 'IXSwap Token',
     symbol: 'IXS',
     address: '0xA1997c88a60dCe7BF92A3644DA21e1FfC8F96dC2',
     contractAddress: '0x10367e146e497267a9fc0c4f47702005f194a13c',
