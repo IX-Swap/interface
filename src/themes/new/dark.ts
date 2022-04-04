@@ -148,6 +148,9 @@ export const darkTheme: DeprecatedThemeOptions = {
     skeleton: {
       bg: '#1D3667'
     },
+    input: {
+      placeholder: '#89A1CE'
+    },
     success: {
       main: '#7DD320'
     },

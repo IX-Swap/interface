@@ -19,6 +19,7 @@ import { menuItem } from 'themes/new/overrides/menuItem'
 import { chip } from 'themes/new/overrides/chip'
 import { skeleton } from 'themes/new/overrides/skeleton'
 import { inputBase } from 'themes/new/overrides/inputBase'
+import { input } from 'themes/new/overrides/input'
 
 declare module '@mui/material/Button' {
   interface ButtonPropsVariantOverrides {
@@ -47,5 +48,6 @@ export const getThemeOverrides = (
   MuiCheckbox: checkbox(theme),
   MuiChip: chip(theme),
   MuiSkeleton: skeleton(theme),
-  MuiInputBase: inputBase(theme)
+  MuiInputBase: inputBase(theme),
+  MuiTextField: input(theme)
 })

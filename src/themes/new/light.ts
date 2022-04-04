@@ -155,6 +155,9 @@ export const lightTheme: DeprecatedThemeOptions = {
     skeleton: {
       bg: '#EDF2FA'
     },
+    input: {
+      placeholder: '#778194'
+    },
     success: {
       main: '#7DD320'
     },

@@ -160,6 +160,9 @@ declare module '@mui/material/styles' {
     }
     paginationItem?: PaginationItem
     tablePagination?: TablePagination
+    input?: {
+      placeholder: CSSProperties['color']
+    }
     alerts?: Alerts
   }
 
@@ -193,6 +196,9 @@ declare module '@mui/material/styles' {
     }
     paginationItem?: PaginationItem
     tablePagination?: TablePagination
+    input?: {
+      placeholder: CSSProperties['color']
+    }
     alerts?: Alerts
   }
 
