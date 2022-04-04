@@ -87,6 +87,7 @@ export function useAuthorizationDigest(
   trade: V2Trade<Currency, Currency, TradeType> | undefined
 ): Array<TradeAuthorization> | undefined {
   const authorizations = useAuthorizationsState()
+  const { account } = useActiveWeb3React()
   const addresses = useSwapSecTokenAddresses(trade)
   const { secPairs: pairs } = useSwapSecPairs(trade)
   const authorizationDigest: Array<TradeAuthorization> | undefined = useMemo(() => {
@@ -95,7 +96,8 @@ export function useAuthorizationDigest(
     }
     const tokenToPairMap = getTokenToPairMap(pairs)
     return addresses.map((address) => {
-      const addressAuthorization = address && authorizations ? authorizations[tokenToPairMap[address]] : null
+      const addressAuthorization =
+        address && authorizations ? authorizations[account || ''] || authorizations[tokenToPairMap[address]] : null
       if (!addressAuthorization) {
         return EMPTY_AUTHORIZATION
       }

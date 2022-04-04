@@ -3,6 +3,7 @@ import store from 'state'
 import { omit } from 'utils/omit'
 import {
   clearAuthorization,
+  clearSwapHelperState,
   saveAuthorization,
   setAuthorizationInProgress,
   setLoadingSwap,
@@ -40,8 +41,8 @@ export default createReducer(initialState, (builder) =>
         },
       }
     })
-    .addCase(clearAuthorization, (state, { payload: { chainId, addresses } }) => {
-      const newAuthorization = omit(state.authorizations[chainId], addresses)
+    .addCase(clearAuthorization, (state, { payload: { chainId, addresses, account } }) => {
+      const newAuthorization = omit(state.authorizations[chainId], [...addresses, account])
       return {
         ...state,
         authorizations: {
@@ -74,5 +75,17 @@ export default createReducer(initialState, (builder) =>
     })
     .addCase(setLoadingSwap, (state, { payload: { isLoading } }) => {
       state.loadingSwap = isLoading
+    })
+    .addCase(clearSwapHelperState, (state) => {
+      state.localSwap = {
+        showConfirm: false,
+        tradeToConfirm: undefined,
+        attemptingTxn: false,
+        swapErrorMessage: undefined,
+        txHash: undefined,
+      }
+      state.openModal = false
+      state.authorizationInProgress = null
+      state.loadingSwap = false
     })
 )
