@@ -12,7 +12,6 @@ export const tooltip = (theme: Theme) => {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        boxSizing: 'border-box',
         borderRadius: '6px',
 
         background: tooltipPalette.bg,
