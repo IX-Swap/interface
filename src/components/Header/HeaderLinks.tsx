@@ -1,5 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { ChevronElement } from 'components/ChevronElement'
+import Column from 'components/Column'
 import { Line } from 'components/Line'
 import Popover from 'components/Popover'
 import { ENV_SUPPORTED_TGE_CHAINS } from 'constants/addresses'
@@ -12,7 +13,7 @@ import React, { useRef } from 'react'
 import { NavLink } from 'react-router-dom'
 import { css } from 'styled-components'
 import styled from 'styled-components/macro'
-import { ExternalLink } from 'theme'
+import { ExternalLink, TYPE } from 'theme'
 import { isUserWhitelisted } from 'utils/isUserWhitelisted'
 import { routes } from 'utils/routes'
 import Row, { RowFixed } from '../Row'
@@ -25,25 +26,37 @@ const HeaderPopover = () => {
       onClick={(e) => (e ? e.stopPropagation() : null)}
       onMouseDown={(e) => (e ? e.stopPropagation() : null)}
     >
-      <SubMenuExternalLink href={`https://ixswap.defiterm.io/`}>
-        <Trans>Live Pools</Trans>
-      </SubMenuExternalLink>
+      <Column style={{ gap: 3 }}>
+        <TYPE.body2 fontWeight={600} marginBottom="4px">
+          <Trans>Staking</Trans>
+        </TYPE.body2>
 
-      <SubMenuLink id={`stake-nav-link`} to={routes.staking}>
-        <Trans>Legacy Pools (Closed)</Trans>
-      </SubMenuLink>
+        <SubMenuExternalLink href={`https://ixswap.defiterm.io/`}>
+          <Trans>Live Pools</Trans>
+        </SubMenuExternalLink>
+
+        <SubMenuLink id={`stake-nav-link`} to={routes.staking}>
+          <Trans>Legacy Pools (Closed)</Trans>
+        </SubMenuLink>
+      </Column>
 
       <Row style={{ padding: '0', margin: '5px 0' }}>
         <Line />
       </Row>
 
-      <SubMenuLink id={`vesting-nav-link`} to={routes.vesting}>
-        <Trans>Token Sale Distribution</Trans>
-      </SubMenuLink>
+      <Column style={{ gap: 3 }}>
+        <TYPE.body2 fontWeight={600} marginBottom="4px">
+          <Trans>Other</Trans>
+        </TYPE.body2>
 
-      <SubMenuExternalLink href={`https://ixswap.defiterm.io/`}>
-        <Trans>Liquidity Mining Program (Quickswap)</Trans>
-      </SubMenuExternalLink>
+        <SubMenuLink id={`vesting-nav-link`} to={routes.vesting}>
+          <Trans>Token Sale Distribution</Trans>
+        </SubMenuLink>
+
+        <SubMenuExternalLink href={`https://ixswap.defiterm.io/`}>
+          <Trans>Liquidity Mining Program (Quickswap)</Trans>
+        </SubMenuExternalLink>
+      </Column>
     </PopOverContent>
   )
 }
@@ -219,6 +232,7 @@ const StyledNavLink = styled(NavLink).attrs({
 const subMenuLinkStyle = css`
   font-size: 16px;
   line-height: 24px;
+  font-weight: 500;
   text-transform: none;
   padding: 0 66px 0 0;
   :hover {
