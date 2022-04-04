@@ -39,6 +39,10 @@ export const useStyles = makeStyles(theme => {
       padding: theme.spacing(1.25, 3),
       minHeight: 36,
 
+      '&:hover': {
+        backgroundColor: ({ type }: Props) => getBg(type)
+      },
+
       '& > span': {
         padding: 0
       },
