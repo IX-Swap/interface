@@ -1,7 +1,7 @@
 import React from 'react'
 import { Grid, Radio, Typography } from '@mui/material'
 import { useFormError } from 'hooks/useFormError'
-import { themeColors } from 'themes/old/colors'
+import { themeColors } from 'themes/app/colors'
 
 export interface YesOrNoProps {
   name: string

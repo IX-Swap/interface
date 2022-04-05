@@ -17,7 +17,7 @@ config.output = {
 }
 
 // config.plugins.push(
-//   new BundleAnalyzerPlugin({
+//   app BundleAnalyzerPlugin({
 //     analyzerMode: 'json'
 //   })
 // )

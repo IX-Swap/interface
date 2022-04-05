@@ -1,7 +1,7 @@
 import { createTheme } from '@mui/material/styles'
-import { darkTheme } from 'themes/new/dark'
-import { getThemeOverrides } from 'themes/new/overrides'
-import { typography } from 'themes/new/typography'
+import { darkTheme } from 'themes/app/dark'
+import { getThemeOverrides } from 'themes/app/overrides'
+import { typography } from 'themes/app/typography'
 
 export enum AppTheme {
   Light = 'Light',

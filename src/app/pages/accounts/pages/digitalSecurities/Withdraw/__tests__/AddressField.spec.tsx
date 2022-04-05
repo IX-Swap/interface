@@ -12,7 +12,7 @@ describe('AddressField', () => {
     jest.clearAllMocks()
   })
 
-  it('renders correct form when addressType is new', () => {
+  it('renders correct form when addressType is app', () => {
     render(
       <Form defaultValues={{ addressType: 'new' }}>
         <AddressField />

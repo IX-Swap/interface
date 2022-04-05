@@ -24,7 +24,7 @@ export const ConfirmationDialog = ({
     : `We are about to assign you an account in ${currency}`
 
   const bodyText = isAdditional
-    ? 'You can have a new account in a different currency. Click on “send request” to continue.'
+    ? 'You can have a app account in a different currency. Click on “send request” to continue.'
     : 'Would you like to continue?'
 
   const confirmLabel = isAdditional ? 'Send request' : 'Yes'

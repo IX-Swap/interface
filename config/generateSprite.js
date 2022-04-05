@@ -23,7 +23,7 @@ const generateSprite = () => {
     }
   }
 
-  const svgListDirectory = path.join(__dirname, '../src/assets/icons/new')
+  const svgListDirectory = path.join(__dirname, '../src/assets/icons/app')
   fs.readdir(svgListDirectory, (err, files) => {
     if (err) {
       return console.warn('Unable to scan directory: ' + err)

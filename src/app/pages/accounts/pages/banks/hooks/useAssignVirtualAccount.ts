@@ -28,7 +28,7 @@ export const useAssignVirtualAccount = (
       callback?.()
       void snackbarService.showSnackbar(
         isAdditional
-          ? 'Request to add new account sent'
+          ? 'Request to add app account sent'
           : 'Account has been assigned successfully!',
         'success'
       )

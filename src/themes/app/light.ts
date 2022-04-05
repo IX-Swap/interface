@@ -1,5 +1,5 @@
 import { DeprecatedThemeOptions } from '@mui/material'
-import { themeColors } from 'themes/new/colors'
+import { themeColors } from 'themes/app/colors'
 import tinycolor from 'tinycolor2'
 
 export const lightTheme: DeprecatedThemeOptions = {

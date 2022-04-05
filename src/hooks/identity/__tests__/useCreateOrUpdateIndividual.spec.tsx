@@ -15,7 +15,7 @@ describe('useCreateOrUpdateIndividual', () => {
     //   params: {},
     //   replace: jest.fn(),
     //   push: jest.fn(),
-    //   query: new URLSearchParams(),
+    //   query: app URLSearchParams(),
     //   current: {
     //     path: '',
     //     label: ''

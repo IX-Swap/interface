@@ -1,9 +1,9 @@
 import React from 'react'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { lightTheme } from 'themes/new/light'
-import { darkTheme } from 'themes/new/dark'
-import { typography } from 'themes/new/typography'
-import { getThemeOverrides } from 'themes/new/overrides'
+import { lightTheme } from 'themes/app/light'
+import { darkTheme } from 'themes/app/dark'
+import { typography } from 'themes/app/typography'
+import { getThemeOverrides } from 'themes/app/overrides'
 import { useDarkMode } from 'storybook-dark-mode'
 
 export interface UIKitThemeWrapperProps {

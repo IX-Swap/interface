@@ -1,9 +1,9 @@
 import { createTheme, Theme } from '@mui/material/styles'
-import { lightTheme } from 'themes/new/light'
-import { typography } from 'themes/new/typography'
-import { getThemeOverrides } from 'themes/new/overrides'
-import { AppTheme, getAppTheme } from 'themes/new/index'
-import { darkTheme } from 'themes/new/dark'
+import { lightTheme } from 'themes/app/light'
+import { typography } from 'themes/app/typography'
+import { getThemeOverrides } from 'themes/app/overrides'
+import { AppTheme, getAppTheme } from 'themes/app/index'
+import { darkTheme } from 'themes/app/dark'
 
 jest.mock('@mui/material/styles', () => ({
   createTheme: jest.fn()

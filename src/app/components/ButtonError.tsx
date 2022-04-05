@@ -2,7 +2,7 @@ import * as React from 'react'
 import Button, { ButtonProps } from '@mui/material/Button'
 import { Theme } from '@mui/material'
 import { withStyles } from '@mui/styles'
-import { themeColors } from 'themes/old/colors'
+import { themeColors } from 'themes/app/colors'
 import tinycolor from 'tinycolor2'
 
 const styles: (theme: Theme) => any = theme => {
