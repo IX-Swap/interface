@@ -12,8 +12,7 @@ export const corporateTransformApiData = (data: any) => {
     beneficialOwners,
     usTin,
   } = data
-  const splittedFunds = sourceOfFunds.split(',').map((label: string) => label.trim())
-  const funds = splittedFunds.includes('Others') ? splittedFunds.slice(0, -1) : splittedFunds
+  const [funds, otherFunds] = sourceOfFunds.split(', Others, ')
 
   return {
     ...data,
@@ -28,9 +27,9 @@ export const corporateTransformApiData = (data: any) => {
     residentialAddressLine2: residentialAddress.line2,
     residentialAddressCountry: { value: 0, label: residentialAddress.country },
     residentialAddressCity: residentialAddress.city,
-    sourceOfFunds: funds.filter((fund: string) => fund !== ''),
+    sourceOfFunds: otherFunds.length ? [...funds.split(', '), 'Others'] : funds.split(', '),
     isUSTaxPayer: usTin ? 1 : 0,
-    otherFunds: splittedFunds.includes('Others') ? splittedFunds[splittedFunds.length - 1] : '',
+    otherFunds,
     taxCountry: { value: 0, label: taxCountry },
     beneficialOwners:
       beneficialOwners.length > 0
@@ -64,8 +63,9 @@ export const corporateTransformKycDto = (values: any) => {
 
   return {
     ...values,
+    ...(!isUSTaxPayer && { usTin: '' }),
     typeOfLegalEntity: typeOfLegalEntity.value,
-    sourceOfFunds: [...sourceOfFunds, otherFunds].join(', '),
+    sourceOfFunds: [...sourceOfFunds, ...(sourceOfFunds.includes('Others') ? [otherFunds] : [])].join(', '),
     countryOfIncorporation: countryOfIncorporation.label,
     country: country.label,
     residentialAddressCountry: residentialAddressCountry.label,
@@ -87,14 +87,13 @@ export const corporateTransformKycDto = (values: any) => {
 
 export const individualTransformApiData = (data: any) => {
   const { sourceOfFunds, address, documents, usTin, citizenship, employmentStatus, gender, nationality, income } = data
-  const splittedFunds = sourceOfFunds.split(',').map((label: string) => label.trim())
-  const funds = splittedFunds.includes('Others') ? splittedFunds.slice(0, -1) : splittedFunds
+  const [funds, otherFunds] = sourceOfFunds.split(', Others, ')
 
   return {
     ...data,
-    sourceOfFunds: funds.filter((fund: string) => fund !== ''),
+    sourceOfFunds: otherFunds.length ? [...funds.split(', '), 'Others'] : funds.split(', '),
     isUSTaxPayer: usTin ? 1 : 0,
-    otherFunds: splittedFunds.includes('Others') ? splittedFunds[splittedFunds.length - 1] : '',
+    otherFunds,
     line1: address.line1,
     line2: address.line2,
     country: { value: 0, label: address.country },
@@ -126,8 +125,9 @@ export const individualTransformKycDto = (values: any) => {
 
   return {
     ...values,
+    ...(!isUSTaxPayer && { usTin: '' }),
     dateOfBirth: typeof dateOfBirth === 'string' ? dateOfBirth : dateOfBirth.format(),
-    sourceOfFunds: [...sourceOfFunds, otherFunds].join(', '),
+    sourceOfFunds: [...sourceOfFunds, ...(sourceOfFunds.includes('Others') ? [otherFunds] : [])].join(', '),
     citizenship: citizenship.label,
     nationality: nationality.label,
     country: country.label,
