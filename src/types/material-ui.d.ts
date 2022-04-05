@@ -82,6 +82,11 @@ export interface MenuPalette {
   boxShadow: string
 }
 
+export interface TooltipPalette {
+  color: string
+  bg: string
+}
+
 export interface SkeletonPalette {
   bg: string
 }
@@ -125,6 +130,21 @@ export interface TablePagination {
   menuItemColor: CSSProperties['color']
 }
 
+export interface StepIcon {
+  bg: CSSProperties['color']
+  color: CSSProperties['color']
+  border: string
+  bgActive: CSSProperties['color']
+  colorActive: CSSProperties['color']
+  borderActive: string
+  bgCompleted: CSSProperties['color']
+  colorCompleted: CSSProperties['color']
+  borderCompleted: string
+  bgError: CSSProperties['color']
+  colorError: CSSProperties['color']
+  borderError: string
+}
+
 export interface SelectPalette {
   bg: CSSProperties['color']
   bgDisabled: CSSProperties['color']
@@ -144,6 +164,7 @@ declare module '@mui/styles/defaultTheme' {
 declare module '@mui/material/styles' {
   export interface PaletteOptions {
     backgrounds: AppBackgrounds
+    tooltip?: TooltipPalette
     skeleton?: SkeletonPalette
     chip?: ChipPalette
     toggledInputs?: ToggledInputsColorOptions
@@ -173,11 +194,13 @@ declare module '@mui/material/styles' {
     paginationItem?: PaginationItem
     tablePagination?: TablePagination
     alerts?: Alerts
+    stepIcon?: StepIcon
     select?: SelectPalette
   }
 
   export interface Palette {
     backgrounds: AppBackgrounds
+    tooltip?: TooltipPalette
     skeleton?: SkeletonPalette
     chip?: ChipPalette
     toggledInputs?: ToggledInputsColorOptions
@@ -207,6 +230,7 @@ declare module '@mui/material/styles' {
     paginationItem?: PaginationItem
     tablePagination?: TablePagination
     alerts?: Alerts
+    stepIcon?: StepIcon
     select?: SelectPalette
   }
 

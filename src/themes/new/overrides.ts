@@ -1,5 +1,4 @@
 import { Theme } from '@mui/material'
-import { ThemeOptions } from '@mui/material/styles'
 import { rte } from 'themes/new/rte'
 import { checkbox } from 'themes/new/overrides/checkbox'
 import { radio } from 'themes/new/overrides/radio'
@@ -16,9 +15,13 @@ import { typography } from 'themes/new/overrides/typography'
 import { fab } from 'themes/new/overrides/fab'
 import { menu } from 'themes/new/overrides/menu'
 import { menuItem } from 'themes/new/overrides/menuItem'
+import { tooltip } from 'themes/new/overrides/tooltip'
 import { chip } from 'themes/new/overrides/chip'
 import { skeleton } from 'themes/new/overrides/skeleton'
 import { inputBase } from 'themes/new/overrides/inputBase'
+import { step } from 'themes/new/overrides/step'
+import { stepLabel } from 'themes/new/overrides/stepLabel'
+import { ThemeOptions } from '@mui/material/styles'
 
 declare module '@mui/material/Button' {
   interface ButtonPropsVariantOverrides {
@@ -45,7 +48,11 @@ export const getThemeOverrides = (
   MuiSwitch: switcher(theme),
   MuiRadio: radio(theme),
   MuiCheckbox: checkbox(theme),
+  MuiTooltip: tooltip(theme),
   MuiChip: chip(theme),
   MuiSkeleton: skeleton(theme),
-  MuiInputBase: inputBase(theme)
+  MuiInputBase: inputBase(theme),
+  MuiStep: step(theme),
+  MuiStepLabel: stepLabel(theme),
+  MuiButtonBase: {}
 })
