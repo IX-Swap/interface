@@ -286,27 +286,37 @@ export default function CurrencyList({
   setImportToken: (token: Token) => void
 }) {
   const sortedBySecList = useMemo(() => {
-    const sorted = [...currencies].sort((a: CurrencySec, b: CurrencySec) =>
-      `${a.isSecToken || false}` > `${b.isSecToken || false}` ? -1 : 1
+    const { sec, rest, wixs, usdc } = currencies.reduce(
+      (
+        acc: {
+          sec: CurrencySec[]
+          rest: CurrencySec[]
+          wixs: CurrencySec
+          usdc: CurrencySec
+        },
+        next: any
+      ) => {
+        if (next.isSecToken) {
+          acc.sec.push(next)
+        } else if (next?.tokenInfo?.symbol === 'USDC') {
+          acc.usdc = next
+        } else if (next?.tokenInfo?.symbol === 'WIXS') {
+          acc.wixs = next
+        } else {
+          acc.rest.push(next)
+        }
+
+        return acc
+      },
+      {
+        sec: [],
+        rest: [],
+        wixs: {} as CurrencySec,
+        usdc: {} as CurrencySec,
+      }
     )
 
-    const wixsItem = currencies.find(({ tokenInfo }: any) => tokenInfo?.symbol === 'WIXS')
-    const wixsIndex = sorted.findIndex(({ tokenInfo }: any) => tokenInfo?.symbol === 'WIXS')
-
-    const usdcItem = currencies.find(({ tokenInfo }: any) => tokenInfo?.symbol === 'USDC')
-    const usdcIndex = sorted.findIndex(({ tokenInfo }: any) => tokenInfo?.symbol === 'USDC')
-
-    if (wixsItem) {
-      sorted.splice(wixsIndex, 1)
-      sorted.splice(1, 0, wixsItem)
-    }
-
-    if (usdcItem) {
-      sorted.splice(usdcIndex, 1)
-      sorted.splice(2, 0, usdcItem)
-    }
-
-    return sorted
+    return [...sec, wixs, usdc, ...rest]
   }, [currencies])
 
   const itemData: (Currency | BreakLine)[] = useMemo(() => {
@@ -332,7 +342,7 @@ export default function CurrencyList({
       const otherSelected = Boolean(currency && otherCurrency && otherCurrency.equals(currency))
       const handleSelect = () => currency && onCurrencySelect(currency)
 
-      const showImport = index > currencies.length
+      const showImport = index > sortedBySecList.length
       const token = currency?.wrapped
       const currencyId = token.address
 
@@ -361,7 +371,7 @@ export default function CurrencyList({
       }
     },
     [
-      currencies.length,
+      sortedBySecList.length,
       onCurrencySelect,
       otherCurrency,
       selectedCurrency,

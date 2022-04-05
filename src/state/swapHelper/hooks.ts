@@ -1,6 +1,7 @@
 import { Currency, Percent, TradeType } from '@ixswap1/sdk-core'
 import { Pair, Trade as V2Trade } from '@ixswap1/v2-sdk'
 import { useWeb3React } from '@web3-react/core'
+import axios from 'axios'
 import { BigNumber, utils } from 'ethers'
 import * as H from 'history'
 import { useCurrency } from 'hooks/Tokens'
@@ -182,27 +183,116 @@ export function useSwapSecPairs(trade: V2Trade<Currency, Currency, TradeType> | 
 }
 
 export function useSubmitBrokerDealerForm() {
-  const submitForm = useCallback(({ dto, formRef }: { dto: BrokerDealerSwapDto; formRef: any }) => {
-    const endpoint = dto?.endpoint
-    const callbackEndpoint = `${dto?.callbackEndpoint}/${dto?.brokerDealerId}`
-    const data = dto?.encryptedData
-    const hash = dto?.hash
-    const formValues: { [key: string]: string } = {
-      callbackEndpoint,
-      data,
-      hash,
-    }
-    if (formRef?.current) {
-      formRef.current.action = endpoint
-      for (const key in formValues) {
-        const input = document.createElement('input')
-        input.setAttribute('name', key)
-        input.setAttribute('value', formValues[key])
-        formRef.current.appendChild(input)
+  const addPopup = useAddPopup()
+  const dispatch = useDispatch<AppDispatch>()
+
+  const { account, chainId } = useActiveWeb3React()
+  const { authorizationInProgress } = useSwapHelpersState()
+
+  const address = authorizationInProgress?.pairAddress
+  const brokerDealerId = authorizationInProgress?.brokerDealerId
+  const platform = authorizationInProgress?.platform
+  const amount = authorizationInProgress?.amount || '0'
+
+  const showPopup = useCallback(
+    ({ success }: { success: boolean }) => {
+      addPopup(
+        {
+          info: {
+            success,
+            summary: getMessage({ name: platform ?? '', isError: !success }),
+          },
+        },
+        address ?? undefined
+      )
+    },
+    [addPopup, address, platform]
+  )
+
+  const clearState = useCallback(() => {
+    dispatch(setAuthorizationInProgress({ authorizationInProgress: null }))
+    dispatch(setLoadingSwap({ isLoading: false }))
+  }, [dispatch])
+
+  const fetchAuthorization = useCallback(
+    async ({ hash, result }: { hash: string; result: string }) => {
+      if (brokerDealerId === undefined || !chainId || !address || !length || !hash) {
+        return
       }
-      formRef.current.submit()
-    }
-  }, [])
+      const swapConfirm = {
+        hash,
+        encryptedData: result,
+        brokerDealerId,
+      }
+      try {
+        const response = await getSwapConfirmAuthorization({ ...swapConfirm })
+        const data = response.data
+        const { s, v, r, operator, deadline } = data.authorization
+        const swapId = data.swapId
+        const persistedAuthorization = {
+          s,
+          v,
+          r,
+          operator,
+          deadline,
+          expiresAt: hexTimeToTokenExpirationTime(deadline),
+          amount,
+          swapId,
+        }
+        // setReceivedAuthorization(true)
+        dispatch(saveAuthorization({ authorization: persistedAuthorization, chainId, address, account: account || '' }))
+        showPopup({ success: true })
+        clearState()
+      } catch (e) {
+        console.log({ e })
+        showPopup({ success: false })
+        clearState()
+      }
+    },
+    [brokerDealerId, chainId, address, amount, dispatch, account, showPopup, clearState]
+  )
+
+  const submitForm = useCallback(
+    async ({ dto, cb }: { dto: BrokerDealerSwapDto; formRef: any; cb?: () => void }) => {
+      const endpoint = dto?.endpoint
+      const callbackEndpoint = `${dto?.callbackEndpoint}/${dto?.brokerDealerId}`
+      const data = dto?.encryptedData
+      const hash = dto?.hash
+
+      const payload = { callbackEndpoint, data, hash }
+      const url: string = await axios.post(endpoint, payload).then((r) => r.data.url)
+
+      const params = url
+        .split('?')
+        .pop()
+        ?.split('&')
+        .map((part) => {
+          const [key, value] = part.split('=')
+
+          return { [key]: value }
+        })
+        .reduce((acc, e) => ({ ...acc, ...e }))
+
+      if (params) {
+        await fetchAuthorization({ result: params.result, hash: params.hash })
+      }
+      if (cb) {
+        cb()
+      }
+
+      // if (formRef?.current) {
+      //   formRef.current.action = endpoint
+      //   for (const key in formValues) {
+      //     const input = document.createElement('input')
+      //     input.setAttribute('name', key)
+      //     input.setAttribute('value', formValues[key])
+      //     formRef.current.appendChild(input)
+      //   }
+      //   formRef.current.submit()
+      // }
+    },
+    [fetchAuthorization]
+  )
   return submitForm
 }
 

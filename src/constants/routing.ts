@@ -1,7 +1,9 @@
 // a list of tokens by chain
 import { Currency, Ether, Token, WETH9 } from '@ixswap1/sdk-core'
+import DEFAULT_TOKEN_LIST from '@ixswap1/default-token-list'
 
 import { IXS, USDC } from './tokens'
+import { listToTokenMapArray } from 'state/lists/hooks'
 
 type ChainTokenList = {
   readonly [chainId: number]: Token[]
@@ -15,6 +17,8 @@ type ChainCurrencyList = {
 // Last pulled from : https://whitelist.mirror.finance/eth/tokenlists.json
 // TODO: Generate this programmatically ?
 
+const TRANSFORMED_DEFAULT_TOKEN_LIST = listToTokenMapArray(DEFAULT_TOKEN_LIST)
+
 const WETH_ONLY: ChainTokenList = {
   [1]: [WETH9[1]],
   [3]: [WETH9[3]],
@@ -23,6 +27,7 @@ const WETH_ONLY: ChainTokenList = {
   [42]: [WETH9[42]],
   [137]: [WETH9[137]],
 }
+
 // used to construct intermediary pairs for trading
 export const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
   ...WETH_ONLY,
@@ -73,9 +78,9 @@ export const COMMON_BASES: ChainCurrencyList = {
 // used to construct the list of all pairs we consider by default in the frontend
 export const BASES_TO_TRACK_LIQUIDITY_FOR: ChainTokenList = {
   ...WETH_ONLY,
-  [1]: [...WETH_ONLY[1], USDC[1], IXS[1]],
-  [42]: [...WETH_ONLY[42], USDC[42], IXS[42]],
-  [137]: [...WETH_ONLY[137], USDC[137], IXS[137]],
+  [1]: [...WETH_ONLY[1], ...TRANSFORMED_DEFAULT_TOKEN_LIST[1], USDC[1], IXS[1]],
+  [42]: [...WETH_ONLY[42], ...TRANSFORMED_DEFAULT_TOKEN_LIST[42], USDC[42], IXS[42]],
+  [137]: [...WETH_ONLY[137], ...TRANSFORMED_DEFAULT_TOKEN_LIST[137], USDC[137], IXS[137]],
 }
 export const PINNED_PAIRS: { readonly [chainId: number]: [Token, Token][] } = {
   [1]: [[USDC[1], IXS[1]]],

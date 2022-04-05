@@ -149,6 +149,9 @@ export default function CorporateKycForm() {
     // check for existence
     if (indexOfSource > -1) {
       newSources.splice(indexOfSource, 1)
+    } else if (fields.includes('Others')) {
+      const othersIndex = fields.indexOf('Others')
+      newSources.splice(othersIndex - 1, 0, source)
     } else {
       newSources.push(source)
     }

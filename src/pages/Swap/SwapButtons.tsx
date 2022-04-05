@@ -156,7 +156,6 @@ export const SwapButtons = ({
     <>
       {showConfirm && (
         <>
-          <ConfirmSwapInfo data-testid="confirm-swap-card-info" trade={trade} allowedSlippage={allowedSlippage} />
           {trade && <OutputInfo {...{ trade, recipient, allowedSlippage }} />}
           <BottomGrouping>
             <ButtonIXSWide
