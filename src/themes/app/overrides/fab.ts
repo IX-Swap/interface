@@ -2,8 +2,7 @@ import { Theme } from '@mui/material'
 import { alpha } from '@mui/material/styles'
 
 export const fab = (theme: Theme) => {
-  // eslint-disable-next-line
-  const fabPalette = theme.palette.fab!
+  const fabPalette = theme.palette.fab
 
   return {
     styleOverrides: {

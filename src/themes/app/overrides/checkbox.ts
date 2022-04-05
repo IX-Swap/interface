@@ -2,8 +2,7 @@ import { Theme } from '@mui/material'
 import { alpha } from '@mui/material/styles'
 
 export const checkbox = (theme: Theme) => {
-  // eslint-disable-next-line
-  const checkboxPalette = theme.palette.toggledInputs!
+  const checkboxPalette = theme.palette.toggledInputs
 
   return {
     styleOverrides: {
