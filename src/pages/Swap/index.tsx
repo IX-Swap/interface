@@ -21,6 +21,8 @@ import {
   useSwapHelpersState,
   useWatchAuthorizationExpire,
 } from 'state/swapHelper/hooks'
+import { ConfirmSwapInfo } from 'components/swap/ConfirmSwapInfo'
+
 import { AutoColumn } from '../../components/Column'
 import { CurrencyInput } from '../../components/swap/CurrencyInput'
 import { Wrapper } from '../../components/swap/styleds'
@@ -136,11 +138,13 @@ export default function Swap({ history }: RouteComponentProps) {
 
           <AutoColumn gap={'1.25rem'}>
             <CurrencyInput {...{ parsedAmounts, maxInputAmount, showWrap, currencies, handleHideConfirm }} />
+            {showWrap ? null : <CurrentRate {...{ trade, allowedSlippage }} />}
+            <ConfirmSwapInfo data-testid="confirm-swap-card-info" trade={trade} allowedSlippage={allowedSlippage} />
+
             {!showLoading && (
               <>
                 {recipient !== null && !showWrap ? <EditRecipient {...{ recipient, onChangeRecipient }} /> : null}
 
-                {showWrap ? null : <CurrentRate {...{ trade, allowedSlippage }} />}
                 {showAcceptChanges ? <AcceptChanges handleAcceptChanges={handleAcceptChanges} /> : null}
                 <AuthorizationButtons formRef={formRef} allowSwap={allowSwapSecurity || !withSecToken} />
                 <SwapButtons
