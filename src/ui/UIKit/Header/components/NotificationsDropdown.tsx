@@ -23,7 +23,7 @@ export const NotificationsDropdown = () => {
     <Grid item>
       <Dropdown
         trigger={NotificationsDropdownTrigger}
-        // TODO Needs to add app content after complete design for notifications dropdown
+        // TODO Needs to add new content after complete design for notifications dropdown
         content={NotificationsDropdownContent}
       />
     </Grid>

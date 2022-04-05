@@ -15,7 +15,7 @@ describe('useCreateCorporateIdentity', () => {
     //   params: {},
     //   replace: jest.fn(),
     //   push: jest.fn(),
-    //   query: app URLSearchParams(),
+    //   query: new URLSearchParams(),
     //   current: {
     //     path: '',
     //     label: ''

@@ -204,7 +204,7 @@ export const validateUEN = (uen: any) => {
         return 'There are non-numbers in 5th to 9th letters'
       }
     }
-    // (C) All other entities which will be issued app UEN
+    // (C) All other entities which will be issued new UEN
     else {
       // check that 1st letter is either T or S or R
       if (
@@ -248,7 +248,7 @@ export const validateUEN = (uen: any) => {
         return '2nd and 3rd letter is incorrect'
       }
 
-      // (C) All other entities which will be issued app UEN (SUCCESS)
+      // (C) All other entities which will be issued new UEN (SUCCESS)
       return true
     }
   }

@@ -30,7 +30,7 @@ describe('AddListingButton', () => {
         size: 'small',
         color: 'primary',
         variant: 'outlined',
-        children: 'Create a app listing'
+        children: 'Create a new listing'
       },
       {}
     )
