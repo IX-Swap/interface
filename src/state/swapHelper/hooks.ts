@@ -1,6 +1,7 @@
 import { Currency, Percent, TradeType } from '@ixswap1/sdk-core'
 import { Pair, Trade as V2Trade } from '@ixswap1/v2-sdk'
 import { useWeb3React } from '@web3-react/core'
+import axios from 'axios'
 import { BigNumber, utils } from 'ethers'
 import * as H from 'history'
 import { useCurrency } from 'hooks/Tokens'
@@ -182,27 +183,45 @@ export function useSwapSecPairs(trade: V2Trade<Currency, Currency, TradeType> | 
 }
 
 export function useSubmitBrokerDealerForm() {
-  const submitForm = useCallback(({ dto, formRef }: { dto: BrokerDealerSwapDto; formRef: any }) => {
-    const endpoint = dto?.endpoint
-    const callbackEndpoint = `${dto?.callbackEndpoint}/${dto?.brokerDealerId}`
-    const data = dto?.encryptedData
-    const hash = dto?.hash
-    const formValues: { [key: string]: string } = {
-      callbackEndpoint,
-      data,
-      hash,
-    }
-    if (formRef?.current) {
-      formRef.current.action = endpoint
-      for (const key in formValues) {
-        const input = document.createElement('input')
-        input.setAttribute('name', key)
-        input.setAttribute('value', formValues[key])
-        formRef.current.appendChild(input)
+  const submitForm = useCallback(
+    async ({ dto, formRef, redirect = true }: { dto: BrokerDealerSwapDto; formRef: any; redirect?: boolean }) => {
+      console.log({ formRef })
+      const endpoint = dto?.endpoint
+      const callbackEndpoint = `${dto?.callbackEndpoint}/${dto?.brokerDealerId}`
+      const data = dto?.encryptedData
+      const hash = dto?.hash
+
+      const payload = new FormData()
+      payload.append('callbackEndpoint', callbackEndpoint)
+      payload.append('data', data)
+      payload.append('hash', hash)
+
+      const result = await axios.post(endpoint, payload)
+      return result?.data
+
+      /*
+      
+      const formValues: { [key: string]: string } = {
+        callbackEndpoint,
+        data,
+        hash,
       }
-      formRef.current.submit()
-    }
-  }, [])
+      if (formRef?.current) {
+        if (!redirect) {
+          formRef.current.preventDefault()
+        }
+        formRef.current.action = endpoint
+        for (const key in formValues) {
+          const input = document.createElement('input')
+          input.setAttribute('name', key)
+          input.setAttribute('value', formValues[key])
+          formRef.current.appendChild(input)
+        }
+        formRef.current.submit()
+      }*/
+    },
+    []
+  )
   return submitForm
 }
 
