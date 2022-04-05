@@ -23,7 +23,8 @@ export const defaultUploadDocumentInfo: UploadDocumentInfo = {
 export const useUploadFile = (
   callbacks?: QueryOrMutationCallbacks<DataroomFile[]>,
   uri = documentsURL.create,
-  userId?: string
+  userId?: string,
+  setCompleted?: (completed: number) => void
 ) => {
   const { snackbarService, apiService } = useServices()
   const uploadFile = async (args: UploadDocumentArgs) => {
@@ -41,7 +42,15 @@ export const useUploadFile = (
 
     return await apiService.post<DataroomFile[]>(
       [uri, userId].join('/'),
-      formData
+      formData,
+      {
+        onUploadProgress: function (progressEvent) {
+          var percentCompleted = Math.round(
+            (progressEvent.loaded * 100) / progressEvent.total
+          )
+          setCompleted?.(percentCompleted)
+        }
+      }
     )
   }
 
