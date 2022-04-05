@@ -193,7 +193,7 @@ export function useSubmitBrokerDealerForm() {
   const brokerDealerId = authorizationInProgress?.brokerDealerId
   const platform = authorizationInProgress?.platform
   const amount = authorizationInProgress?.amount || '0'
-  
+
   const showPopup = useCallback(
     ({ success }: { success: boolean }) => {
       addPopup(
@@ -253,28 +253,30 @@ export function useSubmitBrokerDealerForm() {
   )
 
   const submitForm = useCallback(
-    async ({ dto, formRef }: { dto: BrokerDealerSwapDto; formRef: any; }) => {
-      console.log({ formRef })
+    async ({ dto, cb }: { dto: BrokerDealerSwapDto; formRef: any; cb: () => void }) => {
       const endpoint = dto?.endpoint
       const callbackEndpoint = `${dto?.callbackEndpoint}/${dto?.brokerDealerId}`
       const data = dto?.encryptedData
       const hash = dto?.hash
 
       const payload = { callbackEndpoint, data, hash }
-      const url: string = await axios.post(endpoint, payload)
-        .then(r => r.data.url)
+      const url: string = await axios.post(endpoint, payload).then((r) => r.data.url)
 
-      const params = url.split('?').pop()?.split('&')
-        .map(part => {
+      const params = url
+        .split('?')
+        .pop()
+        ?.split('&')
+        .map((part) => {
           const [key, value] = part.split('=')
 
           return { [key]: value }
         })
-        .reduce((acc, e) => ({...acc, ...e }))
+        .reduce((acc, e) => ({ ...acc, ...e }))
 
       if (params) {
         await fetchAuthorization({ result: params.result, hash: params.hash })
       }
+      cb()
 
       // if (formRef?.current) {
       //   formRef.current.action = endpoint
