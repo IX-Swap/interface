@@ -48,7 +48,6 @@ export default function Swap({ history }: RouteComponentProps) {
   const { openModal, setOpenModal } = useOpenModal()
   const { loadingSwap } = useSwapHelpersState()
   const { independentField, typedValue, recipient } = useSwapState()
-  const showFakeApproval = useFakeApprovalState()
 
   const { onUserInput, onChangeRecipient } = useSwapActionHandlers()
 
@@ -160,7 +159,7 @@ export default function Swap({ history }: RouteComponentProps) {
               </LoaderContainer>
             )}
           </AutoColumn>
-          {showFakeApproval && <FakeBrokerDealerApproval formRef={formRef} />}
+          {/* {showFakeApproval && <FakeBrokerDealerApproval formRef={formRef} />} */}
         </Wrapper>
       </AppBody>
       {!swapIsUnsupported ? null : (

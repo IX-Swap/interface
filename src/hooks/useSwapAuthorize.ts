@@ -129,7 +129,7 @@ export function useSwapAuthorizeFirstStep(
           if (!amount || brokerDealerId === undefined || !pairAddress) {
             return
           }
-          dispatch(setLoadingSwap({ isLoading: true }))
+          dispatch(setLoadingSwap({ isLoading: false }))
 
           dispatch(
             setAuthorizationInProgress({
