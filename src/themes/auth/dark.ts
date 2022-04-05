@@ -51,5 +51,5 @@ export const darkTheme: DeprecatedThemeOptions = {
     info: {
       main: '#4C88FF'
     }
-  }
+  } as any
 }
