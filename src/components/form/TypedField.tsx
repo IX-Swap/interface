@@ -129,10 +129,10 @@ export const TypedField = <
             }
           })
         }
-
         // temporarily fix to prevent input label
-        const isTextField = (component as any)?.render?.name === 'TextField'
-
+        const isTextField =
+          (component as any)?.render?.name === 'TextField' ||
+          (component as any).displayName === 'TextInput'
         return (
           <FormControl fullWidth variant={rest?.variant}>
             {!isTextField && label !== undefined && (
