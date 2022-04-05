@@ -159,6 +159,20 @@ export const lightTheme: DeprecatedThemeOptions = {
     skeleton: {
       bg: '#EDF2FA'
     },
+    stepIcon: {
+      bg: tinycolor('#BEC4CF1A').setAlpha(0.1).toRgbString(),
+      color: '#BEC4CF',
+      border: tinycolor('#BEC4CF1A').setAlpha(0.5).toRgbString(),
+      bgActive: tinycolor('#4C88FF').setAlpha(0.1).toRgbString(),
+      colorActive: '#4C88FF',
+      borderActive: tinycolor('#4C88FF').setAlpha(0.5).toRgbString(),
+      bgCompleted: tinycolor('#7DD32080').setAlpha(0.1).toRgbString(),
+      colorCompleted: '#7DD32080',
+      borderCompleted: tinycolor('#7DD32080').setAlpha(0.5).toRgbString(),
+      bgError: tinycolor('#F56283').setAlpha(0.1).toRgbString(),
+      colorError: '#F56283',
+      borderError: tinycolor('#F56283').setAlpha(0.5).toRgbString()
+    },
     success: {
       main: '#7DD320'
     },
