@@ -26,7 +26,7 @@ export const AuthorizationButtons = ({ formRef, allowSwap }: { formRef: any; all
     if (showFakeApproval) {
       setTimeout(() => {
         setShowFakeApproval(false)
-        submitToBrokerDealer({ dto: brokerDealerDTO, redirect: false, formRef })
+        submitToBrokerDealer({ dto: brokerDealerDTO, formRef })
       }, 5000)
     }
   }, [setShowFakeApproval, brokerDealerDTO, formRef, submitToBrokerDealer, showFakeApproval])

@@ -182,32 +182,32 @@ export function useSwapSecPairs(trade: V2Trade<Currency, Currency, TradeType> | 
   return { secPairs, currencies }
 }
 
-export function useSubmitBrokerDealerForm() {
-  const submitForm = useCallback(({ dto, formRef }: { dto: BrokerDealerSwapDto; formRef: any }) => {
-    const endpoint = dto?.endpoint
-    const callbackEndpoint = `${dto?.callbackEndpoint}/${dto?.brokerDealerId}`
-    const data = dto?.encryptedData
-    const hash = dto?.hash
-    const formValues: { [key: string]: string } = {
-      callbackEndpoint,
-      data,
-      hash,
-    }
-    if (formRef?.current) {
-      formRef.current.action = endpoint
-      for (const key in formValues) {
-        const input = document.createElement('input')
-        input.setAttribute('name', key)
-        input.setAttribute('value', formValues[key])
-        formRef.current.appendChild(input)
-      }
-      formRef.current.submit()
-    }
-  }, [])
-  return submitForm
-}
+// export function useSubmitBrokerDealerForm() {
+//   const submitForm = useCallback(({ dto, formRef }: { dto: BrokerDealerSwapDto; formRef: any }) => {
+//     const endpoint = dto?.endpoint
+//     const callbackEndpoint = `${dto?.callbackEndpoint}/${dto?.brokerDealerId}`
+//     const data = dto?.encryptedData
+//     const hash = dto?.hash
+//     const formValues: { [key: string]: string } = {
+//       callbackEndpoint,
+//       data,
+//       hash,
+//     }
+//     if (formRef?.current) {
+//       formRef.current.action = endpoint
+//       for (const key in formValues) {
+//         const input = document.createElement('input')
+//         input.setAttribute('name', key)
+//         input.setAttribute('value', formValues[key])
+//         formRef.current.appendChild(input)
+//       }
+//       formRef.current.submit()
+//     }
+//   }, [])
+//   return submitForm
+// }
 
-/*export function useSubmitBrokerDealerForm() {
+export function useSubmitBrokerDealerForm() {
   const submitForm = useCallback(
     async ({ dto, formRef, redirect = true }: { dto: BrokerDealerSwapDto; formRef: any; redirect?: boolean }) => {
       console.log({ formRef })
@@ -227,7 +227,7 @@ export function useSubmitBrokerDealerForm() {
     []
   )
   return submitForm
-}*/
+}
 
 export function useSwapConfirmDataFromURL(
   trade: V2Trade<Currency, Currency, TradeType> | undefined,
