@@ -1,6 +1,7 @@
 import { Percent, Token } from '@ixswap1/sdk-core'
 import { Pair } from '@ixswap1/v2-sdk'
 import { t } from '@lingui/macro'
+import { KYC_STATUSES } from 'components/AdminKyc/StatusCell'
 import { ERROR_ACCREDITATION_STATUSES } from 'components/Vault/enum'
 import { IXS_ADDRESS, IXS_GOVERNANCE_ADDRESS } from 'constants/addresses'
 import { SupportedLocale } from 'constants/locales'
@@ -9,11 +10,13 @@ import JSBI from 'jsbi'
 import flatMap from 'lodash.flatmap'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { shallowEqual, useDispatch, useSelector } from 'react-redux'
+import { useHistory, useLocation } from 'react-router-dom'
 import apiService from 'services/apiService'
 import { broker, kyc, tokens } from 'services/apiUrls'
 import { useChooseBrokerDealerModalToggle, useShowError } from 'state/application/hooks'
 import { LOGIN_STATUS, useLogin, useUserisLoggedIn } from 'state/auth/hooks'
 import { useAuthState } from 'state/auth/hooks'
+import { useKYCState } from 'state/kyc/hooks'
 import {
   listToSecTokenMap,
   SecTokenAddressMap,
@@ -486,6 +489,10 @@ export function useAccount() {
   const getUserSecTokens = useFetchUserSecTokenListCallback()
   const isLoggedIn = useUserisLoggedIn()
   const [triggeredAuth, handleTriggeredAuth] = useState(false)
+  const [accountChanged, handleAccountChanged] = useState(false)
+  const { kyc, loadingRequest } = useKYCState()
+  const history = useHistory()
+  const { pathname } = useLocation()
 
   const { loginError, token } = useAuthState()
 
@@ -534,6 +541,7 @@ export function useAccount() {
 
   useEffect(() => {
     if (account && account !== savedAccount) {
+      handleAccountChanged(true)
       dispatch(saveAccount({ account }))
       dispatch(clearSwapState())
       dispatch(clearSwapHelperState())
@@ -545,4 +553,13 @@ export function useAccount() {
       getUserSecTokens()
     }
   }, [token, getUserSecTokens])
+
+  useEffect(() => {
+    if (kyc?.data?.status !== KYC_STATUSES.APPROVED && accountChanged && !loadingRequest) {
+      if (pathname !== '/kyc') {
+        history.push('/kyc')
+      }
+      handleAccountChanged(false)
+    }
+  }, [kyc, accountChanged, loadingRequest, pathname])
 }
