@@ -253,7 +253,7 @@ export function useSubmitBrokerDealerForm() {
   )
 
   const submitForm = useCallback(
-    async ({ dto, cb }: { dto: BrokerDealerSwapDto; formRef: any; cb: () => void }) => {
+    async ({ dto, cb }: { dto: BrokerDealerSwapDto; formRef: any; cb?: () => void }) => {
       const endpoint = dto?.endpoint
       const callbackEndpoint = `${dto?.callbackEndpoint}/${dto?.brokerDealerId}`
       const data = dto?.encryptedData
@@ -276,7 +276,9 @@ export function useSubmitBrokerDealerForm() {
       if (params) {
         await fetchAuthorization({ result: params.result, hash: params.hash })
       }
-      cb()
+      if (cb) {
+        cb()
+      }
 
       // if (formRef?.current) {
       //   formRef.current.action = endpoint
