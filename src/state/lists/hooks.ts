@@ -40,6 +40,22 @@ export function listToTokenMap(list: TokenList): TokenAddressMap {
   return map
 }
 
+export function listToTokenMapArray(list: TokenList): Record<string, any[]> {
+  const map = list.tokens.reduce(
+    (tokenMap: any, tokenInfo) => {
+      const token = new WrappedTokenInfo(tokenInfo, list)
+
+      return {
+        ...tokenMap,
+        [token.chainId]: [...tokenMap[token.chainId], token],
+      }
+    },
+    { 1: [], 42: [], 137: [] }
+  )
+
+  return map
+}
+
 const TRANSFORMED_DEFAULT_TOKEN_LIST = listToTokenMap(DEFAULT_TOKEN_LIST)
 
 export function useAllLists(): AppState['lists']['byUrl'] {
