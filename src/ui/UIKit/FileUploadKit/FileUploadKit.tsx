@@ -9,9 +9,13 @@ export const FileUploadKit = () => {
   return (
     <UIKitThemeWrapper>
       <Form
+        defaultValues={{
+          'file-multiple': [{ _id: 'first-id' }]
+        }}
         validationSchema={yup.object().shape({
           file: yup.mixed().required('Required'),
-          image: yup.mixed().required('Required')
+          image: yup.mixed().required('Required'),
+          'file-multiple': yup.mixed()
         })}
       >
         <FileUploadFields />

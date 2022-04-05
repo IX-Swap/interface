@@ -12,23 +12,20 @@ export interface ActionsProps {
   readonly?: boolean
   setCompleted: (completed: number) => void
   multiple?: boolean
+  remove?: () => void
 }
 
 export const Actions = ({
   name,
   document,
   readonly = false,
-  multiple = false,
+  remove,
   setCompleted
 }: ActionsProps) => {
-  const { setValue, getValues } = useFormContext()
+  const { setValue } = useFormContext()
   const handleDelete = () => {
-    if (multiple) {
-      const values: DataroomFile[] = getValues(name)
-      setValue(
-        name,
-        values.filter(value => value._id !== document._id)
-      )
+    if (remove !== undefined) {
+      remove()
       return
     }
 

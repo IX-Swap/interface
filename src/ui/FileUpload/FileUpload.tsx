@@ -26,6 +26,7 @@ export interface FileUploadProps {
   uploadFunction?: any
   minSize?: number
   maxSize?: number
+  remove?: () => void
 }
 
 export const FileUpload = (props: FileUploadProps) => {
@@ -40,7 +41,8 @@ export const FileUpload = (props: FileUploadProps) => {
     fullWidth = false,
     disabled = false,
     minSize = 0,
-    maxSize = 10
+    maxSize = 10,
+    remove
   } = props
   const { watch } = useFormContext()
   const value = watch(name, defaultValue) as FileUploadProps['value']
@@ -130,7 +132,8 @@ export const FileUpload = (props: FileUploadProps) => {
     disabled,
     setCompleted,
     value,
-    completed
+    completed,
+    remove
   }
 
   if (fullWidth) {

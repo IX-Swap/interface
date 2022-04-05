@@ -1,4 +1,4 @@
-import { Grid } from '@mui/material'
+import { Button, Grid } from '@mui/material'
 import { TypedField } from 'components/form/TypedField'
 import { DataroomFileType } from 'config/dataroom'
 import { plainValueExtractor } from 'helpers/forms'
@@ -9,7 +9,8 @@ import { File } from 'ui/FileUpload/File'
 import { DataroomFile } from 'types/dataroomFile'
 import { Avatar } from 'components/Avatar'
 import { getDataroomFileId } from 'helpers/dataroom'
-import { FileList } from 'ui/FileUpload/FileList'
+import { FieldsArray } from 'components/form/FieldsArray'
+import { Icon } from 'ui/Icons/Icon'
 
 const sampleDocument: DataroomFile = {
   _id: '1232131231',
@@ -87,24 +88,43 @@ export const FileUploadFields = () => {
         </Grid>
       </Grid>
       <Grid item xs={12}>
-        <FileList name='file-multiple' />
-      </Grid>
-      <Grid item xs={12}>
-        <TypedField
-          multiple
-          customRenderer
-          name='file-multiple'
-          control={control}
-          component={FileUpload}
-          label='Upload File'
-          valueExtractor={plainValueExtractor}
-          accept={DataroomFileType.document}
-          fullWidth
-          maxSize={10}
-          documentInfo={{
-            type: 'Report Document'
-          }}
-        />
+        <FieldsArray name='file-multiple' control={control}>
+          {({ fields, append, remove }) => (
+            <Grid container spacing={1}>
+              {fields.map((field, index) => {
+                return (
+                  <Grid item xs={12} key={field.id}>
+                    <TypedField
+                      customRenderer
+                      name={['file-multiple', index, 'value']}
+                      control={control}
+                      component={FileUpload}
+                      label='Upload File'
+                      valueExtractor={plainValueExtractor}
+                      accept={DataroomFileType.document}
+                      fullWidth
+                      maxSize={10}
+                      documentInfo={{
+                        type: 'Report Document'
+                      }}
+                      remove={() => remove(index)}
+                    />
+                  </Grid>
+                )
+              })}
+              <Grid item xs={12}>
+                <Button
+                  onClick={() => append({ value: {} })}
+                  variant='outlined'
+                  startIcon={<Icon name='plus' />}
+                  sx={{ width: '100%' }}
+                >
+                  Add More
+                </Button>
+              </Grid>
+            </Grid>
+          )}
+        </FieldsArray>
       </Grid>
     </Grid>
   )

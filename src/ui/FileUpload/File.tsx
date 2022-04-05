@@ -22,6 +22,7 @@ export interface FileProps {
   completed?: number
   readonly?: boolean
   isDisplay?: boolean
+  remove?: () => void
 }
 
 export const File = ({
@@ -38,7 +39,8 @@ export const File = ({
   value,
   completed = 0,
   readonly = false,
-  isDisplay = false
+  isDisplay = false,
+  remove
 }: FileProps) => {
   return (
     <>
@@ -65,6 +67,7 @@ export const File = ({
             readonly={readonly}
             setCompleted={setCompleted}
             multiple={multiple}
+            remove={remove}
           />
         ) : (
           <Box {...rootProps}>
