@@ -191,7 +191,12 @@ export default function KYC() {
         ) : (
           <Column style={{ alignItems: 'center' }}>
             {(status === KYCStatuses.NOT_SUBMITTED || status === null) && (
-              <TYPE.mediumHeader marginTop="24px" color="white">
+              <TYPE.mediumHeader
+                marginBottom={isMobile ? '12px' : '0px'}
+                textAlign="center"
+                marginTop="24px"
+                color="white"
+              >
                 You need to pass KYC to access the full IX Swap App and trade Security Tokens
               </TYPE.mediumHeader>
             )}
