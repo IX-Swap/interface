@@ -28,11 +28,11 @@ export const AuthorizationButtons = ({ formRef, allowSwap }: { formRef: any; all
     if (showFakeApproval) {
       setTimeout(() => {
         setShowFakeApproval(false)
-        submitToBrokerDealer({ dto: brokerDealerDTO, formRef })
+        submitToBrokerDealer({ dto: brokerDealerDTO, formRef, cb: () => setStartedFirstStep(false) })
       }, 5000)
     }
   }, [setShowFakeApproval, brokerDealerDTO, formRef, submitToBrokerDealer, showFakeApproval])
-  
+
   const startFirstStep = useCallback(
     (address: any) => {
       setStartedFirstStep(true)
@@ -52,12 +52,15 @@ export const AuthorizationButtons = ({ formRef, allowSwap }: { formRef: any; all
           {address && secTokens[address] && allowSwap && (
             <>
               {(startedFirstStep || showFakeApproval) && (
-                <ButtonIXSGradient disabled style={{ width: missingAuthorizations.length === 1 ? '100%' : 'fit-content' }}>
+                <ButtonIXSGradient
+                  disabled
+                  style={{ width: missingAuthorizations.length === 1 ? '100%' : 'fit-content' }}
+                >
                   Confirming transaction with broker...
                 </ButtonIXSGradient>
               )}
 
-              {(!startedFirstStep && !showFakeApproval) && (
+              {!startedFirstStep && !showFakeApproval && (
                 <ButtonIXSGradient
                   onClick={() => startFirstStep(address)}
                   style={{ width: missingAuthorizations.length === 1 ? '100%' : 'fit-content' }}
