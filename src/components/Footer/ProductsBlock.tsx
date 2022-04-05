@@ -45,8 +45,8 @@ export const ProductsBlock = () => {
           </NavLink>
         )}
         {account && (
-          <ExternalLink href="https://info.ixswap.io/home">
-            <Trans>Charts </Trans>
+          <ExternalLink target="_self" href="https://info.ixswap.io/home">
+            <Trans>Charts</Trans>
           </ExternalLink>
         )}
         {/* <NavLink to={routes.nftCollections}>

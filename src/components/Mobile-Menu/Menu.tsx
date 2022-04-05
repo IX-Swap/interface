@@ -83,7 +83,7 @@ export const Menu = ({ close }: Props) => {
           </ExternalListItem>
 
           {isWhitelisted && (
-            <ExternalListItem href={'https://info.ixswap.io/home'}>
+            <ExternalListItem target="_self" href={'https://info.ixswap.io/home'}>
               <Trans>Charts</Trans>
             </ExternalListItem>
           )}

@@ -156,7 +156,7 @@ export const HeaderLinks = () => {
       )}
 
       {account && isWhitelisted && (
-        <MenuExternalLink href={'https://info.ixswap.io/home'}>
+        <MenuExternalLink target="_self" href={'https://info.ixswap.io/home'}>
           <Trans>Charts</Trans>
         </MenuExternalLink>
       )}
