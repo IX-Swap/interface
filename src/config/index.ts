@@ -1,4 +1,4 @@
-export const API_URL = 'http://localhost:8080/v1/' || process.env.REACT_APP_API_URL
+export const API_URL = process.env.REACT_APP_API_URL
 // export const API_URL = process.env.REACT_APP_API_URL
 export const SECURITY_TOKENS = process.env.REACT_APP_SECURITY_TOKENS === 'true'
 export const STAKING_CONTRACT_KOVAN =
