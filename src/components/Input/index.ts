@@ -51,6 +51,20 @@ export const Input = styled.input<{ error?: boolean }>`
   padding: 0px;
   -webkit-appearance: textfield;
 
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus {
+    border: none;
+    -webkit-text-fill-color: ${({ error, theme }) => (error ? theme.red1 : theme.text1)};
+    color: ${({ error, theme }) => (error ? theme.red1 : theme.text1)};
+    -webkit-box-shadow: ${({ theme: { bg12 } }) => `0 0 0px 1000px ${`${bg12}40`} inset`};
+    transition: background-color 100000s ease-in-out 0s;
+  }
+
+  ::-webkit-autofill::first-line {
+    font-family: 'Poppins', sans-serif;
+  }
+
   ::-webkit-search-decoration {
     -webkit-appearance: none;
   }
