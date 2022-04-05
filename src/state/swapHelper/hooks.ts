@@ -281,8 +281,8 @@ export function useSubmitBrokerDealerForm() {
   const submitForm = useCallback(
     async ({ dto, formRef }: { dto: BrokerDealerSwapDto; formRef: any; }) => {
       console.log({ formRef })
-      const endpoint = dto?.endpoint
-      const callbackEndpoint = `${dto?.callbackEndpoint}/${dto?.brokerDealerId}`
+      const endpoint = dto?.endpoint.replace('https://api.staging.ixswap.io', 'http://localhost:8080')
+      const callbackEndpoint = `${dto?.callbackEndpoint?.replace('https://api.staging.ixswap.io', 'http://localhost:8080')}/${dto?.brokerDealerId}`
       const data = dto?.encryptedData
       const hash = dto?.hash
 
