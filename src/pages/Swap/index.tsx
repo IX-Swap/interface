@@ -46,7 +46,6 @@ export default function Swap({ history }: RouteComponentProps) {
   const { openModal, setOpenModal } = useOpenModal()
   const { loadingSwap } = useSwapHelpersState()
   const { independentField, typedValue, recipient } = useSwapState()
-  const showFakeApproval = useFakeApprovalState()
 
   const { onUserInput, onChangeRecipient } = useSwapActionHandlers()
 

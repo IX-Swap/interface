@@ -2,7 +2,7 @@ import { ButtonIXSGradient } from 'components/Button'
 import { RowBetween } from 'components/Row'
 import { useSwapAuthorizeFirstStep } from 'hooks/useSwapAuthorize'
 import { useMissingAuthorizations } from 'hooks/useSwapCallback'
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useBrokerDealerState, useFakeApprovalState, useToggleFakeApproval } from 'state/application/hooks'
 import { useDerivedSwapInfo } from 'state/swap/hooks'
 import { useSubmitBrokerDealerForm } from 'state/swapHelper/hooks'
@@ -22,6 +22,8 @@ export const AuthorizationButtons = ({ formRef, allowSwap }: { formRef: any; all
   const { secTokens } = useUserSecTokens()
   const authorizeFirstStep = useSwapAuthorizeFirstStep(trade, allowedSlippage, formRef)
 
+  const [startedFirstStep, setStartedFirstStep] = useState(false)
+
   useEffect(() => {
     if (showFakeApproval) {
       setTimeout(() => {
@@ -30,6 +32,14 @@ export const AuthorizationButtons = ({ formRef, allowSwap }: { formRef: any; all
       }, 5000)
     }
   }, [setShowFakeApproval, brokerDealerDTO, formRef, submitToBrokerDealer, showFakeApproval])
+  
+  const startFirstStep = useCallback(
+    (address: any) => {
+      setStartedFirstStep(true)
+      authorizeFirstStep(secTokens[address])
+    },
+    [authorizeFirstStep, secTokens]
+  )
 
   if (!missingAuthorizations || missingAuthorizations?.length === 0) {
     return null
@@ -41,15 +51,15 @@ export const AuthorizationButtons = ({ formRef, allowSwap }: { formRef: any; all
         <React.Fragment key={address}>
           {address && secTokens[address] && allowSwap && (
             <>
-              {showFakeApproval && (
-                <ButtonIXSGradient style={{ width: missingAuthorizations.length === 1 ? '100%' : 'fit-content' }}>
+              {(startedFirstStep || showFakeApproval) && (
+                <ButtonIXSGradient disabled style={{ width: missingAuthorizations.length === 1 ? '100%' : 'fit-content' }}>
                   Confirming transaction with broker...
                 </ButtonIXSGradient>
               )}
 
-              {!showFakeApproval && (
+              {(!startedFirstStep && !showFakeApproval) && (
                 <ButtonIXSGradient
-                  onClick={() => authorizeFirstStep(secTokens[address])}
+                  onClick={() => startFirstStep(address)}
                   style={{ width: missingAuthorizations.length === 1 ? '100%' : 'fit-content' }}
                 >
                   Authorize {secTokens[address]?.symbol}
