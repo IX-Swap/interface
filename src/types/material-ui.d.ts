@@ -82,11 +82,67 @@ export interface MenuPalette {
   boxShadow: string
 }
 
+export interface TooltipPalette {
+  color: string
+  bg: string
+}
+
+export interface SkeletonPalette {
+  bg: string
+}
+
 export interface Alerts {
   bg: CSSProperties['color']
   color: CSSProperties['color']
   boxShadow: string
   border: string
+}
+
+export interface ChipPalette {
+  bg: string
+  fill: string
+  opacity: number
+  color: string
+  bgBasic: string
+  bgSpecial: string
+}
+
+export interface PaginationItem {
+  color: CSSProperties['color']
+  bg: CSSProperties['color']
+  border: string
+  colorHover: CSSProperties['color']
+  bgHover: CSSProperties['color']
+  borderHover: string
+  colorDisabled: CSSProperties['color']
+  bgDisabled: CSSProperties['color']
+  borderDisabled: string
+  colorActive: CSSProperties['color']
+  bgActive: CSSProperties['color']
+  borderActive: string
+}
+
+export interface TablePagination {
+  main: CSSProperties['color']
+  selectColor: CSSProperties['color']
+  selectHoverBg: CSSProperties['color']
+  menuItemBorder: string
+  menuItemColor: CSSProperties['color']
+}
+
+export interface StepIcon {
+  bg: CSSProperties['color']
+  color: CSSProperties['color']
+  border: string
+  bgActive: CSSProperties['color']
+  colorActive: CSSProperties['color']
+  borderActive: string
+  bgCompleted: CSSProperties['color']
+  colorCompleted: CSSProperties['color']
+  borderCompleted: string
+  bgError: CSSProperties['color']
+  colorError: CSSProperties['color']
+  borderError: string
 }
 
 declare module '@mui/styles/defaultTheme' {
@@ -96,6 +152,9 @@ declare module '@mui/styles/defaultTheme' {
 declare module '@mui/material/styles' {
   export interface PaletteOptions {
     backgrounds: AppBackgrounds
+    tooltip?: TooltipPalette
+    skeleton?: SkeletonPalette
+    chip?: ChipPalette
     toggledInputs?: ToggledInputsColorOptions
     switch?: SwitchColorOptions
     slider: {
@@ -120,11 +179,17 @@ declare module '@mui/material/styles' {
         color?: CSSProperties['color']
       }
     }
+    paginationItem?: PaginationItem
+    tablePagination?: TablePagination
     alerts?: Alerts
+    stepIcon?: StepIcon
   }
 
   export interface Palette {
     backgrounds: AppBackgrounds
+    tooltip?: TooltipPalette
+    skeleton?: SkeletonPalette
+    chip?: ChipPalette
     toggledInputs?: ToggledInputsColorOptions
     switch?: SwitchColorOptions
     sidebar: {
@@ -149,7 +214,10 @@ declare module '@mui/material/styles' {
         color?: CSSProperties['color']
       }
     }
+    paginationItem?: PaginationItem
+    tablePagination?: TablePagination
     alerts?: Alerts
+    stepIcon?: StepIcon
   }
 
   export interface Theme {

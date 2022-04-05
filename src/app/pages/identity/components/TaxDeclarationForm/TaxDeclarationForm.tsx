@@ -15,7 +15,12 @@ export const TaxDeclarationForm = ({
   return (
     <>
       <FormSectionHeader title='Tax Declaration' />
-      <Grid container direction='column' spacing={6}>
+      <Grid
+        data-testid='taxDeclaration'
+        container
+        direction='column'
+        spacing={6}
+      >
         <Grid item>
           <Typography>
             <TaxDeclarationInfoDialog /> to know why we need your tax

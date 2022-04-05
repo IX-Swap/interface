@@ -69,21 +69,6 @@ describe('DetailsOfIssuanceForm', () => {
     expect(createDialogMock).toHaveBeenCalled()
   })
 
-  it('renders loading text when isLoading', () => {
-    const useDetailsOfIssuanceLoading = generateQueryResult({
-      data: undefined,
-      isLoading: true
-    })
-
-    jest
-      .spyOn(useDetailsOfIssuance, 'useDetailsOfIssuance')
-      .mockImplementation(() => useDetailsOfIssuanceLoading as any)
-
-    const { getByText } = render(<DetailsOfIssuanceForm />)
-
-    expect(getByText('Loading...')).toBeTruthy()
-  })
-
   it('redirects to create issuer form if details of issuance is skipped', () => {
     const useDetailsOfIssuanceLoading = generateQueryResult({
       data: { skipped: true },

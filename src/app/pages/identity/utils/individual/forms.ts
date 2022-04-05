@@ -68,7 +68,7 @@ export const getTaxDeclarationFormValues = (
 export const getInvestorDeclarationFormValues = (
   data: IndividualIdentity
 ): IndividualInvestorDeclarationFormValues => {
-  return data.declarations.investorsStatus
+  return data?.declarations?.investorsStatus
 }
 
 export const getDocumentsFormValues = (

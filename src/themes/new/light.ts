@@ -18,6 +18,18 @@ export const lightTheme: DeprecatedThemeOptions = {
       dark: '#F0F2F7',
       light: '#EDF2FA'
     },
+    tooltip: {
+      color: '#778194',
+      bg: '#EDF2FA'
+    },
+    chip: {
+      fill: '#DBE2EC',
+      bg: '#EEF1F4',
+      opacity: 0.5,
+      color: '#0A1326',
+      bgBasic: '#F7F9FA',
+      bgSpecial: '#FFFFFF'
+    },
     toggledInputs: {
       fill: '#FFFFFF',
       bg: '#FFFFFF',
@@ -120,19 +132,61 @@ export const lightTheme: DeprecatedThemeOptions = {
         color: '#A2ACBF'
       }
     },
+    paginationItem: {
+      color: '#778194',
+      bg: '#FFFFFF',
+      border: '#FFFFFF',
+      colorHover: '#4C88FF',
+      bgHover: '#FFFFFF',
+      borderHover: '#4C88FF20',
+      colorDisabled: '#89A1CE',
+      bgDisabled: '#EDF2FA',
+      borderDisabled: '#EDF2FA',
+      colorActive: '#FFFFFF',
+      bgActive: '#4C88FF',
+      borderActive: '#4C88FF'
+    },
+    tablePagination: {
+      main: '#778194',
+      selectColor: '#0A1326',
+      selectHoverBg: '#F0F2F7',
+      menuItemColor: tinycolor('#0A1326').setAlpha(0.7).toRgbString(),
+      menuItemBorder: '#EDF2FA'
+    },
     divider: '#DBE2EC',
     text: {
       primary: '#3B4251',
       secondary: '#778194'
     },
+    skeleton: {
+      bg: '#EDF2FA'
+    },
+    stepIcon: {
+      bg: tinycolor('#BEC4CF1A').setAlpha(0.1).toRgbString(),
+      color: '#BEC4CF',
+      border: tinycolor('#BEC4CF1A').setAlpha(0.5).toRgbString(),
+      bgActive: tinycolor('#4C88FF').setAlpha(0.1).toRgbString(),
+      colorActive: '#4C88FF',
+      borderActive: tinycolor('#4C88FF').setAlpha(0.5).toRgbString(),
+      bgCompleted: tinycolor('#7DD32080').setAlpha(0.1).toRgbString(),
+      colorCompleted: '#7DD32080',
+      borderCompleted: tinycolor('#7DD32080').setAlpha(0.5).toRgbString(),
+      bgError: tinycolor('#F56283').setAlpha(0.1).toRgbString(),
+      colorError: '#F56283',
+      borderError: tinycolor('#F56283').setAlpha(0.5).toRgbString()
+    },
     success: {
       main: '#7DD320'
     },
     warning: {
-      main: '#FFC900'
+      main: '#FFC900',
+      dark: '#D3A701',
+      light: tinycolor('#ffc900').setAlpha(0.2).toRgbString()
     },
     error: {
-      main: '#F56283'
+      main: '#F56283',
+      dark: '#FF8080',
+      light: tinycolor('#FF8080').setAlpha(0.2).toRgbString()
     },
     info: {
       main: '#4C88FF'
