@@ -317,28 +317,6 @@ export default function CurrencyList({
     )
 
     return [...sec, wixs, usdc, ...rest]
-
-    // const sorted = [...currencies].sort((a: CurrencySec, b: CurrencySec) =>
-    //   `${a.isSecToken || false}` > `${b.isSecToken || false}` ? -1 : 1
-    // )
-
-    // const wixsItem = currencies.find(({ tokenInfo }: any) => tokenInfo?.symbol === 'WIXS')
-    // const usdcItem = currencies.find(({ tokenInfo }: any) => tokenInfo?.symbol === 'USDC')
-
-    // const wixsIndex = sorted.findIndex(({ tokenInfo }: any) => tokenInfo?.symbol === 'WIXS')
-    // const usdcIndex = sorted.findIndex(({ tokenInfo }: any) => tokenInfo?.symbol === 'USDC')
-
-    // sorted.splice(wixsIndex, 1)
-    // if (wixsItem) {
-    //   sorted.splice(1, 0, wixsItem)
-    // }
-
-    // sorted.splice(usdcIndex, 1)
-    // if (usdcItem) {
-    //   sorted.splice(2, 0, usdcItem)
-    // }
-
-    // return sorted
   }, [currencies])
 
   const itemData: (Currency | BreakLine)[] = useMemo(() => {
