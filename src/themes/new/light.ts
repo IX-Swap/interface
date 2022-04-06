@@ -1,6 +1,8 @@
-import { DeprecatedThemeOptions } from '@mui/material'
+import { createTheme, DeprecatedThemeOptions } from '@mui/material'
 import { themeColors } from 'themes/new/colors'
 import tinycolor from 'tinycolor2'
+
+const { palette } = createTheme()
 
 export const lightTheme: DeprecatedThemeOptions = {
   palette: {
@@ -167,6 +169,20 @@ export const lightTheme: DeprecatedThemeOptions = {
     skeleton: {
       bg: '#EDF2FA'
     },
+    stepIcon: {
+      bg: tinycolor('#BEC4CF1A').setAlpha(0.1).toRgbString(),
+      color: '#BEC4CF',
+      border: tinycolor('#BEC4CF1A').setAlpha(0.5).toRgbString(),
+      bgActive: tinycolor('#4C88FF').setAlpha(0.1).toRgbString(),
+      colorActive: '#4C88FF',
+      borderActive: tinycolor('#4C88FF').setAlpha(0.5).toRgbString(),
+      bgCompleted: tinycolor('#7DD32080').setAlpha(0.1).toRgbString(),
+      colorCompleted: '#7DD32080',
+      borderCompleted: tinycolor('#7DD32080').setAlpha(0.5).toRgbString(),
+      bgError: tinycolor('#F56283').setAlpha(0.1).toRgbString(),
+      colorError: '#F56283',
+      borderError: tinycolor('#F56283').setAlpha(0.5).toRgbString()
+    },
     success: {
       main: '#7DD320'
     },
@@ -182,6 +198,20 @@ export const lightTheme: DeprecatedThemeOptions = {
     },
     info: {
       main: '#4C88FF'
-    }
+    },
+    'special-red': palette.augmentColor({
+      color: {
+        main: '#F56283',
+        light: '#F58FA6',
+        contrastText: '#FFF'
+      }
+    }),
+    'special-green': palette.augmentColor({
+      color: {
+        main: '#7DD320',
+        light: '#AADF70',
+        contrastText: '#FFF'
+      }
+    })
   }
 }

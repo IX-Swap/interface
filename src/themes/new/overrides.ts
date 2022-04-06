@@ -1,4 +1,4 @@
-import { Theme } from '@mui/material'
+import { Theme, PaletteColor } from '@mui/material'
 import { ThemeOptions } from '@mui/material/styles'
 import { rte } from 'themes/new/rte'
 import { checkbox } from 'themes/new/overrides/checkbox'
@@ -20,10 +20,30 @@ import { tooltip } from 'themes/new/overrides/tooltip'
 import { chip } from 'themes/new/overrides/chip'
 import { skeleton } from 'themes/new/overrides/skeleton'
 import { inputBase } from 'themes/new/overrides/inputBase'
+import { step } from 'themes/new/overrides/step'
+import { stepLabel } from 'themes/new/overrides/stepLabel'
 
 declare module '@mui/material/Button' {
   interface ButtonPropsVariantOverrides {
     alternate: true
+  }
+}
+
+declare module '@mui/material/styles' {
+  interface Palette {
+    'special-red': PaletteColor
+    'special-green': PaletteColor
+  }
+  interface PaletteOptions {
+    'special-red': PaletteColor
+    'special-green': PaletteColor
+  }
+}
+
+declare module '@mui/material/Button' {
+  interface ButtonPropsColorOverrides {
+    'special-red': true
+    'special-green': true
   }
 }
 
@@ -49,5 +69,8 @@ export const getThemeOverrides = (
   MuiTooltip: tooltip(theme),
   MuiChip: chip(theme),
   MuiSkeleton: skeleton(theme),
-  MuiInputBase: inputBase(theme)
+  MuiInputBase: inputBase(theme),
+  MuiStep: step(theme),
+  MuiStepLabel: stepLabel(theme),
+  MuiButtonBase: {}
 })

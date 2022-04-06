@@ -6,7 +6,9 @@ import { AppTheme, getAppTheme } from 'themes/new/index'
 import { darkTheme } from 'themes/new/dark'
 
 jest.mock('@mui/material/styles', () => ({
-  createTheme: jest.fn()
+  createTheme: jest.fn(() => ({
+    palette: { augmentColor: jest.fn() }
+  }))
 }))
 
 describe.skip('getAppTheme', () => {

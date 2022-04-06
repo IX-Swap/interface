@@ -137,6 +137,21 @@ export interface TablePagination {
   menuItemColor: CSSProperties['color']
 }
 
+export interface StepIcon {
+  bg: CSSProperties['color']
+  color: CSSProperties['color']
+  border: string
+  bgActive: CSSProperties['color']
+  colorActive: CSSProperties['color']
+  borderActive: string
+  bgCompleted: CSSProperties['color']
+  colorCompleted: CSSProperties['color']
+  borderCompleted: string
+  bgError: CSSProperties['color']
+  colorError: CSSProperties['color']
+  borderError: string
+}
+
 declare module '@mui/styles/defaultTheme' {
   interface DefaultTheme extends Theme {}
 }
@@ -175,14 +190,14 @@ declare module '@mui/material/styles' {
     table?: TablePalette
     paginationItem?: PaginationItem
     tablePagination?: TablePagination
-    alerts?: Alerts
+    stepIcon?: StepIcon
   }
 
   export interface Palette {
     backgrounds: AppBackgrounds
-    chip?: ChipPalette
-    skeleton?: SkeletonPalette
     tooltip?: TooltipPalette
+    skeleton?: SkeletonPalette
+    chip?: ChipPalette
     toggledInputs?: ToggledInputsColorOptions
     switch?: SwitchColorOptions
     sidebar: {
@@ -211,6 +226,7 @@ declare module '@mui/material/styles' {
     table?: TablePalette
     paginationItem?: PaginationItem
     tablePagination?: TablePagination
+    stepIcon?: StepIcon
   }
 
   export interface Theme {
