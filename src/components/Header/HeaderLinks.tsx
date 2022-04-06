@@ -63,59 +63,36 @@ const HeaderPopover = () => {
   )
 }
 
-const NFTPopover = () => {
-  return (
-    <PopOverContent
-      onClick={(e) => (e ? e.stopPropagation() : null)}
-      onMouseDown={(e) => (e ? e.stopPropagation() : null)}
-    >
-      <SubMenuLink id={`nft-collections-nav-link`} to={routes.nftCollections} exact>
-        <Trans>My Collections</Trans>
-      </SubMenuLink>
-      <SubMenuLink id={`nft-create-nav-link`} to={routes.nftCreate}>
-        <Trans>Create NFT</Trans>
-      </SubMenuLink>
-      <SubMenuLink id={`nft-create-collection-nav-link`} to={routes.nftCollectionCreate} exact>
-        <Trans>Create Collection</Trans>
-      </SubMenuLink>
-    </PopOverContent>
-  )
-}
-
-const PoolPopover = () => {
-  return (
-    <PopOverContent
-      onClick={(e) => (e ? e.stopPropagation() : null)}
-      onMouseDown={(e) => (e ? e.stopPropagation() : null)}
-    >
-      <SubMenuLink id={`pool-provide-liquidity`} to={`/pool`} exact>
-        <Trans>Provide Liquidity</Trans>
-      </SubMenuLink>
-      <SubMenuExternalLink
-        id={`pool-ixswap-analytics`}
-        href={`#`}
-      >
-        <Trans>IX Swap analytics</Trans>
-      </SubMenuExternalLink>
-    </PopOverContent>
-  )
-}
+// const NFTPopover = () => {
+//   return (
+//     <PopOverContent
+//       onClick={(e) => (e ? e.stopPropagation() : null)}
+//       onMouseDown={(e) => (e ? e.stopPropagation() : null)}
+//     >
+//       <SubMenuLink id={`nft-collections-nav-link`} to={routes.nftCollections} exact>
+//         <Trans>My Collections</Trans>
+//       </SubMenuLink>
+//       <SubMenuLink id={`nft-create-nav-link`} to={routes.nftCreate}>
+//         <Trans>Create NFT</Trans>
+//       </SubMenuLink>
+//       <SubMenuLink id={`nft-create-collection-nav-link`} to={routes.nftCollectionCreate} exact>
+//         <Trans>Create Collection</Trans>
+//       </SubMenuLink>
+//     </PopOverContent>
+//   )
+// }
 
 export const HeaderLinks = () => {
   const { chainId, account } = useActiveWeb3React()
   const [open, toggle] = useToggle(false)
   const [openNFT, toggleNFT] = useToggle(false)
-  const [openPool, togglePool] = useToggle(false)
   const farmNode = useRef<HTMLDivElement>()
   const nftNode = useRef<HTMLDivElement>()
-  const poolNode = useRef<HTMLDivElement>()
   const { kyc } = useKYCState()
   useOnClickOutside(farmNode, open ? toggle : undefined)
   useOnClickOutside(nftNode, openNFT ? toggleNFT : undefined)
-  useOnClickOutside(poolNode, openPool ? togglePool : undefined)
-
   const isWhitelisted = isUserWhitelisted({ account, chainId })
-  const isKycApproved = kyc?.status === KYCStatuses.APPROVED ?? false
+  const isKycApproved = kyc?.data?.status === KYCStatuses.APPROVED ?? false
   const isDev = ['test development env', 'development'].includes(process.env.NODE_ENV)
   const chains = ENV_SUPPORTED_TGE_CHAINS || [42]
 
@@ -134,21 +111,8 @@ export const HeaderLinks = () => {
       )}
 
       {account && chainId && chains.includes(chainId) && isWhitelisted && (
-        <StyledNavLink
-          ref={poolNode as any}
-          id={`pool-nav-link`}
-          to={'#'}
-          isActive={(match, { pathname }) =>
-            pathname.startsWith('/add') || pathname.startsWith('/remove') || pathname.startsWith('/find')
-          }
-          disabled={!isKycApproved}
-        >
-          <Popover hideArrow show={openPool} content={<PoolPopover />} placement={'bottom-start'}>
-            <RowFixed onClick={togglePool}>
-              <Trans>Liquidity pools</Trans>
-              <ChevronElement showMore={openPool} />
-            </RowFixed>
-          </Popover>
+        <StyledNavLink disabled={!isKycApproved} id={`pool-nav-link`} to={'/pool'}>
+          <Trans>Liquidity pools</Trans>
         </StyledNavLink>
       )}
 

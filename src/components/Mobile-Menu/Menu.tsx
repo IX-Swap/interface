@@ -35,7 +35,7 @@ export const Menu = ({ close }: Props) => {
 
   const isWhitelisted = isUserWhitelisted({ account, chainId })
   const { kyc } = useKYCState()
-  const isKycApproved = kyc?.status === KYCStatuses.APPROVED ?? false
+  const isKycApproved = kyc?.data?.status === KYCStatuses.APPROVED ?? false
 
   const chains = ENV_SUPPORTED_TGE_CHAINS || [137]
 
@@ -53,31 +53,16 @@ export const Menu = ({ close }: Props) => {
           )}
 
           {chainId && chains.includes(chainId) && isWhitelisted && (
-            <MenuListItem disabled={!isKycApproved} id={`stake-nav-link`} to={routes.securityTokens()} onClick={close}>
+            <MenuListItem disabled={!isKycApproved} id={`security-nav-link`} to={routes.securityTokens()} onClick={close}>
               <Trans>Security Tokens</Trans>
             </MenuListItem>
           )}
 
           {chainId && chains.includes(chainId) && isWhitelisted && (
-            <MenuListItem
-              id={`pool-nav-link`}
-              to={'/pool'}
-              isActive={(match, { pathname }) =>
-                Boolean(match) ||
-                pathname.startsWith('/add') ||
-                pathname.startsWith('/remove') ||
-                pathname.startsWith('/find')
-              }
-              onClick={close}
-              disabled={!isKycApproved}
-            >
-              <Trans>Provide Liquidity</Trans>
+            <MenuListItem disabled={!isKycApproved} id={`pool-nav-link`} to={`/pool`} onClick={close}>
+              <Trans>Liquidity pools</Trans>
             </MenuListItem>
           )}
-
-          <ExternalListItem disabled={!isKycApproved} target="_self" href={`#`}>
-            <Trans>IX Swap analytics</Trans>
-          </ExternalListItem>
 
           <ExternalListItem href={`https://ixswap.defiterm.io/`}>
             <Trans>Live Pools</Trans>
