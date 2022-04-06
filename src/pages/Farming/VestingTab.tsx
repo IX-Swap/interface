@@ -2,6 +2,7 @@ import React from 'react'
 import { isMobile } from 'react-device-detect'
 import styled from 'styled-components/macro'
 import { Trans } from '@lingui/macro'
+import { useCookies } from 'react-cookie'
 
 import { NotAvailablePage } from 'components/NotAvailablePage'
 import { RowBetween } from 'components/Row'
@@ -13,8 +14,8 @@ import { useActiveWeb3React } from 'hooks/web3'
 import { TextGradient, TYPE } from 'theme'
 import { LightBackground } from 'theme/Background'
 
-import { Container } from './styleds'
 import { Vesting } from './Vesting/Vesting'
+import { BodyWrapper } from 'pages/AppBody'
 
 const PaddedRow = styled(RowBetween)`
   padding: 0 15px;
@@ -25,6 +26,7 @@ export const VestingTab = () => {
   const { library, chainId, account } = useActiveWeb3React()
   const switchChain = useSwitchChain()
   const IXSCurrency = useIXSCurrency()
+  const [cookies] = useCookies(['annoucementsSeen'])
 
   const blurred = ![...TGE_CHAINS_WITH_STAKING, SUPPORTED_TGE_CHAINS.MAIN].includes(chainId || 0) || !account
 
@@ -39,7 +41,7 @@ export const VestingTab = () => {
   return (
     <>
       <LightBackground />
-      <Container width={['100%']} maxWidth={'1299px'}>
+      <BodyWrapper hasAnnouncement={!cookies.annoucementsSeen} style={{ background: 'transparent', padding: 0, width: '100%', maxWidth: 1299 }}>
         <PaddedRow>
           <TYPE.title4>
             <Trans>Vesting {IXSCurrency?.symbol}</Trans>
@@ -52,7 +54,7 @@ export const VestingTab = () => {
         </PaddedRow>
 
         <Vesting />
-      </Container>
+      </BodyWrapper>
     </>
   )
 }
