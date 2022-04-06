@@ -15,11 +15,11 @@ describe('BooleanColumn', () => {
       <BooleanColumn value={true} />
     )
     expect(getByText(/true/i)).toBeInTheDocument()
-    expect(container.firstChild).toHaveStyle('color:rgb(68,68,68);')
+    expect(container.firstChild).toHaveStyle('color: rgb(59, 66, 81);')
 
     rerender(<BooleanColumn value={false} />)
     expect(getByText(/false/i)).toBeInTheDocument()
-    expect(container.firstChild).toHaveStyle('color:rgb(211,47,47);')
+    expect(container.firstChild).toHaveStyle('color: rgb(245, 98, 131);')
   })
 
   it('renders correct labels and colors provided', () => {
@@ -33,11 +33,11 @@ describe('BooleanColumn', () => {
       <BooleanColumn {...sampleProps} />
     )
     expect(getByText(/enabled/i)).toBeInTheDocument()
-    expect(container.firstChild).toHaveStyle('color:rgb(211,47,47);')
+    expect(container.firstChild).toHaveStyle('color: rgb(245, 98, 131);')
 
     sampleProps.value = false
     rerender(<BooleanColumn {...sampleProps} />)
     expect(getByText(/disabled/i)).toBeInTheDocument()
-    expect(container.firstChild).toHaveStyle('color:rgb(68,68,68);')
+    expect(container.firstChild).toHaveStyle('color: rgb(59, 66, 81);')
   })
 })

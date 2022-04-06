@@ -7,7 +7,7 @@ import PopupState, {
 import { DropdownContent } from 'app/components/Dropdown/DropdownContent'
 import { ThemeProvider, PopperPlacementType } from '@mui/material'
 import { useAppTheme } from 'hooks/useAppTheme'
-import { AppTheme, getAppTheme } from 'themes/old'
+import { AppTheme, getAppTheme } from 'themes/app'
 
 export interface DropdownTriggerProps {
   triggerProps: ReturnType<typeof bindTrigger>
