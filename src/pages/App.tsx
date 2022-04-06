@@ -1,5 +1,5 @@
 import React, { lazy, Suspense, useEffect, useMemo } from 'react'
-import { Redirect, Route, Switch, useLocation } from 'react-router-dom'
+import { Redirect, RouteComponentProps, Route, Switch, useLocation } from 'react-router-dom'
 import styled from 'styled-components/macro'
 
 import { AppBackground } from 'components/AppBackground'
@@ -93,6 +93,20 @@ export default function App() {
 
   const { kyc } = useKYCState()
 
+  const chains = useMemo(() => ENV_SUPPORTED_TGE_CHAINS || [42], [])
+  const isWhitelisted = isUserWhitelisted({ account, chainId })
+
+  const defaultPage = useMemo(() => {
+    if (kyc?.data?.status !== KYCStatuses.APPROVED || !account) {
+      return '/kyc'
+    }
+    if (kyc?.data?.status === KYCStatuses.APPROVED && chainId && chains.includes(chainId) && isWhitelisted) {
+      return '/security-tokens'
+    }
+
+    return '/kyc'
+  }, [kyc, account, chainId, isWhitelisted, chains])
+
   const canAccessKycForm = (kycType: string) => {
     if (!account) return false
     if (!kyc) return true
@@ -143,10 +157,6 @@ export default function App() {
   const visibleBody = useMemo(() => {
     return !isSettingsOpen || !account
   }, [isAdminKyc, isSettingsOpen, account])
-
-  const isWhitelisted = isUserWhitelisted({ account, chainId })
-
-  const chains = ENV_SUPPORTED_TGE_CHAINS || [42]
 
   return (
     <ErrorBoundary>
@@ -238,7 +248,9 @@ export default function App() {
                 <Route exact strict path={routes.staking} component={StakingTab} />
                 <Route exact strict path={routes.vesting} component={VestingTab} />
 
-                <Route component={RedirectPathToKyc} />
+                <Route
+                  component={(props: RouteComponentProps) => <Redirect to={{ ...props, pathname: defaultPage }} />}
+                />
               </Switch>
             </Suspense>
           </Web3ReactManager>
