@@ -6,10 +6,14 @@ import React, { useEffect } from 'react'
 import { NavLink } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 import { ExternalLink } from 'theme'
+import { useKYCState } from 'state/kyc/hooks'
+import { KYCStatuses } from 'pages/KYC/enum'
 import { routes } from 'utils/routes'
 import { isUserWhitelisted } from 'utils/isUserWhitelisted'
 
 import closeIcon from '../../assets/images/cross.svg'
+import { disabledStyle } from 'components/Header/HeaderLinks'
+
 interface Props {
   close: () => void
 }
@@ -30,6 +34,8 @@ export const Menu = ({ close }: Props) => {
   }, [])
 
   const isWhitelisted = isUserWhitelisted({ account, chainId })
+  const { kyc } = useKYCState()
+  const isKycApproved = kyc?.data?.status === KYCStatuses.APPROVED ?? false
 
   const chains = ENV_SUPPORTED_TGE_CHAINS || [137]
 
@@ -41,31 +47,23 @@ export const Menu = ({ close }: Props) => {
         </CloseContainer>
         <MenuList>
           {chainId && chains.includes(chainId) && isWhitelisted && (
-            <MenuListItem id={`swap-nav-link`} to={'/swap'} onClick={close}>
-              <Trans>Swap</Trans>
-            </MenuListItem>
-          )}
-          {chainId && chains.includes(chainId) && isWhitelisted && (
-            <MenuListItem
-              id={`pool-nav-link`}
-              to={'/pool'}
-              isActive={(match, { pathname }) =>
-                Boolean(match) ||
-                pathname.startsWith('/add') ||
-                pathname.startsWith('/remove') ||
-                pathname.startsWith('/find')
-              }
-              onClick={close}
-            >
-              <Trans>Pools</Trans>
+            <MenuListItem disabled={!isKycApproved} id={`swap-nav-link`} to={'/swap'} onClick={close}>
+              <Trans>Swap/Trade</Trans>
             </MenuListItem>
           )}
 
           {chainId && chains.includes(chainId) && isWhitelisted && (
-            <MenuListItem id={`stake-nav-link`} to={routes.securityTokens()} onClick={close}>
-              <Trans>Securities</Trans>
+            <MenuListItem disabled={!isKycApproved} id={`security-nav-link`} to={routes.securityTokens()} onClick={close}>
+              <Trans>Security Tokens</Trans>
             </MenuListItem>
           )}
+
+          {chainId && chains.includes(chainId) && isWhitelisted && (
+            <MenuListItem disabled={!isKycApproved} id={`pool-nav-link`} to={`/pool`} onClick={close}>
+              <Trans>Liquidity pools</Trans>
+            </MenuListItem>
+          )}
+
           <ExternalListItem href={`https://ixswap.defiterm.io/`}>
             <Trans>Live Pools</Trans>
           </ExternalListItem>
@@ -83,13 +81,13 @@ export const Menu = ({ close }: Props) => {
           </ExternalListItem>
 
           {isWhitelisted && (
-            <ExternalListItem target="_self" href={'https://info.ixswap.io/home'}>
+            <ExternalListItem disabled={!isKycApproved} target="_self" href={'https://info.ixswap.io/home'}>
               <Trans>Charts</Trans>
             </ExternalListItem>
           )}
 
           {chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
-            <MenuListItem id={`faucet-nav-link`} to={'/faucet'} onClick={close}>
+            <MenuListItem disabled={!isKycApproved} id={`faucet-nav-link`} to={'/faucet'} onClick={close}>
               <Trans>Faucet</Trans>
             </MenuListItem>
           )}
@@ -165,8 +163,9 @@ const listItemStyle = css`
     color: white;
   }
 `
-const MenuListItem = styled(NavLink)`
+const MenuListItem = styled(NavLink)<{ disabled?: boolean }>`
   ${listItemStyle};
+  ${({ disabled }) => disabled && `${disabledStyle}`};
 `
 const ExternalListItem = styled(ExternalLink)`
   ${listItemStyle};
@@ -175,4 +174,6 @@ const ExternalListItem = styled(ExternalLink)`
   :focus {
     text-decoration: none;
   }
+
+  ${({ disabled }) => disabled && `${disabledStyle}`};
 `
