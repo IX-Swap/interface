@@ -1,4 +1,4 @@
-import { Theme } from '@mui/material'
+import { PaletteColor, Theme } from '@mui/material'
 import { rte } from 'themes/app/rte'
 import { checkbox } from 'themes/app/overrides/checkbox'
 import { radio } from 'themes/app/overrides/radio'
@@ -26,6 +26,24 @@ import { ThemeOptions } from '@mui/material/styles'
 declare module '@mui/material/Button' {
   interface ButtonPropsVariantOverrides {
     alternate: true
+  }
+}
+
+declare module '@mui/material/styles' {
+  interface Palette {
+    'special-red': PaletteColor
+    'special-green': PaletteColor
+  }
+  interface PaletteOptions {
+    'special-red': PaletteColor
+    'special-green': PaletteColor
+  }
+}
+
+declare module '@mui/material/Button' {
+  interface ButtonPropsColorOverrides {
+    'special-red': true
+    'special-green': true
   }
 }
 
