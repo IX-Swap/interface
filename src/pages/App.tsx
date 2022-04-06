@@ -32,6 +32,7 @@ import { isUserWhitelisted } from 'utils/isUserWhitelisted'
 import { KYCStatuses } from 'components/Vault/enum'
 import { useAuthState } from 'state/auth/hooks'
 import { useDispatch } from 'react-redux'
+import { LoadingIndicator } from 'components/LoadingIndicator'
 
 const Admin = lazy(() => import('./Admin'))
 
@@ -147,7 +148,7 @@ export default function App() {
   const isAdminKyc = pathname.includes('admin')
 
   const visibleBody = useMemo(() => {
-    return !isSettingsOpen || !account
+    return !isSettingsOpen || !account || kyc !== null
   }, [isAdminKyc, isSettingsOpen, account])
 
   return (
@@ -163,7 +164,13 @@ export default function App() {
         <ToggleableBody isVisible={visibleBody} {...(isAdminKyc && { style: { marginTop: 26 } })}>
           <IXSBalanceModal />
           <Web3ReactManager>
-            <Suspense fallback={<></>}>
+            <Suspense
+              fallback={
+                <>
+                  <LoadingIndicator isLoading />
+                </>
+              }
+            >
               <Switch>
                 <Route exact strict path="/admin" render={() => <Redirect to="/admin/accreditation" />} />
 
@@ -240,9 +247,11 @@ export default function App() {
                 <Route exact strict path={routes.staking} component={StakingTab} />
                 <Route exact strict path={routes.vesting} component={VestingTab} />
 
-                <Route
-                  component={(props: RouteComponentProps) => <Redirect to={{ ...props, pathname: defaultPage }} />}
-                />
+                {kyc !== null && (
+                  <Route
+                    component={(props: RouteComponentProps) => <Redirect to={{ ...props, pathname: defaultPage }} />}
+                  />
+                )}
               </Switch>
             </Suspense>
           </Web3ReactManager>

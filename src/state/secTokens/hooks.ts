@@ -90,9 +90,11 @@ export function useFetchSecTokenListCallback(): (sendDispatch?: boolean) => Prom
 }
 
 export type SecTokenAddressMap = {
-  [tokenAddress: string]: {
-    token: WrappedTokenInfo
-  }
+  readonly [x: number]: Readonly<{
+    [tokenAddress: string]: {
+      token: WrappedTokenInfo
+    }
+  }>
 }
 
 export function listToSecTokenMap(
@@ -104,16 +106,19 @@ export function listToSecTokenMap(
   if (result) return result
   const map = list.reduce<SecTokenAddressMap>((tokenMap, tokenInfo) => {
     const token = new WrappedTokenInfo(tokenInfo, undefined)
-    if (tokenMap[token?.address]) {
+    if (tokenMap[token?.chainId]?.[token?.address] !== undefined) {
       console.error(new Error(`Duplicate token! ${token?.address}`))
       return tokenMap
     }
     return {
       ...tokenMap,
-      [token.address]: {
-        token,
-        list,
-        platform: tokenInfo.platform,
+      [token.chainId]: {
+        ...tokenMap[token.chainId],
+        [token.address]: {
+          token,
+          list,
+          platform: tokenInfo.platform,
+        },
       },
     }
   }, {})
@@ -123,16 +128,19 @@ export function listToSecTokenMap(
 
 // reduce token map into standard address <-> Token mapping, optionally include user added tokens
 export function useSecTokensFromMap(tokenMap: SecTokenAddressMap): { [address: string]: Token } {
+  const { chainId } = useActiveWeb3React()
+
   return useMemo(() => {
-    if (!tokenMap) return {}
+    if (!tokenMap || chainId === undefined) return {}
+    if (!tokenMap[chainId]) return {}
     // reduce to just tokens
-    const mapWithoutUrls = Object.keys(tokenMap).reduce<{ [address: string]: Token }>((newMap, address) => {
-      newMap[address] = tokenMap[address].token
+    const mapWithoutUrls = Object.keys(tokenMap[chainId]).reduce<{ [address: string]: Token }>((newMap, address) => {
+      newMap[address] = tokenMap[chainId][address].token
       return newMap
     }, {})
 
     return mapWithoutUrls
-  }, [tokenMap])
+  }, [tokenMap, chainId])
 }
 
 export function useAccreditationStatus(currencyId?: string) {
