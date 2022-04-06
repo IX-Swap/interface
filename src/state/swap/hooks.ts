@@ -104,6 +104,7 @@ export function useDerivedSwapInfo(): {
   toggledTrade: V2Trade<Currency, Currency, TradeType> | undefined
   allowedSlippage: Percent
   shouldGetAuthorization: boolean
+  insufficientBalance: boolean
 } {
   const { account } = useActiveWeb3React()
 
@@ -183,8 +184,10 @@ export function useDerivedSwapInfo(): {
   // compare input balance to max input based on version
   const [balanceIn, amountIn] = [currencyBalances[Field.INPUT], v2Trade?.maximumAmountIn(allowedSlippage)]
 
-  if (balanceIn && amountIn && balanceIn.lessThan(amountIn)) {
-    inputError = t`Insufficient ${amountIn.currency.symbol} balance`
+  const insufficientBalance = Boolean(balanceIn && amountIn && balanceIn.lessThan(amountIn))
+
+  if (insufficientBalance) {
+    inputError = t`Insufficient ${amountIn?.currency?.symbol} balance`
   }
 
   const missingAuthorizations = useMissingAuthorizations(v2Trade)
@@ -205,6 +208,7 @@ export function useDerivedSwapInfo(): {
     toggledTrade,
     allowedSlippage,
     shouldGetAuthorization,
+    insufficientBalance,
   }
 }
 
