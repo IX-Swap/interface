@@ -44,8 +44,10 @@ export const TopbarLinkContainer = (props: TopbarLinkProps) => {
 
   return (
     <Link to={link} className={classes.wrapper} onClick={handleClick}>
-      <Typography variant={'body1'}>{label}</Typography>
-      {disabled ? <ArrowDropDownIcon /> : null}
+      <Typography className={classes.text} variant={'body1'}>
+        {label}
+      </Typography>
+      {disabled ? <ArrowDropDownIcon className={classes.icon} /> : null}
     </Link>
   )
 }

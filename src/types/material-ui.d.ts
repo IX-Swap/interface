@@ -145,6 +145,11 @@ export interface StepIcon {
   borderError: string
 }
 
+export interface NavigationLink {
+  color: CSSProperties['color']
+  activeColor: CSSProperties['color']
+}
+
 declare module '@mui/styles/defaultTheme' {
   interface DefaultTheme extends Theme {}
 }
@@ -183,6 +188,7 @@ declare module '@mui/material/styles' {
     tablePagination: TablePagination
     alerts: Alerts
     stepIcon: StepIcon
+    navigationLink: NavigationLink
   }
 
   export interface Palette {
@@ -218,6 +224,7 @@ declare module '@mui/material/styles' {
     tablePagination: TablePagination
     alerts: Alerts
     stepIcon: StepIcon
+    navigationLink: NavigationLink
   }
 
   export interface Theme {

@@ -176,6 +176,10 @@ export const lightTheme: DeprecatedThemeOptions = {
       colorError: '#F56283',
       borderError: tinycolor('#F56283').setAlpha(0.5).toRgbString()
     },
+    navigationLink: {
+      color: '#778194',
+      activeColor: '#3B4251'
+    },
     success: {
       main: '#7DD320'
     },
