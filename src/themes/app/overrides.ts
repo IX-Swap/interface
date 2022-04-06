@@ -21,6 +21,7 @@ import { skeleton } from 'themes/app/overrides/skeleton'
 import { inputBase } from 'themes/app/overrides/inputBase'
 import { step } from 'themes/app/overrides/step'
 import { stepLabel } from 'themes/app/overrides/stepLabel'
+import { input } from 'themes/app/overrides/input'
 import { ThemeOptions } from '@mui/material/styles'
 
 declare module '@mui/material/Button' {
@@ -72,5 +73,6 @@ export const getThemeOverrides = (
   MuiInputBase: inputBase(theme),
   MuiStep: step(theme),
   MuiStepLabel: stepLabel(theme),
-  MuiButtonBase: {}
+  MuiButtonBase: {},
+  MuiTextField: input(theme)
 })

@@ -13,10 +13,9 @@ export const input = (theme: Theme) => {
         backgroundColor: theme.palette.background.paper,
         borderRadius: 4,
 
-        '& ~ p.MuiFormHelperText-root': {
+        '& .MuiFormHelperText-root, & ~ .MuiFormHelperText-root,': {
           marginLeft: 0,
-          background: 'transparent',
-          backgroundColor: 'transparent'
+          marginTop: 12
         },
         '& .MuiFilledInput-root, & .MuiFilledInput-root:focus, & .MuiFilledInput-root:hover':
           {
@@ -39,21 +38,30 @@ export const input = (theme: Theme) => {
         '& .MuiOutlinedInput-input': {
           height: 49
         },
-        '.MuiOutlinedInput-root.MuiInputBase-root:hover .MuiOutlinedInput-notchedOutline':
-          {
-            borderColor: theme.palette.primary.light,
-            borderWidth: 1
-          },
-        '.MuiOutlinedInput-root.MuiInputBase-root.Mui-disabled:hover .MuiOutlinedInput-notchedOutline':
-          {
-            borderColor: 'unset'
-          },
-        '.MuiOutlinedInput-root.Mui-error.MuiInputBase-root:hover .MuiOutlinedInput-notchedOutline':
-          {
-            borderColor: theme.palette.error.main
-          },
-        '& .MuiOutlinedInput-root': {
+        '.MuiOutlinedInput-root': {
+          width: 267,
+          maxWidth: 267,
+          backgroundColor: theme.palette.background.paper,
           paddingRight: 0,
+          borderWidth: 1,
+          '&.MuiInputBase-root': {
+            '&:hover .MuiOutlinedInput-notchedOutline': {
+              borderColor: theme.palette.primary.light,
+              borderWidth: 1
+            },
+            '&.Mui-disabled:hover .MuiOutlinedInput-notchedOutline': {
+              borderColor: 'unset'
+            },
+            '&.Mui-error:hover .MuiOutlinedInput-notchedOutline': {
+              borderColor: theme.palette.error.main
+            }
+          },
+          '&.Mui-focus': {
+            backgroundColor: theme.palette.background.paper
+          },
+          '&.Mui-disabled': {
+            backgroundColor: inputStyles.disabledBg
+          },
           '& fieldset': {
             border: `1px solid ${inputStyles?.border}`
           },
@@ -62,18 +70,18 @@ export const input = (theme: Theme) => {
           }
         },
         '& .MuiInputAdornment-root.MuiInputAdornment-positionEnd': {
-          marginLeft: -32
+          marginRight: 10,
+          backgroundColor: theme.palette.background.paper
         },
         input: {
-          paddingTop: 18,
-          paddingBottom: 18,
-          paddingLeft: 24,
-          paddingRight: 24,
+          paddingTop: 17,
+          paddingBottom: 17,
+          paddingLeft: 16,
           height: '100%',
-          marginRight: 12,
-          width: '100%',
+          marginRight: 5,
           boxShadow: 'none',
           borderRadius: 8,
+
           boxSizing: 'border-box' as any,
           color: theme.palette.text.primary,
           fontSize: 16,
@@ -83,23 +91,23 @@ export const input = (theme: Theme) => {
             color: inputStyles?.placeholder
           },
           '&:-webkit-autofill': {
-            WebkitBoxShadow: '',
+            WebkitBoxShadow: `0 0 0px 1000px ${theme.palette.background.paper} inset`,
             WebkitTextFillColor: '',
             transition: ''
           },
 
           '&:-webkit-autofill:focus': {
-            WebkitBoxShadow: '',
+            WebkitBoxShadow: `0 0 0px 1000px ${theme.palette.background.paper} inset`,
             WebkitTextFillColor: '',
             transition: 'none'
           },
           '&:-internal-autofill-selected': {
-            WebkitBoxShadow: '',
-            backgroundColor: ''
+            WebkitBoxShadow: `0 0 0px 1000px ${theme.palette.background.paper} inset`,
+            borderRadius: 0
           },
           '.Mui-focused &': {
             backgroundColor: '',
-            WebkitBoxShadow: 'none!important',
+            WebkitBoxShadow: `0 0 0px 1000px ${theme.palette.background.paper} inset`,
             color: '',
             transition: 'none!important'
           },
@@ -110,16 +118,6 @@ export const input = (theme: Theme) => {
           '.Mui-disabled &': {
             background: inputStyles.disabledBg,
             backgroundColor: inputStyles.disabledBg
-          }
-        },
-        adornedEnd: {
-          paddingRight: 8,
-          '&.Mui-error': {
-            backgroundColor: ''
-          },
-          '&.Mui-focused': {
-            backgroundColor: '',
-            WebkitBoxShadow: 'none!important'
           }
         },
         multiline: {

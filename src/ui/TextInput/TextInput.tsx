@@ -21,8 +21,8 @@ export const TextInput = (props: InputProps) => {
       InputLabelProps={{
         shrink: true
       }}
-      error={error}
       name={name}
+      error={error}
       disabled={disabled}
       className={disabled === true ? classes.disabled : ''}
       sx={{

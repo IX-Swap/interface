@@ -11,7 +11,6 @@ export const TextInputKit = () => {
         sx={{
           p: 10,
           justifyContent: 'center',
-          background: '#ffffff',
           display: 'flex',
           flexWrap: 'wrap'
         }}
