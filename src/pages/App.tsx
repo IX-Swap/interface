@@ -134,16 +134,8 @@ export default function App() {
     const cleared = localStorage.getItem('clearedLS-04-04-22')
     if (!cleared) {
       dispatch(clearStore())
-      document.cookie.split(';').forEach(function (c) {
-        document.cookie = c.replace(/^ +/, '').replace(/=.*/, '=;expires=' + new Date().toUTCString() + ';path=/')
-      })
-
       localStorage.clear()
       localStorage.setItem('clearedLS-04-04-22', 'true')
-      localStorage.setItem(
-        'redux_localstorage_simple_auth',
-        `{"token":{},"refreshToken":{},"loginLoading":false,"loginError":null}`
-      )
     }
   }
 

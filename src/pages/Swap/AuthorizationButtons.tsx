@@ -17,7 +17,7 @@ export const AuthorizationButtons = ({ formRef, allowSwap }: { formRef: any; all
 
   // const [removeApproval, setRemoveApproval] = useState(false)
 
-  const { toggledTrade: trade, allowedSlippage } = useDerivedSwapInfo()
+  const { toggledTrade: trade, allowedSlippage, insufficientBalance } = useDerivedSwapInfo()
   const missingAuthorizations = useMissingAuthorizations(trade)
   const { secTokens } = useUserSecTokens()
   const authorizeFirstStep = useSwapAuthorizeFirstStep(trade, allowedSlippage, formRef)
@@ -41,7 +41,7 @@ export const AuthorizationButtons = ({ formRef, allowSwap }: { formRef: any; all
     [authorizeFirstStep, secTokens]
   )
 
-  if (!missingAuthorizations || missingAuthorizations?.length === 0) {
+  if (!missingAuthorizations || missingAuthorizations?.length === 0 || insufficientBalance) {
     return null
   }
 
