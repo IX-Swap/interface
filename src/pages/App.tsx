@@ -131,11 +131,11 @@ export default function App() {
   }, [account, token])
 
   const clearLocaleStorage = () => {
-    const cleared = localStorage.getItem('clearedLS-04-04-22')
+    const cleared = localStorage.getItem('clearedLS-06-04-22')
     if (!cleared) {
       dispatch(clearStore())
       localStorage.clear()
-      localStorage.setItem('clearedLS-04-04-22', 'true')
+      localStorage.setItem('clearedLS-06-04-22', 'true')
     }
   }
 
