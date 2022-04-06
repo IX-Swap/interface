@@ -27,6 +27,7 @@ import {
   Divider,
 } from './styleds'
 import { Info } from './Info'
+import { useUserState } from 'state/user/hooks'
 
 export default function CustodianV2() {
   const offset = 10
@@ -38,6 +39,7 @@ export default function CustodianV2() {
   const [noFilteredTokens, setNoFilteredTokens] = useState([])
   const { tokens } = useSecCatalogState()
   const { account, chainId } = useActiveWeb3React()
+  const { account: userAccount } = useUserState()
 
   const blurred = !chainId || !TGE_CHAINS_WITH_SWAP.includes(chainId)
   const isLoggedIn = !!token && !!account
@@ -50,13 +52,13 @@ export default function CustodianV2() {
     if (isLoggedIn) {
       fetchMyTokens()
     }
-  }, [account, isLoggedIn])
+  }, [userAccount, isLoggedIn])
 
   useEffect(() => {
     if (isLoggedIn) {
       fetchTokens({ page: 1, offset, search: '' })
     }
-  }, [fetchTokens, isLoggedIn])
+  }, [fetchTokens, isLoggedIn, userAccount])
 
   useEffect(() => {
     if (noFilteredTokens.length === 0 && tokens) {
