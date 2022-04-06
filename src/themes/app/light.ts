@@ -1,5 +1,6 @@
-import { createTheme, DeprecatedThemeOptions } from '@mui/material'
-import { themeColors } from 'themes/new/colors'
+import { DeprecatedThemeOptions } from '@mui/material'
+import { createTheme } from '@mui/material/styles'
+import { themeColors } from 'themes/app/colors'
 import tinycolor from 'tinycolor2'
 
 const { palette } = createTheme()

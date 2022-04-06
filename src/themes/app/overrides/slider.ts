@@ -1,8 +1,7 @@
 import { Theme } from '@mui/material'
 
 export const slider = (theme: Theme) => {
-  // eslint-disable-next-line
-  const sliderPalette = theme.palette.newSlider!
+  const sliderPalette = theme.palette.newSlider
 
   return {
     styleOverrides: {

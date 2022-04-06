@@ -1,8 +1,8 @@
 import { Theme } from '@mui/material'
 
 export const chip = (theme: Theme) => {
-  // eslint-disable-next-line
-  const chipPalette = theme.palette.chip!
+  const chipPalette = theme.palette.chip
+
   return {
     styleOverrides: {
       root: {

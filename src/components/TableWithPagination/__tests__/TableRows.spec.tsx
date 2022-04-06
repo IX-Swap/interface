@@ -68,7 +68,7 @@ describe('TableRows', () => {
       1,
       expect.objectContaining({
         style: {
-          backgroundColor: '#ffffff',
+          backgroundColor: '#F7F9FA',
           border: 'none',
           borderBottom: 'initial'
         }
@@ -92,7 +92,7 @@ describe('TableRows', () => {
       3,
       expect.objectContaining({
         style: {
-          backgroundColor: '#ffffff',
+          backgroundColor: '#F7F9FA',
           border: 'none',
           borderBottom: 'initial'
         }

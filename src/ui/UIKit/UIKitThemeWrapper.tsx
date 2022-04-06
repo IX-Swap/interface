@@ -1,64 +1,15 @@
 import React from 'react'
-import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { lightTheme } from 'themes/new/light'
-import { darkTheme } from 'themes/new/dark'
-import { typography } from 'themes/new/typography'
-import { getThemeOverrides } from 'themes/new/overrides'
 import { useDarkMode } from 'storybook-dark-mode'
+import { AppTheme, getAppTheme } from 'themes/app'
+import { ThemeProvider } from '@mui/material/styles'
 
 export interface UIKitThemeWrapperProps {
   children: JSX.Element | JSX.Element[]
 }
 
 export const UIKitThemeWrapper = ({ children }: UIKitThemeWrapperProps) => {
-  const currentNewTheme = useDarkMode() ? darkTheme : lightTheme
-  const newTheme = createTheme({ ...currentNewTheme, typography })
+  const themeModeFromStorybook = useDarkMode() ? AppTheme.Dark : AppTheme.Light
+  const theme = getAppTheme(themeModeFromStorybook, false)
 
-  newTheme.components = {
-    ...getThemeOverrides(newTheme),
-    MuiSwitch: {
-      ...getThemeOverrides(newTheme)?.MuiSwitch,
-      defaultProps: {
-        disableTouchRipple: true
-      }
-    },
-    MuiRadio: {
-      ...getThemeOverrides(newTheme)?.MuiRadio,
-      defaultProps: {
-        disableTouchRipple: true
-      }
-    },
-    MuiCheckbox: {
-      ...getThemeOverrides(newTheme)?.MuiCheckbox,
-      defaultProps: {
-        disableTouchRipple: true
-      }
-    },
-    MuiButton: {
-      ...getThemeOverrides(newTheme)?.MuiButton,
-      defaultProps: {
-        disableTouchRipple: true
-      }
-    },
-    MuiButtonBase: {
-      ...getThemeOverrides(newTheme)?.MuiButtonBase,
-      defaultProps: {
-        disableTouchRipple: true
-      }
-    },
-    MuiIconButton: {
-      ...getThemeOverrides(newTheme)?.MuiIconButton,
-      defaultProps: {
-        disableTouchRipple: true
-      }
-    },
-    MuiFab: {
-      ...getThemeOverrides(newTheme)?.MuiFab,
-      defaultProps: {
-        disableTouchRipple: true
-      }
-    }
-  }
-
-  return <ThemeProvider theme={newTheme}>{children}</ThemeProvider>
+  return <ThemeProvider theme={theme}>{children}</ThemeProvider>
 }

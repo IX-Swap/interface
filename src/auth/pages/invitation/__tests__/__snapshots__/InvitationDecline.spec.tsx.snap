@@ -3,10 +3,10 @@
 exports[`InvitationDecline should match snapshot 1`] = `
 <div>
   <div
-    class="MuiGrid-root MuiGrid-container makeStyles-wrapper-1 css-1kca4ek-MuiGrid-root"
+    class="MuiGrid-root MuiGrid-container makeStyles-wrapper-1 css-11lq3yg-MuiGrid-root"
   >
     <div
-      class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
     >
       <img
         alt="logo"
@@ -17,10 +17,10 @@ exports[`InvitationDecline should match snapshot 1`] = `
       />
     </div>
     <div
-      class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
     >
       <p
-        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignCenter makeStyles-description-3 css-6bx0l6-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-body1 MuiTypography-alignCenter makeStyles-description-3 css-1gd5lqg-MuiTypography-root"
       >
         Are you sure you want to decline the invitation?
       </p>
@@ -29,20 +29,20 @@ exports[`InvitationDecline should match snapshot 1`] = `
       />
     </div>
     <div
-      class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
     >
       <hr
-        class="MuiDivider-root MuiDivider-fullWidth css-1dme0vl-MuiDivider-root"
+        class="MuiDivider-root MuiDivider-fullWidth css-99mzem-MuiDivider-root"
       />
       <div
         class="MuiBox-root css-1jpm9pd"
       />
     </div>
     <div
-      class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
     >
       <button
-        class="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeLarge MuiButton-textSizeLarge MuiButtonBase-root makeStyles-customButton-6 css-1vk2y0j-MuiButtonBase-root-MuiButton-root"
+        class="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeLarge MuiButton-textSizeLarge MuiButtonBase-root makeStyles-customButton-6 css-18vbx94-MuiButtonBase-root-MuiButton-root"
         tabindex="0"
         type="button"
       >

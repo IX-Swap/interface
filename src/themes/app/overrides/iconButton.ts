@@ -1,8 +1,7 @@
 import { Theme } from '@mui/material'
 
 export const iconButton = (theme: Theme) => {
-  // eslint-disable-next-line
-  const iconButtonPalette = theme.palette.iconButton!
+  const iconButtonPalette = theme.palette.iconButton
 
   return {
     styleOverrides: {

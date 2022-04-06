@@ -2,8 +2,7 @@ import { Theme } from '@mui/material'
 import { alpha } from '@mui/material/styles'
 
 export const button = (theme: Theme) => {
-  // eslint-disable-next-line
-  const buttonPalette = theme.palette.button!
+  const buttonPalette = theme.palette.button
 
   return {
     styleOverrides: {

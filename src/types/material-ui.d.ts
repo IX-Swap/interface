@@ -152,46 +152,46 @@ declare module '@mui/styles/defaultTheme' {
 declare module '@mui/material/styles' {
   export interface PaletteOptions {
     backgrounds: AppBackgrounds
-    tooltip?: TooltipPalette
-    skeleton?: SkeletonPalette
-    chip?: ChipPalette
-    toggledInputs?: ToggledInputsColorOptions
-    switch?: SwitchColorOptions
+    tooltip: TooltipPalette
+    skeleton: SkeletonPalette
+    chip: ChipPalette
+    toggledInputs: ToggledInputsColorOptions
+    switch: SwitchColorOptions
     slider: {
       activeColor: CSSProperties['color']
       background: CSSProperties['color']
       activeBackground: CSSProperties['color']
     }
-    newSlider?: SliderPaletteOptions
+    newSlider: SliderPaletteOptions
     sidebar: {
       activeColor: CSSProperties['color']
       activeBackground: CSSProperties['color']
     }
-    button?: ButtonPaletteOptions
-    buttonGroup?: ButtonGroupPalette
-    iconButton?: IconButtonPalette
-    fab?: FABPalette
-    menu?: MenuPalette
-    breadcrumbs?: BreadCrumbsPaletteOptions
-    tab?: {
+    button: ButtonPaletteOptions
+    buttonGroup: ButtonGroupPalette
+    iconButton: IconButtonPalette
+    fab: FABPalette
+    menu: MenuPalette
+    breadcrumbs: BreadCrumbsPaletteOptions
+    tab: {
       contained: {
         border: CSSProperties['color']
         color?: CSSProperties['color']
       }
     }
-    paginationItem?: PaginationItem
-    tablePagination?: TablePagination
-    alerts?: Alerts
-    stepIcon?: StepIcon
+    paginationItem: PaginationItem
+    tablePagination: TablePagination
+    alerts: Alerts
+    stepIcon: StepIcon
   }
 
   export interface Palette {
     backgrounds: AppBackgrounds
-    tooltip?: TooltipPalette
-    skeleton?: SkeletonPalette
-    chip?: ChipPalette
-    toggledInputs?: ToggledInputsColorOptions
-    switch?: SwitchColorOptions
+    tooltip: TooltipPalette
+    skeleton: SkeletonPalette
+    chip: ChipPalette
+    toggledInputs: ToggledInputsColorOptions
+    switch: SwitchColorOptions
     sidebar: {
       activeColor: CSSProperties['color']
       activeBackground: CSSProperties['color']
@@ -201,23 +201,23 @@ declare module '@mui/material/styles' {
       background: CSSProperties['color']
       activeBackground: CSSProperties['color']
     }
-    newSlider?: SliderPaletteOptions
-    button?: ButtonPaletteOptions
-    buttonGroup?: ButtonGroupPalette
-    iconButton?: IconButtonPalette
-    fab?: FABPalette
-    menu?: MenuPalette
-    breadcrumbs?: BreadCrumbsPaletteOptions
-    tab?: {
+    newSlider: SliderPaletteOptions
+    button: ButtonPaletteOptions
+    buttonGroup: ButtonGroupPalette
+    iconButton: IconButtonPalette
+    fab: FABPalette
+    menu: MenuPalette
+    breadcrumbs: BreadCrumbsPaletteOptions
+    tab: {
       contained: {
         border: CSSProperties['color']
         color?: CSSProperties['color']
       }
     }
-    paginationItem?: PaginationItem
-    tablePagination?: TablePagination
-    alerts?: Alerts
-    stepIcon?: StepIcon
+    paginationItem: PaginationItem
+    tablePagination: TablePagination
+    alerts: Alerts
+    stepIcon: StepIcon
   }
 
   export interface Theme {

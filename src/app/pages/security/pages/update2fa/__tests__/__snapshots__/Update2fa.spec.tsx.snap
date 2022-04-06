@@ -3,29 +3,29 @@
 exports[`Update2fa does not render Next and Back button if step is 0, should match snapshot 1`] = `
 <div>
   <div
-    class="MuiGrid-root MuiGrid-container css-1kca4ek-MuiGrid-root"
+    class="MuiGrid-root MuiGrid-container css-11lq3yg-MuiGrid-root"
   >
     <div
-      class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-container-4 css-3buk32-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-container-4 css-1vpwcmr-MuiGrid-root"
     >
       <div
-        class="MuiGrid-root MuiGrid-container makeStyles-header-3 css-1kca4ek-MuiGrid-root"
+        class="MuiGrid-root MuiGrid-container makeStyles-header-3 css-11lq3yg-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-item css-19l8j7t-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-container MuiGrid-item css-i6prtc-MuiGrid-root"
         >
           <h2
-            class="MuiTypography-root MuiTypography-h2 css-1ybxgbh-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-h2 css-rldqdm-MuiTypography-root"
           >
             Change Authenticator
           </h2>
         </div>
       </div>
       <div
-        class="MuiGrid-root css-186c2wj-MuiGrid-root"
+        class="MuiGrid-root css-vj1n65-MuiGrid-root"
       >
         <nav
-          class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-1f69azb-MuiTypography-root-MuiBreadcrumbs-root"
+          class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-128kl2r-MuiTypography-root-MuiBreadcrumbs-root"
         >
           <ol
             class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
@@ -34,32 +34,32 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
       </div>
     </div>
     <div
-      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 makeStyles-wrapper-1 css-1sr5n48-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 makeStyles-wrapper-1 css-1idn90j-MuiGrid-root"
     >
       <div
-        class="MuiContainer-root MuiContainer-maxWidthLg css-quzgmo-MuiContainer-root"
+        class="MuiContainer-root MuiContainer-maxWidthLg css-1oqqzyl-MuiContainer-root"
       >
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-container-4 css-3buk32-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-container-4 css-1vpwcmr-MuiGrid-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-container makeStyles-header-3 css-1kca4ek-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-container makeStyles-header-3 css-11lq3yg-MuiGrid-root"
           >
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-item css-19l8j7t-MuiGrid-root"
+              class="MuiGrid-root MuiGrid-container MuiGrid-item css-i6prtc-MuiGrid-root"
             >
               <h6
-                class="MuiTypography-root MuiTypography-h6 css-1y9wz2m-MuiTypography-root"
+                class="MuiTypography-root MuiTypography-h6 css-1h41tev-MuiTypography-root"
               >
                 Change Authenticator
               </h6>
             </div>
           </div>
           <div
-            class="MuiGrid-root css-186c2wj-MuiGrid-root"
+            class="MuiGrid-root css-vj1n65-MuiGrid-root"
           >
             <nav
-              class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-1f69azb-MuiTypography-root-MuiBreadcrumbs-root"
+              class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-128kl2r-MuiTypography-root-MuiBreadcrumbs-root"
             >
               <ol
                 class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
@@ -71,20 +71,20 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
           class="MuiBox-root css-0"
         >
           <div
-            class="MuiStepper-root MuiStepper-horizontal MuiStepper-alternativeLabel css-fd5akd-MuiStepper-root"
+            class="MuiStepper-root MuiStepper-horizontal MuiStepper-alternativeLabel css-10mg1vw-MuiStepper-root"
           >
             <div
-              class="MuiStep-root MuiStep-horizontal MuiStep-alternativeLabel css-n7tliy-MuiStep-root"
+              class="MuiStep-root MuiStep-horizontal MuiStep-alternativeLabel css-y4s37f-MuiStep-root"
             >
               <span
-                class="MuiStepLabel-root MuiStepLabel-horizontal MuiStepLabel-alternativeLabel css-ascpo7-MuiStepLabel-root"
+                class="MuiStepLabel-root MuiStepLabel-horizontal MuiStepLabel-alternativeLabel css-3yr9gi-MuiStepLabel-root"
               >
                 <span
-                  class="MuiStepLabel-iconContainer MuiStepLabel-alternativeLabel css-vnkopk-MuiStepLabel-iconContainer"
+                  class="MuiStepLabel-iconContainer MuiStepLabel-alternativeLabel css-4m07z1-MuiStepLabel-iconContainer"
                 >
                   <svg
                     aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiStepIcon-root Mui-active css-27kra0-MuiSvgIcon-root-MuiStepIcon-root"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiStepIcon-root Mui-active css-4x3zrh-MuiSvgIcon-root-MuiStepIcon-root"
                     focusable="false"
                     viewBox="0 0 24 24"
                   >
@@ -94,7 +94,7 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
                       r="12"
                     />
                     <text
-                      class="MuiStepIcon-text css-103y0dn-MuiStepIcon-text"
+                      class="MuiStepIcon-text css-7avtsd-MuiStepIcon-text"
                       text-anchor="middle"
                       x="12"
                       y="16"
@@ -104,10 +104,10 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
                   </svg>
                 </span>
                 <span
-                  class="MuiStepLabel-labelContainer css-16ubnlw-MuiStepLabel-labelContainer"
+                  class="MuiStepLabel-labelContainer css-1n74cx2-MuiStepLabel-labelContainer"
                 >
                   <span
-                    class="MuiStepLabel-label Mui-active MuiStepLabel-alternativeLabel css-h2q6ot-MuiStepLabel-label"
+                    class="MuiStepLabel-label Mui-active MuiStepLabel-alternativeLabel css-t1n505-MuiStepLabel-label"
                   >
                     Remove Current Authenticator
                   </span>
@@ -115,24 +115,24 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
               </span>
             </div>
             <div
-              class="MuiStep-root MuiStep-horizontal MuiStep-alternativeLabel css-n7tliy-MuiStep-root"
+              class="MuiStep-root MuiStep-horizontal MuiStep-alternativeLabel css-y4s37f-MuiStep-root"
             >
               <div
-                class="MuiStepConnector-root MuiStepConnector-horizontal MuiStepConnector-alternativeLabel Mui-disabled css-1wkws5l-MuiStepConnector-root"
+                class="MuiStepConnector-root MuiStepConnector-horizontal MuiStepConnector-alternativeLabel Mui-disabled css-zpcwqm-MuiStepConnector-root"
               >
                 <span
-                  class="MuiStepConnector-line MuiStepConnector-lineHorizontal css-naw7o4-MuiStepConnector-line"
+                  class="MuiStepConnector-line MuiStepConnector-lineHorizontal css-z7uhs0-MuiStepConnector-line"
                 />
               </div>
               <span
-                class="MuiStepLabel-root MuiStepLabel-horizontal Mui-disabled MuiStepLabel-alternativeLabel css-ascpo7-MuiStepLabel-root"
+                class="MuiStepLabel-root MuiStepLabel-horizontal Mui-disabled MuiStepLabel-alternativeLabel css-3yr9gi-MuiStepLabel-root"
               >
                 <span
-                  class="MuiStepLabel-iconContainer MuiStepLabel-alternativeLabel css-vnkopk-MuiStepLabel-iconContainer"
+                  class="MuiStepLabel-iconContainer MuiStepLabel-alternativeLabel css-4m07z1-MuiStepLabel-iconContainer"
                 >
                   <svg
                     aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiStepIcon-root css-27kra0-MuiSvgIcon-root-MuiStepIcon-root"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiStepIcon-root css-4x3zrh-MuiSvgIcon-root-MuiStepIcon-root"
                     focusable="false"
                     viewBox="0 0 24 24"
                   >
@@ -142,7 +142,7 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
                       r="12"
                     />
                     <text
-                      class="MuiStepIcon-text css-103y0dn-MuiStepIcon-text"
+                      class="MuiStepIcon-text css-7avtsd-MuiStepIcon-text"
                       text-anchor="middle"
                       x="12"
                       y="16"
@@ -152,10 +152,10 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
                   </svg>
                 </span>
                 <span
-                  class="MuiStepLabel-labelContainer css-16ubnlw-MuiStepLabel-labelContainer"
+                  class="MuiStepLabel-labelContainer css-1n74cx2-MuiStepLabel-labelContainer"
                 >
                   <span
-                    class="MuiStepLabel-label Mui-disabled MuiStepLabel-alternativeLabel css-h2q6ot-MuiStepLabel-label"
+                    class="MuiStepLabel-label Mui-disabled MuiStepLabel-alternativeLabel css-t1n505-MuiStepLabel-label"
                   >
                     Scan New QR Code
                   </span>
@@ -163,24 +163,24 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
               </span>
             </div>
             <div
-              class="MuiStep-root MuiStep-horizontal MuiStep-alternativeLabel css-n7tliy-MuiStep-root"
+              class="MuiStep-root MuiStep-horizontal MuiStep-alternativeLabel css-y4s37f-MuiStep-root"
             >
               <div
-                class="MuiStepConnector-root MuiStepConnector-horizontal MuiStepConnector-alternativeLabel Mui-disabled css-1wkws5l-MuiStepConnector-root"
+                class="MuiStepConnector-root MuiStepConnector-horizontal MuiStepConnector-alternativeLabel Mui-disabled css-zpcwqm-MuiStepConnector-root"
               >
                 <span
-                  class="MuiStepConnector-line MuiStepConnector-lineHorizontal css-naw7o4-MuiStepConnector-line"
+                  class="MuiStepConnector-line MuiStepConnector-lineHorizontal css-z7uhs0-MuiStepConnector-line"
                 />
               </div>
               <span
-                class="MuiStepLabel-root MuiStepLabel-horizontal Mui-disabled MuiStepLabel-alternativeLabel css-ascpo7-MuiStepLabel-root"
+                class="MuiStepLabel-root MuiStepLabel-horizontal Mui-disabled MuiStepLabel-alternativeLabel css-3yr9gi-MuiStepLabel-root"
               >
                 <span
-                  class="MuiStepLabel-iconContainer MuiStepLabel-alternativeLabel css-vnkopk-MuiStepLabel-iconContainer"
+                  class="MuiStepLabel-iconContainer MuiStepLabel-alternativeLabel css-4m07z1-MuiStepLabel-iconContainer"
                 >
                   <svg
                     aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiStepIcon-root css-27kra0-MuiSvgIcon-root-MuiStepIcon-root"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiStepIcon-root css-4x3zrh-MuiSvgIcon-root-MuiStepIcon-root"
                     focusable="false"
                     viewBox="0 0 24 24"
                   >
@@ -190,7 +190,7 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
                       r="12"
                     />
                     <text
-                      class="MuiStepIcon-text css-103y0dn-MuiStepIcon-text"
+                      class="MuiStepIcon-text css-7avtsd-MuiStepIcon-text"
                       text-anchor="middle"
                       x="12"
                       y="16"
@@ -200,10 +200,10 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
                   </svg>
                 </span>
                 <span
-                  class="MuiStepLabel-labelContainer css-16ubnlw-MuiStepLabel-labelContainer"
+                  class="MuiStepLabel-labelContainer css-1n74cx2-MuiStepLabel-labelContainer"
                 >
                   <span
-                    class="MuiStepLabel-label Mui-disabled MuiStepLabel-alternativeLabel css-h2q6ot-MuiStepLabel-label"
+                    class="MuiStepLabel-label Mui-disabled MuiStepLabel-alternativeLabel css-t1n505-MuiStepLabel-label"
                   >
                     Backup the Key
                   </span>
@@ -211,24 +211,24 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
               </span>
             </div>
             <div
-              class="MuiStep-root MuiStep-horizontal MuiStep-alternativeLabel css-n7tliy-MuiStep-root"
+              class="MuiStep-root MuiStep-horizontal MuiStep-alternativeLabel css-y4s37f-MuiStep-root"
             >
               <div
-                class="MuiStepConnector-root MuiStepConnector-horizontal MuiStepConnector-alternativeLabel Mui-disabled css-1wkws5l-MuiStepConnector-root"
+                class="MuiStepConnector-root MuiStepConnector-horizontal MuiStepConnector-alternativeLabel Mui-disabled css-zpcwqm-MuiStepConnector-root"
               >
                 <span
-                  class="MuiStepConnector-line MuiStepConnector-lineHorizontal css-naw7o4-MuiStepConnector-line"
+                  class="MuiStepConnector-line MuiStepConnector-lineHorizontal css-z7uhs0-MuiStepConnector-line"
                 />
               </div>
               <span
-                class="MuiStepLabel-root MuiStepLabel-horizontal Mui-disabled MuiStepLabel-alternativeLabel css-ascpo7-MuiStepLabel-root"
+                class="MuiStepLabel-root MuiStepLabel-horizontal Mui-disabled MuiStepLabel-alternativeLabel css-3yr9gi-MuiStepLabel-root"
               >
                 <span
-                  class="MuiStepLabel-iconContainer MuiStepLabel-alternativeLabel css-vnkopk-MuiStepLabel-iconContainer"
+                  class="MuiStepLabel-iconContainer MuiStepLabel-alternativeLabel css-4m07z1-MuiStepLabel-iconContainer"
                 >
                   <svg
                     aria-hidden="true"
-                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiStepIcon-root css-27kra0-MuiSvgIcon-root-MuiStepIcon-root"
+                    class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiStepIcon-root css-4x3zrh-MuiSvgIcon-root-MuiStepIcon-root"
                     focusable="false"
                     viewBox="0 0 24 24"
                   >
@@ -238,7 +238,7 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
                       r="12"
                     />
                     <text
-                      class="MuiStepIcon-text css-103y0dn-MuiStepIcon-text"
+                      class="MuiStepIcon-text css-7avtsd-MuiStepIcon-text"
                       text-anchor="middle"
                       x="12"
                       y="16"
@@ -248,10 +248,10 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
                   </svg>
                 </span>
                 <span
-                  class="MuiStepLabel-labelContainer css-16ubnlw-MuiStepLabel-labelContainer"
+                  class="MuiStepLabel-labelContainer css-1n74cx2-MuiStepLabel-labelContainer"
                 >
                   <span
-                    class="MuiStepLabel-label Mui-disabled MuiStepLabel-alternativeLabel css-h2q6ot-MuiStepLabel-label"
+                    class="MuiStepLabel-label Mui-disabled MuiStepLabel-alternativeLabel css-t1n505-MuiStepLabel-label"
                   >
                     Enable New Authenticator
                   </span>
@@ -260,10 +260,10 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
             </div>
           </div>
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column css-t90b6x-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column css-1ewlecp-MuiGrid-root"
           >
             <div
-              class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+              class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
             >
               <div
                 class="MuiBox-root css-12aw9rk"
@@ -272,13 +272,13 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
                 class="MuiBox-root css-1mvxmnv"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column css-bjcb1i-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column css-32q0xd-MuiGrid-root"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1sr5n48-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                   >
                     <h5
-                      class="MuiTypography-root MuiTypography-h5 MuiTypography-alignCenter css-1f4u6as-MuiTypography-root"
+                      class="MuiTypography-root MuiTypography-h5 MuiTypography-alignCenter css-qj7s3w-MuiTypography-root"
                     >
                       Remove Authenticator by Verifying Your Identity
                     </h5>
@@ -287,26 +287,26 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
                     />
                   </div>
                   <div
-                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1sr5n48-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                   >
                     <div
-                      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column css-11ypfzm-MuiGrid-root"
+                      class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column css-19zvv5e-MuiGrid-root"
                     >
                       <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-8 MuiGrid-grid-lg-7 css-1qk6jlo-MuiGrid-root"
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-8 MuiGrid-grid-lg-7 css-9cj2hi-MuiGrid-root"
                       >
                         <p
-                          class="MuiTypography-root MuiTypography-body1 MuiTypography-alignCenter css-6bx0l6-MuiTypography-root"
+                          class="MuiTypography-root MuiTypography-body1 MuiTypography-alignCenter css-1gd5lqg-MuiTypography-root"
                           style="max-width: 380px;"
                         >
                           To remove the Authenticator, we have to send a code to your email. The code will be valid for 30 minutes.
                         </p>
                       </div>
                       <div
-                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-8 MuiGrid-grid-lg-7 css-1qk6jlo-MuiGrid-root"
+                        class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-8 MuiGrid-grid-lg-7 css-9cj2hi-MuiGrid-root"
                       >
                         <button
-                          class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root  css-1i8ofwk-MuiButtonBase-root-MuiButton-root"
+                          class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButtonBase-root  css-13e45tm-MuiButtonBase-root-MuiButton-root"
                           tabindex="0"
                           type="button"
                         >
@@ -322,10 +322,10 @@ exports[`Update2fa does not render Next and Back button if step is 0, should mat
               </div>
             </div>
             <div
-              class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+              class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
             >
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-17hsvvk-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-1s324r5-MuiGrid-root"
               />
             </div>
           </div>

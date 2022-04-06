@@ -1,8 +1,7 @@
 import { Theme } from '@mui/material'
 
 export const skeleton = (theme: Theme) => {
-  // eslint-disable-next-line
-  const skeletonPalette = theme.palette.skeleton!
+  const skeletonPalette = theme.palette.skeleton
 
   return {
     styleOverrides: {

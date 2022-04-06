@@ -1,8 +1,7 @@
 import { Theme } from '@mui/material'
 
 export const menu = (theme: Theme) => {
-  // eslint-disable-next-line
-  const menuPalette = theme.palette.menu!
+  const menuPalette = theme.palette.menu
 
   return {
     styleOverrides: {
