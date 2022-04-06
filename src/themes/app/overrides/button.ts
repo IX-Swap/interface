@@ -95,6 +95,48 @@ export const button = (theme: Theme) => {
             border: `1px solid ${buttonPalette.borderAlternateHover}`
           }
         }
+      },
+      {
+        props: { variant: 'contained', color: 'special-red' } as any,
+        style: {
+          backgroundColor: theme.palette['special-red'].main,
+          color: theme.palette['special-red'].contrastText,
+          ':hover': {
+            backgroundColor: theme.palette['special-red'].light
+          }
+        }
+      },
+      {
+        props: { variant: 'contained', color: 'special-green' } as any,
+        style: {
+          backgroundColor: theme.palette['special-green'].main,
+          color: theme.palette['special-green'].contrastText,
+          ':hover': {
+            backgroundColor: theme.palette['special-green'].light
+          }
+        }
+      },
+      {
+        props: { variant: 'outlined', color: 'special-red' } as any,
+        style: {
+          borderColor: theme.palette['special-red'].main,
+          color: theme.palette['special-red'].main,
+          ':hover': {
+            backgroundColor: theme.palette['special-red'].light,
+            borderColor: alpha(theme.palette['special-red'].main, 0.3)
+          }
+        }
+      },
+      {
+        props: { variant: 'outlined', color: 'special-green' } as any,
+        style: {
+          borderColor: theme.palette['special-green'].main,
+          color: theme.palette['special-green'].main,
+          ':hover': {
+            backgroundColor: theme.palette['special-green'].light,
+            borderColor: alpha(theme.palette['special-green'].main, 0.3)
+          }
+        }
       }
     ]
   }
