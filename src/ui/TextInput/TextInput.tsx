@@ -12,9 +12,21 @@ import useStyles from './TextInput.styles'
 type InputProps = TextFieldProps & { loading?: boolean }
 
 export const TextInput = (props: InputProps) => {
-  const { children, loading = false, disabled, error, name, ...rest } = props
+  const {
+    children,
+    loading = false,
+    InputProps,
+    disabled,
+    error,
+    name,
+    value,
+    ...rest
+  } = props
   const theme = useTheme()
   const classes = useStyles()
+  const hasError = Boolean(
+    error === undefined || !error ? InputProps?.error ?? error : error
+  )
   return (
     <TextField
       {...rest}
@@ -22,7 +34,8 @@ export const TextInput = (props: InputProps) => {
         shrink: true
       }}
       name={name}
-      error={error}
+      error={hasError}
+      value={value}
       disabled={disabled}
       className={disabled === true ? classes.disabled : ''}
       sx={{
@@ -31,7 +44,7 @@ export const TextInput = (props: InputProps) => {
       }}
       InputProps={{
         endAdornment:
-          loading || error !== undefined ? (
+          loading || hasError !== undefined ? (
             <InputAdornment position='end'>
               {loading && (
                 <CircularProgress
@@ -40,20 +53,27 @@ export const TextInput = (props: InputProps) => {
                   size={13}
                 />
               )}
-              {!loading && (
+              {!loading && hasError && (
                 <Icon
-                  name={error === true ? 'alert-triangle' : 'check'}
+                  name={'alert-triangle'}
                   noHover
                   size={15}
-                  color={
-                    error === true
-                      ? theme.palette.error.main
-                      : theme.palette.success.main
-                  }
+                  color={theme.palette.error.main}
                 />
               )}
+              {!loading &&
+                !hasError &&
+                (value === undefined ? null : (
+                  <Icon
+                    name={'check'}
+                    noHover
+                    size={15}
+                    color={theme.palette.success.main}
+                  />
+                ))}
             </InputAdornment>
-          ) : null
+          ) : null,
+        ...InputProps
       }}
     >
       {props?.children}

@@ -29,15 +29,14 @@ export const TextInputFields = () => {
           <TypedField
             control={control}
             name='filled2'
-            component={TextInput}
-            customRenderer
-            placeholder='Placeholder'
-            label={'Label'}
             variant='filled'
+            placeholder='Placeholder'
             InputProps={{
               error: true
             }}
             helperText={'Validation message'}
+            component={TextInput}
+            customRenderer
           />
         </Grid>
         <Grid item>
@@ -81,12 +80,12 @@ export const TextInputFields = () => {
           <TypedField
             name='outlined3'
             label={'Label'}
+            variant='outlined'
             placeholder='Placeholder'
             InputProps={{
               error: true
             }}
             helperText={'Validation message'}
-            variant='outlined'
             control={control}
             component={TextInput}
             customRenderer
