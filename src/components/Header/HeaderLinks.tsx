@@ -8,9 +8,11 @@ import { SupportedChainId } from 'constants/chains'
 import { useOnClickOutside } from 'hooks/useOnClickOutside'
 import useToggle from 'hooks/useToggle'
 import { useActiveWeb3React } from 'hooks/web3'
+import { KYCStatuses } from 'pages/KYC/enum'
 import { darken } from 'polished'
 import React, { useRef } from 'react'
 import { NavLink } from 'react-router-dom'
+import { useKYCState } from 'state/kyc/hooks'
 import { css } from 'styled-components'
 import styled from 'styled-components/macro'
 import { ExternalLink, TYPE } from 'theme'
@@ -80,50 +82,87 @@ const NFTPopover = () => {
   )
 }
 
+const PoolPopover = () => {
+  return (
+    <PopOverContent
+      onClick={(e) => (e ? e.stopPropagation() : null)}
+      onMouseDown={(e) => (e ? e.stopPropagation() : null)}
+    >
+      <SubMenuLink id={`pool-provide-liquidity`} to={`/pool`} exact>
+        <Trans>Provide Liquidity</Trans>
+      </SubMenuLink>
+      <SubMenuExternalLink
+        id={`pool-ixswap-analytics`}
+        href={`#`}
+      >
+        <Trans>IX Swap analytics</Trans>
+      </SubMenuExternalLink>
+    </PopOverContent>
+  )
+}
+
 export const HeaderLinks = () => {
   const { chainId, account } = useActiveWeb3React()
   const [open, toggle] = useToggle(false)
   const [openNFT, toggleNFT] = useToggle(false)
+  const [openPool, togglePool] = useToggle(false)
   const farmNode = useRef<HTMLDivElement>()
   const nftNode = useRef<HTMLDivElement>()
+  const poolNode = useRef<HTMLDivElement>()
+  const { kyc } = useKYCState()
   useOnClickOutside(farmNode, open ? toggle : undefined)
   useOnClickOutside(nftNode, openNFT ? toggleNFT : undefined)
+  useOnClickOutside(poolNode, openPool ? togglePool : undefined)
 
   const isWhitelisted = isUserWhitelisted({ account, chainId })
-
+  const isKycApproved = kyc?.status === KYCStatuses.APPROVED ?? false
   const isDev = ['test development env', 'development'].includes(process.env.NODE_ENV)
-
   const chains = ENV_SUPPORTED_TGE_CHAINS || [42]
 
   return (
     <HeaderLinksWrap links={7}>
       {account && chainId && chains.includes(chainId) && isWhitelisted && (
-        <StyledNavLink id={`swap-nav-link`} to={'/swap'}>
-          <Trans>Swap</Trans>
-        </StyledNavLink>
-      )}
-      {account && chainId && chains.includes(chainId) && isWhitelisted && (
-        <StyledNavLink
-          id={`pool-nav-link`}
-          to={'/pool'}
-          isActive={(match, { pathname }) =>
-            Boolean(match) ||
-            pathname.startsWith('/add') ||
-            pathname.startsWith('/remove') ||
-            pathname.startsWith('/find')
-          }
-        >
-          <Trans>Pools</Trans>
+        <StyledNavLink disabled={!isKycApproved} id={`swap-nav-link`} to={'/swap'}>
+          <Trans>Swap/Trade</Trans>
         </StyledNavLink>
       )}
 
       {account && chainId && chains.includes(chainId) && isWhitelisted && (
-        <StyledNavLink id={`stake-nav-link`} to={routes.securityTokens()}>
-          <Trans>Securities</Trans>
+        <StyledNavLink disabled={!isKycApproved} id={`stake-nav-link`} to={routes.securityTokens()}>
+          <Trans>Security Tokens</Trans>
+        </StyledNavLink>
+      )}
+
+      {account && chainId && chains.includes(chainId) && isWhitelisted && (
+        <StyledNavLink
+          ref={poolNode as any}
+          id={`pool-nav-link`}
+          to={'#'}
+          isActive={(match, { pathname }) =>
+            pathname.startsWith('/add') || pathname.startsWith('/remove') || pathname.startsWith('/find')
+          }
+          disabled={!isKycApproved}
+        >
+          <Popover hideArrow show={openPool} content={<PoolPopover />} placement={'bottom-start'}>
+            <RowFixed onClick={togglePool}>
+              <Trans>Liquidity pools</Trans>
+              <ChevronElement showMore={openPool} />
+            </RowFixed>
+          </Popover>
         </StyledNavLink>
       )}
 
       {account && chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && isDev && (
+        <MenuExternalLink
+          disabled={!isKycApproved}
+          target="_self"
+          href={'https://ixswap.io/fractionalized-nfts-coming-soon-on-ix-swap/'}
+        >
+          <Trans>FNFT</Trans>
+        </MenuExternalLink>
+      )}
+
+      {/* {account && chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && isDev && (
         <StyledNavLink
           ref={nftNode as any}
           id={`nft-nav-link`}
@@ -137,7 +176,7 @@ export const HeaderLinks = () => {
             </RowFixed>
           </Popover>
         </StyledNavLink>
-      )}
+      )} */}
 
       {account && chainId && account && (
         <StyledNavLink
@@ -156,13 +195,13 @@ export const HeaderLinks = () => {
       )}
 
       {account && isWhitelisted && (
-        <MenuExternalLink target="_self" href={'https://info.ixswap.io/home'}>
+        <MenuExternalLink disabled={!isKycApproved} target="_self" href={'https://info.ixswap.io/home'}>
           <Trans>Charts</Trans>
         </MenuExternalLink>
       )}
 
       {account && chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
-        <StyledNavLink id={`faucet-nav-link`} to={'/faucet'}>
+        <StyledNavLink disabled={!isKycApproved} id={`faucet-nav-link`} to={'/faucet'}>
           <Trans>Faucet</Trans>
         </StyledNavLink>
       )}
@@ -189,6 +228,13 @@ const HeaderLinksWrap = styled(Row)<{ links: number }>`
     display: none;
   }
 `
+
+export const disabledStyle = css`
+  cursor: initial;
+  pointer-events: none;
+  opacity: 0.2;
+`
+
 const navLinkStyles = css`
   ${({ theme }) => theme.flexRowNoWrap}
   align-items: left;
@@ -226,9 +272,11 @@ const navLinkStyles = css`
 `
 const StyledNavLink = styled(NavLink).attrs({
   activeClassName,
-})`
-  ${navLinkStyles}
+})<{ disabled?: boolean }>`
+  ${navLinkStyles};
+  ${({ disabled }) => disabled && `${disabledStyle}`};
 `
+
 const subMenuLinkStyle = css`
   font-size: 16px;
   line-height: 24px;
@@ -246,7 +294,7 @@ const SubMenuLink = styled(StyledNavLink)`
     color: ${({ theme }) => theme.text1};
   }
 `
-const SubMenuExternalLink = styled(ExternalLink)`
+const SubMenuExternalLink = styled(ExternalLink)<{ disabled?: boolean }>`
   ${navLinkStyles};
   ${subMenuLinkStyle};
   :hover,
@@ -257,6 +305,7 @@ const SubMenuExternalLink = styled(ExternalLink)`
 `
 const MenuExternalLink = styled(ExternalLink)`
   ${navLinkStyles};
+  ${({ disabled }) => disabled && `${disabledStyle}`};
 `
 const PopOverContent = styled.div`
   display: flex;
