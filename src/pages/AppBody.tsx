@@ -1,14 +1,7 @@
-import { Trans } from '@lingui/macro'
 import React from 'react'
+import { useCookies } from 'react-cookie'
 import styled from 'styled-components/macro'
 
-import Column, { ColumnCenter } from 'components/Column'
-import { TYPE } from 'theme'
-import { switchToNetwork } from 'hooks/switchToNetwork'
-import { useActiveWeb3React } from 'hooks/web3'
-import { SupportedChainId } from 'constants/chains'
-import { ButtonText } from 'components/Button'
-import Row from 'components/Row'
 import { NotAvailablePage } from 'components/NotAvailablePage'
 
 export const BodyWrapper = styled.div<{
@@ -18,6 +11,7 @@ export const BodyWrapper = styled.div<{
   maxWidth?: string
   transparent?: boolean
   blurred?: boolean
+  hasAnnouncement?: boolean
 }>`
   position: relative;
   margin-top: ${({ margin }) => margin ?? '0px'};
@@ -27,7 +21,7 @@ export const BodyWrapper = styled.div<{
   box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.01), 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 16px 24px rgba(0, 0, 0, 0.04),
     0px 24px 32px rgba(0, 0, 0, 0.01);
   border-radius: ${({ blurred }) => (blurred ? '30px' : '24px')};
-  margin-top: 1rem;
+  margin-top: ${({ hasAnnouncement }) => (hasAnnouncement ? '3rem' : '1rem')};
   padding: ${({ padding, blurred }) => (blurred ? '0px' : padding ?? '26px 36px 52px 36px;')};
   ${({ theme, paddingXS, blurred }) =>
     !blurred &&
@@ -35,6 +29,10 @@ export const BodyWrapper = styled.div<{
       padding: ${paddingXS ?? '1rem 0.7rem'};
   `};
   z-index: 1;
+
+  ${({ theme, hasAnnouncement }) => theme.mediaWidth.upToMedium`
+    margin-top: ${hasAnnouncement ? '9rem' : '1rem'};
+  `};
 `
 export const BlurredOverlay = styled.div`
   width: 100%;
@@ -61,17 +59,11 @@ export default function AppBody({
   transparent?: boolean
   maxWidth?: string
 }) {
-  const { library } = useActiveWeb3React()
-
-  const handleCovanClick = () => {
-    if (library && library?.provider?.isMetaMask) {
-      switchToNetwork({ library, chainId: SupportedChainId.KOVAN })
-    }
-  }
+  const [cookies] = useCookies(['annoucementsSeen'])
 
   return (
     <React.Fragment>
-      <BodyWrapper {...rest} blurred={blurred}>
+      <BodyWrapper {...rest} hasAnnouncement={!cookies.annoucementsSeen} blurred={blurred}>
         {blurred && (
           <BlurredOverlay>
             <NotAvailablePage />

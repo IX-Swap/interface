@@ -1,6 +1,7 @@
 import * as Sentry from '@sentry/react'
 import { Integrations } from '@sentry/tracing'
 import { createWeb3ReactRoot, Web3ReactProvider } from '@web3-react/core'
+import { CookiesProvider } from 'react-cookie'
 import React, { StrictMode } from 'react'
 import { isMobile } from 'react-device-detect'
 import ReactDOM from 'react-dom'
@@ -87,7 +88,9 @@ ReactDOM.render(
                 <ThemeProvider>
                   <ThemedGlobalStyle />
                   <MuiPickersUtilsProvider utils={DayJsUtils}>
-                    <App />
+                    <CookiesProvider>
+                      <App />
+                    </CookiesProvider>
                   </MuiPickersUtilsProvider>
                 </ThemeProvider>
               </Blocklist>
