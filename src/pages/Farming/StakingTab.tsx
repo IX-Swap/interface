@@ -2,6 +2,7 @@ import React from 'react'
 import { Trans } from '@lingui/macro'
 import useIXSCurrency from 'hooks/useIXSCurrency'
 import styled from 'styled-components'
+import { useCookies } from 'react-cookie'
 
 import { useActiveWeb3React } from 'hooks/web3'
 import { NotAvailablePage } from 'components/NotAvailablePage'
@@ -10,7 +11,7 @@ import { LightBackground } from 'theme/Background'
 import { SUPPORTED_TGE_CHAINS, TGE_CHAINS_WITH_STAKING } from 'constants/addresses'
 
 import { Staking } from './Staking'
-import { Container } from './styleds'
+import { BodyWrapper } from 'pages/AppBody'
 
 const StyledStakingTab = styled.div`
   max-width: 90vw;
@@ -25,6 +26,7 @@ const StyledStakingTab = styled.div`
 export const StakingTab = () => {
   const IXSCurrency = useIXSCurrency()
   const { chainId, account } = useActiveWeb3React()
+  const [cookies] = useCookies(['annoucementsSeen'])
 
   const blurred = ![...TGE_CHAINS_WITH_STAKING, SUPPORTED_TGE_CHAINS.MAIN].includes(chainId || 0) || !account
 
@@ -39,14 +41,17 @@ export const StakingTab = () => {
   return (
     <>
       <LightBackground />
-      <Container width={['100%']} maxWidth={'1400px'}>
+      <BodyWrapper
+        hasAnnouncement={!cookies.annoucementsSeen}
+        style={{ background: 'transparent', padding: 0, width: '100%', maxWidth: 1400 }}
+      >
         <StyledStakingTab>
           <TYPE.title4>
             <Trans>Staking {IXSCurrency?.symbol}</Trans>
           </TYPE.title4>
         </StyledStakingTab>
         <Staking />
-      </Container>
+      </BodyWrapper>
     </>
   )
 }
