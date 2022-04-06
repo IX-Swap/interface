@@ -7,16 +7,28 @@ import {
 } from '@mui/material'
 import { Icon } from 'ui/Icons/Icon'
 import { useTheme } from '@mui/material/styles'
+import useStyles from './TextInput.styles'
 
 type InputProps = TextFieldProps & { loading?: boolean }
 
 export const TextInput = (props: InputProps) => {
-  const { children, loading = false, error, ...rest } = props
+  const { children, loading = false, disabled, error, name, ...rest } = props
   const theme = useTheme()
-  console.log(theme?.palette?.input?.placeholder)
+  const classes = useStyles()
   return (
     <TextField
       {...rest}
+      InputLabelProps={{
+        shrink: true
+      }}
+      error={error}
+      name={name}
+      disabled={disabled}
+      className={disabled === true ? classes.disabled : ''}
+      sx={{
+        marginTop:
+          (rest?.variant ?? 'outlined') === 'outlined' ? '12px' : 'initial'
+      }}
       InputProps={{
         endAdornment:
           loading || error !== undefined ? (
@@ -29,7 +41,16 @@ export const TextInput = (props: InputProps) => {
                 />
               )}
               {!loading && (
-                <Icon name={error === false ? 'alert-triangle' : 'check'} />
+                <Icon
+                  name={error === true ? 'alert-triangle' : 'check'}
+                  noHover
+                  size={15}
+                  color={
+                    error === true
+                      ? theme.palette.error.main
+                      : theme.palette.success.main
+                  }
+                />
               )}
             </InputAdornment>
           ) : null
@@ -39,3 +60,5 @@ export const TextInput = (props: InputProps) => {
     </TextField>
   )
 }
+
+TextInput.displayName = 'TextInput'

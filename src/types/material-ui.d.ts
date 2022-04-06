@@ -162,6 +162,8 @@ declare module '@mui/material/styles' {
     tablePagination?: TablePagination
     input?: {
       placeholder: CSSProperties['color']
+      border: string
+      disabledBg: string
     }
     alerts?: Alerts
   }
@@ -198,6 +200,8 @@ declare module '@mui/material/styles' {
     tablePagination?: TablePagination
     input?: {
       placeholder: CSSProperties['color']
+      border: string
+      disabledBg: string
     }
     alerts?: Alerts
   }

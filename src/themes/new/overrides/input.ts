@@ -1,7 +1,8 @@
 import { Theme } from '@mui/material'
 
 export const input = (theme: Theme) => {
-  const placeholder = theme.palette.input?.placeholder
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const inputStyles = theme.palette.input!
   return {
     MuiInputLabel: {
       defaultProps: {
@@ -11,6 +12,13 @@ export const input = (theme: Theme) => {
     styleOverrides: {
       root: {
         backgroundColor: theme.palette.background.paper,
+        borderRadius: 4,
+
+        '& ~ p.MuiFormHelperText-root': {
+          marginLeft: 0,
+          background: 'transparent',
+          backgroundColor: 'transparent'
+        },
         '& .MuiFilledInput-root, & .MuiFilledInput-root:focus, & .MuiFilledInput-root:hover':
           {
             backgroundColor: theme.palette.background.paper,
@@ -20,8 +28,42 @@ export const input = (theme: Theme) => {
               transition: 'none'
             }
           },
+        '& .MuiInputLabel-root': {
+          '&.Mui-disabled': {
+            color: theme.palette.text.secondary
+          }
+        },
+        '& .MuiInputLabel-outlined': {
+          top: -12,
+          left: -12
+        },
         '& .MuiOutlinedInput-input': {
           height: 49
+        },
+        '.MuiOutlinedInput-root.MuiInputBase-root:hover .MuiOutlinedInput-notchedOutline':
+          {
+            borderColor: theme.palette.primary.light,
+            borderWidth: 1
+          },
+        '.MuiOutlinedInput-root.MuiInputBase-root.Mui-disabled:hover .MuiOutlinedInput-notchedOutline':
+          {
+            borderColor: 'unset'
+          },
+        '.MuiOutlinedInput-root.Mui-error.MuiInputBase-root:hover .MuiOutlinedInput-notchedOutline':
+          {
+            borderColor: theme.palette.error.main
+          },
+        '& .MuiOutlinedInput-root': {
+          paddingRight: 0,
+          '& fieldset': {
+            border: `1px solid ${inputStyles?.border}`
+          },
+          '& fieldset legend': {
+            width: 0
+          }
+        },
+        '& .MuiInputAdornment-root.MuiInputAdornment-positionEnd': {
+          marginLeft: -32
         },
         input: {
           paddingTop: 18,
@@ -29,15 +71,17 @@ export const input = (theme: Theme) => {
           paddingLeft: 24,
           paddingRight: 24,
           height: '100%',
+          marginRight: 12,
+          width: '100%',
           boxShadow: 'none',
           borderRadius: 8,
           boxSizing: 'border-box' as any,
-          color: '#ffffff',
+          color: theme.palette.text.primary,
           fontSize: 16,
           WebkitBoxShadow: '',
           '&::placeholder': {
             textOverflow: 'ellipsis !important',
-            color: placeholder
+            color: inputStyles?.placeholder
           },
           '&:-webkit-autofill': {
             WebkitBoxShadow: '',
@@ -58,11 +102,15 @@ export const input = (theme: Theme) => {
             backgroundColor: '',
             WebkitBoxShadow: 'none!important',
             color: '',
-            border: `1px solid ${theme.palette.primary.light}`,
             transition: 'none!important'
           },
           '.Mui-error &': {
-            WebkitBoxShadow: 'none!important'
+            WebkitBoxShadow: 'none!important',
+            color: theme.palette.error.main
+          },
+          '.Mui-disabled &': {
+            background: inputStyles.disabledBg,
+            backgroundColor: inputStyles.disabledBg
           }
         },
         adornedEnd: {
@@ -77,7 +125,6 @@ export const input = (theme: Theme) => {
         },
         multiline: {
           height: 'auto',
-
           minHeight: 74
         },
         inputMultiline: {

@@ -156,7 +156,9 @@ export const lightTheme: DeprecatedThemeOptions = {
       bg: '#EDF2FA'
     },
     input: {
-      placeholder: '#778194'
+      placeholder: '#778194',
+      border: '#DBE2EC',
+      disabledBg: '#F0F2F7'
     },
     success: {
       main: '#7DD320'
