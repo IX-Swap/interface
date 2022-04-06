@@ -890,11 +890,7 @@
             var a = e.call(this, t, n) || this
             return (
               (a._handleClick = function () {
-                Object(K.trackEvent)(
-                  'GUI',
-                  'Chart NewHeader Toolbar',
-                  'compare'
-                ),
+                Object(K.trackEvent)('GUI', 'Chart Header Toolbar', 'compare'),
                   a.setState({ isActive: !0 }),
                   a.context.chartWidgetCollection
                     .toggleAddCompareDialog()
@@ -2139,7 +2135,7 @@
                   a.context.chartWidgetCollection.activeChartWidget.value()
                 Object(K.trackEvent)(
                   'GUI',
-                  'Chart NewHeader Toolbar',
+                  'Chart Header Toolbar',
                   'chart properties'
                 ),
                   e.showGeneralChartProperties()

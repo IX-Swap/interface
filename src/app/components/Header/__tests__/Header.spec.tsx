@@ -2,7 +2,7 @@ import React from 'react'
 import { render } from 'test-utils'
 import { UserDropdown } from 'app/components/UserDropdown/UserDropdown'
 import { NotificationsDropdown } from 'app/pages/notifications/components/NotificationsDropdown'
-import { Header } from 'app/components/NewHeader/Header'
+import { Header } from 'app/components/Header/Header'
 
 jest.mock('app/components/UserDropdown/UserDropdown', () => ({
   UserDropdown: jest.fn(() => null)

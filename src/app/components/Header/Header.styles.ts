@@ -1,150 +1,16 @@
-import { alpha } from '@mui/material/styles'
 import makeStyles from '@mui/styles/makeStyles'
 
-export default makeStyles(theme => ({
-  logotype: {
-    color: 'white',
-    marginLeft: theme.spacing(2.5),
-    marginRight: theme.spacing(2.5),
-    fontWeight: 500,
-    fontSize: 18,
-    whiteSpace: 'nowrap',
-    [theme.breakpoints.down('sm')]: {
-      display: 'none'
-    }
-  },
-  appBar: {
-    zIndex: 1201,
-    transition: theme.transitions.create(['margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    }),
-    backgroundColor: '#141272',
-    paddingRight: '0 !important'
+export const useStyles = makeStyles(theme => ({
+  wrapper: {
+    background:
+      theme.palette.mode === 'light'
+        ? `linear-gradient(180deg, rgba(237, 242, 250, 0) 98.71%, ${theme.palette.secondary.light} 98.71%), ${theme.palette.backgrounds.light}!important`
+        : '#152d5f!important'
   },
   toolbar: {
-    paddingLeft: theme.spacing(3.25),
-    paddingRight: theme.spacing(3.25)
+    height: 80
   },
-  hide: {
-    display: 'none'
-  },
-  grow: {
+  emptySpace: {
     flexGrow: 1
-  },
-  small: {
-    flexGrow: 0.2
-  },
-  search: {
-    position: 'relative',
-    borderRadius: 25,
-    paddingLeft: theme.spacing(2.5),
-    width: 36,
-    backgroundColor: alpha(theme.palette.common.black, 0),
-    transition: theme.transitions.create(['background-color', 'width']),
-    '&:hover': {
-      cursor: 'pointer',
-      backgroundColor: alpha(theme.palette.common.black, 0.08)
-    }
-  },
-  searchFocused: {
-    backgroundColor: alpha(theme.palette.common.black, 0.08),
-    width: '100%',
-    [theme.breakpoints.up('md')]: {
-      width: 250
-    }
-  },
-  searchIcon: {
-    width: 36,
-    right: 0,
-    height: '100%',
-    position: 'absolute',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    transition: theme.transitions.create('right'),
-    '&:hover': {
-      cursor: 'pointer'
-    }
-  },
-  searchIconOpened: {
-    right: theme.spacing(1.25)
-  },
-  inputRoot: {
-    color: 'inherit',
-    width: '100%'
-  },
-  messageContent: {
-    display: 'flex',
-    flexDirection: 'column'
-  },
-  headerMenu: {
-    marginTop: theme.spacing(7)
-  },
-  headerMenuList: {
-    display: 'flex',
-    flexDirection: 'column'
-  },
-  headerMenuItem: {
-    '&:hover, &:focus': {
-      backgroundColor: theme.palette.primary.main,
-      color: 'white'
-    }
-  },
-  headerMenuButton: {
-    marginLeft: theme.spacing(2),
-    padding: theme.spacing(0.5)
-  },
-  headerMenuButtonCollapse: {
-    marginRight: theme.spacing(2)
-  },
-  headerIcon: {
-    fontSize: 28,
-    color: 'rgba(255, 255, 255, 0.35)'
-  },
-  headerIconCollapse: {
-    color: 'white'
-  },
-  profileMenu: {
-    minWidth: 265
-  },
-  profileMenuUser: {
-    display: 'flex',
-    flexDirection: 'column',
-    padding: theme.spacing(2)
-  },
-  profileMenuLink: {
-    fontSize: 16,
-    textDecoration: 'none',
-    '&:hover': {
-      cursor: 'pointer'
-    }
-  },
-  messageNotification: {
-    height: 'auto',
-    display: 'flex',
-    alignItems: 'center',
-    '&:hover, &:focus': {
-      backgroundColor: theme.palette.background.default
-    }
-  },
-  messageNotificationSide: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    marginRight: theme.spacing(2)
-  },
-  messageNotificationBodySide: {
-    alignItems: 'flex-start',
-    marginRight: 0
-  },
-  sendMessageButton: {
-    margin: theme.spacing(4),
-    marginTop: theme.spacing(2),
-    marginBottom: theme.spacing(2),
-    textTransform: 'none'
-  },
-  sendButtonIcon: {
-    marginLeft: theme.spacing(2)
   }
 }))
