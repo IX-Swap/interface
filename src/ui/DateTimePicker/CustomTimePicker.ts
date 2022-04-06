@@ -15,7 +15,7 @@ export const CustomTimePicker = styled(TimePicker)(
     font-family: ${theme.typography.fontFamily as string};
     font-weight: 500;
     font-size: 14px;
-    color: ${theme.palette.text.primary};
+    color: ${theme.palette.text.primary as string};
     outline: none;
   }
   .react-time-picker__clear-button, .react-time-picker__inputGroup__amPm {
