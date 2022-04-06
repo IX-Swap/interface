@@ -1,4 +1,5 @@
-import { createTheme, DeprecatedThemeOptions } from '@mui/material'
+import { DeprecatedThemeOptions } from '@mui/material'
+import { createTheme } from '@mui/material/styles'
 import { themeColors } from 'themes/app/colors'
 import tinycolor from 'tinycolor2'
 
