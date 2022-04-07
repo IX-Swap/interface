@@ -11,9 +11,12 @@ import {
 import { UserDropdownContent } from 'app/components/Header/components/UserDropdown/UserDropdownContent/UserDropdownContent'
 import { UserDropdownItem } from 'app/components/Header/components/UserDropdown/UserDropdownItem/UserDropdownItem'
 
-jest.mock('app/components/UserDropdown/UserDropdownItem', () => ({
-  UserDropdownItem: jest.fn(() => null)
-}))
+jest.mock(
+  'app/components/Header/components/UserDropdown/UserDropdownItem/UserDropdownItem',
+  () => ({
+    UserDropdownItem: jest.fn(() => null)
+  })
+)
 
 describe('UserDropdownContent', () => {
   const props: DropdownContentProps = {

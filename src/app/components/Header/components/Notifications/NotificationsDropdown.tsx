@@ -1,11 +1,11 @@
 import React from 'react'
 import { Grid } from '@mui/material'
-import { Dropdown } from 'app/components/Dropdown/Dropdown'
 import { AppRouterLink } from 'components/AppRouterLink'
-import { NotificationsDropdownTrigger } from 'app/components/Header/components/Notifications/NotificationsDropdownTrigger/NotificationsDropdownTrigger'
-import { NotificationsDropdownContent } from 'app/components/Header/components/Notifications/NotificationsDropdownContent/NotificationsDropdownContent'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { AppRoute } from 'app/router/config'
+import { Dropdown } from 'app/components/Header/components/Dropdown/Dropdown'
+import { NotificationsDropdownTrigger } from 'app/components/Header/components/Notifications/NotificationsDropdownTrigger/NotificationsDropdownTrigger'
+import { NotificationsDropdownContent } from 'app/components/Header/components/Notifications/NotificationsDropdownContent/NotificationsDropdownContent'
 
 export const NotificationsDropdown = () => {
   const { isTablet } = useAppBreakpoints()
