@@ -579,7 +579,7 @@ export default function IndividualKycForm() {
 
                         <Column style={{ gap: '40px' }}>
                           <Uploader
-                            subtitle="Proof of ID, passport, driving license, National ID card."
+                            subtitle="Proof of ID - Passport or Singapore NRIC."
                             error={errors.proofOfIdentity && errors.proofOfIdentity}
                             title="Proof of Identity"
                             files={values.proofOfIdentity}
