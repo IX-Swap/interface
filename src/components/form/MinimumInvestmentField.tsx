@@ -24,3 +24,5 @@ export const MinimumInvesmentField = (props: NumericInputProps) => {
     </Box>
   )
 }
+
+MinimumInvesmentField.displayName = 'MinimumInvesmentField'

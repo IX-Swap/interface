@@ -56,13 +56,12 @@ export const UserIdentitySelect = ({
 
   return (
     <Grid container spacing={1} justifyContent='flex-start' alignItems='center'>
-      <Grid item xs={6}>
+      <Grid item xs={7}>
         <FormControl fullWidth>
           <TextFieldSelect
             label='Identity Status'
             value={identity}
             onChange={value => setIdentity(value?.target.value)}
-            variant='outlined'
             fullWidth
           >
             {!hasIdentity ? (
@@ -90,7 +89,7 @@ export const UserIdentitySelect = ({
           </TextFieldSelect>
         </FormControl>
       </Grid>
-      <Grid item xs={6}>
+      <Grid item xs={5}>
         <Button
           component={AppRouterLinkComponent}
           to={getPath()}
@@ -105,3 +104,5 @@ export const UserIdentitySelect = ({
     </Grid>
   )
 }
+
+UserIdentitySelect.displayName = 'UserIdentitySelect'

@@ -1,4 +1,4 @@
-import { Grid, TextField } from '@mui/material'
+import { Grid } from '@mui/material'
 import { documentValueExtractor } from 'app/components/DSO/utils'
 import { CorporateType } from 'app/pages/identity/components/CorporateInvestorForm/CorporateInvestorForm'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
@@ -11,6 +11,7 @@ import { privateClassNames } from 'helpers/classnames'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import React, { useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
+import { TextInput } from 'ui/TextInput/TextInput'
 
 export interface InformationFieldsProps {
   type?: CorporateType
@@ -68,7 +69,7 @@ export const InformationFields = ({
           <Grid item xs={12} sm={6} md={6}>
             <TypedField
               fullWidth
-              component={TextField}
+              component={TextInput}
               control={control}
               variant='outlined'
               name='companyLegalName'
@@ -88,7 +89,7 @@ export const InformationFields = ({
           <Grid item xs={12} sm={6} md={6}>
             <TypedField
               fullWidth
-              component={TextField}
+              component={TextInput}
               control={control}
               variant='outlined'
               name='registrationNumber'
@@ -108,7 +109,7 @@ export const InformationFields = ({
             <TypedField
               customRenderer
               fullWidth
-              component={TextField}
+              component={TextInput}
               control={control}
               variant='outlined'
               name='otherLegalEntityStatus'

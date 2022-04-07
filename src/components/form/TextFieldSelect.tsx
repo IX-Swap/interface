@@ -1,21 +1,24 @@
-import { TextField, TextFieldProps } from '@mui/material'
+import { TextFieldProps } from '@mui/material'
 import React from 'react'
+import { TextInput } from 'ui/TextInput/TextInput'
 export const TextFieldSelect = (props: TextFieldProps) => {
   const { label, children, onChange, value } = props
   return (
-    <TextField
+    <TextInput
       select
       id={`${label as string}-select-input`}
       SelectProps={{
         displayEmpty: true,
         labelId: `${label as string}-select-label`
       }}
-      InputLabelProps={{ shrink: true }}
       onChange={onChange}
       value={value ?? ''}
+      hideIcon
       label={label}
     >
       {children}
-    </TextField>
+    </TextInput>
   )
 }
+
+TextFieldSelect.displayName = 'TextFieldSelect'

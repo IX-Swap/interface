@@ -9,7 +9,7 @@ import { Icon } from 'ui/Icons/Icon'
 import { useTheme } from '@mui/material/styles'
 import useStyles from './TextInput.styles'
 
-type InputProps = TextFieldProps & { loading?: boolean }
+type InputProps = TextFieldProps & { loading?: boolean; hideIcon?: boolean }
 
 export const TextInput = (props: InputProps) => {
   const {
@@ -20,19 +20,20 @@ export const TextInput = (props: InputProps) => {
     error,
     name,
     value,
+    hideIcon = false,
     ...rest
   } = props
   const theme = useTheme()
   const classes = useStyles()
+  // For testing purposes. If the field has no error. Take it from input props
   const hasError = Boolean(
     error === undefined || !error ? InputProps?.error ?? error : error
   )
+  const inputIsEmpty = value === undefined || value === null || value === ''
+
   return (
     <TextField
       {...rest}
-      InputLabelProps={{
-        shrink: true
-      }}
       name={name}
       error={hasError}
       value={value}
@@ -44,7 +45,7 @@ export const TextInput = (props: InputProps) => {
       }}
       InputProps={{
         endAdornment:
-          loading || hasError !== undefined ? (
+          !hideIcon && (loading || hasError !== undefined) ? (
             <InputAdornment position='end'>
               {loading && (
                 <CircularProgress
@@ -63,7 +64,7 @@ export const TextInput = (props: InputProps) => {
               )}
               {!loading &&
                 !hasError &&
-                (value === undefined ? null : (
+                (inputIsEmpty ? null : (
                   <Icon
                     name={'check'}
                     noHover

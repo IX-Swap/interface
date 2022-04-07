@@ -1,21 +1,21 @@
-import React from 'react'
-import { Box, Grid, TextField } from '@mui/material'
-import { TypedField } from 'components/form/TypedField'
-import { dateTimeValueExtractor, numericValueExtractor } from 'helpers/forms'
-import { CorporateSelect } from 'components/form/CorporateSelect'
-import { NetworkSelect } from 'components/form/NetworkSelect'
-import { useFormContext } from 'react-hook-form'
+import { Box, Grid } from '@mui/material'
+import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
 import { documentValueExtractor } from 'app/components/DSO/utils'
-import { DataroomFileType } from 'config/dataroom'
-import { DateTimePicker } from 'components/form/_DateTimePicker'
+import { ListingHiddenFields } from 'app/pages/exchange/components/ListingForm/ListingHiddenFields'
+import { initialListingFormValues } from 'app/pages/exchange/consts/listing'
 import { Dropzone } from 'components/dataroom/Dropzone'
 import { CapitalStructureSelect } from 'components/form/CapitalStructureSelect'
-import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
-import { initialListingFormValues } from 'app/pages/exchange/consts/listing'
-import { ListingHiddenFields } from 'app/pages/exchange/components/ListingForm/ListingHiddenFields'
+import { CorporateSelect } from 'components/form/CorporateSelect'
+import { NetworkSelect } from 'components/form/NetworkSelect'
 import { NumericInput } from 'components/form/NumericInput'
+import { TypedField } from 'components/form/TypedField'
+import { DateTimePicker } from 'components/form/_DateTimePicker'
+import { DataroomFileType } from 'config/dataroom'
 import { positiveNumberFormat } from 'config/numberFormat'
-
+import { dateTimeValueExtractor, numericValueExtractor } from 'helpers/forms'
+import React from 'react'
+import { useFormContext } from 'react-hook-form'
+import { TextInput } from 'ui/TextInput/TextInput'
 export interface ListingBaseFieldsProps {
   isNew: boolean
   isLive: boolean
@@ -85,7 +85,7 @@ export const ListingBaseFields = (props: ListingBaseFieldsProps) => {
           <Grid container spacing={3}>
             <Grid item xs={12} md={4}>
               <TypedField
-                component={TextField}
+                component={TextInput}
                 label='Token Name'
                 name='tokenName'
                 disabled={
@@ -100,7 +100,7 @@ export const ListingBaseFields = (props: ListingBaseFieldsProps) => {
             </Grid>
             <Grid item xs={12} md={4}>
               <TypedField
-                component={TextField}
+                component={TextInput}
                 label='Symbol'
                 name='tokenSymbol'
                 disabled={

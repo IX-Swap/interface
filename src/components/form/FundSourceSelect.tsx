@@ -14,3 +14,5 @@ export const FundSourceSelect = (props: any): JSX.Element => {
     </TextFieldSelect>
   )
 }
+
+FundSourceSelect.displayName = 'FundSourceSelect'

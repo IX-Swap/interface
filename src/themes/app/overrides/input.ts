@@ -3,11 +3,6 @@ import { Theme } from '@mui/material'
 export const input = (theme: Theme) => {
   const inputStyles = theme.palette.input
   return {
-    MuiInputLabel: {
-      defaultProps: {
-        shrink: true
-      }
-    },
     styleOverrides: {
       root: {
         backgroundColor: theme.palette.background.paper,
@@ -25,6 +20,9 @@ export const input = (theme: Theme) => {
         '& .MuiInputAdornment-root.MuiInputAdornment-positionEnd': {
           marginRight: 10,
           backgroundColor: theme.palette.background.paper
+        },
+        '& .MuiInputBase-root.Mui-error.MuiInputBase-formControl input': {
+          color: `${theme.palette.error.main}`
         },
 
         // filled input
@@ -150,8 +148,7 @@ export const input = (theme: Theme) => {
             transition: 'none!important'
           },
           '.Mui-error &': {
-            WebkitBoxShadow: 'none!important',
-            color: theme.palette.error.main
+            WebkitBoxShadow: 'none!important'
           },
           '.Mui-disabled &': {
             background: inputStyles.disabledBg,

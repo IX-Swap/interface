@@ -1,4 +1,4 @@
-import { Grid, FormControlLabel, Radio, Box, TextField } from '@mui/material'
+import { Box, FormControlLabel, Grid, Radio } from '@mui/material'
 import {
   IndividualTaxDeclarationFormValues,
   TaxResidency
@@ -7,6 +7,7 @@ import { RadioGroup } from 'components/form/RadioGroup'
 import { TypedField } from 'components/form/TypedField'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
+import { TextInput } from 'ui/TextInput/TextInput'
 
 export interface ReasonFieldsProps {
   index: number
@@ -75,7 +76,7 @@ export const ReasonFields = ({
               display={isBReason ? 'block' : 'none'}
             >
               <TypedField
-                component={TextField}
+                component={TextInput}
                 variant='outlined'
                 control={control}
                 name={['taxResidencies', index, 'customReason']}

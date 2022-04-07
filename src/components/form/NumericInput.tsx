@@ -1,13 +1,14 @@
+import { InputProps } from '@mui/material'
 import React from 'react'
-import { InputProps, TextField } from '@mui/material'
 import NumberFormat, { NumberFormatProps } from 'react-number-format'
+import { TextInput } from 'ui/TextInput/TextInput'
 
 const InputComponent: React.FC = (props: NumberFormatProps<any>) => {
   const { onValueChange, onChange, inputRef, ...rest } = props
   return (
     <NumberFormat
       {...rest}
-      customInput={TextField}
+      customInput={TextInput}
       onValueChange={onValueChange}
     />
   )
@@ -33,3 +34,5 @@ export const NumericInput = (
     />
   )
 }
+
+NumericInput.displayName = 'NumericInput'

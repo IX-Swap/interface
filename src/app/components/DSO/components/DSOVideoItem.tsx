@@ -1,11 +1,12 @@
 import React from 'react'
-import { Box, Grid, TextField } from '@mui/material'
+import { Box, Grid } from '@mui/material'
 import { DSOTeamRemoveButton } from 'app/components/DSO/components/DSOTeamRemoveButton'
 import { TypedField } from 'components/form/TypedField'
 import { useFormContext } from 'react-hook-form'
 import { DSOFormValues, DsoVideo } from 'types/dso'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { VSpacer } from 'components/VSpacer'
+import { TextInput } from 'ui/TextInput/TextInput'
 
 export interface DSOVideoItemProps {
   isNew: boolean
@@ -35,7 +36,7 @@ export const DSOVideoItem = (props: DSOVideoItemProps) => {
           <TypedField
             fullWidth
             key={fieldId}
-            component={TextField}
+            component={TextInput}
             control={control}
             defaultValue={defaultValue?.title ?? ''}
             label='Video Title'
@@ -50,7 +51,7 @@ export const DSOVideoItem = (props: DSOVideoItemProps) => {
             fullWidth
             key={fieldId}
             control={control}
-            component={TextField}
+            component={TextInput}
             defaultValue={defaultValue?.link ?? ''}
             label='Link Source URL'
             name={['videos', index, 'link']}
