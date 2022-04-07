@@ -132,24 +132,28 @@ export default function App() {
   }, [account, token])
 
   const clearLocaleStorage = () => {
-    const cleared = localStorage.getItem('clearedLS-06-04-22')
+    const cleared = localStorage.getItem('clearedLS-07-04-22')
     if (!cleared) {
       dispatch(clearStore())
       localStorage.clear()
-      localStorage.setItem('clearedLS-06-04-22', 'true')
+      localStorage.setItem('clearedLS-07-04-22', 'true')
     }
   }
 
   useEffect(() => {
     clearLocaleStorage()
+  }, [])
+
+  useEffect(() => {
     window.scrollTo(0, 0)
   }, [pathname])
 
   const isAdminKyc = pathname.includes('admin')
-
   const visibleBody = useMemo(() => {
     return !isSettingsOpen || !account || kyc !== null
   }, [isAdminKyc, isSettingsOpen, account])
+
+  const useRedirect = account ? kyc !== null : true
 
   return (
     <ErrorBoundary>
@@ -247,7 +251,7 @@ export default function App() {
                 <Route exact strict path={routes.staking} component={StakingTab} />
                 <Route exact strict path={routes.vesting} component={VestingTab} />
 
-                {kyc !== null && (
+                {useRedirect && (
                   <Route
                     component={(props: RouteComponentProps) => <Redirect to={{ ...props, pathname: defaultPage }} />}
                   />

@@ -24,6 +24,12 @@ export default createReducer<AuthState>(initialState, (builder) =>
     .addCase(postLogin.pending, (state, { payload: account }) => {
       state.loginLoading = true
       state.loginError = null
+      if (!state.token) {
+        state.token = { [account]: '' }
+      }
+      if (!state.refreshToken) {
+        state.refreshToken = { [account]: '' }
+      }
     })
     .addCase(postLogin.fulfilled, (state, { payload: { auth, account } }) => {
       state.loginLoading = false
