@@ -132,7 +132,9 @@ export const FormStep = (props: FormStepProps) => {
 
           {hasNextStep && <NextButton />}
 
-          {isLastStep && <SubmitButton mutation={submitMutation} data={data} />}
+          {isLastStep && (
+            <SubmitButton mutation={submitMutation} data={data} step={step} />
+          )}
         </Box>
       </Grid>
       <ScrollToTop />

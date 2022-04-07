@@ -20,7 +20,7 @@ export const useCreateIndividual = () => {
 
   return useMutation(createOrUpdateIndividual, {
     onSuccess: async data => {
-      void snackbarService.showSnackbar(data.message, 'success')
+      // void snackbarService.showSnackbar(data.message, 'success')
 
       // eslint-disable-next-line
       if (location.pathname.endsWith('create')) {
