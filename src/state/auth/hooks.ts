@@ -9,7 +9,7 @@ import { AppDispatch, AppState } from 'state'
 import { clearEventLog } from 'state/eventLog/actions'
 import { clearUserData, saveAccount } from 'state/user/actions'
 import { useUserState } from 'state/user/hooks'
-import { logout, postLogin } from './actions'
+import { postLogin } from './actions'
 
 export enum LOGIN_STATUS {
   NO_ACCOUNT,
@@ -26,7 +26,7 @@ export function useAuthState(): AuthState {
   const data = useSelector<AppState, AppState['auth']>((state) => state.auth)
   const { account } = useActiveWeb3React()
 
-  return { ...data, token: data.token[account ?? ''], refreshToken: data.refreshToken[account ?? ''] }
+  return { ...data, token: data.token?.[account ?? ''], refreshToken: data.refreshToken?.[account ?? ''] }
 }
 
 export function useHasLogin() {

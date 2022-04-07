@@ -159,7 +159,11 @@ export const HeaderLinks = () => {
       )}
 
       {account && isWhitelisted && (
-        <MenuExternalLink disabled={!isKycApproved} target="_self" href={'https://info.ixswap.io/home'}>
+        <MenuExternalLink
+          disabled={!isKycApproved}
+          target="_self"
+          href={isDev ? 'https://dev.info.ixswap.io/' : 'https://info.ixswap.io/home'}
+        >
           <Trans>Charts</Trans>
         </MenuExternalLink>
       )}
