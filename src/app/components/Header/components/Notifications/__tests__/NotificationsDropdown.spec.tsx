@@ -1,7 +1,7 @@
 import React from 'react'
 import { render } from 'test-utils'
 import { Dropdown } from 'app/components/Header/components/Dropdown/Dropdown'
-import { NotificationsDropdown } from 'app/components/Header/components/Notifications/NotificationsDropdown'
+import { NotificationsDropdown } from 'app/components/Header/components/Notifications/NotificationsDropdown/NotificationsDropdown'
 import { NotificationsDropdownContent } from 'app/components/Header/components/Notifications/NotificationsDropdownContent/NotificationsDropdownContent'
 import { NotificationsDropdownTrigger } from 'app/components/Header/components/Notifications/NotificationsDropdownTrigger/NotificationsDropdownTrigger'
 

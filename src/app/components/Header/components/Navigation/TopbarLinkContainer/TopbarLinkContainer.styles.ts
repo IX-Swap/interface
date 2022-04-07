@@ -34,6 +34,7 @@ export const useStyles = makeStyles(theme => ({
           ? theme.palette.primary.main
           : 'transparent'
       }`,
+    '-webkit-tap-highlight-color': 'transparent',
 
     '&:hover': {
       color: theme.palette.navigationLink.activeColor,
