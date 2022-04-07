@@ -78,7 +78,11 @@ describe('CommitmentFormWrapper', () => {
     render(<CommitmentFormWrapper />)
 
     expect(CommitmentFormFields).toHaveBeenCalledWith(
-      { symbol: dso.currency.symbol, network: dso.network?._id },
+      {
+        symbol: dso.currency.symbol,
+        network: dso.network?._id,
+        isCampaign: true
+      },
       {}
     )
   })
