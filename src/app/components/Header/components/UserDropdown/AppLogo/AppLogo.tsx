@@ -11,7 +11,12 @@ export const AppLogo = () => {
   return (
     <Link
       to={IdentityRoute.list}
-      style={{ height: '100%', display: 'flex', alignItems: 'center' }}
+      style={{
+        height: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        webkitTapHighlightColor: 'transparent'
+      }}
     >
       {theme.palette.mode === 'light' ? <InvestaXLight /> : <InvestaXDark />}
     </Link>
