@@ -386,7 +386,7 @@ export function useSwapCallback(
             to: address,
             data: calldata,
             // let the wallet try if we can't estimate the gas
-            ...('gasEstimate' in bestCallOption ? { gasLimit: 9000000 } : {}),
+            // ...('gasEstimate' in bestCallOption ? { gasLimit: 900000 } : {}),
             ...(value && !isZero(value) ? { value } : {}),
           })
           .then((response) => {
