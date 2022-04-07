@@ -33,6 +33,7 @@ import { KYCStatuses } from 'components/Vault/enum'
 import { useAuthState } from 'state/auth/hooks'
 import { useDispatch } from 'react-redux'
 import { LoadingIndicator } from 'components/LoadingIndicator'
+import { useCookies } from 'react-cookie'
 
 const Admin = lazy(() => import('./Admin'))
 
@@ -91,6 +92,7 @@ export default function App() {
   const getMyKyc = useGetMyKyc()
   const { token } = useAuthState()
   const dispatch = useDispatch()
+  const [_cookies, setCookie] = useCookies(['annoucementsSeen'])
 
   const { kyc } = useKYCState()
 
@@ -141,6 +143,9 @@ export default function App() {
   }
 
   useEffect(() => {
+    setCookie('annoucementsSeen', 'true', {
+      path: '/',
+    })
     clearLocaleStorage()
   }, [])
 
