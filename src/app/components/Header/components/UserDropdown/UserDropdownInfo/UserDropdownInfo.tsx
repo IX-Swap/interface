@@ -5,7 +5,6 @@ import { useStyles } from 'app/components/Header/components/UserDropdown/UserDro
 import { CustomAvatar } from 'ui/CustomAvatar'
 import { UserRoleStatus } from 'app/components/Header/components/UserDropdown/UserRoleStatus/UserRoleStatus'
 import { useAuth } from 'hooks/auth/useAuth'
-// import { Avatar } from 'components/Avatar'
 
 export const UserDropdownInfo = () => {
   const classes = useStyles()
@@ -20,18 +19,14 @@ export const UserDropdownInfo = () => {
 
   return (
     <Box className={classes.wrapper}>
-      {/* TODO Needs to add functionality for showing photo, as in old component below */}
-      <CustomAvatar size={64} src={data?.photo}>
+      <CustomAvatar
+        documentId={data?.photo}
+        ownerId={user._id}
+        size={64}
+        src={data?.photo}
+      >
         {name[0]}
       </CustomAvatar>
-      {/* <Avatar */}
-      {/*  borderRadius={'50%'} */}
-      {/*  size={64} */}
-      {/*  documentId={data?.photo} */}
-      {/*  ownerId={user._id} */}
-      {/* > */}
-      {/*  {name[0]} */}
-      {/* </Avatar> */}
       <Box display={'flex'} flexDirection={'column'} alignItems={'center'}>
         <Typography variant='subtitle1' className={classes.name}>
           {name}

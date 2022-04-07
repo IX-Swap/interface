@@ -17,7 +17,7 @@ export const useStyles = makeStyles(theme => ({
     }`,
     border: `1px solid ${
       theme.palette.mode === 'light' ? '#EDF2FA' : '#1D3667'
-    }`
+    }!important`
   },
   list: { padding: 0 },
   navItem: {

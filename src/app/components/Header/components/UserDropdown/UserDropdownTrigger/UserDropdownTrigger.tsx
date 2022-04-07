@@ -5,10 +5,12 @@ import { CustomAvatar } from 'ui/CustomAvatar'
 import { useStyles } from 'app/components/Header/components/UserDropdown/UserDropdownTrigger/UserDropdownTrigger.styles'
 import classnames from 'classnames'
 import { useAuth } from 'hooks/auth/useAuth'
+import { useIndividualIdentity } from 'hooks/identity/useIndividualIdentity'
 
 export const UserDropdownTrigger = (props: DropdownTriggerProps) => {
   const classes = useStyles({ isOpen: props.injectedProps.isOpen })
   const { user } = useAuth()
+  const { data } = useIndividualIdentity()
 
   if (user === undefined) {
     return null
@@ -26,8 +28,9 @@ export const UserDropdownTrigger = (props: DropdownTriggerProps) => {
         [classes.opened]: props.injectedProps.isOpen
       })}
     >
-      {/* TODO Needs to add view photo functionality, as in old Avatar component */}
-      <CustomAvatar>{user.name[0]}</CustomAvatar>
+      <CustomAvatar documentId={data?.photo} ownerId={user._id}>
+        {user.name[0]}
+      </CustomAvatar>
     </IconButton>
   )
 }
