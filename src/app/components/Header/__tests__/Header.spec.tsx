@@ -1,15 +1,18 @@
 import React from 'react'
 import { render } from 'test-utils'
-import { UserDropdown } from 'app/components/UserDropdown/UserDropdown'
-import { NotificationsDropdown } from 'app/pages/notifications/components/NotificationsDropdown'
 import { Header } from 'app/components/Header/Header'
+import { UserDropdown } from 'app/components/Header/components/UserDropdown/UserDropdown'
+import { NotificationsDropdown } from 'app/components/Header/components/Notifications/NotificationsDropdown'
 
-jest.mock('app/components/UserDropdown/UserDropdown', () => ({
+jest.mock('app/components/Header/components/UserDropdown/UserDropdown', () => ({
   UserDropdown: jest.fn(() => null)
 }))
-jest.mock('app/pages/notifications/components/NotificationsDropdown', () => ({
-  NotificationsDropdown: jest.fn(() => null)
-}))
+jest.mock(
+  'app/components/Header/components/Notifications/NotificationsDropdown',
+  () => ({
+    NotificationsDropdown: jest.fn(() => null)
+  })
+)
 
 describe('Header', () => {
   afterEach(async () => {
