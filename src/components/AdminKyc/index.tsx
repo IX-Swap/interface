@@ -184,7 +184,7 @@ const NoData = styled.div`
   text-align: center;
 `
 
-const Wallet = styled.div`
+export const Wallet = styled.div`
   background: ${({ theme: { bgG3 } }) => bgG3};
   -webkit-background-clip: text;
   background-clip: text;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, CSSProperties, FC } from 'react'
 import styled from 'styled-components'
 import { Box } from 'rebass'
 import { Label } from '@rebass/forms'
@@ -13,8 +13,13 @@ import { isValidAddress } from 'utils'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 import { addAdmin } from 'state/admin/hooks'
 import { useAddPopup } from 'state/application/hooks'
+import { StyledButtonGradientBorder } from 'components/AdminSecurityCatalog/styleds'
 
-export const AddAdmin = () => {
+interface Props {
+  buttonStyles?: CSSProperties
+}
+
+export const AddAdmin: FC<Props> = ({ buttonStyles }) => {
   const [isOpen, handleIsOpen] = useState(false)
   const [isLoading, handleIsLoading] = useState(false)
   const [address, handleAddress] = useState('')
@@ -56,7 +61,9 @@ export const AddAdmin = () => {
 
   return (
     <>
-      <AddButton onClick={open}>Add Admin</AddButton>
+      <StyledButtonGradientBorder style={buttonStyles} onClick={open}>
+        <Trans>Add Admin</Trans>
+      </StyledButtonGradientBorder>
       <RedesignedWideModal isOpen={isOpen} onDismiss={close}>
         <ModalBlurWrapper data-testid="areYouSureModal" style={{ minWidth: '360px', position: 'relative' }}>
           <LoadingIndicator isLoading={isLoading} isRelative />
