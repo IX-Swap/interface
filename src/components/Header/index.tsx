@@ -1,4 +1,5 @@
 import { Trans } from '@lingui/macro'
+import { useCookies } from 'react-cookie'
 import useScrollPosition from '@react-hook/window-scroll'
 import useLightBackground from 'components/AppBackground/useLightBackground'
 import { useNativeCurrency } from 'hooks/useNativeCurrencyName'
@@ -13,6 +14,7 @@ import { MobileMenu } from '../Mobile-Menu'
 import { RowFixed } from '../Row'
 import Web3Status from '../Web3Status'
 import { HeaderLinks } from './HeaderLinks'
+import { Announcement } from 'components/Announcement'
 import { IXSBalance } from './IXSBalance'
 import { NetworkCard } from './NetworkCard'
 import { TYPE } from 'theme'
@@ -179,9 +181,9 @@ export const StyledMenuButton = styled.button`
 `
 
 const HeaderWrapper = styled.div`
-  ${({ theme }) => theme.flexRowNoWrap}
+  ${({ theme }) => theme.flexColumnNoWrap}
   width: 100%;
-  justify-content: space-between;
+  align-items: space-between;
   position: fixed;
   top: 0;
   z-index: 2;

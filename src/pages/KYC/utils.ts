@@ -12,7 +12,7 @@ export const corporateTransformApiData = (data: any) => {
     beneficialOwners,
     usTin,
   } = data
-  const [funds, otherFunds] = sourceOfFunds.split(', Others, ')
+  const [funds, otherFunds = ''] = sourceOfFunds.split(', Others, ')
 
   return {
     ...data,
@@ -87,7 +87,7 @@ export const corporateTransformKycDto = (values: any) => {
 
 export const individualTransformApiData = (data: any) => {
   const { sourceOfFunds, address, documents, usTin, citizenship, employmentStatus, gender, nationality, income } = data
-  const [funds, otherFunds] = sourceOfFunds.split(', Others, ')
+  const [funds, otherFunds = ''] = sourceOfFunds.split(', Others, ')
 
   return {
     ...data,

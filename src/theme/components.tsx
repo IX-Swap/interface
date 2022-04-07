@@ -416,6 +416,7 @@ export const gradientBorder = css`
     -webkit-mask-composite: destination-out;
     mask-composite: exclude;
     padding: 2px;
+    background: ${({ theme }) => `-webkit${theme.borderG1}`};
     background: ${({ theme }) => theme.borderG1};
   }
 `

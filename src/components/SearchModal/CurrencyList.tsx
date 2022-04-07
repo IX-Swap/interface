@@ -344,7 +344,7 @@ export default function CurrencyList({
 
       const showImport = index > sortedBySecList.length
       const token = currency?.wrapped
-      const currencyId = token.address
+      const currencyId = token?.address
 
       const isUnapprovedToken =
         token && secTokens[currencyId]
@@ -394,7 +394,7 @@ export default function CurrencyList({
       return BREAK_HEIGHT
     }
     const token = currency?.wrapped
-    const currencyId = token.address
+    const currencyId = token?.address
     const isUnapprovedToken =
       token && secTokens[currencyId]
         ? (userSecTokens[currencyId] as any)?.tokenInfo?.accreditationRequest?.status !==

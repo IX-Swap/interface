@@ -5,6 +5,7 @@ import { Flex } from 'rebass'
 import { Link } from 'react-router-dom'
 import dayjs from 'dayjs'
 
+import { useCookies } from 'react-cookie'
 import { ButtonGradientBorder, ButtonIXSGradient } from 'components/Button'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import { RowCenter } from 'components/Row'
@@ -84,6 +85,7 @@ export default function KYC() {
   const [loading, setLoading] = useState(false)
   const isLoggedIn = useUserisLoggedIn()
   const pendingSign = usePendingSignState()
+  const [cookies] = useCookies(['annoucementsSeen'])
 
   const { kyc, loadingRequest } = useKYCState()
 
@@ -182,7 +184,7 @@ export default function KYC() {
   if (!account) return <NotAvailablePage />
 
   return (
-    <StyledBodyWrapper>
+    <StyledBodyWrapper hasAnnouncement={!cookies.annoucementsSeen}>
       <StatusCard>
         {loadingRequest || loading ? (
           <RowCenter>

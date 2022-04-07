@@ -1,5 +1,5 @@
 import React, { lazy, Suspense, useEffect, useMemo } from 'react'
-import { Redirect, Route, Switch, useLocation } from 'react-router-dom'
+import { Redirect, RouteComponentProps, Route, Switch, useLocation } from 'react-router-dom'
 import styled from 'styled-components/macro'
 
 import { AppBackground } from 'components/AppBackground'
@@ -32,6 +32,8 @@ import { isUserWhitelisted } from 'utils/isUserWhitelisted'
 import { KYCStatuses } from 'components/Vault/enum'
 import { useAuthState } from 'state/auth/hooks'
 import { useDispatch } from 'react-redux'
+import { LoadingIndicator } from 'components/LoadingIndicator'
+import { useCookies } from 'react-cookie'
 
 const Admin = lazy(() => import('./Admin'))
 
@@ -90,8 +92,23 @@ export default function App() {
   const getMyKyc = useGetMyKyc()
   const { token } = useAuthState()
   const dispatch = useDispatch()
+  const [_cookies, setCookie] = useCookies(['annoucementsSeen'])
 
   const { kyc } = useKYCState()
+
+  const chains = useMemo(() => ENV_SUPPORTED_TGE_CHAINS || [42], [])
+  const isWhitelisted = isUserWhitelisted({ account, chainId })
+
+  const defaultPage = useMemo(() => {
+    if (kyc?.data?.status !== KYCStatuses.APPROVED || !account) {
+      return '/kyc'
+    }
+    if (kyc?.data?.status === KYCStatuses.APPROVED && chainId && chains.includes(chainId) && isWhitelisted) {
+      return '/security-tokens'
+    }
+
+    return '/kyc'
+  }, [kyc, account, chainId, isWhitelisted, chains])
 
   const canAccessKycForm = (kycType: string) => {
     if (!account) return false
@@ -117,36 +134,31 @@ export default function App() {
   }, [account, token])
 
   const clearLocaleStorage = () => {
-    const cleared = localStorage.getItem('clearedLS-04-04-22')
+    const cleared = localStorage.getItem('clearedLS-07-04-22')
     if (!cleared) {
       dispatch(clearStore())
-      document.cookie.split(';').forEach(function (c) {
-        document.cookie = c.replace(/^ +/, '').replace(/=.*/, '=;expires=' + new Date().toUTCString() + ';path=/')
-      })
-
       localStorage.clear()
-      localStorage.setItem('clearedLS-04-04-22', 'true')
-      localStorage.setItem(
-        'redux_localstorage_simple_auth',
-        `{"token":{},"refreshToken":{},"loginLoading":false,"loginError":null}`
-      )
+      localStorage.setItem('clearedLS-07-04-22', 'true')
     }
   }
 
   useEffect(() => {
+    setCookie('annoucementsSeen', 'true', {
+      path: '/',
+    })
     clearLocaleStorage()
+  }, [])
+
+  useEffect(() => {
     window.scrollTo(0, 0)
   }, [pathname])
 
   const isAdminKyc = pathname.includes('admin')
-
   const visibleBody = useMemo(() => {
-    return !isSettingsOpen || !account
+    return !isSettingsOpen || !account || kyc !== null
   }, [isAdminKyc, isSettingsOpen, account])
 
-  const isWhitelisted = isUserWhitelisted({ account, chainId })
-
-  const chains = ENV_SUPPORTED_TGE_CHAINS || [42]
+  const useRedirect = account ? kyc !== null : true
 
   return (
     <ErrorBoundary>
@@ -161,7 +173,13 @@ export default function App() {
         <ToggleableBody isVisible={visibleBody} {...(isAdminKyc && { style: { marginTop: 26 } })}>
           <IXSBalanceModal />
           <Web3ReactManager>
-            <Suspense fallback={<></>}>
+            <Suspense
+              fallback={
+                <>
+                  <LoadingIndicator isLoading />
+                </>
+              }
+            >
               <Switch>
                 <Route exact strict path="/admin" render={() => <Redirect to="/admin/accreditation" />} />
 
@@ -238,7 +256,11 @@ export default function App() {
                 <Route exact strict path={routes.staking} component={StakingTab} />
                 <Route exact strict path={routes.vesting} component={VestingTab} />
 
-                <Route component={RedirectPathToKyc} />
+                {useRedirect && (
+                  <Route
+                    component={(props: RouteComponentProps) => <Redirect to={{ ...props, pathname: defaultPage }} />}
+                  />
+                )}
               </Switch>
             </Suspense>
           </Web3ReactManager>

@@ -5,6 +5,7 @@ import { Formik } from 'formik'
 import { useHistory } from 'react-router-dom'
 import moment from 'moment'
 import { isMobile } from 'react-device-detect'
+import { useCookies } from 'react-cookie'
 
 import usePrevious from 'hooks/usePrevious'
 import Column from 'components/Column'
@@ -48,6 +49,7 @@ export const FormContainer = styled(FormWrapper)`
 `
 
 export default function IndividualKycForm() {
+  const [cookies] = useCookies(['annoucementsSeen'])
   const [waitingForInitialValues, setWaitingForInitialValues] = useState(true)
   const [updateKycId, setUpdateKycId] = useState<any>(null)
   const [formData, setFormData] = useState<any>(null)
@@ -190,7 +192,7 @@ export default function IndividualKycForm() {
   return (
     <Loadable loading={!isLoggedIn}>
       <LoadingIndicator isLoading={loadingRequest} />
-      <StyledBodyWrapper>
+      <StyledBodyWrapper hasAnnouncement={!cookies.annoucementsSeen}>
         <ButtonText
           style={{ textDecoration: 'none' }}
           display="flex"
@@ -577,7 +579,7 @@ export default function IndividualKycForm() {
 
                         <Column style={{ gap: '40px' }}>
                           <Uploader
-                            subtitle="Proof of ID, passport, driving license, National ID card."
+                            subtitle="Proof of ID - Passport or Singapore NRIC."
                             error={errors.proofOfIdentity && errors.proofOfIdentity}
                             title="Proof of Identity"
                             files={values.proofOfIdentity}

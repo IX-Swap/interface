@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Box, Flex } from 'rebass'
 import { isMobile } from 'react-device-detect'
 import { Trans } from '@lingui/macro'
+import { useCookies } from 'react-cookie'
 
 import { ExternalLink, TYPE } from 'theme'
 import { StyledButtonGradientBorder } from 'components/AdminSecurityCatalog/styleds'
@@ -26,16 +27,19 @@ import {
   Divider,
 } from './styleds'
 import { Info } from './Info'
+import { useUserState } from 'state/user/hooks'
 
 export default function CustodianV2() {
   const offset = 10
   const docLink = 'https://docs.google.com/forms/d/e/1FAIpQLSenV66JwRp7MeHMm31EYLw-8VCHWfsyj8ji98l5Cqchpr2IyQ/viewform'
   const { token } = useAuthState()
   const [mySecTokens, setMySecTokens] = useState([])
+  const [cookies] = useCookies(['annoucementsSeen'])
   const fetchTokens = useFetchTokens()
   const [noFilteredTokens, setNoFilteredTokens] = useState([])
   const { tokens } = useSecCatalogState()
   const { account, chainId } = useActiveWeb3React()
+  const { account: userAccount } = useUserState()
 
   const blurred = !chainId || !TGE_CHAINS_WITH_SWAP.includes(chainId)
   const isLoggedIn = !!token && !!account
@@ -48,13 +52,13 @@ export default function CustodianV2() {
     if (isLoggedIn) {
       fetchMyTokens()
     }
-  }, [account, isLoggedIn])
+  }, [userAccount, isLoggedIn])
 
   useEffect(() => {
     if (isLoggedIn) {
       fetchTokens({ page: 1, offset, search: '' })
     }
-  }, [fetchTokens, isLoggedIn])
+  }, [fetchTokens, isLoggedIn, userAccount])
 
   useEffect(() => {
     if (noFilteredTokens.length === 0 && tokens) {
@@ -84,7 +88,7 @@ export default function CustodianV2() {
       <Trans>Security Tokens</Trans>
     </AppBody>
   ) : (
-    <StyledBodyWrapper>
+    <StyledBodyWrapper hasAnnouncement={!cookies.annoucementsSeen}>
       <Flex
         flexDirection={isMobile ? 'column' : 'row'}
         alignItems={isMobile ? 'flex-start' : 'center'}

@@ -4,6 +4,7 @@ import { FileWithPath } from 'react-dropzone'
 import { useHistory } from 'react-router-dom'
 import { Formik } from 'formik'
 import { isMobile } from 'react-device-detect'
+import { useCookies } from 'react-cookie'
 
 import usePrevious from 'hooks/usePrevious'
 import Column from 'components/Column'
@@ -34,6 +35,7 @@ import { KYCStatuses } from './enum'
 import { corporateTransformApiData, corporateTransformKycDto } from './utils'
 
 export default function CorporateKycForm() {
+  const [cookies] = useCookies(['annoucementsSeen'])
   const [waitingForInitialValues, setWaitingForInitialValues] = useState(true)
   const [updateKycId, setUpdateKycId] = useState<any>(null)
   const [formData, setFormData] = useState<any>(null)
@@ -216,7 +218,7 @@ export default function CorporateKycForm() {
     <Loadable loading={!isLoggedIn}>
       <LoadingIndicator isLoading={loadingRequest} />
 
-      <StyledBodyWrapper>
+      <StyledBodyWrapper hasAnnouncement={!cookies.annoucementsSeen}>
         <ButtonText
           style={{ textDecoration: 'none' }}
           display="flex"
