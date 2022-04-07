@@ -9,7 +9,7 @@ export const useStyles = makeStyles(theme => ({
     padding: '0!important',
     borderTopRightRadius: '0!important',
     borderTopLeftRadius: '0!important',
-    top: '81px!important',
+    top: '80px!important',
     boxShadow: `0px 80px 80px ${
       theme.palette.mode === 'light'
         ? 'rgba(162, 172, 191, 0.16)'

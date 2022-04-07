@@ -2,7 +2,7 @@ import makeStyles from '@mui/styles/makeStyles'
 
 export const useStyles = makeStyles(theme => ({
   wrapper: {
-    height: '100%!important',
+    height: '80px!important',
     '&:hover': {
       background: 'initial!important',
       '& > div': {
