@@ -12,8 +12,8 @@ export const TextInputFields = () => {
     })
   }, [setError])
   return (
-    <Grid container spacing={1} alignContent='center' xs={8}>
-      <Grid container spacing={3} xs={6} direction='column'>
+    <Grid container spacing={2} alignContent='center' xs={8}>
+      <Grid container spacing={2} xs={6} direction='column'>
         <Grid item>
           <TypedField
             control={control}

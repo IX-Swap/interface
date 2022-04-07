@@ -12,25 +12,68 @@ export const input = (theme: Theme) => {
       root: {
         backgroundColor: theme.palette.background.paper,
         borderRadius: 4,
-
+        // common styles
         '& .MuiFormHelperText-root, & ~ .MuiFormHelperText-root,': {
           marginLeft: 0,
           marginTop: 12
         },
-        '& .MuiFilledInput-root, & .MuiFilledInput-root:focus, & .MuiFilledInput-root:hover':
-          {
-            backgroundColor: theme.palette.background.paper,
-            height: 85,
-            '&:before, &:after': {
-              border: 0,
-              transition: 'none'
-            }
-          },
         '& .MuiInputLabel-root': {
           '&.Mui-disabled': {
             color: theme.palette.text.secondary
           }
         },
+        '& .MuiInputAdornment-root.MuiInputAdornment-positionEnd': {
+          marginRight: 10,
+          backgroundColor: theme.palette.background.paper
+        },
+
+        // filled input
+        '.MuiFilledInput-root.MuiFilledInput-underline.MuiInputBase-root': {
+          background: theme.palette.background.paper,
+          backgroundColor: theme.palette.background.paper,
+          '&.Mui-disabled': {
+            backgroundColor: inputStyles.disabledBg,
+            border: 'none'
+          },
+          '&:hover:before': {
+            border: 0
+          }
+        },
+        '& .MuiFilledInput-root:hover': {
+          border: `1px solid ${theme.palette.primary.light}`
+        },
+        '& .MuiFilledInput-root, & .MuiFilledInput-root:focus, & .MuiFilledInput-root:hover':
+          {
+            backgroundColor: theme.palette.background.paper,
+            background: theme.palette.background.paper,
+            height: 85,
+            transition: 'none',
+            width: 400,
+            [theme.breakpoints.down('sm')]: {
+              width: 300
+            },
+            '&:before, &:after': {
+              border: 0,
+              transition: 'none'
+            },
+            '&.Mui-focused': {
+              border: `1px solid ${theme.palette.primary.light}`
+            },
+            '&.Mui-disabled': {
+              backgroundColor: inputStyles.disabledBg,
+              border: 'none'
+            },
+            '&.Mui-error': {
+              border: `1px solid ${theme.palette.error.main}`
+            },
+            input: {
+              '&:-internal-autofill-selected': {
+                WebkitBoxShadow: `0 0 0px 1000px ${theme.palette.background.paper} inset`,
+                borderRadius: 0
+              }
+            }
+          },
+        // outlined input
         '& .MuiInputLabel-outlined': {
           top: -12,
           left: -12
@@ -39,8 +82,6 @@ export const input = (theme: Theme) => {
           height: 49
         },
         '.MuiOutlinedInput-root': {
-          width: 267,
-          maxWidth: 267,
           backgroundColor: theme.palette.background.paper,
           paddingRight: 0,
           borderWidth: 1,
@@ -69,10 +110,7 @@ export const input = (theme: Theme) => {
             width: 0
           }
         },
-        '& .MuiInputAdornment-root.MuiInputAdornment-positionEnd': {
-          marginRight: 10,
-          backgroundColor: theme.palette.background.paper
-        },
+        // input
         input: {
           paddingTop: 17,
           paddingBottom: 17,

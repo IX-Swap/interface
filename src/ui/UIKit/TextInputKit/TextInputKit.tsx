@@ -9,8 +9,8 @@ export const TextInputKit = () => {
     <UIKitThemeWrapper>
       <Box
         sx={{
-          p: 10,
-          justifyContent: 'center',
+          margin: '5%',
+          justifyContent: 'space-between',
           display: 'flex',
           flexWrap: 'wrap'
         }}
