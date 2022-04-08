@@ -1,8 +1,7 @@
 import { Theme } from '@mui/material'
 
 export const switcher = (theme: Theme) => {
-  // eslint-disable-next-line
-  const switchPalette = theme.palette.switch!
+  const switchPalette = theme.palette.switch
 
   return {
     styleOverrides: {

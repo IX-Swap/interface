@@ -3,32 +3,32 @@
 exports[`Dashboard should match snapshot 1`] = `
 <div>
   <div
-    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-izaklv-MuiGrid-root"
+    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-zow5z4-MuiGrid-root"
   >
     <div
-      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1sr5n48-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
     >
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-container-3 css-3buk32-MuiGrid-root"
+        class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-container-3 css-1vpwcmr-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root MuiGrid-container makeStyles-header-2 css-1kca4ek-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-container makeStyles-header-2 css-11lq3yg-MuiGrid-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item css-19l8j7t-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-container MuiGrid-item css-i6prtc-MuiGrid-root"
           >
             <h2
-              class="MuiTypography-root MuiTypography-h2 css-1ybxgbh-MuiTypography-root"
+              class="MuiTypography-root MuiTypography-h2 css-rldqdm-MuiTypography-root"
             >
               InvestaX Digital Fund VCC
             </h2>
           </div>
         </div>
         <div
-          class="MuiGrid-root css-186c2wj-MuiGrid-root"
+          class="MuiGrid-root css-vj1n65-MuiGrid-root"
         >
           <nav
-            class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-1f69azb-MuiTypography-root-MuiBreadcrumbs-root"
+            class="MuiTypography-root MuiTypography-body1 MuiBreadcrumbs-root css-128kl2r-MuiTypography-root-MuiBreadcrumbs-root"
           >
             <ol
               class="MuiBreadcrumbs-ol css-4pdmu4-MuiBreadcrumbs-ol"
@@ -38,49 +38,49 @@ exports[`Dashboard should match snapshot 1`] = `
       </div>
     </div>
     <div
-      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1sr5n48-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
     >
       <div
         class="MuiBox-root css-12aw9rk"
       />
     </div>
     <div
-      class="MuiGrid-root MuiGrid-container MuiGrid-item css-a4ud3l-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
     >
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-izaklv-MuiGrid-root"
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-zow5z4-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3 css-se1mjd-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3 css-iv7vbz-MuiGrid-root"
         >
           <div
-            class="MuiPaper-root MuiPaper-outlined MuiPaper-rounded MuiCard-root css-vi6bn4-MuiPaper-root-MuiCard-root"
-            style="background-color: rgb(255, 255, 255);"
+            class="MuiPaper-root MuiPaper-outlined MuiPaper-rounded MuiCard-root css-79eh9f-MuiPaper-root-MuiCard-root"
+            style="background-color: rgb(247, 249, 250);"
           >
             <div
               class="MuiBox-root css-1dx0e3j"
             >
               <div
-                class="MuiGrid-root MuiGrid-container css-dx5cpz-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-container css-9cyib4-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-wrap-xs-nowrap css-1l32j5n-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-wrap-xs-nowrap css-1me3d2y-MuiGrid-root"
                   >
                     <div
-                      class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                     >
                       <div
                         class="MuiBox-root css-1jndwss"
                       />
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                     >
                       <h6
-                        class="MuiTypography-root MuiTypography-subtitle1 MuiTypography-noWrap css-8qgjdj-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-subtitle1 MuiTypography-noWrap css-14ppkdo-MuiTypography-root"
                         style="line-height: 25px;"
                       >
                         Total DSOs
@@ -91,7 +91,7 @@ exports[`Dashboard should match snapshot 1`] = `
                     class="MuiBox-root css-mz9qt7"
                   />
                   <p
-                    class="MuiTypography-root MuiTypography-body1 makeStyles-root-5 css-3a17l8-MuiTypography-root"
+                    class="MuiTypography-root MuiTypography-body1 makeStyles-root-5 css-1b4l2pg-MuiTypography-root"
                   >
                     2
                   </p>
@@ -101,36 +101,36 @@ exports[`Dashboard should match snapshot 1`] = `
           </div>
         </div>
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3 css-se1mjd-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3 css-iv7vbz-MuiGrid-root"
         >
           <div
-            class="MuiPaper-root MuiPaper-outlined MuiPaper-rounded MuiCard-root css-vi6bn4-MuiPaper-root-MuiCard-root"
-            style="background-color: rgb(255, 255, 255);"
+            class="MuiPaper-root MuiPaper-outlined MuiPaper-rounded MuiCard-root css-79eh9f-MuiPaper-root-MuiCard-root"
+            style="background-color: rgb(247, 249, 250);"
           >
             <div
               class="MuiBox-root css-1dx0e3j"
             >
               <div
-                class="MuiGrid-root MuiGrid-container css-dx5cpz-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-container css-9cyib4-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-wrap-xs-nowrap css-1l32j5n-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-wrap-xs-nowrap css-1me3d2y-MuiGrid-root"
                   >
                     <div
-                      class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                     >
                       <div
                         class="MuiBox-root css-1ha0855"
                       />
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                     >
                       <h6
-                        class="MuiTypography-root MuiTypography-subtitle1 MuiTypography-noWrap css-8qgjdj-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-subtitle1 MuiTypography-noWrap css-14ppkdo-MuiTypography-root"
                         style="line-height: 25px;"
                       >
                         Pending Authorizations
@@ -141,7 +141,7 @@ exports[`Dashboard should match snapshot 1`] = `
                     class="MuiBox-root css-mz9qt7"
                   />
                   <p
-                    class="MuiTypography-root MuiTypography-body1 makeStyles-root-5 css-3a17l8-MuiTypography-root"
+                    class="MuiTypography-root MuiTypography-body1 makeStyles-root-5 css-1b4l2pg-MuiTypography-root"
                   >
                     0
                   </p>
@@ -151,36 +151,36 @@ exports[`Dashboard should match snapshot 1`] = `
           </div>
         </div>
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3 css-se1mjd-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-3 css-iv7vbz-MuiGrid-root"
         >
           <div
-            class="MuiPaper-root MuiPaper-outlined MuiPaper-rounded MuiCard-root css-vi6bn4-MuiPaper-root-MuiCard-root"
-            style="background-color: rgb(255, 255, 255);"
+            class="MuiPaper-root MuiPaper-outlined MuiPaper-rounded MuiCard-root css-79eh9f-MuiPaper-root-MuiCard-root"
+            style="background-color: rgb(247, 249, 250);"
           >
             <div
               class="MuiBox-root css-1dx0e3j"
             >
               <div
-                class="MuiGrid-root MuiGrid-container css-dx5cpz-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-container css-9cyib4-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                 >
                   <div
-                    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-wrap-xs-nowrap css-1l32j5n-MuiGrid-root"
+                    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-wrap-xs-nowrap css-1me3d2y-MuiGrid-root"
                   >
                     <div
-                      class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                     >
                       <div
                         class="MuiBox-root css-1r94xpk"
                       />
                     </div>
                     <div
-                      class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+                      class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                     >
                       <h6
-                        class="MuiTypography-root MuiTypography-subtitle1 MuiTypography-noWrap css-8qgjdj-MuiTypography-root"
+                        class="MuiTypography-root MuiTypography-subtitle1 MuiTypography-noWrap css-14ppkdo-MuiTypography-root"
                         style="line-height: 25px;"
                       >
                         Total Investors
@@ -191,7 +191,7 @@ exports[`Dashboard should match snapshot 1`] = `
                     class="MuiBox-root css-mz9qt7"
                   />
                   <p
-                    class="MuiTypography-root MuiTypography-body1 makeStyles-root-5 css-3a17l8-MuiTypography-root"
+                    class="MuiTypography-root MuiTypography-body1 makeStyles-root-5 css-1b4l2pg-MuiTypography-root"
                   >
                     10
                   </p>
@@ -203,29 +203,29 @@ exports[`Dashboard should match snapshot 1`] = `
       </div>
     </div>
     <div
-      class="MuiGrid-root MuiGrid-container MuiGrid-item css-a4ud3l-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-container MuiGrid-item css-1f064cs-MuiGrid-root"
     >
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-izaklv-MuiGrid-root"
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-zow5z4-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6 css-9ktohd-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6 css-1fyyp8j-MuiGrid-root"
         >
           <div
-            class="MuiPaper-root MuiPaper-outlined MuiPaper-rounded MuiCard-root css-vi6bn4-MuiPaper-root-MuiCard-root"
-            style="background-color: rgb(255, 255, 255);"
+            class="MuiPaper-root MuiPaper-outlined MuiPaper-rounded MuiCard-root css-79eh9f-MuiPaper-root-MuiCard-root"
+            style="background-color: rgb(247, 249, 250);"
           >
             <div
               class="MuiBox-root css-1ap1gp3"
             >
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-wrap-xs-nowrap css-1l32j5n-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-wrap-xs-nowrap css-1me3d2y-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                 >
                   <h6
-                    class="MuiTypography-root MuiTypography-subtitle1 MuiTypography-noWrap css-8qgjdj-MuiTypography-root"
+                    class="MuiTypography-root MuiTypography-subtitle1 MuiTypography-noWrap css-14ppkdo-MuiTypography-root"
                     style="line-height: 25px;"
                   >
                     Investments Overview
@@ -239,23 +239,23 @@ exports[`Dashboard should match snapshot 1`] = `
           </div>
         </div>
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6 css-9ktohd-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-6 css-1fyyp8j-MuiGrid-root"
         >
           <div
-            class="MuiPaper-root MuiPaper-outlined MuiPaper-rounded MuiCard-root css-vi6bn4-MuiPaper-root-MuiCard-root"
-            style="background-color: rgb(255, 255, 255);"
+            class="MuiPaper-root MuiPaper-outlined MuiPaper-rounded MuiCard-root css-79eh9f-MuiPaper-root-MuiCard-root"
+            style="background-color: rgb(247, 249, 250);"
           >
             <div
               class="makeStyles-wrapper-6 MuiBox-root css-1j30m50"
             >
               <div
-                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-wrap-xs-nowrap css-1l32j5n-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-wrap-xs-nowrap css-1me3d2y-MuiGrid-root"
               >
                 <div
-                  class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                 >
                   <h6
-                    class="MuiTypography-root MuiTypography-subtitle1 MuiTypography-noWrap css-8qgjdj-MuiTypography-root"
+                    class="MuiTypography-root MuiTypography-subtitle1 MuiTypography-noWrap css-14ppkdo-MuiTypography-root"
                     style="line-height: 25px;"
                   >
                     Top Investors Open Deals
@@ -269,28 +269,28 @@ exports[`Dashboard should match snapshot 1`] = `
                   class="MuiTableContainer-root css-rorn0c-MuiTableContainer-root"
                 >
                   <table
-                    class="MuiTable-root css-me9vuo-MuiTable-root"
+                    class="MuiTable-root css-7mlt34-MuiTable-root"
                   >
                     <thead
                       class="MuiTableHead-root css-15wwp11-MuiTableHead-root"
                     >
                       <tr
-                        class="MuiTableRow-root MuiTableRow-head css-17ivmep-MuiTableRow-root"
+                        class="MuiTableRow-root MuiTableRow-head css-8dfetm-MuiTableRow-root"
                       >
                         <th
-                          class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-headColumn-7 css-hr8dup-MuiTableCell-root"
+                          class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-headColumn-7 css-1efwvfh-MuiTableCell-root"
                           scope="col"
                         >
                           Sub-Fund
                         </th>
                         <th
-                          class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-headColumn-7 css-hr8dup-MuiTableCell-root"
+                          class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-headColumn-7 css-1efwvfh-MuiTableCell-root"
                           scope="col"
                         >
                           Investor Name
                         </th>
                         <th
-                          class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-headColumn-7 css-19du5ju-MuiTableCell-root"
+                          class="MuiTableCell-root MuiTableCell-head MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-headColumn-7 css-1v6mra9-MuiTableCell-root"
                           scope="col"
                         >
                           Amount
@@ -301,22 +301,22 @@ exports[`Dashboard should match snapshot 1`] = `
                       class="MuiTableBody-root css-apqrd9-MuiTableBody-root"
                     >
                       <tr
-                        class="MuiTableRow-root css-17ivmep-MuiTableRow-root"
+                        class="MuiTableRow-root css-8dfetm-MuiTableRow-root"
                       >
                         <th
-                          class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-column-8 css-19zhwm2-MuiTableCell-root"
+                          class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-column-8 css-17e0zod-MuiTableCell-root"
                           scope="row"
                         >
                           Access Token
                         </th>
                         <th
-                          class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-column-8 css-19zhwm2-MuiTableCell-root"
+                          class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignLeft MuiTableCell-sizeMedium makeStyles-column-8 css-17e0zod-MuiTableCell-root"
                           scope="row"
                         >
                           aditya test 2
                         </th>
                         <th
-                          class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-8 css-1kshyuf-MuiTableCell-root"
+                          class="MuiTableCell-root MuiTableCell-body MuiTableCell-alignRight MuiTableCell-sizeMedium makeStyles-column-8 css-17jaypo-MuiTableCell-root"
                           scope="row"
                         >
                           2,000,000.00
@@ -332,30 +332,30 @@ exports[`Dashboard should match snapshot 1`] = `
       </div>
     </div>
     <div
-      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1sr5n48-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
     >
       <div
-        class="MuiPaper-root MuiPaper-outlined MuiPaper-rounded css-4a93ov-MuiPaper-root"
+        class="MuiPaper-root MuiPaper-outlined MuiPaper-rounded css-1nt1r1b-MuiPaper-root"
         style="padding: 16px 16px 20px 16px;"
       >
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-izaklv-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 css-zow5z4-MuiGrid-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-ecpyny-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-container MuiGrid-item MuiGrid-grid-xs-12 css-t6erdo-MuiGrid-root"
           >
             <div
-              class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+              class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
             >
               <h6
-                class="MuiTypography-root MuiTypography-subtitle1 css-19nocy2-MuiTypography-root"
+                class="MuiTypography-root MuiTypography-subtitle1 css-1b4l2pg-MuiTypography-root"
               >
                 Investors
               </h6>
             </div>
           </div>
           <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1sr5n48-MuiGrid-root"
+            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
           >
             <div
               class="MuiBox-root css-1tsffzt"
@@ -364,7 +364,7 @@ exports[`Dashboard should match snapshot 1`] = `
                 class="MuiBox-root css-1jpm9pd"
               />
               <p
-                class="MuiTypography-root MuiTypography-body1 MuiTypography-alignCenter css-6bx0l6-MuiTypography-root"
+                class="MuiTypography-root MuiTypography-body1 MuiTypography-alignCenter css-1gd5lqg-MuiTypography-root"
               >
                 There is no investment at the moment. Once you receive investments in your deal you will be able to see the charts.
               </p>

@@ -1,8 +1,7 @@
 import { Theme } from '@mui/material'
 
 export const breadcrumbs = (theme: Theme) => {
-  // eslint-disable-next-line
-  const breadcrumbsPalette = theme.palette.breadcrumbs!
+  const breadcrumbsPalette = theme.palette.breadcrumbs
 
   return {
     defaultProps: {

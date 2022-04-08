@@ -1,8 +1,7 @@
 import makeStyles from '@mui/styles/makeStyles'
 
 export const useStyles = makeStyles(theme => {
-  // eslint-disable-next-line
-  const alertsPalette = theme.palette.alerts!
+  const alertsPalette = theme.palette.alerts
 
   return {
     wrapper: {

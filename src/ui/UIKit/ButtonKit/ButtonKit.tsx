@@ -6,6 +6,7 @@ import { IconButtonKit } from 'ui/UIKit/ButtonKit/IconButtonKit'
 import { FABKit } from 'ui/UIKit/ButtonKit/FABKit'
 import { DropdownKit } from 'ui/UIKit/ButtonKit/DropdownKit'
 import { UIKitThemeWrapper } from 'ui/UIKit/UIKitThemeWrapper'
+import { SpecialButtons } from 'ui/UIKit/ButtonKit/SpecialButtons/SpecialButtons'
 
 export const ButtonKit = () => {
   return (
@@ -13,6 +14,9 @@ export const ButtonKit = () => {
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <BasicButtons />
+        </Grid>
+        <Grid item xs={12}>
+          <SpecialButtons />
         </Grid>
         <Grid item xs={12}>
           <ButtonGroupKit />

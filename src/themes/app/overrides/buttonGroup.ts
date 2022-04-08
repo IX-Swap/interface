@@ -2,8 +2,7 @@ import { Theme } from '@mui/material'
 import { alpha } from '@mui/material/styles'
 
 export const buttonGroup = (theme: Theme) => {
-  // eslint-disable-next-line
-  const buttonGroupPalette = theme.palette.buttonGroup!
+  const buttonGroupPalette = theme.palette.buttonGroup
 
   return {
     styleOverrides: {

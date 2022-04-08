@@ -2,8 +2,7 @@ import { Theme } from '@mui/material'
 import { alpha } from '@mui/material/styles'
 
 export const button = (theme: Theme) => {
-  // eslint-disable-next-line
-  const buttonPalette = theme.palette.button!
+  const buttonPalette = theme.palette.button
 
   return {
     styleOverrides: {
@@ -94,6 +93,48 @@ export const button = (theme: Theme) => {
               fill: buttonPalette.colorAlternateHover
             },
             border: `1px solid ${buttonPalette.borderAlternateHover}`
+          }
+        }
+      },
+      {
+        props: { variant: 'contained', color: 'special-red' } as any,
+        style: {
+          backgroundColor: theme.palette['special-red'].main,
+          color: theme.palette['special-red'].contrastText,
+          ':hover': {
+            backgroundColor: theme.palette['special-red'].light
+          }
+        }
+      },
+      {
+        props: { variant: 'contained', color: 'special-green' } as any,
+        style: {
+          backgroundColor: theme.palette['special-green'].main,
+          color: theme.palette['special-green'].contrastText,
+          ':hover': {
+            backgroundColor: theme.palette['special-green'].light
+          }
+        }
+      },
+      {
+        props: { variant: 'outlined', color: 'special-red' } as any,
+        style: {
+          borderColor: theme.palette['special-red'].main,
+          color: theme.palette['special-red'].main,
+          ':hover': {
+            backgroundColor: theme.palette['special-red'].light,
+            borderColor: alpha(theme.palette['special-red'].main, 0.3)
+          }
+        }
+      },
+      {
+        props: { variant: 'outlined', color: 'special-green' } as any,
+        style: {
+          borderColor: theme.palette['special-green'].main,
+          color: theme.palette['special-green'].main,
+          ':hover': {
+            backgroundColor: theme.palette['special-green'].light,
+            borderColor: alpha(theme.palette['special-green'].main, 0.3)
           }
         }
       }

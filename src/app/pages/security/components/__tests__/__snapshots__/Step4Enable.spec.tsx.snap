@@ -3,13 +3,13 @@
 exports[`Step4Enable should match snapshot 1`] = `
 <div>
   <div
-    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column css-bjcb1i-MuiGrid-root"
+    class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column css-32q0xd-MuiGrid-root"
   >
     <div
-      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1sr5n48-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
     >
       <h5
-        class="MuiTypography-root MuiTypography-h5 MuiTypography-alignCenter css-1f4u6as-MuiTypography-root"
+        class="MuiTypography-root MuiTypography-h5 MuiTypography-alignCenter css-qj7s3w-MuiTypography-root"
       >
         Enable Authenticator App
       </h5>
@@ -18,16 +18,16 @@ exports[`Step4Enable should match snapshot 1`] = `
       />
     </div>
     <div
-      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1sr5n48-MuiGrid-root"
+      class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
     >
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column css-11ypfzm-MuiGrid-root"
+        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-3 MuiGrid-direction-xs-column css-19zvv5e-MuiGrid-root"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-8 MuiGrid-grid-lg-6 css-1er4735-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-md-8 MuiGrid-grid-lg-6 css-1ihtruj-MuiGrid-root"
         >
           <p
-            class="MuiTypography-root MuiTypography-body1 MuiTypography-alignCenter css-6bx0l6-MuiTypography-root"
+            class="MuiTypography-root MuiTypography-body1 MuiTypography-alignCenter css-1gd5lqg-MuiTypography-root"
           >
             Please enter the 6-digit code from your 
             
@@ -36,17 +36,17 @@ exports[`Step4Enable should match snapshot 1`] = `
           </p>
         </div>
         <div
-          class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+          class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
         >
           <form
             data-testid="form"
             style="width: 100%;"
           >
             <div
-              class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-direction-xs-column css-13do5pu-MuiGrid-root"
+              class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 MuiGrid-direction-xs-column css-ffjoah-MuiGrid-root"
             >
               <div
-                class="MuiGrid-root MuiGrid-item css-7kz4db-MuiGrid-root"
+                class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
               >
                 <div
                   class="makeStyles-container-1 makeStyles-fullwidth-2"
@@ -137,7 +137,7 @@ exports[`Step4Enable should match snapshot 1`] = `
               class="MuiBox-root css-17w1y3n"
             >
               <button
-                class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-disableElevation MuiButtonBase-root Mui-disabled  css-7u5lsg-MuiButtonBase-root-MuiButton-root"
+                class="MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-disableElevation MuiButtonBase-root Mui-disabled  css-gbhykm-MuiButtonBase-root-MuiButton-root"
                 disabled=""
                 tabindex="-1"
                 type="submit"

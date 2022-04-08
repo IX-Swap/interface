@@ -1,8 +1,8 @@
 import { Theme } from '@mui/material'
 
 export const tooltip = (theme: Theme) => {
-  // eslint-disable-next-line
-  const tooltipPalette = theme.palette.tooltip!
+  const tooltipPalette = theme.palette.tooltip
+
   return {
     styleOverrides: {
       tooltip: {

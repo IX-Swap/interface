@@ -1,9 +1,8 @@
 import { Theme } from '@mui/material'
 import { alpha } from '@mui/material/styles'
 
-export const checkbox = (theme: Theme) => {
-  // eslint-disable-next-line
-  const checkboxPalette = theme.palette.toggledInputs!
+export const radio = (theme: Theme) => {
+  const radioPalette = theme.palette.toggledInputs
 
   return {
     styleOverrides: {
@@ -14,19 +13,23 @@ export const checkbox = (theme: Theme) => {
 
           '&:hover': {
             '& .MuiSvgIcon-root': {
-              border: `1px solid ${checkboxPalette.borderHover}`,
-              boxShadow: `0px 4px 4px ${alpha(checkboxPalette.boxShadow, 0.08)}`
+              border: `1px solid ${radioPalette.borderHover}`,
+              boxShadow: `0px 4px 4px ${
+                theme.palette.mode === 'light'
+                  ? alpha(radioPalette.boxShadow, 0.08)
+                  : 'transparent'
+              }`
             }
           },
 
           '& .MuiSvgIcon-root': {
-            width: 18,
-            height: 18,
-            borderRadius: 2,
+            width: 16,
+            height: 16,
+            background: radioPalette.bg,
+            fill: radioPalette.fill,
+            border: `1px solid ${radioPalette.border}`,
             boxSizing: 'border-box',
-            fill: checkboxPalette.fill,
-            background: checkboxPalette.bg,
-            border: `1px solid ${checkboxPalette.border}`
+            borderRadius: 10
           },
 
           '&.Mui-checked': {
@@ -38,7 +41,7 @@ export const checkbox = (theme: Theme) => {
           },
           '&.Mui-disabled': {
             '& .MuiSvgIcon-root': {
-              opacity: checkboxPalette.opacity
+              opacity: radioPalette.opacity
             }
           }
         }
