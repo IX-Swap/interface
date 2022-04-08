@@ -6,6 +6,12 @@ import { button } from 'themes/app/overrides/button'
 import { buttonGroup } from 'themes/app/overrides/buttonGroup'
 import { checkbox } from 'themes/app/overrides/checkbox'
 import { chip } from 'themes/app/overrides/chip'
+import {
+  dialog,
+  dialogActions,
+  dialogContent,
+  dialogTitle
+} from 'themes/app/overrides/dialog'
 import { fab } from 'themes/app/overrides/fab'
 import { iconButton } from 'themes/app/overrides/iconButton'
 import { input } from 'themes/app/overrides/input'
@@ -78,5 +84,9 @@ export const getThemeOverrides = (
   MuiButtonBase: {},
   MuiTextField: input(theme),
   MuiOutlinedInput: outlined(theme),
-  MuiInputLabel: inputLabel(theme)
+  MuiInputLabel: inputLabel(theme),
+  MuiDialog: dialog(theme),
+  MuiDialogContent: dialogContent(theme),
+  MuiDialogActions: dialogActions(theme),
+  MuiDialogTitle: dialogTitle(theme)
 })
