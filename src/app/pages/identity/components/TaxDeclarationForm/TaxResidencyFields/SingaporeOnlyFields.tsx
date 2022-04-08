@@ -3,13 +3,13 @@ import {
   Box,
   Grid,
   Typography,
-  Radio,
   FormControlLabel,
   TextField
 } from '@mui/material'
 import { TypedField } from 'components/form/TypedField'
 import { useFormContext } from 'react-hook-form'
 import { VSpacer } from 'components/VSpacer'
+import { UIRadio } from 'components/UIRadio/UIRadio'
 
 export const SingaporeOnlyFields = () => {
   const { control } = useFormContext()
@@ -25,7 +25,7 @@ export const SingaporeOnlyFields = () => {
         <FormControlLabel
           label='YES, I’m currently only tax resident in Singapore and do not have a foreign tax residency.'
           value='yes'
-          control={<Radio />}
+          control={<UIRadio />}
         />
       </Grid>
       {singaporeOnly === 'yes' && (
