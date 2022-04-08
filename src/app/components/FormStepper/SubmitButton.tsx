@@ -1,4 +1,4 @@
-import { Button } from '@mui/material'
+import { Box, Button, Tooltip, Typography } from '@mui/material'
 import React from 'react'
 import { MutationResultPair } from 'react-query'
 import { ButtonProps } from '@mui/material/Button'
@@ -18,21 +18,37 @@ export const SubmitButton = (props: SubmitButtonProps) => {
   const isApproved = data?.status === 'Approved'
 
   const isValid: boolean =
-    step.validationSchema?.isValidSync(step.getFormValues(data)) ?? true
+    step.validationSchema?.isValidSync(step.getFormValues(data)) ?? false
 
   const handleSave = async () => {
     return await save(data._id)
   }
 
   return (
-    <Button
-      variant='contained'
-      color='primary'
-      onClick={async () => void handleSave()}
-      disabled={isApproved || isLoading || isSubmitted || !isValid}
-      disableElevation
+    <Tooltip
+      title={
+        !isValid ? (
+          <Typography color='error'>
+            Please fill in all the required steps
+          </Typography>
+        ) : (
+          ''
+        )
+      }
+      placement='top-end'
+      arrow
     >
-      {isApproved ? 'Approved' : isSubmitted ? 'Submitted' : 'Submit'}
-    </Button>
+      <Box>
+        <Button
+          variant='contained'
+          color='primary'
+          onClick={async () => void handleSave()}
+          disabled={isApproved || isLoading || isSubmitted || !isValid}
+          disableElevation
+        >
+          {isApproved ? 'Approved' : isSubmitted ? 'Submitted' : 'Submit'}
+        </Button>
+      </Box>
+    </Tooltip>
   )
 }

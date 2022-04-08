@@ -1,8 +1,10 @@
-import { Grid, Step, StepButton, StepLabel, Stepper } from '@mui/material'
+import { Grid, Paper, Step, Typography } from '@mui/material'
 import { FormStep } from 'app/components/FormStepper/FormStep'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import React, { ComponentType, useEffect, useMemo, useState } from 'react'
 import { MutationResultPair } from 'react-query'
+import { Stepper } from 'ui/Stepper/Stepper'
+import { StepButton } from 'ui/Stepper/StepButton'
 
 export interface FormStepperStep {
   label: string
@@ -38,12 +40,22 @@ export const FormStepper = (props: FormStepperProps) => {
   } = props
 
   const stepsMemo = useMemo(() => steps, []) // eslint-disable-line
+
+  const getCompleted = () => {
+    if (data?.submitted === true) {
+      return steps.length
+    }
+
+    if (shouldSaveOnMove) {
+      return defaultActiveStep ?? data?.step ?? 0
+    }
+
+    return steps.length
+  }
   const [completed, setCompleted] = React.useState<number[]>(
     Array.from(
       {
-        length: shouldSaveOnMove
-          ? defaultActiveStep ?? data?.step ?? 0
-          : steps.length
+        length: getCompleted()
       },
       (x, i) => i
     )
@@ -83,34 +95,38 @@ export const FormStepper = (props: FormStepperProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeStep])
 
-  return (
-    <Grid container direction='column' spacing={2}>
-      <Grid item>
-        <Stepper activeStep={activeStep} alternativeLabel nonLinear={nonLinear}>
-          {steps.map((step, index) => (
-            <Step key={`step-${index}`} completed={completed.includes(index)}>
-              {nonLinear ? (
-                <StepButton
-                  onClick={handleStepButtonClick(index)}
-                  disableRipple
-                  disabled={
-                    !completed.includes(index) &&
-                    index !== Math.max(...completed) + 1
-                  }
-                >
-                  <StepLabel>{step.label}</StepLabel>
-                </StepButton>
-              ) : (
-                <StepLabel>{step.label}</StepLabel>
-              )}
-            </Step>
-          ))}
-        </Stepper>
-      </Grid>
+  const getStepStatus = (
+    step: FormStepperStep,
+    index: number,
+    activeStep: number
+  ) => {
+    const isValid: boolean =
+      step.validationSchema?.isValidSync(step.getFormValues(data)) ?? false
 
-      {stepsMemo.map((step, index) => (
-        <Grid item key={`step-content-${index}`}>
+    const lastStep = index === steps.length - 1
+    return {
+      active: index === activeStep,
+      completed: lastStep
+        ? data !== undefined
+          ? data.status === 'Submitted' || data.status === 'Approved'
+          : false
+        : completed.includes(index)
+        ? isValid
+        : false,
+      error: lastStep
+        ? data?.status === 'Rejected'
+        : completed.includes(index)
+        ? !isValid
+        : false
+    }
+  }
+
+  return (
+    <Grid container spacing={2}>
+      <Grid item xs={9}>
+        {stepsMemo.map((step, index) => (
           <FormStep
+            key={`step-content-${index}`}
             step={step}
             index={index}
             totalSteps={steps.length}
@@ -124,8 +140,39 @@ export const FormStepper = (props: FormStepperProps) => {
             shouldSaveOnMove={shouldSaveOnMove}
             skippable={skippable}
           />
-        </Grid>
-      ))}
+        ))}
+      </Grid>
+      <Grid item xs={3}>
+        <Paper sx={{ borderRadius: 2, py: 5 }}>
+          <Typography variant='h6' sx={{ mb: 2, pl: 4 }}>
+            Progress
+          </Typography>
+          <Stepper
+            nonLinear={nonLinear}
+            orientation='vertical'
+            activeStep={activeStep}
+          >
+            {steps.map((formStep, index) => {
+              const step = index + 1
+              return (
+                <Step key={formStep.label}>
+                  <StepButton
+                    step={step}
+                    variantsConditions={getStepStatus(
+                      formStep,
+                      index,
+                      activeStep
+                    )}
+                    onClick={handleStepButtonClick(index)}
+                  >
+                    {formStep.label}
+                  </StepButton>
+                </Step>
+              )
+            })}
+          </Stepper>
+        </Paper>
+      </Grid>
     </Grid>
   )
 }
