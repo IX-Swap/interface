@@ -199,6 +199,7 @@ const KYCWrapper = styled(Flex)`
 `
 
 export default function Header() {
+  const [cookies] = useCookies(['annoucementsSeen'])
   const { account, chainId } = useActiveWeb3React()
   const { hasLightBackground } = useLightBackground()
   const userEthBalance = useETHBalances(account ? [account] : [])?.[account ?? '']
@@ -211,6 +212,7 @@ export default function Header() {
   return (
     <>
       <HeaderWrapper>
+        {!cookies.annoucementsSeen && <Announcement />}
         <HeaderFrame showBackground={scrollY > 45} lightBackground={hasLightBackground}>
           <HeaderRow>
             <Title href=".">
