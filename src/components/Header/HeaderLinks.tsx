@@ -99,7 +99,7 @@ export const HeaderLinks = () => {
   return (
     <HeaderLinksWrap links={7}>
       {account && chainId && chains.includes(chainId) && isWhitelisted && (
-        <StyledNavLink disabled={!isKycApproved} id={`swap-nav-link`} to={'/swap'}>
+        <StyledNavLink id={`swap-nav-link`} to={'/swap'}>
           <Trans>Swap/Trade</Trans>
         </StyledNavLink>
       )}
@@ -116,7 +116,7 @@ export const HeaderLinks = () => {
         </StyledNavLink>
       )}
 
-      {account && chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && isDev && (
+      {account && chainId && chains.includes(chainId) && isWhitelisted && (
         <MenuExternalLink
           disabled={!isKycApproved}
           target="_self"
