@@ -284,3 +284,10 @@ export const corporateInvestorAgreementsSchema = yup
     investor: yup.bool().oneOf([true]).required(validationMessages.required),
     disclosure: yup.bool().oneOf([true]).required(validationMessages.required)
   })
+
+export const corporateInvestorSchema = yup.object().shape<any>({
+  ...corporateInvestorInfoSchema.fields,
+  ...corporateIssuerDocumentsSchema.fields,
+  ...corporateTaxDeclarationSchema.fields,
+  ...directorsAndBeneficialOwnersSchema.fields
+})
