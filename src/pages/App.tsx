@@ -143,9 +143,6 @@ export default function App() {
   }
 
   useEffect(() => {
-    // setCookie('annoucementsSeen', 'true', {
-    //   path: '/',
-    // })
     clearLocaleStorage()
   }, [])
 
