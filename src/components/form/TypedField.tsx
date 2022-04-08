@@ -130,21 +130,11 @@ export const TypedField = <
           })
         }
         // temporarily fix to prevent input label
-        const displayName = (component as any).displayName
-        console.log({ displayName })
-        const textFieldWrappers = [
-          'TextInput',
-          'NumericInput',
-          'MinimumInvesmentField',
-          'TextFieldSelect',
-          'BankSelect',
-          'UserIdentitySelect',
-          'FundSourceSelect'
-        ]
+        const displayName = String((component as any).displayName)
 
         const isTextField =
           (component as any)?.render?.name === 'TextField' ||
-          textFieldWrappers.includes(displayName)
+          displayName.startsWith('TextField')
 
         return (
           <FormControl fullWidth variant={rest?.variant}>

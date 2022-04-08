@@ -105,4 +105,4 @@ export const UserIdentitySelect = ({
   )
 }
 
-UserIdentitySelect.displayName = 'UserIdentitySelect'
+UserIdentitySelect.displayName = 'TextField_UserIdentitySelect'

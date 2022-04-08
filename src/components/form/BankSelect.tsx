@@ -36,4 +36,4 @@ export const BankSelect = (props: BankSelectProps) => {
   )
 }
 
-BankSelect.displayName = 'BankSelect'
+BankSelect.displayName = 'TextField_BankSelect'

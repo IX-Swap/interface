@@ -82,4 +82,4 @@ export const TextInput = (props: InputProps) => {
   )
 }
 
-TextInput.displayName = 'TextInput'
+TextInput.displayName = 'TextField_TextInput'

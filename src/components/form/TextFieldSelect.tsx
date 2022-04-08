@@ -21,4 +21,4 @@ export const TextFieldSelect = (props: TextFieldProps) => {
   )
 }
 
-TextFieldSelect.displayName = 'TextFieldSelect'
+TextFieldSelect.displayName = 'TextField_TextFieldSelect'

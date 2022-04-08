@@ -35,4 +35,4 @@ export const NumericInput = (
   )
 }
 
-NumericInput.displayName = 'NumericInput'
+NumericInput.displayName = 'TextField_NumericInput'
