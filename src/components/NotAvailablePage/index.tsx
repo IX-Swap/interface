@@ -1,6 +1,7 @@
 import React from 'react'
 import { Trans, t } from '@lingui/macro'
 import { useLocation } from 'react-router-dom'
+import { useCookies } from 'react-cookie'
 
 import ethereumIcon from 'assets/images/ethereum-clear-logo.svg'
 import polygonIcon from 'assets/images/polygon.svg'
@@ -25,6 +26,7 @@ import {
 export const NotAvailablePage = () => {
   const { chainId, library, account } = useActiveWeb3React()
   const { pathname } = useLocation()
+  const [cookies] = useCookies(['annoucementsSeen'])
 
   const toggleWalletModal = useWalletModalToggle()
 
@@ -38,7 +40,7 @@ export const NotAvailablePage = () => {
 
   if (!account) {
     return (
-      <ConnectWalletContainer>
+      <ConnectWalletContainer hasAnnouncement={!cookies.annoucementsSeen}>
         <div>
           <Trans>Welcome to IX Swap</Trans>
         </div>
