@@ -52,7 +52,6 @@ export const corporateErrorsSchema = yup.object().shape({
     otherwise: yup.string(),
   }),
   businessActivity: yup.string().required('Required'),
-  incorporated: yup.boolean(),
   personnelName: yup.string().required('Required'),
   designation: yup.string().required('Required'),
   email: yup.string().email('Invalid email').required('Required'),

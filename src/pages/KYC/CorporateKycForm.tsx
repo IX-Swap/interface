@@ -393,13 +393,6 @@ export default function CorporateKycForm() {
                               />
                             )}
                           </FormGrid>
-                          {/* <FormGrid columns={1}>
-                            <Checkbox
-                              checked={values.incorporated}
-                              onClick={() => setFieldValue('incorporated', !values.incorporated, false)}
-                              label="Is Incorporated"
-                            />
-                          </FormGrid> */}
                         </Column>
                       </FormCard>
 
