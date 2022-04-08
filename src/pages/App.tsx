@@ -34,6 +34,7 @@ import { useAuthState } from 'state/auth/hooks'
 import { useDispatch } from 'react-redux'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 import { useCookies } from 'react-cookie'
+import { MaintenanceOverlay } from 'components/MaintenanceOverlay'
 
 const Admin = lazy(() => import('./Admin'))
 
@@ -86,6 +87,7 @@ const ToggleableBody = styled(BodyWrapper)<{ isVisible?: boolean }>`
 `
 
 export default function App() {
+  const isMaintenanceMode = false
   const isSettingsOpen = useModalOpen(ApplicationModal.SETTINGS)
   const { pathname } = useLocation()
   const { chainId, account } = useActiveWeb3React()
@@ -165,107 +167,121 @@ export default function App() {
       <Route component={GoogleAnalyticsReporter} />
       <Route component={DarkModeQueryParamReader} />
       <Route component={ApeModeQueryParamReader} />
+
       <AppBackground />
       <Popups />
       <AppWrapper>
-        <PlaygroundModal />
-        {!isAdminKyc && <Header />}
-        <ToggleableBody isVisible={visibleBody} {...(isAdminKyc && { style: { marginTop: 26 } })}>
-          <IXSBalanceModal />
-          <Web3ReactManager>
-            <Suspense
-              fallback={
-                <>
-                  <LoadingIndicator isLoading />
-                </>
-              }
-            >
-              <Switch>
-                <Route exact strict path="/admin" render={() => <Redirect to="/admin/accreditation" />} />
+        {isMaintenanceMode ? (
+          <MaintenanceOverlay />
+        ) : (
+          <>
+            <PlaygroundModal />
+            {!isAdminKyc && <Header />}
+            <ToggleableBody isVisible={visibleBody} {...(isAdminKyc && { style: { marginTop: 26 } })}>
+              <IXSBalanceModal />
+              <Web3ReactManager>
+                <Suspense
+                  fallback={
+                    <>
+                      <LoadingIndicator isLoading />
+                    </>
+                  }
+                >
+                  <Switch>
+                    <Route exact strict path="/admin" render={() => <Redirect to="/admin/accreditation" />} />
 
-                <Route exact strict path="/admin/:tab/:id?" component={Admin} />
+                    <Route exact strict path="/admin/:tab/:id?" component={Admin} />
 
-                {chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
-                  <Route exact strict path={routes.nftCreate} component={CreateNFT} />
-                )}
-                {chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
-                  <Route exact strict path={routes.nftList} component={ListNFT} />
-                )}
-                {chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
-                  <Route exact strict path={routes.nftCollections} component={NFTCollections} />
-                )}
-                {chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
-                  <Route exact strict path={routes.nftCollectionCreate} component={CreateCollection} />
-                )}
-                {chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
-                  <Route exact strict path={routes.nftEditCollectionPath} component={UpdateCollection} />
-                )}
-                {chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
-                  <Route exact strict path={routes.nftCollectionImport} component={NftImport} />
-                )}
-                {chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
-                  <Route exact strict path={routes.nftViewCollectionPath} component={NFTCollection} />
-                )}
-                {chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
-                  <Route exact strict path={routes.nftItemPath} component={NftAssetPage} />
-                )}
+                    {chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
+                      <Route exact strict path={routes.nftCreate} component={CreateNFT} />
+                    )}
+                    {chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
+                      <Route exact strict path={routes.nftList} component={ListNFT} />
+                    )}
+                    {chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
+                      <Route exact strict path={routes.nftCollections} component={NFTCollections} />
+                    )}
+                    {chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
+                      <Route exact strict path={routes.nftCollectionCreate} component={CreateCollection} />
+                    )}
+                    {chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
+                      <Route exact strict path={routes.nftEditCollectionPath} component={UpdateCollection} />
+                    )}
+                    {chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
+                      <Route exact strict path={routes.nftCollectionImport} component={NftImport} />
+                    )}
+                    {chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
+                      <Route exact strict path={routes.nftViewCollectionPath} component={NFTCollection} />
+                    )}
+                    {chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
+                      <Route exact strict path={routes.nftItemPath} component={NftAssetPage} />
+                    )}
 
-                {isWhitelisted && <Route exact strict path={routes.kyc} component={KYC} />}
-                {isWhitelisted && canAccessKycForm('individual') && (
-                  <Route exact strict path={routes.kycIndividual} component={IndividualKYC} />
-                )}
-                {isWhitelisted && canAccessKycForm('corporate') && (
-                  <Route exact strict path={routes.kycCorporate} component={CorporateKYC} />
-                )}
+                    {isWhitelisted && <Route exact strict path={routes.kyc} component={KYC} />}
+                    {isWhitelisted && canAccessKycForm('individual') && (
+                      <Route exact strict path={routes.kycIndividual} component={IndividualKYC} />
+                    )}
+                    {isWhitelisted && canAccessKycForm('corporate') && (
+                      <Route exact strict path={routes.kycCorporate} component={CorporateKYC} />
+                    )}
 
-                {chainId && chains.includes(chainId) && isWhitelisted && (
-                  <Route exact strict path="/send" component={RedirectPathToSwapOnly} />
-                )}
-                {chainId && chains.includes(chainId) && isWhitelisted && (
-                  <Route exact strict path="/swap/:outputCurrency" component={RedirectToSwap} />
-                )}
-                {chainId && chains.includes(chainId) && isWhitelisted && (
-                  <Route exact strict path="/swap" component={Swap} />
-                )}
-                {chainId && chains.includes(chainId) && isWhitelisted && (
-                  <Route exact strict path="/find" component={PoolFinder} />
-                )}
-                {chainId && chains.includes(chainId) && isWhitelisted && (
-                  <Route exact strict path="/pool" component={PoolV2} />
-                )}
+                    {chainId && chains.includes(chainId) && isWhitelisted && (
+                      <Route exact strict path="/send" component={RedirectPathToSwapOnly} />
+                    )}
+                    {chainId && chains.includes(chainId) && isWhitelisted && (
+                      <Route exact strict path="/swap/:outputCurrency" component={RedirectToSwap} />
+                    )}
+                    {chainId && chains.includes(chainId) && isWhitelisted && (
+                      <Route exact strict path="/swap" component={Swap} />
+                    )}
+                    {chainId && chains.includes(chainId) && isWhitelisted && (
+                      <Route exact strict path="/find" component={PoolFinder} />
+                    )}
+                    {chainId && chains.includes(chainId) && isWhitelisted && (
+                      <Route exact strict path="/pool" component={PoolV2} />
+                    )}
 
-                {chainId && chains.includes(chainId) && isWhitelisted && (
-                  <Route exact strict path="/add/:currencyIdA?/:currencyIdB?" component={RedirectDuplicateTokenIdsV2} />
-                )}
+                    {chainId && chains.includes(chainId) && isWhitelisted && (
+                      <Route
+                        exact
+                        strict
+                        path="/add/:currencyIdA?/:currencyIdB?"
+                        component={RedirectDuplicateTokenIdsV2}
+                      />
+                    )}
 
-                {chainId && chains.includes(chainId) && isWhitelisted && (
-                  <Route exact strict path="/remove/:currencyIdA/:currencyIdB" component={RemoveLiquidity} />
-                )}
+                    {chainId && chains.includes(chainId) && isWhitelisted && (
+                      <Route exact strict path="/remove/:currencyIdA/:currencyIdB" component={RemoveLiquidity} />
+                    )}
 
-                {chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
-                  <Route exact strict path="/faucet" component={Faucet} />
-                )}
+                    {chainId && chainId === SupportedChainId.KOVAN && isWhitelisted && (
+                      <Route exact strict path="/faucet" component={Faucet} />
+                    )}
 
-                {chainId && chains.includes(chainId) && isWhitelisted && (
-                  <Route exact strict path="/security-tokens/:currencyId" component={SecTokenDetails} />
-                )}
-                {chainId && chains.includes(chainId) && isWhitelisted && (
-                  <Route exact strict path={routes.securityTokens()} component={CustodianV2} />
-                )}
+                    {chainId && chains.includes(chainId) && isWhitelisted && (
+                      <Route exact strict path="/security-tokens/:currencyId" component={SecTokenDetails} />
+                    )}
+                    {chainId && chains.includes(chainId) && isWhitelisted && (
+                      <Route exact strict path={routes.securityTokens()} component={CustodianV2} />
+                    )}
 
-                <Route exact strict path={routes.staking} component={StakingTab} />
-                <Route exact strict path={routes.vesting} component={VestingTab} />
+                    <Route exact strict path={routes.staking} component={StakingTab} />
+                    <Route exact strict path={routes.vesting} component={VestingTab} />
 
-                {useRedirect && (
-                  <Route
-                    component={(props: RouteComponentProps) => <Redirect to={{ ...props, pathname: defaultPage }} />}
-                  />
-                )}
-              </Switch>
-            </Suspense>
-          </Web3ReactManager>
-        </ToggleableBody>
-        <Footer />
+                    {useRedirect && (
+                      <Route
+                        component={(props: RouteComponentProps) => (
+                          <Redirect to={{ ...props, pathname: defaultPage }} />
+                        )}
+                      />
+                    )}
+                  </Switch>
+                </Suspense>
+              </Web3ReactManager>
+            </ToggleableBody>
+            <Footer />
+          </>
+        )}
       </AppWrapper>
     </ErrorBoundary>
   )

@@ -60,6 +60,7 @@ export interface Colors {
   borderG1: Gradient
   borderG2: Gradient
   borderG3: Gradient
+  borderG4: Gradient
   modalBG: Color
   advancedBG: Color
   divider: Color

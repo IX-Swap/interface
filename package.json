@@ -177,6 +177,7 @@
     "playwright": "^1.13.0",
     "react-cookie": "^4.1.1",
     "react-lazy-load-image-component": "^1.5.1",
+    "react-lottie-player": "^1.4.1",
     "react-phone-input-2": "^2.15.0",
     "react-select": "^5.2.2",
     "react-sticky-box": "^0.9.3",

@@ -136,6 +136,9 @@ export function colors(darkMode: boolean): Colors {
     borderG3: darkMode
       ? 'linear-gradient(90deg, rgba(237, 206, 255, 0) 0%, #edceff 4.92%, #edceff 94.53%, rgba(237, 206, 255, 0) 98.88%);'
       : 'linear-gradient(90deg, rgba(237, 206, 255, 0) 0%, #edceff 4.92%, #edceff 94.53%, rgba(237, 206, 255, 0) 98.88%);',
+    borderG4: darkMode
+      ? 'linear-gradient(86.36deg, #6B2EE6 29.09%, #FF0080 107.32%);'
+      : 'linear-gradient(86.36deg, #6B2EE6 29.09%, #FF0080 107.32%);',
     modalBG: darkMode ? 'rgba(0,0,0,0.9)' : 'rgba(0,0,0,0.3)',
     advancedBG: darkMode ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.6)',
     divider: darkMode ? 'rgba(43, 43, 43, 0.435)' : 'rgba(43, 43, 43, 0.035)',
@@ -358,6 +361,9 @@ export const TYPE = {
   },
   error({ error, ...props }: { error: boolean } & TextProps) {
     return <TextWrapper fontWeight={500} color={error ? 'error' : 'text2'} {...props} />
+  },
+  maintenance(props: TextProps) {
+    return <TextWrapper fontWeight={700} fontSize={64} lineHeight={'110%'} {...props} />
   },
 }
 
