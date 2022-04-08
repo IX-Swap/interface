@@ -31,17 +31,16 @@ export const VestingTab = () => {
   const blurred = ![...TGE_CHAINS_WITH_STAKING, SUPPORTED_TGE_CHAINS.MAIN].includes(chainId || 0) || !account
 
   if (blurred || !account) {
-    return (
-      <div style={{ marginTop: '1rem' }}>
-        <NotAvailablePage />
-      </div>
-    )
+    return <NotAvailablePage />
   }
 
   return (
     <>
       <LightBackground />
-      <BodyWrapper hasAnnouncement={!cookies.annoucementsSeen} style={{ background: 'transparent', padding: 0, width: '100%', maxWidth: 1299 }}>
+      <BodyWrapper
+        hasAnnouncement={!cookies.annoucementsSeen}
+        style={{ background: 'transparent', padding: 0, width: '100%', maxWidth: 1299 }}
+      >
         <PaddedRow>
           <TYPE.title4>
             <Trans>Vesting {IXSCurrency?.symbol}</Trans>

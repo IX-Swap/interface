@@ -115,7 +115,8 @@ export const KovanRow = styled.div`
   justify-content: center;
 `
 
-export const ConnectWalletContainer = styled(Container)`
+export const ConnectWalletContainer = styled(Container)<{ hasAnnouncement?: boolean }>`
+  margin-top: ${({ hasAnnouncement }) => (hasAnnouncement ? 3 : 1)}rem;
   a {
     color: white;
   }
@@ -144,4 +145,8 @@ export const ConnectWalletContainer = styled(Container)`
     text-align: center;
     color: #ffffff;
   }
+
+  ${({ theme, hasAnnouncement }) => theme.mediaWidth.upToMedium`
+    margin-top: ${hasAnnouncement ? '9rem' : '1rem'};
+  `};
 `
