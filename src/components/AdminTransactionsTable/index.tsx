@@ -3,10 +3,10 @@ import { LoaderThin } from 'components/Loader/LoaderThin'
 import dayjs from 'dayjs'
 import { Copy } from 'react-feather'
 import styled from 'styled-components'
-import React, { FC, useEffect, useState, ChangeEvent } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import { Currency, CurrencyAmount } from '@ixswap1/sdk-core'
 
-import { Input as SearchInput } from '../AdminAccreditationTable/Search'
+import { Search } from '../AdminAccreditationTable/Search'
 import { isAddress } from 'utils'
 import { IconWrapper } from 'components/AccountDetails/styleds'
 import { useAdminState, useFetchBrokerDealerSwaps } from 'state/admin/hooks'
@@ -32,7 +32,6 @@ export const StyledCopy = styled(Copy)`
   width: 17px;
   height: 17px;
 `
-let timer = null as any
 
 const headerCells = [t`Date`, t`Name`, t`Trader's wallet`, t`Trading pair`, t`Amount`, t`Response`, t`Status`]
 
@@ -113,24 +112,18 @@ export const AdminTransactionsTable = () => {
   const [searchValue, setSearchValue] = useState('')
   const getBrokerDealerSwaps = useFetchBrokerDealerSwaps()
 
+  useEffect(() => {
+    getBrokerDealerSwaps({
+      page: 1,
+      offset,
+      ...(searchValue && { search: searchValue }),
+    })
+  }, [getBrokerDealerSwaps, searchValue])
+
   const onPageChange = (page: number) => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
 
-    getBrokerDealerSwaps({ page, offset, search: isAddress(searchValue) || searchValue === '' ? searchValue : '' })
-  }
-
-  useEffect(() => {
-    getBrokerDealerSwaps({ page: 1, offset })
-  }, [getBrokerDealerSwaps])
-
-  const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target
-    setSearchValue(value)
-
-    if (isAddress(value) || value === '') {
-      clearTimeout(timer)
-      timer = setTimeout(() => getBrokerDealerSwaps({ page: 1, offset, search: value }), 250)
-    }
+    getBrokerDealerSwaps({ page, offset, ...(searchValue && { search: searchValue }) })
   }
 
   return (
@@ -146,7 +139,7 @@ export const AdminTransactionsTable = () => {
         </NoData>
       ) : (
         <Container>
-          <SearchInput value={searchValue} placeholder={t`Search for Wallet`} onChange={onSearchChange} />
+          <Search setSearchValue={setSearchValue} placeholder={t`Search for Wallet`} />
           <Table body={<Body />} header={<Header />} />
           <Pagination page={page} totalPages={totalPages} onPageChange={onPageChange} />
         </Container>

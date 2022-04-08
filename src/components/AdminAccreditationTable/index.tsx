@@ -127,8 +127,8 @@ export const AdminAccreditationTable = () => {
   }
 
   useEffect(() => {
-    getAccreditationList({ page: 1, offset })
-  }, [getAccreditationList])
+    getAccreditationList({ page: 1, offset, ...(searchValue && { search: searchValue }) })
+  }, [getAccreditationList, searchValue])
 
   const closeModal = () => handleKyc({} as KycItem)
   const openModal = (kyc: KycItem) => handleKyc(kyc)
