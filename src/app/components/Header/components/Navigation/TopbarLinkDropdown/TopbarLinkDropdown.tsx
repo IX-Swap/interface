@@ -28,7 +28,7 @@ export const TopbarLinkDropdown = ({
 
   return (
     <>
-      <div className={classes.wrapper} onClick={e => handleClick(e)}>
+      <div className={classes.wrapper} onClick={handleClick}>
         <TopbarLinkContainer
           placement={'topbar'}
           link={link}
