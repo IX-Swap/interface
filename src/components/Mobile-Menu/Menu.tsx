@@ -47,7 +47,7 @@ export const Menu = ({ close }: Props) => {
         </CloseContainer>
         <MenuList>
           {chainId && chains.includes(chainId) && isWhitelisted && (
-            <MenuListItem disabled={!isKycApproved} id={`swap-nav-link`} to={'/swap'} onClick={close}>
+            <MenuListItem id={`swap-nav-link`} to={'/swap'} onClick={close}>
               <Trans>Swap/Trade</Trans>
             </MenuListItem>
           )}
