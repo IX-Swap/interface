@@ -9,6 +9,10 @@ export const useStyles = makeStyles(theme => {
       borderRadius: 8,
       backgroundColor: selectPalette.bg,
 
+      '&.Mui-focused': {
+        backgroundColor: selectPalette.bg
+      },
+
       '& .MuiOutlinedInput-notchedOutline': {
         borderColor: selectPalette.border
       },
@@ -32,8 +36,7 @@ export const useStyles = makeStyles(theme => {
     },
     paper: {
       '&.MuiPaper-root': {
-        padding: 0,
-        backgroundColor: theme.palette.background.paper
+        padding: 0
       }
     },
     list: {
