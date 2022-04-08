@@ -22,7 +22,6 @@ export const useCreateIndividual = () => {
 
   return useMutation(createOrUpdateIndividual, {
     onSuccess: async data => {
-      // void snackbarService.showSnackbar(data.message, 'success')
       void queryCache.invalidateQueries(identityQueryKeys.getIndividual)
       // eslint-disable-next-line
       if (location.pathname.endsWith('create')) {
