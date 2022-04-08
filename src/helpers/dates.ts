@@ -4,6 +4,7 @@ import formatDistance from 'date-fns/formatDistance'
 import differenceInDays from 'date-fns/differenceInDays'
 import differenceInHours from 'date-fns/differenceInHours'
 import differenceInMinutes from 'date-fns/differenceInMinutes'
+import addDays from 'date-fns/addDays'
 import { isValid } from 'date-fns'
 
 export const convertISOToDate = (
@@ -122,4 +123,8 @@ export const getTimeAgoFromString = (date: string) => {
     return null
   }
   return formatDistance(new Date(date), new Date(), { addSuffix: true })
+}
+
+export const add45Days = (date: Date) => {
+  return addDays(date, 45)
 }
