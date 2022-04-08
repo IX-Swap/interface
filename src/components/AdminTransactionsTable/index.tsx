@@ -116,14 +116,14 @@ export const AdminTransactionsTable = () => {
     getBrokerDealerSwaps({
       page: 1,
       offset,
-      ...(searchValue && { search: isAddress(searchValue) || searchValue === '' ? searchValue : '' }),
+      ...(searchValue && { search: searchValue }),
     })
   }, [getBrokerDealerSwaps, searchValue])
 
   const onPageChange = (page: number) => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
 
-    getBrokerDealerSwaps({ page, offset, search: isAddress(searchValue) || searchValue === '' ? searchValue : '' })
+    getBrokerDealerSwaps({ page, offset, ...(searchValue && { search: searchValue }) })
   }
 
   return (
