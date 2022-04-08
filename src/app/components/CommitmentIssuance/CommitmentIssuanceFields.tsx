@@ -1,24 +1,29 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Grid, Typography, Box, OutlinedInput } from '@mui/material'
 import { useFormContext } from 'react-hook-form'
 import { LabelledValue } from 'components/LabelledValue'
 import { TypedField } from 'components/form/TypedField'
-import { DateTimePickerComponent } from 'components/form/DateTimePicker'
+import { DateTimePicker } from 'components/form/_DateTimePicker'
 import { CommitmentIssuanceFormValues } from 'types/commitment'
 import useStyles from 'app/components/CommitmentIssuance/CommitmentIssuanceFields.styles'
-import { convertDateToISO } from 'helpers/dates'
+import { add45Days, convertDateToISO } from 'helpers/dates'
 
 export interface CommitmentIssuanceFieldsProps {
   amount: string
+  isCampaign?: boolean
 }
 
 export const CommitmentIssuanceFields = (
   props: CommitmentIssuanceFieldsProps
 ) => {
   const classes = useStyles()
-
-  const { control } = useFormContext<CommitmentIssuanceFormValues>()
-
+  const { isCampaign = false } = props
+  const { control, setValue } = useFormContext<CommitmentIssuanceFormValues>()
+  useEffect(() => {
+    if (isCampaign) {
+      setValue('releaseDate', add45Days(new Date()))
+    }
+  }, [isCampaign, setValue])
   return (
     <React.Fragment>
       <Grid item>
@@ -60,8 +65,9 @@ export const CommitmentIssuanceFields = (
           name='releaseDate'
           label=''
           control={control}
-          component={DateTimePickerComponent}
+          component={DateTimePicker}
           disablePast
+          disabled={isCampaign}
           valueExtractor={convertDateToISO}
           defaultValue={null}
           style={{ maxWidth: 200 }}

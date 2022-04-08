@@ -29,7 +29,10 @@ export const CommitmentIssuance = (props: CommitmentIssuanceProps) => {
       <Grid item xs={12}>
         <CommitmentIssuanceForm defaultValues={initialValues}>
           <Grid container direction='column'>
-            <CommitmentIssuanceFields amount={amount} />
+            <CommitmentIssuanceFields
+              amount={amount}
+              isCampaign={Boolean(data?.dso?.isCampaign)}
+            />
 
             <Grid item>
               <Submit color='primary' variant='outlined' size='large'>

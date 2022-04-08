@@ -2,11 +2,13 @@ import {
   getTimeAgo,
   convertDateToISO,
   formatDateToMMDDYY,
-  formatDateAndTime
+  formatDateAndTime,
+  add45Days
 } from 'helpers/dates'
 import subDays from 'date-fns/subDays'
 import subHours from 'date-fns/subHours'
 import subMinutes from 'date-fns/subMinutes'
+import differenceInDays from 'date-fns/differenceInDays'
 
 describe('getTimeAgo', () => {
   it('returns "Just now" if current time is passed', () => {
@@ -73,5 +75,12 @@ describe('convertDateToISO', () => {
 
   it('returns undefined if date is empty string', () => {
     expect(convertDateToISO('')).toEqual(undefined)
+  })
+})
+
+describe('add45days', () => {
+  const current = new Date()
+  it('adds 45 days', () => {
+    expect(differenceInDays(add45Days(current), current)).toEqual(45)
   })
 })
