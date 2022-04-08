@@ -32,7 +32,8 @@ export const useStyles = makeStyles(theme => {
     },
     paper: {
       '&.MuiPaper-root': {
-        padding: 0
+        padding: 0,
+        backgroundColor: theme.palette.background.paper
       }
     },
     list: {

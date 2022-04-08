@@ -58,7 +58,7 @@ export const SelectKit = () => {
           </FormControl>
         </Box>
 
-        <Box>
+        <Box marginRight={12}>
           <Typography>Select(Checkboxes)</Typography>
           <VSpacer size={'medium'} />
 
@@ -80,6 +80,28 @@ export const SelectKit = () => {
                     {item}
                   </SelectItem>
                 )
+              })}
+            </Select>
+          </FormControl>
+        </Box>
+
+        <Box>
+          <Typography>Select(disabled)</Typography>
+          <VSpacer size={'medium'} />
+
+          <FormControl sx={{ width: 266 }}>
+            <InputLabel>Label</InputLabel>
+
+            <Select
+              fullWidth
+              disabled
+              displayEmpty
+              value={value}
+              placeholder={'Select "Label"'}
+              onChange={handleChange}
+            >
+              {options.map(item => {
+                return <SelectItem value={item}>{item}</SelectItem>
               })}
             </Select>
           </FormControl>
