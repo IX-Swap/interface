@@ -150,6 +150,18 @@ export interface NavigationLink {
   activeColor: CSSProperties['color']
 }
 
+export interface SelectPalette {
+  bg: CSSProperties['color']
+  bgDisabled: CSSProperties['color']
+  color: CSSProperties['color']
+  colorDisabled: CSSProperties['color']
+  itemBorder: string
+  placeholder: CSSProperties['color']
+  label: CSSProperties['color']
+  labelDisabled: CSSProperties['color']
+  border: CSSProperties['color']
+}
+
 declare module '@mui/styles/defaultTheme' {
   interface DefaultTheme extends Theme {}
 }
@@ -189,6 +201,7 @@ declare module '@mui/material/styles' {
     alerts: Alerts
     stepIcon: StepIcon
     navigationLink: NavigationLink
+    select: SelectPalette
   }
 
   export interface Palette {
@@ -225,6 +238,7 @@ declare module '@mui/material/styles' {
     alerts: Alerts
     stepIcon: StepIcon
     navigationLink: NavigationLink
+    select: SelectPalette
   }
 
   export interface Theme {

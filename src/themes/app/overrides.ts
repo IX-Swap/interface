@@ -22,6 +22,12 @@ import { inputBase } from 'themes/app/overrides/inputBase'
 import { step } from 'themes/app/overrides/step'
 import { stepLabel } from 'themes/app/overrides/stepLabel'
 import { ThemeOptions } from '@mui/material/styles'
+import {
+  dialog,
+  dialogContent,
+  dialogActions,
+  dialogTitle
+} from 'themes/app/overrides/dialog'
 
 declare module '@mui/material/Button' {
   interface ButtonPropsVariantOverrides {
@@ -72,5 +78,9 @@ export const getThemeOverrides = (
   MuiInputBase: inputBase(theme),
   MuiStep: step(theme),
   MuiStepLabel: stepLabel(theme),
-  MuiButtonBase: {}
+  MuiButtonBase: {},
+  MuiDialog: dialog(theme),
+  MuiDialogContent: dialogContent(theme),
+  MuiDialogActions: dialogActions(theme),
+  MuiDialogTitle: dialogTitle(theme)
 })

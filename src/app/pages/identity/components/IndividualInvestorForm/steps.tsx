@@ -16,13 +16,7 @@ import {
   getPersonalInfoRequestPayload,
   getTaxDeclarationRequestPayload
 } from 'app/pages/identity/utils/individual/requests'
-import {
-  financialInfoSchema,
-  individualInvestorDocumentsSchema,
-  individualInvestorStatusDeclarationSchema,
-  personalInfoSchema,
-  taxDeclarationSchema
-} from 'app/pages/identity/validation/individual'
+import { individualInvestorValidationSchema } from 'app/pages/identity/validation/individual'
 import { InvestorDeclarationForm } from '../InvestorDeclarationForm/InvestorDeclarationForm'
 import { FinancialInformationForm } from 'app/pages/identity/components/FinancialInformationForm/FinancialInformationForm'
 import { TaxDeclarationForm } from 'app/pages/identity/components/TaxDeclarationForm/TaxDeclarationForm'
@@ -37,7 +31,6 @@ export const individualInvestorFormSteps = [
     label: 'Personal Information',
     getFormValues: getPersonalInfoFormValues,
     getRequestPayload: getPersonalInfoRequestPayload,
-    validationSchema: personalInfoSchema,
     component: () => (
       <Fragment>
         <FormSectionHeader title={'Personal Information'} />
@@ -56,7 +49,6 @@ export const individualInvestorFormSteps = [
     label: 'Financial Information',
     getFormValues: getFinancialInfoFormValues,
     getRequestPayload: getFinancialInfoRequestPayload,
-    validationSchema: financialInfoSchema,
     component: () => (
       <Fragment>
         <FinancialInformationForm />
@@ -67,7 +59,6 @@ export const individualInvestorFormSteps = [
     label: 'Tax Declaration',
     getFormValues: getTaxDeclarationFormValues,
     getRequestPayload: getTaxDeclarationRequestPayload,
-    validationSchema: taxDeclarationSchema,
     component: () => (
       <Fragment>
         <TaxDeclarationForm />
@@ -78,7 +69,6 @@ export const individualInvestorFormSteps = [
     label: 'Investor Status Declaration',
     getFormValues: getInvestorDeclarationFormValues,
     getRequestPayload: getInvestorDeclarationRequestPayload,
-    validationSchema: individualInvestorStatusDeclarationSchema,
     component: () => (
       <Fragment>
         <InvestorDeclarationForm />
@@ -89,7 +79,6 @@ export const individualInvestorFormSteps = [
     label: 'Upload Documents',
     getFormValues: getDocumentsFormValues,
     getRequestPayload: getDocumentsRequestPayload,
-    validationSchema: individualInvestorDocumentsSchema,
     component: () => (
       <Fragment>
         <FormSectionHeader title={'Upload Documents'} />
@@ -112,9 +101,26 @@ export const individualInvestorFormSteps = [
   },
   {
     label: 'Review & Submit',
-    getFormValues: () => {},
-    getRequestPayload: () => {},
-    validationSchema: null,
+    getFormValues: (data: any) => {
+      const allData = {
+        ...getDocumentsFormValues(data),
+        ...getFinancialInfoFormValues(data),
+        ...getInvestorDeclarationFormValues(data),
+        ...getPersonalInfoFormValues(data),
+        ...getTaxDeclarationFormValues(data)
+      }
+      return allData
+    },
+    getRequestPayload: (data: any) => {
+      return {
+        ...getDocumentsRequestPayload(data),
+        ...getFinancialInfoRequestPayload(data),
+        ...getInvestorDeclarationRequestPayload(data),
+        ...getPersonalInfoRequestPayload(data),
+        ...getTaxDeclarationRequestPayload(data)
+      }
+    },
+    validationSchema: individualInvestorValidationSchema,
     component: () => <IndividualIdentityContainer />
   }
 ]

@@ -9,7 +9,7 @@ export interface FormStepperStep {
   component: ComponentType
   getFormValues: any
   getRequestPayload: any
-  validationSchema: any
+  validationSchema?: any
 }
 
 export interface FormStepperProps {
