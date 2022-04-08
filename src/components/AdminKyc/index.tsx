@@ -108,10 +108,14 @@ export const AdminKycTable = () => {
 
   const { id } = useParams<AdminParams>()
 
+  useEffect(() => {
+    getKycList({ page: 1, offset, ...(searchValue && { search: searchValue }) })
+  }, [getKycList, searchValue])
+
   const onPageChange = (page: number) => {
     window.scrollTo({ top: 0, behavior: 'smooth' })
 
-    getKycList({ page, offset: 10, search: searchValue })
+    getKycList({ page, offset, search: searchValue })
   }
 
   const closeModal = () => {
@@ -119,10 +123,6 @@ export const AdminKycTable = () => {
     handleKyc({} as KycItem)
   }
   const openModal = (kyc: KycItem) => history.push(`/admin/kyc/${kyc.id}`)
-
-  useEffect(() => {
-    getKycList({ page: 1, offset })
-  }, [getKycList])
 
   useEffect(() => {
     getKyc()
@@ -143,7 +143,7 @@ export const AdminKycTable = () => {
   return (
     <div id="kyc-container">
       {Boolean(kyc.id) && <KycReviewModal isOpen onClose={closeModal} data={kyc} />}
-      <Search callback={getKycList} setSearchValue={setSearchValue} placeholder="Search for Wallet" />
+      <Search placeholder="Search for Wallet" setSearchValue={setSearchValue} />
       {(adminLoading || isLoading) && (
         <Loader>
           <LoaderThin size={96} />

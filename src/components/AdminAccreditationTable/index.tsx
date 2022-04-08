@@ -127,8 +127,8 @@ export const AdminAccreditationTable = () => {
   }
 
   useEffect(() => {
-    getAccreditationList({ page: 1, offset })
-  }, [getAccreditationList])
+    getAccreditationList({ page: 1, offset, ...(searchValue && { search: searchValue }) })
+  }, [getAccreditationList, searchValue])
 
   const closeModal = () => handleKyc({} as KycItem)
   const openModal = (kyc: KycItem) => handleKyc(kyc)
@@ -136,7 +136,7 @@ export const AdminAccreditationTable = () => {
   return (
     <div id="accreditation-container">
       {Boolean(kyc.id) && <KycReviewModal isOpen onClose={closeModal} data={kyc} />}
-      <Search callback={getAccreditationList} setSearchValue={setSearchValue} />
+      <Search setSearchValue={setSearchValue} />
       {adminLoading && (
         <Loader>
           <LoaderThin size={96} />

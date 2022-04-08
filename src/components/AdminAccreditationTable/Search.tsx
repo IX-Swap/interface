@@ -1,29 +1,23 @@
-import React, { ChangeEvent } from 'react'
+import React, { ChangeEvent, CSSProperties } from 'react'
 import { t } from '@lingui/macro'
 import styled from 'styled-components'
-
-import { adminOffset as offset } from 'state/admin/constants'
-import { useGetAccreditationList } from 'state/admin/hooks'
 
 let timer = null as any
 
 interface Props {
   placeholder?: string
-  setSearchValue?: (newValue: string) => void
-  callback?: any
+  setSearchValue: (newValue: string) => void
+  style?: CSSProperties
 }
 
-export const Search = ({ setSearchValue, placeholder, callback }: Props) => {
-  const getKysList = useGetAccreditationList()
-
+export const Search = ({ setSearchValue, placeholder, style }: Props) => {
   const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
     clearTimeout(timer)
-    timer = setTimeout(() => getKysList({ page: 1, offset, search: value }), 250)
-    setSearchValue && setSearchValue(value)
+    timer = setTimeout(() => setSearchValue(value), 250)
   }
 
-  return <Input placeholder={t`${placeholder || 'Search for Wallet or Token'}`} onChange={onSearchChange} />
+  return <Input style={style} placeholder={t`${placeholder || 'Search for Wallet or Token'}`} onChange={onSearchChange} />
 }
 
 export const Input = styled.input`
