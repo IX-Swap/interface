@@ -23,6 +23,7 @@ export const NavigationMobile = (props: DropdownContentProps) => {
 
           return (
             <NavigationDropdownLinkMobile
+              key={link.label}
               {...link}
               dropdownLinksItems={dropdownLinks}
             />
