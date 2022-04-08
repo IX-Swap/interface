@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect, ChangeEvent } from 'react'
+import React, { FC, useState, useEffect } from 'react'
 import { t, Trans } from '@lingui/macro'
 import { Box, Flex } from 'rebass'
 import { Label } from '@rebass/forms'
@@ -8,6 +8,7 @@ import { ExternalLink, TYPE } from 'theme'
 import { Container } from 'components/AdminAccreditationTable'
 import { BrokerDealerCard } from './BrokerDealerCard'
 import { ButtonIXSGradient, ButtonText } from 'components/Button'
+import { Search } from 'components/AdminAccreditationTable/Search'
 import { ContainerRow, Input, InputContainer, InputPanel } from 'components/Input'
 import { useAddPopup, useTokenPopupToggle, useDeleteTokenPopupToggle } from 'state/application/hooks'
 import { TokenPopup } from './TokenPopup'
@@ -23,7 +24,6 @@ import Upload from 'components/Upload'
 import { Loader } from '../AdminTransactionsTable'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import { BROKER_DEALERS_STATUS } from 'state/brokerDealer/hooks'
-import { StyledSearchInput } from 'pages/CustodianV2/styleds'
 import { DeleteTokenConfirmationPopup } from './DeleteConfirmation'
 import { adminOffset as offset } from 'state/admin/constants'
 
@@ -37,8 +37,6 @@ import { Pagination } from 'components/Pagination'
 interface Tab {
   value: 'catalog' | 'add_issuer' | 'edit_issuer'
 }
-
-let timer = null as any
 
 export const AdminSecurityCatalog: FC = () => {
   const addIssuer = useAddIssuer()
@@ -65,12 +63,6 @@ export const AdminSecurityCatalog: FC = () => {
     }
   }, [getIssuers, showMode])
 
-  const onPageChange = (page: number) => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-
-    getIssuers({ search: searchValue, page, offset })
-  }
-
   const fetchIssuer = async () => {
     const data = await getIssuer(currentIssuer.id)
     if (data) setCurrentIssuer({ ...currentIssuer, ...data })
@@ -82,12 +74,14 @@ export const AdminSecurityCatalog: FC = () => {
     }
   }, [issuers])
 
-  const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.currentTarget
-    setSearchValue(value)
+  useEffect(() => {
+    getIssuers({ page: 1, offset, ...(searchValue && { search: searchValue }) })
+  }, [getIssuers, searchValue])
 
-    clearTimeout(timer)
-    timer = setTimeout(() => getIssuers({ search: value, page: 1, offset }), 250)
+  const onPageChange = (page: number) => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+
+    getIssuers({ search: searchValue, page, offset })
   }
 
   const handleResetState = async () => {
@@ -326,7 +320,7 @@ export const AdminSecurityCatalog: FC = () => {
         {showMode === 'catalog' && (
           <>
             <Flex flexDirection={isMobile ? 'column' : 'row'} marginBottom="33px">
-              <StyledSearchInput value={searchValue} placeholder={t`Search`} onChange={onSearchChange} />
+              <Search style={{ marginBottom: 0 }} setSearchValue={setSearchValue} placeholder={t`Search`} />
               <StyledButtonGradientBorder
                 marginTop={isMobile ? '16px' : '0px'}
                 marginLeft={isMobile ? '0px' : '33px'}
