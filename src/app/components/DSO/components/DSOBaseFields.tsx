@@ -1,18 +1,19 @@
-import React from 'react'
 import { Grid, TextField } from '@mui/material'
-import { TypedField } from 'components/form/TypedField'
-import { dateTimeValueExtractor } from 'helpers/forms'
+import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
+import { documentValueExtractor } from 'app/components/DSO/utils'
+import { Dropzone } from 'components/dataroom/Dropzone'
+import { AssetSelect } from 'components/form/AssetSelect/AssetSelect'
+import { CapitalStructureSelect } from 'components/form/CapitalStructureSelect'
+import { Checkbox } from 'components/form/Checkbox'
 import { CorporateSelect } from 'components/form/CorporateSelect'
 import { NetworkSelect } from 'components/form/NetworkSelect'
-import { AssetSelect } from 'components/form/AssetSelect/AssetSelect'
+import { TypedField } from 'components/form/TypedField'
+import { DateTimePicker } from 'components/form/_DateTimePicker'
+import { DataroomFileType } from 'config/dataroom'
+import { booleanValueExtractor, dateTimeValueExtractor } from 'helpers/forms'
+import React from 'react'
 import { useFormContext } from 'react-hook-form'
 import { DSOFormValues } from 'types/dso'
-import { documentValueExtractor } from 'app/components/DSO/utils'
-import { DataroomFileType } from 'config/dataroom'
-import { DateTimePicker } from 'components/form/_DateTimePicker'
-import { Dropzone } from 'components/dataroom/Dropzone'
-import { CapitalStructureSelect } from 'components/form/CapitalStructureSelect'
-import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
 
 export interface DSOBaseFieldsProps {
   isNew: boolean
@@ -22,7 +23,6 @@ export interface DSOBaseFieldsProps {
 export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
   const { isNew, isLive } = props
   const { control } = useFormContext<DSOFormValues>()
-
   return (
     <Grid item>
       <Grid container direction='column' spacing={2}>
@@ -174,6 +174,20 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
                 defaultValue={null}
                 helperText='Offering completion date'
                 inputVariant='outlined'
+              />
+            </Grid>
+          </Grid>
+          <Grid container spacing={3} mt={1}>
+            <Grid item xs={12}>
+              <TypedField
+                customRenderer
+                defaultValue={false}
+                valueExtractor={booleanValueExtractor}
+                component={Checkbox}
+                control={control}
+                label={'Is this a campaign?'}
+                name='isCampaign'
+                data-testid='is-campaign'
               />
             </Grid>
           </Grid>
