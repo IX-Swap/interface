@@ -113,7 +113,6 @@ export const RegisterFields = () => {
           customRenderer
           valueExtractor={booleanValueExtractor}
           component={Checkbox}
-          withNewSuccessIcon
           control={control}
           label={(<CheckboxLabel isError={agreeErrors} />) as any}
           name='agree'
