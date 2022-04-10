@@ -206,6 +206,11 @@ declare module '@mui/material/styles' {
     alerts: Alerts
     stepIcon: StepIcon
     navigationLink: NavigationLink
+    input: {
+      placeholder: CSSProperties['color']
+      border: string
+      disabledBg: string
+    }
     select: SelectPalette
     dropdownLink: DropdownLink
   }
@@ -244,6 +249,11 @@ declare module '@mui/material/styles' {
     alerts: Alerts
     stepIcon: StepIcon
     navigationLink: NavigationLink
+    input: {
+      placeholder: CSSProperties['color']
+      border: string
+      disabledBg: string
+    }
     select: SelectPalette
     dropdownLink: DropdownLink
   }

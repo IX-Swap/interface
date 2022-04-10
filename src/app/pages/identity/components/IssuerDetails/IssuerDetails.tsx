@@ -1,4 +1,4 @@
-import { Grid, TextField, Typography } from '@mui/material'
+import { Grid, Typography } from '@mui/material'
 import { NumericInput } from 'components/form/NumericInput'
 import { TypedField } from 'components/form/TypedField'
 import { moneyNumberFormat } from 'config/numberFormat'
@@ -6,6 +6,7 @@ import { numericValueExtractor } from 'helpers/forms'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
 import { useIndividualDefaultInfo } from 'hooks/auth/useIndividualDefaultInfo'
+import { TextInput } from 'ui/TextInput/TextInput'
 
 export const basicInformationFields = [
   {
@@ -42,7 +43,7 @@ export const IssuerDetails = (props: IssuerDetailFieldsProps) => {
           {basicInformationFields.map(field => (
             <Grid item xs={12} sm={6}>
               <TypedField
-                component={TextField}
+                component={TextInput}
                 control={control}
                 name={field.name}
                 label={field.label}
@@ -81,7 +82,7 @@ export const IssuerDetails = (props: IssuerDetailFieldsProps) => {
           </Grid>
           <Grid item xs={12}>
             <TypedField
-              component={TextField}
+              component={TextInput}
               label='Details of Issuance'
               name='detail'
               control={control}

@@ -35,3 +35,5 @@ export const BankSelect = (props: BankSelectProps) => {
     </TextFieldSelect>
   )
 }
+
+BankSelect.displayName = 'TextField_BankSelect'

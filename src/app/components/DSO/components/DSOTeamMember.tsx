@@ -1,16 +1,17 @@
-import React from 'react'
-import { Box, Grid, TextField } from '@mui/material'
-import { documentValueExtractor } from 'app/components/DSO/utils'
+import { Box, Grid } from '@mui/material'
+import { DSOContainer } from 'app/components/DSO/components/DSOContainer'
 import { DSOTeamRemoveButton } from 'app/components/DSO/components/DSOTeamRemoveButton'
-import { TypedField } from 'components/form/TypedField'
+import { documentValueExtractor } from 'app/components/DSO/utils'
+import { Dropzone } from 'components/dataroom/Dropzone'
 import { RichTextEditor } from 'components/form/RichTextEditor'
+import { TypedField } from 'components/form/TypedField'
+import { VSpacer } from 'components/VSpacer'
 import { wysiwygValueExtractor } from 'helpers/forms'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+import React from 'react'
 import { useFormContext } from 'react-hook-form'
 import { DSOFormValues, DsoTeamMember } from 'types/dso'
-import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
-import { Dropzone } from 'components/dataroom/Dropzone'
-import { DSOContainer } from 'app/components/DSO/components/DSOContainer'
-import { VSpacer } from 'components/VSpacer'
+import { TextInput } from 'ui/TextInput/TextInput'
 
 export interface DSOTeamMemberProps {
   fieldId: string
@@ -54,7 +55,7 @@ export const DSOTeamMember = (props: DSOTeamMemberProps) => {
             <TypedField
               fullWidth
               key={fieldId}
-              component={TextField}
+              component={TextInput}
               control={control}
               defaultValue={defaultValue?.name ?? ''}
               label='Name'
@@ -70,7 +71,7 @@ export const DSOTeamMember = (props: DSOTeamMemberProps) => {
               fullWidth
               key={fieldId}
               control={control}
-              component={TextField}
+              component={TextInput}
               defaultValue={defaultValue?.position ?? ''}
               label='Position'
               name={['team', index, 'position']}

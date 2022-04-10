@@ -43,7 +43,6 @@ export const DSOPricing = () => {
                 numberFormat={moneyNumberFormat}
                 valueExtractor={numericValueExtractor}
                 helperText='Amount you want to raise'
-                variant='outlined'
               />
             </Grid>
           </Grid>
