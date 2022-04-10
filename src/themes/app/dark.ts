@@ -58,7 +58,7 @@ export const darkTheme: DeprecatedThemeOptions = {
       alternativeLight: tinycolor('#132a57').lighten(20).toHex()
     },
     sidebar: {
-      activeBackground: 'rgba(137, 149, 252, 0.11)',
+      activeBackground: tinycolor('#8995fc').setAlpha(0.1).toRgbString(),
       activeColor: '#8995FC'
     },
     breadcrumbs: {
@@ -185,7 +185,7 @@ export const darkTheme: DeprecatedThemeOptions = {
       border: '#1D3667'
     },
     dropdownLink: {
-      boxShadow: 'rgba(14, 31, 63, 0.3)',
+      boxShadow: tinycolor('#0e1f3f').setAlpha(0.3).toRgbString(),
       border: '#1D3667'
     },
     success: {
