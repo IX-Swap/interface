@@ -184,6 +184,10 @@ export const darkTheme: DeprecatedThemeOptions = {
       labelDisabled: '#496396',
       border: '#1D3667'
     },
+    dropdownLink: {
+      boxShadow: 'rgba(14, 31, 63, 0.3)',
+      border: '#1D3667'
+    },
     success: {
       main: '#7DD320'
     },

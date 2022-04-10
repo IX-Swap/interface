@@ -61,7 +61,6 @@ export const lightTheme: DeprecatedThemeOptions = {
       alternative: '#56AA82',
       alternativeLight: 'rgba(86, 170, 130, 0.06)'
     },
-    // TODO Remove old slider after delete old theme
     slider: {
       background: '#C6D9FF',
       activeColor: '#ffffff',
@@ -190,6 +189,10 @@ export const lightTheme: DeprecatedThemeOptions = {
       colorDisabled: '#778194',
       labelDisabled: '#778194',
       border: '#DBE2EC'
+    },
+    dropdownLink: {
+      boxShadow: 'rgba(162, 172, 191, 0.16)',
+      border: '#EDF2FA'
     },
     success: {
       main: '#7DD320'

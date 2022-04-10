@@ -33,6 +33,7 @@ export const useAppNavigationLinks = () => {
   const isFundManager = useIsFundManager()
 
   const isSuperUser = isAuthorizer || isAdmin
+  const educationCenterLabel = 'Education Centre'
   const links = [
     {
       label: 'Accounts',
@@ -63,7 +64,7 @@ export const useAppNavigationLinks = () => {
   }
 
   links.push({
-    label: 'Education Centre',
+    label: educationCenterLabel,
     link: AppRoute.educationCentre
   } as any)
 
@@ -127,7 +128,7 @@ export const useAppNavigationLinks = () => {
 
   const dropdownLinksItems = (name: string) => {
     switch (name) {
-      case 'Education Centre':
+      case educationCenterLabel:
         return educationCentreLinks
       case 'Authorizer':
         return [
@@ -154,7 +155,7 @@ export const useAppNavigationLinks = () => {
       label === 'Authorizer' ||
       label === 'Invest' ||
       label === 'Issuance' ||
-      label === 'Education Centre'
+      label === educationCenterLabel
     ) {
       return true
     }

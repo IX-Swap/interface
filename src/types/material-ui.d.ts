@@ -150,6 +150,11 @@ export interface NavigationLink {
   activeColor: CSSProperties['color']
 }
 
+export interface DropdownLink {
+  boxShadow: string
+  border: string
+}
+
 export interface SelectPalette {
   bg: CSSProperties['color']
   bgDisabled: CSSProperties['color']
@@ -202,6 +207,7 @@ declare module '@mui/material/styles' {
     stepIcon: StepIcon
     navigationLink: NavigationLink
     select: SelectPalette
+    dropdownLink: DropdownLink
   }
 
   export interface Palette {
@@ -239,6 +245,7 @@ declare module '@mui/material/styles' {
     stepIcon: StepIcon
     navigationLink: NavigationLink
     select: SelectPalette
+    dropdownLink: DropdownLink
   }
 
   export interface Theme {
