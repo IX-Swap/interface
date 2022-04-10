@@ -195,6 +195,11 @@ declare module '@mui/material/styles' {
     tablePagination: TablePagination
     alerts: Alerts
     stepIcon: StepIcon
+    input: {
+      placeholder: CSSProperties['color']
+      border: string
+      disabledBg: string
+    }
     select: SelectPalette
   }
 
@@ -231,6 +236,11 @@ declare module '@mui/material/styles' {
     tablePagination: TablePagination
     alerts: Alerts
     stepIcon: StepIcon
+    input: {
+      placeholder: CSSProperties['color']
+      border: string
+      disabledBg: string
+    }
     select: SelectPalette
   }
 

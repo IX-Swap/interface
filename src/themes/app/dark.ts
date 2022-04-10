@@ -155,6 +155,11 @@ export const darkTheme: DeprecatedThemeOptions = {
     skeleton: {
       bg: '#1D3667'
     },
+    input: {
+      placeholder: '#89A1CE',
+      border: '#1D3667',
+      disabledBg: '#11254C'
+    },
     stepIcon: {
       bg: tinycolor('#BEC4CF').setAlpha(0.1).toRgbString(),
       color: '#BEC4CF',

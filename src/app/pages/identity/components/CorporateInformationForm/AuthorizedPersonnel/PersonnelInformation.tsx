@@ -1,11 +1,11 @@
-import React from 'react'
-import { TypedField } from 'components/form/TypedField'
-import { Grid, TextField } from '@mui/material'
-import { useFormContext } from 'react-hook-form'
-import { PhoneInput } from 'components/form/PhoneInput'
-import { plainValueExtractor } from 'helpers/forms'
+import { Grid } from '@mui/material'
 import { Personnel } from 'app/pages/identity/types/forms'
-
+import { PhoneInput } from 'components/form/PhoneInput'
+import { TypedField } from 'components/form/TypedField'
+import { plainValueExtractor } from 'helpers/forms'
+import React from 'react'
+import { useFormContext } from 'react-hook-form'
+import { TextInput } from 'ui/TextInput/TextInput'
 export interface PersonnelInformationProps {
   fieldId: string
   rootName: string
@@ -29,7 +29,7 @@ export const PersonnelInformation = ({
             <TypedField
               key={fieldId}
               defaultValue={defaultValue?.fullName ?? ''}
-              component={TextField}
+              component={TextInput}
               control={control}
               variant='outlined'
               name={[rootName, index, 'fullName']}
@@ -39,7 +39,7 @@ export const PersonnelInformation = ({
           <Grid item xs={12} sm={6} md={4}>
             <TypedField
               key={fieldId}
-              component={TextField}
+              component={TextInput}
               defaultValue={defaultValue?.designation ?? ''}
               control={control}
               variant='outlined'
@@ -54,7 +54,7 @@ export const PersonnelInformation = ({
           <Grid item xs={12} sm={6} md={4}>
             <TypedField
               key={fieldId}
-              component={TextField}
+              component={TextInput}
               defaultValue={defaultValue?.email ?? ''}
               control={control}
               variant='outlined'

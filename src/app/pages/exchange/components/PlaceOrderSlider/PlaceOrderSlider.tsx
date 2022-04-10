@@ -1,8 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { Slider } from '@mui/material'
-import { useStyles } from 'app/pages/exchange/components/PlaceOrderSlider/PlaceOrderSlider.style'
-
 export interface PlaceOrderFieldsProps {
   balance: number
 }
@@ -15,7 +13,6 @@ export const PlaceOrderSlider: React.FC<PlaceOrderFieldsProps> = ({
     to: 4,
     maxPercentageValue: 100
   }
-  const classes = useStyles()
   const { setValue, watch } = useFormContext()
   const price = watch('price')
   const amount = watch('amount')
@@ -57,15 +54,9 @@ export const PlaceOrderSlider: React.FC<PlaceOrderFieldsProps> = ({
       max={sliderRange.to}
       marks={marks}
       step={0.05}
-      classes={{
-        rail: classes.rail,
-        track: classes.track,
-        thumb: classes.thumb,
-        mark: classes.mark,
-        markActive: classes.markActive
-      }}
       disabled={price === null || price === undefined}
       data-testid='slider'
+      size='small'
       onChange={computeAmount}
     />
   )

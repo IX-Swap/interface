@@ -162,6 +162,11 @@ export const lightTheme: DeprecatedThemeOptions = {
     skeleton: {
       bg: '#EDF2FA'
     },
+    input: {
+      placeholder: '#778194',
+      border: '#DBE2EC',
+      disabledBg: '#F0F2F7'
+    },
     stepIcon: {
       bg: tinycolor('#BEC4CF1A').setAlpha(0.1).toRgbString(),
       color: '#BEC4CF',

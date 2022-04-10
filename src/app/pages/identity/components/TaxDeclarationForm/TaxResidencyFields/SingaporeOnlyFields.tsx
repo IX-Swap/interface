@@ -1,15 +1,9 @@
-import React from 'react'
-import {
-  Box,
-  Grid,
-  Typography,
-  Radio,
-  FormControlLabel,
-  TextField
-} from '@mui/material'
+import { Box, FormControlLabel, Grid, Radio, Typography } from '@mui/material'
 import { TypedField } from 'components/form/TypedField'
-import { useFormContext } from 'react-hook-form'
 import { VSpacer } from 'components/VSpacer'
+import React from 'react'
+import { useFormContext } from 'react-hook-form'
+import { TextInput } from 'ui/TextInput/TextInput'
 
 export const SingaporeOnlyFields = () => {
   const { control } = useFormContext()
@@ -38,7 +32,7 @@ export const SingaporeOnlyFields = () => {
 
           <VSpacer size='small' />
           <TypedField
-            component={TextField}
+            component={TextInput}
             variant='outlined'
             control={control}
             name={['taxResidencies', 0, 'taxIdentificationNumber']}
