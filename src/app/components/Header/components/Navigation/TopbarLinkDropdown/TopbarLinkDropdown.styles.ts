@@ -3,7 +3,7 @@ import makeStyles from '@mui/styles/makeStyles'
 const importantPosition = '0!important'
 
 export const useStyles = makeStyles(theme => {
-  const getWidth = `calc(100% - 32px)`
+  const lineWidth = `calc(100% - 32px)`
 
   return {
     wrapper: {
@@ -33,7 +33,7 @@ export const useStyles = makeStyles(theme => {
       position: 'absolute',
       bottom: 0,
       height: 1,
-      width: getWidth(),
+      width: lineWidth,
       backgroundColor: theme.palette.dropdownLink.border,
       marginRight: theme.spacing(2),
       marginLeft: theme.spacing(2)
