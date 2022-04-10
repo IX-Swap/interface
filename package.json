@@ -124,7 +124,7 @@
     "copy-webpack-plugin": "^10.2.0",
     "css-loader": "^6.5.1",
     "dotenv": "^10.0.0",
-    "eslint": "^8.6.0",
+    "eslint": "^8.12.0",
     "eslint-config-prettier": "^6.12.0",
     "eslint-config-react-app": "^6.0.0",
     "eslint-config-standard-with-typescript": "^18.0.2",

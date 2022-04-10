@@ -174,6 +174,17 @@ export const darkTheme: DeprecatedThemeOptions = {
       colorError: '#F56283',
       borderError: tinycolor('#F56283').setAlpha(0.5).toRgbString()
     },
+    select: {
+      bg: '#152D5F',
+      bgDisabled: '#11254C',
+      itemBorder: '#1D3667',
+      placeholder: '#89A1CE',
+      label: '#89A1CE',
+      color: '#496396',
+      colorDisabled: '#496396',
+      labelDisabled: '#496396',
+      border: '#1D3667'
+    },
     success: {
       main: '#7DD320'
     },
