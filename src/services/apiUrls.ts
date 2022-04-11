@@ -84,6 +84,11 @@ export const secCatalog = {
   issuerToken: (tokenId: number) => `/catalog/token/${tokenId}`,
   checkWrappedAddress: (address: string) => `/token/address/${address}`,
 }
+
+export const users = {
+  update: (address: string) => `/users/settings/address/${address}`,
+}
+
 export interface PaginateWithFilter {
   tokenId?: number | null
   page?: number

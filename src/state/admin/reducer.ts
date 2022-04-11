@@ -21,6 +21,7 @@ import {
   getKycList,
   postResubmitKyc,
   getAdminList,
+  AdminList,
 } from './actions'
 
 export interface AdminState {
@@ -30,7 +31,7 @@ export interface AdminState {
   adminIsAuthenticated: boolean
   adminError: string | null
   adminData: RawGetMePayload | null
-  adminList: any[] |  null
+  adminList: AdminList | null
   accreditationList: AccreditationList
   kycList: KycList
   brokerDealerList: BrokerDealerList

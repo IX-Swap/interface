@@ -4,33 +4,54 @@ import { Box } from 'rebass'
 import { Label } from '@rebass/forms'
 import { Trans } from '@lingui/macro'
 
-import { ButtonGradientBorder, ButtonIXSGradient } from 'components/Button'
+import { ButtonIXSGradient } from 'components/Button'
 import { ModalBlurWrapper, ModalContentWrapper, CloseIcon, TYPE } from 'theme'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import { RowCenter } from 'components/Row'
 import { AddressInput } from 'components/AddressInputPanel/AddressInput'
-import { isValidAddress } from 'utils'
+import { isValidAddress, shortAddress } from 'utils'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 import { addAdmin } from 'state/admin/hooks'
 import { useAddPopup } from 'state/application/hooks'
 import { StyledButtonGradientBorder } from 'components/AdminSecurityCatalog/styleds'
+import { Select } from 'pages/KYC/common'
+import { capitalizeFirstLetter } from 'components/AdminAccreditationTable/utils'
+import { updateUser } from 'state/user/hooks'
+
+import { adminRoles } from './mock'
 
 interface Props {
   buttonStyles?: CSSProperties
+  isOpen: boolean
+  address: string
+  isUpdating: boolean
+  error: string
+  role: any
+  addAdminCallback: () => void
+  handleError: (value: string) => void
+  close: () => void
+  handleAddress: (value: string) => void
+  open: () => void
+  handleRole: (value: string) => void
 }
 
-export const AddAdmin: FC<Props> = ({ buttonStyles }) => {
-  const [isOpen, handleIsOpen] = useState(false)
+export const EditAdmin: FC<Props> = ({
+  isOpen,
+  isUpdating,
+  address,
+  buttonStyles,
+  error,
+  role,
+  handleRole,
+  handleError,
+  handleAddress,
+  close,
+  open,
+  addAdminCallback,
+}) => {
   const [isLoading, handleIsLoading] = useState(false)
-  const [address, handleAddress] = useState('')
-  const [error, handleError] = useState('')
-  const addPopup = useAddPopup()
 
-  const open = () => handleIsOpen(true)
-  const close = () => {
-    handleIsOpen(false)
-    handleAddress('')
-  }
+  const addPopup = useAddPopup()
 
   const onAddressChange = (value: string) => {
     handleAddress(value)
@@ -41,16 +62,24 @@ export const AddAdmin: FC<Props> = ({ buttonStyles }) => {
       try {
         handleError('')
         handleIsLoading(true)
-        await addAdmin(address)
+
+        if (isUpdating) {
+          await updateUser(address, { role: role.label ? role.label.toLowerCase() : role.toLowerCase() })
+        } else {
+          await addAdmin(address)
+        }
+
         handleIsLoading(false)
         close()
         addPopup({
           info: {
             success: true,
-            summary: 'Admin was added successfully',
+            summary: `Admin was ${isUpdating ? 'updated' : 'added'} successfully`,
           },
         })
+        addAdminCallback()
       } catch (err: any) {
+        console.log(err)
         handleIsLoading(false)
         handleError('Address is already admin or exists user with this address')
       }
@@ -69,10 +98,10 @@ export const AddAdmin: FC<Props> = ({ buttonStyles }) => {
           <LoadingIndicator isLoading={isLoading} isRelative />
           <ModalContent>
             <Title>
-              <Trans>Add Admin</Trans>
+              <Trans>{isUpdating ? 'Update Admin Role' : 'Add Admin'}</Trans>
               <CloseIcon data-testid="cross" onClick={close} />
             </Title>
-            <Box>
+            <Box marginBottom="16px">
               <Label marginBottom="11px" htmlFor="token-address">
                 <TYPE.title11 color="text2">
                   <Trans>Wallet Address</Trans>
@@ -81,10 +110,11 @@ export const AddAdmin: FC<Props> = ({ buttonStyles }) => {
               <AddressInput
                 {...{
                   id: 'address',
-                  value: address,
+                  value: isUpdating ? shortAddress(address) : address,
                   error: Boolean(error),
                   onChange: onAddressChange,
                   placeholder: ' ',
+                  disabled: isUpdating,
                 }}
               />
               {error && (
@@ -93,9 +123,18 @@ export const AddAdmin: FC<Props> = ({ buttonStyles }) => {
                 </TYPE.small>
               )}
             </Box>
+            {isUpdating && (
+              <Select
+                withScroll
+                label="Role of Admin"
+                selectedItem={role.length > 0 ? capitalizeFirstLetter(role) : ''}
+                items={adminRoles}
+                onSelect={(selectedRole) => handleRole(selectedRole)}
+              />
+            )}
             <RowCenter>
               <AddAdminButton onClick={onAdd}>
-                <Trans>Add</Trans>
+                <Trans>{isUpdating ? 'Update' : 'Add'}</Trans>
               </AddAdminButton>
             </RowCenter>
           </ModalContent>
@@ -104,13 +143,6 @@ export const AddAdmin: FC<Props> = ({ buttonStyles }) => {
     </>
   )
 }
-
-const AddButton = styled(ButtonGradientBorder)`
-  min-height: 40px;
-  height: 40px;
-  font-size: 16px;
-  margin-left: 16px;
-`
 
 const AddAdminButton = styled(ButtonIXSGradient)`
   margin-top: 32px;
