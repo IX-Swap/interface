@@ -1,12 +1,12 @@
-import { Grid, TextField } from '@mui/material'
+import { Grid } from '@mui/material'
+import { Personnel } from 'app/pages/identity/types/forms'
 import { NumericInput } from 'components/form/NumericInput'
 import { TypedField } from 'components/form/TypedField'
 import { percentageNumberFormat } from 'config/numberFormat'
 import { numericValueExtractor } from 'helpers/forms'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
-import { Personnel } from 'app/pages/identity/types/forms'
-
+import { TextInput } from 'ui/TextInput/TextInput'
 export interface BeneficialOwnersInformationFieldsProps {
   rootName: string
   index: number
@@ -27,7 +27,7 @@ export const BeneficialOwnersInformationFields = ({
       <Grid item xs={12} md={4}>
         <TypedField
           key={fieldId}
-          component={TextField}
+          component={TextInput}
           control={control}
           variant='outlined'
           name={[rootName, index, 'fullName']}

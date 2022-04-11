@@ -1,9 +1,10 @@
-import React from 'react'
+import { FormControlLabel, Grid } from '@mui/material'
 import { RadioGroup } from 'components/form/RadioGroup'
 import { TypedField } from 'components/form/TypedField'
+import React from 'react'
 import { useFormContext } from 'react-hook-form'
-import { FormControlLabel, Grid, TextField } from '@mui/material'
 import { UIRadio } from 'components/UIRadio/UIRadio'
+import { TextInput } from 'ui/TextInput/TextInput'
 
 export const UsCitizenshipConfirmationFields = () => {
   const { control, watch } = useFormContext()
@@ -28,7 +29,7 @@ export const UsCitizenshipConfirmationFields = () => {
             <Grid item xs={12} sm={4}>
               <TypedField
                 control={control}
-                component={TextField}
+                component={TextInput}
                 label='US TIN'
                 defaultValue=''
                 name='usTin'

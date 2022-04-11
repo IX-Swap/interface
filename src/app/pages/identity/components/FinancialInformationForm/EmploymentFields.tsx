@@ -1,11 +1,12 @@
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
-import { Grid, TextField, Typography } from '@mui/material'
+import { Grid, Typography } from '@mui/material'
 import { VSpacer } from 'components/VSpacer'
 import { TypedField } from 'components/form/TypedField'
 import { AnnualIncomeSelect } from 'components/form/AnnualIncomeSelect'
 import { EmploymentStatusSelect } from 'app/pages/identity/components/FinancialInformationForm/EmploymentStatusSelect'
 import { OccupationSelect } from './OccupationSelect'
+import { TextInput } from 'ui/TextInput/TextInput'
 
 export const EmploymentField = () => {
   const { control } = useFormContext()
@@ -38,7 +39,7 @@ export const EmploymentField = () => {
           </Grid>
           <Grid item xs={12} md={4}>
             <TypedField
-              component={TextField}
+              component={TextInput}
               control={control}
               variant='outlined'
               name='employer'
