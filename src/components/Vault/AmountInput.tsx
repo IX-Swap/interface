@@ -1,6 +1,7 @@
 import { Currency, CurrencyAmount } from '@ixswap1/sdk-core'
 import { MaxButton } from 'components/CurrencyInputPanel/MaxButton'
 import { RowFixed } from 'components/Row'
+import { TokenLogo } from 'components/TokenLogo'
 import React, { ReactNode } from 'react'
 import styled from 'styled-components'
 import { TYPE } from 'theme'
@@ -43,15 +44,32 @@ const Aligner = styled.span`
   justify-content: space-between;
   width: 100%;
 `
+
+type SecCurrency = Currency & {
+  originalSymbol?: string | null
+}
+
 interface Props {
-  currency?: Currency
+  currency?: SecCurrency
   value: string
-  amount?: CurrencyAmount<Currency>
+  amount?: CurrencyAmount<SecCurrency>
   showMax?: boolean
   rightItem?: ReactNode
   onUserInput: (typedValue: string) => void
+  token: any
+  widthdraw?: boolean
 }
-export const AmountInput = ({ currency, value, amount, onUserInput, rightItem, showMax = false, ...rest }: Props) => {
+export const AmountInput = ({
+  currency,
+  value,
+  amount,
+  onUserInput,
+  rightItem,
+  showMax = false,
+  token,
+  widthdraw,
+  ...rest
+}: Props) => {
   return (
     <InputPanel id={'amount-input'} {...rest}>
       <Container>
@@ -69,9 +87,17 @@ export const AmountInput = ({ currency, value, amount, onUserInput, rightItem, s
             {showMax && <MaxButton currency={currency} onInput={onUserInput} amount={amount} />}
             {rightItem || (
               <RowFixed>
-                <CurrencyLogo style={{ marginRight: '0.5rem' }} currency={currency} size={'24px'} />
-                <StyledTokenName className="token-symbol-container" active={Boolean(currency && currency.symbol)}>
-                  <TYPE.main1>{formatCurrencySymbol({ currency })}</TYPE.main1>
+                {token?.logo ? (
+                  <TokenLogo logo={token.logo} width="24px" height="24px" />
+                ) : (
+                  <CurrencyLogo currency={currency} size="72px" />
+                )}
+
+                <StyledTokenName
+                  className="token-symbol-container"
+                  active={Boolean(currency && currency.originalSymbol)}
+                >
+                  <TYPE.main1>{widthdraw ? currency?.symbol : formatCurrencySymbol({ currency })}</TYPE.main1>
                 </StyledTokenName>
               </RowFixed>
             )}
