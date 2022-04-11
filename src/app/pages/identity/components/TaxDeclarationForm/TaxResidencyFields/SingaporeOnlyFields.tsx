@@ -1,7 +1,8 @@
-import { Box, FormControlLabel, Grid, Radio, Typography } from '@mui/material'
+import React from 'react'
+import { Box, FormControlLabel, Grid, Typography } from '@mui/material'
 import { TypedField } from 'components/form/TypedField'
 import { VSpacer } from 'components/VSpacer'
-import React from 'react'
+import { UIRadio } from 'components/UIRadio/UIRadio'
 import { useFormContext } from 'react-hook-form'
 import { TextInput } from 'ui/TextInput/TextInput'
 
@@ -19,7 +20,7 @@ export const SingaporeOnlyFields = () => {
         <FormControlLabel
           label='YES, I’m currently only tax resident in Singapore and do not have a foreign tax residency.'
           value='yes'
-          control={<Radio />}
+          control={<UIRadio />}
         />
       </Grid>
       {singaporeOnly === 'yes' && (

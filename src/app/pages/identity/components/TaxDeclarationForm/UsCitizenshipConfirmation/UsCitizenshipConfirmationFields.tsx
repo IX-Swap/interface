@@ -1,8 +1,9 @@
-import { FormControlLabel, Grid, Radio } from '@mui/material'
+import { FormControlLabel, Grid } from '@mui/material'
 import { RadioGroup } from 'components/form/RadioGroup'
 import { TypedField } from 'components/form/TypedField'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
+import { UIRadio } from 'components/UIRadio/UIRadio'
 import { TextInput } from 'ui/TextInput/TextInput'
 
 export const UsCitizenshipConfirmationFields = () => {
@@ -20,7 +21,7 @@ export const UsCitizenshipConfirmationFields = () => {
         <FormControlLabel
           label='I confirm that I am a US citizen and/or resident in the US for tax purposes and my U.S. federal Taxpayer Identifying Number (US TIN) is as follows:'
           value='yes'
-          control={<Radio />}
+          control={<UIRadio />}
         />
         {fatca === 'yes' ? (
           <Grid container spacing={2} direction='column'>
@@ -42,7 +43,7 @@ export const UsCitizenshipConfirmationFields = () => {
         <FormControlLabel
           label='I confirm that I am not a US citizen or resident in the US for tax purposes.'
           value='no'
-          control={<Radio />}
+          control={<UIRadio />}
         />
       </TypedField>
     </>

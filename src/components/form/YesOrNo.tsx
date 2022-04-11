@@ -1,7 +1,8 @@
 import React from 'react'
-import { Grid, Radio, Typography } from '@mui/material'
+import { Grid, Typography } from '@mui/material'
 import { useFormError } from 'hooks/useFormError'
 import { themeColors } from 'themes/app/colors'
+import { UIRadio } from 'components/UIRadio/UIRadio'
 
 export interface YesOrNoProps {
   name: string
@@ -32,7 +33,7 @@ export const YesOrNo = (props: Partial<YesOrNoProps>): JSX.Element => {
         <Typography variant='inherit' color={textColor}>
           Yes
         </Typography>
-        <Radio
+        <UIRadio
           value='yes'
           checked={value === 'yes'}
           name={name}
@@ -52,7 +53,7 @@ export const YesOrNo = (props: Partial<YesOrNoProps>): JSX.Element => {
         <Typography variant='inherit' color={textColor}>
           No
         </Typography>
-        <Radio
+        <UIRadio
           value='no'
           name={name}
           checked={value === 'no'}

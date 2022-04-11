@@ -1,5 +1,4 @@
 import {
-  Checkbox,
   FormControl,
   InputLabel,
   ListItemIcon,
@@ -12,6 +11,7 @@ import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilte
 import { hasValue } from 'helpers/forms'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import React, { useEffect } from 'react'
+import { UICheckbox } from 'components/UICheckbox/UICheckbox'
 
 export const SubFundSelect = () => {
   const { data, isLoading } = useVCCDSO()
@@ -101,7 +101,7 @@ export const SubFundSelect = () => {
               {options?.length > 0 ? (
                 <MenuItem value='all'>
                   <ListItemIcon>
-                    <Checkbox
+                    <UICheckbox
                       checked={isAllSelected}
                       indeterminate={
                         selected.length > 0 && selected.length < options.length
@@ -118,7 +118,7 @@ export const SubFundSelect = () => {
               {options?.map((option: any) => (
                 <MenuItem key={option.id} value={option.id}>
                   <ListItemIcon>
-                    <Checkbox checked={selected.includes(option.id)} />
+                    <UICheckbox checked={selected.includes(option.id)} />
                   </ListItemIcon>
                   <ListItemText primary={option.name} />
                 </MenuItem>

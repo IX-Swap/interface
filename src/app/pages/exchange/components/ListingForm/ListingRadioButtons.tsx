@@ -2,13 +2,13 @@ import {
   FormControl,
   FormControlLabel,
   Grid,
-  Radio,
   RadioGroup,
   Typography
 } from '@mui/material'
 import React, { useState } from 'react'
 import { DSOSelect } from 'app/pages/issuance/components/IssuanceLanding/DSOSelect'
 import { useDSOsByUserId } from 'app/pages/issuance/hooks/useDSOsByUserId'
+import { UIRadio } from 'components/UIRadio/UIRadio'
 
 export interface NewListingRadioButtonsProps {
   onImportClick: (value: string) => void
@@ -32,14 +32,14 @@ export const ListingRadioButtons = ({
           <FormControlLabel
             label='New Listing'
             value='yes'
-            control={<Radio />}
+            control={<UIRadio />}
           />
         </Grid>
         <Grid item>
           <FormControlLabel
             label='Import Data from Issuance'
             value='no'
-            control={<Radio />}
+            control={<UIRadio />}
           />
         </Grid>
         <Grid item>
