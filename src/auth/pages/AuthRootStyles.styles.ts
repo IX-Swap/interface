@@ -20,8 +20,9 @@ export const useStyles = makeStyles(theme => ({
   },
   wrapper: {
     width: '55%',
-    minHeight: '100%',
+    height: '100vh',
     position: 'relative',
+    overflowY: 'scroll',
     backgroundColor: 'transparent',
     display: 'flex',
     justifyContent: 'center',
@@ -33,6 +34,8 @@ export const useStyles = makeStyles(theme => ({
   formContainer: {
     marginTop: 'auto',
     marginBottom: 'auto',
+    paddingTop: 50,
+    paddingBottom: 50,
     [theme.breakpoints.down('md')]: {
       marginTop: 0
     }
