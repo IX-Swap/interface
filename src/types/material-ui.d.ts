@@ -145,6 +145,16 @@ export interface StepIcon {
   borderError: string
 }
 
+export interface NavigationLink {
+  color: CSSProperties['color']
+  activeColor: CSSProperties['color']
+}
+
+export interface DropdownLink {
+  boxShadow: string
+  border: string
+}
+
 export interface SelectPalette {
   bg: CSSProperties['color']
   bgDisabled: CSSProperties['color']
@@ -195,12 +205,14 @@ declare module '@mui/material/styles' {
     tablePagination: TablePagination
     alerts: Alerts
     stepIcon: StepIcon
+    navigationLink: NavigationLink
     input: {
       placeholder: CSSProperties['color']
       border: string
       disabledBg: string
     }
     select: SelectPalette
+    dropdownLink: DropdownLink
   }
 
   export interface Palette {
@@ -236,12 +248,14 @@ declare module '@mui/material/styles' {
     tablePagination: TablePagination
     alerts: Alerts
     stepIcon: StepIcon
+    navigationLink: NavigationLink
     input: {
       placeholder: CSSProperties['color']
       border: string
       disabledBg: string
     }
     select: SelectPalette
+    dropdownLink: DropdownLink
   }
 
   export interface Theme {

@@ -58,7 +58,7 @@ export const darkTheme: DeprecatedThemeOptions = {
       alternativeLight: tinycolor('#132a57').lighten(20).toHex()
     },
     sidebar: {
-      activeBackground: 'rgba(137, 149, 252, 0.11)',
+      activeBackground: tinycolor('#8995fc').setAlpha(0.1).toRgbString(),
       activeColor: '#8995FC'
     },
     breadcrumbs: {
@@ -174,6 +174,10 @@ export const darkTheme: DeprecatedThemeOptions = {
       colorError: '#F56283',
       borderError: tinycolor('#F56283').setAlpha(0.5).toRgbString()
     },
+    navigationLink: {
+      color: '#FFFFFF',
+      activeColor: '#4C88FF'
+    },
     select: {
       bg: '#152D5F',
       bgDisabled: '#11254C',
@@ -183,6 +187,10 @@ export const darkTheme: DeprecatedThemeOptions = {
       color: '#496396',
       colorDisabled: '#496396',
       labelDisabled: '#496396',
+      border: '#1D3667'
+    },
+    dropdownLink: {
+      boxShadow: tinycolor('#0e1f3f').setAlpha(0.3).toRgbString(),
       border: '#1D3667'
     },
     success: {

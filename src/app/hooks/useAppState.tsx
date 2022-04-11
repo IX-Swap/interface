@@ -19,10 +19,6 @@ type AppActionTypes =
       payload: AppState['pageTitle']
     }
   | {
-      type: 'setNavDrawerOpened'
-      payload: AppState['isNavDrawerOpened']
-    }
-  | {
       type: 'setSidebarOpened'
       payload: AppState['isSidebarOpened']
     }
@@ -35,7 +31,6 @@ const AppStateContext = createContext<AppState | null>(null)
 
 interface AppActions {
   setPageTitle: (title: AppState['pageTitle']) => void
-  setNavDrawerOpened: (status: boolean) => void
   setSidebarOpened: (status: boolean) => void
   setOnboardingPanelOpened: (status: boolean) => void
 }
@@ -55,12 +50,6 @@ const appReducer = (state: AppState, action: AppActionTypes) => {
       return {
         ...state,
         pageTitle: action.payload
-      }
-
-    case 'setNavDrawerOpened':
-      return {
-        ...state,
-        isNavDrawerOpened: action.payload
       }
 
     case 'setSidebarOpened':
@@ -88,8 +77,6 @@ export const AppStateProvider = (props: PropsWithChildren<any>) => {
   const appActions = {
     setPageTitle: (title: AppState['pageTitle']) =>
       dispatch({ type: 'setPageTitle', payload: title }),
-    setNavDrawerOpened: (opened: boolean) =>
-      dispatch({ type: 'setNavDrawerOpened', payload: opened }),
     setSidebarOpened: (opened: boolean) =>
       dispatch({ type: 'setSidebarOpened', payload: opened }),
     setOnboardingPanelOpened: (opened: boolean) =>

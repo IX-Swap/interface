@@ -59,9 +59,8 @@ export const lightTheme: DeprecatedThemeOptions = {
       light: '#ffffff',
       lighter: '#e3e3e3',
       alternative: '#56AA82',
-      alternativeLight: 'rgba(86, 170, 130, 0.06)'
+      alternativeLight: tinycolor('#56aa82').setAlpha(0.06).toRgbString()
     },
-    // TODO Remove old slider after delete old theme
     slider: {
       background: '#C6D9FF',
       activeColor: '#ffffff',
@@ -181,6 +180,10 @@ export const lightTheme: DeprecatedThemeOptions = {
       colorError: '#F56283',
       borderError: tinycolor('#F56283').setAlpha(0.5).toRgbString()
     },
+    navigationLink: {
+      color: '#778194',
+      activeColor: '#3B4251'
+    },
     select: {
       bg: '#FFFFFF',
       bgDisabled: '#F0F2F7',
@@ -191,6 +194,10 @@ export const lightTheme: DeprecatedThemeOptions = {
       colorDisabled: '#778194',
       labelDisabled: '#778194',
       border: '#DBE2EC'
+    },
+    dropdownLink: {
+      boxShadow: tinycolor('#a2acbf16').setAlpha(0.16).toRgbString(),
+      border: '#EDF2FA'
     },
     success: {
       main: '#7DD320'
