@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Grid, OutlinedInput, InputAdornment } from '@mui/material'
 import { moneyNumberFormat } from 'config/numberFormat'
 import { useFormContext } from 'react-hook-form'
@@ -18,10 +18,11 @@ export interface CommitmentFormFieldsProps {
   symbol: string
   network?: string
   decimalScale?: number
+  isCampaign?: boolean
 }
 
 export const CommitmentFormFields = (props: CommitmentFormFieldsProps) => {
-  const { control } = useFormContext<CommitmentFormValues>()
+  const { control, setValue } = useFormContext<CommitmentFormValues>()
   const handleNumOfUnitsChange = (value: number, path: string) => {
     const { pricePerUnit } = control.getValues()
     const nextValue = value * (pricePerUnit ?? 1)
@@ -37,7 +38,12 @@ export const CommitmentFormFields = (props: CommitmentFormFieldsProps) => {
     ({ status }) => status === 'Approved'
   )
   const hasFilteredAddresses = filteredAddresses.length > 0
-
+  const { isCampaign = false } = props
+  useEffect(() => {
+    if (isCampaign) {
+      setValue('numberOfUnits', 1)
+    }
+  }, [isCampaign, setValue])
   return (
     <Grid container direction='column' spacing={2}>
       <Grid item>
@@ -61,6 +67,7 @@ export const CommitmentFormFields = (props: CommitmentFormFieldsProps) => {
           component={NumericInput}
           control={control}
           name='numberOfUnits'
+          disabled={isCampaign}
           label='Number of Units'
           numberFormat={{ ...moneyNumberFormat, decimalScale }}
           valueExtractor={numericValueExtractor}

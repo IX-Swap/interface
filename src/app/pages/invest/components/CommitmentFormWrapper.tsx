@@ -24,6 +24,9 @@ export const CommitmentFormWrapper = () => {
     return null
   }
 
+  // adjust when we have campaign dso's
+  const isCampaign = !(data?.isCampaign === true)
+
   return (
     <CommitmentForm
       dso={data._id}
@@ -54,6 +57,7 @@ export const CommitmentFormWrapper = () => {
                 decimalScale={data.deploymentInfo?.decimals}
                 symbol={data.currency.symbol}
                 network={data.network?._id}
+                isCampaign={isCampaign}
               />
               <VSpacer size='medium' />
               <Grid container spacing={2} justifyContent='center'>
