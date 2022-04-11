@@ -1,4 +1,5 @@
 import { TokenInfo } from '@uniswap/token-lists'
+import { Currency } from '@ixswap1/sdk-core'
 
 export interface SecToken extends TokenInfo {
   ticker: string
@@ -30,4 +31,8 @@ export interface TokenUser {
   createdAt: string
   updatedAt: string
   deletedAt: string | null
+}
+
+export type SecCurrency = Currency & {
+  originalSymbol?: string | null
 }
