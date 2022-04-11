@@ -1,4 +1,3 @@
-import { Currency } from '@ixswap1/sdk-core'
 import styled from 'styled-components'
 import { Trans } from '@lingui/macro'
 import { ArrowDown } from 'react-feather'
@@ -28,6 +27,7 @@ import info from '../../assets/images/info-filled.svg'
 import { chainIdToNetworkName, getNetworkFromToken } from 'components/CurrencyLogo'
 import { capitalizeFirstLetter } from 'components/AdminAccreditationTable/utils'
 import { SupportedChainId } from 'constants/chains'
+import { SecCurrency } from 'types/secToken'
 
 export const ArrowWrapper = styled.div`
   padding: 7px 5px;
@@ -41,10 +41,11 @@ export const ArrowWrapper = styled.div`
   background-color: ${({ theme }) => theme.bg9};
 `
 interface Props {
-  currency?: Currency
+  currency?: SecCurrency
+  token: any
 }
 
-export const DepositRequestForm = ({ currency }: Props) => {
+export const DepositRequestForm = ({ currency, token }: Props) => {
   const theme = useTheme()
   const showAboutWrapping = useShowAboutWrappingCallback()
   const { account, chainId } = useActiveWeb3React()
@@ -96,7 +97,13 @@ export const DepositRequestForm = ({ currency }: Props) => {
                 <Trans>I want to deposit:</Trans>
               </TYPE.body1>
             </Row>
-            <AmountInput currency={currency} value={amount ?? ''} onUserInput={onTypeAmount} amount={parsedAmount} />
+            <AmountInput
+              token={token}
+              currency={currency}
+              value={amount ?? ''}
+              onUserInput={onTypeAmount}
+              amount={parsedAmount}
+            />
           </Column>
           <Column style={{ marginTop: '20px', gap: '11px' }}>
             <Row>
@@ -128,12 +135,13 @@ export const DepositRequestForm = ({ currency }: Props) => {
           <Column style={{ gap: '11px' }}>
             <Row>
               <TYPE.body1>
-                <Trans>{`You will get wrapped ${tokenInfo?.symbol}:`}</Trans>
+                <Trans>{`You will get wrapped ${currency?.originalSymbol || currency?.symbol}:`}</Trans>
               </TYPE.body1>
             </Row>
             <AmountInput
+              token={token}
               currency={currency}
-              value={amount ? `${amount} ${tokenInfo?.symbol}` : ''}
+              value={amount ? `${amount} ${currency?.originalSymbol || currency?.symbol}` : ''}
               onUserInput={onTypeAmount}
               amount={parsedAmount}
               rightItem={
