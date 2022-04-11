@@ -79,6 +79,12 @@ export const FormStepper = (props: FormStepperProps) => {
   )
 
   const handleStepButtonClick = (step: number) => () => {
+    if (nonLinear) {
+      setCompleted([...completed, activeStep])
+      setActiveStep(step)
+      return
+    }
+
     if (completed.includes(step) || step === Math.max(...completed) + 1) {
       setActiveStep(step)
     }
