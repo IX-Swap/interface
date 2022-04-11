@@ -193,6 +193,12 @@ export const darkTheme: DeprecatedThemeOptions = {
       boxShadow: tinycolor('#0e1f3f').setAlpha(0.3).toRgbString(),
       border: '#1D3667'
     },
+    notificationsDropdown: {
+      bg: '#11254C',
+      message: '#778194',
+      divider: '#1D3667',
+      bgHover: tinycolor('#152D5F').setAlpha(0.4).toRgbString()
+    },
     success: {
       main: '#7DD320'
     },

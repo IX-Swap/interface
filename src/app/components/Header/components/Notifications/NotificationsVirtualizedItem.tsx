@@ -1,8 +1,7 @@
 import React from 'react'
 import { ListChildComponentProps } from 'react-window'
-import { useVirtualizedListItemHelpers } from 'components/VirtualizedList/hooks/useVirtualizedListHelpers'
-import { MarkAsRead } from './MarkAsRead'
-import { NotificationView } from './NotificationView'
+import { NotificationView } from 'app/components/Header/components/Notifications/NotificationView/NotificationView'
+import { useVirtualizedListItemHelpers } from 'app/components/Header/components/Notifications/VirtualizedList/hooks/useVirtualizedListHelpers'
 
 export interface NotificationsVirtualizedItemProps
   extends ListChildComponentProps {}
@@ -16,8 +15,8 @@ export const NotificationsVirtualizedItem = (
 
   return (
     <div {...rest}>
-      <div ref={ref} style={{ marginBottom: -1 }}>
-        <NotificationView data={item} action={<MarkAsRead data={item} />} />
+      <div ref={ref}>
+        <NotificationView data={item} />
       </div>
     </div>
   )
