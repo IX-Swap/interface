@@ -21,8 +21,12 @@ export const registerFormInitialValues = {
 }
 
 export const Register: React.FC = observer(() => {
-  const { title, question, link } = useStyles({})
   const [signup, { isLoading }] = useSignup()
+  const { title, question, link } = useStyles({})
+  const { updateFilter, getFilterValue } = useQueryFilter()
+  const identity = getFilterValue('identityType')
+  const isIndvidual = identity === 'individual'
+
   const handleSubmit = async (values: SignupArgs) => {
     await signup({
       name: values.name,
@@ -31,9 +35,12 @@ export const Register: React.FC = observer(() => {
     })
   }
 
-  const { updateFilter, getFilterValue } = useQueryFilter()
-  const identity = getFilterValue('identityType')
-  const isIndvidual = identity === 'individual'
+  useEffect(() => {
+    if (identity === undefined || identity === '') {
+      updateFilter('identityType', 'corporate')
+    }
+  }, [identity, updateFilter])
+
   const handleIdentityChange = () => {
     if (isIndvidual) {
       updateFilter('identityType', 'corporate')
@@ -42,12 +49,6 @@ export const Register: React.FC = observer(() => {
 
     updateFilter('identityType', 'individual')
   }
-
-  useEffect(() => {
-    if (identity === undefined || identity === '') {
-      updateFilter('identityType', 'corporate')
-    }
-  }, [identity, updateFilter])
 
   return (
     <Form

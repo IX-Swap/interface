@@ -75,7 +75,7 @@ export const RegisterFields = () => {
           component={TextField}
           name='name'
           label={isIndvidual ? 'Full Name' : 'Corporate Name'}
-          placeholder='Full Name'
+          placeholder={isIndvidual ? 'Full Name' : 'Corporate Name'}
           fullWidth
           InputLabelProps={{
             shrink: true
