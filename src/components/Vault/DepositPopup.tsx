@@ -1,10 +1,9 @@
-import { Currency } from '@ixswap1/sdk-core'
 import { Trans } from '@lingui/macro'
 import { ButtonText } from 'components/Button'
 import { getNetworkFromToken } from 'components/CurrencyLogo'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import Row, { RowBetween } from 'components/Row'
-import React, { useCallback, useEffect } from 'react'
+import React, { useCallback } from 'react'
 import { useDispatch } from 'react-redux'
 import { Box } from 'rebass'
 import { AppDispatch } from 'state'
@@ -15,6 +14,7 @@ import { useDepositState, useHideAboutWrappingCallback } from 'state/deposit/hoo
 import { DepositModalView } from 'state/deposit/reducer'
 import { useUserSecTokens } from 'state/user/hooks'
 import { ModalBlurWrapper, ModalContentWrapper, ModalPadding } from 'theme'
+import { SecCurrency } from 'types/secToken'
 import { ReactComponent as ArrowLeft } from '../../assets/images/arrow-back.svg'
 import { CloseIcon, TYPE } from '../../theme'
 import { DepositAboutWrapping } from './DepositAboutWrapping'
@@ -24,9 +24,10 @@ import { DepositRequestForm } from './DepositRequestForm'
 import { DepositSendInfo } from './DepositSendInfo'
 
 interface Props {
-  currency?: Currency
+  currency?: SecCurrency
+  token: any
 }
-export const DepositPopup = ({ currency }: Props) => {
+export const DepositPopup = ({ currency, token }: Props) => {
   const { secTokens } = useUserSecTokens()
   const isOpen = useModalOpen(ApplicationModal.DEPOSIT)
   const hideAboutWrapping = useHideAboutWrappingCallback()
@@ -42,6 +43,7 @@ export const DepositPopup = ({ currency }: Props) => {
     toggle()
     hideAboutWrapping()
   }, [toggle])
+
   return (
     <RedesignedWideModal isOpen={isOpen} onDismiss={onClose} minHeight={false} maxHeight={'fit-content'} scrollable>
       <ModalBlurWrapper data-testid="depositPopup">
@@ -61,7 +63,7 @@ export const DepositPopup = ({ currency }: Props) => {
                 </Row>
               ) : (
                 <TYPE.title5>
-                  <Trans>{`Deposit ${tokenInfo?.symbol || ''} ${
+                  <Trans>{`Deposit ${currency?.originalSymbol || ''} ${
                     modalView === DepositModalView.SEND_INFO ? `to 1st Digital Custodian` : `from ${networkName || ''}`
                   }`}</Trans>
                 </TYPE.title5>
@@ -71,7 +73,7 @@ export const DepositPopup = ({ currency }: Props) => {
                 onClick={modalView === DepositModalView.ABOUT_WRAPPING ? hideAboutWrapping : onClose}
               />
             </RowBetween>
-            {modalView === DepositModalView.CREATE_REQUEST && <DepositRequestForm currency={currency} />}
+            {modalView === DepositModalView.CREATE_REQUEST && <DepositRequestForm token={token} currency={currency} />}
             {modalView === DepositModalView.SEND_INFO && <DepositSendInfo onClose={onClose} />}
             {modalView === DepositModalView.PENDING && <DepositPending />}
             {modalView === DepositModalView.ERROR && <DepositError onClose={onClose} />}

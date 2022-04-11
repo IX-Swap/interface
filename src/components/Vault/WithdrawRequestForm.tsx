@@ -1,4 +1,3 @@
-import { Currency } from '@ixswap1/sdk-core'
 import { Trans } from '@lingui/macro'
 import { ButtonIXSWide } from 'components/Button'
 import Column from 'components/Column'
@@ -16,6 +15,7 @@ import {
   useWithdrawState,
 } from 'state/withdraw/hooks'
 import { TYPE } from 'theme'
+import { SecCurrency } from 'types/secToken'
 import { shortAddress } from 'utils'
 import { currencyId } from 'utils/currencyId'
 import { AddressInput } from '../AddressInputPanel/AddressInput'
@@ -23,10 +23,11 @@ import { AmountInput } from './AmountInput'
 import { WithdrawModalView } from './WithdrawPopup'
 
 interface Props {
-  currency?: Currency
+  currency?: SecCurrency
   changeModal: (param: WithdrawModalView) => void
+  token: any
 }
-export const WithdrawRequestForm = ({ currency, changeModal }: Props) => {
+export const WithdrawRequestForm = ({ currency, changeModal, token }: Props) => {
   const theme = useTheme()
   const { amount, receiver, currencyId: cid } = useWithdrawState()
   const { account } = useActiveWeb3React()
@@ -75,7 +76,9 @@ export const WithdrawRequestForm = ({ currency, changeModal }: Props) => {
               <Trans>Info:</Trans>
             </b>
             &nbsp;
-            <Trans>{`Your wrapped ${tokenInfo?.symbol} will be extracted from your ${networkName} wallet and burnt automatically.`}</Trans>
+            <Trans>{`Your wrapped ${
+              currency?.originalSymbol || tokenInfo?.symbol
+            } will be extracted from your Polygon wallet and burnt automatically.`}</Trans>
           </TYPE.description3>
         </Column>
         <Column style={{ gap: '11px' }}>
@@ -85,6 +88,8 @@ export const WithdrawRequestForm = ({ currency, changeModal }: Props) => {
             </TYPE.body1>
           </Row>
           <AmountInput
+          widthdraw
+            token={token}
             amount={parsedAmount}
             showMax={true}
             currency={currency}

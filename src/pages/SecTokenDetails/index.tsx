@@ -15,20 +15,7 @@ import { DetailsInfo } from './DetailsInfo'
 import { AddToMetamask } from './AddToMetamask'
 import { AtlasInfo } from './AtlasInfo'
 import { NotTradable } from './NotTradable'
-
-interface TokenLogoProps {
-  logo: {
-    storageUrl: string
-    uuid: string
-  }
-}
-
-const TokenLogo: FC<TokenLogoProps> = ({ logo }: TokenLogoProps) => {
-  if (!logo) return null
-
-  const { storageUrl, uuid } = logo
-  return <img width="72px" height="72px" style={{ borderRadius: '50%' }} src={`${storageUrl}${uuid}`} />
-}
+import { TokenLogo } from 'components/TokenLogo'
 
 export default function SecTokenDetails({
   match: {
@@ -55,8 +42,8 @@ export default function SecTokenDetails({
 
   return (
     <>
-      <DepositPopup currency={token?.token} />
-      <WithdrawPopup currency={token?.token} />
+      <DepositPopup currency={token?.token} token={token} />
+      <WithdrawPopup currency={token?.token} token={token} />
       <LightBackground />
       <Container width={['100%', '90%']} maxWidth={'920px'}>
         <InfoTitle>
