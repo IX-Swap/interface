@@ -246,6 +246,16 @@ export const getKycList: Readonly<{
   rejected: createAction('admin/getKycList/rejected'),
 }
 
+export const getAdminList: Readonly<{
+  pending: ActionCreatorWithoutPayload
+  fulfilled: ActionCreatorWithPayload<{ data: any[] }>
+  rejected: ActionCreatorWithPayload<{ errorMessage: string }>
+}> = {
+  pending: createAction('admin/getAdminList/pending'),
+  fulfilled: createAction('admin/getAdminList/fulfilled'),
+  rejected: createAction('admin/getAdminList/rejected'),
+}
+
 export const postApproveKyc: Readonly<{
   pending: ActionCreatorWithoutPayload
   fulfilled: ActionCreatorWithPayload<{ data: { id: number; status: string } }>
