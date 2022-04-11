@@ -1,12 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { DigitalSecurityOffering } from 'types/dso'
-import { Grid } from '@mui/material'
+import { Button, Grid } from '@mui/material'
 import { DSOTitle } from 'app/components/DSO/components/DSOTitle'
 import { EstimatedValue } from 'app/pages/invest/components/EstimatedValue'
 import { AssetBalance } from 'app/pages/invest/components/AssetBalance'
 import { useSetPageTitle } from 'app/hooks/useSetPageTitle'
 import { LabelledValue } from 'components/LabelledValue'
 import { formatMoney } from 'helpers/numbers'
+import WalletModal from 'components/WalletModal/WalletModal'
 
 export interface CommitmentHeaderProps {
   dso: DigitalSecurityOffering
@@ -14,7 +15,8 @@ export interface CommitmentHeaderProps {
 
 export const CommitmentHeader = (props: CommitmentHeaderProps) => {
   const { dso } = props
-
+  const [isOpen, setOpen] = useState(false)
+  const toggleOpen = () => setOpen(!isOpen)
   useSetPageTitle(`${dso.tokenName} (${dso.tokenSymbol})`)
 
   return (
@@ -34,6 +36,8 @@ export const CommitmentHeader = (props: CommitmentHeaderProps) => {
       <Grid item xs={4} md={2}>
         <EstimatedValue symbol={dso.currency.symbol} />
       </Grid>
+      <Button onClick={toggleOpen}>Connect Wallet</Button>
+      <WalletModal isOpen={isOpen} toggleModal={toggleOpen} />
     </Grid>
   )
 }
