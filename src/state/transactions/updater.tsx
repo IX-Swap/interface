@@ -131,7 +131,7 @@ export default function Updater(): null {
             console.error(`failed to check transaction hash: ${hash}`, error)
           })
       })
-  }, [chainId, library, transactions, lastBlockNumber, dispatch, addPopup, pendingTransactions, account, subscription])
+  }, [chainId, library, transactions, lastBlockNumber, dispatch, addPopup])
 
   return null
 }
