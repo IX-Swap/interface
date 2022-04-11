@@ -37,7 +37,7 @@ const TransactionState = styled(ExternalLink)<{ pending: boolean; success?: bool
 `
 
 export default function Transaction({ hash }: { hash: string }) {
-  const { chainId, library } = useActiveWeb3React()
+  const { chainId } = useActiveWeb3React()
   const allTransactions = useAllTransactions()
   const theme = useTheme()
   const tx = allTransactions?.[hash]
