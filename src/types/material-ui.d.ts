@@ -145,6 +145,18 @@ export interface StepIcon {
   borderError: string
 }
 
+export interface SelectPalette {
+  bg: CSSProperties['color']
+  bgDisabled: CSSProperties['color']
+  color: CSSProperties['color']
+  colorDisabled: CSSProperties['color']
+  itemBorder: string
+  placeholder: CSSProperties['color']
+  label: CSSProperties['color']
+  labelDisabled: CSSProperties['color']
+  border: CSSProperties['color']
+}
+
 declare module '@mui/styles/defaultTheme' {
   interface DefaultTheme extends Theme {}
 }
@@ -183,6 +195,12 @@ declare module '@mui/material/styles' {
     tablePagination: TablePagination
     alerts: Alerts
     stepIcon: StepIcon
+    input: {
+      placeholder: CSSProperties['color']
+      border: string
+      disabledBg: string
+    }
+    select: SelectPalette
   }
 
   export interface Palette {
@@ -218,6 +236,12 @@ declare module '@mui/material/styles' {
     tablePagination: TablePagination
     alerts: Alerts
     stepIcon: StepIcon
+    input: {
+      placeholder: CSSProperties['color']
+      border: string
+      disabledBg: string
+    }
+    select: SelectPalette
   }
 
   export interface Theme {

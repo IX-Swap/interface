@@ -1,12 +1,12 @@
-import React from 'react'
-import { Box, Grid, TextField } from '@mui/material'
+import { Box, Grid } from '@mui/material'
 import { DSOTeamRemoveButton } from 'app/components/DSO/components/DSOTeamRemoveButton'
 import { TypedField } from 'components/form/TypedField'
+import { VSpacer } from 'components/VSpacer'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+import React from 'react'
 import { useFormContext } from 'react-hook-form'
 import { DsoFAQItem, DSOFormValues } from 'types/dso'
-import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
-import { VSpacer } from 'components/VSpacer'
-
+import { TextInput } from 'ui/TextInput/TextInput'
 export interface DSOFAQItemProps {
   isNew: boolean
   fieldId: string
@@ -33,7 +33,7 @@ export const DSOFAQItem = (props: DSOFAQItemProps) => {
           <TypedField
             fullWidth
             key={fieldId}
-            component={TextField}
+            component={TextInput}
             control={control}
             defaultValue={defaultValue?.question ?? ''}
             label={`FAQ #${index + 1}`}
@@ -50,7 +50,7 @@ export const DSOFAQItem = (props: DSOFAQItemProps) => {
             fullWidth
             key={fieldId}
             control={control}
-            component={TextField}
+            component={TextInput}
             defaultValue={defaultValue?.answer ?? ''}
             label='Input answer here'
             name={['faqs', index, 'answer']}

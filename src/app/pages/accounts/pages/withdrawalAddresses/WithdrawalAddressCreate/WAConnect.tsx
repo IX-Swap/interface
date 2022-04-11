@@ -1,25 +1,25 @@
-import React, { ReactElement, useEffect } from 'react'
 import { FileCopyOutlined } from '@mui/icons-material'
 import {
+  Alert,
   CircularProgress,
   DialogActions,
   Grid,
   IconButton,
-  InputAdornment,
-  TextField,
-  Alert
+  InputAdornment
 } from '@mui/material'
+import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 import { WalletConnectionStatus } from 'app/pages/accounts/pages/withdrawalAddresses/hooks/useConnectMetamaskWallet'
 import { WAConnectActions } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WAConnectActions'
 import { WAInfoFields } from 'app/pages/accounts/pages/withdrawalAddresses/WithdrawalAddressCreate/WAInfoFields'
-import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 import { TypedField } from 'components/form/TypedField'
 import { privateClassNames } from 'helpers/classnames'
-import { useCheckAddress } from '../hooks/useCheckAddress'
-import { useDebouncedCallback } from 'use-debounce'
+import { copyToClipboard } from 'helpers/clipboard'
+import React, { ReactElement, useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
 import { WithdrawalAddressFormValues } from 'types/withdrawalAddress'
-import { copyToClipboard } from 'helpers/clipboard'
+import { TextInput } from 'ui/TextInput/TextInput'
+import { useDebouncedCallback } from 'use-debounce'
+import { useCheckAddress } from '../hooks/useCheckAddress'
 import { WAPair } from './WAPair'
 
 export interface WAConnectProps {
@@ -63,7 +63,7 @@ export const WAConnect = ({ hint, status, getAccount }: WAConnectProps) => {
       <Grid item mt={3}>
         <TypedField
           className={privateClassNames()}
-          component={TextField}
+          component={TextInput}
           control={control}
           name='address'
           label='Blockchain Address'

@@ -6,6 +6,7 @@ import { numericValueExtractor } from 'helpers/forms'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
 import { useIndividualDefaultInfo } from 'hooks/auth/useIndividualDefaultInfo'
+import { TextInput } from 'ui/TextInput/TextInput'
 
 export const basicInformationFields = [
   {
@@ -84,7 +85,7 @@ export const IssuerDetails = (props: IssuerDetailFieldsProps) => {
             </Grid>
             <Grid item xs={12}>
               <TypedField
-                component={TextField}
+                component={TextInput}
                 label='Details of Issuance'
                 name='detail'
                 control={control}

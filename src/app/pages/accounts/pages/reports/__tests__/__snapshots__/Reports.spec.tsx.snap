@@ -86,25 +86,25 @@ exports[`Reports should match snapshot 1`] = `
               class="makeStyles-filterWrapper-8 MuiBox-root css-0"
             >
               <div
-                class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
+                class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1rj7xs-MuiFormControl-root-MuiTextField-root"
               >
                 <label
-                  class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary css-7f3qay-MuiFormLabel-root-MuiInputLabel-root"
-                  data-shrink="false"
+                  class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary css-fhk4wr-MuiFormLabel-root-MuiInputLabel-root"
+                  data-shrink="true"
                   for="mui-1"
                   id="mui-1-label"
                 >
                   From
                 </label>
                 <div
-                  class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl css-1xusqs5-MuiInputBase-root-MuiOutlinedInput-root"
+                  class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl css-jbw6h8-MuiInputBase-root-MuiOutlinedInput-root"
                   style="width: 150px;"
                 >
                   <input
                     aria-invalid="false"
                     aria-label="Choose date"
                     aria-readonly="true"
-                    class="MuiOutlinedInput-input MuiInputBase-input css-1lkr5rz-MuiInputBase-input-MuiOutlinedInput-input"
+                    class="MuiOutlinedInput-input MuiInputBase-input css-17cvodc-MuiInputBase-input-MuiOutlinedInput-input"
                     id="mui-1"
                     readonly=""
                     type="text"
@@ -129,25 +129,25 @@ exports[`Reports should match snapshot 1`] = `
               class="makeStyles-filterWrapper-8 MuiBox-root css-0"
             >
               <div
-                class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-wb57ya-MuiFormControl-root-MuiTextField-root"
+                class="MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1rj7xs-MuiFormControl-root-MuiTextField-root"
               >
                 <label
-                  class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary css-7f3qay-MuiFormLabel-root-MuiInputLabel-root"
-                  data-shrink="false"
+                  class="MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined MuiFormLabel-root MuiFormLabel-colorPrimary css-fhk4wr-MuiFormLabel-root-MuiInputLabel-root"
+                  data-shrink="true"
                   for="mui-3"
                   id="mui-3-label"
                 >
                   To
                 </label>
                 <div
-                  class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl css-1xusqs5-MuiInputBase-root-MuiOutlinedInput-root"
+                  class="MuiOutlinedInput-root MuiInputBase-root MuiInputBase-colorPrimary MuiInputBase-formControl css-jbw6h8-MuiInputBase-root-MuiOutlinedInput-root"
                   style="width: 150px;"
                 >
                   <input
                     aria-invalid="false"
                     aria-label="Choose date"
                     aria-readonly="true"
-                    class="MuiOutlinedInput-input MuiInputBase-input css-1lkr5rz-MuiInputBase-input-MuiOutlinedInput-input"
+                    class="MuiOutlinedInput-input MuiInputBase-input css-17cvodc-MuiInputBase-input-MuiOutlinedInput-input"
                     id="mui-3"
                     readonly=""
                     type="text"

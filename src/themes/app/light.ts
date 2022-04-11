@@ -162,6 +162,11 @@ export const lightTheme: DeprecatedThemeOptions = {
     skeleton: {
       bg: '#EDF2FA'
     },
+    input: {
+      placeholder: '#778194',
+      border: '#DBE2EC',
+      disabledBg: '#F0F2F7'
+    },
     stepIcon: {
       bg: tinycolor('#BEC4CF1A').setAlpha(0.1).toRgbString(),
       color: '#BEC4CF',
@@ -175,6 +180,17 @@ export const lightTheme: DeprecatedThemeOptions = {
       bgError: tinycolor('#F56283').setAlpha(0.1).toRgbString(),
       colorError: '#F56283',
       borderError: tinycolor('#F56283').setAlpha(0.5).toRgbString()
+    },
+    select: {
+      bg: '#FFFFFF',
+      bgDisabled: '#F0F2F7',
+      itemBorder: '#EDF2FA',
+      placeholder: '#778194',
+      label: '#0A1326',
+      color: '#778194',
+      colorDisabled: '#778194',
+      labelDisabled: '#778194',
+      border: '#DBE2EC'
     },
     success: {
       main: '#7DD320'
