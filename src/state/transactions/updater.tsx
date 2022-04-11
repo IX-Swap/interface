@@ -1,15 +1,23 @@
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useActiveWeb3React } from '../../hooks/web3'
 import { updateBlockNumber } from '../application/actions'
 import { useAddPopup, useBlockNumber } from '../application/hooks'
 import { AppDispatch, AppState } from '../index'
-import { checkedTransaction, finalizeTransaction } from './actions'
+import { checkedTransaction, finalizeTransaction, replaceSpeededTransaction } from './actions'
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const Web3 = require('web3') // for some reason import Web3 from web3 didn't see eth module
 
 interface TxInterface {
   addedTime: number
   receipt?: Record<string, any>
   lastCheckedBlockNumber?: number
+}
+
+interface Log {
+  transactionHash: string
+  transactionIndex: number
 }
 
 export function shouldCheck(lastBlockNumber: number, tx: TxInterface): boolean {
@@ -31,7 +39,8 @@ export function shouldCheck(lastBlockNumber: number, tx: TxInterface): boolean {
 }
 
 export default function Updater(): null {
-  const { chainId, library } = useActiveWeb3React()
+  const [subscription, handleSubscription] = useState<any>(null)
+  const { chainId, library, account } = useActiveWeb3React()
 
   const lastBlockNumber = useBlockNumber()
 
@@ -39,6 +48,35 @@ export default function Updater(): null {
   const state = useSelector<AppState, AppState['transactions']>((state) => state.transactions)
 
   const transactions = useMemo(() => (chainId ? state[chainId] ?? {} : {}), [chainId, state])
+
+  const pendingTransactions = useMemo(() => Object.values(transactions).filter((tx) => !tx.receipt), [transactions])
+
+  useEffect(() => {
+    if (library && pendingTransactions.length > 0 && !subscription) {
+      const web3 = new Web3(library.provider)
+      const newSubscription = web3.eth.subscribe('logs', {
+        address: account,
+      })
+      handleSubscription(newSubscription)
+      newSubscription.on('data', (data: Log) => {
+        const nonce = data.transactionIndex
+        pendingTransactions.forEach(({ hash, txResponse }) => {
+          if (txResponse?.nonce === nonce) {
+            dispatch(
+              replaceSpeededTransaction({ oldHash: hash, newHash: data.transactionHash, chainId: chainId || 137 })
+            )
+          }
+        })
+      })
+    }
+  }, [library, pendingTransactions, account, chainId, dispatch, subscription])
+
+  useEffect(() => {
+    if (pendingTransactions.length === 0 && subscription) {
+      subscription.unsubscribe()
+      handleSubscription(null)
+    }
+  }, [pendingTransactions, subscription])
 
   // show popup on confirm
   const addPopup = useAddPopup()
@@ -93,7 +131,7 @@ export default function Updater(): null {
             console.error(`failed to check transaction hash: ${hash}`, error)
           })
       })
-  }, [chainId, library, transactions, lastBlockNumber, dispatch, addPopup])
+  }, [chainId, library, transactions, lastBlockNumber, dispatch, addPopup, pendingTransactions, account, subscription])
 
   return null
 }

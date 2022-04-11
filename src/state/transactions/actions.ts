@@ -31,3 +31,8 @@ export const checkedTransaction = createAction<{
   hash: string
   blockNumber: number
 }>('transactions/checkedTransaction')
+export const replaceSpeededTransaction = createAction<{
+  chainId: number
+  oldHash: string
+  newHash: string
+}>('transactions/replaceSpeededTransaction')

@@ -5,6 +5,7 @@ import {
   clearAllTransactions,
   finalizeTransaction,
   SerializableTransactionReceipt,
+  replaceSpeededTransaction,
 } from './actions'
 
 const now = () => new Date().getTime()
@@ -19,6 +20,7 @@ export interface TransactionDetails {
   addedTime: number
   confirmedTime?: number
   from: string
+  txResponse?: Record<string, any>
 }
 
 export interface TransactionState {
@@ -64,5 +66,13 @@ export default createReducer(initialState, (builder) =>
       }
       tx.receipt = receipt
       tx.confirmedTime = now()
+    })
+    .addCase(replaceSpeededTransaction, (state, { payload: { oldHash, newHash, chainId } }) => {
+      const txs = state[chainId] ?? {}
+      const tx = { ...(txs[oldHash] || {}) }
+      txs[newHash] = { ...tx, hash: newHash }
+      delete txs[oldHash]
+
+      state[chainId] = txs
     })
 )
