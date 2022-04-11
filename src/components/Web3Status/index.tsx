@@ -24,6 +24,9 @@ import Loader from '../Loader'
 import { RowBetween } from '../Row'
 import WalletModal from '../WalletModal'
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const Web3 = require('web3') // for some reason import Web3 from web3 didn't see eth module
+
 const IconWrapper = styled.div<{ size?: number }>`
   ${({ theme }) => theme.flexColumnNoWrap};
   align-items: center;
@@ -221,7 +224,7 @@ function Web3StatusInner() {
 }
 
 export default function Web3Status() {
-  const { active, account } = useWeb3React()
+  const { active, account, library } = useWeb3React()
   const contextNetwork = useWeb3React(NetworkContextName)
 
   const { ENSName } = useENSName(account ?? undefined)
@@ -233,11 +236,31 @@ export default function Web3Status() {
     return txs.filter(isTransactionRecent).sort(newTransactionsFirst)
   }, [allTransactions])
 
+  console.log('log => sortedRecentTransactions', sortedRecentTransactions)
+
   const pending = sortedRecentTransactions.filter((tx) => !tx.receipt).map((tx) => tx.hash)
   const confirmed = sortedRecentTransactions.filter((tx) => tx.receipt).map((tx) => tx.hash)
 
   if (!contextNetwork.active && !active) {
     return null
+  }
+  console.log('log => pending', pending)
+  if (library) {
+    const web3 = new Web3(library.provider)
+    // web3.eth.getTransaction(hash).then((res: any) => {
+    //   if (!res) {
+    //     console.log('log => res', { hash, res })
+    //   }
+    // })
+
+    web3.eth.subscribe('pendingTransactions').on('data', (transaction: any) => {
+      console.log('log => transaction', transaction)
+    })
+
+    // unsubscribes the subscription
+    // subscription.unsubscribe(function (error, success) {
+    //   if (success) console.log('Successfully unsubscribed!')
+    // })
   }
 
   return (

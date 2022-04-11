@@ -12,6 +12,7 @@ import Loader from '../Loader'
 import { IconWrapperWithBg, IconWrapper } from './styleds'
 import useTheme from 'hooks/useTheme'
 import { Box } from 'rebass'
+
 const TransactionWrapper = styled.div``
 
 const TransactionStatusText = styled.div`
@@ -36,7 +37,7 @@ const TransactionState = styled(ExternalLink)<{ pending: boolean; success?: bool
 `
 
 export default function Transaction({ hash }: { hash: string }) {
-  const { chainId } = useActiveWeb3React()
+  const { chainId, library } = useActiveWeb3React()
   const allTransactions = useAllTransactions()
   const theme = useTheme()
   const tx = allTransactions?.[hash]
