@@ -81,7 +81,7 @@ describe('CommitmentFormWrapper', () => {
       {
         symbol: dso.currency.symbol,
         network: dso.network?._id,
-        isCampaign: true
+        isCampaign: false
       },
       {}
     )

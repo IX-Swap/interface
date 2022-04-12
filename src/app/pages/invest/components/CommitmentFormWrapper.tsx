@@ -24,8 +24,7 @@ export const CommitmentFormWrapper = () => {
     return null
   }
 
-  // adjust when we have campaign dso's
-  const isCampaign = !(data?.isCampaign === true)
+  const isCampaign = data?.isCampaign === true
 
   return (
     <CommitmentForm
