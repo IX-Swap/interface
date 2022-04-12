@@ -59,6 +59,7 @@ export const corporateTransformKycDto = (values: any) => {
     isUSTaxPayer,
     taxCountry,
     beneficialOwners,
+    dateOfBirth,
   } = values
 
   return {
@@ -82,6 +83,7 @@ export const corporateTransformKycDto = (values: any) => {
     ),
     beneficialOwnersIdentity: beneficialOwners.map(({ proofOfIdentity }: any) => proofOfIdentity),
     beneficialOwnersAddress: beneficialOwners.map(({ proofOfAddress }: any) => proofOfAddress),
+    dateOfBirth: typeof dateOfBirth === 'string' ? dateOfBirth : dateOfBirth.format('MM/DD/YYYY'),
   }
 }
 
@@ -126,7 +128,7 @@ export const individualTransformKycDto = (values: any) => {
   return {
     ...values,
     ...(!isUSTaxPayer && { usTin: '' }),
-    dateOfBirth: typeof dateOfBirth === 'string' ? dateOfBirth : dateOfBirth.format(),
+    dateOfBirth: typeof dateOfBirth === 'string' ? dateOfBirth : dateOfBirth.format('MM/DD/YYYY'),
     sourceOfFunds: [...sourceOfFunds, ...(sourceOfFunds.includes('Others') ? [otherFunds] : [])].join(', '),
     citizenship: citizenship.label,
     nationality: nationality.label,
