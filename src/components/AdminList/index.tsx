@@ -22,17 +22,23 @@ import { StyledBodyRow, StyledHeaderRow } from './styleds'
 import { IconWrapper } from 'components/AccountDetails/styleds'
 import { ButtonGradientBorder } from 'components/Button'
 import { updateUser } from 'state/user/hooks'
+import { DeleteConfirmationPopup } from 'components/DeleteConfirmation'
+import { useAddPopup, useDeleteConfirmationPopupToggle } from 'state/application/hooks'
 
 const headerCells = [t`Wallet address`, t`Role`, '', '']
 
 interface BodyProps {
   changeRoleClick: (address: string, role: string) => void
   items: AdminRole[]
+  callbackParams: any[]
+  setCallbackParams: (value: any[]) => void
 }
 
 interface RowProps {
   changeRoleClick: (address: string, role: string) => void
   item: AdminRole
+  callbackParams: any[]
+  setCallbackParams: (value: any[]) => void
 }
 
 export const AdminList: FC = () => {
@@ -43,6 +49,7 @@ export const AdminList: FC = () => {
   const [updateAddress, setUpdateAddress] = useState('')
   const [searchValue, setSearchValue] = useState('')
   const { adminList, adminLoading } = useAdminState()
+  const [callbackParams, setCallbackParams] = useState<any>([])
   const getAdminList = useGetAdminList()
 
   const getPaginatedAdminList = () => {
@@ -103,64 +110,104 @@ export const AdminList: FC = () => {
         </Flex>
 
         {adminList && (
-          <Table body={<Body changeRoleClick={changeRoleClick} items={adminList.items} />} header={<Header />} />
+          <Table
+            body={
+              <Body
+                callbackParams={callbackParams}
+                setCallbackParams={setCallbackParams}
+                changeRoleClick={changeRoleClick}
+                items={adminList.items}
+              />
+            }
+            header={<Header />}
+          />
         )}
       </Container>
     </>
   )
 }
 
-const Row: FC<RowProps> = ({ item, changeRoleClick }) => {
+const Row: FC<RowProps> = ({ callbackParams, setCallbackParams, item, changeRoleClick }) => {
   const [copied, setCopied] = useCopyClipboard()
   const { ethAddress, role } = item
+  const toggle = useDeleteConfirmationPopupToggle()
+  const addPopup = useAddPopup()
 
   const updateAdminRole = async (address: string, newRole: string) => {
-    await updateUser(address, { role: newRole })
+    const data = await updateUser(address, { role: newRole })
+
+    if (data) {
+      addPopup({
+        info: {
+          success: true,
+          summary: `Admin was deleted successfully`,
+        },
+      })
+    } else {
+      addPopup({
+        info: {
+          success: false,
+          summary: `Something went wrong`,
+        },
+      })
+    }
+
+    toggle()
   }
 
   return (
-    <StyledBodyRow>
-      <Wallet>
-        {copied ? (
-          <Trans>Copied</Trans>
-        ) : (
-          <>
-            {shortenAddress(ethAddress || '')}
-            <IconWrapper size={18} onClick={() => setCopied(ethAddress || '')}>
-              <StyledCopy />
-            </IconWrapper>
-          </>
-        )}
-      </Wallet>
-      <div>{capitalizeFirstLetter(role)}</div>
-      <div>
-        <ButtonGradientBorder
-          onClick={() => {
-            changeRoleClick(ethAddress, role)
-          }}
-          style={{ fontSize: 16, minHeight: 40, height: 40 }}
-        >
-          Change Role
-        </ButtonGradientBorder>
-      </div>
-      <div>
-        <ButtonGradientBorder
-          onClick={() => {
-            updateAdminRole(ethAddress, 'user')
-          }}
-          style={{ fontSize: 16, minHeight: 40, height: 40 }}
-        >
-          Remove
-        </ButtonGradientBorder>
-      </div>
-    </StyledBodyRow>
+    <>
+      <StyledBodyRow>
+        <Wallet>
+          {copied ? (
+            <Trans>Copied</Trans>
+          ) : (
+            <>
+              {shortenAddress(ethAddress || '')}
+              <IconWrapper size={18} onClick={() => setCopied(ethAddress || '')}>
+                <StyledCopy />
+              </IconWrapper>
+            </>
+          )}
+        </Wallet>
+        <div>{capitalizeFirstLetter(role)}</div>
+        <div>
+          <ButtonGradientBorder
+            onClick={() => {
+              changeRoleClick(ethAddress, role)
+            }}
+            style={{ fontSize: 16, minHeight: 40, height: 40 }}
+          >
+            Change Role
+          </ButtonGradientBorder>
+        </div>
+        <div>
+          <ButtonGradientBorder
+            onClick={() => {
+              toggle()
+              setCallbackParams([ethAddress, 'user'])
+            }}
+            style={{ fontSize: 16, minHeight: 40, height: 40 }}
+          >
+            Remove
+          </ButtonGradientBorder>
+        </div>
+      </StyledBodyRow>
+      <DeleteConfirmationPopup callbackParams={callbackParams} confirmCallback={updateAdminRole} />
+    </>
   )
 }
-const Body: FC<BodyProps> = ({ items, changeRoleClick }) => {
+const Body: FC<BodyProps> = ({ items, callbackParams, setCallbackParams, changeRoleClick }) => {
   return (
     <>
       {items.map((item) => (
-        <Row changeRoleClick={changeRoleClick} item={item} key={`kyc-table-${item}`} />
+        <Row
+          callbackParams={callbackParams}
+          setCallbackParams={setCallbackParams}
+          changeRoleClick={changeRoleClick}
+          item={item}
+          key={`kyc-table-${item}`}
+        />
       ))}
     </>
   )
