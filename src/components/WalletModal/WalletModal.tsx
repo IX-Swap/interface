@@ -238,7 +238,7 @@ export default function WalletModal({ isOpen, toggleModal }: WalletModalProps) {
     )
   }
   if (account) {
-    return <Typography>Connected!</Typography>
+    return null
   }
   return (
     <Dialog fullWidth open={isOpen} maxWidth={'xs'} onClose={toggleModal}>

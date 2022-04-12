@@ -1,6 +1,6 @@
 import React from 'react'
 import { useCommitmentValidator } from 'app/pages/invest/hooks/useCommitmentValidator'
-import { Button } from '@mui/material'
+import { Button, Tooltip } from '@mui/material'
 import { useFormContext } from 'react-hook-form'
 import { useMakeCommitment } from 'app/pages/invest/hooks/useMakeCommitment'
 import { CommitmentFormValues } from 'types/commitment'
@@ -18,7 +18,10 @@ export const CommitmentFormSubmitButton = ({
   dsoId,
   currency
 }: CommitmentFormSubmitButtonProps) => {
-  const { isValid } = useCommitmentValidator({ assetId, minInvestment })
+  const { isValid, message } = useCommitmentValidator({
+    assetId,
+    minInvestment
+  })
   const {
     invest: [makeInvestment]
   } = useMakeCommitment()
@@ -41,8 +44,7 @@ export const CommitmentFormSubmitButton = ({
   const handleClick = () => {
     void submit()
   }
-
-  return (
+  const submitButton = (
     <Button
       color='primary'
       variant='contained'
@@ -54,5 +56,12 @@ export const CommitmentFormSubmitButton = ({
     >
       Invest
     </Button>
+  )
+  return isValid ? (
+    <>{submitButton}</>
+  ) : (
+    <Tooltip title={message ?? ''} area-label={message} arrow>
+      <span>{submitButton}</span>
+    </Tooltip>
   )
 }
