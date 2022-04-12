@@ -9,7 +9,6 @@ export const WithdrawForm: React.FC = props => {
   const { children } = props
   const [withdrawCash] = useWithdrawCash()
   const handleSubmit = async (values: WithdrawCashFormValues) => {
-    console.log({ values })
     return await withdrawCash(values)
   }
   const { list, isLoading } = useVirtualAccount()

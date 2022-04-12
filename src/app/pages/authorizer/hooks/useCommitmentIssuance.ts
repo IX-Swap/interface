@@ -7,7 +7,6 @@ import { useParams } from 'react-router-dom'
 export const useCommitmentIssuance = () => {
   const { apiService, snackbarService } = useServices()
   const { commitmentId } = useParams<{ commitmentId: string }>()
-  console.log(commitmentId)
   const uri = issuanceURL.commitments.overrideById(commitmentId)
   const updateCommitment = async (args: CommitmentIssuanceArgs) => {
     return await apiService.patch(uri, args)
