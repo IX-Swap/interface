@@ -19,36 +19,37 @@ export interface NotificationViewProps extends GridProps {
   index?: number
 }
 
+export const getIcon = (type: NotificationType) => {
+  switch (type) {
+    case 'success':
+      return <SuccessIcon />
+    case 'error':
+      return <ErrorIcon />
+    case 'info':
+      return <InfoIcon />
+    case 'warning':
+      return <WarningIcon />
+    default:
+      return <SuccessIcon />
+  }
+}
+
 export const NotificationView = (props: NotificationViewProps) => {
   const { data, showTime = true, trimComment = true, ...rest } = props
   const { message, subject, createdAt, read, comment } = data
   const { mutation, isLoading } = useMarkAsRead(data)
   const handleClick = async () => {
-    if (!isLoading || !read) {
+    if (!isLoading && !read) {
       await mutation()
     }
   }
   const classes = useStyles()
 
-  const getIcon = (type: NotificationType) => {
-    switch (type) {
-      case 'success':
-        return <SuccessIcon />
-      case 'error':
-        return <ErrorIcon />
-      case 'info':
-        return <InfoIcon />
-      case 'warning':
-        return <WarningIcon />
-      default:
-        return <SuccessIcon />
-    }
-  }
-
   return (
     <Grid
       {...rest}
       component='div'
+      data-testid='wrapper'
       className={classes.container}
       onClick={handleClick}
     >
