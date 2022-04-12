@@ -16,7 +16,7 @@ export const corporateTransformApiData = (data: any) => {
 
   return {
     ...data,
-    typeOfLegalEntity: legalEntityTypes[typeOfLegalEntity - 1],
+    typeOfLegalEntity: { id: legalEntityTypes.find(({ label }) => label === typeOfLegalEntity)?.value || 0,  label: typeOfLegalEntity },
     countryOfIncorporation: { value: 0, label: countryOfIncorporation },
     authorizationDocuments: documents.filter(({ type }: any) => type === 'authorization'),
     line1: address.line1,
@@ -64,7 +64,7 @@ export const corporateTransformKycDto = (values: any) => {
   return {
     ...values,
     ...(!isUSTaxPayer && { usTin: '' }),
-    typeOfLegalEntity: typeOfLegalEntity.value,
+    typeOfLegalEntity: typeOfLegalEntity.label,
     sourceOfFunds: [...sourceOfFunds, ...(sourceOfFunds.includes('Others') ? [otherFunds] : [])].join(', '),
     countryOfIncorporation: countryOfIncorporation.label,
     country: country.label,
@@ -86,7 +86,18 @@ export const corporateTransformKycDto = (values: any) => {
 }
 
 export const individualTransformApiData = (data: any) => {
-  const { sourceOfFunds, address, documents, usTin, citizenship, employmentStatus, gender, nationality, income } = data
+  const {
+    sourceOfFunds,
+    address,
+    documents,
+    usTin,
+    citizenship,
+    employmentStatus,
+    gender,
+    nationality,
+    income,
+    occupation,
+  } = data
   const [funds, otherFunds = ''] = sourceOfFunds.split(', Others, ')
 
   return {
@@ -103,6 +114,7 @@ export const individualTransformApiData = (data: any) => {
     citizenship: { value: 0, label: citizenship },
     employmentStatus: { value: 0, label: employmentStatus },
     gender: { value: 0, label: gender },
+    occupation: { value: 0, label: occupation },
     nationality: { value: 0, label: nationality },
     income: { value: 0, label: income },
     removedDocuments: [],
@@ -121,6 +133,7 @@ export const individualTransformKycDto = (values: any) => {
     gender,
     income,
     isUSTaxPayer,
+    occupation,
   } = values
 
   return {
@@ -132,6 +145,7 @@ export const individualTransformKycDto = (values: any) => {
     nationality: nationality.label,
     country: country.label,
     employmentStatus: employmentStatus.label,
+    occupation: occupation.label,
     gender: gender.label,
     income: income.label,
     isUSTaxPayer: isUSTaxPayer ? true : false,
