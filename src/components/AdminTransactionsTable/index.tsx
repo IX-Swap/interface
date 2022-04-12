@@ -7,9 +7,8 @@ import React, { FC, useEffect, useState } from 'react'
 import { Currency, CurrencyAmount } from '@ixswap1/sdk-core'
 
 import { Search } from '../AdminAccreditationTable/Search'
-import { isAddress } from 'utils'
 import { IconWrapper } from 'components/AccountDetails/styleds'
-import { useAdminState, useFetchBrokerDealerSwaps } from 'state/admin/hooks'
+import { useAdminState, useFetchBrokerDealerSwaps, useOnlyAdminAccess } from 'state/admin/hooks'
 import { shortenAddress } from 'utils'
 import { BodyRow, HeaderRow, Table } from '../Table'
 import { Pagination } from 'components/AdminAccreditationTable/Pagination'
@@ -105,6 +104,7 @@ const Body = () => {
 }
 
 export const AdminTransactionsTable = () => {
+  useOnlyAdminAccess()
   const {
     brokerDealerSwaps: { items, page, totalPages },
     adminLoading,

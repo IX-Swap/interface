@@ -26,6 +26,7 @@ import { LoaderThin } from 'components/Loader/LoaderThin'
 import { BROKER_DEALERS_STATUS } from 'state/brokerDealer/hooks'
 import { DeleteTokenConfirmationPopup } from './DeleteConfirmation'
 import { adminOffset as offset } from 'state/admin/constants'
+import { useOnlyAdminAccess } from 'state/admin/hooks'
 
 import { EditButton, StyledButtonGradientBorder, FormGrid, Logo, TokenCard } from './styleds'
 import { initialIssuerState } from './mock'
@@ -39,6 +40,7 @@ interface Tab {
 }
 
 export const AdminSecurityCatalog: FC = () => {
+  useOnlyAdminAccess()
   const addIssuer = useAddIssuer()
   const editIssuer = useEditIssuer()
   const getIssuers = useFetchIssuers()

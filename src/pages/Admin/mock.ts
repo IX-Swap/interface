@@ -1,0 +1,1 @@
+export const SUPPORTED_ADMIN_ROLES = ['admin', 'operator']

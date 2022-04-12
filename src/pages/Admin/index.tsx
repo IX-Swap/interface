@@ -12,6 +12,7 @@ import { AdminList } from 'components/AdminList'
 import { AdminKycTable } from 'components/AdminKyc'
 
 import { Navbar } from './Navbar'
+import { SUPPORTED_ADMIN_ROLES } from './mock'
 
 type AdminTab = 'accreditation' | 'kyc' | 'transactions' | 'security-catalog' | 'admin-list'
 
@@ -65,6 +66,8 @@ const AdminKyc = () => {
 
     if (result && result?.role === 'admin') {
       // history.push('/admin')
+    } else if (result && result?.role === 'operator') {
+      history.push('/admin/kyc')
     } else {
       history.push('/')
     }
@@ -89,7 +92,7 @@ const AdminKyc = () => {
       return
     }
 
-    if (adminData && adminData?.role === 'admin') {
+    if (adminData && SUPPORTED_ADMIN_ROLES.includes(adminData.role || 'user')) {
       // history.push('/admin')
       return
     }
@@ -100,12 +103,19 @@ const AdminKyc = () => {
   return (
     <Container>
       <Navbar />
-      {adminData?.role === 'admin' && (
+      {SUPPORTED_ADMIN_ROLES.includes(adminData?.role || 'user') && (
         <Body>
           <TabsContainer>
             {tabs.map(({ value, label }, index) => (
               <>
-                <ToggleOption key={`tabs-${index}`} onClick={() => changeTab(value)} active={selectedTab === value}>
+                <ToggleOption
+                  style={
+                    adminData?.role === 'operator' && value !== 'kyc' ? { opacity: 0.5, pointerEvents: 'none' } : {}
+                  }
+                  key={`tabs-${index}`}
+                  onClick={() => changeTab(value)}
+                  active={selectedTab === value}
+                >
                   <Trans>{label}</Trans>
                   <Border active={selectedTab === value} />
                 </ToggleOption>

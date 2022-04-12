@@ -440,3 +440,12 @@ export const addAdmin = async (address: string) => {
   const result = await apiService.post(admin.addAdmin(), { address })
   return result.data
 }
+
+export const useOnlyAdminAccess = () => {
+  const { adminData } = useAdminState()
+  const history = useHistory()
+
+  if (adminData?.role !== 'admin') {
+    history.push('/admin/kyc')
+  }
+}
