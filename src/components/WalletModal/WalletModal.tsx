@@ -32,7 +32,6 @@ export interface WalletModalProps {
 export default function WalletModal({ isOpen, toggleModal }: WalletModalProps) {
   // important that these are destructed from the account-specific web3-react context
   const { active, account, connector, activate, error } = useWeb3React()
-  console.log({ error, active, account, connector })
   const [walletView, setWalletView] = useState(WALLET_VIEWS.ACCOUNT)
   const classes = useStyles()
   const [pendingWallet, setPendingWallet] = useState<
@@ -97,11 +96,9 @@ export default function WalletModal({ isOpen, toggleModal }: WalletModalProps) {
         connector instanceof WalletConnectConnector &&
         connector.walletConnectProvider?.wc?.uri
       ) {
-        console.log('resetting the connector')
         connector.walletConnectProvider = undefined
       }
       if (connector != null) {
-        console.log({ connector })
         try {
           await activate(connector, undefined, true)
         } catch (error) {
