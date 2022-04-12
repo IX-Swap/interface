@@ -49,7 +49,6 @@ describe('CommitmentIssuance', () => {
     expect(CommitmentIssuanceFields).toHaveBeenCalledWith(
       {
         amount: `${commitment.numberOfUnits} ${commitment.dso.tokenSymbol}`,
-        isCampaign: false
       },
       {}
     )
