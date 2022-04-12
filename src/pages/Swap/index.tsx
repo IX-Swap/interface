@@ -51,7 +51,14 @@ export default function Swap({ history }: RouteComponentProps) {
 
   const { onUserInput, onChangeRecipient } = useSwapActionHandlers()
 
-  const { toggledTrade: trade, allowedSlippage, currencyBalances, parsedAmount, currencies } = useDerivedSwapInfo()
+  const {
+    toggledTrade: trade,
+    allowedSlippage,
+    currencyBalances,
+    parsedAmount,
+    currencies,
+    isLoading,
+  } = useDerivedSwapInfo()
 
   const { wrapType } = useWrapCallback(currencies[Field.INPUT], currencies[Field.OUTPUT], typedValue)
 
@@ -106,6 +113,7 @@ export default function Swap({ history }: RouteComponentProps) {
   useWatchAuthorizationExpire(trade)
   const showLoading =
     loadingSwap ||
+    isLoading ||
     (!trade &&
       parsedAmounts.INPUT &&
       !parsedAmounts.OUTPUT &&

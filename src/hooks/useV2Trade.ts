@@ -6,13 +6,12 @@ import { BETTER_TRADE_LESS_HOPS_THRESHOLD } from '../constants/misc'
 import { useAllCurrencyCombinations } from './useAllCurrencyCombinations'
 import { PairState, useV2Pairs } from './useV2Pairs'
 
-function useAllCommonPairs(currencyA?: Currency, currencyB?: Currency): Pair[] {
+function useAllCommonPairs(currencyA?: Currency, currencyB?: Currency): { isLoading: boolean; allowedPairs: Pair[] } {
   const allCurrencyCombinations = useAllCurrencyCombinations(currencyA, currencyB)
-
   const allPairs = useV2Pairs(allCurrencyCombinations)
 
   // only pass along valid pairs, non-duplicated pairs
-  return useMemo(
+  const allowedPairs = useMemo(
     () =>
       Object.values(
         allPairs
@@ -26,6 +25,14 @@ function useAllCommonPairs(currencyA?: Currency, currencyB?: Currency): Pair[] {
       ),
     [allPairs]
   )
+  const isLoading = useMemo(
+    () =>
+      allPairs.filter((result): result is [PairState.EXISTS, Pair] => Boolean(result[0] === PairState.LOADING)).length >
+      0,
+    [allPairs]
+  )
+
+  return { isLoading, allowedPairs }
 }
 
 const MAX_HOPS = 3
@@ -37,10 +44,10 @@ export function useV2TradeExactIn(
   currencyAmountIn?: CurrencyAmount<Currency>,
   currencyOut?: Currency,
   { maxHops = MAX_HOPS } = {}
-): Trade<Currency, Currency, TradeType.EXACT_INPUT> | null {
-  const allowedPairs = useAllCommonPairs(currencyAmountIn?.currency, currencyOut)
+): { V2TradeExactIn: Trade<Currency, Currency, TradeType.EXACT_INPUT> | null; isLoading: boolean } {
+  const { allowedPairs, isLoading } = useAllCommonPairs(currencyAmountIn?.currency, currencyOut)
 
-  return useMemo(() => {
+  const V2TradeExactIn = useMemo(() => {
     if (currencyAmountIn && currencyOut && allowedPairs.length > 0) {
       if (maxHops === 1) {
         return (
@@ -64,6 +71,8 @@ export function useV2TradeExactIn(
 
     return null
   }, [allowedPairs, currencyAmountIn, currencyOut, maxHops])
+
+  return { V2TradeExactIn, isLoading }
 }
 
 /**
@@ -73,10 +82,10 @@ export function useV2TradeExactOut(
   currencyIn?: Currency,
   currencyAmountOut?: CurrencyAmount<Currency>,
   { maxHops = MAX_HOPS } = {}
-): Trade<Currency, Currency, TradeType.EXACT_OUTPUT> | null {
-  const allowedPairs = useAllCommonPairs(currencyIn, currencyAmountOut?.currency)
+): { V2TradeExactOut: Trade<Currency, Currency, TradeType.EXACT_OUTPUT> | null; isLoading: boolean } {
+  const { allowedPairs, isLoading } = useAllCommonPairs(currencyIn, currencyAmountOut?.currency)
 
-  return useMemo(() => {
+  const V2TradeExactOut = useMemo(() => {
     if (currencyIn && currencyAmountOut && allowedPairs.length > 0) {
       if (maxHops === 1) {
         return (
@@ -98,4 +107,6 @@ export function useV2TradeExactOut(
     }
     return null
   }, [currencyIn, currencyAmountOut, allowedPairs, maxHops])
+
+  return { V2TradeExactOut, isLoading }
 }
