@@ -11,8 +11,8 @@ import { UploadSignedSubscriptionDocument } from 'components/dataroom/UploadSign
 import { privateClassNames } from 'helpers/classnames'
 import { WithdrawalAddressSelect } from 'components/form/WithdrawalAddressSelect'
 import { ETHEREUM_DECIMAL_PLACES } from 'config'
-import { CreateCustodyWithdrawalAddressButton } from 'app/pages/invest/components/CreateCustodyWithdrawalAddressButton/CreateCustodyWithdrawalAddressButton'
 import { useWithdrawalAddresses } from 'app/pages/accounts/pages/withdrawalAddresses/hooks/useWithdrawalAddresses'
+import { AddMetamaskWallet } from './AddMetamaskWallet'
 
 export interface CommitmentFormFieldsProps {
   symbol: string
@@ -33,7 +33,7 @@ export const CommitmentFormFields = (props: CommitmentFormFieldsProps) => {
 
   const decimalScale = props.decimalScale ?? ETHEREUM_DECIMAL_PLACES
 
-  const { data, status } = useWithdrawalAddresses({ network: props.network })
+  const { data, status } = useWithdrawalAddresses({})
   const filteredAddresses = data.list.filter(
     ({ status }) => status === 'Approved'
   )
@@ -121,7 +121,7 @@ export const CommitmentFormFields = (props: CommitmentFormFieldsProps) => {
       </Grid>
 
       <Grid item>
-        <CreateCustodyWithdrawalAddressButton />
+        <AddMetamaskWallet />
       </Grid>
 
       <Grid item>

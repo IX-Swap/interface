@@ -16,6 +16,13 @@ export const isEmptyString = (value: string | null | undefined) => {
   return value === undefined || value === null || value.trim().length === 0
 }
 
+export const isTruthy = (value: any) => {
+  if (value === undefined || value === null) {
+    return false
+  }
+  return !(value === '' || value === 0)
+}
+
 export const compareStrings = (a: string, b: string) => a === b
 
 export const getOfferingName = (
