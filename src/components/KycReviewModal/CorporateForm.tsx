@@ -34,7 +34,7 @@ export const CorporateForm = ({ data, riskJSON }: Props) => {
       {/* <OptInRequirement /> */}
       <TaxDeclaration data={data} />
       <BeneficialOwners owners={data.beneficialOwners} />
-      <UploadedDocuments data={data.documents} />
+      <UploadedDocuments data={data.documents.filter(({ type }) => type !== 'authorization')} />
     </>
   )
 }
