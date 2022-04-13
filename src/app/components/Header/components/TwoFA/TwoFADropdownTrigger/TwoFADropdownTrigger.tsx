@@ -8,13 +8,14 @@ import { useAuth } from 'hooks/auth/useAuth'
 
 export const TwoFADropdownTrigger = (props: DropdownTriggerProps) => {
   const { user = { enable2Fa: undefined } } = useAuth()
+  const { enable2Fa } = user
   const classes = useStyles()
 
   useEffect(() => {
-    if (user?.enable2Fa === undefined) {
+    if (enable2Fa === undefined) {
       return props.injectedProps.open()
     }
-  }, [user?.enable2Fa]) // eslint-disable-line
+  }, [enable2Fa]) // eslint-disable-line
 
   return (
     <IconButton
@@ -25,10 +26,7 @@ export const TwoFADropdownTrigger = (props: DropdownTriggerProps) => {
       disableTouchRipple
       {...props?.triggerProps}
     >
-      <Badge
-        variant={user.enable2Fa === true ? 'standard' : 'dot'}
-        color='error'
-      >
+      <Badge variant={'dot'} color={enable2Fa === true ? 'success' : 'error'}>
         <Icon name='security' />
       </Badge>
     </IconButton>
