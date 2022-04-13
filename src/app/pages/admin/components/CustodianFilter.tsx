@@ -1,6 +1,7 @@
 import React from 'react'
-import { Checkbox, FormControlLabel } from '@mui/material'
+import { FormControlLabel } from '@mui/material'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
+import { UICheckbox } from 'components/UICheckbox/UICheckbox'
 
 export interface CustodianFilterProps {
   custodian: 'HEX' | 'InvestaX'
@@ -24,7 +25,7 @@ export const CustodianFilter = ({ custodian }: CustodianFilterProps) => {
         <FormControlLabel
           style={{ marginRight: 0 }}
           control={
-            <Checkbox
+            <UICheckbox
               checked={getChecked(value)}
               onChange={(_, checked) => {
                 onChange(getStringValue(value, checked))

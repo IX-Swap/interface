@@ -1,8 +1,8 @@
 import { Grid, RadioGroup, Switch, Typography } from '@mui/material'
 import React from 'react'
-import { UICheckbox } from 'ui/UICheckbox/UICheckbox'
+import { UICheckbox } from 'components/UICheckbox/UICheckbox'
 import { VSpacer } from 'components/VSpacer'
-import { UIRadio } from 'ui/UIRadio/UIRadio'
+import { UIRadio } from 'components/UIRadio/UIRadio'
 import { UIKitThemeWrapper } from 'ui/UIKit/UIKitThemeWrapper'
 
 export const RadioCheckSwitchKit = () => {

@@ -1,4 +1,4 @@
-import { FormControl, InputLabel, MenuItem } from '@mui/material'
+import { FormControl, MenuItem } from '@mui/material'
 import { TextFieldSelect } from 'components/form/TextFieldSelect'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
 import React from 'react'
@@ -28,7 +28,6 @@ export const CountryFilter = () => {
     <SearchQueryFilter<'country'> name='country' defaultValue=''>
       {({ value, onChange }) => (
         <FormControl variant='outlined' style={{ width: 140 }}>
-          <InputLabel shrink>Country</InputLabel>
           <TextFieldSelect
             label='Country'
             onChange={event => {

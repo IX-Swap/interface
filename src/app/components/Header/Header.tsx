@@ -1,23 +1,23 @@
 import React from 'react'
-import { AppBar, Box, Toolbar } from '@mui/material'
-import useStyles from './Header.styles'
-import { UserDropdown } from 'app/components/UserDropdown/UserDropdown'
-import { NotificationsDropdown } from 'app/pages/notifications/components/NotificationsDropdown'
-import { AppLogo } from 'app/components/AppLogo/AppLogo'
-import { NavDrawerToggle } from 'app/components/Header/components/NavDrawerToggle'
-import { TopbarContainer } from 'app/components/TopbarContainer/TopbarContainer'
+import { useStyles } from 'app/components/Header/Header.styles'
+import { Toolbar, Box, AppBar } from '@mui/material'
+import { AppLogo } from 'app/components/Header/components/AppLogo/AppLogo'
+import { Navigation } from 'app/components/Header/components/Navigation/Navigation'
+import { UserDropdown } from 'app/components/Header/components/UserDropdown/UserDropdown'
+import { NotificationsDropdown } from 'app/components/Header/components/Notifications/NotificationsDropdown/NotificationsDropdown'
+import { NavDrawerToggle } from 'app/components/Header/components/Navigation/NavDrawerToggle/NavDrawerToggle'
 
 export const Header = () => {
   const classes = useStyles()
 
   return (
-    <AppBar position='fixed' elevation={1} className={classes.appBar}>
+    <AppBar position='fixed' elevation={0} className={classes.wrapper}>
       <Toolbar className={classes.toolbar}>
         <NavDrawerToggle />
         <AppLogo />
-        <Box className={classes.small} />
-        <TopbarContainer />
-        <Box className={classes.grow} />
+        <Box className={classes.emptySpace} />
+        <Navigation />
+        <Box className={classes.emptySpace} />
         <NotificationsDropdown />
         <UserDropdown />
       </Toolbar>

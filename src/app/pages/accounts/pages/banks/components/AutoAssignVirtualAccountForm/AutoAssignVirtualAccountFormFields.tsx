@@ -1,15 +1,10 @@
-import {
-  Button,
-  FormControlLabel,
-  Grid,
-  Radio,
-  Typography
-} from '@mui/material'
+import { Button, FormControlLabel, Grid, Typography } from '@mui/material'
 import { useVirtualAccount } from 'app/pages/accounts/hooks/useVirtualAccount'
 import { RadioGroup } from 'components/form/RadioGroup'
 import { TypedField } from 'components/form/TypedField'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
+import { UIRadio } from 'components/UIRadio/UIRadio'
 
 export interface AutoAssignVirtualAccountFormFieldsProps {
   handleOpen: () => void
@@ -53,14 +48,14 @@ export const AutoAssignVirtualAccountFormFields = ({
                   <FormControlLabel
                     label='SGD'
                     value='SGD'
-                    control={<Radio />}
+                    control={<UIRadio />}
                   />
                 </Grid>
                 <Grid item>
                   <FormControlLabel
                     label='USD'
                     value='USD'
-                    control={<Radio />}
+                    control={<UIRadio />}
                   />
                 </Grid>
               </>
@@ -69,7 +64,7 @@ export const AutoAssignVirtualAccountFormFields = ({
                 <FormControlLabel
                   label={currencyAvailable}
                   value={currencyAvailable}
-                  control={<Radio />}
+                  control={<UIRadio />}
                 />
               </Grid>
             )}

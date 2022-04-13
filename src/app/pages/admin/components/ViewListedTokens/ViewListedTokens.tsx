@@ -1,12 +1,7 @@
 import React from 'react'
-import {
-  Button,
-  FormControlLabel,
-  Grid,
-  Radio,
-  RadioGroup
-} from '@mui/material'
+import { Button, FormControlLabel, Grid, RadioGroup } from '@mui/material'
 import { VSpacer } from 'components/VSpacer'
+import { UIRadio } from 'components/UIRadio/UIRadio'
 
 export interface ViewListedTokensProps {
   radioValue: string
@@ -25,11 +20,11 @@ export const ViewListedTokens = ({
         onChange={e => onRadioChange(e.target.value)}
         value={radioValue}
       >
-        <FormControlLabel label='Hex' value='hex' control={<Radio />} />
+        <FormControlLabel label='Hex' value='hex' control={<UIRadio />} />
         <FormControlLabel
           label='InvestaX'
           value='investax'
-          control={<Radio />}
+          control={<UIRadio />}
         />
       </RadioGroup>
       <VSpacer size={'small'} />

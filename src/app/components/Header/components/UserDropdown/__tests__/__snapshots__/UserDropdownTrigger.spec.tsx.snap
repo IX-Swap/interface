@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserDropdownTrigger should match snapshot if user is not undefined and has identity info 1`] = `
+<div>
+  <button
+    aria-controls="profile-menu"
+    aria-haspopup="true"
+    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeLarge makeStyles-wrapper-3 css-1pd25mh-MuiButtonBase-root-MuiIconButton-root"
+    tabindex="0"
+    type="button"
+  >
+    <div
+      class="MuiAvatar-root MuiAvatar-circular MuiAvatar-colorDefault css-69x3yt-MuiAvatar-root"
+      style="width: 32px; height: 32px; max-width: initial;"
+    >
+      n
+    </div>
+    <span
+      class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+    />
+  </button>
+</div>
+`;

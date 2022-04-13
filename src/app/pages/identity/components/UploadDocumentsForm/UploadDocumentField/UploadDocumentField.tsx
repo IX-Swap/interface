@@ -28,8 +28,8 @@ export const UploadDocumentField = ({
   const { control } = useFormContext()
 
   return (
-    <Grid container spacing={3} direction='column'>
-      <Grid item>
+    <Grid container spacing={3}>
+      <Grid item xs={12}>
         <Box>
           <Grid item container alignItems='center'>
             <Typography variant='subtitle1'>{label}</Typography>
@@ -44,7 +44,8 @@ export const UploadDocumentField = ({
         </Box>
         {helperElement !== undefined ? <Box>{helperElement}</Box> : null}
       </Grid>
-      <Grid item>
+      <DocumentList name={name} />
+      <Grid item xs={12}>
         <TypedField
           key={fieldId}
           control={control}
@@ -64,7 +65,6 @@ export const UploadDocumentField = ({
           defaultValue={defaultValue}
         />
       </Grid>
-      <DocumentList name={name} />
     </Grid>
   )
 }

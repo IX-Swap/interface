@@ -1,6 +1,6 @@
 import { Theme } from '@mui/material'
 import { ThemeOptions } from '@mui/material/styles'
-import { rte } from 'themes/new/rte'
+import { rte } from 'themes/app/rte'
 
 export const getThemeOverrides = (
   theme: Theme

@@ -129,9 +129,12 @@ export const TypedField = <
             }
           })
         }
-
         // temporarily fix to prevent input label
-        const isTextField = (component as any)?.render?.name === 'TextField'
+        const displayName = String((component as any).displayName)
+
+        const isTextField =
+          (component as any)?.render?.name === 'TextField' ||
+          displayName.startsWith('TextField')
 
         return (
           <FormControl fullWidth variant={rest?.variant}>

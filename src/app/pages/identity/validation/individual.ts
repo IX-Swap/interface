@@ -183,3 +183,11 @@ export const individualInvestorAgreementsSchema = yup
     investor: yup.bool().oneOf([true]).required(validationMessages.required),
     disclosure: yup.bool().oneOf([true]).required(validationMessages.required)
   })
+
+export const individualInvestorValidationSchema = yup.object().shape<any>({
+  ...financialInfoSchema.fields,
+  ...individualInvestorDocumentsSchema.fields,
+  ...individualInvestorStatusDeclarationSchema.fields,
+  ...personalInfoSchema.fields,
+  ...taxDeclarationSchema.fields
+})

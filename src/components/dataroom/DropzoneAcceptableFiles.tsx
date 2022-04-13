@@ -14,26 +14,17 @@ export const DropzoneAcceptableFiles = ({
     return null
   }
 
-  const acceptedFilesArray = Array.isArray(accept) ? accept : accept.split(',')
-  const preparedAcceptedFilesArray = acceptedFilesArray.map(fileType =>
-    fileType.replace(/image\/|\./i, '')
-  )
-  const acceptedFilesString = `${preparedAcceptedFilesArray
-
-    .slice(0, -1)
-    .join(', ')} and ${preparedAcceptedFilesArray.slice(-1)[0]}`
-
   return (
     <>
       <Box pt={1} />
       <Typography
         variant='caption'
         color='textSecondary'
-        style={{ fontSize: 14 }}
+        component='p'
+        style={{ fontSize: 14, opacity: 0.5, fontWeight: 400 }}
+        textAlign='right'
       >
-        Notes: Type of document format supported is {acceptedFilesString}.
-        <br />
-        File size limit 10 MB.
+        File size limit 10 MB
       </Typography>
     </>
   )

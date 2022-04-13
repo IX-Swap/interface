@@ -10,7 +10,10 @@ import {
 export const getPersonalInfoRequestPayload = (
   values: IndividualPersonalInfoFormValues
 ) => {
-  return values
+  if (values.dob === null || values.dob === undefined) {
+    delete values.dob
+  }
+  return { ...values }
 }
 
 export const getFinancialInfoRequestPayload = (
@@ -65,7 +68,7 @@ export const getInvestorDeclarationRequestPayload = (
 export const getDocumentsRequestPayload = (
   values: IndividualDocumentsFormValues
 ) => {
-  return {
+  const documents = {
     documents: Object.values(values).reduce<string[]>((result, documents) => {
       if (Array.isArray(documents)) {
         return [...result, ...documents.map(document => document._id)]
@@ -74,6 +77,7 @@ export const getDocumentsRequestPayload = (
       return result
     }, [])
   }
+  return documents.documents.length > 0 ? documents : {}
 }
 
 export const getAgreementsRequestPayload = (
