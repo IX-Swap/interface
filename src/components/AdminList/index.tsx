@@ -134,7 +134,7 @@ const Row: FC<RowProps> = ({ callbackParams, setCallbackParams, item, changeRole
   const addPopup = useAddPopup()
 
   const updateAdminRole = async (address: string, newRole: string) => {
-    const data = await updateUser(address, { role: newRole })
+    const data = await updateUser(address, { role: newRole, language: 'en', active: true, photoId: 0 })
 
     if (data) {
       addPopup({

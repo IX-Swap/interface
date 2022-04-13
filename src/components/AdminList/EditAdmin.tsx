@@ -64,7 +64,7 @@ export const EditAdmin: FC<Props> = ({
         handleIsLoading(true)
 
         if (isUpdating) {
-          await updateUser(address, { role: role.label ? role.label.toLowerCase() : role.toLowerCase() })
+          await updateUser(address, { role: role.label ? role.label.toLowerCase() : role.toLowerCase(), language: 'en', active: true, photoId: 0  })
         } else {
           await addAdmin(address)
         }
