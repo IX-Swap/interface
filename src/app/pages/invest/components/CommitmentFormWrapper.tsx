@@ -80,6 +80,7 @@ export const CommitmentFormWrapper = () => {
                     minInvestment={data.minimumInvestment}
                     dsoId={params.dsoId}
                     currency={data.currency._id}
+                    disabled={data?.disableInvestInCampaign === true}
                   />
                 </Grid>
               </Grid>
