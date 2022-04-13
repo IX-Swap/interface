@@ -63,17 +63,17 @@ export const CommitmentFormWrapper = () => {
                 <Grid item xs={4}>
                   <CommitmentFormCancelButton />
                 </Grid>
-                {capitalStructureWithFunds.includes(data.capitalStructure) && (
-                  <Grid item xs={4}>
-                    <CommitmentFormCommitButton
-                      assetId={data.currency._id}
-                      minInvestment={data.minimumInvestment}
-                      dsoId={params.dsoId}
-                      currency={data.currency._id}
-                      disabled={isCampaign}
-                    />
-                  </Grid>
-                )}
+                {!isCampaign &&
+                  capitalStructureWithFunds.includes(data.capitalStructure) && (
+                    <Grid item xs={4}>
+                      <CommitmentFormCommitButton
+                        assetId={data.currency._id}
+                        minInvestment={data.minimumInvestment}
+                        dsoId={params.dsoId}
+                        currency={data.currency._id}
+                      />
+                    </Grid>
+                  )}
 
                 <Grid item xs={4}>
                   <CommitmentFormSubmitButton
