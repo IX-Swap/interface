@@ -10,15 +10,13 @@ export interface CommitmentFormCommitButtonProps {
   minInvestment: number | null
   currency: string
   dsoId?: string
-  disabled: boolean
 }
 
 export const CommitmentFormCommitButton = ({
   assetId,
   minInvestment,
   dsoId,
-  currency,
-  disabled
+  currency
 }: CommitmentFormCommitButtonProps) => {
   const { isValid } = useCommitmentValidator({ assetId, minInvestment })
   const { handleSubmit } = useFormContext()
@@ -49,7 +47,7 @@ export const CommitmentFormCommitButton = ({
       color='primary'
       variant='outlined'
       fullWidth
-      disabled={!isValid || disabled}
+      disabled={!isValid}
       type='button'
     >
       Commit
