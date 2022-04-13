@@ -98,7 +98,7 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
         scrollable
         isLarge
       >
-        <ModalBlurWrapper data-testid="kyc-review">
+        <ModalBlurWrapper touchable data-testid="kyc-review">
           <ModalContent>
             <TitleContainer>
               <Title>

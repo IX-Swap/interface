@@ -333,7 +333,7 @@ export const StyledPageHeader = styled.div`
     margin-bottom: 5px;
   }
 `
-export const ModalBlurWrapper = styled.span`
+export const ModalBlurWrapper = styled.span<{touchable?: boolean}>`
   background: ${({ theme }) => theme.bgG5};
   border-radius: 45px;
   display: flex;
@@ -353,7 +353,7 @@ export const ModalBlurWrapper = styled.span`
     max-width: 100%;
     border-radius: 0;
   `};
-  user-select: none;
+  user-select: ${({touchable}) => touchable ? 'auto' : 'none'};
 `
 export const StyledNumberInput = styled.input<{ error?: boolean; fontSize?: string; align?: string }>`
   color: ${({ error, theme }) => (error ? theme.red1 : theme.text1)};
