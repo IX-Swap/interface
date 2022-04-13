@@ -105,6 +105,7 @@ export function useDerivedSwapInfo(): {
   allowedSlippage: Percent
   shouldGetAuthorization: boolean
   insufficientBalance: boolean
+  isLoading: boolean
 } {
   const { account } = useActiveWeb3React()
 
@@ -130,14 +131,22 @@ export function useDerivedSwapInfo(): {
   const isExactIn: boolean = independentField === Field.INPUT
   const parsedAmount = tryParseAmount(typedValue, (isExactIn ? inputCurrency : outputCurrency) ?? undefined)
 
-  const bestV2TradeExactIn = useV2TradeExactIn(isExactIn ? parsedAmount : undefined, outputCurrency ?? undefined, {
-    maxHops: singleHopOnly ? 1 : undefined,
-  })
-  const bestV2TradeExactOut = useV2TradeExactOut(inputCurrency ?? undefined, !isExactIn ? parsedAmount : undefined, {
-    maxHops: singleHopOnly ? 1 : undefined,
-  })
+  const { V2TradeExactIn, isLoading: V2TradeExactInLoading } = useV2TradeExactIn(
+    isExactIn ? parsedAmount : undefined,
+    outputCurrency ?? undefined,
+    {
+      maxHops: singleHopOnly ? 1 : undefined,
+    }
+  )
+  const { V2TradeExactOut, isLoading: V2TradeExactOutLoading } = useV2TradeExactOut(
+    inputCurrency ?? undefined,
+    !isExactIn ? parsedAmount : undefined,
+    {
+      maxHops: singleHopOnly ? 1 : undefined,
+    }
+  )
 
-  const v2Trade = isExactIn ? bestV2TradeExactIn : bestV2TradeExactOut
+  const v2Trade = isExactIn ? V2TradeExactIn : V2TradeExactOut
 
   const currencyBalances = {
     [Field.INPUT]: relevantTokenBalances[0],
@@ -167,8 +176,8 @@ export function useDerivedSwapInfo(): {
   } else {
     if (
       BAD_RECIPIENT_ADDRESSES[formattedTo] ||
-      (bestV2TradeExactIn && involvesAddress(bestV2TradeExactIn, formattedTo)) ||
-      (bestV2TradeExactOut && involvesAddress(bestV2TradeExactOut, formattedTo))
+      (V2TradeExactIn && involvesAddress(V2TradeExactIn, formattedTo)) ||
+      (V2TradeExactOut && involvesAddress(V2TradeExactOut, formattedTo))
     ) {
       inputError = inputError ?? t`Invalid recipient`
     }
@@ -209,6 +218,7 @@ export function useDerivedSwapInfo(): {
     allowedSlippage,
     shouldGetAuthorization,
     insufficientBalance,
+    isLoading: V2TradeExactInLoading || V2TradeExactOutLoading,
   }
 }
 

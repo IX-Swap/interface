@@ -1,6 +1,6 @@
 import { Trans, t } from '@lingui/macro'
 import { ReactComponent as Checkmark } from 'assets/images/checked-solid-bg.svg'
-import { ButtonIXSGradient, ButtonIXSWide, ButtonPrimary } from 'components/Button'
+import { ButtonIXSWide } from 'components/Button'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import Row, { RowBetween } from 'components/Row'
@@ -213,6 +213,14 @@ export const ChooseBrokerDealerPopup = ({ tokenId, currencyId }: { tokenId: any;
   const fetchList = useFetchUserSecTokenListCallback()
   const fetchBrokerDealerPairs = useFetchBrokerDealers()
   const { kyc } = useKYCState()
+
+  useEffect(() => {
+    if (isOpen) {
+      return () => {
+        toggle()
+      }
+    }
+  }, [isOpen, toggle])
 
   useEffect(() => {
     if (tokenId) {
