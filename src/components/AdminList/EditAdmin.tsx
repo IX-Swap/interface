@@ -79,7 +79,6 @@ export const EditAdmin: FC<Props> = ({
         })
         refreshCallback()
       } catch (err: any) {
-        console.log(err)
         handleIsLoading(false)
         handleError('Address is already admin or exists user with this address')
       }

@@ -111,7 +111,6 @@ const AdminKyc = () => {
                 </ToggleOption>
               </>
             ))}
-            {/* <AddAdmin /> */}
           </TabsContainer>
 
           {renderTab(selectedTab)}
