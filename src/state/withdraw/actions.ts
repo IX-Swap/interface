@@ -15,3 +15,33 @@ export const withdrawCurrency: Readonly<{
   fulfilled: createAction('withdraw/withdrawCurrency/fulfilled'),
   rejected: createAction('withdraw/withdrawCurrency/rejected'),
 }
+
+export const getFeeStatus: Readonly<{
+  pending: ActionCreatorWithoutPayload
+  fulfilled: ActionCreatorWithPayload<string>
+  rejected: ActionCreatorWithPayload<{ errorMessage: string }>
+}> = {
+  pending: createAction('withdraw/getFeeStatus/pending'),
+  fulfilled: createAction('withdraw/getFeeStatus/fulfilled'),
+  rejected: createAction('withdraw/getFeeStatus/rejected'),
+}
+
+export const getFeePrice: Readonly<{
+  pending: ActionCreatorWithoutPayload
+  fulfilled: ActionCreatorWithPayload<string>
+  rejected: ActionCreatorWithPayload<{ errorMessage: string }>
+}> = {
+  pending: createAction('withdraw/getFeePrice/pending'),
+  fulfilled: createAction('withdraw/getFeePrice/fulfilled'),
+  rejected: createAction('withdraw/getFeePrice/rejected'),
+}
+
+export const postPaidFee: Readonly<{
+  pending: ActionCreatorWithoutPayload
+  fulfilled: ActionCreatorWithPayload<string>
+  rejected: ActionCreatorWithPayload<{ errorMessage: string }>
+}> = {
+  pending: createAction('withdraw/postPaidFee/pending'),
+  fulfilled: createAction('withdraw/postPaidFee/fulfilled'),
+  rejected: createAction('withdraw/postPaidFee/rejected'),
+}

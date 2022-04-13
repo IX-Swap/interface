@@ -103,6 +103,9 @@ export const custody = {
     filters += getQueryParam({ param: 'page', value: page, isFirst: !Boolean(tokenId || filter) })
     return `/custody/request?${filters}`
   },
+  feeStatus: (id: number | string) => `/custody/withdraw/fee-status/${id}`,
+  feePrice: (id: number | string) => `/token/price/${id}`,
+  paidFee: `/custody/withdraw/check-whitelist`,
 }
 
 export const eventLog = {

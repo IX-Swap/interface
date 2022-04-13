@@ -1,4 +1,7 @@
-import { Trans } from '@lingui/macro'
+import React, { useEffect } from 'react'
+import { t, Trans } from '@lingui/macro'
+import JSBI from 'jsbi'
+
 import { ButtonIXSWide } from 'components/Button'
 import Column from 'components/Column'
 import { getNetworkFromToken } from 'components/CurrencyLogo'
@@ -6,21 +9,24 @@ import Row from 'components/Row'
 import useENS from 'hooks/useENS'
 import useTheme from 'hooks/useTheme'
 import { useActiveWeb3React } from 'hooks/web3'
-import React, { useEffect } from 'react'
 import { useUserSecTokens } from 'state/user/hooks'
 import {
   useDerivedWithdrawInfo,
   useWithdrawActionHandlers,
   useWithdrawCallback,
   useWithdrawState,
+  useGetFeeStatus,
+  useGetFeePrice,
 } from 'state/withdraw/hooks'
 import { TYPE } from 'theme'
 import { SecCurrency } from 'types/secToken'
 import { shortAddress } from 'utils'
 import { currencyId } from 'utils/currencyId'
+
 import { AddressInput } from '../AddressInputPanel/AddressInput'
 import { AmountInput } from './AmountInput'
 import { WithdrawModalView } from './WithdrawPopup'
+import { FeeStatus } from './FeeStatus'
 
 interface Props {
   currency?: SecCurrency
@@ -29,8 +35,10 @@ interface Props {
 }
 export const WithdrawRequestForm = ({ currency, changeModal, token }: Props) => {
   const theme = useTheme()
-  const { amount, receiver, currencyId: cid } = useWithdrawState()
-  const { account } = useActiveWeb3React()
+  const getFeeStatus = useGetFeeStatus()
+  const getFeePrice = useGetFeePrice()
+  const { amount, receiver, currencyId: cid, feeStatus, feePrice } = useWithdrawState()
+  const { account, library } = useActiveWeb3React()
   const { secTokens } = useUserSecTokens()
   const { onTypeAmount, onTypeReceiver, onCurrencySet, onSetNetWorkName, onResetWithdraw } = useWithdrawActionHandlers()
   const withdraw = useWithdrawCallback(cid, currency?.symbol)
@@ -45,23 +53,43 @@ export const WithdrawRequestForm = ({ currency, changeModal, token }: Props) => 
   }, [])
 
   useEffect(() => {
+    if (tokenInfo.id) {
+      getFeeStatus(tokenInfo.id)
+      getFeePrice(tokenInfo.id)
+    }
+  }, [tokenInfo.id, getFeeStatus, getFeePrice])
+
+  useEffect(() => {
     if (networkName) {
       onSetNetWorkName(networkName ?? '')
     }
   }, [networkName, onSetNetWorkName])
 
   const onClick = () => {
+    if (feeStatus !== 'paidFee' && library && account) {
+      library.call({
+        from: account,
+        to: '0xb305c1f2200a17E0502416B1746aB88C9B5C449f',
+        // data: calldata,
+        value: JSBI.BigInt(feePrice || 0) as any,
+      })
+
+      return
+    }
     const tokenId = (secTokens[cid ?? ''] as any)?.tokenInfo?.id
     if (tokenId && !error && parsedAmount && !inputError && receiver) {
       withdraw({ id: tokenId, amount: parsedAmount.toExact(), onSuccess, onError, receiver })
     }
   }
+
   const onSuccess = () => {
     changeModal(WithdrawModalView.SUCCESS)
   }
+
   const onError = () => {
     changeModal(WithdrawModalView.ERROR)
   }
+
   useEffect(() => {
     const id = currencyId(currency)
     onCurrencySet(id)
@@ -88,7 +116,7 @@ export const WithdrawRequestForm = ({ currency, changeModal, token }: Props) => 
             </TYPE.body1>
           </Row>
           <AmountInput
-          widthdraw
+            widthdraw
             token={token}
             amount={parsedAmount}
             showMax={true}
@@ -121,10 +149,10 @@ export const WithdrawRequestForm = ({ currency, changeModal, token }: Props) => 
           />
         </Column>
       </Column>
-
-      <Row style={{ marginTop: '50px', marginBottom: '24px' }}>
+      <FeeStatus status={feeStatus} feePrice={feePrice} />
+      <Row>
         <ButtonIXSWide style={{ textTransform: 'unset' }} disabled={!!inputError} onClick={onClick}>
-          {inputError ?? <Trans>Send</Trans>}
+          {inputError ?? t`${feeStatus !== 'paidFee' ? 'Pay Withdraw FEE' : 'Withdraw'}`}
         </ButtonIXSWide>
       </Row>
     </div>

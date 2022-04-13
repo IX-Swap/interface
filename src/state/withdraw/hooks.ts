@@ -23,6 +23,8 @@ import {
   typeReceiver,
   withdrawCurrency,
   resetWithdraw,
+  getFeeStatus,
+  getFeePrice,
 } from './actions'
 import walletValidator from 'multicoin-address-validator'
 
@@ -186,5 +188,49 @@ export function useWithdrawCallback(
       }
     },
     [dispatch, router, addTransaction, currencySymbol, tokenId, getEvents]
+  )
+}
+
+export const getFeeStatusReq = async (id: string | number) => {
+  const response = await apiService.get(custody.feeStatus(id))
+  return response.data
+}
+
+export const useGetFeeStatus = () => {
+  const dispatch = useDispatch<AppDispatch>()
+
+  return useCallback(
+    async (id: string | number) => {
+      try {
+        dispatch(getFeeStatus.pending())
+        const response = await getFeeStatusReq(id)
+        dispatch(getFeeStatus.fulfilled(response))
+      } catch (error: any) {
+        dispatch(getFeeStatus.rejected({ errorMessage: error.message }))
+      }
+    },
+    [dispatch]
+  )
+}
+
+export const getFeePriceReq = async (id: string | number) => {
+  const response = await apiService.get(custody.feePrice(id))
+  return response.data
+}
+
+export const useGetFeePrice = () => {
+  const dispatch = useDispatch<AppDispatch>()
+
+  return useCallback(
+    async (id: string | number) => {
+      try {
+        dispatch(getFeePrice.pending())
+        const response = await getFeePriceReq(id)
+        dispatch(getFeePrice.fulfilled(response))
+      } catch (error: any) {
+        dispatch(getFeePrice.rejected({ errorMessage: error.message }))
+      }
+    },
+    [dispatch]
   )
 }

@@ -7,6 +7,9 @@ import {
   typeReceiver,
   withdrawCurrency,
   resetWithdraw,
+  getFeeStatus,
+  getFeePrice,
+  postPaidFee,
 } from './actions'
 
 export interface WithdrawState {
@@ -15,8 +18,11 @@ export interface WithdrawState {
   readonly currencyId?: string
   readonly networkName?: string
   loadingWithdraw: boolean
+  loading: boolean
   withdrawError: string | null
   tx: string | null
+  feeStatus: string
+  feePrice: number | null
 }
 
 const initialState: WithdrawState = {
@@ -27,6 +33,9 @@ const initialState: WithdrawState = {
   withdrawError: null,
   tx: null,
   networkName: '',
+  feeStatus: '',
+  feePrice: null,
+  loading: false,
 }
 
 export default createReducer<WithdrawState>(initialState, (builder) =>
@@ -72,5 +81,46 @@ export default createReducer<WithdrawState>(initialState, (builder) =>
       state.amount = initialState.amount
       state.currencyId = initialState.currencyId
       state.receiver = initialState.receiver
+    })
+    .addCase(getFeeStatus.pending, (state) => {
+      state.loading = true
+      state.withdrawError = null
+      state.tx = null
+    })
+    .addCase(getFeeStatus.fulfilled, (state, { payload }) => {
+      state.loading = false
+      state.withdrawError = null
+      state.feeStatus = payload
+    })
+    .addCase(getFeeStatus.rejected, (state, { payload: { errorMessage } }) => {
+      state.loading = false
+      state.withdrawError = errorMessage
+    })
+    .addCase(getFeePrice.pending, (state) => {
+      state.loading = true
+      state.withdrawError = null
+      state.tx = null
+    })
+    .addCase(getFeePrice.fulfilled, (state, { payload }) => {
+      state.loading = false
+      state.withdrawError = null
+      state.feePrice = +payload
+    })
+    .addCase(getFeePrice.rejected, (state, { payload: { errorMessage } }) => {
+      state.loading = false
+      state.withdrawError = errorMessage
+    })
+    .addCase(postPaidFee.pending, (state) => {
+      state.loading = true
+      state.withdrawError = null
+      state.tx = null
+    })
+    .addCase(postPaidFee.fulfilled, (state) => {
+      state.loading = false
+      state.withdrawError = null
+    })
+    .addCase(postPaidFee.rejected, (state, { payload: { errorMessage } }) => {
+      state.loading = false
+      state.withdrawError = errorMessage
     })
 )
