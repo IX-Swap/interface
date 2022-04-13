@@ -33,7 +33,7 @@ export const individualErrorsSchema = yup.object().shape({
     then: yup.string().required('Required'),
     otherwise: yup.string(),
   }),
-  occupation: yup.string().required('Required'),
+  occupation: yup.object().nullable().required('Required'),
   employmentStatus: yup.object().nullable().required('Required'),
   employer: yup.string().required('Required'),
   income: yup.object().nullable().required('Required'),

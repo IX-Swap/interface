@@ -4,7 +4,7 @@ import approvedIcon from 'assets/images/check-success.svg'
 import pendingIcon from 'assets/images/loader_thin.svg'
 
 export function capitalizeFirstLetter(word: string) {
-  return word.charAt(0).toUpperCase() + word.slice(1)
+  return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
 }
 
 export const fixCapitalization = (words: string[]) => {
