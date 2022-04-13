@@ -62,5 +62,5 @@ export const useCommitmentValidator = (
     }
   }
 
-  return { isValid: false }
+  return { isValid: false, message: 'Insufficient Balance' }
 }

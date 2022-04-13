@@ -46,6 +46,7 @@ describe('CommitmentFormCommitButton', () => {
           minInvestment={100}
           dsoId='123'
           currency='$'
+          disabled={false}
         />
       </Form>
     )
