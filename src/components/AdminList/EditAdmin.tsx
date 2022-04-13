@@ -1,4 +1,4 @@
-import React, { useState, CSSProperties, FC } from 'react'
+import React, { useState, FC } from 'react'
 import styled from 'styled-components'
 import { Box } from 'rebass'
 import { Label } from '@rebass/forms'
@@ -13,15 +13,14 @@ import { isValidAddress, shortAddress } from 'utils'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 import { addAdmin } from 'state/admin/hooks'
 import { useAddPopup } from 'state/application/hooks'
-import { StyledButtonGradientBorder } from 'components/AdminSecurityCatalog/styleds'
 import { Select } from 'pages/KYC/common'
 import { capitalizeFirstLetter } from 'components/AdminAccreditationTable/utils'
 import { updateUser } from 'state/user/hooks'
 
+import { StyledButtonGradientBorder } from './styleds'
 import { adminRoles } from './mock'
-
+ 
 interface Props {
-  buttonStyles?: CSSProperties
   isOpen: boolean
   address: string
   isUpdating: boolean
@@ -39,7 +38,6 @@ export const EditAdmin: FC<Props> = ({
   isOpen,
   isUpdating,
   address,
-  buttonStyles,
   error,
   role,
   handleRole,
@@ -64,7 +62,12 @@ export const EditAdmin: FC<Props> = ({
         handleIsLoading(true)
 
         if (isUpdating) {
-          await updateUser(address, { role: role.label ? role.label.toLowerCase() : role.toLowerCase(), language: 'en', active: true, photoId: 0  })
+          await updateUser(address, {
+            role: role.label ? role.label.toLowerCase() : role.toLowerCase(),
+            language: 'en',
+            active: true,
+            photoId: 0,
+          })
         } else {
           await addAdmin(address)
         }
@@ -89,7 +92,7 @@ export const EditAdmin: FC<Props> = ({
 
   return (
     <>
-      <StyledButtonGradientBorder style={buttonStyles} onClick={open}>
+      <StyledButtonGradientBorder onClick={open}>
         <Trans>Add Admin</Trans>
       </StyledButtonGradientBorder>
       <RedesignedWideModal isOpen={isOpen} onDismiss={close}>

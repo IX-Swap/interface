@@ -1,16 +1,13 @@
 import React, { FC, useEffect, useState } from 'react'
-import { Flex } from 'rebass'
-import { isMobile } from 'react-device-detect'
 import { t, Trans } from '@lingui/macro'
 
 import { Table } from '../Table'
 import { Container } from 'components/AdminAccreditationTable'
 import { Wallet } from 'components/AdminKyc'
+import { LoadingIndicator } from 'components/LoadingIndicator'
 import { EditAdmin } from './EditAdmin'
 import { useAdminState, useGetAdminList } from 'state/admin/hooks'
 import { adminOffset as offset } from 'state/admin/constants'
-import { Loader } from '../AdminTransactionsTable'
-import { LoaderThin } from 'components/Loader/LoaderThin'
 import { Search } from 'components/AdminAccreditationTable/Search'
 import useCopyClipboard from 'hooks/useCopyClipboard'
 import { shortenAddress } from 'utils'
@@ -18,7 +15,7 @@ import { StyledCopy } from 'components/AdminTransactionsTable'
 import { AdminRole } from 'state/admin/actions'
 import { capitalizeFirstLetter } from 'components/AdminAccreditationTable/utils'
 
-import { StyledBodyRow, StyledHeaderRow } from './styleds'
+import { TopContent, StyledBodyRow, StyledHeaderRow } from './styleds'
 import { IconWrapper } from 'components/AccountDetails/styleds'
 import { ButtonGradientBorder } from 'components/Button'
 import { updateUser } from 'state/user/hooks'
@@ -86,47 +83,40 @@ export const AdminList: FC = () => {
   }
 
   return (
-    <>
-      {adminLoading && (
-        <Loader>
-          <LoaderThin size={96} />
-        </Loader>
-      )}
-      <Container>
-        <Flex flexDirection={isMobile ? 'column' : 'row'} marginBottom="33px">
-          <Search style={{ marginBottom: 0 }} setSearchValue={setSearchValue} placeholder={t`Search`} />
-          <EditAdmin
-            isUpdating={isUpdating}
-            address={updateAddress}
-            handleAddress={setUpdateAddress}
-            close={closeUpdateModal}
-            isOpen={modalOpen}
-            refreshCallback={refreshCallback}
-            buttonStyles={{ marginTop: isMobile ? 16 : 0, marginLeft: isMobile ? 0 : 33 }}
-            open={openUpdateModal}
-            error={modalError}
-            handleError={handleError}
-            role={adminRole}
-            handleRole={handleRole}
-          />
-        </Flex>
+    <Container>
+      <LoadingIndicator isLoading={adminLoading} />
+      <TopContent marginBottom="33px">
+        <Search style={{ marginBottom: 0 }} setSearchValue={setSearchValue} placeholder={t`Search`} />
+        <EditAdmin
+          isUpdating={isUpdating}
+          address={updateAddress}
+          handleAddress={setUpdateAddress}
+          close={closeUpdateModal}
+          isOpen={modalOpen}
+          refreshCallback={refreshCallback}
+          open={openUpdateModal}
+          error={modalError}
+          handleError={handleError}
+          role={adminRole}
+          handleRole={handleRole}
+        />
+      </TopContent>
 
-        {adminList && (
-          <Table
-            body={
-              <Body
-                callbackParams={callbackParams}
-                setCallbackParams={setCallbackParams}
-                changeRoleClick={changeRoleClick}
-                refreshCallback={refreshCallback}
-                items={adminList.items}
-              />
-            }
-            header={<Header />}
-          />
-        )}
-      </Container>
-    </>
+      {adminList && (
+        <Table
+          body={
+            <Body
+              callbackParams={callbackParams}
+              setCallbackParams={setCallbackParams}
+              changeRoleClick={changeRoleClick}
+              refreshCallback={refreshCallback}
+              items={adminList.items}
+            />
+          }
+          header={<Header />}
+        />
+      )}
+    </Container>
   )
 }
 
