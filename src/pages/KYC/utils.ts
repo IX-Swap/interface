@@ -16,7 +16,7 @@ export const corporateTransformApiData = (data: any) => {
 
   return {
     ...data,
-    typeOfLegalEntity: { id: legalEntityTypes.find(({ label }) => label === typeOfLegalEntity)?.value || 0,  label: typeOfLegalEntity },
+    typeOfLegalEntity: { value: legalEntityTypes.find(({ label }) => label === typeOfLegalEntity)?.value || 0,  label: typeOfLegalEntity },
     countryOfIncorporation: { value: 0, label: countryOfIncorporation },
     authorizationDocuments: documents.filter(({ type }: any) => type === 'authorization'),
     line1: address.line1,
