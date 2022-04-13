@@ -8,12 +8,12 @@ import { AdminAccreditationTable } from 'components/AdminAccreditationTable'
 import { AdminTransactionsTable } from 'components/AdminTransactionsTable'
 import { AdminSecurityCatalog } from 'components/AdminSecurityCatalog'
 import { Border, ToggleOption } from 'components/Tabs'
+import { AdminList } from 'components/AdminList'
 import { AdminKycTable } from 'components/AdminKyc'
-import { AddAdmin } from 'components/AddAdmin'
 
 import { Navbar } from './Navbar'
 
-type AdminTab = 'accreditation' | 'kyc' | 'transactions' | 'security-catalog'
+type AdminTab = 'accreditation' | 'kyc' | 'transactions' | 'security-catalog' | 'admin-list'
 
 interface Tab {
   label: string
@@ -30,6 +30,7 @@ const tabs: Tab[] = [
   { label: 'KYC', value: 'kyc' },
   { label: 'Broker-dealer Transactions', value: 'transactions' },
   { label: 'Security catalog', value: 'security-catalog' },
+  { label: `Admin's`, value: 'admin-list' },
 ]
 
 const renderTab = (selectedTab: AdminTab | string) => {
@@ -42,7 +43,8 @@ const renderTab = (selectedTab: AdminTab | string) => {
       return <AdminTransactionsTable />
     case 'security-catalog':
       return <AdminSecurityCatalog />
-
+    case 'admin-list':
+      return <AdminList />
     default:
       return null
   }
@@ -109,7 +111,6 @@ const AdminKyc = () => {
                 </ToggleOption>
               </>
             ))}
-            <AddAdmin />
           </TabsContainer>
 
           {renderTab(selectedTab)}

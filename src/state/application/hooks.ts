@@ -89,6 +89,10 @@ export function useDeleteTokenPopupToggle(): () => void {
   return useToggleModal(ApplicationModal.TOKEN_DELETE_CLAIM)
 }
 
+export function useDeleteConfirmationPopupToggle(): () => void {
+  return useToggleModal(ApplicationModal.DELETE_CONFIRMATION)
+}
+
 // returns a function that allows adding a popup
 export function useAddPopup(): (content: PopupContent, key?: string) => void {
   const dispatch = useDispatch()

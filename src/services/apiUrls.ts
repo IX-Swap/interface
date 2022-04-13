@@ -3,6 +3,7 @@ import { ActionFilterTabs } from 'components/Vault/enum'
 export const admin = {
   login: 'auth/login',
   me: 'auth/me',
+  adminList: 'users/admin',
   brokerDealerList: '/broker-dealer/list',
   getSwaps: 'broker-dealer/swaps/all',
   accreditationList: '/kyc/list',
@@ -83,6 +84,11 @@ export const secCatalog = {
   issuerToken: (tokenId: number) => `/catalog/token/${tokenId}`,
   checkWrappedAddress: (address: string) => `/token/address/${address}`,
 }
+
+export const users = {
+  update: (address: string) => `/users/settings/address/${address}`,
+}
+
 export interface PaginateWithFilter {
   tokenId?: number | null
   page?: number
