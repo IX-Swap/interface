@@ -39,7 +39,7 @@ export const PrimaryInvestLink = ({ data, type }: PrimaryInvestLinkProps) => {
       to={link}
       params={params}
       data-testid='otc-card-link'
-      disabled={isDisabled}
+      disabled={isDisabled || data?.disableInvestInCampaign === true}
       style={{ fontSize: 16, marginTop: 16 }}
     >
       {type !== 'OTC' ? 'Invest' : 'Trade'}
