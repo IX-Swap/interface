@@ -32,6 +32,7 @@ interface BodyProps {
   items: AdminRole[]
   callbackParams: any[]
   setCallbackParams: (value: any[]) => void
+  refreshCallback: () => void
 }
 
 interface RowProps {
@@ -39,6 +40,7 @@ interface RowProps {
   item: AdminRole
   callbackParams: any[]
   setCallbackParams: (value: any[]) => void
+  refreshCallback: () => void
 }
 
 export const AdminList: FC = () => {
@@ -71,7 +73,7 @@ export const AdminList: FC = () => {
     setUpdateAddress('')
   }
 
-  const addAdminCallback = () => {
+  const refreshCallback = () => {
     getPaginatedAdminList()
   }
 
@@ -99,7 +101,7 @@ export const AdminList: FC = () => {
             handleAddress={setUpdateAddress}
             close={closeUpdateModal}
             isOpen={modalOpen}
-            addAdminCallback={addAdminCallback}
+            refreshCallback={refreshCallback}
             buttonStyles={{ marginTop: isMobile ? 16 : 0, marginLeft: isMobile ? 0 : 33 }}
             open={openUpdateModal}
             error={modalError}
@@ -116,6 +118,7 @@ export const AdminList: FC = () => {
                 callbackParams={callbackParams}
                 setCallbackParams={setCallbackParams}
                 changeRoleClick={changeRoleClick}
+                refreshCallback={refreshCallback}
                 items={adminList.items}
               />
             }
@@ -127,7 +130,7 @@ export const AdminList: FC = () => {
   )
 }
 
-const Row: FC<RowProps> = ({ callbackParams, setCallbackParams, item, changeRoleClick }) => {
+const Row: FC<RowProps> = ({ callbackParams, setCallbackParams, item, refreshCallback, changeRoleClick }) => {
   const [copied, setCopied] = useCopyClipboard()
   const { ethAddress, role } = item
   const toggle = useDeleteConfirmationPopupToggle()
@@ -135,14 +138,15 @@ const Row: FC<RowProps> = ({ callbackParams, setCallbackParams, item, changeRole
 
   const updateAdminRole = async (address: string, newRole: string) => {
     const data = await updateUser(address, { role: newRole, language: 'en', active: true, photoId: 0 })
-
-    if (data) {
+    toggle()
+    if (data?.id) {
       addPopup({
         info: {
           success: true,
           summary: `Admin was deleted successfully`,
         },
       })
+      refreshCallback()
     } else {
       addPopup({
         info: {
@@ -151,8 +155,6 @@ const Row: FC<RowProps> = ({ callbackParams, setCallbackParams, item, changeRole
         },
       })
     }
-
-    toggle()
   }
 
   return (
@@ -197,13 +199,14 @@ const Row: FC<RowProps> = ({ callbackParams, setCallbackParams, item, changeRole
     </>
   )
 }
-const Body: FC<BodyProps> = ({ items, callbackParams, setCallbackParams, changeRoleClick }) => {
+const Body: FC<BodyProps> = ({ items, callbackParams, refreshCallback, setCallbackParams, changeRoleClick }) => {
   return (
     <>
       {items.map((item) => (
         <Row
           callbackParams={callbackParams}
           setCallbackParams={setCallbackParams}
+          refreshCallback={refreshCallback}
           changeRoleClick={changeRoleClick}
           item={item}
           key={`kyc-table-${item}`}

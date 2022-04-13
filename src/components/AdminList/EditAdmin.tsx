@@ -27,7 +27,7 @@ interface Props {
   isUpdating: boolean
   error: string
   role: any
-  addAdminCallback: () => void
+  refreshCallback: () => void
   handleError: (value: string) => void
   close: () => void
   handleAddress: (value: string) => void
@@ -47,7 +47,7 @@ export const EditAdmin: FC<Props> = ({
   handleAddress,
   close,
   open,
-  addAdminCallback,
+  refreshCallback,
 }) => {
   const [isLoading, handleIsLoading] = useState(false)
 
@@ -77,7 +77,7 @@ export const EditAdmin: FC<Props> = ({
             summary: `Admin was ${isUpdating ? 'updated' : 'added'} successfully`,
           },
         })
-        addAdminCallback()
+        refreshCallback()
       } catch (err: any) {
         console.log(err)
         handleIsLoading(false)
