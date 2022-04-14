@@ -114,6 +114,8 @@ export interface DigitalSecurityOffering extends BaseDigitalSecurityOffering {
   currency: Asset
   insight: DSOInsight
   network?: Network
+  isCampaign?: boolean
+  disableInvestInCampaign?: boolean
 }
 
 export type DeploymentInfoFormValues = Omit<

@@ -72,7 +72,7 @@ describe('useMakeCommitment', () => {
           const [mutate] = result.current.invest
           void mutate(makeInvestmentArgs)
 
-          expect(showSnackbar).toHaveBeenCalledWith('Success', 'success')
+          expect(showSnackbar).toHaveBeenCalledWith("Success. Please wait for the authorizer's approval", 'success')
         },
         { timeout: 1000 }
       )
