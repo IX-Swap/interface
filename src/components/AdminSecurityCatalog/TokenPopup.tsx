@@ -201,9 +201,9 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
   }, [])
 
   const chainsOptions = [
-    { id: SUPPORTED_TGE_CHAINS.MAIN, name: 'Mainnet' },
+    { id: SUPPORTED_TGE_CHAINS.MAIN, name: 'Ethereum' },
     { id: SUPPORTED_TGE_CHAINS.KOVAN, name: 'Kovan' },
-    { id: SUPPORTED_TGE_CHAINS.MATIC, name: 'Matic' },
+    { id: SUPPORTED_TGE_CHAINS.MATIC, name: 'Polygon' },
   ]
 
   const selectedChainOption = useMemo(() => {
@@ -312,7 +312,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                       <Box>
                         <Label marginBottom="11px" htmlFor="token-chain">
                           <TYPE.title11 color="text2">
-                            <Trans>Select Chain</Trans>
+                            <Trans>Origin Chain</Trans>
                           </TYPE.title11>
                         </Label>
                         <Dropdown
