@@ -6,8 +6,7 @@ export interface Props {
 }
 
 export const useStyles = makeStyles(theme => {
-  // eslint-disable-next-line
-  const stepIconPalette = theme.palette.stepIcon!
+  const stepIconPalette = theme.palette.stepIcon
 
   const getBg = (type: StepIconType) => {
     switch (type) {

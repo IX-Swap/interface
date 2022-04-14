@@ -1,10 +1,8 @@
 import React, { ReactElement } from 'react'
-import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { lightTheme } from 'themes/new/light'
-import { darkTheme } from 'themes/new/dark'
-import { typography } from 'themes/new/typography'
-import { getThemeOverrides } from 'themes/new/overrides'
 import { useDarkMode } from 'storybook-dark-mode'
+import { AppTheme, getAppTheme } from 'themes/app'
+import { ThemeProvider } from '@mui/material/styles'
+import { getThemeOverrides } from 'themes/app/overrides'
 import { Theme } from '@mui/material'
 
 export interface ChildrenProps {
@@ -16,49 +14,49 @@ export interface UIKitThemeWrapperProps {
 }
 
 export const UIKitThemeWrapper = ({ children }: UIKitThemeWrapperProps) => {
-  const currentNewTheme = useDarkMode() ? darkTheme : lightTheme
-  const newTheme = createTheme({ ...currentNewTheme, typography })
+  const themeModeFromStorybook = useDarkMode() ? AppTheme.Dark : AppTheme.Light
+  const theme = getAppTheme(themeModeFromStorybook, false)
 
-  newTheme.components = {
-    ...getThemeOverrides(newTheme),
+  theme.components = {
+    ...getThemeOverrides(theme),
     MuiSwitch: {
-      ...getThemeOverrides(newTheme)?.MuiSwitch,
+      ...getThemeOverrides(theme)?.MuiSwitch,
       defaultProps: {
         disableTouchRipple: true
       }
     },
     MuiRadio: {
-      ...getThemeOverrides(newTheme)?.MuiRadio,
+      ...getThemeOverrides(theme)?.MuiRadio,
       defaultProps: {
         disableTouchRipple: true
       }
     },
     MuiCheckbox: {
-      ...getThemeOverrides(newTheme)?.MuiCheckbox,
+      ...getThemeOverrides(theme)?.MuiCheckbox,
       defaultProps: {
         disableTouchRipple: true
       }
     },
     MuiButton: {
-      ...getThemeOverrides(newTheme)?.MuiButton,
+      ...getThemeOverrides(theme)?.MuiButton,
       defaultProps: {
         disableTouchRipple: true
       }
     },
     MuiButtonBase: {
-      ...getThemeOverrides(newTheme)?.MuiButtonBase,
+      ...getThemeOverrides(theme)?.MuiButtonBase,
       defaultProps: {
         disableTouchRipple: true
       }
     },
     MuiIconButton: {
-      ...getThemeOverrides(newTheme)?.MuiIconButton,
+      ...getThemeOverrides(theme)?.MuiIconButton,
       defaultProps: {
         disableTouchRipple: true
       }
     },
     MuiFab: {
-      ...getThemeOverrides(newTheme)?.MuiFab,
+      ...getThemeOverrides(theme)?.MuiFab,
       defaultProps: {
         disableTouchRipple: true
       }
@@ -66,8 +64,8 @@ export const UIKitThemeWrapper = ({ children }: UIKitThemeWrapperProps) => {
   }
 
   return (
-    <ThemeProvider theme={newTheme}>
-      {typeof children === 'function' ? children(newTheme) : children}
+    <ThemeProvider theme={theme}>
+      {typeof children === 'function' ? children(theme) : children}
     </ThemeProvider>
   )
 }

@@ -1,12 +1,7 @@
 import React from 'react'
-import {
-  Checkbox,
-  ListItemText,
-  MenuItem,
-  Select,
-  SelectProps
-} from '@mui/material'
+import { ListItemText, MenuItem, Select, SelectProps } from '@mui/material'
 import { ROLES } from 'config/roles'
+import { UICheckbox } from 'components/UICheckbox/UICheckbox'
 
 export interface RoleSelectProps extends SelectProps {
   value: string[]
@@ -30,7 +25,7 @@ export const RoleSelect = (props: RoleSelectProps) => {
     >
       {ROLES.map(name => (
         <MenuItem key={name} value={name} disabled={name === 'user'}>
-          <Checkbox checked={props.value.includes(name)} />
+          <UICheckbox checked={props.value.includes(name)} />
           <ListItemText primary={getName(name)} />
         </MenuItem>
       ))}

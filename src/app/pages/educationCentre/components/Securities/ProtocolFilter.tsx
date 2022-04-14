@@ -1,4 +1,4 @@
-import { FormControl, InputLabel, MenuItem } from '@mui/material'
+import { FormControl, MenuItem } from '@mui/material'
 import { TextFieldSelect } from 'components/form/TextFieldSelect'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
 import React from 'react'
@@ -19,7 +19,6 @@ export const ProtocolFilter = () => {
     <SearchQueryFilter<'protocol'> name='protocol' defaultValue=''>
       {({ value, onChange }) => (
         <FormControl variant='outlined' style={{ width: 140 }}>
-          <InputLabel shrink>Protocol</InputLabel>
           <TextFieldSelect
             label='Protocol'
             onChange={event => {

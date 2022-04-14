@@ -1,18 +1,13 @@
-import React, { useEffect, useState } from 'react'
-import {
-  Box,
-  TextField,
-  InputAdornment,
-  IconButton,
-  InputLabel
-} from '@mui/material'
-import { PickerOnChangeFn } from '@mui/lab/internal/pickers/hooks/useViews'
-import { addYears, format, subYears } from 'date-fns'
-import { DatePickerProps as MUIDatePickerProps } from '@mui/lab/DatePicker'
-import { Icon } from 'ui/Icons/Icon'
-import { DatePickerPopper } from 'ui/DateTimePicker/DatePickerPopper'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
+import { DatePickerProps as MUIDatePickerProps } from '@mui/lab/DatePicker'
+import { PickerOnChangeFn } from '@mui/lab/internal/pickers/hooks/useViews'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
+import { Box, IconButton, InputAdornment, InputLabel } from '@mui/material'
+import { addYears, format, subYears } from 'date-fns'
+import React, { useEffect, useState } from 'react'
+import { DatePickerPopper } from 'ui/DateTimePicker/DatePickerPopper'
+import { Icon } from 'ui/Icons/Icon'
+import { TextInput } from 'ui/TextInput/TextInput'
 
 const defaultDates = {
   min: subYears(new Date(), 40),
@@ -122,11 +117,9 @@ export const DatePicker = ({
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <Box maxWidth={320}>
         {label !== undefined && (
-          <InputLabel error={hasError} sx={{ mb: '12px' }}>
-            {label}
-          </InputLabel>
+          <InputLabel error={hasError}>{label}</InputLabel>
         )}
-        <TextField
+        <TextInput
           value={format(
             date,
             `${
@@ -143,7 +136,6 @@ export const DatePicker = ({
                   edge='end'
                   disableRipple
                   sx={{
-                    ml: 1,
                     '&.MuiButtonBase-root:hover': {
                       bgcolor: 'transparent'
                     }

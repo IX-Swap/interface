@@ -27,7 +27,29 @@ describe('CommitmentStatsChart', () => {
       })
     )
     render(<CommitmentStatsChart />)
-    expect(Chart).toHaveBeenNthCalledWith(1, commitmentChartOption, {})
+    expect(Chart).toHaveBeenNthCalledWith(
+      1,
+      {
+        ...commitmentChartOption,
+        options: {
+          ...commitmentChartOption.options,
+          hAxis: {
+            ...commitmentChartOption.options.hAxis,
+            gridlines: { color: '#778194' }
+          },
+          vAxis: {
+            ...commitmentChartOption.options.vAxis,
+            baselineColor: '#778194',
+            gridlines: {
+              ...commitmentChartOption.options.vAxis.gridlines,
+              color: '#778194'
+            }
+          },
+          colors: ['#4C88FF']
+        }
+      },
+      {}
+    )
   })
 
   it('renders Chart with correct props when there is no data', () => {
@@ -38,6 +60,16 @@ describe('CommitmentStatsChart', () => {
       })
     )
     render(<CommitmentStatsChart />)
-    expect(Chart).toHaveBeenNthCalledWith(1, commitmentChartNoDataOption, {})
+    expect(Chart).toHaveBeenNthCalledWith(
+      1,
+      {
+        ...commitmentChartNoDataOption,
+        options: {
+          ...commitmentChartNoDataOption.options,
+          colors: ['#4C88FF']
+        }
+      },
+      {}
+    )
   })
 })

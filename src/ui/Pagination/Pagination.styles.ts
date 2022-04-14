@@ -2,10 +2,8 @@ import makeStyles from '@mui/styles/makeStyles'
 import InfoIcon from 'assets/icons/item-checked.svg'
 
 export const useStyles = makeStyles(theme => {
-  // eslint-disable-next-line
-  const paginationItemPalette = theme.palette.paginationItem!
-  // eslint-disable-next-line
-  const tablePaginationPalette = theme.palette.tablePagination!
+  const paginationItemPalette = theme.palette.paginationItem
+  const tablePaginationPalette = theme.palette.tablePagination
 
   return {
     wrapper: {

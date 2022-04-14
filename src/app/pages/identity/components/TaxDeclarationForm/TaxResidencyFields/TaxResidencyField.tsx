@@ -1,13 +1,13 @@
-import React from 'react'
-import { useFormContext } from 'react-hook-form'
-import { Grid, IconButton, TextField, Button } from '@mui/material'
 import DeleteOutlined from '@mui/icons-material/DeleteOutlined'
+import { Button, Grid, IconButton } from '@mui/material'
+import { TinUnavailableFields } from 'app/pages/identity/components/TaxDeclarationForm/TinUnavailableFields/TinUnavailableFields'
+import { TaxResidency } from 'app/pages/identity/types/forms'
 import { CountrySelect } from 'components/form/CountrySelect'
 import { TypedField } from 'components/form/TypedField'
-import { TinUnavailableFields } from 'app/pages/identity/components/TaxDeclarationForm/TinUnavailableFields/TinUnavailableFields'
 import { VSpacer } from 'components/VSpacer'
-import { TaxResidency } from 'app/pages/identity/types/forms'
-
+import React from 'react'
+import { useFormContext } from 'react-hook-form'
+import { TextInput } from 'ui/TextInput/TextInput'
 export interface TaxResidencyFieldProps {
   field: Partial<TaxResidency & { id: string }>
   append: (
@@ -95,7 +95,7 @@ export const TaxResidencyField = ({
             <TypedField
               fullWidth
               control={control}
-              component={TextField}
+              component={TextInput}
               label='Tax Identification Number'
               defaultValue={defaultValue?.taxIdentificationNumber ?? ''}
               name={['taxResidencies', index, 'taxIdentificationNumber']}

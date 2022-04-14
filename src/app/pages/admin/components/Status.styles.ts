@@ -1,5 +1,5 @@
 import makeStyles from '@mui/styles/makeStyles'
-import { themeColors } from 'themes/old/colors'
+import { themeColors } from 'themes/app/colors'
 
 export const useStyles = makeStyles(theme => ({
   default: {
