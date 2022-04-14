@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { t } from '@lingui/macro'
 import styled from 'styled-components'
 import dayjs from 'dayjs'
@@ -6,6 +6,7 @@ import dayjs from 'dayjs'
 import pdfIcon from 'assets/images/pdf.svg'
 import { EllipsisText, MEDIA_WIDTHS } from 'theme'
 import { Document } from 'state/admin/actions'
+import { KycDocPreviewModal } from 'components/KycDocPreviewModal'
 
 const headerCells = [t`File`, t`Type`, t`Uploaded At`]
 
@@ -43,10 +44,10 @@ const Row = ({
     createdAt,
   },
   isFirstRow,
-}: {
-  file: Document
-  isFirstRow: boolean
-}) => {
+  data
+}: any) => {
+  const [openPreviewModal, handlePreviewModal] = useState(false)
+
   const downloadFile = (url: string, name: string) => {
     const link = document.createElement('a')
     link.download = name
@@ -56,11 +57,42 @@ const Row = ({
     document.body.removeChild(link)
   }
 
+  const extractDocType = (docName: any) => docName.substring(docName.lastIndexOf(".")).split('.')[1]
+
+  const filteredDocs = data.filter((doc: any) => {
+    const docName =  doc?.asset?.name;
+    const docType = extractDocType(docName)
+
+    return !['docx', 'doc'].includes(docType) && doc
+  })
+
+  const closeModal = () => {
+    handlePreviewModal(false)
+  }
+
+  const openModal = () => {
+    console.log('CLICKED', filteredDocs)
+    handlePreviewModal(true)
+  }
+
+  const handleRowClick = (url: string, name: string) => {
+    const docType = extractDocType(name)
+    if (['docx', 'doc'].includes(docType)) {
+      downloadFile(url, name)
+    } else {
+      openModal()
+    }
+  }
+
   return (
-    <BodyRow key={id} href={publicUrl} target="_blank" download={name}>
+
+    // <BodyRow key={id} href={publicUrl} target="_blank" download={name}>
+    <BodyRow key={id} onClick={() => handleRowClick(publicUrl, name)}>
+     {Boolean(id) && openPreviewModal && <KycDocPreviewModal isOpen onClose={closeModal} data={filteredDocs} />}
+
       <div>
         {isFirstRow && <ColumnHeader>{headerCells[0]}</ColumnHeader>}
-        <FileName>
+        <FileName >
           <img src={pdfIcon} alt="pdfIcon" />
           <EllipsisText>{name}</EllipsisText>
         </FileName>
@@ -82,7 +114,7 @@ const Body = ({ documents }: Pick<Props, 'documents'>) => {
   return (
     <>
       {documents.map((item, index) => {
-        return <Row key={`kyc-table-${item.id}`} file={item} isFirstRow={!index} />
+        return <Row key={`kyc-table-${item.id}`} file={item} isFirstRow={!index} data={documents} />
       })}
     </>
   )

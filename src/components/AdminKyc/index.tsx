@@ -4,6 +4,7 @@ import dayjs from 'dayjs'
 import styled from 'styled-components'
 
 import { StyledCopy } from 'components/AdminTransactionsTable'
+import { File } from 'react-feather'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import useCopyClipboard from 'hooks/useCopyClipboard'
 import { getKycById, useAdminState, useGetKycList } from 'state/admin/hooks'
@@ -17,15 +18,18 @@ import { BodyRow, HeaderRow, Table } from '../Table'
 import { Search } from '../AdminAccreditationTable/Search'
 import { StatusCell } from './StatusCell'
 import { KycReviewModal } from 'components/KycReviewModal'
-import { ButtonGradientBorder } from 'components/Button'
+import { KycDocPreviewModal } from 'components/KycDocPreviewModal'
+import { ButtonGradientBorder, ButtonGradient } from 'components/Button'
 import { useHistory, useParams } from 'react-router-dom'
 import { AdminParams } from 'pages/Admin'
+import useParsedQueryString from 'hooks/useParsedQueryString'
 
 const headerCells = [t`Wallet address`, t`Name`, t`Identity`, t`Date of request`, t`KYC Status`]
 
 interface RowProps {
   item: KycItem
   openModal: () => void
+  // openDocPreviewModal: () => void
 }
 
 const Header = () => {
@@ -52,7 +56,7 @@ const Row: FC<RowProps> = ({ item, openModal }: RowProps) => {
   const fullName = individualKycId
     ? [kyc?.firstName, kyc?.lastName].filter((el) => Boolean(el)).join(' ')
     : kyc?.corporateName
-
+  
   return (
     <StyledBodyRow key={id}>
       <Wallet>
@@ -74,6 +78,13 @@ const Row: FC<RowProps> = ({ item, openModal }: RowProps) => {
         <StatusCell status={status} />
       </div>
       {/* <div>risk level</div> */}
+      {/* <div>
+        <StyledDocPreviewButton onClick={openDocPreviewModal}>
+          <IconWrapper style={{margin: 0}} size={18}>
+            <StyledDoc />
+          </IconWrapper>
+        </StyledDocPreviewButton>
+      </div> */}
       <div>
         <StyledReviewButton onClick={openModal}>Review</StyledReviewButton>
       </div>
@@ -98,6 +109,7 @@ export const AdminKycTable = () => {
   const [kyc, handleKyc] = useState({} as KycItem)
   const [isLoading, handleIsLoading] = useState(false)
   const [searchValue, setSearchValue] = useState('')
+  const [openDocModal, handleOpenDocModal] = useState(false)
   const {
     kycList: { totalPages, page, items },
     adminLoading,
@@ -107,6 +119,7 @@ export const AdminKycTable = () => {
   const history = useHistory()
 
   const { id } = useParams<AdminParams>()
+  // const queryParams = useParsedQueryString()
 
   useEffect(() => {
     getKycList({ page: 1, offset, ...(searchValue && { search: searchValue }) })
@@ -121,8 +134,11 @@ export const AdminKycTable = () => {
   const closeModal = () => {
     history.push(`/admin/kyc`)
     handleKyc({} as KycItem)
+    // openDocModal && handleOpenDocModal(false)
   }
   const openModal = (kyc: KycItem) => history.push(`/admin/kyc/${kyc.id}`)
+  // const openDocPreviewModal = (kyc: KycItem) => history.push(`/admin/kyc/${kyc.id}?preview`)
+  // const isParamPreview = ('preview' in queryParams)
 
   useEffect(() => {
     getKyc()
@@ -139,10 +155,10 @@ export const AdminKycTable = () => {
       handleIsLoading(false)
     }
   }
-
-  return (
+  return (  
     <div id="kyc-container">
       {Boolean(kyc.id) && <KycReviewModal isOpen onClose={closeModal} data={kyc} />}
+      {/* {Boolean(kyc.id) && isParamPreview && <KycDocPreviewModal isOpen onClose={closeModal} data={kyc} />} */}
       <Search placeholder="Search for Wallet" setSearchValue={setSearchValue} />
       {(adminLoading || isLoading) && (
         <Loader>
@@ -197,6 +213,13 @@ export const Container = styled.div`
   grid-gap: 50px;
 `
 
+export const StyledDoc = styled(File)`
+  cursor: pointer;
+  color: ${({ theme }) => theme.text1};
+  width: 17px;
+  height: 17px;
+`
+
 const StyledHeaderRow = styled(HeaderRow)`
   grid-template-columns: 175px 175px 175px 1fr 1fr 100px;
   min-width: 1270px;
@@ -209,6 +232,15 @@ const StyledBodyRow = styled(BodyRow)`
 
 const StyledReviewButton = styled(ButtonGradientBorder)`
   min-height: 32px;
+  padding: 4px 8px;
+  font-size: 14px;
+`
+
+export const StyledDocPreviewButton = styled(ButtonGradient)`
+  min-height: 34px;
+  min-width: 34px;
+  max-height: 34px;
+  max-width: 34px;
   padding: 4px 8px;
   font-size: 14px;
 `
