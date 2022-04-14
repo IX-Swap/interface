@@ -21,5 +21,12 @@ export const useStyles = makeStyles(theme => ({
           ? theme.palette.success.main
           : theme.palette.error.main
         : theme.palette.text.primary
+  },
+  wrapper: {
+    width: 140
+  },
+  centered: {
+    display: 'flex',
+    justifyContent: 'center'
   }
 }))
