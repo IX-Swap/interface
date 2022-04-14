@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Badge, IconButton } from '@mui/material'
 import { DropdownTriggerProps } from 'app/components/Dropdown/Dropdown'
-import { useStyles } from './TwoFADropdownTrigger.styles'
+import { useStyles } from 'app/components/Header/components/Dropdown/DropdownTrigger.styles'
 import { Icon } from 'ui/Icons/Icon'
 import classnames from 'classnames'
 import { useAuth } from 'hooks/auth/useAuth'

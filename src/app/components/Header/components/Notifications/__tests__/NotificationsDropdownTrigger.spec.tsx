@@ -3,7 +3,7 @@ import { render } from 'test-utils'
 import * as Badge from '@mui/material/Badge'
 import * as useNotifications from 'app/pages/notifications/hooks/useNotifications'
 import { DropdownTriggerProps } from 'app/components/Header/components/Dropdown/Dropdown'
-import { NotificationsDropdownTrigger } from 'app/components/Header/components/Notifications/NotificationsDropdownTrigger/NotificationsDropdownTrigger'
+import { NotificationsDropdownTrigger } from 'app/components/Header/components/Notifications/NotificationsDropdownTrigger'
 
 jest.mock('@mui/material/Badge', () => jest.fn(() => null))
 

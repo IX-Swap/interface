@@ -1,8 +1,8 @@
 import React from 'react'
 import { Typography } from '@mui/material'
-import { useStyles } from './TwoFASupportInfo.styles'
+import { useStyles } from 'app/components/TwoFADialog/SupportInfo/SupportInfo.styles'
 
-export const TwoFASupportInfo = () => {
+export const SupportInfo = () => {
   const classes = useStyles()
   return (
     <Typography variant={'body1'}>
