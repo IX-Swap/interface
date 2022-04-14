@@ -14,7 +14,7 @@ export const individualErrorsSchema = yup.object().shape({
     .string()
     .required('Required')
     .min(10, 'Must be valid phone number')
-    .max(12, 'Must be valid phone number'),
+    .max(15, 'Must be valid phone number'),
   email: yup.string().email('Invalid email').required('Required'),
   line1: yup.string().required('Required'),
   line2: yup.string().required('Required'),
@@ -58,7 +58,7 @@ export const corporateErrorsSchema = yup.object().shape({
   phoneNumber: yup
     .string()
     .min(10, 'Must be valid phone number')
-    .max(12, 'Must be valid phone number')
+    .max(15, 'Must be valid phone number')
     .required('Required'),
   authorizationDocuments: yup.array().min(1, 'Required').nullable(),
   line1: yup.string().required('Required'),
