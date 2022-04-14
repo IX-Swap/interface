@@ -9,7 +9,7 @@ jest.mock('app/components/Header/components/Dropdown/Dropdown', () => ({
   Dropdown: jest.fn(() => null)
 }))
 jest.mock(
-  'app/components/Header/components/Notifications/NotificationsDropdownTrigger/NotificationsDropdownTrigger',
+  'app/components/Header/components/Notifications/NotificationsDropdownTrigger',
   () => ({ NotificationsDropdownTrigger: jest.fn(() => null) })
 )
 jest.mock(
