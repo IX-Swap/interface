@@ -152,6 +152,14 @@ export const darkTheme: DeprecatedThemeOptions = {
       primary: '#FFFFFF',
       secondary: '#496396'
     },
+    table: {
+      color: '#89A1CE',
+      rowBg: '#152D5F',
+      rowColor: '#89A1CE',
+      boxShadow: `0px 80px 80px ${tinycolor('#0e1f3f')
+        .setAlpha(0.3)
+        .toRgbString()}`
+    },
     skeleton: {
       bg: '#1D3667'
     },

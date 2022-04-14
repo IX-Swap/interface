@@ -98,6 +98,13 @@ export interface Alerts {
   border: string
 }
 
+export interface TablePalette {
+  rowBg: CSSProperties['color']
+  rowColor: CSSProperties['color']
+  color: CSSProperties['color']
+  boxShadow: string
+}
+
 export interface ChipPalette {
   bg: string
   fill: string
@@ -201,6 +208,7 @@ declare module '@mui/material/styles' {
         color?: CSSProperties['color']
       }
     }
+    table: TablePalette
     paginationItem: PaginationItem
     tablePagination: TablePagination
     alerts: Alerts
@@ -244,6 +252,7 @@ declare module '@mui/material/styles' {
         color?: CSSProperties['color']
       }
     }
+    table: TablePalette
     paginationItem: PaginationItem
     tablePagination: TablePagination
     alerts: Alerts
