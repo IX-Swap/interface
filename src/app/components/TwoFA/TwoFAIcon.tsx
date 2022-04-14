@@ -8,8 +8,8 @@ export const TwoFAIcon = () => {
   const { enable2Fa } = user
 
   if (enable2Fa === true) {
-    return <Disabled2FAIcon />
+    return <Enabled2FAIcon />
   }
 
-  return <Enabled2FAIcon />
+  return <Disabled2FAIcon />
 }
