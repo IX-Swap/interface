@@ -11,7 +11,7 @@ export interface ActionsProps {
 }
 
 export const Actions = ({ handleClose, enable2fa }: ActionsProps) => {
-  const [disable2fa] = useDisable2fa(handleClose)
+  const [disable2fa] = useDisable2fa()
   const { push } = useHistory()
   const classes = useStyles()
 
@@ -23,11 +23,11 @@ export const Actions = ({ handleClose, enable2fa }: ActionsProps) => {
   const handleSecondButtonClick = async () => {
     if (enable2fa === true) {
       push(SecurityRoute.change2fa)
-      handleClose()
     }
     if (enable2fa === undefined) {
       await disable2fa()
     }
+    handleClose()
   }
 
   return (

@@ -20,11 +20,11 @@ export const useDisable2fa = (handleSuccess?: () => void) => {
       if (handleSuccess !== undefined) {
         handleSuccess()
       }
-      void snackbarService.showSnackbar(data.message, 'success')
+      snackbarService.showSnackbar(data.message, 'success')
       storageService.set(USER_QUERY_KEY, { ...user, enable2Fa: false })
     },
     onError: (error: any) => {
-      void snackbarService.showSnackbar(error.message, 'error')
+      snackbarService.showSnackbar(error.message, 'error')
     }
   })
 }
