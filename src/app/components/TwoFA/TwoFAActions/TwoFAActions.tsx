@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom'
 import { SecurityRoute } from 'app/pages/security/router/config'
 import { useStyles } from './TwoFAActions.styles'
 import { useAuth } from 'hooks/auth/useAuth'
+import { useDisable2fa } from 'app/pages/security/hooks/useDisable2fa'
 
 interface ButtonsBlockProps {
   handleClose: () => void
@@ -11,9 +12,9 @@ interface ButtonsBlockProps {
 
 export const TwoFAActions = ({ handleClose }: ButtonsBlockProps) => {
   const { user = { enable2Fa: undefined } } = useAuth()
+  const [disable2fa] = useDisable2fa(handleClose)
   const { push } = useHistory()
   const { enable2Fa } = user
-
   const classes = useStyles()
 
   const handleFirstButtonClick = () => {
@@ -21,13 +22,13 @@ export const TwoFAActions = ({ handleClose }: ButtonsBlockProps) => {
     handleClose()
   }
 
-  const handleSecondButtonClick = () => {
+  const handleSecondButtonClick = async () => {
     if (enable2Fa === true) {
       push(SecurityRoute.change2fa)
       handleClose()
-    } else {
-      // TODO Call to backend api {{ENDPOINT}}/auth/2fa/disable/{{UserId}}
-      handleClose()
+    }
+    if (enable2Fa === undefined) {
+      await disable2fa()
     }
   }
 
