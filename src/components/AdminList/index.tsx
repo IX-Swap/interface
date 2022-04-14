@@ -6,7 +6,7 @@ import { Container } from 'components/AdminAccreditationTable'
 import { Wallet } from 'components/AdminKyc'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 import { EditAdmin } from './EditAdmin'
-import { useAdminState, useGetAdminList } from 'state/admin/hooks'
+import { useAdminState, useGetAdminList, useOnlyAdminAccess } from 'state/admin/hooks'
 import { adminOffset as offset } from 'state/admin/constants'
 import { Search } from 'components/AdminAccreditationTable/Search'
 import useCopyClipboard from 'hooks/useCopyClipboard'
@@ -41,6 +41,7 @@ interface RowProps {
 }
 
 export const AdminList: FC = () => {
+  useOnlyAdminAccess()
   const [isUpdating, setIsUpdating] = useState(false)
   const [modalOpen, setModalOpen] = useState(false)
   const [modalError, handleError] = useState('')
