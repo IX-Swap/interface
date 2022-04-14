@@ -1,17 +1,18 @@
 import React from 'react'
-import { MenuItem, Select } from '@mui/material'
+import { Select } from 'ui/Select/Select'
+import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 
 export const DistributionFrequencySelect = (props: any) => {
   return (
     <Select {...props}>
-      <MenuItem disabled value={undefined}>
+      <SelectItem disabled value={undefined}>
         Distribution Frequency
-      </MenuItem>
-      <MenuItem value='Not Applicable'>Not Applicable</MenuItem>
-      <MenuItem value='Monthly'>Monthly</MenuItem>
-      <MenuItem value='Quarterly'>Quarterly</MenuItem>
-      <MenuItem value='Semi-Annually'>Semi-Annually</MenuItem>
-      <MenuItem value='Annually'>Annually</MenuItem>
+      </SelectItem>
+      <SelectItem value='Not Applicable'>Not Applicable</SelectItem>
+      <SelectItem value='Monthly'>Monthly</SelectItem>
+      <SelectItem value='Quarterly'>Quarterly</SelectItem>
+      <SelectItem value='Semi-Annually'>Semi-Annually</SelectItem>
+      <SelectItem value='Annually'>Annually</SelectItem>
     </Select>
   )
 }

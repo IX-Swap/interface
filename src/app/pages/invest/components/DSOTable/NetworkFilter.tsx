@@ -1,9 +1,11 @@
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import React from 'react'
-import { MenuItem, Select, SelectChangeEvent } from '@mui/material'
+import { SelectChangeEvent } from '@mui/material'
 import { privateClassNames } from 'helpers/classnames'
 import { useAllNetworks } from 'app/pages/accounts/pages/withdrawalAddresses/hooks/useAllNetworks'
 import { queryStatusRenderer } from 'components/form/renderUtils'
+import { Select } from 'ui/Select/Select'
+import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 
 export const NetworkFilter = () => {
   const { data, status } = useAllNetworks()
@@ -34,11 +36,11 @@ export const NetworkFilter = () => {
       defaultValue={value ?? 'All'}
       style={{ fontSize: 15, fontWeight: 'normal' }}
     >
-      <MenuItem value={'All'}>Network</MenuItem>
+      <SelectItem value={'All'}>Network</SelectItem>
       {data?.map(({ name, _id }) => (
-        <MenuItem key={_id} value={_id} className={privateClassNames()}>
+        <SelectItem key={_id} value={_id} className={privateClassNames()}>
           {name}
-        </MenuItem>
+        </SelectItem>
       ))}
     </Select>
   )

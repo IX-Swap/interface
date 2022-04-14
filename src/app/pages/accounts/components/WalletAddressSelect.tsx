@@ -1,7 +1,9 @@
-import { MenuItem, Select, SelectProps } from '@mui/material'
+import { SelectProps } from '@mui/material'
 import { useWalletAddresses } from 'app/pages/accounts/hooks/useWalletAddresses'
 import React from 'react'
 import { WithdrawalAddress } from 'types/withdrawalAddress'
+import { Select } from 'ui/Select/Select'
+import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 
 export const WalletAddressSelect = React.forwardRef(
   (props: SelectProps, ref) => {
@@ -13,13 +15,13 @@ export const WalletAddressSelect = React.forwardRef(
 
     return (
       <Select {...props} ref={ref}>
-        <MenuItem disabled value={undefined}>
+        <SelectItem disabled value={undefined}>
           {props.label}
-        </MenuItem>
+        </SelectItem>
         {data.map((wallet: WithdrawalAddress) => (
-          <MenuItem key={wallet.address} value={wallet.address}>
+          <SelectItem key={wallet.address} value={wallet.address}>
             {wallet.label}
-          </MenuItem>
+          </SelectItem>
         ))}
       </Select>
     )

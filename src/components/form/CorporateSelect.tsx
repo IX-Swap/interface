@@ -1,7 +1,8 @@
 import React from 'react'
 import { useAllCorporates } from 'app/pages/identity/hooks/useAllCorporates'
-import { MenuItem, Select } from '@mui/material'
 import { queryStatusRenderer } from './renderUtils'
+import { Select } from 'ui/Select/Select'
+import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 
 export const CorporateSelect = (props: any) => {
   const { data, status } = useAllCorporates({ all: true, status: 'Approved' })
@@ -11,13 +12,13 @@ export const CorporateSelect = (props: any) => {
 
   return (
     <Select {...props} style={{ minWidth: 100 }} label={props.label}>
-      <MenuItem disabled value={undefined}>
+      <SelectItem disabled value={undefined}>
         Corporate
-      </MenuItem>
+      </SelectItem>
       {data.list.map(({ _id, companyLegalName }) => (
-        <MenuItem value={_id} key={_id}>
+        <SelectItem value={_id} key={_id}>
           {companyLegalName}
-        </MenuItem>
+        </SelectItem>
       ))}
     </Select>
   )

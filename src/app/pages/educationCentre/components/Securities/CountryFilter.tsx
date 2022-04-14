@@ -1,7 +1,8 @@
-import { FormControl, MenuItem } from '@mui/material'
+import { FormControl } from '@mui/material'
 import { TextFieldSelect } from 'components/form/TextFieldSelect'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
 import React from 'react'
+import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 
 export const countries = [
   'United States',
@@ -35,11 +36,11 @@ export const CountryFilter = () => {
             }}
             value={value}
           >
-            <MenuItem value=''>All Countries</MenuItem>
+            <SelectItem value=''>All Countries</SelectItem>
             {countries.map(country => (
-              <MenuItem key={country} value={country}>
+              <SelectItem key={country} value={country}>
                 {country}
-              </MenuItem>
+              </SelectItem>
             ))}
           </TextFieldSelect>
         </FormControl>

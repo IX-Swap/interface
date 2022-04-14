@@ -1,5 +1,6 @@
 import React from 'react'
-import { MenuItem, Select } from '@mui/material'
+import { Select } from 'ui/Select/Select'
+import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 
 const employmentStatusList = [
   'Full-Time Employee',
@@ -18,9 +19,9 @@ export const EmploymentStatusSelect = (props: any) => {
     <Select {...rest} style={{ minWidth: 100 }}>
       {employmentStatusList.map(item => {
         return (
-          <MenuItem value={item} key={item}>
+          <SelectItem value={item} key={item}>
             {item}
-          </MenuItem>
+          </SelectItem>
         )
       })}
     </Select>

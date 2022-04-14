@@ -1,10 +1,11 @@
-import { Button, FormControl, Grid, MenuItem, Typography } from '@mui/material'
+import { Button, FormControl, Grid, Typography } from '@mui/material'
 import { useStyles } from 'app/pages/admin/components/UserIdentitySelect.styles'
 import { AdminRoute } from 'app/pages/admin/router/config'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import React, { useState } from 'react'
 import { UserIdentityCreatedStatus } from 'types/user'
 import { TextFieldSelect } from 'components/form/TextFieldSelect'
+import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 
 export interface UserIdentitySelectProps {
   userIdentities: UserIdentityCreatedStatus
@@ -65,27 +66,27 @@ export const UserIdentitySelect = ({
             fullWidth
           >
             {!hasIdentity ? (
-              <MenuItem value='no identity'>
+              <SelectItem value='no identity'>
                 <Typography classes={{ root: active }}>
                   No Identity Created Yet
                 </Typography>
-              </MenuItem>
+              </SelectItem>
             ) : null}
-            <MenuItem value='individual'>
+            <SelectItem value='individual'>
               <Typography classes={{ root: hasIndividual ? active : root }}>
                 Individual Investor
               </Typography>
-            </MenuItem>
-            <MenuItem value='investors'>
+            </SelectItem>
+            <SelectItem value='investors'>
               <Typography classes={{ root: hasInvestor ? active : root }}>
                 Corporate Investor
               </Typography>
-            </MenuItem>
-            <MenuItem value='issuers'>
+            </SelectItem>
+            <SelectItem value='issuers'>
               <Typography classes={{ root: hasIssuer ? active : root }}>
                 Issuer (Raise Capital)
               </Typography>
-            </MenuItem>
+            </SelectItem>
           </TextFieldSelect>
         </FormControl>
       </Grid>

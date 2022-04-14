@@ -1,9 +1,10 @@
 import React from 'react'
-import { MenuItem, SelectProps, TextFieldProps } from '@mui/material'
+import { SelectProps, TextFieldProps } from '@mui/material'
 import { useBanksData } from 'app/pages/accounts/pages/banks/hooks/useBanksData'
 import { AuthorizableStatus } from 'types/util'
 import { ValidCurrency } from 'helpers/types'
 import { TextFieldSelect } from 'components/form/TextFieldSelect'
+import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 
 interface BankSelectProps extends Partial<SelectProps> {
   currency?: ValidCurrency
@@ -24,13 +25,13 @@ export const BankSelect = (props: BankSelectProps) => {
 
   return (
     <TextFieldSelect {...(rest as TextFieldProps)}>
-      <MenuItem disabled value={undefined}>
+      <SelectItem disabled value={undefined}>
         {filteredBanks.length > 0 ? 'Bank' : 'No available banks'}
-      </MenuItem>
+      </SelectItem>
       {filteredBanks.map(({ _id, bankName, bankAccountNumber }) => (
-        <MenuItem key={_id} value={_id}>
+        <SelectItem key={_id} value={_id}>
           {bankName} – {bankAccountNumber}
-        </MenuItem>
+        </SelectItem>
       ))}
     </TextFieldSelect>
   )

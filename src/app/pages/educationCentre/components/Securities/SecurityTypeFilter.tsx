@@ -1,7 +1,8 @@
-import { FormControl, MenuItem } from '@mui/material'
+import { FormControl } from '@mui/material'
 import { TextFieldSelect } from 'components/form/TextFieldSelect'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
 import React from 'react'
+import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 
 export const assetClasses = [
   'Equity',
@@ -23,11 +24,11 @@ export const SecurityTypeFilter = () => {
             }}
             value={value}
           >
-            <MenuItem value=''>All Types</MenuItem>
+            <SelectItem value=''>All Types</SelectItem>
             {assetClasses.map(assetClass => (
-              <MenuItem key={assetClass} value={assetClass}>
+              <SelectItem key={assetClass} value={assetClass}>
                 {assetClass}
-              </MenuItem>
+              </SelectItem>
             ))}
           </TextFieldSelect>
         </FormControl>

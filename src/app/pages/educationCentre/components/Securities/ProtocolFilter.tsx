@@ -1,7 +1,8 @@
-import { FormControl, MenuItem } from '@mui/material'
+import { FormControl } from '@mui/material'
 import { TextFieldSelect } from 'components/form/TextFieldSelect'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
 import React from 'react'
+import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 
 export const protocols = [
   'ERC-20',
@@ -26,11 +27,11 @@ export const ProtocolFilter = () => {
             }}
             value={value}
           >
-            <MenuItem value=''>All Protocols</MenuItem>
+            <SelectItem value=''>All Protocols</SelectItem>
             {protocols.map(protocol => (
-              <MenuItem key={protocol} value={protocol}>
+              <SelectItem key={protocol} value={protocol}>
                 {protocol}
-              </MenuItem>
+              </SelectItem>
             ))}
           </TextFieldSelect>
         </FormControl>

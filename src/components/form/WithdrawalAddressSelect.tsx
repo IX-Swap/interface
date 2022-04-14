@@ -1,9 +1,11 @@
 import React from 'react'
-import { MenuItem, Select, SelectProps } from '@mui/material'
+import { SelectProps } from '@mui/material'
 import { queryStatusRenderer } from 'components/form/renderUtils'
 import { privateClassNames } from 'helpers/classnames'
 import { WithdrawalAddress } from 'types/withdrawalAddress'
 import { QueryStatus } from 'react-query'
+import { Select } from 'ui/Select/Select'
+import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 
 export interface WithdrawalAddressSelectProps extends SelectProps {
   list: WithdrawalAddress[]
@@ -21,9 +23,9 @@ export const WithdrawalAddressSelect: React.FC<
   return (
     <Select {...rest}>
       {list.map(({ label, _id }) => (
-        <MenuItem key={_id} value={_id} className={privateClassNames()}>
+        <SelectItem key={_id} value={_id} className={privateClassNames()}>
           {label}
-        </MenuItem>
+        </SelectItem>
       ))}
     </Select>
   )

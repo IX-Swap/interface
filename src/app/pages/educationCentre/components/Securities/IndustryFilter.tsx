@@ -1,7 +1,8 @@
-import { FormControl, MenuItem } from '@mui/material'
+import { FormControl } from '@mui/material'
 import { TextFieldSelect } from 'components/form/TextFieldSelect'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
 import React from 'react'
+import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 
 export const industries = [
   'Diverse Industries',
@@ -23,11 +24,11 @@ export const IndustryFilter = () => {
             }}
             value={value}
           >
-            <MenuItem value=''>All Industries</MenuItem>
+            <SelectItem value=''>All Industries</SelectItem>
             {industries.map(industry => (
-              <MenuItem key={industry} value={industry}>
+              <SelectItem key={industry} value={industry}>
                 {industry}
-              </MenuItem>
+              </SelectItem>
             ))}
           </TextFieldSelect>
         </FormControl>

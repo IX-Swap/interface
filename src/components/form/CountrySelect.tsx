@@ -1,7 +1,9 @@
 import React from 'react'
-import { MenuItem, Select, SelectProps } from '@mui/material'
-import { renderMenuItems } from 'helpers/rendering'
+import { SelectProps } from '@mui/material'
+import { renderSelectItems } from 'helpers/rendering'
 import { COUNTRIES_OPTS } from 'app/pages/identity/const'
+import { Select } from 'ui/Select/Select'
+import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 
 export interface CountrySelectProps extends SelectProps {
   filter?: string[]
@@ -18,10 +20,10 @@ export const CountrySelect = (props: CountrySelectProps): JSX.Element => {
 
   return (
     <Select {...props}>
-      <MenuItem disabled value={undefined}>
+      <SelectItem disabled value={undefined}>
         Country
-      </MenuItem>
-      {renderMenuItems(filteredCountries())}
+      </SelectItem>
+      {renderSelectItems(filteredCountries())}
     </Select>
   )
 }

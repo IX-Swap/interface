@@ -1,5 +1,6 @@
 import React from 'react'
-import { MenuItem, Select } from '@mui/material'
+import { Select } from 'ui/Select/Select'
+import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 
 export const LEGAL_ENTITY_STATUS_LIST = [
   { name: 'Public Company', value: 'publicCompany' },
@@ -39,14 +40,14 @@ export const LEGAL_ENTITY_STATUS_LIST = [
 export const LegalEntityStatusSelect = (props: any) => {
   return (
     <Select {...props} style={{ minWidth: 100 }} label={props.label}>
-      <MenuItem disabled value={undefined}>
+      <SelectItem disabled value={undefined}>
         Legal Entity
-      </MenuItem>
+      </SelectItem>
       {LEGAL_ENTITY_STATUS_LIST.map(({ value, name }) => {
         return (
-          <MenuItem value={value} key={value}>
+          <SelectItem value={value} key={value}>
             {name}
-          </MenuItem>
+          </SelectItem>
         )
       })}
     </Select>

@@ -3,7 +3,6 @@ import {
   InputLabel,
   ListItemIcon,
   ListItemText,
-  MenuItem,
   TextField
 } from '@mui/material'
 import { useVCCDSO } from 'app/pages/issuance/hooks/useVCCDSO'
@@ -12,6 +11,7 @@ import { hasValue } from 'helpers/forms'
 import { useQueryFilter } from 'hooks/filters/useQueryFilter'
 import React, { useEffect } from 'react'
 import { UICheckbox } from 'components/UICheckbox/UICheckbox'
+import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 
 export const SubFundSelect = () => {
   const { data, isLoading } = useVCCDSO()
@@ -99,7 +99,7 @@ export const SubFundSelect = () => {
               disabled={isLoading}
             >
               {options?.length > 0 ? (
-                <MenuItem value='all'>
+                <SelectItem value='all'>
                   <ListItemIcon>
                     <UICheckbox
                       checked={isAllSelected}
@@ -109,19 +109,19 @@ export const SubFundSelect = () => {
                     />
                   </ListItemIcon>
                   <ListItemText primary='Select All' />
-                </MenuItem>
+                </SelectItem>
               ) : (
-                <MenuItem value='none' disabled>
+                <SelectItem value='none' disabled>
                   <ListItemText primary='No Subfunds found' />
-                </MenuItem>
+                </SelectItem>
               )}
               {options?.map((option: any) => (
-                <MenuItem key={option.id} value={option.id}>
+                <SelectItem key={option.id} value={option.id}>
                   <ListItemIcon>
                     <UICheckbox checked={selected.includes(option.id)} />
                   </ListItemIcon>
                   <ListItemText primary={option.name} />
-                </MenuItem>
+                </SelectItem>
               ))}
             </TextField>
           </FormControl>

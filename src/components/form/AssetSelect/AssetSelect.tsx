@@ -1,8 +1,10 @@
 import React from 'react'
 import { AssetType } from 'types/asset'
 import { useAssetsData } from 'hooks/asset/useAssetsData'
-import { MenuItem, Select, SelectProps } from '@mui/material'
+import { SelectProps } from '@mui/material'
 import { queryStatusRenderer } from 'components/form/renderUtils'
+import { Select } from 'ui/Select/Select'
+import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 
 export interface AssetSelectProps {
   assetType?: AssetType
@@ -19,13 +21,13 @@ export const AssetSelect = (
 
   return (
     <Select {...rest} style={{ minWidth: 80 }} label={label}>
-      <MenuItem disabled value={undefined}>
+      <SelectItem disabled value={undefined}>
         {assetType}
-      </MenuItem>
+      </SelectItem>
       {data.list.map(({ _id, numberFormat }) => (
-        <MenuItem key={_id} value={_id}>
+        <SelectItem key={_id} value={_id}>
           {numberFormat.currency}
-        </MenuItem>
+        </SelectItem>
       ))}
     </Select>
   )

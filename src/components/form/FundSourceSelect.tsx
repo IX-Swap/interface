@@ -1,16 +1,16 @@
 import React from 'react'
-import { MenuItem } from '@mui/material'
-import { renderMenuItems } from 'helpers/rendering'
+import { renderSelectItems } from 'helpers/rendering'
 import { FUNDSOURCES_OPTS } from 'app/pages/identity/const'
 import { TextFieldSelect } from 'components/form/TextFieldSelect'
+import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 
 export const FundSourceSelect = (props: any): JSX.Element => {
   return (
     <TextFieldSelect {...props}>
-      <MenuItem disabled value={undefined}>
+      <SelectItem disabled value={undefined}>
         Source of funds
-      </MenuItem>
-      {renderMenuItems(FUNDSOURCES_OPTS)}
+      </SelectItem>
+      {renderSelectItems(FUNDSOURCES_OPTS)}
     </TextFieldSelect>
   )
 }

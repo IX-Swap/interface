@@ -1,8 +1,10 @@
 import React from 'react'
-import { MenuItem, Select, SelectProps } from '@mui/material'
-import { renderMenuItems } from 'helpers/rendering'
+import { SelectProps } from '@mui/material'
+import { renderSelectItems } from 'helpers/rendering'
 import { TypedSelectProps } from 'types/util'
 import { capitalStructures } from 'config/defaults'
+import { Select } from 'ui/Select/Select'
+import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
 
 export interface CapitalStructureSelectProps extends TypedSelectProps {
   includeAll?: boolean
@@ -15,11 +17,11 @@ export const CapitalStructureSelect = (props: CapitalStructureSelectProps) => {
   return (
     <Select {...(rest as SelectProps)} label={label}>
       {includeAll && (
-        <MenuItem value='All'>
+        <SelectItem value='All'>
           {labelBetweenAll !== undefined ? labelBetweenAll : 'All'}
-        </MenuItem>
+        </SelectItem>
       )}
-      {renderMenuItems(
+      {renderSelectItems(
         capitalStructures.map(option => ({ label: option, value: option }))
       )}
     </Select>
