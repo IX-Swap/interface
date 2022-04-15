@@ -1,4 +1,5 @@
 import { Trans } from '@lingui/macro'
+import { LoadingIndicator } from 'components/LoadingIndicator'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
 import { RowBetween } from 'components/Row'
 import React, { useCallback, useEffect, useState } from 'react'
@@ -30,7 +31,7 @@ export const WithdrawPopup = ({ currency, token }: Props) => {
   const { secTokens } = useUserSecTokens()
   const toggle = useWithdrawModalToggle()
   const [modalView, setModalView] = useState<WithdrawModalView>(WithdrawModalView.WITHDRAW_REQUEST)
-  const { loadingWithdraw } = useWithdrawState()
+  const { loadingWithdraw, loading } = useWithdrawState()
   const tokenInfo = (secTokens[(currency as any)?.address || ''] as any)?.tokenInfo
   const onClose = useCallback(() => {
     setModalView(WithdrawModalView.WITHDRAW_REQUEST)
@@ -60,7 +61,8 @@ export const WithdrawPopup = ({ currency, token }: Props) => {
         </HideSmall>
       }
     >
-      <ModalBlurWrapper>
+      <ModalBlurWrapper style={{ position: 'relative' }}>
+        <LoadingIndicator isLoading={loading} isRelative />
         <ModalContentWrapper>
           <ModalPadding>
             <RowBetween>

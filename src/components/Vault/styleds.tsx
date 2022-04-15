@@ -114,6 +114,13 @@ export const StyledTitle = styled(TYPE.title4)`
 export const DateBox = styled.div`
   width: 123px;
 `
+
+export const WaitingWitdrawalFee = styled.div`
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+`
+
 /* eslint-disable react/display-name */
 export const StatusIcons = {
   [ActionHistoryStatus.PENDING]: () => <LoaderThin size={20} />,
@@ -125,6 +132,11 @@ export const StatusIcons = {
   [ActionHistoryStatus.CANCELLED]: () => <Attention />,
   [ActionHistoryStatus.PROCESSING]: () => <LoaderThin size={20} />,
   [ActionHistoryStatus.NON_TRADABLE]: () => <NonTradable />,
+  [ActionHistoryStatus.DRAFT]: () => <LoaderThin size={20} />,
+  [ActionHistoryStatus.FEE_ACCEPTED]: () => <LoaderThin size={20} />,
+  [ActionHistoryStatus.WHITELISTED]: () => <LoaderThin size={20} />,
+  [ActionHistoryStatus.ON_WHITELIST]: () => <LoaderThin size={20} />,
+  [ActionHistoryStatus.BURNED]: () => <LoaderThin size={20} />,
 }
 
 export const getStatusIcon = (action = ActionTypes.DEPOSIT, status: ActionHistoryStatus) => {

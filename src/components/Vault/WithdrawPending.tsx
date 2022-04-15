@@ -34,7 +34,7 @@ export const WithdrawPending = () => {
         </Row>
 
         <RowBetween style={{ marginTop: '4px', flexWrap: 'wrap' }} onClick={() => setCopied(receiver)}>
-          <TYPE.title9>{shortenAddress(receiver)}</TYPE.title9>
+          <TYPE.title9>{receiver ? shortenAddress(receiver) : ''}</TYPE.title9>
           {isCopied ? (
             <Trans>Copied</Trans>
           ) : (
