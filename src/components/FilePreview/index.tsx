@@ -5,8 +5,6 @@ import { TYPE } from 'theme'
 import { KYCStatusIcons } from 'pages/KYC/styleds'
 import { KYCStatuses } from 'components/Vault/enum'
 import { ButtonText } from 'components/Button'
-import Column from 'components/Column'
-import { ErrorMessage } from 'pages/KYC/common'
 
 import { ReactComponent as PdfImage } from 'assets/images/pdf.svg'
 import { Wrapper } from './styleds'

@@ -3472,13 +3472,6 @@
   dependencies:
     "@types/lodash" "*"
 
-"@types/lodash.uniqueid@^4.0.6":
-  "integrity" "sha512-WXXsDm7Q1SiAeCG9ubCiDxOuLEDi5x+Crx8SgwTFgBtofATwK1jAeSbGz2bHlfqWezi7mcjynenlBFCeDLhHlw=="
-  "resolved" "https://registry.npmjs.org/@types/lodash.uniqueid/-/lodash.uniqueid-4.0.6.tgz"
-  "version" "4.0.6"
-  dependencies:
-    "@types/lodash" "*"
-
 "@types/lodash@*", "@types/lodash@^4.14.175", "@types/lodash@^4.14.53":
   "integrity" "sha512-n3tyKthHJbkiWhDZs3DkhkCzt2MexYHXlX0td5iMplyfwketaOeKboEVBqzceH7juqvEg3q5oUoBFxSLu7zFag=="
   "resolved" "https://registry.npmjs.org/@types/lodash/-/lodash-4.14.181.tgz"
@@ -12220,11 +12213,6 @@
   "integrity" "sha1-0CJTc662Uq3BvILklFM5qEJ1R3M="
   "resolved" "https://registry.npmjs.org/lodash.uniq/-/lodash.uniq-4.5.0.tgz"
   "version" "4.5.0"
-
-"lodash.uniqueid@^4.0.1":
-  "integrity" "sha1-MmjyanyI5PSxdY1nknGBTjH6WyY="
-  "resolved" "https://registry.npmjs.org/lodash.uniqueid/-/lodash.uniqueid-4.0.1.tgz"
-  "version" "4.0.1"
 
 "lodash@^4.17.11", "lodash@^4.17.14", "lodash@^4.17.15", "lodash@^4.17.19", "lodash@^4.17.20", "lodash@^4.17.21", "lodash@^4.17.5", "lodash@^4.7.0", "lodash@>=3.5 <5":
   "integrity" "sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg=="
