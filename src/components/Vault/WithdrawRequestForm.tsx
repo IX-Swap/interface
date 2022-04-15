@@ -17,6 +17,7 @@ import {
   useGetWithdrawStatus,
   useGetFeePrice,
   useCreateDraftWitdraw,
+  usePayFee,
 } from 'state/withdraw/hooks'
 import { TYPE } from 'theme'
 import { SecCurrency } from 'types/secToken'
@@ -41,6 +42,7 @@ export const WithdrawRequestForm = ({ currency, changeModal, token }: Props) => 
   const getWithdrawStatus = useGetWithdrawStatus()
   const createDraftWithdraw = useCreateDraftWitdraw()
   const getFeePrice = useGetFeePrice()
+  const payFee = usePayFee()
   const { amount, receiver, currencyId: cid, withdrawStatus, feePrice, loadingFee } = useWithdrawState()
   const { account } = useActiveWeb3React()
   const { secTokens } = useUserSecTokens()
@@ -70,12 +72,22 @@ export const WithdrawRequestForm = ({ currency, changeModal, token }: Props) => 
   }, [networkName, onSetNetWorkName])
 
   const onClick = () => {
-    if (withdrawStatus.status !== ActionHistoryStatus.FEE_ACCEPTED && account && tokenInfo) {
-      createDraftWithdraw({
+    if (withdrawStatus && withdrawStatus.status !== ActionHistoryStatus.FEE_ACCEPTED && account && tokenInfo) {
+      if (withdrawStatus.status !== ActionHistoryStatus.DRAFT && account && tokenInfo) {
+        createDraftWithdraw({
+          tokenId: tokenInfo.id,
+          fromAddress: account,
+          feeContractAddress: tokenInfo.withdrawFeeAddress,
+          amount,
+        })
+
+        return
+      }
+      payFee({
         tokenId: tokenInfo.id,
-        fromAddress: account,
         feeContractAddress: tokenInfo.withdrawFeeAddress,
-        amount,
+        feeAmount: withdrawStatus.feeAmount || feePrice,
+        id: withdrawStatus.id,
       })
 
       return
