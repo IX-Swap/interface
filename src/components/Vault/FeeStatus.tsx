@@ -13,7 +13,7 @@ interface Props {
 }
 
 export const FeeStatus = ({ status, feePrice, estimatedPrice }: Props) => {
-  const paid = status === ActionHistoryStatus.FEE_ACCEPTED
+  const paid = status && status !== ActionHistoryStatus.DRAFT
 
   const feeText = useMemo(() => {
     if (paid || feePrice) {
