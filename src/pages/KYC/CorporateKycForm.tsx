@@ -113,6 +113,10 @@ export default function CorporateKycForm() {
     const beneficiar = owners[index]
     const newData = [...owners]
 
+    if (value && typeof value === 'object' && value?.size > 10 ** 7) {
+      setErrors({ ...errors, [specificErrorField]: 'Max size of 10mb' })
+    }
+
     if (beneficiar[fieldName]?.id) {
       setFieldValue('removedDocuments', [beneficiar[fieldName].id])
     }
