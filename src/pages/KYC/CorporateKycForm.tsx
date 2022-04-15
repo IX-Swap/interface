@@ -5,7 +5,6 @@ import { useHistory } from 'react-router-dom'
 import { Formik } from 'formik'
 import { isMobile } from 'react-device-detect'
 import { useCookies } from 'react-cookie'
-import generateUniqueId from 'lodash.uniqueid'
 
 import usePrevious from 'hooks/usePrevious'
 import Column from 'components/Column'
@@ -26,7 +25,7 @@ import { useActiveWeb3React } from 'hooks/web3'
 import { countriesList } from 'constants/countriesList'
 import { MAX_FILE_UPLOAD_SIZE } from 'constants/constants'
 
-import { getFileErrors, Select, TextInput, Uploader } from './common'
+import { Select, TextInput, Uploader } from './common'
 import { KYCProgressBar } from './KYCProgressBar'
 import { corporateSourceOfFunds, legalEntityTypes, corporateFormInitialValues, promptValue } from './mock'
 import { FormCard, FormGrid, ExtraInfoCard, Divider, StyledStickyBox } from './styleds'
@@ -194,16 +193,15 @@ export default function CorporateKycForm() {
   }
 
   const handleDropImage = (acceptedFile: any, values: any, key: string, setFieldValue: any) => {
-    const fileUniqueID = generateUniqueId()
     const file = acceptedFile
-    const arrayOfFiles = [...values[key]]
-    arrayOfFiles.push(Object.assign(file, { uniqueId: fileUniqueID }))
 
     if (file?.size > MAX_FILE_UPLOAD_SIZE) {
-      const errorKey = `${key}[${fileUniqueID}]`
-      setErrors({ ...errors, [errorKey]: { key: errorKey, value: 'Max size of 10mb' } })
+      setErrors({ ...errors, [key]: 'Max size of 10mb' })
+      return
     }
 
+    const arrayOfFiles = [...values[key]]
+    arrayOfFiles.push(file)
     setFieldValue(key, arrayOfFiles, false)
     validationSeen(key)
   }
@@ -450,12 +448,10 @@ export default function CorporateKycForm() {
                               title="Authorization Document"
                               subtitle="Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Proin eget tortor risus."
                               files={values.authorizationDocuments}
-                              fileErrors={getFileErrors(errors, 'authorizationDocuments')}
                               error={errors.authorizationDocuments && errors.authorizationDocuments}
                               onDrop={(file) => {
                                 handleDropImage(file, values, 'authorizationDocuments', setFieldValue)
                               }}
-                              validationSeen={validationSeen}
                               handleDeleteClick={handleImageDelete(
                                 values,
                                 'authorizationDocuments',
@@ -856,9 +852,7 @@ export default function CorporateKycForm() {
                             title="Corporate documents"
                             subtitle="Company Registry Profile, Certificate of Incorporation, Memorandum and article association, Corporate registry profile, Company Organization Chart, Register of shareholders and directors and Partnership Deed, Trust Deed."
                             files={values.corporateDocuments}
-                            fileErrors={getFileErrors(errors, 'corporateDocuments')}
                             error={errors.corporateDocuments && errors.corporateDocuments}
-                            validationSeen={validationSeen}
                             onDrop={(file) => {
                               handleDropImage(file, values, 'corporateDocuments', setFieldValue)
                             }}
@@ -874,12 +868,10 @@ export default function CorporateKycForm() {
                             title="Financial Documents"
                             subtitle="Please upload your balance sheet , P&L statement or Annual Returns"
                             files={values.financialDocuments}
-                            fileErrors={getFileErrors(errors, 'financialDocuments')}
                             error={errors.financialDocuments && errors.financialDocuments}
                             onDrop={(file) => {
                               handleDropImage(file, values, 'financialDocuments', setFieldValue)
                             }}
-                            validationSeen={validationSeen}
                             handleDeleteClick={handleImageDelete(
                               values,
                               'financialDocuments',

@@ -6,7 +6,6 @@ import { useHistory } from 'react-router-dom'
 import moment from 'moment'
 import { isMobile } from 'react-device-detect'
 import { useCookies } from 'react-cookie'
-import generateUniqueId from 'lodash.uniqueid'
 
 import usePrevious from 'hooks/usePrevious'
 import Column from 'components/Column'
@@ -15,7 +14,7 @@ import { ButtonText } from 'components/Button'
 import { TYPE } from 'theme'
 import { GradientText, StyledBodyWrapper } from 'pages/CustodianV2/styleds'
 import Row, { RowBetween } from 'components/Row'
-import { getFileErrors, Select, TextInput, Uploader } from './common'
+import { Select, TextInput, Uploader } from './common'
 import { PhoneInput } from 'components/PhoneInput'
 import { DateInput } from 'components/DateInput'
 import { Checkbox } from 'components/Checkbox'
@@ -29,8 +28,15 @@ import { LoadingIndicator } from 'components/LoadingIndicator'
 import { countriesList } from 'constants/countriesList'
 import { useAddPopup } from 'state/application/hooks'
 
-
-import { empleymentStatuses, individualFormInitialValues, genders, incomes, sourceOfFunds, promptValue, occupationList } from './mock'
+import {
+  empleymentStatuses,
+  individualFormInitialValues,
+  genders,
+  incomes,
+  sourceOfFunds,
+  promptValue,
+  occupationList,
+} from './mock'
 import { FormCard, FormGrid, ExtraInfoCard, FormWrapper, StyledStickyBox } from './styleds'
 import { individualErrorsSchema } from './schema'
 import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
@@ -164,16 +170,15 @@ export default function IndividualKycForm() {
   }
 
   const handleDropImage = (acceptedFile: any, values: any, key: string, setFieldValue: any) => {
-    const fileUniqueID = generateUniqueId()
     const file = acceptedFile
-    const arrayOfFiles = [...values[key]]
-    arrayOfFiles.push(Object.assign(file, { uniqueId: fileUniqueID }))
 
     if (file?.size > MAX_FILE_UPLOAD_SIZE) {
-      const errorKey = `${key}[${fileUniqueID}]`
-      setErrors({ ...errors, [errorKey]: { key: errorKey, value: 'Max size of 10mb' } })
+      setErrors({ ...errors, [key]: 'Max size of 10mb' })
+      return
     }
 
+    const arrayOfFiles = [...values[key]]
+    arrayOfFiles.push(file)
     setFieldValue(key, arrayOfFiles, false)
     validationSeen(key)
   }
@@ -593,8 +598,6 @@ export default function IndividualKycForm() {
                             error={errors.proofOfIdentity && errors.proofOfIdentity}
                             title="Proof of Identity"
                             files={values.proofOfIdentity}
-                            fileErrors={getFileErrors(errors, 'proofOfIdentity')}
-                            validationSeen={validationSeen}
                             onDrop={(file) => {
                               handleDropImage(file, values, 'proofOfIdentity', setFieldValue)
                             }}
@@ -611,8 +614,6 @@ export default function IndividualKycForm() {
                             error={errors.proofOfAddress && errors.proofOfAddress}
                             title="Proof of Address"
                             files={values.proofOfAddress}
-                            fileErrors={getFileErrors(errors, 'proofOfAddress')}
-                            validationSeen={validationSeen}
                             onDrop={(file) => {
                               handleDropImage(file, values, 'proofOfAddress', setFieldValue)
                             }}

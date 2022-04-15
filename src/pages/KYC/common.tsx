@@ -19,21 +19,14 @@ import { ReactComponent as CrossIcon } from 'assets/images/cross.svg'
 import { UploaderCard, FormGrid, BeneficialOwnersTableContainer } from './styleds'
 import { AcceptFiles } from 'components/Upload/types'
 
-export interface FileError {
-  key: string
-  value: string
-}
-
 export interface UploaderProps {
   files: FileWithPath[]
   title: string
   subtitle?: string | JSX.Element
   optional?: boolean
   error?: any | ReactChildren
-  fileErrors: FileError[]
   handleDeleteClick: (index: number) => void
   onDrop: (file: any) => void
-  validationSeen: (key: string) => void
 }
 
 interface SelectProps {
@@ -113,9 +106,7 @@ export const Uploader: FC<UploaderProps> = ({
   subtitle,
   files,
   error,
-  fileErrors,
   optional = false,
-  validationSeen,
   onDrop,
   handleDeleteClick,
 }: UploaderProps) => {
@@ -135,24 +126,17 @@ export const Uploader: FC<UploaderProps> = ({
       {subtitle && <StyledDescription marginBottom="10px">{subtitle}</StyledDescription>}
       {files.length > 0 && (
         <Flex flexWrap="wrap">
-          {files.map((file: any, index) => {
-            const error = fileErrors.find(({ key }) => key.includes(`[${file.uniqueId}]`))
-            return (
-              <FilePreview
-                key={`file-${index}-${file.name}`}
-                file={file?.asset ? file.asset : file}
-                error={error?.value || null}
-                index={1}
-                handleDeleteClick={() => {
-                  handleDeleteClick(index)
-                  if (error) {
-                    validationSeen(error.key)
-                  }
-                }}
-                style={{ marginRight: index !== files.length - 1 ? 16 : 0 }}
-              />
-            )
-          })}
+          {files.map((file: any, index) => (
+            <FilePreview
+              key={`file-${index}-${file.name}`}
+              file={file?.asset ? file.asset : file}
+              index={1}
+              handleDeleteClick={() => {
+                handleDeleteClick(index)
+              }}
+              style={{ marginRight: index !== files.length - 1 ? 16 : 0 }}
+            />
+          ))}
         </Flex>
       )}
       <Upload accept={`${AcceptFiles.IMAGE},${AcceptFiles.DOCUMENTS}` as AcceptFiles} file={null} onDrop={onDrop}>
@@ -265,12 +249,6 @@ export const ErrorMessage: FC<ErrorMessageProps> = ({ error }) => {
       {error}
     </TYPE.small>
   ) : null
-}
-
-export const getFileErrors = (errors: any, filesKey: string) => {
-  return Object.entries<FileError>(errors)
-    .filter((error) => error[0].includes(`${filesKey}[`))
-    .map((error) => ({ ...error[1] }))
 }
 
 const StyledDescription = styled(TYPE.description3)`
