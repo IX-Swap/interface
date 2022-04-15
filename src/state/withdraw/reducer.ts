@@ -35,6 +35,7 @@ export interface WithdrawStatus {
   createdAt: Date
   updatedAt: Date
   deletedAt: Date
+  id: number
 }
 
 export interface WithdrawState {

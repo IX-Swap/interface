@@ -30,6 +30,7 @@ import {
   payFee,
 } from './actions'
 import walletValidator from 'multicoin-address-validator'
+import { useAddPopup } from 'state/application/hooks'
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const Web3 = require('web3') // for some reason import Web3 from web3 didn't see eth module
@@ -255,10 +256,9 @@ export const postCreateDraftWithdrawReq = async (data: Draft) => {
 
 export const useCreateDraftWitdraw = () => {
   const dispatch = useDispatch<AppDispatch>()
-  const { library, account } = useActiveWeb3React()
-  const web3 = new Web3(library?.provider)
-  const paidFee = usePaidWithdrawFee()
   const getEvents = useGetEventCallback()
+  const payfee = usePayFee()
+  const addPopup = useAddPopup()
 
   return useCallback(
     async (data: Draft) => {
@@ -270,26 +270,53 @@ export const useCreateDraftWitdraw = () => {
         dispatch(postCreateDraftWithdraw.fulfilled(response))
 
         getEvents({ tokenId: data.tokenId, filter: 'all' })
+        payfee({
+          feeContractAddress: data.feeContractAddress,
+          feeAmount: response.feeAmount,
+          tokenId: data.tokenId,
+          id: response.id,
+        })
+      } catch (error: any) {
+        addPopup({
+          info: {
+            success: false,
+            summary: error.message || 'Faild to create withdrawal request',
+          },
+        })
+        dispatch(postCreateDraftWithdraw.rejected({ errorMessage: error.message }))
+      }
+    },
+    [dispatch, payfee, getEvents]
+  )
+}
 
+export const usePayFee = () => {
+  const dispatch = useDispatch<AppDispatch>()
+  const { library, account } = useActiveWeb3React()
+  const web3 = new Web3(library?.provider)
+  const paidFee = usePaidWithdrawFee()
+
+  return useCallback(
+    async ({ feeContractAddress, feeAmount, tokenId, id }) => {
+      try {
         dispatch(payFee.pending())
 
         const tx = {
           from: account,
-          to: data.feeContractAddress,
-          value: web3.utils.toWei(`${response.feeAmount}`, 'ether'),
+          to: feeContractAddress,
+          value: web3.utils.toWei(`${feeAmount}`, 'ether'),
         }
-        const txRes = await web3.eth.sendTransaction(tx)
 
+        const txRes = await web3.eth.sendTransaction(tx)
         if (txRes.transactionHash) {
-          await paidFee({ tokenId: data.tokenId, id: response.id, feeTxHash: txRes.transactionHash })
+          await paidFee({ tokenId, id, feeTxHash: txRes.transactionHash })
         }
         dispatch(payFee.fulfilled())
       } catch (error: any) {
         dispatch(payFee.rejected({ errorMessage: error.message }))
-        dispatch(postCreateDraftWithdraw.rejected({ errorMessage: error.message }))
       }
     },
-    [dispatch]
+    [account, dispatch, paidFee]
   )
 }
 
