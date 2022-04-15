@@ -24,6 +24,7 @@ import { ReactComponent as BigPassed } from 'assets/images/check-success-big.svg
 import { getCorporateProgress, useCreateCorporateKYC, useKYCState, useUpdateCorporateKYC } from 'state/kyc/hooks'
 import { useActiveWeb3React } from 'hooks/web3'
 import { countriesList } from 'constants/countriesList'
+import { MAX_FILE_UPLOAD_SIZE } from 'constants/constants'
 
 import { getFileErrors, Select, TextInput, Uploader } from './common'
 import { KYCProgressBar } from './KYCProgressBar'
@@ -113,7 +114,7 @@ export default function CorporateKycForm() {
     const beneficiar = owners[index]
     const newData = [...owners]
 
-    if (value && typeof value === 'object' && value?.size > 10 ** 7) {
+    if (value && typeof value === 'object' && value?.size > MAX_FILE_UPLOAD_SIZE) {
       setErrors({ ...errors, [specificErrorField]: 'Max size of 10mb' })
     }
 
@@ -198,7 +199,7 @@ export default function CorporateKycForm() {
     const arrayOfFiles = [...values[key]]
     arrayOfFiles.push(Object.assign(file, { uniqueId: fileUniqueID }))
 
-    if (file?.size > 10 ** 7) {
+    if (file?.size > MAX_FILE_UPLOAD_SIZE) {
       const errorKey = `${key}[${fileUniqueID}]`
       setErrors({ ...errors, [errorKey]: { key: errorKey, value: 'Max size of 10mb' } })
     }

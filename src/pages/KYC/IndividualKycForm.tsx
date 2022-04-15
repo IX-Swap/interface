@@ -20,6 +20,7 @@ import { PhoneInput } from 'components/PhoneInput'
 import { DateInput } from 'components/DateInput'
 import { Checkbox } from 'components/Checkbox'
 import { getIndividualProgress, useCreateIndividualKYC, useKYCState, useUpdateIndividualKYC } from 'state/kyc/hooks'
+import { MAX_FILE_UPLOAD_SIZE } from 'constants/constants'
 
 import { useActiveWeb3React } from 'hooks/web3'
 import { useAuthState } from 'state/auth/hooks'
@@ -168,7 +169,7 @@ export default function IndividualKycForm() {
     const arrayOfFiles = [...values[key]]
     arrayOfFiles.push(Object.assign(file, { uniqueId: fileUniqueID }))
 
-    if (file?.size > 10 ** 7) {
+    if (file?.size > MAX_FILE_UPLOAD_SIZE) {
       const errorKey = `${key}[${fileUniqueID}]`
       setErrors({ ...errors, [errorKey]: { key: errorKey, value: 'Max size of 10mb' } })
     }

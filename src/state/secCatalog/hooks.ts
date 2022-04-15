@@ -5,10 +5,10 @@ import apiService from 'services/apiService'
 import { secCatalog } from 'services/apiUrls'
 import { AppDispatch, AppState } from 'state'
 import { BROKER_DEALERS_STATUS } from 'state/brokerDealer/hooks'
-import { validateSecTokenFields } from 'components/AdminSecurityCatalog/mock'
 import { fetchAddIssuer, fetchEditIssuer, fetchIssuers, fetchIssuersTokens } from './actions'
 import { Issuer } from './reducer'
 import { isValidAddress } from 'utils'
+import { MAX_FILE_UPLOAD_SIZE } from 'constants/constants'
 
 export function useSecCatalogState() {
   return useSelector<AppState, AppState['secCatalog']>((state) => state.secCatalog)
@@ -248,7 +248,7 @@ const urlValidator = (url: string) => {
 }
 
 const logoValidator = (logo: any) => {
-  if (logo?.size > 10 ** 7) return { logo: 'Max size of 10Mb' }
+  if (logo?.size > MAX_FILE_UPLOAD_SIZE) return { logo: 'Max size of 10Mb' }
   else return null
 }
 
