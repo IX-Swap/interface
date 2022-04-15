@@ -7,10 +7,35 @@ import {
   typeReceiver,
   withdrawCurrency,
   resetWithdraw,
-  getFeeStatus,
+  getWithdrawStatus,
   getFeePrice,
   postPaidFee,
+  postCreateDraftWithdraw,
+  payFee,
 } from './actions'
+
+export interface WithdrawStatus {
+  tokenId: number
+  status: string
+  feePrice: number
+  userId: number
+  type: string
+  fromAddress: string
+  amount: string
+  requestId: string
+  depositAddress: string
+  custodianAccountId: string
+  custodianType: string
+  ethTransactionId: number
+  blockNumber: number
+  feeTxHash: string
+  feeAmount: string
+  feeContractAddress: string
+  feeAccepted: boolean
+  createdAt: Date
+  updatedAt: Date
+  deletedAt: Date
+}
 
 export interface WithdrawState {
   readonly amount: string
@@ -21,8 +46,9 @@ export interface WithdrawState {
   loading: boolean
   withdrawError: string | null
   tx: string | null
-  feeStatus: string
+  withdrawStatus: WithdrawStatus
   feePrice: number | null
+  loadingFee: boolean
 }
 
 const initialState: WithdrawState = {
@@ -33,9 +59,10 @@ const initialState: WithdrawState = {
   withdrawError: null,
   tx: null,
   networkName: '',
-  feeStatus: '',
+  withdrawStatus: {} as WithdrawStatus,
   feePrice: null,
   loading: false,
+  loadingFee: false,
 }
 
 export default createReducer<WithdrawState>(initialState, (builder) =>
@@ -82,17 +109,17 @@ export default createReducer<WithdrawState>(initialState, (builder) =>
       state.currencyId = initialState.currencyId
       state.receiver = initialState.receiver
     })
-    .addCase(getFeeStatus.pending, (state) => {
+    .addCase(getWithdrawStatus.pending, (state) => {
       state.loading = true
       state.withdrawError = null
       state.tx = null
     })
-    .addCase(getFeeStatus.fulfilled, (state, { payload }) => {
+    .addCase(getWithdrawStatus.fulfilled, (state, { payload }) => {
       state.loading = false
       state.withdrawError = null
-      state.feeStatus = payload
+      state.withdrawStatus = payload
     })
-    .addCase(getFeeStatus.rejected, (state, { payload: { errorMessage } }) => {
+    .addCase(getWithdrawStatus.rejected, (state, { payload: { errorMessage } }) => {
       state.loading = false
       state.withdrawError = errorMessage
     })
@@ -115,12 +142,40 @@ export default createReducer<WithdrawState>(initialState, (builder) =>
       state.withdrawError = null
       state.tx = null
     })
-    .addCase(postPaidFee.fulfilled, (state) => {
+    .addCase(postPaidFee.fulfilled, (state, { payload }) => {
       state.loading = false
       state.withdrawError = null
+      state.withdrawStatus = payload
     })
     .addCase(postPaidFee.rejected, (state, { payload: { errorMessage } }) => {
       state.loading = false
+      state.withdrawError = errorMessage
+    })
+    .addCase(postCreateDraftWithdraw.pending, (state) => {
+      state.loading = true
+      state.withdrawError = null
+      state.tx = null
+    })
+    .addCase(postCreateDraftWithdraw.fulfilled, (state, { payload }) => {
+      state.loading = false
+      state.withdrawError = null
+      state.withdrawStatus = payload
+    })
+    .addCase(postCreateDraftWithdraw.rejected, (state, { payload: { errorMessage } }) => {
+      state.loading = false
+      state.withdrawError = errorMessage
+    })
+    .addCase(payFee.pending, (state) => {
+      state.loadingFee = true
+      state.withdrawError = null
+      state.tx = null
+    })
+    .addCase(payFee.fulfilled, (state) => {
+      state.loadingFee = false
+      state.withdrawError = null
+    })
+    .addCase(payFee.rejected, (state, { payload: { errorMessage } }) => {
+      state.loadingFee = false
       state.withdrawError = errorMessage
     })
 )

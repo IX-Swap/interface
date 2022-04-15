@@ -77,6 +77,7 @@ export const ButtonPrimary = styled(Base)`
     border: 1px solid transparent;
     outline: none;
     opacity: 0.4;
+    background: linear-gradient(116.36deg, #3a2161 33.43%, #590d4c 95.41%);
     opacity: ${({ altDisabledStyle }) => (altDisabledStyle ? '0.5' : '0.4')};
   }
 `

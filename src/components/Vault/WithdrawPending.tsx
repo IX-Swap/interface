@@ -21,7 +21,7 @@ export const WithdrawPending = () => {
   const { amount, receiver, currencyId: cid } = useWithdrawState()
   const currency = useCurrency(cid)
   const [isCopied, setCopied] = useCopyClipboard()
-  console.log('log => receiver', receiver)
+
   return (
     <div style={{ position: 'relative' }}>
       <Column>

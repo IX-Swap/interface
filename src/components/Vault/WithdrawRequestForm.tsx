@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
 import { t, Trans } from '@lingui/macro'
-import JSBI from 'jsbi'
 
 import { ButtonIXSWide } from 'components/Button'
 import Column from 'components/Column'
@@ -15,18 +14,22 @@ import {
   useWithdrawActionHandlers,
   useWithdrawCallback,
   useWithdrawState,
-  useGetFeeStatus,
+  useGetWithdrawStatus,
   useGetFeePrice,
+  useCreateDraftWitdraw,
 } from 'state/withdraw/hooks'
 import { TYPE } from 'theme'
 import { SecCurrency } from 'types/secToken'
 import { shortAddress } from 'utils'
 import { currencyId } from 'utils/currencyId'
+import { LoaderThin } from 'components/Loader/LoaderThin'
 
 import { AddressInput } from '../AddressInputPanel/AddressInput'
 import { AmountInput } from './AmountInput'
 import { WithdrawModalView } from './WithdrawPopup'
 import { FeeStatus } from './FeeStatus'
+import { ActionHistoryStatus } from './enum'
+import { WaitingWitdrawalFee } from './styleds'
 
 interface Props {
   currency?: SecCurrency
@@ -35,10 +38,11 @@ interface Props {
 }
 export const WithdrawRequestForm = ({ currency, changeModal, token }: Props) => {
   const theme = useTheme()
-  const getFeeStatus = useGetFeeStatus()
+  const getWithdrawStatus = useGetWithdrawStatus()
+  const createDraftWithdraw = useCreateDraftWitdraw()
   const getFeePrice = useGetFeePrice()
-  const { amount, receiver, currencyId: cid, feeStatus, feePrice } = useWithdrawState()
-  const { account, library } = useActiveWeb3React()
+  const { amount, receiver, currencyId: cid, withdrawStatus, feePrice, loadingFee } = useWithdrawState()
+  const { account } = useActiveWeb3React()
   const { secTokens } = useUserSecTokens()
   const { onTypeAmount, onTypeReceiver, onCurrencySet, onSetNetWorkName, onResetWithdraw } = useWithdrawActionHandlers()
   const withdraw = useWithdrawCallback(cid, currency?.symbol)
@@ -54,10 +58,10 @@ export const WithdrawRequestForm = ({ currency, changeModal, token }: Props) => 
 
   useEffect(() => {
     if (tokenInfo.id) {
-      getFeeStatus(tokenInfo.id)
+      getWithdrawStatus(tokenInfo.id)
       getFeePrice(tokenInfo.id)
     }
-  }, [tokenInfo.id, getFeeStatus, getFeePrice])
+  }, [tokenInfo.id, getWithdrawStatus, getFeePrice])
 
   useEffect(() => {
     if (networkName) {
@@ -66,12 +70,12 @@ export const WithdrawRequestForm = ({ currency, changeModal, token }: Props) => 
   }, [networkName, onSetNetWorkName])
 
   const onClick = () => {
-    if (feeStatus !== 'paidFee' && library && account) {
-      library.call({
-        from: account,
-        to: '0xb305c1f2200a17E0502416B1746aB88C9B5C449f',
-        // data: calldata,
-        value: JSBI.BigInt(feePrice || 0) as any,
+    if (withdrawStatus.status !== ActionHistoryStatus.FEE_ACCEPTED && account && tokenInfo) {
+      createDraftWithdraw({
+        tokenId: tokenInfo.id,
+        fromAddress: account,
+        feeContractAddress: tokenInfo.withdrawFeeAddress,
+        amount,
       })
 
       return
@@ -149,10 +153,20 @@ export const WithdrawRequestForm = ({ currency, changeModal, token }: Props) => 
           />
         </Column>
       </Column>
-      <FeeStatus status={feeStatus} feePrice={feePrice} />
+      <FeeStatus status={withdrawStatus.status} feePrice={withdrawStatus.feeAmount} estimatedPrice={feePrice} />
       <Row>
-        <ButtonIXSWide style={{ textTransform: 'unset' }} disabled={!!inputError} onClick={onClick}>
-          {inputError ?? t`${feeStatus !== 'paidFee' ? 'Pay Withdraw FEE' : 'Withdraw'}`}
+        <ButtonIXSWide style={{ textTransform: 'unset' }} disabled={!!inputError || loadingFee} onClick={onClick}>
+          {loadingFee ? (
+            <WaitingWitdrawalFee>
+              <LoaderThin size={20} />
+              {t`Sending Withdrawal Fee`}
+            </WaitingWitdrawalFee>
+          ) : (
+            <>
+              {inputError ??
+                t`${withdrawStatus.status !== ActionHistoryStatus.FEE_ACCEPTED ? 'Pay withdraw fee' : 'Withdraw'}`}
+            </>
+          )}
         </ButtonIXSWide>
       </Row>
     </div>
