@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom'
 import { Formik } from 'formik'
 import { isMobile } from 'react-device-detect'
 import { useCookies } from 'react-cookie'
+import generateUniqueId from 'lodash.uniqueid'
 
 import usePrevious from 'hooks/usePrevious'
 import Column from 'components/Column'
@@ -16,7 +17,7 @@ import { PhoneInput } from 'components/PhoneInput'
 import { Checkbox } from 'components/Checkbox'
 import { Loadable } from 'components/LoaderHover'
 import { useAuthState } from 'state/auth/hooks'
-import { useAddPopup, useShowError } from 'state/application/hooks'
+import { useAddPopup } from 'state/application/hooks'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
 import { ReactComponent as BigPassed } from 'assets/images/check-success-big.svg'
@@ -24,7 +25,7 @@ import { getCorporateProgress, useCreateCorporateKYC, useKYCState, useUpdateCorp
 import { useActiveWeb3React } from 'hooks/web3'
 import { countriesList } from 'constants/countriesList'
 
-import { Select, TextInput, Uploader } from './common'
+import { getFileErrors, Select, TextInput, Uploader } from './common'
 import { KYCProgressBar } from './KYCProgressBar'
 import { corporateSourceOfFunds, legalEntityTypes, corporateFormInitialValues, promptValue } from './mock'
 import { FormCard, FormGrid, ExtraInfoCard, Divider, StyledStickyBox } from './styleds'
@@ -44,7 +45,6 @@ export default function CorporateKycForm() {
   const [errors, setErrors] = useState<any>({})
   const history = useHistory()
   const { kyc, loadingRequest } = useKYCState()
-  const showError = useShowError()
   const addPopup = useAddPopup()
   const createCorporateKYC = useCreateCorporateKYC()
   const updateCorporateKYC = useUpdateCorporateKYC()
@@ -189,16 +189,18 @@ export default function CorporateKycForm() {
   }
 
   const handleDropImage = (acceptedFile: any, values: any, key: string, setFieldValue: any) => {
+    const fileUniqueID = generateUniqueId()
     const file = acceptedFile
-    if (file?.size > 10 ** 7) {
-      showError(t`Max size of 10Mb`)
-    } else {
-      const arrayOfFiles = [...values[key]]
-      arrayOfFiles.push(file)
+    const arrayOfFiles = [...values[key]]
+    arrayOfFiles.push(Object.assign(file, { uniqueId: fileUniqueID }))
 
-      setFieldValue(key, arrayOfFiles, false)
-      validationSeen(key)
+    if (file?.size > 10 ** 7) {
+      const errorKey = `${key}[${fileUniqueID}]`
+      setErrors({ ...errors, [errorKey]: { key: errorKey, value: 'Max size of 10mb' } })
     }
+
+    setFieldValue(key, arrayOfFiles, false)
+    validationSeen(key)
   }
 
   const handleImageDelete =
@@ -291,7 +293,7 @@ export default function CorporateKycForm() {
                 })
             }}
           >
-            {({ values, setFieldValue, dirty, handleSubmit }) => {
+            {({ values, dirty, setFieldValue, handleSubmit }) => {
               const shouldValidate = dirty && isSubmittedOnce
               const infoFilled =
                 shouldValidate &&
@@ -443,10 +445,12 @@ export default function CorporateKycForm() {
                               title="Authorization Document"
                               subtitle="Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Proin eget tortor risus."
                               files={values.authorizationDocuments}
+                              fileErrors={getFileErrors(errors, 'authorizationDocuments')}
+                              error={errors.authorizationDocuments && errors.authorizationDocuments}
                               onDrop={(file) => {
                                 handleDropImage(file, values, 'authorizationDocuments', setFieldValue)
                               }}
-                              error={errors.authorizationDocuments && errors.authorizationDocuments}
+                              validationSeen={validationSeen}
                               handleDeleteClick={handleImageDelete(
                                 values,
                                 'authorizationDocuments',
@@ -847,10 +851,12 @@ export default function CorporateKycForm() {
                             title="Corporate documents"
                             subtitle="Company Registry Profile, Certificate of Incorporation, Memorandum and article association, Corporate registry profile, Company Organization Chart, Register of shareholders and directors and Partnership Deed, Trust Deed."
                             files={values.corporateDocuments}
+                            fileErrors={getFileErrors(errors, 'corporateDocuments')}
+                            error={errors.corporateDocuments && errors.corporateDocuments}
+                            validationSeen={validationSeen}
                             onDrop={(file) => {
                               handleDropImage(file, values, 'corporateDocuments', setFieldValue)
                             }}
-                            error={errors.corporateDocuments && errors.corporateDocuments}
                             handleDeleteClick={handleImageDelete(
                               values,
                               'corporateDocuments',
@@ -863,10 +869,12 @@ export default function CorporateKycForm() {
                             title="Financial Documents"
                             subtitle="Please upload your balance sheet , P&L statement or Annual Returns"
                             files={values.financialDocuments}
+                            fileErrors={getFileErrors(errors, 'financialDocuments')}
+                            error={errors.financialDocuments && errors.financialDocuments}
                             onDrop={(file) => {
                               handleDropImage(file, values, 'financialDocuments', setFieldValue)
                             }}
-                            error={errors.financialDocuments && errors.financialDocuments}
+                            validationSeen={validationSeen}
                             handleDeleteClick={handleImageDelete(
                               values,
                               'financialDocuments',

@@ -19,14 +19,21 @@ import { ReactComponent as CrossIcon } from 'assets/images/cross.svg'
 import { UploaderCard, FormGrid, BeneficialOwnersTableContainer } from './styleds'
 import { AcceptFiles } from 'components/Upload/types'
 
+export interface FileError {
+  key: string
+  value: string
+}
+
 export interface UploaderProps {
   files: FileWithPath[]
-  onDrop: (file: any) => void
   title: string
   subtitle?: string | JSX.Element
   optional?: boolean
   error?: any | ReactChildren
+  fileErrors: FileError[]
   handleDeleteClick: (index: number) => void
+  onDrop: (file: any) => void
+  validationSeen: (key: string) => void
 }
 
 interface SelectProps {
@@ -46,6 +53,10 @@ type TextInputProps = HTMLProps<HTMLInputElement> & {
   error?: any | ReactChildren
 }
 
+interface ErrorMessageProps {
+  error?: string | null
+}
+
 export const Select: FC<SelectProps> = ({ label, onSelect, selectedItem, items, error, name }: SelectProps) => {
   return (
     <Box>
@@ -55,11 +66,7 @@ export const Select: FC<SelectProps> = ({ label, onSelect, selectedItem, items, 
         </TYPE.title11>
       </Label>
       <ReactSelect name={name} onSelect={onSelect} value={selectedItem} options={items} error={error} />
-      {error && (
-        <TYPE.small marginTop="4px" color={'red1'}>
-          {error}
-        </TYPE.small>
-      )}
+      <ErrorMessage error={error} />
     </Box>
   )
 }
@@ -96,11 +103,7 @@ export const TextInput: FC<TextInputProps> = ({
         autoComplete="off"
       />
 
-      {error && (
-        <TYPE.small marginTop="4px" color={'red1'}>
-          {error}
-        </TYPE.small>
-      )}
+      <ErrorMessage error={error} />
     </Box>
   )
 }
@@ -109,9 +112,11 @@ export const Uploader: FC<UploaderProps> = ({
   title,
   subtitle,
   files,
-  onDrop,
   error,
+  fileErrors,
   optional = false,
+  validationSeen,
+  onDrop,
   handleDeleteClick,
 }: UploaderProps) => {
   return (
@@ -130,17 +135,24 @@ export const Uploader: FC<UploaderProps> = ({
       {subtitle && <StyledDescription marginBottom="10px">{subtitle}</StyledDescription>}
       {files.length > 0 && (
         <Flex flexWrap="wrap">
-          {files.map((file: any, index) => (
-            <FilePreview
-              key={`file-${index}-${file.name}`}
-              file={file?.asset ? file.asset : file}
-              index={1}
-              handleDeleteClick={() => {
-                handleDeleteClick(index)
-              }}
-              style={{ marginRight: index !== files.length - 1 ? 16 : 0 }}
-            />
-          ))}
+          {files.map((file: any, index) => {
+            const error = fileErrors.find(({ key }) => key.includes(`[${file.uniqueId}]`))
+            return (
+              <FilePreview
+                key={`file-${index}-${file.name}`}
+                file={file?.asset ? file.asset : file}
+                error={error?.value || null}
+                index={1}
+                handleDeleteClick={() => {
+                  handleDeleteClick(index)
+                  if (error) {
+                    validationSeen(error.key)
+                  }
+                }}
+                style={{ marginRight: index !== files.length - 1 ? 16 : 0 }}
+              />
+            )
+          })}
         </Flex>
       )}
       <Upload accept={`${AcceptFiles.IMAGE},${AcceptFiles.DOCUMENTS}` as AcceptFiles} file={null} onDrop={onDrop}>
@@ -156,11 +168,7 @@ export const Uploader: FC<UploaderProps> = ({
           </Flex>
         </UploaderCard>
       </Upload>
-      {error && (
-        <TYPE.small marginTop="4px" color={'red1'}>
-          {error}
-        </TYPE.small>
-      )}
+      <ErrorMessage error={error} />
     </Box>
   )
 }
@@ -192,11 +200,7 @@ export const ChooseFile = ({ label, file, onDrop, error, handleDeleteClick }: Ch
           </ButtonGradient>
         </Upload>
       )}
-      {error && (
-        <TYPE.small marginTop="4px" color={'red1'}>
-          {error}
-        </TYPE.small>
-      )}
+      <ErrorMessage error={error} />
     </Box>
   )
 }
@@ -253,6 +257,20 @@ export const DeleteRow = ({ children, onClick }: DeleteRowTypes) => {
       <DeleteRowChildren>{children}</DeleteRowChildren>
     </DeleteRowContainer>
   )
+}
+
+export const ErrorMessage: FC<ErrorMessageProps> = ({ error }) => {
+  return error ? (
+    <TYPE.small marginTop="4px" color={'red1'}>
+      {error}
+    </TYPE.small>
+  ) : null
+}
+
+export const getFileErrors = (errors: any, filesKey: string) => {
+  return Object.entries<FileError>(errors)
+    .filter((error) => error[0].includes(`${filesKey}[`))
+    .map((error) => ({ ...error[1] }))
 }
 
 const StyledDescription = styled(TYPE.description3)`
