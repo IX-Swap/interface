@@ -1,5 +1,6 @@
 import React from 'react'
 import useTheme from 'hooks/useTheme'
+import { isIOS, isIPad13, isSafari, isMobileSafari } from 'react-device-detect'
 import { darken } from 'polished'
 import { Check, ChevronDown, Plus } from 'react-feather'
 import { Button as RebassButton, ButtonProps as ButtonPropsOriginal } from 'rebass/styled-components'
@@ -8,6 +9,8 @@ import { RowBetween, RowCenter } from '../Row'
 import { gradientBorder } from 'theme'
 
 type ButtonProps = Omit<ButtonPropsOriginal, 'css'>
+
+const isNotSupportGradient = isIOS || isIPad13 || isSafari || isMobileSafari
 
 const Base = styled(RebassButton)<
   {
@@ -196,7 +199,12 @@ export const ButtonIXSGradient = styled(ButtonPrimary)<{ confirmed?: boolean; di
 export const ButtonGradientBorder = styled(ButtonIXSGradient)`
   background-color: transparent;
   background: transparent;
-  ${gradientBorder};
+
+  ${({ theme }) =>
+  isNotSupportGradient
+      ? `
+  border: 2px solid ${theme.bg20};`
+      : gradientBorder}
   :focus,
   :hover {
     background-color: transparent;
