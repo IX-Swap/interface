@@ -240,7 +240,7 @@ const isEmptyObject = (value: Record<string, any>) => {
 
 const urlValidator = (url: string) => {
   if (
-    url.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g) ===
+    url.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,10}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g) ===
     null
   )
     return { url: 'Must be a valid URL' }
