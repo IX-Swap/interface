@@ -115,6 +115,7 @@ export default function CorporateKycForm() {
 
     if (value && typeof value === 'object' && value?.size > MAX_FILE_UPLOAD_SIZE) {
       setErrors({ ...errors, [specificErrorField]: 'Max size of 10mb' })
+      return
     }
 
     if (beneficiar[fieldName]?.id) {
