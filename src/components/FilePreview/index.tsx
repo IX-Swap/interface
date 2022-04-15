@@ -17,30 +17,25 @@ interface Props {
   handleDeleteClick: () => void
   style?: CSSProperties
   withBackground?: boolean
-  error?: string | null
 }
 
-export const FilePreview: FC<Props> = ({ file, style, handleDeleteClick, error, withBackground = true }: Props) => {
+export const FilePreview: FC<Props> = ({ file, style, handleDeleteClick, withBackground = true }: Props) => {
   const deleteIcon = KYCStatusIcons[KYCStatuses.REJECTED]
 
   return (
-    <Column style={{ marginBottom: 10 }}>
-      <Wrapper withBackground={withBackground} width="fit-content" alignItems="center" style={style}>
-        <PdfImage style={{ minWidth: 32, minHeight: 32 }} />
-        <TYPE.subHeader
-          style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
-          lineHeight="40px"
-          marginLeft="12px"
-          marginRight="18px"
-        >
-          {file.name}
-        </TYPE.subHeader>
-        <ButtonText style={{ minWidth: 24, minHeight: 24 }} onClick={handleDeleteClick} type="button">
-          {deleteIcon()}
-        </ButtonText>
-      </Wrapper>
-
-      <ErrorMessage error={error} />
-    </Column>
+    <Wrapper withBackground={withBackground} marginBottom="10px" width="fit-content" alignItems="center" style={style}>
+      <PdfImage style={{ minWidth: 32, minHeight: 32 }} />
+      <TYPE.subHeader
+        style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}
+        lineHeight="40px"
+        marginLeft="12px"
+        marginRight="18px"
+      >
+        {file.name}
+      </TYPE.subHeader>
+      <ButtonText style={{ minWidth: 24, minHeight: 24 }} onClick={handleDeleteClick} type="button">
+        {deleteIcon()}
+      </ButtonText>
+    </Wrapper>
   )
 }
