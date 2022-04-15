@@ -64,6 +64,19 @@ export interface AccreditationList {
   prevPage: number
 }
 
+export interface AdminRole {
+  active: boolean
+  ethAddress: string
+  id: number
+  role: string
+  tenant: string
+}
+
+export interface AdminList {
+  page: number
+  totalPages: number
+  items: AdminRole[]
+}
 export interface BrokerDealerList {
   data: any
 }
@@ -244,6 +257,16 @@ export const getKycList: Readonly<{
   pending: createAction('admin/getKycList/pending'),
   fulfilled: createAction('admin/getKycList/fulfilled'),
   rejected: createAction('admin/getKycList/rejected'),
+}
+
+export const getAdminList: Readonly<{
+  pending: ActionCreatorWithoutPayload
+  fulfilled: ActionCreatorWithPayload<{ data: AdminList }>
+  rejected: ActionCreatorWithPayload<{ errorMessage: string }>
+}> = {
+  pending: createAction('admin/getAdminList/pending'),
+  fulfilled: createAction('admin/getAdminList/fulfilled'),
+  rejected: createAction('admin/getAdminList/rejected'),
 }
 
 export const postApproveKyc: Readonly<{

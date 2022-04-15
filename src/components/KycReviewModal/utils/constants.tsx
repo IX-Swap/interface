@@ -22,10 +22,8 @@ export const corporateInfoKeys = [
     key: 'typeOfLegalEntity',
     label: 'Type Of Legal Entity',
     width: { xs: 12, sm: 6 },
-    format: (key: string) => legalEntityTypes[+key - 1].label,
   },
   { key: 'businessActivity', label: 'Business Activity', width: { xs: 12, sm: 6 } },
-  { key: 'otherEntity', label: 'Other Entity', width: { xs: 12, sm: 6 } },
 ] as Array<{ key: string; label: string; width?: Record<string, number>; format?: (values: string) => string }>
 
 export const personalInfoKeys = [

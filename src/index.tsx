@@ -1,5 +1,3 @@
-import * as Sentry from '@sentry/react'
-import { Integrations } from '@sentry/tracing'
 import { createWeb3ReactRoot, Web3ReactProvider } from '@web3-react/core'
 import { CookiesProvider } from 'react-cookie'
 import React, { StrictMode } from 'react'
@@ -66,15 +64,6 @@ function Updaters() {
     </>
   )
 }
-
-Sentry.init({
-  dsn: 'https://2513acdd7bf24acf85a18ad939a8b134@o998077.ingest.sentry.io/5956549',
-  integrations: [new Integrations.BrowserTracing()],
-
-  // We recommend adjusting this value in production, or using tracesSampler
-  // for finer control
-  tracesSampleRate: 0.8,
-})
 
 ReactDOM.render(
   <StrictMode>

@@ -1,4 +1,6 @@
-import { Trans } from '@lingui/macro'
+import React, { useEffect } from 'react'
+import { t, Trans } from '@lingui/macro'
+
 import { ButtonIXSWide } from 'components/Button'
 import Column from 'components/Column'
 import { getNetworkFromToken } from 'components/CurrencyLogo'
@@ -6,21 +8,28 @@ import Row from 'components/Row'
 import useENS from 'hooks/useENS'
 import useTheme from 'hooks/useTheme'
 import { useActiveWeb3React } from 'hooks/web3'
-import React, { useEffect } from 'react'
 import { useUserSecTokens } from 'state/user/hooks'
 import {
   useDerivedWithdrawInfo,
   useWithdrawActionHandlers,
   useWithdrawCallback,
   useWithdrawState,
+  useGetWithdrawStatus,
+  useGetFeePrice,
+  useCreateDraftWitdraw,
 } from 'state/withdraw/hooks'
 import { TYPE } from 'theme'
 import { SecCurrency } from 'types/secToken'
 import { shortAddress } from 'utils'
 import { currencyId } from 'utils/currencyId'
+import { LoaderThin } from 'components/Loader/LoaderThin'
+
 import { AddressInput } from '../AddressInputPanel/AddressInput'
 import { AmountInput } from './AmountInput'
 import { WithdrawModalView } from './WithdrawPopup'
+import { FeeStatus } from './FeeStatus'
+import { ActionHistoryStatus } from './enum'
+import { WaitingWitdrawalFee } from './styleds'
 
 interface Props {
   currency?: SecCurrency
@@ -29,7 +38,10 @@ interface Props {
 }
 export const WithdrawRequestForm = ({ currency, changeModal, token }: Props) => {
   const theme = useTheme()
-  const { amount, receiver, currencyId: cid } = useWithdrawState()
+  const getWithdrawStatus = useGetWithdrawStatus()
+  const createDraftWithdraw = useCreateDraftWitdraw()
+  const getFeePrice = useGetFeePrice()
+  const { amount, receiver, currencyId: cid, withdrawStatus, feePrice, loadingFee } = useWithdrawState()
   const { account } = useActiveWeb3React()
   const { secTokens } = useUserSecTokens()
   const { onTypeAmount, onTypeReceiver, onCurrencySet, onSetNetWorkName, onResetWithdraw } = useWithdrawActionHandlers()
@@ -45,23 +57,43 @@ export const WithdrawRequestForm = ({ currency, changeModal, token }: Props) => 
   }, [])
 
   useEffect(() => {
+    if (tokenInfo.id) {
+      getWithdrawStatus(tokenInfo.id)
+      getFeePrice(tokenInfo.id)
+    }
+  }, [tokenInfo.id, getWithdrawStatus, getFeePrice])
+
+  useEffect(() => {
     if (networkName) {
       onSetNetWorkName(networkName ?? '')
     }
   }, [networkName, onSetNetWorkName])
 
   const onClick = () => {
+    if (withdrawStatus.status !== ActionHistoryStatus.FEE_ACCEPTED && account && tokenInfo) {
+      createDraftWithdraw({
+        tokenId: tokenInfo.id,
+        fromAddress: account,
+        feeContractAddress: tokenInfo.withdrawFeeAddress,
+        amount,
+      })
+
+      return
+    }
     const tokenId = (secTokens[cid ?? ''] as any)?.tokenInfo?.id
     if (tokenId && !error && parsedAmount && !inputError && receiver) {
       withdraw({ id: tokenId, amount: parsedAmount.toExact(), onSuccess, onError, receiver })
     }
   }
+
   const onSuccess = () => {
     changeModal(WithdrawModalView.SUCCESS)
   }
+
   const onError = () => {
     changeModal(WithdrawModalView.ERROR)
   }
+
   useEffect(() => {
     const id = currencyId(currency)
     onCurrencySet(id)
@@ -88,7 +120,7 @@ export const WithdrawRequestForm = ({ currency, changeModal, token }: Props) => 
             </TYPE.body1>
           </Row>
           <AmountInput
-          widthdraw
+            widthdraw
             token={token}
             amount={parsedAmount}
             showMax={true}
@@ -121,10 +153,20 @@ export const WithdrawRequestForm = ({ currency, changeModal, token }: Props) => 
           />
         </Column>
       </Column>
-
-      <Row style={{ marginTop: '50px', marginBottom: '24px' }}>
-        <ButtonIXSWide style={{ textTransform: 'unset' }} disabled={!!inputError} onClick={onClick}>
-          {inputError ?? <Trans>Send</Trans>}
+      <FeeStatus status={withdrawStatus.status} feePrice={withdrawStatus.feeAmount} estimatedPrice={feePrice} />
+      <Row>
+        <ButtonIXSWide style={{ textTransform: 'unset' }} disabled={!!inputError || loadingFee} onClick={onClick}>
+          {loadingFee ? (
+            <WaitingWitdrawalFee>
+              <LoaderThin size={20} />
+              {t`Sending Withdrawal Fee`}
+            </WaitingWitdrawalFee>
+          ) : (
+            <>
+              {inputError ??
+                t`${withdrawStatus.status !== ActionHistoryStatus.FEE_ACCEPTED ? 'Pay withdraw fee' : 'Withdraw'}`}
+            </>
+          )}
         </ButtonIXSWide>
       </Row>
     </div>

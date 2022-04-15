@@ -26,7 +26,7 @@ import { Loadable } from 'components/LoaderHover'
 import { LoadingIndicator } from 'components/LoadingIndicator'
 import { countriesList } from 'constants/countriesList'
 
-import { empleymentStatuses, individualFormInitialValues, genders, incomes, sourceOfFunds, promptValue } from './mock'
+import { empleymentStatuses, individualFormInitialValues, genders, incomes, sourceOfFunds, promptValue, occupationList } from './mock'
 import { FormCard, FormGrid, ExtraInfoCard, FormWrapper, StyledStickyBox } from './styleds'
 import { individualErrorsSchema } from './schema'
 import { ReactComponent as ArrowLeft } from 'assets/images/arrow-back.svg'
@@ -540,10 +540,11 @@ export default function IndividualKycForm() {
                           {employmentInfoFilled && <BigPassed />}
                         </RowBetween>
                         <Column style={{ gap: '20px' }}>
-                          <TextInput
-                            onChange={(e) => onChangeInput('occupation', e.currentTarget.value, values, setFieldValue)}
-                            value={values.occupation}
+                          <Select
                             label="Occupation"
+                            selectedItem={values.occupation}
+                            items={occupationList}
+                            onSelect={(status) => onSelectChange('occupation', status, setFieldValue)}
                             error={errors.occupation && errors.occupation}
                           />
                           <Select

@@ -6,7 +6,7 @@ import styled from 'styled-components'
 import { StyledCopy } from 'components/AdminTransactionsTable'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import useCopyClipboard from 'hooks/useCopyClipboard'
-import { getKyc, useAdminState, useGetAccreditationList } from 'state/admin/hooks'
+import { useAdminState, useGetAccreditationList, useOnlyAdminAccess } from 'state/admin/hooks'
 import { shortenAddress } from 'utils'
 import { AccreditationItem, KycItem } from 'state/admin/actions'
 import { adminOffset as offset } from 'state/admin/constants'
@@ -14,7 +14,6 @@ import { adminOffset as offset } from 'state/admin/constants'
 import { CustodianStatus } from './CustodianStatus'
 import { BodyRow, HeaderRow, Table } from '../Table'
 import { BrokerDealerStatus } from './BrokerDealerStatus'
-import { MoreActions } from './MoreActions'
 import { IconWrapper } from 'components/AccountDetails/styleds'
 import { Pagination } from './Pagination'
 import { Search } from './Search'
@@ -112,6 +111,7 @@ const Body = ({ openReviewModal }: BodyProps) => {
 }
 
 export const AdminAccreditationTable = () => {
+  useOnlyAdminAccess()
   const [kyc, handleKyc] = useState({} as KycItem)
   const [searchValue, setSearchValue] = useState('')
   const {

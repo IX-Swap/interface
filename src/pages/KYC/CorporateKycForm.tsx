@@ -299,7 +299,6 @@ export default function CorporateKycForm() {
                 !errors.typeOfLegalEntity &&
                 !errors.registrationNumber &&
                 !errors.countryOfIncorporation &&
-                !errors.otherEntity &&
                 !errors.businessActivity
               const authorizedPersonnelFilled =
                 shouldValidate &&
@@ -380,18 +379,6 @@ export default function CorporateKycForm() {
                               onSelect={(entityType) => onSelectChange('typeOfLegalEntity', entityType, setFieldValue)}
                               error={errors.typeOfLegalEntity && errors.typeOfLegalEntity}
                             />
-                          </FormGrid>
-                          <FormGrid columns={1}>
-                            {values.typeOfLegalEntity?.value === legalEntityTypes.length && (
-                              <TextInput
-                                label="Other Entity"
-                                onChange={(e) =>
-                                  onChangeInput('otherEntity', e.currentTarget.value, values, setFieldValue)
-                                }
-                                value={values.otherEntity}
-                                error={errors.otherEntity && errors.otherEntity}
-                              />
-                            )}
                           </FormGrid>
                         </Column>
                       </FormCard>

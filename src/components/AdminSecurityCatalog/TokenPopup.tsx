@@ -17,7 +17,6 @@ import { addToken, checkWrappedAddress, updateToken, useFetchIssuers, validateTo
 import { Dropdown } from './Dropdown'
 import Upload from 'components/Upload'
 import { AddressInput } from 'components/AddressInputPanel/AddressInput'
-import { NETWORK_LABELS } from 'constants/chains'
 import { AreYouSureModal } from 'components/AreYouSureModal'
 import { adminOffset as offset } from 'state/admin/constants'
 import { SUPPORTED_TGE_CHAINS } from 'constants/addresses'
@@ -27,7 +26,6 @@ import { WideModal, WideModalWrapper, FormWrapper, FormGrid, Logo, FormRow, Load
 import { industries, initialTokenState } from './mock'
 import { TokenAvailableFor } from './TokenAvailableFor'
 import { getAtlasIdByTicker } from 'state/admin/hooks'
-import { LoadingIndicator } from 'components/LoadingIndicator'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 
 interface Props {
@@ -38,14 +36,15 @@ interface Props {
 
 export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurrentToken }: Props) => {
   const isOpen = useModalOpen(ApplicationModal.TOKEN_POPUP)
+  const [hasErrorOnSubmit, setHasErrorOnSubmit] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const toggle = useTokenPopupToggle()
   const [errors, setErrors] = useState<any>()
   const [isConfirmOpen, handleIsConfirmOpen] = useState(false)
+  const [token, setToken] = useState<any>(null)
 
+  const toggle = useTokenPopupToggle()
   const getIssuers = useFetchIssuers()
   const addPopup = useAddPopup()
-  const [token, setToken] = useState<any>(null)
 
   const getAtlasId = async () => {
     try {
@@ -84,10 +83,11 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
     if (propToken) setToken(propToken)
     else setToken(initialTokenState)
     resetErrors()
+    setHasErrorOnSubmit(false)
   }, [propToken])
 
   useEffect(() => {
-    if (token) {
+    if (token && hasErrorOnSubmit) {
       const validationErrors = validateToken(token)
       setErrors(validationErrors)
     }
@@ -98,6 +98,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
     resetErrors()
     toggle()
     setCurrentToken(initialTokenState)
+    setHasErrorOnSubmit(false)
   }
 
   const onClose = () => {
@@ -107,6 +108,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
     } else {
       confirmClose()
     }
+    setHasErrorOnSubmit(false)
   }
 
   const handleDropImage = (acceptedFile: any) => {
@@ -130,6 +132,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
 
     if (hasError) {
       setErrors(validationErrors)
+      setHasErrorOnSubmit(true)
     } else {
       let data = null
       if (token.id) {
@@ -168,8 +171,8 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
         })
       }
       resetErrors()
+      setHasErrorOnSubmit(false)
     }
-
     setIsLoading(false)
   }
 
@@ -201,9 +204,9 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
   }, [])
 
   const chainsOptions = [
-    { id: SUPPORTED_TGE_CHAINS.MAIN, name: 'Mainnet' },
+    { id: SUPPORTED_TGE_CHAINS.MAIN, name: 'Ethereum' },
     { id: SUPPORTED_TGE_CHAINS.KOVAN, name: 'Kovan' },
-    { id: SUPPORTED_TGE_CHAINS.MATIC, name: 'Matic' },
+    { id: SUPPORTED_TGE_CHAINS.MATIC, name: 'Polygon' },
   ]
 
   const selectedChainOption = useMemo(() => {
@@ -312,7 +315,7 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                       <Box>
                         <Label marginBottom="11px" htmlFor="token-chain">
                           <TYPE.title11 color="text2">
-                            <Trans>Select Chain</Trans>
+                            <Trans>Origin Chain</Trans>
                           </TYPE.title11>
                         </Label>
                         <Dropdown

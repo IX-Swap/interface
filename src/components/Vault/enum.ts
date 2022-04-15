@@ -1,6 +1,8 @@
 import { t } from '@lingui/macro'
 
 export enum ActionHistoryStatus {
+  DRAFT = 'draft',
+  BURNED = 'burned',
   PENDING = 'pending',
   APPROVED = 'approved',
   REJECTED = 'rejected',
@@ -10,7 +12,11 @@ export enum ActionHistoryStatus {
   CANCELLED = 'cancelled',
   PROCESSING = 'processing',
   NON_TRADABLE = 'non_tradable',
+  ON_WHITELIST = 'onWhitelist',
+  WHITELISTED = 'whitelisted',
+  FEE_ACCEPTED = 'feeAccepted',
 }
+
 export enum ActionTypes {
   WITHDRAW = 'withdraw',
   DEPOSIT = 'deposit',
@@ -44,6 +50,11 @@ const TransactionHistoryStatusText = {
   [ActionHistoryStatus.CANCELLED]: t`Cancelled`,
   [ActionHistoryStatus.PROCESSING]: t`Processing`,
   [ActionHistoryStatus.NON_TRADABLE]: t`Processing`,
+  [ActionHistoryStatus.DRAFT]: t`Draft`,
+  [ActionHistoryStatus.BURNED]: t`Burned`,
+  [ActionHistoryStatus.ON_WHITELIST]: t`On Whitelist`,
+  [ActionHistoryStatus.WHITELISTED]: t`Whitelisted`,
+  [ActionHistoryStatus.FEE_ACCEPTED]: t`Fee Accepted`,
 }
 
 const StatusColors = {
@@ -56,6 +67,11 @@ const StatusColors = {
   [ActionHistoryStatus.CANCELLED]: t`error`,
   [ActionHistoryStatus.PROCESSING]: t`text2`,
   [ActionHistoryStatus.NON_TRADABLE]: t`text2`,
+  [ActionHistoryStatus.DRAFT]: t`text2`,
+  [ActionHistoryStatus.BURNED]: t`text2`,
+  [ActionHistoryStatus.ON_WHITELIST]: t`text2`,
+  [ActionHistoryStatus.WHITELISTED]: t`text2`,
+  [ActionHistoryStatus.FEE_ACCEPTED]: t`text2`,
 }
 
 export const ActionTypeText = {
