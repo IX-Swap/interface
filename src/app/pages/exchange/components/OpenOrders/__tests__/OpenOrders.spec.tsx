@@ -3,8 +3,8 @@ import React from 'react'
 import { renderWithUserStore } from 'test-utils'
 import { TableView } from 'components/TableWithPagination/TableView'
 import { history } from 'config/history'
-import { OTCMarketRoute } from 'app/pages/exchange/router/config'
 import * as useAppBreakpoints from 'hooks/useAppBreakpoints'
+import { InvestRoute } from 'app/pages/invest/router/config'
 
 jest.mock('components/TableWithPagination/TableView', () => ({
   TableView: jest.fn(() => null)
@@ -24,7 +24,7 @@ describe('OpenOrders', () => {
   })
 
   it('renders TableView with correct props on mdUp viewport', () => {
-    history.push(OTCMarketRoute.market, { pairId: '1234567890' })
+    history.push(InvestRoute.exchange, { pairId: '1234567890' })
     renderWithUserStore(<OpenOrders />)
 
     expect(TableView).toHaveBeenCalledWith(
@@ -44,7 +44,7 @@ describe('OpenOrders', () => {
       .spyOn(useAppBreakpoints, 'useAppBreakpoints')
       .mockImplementation(() => objResponse as any)
 
-    history.push(OTCMarketRoute.market, { pairId: '1234567890' })
+    history.push(InvestRoute.exchange, { pairId: '1234567890' })
     renderWithUserStore(<OpenOrders />)
 
     expect(TableView).toHaveBeenCalledWith(
