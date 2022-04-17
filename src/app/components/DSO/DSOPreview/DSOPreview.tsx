@@ -81,13 +81,11 @@ export const DSOPreview = (props: DSOPreviewProps) => {
                 </Element>
               </Grid>
 
-              {data?.isCampaign !== true && (
-                <Grid item xs={12}>
-                  <Element name={DSOFormSection['Offering Terms']}>
-                    <DSOTermsViewCompact dso={data} />
-                  </Element>
-                </Grid>
-              )}
+              <Grid item xs={12}>
+                <Element name={DSOFormSection['Offering Terms']}>
+                  <DSOTermsViewCompact dso={data} />
+                </Element>
+              </Grid>
             </Grid>
 
             <Element name={DSOFormSection.Information}>
