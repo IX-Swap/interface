@@ -3,10 +3,10 @@ import { Star, StarBorder } from '@mui/icons-material'
 import { useFavoritePairs } from 'app/pages/exchange/hooks/useFavoritePairs'
 import { Pair } from 'app/pages/exchange/hooks/useMarketList'
 import { useMarkPairAsFavorite } from 'app/pages/exchange/hooks/useMarkPairAsFavorite'
-import { OTCMarketRoute } from 'app/pages/exchange/router/config'
 import { AppRouterLink } from 'components/AppRouterLink'
 import React from 'react'
 import { generatePath } from 'react-router-dom'
+import { InvestRoute } from 'app/pages/invest/router/config'
 
 export interface PairNameProps {
   pair: Pair
@@ -33,7 +33,7 @@ export const PairName = ({ pair }: PairNameProps) => {
       </Grid>
       <Grid item>
         <AppRouterLink
-          to={generatePath(OTCMarketRoute.market, { pairId: pair._id })}
+          to={generatePath(InvestRoute.exchange, { pairId: pair._id })}
         >
           {pair.name}
         </AppRouterLink>

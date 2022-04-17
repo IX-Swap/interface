@@ -6,7 +6,7 @@ import { getDataFeed } from 'app/pages/invest/components/TVChartContainer/servic
 import { IBasicDataFeed } from 'charting_library'
 import { generatePath, Redirect, useParams } from 'react-router-dom'
 import { useMarketList } from 'app/pages/exchange/hooks/useMarketList'
-import { OTCMarketRoute } from 'app/pages/exchange/router/config'
+import { InvestRoute } from 'app/pages/invest/router/config'
 import { GetWalletDialog } from '../../components/GetWalletDialog/GetWalletDialog'
 import {
   isMarketDataFalsy,
@@ -81,8 +81,10 @@ export const Market = () => {
     const firstPair = data.list[0]
     const to =
       firstPair !== undefined
-        ? generatePath(OTCMarketRoute.market, { pairId: data?.list[0]?._id })
-        : OTCMarketRoute.landing
+        ? generatePath(InvestRoute.exchange, {
+            pairId: data?.list[0]?._id
+          })
+        : InvestRoute.exchange
 
     return <Redirect to={to} />
   }

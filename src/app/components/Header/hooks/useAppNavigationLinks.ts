@@ -93,7 +93,7 @@ export const useAppNavigationLinks = () => {
 
   const newAccountsLandingLinks = [
     ...accountsLandingLinks,
-    { ...OTCMarketLandingLinks[1], label: 'My Exchange Holdings' }
+    { ...OTCMarketLandingLinks[0], label: 'My Exchange Holdings' }
   ]
 
   const newInvestLandingLinks = [
@@ -107,7 +107,7 @@ export const useAppNavigationLinks = () => {
     },
     {
       label: 'Exchange',
-      path: OTCMarketRoute.landing
+      path: InvestRoute.exchange
     }
   ]
 

@@ -1,13 +1,10 @@
 import { makeURL } from 'config/appURL'
 import { InternalRouteProps } from 'types/util'
-import { ReactComponent as OTCMarketIcon } from 'assets/icons/navigation/otc-market.svg'
 import { ReactComponent as ListingsIcon } from 'assets/icons/navigation/listings.svg'
 import { ReactComponent as HoldingsIcon } from 'assets/icons/navigation/account.svg'
 import { ReactComponent as BuyerListIcon } from 'assets/icons/navigation/buyer-list.svg'
 
 export const OTCMarketRoute = {
-  landing: makeURL(['app', 'OTCMarket']),
-  market: makeURL(['app', 'OTCMarket', 'market', 'pairId']),
   holdings: makeURL(['app', 'OTCMarket', 'holdings']),
   viewListing: makeURL(['app', 'OTCMarket', 'myListings', 'listingId', 'view']),
   editListing: makeURL(['app', 'OTCMarket', 'myListings', 'listingId', 'edit']),
@@ -25,12 +22,6 @@ export const OTCMarketRoute = {
 }
 
 export const OTCMarketLandingLinks: InternalRouteProps[] = [
-  {
-    label: 'Market',
-    path: OTCMarketRoute.market,
-    color: '#E65133',
-    icon: OTCMarketIcon
-  },
   {
     label: 'Holdings',
     path: OTCMarketRoute.holdings,
