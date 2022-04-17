@@ -39,7 +39,7 @@ describe('Market', () => {
 
     render(<Market />)
     expect(history.location.pathname).toBe(
-      `/app/otc-market/market/${defaultPairId}`
+      `/app/invest/exchange/${defaultPairId}`
     )
   })
 
