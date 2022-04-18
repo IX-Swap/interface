@@ -1,25 +1,26 @@
-import React from 'react'
-import { Grid, Box, TextField } from '@mui/material'
-import { useFormContext } from 'react-hook-form'
-import { TypedField } from 'components/form/TypedField'
+import { Box, Grid } from '@mui/material'
 import { documentValueExtractor } from 'app/components/DSO/utils'
+import { IndividualPersonalInformation } from 'app/pages/identity/types/forms'
+import { Dropzone } from 'components/dataroom/Dropzone'
+import { DatePicker } from 'components/form/DatePicker'
+import { GenderSelect } from 'components/form/GenderSelect'
+import { NationalitySelect } from 'components/form/NationalitySelect'
+import { PhoneInput } from 'components/form/PhoneInput'
+import { TypedField } from 'components/form/TypedField'
+import { DataroomFileType } from 'config/dataroom'
+import { subYears } from 'date-fns'
+import { privateClassNames } from 'helpers/classnames'
 import {
   dateTimeValueExtractor,
   plainValueExtractor,
   textValueExtractor
 } from 'helpers/forms'
-import { NationalitySelect } from 'components/form/NationalitySelect'
-import { GenderSelect } from 'components/form/GenderSelect'
-import { useIndividualDefaultInfo } from 'hooks/auth/useIndividualDefaultInfo'
-import { DataroomFileType } from 'config/dataroom'
-import { privateClassNames } from 'helpers/classnames'
-import { Dropzone } from 'components/dataroom/Dropzone'
-import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
-import { PhoneInput } from 'components/form/PhoneInput'
-import { DatePicker } from 'components/form/DatePicker'
-import { IndividualPersonalInformation } from 'app/pages/identity/types/forms'
-import { subYears } from 'date-fns'
 import { capitalizeFirstLetter } from 'helpers/strings'
+import { useIndividualDefaultInfo } from 'hooks/auth/useIndividualDefaultInfo'
+import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
+import React from 'react'
+import { useFormContext } from 'react-hook-form'
+import { TextInput } from 'ui/TextInput/TextInput'
 
 export interface IndividualInfoFieldsProps {
   rootName?: string
@@ -60,7 +61,7 @@ export const IndividualInfoFields = (
           <Grid item xs={12} sm={6} md={4}>
             <TypedField
               rootName={rootName}
-              component={TextField}
+              component={TextInput}
               control={control}
               name='firstName'
               label='First Name'
@@ -76,7 +77,7 @@ export const IndividualInfoFields = (
           <Grid item xs={12} sm={6} md={4}>
             <TypedField
               rootName={rootName}
-              component={TextField}
+              component={TextInput}
               control={control}
               name='middleName'
               label='Middle Name'
@@ -92,7 +93,7 @@ export const IndividualInfoFields = (
           <Grid item xs={12} sm={6} md={4}>
             <TypedField
               rootName={rootName}
-              component={TextField}
+              component={TextInput}
               control={control}
               name='lastName'
               label='Last Name'
@@ -136,7 +137,7 @@ export const IndividualInfoFields = (
           <Grid item xs={12} sm={6} md={4}>
             <TypedField
               rootName={rootName}
-              component={TextField}
+              component={TextInput}
               control={control}
               name='email'
               label='Email'

@@ -1,16 +1,16 @@
-import React from 'react'
+import { Box, Grid } from '@mui/material'
+import { ApproveButton } from 'app/pages/authorizer/components/ApproveButton'
+import { AuthorizerFormValues } from 'app/pages/authorizer/components/AuthorizerForm'
+import { RejectButton } from 'app/pages/authorizer/components/RejectButton'
+import { useAuthorizerAction } from 'app/pages/authorizer/hooks/useAuthorizerAction'
+import { Checkbox } from 'components/form/Checkbox'
 import { TypedField } from 'components/form/TypedField'
-import { Box, Grid, TextField } from '@mui/material'
 import { VSpacer } from 'components/VSpacer'
 import { booleanValueExtractor } from 'helpers/forms'
-import { Checkbox } from 'components/form/Checkbox'
-import { ApproveButton } from 'app/pages/authorizer/components/ApproveButton'
-import { RejectButton } from 'app/pages/authorizer/components/RejectButton'
+import React from 'react'
 import { useFormContext } from 'react-hook-form'
-import { AuthorizerFormValues } from 'app/pages/authorizer/components/AuthorizerForm'
 import { AuthorizableStatus } from 'types/util'
-import { useAuthorizerAction } from 'app/pages/authorizer/hooks/useAuthorizerAction'
-
+import { TextInput } from 'ui/TextInput/TextInput'
 export interface AuthorizerFormFieldsProps {
   status: AuthorizableStatus
   itemId: string
@@ -40,7 +40,7 @@ export const AuthorizerFormFields = (props: AuthorizerFormFieldsProps) => {
       <TypedField
         control={control}
         customRenderer
-        component={TextField}
+        component={TextInput}
         fullWidth
         variant='outlined'
         disabled={isProcessing}

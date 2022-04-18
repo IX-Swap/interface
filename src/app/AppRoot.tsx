@@ -3,7 +3,6 @@ import { ErrorBoundary } from '@sentry/react'
 import { Grid } from '@mui/material'
 import { AppError } from 'app/components/AppError'
 import { useDataFromURL } from 'hooks/location/useDataFromURL'
-import { SidebarContainer } from 'app/components/SidebarContainer/SidebarContainer'
 import { AppContentWrapper } from 'ui/AppContentWrapper'
 import { OnboardingContentWrapper } from 'app/components/OnboardingPanel/OnboardingContentWrapper'
 import { AppRouter } from 'app/router/AppRouter'
@@ -23,7 +22,6 @@ export const AppRoot = () => {
         <Grid item>
           <Header />
         </Grid>
-        <SidebarContainer />
         <AppContentWrapper item container>
           <OnboardingContentWrapper>
             <AppRouter />

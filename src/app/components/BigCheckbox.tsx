@@ -1,13 +1,14 @@
 import React from 'react'
 import clsx from 'clsx'
-import Checkbox, { CheckboxProps } from '@mui/material/Checkbox'
+import { CheckboxProps } from '@mui/material/Checkbox'
 import useStyles from './BigCheckbox.styles'
+import { UICheckbox } from 'components/UICheckbox/UICheckbox'
 
 export const BigCheckbox = (props: CheckboxProps) => {
   const classes = useStyles()
 
   return (
-    <Checkbox
+    <UICheckbox
       {...props}
       className={classes.root}
       disableRipple

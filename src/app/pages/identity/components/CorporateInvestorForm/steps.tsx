@@ -68,8 +68,8 @@ export const getCorporateInvestorFormSteps = (type: CorporateType) => [
   {
     label: 'Review & Submit',
     getFormValues: () => null,
-    getRequestPayload: {},
-    validationSchema: {},
+    getRequestPayload: () => null,
+    validationSchema: null,
     component: () => <CorporateIdentityContainer />
   }
 ]

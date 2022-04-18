@@ -82,11 +82,96 @@ export interface MenuPalette {
   boxShadow: string
 }
 
+export interface TooltipPalette {
+  color: string
+  bg: string
+}
+
+export interface SkeletonPalette {
+  bg: string
+}
+
 export interface Alerts {
   bg: CSSProperties['color']
   color: CSSProperties['color']
   boxShadow: string
   border: string
+}
+
+export interface TablePalette {
+  rowBg: CSSProperties['color']
+  rowColor: CSSProperties['color']
+  color: CSSProperties['color']
+  boxShadow: string
+}
+
+export interface ChipPalette {
+  bg: string
+  fill: string
+  opacity: number
+  color: string
+  bgBasic: string
+  bgSpecial: string
+}
+
+export interface PaginationItem {
+  color: CSSProperties['color']
+  bg: CSSProperties['color']
+  border: string
+  colorHover: CSSProperties['color']
+  bgHover: CSSProperties['color']
+  borderHover: string
+  colorDisabled: CSSProperties['color']
+  bgDisabled: CSSProperties['color']
+  borderDisabled: string
+  colorActive: CSSProperties['color']
+  bgActive: CSSProperties['color']
+  borderActive: string
+}
+
+export interface TablePagination {
+  main: CSSProperties['color']
+  selectColor: CSSProperties['color']
+  selectHoverBg: CSSProperties['color']
+  menuItemBorder: string
+  menuItemColor: CSSProperties['color']
+}
+
+export interface StepIcon {
+  bg: CSSProperties['color']
+  color: CSSProperties['color']
+  border: string
+  bgActive: CSSProperties['color']
+  colorActive: CSSProperties['color']
+  borderActive: string
+  bgCompleted: CSSProperties['color']
+  colorCompleted: CSSProperties['color']
+  borderCompleted: string
+  bgError: CSSProperties['color']
+  colorError: CSSProperties['color']
+  borderError: string
+}
+
+export interface NavigationLink {
+  color: CSSProperties['color']
+  activeColor: CSSProperties['color']
+}
+
+export interface DropdownLink {
+  boxShadow: string
+  border: string
+}
+
+export interface SelectPalette {
+  bg: CSSProperties['color']
+  bgDisabled: CSSProperties['color']
+  color: CSSProperties['color']
+  colorDisabled: CSSProperties['color']
+  itemBorder: string
+  placeholder: CSSProperties['color']
+  label: CSSProperties['color']
+  labelDisabled: CSSProperties['color']
+  border: CSSProperties['color']
 }
 
 declare module '@mui/styles/defaultTheme' {
@@ -96,37 +181,55 @@ declare module '@mui/styles/defaultTheme' {
 declare module '@mui/material/styles' {
   export interface PaletteOptions {
     backgrounds: AppBackgrounds
-    toggledInputs?: ToggledInputsColorOptions
-    switch?: SwitchColorOptions
+    tooltip: TooltipPalette
+    skeleton: SkeletonPalette
+    chip: ChipPalette
+    toggledInputs: ToggledInputsColorOptions
+    switch: SwitchColorOptions
     slider: {
       activeColor: CSSProperties['color']
       background: CSSProperties['color']
       activeBackground: CSSProperties['color']
     }
-    newSlider?: SliderPaletteOptions
+    newSlider: SliderPaletteOptions
     sidebar: {
       activeColor: CSSProperties['color']
       activeBackground: CSSProperties['color']
     }
-    button?: ButtonPaletteOptions
-    buttonGroup?: ButtonGroupPalette
-    iconButton?: IconButtonPalette
-    fab?: FABPalette
-    menu?: MenuPalette
-    breadcrumbs?: BreadCrumbsPaletteOptions
-    tab?: {
+    button: ButtonPaletteOptions
+    buttonGroup: ButtonGroupPalette
+    iconButton: IconButtonPalette
+    fab: FABPalette
+    menu: MenuPalette
+    breadcrumbs: BreadCrumbsPaletteOptions
+    tab: {
       contained: {
         border: CSSProperties['color']
         color?: CSSProperties['color']
       }
     }
-    alerts?: Alerts
+    table: TablePalette
+    paginationItem: PaginationItem
+    tablePagination: TablePagination
+    alerts: Alerts
+    stepIcon: StepIcon
+    navigationLink: NavigationLink
+    input: {
+      placeholder: CSSProperties['color']
+      border: string
+      disabledBg: string
+    }
+    select: SelectPalette
+    dropdownLink: DropdownLink
   }
 
   export interface Palette {
     backgrounds: AppBackgrounds
-    toggledInputs?: ToggledInputsColorOptions
-    switch?: SwitchColorOptions
+    tooltip: TooltipPalette
+    skeleton: SkeletonPalette
+    chip: ChipPalette
+    toggledInputs: ToggledInputsColorOptions
+    switch: SwitchColorOptions
     sidebar: {
       activeColor: CSSProperties['color']
       activeBackground: CSSProperties['color']
@@ -136,20 +239,32 @@ declare module '@mui/material/styles' {
       background: CSSProperties['color']
       activeBackground: CSSProperties['color']
     }
-    newSlider?: SliderPaletteOptions
-    button?: ButtonPaletteOptions
-    buttonGroup?: ButtonGroupPalette
-    iconButton?: IconButtonPalette
-    fab?: FABPalette
-    menu?: MenuPalette
-    breadcrumbs?: BreadCrumbsPaletteOptions
-    tab?: {
+    newSlider: SliderPaletteOptions
+    button: ButtonPaletteOptions
+    buttonGroup: ButtonGroupPalette
+    iconButton: IconButtonPalette
+    fab: FABPalette
+    menu: MenuPalette
+    breadcrumbs: BreadCrumbsPaletteOptions
+    tab: {
       contained: {
         border: CSSProperties['color']
         color?: CSSProperties['color']
       }
     }
-    alerts?: Alerts
+    table: TablePalette
+    paginationItem: PaginationItem
+    tablePagination: TablePagination
+    alerts: Alerts
+    stepIcon: StepIcon
+    navigationLink: NavigationLink
+    input: {
+      placeholder: CSSProperties['color']
+      border: string
+      disabledBg: string
+    }
+    select: SelectPalette
+    dropdownLink: DropdownLink
   }
 
   export interface Theme {

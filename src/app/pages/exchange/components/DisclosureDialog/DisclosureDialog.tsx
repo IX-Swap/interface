@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import {
   Box,
   Button,
-  Checkbox,
   Dialog,
   DialogActions,
   DialogContentText,
@@ -18,6 +17,7 @@ import { Divider } from 'ui/Divider'
 import { useAcceptMASDisclosure } from 'app/pages/exchange/hooks/useAcceptMASDisclosure'
 import { generatePath, useHistory } from 'react-router-dom'
 import { InvestRoute } from 'app/pages/invest/router/config'
+import { UICheckbox } from 'components/UICheckbox/UICheckbox'
 
 export interface DisclosureDialogProps {
   content: any
@@ -53,7 +53,7 @@ export const DisclosureDialog = ({
             <Box className={classes.box}>
               <FormControlLabel
                 control={
-                  <Checkbox
+                  <UICheckbox
                     checked={isChecked}
                     onClick={() => setIsChecked(!isChecked)}
                   />

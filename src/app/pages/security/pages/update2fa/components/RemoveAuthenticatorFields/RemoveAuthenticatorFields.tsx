@@ -1,11 +1,11 @@
-import React from 'react'
-import { Grid, TextField, Typography } from '@mui/material'
-import { TypedField } from 'components/form/TypedField'
-import { useFormContext } from 'react-hook-form'
+import { Grid, Typography } from '@mui/material'
 import { Submit } from 'components/form/Submit'
+import { TypedField } from 'components/form/TypedField'
 import { renderPartOfEmail } from 'helpers/rendering'
+import React from 'react'
+import { useFormContext } from 'react-hook-form'
+import { TextInput } from 'ui/TextInput/TextInput'
 import { useStyles } from './RemoveAuthenticatorFields.styles'
-
 export interface OTPFieldsProps {
   isLoading: boolean
   email: string
@@ -27,7 +27,7 @@ export const RemoveAuthenticatorFields = ({
           <TypedField
             control={control}
             customRenderer
-            component={TextField}
+            component={TextInput}
             name='emailCode'
             fullWidth
             placeholder={'E-mail verification code'}
@@ -45,7 +45,7 @@ export const RemoveAuthenticatorFields = ({
           <TypedField
             control={control}
             customRenderer
-            component={TextField}
+            component={TextInput}
             name='otp'
             fullWidth
             placeholder={'Authenticator Code'}

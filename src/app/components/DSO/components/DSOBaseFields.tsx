@@ -1,18 +1,19 @@
-import React from 'react'
-import { Grid, TextField } from '@mui/material'
-import { TypedField } from 'components/form/TypedField'
-import { dateTimeValueExtractor } from 'helpers/forms'
+import { Grid } from '@mui/material'
+import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
+import { documentValueExtractor } from 'app/components/DSO/utils'
+import { Dropzone } from 'components/dataroom/Dropzone'
+import { AssetSelect } from 'components/form/AssetSelect/AssetSelect'
+import { CapitalStructureSelect } from 'components/form/CapitalStructureSelect'
 import { CorporateSelect } from 'components/form/CorporateSelect'
 import { NetworkSelect } from 'components/form/NetworkSelect'
-import { AssetSelect } from 'components/form/AssetSelect/AssetSelect'
+import { TypedField } from 'components/form/TypedField'
+import { DateTimePicker } from 'components/form/_DateTimePicker'
+import { DataroomFileType } from 'config/dataroom'
+import { dateTimeValueExtractor } from 'helpers/forms'
+import React from 'react'
 import { useFormContext } from 'react-hook-form'
 import { DSOFormValues } from 'types/dso'
-import { documentValueExtractor } from 'app/components/DSO/utils'
-import { DataroomFileType } from 'config/dataroom'
-import { DateTimePicker } from 'components/form/_DateTimePicker'
-import { Dropzone } from 'components/dataroom/Dropzone'
-import { CapitalStructureSelect } from 'components/form/CapitalStructureSelect'
-import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
+import { TextInput } from 'ui/TextInput/TextInput'
 
 export interface DSOBaseFieldsProps {
   isNew: boolean
@@ -73,7 +74,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
           <Grid container spacing={3}>
             <Grid item xs={12} md={6}>
               <TypedField
-                component={TextField}
+                component={TextInput}
                 label='Token Name'
                 name='tokenName'
                 disabled={isLive}
@@ -84,7 +85,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
             </Grid>
             <Grid item xs={12} md={6}>
               <TypedField
-                component={TextField}
+                component={TextInput}
                 label='Symbol'
                 name='tokenSymbol'
                 disabled={isLive}
@@ -99,7 +100,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
           <Grid container spacing={3}>
             <Grid item xs={12} md={6}>
               <TypedField
-                component={TextField}
+                component={TextInput}
                 label='Unique Identifier Code'
                 name='uniqueIdentifierCode'
                 disabled={isLive}
@@ -124,7 +125,7 @@ export const DSOBaseFields = (props: DSOBaseFieldsProps) => {
           <Grid container spacing={3}>
             <Grid item xs={12} md={6}>
               <TypedField
-                component={TextField}
+                component={TextInput}
                 label='Issuer Name'
                 name='issuerName'
                 control={control}

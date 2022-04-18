@@ -29,7 +29,13 @@ describe('InvestmentGrowthChart', () => {
     render(<InvestmentGrowthChart />)
     expect(Chart).toHaveBeenNthCalledWith(
       1,
-      { ...investmentGrowthChartOptions },
+      {
+        ...investmentGrowthChartOptions,
+        options: {
+          ...investmentGrowthChartOptions.options,
+          colors: ['#4C88FF']
+        }
+      },
       {}
     )
   })

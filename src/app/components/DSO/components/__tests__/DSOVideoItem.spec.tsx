@@ -5,7 +5,7 @@ import { videoLink } from '__fixtures__/issuance'
 import { DSOVideoItem } from 'app/components/DSO/components/DSOVideoItem'
 import { DSOTeamRemoveButton } from 'app/components/DSO/components/DSOTeamRemoveButton'
 import { TypedField } from 'components/form/TypedField'
-import { TextField } from '@mui/material'
+import { TextInput } from 'ui/TextInput/TextInput'
 
 jest.mock('components/form/TypedField', () => ({
   TypedField: jest.fn(() => null)
@@ -40,7 +40,7 @@ describe('DSOVideoItem', () => {
       1,
       expect.objectContaining({
         fullWidth: true,
-        component: TextField,
+        component: TextInput,
         defaultValue: videoLink.title,
         label: 'Video Title',
         name: ['videos', 1, 'title'],
@@ -54,7 +54,7 @@ describe('DSOVideoItem', () => {
       2,
       expect.objectContaining({
         fullWidth: true,
-        component: TextField,
+        component: TextInput,
         defaultValue: videoLink.link,
         label: 'Link Source URL',
         name: ['videos', 1, 'link'],
