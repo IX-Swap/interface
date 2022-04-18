@@ -55,7 +55,6 @@ const Row = ({
     createdAt,
   },
   isFirstRow,
-  downloadFile,
   setPreviewModal
 }: any) => {
 

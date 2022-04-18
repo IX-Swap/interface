@@ -81,8 +81,6 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
 
   const isDraftStatus = data.status === 'draft'
 
-  console.log('render in KycReviewModal')
-  
   return (
     <>
       <ReasonModal
