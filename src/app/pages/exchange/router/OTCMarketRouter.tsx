@@ -3,16 +3,12 @@ import { Switch } from 'react-router-dom'
 import { OTCMarketRoute } from 'app/pages/exchange/router/config'
 import { AppRoute } from 'components/AppRoute'
 import { BuyerList } from '../pages/buyer-list/BuyerList'
-import { MyHoldings } from 'app/pages/exchange/pages/holdings/MyHoldings'
 import { MyListingsRouter } from 'app/pages/exchange/router/MyListingsRouter'
 import { CreateListing } from 'app/pages/exchange/pages/create-listing/CreateListing'
 
 export const OTCMarketRouter = () => {
   return (
     <Switch>
-      <AppRoute breadcrumb='Holdings' path={OTCMarketRoute.holdings}>
-        <MyHoldings />
-      </AppRoute>
       <AppRoute breadcrumb='My Listings' path={OTCMarketRoute.myListings}>
         <MyListingsRouter />
       </AppRoute>

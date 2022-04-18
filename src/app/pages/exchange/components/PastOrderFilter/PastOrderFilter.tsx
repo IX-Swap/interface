@@ -5,15 +5,15 @@ import { AppRouterLink } from 'components/AppRouterLink'
 import { SearchQueryFilterGroup } from 'components/SearchQueryFilter/SearchQueryFilterGroup/SearchQueryFilterGroup'
 import { SearchQueryFilterGroupApply } from 'components/SearchQueryFilter/SearchQueryFilterGroupApply'
 import { SearchQueryFilterGroupReset } from 'components/SearchQueryFilter/SearchQueryFilterGroupReset'
-import { OTCMarketRoute } from 'app/pages/exchange/router/config'
 import { isEmptyString } from 'helpers/strings'
+import { AccountsRoute } from 'app/pages/accounts/router/config'
 
 interface PastOrderFilterProps {
   pairId?: string
 }
 export const PastOrderFilter = ({ pairId }: PastOrderFilterProps) => {
   const redirectLink = useMemo(() => {
-    let link = `${OTCMarketRoute.holdings}?tab=1`
+    let link = `${AccountsRoute.myHoldings}?tab=1`
     if (!isEmptyString(pairId)) {
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       link += `&pair=${pairId!}`

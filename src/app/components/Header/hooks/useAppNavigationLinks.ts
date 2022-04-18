@@ -21,10 +21,7 @@ import {
 } from 'app/pages/authorizer/router/config'
 import { ReactComponent as AuthorizerIcon } from 'assets/icons/navigation/authorizer.svg'
 import { EducationCentreRoute } from 'app/pages/educationCentre/router/config'
-import {
-  OTCMarketLandingLinks,
-  OTCMarketRoute
-} from 'app/pages/exchange/router/config'
+import { OTCMarketRoute } from 'app/pages/exchange/router/config'
 
 export const useAppNavigationLinks = () => {
   const isAuthorizer = useIsAuthorizer()
@@ -91,11 +88,6 @@ export const useAppNavigationLinks = () => {
     }
   ]
 
-  const newAccountsLandingLinks = [
-    ...accountsLandingLinks,
-    { ...OTCMarketLandingLinks[0], label: 'My Exchange Holdings' }
-  ]
-
   const newInvestLandingLinks = [
     {
       label: 'Overview',
@@ -139,7 +131,7 @@ export const useAppNavigationLinks = () => {
           ...authorizerLandingLinks
         ]
       case 'Accounts':
-        return newAccountsLandingLinks
+        return accountsLandingLinks
       case 'Issuance':
         return newIssuanceLandingLinks
       case 'Invest':
