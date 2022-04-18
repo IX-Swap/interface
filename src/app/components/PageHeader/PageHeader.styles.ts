@@ -14,5 +14,19 @@ export const useStyles = makeStyles(theme => ({
   },
   noMargin: {
     margin: 0
+  },
+  wrapper: {
+    position: `relative`,
+    background: 'rgba(255, 255, 255, 0.75)',
+    border: 'none',
+    height: '120px',
+    width: `100vw`,
+    left: `50%`,
+    right: `50%`,
+    marginLeft: `-50vw`,
+    marginRight: `-50vw`,
+    marginTop: `-1vw`,
+    padding: `3% 16% 10% 16%`,
+    marginBottom: `2vw`
   }
 }))
