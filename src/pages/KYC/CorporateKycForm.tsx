@@ -23,6 +23,7 @@ import { ReactComponent as BigPassed } from 'assets/images/check-success-big.svg
 import { getCorporateProgress, useCreateCorporateKYC, useKYCState, useUpdateCorporateKYC } from 'state/kyc/hooks'
 import { useActiveWeb3React } from 'hooks/web3'
 import { countriesList } from 'constants/countriesList'
+import { MAX_FILE_UPLOAD_SIZE } from 'constants/constants'
 
 import { Select, TextInput, Uploader } from './common'
 import { KYCProgressBar } from './KYCProgressBar'
@@ -113,6 +114,11 @@ export default function CorporateKycForm() {
     const beneficiar = owners[index]
     const newData = [...owners]
 
+    if (value && typeof value === 'object' && value?.size > MAX_FILE_UPLOAD_SIZE) {
+      showError(t`Max size of 10Mb`)
+      return
+    }
+
     if (beneficiar[fieldName]?.id) {
       setFieldValue('removedDocuments', [beneficiar[fieldName].id])
     }
@@ -190,7 +196,7 @@ export default function CorporateKycForm() {
 
   const handleDropImage = (acceptedFile: any, values: any, key: string, setFieldValue: any) => {
     const file = acceptedFile
-    if (file?.size > 10 ** 7) {
+    if (file?.size > MAX_FILE_UPLOAD_SIZE) {
       showError(t`Max size of 10Mb`)
     } else {
       const arrayOfFiles = [...values[key]]
