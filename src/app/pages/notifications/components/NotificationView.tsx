@@ -4,9 +4,9 @@ import classNames from 'classnames'
 import { Notification } from 'types/notification'
 import { useStyles } from 'app/pages/notifications/components/NotificationsItem.styles'
 import { NotificationIcon } from './NotificationIcon'
-import { NotificationTimeAgo } from './NotificationTimeAgo'
 import { notificationColorMap } from './config'
 import { privateClassNames } from 'helpers/classnames'
+import { NotificationTimeAgo } from 'app/components/Header/components/Notifications/NotificationTimeAgo'
 
 export interface NotificationViewProps extends GridProps {
   data: Notification
