@@ -56,7 +56,11 @@ const Row = ({
   },
   isFirstRow,
   setPreviewModal
-}: any) => {
+}: {
+  file: Document,
+  isFirstRow: boolean
+  setPreviewModal: (value: boolean) => void
+}) => {
 
   const openModal = () => {
     setPreviewModal(true)
