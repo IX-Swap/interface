@@ -2,7 +2,6 @@ import { Grid } from '@mui/material'
 import { documentValueExtractor } from 'app/components/DSO/utils'
 import { CorporateType } from 'app/pages/identity/components/CorporateInvestorForm/CorporateInvestorForm'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
-import { Dropzone } from 'components/dataroom/Dropzone'
 import { CountrySelect } from 'components/form/CountrySelect'
 import { FundSourceSelect } from 'components/form/FundSourceSelect'
 import { LegalEntityStatusSelect } from 'components/form/LegalEntityStatusSelect'
@@ -11,6 +10,7 @@ import { privateClassNames } from 'helpers/classnames'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import React, { useEffect } from 'react'
 import { useFormContext } from 'react-hook-form'
+import { FileUpload } from 'ui/FileUpload/FileUpload'
 import { TextInput } from 'ui/TextInput/TextInput'
 
 export interface InformationFieldsProps {
@@ -47,8 +47,8 @@ export const InformationFields = ({
           <TypedField
             customRenderer
             control={control}
-            component={Dropzone}
-            label='Upload your logo (Optional)'
+            component={FileUpload}
+            label='Upload your logo'
             valueExtractor={documentValueExtractor}
             documentInfo={{
               title: 'Logo',

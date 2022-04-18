@@ -3,7 +3,6 @@ import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHead
 import { documentValueExtractor } from 'app/components/DSO/utils'
 import { ListingHiddenFields } from 'app/pages/exchange/components/ListingForm/ListingHiddenFields'
 import { initialListingFormValues } from 'app/pages/exchange/consts/listing'
-import { Dropzone } from 'components/dataroom/Dropzone'
 import { CapitalStructureSelect } from 'components/form/CapitalStructureSelect'
 import { CorporateSelect } from 'components/form/CorporateSelect'
 import { NetworkSelect } from 'components/form/NetworkSelect'
@@ -15,6 +14,7 @@ import { positiveNumberFormat } from 'config/numberFormat'
 import { dateTimeValueExtractor, numericValueExtractor } from 'helpers/forms'
 import React from 'react'
 import { useFormContext } from 'react-hook-form'
+import { FileUpload } from 'ui/FileUpload/FileUpload'
 import { TextInput } from 'ui/TextInput/TextInput'
 export interface ListingBaseFieldsProps {
   isNew: boolean
@@ -35,7 +35,7 @@ export const ListingBaseFields = (props: ListingBaseFieldsProps) => {
         <Grid item>
           <TypedField
             customRenderer
-            component={Dropzone}
+            component={FileUpload}
             name='logo'
             label='Upload Logo'
             control={control}

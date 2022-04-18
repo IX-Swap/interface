@@ -57,7 +57,10 @@ export const Avatar = ({
         ) : (
           <>
             <Icon name='file' />
-            <Typography className='label' sx={{ ml: 1, lineHeight: '24px' }}>
+            <Typography
+              className='label'
+              sx={{ ml: 1, lineHeight: '24px', textAlign: 'center' }}
+            >
               {label}
             </Typography>
           </>

@@ -1,5 +1,4 @@
 import { Grid, Typography, Box } from '@mui/material'
-import { Dropzone } from 'components/dataroom/Dropzone'
 import { TypedField } from 'components/form/TypedField'
 import { documentValueExtractor } from 'app/components/DSO/utils'
 import React from 'react'
@@ -7,6 +6,7 @@ import { useFormContext } from 'react-hook-form'
 import { DataroomFileType } from 'config/dataroom'
 import { DocumentList } from 'app/pages/identity/components/UploadDocumentsForm/UploadDocumentField/DocumentList'
 import { Tooltip } from 'app/pages/identity/components/UploadDocumentsForm/Tooltip/Tooltip'
+import { FileUpload } from 'ui/FileUpload/FileUpload'
 
 export interface UploadDocumentFieldProps {
   name: any
@@ -50,7 +50,7 @@ export const UploadDocumentField = ({
           key={fieldId}
           control={control}
           customRenderer
-          component={Dropzone}
+          component={FileUpload}
           name={name}
           label=''
           valueExtractor={documentValueExtractor}
