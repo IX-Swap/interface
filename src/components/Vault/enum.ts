@@ -41,20 +41,20 @@ export const isSuccessTransaction = (action: ActionTypes, status: ActionHistoryS
 }
 
 const TransactionHistoryStatusText = {
-  [ActionHistoryStatus.PENDING]: t`Pending...`,
+  [ActionHistoryStatus.PENDING]: t`Burning wMSTO...`,
   [ActionHistoryStatus.APPROVED]: t`Completed`,
   [ActionHistoryStatus.SETTLED]: t`Completed`,
   [ActionHistoryStatus.REJECTED]: t`Declined`,
   [ActionHistoryStatus.FAILED]: t`Failed`,
   [ActionHistoryStatus.REQUESTED]: t`Requested`,
   [ActionHistoryStatus.CANCELLED]: t`Cancelled`,
-  [ActionHistoryStatus.PROCESSING]: t`Processing`,
-  [ActionHistoryStatus.NON_TRADABLE]: t`Processing`,
-  [ActionHistoryStatus.DRAFT]: t`Draft`,
-  [ActionHistoryStatus.BURNED]: t`Burned`,
-  [ActionHistoryStatus.ON_WHITELIST]: t`On Whitelist`,
-  [ActionHistoryStatus.WHITELISTED]: t`Whitelisted`,
-  [ActionHistoryStatus.FEE_ACCEPTED]: t`Fee Accepted`,
+  [ActionHistoryStatus.PROCESSING]: t`Processing...`,
+  [ActionHistoryStatus.NON_TRADABLE]: t`Processing...`,
+  [ActionHistoryStatus.DRAFT]: t`Fee Payment required! `,
+  [ActionHistoryStatus.BURNED]: t`wMSTO burned, whitelisting in progress...`,
+  [ActionHistoryStatus.ON_WHITELIST]: t`Whitelisting your wallet...`,
+  [ActionHistoryStatus.WHITELISTED]: t`Whitelisted, sending MSTO`,
+  [ActionHistoryStatus.FEE_ACCEPTED]: t`Fee paid, withdrawal on hold`,
 }
 
 const StatusColors = {
