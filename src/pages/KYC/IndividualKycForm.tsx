@@ -24,7 +24,7 @@ import { useActiveWeb3React } from 'hooks/web3'
 import { useAuthState } from 'state/auth/hooks'
 import { Loadable } from 'components/LoaderHover'
 import { LoadingIndicator } from 'components/LoadingIndicator'
-import { MAX_FILE_UPLOAD_SIZE } from 'constants/constants'
+import { MAX_FILE_UPLOAD_SIZE, MAX_FILE_UPLOAD_SIZE_ERROR } from 'constants/constants'
 import { countriesList } from 'constants/countriesList'
 
 import {
@@ -173,7 +173,7 @@ export default function IndividualKycForm() {
   const handleDropImage = (acceptedFile: any, values: any, key: string, setFieldValue: any) => {
     const file = acceptedFile
     if (file?.size > MAX_FILE_UPLOAD_SIZE) {
-      showError(t`Max size of 10Mb`)
+      showError(MAX_FILE_UPLOAD_SIZE_ERROR)
     } else {
       const arrayOfFiles = [...values[key]]
       arrayOfFiles.push(file)

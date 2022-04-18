@@ -5,7 +5,7 @@ import apiService from 'services/apiService'
 import { secCatalog } from 'services/apiUrls'
 import { AppDispatch, AppState } from 'state'
 import { BROKER_DEALERS_STATUS } from 'state/brokerDealer/hooks'
-import { MAX_FILE_UPLOAD_SIZE } from 'constants/constants'
+import { MAX_FILE_UPLOAD_SIZE, MAX_FILE_UPLOAD_SIZE_ERROR } from 'constants/constants'
 import { fetchAddIssuer, fetchEditIssuer, fetchIssuers, fetchIssuersTokens } from './actions'
 import { Issuer } from './reducer'
 import { isValidAddress } from 'utils'
@@ -248,7 +248,7 @@ const urlValidator = (url: string) => {
 }
 
 const logoValidator = (logo: any) => {
-  if (logo?.size > MAX_FILE_UPLOAD_SIZE) return { logo: 'Max size of 10Mb' }
+  if (logo?.size > MAX_FILE_UPLOAD_SIZE) return { logo: MAX_FILE_UPLOAD_SIZE_ERROR }
   else return null
 }
 
