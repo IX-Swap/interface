@@ -13,10 +13,10 @@ interface Props {
 }
 
 export const FeeStatus = ({ status, feePrice, estimatedPrice }: Props) => {
-  const paid = status && status !== ActionHistoryStatus.DRAFT
+  const paid = status === ActionHistoryStatus.FEE_ACCEPTED
 
   const feeText = useMemo(() => {
-    if (paid || feePrice) {
+    if (paid) {
       return `Withdrawal fee: ${(+feePrice).toFixed(4)} Matic`
     }
     return `Expected withdrawal fees: ${estimatedPrice ? `0.01 ETH (~${estimatedPrice.toFixed(4)} Matic)` : ' - '}`
