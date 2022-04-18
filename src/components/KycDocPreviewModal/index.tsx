@@ -1,77 +1,72 @@
 import React, { useEffect, useState } from 'react'
-import { Trans, t } from '@lingui/macro'
+import { Trans } from '@lingui/macro'
 import styled from 'styled-components'
-import { ModalBlurWrapper, ModalContentWrapper, MEDIA_WIDTHS, CloseIcon } from 'theme'
-import { StyledDocPreviewButton } from 'components/AdminKyc'
-import { Download } from 'react-feather'
-import { KycItem } from 'state/admin/actions'
-import { IconWrapper } from 'components/AccountDetails/styleds'
+import { ModalBlurWrapper, ModalContentWrapper, MEDIA_WIDTHS, CloseIcon, EllipsisText } from 'theme'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
-import { LoadingIndicator } from 'components/LoadingIndicator'
+import { Download } from 'react-feather';
+import { IconWrapper } from 'components/AccountDetails/styleds'
+import { ButtonGradient } from 'components/Button'
 import { createFileFromApi } from 'utils/createFileFromApi'
 import { AcceptFiles } from 'components/Upload/types'
-
+import FileViewer from 'react-file-viewer';
 
 interface Props {
   isOpen: boolean
   onClose: () => void
-  data: any
+  data: Array<any>
+  downloadFile: (url: string, name: string) => void
 }
 
-export const KycDocPreviewModal = ({ isOpen, onClose, data }: Props) => {
-  const [isLoading, handleIsLoading] = useState(false)
-  const [docs, handleDocs] = useState([])
-  const { individualKycId, individual, corporate } = data 
-  const kyc = individualKycId ? individual : corporate
-  const documents = kyc?.documents
+export const KycDocPreviewModal = ({ isOpen, onClose, data, downloadFile }: Props) => {
+  const [docs, setDocs] = useState([])
 
   const fetchDocs = async () => {
-    const response = documents?.reduce((acc: any, doc: any) => {
+    const response = data?.reduce((acc: any, doc: any) => {
       const res = createFileFromApi(doc.asset)
       return [...acc, res]
     }, [])
 
-    const data = await Promise.all(response as any)
-
-    handleDocs(data as any)
+    const documents = await Promise.all(response as any)
+    setDocs(documents as any)
   }
   
   useEffect(() => {
-    if (documents?.length) {
+    if (data?.length) {
       fetchDocs()
     }
-  }, [documents])
-
-  console.log('Docs in modal:', data)
+  }, [data])
 
   return (
     <>
       <RedesignedWideModal isOpen={isOpen} onDismiss={onClose}>
-        <ModalBlurWrapper style={{ minWidth: '360px', width: '800px', height: '900px', position: 'relative' }}>
-          <LoadingIndicator isLoading={isLoading} isRelative />
+        <ModalBlurWrapper style={{ position: 'relative' }}>
           <ModalContent>
             <TitleContainer>
               <Title>
                 <Trans>Documents</Trans>
                 <Wrapper>
-                  {/* <StyledDocPreviewButton onClick={() => null} style={{margin: '0 20px 0 0'}}>
-                    <IconWrapper style={{margin: 0}} size={18}>
-                      <StyledDownload />
-                    </IconWrapper>
-                  </StyledDocPreviewButton> */}
-
                   <CloseIcon data-testid="cross" onClick={onClose} />
                 </Wrapper>
               </Title>
             </TitleContainer>
-            <Body style={{height: '700px', overflowY: 'auto'}}>
+            <Body className="file-viewer-canvas-wrapper">
               {
-                data?.map(({asset, id}: any) => (
+                docs?.map(({preview, file, id}: any) => (
                   <>
                     {
-                      asset.mimeType === AcceptFiles.PDF
-                        ? <iframe frameBorder="0" key={id} width="100%" height="700px" src={asset.public} />
-                        : <img src={asset.public} alt="" />
+                      file.type === AcceptFiles.PDF
+                        ? <div>
+                            <div className="file-viewer-title">
+                              <EllipsisText style={{width: 'calc(100% - 40px)'}}>{file.name}</EllipsisText>
+                              <StyledDocPreviewButton onClick={() => downloadFile(preview, file.name)}>
+                                <IconWrapper style={{margin: 0}} size={18}>
+                                  <StyledDownload />
+                                </IconWrapper>
+                              </StyledDocPreviewButton>
+                            </div>
+                            <FileViewer fileType='pdf' filePath={preview} />
+                          </div>
+                        : <img key={id} style={{maxWidth: '100%', maxHeight: '100%'}} src={preview} alt="" />
                     }
                   </>
                 ))
@@ -84,6 +79,15 @@ export const KycDocPreviewModal = ({ isOpen, onClose, data }: Props) => {
   )
 }
 
+export const StyledDocPreviewButton = styled(ButtonGradient)`
+  min-height: 34px;
+  min-width: 34px;
+  max-height: 34px;
+  max-width: 34px;
+  padding: 4px 8px;
+  font-size: 14px;
+`
+
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
@@ -93,6 +97,27 @@ const Body = styled.div`
   display: grid;
   row-gap: 35px;
   overflow: auto;
+  &.file-viewer-canvas-wrapper {
+    height: 700px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    canvas {
+      width: 100%;
+    }
+  }
+
+  .file-viewer-title {
+    display: flex;
+    justify-content: space-between;
+    width: calc(100% - 14px);
+    align-items: center;
+  }
+`
+
+const StyledDownload = styled(Download)`
+  color: ${({ theme }) => theme.text1};
+  width: 17px;
+  height: 17px;
 `
 
 const TitleContainer = styled.div`
@@ -102,7 +127,7 @@ const TitleContainer = styled.div`
 `
 
 const ModalContent = styled(ModalContentWrapper)`
-  padding: 29px 38px 42px 42px;
+  padding: 29px 38px 20px 42px;
   border-radius: 20px;
   @media (max-width: ${MEDIA_WIDTHS.upToSmall}px) {
     padding: 16px;
@@ -117,11 +142,4 @@ const Title = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-`
-
-export const StyledDownload = styled(Download)`
-  cursor: pointer;
-  color: ${({ theme }) => theme.text1};
-  width: 17px;
-  height: 17px;
 `

@@ -80,6 +80,8 @@ export const KycReviewModal = ({ isOpen, onClose, data }: Props) => {
   if (loadingCynopsis) return <LoadingIndicator isLoading size={96} />
 
   const isDraftStatus = data.status === 'draft'
+
+  console.log('render in KycReviewModal')
   
   return (
     <>

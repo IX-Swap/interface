@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 import { t } from '@lingui/macro'
 import styled from 'styled-components'
 import dayjs from 'dayjs'
@@ -23,6 +23,17 @@ interface Props {
   title?: string
 }
 
+const extractDocType = (docName: any) => docName.substring(docName.lastIndexOf(".")).split('.')[1]
+
+const downloadFile = (url: string, name: string) => {
+  const link = document.createElement('a')
+  link.download = name
+  link.href = url
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
+}
+
 export const Documents = ({ documents, title }: Props) => {
   {
     return (
@@ -44,35 +55,12 @@ const Row = ({
     createdAt,
   },
   isFirstRow,
-  data
+  downloadFile,
+  setPreviewModal
 }: any) => {
-  const [openPreviewModal, handlePreviewModal] = useState(false)
-
-  const downloadFile = (url: string, name: string) => {
-    const link = document.createElement('a')
-    link.download = name
-    link.href = url
-    document.body.appendChild(link)
-    link.click()
-    document.body.removeChild(link)
-  }
-
-  const extractDocType = (docName: any) => docName.substring(docName.lastIndexOf(".")).split('.')[1]
-
-  const filteredDocs = data.filter((doc: any) => {
-    const docName =  doc?.asset?.name;
-    const docType = extractDocType(docName)
-
-    return !['docx', 'doc'].includes(docType) && doc
-  })
-
-  const closeModal = () => {
-    handlePreviewModal(false)
-  }
 
   const openModal = () => {
-    console.log('CLICKED', filteredDocs)
-    handlePreviewModal(true)
+    setPreviewModal(true)
   }
 
   const handleRowClick = (url: string, name: string) => {
@@ -85,11 +73,7 @@ const Row = ({
   }
 
   return (
-
-    // <BodyRow key={id} href={publicUrl} target="_blank" download={name}>
     <BodyRow key={id} onClick={() => handleRowClick(publicUrl, name)}>
-     {Boolean(id) && openPreviewModal && <KycDocPreviewModal isOpen onClose={closeModal} data={filteredDocs} />}
-
       <div>
         {isFirstRow && <ColumnHeader>{headerCells[0]}</ColumnHeader>}
         <FileName >
@@ -111,10 +95,25 @@ const Row = ({
 }
 
 const Body = ({ documents }: Pick<Props, 'documents'>) => {
+  const [openPreviewModal, setPreviewModal] = useState(false)
+
+  const filteredDocs = documents.filter((doc: any) => {
+    const docName =  doc?.asset?.name;
+    const docType = extractDocType(docName)
+
+    return !['docx', 'doc'].includes(docType) && doc
+  })
+
+  const closeModal = () => {
+    setPreviewModal(false)
+  }
+
   return (
     <>
+      {openPreviewModal && <KycDocPreviewModal isOpen onClose={closeModal} data={filteredDocs} downloadFile={downloadFile} />}
+
       {documents.map((item, index) => {
-        return <Row key={`kyc-table-${item.id}`} file={item} isFirstRow={!index} data={documents} />
+        return <Row key={`kyc-table-${item.id}`} file={item} isFirstRow={!index} setPreviewModal={setPreviewModal} />
       })}
     </>
   )

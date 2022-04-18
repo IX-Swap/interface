@@ -82,6 +82,7 @@ const AdminKyc = () => {
   }, [params])
 
   useEffect(() => {
+    console.log('adminData', adminData)
     if (!adminData) {
       fetchMe()
       return
@@ -93,7 +94,9 @@ const AdminKyc = () => {
     }
 
     history.push('/')
-  }, [getMe, adminData, history, fetchMe])
+  }, [adminData])
+
+
 
   return (
     <Container>

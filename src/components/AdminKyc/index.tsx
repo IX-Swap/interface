@@ -18,18 +18,15 @@ import { BodyRow, HeaderRow, Table } from '../Table'
 import { Search } from '../AdminAccreditationTable/Search'
 import { StatusCell } from './StatusCell'
 import { KycReviewModal } from 'components/KycReviewModal'
-import { KycDocPreviewModal } from 'components/KycDocPreviewModal'
 import { ButtonGradientBorder, ButtonGradient } from 'components/Button'
 import { useHistory, useParams } from 'react-router-dom'
 import { AdminParams } from 'pages/Admin'
-import useParsedQueryString from 'hooks/useParsedQueryString'
 
 const headerCells = [t`Wallet address`, t`Name`, t`Identity`, t`Date of request`, t`KYC Status`]
 
 interface RowProps {
   item: KycItem
   openModal: () => void
-  // openDocPreviewModal: () => void
 }
 
 const Header = () => {
@@ -78,13 +75,6 @@ const Row: FC<RowProps> = ({ item, openModal }: RowProps) => {
         <StatusCell status={status} />
       </div>
       {/* <div>risk level</div> */}
-      {/* <div>
-        <StyledDocPreviewButton onClick={openDocPreviewModal}>
-          <IconWrapper style={{margin: 0}} size={18}>
-            <StyledDoc />
-          </IconWrapper>
-        </StyledDocPreviewButton>
-      </div> */}
       <div>
         <StyledReviewButton onClick={openModal}>Review</StyledReviewButton>
       </div>
@@ -109,7 +99,6 @@ export const AdminKycTable = () => {
   const [kyc, handleKyc] = useState({} as KycItem)
   const [isLoading, handleIsLoading] = useState(false)
   const [searchValue, setSearchValue] = useState('')
-  const [openDocModal, handleOpenDocModal] = useState(false)
   const {
     kycList: { totalPages, page, items },
     adminLoading,
@@ -119,7 +108,6 @@ export const AdminKycTable = () => {
   const history = useHistory()
 
   const { id } = useParams<AdminParams>()
-  // const queryParams = useParsedQueryString()
 
   useEffect(() => {
     getKycList({ page: 1, offset, ...(searchValue && { search: searchValue }) })
@@ -134,11 +122,8 @@ export const AdminKycTable = () => {
   const closeModal = () => {
     history.push(`/admin/kyc`)
     handleKyc({} as KycItem)
-    // openDocModal && handleOpenDocModal(false)
   }
   const openModal = (kyc: KycItem) => history.push(`/admin/kyc/${kyc.id}`)
-  // const openDocPreviewModal = (kyc: KycItem) => history.push(`/admin/kyc/${kyc.id}?preview`)
-  // const isParamPreview = ('preview' in queryParams)
 
   useEffect(() => {
     getKyc()
@@ -155,10 +140,10 @@ export const AdminKycTable = () => {
       handleIsLoading(false)
     }
   }
+
   return (  
     <div id="kyc-container">
       {Boolean(kyc.id) && <KycReviewModal isOpen onClose={closeModal} data={kyc} />}
-      {/* {Boolean(kyc.id) && isParamPreview && <KycDocPreviewModal isOpen onClose={closeModal} data={kyc} />} */}
       <Search placeholder="Search for Wallet" setSearchValue={setSearchValue} />
       {(adminLoading || isLoading) && (
         <Loader>
@@ -236,11 +221,3 @@ const StyledReviewButton = styled(ButtonGradientBorder)`
   font-size: 14px;
 `
 
-export const StyledDocPreviewButton = styled(ButtonGradient)`
-  min-height: 34px;
-  min-width: 34px;
-  max-height: 34px;
-  max-width: 34px;
-  padding: 4px 8px;
-  font-size: 14px;
-`
