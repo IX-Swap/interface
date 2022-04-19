@@ -23,7 +23,7 @@ interface Props {
   title?: string
 }
 
-const extractDocType = (docName: any) => docName.substring(docName.lastIndexOf(".")).split('.')[1]
+const extractDocType = (docName: any) => docName.substring(docName.lastIndexOf('.')).split('.')[1]
 
 const downloadFile = (url: string, name: string) => {
   const link = document.createElement('a')
@@ -55,13 +55,12 @@ const Row = ({
     createdAt,
   },
   isFirstRow,
-  setPreviewModal
+  setPreviewModal,
 }: {
-  file: Document,
+  file: Document
   isFirstRow: boolean
   setPreviewModal: (value: boolean) => void
 }) => {
-
   const openModal = () => {
     setPreviewModal(true)
   }
@@ -79,7 +78,7 @@ const Row = ({
     <BodyRow key={id} onClick={() => handleRowClick(publicUrl, name)}>
       <div>
         {isFirstRow && <ColumnHeader>{headerCells[0]}</ColumnHeader>}
-        <FileName >
+        <FileName>
           <img src={pdfIcon} alt="pdfIcon" />
           <EllipsisText>{name}</EllipsisText>
         </FileName>
@@ -101,7 +100,7 @@ const Body = ({ documents }: Pick<Props, 'documents'>) => {
   const [openPreviewModal, setPreviewModal] = useState(false)
 
   const filteredDocs = documents.filter((doc: any) => {
-    const docName =  doc?.asset?.name;
+    const docName = doc?.asset?.name
     const docType = extractDocType(docName)
 
     return !['docx', 'doc'].includes(docType) && doc
@@ -113,7 +112,9 @@ const Body = ({ documents }: Pick<Props, 'documents'>) => {
 
   return (
     <>
-      {openPreviewModal && <KycDocPreviewModal isOpen onClose={closeModal} data={filteredDocs} downloadFile={downloadFile} />}
+      {openPreviewModal && (
+        <KycDocPreviewModal isOpen onClose={closeModal} data={filteredDocs} downloadFile={downloadFile} />
+      )}
 
       {documents.map((item, index) => {
         return <Row key={`kyc-table-${item.id}`} file={item} isFirstRow={!index} setPreviewModal={setPreviewModal} />

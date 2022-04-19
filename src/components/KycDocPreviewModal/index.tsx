@@ -3,12 +3,12 @@ import { Trans } from '@lingui/macro'
 import styled from 'styled-components'
 import { ModalBlurWrapper, ModalContentWrapper, MEDIA_WIDTHS, CloseIcon, EllipsisText } from 'theme'
 import RedesignedWideModal from 'components/Modal/RedesignedWideModal'
-import { Download } from 'react-feather';
+import { Download } from 'react-feather'
 import { IconWrapper } from 'components/AccountDetails/styleds'
 import { ButtonGradient } from 'components/Button'
 import { createFileFromApi } from 'utils/createFileFromApi'
 import { AcceptFiles } from 'components/Upload/types'
-import FileViewer from 'react-file-viewer';
+import FileViewer from 'react-file-viewer'
 
 interface Props {
   isOpen: boolean
@@ -29,7 +29,7 @@ export const KycDocPreviewModal = ({ isOpen, onClose, data, downloadFile }: Prop
     const documents = await Promise.all(response as any)
     setDocs(documents as any)
   }
-  
+
   useEffect(() => {
     if (data?.length) {
       fetchDocs()
@@ -50,27 +50,25 @@ export const KycDocPreviewModal = ({ isOpen, onClose, data, downloadFile }: Prop
               </Title>
             </TitleContainer>
             <Body className="file-viewer-canvas-wrapper">
-              {
-                docs?.map(({preview, file, id}: any) => (
-                  <>
-                    {
-                      file.type === AcceptFiles.PDF
-                        ? <div>
-                            <div className="file-viewer-title">
-                              <EllipsisText style={{width: 'calc(100% - 40px)'}}>{file.name}</EllipsisText>
-                              <StyledDocPreviewButton onClick={() => downloadFile(preview, file.name)}>
-                                <IconWrapper style={{margin: 0}} size={18}>
-                                  <StyledDownload />
-                                </IconWrapper>
-                              </StyledDocPreviewButton>
-                            </div>
-                            <FileViewer fileType='pdf' filePath={preview} />
-                          </div>
-                        : <img key={id} style={{maxWidth: '100%', maxHeight: '100%'}} src={preview} alt="" />
-                    }
-                  </>
-                ))
-              }
+              {docs?.map(({ preview, file, id }: any) => (
+                <>
+                  {file.type === AcceptFiles.PDF ? (
+                    <div>
+                      <div className="file-viewer-title">
+                        <EllipsisText style={{ width: 'calc(100% - 40px)' }}>{file.name}</EllipsisText>
+                        <StyledDocPreviewButton onClick={() => downloadFile(preview, file.name)}>
+                          <IconWrapper style={{ margin: 0 }} size={18}>
+                            <StyledDownload />
+                          </IconWrapper>
+                        </StyledDocPreviewButton>
+                      </div>
+                      <FileViewer fileType="pdf" filePath={preview} />
+                    </div>
+                  ) : (
+                    <img key={id} style={{ maxWidth: '100%', maxHeight: '100%' }} src={preview} alt="" />
+                  )}
+                </>
+              ))}
             </Body>
           </ModalContent>
         </ModalBlurWrapper>
