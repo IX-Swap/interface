@@ -209,7 +209,7 @@ const navLinkStyles = css`
   border-radius: 3rem;
   outline: none;
   cursor: pointer;
-  text-decoration: none;
+  text-decoration: none !important;
   color: ${({ theme }) => theme.text2};
   width: fit-content;
   word-break: break-word;
