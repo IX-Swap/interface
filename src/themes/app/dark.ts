@@ -58,7 +58,7 @@ export const darkTheme: DeprecatedThemeOptions = {
       alternativeLight: tinycolor('#132a57').lighten(20).toHex()
     },
     sidebar: {
-      activeBackground: 'rgba(137, 149, 252, 0.11)',
+      activeBackground: tinycolor('#8995fc').setAlpha(0.1).toRgbString(),
       activeColor: '#8995FC'
     },
     breadcrumbs: {
@@ -152,6 +152,14 @@ export const darkTheme: DeprecatedThemeOptions = {
       primary: '#FFFFFF',
       secondary: '#496396'
     },
+    table: {
+      color: '#89A1CE',
+      rowBg: '#152D5F',
+      rowColor: '#89A1CE',
+      boxShadow: `0px 80px 80px ${tinycolor('#0e1f3f')
+        .setAlpha(0.3)
+        .toRgbString()}`
+    },
     skeleton: {
       bg: '#1D3667'
     },
@@ -174,6 +182,10 @@ export const darkTheme: DeprecatedThemeOptions = {
       colorError: '#F56283',
       borderError: tinycolor('#F56283').setAlpha(0.5).toRgbString()
     },
+    navigationLink: {
+      color: '#FFFFFF',
+      activeColor: '#4C88FF'
+    },
     select: {
       bg: '#152D5F',
       bgDisabled: '#11254C',
@@ -184,6 +196,16 @@ export const darkTheme: DeprecatedThemeOptions = {
       colorDisabled: '#496396',
       labelDisabled: '#496396',
       border: '#1D3667'
+    },
+    dropdownLink: {
+      boxShadow: tinycolor('#0e1f3f').setAlpha(0.3).toRgbString(),
+      border: '#1D3667'
+    },
+    notificationsDropdown: {
+      bg: '#11254C',
+      message: '#778194',
+      divider: '#1D3667',
+      bgHover: tinycolor('#152D5F').setAlpha(0.4).toRgbString()
     },
     success: {
       main: '#7DD320'

@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NotificationsVirtualizedItem should match snapshot 1`] = `
+<div>
+  <div>
+    <div>
+      <div
+        class="MuiGrid-root makeStyles-container-1 css-vj1n65-MuiGrid-root"
+        data-testid="wrapper"
+      >
+        <div
+          class="MuiGrid-root MuiGrid-container makeStyles-inner-2 css-11lq3yg-MuiGrid-root"
+          data-testid="notification-inner"
+        >
+          <div
+            class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
+          />
+          <div
+            class="MuiGrid-root MuiGrid-item MuiGrid-zeroMinWidth makeStyles-content-3 css-175wz9v-MuiGrid-root"
+          >
+            <p
+              class="MuiTypography-root MuiTypography-body1 MuiTypography-noWrap makeStyles-title-4 css-1kaswgd-MuiTypography-root"
+            >
+              Cash Withdrawl
+            </p>
+            <p
+              class="MuiTypography-root MuiTypography-body1 css-3phns2-MuiTypography-root"
+            >
+              Your cash withdrawl request has been declined.
+            </p>
+            <p
+              class="MuiTypography-root MuiTypography-body1 MuiTypography-noWrap fs-exclude css-1kaswgd-MuiTypography-root"
+              style="color: rgb(52, 168, 123);"
+            />
+          </div>
+          <div
+            class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-actions-5 css-vnie10-MuiGrid-root"
+          >
+            <div
+              aria-disabled="true"
+              aria-label="Mark as read"
+              class="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root Mui-disabled makeStyles-container-6 makeStyles-container-7 css-slzo6x-MuiButtonBase-root-MuiButton-root"
+              data-mui-internal-clone-element="true"
+              role="button"
+              tabindex="-1"
+            />
+            <span
+              class="MuiTypography-root MuiTypography-caption css-1fbb6wu-MuiTypography-root"
+            >
+              545 d
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

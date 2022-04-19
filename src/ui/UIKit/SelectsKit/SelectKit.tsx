@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { UIKitThemeWrapper } from 'ui/UIKit/UIKitThemeWrapper'
 import { Select } from 'ui/Select/Select'
 import { SelectItem } from 'ui/Select/SelectItem/SelectItem'
-import { UICheckbox } from 'ui/UICheckbox/UICheckbox'
+import { UICheckbox } from 'components/UICheckbox/UICheckbox'
 import { VSpacer } from 'components/VSpacer'
 import { InputLabel } from 'ui/Select/InputLabel/InputLabel'
 

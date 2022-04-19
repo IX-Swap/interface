@@ -34,14 +34,21 @@ export const useStyles = makeStyles(theme => {
 
   return {
     wrapper: {
-      color: ({ type }: Props) => getColor(type),
       backgroundColor: ({ type }: Props) => getBg(type),
       border: ({ type }: Props) => `1px solid ${getBorderColor(type)}`,
       padding: theme.spacing(1.25, 3),
       minHeight: 36,
 
-      '& span': {
+      '&:hover': {
+        backgroundColor: ({ type }: Props) => getBg(type)
+      },
+
+      '& > span': {
         padding: 0
+      },
+      '& .MuiChip-label': {
+        color: ({ type }: Props) => getColor(type),
+        opacity: 1
       }
     }
   }
