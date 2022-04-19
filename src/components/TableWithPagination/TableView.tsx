@@ -10,7 +10,6 @@ import {
   Paper,
   Grid,
   PaperProps,
-  Checkbox,
   FormControlLabel
 } from '@mui/material'
 import { TableColumn, BaseFilter } from 'types/util'
@@ -22,6 +21,7 @@ import { UseSelectionHelperReturnType } from 'hooks/useSelectionHelper'
 import { useTheme } from '@mui/material/styles'
 import useStyles from './TableView.styles'
 import { NoData } from 'app/components/NoData/NoData'
+import { UICheckbox } from 'components/UICheckbox/UICheckbox'
 
 export interface TableViewRendererProps<T> {
   items: T[]
@@ -135,7 +135,7 @@ export const TableView = <T,>({
         label: (
           <FormControlLabel
             control={
-              <Checkbox
+              <UICheckbox
                 checked={getIsItemsSelected(_items)}
                 indeterminate={getIsIndeterminate(_items)}
                 onClick={() => toggleAll(_items)}
@@ -151,7 +151,7 @@ export const TableView = <T,>({
         render: (val: any, item: T) => (
           <FormControlLabel
             control={
-              <Checkbox
+              <UICheckbox
                 checked={getIsItemSelected(item)}
                 onClick={() => toggle(item)}
               />

@@ -98,6 +98,13 @@ export interface Alerts {
   border: string
 }
 
+export interface TablePalette {
+  rowBg: CSSProperties['color']
+  rowColor: CSSProperties['color']
+  color: CSSProperties['color']
+  boxShadow: string
+}
+
 export interface ChipPalette {
   bg: string
   fill: string
@@ -145,6 +152,16 @@ export interface StepIcon {
   borderError: string
 }
 
+export interface NavigationLink {
+  color: CSSProperties['color']
+  activeColor: CSSProperties['color']
+}
+
+export interface DropdownLink {
+  boxShadow: string
+  border: string
+}
+
 export interface SelectPalette {
   bg: CSSProperties['color']
   bgDisabled: CSSProperties['color']
@@ -155,6 +172,13 @@ export interface SelectPalette {
   label: CSSProperties['color']
   labelDisabled: CSSProperties['color']
   border: CSSProperties['color']
+}
+
+export interface NotificationsDropdown {
+  divider: string
+  message: CSSProperties['color']
+  bg: CSSProperties['color']
+  bgHover: CSSProperties['color']
 }
 
 declare module '@mui/styles/defaultTheme' {
@@ -191,16 +215,20 @@ declare module '@mui/material/styles' {
         color?: CSSProperties['color']
       }
     }
+    table: TablePalette
     paginationItem: PaginationItem
     tablePagination: TablePagination
     alerts: Alerts
     stepIcon: StepIcon
+    navigationLink: NavigationLink
     input: {
       placeholder: CSSProperties['color']
       border: string
       disabledBg: string
     }
     select: SelectPalette
+    dropdownLink: DropdownLink
+    notificationsDropdown: NotificationsDropdown
   }
 
   export interface Palette {
@@ -232,16 +260,20 @@ declare module '@mui/material/styles' {
         color?: CSSProperties['color']
       }
     }
+    table: TablePalette
     paginationItem: PaginationItem
     tablePagination: TablePagination
     alerts: Alerts
     stepIcon: StepIcon
+    navigationLink: NavigationLink
     input: {
       placeholder: CSSProperties['color']
       border: string
       disabledBg: string
     }
     select: SelectPalette
+    dropdownLink: DropdownLink
+    notificationsDropdown: NotificationsDropdown
   }
 
   export interface Theme {

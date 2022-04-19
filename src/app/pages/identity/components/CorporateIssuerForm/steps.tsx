@@ -17,6 +17,7 @@ import { TaxDeclarationForm } from '../TaxDeclarationForm/TaxDeclarationForm'
 import { CorporateUploadDocumentsForm } from '../UploadDocumentsForm/CorporateUploadDocumentsForm'
 import {
   corporateInvestorInfoSchema,
+  corporateInvestorSchema,
   corporateIssuerDocumentsSchema,
   corporateTaxDeclarationSchema,
   directorsAndBeneficialOwnersSchema
@@ -54,9 +55,25 @@ export const corporateIssuerFormSteps = [
   },
   {
     label: 'Review & Submit',
-    getFormValues: () => null,
-    getRequestPayload: {},
-    validationSchema: {},
+    getFormValues: (data: any) => {
+      const allData = {
+        ...getCorporateInfoFormValues(data),
+        ...getCorporateInvestorDocumentsFormValues(data),
+        ...getCorporateInvestorTaxDeclarationFormValues(data),
+        ...getDirectorsAndBeneficialOwnersFormValues(data)
+      }
+      return allData
+    },
+    getRequestPayload: (data: any) => {
+      const allData = {
+        ...getCorporateInfoRequestPayload(data),
+        ...getCorporateInvestorDocumentsRequestPayload(data),
+        ...getDirectorsAndBeneficialOwnerRequestPayload(data),
+        ...getTaxDeclarationRequestPayload(data)
+      }
+      return allData
+    },
+    validationSchema: corporateInvestorSchema,
     component: () => <CorporateIdentityContainer />
   }
 ]

@@ -1,9 +1,10 @@
 import React from 'react'
-import { Box, Checkbox, Grid } from '@mui/material'
+import { Box, Grid } from '@mui/material'
 import {
   DataroomRowUploader,
   DataroomRowUploaderProps
 } from 'components/dataroom/DataroomRowUploader'
+import { UICheckbox } from 'components/UICheckbox/UICheckbox'
 
 export interface SelectableDataroomEditRowProps
   extends DataroomRowUploaderProps {
@@ -28,7 +29,7 @@ export const SelectableDataroomEditRow = (
     <Grid container alignItems='center' wrap='nowrap' onClick={toggleItem}>
       {hasSelected && (
         <Box flex='1 0 50px'>
-          <Checkbox checked={isSelected} />
+          <UICheckbox checked={isSelected} />
         </Box>
       )}
       <DataroomRowUploader {...rest} onDelete={handleDelete} />

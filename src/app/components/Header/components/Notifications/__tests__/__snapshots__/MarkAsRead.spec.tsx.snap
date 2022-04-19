@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MarkAsRead should match snapshot 1`] = `
+<div>
+  <div
+    aria-disabled="true"
+    aria-label="Mark as read"
+    class="MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium MuiButtonBase-root Mui-disabled makeStyles-container-1 makeStyles-container-2 css-slzo6x-MuiButtonBase-root-MuiButton-root"
+    data-mui-internal-clone-element="true"
+    role="button"
+    tabindex="-1"
+  />
+</div>
+`;

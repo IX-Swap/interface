@@ -1,15 +1,17 @@
 import { IdentityRoute } from 'app/pages/identity/router/config'
 import { IndividualIdentity } from 'app/pages/identity/types/forms'
 import { identityURL } from 'config/apiURL'
+import { identityQueryKeys } from 'config/queryKeys'
 import { getIdFromObj } from 'helpers/strings'
 import { useAuth } from 'hooks/auth/useAuth'
 import { useServices } from 'hooks/useServices'
-import { useMutation } from 'react-query'
+import { useMutation, useQueryCache } from 'react-query'
 import { generatePath, useHistory } from 'react-router-dom'
 
 export const useCreateIndividual = () => {
   const { snackbarService, apiService } = useServices()
   const { replace, location } = useHistory()
+  const queryCache = useQueryCache()
   const { user } = useAuth()
   const userId = getIdFromObj(user)
   const uri = identityURL.individuals.create(userId)
@@ -20,6 +22,7 @@ export const useCreateIndividual = () => {
 
   return useMutation(createOrUpdateIndividual, {
     onSuccess: async data => {
+      void queryCache.invalidateQueries(identityQueryKeys.getIndividual)
       // eslint-disable-next-line
       if (location.pathname.endsWith('create')) {
         replace(

@@ -1,8 +1,9 @@
 import React from 'react'
 import { TypedField } from 'components/form/TypedField'
 import { RadioGroup } from 'components/form/RadioGroup'
-import { FormControlLabel, Grid, Radio } from '@mui/material'
+import { FormControlLabel, Grid } from '@mui/material'
 import { useFormContext } from 'react-hook-form'
+import { UIRadio } from 'components/UIRadio/UIRadio'
 
 export const AddressType = () => {
   const { control, watch } = useFormContext()
@@ -20,14 +21,14 @@ export const AddressType = () => {
           <FormControlLabel
             label='New Address'
             value='new'
-            control={<Radio checked={addressType === 'new'} />}
+            control={<UIRadio checked={addressType === 'new'} />}
           />
         </Grid>
         <Grid item>
           <FormControlLabel
             label='Import from Withdrawal Addresses'
             value='existing'
-            control={<Radio checked={addressType === 'existing'} />}
+            control={<UIRadio checked={addressType === 'existing'} />}
           />
         </Grid>
       </Grid>

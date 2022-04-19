@@ -1,13 +1,14 @@
 import React from 'react'
 import { VSpacer } from 'components/VSpacer'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
-import { FormControlLabel, Grid, Radio, Typography } from '@mui/material'
+import { FormControlLabel, Grid, Typography } from '@mui/material'
 import { TypedField } from 'components/form/TypedField'
 import { RadioGroup } from 'components/form/RadioGroup'
 import { useFormContext } from 'react-hook-form'
 import { useAssetsData } from 'hooks/asset/useAssetsData'
 import getSymbolFromCurrency from 'currency-symbol-map'
 import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
+import { UIRadio } from 'components/UIRadio/UIRadio'
 
 export const ListingMarketInfo = () => {
   const { control } = useFormContext()
@@ -56,7 +57,7 @@ export const ListingMarketInfo = () => {
                   // eslint-disable-next-line
                   label={`${item.name} (${getSymbolFromCurrency(item.symbol)})`}
                   value={item._id}
-                  control={<Radio />}
+                  control={<UIRadio />}
                 />
               )
             })}
@@ -80,7 +81,7 @@ export const ListingMarketInfo = () => {
                 <FormControlLabel
                   label='Exchange'
                   value='Exchange'
-                  control={<Radio />}
+                  control={<UIRadio />}
                 />
               </Grid>
             </Grid>

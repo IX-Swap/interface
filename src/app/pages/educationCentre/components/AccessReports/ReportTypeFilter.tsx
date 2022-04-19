@@ -1,12 +1,7 @@
 import React from 'react'
 import { SearchQueryFilter } from 'components/SearchQueryFilter/SearchQueryFilter'
-import {
-  FormControl,
-  FormControlLabel,
-  Grid,
-  Radio,
-  RadioGroup
-} from '@mui/material'
+import { FormControl, FormControlLabel, Grid, RadioGroup } from '@mui/material'
+import { UIRadio } from 'components/UIRadio/UIRadio'
 
 export const ReportTypeFilter = () => {
   return (
@@ -23,14 +18,14 @@ export const ReportTypeFilter = () => {
                 <Grid item>
                   <FormControlLabel
                     value='INVESTAX'
-                    control={<Radio checked={value === 'INVESTAX'} />}
+                    control={<UIRadio checked={value === 'INVESTAX'} />}
                     label='InvestaX'
                   />
                 </Grid>
                 <Grid item>
                   <FormControlLabel
                     value='ATLAS_ONE'
-                    control={<Radio checked={value === 'ATLAS_ONE'} />}
+                    control={<UIRadio checked={value === 'ATLAS_ONE'} />}
                     label='Atlas One'
                   />
                 </Grid>

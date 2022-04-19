@@ -41,7 +41,7 @@ export const StepperExample = ({
         const step = index + 1
 
         return (
-          <Step key={label}>
+          <Step key={label} completed={getVariantsConditions(index).completed}>
             <StepButton
               step={step}
               variantsConditions={getVariantsConditions(index)}
