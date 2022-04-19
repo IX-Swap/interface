@@ -1,24 +1,33 @@
-import React from 'react'
-import { useDownloadRawFile } from 'hooks/useDownloadRawFile'
 import { IconButton } from '@mui/material'
+import { documentsURL } from 'config/apiURL'
+import { getIdFromObj } from 'helpers/strings'
+import { useAuth } from 'hooks/auth/useAuth'
+import { useDownloadRawDocument } from 'hooks/useDownloadRawDocument'
 import { convertBlobToFile, openFileInNewTab } from 'hooks/utils'
+import React from 'react'
 import { Icon } from 'ui/Icons/Icon'
 
 export interface DownloadProps {
-  uri: string
+  documentId: string
 }
 
-export const Download = ({ uri }: DownloadProps) => {
-  const [download, { isLoading }] = useDownloadRawFile(uri, {
-    onSuccess: ({ data }) => {
-      const file = convertBlobToFile(data, '')
-      openFileInNewTab(file)
-    }
-  })
+export const Download = ({ documentId }: DownloadProps) => {
+  const { user } = useAuth()
 
-  const handleDownload = async () => await download()
+  const [downloadDocument, { isLoading }] = useDownloadRawDocument(
+    { documentId, uri: documentsURL.getById(getIdFromObj(user), documentId) },
+    {
+      onSuccess: ({ data }) => {
+        const file = convertBlobToFile(data, '')
+        openFileInNewTab(file)
+      }
+    }
+  )
+
+  const handleClick = async () => await downloadDocument()
+
   return (
-    <IconButton disabled={isLoading} onClick={handleDownload} size='large'>
+    <IconButton onClick={handleClick} disabled={isLoading} size='large'>
       <Icon name='eye' />
     </IconButton>
   )

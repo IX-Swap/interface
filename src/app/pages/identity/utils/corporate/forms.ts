@@ -101,8 +101,8 @@ export const getCorporateInvestorDocumentsFormValues = (
       return {
         ...result,
         evidenceOfAccreditation: Array.isArray(evidenceOfAccreditation)
-          ? [...evidenceOfAccreditation, document]
-          : [document]
+          ? [...evidenceOfAccreditation, { value: document }]
+          : [{ value: document }]
       }
     }
 
@@ -110,8 +110,8 @@ export const getCorporateInvestorDocumentsFormValues = (
       return {
         ...result,
         financialDocuments: Array.isArray(financialDocuments)
-          ? [...financialDocuments, document]
-          : [document]
+          ? [...financialDocuments, { value: document }]
+          : [{ value: document }]
       }
     }
 
@@ -119,8 +119,8 @@ export const getCorporateInvestorDocumentsFormValues = (
       return {
         ...result,
         corporateDocuments: Array.isArray(corporateDocuments)
-          ? [...corporateDocuments, document]
-          : [document]
+          ? [...corporateDocuments, { value: document }]
+          : [{ value: document }]
       }
     }
 

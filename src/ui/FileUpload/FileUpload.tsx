@@ -45,6 +45,7 @@ export const FileUpload = (props: FileUploadProps) => {
     remove
   } = props
   const { watch } = useFormContext()
+
   const value = watch(name, defaultValue) as FileUploadProps['value']
   const { snackbarService } = useServices()
   const { hasError } = useFormError(name)
@@ -112,8 +113,8 @@ export const FileUpload = (props: FileUploadProps) => {
     if (multiple) {
       return label
     }
-    if (value !== undefined && completed === 100) {
-      return (value as DataroomFile | undefined)?.originalFileName
+    if (hasValue) {
+      return (value as DataroomFile).originalFileName
     }
 
     return label

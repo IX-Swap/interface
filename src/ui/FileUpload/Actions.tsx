@@ -3,7 +3,6 @@ import React from 'react'
 import { DataroomFile } from 'types/dataroomFile'
 import { Icon } from 'ui/Icons/Icon'
 import { useFormContext } from 'react-hook-form'
-import { ViewDocument } from 'app/components/DSO/components/ViewDocument'
 import { Download } from 'ui/FileUpload/Download'
 
 export interface ActionsProps {
@@ -41,9 +40,7 @@ export const Actions = ({
         </IconButton>
       )}
 
-      <ViewDocument documentId={document._id}>
-        {file => <Download uri={file} />}
-      </ViewDocument>
+      <Download documentId={document._id} />
     </Box>
   )
 }

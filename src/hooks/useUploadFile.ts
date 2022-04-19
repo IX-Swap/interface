@@ -45,7 +45,7 @@ export const useUploadFile = (
       formData,
       {
         onUploadProgress: function (progressEvent) {
-          var percentCompleted = Math.round(
+          const percentCompleted = Math.round(
             (progressEvent.loaded * 100) / progressEvent.total
           )
           setCompleted?.(percentCompleted)

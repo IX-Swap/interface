@@ -43,54 +43,52 @@ export const File = ({
   remove
 }: FileProps) => {
   return (
-    <>
-      <FileUploadBox
-        component='div'
-        width='100%'
-        height={80}
-        className={classNames({
-          hasError,
-          isFileTooLarge,
-          hasValue
-        })}
-      >
-        <Box display='flex' alignItems='center'>
-          <Icon name='file' />
-          <Typography className='label' sx={{ ml: 1, lineHeight: '24px' }}>
-            {label}
+    <FileUploadBox
+      component='div'
+      width='100%'
+      height={80}
+      className={classNames({
+        hasError,
+        isFileTooLarge,
+        hasValue
+      })}
+    >
+      <Box display='flex' alignItems='center'>
+        <Icon name='file' />
+        <Typography className='label' sx={{ ml: 1, lineHeight: '24px' }}>
+          {label}
+        </Typography>
+      </Box>
+      {(!multiple || isDisplay) && value !== undefined ? (
+        <Actions
+          name={name}
+          document={value as DataroomFile}
+          readonly={readonly}
+          setCompleted={setCompleted}
+          multiple={multiple}
+          remove={remove}
+        />
+      ) : (
+        <Box {...rootProps}>
+          <Typography sx={{ cursor: 'pointer' }} color='primary'>
+            Browse
           </Typography>
-        </Box>
-        {(!multiple || isDisplay) && value !== undefined ? (
-          <Actions
+          <input
+            id={name}
             name={name}
-            document={value as DataroomFile}
-            readonly={readonly}
-            setCompleted={setCompleted}
-            multiple={multiple}
-            remove={remove}
-          />
-        ) : (
-          <Box {...rootProps}>
-            <Typography sx={{ cursor: 'pointer' }} color='primary'>
-              Browse
-            </Typography>
-            <input
-              id={name}
-              name={name}
-              {...inputProps}
-              disabled={disabled}
-              hidden
-            />
-          </Box>
-        )}
-        <Box position='absolute' bottom={0} left={0} width='100%'>
-          <LinearProgress
-            variant='determinate'
-            value={completed}
-            color={completed === 100 ? 'success' : 'primary'}
+            {...inputProps}
+            disabled={disabled}
+            hidden
           />
         </Box>
-      </FileUploadBox>
-    </>
+      )}
+      <Box position='absolute' bottom={0} left={0} width='100%'>
+        <LinearProgress
+          variant='determinate'
+          value={completed}
+          color={completed === 100 ? 'success' : 'primary'}
+        />
+      </Box>
+    </FileUploadBox>
   )
 }
