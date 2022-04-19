@@ -40,8 +40,8 @@ export const DSOTeamMember = (props: DSOTeamMemberProps) => {
             key={fieldId}
             control={control}
             component={FileUpload}
-            label=''
-            defaultValue={defaultValue?.photo ?? ''}
+            label='Upload photo'
+            defaultValue={defaultValue?.photo}
             valueExtractor={documentValueExtractor}
             documentInfo={{
               title: 'Photo',
