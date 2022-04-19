@@ -82,7 +82,6 @@ export const CorporateInvestorForm = ({
         submitMutation={submitMutation}
         steps={corporateInvestorFormSteps}
         defaultActiveStep={defaultActiveStep}
-        shouldSaveOnMove={!isCorporateJourneyCompleted}
         nonLinear
       />
     </>

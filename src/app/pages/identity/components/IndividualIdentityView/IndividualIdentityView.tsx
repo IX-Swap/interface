@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid } from '@mui/material'
+import { Grid, Paper } from '@mui/material'
 import { IdentityDocumentsView } from 'app/pages/identity/components/IdentityDocumentsView/IdentityDocumentsView'
 import { privateClassNames } from 'helpers/classnames'
 import { FormSectionHeader } from 'app/components/DSO/components/FormSectionHeader'
@@ -20,33 +20,45 @@ export const IndividualIdentityView = ({
   return (
     <Grid container spacing={6}>
       <Grid item xs={12}>
-        <FormSectionHeader title='Overview' />
-        <IndividualInfoView data={data} />
+        <Paper sx={{ borderRadius: 2, p: 5 }}>
+          <FormSectionHeader title='Overview' />
+          <IndividualInfoView data={data} />
+        </Paper>
       </Grid>
 
       <Grid item xs={12} className={privateClassNames()}>
-        <FormSectionHeader title='Address' />
-        <AddressView data={data.address} />
+        <Paper sx={{ borderRadius: 2, p: 5 }}>
+          <FormSectionHeader title='Address' />
+          <AddressView data={data.address} />
+        </Paper>
       </Grid>
 
       <Grid item xs={12} className={privateClassNames()}>
-        <FormSectionHeader title='Financial Information' />
-        <FinancialView data={data} />
+        <Paper sx={{ borderRadius: 2, p: 5 }}>
+          <FormSectionHeader title='Financial Information' />
+          <FinancialView data={data} />
+        </Paper>
       </Grid>
 
       <Grid item xs={12} className={privateClassNames()}>
-        <FormSectionHeader title='Tax Declaration' />
-        <TaxDeclarationView data={data} />
+        <Paper sx={{ borderRadius: 2, p: 5 }}>
+          <FormSectionHeader title='Tax Declaration' />
+          <TaxDeclarationView data={data} />
+        </Paper>
       </Grid>
 
       <Grid item xs={12}>
-        <FormSectionHeader title='Investor Status Declaration' />
-        <InvestorDeclarationView data={data} />
+        <Paper sx={{ borderRadius: 2, p: 5 }}>
+          <FormSectionHeader title='Investor Status Declaration' />
+          <InvestorDeclarationView data={data} />
+        </Paper>
       </Grid>
 
       <Grid item xs={12}>
-        <FormSectionHeader title='Documents' />
-        <IdentityDocumentsView data={data.documents} type='individual' />
+        <Paper sx={{ borderRadius: 2, p: 5 }}>
+          <FormSectionHeader title='Documents' />
+          <IdentityDocumentsView data={data.documents} type='individual' />
+        </Paper>
       </Grid>
     </Grid>
   )

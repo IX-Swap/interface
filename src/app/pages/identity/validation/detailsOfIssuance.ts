@@ -36,3 +36,8 @@ export const issuerDocumentsSchema = yup.object().shape<any>({
     .required(validationMessages.required),
   financial: yup.array<DataroomFile>().required(validationMessages.required)
 })
+
+export const detailsOfIssuanceSchema = yup.object().shape<any>({
+  ...issuerDetailsSchema.fields,
+  ...issuerDocumentsSchema.fields
+})
