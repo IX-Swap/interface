@@ -16,6 +16,7 @@ import { useKYCState } from 'state/kyc/hooks'
 import { css } from 'styled-components'
 import styled from 'styled-components/macro'
 import { ExternalLink, TYPE } from 'theme'
+import { isDevelopment } from 'utils/isEnvMode'
 import { isUserWhitelisted } from 'utils/isUserWhitelisted'
 import { routes } from 'utils/routes'
 import Row, { RowFixed } from '../Row'
@@ -162,7 +163,7 @@ export const HeaderLinks = () => {
         <MenuExternalLink
           disabled={!isKycApproved}
           target="_self"
-          href={isDev ? 'https://dev.info.ixswap.io/' : 'https://info.ixswap.io/home'}
+          href={isDevelopment ? 'https://dev.info.ixswap.io/' : 'https://info.ixswap.io/home'}
         >
           <Trans>Charts</Trans>
         </MenuExternalLink>
