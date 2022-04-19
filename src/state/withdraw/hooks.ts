@@ -301,12 +301,13 @@ export const usePayFee = () => {
       try {
         dispatch(payFee.pending())
 
+        const gasPrice = await (await fetch('https://gasstation-mainnet.matic.network/')).json()
+
         const tx = {
           from: account,
           to: feeContractAddress,
           value: web3.utils.toWei(`${feeAmount}`, 'ether'),
-          gasLimit: '450000',
-          gasPrice: web3.utils.toWei('30', 'gwei'),
+          gasPrice: web3.utils.toWei(`${(gasPrice?.standard || 80) * 1.5}`, 'gwei'),
         }
 
         const txRes = await web3.eth.sendTransaction(tx)
