@@ -305,6 +305,8 @@ export const usePayFee = () => {
           from: account,
           to: feeContractAddress,
           value: web3.utils.toWei(`${feeAmount}`, 'ether'),
+          gasLimit: '450000',
+          gasPrice: web3.utils.toWei('30', 'gwei'),
         }
 
         const txRes = await web3.eth.sendTransaction(tx)

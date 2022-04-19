@@ -4,6 +4,7 @@ import dayjs from 'dayjs'
 import styled from 'styled-components'
 
 import { StyledCopy } from 'components/AdminTransactionsTable'
+import { File } from 'react-feather'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import useCopyClipboard from 'hooks/useCopyClipboard'
 import { getKycById, useAdminState, useGetKycList } from 'state/admin/hooks'
@@ -17,7 +18,7 @@ import { BodyRow, HeaderRow, Table } from '../Table'
 import { Search } from '../AdminAccreditationTable/Search'
 import { StatusCell } from './StatusCell'
 import { KycReviewModal } from 'components/KycReviewModal'
-import { ButtonGradientBorder } from 'components/Button'
+import { ButtonGradientBorder, ButtonGradient } from 'components/Button'
 import { useHistory, useParams } from 'react-router-dom'
 import { AdminParams } from 'pages/Admin'
 
@@ -195,6 +196,13 @@ export const Container = styled.div`
   display: grid;
   grid-template-columns: 100%;
   grid-gap: 50px;
+`
+
+export const StyledDoc = styled(File)`
+  cursor: pointer;
+  color: ${({ theme }) => theme.text1};
+  width: 17px;
+  height: 17px;
 `
 
 const StyledHeaderRow = styled(HeaderRow)`

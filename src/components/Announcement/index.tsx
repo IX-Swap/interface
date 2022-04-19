@@ -8,8 +8,8 @@ import { Card } from './styleds'
 export const Announcement: FC = () => {
   const [_cookies, setCookie] = useCookies(['annoucementsSeen'])
   const annoumcementText =
-    'For the best performance of the app we recommend to use recent stable versions of Chrome, Brave or Firefox browsers, or Trust Wallet, Metamask, Coinbase Wallet apps on smartphone.'
-
+    'To get the best performance of the app, we recommend using any of the recent stable versions of the Chrome, Brave, or any Firefox browsers. For wallets, we recommend Trust Wallet, Metamask, or Coinbase Wallet.'
+    
   const onClose = () => {
     setCookie('annoucementsSeen', 'true', {
       path: '/',
