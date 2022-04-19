@@ -22,13 +22,13 @@ export const useStyles = makeStyles(theme => ({
     width: '55%',
     height: '100vh',
     position: 'relative',
-    overflowY: 'scroll',
     backgroundColor: 'transparent',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     [theme.breakpoints.down('md')]: {
-      width: '100%'
+      width: '100%',
+      overflowY: 'scroll'
     }
   },
   formContainer: {

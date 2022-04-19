@@ -58,7 +58,7 @@ const CheckboxLabel = ({ isError }: CheckboxLabelProps) => {
 export const RegisterFields = () => {
   const { getFilterValue } = useQueryFilter()
   const identity = getFilterValue('identityType')
-  const isIndvidual = identity === 'individual'
+  const isIndividual = identity === 'individual'
 
   const { control, errors } = useFormContext<SignupArgs>()
   const { bottomBlock, topBlock } = useStyles({})
@@ -68,14 +68,14 @@ export const RegisterFields = () => {
 
   return (
     <Grid container spacing={6} direction='column'>
-      <Grid item>{isIndvidual ? <SingPassButton /> : null}</Grid>
+      <Grid item>{isIndividual ? <SingPassButton /> : null}</Grid>
       <Grid item>
         <TypedField
           control={control}
           component={TextField}
           name='name'
-          label={isIndvidual ? 'Full Name' : 'Corporate Name'}
-          placeholder={isIndvidual ? 'Full Name' : 'Corporate Name'}
+          label={isIndividual ? 'Full Name' : 'Corporate Name'}
+          placeholder={isIndividual ? 'Full Name' : 'Corporate Name'}
           fullWidth
           InputLabelProps={{
             shrink: true

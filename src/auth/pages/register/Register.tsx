@@ -25,7 +25,7 @@ export const Register: React.FC = observer(() => {
   const { title, question, link } = useStyles({})
   const { updateFilter, getFilterValue } = useQueryFilter()
   const identity = getFilterValue('identityType')
-  const isIndvidual = identity === 'individual'
+  const isIndividual = identity === 'individual'
 
   const handleSubmit = async (values: SignupArgs) => {
     await signup({
@@ -42,7 +42,7 @@ export const Register: React.FC = observer(() => {
   }, [identity, updateFilter])
 
   const handleIdentityChange = () => {
-    if (isIndvidual) {
+    if (isIndividual) {
       updateFilter('identityType', 'corporate')
       return
     }
@@ -64,7 +64,7 @@ export const Register: React.FC = observer(() => {
             Sign up
           </Typography>
           <Typography align='center' sx={{ color: 'rgba(255, 255, 255, .5)' }}>
-            Creating {isIndvidual ? 'a ' : 'an '}
+            Creating {isIndividual ? 'a ' : 'an '}
             <Button
               variant='text'
               onClick={handleIdentityChange}
@@ -78,7 +78,7 @@ export const Register: React.FC = observer(() => {
                 }
               }}
             >
-              {isIndvidual ? 'Corporate' : 'Individual'} Account
+              {isIndividual ? 'Corporate' : 'Individual'} Account
             </Button>{' '}
             ?
           </Typography>
