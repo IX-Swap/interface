@@ -53,7 +53,7 @@ const Row: FC<RowProps> = ({ item, openModal }: RowProps) => {
   const fullName = individualKycId
     ? [kyc?.firstName, kyc?.lastName].filter((el) => Boolean(el)).join(' ')
     : kyc?.corporateName
-  
+
   return (
     <StyledBodyRow key={id}>
       <Wallet>
@@ -141,7 +141,7 @@ export const AdminKycTable = () => {
     }
   }
 
-  return (  
+  return (
     <div id="kyc-container">
       {Boolean(kyc.id) && <KycReviewModal isOpen onClose={closeModal} data={kyc} />}
       <Search placeholder="Search for Wallet" setSearchValue={setSearchValue} />
@@ -220,4 +220,3 @@ const StyledReviewButton = styled(ButtonGradientBorder)`
   padding: 4px 8px;
   font-size: 14px;
 `
-
