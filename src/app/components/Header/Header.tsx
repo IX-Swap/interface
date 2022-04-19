@@ -6,6 +6,7 @@ import { Navigation } from 'app/components/Header/components/Navigation/Navigati
 import { UserDropdown } from 'app/components/Header/components/UserDropdown/UserDropdown'
 import { NotificationsDropdown } from 'app/components/Header/components/Notifications/NotificationsDropdown/NotificationsDropdown'
 import { NavDrawerToggle } from 'app/components/Header/components/Navigation/NavDrawerToggle/NavDrawerToggle'
+import { TwoFADropdown } from 'app/components/Header/components/TwoFADropdown/TwoFADropdown'
 
 export const Header = () => {
   const classes = useStyles()
@@ -18,6 +19,7 @@ export const Header = () => {
         <Box className={classes.emptySpace} />
         <Navigation />
         <Box className={classes.emptySpace} />
+        <TwoFADropdown />
         <NotificationsDropdown />
         <UserDropdown />
       </Toolbar>
