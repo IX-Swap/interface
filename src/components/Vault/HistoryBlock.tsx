@@ -19,8 +19,10 @@ interface Props {
   account?: string | null
 }
 
+let interval = null as any
+
 export const HistoryBlock = ({ currency, account }: Props) => {
-  const { eventLogLoading } = useEventState()
+  const { eventLogLoading, page, filter } = useEventState()
   const tokenId = useSecTokenId({ currencyId: (currency as any)?.address })
   const getEvents = useGetEventCallback()
   const currencyBalance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
@@ -30,7 +32,19 @@ export const HistoryBlock = ({ currency, account }: Props) => {
     if (tokenId && balance !== '-') {
       getEvents({ tokenId, filter: 'all' })
     }
-  }, [getEvents, tokenId, balance])
+  }, [getEvents, tokenId])
+
+  useEffect(() => {
+    if (tokenId && balance !== '-') {
+      interval = setInterval(() => {
+        getEvents({ tokenId, page: page || 1, filter: filter || 'all' })
+      }, 30000)
+
+      return () => {
+        clearInterval(interval)
+      }
+    }
+  }, [getEvents, tokenId, balance, page, filter])
 
   return (
     <>
