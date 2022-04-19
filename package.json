@@ -137,7 +137,7 @@
   "scripts": {
     "compile-contract-types": "yarn compile-external-abi-types",
     "compile-external-abi-types": "typechain --target ethers-v5 --out-dir src/abis/types \"./src/abis/**/*.json\"",
-    "build": "yarn compile-contract-types && yarn i18n:extract && yarn i18n:compile && react-scripts build",
+    "build": "yarn compile-contract-types && yarn i18n:extract && yarn i18n:compile && react-scripts --max_old_space_size=8192 build",
     "i18n:extract": "lingui extract --locale en-US",
     "i18n:compile": "lingui compile",
     "integration-test": "concurrently \"yarn start\" \"wait-on http-get://localhost:3000 && xvfb-run npx playwright test /__tests__  --workers=1 --timeout 180000 \" --kill-others --success first",
