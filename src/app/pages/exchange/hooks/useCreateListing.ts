@@ -8,7 +8,7 @@ import {
   ListingFormValuesForSubmit,
   ListingRequestArgs
 } from 'app/pages/exchange/types/listings'
-import { OTCMarketRoute } from 'app/pages/exchange/router/config'
+import { IssuanceRoute } from 'app/pages/issuance/router/config'
 
 export const useCreateListing = () => {
   const { apiService, snackbarService } = useServices()
@@ -26,7 +26,7 @@ export const useCreateListing = () => {
       void snackbarService.showSnackbar('Success', 'success')
 
       replace(
-        generatePath(OTCMarketRoute.viewListing, {
+        generatePath(IssuanceRoute.viewListing, {
           listingId: data.data._id
         })
       )

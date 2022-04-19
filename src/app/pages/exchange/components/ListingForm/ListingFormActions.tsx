@@ -2,8 +2,7 @@ import React from 'react'
 import { Box, Button } from '@mui/material'
 import { DigitalSecurityOffering } from 'types/dso'
 import { useHistory, generatePath } from 'react-router-dom'
-
-import { OTCMarketRoute } from 'app/pages/exchange/router/config'
+import { IssuanceRoute } from 'app/pages/issuance/router/config'
 import { ListingFinishLaterButton } from 'app/pages/exchange/components/ListingForm/ListinfFInishLaterButton'
 import { getIdFromObj } from 'helpers/strings'
 import { Listing } from 'app/pages/exchange/types/listings'
@@ -26,7 +25,7 @@ export const ListingFormActions = (props: ListingFormActionsProps) => {
           disableElevation
           onClick={() =>
             push(
-              generatePath(OTCMarketRoute.previewListing, {
+              generatePath(IssuanceRoute.previewListing, {
                 listingId: listing?._id,
                 issuerId:
                   typeof listing?.user === 'string'

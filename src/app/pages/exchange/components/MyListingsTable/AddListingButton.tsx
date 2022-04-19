@@ -1,7 +1,7 @@
 import React from 'react'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { Button } from '@mui/material'
-import { OTCMarketRoute as paths } from 'app/pages/exchange/router/config'
+import { IssuanceRoute as paths } from 'app/pages/issuance/router/config'
 
 export const AddListingButton = () => {
   return (

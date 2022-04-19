@@ -1,7 +1,7 @@
 import React from 'react'
 import { Launch as LaunchIcon } from '@mui/icons-material'
 import { IconButton } from '@mui/material'
-import { OTCMarketRoute as paths } from 'app/pages/exchange/router/config'
+import { IssuanceRoute as paths } from 'app/pages/issuance/router/config'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import { Listing } from 'types/listing'
 import { useAuth } from 'hooks/auth/useAuth'

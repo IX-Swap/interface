@@ -1,10 +1,10 @@
 import { Button, Grid, Typography } from '@mui/material'
 import { AuthorizableStatus } from 'app/pages/authorizer/components/AuthorizableStatus'
 import { SubmitListingButton } from 'app/pages/exchange/components/ListingDetails/SubmitListingButton'
-import { OTCMarketRoute } from 'app/pages/exchange/router/config'
 import React from 'react'
 import { generatePath, useHistory } from 'react-router-dom'
 import { ListingView } from 'types/listing'
+import { IssuanceRoute } from 'app/pages/issuance/router/config'
 
 export interface ListingStatusAndActionsProps {
   data: ListingView
@@ -41,7 +41,7 @@ export const ListingStatusAndActions = ({
             disableElevation
             onClick={() =>
               push(
-                generatePath(OTCMarketRoute.editListing, {
+                generatePath(IssuanceRoute.editListing, {
                   listingId: data._id
                 })
               )

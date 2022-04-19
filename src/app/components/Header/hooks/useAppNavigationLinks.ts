@@ -21,7 +21,6 @@ import {
 } from 'app/pages/authorizer/router/config'
 import { ReactComponent as AuthorizerIcon } from 'assets/icons/navigation/authorizer.svg'
 import { EducationCentreRoute } from 'app/pages/educationCentre/router/config'
-import { OTCMarketRoute } from 'app/pages/exchange/router/config'
 
 export const useAppNavigationLinks = () => {
   const isAuthorizer = useIsAuthorizer()
@@ -106,8 +105,8 @@ export const useAppNavigationLinks = () => {
   const newIssuanceLandingLinks = [
     { label: 'Create New DSO', path: IssuanceRoute.create },
     { label: 'View DSO Listings', path: IssuanceRoute.list },
-    { label: 'Create Exchange Listings', path: OTCMarketRoute.createListing },
-    { label: 'View Exchange Listings', path: OTCMarketRoute.myListings },
+    { label: 'Create Exchange Listings', path: IssuanceRoute.createListing },
+    { label: 'View Exchange Listings', path: IssuanceRoute.myListings },
     { label: 'Financial Reports', path: IssuanceRoute.financialReports }
   ]
 

@@ -1,10 +1,10 @@
 import * as IconButton from '@mui/material'
-import { OTCMarketRoute as paths } from 'app/pages/exchange/router/config'
 import { AppRouterLinkComponent } from 'components/AppRouterLink'
 import React from 'react'
 import { render } from 'test-utils'
 import { Listing } from 'types/listing'
 import { Actions } from '../Actions'
+import { IssuanceRoute as paths } from 'app/pages/issuance/router/config'
 
 jest.mock('@mui/material/IconButton', () => jest.fn(() => null))
 

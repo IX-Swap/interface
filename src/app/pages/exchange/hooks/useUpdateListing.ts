@@ -10,7 +10,7 @@ import {
   ListingFormValuesForSubmit,
   ListingRequestArgs
 } from 'app/pages/exchange/types/listings'
-import { OTCMarketRoute } from 'app/pages/exchange/router/config'
+import { IssuanceRoute } from 'app/pages/issuance/router/config'
 
 export const useUpdateListing = (
   listingId: string,
@@ -31,7 +31,7 @@ export const useUpdateListing = (
     onSuccess: data => {
       callbacks?.onSuccess?.(data)
       replace(
-        generatePath(OTCMarketRoute.viewListing, {
+        generatePath(IssuanceRoute.viewListing, {
           listingId: data.data._id
         })
       )
