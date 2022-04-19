@@ -26,12 +26,14 @@ describe('forms', () => {
   it('returns correct getIssuerDocumentsFormValues data', () => {
     expect(getIssuerDocumentsFormValues(detailsOfIssuance)).toEqual({
       companyRelated: [
-        { ...document, _id: '1', type: 'Company-Related Documents' }
+        { value: { ...document, _id: '1', type: 'Company-Related Documents' } }
       ],
       issuanceRelated: [
-        { ...document, _id: '2', type: 'Issuance-Related Documents' }
+        { value: { ...document, _id: '2', type: 'Issuance-Related Documents' } }
       ],
-      financial: [{ ...document, _id: '3', type: 'Financial Documents' }]
+      financial: [
+        { value: { ...document, _id: '3', type: 'Financial Documents' } }
+      ]
     })
   })
 })
