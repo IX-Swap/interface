@@ -77,7 +77,6 @@ export function useTokenBalancesWithLoadingIndicator(
     () => tokens?.filter((t?: Token): t is Token => isAddress(t?.address) !== false) ?? [],
     [tokens]
   )
-
   const validatedTokenAddresses = useMemo(() => validatedTokens.map((vt) => vt.address), [validatedTokens])
   const ERC20Interface = new Interface(ERC20ABI) as Erc20Interface
   const balances = useMultipleContractSingleData(

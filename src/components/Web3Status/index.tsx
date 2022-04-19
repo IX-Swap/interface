@@ -1,12 +1,11 @@
-import { t, Trans } from '@lingui/macro'
+import React, { useMemo } from 'react'
+import { Trans } from '@lingui/macro'
+import { darken } from 'polished'
 import { AbstractConnector } from '@web3-react/abstract-connector'
 import { UnsupportedChainIdError, useWeb3React } from '@web3-react/core'
-import { darken } from 'polished'
-import React, { useMemo } from 'react'
-import { isMobile } from 'react-device-detect'
 import { Activity } from 'react-feather'
 import styled, { css } from 'styled-components'
-import { DesktopAndTablet } from 'theme'
+
 // import CoinbaseWalletIcon from '../../assets/images/coinbaseWalletIcon.svg'
 // import FortmaticIcon from '../../assets/images/fortmaticIcon.png'
 // import PortisIcon from '../../assets/images/portisIcon.png'
@@ -118,14 +117,6 @@ function newTransactionsFirst(a: TransactionDetails, b: TransactionDetails) {
   return b.addedTime - a.addedTime
 }
 
-function Sock() {
-  return (
-    <span role="img" aria-label={t`has socks emoji`} style={{ marginTop: -4, marginBottom: -4 }}>
-      🧦
-    </span>
-  )
-}
-
 // eslint-disable-next-line react/prop-types
 function StatusIcon({ connector }: { connector: AbstractConnector }) {
   if (connector === injected) {
@@ -203,7 +194,7 @@ function Web3StatusInner() {
     return (
       <Web3StatusError onClick={toggleWalletModal}>
         <NetworkIcon />
-        <Text style={{ margin: '4px 0px 4px 13px' }}>
+        <Text style={{ margin: '4px 13px 4px 0' }}>
           {error instanceof UnsupportedChainIdError ? <Trans>Wrong Network</Trans> : <Trans>Error</Trans>}
         </Text>
       </Web3StatusError>

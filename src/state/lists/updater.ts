@@ -12,7 +12,7 @@ import { useActiveListUrls } from './hooks'
 import { UNSUPPORTED_LIST_URLS } from 'constants/lists'
 
 export default function Updater(): null {
-  const { library } = useActiveWeb3React()
+  const { library, connector } = useActiveWeb3React()
   const dispatch = useDispatch<AppDispatch>()
   const isWindowVisible = useIsWindowVisible()
 
@@ -39,7 +39,7 @@ export default function Updater(): null {
         fetchList(listUrl).catch((error) => console.debug('list added fetching error', error))
       }
     })
-  }, [dispatch, fetchList, library, lists])
+  }, [dispatch, fetchList, library, lists, connector])
 
   // if any lists from unsupported lists are loaded, check them too (in case new updates since last visit)
   useEffect(() => {

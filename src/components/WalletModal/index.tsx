@@ -110,11 +110,9 @@ export default function WalletModal({
 
       // if the connector is walletconnect and the user has already tried to connect, manually reset the connector
       if (connector instanceof WalletConnectConnector && connector.walletConnectProvider?.wc?.uri) {
-        console.log('resetting the connector')
         connector.walletConnectProvider = undefined
       }
       if (connector) {
-        console.log({ connector })
         try {
           await activate(connector, undefined, true)
         } catch (error) {
@@ -130,12 +128,12 @@ export default function WalletModal({
     [activate]
   )
 
-  // useEffect(() => {
-  //   const isWalletConnect = localStorage.getItem('walletconnect')
-  //   if (isWalletConnect && isMobile && !account) {
-  //     tryActivation(walletconnect)
-  //   }
-  // }, [account, tryActivation])
+  useEffect(() => {
+    const isWalletConnect = localStorage.getItem('walletconnect')
+    if (isWalletConnect && !account) {
+      tryActivation(walletconnect)
+    }
+  }, [account, tryActivation])
 
   // close wallet modal if fortmatic modal is active
   // useEffect(() => {
@@ -308,6 +306,7 @@ export default function WalletModal({
       </RedesignedWideModal>
     )
   }
+
   return (
     <Modal isOpen={walletModalOpen} onDismiss={toggleWalletModal} minHeight={false} maxHeight={90}>
       <Wrapper>{getModalContent()}</Wrapper>

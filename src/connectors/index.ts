@@ -26,11 +26,11 @@ const NETWORK_URLS: {
   [137]: `https://polygon-mainnet.infura.io/v3/${INFURA_KEY}`,
 }
 
-const SUPPORTED_CHAIN_IDS = [1, 4, 3, 5, 42, 80001, 137, 56]
+// const SUPPORTED_CHAIN_IDS = [1, 4, 3, 5, 42, 80001, 137, 56]
 
 export const network = new NetworkConnector({
   urls: NETWORK_URLS,
-  defaultChainId: 1,
+  defaultChainId: 137,
 })
 
 let networkLibrary: Web3Provider | undefined
@@ -60,9 +60,9 @@ export const walletconnect = new WalletConnectConnector({
 //   networks: [1],
 // })
 
-// mainnet only
+// polygon only
 export const walletlink = new WalletLinkConnector({
-  url: NETWORK_URLS[1],
+  url: NETWORK_URLS[137],
   appName: 'IX Swap',
   appLogoUrl: IXSWAP_LOGO_URL,
 })

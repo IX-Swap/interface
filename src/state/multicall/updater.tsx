@@ -38,6 +38,7 @@ async function fetchChunk(
       false,
       chunk.map((obj) => ({ target: obj.address, callData: obj.callData }))
     )
+
     resultsBlockNumber = blockNumber.toNumber()
     results = returnData
   } catch (error) {

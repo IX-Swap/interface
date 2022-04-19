@@ -44,11 +44,11 @@ export function useContract<T extends Contract = Contract>(
   ABI: any,
   withSignerIfPossible = true
 ): T | null {
-  const { library, account, chainId } = useActiveWeb3React()
+  const { library, account, chainId, connector } = useActiveWeb3React()
 
   return useMemo(
     () => getContractInstance({ addressOrAddressMap, ABI, withSignerIfPossible, library, chainId, account }),
-    [addressOrAddressMap, ABI, library, chainId, withSignerIfPossible, account]
+    [addressOrAddressMap, ABI, library, chainId, withSignerIfPossible, account, connector]
   ) as T
 }
 
@@ -69,6 +69,7 @@ export function getContractInstance({
   chainId,
   account,
 }: ContractInstanceProps) {
+  console.log('log => library', library)
   if (!addressOrAddressMap || !ABI || !library || !chainId) return null
   let address: string | undefined
   if (typeof addressOrAddressMap === 'string') {
