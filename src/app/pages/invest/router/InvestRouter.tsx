@@ -7,7 +7,7 @@ import { AppRoute } from 'components/AppRoute'
 import { InvestDSORouter } from 'app/pages/invest/router/InvestDSORouter'
 import { ViewListing } from 'app/pages/invest/router/ViewListing'
 import { InvestOverview } from 'app/pages/invest/router/InvestOverview'
-import { Market } from 'app/pages/exchange/pages/market/Market'
+import { Market } from 'app/pages/invest/pages/market/Market'
 import { RootContainer } from 'ui/RootContainer'
 
 export const InvestRouter = () => {

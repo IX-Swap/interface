@@ -5,7 +5,7 @@ import {
   DSOLaunchStatus
 } from 'types/dso'
 import { DataroomFile } from 'types/dataroomFile'
-import { percentageToNumber } from 'app/pages/issuance/utils'
+import { percentageToNumber } from 'app/pages/issuance/utils/utils'
 import { getIdFromObj } from 'helpers/strings'
 import { calculatePercent } from 'helpers/numbers'
 import isPast from 'date-fns/isPast'

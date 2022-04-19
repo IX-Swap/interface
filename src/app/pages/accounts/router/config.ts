@@ -23,7 +23,7 @@ export const AccountsRoute = {
   commitments: makeURL(['app', 'account', 'commitments']),
   dashboard: makeURL(['app', 'account', 'dashboard']),
   reports: '/app/accounts/reports',
-  myHoldings: '/app/accounts/myHoldings'
+  myHoldings: '/app/accounts/holdings'
 }
 
 export const accountsLandingLinks: InternalRouteProps[] = [
