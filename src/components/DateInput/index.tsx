@@ -27,6 +27,7 @@ export const DateInput = ({ value, onChange, label, name, onBlur, error, maxDate
         value={value || null}
         onChange={onChange}
         onBlur={onBlur}
+        autoOk
         openTo="year"
         views={['year', 'month', 'date']}
         format="DD/MM/YYYY"
