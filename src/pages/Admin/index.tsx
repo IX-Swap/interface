@@ -98,7 +98,7 @@ const AdminKyc = () => {
     }
 
     history.push('/')
-  }, [getMe, adminData, history, fetchMe])
+  }, [adminData])
 
   return (
     <Container>
