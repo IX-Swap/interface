@@ -41,7 +41,7 @@ export const isSuccessTransaction = (action: ActionTypes, status: ActionHistoryS
 }
 
 const TransactionHistoryStatusText = {
-  [ActionHistoryStatus.PENDING]: t`Burning wMSTO...`,
+  [ActionHistoryStatus.PENDING]: t`Pending...`,
   [ActionHistoryStatus.APPROVED]: t`Completed`,
   [ActionHistoryStatus.SETTLED]: t`Completed`,
   [ActionHistoryStatus.REJECTED]: t`Declined`,
@@ -80,16 +80,9 @@ export const ActionTypeText = {
 }
 
 export const getStatusColor = (action: ActionTypes, status: ActionHistoryStatus) => {
-  if (isDeposit(action) && status === ActionHistoryStatus.APPROVED) {
-    return StatusColors[ActionHistoryStatus.PENDING]
-  }
   return StatusColors[status]
 }
 export const getActionStatusText = (action: ActionTypes, status: ActionHistoryStatus) => {
-  if (isDeposit(action) && status === ActionHistoryStatus.PENDING) {
-    return TransactionHistoryStatusText[ActionHistoryStatus.PENDING]
-  }
-
   return TransactionHistoryStatusText[status]
 }
 
