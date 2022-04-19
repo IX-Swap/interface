@@ -8,18 +8,18 @@ import React from 'react'
 import { render } from 'test-utils'
 import { PlaceOrderForm } from 'app/pages/invest/components/PlaceOrderForm/PlaceOrderForm'
 
-jest.mock('app/pages/exchange/components/Trades/Trades', () => ({
+jest.mock('app/pages/invest/components/Trades/Trades', () => ({
   Trades: jest.fn(() => null)
 }))
 
 jest.mock(
-  'app/pages/exchange/components/InvestorLiveOrderBook/InvestorLiveOrderBook',
+  'app/pages/invest/components/InvestorLiveOrderBook/InvestorLiveOrderBook',
   () => ({
     InvestorLiveOrderBook: jest.fn(() => null)
   })
 )
 
-jest.mock('app/pages/exchange/components/MyOrders/MyOrders', () => ({
+jest.mock('app/pages/invest/components/MyOrders/MyOrders', () => ({
   MyOrders: jest.fn(() => null)
 }))
 
@@ -30,12 +30,9 @@ jest.mock(
   })
 )
 
-jest.mock(
-  'app/pages/exchange/components/PlaceOrderForm/PlaceOrderForm',
-  () => ({
-    PlaceOrderForm: jest.fn(() => null)
-  })
-)
+jest.mock('app/pages/invest/components/PlaceOrderForm/PlaceOrderForm', () => ({
+  PlaceOrderForm: jest.fn(() => null)
+}))
 
 describe('MarketGridView', () => {
   const props: MarketViewProps = {

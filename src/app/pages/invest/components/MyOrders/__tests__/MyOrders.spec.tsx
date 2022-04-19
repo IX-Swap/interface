@@ -5,18 +5,15 @@ import { OpenOrders } from 'app/pages/invest/components/OpenOrders/OpenOrders'
 import { PastOrderTable } from 'app/pages/invest/components/PastOrderTable/PastOrderTable'
 import { MyTrades } from 'app/pages/invest/components/Trades/MyTrades'
 
-jest.mock('app/pages/exchange/components/OpenOrders/OpenOrders', () => ({
+jest.mock('app/pages/invest/components/OpenOrders/OpenOrders', () => ({
   OpenOrders: jest.fn(() => null)
 }))
 
-jest.mock(
-  'app/pages/exchange/components/PastOrderTable/PastOrderTable',
-  () => ({
-    PastOrderTable: jest.fn(() => null)
-  })
-)
+jest.mock('app/pages/invest/components/PastOrderTable/PastOrderTable', () => ({
+  PastOrderTable: jest.fn(() => null)
+}))
 
-jest.mock('app/pages/exchange/components/Trades/MyTrades', () => ({
+jest.mock('app/pages/invest/components/Trades/MyTrades', () => ({
   MyTrades: jest.fn(() => null)
 }))
 

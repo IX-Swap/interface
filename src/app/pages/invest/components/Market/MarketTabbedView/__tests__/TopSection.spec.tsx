@@ -14,13 +14,13 @@ jest.mock(
 )
 
 jest.mock(
-  'app/pages/exchange/components/InvestorLiveOrderBook/InvestorLiveOrderBook',
+  'app/pages/invest/components/InvestorLiveOrderBook/InvestorLiveOrderBook',
   () => ({
     InvestorLiveOrderBook: jest.fn(() => null)
   })
 )
 
-jest.mock('app/pages/exchange/components/Trades/MarketTrades', () => ({
+jest.mock('app/pages/invest/components/Trades/MarketTrades', () => ({
   MarketTrades: jest.fn(() => null)
 }))
 

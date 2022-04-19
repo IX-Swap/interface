@@ -7,7 +7,7 @@ import * as useLastPrice from 'app/pages/invest/hooks/useLastPrice'
 import { OrderSide } from 'types/order'
 
 jest.mock(
-  'app/pages/exchange/components/LiveTrackingPrice/TrackingPrice',
+  'app/pages/invest/components/LiveTrackingPrice/TrackingPrice',
   () => ({
     TrackingPrice: jest.fn(() => null)
   })

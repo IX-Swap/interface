@@ -5,12 +5,9 @@ import { MarketViewProps } from 'app/pages/invest/components/Market/MarketGridVi
 import { PlaceOrderForm } from 'app/pages/invest/components/PlaceOrderForm/PlaceOrderForm'
 import { fireEvent } from '@testing-library/react'
 
-jest.mock(
-  'app/pages/exchange/components/PlaceOrderForm/PlaceOrderForm',
-  () => ({
-    PlaceOrderForm: jest.fn(() => null)
-  })
-)
+jest.mock('app/pages/invest/components/PlaceOrderForm/PlaceOrderForm', () => ({
+  PlaceOrderForm: jest.fn(() => null)
+}))
 
 describe('PlaceOrderFormDialog', () => {
   const props: MarketViewProps = {

@@ -12,12 +12,9 @@ jest.mock(
   })
 )
 
-jest.mock(
-  'app/pages/exchange/components/PlaceOrderForm/PlaceOrderForm',
-  () => ({
-    PlaceOrderForm: jest.fn(() => null)
-  })
-)
+jest.mock('app/pages/invest/components/PlaceOrderForm/PlaceOrderForm', () => ({
+  PlaceOrderForm: jest.fn(() => null)
+}))
 
 const defaultPairId = '60d2a03508a1f73d1aadebe2'
 

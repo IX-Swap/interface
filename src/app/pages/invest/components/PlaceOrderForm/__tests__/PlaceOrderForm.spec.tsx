@@ -5,7 +5,7 @@ import { Form } from 'components/form/Form'
 import { PlaceOrderFields } from 'app/pages/invest/components/PlaceOrderFields/PlaceOrderFields'
 
 jest.mock(
-  'app/pages/exchange/components/PlaceOrderFields/PlaceOrderFields',
+  'app/pages/invest/components/PlaceOrderFields/PlaceOrderFields',
   () => ({
     PlaceOrderFields: jest.fn(() => null)
   })
