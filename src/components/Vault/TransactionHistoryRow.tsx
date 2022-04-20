@@ -8,11 +8,12 @@ import React, { useCallback, useMemo } from 'react'
 import { useDispatch } from 'react-redux'
 import { Box } from 'rebass'
 import { AppDispatch } from 'state'
-import { useToggleTransactionModal } from 'state/application/hooks'
+import { useToggleTransactionModal, useWithdrawModalToggle } from 'state/application/hooks'
 import { LogItem, setLogItem } from 'state/eventLog/actions'
+import { useWithdrawActionHandlers } from 'state/withdraw/hooks'
 import { DesktopAndTablet, DesktopOnly, MEDIA_WIDTHS, TYPE } from 'theme'
 import { formatAmount } from 'utils/formatCurrencyAmount'
-import { ActionHistoryStatus, ActionTypeText, getActionStatusText, getStatusColor } from './enum'
+import { ActionHistoryStatus, ActionTypes, ActionTypeText, getActionStatusText, getStatusColor } from './enum'
 import { DateBox, HistoryRowWraper, IconColumn } from './styleds'
 
 interface Props {
@@ -34,10 +35,21 @@ export const TransactionHistoryRow = ({ row, key, currency, icon }: Props) => {
   const textColor = getStatusColor(row.type, status)
   const toggle = useToggleTransactionModal()
   const dispatch = useDispatch<AppDispatch>()
+  const toggleWithdrawModal = useWithdrawModalToggle()
+  const { onTypeAmount, onTypeReceiver } = useWithdrawActionHandlers()
 
   const openModal = useCallback(() => {
-    dispatch(setLogItem({ logItem: row }))
-    toggle()
+    if (
+      row.type === ActionTypes.WITHDRAW &&
+      [ActionHistoryStatus.DRAFT, ActionHistoryStatus.FEE_ACCEPTED].includes(row.status as ActionHistoryStatus)
+    ) {
+      onTypeAmount(row.amount || '0')
+      onTypeReceiver(row.fromAddress || '')
+      toggleWithdrawModal()
+    } else {
+      dispatch(setLogItem({ logItem: row }))
+      toggle()
+    }
   }, [toggle, dispatch, row])
   return (
     <HistoryRowWraper data-testid="row" key={`history-item-${key}`} onClick={() => openModal()}>

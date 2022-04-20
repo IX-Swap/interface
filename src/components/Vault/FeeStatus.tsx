@@ -16,7 +16,7 @@ export const FeeStatus = ({ status, feePrice, estimatedPrice }: Props) => {
   const paid = status === ActionHistoryStatus.FEE_ACCEPTED
 
   const feeText = useMemo(() => {
-    if (paid) {
+    if (paid || feePrice) {
       return `Withdrawal fee: ${(+feePrice).toFixed(4)} Matic`
     }
     return `Expected withdrawal fees: ${estimatedPrice ? `0.01 ETH (~${estimatedPrice.toFixed(4)} Matic)` : ' - '}`
