@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid } from '@mui/material'
+import { Grid, Paper } from '@mui/material'
 import { InformationFields } from 'app/pages/identity/components/CorporateInformationForm/InformationFields'
 import { CorporateAddressFields } from 'app/pages/identity/components/CorporateInformationForm/CorporateAddressFields'
 import { AuthorizedPersonnelFields } from 'app/pages/identity/components/CorporateInformationForm/AuthorizedPersonnelFields'
@@ -21,16 +21,24 @@ export const CorporateInformationForm = ({
       direction='column'
     >
       <Grid item>
-        <InformationFields type={type} />
+        <Paper sx={{ borderRadius: 2, p: 5 }}>
+          <InformationFields type={type} />
+        </Paper>
       </Grid>
       <Grid item>
-        <OwnershipStructureFields />
+        <Paper sx={{ borderRadius: 2, p: 5 }}>
+          <OwnershipStructureFields />
+        </Paper>
       </Grid>
       <Grid item>
-        <CorporateAddressFields />
+        <Paper sx={{ borderRadius: 2, p: 5 }}>
+          <CorporateAddressFields />
+        </Paper>
       </Grid>
       <Grid item>
-        <AuthorizedPersonnelFields />
+        <Paper sx={{ borderRadius: 2, p: 5 }}>
+          <AuthorizedPersonnelFields />
+        </Paper>
       </Grid>
     </Grid>
   )

@@ -21,7 +21,9 @@ export const step = (theme: Theme) => {
       vertical: {
         '& .MuiStepButton-root': {
           paddingLeft: 0,
-          paddingRight: 0
+          paddingRight: 31,
+          margin: 0,
+          boxSizing: 'border-box'
         },
 
         '& .MuiStepLabel-label': {

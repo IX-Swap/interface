@@ -34,7 +34,7 @@ export const transformDSOToFormValues = (
       tokenName: '',
       network: '',
       corporate: '',
-      logo: '',
+      logo: undefined,
       equityMultiple: '',
       leverage: '',
       distributionFrequency: '',

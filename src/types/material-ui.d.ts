@@ -174,6 +174,13 @@ export interface SelectPalette {
   border: CSSProperties['color']
 }
 
+export interface NotificationsDropdown {
+  divider: string
+  message: CSSProperties['color']
+  bg: CSSProperties['color']
+  bgHover: CSSProperties['color']
+}
+
 declare module '@mui/styles/defaultTheme' {
   interface DefaultTheme extends Theme {}
 }
@@ -221,6 +228,7 @@ declare module '@mui/material/styles' {
     }
     select: SelectPalette
     dropdownLink: DropdownLink
+    notificationsDropdown: NotificationsDropdown
   }
 
   export interface Palette {
@@ -265,6 +273,7 @@ declare module '@mui/material/styles' {
     }
     select: SelectPalette
     dropdownLink: DropdownLink
+    notificationsDropdown: NotificationsDropdown
   }
 
   export interface Theme {
