@@ -6,7 +6,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { ApplicationModal } from 'state/application/actions'
 import { useModalOpen, useWithdrawModalToggle } from 'state/application/hooks'
 import { useUserSecTokens } from 'state/user/hooks'
-import { useWithdrawState } from 'state/withdraw/hooks'
+import { useWithdrawActionHandlers, useWithdrawState } from 'state/withdraw/hooks'
 import { HideSmall, ModalBlurWrapper, ModalContentWrapper, ModalPadding } from 'theme'
 import { SecCurrency } from 'types/secToken'
 import { CloseIcon, TYPE } from '../../theme'
@@ -32,11 +32,14 @@ export const WithdrawPopup = ({ currency, token }: Props) => {
   const toggle = useWithdrawModalToggle()
   const [modalView, setModalView] = useState<WithdrawModalView>(WithdrawModalView.WITHDRAW_REQUEST)
   const { loadingWithdraw, loading } = useWithdrawState()
+  const { onResetWithdraw } = useWithdrawActionHandlers()
+
   const tokenInfo = (secTokens[(currency as any)?.address || ''] as any)?.tokenInfo
   const onClose = useCallback(() => {
     setModalView(WithdrawModalView.WITHDRAW_REQUEST)
     toggle()
-  }, [toggle, setModalView])
+    onResetWithdraw()
+  }, [toggle, setModalView, onResetWithdraw])
 
   useEffect(() => {
     if (loadingWithdraw && modalView === WithdrawModalView.WITHDRAW_REQUEST) {
