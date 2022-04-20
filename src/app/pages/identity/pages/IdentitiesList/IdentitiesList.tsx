@@ -1,20 +1,10 @@
 import React from 'react'
 import { Grid, Typography } from '@mui/material'
-import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
-import { useGetIdentities } from 'app/components/OnboardingPanel/hooks/useGetIdentities'
-import { NoIdentityView } from 'app/pages/identity/components/NoIdentityView/NoIdentityView'
-import { IdentityPreview } from 'app/pages/identity/components/IdentityPreview/IdentityPreview'
 import { RootContainer } from 'ui/RootContainer'
 import { AppContentWrapper } from 'ui/AppContentWrapper'
+import { IdentitySelectionView } from 'app/pages/identity/components/IdentitySelectionView/IdentiySelectionView'
 
 export const IdentitiesList: React.FC = () => {
-  const { hasIdentity, isLoadingIdentities, detailsOfIssuance } =
-    useGetIdentities()
-
-  if (isLoadingIdentities) {
-    return <LoadingIndicator />
-  }
-
   return (
     <AppContentWrapper container background='default'>
       <RootContainer background='default'>
@@ -32,11 +22,7 @@ export const IdentitiesList: React.FC = () => {
             </Grid>
           </Grid>
           <Grid item xs={12}>
-            {hasIdentity || detailsOfIssuance !== undefined ? (
-              <IdentityPreview />
-            ) : (
-              <NoIdentityView />
-            )}
+            <IdentitySelectionView />
           </Grid>
         </Grid>
       </RootContainer>
