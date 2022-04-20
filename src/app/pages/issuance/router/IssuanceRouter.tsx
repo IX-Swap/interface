@@ -13,7 +13,7 @@ import { Commitments } from 'app/pages/issuance/pages/Commitments'
 import { useIsIssuer } from 'helpers/acl'
 import { CapTableRouter } from 'app/pages/issuance/router/CapTableRouter'
 import { FinancialReportsRouter } from 'app/pages/issuance/router/FinancialReportsRouter'
-import { CreateListing } from 'app/pages/issuance/pages/create-listing/CreateListing'
+import { CreateListing } from 'app/pages/issuance/pages/CreateListing'
 import { MyListingsRouter } from 'app/pages/invest/router/MyListingsRouter'
 
 export const IssuanceRouter = () => {
