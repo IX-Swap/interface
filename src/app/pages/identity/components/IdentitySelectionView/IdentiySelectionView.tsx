@@ -6,23 +6,14 @@ import { ReactComponent as IssuerImage } from 'assets/images/issuer.svg'
 import { Icon } from 'ui/Icons/Icon'
 import { IdentityRoute } from 'app/pages/identity/router/config'
 import { useGetIdentities } from 'app/components/OnboardingPanel/hooks/useGetIdentities'
-import { LoadingIndicator } from 'app/components/LoadingIndicator/LoadingIndicator'
 
 export const IdentitySelectionView = () => {
-  const {
-    hasIdentity,
-    isIdentitiesLoaded,
-    individualIdentity,
-    corporateIdentities
-  } = useGetIdentities()
+  const { hasIdentity, individualIdentity, corporateIdentities } =
+    useGetIdentities()
 
   const hasIndividual = individualIdentity !== undefined
   const hasCorporate =
     corporateIdentities !== undefined && corporateIdentities.list.length > 0
-
-  if (!isIdentitiesLoaded) {
-    return <LoadingIndicator />
-  }
 
   return (
     <Grid container spacing={3} justifyContent='center'>
