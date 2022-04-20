@@ -5,7 +5,7 @@ exports[`UserDropdownTrigger should match snapshot if user is not undefined and 
   <button
     aria-controls="profile-menu"
     aria-haspopup="true"
-    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeLarge makeStyles-wrapper-3 css-1pd25mh-MuiButtonBase-root-MuiIconButton-root"
+    class="MuiButtonBase-root MuiIconButton-root MuiIconButton-colorInherit MuiIconButton-sizeLarge makeStyles-wrapper-3 css-1ncy747-MuiButtonBase-root-MuiIconButton-root"
     tabindex="0"
     type="button"
   >
