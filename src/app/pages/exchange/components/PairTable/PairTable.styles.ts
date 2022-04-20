@@ -20,13 +20,11 @@ export const useStyles = makeStyles(theme => ({
         ? props.isPositive
           ? theme.palette.success.main
           : theme.palette.error.main
-        : theme.palette.text.primary
+        : theme.palette.text.primary,
+    display: 'flex',
+    justifyContent: 'center'
   },
   wrapper: {
     width: 140
-  },
-  centered: {
-    display: 'flex',
-    justifyContent: 'center'
   }
 }))
