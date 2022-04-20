@@ -1,6 +1,5 @@
 import React from 'react'
 import { Actions } from 'app/components/TwoFADialog/Actions/Actions'
-import { useAuth } from 'hooks/auth/useAuth'
 import { Description } from 'app/components/TwoFADialog/Description/Description'
 import { InfoIcon } from 'app/components/TwoFADialog/InfoIcon'
 import {
@@ -16,13 +15,16 @@ import { useStyles } from './TwoFADialog.styles'
 import { Icon } from 'ui/Icons/Icon'
 
 export interface TwoFADialogProps {
+  enable2Fa: boolean | undefined
   isOpen: boolean
   onClose: () => void
 }
 
-export const TwoFADialog = ({ isOpen, onClose }: TwoFADialogProps) => {
-  const { user = { enable2Fa: undefined } } = useAuth()
-  const { enable2Fa } = user
+export const TwoFADialog = ({
+  enable2Fa,
+  isOpen,
+  onClose
+}: TwoFADialogProps) => {
   const classes = useStyles()
 
   const renderBody = () => {
