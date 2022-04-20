@@ -2,7 +2,6 @@ import { Box } from '@mui/material'
 import { useStyles } from 'app/pages/exchange/components/PairTable/PairTable.styles'
 import React from 'react'
 import { formatAmount } from 'helpers/numbers'
-import clsx from 'clsx'
 
 export interface LastPriceProps {
   value: number
@@ -10,9 +9,9 @@ export interface LastPriceProps {
 }
 
 export const LastPrice = ({ value, isPositive }: LastPriceProps) => {
-  const { trendColor, centered } = useStyles({ isPositive })
+  const { trendColor } = useStyles({ isPositive })
   return (
-    <Box component='span' className={clsx(trendColor, centered)}>
+    <Box component='span' className={trendColor}>
       {formatAmount(value)}
     </Box>
   )
