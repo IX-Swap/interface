@@ -6,7 +6,7 @@ import { ReactComponent as IssuerImage } from 'assets/images/issuer.svg'
 import { Icon } from 'ui/Icons/Icon'
 import { IdentityRoute } from 'app/pages/identity/router/config'
 
-export const NoIdentityView = () => {
+export const IdentitySelectionView = () => {
   return (
     <Grid container spacing={3} justifyContent='center'>
       <Grid item>
