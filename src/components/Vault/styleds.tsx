@@ -3,6 +3,7 @@ import styled, { css, keyframes } from 'styled-components'
 
 import { ReactComponent as Attention } from 'assets/images/attention.svg'
 import { ReactComponent as Passed } from 'assets/images/check-success.svg'
+import { ButtonIXSGradient } from 'components/Button'
 import Column from 'components/Column'
 import { LoaderThin } from 'components/Loader/LoaderThin'
 import { RowBetween } from 'components/Row'
@@ -20,6 +21,7 @@ export const NoVaultWrapper = styled.div`
   flex-direction: column;
   ${gradientBorder}
 `
+
 export const ExistingWrapper = styled.div`
   background: ${({ theme }) => theme.bgG11};
   border-radius: 45px;
@@ -28,6 +30,7 @@ export const ExistingWrapper = styled.div`
     padding: 1rem;
   `};
 `
+
 export const NoVaultTitle = styled.div`
   display: flex;
   justify-content: center;
@@ -37,6 +40,7 @@ export const NoVaultTitle = styled.div`
     line-height: 28px;
   }
 `
+
 export const ExistingTitle = styled.span`
   text-align: left;
   white-space: pre-wrap; /* CSS3 */
@@ -48,6 +52,7 @@ export const ExistingTitle = styled.span`
       margin-bottom: 20px;
   `};
 `
+
 export const VaultStatusDescription = styled.div`
   text-align: center;
   margin-top: 20px;
@@ -149,6 +154,14 @@ export const getStatusIcon = (action: ActionTypes, status: string) => {
   return StatusIcons[status] || <LoaderThin size={20} />
 }
 
+export const StyledButtonIXSGradient = styled(ButtonIXSGradient)`
+  width: 230px;
+
+  ${({ theme }) => theme.mediaWidth.upToSmall`
+    width: 100%;
+  `};
+`
+
 export const InfoModalHeader = styled.div`
   padding: 24px 32px;
   border-radius: 20px 20px 0px 0px;
@@ -160,6 +173,7 @@ export const InfoModalHeader = styled.div`
   font-size: 22px;
   color: white;
 `
+
 export const InfoModalBody = styled.div<{ isSuccess: boolean }>`
   padding: 24px 32px;
   display: flex;

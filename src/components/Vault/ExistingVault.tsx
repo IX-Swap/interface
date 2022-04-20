@@ -2,7 +2,6 @@ import React, { useMemo } from 'react'
 import { Currency } from '@ixswap1/sdk-core'
 import { Trans } from '@lingui/macro'
 
-import { ButtonIXSGradient } from 'components/Button'
 import { useActiveWeb3React } from 'hooks/web3'
 import { useDepositModalToggle } from 'state/application/hooks'
 import { TYPE } from 'theme'
@@ -11,7 +10,7 @@ import { MouseoverTooltip } from 'components/Tooltip'
 
 import { BalanceRow } from './BalanceRow'
 import { HistoryBlock } from './HistoryBlock'
-import { ExistingTitle, ExistingWrapper, StyledTitle, TitleStatusRow } from './styleds'
+import { ExistingTitle, ExistingWrapper, StyledButtonIXSGradient, StyledTitle, TitleStatusRow } from './styleds'
 import { useUserState } from 'state/user/hooks'
 
 interface Props {
@@ -33,7 +32,7 @@ export const ExistingVault = ({ currency, custodian, token }: Props) => {
 
   return (
     <ExistingWrapper>
-      <TitleStatusRow style={{ marginBottom: '0.6rem' }}>
+      <TitleStatusRow style={{ marginBottom: '0.6rem', width: '100%' }}>
         <ExistingTitle>
           <StyledTitle>
             <Trans>My {symbolText} Vault</Trans>
@@ -42,15 +41,14 @@ export const ExistingVault = ({ currency, custodian, token }: Props) => {
             <Trans>on {custodian?.name} custodian</Trans>
           </TYPE.description2>
         </ExistingTitle>
-        <MouseoverTooltip text={isDisabled ? 'Deposits are not available yet for this token' : ''}>
-          <ButtonIXSGradient
+        <MouseoverTooltip style={{ width: '100%' }} text={isDisabled ? 'Deposit are not available yet for this token' : ''}>
+          <StyledButtonIXSGradient
             data-testid="deposit"
-            style={{ width: '230px' }}
             onClick={() => toggle()}
             disabled={isDisabled}
           >
             <Trans>Deposit</Trans>
-          </ButtonIXSGradient>
+          </StyledButtonIXSGradient>
         </MouseoverTooltip>
       </TitleStatusRow>
       <BalanceRow currency={currency} account={account} token={token} />

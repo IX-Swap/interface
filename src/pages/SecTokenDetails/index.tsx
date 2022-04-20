@@ -10,7 +10,7 @@ import { getAtlasInfo, getToken } from 'state/secCatalog/hooks'
 import { LightBackground } from 'theme/Background'
 import { BackArrowButton } from 'components/BackArrowButton'
 
-import { Container, ValutContainer, InfoTitle, Logo, StyledTitleBig } from './styleds'
+import { Container, ValutContainer, InfoTitle, Logo, StyledTitleBig, CompanyName } from './styleds'
 import { DetailsInfo } from './DetailsInfo'
 import { AddToMetamask } from './AddToMetamask'
 import { AtlasInfo } from './AtlasInfo'
@@ -49,12 +49,12 @@ export default function SecTokenDetails({
         <InfoTitle>
           <BackArrowButton />
           {token?.logo ? <TokenLogo logo={token.logo} /> : <Logo currency={currency} size="72px" />}
-          <Box display="flex">
+          <Box display="flex" alignItems="center">
             <StyledTitleBig fontWeight="600">{token?.ticker}</StyledTitleBig>
-            <StyledTitleBig>
+            <CompanyName>
               &nbsp;-&nbsp;
               {token?.companyName}
-            </StyledTitleBig>
+            </CompanyName>
           </Box>
         </InfoTitle>
         {token && <DetailsInfo token={token} />}

@@ -1,20 +1,8 @@
-import React, { useMemo } from 'react'
+import React from 'react'
 import { Trans, t } from '@lingui/macro'
-import { Flex } from 'rebass'
 
 import { ReadMore } from 'components/ReadMore'
-import { ButtonGradient } from 'components/Button'
-import { RowStart } from 'components/Row'
-import { AboutWrapping } from 'components/Vault/AboutWrapping'
-import { AccreditationRequest } from 'components/Vault/enum'
-import { useCurrency } from 'hooks/Tokens'
-import useAddTokenToMetamask from 'hooks/useAddTokenToMetamask'
-import useCopyClipboard from 'hooks/useCopyClipboard'
-import { useActiveWeb3React } from 'hooks/web3'
-import { ApplicationModal } from 'state/application/actions'
-import { useToggleModal } from 'state/application/hooks'
-import { ExternalLink, TextGradient } from 'theme'
-import { shortenAddress } from 'utils'
+import { ExternalLink } from 'theme'
 
 import { Details, Dot } from './styleds'
 

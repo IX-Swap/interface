@@ -33,8 +33,8 @@ const TextWrap = styled(TYPE.titleBig)`
   line-height: 36px !important;
   ${({ theme }) => theme.mediaWidth.upToSmall`
       display: flex;
-      gap: 10px;
-      flex-direction: column;
+      gap: 0px;
+      flex-direction: row;
       font-size: 23px !important;
       line-height: 27px !important;
   `};

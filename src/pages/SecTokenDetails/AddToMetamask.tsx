@@ -14,6 +14,7 @@ import { shortenAddress } from 'utils'
 
 import { ReactComponent as Info } from 'assets/images/info-filled.svg'
 import { AddressToMetamask, StyledButtonGradient } from './styleds'
+import { Flex } from 'rebass'
 
 interface Props {
   token: any
@@ -69,22 +70,24 @@ export const AddWrappedToMetamask = ({ token }: Props) => {
       <AddressToMetamask style={{ marginTop: 8 }}>
         {token.token?.address && (
           <>
-            <div>
-              <Info onClick={toggleAbout} />
+            <>
               <div>
-                <Trans>Wrapped {token?.ticker || 'Original token'}:</Trans>
+                <Info onClick={toggleAbout} />
+                <div>
+                  <Trans>Wrapped {token?.ticker || 'Original token'}:</Trans>
+                </div>
               </div>
-            </div>
-            <div onClick={() => setCopied(token?.token?.address ?? '')}>
-              {isCopied ? (
-                <Trans>Copied!</Trans>
-              ) : (
-                <RowCenter>
-                  {shortenAddress(token?.token?.address ?? '')}
-                  <StyledCopy />
-                </RowCenter>
-              )}
-            </div>
+              <div onClick={() => setCopied(token?.token?.address ?? '')}>
+                {isCopied ? (
+                  <Trans>Copied!</Trans>
+                ) : (
+                  <RowCenter>
+                    {shortenAddress(token?.token?.address ?? '')}
+                    <StyledCopy />
+                  </RowCenter>
+                )}
+              </div>
+            </>
             {library?.provider?.isMetaMask && (
               <StyledButtonGradient onClick={() => !addCurrency.success && addCurrency.addToken()}>
                 <Trans>{!addCurrency.success ? 'Add to Metamask' : 'Added'}</Trans>
