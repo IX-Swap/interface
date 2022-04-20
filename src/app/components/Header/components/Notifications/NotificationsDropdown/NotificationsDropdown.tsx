@@ -4,7 +4,7 @@ import { AppRouterLink } from 'components/AppRouterLink'
 import { useAppBreakpoints } from 'hooks/useAppBreakpoints'
 import { AppRoute } from 'app/router/config'
 import { Dropdown } from 'app/components/Header/components/Dropdown/Dropdown'
-import { NotificationsDropdownTrigger } from 'app/components/Header/components/Notifications/NotificationsDropdownTrigger/NotificationsDropdownTrigger'
+import { NotificationsDropdownTrigger } from 'app/components/Header/components/Notifications/NotificationsDropdownTrigger'
 import { NotificationsDropdownContent } from 'app/components/Header/components/Notifications/NotificationsDropdownContent/NotificationsDropdownContent'
 import { useStyles } from './NotificationsDropdown.styles'
 
@@ -24,7 +24,6 @@ export const NotificationsDropdown = () => {
     <Grid item>
       <Dropdown
         trigger={NotificationsDropdownTrigger}
-        // TODO Needs to add new content after complete design for notifications dropdown
         content={NotificationsDropdownContent}
       />
     </Grid>

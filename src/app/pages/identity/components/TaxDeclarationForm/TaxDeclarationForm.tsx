@@ -1,5 +1,5 @@
 import React from 'react'
-import { Grid, Typography } from '@mui/material'
+import { Grid, Paper, Typography } from '@mui/material'
 import { TaxResidencyFields } from 'app/pages/identity/components/TaxDeclarationForm/TaxResidencyFields/TaxResidencyFields'
 import { UsCitizenshipConfirmation } from 'app/pages/identity/components/TaxDeclarationForm/UsCitizenshipConfirmation/UsCitizenshipConfirmation'
 import { FormSectionHeader } from 'app/pages/identity/components/FormSectionHeader'
@@ -21,24 +21,32 @@ export const TaxDeclarationForm = ({
         direction='column'
         spacing={6}
       >
-        <Grid item>
-          <Typography>
-            <TaxDeclarationInfoDialog /> to know why we need your tax
-            information.
-          </Typography>
-        </Grid>
+        <Paper sx={{ borderRadius: 2, p: 5 }}>
+          <Grid item>
+            <Typography>
+              <TaxDeclarationInfoDialog /> to know why we need your tax
+              information.
+            </Typography>
+          </Grid>
+        </Paper>
         <Grid item>
           {identityType === 'individual' ? (
-            <TaxResidencyFields />
+            <Paper sx={{ borderRadius: 2, p: 5 }}>
+              <TaxResidencyFields />
+            </Paper>
           ) : (
-            <TaxResidencyFieldArray />
+            <Paper sx={{ borderRadius: 2, p: 5 }}>
+              <TaxResidencyFieldArray />
+            </Paper>
           )}
         </Grid>
         {identityType === 'individual' ? (
           <>
             <Grid item>
-              <FormSectionHeader title={'FATCA'} />
-              <UsCitizenshipConfirmation />
+              <Paper sx={{ borderRadius: 2, p: 5 }}>
+                <FormSectionHeader title={'FATCA'} />
+                <UsCitizenshipConfirmation />
+              </Paper>
             </Grid>
           </>
         ) : null}
