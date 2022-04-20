@@ -20,13 +20,13 @@ import { AddressInput } from 'components/AddressInputPanel/AddressInput'
 import { AreYouSureModal } from 'components/AreYouSureModal'
 import { adminOffset as offset } from 'state/admin/constants'
 import { SUPPORTED_TGE_CHAINS } from 'constants/addresses'
+import { LoaderThin } from 'components/Loader/LoaderThin'
+import { getAtlasIdByTicker } from 'state/admin/hooks'
+import { TokenAvailableFor } from './TokenAvailableFor'
 
 import { ReactComponent as LogoImage } from '../../assets/images/wallpaper.svg'
 import { WideModal, WideModalWrapper, FormWrapper, FormGrid, Logo, FormRow, LoaderContainer } from './styleds'
 import { industries, initialTokenState } from './mock'
-import { TokenAvailableFor } from './TokenAvailableFor'
-import { getAtlasIdByTicker } from 'state/admin/hooks'
-import { LoaderThin } from 'components/Loader/LoaderThin'
 
 interface Props {
   token: any | null
@@ -207,6 +207,8 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
     { id: SUPPORTED_TGE_CHAINS.MAIN, name: 'Ethereum' },
     { id: SUPPORTED_TGE_CHAINS.KOVAN, name: 'Kovan' },
     { id: SUPPORTED_TGE_CHAINS.MATIC, name: 'Polygon' },
+    { id: 777, name: 'Raven' },
+    { id: 111, name: 'Tezos' },
   ]
 
   const selectedChainOption = useMemo(() => {

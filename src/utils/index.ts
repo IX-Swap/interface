@@ -33,14 +33,26 @@ export function isEthChainAddress(value: any): string | false {
     return false
   }
 }
+
 export const isValidAddress = (value: string): string | false => {
-  const isValid = /^0x[a-fA-F0-9]{40}$/.test(value) ? value : false
+  const isValid = validatePattern(value)
+
   if (!isValid) {
     if (walletValidator.validate(value, 'Tezos') || walletValidator.validate(value, 'Algorand')) {
       return value
     }
   }
   return isValid
+}
+
+const validatePattern = (value: string) => {
+  const validAddressPatterns = [/^0x[a-fA-F0-9]{40}$/, /[a-fA-F0-9]{36}$/]
+
+  for (let i = 0; i < validAddressPatterns.length; i++) {
+    if (validAddressPatterns[i].test(value)) return value
+  }
+
+  return false
 }
 
 // shorten the checksummed version of the input address to have 0x + 4 characters at start and end
