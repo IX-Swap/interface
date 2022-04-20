@@ -69,10 +69,10 @@ export const WithdrawRequestForm = ({ currency, changeModal, token }: Props) => 
 
   const onClick = () => {
     if (withdrawStatus && withdrawStatus.status !== ActionHistoryStatus.FEE_ACCEPTED && account && tokenInfo) {
-      if (withdrawStatus.status !== ActionHistoryStatus.DRAFT && account && tokenInfo) {
+      if (withdrawStatus.status !== ActionHistoryStatus.DRAFT && receiver && tokenInfo) {
         createDraftWithdraw({
           tokenId: tokenInfo.id,
-          fromAddress: account,
+          fromAddress: receiver,
           feeContractAddress: tokenInfo.withdrawFeeAddress,
           amount,
         })
