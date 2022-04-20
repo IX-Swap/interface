@@ -286,7 +286,7 @@ export const useCreateDraftWitdraw = () => {
         dispatch(postCreateDraftWithdraw.rejected({ errorMessage: error.message }))
       }
     },
-    [dispatch, payfee, getEvents]
+    [dispatch, payfee, getEvents, addPopup]
   )
 }
 
@@ -295,13 +295,15 @@ export const usePayFee = () => {
   const { library, account } = useActiveWeb3React()
   const web3 = new Web3(library?.provider)
   const paidFee = usePaidWithdrawFee()
+  const getEvents = useGetEventCallback()
 
   return useCallback(
     async ({ feeContractAddress, feeAmount, tokenId, id }) => {
       try {
         dispatch(payFee.pending())
 
-        const gasPrice = await (await fetch('https://gasstation-mainnet.matic.network/')).json()
+        const gasPriceResponse = await apiService.get('', { baseURL: 'https://gasstation-mainnet.matic.network/' })
+        const gasPrice = gasPriceResponse.data
 
         const tx = {
           from: account,
@@ -311,9 +313,11 @@ export const usePayFee = () => {
         }
 
         const txRes = await web3.eth.sendTransaction(tx)
+
         if (txRes.transactionHash) {
           await paidFee({ tokenId, id, feeTxHash: txRes.transactionHash })
         }
+        getEvents({ tokenId, filter: 'all' })
         dispatch(payFee.fulfilled())
       } catch (error: any) {
         dispatch(payFee.rejected({ errorMessage: error.message }))
