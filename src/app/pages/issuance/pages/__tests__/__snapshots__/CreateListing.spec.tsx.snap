@@ -257,57 +257,60 @@ exports[`CreateListing should match snapshot 1`] = `
                       class="MuiGrid-root MuiGrid-item css-13i4rnv-MuiGrid-root"
                     >
                       <div
-                        class="MuiBox-root css-1iaitcx"
+                        class="hasValue MuiBox-root css-1r9z2fn"
                       >
-                        <h6
-                          class="MuiTypography-root MuiTypography-subtitle2 css-4iyrry-MuiTypography-root"
-                        >
-                          <span
-                            class="MuiBox-root css-10rvbm3"
-                          >
-                            Upload Logo
-                          </span>
-                        </h6>
-                      </div>
-                      <div
-                        class="makeStyles-container-8 MuiBox-root css-1kw7226"
-                        tabindex="0"
-                      >
-                        <input
-                          accept="image/jpg,image/jpeg,image/png,image/gif,image/tiff,image/webp,image/svg,image/apng,image/avif,image/jfif,image/pjpeg,image/pjp"
-                          autocomplete="off"
-                          id="logo"
-                          name="logo"
-                          style="display: none;"
-                          tabindex="-1"
-                          type="file"
-                        />
                         <div
-                          class="MuiBox-root css-z42sue"
+                          class="MuiBox-root css-dj9eh8"
+                          tabindex="0"
                         >
-                          <svg
-                            class="css-1s8o7ec"
-                            fill="#4C88FF"
-                            height="24px"
-                            width="24px"
+                          <div
+                            class="MuiAvatar-root MuiAvatar-square MuiAvatar-colorDefault css-19j9e2s-MuiAvatar-root"
+                            style="width: 120px; height: 120px; border-radius: initial; max-width: initial;"
                           >
-                            <use
-                              href="image-mock#upload"
-                            />
-                          </svg>
-                          <span
-                            class="MuiTypography-root MuiTypography-caption MuiTypography-alignCenter css-dr955s-MuiTypography-root"
-                          >
-                            Drag and Drop
-                            <br />
-                             or
-                             
-                            <span
-                              class="MuiBox-root css-feznls"
+                            <svg
+                              aria-hidden="true"
+                              class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiAvatar-fallback css-1ql7le6-MuiSvgIcon-root-MuiAvatar-fallback"
+                              data-testid="PersonIcon"
+                              focusable="false"
+                              viewBox="0 0 24 24"
                             >
-                              Upload
-                            </span>
-                          </span>
+                              <path
+                                d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+                              />
+                            </svg>
+                          </div>
+                          <input
+                            accept="image/jpg,image/jpeg,image/png,image/gif,image/tiff,image/webp,image/svg,image/apng,image/avif,image/jfif,image/pjpeg,image/pjp"
+                            autocomplete="off"
+                            id="logo"
+                            name="logo"
+                            style="display: none;"
+                            tabindex="-1"
+                            type="file"
+                          />
+                        </div>
+                        <div
+                          class="MuiBox-root css-zndq09"
+                        >
+                          <button
+                            class="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-1ahw2kl-MuiButtonBase-root-MuiIconButton-root"
+                            tabindex="0"
+                            type="button"
+                          >
+                            <svg
+                              class="css-1s8o7ec"
+                              fill="#778194"
+                              height="24px"
+                              width="24px"
+                            >
+                              <use
+                                href="image-mock#trash"
+                              />
+                            </svg>
+                            <span
+                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                            />
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -813,7 +816,7 @@ exports[`CreateListing should match snapshot 1`] = `
                   class="MuiBox-root css-1kgakwq"
                 />
                 <div
-                  class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-wrapper-12 css-l6hioc-MuiGrid-root"
+                  class="MuiGrid-root MuiGrid-container MuiGrid-direction-xs-column makeStyles-wrapper-8 css-l6hioc-MuiGrid-root"
                   style="opacity: 0.75;"
                 >
                   <div
@@ -1594,56 +1597,37 @@ exports[`CreateListing should match snapshot 1`] = `
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                     >
                       <div
-                        class="makeStyles-container-8 MuiBox-root css-ojhax6"
-                        tabindex="0"
+                        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-a5rdam-MuiGrid-root"
                       >
-                        <input
-                          accept=".xlsx,.pdf"
-                          autocomplete="off"
-                          id="incomeStatement"
-                          multiple=""
-                          name="incomeStatement"
-                          style="display: none;"
-                          tabindex="-1"
-                          type="file"
-                        />
                         <div
-                          class="MuiBox-root css-z42sue"
+                          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                         >
-                          <svg
-                            class="css-1s8o7ec"
-                            fill="#4C88FF"
-                            height="24px"
-                            width="24px"
+                          <button
+                            class="MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButtonBase-root  css-q2jx2n-MuiButtonBase-root-MuiButton-root"
+                            tabindex="0"
+                            type="button"
                           >
-                            <use
-                              href="image-mock#upload"
-                            />
-                          </svg>
-                          <span
-                            class="MuiTypography-root MuiTypography-caption MuiTypography-alignCenter css-dr955s-MuiTypography-root"
-                          >
-                            Drag and Drop
-                            <br />
-                             or
-                             
                             <span
-                              class="MuiBox-root css-feznls"
+                              class="MuiButton-startIcon MuiButton-iconSizeMedium css-gcc2o7-MuiButton-startIcon"
                             >
-                              Upload
+                              <svg
+                                class="css-1s8o7ec"
+                                fill="#778194"
+                                height="24px"
+                                width="24px"
+                              >
+                                <use
+                                  href="image-mock#plus"
+                                />
+                              </svg>
                             </span>
-                          </span>
+                            Add More
+                            <span
+                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                            />
+                          </button>
                         </div>
                       </div>
-                      <div
-                        class="MuiBox-root css-zoser8"
-                      />
-                      <p
-                        class="MuiTypography-root MuiTypography-caption css-23kzf0-MuiTypography-root"
-                        style="font-size: 14px; opacity: 0.5; font-weight: 400;"
-                      >
-                        File size limit 10 MB
-                      </p>
                     </div>
                   </div>
                   <div
@@ -1685,56 +1669,37 @@ exports[`CreateListing should match snapshot 1`] = `
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                     >
                       <div
-                        class="makeStyles-container-8 MuiBox-root css-ojhax6"
-                        tabindex="0"
+                        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-a5rdam-MuiGrid-root"
                       >
-                        <input
-                          accept=".xlsx,.pdf"
-                          autocomplete="off"
-                          id="cashFlow"
-                          multiple=""
-                          name="cashFlow"
-                          style="display: none;"
-                          tabindex="-1"
-                          type="file"
-                        />
                         <div
-                          class="MuiBox-root css-z42sue"
+                          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                         >
-                          <svg
-                            class="css-1s8o7ec"
-                            fill="#4C88FF"
-                            height="24px"
-                            width="24px"
+                          <button
+                            class="MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButtonBase-root  css-q2jx2n-MuiButtonBase-root-MuiButton-root"
+                            tabindex="0"
+                            type="button"
                           >
-                            <use
-                              href="image-mock#upload"
-                            />
-                          </svg>
-                          <span
-                            class="MuiTypography-root MuiTypography-caption MuiTypography-alignCenter css-dr955s-MuiTypography-root"
-                          >
-                            Drag and Drop
-                            <br />
-                             or
-                             
                             <span
-                              class="MuiBox-root css-feznls"
+                              class="MuiButton-startIcon MuiButton-iconSizeMedium css-gcc2o7-MuiButton-startIcon"
                             >
-                              Upload
+                              <svg
+                                class="css-1s8o7ec"
+                                fill="#778194"
+                                height="24px"
+                                width="24px"
+                              >
+                                <use
+                                  href="image-mock#plus"
+                                />
+                              </svg>
                             </span>
-                          </span>
+                            Add More
+                            <span
+                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                            />
+                          </button>
                         </div>
                       </div>
-                      <div
-                        class="MuiBox-root css-zoser8"
-                      />
-                      <p
-                        class="MuiTypography-root MuiTypography-caption css-23kzf0-MuiTypography-root"
-                        style="font-size: 14px; opacity: 0.5; font-weight: 400;"
-                      >
-                        File size limit 10 MB
-                      </p>
                     </div>
                   </div>
                   <div
@@ -1776,56 +1741,37 @@ exports[`CreateListing should match snapshot 1`] = `
                       class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                     >
                       <div
-                        class="makeStyles-container-8 MuiBox-root css-ojhax6"
-                        tabindex="0"
+                        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-1 css-a5rdam-MuiGrid-root"
                       >
-                        <input
-                          accept=".xlsx,.pdf"
-                          autocomplete="off"
-                          id="balanceSheet"
-                          multiple=""
-                          name="balanceSheet"
-                          style="display: none;"
-                          tabindex="-1"
-                          type="file"
-                        />
                         <div
-                          class="MuiBox-root css-z42sue"
+                          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 css-1idn90j-MuiGrid-root"
                         >
-                          <svg
-                            class="css-1s8o7ec"
-                            fill="#4C88FF"
-                            height="24px"
-                            width="24px"
+                          <button
+                            class="MuiButton-root MuiButton-outlined MuiButton-outlinedPrimary MuiButton-sizeMedium MuiButton-outlinedSizeMedium MuiButtonBase-root  css-q2jx2n-MuiButtonBase-root-MuiButton-root"
+                            tabindex="0"
+                            type="button"
                           >
-                            <use
-                              href="image-mock#upload"
-                            />
-                          </svg>
-                          <span
-                            class="MuiTypography-root MuiTypography-caption MuiTypography-alignCenter css-dr955s-MuiTypography-root"
-                          >
-                            Drag and Drop
-                            <br />
-                             or
-                             
                             <span
-                              class="MuiBox-root css-feznls"
+                              class="MuiButton-startIcon MuiButton-iconSizeMedium css-gcc2o7-MuiButton-startIcon"
                             >
-                              Upload
+                              <svg
+                                class="css-1s8o7ec"
+                                fill="#778194"
+                                height="24px"
+                                width="24px"
+                              >
+                                <use
+                                  href="image-mock#plus"
+                                />
+                              </svg>
                             </span>
-                          </span>
+                            Add More
+                            <span
+                              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                            />
+                          </button>
                         </div>
                       </div>
-                      <div
-                        class="MuiBox-root css-zoser8"
-                      />
-                      <p
-                        class="MuiTypography-root MuiTypography-caption css-23kzf0-MuiTypography-root"
-                        style="font-size: 14px; opacity: 0.5; font-weight: 400;"
-                      >
-                        File size limit 10 MB
-                      </p>
                     </div>
                   </div>
                 </div>
@@ -1874,7 +1820,7 @@ exports[`CreateListing should match snapshot 1`] = `
                             class="MuiBox-root css-164r41r"
                           >
                             <span
-                              class="MuiTypography-root MuiTypography-caption makeStyles-subtitle-13 css-1b4l2pg-MuiTypography-root"
+                              class="MuiTypography-root MuiTypography-caption makeStyles-subtitle-9 css-1b4l2pg-MuiTypography-root"
                             >
                               A short description of the company helps investors know more about your company.
                             </span>
@@ -1900,15 +1846,15 @@ exports[`CreateListing should match snapshot 1`] = `
                                   class="MuiBox-root css-hix1c1"
                                 >
                                   <div
-                                    class="MUIRichTextEditor-root-14"
+                                    class="MUIRichTextEditor-root-10"
                                     id="mui-rte-root"
                                   >
                                     <div
-                                      class="MUIRichTextEditor-container-15"
+                                      class="MUIRichTextEditor-container-11"
                                       id="mui-rte-container"
                                     >
                                       <div
-                                        class="MUIRichTextEditor-toolbar-26"
+                                        class="MUIRichTextEditor-toolbar-22"
                                         id="mui-rte-toolbar"
                                       >
                                         <button
@@ -2265,17 +2211,17 @@ exports[`CreateListing should match snapshot 1`] = `
                                         </button>
                                       </div>
                                       <div
-                                        class="MUIRichTextEditor-editorContainer-18 MUIRichTextEditor-placeHolder-22"
+                                        class="MUIRichTextEditor-editorContainer-14 MUIRichTextEditor-placeHolder-18"
                                         tabindex="0"
                                       >
                                         Start typing...
                                       </div>
                                       <div
-                                        class="MUIRichTextEditor-editor-17"
+                                        class="MUIRichTextEditor-editor-13"
                                         id="mui-rte-editor"
                                       >
                                         <div
-                                          class="MUIRichTextEditor-hidePlaceholder-21 MUIRichTextEditor-editorContainer-18"
+                                          class="MUIRichTextEditor-hidePlaceholder-17 MUIRichTextEditor-editorContainer-14"
                                           id="mui-rte-editor-container"
                                         >
                                           <div
@@ -2297,15 +2243,15 @@ exports[`CreateListing should match snapshot 1`] = `
                                                   <div
                                                     class=""
                                                     data-block="true"
-                                                    data-editor="2pskk"
-                                                    data-offset-key="6s5cp-0-0"
+                                                    data-editor="e7sr0"
+                                                    data-offset-key="94urq-0-0"
                                                   >
                                                     <div
                                                       class="public-DraftStyleDefault-block public-DraftStyleDefault-ltr"
-                                                      data-offset-key="6s5cp-0-0"
+                                                      data-offset-key="94urq-0-0"
                                                     >
                                                       <span
-                                                        data-offset-key="6s5cp-0-0"
+                                                        data-offset-key="94urq-0-0"
                                                       >
                                                         <br
                                                           data-text="true"
