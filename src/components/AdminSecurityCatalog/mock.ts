@@ -1,10 +1,15 @@
-import { CREATE_TOKEN_CHAINS } from 'constants/addresses'
-
 export const defaultKycType = {
   individualAccredited: false,
   individualAccreditedNot: false,
   corporateAccredited: false,
   corporateAccreditedNot: false,
+}
+
+export const defaultNetworksJson = {
+  kovan: false,
+  ethereum: false,
+  polygon: false,
+  mumbai: false,
 }
 
 export const initialTokenState = {
@@ -27,6 +32,7 @@ export const initialTokenState = {
   chainId: null,
   kycType: defaultKycType,
   kycTypeJson: defaultKycType,
+  kycNetworks: defaultNetworksJson,
 }
 
 export const initialIssuerState = {

@@ -20,13 +20,14 @@ import { AddressInput } from 'components/AddressInputPanel/AddressInput'
 import { AreYouSureModal } from 'components/AreYouSureModal'
 import { adminOffset as offset } from 'state/admin/constants'
 import { SUPPORTED_TGE_CHAINS } from 'constants/addresses'
+import { TokenAvailableFor } from './TokenAvailableFor'
+import { getAtlasIdByTicker } from 'state/admin/hooks'
+import { LoaderThin } from 'components/Loader/LoaderThin'
+import { TokenAvailableNetworks } from './TokenAvailableNetworks'
 
 import { ReactComponent as LogoImage } from '../../assets/images/wallpaper.svg'
 import { WideModal, WideModalWrapper, FormWrapper, FormGrid, Logo, FormRow, LoaderContainer } from './styleds'
 import { industries, initialTokenState } from './mock'
-import { TokenAvailableFor } from './TokenAvailableFor'
-import { getAtlasIdByTicker } from 'state/admin/hooks'
-import { LoaderThin } from 'components/Loader/LoaderThin'
 
 interface Props {
   token: any | null
@@ -505,6 +506,12 @@ export const TokenPopup: FC<Props> = ({ token: propToken, currentIssuer, setCurr
                             onToggle={() => setToken({ ...token, allowWithdrawal: !token.allowWithdrawal })}
                           />
                         </Box>
+                      </Box>
+                    </FormRow>
+
+                    <FormRow>
+                      <Box>
+                        <TokenAvailableNetworks token={token} setToken={setToken} error={errors.kycNetworks} />
                       </Box>
                     </FormRow>
                   </FormWrapper>

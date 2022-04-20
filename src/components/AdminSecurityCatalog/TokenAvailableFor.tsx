@@ -47,7 +47,7 @@ export const TokenAvailableFor = ({ setToken, token, error }: Props) => {
   )
 }
 
-const Container = styled.div`
+export const Container = styled.div`
   > div:first-child {
     color: ${({ theme }) => theme.text2};
     margin-bottom: 8px;
@@ -59,7 +59,7 @@ const Container = styled.div`
   }
 `
 
-const Options = styled.div`
+export const Options = styled.div`
   * {
     color: white;
   }
