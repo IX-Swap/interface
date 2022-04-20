@@ -10,7 +10,7 @@ export interface VirtualizedListSizeMap {
 }
 
 export interface VirtualizedListProps
-  extends Omit<VariableSizeListProps, 'itemSize' | 'children'> {
+  extends Omit<VariableSizeListProps, 'itemSize' | 'children' | 'height'> {
   itemComponent: (props: ListChildComponentProps) => JSX.Element
 }
 
@@ -27,6 +27,11 @@ export const VirtualizedList = (props: VirtualizedListProps) => {
   const getItemSize = useCallback((index: number) => {
     return sizeMap.current[index] ?? 65
   }, [])
+
+  const getListSize = useCallback(() => {
+    return sizeMap.current[0] + sizeMap.current[1] + sizeMap.current[2]
+  }, [])
+
   const listRef = useRef<VariableSizeList>(null)
   const updateList = () => {
     listRef?.current?.resetAfterIndex(0)
@@ -42,6 +47,7 @@ export const VirtualizedList = (props: VirtualizedListProps) => {
         {...rest}
         ref={listRef}
         width='100%'
+        height={getListSize()}
         itemSize={getItemSize}
         onScroll={() => {
           updateList()

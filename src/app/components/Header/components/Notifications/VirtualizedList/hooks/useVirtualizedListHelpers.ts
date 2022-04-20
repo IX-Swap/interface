@@ -1,5 +1,5 @@
 import { useContext, useRef, useLayoutEffect } from 'react'
-import { VirtualizedListContext } from 'components/VirtualizedList/VirtualizedList'
+import { VirtualizedListContext } from 'app/components/Header/components/Notifications/VirtualizedList/VirtualizedList'
 
 export const useVirtualizedListItemHelpers = (index: number, gap: number) => {
   const listContext = useContext(VirtualizedListContext)

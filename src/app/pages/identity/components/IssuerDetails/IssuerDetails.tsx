@@ -1,4 +1,4 @@
-import { Grid, Typography } from '@mui/material'
+import { Grid, Paper, TextField, Typography } from '@mui/material'
 import { NumericInput } from 'components/form/NumericInput'
 import { TypedField } from 'components/form/TypedField'
 import { moneyNumberFormat } from 'config/numberFormat'
@@ -36,62 +36,66 @@ export const IssuerDetails = (props: IssuerDetailFieldsProps) => {
   return (
     <Grid container direction='column' spacing={6}>
       <Grid item xs={12}>
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <Typography variant='h5'>Basic Information</Typography>
-          </Grid>
-          {basicInformationFields.map(field => (
-            <Grid item xs={12} sm={6}>
-              <TypedField
-                component={TextInput}
-                control={control}
-                name={field.name}
-                label={field.label}
-                variant='outlined'
-                defaultValue={
-                  field.name === 'fullName'
-                    ? `${defaultFirstName as string}
+        <Paper sx={{ borderRadius: 2, p: 5 }}>
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <Typography variant='h5'>Basic Information</Typography>
+            </Grid>
+            {basicInformationFields.map(field => (
+              <Grid item xs={12} sm={6}>
+                <TypedField
+                  component={TextField}
+                  control={control}
+                  name={field.name}
+                  label={field.label}
+                  variant='outlined'
+                  defaultValue={
+                    field.name === 'fullName'
+                      ? `${defaultFirstName as string}
                         ${defaultMiddleName as string}
                        ${defaultLastName as string}`
-                        .replace(/\s\s+/g, ' ')
-                        .replace('undefined', '')
-                        .replace('  ', ' ')
-                    : ''
-                }
-              />
-            </Grid>
-          ))}
-        </Grid>
+                          .replace(/\s\s+/g, ' ')
+                          .replace('undefined', '')
+                          .replace('  ', ' ')
+                      : ''
+                  }
+                />
+              </Grid>
+            ))}
+          </Grid>
+        </Paper>
       </Grid>
       <Grid item xs={12}>
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <Typography variant='h5'>Fundraising Information</Typography>
+        <Paper sx={{ borderRadius: 2, p: 5 }}>
+          <Grid container spacing={3}>
+            <Grid item xs={12}>
+              <Typography variant='h5'>Fundraising Information</Typography>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TypedField
+                component={NumericInput}
+                control={control}
+                numberFormat={moneyNumberFormat}
+                valueExtractor={numericValueExtractor}
+                name='fundRaisingAmount'
+                label='Fundraising Amount'
+                variant='outlined'
+                helperText='Amount in SGD'
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TypedField
+                component={TextInput}
+                label='Details of Issuance'
+                name='detail'
+                control={control}
+                multiline
+                fullWidth
+                variant='outlined'
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <TypedField
-              component={NumericInput}
-              control={control}
-              numberFormat={moneyNumberFormat}
-              valueExtractor={numericValueExtractor}
-              name='fundRaisingAmount'
-              label='Fundraising Amount'
-              variant='outlined'
-              helperText='Amount in SGD'
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TypedField
-              component={TextInput}
-              label='Details of Issuance'
-              name='detail'
-              control={control}
-              multiline
-              fullWidth
-              variant='outlined'
-            />
-          </Grid>
-        </Grid>
+        </Paper>
       </Grid>
     </Grid>
   )

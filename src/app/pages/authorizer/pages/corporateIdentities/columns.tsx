@@ -34,5 +34,9 @@ export const columns: Array<TableColumn<CorporateIdentity>> = [
     label: 'Representative',
     render: renderRepresentativeName
   },
+  {
+    key: 'type',
+    label: 'Type'
+  },
   { key: 'cynopsis.riskRating', label: 'Risk Report', render: renderRiskReport }
 ]

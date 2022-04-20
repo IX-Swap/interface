@@ -132,6 +132,14 @@ export const lightTheme: DeprecatedThemeOptions = {
         color: '#A2ACBF'
       }
     },
+    table: {
+      color: '#778194',
+      rowBg: '#FFFFFF',
+      rowColor: '#778194',
+      boxShadow: `0px 32px 64px ${tinycolor('#3b4251')
+        .setAlpha(0.08)
+        .toRgbString()}`
+    },
     paginationItem: {
       color: '#778194',
       bg: '#FFFFFF',
@@ -198,6 +206,12 @@ export const lightTheme: DeprecatedThemeOptions = {
     dropdownLink: {
       boxShadow: tinycolor('#a2acbf16').setAlpha(0.16).toRgbString(),
       border: '#EDF2FA'
+    },
+    notificationsDropdown: {
+      bg: '#FFFFFF',
+      message: '#778194',
+      divider: '#EDF2FA',
+      bgHover: tinycolor('#EDF2FA').setAlpha(0.4).toRgbString()
     },
     success: {
       main: '#7DD320'

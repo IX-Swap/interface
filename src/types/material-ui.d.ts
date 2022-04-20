@@ -98,6 +98,13 @@ export interface Alerts {
   border: string
 }
 
+export interface TablePalette {
+  rowBg: CSSProperties['color']
+  rowColor: CSSProperties['color']
+  color: CSSProperties['color']
+  boxShadow: string
+}
+
 export interface ChipPalette {
   bg: string
   fill: string
@@ -167,6 +174,13 @@ export interface SelectPalette {
   border: CSSProperties['color']
 }
 
+export interface NotificationsDropdown {
+  divider: string
+  message: CSSProperties['color']
+  bg: CSSProperties['color']
+  bgHover: CSSProperties['color']
+}
+
 declare module '@mui/styles/defaultTheme' {
   interface DefaultTheme extends Theme {}
 }
@@ -201,6 +215,7 @@ declare module '@mui/material/styles' {
         color?: CSSProperties['color']
       }
     }
+    table: TablePalette
     paginationItem: PaginationItem
     tablePagination: TablePagination
     alerts: Alerts
@@ -213,6 +228,7 @@ declare module '@mui/material/styles' {
     }
     select: SelectPalette
     dropdownLink: DropdownLink
+    notificationsDropdown: NotificationsDropdown
   }
 
   export interface Palette {
@@ -244,6 +260,7 @@ declare module '@mui/material/styles' {
         color?: CSSProperties['color']
       }
     }
+    table: TablePalette
     paginationItem: PaginationItem
     tablePagination: TablePagination
     alerts: Alerts
@@ -256,6 +273,7 @@ declare module '@mui/material/styles' {
     }
     select: SelectPalette
     dropdownLink: DropdownLink
+    notificationsDropdown: NotificationsDropdown
   }
 
   export interface Theme {
