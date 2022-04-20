@@ -1,4 +1,5 @@
 import { makeURL } from 'config/appURL'
+import { InternalRouteProps } from 'types/util'
 
 export const InvestRoute = {
   landing: makeURL(['app', 'invest']),
@@ -29,3 +30,18 @@ export const CommitmentRoute = {
   list: makeURL(['app', 'invest', 'commitments']),
   view: makeURL(['app', 'invest', 'commitments', 'commitmentId', 'view'])
 }
+
+export const investLandingLinks: InternalRouteProps[] = [
+  {
+    label: 'Overview',
+    path: InvestRoute.overview
+  },
+  {
+    label: 'Primary',
+    path: InvestRoute.landing
+  },
+  {
+    label: 'Exchange',
+    path: InvestRoute.exchange
+  }
+]

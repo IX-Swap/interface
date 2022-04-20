@@ -8,19 +8,22 @@ import {
   accountsLandingLinks,
   AccountsRoute
 } from 'app/pages/accounts/router/config'
-import { ReactComponent as AccountsIcon } from 'assets/icons/navigation/account.svg'
-import { InvestRoute } from 'app/pages/invest/router/config'
-import { ReactComponent as InvestIcon } from 'assets/icons/navigation/invest.svg'
-import { FundsManagementRoute } from 'app/pages/fundsManagement/router/config'
-import { IssuanceRoute } from 'app/pages/issuance/router/config'
-import { ReactComponent as IssuanceIcon } from 'assets/icons/navigation/issuance.svg'
-import { AppRoute } from 'app/router/config'
+import {
+  issuanceLandingLinks,
+  IssuanceRoute
+} from 'app/pages/issuance/router/config'
 import {
   authorizerLandingLinks,
   AuthorizerRoute
 } from 'app/pages/authorizer/router/config'
+import { AppRoute } from 'app/router/config'
+import { FundsManagementRoute } from 'app/pages/fundsManagement/router/config'
+import { educationCentreLinks } from 'app/pages/educationCentre/router/config'
+import { investLandingLinks, InvestRoute } from 'app/pages/invest/router/config'
+import { ReactComponent as InvestIcon } from 'assets/icons/navigation/invest.svg'
+import { ReactComponent as AccountsIcon } from 'assets/icons/navigation/account.svg'
+import { ReactComponent as IssuanceIcon } from 'assets/icons/navigation/issuance.svg'
 import { ReactComponent as AuthorizerIcon } from 'assets/icons/navigation/authorizer.svg'
-import { EducationCentreRoute } from 'app/pages/educationCentre/router/config'
 
 export const useAppNavigationLinks = () => {
   const isAuthorizer = useIsAuthorizer()
@@ -46,9 +49,8 @@ export const useAppNavigationLinks = () => {
   if (isFundManager) {
     links.push({
       label: 'Funds Management',
-      link: FundsManagementRoute.dashboard,
-      icon: () => null
-    })
+      link: FundsManagementRoute.dashboard
+    } as any)
   }
 
   if (isIssuer) {
@@ -72,46 +74,8 @@ export const useAppNavigationLinks = () => {
     })
   }
 
-  const educationCentreLinks = [
-    {
-      label: 'News',
-      path: EducationCentreRoute.news
-    },
-    {
-      label: 'Reports',
-      path: EducationCentreRoute.reports
-    },
-    {
-      label: 'Research Terminal',
-      path: EducationCentreRoute.securitiesMarkets
-    }
-  ]
-
-  const newInvestLandingLinks = [
-    {
-      label: 'Overview',
-      path: InvestRoute.overview
-    },
-    {
-      label: 'Primary',
-      path: InvestRoute.landing
-    },
-    {
-      label: 'Exchange',
-      path: InvestRoute.exchange
-    }
-  ]
-
-  const newIssuanceLandingLinks = [
-    { label: 'Create New DSO', path: IssuanceRoute.create },
-    { label: 'View DSO Listings', path: IssuanceRoute.list },
-    { label: 'Create Exchange Listings', path: IssuanceRoute.createListing },
-    { label: 'View Exchange Listings', path: IssuanceRoute.myListings },
-    { label: 'Financial Reports', path: IssuanceRoute.financialReports }
-  ]
-
   if (isFundManager) {
-    newIssuanceLandingLinks.unshift({
+    issuanceLandingLinks.unshift({
       label: 'Overview',
       path: IssuanceRoute.insight
     })
@@ -132,9 +96,9 @@ export const useAppNavigationLinks = () => {
       case 'Accounts':
         return accountsLandingLinks
       case 'Issuance':
-        return newIssuanceLandingLinks
+        return issuanceLandingLinks
       case 'Invest':
-        return newInvestLandingLinks
+        return investLandingLinks
       default:
         return []
     }
